@@ -1,0 +1,93 @@
+<html>
+<head>
+    <title> Tests </title>
+    <link rel="stylesheet" href="../node_modules/mocha/mocha.css" />
+</head>
+<body>
+<div id="mocha"></div>
+<script src="../node_modules/mocha/mocha.js"></script>
+<script src="../node_modules/chai/chai.js"></script>
+
+<script>
+    mocha.ui('bdd');
+    mocha.reporter('html');
+    var expect = chai.expect;
+    var stuff = [];
+    var removeStuff = function () {
+        stuff.forEach(function (elm) {
+            elm && elm.parentNode && elm.parentNode.removeChild(elm);
+            delete elm;
+        })
+        stuff.length = 0;
+    };
+    var box = document.createElement('div');
+    document.body.appendChild(box);
+    var getBox = function () {
+        return box;
+    }
+    var appendTestArea = function (id, noput) {
+        var textarea = document.createElement('textarea');
+        textarea.setAttribute('id', id || ('editor_' + (new Date()).getTime()));
+        box.appendChild(textarea);
+        !noput && stuff.push(textarea);
+        return textarea;
+    }
+
+    var sortAtrtibutes = function (html) {
+        var reg = /([a-z]+)[\s]*=[\s]*"([^"]+)"/i, attrs = [], matches;
+        do {
+            matches = reg.exec(html);
+            if (!matches) {
+                break;
+            }
+            attrs.push({
+                name: matches[1].toLowerCase(),
+                value: matches[2],
+            });
+            html = html.replace(reg, 'attribute:'  + attrs.length);
+        } while(matches);
+
+        attrs.sort(function (a, b) {
+            return  (a.name < b.name) ? -1 : (a.name > b.name) ? 1 : 0;
+        })
+
+        attrs.forEach(function (elm, i) {
+            html = html.replace('attribute:'  + (i + 1), elm.name + '="' + elm.value + '"');
+        });
+        return html;
+    }
+    /**
+     *
+     * @param type
+     * @param keyCodeArg
+     * @param element
+     * @param options
+     */
+    var simulateEvent = function (type, keyCodeArg, element, options) {
+        var evt = document.createEvent('HTMLEvents')
+        evt.initEvent(type, true, false);
+        evt.keyCode = keyCodeArg;
+        evt.which = keyCodeArg;
+        if (options) {
+            options(evt);
+        }
+        element.dispatchEvent(evt);
+    }
+</script>
+<link rel="stylesheet" href="../dist/jodit.css" />
+<script src="../dist/jodit.js"></script>
+<script src="tests/editor.js"></script>
+<script src="tests/enter.js"></script>
+<script src="tests/commands.js"></script>
+<script src="tests/table.js"></script>
+<script>
+    window.onload = function() {
+        if (window.mochaPhantomJS) {
+            mochaPhantomJS.run();
+        } else {
+            mocha.run();
+        }
+    };
+</script>
+</body>
+</html>

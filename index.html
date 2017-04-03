@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Jodit Example</title>
+    <script>
+        var simulateEvent = function (type, keyCodeArg, element, options) {
+            var evt = document.createEvent('HTMLEvents')
+            evt.initEvent(type, true, false);
+            evt.keyCode = keyCodeArg;
+            evt.which = keyCodeArg;
+            if (options) {
+                options(evt);
+            }
+            element.dispatchEvent(evt);
+        }
+    </script>
+</head>
+<body>
+    <table style="width:100%">
+        <tr>
+            <td style="width:50%"><textarea id="editor"></textarea></td>
+            <td><textarea id="mirror"></textarea></td>
+        </tr>
+        <!--<tr>-->
+            <!--<td colspan="2"><textarea id="consoles" cols="30" rows="10"></textarea></td>-->
+        <!--</tr>-->
+    </table>
+    <style>
+        .jodit.jodit_editor, textarea {
+            box-sizing: border-box;
+            display: block;
+            width: 100%;
+            min-height: 200px;
+            border:1px solid #ccc;
+        }
+    </style>
+</body>
+<link rel="stylesheet" href="app.css" />
+<script src="dist/jodit.js"></script>
+<script>
+    editor = new Jodit('#editor');
+    Jodit.instances.editor.selection.insertNode(document.createElement('span'));
+    Jodit.instances.editor.selection.insertNode(document.createTextNode('Test'));
+    function simpleKeys (original) {
+        var newobject = {};
+        for(var key in original) {
+            newobject[key] = typeof original[key] === 'object' ? '{ ... }' : original[key];
+        }
+        return newobject;
+    }
+    var timeout,
+        callback = function (e) {
+            clearTimeout(timeout);
+            timeout = setTimeout(function () {
+                mirror.value = editor.editor.innerHTML;
+                if (e) {
+                    //consoles.value = JSON.stringify(simpleKeys(e)) + "\n\n" + consoles.value
+                    //consoles.scrollTop=100000;
+                }
+            }, 100)
+        }
+    editor.editor.addEventListener('keydown', callback)
+    editor.editor.addEventListener('keyup', callback)
+    editor.editor.addEventListener('moisedown', callback)
+    editor.editor.addEventListener('input', callback)
+    editor.events.on('change', callback)
+    editor.setEditorValue('<table style="width:100%">' +
+        [0,1,2,3,4,5,6,7,8,9,10].map(function (i) {
+            return '<tr>' +
+                [0,1,2,3,4,5,6,7,8,9,10].map(function (j) {
+                    return '<td>' + i + ',' + j + '</td>'
+                }).join('') +
+                '</tr>';
+        }).join('') +
+        '</table>');
+    editor.setEditorValue('<table style="width: 100px; border-collapse: separate;" cellspacing="0">' +
+        '<tr><td>1</td><td>2</td><td>3</td><td>4</td></tr>' +
+        '</table>');
+    setTimeout(function () {
+
+
+        var td = editor.editor.querySelectorAll('td')[3], box = td.getBoundingClientRect();
+        simulateEvent('mousemove', 1, td, function (options) {
+            options.clientX = box.left + box.width;
+            options.offsetX = box.width;
+        });
+        simulateEvent('mousedown', 1, editor.container.querySelector('.jodit_table_resizer'), function (options) {
+            options.clientX = box.left;
+        });
+
+        simulateEvent('mousemove', 1, editor.win, function (options) {
+            options.clientX = box.left + box.width + 50;
+        });
+        simulateEvent('mouseup', 1, window, function (options) {
+            options.clientX = box.left + box.width + 50;
+        });
+    }, 100)
+
+    callback();
+</script>
+</html>
