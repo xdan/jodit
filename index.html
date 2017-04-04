@@ -27,6 +27,8 @@
                     <button id="merge">Merge</button>
                     <button id="splithorizontal">Split by Horizontal</button>
                     <button id="splitvertical">Split by vertical</button>
+                    <button id="undo">Undo</button>
+                    <button id="redo">Redo</button>
                 </div>
             </td>
             <td><textarea id="mirror"></textarea></td>
@@ -107,6 +109,14 @@
     })
     splithorizontal.addEventListener('mousedown', function () {
         editor.execCommand('splitHorizontal')
+        return false;
+    })
+    redo.addEventListener('mousedown', function () {
+        editor.execCommand('redo')
+        return false;
+    })
+    undo.addEventListener('mousedown', function () {
+        editor.execCommand('undo')
         return false;
     })
     callback();

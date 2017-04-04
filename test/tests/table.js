@@ -327,7 +327,7 @@ describe('Tables Jodit Editor Tests', function() {
                     '</table>'
                 );
             });
-            it('Split cell with rowspan by vertical ', function () {
+            it('Split cell with rowspan by horizontal ', function () {
                 var editor = new Jodit('#table_editor');
 
                 editor.setEditorValue(
@@ -396,6 +396,30 @@ describe('Tables Jodit Editor Tests', function() {
                     '<tr><td><br></td><td><br></td></tr>' +
                     '<tr><td>2,0</td><td>2,1</td><td>2,2</td></tr>' +
                     '</tbody>' +
+                    '</table>'
+                );
+            });
+            it('Split cell by vertical', function () {
+                var editor = new Jodit('#table_editor');
+
+                editor.setEditorValue(
+                    '<table style="width: 100px;">' +
+                        '<tbody>' +
+                            '<tr><td style="width:30px" class="jodit_selected_cell">0,0</td><td>0,1</td></tr>' +
+                            '<tr><td>1,0</td><td>1,1</td></tr>' +
+                        '</tbody>' +
+                    '</table>'
+                );
+
+                var table = new Jodit.modules.Table(editor);
+                table.splitVertical(editor.editor.firstChild);
+
+                expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal(
+                    '<table style="width: 100px;">' +
+                        '<tbody>' +
+                            '<tr><td style="width: 16%;">0,0</td><td style="width: 16%;"><br></td><td>0,1</td></tr>' +
+                            '<tr><td colspan="2">1,0</td><td>1,1</td></tr>' +
+                        '</tbody>' +
                     '</table>'
                 );
             });
