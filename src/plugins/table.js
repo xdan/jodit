@@ -1,7 +1,7 @@
 import Jodit from '../jodit';
 import Table from '../modules/Table';
 import * as consts from '../constants';
-import {each, $$, getContentWidth} from '../modules/Helpers';
+import {each, getContentWidth, $$} from '../modules/Helpers';
 import config from '../config'
 
 /**
@@ -16,16 +16,24 @@ config.useTableProcessor = true;
 class TableProcessor extends Table{
     __key = 'table_processor_observer';
     __selectMode = false;
-    __deSelectAll(current_cell) {
-        let cells = $$('.jodit_selected_cell', this.parent.editor);
+
+    /**
+     *
+     * @param {HTMLTableElement} [table]
+     * @param {HTMLTableCellElement} [current_cell]
+     * @private
+     */
+    __deSelectAll(table, current_cell) {
+        let cells = table ? this.getAllSelectedCells(table) : $$(this.selectedClass, this.parent.editor);
         if (cells.length) {
             each(cells, (i, cell) => {
-                if (current_cell !== cell) {
+                if (!current_cell || current_cell !== cell) {
                     cell.classList.remove(this.selectedClass);
                 }
             })
         }
     }
+
     __resizerDelta = 0;
     __resizerHandler;
     __drag = false;
@@ -200,35 +208,9 @@ class TableProcessor extends Table{
                             event.preventDefault();
                         }
                     }
-                    this.__deSelectAll();
-                    let bound = [[Infinity, Infinity], [0, 0]];
-                    let box = this.formalMatrix(table);
-
-                    for (let i = 0; i < box.length; i += 1) {
-                        for (let j = 0; j < box[i].length; j += 1) {
-                            if (box[i][j] === cell || box[i][j] === start) {
-                                bound[0][0] = Math.min(i, bound[0][0]);
-                                bound[0][1] = Math.min(j, bound[0][1]);
-                                bound[1][0] = Math.max(i, bound[1][0]);
-                                bound[1][1] = Math.max(j, bound[1][1]);
-                            }
-                        }
-                    }
-                    for (let i = bound[0][0]; i <= bound[1][0]; i += 1) {
-                        for (let k = 1, j = bound[0][1]; j <= bound[1][1]; j += 1) {
-                            while (box[i][j] === box[i][j - k]) {
-                                bound[0][1] = Math.min(j - k, bound[0][1]);
-                                bound[1][1] = Math.max(j - k, bound[1][1]);
-                                k += 1;
-                            }
-                            k = 1;
-                            while (box[i][j] === box[i][j + k]) {
-                                bound[0][1] = Math.min(j + k, bound[0][1]);
-                                bound[1][1] = Math.max(j + k, bound[1][1]);
-                                k += 1;
-                            }
-                        }
-                    }
+                    this.__deSelectAll(table);
+                    let bound = this.getSelectedBound(table, [cell, start]),
+                        box = this.formalMatrix(table);
 
                     for (let i = bound[0][0]; i <= bound[1][0]; i += 1) {
                         for (let j = bound[0][1]; j <= bound[1][1]; j += 1) {
@@ -290,8 +272,11 @@ class TableProcessor extends Table{
             }
         })
         this.__on(window, 'mousedown', (event) => {
-            let current_cell = this.parent.node.up(event.target, (tag) => (/^TD|TH$/i.test(tag.tagName)));
-            this.__deSelectAll(current_cell);
+            let current_cell = this.parent.node.closest(event.target, 'TD|TH'), table;
+            if (current_cell) {
+                table = this.parent.node.closest(current_cell, 'table')
+            }
+            this.__deSelectAll(table, current_cell);
         });
         editor.events
             .on('change', () => {
@@ -303,11 +288,49 @@ class TableProcessor extends Table{
             })
             .on('keydown', (event) => {
                 if (event.which === consts.KEY_TAB) {
-                    this.__deSelectAll();
+                    each(editor.editor.querySelectorAll('table'), (i, table) => {
+                        this.__deSelectAll(table);
+                    })
                 }
+            })
+            .on('beforeCommand', (command) => {
+                this.onExecCommand(command);
             });
 
     }
+
+    /**
+     *
+     * @param {string} command
+     */
+    onExecCommand(command) {
+        switch (command) {
+            case 'splitvertical': {
+                let cell = $$('.' + this.selectedClass, this.parent.editor)[0];
+                if (cell) {
+                    this.splitVertical(this.parent.node.closest(cell, 'table'));
+                }
+                break;
+            }
+            case 'splithorizontal': {
+                let cell = $$('.' + this.selectedClass, this.parent.editor)[0];
+                if (cell) {
+                    this.splitHorizontal(this.parent.node.closest(cell, 'table'));
+                }
+                break;
+            }
+            case 'mergeselectedcells': {
+                let cell = $$('.' + this.selectedClass, this.parent.editor)[0];
+                if (cell) {
+                    this.mergeSelected(this.parent.node.closest(cell, 'table'));
+                }
+                break;
+            }
+        }
+    }
+
+
+
     destruct() {
         this.__off();
     }

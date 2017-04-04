@@ -90,11 +90,20 @@ Jodit.plugines.enter = function (editor) {
             }
             editor.selection.focus();
             let current = editor.selection.current();
-            let fake;
-            let currentBox = current ? editor.node.up(current, (node) => (editor.node.isBlock(node))) : false;
 
             let sel = editor.win.getSelection(),
                 range = sel.rangeCount ? sel.getRangeAt(0) : editor.doc.createRange();
+
+            if (!current) {
+                current = editor.node.create('text', consts.INVISIBLE_SPACE);
+                editor.editor.appendChild(current);
+                range.selectNode(current);
+                sel.removeAllRanges();
+                sel.addRange(range);
+            }
+
+            let fake;
+            let currentBox = current ? editor.node.up(current, (node) => (editor.node.isBlock(node))) : false;
 
             if (!currentBox && current) {
                 currentBox = wrap(current, range, editor);

@@ -195,6 +195,32 @@ export default class Nodes extends Component{
 
         return false;
     }
+
+    /**
+     *
+     * @param {Node} node
+     * @param {String} tags
+     * @return {Boolean|Node}
+     */
+    closest(node, tags) {
+        return this.up(node, (tag) => ((new RegExp('^' + tags + '$', 'i')).test(tag.tagName)));
+    }
+
+    /**
+     * Insert newElement after element
+     *
+     * @param elm
+     * @param newElement
+     */
+    after(elm, newElement) {
+        let parent = elm.parentNode;
+        if (parent.lastChild === elm) {
+            parent.appendChild(newElement);
+        } else {
+            parent.insertBefore(newElement, elm.nextSibling);
+        }
+    }
+
     all(node, condition) {
         let start = node;
         let nodes = start.childNodes ? Array.prototype.slice.call(start.childNodes) : [];

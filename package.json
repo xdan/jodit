@@ -4,6 +4,7 @@
   "description": "Jodit is awesome and usefully wysiwyg editor with filebrowser",
   "main": "index.js",
   "scripts": {
+    "gitlab": "git add --all && git commit -m 'Commit' && git push -u origin master",
     "start": "node server.js",
     "build": "cross-env NODE_ENV=production webpack --progress",
     "test": "mocha-phantomjs http://localhost:2000/test/test.html ",

@@ -21,7 +21,14 @@
 <body>
     <table style="width:100%">
         <tr>
-            <td style="width:50%"><textarea id="editor"></textarea></td>
+            <td style="width:50%">
+                <textarea id="editor"></textarea>
+                <div class="buttons">
+                    <button id="merge">Merge</button>
+                    <button id="splithorizontal">Split by Horizontal</button>
+                    <button id="splitvertical">Split by vertical</button>
+                </div>
+            </td>
             <td><textarea id="mirror"></textarea></td>
         </tr>
         <!--<tr>-->
@@ -64,41 +71,44 @@
         }
     editor.editor.addEventListener('keydown', callback)
     editor.editor.addEventListener('keyup', callback)
-    editor.editor.addEventListener('moisedown', callback)
+    editor.editor.addEventListener('mousedown', callback)
+    editor.editor.addEventListener('mouseup', callback)
     editor.editor.addEventListener('input', callback)
     editor.events.on('change', callback)
+    var fill = [];
+    fill.length = 3;
+    fill.fill(10);
     editor.setEditorValue('<table style="width:100%">' +
-        [0,1,2,3,4,5,6,7,8,9,10].map(function (i) {
+        fill.map(function (i, row) {
             return '<tr>' +
-                [0,1,2,3,4,5,6,7,8,9,10].map(function (j) {
-                    return '<td>' + i + ',' + j + '</td>'
+                fill.map(function (j, column) {
+                    return '<td>' + row + ',' + column + '</td>'
                 }).join('') +
                 '</tr>';
         }).join('') +
         '</table>');
-    editor.setEditorValue('<table style="width: 100px; border-collapse: separate;" cellspacing="0">' +
-        '<tr><td>1</td><td>2</td><td>3</td><td>4</td></tr>' +
-        '</table>');
-    setTimeout(function () {
 
 
-        var td = editor.editor.querySelectorAll('td')[3], box = td.getBoundingClientRect();
-        simulateEvent('mousemove', 1, td, function (options) {
-            options.clientX = box.left + box.width;
-            options.offsetX = box.width;
-        });
-        simulateEvent('mousedown', 1, editor.container.querySelector('.jodit_table_resizer'), function (options) {
-            options.clientX = box.left;
-        });
 
-        simulateEvent('mousemove', 1, editor.win, function (options) {
-            options.clientX = box.left + box.width + 50;
-        });
-        simulateEvent('mouseup', 1, window, function (options) {
-            options.clientX = box.left + box.width + 50;
-        });
-    }, 100)
+    //var table = new Jodit.modules.Table(editor);
+    //editor.selection.setCursorIn(editor.editor.querySelector('td'));
 
+//    simulateEvent('mousedown', 1, editor.editor.querySelectorAll('td')[0]);
+//    simulateEvent('mousemove', 1, editor.editor.querySelectorAll('td')[7]);
+//    simulateEvent('mouseup', 1, editor.editor.querySelectorAll('td')[7]);
+    //editor.execCommand('mergeSelectedCells')
+    merge.addEventListener('mousedown', function () {
+        editor.execCommand('mergeSelectedCells')
+        return false;
+    })
+    splitvertical.addEventListener('mousedown', function () {
+        editor.execCommand('splitVertical')
+        return false;
+    })
+    splithorizontal.addEventListener('mousedown', function () {
+        editor.execCommand('splitHorizontal')
+        return false;
+    })
     callback();
 </script>
 </html>

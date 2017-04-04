@@ -34,28 +34,47 @@
     }
 
     var sortAtrtibutes = function (html) {
-        var reg = /([a-z]+)[\s]*=[\s]*"([^"]+)"/i, attrs = [], matches;
-        do {
-            matches = reg.exec(html);
-            if (!matches) {
-                break;
-            }
-            attrs.push({
-                name: matches[1].toLowerCase(),
-                value: matches[2],
+        var tag = /<([^>]+)>/g;
+        var reg = /([a-z]+)[\s]*=[\s]*"([^"]+)"/i, matches, tags = [];
+
+        while (tagmatch = tag.exec(html)) {
+            attrs = [];
+
+            var newtag = tagmatch[0];
+
+            do {
+                matches = reg.exec(newtag);
+                if (!matches) {
+                    break;
+                }
+                attrs.push({
+                    name: matches[1].toLowerCase(),
+                    value: matches[2],
+                });
+                newtag = newtag.replace(matches[0], 'attribute:'  + attrs.length);
+            } while(matches);
+
+            attrs.sort(function (a, b) {
+                return  (a.name < b.name) ? -1 : (a.name > b.name) ? 1 : 0;
+            })
+
+            attrs.forEach(function (elm, i) {
+                newtag = newtag.replace('attribute:'  + (i + 1), elm.name + '="' + elm.value + '"');
             });
-            html = html.replace(reg, 'attribute:'  + attrs.length);
-        } while(matches);
 
-        attrs.sort(function (a, b) {
-            return  (a.name < b.name) ? -1 : (a.name > b.name) ? 1 : 0;
-        })
+            tags.push({
+                name: tagmatch[0],
+                value: newtag,
+            });
+        }
 
-        attrs.forEach(function (elm, i) {
-            html = html.replace('attribute:'  + (i + 1), elm.name + '="' + elm.value + '"');
+        tags.forEach(function (elm, i) {
+            html = html.replace(elm.name, elm.value);
         });
+
         return html;
     }
+
     /**
      *
      * @param type

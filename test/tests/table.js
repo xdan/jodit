@@ -129,34 +129,277 @@ describe('Tables Jodit Editor Tests', function() {
                 '</tbody>' +
                 '</table>');
         });
-        it('method merge selected cells should merge all selected cells into one ', function () {
-            var editor = new Jodit('#table_editor');
+        describe('Method merge selected cells', function() {
+            it('Simple should merge all selected cells into one ', function () {
+                var editor = new Jodit('#table_editor');
 
-            editor.setEditorValue('<table>' +
-                '<tr><td class="jodit_selected_cell">1</td><td class="jodit_selected_cell">2</td></tr>' +
-                '<tr><td class="jodit_selected_cell">3</td><td class="jodit_selected_cell">4</td></tr>' +
-                '<tr><td>5</td><td>6</td></tr>' +
-                '</table>');
+                editor.setEditorValue('<table>' +
+                    '<tr><td class="jodit_selected_cell">1</td><td class="jodit_selected_cell">2</td></tr>' +
+                    '<tr><td class="jodit_selected_cell">3</td><td class="jodit_selected_cell">4</td></tr>' +
+                    '<tr><td>5</td><td>6</td></tr>' +
+                    '</table>');
 
-            var table = new Jodit.modules.Table(editor);
-            table.mergeSelected(editor.editor.firstChild);
+                var table = new Jodit.modules.Table(editor);
+                table.mergeSelected(editor.editor.firstChild);
 
-            expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal(
-                '<table>' +
-                '<tbody>' +
-                '<tr>' +
-                '<td class="jodit_selected_cell" colspan="2" rowspan="2" style="width: 40%;">1<br>2<br>3<br>4<br></td>' +
-                '</tr>' +
-                '<tr>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>5</td>' +
-                '<td>6</td>' +
-                '</tr>' +
-                '</tbody>' +
-                '</table>'
-            );
-        });
+                expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal(
+                    '<table>' +
+                    '<tbody>' +
+                    '<tr>' +
+                    '<td class="jodit_selected_cell" colspan="2">1<br>2<br>3<br>4</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                    '<td>5</td>' +
+                    '<td>6</td>' +
+                    '</tr>' +
+                    '</tbody>' +
+                    '</table>'
+                );
+            });
+            it('With colspan and rowspan into one ', function () {
+                var editor = new Jodit('#table_editor');
+
+                editor.setEditorValue('<table>' +
+                    '<tr><td colspan="2" class="jodit_selected_cell">1</td></tr>' +
+                    '<tr><td class="jodit_selected_cell">3</td><td class="jodit_selected_cell">4</td></tr>' +
+                    '<tr><td rowspan="2" class="jodit_selected_cell">5</td><td class="jodit_selected_cell">6</td></tr>' +
+                    '<tr><td class="jodit_selected_cell">7</td></tr>' +
+                    '<tr><td>8</td><td>9</td></tr>' +
+                    '</table>');
+
+                var table = new Jodit.modules.Table(editor);
+                table.mergeSelected(editor.editor.firstChild);
+
+                expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal(
+                    '<table>' +
+                        '<tbody>' +
+                            '<tr>' +
+                                '<td class="jodit_selected_cell" colspan="2">' +
+                                    '1<br>3<br>4<br>5<br>6<br>7' +
+                                '</td>' +
+                            '</tr>' +
+                            '<tr>' +
+                                '<td>8</td>' +
+                                '<td>9</td>' +
+                            '</tr>' +
+                        '</tbody>' +
+                    '</table>'
+                );
+            });
+            it('A few cells with colspan and rowspan', function () {
+                var editor = new Jodit('#table_editor');
+
+                editor.setEditorValue(
+                    '<table style="width: 100%;">' +
+                    '<tbody>' +
+                    '<tr><td class="jodit_selected_cell" colspan="3">0,0<br>0,1<br>0,2<br></td><td>0,3</td></tr>' +
+                    '<tr><td class="jodit_selected_cell" rowspan="3">1,0<br>2,0<br>3,0<br></td><td class="jodit_selected_cell">1,1</td><td class="jodit_selected_cell">1,2</td><td>1,3</td></tr>' +
+                    '<tr><td class="jodit_selected_cell">2,1</td><td class="jodit_selected_cell">2,2</td><td>2,3</td></tr>' +
+                    '<tr><td class="jodit_selected_cell">3,1</td><td class="jodit_selected_cell">3,2</td><td>3,3</td></tr>' +
+                    '</tbody></table>');
+
+                var table = new Jodit.modules.Table(editor);
+                table.mergeSelected(editor.editor.firstChild);
+
+                expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal(
+                    '<table style="width: 100%;">' +
+                        '<tbody>' +
+                            '<tr>' +
+                                '<td class="jodit_selected_cell" rowspan="4">' +
+                                    '0,0<br>0,1<br>0,2<br><br>' +
+                                    '1,0<br>2,0<br>3,0<br><br>' +
+                                    '1,1<br>' +
+                                    '1,2<br>' +
+                                    '2,1<br>' +
+                                    '2,2<br>' +
+                                    '3,1<br>' +
+                                    '3,2' +
+                                '</td>' +
+                                '<td>0,3</td>' +
+                            '</tr>' +
+                            '<tr>' +
+                                '<td>1,3</td>' +
+                            '</tr>' +
+                            '<tr>' +
+                                '<td>2,3</td>' +
+                            '</tr>' +
+                            '<tr>' +
+                                '<td>3,3</td>' +
+                            '</tr>' +
+                        '</tbody>' +
+                    '</table>'
+                );
+            });
+            it('Merge cells in center', function () {
+                var editor = new Jodit('#table_editor');
+
+                editor.setEditorValue(
+                    '<table style="width: 100%;">' +
+                    '<tbody>' +
+                    '<tr><td colspan="3" class="">0,0<br>0,1<br>0,2<br></td><td>0,3</td></tr>' +
+                    '<tr>' +
+                        '<td rowspan="3" class="">1,0<br>2,0<br>3,0<br></td>' +
+                        '<td class="jodit_selected_cell">1,1</td><td class="jodit_selected_cell">1,2</td>' +
+                        '<td class="jodit_selected_cell">1,3</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                        '<td class="jodit_selected_cell">2,1</td>' +
+                        '<td class="jodit_selected_cell">2,2</td>' +
+                        '<td class="jodit_selected_cell">2,3</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                        '<td class="">3,1</td>' +
+                        '<td class="">3,2</td>' +
+                        '<td>3,3</td></tr>' +
+                    '</tbody>' +
+                    '</table>');
+
+                var table = new Jodit.modules.Table(editor);
+                table.mergeSelected(editor.editor.firstChild);
+
+                expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal(
+                    '<table style="width: 100%;">' +
+                        '<tbody>' +
+                            '<tr>' +
+                                '<td colspan="3">0,0<br>0,1<br>0,2<br></td><td>0,3</td>' +
+                            '</tr>' +
+                            '<tr>' +
+                                '<td rowspan="2">1,0<br>2,0<br>3,0<br></td>' +
+                                '<td class="jodit_selected_cell" colspan="3">1,1<br>1,2<br>1,3<br>2,1<br>2,2<br>2,3</td>' +
+                            '</tr>' +
+                            '<tr>' +
+                                '<td>3,1</td><td>3,2</td><td>3,3</td>' +
+                            '</tr>' +
+                        '</tbody>' +
+                    '</table>'
+                );
+            });
+            it('Normalize merged cells', function () {
+                var editor = new Jodit('#table_editor');
+
+                editor.setEditorValue(
+                    '<table>' +
+                    '<tbody>' +
+                    '<tr>' +
+                        '<td colspan="3" class="jodit_selected_cell">1</td>' +
+                        '<td class="jodit_selected_cell" rowspan="4">2</td>' +
+                    '</tr>' +
+                    '</tbody>' +
+                    '</table>');
+
+                var table = new Jodit.modules.Table(editor);
+                table.mergeSelected(editor.editor.firstChild);
+
+                expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal(
+                    '<table>' +
+                        '<tbody>' +
+                            '<tr>' +
+                                '<td class="jodit_selected_cell">1<br>2</td>' +
+                            '</tr>' +
+                        '</tbody>' +
+                    '</table>'
+                );
+            });
+        })
+        describe('Split selected cells', function() {
+            it('Split cell by Horizontal', function () {
+                var editor = new Jodit('#table_editor');
+
+                editor.setEditorValue(
+                    '<table>' +
+                    '<tbody>' +
+                        '<tr><td class="jodit_selected_cell">0,0</td></tr>' +
+                        '<tr><td>1,0</td></tr>' +
+                    '</tbody>' +
+                    '</table>'
+                );
+
+                var table = new Jodit.modules.Table(editor);
+                table.splitHorizontal(editor.editor.firstChild);
+
+                expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal(
+                    '<table>' +
+                        '<tbody>' +
+                            '<tr><td>0,0</td></tr>' +
+                            '<tr><td><br></td></tr>' +
+                            '<tr><td>1,0</td></tr>' +
+                        '</tbody>' +
+                    '</table>'
+                );
+            });
+            it('Split cell with rowspan by vertical ', function () {
+                var editor = new Jodit('#table_editor');
+
+                editor.setEditorValue(
+                    '<table>' +
+                        '<tbody>' +
+                            '<tr><td>0,0</td><td>0,1</td><td>0,2</td></tr>' +
+                            '<tr>' +
+                                '<td rowspan="2" class="jodit_selected_cell">1,0</td>' +
+                                '<td>1,1</td>' +
+                                '<td rowspan="2">1,2</td>' +
+                            '</tr>' +
+                            '<tr><td><br></td></tr>' +
+                            '<tr><td>2,0</td><td>2,1</td><td>2,2</td></tr>' +
+                        '</tbody>' +
+                    '</table>'
+                );
+
+                var table = new Jodit.modules.Table(editor);
+                table.splitHorizontal(editor.editor.firstChild);
+
+                expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal(
+                    '<table>' +
+                        '<tbody>' +
+                            '<tr><td>0,0</td><td>0,1</td><td>0,2</td></tr>' +
+                            '<tr>' +
+                                '<td>1,0</td>' +
+                                '<td>1,1</td>' +
+                                '<td rowspan="2">1,2</td>' +
+                            '</tr>' +
+                            '<tr><td><br></td><td><br></td></tr>' +
+                            '<tr><td>2,0</td><td>2,1</td><td>2,2</td></tr>' +
+                        '</tbody>' +
+                    '</table>'
+                );
+            });
+            it('Split cell with rowspan by horizontal 2', function () {
+                var editor = new Jodit('#table_editor');
+
+                editor.setEditorValue(
+                    '<table>' +
+                    '<tbody>' +
+                    '<tr><td>0,0</td><td>0,1</td><td>0,2</td></tr>' +
+                    '<tr>' +
+                    '<td rowspan="2">1,0</td>' +
+                    '<td rowspan="2" class="jodit_selected_cell">1,1</td>' +
+                    '<td>1,2</td>' +
+                    '</tr>' +
+                    '<tr><td><br></td></tr>' +
+                    '<tr><td>2,0</td><td>2,1</td><td>2,2</td></tr>' +
+                    '</tbody>' +
+                    '</table>'
+                );
+
+                var table = new Jodit.modules.Table(editor);
+                table.splitHorizontal(editor.editor.firstChild);
+
+                expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal(
+                    '<table>' +
+                    '<tbody>' +
+                    '<tr><td>0,0</td><td>0,1</td><td>0,2</td></tr>' +
+                    '<tr>' +
+                    '<td rowspan="2">1,0</td>' +
+                    '<td>1,1</td>' +
+                    '<td>1,2</td>' +
+                    '</tr>' +
+                    '<tr><td><br></td><td><br></td></tr>' +
+                    '<tr><td>2,0</td><td>2,1</td><td>2,2</td></tr>' +
+                    '</tbody>' +
+                    '</table>'
+                );
+            });
+        })
     });
     describe('Work with tables', function() {
         it('Create table and insert into cell some text', function() {
@@ -637,60 +880,30 @@ describe('Tables Jodit Editor Tests', function() {
 
                  expect(editor.editor.innerHTML).to.equal('<table><tbody><tr><td>1</td><td>2</td></tr><tr><td>3</td><td class="test"><table><tbody><tr><td class="jodit_selected_cell">1</td><td class="jodit_selected_cell">2</td></tr><tr><td class="jodit_selected_cell">3</td><td class="jodit_selected_cell">4</td></tr><tr><td>5</td><td>6</td></tr></tbody></table></td></tr><tr><td>5</td><td>6</td></tr></tbody></table>');
              });
-            it('When we press mouse button over cell and move mouse to another cell, it should select all cells in bound even if between be colspan', function () {
+            it('When we press mouse button over cell and move mouse to another cell, it should select all cells in bound even if between be colspan and rowspan', function () {
                 var editor = new Jodit('#table_editor');
 
-                editor.setEditorValue('<table>' +
-                    '<tr>' +
-                    '<td></td>' +
-                    '<td></td>' +
-                    '<td>first</td>' +
-                    '<td></td>' +
-                    '</tr>' +
-                    '<tr>' +
-                    '<td></td>' +
-                    '<td colspan="2">2</td>' +
-                    '<td></td>' +
-                    '</tr>' +
-                    '<tr>' +
-                    '<td></td>' +
-                    '<td></td>' +
-                    '<td>second</td>' +
-                    '<td></td>' +
-                    '</tr>' +
-                    '</table>');
+                editor.setEditorValue(
+                    '<table style="width: 100%;">' +
+                        '<tbody>' +
+                            '<tr><td colspan="3">0,0<br>0,1<br>0,2<br></td><td>0,3</td></tr>' +
+                            '<tr><td rowspan="3">1,0<br>2,0<br>3,0<br></td><td>1,1</td><td>1,2</td><td>1,3</td></tr>' +
+                            '<tr><td>2,1</td><td>2,2</td><td>2,3</td></tr>' +
+                            '<tr><td>3,1</td><td>3,2</td><td>3,3</td></tr>' +
+                        '</tbody>' +
+                    '</table>'
+                );
 
                 //var table = new Jodit.modules.Table(editor);
                 //editor.selection.setCursorIn(editor.editor.querySelector('td'));
 
-                simulateEvent('mousedown', 1, editor.editor.querySelectorAll('td')[2]);
-                simulateEvent('mousemove', 1, editor.editor.querySelectorAll('td')[9]);
+                simulateEvent('mousedown', 1, editor.editor.querySelectorAll('td')[0]);
+                simulateEvent('mousemove', 1, editor.editor.querySelectorAll('td')[7]);
 
-                expect(editor.editor.innerHTML.toLowerCase()
-                        .replace(/([\s]?)colspan="2"([\s]?)/, '$1class="jodit_selected_cell"$2') // ie change position between colspan and class
-
+                expect(
+                    sortAtrtibutes(editor.editor.innerHTML) // ie change position between colspan and class
                 ).to.equal(
-                    '<table>' +
-                    '<tbody>' +
-                    '<tr>' +
-                    '<td></td>' +
-                    '<td class="jodit_selected_cell"></td>' +
-                    '<td class="jodit_selected_cell">first</td>' +
-                    '<td></td>' +
-                    '</tr>' +
-                    '<tr>' +
-                    '<td></td>' +
-                    '<td class="jodit_selected_cell" class="jodit_selected_cell">2</td>' + // ie change position between colspan and class
-                    '<td></td>' +
-                    '</tr>' +
-                    '<tr>' +
-                    '<td></td>' +
-                    '<td class="jodit_selected_cell"></td>' +
-                    '<td class="jodit_selected_cell">second</td>' +
-                    '<td></td>' +
-                    '</tr>' +
-                    '</tbody>' +
-                    '</table>'
+                    '<table style="width: 100%;"><tbody><tr><td class="jodit_selected_cell" colspan="3">0,0<br>0,1<br>0,2<br></td><td>0,3</td></tr><tr><td class="jodit_selected_cell" rowspan="3">1,0<br>2,0<br>3,0<br></td><td class="jodit_selected_cell">1,1</td><td class="jodit_selected_cell">1,2</td><td>1,3</td></tr><tr><td class="jodit_selected_cell">2,1</td><td class="jodit_selected_cell">2,2</td><td>2,3</td></tr><tr><td class="jodit_selected_cell">3,1</td><td class="jodit_selected_cell">3,2</td><td>3,3</td></tr></tbody></table>'
                 );
             });
         });

@@ -94,6 +94,23 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
             expect(editor.getEditorValue()).to.be.equal('<p></p><p> a Some text</p>');
         })
+        it('If Enter was pressed inside empty editor, should be added 2 paragraph and cursor must be in second', function () {
+            var editor = new Jodit(appendTestArea())
+
+
+            editor.setEditorValue(''); // empty
+
+
+            editor.editor.focus(),
+
+
+            simulateEvent('keydown',  Jodit.KEY_ENTER, editor.editor);
+
+
+            editor.selection.insertNode(editor.doc.createTextNode(' a '))
+
+            expect(editor.getEditorValue()).to.be.equal('<p></p><p> a </p>');
+        })
         it('If Enter was pressed in no wrapped text, it text should be wrap in paragraph and spliced on two parts', function () {
             var editor = new Jodit(appendTestArea())
             editor.setEditorValue('Some text');
@@ -117,7 +134,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
             simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
             simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
             simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
-            expect(editor.getEditorValue()).to.be.equal('<p></p><p></p><p></p>');
+            expect(editor.getEditorValue()).to.be.equal('<p></p><p></p><p></p><p></p>');
         })
         it('Split paragraph', function () {
             var editor = new Jodit(appendTestArea())

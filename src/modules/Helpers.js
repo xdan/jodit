@@ -6,6 +6,14 @@ let hasOwn = class2type.hasOwnProperty;
 export const isIE = () => {
     return navigator.userAgent.indexOf("MSIE") != -1 || /rv:11.0/i.test(navigator.userAgent);
 };
+
+/**
+ *
+ * @param {string} CSS like selector
+ * @param {HTMLElement} root
+ *
+ * @return {Array.<HTMLElement>}
+ */
 export const $$ = (selector, root) => {
     let result = [];
 
@@ -51,9 +59,15 @@ export const isArrayLike = (obj) => {
 }
 
 /**
+ * @callback eachCallback
+ * @param  {number|string} index
+ * @param  {HTMLElement} element
+ */
+
+/**
  *
  * @param {array|object} obj
- * @param {function(number=, T=):boolean} callback
+ * @param {eachCallback} callback
  * @return {*}
  */
 export const each = (obj, callback) => {

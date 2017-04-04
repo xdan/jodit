@@ -14,12 +14,22 @@ import * as consts from '../constants';
 export default class Table extends Component{
     selectedClass = 'jodit_selected_cell';
 
+
+    /**
+     *
+     * @param {HTMLTableElement} table
+     * @return {Array.<HTMLTableCellElement>}
+     */
+    getAllSelectedCells(table) {
+        return $$('.' + this.selectedClass, table);
+    }
+
     /**
      * @param {HTMLTableElement} table
      * @return {number}
      */
     getRowsCount(table) {
-        return $$(':scope>tr, :scope>tbody>tr, :scope>tfoot>tr, :scope>thead>tr', table).length;
+        return table.rows.length;
     }
 
     /**
@@ -28,8 +38,8 @@ export default class Table extends Component{
      */
     getColumnsCount(table) {
         const matrix = this.formalMatrix(table);
-        return matrix.reduce((max_count, row) => {
-            return Math.max(max_count, row.length);
+        return matrix.reduce((max_count, cells) => {
+            return Math.max(max_count, cells.length);
         }, 0);
     }
 
@@ -43,28 +53,21 @@ export default class Table extends Component{
      */
     formalMatrix(table, callback) {
         let matrix = [[],];
-        const rows  = $$(':scope>tr, :scope>tbody>tr, :scope>tfoot>tr, :scope>thead>tr', table) || [];
+        const rows  = Array.prototype.slice.call(table.rows);
 
         let setCell = (cell, i) => {
             if (matrix[i] === undefined) {
                 matrix[i] = [];
             }
 
-            let colSpan = 1,
+            let colSpan = cell.colSpan,
                 column,
-                rowSpan = 1,
+                rowSpan = cell.rowSpan,
                 row,
                 currentColumn = 0;
 
             while (matrix[i][currentColumn]) {
                 currentColumn += 1;
-            }
-
-            if (cell.hasAttribute('colspan')) {
-                colSpan = parseInt(cell.getAttribute('colspan'), 10) || 1;
-            }
-            if (cell.hasAttribute('rowspan')) {
-                rowSpan = parseInt(cell.getAttribute('rowspan'), 10) || 1;
             }
 
             for (row = 0; row < rowSpan; row += 1) {
@@ -81,7 +84,7 @@ export default class Table extends Component{
         }
 
         for (let i = 0, j; i < rows.length; i += 1) {
-            let cells = $$(':scope>td, :scope>th', rows[i]) || [];
+            let cells = Array.prototype.slice.call(rows[i].cells);
             for (j = 0; j < cells.length; j += 1) {
                 if (setCell(cells[j], i) === false) {
                     return matrix;
@@ -155,7 +158,7 @@ export default class Table extends Component{
      */
     removeRow(table, rowIndex) {
         let box = this.formalMatrix(table), dec;
-        let row = $$('tr', table)[rowIndex];
+        let row = table.rows[rowIndex];
 
         each(box[rowIndex], (j, cell) => {
             dec = false;
@@ -256,34 +259,135 @@ export default class Table extends Component{
         });
     }
 
-    getSelectedBound (table) {
-        let selCells = $$('.' + this.selectedClass, table),
-            maxIndex = 0,
-            minIndex = 1000000,
-            maxRow = 0,
-            minRow = 1000000;
+    /**
+     * Define bound for selected cells
+     *
+     * @param {HTMLTableElement} table
+     * @param {Array.<HTMLTableCellElement>} selectedCells
+     * @return {[[left, top], [right, bottom]]}
+     */
+    getSelectedBound (table, selectedCells) {
+        let bound = [[Infinity, Infinity], [0, 0]];
+        let box = this.formalMatrix(table);
 
-        if (selCells.length) {
-            selCells.forEach((cell) => {
-                let coordinate = this.formalCoordinate(table, cell);
-                maxIndex = Math.max(coordinate[1] + coordinate[2] - 1, maxIndex);
-                minIndex = Math.min(coordinate[1], minIndex);
-                maxRow = Math.max(coordinate[0]  +  coordinate[3] - 1, maxRow);
-                minRow = Math.min(coordinate[0], minRow);
-            });
-
-            return [minRow, minIndex, maxRow, maxIndex];
+        for (let i = 0; i < box.length; i += 1) {
+            for (let j = 0; j < box[i].length; j += 1) {
+                if (selectedCells.indexOf(box[i][j]) !== -1) {
+                    bound[0][0] = Math.min(i, bound[0][0]);
+                    bound[0][1] = Math.min(j, bound[0][1]);
+                    bound[1][0] = Math.max(i, bound[1][0]);
+                    bound[1][1] = Math.max(j, bound[1][1]);
+                }
+            }
+        }
+        for (let i = bound[0][0]; i <= bound[1][0]; i += 1) {
+            for (let k = 1, j = bound[0][1]; j <= bound[1][1]; j += 1) {
+                while (box[i][j - k] && box[i][j] === box[i][j - k]) {
+                    bound[0][1] = Math.min(j - k, bound[0][1]);
+                    bound[1][1] = Math.max(j - k, bound[1][1]);
+                    k += 1;
+                }
+                k = 1;
+                while (box[i][j + k] && box[i][j] === box[i][j + k]) {
+                    bound[0][1] = Math.min(j + k, bound[0][1]);
+                    bound[1][1] = Math.max(j + k, bound[1][1]);
+                    k += 1;
+                }
+                k = 1;
+                while (box[i - k] && box[i][j] === box[i - k][j]) {
+                    bound[0][0] = Math.min(i - k, bound[0][0]);
+                    bound[1][0] = Math.max(i - k, bound[1][0]);
+                    k += 1;
+                }
+                k = 1;
+                while (box[i + k] && box[i][j] === box[i + k][j]) {
+                    bound[0][0] = Math.min(i + k, bound[0][0]);
+                    bound[1][0] = Math.max(i + k, bound[1][0]);
+                    k += 1;
+                }
+            }
         }
 
-        return false;
+        return bound;
+    }
+
+    /**
+     *
+     * @param {HTMLTableElement} table
+     * @private
+     */
+    __normalizeTable (table) {
+        let box, i, j, min, not;
+        box = this.formalMatrix(table);
+
+        // remove extra colspans
+        for (j = 0; j < box[0].length; j += 1) {
+            min = 1000000;
+            not = false;
+            for (i = 0; i < box.length; i += 1) {
+                if (box[i][j].colSpan < 2) {
+                    not = true;
+                    break;
+                }
+                min = Math.min(min, box[i][j].colSpan);
+            }
+            if (!not) {
+                for (i = 0; i < box.length; i += 1) {
+                    this.__mark(box[i][j], 'colspan', box[i][j].colSpan - min + 1);
+                }
+            }
+        }
+
+
+        // remove extra rowspans
+        for (i = 0; i < box.length; i += 1) {
+            min = 1000000;
+            not = false;
+            for (j = 0; j < box[i].length; j += 1) {
+                if (box[i][j].rowSpan < 2) {
+                    not = true;
+                    break;
+                }
+                min = Math.min(min, box[i][j].rowSpan);
+            }
+            if (!not) {
+                for (j = 0; j < box[i].length; j += 1) {
+                    this.__mark(box[i][j], 'rowspan', box[i][j].rowSpan - min + 1);
+                }
+            }
+        }
+
+        // remove rowspans and colspans equal 1 and empty class
+        for (i = 0; i < box.length; i += 1) {
+            for (j = 0; j < box[i].length; j += 1) {
+                if (box[i][j].hasAttribute('rowspan') && box[i][j].rowSpan === 1) {
+                    box[i][j].removeAttribute('rowspan');
+                }
+                if (box[i][j].hasAttribute('colspan') && box[i][j].colSpan === 1) {
+                    box[i][j].removeAttribute('colspan');
+                }
+                if (box[i][j].hasAttribute('class') && !box[i][j].getAttribute('class')) {
+                    box[i][j].removeAttribute('class');
+                }
+            }
+        }
+
+        this.__unmark();
+        // box = this.formalMatrix(table);
+        // for (j = 0; j < box[0].length; j += 1) {
+        //     this.setColumnWidthByDelta(table, j, 0, false, true);
+        // }
+        // this.__unmark();
     }
 
     /**
      * It combines all of the selected cells into one. The contents of the cells will also be combined
      *
+     * @param {HTMLTableElement} table
+     *
      */
     mergeSelected(table) {
-        var bound = this.getSelectedBound(table),
+        let bound = this.getSelectedBound(table, this.getAllSelectedCells(table)),
             w = 0,
             first,
             first_j,
@@ -292,10 +396,10 @@ export default class Table extends Component{
             cols = 0,
             rows = 0;
 
-        if (bound && (bound[0] - bound[2] || bound[1] - bound[3])) {
+        if (bound && (bound[0][0] - bound[1][0] || bound[0][1] - bound[1][1])) {
             this.formalMatrix(table, (cell, i, j, cs, rs) => {
-                if (i >= bound[0] && i <= bound[2]) {
-                    if (j >= bound[1] && j <= bound[3]) {
+                if (i >= bound[0][0] && i <= bound[1][0]) {
+                    if (j >= bound[0][1] && j <= bound[1][1]) {
                         td = cell;
                         if (td.__i_am_already_was) {
                             return;
@@ -303,12 +407,12 @@ export default class Table extends Component{
 
                         td.__i_am_already_was = true;
 
-                        if (i === bound[0]) {
-                            w += td.offsetWidth;
+                        if (i === bound[0][0] && td.style.width) {
+                            w += parseInt(td.offsetWidth, 10);
                         }
 
                         if (trim(cell.innerHTML.replace(/<br(\/)?>/g, '')) !== '') {
-                            html.push(cell.innerHTML + '<br/>');
+                            html.push(cell.innerHTML);
                         }
 
                         if (cs > 1) {
@@ -328,28 +432,131 @@ export default class Table extends Component{
                 }
             });
 
-            cols = bound[3] - bound[1] + 1;
-            rows = bound[2] - bound[0] + 1;
-
-            if (cols > 1 && first) {
-                first.setAttribute('colspan', cols);
-            }
-            if (rows > 1 && first) {
-                first.setAttribute('rowspan', rows);
-            }
+            cols = bound[1][1] - bound[0][1] + 1;
+            rows = bound[1][0] - bound[0][0] + 1;
 
             if (first) {
-                this.__mark(first, 'width', ((w / table.offsetWidth) * 100).toFixed(consts.ACCURACY) + '%');
-                first.innerHTML = html.join('');
+                if (cols > 1) {
+                    this.__mark(first, 'colspan', cols);
+                }
+                if (rows > 1) {
+                    this.__mark(first, 'rowspan', rows);
+                }
+
+
+                if (w) {
+                    this.__mark(first, 'width', ((w / table.offsetWidth) * 100).toFixed(consts.ACCURACY) + '%');
+                    if (first_j) {
+                        this.setColumnWidthByDelta(table, first_j, 0, false, true);
+                    }
+                }
+
+                delete first.__i_am_already_was;
+
+                first.innerHTML = html.join('<br/>');
+
+                this.__unmark();
+
+                this.__normalizeTable(table);
+
+                each([].slice.call(table.rows), (index, tr) => {
+                    if (!tr.cells.length) {
+                        tr.parentNode.removeChild(tr);
+                    }
+                })
+            }
+        }
+    }
+
+
+    /**
+     * Divides all selected by `jodit_focused_cell` class table cell in 2 parts vertical. Those division into 2 columns
+     *
+     * @param {HTMLTableElement} table
+     *
+     */
+    splitHorizontal(table) {
+        let coord, td, tr, parent, after;
+        each(this.getAllSelectedCells(table),  (i, cell) => {
+            td = this.parent.node.create('td');
+            td.appendChild(this.parent.node.create('br'));
+            tr = this.parent.node.create('tr');
+
+            coord = this.formalCoordinate(table, cell);
+
+            if (cell.rowSpan < 2) {
+                this.formalMatrix(table, (td, i, j) => {
+                    if (coord[0] === i && coord[1] !== j && td !== cell) {
+                        this.__mark(td, 'rowspan', td.rowSpan + 1);
+                    }
+                });
+                this.parent.node.after(this.parent.node.closest(cell, 'tr'), tr);
+                tr.appendChild(td);
+            } else {
+                this.__mark(cell, 'rowspan', cell.rowSpan - 1);
+                this.formalMatrix(table, (td, i, j) => {
+                    if (i > coord[0] && i < coord[0] + cell.rowSpan && coord[1] >  j && td.parentNode.rowIndex === i) {
+                        after = td;
+                    }
+                    if (coord[0] < i && td === cell) {
+                        parent = table.rows[i];
+                    }
+                });
+                if (after) {
+                    this.parent.node.after(after, td);
+                } else {
+                    parent.insertBefore(td, parent.firstChild);
+                }
             }
 
-            if (first_j) {
-                this.setColumnWidthByDelta(table, first_j, 0, false, true);
+            if (cell.colSpan > 1) {
+                this.__mark(td, 'colspan', cell.colSpan);
             }
 
             this.__unmark();
-        }
+            cell.classList.remove(this.selectedClass);
+        });
+        this.__normalizeTable(table);
     }
+
+    /**
+     * It splits all the selected cells into 2 parts horizontally. Those. are added new row
+     *
+     * @param {HTMLTableElement} table
+     */
+    splitVertical(table) {
+        let coord, td, w, percentage;
+        each(this.getAllSelectedCells(table),  (i, cell) => {
+            coord = this.formalCoordinate(table, cell);
+            if (cell.colSpan < 2) {
+                this.formalMatrix(table, (td, i, j) => {
+                    if (coord[1] === j && coord[0] !== i && td !== cell) {
+                        this.__mark(td, 'colspan', td.colSpan + 1);
+                    }
+                });
+            } else {
+                this.__mark(cell, 'colspan', cell.colSpan - 1);
+            }
+
+            td = this.parent.node.create('td');
+            td.appendChild(this.parent.node.create('br'));
+
+            if (cell.rowSpan > 1) {
+                this.__mark(td, 'rowspan', cell.rowSpan);
+            }
+
+            this.parent.node.after(cell, td);
+            w = parseInt(cell.offsetWidth, 10);
+            percentage = (w / parseInt(table.offsetWidth, 10)) / 2;
+            this.__mark(cell, 'width', (percentage * 100).toFixed(consts.ACCURACY) + '%');
+            this.__mark(td, 'width', (percentage * 100).toFixed(consts.ACCURACY) + '%');
+            this.__unmark();
+
+            cell.classList.remove(this.selectedClass);
+        });
+        this.__normalizeTable(table);
+    }
+
     __marked = [];
 
     /**
@@ -369,31 +576,34 @@ export default class Table extends Component{
 
     __unmark () {
         this.__marked.forEach((cell) => {
-            each(cell.__marked_value, (key, value) => {
-                switch (key) {
-                    case 'remove':
-                        cell.parentNode.removeChild(cell);
-                        break;
-                    case 'rowspan':
-                        if (value > 1) {
-                            cell.setAttribute('rowspan', value);
-                        } else {
-                            cell.removeAttribute('rowspan');
-                        }
-                        break;
-                    case 'colspan':
-                        if (value > 1) {
-                            cell.setAttribute('colspan', value);
-                        } else {
-                            cell.removeAttribute('colspan');
-                        }
-                        break;
-                    case 'width':
-                        cell.style.width = value;
-                        break;
-                }
-                delete cell.__marked_value[key];
-            });
+            if (cell.__marked_value) {
+                each(cell.__marked_value, (key, value) => {
+                    switch (key) {
+                        case 'remove':
+                            cell.parentNode.removeChild(cell);
+                            break;
+                        case 'rowspan':
+                            if (value > 1) {
+                                cell.setAttribute('rowspan', value);
+                            } else {
+                                cell.removeAttribute('rowspan');
+                            }
+                            break;
+                        case 'colspan':
+                            if (value > 1) {
+                                cell.setAttribute('colspan', value);
+                            } else {
+                                cell.removeAttribute('colspan');
+                            }
+                            break;
+                        case 'width':
+                            cell.style.width = value;
+                            break;
+                    }
+                    delete cell.__marked_value[key];
+                });
+                delete cell.__marked_value;
+            }
         });
         this.__marked = [];
     }
