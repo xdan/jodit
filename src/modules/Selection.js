@@ -1,6 +1,6 @@
 import * as consts from '../constants';
 import Component from './Component';
-import {isArrayLike, each, gebi} from './Helpers';
+import {each, gebi} from './Helpers';
 
 export default class Selection extends Component{
     //TODO
@@ -12,7 +12,7 @@ export default class Selection extends Component{
     restore(selectionInfo = []) {
         //return 1;
         //debugger
-        if (isArrayLike(selectionInfo)) {
+        if (Array.isArray(selectionInfo)) {
 
 
             let sel = this.win.getSelection();

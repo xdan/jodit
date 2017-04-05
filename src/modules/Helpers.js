@@ -47,16 +47,6 @@ export const type = (obj) => {
     }
     return typeof obj === "object" || typeof obj === "function" ? class2type[toString.call(obj)] || "object" : typeof obj;
 }
-export const isArrayLike = (obj) => {
-    let length = !!obj && obj.length !== undefined && obj.length,
-        definedType = type(obj);
-
-    if (definedType === "function" || isWindow(obj)) {
-        return false;
-    }
-
-    return type === "array" || length === 0 || (typeof length === "number" && length > 0 &&  obj[length - 1] !== undefined);
-}
 
 /**
  * @callback eachCallback
@@ -74,7 +64,7 @@ export const each = (obj, callback) => {
     let length,
         keys,
         i;
-    if (isArrayLike(obj)) {
+    if (Array.isArray(obj)) {
         length = obj.length;
         for (i = 0; i < length; i += 1) {
             if (callback.call(obj[i], i, obj[i]) === false) {
@@ -289,4 +279,21 @@ export const getContentWidth = (element, win) => {
         paddingRight = pi(style.getPropertyValue('padding-right') || 0);
 
     return width - paddingLeft - paddingRight;
+}
+
+/**
+ * CTRL pressed
+ *
+ * @param  {KeyboardEvent} e Event
+ * @return {boolean} true ctrl key was pressed
+ */
+export const ctrlKey = (e) => {
+    if (navigator.userAgent.indexOf("Mac OS X") !== -1) {
+        if (e.metaKey && !e.altKey) {
+            return true;
+        }
+    } else if (e.ctrlKey && !e.altKey) {
+        return true;
+    }
+    return false;
 }

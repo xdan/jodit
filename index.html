@@ -111,14 +111,32 @@
         editor.execCommand('splitHorizontal')
         return false;
     })
-    redo.addEventListener('mousedown', function () {
+    redo.addEventListener('mousedown', function (e) {
         editor.execCommand('redo')
+        e.preventDefault();
         return false;
     })
-    undo.addEventListener('mousedown', function () {
+    undo.addEventListener('mousedown', function (e) {
         editor.execCommand('undo')
+        e.preventDefault();
         return false;
     })
+
+    editor.events.on('canRedo', function (can) {
+        if (can) {
+            redo.removeAttribute('disabled')
+        } else {
+            redo.setAttribute('disabled', true)
+        }
+    });
+    editor.events.on('canUndo', function (can) {
+        if (can) {
+            undo.removeAttribute('disabled')
+        } else {
+            undo.setAttribute('disabled', true)
+        }
+    });
+
     callback();
 </script>
 </html>

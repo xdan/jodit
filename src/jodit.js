@@ -4,7 +4,7 @@ import Nodes  from './modules/Nodes';
 import Table  from './modules/Table';
 import Component from './modules/Component';
 import * as consts from './constants';
-import {extend} from './modules/Helpers';
+import {isArrayLike,extend} from './modules/Helpers';
 
 /** Class Jodit. Main class*/
 export default class Jodit extends Component{
@@ -51,15 +51,18 @@ export default class Jodit extends Component{
     constructor(element, options) {
         super(window);
 
-        let Options = function () {
-
-        }
+        let Options = function () {}
         Options.prototype = Jodit.defaultOptions;
+        this.options = new Options();
 
         if (options !== undefined && typeof options === 'object') {
-            this.options = extend(new Options(), options);
-        } else {
-            this.options = new Options();
+            Object.keys(options).forEach((key) => {
+                if (typeof Jodit.defaultOptions[key] === 'object') {
+                    this.options[key] = extend({}, Jodit.defaultOptions[key], options[key]);
+                } else {
+                    this.options[key] = options[key];
+                }
+            })
         }
 
 
@@ -82,13 +85,92 @@ export default class Jodit extends Component{
         this.initPlugines();
 
         // proxy events
-        ['keydown', 'keyup', 'keypress', 'mousedown', 'mouseup', 'mousepress'].forEach((event_type) => {
+        ['keydown', 'keyup', 'keypress', 'mousedown', 'mouseup', 'mousepress', 'paste'].forEach((event_type) => {
             this.editor.addEventListener(event_type, (e) => {
                 if (this.events.fire(event_type, [e]) === false) {
                     e.preventDefault();
                     return false;
                 }
             });
+        });
+
+
+        this.editor.addEventListener('paste', (event) => {
+            /**
+             * Triggered before pasting something into the Jodit Editor
+             *
+             * @event beforePaste
+             * @param {ClipboardEvent} event
+             * @return Returning false in the handler assigned to the event will cancel the current action.
+             * @example
+             * var editor = new Jodit("#redactor");
+             * editor.events.on('beforePaste', function (event) {
+             *     return false; // deny paste
+             * });
+             */
+
+            if (this.events.fire('beforePaste', [event]) === false) {
+                event.preventDefault();
+                return false;
+            }
+
+            if (event && event.clipboardData && event.clipboardData.getData) {
+                var i, types = event.clipboardData.types, types_str, clipboard_html = '';
+                if (isArrayLike(types)) {
+                    for (i = 0; i < types.length; i += 1) {
+                        types_str += types[i] + ";";
+                    }
+                } else {
+                    types_str = types;
+                }
+
+                if (/text\/html/.test(types_str)) {
+                    clipboard_html = event.clipboardData.getData("text/html");
+                } else if (/text\/rtf/.test(types_str) && self.browser('safari')) {
+                    clipboard_html = event.clipboardData.getData("text/rtf");
+                } else if (/text\/plain/.test(types_str) && !self.browser('mozilla')) {
+                    clipboard_html = self.helper.htmlentities(event.clipboardData.getData("text/plain")).replace(/\n/g, "<br/>");
+                }
+
+                if (clipboard_html !== '' || clipboard_html instanceof Node) {
+                    /**
+                     * Triggered after the content is pasted from the clipboard into the Jodit. If a string is returned the new string will be used as the pasted content.
+                     *
+                     * @event beforePaste
+                     * @param {ClipboardEvent} event
+                     * @return Return {string|undefined}
+                     * @example
+                     * var editor = new Jodit("#redactor");
+                     * editor.events.on('beforePaste', function (event) {
+                     *     return false; // deny paste
+                     * });
+                     */
+
+                    clipboard_html = this.events.fire('processPaste', [event, clipboard_html]);
+
+                    if (typeof clipboard_html === 'string' || clipboard_html instanceof Node) {
+                        this.selection.insertHTML(clipboard_html);
+                    }
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+            }
+
+            /**
+             * Triggered after pasting something into the Jodit
+             *
+             * @event afterPaste
+             * @param {ClipboardEvent} event
+             * @return Return {string|undefined}
+             * @example
+             * var editor = new Jodit("#redactor");
+             * editor.events.on('afterPaste', function (event) {
+             *     return false; // deny paste
+             * });
+             */
+            if (self.events.fire('afterPaste', [event]) === false) {
+                return false;
+            }
         });
 
         this.id = this.element.getAttribute('id') || (new Date()).getTime();
@@ -102,6 +184,8 @@ export default class Jodit extends Component{
         } catch (ignore) {
             // continue regardless of error
         }
+
+        this.setEditorValue(); // syncro
     }
     __plugins = [];
     initPlugines() {
@@ -140,13 +224,10 @@ export default class Jodit extends Component{
      * Jodit's Destructor. Remove editor, and return source input
      */
     destruct() {
+        console.log('destruct');
         if (!this.editor) {
             return;
         }
-
-        this.container.parentNode.removeChild(this.container);
-        delete this['container'];
-        delete this['editor'];
 
         this.element.style.display = this.element.__defaultStyleDisplay;
         delete this.element.__defaultStyleDisplay;
@@ -165,7 +246,12 @@ export default class Jodit extends Component{
                 plugin.destruct();
             }
         });
+
         this.__plugins.length = 0;
+
+        this.container.parentNode.removeChild(this.container);
+        delete this['container'];
+        delete this['editor'];
 
         delete Jodit.instances[this.id];
     }
@@ -224,6 +310,7 @@ export default class Jodit extends Component{
         if (value !== undefined) {
             this.editor.innerHTML = value;
         }
+
         let old_value = this.getElementValue();
         if (old_value !== this.getEditorValue()) {
             this.setElementValue(this.getEditorValue());
@@ -263,22 +350,20 @@ export default class Jodit extends Component{
          *      parent.selection.insertNode(p)
          *      parent.selection.moveCursorTo(p);
          *      p.style.textAlign = 'justyfy';
-         *      return false; // break execute commande
+         *      return false; // break execute native command
          *  }
          * })
          */
-        if (this.events.fire('beforeCommand', [command, second, third]) === false) {
-            return false;
-        }
+        if (this.events.fire('beforeCommand', [command, second, third]) !== false) {
+            this.selection.focus();
 
-        this.selection.focus();
-
-        switch(command) {
-            case 'selectall':
-                this.selection.select(this.editor, true);
-                break;
-            default:
-                result = this.doc.execCommand(command, second, third);
+            switch (command) {
+                case 'selectall':
+                    this.selection.select(this.editor, true);
+                    break;
+                default:
+                    result = this.doc.execCommand(command, second, third);
+            }
         }
 
         /**

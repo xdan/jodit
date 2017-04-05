@@ -1,4 +1,7 @@
 export default class Component {
+    /**
+     * @prop {Jodit} parent
+     */
     parent;
     /**
      * @prop {HTMLDocument} win

@@ -14,6 +14,9 @@ export const KEY_LEFT       = 37;
 export const KEY_TOP        = 38;
 export const KEY_RIGHT      = 39;
 export const KEY_BOTTOM     = 40;
+export const KEY_Z          = 90;
+export const KEY_Y          = 89;
+export const KEY_CTRL       = 17;
 
 export const NEARBY = 5;
 export const ACCURACY = 10;

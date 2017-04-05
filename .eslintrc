@@ -11,6 +11,7 @@
     "react"
   ],
   "rules": {
+    "no-empty": ["error", { "allowEmptyCatch": true }],
     "no-debugger": 0,
     "no-console": 0,
     "new-cap": 0,

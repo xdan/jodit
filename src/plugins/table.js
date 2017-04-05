@@ -279,7 +279,7 @@ class TableProcessor extends Table{
             this.__deSelectAll(table, current_cell);
         });
         editor.events
-            .on('change', () => {
+            .on('change afterCommand', () => {
                 each(editor.editor.querySelectorAll('table'), (i, table) => {
                     if (!table[this.__key]) {
                         this.observe(table);
