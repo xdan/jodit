@@ -9,7 +9,7 @@ body {
     line-height: 1.5;
     height: 100%;
 }
-.jodit_editor {
+.jodit_wysiwyg {
     color: #000;
     padding: 10px;
     -webkit-box-sizing: border-box;
@@ -17,16 +17,16 @@ body {
     box-sizing: border-box;
     overflow-x: auto;
 }
-.jodit_editor * {
+.jodit_wysiwyg * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
-.jodit_editor table, .jodit_editor p {
+.jodit_wysiwyg table, .jodit_wysiwyg p {
     margin: 0 0 16px 0;
 }
 
-.jodit_editor table {
+.jodit_wysiwyg table {
     border: none;
     border-collapse: collapse;
     empty-cells: show;
@@ -34,7 +34,7 @@ body {
     border-spacing: 0;
     *border-collapse: collapse;
 }
-.jodit_editor  table tr {
+.jodit_wysiwyg  table tr {
     user-select: none;
     -o-user-select: none;
     -moz-user-select: none;
@@ -42,7 +42,7 @@ body {
     -webkit-user-select: none;
     -ms-user-select: none;
 }
-.jodit_editor  table td, .jodit_editor  table th {
+.jodit_wysiwyg  table td, .jodit_wysiwyg  table th {
     user-select: text;
     -o-user-select: text;
     -moz-user-select: text;
@@ -50,13 +50,13 @@ body {
     -webkit-user-select: text;
     -ms-user-select: text;
 }
-.jodit_editor  table th,.jodit_editor   table td {
+.jodit_wysiwyg  table th,.jodit_wysiwyg   table td {
     padding: 2px 5px;
     vertical-align: top;
 }
-.jodit_editor table td, .jodit_editor  table th {
+.jodit_wysiwyg table td, .jodit_wysiwyg  table th {
     border: 1px solid #ddd;
 }
-.jodit_editor  table td.jodit_selected_cell, table th.jodit_selected_cell {
+.jodit_wysiwyg  table td.jodit_selected_cell, table th.jodit_selected_cell {
     border: 1px double #1e88e5;
 }

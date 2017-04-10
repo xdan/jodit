@@ -21,15 +21,16 @@
 <body>
     <table style="width:100%">
         <tr>
-            <td style="width:50%">
-                <textarea id="editor"></textarea>
+            <td style="width:50%;vertical-align: top">
                 <div class="buttons">
+                    <button id="source">source</button>
                     <button id="merge">Merge</button>
                     <button id="splithorizontal">Split by Horizontal</button>
                     <button id="splitvertical">Split by vertical</button>
                     <button id="undo">Undo</button>
                     <button id="redo">Redo</button>
                 </div>
+                <textarea id="editor"></textarea>
             </td>
             <td><textarea id="mirror"></textarea></td>
         </tr>
@@ -50,7 +51,14 @@
 <link rel="stylesheet" href="app.css" />
 <script src="dist/jodit.js"></script>
 <script>
-    editor = new Jodit('#editor');
+    editor = new Jodit('#editor', {
+        defaultMode: Jodit.MODE_SOURCE,
+        events: {
+            afterSetMode: function () {
+                source.innerText = this.getMode() === Jodit.MODE_WYSIWYG ? 'Source' : 'WYSIWYG';
+            }
+        }
+    });
     Jodit.instances.editor.selection.insertNode(document.createElement('span'));
     Jodit.instances.editor.selection.insertNode(document.createTextNode('Test'));
     function simpleKeys (original) {
@@ -136,6 +144,10 @@
             undo.setAttribute('disabled', true)
         }
     });
+    source.addEventListener('mousedown', function () {
+        editor.toggleMode()
+        return false;
+    })
 
     callback();
 </script>

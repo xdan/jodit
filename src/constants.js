@@ -51,9 +51,9 @@ export const OUTDATED_TAGS    =  {
 export const  MODE_WYSIWYG  = 1;
 
 /**
- * @property {int} MODE_TEXTAREA=2 html editor mode
+ * @property {int} MODE_SOURCE=2 html editor mode
  */
-export const  MODE_TEXTAREA = 2;
+export const  MODE_SOURCE = 2;
 
 /**
  * @property {int} MODE_SPLIT=3  Source code editor and HTML editor both like {@link http://getuikit.com/docs/htmleditor.html|this}

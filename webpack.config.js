@@ -79,6 +79,21 @@ module.exports = {
                     path.resolve(__dirname, "src"),
                 ],
             },
+            {
+                test: /\.(svg)$/i,
+                include: [
+                    path.resolve(__dirname, "src/styles/icons"),
+                ],
+                use: [
+                    {
+                        loader: 'svg-inline-loader',
+                        options: {
+                            name: '[path][name].[ext]',
+                            limit: 4096
+                        }
+                    }
+                ]
+            },
         ]
     },
 

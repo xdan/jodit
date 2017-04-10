@@ -89,9 +89,10 @@ export default class Events extends Component{
      /**
      * Sets the handler for the specified event ( Event List ) for a given element .
      * @method on
-     * @param {object} [object] - The object for which to set an event handler
-     * @param {string} list - List of events , separated by a space or comma
-     * @param {function} callback - The event handler
+     * @param {Object|string} [object] - The object for which to set an event handler
+     * @param {(String|Function)} list - List of events , separated by a space or comma
+     * @param {function} [callback] - The event handler
+     * @param {Boolean} [onTop=false] - Set handler in first
      * @return {Jodit.Events} this
      * @example
      * // set global handler
@@ -99,7 +100,7 @@ export default class Events extends Component{
      *     data.value = jQuery.trim(data.value);
      * });
      */
-    on(object, list, callback) {
+    on(object, list, callback, onTop = false) {
         var i;
         if (typeof object === 'string') {
             callback = list;
@@ -111,10 +112,16 @@ export default class Events extends Component{
             if (object.handlers === undefined) {
                 object.handlers = {};
             }
+
             if (object.handlers[list[i]] === undefined) {
                 object.handlers[list[i]] = [];
             }
-            object.handlers[list[i]].push(callback);
+
+            if (onTop) {
+                object.handlers[list[i]].unshift(callback);
+            } else {
+                object.handlers[list[i]].push(callback);
+            }
         }
         return this;
     }

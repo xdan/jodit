@@ -18,7 +18,7 @@ describe('Jodit Editor Tests', function() {
             var area = appendTestArea();
             var editor = new Jodit(area);
             expect(area.style.display).to.equal('none');
-            expect(editor.editor).to.equal(document.querySelector('.jodit_editor'));
+            expect(editor.editor).to.equal(document.querySelector('.jodit_wysiwyg'));
         })
         it('Options should be inherited from the default values', function() {
             var area = appendTestArea();
@@ -103,6 +103,27 @@ describe('Jodit Editor Tests', function() {
             editor.setEditorValue('<div>Test<div>');
             expect(editor.editor.innerHTML).to.be.equal('<div>Test<div></div></div>');
         });
+        it('Hide placeholder', function () {
+            var area = appendTestArea();
+            var editor = new Jodit(area);
+            editor.setEditorValue('<div>Test<div>');
+            expect(editor.container.querySelectorAll('.jodit_placeholder').length && editor.container.querySelector('.jodit_placeholder').style.display === 'none').to.be.equal(true);
+        });
+        it('Show placeholder', function () {
+            var area = appendTestArea();
+            var editor = new Jodit(area);
+            editor.setEditorValue('');
+            expect(editor.container.querySelectorAll('.jodit_placeholder').length && editor.container.querySelector('.jodit_placeholder').style.display === 'block').to.be.equal(true);
+            editor.selection.insertNode(editor.node.create('text', 'test'))
+            expect(editor.container.querySelectorAll('.jodit_placeholder').length && editor.container.querySelector('.jodit_placeholder').style.display === 'none').to.be.equal(true);
+        });
+        it("Placeholder's fontsize", function () {
+            var area = appendTestArea();
+            var editor = new Jodit(area);
+            editor.editor.style.fontSize = '12px';
+            simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+            expect(editor.container.querySelectorAll('.jodit_placeholder').length && editor.container.querySelector('.jodit_placeholder').style.fontSize === '12px').to.be.equal(true);
+        });
         describe('Synchronization', function () {
             it('Check synchronization between element and editor', function () {
                 var area = appendTestArea();
@@ -121,6 +142,14 @@ describe('Jodit Editor Tests', function() {
                 var area = appendTestArea();
                 var editor = new Jodit(area);
                 editor.setElementValue('<div>Test<div>');
+                expect(editor.getEditorValue()).to.be.equal(editor.getElementValue());
+            });
+            it('Check synchronization between editor and element when was pressed button', function () {
+                var area = appendTestArea();
+                var editor = new Jodit(area);
+                editor.setElementValue('<div>Test<div>');
+                expect(editor.getEditorValue()).to.be.equal(editor.getElementValue());
+                simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
                 expect(editor.getEditorValue()).to.be.equal(editor.getElementValue());
             });
         });

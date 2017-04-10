@@ -50,8 +50,8 @@ export const type = (obj) => {
 
 /**
  * @callback eachCallback
- * @param  {number|string} index
- * @param  {HTMLElement} element
+ * @param  {number|string} key
+ * @param  {mixed} value
  */
 
 /**
@@ -87,6 +87,14 @@ each(['Boolean', 'Number', 'String', 'Function', 'Array', 'Date', 'RegExp', 'Obj
         class2type["[object " + name + "]"] = name.toLowerCase();
     }
 )
+
+/**
+ *
+ * @param {String|Int} needle
+ * @param {Array} haystack
+ * @return {Boolean}
+ */
+export const inArray = (needle, haystack) => (haystack.indexOf(needle) !== -1);
 
 export const isPlainObject = (obj) => {
     if (typeof obj !== "object" || obj.nodeType || isWindow(obj)) {
@@ -296,4 +304,43 @@ export const ctrlKey = (e) => {
         return true;
     }
     return false;
+}
+
+let formatUrl = (url) => {
+    if (window.location.protocol === 'file:' && /^\/\//.test(url)) {
+        url = 'https:' + url;
+    }
+    return url;
+}
+
+/**
+ *
+ * @param {string} url
+ * @param {function} callback
+ */
+export const appendScript = (url, callback, className = '') => {
+    let script = document.createElement('script');
+    script.className = className;
+    script.type = 'text/javascript';
+    script.charset = 'utf-8';
+
+    script.src = formatUrl(url);
+
+    if (callback !== undefined) {
+        script.onload = callback;
+    }
+
+    document.body.appendChild(script);
+}
+
+/**
+ * Create DOM element from HTML text
+ *
+ * @param {string} html
+ * @param {HTMLDocument} [doc=document]
+ */
+export const dom = (html, doc = document) => {
+    let div = doc.createElement('div');
+    div.innerHTML = html;
+    return div.firstChild;
 }

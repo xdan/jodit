@@ -4,6 +4,10 @@ import * as consts from '../constants';
 import {ctrlKey} from '../modules/Helpers'
 
 Jodit.plugines.redoundo = function (editor) {
+    const updateButton = () => {
+        editor.events.fire('canRedo', [observer.stack.canRedo()]);
+        editor.events.fire('canUndo', [observer.stack.canUndo()]);
+    };
     editor.events
         .on('keydown', (e) => {
             if (ctrlKey(e)) {
@@ -14,13 +18,24 @@ Jodit.plugines.redoundo = function (editor) {
                     return false;
                 }
             }
-        });
+        }, null, true);
 
     let observer = new Observer(editor);
 
+    editor.events.on('afterSetMode', () => {
+        if (editor.getMode() === consts.MODE_WYSIWYG) {
+            updateButton();
+        }
+    });
+
     editor.events.on('beforeCommand', (command) => {
-        if (command === 'redo' || command === 'undo' && observer.stack['can' + command.substr(0,1).toUpperCase() + command.substr(1)]()) {
-            observer.stack[command]();
+        if (command === 'redo' || command === 'undo') {
+            if (editor.getMode() === consts.MODE_WYSIWYG) {
+                if (observer.stack['can' + command.substr(0,1).toUpperCase() + command.substr(1)]()) {
+                    observer.stack[command]();
+                }
+                updateButton();
+            }
             return false;
         }
     })

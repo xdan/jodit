@@ -1,7 +1,7 @@
 import Jodit from '../jodit';
 import Table from '../modules/Table';
 import * as consts from '../constants';
-import {each, getContentWidth, $$} from '../modules/Helpers';
+import {each, getContentWidth, $$, dom} from '../modules/Helpers';
 import config from '../config'
 
 /**
@@ -76,7 +76,7 @@ class TableProcessor extends Table{
         if (!this.__resizerHandler) {
             this.__resizerHandler = this.parent.container.querySelector('.jodit_table_resizer');
             if (!this.__resizerHandler) {
-                this.__resizerHandler = this.parent.node.dom('<div class="jodit_table_resizer"></div>');
+                this.__resizerHandler = dom('<div class="jodit_table_resizer"></div>');
                 let startX = 0;//, startLeft = 0;
                 this.__resizerHandler.addEventListener('mousedown', (event) => {
                     this.__drag = true;
@@ -284,6 +284,12 @@ class TableProcessor extends Table{
                     if (!table[this.__key]) {
                         this.observe(table);
                     }
+                })
+            })
+            .on('beforeSetMode', () => {
+                $$('.' + this.selectedClass, editor.editor).forEach((td) => {
+                    td.classList.remove(this.selectedClass);
+                    this.normalizeTable(editor.node.closest(td, 'table'))
                 })
             })
             .on('keydown', (event) => {

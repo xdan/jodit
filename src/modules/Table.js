@@ -314,9 +314,8 @@ export default class Table extends Component{
     /**
      *
      * @param {HTMLTableElement} table
-     * @private
      */
-    __normalizeTable (table) {
+    normalizeTable (table) {
         let box, i, j, min, not;
         box = this.formalMatrix(table);
 
@@ -457,7 +456,7 @@ export default class Table extends Component{
 
                 this.__unmark();
 
-                this.__normalizeTable(table);
+                this.normalizeTable(table);
 
                 each([].slice.call(table.rows), (index, tr) => {
                     if (!tr.cells.length) {
@@ -516,7 +515,7 @@ export default class Table extends Component{
             this.__unmark();
             cell.classList.remove(this.selectedClass);
         });
-        this.__normalizeTable(table);
+        this.normalizeTable(table);
     }
 
     /**
@@ -554,7 +553,7 @@ export default class Table extends Component{
 
             cell.classList.remove(this.selectedClass);
         });
-        this.__normalizeTable(table);
+        this.normalizeTable(table);
     }
 
     __marked = [];

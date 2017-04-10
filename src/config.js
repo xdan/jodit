@@ -517,14 +517,14 @@ export default Jodit.defaultOptions = {
                 dialog.open();
             },
             tooltip: 'About Jodit',
-            mode: consts.MODE_TEXTAREA + consts.MODE_WYSIWYG
+            mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG
         },
         fullsize: {
             exec: function () {
                 this.events.fire('toggleFullsize');
             },
             tooltip: 'Open editor in fullsize',
-            mode: consts.MODE_TEXTAREA + consts.MODE_WYSIWYG
+            mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG
         },
         eraser: {
             exec: function () {
@@ -601,7 +601,7 @@ export default Jodit.defaultOptions = {
         redo: {
             mode: consts.MODE_SPLIT,
             exec: function () {
-                if (this.getRealMode() !== consts.MODE_TEXTAREA) {
+                if (this.getRealMode() !== consts.MODE_SOURCE) {
                     this.observer.redo();
                 } else {
                     this.observerarea.redo();
@@ -612,7 +612,7 @@ export default Jodit.defaultOptions = {
         undo: {
             mode: consts.MODE_SPLIT,
             exec: function () {
-                if (this.getRealMode() !== consts.MODE_TEXTAREA) {
+                if (this.getRealMode() !== consts.MODE_SOURCE) {
                     this.observer.undo();
                 } else {
                     this.observerarea.undo();

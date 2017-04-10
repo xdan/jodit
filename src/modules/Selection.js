@@ -3,15 +3,12 @@ import Component from './Component';
 import {each, gebi} from './Helpers';
 
 export default class Selection extends Component{
-    //TODO
     /**
      * Restores user selections using marker invisible elements in the DOM.
      *
      * @param {array} selectionInfo
      */
     restore(selectionInfo = []) {
-        //return 1;
-        //debugger
         if (Array.isArray(selectionInfo)) {
 
 
@@ -112,6 +109,7 @@ export default class Selection extends Component{
 
         return info;
     }
+
     /**
      * Set focus in editor
      */
@@ -121,6 +119,7 @@ export default class Selection extends Component{
             this.parent.editor.focus();
         }
     }
+
     /**
      * Checks whether the current selection is something or just set the cursor is
      *
@@ -135,6 +134,7 @@ export default class Selection extends Component{
         }
         return true;
     }
+
     /**
      * Checks whether the editor currently in focus
      *
@@ -143,6 +143,7 @@ export default class Selection extends Component{
     isFocused (){
         return this.doc.hasFocus() && this.parent.editor === this.doc.activeElement;
     }
+
     /**
      * Returns the current element under the cursor inside editor
      *

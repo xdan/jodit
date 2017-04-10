@@ -2,9 +2,10 @@ import Selection from './modules/Selection';
 import Events from './modules/Events';
 import Nodes  from './modules/Nodes';
 import Table  from './modules/Table';
+import Toolbar  from './modules/Toolbar';
 import Component from './modules/Component';
 import * as consts from './constants';
-import {isArrayLike,extend} from './modules/Helpers';
+import {extend, inArray, dom, each} from './modules/Helpers';
 
 /** Class Jodit. Main class*/
 export default class Jodit extends Component{
@@ -19,6 +20,16 @@ export default class Jodit extends Component{
     id;
 
     /**
+     * @prop {HTMLDivElement} workplace It contains source and wysiwyg editors
+     */
+    workplace;
+
+    /**
+     * @prop {HTMLDivElement} container main editor's box
+     */
+    container;
+
+    /**
      * @prop {HTMLElement} element It contains source element
      */
     element;
@@ -27,6 +38,7 @@ export default class Jodit extends Component{
      * @prop {HTMLDivElement} editor It contains the root element editor
      */
     editor;
+
 
     /**
      * @prop {PlainObject} options All Jodit settings default + second arguments of constructor
@@ -76,7 +88,7 @@ export default class Jodit extends Component{
             throw new Error('Element "' + element + '" should be string or HTMLElement');
         }
 
-        this.createEditor();
+        this.__createEditor();
 
         this.selection = new Selection(this);
         this.events = new Events(this);
@@ -85,15 +97,21 @@ export default class Jodit extends Component{
         this.initPlugines();
 
         // proxy events
-        ['keydown', 'keyup', 'keypress', 'mousedown', 'mouseup', 'mousepress', 'paste'].forEach((event_type) => {
+        ['keydown', 'keyup', 'keypress', 'mousedown', 'mouseup', 'mousepress', 'paste', 'resize'].forEach((event_type) => {
             this.editor.addEventListener(event_type, (e) => {
                 if (this.events.fire(event_type, [e]) === false) {
                     e.preventDefault();
                     return false;
                 }
+                this.setEditorValue(); // sync all events in element
             });
         });
 
+        if (this.options.events) {
+            each(this.options.events, (key, callback) => {
+                this.events.on(key, callback);
+            });
+        }
 
         this.editor.addEventListener('paste', (event) => {
             /**
@@ -116,7 +134,7 @@ export default class Jodit extends Component{
 
             if (event && event.clipboardData && event.clipboardData.getData) {
                 var i, types = event.clipboardData.types, types_str, clipboard_html = '';
-                if (isArrayLike(types)) {
+                if (Array.isArray(types)) {
                     for (i = 0; i < types.length; i += 1) {
                         types_str += types[i] + ";";
                     }
@@ -186,6 +204,14 @@ export default class Jodit extends Component{
         }
 
         this.setEditorValue(); // syncro
+        this.setMode(this.options.defaultMode)
+
+
+        this.__createMainToolbar();
+    }
+    __createMainToolbar() {
+        let toolbar = new Toolbar(this);
+        toolbar.build(this.options.buttons, this.workplace);
     }
     __plugins = [];
     initPlugines() {
@@ -197,21 +223,37 @@ export default class Jodit extends Component{
 
     /**
      * Create main DIV element and replace source textarea
+     *
+     * @private
      */
-    createEditor() {
-        this.container = document.createElement('div');
-        this.editor = document.createElement('div');
+    __createEditor() {
+        this.editor = dom('<div class="jodit_wysiwyg" contenteditable="true" aria-disabled="false" tabindex="' + this.options.tabIndex + '"/>');
 
-        this.editor.setAttribute('class', 'jodit_editor');
-        this.container.setAttribute('class', 'jodit_container');
 
-        this.editor.setAttribute('contenteditable', true);
-        this.editor.setAttribute('aria-disabled', false);
-        this.editor.setAttribute('spellcheck', this.options.spellcheck);
+        if (this.options.spellcheck) {
+            this.editor.setAttribute('spellcheck', true);
+        }
 
-        this.container.appendChild(document.createTextNode("\n"));
-        this.container.appendChild(this.editor);
-        this.container.appendChild(document.createTextNode("\n"));
+        // direction
+        if (this.options.direction) {
+            this.editor.style.direction = this.options.direction.toLowerCase() === 'rtl' ? 'rtl' : 'ltr';
+        }
+
+        this.container = dom('<div class="jodit_container" />');
+        this.container.classList.add('jodit_' + (this.options.theme || 'default') + '_theme');
+
+        if (this.options.zIndex) {
+            this.container.style.zIndex = parseInt(this.options.zIndex, 10)
+        }
+
+        this.workplace = dom('<div class="jodit_workplace" />');
+
+        // fix fo ie
+        this.workplace.appendChild(document.createTextNode("\n"));
+        this.workplace.appendChild(this.editor);
+        this.workplace.appendChild(document.createTextNode("\n"));
+
+        this.container.appendChild(this.workplace);
 
         this.element.parentNode.insertBefore(this.container, this.element);
 
@@ -224,7 +266,21 @@ export default class Jodit extends Component{
      * Jodit's Destructor. Remove editor, and return source input
      */
     destruct() {
-        console.log('destruct');
+        /**
+         * Triggered before {@link module:Jodit~beforeDestruct|beforeDestruct} executed. If returned false method stopped
+         *
+         * @event beforeDestruct
+         * @example
+         * var editor = new Jodit("#redactor");
+         * editor.events.on('beforeDestruct', function (data) {
+         *     return false;
+         * });
+         */
+        if (this.events.fire('beforeDestruct') === false) {
+            return;
+        }
+
+
         if (!this.editor) {
             return;
         }
@@ -252,6 +308,7 @@ export default class Jodit extends Component{
         this.container.parentNode.removeChild(this.container);
         delete this['container'];
         delete this['editor'];
+        delete this['workplace'];
 
         delete Jodit.instances[this.id];
     }
@@ -389,6 +446,157 @@ export default class Jodit extends Component{
      */
     endDrag() {
         this.editor.classList.remove('jodit_disabled');
+    }
+
+    mode = consts.MODE_WYSIWYG;
+    getMode() {
+        return this.mode;
+    }
+
+    /**
+     * Return current real work mode. When editor in MODE_SOURCE or MODE_WYSIWYG it will return them, but then editor in MODE_SPLIT it will return MODE_SOURCE if Textarea(CodeMirror) focused or MODE_WYSIWYG otherwise
+     *
+     * @example
+     * var editor = new Jodit('#editor');
+     * console.log(editor.getRealMode());
+     * @method getRealMode
+     */
+    getRealMode() {
+        return this.mode !== consts.MODE_SPLIT ? this.mode : ((document.activeElement && document.activeElement.tagName === 'TEXTAREA') ? consts.MODE_SOURCE : consts.MODE_WYSIWYG);
+    }
+
+    /**
+     * Set current mode
+     *
+     * @method setMode
+     * @fired beforeSetMode
+     * @fired afterSetMode
+     */
+    setMode(mode) {
+        let data = {
+                mode
+            },
+            modeClasses = ['jodit_wysiwyg_mode', 'jodit_source_mode', 'jodit_split_mode'];
+
+        /**
+         * Triggered before {@link module:Jodit~setMode|setMode} executed. If returned false method stopped
+         * @event beforeSetMode
+         * @param {Object} data PlainObject {mode: {string}} In handler you can change data.mode
+         * @example
+         * var editor = new Jodit("#redactor");
+         * editor.events.on('beforeSetMode', function (data) {
+             *     data.mode = Jodit.MODE_SOURCE; // not respond to the mode change. Always make the source code mode
+             * });
+         */
+        if (this.events.fire('beforeSetMode', [data]) === false) {
+            return;
+        }
+
+        this.mode = inArray(data.mode, [consts.MODE_SOURCE, consts.MODE_WYSIWYG, consts.MODE_SPLIT]) ? data.mode : consts.MODE_WYSIWYG;
+
+        if (this.options.saveModeInCookie) {
+            this.cookie.set('jodit_default_mode', this.mode, 31);
+        }
+
+        modeClasses.forEach((className) => {
+            this.container.classList.remove(className)
+        })
+        this.container.classList.add(modeClasses[this.mode - 1]);
+
+        /**
+         * Triggered after {@link module:Jodit~setMode|setMode} executed
+         * @event afterSetMode
+         * @example
+         * var editor = new Jodit("#redactor");
+         * editor.events.on('afterSetMode', function () {
+             *     editor.val(''); // clear editor's value after change mode
+             * });
+         */
+        this.events.fire('afterSetMode');
+    }
+
+    /**
+     * Toggle editor mode WYSIWYG to TEXTAREA(CodeMirror) to SPLIT(WYSIWYG and TEXTAREA) to again WYSIWYG
+     *
+     * @example
+     * var editor = new Jodit('#editor');
+     * editor.toggleMode();
+     * @method toggleMode
+     */
+    toggleMode () {
+        let mode = this.getMode();
+        if (inArray(mode + 1, [consts.MODE_SOURCE, consts.MODE_WYSIWYG, this.options.useSplitMode ? consts.MODE_SPLIT : 9])) {
+            mode += 1;
+        } else {
+            mode = consts.MODE_WYSIWYG;
+        }
+        this.setMode(mode);
+    }
+
+    /**
+     * Internationalization method. Uses Jodit.lang object
+     *
+     * @method i18n
+     * @memberof module:Jodit
+     * @param {string} key Some text
+     * @return {string}
+     * @example
+     * var editor = new Jodit("#redactor", {
+     *      langusage: 'ru'
+     * });
+     * console.log(editor.i18n('Cancel')) //Отмена;
+     *
+     * Jodit.defaultOptions.language = 'ru';
+     * console.log(Jodit.prototype.i18n('Cancel')) //Отмена
+     *
+     * Jodit.lang.cs = {
+     *    Cancel: 'Zrušit'
+     * };
+     * Jodit.defaultOptions.language = 'cs';
+     * console.log(Jodit.prototype.i18n('Cancel')) //Zrušit
+     *
+     * Jodit.lang.cs = {
+     *    'Hello world': 'Hello 1$ Good 2$'
+     * };
+     * Jodit.defaultOptions.language = 'cs';
+     * console.log(Jodit.prototype.i18n('Hello world', 'mr.Perkins', 'day')) //Hello mr.Perkins Good day
+     */
+    i18n (key) {
+        let store,
+            args = Array.prototype.slice.call(arguments),
+            parse = function (value) {
+                return value.replace(/([0-9]{1})\$/gm, function (match, part1) {
+                    part1 = parseInt(part1, 10);
+                    if (args[part1] !== undefined) {
+                        return args[part1];
+                    }
+                    return '';
+                });
+            };
+
+        if (this.options !== undefined && Jodit.lang[this.options.language] !== undefined) {
+            store = Jodit.lang[this.options.language];
+        } else {
+            if (Jodit.lang[Jodit.defaultOptions.language] !== undefined) {
+                store = Jodit.lang[Jodit.defaultOptions.language];
+            } else {
+                store = Jodit.lang.en;
+            }
+        }
+
+        if (this.options !== undefined && this.options.i18n[this.options.language] !== undefined && this.options.i18n[this.options.language][key]) {
+            return parse(this.options.i18n[this.options.language][key]);
+        }
+
+        if (store[key] !== undefined) {
+            return parse(store[key]);
+        }
+
+        if (Jodit.lang.en[key] !== undefined) {
+            return parse(Jodit.lang.en[key]);
+        }
+
+        return parse(key);
     }
 }
 

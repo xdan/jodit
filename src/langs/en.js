@@ -1,5 +1,5 @@
 import Jodit from '../jodit'
-Jodit.lang.en_example = {
+Jodit.lang.en = {
     'Type something': 'Start writing...',
     // About
     'About Jodit': '',

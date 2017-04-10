@@ -1,6 +1,7 @@
 import config from '../config'
 import Component from './Component'
 import Snapshot from './Snapshot'
+import * as consts from '../constants';
 import {Stack} from './Undo'
 /**
  * @memberof Jodit.defaultOptions
@@ -93,7 +94,7 @@ export default class Observer extends Component {
         this.stack.changed();
 
 
-        editor.events.on('change keydown keyup afterPaste mousedown mouseup', ::this.__changeHandler);
+        editor.events.on('change', ::this.__changeHandler);
     }
 
     /**
@@ -140,9 +141,10 @@ export default class Observer extends Component {
         //     redobtn.toggleClass('disabled', !stack.canRedo());
         //     undobtn.toggleClass('disabled', !stack.canUndo());
         // }
-
-        this.parent.events.fire('canRedo', [this.stack.canRedo()]);
-        this.parent.events.fire('canUndo', [this.stack.canUndo()]);
+        if (this.parent.getMode() === consts.MODE_WYSIWYG) {
+            this.parent.events.fire('canRedo', [this.stack.canRedo()]);
+            this.parent.events.fire('canUndo', [this.stack.canUndo()]);
+        }
     }
 
     /**

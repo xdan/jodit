@@ -4,16 +4,9 @@ import {each} from '../modules/Helpers'
 
 export default class Nodes extends Component{
     /**
-     * Create DOM element from HTML text
      *
-     * @param {string} html
+     * @param node
      */
-    dom(html) {
-        let div = this.create('div');
-        div.innerHTML = html;
-        return div.firstChild;
-    }
-
     unwrap(node) {
         let parent = node.parentNode, el = node;
         while (el.firstChild) {

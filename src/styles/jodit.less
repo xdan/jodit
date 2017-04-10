@@ -1,39 +1,22 @@
 @import (reference) "variables";
 
-.jodit_editor {
-  margin : 0;
-  padding: 0;
-  min-height: 100px;
-  border: 1px solid @border-color;
-  outline: 0;
-  &::selection,
-  *::selection {
-    background: @selection-background-color;
-    color: @selection-color;
-  }
-  &.jodit_disabled {
-    user-select: none;
-  }
-}
-.jodit_table_resizer {
-  cursor: col-resize;
-  position: fixed;
-  z-index: 3;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin-left: -5px;
-  &:after {
-    content: '';
-    display: block;
-    height: 100%;
-    width:0;
-    border:1px solid transparent;
-    border-width: 0 1px 0 0;
-  }
-  &-moved{
-    z-index: 2;
-    &:after {
-      border-color: @border-moved-color;
+.jodit_container {
+  .jodit_workplace {
+    border: 1px solid @color-border;
+    position: relative;
+    .jodit_wysiwyg {
+      margin : 0;
+      padding: 0;
+      min-height: 100px;
+      outline: 0;
+      &::selection,
+      *::selection {
+        background: @background-color-selection;
+        color: @color-selection;
+      }
+      &.jodit_disabled {
+        user-select: none;
+      }
     }
   }
 }
