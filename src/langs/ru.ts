@@ -1,7 +1,5 @@
-"use strict";
-exports.__esModule = true;
-var jodit_1 = require("../jodit");
-jodit_1["default"].lang.ru = {
+import Jodit from '../jodit';
+export default Jodit.lang.ru = {
     'Type something': 'Напишите что-либо',
     // About
     'About Jodit': 'О Jodit',
@@ -12,6 +10,7 @@ jodit_1["default"].lang.ru = {
     'For information about the license, please go to our website:': 'Для получения сведений о лицензии , пожалуйста, перейдите на наш сайт:',
     'Buy full version': 'Купить полную версию',
     'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.': 'Авторские права © XDSoft.net - Чупурнов Валерий. Все права защищены.',
+
     // Toolbar
     'Anchor': 'Анкор',
     'Open in new tab': 'Открывать ссылку в новой вкладке',
@@ -33,6 +32,7 @@ jodit_1["default"].lang.ru = {
     'Insert link': 'Вставить ссылку',
     'Font size': 'Размер шрифта',
     'Font family': 'Шрифт',
+
     'Insert format block': 'Вставить блочный элемент',
     'Normal': 'Нормальный текст',
     'Heading 1': 'Заголовок 1',
@@ -41,9 +41,11 @@ jodit_1["default"].lang.ru = {
     'Heading 4': 'Заголовок 4',
     'Quote': 'Цитата',
     'Code': 'Код',
+
     'Insert': 'Вставить',
     'Insert table': 'Вставить таблицу',
     'Change mode': 'Источник',
+
     //plugin Image
     'Margins': 'Отступы',
     'top': 'сверху',
@@ -67,9 +69,11 @@ jodit_1["default"].lang.ru = {
     'Image properties': 'Свойства изображения',
     'Cancel': 'Отмена',
     'Ok': 'Ok',
+
     //plugin insertHTML
     'Your code is similar to HTML. Paste as HTML?': 'Ваш текст, который вы пытаетесь вставить похож на HTML. Вставить его как HTML?',
     'Paste as HTML': 'Вставить как HTML?',
+
     // File Browser module
     'File Browser': 'Браузер файлов',
     'Error on load list': 'Ошибка при загрузке списка изображений',
@@ -78,15 +82,18 @@ jodit_1["default"].lang.ru = {
     'Enter Directory name': 'Введите название директории',
     'Create directory': 'Создать директорию',
     'type name': 'введите название',
+
     // Form module
     'Drop image': 'Перетащите сюда изображение',
     'or click': 'или нажмите',
     'Alternative text': 'Альтернативный текст',
     'Browse': 'Сервер',
     'Upload': 'Загрузка',
+
     'Background': 'Фон',
     'Text': 'Текст',
-    // popap module
+
+     // popap module
     'Top': ' К верху',
     'Middle': 'По середине',
     'Bottom': 'К низу',

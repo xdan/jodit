@@ -6,9 +6,18 @@
     position: relative;
     .jodit_wysiwyg {
       margin : 0;
-      padding: 0;
+      padding: @padding-default;
       min-height: 100px;
       outline: 0;
+      overflow-x: auto;
+
+      p, pre {
+        margin: 0 0 10px;
+      }
+      h1,h2,h3,h4,h5 {
+        margin-top: 0;
+      }
+
       &::selection,
       *::selection {
         background: @background-color-selection;

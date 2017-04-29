@@ -1,0 +1,41 @@
+@import (reference) "../variables";
+@color-cell-size: 18px;
+@color-cell-icon-size: 12px;
+.jodit_colorpicker {
+    min-width: 180px;
+    text-align: left;
+    margin: 0px;
+    .jodit_colorpicker_group{
+        margin-bottom: 5px;
+    }
+    a {
+        width: @color-cell-size;
+        height: @color-cell-size;
+        line-height:@color-cell-size - 2;
+        display:inline-block;
+        vertical-align: middle;
+        text-align:center;
+
+        &:before {
+            content: '';
+            display: inline-block;
+            height:100%;
+            vertical-align: middle;
+            width: 0;
+        }
+        svg {
+            display: inline-block;
+            vertical-align: middle;
+            font-smoothing: antialiased;
+            max-width: @color-cell-size - 4;
+        }
+
+        &:hover {
+            border-color: #000;
+        }
+        &:active {
+            background: #d6d6d6;
+            color: @active_border;
+        }
+    }
+}

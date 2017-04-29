@@ -1,0 +1,35 @@
+@import (reference) "../variables";
+@import (reference) "../mixins";
+@keyframes rotate {
+    to {
+        transform: rotate(360deg)
+    }
+}
+.jodit_icon-loader{
+    //background: data-uri('loader.png') no-repeat center;
+    background-size: 100% 100%;
+    width:128px;
+    height:128px;
+    display:inline-block;
+    vertical-align:middle;
+    will-change:transform;
+    animation: rotate 2s ease-out 0s infinite;
+}
+.jodit_icon {
+    font-style: normal;
+    display:inline-block;
+    .size(@icon_middle_size);
+    font-size:8px;
+    overflow:hidden;
+    vertical-align:middle;
+    fill: @icon_color;
+    transform-origin: 0px 0px!important;
+}
+.jodit_toolbar_size{
+    &-small .jodit_icon{
+        .size(@icon_small_size);
+    }
+    &-large .jodit_icon {
+        .size(@icon_large_size);
+    }
+}

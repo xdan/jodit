@@ -92,10 +92,19 @@
         }
         element.dispatchEvent(evt);
     }
+
+    var setCursor = function (elm, inEnd) {
+        var range = document.createRange();
+        range.selectNodeContents(elm);
+        range.collapse(!inEnd);
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+    }
 </script>
 <link rel="stylesheet" href="../dist/jodit.css" />
 <script src="../dist/jodit.js"></script>
 <script src="tests/editor.js"></script>
+<script src="tests/interface.js"></script>
 <script src="tests/enter.js"></script>
 <script src="tests/commands.js"></script>
 <script src="tests/table.js"></script>

@@ -1,7 +1,5 @@
-"use strict";
-exports.__esModule = true;
-var jodit_1 = require("../jodit");
-jodit_1["default"].lang.en = {
+import Jodit from '../jodit'
+export default  Jodit.lang.en = {
     'Type something': 'Start writing...',
     // About
     'About Jodit': '',
@@ -11,7 +9,8 @@ jodit_1["default"].lang.en = {
     'contains detailed help for using': '',
     'For information about the license, please go to our website:': '',
     'Buy full version': '',
-    'Copyright ï¿½ XDSoft.net - Chupurnov Valeriy. All rights reserved.': '',
+    'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.': '',
+    
     // Toolbar
     'Anchor': '',
     'Open editor in fullsize': '',
@@ -32,6 +31,7 @@ jodit_1["default"].lang.en = {
     'Insert link': '',
     'Font size': '',
     'Font family': '',
+
     'Insert format block': '',
     'Normal': '',
     'Heading 1': '',
@@ -40,8 +40,10 @@ jodit_1["default"].lang.en = {
     'Heading 4': '',
     'Quote': '',
     'Code': '',
+
     'Insert table': '',
     'Change mode': '',
+    
     //plugin Image
     'Margins': '',
     'top': '',
@@ -65,6 +67,7 @@ jodit_1["default"].lang.en = {
     'Image properties': '',
     'Cancel': '',
     'Ok': '',
+    
     // File Browser module
     'File Browser': '',
     'Error on load list': '',
@@ -73,6 +76,7 @@ jodit_1["default"].lang.en = {
     'Enter Directory name': '',
     'Create directory': '',
     'type name': '',
+    
     // Form module
     'Drop image': '',
     'or click': '',
@@ -80,6 +84,7 @@ jodit_1["default"].lang.en = {
     'Browse': '',
     'Background': '',
     'Text': '',
+    
     // popap module
     'Top': '',
     'Middle': '',
@@ -91,5 +96,5 @@ jodit_1["default"].lang.en = {
     'Delete table': '',
     'Delete row': '',
     'Delete column': '',
-    'Empty cell': ''
+    'Empty cell': '',
 };

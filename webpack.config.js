@@ -48,6 +48,10 @@ module.exports = {
         './src/index'
     ] : './src/index',
 
+    resolve: {
+        extensions: [".ts", ".tsx", ".js", ".json", ".less"]
+    },
+
     output: {
         path: path.join(__dirname, 'dist'),
         filename: 'jodit.js',
@@ -68,6 +72,12 @@ module.exports = {
             },
             {
                 //include: path.resolve(__dirname, "src"),
+                test: /\.(ts|js)$/,
+                loader: 'awesome-typescript-loader',
+                exclude: /(node_modules|bower_components)/,
+            },
+            /*{
+                //include: path.resolve(__dirname, "src"),
                 test: /\.js$/,
                 loader: 'babel-loader',
                 exclude: /(node_modules|bower_components)/,
@@ -78,7 +88,7 @@ module.exports = {
                 include: [
                     path.resolve(__dirname, "src"),
                 ],
-            },
+            },*/
             {
                 test: /\.(svg)$/i,
                 include: [
@@ -88,6 +98,7 @@ module.exports = {
                     {
                         loader: 'svg-inline-loader',
                         options: {
+                            removingTagAttrs: ['id', 'version', 'xmlns', 'xmlns:xlink', 'width', 'height'],
                             name: '[path][name].[ext]',
                             limit: 4096
                         }

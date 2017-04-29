@@ -1,0 +1,171 @@
+import config from '../config'
+import Component from './Component'
+import Snapshot from './Snapshot'
+import * as consts from '../constants';
+import {Stack} from './Undo'
+/**
+ * @memberof Jodit.defaultOptions
+ * @prop {object} observer module settings {@link module:Jodit/Observer|Observer}
+ * @prop {int} observer.timeout=100 Delay on every change
+ */
+config.observer = {
+    timeout: 100,
+}
+
+class Command {
+    parent;
+    oldValue: any;
+    newValue: any;
+    constructor(oldValue, newValue, parent) {
+        this.parent = parent;
+        this.oldValue = oldValue;
+        this.newValue = newValue;
+    }
+    execute() {}
+    undo () {
+        this.parent.block(true);
+        this.parent.snapshot.restore(this.oldValue);
+    }
+    redo () {
+        this.parent.block(true);
+        this.parent.snapshot.restore(this.newValue);
+    }
+}
+
+/**
+ * The module monitors the status of the editor and creates / deletes the required number of Undo / Redo shots . To track changes in use {@link https://developer.mozilla.org/ru/docs/Web/API/MutationObserver|MutationObserver}
+ *
+ * @module Observer
+ * @see {@link module:Snapshot|Snapshot}
+ * @params {Jodit} parent Jodit main object
+ */
+export default class Observer extends Component {
+
+    /**
+     * @property {Stack} stack
+     */
+    stack;
+
+    /**
+     * @prop {Snapshot} snapshot
+     */
+    snapshot;
+    __blocked = false;
+    __timer;
+    // redobtn;
+    // undobtn;
+    __startValue;
+    __newValue;
+    __timeouts = [];
+
+
+    __onChange() {
+        this.__newValue = this.snapshot.make();
+        if (!this.snapshot.equal(this.__newValue, this.__startValue)) {
+            this.stack.execute(new Command(this.__startValue, this.__newValue, this));
+            this.__startValue = this.__newValue;
+        }
+    }
+
+    __changeHandler() {
+        if (this.__blocked) {
+            this.block(false);
+            return;
+        }
+
+        if (this.parent.options.observer.timeout) {
+            clearTimeout(this.__timer);
+            this.__timer = setTimeout(this.__onChange.bind(this), this.parent.options.observer.timeout);
+            this.__timeouts[this.__timeouts.length] = this.__timer;
+        } else {
+            this.__onChange();
+        }
+    }
+
+    constructor (editor) {
+        super(editor);
+
+        this.stack = new Stack();
+        this.stack.changed = () => {
+            this.changed()
+        };
+        this.snapshot = new Snapshot(editor);
+
+        this.__startValue = this.snapshot.make();
+
+        this.stack.changed();
+
+
+        editor.events.on('change afterCommand', (command) => {
+            if (command !== 'undo' && command !== 'redo') {
+                this.__changeHandler()
+            }
+        });
+    }
+
+    /**
+     * Called when module will be destroed
+     */
+    destruct () {
+        this.__timeouts.forEach((timer) => {
+            clearTimeout(timer);
+        })
+    }
+
+    /**
+     * Do not remember changes to the stack Redo / Undo when it is not needed.
+     * For example, if group operations, it is best to remember only the result of the last operation .
+     * However, in some operations itself Jodit launches block (true) and off you do not need to own . therefore
+     * You can use 1 and 0. 1 - Set the value to true, but it will remember the current value . A 0 - restore the current value
+     * @param {boolean|int} block = 1 do not remember . 1 can be used , and 0. 1 - establish a true value but will memorize the current value. A 0 - restore the current value
+     * @example
+     * parent.__nativeObserver.block(1);// если value has been true when you call parent.__nativeObserver.block(0); it will still be true
+     * parent.selection.insertImage('some.png');
+     * parent.selection.insertImage('some2.png');
+     * parent.selection.insertImage('some4.png', 'Some image');
+     * parent.__nativeObserver.block(0); // restore the value that was before parent.__nativeObserver.block(1)
+     * parent.$editor.find('img').css('border', '1px solid #ccc'); // the stack will be filled soon , the last state
+     */
+    block = function (block: boolean|number = 1) {
+        if (block === true || block === false) {
+            this.__blocked = block;
+        } else if (block === 1) {
+            this.oldblock = this.__blocked;
+            this.__blocked = true;
+        } else if (block === 0) {
+            this.__blocked = this.oldblock !== undefined ? this.oldblock : false;
+        }
+    }
+
+    /**
+     * There has been a change in the stack Undo/Redo
+     * @method changed
+     */
+    changed = function () {
+        //TODO этот код надо будет привязать к тулбару
+        // if (parent.getRealMode() === Jodit.MODE_WYSIWYG) {
+        //     redobtn.toggleClass('disabled', !stack.canRedo());
+        //     undobtn.toggleClass('disabled', !stack.canUndo());
+        // }
+        if (this.parent.getMode() === consts.MODE_WYSIWYG) {
+            this.parent.events.fire('canRedo', [this.stack.canRedo()]);
+            this.parent.events.fire('canUndo', [this.stack.canUndo()]);
+        }
+    }
+
+    /**
+     * Return state of the WYSIWYG editor to step back
+     * @method redo
+     */
+    redo () {
+        this.stack.redo();
+    }
+
+    /**
+     * Return the state of the WYSIWYG editor to step forward
+     * @method undo
+     */
+    undo () {
+        this.stack.undo();
+    }
+}

@@ -1,0 +1,92 @@
+@import (reference) "../variables";
+.jodit_form {
+  textarea,
+  input[type=url],
+  input[type=text] {
+    display: block;
+    border: none;
+    outline: none;
+    border: 1px solid @active_border;
+    height: 28px;
+    line-height: 28px;
+    padding: 0 5px;
+    min-width: 200px;
+    margin-top: 10px;
+    @media (max-width: @medium) {
+      min-width: 150px;
+    }
+  }
+  textarea {
+    height: 128px;
+  }
+  button {
+    height: 36px;
+    line-height: 1;
+    color: @button_color;
+    padding: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+    background: #d6d6d6;
+    font-size: 16px;
+    outline: none;
+    transition: background 0.2s ease 0s;
+    float: right;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    &:hover {
+      background-color: @button_bg_hover;
+      color: @button_color;
+    }
+    &:active {
+      background: @button_bg_hover;
+      color: @button_color;
+    }
+  }
+
+  input[type=checkbox] {
+    display: inline-block;
+    z-index: 2;
+    border: 0 none;
+    cursor: pointer;
+    height: 16px;
+    margin: 0;
+    padding: 0;
+    width: 16px;
+    position: relative;
+    top: 3px;
+    &:after {
+      content: '';
+      background: #fff;
+      border: solid 1px @main_bg_color;
+      border-radius: 2px;
+      background-clip: padding-box;
+      width: 16px;
+      height: 16px;
+      display: inline-block;
+      position: relative;
+      z-index: 1;
+      box-sizing: border-box;
+      transition: background 0.2s ease 0s, border-color 0.2s ease 0s;
+    }
+    &:checked:after {
+      //background: data-uri('ok.svg') no-repeat center center;
+      background-color: @active_border;
+      border-color: @active_border;
+    }
+  }
+
+  label {
+    margin-top: 10px;
+    display: block;
+    text-align: left;
+  }
+
+  form {
+    &:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+  }
+}

@@ -15,6 +15,22 @@ describe('Commands Jodit Editor Tests', function() {
 
         expect(editor.getEditorValue()).to.equal('<p><strong>test</strong></p>');
     });
+    it('Try exec the command "bold" twice', function() {
+        var editor = new Jodit('#tested_area');
+        editor.setEditorValue('<p>test</p>');
+
+        var sel = editor.win.getSelection(),
+            range = editor.doc.createRange();
+
+        range.selectNodeContents(editor.editor.firstChild);
+        sel.removeAllRanges();
+        sel.addRange(range);
+
+        editor.execCommand('bold');
+        editor.execCommand('bold');
+
+        expect(editor.getEditorValue()).to.equal('<p>test</p>');
+    });
     it('After exec some command selection should be restore to previous', function() {
         var editor = new Jodit('#tested_area');
         editor.setEditorValue('<p>test</p>');
@@ -63,6 +79,45 @@ describe('Commands Jodit Editor Tests', function() {
 
             expect(editor.getEditorValue()).to.equal('<ul><li>test</li><li>test</li><li>test</li></ul>');
         });
+        it('If press Enter inside <li> in the end it should create new <li> and cursor must be in it', function () {
+            var editor = new Jodit('#tested_area');
+            editor.setEditorValue('<ul><li>test</li></ul>');
+
+            var sel = editor.win.getSelection(),
+                range = editor.doc.createRange();
+
+            range.setStart(editor.editor.firstChild.firstChild.firstChild, 4);
+            range.collapse(true);
+
+            sel.removeAllRanges();
+            sel.addRange(range);
+
+            simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
+
+            editor.selection.insertNode(editor.doc.createTextNode(' a '))
+
+            expect(editor.getEditorValue()).to.equal('<ul><li>test</li><li> a </li></ul>');
+        });
+        it('If press Enter inside <li> inside some text should split that text and created new <li> and cursor must be in it', function () {
+            var editor = new Jodit('#tested_area');
+            editor.setEditorValue('<ul><li>test</li></ul>');
+
+            var sel = editor.win.getSelection(),
+                range = editor.doc.createRange();
+
+            range.setStart(editor.editor.firstChild.firstChild.firstChild, 2);
+            range.collapse(true);
+
+            sel.removeAllRanges();
+            sel.addRange(range);
+
+            simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
+
+            editor.selection.insertNode(editor.doc.createTextNode(' a '))
+
+            expect(editor.getEditorValue()).to.equal('<ul><li>te</li><li> a st</li></ul>');
+        });
+
     });
     describe('Blocks', function() {
         it('Run command formatBlock should wrap or replace container to specialize tag', function () {

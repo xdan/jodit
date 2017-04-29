@@ -1,7 +1,5 @@
-"use strict";
-exports.__esModule = true;
-var jodit_1 = require("../jodit");
-jodit_1["default"].lang.de = {
+import Jodit from '../jodit'
+export default Jodit.lang.de = {
     'Type something': 'Schreibe etwas',
     // About
     'About Jodit': 'Über Jodi',
@@ -12,6 +10,7 @@ jodit_1["default"].lang.de = {
     'For information about the license, please go to our website:': 'Für Informationen über die Lizenz, gehen Sie bitte auf unsere Webseite:',
     'Buy full version': 'Vollversion kaufen',
     'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.': 'Copyright © XDSoft.net - Chupurnov Valeriy. Alle Rechte vorbehalten.',
+    
     // Toolbar
     'Anchor': 'Anker',
     'Open in new tab': 'In neuer Registerkarte öffnen',
@@ -33,6 +32,7 @@ jodit_1["default"].lang.de = {
     'Insert link': 'Link einfügen',
     'Font size': 'Schriftgröße',
     'Font family': 'Schriftfamilie',
+
     'Insert format block': 'Insert Format Block',
     'Normal': 'Normal',
     'Heading 1': 'Überschrift 1',
@@ -41,9 +41,11 @@ jodit_1["default"].lang.de = {
     'Heading 4': 'Überschrift 4',
     'Quote': 'Zitat',
     'Code': 'Code',
+
     'Insert': 'Einfügen',
     'Insert table': 'Tabelle einfügen',
     'Change mode': 'Änderungsmodus',
+    
     //plugin Image
     'Margins': 'Die Margen',
     'top': 'oben',
@@ -67,6 +69,7 @@ jodit_1["default"].lang.de = {
     'Image properties': 'Bildeigenschaften',
     'Cancel': 'Stornieren',
     'Ok': 'OK',
+    
     // File Browser module
     'File Browser': 'Dateibrowser',
     'Error on load list': 'Fehler beim Ladeliste',
@@ -75,15 +78,18 @@ jodit_1["default"].lang.de = {
     'Enter Directory name': 'Geben Sie Verzeichnisname',
     'Create directory': 'Verzeichnis erstellen',
     'type name': 'Modellname',
+    
     // Form module
     'Drop image': 'Bild Tropfen',
     'or click': 'oder klicken Sie auf',
     'Alternative text': 'Alternativer Text',
     'Browse': 'Blättern',
     'Upload': 'Hochladen',
+
     'Background': 'Hintergrund',
     'Text': 'Text',
-    // popap module
+    
+     // popap module
     'Top': 'Oben',
     'Middle': 'Mitte',
     'Bottom': 'Boden',

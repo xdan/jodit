@@ -23,6 +23,24 @@
   }
 }
 
-.jodit_selected_cell {
-  border: 1px double @color-border-selected;
+.jodit_wysiwyg {
+  table {
+    width: 100%;
+    border: none;
+    border-collapse: collapse;
+    empty-cells: show;
+    max-width: 100%;
+    tr {
+      user-select: none;
+      th, td {
+        border: 1px solid #ddd;
+        padding: 2px 5px;
+        text-align: left;
+        vertical-align: middle;
+        &.jodit_selected_cell {
+          border: 1px double @color-border-selected;
+        }
+      }
+    }
+  }
 }

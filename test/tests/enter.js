@@ -56,6 +56,25 @@ describe('Enter behavior Jodit Editor Tests', function() {
             expect(editor.getEditorValue()).to.be.equal('<h1>Some </h1><h1> a text</h1>');
 
         })
+        it('If Enter was pressed inside empty LI it should be removed and cursor must be after UL|OL', function () {
+            var editor = new Jodit(appendTestArea())
+            editor.setEditorValue('<ul><li>Some text</li><li> </li></ul>');
+
+            var sel = editor.win.getSelection(),
+                range = editor.doc.createRange();
+
+            range.setStart(editor.editor.firstChild.lastChild.firstChild, 1);
+            range.collapse(true);
+            sel.removeAllRanges();
+            sel.addRange(range);
+
+            simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
+
+            editor.selection.insertNode(editor.doc.createTextNode(' a '))
+
+            expect(editor.getEditorValue()).to.be.equal('<ul><li>Some text</li></ul><p> a </p>');
+
+        })
         it('If Enter was pressed inside H1-6 cursor should be move in new paragraph below', function () {
             var editor = new Jodit(appendTestArea())
             editor.setEditorValue('<h1>Some text</h1>');
@@ -135,6 +154,21 @@ describe('Enter behavior Jodit Editor Tests', function() {
             simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
             simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
             expect(editor.getEditorValue()).to.be.equal('<p></p><p></p><p></p><p></p>');
+        })
+        it('Content editor after pressing the Enter key must contain the specified tag settings and afte this cursor must be inside that tag', function () {
+            var editor = new Jodit(appendTestArea())
+            editor.setEditorValue('');
+
+            simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
+            editor.selection.insertNode(document.createTextNode('test'));
+
+            simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
+            editor.selection.insertNode(document.createTextNode('test2'));
+
+            simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
+            editor.selection.insertNode(document.createTextNode('test3'));
+
+            expect(editor.getEditorValue()).to.be.equal('<p></p><p>test</p><p>test2</p><p>test3</p>');
         })
         it('Split paragraph', function () {
             var editor = new Jodit(appendTestArea())
@@ -233,6 +267,28 @@ describe('Enter behavior Jodit Editor Tests', function() {
             simulateEvent('keydown',    Jodit.KEY_ENTER, editor.editor);
 
             expect(editor.getEditorValue()).to.be.equal('<table><tbody><tr><td>split <br>text</td></tr></tbody></table>');
+        })
+        it('Press packspace after enter', function () {
+            var editor = new Jodit(appendTestArea())
+
+            editor.setEditorValue('test');
+
+            var range = document.createRange();
+
+
+            // set cursor in start of element
+            range.selectNodeContents(editor.editor.firstChild);
+            range.collapse(false);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+
+
+            simulateEvent('keydown',    Jodit.KEY_ENTER, editor.editor);
+            simulateEvent('keydown',    Jodit.KEY_BACKSPACE, editor.editor);
+
+            editor.selection.insertNode(document.createTextNode(' 2 '));
+
+            expect(editor.getEditorValue()).to.be.equal('<p>test 2 </p>');
         })
     });
     afterEach(function () {

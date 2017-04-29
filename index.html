@@ -22,15 +22,8 @@
     <table style="width:100%">
         <tr>
             <td style="width:50%;vertical-align: top">
-                <div class="buttons">
-                    <button id="source">source</button>
-                    <button id="merge">Merge</button>
-                    <button id="splithorizontal">Split by Horizontal</button>
-                    <button id="splitvertical">Split by vertical</button>
-                    <button id="undo">Undo</button>
-                    <button id="redo">Redo</button>
-                </div>
-                <textarea id="editor"></textarea>
+                <textarea id="editor">Jodit Editor is a lightweight WYSIWYG HTML Editor written in Javascript that enables rich text editing capabilities for your applications. <br>
+Its complete documentation, specially designed framework plugins and tons of examples make it easy to integrate. We're continuously working to add in new features and take the Javascript web WYSIWYG editing capabilities beyond its current limits.</textarea>
             </td>
             <td><textarea id="mirror"></textarea></td>
         </tr>
@@ -46,21 +39,18 @@
             min-height: 200px;
             border:1px solid #ccc;
         }
+        body {
+            font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
     </style>
 </body>
-<link rel="stylesheet" href="app.css" />
+<!--<link rel="stylesheet" href="dist/jodit.css" />-->
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,700,700i" rel="stylesheet">
+
 <script src="dist/jodit.js"></script>
 <script>
-    editor = new Jodit('#editor', {
-        defaultMode: Jodit.MODE_SOURCE,
-        events: {
-            afterSetMode: function () {
-                source.innerText = this.getMode() === Jodit.MODE_WYSIWYG ? 'Source' : 'WYSIWYG';
-            }
-        }
-    });
-    Jodit.instances.editor.selection.insertNode(document.createElement('span'));
-    Jodit.instances.editor.selection.insertNode(document.createTextNode('Test'));
+    editor = new Jodit('#editor');
+
     function simpleKeys (original) {
         var newobject = {};
         for(var key in original) {
@@ -85,18 +75,37 @@
     editor.editor.addEventListener('mouseup', callback)
     editor.editor.addEventListener('input', callback)
     editor.events.on('change', callback)
-    var fill = [];
-    fill.length = 3;
-    fill.fill(10);
-    editor.setEditorValue('<table style="width:100%">' +
-        fill.map(function (i, row) {
-            return '<tr>' +
-                fill.map(function (j, column) {
-                    return '<td>' + row + ',' + column + '</td>'
-                }).join('') +
-                '</tr>';
-        }).join('') +
-        '</table>');
+
+
+    editor.setEditorValue('test');
+
+    var range = document.createRange();
+
+
+    // set cursor in start of element
+    range.selectNodeContents(editor.editor.firstChild);
+    range.collapse(false);
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+
+
+    simulateEvent('keydown',    Jodit.KEY_ENTER, editor.editor);
+    simulateEvent('keydown',    Jodit.KEY_BACKSPACE, editor.editor);
+
+    editor.selection.insertNode(document.createTextNode(' 2 '));
+
+//    var fill = [];
+//    fill.length = 3;
+//    fill.fill(10);
+//    editor.setEditorValue('<table style="width:100%">' +
+//        fill.map(function (i, row) {
+//            return '<tr>' +
+//                fill.map(function (j, column) {
+//                    return '<td>' + row + ',' + column + '</td>'
+//                }).join('') +
+//                '</tr>';
+//        }).join('') +
+//        '</table>');
 
 
 
@@ -107,47 +116,6 @@
 //    simulateEvent('mousemove', 1, editor.editor.querySelectorAll('td')[7]);
 //    simulateEvent('mouseup', 1, editor.editor.querySelectorAll('td')[7]);
     //editor.execCommand('mergeSelectedCells')
-    merge.addEventListener('mousedown', function () {
-        editor.execCommand('mergeSelectedCells')
-        return false;
-    })
-    splitvertical.addEventListener('mousedown', function () {
-        editor.execCommand('splitVertical')
-        return false;
-    })
-    splithorizontal.addEventListener('mousedown', function () {
-        editor.execCommand('splitHorizontal')
-        return false;
-    })
-    redo.addEventListener('mousedown', function (e) {
-        editor.execCommand('redo')
-        e.preventDefault();
-        return false;
-    })
-    undo.addEventListener('mousedown', function (e) {
-        editor.execCommand('undo')
-        e.preventDefault();
-        return false;
-    })
-
-    editor.events.on('canRedo', function (can) {
-        if (can) {
-            redo.removeAttribute('disabled')
-        } else {
-            redo.setAttribute('disabled', true)
-        }
-    });
-    editor.events.on('canUndo', function (can) {
-        if (can) {
-            undo.removeAttribute('disabled')
-        } else {
-            undo.setAttribute('disabled', true)
-        }
-    });
-    source.addEventListener('mousedown', function () {
-        editor.toggleMode()
-        return false;
-    })
 
     callback();
 </script>

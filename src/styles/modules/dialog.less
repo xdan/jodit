@@ -1,0 +1,329 @@
+@import (reference) "../variables";
+.jodit_dialog_box{
+	box-sizing:border-box;
+	* {
+		box-sizing:border-box;
+	}
+    .jodit_elfinder {
+        &, & * {
+            box-sizing: initial; 
+        }
+    }
+	display:none;
+	width:0;
+	height:0;
+	border:0;
+	position:absolute;
+	will-change:left, top, width, height;
+    .jodit_dialog_overlay{
+		position:fixed;
+		top:0px;
+		left:0px;
+		width: 100%;
+		height: 100%;
+		z-index:@dialog_overlay_z_index;
+		text-align:center;
+		white-space: nowrap;
+		overflow: auto;
+		display:none;
+		background-color: rgba(0, 0, 0, 0.5);
+	}
+	&.jodit_modal .jodit_dialog_overlay{
+		display:block;
+	}
+	&.active{
+		display:block;
+	}
+	.jodit_dialog{
+		z-index:@dialog_z_index;
+		display:inline-block;
+		vertical-align:middle;
+		white-space: normal;
+		text-align: left;
+		position: fixed;
+		left:0px;
+		top:0px;
+		background-color:#fff;
+		box-shadow: 0 10px 20px rgba(0,0,0,0.19),0 6px 6px rgba(0,0,0,0.23);
+		min-width:200px;
+		min-height:100px;
+        @media (max-width: @small) {
+            max-width: 100%;
+            width: 100% !important;
+            height: 100% !important;
+            top: 0 !important;
+            left: 0 !important;
+        }
+		.jodit_promt{
+			max-width:300px;
+			min-width:200px;
+			padding: 10px;
+			word-break: break-word;
+			label{
+				margin-bottom:5px;
+				display: block;
+			}
+			input[type=text] {
+				display: block;
+				border: 1px solid #ccc;
+				background: #fff;
+				width: 100%;
+				height: 28px;
+				line-height: 16px;
+				padding: 3px 6px;
+				outline: none;
+			}
+		}
+		.jodit_alert{
+			max-width:300px;
+			min-width:200px;
+			padding: 10px;
+			word-break: break-word;
+		}
+		.jodit_button{
+			padding: 0;
+			margin: 0;
+			border: 0;
+			display:inline-block;
+			vertical-align:top;
+			width: 32px;
+			height: 48px;
+			line-height:48px;
+			text-align:center;
+			cursor:pointer;
+			text-decoration:none;
+            
+			&:not(.disabled):hover{
+				background-color: @button_bg_hover;
+			}
+			&.disabled {
+				opacity:.7;
+			}
+		}
+        .jodit_input{
+            border: 1px solid #ccc;
+            padding:5px;
+            background-color: #fff;
+            outline:0;
+            width:120px;
+            margin-left: 10px;
+            font: 13px Arial;
+            height: 28px;
+        }
+        select.jodit_input {
+            width:75px;
+        }
+
+        .jodit_button .jodit_icon,
+        .jodit_dialog_header .jodit_icon {
+            width: 16px;
+            height: 16px;
+        }
+
+		.jodit_dialog_header{
+			text-align:left;
+			color: #222222;
+			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.16), 0 1px 2px rgba(0, 0, 0, 0.23);
+			cursor:move;
+			height:48px;
+			overflow:hidden;
+			h4 {
+				font-size: 18px;
+				padding: 0;
+				padding-left: 20px;
+				margin: 0;
+				font-weight: 400;
+				line-height: 48px;
+				display: inline-block;
+				vertical-align:top;
+                @media (max-width: @small) {
+                    padding-left: 0;
+                }
+			}
+            button {
+                margin-right: 10px;
+            }
+			a {
+				color: #222222;
+				font-size: 24px;
+				font-weight: 700;
+				display: inline-block;
+				transition: background-color 0.2s ease 0s;
+				width:48px;
+				height:48px;
+				vertical-align:top;
+				line-height: 48px;
+				text-decoration:none;
+				text-align:center;
+				float:right;
+				&:hover {
+					background-color: @button_bg_hover;
+				}
+			}
+		}
+		.jodit_dialog_content{
+			height: calc(~"100% - 48px");
+            overflow:auto;
+            .jodit_form_group {
+                margin-bottom: 10px;
+                padding: 0 10px;
+                &:first-child{
+                    margin-top: 10px;
+                }
+                label {
+                    display: inline-block;
+                    max-width: 100%;
+                    margin-bottom: 5px;
+                    font-weight: 700;
+                }
+                select,
+                input {
+                    &.select,
+                    &[type=text],
+                    &[type=number],
+                    &[type=url] {
+                        display: block;
+                        width: 100%;
+                        height: 34px;
+                        padding: 6px 4px;
+                        font-size: 14px;
+                        line-height: 1.42857143;
+                        color: #555;
+                        background-color: #fff;
+                        background-image: none;
+                        border: 1px solid #ccc;
+                        border-radius: 0px;
+                        box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+                        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+                        &:focus {
+                            border-color: #66afe9;
+                            outline: 0;
+                            box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+                        }
+                        &[disabled] {
+                            background-color: #f0f0f0;
+                            color: #ccc;                           
+                        }
+                    }
+                }
+                .jodit_input_group{
+                    display: table;
+                    border-collapse: separate;
+                    width: 100%;
+                    > * {
+                        vertical-align: middle;
+                        display: table-cell;
+                        height: 34px;
+                    }
+                    > input {
+                        width: 100%;
+                        float: left;
+                        margin: 0 !important;
+                    }
+                    &-buttons {
+                        width:1%;
+                        font-size: 0;
+                        white-space: nowrap;
+                        vertical-align: middle;
+                        > a {
+                            text-align:center;
+                            display: inline-block;
+                            border: 1px solid #ccc;
+                            margin-left:-1px;
+                            position: relative;
+                            height: 34px;
+                            line-height: 34px;
+                        }
+                    }
+                }
+            }
+		}
+		.jodit_dialog_footer{
+			padding:0 10px;
+			padding-top:10px;
+			text-align:center;
+            height:48px;
+            display:none;
+			.jodit_button{
+				width:auto;
+				margin-bottom:10px;
+				height: 32px;
+				line-height:32px;
+				padding:0px 15px;
+				background-color: #ccc;
+				border: 1px solid #ccc;
+				color:#000;
+                .jodit_icon {
+                    vertical-align: text-top;
+                }
+				&:focus{
+					border: 1px solid #8bade4;
+					outline: 1px solid #82b2e8;
+				}
+			}
+			.jodit_button:nth-child(n + 2){
+				margin-left:10px;
+			}
+		}
+		&.with_footer .jodit_dialog_content{
+            height: calc(~"100% - 96px");
+        }
+		&.with_footer .jodit_dialog_footer{
+            display:block;
+        }
+        .jodit_dialog_resizer{
+			position:absolute;
+			bottom:0px;
+			right:0px;
+
+			cursor:se-resize;
+            
+            width: 0;
+            height: 0;
+            display: inline-block;
+
+            border: 8px solid rgba(0, 0, 0, .2);
+            border-left-color: rgba(0, 0, 0, 0) !important;
+            border-top-color: rgba(0, 0, 0, 0) !important;
+             // background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABZJREFUeNpi2r9//38gYGAEESAAEGAAasgJOgzOKCoAAAAASUVORK5CYII=);
+			&:after {
+                content: "";
+                display: inline-block;
+                width: 0;
+                height: 0;
+
+                position: absolute;
+                border: 3px solid #fff;
+                border-top: 3px solid rgba(0, 0, 0, 0);
+                border-left: 3px solid rgba(0,0,0,0);
+            }
+			&:hover{
+				border-color: rgba(0, 0, 0, .6);
+			}
+		}
+        @media (max-width: @small) {
+            .jodit_dialog_resizer{
+                display: none;
+            }
+        }
+	}
+    &-fullsize .jodit_dialog{
+        top:0 !important;
+        bottom:0 !important;
+        left:0 !important;
+        right:0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        .jodit_dialog_resizer{
+            display: none;
+        }
+    }
+}
+
+@media (max-width: @medium) {
+    .jodit_dialog_header_title,
+    .jodit_dialog_header_fullsize,
+    .jodit_dialog_header .jodit_input {
+        display: none !important;
+    }
+}

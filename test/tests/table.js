@@ -8,6 +8,22 @@ describe('Tables Jodit Editor Tests', function() {
             editor.selection.insertNode(editor.node.create('table'));
             expect(editor.container.querySelectorAll('.jodit_table_resizer').length).to.equal(1);
         });
+        it('Process wrong tabel', function() {
+            var editor = new Jodit('#table_editor');
+            editor.setEditorValue('<table>' +
+                    '<tr>' +
+                        '<td class="jodit_selected_cell">1</td>' +
+                        '<td class="jodit_selected_cell">2</td>' +
+                        '<td rowspan="2">3</td>' +
+                    '</tr>' +
+                    '<tr><td>4</td></tr>' +
+                '</table>')
+
+            var table = new Jodit.modules.Table(editor);
+            table.mergeSelected(editor.editor.firstChild);
+
+            expect(editor.container.querySelectorAll('.jodit_table_resizer').length).to.equal(1);
+        });
         it('Method getRowsCount should return TR count', function() {
             var editor = new Jodit('#table_editor');
 
@@ -279,12 +295,15 @@ describe('Tables Jodit Editor Tests', function() {
 
                 editor.setEditorValue(
                     '<table>' +
-                    '<tbody>' +
-                    '<tr>' +
-                        '<td colspan="3" class="jodit_selected_cell">1</td>' +
-                        '<td class="jodit_selected_cell" rowspan="4">2</td>' +
-                    '</tr>' +
-                    '</tbody>' +
+                        '<tbody>' +
+                            '<tr>' +
+                                '<td colspan="3" class="jodit_selected_cell" rowspan="4">1</td>' +
+                                '<td class="jodit_selected_cell" rowspan="4">2</td>' +
+                            '</tr>' +
+                            '<tr></tr>' +
+                            '<tr></tr>' +
+                            '<tr></tr>' +
+                        '</tbody>' +
                     '</table>');
 
                 var table = new Jodit.modules.Table(editor);
@@ -417,7 +436,7 @@ describe('Tables Jodit Editor Tests', function() {
                 expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal(
                     '<table style="width: 100px;">' +
                         '<tbody>' +
-                            '<tr><td style="width: 17%;">0,0</td><td style="width: 17%;"><br></td><td>0,1</td></tr>' +
+                            '<tr><td style="width: 18.5%;">0,0</td><td style="width: 18.5%;"><br></td><td>0,1</td></tr>' +
                             '<tr><td colspan="2">1,0</td><td>1,1</td></tr>' +
                         '</tbody>' +
                     '</table>'
@@ -428,6 +447,8 @@ describe('Tables Jodit Editor Tests', function() {
     describe('Work with tables', function() {
         it('Create table and insert into cell some text', function() {
             var editor = new Jodit('#table_editor');
+
+            editor.setEditorValue('');
 
             var table = editor.node.create('table'),
                 tr = editor.node.create('tr'),
@@ -1043,7 +1064,7 @@ describe('Tables Jodit Editor Tests', function() {
                 });
 
                 expect(editor.editor.innerHTML.toLowerCase()).to.equal(
-                    '<table style="width: 75%; border-collapse: separate;" cellspacing="0"><tbody>' +
+                    '<table style="width: 93.75%; border-collapse: separate;" cellspacing="0"><tbody>' +
                     '<tr>' +
                     '<td>1</td>' +
                     '<td>2</td>' +
@@ -1080,7 +1101,7 @@ describe('Tables Jodit Editor Tests', function() {
                 });
 
                 
-                expect(editor.editor.innerHTML.toLowerCase()).to.equal('<table style="width: 25%; margin-left: 25%;">' +
+                expect(editor.editor.innerHTML.toLowerCase()).to.equal('<table style="width: 31.25%; margin-left: 31.25%;">' +
                     '<tbody>' +
                     '<tr>' +
                     '<td>1</td>' +
