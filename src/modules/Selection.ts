@@ -199,8 +199,6 @@ export default class Selection extends Component{
             sel = this.win.getSelection();
 
             if (!this.isCollapsed()) {
-                //sel.getRangeAt(0).extractContents();
-                //sel.getRangeAt(0).collapse(true);
                 this.parent.execCommand('Delete');
             }
 

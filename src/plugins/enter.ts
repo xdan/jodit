@@ -1,5 +1,5 @@
 import Jodit from '../jodit';
-import {trim} from "../modules/Helpers"
+import {trim,$$} from "../modules/Helpers"
 import * as consts from '../constants';
 /**
  * Insert default paragraph
@@ -26,49 +26,7 @@ export const insertParagraph = (editor, fake ?: Node, wrapperTag ?: string) => {
     }
     return p;
 };
-/**
- *
- * @param {Node} current
- * @param {Range} range
- * @param {Jodit} editor
- * @return {Element}
- */
-export const wrap = (current, range, editor): HTMLElement => {
-    let tmp, first = current, last = current, offset = range.startOffset;
-    do {
-        tmp = editor.node.prev(first, (elm) => (elm && !editor.node.isBlock(elm)), undefined, false);
-        if (tmp) {
-            first = tmp;
-        }
-    } while(tmp);
-    do {
-        tmp = editor.node.next(last, (elm) => (elm && !editor.node.isBlock(elm)), undefined, false);
-        if (tmp) {
-            last = tmp;
-        }
-    } while(tmp);
 
-    let newRange = editor.doc.createRange();
-    newRange.setStartBefore(first);
-    newRange.setEndAfter(last);
-    let fragment = newRange.extractContents();
-
-    let p = insertParagraph(editor);
-    if (fragment.textContent){
-        p.removeChild(p.firstChild);
-        p.appendChild(fragment);
-    }
-
-
-    let sel = editor.win.getSelection()
-    range = editor.doc.createRange();
-
-    range.setStart(current, offset);
-    sel.removeAllRanges();
-    sel.addRange(range);
-
-    return p;
-}
 
 Jodit.plugins.enter = function (editor: Jodit) {
     editor.events.on('keyup', () => {
@@ -112,10 +70,11 @@ Jodit.plugins.enter = function (editor: Jodit) {
             let currentBox = current ? editor.node.up(current, (node) => (editor.node.isBlock(node))) : false;
 
             if (!currentBox && current) {
-                currentBox = wrap(current, range, editor);
+                currentBox = editor.node.wrap(current);
                 sel = editor.win.getSelection();
                 range = sel.rangeCount ? sel.getRangeAt(0) : editor.doc.createRange();
             }
+
             if (currentBox) {
                 if (!editor.node.canSplitBlock(currentBox)) {
                     let br = editor.doc.createElement('br');
@@ -126,20 +85,53 @@ Jodit.plugins.enter = function (editor: Jodit) {
 
                 if (currentBox.nodeName === 'LI') {
                     if (trim(currentBox.textContent || currentBox['innerText']).length === 0) {
-                        fake = editor.selection.setCursorAfter(editor.node.closest(currentBox, 'ol|ul') || currentBox);
+                        const ul = <Node>editor.node.closest(currentBox, 'ol|ul');
+                        /*fake = editor.selection.setCursorAfter(editor.node.closest(currentBox, 'ol|ul') || currentBox);
+                        currentBox.parentNode.removeChild(currentBox);
+                        insertParagraph(editor, fake);*/
+                        /*let leftRange = editor.doc.createRange(),
+                            ul = <Node>editor.node.closest(currentBox, 'ol|ul');
+
+                        leftRange.setStartBefore(ul);
+                        leftRange.setEnd(range.startContainer, range.startOffset);
+
+                        let fragment = leftRange.extractContents();
+                        ul.parentNode.insertBefore(fragment, ul);
+
+                        editor.selection.setCursorIn(currentBox, true);
+                        return false;*/
+
+                        // If there is no LI element before
+                        if (!editor.node.prev(currentBox, elm => elm && elm.tagName === 'LI', ul)) {
+                            fake = editor.selection.setCursorBefore(ul);
+                            // If there is no LI element after
+                        } else if (!editor.node.next(currentBox, elm => elm && elm.tagName === 'LI', ul)) {
+                            fake = editor.selection.setCursorAfter(ul);
+                        } else {
+                            let leftRange = editor.doc.createRange();
+                            leftRange.setStartBefore(ul);
+                            leftRange.setEndAfter(currentBox);
+                            let fragment = leftRange.extractContents();
+                            ul.parentNode.insertBefore(fragment, ul);
+                            fake = editor.selection.setCursorBefore(ul);
+                        }
+
                         currentBox.parentNode.removeChild(currentBox);
                         insertParagraph(editor, fake);
+                        if (!$$('li', ul).length) {
+                            ul.parentNode.removeChild(ul);
+                        }
                         return false;
+
                     }
                 }
 
-                //if (!editor.node.prev(current, (elm) => (elm), currentBox) && (current.nodeType !== Node.TEXT_NODE || range.startOffset === 0)) {
+
                 if (editor.selection.cursorInEdge(true)) {
                     // if we are in the left edge of paragraph
                     fake = editor.selection.setCursorBefore(currentBox);
-                    insertParagraph(editor, fake);
+                    insertParagraph(editor, fake, currentBox.nodeName === 'LI' ? 'li' : editor.options.enter);
                     editor.selection.setCursorIn(currentBox, true);
-                //} else if ((editor.node.next(current, (elm) => (elm && elm.tagName !== 'BR' && (elm.nodeType !== Node.TEXT_NODE || trim(elm.nodeValue).length)), currentBox)) || (current.nodeType === Node.TEXT_NODE && range.startOffset !== current.nodeValue.length)) {
                 } else if (!editor.selection.cursorInEdge(false)) {
                     // if we are not in right edge of paragraph
                     // split p,h1 etc on two parts

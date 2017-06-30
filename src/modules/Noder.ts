@@ -1,8 +1,56 @@
+import Jodit from '../jodit';
 import Component from './Component';
 import * as consts from '../constants';
 import {each} from './Helpers'
 
 export default class Noder extends Component{
+    /**
+     *
+     * @param {Node} current
+     * @param {String|Node} tag
+     * @param {Jodit} editor
+     * @return {Element}
+     */
+    wrap = (current, tag: Node|string = 'p'): HTMLElement => {
+        let tmp, first = current, last = current;
+
+        let selInfo = this.parent.selection.save();
+
+        do {
+            tmp = this.prev(first, (elm) => (elm && !this.isBlock(elm)), undefined, false);
+            if (tmp) {
+                first = tmp;
+            }
+        } while(tmp);
+
+        do {
+            tmp = this.next(last, (elm) => (elm && !this.isBlock(elm)), undefined, false);
+            if (tmp) {
+                last = tmp;
+            }
+        } while(tmp);
+
+
+        let p = typeof tag === 'string' ? this.doc.createElement(this.parent.options.enter) : tag;
+
+        first.parentNode.insertBefore(p, first);
+
+        let next = first;
+        while (next) {
+            next = first.nextSibling;
+            p.appendChild(first);
+            if (first === last) {
+                break;
+            }
+            first = next;
+        }
+
+
+        this.parent.selection.restore(selInfo);
+
+        return p;
+    }
+
     /**
      *
      * @param node
@@ -103,6 +151,7 @@ export default class Noder extends Component{
     isBlock(node) {
         return (node && node.tagName && consts.IS_BLOCK.test(node.tagName))
     }
+
     /**
      * It's block and it can be split
      *

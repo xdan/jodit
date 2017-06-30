@@ -1,0 +1,62 @@
+@import (reference) "../variables";
+.jodit_iframe_wrapper {
+  display: block;
+  clear: both;
+  user-select: none;
+  position: relative;
+  &:after {
+    position: absolute;
+    content: '';
+    z-index: 1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    cursor: pointer;
+    display: block;
+    background: rgba(0,0,0,0);
+  }
+}
+.jodit_resizer {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  border: 1px solid @resize_border_color;
+  top:0px;
+  left:0px;
+  display: none;
+  pointer-events: none;
+
+  * {
+    box-sizing: border-box;
+  }
+  > i {
+    position: absolute;
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+
+    z-index:4;
+    pointer-events: all ;
+
+    border: 1px solid @resize_border_color;
+    background-color: #10732e;
+
+    &:nth-child(1) {
+      left:-5px; top:-5px;
+      cursor: nw-resize;
+    }
+    &:nth-child(2) {
+      right:-5px; top:-5px;
+      cursor: ne-resize;
+    }
+    &:nth-child(3) {
+      right:-5px; bottom:-5px;
+      cursor: se-resize;
+    }
+    &:nth-child(4) {
+      left:-5px; bottom:-5px;
+      cursor: sw-resize;
+    }
+  }
+}

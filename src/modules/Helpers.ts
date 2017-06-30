@@ -278,7 +278,6 @@ export const normalizeSize = (value) => {
     return value;
 }
 
-
 export const getContentWidth = (element, win) => {
     let pi = (value) => (parseInt(value, 10)),
         style = win.getComputedStyle(element),
@@ -531,7 +530,7 @@ export const parseQuery = (qstr) => {
  * @param {int} [height=345]
  * return {string} embed code
  */
-export const convertMediaURLToVideoEmbed = (url, width, height) => {
+export const convertMediaURLToVideoEmbed = (url, width:number = 400, height: number = 345) => {
     if (!isURL(url)) {
         return url;
     }
@@ -598,3 +597,30 @@ export const browser = (browser: string): boolean => {
 
     return match[1] === browser;
 };
+
+
+/**
+ * Calc relative offset by start editor field
+ *
+ * @method offset
+ * @param {HTMLElement} elm
+ * @return {{top: number, left: number}} returns an object containing the properties top and left.
+ */
+export const offset =  (elm: HTMLElement) => {
+    let rect = elm.getBoundingClientRect(),
+        doc = elm.ownerDocument,
+        body = doc.body,
+        docElem = doc.documentElement,
+        win = doc.defaultView || doc['parentWindow'],
+        scrollTop = win.pageYOffset || docElem.scrollTop || body.scrollTop,
+        scrollLeft = win.pageXOffset || docElem.scrollLeft || body.scrollLeft,
+        clientTop = docElem.clientTop || body.clientTop || 0,
+        clientLeft = docElem.clientLeft || body.clientLeft || 0,
+        top  = rect.top +  scrollTop - clientTop,
+        left = rect.left + scrollLeft - clientLeft;
+
+    return {
+        top: Math.round(top),
+        left: Math.round(left)
+    };
+}

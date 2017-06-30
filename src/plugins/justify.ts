@@ -1,6 +1,6 @@
 import Jodit from '../jodit';
 import {$$} from '../modules/Helpers';
-import {wrap} from './enter';
+
 // import * as consts from '../constants';
 
 Jodit.plugins.justify = function (editor: Jodit) {
@@ -47,7 +47,7 @@ Jodit.plugins.justify = function (editor: Jodit) {
                 let sel = editor.win.getSelection(),
                     range = sel.rangeCount ? sel.getRangeAt(0) : editor.doc.createRange();
 
-                currentBox = wrap(current, range, editor);
+                currentBox = editor.node.wrap(current);
             }
 
             justify(currentBox);

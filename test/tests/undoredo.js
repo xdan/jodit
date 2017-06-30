@@ -36,12 +36,20 @@ describe('Undo/Redo behaviors', function() {
             });
 
 
-            editor.setEditorValue('test ');
+            editor.setEditorValue('test');
+
+            var range = document.createRange();
+            range.setEnd(editor.editor.firstChild, 4);
+            range.collapse(false);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+
             editor.selection.insertNode(editor.doc.createTextNode('test2'));
             editor.execCommand('undo');
-            expect(editor.getEditorValue()).to.equal('test ');
+            expect(editor.getEditorValue()).to.equal('test');
+
             editor.execCommand('redo');
-            expect(editor.getEditorValue()).to.equal('test2test ');
+            expect(editor.getEditorValue()).to.equal('testtest2');
         });
     });
     after(function() {

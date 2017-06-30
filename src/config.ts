@@ -534,34 +534,56 @@ const config: any = {
                 }
             },
             popap: ({editor}) => {
-                let sel = editor.win.getSelection(), color = '', bg_color = '', current, tabs;
+                let sel = editor.win.getSelection(), color = '', bg_color = '', current, tabs,
+                    checkRemoveOpportunity = () => {
+                        if (current && (!current.hasAttribute("style") || !current.getAttribute("style").length)) {
+                            let selInfo = editor.selection.save();
+                            while (current.firstChild) {
+                                current.parentNode.insertBefore(current.firstChild, current);
+                            }
+                            current.parentNode.removeChild(current)
+                            current = null;
+                            editor.selection.restore(selInfo);
+                        }
+                    },
+                    tryGetCurrent = () => {
+                        if (sel && sel.anchorNode) {
+                            [sel.anchorNode, sel.anchorNode.parentNode].forEach((elm) => {
+                                if (elm && elm.hasAttribute && elm.hasAttribute("style") && elm.getAttribute('style').indexOf('background') !== -1 && elm.style.backgroundColor) {
+                                    current = elm;
+                                    bg_color = editor.win.getComputedStyle(current).getPropertyValue('background-color');
+                                }
 
-                if (sel && sel.anchorNode && sel.anchorNode.parentNode.hasAttribute("style") && sel.anchorNode.parentNode.getAttribute('style').indexOf('background') !== -1 && sel.anchorNode.parentNode.getAttribute('style').indexOf('background-color')) {
-                    current = sel.anchorNode.parentNode;
-                    bg_color = dom(current).css('background-color');
-                }
+                                if (elm && elm.hasAttribute && elm.hasAttribute('style') && elm.getAttribute('style').indexOf('color') !== -1 && elm.style.color) {
+                                    current = elm;
+                                    color = current.style.color;
+                                }
+                            })
+                        }
+                    };
 
-                if (sel && sel.anchorNode && sel.anchorNode.parentNode.hasAttribute('style') && sel.anchorNode.parentNode.getAttribute('style').indexOf('color') !== -1 && sel.anchorNode.parentNode.style.color) {
-                    current = sel.anchorNode.parentNode;
-                    color = current.style.color;
-                }
+                tryGetCurrent();
 
                 let widget = new Jodit.modules.Widget(editor);
 
                 const backgroundTag = widget.create('ColorPicker', (value) => {
                     if (!current) {
                         editor.execCommand('background', false, value);
+                        tryGetCurrent();
                     } else {
                         current.style.backgroundColor = value;
                     }
+                    checkRemoveOpportunity();
                 }, bg_color);
 
                 const colorTab = widget.create('ColorPicker', (value) => {
                     if (!current) {
                         editor.execCommand('forecolor', false, value);
+                        tryGetCurrent();
                     } else {
                         current.style.color = value;
                     }
+                    checkRemoveOpportunity();
                 }, color);
 
                 if (editor.options.colorPickerDefaultTab === 'background') {
@@ -726,38 +748,39 @@ const config: any = {
 
                 let selInfo = editor.selection.save();
 
-                form.addEventListener('submit', () => {
-                        editor.selection.restore(selInfo);
-                        let a = dom(current || '<a></a>');
+                form.addEventListener('submit', (event: Event) => {
+                    event.preventDefault()
+                    editor.selection.restore(selInfo);
+                    let a = dom(current || '<a></a>');
 
-                        if (!editor.helper.isURL(form.querySelector('input[name=url]').value)) {
-                            form.querySelector('input[name=url]').focus();
-                            form.querySelector('input[name=url]').classList.add('jodit_error');
-                            return false;
-                        }
-
-
-                        a.setAttribute('href', form.querySelector('input[name=url]').value);
-                        a.innerText = form.querySelector('input[name=text]').value;
-
-                        if (form.querySelector('querySelector[name=target]').checked) {
-                            a.setAttribute('target', '_blank');
-                        } else {
-                            a.removeAttribute('target');
-                        }
-
-                        if (form.querySelector('input[name=nofollow]').checked) {
-                            a.setAttribute('rel', 'nofollow');
-                        } else {
-                            a.removeAttribute('rel');
-                        }
-
-                        if (!current) {
-                            editor.selection.insertNode(a);
-                        }
-
+                    if (!editor.helper.isURL(form.querySelector('input[name=url]').value)) {
+                        form.querySelector('input[name=url]').focus();
+                        form.querySelector('input[name=url]').classList.add('jodit_error');
                         return false;
-                    });
+                    }
+
+
+                    a.setAttribute('href', form.querySelector('input[name=url]').value);
+                    a.innerText = form.querySelector('input[name=text]').value;
+
+                    if (form.querySelector('querySelector[name=target]').checked) {
+                        a.setAttribute('target', '_blank');
+                    } else {
+                        a.removeAttribute('target');
+                    }
+
+                    if (form.querySelector('input[name=nofollow]').checked) {
+                        a.setAttribute('rel', 'nofollow');
+                    } else {
+                        a.removeAttribute('rel');
+                    }
+
+                    if (!current) {
+                        editor.selection.insertNode(a);
+                    }
+
+                    return false;
+                });
 
                 return form;
             },
@@ -787,7 +810,9 @@ const config: any = {
                 tab[Jodit.modules.Toolbar.getIcon('link') + '&nbsp;' + editor.i18n('Link')] = bylink;
                 tab[Jodit.modules.Toolbar.getIcon('source') + '&nbsp;' + editor.i18n('Code')] = bycode;
 
-                bycode.addEventListener('submit', () => {
+                bycode.addEventListener('submit', (event) => {
+                    event.preventDefault();
+
                     if (!trim(bycode.querySelector('textarea[name=code]').value)) {
                         bycode.querySelector('textarea[name=code]').focus();
                         bycode.querySelector('textarea[name=code]').classList.add('jodit_error');
@@ -798,7 +823,8 @@ const config: any = {
                     return false;
                 });
 
-                bylink.addEventListener('submit',  () => {
+                bylink.addEventListener('submit',  (event) => {
+                    event.preventDefault();
                     if (!editor.helper.isURL(bylink.querySelector('input[name=code]').value)) {
                         bylink.querySelector('input[name=code]').focus();
                         bylink.querySelector('input[name=code]').classList.add('jodit_error');

@@ -1,5 +1,4 @@
 import Jodit from '../jodit';
-import {wrap} from './enter';
 // import {wrapAndSelect} from './bold';
 // import {normalizeColor} from '../modules/Helpers';
 // import * as consts from '../constants';
@@ -17,9 +16,7 @@ Jodit.plugins.formatblock = function (editor) {
             let selection = editor.selection.save();
 
             if (!currentBox && current) {
-                currentBox = wrap(current, range, editor);
-                sel = editor.win.getSelection();
-                range = sel.rangeCount ? sel.getRangeAt(0) : editor.doc.createRange();
+                currentBox = editor.node.wrap(current);
             }
 
             if (!currentBox) {

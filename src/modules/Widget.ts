@@ -43,7 +43,7 @@ export default class Widget extends Component {
  * });
  */
 Widget['ColorPicker'] = class extends Widget{
-    constructor(parent, callback, value) {
+    constructor(parent: Jodit, callback, value) {
         super(parent);
         const valueHex = normalizeColor(value),
             form = dom('<div class="jodit_colorpicker"></div>'),
@@ -57,7 +57,9 @@ Widget['ColorPicker'] = class extends Widget{
                    })
                 } else if (Array.isArray(colors)) {
                     colors.forEach((color) => {
-                        stack.push('<a ' + (valueHex === color ? ' class="active" ' : '') + ' title="' + color + '" style="background-color:' + color + '" data-color="' + color + '" href="javascript:void(0)"></a>');
+                        stack.push('<a ' + (valueHex === color ? ' class="active" ' : '') + ' title="' + color + '" style="background-color:' + color + '" data-color="' + color + '" href="javascript:void(0)">' +
+                                (valueHex === color ? Jodit.modules.Toolbar.getIcon('eye') : '') +
+                            '</a>');
                     })
                 }
                 return stack.join('');
@@ -78,10 +80,11 @@ Widget['ColorPicker'] = class extends Widget{
             .addEventListener('mousedown', (e) => {
                 let target = e.target;
 
-                if (target.tagName === 'SVG') {
-                    target = target.parentNode;
+                if (target.tagName.toUpperCase() === 'SVG' || target.tagName.toUpperCase() === 'PATH') {
+                    target = parent.node.closest(target.parentNode, 'A');
                 }
-                if (target.tagName !== 'A') {
+                if (target.tagName.toUpperCase() !== 'A') {
+                    console.log(target.tagName.toUpperCase());
                     return;
                 }
 
@@ -93,16 +96,20 @@ Widget['ColorPicker'] = class extends Widget{
                     active.innerHTML = '';
                 }
 
-                let color = target.getAttribute('data-color');
+                let color = target.getAttribute('data-color') || '';
 
-                target.classList.add('active');
-                target.innerHTML = Jodit.modules.Toolbar.getIcon('eye');
-                let colorRGB = hexToRgb(color);
-                target.firstChild.style.fill = 'rgb(' + (255 - colorRGB.r) + ',' + (255 - colorRGB.g) + ',' + (255 - colorRGB.b) + ')'
+
+                if (color) {
+                    target.innerHTML = Jodit.modules.Toolbar.getIcon('eye');
+                    target.classList.add('active');
+
+                    let colorRGB = hexToRgb(color);
+                    target.firstChild.style.fill = 'rgb(' + (255 - colorRGB.r) + ',' + (255 - colorRGB.g) + ',' + (255 - colorRGB.b) + ')'
+                }
 
 
                 if (callback && typeof callback === 'function') {
-                    callback.call(parent, color);
+                    callback(color);
                 }
 
 
@@ -247,8 +254,8 @@ Widget['ImageSelector'] = class extends Widget{
         }
 
         if (callbacks.url) {
-            form = dom('<form class="jodit_form">' +
-                '<input required name="url" placeholder="http://" type="text"/>' +
+            form = dom('<form onsubmit="return false;" class="jodit_form">' +
+                '<input required name="url" placeholder="http://" type="url"/>' +
                 '<input name="text" placeholder="' + editor.i18n('Alternative text') + '" type="text"/>' +
                 '<button type="submit">' + editor.i18n('Insert') + '</button>' +
                 '</form>');
@@ -262,7 +269,10 @@ Widget['ImageSelector'] = class extends Widget{
                 form.querySelector('button').innerText = editor.i18n('Update');
             }
 
-            form.addEventListener('submit', () => {
+            form.addEventListener('submit', (event) => {
+                event.preventDefault(event)
+                event.stopPropagation()
+
                 if (!editor.helper.isURL(form.querySelector('input[name=url]').value)) {
                     form.querySelector('input[name=url]').focus();
                     form.querySelector('input[name=url]').classList.add('jodit_error');
@@ -272,7 +282,7 @@ Widget['ImageSelector'] = class extends Widget{
                     callbacks.url.call(editor, form.querySelector('input[name=url]').value, form.querySelector('input[name=text]').value);
                 }
                 return false;
-            });
+            }, false);
 
             tabs[Jodit.modules.Toolbar.getIcon('link') + ' URL'] = form;
 

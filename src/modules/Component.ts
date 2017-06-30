@@ -27,20 +27,41 @@ export default class Component {
         console.warn('Method should be override')
     }
 
-    __scope:any[] = [];
-    __off() {
+    __scope: any[] = [];
+    __scopeNamespace: any = {};
+
+    __off(element: false|HTMLElement = false) {
         this.__scope.forEach((data) => {
-            data.element.removeEventListener(data.event, data.callback)
+            if (element === false || element === data.element) {
+                data.element.removeEventListener(data.event, data.callback)
+            }
         })
+        return this;
     }
-    __on(element, event, callback) {
+
+    __on(element: HTMLElement|Window, event: string, callback: (eventObject) => any) {
+        let namespace = '';
+        if (/\./.test(event)) {
+            [event, namespace] = event.split('.');
+        }
         element.addEventListener(event, callback);
-        this.__scope.push({
+
+        let eventData = {
             element,
             event,
             callback
-        });
+        }
+
+        if (this.__scopeNamespace[namespace] === undefined) {
+            this.__scopeNamespace[namespace] = [];
+        }
+
+        this.__scopeNamespace[namespace].push(eventData)
+        this.__scope.push(eventData);
+
+        return this;
     }
+
     destruct() {
         this.__off();
     }

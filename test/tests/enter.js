@@ -56,6 +56,25 @@ describe('Enter behavior Jodit Editor Tests', function() {
             expect(editor.getEditorValue()).to.be.equal('<h1>Some </h1><h1> a text</h1>');
 
         })
+        it('If Enter was pressed inside first empty LI and it was alone LI in UL it should be remove LI and UL and cursor must b inside new P', function () {
+            var editor = new Jodit(appendTestArea())
+            editor.setEditorValue('<ul><li></li></ul>');
+
+            var sel = editor.win.getSelection(),
+                range = editor.doc.createRange();
+
+            range.setStart(editor.editor.firstChild.firstChild, 0);
+            range.collapse(true);
+            sel.removeAllRanges();
+            sel.addRange(range);
+
+            simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
+
+            editor.selection.insertNode(editor.doc.createTextNode(' a '))
+
+            expect(editor.getEditorValue()).to.be.equal('<p> a </p>');
+
+        })
         it('If Enter was pressed inside empty LI it should be removed and cursor must be after UL|OL', function () {
             var editor = new Jodit(appendTestArea())
             editor.setEditorValue('<ul><li>Some text</li><li> </li></ul>');
@@ -75,6 +94,65 @@ describe('Enter behavior Jodit Editor Tests', function() {
             expect(editor.getEditorValue()).to.be.equal('<ul><li>Some text</li></ul><p> a </p>');
 
         })
+
+        it('If Enter was pressed inside empty middle LI it should split parent UL, remove LI, insert new P in the middle of two new Ul and insert cursor inside this', function () {
+            var editor = new Jodit(appendTestArea())
+            editor.setEditorValue('<ul><li>Test</li><li></li><li>Some text</li></ul>');
+
+            var sel = editor.win.getSelection(),
+                range = editor.doc.createRange();
+
+            range.setStart(editor.editor.firstChild.childNodes[1], 0);
+            range.collapse(true);
+            sel.removeAllRanges();
+            sel.addRange(range);
+
+            simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
+
+            editor.selection.insertNode(editor.doc.createTextNode(' a '))
+
+            expect(editor.getEditorValue()).to.be.equal('<ul><li>Test</li></ul><p> a </p><ul><li>Some text</li></ul>');
+
+        })
+
+        it('If Enter was pressed inside start of first(not empty) LI it should add empty LI and cursor should not move', function () {
+            var editor = new Jodit(appendTestArea())
+            editor.setEditorValue('<ul><li>Some text</li></ul>');
+
+            var sel = editor.win.getSelection(),
+                range = editor.doc.createRange();
+
+            range.setStart(editor.editor.firstChild.firstChild.firstChild, 0);
+            range.collapse(true);
+            sel.removeAllRanges();
+            sel.addRange(range);
+
+            simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
+
+            editor.selection.insertNode(editor.doc.createTextNode(' a '))
+
+            expect(editor.getEditorValue()).to.be.equal('<ul><li></li><li> a Some text</li></ul>');
+        })
+
+        it('If Enter was pressed inside start of first empty LI it should remove this LI, and insert new P element before parent UL, cursor should move to inside it', function () {
+            var editor = new Jodit(appendTestArea())
+            editor.setEditorValue('<ul><li></li><li>Some text</li></ul>');
+
+            var sel = editor.win.getSelection(),
+                range = editor.doc.createRange();
+
+            range.setStart(editor.editor.firstChild.firstChild, 0);
+            range.collapse(true);
+            sel.removeAllRanges();
+            sel.addRange(range);
+
+            simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
+
+            editor.selection.insertNode(editor.doc.createTextNode(' a '))
+
+            expect(editor.getEditorValue()).to.be.equal('<p> a </p><ul><li>Some text</li></ul>');
+        })
+
         it('If Enter was pressed inside H1-6 cursor should be move in new paragraph below', function () {
             var editor = new Jodit(appendTestArea())
             editor.setEditorValue('<h1>Some text</h1>');

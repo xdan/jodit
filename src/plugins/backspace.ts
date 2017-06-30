@@ -43,7 +43,7 @@ Jodit.plugins.backspace = function (editor) {
                         return;
                     }
                 }
-                if (!textNode.previousSibling) {
+                if (!textNode.previousSibling && startOffset === 0) {
                     let prevBox = editor.node.prev(textNode, editor.node.isBlock);
                     if (prevBox) {
                         editor.selection.setCursorIn(prevBox, false)

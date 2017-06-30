@@ -218,7 +218,7 @@ describe('Tables Jodit Editor Tests', function() {
                 table.mergeSelected(editor.editor.firstChild);
 
                 expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal(
-                    '<table style="width: 100%;">' +
+                    '<table style="width: 100%">' +
                         '<tbody>' +
                             '<tr>' +
                                 '<td class="jodit_selected_cell" rowspan="4">' +
@@ -274,7 +274,7 @@ describe('Tables Jodit Editor Tests', function() {
                 table.mergeSelected(editor.editor.firstChild);
 
                 expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal(
-                    '<table style="width: 100%;">' +
+                    '<table style="width: 100%">' +
                         '<tbody>' +
                             '<tr>' +
                                 '<td colspan="3">0,0<br>0,1<br>0,2<br></td><td>0,3</td>' +
@@ -434,9 +434,9 @@ describe('Tables Jodit Editor Tests', function() {
                 table.splitVertical(editor.editor.firstChild);
 
                 expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal(
-                    '<table style="width: 100px;">' +
+                    '<table style="width: 100px">' +
                         '<tbody>' +
-                            '<tr><td style="width: 18.5%;">0,0</td><td style="width: 18.5%;"><br></td><td>0,1</td></tr>' +
+                            '<tr><td style="width: 18.5%">0,0</td><td style="width: 18.5%"><br></td><td>0,1</td></tr>' +
                             '<tr><td colspan="2">1,0</td><td>1,1</td></tr>' +
                         '</tbody>' +
                     '</table>'
@@ -948,7 +948,7 @@ describe('Tables Jodit Editor Tests', function() {
                 expect(
                     sortAtrtibutes(editor.editor.innerHTML) // ie change position between colspan and class
                 ).to.equal(
-                    '<table style="width: 100%;"><tbody><tr><td class="jodit_selected_cell" colspan="3">0,0<br>0,1<br>0,2<br></td><td>0,3</td></tr><tr><td class="jodit_selected_cell" rowspan="3">1,0<br>2,0<br>3,0<br></td><td class="jodit_selected_cell">1,1</td><td class="jodit_selected_cell">1,2</td><td>1,3</td></tr><tr><td class="jodit_selected_cell">2,1</td><td class="jodit_selected_cell">2,2</td><td>2,3</td></tr><tr><td class="jodit_selected_cell">3,1</td><td class="jodit_selected_cell">3,2</td><td>3,3</td></tr></tbody></table>'
+                    '<table style="width: 100%"><tbody><tr><td class="jodit_selected_cell" colspan="3">0,0<br>0,1<br>0,2<br></td><td>0,3</td></tr><tr><td class="jodit_selected_cell" rowspan="3">1,0<br>2,0<br>3,0<br></td><td class="jodit_selected_cell">1,1</td><td class="jodit_selected_cell">1,2</td><td>1,3</td></tr><tr><td class="jodit_selected_cell">2,1</td><td class="jodit_selected_cell">2,2</td><td>2,3</td></tr><tr><td class="jodit_selected_cell">3,1</td><td class="jodit_selected_cell">3,2</td><td>3,3</td></tr></tbody></table>'
                 );
             });
         });

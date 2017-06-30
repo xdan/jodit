@@ -35,7 +35,7 @@
 
     var sortAtrtibutes = function (html) {
         var tag = /<([^>]+)>/g;
-        var reg = /([a-z]+)[\s]*=[\s]*"([^"]+)"/i, matches, tags = [];
+        var reg = /([a-z_\-]+)[\s]*=[\s]*"([^"]*)"/i, matches, tags = [];
 
         while (tagmatch = tag.exec(html)) {
             attrs = [];
@@ -47,10 +47,25 @@
                 if (!matches) {
                     break;
                 }
+
+
+                if (matches[1].toLowerCase() === 'style') {
+                    var styles = matches[2].split(';');
+                    styles = styles.map(function (elm) {
+                        return elm.replace(/^[\s\r\t\n]+/g, '').replace(/[\s\r\t\n]+$/g, '')
+                    }).filter(function (elm) {
+                        return elm.length;
+                    }).sort(function (a, b) {
+                        return  (a < b) ? -1 : (a > b) ? 1 : 0;
+                    });
+                    matches[2] = styles.join(';')
+                }
+
                 attrs.push({
                     name: matches[1].toLowerCase(),
                     value: matches[2],
                 });
+
                 newtag = newtag.replace(matches[0], 'attribute:'  + attrs.length);
             } while(matches);
 
@@ -84,7 +99,7 @@
      */
     var simulateEvent = function (type, keyCodeArg, element, options) {
         var evt = document.createEvent('HTMLEvents')
-        evt.initEvent(type, true, false);
+        evt.initEvent(type, true, true);
         evt.keyCode = keyCodeArg;
         evt.which = keyCodeArg;
         if (options) {

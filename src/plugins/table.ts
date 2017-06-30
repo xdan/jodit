@@ -61,21 +61,6 @@ class TableProcessor extends Table{
     __minX;
     __maxX;
 
-    __scope = [];
-    __off() {
-        this.__scope.forEach((data) => {
-            data.element.removeEventListener(data.event, data.callback)
-        })
-    }
-    __on(element, event, callback) {
-        element.addEventListener(event, callback);
-        this.__scope.push({
-            element,
-            event,
-            callback
-        });
-    }
-
     __addResizer() {
         if (!this.__resizerHandler) {
             this.__resizerHandler = this.parent.container.querySelector('.jodit_table_resizer');
