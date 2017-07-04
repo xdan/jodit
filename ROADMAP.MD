@@ -2,4 +2,4 @@
 
 [*] Image resizer
 
-[ ] Disable buttons when they should be disabled and set active then they has matches in editor Dom 
+[ ] Disable buttons when they can not be used and set active then they have matches with current selection
