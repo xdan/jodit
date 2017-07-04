@@ -322,7 +322,7 @@ export default class Toolbar extends Component{
             }
         });
 
-        this.parent.events.on('mousedown keydown', () => {
+        this.parent.events.on('mousedown keydown change', () => {
             let callback = () => {
                 if (this.parent.selection) {
                     this.checkActiveButtons(this.parent.selection.current())

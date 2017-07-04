@@ -86,6 +86,133 @@ describe('Commands Jodit Editor Tests', function() {
 
         expect(editor.getEditorValue()).to.equal('<span>test</span>');
     });
+    it('Exec command "bold" insert a few chars and again exec bold. Bold mode should be switch off', function() {
+        var editor = new Jodit('#tested_area');
+        editor.setEditorValue('test');
+
+        var sel = editor.win.getSelection(),
+            range = editor.doc.createRange();
+
+        range.selectNodeContents(editor.editor.firstChild);
+        range.collapse(false);
+        sel.removeAllRanges();
+        sel.addRange(range);
+
+        editor.execCommand('bold');
+
+        editor.selection.insertNode(editor.node.create('text', 'abc'))
+
+        editor.execCommand('bold');
+
+        editor.selection.insertNode(editor.node.create('text', 'def'))
+
+        expect(editor.getEditorValue()).to.equal('test<strong>abc</strong>def');
+
+    });
+    it('Exec command "bold" fot some text should wrap this text in STRONG element', function() {
+        var editor = new Jodit('#tested_area');
+        editor.setEditorValue('test');
+
+        var sel = editor.win.getSelection(),
+            range = editor.doc.createRange();
+
+        range.selectNodeContents(editor.editor.firstChild);
+        sel.removeAllRanges();
+        sel.addRange(range);
+
+        editor.execCommand('bold');
+
+        expect(editor.getEditorValue()).to.equal('<strong>test</strong>');
+
+    });
+    it('Exec command "bold" fot some text inside STRONG element from start of this element, should unwrap this text', function() {
+        var editor = new Jodit('#tested_area');
+        editor.setEditorValue('<strong>test</strong>');
+
+        var sel = editor.win.getSelection(),
+            range = editor.doc.createRange();
+
+        range.setStart(editor.editor.firstChild.firstChild, 0);
+        range.setEnd(editor.editor.firstChild.firstChild, 2);
+        sel.removeAllRanges();
+        sel.addRange(range);
+
+        editor.execCommand('bold');
+
+        expect(editor.getEditorValue()).to.equal('te<strong>st</strong>');
+
+    });
+    it('Exec command "bold" fot some text inside STRONG element near end of this element, should unwrap this text', function() {
+        var editor = new Jodit('#tested_area');
+        editor.setEditorValue('<strong>test</strong>');
+
+        var sel = editor.win.getSelection(),
+            range = editor.doc.createRange();
+
+        range.setStart(editor.editor.firstChild.firstChild, 2);
+        range.setEnd(editor.editor.firstChild.firstChild, 4);
+        sel.removeAllRanges();
+        sel.addRange(range);
+
+        editor.execCommand('bold');
+
+        expect(editor.getEditorValue()).to.equal('<strong>te</strong>st');
+
+    });
+    it('Exec command "bold" fot some text inside STRONG element in the middle of this element, should unwrap this text', function() {
+        var editor = new Jodit('#tested_area');
+        editor.setEditorValue('<strong>test</strong>');
+
+        var sel = editor.win.getSelection(),
+            range = editor.doc.createRange();
+
+        range.setStart(editor.editor.firstChild.firstChild, 1);
+        range.setEnd(editor.editor.firstChild.firstChild, 3);
+        sel.removeAllRanges();
+        sel.addRange(range);
+
+        editor.execCommand('bold');
+
+        expect(editor.getEditorValue()).to.equal('<strong>t</strong>es<strong>t</strong>');
+
+    });
+
+    it('Exec command "bold" fot some text that contains a few STRONG elements, should wrap all of these in one STRONG', function() {
+        var editor = new Jodit('#tested_area');
+        editor.setEditorValue('test <strong>test</strong> test');
+
+        var sel = editor.win.getSelection(),
+            range = editor.doc.createRange();
+
+        range.selectNodeContents(editor.editor);
+        sel.removeAllRanges();
+        sel.addRange(range);
+
+        editor.execCommand('bold');
+
+        expect(editor.getEditorValue()).to.equal('<strong>test test test</strong>');
+
+    });
+
+    it('Exec command "bold" fot some text inside STRONG elements, should unwrap this part and after exec "bold" again it should create 3 STRONG elements', function() {
+        var editor = new Jodit('#tested_area');
+        editor.setEditorValue('<strong>1 2 3</strong>');
+
+        var sel = editor.win.getSelection(),
+            range = editor.doc.createRange();
+
+        range.setStart(editor.editor.firstChild.firstChild, 1);
+        range.setEnd(editor.editor.firstChild.firstChild, 4);
+        sel.removeAllRanges();
+        sel.addRange(range);
+
+        editor.execCommand('bold');
+        editor.execCommand('bold');
+
+        expect(editor.getEditorValue()).to.equal('<strong>1</strong><strong> 2 </strong><strong>3</strong>');
+
+    });
+
     it('After exec some command selection should be restore to previous', function() {
         var editor = new Jodit('#tested_area');
         editor.setEditorValue('<p>test</p>');

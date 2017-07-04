@@ -127,12 +127,12 @@ Jodit.plugins.enter = function (editor: Jodit) {
                 }
 
 
-                if (editor.selection.cursorInEdge(true)) {
+                if (editor.selection.cursorInTheEdge(true)) {
                     // if we are in the left edge of paragraph
                     fake = editor.selection.setCursorBefore(currentBox);
                     insertParagraph(editor, fake, currentBox.nodeName === 'LI' ? 'li' : editor.options.enter);
                     editor.selection.setCursorIn(currentBox, true);
-                } else if (!editor.selection.cursorInEdge(false)) {
+                } else if (!editor.selection.cursorInTheEdge(false)) {
                     // if we are not in right edge of paragraph
                     // split p,h1 etc on two parts
                     let leftRange = editor.doc.createRange();

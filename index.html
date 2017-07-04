@@ -52,9 +52,6 @@ Its complete documentation, specially designed framework plugins and tons of exa
 
 <script>
     editor = new Jodit('#editor', {
-        observer: {
-            timeout: 0 // disable delay
-        },
         buttons: Jodit.defaultOptions.buttons.concat([
             {
                 name: 'insertDate',
@@ -95,13 +92,15 @@ Its complete documentation, specially designed framework plugins and tons of exa
     //    var editor = new Jodit('#table_editor_interface');
 
 //    var editor = new Jodit('#tested_area');
-    editor.setEditorValue('<span style="font-weight: 700">test</span>');
+    editor.setEditorValue('<strong>1 2 3</strong>');
     var sel = editor.win.getSelection(),
         range = editor.doc.createRange();
-    range.selectNodeContents(editor.editor.firstChild);
+    range.setStart(editor.editor.firstChild.firstChild, 1);
+    range.setEnd(editor.editor.firstChild.firstChild, 4);
     sel.removeAllRanges();
     sel.addRange(range);
     editor.execCommand('bold');
+    //editor.execCommand('bold');
 //    expect(editor.container.querySelectorAll('.jodit_toolbar_btn-bold.jodit_active').length).to.equal(1)
 
 //    expect(editor.container.querySelectorAll('.jodit_toolbar_btn-bold.jodit_active').length).to.equal(0);

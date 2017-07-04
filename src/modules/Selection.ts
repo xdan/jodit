@@ -3,6 +3,16 @@ import Component from './Component';
 import {each, gebi, dom, trim} from './Helpers';
 
 export default class Selection extends Component{
+
+    __normalizeSelection(range: Range, atStart) {
+        if (this.cursorInTheEdge(!atStart, elm => elm && elm.nodeType !== Node.TEXT_NODE && elm !== this.parent.editor, true)) {
+            if (atStart) {
+                range.setStartAfter(range.startContainer)
+            } else {
+                range.setEndBefore(range.endContainer)
+            }
+        }
+    }
     /**
      * Restores user selections using marker invisible elements in the DOM.
      *
@@ -43,6 +53,9 @@ export default class Selection extends Component{
                 }
 
                 sel.addRange(range);
+
+                this.__normalizeSelection(range, true);
+                this.__normalizeSelection(range, false);
             });
         }
     }
@@ -67,6 +80,7 @@ export default class Selection extends Component{
             marker.style.display = "none";
             marker.className = "jodit_selection_marker " + "jodit_selection_marker-" + (atStart ? 'start' : 'end');
             marker.appendChild(this.doc.createTextNode(consts.INVISIBLE_SPACE));
+
             newRange.insertNode(marker);
 
             return marker;
@@ -160,6 +174,7 @@ export default class Selection extends Component{
                 if (range.startContainer.nodeType !== Node.TEXT_NODE && range.startContainer === range.endContainer && range.startOffset !== range.endOffset) {
                     node = range.startContainer.childNodes[range.startOffset];
                 }
+                // check - cursor inside editor
                 while (elm.parentNode) {
                     if (elm.parentNode === this.parent.editor) {
                         return node;
@@ -338,12 +353,18 @@ export default class Selection extends Component{
         let sel = this.win.getSelection()
         if (sel.rangeCount) {
             let range = sel.getRangeAt(0);
-            let nodes = [];
-            this.parent.node.find(range.startContainer === this.parent.editor ? this.parent.editor.firstChild : range.startContainer, (node: Node|HTMLElement) => {
+            let nodes = [],
+                start = range.startContainer === this.parent.editor ? this.parent.editor.childNodes[range.startOffset] : range.startContainer,
+                end = range.endContainer === this.parent.editor ? this.parent.editor.childNodes[range.endOffset - 1] : range.endContainer;
+
+            this.parent.node.find(start, (node: Node|HTMLElement) => {
                 if (node && !this.parent.node.isEmptyTextNode(node) && !(node instanceof HTMLElement && node.classList.contains('jodit_selection_marker'))) {
                     nodes.push(node);
                 }
-                if (node === range.endContainer) {
+                if (node === end) {
+                    // if (range.endContainer.nodeType !== Node.TEXT_NODE) {
+                    //     nodes.pop()
+                    // }
                     return true;
                 }
             }, this.parent.editor, true, 'nextSibling', false);
@@ -398,17 +419,29 @@ export default class Selection extends Component{
      * @param  {boolean} [start=false] true - check whether the cursor is at the start block
      * @return {boolean} true - the cursor is at the end(start) block
      */
-    cursorInEdge (start:boolean = false): boolean {
-        let sel = this.win.getSelection(),
-            rng: Range = sel.rangeCount ? sel.getRangeAt(0) : this.doc.createRange(),
-            container = rng.startContainer,
+    cursorInTheEdge (start:boolean = false, parentBlock: HTMLElement|Function|false = false, inverse: boolean = false): boolean {
+        let sel = this.win.getSelection();
+        if (!sel.rangeCount) {
+            return false;
+        }
+
+        let rng: Range = sel.getRangeAt(0),
+            isStart = () => {
+                return inverse === false ? start : !start;
+            },
+            container = isStart() ? rng.startContainer : rng.endContainer,
             node,
             nodeValue,
             newNodeValue,
             isAfterLastNodeInContainer = false,
-            parentBlock = this.parent.node.up(container, this.parent.node.isBlock),
-            offset = rng.startOffset;
-        
+            offset = isStart() ? rng.startOffset : rng.endOffset;
+
+        if (parentBlock === false) {
+            parentBlock = <HTMLElement>this.parent.node.up(container, this.parent.node.isBlock)
+        } else if (typeof parentBlock === 'function') {
+            parentBlock = <HTMLElement>this.parent.node.up(container, parentBlock)
+        }
+
         if (!container) {
             return false;
         }
