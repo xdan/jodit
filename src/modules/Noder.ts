@@ -286,11 +286,19 @@ export default class Noder extends Component{
      * Find parent by tag name
      *
      * @param {Node} node
-     * @param {String} tags
+     * @param {String|Function} tags
      * @return {Boolean|Node}
      */
-    closest(node: Node, tags): Node|HTMLElement|false|HTMLTableCellElement {
-        return this.up(node, (tag) => ((new RegExp('^(' + tags + ')$', 'i')).test(tag.tagName)));
+    closest(node: Node, tags: string|Function|RegExp): Node|HTMLElement|false|HTMLTableCellElement {
+        let condition;
+        if (typeof tags  === 'function') {
+            condition = tags
+        } else if (tags instanceof RegExp) {
+            condition = tag => tags.test(tag.tagName)
+        } else {
+            condition = tag => (new RegExp('^(' + tags + ')$', 'i')).test(tag.tagName)
+        }
+        return this.up(node, condition);
     }
 
     /**

@@ -99,30 +99,40 @@ export default class Toolbar extends Component{
     }
 
     checkActiveButtons(element: Node|false) {
+        const active_class = 'jodit_active'
         this.buttonList.forEach(({name, control, btn}) => {
+            btn.classList.remove(active_class);
+
             let className = name || "empty",
                 tags,
                 elm,
                 css,
-                el,
-                checkActiveStatus = (cssObject) => {
+                getCSS = (elm: HTMLElement, key: string): string => {
+                    return this.parent.win.getComputedStyle(elm).getPropertyValue(key).toString()
+                },
+                checkActiveStatus = (cssObject, node) => {
                     let matches = 0,
                         total = 0;
 
-                    each(cssObject, (cssProperty, cssValue) => {
-                        if (isFunction(cssValue)) {
-                            if (cssValue.apply(self, [el.css(cssProperty).toString().toLowerCase(), self])) {
+                    Object.keys(cssObject).forEach((cssProperty) => {
+                        let cssValue = cssObject[cssProperty]
+                        if (typeof cssValue === 'function') {
+                            if (cssValue({
+                                    editor: this.parent,
+                                    value: getCSS(node, cssProperty).toLowerCase()
+                                })) {
                                 matches += 1;
                             }
                         } else {
-                            if (el.css(cssProperty).toString().toLowerCase() === cssValue) {
+                            if (cssValue.indexOf(getCSS(node, cssProperty).toLowerCase()) !== -1) {
                                 matches += 1;
                             }
                         }
                         total += 1;
-                    });
-                    if (total === matches && this.container.querySelector(".toolbar-" + className)) {
-                        btn.classList.add("active");
+                    })
+
+                    if (total === matches) {
+                        btn.classList.add(active_class);
                     }
                 };
 
@@ -132,7 +142,7 @@ export default class Toolbar extends Component{
                 elm = element;
                 this.parent.node.up(elm, (node) => {
                     if (tags.indexOf(node.nodeName.toLowerCase()) !== -1) {
-                        btn.classList.add("active");
+                        btn.classList.add(active_class);
                         return true;
                     }
                 }, this.parent.editor);
@@ -141,12 +151,15 @@ export default class Toolbar extends Component{
             //activate by supposed css
             if (control.css || (control.options && control.options.css)) {
                 css = control.css || (control.options && control.options.css);
-                el = element;
 
-                while (el && el.nodeType === Node.ELEMENT_NODE && !elm.classList.contains('jodit_editor')) {
-                    checkActiveStatus(css);
-                    el = elm.parentNode;
-                }
+
+                elm = element;
+                this.parent.node.up(elm, (node) => {
+                    if (node && node.nodeType !== Node.TEXT_NODE && !node.classList.contains(active_class)) {
+                        checkActiveStatus(css, node);
+                    }
+                }, this.parent.editor);
+
             }
         });
     }

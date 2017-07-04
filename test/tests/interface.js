@@ -222,6 +222,78 @@ describe('Test interface', function() {
                 simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-insertDate'))
                 expect(editor.getEditorValue()).to.equal('Wed Mar 16 2016');
             });
+            it('When cursor inside STRONG tag, Bold button should be selected', function() {
+                var editor = new Jodit('#table_editor_interface', {
+                    observer: {
+                        timeout: 0 // disable delay
+                    }
+                });
+
+                editor.setEditorValue('<strong>test</strong><em>test2</em><i>test3</i><b>test3</b>');
+
+                var sel = editor.win.getSelection(), range = editor.doc.createRange();
+
+                range.setStart(editor.editor.firstChild.firstChild, 2)
+                range.collapse(true)
+                sel.removeAllRanges();
+                sel.addRange(range)
+
+                simulateEvent('mousedown', 0, editor.editor)
+
+                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-bold.jodit_active').length).to.equal(1);
+
+
+                range.setStart(editor.editor.firstChild.nextSibling.firstChild, 2)
+                range.collapse(true)
+                sel.removeAllRanges();
+                sel.addRange(range)
+
+                simulateEvent('mousedown', 0, editor.editor)
+
+                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-bold.jodit_active').length).to.equal(0);
+                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-italic.jodit_active').length).to.equal(1);
+
+                range.setStart(editor.editor.firstChild.nextSibling.nextSibling.firstChild, 2)
+                range.collapse(true)
+                sel.removeAllRanges();
+                sel.addRange(range)
+
+                simulateEvent('mousedown', 0, editor.editor)
+
+                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-bold.jodit_active').length).to.equal(0);
+                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-italic.jodit_active').length).to.equal(1);
+
+
+                range.setStart(editor.editor.firstChild.nextSibling.nextSibling.nextSibling.firstChild, 2)
+                range.collapse(true)
+                sel.removeAllRanges();
+                sel.addRange(range)
+
+                simulateEvent('mousedown', 0, editor.editor)
+
+                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-bold.jodit_active').length).to.equal(1);
+                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-italic.jodit_active').length).to.equal(0);
+            });
+
+            it('When cursor inside SPAN tag with style="font-weight: bold" or style="font-weight: 700", Bold button should be selected', function() {
+                var editor = new Jodit('#table_editor_interface', {
+                    observer: {
+                        timeout: 0 // disable delay
+                    }
+                });
+
+                editor.setEditorValue('<span style="font-weight: bold">test</span>');
+
+                var sel = editor.win.getSelection(), range = editor.doc.createRange();
+                range.setStart(editor.editor.firstChild.firstChild, 2)
+                range.collapse(true)
+                sel.removeAllRanges();
+                sel.addRange(range)
+
+                simulateEvent('mousedown', 0, editor.editor)
+
+                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-bold.jodit_active').length).to.equal(1);
+            });
         });
         describe('Commands', function () {
             it('Click on Source button should change current mode', function() {

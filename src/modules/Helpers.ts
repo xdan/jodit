@@ -68,14 +68,14 @@ export const each = (obj, callback) => {
         length = obj.length;
         for (i = 0; i < length; i += 1) {
             if (callback.call(obj[i], i, obj[i]) === false) {
-                break;
+                return false;
             }
         }
     } else {
         keys = Object.keys(obj);
         for (i = 0; i < keys.length; i += 1) {
             if (callback.call(obj[keys[i]], keys[i], obj[keys[i]]) === false) {
-                break;
+                return false;
             }
         }
     }
@@ -238,7 +238,7 @@ export const colorToHex = (color) => {
  * @param {string} color - string like rgba(red, green, blue, alpha) or rgb(red, green, blue) or #fff or #ffffff
  * @return {string|NaN} HEX color, NaN - for transparent color
  */
-export const normalizeColor = (color) => {
+export const normalizeColor = (color: string): string|number => {
     let newcolor = ['#'], i;
 
     color = colorToHex(color);
@@ -624,3 +624,24 @@ export const offset =  (elm: HTMLElement) => {
         left: Math.round(left)
     };
 }
+
+/**
+ *
+ * @param key
+ * @return {string}
+ */
+export const camelCase = (key: string): string => {
+    return key.replace(/-(.{1})/g, (m, letter) => {
+        return letter.toUpperCase();
+    });
+};
+/**
+ *
+ * @param key
+ * @return {string}
+ */
+export const fromCamelCase = (key: string): string => {
+    return key.replace(/([A-Z]+)/g, function (m, letter) {
+        return '-' + letter.toLowerCase();
+    });
+};

@@ -600,22 +600,40 @@ const config: any = {
             mode: consts.MODE_SPLIT,
             tooltip: 'Undo'
         },
+
         bold: {
-            tags: ["b", "strong", "#text"],
+            tagRegExp: /^(strong|b)$/i,
+            tags: ["strong", "b"],
             css: {
-                fontWeight: "bold"
+                "font-weight": ["bold", "700"]
             },
             tooltip: "Bold",
-            hotkey: {"ctrl": 1, "key": 66}
         },
         italic: {
-            tags: ["i", "em"],
+            tagRegExp: /^(em|i)$/i,
+            tags: ["em", "i"],
             css: {
-                fontStyle: "italic"
+                "font-style": "italic"
             },
             tooltip: "Italic",
-            hotkey: {"ctrl": 1, "key": 73}
         },
+        underline: {
+            tagRegExp: /^(u)$/i,
+            tags: ['u'],
+            css: {
+                "text-decoration": "underline"
+            },
+            tooltip: "Underline",
+        },
+        strikethrough: {
+            tagRegExp: /^(s)$/i,
+            tags: ['s'],
+            css: {
+                "text-decoration": "line-through"
+            },
+            tooltip: "Strike through",
+        },
+
         ul: {
             command: 'insertUnorderedList',
             controlName : 'ul',
@@ -643,28 +661,28 @@ const config: any = {
             command: 'justifyCenter',
             tags: ["center"],
             css: {
-                textAlign: "center"
+                "text-align": "center"
             },
             tooltip: "Align Center"
         },
         justify: {
             command: 'justifyFull',
             css: {
-                textAlign: "justify"
+                "text-align": "justify"
             },
             tooltip: "Align Justify"
         },
         left: {
             command: 'justifyLeft',
             css: {
-                textAlign: "left"
+                "text-align": "left"
             },
             tooltip: "Align Left"
         },
         right: {
             command: 'justifyRight',
             css: {
-                textAlign: "right"
+                "text-align": "right"
             },
             tooltip: "Align Right"
         },

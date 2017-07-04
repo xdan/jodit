@@ -70,6 +70,22 @@ describe('Commands Jodit Editor Tests', function() {
 
         expect(editor.getEditorValue()).to.equal('<p>test</p>');
     });
+    it('Try exec the command "bold" for font-weight: 700 Element', function() {
+        var editor = new Jodit('#tested_area');
+        editor.setEditorValue('<span style="font-weight: 700">test</span>');
+
+        var sel = editor.win.getSelection(),
+            range = editor.doc.createRange();
+
+        range.selectNodeContents(editor.editor.firstChild);
+        sel.removeAllRanges();
+        sel.addRange(range);
+
+        editor.execCommand('bold');
+        // editor.execCommand('bold');
+
+        expect(editor.getEditorValue()).to.equal('<span>test</span>');
+    });
     it('After exec some command selection should be restore to previous', function() {
         var editor = new Jodit('#tested_area');
         editor.setEditorValue('<p>test</p>');

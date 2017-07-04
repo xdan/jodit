@@ -52,6 +52,9 @@ Its complete documentation, specially designed framework plugins and tons of exa
 
 <script>
     editor = new Jodit('#editor', {
+        observer: {
+            timeout: 0 // disable delay
+        },
         buttons: Jodit.defaultOptions.buttons.concat([
             {
                 name: 'insertDate',
@@ -92,19 +95,20 @@ Its complete documentation, specially designed framework plugins and tons of exa
     //    var editor = new Jodit('#table_editor_interface');
 
 //    var editor = new Jodit('#tested_area');
-    editor.setEditorValue('tess');
-
+    editor.setEditorValue('<span style="font-weight: 700">test</span>');
     var sel = editor.win.getSelection(),
         range = editor.doc.createRange();
-
-    /*range.setStartBefore(editor.editor.firstChild);
-    range.setEndAfter(editor.editor.lastChild);
+    range.selectNodeContents(editor.editor.firstChild);
     sel.removeAllRanges();
-    sel.addRange(range);*/
+    sel.addRange(range);
+    editor.execCommand('bold');
+//    expect(editor.container.querySelectorAll('.jodit_toolbar_btn-bold.jodit_active').length).to.equal(1)
 
-    editor.execCommand('formatBlock', false, 'h1');
+//    expect(editor.container.querySelectorAll('.jodit_toolbar_btn-bold.jodit_active').length).to.equal(0);
+//    expect(editor.container.querySelectorAll('.jodit_toolbar_btn-italic.jodit_active').length).to.equal(1);
 
-//    expect(editor.getEditorValue()).to.equal('<h1>test</h1><h1>test2</h1>');
+
+    //    expect(editor.getEditorValue()).to.equal('<h1>test</h1><h1>test2</h1>');
     //editor.selection.insertNode(document.createTextNode('split '));
 
     //simulateEvent('keydown',    Jodit.KEY_ENTER, editor.editor);

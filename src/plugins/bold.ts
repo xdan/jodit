@@ -1,23 +1,25 @@
 import Jodit from '../jodit';
 import * as consts from '../constants';
+import {each} from "../modules/Helpers";
 
 /**
  * Wrap selected content in special tag or return already wrapped
  *
  * @param {Jodit} editor
  * @param {Node} strong
- * @param {String} reg tag list "A|TABLE|TD"
+ * @param {RegExp|string} reg tag list /A|TABLE|TD/i
  * @param {Boolean} [breakIfExists=true]
- * @return {Node}
+ * @return {HTMLElement}
  */
-export const wrapAndSelect = (editor, strong, reg, breakIfExists = true) => {
+export const wrapAndSelect = (editor: Jodit, strong: Node, reg: RegExp|string, breakIfExists: boolean = true): HTMLElement => {
     editor.selection.focus();
     let sel = editor.win.getSelection(),
         range = sel.getRangeAt(0),
+        current = editor.selection.current(),
         fake;
 
-    if (breakIfExists && editor.node.closest(editor.selection.current(), reg)) {
-        return editor.node.closest(editor.selection.current(), reg);
+    if (breakIfExists && current !== false && editor.node.closest(current, reg)) {
+        return <HTMLElement>editor.node.closest(current, reg);
     }
 
     let collapsed = editor.selection.isCollapsed();
@@ -48,37 +50,63 @@ export const wrapAndSelect = (editor, strong, reg, breakIfExists = true) => {
     sel.removeAllRanges();
     sel.addRange(new_range);
 
-    return strong;
+    return <HTMLElement>strong;
 };
 
-Jodit.plugins.bold = function (editor) {
-    editor.events.on('beforeCommand', (command) => {
-        const commands = {
-            bold: 'strong|b',
-            italic: 'em|i',
-            underline: 'u',
-            strikethrough: 's',
-        };
+Jodit.plugins.bold = function (editor: Jodit) {
+    editor.events.on('beforeCommand', (command: string) => {
 
-        if (commands[command] !== undefined) {
-            let current = editor.selection.current();
+        const commands = ['bold', 'italic', 'underline', 'strikethrough'];
+
+
+        if (commands.indexOf(command) !== -1) {
+            let current = editor.selection.current(),
+                getCSS = (elm: HTMLElement, key: string): string => {
+                    return editor.win.getComputedStyle(elm).getPropertyValue(key).toString()
+                },
+                commandOptions = Jodit.defaultOptions.controls[command];
 
             if (current) {
-                let wrapper = editor.node.closest(current, commands[command]);
+                let wrapper = <HTMLElement>editor.node.closest(current, (elm) => {
+                    if (elm.nodeType !== Node.TEXT_NODE) {
+                        if (each(commandOptions.css, (cssPropertyKey, cssPropertyValues) => {
+                            let value = getCSS(elm, cssPropertyKey);
+                            return  cssPropertyValues.indexOf(value.toLowerCase()) !== -1
+                        }) !== false) {
+                            return true;
+                        }
+                    }
+                    return false;
+                });
                 if (wrapper) {
                     // wrapper already exists
-                    let saved = editor.selection.save();
-                    while (wrapper.firstChild) {
-                        wrapper.parentNode.insertBefore(wrapper.firstChild, wrapper);
+                    let selectionInfo = editor.selection.save();
+
+                    if (wrapper.tagName.toLowerCase().match(commandOptions.tagRegExp)) {
+                        while (wrapper.firstChild) {
+                            wrapper.parentNode.insertBefore(wrapper.firstChild, wrapper);
+                        }
+
+                        editor.selection.restore(selectionInfo);
+                        wrapper.parentNode.removeChild(wrapper); // because in some browsers selection can be inside wrapper
+                    } else {
+                        each(commandOptions.css, (cssPropertyKey) => {
+                            wrapper.style.removeProperty(cssPropertyKey);
+                        });
+
+                        if (!wrapper.getAttribute('style')) {
+                            wrapper.removeAttribute('style')
+                        }
+
+                        editor.selection.restore(selectionInfo);
                     }
-                    editor.selection.restore(saved);
-                    wrapper.parentNode.removeChild(wrapper); // because in some browsers selection can be inside wrapper
+
                     editor.setEditorValue();
                     return false;
                 }
             }
 
-            wrapAndSelect(editor, editor.node.create(commands[command].split('|')[0]),  commands[command]);
+            wrapAndSelect(editor, editor.node.create(commandOptions.tags[0]),  commandOptions.tagRegExp);
             editor.setEditorValue();
             return false;
         }
