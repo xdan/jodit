@@ -199,7 +199,7 @@ export default class Noder extends Component{
      * @param {Node} [root]
      * @param {boolean} [recurse=false] check first argument
      * @param {string} [sibling=nextSibling] nextSibling or previousSibling
-     * @param {string} [child=firstChild] firstChild or lastChild
+     * @param {string|false} [child=firstChild] firstChild or lastChild
      * @return {Node|Boolean}
      */
     find(node, condition, root, recurse = false, sibling = 'nextSibling', child: string|false = 'firstChild') : false|Node {

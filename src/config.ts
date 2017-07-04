@@ -345,7 +345,7 @@ const config: any = {
      * @property {array} [buttons.button.tags] Tag list when the cursor is to be highlighted on this button
      * @property {array|object} [buttons.button.list] Drop-down list. A hash or array . You must specify the command which will be submitted to the hash key (array value) (see .{@link module:Jodit~execCommand|execCommand}) or define 'exec' function. See example
      * @property {function(key, value): string} [buttons.button.template] The method that will be called for each element button.list
-     * @default ['source', '|', 'bold', 'italic', '|', 'ul', 'ol', '|', 'font', 'fontsize', 'brush', 'paragraph', '|','image', 'video', 'table', 'link', '|', 'left', 'center', 'right', 'justify', '|', 'undo', 'redo', '|', 'hr', 'eraser', 'fullsize']
+     * @default ['source', '|', 'bold', 'italic', '|', 'ul', 'ol', '|', 'font', 'fontsize', 'brush', 'paragraph', '|','image', 'video', 'table', 'link', '|', 'align', '|', 'undo', 'redo', '|', 'hr', 'eraser', 'fullsize']
      * @example
      * new Jodit('#editor', {
      *     buttons: ['bold', 'italic', 'source'],
@@ -414,10 +414,7 @@ const config: any = {
         'video',
         'table',
         'link', '|',
-        'left',
-        'center',
-        'right',
-        'justify', '|',
+        'align','|',
         'undo', 'redo', '|',
         'hr',
         'eraser',
@@ -437,10 +434,7 @@ const config: any = {
         'image',
         'table',
         'link', '|',
-        'left',
-        'center',
-        'right',
-        'justify', '|',
+        'align','|',
         'undo', 'redo', '|',
         'hr',
         'eraser',
@@ -458,9 +452,7 @@ const config: any = {
         'image',
         'table',
         'link', '|',
-        'left',
-        'center',
-        'right', '|',
+        'align','|',
         'undo', 'redo', '|',
         'eraser',
         'fullsize'
@@ -470,9 +462,7 @@ const config: any = {
         'image', '|',
         'brush',
         'paragraph', '|',
-        'left',
-        'center',
-        'right', '|',
+        'align', '|',
         'undo', 'redo', '|',
         'eraser'
     ],
@@ -611,7 +601,7 @@ const config: any = {
             tooltip: 'Undo'
         },
         bold: {
-            tags: ["b", "strong"],
+            tags: ["b", "strong", "#text"],
             css: {
                 fontWeight: "bold"
             },
@@ -638,34 +628,45 @@ const config: any = {
             tags: ["ol"],
             tooltip: "Insert Ordered List"
         },
+        align: {
+            tags: ["p", "div", "span", "td", "th", "img"],
+            name: 'left',
+            tooltip: "Align",
+            list: [
+                'center',
+                'left',
+                'right',
+                'justify',
+            ],
+        },
         center: {
             command: 'justifyCenter',
             tags: ["center"],
             css: {
                 textAlign: "center"
             },
-            tooltip: "Justify Center"
+            tooltip: "Align Center"
         },
         justify: {
             command: 'justifyFull',
             css: {
                 textAlign: "justify"
             },
-            tooltip: "Justify Full"
+            tooltip: "Align Justify"
         },
         left: {
             command: 'justifyLeft',
             css: {
                 textAlign: "left"
             },
-            tooltip: "Justify Left"
+            tooltip: "Align Left"
         },
         right: {
             command: 'justifyRight',
             css: {
                 textAlign: "right"
             },
-            tooltip: "Justify Right"
+            tooltip: "Align Right"
         },
         hr : {
             command: 'insertHorizontalRule',
@@ -845,9 +846,7 @@ const config: any = {
         fontsize : {
             command: 'fontSize',
             list : ["8", "9", "10", "11", "12", "14", "18", "24", "30", "36", "48", "60", "72", "96"],
-            template : function (i, text) {
-                return text;
-            },
+            template : ({value}) => value,
             tooltip: "Font size"
         },
         font : {
@@ -864,8 +863,8 @@ const config: any = {
                 "'Times New Roman',Times,serif": "Times New Roman",
                 "Verdana,Geneva,sans-serif": "Verdana"
             },
-            template : (i, text) => {
-                return '<span style="font-family: ' + i + '"> ' + text + ' </span>';
+            template : ({key, value}) => {
+                return '<span style="font-family: ' + key + '"> ' + value + ' </span>';
             },
             tooltip: "Font family"
         },
@@ -883,8 +882,8 @@ const config: any = {
                 blockquote : "Quote",
                 pre : "Code"
             },
-            template : function (name, value) {
-                return '<' + name + ' class="jodit_list_element"><span>' + this.i18n(value) + '</span></' + name + '></li>';
+            template : ({key, value, editor}) => {
+                return '<' + key + ' class="jodit_list_element"><span>' + editor.i18n(value) + '</span></' + key + '></li>';
             },
             tooltip: "Insert format block"
         },

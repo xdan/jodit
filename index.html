@@ -51,7 +51,17 @@ Its complete documentation, specially designed framework plugins and tons of exa
 </html>
 
 <script>
-    editor = new Jodit('#editor');
+    editor = new Jodit('#editor', {
+        buttons: Jodit.defaultOptions.buttons.concat([
+            {
+                name: 'insertDate',
+                iconURL: 'http://xdsoft.net/jodit/logo.png',
+                exec: function (data) {
+                    data.editor.selection.insertHTML((new Date).toDateString());
+                }
+            }
+        ])
+    });
 
     function simpleKeys (original) {
         var newobject = {};
@@ -81,35 +91,20 @@ Its complete documentation, specially designed framework plugins and tons of exa
 
     //    var editor = new Jodit('#table_editor_interface');
 
-    editor.setEditorValue('text2text')
+//    var editor = new Jodit('#tested_area');
+    editor.setEditorValue('tess');
 
-    var sel = editor.win.getSelection(), range = editor.doc.createRange();
+    var sel = editor.win.getSelection(),
+        range = editor.doc.createRange();
 
-    range.selectNodeContents(editor.editor.firstChild)
-    range.collapse(true)
+    /*range.setStartBefore(editor.editor.firstChild);
+    range.setEndAfter(editor.editor.lastChild);
     sel.removeAllRanges();
-    sel.addRange(range)
+    sel.addRange(range);*/
 
-    simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-image'))
+    editor.execCommand('formatBlock', false, 'h1');
 
-    var list = editor.container.querySelector('.jodit_toolbar_popup');
-
-    //    expect(list.style.display).to.equal('block');
-    editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-image input[name=url]').value = 'sddhttp://xdsoft.net/jodit/images/artio.jpg' // try wrong url
-    editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-image input[name=text]').value = '123'
-
-    //editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-image .jodit_form').submit();
-    simulateEvent('submit', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-image .jodit_form'))
-
-    //    expect(editor.container.querySelectorAll('.jodit_toolbar_btn.jodit_toolbar_btn-image input[name=url].jodit_error').length).to.equal(1);
-
-    editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-image input[name=url]').value = 'http://xdsoft.net/jodit/images/artio.jpg'
-
-    simulateEvent('submit', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-image .jodit_form'))
-
-    //    expect(sortAtrtibutes(editor.getEditorValue())).to.equal('<img alt="123" src="http://xdsoft.net/jodit/images/artio.jpg">text2text');
-
-    simulateEvent('mousedown', 0, editor.editor)
+//    expect(editor.getEditorValue()).to.equal('<h1>test</h1><h1>test2</h1>');
     //editor.selection.insertNode(document.createTextNode('split '));
 
     //simulateEvent('keydown',    Jodit.KEY_ENTER, editor.editor);

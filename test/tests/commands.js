@@ -1,5 +1,22 @@
 describe('Commands Jodit Editor Tests', function() {
     appendTestArea('tested_area', true);
+    it('Try exec the command "formatBlock" for several elements', function() {
+        var editor = new Jodit('#tested_area');
+        editor.setEditorValue('<p>test</p><p>test2</p>');
+
+        var sel = editor.win.getSelection(),
+            range = editor.doc.createRange();
+
+        range.setStart(editor.editor.firstChild, 0);
+        range.setEnd(editor.editor.lastChild, 0);
+        sel.removeAllRanges();
+        sel.addRange(range);
+
+        editor.execCommand('formatBlock', false, 'h1');
+
+        expect(editor.getEditorValue()).to.equal('<h1>test</h1><h1>test2</h1>');
+    });
+
     it('Try exec the command "bold"', function() {
         var editor = new Jodit('#tested_area');
         editor.setEditorValue('<p>test</p>');

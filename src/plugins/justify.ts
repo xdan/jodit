@@ -28,29 +28,30 @@ Jodit.plugins.justify = function (editor: Jodit) {
 
 
             editor.selection.focus();
-            let current = editor.selection.current();
-            if (!current) {
-                if (editor.editor.querySelector('.jodit_selected_cell')) {
-                    $$('.jodit_selected_cell', editor.editor).forEach(justify);
-                    return false;
+            editor.selection.eachSelection((current) => {
+                if (!current) {
+                    if (editor.editor.querySelector('.jodit_selected_cell')) {
+                        $$('.jodit_selected_cell', editor.editor).forEach(justify);
+                        return false;
+                    }
                 }
-            }
 
-            if (!(current instanceof  Node)) {
-                return;
-            }
+                if (!(current instanceof Node)) {
+                    return;
+                }
 
-            let currentBox = current ? editor.node.up(current, (node) => (editor.node.isBlock(node))) : false;
+                let currentBox = current ? editor.node.up(current, (node) => (editor.node.isBlock(node))) : false;
 
 
-            if (!currentBox && current) {
-                let sel = editor.win.getSelection(),
-                    range = sel.rangeCount ? sel.getRangeAt(0) : editor.doc.createRange();
+                if (!currentBox && current) {
+                    let sel = editor.win.getSelection(),
+                        range = sel.rangeCount ? sel.getRangeAt(0) : editor.doc.createRange();
 
-                currentBox = editor.node.wrap(current);
-            }
+                    currentBox = editor.node.wrap(current);
+                }
 
-            justify(currentBox);
+                justify(currentBox);
+            });
             return false;
         }
     });

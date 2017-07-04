@@ -53,7 +53,8 @@ export default class Selection extends Component{
      * @return {Array}
      */
     save():any[]|null  {
-        if (!this.current()) {
+        let sel = this.win.getSelection();
+        if (!sel.rangeCount) {
             return null;
         }
         let _marker = (range, atStart = false) => {
@@ -70,10 +71,7 @@ export default class Selection extends Component{
 
             return marker;
         };
-        let sel = this.win.getSelection();
-        if (!sel.rangeCount) {
-            return null;
-        }
+
 
         let info = [], length = sel.rangeCount, i, start, end, ranges = [];
         for (i = 0; i < length; i += 1) {
@@ -104,7 +102,11 @@ export default class Selection extends Component{
                 ranges[i].setStartAfter(gebi(info[i].startId, this.doc));
                 ranges[i].setEndBefore(gebi(info[i].endId, this.doc));
             }
-            sel.addRange(ranges[i].cloneRange());
+            try {
+                sel.addRange(ranges[i].cloneRange());
+            } catch (e) {
+                //console.log(e);
+            }
         }
 
         return info;
@@ -330,6 +332,25 @@ export default class Selection extends Component{
                  * });
          */
         this.parent.events.fire('afterInsertImage', [image]);
+    }
+
+    eachSelection = (callback: Function) => {
+        let sel = this.win.getSelection()
+        if (sel.rangeCount) {
+            let range = sel.getRangeAt(0);
+            let nodes = [];
+            this.parent.node.find(range.startContainer === this.parent.editor ? this.parent.editor.firstChild : range.startContainer, (node: Node|HTMLElement) => {
+                if (node && !this.parent.node.isEmptyTextNode(node) && !(node instanceof HTMLElement && node.classList.contains('jodit_selection_marker'))) {
+                    nodes.push(node);
+                }
+                if (node === range.endContainer) {
+                    return true;
+                }
+            }, this.parent.editor, true, 'nextSibling', false);
+            nodes.forEach((current) => {
+                callback(current);
+            })
+        }
     }
 
     /**

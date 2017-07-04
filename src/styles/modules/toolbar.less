@@ -1,5 +1,8 @@
 @import (reference) "../variables";
 @import (reference) "../mixins";
+.jodit_toolbar, .jodit_toolbar *{
+  box-sizing: border-box;
+}
 .jodit_toolbar{
   position: relative;
   left: 0;
@@ -35,6 +38,7 @@
     color : #000;
     text-decoration: none;
     display: block;
+    background: no-repeat center center;
   }
   > li.jodit_toolbar_btn {
     display: inline-block !important;
@@ -73,16 +77,16 @@
       height: 0;
     }
 
-    > a {
+
+    > a, .jodit_toolbar_btn > a  {
       width:100%;
+      line-height: 200%;
       height:100%;
       display: inline-block;
       outline: none;
       text-decoration: none;
-      line-height: 100%;
       & + .jodit_tooltip {
         opacity:0;
-        box-sizing: border-box;
         visibility: hidden;
         position:absolute;
         transition: opacity .4s linear;
@@ -94,7 +98,7 @@
         font-family: Arial, sans-serif;
         left: 50%;
         margin-left: -45px;
-        z-index:5;
+        z-index: @dropdownlist_z_index + 1;
         width:90px;
         transition: opacity .3s linear;
         @media (max-width: @medium) {
@@ -111,6 +115,9 @@
         visibility: visible;
         opacity:1;
       }
+    }
+    > a {
+      line-height: 100%;
     }
     .jodit_popap_open,
 
@@ -139,21 +146,15 @@
       display: none !important;
     }
     &.jodit_with_dropdownlist{
-      > a{
-        margin-left:-4px;
-      }
-      &:after{
-        content:'';
-        width: 0;
-        height: 0;
-        border-right: 3px solid transparent;
-        border-left: 3px solid transparent;
-        border-top: 3px solid #4c4c4c;
-        position: absolute;
-        top: 50%;
-        right: 3px;
-        margin-top: -2px;
-        display: inline-block;
+      .jodit_with_dropdownlist-trigger {
+          width: 0;
+          height: 0;
+          border-right: 3px solid transparent;
+          border-left: 3px solid transparent;
+          border-top: 3px solid #4c4c4c;
+          display: inline-block;
+          vertical-align: middle;
+          margin-left: 3px;
       }
     }
   }
@@ -189,35 +190,10 @@
     margin: 10px;
   }
 
-  /*&:after {
-      content:'';
-      height: 1px;
-      position: absolute;
-      left:-1px;
-      right:-1px;
-      top:0px;
-      display: inline-block;
-      background-color: @main_bg_color;
-  }*/
-
   &:before {
-    /* content:'';
-     width: 0;
-     height: 0;
-     border-left: 5px solid transparent;
-     border-right: 5px solid transparent;
-     border-bottom: 5px solid @main_bg_color;
-     position: absolute;
-     top: -6px;
-     left: 9px;
-     display: inline-block;*/
-
     content: '';
     width: @popap-triangle-size;
     height: @popap-triangle-size;
-    /*border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-bottom: 5px solid @main_bg_color;*/
     position: absolute;
     top: -@popap-triangle-size/2 - 1px;
     left: 9px;

@@ -2,6 +2,7 @@ import Component from './modules/Component';
 import Noder from './modules/Noder';
 import Events from './modules/Events';
 import Selection from './modules/Selection';
+import Toolbar from './modules/Toolbar';
 import Cookie from './modules/Cookie';
 import * as consts from './constants';
 import {extend, inArray, dom, each, htmlentities, browser} from './modules/Helpers';
@@ -77,7 +78,7 @@ export default class Jodit extends Component{
 
         if (options !== undefined && typeof options === 'object') {
             Object.keys(options).forEach((key) => {
-                if (typeof Jodit.defaultOptions[key] === 'object') {
+                if (typeof Jodit.defaultOptions[key] === 'object' && !Array.isArray(Jodit.defaultOptions[key])) {
                     this.options[key] = extend({}, Jodit.defaultOptions[key], options[key]);
                 } else {
                     this.options[key] = options[key];
@@ -105,13 +106,14 @@ export default class Jodit extends Component{
 
         this.workplace = dom('<div class="jodit_workplace" />');
 
-        this.__createMainToolbar();
-        this.__createEditor();
-
         this.cookie = new Jodit.modules.Cookie(this);
         this.selection = new Jodit.modules.Selection(this);
         this.events = new Jodit.modules.Events(this);
         this.node = new Jodit.modules.Noder(this);
+
+        this.__createMainToolbar();
+        this.__createEditor();
+
         this.helper = helper;
 
         this.setElementValue(); // syncro
@@ -234,7 +236,7 @@ export default class Jodit extends Component{
     }
 
     __createMainToolbar() {
-        let toolbar = new Jodit.modules.Toolbar(this);
+        let toolbar = new Toolbar(this);
         toolbar.build(this.options.buttons, this.container);
     }
 

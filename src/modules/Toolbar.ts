@@ -1,10 +1,15 @@
 import Jodit from "../jodit"
 import Component from "./Component"
-import {dom, each, $$} from "./Helpers"
+import {dom, each, $$, extend, inArray} from "./Helpers"
+import {isFunction} from "util";
+
 type ControlType = {
     name?: string;
-    list?: any[],
+    list?: any[];
     command?: string;
+    tags?: string;
+    options?: any;
+    css?: any;
     iconURL?: string;
     tooltip?: string;
     exec?: Function;
@@ -12,6 +17,12 @@ type ControlType = {
     template?: Function;
     popap?: Function;
 }
+type ButtonType = {
+    btn: HTMLLIElement,
+    control: ControlType,
+    name: string,
+}
+
 export default class Toolbar extends Component{
     static icons = {};
     container: HTMLDivElement;
@@ -37,8 +48,15 @@ export default class Toolbar extends Component{
         this.list.addEventListener('mousedown', (e) => {e.stopPropagation()})
     }
 
-    static getIcon(name) {
-        return Toolbar.icons[name] !== undefined ? Toolbar.icons[name] : '<span></span>';
+    /**
+     * Return SVG icon
+     *
+     * @param {string} name icon
+     * @param {string|false} [defaultValue='<span></span>']
+     * @return {string}
+     */
+    static getIcon(name, defaultValue:string|false = '<span></span>') {
+        return Toolbar.icons[name] !== undefined ? Toolbar.icons[name] : defaultValue;
     }
 
     /**
@@ -66,6 +84,9 @@ export default class Toolbar extends Component{
         this.list.style.display = 'block';
     }
 
+    /**
+     *
+     */
     closeAll() {
         this.list.innerHTML = '';
         this.popup.innerHTML = '';
@@ -77,6 +98,60 @@ export default class Toolbar extends Component{
         })
     }
 
+    checkActiveButtons(element: Node|false) {
+        this.buttonList.forEach(({name, control, btn}) => {
+            let className = name || "empty",
+                tags,
+                elm,
+                css,
+                el,
+                checkActiveStatus = (cssObject) => {
+                    let matches = 0,
+                        total = 0;
+
+                    each(cssObject, (cssProperty, cssValue) => {
+                        if (isFunction(cssValue)) {
+                            if (cssValue.apply(self, [el.css(cssProperty).toString().toLowerCase(), self])) {
+                                matches += 1;
+                            }
+                        } else {
+                            if (el.css(cssProperty).toString().toLowerCase() === cssValue) {
+                                matches += 1;
+                            }
+                        }
+                        total += 1;
+                    });
+                    if (total === matches && this.container.querySelector(".toolbar-" + className)) {
+                        btn.classList.add("active");
+                    }
+                };
+
+            if (control.tags || (control.options && control.options.tags)) {
+                tags = control.tags || (control.options && control.options.tags);
+
+                elm = element;
+                this.parent.node.up(elm, (node) => {
+                    if (tags.indexOf(node.nodeName.toLowerCase()) !== -1) {
+                        btn.classList.add("active");
+                        return true;
+                    }
+                }, this.parent.editor);
+            }
+
+            //activate by supposed css
+            if (control.css || (control.options && control.options.css)) {
+                css = control.css || (control.options && control.options.css);
+                el = element;
+
+                while (el && el.nodeType === Node.ELEMENT_NODE && !elm.classList.contains('jodit_editor')) {
+                    checkActiveStatus(css);
+                    el = elm.parentNode;
+                }
+            }
+        });
+    }
+
+    private buttonList:ButtonType[] = [];
     /**
      *
      */
@@ -88,14 +163,23 @@ export default class Toolbar extends Component{
             name = typeof item === 'string' ? item : (item.name || 'empty'),
             a = btn.querySelector('a');
 
+        let iconSVG = Toolbar.getIcon(name, false);
+
+        if (iconSVG === false) {
+            iconSVG = Toolbar.getIcon(typeof control.name === 'string' ? control.name : 'empty');
+        }
+
         btn.control =  control;
 
         const clearName = name.replace(/[^a-zA-Z0-9]/g, '_');
 
-        btn.classList.add('jodit_toolbar_btn'); // fix for ie You can not simply add and add a second parameter
+        btn.classList.add('jodit_toolbar_btn'); // fix for ie You can not simply add class and add second parameter
         btn.classList.add('jodit_toolbar_btn-' + clearName);
 
-        let icon = dom(Toolbar.getIcon(name));
+
+
+
+        let icon =  dom(iconSVG);
         icon.classList.add('jodit_icon', 'jodit_icon_' + clearName);
         a.appendChild(icon);
 
@@ -109,6 +193,7 @@ export default class Toolbar extends Component{
 
         if (control.list) {
             btn.classList.add('jodit_with_dropdownlist');
+            a.appendChild(dom('<span class="jodit_with_dropdownlist-trigger"></span>'))
         }
 
         if (control.iconURL) {
@@ -133,7 +218,13 @@ export default class Toolbar extends Component{
                 if (control.list) {
                     this.openList(btn);
                     each(control.list, (key, value) => {
-                        let elm = this.addButton(key, {
+                        let elm;
+                        if (this.parent.options.controls[value] !== undefined) {
+                            elm = this.addButton(value, this.parent.options.controls[value]); // list like array {"align": {list: ["left", "right"]}}
+                        } else if (this.parent.options.controls[key] !== undefined) {
+                            elm = this.addButton(key, extend({}, this.parent.options.controls[key], value)); // list like object {"align": {list: {"left": {exec: alert}, "right": {}}}}
+                        } else {
+                            elm = this.addButton(key, {
                                     exec: control.exec,
                                     command: control.command,
                                     args: [
@@ -141,8 +232,14 @@ export default class Toolbar extends Component{
                                         (control.args && control.args[1]) || value
                                     ]
                                 },
-                                control.template && control.template.call(this.parent, key, value)
+                                control.template && control.template({
+                                    editor: this.parent,
+                                    key,
+                                    value
+                                })
                             );
+                        }
+
                         this.list.appendChild(elm);
                     });
                     btn.appendChild(this.list);
@@ -165,6 +262,12 @@ export default class Toolbar extends Component{
                     }
                 }
             });
+
+        this.buttonList.push({
+            control,
+            btn,
+            name,
+        });
 
         return btn;
     }
@@ -203,6 +306,19 @@ export default class Toolbar extends Component{
         this.__on(window, 'mousedown', () => {
             if (this.__popapOpened) {
                 this.closeAll();
+            }
+        });
+
+        this.parent.events.on('mousedown keydown', () => {
+            let callback = () => {
+                if (this.parent.selection) {
+                    this.checkActiveButtons(this.parent.selection.current())
+                }
+            };
+            if (this.parent.options.observer.timeout) {
+                setTimeout(callback, this.parent.options.observer.timeout)
+            } else {
+                callback();
             }
         });
 

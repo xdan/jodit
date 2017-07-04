@@ -171,14 +171,56 @@ describe('Test interface', function() {
 
                 expect(list.style.display).to.equal('none');
             });
-        });
-        describe('Commands', function () {
-            it('Click on Source button should change current mode', function() {
+            it('Open align list and choose Right align.', function() {
                 var editor = new Jodit('#table_editor_interface');
 
-                simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-source'))
+                editor.setEditorValue('Test')
 
-                expect(editor.getMode()).to.equal(Jodit.MODE_SOURCE);
+
+                simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-align'))
+
+                var list = editor.container.querySelector('.jodit_dropdownlist');
+
+                expect(list.style.display).to.equal('block');
+
+                simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-align .jodit_toolbar_btn.jodit_toolbar_btn-right'))
+
+
+                expect(sortAtrtibutes(editor.getEditorValue())).to.equal('<p style="text-align: right">Test</p>');
+
+                simulateEvent('mousedown', 0, editor.editor)
+
+                expect(list.style.display).to.equal('none');
+            });
+        });
+        describe('Buttons', function () {
+            it('Remove default buttons functionality', function() {
+                var editor = new Jodit('#table_editor_interface');
+                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-source').length).to.equal(1);
+                editor.destruct();
+                editor = new Jodit('#table_editor_interface', {
+                    removeButtons: ['source']
+                });
+                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-source').length).to.equal(0);
+            });
+            it('Add own button', function() {
+                var editor = new Jodit('#table_editor_interface', {
+                    buttons: Jodit.defaultOptions.buttons.concat([
+                        {
+                            name: 'insertDate',
+                            iconURL: 'http://xdsoft.net/jodit/logo.png',
+                            exec: function (data) {
+                                data.editor.selection.insertHTML((new Date('2016/03/16')).toDateString());
+                            }
+                        }
+                    ])
+                });
+                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-insertDate').length).to.equal(1);
+
+                editor.setEditorValue('');
+
+                simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-insertDate'))
+                expect(editor.getEditorValue()).to.equal('Wed Mar 16 2016');
             });
         });
         describe('Commands', function () {
