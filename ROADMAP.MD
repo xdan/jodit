@@ -1,5 +1,5 @@
-[*] Check all buttons functionality 
-
-[*] Image resizer
-
-[ ] Disable buttons when they can not be used and set active then they have matches with current selection
+- [x] Check all buttons functionality 
+- [x] Image resizer
+- [x] Disable buttons when they can not be used and set active then they have matches with current selection
+- [ ] Disable buttons when mode was changed
+- [ ] Restore FileBrowser
