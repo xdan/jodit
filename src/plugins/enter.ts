@@ -86,21 +86,6 @@ Jodit.plugins.enter = function (editor: Jodit) {
                 if (currentBox.nodeName === 'LI') {
                     if (trim(currentBox.textContent || currentBox['innerText']).length === 0) {
                         const ul = <Node>editor.node.closest(currentBox, 'ol|ul');
-                        /*fake = editor.selection.setCursorAfter(editor.node.closest(currentBox, 'ol|ul') || currentBox);
-                        currentBox.parentNode.removeChild(currentBox);
-                        insertParagraph(editor, fake);*/
-                        /*let leftRange = editor.doc.createRange(),
-                            ul = <Node>editor.node.closest(currentBox, 'ol|ul');
-
-                        leftRange.setStartBefore(ul);
-                        leftRange.setEnd(range.startContainer, range.startOffset);
-
-                        let fragment = leftRange.extractContents();
-                        ul.parentNode.insertBefore(fragment, ul);
-
-                        editor.selection.setCursorIn(currentBox, true);
-                        return false;*/
-
                         // If there is no LI element before
                         if (!editor.node.prev(currentBox, elm => elm && elm.tagName === 'LI', ul)) {
                             fake = editor.selection.setCursorBefore(ul);

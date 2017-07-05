@@ -1,6 +1,6 @@
 import Jodit from "../jodit"
 import Component from "./Component"
-import {dom, each, $$, extend, inArray} from "./Helpers"
+import {dom, each, $$, extend, inArray, camelCase} from "./Helpers"
 import {isFunction} from "util";
 
 type ControlType = {
@@ -32,6 +32,7 @@ export default class Toolbar extends Component{
 
 
     __popapOpened = false;
+    __listOpened = false;
 
     /**
      *
@@ -80,7 +81,7 @@ export default class Toolbar extends Component{
     openList(btn: HTMLLIElement) {
         btn.classList.add('jodit_dropdown_open');
         this.closeAll();
-        this.__popapOpened = true;
+        this.__listOpened = true;
         this.list.style.display = 'block';
     }
 
@@ -92,10 +93,17 @@ export default class Toolbar extends Component{
         this.popup.innerHTML = '';
         this.popup.style.display = 'none';
         this.list.style.display = 'none';
-        this.__popapOpened = false;
+
         $$('.jodit_dropdown_open, .jodit_popap_open', this.container).forEach((btn) => {
             btn.classList.remove('jodit_dropdown_open', 'jodit_popap_open');
         })
+
+        if (this.__popapOpened && this.parent.selection) {
+            this.parent.selection.clear();
+        }
+
+        this.__popapOpened = false;
+        this.__listOpened = false;
     }
 
     checkActiveButtons(element: Node|false) {
@@ -190,7 +198,18 @@ export default class Toolbar extends Component{
         btn.classList.add('jodit_toolbar_btn-' + clearName);
 
 
-
+        this.parent.events.on(camelCase('can-' + clearName), (enable) => {
+            btn.classList.toggle('jodit_disabled', !enable);
+            if (enable) {
+                if (btn.hasAttribute('disabled')) {
+                    btn.removeAttribute('disabled')
+                }
+            } else {
+                if (!btn.hasAttribute('disabled')) {
+                    btn.setAttribute('disabled', true)
+                }
+            }
+        })
 
         let icon =  dom(iconSVG);
         icon.classList.add('jodit_icon', 'jodit_icon_' + clearName);
@@ -221,12 +240,13 @@ export default class Toolbar extends Component{
 
         btn
             .addEventListener('mousedown',  (originalEvent) => {
-                if (btn.classList.contains('disabled')) {
+                originalEvent.stopImmediatePropagation();
+                originalEvent.preventDefault();
+
+                if (btn.classList.contains('jodit_disabled')) {
                     return false;
                 }
 
-                originalEvent.stopImmediatePropagation();
-                originalEvent.preventDefault();
 
                 if (control.list) {
                     this.openList(btn);
@@ -317,7 +337,7 @@ export default class Toolbar extends Component{
         });
 
         this.__on(window, 'mousedown', () => {
-            if (this.__popapOpened) {
+            if (this.__popapOpened || this.__listOpened) {
                 this.closeAll();
             }
         });

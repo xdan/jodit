@@ -179,18 +179,19 @@ describe('Commands Jodit Editor Tests', function() {
 
     it('Exec command "bold" fot some text that contains a few STRONG elements, should wrap all of these in one STRONG', function() {
         var editor = new Jodit('#tested_area');
-        editor.setEditorValue('test <strong>test</strong> test');
+        editor.setEditorValue('<strong>test</strong> test <strong>test</strong>');
 
         var sel = editor.win.getSelection(),
             range = editor.doc.createRange();
 
-        range.selectNodeContents(editor.editor);
+        range.setStart(editor.editor.firstChild.firstChild, 0);
+        range.setEnd(editor.editor.lastChild.firstChild, 4);
         sel.removeAllRanges();
         sel.addRange(range);
 
         editor.execCommand('bold');
 
-        expect(editor.getEditorValue()).to.equal('<strong>test test test</strong>');
+        expect(editor.getEditorValue()).to.equal('test test test');
 
     });
 

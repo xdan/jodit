@@ -92,14 +92,60 @@ Its complete documentation, specially designed framework plugins and tons of exa
     //    var editor = new Jodit('#table_editor_interface');
 
 //    var editor = new Jodit('#tested_area');
-    editor.setEditorValue('<strong>1 2 3</strong>');
+    editor.setEditorValue('')
+
+
+    simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link'))
+
+    var list = editor.container.querySelector('.jodit_toolbar_popup');
+
+//    expect(list.style.display).to.equal('block');
+
+    editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=url]').value = '' // try wrong url
+    editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=text]').value = '123'
+    simulateEvent('submit', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_form'))
+
+//    expect(editor.container.querySelectorAll('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=url].jodit_error').length).to.equal(1);
+
+    editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=url]').value = 'http://xdsoft.net/jodit/images/artio.jpg'
+    simulateEvent('submit', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_form'))
+
+//    expect(sortAtrtibutes(editor.getEditorValue())).to.equal('<a href="http://xdsoft.net/jodit/images/artio.jpg">123</a>');
+
+    simulateEvent('mousedown', 0, editor.editor)
+
+//    expect(list.style.display).to.equal('none');
+
+
     var sel = editor.win.getSelection(),
         range = editor.doc.createRange();
-    range.setStart(editor.editor.firstChild.firstChild, 1);
-    range.setEnd(editor.editor.firstChild.firstChild, 4);
+
+    range.selectNode(editor.editor.firstChild);
     sel.removeAllRanges();
     sel.addRange(range);
-    editor.execCommand('bold');
+//debugger
+    simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link'))
+//    expect(editor.container.querySelectorAll('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=url]').value).to.equal(1);
+
+//    simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link'))
+//
+//    var list = editor.container.querySelector('.jodit_toolbar_popup');
+//
+////    expect(list.style.display).to.equal('block');
+//
+//    editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=url]').value = 'sddhttp://xdsoft.net/jodit/images/artio.jpg' // try wrong url
+//    editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=text]').value = '123'
+//    simulateEvent('submit', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_form'))
+//
+////    expect(editor.container.querySelectorAll('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=url].jodit_error').length).to.equal(1);
+//
+//    editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=url]').value = 'http://xdsoft.net/jodit/images/artio.jpg'
+//    simulateEvent('submit', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_form'))
+//
+////    expect(sortAtrtibutes(editor.getEditorValue())).to.equal('<img alt="123" src="http://xdsoft.net/jodit/images/artio.jpg">text2text');
+//
+//    simulateEvent('mousedown', 0, editor.editor)
+
     //editor.execCommand('bold');
 //    expect(editor.container.querySelectorAll('.jodit_toolbar_btn-bold.jodit_active').length).to.equal(1)
 

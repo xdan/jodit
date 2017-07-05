@@ -1,6 +1,6 @@
 import * as consts from '../constants';
 import Component from './Component';
-import {each, gebi, dom, trim} from './Helpers';
+import {each, gebi, dom, trim, $$} from './Helpers';
 
 export default class Selection extends Component{
 
@@ -13,6 +13,16 @@ export default class Selection extends Component{
             }
         }
     }
+
+    /**
+     * Remove all markers
+     */
+    clear() {
+        $$('.jodit_selection_marker', this.parent.editor).forEach((marker) => {
+            marker.parentNode.removeChild(marker)
+        })
+    }
+
     /**
      * Restores user selections using marker invisible elements in the DOM.
      *
@@ -170,16 +180,14 @@ export default class Selection extends Component{
             let sel = this.win.getSelection();
             if (sel.rangeCount > 0) {
                 let range = sel.getRangeAt(0);
-                let node = range.startContainer, elm = node;
+                let node = range.startContainer;
                 if (range.startContainer.nodeType !== Node.TEXT_NODE && range.startContainer === range.endContainer && range.startOffset !== range.endOffset) {
                     node = range.startContainer.childNodes[range.startOffset];
                 }
+
                 // check - cursor inside editor
-                while (elm.parentNode) {
-                    if (elm.parentNode === this.parent.editor) {
-                        return node;
-                    }
-                    elm = elm.parentNode;
+                if (this.parent.node.contains(this.parent.editor, node)) {
+                    return node;
                 }
             }
         }
@@ -440,6 +448,10 @@ export default class Selection extends Component{
             parentBlock = <HTMLElement>this.parent.node.up(container, this.parent.node.isBlock)
         } else if (typeof parentBlock === 'function') {
             parentBlock = <HTMLElement>this.parent.node.up(container, parentBlock)
+        } else {
+            if (!this.parent.node.isOrContains(parentBlock, container)) {
+                return null;
+            }
         }
 
         if (!container) {

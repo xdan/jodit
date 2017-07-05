@@ -255,10 +255,12 @@ Widget['ImageSelector'] = class extends Widget{
 
         if (callbacks.url) {
             form = dom('<form onsubmit="return false;" class="jodit_form">' +
-                '<input required name="url" placeholder="http://" type="url"/>' +
+                '<input required name="url" placeholder="http://" type="text"/>' +
                 '<input name="text" placeholder="' + editor.i18n('Alternative text') + '" type="text"/>' +
-                '<button type="submit">' + editor.i18n('Insert') + '</button>' +
-                '</form>');
+                '<div style="text-align: right">' +
+                    '<button type="submit">' + editor.i18n('Insert') + '</button>' +
+                '</div>' +
+            '</form>');
 
             this.currentImage = null;
 
@@ -273,7 +275,7 @@ Widget['ImageSelector'] = class extends Widget{
                 event.preventDefault(event)
                 event.stopPropagation()
 
-                if (!editor.helper.isURL(form.querySelector('input[name=url]').value)) {
+                if (!form.querySelector('input[name=url]').value) {
                     form.querySelector('input[name=url]').focus();
                     form.querySelector('input[name=url]').classList.add('jodit_error');
                     return false;

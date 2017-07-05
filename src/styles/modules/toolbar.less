@@ -52,7 +52,8 @@
     text-align:center;
     cursor: pointer;
     transition: background-color .2s linear, opacity .1s linear;
-    &.disabled {
+
+    &.jodit_disabled {
       background-color: transparent !important;
       opacity:.3;
       cursor:default;
@@ -115,6 +116,9 @@
         visibility: visible;
         opacity:1;
       }
+    }
+    &.jodit_disabled  .jodit_tooltip{
+      display: none !important;
     }
     > a {
       line-height: 100%;

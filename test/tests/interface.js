@@ -130,7 +130,7 @@ describe('Test interface', function() {
 
                 expect(list.style.display).to.equal('block');
 
-                editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-image input[name=url]').value = 'sddhttp://xdsoft.net/jodit/images/artio.jpg' // try wrong url
+                editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-image input[name=url]').value = '' // try wrong url
                 editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-image input[name=text]').value = '123'
                 simulateEvent('submit', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-image .jodit_form'))
 
@@ -191,6 +191,58 @@ describe('Test interface', function() {
                 simulateEvent('mousedown', 0, editor.editor)
 
                 expect(list.style.display).to.equal('none');
+            });
+            it('Open LINK insert dialog and insert new link.', function() {
+                var editor = new Jodit('#table_editor_interface', {
+                    observer: {
+                        timeout: 0
+                    }
+                });
+
+                editor.setEditorValue('')
+
+
+                simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link'))
+
+                var list = editor.container.querySelector('.jodit_toolbar_popup');
+
+                expect(list.style.display).to.equal('block');
+                expect(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_unlink_button').style.display).to.equal('none');
+
+                editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=url]').value = '' // try wrong url
+                editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=text]').value = '123'
+                simulateEvent('submit', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_form'))
+
+                expect(editor.container.querySelectorAll('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=url].jodit_error').length).to.equal(1);
+
+                editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=url]').value = 'http://xdsoft.net/jodit/images/artio.jpg'
+                simulateEvent('submit', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_form'))
+
+                expect(sortAtrtibutes(editor.getEditorValue())).to.equal('<a href="http://xdsoft.net/jodit/images/artio.jpg">123</a>');
+
+                simulateEvent('mousedown', 0, editor.editor)
+
+                expect(list.style.display).to.equal('none');
+
+                editor.setEditorValue('<a target="_blank" rel="nofollow" href="#test">test</a>')
+
+                var sel = editor.win.getSelection(),
+                    range = editor.doc.createRange();
+
+                range.selectNode(editor.editor.firstChild);
+                sel.removeAllRanges();
+                sel.addRange(range);
+
+                simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link'))
+
+                expect(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=url]').value).to.equal('#test');
+                expect(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=target]').checked).to.equal(true);
+                expect(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=nofollow]').checked).to.equal(true);
+                expect(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_unlink_button').style.display).to.not.equal('none');
+
+                simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_unlink_button'))
+
+                expect(sortAtrtibutes(editor.getEditorValue())).to.equal('test')
             });
         });
         describe('Buttons', function () {
@@ -293,6 +345,25 @@ describe('Test interface', function() {
                 simulateEvent('mousedown', 0, editor.editor)
 
                 expect(editor.container.querySelectorAll('.jodit_toolbar_btn-bold.jodit_active').length).to.equal(1);
+            });
+            it('Check Redo Undo functionality', function() {
+                table_editor_interface.value = 'top';
+                var editor = new Jodit('#table_editor_interface', {
+                    observer: {
+                        timeout: 0 // disable delay
+                    }
+                });
+
+                editor.setEditorValue('Test');
+
+                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-redo.jodit_disabled').length).to.equal(1);
+                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-undo.jodit_disabled').length).to.equal(0);
+
+                simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-undo'))
+
+                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-redo.jodit_disabled').length).to.equal(0);
+                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-undo.jodit_disabled').length).to.equal(1);
+                expect(editor.getEditorValue()).to.equal('top');
             });
         });
         describe('Commands', function () {

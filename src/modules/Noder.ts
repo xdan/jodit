@@ -328,4 +328,157 @@ export default class Noder extends Component{
             this.all(child, condition);
         })
     }
+
+    /**
+     * Check root contains child
+     *
+     * @param root
+     * @param child
+     * @return {boolean}
+     */
+    contains = (root: Node, child: Node): boolean => {
+        while (child.parentNode) {
+            if (child.parentNode === root) {
+                return true;
+            }
+            child = child.parentNode;
+        }
+        return false;
+    }
+
+    /**
+     * Check root contains child or equal child
+     *
+     * @param root
+     * @param child
+     * @return {boolean}
+     */
+    isOrContains = (root: Node, child: Node): boolean => {
+        if (root === child || this.contains(root, child)) {
+            return true;
+        }
+        return false;
+    }
+
+    apply = (options, addPropertyCallback) => {
+        const WRAP  = 1;
+        const UNWRAP  = 0;
+        let selectionInfo,
+            editor = this.parent,
+            getCSS = (elm: HTMLElement, key: string): string => {
+                return editor.win.getComputedStyle(elm).getPropertyValue(key).toString()
+            },
+            mode,
+            checkCssRulesFor = (elm: HTMLElement) => {
+                return elm.nodeType === Node.ELEMENT_NODE && each(options.css, (cssPropertyKey, cssPropertyValues) => {
+                        let value = getCSS(elm, cssPropertyKey);
+                        return  cssPropertyValues.indexOf(value.toLowerCase()) !== -1
+                    }) !== false
+            };
+
+        let oldWrappers = [];
+        editor.selection.eachSelection((current) => {
+            let sel = editor.win.getSelection(),
+                wrapper,
+                range = sel.getRangeAt(0);
+
+            wrapper = <HTMLElement>editor.node.closest(current, (elm) => {
+                if (checkCssRulesFor(<HTMLElement>elm)) {
+                    return true;
+                }
+                return false;
+            });
+
+            if (wrapper && oldWrappers.reduce((was, oldWprapper) => {
+                    return was || oldWprapper === wrapper
+                }, false)) {
+                return;
+            }
+
+            if (mode === undefined) {
+                mode = wrapper ? UNWRAP : WRAP;
+            }
+
+            if (wrapper) {
+                // element full selected !range.collapsed && editor.selection.cursorInTheEdge(true, wrapper) && editor.selection.cursorInTheEdge(false, wrapper)
+                if (!range.collapsed) {
+                    let cursorInTheStart = editor.selection.cursorInTheEdge(true, wrapper),
+                        cursorInTheEnd = editor.selection.cursorInTheEdge(false, wrapper);
+
+                    selectionInfo = editor.selection.save();
+
+                    if (cursorInTheStart === false || cursorInTheEnd === false) {
+                        let leftRange = editor.doc.createRange();
+
+                        if (cursorInTheStart) {
+                            leftRange.setStart(range.endContainer, range.endOffset);
+                            leftRange.setEndAfter(wrapper);
+                            let fragment = leftRange.extractContents();
+                            editor.node.after(wrapper, fragment)
+                        } else if (cursorInTheEnd) {
+                            leftRange.setStartBefore(wrapper);
+                            leftRange.setEnd(range.startContainer, range.startOffset);
+                            let fragment = leftRange.extractContents();
+                            wrapper.parentNode.insertBefore(fragment, wrapper);
+                        } else {
+                            let cloneRange = range.cloneRange();
+                            leftRange.setStartBefore(wrapper);
+                            leftRange.setEnd(cloneRange.startContainer, cloneRange.startOffset);
+                            let fragment = leftRange.extractContents();
+                            wrapper.parentNode.insertBefore(fragment, wrapper);
+                            leftRange.setStart(cloneRange.endContainer, cloneRange.endOffset);
+                            leftRange.setEndAfter(wrapper);
+                            fragment = leftRange.extractContents();
+                            editor.node.after(wrapper, fragment)
+                        }
+                    }
+
+                } else {
+                    if (editor.selection.cursorInTheEdge(true, wrapper)) {
+                        editor.selection.setCursorBefore(wrapper);
+                    } else {
+                        editor.selection.setCursorAfter(wrapper);
+                    }
+                    return false;
+                }
+
+
+
+
+                // wrapper already exists
+                if (options.tagRegExp && wrapper.tagName.toLowerCase().match(options.tagRegExp)) {
+                    while (wrapper.firstChild) {
+                        wrapper.parentNode.insertBefore(wrapper.firstChild, wrapper);
+                    }
+
+                    editor.selection.restore(selectionInfo);
+                    wrapper.parentNode.removeChild(wrapper); // because in FF selection can be inside wrapper
+                } else {
+                    each(options.css, (cssPropertyKey) => {
+                        wrapper.style.removeProperty(cssPropertyKey);
+                    });
+
+                    if (!wrapper.getAttribute('style')) {
+                        wrapper.removeAttribute('style')
+                    }
+
+                    wrapper.normalize();
+
+                    editor.selection.restore(selectionInfo);
+                }
+
+                editor.setEditorValue();
+                return false;
+            }
+
+            if (mode === WRAP) {
+                wrapper = addPropertyCallback(options);
+                wrapper.normalize();
+            }
+
+            if (wrapper) {
+                oldWrappers.push(wrapper);
+            }
+        });
+    }
 }

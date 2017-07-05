@@ -741,38 +741,51 @@ const config: any = {
             tooltip: "Insert Image"
         },
         link : {
-            popap: ({editor}) => {
-                let current,
-                    sel = editor.win.getSelection(),
+            popap: ({editor, current, close}) => {
+                let sel = editor.win.getSelection(),
                     form = dom('<form class="jodit_form">' +
                         '<input required name="url" placeholder="http://" type="text"/>' +
-                        '<input name="text" placeholder="' + editor.i18n('Anchor') + '" type="text"/>' +
+                        '<input name="text" placeholder="' + editor.i18n('Text') + '" type="text"/>' +
                         '<label><input name="target" type="checkbox"/> ' + editor.i18n('Open in new tab') + '</label>' +
                         '<label><input name="nofollow" type="checkbox"/> ' + editor.i18n('No follow') + '</label>' +
-                        '<button type="submit">' + editor.i18n('Insert') + '</button>' +
-                        '<form/>');
+                        '<div style="text-align: right">' +
+                            '<button class="jodit_unlink_button" type="button">' + editor.i18n('Unlink') + '</button> &nbsp;&nbsp;' +
+                            '<button type="submit">' + editor.i18n('Insert') + '</button>' +
+                        '</div>' +
+                    '<form/>');
 
-                if (sel && sel.anchorNode && sel.anchorNode.parentNode.tagName === 'A') {
-                    form.querySelector('input[name=url]').value = (sel.anchorNode.parentNode.href);
-                    form.querySelector('input[name=text]').value = (sel.anchorNode.parentNode.text);
-                    form.querySelector('input[name=target]').checked = (sel.anchorNode.parentNode.target === '_blank');
-                    form.querySelector('input[name=nofollow]').checked = (sel.anchorNode.parentNode.rel === 'nofollow');
-
-                    if (sel.toString() === '') {
-                        current = sel.anchorNode.parentNode;
-                    }
+                if (current && editor.node.closest(current, 'A')) {
+                    current = editor.node.closest(current, 'A')
                 } else {
+                    current = false;
+                }
+
+                if (current) {
+                    form.querySelector('input[name=url]').value = current.getAttribute('href');
+                    form.querySelector('input[name=text]').value = current.innerText;
+                    form.querySelector('input[name=target]').checked = (current.getAttribute('target') === '_blank');
+                    form.querySelector('input[name=nofollow]').checked = (current.getAttribute('rel') === 'nofollow');
+                } else {
+                    form.querySelector('.jodit_unlink_button').style.display = 'none';
                     form.querySelector('input[name=text]').value = sel.toString();
                 }
 
                 let selInfo = editor.selection.save();
 
+                form.querySelector('.jodit_unlink_button').addEventListener('mousedown', (event: Event) => {
+                    if (current) {
+                        editor.node.unwrap(current);
+                    }
+                    close();
+                });
+
                 form.addEventListener('submit', (event: Event) => {
                     event.preventDefault()
                     editor.selection.restore(selInfo);
-                    let a = dom(current || '<a></a>');
 
-                    if (!editor.helper.isURL(form.querySelector('input[name=url]').value)) {
+                    let a = current || editor.node.create('a');
+
+                    if (!form.querySelector('input[name=url]').value) {
                         form.querySelector('input[name=url]').focus();
                         form.querySelector('input[name=url]').classList.add('jodit_error');
                         return false;
@@ -782,7 +795,7 @@ const config: any = {
                     a.setAttribute('href', form.querySelector('input[name=url]').value);
                     a.innerText = form.querySelector('input[name=text]').value;
 
-                    if (form.querySelector('querySelector[name=target]').checked) {
+                    if (form.querySelector('input[name=target]').checked) {
                         a.setAttribute('target', '_blank');
                     } else {
                         a.removeAttribute('target');
@@ -798,6 +811,7 @@ const config: any = {
                         editor.selection.insertNode(a);
                     }
 
+                    close();
                     return false;
                 });
 
