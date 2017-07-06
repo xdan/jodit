@@ -594,7 +594,7 @@ export default class FileBrowser extends Component {
                                         selectBtn = self.buttons.select.cloneNode(true),
                                         image = document.createElement('img'),
                                         addLoadHandler = () => {
-                                            let onload = function () {
+                                            let onload = () => {
                                                 this.removeEventListener('load', <EventListenerOrEventListenerObject>onload);
                                                 temp_content.innerHTML = '';
                                                 if (self.options.showPreviewNavigation) {
@@ -608,7 +608,7 @@ export default class FileBrowser extends Component {
                                                         temp_content.appendChild(item.nextSibling);
                                                     }
 
-                                                    self.__on([next, prev], 'click', function (this: HTMLElement, e) {
+                                                    self.__on([next, prev], 'click', function (this: HTMLElement) {
                                                         if (this.classList.contains('jodit_filebrowser_preview_navigation-next')) {
                                                             item = <HTMLElement>item.nextSibling;
                                                         } else {
@@ -625,11 +625,11 @@ export default class FileBrowser extends Component {
                                                 preview.setPosition();
                                             };
 
-                                            image.addEventListener("load", onload)
+                                            image.addEventListener("load", onload);
                                             if (image.complete) {
                                                 onload.call(this);
                                             }
-                                        }
+                                        };
 
                                     addLoadHandler();
                                     image.setAttribute('src', src);
@@ -638,10 +638,10 @@ export default class FileBrowser extends Component {
                                     if (self.options.showSelectButtonInPreview) {
                                         selectBtn.removeAttr('disabled');
                                         preview.setTitle(selectBtn);
-                                        selectBtn.on('click', function () {
+                                        selectBtn.on('click', () => {
                                             self.files.querySelector('a.active').classList.add('active');
                                             item.classList.add('active');
-                                            self.buttons.select.trigger('click');
+                                            self.__fire(self.buttons.select, 'click');
                                             preview.close();
                                         });
                                     }
@@ -664,7 +664,7 @@ export default class FileBrowser extends Component {
                     if (!ctrlKey(e)) {
                         $$('>a', self.files).forEach((elm: HTMLElement) => {
                             elm.classList.remove('active');
-                        })
+                        });
                         self.someSelectedWasChanged();
                     }
                 })
@@ -690,8 +690,7 @@ export default class FileBrowser extends Component {
                 })
                 .__on(window, 'keydown', (e) => {
                     if (self.isOpened() && e.which === 46) {
-                        //TODO
-                        //self.buttons.remove.trigger('click');
+                        self.__fire(self.buttons.remove, 'click');
                     }
                 })
                 .__on(window, 'mouseup dragend',() => {
@@ -713,8 +712,8 @@ export default class FileBrowser extends Component {
             this.options.items = {...this.options.ajax, ...this.options.items};
         }
 
-        view = 'tiles'
-        sortBy = 'changed'
+        view = 'tiles';
+        sortBy = 'changed';
 
         /**
          * Get base url. You can use this method in another modules
@@ -1057,11 +1056,11 @@ export default class FileBrowser extends Component {
             }
         }
 
-        errorHandler = (resp) => {
+        errorHandler(resp) {
             this.status(this.options.getMsg(resp));
         }
 
-        uploadHandler = (data, resp) => {
+        uploadHandler(data, resp) {
             if (this.options.isSuccess(resp)) {
                 this.status(this.parent.i18n('Files [1$] was uploaded', data.files.join(',')), true);
             } else {
