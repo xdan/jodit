@@ -75,7 +75,7 @@ export default class Component {
             }
 
             (Array.isArray(element) ? element : [element]).forEach((elm: HTMLElement) => {
-                elm.addEventListener(event, <EventListenerOrEventListenerObject>callback);
+                elm.addEventListener(event, <EventListenerOrEventListenerObject>temp);
             });
 
             let eventData = {

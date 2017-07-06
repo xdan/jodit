@@ -184,7 +184,7 @@ export default class Dialog extends Component{
      * dialog.setTitle(['Hello world', '<button>OK</button>', $('<div>some</div>')]);
      * dialog.open();
      */
-    setTitle(title:  string|string[]|HTMLElement|HTMLElement[]) {
+    setTitle(title:  string|string[]|Element|Element[]) {
         this.dialogbox.header.innerHTML = ''
         asArray(title).forEach((elm) => {
             this.dialogbox.header.appendChild(dom(elm));
@@ -201,7 +201,7 @@ export default class Dialog extends Component{
      * dialog.setContent('<form onsubmit="alert(1);"><input type="text" /></form>');
      * dialog.open();
      */
-    setContent(content: string|string[]|HTMLElement|HTMLElement[]) {
+    setContent(content: string|string[]|Element|Element[]) {
         this.dialogbox.content.innerHTML = ''
         asArray(content).forEach((elm) => {
             this.dialogbox.content.appendChild(dom(elm));
@@ -224,7 +224,7 @@ export default class Dialog extends Component{
      * ]);
      * dialog.open();
      */
-    setFooter(content: string|string[]|HTMLElement|HTMLElement[]) {
+    setFooter(content: string|string[]|Element|Element[]) {
         this.dialogbox.footer.innerHTML = ''
         asArray(content).forEach((elm) => {
             this.dialogbox.footer.appendChild(dom(elm));
@@ -563,7 +563,7 @@ export const Alert = (msg: string, title: string|Function, callback: Function) =
         $ok
     ]);
 
-    dialog.open($div, title || '&nbsp;', true, true);
+    dialog.open($div, <string>title || '&nbsp;', true, true);
     $ok.focus();
 }
 
@@ -630,7 +630,7 @@ export const Promt = (msg: string, title: string|Function, callback: Function, p
         $cancel
     ]);
 
-    dialog.open($div, title || '&nbsp;', true, true);
+    dialog.open($div, <string>title || '&nbsp;', true, true);
     $input.focus();
 }
 Jodit['Promt'] = Promt;
@@ -696,7 +696,7 @@ export const Confirm = (msg: string, title: string|Function, callback: Function)
         $cancel
     ]);
 
-    dialog.open($div, title || '&nbsp;', true, true);
+    dialog.open($div, <string>title || '&nbsp;', true, true);
     $ok.focus();
 }
 Jodit['Confirm'] = Confirm;

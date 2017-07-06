@@ -68,6 +68,36 @@ describe('Jodit Events system Tests', function() {
             simulateEvent('click', 0, div);
             expect(work).to.be.equal(1);
         })
+        it('Add event handler for several elements', () => {
+            var editor = new Jodit(appendTestArea()),
+                work = '',
+                div1 = document.createElement('button'),
+                div2 = document.createElement('button');
+
+            div1.innerText = 'test1';
+            div2.innerText = 'test2';
+
+            editor.__on([div1, div2], 'click', function () {
+                work += this.innerText;
+            })
+
+            editor.__fire(div1, 'click');
+            editor.__fire(div2, 'click');
+
+            expect(work).to.be.equal('test1test2');
+        })
+        it('Fire trigger', () => {
+            var editor = new Jodit(appendTestArea()),
+                work = 0,
+                div = document.createElement('button');
+
+            editor.__on(div, 'click', function () {
+                work++;
+            })
+
+            editor.__fire(div, 'click');
+            expect(work).to.be.equal(1);
+        })
     })
     describe('Jodit Events', function () {
         it('Event handler', function () {
