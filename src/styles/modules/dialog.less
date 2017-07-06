@@ -253,14 +253,30 @@
 				width:auto;
 				margin-bottom:10px;
 				height: 32px;
-				line-height:32px;
+				line-height: 100%;
 				padding:0px 15px;
 				background-color: #ccc;
 				border: 1px solid #ccc;
 				color:#000;
-                .jodit_icon {
-                    vertical-align: text-top;
+				font-size: 0;
+				&:before {
+					content: '';
+					display: inline-block;
+					vertical-align: middle;
+					height: 100%;
+				}
+                svg {
+					display: inline-block;
+					width: 24px;
+					height: 24px;
+                    vertical-align: middle;
                 }
+				span {
+					display: inline-block;
+					vertical-align: middle;
+					font-size: 14px;
+					margin-left: 5px;
+				}
 				&:focus{
 					border: 1px solid #8bade4;
 					outline: 1px solid #82b2e8;

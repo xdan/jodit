@@ -263,39 +263,6 @@ describe('Jodit Editor Tests', function() {
             });
         });
     });
-    describe('Events', function () {
-        it('Event handler', function () {
-            var enable = false;
-            var editor = new Jodit(appendTestArea());
-            editor.events.on('keydown', function (event) {
-                enable = true;
-            });
-            simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
-            expect(enable).to.be.equal(true);
-        });
-        it('Delete event handler', function () {
-            var enable = false, callback = function (event) {
-                enable = true;
-            };
-            var editor = new Jodit(appendTestArea());
-
-            editor.events.on('keydown', callback);
-            editor.events.off('keydown', callback);
-
-            simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
-
-            expect(enable).to.be.equal(false);
-        });
-        it('Proxy events', function () {
-            var editor = new Jodit(appendTestArea()), work = false;
-            editor.events.on('keydown', function (event) {
-                work = true
-            });
-            simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
-
-            expect(work).to.be.equal(true);
-        });
-    });
     afterEach(function () {
         removeStuff();
         var i, keys = Object.keys(Jodit.instances);

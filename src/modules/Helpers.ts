@@ -645,3 +645,104 @@ export const fromCamelCase = (key: string): string => {
         return '-' + letter.toLowerCase();
     });
 };
+
+
+/**
+ * Convert special characters to HTML entities
+ *
+ * @method htmlspecialchars
+ * @param {string} html
+ * @return {string}
+ */
+export const htmlspecialchars = (html: string) => {
+    let tmp = document.createElement('div');
+    tmp.innerText = html;
+    return tmp.innerHTML;
+}
+
+/**
+ * Debouncing enforces that a function not be called again until a certain amount of time has passed without it being called. As in "execute this function only if 100 milliseconds have passed without it being called."
+ *
+ * @method debounce
+ * @param {function} fn
+ * @param {int} timeout
+ * @param {boolean} [invokeAsap] - execute fn on first call without timeout
+ * @param {context} [ctx] Context
+ * @return {function}
+ * @example
+ * var jodit = new Jodit('.editor');
+ * Jodit.modules.Dom("input").on('keydown', jodit.helper.debounce(function() {
+             *     // Do expensive things
+             * }, 100));
+ */
+export const  debounce = function (fn, timeout ?: number, invokeAsap?: boolean, ctx?: any) {
+    if (arguments.length === 3 && typeof invokeAsap !== 'boolean') {
+        ctx = invokeAsap;
+        invokeAsap = false;
+    }
+
+    let timer;
+
+    return function () {
+
+        let args = arguments;
+        ctx = ctx || this;
+
+        if (invokeAsap && !timer) {
+            fn.apply(ctx, args);
+        }
+
+        clearTimeout(timer);
+
+        timer = setTimeout(function () {
+            if (!invokeAsap) {
+                fn.apply(ctx, args);
+            }
+            timer = null;
+        }, timeout);
+    };
+}
+
+
+/**
+ * Get the value of a computed style property for the first element in the set of matched elements or set one or more CSS properties for every matched element
+ *
+ * @method css
+ * @param {string|object} key An object of property-value pairs to set. A CSS property name.
+ * @param {string|int} value A value to set for the property.
+ */
+export const css = (element: Element, key: string|object, value?: string|number) => {
+    let result, setValue;
+
+    if (isPlainObject(key) || value !== undefined) {
+        setValue = (elm, key, value) => {
+            if (value !== undefined && value !== null && /^left|top|bottom|right|width|min|max|height|margin|padding/i.test(key) && /^[0-9]+$/.test(value.toString())) {
+                value += 'px';
+            }
+            elm.style[key] = value;
+        }
+
+        if (isPlainObject(key)) {
+            let keys = Object.keys(key), j;
+            for (j = 0; j < keys.length; j += 1) {
+                setValue(this, camelCase(keys[j]), key[keys[j]]);
+            }
+        } else {
+            setValue(this, key, value);
+        }
+
+        return this;
+    }
+
+
+    result = window.getComputedStyle(element).getPropertyValue(fromCamelCase(<string>key));
+
+
+    return result;
+}
+
+export const asArray = (a): Array<any> => (
+    Array.isArray(a) ? a : [a]
+)
+
+export const ajax = (opts) => {}

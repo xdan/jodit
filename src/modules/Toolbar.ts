@@ -1,10 +1,11 @@
 import Jodit from "../jodit"
 import Component from "./Component"
 import {dom, each, $$, extend, inArray, camelCase} from "./Helpers"
-import {isFunction} from "util";
+import * as consts from "../constants";
 
 type ControlType = {
     name?: string;
+    mode?: number;
     list?: any[];
     command?: string;
     tags?: string;
@@ -17,6 +18,7 @@ type ControlType = {
     template?: Function;
     popap?: Function;
 }
+
 type ButtonType = {
     btn: HTMLLIElement,
     control: ControlType,
@@ -106,18 +108,40 @@ export default class Toolbar extends Component{
         this.__listOpened = false;
     }
 
+    __toggleButton(btn: HTMLElement, enable: boolean) {
+        btn.classList.toggle('jodit_disabled', !enable);
+        if (enable) {
+            if (btn.hasAttribute('disabled')) {
+                btn.removeAttribute('disabled')
+            }
+        } else {
+            if (!btn.hasAttribute('disabled')) {
+                btn.setAttribute('disabled', 'disabled')
+            }
+        }
+    }
+
     checkActiveButtons(element: Node|false) {
         const active_class = 'jodit_active'
-        this.buttonList.forEach(({name, control, btn}) => {
+        this.buttonList.forEach(({control, btn}) => {
             btn.classList.remove(active_class);
 
-            let className = name || "empty",
-                tags,
+            let mode =  (control === undefined || control.mode === undefined) ? consts.MODE_WYSIWYG : control.mode;
+
+            this.__toggleButton(btn, mode === consts.MODE_SPLIT || mode === this.parent.getRealMode());
+
+            if (!element) {
+                return;
+            }
+
+            let tags,
                 elm,
                 css,
+
                 getCSS = (elm: HTMLElement, key: string): string => {
                     return this.parent.win.getComputedStyle(elm).getPropertyValue(key).toString()
                 },
+
                 checkActiveStatus = (cssObject, node) => {
                     let matches = 0,
                         total = 0;
@@ -199,16 +223,7 @@ export default class Toolbar extends Component{
 
 
         this.parent.events.on(camelCase('can-' + clearName), (enable) => {
-            btn.classList.toggle('jodit_disabled', !enable);
-            if (enable) {
-                if (btn.hasAttribute('disabled')) {
-                    btn.removeAttribute('disabled')
-                }
-            } else {
-                if (!btn.hasAttribute('disabled')) {
-                    btn.setAttribute('disabled', true)
-                }
-            }
+            this.__toggleButton(btn, enable);
         })
 
         let icon =  dom(iconSVG);
@@ -342,7 +357,7 @@ export default class Toolbar extends Component{
             }
         });
 
-        this.parent.events.on('mousedown keydown change', () => {
+        this.parent.events.on('mousedown keydown change afterSetMode', () => {
             let callback = () => {
                 if (this.parent.selection) {
                     this.checkActiveButtons(this.parent.selection.current())

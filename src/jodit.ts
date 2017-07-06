@@ -24,6 +24,11 @@ export default class Jodit extends Component{
     id;
 
     /**
+     * @prop {HTMLDivElement} progress_bar Progress bar
+     */
+    progress_bar;
+
+    /**
      * @prop {HTMLDivElement} workplace It contains source and wysiwyg editors
      */
     workplace;
@@ -105,6 +110,7 @@ export default class Jodit extends Component{
         }
 
         this.workplace = dom('<div class="jodit_workplace" />');
+        this.progress_bar = dom('<div class="jodit_progress_bar" />');
 
         this.cookie = new Jodit.modules.Cookie(this);
         this.selection = new Jodit.modules.Selection(this);
@@ -126,88 +132,6 @@ export default class Jodit extends Component{
                 this.events.on(key, callback);
             });
         }
-
-        this.editor.addEventListener('paste', (event) => {
-            /**
-             * Triggered before pasting something into the Jodit Editor
-             *
-             * @event beforePaste
-             * @param {ClipboardEvent} event
-             * @return Returning false in the handler assigned to the event will cancel the current action.
-             * @example
-             * var editor = new Jodit("#redactor");
-             * editor.events.on('beforePaste', function (event) {
-             *     return false; // deny paste
-             * });
-             */
-
-            if (this.events.fire('beforePaste', [event]) === false) {
-                event.preventDefault();
-                return false;
-            }
-
-            if (event && event.clipboardData && event.clipboardData.getData) {
-                let i,
-                    types = event.clipboardData.types,
-                    types_str:string = '',
-                    clipboard_html:any = '';
-
-                if (Array.isArray(types)) {
-                    for (i = 0; i < types.length; i += 1) {
-                        types_str += types[i] + ";";
-                    }
-                } else {
-                    types_str = types;
-                }
-
-                if (/text\/html/.test(types_str)) {
-                    clipboard_html = event.clipboardData.getData("text/html");
-                } else if (/text\/rtf/.test(types_str) && browser('safari')) {
-                    clipboard_html = event.clipboardData.getData("text/rtf");
-                } else if (/text\/plain/.test(types_str) && !browser('mozilla')) {
-                    clipboard_html = htmlentities(event.clipboardData.getData("text/plain")).replace(/\n/g, "<br/>");
-                }
-
-                if (clipboard_html !== '' || clipboard_html instanceof Node) {
-                    /**
-                     * Triggered after the content is pasted from the clipboard into the Jodit. If a string is returned the new string will be used as the pasted content.
-                     *
-                     * @event beforePaste
-                     * @param {ClipboardEvent} event
-                     * @return Return {string|undefined}
-                     * @example
-                     * var editor = new Jodit("#redactor");
-                     * editor.events.on('beforePaste', function (event) {
-                     *     return false; // deny paste
-                     * });
-                     */
-
-                    clipboard_html = this.events.fire('processPaste', [event, clipboard_html]);
-
-                    if (typeof clipboard_html === 'string' || clipboard_html instanceof Node) {
-                        this.selection.insertHTML(clipboard_html);
-                    }
-                    event.preventDefault();
-                    event.stopPropagation();
-                }
-            }
-
-            /**
-             * Triggered after pasting something into the Jodit
-             *
-             * @event afterPaste
-             * @param {ClipboardEvent} event
-             * @return Return {string|undefined}
-             * @example
-             * var editor = new Jodit("#redactor");
-             * editor.events.on('afterPaste', function (event) {
-             *     return false; // deny paste
-             * });
-             */
-            if (this.events.fire('afterPaste', [event]) === false) {
-                return false;
-            }
-        });
 
         this.id = this.element.getAttribute('id') || (new Date()).getTime();
 
@@ -274,6 +198,7 @@ export default class Jodit extends Component{
         this.workplace.appendChild(document.createTextNode("\n"));
 
         this.container.appendChild(this.workplace);
+        this.container.appendChild(this.progress_bar);
 
         this.element.parentNode.insertBefore(this.container, this.element);
 
@@ -586,9 +511,9 @@ export default class Jodit extends Component{
      * Jodit.defaultOptions.language = 'cs';
      * console.log(Jodit.prototype.i18n('Hello world', 'mr.Perkins', 'day')) //Hello mr.Perkins Good day
      */
-    i18n (key) {
+    i18n (key, ...params) {
         let store,
-            args = Array.prototype.slice.call(arguments),
+            args = Array.prototype.slice.call(params),
             parse = (value) => {
                 return value.replace(/([0-9])\$/gm, (match, part1) => {
                     part1 = parseInt(part1, 10);

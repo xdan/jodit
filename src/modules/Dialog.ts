@@ -1,7 +1,8 @@
 import Jodit from '../jodit'
 import Component from './Component'
 import config from '../config'
-import {dom, $$} from './Helpers'
+import {dom, $$, asArray} from './Helpers'
+import Toolbar from "./Toolbar";
 
 
 /**
@@ -183,9 +184,11 @@ export default class Dialog extends Component{
      * dialog.setTitle(['Hello world', '<button>OK</button>', $('<div>some</div>')]);
      * dialog.open();
      */
-    setTitle(title) {
+    setTitle(title:  string|string[]|HTMLElement|HTMLElement[]) {
         this.dialogbox.header.innerHTML = ''
-        this.dialogbox.header.appendChild(dom(title));
+        asArray(title).forEach((elm) => {
+            this.dialogbox.header.appendChild(dom(elm));
+        })
     }
 
     /**
@@ -198,9 +201,11 @@ export default class Dialog extends Component{
      * dialog.setContent('<form onsubmit="alert(1);"><input type="text" /></form>');
      * dialog.open();
      */
-    setContent(content) {
+    setContent(content: string|string[]|HTMLElement|HTMLElement[]) {
         this.dialogbox.content.innerHTML = ''
-        this.dialogbox.content.appendChild(dom(content));
+        asArray(content).forEach((elm) => {
+            this.dialogbox.content.appendChild(dom(elm));
+        })
     }
 
     /**
@@ -219,9 +224,11 @@ export default class Dialog extends Component{
      * ]);
      * dialog.open();
      */
-    setFooter(content) {
+    setFooter(content: string|string[]|HTMLElement|HTMLElement[]) {
         this.dialogbox.footer.innerHTML = ''
-        this.dialogbox.footer.appendChild(dom(content));
+        asArray(content).forEach((elm) => {
+            this.dialogbox.footer.appendChild(dom(elm));
+        })
         this.dialog.classList.toggle('with_footer', !!content);
     }
 
@@ -291,7 +298,7 @@ export default class Dialog extends Component{
      * @fires {@link event:beforeOpen|beforeOpen} id returns 'false' then the window will not open
      * @fires {@link event:afterOpen|afterOpen}
      */
-    open(content, title, destroyAfter, modal) {
+    open(content?: string|Element, title?: string|string[]|any[], destroyAfter?: boolean, modal?: boolean) {
         /**
          * Called before the opening of the dialog box
          *
@@ -534,7 +541,7 @@ export default class Dialog extends Component{
  *    $('form').hide();
  * });
  */
-Jodit['Alert'] = (msg, title, callback) => {
+export const Alert = (msg: string, title: string|Function, callback: Function) => {
     if (typeof title === 'function') {
         callback = title;
         title = undefined;
@@ -560,6 +567,8 @@ Jodit['Alert'] = (msg, title, callback) => {
     $ok.focus();
 }
 
+Jodit['Alert'] = Alert;
+
 
 /**
  * Show `promt` dialog. Work without Jodit object
@@ -579,9 +588,8 @@ Jodit['Alert'] = (msg, title, callback) => {
  *     // do something
  * });
  */
-Jodit['Promt'] = (msg, title, callback, placeholder) => {
+export const Promt = (msg: string, title: string|Function, callback: Function, placeholder: string) => {
     let dialog = new Dialog(),
-        icons = new Jodit.modules.Icons(),
         $cancel,
         $ok,
         $div = dom('<form class="jodit_promt"></form>'),
@@ -600,9 +608,9 @@ Jodit['Promt'] = (msg, title, callback, placeholder) => {
     $label.innerHTML = msg;
     $div.appendChild($label);
     $div.appendChild($input);
-    $cancel = dom('<a href="javascript:void(0)" style="float:right;" class="jodit_button">' + icons.getSVGIcon('cancel') + '&nbsp;' + Jodit.prototype.i18n('Cancel') + '</a>').on('click', dialog.close);
+    $cancel = dom('<a href="javascript:void(0)" style="float:right;" class="jodit_button">' + Toolbar.getIcon('cancel') + '<span>' + Jodit.prototype.i18n('Cancel') + '</span></a>').on('click', dialog.close);
 
-    $ok = dom('<a href="javascript:void(0)" style="float:left;" class="jodit_button">' + icons.getSVGIcon('check') + '&nbsp;' + Jodit.prototype.i18n('Ok') + '</a>');
+    $ok = dom('<a href="javascript:void(0)" style="float:left;" class="jodit_button">' + Toolbar.getIcon('check') + '<span>' + Jodit.prototype.i18n('Ok') + '</span></a>');
 
     const onclick = () => {
         if (!callback || typeof callback !== 'function' || callback($input.value) !== false) {
@@ -625,6 +633,7 @@ Jodit['Promt'] = (msg, title, callback, placeholder) => {
     dialog.open($div, title || '&nbsp;', true, true);
     $input.focus();
 }
+Jodit['Promt'] = Promt;
 
 /**
  * Show `confirm` dialog. Work without Jodit object
@@ -642,9 +651,8 @@ Jodit['Promt'] = (msg, title, callback, placeholder) => {
  *     }
  * });
  */
-Jodit['Confirm'] = (msg, title, callback) => {
+export const Confirm = (msg: string, title: string|Function, callback: Function) => {
     let dialog = new Dialog(),
-        icons = new Jodit.modules.Icons(),
         $cancel,
         $ok,
         $div = dom('<form class="jodit_promt"></form>'),
@@ -657,7 +665,10 @@ Jodit['Confirm'] = (msg, title, callback) => {
 
     $label.innerHTML = msg;
     $div.appendChild($label);
-    $cancel = dom('<a href="javascript:void(0)" style="float:right;" class="jodit_button">' + icons.getSVGIcon('cancel') + '&nbsp;' + Jodit.prototype.i18n('Cancel') + '</a>').addEventListener('click', () => {
+
+    $cancel = dom('<a href="javascript:void(0)" style="float:right;" class="jodit_button">' + Toolbar.getIcon('cancel') + '<span>' + Jodit.prototype.i18n('Cancel') + '</span></a>')
+
+    $cancel.addEventListener('click', () => {
         if (callback) {
             callback(false);
         }
@@ -671,7 +682,9 @@ Jodit['Confirm'] = (msg, title, callback) => {
         dialog.close();
     };
 
-    $ok = dom('<a href="javascript:void(0)" style="float:left;" class="jodit_button">' + icons.getSVGIcon('check') + '&nbsp;' + Jodit.prototype.i18n('Yes') + '</a>').addEventListener('click', onok);
+    $ok = dom('<a href="javascript:void(0)" style="float:left;" class="jodit_button">' + Toolbar.getIcon('check') + '<span>' + Jodit.prototype.i18n('Yes') + '</span></a>')
+
+    $ok.addEventListener('click', onok);
 
     $div.addEventListener('submit', () => {
         onok();
@@ -686,3 +699,4 @@ Jodit['Confirm'] = (msg, title, callback) => {
     dialog.open($div, title || '&nbsp;', true, true);
     $ok.focus();
 }
+Jodit['Confirm'] = Confirm;

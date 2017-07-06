@@ -30,34 +30,63 @@ export default class Component {
     __scope: any[] = [];
     __scopeNamespace: any = {};
 
-    __off(element: false|HTMLElement = false) {
+    __off(element: false|Element|HTMLElement|Array<HTMLElement> = false, event: string|false = false) {
         this.__scope.forEach((data) => {
-            if (element === false || element === data.element) {
-                data.element.removeEventListener(data.event, data.callback)
-            }
+            (Array.isArray(element) ? element : [element]).forEach((elm) => {
+                if ((elm === false || elm === data.element) && (event === false || event === data.event)) {
+                    data.element.removeEventListener(data.event, data.callback)
+                }
+            });
         })
         return this;
     }
 
-    __on(element: HTMLElement|Window, event: string, callback: (eventObject) => any) {
-        let namespace = '';
-        if (/\./.test(event)) {
-            [event, namespace] = event.split('.');
-        }
-        element.addEventListener(event, callback);
+    classSeparator = /[\s]+/
 
-        let eventData = {
-            element,
-            event,
-            callback
+    __on(element: Document|Element|HTMLElement|Window|Array<HTMLElement>, event: string, selector: false|string|Function, callback?: Function) {
+        if (typeof selector === 'function') {
+            callback = selector;
+            selector = false;
         }
 
-        if (this.__scopeNamespace[namespace] === undefined) {
-            this.__scopeNamespace[namespace] = [];
-        }
+        let eventsArray = event ? event.split(this.classSeparator) : [],
+            temp: Function = callback;
 
-        this.__scopeNamespace[namespace].push(eventData)
-        this.__scope.push(eventData);
+        eventsArray.forEach((event: string) => {
+            let namespace = '';
+            if (/\./.test(event)) {
+                [event, namespace] = event.split('.');
+            }
+
+            if (selector) {
+                temp = function (event) {
+                    let node = event.target;
+                    while (node && node !== this) {
+                        if (node.matches(selector)) {
+                            return callback.call(node, event);
+                        }
+                        node = node.parentNode;
+                    }
+                }
+            }
+
+            (Array.isArray(element) ? element : [element]).forEach((elm: HTMLElement) => {
+                elm.addEventListener(event, <EventListenerOrEventListenerObject>callback);
+            });
+
+            let eventData = {
+                element,
+                event,
+                callback
+            }
+
+            if (this.__scopeNamespace[namespace] === undefined) {
+                this.__scopeNamespace[namespace] = [];
+            }
+
+            this.__scopeNamespace[namespace].push(eventData)
+            this.__scope.push(eventData);
+        })
 
         return this;
     }

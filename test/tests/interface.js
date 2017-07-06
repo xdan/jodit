@@ -326,6 +326,26 @@ describe('Test interface', function() {
                 expect(editor.container.querySelectorAll('.jodit_toolbar_btn-bold.jodit_active').length).to.equal(1);
                 expect(editor.container.querySelectorAll('.jodit_toolbar_btn-italic.jodit_active').length).to.equal(0);
             });
+            it('Disable buttons which can not be used in that mode', function() {
+                var editor = new Jodit('#table_editor_interface', {
+                    observer: {
+                        timeout: 0 // disable delay
+                    }
+                });
+
+                editor.setEditorValue('<strong>test</strong><em>test2</em><i>test3</i><b>test3</b>');
+
+                editor.setMode(Jodit.MODE_SOURCE);
+
+                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-bold.jodit_disabled').length).to.equal(1);
+                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-source.jodit_disabled').length).to.equal(0);
+
+                editor.setMode(Jodit.MODE_WYSIWYG);
+
+                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-bold.jodit_disabled').length).to.equal(0);
+                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-source.jodit_disabled').length).to.equal(0);
+
+            });
 
             it('When cursor inside SPAN tag with style="font-weight: bold" or style="font-weight: 700", Bold button should be selected', function() {
                 var editor = new Jodit('#table_editor_interface', {

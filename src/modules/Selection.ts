@@ -15,6 +15,37 @@ export default class Selection extends Component{
     }
 
     /**
+     * Insert the cursor to any point x, y
+     *
+     * @method insertAtPoint
+     * @param {int} x Coordinate by horizontal
+     * @param {int} y Coordinate by vertical
+     * @return {boolean} Something went wrong
+     */
+    insertCursorAtPoint(x: number, y: number): boolean {
+        let caret,
+            doc = this.doc,
+            rng;
+
+        this.clear();
+
+        try {
+            caret = doc.caretRangeFromPoint(x, y);
+            rng = doc.createRange();
+            rng.setStart(caret.startContainer, caret.startOffset);
+            rng.setEnd(caret.startContainer, caret.startOffset);
+
+            let sel = this.win.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(rng);
+            return true;
+        } catch (e) {
+        }
+
+        return false;
+    }
+
+    /**
      * Remove all markers
      */
     clear() {

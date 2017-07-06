@@ -1,5 +1,6 @@
 - [x] Check all buttons functionality 
 - [x] Image resizer
 - [x] Disable buttons when they can not be used and set active then they have matches with current selection
-- [ ] Disable buttons when mode was changed
+- [x] Disable buttons when mode was changed
+- [x] Restore copy/paste plugin. Move setting onpaste  handler to this plugin
 - [ ] Restore FileBrowser
