@@ -73,13 +73,16 @@ export default class Ajax extends Component{
     done(handler){
         this.__done = handler;
         this.__fire_done();
+        return this;
     }
     error(handler) {
         this.__error = handler;
         this.__fire_error();
+        return this;
     }
     abort(){
         this.xhr.abort();
+        return this;
     }
     constructor(editor: Jodit, opt?: any) {
         super(editor);

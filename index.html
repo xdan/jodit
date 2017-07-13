@@ -69,8 +69,8 @@ Its complete documentation, specially designed framework plugins and tons of exa
         ])
     });
 
-//    (new Jodit.modules.FileBrowser(editor)).open(function () {});
-//    console.log(document.querySelectorAll('.jodit_dialog_box.active').length);
+    (new Jodit.modules.FileBrowser(editor)).open(function () {});
+    console.log(document.querySelectorAll('.jodit_dialog_box.active').length);
     function simpleKeys (original) {
         var newobject = {};
         for(var key in original) {
@@ -96,15 +96,7 @@ Its complete documentation, specially designed framework plugins and tons of exa
     editor.editor.addEventListener('input', callback)
     editor.events.on('change', callback)
 
-    editor.setEditorValue('<p>Text to text</p>')
-    var sel = editor.win.getSelection(), range = editor.doc.createRange();
-    range.setStart(editor.editor.firstChild.firstChild, 5)
-    range.collapse(true)
-    sel.removeAllRanges();
-    sel.addRange(range)
 
-    simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-ul'))
-    editor.selection.insertHTML('test ');
     //    var editor = new Jodit('#table_editor_interface');
 
 //    var editor = new Jodit('#tested_area');

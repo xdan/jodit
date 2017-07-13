@@ -375,781 +375,789 @@ config.filebrowser = {
     },
     uploader: null // use default Uploader's settings
 }
+
 export default class FileBrowser extends Component {
-        options;
-        currentPath = ''
-        private currentBaseUrl = ''
+    options;
+    currentPath = ''
+    private currentBaseUrl = ''
 
-        dialog: Dialog;
-        loader: Element;
-        browser: Element;
-        status_line: Element;
-        tree: Element;
-        files: Element;
+    dialog: Dialog;
+    loader: HTMLElement;
+    browser: HTMLElement;
+    status_line: HTMLElement;
+    tree: HTMLElement;
+    files: HTMLElement;
 
-        buttons;
+    buttons;
 
-        uploader;
+    uploader;
 
-        constructor(editor: Jodit) {
-            super(editor);
-            const self = this;
+    constructor(editor: Jodit) {
+        super(editor);
+        const self = this;
 
-            self.options = extend(true, {}, config.filebrowser, self.parent.options.filebrowser);
+        self.options = extend(true, {}, config.filebrowser, self.parent.options.filebrowser);
 
-            self.dialog = new Dialog(editor, {
-                fullsizeButton: true
-            })
+        self.dialog = new Dialog(editor, {
+            fullsizeButton: true
+        })
 
-            self.loader = dom('<div class="jodit_filebrowser_loader"><i class="jodit_icon-loader"></i></div>')
-            self.browser = dom('<div class="jodit_filebrowser non-selected">' +
-                (self.options.showFoldersPanel ? '<div class="jodit_filebrowser_tree"></div>' : '') +
-                '<div class="jodit_filebrowser_files"></div>' +
-                '<div class="jodit_filebrowser_status"></div>' +
-             '</div>');
+        self.loader = dom('<div class="jodit_filebrowser_loader"><i class="jodit_icon-loader"></i></div>')
+        self.browser = dom('<div class="jodit_filebrowser non-selected">' +
+            (self.options.showFoldersPanel ? '<div class="jodit_filebrowser_tree"></div>' : '') +
+            '<div class="jodit_filebrowser_files"></div>' +
+            '<div class="jodit_filebrowser_status"></div>' +
+         '</div>');
 
-            self.status_line = self.browser.querySelector('.jodit_filebrowser_status');
+        self.status_line = <HTMLElement>self.browser.querySelector('.jodit_filebrowser_status');
 
 
 
-            self.buttons = {
-                upload : dom('<div class="jodit_uploadfile_button jodit_button">' + Toolbar.getIcon('plus') + '<input type="file" accept="image/*" tabindex="-1" dir="auto" multiple=""/></div>'),
-                remove : dom('<div class="jodit_button disabled">' + Toolbar.getIcon('bin') + '</div>'),
-                update : dom('<div class="jodit_button">' + Toolbar.getIcon('update') + '</div>'),
-                select : dom('<div class="jodit_button disabled">' + Toolbar.getIcon('check') + '</div>'),
-                edit : dom('<div class="jodit_button disabled">' + Toolbar.getIcon('pencil') + '</div>'),
-                addfolder : dom('<a class="jodit_button addfolder" href="javascript:void(0)">' + Toolbar.getIcon('plus') + ' Folder</div>'),
-                tiles : dom('<div class="jodit_button jodit_button_tiles disabled" href="javascript:void(0)">' + Toolbar.getIcon('th') + '</div>'),
-                list : dom('<div class="jodit_button disabled" href="javascript:void(0)">' + Toolbar.getIcon('th-list') + '</div>'),
-                filter: dom('<input class="jodit_input" type="text" placeholder="' + editor.i18n('Filter') + '"/>'),
+        self.buttons = {
+            upload : dom('<div class="jodit_uploadfile_button jodit_button">' + Toolbar.getIcon('plus') + '<input type="file" accept="image/*" tabindex="-1" dir="auto" multiple=""/></div>'),
+            remove : dom('<div class="jodit_button disabled">' + Toolbar.getIcon('bin') + '</div>'),
+            update : dom('<div class="jodit_button">' + Toolbar.getIcon('update') + '</div>'),
+            select : dom('<div class="jodit_button disabled">' + Toolbar.getIcon('check') + '</div>'),
+            edit : dom('<div class="jodit_button disabled">' + Toolbar.getIcon('pencil') + '</div>'),
+            addfolder : dom('<a class="jodit_button addfolder" href="javascript:void(0)">' + Toolbar.getIcon('plus') + ' Folder</div>'),
+            tiles : dom('<div class="jodit_button jodit_button_tiles disabled" href="javascript:void(0)">' + Toolbar.getIcon('th') + '</div>'),
+            list : dom('<div class="jodit_button disabled" href="javascript:void(0)">' + Toolbar.getIcon('th-list') + '</div>'),
+            filter: dom('<input class="jodit_input" type="text" placeholder="' + editor.i18n('Filter') + '"/>'),
 
-                sort: dom('<select class="jodit_input">' +
-                    '<option value="changed">' + editor.i18n('Sort by changed') + '</option>' +
-                    '<option value="name">' + editor.i18n('Sort by name') + '</option>' +
-                    '<option value="size">' + editor.i18n('Sort by size') + '</option>' +
-                    '</select>'),
+            sort: dom('<select class="jodit_input">' +
+                '<option value="changed">' + editor.i18n('Sort by changed') + '</option>' +
+                '<option value="name">' + editor.i18n('Sort by name') + '</option>' +
+                '<option value="size">' + editor.i18n('Sort by size') + '</option>' +
+                '</select>'),
+        }
+
+
+        self.tree = <HTMLElement>self.browser.querySelector('.jodit_filebrowser_tree')
+        self.files = <HTMLElement>self.browser.querySelector('.jodit_filebrowser_files')
+
+        self.__on([self.buttons.tiles, self.buttons.list], 'click', (event: Event) => {
+            let target = <Element>event.target;
+            if (target.classList.contains('jodit_button_tiles')) {
+                self.view = 'tiles';
+                self.buttons.list.classList.add('disabled');
+            } else {
+                self.view = 'list';
+                self.buttons.tiles.classList.add('disabled');
             }
 
+            target.classList.remove('disabled');
+            self.files.classList.remove('jodit_filebrowser_files_view-tiles', 'jodit_filebrowser_files_view-list');
+            self.files.classList.add('jodit_filebrowser_files_view-' + self.view);
 
-            self.tree = self.browser.querySelector('.jodit_filebrowser_tree')
-            self.files = self.browser.querySelector('.jodit_filebrowser_files')
+            editor.cookie.set('jodit_filebrowser_view', self.view, 31);
+        })
 
-            self.__on([self.buttons.tiles, self.buttons.list], 'click', (event: Event) => {
-                let target = <Element>event.target;
-                if (target.classList.contains('jodit_button_tiles')) {
-                    self.view = 'tiles';
-                    self.buttons.list.classList.add('disabled');
-                } else {
-                    self.view = 'list';
-                    self.buttons.tiles.classList.add('disabled');
-                }
+        self.__on(self.buttons.sort, 'change', () => {
+            self.sortBy = self.buttons.sort.val();
+            editor.cookie.set('jodit_filebrowser_sortby', self.sortBy, 31);
+            self.generateItemsBox();
+        })
 
-                target.classList.remove('disabled');
-                self.files.classList.remove('jodit_filebrowser_files_view-tiles', 'jodit_filebrowser_files_view-list');
-                self.files.classList.add('jodit_filebrowser_files_view-' + self.view);
+        self.__on(self.buttons.sort, 'click mousedown', (e) => {
+            e.stopPropagation();
+        });
 
-                editor.cookie.set('jodit_filebrowser_view', self.view, 31);
-            })
 
-            self.__on(self.buttons.sort, 'change', () => {
-                self.sortBy = self.buttons.sort.val();
-                editor.cookie.set('jodit_filebrowser_sortby', self.sortBy, 31);
-                self.generateItemsBox();
-            })
-
-            self.__on(self.buttons.sort, 'click mousedown', (e) => {
+        self
+            .__on(self.buttons.filter, 'click mousedown', (e) => {
                 e.stopPropagation();
-            });
+            })
+            .__on(self.buttons.filter, 'keydown', debounce(() => {
+                self.filterWord = self.buttons.filter.val();
+                self.generateItemsBox();
+            }, 300));
 
-
-            self
-                .__on(self.buttons.filter, 'click mousedown', (e) => {
-                    e.stopPropagation();
-                })
-                .__on(self.buttons.filter, 'keydown', debounce(() => {
-                    self.filterWord = self.buttons.filter.val();
-                    self.generateItemsBox();
-                }, 300));
-
-            self.__on(self.buttons.remove, 'click', () => {
-                if (this.__getActiveElements().length) {
-                    Confirm(editor.i18n('Are you shure?'), '', (yes) => {
-                        if (yes) {
-                            this.__getActiveElements().forEach((a) => {
-                                self.remove(self.currentPath, a.dataset.name);
-                            });
-                            self.someSelectedWasChanged();
-                            self.loadTree(self.currentPath);
-                        }
-                    });
-                }
-            });
-
-            self.__on(self.buttons.edit, 'click', () => {
-                let files = this.__getActiveElements();
-                if (files.length === 1) {
-                    self.openImageEditor(files[0].getAttribute('href'), files[0].dataset.name);
-                }
-            });
-
-            self.__on(self.buttons.update, 'click', () => {
-                self.loadTree();
-            });
-
-            self
-                .__on(self.tree, 'click', 'a>i.remove', function (e)  {
-                    let a = this.parentNode, path = a.dataset.path;
-                    Confirm(editor.i18n('Are you shure?'), '', (yes) => {
-                        if (yes) {
-                            self.remove(path, a.dataset.name);
-                            self.loadTree(self.currentPath);
-                        }
-                    });
-                    e.stopImmediatePropagation();
-                    return false;
-                })
-                .__on(self.tree, 'click', 'a', function () {
-                    if (this.classList.contains('addfolder')) {
-                        Promt(self.parent.i18n('Enter Directory name'), self.parent.i18n('Create directory'), (name) => {
-                            self.create(name, self.currentPath);
-                        }, self.parent.i18n('type name'));
-                    } else {
-                        self.loadTree(this.dataset.path);
-                    }
-                })
-                .__on(this.tree, 'dragstart', 'a', function () {
-                    self.dragger = this;
-                })
-                .__on(this.tree, 'drop',  'a', function () {
-                    if (self.options.moveFolder && self.dragger) {
-                        let path = self.dragger.dataset.path;
-
-                        //move folder
-                        if (!self.options.moveFolder && self.dragger.classList.contains('jodit_filebrowser_tree_item')) {
-                            return false;
-                        }
-
-                        //move file
-                        if (self.dragger.classList.contains('jodit_filebrowser_files_item')) {
-                            path += self.dragger.dataset.name;
-                            if (!self.options.moveFile) {
-                                return false;
-                            }
-                        }
-
-                        self.move(path, this.dataset.path);
-                    }
-                });
-
-            const contextmenu = new ContextMenu(this.parent);
-            self
-                .__on(self.files, 'mousedown', 'a>img', function (this: HTMLElement, e) {
-                    self.client.x = e.clientX;
-                    self.client.y = e.clientY;
-
-                    self.start = offset(this);
-
-                    self.draggble = <Element>this.cloneNode(true);
-
-                    css(<Element>self.draggble, {
-                        'z-index': 100000000000000,
-                        position: 'fixed',
-                        display: 'none',
-                        left: self.start.left,
-                        top: self.start.top,
-                        width: this.offsetWidth,
-                        height: this.offsetHeight
-                    });
-
-                    document.body.appendChild(self.draggble)
-                })
-                .__on(self.files, 'dragstart', 'a', function (this: HTMLElement, e) {
-                    self.dragger = this;
-                    e.originalEvent.dataTransfer.setData('text/plain', this.getAttribute('href'));
-                    e.stopPropagation();
-                })
-                .__on(self.files, 'contextmenu', 'a', function (this: HTMLElement, e) {
-                    if (self.options.contextMenu) {
-                        let item = this;
-                        contextmenu.show(e.pageX, e.pageY, [
-                            self.options.editImage && Jodit.modules.ImageEditor !== undefined ? {
-                                icon: 'pencil',
-                                title: 'Edit',
-                                exec: () => {
-                                    self.openImageEditor(item.getAttribute('href'), item.dataset.name);
-                                }
-                            } : false,
-                            {
-                                icon: 'bin',
-                                title: 'Delete',
-                                exec: () => {
-                                    self.remove(self.currentPath, item.dataset.name);
-                                    self.someSelectedWasChanged();
-                                    self.loadTree(self.currentPath);
-                                }
-                            },
-                            self.options.preview ? {
-                                icon: 'eye',
-                                title: 'Preview',
-                                exec: () => {
-                                    let preview = new Dialog(self.parent),
-                                        temp_content: HTMLElement = dom('<div class="jodit_filebrowser_preview"><i class="jodit_icon-loader"></i></div>'),
-                                        src = item.getAttribute('href'),
-                                        selectBtn = self.buttons.select.cloneNode(true),
-                                        image = document.createElement('img'),
-                                        addLoadHandler = () => {
-                                            let onload = () => {
-                                                this.removeEventListener('load', <EventListenerOrEventListenerObject>onload);
-                                                temp_content.innerHTML = '';
-                                                if (self.options.showPreviewNavigation) {
-                                                    let next = dom('<a href="javascript:void(0)" class="jodit_filebrowser_preview_navigation jodit_filebrowser_preview_navigation-next">' + Toolbar.getIcon('angle-right') + '</a>'),
-                                                        prev = dom('<a href="javascript:void(0)" class="jodit_filebrowser_preview_navigation jodit_filebrowser_preview_navigation-prev">' + Toolbar.getIcon('angle-left') + '</a>');
-
-                                                    if (item.previousSibling) {
-                                                        temp_content.appendChild(item.previousSibling);
-                                                    }
-                                                    if (item.nextSibling) {
-                                                        temp_content.appendChild(item.nextSibling);
-                                                    }
-
-                                                    self.__on([next, prev], 'click', function (this: HTMLElement) {
-                                                        if (this.classList.contains('jodit_filebrowser_preview_navigation-next')) {
-                                                            item = <HTMLElement>item.nextSibling;
-                                                        } else {
-                                                            item = <HTMLElement>item.previousSibling;
-                                                        }
-                                                        temp_content.innerHTML = '<i class="jodit_icon-loader"></i>';
-                                                        src = item.getAttribute('href');
-                                                        image.setAttribute('src', src);
-                                                        addLoadHandler();
-                                                    });
-                                                }
-
-                                                temp_content.appendChild(image);
-                                                preview.setPosition();
-                                            };
-
-                                            image.addEventListener("load", onload);
-                                            if (image.complete) {
-                                                onload.call(this);
-                                            }
-                                        };
-
-                                    addLoadHandler();
-                                    image.setAttribute('src', src);
-                                    preview.setContent(temp_content);
-
-                                    if (self.options.showSelectButtonInPreview) {
-                                        selectBtn.removeAttr('disabled');
-                                        preview.setTitle(selectBtn);
-                                        selectBtn.on('click', () => {
-                                            self.files.querySelector('a.active').classList.add('active');
-                                            item.classList.add('active');
-                                            self.__fire(self.buttons.select, 'click');
-                                            preview.close();
-                                        });
-                                    }
-
-                                    preview.open();
-                                }
-                            } : false,
-                            {
-                                icon: 'upload',
-                                title: 'Download',
-                                exec: function () {
-                                    window.open(item.getAttribute('href'));
-                                }
-                            }
-                        ]);
-                        return false;
-                    }
-                })
-                .__on(self.files, 'click', (e) => {
-                    if (!ctrlKey(e)) {
-                        this.__getActiveElements().forEach((elm: HTMLElement) => {
-                            elm.classList.remove('active');
+        self.__on(self.buttons.remove, 'click', () => {
+            if (this.__getActiveElements().length) {
+                Confirm(editor.i18n('Are you shure?'), '', (yes) => {
+                    if (yes) {
+                        this.__getActiveElements().forEach((a) => {
+                            self.remove(self.currentPath, a.dataset.name);
                         });
                         self.someSelectedWasChanged();
-                    }
-                })
-                .__on(self.files, 'click', 'a', function (this: HTMLElement,e) {
-                    if (!ctrlKey(e)) {
-                        self.__getActiveElements().forEach((elm: HTMLElement) => {
-                            elm.classList.remove('active');
-                        })
-                    }
-                    this.classList.toggle('active');
-                    self.someSelectedWasChanged();
-                    e.stopPropagation();
-                    return false;
-                })
-                .__on(document, 'dragover', function (e) {
-                    if (self.isOpened() && self.draggble && e.originalEvent.clientX !== undefined) {
-                        css(self.draggble, {
-                            left: e.originalEvent.clientX + 20,
-                            top: e.originalEvent.clientY + 20,
-                            display: 'block'
-                        });
-                    }
-                })
-                .__on(window, 'keydown', (e) => {
-                    if (self.isOpened() && e.which === 46) {
-                        self.__fire(self.buttons.remove, 'click');
-                    }
-                })
-                .__on(window, 'mouseup dragend',() => {
-                    if (self.draggble) {
-                        self.draggble.parentNode.removeChild(self.draggble)
-                        self.draggble = false;
+                        self.loadTree(self.currentPath);
                     }
                 });
-
-            this.dialog.setSize(this.options.width, this.options.height);
-
-            this.options.getfilebyurl = extend(true, {}, this.options.ajax, this.options.getfilebyurl);
-            this.options.crop = extend(true, {}, this.options.ajax, this.options.crop);
-            this.options.resize = extend(true, {}, this.options.ajax, this.options.resize);
-            this.options.create = extend(true, {}, this.options.ajax, this.options.create);
-            this.options.move = extend(true, {}, this.options.ajax, this.options.move);
-            this.options.remove = extend(true, {}, this.options.ajax, this.options.remove);
-            this.options.folder = extend(true, {}, this.options.ajax, this.options.folder);
-            this.options.items = extend(true, {}, this.options.ajax, this.options.items);
-        }
-
-        view = 'tiles';
-        sortBy = 'changed';
-
-        /**
-         * Get base url. You can use this method in another modules
-         *
-         * @method getBaseUrl
-         */
-        getBaseUrl () {
-            return this.currentBaseUrl;
-        }
-
-        dragger:false|HTMLElement = false
-
-
-
-
-        isOpened () {
-            return this.dialog.isOpened() && !this.browser.matches(':hidden');
-        }
-        statustimer = 0
-
-        /**
-         * It displays a message in the status bar of filebrowser
-         *
-         * @method status
-         * @param {string} msg Message
-         * @param {boolean} [success] true It will be shown a message light . If no option is specified , an error will be shown the red
-         * @example
-         * parent.filebrowser.status('There was an error uploading file', false);
-         */
-        status (msg, success?: boolean) {
-            clearTimeout(this.statustimer);
-            this.status_line
-                .classList.remove('success')
-            this.status_line
-                .classList.add('active')
-            this.status_line.innerHTML = msg
-
-            if (success) {
-                this.status_line
-                    .classList.add('success');
             }
-            this.statustimer = setTimeout(() => {
-                this.status_line
-                    .classList.remove('active')
-            }, this.options.howLongShowMsg);
-        }
+        });
 
-        generateFolderTree(tree: string[], path: string) {
-            let folders = [];
-            tree.forEach((name: string) => {
-                let $folder = dom('<a class="jodit_filebrowser_tree_item" href="javascript:void(0)" data-path="' + pathNormalize(path + name) + '/"><span>' + name + '</span></a>');
-                folders.push($folder);
-                if (this.options.deleteFolder && name !== '..' && name !== '.') {
-                    $folder.append(dom('<i class="remove" data-path="' + pathNormalize(path + name + '/') + '">&times;</i>'));
-                }
-            });
-            this.tree.innerHTML = folders.join('');
-            if (this.options.createNewFolder) {
-                this.tree.appendChild(this.buttons.addfolder);
+        self.__on(self.buttons.edit, 'click', () => {
+            let files = this.__getActiveElements();
+            if (files.length === 1) {
+                self.openImageEditor(files[0].getAttribute('href'), files[0].dataset.name);
             }
-        }
+        });
 
-        currentItems
-        currentItemsPath
-        currentItemsBaseurl
-        filterWord = ''
+        self.__on(self.buttons.update, 'click', () => {
+            self.loadTree();
+        });
 
-        generateItemsBox(items = null, path = '' , baseurl = '') {
-
-            if (items === null && this.currentItems !== undefined) {
-                items = this.currentItems;
-                path = this.currentItemsPath;
-                baseurl = this.currentItemsBaseurl;
-            }
-
-            if (items === undefined) {
-                items = [];
-            }
-
-            let images = [],
-                tmpl = this.options.getThumbTemplate;
-
-            if (typeof this.options.sort === 'function') {
-                items.sort((a, b) => {
-                    return this.options.sort(a, b, this.sortBy, parent);
-                });
-            }
-
-            each(items, (i, item) => {
-                if (this.options.filter === undefined ||this.options.filter(item, this.filterWord)) {
-                    images.push(tmpl.call(parent, item, path, baseurl));
-                }
-            });
-
-            this.files.innerHTML = images.join('');
-
-            this.currentItems = items;
-            this.currentItemsPath = path;
-            this.currentItemsBaseurl = baseurl;
-        }
-
-
-        private __getActiveElements(): HTMLElement[] {
-            return $$(':scope>a.active', this.files)
-        }
-
-        someSelectedWasChanged() {
-            let actives = this.__getActiveElements();
-            this.buttons.remove.classList.toggle('disabled', !actives.length);
-            this.buttons.select.classList.toggle('disabled', !actives.length);
-            this.buttons.edit.classList.toggle('disabled', actives.length !== 1);
-        }
-
-        __ajax2: Ajax;
-
-        send(name, success, error) {
-            let xhr, opts = extend(true, {}, this.options.ajax, this.options[name] !== undefined ? this.options[name] : this.options.ajax);
-            opts.data = opts.prepareData(opts.data);
-            xhr = new Ajax(this.parent, opts);
-            xhr.done(success);
-            xhr.error(error);
-            return xhr;
-        }
-
-        /**
-         * Get path by url. You can use this method in another modules
-         *
-         * @method getPathByUrl
-         * @param {string} full url
-         * @param {function} success
-         * @param {string} success.path path to file from connector's root (without filename)
-         * @param {string} success.name filename
-         * @param {function} failed filename
-         * @param {string} failed.message
-         */
-        getPathByUrl = (url, success, failed) => {
-            let action = 'getfilebyurl';
-            this.options[action].data.url = url;
-            this.send(action, (resp) => {
-                if (this.options.isSuccess(resp)) {
-                    success(resp.path, resp.name);
-                } else {
-                    failed(this.options.getMsg(resp));
-                }
-            }, (resp)  => {
-                failed(this.options.getMsg(resp));
-            });
-        }
-        loadItems = (path?: string) => {
-            if (path) {
-                this.options.items.data.path = path;
-            } else {
-                path = this.options.items.data.path || '';
-            }
-            if (this.options.items.url) {
-                this.files.classList.add('active');
-                this.files.appendChild(this.loader.cloneNode(true));
-
-                if (this.__ajax2 && this.__ajax2.abort) {
-                    this.__ajax2.abort();
-                }
-                this.__ajax2 = this.send('items', (resp) => {
-                    let data = this.options.items.process.call(this, resp);
-                    this.currentBaseUrl = data.baseurl;
-                    this.generateItemsBox(data.files, data.path, data.baseurl);
-                    this.someSelectedWasChanged();
-                }, () => {
-                    this.status(this.parent.i18n('Error on load list'));
-                });
-            }
-        }
-
-        __ajax: Ajax;
-        loadTree(path?: string) {
-            if (path) {
-                this.options.folder.data.path = path;
-            }
-
-            this.currentPath = path;
-            if (this.uploader) {
-                this.uploader.setPath(this.currentPath);
-            }
-
-            if (this.options.showFoldersPanel) {
-                if (this.options.folder.url) {
-                    this.tree.classList.add('active');
-                    this.tree.innerHTML = '';
-                    this.tree.appendChild(this.loader.cloneNode(true));
-                    if (this.__ajax && this.__ajax.abort) {
-                        this.__ajax.abort();
+        self
+            .__on(self.tree, 'click', 'a>i.remove', function (e)  {
+                let a = this.parentNode, path = a.dataset.path;
+                Confirm(editor.i18n('Are you shure?'), '', (yes) => {
+                    if (yes) {
+                        self.remove(path, a.dataset.name);
+                        self.loadTree(self.currentPath);
                     }
-                    this.__ajax = this.send('folder', (resp) => {
-                        let data = this.options.folder.process.call(this, resp);
-                        this.currentPath = data.path;
-                        this.generateFolderTree(data.files, data.path);
-                    }, () => {
-                        this.status(this.parent.i18n('Error on load folders'));
-                    });
-                } else {
-                    this.tree.classList.remove('active');
-                }
-            }
-
-            this.loadItems(path);
-        }
-
-        /**
-         * Create a directory on the server
-         *
-         * @method create
-         * @param {string} name Name the new folder
-         * @param {string} path Relative to the directory in which you want to create a folder
-         */
-        create = (name, path) => {
-            this.options.create.data.path = path;
-            this.options.create.data.name = name;
-            this.send('create', (resp) => {
-                if (this.options.isSuccess(resp)) {
-                    this.loadTree(path);
-                } else {
-                    this.status(this.options.getMsg(resp));
-                }
-            }, (error) => {
-                this.status(error);
-            });
-        }
-
-        /**
-         * Move a file / directory on the server
-         *
-         * @method move
-         * @param {string} filepath The relative path to the file / folder source
-         * @param {string} path Relative to the directory where you want to move the file / folder
-         */
-        move = (filepath, path) => {
-            this.options.move.data.filepath = filepath;
-            this.options.move.data.path = path;
-            this.send('move', (resp) => {
-                if (this.options.isSuccess(resp)) {
-                    this.loadTree(path);
-                } else {
-                    this.status(this.options.getMsg(resp));
-                }
-            }, (error) => {
-                this.status(error);
-            });
-        }
-
-        /**
-         * Deleting a file / directory on the server
-         *
-         * @method remove
-         * @param {string} path Relative to the directory
-         * @param {string} file The filename
-         */
-        remove(path, file) {
-            this.options.remove.data.path = path;
-            this.options.remove.data.target = file;
-            this.send('remove', (resp) => {
-                resp = this.options.remove.process.call(self, resp);
-                if (!this.options.isSuccess(resp)) {
-                    this.status(this.options.getMsg(resp));
-                } else {
-                    this.someSelectedWasChanged();
-                    this.status(this.options.getMsg(resp), true);
-                }
-            }, (error) => {
-                this.status(error);
-            });
-        }
-
-        /**
-         * Close dialog
-         * @method close
-         */
-        close() {
-            this.dialog.close();
-        }
-        onSelect(callback) {
-            return () => {
-                let actives = this.__getActiveElements();
-                if (actives.length) {
-                    let urls = [];
-                    actives.forEach((elm) => {
-                        urls.push(elm.dataset.url);
-                    });
-                    this.close();
-                    if (typeof callback === 'function') {
-                        callback({
-                            baseurl: '',
-                            files: urls
-                        });
-                    }
-                }
+                });
+                e.stopImmediatePropagation();
                 return false;
-            };
-        }
+            })
+            .__on(self.tree, 'click', 'a', function () {
+                if (this.classList.contains('addfolder')) {
+                    Promt(self.parent.i18n('Enter Directory name'), self.parent.i18n('Create directory'), (name) => {
+                        self.create(name, self.currentPath);
+                    }, self.parent.i18n('type name'));
+                } else {
+                    self.loadTree(this.dataset.path);
+                }
+            })
+            .__on(this.tree, 'dragstart', 'a', function () {
+                self.dragger = this;
+            })
+            .__on(this.tree, 'drop',  'a', function () {
+                if (self.options.moveFolder && self.dragger) {
+                    let path = self.dragger.dataset.path;
 
-        /**
-         * It opens a web browser window
-         *
-         * @method open
-         * @param {function(imagelist)} callback The function that will be called after the file selection in the browser
-         * @example
-         * var fb = new Jodit.modules.FileBrowser(parent);
-         * fb.open(function (images) {
-         *     var i;
-         *     for (i = 0;i < images.length; i += 1) {
-         *         parent.selection.insertImage(images[i]);
-         *     }
-         * });
-         */
-        open = (callback) => {
-            if (this.options.items.url) {
-                this
-                    .__off(this.files, 'dblclick')
-                    .__on(this.files, 'dblclick', ':scope>a', this.onSelect(callback))
+                    //move folder
+                    if (!self.options.moveFolder && self.dragger.classList.contains('jodit_filebrowser_tree_item')) {
+                        return false;
+                    }
 
-                this
-                    .__off(this.buttons.select, 'click')
-                    .__on(this.buttons.select, 'click', this.onSelect(callback))
-
-                this.loadTree(this.currentPath);
-
-
-                let header = [
-                        '<span class="jodit_dialog_header_title">' + this.parent.i18n('File Browser') + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + '</span>'
-                    ],
-                    i,
-                    button;
-
-                for (i = 0; i < this.options.buttons.length; i += 1) {
-                    if (this.buttons[this.options.buttons[i]] !== undefined && ((this.options.editImage && Jodit.modules.ImageEditor !== undefined) || this.options.buttons[i] !== 'edit')) {
-                        header.push(this.buttons[this.options.buttons[i]]);
-                    } else {
-                        if (typeof this.options.buttons[i] === 'function') {
-                            header.push(this.options.buttons[i].call(parent));
-                        } else if (isPlainObject(this.options.buttons[i]) && this.options.buttons[i].exec && this.options.buttons[i].name) {
-                            button = dom('<div class="jodit_button">' + Toolbar.getIcon(this.options.buttons[i].icon || this.options.buttons[i].name) + '</div>');
-                            header.push(button);
-                            button.addEventListener('click', this.options.buttons[i].exec);
+                    //move file
+                    if (self.dragger.classList.contains('jodit_filebrowser_files_item')) {
+                        path += self.dragger.dataset.name;
+                        if (!self.options.moveFile) {
+                            return false;
                         }
                     }
+
+                    self.move(path, this.dataset.path);
                 }
-                this.dialog.open(this.browser, header);
+            });
+
+        const contextmenu = new ContextMenu(this.parent);
+
+        self
+            .__on(self.files, 'mousedown', 'a>img', function (this: HTMLElement, e) {
+                self.client.x = e.clientX;
+                self.client.y = e.clientY;
+
+                self.start = offset(this);
+
+                self.draggble = <Element>this.cloneNode(true);
+
+                css(<HTMLElement>self.draggble, {
+                    'z-index': 100000000000000,
+                    position: 'fixed',
+                    display: 'none',
+                    left: self.start.left,
+                    top: self.start.top,
+                    width: this.offsetWidth,
+                    height: this.offsetHeight
+                });
+
+                document.body.appendChild(self.draggble)
+            })
+            .__on(self.files, 'dragstart', 'a', function (this: HTMLElement, e) {
+                self.dragger = this;
+                e.originalEvent.dataTransfer.setData('text/plain', this.getAttribute('href'));
+                e.stopPropagation();
+            })
+            .__on(self.files, 'contextmenu', 'a', function (this: HTMLElement, e) {
+                if (self.options.contextMenu) {
+                    let item = this;
+                    contextmenu.show(e.pageX, e.pageY, [
+                        self.options.editImage && Jodit.modules.ImageEditor !== undefined ? {
+                            icon: 'pencil',
+                            title: 'Edit',
+                            exec: () => {
+                                self.openImageEditor(item.getAttribute('href'), item.dataset.name);
+                            }
+                        } : false,
+                        {
+                            icon: 'bin',
+                            title: 'Delete',
+                            exec: () => {
+                                self.remove(self.currentPath, item.dataset.name);
+                                self.someSelectedWasChanged();
+                                self.loadTree(self.currentPath);
+                            }
+                        },
+                        self.options.preview ? {
+                            icon: 'eye',
+                            title: 'Preview',
+                            exec: () => {
+                                let preview = new Dialog(self.parent),
+                                    temp_content: HTMLElement = dom('<div class="jodit_filebrowser_preview"><i class="jodit_icon-loader"></i></div>'),
+                                    src = item.getAttribute('href'),
+                                    selectBtn = self.buttons.select.cloneNode(true),
+                                    image = document.createElement('img'),
+                                    addLoadHandler = () => {
+                                        let onload = () => {
+                                            this.removeEventListener('load', <EventListenerOrEventListenerObject>onload);
+                                            temp_content.innerHTML = '';
+                                            if (self.options.showPreviewNavigation) {
+                                                let next = dom('<a href="javascript:void(0)" class="jodit_filebrowser_preview_navigation jodit_filebrowser_preview_navigation-next">' + Toolbar.getIcon('angle-right') + '</a>'),
+                                                    prev = dom('<a href="javascript:void(0)" class="jodit_filebrowser_preview_navigation jodit_filebrowser_preview_navigation-prev">' + Toolbar.getIcon('angle-left') + '</a>');
+
+                                                if (item.previousSibling) {
+                                                    temp_content.appendChild(item.previousSibling);
+                                                }
+                                                if (item.nextSibling) {
+                                                    temp_content.appendChild(item.nextSibling);
+                                                }
+
+                                                self.__on([next, prev], 'click', function (this: HTMLElement) {
+                                                    if (this.classList.contains('jodit_filebrowser_preview_navigation-next')) {
+                                                        item = <HTMLElement>item.nextSibling;
+                                                    } else {
+                                                        item = <HTMLElement>item.previousSibling;
+                                                    }
+                                                    temp_content.innerHTML = '<i class="jodit_icon-loader"></i>';
+                                                    src = item.getAttribute('href');
+                                                    image.setAttribute('src', src);
+                                                    addLoadHandler();
+                                                });
+                                            }
+
+                                            temp_content.appendChild(image);
+                                            preview.setPosition();
+                                        };
+
+                                        image.addEventListener("load", onload);
+                                        if (image.complete) {
+                                            onload.call(this);
+                                        }
+                                    };
+
+                                addLoadHandler();
+                                image.setAttribute('src', src);
+                                preview.setContent(temp_content);
+
+                                if (self.options.showSelectButtonInPreview) {
+                                    selectBtn.removeAttr('disabled');
+                                    preview.setTitle(selectBtn);
+                                    selectBtn.on('click', () => {
+                                        self.files.querySelector('a.active').classList.add('active');
+                                        item.classList.add('active');
+                                        self.__fire(self.buttons.select, 'click');
+                                        preview.close();
+                                    });
+                                }
+
+                                preview.open();
+                            }
+                        } : false,
+                        {
+                            icon: 'upload',
+                            title: 'Download',
+                            exec: function () {
+                                window.open(item.getAttribute('href'));
+                            }
+                        }
+                    ]);
+                    return false;
+                }
+            })
+            .__on(self.files, 'click', (e) => {
+                if (!ctrlKey(e)) {
+                    this.__getActiveElements().forEach((elm: HTMLElement) => {
+                        elm.classList.remove('active');
+                    });
+                    self.someSelectedWasChanged();
+                }
+            })
+            .__on(self.files, 'click', 'a', function (this: HTMLElement,e) {
+                if (!ctrlKey(e)) {
+                    self.__getActiveElements().forEach((elm: HTMLElement) => {
+                        elm.classList.remove('active');
+                    })
+                }
+                this.classList.toggle('active');
+                self.someSelectedWasChanged();
+                e.stopPropagation();
+                return false;
+            })
+            .__on(document, 'dragover', function (e) {
+                if (self.isOpened() && self.draggble && e.originalEvent.clientX !== undefined) {
+                    css(<HTMLElement>self.draggble, {
+                        left: e.originalEvent.clientX + 20,
+                        top: e.originalEvent.clientY + 20,
+                        display: 'block'
+                    });
+                }
+            })
+            .__on(window, 'keydown', (e) => {
+                if (self.isOpened() && e.which === 46) {
+                    self.__fire(self.buttons.remove, 'click');
+                }
+            })
+            .__on(window, 'mouseup dragend',() => {
+                if (self.draggble) {
+                    self.draggble.parentNode.removeChild(self.draggble)
+                    self.draggble = false;
+                }
+            });
+
+        this.dialog.setSize(this.options.width, this.options.height);
+
+        this.options.getfilebyurl = extend(true, {}, this.options.ajax, this.options.getfilebyurl);
+        this.options.crop = extend(true, {}, this.options.ajax, this.options.crop);
+        this.options.resize = extend(true, {}, this.options.ajax, this.options.resize);
+        this.options.create = extend(true, {}, this.options.ajax, this.options.create);
+        this.options.move = extend(true, {}, this.options.ajax, this.options.move);
+        this.options.remove = extend(true, {}, this.options.ajax, this.options.remove);
+        this.options.folder = extend(true, {}, this.options.ajax, this.options.folder);
+        this.options.items = extend(true, {}, this.options.ajax, this.options.items);
+    }
+
+    view = 'tiles';
+    sortBy = 'changed';
+
+    /**
+     * Get base url. You can use this method in another modules
+     *
+     * @method getBaseUrl
+     */
+    getBaseUrl () {
+        return this.currentBaseUrl;
+    }
+
+    dragger:false|HTMLElement = false
+
+
+    /**
+     *
+     * @return {boolean}
+     */
+    isOpened (): boolean {
+        return this.dialog.isOpened() && this.browser.style.display !== 'none';
+    }
+    statustimer = 0
+
+    /**
+     * It displays a message in the status bar of filebrowser
+     *
+     * @method status
+     * @param {string} msg Message
+     * @param {boolean} [success] true It will be shown a message light . If no option is specified , an error will be shown the red
+     * @example
+     * parent.filebrowser.status('There was an error uploading file', false);
+     */
+    status (msg, success?: boolean) {
+        clearTimeout(this.statustimer);
+        this.status_line
+            .classList.remove('success')
+        this.status_line
+            .classList.add('active')
+        this.status_line.innerHTML = msg
+
+        if (success) {
+            this.status_line
+                .classList.add('success');
+        }
+        this.statustimer = setTimeout(() => {
+            this.status_line
+                .classList.remove('active')
+        }, this.options.howLongShowMsg);
+    }
+
+    generateFolderTree(tree: string[], path: string) {
+        let folders = [];
+        tree.forEach((name: string) => {
+            let $folder = dom('<a class="jodit_filebrowser_tree_item" href="javascript:void(0)" data-path="' + pathNormalize(path + name) + '/"><span>' + name + '</span></a>');
+            folders.push($folder);
+            if (this.options.deleteFolder && name !== '..' && name !== '.') {
+                $folder.append(dom('<i class="remove" data-path="' + pathNormalize(path + name + '/') + '">&times;</i>'));
+            }
+        });
+        this.tree.innerHTML = folders.join('');
+        if (this.options.createNewFolder) {
+            this.tree.appendChild(this.buttons.addfolder);
+        }
+    }
+
+    currentItems
+    currentItemsPath
+    currentItemsBaseurl
+    filterWord = ''
+
+    generateItemsBox(items = null, path = '' , baseurl = '') {
+
+        if (items === null && this.currentItems !== undefined) {
+            items = this.currentItems;
+            path = this.currentItemsPath;
+            baseurl = this.currentItemsBaseurl;
+        }
+
+        if (items === undefined) {
+            items = [];
+        }
+
+        let images = [],
+            tmpl = this.options.getThumbTemplate;
+
+        if (typeof this.options.sort === 'function') {
+            items.sort((a, b) => {
+                return this.options.sort(a, b, this.sortBy, parent);
+            });
+        }
+
+        each(items, (i, item) => {
+            if (this.options.filter === undefined ||this.options.filter(item, this.filterWord)) {
+                images.push(tmpl.call(parent, item, path, baseurl));
+            }
+        });
+
+        this.files.innerHTML = images.join('');
+
+        this.currentItems = items;
+        this.currentItemsPath = path;
+        this.currentItemsBaseurl = baseurl;
+    }
+
+
+    private __getActiveElements(): HTMLElement[] {
+        return $$(':scope>a.active', this.files)
+    }
+
+    someSelectedWasChanged() {
+        let actives = this.__getActiveElements();
+        this.buttons.remove.classList.toggle('disabled', !actives.length);
+        this.buttons.select.classList.toggle('disabled', !actives.length);
+        this.buttons.edit.classList.toggle('disabled', actives.length !== 1);
+    }
+
+    __ajax2: Ajax;
+
+    send(name, success, error) {
+        let xhr, opts = extend(true, {}, this.options.ajax, this.options[name] !== undefined ? this.options[name] : this.options.ajax);
+        opts.data = opts.prepareData(opts.data);
+        xhr = new Ajax(this.parent, opts);
+
+        xhr
+            .done(success)
+            .error(error);
+
+        return xhr;
+    }
+
+    /**
+     * Get path by url. You can use this method in another modules
+     *
+     * @method getPathByUrl
+     * @param {string} full url
+     * @param {function} success
+     * @param {string} success.path path to file from connector's root (without filename)
+     * @param {string} success.name filename
+     * @param {function} failed filename
+     * @param {string} failed.message
+     */
+    getPathByUrl = (url, success, failed) => {
+        let action = 'getfilebyurl';
+        this.options[action].data.url = url;
+        this.send(action, (resp) => {
+            if (this.options.isSuccess(resp)) {
+                success(resp.path, resp.name);
+            } else {
+                failed(this.options.getMsg(resp));
+            }
+        }, (resp)  => {
+            failed(this.options.getMsg(resp));
+        });
+    }
+
+    loadItems = (path?: string) => {
+        if (path) {
+            this.options.items.data.path = path;
+        } else {
+            path = this.options.items.data.path || '';
+        }
+        if (this.options.items.url) {
+            this.files.classList.add('active');
+            this.files.appendChild(this.loader.cloneNode(true));
+
+            if (this.__ajax2 && this.__ajax2.abort) {
+                this.__ajax2.abort();
+            }
+            this.__ajax2 = this.send('items', (resp) => {
+                let data = this.options.items.process.call(this, resp);
+                this.currentBaseUrl = data.baseurl;
+                this.generateItemsBox(data.files, data.path, data.baseurl);
+                this.someSelectedWasChanged();
+            }, () => {
+                this.status(this.parent.i18n('Error on load list'));
+            });
+        }
+    }
+
+    __ajax: Ajax;
+    loadTree(path?: string) {
+        if (path) {
+            this.options.folder.data.path = path;
+        }
+
+        this.currentPath = path;
+        if (this.uploader) {
+            this.uploader.setPath(this.currentPath);
+        }
+
+        if (this.options.showFoldersPanel) {
+            if (this.options.folder.url) {
+                this.tree.classList.add('active');
+                this.tree.innerHTML = '';
+                this.tree.appendChild(this.loader.cloneNode(true));
+                if (this.__ajax && this.__ajax.abort) {
+                    this.__ajax.abort();
+                }
+                this.__ajax = this.send('folder', (resp) => {
+                    let data = this.options.folder.process.call(this, resp);
+                    this.currentPath = data.path;
+                    this.generateFolderTree(data.files, data.path);
+                }, () => {
+                    this.status(this.parent.i18n('Error on load folders'));
+                });
+            } else {
+                this.tree.classList.remove('active');
             }
         }
 
-        errorHandler(resp) {
-            this.status(this.options.getMsg(resp));
-        }
+        this.loadItems(path);
+    }
 
-        uploadHandler(data, resp) {
+    /**
+     * Create a directory on the server
+     *
+     * @method create
+     * @param {string} name Name the new folder
+     * @param {string} path Relative to the directory in which you want to create a folder
+     */
+    create = (name, path) => {
+        this.options.create.data.path = path;
+        this.options.create.data.name = name;
+        this.send('create', (resp) => {
             if (this.options.isSuccess(resp)) {
-                this.status(this.parent.i18n('Files [1$] was uploaded', data.files.join(',')), true);
+                this.loadTree(path);
             } else {
                 this.status(this.options.getMsg(resp));
             }
-            this.loadItems();
-        }
+        }, (error) => {
+            this.status(error);
+        });
+    }
 
-        init () {
-            this.view = this.options.view === 'list' ? 'list' : 'tiles';
-            if (this.parent.cookie.get('jodit_filebrowser_view')) {
-                this.view = this.parent.cookie.get('jodit_filebrowser_view') === 'list' ? 'list' : 'tiles';
+    /**
+     * Move a file / directory on the server
+     *
+     * @method move
+     * @param {string} filepath The relative path to the file / folder source
+     * @param {string} path Relative to the directory where you want to move the file / folder
+     */
+    move = (filepath, path) => {
+        this.options.move.data.filepath = filepath;
+        this.options.move.data.path = path;
+        this.send('move', (resp) => {
+            if (this.options.isSuccess(resp)) {
+                this.loadTree(path);
+            } else {
+                this.status(this.options.getMsg(resp));
             }
-            this.buttons[this.view].classList.remove('disabled');
-            this.files.classList.add('jodit_filebrowser_files_view-' + this.view);
+        }, (error) => {
+            this.status(error);
+        });
+    }
 
-            this.sortBy = (['changed', 'name', 'size']).indexOf(this.options.sortBy) !== -1 ? this.options.sortBy : 'changed';
-            if (this.parent.cookie.get('jodit_filebrowser_sortby')) {
-                this.sortBy = (['changed', 'name', 'size']).indexOf(this.parent.cookie.get('jodit_filebrowser_sortby')) !== -1 ? this.parent.cookie.get('jodit_filebrowser_sortby') : 'changed';
+    /**
+     * Deleting a file / directory on the server
+     *
+     * @method remove
+     * @param {string} path Relative to the directory
+     * @param {string} file The filename
+     */
+    remove(path, file) {
+        this.options.remove.data.path = path;
+        this.options.remove.data.target = file;
+        this.send('remove', (resp) => {
+            resp = this.options.remove.process.call(self, resp);
+            if (!this.options.isSuccess(resp)) {
+                this.status(this.options.getMsg(resp));
+            } else {
+                this.someSelectedWasChanged();
+                this.status(this.options.getMsg(resp), true);
             }
-            this.buttons.sort.valuse = this.sortBy;
+        }, (error) => {
+            this.status(error);
+        });
+    }
 
-            this.currentBaseUrl = $$('base', this.parent.doc).length ? $$('base', this.parent.doc)[0].getAttribute('href') : location.protocol + '//' + location.host;
-            if (Jodit.modules.Uploader !== undefined) {
-                this.uploader = new Uploader(this.parent, {...this.parent.options.uploader, ...this.options.uploader});
-                this.uploader.setPath(this.currentPath);
-                this.uploader.bind(this.browser, this.uploadHandler, this.errorHandler);
-                this.uploader.bind(this.buttons.upload, this.uploadHandler, this.errorHandler);
+    /**
+     * Close dialog
+     * @method close
+     */
+    close() {
+        this.dialog.close();
+    }
+    onSelect(callback) {
+        return () => {
+            let actives = this.__getActiveElements();
+            if (actives.length) {
+                let urls = [];
+                actives.forEach((elm) => {
+                    urls.push(elm.dataset.url);
+                });
+                this.close();
+                if (typeof callback === 'function') {
+                    callback({
+                        baseurl: '',
+                        files: urls
+                    });
+                }
             }
-        }
+            return false;
+        };
+    }
 
-        /**
-         * Open Image Editor
-         *
-         * @method openImageEditor
-         * @param {string} href Full url for edited image
-         * @param {string} name Filename for edited image
-         * @param {string} [pth] Path for edited image
-         */
-        openImageEditor = function (href: string, name: string, pth?: string, onSuccess?: Function, onFailed?: Function) {
-            if (this.parent.imageeditor) {
-                this.parent.imageeditor.open(href, (newname, box, success, failed) => {
-                    if (this.options[box.action] === undefined) {
-                        this.options[box.action] = {};
+    /**
+     * It opens a web browser window
+     *
+     * @method open
+     * @param {function(imagelist)} callback The function that will be called after the file selection in the browser
+     * @example
+     * var fb = new Jodit.modules.FileBrowser(parent);
+     * fb.open(function (images) {
+     *     var i;
+     *     for (i = 0;i < images.length; i += 1) {
+     *         parent.selection.insertImage(images[i]);
+     *     }
+     * });
+     */
+    open = (callback) => {
+        if (this.options.items.url) {
+            this
+                .__off(this.files, 'dblclick')
+                .__on(this.files, 'dblclick', ':scope>a', this.onSelect(callback))
+
+            this
+                .__off(this.buttons.select, 'click')
+                .__on(this.buttons.select, 'click', this.onSelect(callback))
+
+            this.loadTree(this.currentPath);
+
+
+            let header = [
+                    '<span class="jodit_dialog_header_title">' + this.parent.i18n('File Browser') + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + '</span>'
+                ],
+                i,
+                button;
+
+            for (i = 0; i < this.options.buttons.length; i += 1) {
+                if (this.buttons[this.options.buttons[i]] !== undefined && ((this.options.editImage && Jodit.modules.ImageEditor !== undefined) || this.options.buttons[i] !== 'edit')) {
+                    header.push(this.buttons[this.options.buttons[i]]);
+                } else {
+                    if (typeof this.options.buttons[i] === 'function') {
+                        header.push(this.options.buttons[i].call(parent));
+                    } else if (isPlainObject(this.options.buttons[i]) && this.options.buttons[i].exec && this.options.buttons[i].name) {
+                        button = dom('<div class="jodit_button">' + Toolbar.getIcon(this.options.buttons[i].icon || this.options.buttons[i].name) + '</div>');
+                        header.push(button);
+                        button.addEventListener('click', this.options.buttons[i].exec);
                     }
-                    if (this.options[box.action].data === undefined) {
-                        this.options[box.action].data = {
-                            action: box.action
-                        };
-                    }
+                }
+            }
+            this.dialog.open(this.browser, header);
+        }
+    }
 
-                    this.options[box.action].data.newname = newname;
-                    this.options[box.action].data.box = box.box;
-                    this.options[box.action].data.path = pth || this.currentPath;
-                    this.options[box.action].data.file = name;
+    errorHandler(resp) {
+        this.status(this.options.getMsg(resp));
+    }
 
-                    this.send(box.action, (resp) => {
-                        if (this.options.isSuccess(resp)) {
-                            this.loadTree();
-                            success();
-                            if (onSuccess) {
-                                onSuccess();
-                            }
-                        } else {
-                            failed(this.options.getMsg(resp));
-                            if (onFailed) {
-                                onFailed(this.options.getMsg(resp));
-                            }
+    uploadHandler(data, resp) {
+        if (this.options.isSuccess(resp)) {
+            this.status(this.parent.i18n('Files [1$] was uploaded', data.files.join(',')), true);
+        } else {
+            this.status(this.options.getMsg(resp));
+        }
+        this.loadItems();
+    }
+
+    init () {
+        this.view = this.options.view === 'list' ? 'list' : 'tiles';
+        if (this.parent.cookie.get('jodit_filebrowser_view')) {
+            this.view = this.parent.cookie.get('jodit_filebrowser_view') === 'list' ? 'list' : 'tiles';
+        }
+        this.buttons[this.view].classList.remove('disabled');
+        this.files.classList.add('jodit_filebrowser_files_view-' + this.view);
+
+        this.sortBy = (['changed', 'name', 'size']).indexOf(this.options.sortBy) !== -1 ? this.options.sortBy : 'changed';
+        if (this.parent.cookie.get('jodit_filebrowser_sortby')) {
+            this.sortBy = (['changed', 'name', 'size']).indexOf(this.parent.cookie.get('jodit_filebrowser_sortby')) !== -1 ? this.parent.cookie.get('jodit_filebrowser_sortby') : 'changed';
+        }
+        this.buttons.sort.valuse = this.sortBy;
+
+        this.currentBaseUrl = $$('base', this.parent.doc).length ? $$('base', this.parent.doc)[0].getAttribute('href') : location.protocol + '//' + location.host;
+        if (Jodit.modules.Uploader !== undefined) {
+            this.uploader = new Uploader(this.parent, {...this.parent.options.uploader, ...this.options.uploader});
+            this.uploader.setPath(this.currentPath);
+            this.uploader.bind(this.browser, this.uploadHandler, this.errorHandler);
+            this.uploader.bind(this.buttons.upload, this.uploadHandler, this.errorHandler);
+        }
+    }
+
+    /**
+     * Open Image Editor
+     *
+     * @method openImageEditor
+     * @param {string} href Full url for edited image
+     * @param {string} name Filename for edited image
+     * @param {string} [pth] Path for edited image
+     */
+    openImageEditor = function (href: string, name: string, pth?: string, onSuccess?: Function, onFailed?: Function) {
+        if (this.parent.imageeditor) {
+            this.parent.imageeditor.open(href, (newname, box, success, failed) => {
+                if (this.options[box.action] === undefined) {
+                    this.options[box.action] = {};
+                }
+                if (this.options[box.action].data === undefined) {
+                    this.options[box.action].data = {
+                        action: box.action
+                    };
+                }
+
+                this.options[box.action].data.newname = newname;
+                this.options[box.action].data.box = box.box;
+                this.options[box.action].data.path = pth || this.currentPath;
+                this.options[box.action].data.file = name;
+
+                this.send(box.action, (resp) => {
+                    if (this.options.isSuccess(resp)) {
+                        this.loadTree();
+                        success();
+                        if (onSuccess) {
+                            onSuccess();
                         }
-                    }, (resp) => {
+                    } else {
                         failed(this.options.getMsg(resp));
                         if (onFailed) {
                             onFailed(this.options.getMsg(resp));
                         }
-                    });
+                    }
+                }, (resp) => {
+                    failed(this.options.getMsg(resp));
+                    if (onFailed) {
+                        onFailed(this.options.getMsg(resp));
+                    }
                 });
-            }
+            });
         }
-        draggble: Element|false = false
-        start = {top: 0, left: 0}
-        client = {x: 0, y: 0}
+    }
+    draggble: Element|false = false
+    start = {top: 0, left: 0}
+    client = {x: 0, y: 0}
 }

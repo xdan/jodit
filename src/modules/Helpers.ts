@@ -711,7 +711,7 @@ export const  debounce = function (fn, timeout ?: number, invokeAsap?: boolean, 
  * @param {string|object} key An object of property-value pairs to set. A CSS property name.
  * @param {string|int} value A value to set for the property.
  */
-export const css = (element: Element, key: string|object, value?: string|number) => {
+export const css = (element: HTMLElement, key: string|object, value?: string|number) => {
     let result, setValue;
 
     if (isPlainObject(key) || value !== undefined) {
@@ -725,17 +725,20 @@ export const css = (element: Element, key: string|object, value?: string|number)
         if (isPlainObject(key)) {
             let keys = Object.keys(key), j;
             for (j = 0; j < keys.length; j += 1) {
-                setValue(this, camelCase(keys[j]), key[keys[j]]);
+                setValue(element, camelCase(keys[j]), key[keys[j]]);
             }
         } else {
-            setValue(this, key, value);
+            setValue(element, camelCase(<string>key), value);
         }
 
         return this;
     }
 
+    let key2 = <string>fromCamelCase(<string>key),
+        doc  = element.ownerDocument,
+        win = doc.defaultView || doc['parentWindow'];
 
-    result = window.getComputedStyle(element).getPropertyValue(fromCamelCase(<string>key));
+    result = element.style[<string>key] !== undefined ? element.style[<string>key] : win.getComputedStyle(element).getPropertyValue(key2);
 
 
     return result;

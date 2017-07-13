@@ -1,7 +1,7 @@
 import Jodit from '../jodit'
 import Component from './Component'
 import config from '../config'
-import {dom, $$, asArray} from './Helpers'
+import {dom, $$, asArray, css} from './Helpers'
 import Toolbar from "./Toolbar";
 
 
@@ -232,19 +232,20 @@ export default class Dialog extends Component{
         this.dialog.classList.toggle('with_footer', !!content);
     }
 
+
     /**
      * Get dialog instance with maximum z-index displaying it on top of all the dialog boxes
      *
      * @return {Dialog}
      */
     getMaxZIndexDialog() {
-        let maxzi = 0, dlg, zi, res = this;
+        let maxzi = 0, dlg, zIndex, res = this;
         $$('.jodit_dialog_box', document.body).forEach((dialog) => {
             dlg = dialog.__jodit_dialog;
-            zi = parseInt(dialog.style.zIndex || 0, 10);
-            if (dlg.isOpened() &&  zi > maxzi) {
+            zIndex = parseInt(<string>css(dialog, 'zIndex'), 10);
+            if (dlg.isOpened() && !isNaN(zIndex) && zIndex > maxzi) {
                 res = dlg;
-                maxzi = zi;
+                maxzi = zIndex;
             }
         });
         return res;
@@ -254,9 +255,11 @@ export default class Dialog extends Component{
      * Sets the maximum z-index dialog box, displaying it on top of all the dialog boxes
      */
     setMaxZIndex() {
-        let maxzi = 0;
+        let maxzi = 0, zIndex = 0;
+
         $$('.jodit_dialog_box', document.body).forEach((dialog) => {
-            maxzi = Math.max(parseInt(dialog.style.zIndex, 10), maxzi);
+            zIndex = parseInt(<string>css(dialog, 'zIndex'), 10);
+            maxzi = Math.max(isNaN(zIndex) ? 0 : zIndex, maxzi);
         });
 
         this.dialogbox

@@ -155,7 +155,7 @@ Widget['Tabs'] = class extends Widget{
             button.innerHTML = parent.i18n(name);
             buttons.appendChild(button);
 
-            if (typeof tab !== 'function') {
+            if (typeof tabOptions !== 'function') {
                 tab.appendChild(dom(tabOptions));
             } else {
                 tab.appendChild(dom('<div class="jodit_tab_empty"></div>'));
@@ -172,7 +172,7 @@ Widget['Tabs'] = class extends Widget{
                 button.classList.add('active');
                 tab.classList.add('active');
                 if (typeof tabOptions === 'function') {
-                    tab.call(parent);
+                    tabOptions.call(parent);
                 }
                 e.stopPropagation();
                 return false;
@@ -246,7 +246,7 @@ Widget['ImageSelector'] = class extends Widget{
         }
 
         if (callbacks.filebrowser) {
-            if (editor.filebrowser && (editor.options.filebrowser.url || editor.options.filebrowser.ajax.url || editor.options.filebrowser.items.url)) {
+            if (editor.options.filebrowser.url || editor.options.filebrowser.ajax.url || editor.options.filebrowser.items.url) {
                 tabs[Jodit.modules.Toolbar.getIcon('folder') + editor.i18n('Browse')] = function () {
                     editor.filebrowser.open(callbacks.filebrowser);
                 };

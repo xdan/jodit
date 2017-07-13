@@ -7,6 +7,7 @@ import Cookie from './modules/Cookie';
 import * as consts from './constants';
 import {extend, inArray, dom, each, htmlentities, browser} from './modules/Helpers';
 import * as helper from './modules/Helpers';
+import FileBrowser from "./modules/FileBrowser";
 
 /** Class Jodit. Main class*/
 export default class Jodit extends Component{
@@ -62,6 +63,11 @@ export default class Jodit extends Component{
     selection: Selection;
 
     /**
+     * @property {FileBrowser} filebrowser
+     */
+    filebrowser: FileBrowser;
+
+    /**
      * @property {Noder} node
      */
     node: Noder;
@@ -114,6 +120,7 @@ export default class Jodit extends Component{
 
         this.cookie = new Jodit.modules.Cookie(this);
         this.selection = new Jodit.modules.Selection(this);
+        this.filebrowser = new Jodit.modules.FileBrowser(this);
         this.events = new Jodit.modules.Events(this);
         this.node = new Jodit.modules.Noder(this);
 
