@@ -29,6 +29,7 @@ export default class Component {
 
     __scope: any[] = [];
     __scopeNamespace: any = {};
+
     __fire(element: Element, event: string) {
         let evt = this.doc.createEvent('HTMLEvents')
         evt.initEvent(event, true, true);
@@ -37,7 +38,7 @@ export default class Component {
     __off(element: false|Element|HTMLElement|Array<HTMLElement> = false, event: string|false = false) {
         this.__scope.forEach((data) => {
             (Array.isArray(element) ? element : [element]).forEach((elm) => {
-                if ((elm === false || elm === data.element) && (event === false || event === data.event)) {
+                if (data.element && data.element.removeEventListener && (elm === false || elm === data.element) && (event === false || event === data.event)) {
                     data.element.removeEventListener(data.event, data.callback)
                 }
             });
@@ -75,7 +76,7 @@ export default class Component {
             }
 
             (Array.isArray(element) ? element : [element]).forEach((elm: HTMLElement) => {
-                elm.addEventListener(event, <EventListenerOrEventListenerObject>temp);
+                elm.addEventListener(event, <EventListenerOrEventListenerObject>temp, false);
             });
 
             let eventData = {

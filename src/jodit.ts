@@ -84,7 +84,7 @@ export default class Jodit extends Component{
         if (options !== undefined && typeof options === 'object') {
             Object.keys(options).forEach((key) => {
                 if (typeof Jodit.defaultOptions[key] === 'object' && !Array.isArray(Jodit.defaultOptions[key])) {
-                    this.options[key] = extend({}, Jodit.defaultOptions[key], options[key]);
+                    this.options[key] = extend(true, {}, Jodit.defaultOptions[key], options[key]);
                 } else {
                     this.options[key] = options[key];
                 }

@@ -22,6 +22,7 @@
     <table style="width:100%">
         <tr>
             <td style="width:50%;vertical-align: top">
+                <div id="filebrowser"></div>
                 <textarea id="editor">Jodit Editor is a lightweight WYSIWYG HTML Editor written in Javascript that enables rich text editing capabilities for your applications. <br>
 Its complete documentation, specially designed framework plugins and tons of examples make it easy to integrate. We're continuously working to add in new features and take the Javascript web WYSIWYG editing capabilities beyond its current limits.</textarea>
             </td>
@@ -52,6 +53,11 @@ Its complete documentation, specially designed framework plugins and tons of exa
 
 <script>
     editor = new Jodit('#editor', {
+        filebrowser: {
+            ajax: {
+                url: 'http://localhost:8181/index-test.php'
+            }
+        },
         buttons: Jodit.defaultOptions.buttons.concat([
             {
                 name: 'insertDate',
@@ -63,6 +69,8 @@ Its complete documentation, specially designed framework plugins and tons of exa
         ])
     });
 
+//    (new Jodit.modules.FileBrowser(editor)).open(function () {});
+//    console.log(document.querySelectorAll('.jodit_dialog_box.active').length);
     function simpleKeys (original) {
         var newobject = {};
         for(var key in original) {
@@ -88,31 +96,22 @@ Its complete documentation, specially designed framework plugins and tons of exa
     editor.editor.addEventListener('input', callback)
     editor.events.on('change', callback)
 
+    editor.setEditorValue('<p>Text to text</p>')
+    var sel = editor.win.getSelection(), range = editor.doc.createRange();
+    range.setStart(editor.editor.firstChild.firstChild, 5)
+    range.collapse(true)
+    sel.removeAllRanges();
+    sel.addRange(range)
 
+    simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-ul'))
+    editor.selection.insertHTML('test ');
     //    var editor = new Jodit('#table_editor_interface');
 
 //    var editor = new Jodit('#tested_area');
-    editor.setEditorValue('')
 
-
-    var work = 0,
-        div = document.createElement('button'),
-        a = document.createElement('a');
-
-    debugger
-    editor.__on(div, 'click', 'a.active', function () {
-        work++;
-    })
-    simulateEvent('click', 0, div);
 //    expect(work).to.be.equal(0);
 
-    div.appendChild(a);
 
-    simulateEvent('click', 0, a);
-//    expect(work).to.be.equal(0);
-
-    a.classList.add('active');
-    simulateEvent('click', 0, a);
 //    expect(work).to.be.equal(1);
 //    expect(editor.container.querySelectorAll('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=url]').value).to.equal(1);
 

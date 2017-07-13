@@ -2,10 +2,11 @@ import Jodit from '../jodit';
 import Component from './Component';
 import Dialog, {Confirm, Promt} from '../modules/Dialog';
 import config from '../config'
-import {$$, ajax, css, ctrlKey, debounce, dom, each, isPlainObject, offset, pathNormalize} from "./Helpers";
+import {$$, css, ctrlKey, debounce, dom, each, extend, isPlainObject, offset, pathNormalize} from "./Helpers";
 import Toolbar from "./Toolbar";
 import ContextMenu from "./ContextMenu";
 import Uploader from "./Uploader";
+import Ajax from "./Ajax";
 /**
  * The module creates a web browser dialog box . In a Web browser , you can select an image , remove , drag it . Upload new
  *
@@ -367,10 +368,10 @@ config.filebrowser = {
         data: {action: 'remove'},
     },
     items: {
-        data: {action: 'items'},
+        data: {action: 'files'},
     },
     folder: {
-        data: {action: 'folder'},
+        data: {action: 'folders'},
     },
     uploader: null // use default Uploader's settings
 }
@@ -382,7 +383,7 @@ export default class FileBrowser extends Component {
         dialog: Dialog;
         loader: Element;
         browser: Element;
-        statusline: Element;
+        status_line: Element;
         tree: Element;
         files: Element;
 
@@ -394,17 +395,20 @@ export default class FileBrowser extends Component {
             super(editor);
             const self = this;
 
-            self.options = self.parent.options.filebrowser;
+            self.options = extend(true, {}, config.filebrowser, self.parent.options.filebrowser);
+
             self.dialog = new Dialog(editor, {
                 fullsizeButton: true
             })
+
             self.loader = dom('<div class="jodit_filebrowser_loader"><i class="jodit_icon-loader"></i></div>')
             self.browser = dom('<div class="jodit_filebrowser non-selected">' +
                 (self.options.showFoldersPanel ? '<div class="jodit_filebrowser_tree"></div>' : '') +
                 '<div class="jodit_filebrowser_files"></div>' +
                 '<div class="jodit_filebrowser_status"></div>' +
              '</div>');
-            self.statusline = self.browser.querySelector('.jodit_filebrowser_status');
+
+            self.status_line = self.browser.querySelector('.jodit_filebrowser_status');
 
 
 
@@ -468,10 +472,10 @@ export default class FileBrowser extends Component {
                 }, 300));
 
             self.__on(self.buttons.remove, 'click', () => {
-                if ($$('>a.active', self.files).length) {
+                if (this.__getActiveElements().length) {
                     Confirm(editor.i18n('Are you shure?'), '', (yes) => {
                         if (yes) {
-                            $$('>a.active', self.files).forEach((a) => {
+                            this.__getActiveElements().forEach((a) => {
                                 self.remove(self.currentPath, a.dataset.name);
                             });
                             self.someSelectedWasChanged();
@@ -482,7 +486,7 @@ export default class FileBrowser extends Component {
             });
 
             self.__on(self.buttons.edit, 'click', () => {
-                let files = $$('>a.active', self.files);
+                let files = this.__getActiveElements();
                 if (files.length === 1) {
                     self.openImageEditor(files[0].getAttribute('href'), files[0].dataset.name);
                 }
@@ -662,7 +666,7 @@ export default class FileBrowser extends Component {
                 })
                 .__on(self.files, 'click', (e) => {
                     if (!ctrlKey(e)) {
-                        $$('>a', self.files).forEach((elm: HTMLElement) => {
+                        this.__getActiveElements().forEach((elm: HTMLElement) => {
                             elm.classList.remove('active');
                         });
                         self.someSelectedWasChanged();
@@ -670,7 +674,7 @@ export default class FileBrowser extends Component {
                 })
                 .__on(self.files, 'click', 'a', function (this: HTMLElement,e) {
                     if (!ctrlKey(e)) {
-                        $$('>a', self.files).forEach((elm: HTMLElement) => {
+                        self.__getActiveElements().forEach((elm: HTMLElement) => {
                             elm.classList.remove('active');
                         })
                     }
@@ -702,14 +706,14 @@ export default class FileBrowser extends Component {
 
             this.dialog.setSize(this.options.width, this.options.height);
 
-            this.options.getfilebyurl = {...this.options.ajax, ...this.options.getfilebyurl};
-            this.options.crop = {...this.options.ajax, ...this.options.crop};
-            this.options.resize = {...this.options.ajax, ...this.options.resize};
-            this.options.create = {...this.options.ajax, ...this.options.create};
-            this.options.move = {...this.options.ajax, ...this.options.move};
-            this.options.remove = {...this.options.ajax, ...this.options.remove};
-            this.options.folder = {...this.options.ajax, ...this.options.folder};
-            this.options.items = {...this.options.ajax, ...this.options.items};
+            this.options.getfilebyurl = extend(true, {}, this.options.ajax, this.options.getfilebyurl);
+            this.options.crop = extend(true, {}, this.options.ajax, this.options.crop);
+            this.options.resize = extend(true, {}, this.options.ajax, this.options.resize);
+            this.options.create = extend(true, {}, this.options.ajax, this.options.create);
+            this.options.move = extend(true, {}, this.options.ajax, this.options.move);
+            this.options.remove = extend(true, {}, this.options.ajax, this.options.remove);
+            this.options.folder = extend(true, {}, this.options.ajax, this.options.folder);
+            this.options.items = extend(true, {}, this.options.ajax, this.options.items);
         }
 
         view = 'tiles';
@@ -745,18 +749,18 @@ export default class FileBrowser extends Component {
          */
         status (msg, success?: boolean) {
             clearTimeout(this.statustimer);
-            this.statusline
+            this.status_line
                 .classList.remove('success')
-            this.statusline
+            this.status_line
                 .classList.add('active')
-            this.statusline.innerHTML = msg
+            this.status_line.innerHTML = msg
 
             if (success) {
-                this.statusline
+                this.status_line
                     .classList.add('success');
             }
             this.statustimer = setTimeout(() => {
-                this.statusline
+                this.status_line
                     .classList.remove('active')
             }, this.options.howLongShowMsg);
         }
@@ -815,18 +819,24 @@ export default class FileBrowser extends Component {
             this.currentItemsBaseurl = baseurl;
         }
 
+
+        private __getActiveElements(): HTMLElement[] {
+            return $$(':scope>a.active', this.files)
+        }
+
         someSelectedWasChanged() {
-            let actives = $$('>a.active', this.files);
+            let actives = this.__getActiveElements();
             this.buttons.remove.classList.toggle('disabled', !actives.length);
             this.buttons.select.classList.toggle('disabled', !actives.length);
             this.buttons.edit.classList.toggle('disabled', actives.length !== 1);
         }
 
-        xhr2: XMLHttpRequest;
+        __ajax2: Ajax;
+
         send(name, success, error) {
-            let xhr, opts = {...this.options[name] !== undefined ? this.options[name] : this.options.ajax};
+            let xhr, opts = extend(true, {}, this.options.ajax, this.options[name] !== undefined ? this.options[name] : this.options.ajax);
             opts.data = opts.prepareData(opts.data);
-            xhr = ajax(opts);
+            xhr = new Ajax(this.parent, opts);
             xhr.done(success);
             xhr.error(error);
             return xhr;
@@ -866,21 +876,21 @@ export default class FileBrowser extends Component {
                 this.files.classList.add('active');
                 this.files.appendChild(this.loader.cloneNode(true));
 
-                if (this.xhr2.abort) {
-                    this.xhr2.abort();
+                if (this.__ajax2 && this.__ajax2.abort) {
+                    this.__ajax2.abort();
                 }
-                this.xhr2 = this.send('items', (resp) => {
+                this.__ajax2 = this.send('items', (resp) => {
                     let data = this.options.items.process.call(this, resp);
                     this.currentBaseUrl = data.baseurl;
                     this.generateItemsBox(data.files, data.path, data.baseurl);
                     this.someSelectedWasChanged();
-                }, (error) => {
+                }, () => {
                     this.status(this.parent.i18n('Error on load list'));
                 });
             }
         }
 
-        xhr: XMLHttpRequest;
+        __ajax: Ajax;
         loadTree(path?: string) {
             if (path) {
                 this.options.folder.data.path = path;
@@ -896,10 +906,10 @@ export default class FileBrowser extends Component {
                     this.tree.classList.add('active');
                     this.tree.innerHTML = '';
                     this.tree.appendChild(this.loader.cloneNode(true));
-                    if (this.xhr.abort) {
-                        this.xhr.abort();
+                    if (this.__ajax && this.__ajax.abort) {
+                        this.__ajax.abort();
                     }
-                    this.xhr = this.send('folder', (resp) => {
+                    this.__ajax = this.send('folder', (resp) => {
                         let data = this.options.folder.process.call(this, resp);
                         this.currentPath = data.path;
                         this.generateFolderTree(data.files, data.path);
@@ -988,7 +998,7 @@ export default class FileBrowser extends Component {
         }
         onSelect(callback) {
             return () => {
-                let actives = $$('>a.active', this.files);
+                let actives = this.__getActiveElements();
                 if (actives.length) {
                     let urls = [];
                     actives.forEach((elm) => {
@@ -1024,7 +1034,7 @@ export default class FileBrowser extends Component {
             if (this.options.items.url) {
                 this
                     .__off(this.files, 'dblclick')
-                    .__on(this.files, 'dblclick', '>a', this.onSelect(callback))
+                    .__on(this.files, 'dblclick', ':scope>a', this.onSelect(callback))
 
                 this
                     .__off(this.buttons.select, 'click')

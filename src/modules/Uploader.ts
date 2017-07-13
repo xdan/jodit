@@ -1,7 +1,8 @@
 import Jodit from '../jodit';
 import Component from './Component';
+import Ajax from './Ajax';
 import config from '../config'
-import {ajax, browser, isPlainObject} from "./Helpers";
+import {browser, isPlainObject} from "./Helpers";
 /**
  * Module for processing download documents and images by Drag and Drop
  *
@@ -162,8 +163,9 @@ export default class Uploader extends Component {
         return data;
     }
 
+    private __ajax: Ajax;
     send(data, success) {
-        ajax({
+        this.__ajax = new Ajax(this.parent, {
             xhr: () => {
                 let xhr = new XMLHttpRequest();
                 if (window['FormData'] !== undefined) {
@@ -196,7 +198,7 @@ export default class Uploader extends Component {
             dataType: this.options.format  || 'json',
             error: this.options.error.bind(this.parent),
             success: success
-        });
+        })
     }
 
     sendFiles(files, handlerSuccess, handlerError, process?: Function) {

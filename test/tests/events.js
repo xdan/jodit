@@ -5,6 +5,8 @@ describe('Jodit Events system Tests', function() {
                 work = false,
                 div = document.createElement('button');
 
+            document.body.appendChild(div)
+
             editor.__on(div, 'click', function () {
                 work = true;
             })
@@ -12,11 +14,15 @@ describe('Jodit Events system Tests', function() {
             simulateEvent('click', 0, div);
 
             expect(work).to.be.equal(true);
+
+            div.parentNode.removeChild(div)
         });
         it('Create simple event handler on some DOM element on few events', function () {
             var editor = new Jodit(appendTestArea()),
                 work = 0,
                 div = document.createElement('button');
+
+            document.body.appendChild(div)
 
             editor.__on(div, 'click dblclick keydown', function () {
                 work++;
@@ -27,12 +33,15 @@ describe('Jodit Events system Tests', function() {
             simulateEvent('keydown', 0, div);
 
             expect(work).to.be.equal(3);
+            div.parentNode.removeChild(div)
         });
         it('Create simple event handler on all DOM elements which will be inside some starting DOm element', function () {
             var editor = new Jodit(appendTestArea()),
                 work = 0,
                 div = document.createElement('button'),
                 a = document.createElement('a');
+
+            document.body.appendChild(div)
 
             editor.__on(div, 'click', 'a.active', function () {
                 work++;
@@ -50,11 +59,15 @@ describe('Jodit Events system Tests', function() {
             simulateEvent('click', 0, a);
             expect(work).to.be.equal(1);
 
+            div.parentNode.removeChild(div)
+
         });
-        it('Add and remove event handler', () => {
+        it('Add and remove event handler', function () {
             var editor = new Jodit(appendTestArea()),
                 work = 0,
                 div = document.createElement('button');
+
+            document.body.appendChild(div)
 
             editor.__on(div, 'click', function () {
                 work++;
@@ -67,12 +80,50 @@ describe('Jodit Events system Tests', function() {
 
             simulateEvent('click', 0, div);
             expect(work).to.be.equal(1);
+
+            div.parentNode.removeChild(div)
         })
-        it('Add event handler for several elements', () => {
+        it('Add a few handlers for several evens and remove all handlers', function () {
+            var editor = new Jodit(appendTestArea()),
+                work = 0,
+                div = document.createElement('button');
+
+            document.body.appendChild(div)
+
+            editor.__on(div, 'click', function () {
+                work++;
+            })
+            editor.__on(div, 'dblclick', function () {
+                work++;
+            })
+            editor.__on(div, 'mousedown', function () {
+                work++;
+            })
+
+            simulateEvent('click', 0, div);
+            simulateEvent('dblclick', 0, div);
+            simulateEvent('mousedown', 0, div);
+
+            expect(work).to.be.equal(3);
+
+            editor.__off(div)
+
+            simulateEvent('click', 0, div);
+            simulateEvent('dblclick', 0, div);
+            simulateEvent('mousedown', 0, div);
+
+            expect(work).to.be.equal(3);
+
+            div.parentNode.removeChild(div)
+        })
+        it('Add event handler for several elements', function () {
             var editor = new Jodit(appendTestArea()),
                 work = '',
                 div1 = document.createElement('button'),
                 div2 = document.createElement('button');
+
+            document.body.appendChild(div1)
+            document.body.appendChild(div2)
 
             div1.innerText = 'test1';
             div2.innerText = 'test2';
@@ -85,11 +136,16 @@ describe('Jodit Events system Tests', function() {
             editor.__fire(div2, 'click');
 
             expect(work).to.be.equal('test1test2');
+
+            div1.parentNode.removeChild(div1)
+            div2.parentNode.removeChild(div2)
         })
-        it('Fire trigger', () => {
+        it('Fire trigger', function () {
             var editor = new Jodit(appendTestArea()),
                 work = 0,
                 div = document.createElement('button');
+
+            document.body.appendChild(div)
 
             editor.__on(div, 'click', function () {
                 work++;
@@ -97,6 +153,8 @@ describe('Jodit Events system Tests', function() {
 
             editor.__fire(div, 'click');
             expect(work).to.be.equal(1);
+
+            div.parentNode.removeChild(div)
         })
     })
     describe('Jodit Events', function () {

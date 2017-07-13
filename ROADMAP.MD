@@ -4,3 +4,4 @@
 - [x] Disable buttons when mode was changed
 - [x] Restore copy/paste plugin. Move setting onpaste  handler to this plugin
 - [ ] Restore FileBrowser
+- [ ] Auto choose language

@@ -744,5 +744,3 @@ export const css = (element: Element, key: string|object, value?: string|number)
 export const asArray = (a): Array<any> => (
     Array.isArray(a) ? a : [a]
 )
-
-export const ajax = (opts) => {}

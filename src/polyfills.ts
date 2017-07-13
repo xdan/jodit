@@ -1,4 +1,6 @@
 import 'classlist-polyfill';
+import 'promise-polyfill';
+
 
 (function(e){
     e.matches || (e.matches = e['matchesSelector'] !== undefined ? e['matchesSelector'] : function (selector) {

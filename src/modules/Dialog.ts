@@ -608,7 +608,8 @@ export const Promt = (msg: string, title: string|Function, callback: Function, p
     $label.innerHTML = msg;
     $div.appendChild($label);
     $div.appendChild($input);
-    $cancel = dom('<a href="javascript:void(0)" style="float:right;" class="jodit_button">' + Toolbar.getIcon('cancel') + '<span>' + Jodit.prototype.i18n('Cancel') + '</span></a>').on('click', dialog.close);
+    $cancel = dom('<a href="javascript:void(0)" style="float:right;" class="jodit_button">' + Toolbar.getIcon('cancel') + '<span>' + Jodit.prototype.i18n('Cancel') + '</span></a>');
+    $cancel.addEventListener('click', dialog.close, false);
 
     $ok = dom('<a href="javascript:void(0)" style="float:left;" class="jodit_button">' + Toolbar.getIcon('check') + '<span>' + Jodit.prototype.i18n('Ok') + '</span></a>');
 
@@ -620,7 +621,7 @@ export const Promt = (msg: string, title: string|Function, callback: Function, p
 
     $ok.addEventListener('click', onclick);
 
-    $div.on('submit', () => {
+    $div.addEventListener('submit', () => {
         onclick();
         return false;
     });

@@ -1,0 +1,37 @@
+@import (reference) "../variables";
+.jodit_draganddrop_file_box, .jodit_uploadfile_button{
+    position:relative;
+    width: 220px;
+
+    border: dashed 1px @border_drag;
+    padding: 25px 0;
+    margin: 10px 0px;
+    text-align: center;
+    overflow:hidden;
+
+    &:hover{
+        background-color: @button_bg_hover;
+    }
+
+    input {
+        cursor: pointer;
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        bottom: 0px;
+        bottom:0px;
+        right:0px;
+        margin: 0px;
+        padding:0;
+        opacity: 0;
+        font-size: 400px;
+    }
+}
+
+@media (max-width: @medium) {
+    .jodit_draganddrop_file_box {
+        width: auto;
+        max-width: 100%;
+        min-width: 120px;
+    }
+}
