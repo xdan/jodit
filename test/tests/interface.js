@@ -385,6 +385,21 @@ describe('Test interface', function() {
                 expect(editor.container.querySelectorAll('.jodit_toolbar_btn-undo.jodit_disabled').length).to.equal(1);
                 expect(editor.getEditorValue()).to.equal('top');
             });
+            it('Full size button', function() {
+                var editor = new Jodit('#table_editor_interface', {
+                    observer: {
+                        timeout: 0 // disable delay
+                    }
+                });
+
+                simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-fullsize'));
+
+                let node = editor.container.parentNode;
+                while (node && !(node instanceof Document)) {
+                    expect(node.classList.contains('jodit_fullsize_box')).to.equal(true);
+                    node = node.parentNode;
+                }
+            });
         });
         describe('Commands', function () {
             it('Click on Source button should change current mode', function() {

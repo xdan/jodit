@@ -80,6 +80,8 @@ export default class Jodit extends Component{
 
     helper: any;
 
+    toolbar: Toolbar;
+
     private __modulesInstances = {};
 
     getInstance(moduleName, options?: object) {
@@ -146,7 +148,9 @@ export default class Jodit extends Component{
         this.events = this.getInstance('Events');
         this.node = this.getInstance('Noder');
 
-        this.__createMainToolbar();
+        this.toolbar = new Toolbar(this);
+        this.toolbar.build(this.options.buttons, this.container);
+
         this.__createEditor();
 
         this.helper = helper;
@@ -188,10 +192,6 @@ export default class Jodit extends Component{
         }
     }
 
-    __createMainToolbar() {
-        let toolbar = new Toolbar(this);
-        toolbar.build(this.options.buttons, this.container);
-    }
 
     /**
      * Create main DIV element and replace source textarea

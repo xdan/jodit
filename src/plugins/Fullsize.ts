@@ -1,0 +1,87 @@
+import Jodit from '../jodit';
+import config from '../config'
+import {css, dom} from "../modules/Helpers";
+import Toolbar from "../modules/Toolbar";
+
+/**
+ * Fullsize plugin
+ *
+ * @module Fullsize
+ */
+
+/**
+* @prop {boolean} fullsize=false true Editor to open to full screen
+* @prop {boolean} globalFullsize=true if true, after `fullsize` -  all editors element get jodit_fullsize_box class (z-index: 100000 !important;)
+* @memberof Jodit.defaultOptions
+* @example
+* var editor = new jodit({
+*     fullsize: true // fullsize editor
+* });
+* @example
+* var editor = new Jodit();
+* editor.events.fire('toggleFullsize');
+* editor.events.fire('toggleFullsize', [true]); // fullsize
+* editor.events.fire('toggleFullsize', [false]); // usual mode
+*/
+config.fullsize = false;
+config.globalFullsize = true;
+
+
+Jodit.plugins.fullsize = function (editor: Jodit) {
+    let shown = false,
+        resize  = () => {
+            if (shown) {
+                css(editor.container, {
+                    height: window.innerHeight,
+                    width: window.innerWidth
+                });
+            } else {
+                css(editor.container, {
+                    height: null,
+                    width: null
+                });
+            }
+        },
+        toggle = (condition) => {
+            if (condition === undefined) {
+                condition = !editor.container.classList.contains('jodit_fullsize');
+            }
+
+            shown = condition;
+
+            editor.container.classList.toggle('jodit_fullsize', condition);
+
+            if (editor.toolbar) {
+                css(editor.toolbar.container, 'width', 'auto');
+                let icon = dom(Toolbar.getIcon(condition ? 'shrink' : 'fullsize')),
+                    a = editor.toolbar.container.querySelector('.jodit_toolbar_btn-fullsize a');
+                icon.classList.add('jodit_icon');
+                a.innerHTML = '';
+                a.appendChild(icon);
+            }
+
+            if (editor.options.globalFullsize) {
+                let node = editor.container.parentNode;
+                while (node && !(node instanceof Document)) {
+                    node.classList.toggle('jodit_fullsize_box', condition);
+                    node = node.parentNode;
+                }
+                resize();
+            }
+
+            editor.events.fire('afterResize');
+        };
+
+    if (editor.options.fullsize) {
+        toggle(true);
+    }
+
+    if (editor.options.globalFullsize) {
+        editor.__on(window, 'resize', resize);
+    }
+
+    editor.events.on('toggleFullsize', toggle);
+    editor.events.on('beforeDestruct', () => {
+        toggle(false);
+    });
+};

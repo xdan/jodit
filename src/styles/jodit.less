@@ -1,9 +1,13 @@
 @import (reference) "variables";
 
 .jodit_container {
+   background: #fff;
   .jodit_workplace {
     border: 1px solid @color-border;
     position: relative;
+    height: ~'calc(100% - 23px)';
+    overflow: auto;
+
     .jodit_wysiwyg {
       margin : 0;
       padding: @padding-default;
