@@ -10,7 +10,8 @@ import Toolbar from "./Toolbar";
  */
 export default class ContextMenu extends Component {
     context: HTMLElement;
-    init() {
+    constructor(editor: Jodit) {
+        super(editor);
         this.context = dom('<div class="jodit_context_menu"></div>');
         document.body.appendChild(this.context);
     }
@@ -20,11 +21,11 @@ export default class ContextMenu extends Component {
      *
      * @method hide
      */
-    hide() {
+    hide = () => {
         this.context.classList.remove('jodit_context_menu-show');
         window
             .removeEventListener('mouseup', this.hide);
-    }
+    };
 
     /**
      * Generate and show context menu

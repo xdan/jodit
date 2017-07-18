@@ -2,7 +2,7 @@ import Jodit from '../jodit';
 import Component from './Component';
 import Ajax from './Ajax';
 import config from '../config'
-import {browser, isPlainObject} from "./Helpers";
+import {browser, extend, isPlainObject} from "./Helpers";
 /**
  * Module for processing download documents and images by Drag and Drop
  *
@@ -20,8 +20,6 @@ config.enableDragAndDropFileToEditor = true;
  * @property {string} uploader.url Point of entry for file uploader
  * @property {string} uploader.format='json' The format of the received data
  * @property {string} uploader.headers=null An object of additional header key/value pairs to send along with requests using the XMLHttpRequest transport. See {@link module:Dom.defaultAjaxOptions|Dom.defaultAjaxOptions}
- * @property {string} uploader.filesVariableName='files' Name for request variable. This name very important for server side. if filesVariableName='images' you need expect $_FILES['images']
- * @property {string} uploader.pathVariableName='path' Name for request variable. This variable will content relative path for uploading image
  * @property {function} uploader.prepareData Before send file will called this function. First argument it gets [new FormData ()](https://developer.mozilla.org/en/docs/Web/API/FormData), you can use this if you want add some POST parameter.
  * @property {plainobject|false} uploader.data=false POST parameters.
  * @example
@@ -34,10 +32,10 @@ config.enableDragAndDropFileToEditor = true;
  *      }
  * });
  * @property {function} uploader.isSuccess Check if received data was positive
- * @property {function} uploader.getMsg If you need display a message use this
+ * @property {function} uploader.getMessage If you need display a message use this
  * @property {function(data)} uploader.process The method of processing data received from the server. Must return this PlainObject format `{
  * {
- *     files: resp.files || [], // {array} The names of uploaded files. Field name uploader.filesVariableName
+ *     files: resp.files || [], // {array} The names of uploaded files.
  *     path: resp.path, // {string} Real relative path
  *     baseurl: resp.baseurl, // {string} Base url for filebrowser
  *     error: resp.error, // {int}
@@ -56,8 +54,6 @@ config.enableDragAndDropFileToEditor = true;
  *         headers: {
  *             'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
  *         },
- *         pathVariableName: 'path',
- *         filesVariableName: 'files',
  *         prepareData: function (data) {
  *             data.append('id', 24); //
  *         },
@@ -67,12 +63,12 @@ config.enableDragAndDropFileToEditor = true;
  *         isSuccess: function (resp) {
  *             return !resp.error;
  *         },
- *         getMsg: function (resp) {
+ *         getMessage: function (resp) {
  *             return resp.msg;
  *         },
  *         process: function (resp) {
  *              return {
- *                  files: resp[this.options.uploader.filesVariableName] || [],
+ *                  files: resp.files || [],
  *                  path: resp.path,
  *                  baseurl: resp.baseurl,
  *                  error: resp.error,
@@ -80,7 +76,7 @@ config.enableDragAndDropFileToEditor = true;
  *              };
  *         },
  *        defaultHandlerSuccess: function (data, resp) {
- *            var i, field = this.options.uploader.filesVariableName;
+ *            var i, field = 'files';
  *            if (data[field] && data[field].length) {
  *                for (i = 0; i < data[field].length; i += 1) {
  *                    this.selection.insertImage(data.baseurl + data[field][i]);
@@ -88,59 +84,78 @@ config.enableDragAndDropFileToEditor = true;
  *            }
  *         },
  *         error: function (e) {
- *             this.events.fire('{@link event:errorPopap|errorPopap}', [e.getMessage(), 'error', 4000])
+ *             this.events.fire('{@link event:errorMessage|errorMessage}', [e.getMessage(), 'error', 4000])
  *         }
  *     }
  * })
  */
+type UploaderAnswer = {
+    success: boolean,
+    time: string,
+    data: {
+        messages?: string[],
+        files?: string[],
+        path?: string,
+        baseurl?: string,
+    }
+};
+
 config.uploader = {
     url: '',
     format: 'json',
-    pathVariableName: 'path',
-    filesVariableName: 'files',
-    data: false,
 
-    prepareData: function (formdata) {
-        return formdata;
+    prepareData: function (this: Uploader, formData: FormData) {
+        return formData;
     },
-    isSuccess: function (resp) {
-        return !resp.error;
+
+    isSuccess: function (this: Uploader, resp: UploaderAnswer) {
+        return resp.success;
     },
-    getMsg: function (resp) {
-        return resp.msg.join !== undefined ? resp.msg.join(' ') : resp.msg;
+
+    getMessage: function (this: Uploader, resp: UploaderAnswer) {
+        return (resp.data.messages!== undefined && Array.isArray(resp.data.messages)) ? resp.data.messages.join(' ') : '';
     },
-    process: function (resp) {
+
+    process: function (this: Uploader, resp: UploaderAnswer) {
         return {
-            files: resp[this.options.uploader.filesVariableName] || [],
-            path: resp.path,
-            baseurl: resp.baseurl,
-            error: resp.error,
-            msg: resp.msg
+            files: resp.data.files || [],
+            path: resp.data.path || '',
+            baseurl: resp.data.baseurl || '',
         };
     },
-    error: function (e) {
-        this.events.fire('errorPopap', [e.getMessage(), 'error', 4000]);
+
+    error: function (this: Uploader, e: Error) {
+        this.parent.events.fire('errorMessage', [e.message, 'error', 4000]);
     },
-    defaultHandlerSuccess: function (data, resp) {
-        var i, field = this.options.uploader.filesVariableName;
-        if (data[field] && data[field].length) {
-            for (i = 0; i < data[field].length; i += 1) {
-                this.selection.insertImage(data.baseurl + data[field][i]);
-            }
+
+    defaultHandlerSuccess:function (this: Uploader, data, resp: UploaderAnswer) {
+        if (data.files && data.files.length) {
+            data.files.forEach((image) => {
+                this.parent.selection.insertImage(data.baseurl + image);
+            })
         }
     },
-    defaultHandlerError: function (resp) {
-        this.events.fire('errorPopap', [this.options.uploader.getMsg(resp)]);
+
+    defaultHandlerError: function (this: Uploader, resp: UploaderAnswer) {
+        this.parent.events.fire('errorMessage', [this.options.getMessage(resp)]);
     }
 }
 
 export default class Uploader extends Component {
-    path = ''
+    path = '';
+    source = 'default';
+
     options;
-    constructor(editor, options) {
+    constructor(editor: Jodit, options) {
         super(editor);
-        this.options = options || this.parent.options.uploader
+        this.options = extend(true, {}, config.uploader, this.parent.options.uploader, options);
+        if (this.parent.editor) {
+            if (this.parent.options.enableDragAndDropFileToEditor && this.parent.options.uploader && this.parent.options.uploader.url) {
+                this.bind(this.parent.editor);
+            }
+        }
     }
+
     buildData(data) {
         if (window['FormData'] !== undefined) {
             if (data instanceof FormData) {
@@ -164,6 +179,7 @@ export default class Uploader extends Component {
     }
 
     private __ajax: Ajax;
+
     send(data, success) {
         this.__ajax = new Ajax(this.parent, {
             xhr: () => {
@@ -188,54 +204,64 @@ export default class Uploader extends Component {
                 return xhr;
             },
             type: 'POST',
-            enctype: (window['FormData'] !== undefined && typeof data !== 'string') ? 'multipart/form-data' : 'application/x-www-form-urlencoded',
             data: this.buildData(data),
             url: this.options.url,
             headers: this.options.headers,
-            cache: false,
+
             contentType: (window['FormData'] !== undefined && typeof data !== 'string') ? false : 'application/x-www-form-urlencoded; charset=UTF-8',
-            processData: window['FormData'] === undefined || typeof data === 'string',
             dataType: this.options.format  || 'json',
-            error: this.options.error.bind(this.parent),
-            success: success
-        })
+        });
+
+        this.__ajax.send()
+            .then(success)
+            .catch(error => {
+                this.options.error.call(this, error);
+            });
     }
 
     sendFiles(files, handlerSuccess, handlerError, process?: Function) {
-        let len = files.length, i, form, extension, keys;
+        let len = files.length,
+            i,
+            form,
+            extension,
+            keys,
+            uploader = this;
+
         if (!len) {
             return false;
         }
+
         form = new FormData();
 
-        form.append(this.options.pathVariableName, this.path);
+        form.append('path', uploader.path);
+        form.append('source', uploader.source);
 
         for (i = 0; i < len; i += 1) {
             extension = files[i].type.match(/\/([a-z0-9]+)/i)[1].toLowerCase();
-            form.append(this.options.filesVariableName  + "[" + i + "]", files[i], files[i].name || Math.random().toString().replace('.', '') + '.' + extension);
+            form.append("files[" + i + "]", files[i], files[i].name || Math.random().toString().replace('.', '') + '.' + extension);
         }
 
-        this.options.prepareData(form);
+        uploader.options.prepareData(form);
 
         if (process) {
             process(form);
         }
 
-        if (this.options.data && isPlainObject(this.options.data)) {
-            keys = Object.keys(this.options.data);
+        if (uploader.options.data && isPlainObject(uploader.options.data)) {
+            keys = Object.keys(uploader.options.data);
             for (i = 0; i < keys.length; i += 1) {
-                form.append(keys[i], this.options.data[keys[i]]);
+                form.append(keys[i], uploader.options.data[keys[i]]);
             }
         }
 
-        this.send(form, function (resp) {
-            if (this.options.isSuccess.call(parent, resp)) {
-                if (typeof (handlerSuccess || this.options.defaultHandlerSuccess) === 'function') {
-                    (handlerSuccess || this.options.defaultHandlerSuccess).call(parent, this.options.process.call(parent, resp), resp);
+        uploader.send(form, (resp) => {
+            if (this.options.isSuccess.call(uploader, resp)) {
+                if (typeof (handlerSuccess || uploader.options.defaultHandlerSuccess) === 'function') {
+                    (handlerSuccess || uploader.options.defaultHandlerSuccess).call(uploader, uploader.options.process.call(uploader, resp), resp);
                 }
             } else {
-                if (typeof (handlerError || this.options.defaultHandlerError)) {
-                    (handlerError || this.options.defaultHandlerError).call(parent, resp);
+                if (typeof (handlerError || uploader.options.defaultHandlerError)) {
+                    (handlerError || uploader.options.defaultHandlerError).call(uploader, resp);
                     return;
                 }
             }
@@ -244,10 +270,20 @@ export default class Uploader extends Component {
     /**
      * It sets the path for uploading files
      * @method setPath
-     * @param {string} newpath
+     * @param {string} path
      */
-    setPath(newpath) {
-        this.path = newpath;
+    setPath(path: string) {
+        this.path = path;
+    }
+
+    /**
+     * It sets the source for connector
+     *
+     * @method setSource
+     * @param {string} source
+     */
+    setSource(source: string) {
+        this.source = source;
     }
 
     dataURItoBlob(dataURI) {
@@ -339,20 +375,20 @@ export default class Uploader extends Component {
             })
             .__on(form, "drop", (event) => {
                 form.classList.remove('draghover');
-                if (event.originalEvent.dataTransfer && event.originalEvent.dataTransfer.files && event.originalEvent.dataTransfer.files.length) {
+                if (event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files.length) {
                     event.preventDefault();
-                    this.sendFiles(event.originalEvent.dataTransfer.files, handlerSuccess, handlerError);
-                } else if (event.originalEvent.dataTransfer && event.originalEvent.dataTransfer.getData('text/plain') && event.originalEvent.dataTransfer.getData('text/plain') !== '-' && form === this.parent.editor) {
+                    this.sendFiles(event.dataTransfer.files, handlerSuccess, handlerError);
+                } else if (event.dataTransfer && event.dataTransfer.getData('text/plain') && event.dataTransfer.getData('text/plain') !== '-' && form === this.parent.editor) {
                     event.preventDefault();
                     event.stopPropagation();
-                    if (!this.parent.selection.insertCursorAtPoint(event.originalEvent.clientX, event.originalEvent.clientY)) {
+                    if (!this.parent.selection.insertCursorAtPoint(event.clientX, event.clientY)) {
                         return false;
                     }
                     if (handlerSuccess || this.options.defaultHandlerSuccess) {
-                        let data = {baseurl: ''};
-                        data[this.parent.options.uploader.filesVariableName] = [event.originalEvent.dataTransfer.getData('text/plain')];
+                        let data = {baseurl: '', files: []};
+                        data.files = [event.dataTransfer.getData('text/plain')];
 
-                        (handlerSuccess || this.options.defaultHandlerSuccess).call(parent, data);
+                        (handlerSuccess || this.options.defaultHandlerSuccess).call(this, data);
                     }
                     event.preventDefault();
                 }
@@ -374,27 +410,21 @@ export default class Uploader extends Component {
      * @param {function} [handlerError]
      */
     uploadRemoteImage(url, handlerSuccess?: Function, handlerError?: Function) {
-        this.send({
+        let uploader = this;
+        uploader.send({
             action: 'uploadremote',
             url: url
         }, (resp) => {
-            if (this.options.isSuccess.call(parent, resp)) {
+            if (uploader.options.isSuccess.call(uploader, resp)) {
                 if (typeof handlerSuccess === 'function') {
-                    handlerSuccess.call(parent, resp, this.options.getMsg(resp));
+                    handlerSuccess.call(uploader, resp, uploader.options.getMessage(resp));
                 }
             } else {
-                if (typeof (handlerError || this.options.defaultHandlerError) === 'function') {
-                    (handlerError || this.options.defaultHandlerError).call(this.parent, resp, this.options.getMsg(resp));
+                if (typeof (handlerError || uploader.options.defaultHandlerError) === 'function') {
+                    (handlerError || this.options.defaultHandlerError).call(uploader, resp, uploader.options.getMessage(resp));
                     return;
                 }
             }
         });
     }
-    init() {
-        if (this.parent.editor) {
-            if (this.parent.options.enableDragAndDropFileToEditor && this.parent.options.uploader && this.parent.options.uploader.url) {
-                this.bind(this.parent.editor);
-            }
-        }
-    };
 }

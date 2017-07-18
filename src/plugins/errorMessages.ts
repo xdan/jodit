@@ -1,0 +1,65 @@
+import Jodit from '../jodit';
+import config from '../config'
+import {css, dom} from "../modules/Helpers";
+
+/**
+* @prop {boolean} showMessageErrors=true Use plugin {@link module:ErrorMessages|Errormessages}
+* @memberof Jodit.defaultOptions
+*/
+config.showMessageErrors = true;
+/**
+* @prop {int} showMessageErrorTime=3000 How long show messages
+* @memberof Jodit.defaultOptions
+*/
+config.showMessageErrorTime = 3000;
+
+/**
+* @prop {int} showMessageErrorOffsetPx=3 Offset fo message
+* @memberof Jodit.defaultOptions
+*/
+config.showMessageErrorOffsetPx = 3;
+
+/**
+ * Plugin to display pop-up messages in the lower right corner of the editor
+ *
+ * @module ErrorMessages
+ */
+Jodit.plugins.errorMessages = function (editor: Jodit) {
+    if (editor.options.showMessageErrors) {
+        let messagesBox = dom('<div class="jodit_error_box_for_messages"></div>'),
+            height,
+            recalcOffsets = function () {
+                height = 5;
+                [].slice.call(messagesBox.childNodes).forEach(function (elm) {
+                    css(messagesBox, 'bottom', height + 'px');
+                    height += elm.offsetWidth + editor.options.showMessageErrorOffsetPx;
+                });
+            };
+        editor.workplace.append(messagesBox);
+
+        /**
+         * Вывести всплывающее сообщение внизу редактора
+         *
+         * @event errorMessage
+         * @param {string} message  Сообщение
+         * @param {string} className Дополнительный класс собобщения. Допускаются info, error, success
+         * @param {string} timeout Сколько миллисекунд показывать. По умолчанию используется options.showMessageErrorTime = 2000
+         * @example
+         * parent.events.fire('errorMessage', ['Error 123. File has not been upload']);
+         * parent.events.fire('errorMessage', ['You can upload file', 'info', 4000]);
+         * parent.events.fire('errorMessage', ['File was uploaded', 'success', 4000]);
+         */
+        editor.events.on('errorMessage', (message, className, timeout) => {
+            let newmessage = dom('<div class="active ' + (className || '') + '">' + message + '</div>');
+            messagesBox.append(newmessage);
+            recalcOffsets();
+            setTimeout(() => {
+                newmessage.classList.remove('active');
+                setTimeout(() => {
+                    messagesBox.removeChild(newmessage);
+                    recalcOffsets();
+                }, 300);
+            }, timeout || editor.options.showMessageErrorTime);
+        });
+    }
+};

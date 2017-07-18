@@ -1,6 +1,7 @@
 import Jodit from "../jodit"
 import config from '../config'
-import {each} from "./Helpers";
+import {each, extend} from "./Helpers";
+import PseudoPromise from "./PseudoPromise";
 import Component from "./Component";
 
 /**
@@ -21,23 +22,28 @@ import Component from "./Component";
 config.defaultAjaxOptions = {
     dataType: 'json',
     type: 'GET',
-    url: '',
-    async: true,
-    data: null,
-    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-    headers: {},
 
-    error: false,
-    success: false,
+    url: '',
+
+    async: true,
+
+    data: null,
+
+    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+
+    headers: {
+        'X-REQUESTED-WITH': 'XMLHttpRequest' // compatible with jQuery
+    },
+
     withCredentials: true,
 
     xhr: () => {
         return new XMLHttpRequest();
     }
-}
+};
 
 export default class Ajax extends Component{
-    buildParams (obj, prefix?: string) {
+    private __buildParams (obj, prefix?: string) {
         if (typeof obj === 'string' || obj instanceof window['FormData']) {
             return obj;
         }
@@ -46,105 +52,79 @@ export default class Ajax extends Component{
             if (obj.hasOwnProperty(p)) {
                 k = prefix ? prefix + "[" + p + "]" : p;
                 v = obj[p];
-                str.push(typeof v === "object" ? this.buildParams(v, k) : encodeURIComponent(k) + "=" + encodeURIComponent(v));
+                str.push(typeof v === "object" ? this.__buildParams(v, k) : encodeURIComponent(k) + "=" + encodeURIComponent(v));
             }
         }
         return str.join("&");
     }
+
     private xhr: XMLHttpRequest;
+
     status: number;
     response: string;
-    is_done = false;
-    is_error = false;
 
-    private __done = function () {};
-    private __error = function () {};
-    private __fire_done() {
-        if (this.is_done && this.__done) {
-            this.__done.call(this.xhr, this.response, this.status);
-        }
-    }
-    private __fire_error(){
-        if (this.is_error && this.__error) {
-            this.__error.call(this.xhr, this.response, this.status);
-        }
-    }
-
-    done(handler){
-        this.__done = handler;
-        this.__fire_done();
-        return this;
-    }
-    error(handler) {
-        this.__error = handler;
-        this.__fire_error();
-        return this;
-    }
-    abort(){
+    abort () {
         this.xhr.abort();
         return this;
     }
-    constructor(editor: Jodit, opt?: any) {
+
+    options: any;
+
+    constructor(editor: Jodit, options?: any) {
         super(editor);
-        let options = {...editor.options.defaultAjaxOptions,  ...opt};
+        this.options = extend(true, {}, config.defaultAjaxOptions, options);
+        this.xhr = this.options.xhr();
+    }
 
-        this.xhr = options.xhr();
+    send(): PseudoPromise {
+        return new PseudoPromise((resolve, reject) => {
+            this.xhr.onabort = reject;
+            this.xhr.onerror = reject;
+            this.xhr.ontimeout = reject;
 
-        this.xhr.onreadystatechange = () => {
-            if (this.xhr.readyState === XMLHttpRequest.DONE) {
-                let resp = this.xhr.responseText;
-                if (this.xhr.status === 200) {
-                    switch (options.dataType) {
-                        case 'json':
-                            try {
-                                resp = JSON.parse(resp);
-                            } catch (e) {
-                                if (options.error && typeof options.error === 'function') {
-                                    options.error(this.xhr,this. xhr.status);
+            this.xhr.onreadystatechange = () => {
+                if (this.xhr.readyState === XMLHttpRequest.DONE) {
+                    let resp = this.xhr.responseText;
+
+                    this.response = resp;
+                    this.status = this.xhr.status;
+
+                    if (this.xhr.status === 200) {
+                        switch (this.options.dataType) {
+                            case 'json':
+                                try {
+                                    resp = JSON.parse(resp);
+                                } catch (e) {
+                                    reject.call(this.xhr, e);
+                                    return;
                                 }
+                                break;
+                        }
 
-                                return;
-                            }
-                            break;
+                        resolve.call(this.xhr, resp);
+                    } else {
+                        reject.call(this.xhr, new Error(this.xhr.statusText || this.parent.i18n('Connection error!')));
                     }
-
-                    if (options.success && typeof options.success === 'function') {
-                        options.success(resp);
-                    }
-
-                    this.response = resp;
-                    this.status = this.xhr.status;
-                    this.is_done = true;
-                    this.__fire_done();
-                } else {
-                    if (options.error && typeof options.error === 'function') {
-                        options.error(this.xhr, this.xhr.status);
-                    }
-                    this.response = resp;
-                    this.status = this.xhr.status;
-                    this.is_error = true;
-                    this.__fire_error();
                 }
+            };
+
+            this.xhr.withCredentials = this.options.withCredentials;
+
+            this.xhr.open(this.options.type, this.options.url, this.options.async);
+
+            if (this.options.contentType) {
+                this.xhr.setRequestHeader("Content-type", this.options.contentType);
             }
-        };
 
-        this.xhr.withCredentials = !!options.withCredentials;
+            if (this.options.headers) {
+                each(this.options.headers, (key, value) => {
+                    this.xhr.setRequestHeader(key, value);
+                });
+            }
 
-        this.xhr.open(options.type, options.url, options.async);
-        this.xhr.setRequestHeader('X-REQUESTED-WITH', 'XMLHttpRequest');
-
-        if (options.contentType) {
-            this.xhr.setRequestHeader("Content-type", options.contentType);
-        }
-
-        if (options.headers) {
-            each(options.headers, (key, value) => {
-                this.xhr.setRequestHeader(key, value);
-            });
-        }
-
-        if (options.data) {
-            this.xhr.send(this.buildParams(options.data));
-        }
+            if (this.options.data) {
+                this.xhr.send(this.__buildParams(this.options.data));
+            }
+        });
     }
 }

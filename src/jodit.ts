@@ -5,9 +5,10 @@ import Selection from './modules/Selection';
 import Toolbar from './modules/Toolbar';
 import Cookie from './modules/Cookie';
 import * as consts from './constants';
-import {extend, inArray, dom, each, htmlentities, browser} from './modules/Helpers';
+import {extend, inArray, dom, each} from './modules/Helpers';
 import * as helper from './modules/Helpers';
 import FileBrowser from "./modules/FileBrowser";
+import Uploader from "./modules/Uploader";
 
 /** Class Jodit. Main class*/
 export default class Jodit extends Component{
@@ -63,6 +64,11 @@ export default class Jodit extends Component{
     selection: Selection;
 
     /**
+     * @property {Uploader} uploader
+     */
+    uploader: Uploader;
+
+    /**
      * @property {FileBrowser} filebrowser
      */
     filebrowser: FileBrowser;
@@ -74,15 +80,30 @@ export default class Jodit extends Component{
 
     helper: any;
 
+    private __modulesInstances = {};
+
+    getInstance(moduleName, options?: object) {
+        if (Jodit.modules[moduleName] === undefined) {
+            throw new Error('Need real module name')
+        }
+
+        if (this.__modulesInstances[moduleName] === undefined) {
+            this.__modulesInstances[moduleName] = new Jodit.modules[moduleName](this, options);
+        }
+
+        return this.__modulesInstances[moduleName];
+    }
+
     /**
      * Create instance of Jodit
      * @constructor
      * @param {string|HTMLElement} element Selector or HTMLElement
+     * @param {object} options Editor's options
      */
     constructor(element, options) {
         super();
 
-        let Options = function () {}
+        let Options = function () {};
         Options.prototype = Jodit.defaultOptions;
 
         this.options = new Options();
@@ -112,17 +133,18 @@ export default class Jodit extends Component{
         this.container.classList.add('jodit_' + (this.options.theme || 'default') + '_theme');
 
         if (this.options.zIndex) {
-            this.container.style.zIndex = parseInt(this.options.zIndex, 10)
+            this.container.style.zIndex = parseInt(this.options.zIndex, 10);
         }
 
         this.workplace = dom('<div class="jodit_workplace" />');
-        this.progress_bar = dom('<div class="jodit_progress_bar" />');
+        this.progress_bar = dom('<div class="jodit_progress_bar"><div></div></div>');
 
-        this.cookie = new Jodit.modules.Cookie(this);
-        this.selection = new Jodit.modules.Selection(this);
-        this.filebrowser = new Jodit.modules.FileBrowser(this);
-        this.events = new Jodit.modules.Events(this);
-        this.node = new Jodit.modules.Noder(this);
+        this.cookie = this.getInstance('Cookie');
+        this.selection = this.getInstance('Selection');
+        this.uploader = this.getInstance('Uploader');
+
+        this.events = this.getInstance('Events');
+        this.node = this.getInstance('Noder');
 
         this.__createMainToolbar();
         this.__createEditor();
@@ -205,12 +227,12 @@ export default class Jodit extends Component{
         this.workplace.appendChild(document.createTextNode("\n"));
 
         this.container.appendChild(this.workplace);
-        this.container.appendChild(this.progress_bar);
+        // this.workplace.appendChild(this.progress_bar);
 
         this.element.parentNode.insertBefore(this.container, this.element);
 
         // hide source element
-        this.element.__defaultStyleDisplay = this.element.style.display
+        this.element.__defaultStyleDisplay = this.element.style.display;
         this.element.style.display = 'none';
     }
 
@@ -339,8 +361,8 @@ export default class Jodit extends Component{
      * @method execCommand
      * @param  {string} command command. It supports all the {@link https://developer.mozilla.org/ru/docs/Web/API/Document/execCommand#commands} and a number of its own
      * for example applyCSSProperty. Comand fontSize receives the second parameter px, formatBlock and can take several options
-     * @param  {boolean|string|int} b
-     * @param  {boolean|string|int} c
+     * @param  {boolean|string|int} second
+     * @param  {boolean|string|int} third
      * @fires beforeCommand
      * @fires afterCommand
      * @example
@@ -456,8 +478,8 @@ export default class Jodit extends Component{
         }
 
         modeClasses.forEach((className) => {
-            this.container.classList.remove(className)
-        })
+            this.container.classList.remove(className);
+        });
         this.container.classList.add(modeClasses[this.mode - 1]);
 
         /**
@@ -496,6 +518,7 @@ export default class Jodit extends Component{
      * @method i18n
      * @memberof module:Jodit
      * @param {string} key Some text
+     * @param {string[]} params Some text
      * @return {string}
      * @example
      * var editor = new Jodit("#redactor", {

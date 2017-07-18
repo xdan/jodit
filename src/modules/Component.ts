@@ -1,4 +1,4 @@
-import Jodit from "../jodit"
+import Jodit from "../jodit";
 export default class Component {
     handlers: {};
     /**
@@ -23,30 +23,39 @@ export default class Component {
         }
     }
 
-    init() {
-        console.warn('Method should be override')
-    }
-
     __scope: any[] = [];
     __scopeNamespace: any = {};
 
     __fire(element: Element, event: string) {
-        let evt = this.doc.createEvent('HTMLEvents')
+        let evt = this.doc.createEvent('HTMLEvents');
         evt.initEvent(event, true, true);
         element.dispatchEvent(evt);
     }
-    __off(element: false|Element|HTMLElement|Array<HTMLElement> = false, event: string|false = false) {
+    __off(element: false|Document|Element|HTMLElement|Window|Array<HTMLElement> = false, event: string|false = false) {
+        if (event && /^\./.test(event)) {
+            let nameSpace = event.replace(/^\./, '');
+            if (this.__scopeNamespace[nameSpace]) {
+                this.__scopeNamespace[nameSpace].forEach((data) => {
+                    (Array.isArray(element) ? element : [element]).forEach((elm) => {
+                        if (data.element && data.element.removeEventListener && (elm === false || elm === data.element)) {
+                            data.element.removeEventListener(data.event, data.callback)
+                        }
+                    });
+                });
+            }
+            return this;
+        }
         this.__scope.forEach((data) => {
             (Array.isArray(element) ? element : [element]).forEach((elm) => {
                 if (data.element && data.element.removeEventListener && (elm === false || elm === data.element) && (event === false || event === data.event)) {
                     data.element.removeEventListener(data.event, data.callback)
                 }
             });
-        })
+        });
         return this;
     }
 
-    classSeparator = /[\s]+/
+    classSeparator = /[\s]+/;
 
     __on(element: Document|Element|HTMLElement|Window|Array<HTMLElement>, event: string, selector: false|string|Function, callback?: Function) {
         if (typeof selector === 'function') {
@@ -68,7 +77,11 @@ export default class Component {
                     let node = event.target;
                     while (node && node !== this) {
                         if (node.matches(selector)) {
-                            return callback.call(node, event);
+                            if (callback.call(node, event) === false) {
+                                event.preventDefault();
+                                return false;
+                            }
+                            return;
                         }
                         node = node.parentNode;
                     }
@@ -82,16 +95,16 @@ export default class Component {
             let eventData = {
                 element,
                 event,
-                callback
-            }
+                callback: temp
+            };
 
             if (this.__scopeNamespace[namespace] === undefined) {
                 this.__scopeNamespace[namespace] = [];
             }
 
-            this.__scopeNamespace[namespace].push(eventData)
+            this.__scopeNamespace[namespace].push(eventData);
             this.__scope.push(eventData);
-        })
+        });
 
         return this;
     }

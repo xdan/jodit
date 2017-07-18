@@ -393,7 +393,7 @@ const config: any = {
      *                 return;
      *             }
      *             this.selection.{@link module:Selection~insertNode|insertNode}(this.enterkey.{@link module:EnterKey~createNewBlock|createNewBlock}(key));
-     *             this.{@link module:Events|events}.fire('{@link event:errorPopap|errorPopap}', ['Was inserted ' + value]);
+     *             this.{@link module:Events|events}.fire('{@link event:errorMessage|errorMessage}', ['Was inserted ' + value]);
      *        },
      *        template: function (key, value) {
      *            return '<div>' + value + '</div>';

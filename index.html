@@ -53,6 +53,9 @@ Its complete documentation, specially designed framework plugins and tons of exa
 
 <script>
     editor = new Jodit('#editor', {
+        uploader: {
+            url: 'http://localhost:8181/index-test.php?action=upload'
+        },
         filebrowser: {
             ajax: {
                 url: 'http://localhost:8181/index-test.php'
@@ -69,8 +72,6 @@ Its complete documentation, specially designed framework plugins and tons of exa
         ])
     });
 
-    (new Jodit.modules.FileBrowser(editor)).open(function () {});
-    console.log(document.querySelectorAll('.jodit_dialog_box.active').length);
     function simpleKeys (original) {
         var newobject = {};
         for(var key in original) {
@@ -95,7 +96,7 @@ Its complete documentation, specially designed framework plugins and tons of exa
     editor.editor.addEventListener('mouseup', callback)
     editor.editor.addEventListener('input', callback)
     editor.events.on('change', callback)
-
+    editor.getInstance('FileBrowser').open();
 
     //    var editor = new Jodit('#table_editor_interface');
 

@@ -1,0 +1,32 @@
+.jodit_btn_group{
+    font-size: 0;
+    vertical-align: middle;
+    input {
+        display: none;
+    }
+    button {
+        float: left;
+        & + button {
+            margin-left: -1px;
+        }
+    }
+
+    input:first-child + button, button:first-child {
+        border-right: 0;
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+    }
+    input:last-child + button, button:last-child {
+        border-left: 0;
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+    }
+
+    &:after{
+        content: '';
+        clear: both;
+        float: none;
+        display: table;
+    }
+
+}

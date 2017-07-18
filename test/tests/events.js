@@ -156,6 +156,64 @@ describe('Jodit Events system Tests', function() {
 
             div.parentNode.removeChild(div)
         })
+        it('Remove handler should remove full handler with selector options', function () {
+            var editor = new Jodit(appendTestArea()),
+                work = 0,
+                a = document.createElement('a'),
+                div = document.createElement('button');
+
+            a.innerText = 'test';
+            div.appendChild(a)
+            document.body.appendChild(div)
+
+            editor.__on(div, 'click', 'a', function () {
+                work++;
+            })
+
+            editor.__fire(div, 'click');
+            expect(work).to.be.equal(0);
+
+
+            editor.__fire(a, 'click');
+            expect(work).to.be.equal(1);
+
+            editor.__off(div, 'click')
+            editor.__fire(a, 'click');
+            expect(work).to.be.equal(1);
+
+            editor.__on(div, 'click', 'a', function () {
+                work++;
+            })
+            editor.__fire(a, 'click');
+            expect(work).to.be.equal(2);
+
+            div.parentNode.removeChild(div)
+        })
+        it('Remove all handlers using event namespace', function () {
+            var editor = new Jodit(appendTestArea()),
+                work = 0,
+                div = document.createElement('button');
+
+            document.body.appendChild(div)
+
+            editor.__on(div, 'click.test', function () {
+                work++;
+            })
+            editor.__on(div, 'mousedown.test', function () {
+                work++;
+            })
+
+            editor.__fire(div, 'click');
+            editor.__fire(div, 'mousedown');
+            expect(work).to.be.equal(2);
+
+            editor.__off(div, '.test')
+            editor.__fire(div, 'click');
+            editor.__fire(div, 'mousedown');
+            expect(work).to.be.equal(2);
+
+            div.parentNode.removeChild(div)
+        })
     })
     describe('Jodit Events', function () {
         it('Event handler', function () {

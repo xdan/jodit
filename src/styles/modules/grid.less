@@ -1,0 +1,57 @@
+@import (reference) "../variables";
+@import (reference) "../mixins";
+
+.jodit_grid {
+  width: 100%;
+  &,
+  [class*='jodit_col-'],
+  &:after {
+    box-sizing: border-box;
+  }
+  .loop(@j: 1, @i: 1, @prefix) when (@j <= 12) {
+    .jodit_col-@{prefix}@{i}-@{j} {
+      width: ((@i/@j) * 100%);
+    }
+    .loop(@j + 1, @i, @prefix);
+  }
+  .gloop(@prefix: '', @i: 1) when (@i <= 12) {
+    &.@{prefix}offset {
+      margin:0 -@padding-default * 1;
+      [class*='jodit_col-'] {
+        padding:0 @padding-default * 1;
+      }
+    }
+    .loop(0, @i, @prefix);
+    .gloop(@prefix, @i + 1);
+  }
+  .gloop(lg-);
+  [class*=jodit_col-] {
+    display: block;
+    float: left;
+    &.right {
+      float: right;
+      text-align: right;
+    }
+  }
+
+  &.inverse [class*=jodit_col-] {
+    float: right;
+    &.left {
+      float: left;
+      text-align: left;
+    }
+  }
+
+
+  @media (max-width: @screen-md) {
+    .gloop(md-);
+  }
+  @media (max-width: @screen-sm) {
+    .gloop(sm-);
+  }
+  @media (max-width: @screen-xs) {
+    .gloop(xs-);
+  }
+
+  .clearfix();
+}

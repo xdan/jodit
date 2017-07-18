@@ -47,7 +47,7 @@
 		box-shadow: 0 10px 20px rgba(0,0,0,0.19),0 6px 6px rgba(0,0,0,0.23);
 		min-width:200px;
 		min-height:100px;
-        @media (max-width: @small) {
+        @media (max-width: @screen-xs) {
             max-width: 100%;
             width: 100% !important;
             height: 100% !important;
@@ -109,6 +109,7 @@
             margin-left: 10px;
             font: 13px Arial;
             height: 28px;
+			vertical-align: middle;
         }
         select.jodit_input {
             width:75px;
@@ -140,7 +141,7 @@
 				line-height: 48px;
 				display: inline-block;
 				vertical-align:top;
-                @media (max-width: @small) {
+                @media (max-width: @screen-xs) {
                     padding-left: 0;
                 }
 			}
@@ -192,7 +193,6 @@
                     &[type=number],
                     &[type=url] {
                         display: block;
-                        width: 100%;
                         height: 34px;
                         padding: 6px 4px;
                         font-size: 14px;
@@ -213,6 +213,9 @@
                             background-color: #f0f0f0;
                             color: #ccc;                           
                         }
+						&:not([class*=col-]) {
+							width: 100%;
+						}
                     }
                 }
                 .jodit_input_group{
@@ -225,9 +228,11 @@
                         height: 34px;
                     }
                     > input {
-                        width: 100%;
                         float: left;
                         margin: 0 !important;
+						&:not([class*=col-]) {
+							width: 100%;
+						}
                     }
                     &-buttons {
                         width:1%;
@@ -303,15 +308,15 @@
 
 			cursor:se-resize;
             
-            width: 0;
-            height: 0;
+            width: 7px;
+            height: 7px;
             display: inline-block;
 
-            border: 8px solid rgba(0, 0, 0, .2);
-            border-left-color: rgba(0, 0, 0, 0) !important;
-            border-top-color: rgba(0, 0, 0, 0) !important;
-             // background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABZJREFUeNpi2r9//38gYGAEESAAEGAAasgJOgzOKCoAAAAASUVORK5CYII=);
-			&:after {
+            //border: 8px solid rgba(0, 0, 0, .2);
+            //border-left-color: rgba(0, 0, 0, 0) !important;
+            //border-top-color: rgba(0, 0, 0, 0) !important;
+            background-image: data-uri("../modules/resizer.png");
+			/*&:after {
                 content: "";
                 display: inline-block;
                 width: 0;
@@ -321,12 +326,12 @@
                 border: 3px solid #fff;
                 border-top: 3px solid rgba(0, 0, 0, 0);
                 border-left: 3px solid rgba(0,0,0,0);
-            }
+            }*/
 			&:hover{
 				border-color: rgba(0, 0, 0, .6);
 			}
 		}
-        @media (max-width: @small) {
+        @media (max-width: @screen-xs) {
             .jodit_dialog_resizer{
                 display: none;
             }
@@ -345,7 +350,7 @@
     }
 }
 
-@media (max-width: @medium) {
+@media (max-width: @screen-sm) {
     .jodit_dialog_header_title,
     .jodit_dialog_header_fullsize,
     .jodit_dialog_header .jodit_input {

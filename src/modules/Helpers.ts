@@ -348,7 +348,7 @@ export const dom = (html: string|HTMLElement, doc = document): any => {
     let div = doc.createElement('div');
     div.innerHTML = html;
 
-    return div.firstChild;
+    return div.firstChild !== div.lastChild ? div : div.firstChild;
 }
 
 /**
@@ -703,6 +703,45 @@ export const  debounce = function (fn, timeout ?: number, invokeAsap?: boolean, 
     };
 }
 
+/**
+ * Throttling enforces a maximum number of times a function can be called over time. As in "execute this function at most once every 100 milliseconds."
+ *
+ * @method throttle
+ * @param {function} fn
+ * @param {int} timeout
+ * @param {context} [ctx] Context
+ * @return {function}
+ * @example
+ * var jodit = new Jodit('.editor');
+ * Jodit.modules.Dom("body").on('scroll', jodit.helper.throttle(function() {
+             *     // Do expensive things
+             * }, 100));
+ */
+export const throttle = function (fn: Function, timeout: number, ctx?: any) {
+    let timer, args, needInvoke, callee;
+
+    return function () {
+
+        args = arguments;
+        needInvoke = true;
+        ctx = ctx || this;
+
+        if (!timer) {
+            callee = function () {
+                if (needInvoke) {
+                    fn.apply(ctx, args);
+                    needInvoke = false;
+                    timer = setTimeout(callee, timeout);
+                } else {
+                    timer = null;
+                }
+            };
+            callee();
+        }
+
+    };
+
+};
 
 /**
  * Get the value of a computed style property for the first element in the set of matched elements or set one or more CSS properties for every matched element
@@ -712,11 +751,11 @@ export const  debounce = function (fn, timeout ?: number, invokeAsap?: boolean, 
  * @param {string|int} value A value to set for the property.
  */
 export const css = (element: HTMLElement, key: string|object, value?: string|number) => {
-    let result, setValue;
+    let numberFieldsReg = /^left|top|bottom|right|width|min|max|height|margin|padding/i;
 
     if (isPlainObject(key) || value !== undefined) {
-        setValue = (elm, key, value) => {
-            if (value !== undefined && value !== null && /^left|top|bottom|right|width|min|max|height|margin|padding/i.test(key) && /^[0-9]+$/.test(value.toString())) {
+        let setValue = (elm, key, value) => {
+            if (value !== undefined && value !== null && numberFieldsReg.test(key) && /^[\-\+]?[0-9]+$/.test(value.toString())) {
                 value += 'px';
             }
             elm.style[key] = value;
@@ -738,8 +777,11 @@ export const css = (element: HTMLElement, key: string|object, value?: string|num
         doc  = element.ownerDocument,
         win = doc.defaultView || doc['parentWindow'];
 
-    result = element.style[<string>key] !== undefined ? element.style[<string>key] : win.getComputedStyle(element).getPropertyValue(key2);
+    let result = (element.style[<string>key] !== undefined && element.style[<string>key] !== '') ? element.style[<string>key] : win.getComputedStyle(element).getPropertyValue(key2);
 
+    if (numberFieldsReg.test(<string>key) && /^[\-\+]?[0-9]+px$/.test(result.toString())) {
+        result = parseInt(result, 10);
+    }
 
     return result;
 }

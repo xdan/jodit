@@ -223,6 +223,7 @@ Widget['ImageSelector'] = class extends Widget{
     currentImage: any;
     constructor(editor, callbacks, elm) {
         super(editor);
+
         let tabs = {},
             dragbox,
             form;
@@ -234,12 +235,12 @@ Widget['ImageSelector'] = class extends Widget{
                 '<input type="file" accept="image/*" tabindex="-1" dir="auto" multiple=""/>' +
                 '</div>');
 
-            editor.uploader.bind(dragbox, (images) => {
+            editor.getInstance('Uploader').bind(dragbox, (images) => {
                 if (typeof(callbacks.upload) === 'function') {
                     callbacks.upload.call(editor, images);
                 }
             }, (resp) => {
-                editor.events.fire('errorPopap', [editor.options.uploader.getMsg(resp)]);
+                editor.events.fire('errorMessage', [editor.options.uploader.getMessage(resp)]);
             })
 
             tabs[Jodit.modules.Toolbar.getIcon('upload') + editor.i18n('Upload')] = dragbox;
@@ -248,7 +249,7 @@ Widget['ImageSelector'] = class extends Widget{
         if (callbacks.filebrowser) {
             if (editor.options.filebrowser.url || editor.options.filebrowser.ajax.url || editor.options.filebrowser.items.url) {
                 tabs[Jodit.modules.Toolbar.getIcon('folder') + editor.i18n('Browse')] = function () {
-                    editor.filebrowser.open(callbacks.filebrowser);
+                    editor.getInstance('FileBrowser').open(callbacks.filebrowser);
                 };
             }
         }
