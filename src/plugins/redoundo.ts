@@ -1,4 +1,4 @@
-import Jodit from '../jodit';
+import Jodit from '../Jodit';
 import Observer from '../modules/Observer';
 import * as consts from '../constants';
 import {ctrlKey} from '../modules/Helpers'

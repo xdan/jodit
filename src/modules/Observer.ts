@@ -1,4 +1,4 @@
-import config from '../config'
+import {Config} from '../Config'
 import Component from './Component'
 import Snapshot from './Snapshot'
 import * as consts from '../constants';
@@ -8,7 +8,15 @@ import {Stack} from './Undo'
  * @prop {object} observer module settings {@link module:Jodit/Observer|Observer}
  * @prop {int} observer.timeout=100 Delay on every change
  */
-config.observer = {
+declare module "../Config" {
+    interface Config {
+        observer: {
+            timeout: number;
+        }
+    }
+}
+
+Config.prototype.observer = {
     timeout: 100,
 }
 

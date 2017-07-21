@@ -1,5 +1,5 @@
-import Jodit from '../jodit';
-import config from '../config'
+import Jodit from '../Jodit';
+import {Config} from '../Config'
 import * as consts from '../constants';
 import {dom,each} from '../modules/Helpers'
 /**
@@ -17,7 +17,14 @@ import {dom,each} from '../modules/Helpers'
  *    showPlaceholder: false
  * });
  */
-config.showPlaceholder = true;
+declare module "../Config" {
+    interface Config {
+        showPlaceholder: boolean;
+        useInputsPlaceholder: boolean;
+        placeholder: string;
+    }
+}
+Config.prototype.showPlaceholder = true;
 
 /**
  * @property {boolean} useInputsPlaceholder=true use a placeholder from original input field, if it was set
@@ -28,7 +35,7 @@ config.showPlaceholder = true;
  *    useInputsPlaceholder: true
  * });
  */
-config.useInputsPlaceholder = true;
+Config.prototype.useInputsPlaceholder = true;
 
 /**
  * @property {string} placeholder='Type something' Default placeholder
@@ -38,7 +45,7 @@ config.useInputsPlaceholder = true;
  *    placeholder: 'start typing text ...'
  * });
  */
-config.placeholder = 'Type something';
+Config.prototype.placeholder = 'Type something';
 
 Jodit.plugins.placeholder = function (parent) {
     let placeholder, timeout;
@@ -54,8 +61,6 @@ Jodit.plugins.placeholder = function (parent) {
                 let style2 = parent.win.getComputedStyle(parent.editor.firstChild);
                 marginTop = parseInt(style2.getPropertyValue('margin-top'), 10);
                 marginLeft = parseInt(style2.getPropertyValue('margin-left'), 10);
-                // paddingTop = parseInt(style2.getPropertyValue('padding-top'), 10);
-                // paddingLeft = parseInt(style2.getPropertyValue('padding-left'), 10);
                 placeholder.style.fontSize = parseInt(style2.getPropertyValue('font-size'), 10) + 'px';
                 placeholder.style.lineHeight = style2.getPropertyValue('line-height');
             } else {

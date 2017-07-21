@@ -78,9 +78,12 @@
             position: relative;
             z-index:1;
             pointer-events: none;
+            height: 100%;
 
             img {
                 user-select: none;
+                max-width: 100%;
+                max-height: 100%;
             }
         }
         .jodit_image_editor_croper,
@@ -118,9 +121,11 @@
         }
     }
     &_area.jodit_image_editor_area_crop {
+        height: 100%;
         background: #eee;
         text-align: center;
         line-height: 100%;
+        position: relative;
 
         &:before{
             content: '';                
@@ -130,11 +135,11 @@
             display: inline-block;
         }
         .jodit_image_editor_box {
-            overflow: scroll;
+            height: 100%;
+            overflow: visible;
             display: inline-block;
             vertical-align: middle;
             pointer-events: all;
-            height: auto;
             font-size: 0;
 
             img {

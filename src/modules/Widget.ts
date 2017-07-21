@@ -1,5 +1,5 @@
 import Component from './Component'
-import Jodit from '../jodit'
+import Jodit from '../Jodit'
 import {normalizeColor,dom,isPlainObject,each,$$,hexToRgb} from './Helpers'
 
 export default class Widget extends Component {

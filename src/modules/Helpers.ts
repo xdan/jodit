@@ -26,6 +26,11 @@ export const $$ = (selector, root) => {
 
         !id && root.setAttribute('id', temp_id);
 
+        // if (!root.parentNode) {
+        //     let div = document.createElement('div');
+        //     div.appendChild(root)
+        // }
+
         result = root.parentNode.querySelectorAll(selector);
 
         if (!id) {
@@ -568,14 +573,13 @@ export const convertMediaURLToVideoEmbed = (url, width:number = 400, height: num
  * Module returns method that is used to determine the browser
  * @params {Object} parent main Jodit object
  * @example
- $browser = new Jodit.modules.Browser();
- console.log($browser('mse'));
- console.log($browser('chrome'));
- console.log($browser('opera'));
- console.log($browser('firefox'));
- console.log($browser('mse') && $browser('version') > 10);
+ console.log(editor.helper.browser('mse'));
+ console.log(editor.helper.browser('chrome'));
+ console.log($editor.helper.browser('opera'));
+ console.log(editor.helper.browser('firefox'));
+ console.log(editor.helper.browser('mse') && editor.helper.browser('version') > 10);
  */
-export const browser = (browser: string): boolean => {
+export const browser = (browser: string): boolean|string => {
     let ua = navigator.userAgent.toLowerCase(),
         match = ((/(firefox)[\s\/]([\w.]+)/.exec(ua) || /(chrome)[\s\/]([\w.]+)/.exec(ua) || /(webkit)[\s\/]([\w.]+)/.exec(ua) || /(opera)(?:.*version)[\s\/]([\w.]+)/.exec(ua) || /(msie)[\s]([\w.]+)/.exec(ua) || /(trident)\/([\w.]+)/.exec(ua) || ua.indexOf("compatible") < 0)) || [];
 
@@ -694,12 +698,14 @@ export const  debounce = function (fn, timeout ?: number, invokeAsap?: boolean, 
 
         clearTimeout(timer);
 
-        timer = setTimeout(function () {
-            if (!invokeAsap) {
-                fn.apply(ctx, args);
-            }
-            timer = null;
-        }, timeout);
+        if (timeout) {
+            timer = setTimeout(function () {
+                if (!invokeAsap) {
+                    fn.apply(ctx, args);
+                }
+                timer = null;
+            }, timeout);
+        }
     };
 }
 
@@ -755,8 +761,8 @@ export const css = (element: HTMLElement, key: string|object, value?: string|num
 
     if (isPlainObject(key) || value !== undefined) {
         let setValue = (elm, key, value) => {
-            if (value !== undefined && value !== null && numberFieldsReg.test(key) && /^[\-\+]?[0-9]+$/.test(value.toString())) {
-                value += 'px';
+            if (value !== undefined && value !== null && numberFieldsReg.test(key) && /^[\-\+]?[0-9\.]+$/.test(value.toString())) {
+                value = parseInt(value, 10) + 'px';
             }
             elm.style[key] = value;
         }
@@ -789,3 +795,122 @@ export const css = (element: HTMLElement, key: string|object, value?: string|num
 export const asArray = (a): Array<any> => (
     Array.isArray(a) ? a : [a]
 )
+
+export function sprintf() {
+    const regex = /%%|%(\d+\$)?([-+#0 ]*)(\*\d+\$|\*|\d+)?(\.(\*\d+\$|\*|\d+))?([scboxXuidfegEG])/g;
+    let a = arguments,
+        i = 0,
+        format = a[i++];
+
+
+    const pad = function(str, len, chr, leftJustify) {
+        const padding = (str.length >= len) ? '' : Array(1 + len - str.length >>> 0).join(chr);
+        return leftJustify ? str + padding : padding + str;
+    };
+
+    // justify()
+    const justify = function(value, prefix, leftJustify, minWidth, zeroPad) {
+        const diff = minWidth - value.length;
+        if (diff > 0) {
+            if (leftJustify || !zeroPad) {
+                value = pad(value, minWidth, ' ', leftJustify);
+            } else {
+                value = value.slice(0, prefix.length) + pad('', diff, '0', true) + value.slice(prefix.length);
+            }
+        }
+        return value;
+    };
+
+    const formatBaseX = function(value, base, prefix, leftJustify, minWidth, precision, zeroPad) {
+        const number = value >>> 0;
+        prefix = prefix && number && {'2': '0b', '8': '0', '16': '0x'}[base] || '';
+        value = prefix + pad(number.toString(base), precision || 0, '0', false);
+        return justify(value, prefix, leftJustify, minWidth, zeroPad);
+    };
+
+    const formatString = function(value, leftJustify, minWidth, precision, zeroPad) {
+        if (precision != null) {
+            value = value.slice(0, precision);
+        }
+        return justify(value, '', leftJustify, minWidth, zeroPad);
+    };
+
+    const doFormat = function(substring, valueIndex, flags, minWidth, _, precision, type) {
+        if (substring == '%%') return '%';
+
+        let leftJustify = false, positivePrefix = '', zeroPad = false, prefixBaseX = false;
+        for (let j = 0; flags && j < flags.length; j++) switch (flags.charAt(j)) {
+            case ' ': positivePrefix = ' '; break;
+            case '+': positivePrefix = '+'; break;
+            case '-': leftJustify = true; break;
+            case '0': zeroPad = true; break;
+            case '#': prefixBaseX = true; break;
+        }
+
+        if (!minWidth) {
+            minWidth = 0;
+        } else if (minWidth === '*') {
+            minWidth = +a[i++];
+        } else if (minWidth.charAt(0) === '*') {
+            minWidth = +a[minWidth.slice(1, -1)];
+        } else {
+            minWidth = +minWidth;
+        }
+
+        // Note: undocumented perl feature:
+        if (minWidth < 0) {
+            minWidth = -minWidth;
+            leftJustify = true;
+        }
+
+        if (!isFinite(minWidth)) {
+            throw new Error('sprintf: (minimum-)width must be finite');
+        }
+
+        if (!precision) {
+            precision = 'fFeE'.indexOf(type) > -1 ? 6 : (type == 'd') ? 0 : void(0);
+        } else if (precision === '*') {
+            precision = +a[i++];
+        } else if (precision[0] === '*') {
+            precision = +a[precision.slice(1, -1)];
+        } else {
+            precision = +precision;
+        }
+
+        // grab value using valueIndex if required?
+        let value = valueIndex ? a[valueIndex.slice(0, -1)] : a[i++];
+
+        switch (type) {
+            case 's': return formatString(String(value), leftJustify, minWidth, precision, zeroPad);
+            case 'c': return formatString(String.fromCharCode(+value), leftJustify, minWidth, precision, zeroPad);
+            case 'b': return formatBaseX(value, 2, prefixBaseX, leftJustify, minWidth, precision, zeroPad);
+            case 'o': return formatBaseX(value, 8, prefixBaseX, leftJustify, minWidth, precision, zeroPad);
+            case 'x': return formatBaseX(value, 16, prefixBaseX, leftJustify, minWidth, precision, zeroPad);
+            case 'X': return formatBaseX(value, 16, prefixBaseX, leftJustify, minWidth, precision, zeroPad).toUpperCase();
+            case 'u': return formatBaseX(value, 10, prefixBaseX, leftJustify, minWidth, precision, zeroPad);
+            case 'i':
+            case 'd': {
+                let number = parseInt(value.toString(), 10);
+                let prefix = number < 0 ? '-' : positivePrefix;
+                value = prefix + pad(String(Math.abs(number)), precision, '0', false);
+                return justify(value, prefix, leftJustify, minWidth, zeroPad);
+            }
+            case 'e':
+            case 'E':
+            case 'f':
+            case 'F':
+            case 'g':
+            case 'G':  {
+                let number = +value;
+                let prefix = number < 0 ? '-' : positivePrefix;
+                let method = ['toExponential', 'toFixed', 'toPrecision']['efg'.indexOf(type.toLowerCase())];
+                let textTransform = ['toString', 'toUpperCase']['eEfFgG'.indexOf(type) % 2];
+                value = prefix + Math.abs(number)[method](precision);
+                return justify(value, prefix, leftJustify, minWidth, zeroPad)[textTransform]();
+            }
+            default: return substring;
+        }
+    };
+
+    return format.replace(regex, doFormat);
+}

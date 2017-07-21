@@ -1,4 +1,4 @@
-import Jodit from '../jodit';
+import Jodit from '../Jodit';
 
 Jodit.plugins.orderedlist = function (editor) {
     editor.events.on('afterCommand', (command) => {

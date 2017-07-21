@@ -1,4 +1,4 @@
-import Jodit from '../jodit'
+import Jodit from '../Jodit'
 export default  Jodit.lang.en = {
     'Type something': 'Start writing...',
     // About

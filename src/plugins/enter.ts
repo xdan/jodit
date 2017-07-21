@@ -1,4 +1,4 @@
-import Jodit from '../jodit';
+import Jodit from '../Jodit';
 import {trim,$$} from "../modules/Helpers"
 import * as consts from '../constants';
 /**

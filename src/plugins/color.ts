@@ -1,4 +1,4 @@
-import Jodit from '../jodit';
+import Jodit from '../Jodit';
 import {wrapAndSelect} from './bold';
 import {normalizeColor} from '../modules/Helpers';
 

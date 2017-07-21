@@ -1,7 +1,4 @@
-import Jodit from '../jodit';
-// import {wrapAndSelect} from './bold';
-// import {normalizeColor} from '../modules/Helpers';
-// import * as consts from '../constants';
+import Jodit from '../Jodit';
 
 Jodit.plugins.formatblock = function (editor) {
     editor.events.on('beforeCommand', (command, second, third) => {

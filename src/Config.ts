@@ -1,19 +1,18 @@
-/*eslint no-unused-vars: 0*/
 import * as consts from './constants'
-import Jodit from './jodit'
-import {dom, trim, $$} from './modules/Helpers'
+import {dom, trim, $$, normalizeColor, isURL, convertMediaURLToVideoEmbed} from './modules/Helpers'
+
 /**
  * Default Editor's Configuration
- *
- * @namespace
- */
-const config: any = {
+ **/
+
+export class Config {
+
     /**
      * @prop {int} zIndex=0 zindex For editor
      * @since 2.5.61
      * @link http://xdsoft.net/jodit/doc/#2.5.61
      */
-    zIndex: 0,
+    zIndex = 0;
 
     /**
      * @prop {int} offsetTopForAssix=0 For example, in Joomla, the top menu bar closes Jodit toolbar when scrolling. Therefore, it is necessary to move the toolbar Jodit by this amount [more](http://xdsoft.net/jodit/doc/#2.5.57)
@@ -21,13 +20,13 @@ const config: any = {
      * @link http://xdsoft.net/jodit/doc/#2.5.57
      */
 
-    offsetTopForAssix: 0,
+    offsetTopForAssix = 0;
 
     /**
      * @prop {int} syncCodeTimeout=30 timeout synchronize data between the editor , source element and source code editor
      * @since 2.4.16
      */
-    syncCodeTimeout: 30,
+    syncCodeTimeout = 30;
 
     /**
      * @prop {string} toolbarButtonSize=middle Size of icons in the toolbar (can be "small", "middle", "large")
@@ -37,7 +36,7 @@ const config: any = {
      *      toolbarButtonSize: "small"
      * });
      */
-    toolbarButtonSize: 'middle',
+    toolbarButtonSize = 'middle';
 
     /**
      * @prop {string} theme=default Theme (can be "dark")
@@ -47,20 +46,20 @@ const config: any = {
      *      theme: "dark"
      * });
      */
-    theme: 'default',
+    theme = 'default';
 
     /**
      * @prop {boolean} saveModeInCookie=false if it is true that the current mode is saved in a cookie , and is restored after a reload of the page
      * @since 2.3.59
      */
-    saveModeInCookie: false,
+    saveModeInCookie = false;
 
     /**
      * @prop {boolean} spellcheck=true options specifies whether the editor is to have its spelling and grammar checked or not
      * @see {@link http://www.w3schools.com/tags/att_global_spellcheck.asp}
      * @since 2.3.48
      */
-    spellcheck: true,
+    spellcheck = true;
 
    /**
      * @prop {string|false} editorCssClass=false Class name that can be appended to the editor
@@ -79,7 +78,7 @@ const config: any = {
      * }
      * </style>
      */
-    editorCssClass: false,
+    editorCssClass = false;
 
    /**
      * @prop {boolean} triggerChangeEvent=true After all changes in editors for textarea will call change trigger
@@ -90,17 +89,17 @@ const config: any = {
      *      console.log(this.value);
      * })
      */
-    triggerChangeEvent: true,
+    triggerChangeEvent = true;
 
     /**
      * @prop {boolean} iframe=false When this option is enabled, the editor's content will be placed in an iframe and isolated from the rest of the page.
      * @example
      * new Jodit('#editor', {
-     *    iframe: true,
-     *    iframeStyle: 'html{margin: 0px;}body{padding:10px;background:transparent;color:#000;position:relative;z-index: 2;user-select:auto;margin:0px;overflow:hidden;}body:after{content:"";clear:both;display:block}',
+     *    iframe = true;
+     *    iframeStyle = 'html{margin: 0px;}body{padding:10px;background:transparent;color:#000;position:relative;z-index: 2;user-select:auto;margin:0px;overflow:hidden;}body:after{content:"";clear:both;display:block}';
      * })
      */
-    iframe: false,
+    iframe = false;
 
     /**
      * @prop {boolean|string} iframeBaseUrl=false Base URL where the root directory for {@link Jodit.defaultOptions.iframe|iframe} mode
@@ -110,7 +109,7 @@ const config: any = {
      *    iframeBaseUrl: 'http://xdsoft.net/jodit/docs/',
      * })
      */
-    iframeBaseUrl: false,
+    iframeBaseUrl = false;
 
     /**
      * @prop {string} iframeStyle='html{margin: 0px;}body{padding:10px;background:transparent;color:#000;position:relative;z-index: 2;user-select:auto;margin:0px;overflow:auto;}body:after{content:"";clear:both;display:block}table{width:100%;border-collapse:collapse} th,td{border:1px solid #ccc;-webkit-user-select:text;-moz-user-select:text;-ms-user-select:text;user-select:text}p{margin-top:0;}' Custom style to be used inside the iframe to display content.
@@ -121,7 +120,7 @@ const config: any = {
      * })
      */
 
-    iframeStyle: 'html{margin: 0px;}body{padding:10px;background:transparent;color:#000;position:relative;z-index: 2;user-select:auto;margin:0px;overflow:auto;}body:after{content:"";clear:both;display:block}table{width:100%;border-collapse:collapse} th,td{border:1px solid #ccc;-webkit-user-select:text;-moz-user-select:text;-ms-user-select:text;user-select:text}td.jodit_focused_cell,th.jodit_focused_cell{border: 1px double blue}p{margin-top:0;}.jodit_editor .jodit_iframe_wrapper{display: block;clear: both;user-select: none;position: relative;}.jodit_editor .jodit_iframe_wrapper:after {position:absolute;content:"";z-index:1;top:0;left:0;right: 0;bottom: 0;cursor: pointer;display: block;background: rgba(0, 0, 0, 0);}',
+    iframeStyle = 'html{margin: 0px;}body{padding:10px;background:transparent;color:#000;position:relative;z-index: 2;user-select:auto;margin:0px;overflow:auto;}body:after{content:"";clear:both;display:block}table{width:100%;border-collapse:collapse} th,td{border:1px solid #ccc;-webkit-user-select:text;-moz-user-select:text;-ms-user-select:text;user-select:text}td.jodit_focused_cell,th.jodit_focused_cell{border: 1px double blue}p{margin-top:0;}.jodit_editor .jodit_iframe_wrapper{display: block;clear: both;user-select: none;position: relative;}.jodit_editor .jodit_iframe_wrapper:after {position:absolute;content:"";z-index:1;top:0;left:0;right: 0;bottom: 0;cursor: pointer;display: block;background: rgba(0, 0, 0, 0);}';
 
     /**
      * @prop {array} iframeCSSLinks='[]' Custom stylesheet files to be used inside the iframe to display content.
@@ -132,13 +131,13 @@ const config: any = {
      * })
      */
 
-    iframeCSSLinks: [],
+    iframeCSSLinks = [];
 
     /**
      * @prop {string} iframeIncludeJoditStyle=true Include jodit.min.css in iframe document
      * @deprecated since version 2.3.31
      */
-    iframeIncludeJoditStyle: true,
+    iframeIncludeJoditStyle = true;
 
     /**
      * @prop {string|int} width='auto' Editor's width
@@ -156,7 +155,7 @@ const config: any = {
      * })
      */
 
-    width: 'auto',
+    width = 'auto';
 
     /**
      * @prop {string|int} height='auto' Editor's height
@@ -173,7 +172,7 @@ const config: any = {
      *    height: 'auto', // autosize
      * })
      */
-    height: 'auto',
+    height = 'auto';
 
     /**
      * @prop {string|int} height=100 Editor's min-height
@@ -186,7 +185,7 @@ const config: any = {
      *    minHeight: 200 //min-height: 200px
      * })
      */
-    minHeight: 100,
+    minHeight = 100;
 
     /**
      * @prop {string} direction='' The writing direction of the language which is used to create editor content. Allowed values are: '' (an empty string) – Indicates that content direction will be the same as either the editor UI direction or the page element direction. 'ltr' – Indicates a Left-To-Right text direction (like in English). 'rtl' – Indicates a Right-To-Left text direction (like in Arabic).
@@ -195,7 +194,7 @@ const config: any = {
      *    direction: 'rtl'
      * })
      */
-    direction: '',
+    direction = '';
 
     /**
      * @prop {string} language=en Language by default
@@ -208,7 +207,7 @@ const config: any = {
      * });
      * </script>
      */
-    language: 'en',
+    language = 'en';
 
     /**
      * @prop {PlainObject} i18n=Jodit.lang Collection of language pack data {en: {'Type something': 'Type something', ...}}
@@ -223,34 +222,34 @@ const config: any = {
      * });
      * console.log(editor.i18n('Type something')) //Начните что-либо вводить
      */
-    i18n: Jodit.lang,
+    i18n = 'en';
 
     /**
      * @prop {int} tabIndex=-1 The tabindex global attribute is an integer indicating if the element can take input focus (is focusable), if it should participate to sequential keyboard navigation, and if so, at what position. It can take several values
      */
-    tabIndex: -1,
+    tabIndex = -1;
 
     /**
      * @prop {boolean} autofocus=false true After loading the page into the editor once the focus is set
      */
-    autofocus: false,
+    autofocus = false;
 
     /**
      * @prop {boolean} toolbar=true true Show toolbar
      */
-    toolbar: true,
+    toolbar = true;
 
     // TODO
-    autosave: false, // false or url
-    autosaveCallback: false, // function
-    interval: 60, // seconds
+    // autosave: false, // false or url
+    // autosaveCallback: false, // function
+    // interval: 60, // seconds
     // TODO
 
     /**
      * @prop {(Jodit.ENTER_P|Jodit.ENTER_DIV|Jodit.ENTER_BR)} enter=Jodit.ENTER_P Element that will be created when you press Enter
      * @see {@link module:EnterKey~enter|EnterKey.enter}
      */
-    enter: consts.PARAGRAPH,
+    enter = consts.PARAGRAPH;
 
     /**
      * @prop {(Jodit.MODE_WYSIWYG|Jodit.MODE_AREA|Jodit.MODE_SPLIT)} efaultMode=Jodit.MODE_SPLIT Jodit.MODE_WYSIWYG The HTML editor allows you to write like MSWord, Jodit.MODE_AREA syntax highlighting source editor
@@ -261,12 +260,12 @@ const config: any = {
      * console.log(editor.getRealMode())
      *
      */
-    defaultMode: consts.MODE_WYSIWYG,
+    defaultMode = consts.MODE_WYSIWYG;
 
     /**
      * @prop {boolean} useSplitMode=false Use in {@link module:Jodit~toggleMode|Jodit.toggleMode} Jodit.MODE_SPLIT mode
      */
-    useSplitMode: false,
+    useSplitMode = false;
 
     /**
      * @prop {array} colors The colors in HEX representation to select a color for the background and for the text in colorpicker
@@ -275,7 +274,7 @@ const config: any = {
      *     colors: ['#ff0000', '#00ff00', '#0000ff']
      * })
      */
-    colors: {
+    colors = {
         greyscale:  ['#000000', '#434343', '#666666', '#999999', '#B7B7B7', '#CCCCCC', '#D9D9D9', '#EFEFEF', '#F3F3F3', '#FFFFFF'],
         palette:    ['#980000', '#FF0000', '#FF9900', '#FFFF00', '#00F0F0', '#00FFFF', '#4A86E8', '#0000FF', '#9900FF', '#FF00FF'],
         full: [
@@ -286,7 +285,7 @@ const config: any = {
             '#85200C', '#990000', '#B45F06', '#BF9000', '#38761D', '#134F5C', '#1155CC', '#0B5394', '#351C75', '#733554',
             '#5B0F00', '#660000', '#783F04', '#7F6000', '#274E13', '#0C343D', '#1C4587', '#073763', '#20124D', '#4C1130'
         ]
-    },
+    };
 
     /**
      * @prop {('background'|'color')} colorPickerDefaultTab='background' The default tab color picker
@@ -295,12 +294,12 @@ const config: any = {
      *     colorPickerDefaultTab: 'color'
      * })
      */
-    colorPickerDefaultTab: 'background',
+    colorPickerDefaultTab = 'background';
 
     /**
      * @property {int} imageDefaultWidth=300 Image size defaults to a larger image
      */
-    imageDefaultWidth: 300,
+    imageDefaultWidth = 300;
 
     /**
      * @property {array} removeButtons Do not display those buttons that are on the list
@@ -309,25 +308,25 @@ const config: any = {
      *     removeButtons: ['hr', 'source']
      * });
      */
-    removeButtons: [],
+    removeButtons = [];
 
     /**
      * @property {int} sizeLG=900 The width of the editor, accepted as the biggest. Used to the responsive version of the editor
      * @since 2.5.49
      */
-    sizeLG: 900,
+    sizeLG = 900;
 
     /**
      * @property {int} sizeMD=700 The width of the editor, accepted as the medium. Used to the responsive version of the editor
      * @since 2.5.49
      */
-    sizeMD: 700,
+    sizeMD = 700;
 
     /**
      * @property {int} sizeSM=700 The width of the editor, accepted as the small. Used to the responsive version of the editor
      * @since 2.5.49
      */
-    sizeSM: 400,
+    sizeSM = 400;
 
     /**
      * @property {array} buttons The list of buttons that appear in the editor's toolbar on large places (≥ options.sizeLG). Note - this is not the width of the device, the width of the editor
@@ -400,7 +399,7 @@ const config: any = {
      *        }
      *  });
      */
-    buttons: [
+    buttons = [
         'source', '|',
         'bold',
         'italic', '|',
@@ -420,8 +419,8 @@ const config: any = {
         'eraser',
         'fullsize',
         'about'
-    ],
-    buttonsMD: [
+    ];
+    buttonsMD = [
         'source', '|',
         'bold',
         'italic', '|',
@@ -439,8 +438,8 @@ const config: any = {
         'hr',
         'eraser',
         'fullsize'
-    ],
-    buttonsSM: [
+    ];
+    buttonsSM = [
         'source', '|',
         'bold',
         'italic', '|',
@@ -456,8 +455,8 @@ const config: any = {
         'undo', 'redo', '|',
         'eraser',
         'fullsize'
-    ],
-    buttonsXS: [
+    ];
+    buttonsXS = [
         'bold',
         'image', '|',
         'brush',
@@ -465,15 +464,16 @@ const config: any = {
         'align', '|',
         'undo', 'redo', '|',
         'eraser'
-    ],
+    ];
+
     /**
      * Behavior for buttons
      * @type {Object}
      */
-    controls: {
+    controls = {
         about: {
             exec: ({editor}) => {
-                let dialog = new Jodit.modules.Dialog(editor);
+                let dialog = new (require('./modules/Dialog').default)(editor);
                 dialog.setTitle(editor.i18n('About Jodit'));
                 dialog.setContent(
                     '<div class="jodit_about">\
@@ -515,7 +515,7 @@ const config: any = {
                                     }
                                 }
                             } else if (Array.isArray(colors)) {
-                                return colors.indexOf(editor.helper.normalizeColor(color)) !== -1;
+                                return colors.indexOf(normalizeColor(color)) !== -1;
                             }
                             return false;
                         };
@@ -554,7 +554,7 @@ const config: any = {
 
                 tryGetCurrent();
 
-                let widget = new Jodit.modules.Widget(editor);
+                let widget = new (require('./modules/Widget').default)(editor);
 
                 const backgroundTag = widget.create('ColorPicker', (value) => {
                     if (!current) {
@@ -697,7 +697,7 @@ const config: any = {
                     editor.selection.insertNode(dom('<img src="' + url + '"/>', editor.doc));
                 }
 
-                let widget = new Jodit.modules.Widget(editor);
+                let widget = new (require('./modules/Widget').default)(editor);
 
                 let sourceImage;
 
@@ -840,8 +840,8 @@ const config: any = {
                         editor.selection.insertHTML(code);
                     };
 
-                tab[Jodit.modules.Toolbar.getIcon('link') + '&nbsp;' + editor.i18n('Link')] = bylink;
-                tab[Jodit.modules.Toolbar.getIcon('source') + '&nbsp;' + editor.i18n('Code')] = bycode;
+                tab[(require('./modules/Toolbar').default).getIcon('link') + '&nbsp;' + editor.i18n('Link')] = bylink;
+                tab[(require('./modules/Toolbar').default).getIcon('source') + '&nbsp;' + editor.i18n('Code')] = bycode;
 
                 bycode.addEventListener('submit', (event) => {
                     event.preventDefault();
@@ -858,17 +858,17 @@ const config: any = {
 
                 bylink.addEventListener('submit',  (event) => {
                     event.preventDefault();
-                    if (!editor.helper.isURL(bylink.querySelector('input[name=code]').value)) {
+                    if (!isURL(bylink.querySelector('input[name=code]').value)) {
                         bylink.querySelector('input[name=code]').focus();
                         bylink.querySelector('input[name=code]').classList.add('jodit_error');
                         return false;
                     }
-                    insertCode(editor.helper.convertMediaURLToVideoEmbed(bylink.querySelector('input[name=code]').value));
+                    insertCode(convertMediaURLToVideoEmbed(bylink.querySelector('input[name=code]').value));
                     return false;
                 });
 
 
-                let widget = new Jodit.modules.Widget(editor);
+                let widget = new (require('./modules/Widget').default)(editor);
                 return widget.create('Tabs', tab);
             },
             tags: ["iframe"],
@@ -1043,8 +1043,8 @@ const config: any = {
             },
             tooltip: "Change mode"
         }
-    }
-}
+    };
 
-Jodit.defaultOptions = config;
-export default config;
+    events = {};
+    textIcons = true;
+}

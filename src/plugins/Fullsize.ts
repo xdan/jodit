@@ -1,5 +1,5 @@
-import Jodit from '../jodit';
-import config from '../config'
+import Jodit from '../Jodit';
+import {Config} from '../Config'
 import {css, dom} from "../modules/Helpers";
 import Toolbar from "../modules/Toolbar";
 
@@ -23,8 +23,16 @@ import Toolbar from "../modules/Toolbar";
 * editor.events.fire('toggleFullsize', [true]); // fullsize
 * editor.events.fire('toggleFullsize', [false]); // usual mode
 */
-config.fullsize = false;
-config.globalFullsize = true;
+
+declare module "../Config" {
+    interface Config {
+        fullsize: boolean;
+        globalFullsize: boolean;
+    }
+}
+
+Config.prototype.fullsize = false;
+Config.prototype.globalFullsize = true;
 
 
 Jodit.plugins.fullsize = function (editor: Jodit) {
@@ -61,10 +69,10 @@ Jodit.plugins.fullsize = function (editor: Jodit) {
             }
 
             if (editor.options.globalFullsize) {
-                let node = editor.container.parentNode;
+                let node = <HTMLElement>editor.container.parentNode;
                 while (node && !(node instanceof Document)) {
                     node.classList.toggle('jodit_fullsize_box', condition);
-                    node = node.parentNode;
+                    node = <HTMLElement>node.parentNode;
                 }
                 resize();
             }

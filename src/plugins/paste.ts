@@ -1,13 +1,19 @@
-import Jodit from '../jodit';
+import Jodit from '../Jodit';
 import {Confirm} from '../modules/Dialog';
 import {isHTML, browser, htmlentities, htmlspecialchars} from '../modules/Helpers';
-import config from '../config'
+import {Config} from '../Config'
+import {TEXT_PLAIN} from "../constants";
 
 /**
  * @prop {boolean} askBeforePasteHTML=true Ask before paste HTML in WYSIWYG mode
  * @memberof Jodit.defaultOptions
  */
-config.askBeforePasteHTML = true;
+declare module "../Config" {
+    interface Config {
+        askBeforePasteHTML: boolean;
+    }
+}
+Config.prototype.askBeforePasteHTML = true;
 
 /**
  * Ask before paste HTML source
@@ -15,7 +21,7 @@ config.askBeforePasteHTML = true;
  * @module insertHTML
  */
 Jodit.plugins.paste = function (editor: Jodit) {
-    editor.editor.addEventListener('paste', (event) => {
+    editor.editor.addEventListener('paste', (event: ClipboardEvent) => {
         /**
          * Triggered before pasting something into the Jodit Editor
          *
@@ -53,7 +59,7 @@ Jodit.plugins.paste = function (editor: Jodit) {
             } else if (/text\/rtf/.test(types_str) && browser('safari')) {
                 clipboard_html = event.clipboardData.getData("text/rtf");
             } else if (/text\/plain/.test(types_str) && !browser('mozilla')) {
-                clipboard_html = htmlentities(event.clipboardData.getData("text/plain")).replace(/\n/g, "<br/>");
+                clipboard_html = htmlentities(event.clipboardData.getData(TEXT_PLAIN)).replace(/\n/g, "<br/>");
             }
 
             if (clipboard_html !== '' || clipboard_html instanceof Node) {
@@ -97,9 +103,9 @@ Jodit.plugins.paste = function (editor: Jodit) {
         }
     });
     if (editor.options.askBeforePasteHTML) {
-        editor.events.on('beforePaste', (event) => {
-            if (event && event.clipboardData && event.clipboardData.getData && event.clipboardData.types[0] === 'text/plain') {
-                var html = event.clipboardData.getData('text/plain');
+        editor.events.on('beforePaste', (event: ClipboardEvent) => {
+            if (event && event.clipboardData && event.clipboardData.getData && event.clipboardData.types[0] === TEXT_PLAIN) {
+                let html = event.clipboardData.getData(TEXT_PLAIN);
                 if (isHTML(html)) {
                     Confirm(editor.i18n('Your code is similar to HTML. Paste as HTML?'), editor.i18n('Paste as HTML'), (agree) => {
                         if (agree) {

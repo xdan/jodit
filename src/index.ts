@@ -3,8 +3,8 @@ import * as consts from './constants';
 import './polyfills';
 import Toolbar from './modules/Toolbar'
 
-module.exports = require('./jodit').default;
-import './config'
+module.exports = require('./Jodit').default;
+import './Config'
 
 for (let key in consts) {
     module.exports[key] = consts[key];

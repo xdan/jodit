@@ -23,21 +23,34 @@ export default class Selection extends Component{
      * @return {boolean} Something went wrong
      */
     insertCursorAtPoint(x: number, y: number): boolean {
-        let caret,
-            doc = this.doc,
-            rng;
+        let caret;
 
         this.clear();
 
         try {
-            caret = doc.caretRangeFromPoint(x, y);
-            rng = doc.createRange();
-            rng.setStart(caret.startContainer, caret.startOffset);
-            rng.setEnd(caret.startContainer, caret.startOffset);
+            let rng: Range = null;
 
-            let sel = this.win.getSelection();
-            sel.removeAllRanges();
-            sel.addRange(rng);
+            if (this.doc['caretPositionFromPoint']) {
+                caret = this.doc['caretPositionFromPoint'](x, y);
+                rng = this.doc.createRange();
+                rng.setStart(caret.offsetNode, caret.offset);
+            } else if (this.doc.caretRangeFromPoint) {
+                caret = this.doc.caretRangeFromPoint(x, y);
+                rng = this.doc.createRange();
+                rng.setStart(caret.startContainer, caret.startOffset);
+            }
+
+            if (rng !== null && typeof window.getSelection != "undefined") {
+                rng.collapse(true);
+                let sel = this.win.getSelection();
+                sel.removeAllRanges();
+                sel.addRange(rng);
+            } else if (typeof this.doc.body['createTextRange'] != "undefined") {
+                let range = this.doc.body['createTextRange']();
+                range.moveToPoint(x, y);
+                range.select();
+            }
+
             return true;
         } catch (e) {
         }

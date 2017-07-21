@@ -1,4 +1,4 @@
-import Jodit from '../jodit';
+import Jodit from '../Jodit';
 import {wrapAndSelect} from './bold';
 import {normalizeSize} from '../modules/Helpers';
 // import * as consts from '../constants';

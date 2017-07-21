@@ -1,23 +1,31 @@
-import Jodit from '../jodit';
-import config from '../config'
+import Jodit from '../Jodit';
+import {Config} from '../Config'
 import {css, dom} from "../modules/Helpers";
+
+declare module "../Config" {
+    interface Config {
+        showMessageErrors: boolean;
+        showMessageErrorTime: number;
+        showMessageErrorOffsetPx: number;
+    }
+}
 
 /**
 * @prop {boolean} showMessageErrors=true Use plugin {@link module:ErrorMessages|Errormessages}
 * @memberof Jodit.defaultOptions
 */
-config.showMessageErrors = true;
+Config.prototype.showMessageErrors = true;
 /**
 * @prop {int} showMessageErrorTime=3000 How long show messages
 * @memberof Jodit.defaultOptions
 */
-config.showMessageErrorTime = 3000;
+Config.prototype.showMessageErrorTime = 3000;
 
 /**
 * @prop {int} showMessageErrorOffsetPx=3 Offset fo message
 * @memberof Jodit.defaultOptions
 */
-config.showMessageErrorOffsetPx = 3;
+Config.prototype.showMessageErrorOffsetPx = 3;
 
 /**
  * Plugin to display pop-up messages in the lower right corner of the editor
@@ -35,7 +43,7 @@ Jodit.plugins.errorMessages = function (editor: Jodit) {
                     height += elm.offsetWidth + editor.options.showMessageErrorOffsetPx;
                 });
             };
-        editor.workplace.append(messagesBox);
+        editor.workplace.appendChild(messagesBox);
 
         /**
          * Вывести всплывающее сообщение внизу редактора

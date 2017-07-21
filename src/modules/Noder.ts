@@ -1,4 +1,3 @@
-import Jodit from '../jodit';
 import Component from './Component';
 import * as consts from '../constants';
 import {each} from './Helpers'
@@ -8,8 +7,8 @@ export default class Noder extends Component{
      *
      * @param {Node} current
      * @param {String|Node} tag
-     * @param {Jodit} editor
-     * @return {Element}
+     *
+     * @return {HTMLElement}
      */
     wrap = (current, tag: Node|string = 'p'): HTMLElement => {
         let tmp, first = current, last = current;
@@ -48,7 +47,7 @@ export default class Noder extends Component{
 
         this.parent.selection.restore(selInfo);
 
-        return p;
+        return <HTMLElement>p;
     }
 
     /**

@@ -1,6 +1,7 @@
-import Jodit from '../jodit';
-import config from '../config'
+import Jodit from '../Jodit';
+import {Config} from '../Config'
 import * as consts from '../constants';
+import {cleanFromWord, trim} from "../modules/Helpers";
 
 /**
 * @property {object} cleanHTML {@link module:cleanHTML|cleanHTML}'s options
@@ -37,7 +38,17 @@ import * as consts from '../constants';
 *     }
 * });
 */
-config.cleanHTML = {
+declare module "../Config" {
+    interface Config {
+        cleanHTML: {
+            replaceNBSP: boolean,
+            cleanOnPaste: boolean,
+            allowTags: false|string|{[key:string]: string}
+        }
+    }
+}
+
+Config.prototype.cleanHTML = {
     replaceNBSP: true,
     cleanOnPaste: true,
     allowTags: false
@@ -52,7 +63,7 @@ Jodit.plugins.cleanHTML = function (editor: Jodit) {
 
     if (editor.options.cleanHTML.cleanOnPaste) {
         editor.events.on('processPaste', (event, html) => {
-            return editor.helper.cleanFromWord(html);
+            return cleanFromWord(html);
         });
     }
 
@@ -64,11 +75,11 @@ Jodit.plugins.cleanHTML = function (editor: Jodit) {
 
         if (typeof editor.options.cleanHTML.allowTags === 'string') {
             editor.options.cleanHTML.allowTags.split(seperator).map((elm) => {
-                elm = editor.helper.trim(elm);
+                elm = trim(elm);
                 let attr = attributesReg.exec(elm),
                     allowAttributes = {},
                     attributeMap = function (attr) {
-                        attr = editor.helper.trim(attr);
+                        attr = trim(attr);
                         let val = attrReg.exec(attr);
                         if (val) {
                             allowAttributes[val[1]] = val[2];

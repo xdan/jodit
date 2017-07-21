@@ -64,12 +64,17 @@
                     matches[2] = styles.join(';')
                 }
 
-                attrs.push({
-                    name: matches[1].toLowerCase(),
-                    value: matches[2],
-                });
+                if (matches[1].toLowerCase() !== 'unselectable') {
+                    attrs.push({
+                        name: matches[1].toLowerCase(),
+                        value: matches[2],
+                    });
 
-                newtag = newtag.replace(matches[0], 'attribute:'  + attrs.length);
+                    newtag = newtag.replace(matches[0], 'attribute:'  + attrs.length);
+                } else {
+                    newtag = newtag.replace(' ' + matches[0], '');
+                }
+
             } while(matches);
 
             attrs.sort(function (a, b) {
@@ -121,6 +126,9 @@
 </script>
 <link rel="stylesheet" href="../dist/jodit.css" />
 <script src="../dist/jodit.js"></script>
+<script>
+    Jodit.defaultOptions.observer.timeout = 0;
+</script>
 <script src="tests/editor.js"></script>
 <script src="tests/events.js"></script>
 <script src="tests/interface.js"></script>

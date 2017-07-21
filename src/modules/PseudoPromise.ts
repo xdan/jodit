@@ -4,7 +4,7 @@ const RESOLVE = 1;
 export default class PseudoPromise {
 
 
-    private handlers = {};
+    private handlers: {'0': Function[], '1': Function[]} = {'0': [], '1': []};
 
     isFulfilled = null;
 
@@ -12,8 +12,6 @@ export default class PseudoPromise {
     private currentContext = null;
 
     constructor(processCallback: Function) {
-        this.handlers[REJECT] = [];
-        this.handlers[RESOLVE] = [];
 
         let promise = this;
 
@@ -40,17 +38,27 @@ export default class PseudoPromise {
         }
     }
 
-    private __fire_handlers(store) {
-        if (store !== this.isFulfilled) {
+    private __fire_handlers(store: number) {
+        if (store !== this.isFulfilled || !this.handlers[store].length) {
             return;
         }
 
-        this.handlers[store].forEach((handler) => {
-            let tempResult = handler.call(this.currentContext, this.currentParameter);
+        do {
+            let handler: Function = this.handlers[store].shift();
+            let tempResult;
+
+            try {
+                tempResult = handler.call(this.currentContext, this.currentParameter);
+            } catch(e) {
+                tempResult = e;
+                return this.__fire_handlers(REJECT);
+            }
+
             if (tempResult !== undefined) {
                 this.currentParameter = tempResult;
             }
-        })
+
+        } while(this.handlers[store].length);
     }
 
     then(onFulfilled: Function|null, onRejected?: Function){

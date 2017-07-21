@@ -1,6 +1,6 @@
-import Jodit from '../jodit';
+import Jodit from '../Jodit';
 import Component from './Component';
-import config from '../config'
+import {Config} from '../Config'
 import {$$, css, debounce, dom, throttle, trim} from "./Helpers";
 import Toolbar from "./Toolbar";
 import Dialog, {Alert, Promt} from "./Dialog";
@@ -8,7 +8,27 @@ import Dialog, {Alert, Promt} from "./Dialog";
  * @prop {plainobject} imageeditor module's options
  * @memberof module:ImageEditor
  */
-config.imageeditor = {
+
+type ImageEditorOptions = {
+    closeAfterSave: boolean;
+    width: string|number;
+    height: string|number;
+    crop:  boolean;
+    resize:  boolean;
+    resizeUseRatio:  boolean;
+    resizeMinWidth: number;
+    resizeMinHeight: number;
+    cropUseRatio:  boolean;
+    cropDefaultWidth: string|number;
+    cropDefaultHeight: string|number;
+}
+
+declare module "../Config" {
+    interface Config {
+        imageeditor: ImageEditorOptions
+    }
+}
+Config.prototype.imageeditor = {
     /**
      * @prop {boolean} imageeditor.closeAfterSave=false Close editor after save image
      * @memberof module:ImageEditor
@@ -79,9 +99,9 @@ config.imageeditor = {
  * @param {Object} parent Jodit main object
  */
 export default class ImageEditor extends Component{
-    options;
-    resizeUseRatio: true;
-    cropUseRatio: true;
+    options: ImageEditorOptions;
+    resizeUseRatio: boolean = true;
+    cropUseRatio: boolean = true;
 
     dialog: Dialog;
     image: HTMLImageElement;
@@ -245,10 +265,11 @@ export default class ImageEditor extends Component{
     };
 
     calcCropBox = () => {
-        let wn,
-            hn,
-            w = (<HTMLElement>this.crop_box.parentNode).offsetWidth * 0.8,
-            h = (<HTMLElement>this.crop_box.parentNode).offsetHeight * 0.8;
+        let w = (<HTMLElement>this.crop_box.parentNode).offsetWidth * 0.8,
+            h = (<HTMLElement>this.crop_box.parentNode).offsetHeight * 0.8,
+            wn = w,
+            hn = h
+
 
         if (w > this.naturalWidth && h >this.naturalHeight) {
             wn = this.naturalWidth;
@@ -289,7 +310,7 @@ export default class ImageEditor extends Component{
             top: (this.cropImage.offsetHeight || this.image.offsetHeight) / 2 - this.new_h / 2
         });
 
-        this.__fire(this.cropHandler, 'updatesize');
+        this.parent.events.fire(this.cropHandler, 'updatesize');
     };
 
     cropBox = {
@@ -475,7 +496,7 @@ export default class ImageEditor extends Component{
                             self.heightInput.value = self.new_h.toString();
                         }
 
-                        this.parent.events.fire(self.resizeHandler,'updatesize');
+                        this.parent.events.fire(self.resizeHandler, 'updatesize');
                     } else {
                         if (self.target !== self.cropHandler) {
                             if (self.top_x + self.new_w > self.cropImage.offsetWidth) {
@@ -525,7 +546,7 @@ export default class ImageEditor extends Component{
                 let button = <HTMLButtonElement>this;
                 $$('button', group).forEach(button => <HTMLButtonElement>button.classList.remove('active'));
                 button.classList.add('active');
-                input.checked = !!button.dataset.yes;
+                input.checked = !!button.getAttribute('data-yes');
                 self.__fire(input, 'change');
             });
         });
@@ -534,7 +555,7 @@ export default class ImageEditor extends Component{
                 $$('.jodit_image_editor_slider,.jodit_image_editor_area', self.editor).forEach(elm => elm.classList.remove('active'));
                 let slide = <HTMLElement>this.parentNode;
                 slide.classList.add('active');
-                self.activeTab = slide.dataset.area;
+                self.activeTab = slide.getAttribute('data-area');
                 self.editor.querySelector('.jodit_image_editor_area.jodit_image_editor_area_' + self.activeTab).classList.add('active');
                 if (self.activeTab === 'crop') {
                     self.showCrop();
@@ -543,11 +564,11 @@ export default class ImageEditor extends Component{
 
         self.__on(self.widthInput, 'change mousedown keydown', debounce(() => {
             let value = parseInt(self.widthInput.value, 10), another;
-            if (value > self.parent.options.resizeHandler.min_width) {
+            if (value > self.parent.options.resizer.min_width) {
                 css(self.image, 'width', value + 'px');
                 if (self.resizeUseRatio) {
                     another = Math.round(value / self.ratio);
-                    if (another > self.parent.options.resizeHandler.min_height) {
+                    if (another > self.parent.options.resizer.min_height) {
                         css(self.image, 'height', another + 'px');
                         self.heightInput.value = another;
                     }
@@ -558,11 +579,11 @@ export default class ImageEditor extends Component{
 
         self.__on(self.heightInput, 'change mousedown keydown', debounce(() => {
             let value = parseInt(self.heightInput.value, 10), another;
-            if (value > self.parent.options.resizeHandler.min_height) {
+            if (value > self.parent.options.resizer.min_height) {
                 css(self.image, 'height', value + 'px');
                 if (self.resizeUseRatio) {
                     another = Math.round(value * self.ratio);
-                    if (another > self.parent.options.resizeHandler.min_width) {
+                    if (another > self.parent.options.resizer.min_width) {
                         css(self.image, 'width', another + 'px');
                         self.widthInput.value  = another;
                     }
@@ -635,38 +656,38 @@ export default class ImageEditor extends Component{
             button.addEventListener('mousedown', (e) => {
                 e.stopImmediatePropagation();
             });
-            button.addEventListener('click', function () {
+            button.addEventListener('click', () => {
                 let data = {
                     action: self.activeTab,
                     box: self.activeTab === 'resize' ? self.resizeBox : self.cropBox
                 };
 
-                switch (this.dataset.action) {
+                switch (button.getAttribute('data-action')) {
                     case 'saveas':
-                        Promt(self.parent.i18n('Enter new name'), self.parent.i18n('Save in new file'), function (name) {
+                        Promt(self.parent.i18n('Enter new name'), self.parent.i18n('Save in new file'), (name: string) => {
                             if (!trim(name)) {
                                 Alert(self.parent.i18n('The name should not be empty'));
                                 return false;
                             }
-                            self.onSave(name, data, self.hide, function (message) {
+                            self.onSave(name, data, self.hide, (message: string) => {
                                 Alert(message);
                             });
                         });
                         break;
                     case 'save':
-                        self.onSave(undefined, data, self.hide, function (message) {
+                        self.onSave(undefined, data, self.hide, (message: string) => {
                             Alert(message);
                         });
                         break;
                     case 'reset':
                         if (self.activeTab === 'resize') {
                             css(self.image, {
-                                width: self.naturalWidth,
-                                height: self.naturalHeight,
+                                width: null,
+                                height: null,
                             });
                             self.widthInput.value = self.naturalWidth.toString();
                             self.heightInput.value = self.naturalHeight.toString();
-                            self.__fire(self.resizeHandler, 'updatesize');
+                            self.parent.events.fire(self.resizeHandler, 'updatesize');
                         } else {
                             self.showCrop();
                         }

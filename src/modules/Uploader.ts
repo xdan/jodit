@@ -1,8 +1,47 @@
-import Jodit from '../jodit';
+import Jodit from '../Jodit';
 import Component from './Component';
 import Ajax from './Ajax';
-import config from '../config'
+import {Config} from '../Config'
 import {browser, extend, isPlainObject} from "./Helpers";
+import {TEXT_PLAIN} from "../constants";
+
+export type UploaderData = {
+    messages?: string[],
+    files?: string[],
+    path?: string,
+    baseurl?: string,
+}
+export type UploaderAnswer = {
+    success: boolean,
+    time: string,
+    data: UploaderData
+};
+
+
+declare module "../Config" {
+    interface Config {
+        enableDragAndDropFileToEditor: boolean;
+        uploader: {
+            url: string;
+            format: string;
+
+            prepareData: (formData: FormData) => any;
+
+            isSuccess: (resp: UploaderAnswer) => boolean;
+
+            getMessage: (resp: UploaderAnswer) => string;
+
+            process: (resp: UploaderAnswer) => UploaderData;
+
+            error: (e: Error) => void;
+
+            defaultHandlerSuccess: (data, resp: UploaderAnswer) => void;
+
+            defaultHandlerError: (resp: UploaderAnswer) => void;
+         }
+    }
+}
+
 /**
  * Module for processing download documents and images by Drag and Drop
  *
@@ -14,7 +53,8 @@ import {browser, extend, isPlainObject} from "./Helpers";
  * @property {boolean} enableDragAndDropFileToEditor=true Enable drag and drop file to editor
  * @memberof Jodit.defaultOptions
  */
-config.enableDragAndDropFileToEditor = true;
+Config.prototype.enableDragAndDropFileToEditor = true;
+
 /**
  * @property {object} uploader {@link module:Uploader|Uploader}'s settings
  * @property {string} uploader.url Point of entry for file uploader
@@ -89,18 +129,8 @@ config.enableDragAndDropFileToEditor = true;
  *     }
  * })
  */
-type UploaderAnswer = {
-    success: boolean,
-    time: string,
-    data: {
-        messages?: string[],
-        files?: string[],
-        path?: string,
-        baseurl?: string,
-    }
-};
 
-config.uploader = {
+Config.prototype.uploader = {
     url: '',
     format: 'json',
 
@@ -142,13 +172,14 @@ config.uploader = {
 }
 
 export default class Uploader extends Component {
-    path = '';
-    source = 'default';
+    path: string = '';
+    source: string = 'default';
 
     options;
+
     constructor(editor: Jodit, options) {
         super(editor);
-        this.options = extend(true, {}, config.uploader, this.parent.options.uploader, options);
+        this.options = extend(true, {}, Config.prototype.uploader, this.parent.options.uploader, options);
         if (this.parent.editor) {
             if (this.parent.options.enableDragAndDropFileToEditor && this.parent.options.uploader && this.parent.options.uploader.url) {
                 this.bind(this.parent.editor);
@@ -156,7 +187,7 @@ export default class Uploader extends Component {
         }
     }
 
-    buildData(data) {
+    buildData(data: FormData|object): FormData|object {
         if (window['FormData'] !== undefined) {
             if (data instanceof FormData) {
                 return data;
@@ -164,23 +195,23 @@ export default class Uploader extends Component {
             if (typeof data === 'string') {
                 return data;
             }
-            let newdata = new FormData(),
-                key;
 
-            for (key in data) {
-                if (data.hasOwnProperty(key)) {
-                    newdata.append(key, data[key]);
-                }
-            }
+            let newdata: FormData = new FormData(),
+                key: string;
+
+            Object.keys(data).forEach((key) => {
+                newdata.append(key, data[key]);
+            });
 
             return newdata;
         }
+
         return data;
     }
 
     private __ajax: Ajax;
 
-    send(data, success) {
+    send(data: object, success: (resp: UploaderAnswer) => void) {
         this.__ajax = new Ajax(this.parent, {
             xhr: () => {
                 let xhr = new XMLHttpRequest();
@@ -219,7 +250,7 @@ export default class Uploader extends Component {
             });
     }
 
-    sendFiles(files, handlerSuccess, handlerError, process?: Function) {
+    sendFiles(files: FileList, handlerSuccess: (resp: UploaderAnswer) => void, handlerError: (error: Error) => void, process?: Function) {
         let len = files.length,
             i,
             form,
@@ -257,7 +288,7 @@ export default class Uploader extends Component {
         uploader.send(form, (resp) => {
             if (this.options.isSuccess.call(uploader, resp)) {
                 if (typeof (handlerSuccess || uploader.options.defaultHandlerSuccess) === 'function') {
-                    (handlerSuccess || uploader.options.defaultHandlerSuccess).call(uploader, uploader.options.process.call(uploader, resp), resp);
+                    (handlerSuccess || uploader.options.defaultHandlerSuccess).call(uploader, uploader.options.process.call(uploader, resp));
                 }
             } else {
                 if (typeof (handlerError || uploader.options.defaultHandlerError)) {
@@ -286,7 +317,7 @@ export default class Uploader extends Component {
         this.source = source;
     }
 
-    dataURItoBlob(dataURI) {
+    dataURItoBlob(dataURI: string) {
         // convert base64 to raw binary data held in a string
         // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
         let byteString = atob(dataURI.split(',')[1]),
@@ -308,6 +339,7 @@ export default class Uploader extends Component {
 
     /**
      * Set the handlers Drag and Drop to `$form`
+     *
      * @method bind
      * @param {HTMLElement|String} $form Form or any Node on which you can drag and drop the file. In addition will be processed <code>&lt;input type="file" &gt;</code>
      * @param {function} [handlerSuccess] The function to be called when a successful uploading files to the server
@@ -323,14 +355,18 @@ export default class Uploader extends Component {
      * });
      */
 
-    bind(form: Element, handlerSuccess?: Function, handlerError?: Function) {
-        let self = this;
+    bind(form: HTMLElement, handlerSuccess?: (resp: UploaderAnswer) => void, handlerError?: (error: Error) => void) {
+        let self: Uploader = this;
         self
             .__on(form, 'paste',  function (e) {
-                let i, file, extension, div, process = (formdata) => {
-                    formdata.append('extension', extension);
-                    formdata.append("mimetype", file.type);
-                };
+                let i: number,
+                    file: File,
+                    extension: string,
+                    div: HTMLDivElement,
+                    process = (formdata) => {
+                        formdata.append('extension', extension);
+                        formdata.append("mimetype", file.type);
+                    };
 
                 // send data on server
                 if (e.clipboardData && e.clipboardData.files && e.clipboardData.files.length) {
@@ -339,13 +375,13 @@ export default class Uploader extends Component {
                 }
 
                 if (browser('ff')) {
-                    if (!e.clipboardData.types.length && e.clipboardData.types[0] !== 'text/plain') {
-                        div = this.parent.node.create('div');
+                    if (!e.clipboardData.types.length && e.clipboardData.types[0] !== TEXT_PLAIN) {
+                        div = <HTMLDivElement>this.parent.node.create('div');
                         this.parent.selection.insertNode(div);
                         div.focus();
                         setTimeout(() => {
-                            if (div.firstChild && div.firstChild.hasAttribute('src')) {
-                                let src = div.firstChild.getAttribute('src');
+                            if (div.firstChild && (<HTMLDivElement>div.firstChild).hasAttribute('src')) {
+                                let src = (<HTMLDivElement>div.firstChild).getAttribute('src');
                                 div.parentNode.removeChild(div);
                                 this.sendFiles([this.dataURItoBlob(src)], handlerSuccess, handlerError);
                             }
@@ -365,20 +401,20 @@ export default class Uploader extends Component {
                     }
                 }
             })
-            .__on(form, "dragover", (event) => {
+            .__on(form, "dragover", (event: DragEvent) => {
                 form.classList.add('draghover');
                 event.preventDefault();
             })
-            .__on(form, "dragleave dragend", (event) => {
+            .__on(form, "dragleave dragend", (event: DragEvent) => {
                 form.classList.remove('draghover');
                 event.preventDefault();
             })
-            .__on(form, "drop", (event) => {
+            .__on(form, "drop", (event: DragEvent) => {
                 form.classList.remove('draghover');
                 if (event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files.length) {
                     event.preventDefault();
                     this.sendFiles(event.dataTransfer.files, handlerSuccess, handlerError);
-                } else if (event.dataTransfer && event.dataTransfer.getData('text/plain') && event.dataTransfer.getData('text/plain') !== '-' && form === this.parent.editor) {
+                } else if (event.dataTransfer && event.dataTransfer.getData(TEXT_PLAIN) && event.dataTransfer.getData(TEXT_PLAIN) !== '-' && form === self.parent.editor) {
                     event.preventDefault();
                     event.stopPropagation();
                     if (!this.parent.selection.insertCursorAtPoint(event.clientX, event.clientY)) {
@@ -386,7 +422,7 @@ export default class Uploader extends Component {
                     }
                     if (handlerSuccess || this.options.defaultHandlerSuccess) {
                         let data = {baseurl: '', files: []};
-                        data.files = [event.dataTransfer.getData('text/plain')];
+                        data.files = [event.dataTransfer.getData(TEXT_PLAIN)];
 
                         (handlerSuccess || this.options.defaultHandlerSuccess).call(this, data);
                     }
@@ -395,7 +431,7 @@ export default class Uploader extends Component {
             });
 
         if (form.querySelector('input[type=file]')) {
-            self.__on(form.querySelector('input[type=file]'), 'change', function () {
+            self.__on(form.querySelector('input[type=file]'), 'change', function (this: HTMLInputElement) {
                 self.sendFiles(this.files, handlerSuccess, handlerError);
             });
         }

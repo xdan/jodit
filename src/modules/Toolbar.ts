@@ -1,6 +1,6 @@
-import Jodit from "../jodit"
+import Jodit from "../Jodit"
 import Component from "./Component"
-import {dom, each, $$, extend, inArray, camelCase} from "./Helpers"
+import {dom, each, $$, extend, camelCase} from "./Helpers"
 import * as consts from "../constants";
 
 type ControlType = {
@@ -66,7 +66,7 @@ export default class Toolbar extends Component{
      *
      * @param {HTMLElement} content
      */
-    openPopup(btn: HTMLLIElement, content: HTMLElement) {
+    openPopup(btn: HTMLLIElement|HTMLAnchorElement, content: HTMLElement, rightAlign: boolean = false) {
         // todo replace na position
         this.closeAll()
         btn.classList.add('jodit_popup_open');
@@ -75,6 +75,7 @@ export default class Toolbar extends Component{
         this.popup.innerHTML = '';
         this.popup.appendChild(content);
         this.popup.style.display = 'block';
+        this.popup.classList.toggle('jodit_right', rightAlign);
     }
 
     /**

@@ -1,6 +1,6 @@
-import Jodit from '../jodit'
+import Jodit from '../Jodit'
 import Component from './Component'
-import config from '../config'
+import {Config} from '../Config'
 import {dom, $$, asArray, css} from './Helpers'
 import Toolbar from "./Toolbar";
 
@@ -14,7 +14,22 @@ import Toolbar from "./Toolbar";
  * @prop {boolean} dialog.fullsizeButton=false In header will shown expand button
  * @memberof Jodit.defaultOptions
  */
-config.dialog = {
+
+type DialogOptions = {
+    zIndex?: number;
+    resizable?: boolean;
+    draggable?: boolean;
+    fullsize?: boolean;
+    fullsizeButton?: boolean;
+}
+
+declare module "../Config" {
+    interface Config {
+        dialog: DialogOptions;
+    }
+}
+
+Config.prototype.dialog = {
     zIndex: 100002,
     resizable: true,
     draggable: true,
@@ -30,9 +45,9 @@ config.dialog = {
  */
 export default class Dialog extends Component{
     /**
-     * @property {Object} options
+     * @property {DialogOptions} options
      */
-    options;
+    options: DialogOptions;
     /**
      * @property {HTMLDivElement} dialogbox
      */
@@ -47,9 +62,9 @@ export default class Dialog extends Component{
      * @property {HTMLDivElement} resizer
      */
     resizer;
-    constructor(parent ?: Jodit, options: any = {}) {
+    constructor(parent ?: Jodit, options: DialogOptions = {}) {
         super(parent);
-        this.options = (parent && parent.options) ? parent.options.dialog : {};
+        this.options = (parent && parent.options) ? parent.options.dialog : Config.prototype.dialog;
         this.options = {...this.options, ...options};
 
         this.dialogbox = dom('<div style="z-index:' + this.options.zIndex + '" class="jodit jodit_dialog_box">' +
@@ -84,9 +99,9 @@ export default class Dialog extends Component{
 
         this.destinition.appendChild(this.dialogbox);
 
-        this.dialogbox.addEventListener('close_dialog', this.close.bind(this));
+        this.dialogbox.addEventListener('close_dialog', this.close);
 
-        this.dialogbox.close.addEventListener('mousedown', this.close.bind(this));
+        this.dialogbox.close.addEventListener('mousedown', this.close);
 
         this.dialogbox.fullsize.addEventListener('click', () => {
             let fullSize = this.maximization();
@@ -112,13 +127,13 @@ export default class Dialog extends Component{
 
 
 
-    offsetX;
-    offsetY;
+    offsetX: number;
+    offsetY: number;
 
-    destinition = document.body;
-    destroyAfterClose = false;
+    destinition: HTMLElement = document.body;
+    destroyAfterClose:boolean = false;
 
-    moved = false;
+    moved: boolean = false;
 
     /**
      * Get dom element (div.jodit_dialog_box > .div.jodit_dialog)
@@ -143,7 +158,7 @@ export default class Dialog extends Component{
      * @param {number} [w] - The width of the window
      * @param {number} [h] - The height of the window
      */
-    setSize(w?: number, h?: number) {
+    setSize(w?: number|string, h?: number|string) {
         if (w) {
             css(this.dialog, 'width', w)
         }
@@ -174,21 +189,33 @@ export default class Dialog extends Component{
         this.dialog.style.top = (y || top) + 'px';
     }
 
+    private setElements(root: HTMLDivElement, elements: string|string[]|Element|Element[]) {
+        let elements_list: HTMLElement[] = [];
+        asArray(elements).forEach((elm) => {
+            let element = dom(elm);
+            elements_list.push(element);
+            if (element.parentNode !== root) {
+                root.appendChild(element);
+            }
+        });
+        [].slice.call(root.childNodes).forEach((elm: HTMLElement) => {
+            if (elements_list.indexOf(elm) === -1) {
+                root.removeChild(elm);
+            }
+        });
+    }
     /**
      * Specifies the dialog box title . It can take a string and an array of objects
      *
-     * @param {string|string[]|Element|Element[]} title - A string or an HTML element , or an array of strings and elements
+     * @param {string|string[]|Element|Element[]} content - A string or an HTML element , or an array of strings and elements
      * @example
      * var dialog = new Jodi.modules.Dialog(parent);
      * dialog.setTitle('Hello world');
      * dialog.setTitle(['Hello world', '<button>OK</button>', $('<div>some</div>')]);
      * dialog.open();
      */
-    setTitle(title:  string|string[]|Element|Element[]) {
-        this.dialogbox.header.innerHTML = '';
-        asArray(title).forEach((elm) => {
-            this.dialogbox.header.appendChild(dom(elm));
-        })
+    setTitle(content:  string|string[]|Element|Element[]) {
+        this.setElements(this.dialogbox.header, content);
     }
 
     /**
@@ -202,10 +229,7 @@ export default class Dialog extends Component{
      * dialog.open();
      */
     setContent(content: string|string[]|Element|Element[]) {
-        this.dialogbox.content.innerHTML = '';
-        asArray(content).forEach((elm) => {
-            this.dialogbox.content.appendChild(dom(elm));
-        })
+        this.setElements(this.dialogbox.content, content);
     }
 
     /**
@@ -225,10 +249,7 @@ export default class Dialog extends Component{
      * dialog.open();
      */
     setFooter(content: string|string[]|Element|Element[]) {
-        this.dialogbox.footer.innerHTML = '';
-        asArray(content).forEach((elm) => {
-            this.dialogbox.footer.appendChild(dom(elm));
-        });
+        this.setElements(this.dialogbox.footer, content);
         this.dialog.classList.toggle('with_footer', !!content);
     }
 
@@ -323,9 +344,11 @@ export default class Dialog extends Component{
         if (title !== undefined) {
             this.setTitle(title);
         }
+
         if (content) {
             this.setContent(content);
         }
+
         this.dialogbox.classList.add('active');
         if (modal) {
             this.dialogbox.classList.add('jodit_modal');
@@ -482,7 +505,12 @@ export default class Dialog extends Component{
      * // and second way, you can close dialog from content
      * dialog.open('<a onclick="$(this).closest('.jodit_dialog_box').trigger('close_dialog')">Close</a>', 'Title');
      */
-    close = () => {
+    close = (e?: MouseEvent) => {
+        if (e) {
+            e.stopImmediatePropagation();
+            e.preventDefault();
+        }
+
         /**
          * Called up to close the window
          *
@@ -556,7 +584,7 @@ export const Alert = (msg: string, title?: string|Function, callback?: Function)
 
     let dialog = new Dialog(),
         $div = dom('<div class="jodit_alert"></div>'),
-        $ok = dom('<a href="javascript:void(0)" style="float:left;" class="jodit_button">' + Jodit.prototype.i18n('Ok') + '</a>');
+        $ok = dom('<a href="javascript:void(0)" style="float:left;" class="jodit_button">' + Toolbar.getIcon('cancel') + '<span>' + Jodit.prototype.i18n('Ok') + '</span></a>');
 
     $div.innerHTML = msg;
 

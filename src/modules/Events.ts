@@ -147,7 +147,7 @@ export default class Events extends Component{
      * });
      * dialog.open('Hello world!!!');
      */
-    fire (object: any, list?: any, args?: any[]): false|void {
+    fire (object: any, list?: any, args?: any[]): false|void|any {
         let i, j, result, result_value;
         if (typeof object === 'string') {
             args = list;

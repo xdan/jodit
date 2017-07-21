@@ -1,4 +1,4 @@
-import Jodit from '../jodit';
+import Jodit from '../Jodit';
 import * as consts from '../constants';
 import Table from '../modules/Table'
 

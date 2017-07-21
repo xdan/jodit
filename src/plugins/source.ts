@@ -1,5 +1,5 @@
-import Jodit from '../jodit';
-import config from '../config'
+import Jodit from '../Jodit';
+import {Config} from '../Config'
 import * as consts from '../constants';
 import {$$, appendScript, dom} from '../modules/Helpers';
 
@@ -7,13 +7,24 @@ import {$$, appendScript, dom} from '../modules/Helpers';
 * @prop {boolean} useAceEditor=true Use ACE editor instead of usual textarea. {@link module:source|source}'s options
 * @memberof Jodit.defaultOptions
 */
-config.useAceEditor = true;
+declare module "../Config" {
+    interface Config {
+        useAceEditor: boolean;
+        sourceEditorNativeOptions: {
+            theme: string;
+            mode: string;
+            highlightActiveLine: boolean;
+        }
+        sourceEditorCDNUrlsJS: string[];
+    }
+}
+Config.prototype.useAceEditor = true;
 
 /**
 * @prop {plainObject} sourceEditorNativeOptions={...} Options for {@link https://ace.c9.io/#config|ace} editor
 * @memberof Jodit.defaultOptions
 */
-config.sourceEditorNativeOptions = {
+Config.prototype.sourceEditorNativeOptions = {
     theme: 'ace/theme/textmate',
     mode: 'ace/mode/html',
     highlightActiveLine: true,
@@ -23,7 +34,7 @@ config.sourceEditorNativeOptions = {
 * @prop {Array.<String>} sourceEditorCDNUrlJS=["https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js", "https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ext-beautify.js"]  CDN URLs for ACE editor
 * @memberof Jodit.defaultOptions
 */
-config.sourceEditorCDNUrlsJS = [
+Config.prototype.sourceEditorCDNUrlsJS = [
     '//cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js',
     '//cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ext-emmet.js',
     '//cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.12/beautify.min.js',

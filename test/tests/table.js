@@ -12,8 +12,8 @@ describe('Tables Jodit Editor Tests', function() {
             var editor = new Jodit('#table_editor');
             editor.setEditorValue('<table>' +
                     '<tr>' +
-                        '<td class="jodit_selected_cell">1</td>' +
-                        '<td class="jodit_selected_cell">2</td>' +
+                        '<td data-jodit-selected-cell="1">1</td>' +
+                        '<td data-jodit-selected-cell="1">2</td>' +
                         '<td rowspan="2">3</td>' +
                     '</tr>' +
                     '<tr><td>4</td></tr>' +
@@ -150,8 +150,8 @@ describe('Tables Jodit Editor Tests', function() {
                 var editor = new Jodit('#table_editor');
 
                 editor.setEditorValue('<table>' +
-                    '<tr><td class="jodit_selected_cell">1</td><td class="jodit_selected_cell">2</td></tr>' +
-                    '<tr><td class="jodit_selected_cell">3</td><td class="jodit_selected_cell">4</td></tr>' +
+                    '<tr><td data-jodit-selected-cell="1">1</td><td data-jodit-selected-cell="1">2</td></tr>' +
+                    '<tr><td data-jodit-selected-cell="1">3</td><td data-jodit-selected-cell="1">4</td></tr>' +
                     '<tr><td>5</td><td>6</td></tr>' +
                     '</table>');
 
@@ -162,7 +162,7 @@ describe('Tables Jodit Editor Tests', function() {
                     '<table>' +
                     '<tbody>' +
                     '<tr>' +
-                    '<td class="jodit_selected_cell" colspan="2">1<br>2<br>3<br>4</td>' +
+                    '<td colspan="2" data-jodit-selected-cell="1">1<br>2<br>3<br>4</td>' +
                     '</tr>' +
                     '<tr>' +
                     '<td>5</td>' +
@@ -176,10 +176,10 @@ describe('Tables Jodit Editor Tests', function() {
                 var editor = new Jodit('#table_editor');
 
                 editor.setEditorValue('<table>' +
-                    '<tr><td colspan="2" class="jodit_selected_cell">1</td></tr>' +
-                    '<tr><td class="jodit_selected_cell">3</td><td class="jodit_selected_cell">4</td></tr>' +
-                    '<tr><td rowspan="2" class="jodit_selected_cell">5</td><td class="jodit_selected_cell">6</td></tr>' +
-                    '<tr><td class="jodit_selected_cell">7</td></tr>' +
+                    '<tr><td colspan="2" data-jodit-selected-cell="1">1</td></tr>' +
+                    '<tr><td data-jodit-selected-cell="1">3</td><td data-jodit-selected-cell="1">4</td></tr>' +
+                    '<tr><td rowspan="2" data-jodit-selected-cell="1">5</td><td data-jodit-selected-cell="1">6</td></tr>' +
+                    '<tr><td data-jodit-selected-cell="1">7</td></tr>' +
                     '<tr><td>8</td><td>9</td></tr>' +
                     '</table>');
 
@@ -190,7 +190,7 @@ describe('Tables Jodit Editor Tests', function() {
                     '<table>' +
                         '<tbody>' +
                             '<tr>' +
-                                '<td class="jodit_selected_cell" colspan="2">' +
+                                '<td colspan="2" data-jodit-selected-cell="1">' +
                                     '1<br>3<br>4<br>5<br>6<br>7' +
                                 '</td>' +
                             '</tr>' +
@@ -208,10 +208,10 @@ describe('Tables Jodit Editor Tests', function() {
                 editor.setEditorValue(
                     '<table style="width: 100%;">' +
                     '<tbody>' +
-                    '<tr><td class="jodit_selected_cell" colspan="3">0,0<br>0,1<br>0,2<br></td><td>0,3</td></tr>' +
-                    '<tr><td class="jodit_selected_cell" rowspan="3">1,0<br>2,0<br>3,0<br></td><td class="jodit_selected_cell">1,1</td><td class="jodit_selected_cell">1,2</td><td>1,3</td></tr>' +
-                    '<tr><td class="jodit_selected_cell">2,1</td><td class="jodit_selected_cell">2,2</td><td>2,3</td></tr>' +
-                    '<tr><td class="jodit_selected_cell">3,1</td><td class="jodit_selected_cell">3,2</td><td>3,3</td></tr>' +
+                    '<tr><td data-jodit-selected-cell="1" colspan="3">0,0<br>0,1<br>0,2<br></td><td>0,3</td></tr>' +
+                    '<tr><td data-jodit-selected-cell="1" rowspan="3">1,0<br>2,0<br>3,0<br></td><td data-jodit-selected-cell="1">1,1</td><td data-jodit-selected-cell="1">1,2</td><td>1,3</td></tr>' +
+                    '<tr><td data-jodit-selected-cell="1">2,1</td><td data-jodit-selected-cell="1">2,2</td><td>2,3</td></tr>' +
+                    '<tr><td data-jodit-selected-cell="1">3,1</td><td data-jodit-selected-cell="1">3,2</td><td>3,3</td></tr>' +
                     '</tbody></table>');
 
                 var table = new Jodit.modules.Table(editor);
@@ -221,7 +221,7 @@ describe('Tables Jodit Editor Tests', function() {
                     '<table style="width: 100%">' +
                         '<tbody>' +
                             '<tr>' +
-                                '<td class="jodit_selected_cell" rowspan="4">' +
+                                '<td data-jodit-selected-cell="1" rowspan="4">' +
                                     '0,0<br>0,1<br>0,2<br><br>' +
                                     '1,0<br>2,0<br>3,0<br><br>' +
                                     '1,1<br>' +
@@ -255,13 +255,13 @@ describe('Tables Jodit Editor Tests', function() {
                     '<tr><td colspan="3" class="">0,0<br>0,1<br>0,2<br></td><td>0,3</td></tr>' +
                     '<tr>' +
                         '<td rowspan="3" class="">1,0<br>2,0<br>3,0<br></td>' +
-                        '<td class="jodit_selected_cell">1,1</td><td class="jodit_selected_cell">1,2</td>' +
-                        '<td class="jodit_selected_cell">1,3</td>' +
+                        '<td data-jodit-selected-cell="1">1,1</td><td data-jodit-selected-cell="1">1,2</td>' +
+                        '<td data-jodit-selected-cell="1">1,3</td>' +
                     '</tr>' +
                     '<tr>' +
-                        '<td class="jodit_selected_cell">2,1</td>' +
-                        '<td class="jodit_selected_cell">2,2</td>' +
-                        '<td class="jodit_selected_cell">2,3</td>' +
+                        '<td data-jodit-selected-cell="1">2,1</td>' +
+                        '<td data-jodit-selected-cell="1">2,2</td>' +
+                        '<td data-jodit-selected-cell="1">2,3</td>' +
                     '</tr>' +
                     '<tr>' +
                         '<td class="">3,1</td>' +
@@ -281,7 +281,7 @@ describe('Tables Jodit Editor Tests', function() {
                             '</tr>' +
                             '<tr>' +
                                 '<td rowspan="2">1,0<br>2,0<br>3,0<br></td>' +
-                                '<td class="jodit_selected_cell" colspan="3">1,1<br>1,2<br>1,3<br>2,1<br>2,2<br>2,3</td>' +
+                                '<td colspan="3" data-jodit-selected-cell="1">1,1<br>1,2<br>1,3<br>2,1<br>2,2<br>2,3</td>' +
                             '</tr>' +
                             '<tr>' +
                                 '<td>3,1</td><td>3,2</td><td>3,3</td>' +
@@ -297,8 +297,8 @@ describe('Tables Jodit Editor Tests', function() {
                     '<table>' +
                         '<tbody>' +
                             '<tr>' +
-                                '<td colspan="3" class="jodit_selected_cell" rowspan="4">1</td>' +
-                                '<td class="jodit_selected_cell" rowspan="4">2</td>' +
+                                '<td colspan="3" data-jodit-selected-cell="1" rowspan="4">1</td>' +
+                                '<td data-jodit-selected-cell="1" rowspan="4">2</td>' +
                             '</tr>' +
                             '<tr></tr>' +
                             '<tr></tr>' +
@@ -313,7 +313,7 @@ describe('Tables Jodit Editor Tests', function() {
                     '<table>' +
                         '<tbody>' +
                             '<tr>' +
-                                '<td class="jodit_selected_cell">1<br>2</td>' +
+                                '<td data-jodit-selected-cell="1">1<br>2</td>' +
                             '</tr>' +
                         '</tbody>' +
                     '</table>'
@@ -327,7 +327,7 @@ describe('Tables Jodit Editor Tests', function() {
                 editor.setEditorValue(
                     '<table>' +
                     '<tbody>' +
-                        '<tr><td class="jodit_selected_cell">0,0</td></tr>' +
+                        '<tr><td data-jodit-selected-cell="1">0,0</td></tr>' +
                         '<tr><td>1,0</td></tr>' +
                     '</tbody>' +
                     '</table>'
@@ -354,7 +354,7 @@ describe('Tables Jodit Editor Tests', function() {
                         '<tbody>' +
                             '<tr><td>0,0</td><td>0,1</td><td>0,2</td></tr>' +
                             '<tr>' +
-                                '<td rowspan="2" class="jodit_selected_cell">1,0</td>' +
+                                '<td rowspan="2" data-jodit-selected-cell="1">1,0</td>' +
                                 '<td>1,1</td>' +
                                 '<td rowspan="2">1,2</td>' +
                             '</tr>' +
@@ -391,7 +391,7 @@ describe('Tables Jodit Editor Tests', function() {
                     '<tr><td>0,0</td><td>0,1</td><td>0,2</td></tr>' +
                     '<tr>' +
                     '<td rowspan="2">1,0</td>' +
-                    '<td rowspan="2" class="jodit_selected_cell">1,1</td>' +
+                    '<td rowspan="2" data-jodit-selected-cell="1">1,1</td>' +
                     '<td>1,2</td>' +
                     '</tr>' +
                     '<tr><td><br></td></tr>' +
@@ -424,7 +424,7 @@ describe('Tables Jodit Editor Tests', function() {
                 editor.setEditorValue(
                     '<table style="width: 100px;">' +
                         '<tbody>' +
-                            '<tr><td style="width:30px" class="jodit_selected_cell">0,0</td><td>0,1</td></tr>' +
+                            '<tr><td style="width:30px" data-jodit-selected-cell="1">0,0</td><td>0,1</td></tr>' +
                             '<tr><td>1,0</td><td>1,1</td></tr>' +
                         '</tbody>' +
                     '</table>'
@@ -879,17 +879,18 @@ describe('Tables Jodit Editor Tests', function() {
 
                 simulateEvent('mousedown', 1, editor.editor.querySelector('td'));
                 simulateEvent('mousemove', 1, editor.editor.querySelectorAll('td')[3]);
+                simulateEvent('mouseup', 1, editor.editor.querySelectorAll('td')[3]);
 
-                expect(editor.editor.innerHTML).to.equal(
+                expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal(
                     '<table>' +
                     '<tbody>' +
                     '<tr>' +
-                    '<td class="jodit_selected_cell">1</td>' +
-                    '<td class="jodit_selected_cell">2</td>' +
+                    '<td data-jodit-selected-cell="1">1</td>' +
+                    '<td data-jodit-selected-cell="1">2</td>' +
                     '</tr>' +
                     '<tr>' +
-                    '<td class="jodit_selected_cell">3</td>' +
-                    '<td class="jodit_selected_cell">4</td>' +
+                    '<td data-jodit-selected-cell="1">3</td>' +
+                    '<td data-jodit-selected-cell="1">4</td>' +
                     '</tr>' +
                     '<tr>' +
                     '<td>5</td>' +
@@ -923,7 +924,7 @@ describe('Tables Jodit Editor Tests', function() {
                  simulateEvent('mousedown', 1, editor.editor.querySelector('.test').querySelector('td'));
                  simulateEvent('mousemove', 1, editor.editor.querySelector('.test').querySelectorAll('td')[3]);
 
-                 expect(editor.editor.innerHTML).to.equal('<table><tbody><tr><td>1</td><td>2</td></tr><tr><td>3</td><td class="test"><table><tbody><tr><td class="jodit_selected_cell">1</td><td class="jodit_selected_cell">2</td></tr><tr><td class="jodit_selected_cell">3</td><td class="jodit_selected_cell">4</td></tr><tr><td>5</td><td>6</td></tr></tbody></table></td></tr><tr><td>5</td><td>6</td></tr></tbody></table>');
+                 expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal('<table><tbody><tr><td>1</td><td>2</td></tr><tr><td>3</td><td class="test"><table><tbody><tr><td data-jodit-selected-cell="1">1</td><td data-jodit-selected-cell="1">2</td></tr><tr><td data-jodit-selected-cell="1">3</td><td data-jodit-selected-cell="1">4</td></tr><tr><td>5</td><td>6</td></tr></tbody></table></td></tr><tr><td>5</td><td>6</td></tr></tbody></table>');
              });
             it('When we press mouse button over cell and move mouse to another cell, it should select all cells in bound even if between be colspan and rowspan', function () {
                 var editor = new Jodit('#table_editor');
@@ -948,7 +949,7 @@ describe('Tables Jodit Editor Tests', function() {
                 expect(
                     sortAtrtibutes(editor.editor.innerHTML) // ie change position between colspan and class
                 ).to.equal(
-                    '<table style="width: 100%"><tbody><tr><td class="jodit_selected_cell" colspan="3">0,0<br>0,1<br>0,2<br></td><td>0,3</td></tr><tr><td class="jodit_selected_cell" rowspan="3">1,0<br>2,0<br>3,0<br></td><td class="jodit_selected_cell">1,1</td><td class="jodit_selected_cell">1,2</td><td>1,3</td></tr><tr><td class="jodit_selected_cell">2,1</td><td class="jodit_selected_cell">2,2</td><td>2,3</td></tr><tr><td class="jodit_selected_cell">3,1</td><td class="jodit_selected_cell">3,2</td><td>3,3</td></tr></tbody></table>'
+                    '<table style="width: 100%"><tbody><tr><td colspan="3" data-jodit-selected-cell="1">0,0<br>0,1<br>0,2<br></td><td>0,3</td></tr><tr><td data-jodit-selected-cell="1" rowspan="3">1,0<br>2,0<br>3,0<br></td><td data-jodit-selected-cell="1">1,1</td><td data-jodit-selected-cell="1">1,2</td><td>1,3</td></tr><tr><td data-jodit-selected-cell="1">2,1</td><td data-jodit-selected-cell="1">2,2</td><td>2,3</td></tr><tr><td data-jodit-selected-cell="1">3,1</td><td data-jodit-selected-cell="1">3,2</td><td>3,3</td></tr></tbody></table>'
                 );
             });
         });

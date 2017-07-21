@@ -1,9 +1,10 @@
-import Jodit from '../jodit';
-import config from '../config'
+import Jodit from '../Jodit';
+import {Config} from '../Config'
 import {$$, browser, css, dom, trim} from "../modules/Helpers";
 import {Alert, Confirm, default as Dialog} from "../modules/Dialog";
 import Toolbar from "../modules/Toolbar";
 import Widget from "../modules/Widget";
+import FileBrowser from "../modules/FileBrowser";
 /**
  * Plug-in for image editing window
  *
@@ -24,7 +25,7 @@ import Widget from "../modules/Widget";
  * @prop {boolean} image.editId=true Show edit ID input
  * @prop {boolean} image.editAlign=true Show Alignment selector
  * @prop {boolean} image.showPreview=true Show preview image
- * @prop {boolean} image.selectimageAfterClose=true Select image after close dialog
+ * @prop {boolean} image.selectImageAfterClose=true Select image after close dialog
  * @memberof Jodit.defaultOptions
  * @example
  * var editor = new Jodit('#editor', {
@@ -34,7 +35,30 @@ import Widget from "../modules/Widget";
  *     }
  * });
  */
- config.image =  {
+
+declare module "../Config" {
+    interface Config {
+        image: {
+            openOnDblClick: boolean,
+            editSrc: boolean,
+            useImageEditor: boolean,
+            editTitle: boolean,
+            editAlt: boolean,
+            editLink: boolean,
+            editSize: boolean,
+            editMargins: boolean,
+            editClass: boolean,
+            editStyle: boolean,
+            editId: boolean,
+            editAlign: boolean,
+            showPreview: boolean,
+            selectImageAfterClose: boolean,
+        }
+    }
+}
+
+
+Config.prototype.image =  {
      openOnDblClick: true,
      editSrc: true,
      useImageEditor: true,
@@ -48,10 +72,10 @@ import Widget from "../modules/Widget";
      editId: true,
      editAlign: true,
      showPreview: true,
-     selectimageAfterClose: true,
- };
+     selectImageAfterClose: true,
+};
 
-Jodit.plugins.image = function (editor: Jodit) {
+Jodit.plugins.imageProperties = function (editor: Jodit) {
     /**
      * Open dialog editing image properties
      *
@@ -70,7 +94,7 @@ Jodit.plugins.image = function (editor: Jodit) {
      */
     let open = function (e) {
         const image = <HTMLImageElement>this,
-            dialog = new Dialog(editor),
+            dialog: Dialog = new Dialog(editor),
             cancel: HTMLElement = dom('<a href="javascript:void(0)" style="float:right;" class="jodit_button">' + Toolbar.getIcon('cancel') + '<span>' + editor.i18n('Cancel') + '</span></a>'),
             check: HTMLElement  = dom('<a href="javascript:void(0)" style="float:left;" class="jodit_button">' + Toolbar.getIcon('check') + '<span>' +  editor.i18n('Ok') + '</span></a>'),
 
@@ -172,7 +196,7 @@ Jodit.plugins.image = function (editor: Jodit) {
                 '</div>'),
             ratio: number = image.naturalWidth / image.naturalHeight || 1,
 
-            // $imagebtn = maintab.querySelector('.jodit_rechange'),
+            imagebtn: HTMLAnchorElement = <HTMLAnchorElement>mainTab.querySelector('.jodit_rechange'),
 
             $w: HTMLInputElement = <HTMLInputElement>prop.querySelector('#imageWidth'),
             $h: HTMLInputElement = <HTMLInputElement>prop.querySelector('#imageHeight'),
@@ -267,7 +291,7 @@ Jodit.plugins.image = function (editor: Jodit) {
 
         editor.events.on(dialog, 'afterClose', () => {
             dialog.destruct();
-            if (image.parentNode && editor.options.image.selectimageAfterClose) {
+            if (image.parentNode && editor.options.image.selectImageAfterClose) {
                 editor.selection.select(image);
             }
         });
@@ -280,67 +304,61 @@ Jodit.plugins.image = function (editor: Jodit) {
         mainTab.querySelector('.jodit_use_image_editor').addEventListener('mousedown', () => {
             if (editor.options.image.useImageEditor) {
                 let url = image.getAttribute('src'),
-                    a = document.createElement('a');
+                    a = document.createElement('a'),
+                    loadExternal = () => {
+                        if (a.host !== location.host) {
+                            Confirm(editor.i18n('You can only edit your own images. Download this image on the host?'), (yes) => {
+                                if (yes && editor.uploader) {
+                                    editor.uploader.uploadRemoteImage(a.href.toString(), (resp) => {
+                                        Alert(editor.i18n('The image has been successfully uploaded to the host!'), () => {
+                                            if (resp.data && typeof resp.data.newfilename === 'string') {
+                                                image.setAttribute('src', resp.data.baseurl + resp.data.newfilename);
+                                                updateSrc();
+                                            }
+                                        });
+                                    }, (resp, message) => {
+                                        Alert(editor.i18n('There was an error loading:' + message));
+                                    });
+                                }
+                            });
+                            return;
+                        }
+                    };
 
                 a.href = url;
 
-                if (a.host !== location.host) {
-                    Confirm(editor.i18n('You can only edit your own images. Download this image on the host?'), (yes) => {
-                        if (yes && editor.uploader) {
-                            editor.uploader.uploadRemoteImage(a.href.toString(), () => {
-                                Alert(editor.i18n('The image has been successfully uploaded to the host!'), (resp) => {
-                                    if (typeof resp.newpath === 'string') {
-                                        image.setAttribute('src', resp.baseurl + resp.newpath);
-                                        updateSrc();
-                                    }
-                                });
-                            }, (resp, message) => {
-                                Alert(editor.i18n('There was an error loading:' + message));
-                            });
-                        }
-                    });
-                    return;
-                }
-
-                editor.filebrowser.getPathByUrl(a.href, function (path, name) {
-                    editor.filebrowser.openImageEditor(a.href, name, path, () => {
+                (<FileBrowser>editor.getInstance('FileBrowser')).getPathByUrl(a.href.toString(), (path: string, name: string, source: string) => {
+                    (<FileBrowser>editor.getInstance('FileBrowser')).openImageEditor(a.href, name, path, source, () => {
                         let timestamp = (new Date()).getTime();
                         image.setAttribute('src', url + (url.indexOf('?') !== -1 ? '' : '?') + '&_tmp=' + timestamp);
                         updateSrc();
-                    }, (msg) => {
-                        Alert(msg);
-                    });
-                }, (msg) => {
-                    Alert(msg);
+                    }, Alert);
+                }, (message) => {
+                    Alert(message, loadExternal);
                 });
             }
         });
 
-        // $imagebtn.on('mousedown', function (e) {
-        //     $imagebtn.toggleClass('active');
-        //     editor.$toolbar_popap.show();
-        //     $imagebtn.append(editor.$toolbar_popap); // move
-        //     editor.$toolbar_popap.addClass('jodit_right');
-        //     editor.$toolbar_popap.empty();
-        //     editor.$toolbar_popap.html(editor.form.imageSelector({
-        //         upload: function (data) {
-        //             var field = this.options.uploader.filesVariableName;
-        //             if (data[field] && data[field].length) {
-        //                 image.setAttribute('src', data.baseurl + data[field][0]);
-        //             }
-        //             update();
-        //             editor.closeToolbarPopap();
-        //         },
-        //         filebrowser: function (data) {
-        //             if (data && data.files && $.isArray(data.files) && data.files.length) {
-        //                 image.setAttribute('src', data.files[0]);
-        //                 editor.closeToolbarPopap();
-        //                 update();
-        //             }
-        //         }
-        //     }, image));
-        //     e.stopPropagation();
-        // });
+        imagebtn.addEventListener('mousedown', (e) => {
+            imagebtn.classList.toggle('active');
+            editor.toolbar.openPopup(imagebtn, editor.getInstance('Widget').create('ImageSelector', {
+                upload: (data) => {
+                    if (data.files && data.files.length) {
+                        image.setAttribute('src', data.baseurl + data.files[0]);
+                    }
+                    update();
+                    editor.toolbar.closeAll();
+                },
+                filebrowser: (data) => {
+                    if (data && data.files && Array.isArray(data.files) && data.files.length) {
+                        image.setAttribute('src', data.files[0]);
+                        editor.toolbar.closeAll();
+                        update();
+                    }
+                }
+            }, image), true);
+            e.stopPropagation();
+        });
 
         prop.querySelector('.jodit_lock_helper.jodit_lock_size').addEventListener('click', function () {
             lockSize = !lockSize;
@@ -435,7 +453,7 @@ Jodit.plugins.image = function (editor: Jodit) {
             }
 
             const normalSize = (val) => {
-                val = editor.helper.trim(val);
+                val = trim(val);
                 return (/^[0-9]+$/).test(val) ? val + 'px' : val;
             };
 
@@ -508,7 +526,7 @@ Jodit.plugins.image = function (editor: Jodit) {
             }
 
             dialog.close();
-        })
+        });
 
         dialog.setFooter([
             check,
@@ -521,12 +539,7 @@ Jodit.plugins.image = function (editor: Jodit) {
             e.preventDefault();
         }
         return false;
-    },
-        pd = (e: DragEvent) => {
-            e.dataTransfer.dropEffect = 'move';
-            e.dataTransfer.setData('text/plain', '');
-            e.preventDefault();
-        };
+    };
 
     if (editor.options.image.openOnDblClick) {
         editor.__on(editor.editor, 'dblclick', 'img', open);
@@ -535,31 +548,6 @@ Jodit.plugins.image = function (editor: Jodit) {
             editor.selection.select(this);
         });
     }
-
-    editor.__on(editor.editor, "dragenter", pd)
-        .__on(editor.editor, "dragover", (e) => {
-            if (browser('mse')) {
-                pd(e);
-            }
-        })
-        .__on(editor.editor, "drop", (e) => {
-            let img = editor.editor.querySelector('img.jodit_focused_image'), elm;
-            if (img) {
-                e.preventDefault();
-                e.stopPropagation();
-
-                if (editor.selection.insertCursorAtPoint(e.clientX, e.clientY) === false) {
-                    return false;
-                }
-
-                if (img.parentNode.tagName === 'A' && !img.parentNode.textContent.length) {
-                    elm = img.parentNode;
-                } else {
-                    elm = img;
-                }
-                editor.selection.select(elm);
-            }
-        });
 
     this.open = open;
 };

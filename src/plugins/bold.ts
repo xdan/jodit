@@ -1,6 +1,5 @@
-import Jodit from '../jodit';
+import Jodit from '../Jodit';
 import * as consts from '../constants';
-import {each} from "../modules/Helpers";
 
 /**
  * Wrap selected content in special tag or return already wrapped

@@ -394,7 +394,7 @@ describe('Test interface', function() {
 
                 simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-fullsize'));
 
-                let node = editor.container.parentNode;
+                var node = editor.container.parentNode;
                 while (node && !(node instanceof Document)) {
                     expect(node.classList.contains('jodit_fullsize_box')).to.equal(true);
                     node = node.parentNode;

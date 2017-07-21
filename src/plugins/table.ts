@@ -1,15 +1,19 @@
-import Jodit from '../jodit';
-import Table from '../modules/Table';
+import Jodit from '../Jodit';
+import Table, {JODIT_SELECTED_CELL_MARKER} from '../modules/Table';
 import * as consts from '../constants';
 import {each, getContentWidth, $$, dom} from '../modules/Helpers';
-import config from '../config'
+import {Config} from '../Config'
 
 /**
  * @prop {boolean} useTableProcessor=true true Use module {@link module:TableProcessor|TableProcessor}
  * @memberof Jodit.defaultOptions
  */
-config.useTableProcessor = true;
-
+declare module "../Config" {
+    interface Config {
+        useTableProcessor: boolean;
+    }
+}
+Config.prototype.useTableProcessor = true;
 /**
  *
  */
@@ -24,11 +28,11 @@ class TableProcessor extends Table{
      * @private
      */
     __deSelectAll(table, current_cell ?: HTMLTableCellElement|false) {
-        let cells = table ? this.getAllSelectedCells(table) : $$(this.selectedClass, this.parent.editor);
+        let cells = table ? this.getAllSelectedCells(table) : this.getAllSelectedCells(this.parent.editor);
         if (cells.length) {
             each(cells, (i, cell) => {
                 if (!current_cell || current_cell !== cell) {
-                    cell.classList.remove(this.selectedClass);
+                    this.removeSelected(cell);
                 }
             })
         }
@@ -169,14 +173,14 @@ class TableProcessor extends Table{
         table[this.__key] = true;
         let start;
         table.addEventListener('mousedown', (event: MouseEvent) => {
-            let cell = this.parent.node.up(<HTMLElement>event.target, this.__isCell, table);
+            let cell: HTMLTableCellElement = <HTMLTableCellElement>this.parent.node.up(<HTMLElement>event.target, this.__isCell, table);
             if (cell && cell instanceof  HTMLElement) {
                 if (!cell.firstChild) {
                     cell.appendChild(this.parent.node.create('br'))
                 }
 
                 start = cell;
-                cell.classList.add(this.selectedClass);
+                this.addSelected(cell);
                 this.__selectMode = true;
                 this.parent.startDrag();
             }
@@ -205,7 +209,7 @@ class TableProcessor extends Table{
 
                     for (let i = bound[0][0]; i <= bound[1][0]; i += 1) {
                         for (let j = bound[0][1]; j <= bound[1][1]; j += 1) {
-                            box[i][j].classList.add(this.selectedClass);
+                            this.addSelected(box[i][j])
                         }
                     }
                 } else {
@@ -275,6 +279,9 @@ class TableProcessor extends Table{
             this.__deSelectAll(table, current_cell instanceof HTMLTableCellElement ? current_cell : false);
         });
         editor.events
+            .on('afterGetValueFromEditor', (data) => {
+                data.value = data.value.replace(new RegExp(`([\s]*)${JODIT_SELECTED_CELL_MARKER}="1"`, 'g'), '');
+            })
             .on('change afterCommand afterSetMode', () => {
                 $$('table', editor.editor).forEach((table) => {
                     if (!table[this.__key]) {
@@ -283,8 +290,8 @@ class TableProcessor extends Table{
                 })
             })
             .on('beforeSetMode', () => {
-                $$('.' + this.selectedClass, editor.editor).forEach((td) => {
-                    td.classList.remove(this.selectedClass);
+                this.getAllSelectedCells(editor.editor).forEach((td) => {
+                    this.removeSelected(td)
                     this.normalizeTable(editor.node.closest(td, 'table'))
                 })
             })
@@ -303,28 +310,25 @@ class TableProcessor extends Table{
      *
      * @param {string} command
      */
-    onExecCommand(command: string) {
-        switch (command) {
-            case 'splitvertical': {
-                let cell = $$('.' + this.selectedClass, this.parent.editor)[0];
-                if (cell) {
-                    this.splitVertical(this.parent.node.closest(cell, 'table'));
+    onExecCommand = (command: string) => {
+        if (/splitvertical|splithorizontal|mergeselectedcells/.test(command)) {
+            const cells = this.getAllSelectedCells(this.parent.editor);
+            if (cells.length) {
+                let cell = cells.shift();
+                switch (command) {
+                    case 'splitvertical': {
+                        this.splitVertical(this.parent.node.closest(cell, 'table'));
+                        break;
+                    }
+                    case 'splithorizontal': {
+                        this.splitHorizontal(this.parent.node.closest(cell, 'table'));
+                        break;
+                    }
+                    case 'mergeselectedcells': {
+                        this.mergeSelected(this.parent.node.closest(cell, 'table'));
+                        break;
+                    }
                 }
-                break;
-            }
-            case 'splithorizontal': {
-                let cell = $$('.' + this.selectedClass, this.parent.editor)[0];
-                if (cell) {
-                    this.splitHorizontal(this.parent.node.closest(cell, 'table'));
-                }
-                break;
-            }
-            case 'mergeselectedcells': {
-                let cell = $$('.' + this.selectedClass, this.parent.editor)[0];
-                if (cell) {
-                    this.mergeSelected(this.parent.node.closest(cell, 'table'));
-                }
-                break;
             }
         }
     }

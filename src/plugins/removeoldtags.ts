@@ -1,4 +1,4 @@
-// import Jodit from '../jodit';
+// import Jodit from '../Jodit';
 // import * as consts from '../constants';
 // import {each} from '../modules/Helpers'
 //

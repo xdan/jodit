@@ -1,4 +1,5 @@
 /*eslint no-unused-vars: 0*/
+import {browser, isIE} from "./modules/Helpers";
 export const INVISIBLE_SPACE = "\uFEFF";
 export const INVISIBLE_SPACE_REG_EXP = /[\uFEFF]/g;
 
@@ -64,3 +65,8 @@ export const  MODE_SOURCE = 2;
  * @property {int} MODE_SPLIT=3  Source code editor and HTML editor both like {@link http://getuikit.com/docs/htmleditor.html|this}
  */
 export const  MODE_SPLIT = 3;
+
+/**
+ * @property {string} TEXT_PLAIN='text/plain'  For IE11 it will be 'text'. Need for dataTransfer.setData
+ */
+export const TEXT_PLAIN = isIE() ? 'text' : 'text/plain';

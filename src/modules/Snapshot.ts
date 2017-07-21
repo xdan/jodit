@@ -91,7 +91,7 @@ export default class Snapshot extends Component {
         return snapshot;
     }
     __restoreElementByLadder (ladder) {
-        let n = this.parent.editor,
+        let n = <Node>this.parent.editor,
             i;
         for (i = 0; n && i < ladder.length; i += 1) {
             n = n.childNodes[ladder[i]];

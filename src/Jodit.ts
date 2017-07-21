@@ -5,56 +5,57 @@ import Selection from './modules/Selection';
 import Toolbar from './modules/Toolbar';
 import Cookie from './modules/Cookie';
 import * as consts from './constants';
-import {extend, inArray, dom, each} from './modules/Helpers';
+import {extend, inArray, dom, each, sprintf} from './modules/Helpers';
 import * as helper from './modules/Helpers';
 import FileBrowser from "./modules/FileBrowser";
 import Uploader from "./modules/Uploader";
+import {Config} from "./Config";
 
 /** Class Jodit. Main class*/
 export default class Jodit extends Component{
     static plugins:any =  {};
-    static defaultOptions:any =  {};
+    static defaultOptions: Config;
     static modules: any =  {};
     static instances = {};
     static lang:any = {};
 
-    components:any = [];
+    components: any = [];
 
     /**
      * @prop {string} ID attribute for source element, id add {id}_editor it's editor's id
      */
-    id;
+    id: string;
 
     /**
      * @prop {HTMLDivElement} progress_bar Progress bar
      */
-    progress_bar;
+    progress_bar: HTMLDivElement;
 
     /**
      * @prop {HTMLDivElement} workplace It contains source and wysiwyg editors
      */
-    workplace;
+    workplace: HTMLDivElement;
 
     /**
      * @prop {HTMLDivElement} container main editor's box
      */
-    container;
+    container: HTMLDivElement;
 
     /**
      * @prop {HTMLElement} element It contains source element
      */
-    element;
+    element: HTMLInputElement;
 
     /**
      * @prop {HTMLDivElement} editor It contains the root element editor
      */
-    editor;
+    editor: HTMLDivElement;
 
 
     /**
-     * @prop {PlainObject} options All Jodit settings default + second arguments of constructor
+     * @prop {Config} options All Jodit settings default + second arguments of constructor
      */
-    options;
+    options: Config;
 
     cookie: Cookie;
     events: Events;
@@ -102,13 +103,15 @@ export default class Jodit extends Component{
      * @param {string|HTMLElement} element Selector or HTMLElement
      * @param {object} options Editor's options
      */
-    constructor(element, options) {
+    constructor(element: HTMLInputElement|string, options?: object) {
         super();
 
-        let Options = function () {};
-        Options.prototype = Jodit.defaultOptions;
+        const OptionsDefault = function () {
 
-        this.options = new Options();
+        };
+        OptionsDefault.prototype = Jodit.defaultOptions;
+
+        this.options = <Config>(new OptionsDefault());
 
         if (options !== undefined && typeof options === 'object') {
             Object.keys(options).forEach((key) => {
@@ -122,7 +125,7 @@ export default class Jodit extends Component{
 
 
         if (typeof element === 'string') {
-            this.element = document.querySelector(element);
+            this.element = <HTMLInputElement>document.querySelector(element);
         } else {
             this.element = element;
         }
@@ -135,7 +138,7 @@ export default class Jodit extends Component{
         this.container.classList.add('jodit_' + (this.options.theme || 'default') + '_theme');
 
         if (this.options.zIndex) {
-            this.container.style.zIndex = parseInt(this.options.zIndex, 10);
+            this.container.style.zIndex = parseInt(this.options.zIndex.toString(), 10).toString();
         }
 
         this.workplace = dom('<div class="jodit_workplace" />');
@@ -166,7 +169,7 @@ export default class Jodit extends Component{
             });
         }
 
-        this.id = this.element.getAttribute('id') || (new Date()).getTime();
+        this.id = this.element.getAttribute('id') || (new Date()).getTime().toString();
 
         Jodit.instances[this.id] = this;
 
@@ -180,9 +183,6 @@ export default class Jodit extends Component{
 
 
         this.setMode(this.options.defaultMode)
-
-
-
     }
     __plugins = [];
     initPlugines() {
@@ -193,13 +193,14 @@ export default class Jodit extends Component{
     }
 
 
+    private __defaultStyleDisplayKey = 'data-jodit-default-style-display';
     /**
      * Create main DIV element and replace source textarea
      *
      * @private
      */
     __createEditor() {
-        this.editor = dom('<div class="jodit_wysiwyg" contenteditable="true" aria-disabled="false" tabindex="' + this.options.tabIndex + '"/>');
+        this.editor = dom(`<div class="jodit_wysiwyg" contenteditable="true" aria-disabled="false" tabindex="${this.options.tabIndex}"></div>`);
 
         // proxy events
         ['keydown', 'keyup', 'keypress', 'mousedown', 'mouseup', 'mousepress', 'paste', 'resize'].forEach((event_type) => {
@@ -213,7 +214,7 @@ export default class Jodit extends Component{
         });
 
         if (this.options.spellcheck) {
-            this.editor.setAttribute('spellcheck', true);
+            this.editor.setAttribute('spellcheck', "true");
         }
 
         // direction
@@ -232,7 +233,10 @@ export default class Jodit extends Component{
         this.element.parentNode.insertBefore(this.container, this.element);
 
         // hide source element
-        this.element.__defaultStyleDisplay = this.element.style.display;
+        if (this.element.style.display) {
+            this.element.setAttribute(this.__defaultStyleDisplayKey, this.element.style.display)
+        }
+
         this.element.style.display = 'none';
     }
 
@@ -241,7 +245,7 @@ export default class Jodit extends Component{
      */
     destruct() {
         /**
-         * Triggered before {@link module:Jodit~beforeDestruct|beforeDestruct} executed. If returned false method stopped
+         * Triggered before {@link Jodit~beforeDestruct|beforeDestruct} executed. If returned false method stopped
          *
          * @event beforeDestruct
          * @example
@@ -259,8 +263,12 @@ export default class Jodit extends Component{
             return;
         }
 
-        this.element.style.display = this.element.__defaultStyleDisplay;
-        delete this.element.__defaultStyleDisplay;
+        if (this.element.hasAttribute(this.__defaultStyleDisplayKey)) {
+            this.element.style.display = this.element.getAttribute(this.__defaultStyleDisplayKey);
+            this.element.removeAttribute(this.__defaultStyleDisplayKey);
+        } else {
+            this.element.style.display = '';
+        }
 
         if (this.element.hasAttribute('style') && !this.element.getAttribute('style')) {
             this.element.removeAttribute('style');
@@ -303,15 +311,53 @@ export default class Jodit extends Component{
     /**
      * Return editor value
      */
-    getEditorValue() {
-        let value = this.editor.innerHTML
-            .replace(consts.INVISIBLE_SPACE_REG_EXP, '');
+    getEditorValue(): string {
 
-        if (value === '<br>') {
-            return '';
+        /**
+         * Triggered before {@link Jodit~getEditorValue|getEditorValue} executed. If returned not undefined getEditorValue will return this value
+         *
+         * @event beforeGetValueFromEditor
+         * @example
+         * var editor = new Jodit("#redactor");
+         * editor.events.on('beforeGetValueFromEditor', function () {
+         *     return editor.editor.innerHTML.replace(/a/g, 'b');
+         * });
+         */
+        let value: string;
+
+        value = this.events.fire('beforeGetValueFromEditor');
+        if (value !== undefined) {
+            return value;
         }
 
-        return value;
+
+        value = this.editor.innerHTML
+            .replace(consts.INVISIBLE_SPACE_REG_EXP, '');
+
+
+        if (value === '<br>') {
+            value = '';
+        }
+
+    // .replace(/([\s]*)data-jodit-class="jodit_selected_cell"/g, '')
+
+
+        /**
+         * Triggered after  {@link Jodit~getEditorValue|getEditorValue} got value from wysiwyg. It can change new_value.value
+         *
+         * @event afterGetValueFromEditor
+         * @param {value: string} new_value
+         * @example
+         * var editor = new Jodit("#redactor");
+         * editor.events.on('afterGetValueFromEditor', function (new_value) {
+         *     new_value.value = new_value.value.replace('a', 'b');
+         * });
+         */
+        let new_value = {value};
+
+        this.events.fire('afterGetValueFromEditor', [new_value])
+
+        return new_value.value;
     }
 
     /**
@@ -458,7 +504,7 @@ export default class Jodit extends Component{
             modeClasses = ['jodit_wysiwyg_mode', 'jodit_source_mode', 'jodit_split_mode'];
 
         /**
-         * Triggered before {@link module:Jodit~setMode|setMode} executed. If returned false method stopped
+         * Triggered before {@link Jodit~setMode|setMode} executed. If returned false method stopped
          * @event beforeSetMode
          * @param {Object} data PlainObject {mode: {string}} In handler you can change data.mode
          * @example
@@ -483,7 +529,7 @@ export default class Jodit extends Component{
         this.container.classList.add(modeClasses[this.mode - 1]);
 
         /**
-         * Triggered after {@link module:Jodit~setMode|setMode} executed
+         * Triggered after {@link Jodit~setMode|setMode} executed
          * @event afterSetMode
          * @example
          * var editor = new Jodit("#redactor");
@@ -536,7 +582,7 @@ export default class Jodit extends Component{
      * console.log(Jodit.prototype.i18n('Cancel')) //Zrušit
      *
      * Jodit.lang.cs = {
-     *    'Hello world': 'Hello 1$ Good 2$'
+     *    'Hello world': 'Hello \s Good \s'
      * };
      * Jodit.defaultOptions.language = 'cs';
      * console.log(Jodit.prototype.i18n('Hello world', 'mr.Perkins', 'day')) //Hello mr.Perkins Good day
@@ -544,15 +590,7 @@ export default class Jodit extends Component{
     i18n (key, ...params) {
         let store,
             args = Array.prototype.slice.call(params),
-            parse = (value) => {
-                return value.replace(/([0-9])\$/gm, (match, part1) => {
-                    part1 = parseInt(part1, 10);
-                    if (args[part1] !== undefined) {
-                        return args[part1];
-                    }
-                    return '';
-                });
-            };
+            parse = value => sprintf.apply(this, [value].concat(args));
 
         if (this.options !== undefined && Jodit.lang[this.options.language] !== undefined) {
             store = Jodit.lang[this.options.language];
@@ -589,5 +627,7 @@ export default class Jodit extends Component{
         return '3.0.0';
     }
 }
+
+Jodit.defaultOptions = new Config();
 
 

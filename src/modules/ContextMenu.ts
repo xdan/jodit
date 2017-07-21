@@ -1,4 +1,4 @@
-import Jodit from '../jodit';
+import Jodit from '../Jodit';
 import Component from './Component';
 import {css, dom} from "./Helpers";
 import Toolbar from "./Toolbar";

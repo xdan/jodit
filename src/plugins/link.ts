@@ -1,5 +1,5 @@
-import Jodit from '../jodit';
-import config from '../config'
+import Jodit from '../Jodit';
+import {Config} from '../Config'
 import {isURL, convertMediaURLToVideoEmbed} from '../modules/Helpers'
 
 /**
@@ -11,7 +11,17 @@ import {isURL, convertMediaURLToVideoEmbed} from '../modules/Helpers'
 * @memberof Jodit.defaultOptions
 */
 
-config.link = {
+declare module "../Config" {
+    interface Config {
+        link: {
+            processVideoLink: boolean;
+            processPastedLink: boolean;
+            openLinkDialogAfterPost: boolean;
+            removeLinkAfterFormat: boolean;
+        }
+    }
+}
+Config.prototype.link = {
     processVideoLink: true,
     processPastedLink: true,
     openLinkDialogAfterPost: true,

@@ -96,7 +96,17 @@ Its complete documentation, specially designed framework plugins and tons of exa
     editor.editor.addEventListener('mouseup', callback)
     editor.editor.addEventListener('input', callback)
     editor.events.on('change', callback)
-    editor.getInstance('FileBrowser').open();
+
+    editor.setEditorValue('<p><img src="http://localhost:8181/tests/files/artio.jpg"> фывфывфывфыф вф ыв фыв фыв\
+        </p>\
+        <p>фы</p>\
+        <p>вфы</p>\
+        <p>в</p>');
+//    simulateEvent('mousedown', 1, editor.editor.querySelector('td'));
+//    simulateEvent('mousemove', 1, editor.editor.querySelectorAll('td')[3]);
+//    simulateEvent('mouseup', 1, editor.editor.querySelectorAll('td')[3]);
+
+    //    editor.getInstance('FileBrowser').open();
 
     //    var editor = new Jodit('#table_editor_interface');
 

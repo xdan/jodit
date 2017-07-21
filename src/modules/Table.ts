@@ -11,24 +11,30 @@ import Component from './Component';
 import {$$, each, trim} from './Helpers'
 import * as consts from '../constants';
 
-export default class Table extends Component{
-    selectedClass = 'jodit_selected_cell';
+export const JODIT_SELECTED_CELL_MARKER = 'data-jodit-selected-cell';
 
+export default class Table extends Component{
+    protected addSelected(td: HTMLTableCellElement) {
+        td.setAttribute(JODIT_SELECTED_CELL_MARKER, '1');
+    }
+    protected removeSelected(td: HTMLTableCellElement) {
+        td.removeAttribute(JODIT_SELECTED_CELL_MARKER);
+    }
 
     /**
      *
      * @param {HTMLTableElement} table
-     * @return {Array.<HTMLTableCellElement>}
+     * @return {HTMLTableCellElement[]}
      */
-    getAllSelectedCells(table) {
-        return $$('.' + this.selectedClass, table);
+    getAllSelectedCells(table: HTMLElement|HTMLTableElement): HTMLTableCellElement[] {
+        return $$(`td[${JODIT_SELECTED_CELL_MARKER}],th[${JODIT_SELECTED_CELL_MARKER}]`, table);
     }
 
     /**
      * @param {HTMLTableElement} table
      * @return {number}
      */
-    getRowsCount(table) {
+    getRowsCount(table: HTMLTableElement) {
         return table.rows.length;
     }
 
@@ -36,7 +42,7 @@ export default class Table extends Component{
      * @param {HTMLTableElement} table
      * @return {number}
      */
-    getColumnsCount(table) {
+    getColumnsCount(table: HTMLTableElement) {
         const matrix = this.formalMatrix(table);
         return matrix.reduce((max_count, cells) => {
             return Math.max(max_count, cells.length);
@@ -51,7 +57,7 @@ export default class Table extends Component{
      * @param {function(HTMLTableCellElement, int, int, int, int):boolean} [callback] if return false cycle break
      * @return {Array}
      */
-    formalMatrix(table: HTMLTableElement, callback ?: Function) {
+    formalMatrix(table: HTMLTableElement, callback ?: (cell: HTMLTableCellElement, row: number, col: number, colSpan?: number, rowSpan?: number) => false|void) {
         let matrix = [[],];
         const rows  = Array.prototype.slice.call(table.rows);
 
@@ -508,8 +514,8 @@ export default class Table extends Component{
                 tr.appendChild(td);
             } else {
                 this.__mark(cell, 'rowspan', cell.rowSpan - 1);
-                this.formalMatrix(table, (td, i, j) => {
-                    if (i > coord[0] && i < coord[0] + cell.rowSpan && coord[1] >  j && td.parentNode.rowIndex === i) {
+                this.formalMatrix(table, (td: HTMLTableCellElement, i: number, j: number) => {
+                    if (i > coord[0] && i < coord[0] + cell.rowSpan && coord[1] >  j && (<HTMLTableRowElement>td.parentNode).rowIndex === i) {
                         after = td;
                     }
                     if (coord[0] < i && td === cell) {
@@ -528,7 +534,7 @@ export default class Table extends Component{
             }
 
             this.__unmark();
-            cell.classList.remove(this.selectedClass);
+            this.removeSelected(cell);;
         });
         this.normalizeTable(table);
     }
@@ -566,7 +572,7 @@ export default class Table extends Component{
             this.__mark(td, 'width', (percentage * 100).toFixed(consts.ACCURACY) + '%');
             this.__unmark();
 
-            cell.classList.remove(this.selectedClass);
+            this.removeSelected(cell);;
         });
         this.normalizeTable(table);
     }
