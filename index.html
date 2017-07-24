@@ -23,14 +23,21 @@
         <tr>
             <td style="width:50%;vertical-align: top">
                 <div id="filebrowser"></div>
-                <textarea id="editor">Jodit Editor is a lightweight WYSIWYG HTML Editor written in Javascript that enables rich text editing capabilities for your applications. <br>
-Its complete documentation, specially designed framework plugins and tons of examples make it easy to integrate. We're continuously working to add in new features and take the Javascript web WYSIWYG editing capabilities beyond its current limits.</textarea>
+                <textarea id="editor">&lt;div&gt;
+	&lt;img src="http://xdsoft.net/jodit/images/artio.jpg" style="width: 301px; float: right; margin-left: 15px; margin-top: 10px;"/&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+	&lt;li&gt;Copy/Paste image&lt;/li&gt;
+	&lt;li&gt;Drag&amp;Drop &lt;/li&gt;
+	&lt;li&gt;Split Mode&lt;/li&gt;
+	&lt;li&gt;Free for non-Commercial&lt;/li&gt;
+	&lt;li&gt;CodeMirror out of the box &lt;/li&gt;
+	&lt;li&gt;Pure JavaScript. No libraries&lt;/li&gt;
+	&lt;li&gt;Lightweight: ~32kB gzipped.&lt;/li&gt;
+&lt;/ul&gt;</textarea>
             </td>
             <td><textarea id="mirror"></textarea></td>
         </tr>
-        <!--<tr>-->
-            <!--<td colspan="2"><textarea id="consoles" cols="30" rows="10"></textarea></td>-->
-        <!--</tr>-->
     </table>
     <style>
         .jodit.jodit_editor, textarea {
@@ -53,20 +60,12 @@ Its complete documentation, specially designed framework plugins and tons of exa
 
 <script>
     editor = new Jodit('#editor', {
-        uploader: {
-            url: 'http://localhost:8181/index-test.php?action=upload'
-        },
-        filebrowser: {
-            ajax: {
-                url: 'http://localhost:8181/index-test.php'
-            }
-        },
         buttons: Jodit.defaultOptions.buttons.concat([
             {
                 name: 'insertDate',
                 iconURL: 'http://xdsoft.net/jodit/logo.png',
-                exec: function (data) {
-                    data.editor.selection.insertHTML((new Date).toDateString());
+                exec: function (editor) {
+                    editor.selection.insertHTML((new Date).toDateString());
                 }
             }
         ])
@@ -84,10 +83,6 @@ Its complete documentation, specially designed framework plugins and tons of exa
             clearTimeout(timeout);
             timeout = setTimeout(function () {
                 mirror.value = editor.editor.innerHTML;
-                if (e) {
-                    //consoles.value = JSON.stringify(simpleKeys(e)) + "\n\n" + consoles.value
-                    //consoles.scrollTop=100000;
-                }
             }, 100)
         }
     editor.editor.addEventListener('keydown', callback)
@@ -97,81 +92,16 @@ Its complete documentation, specially designed framework plugins and tons of exa
     editor.editor.addEventListener('input', callback)
     editor.events.on('change', callback)
 
-    editor.setEditorValue('<p><img src="http://localhost:8181/tests/files/artio.jpg"> фывфывфывфыф вф ыв фыв фыв\
-        </p>\
-        <p>фы</p>\
-        <p>вфы</p>\
-        <p>в</p>');
-//    simulateEvent('mousedown', 1, editor.editor.querySelector('td'));
-//    simulateEvent('mousemove', 1, editor.editor.querySelectorAll('td')[3]);
-//    simulateEvent('mouseup', 1, editor.editor.querySelectorAll('td')[3]);
-
-    //    editor.getInstance('FileBrowser').open();
-
-    //    var editor = new Jodit('#table_editor_interface');
-
-//    var editor = new Jodit('#tested_area');
-
-//    expect(work).to.be.equal(0);
-
-
-//    expect(work).to.be.equal(1);
-//    expect(editor.container.querySelectorAll('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=url]').value).to.equal(1);
-
-//    simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link'))
-//
-//    var list = editor.container.querySelector('.jodit_toolbar_popup');
-//
-////    expect(list.style.display).to.equal('block');
-//
-//    editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=url]').value = 'sddhttp://xdsoft.net/jodit/images/artio.jpg' // try wrong url
-//    editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=text]').value = '123'
-//    simulateEvent('submit', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_form'))
-//
-////    expect(editor.container.querySelectorAll('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=url].jodit_error').length).to.equal(1);
-//
-//    editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=url]').value = 'http://xdsoft.net/jodit/images/artio.jpg'
-//    simulateEvent('submit', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_form'))
-//
-////    expect(sortAtrtibutes(editor.getEditorValue())).to.equal('<img alt="123" src="http://xdsoft.net/jodit/images/artio.jpg">text2text');
-//
-//    simulateEvent('mousedown', 0, editor.editor)
-
-    //editor.execCommand('bold');
-//    expect(editor.container.querySelectorAll('.jodit_toolbar_btn-bold.jodit_active').length).to.equal(1)
-
-//    expect(editor.container.querySelectorAll('.jodit_toolbar_btn-bold.jodit_active').length).to.equal(0);
-//    expect(editor.container.querySelectorAll('.jodit_toolbar_btn-italic.jodit_active').length).to.equal(1);
-
-
-    //    expect(editor.getEditorValue()).to.equal('<h1>test</h1><h1>test2</h1>');
-    //editor.selection.insertNode(document.createTextNode('split '));
-
-    //simulateEvent('keydown',    Jodit.KEY_ENTER, editor.editor);
-
-
-    //    var fill = [];
-    //    fill.length = 3;
-    //    fill.fill(10);
-    //    editor.setEditorValue('<table style="width:100%">' +
-    //        fill.map(function (i, row) {
-    //            return '<tr>' +
-    //                fill.map(function (j, column) {
-    //                    return '<td>' + row + ',' + column + '</td>'
-    //                }).join('') +
-    //                '</tr>';
-    //        }).join('') +
-    //        '</table>');
-
-
-
-    //var table = new Jodit.modules.Table(editor);
-    //editor.selection.setCursorIn(editor.editor.querySelector('td'));
-
-    //    simulateEvent('mousedown', 1, editor.editor.querySelectorAll('td')[0]);
-    //    simulateEvent('mousemove', 1, editor.editor.querySelectorAll('td')[7]);
-    //    simulateEvent('mouseup', 1, editor.editor.querySelectorAll('td')[7]);
-    //editor.execCommand('mergeSelectedCells')
+    editor.setEditorValue('Some text');
+    var sel = editor.win.getSelection(),
+        range = editor.doc.createRange();
+    range.setStart(editor.editor.firstChild, 9);
+    range.collapse(true);
+    sel.removeAllRanges();
+    sel.addRange(range);
+    simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
+    editor.selection.insertNode(editor.doc.createTextNode(' a '))
+//    expect(editor.getEditorValue()).to.be.equal('<p>Some text</p><p> a </p>');
 
     callback();
 </script>

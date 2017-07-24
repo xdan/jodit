@@ -314,6 +314,11 @@ type FileBrowserOptions = {
     uploader: null // use default Uploader's settings
 }
 
+export type FileBrowserCallBcackData = {
+    baseurl: string,
+    files: string[]
+};
+
 declare module "../Config" {
 
 
@@ -1166,7 +1171,7 @@ export default class FileBrowser extends Component {
         this.dialog.close();
     };
 
-    onSelect(callback: Function) {
+    onSelect(callback: (data: FileBrowserCallBcackData) => void) {
         return () => {
             let actives = this.__getActiveElements();
             if (actives.length) {
@@ -1178,7 +1183,7 @@ export default class FileBrowser extends Component {
                 this.close();
 
                 if (typeof callback === 'function') {
-                    callback({
+                    callback(<FileBrowserCallBcackData>{
                         baseurl: '',
                         files: urls
                     });
@@ -1195,14 +1200,14 @@ export default class FileBrowser extends Component {
      * @param {Function} callback The function that will be called after the file selection in the browser
      * @example
      * var fb = new Jodit.modules.FileBrowser(parent);
-     * fb.open(function (images) {
+     * fb.open(function (data) {
      *     var i;
-     *     for (i = 0;i < images.length; i += 1) {
-     *         parent.selection.insertImage(images[i]);
+     *     for (i = 0;i < data.files.length; i += 1) {
+     *         parent.selection.insertImage(data.baseurl + data.files[i]);
      *     }
      * });
      */
-    open = (callback: (ImageList: string[]) => {}) => {
+    open = (callback: (data: FileBrowserCallBcackData) => void) => {
         if (this.options.items.url) {
 
             this

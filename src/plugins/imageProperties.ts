@@ -426,7 +426,7 @@ Jodit.plugins.imageProperties = function (editor: Jodit) {
             // Link
             if (val(prop, '#imageLink')) {
                 if (!Dom.closest(image, 'a', editor.editor)) {
-                    Dom.wrap(image, 'a', editor.doc);
+                    Dom.wrap(image, 'a', editor);
                 }
                 link = Dom.closest(image, 'a', editor.editor);
                 link.setAttribute('href', val(prop, '#imageLink'));

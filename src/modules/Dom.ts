@@ -1,4 +1,3 @@
-import Component from './Component';
 import * as consts from '../constants';
 import {css, each} from './Helpers'
 import Jodit from "../Jodit";
@@ -8,31 +7,31 @@ export default class Dom {
      *
      * @param {Node} current
      * @param {String|Node} tag
-     * @param {Document doc
+     * @param {Jodit} editor
      *
      * @return {HTMLElement}
      */
-    static wrap = (current, tag: Node|string = 'p', doc: Document): HTMLElement => {
+    static wrap = (current, tag: Node|string, editor: Jodit): HTMLElement => {
         let tmp, first = current, last = current;
 
-        // let selInfo = this.parent.selection.save();
+        const selInfo = editor.selection.save();
 
         do {
-            tmp = Dom.prev(first, (elm) => (elm && !Dom.isBlock(elm)), undefined, false);
+            tmp = Dom.prev(first, (elm) => (elm && !Dom.isBlock(elm)), editor.editor, false);
             if (tmp) {
                 first = tmp;
             }
         } while(tmp);
 
         do {
-            tmp = Dom.next(last, (elm) => (elm && !Dom.isBlock(elm)), undefined, false);
+            tmp = Dom.next(last, (elm) => (elm && !Dom.isBlock(elm)), editor.editor, false);
             if (tmp) {
                 last = tmp;
             }
         } while(tmp);
 
 
-        const p = typeof tag === 'string' ? Dom.create(tag, '', doc) : tag;
+        const p = typeof tag === 'string' ? Dom.create(tag, '', editor.doc) : tag;
 
         first.parentNode.insertBefore(p, first);
 
@@ -47,7 +46,7 @@ export default class Dom {
         }
 
 
-        // this.parent.selection.restore(selInfo);
+        editor.selection.restore(selInfo);
 
         return <HTMLElement>p;
     };
@@ -171,7 +170,7 @@ export default class Dom {
      *
      * @param {Node} node
      * @param {function} condition
-     * @param {Node} [root]
+     * @param {Node} root
      * @param {boolean} [withChild=true]
      *
      * @return {boolean|Node|HTMLElement|HTMLTableCellElement} false if not found
@@ -185,7 +184,7 @@ export default class Dom {
      *
      * @param {Node} node
      * @param {function} condition
-     * @param {Node} [root]
+     * @param {Node} root
      * @param {boolean} [withChild=true]
      * @return {boolean|Node|HTMLElement|HTMLTableCellElement}
      */
@@ -199,7 +198,7 @@ export default class Dom {
      *
      * @param {Node} node
      * @param {function} condition
-     * @param {Node} [root]
+     * @param {Node} root
      * @param {boolean} [recurse=false] check first argument
      * @param {string} [sibling=nextSibling] nextSibling or previousSibling
      * @param {string|boolean} [child=firstChild] firstChild or lastChild
@@ -247,12 +246,12 @@ export default class Dom {
     /**
      * Returns true if it is a DOM node
      */
-    static isNode(o: any): boolean {
+    static isNode(object: any): boolean {
         if (typeof Node === "object") {
-            return o instanceof Node;
+            return object instanceof Node;
         }
 
-        return typeof o === "object" && typeof o.nodeType === "number" && typeof o.nodeName === "string";
+        return typeof object === "object" && typeof object.nodeType === "number" && typeof object.nodeName === "string";
     }
 
     /**
@@ -260,7 +259,7 @@ export default class Dom {
      *
      * @param {callback} node
      * @param {function} condition
-     * @param {Node} [root] Root element
+     * @param {Node} root Root element
      * @return {boolean|Node|HTMLElement|HTMLTableCellElement|HTMLTableElement} Return false if condition not be true
      */
     static up(node: Node, condition: Function, root: Node): false|Node|HTMLElement|HTMLTableCellElement|HTMLTableElement {
@@ -295,7 +294,7 @@ export default class Dom {
         } else {
             condition = tag => (new RegExp('^(' + tags + ')$', 'i')).test(tag.tagName)
         }
-        return this.up(node, condition, root);
+        return Dom.up(node, condition, root);
     }
 
     /**

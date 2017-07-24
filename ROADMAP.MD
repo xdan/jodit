@@ -3,5 +3,12 @@
 - [x] Disable buttons when they can not be used and set active then they have matches with current selection
 - [x] Disable buttons when mode was changed
 - [x] Restore copy/paste plugin. Move setting onpaste  handler to this plugin
-- [ ] Restore FileBrowser
+- [x] Restore FileBrowser
+- [ ] Inline toolbar
 - [ ] Auto choose language
+- [ ] Restore mobile version/Response mode. Switch buttons md - lg - sm 
+- [ ] Restore Iframe mode
+- [ ] Restore themes
+- [ ] Restore mode without icons
+- [ ] Restore split mode
+- [ ] Hotkeys for button

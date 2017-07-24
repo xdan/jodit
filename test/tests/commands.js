@@ -21,10 +21,10 @@ describe('Commands Jodit Editor Tests', function() {
         var editor = new Jodit('#tested_area');
         editor.setEditorValue('');
 
-        editor.selection.insertNode(editor.node.create('text', 'test'));
-        editor.selection.insertNode(editor.node.create('text', ' test2'));
-        editor.selection.insertNode(editor.node.create('text', ' test3'));
-        editor.selection.insertNode(editor.node.create('span', ' test4'));
+        editor.selection.insertNode(Jodit.modules.Dom.create('text', 'test', editor.doc));
+        editor.selection.insertNode(Jodit.modules.Dom.create('text', ' test2', editor.doc));
+        editor.selection.insertNode(Jodit.modules.Dom.create('text', ' test3', editor.doc));
+        editor.selection.insertNode(Jodit.modules.Dom.create('span', ' test4', editor.doc));
 
         var sel = editor.win.getSelection(),
             range = editor.doc.createRange();
@@ -100,11 +100,11 @@ describe('Commands Jodit Editor Tests', function() {
 
         editor.execCommand('bold');
 
-        editor.selection.insertNode(editor.node.create('text', 'abc'))
+        editor.selection.insertNode(Jodit.modules.Dom.create('text', 'abc', editor.doc))
 
         editor.execCommand('bold');
 
-        editor.selection.insertNode(editor.node.create('text', 'def'))
+        editor.selection.insertNode(Jodit.modules.Dom.create('text', 'def', editor.doc))
 
         expect(editor.getEditorValue()).to.equal('test<strong>abc</strong>def');
 

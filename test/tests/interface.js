@@ -261,8 +261,8 @@ describe('Test interface', function() {
                         {
                             name: 'insertDate',
                             iconURL: 'http://xdsoft.net/jodit/logo.png',
-                            exec: function (data) {
-                                data.editor.selection.insertHTML((new Date('2016/03/16')).toDateString());
+                            exec: function (editor) {
+                                editor.selection.insertHTML((new Date('2016/03/16')).toDateString());
                             }
                         }
                     ])

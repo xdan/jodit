@@ -47,7 +47,7 @@ Config.prototype.sourceEditorCDNUrlsJS = [
  *
  * @module codeMirror
  */
-Jodit.plugins.source = function (editor) {
+Jodit.plugins.source = function (editor: Jodit) {
     let mirrorContainer = dom('<div class="jodit_source"/>'),
         mirror = dom('<textarea class="jodit_source_mirror"/>'),
         from = () => {

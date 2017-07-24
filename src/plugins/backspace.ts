@@ -1,12 +1,13 @@
 import Jodit from '../Jodit';
 import * as consts from '../constants';
 import {trim} from '../modules/Helpers';
+import Dom from "../modules/Dom";
 
-Jodit.plugins.backspace = function (editor) {
+Jodit.plugins.backspace = function (editor: Jodit) {
     editor.events.on('afterCommand', (command) => {
         if (command === 'delete') {
             let current = editor.selection.current();
-            if (current && current.firstChild && current.firstChild.tagName ==='BR') {
+            if (current && current.firstChild && current.firstChild['tagName'] ==='BR') {
                 current.removeChild(current.firstChild);
             }
             if (!trim(editor.editor.innerText) && !editor.editor.querySelector('img')) {
@@ -44,10 +45,10 @@ Jodit.plugins.backspace = function (editor) {
                     }
                 }
                 if (!textNode.previousSibling && startOffset === 0) {
-                    let prevBox = editor.node.prev(textNode, editor.node.isBlock);
+                    const prevBox = Dom.prev(textNode, Dom.isBlock, editor.editor);
                     if (prevBox) {
                         editor.selection.setCursorIn(prevBox, false);
-                        let container = editor.node.up(textNode, editor.node.isBlock);
+                        const container = <HTMLElement>Dom.up(textNode, Dom.isBlock, editor.editor);
                         if (!container.innerHTML) {
                             container.parentNode.removeChild(container)
                         }

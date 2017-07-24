@@ -3,7 +3,7 @@ import Observer from '../modules/Observer';
 import * as consts from '../constants';
 import {ctrlKey} from '../modules/Helpers'
 
-Jodit.plugins.redoundo = function (editor) {
+Jodit.plugins.redoundo = function (editor: Jodit) {
     const updateButton = () => {
         editor.events.fire('canRedo', [observer.stack.canRedo()]);
         editor.events.fire('canUndo', [observer.stack.canUndo()]);

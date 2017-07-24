@@ -184,7 +184,7 @@ export default class Selection extends Component{
     /**
      * Set focus in editor
      */
-    focus () {
+    focus = () => {
         if (!this.isFocused()) {
             this.win.focus();
             this.parent.editor.focus();

@@ -71,7 +71,7 @@ Jodit.plugins.enter = function (editor: Jodit) {
             let currentBox = current ? Dom.up(current, Dom.isBlock, editor.editor) : false;
 
             if (!currentBox && current) {
-                currentBox = Dom.wrap(current, editor.options.enter, editor.doc);
+                currentBox = Dom.wrap(current, editor.options.enter, editor);
                 sel = editor.win.getSelection();
                 range = sel.rangeCount ? sel.getRangeAt(0) : editor.doc.createRange();
             }

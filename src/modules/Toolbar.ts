@@ -4,20 +4,23 @@ import {dom, each, $$, extend, camelCase} from "./Helpers"
 import * as consts from "../constants";
 import Dom from "./Dom";
 
-type ControlType = {
+export type ControlType = {
+    controlName?: string;
     name?: string;
     mode?: number;
-    list?: any[];
+    list?: {[key: string]: string} | string[];
     command?: string;
-    tags?: string;
+    tagRegExp?: RegExp;
+    tags?: string[];
     options?: any;
     css?: any;
     iconURL?: string;
     tooltip?: string;
-    exec?: Function;
+    exec?: (editor: Jodit, originalEvent: Event, constrol: ControlType,  btn: HTMLLIElement) => void;
     args?: any[];
-    template?: Function;
-    popap?: Function;
+    cols?: number;
+    template?: (editor: Jodit, key: string, value: string) => string;
+    popup?: (editor: Jodit, current: Node|false, constrol: ControlType,  close: Function) => HTMLElement;
 }
 
 type ButtonType = {
@@ -94,7 +97,7 @@ export default class Toolbar extends Component{
     /**
      *
      */
-    closeAll() {
+    closeAll = () => {
         this.list.innerHTML = '';
         this.popup.innerHTML = '';
         this.popup.style.display = 'none';
@@ -110,7 +113,7 @@ export default class Toolbar extends Component{
 
         this.__popapOpened = false;
         this.__listOpened = false;
-    }
+    };
 
     private static __toggleButton(btn: HTMLElement, enable: boolean) {
         btn.classList.toggle('jodit_disabled', !enable);
@@ -284,11 +287,11 @@ export default class Toolbar extends Component{
                                         (control.args && control.args[1]) || value
                                     ]
                                 },
-                                control.template && control.template({
-                                    editor: this.parent,
+                                control.template && control.template(
+                                    this.parent,
                                     key,
                                     value
-                                })
+                                )
                             );
                         }
 
@@ -296,17 +299,15 @@ export default class Toolbar extends Component{
                     });
                     btn.appendChild(this.list);
                 } else if (control.exec !== undefined && typeof control.exec === 'function') {
-                    control.exec({editor: this.parent, originalEvent, control, btn});
+                    control.exec(this.parent, originalEvent, control, btn);
                     this.closeAll();
-                } else if (control.popap !== undefined && typeof control.popap === 'function') {
-                    this.openPopup(btn, control.popap({
-                         editor: this.parent,
-                         current: this.parent.selection.current(),
+                } else if (control.popup !== undefined && typeof control.popup === 'function') {
+                    this.openPopup(btn, control.popup(
+                         this.parent,
+                         this.parent.selection.current(),
                          control,
-                         close: () => {
-                             this.closeAll();
-                         }
-                    }));
+                        this.closeAll
+                    ));
                 } else {
                     if (control.command || name) {
                         this.parent.execCommand(control.command || name, (control.args && control.args[0]) || false, (control.args && control.args[1]) || null);

@@ -1,5 +1,9 @@
 import * as consts from './constants'
 import {dom, trim, $$, normalizeColor, isURL, convertMediaURLToVideoEmbed} from './modules/Helpers'
+import Dom from "./modules/Dom";
+import Jodit from "./Jodit";
+import {ControlType} from "./modules/Toolbar";
+import {FileBrowserCallBcackData} from "./modules/FileBrowser";
 
 /**
  * Default Editor's Configuration
@@ -20,13 +24,13 @@ export class Config {
      * @link http://xdsoft.net/jodit/doc/#2.5.57
      */
 
-    offsetTopForAssix = 0;
+    // offsetTopForAssix = 0;
 
     /**
      * @prop {int} syncCodeTimeout=30 timeout synchronize data between the editor , source element and source code editor
      * @since 2.4.16
      */
-    syncCodeTimeout = 30;
+    // syncCodeTimeout = 30;
 
     /**
      * @prop {string} toolbarButtonSize=middle Size of icons in the toolbar (can be "small", "middle", "large")
@@ -36,7 +40,7 @@ export class Config {
      *      toolbarButtonSize: "small"
      * });
      */
-    toolbarButtonSize = 'middle';
+    // toolbarButtonSize = 'middle';
 
     /**
      * @prop {string} theme=default Theme (can be "dark")
@@ -78,7 +82,7 @@ export class Config {
      * }
      * </style>
      */
-    editorCssClass = false;
+    // editorCssClass = false;
 
    /**
      * @prop {boolean} triggerChangeEvent=true After all changes in editors for textarea will call change trigger
@@ -89,7 +93,7 @@ export class Config {
      *      console.log(this.value);
      * })
      */
-    triggerChangeEvent = true;
+    // triggerChangeEvent = true;
 
     /**
      * @prop {boolean} iframe=false When this option is enabled, the editor's content will be placed in an iframe and isolated from the rest of the page.
@@ -99,7 +103,7 @@ export class Config {
      *    iframeStyle = 'html{margin: 0px;}body{padding:10px;background:transparent;color:#000;position:relative;z-index: 2;user-select:auto;margin:0px;overflow:hidden;}body:after{content:"";clear:both;display:block}';
      * })
      */
-    iframe = false;
+    // iframe = false;
 
     /**
      * @prop {boolean|string} iframeBaseUrl=false Base URL where the root directory for {@link Jodit.defaultOptions.iframe|iframe} mode
@@ -109,7 +113,7 @@ export class Config {
      *    iframeBaseUrl: 'http://xdsoft.net/jodit/docs/',
      * })
      */
-    iframeBaseUrl = false;
+    // iframeBaseUrl = false;
 
     /**
      * @prop {string} iframeStyle='html{margin: 0px;}body{padding:10px;background:transparent;color:#000;position:relative;z-index: 2;user-select:auto;margin:0px;overflow:auto;}body:after{content:"";clear:both;display:block}table{width:100%;border-collapse:collapse} th,td{border:1px solid #ccc;-webkit-user-select:text;-moz-user-select:text;-ms-user-select:text;user-select:text}p{margin-top:0;}' Custom style to be used inside the iframe to display content.
@@ -137,7 +141,7 @@ export class Config {
      * @prop {string} iframeIncludeJoditStyle=true Include jodit.min.css in iframe document
      * @deprecated since version 2.3.31
      */
-    iframeIncludeJoditStyle = true;
+    // iframeIncludeJoditStyle = true;
 
     /**
      * @prop {string|int} width='auto' Editor's width
@@ -247,7 +251,6 @@ export class Config {
 
     /**
      * @prop {(Jodit.ENTER_P|Jodit.ENTER_DIV|Jodit.ENTER_BR)} enter=Jodit.ENTER_P Element that will be created when you press Enter
-     * @see {@link module:EnterKey~enter|EnterKey.enter}
      */
     enter = consts.PARAGRAPH;
 
@@ -263,7 +266,7 @@ export class Config {
     defaultMode = consts.MODE_WYSIWYG;
 
     /**
-     * @prop {boolean} useSplitMode=false Use in {@link module:Jodit~toggleMode|Jodit.toggleMode} Jodit.MODE_SPLIT mode
+     * @prop {boolean} useSplitMode=false
      */
     useSplitMode = false;
 
@@ -302,7 +305,7 @@ export class Config {
     imageDefaultWidth = 300;
 
     /**
-     * @property {array} removeButtons Do not display those buttons that are on the list
+     * @property {string[]} removeButtons Do not display those buttons that are on the list
      * @example
      * new Jodit('#editor2', {
      *     removeButtons: ['hr', 'source']
@@ -314,35 +317,35 @@ export class Config {
      * @property {int} sizeLG=900 The width of the editor, accepted as the biggest. Used to the responsive version of the editor
      * @since 2.5.49
      */
-    sizeLG = 900;
+    // sizeLG = 900;
 
     /**
      * @property {int} sizeMD=700 The width of the editor, accepted as the medium. Used to the responsive version of the editor
      * @since 2.5.49
      */
-    sizeMD = 700;
+    // sizeMD = 700;
 
     /**
      * @property {int} sizeSM=700 The width of the editor, accepted as the small. Used to the responsive version of the editor
      * @since 2.5.49
      */
-    sizeSM = 400;
+    // sizeSM = 400;
 
     /**
-     * @property {array} buttons The list of buttons that appear in the editor's toolbar on large places (≥ options.sizeLG). Note - this is not the width of the device, the width of the editor
-     * @property {array} buttonsMD The list of buttons that appear in the editor's toolbar on medium places (≥ options.sizeMD).
-     * @property {array} buttonsSM The list of buttons that appear in the editor's toolbar on small places (≥ options.sizeSM).
-     * @property {array} buttonsXS The list of buttons that appear in the editor's toolbar on extra small places (< options.sizeSM).
-     * @property {string|object} buttons.button Button. Clicking has the next priority popap, exec, list
+     * @property {string[]} buttons The list of buttons that appear in the editor's toolbar on large places (≥ options.sizeLG). Note - this is not the width of the device, the width of the editor
+     * @property {string[]} buttonsMD The list of buttons that appear in the editor's toolbar on medium places (≥ options.sizeMD).
+     * @property {string[]} buttonsSM The list of buttons that appear in the editor's toolbar on small places (≥ options.sizeSM).
+     * @property {string[]} buttonsXS The list of buttons that appear in the editor's toolbar on extra small places (< options.sizeSM).
+     * @property {string|object} buttons.button Button. Clicking has the next priority popup, exec, list
      * @property {string} [buttons.button.icon] If there 'temp' button, then the tag is of the form <code>&lt;a class="icon icon-temp"&gt</code>. Of the existing can be used:
      * <code>addcolumn, addrow, attachment, bin, bold, brush, cancel, check, source, eraser, folder, font, fullsize, image, indent-decrease, indent-increase, italic, link, ol, ul, list2, lock, menu,  merge, hr, center, justify, left, right, pencil, paragraph, plus, redo, resize, shrink, splitg, splitv, strikethrough, table, fontsize, underline, undo, unlock, update, upload, valign</code>
      * @property {string} [buttons.button.iconURL] If you want to address , you can set a background image for the button . This icon should be 16 * 16 px
      * @property {function} [buttons.button.exec] This function will be executed when the button is pressed . this it is the main instance Jodit
-     * @property {function} [buttons.button.popap] By pressing a button the window falls , the contents of which will be something that will return 'popap'
+     * @property {function} [buttons.button.popup] By pressing a button the window falls , the contents of which will be something that will return 'popup'
      * @property {string} [buttons.button.tooltip] Description hover button
-     * @property {string} [buttons.button.command] The command to execute when the button is pressed. allowed all {@link https://developer.mozilla.org/ru/docs/Web/API/Document/execCommand#стандартные команды} а также несколько нестандартных (см. {@link module:Jodit~execCommand|execCommand})
-     * @property {array} [buttons.button.tags] Tag list when the cursor is to be highlighted on this button
-     * @property {array|object} [buttons.button.list] Drop-down list. A hash or array . You must specify the command which will be submitted to the hash key (array value) (see .{@link module:Jodit~execCommand|execCommand}) or define 'exec' function. See example
+     * @property {string} [buttons.button.command] The command to execute when the button is pressed. allowed all {@link https://developer.mozilla.org/ru/docs/Web/API/Document/execCommand#стандартные команды} а также несколько нестандартных (см. {@link Jodit~execCommand|execCommand})
+     * @property {string[]} [buttons.button.tags] Tag list when the cursor is to be highlighted on this button
+     * @property {string[]|object} [buttons.button.list] Drop-down list. A hash or array . You must specify the command which will be submitted to the hash key (array value) (see .{@link Jodit~execCommand|execCommand}) or define 'exec' function. See example
      * @property {function(key, value): string} [buttons.button.template] The method that will be called for each element button.list
      * @default ['source', '|', 'bold', 'italic', '|', 'ul', 'ol', '|', 'font', 'fontsize', 'brush', 'paragraph', '|','image', 'video', 'table', 'link', '|', 'align', '|', 'undo', 'redo', '|', 'hr', 'eraser', 'fullsize']
      * @example
@@ -420,7 +423,7 @@ export class Config {
         'fullsize',
         'about'
     ];
-    buttonsMD = [
+   /* buttonsMD = [
         'source', '|',
         'bold',
         'italic', '|',
@@ -464,16 +467,16 @@ export class Config {
         'align', '|',
         'undo', 'redo', '|',
         'eraser'
-    ];
+    ];*/
 
     /**
      * Behavior for buttons
      * @type {Object}
      */
-    controls = {
+    controls: {[key: string]: ControlType} = {
         about: {
-            exec: ({editor}) => {
-                let dialog = new (require('./modules/Dialog').default)(editor);
+            exec: (editor: Jodit) => {
+                const dialog = new (require('./modules/Dialog').default)(editor);
                 dialog.setTitle(editor.i18n('About Jodit'));
                 dialog.setContent(
                     '<div class="jodit_about">\
@@ -492,7 +495,7 @@ export class Config {
             mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG
         },
         fullsize: {
-            exec: ({editor}) => {
+            exec: (editor: Jodit) => {
                 editor.events.fire('toggleFullsize');
             },
             tooltip: 'Open editor in fullsize',
@@ -505,7 +508,7 @@ export class Config {
         brush: {
             css: {
                 'backgroundColor' : ({editor, color}) => {
-                    let  check = (colors) => {
+                    const  check = (colors) => {
                             let i, keys;
                             if (typeof colors === 'object') {
                                 keys = Object.keys(colors);
@@ -523,22 +526,23 @@ export class Config {
                     return check(editor.options.colors);
                 }
             },
-            popap: ({editor}) => {
-                let sel = editor.win.getSelection(), color = '', bg_color = '', current, tabs,
+            popup: (editor: Jodit) => {
+                let color = '', bg_color = '', current, tabs;
+                const sel = editor.win.getSelection(),
                     checkRemoveOpportunity = () => {
                         if (current && (!current.hasAttribute("style") || !current.getAttribute("style").length)) {
                             let selInfo = editor.selection.save();
                             while (current.firstChild) {
                                 current.parentNode.insertBefore(current.firstChild, current);
                             }
-                            current.parentNode.removeChild(current)
+                            current.parentNode.removeChild(current);
                             current = null;
                             editor.selection.restore(selInfo);
                         }
                     },
                     tryGetCurrent = () => {
                         if (sel && sel.anchorNode) {
-                            [sel.anchorNode, sel.anchorNode.parentNode].forEach((elm) => {
+                            [sel.anchorNode, sel.anchorNode.parentNode].forEach((elm: HTMLElement) => {
                                 if (elm && elm.hasAttribute && elm.hasAttribute("style") && elm.getAttribute('style').indexOf('background') !== -1 && elm.style.backgroundColor) {
                                     current = elm;
                                     bg_color = editor.win.getComputedStyle(current).getPropertyValue('background-color');
@@ -554,7 +558,7 @@ export class Config {
 
                 tryGetCurrent();
 
-                let widget = new (require('./modules/Widget').default)(editor);
+                const widget = new (require('./modules/Widget').default)(editor);
 
                 const backgroundTag = widget.create('ColorPicker', (value) => {
                     if (!current) {
@@ -692,12 +696,12 @@ export class Config {
             tooltip: "Insert Horizontal Line"
         },
         image : {
-            popap: ({editor, current, close}) => {
+            popup: (editor: Jodit, current: HTMLElement|false, self: ControlType, close) => {
                 const insertImage = (url) => {
                     editor.selection.insertNode(dom('<img src="' + url + '"/>', editor.doc));
-                }
+                };
 
-                let widget = new (require('./modules/Widget').default)(editor);
+                const widget = new (require('./modules/Widget').default)(editor);
 
                 let sourceImage;
 
@@ -706,7 +710,7 @@ export class Config {
                 }
 
                 return widget.create('ImageSelector', {
-                    filebrowser: (data) => {
+                    filebrowser: (data: FileBrowserCallBcackData) => {
                         if (data.files && data.files.length) {
                             let i;
                             for (i = 0; i < data.files.length; i += 1) {
@@ -715,7 +719,7 @@ export class Config {
                         }
                         close();
                     },
-                    upload: (data) => {
+                    upload: (data: FileBrowserCallBcackData) => {
                         let i;
                         if (data.files && data.files.length) {
                             for (i = 0; i < data.files.length; i += 1) {
@@ -724,8 +728,8 @@ export class Config {
                         }
                         close();
                     },
-                    url: function (url, text) {
-                        let image = sourceImage || dom('<img/>', editor.doc);
+                    url: (url: string, text: string) => {
+                        const image = sourceImage || dom('<img/>', editor.doc);
 
                         image.setAttribute('src', url);
                         image.setAttribute('alt', text);
@@ -741,8 +745,8 @@ export class Config {
             tooltip: "Insert Image"
         },
         link : {
-            popap: ({editor, current, close}) => {
-                let sel = editor.win.getSelection(),
+            popup: (editor: Jodit, current: HTMLElement|false, self: ControlType, close: Function) => {
+                const sel = editor.win.getSelection(),
                     form = dom('<form class="jodit_form">' +
                         '<input required name="url" placeholder="http://" type="text"/>' +
                         '<input name="text" placeholder="' + editor.i18n('Text') + '" type="text"/>' +
@@ -754,8 +758,8 @@ export class Config {
                         '</div>' +
                     '<form/>');
 
-                if (current && editor.node.closest(current, 'A')) {
-                    current = editor.node.closest(current, 'A')
+                if (current && Dom.closest(current, 'A', editor.editor)) {
+                    current = <HTMLElement>Dom.closest(current, 'A', editor.editor)
                 } else {
                     current = false;
                 }
@@ -772,18 +776,18 @@ export class Config {
 
                 let selInfo = editor.selection.save();
 
-                form.querySelector('.jodit_unlink_button').addEventListener('mousedown', (event: Event) => {
+                form.querySelector('.jodit_unlink_button').addEventListener('mousedown', () => {
                     if (current) {
-                        editor.node.unwrap(current);
+                        Dom.unwrap(current);
                     }
                     close();
                 });
 
                 form.addEventListener('submit', (event: Event) => {
-                    event.preventDefault()
+                    event.preventDefault();
                     editor.selection.restore(selInfo);
 
-                    let a = current || editor.node.create('a');
+                    let a = current || <HTMLAnchorElement>Dom.create('a', '', editor.doc);
 
                     if (!form.querySelector('input[name=url]').value) {
                         form.querySelector('input[name=url]').focus();
@@ -822,16 +826,16 @@ export class Config {
         },
 
         video : {
-            popap: ({editor}) => {
-                let bylink = dom('<form class="jodit_form">' +
-                        '<input required name="code" placeholder="http://" type="url"/>' +
-                        '<button type="submit">' + editor.i18n('Insert') + '</button>' +
-                        '</form>'),
+            popup: (editor: Jodit) => {
+                const bylink = dom(`<form class="jodit_form">
+                        <input required name="code" placeholder="http://" type="url"/>
+                        <button type="submit">${editor.i18n('Insert')}</button>
+                        </form>`),
 
-                    bycode = dom('<form class="jodit_form">' +
-                        '<textarea required name="code" placeholder="' + editor.i18n('Embed code') + '"></textarea>' +
-                        '<button type="submit">' + editor.i18n('Insert') + '</button>' +
-                        '</form>'),
+                    bycode = dom(`<form class="jodit_form">
+                        '<textarea required name="code" placeholder="${editor.i18n('Embed code')}"></textarea>
+                        '<button type="submit">${editor.i18n('Insert')}</button>
+                        '</form>`),
 
                     tab = {},
                     selinfo = editor.selection.save(),
@@ -878,12 +882,12 @@ export class Config {
         fontsize : {
             command: 'fontSize',
             list : ["8", "9", "10", "11", "12", "14", "18", "24", "30", "36", "48", "60", "72", "96"],
-            template : ({value}) => value,
+            template : (editor: Jodit, key: string, value: string) => value,
             tooltip: "Font size"
         },
-        font : {
+        font : <ControlType>{
             command: 'fontname',
-            exec: ({editor, control}) => {
+            exec: (editor: Jodit, event, control: ControlType) => {
                 editor.execCommand(control.command, false, control.args[0]);
             },
             list :  {
@@ -895,14 +899,14 @@ export class Config {
                 "'Times New Roman',Times,serif": "Times New Roman",
                 "Verdana,Geneva,sans-serif": "Verdana"
             },
-            template : ({key, value}) => {
-                return '<span style="font-family: ' + key + '"> ' + value + ' </span>';
+            template : (editor: Jodit, key: string, value: string) => {
+                return `<span style="font-family: ${key}">${value}</span>`;
             },
             tooltip: "Font family"
         },
         paragraph : {
             command: 'formatBlock',
-            exec: ({editor, control}) => {
+            exec: (editor: Jodit, event, control: ControlType) => {
                 editor.execCommand(control.command, false, control.args[0]);
             },
             list: {
@@ -914,31 +918,34 @@ export class Config {
                 blockquote : "Quote",
                 pre : "Code"
             },
-            template : ({key, value, editor}) => {
+            template : (editor: Jodit, key: string, value: string) => {
                 return '<' + key + ' class="jodit_list_element"><span>' + editor.i18n(value) + '</span></' + key + '></li>';
             },
             tooltip: "Insert format block"
         },
         table : {
             cols: 10,
-            popap: ({editor, control, close}) => {
+            popup: (editor: Jodit, current,  control: ControlType, close: Function) => {
                 let i,
                     j,
                     k,
                     div,
-                    form = dom('<form class="jodit_form jodit_form_inserter">' +
+                    rows_count = 1,
+                    cols_count = 1,
+                    default_cols_count = control.cols;
+
+                const form = dom('<form class="jodit_form jodit_form_inserter">' +
                         '<label>' +
                             '<span>1</span> &times; <span>1</span>' +
                         '</label>' +
                         '</form>'),
-                    rows_count = 1,
-                    cols_count = 1,
-                    default_cols_count = control.cols,
+
+
                     rows = form.querySelectorAll('span')[0],
                     cols = form.querySelectorAll('span')[1],
                     cells = [];
 
-                let generateRows = (need_rows) => {
+                const generateRows = (need_rows) => {
                     let cnt = (need_rows + 1) * default_cols_count;
                     if (cells.length > cnt) {
                         for (i = cnt; i < cells.length; i += 1) {
@@ -956,16 +963,16 @@ export class Config {
                     }
                     cells.forEach((cell) => {
                         form.appendChild(cell);
-                    })
+                    });
 
                     form.style.width = (cells[0].offsetWidth * default_cols_count) + 'px';
-                }
+                };
 
                 generateRows(1);
 
                 cells[0].className = 'hovered';
 
-                let mouseenter = (e, index) => {
+                const mouseenter = (e, index) => {
                     if (e.target.tagName !== 'DIV') {
                         return;
                     }
@@ -990,7 +997,7 @@ export class Config {
 
                     cols.innerText = (cols_count);
                     rows.innerText = (rows_count);
-                }
+                };
 
                 form.addEventListener('mousemove', mouseenter);
 
@@ -1038,7 +1045,7 @@ export class Config {
         },
         source : {
             mode: consts.MODE_SPLIT,
-            exec: ({editor}) => {
+            exec: (editor: Jodit) => {
                 editor.toggleMode();
             },
             tooltip: "Change mode"

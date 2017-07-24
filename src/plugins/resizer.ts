@@ -100,7 +100,7 @@ Jodit.plugins.Resizer = function (editor: Jodit) {
                     wrapper.style.width = element.offsetWidth + 'px';
                     wrapper.style.height = element.offsetHeight + 'px';
 
-                    Dom.wrap(element, wrapper, editor.doc);
+                    Dom.wrap(element, wrapper, editor);
                     let iframe = element;
 
                     editor.events.on(wrapper, 'changesize', () => {

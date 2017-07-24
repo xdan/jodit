@@ -4,7 +4,7 @@ import Selection from './modules/Selection';
 import Toolbar from './modules/Toolbar';
 import Cookie from './modules/Cookie';
 import * as consts from './constants';
-import {extend, inArray, dom, each, sprintf} from './modules/Helpers';
+import {extend, inArray, dom, each, sprintf, css} from './modules/Helpers';
 import * as helper from './modules/Helpers';
 import FileBrowser from "./modules/FileBrowser";
 import Uploader from "./modules/Uploader";
@@ -171,7 +171,8 @@ export default class Jodit extends Component{
         }
 
 
-        this.setMode(this.options.defaultMode)
+        this.setMode(this.options.defaultMode);
+        this.events.fire('afterInit');
     }
 
     __plugins = [];
@@ -191,6 +192,12 @@ export default class Jodit extends Component{
      */
     __createEditor() {
         this.editor = dom(`<div class="jodit_wysiwyg" contenteditable aria-disabled="false" tabindex="${this.options.tabIndex}"></div>`);
+
+        css(this.editor, {
+            width: this.options.width,
+            height: this.options.height,
+            minHeight: this.options.minHeight
+        });
 
         // proxy events
         ['keydown', 'keyup', 'keypress', 'mousedown', 'mouseup', 'mousepress', 'paste', 'resize'].forEach((event_type) => {

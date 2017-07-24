@@ -45,7 +45,7 @@ Jodit.plugins.justify = function (editor: Jodit) {
 
 
                 if (!currentBox && current) {
-                    currentBox = Dom.wrap(current, editor.options.enter, editor.doc);
+                    currentBox = Dom.wrap(current, editor.options.enter, editor);
                 }
 
                 justify(currentBox);

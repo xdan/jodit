@@ -2,6 +2,8 @@ import Component from './Component'
 import Jodit from '../Jodit'
 import {normalizeColor, dom, isPlainObject, each, $$, hexToRgb, val} from './Helpers'
 import Dom from "./Dom";
+import Uploader, {UploaderAnswer} from "./Uploader";
+import FileBrowser, {FileBrowserCallBcackData} from "./FileBrowser";
 
 export default class Widget extends Component {
     /**
@@ -220,9 +222,16 @@ Widget['Tabs'] = class extends Widget{
  *      }
  * }, image);
  */
+
+type ImageSelectorCallbacks = {
+    url?: (this: Jodit, url: string, alt: string) => void;
+    filebrowser?: (data: FileBrowserCallBcackData) => void,
+    upload?: (this: Jodit, data: FileBrowserCallBcackData) => void;
+};
+
 Widget['ImageSelector'] = class extends Widget{
     currentImage: any;
-    constructor(editor, callbacks, elm) {
+    constructor(editor, callbacks: ImageSelectorCallbacks, elm) {
         super(editor);
 
         let tabs:{[key: string]: HTMLElement|Function} = {},
@@ -236,12 +245,15 @@ Widget['ImageSelector'] = class extends Widget{
                 '<input type="file" accept="image/*" tabindex="-1" dir="auto" multiple=""/>' +
                 '</div>');
 
-            editor.getInstance('Uploader').bind(dragbox, (images) => {
+            (<Uploader>editor.getInstance('Uploader')).bind(dragbox, (resp: UploaderAnswer) => {
                 if (typeof(callbacks.upload) === 'function') {
-                    callbacks.upload.call(editor, images);
+                    callbacks.upload.call(editor, {
+                        baseurl: resp.data.baseurl,
+                        files: resp.data.files
+                    });
                 }
-            }, (resp) => {
-                editor.events.fire('errorMessage', [editor.options.uploader.getMessage(resp)]);
+            }, (error: Error) => {
+                editor.events.fire('errorMessage', [error.message]);
             });
 
             tabs[Jodit.modules.Toolbar.getIcon('upload') + editor.i18n('Upload')] = dragbox;
@@ -250,7 +262,7 @@ Widget['ImageSelector'] = class extends Widget{
         if (callbacks.filebrowser) {
             if (editor.options.filebrowser.url || editor.options.filebrowser.ajax.url || editor.options.filebrowser.items.url) {
                 tabs[Jodit.modules.Toolbar.getIcon('folder') + editor.i18n('Browse')] = function () {
-                    editor.getInstance('FileBrowser').open(callbacks.filebrowser);
+                    (<FileBrowser>editor.getInstance('FileBrowser')).open(callbacks.filebrowser);
                 };
             }
         }

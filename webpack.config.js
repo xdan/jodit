@@ -6,7 +6,6 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 process.deprecated = false
 
 let less_loaders = [
-    // activate source maps via loader query
     {
         loader: 'css-loader',
         options: {
@@ -71,24 +70,10 @@ module.exports = {
                 })
             },
             {
-                //include: path.resolve(__dirname, "src"),
                 test: /\.(ts|js)$/,
                 loader: 'awesome-typescript-loader',
                 exclude: /(node_modules|bower_components)/,
             },
-            /*{
-                //include: path.resolve(__dirname, "src"),
-                test: /\.js$/,
-                loader: 'babel-loader',
-                exclude: /(node_modules|bower_components)/,
-            },
-            {
-                test: /\.js$/,
-                loader: 'eslint-loader',
-                include: [
-                    path.resolve(__dirname, "src"),
-                ],
-            },*/
             {
                 test: /\.(svg)$/i,
                 include: [

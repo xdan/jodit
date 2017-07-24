@@ -4,8 +4,8 @@ describe('Tables Jodit Editor Tests', function() {
         it('After init container must has one element .jodit_table_resizer', function() {
             var editor = new Jodit('#table_editor');
             expect(editor.editor.querySelector('.jodit_table_resizer')).to.equal(null);
-            editor.selection.insertNode(editor.node.create('table'));
-            editor.selection.insertNode(editor.node.create('table'));
+            editor.selection.insertNode(Jodit.modules.Dom.create('table', '', editor.doc));
+            editor.selection.insertNode(Jodit.modules.Dom.create('table', '', editor.doc));
             expect(editor.container.querySelectorAll('.jodit_table_resizer').length).to.equal(1);
         });
         it('Process wrong tabel', function() {
@@ -449,10 +449,10 @@ describe('Tables Jodit Editor Tests', function() {
 
             editor.setEditorValue('');
 
-            var table = editor.node.create('table'),
-                tr = editor.node.create('tr'),
-                td = editor.node.create('td'),
-                td2 = editor.node.create('td');
+            var table = Jodit.modules.Dom.create('table', '', editor.doc),
+                tr = Jodit.modules.Dom.create('tr', '', editor.doc),
+                td = Jodit.modules.Dom.create('td', '', editor.doc),
+                td2 = Jodit.modules.Dom.create('td', '', editor.doc);
 
             tr.appendChild(td);
             tr.appendChild(td2);
@@ -460,7 +460,7 @@ describe('Tables Jodit Editor Tests', function() {
 
             editor.selection.insertNode(table, false);
             editor.selection.setCursorIn(table, false); // set cursor in last cell
-            editor.selection.insertNode(editor.node.create('text', 'ok'));
+            editor.selection.insertNode(Jodit.modules.Dom.create('text', 'ok', editor.doc));
 
             expect(editor.getEditorValue()).to.equal('<table><tr><td></td><td>ok</td></tr></table>');
         });
@@ -490,7 +490,7 @@ describe('Tables Jodit Editor Tests', function() {
 
             simulateEvent('keydown', Jodit.KEY_TAB, editor.editor);
 
-            editor.selection.insertNode(editor.node.create('text', 'test'), false);
+            editor.selection.insertNode(Jodit.modules.Dom.create('text', 'test', editor.doc), false);
 
             expect(editor.getEditorValue()).to.equal('<table><tbody><tr><td>1</td><td>test</td></tr></tbody></table>');
         })
@@ -510,7 +510,7 @@ describe('Tables Jodit Editor Tests', function() {
                 evnt.shiftKey = true;
             });
 
-            editor.selection.insertNode(editor.node.create('text', 'test'), false);
+            editor.selection.insertNode(Jodit.modules.Dom.create('text', 'test', editor.doc), false);
 
             expect(editor.getEditorValue()).to.equal('<table><tbody><tr><td>test</td><td>2</td></tr></tbody></table>');
         })
@@ -528,7 +528,7 @@ describe('Tables Jodit Editor Tests', function() {
 
             simulateEvent('keydown', Jodit.KEY_RIGHT, editor.editor);
 
-            editor.selection.insertNode(editor.node.create('text', 'test'), false);
+            editor.selection.insertNode(Jodit.modules.Dom.create('text', 'test',  editor.doc), false);
 
             expect(editor.getEditorValue()).to.equal('<table><tbody><tr><td>1</td><td>test2</td></tr></tbody></table>');
         })
@@ -546,7 +546,7 @@ describe('Tables Jodit Editor Tests', function() {
 
             simulateEvent('keydown', Jodit.KEY_RIGHT, editor.editor); // not work but in real cursor move after 1
 
-            editor.selection.insertNode(editor.node.create('text', 'test'), false);
+            editor.selection.insertNode(Jodit.modules.Dom.create('text', 'test',  editor.doc), false);
 
             expect(editor.getEditorValue()).to.equal('<table><tbody><tr><td>test1</td><td>2</td></tr></tbody></table>');
         })
@@ -564,7 +564,7 @@ describe('Tables Jodit Editor Tests', function() {
 
             simulateEvent('keydown', Jodit.KEY_LEFT, editor.editor); // not work but in real cursor move after 1
 
-            editor.selection.insertNode(editor.node.create('text', 'test'), false);
+            editor.selection.insertNode(Jodit.modules.Dom.create('text', 'test', editor.doc), false);
 
             expect(editor.getEditorValue()).to.equal('<table><tbody>' +
                 '<tr>' +
@@ -591,7 +591,7 @@ describe('Tables Jodit Editor Tests', function() {
 
             simulateEvent('keydown', Jodit.KEY_TOP, editor.editor);
 
-            editor.selection.insertNode(editor.node.create('text', 'test'), false);
+            editor.selection.insertNode(Jodit.modules.Dom.create('text', 'test', editor.doc), false);
 
             expect(editor.getEditorValue()).to.equal('<table><tbody>' +
                 '<tr>' +
@@ -625,7 +625,7 @@ describe('Tables Jodit Editor Tests', function() {
 
             simulateEvent('keydown', Jodit.KEY_BOTTOM, editor.editor);
 
-            editor.selection.insertNode(editor.node.create('text', 'test'), false);
+            editor.selection.insertNode(Jodit.modules.Dom.create('text', 'test', editor.doc), false);
 
             expect(editor.getEditorValue()).to.equal('<table><tbody>' +
                 '<tr>' +
@@ -652,7 +652,7 @@ describe('Tables Jodit Editor Tests', function() {
 
             simulateEvent('keydown', Jodit.KEY_TAB, editor.editor);
 
-            editor.selection.insertNode(editor.node.create('text', 'test'), false);
+            editor.selection.insertNode(Jodit.modules.Dom.create('text', 'test', editor.doc), false);
 
             expect(editor.getEditorValue()).to.equal('<table><tbody>' +
                 '<tr>' +
