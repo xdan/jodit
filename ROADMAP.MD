@@ -11,4 +11,4 @@
 - [ ] Restore themes
 - [ ] Restore mode without icons
 - [ ] Restore split mode
-- [ ] Hotkeys for button
+- [ ] Hotkeys for button 
