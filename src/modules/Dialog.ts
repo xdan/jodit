@@ -140,18 +140,18 @@ export default class Dialog extends Component{
      *
      * @return {HTMLDivElement}
      */
-    getDialog() {
-        return this.dialog;
-    }
+    // getDialog() {
+    //     return this.dialog;
+    // }
 
     /**
      * Get dom element (div.jodit_dialog_box)
      *
      * @return {HTMLDivElement}
      */
-    getBox() {
-        return this.dialogbox;
-    }
+    // getBox() {
+    //     return this.dialogbox;
+    // }
     /**
      * Specifies the size of the window
      *
@@ -629,7 +629,7 @@ export const Promt = (msg: string, title: string|Function, callback: Function, p
         $cancel,
         $ok,
         $div = dom('<form class="jodit_promt"></form>'),
-        $input = dom('<input autofocus="true" type="text"/>'),
+        $input = dom('<input autofocus="true"/>'),
         $label = dom('<label></label>');
 
     if (typeof title === 'function') {

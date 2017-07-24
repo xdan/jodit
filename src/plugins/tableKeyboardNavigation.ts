@@ -58,8 +58,7 @@ Jodit.plugins.tableKeyboardNavigation = function (editor) {
             break;
             case consts.KEY_TOP:
             case consts.KEY_BOTTOM: {
-                let proc = new Table(editor);
-                let i = 0, j = 0, matrix = proc.formalMatrix(table, (elm, _i, _j) => {
+                let i = 0, j = 0, matrix = Table.formalMatrix(table, (elm, _i, _j) => {
                     if (elm === block) {
                         i = _i;
                         j = _j;

@@ -36,8 +36,8 @@ describe('Tables Jodit Editor Tests', function() {
                 }).join('') +
                 '</table>');
 
-            var table = new Jodit.modules.Table(editor);
-            expect(table.getRowsCount(editor.editor.firstChild)).to.equal(4);
+            // var table = new Jodit.modules.Table(editor);
+            expect(Jodit.modules.Table.getRowsCount(editor.editor.firstChild)).to.equal(4);
         });
         it('Method getColumnsCount should return maximum of TH or TD in one row in table', function() {
             var editor = new Jodit('#table_editor');
@@ -50,8 +50,7 @@ describe('Tables Jodit Editor Tests', function() {
                     '<tr><td colspan="3">123</td><td>4</td></tr>' + // 4 cells - wrong table but will suit
                 '</table>');
 
-            var table = new Jodit.modules.Table(editor);
-            expect(table.getColumnsCount(editor.editor.firstChild)).to.equal(4);
+            expect(Jodit.modules.Table.getColumnsCount(editor.editor.firstChild)).to.equal(4);
         });
         it('Method appendRow should append one row in the end of table', function() {
             var editor = new Jodit('#table_editor');
@@ -676,7 +675,7 @@ describe('Tables Jodit Editor Tests', function() {
                     '</table>');
 
                 var table = new Jodit.modules.Table(editor);
-                table.removeRow(editor.editor.firstChild, 0);
+                Jodit.modules.Table.removeRow(editor.editor.firstChild, 0);
 
                 expect(editor.getEditorValue().toLowerCase()).to.equal('<table>' +
                     '<tbody>' +
@@ -692,8 +691,8 @@ describe('Tables Jodit Editor Tests', function() {
                     '<tr><td>3</td></tr>' +
                     '</table>');
 
-                var table = new Jodit.modules.Table(editor);
-                table.removeRow(editor.editor.firstChild, 1);
+                // var table = new Jodit.modules.Table(editor);
+                Jodit.modules.Table.removeRow(editor.editor.firstChild, 1);
 
                 expect(editor.getEditorValue().toLowerCase()).to.equal('<table>' +
                     '<tbody>' +
@@ -711,8 +710,8 @@ describe('Tables Jodit Editor Tests', function() {
                     '<tr><td>5</td><td>6</td><td>7</td></tr>' +
                     '</table>');
 
-                var table = new Jodit.modules.Table(editor);
-                table.removeRow(editor.editor.firstChild, 1);
+                // var table = new Jodit.modules.Table(editor);
+                Jodit.modules.Table.removeRow(editor.editor.firstChild, 1);
 
                 expect(editor.getEditorValue().toLowerCase()).to.equal('<table>' +
                     '<tbody>' +
@@ -730,8 +729,8 @@ describe('Tables Jodit Editor Tests', function() {
                     '<tr><td>3</td></tr>' +
                     '</table>');
 
-                var table = new Jodit.modules.Table(editor);
-                table.removeRow(editor.editor.firstChild, 0);
+                // var table = new Jodit.modules.Table(editor);
+                Jodit.modules.Table.removeRow(editor.editor.firstChild, 0);
 
                 expect(editor.getEditorValue().toLowerCase()).to.equal('<table>' +
                     '<tbody>' +
@@ -748,8 +747,8 @@ describe('Tables Jodit Editor Tests', function() {
                     '<tr><td>4</td><td>5</td><td>6</td></tr>' +
                     '</table>');
 
-                var table = new Jodit.modules.Table(editor);
-                table.removeRow(editor.editor.firstChild, 0);
+                // var table = new Jodit.modules.Table(editor);
+                Jodit.modules.Table.removeRow(editor.editor.firstChild, 0);
 
                 expect(editor.getEditorValue().toLowerCase()).to.equal('<table>' +
                     '<tbody>' +
@@ -768,8 +767,8 @@ describe('Tables Jodit Editor Tests', function() {
                     '<tr><td>6</td></tr>' +
                     '</table>');
 
-                var table = new Jodit.modules.Table(editor);
-                table.removeRow(editor.editor.firstChild, 1);
+                // var table = new Jodit.modules.Table(editor);
+                Jodit.modules.Table.removeRow(editor.editor.firstChild, 1);
 
                 expect(editor.getEditorValue().toLowerCase()).to.equal('<table>' +
                     '<tbody>' +
@@ -790,8 +789,8 @@ describe('Tables Jodit Editor Tests', function() {
                     '<tr><td>5</td><td>6</td></tr>' +
                     '</table>');
 
-                var table = new Jodit.modules.Table(editor);
-                table.removeColumn(editor.editor.firstChild, 0);
+                // var table = new Jodit.modules.Table(editor);
+                Jodit.modules.Table.removeColumn(editor.editor.firstChild, 0);
 
                 expect(editor.getEditorValue().toLowerCase()).to.equal('<table>' +
                     '<tbody>' +
@@ -810,8 +809,8 @@ describe('Tables Jodit Editor Tests', function() {
                         '<tr><td>4</td><td>5</td></tr>' +
                     '</table>');
 
-                var table = new Jodit.modules.Table(editor);
-                table.removeColumn(editor.editor.firstChild, 0);
+                // var table = new Jodit.modules.Table(editor);
+                Jodit.modules.Table.removeColumn(editor.editor.firstChild, 0);
 
                 expect(editor.getEditorValue().toLowerCase()).to.equal('<table>' +
                     '<tbody>' +
@@ -830,8 +829,8 @@ describe('Tables Jodit Editor Tests', function() {
                     '<tr><td>4</td><td>5</td></tr>' +
                     '</table>');
 
-                var table = new Jodit.modules.Table(editor);
-                table.removeColumn(editor.editor.firstChild, 1);
+                // var table = new Jodit.modules.Table(editor);
+                Jodit.modules.Table.removeColumn(editor.editor.firstChild, 1);
 
                 expect(editor.getEditorValue().toLowerCase()).to.equal('<table>' +
                     '<tbody>' +
@@ -850,8 +849,8 @@ describe('Tables Jodit Editor Tests', function() {
                         '<tr><td>7</td></tr>' +
                     '</table>');
 
-                var table = new Jodit.modules.Table(editor);
-                table.removeColumn(editor.editor.firstChild, 3);
+                // var table = new Jodit.modules.Table(editor);
+                Jodit.modules.Table.removeColumn(editor.editor.firstChild, 3);
 
                 var result = editor.getEditorValue().toLowerCase();
 

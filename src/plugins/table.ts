@@ -5,7 +5,7 @@ import {each, getContentWidth, $$, dom} from '../modules/Helpers';
 import {Config} from '../Config'
 
 /**
- * @prop {boolean} useTableProcessor=true true Use module {@link module:TableProcessor|TableProcessor}
+ * @prop {boolean} useTableProcessor=true true Use module {@link TableProcessor|TableProcessor}
  * @memberof Jodit.defaultOptions
  */
 declare module "../Config" {
@@ -18,8 +18,8 @@ Config.prototype.useTableProcessor = true;
  *
  */
 class TableProcessor extends Table{
-    __key = 'table_processor_observer';
-    __selectMode = false;
+    __key: string = 'table_processor_observer';
+    __selectMode: boolean = false;
 
     /**
      *
@@ -27,26 +27,26 @@ class TableProcessor extends Table{
      * @param {HTMLTableCellElement} [current_cell]
      * @private
      */
-    __deSelectAll(table, current_cell ?: HTMLTableCellElement|false) {
-        let cells = table ? this.getAllSelectedCells(table) : this.getAllSelectedCells(this.parent.editor);
+    __deSelectAll(table: HTMLTableElement, current_cell ?: HTMLTableCellElement|false) {
+        let cells: HTMLTableCellElement[] = table ? Table.getAllSelectedCells(table) : Table.getAllSelectedCells(this.parent.editor);
         if (cells.length) {
             each(cells, (i, cell) => {
                 if (!current_cell || current_cell !== cell) {
-                    this.removeSelected(cell);
+                    Table.removeSelected(cell);
                 }
             })
         }
     }
 
-    __resizerDelta = 0;
-    __resizerHandler;
-    __drag = false;
+    __resizerDelta: number = 0;
+    __resizerHandler: HTMLElement;
+    __drag: boolean = false;
 
     __wholeTable: boolean | null;
     __workCell: HTMLTableCellElement;
-    __workTable;
+    __workTable: HTMLTableElement;
 
-    __isCell(tag) {
+    private static __isCell(tag: HTMLElement): boolean {
         return tag && /^TD|TH$/i.test(tag.tagName)
     }
 
@@ -56,22 +56,22 @@ class TableProcessor extends Table{
      * @param {boolean|null} [wholeTable=null] true - resize whole table by left side, false - resize whole table by right side, null - resize column
      * @private
      */
-    __setWorkCell(cell, wholeTable = null) {
+    __setWorkCell(cell: HTMLTableCellElement, wholeTable = null) {
         this.__wholeTable = wholeTable;
         this.__workCell = cell;
-        this.__workTable = this.parent.node.up(cell, (elm) => (elm.tagName === 'TABLE'));
+        this.__workTable = <HTMLTableElement>this.parent.node.up(cell, (elm) => (elm.tagName === 'TABLE'));
     }
 
-    __minX;
-    __maxX;
+    __minX: number;
+    __maxX: number;
 
     __addResizer() {
         if (!this.__resizerHandler) {
-            this.__resizerHandler = this.parent.container.querySelector('.jodit_table_resizer');
+            this.__resizerHandler = <HTMLElement>this.parent.container.querySelector('.jodit_table_resizer');
             if (!this.__resizerHandler) {
                 this.__resizerHandler = dom('<div class="jodit_table_resizer"></div>');
                 let startX = 0;//, startLeft = 0;
-                this.__resizerHandler.addEventListener('mousedown', (event) => {
+                this.__resizerHandler.addEventListener('mousedown', (event: MouseEvent) => {
                     this.__drag = true;
 
                     startX = event.clientX;
@@ -87,14 +87,14 @@ class TableProcessor extends Table{
                     this.__maxX = 1000000;
 
                     if (this.__wholeTable !== null) {
-                        tableBox = this.__workTable.parentNode.getBoundingClientRect();
+                        tableBox = (<HTMLElement>this.__workTable.parentNode).getBoundingClientRect();
                         this.__minX = tableBox.left;
                         this.__maxX = tableBox.left + tableBox.width;
                     } else {
                         // find maximum columns
-                        let coordinate = this.formalCoordinate(this.__workTable, this.__workCell, true);
+                        let coordinate = Table.formalCoordinate(this.__workTable, this.__workCell, true);
 
-                        this.formalMatrix(this.__workTable, (td, i, j) => {
+                        Table.formalMatrix(this.__workTable, (td, i, j) => {
                             if (coordinate[1] === j) {
                                 box = td.getBoundingClientRect();
                                 this.__minX = Math.max(box.left + consts.NEARBY / 2, this.__minX);
@@ -107,9 +107,9 @@ class TableProcessor extends Table{
                     }
                 });
 
-                this.__on(window, 'mousemove', (event) => {
+                this.__on(window, 'mousemove', (event: MouseEvent) => {
                     if (this.__drag) {
-                        let x = event.clientX;//startLeft + (event.clientX - startX);
+                        let x = event.clientX;
 
                         if (x < this.__minX) {
                             x = this.__minX;
@@ -153,14 +153,14 @@ class TableProcessor extends Table{
             this.__resizerHandler.style.display = 'block';
 
             if (offsetX <= consts.NEARBY) {
-                let prevTD = this.parent.node.prev(cell, this.__isCell, cell.parentNode);
+                let prevTD = <HTMLTableCellElement>this.parent.node.prev(cell, TableProcessor.__isCell, cell.parentNode);
                 if (prevTD) {
                     this.__setWorkCell(prevTD);
                 } else {
                     this.__setWorkCell(cell, true);
                 }
             } else {
-                let nextTD = this.parent.node.next(cell, this.__isCell, cell.parentNode);
+                let nextTD = this.parent.node.next(cell, TableProcessor.__isCell, cell.parentNode);
                 this.__setWorkCell(cell, !nextTD ? false : null);
             }
 
@@ -171,30 +171,30 @@ class TableProcessor extends Table{
 
     observe(table: HTMLTableElement) {
         table[this.__key] = true;
-        let start;
+        let start: HTMLTableCellElement;
         table.addEventListener('mousedown', (event: MouseEvent) => {
-            let cell: HTMLTableCellElement = <HTMLTableCellElement>this.parent.node.up(<HTMLElement>event.target, this.__isCell, table);
+            let cell: HTMLTableCellElement = <HTMLTableCellElement>this.parent.node.up(<HTMLElement>event.target, TableProcessor.__isCell, table);
             if (cell && cell instanceof  HTMLElement) {
                 if (!cell.firstChild) {
                     cell.appendChild(this.parent.node.create('br'))
                 }
 
                 start = cell;
-                this.addSelected(cell);
+                Table.addSelected(cell);
                 this.__selectMode = true;
                 this.parent.startDrag();
             }
         });
-        table.addEventListener('mouseleave', (e) => {
+        table.addEventListener('mouseleave', (e: MouseEvent) => {
             if (this.__resizerHandler && this.__resizerHandler !== e.relatedTarget) {
                 this.__resizerHandler.style.display = 'none';
             }
         });
-        table.addEventListener('mousemove', (event) => {
+        table.addEventListener('mousemove', (event: MouseEvent) => {
             if (this.__drag) {
                 return;
             }
-            let cell = <HTMLTableCellElement>this.parent.node.up(<HTMLElement>event.target, this.__isCell, table);
+            let cell = <HTMLTableCellElement>this.parent.node.up(<HTMLElement>event.target, TableProcessor.__isCell, table);
             if (cell) {
                 if (this.__selectMode) {
                     if (cell !== start) {
@@ -204,12 +204,12 @@ class TableProcessor extends Table{
                         }
                     }
                     this.__deSelectAll(table);
-                    let bound = this.getSelectedBound(table, [cell, start]),
-                        box = this.formalMatrix(table);
+                    let bound = Table.getSelectedBound(table, [cell, start]),
+                        box = Table.formalMatrix(table);
 
                     for (let i = bound[0][0]; i <= bound[1][0]; i += 1) {
                         for (let j = bound[0][1]; j <= bound[1][1]; j += 1) {
-                            this.addSelected(box[i][j])
+                            Table.addSelected(box[i][j])
                         }
                     }
                 } else {
@@ -242,11 +242,11 @@ class TableProcessor extends Table{
 
                 // resize column
                 if (this.__wholeTable === null) {
-                    this.setColumnWidthByDelta(this.__workTable, this.formalCoordinate(this.__workTable, this.__workCell, true)[1], this.__resizerDelta, false, true);
-                    let nextTD = this.parent.node.next(this.__workCell, this.__isCell, this.__workCell.parentNode);
-                    this.setColumnWidthByDelta(this.__workTable, this.formalCoordinate(this.__workTable, nextTD)[1], -this.__resizerDelta, true);
+                    this.setColumnWidthByDelta(this.__workTable, Table.formalCoordinate(this.__workTable, this.__workCell, true)[1], this.__resizerDelta, true);
+                    const nextTD = <HTMLTableCellElement>this.parent.node.next(this.__workCell, TableProcessor.__isCell, this.__workCell.parentNode);
+                    this.setColumnWidthByDelta(this.__workTable, Table.formalCoordinate(this.__workTable, nextTD)[1], -this.__resizerDelta);
                 } else {
-                    let width = parseInt(this.__workTable.offsetWidth, 10),
+                    let width = this.__workTable.offsetWidth,
                         parentWidth = getContentWidth(this.__workTable.parentNode, this.win);
 
                     // right side
@@ -290,9 +290,9 @@ class TableProcessor extends Table{
                 })
             })
             .on('beforeSetMode', () => {
-                this.getAllSelectedCells(editor.editor).forEach((td) => {
-                    this.removeSelected(td)
-                    this.normalizeTable(editor.node.closest(td, 'table'))
+                Table.getAllSelectedCells(editor.editor).forEach((td) => {
+                    Table.removeSelected(td);
+                    this.normalizeTable(<HTMLTableElement>editor.node.closest(td, 'table'))
                 })
             })
             .on('keydown', (event) => {
@@ -312,26 +312,26 @@ class TableProcessor extends Table{
      */
     onExecCommand = (command: string) => {
         if (/splitvertical|splithorizontal|mergeselectedcells/.test(command)) {
-            const cells = this.getAllSelectedCells(this.parent.editor);
+            const cells = Table.getAllSelectedCells(this.parent.editor);
             if (cells.length) {
-                let cell = cells.shift();
+                let cell: HTMLTableCellElement = cells.shift();
                 switch (command) {
                     case 'splitvertical': {
-                        this.splitVertical(this.parent.node.closest(cell, 'table'));
+                        this.splitVertical(<HTMLTableElement>this.parent.node.closest(cell, 'table'));
                         break;
                     }
                     case 'splithorizontal': {
-                        this.splitHorizontal(this.parent.node.closest(cell, 'table'));
+                        this.splitHorizontal(<HTMLTableElement>this.parent.node.closest(cell, 'table'));
                         break;
                     }
                     case 'mergeselectedcells': {
-                        this.mergeSelected(this.parent.node.closest(cell, 'table'));
+                        this.mergeSelected(<HTMLTableElement>this.parent.node.closest(cell, 'table'));
                         break;
                     }
                 }
             }
         }
-    }
+    };
 
 
 

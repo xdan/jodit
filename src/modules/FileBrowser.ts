@@ -11,6 +11,7 @@ import ContextMenu from "./ContextMenu";
 import Uploader, {UploaderAnswer} from "./Uploader";
 import Ajax from "./Ajax";
 import {TEXT_PLAIN} from "../constants";
+import ImageEditor from "./ImageEditor";
 
 /**
  * The module creates a web browser dialog box . In a Web browser , you can select an image , remove , drag it . Upload new
@@ -297,7 +298,7 @@ type FileBrowserOptions = {
     showFileSize: boolean;
     showFileChangeTime: boolean;
 
-    getThumbTemplate: (item: ISourceFile, source: ISource, source_name: string) => void;
+    getThumbTemplate: (this: FileBrowser, item: ISourceFile, source: ISource, source_name: string) => string;
 
     ajax: FileBrowserAjaxOptions;
     create: FileBrowserAjaxOptions;
@@ -394,7 +395,7 @@ Config.prototype.filebrowser = {
 
     view: 'tiles',
 
-    isSuccess: function (this: FileBrowser, resp: FileBrowserAnswer) {
+    isSuccess: function (this: FileBrowser, resp: FileBrowserAnswer): boolean {
         return resp.success;
     },
     getMessage: function (this: FileBrowser, resp: FileBrowserAnswer) {
@@ -405,7 +406,7 @@ Config.prototype.filebrowser = {
     showFileSize: true,
     showFileChangeTime: true,
 
-    getThumbTemplate: function (this: FileBrowser, item: ISourceFile, source: ISource, source_name: string) {
+    getThumbTemplate: function (this: FileBrowser, item: ISourceFile, source: ISource, source_name: string): string {
         let name: string,
             thumb: string,
             info: string,
@@ -431,7 +432,7 @@ Config.prototype.filebrowser = {
         </div>`;
 
         return `<a draggable="true" class="${ITEM_CLASS}" href="${urlNormalize(source.baseurl + source.path +  name)}" data-source="${source_name}" data-path="${pathNormalize(source.path ? source.path + '/' : '/')}" data-name="${name}" title="${name}" data-url="${urlNormalize(source.baseurl + source.path + name)}">
-                '<img src="${urlNormalize(source.baseurl + source.path + thumb)}?_tmst=${timestamp}" alt="${name}">
+                <img src="${urlNormalize(source.baseurl + source.path + thumb)}?_tmst=${timestamp}" alt="${name}"/>
                 ${(this.options.showFileName || (this.options.showFileSize && item.size) || (this.options.showFileChangeTime && item.changed)) ? info : ''}
             </a>`;
     },
@@ -538,7 +539,7 @@ export default class FileBrowser extends Component {
             edit : dom('<div class="jodit_button disabled">' + Toolbar.getIcon('pencil') + '</div>'),
             tiles : dom('<div class="jodit_button jodit_button_tiles disabled">' + Toolbar.getIcon('th') + '</div>'),
             list : dom('<div class="jodit_button disabled">' + Toolbar.getIcon('th-list') + '</div>'),
-            filter: dom('<input class="jodit_input" type="text" placeholder="' + editor.i18n('Filter') + '"/>'),
+            filter: dom('<input class="jodit_input" placeholder="' + editor.i18n('Filter') + '"/>'),
 
             sort: dom('<select class="jodit_input">' +
                 '<option value="changed">' + editor.i18n('Sort by changed') + '</option>' +
@@ -787,7 +788,7 @@ export default class FileBrowser extends Component {
                     return false;
                 }
             })
-            .__on(self.files, 'click', (e) => {
+            .__on(self.files, 'click', (e: MouseEvent) => {
                 if (!ctrlKey(e)) {
                     this.__getActiveElements().forEach((elm: HTMLElement) => {
                         elm.classList.remove('active');
@@ -795,7 +796,7 @@ export default class FileBrowser extends Component {
                     self.someSelectedWasChanged();
                 }
             })
-            .__on(self.files, 'click', 'a', function (this: HTMLElement, e) {
+            .__on(self.files, 'click', 'a', function (this: HTMLElement, e: MouseEvent) {
                 if (!ctrlKey(e)) {
                     self.__getActiveElements().forEach((elm: HTMLElement) => {
                         elm.classList.remove('active');
@@ -806,7 +807,7 @@ export default class FileBrowser extends Component {
                 e.stopPropagation();
                 return false;
             })
-            .__on(document, 'dragover', function (e) {
+            .__on(document, 'dragover', function (e: MouseEvent) {
                 if (self.isOpened() && self.draggable && e.clientX !== undefined) {
                     css(<HTMLElement>self.draggable, {
                         left: e.clientX + 20,
@@ -815,7 +816,7 @@ export default class FileBrowser extends Component {
                     });
                 }
             })
-            .__on(window, 'keydown', (e) => {
+            .__on(window, 'keydown', (e: KeyboardEvent) => {
                 if (self.isOpened() && e.which === 46) {
                     self.__fire(self.buttons.remove, 'click');
                 }
@@ -1259,7 +1260,7 @@ export default class FileBrowser extends Component {
      * @method openImageEditor
      */
     openImageEditor = (href: string, name: string, path: string, source: string, onSuccess?: Function, onFailed?: Function) => {
-        this.parent.getInstance('ImageEditor').open(href, (newname, box, success, failed) => {
+        (<ImageEditor>this.parent.getInstance('ImageEditor')).open(href, (newname, box, success, failed) => {
             if (this.options[box.action] === undefined) {
                 this.options[box.action] = {};
             }

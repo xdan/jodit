@@ -2,6 +2,13 @@ import Jodit from '../Jodit';
 import Component from './Component';
 import {css, dom} from "./Helpers";
 import Toolbar from "./Toolbar";
+
+type Action = {
+    icon ?: string;
+    title ?: string;
+    exec ?: (this: ContextMenu, e: MouseEvent) => false|void;
+};
+
 /**
  * Module to generate context menu
  *
@@ -31,18 +38,20 @@ export default class ContextMenu extends Component {
      * Generate and show context menu
      *
      * @method show
-     * @param {int} x Global coordinate by X
-     * @param {int} y Global coordinate by Y
-     * @param {array} actions Array with plainobjects {icon: 'bin', title: 'Delete', exec: function () { do smth}}
+     * @param {number} x Global coordinate by X
+     * @param {number} y Global coordinate by Y
+     * @param {Action[]} actions Array with plainobjects {icon: 'bin', title: 'Delete', exec: function () { do smth}}
      * @example
      * parent.show(e.clientX, e.clientY, [{icon: 'bin', title: 'Delete', exec: function () { alert(1) }]);
      */
-    show(x, y, actions) {
+    show(x: number, y: number, actions: Array<false|Action>) {
+        const self = this;
         if (!Array.isArray(actions)) {
             return;
         }
 
         this.context.innerHTML = '';
+
         actions.forEach((item) => {
             if (!item) {
                 return;
@@ -51,22 +60,22 @@ export default class ContextMenu extends Component {
 
             action.addEventListener('click', (e) => {
                 item.exec.call(self, e);
-                this.hide();
+                self.hide();
                 return false;
             });
 
-            action.querySelector('span').innerText = this.parent.i18n(item.title);
-            this.context.appendChild(action);
+            action.querySelector('span').innerText = self.parent.i18n(item.title);
+            self.context.appendChild(action);
         });
 
 
-        css(this.context, {
+        css(self.context, {
             left: x,
             top: y
         });
 
         window
-            .addEventListener('mouseup', this.hide);
+            .addEventListener('mouseup', self.hide);
 
         this.context.classList.add('jodit_context_menu-show');
     }

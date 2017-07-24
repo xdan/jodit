@@ -23,6 +23,16 @@ type ImageEditorOptions = {
     cropDefaultHeight: string|number;
 }
 
+type ActionBox = {
+    action: string,
+    box: {
+        w: number;
+        h: number;
+        x?: number;
+        y?: number;
+    }
+};
+
 declare module "../Config" {
     interface Config {
         imageeditor: ImageEditorOptions
@@ -98,6 +108,7 @@ Config.prototype.imageeditor = {
  * @module ImageEditor
  * @param {Object} parent Jodit main object
  */
+
 export default class ImageEditor extends Component{
     options: ImageEditorOptions;
     resizeUseRatio: boolean = true;
@@ -249,26 +260,30 @@ export default class ImageEditor extends Component{
         this.dialog.close();
     };
 
-    calcValueByPercent =  (value, percent) => {
-        percent = percent.toString();
-        let match;
-        match = /^[\-+]?[0-9]+(px)?$/.exec(percent);
+    calcValueByPercent =  (value: number|string, percent: string|number): number => {
+        let percentStr: string = percent.toString();
+        let valueNbr: number = parseFloat(value.toString());
+        let match: string[];
+
+        match = /^[\-+]?[0-9]+(px)?$/.exec(percentStr);
         if (match) {
-            return parseInt(percent, 10);
-        }
-        match = /^([\-+]?[0-9.]+)%$/.exec(percent);
-        if (match) {
-            return Math.round(value * (parseFloat(match[1]) / 100));
+            return parseInt(percentStr, 10);
         }
 
-        return parseFloat(value) || 0;
+        match = /^([\-+]?[0-9.]+)%$/.exec(percentStr);
+
+        if (match) {
+            return Math.round(valueNbr * (parseFloat(match[1]) / 100));
+        }
+
+        return valueNbr || 0;
     };
 
     calcCropBox = () => {
         let w = (<HTMLElement>this.crop_box.parentNode).offsetWidth * 0.8,
             h = (<HTMLElement>this.crop_box.parentNode).offsetHeight * 0.8,
-            wn = w,
-            hn = h
+            wn: number = w,
+            hn: number = h;
 
 
         if (w > this.naturalWidth && h >this.naturalHeight) {
@@ -379,7 +394,7 @@ export default class ImageEditor extends Component{
      *     success();
      * });
      */
-    open = (url: string, save: Function) => {
+    open = (url: string, save: (newname: string|void, box: ActionBox, success: Function, failed: (message: string) => void) => void) => {
         let timestamp = (new Date()).getTime();
 
         this.image = document.createElement('img');
@@ -657,7 +672,7 @@ export default class ImageEditor extends Component{
                 e.stopImmediatePropagation();
             });
             button.addEventListener('click', () => {
-                let data = {
+                let data = <ActionBox> {
                     action: self.activeTab,
                     box: self.activeTab === 'resize' ? self.resizeBox : self.cropBox
                 };

@@ -217,7 +217,7 @@ export default class Selection extends Component{
     /**
      * Returns the current element under the cursor inside editor
      *
-     * @return {false|Node} The element under the cursor or false if undefined or not in editor
+     * @return {boolean|Node} The element under the cursor or false if undefined or not in editor
      */
     current(): false|Node {
         if (this.win.getSelection !== undefined) {
@@ -389,7 +389,7 @@ export default class Selection extends Component{
         this.insertNode(image);
 
         /**
-         * Triggered after image was inserted {@link module:Selection~insertImage|insertImage}. This method can executed from {@link module:Filebrowser|Filebrowser} or {@link module:Uploader|Uploader}
+         * Triggered after image was inserted {@link Selection~insertImage|insertImage}. This method can executed from {@link FileBrowser|FileBrowser} or {@link Uploader|Uploader}
          * @event afterInsertImage
          * @param {HTMLImageElement} image
          * @example
@@ -402,7 +402,7 @@ export default class Selection extends Component{
     }
 
     eachSelection = (callback: Function) => {
-        let sel = this.win.getSelection()
+        const sel = this.win.getSelection();
         if (sel.rangeCount) {
             let range = sel.getRangeAt(0);
             let nodes = [],
@@ -424,7 +424,7 @@ export default class Selection extends Component{
                 callback(current);
             })
         }
-    }
+    };
 
     /**
      * Set cursor after the node
@@ -469,6 +469,8 @@ export default class Selection extends Component{
      * Checks if the cursor is at the end(start) block
      *
      * @param  {boolean} [start=false] true - check whether the cursor is at the start block
+     * @param {HTMLElement|Function|boolean} [parentBlock=false] - Find in this
+     * @param {boolean} [inverse=false] - find last element on left side and inverse
      * @return {boolean} true - the cursor is at the end(start) block
      */
     cursorInTheEdge (start:boolean = false, parentBlock: HTMLElement|Function|false = false, inverse: boolean = false): boolean {
@@ -584,7 +586,7 @@ export default class Selection extends Component{
      * Set cursor before the node
      *
      * @param {Node} node
-     * @return {TextNode} fake invisible textnode. After insert it can be removed
+     * @return {Text} fake invisible textnode. After insert it can be removed
      */
     setCursorBefore(node) {
         if (!(node instanceof Node)) {

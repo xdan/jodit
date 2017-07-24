@@ -11,12 +11,12 @@ type RangeType = {
     endContainer: number[];
     endOffset: number;
 }
-type SnapshotType = {
+export type SnapshotType = {
     html: string;
     range: RangeType;
 }
 export default class Snapshot extends Component {
-    __countElementsBefore (elm): number {
+    private static __countElementsBefore (elm: Node): number {
         if (!elm.parentNode) {
             return 0;
         }
@@ -39,19 +39,19 @@ export default class Snapshot extends Component {
             last = elms[j];
         }
     }
-    __decomposeHierarchyNodes (elm): number[] {
+    __decomposeHierarchyNodes (elm: Node): number[] {
         let counts = [];
         if (!elm.parentNode) {
             return [];
         }
         while (elm && elm !== this.parent.editor) {
-            counts.push(this.__countElementsBefore(elm));
+            counts.push(Snapshot.__countElementsBefore(elm));
             elm = elm.parentNode;
         }
         return counts.reverse();
     }
 
-    __strokeOffset (elm, offset): number {
+    private static __strokeOffset (elm, offset): number {
         while (elm && elm.nodeType === Node.TEXT_NODE) {
             elm = elm.previousSibling;
             if (elm && elm.nodeType === Node.TEXT_NODE) {
@@ -67,7 +67,7 @@ export default class Snapshot extends Component {
      * @return {object} {html: string, range: {startContainer: int, startOffset: int, endContainer: int, endOffset: int}} или {html: string} при отсутствии выделения
      */
     make() {
-        let snapshot: SnapshotType = {
+        const snapshot: SnapshotType = {
             html: '',
             range: {
                 startContainer: [],
@@ -75,22 +75,22 @@ export default class Snapshot extends Component {
                 endContainer: [],
                 endOffset: 0
             }
-        }, range;
+        };
         snapshot.html = this.parent.getEditorValue();
-        let sel = this.parent.win.getSelection();
+        const sel = this.parent.win.getSelection();
 
         if (sel.rangeCount) {
-            range = sel.getRangeAt(0);
+            const range = sel.getRangeAt(0);
             snapshot.range = {
                 startContainer: this.__decomposeHierarchyNodes(range.startContainer),
-                startOffset: this.__strokeOffset(range.startContainer, range.startOffset),
+                startOffset: Snapshot.__strokeOffset(range.startContainer, range.startOffset),
                 endContainer: this.__decomposeHierarchyNodes(range.endContainer),
-                endOffset: this.__strokeOffset(range.endContainer, range.endOffset)
+                endOffset: Snapshot.__strokeOffset(range.endContainer, range.endOffset)
             }
         }
         return snapshot;
     }
-    __restoreElementByLadder (ladder) {
+    __restoreElementByLadder (ladder: number[]) {
         let n = <Node>this.parent.editor,
             i;
         for (i = 0; n && i < ladder.length; i += 1) {
@@ -102,25 +102,25 @@ export default class Snapshot extends Component {
     /**
      * Compare two snapshotes, if and htmls and selections match, then return true
      *
-     * @param {object} first - the first snapshote
-     * @param {object} second - second shot
+     * @param {SnapshotType} first - the first snapshote
+     * @param {SnapshotType} second - second shot
      * @return {boolean}
      */
-    equal (first, second) {
+    static equal (first: SnapshotType, second: SnapshotType) {
         return first.html === second.html && JSON.stringify(first.range) === JSON.stringify(second.range);
     }
 
     /**
      * Restores the state of the editor of the picture. Rebounding is not only html but selected text
      *
-     * @param {object} snapshot - snapshot of editor resulting from the `{@link module:Snapshot~make|make}`
+     * @param {object} snapshot - snapshot of editor resulting from the `{@link Snapshot~make|make}`
      * @see make
      */
-    restore (snapshot) {
+    restore (snapshot: SnapshotType) {
         this.parent.setEditorValue(snapshot.html);
         try {
             if (snapshot.range) {
-                let sel = this.win.getSelection(),
+                const sel = this.win.getSelection(),
                     range = this.doc.createRange();
 
                 range.setStart(this.__restoreElementByLadder(snapshot.range.startContainer), snapshot.range.startOffset);

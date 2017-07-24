@@ -14,10 +14,10 @@ import * as consts from '../constants';
 export const JODIT_SELECTED_CELL_MARKER = 'data-jodit-selected-cell';
 
 export default class Table extends Component{
-    protected addSelected(td: HTMLTableCellElement) {
+    static addSelected(td: HTMLTableCellElement) {
         td.setAttribute(JODIT_SELECTED_CELL_MARKER, '1');
     }
-    protected removeSelected(td: HTMLTableCellElement) {
+    static removeSelected(td: HTMLTableCellElement) {
         td.removeAttribute(JODIT_SELECTED_CELL_MARKER);
     }
 
@@ -26,7 +26,7 @@ export default class Table extends Component{
      * @param {HTMLTableElement} table
      * @return {HTMLTableCellElement[]}
      */
-    getAllSelectedCells(table: HTMLElement|HTMLTableElement): HTMLTableCellElement[] {
+    static getAllSelectedCells(table: HTMLElement|HTMLTableElement): HTMLTableCellElement[] {
         return $$(`td[${JODIT_SELECTED_CELL_MARKER}],th[${JODIT_SELECTED_CELL_MARKER}]`, table);
     }
 
@@ -34,7 +34,7 @@ export default class Table extends Component{
      * @param {HTMLTableElement} table
      * @return {number}
      */
-    getRowsCount(table: HTMLTableElement) {
+    static getRowsCount(table: HTMLTableElement) {
         return table.rows.length;
     }
 
@@ -42,8 +42,8 @@ export default class Table extends Component{
      * @param {HTMLTableElement} table
      * @return {number}
      */
-    getColumnsCount(table: HTMLTableElement) {
-        const matrix = this.formalMatrix(table);
+    static getColumnsCount(table: HTMLTableElement) {
+        const matrix = Table.formalMatrix(table);
         return matrix.reduce((max_count, cells) => {
             return Math.max(max_count, cells.length);
         }, 0);
@@ -57,20 +57,20 @@ export default class Table extends Component{
      * @param {function(HTMLTableCellElement, int, int, int, int):boolean} [callback] if return false cycle break
      * @return {Array}
      */
-    formalMatrix(table: HTMLTableElement, callback ?: (cell: HTMLTableCellElement, row: number, col: number, colSpan?: number, rowSpan?: number) => false|void) {
-        let matrix = [[],];
+    static formalMatrix(table: HTMLTableElement, callback ?: (cell: HTMLTableCellElement, row: number, col: number, colSpan?: number, rowSpan?: number) => false|void): HTMLTableCellElement[][] {
+        const matrix = [[],];
         const rows  = Array.prototype.slice.call(table.rows);
 
-        let setCell = (cell, i) => {
+        const setCell = (cell, i) => {
             if (matrix[i] === undefined) {
                 matrix[i] = [];
             }
 
-            let colSpan = cell.colSpan,
-                column,
+            let colSpan: number = cell.colSpan,
+                column: number,
                 rowSpan = cell.rowSpan,
-                row,
-                currentColumn = 0;
+                row: number,
+                currentColumn: number = 0;
 
             while (matrix[i][currentColumn]) {
                 currentColumn += 1;
@@ -87,7 +87,7 @@ export default class Table extends Component{
                     matrix[i + row][currentColumn + column] = cell;
                 }
             }
-        }
+        };
 
         for (let i = 0, j; i < rows.length; i += 1) {
             let cells = Array.prototype.slice.call(rows[i].cells);
@@ -102,19 +102,15 @@ export default class Table extends Component{
     }
 
     /**
-     *
-     * @param {HTMLTableElement} table
-     * @param {HTMLTableCellElement} cell
-     * @param {boolean} [max=false] true - find maximum of column (for set colspan),
-     * @return {[{int}i, {int}j, {int}colspan, {int}rowspan]}
+     * Get cell coordinate in formal table (without colspan and rowspan)
      */
-    formalCoordinate (table, cell, max = false) {
-        let i = 0,
-            j = 0,
-            width = 1,
-            height = 1;
+    static formalCoordinate (table: HTMLTableElement, cell: HTMLTableCellElement, max = false): number[] {
+        let i: number = 0,
+            j: number = 0,
+            width: number = 1,
+            height: number = 1;
 
-        this.formalMatrix(table, (td, ii, jj, colSpan, rowSpan) => {
+        Table.formalMatrix(table, (td, ii, jj, colSpan, rowSpan) => {
             if (cell === td) {
                 i = ii;
                 j = jj;
@@ -139,7 +135,7 @@ export default class Table extends Component{
      * @param {Boolean} [after=true] Insert a new line after line contains the selected cell
      */
     appendRow(table, line:false|HTMLTableRowElement = false, after = true) {
-        let columnsCount = this.getColumnsCount(table),
+        let columnsCount = Table.getColumnsCount(table),
             row = this.parent.node.create('tr'),
             j;
 
@@ -162,8 +158,8 @@ export default class Table extends Component{
      * @param {HTMLTableElement} table
      * @param {int} rowIndex
      */
-    removeRow(table, rowIndex) {
-        let box = this.formalMatrix(table), dec;
+    static removeRow(table, rowIndex) {
+        let box = Table.formalMatrix(table), dec;
         let row = table.rows[rowIndex];
 
         each(box[rowIndex], (j, cell) => {
@@ -204,14 +200,11 @@ export default class Table extends Component{
     /**
      * Insert column before / after all the columns containing the selected cells
      *
-     * @param {HTMLTableElement} table
-     * @param {int} [j]
-     * @param {boolean} [after=true]
      */
-    appendColumn(table, j, after = true) {
-        let box = this.formalMatrix(table), i;
+    appendColumn(table: HTMLTableElement, j: number, after = true) {
+        let box = Table.formalMatrix(table), i;
         if (j === undefined) {
-            j = this.getColumnsCount(table) - 1;
+            j = Table.getColumnsCount(table) - 1;
         }
         for (i = 0; i < box.length; i += 1) {
             let cell = this.parent.node.create('td'), added = false;
@@ -231,7 +224,7 @@ export default class Table extends Component{
                 }
             }
             if (!added) {
-                box[i][j].setAttribute('colspan', parseInt(box[i][j].getAttribute('colspan'), 10) + 1);
+                box[i][j].setAttribute('colspan', (parseInt(box[i][j].getAttribute('colspan'), 10) + 1).toString());
             }
         }
     }
@@ -241,10 +234,10 @@ export default class Table extends Component{
      *
      * @param {HTMLTableElement} table
      * @param {int} [j]
-     * @param {boolean} [after=true]
      */
-    removeColumn(table, j) {
-        let box = this.formalMatrix(table), dec;
+    static removeColumn(table: HTMLTableElement, j: number) {
+        const box = Table.formalMatrix(table);
+        let dec: boolean;
         each(box, (i, cells) => {
             dec = false;
             if (j - 1 >= 0 && box[i][j - 1] === cells[j]) {
@@ -257,7 +250,7 @@ export default class Table extends Component{
             if (dec && (i - 1 < 0 || cells[j] !== box[i - 1][j])) {
                 let colSpan = parseInt(cells[j].getAttribute('colspan') || 1, 10);
                 if (colSpan - 1 > 1) {
-                    cells[j].setAttribute('colspan', colSpan - 1);
+                    cells[j].setAttribute('colspan', (colSpan - 1).toString());
                 } else {
                     cells[j].removeAttribute('colspan');
                 }
@@ -272,9 +265,9 @@ export default class Table extends Component{
      * @param {Array.<HTMLTableCellElement>} selectedCells
      * @return {[[left, top], [right, bottom]]}
      */
-    getSelectedBound (table, selectedCells) {
+    static getSelectedBound (table, selectedCells) {
         let bound = [[Infinity, Infinity], [0, 0]];
-        let box = this.formalMatrix(table);
+        let box = Table.formalMatrix(table);
 
         for (let i = 0; i < box.length; i += 1) {
             for (let j = 0; j < box[i].length; j += 1) {
@@ -321,9 +314,13 @@ export default class Table extends Component{
      *
      * @param {HTMLTableElement} table
      */
-    normalizeTable (table) {
-        let box, i, j, min, not;
-        box = this.formalMatrix(table);
+    normalizeTable (table: HTMLTableElement) {
+        let i: number,
+            j: number,
+            min: number,
+            not: boolean;
+
+        const box = Table.formalMatrix(table);
 
         // remove extra colspans
         for (j = 0; j < box[0].length; j += 1) {
@@ -393,11 +390,6 @@ export default class Table extends Component{
         }
 
         this.__unmark();
-        // box = this.formalMatrix(table);
-        // for (j = 0; j < box[0].length; j += 1) {
-        //     this.setColumnWidthByDelta(table, j, 0, false, true);
-        // }
-        // this.__unmark();
     }
 
     /**
@@ -406,8 +398,8 @@ export default class Table extends Component{
      * @param {HTMLTableElement} table
      *
      */
-    mergeSelected(table) {
-        let bound = this.getSelectedBound(table, this.getAllSelectedCells(table)),
+    mergeSelected(table: HTMLTableElement) {
+        let bound = Table.getSelectedBound(table, Table.getAllSelectedCells(table)),
             w = 0,
             first,
             first_j,
@@ -417,7 +409,7 @@ export default class Table extends Component{
             rows = 0;
 
         if (bound && (bound[0][0] - bound[1][0] || bound[0][1] - bound[1][1])) {
-            this.formalMatrix(table, (cell, i, j, cs, rs) => {
+            Table.formalMatrix(table, (cell, i, j, cs, rs) => {
                 if (i >= bound[0][0] && i <= bound[1][0]) {
                     if (j >= bound[0][1] && j <= bound[1][1]) {
                         td = cell;
@@ -467,7 +459,7 @@ export default class Table extends Component{
                 if (w) {
                     this.__mark(first, 'width', ((w / table.offsetWidth) * 100).toFixed(consts.ACCURACY) + '%');
                     if (first_j) {
-                        this.setColumnWidthByDelta(table, first_j, 0, false, true);
+                        this.setColumnWidthByDelta(table, first_j, 0, true);
                     }
                 }
 
@@ -491,30 +483,32 @@ export default class Table extends Component{
 
     /**
      * Divides all selected by `jodit_focused_cell` class table cell in 2 parts vertical. Those division into 2 columns
-     *
-     * @param {HTMLTableElement} table
-     *
      */
-    splitHorizontal(table) {
-        let coord, td, tr, parent, after;
-        each(this.getAllSelectedCells(table),  (i, cell) => {
-            td = this.parent.node.create('td');
-            td.appendChild(this.parent.node.create('br'));
-            tr = this.parent.node.create('tr');
+    splitHorizontal(table: HTMLTableElement) {
+        let coord: number[],
+            td: HTMLTableCellElement,
+            tr: HTMLTableRowElement,
+            parent: HTMLTableRowElement,
+            after: HTMLTableCellElement;
 
-            coord = this.formalCoordinate(table, cell);
+        Table.getAllSelectedCells(table).forEach((cell: HTMLTableCellElement) => {
+            td = <HTMLTableCellElement>this.parent.node.create('td');
+            td.appendChild(this.parent.node.create('br'));
+            tr = <HTMLTableRowElement>this.parent.node.create('tr');
+
+            coord = Table.formalCoordinate(table, cell);
 
             if (cell.rowSpan < 2) {
-                this.formalMatrix(table, (td, i, j) => {
+                Table.formalMatrix(table, (td, i, j) => {
                     if (coord[0] === i && coord[1] !== j && td !== cell) {
                         this.__mark(td, 'rowspan', td.rowSpan + 1);
                     }
                 });
-                this.parent.node.after(this.parent.node.closest(cell, 'tr'), tr);
+                this.parent.node.after(<HTMLTableRowElement>this.parent.node.closest(cell, 'tr'), tr);
                 tr.appendChild(td);
             } else {
                 this.__mark(cell, 'rowspan', cell.rowSpan - 1);
-                this.formalMatrix(table, (td: HTMLTableCellElement, i: number, j: number) => {
+                Table.formalMatrix(table, (td: HTMLTableCellElement, i: number, j: number) => {
                     if (i > coord[0] && i < coord[0] + cell.rowSpan && coord[1] >  j && (<HTMLTableRowElement>td.parentNode).rowIndex === i) {
                         after = td;
                     }
@@ -534,7 +528,7 @@ export default class Table extends Component{
             }
 
             this.__unmark();
-            this.removeSelected(cell);;
+            Table.removeSelected(cell);
         });
         this.normalizeTable(table);
     }
@@ -544,12 +538,16 @@ export default class Table extends Component{
      *
      * @param {HTMLTableElement} table
      */
-    splitVertical(table) {
-        let coord, td, w, percentage;
-        each(this.getAllSelectedCells(table),  (i, cell) => {
-            coord = this.formalCoordinate(table, cell);
+    splitVertical(table: HTMLTableElement) {
+        let coord: number[],
+            td: HTMLTableCellElement,
+            w: number,
+            percentage: number;
+
+        Table.getAllSelectedCells(table).forEach((cell: HTMLTableCellElement) => {
+            coord = Table.formalCoordinate(table, cell);
             if (cell.colSpan < 2) {
-                this.formalMatrix(table, (td, i, j) => {
+                Table.formalMatrix(table, (td, i, j) => {
                     if (coord[1] === j && coord[0] !== i && td !== cell) {
                         this.__mark(td, 'colspan', td.colSpan + 1);
                     }
@@ -558,7 +556,7 @@ export default class Table extends Component{
                 this.__mark(cell, 'colspan', cell.colSpan - 1);
             }
 
-            td = this.parent.node.create('td');
+            td = <HTMLTableCellElement>this.parent.node.create('td');
             td.appendChild(this.parent.node.create('br'));
 
             if (cell.rowSpan > 1) {
@@ -566,13 +564,13 @@ export default class Table extends Component{
             }
 
             this.parent.node.after(cell, td);
-            w = parseInt(cell.offsetWidth, 10);
-            percentage = (w / parseInt(table.offsetWidth, 10)) / 2;
+            w = cell.offsetWidth;
+            percentage = (w / table.offsetWidth) / 2;
             this.__mark(cell, 'width', (percentage * 100).toFixed(consts.ACCURACY) + '%');
             this.__mark(td, 'width', (percentage * 100).toFixed(consts.ACCURACY) + '%');
             this.__unmark();
 
-            this.removeSelected(cell);;
+            Table.removeSelected(cell);
         });
         this.normalizeTable(table);
     }
@@ -634,22 +632,20 @@ export default class Table extends Component{
      * @param {HTMLTableElement} table
      * @param {int} j column
      * @param {int} delta
-     * @param {boolean} [left=false]
      * @param {boolean} [noUnmark=false]
      */
-    setColumnWidthByDelta (table, j, delta, left = false, noUnmark = false) {
-        let i,
-            box = this.formalMatrix(table),
-            w,
-            percent;
+    setColumnWidthByDelta (table: HTMLTableElement, j: number, delta: number, noUnmark = false) {
+        let i: number,
+            box = Table.formalMatrix(table),
+            w: number,
+            percent: number;
 
         for (i = 0; i < box.length; i += 1) {
-            // if (box[i][j] !== box[i][left ? j - 1 : j + 1]) {
-                w = parseInt(box[i][j].offsetWidth, 10);
-                percent = ((w + delta) / parseInt(table.offsetWidth, 10)) * 100;
-                this.__mark(box[i][j], 'width', percent.toFixed(consts.ACCURACY) + '%');
-            // }
+            w = box[i][j].offsetWidth;
+            percent = ((w + delta) / table.offsetWidth) * 100;
+            this.__mark(box[i][j], 'width', percent.toFixed(consts.ACCURACY) + '%');
         }
+
         if (!noUnmark) {
             this.__unmark();
         }

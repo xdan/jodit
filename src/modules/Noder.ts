@@ -48,7 +48,7 @@ export default class Noder extends Component{
         this.parent.selection.restore(selInfo);
 
         return <HTMLElement>p;
-    }
+    };
 
     /**
      *
@@ -88,9 +88,9 @@ export default class Noder extends Component{
      * Create new element
      *
      * @method create
-     * @param  {string} node_name Can be `div`, `span` or `text`
+     * @param  {string} nodeName Can be `div`, `span` or `text`
      * @param  {string} [content] Content for new element
-     * @return {Node}
+     * @return {HTMLElement|Text}
      * @example
      * var textnode = parent.node.create('text', 'Hello world');
      * var div = parent.node.create('div', '<img src="test.jpg">');
@@ -148,7 +148,7 @@ export default class Noder extends Component{
      * @return {boolean}
      */
     isBlock(node) {
-        return (node && node.tagName && consts.IS_BLOCK.test(node.tagName))
+        return (node && node.tagName && consts.IS_BLOCK.test(node.tagName));
     }
 
     /**
@@ -198,7 +198,7 @@ export default class Noder extends Component{
      * @param {Node} [root]
      * @param {boolean} [recurse=false] check first argument
      * @param {string} [sibling=nextSibling] nextSibling or previousSibling
-     * @param {string|false} [child=firstChild] firstChild or lastChild
+     * @param {string|boolean} [child=firstChild] firstChild or lastChild
      * @return {Node|Boolean}
      */
     find(node, condition, root, recurse = false, sibling = 'nextSibling', child: string|false = 'firstChild') : false|Node {
@@ -210,7 +210,7 @@ export default class Noder extends Component{
         }
         let start = node, next;
         do {
-            next = start[sibling]
+            next = start[sibling];
             if (condition(next)) {
                 return next;
             }
@@ -227,7 +227,7 @@ export default class Noder extends Component{
             }
 
             start = next;
-        } while (start && start !== root)
+        } while (start && start !== root);
 
         return false;
     }
@@ -249,10 +249,8 @@ export default class Noder extends Component{
         if (typeof Node === "object") {
             return o instanceof Node;
         }
-        if (typeof o === "object" && typeof o.nodeType === "number" && typeof o.nodeName === "string") {
-            return true;
-        }
-        return false;
+
+        return typeof o === "object" && typeof o.nodeType === "number" && typeof o.nodeName === "string";
     }
 
     /**
@@ -261,7 +259,7 @@ export default class Noder extends Component{
      * @param {callback} node
      * @param {function} condition
      * @param {Node} [root] Root element
-     * @returns {false|Node} Return false if condition not be true
+     * @return {boolean|Node|HTMLElement|HTMLTableCellElement|HTMLTableElement} Return false if condition not be true
      */
     up(node: Node, condition: Function, root ?: Node): false|Node|HTMLElement|HTMLTableCellElement|HTMLTableElement {
         if (!root) {
@@ -276,7 +274,7 @@ export default class Noder extends Component{
                 return start;
             }
             start = start.parentNode;
-        } while (start && start !== root)
+        } while (start && start !== root);
 
         return false;
     }
@@ -306,7 +304,7 @@ export default class Noder extends Component{
      * @param elm
      * @param newElement
      */
-    after(elm, newElement) {
+    after(elm: HTMLElement, newElement: HTMLElement|DocumentFragment) {
         let parent = elm.parentNode;
         if (parent.lastChild === elm) {
             parent.appendChild(newElement);
@@ -343,7 +341,7 @@ export default class Noder extends Component{
             child = child.parentNode;
         }
         return false;
-    }
+    };
 
     /**
      * Check root contains child or equal child
@@ -353,11 +351,8 @@ export default class Noder extends Component{
      * @return {boolean}
      */
     isOrContains = (root: Node, child: Node): boolean => {
-        if (root === child || this.contains(root, child)) {
-            return true;
-        }
-        return false;
-    }
+        return root === child || this.contains(root, child);
+    };
 
     apply = (options, addPropertyCallback) => {
         const WRAP  = 1;
@@ -382,10 +377,7 @@ export default class Noder extends Component{
                 range = sel.getRangeAt(0);
 
             wrapper = <HTMLElement>editor.node.closest(current, (elm) => {
-                if (checkCssRulesFor(<HTMLElement>elm)) {
-                    return true;
-                }
-                return false;
+                return checkCssRulesFor(<HTMLElement>elm);
             });
 
             if (wrapper && oldWrappers.reduce((was, oldWprapper) => {

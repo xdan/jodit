@@ -63,7 +63,7 @@ export const type = (obj) => {
  *
  * @param {array|object} obj
  * @param {eachCallback} callback
- * @return {*}
+ * @return {false|array|object}
  */
 export const each = (obj, callback) => {
     let length,
@@ -299,7 +299,7 @@ export const getContentWidth = (element, win) => {
  * @param  {KeyboardEvent} e Event
  * @return {boolean} true ctrl key was pressed
  */
-export const ctrlKey = (e) => {
+export const ctrlKey = (e: MouseEvent|KeyboardEvent) => {
     if (navigator.userAgent.indexOf("Mac OS X") !== -1) {
         if (e.metaKey && !e.altKey) {
             return true;

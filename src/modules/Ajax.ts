@@ -22,7 +22,7 @@ import Component from "./Component";
 
 declare let XDomainRequest: any;
 
-interface IAjaxOptions {
+type AjaxOptions  = {
     dataType: string;
     method: string;
 
@@ -43,7 +43,7 @@ interface IAjaxOptions {
 
 declare module "../Config" {
     interface Config {
-        defaultAjaxOptions: IAjaxOptions;
+        defaultAjaxOptions: AjaxOptions;
     }
 }
 
@@ -65,7 +65,7 @@ Config.prototype.defaultAjaxOptions = {
 
     withCredentials: true,
 
-    xhr: () => {
+   xhr(): XMLHttpRequest {
         const XHR = typeof XDomainRequest === 'undefined' ? XMLHttpRequest : XDomainRequest;
         return new XHR();
     }
@@ -97,16 +97,16 @@ export default class Ajax extends Component{
         return this;
     }
 
-    options: IAjaxOptions;
+    options: AjaxOptions;
 
     constructor(editor: Jodit, options?: any) {
         super(editor);
-        this.options = extend(true, {}, Config.prototype.defaultAjaxOptions, options);
+        this.options = <AjaxOptions>extend(true, {}, Config.prototype.defaultAjaxOptions, options);
         this.xhr = this.options.xhr();
     }
 
     send(): PseudoPromise {
-        return new PseudoPromise((resolve, reject) => {
+        return new PseudoPromise((resolve: (this: XMLHttpRequest, resp: object) => any, reject: (error: Error) => any) => {
             const __parse = (resp: string) => {
                 switch (this.options.dataType) {
                     case 'json':
@@ -121,9 +121,15 @@ export default class Ajax extends Component{
                 return resp;
             };
 
-            this.xhr.onabort = reject;
-            this.xhr.onerror = reject;
-            this.xhr.ontimeout = reject;
+            this.xhr.onabort = () => {
+                reject(new Error(this.xhr.statusText));
+            };
+            this.xhr.onerror = () => {
+                reject(new Error(this.xhr.statusText));
+            };
+            this.xhr.ontimeout = () => {
+                reject(new Error(this.xhr.statusText));
+            };
             this.xhr.onload = () => {
                 this.response = this.xhr.responseText;
                 this.status = this.xhr.status;

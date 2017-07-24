@@ -5,9 +5,10 @@ export default class Cookie extends Component {
      * Set cookie value
      *
      * @method set
-     * @param {string} name
-     * @param {scalar} value
+     * @param {string|number} name
+     * @param {string|number} value
      * @param {int} [days] if it value < 0 cookie removed
+     * @return Cookie
      * @example
      * Jodit.modules.Cookie().set('somename', somevalue, 5);
      *
@@ -17,8 +18,8 @@ export default class Cookie extends Component {
      * var cookie = new Jodit.modules.Cookie();
      * cookie.set('somename', somevalue, 5);
      */
-    set(name: string|number, value: string|number, days ?: number) {
-        let expires, date;
+    set(name: string|number, value: string|number, days ?: number): Cookie{
+        let expires: string, date;
         if (days) {
             date = new Date();
             date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
@@ -27,6 +28,7 @@ export default class Cookie extends Component {
             expires = '';
         }
         document.cookie = name + "=" + value + expires + '; path=/';
+        return this;
     }
 
     /**
@@ -44,10 +46,10 @@ export default class Cookie extends Component {
      * var cookie = new Jodit.modules.Cookie();
      * console.log(cookie.get('somename'));
      */
-    get (name) {
-        let nameEQ = name + '=',
-            i,
-            c,
+    get (name: string): string|null {
+        let nameEQ: string = name + '=',
+            i: number,
+            c: string,
             ca = document.cookie.split(';');
 
         for (i = 0; i < ca.length; i += 1) {
@@ -77,7 +79,7 @@ export default class Cookie extends Component {
      * var cookie = new Jodit.modules.Cookie();
      * cookie.remove('somename');
      */
-    remove(name) {
+    remove(name: string) {
         this.set(name, '', -1);
     }
 }

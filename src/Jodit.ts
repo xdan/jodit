@@ -106,9 +106,7 @@ export default class Jodit extends Component{
     constructor(element: HTMLInputElement|string, options?: object) {
         super();
 
-        const OptionsDefault = function () {
-
-        };
+        const OptionsDefault = function () {};
         OptionsDefault.prototype = Jodit.defaultOptions;
 
         this.options = <Config>(new OptionsDefault());
@@ -184,6 +182,7 @@ export default class Jodit extends Component{
 
         this.setMode(this.options.defaultMode)
     }
+
     __plugins = [];
     initPlugines() {
         let keys = Object.keys(Jodit.plugins), i;
@@ -200,7 +199,7 @@ export default class Jodit extends Component{
      * @private
      */
     __createEditor() {
-        this.editor = dom(`<div class="jodit_wysiwyg" contenteditable="true" aria-disabled="false" tabindex="${this.options.tabIndex}"></div>`);
+        this.editor = dom(`<div class="jodit_wysiwyg" contenteditable aria-disabled="false" tabindex="${this.options.tabIndex}"></div>`);
 
         // proxy events
         ['keydown', 'keyup', 'keypress', 'mousedown', 'mouseup', 'mousepress', 'paste', 'resize'].forEach((event_type) => {
@@ -228,7 +227,7 @@ export default class Jodit extends Component{
         this.workplace.appendChild(document.createTextNode("\n"));
 
         this.container.appendChild(this.workplace);
-        // this.workplace.appendChild(this.progress_bar);
+        this.workplace.appendChild(this.progress_bar);
 
         this.element.parentNode.insertBefore(this.container, this.element);
 
@@ -245,7 +244,7 @@ export default class Jodit extends Component{
      */
     destruct() {
         /**
-         * Triggered before {@link Jodit~beforeDestruct|beforeDestruct} executed. If returned false method stopped
+         * Triggered before {@link events:beforeDestruct|beforeDestruct} executed. If returned false method stopped
          *
          * @event beforeDestruct
          * @example
@@ -312,7 +311,6 @@ export default class Jodit extends Component{
      * Return editor value
      */
     getEditorValue(): string {
-
         /**
          * Triggered before {@link Jodit~getEditorValue|getEditorValue} executed. If returned not undefined getEditorValue will return this value
          *
@@ -339,14 +337,11 @@ export default class Jodit extends Component{
             value = '';
         }
 
-    // .replace(/([\s]*)data-jodit-class="jodit_selected_cell"/g, '')
-
-
         /**
          * Triggered after  {@link Jodit~getEditorValue|getEditorValue} got value from wysiwyg. It can change new_value.value
          *
          * @event afterGetValueFromEditor
-         * @param {value: string} new_value
+         * @param string new_value
          * @example
          * var editor = new Jodit("#redactor");
          * editor.events.on('afterGetValueFromEditor', function (new_value) {
@@ -355,7 +350,7 @@ export default class Jodit extends Component{
          */
         let new_value = {value};
 
-        this.events.fire('afterGetValueFromEditor', [new_value])
+        this.events.fire('afterGetValueFromEditor', [new_value]);
 
         return new_value.value;
     }

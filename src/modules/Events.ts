@@ -6,8 +6,8 @@ import Component from "./Component"
  * @params {Object} parent Jodit main object
  */
 export default class Events extends Component{
-    current;
-    stack = [];
+    current: string;
+    stack: string[] = [];
 
     /**
      * Get current event name

@@ -1,11 +1,11 @@
 import {Config} from '../Config'
 import Component from './Component'
-import Snapshot from './Snapshot'
+import Snapshot,{SnapshotType} from './Snapshot'
 import * as consts from '../constants';
 import {Stack} from './Undo'
 /**
  * @memberof Jodit.defaultOptions
- * @prop {object} observer module settings {@link module:Jodit/Observer|Observer}
+ * @prop {object} observer module settings {@link Observer|Observer}
  * @prop {int} observer.timeout=100 Delay on every change
  */
 declare module "../Config" {
@@ -18,7 +18,7 @@ declare module "../Config" {
 
 Config.prototype.observer = {
     timeout: 100,
-}
+};
 
 class Command {
     parent;
@@ -52,24 +52,24 @@ export default class Observer extends Component {
     /**
      * @property {Stack} stack
      */
-    stack;
+    stack: Stack;
 
     /**
      * @prop {Snapshot} snapshot
      */
-    snapshot;
+    snapshot: Snapshot;
     __blocked = false;
     __timer;
     // redobtn;
     // undobtn;
-    __startValue;
-    __newValue;
+    __startValue: SnapshotType;
+    __newValue: SnapshotType;
     __timeouts = [];
 
 
     __onChange() {
         this.__newValue = this.snapshot.make();
-        if (!this.snapshot.equal(this.__newValue, this.__startValue)) {
+        if (!Snapshot.equal(this.__newValue, this.__startValue)) {
             this.stack.execute(new Command(this.__startValue, this.__newValue, this));
             this.__startValue = this.__newValue;
         }
@@ -143,7 +143,7 @@ export default class Observer extends Component {
         } else if (block === 0) {
             this.__blocked = this.oldblock !== undefined ? this.oldblock : false;
         }
-    }
+    };
 
     /**
      * There has been a change in the stack Undo/Redo
@@ -159,7 +159,7 @@ export default class Observer extends Component {
             this.parent.events.fire('canRedo', [this.stack.canRedo()]);
             this.parent.events.fire('canUndo', [this.stack.canUndo()]);
         }
-    }
+    };
 
     /**
      * Return state of the WYSIWYG editor to step back
