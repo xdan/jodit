@@ -1,7 +1,7 @@
-# Jodit Editor
+# Jodit Editor 3.0.0
 An excellent WYSIWYG editor written in pure TypeScript without the use of additional libraries. Its file editor and image editor.
 
-
+       For old version please follow here [https://github.com/xdan/jodit2](https://github.com/xdan/jodit2)
 
 ##For contributors:
 ```$xslt
