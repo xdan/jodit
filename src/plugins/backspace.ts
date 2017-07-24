@@ -14,7 +14,7 @@ Jodit.plugins.backspace = function (editor) {
                 editor.selection.setCursorIn(editor.editor);
             }
         }
-    })
+    });
     editor.events.on('keydown', (event) => {
         if (event.which === consts.KEY_BACKSPACE || event.keyCode === consts.KEY_DELETE) {
             if (!editor.selection.isCollapsed()) {
@@ -46,7 +46,7 @@ Jodit.plugins.backspace = function (editor) {
                 if (!textNode.previousSibling && startOffset === 0) {
                     let prevBox = editor.node.prev(textNode, editor.node.isBlock);
                     if (prevBox) {
-                        editor.selection.setCursorIn(prevBox, false)
+                        editor.selection.setCursorIn(prevBox, false);
                         let container = editor.node.up(textNode, editor.node.isBlock);
                         if (!container.innerHTML) {
                             container.parentNode.removeChild(container)
@@ -57,4 +57,4 @@ Jodit.plugins.backspace = function (editor) {
             }
         }
     })
-}
+};

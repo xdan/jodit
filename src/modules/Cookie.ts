@@ -8,17 +8,11 @@ export default class Cookie extends Component {
      * @param {string|number} name
      * @param {string|number} value
      * @param {int} [days] if it value < 0 cookie removed
-     * @return Cookie
      * @example
-     * Jodit.modules.Cookie().set('somename', somevalue, 5);
      *
-     * var editor = new Jodit(".editors");
-     * editor.cookie.set('somename', somevalue, 5);
-     *
-     * var cookie = new Jodit.modules.Cookie();
-     * cookie.set('somename', somevalue, 5);
+     * Jodit.modules.Cookie.set('somename', somevalue, 5);
      */
-    set(name: string|number, value: string|number, days ?: number): Cookie{
+    static set(name: string|number, value: string|number, days ?: number) {
         let expires: string, date;
         if (days) {
             date = new Date();
@@ -28,7 +22,6 @@ export default class Cookie extends Component {
             expires = '';
         }
         document.cookie = name + "=" + value + expires + '; path=/';
-        return this;
     }
 
     /**
@@ -38,15 +31,10 @@ export default class Cookie extends Component {
      * @param {string} name
      * @return {string}
      * @example
-     * console.log(Jodit.modules.Cookie().get('somename'));
      *
-     * var editor = new Jodit(".editors");
-     * console.log(editor.cookie.get('somename'));
-     *
-     * var cookie = new Jodit.modules.Cookie();
-     * console.log(cookie.get('somename'));
+     * console.log(Jodit.modules.Cookie.get('somename'));
      */
-    get (name: string): string|null {
+    static get (name: string): string|null {
         let nameEQ: string = name + '=',
             i: number,
             c: string,
@@ -71,15 +59,10 @@ export default class Cookie extends Component {
      * @method remove
      * @param {string} name
      * @example
-     * Jodit.modules.Cookie().remove('somename');
      *
-     * var editor = new Jodit(".editors");
-     * editor.cookie.remove('somename');
-     *
-     * var cookie = new Jodit.modules.Cookie();
-     * cookie.remove('somename');
+     * Jodit.modules.Cookie.remove('somename');
      */
-    remove(name: string) {
-        this.set(name, '', -1);
+    static remove(name: string) {
+        Cookie.set(name, '', -1);
     }
 }

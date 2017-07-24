@@ -1,36 +1,38 @@
 import Component from './Component';
 import * as consts from '../constants';
-import {each} from './Helpers'
+import {css, each} from './Helpers'
+import Jodit from "../Jodit";
 
-export default class Noder extends Component{
+export default class Dom {
     /**
      *
      * @param {Node} current
      * @param {String|Node} tag
+     * @param {Document doc
      *
      * @return {HTMLElement}
      */
-    wrap = (current, tag: Node|string = 'p'): HTMLElement => {
+    static wrap = (current, tag: Node|string = 'p', doc: Document): HTMLElement => {
         let tmp, first = current, last = current;
 
-        let selInfo = this.parent.selection.save();
+        // let selInfo = this.parent.selection.save();
 
         do {
-            tmp = this.prev(first, (elm) => (elm && !this.isBlock(elm)), undefined, false);
+            tmp = Dom.prev(first, (elm) => (elm && !Dom.isBlock(elm)), undefined, false);
             if (tmp) {
                 first = tmp;
             }
         } while(tmp);
 
         do {
-            tmp = this.next(last, (elm) => (elm && !this.isBlock(elm)), undefined, false);
+            tmp = Dom.next(last, (elm) => (elm && !Dom.isBlock(elm)), undefined, false);
             if (tmp) {
                 last = tmp;
             }
         } while(tmp);
 
 
-        let p = typeof tag === 'string' ? this.doc.createElement(this.parent.options.enter) : tag;
+        const p = typeof tag === 'string' ? Dom.create(tag, '', doc) : tag;
 
         first.parentNode.insertBefore(p, first);
 
@@ -45,7 +47,7 @@ export default class Noder extends Component{
         }
 
 
-        this.parent.selection.restore(selInfo);
+        // this.parent.selection.restore(selInfo);
 
         return <HTMLElement>p;
     };
@@ -54,7 +56,7 @@ export default class Noder extends Component{
      *
      * @param node
      */
-    unwrap(node: Node) {
+    static unwrap(node: Node) {
         let parent = node.parentNode, el = node;
         while (el.firstChild) {
             parent.insertBefore(el.firstChild, el);
@@ -74,10 +76,10 @@ export default class Noder extends Component{
      *  }
      * });
      */
-    each (elm: HTMLElement, callback: Function) {
+    static each (elm: HTMLElement, callback: Function) {
         let node: any = elm;
         do {
-            node = this.next(node, (node) => (node), elm);
+            node = Dom.next(node, (node) => (!!node), elm);
             if (node) {
                 callback.call(node, node);
             }
@@ -89,20 +91,21 @@ export default class Noder extends Component{
      *
      * @method create
      * @param  {string} nodeName Can be `div`, `span` or `text`
-     * @param  {string} [content] Content for new element
+     * @param  {string} content Content for new element
+     * @param  {Document} doc
      * @return {HTMLElement|Text}
      * @example
      * var textnode = parent.node.create('text', 'Hello world');
      * var div = parent.node.create('div', '<img src="test.jpg">');
      */
-    create(nodeName: string, content ?: string) : HTMLElement|Text {
-        let newnode;
+    static create(nodeName: string, content: string, doc: Document) : HTMLElement|Text {
+        let newnode: HTMLElement|Text;
         nodeName = nodeName.toLowerCase();
 
         if (nodeName === 'text') {
-            newnode = this.doc.createTextNode(typeof content === 'string' ? content : '');
+            newnode = doc.createTextNode(typeof content === 'string' ? content : '');
         } else {
-            newnode = this.doc.createElement(nodeName);
+            newnode = doc.createElement(nodeName);
             if (content !== undefined) {
                 newnode.innerHTML = content;
             }
@@ -118,12 +121,13 @@ export default class Noder extends Component{
      * @param  {string} newTagName tag name for which will change `elm`
      * @param  {boolean} withAttributes=false If true move tag's attributes
      * @param  {boolean} notMoveContent=false false - Move content from elm to newTagName
+     * @param  {Document} [doc=document]
      * @return {Node} Returns a new tag
      * @example
-     * parent.node.replace(parent.editor.getElementsByTagName('span')[0], 'p'); // Replace the first <span> element to the < p >
+     * Jodit.modules.Dom.replace(parent.editor.getElementsByTagName('span')[0], 'p'); // Replace the first <span> element to the < p >
      */
-    replace (elm, newTagName, withAttributes = false, notMoveContent = false) {
-        let tag = typeof newTagName === 'string' ? this.doc.createElement(newTagName) : newTagName;
+    static replace (elm: HTMLElement, newTagName: string|HTMLElement, withAttributes = false, notMoveContent = false, doc: Document) {
+        const tag: HTMLElement = typeof newTagName === 'string' ? <HTMLElement>Dom.create(newTagName, '', doc) : newTagName;
 
         if (!notMoveContent) {
             while (elm.firstChild) {
@@ -147,7 +151,7 @@ export default class Noder extends Component{
      * @param node
      * @return {boolean}
      */
-    isBlock(node) {
+    static isBlock(node) {
         return (node && node.tagName && consts.IS_BLOCK.test(node.tagName));
     }
 
@@ -155,7 +159,7 @@ export default class Noder extends Component{
      * It's block and it can be split
      *
      */
-    canSplitBlock (node: any): boolean {
+    static canSplitBlock (node: any): boolean {
         return node && node instanceof HTMLElement &&
             this.isBlock(node) &&
             !/^(TD|TH|CAPTION|FORM)$/.test(node.nodeName) &&
@@ -170,10 +174,10 @@ export default class Noder extends Component{
      * @param {Node} [root]
      * @param {boolean} [withChild=true]
      *
-     * @return {Boolean|Node} false if not found
+     * @return {boolean|Node|HTMLElement|HTMLTableCellElement} false if not found
      */
-    prev(node, condition, root, withChild: Boolean = true) {
-        return this.find(node, condition, root, false, 'previousSibling', withChild ? 'lastChild' : false);
+    static prev(node: Node, condition: (element: Node) => boolean, root: HTMLElement, withChild: Boolean = true): false|Node|HTMLElement|HTMLTableCellElement{
+        return Dom.find(node, condition, root, false, 'previousSibling', withChild ? 'lastChild' : false);
     }
 
     /**
@@ -183,10 +187,10 @@ export default class Noder extends Component{
      * @param {function} condition
      * @param {Node} [root]
      * @param {boolean} [withChild=true]
-     * @return {Node|Boolean}
+     * @return {boolean|Node|HTMLElement|HTMLTableCellElement}
      */
-    next(node, condition, root, withChild = true): false|Node|HTMLElement|HTMLTableCellElement{
-        return this.find(node, condition, root, undefined, undefined, withChild ? 'firstChild' : '');
+    static next(node: Node, condition: (element: Node) => boolean, root: HTMLElement, withChild: Boolean = true): false|Node|HTMLElement|HTMLTableCellElement{
+        return Dom.find(node, condition, root, undefined, undefined, withChild ? 'firstChild' : '');
     }
 
 
@@ -201,13 +205,11 @@ export default class Noder extends Component{
      * @param {string|boolean} [child=firstChild] firstChild or lastChild
      * @return {Node|Boolean}
      */
-    find(node, condition, root, recurse = false, sibling = 'nextSibling', child: string|false = 'firstChild') : false|Node {
+    static find(node: Node, condition: (element: Node) => boolean, root: HTMLElement, recurse = false, sibling = 'nextSibling', child: string|false = 'firstChild') : false|Node {
         if (recurse && condition(node)) {
             return node;
         }
-        if (!root) {
-            root = this.parent.editor;
-        }
+
         let start = node, next;
         do {
             next = start[sibling];
@@ -216,7 +218,7 @@ export default class Noder extends Component{
             }
 
             if (child && next && next[child]) {
-                let nextOne = this.find(next[child], condition, next, true, sibling, child);
+                let nextOne = Dom.find(next[child], condition, next, true, sibling, child);
                 if (nextOne) {
                     return nextOne;
                 }
@@ -238,14 +240,14 @@ export default class Noder extends Component{
      * @param  {Node} node The element of wood to be checked
      * @return {Boolean} true element is empty
      */
-    isEmptyTextNode(node: Node): boolean {
+    static isEmptyTextNode(node: Node): boolean {
         return node && node.nodeType === Node.TEXT_NODE && node.nodeValue.replace(consts.INVISIBLE_SPACE_REG_EXP, '').length === 0;
     }
 
     /**
      * Returns true if it is a DOM node
      */
-    isNode(o: any): boolean {
+    static isNode(o: any): boolean {
         if (typeof Node === "object") {
             return o instanceof Node;
         }
@@ -261,10 +263,7 @@ export default class Noder extends Component{
      * @param {Node} [root] Root element
      * @return {boolean|Node|HTMLElement|HTMLTableCellElement|HTMLTableElement} Return false if condition not be true
      */
-    up(node: Node, condition: Function, root ?: Node): false|Node|HTMLElement|HTMLTableCellElement|HTMLTableElement {
-        if (!root) {
-            root = this.parent.editor;
-        }
+    static up(node: Node, condition: Function, root: Node): false|Node|HTMLElement|HTMLTableCellElement|HTMLTableElement {
         let start = node;
         if (!node) {
             return false;
@@ -284,9 +283,10 @@ export default class Noder extends Component{
      *
      * @param {Node} node
      * @param {String|Function} tags
+     * @param {HTMLElement} root
      * @return {Boolean|Node}
      */
-    closest(node: Node, tags: string|Function|RegExp): Node|HTMLElement|false|HTMLTableCellElement {
+    static closest(node: Node, tags: string|Function|RegExp, root: HTMLElement): Node|HTMLElement|false|HTMLTableCellElement {
         let condition;
         if (typeof tags  === 'function') {
             condition = tags
@@ -295,7 +295,7 @@ export default class Noder extends Component{
         } else {
             condition = tag => (new RegExp('^(' + tags + ')$', 'i')).test(tag.tagName)
         }
-        return this.up(node, condition);
+        return this.up(node, condition, root);
     }
 
     /**
@@ -304,25 +304,25 @@ export default class Noder extends Component{
      * @param elm
      * @param newElement
      */
-    after(elm: HTMLElement, newElement: HTMLElement|DocumentFragment) {
-        let parent = elm.parentNode;
-        if (parent.lastChild === elm) {
-            parent.appendChild(newElement);
+    static after(elm: HTMLElement, newElement: HTMLElement|DocumentFragment) {
+        const parentNode = elm.parentNode;
+        if (parentNode.lastChild === elm) {
+            parentNode.appendChild(newElement);
         } else {
-            parent.insertBefore(newElement, elm.nextSibling);
+            parentNode.insertBefore(newElement, elm.nextSibling);
         }
     }
 
-    all(node, condition) {
-        let start = node;
-        let nodes = start.childNodes ? Array.prototype.slice.call(start.childNodes) : [];
+    static all(node: Node, condition: (element: Node) => boolean|void) {
+        const start = node,
+            nodes = start.childNodes ? Array.prototype.slice.call(start.childNodes) : [];
 
         if (condition(start)) {
             return start;
         }
 
         nodes.forEach((child) => {
-            this.all(child, condition);
+            Dom.all(child, condition);
         })
     }
 
@@ -333,7 +333,7 @@ export default class Noder extends Component{
      * @param child
      * @return {boolean}
      */
-    contains = (root: Node, child: Node): boolean => {
+    static contains = (root: Node, child: Node): boolean => {
         while (child.parentNode) {
             if (child.parentNode === root) {
                 return true;
@@ -350,35 +350,36 @@ export default class Noder extends Component{
      * @param child
      * @return {boolean}
      */
-    isOrContains = (root: Node, child: Node): boolean => {
-        return root === child || this.contains(root, child);
+    static isOrContains = (root: Node, child: Node): boolean => {
+        return root === child || Dom.contains(root, child);
     };
 
-    apply = (options, addPropertyCallback) => {
+    static apply = (options, addPropertyCallback, editor: Jodit) => {
         const WRAP  = 1;
         const UNWRAP  = 0;
         let selectionInfo,
-            editor = this.parent,
-            getCSS = (elm: HTMLElement, key: string): string => {
-                return editor.win.getComputedStyle(elm).getPropertyValue(key).toString()
-            },
-            mode,
-            checkCssRulesFor = (elm: HTMLElement) => {
-                return elm.nodeType === Node.ELEMENT_NODE && each(options.css, (cssPropertyKey, cssPropertyValues) => {
-                        let value = getCSS(elm, cssPropertyKey);
-                        return  cssPropertyValues.indexOf(value.toLowerCase()) !== -1
-                    }) !== false
-            };
+            mode;
 
-        let oldWrappers = [];
+        // const getCSS = (elm: HTMLElement, key: string): string => {
+        //         return editor.win.getComputedStyle(elm).getPropertyValue(key).toString()
+        //     },
+        const checkCssRulesFor = (elm: HTMLElement) => {
+            return elm.nodeType === Node.ELEMENT_NODE && each(options.css, (cssPropertyKey: string, cssPropertyValues: string[]) => {
+                const value = css(elm, cssPropertyKey);
+                return  cssPropertyValues.indexOf(value.toLowerCase()) !== -1
+            }) !== false
+        };
+
+        const oldWrappers = [];
+
         editor.selection.eachSelection((current) => {
             let sel = editor.win.getSelection(),
                 wrapper,
                 range = sel.getRangeAt(0);
 
-            wrapper = <HTMLElement>editor.node.closest(current, (elm) => {
+            wrapper = <HTMLElement>Dom.closest(current, (elm) => {
                 return checkCssRulesFor(<HTMLElement>elm);
-            });
+            }, editor.editor);
 
             if (wrapper && oldWrappers.reduce((was, oldWprapper) => {
                     return was || oldWprapper === wrapper
@@ -405,7 +406,7 @@ export default class Noder extends Component{
                             leftRange.setStart(range.endContainer, range.endOffset);
                             leftRange.setEndAfter(wrapper);
                             let fragment = leftRange.extractContents();
-                            editor.node.after(wrapper, fragment)
+                            Dom.after(wrapper, fragment)
                         } else if (cursorInTheEnd) {
                             leftRange.setStartBefore(wrapper);
                             leftRange.setEnd(range.startContainer, range.startOffset);
@@ -420,7 +421,7 @@ export default class Noder extends Component{
                             leftRange.setStart(cloneRange.endContainer, cloneRange.endOffset);
                             leftRange.setEndAfter(wrapper);
                             fragment = leftRange.extractContents();
-                            editor.node.after(wrapper, fragment)
+                            Dom.after(wrapper, fragment)
                         }
                     }
 

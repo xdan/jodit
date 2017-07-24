@@ -1,14 +1,17 @@
 import Jodit from '../Jodit';
 import * as consts from '../constants';
 import Table from '../modules/Table'
+import Dom from "../modules/Dom";
 
 /**
  *
  * @param {Jodit} editor
  */
-Jodit.plugins.tableKeyboardNavigation = function (editor) {
-    editor.events.on('keydown', (event) => {
-        let current, block;
+Jodit.plugins.tableKeyboardNavigation = function (editor: Jodit) {
+    editor.events.on('keydown', (event: KeyboardEvent) => {
+        let current: Element,
+            block: HTMLElement;
+
         if (
             event.which === consts.KEY_TAB ||
             event.which === consts.KEY_LEFT ||
@@ -16,20 +19,20 @@ Jodit.plugins.tableKeyboardNavigation = function (editor) {
             event.which === consts.KEY_TOP ||
             event.which === consts.KEY_BOTTOM
         ) {
-            current = editor.selection.current();
-            block = editor.node.up(current, (elm) => (elm && /^td|th$/i.test(elm.tagName)));
+            current = <Element>editor.selection.current();
+            block = <HTMLTableCellElement>Dom.up(current, (elm) => (elm && elm['tagName'] && /^td|th$/i.test(elm['tagName'])), editor.editor);
             if (!block) {
                 return;
             }
 
-            let sel = editor.win.getSelection(),
-                range = sel.rangeCount ? sel.getRangeAt(0) : editor.doc.createRange()
+            const sel = editor.win.getSelection(),
+                range = sel.rangeCount ? sel.getRangeAt(0) : editor.doc.createRange();
 
             if (event.which !== consts.KEY_TAB && current !== block) {
                 if (((event.which === consts.KEY_LEFT || event.which === consts.KEY_TOP) &&
-                        (editor.node.prev(current, (elm) => (event.which === consts.KEY_TOP ? (elm && elm.tagName === 'BR') : elm), block) || (event.which !== consts.KEY_TOP && current.nodeType === Node.TEXT_NODE && range.startOffset !== 0))
+                        (Dom.prev(current, (elm) => (event.which === consts.KEY_TOP ? (elm && elm['tagName'] === 'BR') : !!elm), block) || (event.which !== consts.KEY_TOP && current.nodeType === Node.TEXT_NODE && range.startOffset !== 0))
                     ) || ((event.which === consts.KEY_RIGHT || event.which === consts.KEY_BOTTOM) &&
-                        (editor.node.next(current, (elm) => (event.which === consts.KEY_BOTTOM ? (elm && elm.tagName === 'BR') : elm), block) || (event.which !== consts.KEY_BOTTOM && current.nodeType === Node.TEXT_NODE && range.startOffset !== current.nodeValue.length))
+                        (Dom.next(current, (elm) => (event.which === consts.KEY_BOTTOM ? (elm && elm['tagName'] === 'BR') : !!elm), block) || (event.which !== consts.KEY_BOTTOM && current.nodeType === Node.TEXT_NODE && range.startOffset !== current.nodeValue.length))
                     )) {
                     return;
                 }
@@ -40,19 +43,19 @@ Jodit.plugins.tableKeyboardNavigation = function (editor) {
         }
 
 
-        let table = editor.node.up(block, (elm) => (elm && /^table$/i.test(elm.tagName))),
-            next;
+         const table = <HTMLTableElement>Dom.up(block, (elm) => (elm && /^table$/i.test(elm.tagName)), editor.editor);
+         let next: HTMLTableCellElement;
 
         switch (event.which) {
             case consts.KEY_TAB:
             case consts.KEY_RIGHT:
             case consts.KEY_LEFT: {
-                let sibling = (event.which === consts.KEY_LEFT || event.shiftKey) ? 'prev' : 'next';
-                next = editor.node[sibling](block, (elm) => (elm && /^td|th$/i.test(elm.tagName)), table);
+                const sibling = (event.which === consts.KEY_LEFT || event.shiftKey) ? 'prev' : 'next';
+                next = <HTMLTableCellElement>Dom[sibling](block, (elm) => (elm && /^td|th$/i.test((<HTMLElement>elm).tagName)), table);
                 if (!next) {
-                    let proc = new Table(editor);
+                    const proc = new Table(editor);
                     proc.appendRow(table, sibling === 'next' ? false : table.querySelector('tr'), sibling === 'next');
-                    next = editor.node[sibling](block, (elm) => (elm && /^td|th$/i.test(elm.tagName)), table);
+                    next = <HTMLTableCellElement>(Dom[sibling](block, (elm: HTMLElement) => (elm && /^td|th$/i.test((<HTMLElement>elm).tagName)), table));
                 }
             }
             break;
@@ -79,8 +82,8 @@ Jodit.plugins.tableKeyboardNavigation = function (editor) {
 
         if (next) {
             if (!next.firstChild) {
-                next.appendChild(editor.node.create('br'))
-                editor.selection.setCursorBefore(next.firstChild)
+                next.appendChild(Dom.create('br', '', editor.doc));
+                editor.selection.setCursorBefore(next.firstChild);
             } else {
                 if (event.which === consts.KEY_TAB) {
                     editor.selection.select(next, true)
@@ -92,4 +95,4 @@ Jodit.plugins.tableKeyboardNavigation = function (editor) {
         }
 
     });
-}
+};

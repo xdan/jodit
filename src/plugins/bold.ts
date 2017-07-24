@@ -1,5 +1,6 @@
 import Jodit from '../Jodit';
 import * as consts from '../constants';
+import Dom from "../modules/Dom";
 
 /**
  * Wrap selected content in special tag or return already wrapped
@@ -17,8 +18,8 @@ export const wrapAndSelect = (editor: Jodit, strong: Node, reg: RegExp|string, b
         current = editor.selection.current(),
         fake;
 
-    if (breakIfExists && current !== false && editor.node.closest(current, reg)) {
-        return <HTMLElement>editor.node.closest(current, reg);
+    if (breakIfExists && current !== false && Dom.closest(current, reg, editor.editor)) {
+        return <HTMLElement>Dom.closest(current, reg, editor.editor);
     }
 
     let collapsed = editor.selection.isCollapsed();
@@ -27,7 +28,7 @@ export const wrapAndSelect = (editor: Jodit, strong: Node, reg: RegExp|string, b
         let fragment = range.extractContents();
         strong.appendChild(fragment);
     } else {
-        fake = editor.node.create('text', consts.INVISIBLE_SPACE);
+        fake = Dom.create('text', consts.INVISIBLE_SPACE, editor.doc);
         strong.appendChild(fake);
     }
 
@@ -50,7 +51,7 @@ export const wrapAndSelect = (editor: Jodit, strong: Node, reg: RegExp|string, b
     sel.addRange(new_range);
 
     return <HTMLElement>strong;
-}
+};
 
 Jodit.plugins.bold = function (editor: Jodit) {
     editor.events.on('beforeCommand', (command: string) => {
@@ -59,11 +60,11 @@ Jodit.plugins.bold = function (editor: Jodit) {
 
 
         if (commands.indexOf(command) !== -1) {
-            editor.node.apply(Jodit.defaultOptions.controls[command], (commandOptions) => {
-                return wrapAndSelect(editor, editor.node.create(commandOptions.tags[0]),  commandOptions.tagRegExp);;
-            })
+            Dom.apply(Jodit.defaultOptions.controls[command], (commandOptions) => {
+                return wrapAndSelect(editor, Dom.create(commandOptions.tags[0], '', editor.doc),  commandOptions.tagRegExp);
+            }, editor);
             editor.setEditorValue();
             return false;
         }
     });
-}
+};

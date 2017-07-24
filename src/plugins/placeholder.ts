@@ -47,18 +47,26 @@ Config.prototype.useInputsPlaceholder = true;
  */
 Config.prototype.placeholder = 'Type something';
 
-Jodit.plugins.placeholder = function (parent) {
-    let placeholder, timeout;
+Jodit.plugins.placeholder = function (editor: Jodit) {
+    let placeholder: HTMLElement,
+        timeout;
+
+    if (!editor.options.showPlaceholder) {
+        return;
+    }
+
     this.destruct  = () => {
         placeholder.parentNode.removeChild(placeholder);
         clearTimeout(timeout);
     };
-    const show =  () => {
-            let marginTop = 0, marginLeft = 0//, paddingTop = 0, paddingLeft = 0;
-            let style = parent.win.getComputedStyle(parent.editor);
 
-            if (parent.editor.firstChild && parent.editor.firstChild.nodeType === Node.ELEMENT_NODE) {
-                let style2 = parent.win.getComputedStyle(parent.editor.firstChild);
+    const show =  () => {
+            let marginTop: number = 0,
+                marginLeft: number = 0;
+            const style: CSSStyleDeclaration = editor.win.getComputedStyle(editor.editor);
+
+            if (editor.editor.firstChild && editor.editor.firstChild.nodeType === Node.ELEMENT_NODE) {
+                const style2:CSSStyleDeclaration = editor.win.getComputedStyle(<Element>editor.editor.firstChild);
                 marginTop = parseInt(style2.getPropertyValue('margin-top'), 10);
                 marginLeft = parseInt(style2.getPropertyValue('margin-left'), 10);
                 placeholder.style.fontSize = parseInt(style2.getPropertyValue('font-size'), 10) + 'px';
@@ -72,8 +80,6 @@ Jodit.plugins.placeholder = function (parent) {
             each({
                 display: 'block',
                 marginTop: Math.max(parseInt(style.getPropertyValue('margin-top'), 10), marginTop),
-                // paddingTop: Math.max(parseInt(style.getPropertyValue('padding-top'), 10), paddingTop),
-                // paddingLeft: Math.max(parseInt(style.getPropertyValue('padding-left'), 10), paddingLeft),
                 marginLeft: Math.max(parseInt(style.getPropertyValue('margin-left'), 10), marginLeft)
             }, (key, value) => {
                 placeholder.style[key] = value;
@@ -83,32 +89,34 @@ Jodit.plugins.placeholder = function (parent) {
             placeholder.style.display = 'none';
         },
         toggle = () => {
-            if (!parent.editor) {
+            if (!editor.editor) {
                 return;
             }
-            if (parent.getMode() !== consts.MODE_WYSIWYG) {
+            if (editor.getMode() !== consts.MODE_WYSIWYG) {
                 return hide();
             }
-            if (parent.getEditorValue()) {
+            if (editor.getEditorValue()) {
                 hide();
             } else {
                 show();
             }
         };
 
-    placeholder = dom('<span class="jodit_placeholder">' + parent.i18n(parent.options.placeholder) + '</span>');
 
-    if (parent.options.useInputsPlaceholder && parent.element.hasAttribute('placeholder')) {
-        placeholder.innerHTML = parent.element.getAttribute('placeholder');
+
+    placeholder = dom('<span class="jodit_placeholder">' + editor.i18n(editor.options.placeholder) + '</span>');
+
+    if (editor.options.useInputsPlaceholder && editor.element.hasAttribute('placeholder')) {
+        placeholder.innerHTML = editor.element.getAttribute('placeholder');
     }
 
-    parent.workplace
+    editor.workplace
         .appendChild(placeholder);
 
     show();
 
-    parent.events.on('change  keyup mouseup keydown mousedown  afterSetMode', () => {
+    editor.events.on('change  keyup mouseup keydown mousedown  afterSetMode', () => {
         toggle();
         timeout = setTimeout(toggle, 1)
     });
-}
+};

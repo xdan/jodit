@@ -1,6 +1,7 @@
 import Jodit from '../Jodit';
 import {trim,$$} from "../modules/Helpers"
 import * as consts from '../constants';
+import Dom from "../modules/Dom";
 /**
  * Insert default paragraph
  *
@@ -9,7 +10,7 @@ import * as consts from '../constants';
  * @param {String} [wrapperTag]
  * @return {Element}
  */
-export const insertParagraph = (editor, fake ?: Node, wrapperTag ?: string) => {
+export const insertParagraph = (editor: Jodit, fake ?: Node, wrapperTag ?: string) => {
     if (!wrapperTag) {
         wrapperTag = editor.options.enter;
     }
@@ -30,11 +31,11 @@ export const insertParagraph = (editor, fake ?: Node, wrapperTag ?: string) => {
 
 Jodit.plugins.enter = function (editor: Jodit) {
     editor.events.on('keyup', () => {
-        let current = editor.selection.current();
+        let current: false|Node = editor.selection.current();
         if (current !== false) {
-            let currentParagraph = editor.node.up(current, (node) => (node.tagName === 'P'));
+            let currentParagraph = Dom.up(current, (node: HTMLElement) => (node.tagName === editor.options.enter.toUpperCase()), editor.editor);
             if (currentParagraph) {
-                editor.node.all(currentParagraph, (node) => {
+                Dom.all(currentParagraph, (node: Node) => {
                     if (node.nodeType === Node.TEXT_NODE) {
                         if (consts.INVISIBLE_SPACE_REG_EXP.test(node.nodeValue) && node.nodeValue.replace(consts.INVISIBLE_SPACE_REG_EXP, '').length !== 0) {
                             node.nodeValue = node.nodeValue.replace(consts.INVISIBLE_SPACE_REG_EXP, '');
@@ -47,7 +48,7 @@ Jodit.plugins.enter = function (editor: Jodit) {
             }
         }
     });
-    editor.events.on('keydown', (event) => {
+    editor.events.on('keydown', (event: KeyboardEvent) => {
         if (event.which === consts.KEY_ENTER || event.keyCode === consts.KEY_ENTER) {
             if (!editor.selection.isCollapsed()) {
                 editor.execCommand('Delete');
@@ -59,7 +60,7 @@ Jodit.plugins.enter = function (editor: Jodit) {
                 range = sel.rangeCount ? sel.getRangeAt(0) : editor.doc.createRange();
 
             if (!current) {
-                current = editor.node.create('text', consts.INVISIBLE_SPACE);
+                current = Dom.create('text', consts.INVISIBLE_SPACE, editor.doc);
                 editor.editor.appendChild(current);
                 range.selectNode(current);
                 sel.removeAllRanges();
@@ -67,30 +68,30 @@ Jodit.plugins.enter = function (editor: Jodit) {
             }
 
             let fake;
-            let currentBox = current ? editor.node.up(current, (node) => (editor.node.isBlock(node))) : false;
+            let currentBox = current ? Dom.up(current, Dom.isBlock, editor.editor) : false;
 
             if (!currentBox && current) {
-                currentBox = editor.node.wrap(current);
+                currentBox = Dom.wrap(current, editor.options.enter, editor.doc);
                 sel = editor.win.getSelection();
                 range = sel.rangeCount ? sel.getRangeAt(0) : editor.doc.createRange();
             }
 
             if (currentBox) {
-                if (!editor.node.canSplitBlock(currentBox)) {
+                if (!Dom.canSplitBlock(currentBox)) {
                     let br = editor.doc.createElement('br');
                     editor.selection.insertNode(br, false);
-                    editor.selection.setCursorAfter(br)
+                    editor.selection.setCursorAfter(br);
                     return false;
                 }
 
                 if (currentBox.nodeName === 'LI') {
                     if (trim(currentBox.textContent || currentBox['innerText']).length === 0) {
-                        const ul = <Node>editor.node.closest(currentBox, 'ol|ul');
+                        const ul = <HTMLElement>Dom.closest(currentBox, 'ol|ul', editor.editor);
                         // If there is no LI element before
-                        if (!editor.node.prev(currentBox, elm => elm && elm.tagName === 'LI', ul)) {
+                        if (!Dom.prev(currentBox, (elm: HTMLElement) => elm && elm.tagName === 'LI', ul)) {
                             fake = editor.selection.setCursorBefore(ul);
                             // If there is no LI element after
-                        } else if (!editor.node.next(currentBox, elm => elm && elm.tagName === 'LI', ul)) {
+                        } else if (!Dom.next(currentBox, (elm: HTMLElement) => elm && elm.tagName === 'LI', ul)) {
                             fake = editor.selection.setCursorAfter(ul);
                         } else {
                             let leftRange = editor.doc.createRange();
@@ -136,57 +137,7 @@ Jodit.plugins.enter = function (editor: Jodit) {
                 insertParagraph(editor);
             }
 
-
-                /*if (current.nodeType === Node.TEXT_NODE) {
-                    let position = !range.startOffset ? -1 : ((current.nodeValue.length - range.startOffset) ? 0 : 1);
-                    let leftRange = jodit.doc.createRange();
-
-                    leftRange.setStart(current, 0);
-                    leftRange.setEnd(current, range.startOffset);
-                    let fragment = leftRange.extractContents();
-                    let p = insertParagraph();
-                    if (fragment.textContent){
-                        p.removeChild(p.firstChild);
-                        p.appendChild(fragment);
-                    }
-
-                    let fake2;
-                    if (position>0) {
-                        fake2 = jodit.selection.setCursorAfter(p);
-                    }
-
-                    let fragment2;
-                    if (position <= 0) {
-                        let rightRange = jodit.doc.createRange();
-                        if (p.nextSibling) {
-                            rightRange.selectNode(p.nextSibling);
-                        } else {
-                            rightRange.setEndAfter(p);
-                        }
-                        sel.removeAllRanges();
-                        sel.addRange(rightRange);
-
-                        fragment2 = rightRange.extractContents();
-                    }
-
-                    let p2 = insertParagraph();
-
-                    if (fake2 && fake2.parentNode) {
-                        fake2.parentNode.removeChild(fake2);
-                    }
-
-                    if (fragment2 && fragment2.textContent) {
-                        p2.removeChild(p2.firstChild);
-                        p2.appendChild(fragment2);
-                    }
-
-                    jodit.selection.setCursorIn(p2, true);
-                } else {
-                    insertParagraph();
-                }*/
-
-            //helper_node.parentNode.removeChild(helper_node)
             return false;
         }
     });
-}
+};

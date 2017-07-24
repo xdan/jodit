@@ -241,15 +241,15 @@ export const colorToHex = (color) => {
  *
  * @method normalizeColor
  * @param {string} color - string like rgba(red, green, blue, alpha) or rgb(red, green, blue) or #fff or #ffffff
- * @return {string|NaN} HEX color, NaN - for transparent color
+ * @return {string|false} HEX color, NaN - for transparent color
  */
-export const normalizeColor = (color: string): string|number => {
+export const normalizeColor = (color: string): string|false => {
     let newcolor = ['#'], i;
 
     color = colorToHex(color);
 
     if (!color) {
-        return NaN;
+        return false;
     }
 
     color = trim(color.toUpperCase());
@@ -914,3 +914,15 @@ export function sprintf() {
 
     return format.replace(regex, doFormat);
 }
+
+
+export const val = (elm: HTMLInputElement|HTMLElement, selector: string, value ?: string): string => {
+    const child = <HTMLInputElement>elm.querySelector(selector);
+    if (!child) {
+        return '';
+    }
+    if (value) {
+        child.value = value;
+    }
+    return child.value;
+};

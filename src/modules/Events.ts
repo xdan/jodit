@@ -22,9 +22,9 @@ export default class Events extends Component{
      *     }
      * });
      */
-    getEventName() {
-        return this.current;
-    }
+    // getEventName() {
+    //     return this.current;
+    // }
 
     /**
      * Disable all handlers specified event ( Event List ) for a given element. Either a specific event handler.

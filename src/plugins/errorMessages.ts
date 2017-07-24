@@ -11,7 +11,7 @@ declare module "../Config" {
 }
 
 /**
-* @prop {boolean} showMessageErrors=true Use plugin {@link module:ErrorMessages|Errormessages}
+* @prop {boolean} showMessageErrors=true
 * @memberof Jodit.defaultOptions
 */
 Config.prototype.showMessageErrors = true;

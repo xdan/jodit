@@ -1,10 +1,11 @@
 import Jodit from '../Jodit';
 import {Config} from '../Config'
-import {$$, browser, css, dom, trim} from "../modules/Helpers";
+import {$$, css, dom, trim, val} from "../modules/Helpers";
 import {Alert, Confirm, default as Dialog} from "../modules/Dialog";
 import Toolbar from "../modules/Toolbar";
 import Widget from "../modules/Widget";
 import FileBrowser from "../modules/FileBrowser";
+import Dom from "../modules/Dom";
 /**
  * Plug-in for image editing window
  *
@@ -100,17 +101,6 @@ Jodit.plugins.imageProperties = function (editor: Jodit) {
 
             buttons = {
                 remove: dom('<a href="javascript:void(0)" class="jodit_button">' + Toolbar.getIcon('bin') + ' ' + editor.i18n('Delete') + '</a>')
-            },
-
-            val = (elm, selector: string, value ?: string): string => {
-                const child = <HTMLInputElement>elm.querySelector(selector);
-                if (!child) {
-                    return '';
-                }
-                if (value) {
-                    child.value = value;
-                }
-                return child.value;
             },
 
 
@@ -256,9 +246,9 @@ Jodit.plugins.imageProperties = function (editor: Jodit) {
                 if (image.hasAttribute('alt')) {
                     val(prop, '#imageAlt', image.getAttribute('alt'));
                 }
-                if (editor.node.closest(image, 'a')) {
-                    val(prop, '#imageLink', (<HTMLAnchorElement>editor.node.closest(image, 'a')).getAttribute('href'));
-                    (<HTMLInputElement>prop.querySelector('#imageLinkOpenInNewTab')).checked = (<HTMLAnchorElement>editor.node.closest(image, 'a')).getAttribute('target') === '_blank';
+                if (Dom.closest(image, 'a', editor.editor)) {
+                    val(prop, '#imageLink', (<HTMLAnchorElement>Dom.closest(image, 'a', editor.editor)).getAttribute('href'));
+                    (<HTMLInputElement>prop.querySelector('#imageLinkOpenInNewTab')).checked = (<HTMLAnchorElement>Dom.closest(image, 'a', editor.editor)).getAttribute('target') === '_blank';
                 }
             },
             updateSrc = () => {
@@ -316,8 +306,8 @@ Jodit.plugins.imageProperties = function (editor: Jodit) {
                                                 updateSrc();
                                             }
                                         });
-                                    }, (resp, message) => {
-                                        Alert(editor.i18n('There was an error loading:' + message));
+                                    }, (error) => {
+                                        Alert(editor.i18n('There was an error loading %s',  error.message));
                                     });
                                 }
                             });
@@ -435,10 +425,10 @@ Jodit.plugins.imageProperties = function (editor: Jodit) {
 
             // Link
             if (val(prop, '#imageLink')) {
-                if (!editor.node.closest(image, 'a')) {
-                    editor.node.wrap(image, 'a');
+                if (!Dom.closest(image, 'a', editor.editor)) {
+                    Dom.wrap(image, 'a', editor.doc);
                 }
-                link = editor.node.closest(image, 'a');
+                link = Dom.closest(image, 'a', editor.editor);
                 link.setAttribute('href', val(prop, '#imageLink'));
                 if ((<HTMLInputElement>prop.querySelector('#imageLinkOpenInNewTab')).checked) {
                     link.setAttribute('target', '_blank');
@@ -446,8 +436,8 @@ Jodit.plugins.imageProperties = function (editor: Jodit) {
                     link.removeAttribute('target');
                 }
             } else {
-                if (editor.node.closest(image, 'a')) {
-                    link = editor.node.closest(image, 'a');
+                if (Dom.closest(image, 'a', editor.editor)) {
+                    link = Dom.closest(image, 'a', editor.editor);
                     link.parentNode.replaceChild(image, link);
                 }
             }

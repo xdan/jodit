@@ -10,6 +10,7 @@
 import Component from './Component';
 import {$$, each, trim} from './Helpers'
 import * as consts from '../constants';
+import Dom from "./Dom";
 
 export const JODIT_SELECTED_CELL_MARKER = 'data-jodit-selected-cell';
 
@@ -136,11 +137,11 @@ export default class Table extends Component{
      */
     appendRow(table, line:false|HTMLTableRowElement = false, after = true) {
         let columnsCount = Table.getColumnsCount(table),
-            row = this.parent.node.create('tr'),
+            row = Dom.create('tr', '', this.doc),
             j;
 
         for (j = 0; j < columnsCount; j += 1) {
-            row.appendChild(this.parent.node.create('td'))
+            row.appendChild(Dom.create('td', '', this.doc))
         }
 
         if (after && line && line.nextSibling) {
@@ -207,7 +208,8 @@ export default class Table extends Component{
             j = Table.getColumnsCount(table) - 1;
         }
         for (i = 0; i < box.length; i += 1) {
-            let cell = this.parent.node.create('td'), added = false;
+            const cell = Dom.create('td', '', this.parent.doc);
+            let added = false;
             if (after) {
                 if (j + 1 >= box[i].length || box[i][j] !== box[i][j + 1]) {
                     if (box[i][j].nextSibling) {
@@ -492,9 +494,9 @@ export default class Table extends Component{
             after: HTMLTableCellElement;
 
         Table.getAllSelectedCells(table).forEach((cell: HTMLTableCellElement) => {
-            td = <HTMLTableCellElement>this.parent.node.create('td');
-            td.appendChild(this.parent.node.create('br'));
-            tr = <HTMLTableRowElement>this.parent.node.create('tr');
+            td = <HTMLTableCellElement>Dom.create('td', '', this.doc);
+            td.appendChild(Dom.create('br', '', this.doc));
+            tr = <HTMLTableRowElement>Dom.create('tr', '', this.doc);
 
             coord = Table.formalCoordinate(table, cell);
 
@@ -504,7 +506,7 @@ export default class Table extends Component{
                         this.__mark(td, 'rowspan', td.rowSpan + 1);
                     }
                 });
-                this.parent.node.after(<HTMLTableRowElement>this.parent.node.closest(cell, 'tr'), tr);
+                Dom.after(<HTMLTableRowElement>Dom.closest(cell, 'tr', this.parent.editor), tr);
                 tr.appendChild(td);
             } else {
                 this.__mark(cell, 'rowspan', cell.rowSpan - 1);
@@ -517,7 +519,7 @@ export default class Table extends Component{
                     }
                 });
                 if (after) {
-                    this.parent.node.after(after, td);
+                    Dom.after(after, td);
                 } else {
                     parent.insertBefore(td, parent.firstChild);
                 }
@@ -556,14 +558,14 @@ export default class Table extends Component{
                 this.__mark(cell, 'colspan', cell.colSpan - 1);
             }
 
-            td = <HTMLTableCellElement>this.parent.node.create('td');
-            td.appendChild(this.parent.node.create('br'));
+            td = <HTMLTableCellElement>Dom.create('td', '', this.doc);
+            td.appendChild(Dom.create('br', '', this.doc));
 
             if (cell.rowSpan > 1) {
                 this.__mark(td, 'rowspan', cell.rowSpan);
             }
 
-            this.parent.node.after(cell, td);
+            Dom.after(cell, td);
             w = cell.offsetWidth;
             percentage = (w / table.offsetWidth) / 2;
             this.__mark(cell, 'width', (percentage * 100).toFixed(consts.ACCURACY) + '%');

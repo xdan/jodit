@@ -1,6 +1,7 @@
 import Jodit from '../Jodit';
 import {Config} from '../Config'
-import {$$, browser, dom, offset} from '../modules/Helpers'
+import {$$, dom, offset} from '../modules/Helpers'
+import Dom from "../modules/Dom";
 
 /**
  * The module creates a supporting frame for resizing of the elements img and table
@@ -8,7 +9,7 @@ import {$$, browser, dom, offset} from '../modules/Helpers'
  * @params {Object} parent Jodit main object
  */
 /**
- * @prop {boolean} useIframeResizer=true Use true frame for editing iframe size. Uses in  {@link module:Resizer|Resizer} module
+ * @prop {boolean} useIframeResizer=true Use true frame for editing iframe size
  * @memberof Jodit.defaultOptions
  */
 declare module "../Config" {
@@ -26,18 +27,18 @@ Config.prototype.useIframeResizer = true;
 
 
 /**
- * @prop {boolean} useTableResizer=true Use true frame for editing table size. Uses in  {@link module:Resizer|Resizer} module
+ * @prop {boolean} useTableResizer=true Use true frame for editing table size
  * @memberof Jodit.defaultOptions
  */
-Config.prototype.useTableResizer = true
+Config.prototype.useTableResizer = true;
 
 /**
- * @prop {boolean} useImageResizer=true Use true image editing frame size. Uses in  {@link module:Resizer|Resizer} module
+ * @prop {boolean} useImageResizer=true Use true image editing frame size
  * @memberof Jodit.defaultOptions
  */
-Config.prototype.useImageResizer = true
+Config.prototype.useImageResizer = true;
 /**
- * @prop {object} resizer module Settings {@link module:Resizer|Resizer}
+ * @prop {object} resizer
  * @prop {int} resizer.min_width=10 The minimum width for the editable element
  * @prop {int} resizer.min_height=10 The minimum height for the item being edited
  * @memberof Jodit.defaultOptions
@@ -45,9 +46,9 @@ Config.prototype.useImageResizer = true
 Config.prototype.resizer = {
     min_width : 10,
     min_height : 10
-}
+};
 
-Jodit.plugins.resizer = function (editor: Jodit) {
+Jodit.plugins.Resizer = function (editor: Jodit) {
     let clicked = false,
         resized = false,
         target: HTMLElement,
@@ -85,7 +86,7 @@ Jodit.plugins.resizer = function (editor: Jodit) {
         /**
          * Bind an edit element to element
          * @method bind
-         * @param {HTMLElement} $element The element that you want to add a function to resize
+         * @param {HTMLElement} element The element that you want to add a function to resize
          */
         bind = (element: HTMLElement) => {
             let wrapper: HTMLElement;
@@ -99,12 +100,12 @@ Jodit.plugins.resizer = function (editor: Jodit) {
                     wrapper.style.width = element.offsetWidth + 'px';
                     wrapper.style.height = element.offsetHeight + 'px';
 
-                    editor.node.wrap(element, wrapper);
+                    Dom.wrap(element, wrapper, editor.doc);
                     let iframe = element;
 
                     editor.events.on(wrapper, 'changesize', () => {
-                        iframe.setAttribute('width', wrapper.offsetWidth + 'px')
-                        iframe.setAttribute('height', wrapper.offsetHeight + 'px')
+                        iframe.setAttribute('width', wrapper.offsetWidth + 'px');
+                        iframe.setAttribute('height', wrapper.offsetHeight + 'px');
                     });
                     element = wrapper;
                 }
@@ -112,7 +113,7 @@ Jodit.plugins.resizer = function (editor: Jodit) {
 
             editor.
                 __off(element, '.jodit-resizer')
-                .__on(element, 'drag.jodit-resizer', (e) => {
+                .__on(element, 'drag.jodit-resizer', () => {
                     hideResizer()
                 })
                 .__on(element, 'mousedown.jodit-resizer', (e: MouseEvent) => {
@@ -122,7 +123,7 @@ Jodit.plugins.resizer = function (editor: Jodit) {
                     element['clicked'] = true;
                     e.preventDefault();
                 })
-                .__on(element, 'mouseup.jodit-resizer', (e) => {
+                .__on(element, 'mouseup.jodit-resizer', () => {
                     if (element['clicked']) {
                         timeouts.push(setTimeout(() => {
                             element['clicked'] = false;
@@ -137,14 +138,14 @@ Jodit.plugins.resizer = function (editor: Jodit) {
     resizer['$element'] = {};
 
     $$('i', resizer).forEach((handle: HTMLElement) => {
-        editor.__on(handle, 'mousedown', (e) => {
+        editor.__on(handle, 'mousedown', (e: MouseEvent) => {
             if (!resizer['$element'] || !resizer['$element'].parentNode) {
                 hideResizer();
                 return false;
             }
 
             resizer['$element']['clicked'] = false;
-            target = e.target || e.srcElement;
+            target = <HTMLElement>e.target;
             e.preventDefault();
             e.stopImmediatePropagation();
 
@@ -155,10 +156,10 @@ Jodit.plugins.resizer = function (editor: Jodit) {
             clicked = true;
             resized = false;
 
-            start_x = parseInt(e.clientX, 10);
-            start_y = parseInt(e.clientY, 10);
+            start_x = e.clientX;
+            start_y = e.clientY;
         });
-    })
+    });
 
 
     editor
@@ -198,7 +199,7 @@ Jodit.plugins.resizer = function (editor: Jodit) {
                 e.stopImmediatePropagation();
             }
         })
-        .__on(editor.win, 'resize.jodit-resizer' + editor.id + ' updateresizer.jodit-resizer', (e) => {
+        .__on(editor.win, 'resize.jodit-resizer' + editor.id + ' updateresizer.jodit-resizer', () => {
             if (resizerIsVisible) {
                 editor.events.fire(resizer, 'updatesize');
             }

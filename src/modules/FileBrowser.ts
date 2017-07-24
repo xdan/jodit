@@ -12,6 +12,7 @@ import Uploader, {UploaderAnswer} from "./Uploader";
 import Ajax from "./Ajax";
 import {TEXT_PLAIN} from "../constants";
 import ImageEditor from "./ImageEditor";
+import Cookie from "./Cookie";
 
 /**
  * The module creates a web browser dialog box . In a Web browser , you can select an image , remove , drag it . Upload new
@@ -321,7 +322,7 @@ declare module "../Config" {
     }
 }
 
-Config.prototype.filebrowser = {
+Config.prototype.filebrowser = <FileBrowserOptions>{
     filter: function (item, search) {
         search = search.toLowerCase();
         if (typeof item === 'string') {
@@ -567,12 +568,12 @@ export default class FileBrowser extends Component {
             self.files.classList.remove('jodit_filebrowser_files_view-list');
             self.files.classList.add('jodit_filebrowser_files_view-' + self.view);
 
-            editor.cookie.set('jodit_filebrowser_view', self.view, 31);
+            Cookie.set('jodit_filebrowser_view', self.view, 31);
         });
 
         self.__on(self.buttons.sort, 'change', () => {
             self.sortBy = (<HTMLInputElement>self.buttons.sort).value;
-            editor.cookie.set('jodit_filebrowser_sortby', self.sortBy, 31);
+            Cookie.set('jodit_filebrowser_sortby', self.sortBy, 31);
             self.loadItems(self.currentPath, self.currentSource);
         });
 
@@ -841,15 +842,15 @@ export default class FileBrowser extends Component {
 
 
         this.view = this.options.view === 'list' ? 'list' : 'tiles';
-        if (this.parent.cookie.get('jodit_filebrowser_view')) {
-            this.view = this.parent.cookie.get('jodit_filebrowser_view') === 'list' ? 'list' : 'tiles';
+        if (Cookie.get('jodit_filebrowser_view')) {
+            this.view = Cookie.get('jodit_filebrowser_view') === 'list' ? 'list' : 'tiles';
         }
         this.buttons[this.view].classList.remove('disabled');
         this.files.classList.add('jodit_filebrowser_files_view-' + this.view);
 
         this.sortBy = (['changed', 'name', 'size']).indexOf(this.options.sortBy) !== -1 ? this.options.sortBy : 'changed';
-        if (this.parent.cookie.get('jodit_filebrowser_sortby')) {
-            this.sortBy = (['changed', 'name', 'size']).indexOf(this.parent.cookie.get('jodit_filebrowser_sortby')) !== -1 ? this.parent.cookie.get('jodit_filebrowser_sortby') : 'changed';
+        if (Cookie.get('jodit_filebrowser_sortby')) {
+            this.sortBy = (['changed', 'name', 'size']).indexOf(Cookie.get('jodit_filebrowser_sortby')) !== -1 ? Cookie.get('jodit_filebrowser_sortby') : 'changed';
         }
         (<HTMLInputElement>this.buttons.sort).value = this.sortBy;
 

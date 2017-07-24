@@ -1,6 +1,7 @@
 import Jodit from '../Jodit';
 import {Config} from '../Config'
 import {isURL, convertMediaURLToVideoEmbed} from '../modules/Helpers'
+import Dom from "../modules/Dom";
 
 /**
 * @property {object}  link `{@link module:link|link}` plugin's options
@@ -26,7 +27,7 @@ Config.prototype.link = {
     processPastedLink: true,
     openLinkDialogAfterPost: true,
     removeLinkAfterFormat: true,
-}
+};
 
 
 /**
@@ -65,13 +66,13 @@ Jodit.plugins.link = function (editor: Jodit) {
             if (command === 'removeFormat') {
                 node = sel.current();
                 if (node && node.tagName !== 'A') {
-                    node = editor.node.closest(node, 'A');
+                    node = Dom.closest(node, 'A', editor.editor);
                 }
                 if (node && node.tagName === 'A') {
                     if (node.innerHTML === node.innerText) {
-                        newtag = editor.node.create('text', node.innerText);
+                        newtag = Dom.create('text', node.innerText, editor.doc);
                     } else {
-                        newtag = editor.node.create('span', node.innerHTML);
+                        newtag = Dom.create('span', node.innerHTML, editor.doc);
                     }
                     node.parentNode.replaceChild(newtag, node);
                     editor.selection.setCursorIn(newtag, true);

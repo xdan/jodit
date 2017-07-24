@@ -4,7 +4,7 @@ import * as consts from '../constants';
 import {$$, appendScript, dom} from '../modules/Helpers';
 
 /**
-* @prop {boolean} useAceEditor=true Use ACE editor instead of usual textarea. {@link module:source|source}'s options
+* @prop {boolean} useAceEditor=true Use ACE editor instead of usual textarea
 * @memberof Jodit.defaultOptions
 */
 declare module "../Config" {
@@ -28,7 +28,7 @@ Config.prototype.sourceEditorNativeOptions = {
     theme: 'ace/theme/textmate',
     mode: 'ace/mode/html',
     highlightActiveLine: true,
-}
+};
 
 /**
 * @prop {Array.<String>} sourceEditorCDNUrlJS=["https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js", "https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ext-beautify.js"]  CDN URLs for ACE editor
@@ -139,7 +139,7 @@ Jodit.plugins.source = function (editor) {
                 updateButtons();
                 return false;
             }
-        })
+        });
 
         // global add ace editor in browser
         if (window['ace'] === undefined && !$$('script.' + className, document.body).length) {
@@ -157,4 +157,4 @@ Jodit.plugins.source = function (editor) {
             loadNext(0, editor.options.sourceEditorCDNUrlsJS);
         }
     }
-}
+};

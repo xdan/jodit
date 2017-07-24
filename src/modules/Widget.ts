@@ -1,6 +1,7 @@
 import Component from './Component'
 import Jodit from '../Jodit'
-import {normalizeColor,dom,isPlainObject,each,$$,hexToRgb} from './Helpers'
+import {normalizeColor, dom, isPlainObject, each, $$, hexToRgb, val} from './Helpers'
+import Dom from "./Dom";
 
 export default class Widget extends Component {
     /**
@@ -81,7 +82,7 @@ Widget['ColorPicker'] = class extends Widget{
                 let target = e.target;
 
                 if (target.tagName.toUpperCase() === 'SVG' || target.tagName.toUpperCase() === 'PATH') {
-                    target = parent.node.closest(target.parentNode, 'A');
+                    target = Dom.closest(target.parentNode, 'A', this.parent.editor);
                 }
                 if (target.tagName.toUpperCase() !== 'A') {
                     console.log(target.tagName.toUpperCase());
@@ -118,7 +119,7 @@ Widget['ColorPicker'] = class extends Widget{
 
         this.container = form;
     }
-}
+};
 
 /**
  * Build tabs system
@@ -164,10 +165,10 @@ Widget['Tabs'] = class extends Widget{
             button.addEventListener('mousedown', (e) => {
                 $$('a', buttons).forEach((a) => {
                     a.classList.remove('active');
-                })
+                });
                 $$('.jodit_tab', tabs).forEach((a) => {
                     a.classList.remove('active');
-                })
+                });
 
                 button.classList.add('active');
                 tab.classList.add('active');
@@ -191,7 +192,7 @@ Widget['Tabs'] = class extends Widget{
         tabs.querySelector('.jodit_tab:first-child').classList.add('active');
         this.container = box;
     }
-}
+};
 
 /**
  * Generate 3 tabs
@@ -224,9 +225,9 @@ Widget['ImageSelector'] = class extends Widget{
     constructor(editor, callbacks, elm) {
         super(editor);
 
-        let tabs = {},
-            dragbox,
-            form;
+        let tabs:{[key: string]: HTMLElement|Function} = {},
+            dragbox: HTMLElement,
+            form: HTMLFormElement;
 
         if (callbacks.upload && editor.options.uploader && editor.options.uploader.url) {
             dragbox = dom('<div class="jodit_draganddrop_file_box">' +
@@ -241,7 +242,7 @@ Widget['ImageSelector'] = class extends Widget{
                 }
             }, (resp) => {
                 editor.events.fire('errorMessage', [editor.options.uploader.getMessage(resp)]);
-            })
+            });
 
             tabs[Jodit.modules.Toolbar.getIcon('upload') + editor.i18n('Upload')] = dragbox;
         }
@@ -256,10 +257,10 @@ Widget['ImageSelector'] = class extends Widget{
 
         if (callbacks.url) {
             form = dom('<form onsubmit="return false;" class="jodit_form">' +
-                '<input required name="url" placeholder="http://" type="text"/>' +
-                '<input name="text" placeholder="' + editor.i18n('Alternative text') + '" type="text"/>' +
+                '<input required name="url" placeholder="http://"/>' +
+                '<input name="text" placeholder="' + editor.i18n('Alternative text') + '"/>' +
                 '<div style="text-align: right">' +
-                    '<button type="submit">' + editor.i18n('Insert') + '</button>' +
+                    '<button>' + editor.i18n('Insert') + '</button>' +
                 '</div>' +
             '</form>');
 
@@ -267,22 +268,22 @@ Widget['ImageSelector'] = class extends Widget{
 
             if (elm && elm.nodeType !== Node.TEXT_NODE && (elm.tagName === 'IMG' || $$('img', elm).length)) {
                 this.currentImage = elm.tagName === 'IMG' ? elm : $$('img', elm)[0];
-                form.querySelector('input[name=url]').value = this.currentImage.getAttribute('src');
-                form.querySelector('input[name=text]').value = this.currentImage.getAttribute('alt');
+                val(form, 'input[name=url]', this.currentImage.getAttribute('src'));
+                val(form, 'input[name=text]', this.currentImage.getAttribute('alt'));
                 form.querySelector('button').innerText = editor.i18n('Update');
             }
 
-            form.addEventListener('submit', (event) => {
-                event.preventDefault(event)
-                event.stopPropagation()
+            form.addEventListener('submit', (event: Event) => {
+                event.preventDefault();
+                event.stopPropagation();
 
-                if (!form.querySelector('input[name=url]').value) {
-                    form.querySelector('input[name=url]').focus();
+                if (!val(form, 'input[name=url]')) {
+                    (<HTMLInputElement>form.querySelector('input[name=url]')).focus();
                     form.querySelector('input[name=url]').classList.add('jodit_error');
                     return false;
                 }
                 if (typeof(callbacks.url) === 'function') {
-                    callbacks.url.call(editor, form.querySelector('input[name=url]').value, form.querySelector('input[name=text]').value);
+                    callbacks.url.call(editor, val(form, 'input[name=url]'), val(form, 'input[name=text]'));
                 }
                 return false;
             }, false);
@@ -293,4 +294,4 @@ Widget['ImageSelector'] = class extends Widget{
 
         this.container = this.create('Tabs', tabs);
     }
-}
+};

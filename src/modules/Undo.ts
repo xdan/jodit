@@ -1,4 +1,4 @@
-import Component from './Component'
+// import Component from './Component'
 
 export class Stack {
     commands = [];
@@ -35,9 +35,9 @@ export class Stack {
         this.savePosition = this.stackPosition;
         this.changed();
     }
-    dirty () {
-        return this.stackPosition != this.savePosition;
-    }
+    // dirty () {
+    //     return this.stackPosition != this.savePosition;
+    // }
     __clearRedo() {
         this.commands.length = this.stackPosition + 1;
     }
@@ -46,4 +46,4 @@ export class Stack {
     }
 }
 
-export default class Undo extends Component{}
+// export default class Undo extends Component{}

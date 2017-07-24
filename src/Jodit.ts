@@ -1,5 +1,4 @@
 import Component from './modules/Component';
-import Noder from './modules/Noder';
 import Events from './modules/Events';
 import Selection from './modules/Selection';
 import Toolbar from './modules/Toolbar';
@@ -57,7 +56,6 @@ export default class Jodit extends Component{
      */
     options: Config;
 
-    cookie: Cookie;
     events: Events;
     /**
      * @property {Selection} selection
@@ -73,11 +71,6 @@ export default class Jodit extends Component{
      * @property {FileBrowser} filebrowser
      */
     filebrowser: FileBrowser;
-
-    /**
-     * @property {Noder} node
-     */
-    node: Noder;
 
     helper: any;
 
@@ -142,12 +135,10 @@ export default class Jodit extends Component{
         this.workplace = dom('<div class="jodit_workplace" />');
         this.progress_bar = dom('<div class="jodit_progress_bar"><div></div></div>');
 
-        this.cookie = this.getInstance('Cookie');
         this.selection = this.getInstance('Selection');
         this.uploader = this.getInstance('Uploader');
 
         this.events = this.getInstance('Events');
-        this.node = this.getInstance('Noder');
 
         this.toolbar = new Toolbar(this);
         this.toolbar.build(this.options.buttons, this.container);
@@ -515,7 +506,7 @@ export default class Jodit extends Component{
         this.mode = inArray(data.mode, [consts.MODE_SOURCE, consts.MODE_WYSIWYG, consts.MODE_SPLIT]) ? data.mode : consts.MODE_WYSIWYG;
 
         if (this.options.saveModeInCookie) {
-            this.cookie.set('jodit_default_mode', this.mode, 31);
+            Cookie.set('jodit_default_mode', this.mode, 31);
         }
 
         modeClasses.forEach((className) => {

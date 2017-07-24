@@ -2,6 +2,7 @@ import Jodit from "../Jodit"
 import Component from "./Component"
 import {dom, each, $$, extend, camelCase} from "./Helpers"
 import * as consts from "../constants";
+import Dom from "./Dom";
 
 type ControlType = {
     name?: string;
@@ -43,19 +44,19 @@ export default class Toolbar extends Component{
      */
     constructor(parent:Jodit) {
         super(parent);
-        this.container = dom('<div class="jodit_toolbar"/>')
-        this.popup = dom('<div class="jodit_toolbar_popup"/>')
-        this.list = dom('<ul class="jodit_dropdownlist"/>')
+        this.container = dom('<div class="jodit_toolbar"/>');
+        this.popup = dom('<div class="jodit_toolbar_popup"/>');
+        this.list = dom('<ul class="jodit_dropdownlist"/>');
 
-        this.popup.addEventListener('mousedown', (e) => {e.stopPropagation()})
-        this.list.addEventListener('mousedown', (e) => {e.stopPropagation()})
+        this.popup.addEventListener('mousedown', (e) => {e.stopPropagation()});
+        this.list.addEventListener('mousedown', (e) => {e.stopPropagation()});
     }
 
     /**
      * Return SVG icon
      *
      * @param {string} name icon
-     * @param {string|false} [defaultValue='<span></span>']
+     * @param {string|boolean} [defaultValue='<span></span>']
      * @return {string}
      */
     static getIcon(name, defaultValue:string|false = '<span></span>') {
@@ -64,13 +65,15 @@ export default class Toolbar extends Component{
 
     /**
      *
+     * @param {HTMLLIElement|HTMLAnchorElement} btn
      * @param {HTMLElement} content
+     * @param {boolean} [rightAlign=false] Open popup on right side
      */
     openPopup(btn: HTMLLIElement|HTMLAnchorElement, content: HTMLElement, rightAlign: boolean = false) {
         // todo replace na position
-        this.closeAll()
+        this.closeAll();
         btn.classList.add('jodit_popup_open');
-        btn.appendChild(this.popup); // move
+        btn.appendChild(this.popup);
         this.__popapOpened = true;
         this.popup.innerHTML = '';
         this.popup.appendChild(content);
@@ -99,7 +102,7 @@ export default class Toolbar extends Component{
 
         $$('.jodit_dropdown_open, .jodit_popap_open', this.container).forEach((btn) => {
             btn.classList.remove('jodit_dropdown_open', 'jodit_popap_open');
-        })
+        });
 
         if (this.__popapOpened && this.parent.selection) {
             this.parent.selection.clear();
@@ -109,27 +112,27 @@ export default class Toolbar extends Component{
         this.__listOpened = false;
     }
 
-    __toggleButton(btn: HTMLElement, enable: boolean) {
+    private static __toggleButton(btn: HTMLElement, enable: boolean) {
         btn.classList.toggle('jodit_disabled', !enable);
         if (enable) {
             if (btn.hasAttribute('disabled')) {
-                btn.removeAttribute('disabled')
+                btn.removeAttribute('disabled');
             }
         } else {
             if (!btn.hasAttribute('disabled')) {
-                btn.setAttribute('disabled', 'disabled')
+                btn.setAttribute('disabled', 'disabled');
             }
         }
     }
 
     checkActiveButtons(element: Node|false) {
-        const active_class = 'jodit_active'
+        const active_class = 'jodit_active';
         this.buttonList.forEach(({control, btn}) => {
             btn.classList.remove(active_class);
 
             let mode =  (control === undefined || control.mode === undefined) ? consts.MODE_WYSIWYG : control.mode;
 
-            this.__toggleButton(btn, mode === consts.MODE_SPLIT || mode === this.parent.getRealMode());
+            Toolbar.__toggleButton(btn, mode === consts.MODE_SPLIT || mode === this.parent.getRealMode());
 
             if (!element) {
                 return;
@@ -148,7 +151,7 @@ export default class Toolbar extends Component{
                         total = 0;
 
                     Object.keys(cssObject).forEach((cssProperty) => {
-                        let cssValue = cssObject[cssProperty]
+                        const cssValue = cssObject[cssProperty];
                         if (typeof cssValue === 'function') {
                             if (cssValue({
                                     editor: this.parent,
@@ -162,7 +165,7 @@ export default class Toolbar extends Component{
                             }
                         }
                         total += 1;
-                    })
+                    });
 
                     if (total === matches) {
                         btn.classList.add(active_class);
@@ -173,7 +176,7 @@ export default class Toolbar extends Component{
                 tags = control.tags || (control.options && control.options.tags);
 
                 elm = element;
-                this.parent.node.up(elm, (node) => {
+                Dom.up(elm, (node: Node) => {
                     if (tags.indexOf(node.nodeName.toLowerCase()) !== -1) {
                         btn.classList.add(active_class);
                         return true;
@@ -187,7 +190,7 @@ export default class Toolbar extends Component{
 
 
                 elm = element;
-                this.parent.node.up(elm, (node) => {
+                Dom.up(elm, (node: HTMLElement) => {
                     if (node && node.nodeType !== Node.TEXT_NODE && !node.classList.contains(active_class)) {
                         checkActiveStatus(css, node);
                     }
@@ -224,8 +227,8 @@ export default class Toolbar extends Component{
 
 
         this.parent.events.on(camelCase('can-' + clearName), (enable) => {
-            this.__toggleButton(btn, enable);
-        })
+            Toolbar.__toggleButton(btn, enable);
+        });
 
         let icon =  dom(iconSVG);
         icon.classList.add('jodit_icon', 'jodit_icon_' + clearName);

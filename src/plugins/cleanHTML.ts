@@ -2,6 +2,7 @@ import Jodit from '../Jodit';
 import {Config} from '../Config'
 import * as consts from '../constants';
 import {cleanFromWord, trim} from "../modules/Helpers";
+import Dom from "../modules/Dom";
 
 /**
 * @property {object} cleanHTML {@link module:cleanHTML|cleanHTML}'s options
@@ -104,7 +105,8 @@ Jodit.plugins.cleanHTML = function (editor: Jodit) {
 
         editor.events.on('beforeSetElementValue', function (data) {
             if (editor.getMode() === consts.MODE_WYSIWYG) {
-                let div = editor.node.create('div'), node, remove = [], removeAttrs, i;
+                const div: HTMLElement = <HTMLElement>Dom.create('div', '', editor.doc);
+                let node, remove = [], removeAttrs, i;
                 div['innerHTML'] = data.value;
                 node = div.firstChild;
 
@@ -112,7 +114,7 @@ Jodit.plugins.cleanHTML = function (editor: Jodit) {
                     if (node.tagName) {
                         if (!allowTagsHash[node.tagName]) {
                             remove.push(node);
-                            node = editor.node.next(node, (elm) => (elm), div, true);
+                            node = Dom.next(node, elm => !!elm, div, true);
                             continue;
                         }
                         if (allowTagsHash[node.tagName] !== true) {
@@ -134,7 +136,7 @@ Jodit.plugins.cleanHTML = function (editor: Jodit) {
                             }
                         }
                     }
-                    node = editor.node.next(node, (elm) => (elm), div, true);
+                    node = Dom.next(node, elm => !!elm, div, true);
                 }
                 for (i = 0; i < remove.length; i += 1) {
                     if (remove[i].parentNode) {
@@ -155,10 +157,10 @@ Jodit.plugins.cleanHTML = function (editor: Jodit) {
         case 'insertHorizontalRule':
             hr = editor.editor.querySelector('hr[id=null]');
             if (hr) {
-                node = editor.node.next(hr, editor.node.isBlock, editor.editor, false);
+                node = Dom.next(hr, Dom.isBlock, editor.editor, false);
                 if (!node) {
-                    node = editor.node.create(editor.options.enter);
-                    editor.node.after(hr, node)
+                    node = Dom.create(editor.options.enter, '', editor.doc);
+                    Dom.after(hr, node)
                 }
                 sel.setCursorIn(node);
             }
@@ -172,8 +174,8 @@ Jodit.plugins.cleanHTML = function (editor: Jodit) {
                         elm.removeAttribute('style');
                     }
                     if (elm.tagName === 'FONT') {
-                        editor.node.each(elm, clean);
-                        elm = editor.node.replace(elm, 'span');
+                        Dom.each(elm, clean);
+                        elm = Dom.replace(elm, 'span', false, false, editor.doc);
                     }
                     if (elm.normalize) {
                         elm.normalize();

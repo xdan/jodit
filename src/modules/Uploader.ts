@@ -4,12 +4,14 @@ import Ajax from './Ajax';
 import {Config} from '../Config'
 import {browser, extend, isPlainObject} from "./Helpers";
 import {TEXT_PLAIN} from "../constants";
+import Dom from "./Dom";
 
 export type UploaderData = {
     messages?: string[],
     files?: string[],
     path?: string,
     baseurl?: string,
+    newfilename?: string;
 }
 export type UploaderAnswer = {
     success: boolean,
@@ -17,28 +19,32 @@ export type UploaderAnswer = {
     data: UploaderData
 };
 
+type UploaderOptions = {
+    url: string;
+    headers: null|string[],
+    data: null|object,
+    format: string;
+
+    prepareData: (formData: FormData) => any;
+
+    isSuccess: (resp: UploaderAnswer) => boolean;
+
+    getMessage: (resp: UploaderAnswer) => string;
+
+    process: (resp: UploaderAnswer) => UploaderData;
+
+    error: (e: Error) => void;
+
+    defaultHandlerSuccess: (resp: UploaderAnswer) => void;
+
+    defaultHandlerError: (e: Error) => void;
+}
+
 
 declare module "../Config" {
     interface Config {
         enableDragAndDropFileToEditor: boolean;
-        uploader: {
-            url: string;
-            format: string;
-
-            prepareData: (formData: FormData) => any;
-
-            isSuccess: (resp: UploaderAnswer) => boolean;
-
-            getMessage: (resp: UploaderAnswer) => string;
-
-            process: (resp: UploaderAnswer) => UploaderData;
-
-            error: (e: Error) => void;
-
-            defaultHandlerSuccess: (data, resp: UploaderAnswer) => void;
-
-            defaultHandlerError: (resp: UploaderAnswer) => void;
-         }
+        uploader: UploaderOptions
     }
 }
 
@@ -56,12 +62,12 @@ declare module "../Config" {
 Config.prototype.enableDragAndDropFileToEditor = true;
 
 /**
- * @property {object} uploader {@link module:Uploader|Uploader}'s settings
+ * @property {object} uploader {@link Uploader|Uploader}'s settings
  * @property {string} uploader.url Point of entry for file uploader
  * @property {string} uploader.format='json' The format of the received data
- * @property {string} uploader.headers=null An object of additional header key/value pairs to send along with requests using the XMLHttpRequest transport. See {@link module:Dom.defaultAjaxOptions|Dom.defaultAjaxOptions}
+ * @property {string} uploader.headers=null An object of additional header key/value pairs to send along with requests using the XMLHttpRequest transport. See {@link Ajax.defaultAjaxOptions|Ajax.defaultAjaxOptions}
  * @property {function} uploader.prepareData Before send file will called this function. First argument it gets [new FormData ()](https://developer.mozilla.org/en/docs/Web/API/FormData), you can use this if you want add some POST parameter.
- * @property {plainobject|false} uploader.data=false POST parameters.
+ * @property {object|boolean} uploader.data=false POST parameters.
  * @example
  * new Jodit('#editor', {
  *      uploader: {
@@ -130,15 +136,18 @@ Config.prototype.enableDragAndDropFileToEditor = true;
  * })
  */
 
-Config.prototype.uploader = {
+Config.prototype.uploader = <UploaderOptions>{
     url: '',
+    headers: null,
+    data: null,
+
     format: 'json',
 
     prepareData: function (this: Uploader, formData: FormData) {
         return formData;
     },
 
-    isSuccess: function (this: Uploader, resp: UploaderAnswer) {
+    isSuccess: function (this: Uploader, resp: UploaderAnswer): boolean {
         return resp.success;
     },
 
@@ -158,28 +167,28 @@ Config.prototype.uploader = {
         this.parent.events.fire('errorMessage', [e.message, 'error', 4000]);
     },
 
-    defaultHandlerSuccess:function (this: Uploader, data, resp: UploaderAnswer) {
-        if (data.files && data.files.length) {
-            data.files.forEach((image) => {
-                this.parent.selection.insertImage(data.baseurl + image);
+    defaultHandlerSuccess: function (this: Uploader, resp: UploaderAnswer) {
+        if (resp.data.files && resp.data.files.length) {
+            resp.data.files.forEach((image) => {
+                this.parent.selection.insertImage(resp.data.baseurl + image);
             })
         }
     },
 
-    defaultHandlerError: function (this: Uploader, resp: UploaderAnswer) {
-        this.parent.events.fire('errorMessage', [this.options.getMessage(resp)]);
+    defaultHandlerError: function (this: Uploader, e: Error) {
+        this.parent.events.fire('errorMessage', [e.message]);
     }
-}
+};
 
 export default class Uploader extends Component {
     path: string = '';
     source: string = 'default';
 
-    options;
+    options: UploaderOptions;
 
     constructor(editor: Jodit, options) {
         super(editor);
-        this.options = extend(true, {}, Config.prototype.uploader, this.parent.options.uploader, options);
+        this.options = <UploaderOptions>extend(true, {}, Config.prototype.uploader, this.parent.options.uploader, options);
         if (this.parent.editor) {
             if (this.parent.options.enableDragAndDropFileToEditor && this.parent.options.uploader && this.parent.options.uploader.url) {
                 this.bind(this.parent.editor);
@@ -196,8 +205,7 @@ export default class Uploader extends Component {
                 return data;
             }
 
-            let newdata: FormData = new FormData(),
-                key: string;
+            let newdata: FormData = new FormData();
 
             Object.keys(data).forEach((key) => {
                 newdata.append(key, data[key]);
@@ -292,7 +300,7 @@ export default class Uploader extends Component {
                 }
             } else {
                 if (typeof (handlerError || uploader.options.defaultHandlerError)) {
-                    (handlerError || uploader.options.defaultHandlerError).call(uploader, resp);
+                    (handlerError || uploader.options.defaultHandlerError).call(uploader, uploader.options.getMessage(resp));
                     return;
                 }
             }
@@ -317,7 +325,7 @@ export default class Uploader extends Component {
         this.source = source;
     }
 
-    dataURItoBlob(dataURI: string) {
+    static dataURItoBlob(dataURI: string) {
         // convert base64 to raw binary data held in a string
         // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
         let byteString = atob(dataURI.split(',')[1]),
@@ -341,7 +349,7 @@ export default class Uploader extends Component {
      * Set the handlers Drag and Drop to `$form`
      *
      * @method bind
-     * @param {HTMLElement|String} $form Form or any Node on which you can drag and drop the file. In addition will be processed <code>&lt;input type="file" &gt;</code>
+     * @param {HTMLElement} form Form or any Node on which you can drag and drop the file. In addition will be processed <code>&lt;input type="file" &gt;</code>
      * @param {function} [handlerSuccess] The function to be called when a successful uploading files to the server
      * @param {function} [handlerError] The function that will be called during a failed download files to a server
      * @example
@@ -356,9 +364,9 @@ export default class Uploader extends Component {
      */
 
     bind(form: HTMLElement, handlerSuccess?: (resp: UploaderAnswer) => void, handlerError?: (error: Error) => void) {
-        let self: Uploader = this;
+        const self: Uploader = this;
         self
-            .__on(form, 'paste',  function (e) {
+            .__on(form, 'paste',  function (e: ClipboardEvent) {
                 let i: number,
                     file: File,
                     extension: string,
@@ -376,19 +384,20 @@ export default class Uploader extends Component {
 
                 if (browser('ff')) {
                     if (!e.clipboardData.types.length && e.clipboardData.types[0] !== TEXT_PLAIN) {
-                        div = <HTMLDivElement>this.parent.node.create('div');
+                        div = <HTMLDivElement>Dom.create('div', '', this.parent.doc);
                         this.parent.selection.insertNode(div);
                         div.focus();
                         setTimeout(() => {
                             if (div.firstChild && (<HTMLDivElement>div.firstChild).hasAttribute('src')) {
                                 let src = (<HTMLDivElement>div.firstChild).getAttribute('src');
                                 div.parentNode.removeChild(div);
-                                this.sendFiles([this.dataURItoBlob(src)], handlerSuccess, handlerError);
+                                this.sendFiles([Uploader.dataURItoBlob(src)], handlerSuccess, handlerError);
                             }
                         }, 200);
                     }
                     return;
                 }
+
                 if (e.clipboardData && e.clipboardData.items && e.clipboardData.items.length) {
                     for (i = 0; i < e.clipboardData.items.length; i += 1) {
                         if (e.clipboardData.items[i].kind === "file" && e.clipboardData.items[i].type === "image/png") {
@@ -445,7 +454,7 @@ export default class Uploader extends Component {
      * @param {function} [handlerSuccess]
      * @param {function} [handlerError]
      */
-    uploadRemoteImage(url, handlerSuccess?: Function, handlerError?: Function) {
+    uploadRemoteImage(url: string, handlerSuccess?: (this: Uploader, resp: UploaderAnswer, message?: string) => void, handlerError?: (this: Uploader, e: Error) => void) {
         let uploader = this;
         uploader.send({
             action: 'uploadremote',
@@ -457,7 +466,7 @@ export default class Uploader extends Component {
                 }
             } else {
                 if (typeof (handlerError || uploader.options.defaultHandlerError) === 'function') {
-                    (handlerError || this.options.defaultHandlerError).call(uploader, resp, uploader.options.getMessage(resp));
+                    (handlerError || this.options.defaultHandlerError).call(uploader, new Error(uploader.options.getMessage(resp)));
                     return;
                 }
             }

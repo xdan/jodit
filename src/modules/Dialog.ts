@@ -51,17 +51,24 @@ export default class Dialog extends Component{
     /**
      * @property {HTMLDivElement} dialogbox
      */
-    dialogbox;
+    dialogbox: HTMLDivElement;
 
     /**
      * @property {HTMLDivElement} dialog
      */
-    dialog;
+    dialog: HTMLDivElement;
 
     /**
      * @property {HTMLDivElement} resizer
      */
-    resizer;
+    resizer: HTMLDivElement;
+
+    dialogbox_header: HTMLHeadingElement;
+    dialogbox_content: HTMLDivElement;
+    dialogbox_footer: HTMLDivElement;
+    dialogbox_close: HTMLAnchorElement;
+    dialogbox_fullsize: HTMLAnchorElement;
+
     constructor(parent ?: Jodit, options: DialogOptions = {}) {
         super(parent);
         this.options = (parent && parent.options) ? parent.options.dialog : Config.prototype.dialog;
@@ -82,31 +89,31 @@ export default class Dialog extends Component{
              '</div>' +
         '</div>');
 
-        this.dialogbox.__jodit_dialog = this;
+        this.dialogbox['__jodit_dialog'] = this;
 
-        this.dialog = this.dialogbox.querySelector('.jodit_dialog');
-        this.resizer = this.dialogbox.querySelector('.jodit_dialog_resizer');
+        this.dialog = <HTMLDivElement>this.dialogbox.querySelector('.jodit_dialog');
+        this.resizer = <HTMLDivElement>this.dialogbox.querySelector('.jodit_dialog_resizer');
 
         if (this.parent && this.parent.options && this.parent.options.textIcons) {
             this.dialogbox.classList.add('jodit_text_icons');
         }
 
-        this.dialogbox.header = this.dialogbox.querySelector('.jodit_dialog_header>h4');
-        this.dialogbox.content = this.dialogbox.querySelector('.jodit_dialog_content');
-        this.dialogbox.footer = this.dialogbox.querySelector('.jodit_dialog_footer');
-        this.dialogbox.close = this.dialogbox.querySelector('.jodit_dialog_header>a.jodit_close');
-        this.dialogbox.fullsize = dom('<a href="javascript:void(0)" class="jodit_dialog_header_fullsize">' + ((Jodit.modules.Toolbar.getIcon) ? Jodit.modules.Toolbar.getIcon(options.fullsize ? 'fullsize' : 'shrink') : '') + '</a>');
+        this.dialogbox_header = <HTMLHeadingElement>this.dialogbox.querySelector('.jodit_dialog_header>h4');
+        this.dialogbox_content = <HTMLDivElement>this.dialogbox.querySelector('.jodit_dialog_content');
+        this.dialogbox_footer = <HTMLDivElement>this.dialogbox.querySelector('.jodit_dialog_footer');
+        this.dialogbox_close = <HTMLAnchorElement>this.dialogbox.querySelector('.jodit_dialog_header>a.jodit_close');
+        this.dialogbox_fullsize = <HTMLAnchorElement>dom('<a href="javascript:void(0)" class="jodit_dialog_header_fullsize">' + ((Jodit.modules.Toolbar.getIcon) ? Jodit.modules.Toolbar.getIcon(options.fullsize ? 'fullsize' : 'shrink') : '') + '</a>');
 
         this.destinition.appendChild(this.dialogbox);
 
         this.dialogbox.addEventListener('close_dialog', this.close);
 
-        this.dialogbox.close.addEventListener('mousedown', this.close);
+        this.dialogbox_close.addEventListener('mousedown', this.close);
 
-        this.dialogbox.fullsize.addEventListener('click', () => {
+        this.dialogbox_fullsize.addEventListener('click', () => {
             let fullSize = this.maximization();
             if (Jodit.modules.Toolbar) {
-                this.dialogbox.fullsize.innerHTML = Jodit.modules.Toolbar.getIcon(!fullSize ? 'fullsize' : 'shrink');
+                this.dialogbox_fullsize.innerHTML = Jodit.modules.Toolbar.getIcon(!fullSize ? 'fullsize' : 'shrink');
             }
         });
 
@@ -189,7 +196,7 @@ export default class Dialog extends Component{
         this.dialog.style.top = (y || top) + 'px';
     }
 
-    private setElements(root: HTMLDivElement, elements: string|string[]|Element|Element[]) {
+    private setElements(root: HTMLDivElement|HTMLHeadingElement, elements: string|string[]|Element|Element[]) {
         let elements_list: HTMLElement[] = [];
         asArray(elements).forEach((elm) => {
             let element = dom(elm);
@@ -215,7 +222,7 @@ export default class Dialog extends Component{
      * dialog.open();
      */
     setTitle(content:  string|string[]|Element|Element[]) {
-        this.setElements(this.dialogbox.header, content);
+        this.setElements(this.dialogbox_header, content);
     }
 
     /**
@@ -229,7 +236,7 @@ export default class Dialog extends Component{
      * dialog.open();
      */
     setContent(content: string|string[]|Element|Element[]) {
-        this.setElements(this.dialogbox.content, content);
+        this.setElements(this.dialogbox_content, content);
     }
 
     /**
@@ -249,7 +256,7 @@ export default class Dialog extends Component{
      * dialog.open();
      */
     setFooter(content: string|string[]|Element|Element[]) {
-        this.setElements(this.dialogbox.footer, content);
+        this.setElements(this.dialogbox_footer, content);
         this.dialog.classList.toggle('with_footer', !!content);
     }
 
@@ -276,7 +283,8 @@ export default class Dialog extends Component{
      * Sets the maximum z-index dialog box, displaying it on top of all the dialog boxes
      */
     setMaxZIndex() {
-        let maxzi = 0, zIndex = 0;
+        let maxzi: number = 0,
+            zIndex: number = 0;
 
         $$('.jodit_dialog_box', document.body).forEach((dialog) => {
             zIndex = parseInt(<string>css(dialog, 'zIndex'), 10);
@@ -284,7 +292,7 @@ export default class Dialog extends Component{
         });
 
         this.dialogbox
-            .style.zIndex = maxzi + 1;
+            .style.zIndex = (maxzi + 1).toString();
     }
 
     iSetMaximization: boolean = false;
@@ -338,7 +346,7 @@ export default class Dialog extends Component{
         this.destroyAfterClose = (destroyAfter === true);
 
         if (this.options.fullsizeButton) {
-            this.dialogbox.close.parentNode.appendChild(this.dialogbox.fullsize)
+            this.dialogbox_close.parentNode.appendChild(this.dialogbox_fullsize)
         }
 
         if (title !== undefined) {
@@ -412,8 +420,8 @@ export default class Dialog extends Component{
 
         this.startX = e.clientX;
         this.startY = e.clientY;
-        this.startPoint.x = parseInt(this.dialog.style.left || 0, 10);
-        this.startPoint.y = parseInt(this.dialog.style.top || 0, 10);
+        this.startPoint.x = css(this.dialog, 'left');
+        this.startPoint.y = css(this.dialog, 'top');
 
         this.setMaxZIndex();
         e.preventDefault();

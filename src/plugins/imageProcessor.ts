@@ -12,7 +12,7 @@ Jodit.plugins.imageProcessor = function (editor: Jodit) {
                     dragImage = image;
                     e.preventDefault(); // stop default dragging
                 })
-                .__on(image, 'mousedown.imageProcessor', (e) => {
+                .__on(image, 'mousedown.imageProcessor', () => {
                     dragImage = image;
                     const pos = offset(image);
                     editor.events.fire('showPopap', [image, Math.round(pos.left + (image.offsetWidth / 2)), Math.round(pos.top + image.offsetHeight)]);

@@ -1,6 +1,7 @@
 import * as consts from '../constants';
 import Component from './Component';
 import {each, gebi, dom, trim, $$} from './Helpers';
+import Dom from "./Dom";
 
 export default class Selection extends Component{
 
@@ -230,7 +231,7 @@ export default class Selection extends Component{
                 }
 
                 // check - cursor inside editor
-                if (this.parent.node.contains(this.parent.editor, node)) {
+                if (Dom.contains(this.parent.editor, node)) {
                     return node;
                 }
             }
@@ -311,7 +312,7 @@ export default class Selection extends Component{
 
         if (typeof html === 'string') {
             node.innerHTML = html;
-        } else if (this.parent.node.isNode(html)) {
+        } else if (Dom.isNode(html)) {
             node.appendChild(html);
         }
 
@@ -409,8 +410,8 @@ export default class Selection extends Component{
                 start = range.startContainer === this.parent.editor ? this.parent.editor.childNodes[range.startOffset] : range.startContainer,
                 end = range.endContainer === this.parent.editor ? this.parent.editor.childNodes[range.endOffset - 1] : range.endContainer;
 
-            this.parent.node.find(start, (node: Node|HTMLElement) => {
-                if (node && !this.parent.node.isEmptyTextNode(node) && !(node instanceof HTMLElement && node.classList.contains('jodit_selection_marker'))) {
+            Dom.find(start, (node: Node|HTMLElement) => {
+                if (node && !Dom.isEmptyTextNode(node) && !(node instanceof HTMLElement && node.classList.contains('jodit_selection_marker'))) {
                     nodes.push(node);
                 }
                 if (node === end) {
@@ -437,7 +438,7 @@ export default class Selection extends Component{
             throw new Error('Parameter node most be instance of Node');
         }
 
-        if (!this.parent.node.up(node, (elm) => (elm === this.parent.editor || elm.parentNode === this.parent.editor))) {
+        if (!Dom.up(node, (elm) => (elm === this.parent.editor || elm.parentNode === this.parent.editor), this.parent.editor)) {
             throw new Error('Node element must be in editor');
         }
 
@@ -491,11 +492,11 @@ export default class Selection extends Component{
             offset = isStart() ? rng.startOffset : rng.endOffset;
 
         if (parentBlock === false) {
-            parentBlock = <HTMLElement>this.parent.node.up(container, this.parent.node.isBlock)
+            parentBlock = <HTMLElement>Dom.up(container, Dom.isBlock, this.parent.editor)
         } else if (typeof parentBlock === 'function') {
-            parentBlock = <HTMLElement>this.parent.node.up(container, parentBlock)
+            parentBlock = <HTMLElement>Dom.up(container, parentBlock, this.parent.editor)
         } else {
-            if (!this.parent.node.isOrContains(parentBlock, container)) {
+            if (!Dom.isOrContains(parentBlock, container)) {
                 return null;
             }
         }
@@ -557,9 +558,9 @@ export default class Selection extends Component{
 
         if (container.nodeType === Node.TEXT_NODE) {
             if (start && offset === 0) {
-                node = this.parent.node.find(node, node => node, parentBlock, false, 'previousSibling', 'lastChild');
+                node = Dom.find(node, node => !!node, parentBlock, false, 'previousSibling', 'lastChild');
             } else if (!start && offset === newNodeValue.length) {
-                node = this.parent.node.next(node, node => node, parentBlock);
+                node = Dom.next(node, node => !!node, parentBlock);
             }
         }
 
@@ -568,14 +569,14 @@ export default class Selection extends Component{
                 if (node.nodeName !== 'BR') {
                     return false;
                 }
-            } else if (node.nodeType === Node.TEXT_NODE && !/^[ \t\r\n]*$/.test(node.nodeValue) && !this.parent.node.isEmptyTextNode(node)) {
+            } else if (node.nodeType === Node.TEXT_NODE && !/^[ \t\r\n]*$/.test(node.nodeValue) && !Dom.isEmptyTextNode(node)) {
                 return false;
             }
 
             if (start) {
-                node = this.parent.node.find(node, node => node, parentBlock, false,  'previousSibling', 'lastChild');
+                node = Dom.find(node, node => !!node, parentBlock, false,  'previousSibling', 'lastChild');
             } else {
-                node = this.parent.node.next(node, node => node, parentBlock);
+                node = Dom.next(node, node => !!node, parentBlock);
             }
         }
 
@@ -593,7 +594,7 @@ export default class Selection extends Component{
             throw new Error('Parameter node most be instance of Node');
         }
 
-        if (!this.parent.node.up(node, (elm) => (elm === this.parent.editor || elm.parentNode === this.parent.editor))) {
+        if (!Dom.up(node, (elm) => (elm === this.parent.editor || elm.parentNode === this.parent.editor), this.parent.editor)) {
             throw new Error('Node element must be in editor');
         }
 
@@ -629,7 +630,7 @@ export default class Selection extends Component{
         if (!(node instanceof Node)) {
             throw new Error('Parameter node most be instance of Node');
         }
-        if (!this.parent.node.up(node, (elm) => (elm === this.parent.editor || elm.parentNode === this.parent.editor))) {
+        if (!Dom.up(node, (elm) => (elm === this.parent.editor || elm.parentNode === this.parent.editor), this.parent.editor)) {
             throw new Error('Node element must be in editor');
         }
 
@@ -656,11 +657,11 @@ export default class Selection extends Component{
      * @param {Node} node
      * @param {boolean} [inward=false] select all inside
      */
-    select(node, inward = false) {
+    select(node: Node, inward = false) {
         if (!(node instanceof Node)) {
             throw new Error('Parameter node most be instance of Node');
         }
-        if (!this.parent.node.up(node, (elm) => (elm === this.parent.editor || elm.parentNode === this.parent.editor))) {
+        if (!Dom.up(node, (elm) => (elm === this.parent.editor || elm.parentNode === this.parent.editor), this.parent.editor)) {
             throw new Error('Node element must be in editor');
         }
 
