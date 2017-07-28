@@ -53,8 +53,7 @@ Jodit.plugins.tableKeyboardNavigation = function (editor: Jodit) {
                 const sibling = (event.which === consts.KEY_LEFT || event.shiftKey) ? 'prev' : 'next';
                 next = <HTMLTableCellElement>Dom[sibling](block, (elm) => (elm && /^td|th$/i.test((<HTMLElement>elm).tagName)), table);
                 if (!next) {
-                    const proc = new Table(editor);
-                    proc.appendRow(table, sibling === 'next' ? false : table.querySelector('tr'), sibling === 'next');
+                    Table.appendRow(table, sibling === 'next' ? false : <HTMLTableRowElement>table.querySelector('tr'), sibling === 'next');
                     next = <HTMLTableCellElement>(Dom[sibling](block, (elm: HTMLElement) => (elm && /^td|th$/i.test((<HTMLElement>elm).tagName)), table));
                 }
             }

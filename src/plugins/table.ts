@@ -1,7 +1,7 @@
 import Jodit from '../Jodit';
 import Table, {JODIT_SELECTED_CELL_MARKER} from '../modules/Table';
 import * as consts from '../constants';
-import {each, getContentWidth, $$, dom} from '../modules/Helpers';
+import {each, getContentWidth, $$, dom, offset} from '../modules/Helpers';
 import {Config} from '../Config'
 import Dom from "../modules/Dom";
 
@@ -33,7 +33,7 @@ class TableProcessor extends Table{
         if (cells.length) {
             each(cells, (i, cell) => {
                 if (!current_cell || current_cell !== cell) {
-                    Table.removeSelected(cell);
+                    Table.restoreSelection(cell);
                 }
             })
         }
@@ -205,7 +205,7 @@ class TableProcessor extends Table{
                         }
                     }
                     this.__deSelectAll(table);
-                    let bound = Table.getSelectedBound(table, [cell, start]),
+                    const bound = Table.getSelectedBound(table, [cell, start]),
                         box = Table.formalMatrix(table);
 
                     for (let i = bound[0][0]; i <= bound[1][0]; i += 1) {
@@ -213,6 +213,12 @@ class TableProcessor extends Table{
                             Table.addSelected(box[i][j])
                         }
                     }
+
+                    const   max = box[bound[1][0]][bound[1][1]],
+                            min = box[bound[0][0]][bound[0][1]];
+
+                    this.parent.events
+                        .fire('showPopap', [table, offset(min).left + Math.round((offset(max).left + max.offsetWidth - offset(min).left) / 2), offset(max).top + max.offsetHeight]);
                 } else {
                     this.__calcResizerPosition(table, cell, event.offsetX);
                 }
@@ -273,9 +279,10 @@ class TableProcessor extends Table{
             }
         });
         this.__on(window, 'mousedown', (event: MouseEvent) => {
-            let current_cell = Dom.closest(<HTMLElement>event.target, 'TD|TH', this.parent.editor), table;
+            const current_cell: HTMLTableCellElement = <HTMLTableCellElement>Dom.closest(<HTMLElement>event.target, 'TD|TH', this.parent.editor);
+            let table: HTMLTableElement;
             if (current_cell instanceof HTMLTableCellElement) {
-                table = Dom.closest(current_cell, 'table', this.parent.editor)
+                table = <HTMLTableElement>Dom.closest(current_cell, 'table', this.parent.editor)
             }
             this.__deSelectAll(table, current_cell instanceof HTMLTableCellElement ? current_cell : false);
         });
@@ -292,7 +299,7 @@ class TableProcessor extends Table{
             })
             .on('beforeSetMode', () => {
                 Table.getAllSelectedCells(editor.editor).forEach((td) => {
-                    Table.removeSelected(td);
+                    Table.restoreSelection(td);
                     this.normalizeTable(<HTMLTableElement>Dom.closest(td, 'table', editor.editor))
                 })
             })
@@ -312,23 +319,43 @@ class TableProcessor extends Table{
      * @param {string} command
      */
     onExecCommand = (command: string) => {
-        if (/splitvertical|splithorizontal|mergeselectedcells/.test(command)) {
+        if (/table(splitv|splitg|merge|empty|bin|binrow|bincolumn|addcolumn|addrow)/.test(command)) {
+            command = command.replace('table', '');
             const cells = Table.getAllSelectedCells(this.parent.editor);
             if (cells.length) {
-                let cell: HTMLTableCellElement = cells.shift();
+                let cell: HTMLTableCellElement = cells.shift(),
+                    table = <HTMLTableElement>Dom.closest(cell, 'table', this.parent.editor);
+
                 switch (command) {
-                    case 'splitvertical': {
-                        this.splitVertical(<HTMLTableElement>Dom.closest(cell, 'table', this.parent.editor));
+                    case 'splitv':
+                        this.splitVertical(table);
                         break;
-                    }
-                    case 'splithorizontal': {
-                        this.splitHorizontal(<HTMLTableElement>Dom.closest(cell, 'table', this.parent.editor));
+                    case 'splitg':
+                        this.splitHorizontal(table);
                         break;
-                    }
-                    case 'mergeselectedcells': {
-                        this.mergeSelected(<HTMLTableElement>Dom.closest(cell, 'table', this.parent.editor));
+                    case 'merge':
+                        this.mergeSelected(table);
                         break;
-                    }
+                    case 'empty':
+                        Table.getAllSelectedCells(this.parent.editor).forEach(cell => cell.innerHTML = '');
+                        break;
+                    case 'bin':
+                        table.parentNode.removeChild(table);
+                        break;
+                    case 'binrow':
+                        Table.removeRow(table, (<HTMLTableRowElement>cell.parentNode).rowIndex);
+                        break;
+                    case 'bincolumn':
+                        Table.removeColumn(table, cell.cellIndex);
+                        break;
+                    case 'addcolumnafter':
+                    case 'addcolumnbefore':
+                        Table.appendColumn(table, cell.cellIndex, command === 'addcolumnafter')
+                        break;
+                    case 'addrowafter':
+                    case 'addrowbefore':
+                        Table.appendRow(table, <HTMLTableRowElement>cell.parentNode, command === 'addrowafter')
+                        break;
                 }
             }
         }

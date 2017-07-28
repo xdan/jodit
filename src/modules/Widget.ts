@@ -1,67 +1,43 @@
-import Component from './Component'
 import Jodit from '../Jodit'
 import {normalizeColor, dom, isPlainObject, each, $$, hexToRgb, val} from './Helpers'
 import Dom from "./Dom";
 import Uploader, {UploaderData} from "./Uploader";
 import FileBrowser, {FileBrowserCallBcackData} from "./FileBrowser";
 
-export default class Widget extends Component {
-    /**
-     * @property {HTMLElement} container
-     */
-    container;
+export namespace Widget {
 
     /**
+     * Build color picker
      *
-     * @param {String} name
-     * @param {Object|Function} [options]
-     * @param {Object|Function|String|Number} [defaultValue]
-     * @return {HTMLElement}
+     * @param {Jodit} editor
+     * @param {function} callback Callback 'function (color) {}'
+     * @param {string} [coldColor] Color value ex. #fff or rgb(123, 123, 123) or rgba(123, 123, 123, 1)
+     * @example
+     *
+     * $tabs = TabsWidget(editor, {
+     *    'Text' : ColorPickerWidget(editor, function (color) {
+     *         box.style.color = color;
+     *     }, box.style.color),
+     *     'Background' : ColorPickerWidget(editor, function (color) {
+     *         box.style.backgroundColor = color;
+     *     }, box.style.backgroundColor),
+     * });
      */
-    create(name, options:any = {}, defaultValue?: any) {
-        if (Widget[name]) {
-            const widget = new Widget[name](this.parent, options, defaultValue);
-            widget.container.classList.add('jodit_widget');
-            return widget.container;
-        }
-        return document.createElement('div');
-    }
-}
-
-/**
- * Build color picker
- *
- * @param {function} callback Callback 'function (color) {}'
- * @param {string} [value] Color value ex. #fff or rgb(123, 123, 123) or rgba(123, 123, 123, 1)
- * @example
- * let widget = new Jodit.modules.Widget(editor);
- *
- * $tabs = widget.create('Tabs', {
- *    'Text' : widget.create('ColorPicker', function (color) {
- *         box.style.color = color;
- *     }, box.style.color),
- *     'Background' : widget.create('ColorPicker', function (color) {
- *         box.style.backgroundColor = color;
- *     }, box.style.backgroundColor),
- * });
- */
-Widget['ColorPicker'] = class extends Widget{
-    constructor(parent: Jodit, callback, value) {
-        super(parent);
-        const valueHex = normalizeColor(value),
-            form = dom('<div class="jodit_colorpicker"></div>'),
+    export const ColorPickerWidget = (editor: Jodit, callback: (newColor: string) => void, coldColor: string): HTMLDivElement => {
+        const valueHex = normalizeColor(coldColor),
+            form: HTMLDivElement = <HTMLDivElement>dom('<div class="jodit_colorpicker"></div>'),
             eachColor = (colors) => {
                 let stack = [];
                 if (isPlainObject(colors)) {
-                   Object.keys(colors).forEach((key) => {
+                    Object.keys(colors).forEach((key) => {
                         stack.push('<div class="jodit_colorpicker_group jodit_colorpicker_group-' + key + '">');
                         stack.push(eachColor(colors[key]));
                         stack.push('</div>');
-                   })
+                    })
                 } else if (Array.isArray(colors)) {
                     colors.forEach((color) => {
                         stack.push('<a ' + (valueHex === color ? ' class="active" ' : '') + ' title="' + color + '" style="background-color:' + color + '" data-color="' + color + '" href="javascript:void(0)">' +
-                                (valueHex === color ? Jodit.modules.Toolbar.getIcon('eye') : '') +
+                            (valueHex === color ? Jodit.modules.Toolbar.getIcon('eye') : '') +
                             '</a>');
                     })
                 }
@@ -70,7 +46,7 @@ Widget['ColorPicker'] = class extends Widget{
 
 
         form
-            .appendChild(dom('<div>'  + eachColor(parent.options.colors) + '</div>'));
+            .appendChild(dom('<div>' + eachColor(editor.options.colors) + '</div>'));
 
         form.appendChild(dom('<a data-color="" href="javascript:void(0)">' + Jodit.modules.Toolbar.getIcon('eraser') + '</a>'));
 
@@ -84,7 +60,7 @@ Widget['ColorPicker'] = class extends Widget{
                 let target: HTMLElement = <HTMLElement>e.target;
 
                 if (target.tagName.toUpperCase() === 'SVG' || target.tagName.toUpperCase() === 'PATH') {
-                    target = <HTMLElement>Dom.closest(target.parentNode, 'A', this.parent.editor);
+                    target = <HTMLElement>Dom.closest(target.parentNode, 'A', editor.editor);
                 }
                 if (target.tagName.toUpperCase() !== 'A') {
                     console.log(target.tagName.toUpperCase());
@@ -119,43 +95,41 @@ Widget['ColorPicker'] = class extends Widget{
                 return false;
             });
 
-        this.container = form;
-    }
-};
 
-/**
- * Build tabs system
- *
- * @param {Object} tabs PlainObject where 'key' will be tab's Title and `value` is tab's content
- *
- * @example
- * let widget = new Jodit.modules.Widget(editor);
- *
- * let tabs = widget.create('Tabs', {
- *    'Images': '<div>Images</div>',
- *    'Title 2': editor.helper.dom('<div>Some content</div>'),
- *    'Color Picker': widget.create('ColorPicker', function (color) {
- *         box.style.color = color;
- *     }, box.style.color),
- * });
+        return form;
+    };
 
- */
-Widget['Tabs'] = class extends Widget{
-    constructor(parent, options) {
-        super(parent);
-        let box = dom('<div class="jodit_tabs"></div>'),
-            tabs = dom('<div class="jodit_tabs_wrapper"></div>'),
-            buttons = dom('<div class="jodit_tabs_buttons"></div>'),
+    /**
+     * Build tabs system
+     *
+     * @param {Jodit} editor
+     * @param {object} tabs PlainObject where 'key' will be tab's Title and `value` is tab's content
+     *
+     * @example
+     *
+     * let tabs = widget.create('Tabs', {
+     *    'Images': '<div>Images</div>',
+     *    'Title 2': editor.helper.dom('<div>Some content</div>'),
+     *    'Color Picker': ColorPickerWidget(editor, function (color) {
+     *         box.style.color = color;
+     *     }, box.style.color),
+     * });
+
+     */
+    export const TabsWidget = (editor: Jodit, tabs: {[key: string]: string|HTMLElement|Function}): HTMLDivElement => {
+        let box: HTMLDivElement = <HTMLDivElement>dom('<div class="jodit_tabs"></div>'),
+            tabBox: HTMLDivElement = <HTMLDivElement>dom('<div class="jodit_tabs_wrapper"></div>'),
+            buttons: HTMLDivElement = <HTMLDivElement>dom('<div class="jodit_tabs_buttons"></div>'),
             tabcount = 0;
-        
+
         box.appendChild(buttons);
-        box.appendChild(tabs);
-        
-        each(options, (name, tabOptions) => {
+        box.appendChild(tabBox);
+
+        each(tabs, (name, tabOptions) => {
             const tab = dom('<div class="jodit_tab"></div>'),
                 button = dom('<a href="javascript:void(0);"></a>');
 
-            button.innerHTML = parent.i18n(name);
+            button.innerHTML = editor.i18n(name);
             buttons.appendChild(button);
 
             if (typeof tabOptions !== 'function') {
@@ -163,19 +137,19 @@ Widget['Tabs'] = class extends Widget{
             } else {
                 tab.appendChild(dom('<div class="jodit_tab_empty"></div>'));
             }
-            tabs.appendChild(tab);
+            tabBox.appendChild(tab);
             button.addEventListener('mousedown', (e) => {
                 $$('a', buttons).forEach((a) => {
                     a.classList.remove('active');
                 });
-                $$('.jodit_tab', tabs).forEach((a) => {
+                $$('.jodit_tab', tabBox).forEach((a) => {
                     a.classList.remove('active');
                 });
 
                 button.classList.add('active');
                 tab.classList.add('active');
                 if (typeof tabOptions === 'function') {
-                    tabOptions.call(parent);
+                    tabOptions.call(editor);
                 }
                 e.stopPropagation();
                 return false;
@@ -191,26 +165,26 @@ Widget['Tabs'] = class extends Widget{
         });
 
         buttons.querySelector('a:first-child').classList.add('active');
-        tabs.querySelector('.jodit_tab:first-child').classList.add('active');
-        this.container = box;
-    }
-};
+        tabBox.querySelector('.jodit_tab:first-child').classList.add('active');
 
-/**
- * Generate 3 tabs
- * upload - Use Drag and Drop
- * url - By specifying the image url
- * filebrowser - After opening the file browser . In the absence of one of the parameters will be less tabs
- *
- * @params {Object} callbacks Object with keys `url`, `upload` and `filebrowser`, values which are callback functions with different parameters
- * @param {Function} callbacks.upload - function that will be called when the user selects a file or using drag and drop files to the `Upload` tab
- * @param {Function} callbacks.url - function that will be called when the user enters the URL of the tab image and alternative text for images
- * @param {Function} callbacks.filebrowser - function that will be called when the user clicks on the file browser tab, and then choose any image in the window that opens, faylbrauzera
- * @params {HTMLNode} image image object
- * @example
- * let widget = new Jodit.modules.Widget(editor);
- *
- * return widget.create('ImageSelector', {
+        return box;
+    };
+
+    /**
+     * Generate 3 tabs
+     * upload - Use Drag and Drop
+     * url - By specifying the image url
+     * filebrowser - After opening the file browser . In the absence of one of the parameters will be less tabs
+     *
+     * @params {Object} callbacks Object with keys `url`, `upload` and `filebrowser`, values which are callback functions with different parameters
+     * @param {Function} callbacks.upload - function that will be called when the user selects a file or using drag and drop files to the `Upload` tab
+     * @param {Function} callbacks.url - function that will be called when the user enters the URL of the tab image and alternative text for images
+     * @param {Function} callbacks.filebrowser - function that will be called when the user clicks on the file browser tab, and then choose any image in the window that opens, faylbrauzera
+     * @params {HTMLNode} image image object
+     * @example
+     * let widget = new Jodit.modules.Widget(editor);
+     *
+     * return widget.create('ImageSelector', {
  *      url: function (url, alt) {
  *          editor.selections.insertImage(url);
  *      },
@@ -221,20 +195,25 @@ Widget['Tabs'] = class extends Widget{
  *          editor.selections.insertImage(images[0]);
  *      }
  * }, image);
- */
+     */
 
-type ImageSelectorCallbacks = {
-    url?: (this: Jodit, url: string, alt: string) => void;
-    filebrowser?: (data: FileBrowserCallBcackData) => void,
-    upload?: (this: Jodit, data: FileBrowserCallBcackData) => void;
-};
+    type ImageSelectorCallbacks = {
+        url?: (this: Jodit, url: string, alt: string) => void;
+        filebrowser?: (data: FileBrowserCallBcackData) => void,
+        upload?: (this: Jodit, data: FileBrowserCallBcackData) => void;
+    };
 
-Widget['ImageSelector'] = class extends Widget{
-    currentImage: any;
-    constructor(editor, callbacks: ImageSelectorCallbacks, elm) {
-        super(editor);
-
-        let tabs:{[key: string]: HTMLElement|Function} = {};
+    /**
+     *
+     * @param {Jodit} editor
+     * @param {Widget.ImageSelectorCallbacks} callbacks
+     * @param {HTMLElement} elm
+     * @return {HTMLDivElement}
+     * @constructor
+     */
+    export const ImageSelectorWidget = (editor: Jodit, callbacks: ImageSelectorCallbacks, elm: HTMLElement): HTMLDivElement =>{
+        let currentImage: any;
+        let tabs: { [key: string]: HTMLElement | Function } = {};
 
         if (callbacks.upload && editor.options.uploader && editor.options.uploader.url) {
             const dragbox: HTMLElement = dom('<div class="jodit_draganddrop_file_box">' +
@@ -258,7 +237,7 @@ Widget['ImageSelector'] = class extends Widget{
         }
 
         if (callbacks.filebrowser) {
-            if (editor.options.filebrowser.url || editor.options.filebrowser.ajax.url || editor.options.filebrowser.items.url) {
+            if (editor.options.filebrowser.ajax.url || editor.options.filebrowser.items.url) {
                 tabs[Jodit.modules.Toolbar.getIcon('folder') + editor.i18n('Browse')] = function () {
                     (<FileBrowser>editor.getInstance('FileBrowser')).open(callbacks.filebrowser);
                 };
@@ -270,16 +249,16 @@ Widget['ImageSelector'] = class extends Widget{
                 '<input required name="url" placeholder="http://"/>' +
                 '<input name="text" placeholder="' + editor.i18n('Alternative text') + '"/>' +
                 '<div style="text-align: right">' +
-                    '<button>' + editor.i18n('Insert') + '</button>' +
+                '<button>' + editor.i18n('Insert') + '</button>' +
                 '</div>' +
-            '</form>');
+                '</form>');
 
-            this.currentImage = null;
+            currentImage = null;
 
             if (elm && elm.nodeType !== Node.TEXT_NODE && (elm.tagName === 'IMG' || $$('img', elm).length)) {
-                this.currentImage = elm.tagName === 'IMG' ? elm : $$('img', elm)[0];
-                val(form, 'input[name=url]', this.currentImage.getAttribute('src'));
-                val(form, 'input[name=text]', this.currentImage.getAttribute('alt'));
+                currentImage = elm.tagName === 'IMG' ? elm : $$('img', elm)[0];
+                val(form, 'input[name=url]', currentImage.getAttribute('src'));
+                val(form, 'input[name=text]', currentImage.getAttribute('alt'));
                 form.querySelector('button').innerText = editor.i18n('Update');
             }
 
@@ -302,6 +281,6 @@ Widget['ImageSelector'] = class extends Widget{
 
         }
 
-        this.container = this.create('Tabs', tabs);
+        return TabsWidget(editor, tabs);
     }
-};
+}

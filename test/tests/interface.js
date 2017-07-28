@@ -79,7 +79,7 @@ describe('Test interface', function() {
                 simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-brush'))
                 expect(list.style.display).to.equal('block');
 
-                simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-brush .jodit_colorpicker.jodit_widget > a > svg'))
+                simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-brush .jodit_colorpicker > a > svg'))
                 expect(editor.getEditorValue()).to.equal('text2text');
             });
             it('Open format list set H1 for current cursor position. Restore selection after that', function() {
@@ -461,7 +461,7 @@ describe('Test interface', function() {
             });
         });
         describe('Inline', function () {
-            it('Open inline popup after click on the table', function () {
+            it('Open inline popup after click on the image', function () {
                 var editor = new Jodit('#table_editor_interface');
 
                 editor.setEditorValue('<img src="/test/tests/artio.jpg"/>');
@@ -471,6 +471,264 @@ describe('Test interface', function() {
                 var popup = editor.container.querySelector('.jodit_toolbar_popup-inline');
 
                 expect(popup && popup.classList.contains('active')).to.equal(true);
+            });
+            it('Open inline popup after click inside the cell', function () {
+                var editor = new Jodit('#table_editor_interface');
+
+                editor.setEditorValue('<table>' +
+                        '<tr><td>1</td></tr>' +
+                    '</table>');
+
+                simulateEvent('mousedown', 0, editor.editor.querySelector('td'))
+
+                var popup = editor.container.querySelector('.jodit_toolbar_popup-inline');
+
+                expect(popup && popup.classList.contains('active')).to.equal(true);
+            });
+            describe('Table buttone', function () {
+                it('Select table cell and fill it in yellow', function () {
+                    var editor = new Jodit('#table_editor_interface');
+
+                    editor.setEditorValue('<table>' +
+                        '<tr><td>2</td></tr>' +
+                        '</table>');
+
+                    var td = editor.editor.querySelector('td');
+
+                    simulateEvent('mousedown', 0, td)
+                    simulateEvent('mousemove', 0, td)
+
+                    var popup = editor.container.querySelector('.jodit_toolbar_popup-inline');
+
+                    expect(popup && popup.classList.contains('active')).to.equal(true);
+
+                    simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-brush>a'))
+
+                    var popupColor = popup.querySelector('.jodit_toolbar_popup');
+                    expect(popupColor && popupColor.style.display).to.equal('block');
+
+                    simulateEvent('mousedown', 0, popupColor.querySelector('.jodit_colorpicker_group>a'));
+
+
+                    expect(editor.helper.normalizeColor(td.style.backgroundColor)).to.equal('#000000');
+
+                });
+            });
+            it('Select table cell and fill it in yellow', function () {
+                var editor = new Jodit('#table_editor_interface');
+
+                editor.setEditorValue('<table>' +
+                    '<tr><td>3</td></tr>' +
+                    '</table>');
+
+                var td = editor.editor.querySelector('td');
+
+                simulateEvent('mousedown', 0, td)
+
+                var popup = editor.container.querySelector('.jodit_toolbar_popup-inline');
+
+                expect(popup && popup.classList.contains('active')).to.equal(true);
+
+                simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-valign>a'))
+
+                var popupColor = popup.querySelector('.jodit_dropdownlist');
+                expect(popupColor && popupColor.style.display).to.equal('block');
+
+                simulateEvent('mousedown', 0, popupColor.querySelector('li>a'));
+
+
+                expect(td.style.verticalAlign).to.equal('top');
+
+            });
+            it('Select table cell and  set vertical align to Top', function () {
+                var editor = new Jodit('#table_editor_interface');
+
+                editor.setEditorValue('<table>' +
+                    '<tr><td>3</td></tr>' +
+                    '</table>');
+
+                var td = editor.editor.querySelector('td');
+
+                simulateEvent('mousedown', 0, td)
+
+                var popup = editor.container.querySelector('.jodit_toolbar_popup-inline');
+
+                expect(popup && popup.classList.contains('active')).to.equal(true);
+
+                simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-valign>a'))
+
+                var popupColor = popup.querySelector('.jodit_dropdownlist');
+                expect(popupColor && popupColor.style.display).to.equal('block');
+
+                simulateEvent('mousedown', 0, popupColor.querySelector('li>a'));
+
+
+                expect(td.style.verticalAlign).to.equal('top');
+
+            });
+            it('Select table cell and split it by vertical', function () {
+                var editor = new Jodit('#table_editor_interface');
+
+                editor.setEditorValue('<table style="width: 300px;">' +
+                    '<tr><td>3</td></tr>' +
+                    '</table>');
+
+                var td = editor.editor.querySelector('td');
+
+                simulateEvent('mousedown', 0, td)
+
+                var popup = editor.container.querySelector('.jodit_toolbar_popup-inline');
+
+                simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-splitv>a'))
+
+                expect(editor.getEditorValue()).to.equal('<table style="width: 300px;"><tbody><tr><td style="width: 32%;">3</td><td style="width: 32%;"><br></td></tr></tbody></table>');
+
+            });
+            it('Select table cell and split it by horizontal', function () {
+                var editor = new Jodit('#table_editor_interface');
+
+                editor.setEditorValue('<table style="width: 300px;">' +
+                    '<tr><td>5</td></tr>' +
+                    '</table>');
+
+                var td = editor.editor.querySelector('td');
+
+                simulateEvent('mousedown', 0, td)
+
+                var popup = editor.container.querySelector('.jodit_toolbar_popup-inline');
+
+                simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-splitg>a'))
+
+                expect(editor.getEditorValue()).to.equal('<table style="width: 300px;"><tbody><tr><td>5</td></tr><tr><td><br></td></tr></tbody></table>');
+
+            });
+            it('Select two table cells and merge then in one', function () {
+                var editor = new Jodit('#table_editor_interface');
+
+                editor.setEditorValue('<table style="width: 300px;">' +
+                    '<tr><td>5</td><td>6</td></tr>' +
+                    '</table>');
+
+                var td = editor.editor.querySelector('td');
+
+                simulateEvent('mousedown', 0, td)
+                simulateEvent('mousemove', 0, editor.editor.querySelectorAll('td')[1])
+
+                var popup = editor.container.querySelector('.jodit_toolbar_popup-inline');
+
+                simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-merge>a'))
+
+                expect(editor.getEditorValue()).to.equal('<table style="width: 300px;"><tbody><tr><td >5<br>6</td></tr></tbody></table>');
+            });
+            it('Select table cell add column before this', function () {
+                var editor = new Jodit('#table_editor_interface');
+
+                editor.setEditorValue('<table>' +
+                    '<tr><td>3</td></tr>' +
+                    '</table>');
+
+                var td = editor.editor.querySelector('td');
+
+                simulateEvent('mousedown', 0, td)
+
+                var popup = editor.container.querySelector('.jodit_toolbar_popup-inline');
+
+                expect(popup && popup.classList.contains('active')).to.equal(true);
+
+                simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-addcolumn>a'))
+
+                var popupColor = popup.querySelector('.jodit_dropdownlist');
+                expect(popupColor && popupColor.style.display).to.equal('block');
+
+                simulateEvent('mousedown', 0, popupColor.querySelector('li>a'));
+
+
+                expect(editor.getEditorValue()).to.equal('<table><tbody><tr><td></td><td >3</td></tr></tbody></table>');
+
+            });
+            it('Select table cell and add row above this', function () {
+                var editor = new Jodit('#table_editor_interface');
+
+                editor.setEditorValue('<table>' +
+                    '<tr><td>3</td></tr>' +
+                    '</table>');
+
+                var td = editor.editor.querySelector('td');
+
+                simulateEvent('mousedown', 0, td)
+
+                var popup = editor.container.querySelector('.jodit_toolbar_popup-inline');
+
+                expect(popup && popup.classList.contains('active')).to.equal(true);
+
+                simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-addrow>a'))
+
+                var popupColor = popup.querySelector('.jodit_dropdownlist');
+                expect(popupColor && popupColor.style.display).to.equal('block');
+
+                simulateEvent('mousedown', 0, popupColor.querySelector('li>a'));
+
+
+                expect(editor.getEditorValue()).to.equal('<table><tbody><tr><td></td></tr><tr><td >3</td></tr></tbody></table>');
+
+            });
+            it('Select table cell and remove it row', function () {
+                var editor = new Jodit('#table_editor_interface');
+
+                editor.setEditorValue('<table>' +
+                    '<tr><td>1</td></tr>' +
+                    '<tr><td>2</td></tr>' +
+                    '<tr><td>3</td></tr>' +
+                    '</table>');
+
+                var td = editor.editor.querySelectorAll('td')[1];
+
+                simulateEvent('mousedown', 0, td)
+
+                var popup = editor.container.querySelector('.jodit_toolbar_popup-inline');
+
+                expect(popup && popup.classList.contains('active')).to.equal(true);
+
+                simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-bin>a'))
+
+                var popupColor = popup.querySelector('.jodit_dropdownlist');
+                expect(popupColor && popupColor.style.display).to.equal('block');
+
+                simulateEvent('mousedown', 0, popupColor.querySelectorAll('li>a')[1]);
+
+
+                expect(editor.getEditorValue()).to.equal('<table><tbody><tr><td>1</td></tr><tr><td>3</td></tr></tbody></table>');
+
+            });
+            it('Select table cell and remove whole table should hide inline popup', function () {
+                var editor = new Jodit('#table_editor_interface');
+
+                editor.setEditorValue('<table>' +
+                    '<tr><td>1</td></tr>' +
+                    '<tr><td>2</td></tr>' +
+                    '<tr><td>3</td></tr>' +
+                    '</table>');
+
+                var td = editor.editor.querySelectorAll('td')[1];
+
+                simulateEvent('mousedown', 0, td)
+
+                var popup = editor.container.querySelector('.jodit_toolbar_popup-inline');
+
+                expect(popup && popup.classList.contains('active')).to.equal(true);
+
+                simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-bin>a'))
+
+                var popupColor = popup.querySelector('.jodit_dropdownlist');
+                expect(popupColor && popupColor.style.display).to.equal('block');
+
+                simulateEvent('mousedown', 0, popupColor.querySelectorAll('li>a')[0]);
+
+
+                expect(editor.getEditorValue()).to.equal('');
+
+                expect(popup && popup.classList.contains('active')).to.equal(false);
+
             });
         });
     });

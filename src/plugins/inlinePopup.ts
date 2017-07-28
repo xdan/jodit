@@ -1,26 +1,32 @@
 /**
 * Module popup edit img elements and table
-* @module Popap
+* @module popup
 * @params {Object} parent Jodit main object
 */
 import Jodit from "../Jodit";
 import Toolbar from "../modules/Toolbar";
 import {Config} from '../Config'
-import {$$, css, dom, debounce, offset} from "../modules/Helpers";
+import {css, dom, offset} from "../modules/Helpers";
 import {ControlType} from "../modules/Toolbar";
+import Dom from "../modules/Dom";
+import Table from "../modules/Table";
+import {Widget} from "../modules/Widget";
+import ColorPickerWidget = Widget.ColorPickerWidget;
+import TabsWidget = Widget.TabsWidget;
+
 declare module "../Config" {
     interface Config {
-        popup: {[key: string]: ControlType[]}
+        popup: {[key: string]: Array<ControlType|string>}
     }
 }
 /**
  * @memberof Jodit.defaultOptions
- * @prop {object} popap module Settings {@link module:Jodit/Popap|Popap}
- * @prop {array} popap.img List of buttons to the toolbar pop-up window in the image
- * @prop {array} popap.table List of buttons to the toolbar pop-up window at the tables
+ * @prop {object} popup plugin options
+ * @prop {array} popup.img List of buttons to the toolbar pop-up window in the image
+ * @prop {array} popup.table List of buttons to the toolbar pop-up window at the tables
  * @example
  * new Jodit('#editor', {
- *     popap: {
+ *     popup: {
  *         img: [
  *             {name: 'bin'},
  *             {
@@ -54,7 +60,9 @@ Config.prototype.popup = {
         {
             name: 'bin',
             tooltip: 'Delete',
-            command: 'delete'
+            exec: (editor: Jodit, image: HTMLElement) => {
+                image.parentNode.removeChild(image);
+            }
         },
         {
             name: 'pencil',
@@ -131,33 +139,40 @@ Config.prototype.popup = {
             tooltip: 'Horizontal align'
         }
     ],
-    /*table: [
+    table: [
         {
             name: 'brush',
-            popap: function (elm, callback) {
-                let $bg,
-                    $cl,
-                    $tab,
-                    $selected = elm.find('.jodit_focused_cell'),
-                    color = $selected.css('color'),
-                    bg_color = $selected.css('background-color');
+            popup: function (editor: Jodit, elm: HTMLTableElement, control: ControlType, close: Function) {
+                let $bg: HTMLElement,
+                    $cl: HTMLElement,
+                    $tab: HTMLElement,
+                    selected: HTMLTableCellElement[] = Table.getAllSelectedCells(elm),
+                    color: string,
+                    bg_color: string;
 
-                $bg = this.form.buildColorPicker((value) => {
-                    $selected
-                        .css('background-color', value);
-                    if (callback) {
-                        callback();
-                    }
+                if (!selected.length) {
+                    return false;
+                }
+
+                color = css(selected[0], 'color');
+                bg_color = css(selected[0], 'background-color');
+
+
+                $bg = ColorPickerWidget(editor, (value: string) => {
+                    selected.forEach((cell: HTMLTableCellElement) => {
+                        css(cell, 'background-color', value);
+                    });
+                    close();
                 }, bg_color);
 
-                $cl = this.form.buildColorPicker((value) => {
-                    $selected.css('color', value);
-                    if (callback) {
-                        callback();
-                    }
+                $cl = ColorPickerWidget(editor,(value: string) => {
+                    selected.forEach((cell: HTMLTableCellElement) => {
+                        css(cell, 'color', value);
+                    });
+                    close();
                 }, color);
 
-                $tab = this.form.buildTabs({
+                $tab = TabsWidget(editor, {
                     Background : $bg,
                     Text : $cl
                 });
@@ -168,66 +183,88 @@ Config.prototype.popup = {
         },
         {
             name: 'valign',
-            list: {
-                top: 'Top',
-                middle: 'Middle',
-                bottom: 'Bottom'
+            list: [
+                'Top',
+                'Middle',
+                'Bottom'
+            ],
+            exec: (editor: Jodit, table: HTMLTableElement, control: ControlType) => {
+                const command = control.args[1].toLowerCase();
+                Table.getAllSelectedCells(table).forEach((cell: HTMLTableCellElement) => {
+                    css(cell, 'vertical-align', command);
+                })
             },
             tooltip: 'Vertical align'
-        }, '|',
+        },
+        //'|',
         {
             name: 'splitv',
+            command: 'tablesplitv',
             tooltip: 'Split vertical'
         },
         {
             name: 'splitg',
+            command: 'tablesplitg',
             tooltip: 'Split horizontal'
         },
         "\n",
         {
             name: 'merge',
+            command: 'tablemerge',
             tooltip: 'Merge'
         },
         {
             name: 'addcolumn',
             list: {
-                addcolumnbefore: 'Insert column before',
-                addcolumnafter: 'Insert column after'
+                tableaddcolumnbefore: 'Insert column before',
+                tableaddcolumnafter: 'Insert column after'
+            },
+            exec: (editor: Jodit, table: HTMLTableElement, control: ControlType) => {
+                const command = control.args[0].toLowerCase();
+                editor.execCommand(command, false, table);
             },
             tooltip: 'Add column'
         },
         {
             name: 'addrow',
             list: {
-                addrowbefore: 'Insert row above',
-                addrowafter: 'Insert row below'
+                tableaddrowbefore: 'Insert row above',
+                tableaddrowafter: 'Insert row below'
+            },
+            exec: (editor: Jodit, table: HTMLTableElement, control: ControlType) => {
+                const command = control.args[0].toLowerCase();
+                editor.execCommand(command, false, table);
             },
             tooltip: 'Add row'
         },
         {
             name: 'bin',
             list: {
-                bin: 'Delete table',
-                binrow: 'Delete row',
-                bincolumn: 'Delete column',
-                empty: 'Empty cell'
+                tablebin: 'Delete table',
+                tablebinrow: 'Delete row',
+                tablebincolumn: 'Delete column',
+                tableempty: 'Empty cell'
+            },
+            exec: (editor: Jodit, table: HTMLTableElement, control: ControlType) => {
+                const command = control.args[0].toLowerCase();
+                editor.execCommand(command, false, table);
             },
             tooltip: 'Delete'
         }
-    ]*/
+    ]
 };
 
 Jodit.plugins.Popup = function (editor: Jodit) {
+    let timeout: number;
     const toolbar: Toolbar = new Toolbar(editor),
-        popap: HTMLDivElement = <HTMLDivElement> dom('<div class="jodit_toolbar_popup-inline"></div>'),
+        popup: HTMLDivElement = <HTMLDivElement> dom('<div class="jodit_toolbar_popup-inline"></div>'),
 
-        hidePopap = () => {
-            popap
+        hidePopup = () => {
+            popup
                 .classList.remove('active');
         },
 
-        showPopap = (elm: HTMLElement, x: number, y: number) => {
-            hidePopap();
+        showPopup = (elm: HTMLElement, x: number, y: number) => {
 
             const tagName: string = elm.tagName.toLowerCase();
 
@@ -235,18 +272,27 @@ Jodit.plugins.Popup = function (editor: Jodit) {
                 return;
             }
 
-            popap.innerHTML = '';
+            popup.innerHTML = '';
 
-            toolbar.build(editor.options.popup[tagName], popap);
+            toolbar.build(editor.options.popup[tagName], popup, elm);
 
-            popap.classList
+            popup.classList
                 .add('active');
 
-            css(popap, {
+            css(popup, {
                 left: x + 'px',
                 top: y + 'px',
-                marginLeft: -Math.round(popap.offsetWidth / 2) + 'px'
+                marginLeft: -Math.round(popup.offsetWidth / 2) + 'px'
             });
+        },
+
+        delayShowPopup = (elm: HTMLElement, x: number, y: number) => {
+            clearTimeout(timeout);
+            if (editor.options.observer.timeout) {
+                timeout = setTimeout(showPopup.bind(editor, elm, x, y), editor.options.observer.timeout);
+            } else {
+                showPopup(elm, x, y);
+            }
         };
 
     /**
@@ -255,31 +301,30 @@ Jodit.plugins.Popup = function (editor: Jodit) {
 
 
     editor.container
-        .appendChild(popap);
+        .appendChild(popup);
 
-    editor.events.on('hidePopap afterCommand', hidePopap);
-    editor.events.on('showPopap', showPopap);
+    editor.events.on('hidePopup afterCommand', hidePopup);
+    editor.events.on('showPopap', delayShowPopup);
+    editor.events.on('beforeDestruct', () => {
+        clearTimeout(timeout);
+    });
 
 
-    editor.__on(popap,'mouseup', (e: MouseEvent) => {
+    editor.__on(popup,'mouseup', (e: MouseEvent) => {
         e.stopPropagation();
     });
-    editor.__on(window,'mouseup', hidePopap);
 
-    const open = function (event: MouseEvent) {
-        const
-            elm: HTMLImageElement = <HTMLImageElement>event.target,
-            pos = offset(elm);
-        showPopap(elm, Math.round(pos.left + (elm.offsetWidth / 2)), Math.round(pos.top + elm.offsetHeight));
-    };
+    //editor.__on(window,'mouseup', hidePopup);
+
+
     editor.__on(editor.editor, 'mousedown', (event: MouseEvent) => {
-        if ((<HTMLImageElement>event.target).tagName === 'IMG') {
-            editor.selection.select(<Node>event.target);
-            if (editor.options.observer.timeout) {
-                setTimeout(open.bind(this, event), editor.options.observer.timeout);
-            } else {
-                open(event);
-            }
+        if ((<HTMLImageElement>event.target).tagName === 'IMG' || Dom.closest(<Node>event.target, 'table', editor.editor)) {
+            const target: HTMLImageElement|HTMLTableElement = (<HTMLImageElement>event.target).tagName === 'IMG' ? <HTMLImageElement>event.target :  <HTMLTableElement>Dom.closest(<Node>event.target, 'table', editor.editor);
+            //editor.selection.select(<Node>target);
+            const pos = offset(target);
+            delayShowPopup(target, Math.round(pos.left + (target.offsetWidth / 2)), Math.round(pos.top + target.offsetHeight));
+        } else {
+            hidePopup();
         }
     });
 };

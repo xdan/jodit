@@ -271,6 +271,9 @@ export default class Dom {
             if (condition(start)) {
                 return start;
             }
+            if (start === root) {
+                break;
+            }
             start = start.parentNode;
         } while (start && start !== root);
 
@@ -285,7 +288,7 @@ export default class Dom {
      * @param {HTMLElement} root
      * @return {Boolean|Node}
      */
-    static closest(node: Node, tags: string|Function|RegExp, root: HTMLElement): Node|HTMLElement|false|HTMLTableCellElement {
+    static closest(node: Node, tags: string|Function|RegExp, root: HTMLElement): Node|HTMLTableElement|HTMLElement|false|HTMLTableCellElement {
         let condition;
         if (typeof tags  === 'function') {
             condition = tags

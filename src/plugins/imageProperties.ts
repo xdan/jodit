@@ -3,10 +3,13 @@ import {Config} from '../Config'
 import {$$, css, dom, trim, val} from "../modules/Helpers";
 import {Alert, Confirm, default as Dialog} from "../modules/Dialog";
 import Toolbar from "../modules/Toolbar";
-import Widget from "../modules/Widget";
+//import {} from "../modules/Widget";
 import FileBrowser, {FileBrowserCallBcackData} from "../modules/FileBrowser";
 import Dom from "../modules/Dom";
 import {UploaderData} from "../modules/Uploader";
+import {Widget} from "../modules/Widget";
+import TabsWidget = Widget.TabsWidget;
+import ImageSelectorWidget = Widget.ImageSelectorWidget;
 /**
  * Plug-in for image editing window
  *
@@ -274,7 +277,7 @@ Jodit.plugins.imageProperties = function (editor: Jodit) {
 
         tabs[editor.i18n('Image')] = mainTab;
         tabs[editor.i18n('Advansed')] = positionTab;
-        prop.querySelector('#tabsbox').appendChild((<Widget>editor.getInstance('Widget')).create('Tabs', tabs));
+        prop.querySelector('#tabsbox').appendChild(TabsWidget(editor, tabs));
 
         update();
 
@@ -334,7 +337,7 @@ Jodit.plugins.imageProperties = function (editor: Jodit) {
         $$('.jodit_rechange', mainTab).forEach((imagebtn: HTMLAnchorElement) => {
             imagebtn.addEventListener('mousedown', (e: MouseEvent) => {
                 imagebtn.classList.toggle('active');
-                editor.toolbar.openPopup(imagebtn, (<Widget>editor.getInstance('Widget')).create('ImageSelector', {
+                editor.toolbar.openPopup(imagebtn, ImageSelectorWidget(editor, {
                     upload: (data: FileBrowserCallBcackData) => {
                         if (data.files && data.files.length) {
                             image.setAttribute('src', data.baseurl + data.files[0]);

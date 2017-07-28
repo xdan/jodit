@@ -59,7 +59,17 @@
 </html>
 
 <script>
+    function expect() {
+        return {
+            to: {
+                equal: function () {}
+            }
+        };
+    }
     editor = new Jodit('#editor', {
+        observer: {
+            timeout: 0
+        },
 //        uploader: {
 //            url: 'http://localhost:8181/index-test.php?action=upload'
 //        },
@@ -101,7 +111,10 @@
     editor.events.on('change', callback)
 
 
-//    expect(parseInt(editor.container.querySelector('.jodit_table_resizer').style.left, 10) < 50).to.equal(true);
+
+
+
+    //    expect(parseInt(editor.container.querySelector('.jodit_table_resizer').style.left, 10) < 50).to.equal(true);
 
 //    expect(list.style.display).to.equal('none');
 

@@ -59,8 +59,7 @@ describe('Tables Jodit Editor Tests', function() {
                 '<tr><td>1</td><td>2</td><td>3</td></tr>' +
                 '</table>');
 
-            var table = new Jodit.modules.Table(editor);
-            table.appendRow(editor.editor.firstChild);
+            Jodit.modules.Table.appendRow(editor.editor.firstChild);
 
             expect(editor.getEditorValue()).to.equal('<table><tbody><tr><td>1</td><td>2</td><td>3</td></tr><tr><td></td><td></td><td></td></tr></tbody></table>');
         });
@@ -72,8 +71,7 @@ describe('Tables Jodit Editor Tests', function() {
                 '<tr><td>2</td><td>3</td><td>4</td></tr>' +
                 '</table>');
 
-            var table = new Jodit.modules.Table(editor);
-            table.appendRow(editor.editor.firstChild, editor.editor.firstChild.querySelector('tr'));
+            Jodit.modules.Table.appendRow(editor.editor.firstChild, editor.editor.firstChild.querySelector('tr'));
 
             expect(editor.getEditorValue()).to.equal('<table><tbody><tr><td>1</td><td>2</td><td>3</td></tr><tr><td></td><td></td><td></td></tr><tr><td>2</td><td>3</td><td>4</td></tr></tbody></table>');
         });
@@ -85,8 +83,8 @@ describe('Tables Jodit Editor Tests', function() {
                 '<tr><td>2</td><td>3</td><td>4</td></tr>' +
                 '</table>');
 
-            var table = new Jodit.modules.Table(editor);
-            table.appendRow(editor.editor.firstChild, editor.editor.firstChild.querySelector('tr'), false);
+
+            Jodit.modules.Table.appendRow(editor.editor.firstChild, editor.editor.firstChild.querySelector('tr'), false);
 
             expect(editor.getEditorValue()).to.equal('<table><tbody><tr><td></td><td></td><td></td></tr><tr><td>1</td><td>2</td><td>3</td></tr><tr><td>2</td><td>3</td><td>4</td></tr></tbody></table>');
         });
@@ -98,8 +96,7 @@ describe('Tables Jodit Editor Tests', function() {
                 '<tr><td colspan="2">3</td></tr>' +
                 '</table>');
 
-            var table = new Jodit.modules.Table(editor);
-            table.appendColumn(editor.editor.firstChild);
+            Jodit.modules.Table.appendColumn(editor.editor.firstChild);
 
             expect(editor.getEditorValue().toLowerCase()).to.equal('<table>' +
                 '<tbody>' +
@@ -116,8 +113,7 @@ describe('Tables Jodit Editor Tests', function() {
                 '<tr><td colspan="2">3</td></tr>' +
                 '</table>');
 
-            var table = new Jodit.modules.Table(editor);
-            table.appendColumn(editor.editor.firstChild, 0);
+            Jodit.modules.Table.appendColumn(editor.editor.firstChild, 0);
 
             expect(editor.getEditorValue().toLowerCase()).to.equal('<table>' +
                 '<tbody>' +
@@ -134,8 +130,7 @@ describe('Tables Jodit Editor Tests', function() {
                 '<tr><td colspan="2">3</td></tr>' +
                 '</table>');
 
-            var table = new Jodit.modules.Table(editor);
-            table.appendColumn(editor.editor.firstChild, 1, false);
+            Jodit.modules.Table.appendColumn(editor.editor.firstChild, 1, false);
 
             expect(editor.getEditorValue().toLowerCase()).to.equal('<table>' +
                 '<tbody>' +
@@ -431,7 +426,7 @@ describe('Tables Jodit Editor Tests', function() {
 
                 var table = new Jodit.modules.Table(editor);
                 table.splitVertical(editor.editor.firstChild);
-                debugger
+
                 expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal(
                     '<table style="width: 300px">' +
                         '<tbody>' +

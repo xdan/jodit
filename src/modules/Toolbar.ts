@@ -20,7 +20,7 @@ export type ControlType = {
     args?: any[];
     cols?: number;
     template?: (editor: Jodit, key: string, value: string) => string;
-    popup?:(editor: Jodit, current: Node|false, control: ControlType, close: Function) => HTMLElement;
+    popup?:(editor: Jodit, current: Node|false, control: ControlType, close: Function) => HTMLElement|false;
 }
 
 type ButtonType = {
@@ -71,9 +71,12 @@ export default class Toolbar extends Component{
      * @param {HTMLElement} content
      * @param {boolean} [rightAlign=false] Open popup on right side
      */
-    openPopup(btn: HTMLLIElement|HTMLAnchorElement, content: HTMLElement, rightAlign: boolean = false) {
+    openPopup(btn: HTMLLIElement|HTMLAnchorElement, content: HTMLElement|false, rightAlign: boolean = false) {
         // todo replace na position
         this.closeAll();
+        if (!content) {
+            return;
+        }
         btn.classList.add('jodit_popup_open');
         btn.appendChild(this.popup);
         this.__popapOpened = true;
@@ -210,7 +213,7 @@ export default class Toolbar extends Component{
     /**
      *
      */
-    addButton(item: string|ControlType, controlOption?: ControlType, content?: string){
+    addButton(item: string|ControlType, controlOption?: ControlType, content?: string, target?: HTMLElement) {
 
         let control: ControlType = extend(true, {}, controlOption, this.defaultControl);
 
@@ -247,7 +250,7 @@ export default class Toolbar extends Component{
             control = {command: name};
         }
 
-        if (content !== undefined) {
+        if (content !== undefined && content !== '') {
             a.innerHTML = content;
         }
 
@@ -281,9 +284,9 @@ export default class Toolbar extends Component{
                     each(control.list, (key: string, value: string) => {
                         let elm;
                         if (this.parent.options.controls[value] !== undefined) {
-                            elm = this.addButton(value, this.parent.options.controls[value]); // list like array {"align": {list: ["left", "right"]}}
+                            elm = this.addButton(value, this.parent.options.controls[value], '', target); // list like array {"align": {list: ["left", "right"]}}
                         } else if (this.parent.options.controls[key] !== undefined) {
-                            elm = this.addButton(key, extend({}, this.parent.options.controls[key], value)); // list like object {"align": {list: {"left": {exec: alert}, "right": {}}}}
+                            elm = this.addButton(key, extend({}, this.parent.options.controls[key], value),'', target); // list like object {"align": {list: {"left": {exec: alert}, "right": {}}}}
                         } else {
                             elm = this.addButton(key, {
                                     exec: control.exec,
@@ -297,7 +300,8 @@ export default class Toolbar extends Component{
                                     this.parent,
                                     key,
                                     value
-                                )
+                                ),
+                                target
                             );
                         }
 
@@ -307,16 +311,18 @@ export default class Toolbar extends Component{
                 } else if (control.exec !== undefined && typeof control.exec === 'function') {
                     control.exec(
                         this.parent,
-                        this.parent.selection.current(),
+                        target || this.parent.selection.current(),
                         control,
                         originalEvent,
                         btn
                     );
+                    this.parent.setEditorValue();
+                    this.parent.events.fire('hidePopup');
                     this.closeAll();
                 } else if (control.popup !== undefined && typeof control.popup === 'function') {
                     this.openPopup(btn, control.popup(
                         this.parent,
-                        this.parent.selection.current(),
+                        target || this.parent.selection.current(),
                         control,
                         this.closeAll
                     ));
@@ -342,7 +348,7 @@ export default class Toolbar extends Component{
      * @param {Array|Object} buttons
      * @param {HTMLDivElement} container
      */
-    build(buttons: ControlType[]|string[], container: HTMLElement) {
+    build(buttons: Array<ControlType|string>, container: HTMLElement, target?: HTMLElement) {
         let lastBtnSeparator: boolean = false;
 
         this.container.innerHTML = '';
@@ -354,25 +360,36 @@ export default class Toolbar extends Component{
                 return;
             }
 
+            switch (name) {
+                case "\n":
+                    this.container.appendChild(dom('<li class="jodit_toolbar_btn jodit_toolbar_btn-break"></li>'));
+                    break;
+                case '|':
+                    if (!lastBtnSeparator) {
+                        lastBtnSeparator = true;
+                        this.container.appendChild(dom('<li class="jodit_toolbar_btn jodit_toolbar_btn-separator"></li>'));
+                    }
+                    break;
+                default:
+                    let control: string|ControlType = button;
+
+                    lastBtnSeparator = false;
+
+                    if (typeof control !== 'object' && this.parent.options.controls[control] !== undefined) {
+                        control = this.parent.options.controls[control];
+                    }
+
+                    if (typeof control !== 'object') {
+                        throw new Error('Need ControlType ' + control);
+                    }
+
+                    this.container.appendChild(this.addButton(button, <ControlType>control, '', target));
+            }
+
             if (name !== '|') {
-                let control: string|ControlType = button;
 
-                lastBtnSeparator = false;
-
-                if (typeof control !== 'object' && this.parent.options.controls[control] !== undefined) {
-                    control = this.parent.options.controls[control];
-                }
-
-                if (typeof control !== 'object') {
-                    throw new Error('Need ControlType ' + control);
-                }
-
-                this.container.appendChild(this.addButton(button, <ControlType>control));
             } else {
-                if (!lastBtnSeparator) {
-                    lastBtnSeparator = true;
-                    this.container.appendChild(dom('<li class="jodit_toolbar_btn jodit_toolbar_btn-separator"></li>'));
-                }
+
             }
         });
 

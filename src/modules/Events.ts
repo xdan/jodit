@@ -89,7 +89,7 @@ export default class Events extends Component{
      /**
      * Sets the handler for the specified event ( Event List ) for a given element .
      * @method on
-     * @param {Object|string} [object] - The object for which to set an event handler
+     * @param {Object|string} [objectOrEvent] - The object for which to set an event handler
      * @param {(String|Function)} list - List of events , separated by a space or comma
      * @param {function} [callback] - The event handler
      * @param {Boolean} [onTop=false] - Set handler in first
@@ -100,13 +100,13 @@ export default class Events extends Component{
      *     data.value = jQuery.trim(data.value);
      * });
      */
-    on(object: any, list: any, callback?: string|Function, onTop: boolean = false) {
+    on(objectOrEvent: any, list: any, callback?: string|Function, onTop: boolean = false) {
         let i;
 
-        if (typeof object === 'string') {
+        if (typeof objectOrEvent === 'string') {
             callback = list;
-            list = object;
-            object = this.parent;
+            list = objectOrEvent;
+            objectOrEvent = this.parent;
         }
 
          if (typeof list !== 'string') {
@@ -116,18 +116,18 @@ export default class Events extends Component{
          let actionsList:string[] = list.split(/[\s,]+/);
 
         for (i = 0; i < actionsList.length; i += 1) {
-            if (object.handlers === undefined) {
-                object.handlers = {};
+            if (objectOrEvent.handlers === undefined) {
+                objectOrEvent.handlers = {};
             }
 
-            if (object.handlers[actionsList[i]] === undefined) {
-                object.handlers[actionsList[i]] = [];
+            if (objectOrEvent.handlers[actionsList[i]] === undefined) {
+                objectOrEvent.handlers[actionsList[i]] = [];
             }
 
             if (onTop) {
-                object.handlers[actionsList[i]].unshift(callback);
+                objectOrEvent.handlers[actionsList[i]].unshift(callback);
             } else {
-                object.handlers[actionsList[i]].push(callback);
+                objectOrEvent.handlers[actionsList[i]].push(callback);
             }
         }
         return this;
@@ -149,11 +149,13 @@ export default class Events extends Component{
      */
     fire (object: any, list?: any, args?: any[]): false|void|any {
         let i, j, result, result_value;
+
         if (typeof object === 'string') {
             args = list;
             list = object;
             object = this.parent;
         }
+
         if (object.handlers === undefined) {
             return;
         }

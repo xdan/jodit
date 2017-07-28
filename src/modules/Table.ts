@@ -18,7 +18,7 @@ export default class Table extends Component{
     static addSelected(td: HTMLTableCellElement) {
         td.setAttribute(JODIT_SELECTED_CELL_MARKER, '1');
     }
-    static removeSelected(td: HTMLTableCellElement) {
+    static restoreSelection(td: HTMLTableCellElement) {
         td.removeAttribute(JODIT_SELECTED_CELL_MARKER);
     }
 
@@ -135,13 +135,13 @@ export default class Table extends Component{
      * @param {Boolean|HTMLTableRowElement} [line=false] Insert a new line after/before this line contains the selected cell
      * @param {Boolean} [after=true] Insert a new line after line contains the selected cell
      */
-    appendRow(table, line:false|HTMLTableRowElement = false, after = true) {
+    static appendRow(table: HTMLTableElement, line:false|HTMLTableRowElement = false, after = true) {
         let columnsCount = Table.getColumnsCount(table),
-            row = Dom.create('tr', '', this.doc),
+            row = Dom.create('tr', '', table.ownerDocument),
             j;
 
         for (j = 0; j < columnsCount; j += 1) {
-            row.appendChild(Dom.create('td', '', this.doc))
+            row.appendChild(Dom.create('td', '', table.ownerDocument))
         }
 
         if (after && line && line.nextSibling) {
@@ -159,9 +159,10 @@ export default class Table extends Component{
      * @param {HTMLTableElement} table
      * @param {int} rowIndex
      */
-    static removeRow(table, rowIndex) {
-        let box = Table.formalMatrix(table), dec;
-        let row = table.rows[rowIndex];
+    static removeRow(table: HTMLTableElement, rowIndex: number) {
+        const box = Table.formalMatrix(table);
+        let dec: boolean;
+        const row = table.rows[rowIndex];
 
         each(box[rowIndex], (j: number, cell: HTMLTableCellElement) => {
             dec = false;
@@ -202,13 +203,13 @@ export default class Table extends Component{
      * Insert column before / after all the columns containing the selected cells
      *
      */
-    appendColumn(table: HTMLTableElement, j: number, after = true) {
+    static appendColumn(table: HTMLTableElement, j: number, after = true) {
         let box = Table.formalMatrix(table), i;
         if (j === undefined) {
             j = Table.getColumnsCount(table) - 1;
         }
         for (i = 0; i < box.length; i += 1) {
-            const cell = Dom.create('td', '', this.parent.doc);
+            const cell = Dom.create('td', '', table.ownerDocument);
             let added = false;
             if (after) {
                 if (j + 1 >= box[i].length || box[i][j] !== box[i][j + 1]) {
@@ -267,12 +268,13 @@ export default class Table extends Component{
      * @param {Array.<HTMLTableCellElement>} selectedCells
      * @return {[[left, top], [right, bottom]]}
      */
-    static getSelectedBound (table, selectedCells) {
-        let bound = [[Infinity, Infinity], [0, 0]];
-        let box = Table.formalMatrix(table);
+    static getSelectedBound (table, selectedCells): number[][] {
+        const bound = [[Infinity, Infinity], [0, 0]];
+        const box = Table.formalMatrix(table);
+        let i, j, k;
 
-        for (let i = 0; i < box.length; i += 1) {
-            for (let j = 0; j < box[i].length; j += 1) {
+        for (i = 0; i < box.length; i += 1) {
+            for (j = 0; j < box[i].length; j += 1) {
                 if (selectedCells.indexOf(box[i][j]) !== -1) {
                     bound[0][0] = Math.min(i, bound[0][0]);
                     bound[0][1] = Math.min(j, bound[0][1]);
@@ -281,8 +283,8 @@ export default class Table extends Component{
                 }
             }
         }
-        for (let i = bound[0][0]; i <= bound[1][0]; i += 1) {
-            for (let k = 1, j = bound[0][1]; j <= bound[1][1]; j += 1) {
+        for (i = bound[0][0]; i <= bound[1][0]; i += 1) {
+            for (k = 1, j = bound[0][1]; j <= bound[1][1]; j += 1) {
                 while (box[i][j - k] && box[i][j] === box[i][j - k]) {
                     bound[0][1] = Math.min(j - k, bound[0][1]);
                     bound[1][1] = Math.max(j - k, bound[1][1]);
@@ -530,7 +532,7 @@ export default class Table extends Component{
             }
 
             this.__unmark();
-            Table.removeSelected(cell);
+            Table.restoreSelection(cell);
         });
         this.normalizeTable(table);
     }
@@ -572,7 +574,7 @@ export default class Table extends Component{
             this.__mark(td, 'width', (percentage * 100).toFixed(consts.ACCURACY) + '%');
             this.__unmark();
 
-            Table.removeSelected(cell);
+            Table.restoreSelection(cell);
         });
         this.normalizeTable(table);
     }

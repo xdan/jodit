@@ -4,6 +4,10 @@ import Dom from "./modules/Dom";
 import Jodit from "./Jodit";
 import {ControlType} from "./modules/Toolbar";
 import {FileBrowserCallBcackData} from "./modules/FileBrowser";
+import {Widget} from "./modules/Widget";
+import ColorPickerWidget = Widget.ColorPickerWidget;
+import TabsWidget = Widget.TabsWidget;
+import ImageSelectorWidget = Widget.ImageSelectorWidget;
 
 /**
  * Default Editor's Configuration
@@ -558,9 +562,9 @@ export class Config {
 
                 tryGetCurrent();
 
-                const widget = new (require('./modules/Widget').default)(editor);
+                //const widget = new (require('./modules/Widget').default)(editor);
 
-                const backgroundTag = widget.create('ColorPicker', (value) => {
+                const backgroundTag: HTMLElement = ColorPickerWidget(editor, (value: string) => {
                     if (!current) {
                         editor.execCommand('background', false, value);
                         tryGetCurrent();
@@ -570,7 +574,7 @@ export class Config {
                     checkRemoveOpportunity();
                 }, bg_color);
 
-                const colorTab = widget.create('ColorPicker', (value) => {
+                const colorTab: HTMLElement = ColorPickerWidget(editor, (value: string) => {
                     if (!current) {
                         editor.execCommand('forecolor', false, value);
                         tryGetCurrent();
@@ -592,7 +596,7 @@ export class Config {
                     };
                 }
 
-                return widget.create('Tabs', tabs);
+                return TabsWidget(editor, tabs);
             },
             tooltip: "Fill color or set the text color"
         },
@@ -701,15 +705,13 @@ export class Config {
                     editor.selection.insertNode(dom('<img src="' + url + '"/>', editor.doc));
                 };
 
-                const widget = new (require('./modules/Widget').default)(editor);
-
                 let sourceImage;
 
                 if (current && current.nodeType !== Node.TEXT_NODE && (current.tagName === 'IMG' || $$('img', current).length)) {
                     sourceImage = current.tagName === 'IMG' ? current : $$('img', current)[0];
                 }
 
-                return widget.create('ImageSelector', {
+                return ImageSelectorWidget(editor, {
                     filebrowser: (data: FileBrowserCallBcackData) => {
                         if (data.files && data.files.length) {
                             let i;
@@ -873,8 +875,7 @@ export class Config {
                 });
 
 
-                let widget = new (require('./modules/Widget').default)(editor);
-                return widget.create('Tabs', tab);
+                return TabsWidget(editor, tab);
             },
             tags: ["iframe"],
             tooltip: "Insert youtube/vimeo video"
