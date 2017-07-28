@@ -8,7 +8,7 @@ import {
 } from "./Helpers";
 import Toolbar from "./Toolbar";
 import ContextMenu from "./ContextMenu";
-import Uploader, {UploaderAnswer} from "./Uploader";
+import Uploader, {UploaderAnswer, UploaderData} from "./Uploader";
 import Ajax from "./Ajax";
 import {TEXT_PLAIN} from "../constants";
 import ImageEditor from "./ImageEditor";
@@ -1250,12 +1250,7 @@ export default class FileBrowser extends Component {
         this.status(this.options.getMessage(resp));
     };
 
-    uploadHandler = (resp: UploaderAnswer) => {
-        if (this.parent.options.uploader.isSuccess(resp)) {
-            this.status(this.parent.i18n('Files [1$] was uploaded', resp.data.files.join(',')), true);
-        } else {
-            this.status(this.parent.options.uploader.getMessage(resp));
-        }
+    uploadHandler = () => {
         this.loadItems(this.currentPath, this.currentSource);
     };
 

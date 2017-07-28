@@ -4,6 +4,9 @@ import './polyfills';
 import Toolbar from './modules/Toolbar'
 
 module.exports = require('./Jodit').default;
+
+window['Jodit'] = module.exports;
+
 import './Config'
 
 for (let key in consts) {

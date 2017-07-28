@@ -157,15 +157,15 @@ describe('Test interface', function() {
 
                 expect(list.style.display).to.equal('block');
 
-                editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-video input[name=code]').value = 'sddhttps://www.youtube.com/watch?v=XVYxj97Qbyk' // try wrong url
+                editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-video input[name=code]').value = 'sddhttps://www.youtube.com/watch?v=7CcEYRfxUOQ' // try wrong url
                 simulateEvent('submit', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-video .jodit_form'))
 
                 expect(editor.container.querySelectorAll('.jodit_toolbar_btn.jodit_toolbar_btn-video input[name=code].jodit_error').length).to.equal(1);
 
-                editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-video input[name=code]').value = 'https://www.youtube.com/watch?v=XVYxj97Qbyk'
+                editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-video input[name=code]').value = 'https://www.youtube.com/watch?v=7CcEYRfxUOQ'
                 simulateEvent('submit', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-video .jodit_form'))
 
-                expect(sortAtrtibutes(editor.getEditorValue())).to.equal('<div class="jodit_iframe_wrapper" contenteditable="false" data-jodit-temp="1" draggable="true" style="display: block;height: 345px;width: 400px"><iframe allowfullscreen="" frameborder="0" height="345" src="//www.youtube.com/embed/XVYxj97Qbyk" width="400"></iframe></div>');
+                expect(sortAtrtibutes(editor.getEditorValue())).to.equal('<div class="jodit_iframe_wrapper" contenteditable="false" data-jodit-temp="1" draggable="true" style="display: block;height: 345px;width: 400px"><iframe allowfullscreen="" frameborder="0" height="345" src="//www.youtube.com/embed/7CcEYRfxUOQ" width="400"></iframe></div>');
 
                 simulateEvent('mousedown', 0, editor.editor)
 
@@ -458,6 +458,19 @@ describe('Test interface', function() {
                 editor.selection.insertHTML('test ');
 
                 expect(editor.getEditorValue()).to.equal('<ul><li>Text test to text</li></ul>');
+            });
+        });
+        describe('Inline', function () {
+            it('Open inline popup after click on the table', function () {
+                var editor = new Jodit('#table_editor_interface');
+
+                editor.setEditorValue('<img src="/test/tests/artio.jpg"/>');
+
+                simulateEvent('mousedown', 0, editor.editor.querySelector('img'))
+
+                var popup = editor.container.querySelector('.jodit_toolbar_popup-inline');
+
+                expect(popup && popup.classList.contains('active')).to.equal(true);
             });
         });
     });

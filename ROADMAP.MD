@@ -12,3 +12,4 @@
 - [ ] Restore mode without icons 3.0.6
 - [ ] Restore split mode 3.0.7
 - [ ] Hotkeys for button  3.0.8
+- [ ] Copy/paste style  3.0.9

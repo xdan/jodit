@@ -74,7 +74,7 @@ export default class Dialog extends Component{
         this.options = (parent && parent.options) ? parent.options.dialog : Config.prototype.dialog;
         this.options = {...this.options, ...options};
 
-        this.dialogbox = dom('<div style="z-index:' + this.options.zIndex + '" class="jodit jodit_dialog_box">' +
+        this.dialogbox = <HTMLDivElement>dom('<div style="z-index:' + this.options.zIndex + '" class="jodit jodit_dialog_box">' +
              '<div class="jodit_dialog_overlay"></div>' +
              '<div class="jodit_dialog">' +
                 '<div class="jodit_dialog_header non-selected">' +
@@ -267,9 +267,12 @@ export default class Dialog extends Component{
      * @return {Dialog}
      */
     getMaxZIndexDialog() {
-        let maxzi = 0, dlg, zIndex, res = this;
-        $$('.jodit_dialog_box', document.body).forEach((dialog) => {
-            dlg = dialog.__jodit_dialog;
+        let maxzi: number = 0,
+            dlg: Dialog,
+            zIndex: number,
+            res: Dialog = this;
+        $$('.jodit_dialog_box', document.body).forEach((dialog: HTMLDivElement) => {
+            dlg = <Dialog>dialog['__jodit_dialog'];
             zIndex = parseInt(<string>css(dialog, 'zIndex'), 10);
             if (dlg.isOpened() && !isNaN(zIndex) && zIndex > maxzi) {
                 res = dlg;
@@ -633,12 +636,12 @@ Jodit['Alert'] = Alert;
  * });
  */
 export const Promt = (msg: string, title: string|Function, callback: Function, placeholder?: string) => {
-    let dialog = new Dialog(),
-        $cancel,
-        $ok,
-        $div = dom('<form class="jodit_promt"></form>'),
-        $input = dom('<input autofocus="true"/>'),
-        $label = dom('<label></label>');
+    const dialog: Dialog = new Dialog(),
+        $cancel: HTMLAnchorElement = <HTMLAnchorElement>dom('<a href="javascript:void(0)" style="float:right;" class="jodit_button">' + Toolbar.getIcon('cancel') + '<span>' + Jodit.prototype.i18n('Cancel') + '</span></a>'),
+        $ok: HTMLAnchorElement = <HTMLAnchorElement>dom('<a href="javascript:void(0)" style="float:left;" class="jodit_button">' + Toolbar.getIcon('check') + '<span>' + Jodit.prototype.i18n('Ok') + '</span></a>'),
+        $div: HTMLDivElement = <HTMLDivElement>dom('<form class="jodit_promt"></form>'),
+        $input: HTMLInputElement = <HTMLInputElement>dom('<input autofocus="true"/>'),
+        $label: HTMLLabelElement = <HTMLLabelElement>dom('<label></label>');
 
     if (typeof title === 'function') {
         callback = title;
@@ -652,10 +655,9 @@ export const Promt = (msg: string, title: string|Function, callback: Function, p
     $label.innerHTML = msg;
     $div.appendChild($label);
     $div.appendChild($input);
-    $cancel = dom('<a href="javascript:void(0)" style="float:right;" class="jodit_button">' + Toolbar.getIcon('cancel') + '<span>' + Jodit.prototype.i18n('Cancel') + '</span></a>');
+
     $cancel.addEventListener('click', dialog.close, false);
 
-    $ok = dom('<a href="javascript:void(0)" style="float:left;" class="jodit_button">' + Toolbar.getIcon('check') + '<span>' + Jodit.prototype.i18n('Ok') + '</span></a>');
 
     const onclick = () => {
         if (!callback || typeof callback !== 'function' || callback($input.value) !== false) {

@@ -1,4 +1,7 @@
 {
   "sourceMap": true,
-  "noImplicitAny": false
+  "noImplicitAny": true,
+  "module": "umd",
+  "moduleResolution": "node",
+  "allowSyntheticDefaultImports": true
 }

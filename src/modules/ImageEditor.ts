@@ -546,7 +546,7 @@ export default class ImageEditor extends Component{
                 self.showCrop();
                 this.parent.events.fire(self.cropHandler, 'updatesize');
             })
-            .__on(window, 'mouseup.jodit_image_editor' + self.parent.id + ' keydown.jodit_image_editor' + self.parent.id, (e) => {
+            .__on(window, 'mouseup.jodit_image_editor' + self.parent.id + ' keydown.jodit_image_editor' + self.parent.id, (e: MouseEvent) => {
                 if (self.clicked) {
                     self.clicked = false;
                     e.stopImmediatePropagation();
@@ -559,7 +559,7 @@ export default class ImageEditor extends Component{
             let input =  <HTMLInputElement>group.querySelector('input');
             self.__on(group, 'click change','button', function () {
                 let button = <HTMLButtonElement>this;
-                $$('button', group).forEach(button => <HTMLButtonElement>button.classList.remove('active'));
+                $$('button', group).forEach((button: HTMLButtonElement) => button.classList.remove('active'));
                 button.classList.add('active');
                 input.checked = !!button.getAttribute('data-yes');
                 self.__fire(input, 'change');

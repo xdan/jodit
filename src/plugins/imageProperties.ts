@@ -4,8 +4,9 @@ import {$$, css, dom, trim, val} from "../modules/Helpers";
 import {Alert, Confirm, default as Dialog} from "../modules/Dialog";
 import Toolbar from "../modules/Toolbar";
 import Widget from "../modules/Widget";
-import FileBrowser from "../modules/FileBrowser";
+import FileBrowser, {FileBrowserCallBcackData} from "../modules/FileBrowser";
 import Dom from "../modules/Dom";
+import {UploaderData} from "../modules/Uploader";
 /**
  * Plug-in for image editing window
  *
@@ -93,7 +94,7 @@ Jodit.plugins.imageProperties = function (editor: Jodit) {
      * // open the properties of the editing window
      * editor.plugins.image.open.call(img); // `this` must be HTMLImageElement
      */
-    let open = function (e) {
+    const open = function (e ?: MouseEvent) {
         const image = <HTMLImageElement>this,
             dialog: Dialog = new Dialog(editor),
             cancel: HTMLElement = dom('<a href="javascript:void(0)" style="float:right;" class="jodit_button">' + Toolbar.getIcon('cancel') + '<span>' + editor.i18n('Cancel') + '</span></a>'),
@@ -104,7 +105,7 @@ Jodit.plugins.imageProperties = function (editor: Jodit) {
             },
 
 
-            prop: HTMLDivElement = dom('<form class="jodit_properties">' +
+            prop: HTMLDivElement = <HTMLDivElement>dom('<form class="jodit_properties">' +
                     '<div class="jodit_grid">' +
                         '<div class="jodit_col-lg-2-5">' +
                             '<div class="jodit_properties_view_box">' +
@@ -124,7 +125,7 @@ Jodit.plugins.imageProperties = function (editor: Jodit) {
                     '</div>' +
                 '</form>'),
 
-            positionTab: HTMLDivElement = dom('<div style="' + (!editor.options.image.editMargins ? 'display:none' : '') + '" class="jodit_form_group">' +
+            positionTab: HTMLDivElement = <HTMLDivElement>dom('<div style="' + (!editor.options.image.editMargins ? 'display:none' : '') + '" class="jodit_form_group">' +
                     '<label for="marginTop">' + editor.i18n('Margins') + '</label>' +
                     '<div class="jodit_input_group jodit_grid">' +
                         '<input class="jodit_col-lg-1-5 margins" type="text" placeholder="' + editor.i18n('top') + '" id="marginTop"/>' +
@@ -158,7 +159,7 @@ Jodit.plugins.imageProperties = function (editor: Jodit) {
                         '</optgroup>' +
                     '</select>' +
                 '</div>'),
-            mainTab: HTMLDivElement = dom('<div style="' + (!editor.options.image.editSrc ? 'display:none' : '') + '" class="jodit_form_group">' +
+            mainTab: HTMLDivElement = <HTMLDivElement>dom('<div style="' + (!editor.options.image.editSrc ? 'display:none' : '') + '" class="jodit_form_group">' +
                     '<label for="imageSrc">' + editor.i18n('Src') + '</label>' +
                     '<div class="jodit_input_group">' +
                         '<input type="text" id="imageSrc"/>' +
@@ -185,8 +186,6 @@ Jodit.plugins.imageProperties = function (editor: Jodit) {
                     '<input type="checkbox" id="imageLinkOpenInNewTab"/> ' + editor.i18n('Open link in new tab') +
                 '</div>'),
             ratio: number = image.naturalWidth / image.naturalHeight || 1,
-
-            imagebtn: HTMLAnchorElement = <HTMLAnchorElement>mainTab.querySelector('.jodit_rechange'),
 
             $w: HTMLInputElement = <HTMLInputElement>prop.querySelector('#imageWidth'),
             $h: HTMLInputElement = <HTMLInputElement>prop.querySelector('#imageHeight'),
@@ -218,7 +217,7 @@ Jodit.plugins.imageProperties = function (editor: Jodit) {
                     return;
                 }
                 let notequal = false;
-                $$('.margins', prop).forEach(function (elm) {
+                $$('.margins', prop).forEach((elm: HTMLInputElement) => {
                     let value: number|string = <string>image.style[elm.id];
                     if (!value) {
                         return;
@@ -226,7 +225,7 @@ Jodit.plugins.imageProperties = function (editor: Jodit) {
                     if (/^[0-9]+$/.test(value) || /^[0-9]+px$/i.test(value)) {
                         value = parseInt(value, 10);
                     }
-                    elm.value = value || '';
+                    elm.value = value.toString() || '';
                     if (!notequal && elm.id !== 'marginTop' && elm.value !== val(prop, '#marginTop')) {
                         prop.querySelector('.jodit_lock_margin').innerHTML = Toolbar.getIcon('unlock');
                         $$('.margins', prop).forEach((elm:HTMLElement) => elm.classList.remove('disabled'));
@@ -291,63 +290,68 @@ Jodit.plugins.imageProperties = function (editor: Jodit) {
             dialog.close();
         });
 
-        mainTab.querySelector('.jodit_use_image_editor').addEventListener('mousedown', () => {
-            if (editor.options.image.useImageEditor) {
-                let url = image.getAttribute('src'),
-                    a = document.createElement('a'),
-                    loadExternal = () => {
-                        if (a.host !== location.host) {
-                            Confirm(editor.i18n('You can only edit your own images. Download this image on the host?'), (yes) => {
-                                if (yes && editor.uploader) {
-                                    editor.uploader.uploadRemoteImage(a.href.toString(), (resp) => {
-                                        Alert(editor.i18n('The image has been successfully uploaded to the host!'), () => {
-                                            if (resp.data && typeof resp.data.newfilename === 'string') {
-                                                image.setAttribute('src', resp.data.baseurl + resp.data.newfilename);
-                                                updateSrc();
-                                            }
+        $$('.jodit_use_image_editor', mainTab).forEach((btn) => {
+            btn.addEventListener('mousedown', () => {
+                if (editor.options.image.useImageEditor) {
+                    let url = image.getAttribute('src'),
+                        a = document.createElement('a'),
+                        loadExternal = () => {
+                            if (a.host !== location.host) {
+                                Confirm(editor.i18n('You can only edit your own images. Download this image on the host?'), (yes) => {
+                                    if (yes && editor.uploader) {
+                                        editor.uploader.uploadRemoteImage(a.href.toString(), (resp: UploaderData) => {
+                                            Alert(editor.i18n('The image has been successfully uploaded to the host!'), () => {
+                                                if (typeof resp.newfilename === 'string') {
+                                                    image.setAttribute('src', resp.baseurl + resp.newfilename);
+                                                    updateSrc();
+                                                }
+                                            });
+                                        }, (error) => {
+                                            Alert(editor.i18n('There was an error loading %s',  error.message));
                                         });
-                                    }, (error) => {
-                                        Alert(editor.i18n('There was an error loading %s',  error.message));
-                                    });
-                                }
-                            });
-                            return;
-                        }
-                    };
+                                    }
+                                });
+                                return;
+                            }
+                        };
 
-                a.href = url;
+                    a.href = url;
 
-                (<FileBrowser>editor.getInstance('FileBrowser')).getPathByUrl(a.href.toString(), (path: string, name: string, source: string) => {
-                    (<FileBrowser>editor.getInstance('FileBrowser')).openImageEditor(a.href, name, path, source, () => {
-                        let timestamp = (new Date()).getTime();
-                        image.setAttribute('src', url + (url.indexOf('?') !== -1 ? '' : '?') + '&_tmp=' + timestamp);
-                        updateSrc();
-                    }, Alert);
-                }, (message) => {
-                    Alert(message, loadExternal);
-                });
-            }
+                    (<FileBrowser>editor.getInstance('FileBrowser')).getPathByUrl(a.href.toString(), (path: string, name: string, source: string) => {
+                        (<FileBrowser>editor.getInstance('FileBrowser')).openImageEditor(a.href, name, path, source, () => {
+                            let timestamp = (new Date()).getTime();
+                            image.setAttribute('src', url + (url.indexOf('?') !== -1 ? '' : '?') + '&_tmp=' + timestamp);
+                            updateSrc();
+                        }, Alert);
+                    }, (message) => {
+                        Alert(message, loadExternal);
+                    });
+                }
+            });
         });
 
-        imagebtn.addEventListener('mousedown', (e) => {
-            imagebtn.classList.toggle('active');
-            editor.toolbar.openPopup(imagebtn, editor.getInstance('Widget').create('ImageSelector', {
-                upload: (data) => {
-                    if (data.files && data.files.length) {
-                        image.setAttribute('src', data.baseurl + data.files[0]);
-                    }
-                    update();
-                    editor.toolbar.closeAll();
-                },
-                filebrowser: (data) => {
-                    if (data && data.files && Array.isArray(data.files) && data.files.length) {
-                        image.setAttribute('src', data.files[0]);
-                        editor.toolbar.closeAll();
+
+        $$('.jodit_rechange', mainTab).forEach((imagebtn: HTMLAnchorElement) => {
+            imagebtn.addEventListener('mousedown', (e: MouseEvent) => {
+                imagebtn.classList.toggle('active');
+                editor.toolbar.openPopup(imagebtn, (<Widget>editor.getInstance('Widget')).create('ImageSelector', {
+                    upload: (data: FileBrowserCallBcackData) => {
+                        if (data.files && data.files.length) {
+                            image.setAttribute('src', data.baseurl + data.files[0]);
+                        }
                         update();
+                        editor.toolbar.closeAll();
+                    },
+                    filebrowser: (data: FileBrowserCallBcackData) => {
+                        if (data && data.files && Array.isArray(data.files) && data.files.length) {
+                            image.setAttribute('src', data.files[0]);
+                            editor.toolbar.closeAll();
+                            update();
+                        }
                     }
-                }
-            }, image), true);
-            e.stopPropagation();
+                }, image), true);
+                e.stopPropagation();
+            });
         });
 
         prop.querySelector('.jodit_lock_helper.jodit_lock_size').addEventListener('click', function () {
@@ -362,7 +366,7 @@ Jodit.plugins.imageProperties = function (editor: Jodit) {
             if (!lockMargin) {
                 $$('.margins', prop).forEach((elm) => {if (!elm.matches('#marginTop')) elm.removeAttribute('disabled');})
             } else {
-                $$('.margins', prop).forEach((elm) => {if (!elm.matches('#marginTop')) elm.setAttribute('disabled', true);})
+                $$('.margins', prop).forEach((elm) => {if (!elm.matches('#marginTop')) elm.setAttribute('disabled', 'true');})
             }
         });
 
@@ -539,5 +543,7 @@ Jodit.plugins.imageProperties = function (editor: Jodit) {
         });
     }
 
-    this.open = open;
+    editor.events.on(editor, 'openImageProperties', (image: HTMLImageElement) => {
+        open.call(image);
+    });
 };

@@ -48,8 +48,8 @@ Config.prototype.sourceEditorCDNUrlsJS = [
  * @module codeMirror
  */
 Jodit.plugins.source = function (editor: Jodit) {
-    let mirrorContainer = dom('<div class="jodit_source"/>'),
-        mirror = dom('<textarea class="jodit_source_mirror"/>'),
+    const mirrorContainer: HTMLDivElement = <HTMLDivElement>dom('<div class="jodit_source"/>'),
+        mirror: HTMLTextAreaElement = <HTMLTextAreaElement>dom('<textarea class="jodit_source_mirror"/>'),
         from = () => {
             mirror.value = editor.getEditorValue();
         },
@@ -131,7 +131,7 @@ Jodit.plugins.source = function (editor: Jodit) {
             editor.events.on('aceReady', tryInitAceEditor);
         });
 
-        editor.events.on('beforeCommand', (command) => {
+        editor.events.on('beforeCommand', (command: string) => {
             if (editor.getMode() !== consts.MODE_WYSIWYG && (command === 'redo' || command === 'undo') && undoManager) {
                 if (undoManager['has' + command.substr(0,1).toUpperCase() + command.substr(1)]) {
                     sourceEditor[command]();

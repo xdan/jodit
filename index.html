@@ -52,7 +52,7 @@
         }
     </style>
 </body>
-<link rel="stylesheet" href="dist/jodit.css" />
+<link rel="stylesheet" href="app.css" />-
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,700,700i" rel="stylesheet">
 
 <script src="dist/jodit.js"></script>
@@ -60,6 +60,14 @@
 
 <script>
     editor = new Jodit('#editor', {
+//        uploader: {
+//            url: 'http://localhost:8181/index-test.php?action=upload'
+//        },
+//        filebrowser: {
+//            ajax: {
+//                url: 'http://localhost:8181/index-test.php'
+//            }
+//        },
         buttons: Jodit.defaultOptions.buttons.concat([
             {
                 name: 'insertDate',
@@ -92,15 +100,27 @@
     editor.editor.addEventListener('input', callback)
     editor.events.on('change', callback)
 
-    editor.setEditorValue('Some text');
-    var sel = editor.win.getSelection(),
-        range = editor.doc.createRange();
-    range.setStart(editor.editor.firstChild, 9);
-    range.collapse(true);
-    sel.removeAllRanges();
-    sel.addRange(range);
-    simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
-    editor.selection.insertNode(editor.doc.createTextNode(' a '))
+
+//    expect(parseInt(editor.container.querySelector('.jodit_table_resizer').style.left, 10) < 50).to.equal(true);
+
+//    expect(list.style.display).to.equal('none');
+
+//    editor.setEditorValue('<img src="/test/tests/artio.jpg"/>')
+
+//    simulateEvent('mousedown', 0, editor.editor.querySelector('img'));
+//    simulateEvent('mouseup', 0, editor.editor.querySelector('img'));
+//    var resizer = document.querySelector('.jodit_resizer');
+
+//    console.log(resizer.style.display === 'block');
+//    editor.setEditorValue('Some text');
+//    var sel = editor.win.getSelection(),
+//        range = editor.doc.createRange();
+//    range.setStart(editor.editor.firstChild, 9);
+//    range.collapse(true);
+//    sel.removeAllRanges();
+//    sel.addRange(range);
+//    simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
+//    editor.selection.insertNode(editor.doc.createTextNode(' a '))
 //    expect(editor.getEditorValue()).to.be.equal('<p>Some text</p><p> a </p>');
 
     callback();

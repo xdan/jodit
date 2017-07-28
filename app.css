@@ -8,6 +8,7 @@ body {
     text-rendering: optimizelegibility;
     line-height: 1.5;
     height: 100%;
+    margin: 0;
 }
 .jodit_wysiwyg {
     color: #000;
@@ -55,6 +56,7 @@ body {
     -ms-user-select: text;
 }
 .jodit_wysiwyg  table th,.jodit_wysiwyg   table td {
+    box-sizeing: border-box;
     padding: 2px 5px;
     vertical-align: top;
 }

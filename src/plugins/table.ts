@@ -248,7 +248,7 @@ class TableProcessor extends Table{
                     this.setColumnWidthByDelta(this.__workTable, Table.formalCoordinate(this.__workTable, nextTD)[1], -this.__resizerDelta);
                 } else {
                     let width = this.__workTable.offsetWidth,
-                        parentWidth = getContentWidth(this.__workTable.parentNode, this.win);
+                        parentWidth = getContentWidth(<HTMLElement>this.__workTable.parentNode, this.win);
 
                     // right side
                     if (this.__wholeTable === false) {
@@ -272,8 +272,8 @@ class TableProcessor extends Table{
                 }
             }
         });
-        this.__on(window, 'mousedown', (event) => {
-            let current_cell = Dom.closest(event.target, 'TD|TH', this.parent.editor), table;
+        this.__on(window, 'mousedown', (event: MouseEvent) => {
+            let current_cell = Dom.closest(<HTMLElement>event.target, 'TD|TH', this.parent.editor), table;
             if (current_cell instanceof HTMLTableCellElement) {
                 table = Dom.closest(current_cell, 'table', this.parent.editor)
             }
@@ -284,7 +284,7 @@ class TableProcessor extends Table{
                 data.value = data.value.replace(new RegExp(`([\s]*)${JODIT_SELECTED_CELL_MARKER}="1"`, 'g'), '');
             })
             .on('change afterCommand afterSetMode', () => {
-                $$('table', editor.editor).forEach((table) => {
+                $$('table', editor.editor).forEach((table: HTMLTableElement) => {
                     if (!table[this.__key]) {
                         this.observe(table);
                     }
@@ -298,7 +298,7 @@ class TableProcessor extends Table{
             })
             .on('keydown', (event) => {
                 if (event.which === consts.KEY_TAB) {
-                    $$('table', editor.editor).forEach((table) => {
+                    $$('table', editor.editor).forEach((table: HTMLTableElement) => {
                         this.__deSelectAll(table);
                     })
                 }

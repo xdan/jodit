@@ -27,12 +27,14 @@ app.get("/test.html", function(req, res) {
     res.sendFile(__dirname + '/test.html')
 })
 
-app.get("/*", function(req, res) {
+app.get("/dist/jodit.*", function(req, res) {
     res.sendFile(__dirname + '/' + req.url)
 })
 
 app.use('/node_modules', require('express').static(__dirname + '/node_modules'));
+
 app.use('/test', require('express').static(__dirname + '/test'));
+app.use('/app.css', require('express').static(__dirname + '/app.css'));
 
 app.listen(port, function(error) {
     if (error) {

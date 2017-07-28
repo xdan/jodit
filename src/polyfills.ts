@@ -1,5 +1,5 @@
 import 'classlist-polyfill';
-import 'promise-polyfill';
+// import 'promise-polyfill';
 
 
 (function(e){

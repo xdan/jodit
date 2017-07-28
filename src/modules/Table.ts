@@ -28,7 +28,7 @@ export default class Table extends Component{
      * @return {HTMLTableCellElement[]}
      */
     static getAllSelectedCells(table: HTMLElement|HTMLTableElement): HTMLTableCellElement[] {
-        return $$(`td[${JODIT_SELECTED_CELL_MARKER}],th[${JODIT_SELECTED_CELL_MARKER}]`, table);
+        return <HTMLTableCellElement[]>$$(`td[${JODIT_SELECTED_CELL_MARKER}],th[${JODIT_SELECTED_CELL_MARKER}]`, table);
     }
 
     /**
@@ -163,7 +163,7 @@ export default class Table extends Component{
         let box = Table.formalMatrix(table), dec;
         let row = table.rows[rowIndex];
 
-        each(box[rowIndex], (j, cell) => {
+        each(box[rowIndex], (j: number, cell: HTMLTableCellElement) => {
             dec = false;
             if (rowIndex - 1 >= 0 && box[rowIndex - 1][j] === cell) {
                 dec = true;
@@ -184,9 +184,9 @@ export default class Table extends Component{
                 cell.parentNode && cell.parentNode.removeChild(cell);
             }
             if (dec && (cell.parentNode === row || cell !== box[rowIndex][j - 1])) {
-                let rowSpan = parseInt(cell.getAttribute('rowspan') || 1, 10);
+                let rowSpan: number = cell.rowSpan;
                 if (rowSpan - 1 > 1) {
-                    cell.setAttribute('rowspan', rowSpan - 1);
+                    cell.setAttribute('rowspan', (rowSpan - 1).toString());
                 } else {
                     cell.removeAttribute('rowspan');
                 }
@@ -240,7 +240,7 @@ export default class Table extends Component{
     static removeColumn(table: HTMLTableElement, j: number) {
         const box = Table.formalMatrix(table);
         let dec: boolean;
-        each(box, (i, cells) => {
+        each(box, (i: number, cells: HTMLTableCellElement[]) => {
             dec = false;
             if (j - 1 >= 0 && box[i][j - 1] === cells[j]) {
                 dec = true;
@@ -250,7 +250,7 @@ export default class Table extends Component{
                 cells[j].parentNode && cells[j].parentNode.removeChild(cells[j]);
             }
             if (dec && (i - 1 < 0 || cells[j] !== box[i - 1][j])) {
-                let colSpan = parseInt(cells[j].getAttribute('colspan') || 1, 10);
+                const colSpan:number = cells[j].colSpan;
                 if (colSpan - 1 > 1) {
                     cells[j].setAttribute('colspan', (colSpan - 1).toString());
                 } else {
@@ -577,7 +577,7 @@ export default class Table extends Component{
         this.normalizeTable(table);
     }
 
-    __marked = [];
+    private __marked: HTMLTableCellElement[] = [];
 
     /**
      *
@@ -586,18 +586,18 @@ export default class Table extends Component{
      * @param {string} value
      * @private
      */
-    __mark (cell, key, value) {
+    private __mark (cell: HTMLTableCellElement, key: string, value: string|number) {
         this.__marked.push(cell);
-        if (!cell.__marked_value) {
-            cell.__marked_value = {};
+        if (!cell['__marked_value']) {
+            cell['__marked_value'] = {};
         }
-        cell.__marked_value[key] = value === undefined ? 1 : value;
+        cell['__marked_value'][key] = value === undefined ? 1 : value;
     }
 
-    __unmark () {
+    private __unmark () {
         this.__marked.forEach((cell) => {
-            if (cell.__marked_value) {
-                each(cell.__marked_value, (key, value) => {
+            if (cell['__marked_value']) {
+                each(cell['__marked_value'], (key, value) => {
                     switch (key) {
                         case 'remove':
                             cell.parentNode.removeChild(cell);
@@ -620,9 +620,9 @@ export default class Table extends Component{
                             cell.style.width = value;
                             break;
                     }
-                    delete cell.__marked_value[key];
+                    delete cell['__marked_value'][key];
                 });
-                delete cell.__marked_value;
+                delete (<any>cell).__marked_value;
             }
         });
         this.__marked = [];

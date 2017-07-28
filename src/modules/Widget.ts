@@ -2,7 +2,7 @@ import Component from './Component'
 import Jodit from '../Jodit'
 import {normalizeColor, dom, isPlainObject, each, $$, hexToRgb, val} from './Helpers'
 import Dom from "./Dom";
-import Uploader, {UploaderAnswer} from "./Uploader";
+import Uploader, {UploaderData} from "./Uploader";
 import FileBrowser, {FileBrowserCallBcackData} from "./FileBrowser";
 
 export default class Widget extends Component {
@@ -80,11 +80,11 @@ Widget['ColorPicker'] = class extends Widget{
             });
 
         form
-            .addEventListener('mousedown', (e) => {
-                let target = e.target;
+            .addEventListener('mousedown', (e: MouseEvent) => {
+                let target: HTMLElement = <HTMLElement>e.target;
 
                 if (target.tagName.toUpperCase() === 'SVG' || target.tagName.toUpperCase() === 'PATH') {
-                    target = Dom.closest(target.parentNode, 'A', this.parent.editor);
+                    target = <HTMLElement>Dom.closest(target.parentNode, 'A', this.parent.editor);
                 }
                 if (target.tagName.toUpperCase() !== 'A') {
                     console.log(target.tagName.toUpperCase());
@@ -107,7 +107,7 @@ Widget['ColorPicker'] = class extends Widget{
                     target.classList.add('active');
 
                     let colorRGB = hexToRgb(color);
-                    target.firstChild.style.fill = 'rgb(' + (255 - colorRGB.r) + ',' + (255 - colorRGB.g) + ',' + (255 - colorRGB.b) + ')'
+                    (<HTMLElement>target.firstChild).style.fill = 'rgb(' + (255 - colorRGB.r) + ',' + (255 - colorRGB.g) + ',' + (255 - colorRGB.b) + ')'
                 }
 
 
@@ -234,22 +234,20 @@ Widget['ImageSelector'] = class extends Widget{
     constructor(editor, callbacks: ImageSelectorCallbacks, elm) {
         super(editor);
 
-        let tabs:{[key: string]: HTMLElement|Function} = {},
-            dragbox: HTMLElement,
-            form: HTMLFormElement;
+        let tabs:{[key: string]: HTMLElement|Function} = {};
 
         if (callbacks.upload && editor.options.uploader && editor.options.uploader.url) {
-            dragbox = dom('<div class="jodit_draganddrop_file_box">' +
+            const dragbox: HTMLElement = dom('<div class="jodit_draganddrop_file_box">' +
                 '<strong>' + editor.i18n('Drop image') + '</strong>' +
                 '<span><br> ' + editor.i18n('or click') + '</span>' +
                 '<input type="file" accept="image/*" tabindex="-1" dir="auto" multiple=""/>' +
                 '</div>');
 
-            (<Uploader>editor.getInstance('Uploader')).bind(dragbox, (resp: UploaderAnswer) => {
+            (<Uploader>editor.getInstance('Uploader')).bind(dragbox, (resp: UploaderData) => {
                 if (typeof(callbacks.upload) === 'function') {
                     callbacks.upload.call(editor, {
-                        baseurl: resp.data.baseurl,
-                        files: resp.data.files
+                        baseurl: resp.baseurl,
+                        files: resp.files
                     });
                 }
             }, (error: Error) => {
@@ -268,7 +266,7 @@ Widget['ImageSelector'] = class extends Widget{
         }
 
         if (callbacks.url) {
-            form = dom('<form onsubmit="return false;" class="jodit_form">' +
+            const form: HTMLFormElement = <HTMLFormElement>dom('<form onsubmit="return false;" class="jodit_form">' +
                 '<input required name="url" placeholder="http://"/>' +
                 '<input name="text" placeholder="' + editor.i18n('Alternative text') + '"/>' +
                 '<div style="text-align: right">' +

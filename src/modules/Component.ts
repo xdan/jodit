@@ -57,10 +57,10 @@ export default class Component {
 
     classSeparator = /[\s]+/;
 
-    __on(element: Document|Element|HTMLElement|Window|Array<HTMLElement>, event: string, selector: false|string|Function, callback?: Function) {
-        if (typeof selector === 'function') {
-            callback = selector;
-            selector = false;
+    __on(element: Document|Element|HTMLElement|Window|Array<HTMLElement>, event: string, selectorOrCallback: false|string|Function, callback?: Function) {
+        if (typeof selectorOrCallback === 'function') {
+            callback = selectorOrCallback;
+            selectorOrCallback = false;
         }
 
         let eventsArray = event ? event.split(this.classSeparator) : [],
@@ -72,11 +72,11 @@ export default class Component {
                 [event, namespace] = event.split('.');
             }
 
-            if (selector) {
+            if (selectorOrCallback) {
                 temp = function (event) {
                     let node = event.target;
                     while (node && node !== this) {
-                        if (node.matches(selector)) {
+                        if (node.matches(selectorOrCallback)) {
                             if (callback.call(node, event) === false) {
                                 event.preventDefault();
                                 return false;

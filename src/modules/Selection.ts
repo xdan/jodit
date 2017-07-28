@@ -1,6 +1,6 @@
 import * as consts from '../constants';
 import Component from './Component';
-import {each, gebi, dom, trim, $$} from './Helpers';
+import {each, dom, trim, $$} from './Helpers';
 import Dom from "./Dom";
 
 export default class Selection extends Component{
@@ -79,9 +79,9 @@ export default class Selection extends Component{
             sel.removeAllRanges();
 
             each(selectionInfo, (i, selection) => {
-                let range = this.doc.createRange(),
-                    end = gebi(selection.endId, this.doc),
-                    start = gebi(selection.startId, this.doc);
+                const range: Range = this.doc.createRange(),
+                    end: HTMLElement = this.doc.getElementById(selection.endId),
+                    start: HTMLElement = this.doc.getElementById(selection.startId);
 
                 if (!start) {
                     return;
@@ -165,11 +165,11 @@ export default class Selection extends Component{
         sel.removeAllRanges();
         for (i = length - 1; i >= 0; --i) {
             if (info[i].collapsed) {
-                ranges[i].setStartAfter(gebi(info[i].startId, this.doc));
+                ranges[i].setStartAfter(this.doc.getElementById(info[i].startId));
                 ranges[i].collapse(true);
             } else {
-                ranges[i].setStartAfter(gebi(info[i].startId, this.doc));
-                ranges[i].setEndBefore(gebi(info[i].endId, this.doc));
+                ranges[i].setStartAfter(this.doc.getElementById(info[i].startId));
+                ranges[i].setEndBefore(this.doc.getElementById(info[i].endId));
             }
             try {
                 sel.addRange(ranges[i].cloneRange());
@@ -189,7 +189,7 @@ export default class Selection extends Component{
             this.win.focus();
             this.parent.editor.focus();
         }
-    }
+    };
 
     /**
      * Checks whether the current selection is something or just set the cursor is
@@ -347,9 +347,9 @@ export default class Selection extends Component{
      *
      * @fired afterInsertImage
      */
-    insertImage(url, styles: any = {}) {
-        let image = typeof url === 'string' ? dom('<img/>', this.doc) : dom(url, this.doc),
-            dw;
+    insertImage(url, styles: {[key: string]: string} = {}) {
+        let dw: string;
+        const image: HTMLImageElement = typeof url === 'string' ? <HTMLImageElement>dom('<img/>', this.doc) : <HTMLImageElement>dom(url, this.doc);
 
         // delete selected
         if (!this.isCollapsed()) {
@@ -360,14 +360,14 @@ export default class Selection extends Component{
             image.setAttribute('src', url);
         }
 
-        dw = this.parent.options.imageDefaultWidth;
+        dw = this.parent.options.imageDefaultWidth.toString();
         if (dw && "auto" !== dw && (String(dw)).indexOf("px") < 0 && (String(dw)).indexOf("%") < 0) {
             dw += "px";
         }
 
         styles.width = dw;
         if (styles && typeof styles === 'object') {
-            each(styles, (value, key) => {
+            each(styles, (value: string, key: string) => {
                 image.style[key] = value;
             });
         }

@@ -1,5 +1,5 @@
 import * as consts from './constants'
-import {dom, trim, $$, normalizeColor, isURL, convertMediaURLToVideoEmbed} from './modules/Helpers'
+import {dom, trim, $$, normalizeColor, isURL, convertMediaURLToVideoEmbed, val} from './modules/Helpers'
 import Dom from "./modules/Dom";
 import Jodit from "./Jodit";
 import {ControlType} from "./modules/Toolbar";
@@ -746,8 +746,8 @@ export class Config {
         },
         link : {
             popup: (editor: Jodit, current: HTMLElement|false, self: ControlType, close: Function) => {
-                const sel = editor.win.getSelection(),
-                    form = dom('<form class="jodit_form">' +
+                const sel: Selection = editor.win.getSelection(),
+                    form: HTMLFormElement = <HTMLFormElement>dom('<form class="jodit_form">' +
                         '<input required name="url" placeholder="http://" type="text"/>' +
                         '<input name="text" placeholder="' + editor.i18n('Text') + '" type="text"/>' +
                         '<label><input name="target" type="checkbox"/> ' + editor.i18n('Open in new tab') + '</label>' +
@@ -765,16 +765,17 @@ export class Config {
                 }
 
                 if (current) {
-                    form.querySelector('input[name=url]').value = current.getAttribute('href');
-                    form.querySelector('input[name=text]').value = current.innerText;
-                    form.querySelector('input[name=target]').checked = (current.getAttribute('target') === '_blank');
-                    form.querySelector('input[name=nofollow]').checked = (current.getAttribute('rel') === 'nofollow');
+                    val(form, 'input[name=url]', current.getAttribute('href'));
+                    val(form, 'input[name=text]', current.innerText);
+
+                    (<HTMLInputElement>form.querySelector('input[name=target]')).checked = (current.getAttribute('target') === '_blank');
+                    (<HTMLInputElement>form.querySelector('input[name=nofollow]')).checked = (current.getAttribute('rel') === 'nofollow');
                 } else {
-                    form.querySelector('.jodit_unlink_button').style.display = 'none';
-                    form.querySelector('input[name=text]').value = sel.toString();
+                    (<HTMLDivElement>form.querySelector('.jodit_unlink_button')).style.display = 'none';
+                    val(form, 'input[name=text]', sel.toString());
                 }
 
-                let selInfo = editor.selection.save();
+                const selInfo = editor.selection.save();
 
                 form.querySelector('.jodit_unlink_button').addEventListener('mousedown', () => {
                     if (current) {
@@ -787,25 +788,25 @@ export class Config {
                     event.preventDefault();
                     editor.selection.restore(selInfo);
 
-                    let a = current || <HTMLAnchorElement>Dom.create('a', '', editor.doc);
+                    let a: HTMLAnchorElement = <HTMLAnchorElement>current || <HTMLAnchorElement>Dom.create('a', '', editor.doc);
 
-                    if (!form.querySelector('input[name=url]').value) {
-                        form.querySelector('input[name=url]').focus();
-                        form.querySelector('input[name=url]').classList.add('jodit_error');
+                    if (!val(form, 'input[name=url]')) {
+                        (<HTMLInputElement>form.querySelector('input[name=url]')).focus();
+                        (<HTMLInputElement>form.querySelector('input[name=url]')).classList.add('jodit_error');
                         return false;
                     }
 
 
-                    a.setAttribute('href', form.querySelector('input[name=url]').value);
-                    a.innerText = form.querySelector('input[name=text]').value;
+                    a.setAttribute('href', val(form, 'input[name=url]'));
+                    a.innerText = val(form, 'input[name=text]');
 
-                    if (form.querySelector('input[name=target]').checked) {
+                    if ((<HTMLInputElement>form.querySelector('input[name=target]')).checked) {
                         a.setAttribute('target', '_blank');
                     } else {
                         a.removeAttribute('target');
                     }
 
-                    if (form.querySelector('input[name=nofollow]').checked) {
+                    if ((<HTMLInputElement>form.querySelector('input[name=nofollow]')).checked) {
                         a.setAttribute('rel', 'nofollow');
                     } else {
                         a.removeAttribute('rel');
@@ -827,17 +828,17 @@ export class Config {
 
         video : {
             popup: (editor: Jodit) => {
-                const bylink = dom(`<form class="jodit_form">
+                const bylink: HTMLFormElement = <HTMLFormElement>dom(`<form class="jodit_form">
                         <input required name="code" placeholder="http://" type="url"/>
                         <button type="submit">${editor.i18n('Insert')}</button>
                         </form>`),
 
-                    bycode = dom(`<form class="jodit_form">
+                    bycode: HTMLFormElement = <HTMLFormElement>dom(`<form class="jodit_form">
                         '<textarea required name="code" placeholder="${editor.i18n('Embed code')}"></textarea>
                         '<button type="submit">${editor.i18n('Insert')}</button>
                         '</form>`),
 
-                    tab = {},
+                    tab: {[key:string]: HTMLFormElement} = {},
                     selinfo = editor.selection.save(),
                     insertCode = (code) => {
                         editor.selection.restore(selinfo);
@@ -850,24 +851,24 @@ export class Config {
                 bycode.addEventListener('submit', (event) => {
                     event.preventDefault();
 
-                    if (!trim(bycode.querySelector('textarea[name=code]').value)) {
-                        bycode.querySelector('textarea[name=code]').focus();
-                        bycode.querySelector('textarea[name=code]').classList.add('jodit_error');
+                    if (!trim(val(bycode, 'textarea[name=code]'))) {
+                        (<HTMLTextAreaElement>bycode.querySelector('textarea[name=code]')).focus();
+                        (<HTMLTextAreaElement>bycode.querySelector('textarea[name=code]')).classList.add('jodit_error');
                         return false;
                     }
 
-                    insertCode(bycode.querySelector('textarea[name=code]').value);
+                    insertCode(val(bycode, 'textarea[name=code]'));
                     return false;
                 });
 
                 bylink.addEventListener('submit',  (event) => {
                     event.preventDefault();
-                    if (!isURL(bylink.querySelector('input[name=code]').value)) {
-                        bylink.querySelector('input[name=code]').focus();
-                        bylink.querySelector('input[name=code]').classList.add('jodit_error');
+                    if (!isURL(val(bylink, 'input[name=code]'))) {
+                        (<HTMLInputElement>bylink.querySelector('input[name=code]')).focus();
+                        (<HTMLInputElement>bylink.querySelector('input[name=code]')).classList.add('jodit_error');
                         return false;
                     }
-                    insertCode(convertMediaURLToVideoEmbed(bylink.querySelector('input[name=code]').value));
+                    insertCode(convertMediaURLToVideoEmbed(val(bylink, 'input[name=code]')));
                     return false;
                 });
 
@@ -926,27 +927,27 @@ export class Config {
         table : {
             cols: 10,
             popup: (editor: Jodit, current,  control: ControlType, close: Function) => {
-                let i,
-                    j,
-                    k,
-                    div,
-                    rows_count = 1,
-                    cols_count = 1,
-                    default_cols_count = control.cols;
+                let i: number,
+                    j: number,
+                    k: number,
+                    div: HTMLDivElement,
+                    rows_count: number = 1,
+                    cols_count: number = 1,
+                    default_cols_count: number = control.cols;
 
-                const form = dom('<form class="jodit_form jodit_form_inserter">' +
+                const form: HTMLFormElement = <HTMLFormElement>dom('<form class="jodit_form jodit_form_inserter">' +
                         '<label>' +
                             '<span>1</span> &times; <span>1</span>' +
                         '</label>' +
                         '</form>'),
 
 
-                    rows = form.querySelectorAll('span')[0],
-                    cols = form.querySelectorAll('span')[1],
-                    cells = [];
+                    rows: HTMLSpanElement = form.querySelectorAll('span')[0],
+                    cols: HTMLSpanElement = form.querySelectorAll('span')[1],
+                    cells: HTMLDivElement[] = [];
 
                 const generateRows = (need_rows) => {
-                    let cnt = (need_rows + 1) * default_cols_count;
+                    const cnt: number = (need_rows + 1) * default_cols_count;
                     if (cells.length > cnt) {
                         for (i = cnt; i < cells.length; i += 1) {
                             form.removeChild(cells[i]);
@@ -957,11 +958,11 @@ export class Config {
                     for (i = 0; i < cnt; i += 1) {
                         if (!cells[i]) {
                             div = document.createElement('div');
-                            div.index = i;
+                            div.setAttribute('data-index', i.toString());
                             cells.push(div);
                         }
                     }
-                    cells.forEach((cell) => {
+                    cells.forEach((cell: HTMLDivElement) => {
                         form.appendChild(cell);
                     });
 
@@ -972,12 +973,12 @@ export class Config {
 
                 cells[0].className = 'hovered';
 
-                const mouseenter = (e, index) => {
-                    if (e.target.tagName !== 'DIV') {
+                const mouseenter = (e: MouseEvent, index?: number) => {
+                    const div = <HTMLDivElement>e.target;
+                    if (div.tagName !== 'DIV') {
                         return;
                     }
-                    let div = e.target;
-                    k = isNaN(index) ? div.index : index;
+                    k = isNaN(index) ? parseInt(div.getAttribute('data-index'), 10) : index;
                     rows_count = Math.ceil((k + 1) / default_cols_count);
                     cols_count = k % default_cols_count + 1;
                     generateRows(rows_count);
@@ -995,23 +996,30 @@ export class Config {
                         }
                     }
 
-                    cols.innerText = (cols_count);
-                    rows.innerText = (rows_count);
+                    cols.innerText = cols_count.toString();
+                    rows.innerText = rows_count.toString();
                 };
 
                 form.addEventListener('mousemove', mouseenter);
 
-                form.addEventListener('mousedown', (e) => {
+                form.addEventListener('mousedown', (e: MouseEvent) => {
+                    const div = <HTMLDivElement>e.target;
                     e.preventDefault();
                     e.stopImmediatePropagation();
-                    if (e.target.tagName !== 'DIV') {
+                    if (div.tagName !== 'DIV') {
                         return;
                     }
-                    k =  e.target.index;
+                    k =  parseInt(div.getAttribute('data-index'), 10);
                     rows_count = Math.ceil((k + 1) / default_cols_count);
                     cols_count = k % default_cols_count + 1;
 
-                    let table = editor.doc.createElement('table'), first_td, tr, td, br, w = (100 / cols_count).toFixed(7);
+                    const table: HTMLTableElement = editor.doc.createElement('table');
+                    let first_td: HTMLTableCellElement,
+                        tr: HTMLTableRowElement,
+                        td: HTMLTableCellElement,
+                        br: HTMLBRElement,
+                        w: string = (100 / cols_count).toFixed(7);
+
                     for (i = 1; i <= rows_count; i += 1) {
                         tr = editor.doc.createElement('tr');
                         for (j = 1; j <= cols_count; j += 1) {

@@ -160,7 +160,7 @@ export default class Ajax extends Component{
             }
 
             if (this.options.headers && this.xhr.setRequestHeader) {
-                each(this.options.headers, (key, value) => {
+                each(this.options.headers, (key: string, value: string) => {
                     this.xhr.setRequestHeader(key, value);
                 });
             }

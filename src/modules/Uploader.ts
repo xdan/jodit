@@ -19,6 +19,8 @@ export type UploaderAnswer = {
     data: UploaderData
 };
 
+type HandlerSuccess = (resp: UploaderData) => void;
+type HandlerError = (e: Error) => void;
 type UploaderOptions = {
     url: string;
     headers: null|string[],
@@ -35,9 +37,8 @@ type UploaderOptions = {
 
     error: (e: Error) => void;
 
-    defaultHandlerSuccess: (resp: UploaderAnswer) => void;
-
-    defaultHandlerError: (e: Error) => void;
+    defaultHandlerSuccess:  HandlerSuccess;
+    defaultHandlerError: HandlerError;
 }
 
 
@@ -155,7 +156,7 @@ Config.prototype.uploader = <UploaderOptions>{
         return (resp.data.messages!== undefined && Array.isArray(resp.data.messages)) ? resp.data.messages.join(' ') : '';
     },
 
-    process: function (this: Uploader, resp: UploaderAnswer) {
+    process: function (this: Uploader, resp: UploaderAnswer): UploaderData {
         return {
             files: resp.data.files || [],
             path: resp.data.path || '',
@@ -167,10 +168,10 @@ Config.prototype.uploader = <UploaderOptions>{
         this.parent.events.fire('errorMessage', [e.message, 'error', 4000]);
     },
 
-    defaultHandlerSuccess: function (this: Uploader, resp: UploaderAnswer) {
-        if (resp.data.files && resp.data.files.length) {
-            resp.data.files.forEach((image) => {
-                this.parent.selection.insertImage(resp.data.baseurl + image);
+    defaultHandlerSuccess: function (this: Uploader, resp: UploaderData) {
+        if (resp.files && resp.files.length) {
+            resp.files.forEach((image) => {
+                this.parent.selection.insertImage(resp.baseurl + image);
             })
         }
     },
@@ -258,7 +259,7 @@ export default class Uploader extends Component {
             });
     }
 
-    sendFiles(files: FileList, handlerSuccess: (resp: UploaderAnswer) => void, handlerError: (error: Error) => void, process?: Function) {
+    sendFiles(files: FileList|File[], handlerSuccess: HandlerSuccess, handlerError: HandlerError, process?: Function) {
         let len = files.length,
             i,
             form,
@@ -293,14 +294,14 @@ export default class Uploader extends Component {
             }
         }
 
-        uploader.send(form, (resp) => {
+        uploader.send(form, (resp: UploaderAnswer) => {
             if (this.options.isSuccess.call(uploader, resp)) {
                 if (typeof (handlerSuccess || uploader.options.defaultHandlerSuccess) === 'function') {
-                    (handlerSuccess || uploader.options.defaultHandlerSuccess).call(uploader, uploader.options.process.call(uploader, resp));
+                    (<HandlerSuccess>(handlerSuccess || uploader.options.defaultHandlerSuccess)).call(uploader, <UploaderData>uploader.options.process.call(uploader, resp));
                 }
             } else {
                 if (typeof (handlerError || uploader.options.defaultHandlerError)) {
-                    (handlerError || uploader.options.defaultHandlerError).call(uploader, uploader.options.getMessage(resp));
+                    (<HandlerError>(handlerError || uploader.options.defaultHandlerError)).call(uploader, new Error(uploader.options.getMessage(resp)));
                     return;
                 }
             }
@@ -363,7 +364,7 @@ export default class Uploader extends Component {
      * });
      */
 
-    bind(form: HTMLElement, handlerSuccess?: (resp: UploaderAnswer) => void, handlerError?: (error: Error) => void) {
+    bind(form: HTMLElement, handlerSuccess?: HandlerSuccess, handlerError?: HandlerError) {
         const self: Uploader = this;
         self
             .__on(form, 'paste',  function (e: ClipboardEvent) {
@@ -378,14 +379,14 @@ export default class Uploader extends Component {
 
                 // send data on server
                 if (e.clipboardData && e.clipboardData.files && e.clipboardData.files.length) {
-                    this.sendFiles(e.clipboardData.files, handlerSuccess, handlerError);
+                    self.sendFiles(e.clipboardData.files, handlerSuccess, handlerError);
                     return false;
                 }
 
                 if (browser('ff')) {
                     if (!e.clipboardData.types.length && e.clipboardData.types[0] !== TEXT_PLAIN) {
                         div = <HTMLDivElement>Dom.create('div', '', this.parent.doc);
-                        this.parent.selection.insertNode(div);
+                        self.parent.selection.insertNode(div);
                         div.focus();
                         setTimeout(() => {
                             if (div.firstChild && (<HTMLDivElement>div.firstChild).hasAttribute('src')) {
@@ -403,7 +404,7 @@ export default class Uploader extends Component {
                         if (e.clipboardData.items[i].kind === "file" && e.clipboardData.items[i].type === "image/png") {
                             file = e.clipboardData.items[i].getAsFile();
                             extension = file.type.match(/\/([a-z0-9]+)/i)[1].toLowerCase();
-                            this.sendFiles([file], handlerSuccess, handlerError, process);
+                            self.sendFiles([file], handlerSuccess, handlerError, process);
                             e.preventDefault();
                             break;
                         }
@@ -451,18 +452,20 @@ export default class Uploader extends Component {
      * Upload images to a server by its URL, making it through the connector server.
      *
      * @param {string} url
-     * @param {function} [handlerSuccess]
-     * @param {function} [handlerError]
+     * @param {HandlerSuccess} [handlerSuccess]
+     * @param {HandlerError} [handlerError]
      */
-    uploadRemoteImage(url: string, handlerSuccess?: (this: Uploader, resp: UploaderAnswer, message?: string) => void, handlerError?: (this: Uploader, e: Error) => void) {
+    uploadRemoteImage(url: string, handlerSuccess?: HandlerSuccess, handlerError?: HandlerError) {
         let uploader = this;
         uploader.send({
             action: 'uploadremote',
             url: url
-        }, (resp) => {
+        }, (resp: UploaderAnswer) => {
             if (uploader.options.isSuccess.call(uploader, resp)) {
                 if (typeof handlerSuccess === 'function') {
-                    handlerSuccess.call(uploader, resp, uploader.options.getMessage(resp));
+                    handlerSuccess.call(uploader, this.options.process(resp));
+                } else {
+                    this.options.defaultHandlerSuccess.call(uploader, this.options.process(resp));
                 }
             } else {
                 if (typeof (handlerError || uploader.options.defaultHandlerError) === 'function') {

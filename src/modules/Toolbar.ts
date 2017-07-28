@@ -16,11 +16,11 @@ export type ControlType = {
     css?: any;
     iconURL?: string;
     tooltip?: string;
-    exec?: (editor: Jodit, originalEvent: Event, constrol: ControlType,  btn: HTMLLIElement) => void;
+    exec?: (editor: Jodit, current: Node|false, control: ControlType, originalEvent: Event,  btn: HTMLLIElement) => void;
     args?: any[];
     cols?: number;
     template?: (editor: Jodit, key: string, value: string) => string;
-    popup?: (editor: Jodit, current: Node|false, constrol: ControlType,  close: Function) => HTMLElement;
+    popup?:(editor: Jodit, current: Node|false, control: ControlType, close: Function) => HTMLElement;
 }
 
 type ButtonType = {
@@ -29,11 +29,11 @@ type ButtonType = {
     name: string,
 }
 
+
 export default class Toolbar extends Component{
     static icons = {};
     container: HTMLDivElement;
     popup: HTMLDivElement;
-
     list: HTMLDivElement;
 
 
@@ -45,14 +45,13 @@ export default class Toolbar extends Component{
      * @param {Jodit} parent
      *
      */
-    constructor(parent:Jodit) {
+    constructor(parent: Jodit) {
         super(parent);
-        this.container = dom('<div class="jodit_toolbar"/>');
-        this.popup = dom('<div class="jodit_toolbar_popup"/>');
-        this.list = dom('<ul class="jodit_dropdownlist"/>');
+        this.container = <HTMLDivElement>dom('<div class="jodit_toolbar"/>');
+        this.popup = <HTMLDivElement>dom('<div class="jodit_toolbar_popup"/>');
+        this.list = <HTMLDivElement>dom('<ul class="jodit_dropdownlist"/>');
 
-        this.popup.addEventListener('mousedown', (e) => {e.stopPropagation()});
-        this.list.addEventListener('mousedown', (e) => {e.stopPropagation()});
+        this.initEvents();
     }
 
     /**
@@ -203,17 +202,24 @@ export default class Toolbar extends Component{
         });
     }
 
-    private buttonList:ButtonType[] = [];
+    defaultControl:ControlType  = {
+        template: (editor: Jodit, key: string, value: string) => (this.parent.i18n(value))
+    };
+
+    private buttonList: ButtonType[] = [];
     /**
      *
      */
-    addButton(item: string|ControlType, control?: ControlType, content?: string){
-        let btn = dom('<li>' +
+    addButton(item: string|ControlType, controlOption?: ControlType, content?: string){
+
+        let control: ControlType = extend(true, {}, controlOption, this.defaultControl);
+
+        const btn: HTMLLIElement = <HTMLLIElement>dom('<li>' +
                     '<a href="javascript:void(0)"></a>' +
                     '<div class="jodit_tooltip"></div>' +
                 '</li>'),
-            name = typeof item === 'string' ? item : (item.name || 'empty'),
-            a = btn.querySelector('a');
+            name: string = typeof item === 'string' ? item : (item.name || 'empty'),
+            a: HTMLAnchorElement = btn.querySelector('a');
 
         let iconSVG = Toolbar.getIcon(name, false);
 
@@ -221,7 +227,7 @@ export default class Toolbar extends Component{
             iconSVG = Toolbar.getIcon(typeof control.name === 'string' ? control.name : 'empty');
         }
 
-        btn.control =  control;
+        //btn.control =  control;
 
         const clearName = name.replace(/[^a-zA-Z0-9]/g, '_');
 
@@ -272,7 +278,7 @@ export default class Toolbar extends Component{
 
                 if (control.list) {
                     this.openList(btn);
-                    each(control.list, (key, value) => {
+                    each(control.list, (key: string, value: string) => {
                         let elm;
                         if (this.parent.options.controls[value] !== undefined) {
                             elm = this.addButton(value, this.parent.options.controls[value]); // list like array {"align": {list: ["left", "right"]}}
@@ -299,13 +305,19 @@ export default class Toolbar extends Component{
                     });
                     btn.appendChild(this.list);
                 } else if (control.exec !== undefined && typeof control.exec === 'function') {
-                    control.exec(this.parent, originalEvent, control, btn);
+                    control.exec(
+                        this.parent,
+                        this.parent.selection.current(),
+                        control,
+                        originalEvent,
+                        btn
+                    );
                     this.closeAll();
                 } else if (control.popup !== undefined && typeof control.popup === 'function') {
                     this.openPopup(btn, control.popup(
-                         this.parent,
-                         this.parent.selection.current(),
-                         control,
+                        this.parent,
+                        this.parent.selection.current(),
+                        control,
                         this.closeAll
                     ));
                 } else {
@@ -331,15 +343,19 @@ export default class Toolbar extends Component{
      * @param {HTMLDivElement} container
      */
     build(buttons: ControlType[]|string[], container: HTMLElement) {
-        let lastBtnSeparator = false;
+        let lastBtnSeparator: boolean = false;
 
-        each(buttons, (i, button) => {
-            if (this.parent.options.removeButtons.indexOf(button) !== -1) {
+        this.container.innerHTML = '';
+
+        (<ControlType[]>buttons).forEach((button: ControlType|string) => {
+            const name: string = typeof button === 'string' ? <string>button : button.name;
+
+            if (this.parent.options.removeButtons.indexOf(name) !== -1) {
                 return;
             }
 
-            if (button !== '|') {
-                let control = button;
+            if (name !== '|') {
+                let control: string|ControlType = button;
 
                 lastBtnSeparator = false;
 
@@ -347,7 +363,11 @@ export default class Toolbar extends Component{
                     control = this.parent.options.controls[control];
                 }
 
-                this.container.appendChild(this.addButton(button, control));
+                if (typeof control !== 'object') {
+                    throw new Error('Need ControlType ' + control);
+                }
+
+                this.container.appendChild(this.addButton(button, <ControlType>control));
             } else {
                 if (!lastBtnSeparator) {
                     lastBtnSeparator = true;
@@ -356,6 +376,12 @@ export default class Toolbar extends Component{
             }
         });
 
+        container.appendChild(this.container);
+    }
+
+    initEvents = () => {
+        this.popup.addEventListener('mousedown', (e: MouseEvent) => {e.stopPropagation()});
+        this.list.addEventListener('mousedown', (e: MouseEvent) => {e.stopPropagation()});
         this.__on(window, 'mousedown', () => {
             if (this.__popapOpened || this.__listOpened) {
                 this.closeAll();
@@ -363,7 +389,7 @@ export default class Toolbar extends Component{
         });
 
         this.parent.events.on('mousedown keydown change afterSetMode', () => {
-            let callback = () => {
+            const callback = () => {
                 if (this.parent.selection) {
                     this.checkActiveButtons(this.parent.selection.current())
                 }
@@ -374,7 +400,5 @@ export default class Toolbar extends Component{
                 callback();
             }
         });
-
-        container.appendChild(this.container);
-    }
+    };
 }

@@ -1,26 +1,24 @@
 import Jodit from '../Jodit';
-import {$$, debounce, offset} from "../modules/Helpers";
+import {$$, debounce, throttle} from "../modules/Helpers";
 
 const JODIT_IMAGE_PROCESSOR_BINDED = '__jodit_imageprocessor_binded';
 
 Jodit.plugins.imageProcessor = function (editor: Jodit) {
-    let dragImage;
+    let dragImage: HTMLImageElement|false;
     const bind = (image: HTMLImageElement) => {
             editor
                 .__off(image, '.imageProcessor')
                 .__on(image, 'dragstart.imageProcessor', (e) => {
-                    dragImage = image;
+                    dragImage = <HTMLImageElement>image;
                     e.preventDefault(); // stop default dragging
                 })
                 .__on(image, 'mousedown.imageProcessor', () => {
-                    dragImage = image;
-                    const pos = offset(image);
-                    editor.events.fire('showPopap', [image, Math.round(pos.left + (image.offsetWidth / 2)), Math.round(pos.top + image.offsetHeight)]);
+                    dragImage = <HTMLImageElement>image;
                 });
         };
 
     editor
-        .__on(editor.editor, "mousemove",  debounce((e: MouseEvent) => {
+        .__on(editor.editor, "mousemove",  throttle((e: MouseEvent) => {
             if (dragImage) {
                 editor.selection.insertCursorAtPoint(e.clientX, e.clientY);
             }
@@ -29,10 +27,11 @@ Jodit.plugins.imageProcessor = function (editor: Jodit) {
             dragImage = false;
         })
         .__on(editor.editor, "mouseup", (e: DragEvent) => {
-            let img = dragImage, elm;
+            let img: HTMLImageElement = <HTMLImageElement>dragImage,
+                elm;
 
-            if (img) {
-                e.preventDefault();
+            if (img && e.target !== img) {
+                //e.preventDefault();
 
                 if (editor.selection.insertCursorAtPoint(e.clientX, e.clientY) === false) {
                     return false;
@@ -49,11 +48,10 @@ Jodit.plugins.imageProcessor = function (editor: Jodit) {
                 editor.selection.insertImage(elm);
 
                 editor.selection.select(elm);
-
-                editor.events.fire('hidePopap');
             }
         });
-    editor.events.on('change', debounce(() => {
+
+    editor.events.on('change afterInit', debounce(() => {
         $$('img', editor.editor).forEach((elm: HTMLImageElement) => {
             if (!elm[JODIT_IMAGE_PROCESSOR_BINDED]) {
                 elm[JODIT_IMAGE_PROCESSOR_BINDED] = true;

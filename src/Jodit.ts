@@ -10,10 +10,15 @@ import FileBrowser from "./modules/FileBrowser";
 import Uploader from "./modules/Uploader";
 import {Config} from "./Config";
 
+interface JoditPlugin{
+    destruct?: Function;
+    open?: Function;
+}
+
 /** Class Jodit. Main class*/
 export default class Jodit extends Component{
-    static plugins:any =  {};
     static defaultOptions: Config;
+    static plugins: any =  {};
     static modules: any =  {};
     static instances = {};
     static lang:any = {};
@@ -125,15 +130,15 @@ export default class Jodit extends Component{
             throw new Error('Element "' + element + '" should be string or HTMLElement');
         }
 
-        this.container = dom('<div class="jodit_container" />');
+        this.container = <HTMLDivElement>dom('<div class="jodit_container" />');
         this.container.classList.add('jodit_' + (this.options.theme || 'default') + '_theme');
 
         if (this.options.zIndex) {
             this.container.style.zIndex = parseInt(this.options.zIndex.toString(), 10).toString();
         }
 
-        this.workplace = dom('<div class="jodit_workplace" />');
-        this.progress_bar = dom('<div class="jodit_progress_bar"><div></div></div>');
+        this.workplace = <HTMLDivElement>dom('<div class="jodit_workplace" />');
+        this.progress_bar = <HTMLDivElement>dom('<div class="jodit_progress_bar"><div></div></div>');
 
         this.selection = this.getInstance('Selection');
         this.uploader = this.getInstance('Uploader');
@@ -175,11 +180,12 @@ export default class Jodit extends Component{
         this.events.fire('afterInit');
     }
 
-    __plugins = [];
+    __plugins: {[key: string]: JoditPlugin} = {};
+
     initPlugines() {
         let keys = Object.keys(Jodit.plugins), i;
         for (i = 0; i < keys.length; i += 1) {
-            this.__plugins.push(new Jodit.plugins[keys[i]](this));
+            this.__plugins[keys[i]] = new Jodit.plugins[keys[i]](this);
         }
     }
 
@@ -191,7 +197,7 @@ export default class Jodit extends Component{
      * @private
      */
     __createEditor() {
-        this.editor = dom(`<div class="jodit_wysiwyg" contenteditable aria-disabled="false" tabindex="${this.options.tabIndex}"></div>`);
+        this.editor = <HTMLDivElement>dom(`<div class="jodit_wysiwyg" contenteditable aria-disabled="false" tabindex="${this.options.tabIndex}"></div>`);
 
         css(this.editor, {
             width: this.options.width,
@@ -276,10 +282,11 @@ export default class Jodit extends Component{
         this.events.off();
         delete this['events'];
 
-        this.__plugins.forEach((plugin) => {
-            if (plugin.destruct !== undefined && typeof plugin.destruct === 'function') {
-                plugin.destruct();
+        Object.keys(this.__plugins).forEach((pluginName) => {
+            if (this.__plugins[pluginName].destruct !== undefined && typeof this.__plugins[pluginName].destruct === 'function') {
+                this.__plugins[pluginName].destruct();
             }
+            delete this.__plugins[pluginName];
         });
 
         this.components.forEach((component) => {
@@ -287,8 +294,6 @@ export default class Jodit extends Component{
                 component.destruct();
             }
         });
-
-        this.__plugins.length = 0;
 
         this.container.parentNode.removeChild(this.container);
         delete this['container'];
@@ -449,6 +454,9 @@ export default class Jodit extends Component{
          * @param {*} third The third option is for the team
          */
         this.events.fire('afterCommand', [command, second, third]);
+
+        this.setEditorValue();// synchrony
+
         return result;
     }
 

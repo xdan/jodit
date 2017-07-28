@@ -1,7 +1,7 @@
 import * as consts from '../constants';
-let class2type = {};
-let toString = class2type.toString;
-let hasOwn = class2type.hasOwnProperty;
+const class2type = {};
+const toString = class2type.toString;
+const hasOwn = class2type.hasOwnProperty;
 
 export const isIE = () => {
     return navigator.userAgent.indexOf("MSIE") != -1 || /rv:11.0/i.test(navigator.userAgent);
@@ -10,65 +10,53 @@ export const isIE = () => {
 let $$temp:number = 1;
 /**
  *
- * @param {string} CSS like selector
+ * @param {string} selector CSS like selector
  * @param {HTMLElement} root
  *
  * @return {Array.<HTMLElement>}
  */
-export const $$ = (selector, root) => {
-    let result = [];
+export const $$ = (selector: string, root: HTMLElement|HTMLDocument): HTMLElement[] => {
+    let result: NodeList;
 
-    if (/:scope/.test(selector) && isIE()) {
-        let id = root.id,
+    if (/:scope/.test(selector) && isIE() && root !instanceof HTMLDocument) {
+        const id = (<HTMLElement>root).id,
             temp_id = id || '_selector_id_' + ("" + Math.random()).slice(2) + $$temp++;
 
         selector = selector.replace(/:scope/g, '#' + temp_id);
 
-        !id && root.setAttribute('id', temp_id);
+        !id && (<HTMLElement>root).setAttribute('id', temp_id);
 
-        // if (!root.parentNode) {
-        //     let div = document.createElement('div');
-        //     div.appendChild(root)
-        // }
-
-        result = root.parentNode.querySelectorAll(selector);
+        result = (<HTMLElement>root.parentNode).querySelectorAll(selector);
 
         if (!id) {
-            root.removeAttribute('id');
+            (<HTMLElement>root).removeAttribute('id');
         }
     } else {
         result = root.querySelectorAll(selector)
     }
 
     return [].slice.call(result);
-}
+};
 
-export const isWindow = (obj) => {
+export const isWindow = (obj): boolean => {
     return obj !== null && obj === obj.window;
-}
-export const type = (obj) => {
+};
+export const type = (obj): string => {
     if (obj === null) {
         return 'null';
     }
     return typeof obj === "object" || typeof obj === "function" ? class2type[toString.call(obj)] || "object" : typeof obj;
-}
+};
 
-/**
- * @callback eachCallback
- * @param  {Number|String} key
- * @param  {Number|String|Object} value
- */
 
-/**
- *
- * @param {array|object} obj
- * @param {eachCallback} callback
- * @return {false|array|object}
- */
-export const each = (obj, callback) => {
-    let length,
-        keys,
-        i;
+type eachCallback = (key: number|string, value: any|any[]) => boolean|void;
+
+
+export const each = (obj: Array<any>|object, callback: eachCallback) => {
+    let length: number,
+        keys: string[],
+        i: number;
+
     if (Array.isArray(obj)) {
         length = obj.length;
         for (i = 0; i < length; i += 1) {
@@ -91,29 +79,17 @@ each(['Boolean', 'Number', 'String', 'Function', 'Array', 'Date', 'RegExp', 'Obj
     (i, name) => {
         class2type["[object " + name + "]"] = name.toLowerCase();
     }
-)
+);
 
-/**
- *
- * @param {String|Int} needle
- * @param {Array} haystack
- * @return {Boolean}
- */
-export const inArray = (needle, haystack) => (haystack.indexOf(needle) !== -1);
+export const inArray = (needle: string|number, haystack: Array<number|string>): boolean => (haystack.indexOf(needle) !== -1);
 
-export const isPlainObject = (obj) => {
+export const isPlainObject = (obj): boolean => {
     if (typeof obj !== "object" || obj.nodeType || isWindow(obj)) {
         return false;
     }
-    if (obj.constructor && !hasOwn.call(obj.constructor.prototype, "isPrototypeOf")) {
-        return false;
-    }
-    return true;
-}
 
-export const gebi = (id, doc) => {
-    return id && doc.getElementById(id);
-}
+    return !(obj.constructor && !hasOwn.call(obj.constructor.prototype, "isPrototypeOf"));
+};
 
 export const extend = (...args) => {
     let options,
@@ -172,19 +148,19 @@ export const extend = (...args) => {
         }
     }
     return target;
-}
+};
 
 /**
  * It clears the line of all auxiliary invisible characters , from the spaces and line breaks , tabs from the beginning and end of the line
- * @method trim
+ *
  * @param {string} value input string
  * @return {string}
  */
-export const trim = (value) => {
+export const trim = (value: string): string => {
     return value
         .replace(consts.SPACE_REG_EXP_START, '')
         .replace(consts.SPACE_REG_EXP_END, '')
-}
+};
 
 
 /**
@@ -198,9 +174,9 @@ export const trim = (value) => {
  * console.log(colorTohex(p.style.color)); // #ffffff
  */
 
-export const colorToHex = (color) => {
+export const colorToHex = (color: string): string|false => {
     if (color === 'rgba(0, 0, 0, 0)' || color === '') {
-        return NaN;
+        return false;
     }
 
     if (!color) {
@@ -211,7 +187,7 @@ export const colorToHex = (color) => {
         return color;
     }
 
-    let digits = /([\s\n\t\r]*?)rgb\((\d+), (\d+), (\d+)\)/.exec(color) || /([\s\n\t\r]*?)rgba\((\d+), (\d+), (\d+), ([\d\.]+)\)/.exec(color),
+    let digits = /([\s\n\t\r]*?)rgb\((\d+), (\d+), (\d+)\)/.exec(color) || /([\s\n\t\r]*?)rgba\((\d+), (\d+), (\d+), ([\d.]+)\)/.exec(color),
         hex,
         red,
         green,
@@ -234,19 +210,19 @@ export const colorToHex = (color) => {
     }
 
     return digits[1] + '#' + hex;
-}
+};
 
 /**
  * Convert rgba and short HEX color to Full text color. #fff to #FFFFFF
  *
  * @method normalizeColor
- * @param {string} color - string like rgba(red, green, blue, alpha) or rgb(red, green, blue) or #fff or #ffffff
- * @return {string|false} HEX color, NaN - for transparent color
+ * @param {string} colorInput - string like rgba(red, green, blue, alpha) or rgb(red, green, blue) or #fff or #ffffff
+ * @return {string|boolean} HEX color, false - for transparent color
  */
-export const normalizeColor = (color: string): string|false => {
+export const normalizeColor = (colorInput: string): string|false => {
     let newcolor = ['#'], i;
 
-    color = colorToHex(color);
+    let color: string = <string>colorToHex(colorInput);
 
     if (!color) {
         return false;
@@ -268,7 +244,7 @@ export const normalizeColor = (color: string): string|false => {
     }
 
     return '#' + color;
-}
+};
 
 /**
  * Normalize value to CSS meters
@@ -276,22 +252,22 @@ export const normalizeColor = (color: string): string|false => {
  * @param {string|int} value Input string
  * @return {string}
  */
-export const normalizeSize = (value) => {
+export const normalizeSize = (value: string|number): string => {
     if ((/^[0-9]+$/).test(value.toString())) {
         return value + 'px';
     }
-    return value;
-}
+    return value.toString();
+};
 
-export const getContentWidth = (element, win) => {
-    let pi = (value) => (parseInt(value, 10)),
-        style = win.getComputedStyle(element),
-        width = pi(style.getPropertyValue('width')),
-        paddingLeft = pi(style.getPropertyValue('padding-left') || 0),
-        paddingRight = pi(style.getPropertyValue('padding-right') || 0);
+export const getContentWidth = (element: HTMLElement, win: Window) => {
+    let pi = (value: string) => (parseInt(value, 10)),
+        style: CSSStyleDeclaration = win.getComputedStyle(element),
+        width: number = pi(style.getPropertyValue('width')),
+        paddingLeft: number = pi(style.getPropertyValue('padding-left') || '0'),
+        paddingRight: number = pi(style.getPropertyValue('padding-right') || '0');
 
     return width - paddingLeft - paddingRight;
-}
+};
 
 /**
  * CTRL pressed
@@ -299,7 +275,7 @@ export const getContentWidth = (element, win) => {
  * @param  {KeyboardEvent} e Event
  * @return {boolean} true ctrl key was pressed
  */
-export const ctrlKey = (e: MouseEvent|KeyboardEvent) => {
+export const ctrlKey = (e: MouseEvent|KeyboardEvent): boolean => {
     if (navigator.userAgent.indexOf("Mac OS X") !== -1) {
         if (e.metaKey && !e.altKey) {
             return true;
@@ -308,22 +284,17 @@ export const ctrlKey = (e: MouseEvent|KeyboardEvent) => {
         return true;
     }
     return false;
-}
+};
 
-let formatUrl = (url) => {
+const formatUrl = (url: string): string => {
     if (window.location.protocol === 'file:' && /^\/\//.test(url)) {
         url = 'https:' + url;
     }
     return url;
-}
+};
 
-/**
- *
- * @param {string} url
- * @param {function} callback
- */
-export const appendScript = (url, callback, className = '') => {
-    let script = document.createElement('script');
+export const appendScript = (url: string, callback: (this: HTMLScriptElement, e: Event) => any, className: string = '') => {
+    const script: HTMLScriptElement = document.createElement('script');
     script.className = className;
     script.type = 'text/javascript';
     script.charset = 'utf-8';
@@ -335,7 +306,7 @@ export const appendScript = (url, callback, className = '') => {
     }
 
     document.body.appendChild(script);
-}
+};
 
 /**
  * Create DOM element from HTML text
@@ -345,7 +316,7 @@ export const appendScript = (url, callback, className = '') => {
  *
  * @return HTMLElement
  */
-export const dom = (html: string|HTMLElement, doc = document): any => {
+export const dom = (html: string|HTMLElement, doc = document): HTMLElement => {
     if (html instanceof HTMLElement) {
         return html;
     }
@@ -353,26 +324,26 @@ export const dom = (html: string|HTMLElement, doc = document): any => {
     let div = doc.createElement('div');
     div.innerHTML = html;
 
-    return div.firstChild !== div.lastChild ? div : div.firstChild;
-}
+    return div.firstChild !== div.lastChild ? div : <HTMLElement>div.firstChild;
+};
 
 /**
  * @param {string} hex
  * @method hexToRgb
  */
-export const hexToRgb = (hex: string) => {
+export const hexToRgb = (hex: string): {r: number, g: number, b: number}|null => {
     let shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
     hex = hex.replace(shorthandRegex, (m, r, g, b) => {
         return r + r + g + g + b + b;
     });
 
-    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     return result ? {
         r: parseInt(result[1], 16),
         g: parseInt(result[2], 16),
         b: parseInt(result[3], 16)
     } : null;
-}
+};
 
 /**
  * Clear HTML
@@ -382,7 +353,7 @@ export const hexToRgb = (hex: string) => {
  * @param {boolean} [removeEmptyBlocks] if true remove empty blocks
  * @return {string}
  */
-export const clear = (value, removeEmptyBlocks = false) => {
+export const clear = (value, removeEmptyBlocks = false): string => {
     value = trim(value)
         .replace(consts.INVISIBLE_SPACE_REG_EXP, '')
         .replace(/[\s]*class=""/g, '');
@@ -392,7 +363,7 @@ export const clear = (value, removeEmptyBlocks = false) => {
     }
 
     return value;
-}
+};
 
 /**
  * Convert all `<,>,",'` characters to HTML entities
@@ -401,58 +372,63 @@ export const clear = (value, removeEmptyBlocks = false) => {
  * @param {string} text
  * @return {string}
  */
-export const htmlentities = (text: string) => {
+export const htmlentities = (text: string): string => {
     return text.replace(/</gi, "&lt;")
         .replace(/>/gi, "&gt;")
         .replace(/"/gi, "&quot;")
         .replace(/'/gi, "&apos;");
-}
+};
 
 /**
  * The method automatically cleans up content from Microsoft Word and other HTML sources to ensure clean, compliant content that matches the look and feel of the site.
- *
- * @method cleanFromWord
- * @param {string} text input html
- * @return {string}
  */
-export const cleanFromWord = (text) => {
-    let attributes = ["style", "script", "applet", "embed", "noframes", "noscript"], i, reg, newtext;
-
-    text = text.replace(/[.\s\S\w\W<>]*<body[^>]*>([.\s\S\w\W<>]*)<\/body>[.\s\S\w\W<>]*/g, "$1")
-        .replace(/<p(.*?)class="?'?MsoListParagraph"?'? ([\s\S]*?)>([\s\S]*?)<\/p>/gi, "<ul><li>$3</li></ul>")
-        .replace(/<p(.*?)class="?'?NumberedText"?'? ([\s\S]*?)>([\s\S]*?)<\/p>/gi, "<ol><li>$3</li></ol>")
-        .replace(/<p(.*?)class="?'?MsoListParagraphCxSpFirst"?'?([\s\S]*?)(level\d)?([\s\S]*?)>([\s\S]*?)<\/p>/gi, "<ul><li$3>$5</li>")
-        .replace(/<p(.*?)class="?'?NumberedTextCxSpFirst"?'?([\s\S]*?)(level\d)?([\s\S]*?)>([\s\S]*?)<\/p>/gi, "<ol><li$3>$5</li>")
-        .replace(/<p(.*?)class="?'?MsoListParagraphCxSpMiddle"?'?([\s\S]*?)(level\d)?([\s\S]*?)>([\s\S]*?)<\/p>/gi, "<li$3>$5</li>")
-        .replace(/<p(.*?)class="?'?NumberedTextCxSpMiddle"?'?([\s\S]*?)(level\d)?([\s\S]*?)>([\s\S]*?)<\/p>/gi, "<li$3>$5</li>")
-        .replace(/<p(.*?)class="?'?MsoListParagraphCxSpLast"?'?([\s\S]*?)(level\d)?([\s\S]*?)>([\s\S]*?)<\/p>/gi, "<li$3>$5</li></ul>")
-        .replace(/<p(.*?)class="?'?NumberedTextCxSpLast"?'?([\s\S]*?)(level\d)?([\s\S]*?)>([\s\S]*?)<\/p>/gi, "<li$3>$5</li></ol>")
-        .replace(/<span([^<]*?)style="?'?mso-list:Ignore"?'?([\s\S]*?)>([\s\S]*?)<span/gi, "<span><span")
-        .replace(/<!--\[if \!supportLists\]-->([\s\S]*?)<!--\[endif\]-->/gi, "")
-        .replace(/<!\[if \!supportLists\]>([\s\S]*?)<!\[endif\]>/gi, "")
-        .replace(/(\n|\r| class=(")?Mso[a-zA-Z0-9]+(")?)/gi, " ")
-        .replace(/<!--[\s\S]*?-->/gi, "")
-        .replace(/<(\/)*(meta|link|span|\\?xml:|st1:|o:|font)(.*?)>/gi, "");
-
-    for (i = 0; i < attributes.length; i += 1) {
-        reg = new RegExp("<" + attributes[i] + ".*?" + attributes[i] + "(.*?)>", "gi");
-        text = text.replace(reg, "");
-    }
-
-    text = text.replace(/([\w\-]*)=("[^<>"]*"|'[^<>']*'|\w+)/gi, "")
-        .replace(/&nbsp;/gi, " ");
-
-    do {
-        newtext = text;
-        text = text.replace(/<[^\/>][^>]*><\/[^>]+>/gi, '');
-    } while (text !== newtext);
-
-    text = clear(text, true)
-        .replace(/<a>(.[^<]+)<\/a>/gi, "$1");
-
-    return text.replace(/<lilevel([^1])([^>]*)>/gi, '<li data-indent="true"$2>')
-        .replace(/<lilevel1([^>]*)>/gi, "<li$1>");
-}
+export const cleanFromWord = (text: string): string => {
+    text = text.replace(/<o:p>\s*<\/o:p>/g, "") ;
+    text = text.replace(/<o:p>.*?<\/o:p>/g, "&nbsp;") ;
+    text = text.replace( /\s*mso-[^:]+:[^;"]+;?/gi, "" ) ;
+    text = text.replace( /\s*MARGIN: 0cm 0cm 0pt\s*;/gi, "" ) ;
+    text = text.replace( /\s*MARGIN: 0cm 0cm 0pt\s*"/gi, "\"" ) ;
+    text = text.replace( /\s*TEXT-INDENT: 0cm\s*;/gi, "" ) ;
+    text = text.replace( /\s*TEXT-INDENT: 0cm\s*"/gi, "\"" ) ;
+    text = text.replace( /\s*TEXT-ALIGN: [^\s;]+;?"/gi, "\"" ) ;
+    text = text.replace( /\s*PAGE-BREAK-BEFORE: [^\s;]+;?"/gi, "\"" ) ;
+    text = text.replace( /\s*FONT-VARIANT: [^\s;]+;?"/gi, "\"" ) ;
+    text = text.replace( /\s*tab-stops:[^;"]*;?/gi, "" ) ;
+    text = text.replace( /\s*tab-stops:[^"]*/gi, "" ) ;
+    text = text.replace( /\s*face="[^"]*"/gi, "" ) ;
+    text = text.replace( /\s*face=[^ >]*/gi, "" ) ;
+    text = text.replace( /\s*FONT-FAMILY:[^;"]*;?/gi, "" ) ;
+    text = text.replace(/<(\w[^>]*) class=([^ |>]*)([^>]*)/gi, "<$1$3") ;
+    text = text.replace( /<(\w[^>]*) style="([^"]*)"([^>]*)/gi, "<$1$3" ) ;
+    text = text.replace( /\s*style="\s*"/gi, '' ) ;
+    text = text.replace( /<SPAN\s*[^>]*>\s*&nbsp;\s*<\/SPAN>/gi, '&nbsp;' ) ;
+    text = text.replace( /<SPAN\s*[^>]*><\/SPAN>/gi, '' ) ;
+    text = text.replace(/<(\w[^>]*) lang=([^ |>]*)([^>]*)/gi, "<$1$3") ;
+    text = text.replace( /<SPAN\s*>(.*?)<\/SPAN>/gi, '$1' ) ;
+    text = text.replace( /<FONT\s*>(.*?)<\/FONT>/gi, '$1' ) ;
+    text = text.replace(/<\\?\?xml[^>]*>/gi, "") ;
+    text = text.replace(/<\/?\w+:[^>]*>/gi, "") ;
+    text = text.replace( /<H\d>\s*<\/H\d>/gi, '' ) ;
+    text = text.replace( /<H1([^>]*)>/gi, '' ) ;
+    text = text.replace( /<H2([^>]*)>/gi, '' ) ;
+    text = text.replace( /<H3([^>]*)>/gi, '' ) ;
+    text = text.replace( /<H4([^>]*)>/gi, '' ) ;
+    text = text.replace( /<H5([^>]*)>/gi, '' ) ;
+    text = text.replace( /<H6([^>]*)>/gi, '' ) ;
+    text = text.replace( /<\/H\d>/gi, '<br>' ) ; //remove this to take out breaks where Heading tags were 
+    text = text.replace( /<(U|I|STRIKE)>&nbsp;<\/\1>/g, '&nbsp;' ) ;
+    text = text.replace( /<(b)>&nbsp;<\/\b>/ig, '' ) ;
+    text = text.replace( /<([^\s>]+)[^>]*>\s*<\/\1>/g, '' ) ;
+    text = text.replace( /<([^\s>]+)[^>]*>\s*<\/\1>/g, '' ) ;
+    text = text.replace( /<([^\s>]+)[^>]*>\s*<\/\1>/g, '' ) ;
+//some RegEx code for the picky browsers
+    let re = new RegExp("(<P)([^>]*>.*?)(<\/P>)","gi") ;
+    text = text.replace( re, "<div$2</div>" ) ;
+    let re2 =/(<font|<FONT)([^*>]*>.*?)(<\/FONT>|<\/font>)/gi;
+    text = text.replace( re2, "<div$2</div>") ;
+    text = text.replace( /size|SIZE = ([\d])/g, '' ) ;
+    return text ;
+};
 
 
 
@@ -464,7 +440,7 @@ export const cleanFromWord = (text) => {
  * @return {boolean}
  */
 export const isURL = function (str) {
-    var pattern = new RegExp('^(https?:\\/\\/)' + // protocol
+    const pattern = new RegExp('^(https?:\\/\\/)' + // protocol
         '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' + // domain name
         '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
         '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
@@ -472,11 +448,11 @@ export const isURL = function (str) {
         '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
 
     return pattern.test(str);
-}
+};
 
-export const pathNormalize = (path) => (path.replace(/([^:])[\\\/]+/g, '$1/'))
+export const pathNormalize = (path) => (path.replace(/([^:])[\\\/]+/g, '$1/'));
 
-export const urlNormalize = (url) => (url.replace(/([^:])[\\\/]+/g, '$1/'))
+export const urlNormalize = (url) => (url.replace(/([^:])[\\\/]+/g, '$1/'));
 
 /**
  * Check if a string is html or not
@@ -485,7 +461,7 @@ export const urlNormalize = (url) => (url.replace(/([^:])[\\\/]+/g, '$1/'))
  * @param {string} str
  * @return {boolean}
  */
-export const isHTML = (str) => ((/<([A-Za-z][A-Za-z0-9]*)\b[^>]*>(.*?)<\/\1>/m).test(str))
+export const isHTML = (str) => ((/<([A-Za-z][A-Za-z0-9]*)\b[^>]*>(.*?)<\/\1>/m).test(str));
 
 /**
  * Converts from human readable file size (kb,mb,gb,tb) to bytes
@@ -495,29 +471,26 @@ export const isHTML = (str) => ((/<([A-Za-z][A-Za-z0-9]*)\b[^>]*>(.*?)<\/\1>/m).
  * @return {int}
  */
 export const humanSizeToBytes = (human) => {
-    if (/^[0-9\.]+$/.test(human.toString())) {
+    if (/^[0-9.]+$/.test(human.toString())) {
         return human;
     }
 
-    var format = human.substr(-2, 2).toUpperCase(),
+    const format = human.substr(-2, 2).toUpperCase(),
         formats = ["KB", "MB", "GB", "TB"],
         number = human.substr(0, human.length - 2);
 
     return formats.indexOf(format) !== -1 ? number * Math.pow(1024, formats.indexOf(format) + 1) : parseInt(human, 10);
-}
+};
 
 /**
  * Parse query string
  *
- * @method parseQuery
- * @param {string} qstr
- * @return {plainobject}
  */
-export const parseQuery = (qstr) => {
-    let query = {},
-        a = qstr.substr(1).split('&'),
-        i,
-        keyvalue;
+export const parseQuery = (queryString: string): {[key: string]: string} => {
+    let query: {[key: string]: string} = {},
+        a: string[] = queryString.substr(1).split('&'),
+        i: number,
+        keyvalue: string[];
 
     for (i = 0; i < a.length; i += 1) {
         keyvalue = a[i].split('=');
@@ -525,7 +498,7 @@ export const parseQuery = (qstr) => {
     }
 
     return query;
-}
+};
 
 /**
  *  Javascript url pattern converter replace youtube/vimeo url in embed code.
@@ -556,7 +529,7 @@ export const convertMediaURLToVideoEmbed = (url, width:number = 400, height: num
     switch (parser.hostname) {
         case 'www.vimeo.com':
         case 'vimeo.com':
-            return pattern1.test(url) ? url.replace(pattern1, '<iframe width="' + width + '" height="' + height + '" src="//player.vimeo.com/video/$1" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>') : url;
+            return pattern1.test(url) ? url.replace(pattern1, '<iframe width="' + width + '" height="' + height + '" src="//player.vimeo.com/video/$1" frameborder="0" allowfullscreen></iframe>') : url;
         case 'youtube.com':
         case 'www.youtube.com':
         case 'youtu.be':
@@ -566,7 +539,7 @@ export const convertMediaURLToVideoEmbed = (url, width:number = 400, height: num
     }
 
     return url;
-}
+};
 
 
 /**
@@ -611,23 +584,23 @@ export const browser = (browser: string): boolean|string => {
  * @return {{top: number, left: number}} returns an object containing the properties top and left.
  */
 export const offset =  (elm: HTMLElement) => {
-    let rect = elm.getBoundingClientRect(),
-        doc = elm.ownerDocument,
-        body = doc.body,
-        docElem = doc.documentElement,
-        win = doc.defaultView || doc['parentWindow'],
-        scrollTop = win.pageYOffset || docElem.scrollTop || body.scrollTop,
-        scrollLeft = win.pageXOffset || docElem.scrollLeft || body.scrollLeft,
-        clientTop = docElem.clientTop || body.clientTop || 0,
-        clientLeft = docElem.clientLeft || body.clientLeft || 0,
-        top  = rect.top +  scrollTop - clientTop,
-        left = rect.left + scrollLeft - clientLeft;
+    const rect: ClientRect = elm.getBoundingClientRect(),
+        doc: Document = elm.ownerDocument,
+        body: HTMLElement = doc.body,
+        docElem: HTMLElement = doc.documentElement,
+        win: Window = doc.defaultView || doc['parentWindow'],
+        scrollTop: number = win.pageYOffset || docElem.scrollTop || body.scrollTop,
+        scrollLeft: number = win.pageXOffset || docElem.scrollLeft || body.scrollLeft,
+        clientTop: number = docElem.clientTop || body.clientTop || 0,
+        clientLeft: number = docElem.clientLeft || body.clientLeft || 0,
+        topValue: number  = rect.top +  scrollTop - clientTop,
+        leftValue: number = rect.left + scrollLeft - clientLeft;
 
     return {
-        top: Math.round(top),
-        left: Math.round(left)
+        top: Math.round(<number>topValue),
+        left: Math.round(leftValue)
     };
-}
+};
 
 /**
  *
@@ -635,7 +608,7 @@ export const offset =  (elm: HTMLElement) => {
  * @return {string}
  */
 export const camelCase = (key: string): string => {
-    return key.replace(/-(.{1})/g, (m, letter) => {
+    return key.replace(/-(.)/g, (m, letter) => {
         return letter.toUpperCase();
     });
 };
@@ -662,7 +635,7 @@ export const htmlspecialchars = (html: string) => {
     let tmp = document.createElement('div');
     tmp.innerText = html;
     return tmp.innerHTML;
-}
+};
 
 /**
  * Debouncing enforces that a function not be called again until a certain amount of time has passed without it being called. As in "execute this function only if 100 milliseconds have passed without it being called."
@@ -707,8 +680,7 @@ export const  debounce = function (fn, timeout ?: number, invokeAsap?: boolean, 
             }, timeout);
         }
     };
-}
-
+};
 /**
  * Throttling enforces a maximum number of times a function can be called over time. As in "execute this function at most once every 100 milliseconds."
  *
@@ -751,8 +723,7 @@ export const throttle = function (fn: Function, timeout: number, ctx?: any) {
 
 /**
  * Get the value of a computed style property for the first element in the set of matched elements or set one or more CSS properties for every matched element
- *
- * @method css
+ * @param {HTMLElement} element
  * @param {string|object} key An object of property-value pairs to set. A CSS property name.
  * @param {string|int} value A value to set for the property.
  */
@@ -760,12 +731,12 @@ export const css = (element: HTMLElement, key: string|object, value?: string|num
     let numberFieldsReg = /^left|top|bottom|right|width|min|max|height|margin|padding/i;
 
     if (isPlainObject(key) || value !== undefined) {
-        let setValue = (elm, key, value) => {
-            if (value !== undefined && value !== null && numberFieldsReg.test(key) && /^[\-\+]?[0-9\.]+$/.test(value.toString())) {
+        const setValue = (elm, key, value) => {
+            if (value !== undefined && value !== null && numberFieldsReg.test(key) && /^[\-+]?[0-9.]+$/.test(value.toString())) {
                 value = parseInt(value, 10) + 'px';
             }
             elm.style[key] = value;
-        }
+        };
 
         if (isPlainObject(key)) {
             let keys = Object.keys(key), j;
@@ -785,20 +756,20 @@ export const css = (element: HTMLElement, key: string|object, value?: string|num
 
     let result = (element.style[<string>key] !== undefined && element.style[<string>key] !== '') ? element.style[<string>key] : win.getComputedStyle(element).getPropertyValue(key2);
 
-    if (numberFieldsReg.test(<string>key) && /^[\-\+]?[0-9]+px$/.test(result.toString())) {
+    if (numberFieldsReg.test(<string>key) && /^[\-+]?[0-9]+px$/.test(result.toString())) {
         result = parseInt(result, 10);
     }
 
     return result;
-}
+};
 
 export const asArray = (a): Array<any> => (
     Array.isArray(a) ? a : [a]
-)
+);
 
-export function sprintf() {
+export const sprintf = (...args) => {
     const regex = /%%|%(\d+\$)?([-+#0 ]*)(\*\d+\$|\*|\d+)?(\.(\*\d+\$|\*|\d+))?([scboxXuidfegEG])/g;
-    let a = arguments,
+    let a = args,
         i = 0,
         format = a[i++];
 
@@ -913,7 +884,7 @@ export function sprintf() {
     };
 
     return format.replace(regex, doFormat);
-}
+};
 
 
 export const val = (elm: HTMLInputElement|HTMLElement, selector: string, value ?: string): string => {

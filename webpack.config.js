@@ -1,11 +1,22 @@
-const path = require('path');
-const debug = process.env.NODE_ENV !== "production";
-const webpack = require('webpack');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+var path = require('path');
+var debug = process.env.NODE_ENV !== "production";
+var webpack = require('webpack');
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var pkg = require("./package.json");
 
 process.deprecated = false
+// process.traceDeprecation = true;
 
-let less_loaders = [
+
+var banner = `
+   ${pkg.name} - ${pkg.description}
+   Author: ${pkg.author}
+   Version: v${pkg.version}
+   Url: ${pkg.homepage}
+   License(s): ${pkg.license}
+`;
+
+var loaders = [
     {
         loader: 'css-loader',
         options: {
@@ -19,6 +30,7 @@ let less_loaders = [
     {
         loader: 'postcss-loader',
         options: {
+            sourceMap: true,
             plugins: () => {
                 return [
                     require('precss'),
@@ -36,10 +48,11 @@ let less_loaders = [
 ];
 
 if (debug) {
-    less_loaders.splice(1, 1);
+    loaders.splice(1, 1);
 }
 
 module.exports = {
+    cache: true,
     context: __dirname,
     devtool: debug ? "inline-sourcemap" : false,
     entry: debug ? [
@@ -55,10 +68,13 @@ module.exports = {
         path: path.join(__dirname, 'dist'),
         filename: 'jodit.js',
         publicPath: '/dist/',
-        libraryTarget: "this",
+        // hotUpdateChunkFilename: 'dist/hot-update.js',
+        // hotUpdateMainFilename: 'dist/hot-update.json',
+        libraryTarget: "umd",
         // name of the global var: "Foo"
         library: "Jodit"
     },
+
 
     module: {
         rules: [
@@ -66,7 +82,7 @@ module.exports = {
                 test: /\.less$/,
                 use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
-                    use: less_loaders
+                    use: loaders
                 })
             },
             {
@@ -115,8 +131,18 @@ module.exports = {
             },
             minimize: true
         }),
+        new webpack.BannerPlugin( banner ),
     ],
+    node: {
+        global: true,
+        crypto: 'empty',
+        process: false,
+        module: false,
+        clearImmediate: false,
+        setImmediate: false
+    }
 }
+
 module.exports.plugins.push(new ExtractTextPlugin({
     disable: debug,
     filename: 'jodit.css',

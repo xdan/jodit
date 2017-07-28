@@ -34,8 +34,8 @@ Config.prototype.showMessageErrorOffsetPx = 3;
  */
 Jodit.plugins.errorMessages = function (editor: Jodit) {
     if (editor.options.showMessageErrors) {
-        let messagesBox = dom('<div class="jodit_error_box_for_messages"></div>'),
-            height,
+        let height: number;
+        const messagesBox: HTMLDivElement = <HTMLDivElement>dom('<div class="jodit_error_box_for_messages"></div>'),
             recalcOffsets = function () {
                 height = 5;
                 [].slice.call(messagesBox.childNodes).forEach(function (elm) {
@@ -57,9 +57,9 @@ Jodit.plugins.errorMessages = function (editor: Jodit) {
          * parent.events.fire('errorMessage', ['You can upload file', 'info', 4000]);
          * parent.events.fire('errorMessage', ['File was uploaded', 'success', 4000]);
          */
-        editor.events.on('errorMessage', (message, className, timeout) => {
-            let newmessage = dom('<div class="active ' + (className || '') + '">' + message + '</div>');
-            messagesBox.append(newmessage);
+        editor.events.on('errorMessage', (message: string, className: string, timeout: number) => {
+            const newmessage: HTMLDivElement = <HTMLDivElement>dom('<div class="active ' + (className || '') + '">' + message + '</div>');
+            messagesBox.appendChild(newmessage);
             recalcOffsets();
             setTimeout(() => {
                 newmessage.classList.remove('active');
