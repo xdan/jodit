@@ -303,7 +303,7 @@ Jodit.plugins.Popup = function (editor: Jodit) {
     editor.container
         .appendChild(popup);
 
-    editor.events.on('hidePopup afterCommand', hidePopup);
+    editor.events.on('hidePopup afterCommand keydown', hidePopup);
     editor.events.on('showPopap', delayShowPopup);
     editor.events.on('beforeDestruct', () => {
         clearTimeout(timeout);
@@ -316,15 +316,21 @@ Jodit.plugins.Popup = function (editor: Jodit) {
 
     //editor.__on(window,'mouseup', hidePopup);
 
-
+    let clickOnImage = false;
     editor.__on(editor.editor, 'mousedown', (event: MouseEvent) => {
         if ((<HTMLImageElement>event.target).tagName === 'IMG' || Dom.closest(<Node>event.target, 'table', editor.editor)) {
             const target: HTMLImageElement|HTMLTableElement = (<HTMLImageElement>event.target).tagName === 'IMG' ? <HTMLImageElement>event.target :  <HTMLTableElement>Dom.closest(<Node>event.target, 'table', editor.editor);
-            //editor.selection.select(<Node>target);
             const pos = offset(target);
             delayShowPopup(target, Math.round(pos.left + (target.offsetWidth / 2)), Math.round(pos.top + target.offsetHeight));
+            clickOnImage = true;
         } else {
+            clickOnImage = false;
+        }
+    });
+    editor.__on(window, 'mouseup', (event: MouseEvent) => {
+        if (!clickOnImage) {
             hidePopup();
         }
+        clickOnImage = false;
     });
 };

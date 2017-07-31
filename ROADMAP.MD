@@ -4,12 +4,12 @@
 - [x] Disable buttons when mode was changed
 - [x] Restore copy/paste plugin. Move setting onpaste  handler to this plugin
 - [x] Restore FileBrowser
-- [ ] Restore Inline toolbar 3.0.1
+- [x] Restore Inline toolbar for Image and Table 3.0.1
 - [ ] Auto choose language 3.0.2
 - [ ] Restore mobile version/Response mode. Switch buttons md - lg - sm 3.0.3
 - [ ] Restore Iframe mode 3.0.4
 - [ ] Restore themes 3.0.5
 - [ ] Restore mode without icons 3.0.6
 - [ ] Restore split mode 3.0.7
-- [ ] Hotkeys for button  3.0.8
-- [ ] Copy/paste style  3.0.9
+- [ ] Hot keys for toolbar button  3.0.8
+- [ ] Copy/paste all styles from element  3.0.9

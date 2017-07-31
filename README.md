@@ -1,4 +1,4 @@
-# Jodit Editor 3.0.0
+# Jodit Editor 3
 An excellent WYSIWYG editor written in pure TypeScript without the use of additional libraries. Its file editor and image editor.
 
 > For old version, please follow here [https://github.com/xdan/jodit2](https://github.com/xdan/jodit2)
@@ -66,4 +66,9 @@ ______________________
 * Latest Firefox
 * Latest Safari
 * Microsoft Edge
+
+
+## Changelog
+### 3.0.1
+Restore inline toolbar for Images and Tables
 

@@ -625,7 +625,7 @@ export default class Jodit extends Component{
      * @return {string}
      */
     getVersion = () => {
-        return '3.0.0';
+        return '3.0.1';
     }
 }
 
