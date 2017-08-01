@@ -10,6 +10,8 @@ import FileBrowser from "./modules/FileBrowser";
 import Uploader from "./modules/Uploader";
 import {Config} from "./Config";
 
+declare let appVersion: string;
+
 interface JoditPlugin{
     destruct?: Function;
     open?: Function;
@@ -17,6 +19,9 @@ interface JoditPlugin{
 
 /** Class Jodit. Main class*/
 export default class Jodit extends Component{
+    version: string = appVersion;
+
+
     static defaultOptions: Config;
     static plugins: any =  {};
     static modules: any =  {};
@@ -632,7 +637,7 @@ export default class Jodit extends Component{
      * @return {string}
      */
     getVersion = () => {
-        return '3.0.1';
+        return this.version;
     }
 }
 

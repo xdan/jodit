@@ -5,25 +5,38 @@ An excellent WYSIWYG editor written in pure TypeScript without the use of additi
 
 ## For contributors:
 ```$xslt
-yarn install
+npm install
 ```
 
 Run webpack Hot Reload server:
 ```$xslt
-yarn start
+npm start
 ```
 
 Build min files:
 ```$xslt
-yarn run build
+npm run build
 ```
 
-For check tests, open in browser:
+Run tests:
+```$xslt
+karma start --browsers ChromeHeadless,IE,Firefox karma.conf.js
+```
+or
+```$xslt
+npm test
+```
+or
+```$xslt
+yarn test
+```
+
+For checking tests in browser, open URL:
 ```$xslt
 http://localhost:2000/test/test.html
 ```
 
-For testing FileBrowser and Uploader need install [PHP Connector](https://github.com/xdan/jodit-connectors)
+For testing FileBrowser and Uploader modules, need install [PHP Connector](https://github.com/xdan/jodit-connectors)
 ```
 composer create-project jodit/connector
 ```
@@ -59,6 +72,13 @@ After this, you can init Jodit plugin
 new Jodit('#editor');
 ```
 
+With jQuery
+```javascript
+$('textarea').each(function (elm) {
+    new Jodit(elm);
+});
+```
+
 ## Browser Support
 ______________________
 * Internet Explorer 9
@@ -69,6 +89,9 @@ ______________________
 
 
 ## Changelog
+### 3.0.2
+ * Now `options`.`language` by default equal `auto`. It means that after init Jodit, it try define page language (`<html lang="de">`), if it is impossible, editor define language by browser.language.
+ * Added `options`.`debugLanguage`=`false` if true, editro ignore `options`.`language` and `editor.i18n(key)` return `'{key}'`  
 ### 3.0.1
-Restore inline toolbar for Images and Tables
+ * Restore inline toolbar for Images and Tables
 

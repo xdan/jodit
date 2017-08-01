@@ -28,11 +28,7 @@ requireAll(require.context('./styles/plugins/', true, /\.less$/));
 const context = require.context('./styles/icons/', true, /\.svg$/);
 
 context.keys().forEach(function (key) {
-    Toolbar.icons[key.replace('.svg', '').replace('./', '')] = context.apply(this, arguments)
-        .replace(/(version|id)="[^"]+"/gm, '')
-        .replace(/xmlns="http:\/\/www.w3.org\/2000\/svg"/gm, '')
-        .replace(/xmlns:xlink="http:\/\/www.w3.org\/1999\/xlink"/gm, '')
-        .replace(/<!--.*-->/gm, '');
+    Toolbar.icons[key.replace('.svg', '').replace('./', '')] = context.apply(this, arguments);
 });
 
 const context2 = require.context('./modules/', true, /\.ts/);

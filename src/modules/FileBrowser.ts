@@ -320,8 +320,6 @@ export type FileBrowserCallBcackData = {
 };
 
 declare module "../Config" {
-
-
     interface Config {
         filebrowser: FileBrowserOptions
     }
