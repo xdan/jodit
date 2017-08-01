@@ -850,9 +850,9 @@ export class Config {
                         </form>`),
 
                     bycode: HTMLFormElement = <HTMLFormElement>dom(`<form class="jodit_form">
-                        '<textarea required name="code" placeholder="${editor.i18n('Embed code')}"></textarea>
-                        '<button type="submit">${editor.i18n('Insert')}</button>
-                        '</form>`),
+                        <textarea required name="code" placeholder="${editor.i18n('Embed code')}"></textarea>
+                        <button type="submit">${editor.i18n('Insert')}</button>
+                        </form>`),
 
                     tab: {[key:string]: HTMLFormElement} = {},
                     selinfo = editor.selection.save(),
