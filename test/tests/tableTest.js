@@ -212,7 +212,7 @@ describe('Tables Jodit Editor Tests', function() {
                 table.mergeSelected(editor.editor.firstChild);
 
                 expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal(
-                    '<table style="width: 100%">' +
+                    '<table style="width:100%">' +
                         '<tbody>' +
                             '<tr>' +
                                 '<td data-jodit-selected-cell="1" rowspan="4">' +
@@ -268,7 +268,7 @@ describe('Tables Jodit Editor Tests', function() {
                 table.mergeSelected(editor.editor.firstChild);
 
                 expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal(
-                    '<table style="width: 100%">' +
+                    '<table style="width:100%">' +
                         '<tbody>' +
                             '<tr>' +
                                 '<td colspan="3">0,0<br>0,1<br>0,2<br></td><td>0,3</td>' +
@@ -428,9 +428,9 @@ describe('Tables Jodit Editor Tests', function() {
                 table.splitVertical(editor.editor.firstChild);
 
                 expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal(
-                    '<table style="width: 300px">' +
+                    '<table style="width:300px">' +
                         '<tbody>' +
-                            '<tr><td style="width: 16.6667%">0,0</td><td style="width: 16.6667%"><br></td><td>0,1</td></tr>' +
+                            '<tr><td style="width:16.66%">0,0</td><td style="width:16.66%"><br></td><td>0,1</td></tr>' +
                             '<tr><td colspan="2">1,0</td><td>1,1</td></tr>' +
                         '</tbody>' +
                     '</table>'
@@ -943,7 +943,7 @@ describe('Tables Jodit Editor Tests', function() {
                 expect(
                     sortAtrtibutes(editor.editor.innerHTML) // ie change position between colspan and class
                 ).to.equal(
-                    '<table style="width: 100%"><tbody><tr><td colspan="3" data-jodit-selected-cell="1">0,0<br>0,1<br>0,2<br></td><td>0,3</td></tr><tr><td data-jodit-selected-cell="1" rowspan="3">1,0<br>2,0<br>3,0<br></td><td data-jodit-selected-cell="1">1,1</td><td data-jodit-selected-cell="1">1,2</td><td>1,3</td></tr><tr><td data-jodit-selected-cell="1">2,1</td><td data-jodit-selected-cell="1">2,2</td><td>2,3</td></tr><tr><td data-jodit-selected-cell="1">3,1</td><td data-jodit-selected-cell="1">3,2</td><td>3,3</td></tr></tbody></table>'
+                    '<table style="width:100%"><tbody><tr><td colspan="3" data-jodit-selected-cell="1">0,0<br>0,1<br>0,2<br></td><td>0,3</td></tr><tr><td data-jodit-selected-cell="1" rowspan="3">1,0<br>2,0<br>3,0<br></td><td data-jodit-selected-cell="1">1,1</td><td data-jodit-selected-cell="1">1,2</td><td>1,3</td></tr><tr><td data-jodit-selected-cell="1">2,1</td><td data-jodit-selected-cell="1">2,2</td><td>2,3</td></tr><tr><td data-jodit-selected-cell="1">3,1</td><td data-jodit-selected-cell="1">3,2</td><td>3,3</td></tr></tbody></table>'
                 );
             });
         });
@@ -1058,8 +1058,8 @@ describe('Tables Jodit Editor Tests', function() {
                     options.clientX = box.left + box.width + 50;
                 });
 
-                expect(editor.editor.innerHTML.toLowerCase()).to.equal(
-                    '<table style="width: 83.3333%; border-collapse: separate;" cellspacing="0"><tbody>' +
+                expect(sortAtrtibutes(editor.editor.innerHTML.toLowerCase())).to.equal(
+                    '<table cellspacing="0" style="border-collapse:separate;width:83.33%"><tbody>' +
                     '<tr>' +
                     '<td>1</td>' +
                     '<td>2</td>' +
@@ -1096,7 +1096,7 @@ describe('Tables Jodit Editor Tests', function() {
                 });
 
                 
-                expect(editor.editor.innerHTML.toLowerCase()).to.equal('<table style="width: 27.7778%; margin-left: 27.7778%;">' +
+                expect(sortAtrtibutes(editor.editor.innerHTML.toLowerCase())).to.equal('<table style="margin-left:27.77%;width:27.77%">' +
                     '<tbody>' +
                     '<tr>' +
                     '<td>1</td>' +

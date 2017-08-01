@@ -22,19 +22,20 @@
     <table style="width:100%">
         <tr>
             <td style="width:50%;vertical-align: top">
-                <div id="filebrowser"></div>
-                <textarea id="editor">&lt;div&gt;
-	&lt;img src="http://xdsoft.net/jodit/images/artio.jpg" style="width: 301px; float: right; margin-left: 15px; margin-top: 10px;"/&gt;
-&lt;/div&gt;
-&lt;ul&gt;
-	&lt;li&gt;Copy/Paste image&lt;/li&gt;
-	&lt;li&gt;Drag&amp;Drop &lt;/li&gt;
-	&lt;li&gt;Split Mode&lt;/li&gt;
-	&lt;li&gt;Free for non-Commercial&lt;/li&gt;
-	&lt;li&gt;CodeMirror out of the box &lt;/li&gt;
-	&lt;li&gt;Pure JavaScript. No libraries&lt;/li&gt;
-	&lt;li&gt;Lightweight: ~32kB gzipped.&lt;/li&gt;
-&lt;/ul&gt;</textarea>
+                <div id="uniqbox" class="box">
+                    <textarea id="editor">&lt;div&gt;
+        &lt;img src="http://xdsoft.net/jodit/images/artio.jpg" style="width: 301px; float: right; margin-left: 15px; margin-top: 10px;"/&gt;
+    &lt;/div&gt;
+    &lt;ul&gt;
+        &lt;li&gt;Copy/Paste image&lt;/li&gt;
+        &lt;li&gt;Drag&amp;Drop &lt;/li&gt;
+        &lt;li&gt;Split Mode&lt;/li&gt;
+        &lt;li&gt;Free for non-Commercial&lt;/li&gt;
+        &lt;li&gt;CodeMirror out of the box &lt;/li&gt;
+        &lt;li&gt;Pure JavaScript. No libraries&lt;/li&gt;
+        &lt;li&gt;Lightweight: ~32kB gzipped.&lt;/li&gt;
+    &lt;/ul&gt;</textarea>
+                </div>
             </td>
             <td><textarea id="mirror"></textarea></td>
         </tr>
@@ -110,11 +111,37 @@
     editor.editor.addEventListener('input', callback)
     editor.events.on('change', callback)
 
-    editor.setEditorValue('<table>' +
-            '<tr><td>1</td><td>2</td><td>3</td></tr>' +
-            '<tr><td>4</td><td>5</td><td>6</td></tr>' +
-            '<tr><td>7</td><td>8</td><td>9</td></tr>' +
-        '</table>')
+
+    uniqbox.style.width = '202px';
+    editor.setEditorValue('<table style="width: 100px; border-collapse: separate;" cellspacing="0">' +
+        '<tr><td>1</td><td>2</td><td>3</td><td>5</td></tr>' +
+        '</table>');
+    console.log(editor.editor.firstChild.offsetWidth);
+    var td = editor.editor.querySelectorAll('td')[3], box = td.getBoundingClientRect();
+    simulateEvent('mousemove', 1, td, function (options) {
+        options.clientX = box.left + box.width;
+        options.offsetX = box.width;
+    });
+    simulateEvent('mousedown', 1, editor.container.querySelector('.jodit_table_resizer'), function (options) {
+        options.clientX = box.left + box.width;
+    });
+    simulateEvent('mousemove', 1, window, function (options) {
+        options.clientX = box.left + box.width + 50;
+    });
+
+    simulateEvent('mouseup', 1, window, function (options) {
+        options.clientX = box.left + box.width + 50;
+    });
+    expect(editor.editor.innerHTML.toLowerCase()).to.equal(
+        '<table style="width: 83.3333%; border-collapse: separate;" cellspacing="0"><tbody>' +
+        '<tr>' +
+        '<td>1</td>' +
+        '<td>2</td>' +
+        '<td>3</td>' +
+        '<td>5</td>' +
+        '</tr>' +
+        '</tbody></table>'
+    );
 
 
 

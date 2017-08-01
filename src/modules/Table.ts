@@ -545,7 +545,6 @@ export default class Table extends Component{
     splitVertical(table: HTMLTableElement) {
         let coord: number[],
             td: HTMLTableCellElement,
-            w: number,
             percentage: number;
 
         Table.getAllSelectedCells(table).forEach((cell: HTMLTableCellElement) => {
@@ -567,9 +566,12 @@ export default class Table extends Component{
                 this.__mark(td, 'rowspan', cell.rowSpan);
             }
 
+            let oldWidth = cell.offsetWidth; // get old width
+
             Dom.after(cell, td);
-            w = cell.offsetWidth;
-            percentage = (w / table.offsetWidth) / 2;
+
+            percentage = (oldWidth / table.offsetWidth) / 2;
+
             this.__mark(cell, 'width', (percentage * 100).toFixed(consts.ACCURACY) + '%');
             this.__mark(td, 'width', (percentage * 100).toFixed(consts.ACCURACY) + '%');
             this.__unmark();

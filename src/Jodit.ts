@@ -442,7 +442,11 @@ export default class Jodit extends Component{
                     this.selection.select(this.editor, true);
                     break;
                 default:
-                    result = this.doc.execCommand(command, second, third);
+                    try {
+                        result = this.doc.execCommand(command, second, third);
+                    } catch (e) {
+
+                    }
             }
         }
 

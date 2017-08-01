@@ -18,7 +18,7 @@ let $$temp:number = 1;
 export const $$ = (selector: string, root: HTMLElement|HTMLDocument): HTMLElement[] => {
     let result: NodeList;
 
-    if (/:scope/.test(selector) && isIE() && root !instanceof HTMLDocument) {
+    if (/:scope/.test(selector) && isIE() && !(typeof HTMLDocument !== 'undefined' && root instanceof HTMLDocument)) {
         const id = (<HTMLElement>root).id,
             temp_id = id || '_selector_id_' + ("" + Math.random()).slice(2) + $$temp++;
 
@@ -262,7 +262,7 @@ export const normalizeSize = (value: string|number): string => {
 export const getContentWidth = (element: HTMLElement, win: Window) => {
     let pi = (value: string) => (parseInt(value, 10)),
         style: CSSStyleDeclaration = win.getComputedStyle(element),
-        width: number = pi(style.getPropertyValue('width')),
+        width: number = element.offsetWidth,
         paddingLeft: number = pi(style.getPropertyValue('padding-left') || '0'),
         paddingRight: number = pi(style.getPropertyValue('padding-right') || '0');
 

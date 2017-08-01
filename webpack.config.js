@@ -86,7 +86,7 @@ module.exports = {
                 })
             },
             {
-                test: /\.(ts|js)$/,
+                test: /\.(ts)$/,
                 loader: 'awesome-typescript-loader',
                 exclude: /(node_modules|bower_components)/,
             },

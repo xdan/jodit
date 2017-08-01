@@ -32,7 +32,7 @@ body {
 }
 
 .jodit_wysiwyg table {
-    border: none;
+    border: 0;
     border-collapse: collapse;
     empty-cells: show;
     max-width: 100%;

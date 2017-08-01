@@ -13,11 +13,13 @@ var path = require('path');
     config.set({
         basePath: '',
         frameworks: ['mocha', 'chai'],
+        mime: {
+            'text/x-typescript': ['ts','tsx'],
+            'image/jpeg': ['jpg'],
+        },
         files: [
             'app.css',
-            'test/tests/artio.jpg',
-            'dist/jodit.css',
-            'dist/jodit.js',
+            'src/index.ts',
             'test/bootstrap.js',
             'test/tests/*.js'
         ],
@@ -25,11 +27,15 @@ var path = require('path');
         port: 9876,  // karma web server port
         colors: true,
         logLevel: config.LOG_INFO,
-        browsers: ['ChromeHeadless'],
+        browsers: ['ChromeHeadless', 'IE', 'IE9', 'Firefox'],
         customLaunchers: {
+            IE9: {
+                base: 'IE',
+                'x-ua-compatible': 'IE=EmulateIE9'
+            },
             ChromeHeadless: {
                 base: 'Chrome',
-               flags: [/*'--no-sandbox', */'--window-size=1920,1000', '--disable-gpu', /*'--headless',*/ '--disable-extensions', '--disable-translate', /*'--disable-web-security'*/]
+               flags: [/*'--no-sandbox', */'--window-size=1920,1000', '--disable-gpu', /*'--headless', */'--disable-extensions', '--disable-translate', /*'--disable-web-security'*/]
             }
         },
         autoWatch: true,
@@ -37,16 +43,20 @@ var path = require('path');
         concurrency: Infinity,
         preprocessors: {
             'src/index.ts': ['webpack'],
+            // 'test/bootstrap.js': ['webpack'],
+            // 'test/tests/*.js': ['webpack'],
         },
         plugins: [
+            'karma-ie-launcher',
             'karma-chrome-launcher',
+            'karma-firefox-launcher',
             'karma-mocha',
             'karma-chai',
             'karma-webpack',
-           // 'karma-sourcemap-loader'
+            'karma-sourcemap-loader'
         ],
         webpack: {
-            devtool: 'eval-source-map',
+            devtool: 'inline-sourcemap',
             module: webpackConfig.module,
             plugins: webpackConfig.plugins,
             resolve: webpackConfig.resolve
@@ -56,12 +66,12 @@ var path = require('path');
             captureConsole: true
         },
         webpackMiddleware: {
-           // quiet: true,
+            quiet: true,
             stats: {
                 // options i.e.
-               // chunks: false
-            }
-            //noInfo:true,
+               chunks: false
+            },
+            noInfo:true,
             // publicPath: webpackConfig.output.publicPath
         }
     })

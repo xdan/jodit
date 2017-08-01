@@ -358,6 +358,7 @@ class TableProcessor extends Table{
                         break;
                 }
             }
+            return false;
         }
     };
 

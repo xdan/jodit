@@ -165,7 +165,7 @@ describe('Test interface', function() {
                 editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-video input[name=code]').value = 'https://www.youtube.com/watch?v=7CcEYRfxUOQ'
                 simulateEvent('submit', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-video .jodit_form'))
 
-                expect(sortAtrtibutes(editor.getEditorValue())).to.equal('<div class="jodit_iframe_wrapper" contenteditable="false" data-jodit-temp="1" draggable="true" style="display: block;height: 345px;width: 400px"><iframe allowfullscreen="" frameborder="0" height="345" src="//www.youtube.com/embed/7CcEYRfxUOQ" width="400"></iframe></div>');
+                expect(sortAtrtibutes(editor.getEditorValue())).to.equal('<div class="jodit_iframe_wrapper" contenteditable="false" data-jodit-temp="1" draggable="true" style="display:block;height:345px;width:400px"><iframe allowfullscreen="" frameborder="0" height="345" src="//www.youtube.com/embed/7CcEYRfxUOQ" width="400"></iframe></div>');
 
                 simulateEvent('mousedown', 0, editor.editor)
 
@@ -186,7 +186,7 @@ describe('Test interface', function() {
                 simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-align .jodit_toolbar_btn.jodit_toolbar_btn-right'))
 
 
-                expect(sortAtrtibutes(editor.getEditorValue())).to.equal('<p style="text-align: right">Test</p>');
+                expect(sortAtrtibutes(editor.getEditorValue())).to.equal('<p style="text-align:right">Test</p>');
 
                 simulateEvent('mousedown', 0, editor.editor)
 
@@ -581,7 +581,7 @@ describe('Test interface', function() {
 
                 simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-splitv>a'))
 
-                expect(editor.getEditorValue()).to.equal('<table style="width: 300px;"><tbody><tr><td style="width: 32%;">3</td><td style="width: 32%;"><br></td></tr></tbody></table>');
+                expect(sortAtrtibutes(editor.getEditorValue())).to.equal('<table style="width:300px"><tbody><tr><td style="width:49.83%">3</td><td style="width:49.83%"><br></td></tr></tbody></table>');
 
             });
             it('Select table cell and split it by horizontal', function () {
@@ -599,7 +599,7 @@ describe('Test interface', function() {
 
                 simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-splitg>a'))
 
-                expect(editor.getEditorValue()).to.equal('<table style="width: 300px;"><tbody><tr><td>5</td></tr><tr><td><br></td></tr></tbody></table>');
+                expect(sortAtrtibutes(editor.getEditorValue())).to.equal('<table style="width:300px"><tbody><tr><td>5</td></tr><tr><td><br></td></tr></tbody></table>');
 
             });
             it('Select two table cells and merge then in one', function () {

@@ -22,6 +22,16 @@ var appendTestArea = function (id, noput) {
     return textarea;
 }
 
+var trim = function (value) {
+    return value.replace(/^[\s\r\t\n]+/g, '').replace(/[\s\r\t\n]+$/g, '')
+}
+
+function toFixedWithoutRounding (value, precision) {
+    var factorError = Math.pow(10, 14);
+    var factorTruncate = Math.pow(10, 14 - precision);
+    var factorDecimal = Math.pow(10, precision);
+    return Math.floor(Math.floor(value * factorError + 1) / factorTruncate) / factorDecimal;
+}
 var sortAtrtibutes = function (html) {
     var tag = /<([^>]+)>/g;
     var reg = /([a-z_\-]+)[\s]*=[\s]*"([^"]*)"/i, matches, tags = [];
@@ -39,13 +49,25 @@ var sortAtrtibutes = function (html) {
 
             if (matches[1].toLowerCase() === 'style') {
                 var styles = matches[2].split(';');
-                styles = styles.map(function (elm) {
-                    return elm.replace(/^[\s\r\t\n]+/g, '').replace(/[\s\r\t\n]+$/g, '')
-                }).filter(function (elm) {
+                styles = styles.map(trim).filter(function (elm) {
                     return elm.length;
                 }).sort(function (a, b) {
                     return  (a < b) ? -1 : (a > b) ? 1 : 0;
                 });
+
+                styles = styles.map(function (elm) {
+                    var keyvalue = elm.split(':').map(trim);
+
+                    if (/%$/.test(keyvalue[1])) {
+                        var fl = parseFloat(keyvalue[1]),
+                            nt = parseInt(keyvalue[1], 10);
+                        if (fl - nt > 0) {
+                            keyvalue[1] = toFixedWithoutRounding(fl, 2) + '%'
+                        }
+                    }
+                    return keyvalue.join(':');
+                })
+
                 matches[2] = styles.join(';')
             }
 
