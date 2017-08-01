@@ -328,7 +328,7 @@ describe('Tables Jodit Editor Tests', function() {
                 );
 
                 // var table = new Jodit.modules.Table(editor);
-                Jodit.modules.Table.splitHorizontal(editor.editor.firstChild, editor.editor);
+                Jodit.modules.Table.splitHorizontal(editor.editor.firstChild);
 
                 expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal(
                     '<table>' +
@@ -359,7 +359,7 @@ describe('Tables Jodit Editor Tests', function() {
                 );
 
                 // var table = new Jodit.modules.Table(editor);
-                Jodit.modules.Table.splitHorizontal(editor.editor.firstChild, editor.editor);
+                Jodit.modules.Table.splitHorizontal(editor.editor.firstChild);
 
                 expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal(
                     '<table>' +
@@ -395,7 +395,7 @@ describe('Tables Jodit Editor Tests', function() {
                 );
 
                 // var table = new Jodit.modules.Table(editor);
-                Jodit.modules.Table.splitHorizontal(editor.editor.firstChild, editor.editor);
+                Jodit.modules.Table.splitHorizontal(editor.editor.firstChild);
 
                 expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal(
                     '<table>' +

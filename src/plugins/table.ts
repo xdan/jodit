@@ -333,7 +333,7 @@ class TableProcessor extends Component{
                         Table.splitVertical(table);
                         break;
                     case 'splitg':
-                        Table.splitHorizontal(table, this.parent.editor);
+                        Table.splitHorizontal(table);
                         break;
                     case 'merge':
                         Table.mergeSelected(table);

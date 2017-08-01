@@ -491,7 +491,7 @@ export default class Table extends Component{
     /**
      * Divides all selected by `jodit_focused_cell` class table cell in 2 parts vertical. Those division into 2 columns
      */
-    static splitHorizontal(table: HTMLTableElement, root: HTMLElement) {
+    static splitHorizontal(table: HTMLTableElement) {
         let coord: number[],
             td: HTMLTableCellElement,
             tr: HTMLTableRowElement,
@@ -513,7 +513,7 @@ export default class Table extends Component{
                         Table.__mark(td, 'rowspan', td.rowSpan + 1, __marked);
                     }
                 });
-                Dom.after(<HTMLTableRowElement>Dom.closest(cell, 'tr', root), tr);
+                Dom.after(<HTMLTableRowElement>Dom.closest(cell, 'tr', table), tr);
                 tr.appendChild(td);
             } else {
                 Table.__mark(cell, 'rowspan', cell.rowSpan - 1, __marked);
@@ -643,7 +643,8 @@ export default class Table extends Component{
      * @param {HTMLTableElement} table
      * @param {int} j column
      * @param {int} delta
-     * @param {boolean} [noUnmark=false]
+     * @param {boolean} noUnmark
+     * @param {HTMLTableCellElement[]} __marked
      */
     static setColumnWidthByDelta (table: HTMLTableElement, j: number, delta: number, noUnmark: boolean, __marked: HTMLTableCellElement[]) {
         let i: number,
