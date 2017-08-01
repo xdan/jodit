@@ -9,14 +9,16 @@ window['Jodit'] = module.exports;
 
 import './Config'
 
-for (let key in consts) {
+Object.keys(consts).forEach((key) => {
     module.exports[key] = consts[key];
-}
-declare var require: any;
+});
 
-let requireAll = (r) => {
+declare let require: any;
+
+const requireAll = (r) => {
     r.keys().forEach(r);
-}
+};
+
 requireAll(require.context('./plugins/', true, /\.ts$/));
 
 requireAll(require.context('./styles/modules/', true, /\.less$/));

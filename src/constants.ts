@@ -1,10 +1,10 @@
 /*eslint no-unused-vars: 0*/
-import {browser, isIE} from "./modules/Helpers";
+import {isIE} from "./modules/Helpers";
 export const INVISIBLE_SPACE = "\uFEFF";
 export const INVISIBLE_SPACE_REG_EXP = /[\uFEFF]/g;
 
 export const INVISIBLE_SPACE_REG_EXP_START = /^[\uFEFF]+/g;
-export const INVISIBLE_SPACE_REG_EXP_END = /[\uFEFF]+$/g;
+// export const INVISIBLE_SPACE_REG_EXP_END = /[\uFEFF]+$/g;
 
 export const SPACE_REG_EXP = /[\s\n\t\r\uFEFF\u200b]+/g;
 export const SPACE_REG_EXP_START = /^[\s\n\t\r\uFEFF\u200b]+/g;
@@ -22,7 +22,7 @@ export const KEY_RIGHT      = 39;
 export const KEY_BOTTOM     = 40;
 export const KEY_Z          = 90;
 export const KEY_Y          = 89;
-export const KEY_CTRL       = 17;
+// export const KEY_CTRL       = 17;
 
 export const NEARBY = 5;
 export const ACCURACY = 10;
@@ -42,14 +42,6 @@ export const ACCURACY = 10;
 
 export const PARAGRAPH = 'P';
 
-/**
- * @property {object} OUTDATED_TAGS List of old tags that are to be replaced by new ones such as I in EM
- */
-export const OUTDATED_TAGS    =  {
-    I       : 'EM',
-    B       : 'STRONG',
-    STRIKE  : 'S'
-};
 
 /**
  * @property {int} MODE_WYSIWYG=1 WYSIWYG editor mode

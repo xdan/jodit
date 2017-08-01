@@ -318,13 +318,14 @@ export default class Table extends Component{
      *
      * @param {HTMLTableElement} table
      */
-    normalizeTable (table: HTMLTableElement) {
+    static normalizeTable (table: HTMLTableElement) {
         let i: number,
             j: number,
             min: number,
             not: boolean;
 
-        const box = Table.formalMatrix(table);
+        const __marked: HTMLTableCellElement[] = [],
+              box: HTMLTableCellElement[][] = Table.formalMatrix(table);
 
         // remove extra colspans
         for (j = 0; j < box[0].length; j += 1) {
@@ -345,7 +346,7 @@ export default class Table extends Component{
                     if (box[i][j] === undefined) {
                         continue; // broken table
                     }
-                    this.__mark(box[i][j], 'colspan', box[i][j].colSpan - min + 1);
+                    Table.__mark(box[i][j], 'colspan', box[i][j].colSpan - min + 1, __marked);
                 }
             }
         }
@@ -370,7 +371,7 @@ export default class Table extends Component{
                     if (box[i][j] === undefined) {
                         continue; // broken table
                     }
-                    this.__mark(box[i][j], 'rowspan', box[i][j].rowSpan - min + 1);
+                    Table.__mark(box[i][j], 'rowspan', box[i][j].rowSpan - min + 1, __marked);
                 }
             }
         }
@@ -393,7 +394,7 @@ export default class Table extends Component{
             }
         }
 
-        this.__unmark();
+        Table.__unmark(__marked);
     }
 
     /**
@@ -402,7 +403,7 @@ export default class Table extends Component{
      * @param {HTMLTableElement} table
      *
      */
-    mergeSelected(table: HTMLTableElement) {
+    static mergeSelected(table: HTMLTableElement) {
         let bound = Table.getSelectedBound(table, Table.getAllSelectedCells(table)),
             w = 0,
             first,
@@ -411,6 +412,8 @@ export default class Table extends Component{
             html = [],
             cols = 0,
             rows = 0;
+
+        const __marked: HTMLTableCellElement[] = [];
 
         if (bound && (bound[0][0] - bound[1][0] || bound[0][1] - bound[1][1])) {
             Table.formalMatrix(table, (cell, i, j, cs, rs) => {
@@ -442,7 +445,7 @@ export default class Table extends Component{
                             first = cell;
                             first_j = j;
                         } else {
-                            this.__mark(td, 'remove', 1);
+                            Table.__mark(td, 'remove', 1, __marked);
                         }
                     }
                 }
@@ -453,17 +456,17 @@ export default class Table extends Component{
 
             if (first) {
                 if (cols > 1) {
-                    this.__mark(first, 'colspan', cols);
+                    Table.__mark(first, 'colspan', cols, __marked);
                 }
                 if (rows > 1) {
-                    this.__mark(first, 'rowspan', rows);
+                    Table.__mark(first, 'rowspan', rows, __marked);
                 }
 
 
                 if (w) {
-                    this.__mark(first, 'width', ((w / table.offsetWidth) * 100).toFixed(consts.ACCURACY) + '%');
+                    Table.__mark(first, 'width', ((w / table.offsetWidth) * 100).toFixed(consts.ACCURACY) + '%', __marked);
                     if (first_j) {
-                        this.setColumnWidthByDelta(table, first_j, 0, true);
+                        Table.setColumnWidthByDelta(table, first_j, 0, true, __marked);
                     }
                 }
 
@@ -471,9 +474,9 @@ export default class Table extends Component{
 
                 first.innerHTML = html.join('<br/>');
 
-                this.__unmark();
+                Table.__unmark(__marked);
 
-                this.normalizeTable(table);
+                Table.normalizeTable(table);
 
                 each([].slice.call(table.rows), (index, tr) => {
                     if (!tr.cells.length) {
@@ -488,30 +491,32 @@ export default class Table extends Component{
     /**
      * Divides all selected by `jodit_focused_cell` class table cell in 2 parts vertical. Those division into 2 columns
      */
-    splitHorizontal(table: HTMLTableElement) {
+    static splitHorizontal(table: HTMLTableElement, root: HTMLElement) {
         let coord: number[],
             td: HTMLTableCellElement,
             tr: HTMLTableRowElement,
             parent: HTMLTableRowElement,
             after: HTMLTableCellElement;
 
+        const __marked: HTMLTableCellElement[] = [];
+
         Table.getAllSelectedCells(table).forEach((cell: HTMLTableCellElement) => {
-            td = <HTMLTableCellElement>Dom.create('td', '', this.doc);
-            td.appendChild(Dom.create('br', '', this.doc));
-            tr = <HTMLTableRowElement>Dom.create('tr', '', this.doc);
+            td = <HTMLTableCellElement>Dom.create('td', '', table.ownerDocument);
+            td.appendChild(Dom.create('br', '', table.ownerDocument));
+            tr = <HTMLTableRowElement>Dom.create('tr', '', table.ownerDocument);
 
             coord = Table.formalCoordinate(table, cell);
 
             if (cell.rowSpan < 2) {
                 Table.formalMatrix(table, (td, i, j) => {
                     if (coord[0] === i && coord[1] !== j && td !== cell) {
-                        this.__mark(td, 'rowspan', td.rowSpan + 1);
+                        Table.__mark(td, 'rowspan', td.rowSpan + 1, __marked);
                     }
                 });
-                Dom.after(<HTMLTableRowElement>Dom.closest(cell, 'tr', this.parent.editor), tr);
+                Dom.after(<HTMLTableRowElement>Dom.closest(cell, 'tr', root), tr);
                 tr.appendChild(td);
             } else {
-                this.__mark(cell, 'rowspan', cell.rowSpan - 1);
+                Table.__mark(cell, 'rowspan', cell.rowSpan - 1, __marked);
                 Table.formalMatrix(table, (td: HTMLTableCellElement, i: number, j: number) => {
                     if (i > coord[0] && i < coord[0] + cell.rowSpan && coord[1] >  j && (<HTMLTableRowElement>td.parentNode).rowIndex === i) {
                         after = td;
@@ -528,10 +533,10 @@ export default class Table extends Component{
             }
 
             if (cell.colSpan > 1) {
-                this.__mark(td, 'colspan', cell.colSpan);
+                Table.__mark(td, 'colspan', cell.colSpan, __marked);
             }
 
-            this.__unmark();
+            Table.__unmark(__marked);
             Table.restoreSelection(cell);
         });
         this.normalizeTable(table);
@@ -542,64 +547,65 @@ export default class Table extends Component{
      *
      * @param {HTMLTableElement} table
      */
-    splitVertical(table: HTMLTableElement) {
+    static splitVertical(table: HTMLTableElement) {
         let coord: number[],
             td: HTMLTableCellElement,
             percentage: number;
+
+        const __marked: HTMLTableCellElement[] = [];
 
         Table.getAllSelectedCells(table).forEach((cell: HTMLTableCellElement) => {
             coord = Table.formalCoordinate(table, cell);
             if (cell.colSpan < 2) {
                 Table.formalMatrix(table, (td, i, j) => {
                     if (coord[1] === j && coord[0] !== i && td !== cell) {
-                        this.__mark(td, 'colspan', td.colSpan + 1);
+                        Table.__mark(td, 'colspan', td.colSpan + 1, __marked);
                     }
                 });
             } else {
-                this.__mark(cell, 'colspan', cell.colSpan - 1);
+                Table.__mark(cell, 'colspan', cell.colSpan - 1, __marked);
             }
 
-            td = <HTMLTableCellElement>Dom.create('td', '', this.doc);
-            td.appendChild(Dom.create('br', '', this.doc));
+            td = <HTMLTableCellElement>Dom.create('td', '', table.ownerDocument);
+            td.appendChild(Dom.create('br', '',  table.ownerDocument));
 
             if (cell.rowSpan > 1) {
-                this.__mark(td, 'rowspan', cell.rowSpan);
+                Table.__mark(td, 'rowspan', cell.rowSpan, __marked);
             }
 
-            let oldWidth = cell.offsetWidth; // get old width
+            const oldWidth = cell.offsetWidth; // get old width
 
             Dom.after(cell, td);
 
             percentage = (oldWidth / table.offsetWidth) / 2;
 
-            this.__mark(cell, 'width', (percentage * 100).toFixed(consts.ACCURACY) + '%');
-            this.__mark(td, 'width', (percentage * 100).toFixed(consts.ACCURACY) + '%');
-            this.__unmark();
+            Table.__mark(cell, 'width', (percentage * 100).toFixed(consts.ACCURACY) + '%', __marked);
+            Table.__mark(td, 'width', (percentage * 100).toFixed(consts.ACCURACY) + '%', __marked);
+            Table.__unmark(__marked);
 
             Table.restoreSelection(cell);
         });
-        this.normalizeTable(table);
+        Table.normalizeTable(table);
     }
-
-    private __marked: HTMLTableCellElement[] = [];
 
     /**
      *
      * @param {HTMLTableCellElement} cell
      * @param {string} key
      * @param {string} value
+     * @param {HTMLTableCellElement[]} __marked
      * @private
      */
-    private __mark (cell: HTMLTableCellElement, key: string, value: string|number) {
-        this.__marked.push(cell);
+    private static __mark (cell: HTMLTableCellElement, key: string, value: string|number, __marked: HTMLTableCellElement[]) {
+        __marked.push(cell);
         if (!cell['__marked_value']) {
             cell['__marked_value'] = {};
         }
         cell['__marked_value'][key] = value === undefined ? 1 : value;
     }
 
-    private __unmark () {
-        this.__marked.forEach((cell) => {
+    private static __unmark (__marked: HTMLTableCellElement[]) {
+        __marked.forEach((cell) => {
             if (cell['__marked_value']) {
                 each(cell['__marked_value'], (key, value) => {
                     switch (key) {
@@ -629,7 +635,6 @@ export default class Table extends Component{
                 delete (<any>cell).__marked_value;
             }
         });
-        this.__marked = [];
     }
 
     /**
@@ -640,7 +645,7 @@ export default class Table extends Component{
      * @param {int} delta
      * @param {boolean} [noUnmark=false]
      */
-    setColumnWidthByDelta (table: HTMLTableElement, j: number, delta: number, noUnmark = false) {
+    static setColumnWidthByDelta (table: HTMLTableElement, j: number, delta: number, noUnmark: boolean, __marked: HTMLTableCellElement[]) {
         let i: number,
             box = Table.formalMatrix(table),
             w: number,
@@ -649,11 +654,11 @@ export default class Table extends Component{
         for (i = 0; i < box.length; i += 1) {
             w = box[i][j].offsetWidth;
             percent = ((w + delta) / table.offsetWidth) * 100;
-            this.__mark(box[i][j], 'width', percent.toFixed(consts.ACCURACY) + '%');
+            Table.__mark(box[i][j], 'width', percent.toFixed(consts.ACCURACY) + '%', __marked);
         }
 
         if (!noUnmark) {
-            this.__unmark();
+            Table.__unmark(__marked);
         }
     }
 }

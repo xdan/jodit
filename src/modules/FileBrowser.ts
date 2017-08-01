@@ -8,7 +8,7 @@ import {
 } from "./Helpers";
 import Toolbar from "./Toolbar";
 import ContextMenu from "./ContextMenu";
-import Uploader, {UploaderAnswer, UploaderData} from "./Uploader";
+import Uploader from "./Uploader";
 import Ajax from "./Ajax";
 import {TEXT_PLAIN} from "../constants";
 import ImageEditor from "./ImageEditor";

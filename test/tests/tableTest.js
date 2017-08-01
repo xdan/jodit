@@ -19,8 +19,8 @@ describe('Tables Jodit Editor Tests', function() {
                     '<tr><td>4</td></tr>' +
                 '</table>')
 
-            var table = new Jodit.modules.Table(editor);
-            table.mergeSelected(editor.editor.firstChild);
+            // var table = new Jodit.modules.Table(editor);
+            Jodit.modules.Table.mergeSelected(editor.editor.firstChild);
 
             expect(editor.container.querySelectorAll('.jodit_table_resizer').length).to.equal(1);
         });
@@ -149,8 +149,8 @@ describe('Tables Jodit Editor Tests', function() {
                     '<tr><td>5</td><td>6</td></tr>' +
                     '</table>');
 
-                var table = new Jodit.modules.Table(editor);
-                table.mergeSelected(editor.editor.firstChild);
+                // var table = new Jodit.modules.Table(editor);
+                Jodit.modules.Table.mergeSelected(editor.editor.firstChild);
 
                 expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal(
                     '<table>' +
@@ -177,8 +177,8 @@ describe('Tables Jodit Editor Tests', function() {
                     '<tr><td>8</td><td>9</td></tr>' +
                     '</table>');
 
-                var table = new Jodit.modules.Table(editor);
-                table.mergeSelected(editor.editor.firstChild);
+                // var table = new Jodit.modules.Table(editor);
+                Jodit.modules.Table.mergeSelected(editor.editor.firstChild);
 
                 expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal(
                     '<table>' +
@@ -208,8 +208,8 @@ describe('Tables Jodit Editor Tests', function() {
                     '<tr><td data-jodit-selected-cell="1">3,1</td><td data-jodit-selected-cell="1">3,2</td><td>3,3</td></tr>' +
                     '</tbody></table>');
 
-                var table = new Jodit.modules.Table(editor);
-                table.mergeSelected(editor.editor.firstChild);
+                // var table = new Jodit.modules.Table(editor);
+                Jodit.modules.Table.mergeSelected(editor.editor.firstChild);
 
                 expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal(
                     '<table style="width:100%">' +
@@ -264,8 +264,8 @@ describe('Tables Jodit Editor Tests', function() {
                     '</tbody>' +
                     '</table>');
 
-                var table = new Jodit.modules.Table(editor);
-                table.mergeSelected(editor.editor.firstChild);
+                // var table = new Jodit.modules.Table(editor);
+                Jodit.modules.Table.mergeSelected(editor.editor.firstChild);
 
                 expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal(
                     '<table style="width:100%">' +
@@ -300,8 +300,8 @@ describe('Tables Jodit Editor Tests', function() {
                         '</tbody>' +
                     '</table>');
 
-                var table = new Jodit.modules.Table(editor);
-                table.mergeSelected(editor.editor.firstChild);
+                // var table = new Jodit.modules.Table(editor);
+                Jodit.modules.Table.mergeSelected(editor.editor.firstChild);
 
                 expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal(
                     '<table>' +
@@ -327,8 +327,8 @@ describe('Tables Jodit Editor Tests', function() {
                     '</table>'
                 );
 
-                var table = new Jodit.modules.Table(editor);
-                table.splitHorizontal(editor.editor.firstChild);
+                // var table = new Jodit.modules.Table(editor);
+                Jodit.modules.Table.splitHorizontal(editor.editor.firstChild, editor.editor);
 
                 expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal(
                     '<table>' +
@@ -358,8 +358,8 @@ describe('Tables Jodit Editor Tests', function() {
                     '</table>'
                 );
 
-                var table = new Jodit.modules.Table(editor);
-                table.splitHorizontal(editor.editor.firstChild);
+                // var table = new Jodit.modules.Table(editor);
+                Jodit.modules.Table.splitHorizontal(editor.editor.firstChild, editor.editor);
 
                 expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal(
                     '<table>' +
@@ -394,8 +394,8 @@ describe('Tables Jodit Editor Tests', function() {
                     '</table>'
                 );
 
-                var table = new Jodit.modules.Table(editor);
-                table.splitHorizontal(editor.editor.firstChild);
+                // var table = new Jodit.modules.Table(editor);
+                Jodit.modules.Table.splitHorizontal(editor.editor.firstChild, editor.editor);
 
                 expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal(
                     '<table>' +
@@ -424,8 +424,8 @@ describe('Tables Jodit Editor Tests', function() {
                     '</table>'
                 );
 
-                var table = new Jodit.modules.Table(editor);
-                table.splitVertical(editor.editor.firstChild);
+                // var table = new Jodit.modules.Table(editor);
+                Jodit.modules.Table.splitVertical(editor.editor.firstChild);
 
                 expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal(
                     '<table style="width:300px">' +

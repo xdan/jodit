@@ -4,6 +4,7 @@ import * as consts from '../constants';
 import {each, getContentWidth, $$, dom, offset} from '../modules/Helpers';
 import {Config} from '../Config'
 import Dom from "../modules/Dom";
+import Component from "../modules/Component";
 
 /**
  * @prop {boolean} useTableProcessor=true true Use module {@link TableProcessor|TableProcessor}
@@ -18,7 +19,7 @@ Config.prototype.useTableProcessor = true;
 /**
  *
  */
-class TableProcessor extends Table{
+class TableProcessor extends Component{
     __key: string = 'table_processor_observer';
     __selectMode: boolean = false;
 
@@ -249,11 +250,12 @@ class TableProcessor extends Table{
 
                 // resize column
                 if (this.__wholeTable === null) {
-                    this.setColumnWidthByDelta(this.__workTable, Table.formalCoordinate(this.__workTable, this.__workCell, true)[1], this.__resizerDelta, true);
+                    let __marked: HTMLTableCellElement[] = [];
+                    Table.setColumnWidthByDelta(this.__workTable, Table.formalCoordinate(this.__workTable, this.__workCell, true)[1], this.__resizerDelta, true, __marked);
                     const nextTD = <HTMLTableCellElement>Dom.next(this.__workCell, TableProcessor.__isCell, <HTMLElement>this.__workCell.parentNode);
-                    this.setColumnWidthByDelta(this.__workTable, Table.formalCoordinate(this.__workTable, nextTD)[1], -this.__resizerDelta);
+                    Table.setColumnWidthByDelta(this.__workTable, Table.formalCoordinate(this.__workTable, nextTD)[1], -this.__resizerDelta, false, __marked);
                 } else {
-                    let width = this.__workTable.offsetWidth,
+                    const width = this.__workTable.offsetWidth,
                         parentWidth = getContentWidth(<HTMLElement>this.__workTable.parentNode, this.win);
 
                     // right side
@@ -300,7 +302,7 @@ class TableProcessor extends Table{
             .on('beforeSetMode', () => {
                 Table.getAllSelectedCells(editor.editor).forEach((td) => {
                     Table.restoreSelection(td);
-                    this.normalizeTable(<HTMLTableElement>Dom.closest(td, 'table', editor.editor))
+                    Table.normalizeTable(<HTMLTableElement>Dom.closest(td, 'table', editor.editor))
                 })
             })
             .on('keydown', (event) => {
@@ -328,13 +330,13 @@ class TableProcessor extends Table{
 
                 switch (command) {
                     case 'splitv':
-                        this.splitVertical(table);
+                        Table.splitVertical(table);
                         break;
                     case 'splitg':
-                        this.splitHorizontal(table);
+                        Table.splitHorizontal(table, this.parent.editor);
                         break;
                     case 'merge':
-                        this.mergeSelected(table);
+                        Table.mergeSelected(table);
                         break;
                     case 'empty':
                         Table.getAllSelectedCells(this.parent.editor).forEach(cell => cell.innerHTML = '');
@@ -350,11 +352,11 @@ class TableProcessor extends Table{
                         break;
                     case 'addcolumnafter':
                     case 'addcolumnbefore':
-                        Table.appendColumn(table, cell.cellIndex, command === 'addcolumnafter')
+                        Table.appendColumn(table, cell.cellIndex, command === 'addcolumnafter');
                         break;
                     case 'addrowafter':
                     case 'addrowbefore':
-                        Table.appendRow(table, <HTMLTableRowElement>cell.parentNode, command === 'addrowafter')
+                        Table.appendRow(table, <HTMLTableRowElement>cell.parentNode, command === 'addrowafter');
                         break;
                 }
             }
