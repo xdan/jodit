@@ -205,17 +205,31 @@ export class Config {
     direction = '';
 
     /**
-     * @prop {string} language=en Language by default
+     * @prop {string} language=auto Language by default. if `auto` language set by document.documentElement.lang || (navigator.language && navigator.language.substr(0, 2)) || (navigator.browserLanguage && navigator.browserLanguage.substr(0, 2)) || 'en'
      * @example
      * // include in you page lang file
      * <script src="jodit/lang/de.js"></script>
      * <script>
-     * vae editor = new Jodit('.editor', {
+     * var editor = new Jodit('.editor', {
      *    language: 'de'
      * });
      * </script>
      */
-    language = 'en';
+    language = 'auto';
+
+
+    /**
+     * @prop {boolean} debugLanguage=false if true all Lang.i18n(key) return `{key}`
+     * @example
+     * <script>
+     * var editor = new Jodit('.editor', {
+     *    debugLanguage: true
+     * });
+     *
+     * console.log(editor.i18n("Test")); // {Test}
+     * </script>
+     */
+    debugLanguage = false;
 
     /**
      * @prop {PlainObject} i18n=Jodit.lang Collection of language pack data {en: {'Type something': 'Type something', ...}}

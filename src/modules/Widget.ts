@@ -125,7 +125,7 @@ export namespace Widget {
         box.appendChild(buttons);
         box.appendChild(tabBox);
 
-        each(tabs, (name, tabOptions) => {
+        each(tabs, (name: string, tabOptions: Function|HTMLElement) => {
             const tab = dom('<div class="jodit_tab"></div>'),
                 button = dom('<a href="javascript:void(0);"></a>');
 
@@ -137,6 +137,7 @@ export namespace Widget {
             } else {
                 tab.appendChild(dom('<div class="jodit_tab_empty"></div>'));
             }
+
             tabBox.appendChild(tab);
             button.addEventListener('mousedown', (e) => {
                 $$('a', buttons).forEach((a) => {

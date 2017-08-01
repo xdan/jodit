@@ -25,7 +25,7 @@ requireAll(require.context('./styles/modules/', true, /\.less$/));
 requireAll(require.context('./styles/widgets/', true, /\.less$/));
 requireAll(require.context('./styles/plugins/', true, /\.less$/));
 
-let context = require.context('./styles/icons/', true, /\.svg$/);
+const context = require.context('./styles/icons/', true, /\.svg$/);
 
 context.keys().forEach(function (key) {
     Toolbar.icons[key.replace('.svg', '').replace('./', '')] = context.apply(this, arguments)
@@ -35,8 +35,13 @@ context.keys().forEach(function (key) {
         .replace(/<!--.*-->/gm, '');
 });
 
-let context2 = require.context('./modules/', true, /\.ts/);
+const context2 = require.context('./modules/', true, /\.ts/);
 context2.keys().forEach(function (key) {
     module.exports.modules[key.replace('.ts', '').replace('./', '')] = context2.apply(this, arguments).default;
 });
-requireAll(require.context('./langs/', true, /\.ts$/));
+
+
+const context3 = require.context('./langs/', true, /\.ts$/);
+context3.keys().forEach(function (key) {
+    module.exports.lang[key.replace('.ts', '').replace('./', '')] = context3.apply(this, arguments).default;
+});

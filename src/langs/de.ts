@@ -1,5 +1,4 @@
-import Jodit from '../Jodit'
-export default Jodit.lang.de = {
+export default {
     'Type something': 'Schreibe etwas',
     // About
     'About Jodit': 'Über Jodi',

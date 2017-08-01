@@ -5,7 +5,7 @@
 - [x] Restore copy/paste plugin. Move setting onpaste  handler to this plugin
 - [x] Restore FileBrowser
 - [x] Restore Inline toolbar for Image and Table 3.0.1
-- [ ] Auto choose language 3.0.2
+- [x] Auto choose language. Test language mode. 3.0.2
 - [ ] Restore mobile version/Response mode. Switch buttons md - lg - sm 3.0.3
 - [ ] Restore Iframe mode 3.0.4
 - [ ] Restore themes 3.0.5

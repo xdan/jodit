@@ -897,3 +897,8 @@ export const val = (elm: HTMLInputElement|HTMLElement, selector: string, value ?
     }
     return child.value;
 };
+
+
+export  const defaultLanguage = (language?: string): string => (
+    (language === 'auto' || language === undefined) ? document.documentElement.lang || (navigator.language && navigator.language.substr(0, 2)) || (navigator['browserLanguage'] && navigator['browserLanguage'].substr(0, 2)) || 'en' : language
+);

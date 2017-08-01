@@ -4,7 +4,7 @@ import Selection from './modules/Selection';
 import Toolbar from './modules/Toolbar';
 import Cookie from './modules/Cookie';
 import * as consts from './constants';
-import {extend, inArray, dom, each, sprintf, css} from './modules/Helpers';
+import {extend, inArray, dom, each, sprintf, css, defaultLanguage} from './modules/Helpers';
 import * as helper from './modules/Helpers';
 import FileBrowser from "./modules/FileBrowser";
 import Uploader from "./modules/Uploader";
@@ -21,7 +21,7 @@ export default class Jodit extends Component{
     static plugins: any =  {};
     static modules: any =  {};
     static instances = {};
-    static lang:any = {};
+    static lang: any = {};
 
     components: any = [];
 
@@ -592,23 +592,26 @@ export default class Jodit extends Component{
      * Jodit.defaultOptions.language = 'cs';
      * console.log(Jodit.prototype.i18n('Hello world', 'mr.Perkins', 'day')) //Hello mr.Perkins Good day
      */
-    i18n (key, ...params) {
-        let store,
-            args = Array.prototype.slice.call(params),
-            parse = value => sprintf.apply(this, [value].concat(args));
+    i18n (key: string, ...params: Array<string|number>) {
+        if (this.options.debugLanguage) {
+            return '{' + key + '}';
+        }
 
-        if (this.options !== undefined && Jodit.lang[this.options.language] !== undefined) {
-            store = Jodit.lang[this.options.language];
+        let store,
+            parse = value => sprintf.apply(this, [value].concat(params));
+
+        if (this.options !== undefined && Jodit.lang[defaultLanguage(this.options.language)] !== undefined) {
+            store = Jodit.lang[defaultLanguage(this.options.language)];
         } else {
-            if (Jodit.lang[Jodit.defaultOptions.language] !== undefined) {
-                store = Jodit.lang[Jodit.defaultOptions.language];
+            if (Jodit.lang[defaultLanguage(Jodit.defaultOptions.language)] !== undefined) {
+                store = Jodit.lang[defaultLanguage(Jodit.defaultOptions.language)];
             } else {
                 store = Jodit.lang.en;
             }
         }
 
-        if (this.options !== undefined && this.options.i18n[this.options.language] !== undefined && this.options.i18n[this.options.language][key]) {
-            return parse(this.options.i18n[this.options.language][key]);
+        if (this.options !== undefined && this.options.i18n[defaultLanguage(this.options.language)] !== undefined && this.options.i18n[defaultLanguage(this.options.language)][key]) {
+            return parse(this.options.i18n[defaultLanguage(this.options.language)][key]);
         }
 
         if (typeof store[key] === 'string' && store[key]) {
