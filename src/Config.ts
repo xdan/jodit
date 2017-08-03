@@ -252,11 +252,6 @@ export class Config {
     tabIndex = -1;
 
     /**
-     * @prop {boolean} autofocus=false true After loading the page into the editor once the focus is set
-     */
-    autofocus = false;
-
-    /**
      * @prop {boolean} toolbar=true true Show toolbar
      */
     toolbar = true;
@@ -525,8 +520,8 @@ export class Config {
         },
         brush: {
             css: {
-                'backgroundColor' : ({editor, color}) => {
-                    const  check = (colors) => {
+                'backgroundColor' : (editor: Jodit, color: string) => {
+                    const  check = (colors: {[key:string]:string[]}|string[]) => {
                             let i, keys;
                             if (typeof colors === 'object') {
                                 keys = Object.keys(colors);
@@ -536,7 +531,7 @@ export class Config {
                                     }
                                 }
                             } else if (Array.isArray(colors)) {
-                                return colors.indexOf(normalizeColor(color)) !== -1;
+                                return (<Array<string>>colors).indexOf(normalizeColor(color) || '') !== -1;
                             }
                             return false;
                         };
@@ -544,9 +539,9 @@ export class Config {
                     return check(editor.options.colors);
                 }
             },
-            popup: (editor: Jodit) => {
-                let color = '', bg_color = '', current, tabs;
-                const sel = editor.win.getSelection(),
+            popup: (editor: Jodit, current, self, close) => {
+                let color = '', bg_color = '', tabs;
+               /* const sel = editor.win.getSelection(),
                     checkRemoveOpportunity = () => {
                         if (current && (!current.hasAttribute("style") || !current.getAttribute("style").length)) {
                             let selInfo = editor.selection.save();
@@ -572,30 +567,32 @@ export class Config {
                                 }
                             })
                         }
-                    };
+                    };*/
 
-                tryGetCurrent();
+                //tryGetCurrent();
 
                 //const widget = new (require('./modules/Widget').default)(editor);
 
                 const backgroundTag: HTMLElement = ColorPickerWidget(editor, (value: string) => {
-                    if (!current) {
+                    //if (!current) {
                         editor.execCommand('background', false, value);
-                        tryGetCurrent();
-                    } else {
-                        current.style.backgroundColor = value;
-                    }
-                    checkRemoveOpportunity();
+                        close();
+                        //tryGetCurrent();
+                   // } else {
+                   //     current.style.backgroundColor = value;
+                 //   }
+                    //checkRemoveOpportunity();
                 }, bg_color);
 
                 const colorTab: HTMLElement = ColorPickerWidget(editor, (value: string) => {
-                    if (!current) {
-                        editor.execCommand('forecolor', false, value);
-                        tryGetCurrent();
-                    } else {
-                        current.style.color = value;
-                    }
-                    checkRemoveOpportunity();
+                   // if (!current) {
+                    editor.execCommand('forecolor', false, value);
+                    close();
+                   //     tryGetCurrent();
+                   // } else {
+                    //    current.style.color = value;
+                   // }
+                    //checkRemoveOpportunity();
                 }, color);
 
                 if (editor.options.colorPickerDefaultTab === 'background') {

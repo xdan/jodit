@@ -92,7 +92,7 @@ export namespace Widget {
                 }
 
 
-                return false;
+                e.preventDefault();
             });
 
 

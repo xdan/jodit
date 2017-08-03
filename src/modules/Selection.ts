@@ -1,12 +1,12 @@
 import * as consts from '../constants';
 import Component from './Component';
-import {each, dom, trim, $$} from './Helpers';
+import {each, dom, trim, $$, css, asArray} from './Helpers';
 import Dom from "./Dom";
 
 export default class Selection extends Component{
 
     __normalizeSelection(range: Range, atStart) {
-        if (this.cursorInTheEdge(!atStart, elm => elm && elm.nodeType !== Node.TEXT_NODE && elm !== this.parent.editor, true)) {
+        if (!this.isCollapsed() && this.cursorInTheEdge(!atStart, elm => elm && elm.nodeType !== Node.TEXT_NODE && elm !== this.parent.editor, true)) {
             if (atStart) {
                 range.setStartAfter(range.startContainer)
             } else {
@@ -63,7 +63,7 @@ export default class Selection extends Component{
      * Remove all markers
      */
     clear() {
-        $$('.jodit_selection_marker', this.parent.editor).forEach((marker) => {
+        $$('.' + consts.MARKER_CLASS, this.parent.editor).forEach((marker) => {
             marker.parentNode.removeChild(marker)
         })
     }
@@ -109,8 +109,8 @@ export default class Selection extends Component{
 
                 sel.addRange(range);
 
-                this.__normalizeSelection(range, true);
-                this.__normalizeSelection(range, false);
+                // this.__normalizeSelection(range, true);
+                // this.__normalizeSelection(range, false);
             });
         }
     }
@@ -121,19 +121,19 @@ export default class Selection extends Component{
      * @return {Array}
      */
     save():any[]|null  {
-        let sel = this.win.getSelection();
+        const sel = this.win.getSelection();
         if (!sel.rangeCount) {
             return null;
         }
-        let _marker = (range, atStart = false) => {
+        const _marker = (range, atStart = false) => {
             let newRange = range.cloneRange();
             newRange.collapse(atStart);
 
             let marker = this.doc.createElement('span');
-            marker.id = 'jodit_selection_marker_' + (+new Date()) + "_" + ("" + Math.random()).slice(2);
+            marker.id = consts.MARKER_CLASS + '_' + (+new Date()) + "_" + ("" + Math.random()).slice(2);
             marker.style.lineHeight = "0";
             marker.style.display = "none";
-            marker.className = "jodit_selection_marker " + "jodit_selection_marker-" + (atStart ? 'start' : 'end');
+            marker.className = consts.MARKER_CLASS + " " + consts.MARKER_CLASS + '-' + (atStart ? 'start' : 'end');
             marker.appendChild(this.doc.createTextNode(consts.INVISIBLE_SPACE));
 
             newRange.insertNode(marker);
@@ -168,8 +168,8 @@ export default class Selection extends Component{
                 ranges[i].setStartAfter(this.doc.getElementById(info[i].startId));
                 ranges[i].collapse(true);
             } else {
-                ranges[i].setStartAfter(this.doc.getElementById(info[i].startId));
-                ranges[i].setEndBefore(this.doc.getElementById(info[i].endId));
+                ranges[i].setStartBefore(this.doc.getElementById(info[i].startId));
+                ranges[i].setEndAfter(this.doc.getElementById(info[i].endId));
             }
             try {
                 sel.addRange(ranges[i].cloneRange());
@@ -411,7 +411,7 @@ export default class Selection extends Component{
                 end = range.endContainer === this.parent.editor ? this.parent.editor.childNodes[range.endOffset - 1] : range.endContainer;
 
             Dom.find(start, (node: Node|HTMLElement) => {
-                if (node && !Dom.isEmptyTextNode(node) && !(node instanceof HTMLElement && node.classList.contains('jodit_selection_marker'))) {
+                if (node && !Dom.isEmptyTextNode(node) && !(node instanceof HTMLElement && node.classList.contains(consts.MARKER_CLASS))) {
                     nodes.push(node);
                 }
                 if (node === end) {
@@ -470,12 +470,57 @@ export default class Selection extends Component{
      * Checks if the cursor is at the end(start) block
      *
      * @param  {boolean} [start=false] true - check whether the cursor is at the start block
-     * @param {HTMLElement|Function|boolean} [parentBlock=false] - Find in this
+     * @param {HTMLElement} parentBlock - Find in this
      * @param {boolean} [inverse=false] - find last element on left side and inverse
+     *
      * @return {boolean} true - the cursor is at the end(start) block
      */
-    cursorInTheEdge (start:boolean = false, parentBlock: HTMLElement|Function|false = false, inverse: boolean = false): boolean {
-        let sel = this.win.getSelection();
+    cursorInTheEdge (start: boolean = false, parentBlock: HTMLElement|Function|false = false, inverse: boolean = false): boolean {
+        const sel = this.win.getSelection(),
+            isNoEmptyNode = (elm: Node) => (!Dom.isEmptyTextNode(elm));
+        let
+            container: HTMLElement = <HTMLElement>parentBlock;
+
+        if (!sel.rangeCount) {
+            return false;
+        }
+
+        const range: Range = sel.getRangeAt(0),
+            isStart = () => {
+                return inverse === false ? start : !start;
+            },
+            startContainer = isStart() ? range.startContainer : range.endContainer;
+
+        if (parentBlock === false) {
+            container = <HTMLElement>Dom.up(startContainer, Dom.isBlock, this.parent.editor)
+        } else if (typeof parentBlock === 'function') {
+            container = <HTMLElement>Dom.up(startContainer, parentBlock, this.parent.editor)
+        } else {
+            if (!Dom.isOrContains(parentBlock, range.startContainer)) {
+                return null;
+            }
+        }
+
+        if (!container) {
+            return false;
+        }
+
+
+        if (startContainer === container) {
+            if (start) {
+                return range.startOffset === 0;
+            } else {
+                return range.endOffset === [].slice.call(container.childNodes).filter(isNoEmptyNode).length;
+            }
+        } else {
+            if (start) {
+                return (startContainer.nodeType !== Node.TEXT_NODE || range.startOffset === 0) && !Dom.prev(<HTMLElement>startContainer, isNoEmptyNode, container);
+            } else {
+                return (startContainer.nodeType !== Node.TEXT_NODE || range.endOffset === range.startContainer.nodeValue.length) && !Dom.next(<HTMLElement>startContainer,isNoEmptyNode, container);
+            }
+        }
+
+        /*let sel = this.win.getSelection();
         if (!sel.rangeCount) {
             return false;
         }
@@ -580,7 +625,7 @@ export default class Selection extends Component{
             }
         }
 
-        return true;
+        return true;*/
     }
 
     /**
@@ -672,4 +717,144 @@ export default class Selection extends Component{
         sel.removeAllRanges();
         sel.addRange(range);
     }
+
+    applyCSS = (cssRules ?: {[key:string]: string}, nodeName:string = 'span', options?: any) => {
+        const WRAP  = 1;
+        const UNWRAP  = 0;
+        let mode;
+
+        const defaultTag = 'SPAN';
+
+        const findNext = (elm: HTMLElement) => (elm && !Dom.isEmptyTextNode(elm) && !(elm.nodeType === Node.ELEMENT_NODE && elm.classList.contains(consts.MARKER_CLASS)));
+        const checkCssRulesFor = (elm: HTMLElement) => {
+            return elm.nodeName !== 'FONT' && elm.nodeType === Node.ELEMENT_NODE && each(options, (cssPropertyKey: string, cssPropertyValues: string[]) => {
+                const value = css(elm, cssPropertyKey);
+                return  cssPropertyValues.indexOf(value.toLowerCase()) !== -1
+            }) !== false
+        };
+
+        const isSuitElement = (elm: HTMLElement) => {
+            return ((elm.nodeName === nodeName.toUpperCase()) || (options && checkCssRulesFor(elm))) && elm.nodeType === Node.ELEMENT_NODE && !elm.classList.contains(consts.MARKER_CLASS);
+        };
+
+        const canUnwrap = (elm: HTMLElement) => {
+            if (elm.nodeName === defaultTag && !elm.getAttribute('style')) {
+                Dom.unwrap(elm);
+            }
+        };
+
+        if (!this.isCollapsed()) {
+            const selInfo = this.save();
+            this.parent.editor.normalize();
+            this.parent.doc.execCommand('fontsize', false, 7);
+
+            $$('font[size="7"]', this.parent.editor).forEach((font) => {
+                if (!Dom.next(font, findNext, <HTMLElement>font.parentNode) && !Dom.prev(font, findNext, <HTMLElement>font.parentNode) && isSuitElement(<HTMLElement>font.parentNode)) {
+                    css(<HTMLElement>font.parentNode, cssRules);
+                    if (nodeName.toUpperCase() !== defaultTag && isSuitElement(<HTMLElement>font.parentNode)) {
+                        Dom.unwrap(font.parentNode);
+                    } else {
+                        canUnwrap(<HTMLElement>font.parentNode); // TODO for style="font-weight; font-style"
+                    }
+
+                    if (mode === undefined) {
+                        mode = UNWRAP;
+                    }
+
+                    Dom.unwrap(font);
+                } else if (!Dom.next(font.firstChild, findNext, <HTMLElement>font) && !Dom.prev(font.firstChild, findNext, <HTMLElement>font) && isSuitElement(<HTMLElement>font.firstChild)) {
+                    css(<HTMLElement>font.firstChild, cssRules);
+                    if (nodeName.toUpperCase() !== defaultTag && isSuitElement(<HTMLElement>font.firstChild)) {
+                        Dom.unwrap(font.firstChild);
+                    } else {
+                        canUnwrap(<HTMLElement>font.firstChild); // TODO for style="font-weight; font-style"
+                    }
+
+                    if (mode === undefined) {
+                        mode = UNWRAP;
+                    }
+
+                    Dom.unwrap(font);
+                } else if (Dom.closest(font, isSuitElement, this.parent.editor)) {
+                    const leftRange = this.doc.createRange(),
+                        wrapper = <HTMLElement>Dom.closest(font, isSuitElement, this.parent.editor);
+
+                    leftRange.setStartBefore(wrapper);
+                    leftRange.setEndBefore(font);
+                    const leftFragment = leftRange.extractContents();
+
+                    if (!trim(leftFragment.textContent).length) {
+                        Dom.unwrap(leftFragment.firstChild);
+                    }
+
+                    wrapper.parentNode.insertBefore(leftFragment, wrapper);
+                    leftRange.setStartAfter(font);
+                    leftRange.setEndAfter(wrapper);
+                    const rightFragment = leftRange.extractContents();
+
+                    if (!trim(rightFragment.textContent).length) {
+                        Dom.unwrap(rightFragment.firstChild);
+                    }
+
+                    Dom.after(wrapper, rightFragment);
+
+                    if (mode === undefined) {
+                        mode = UNWRAP;
+                    }
+
+                    Dom.unwrap(font);
+                    Dom.unwrap(wrapper);
+
+                } else {
+                    const needUnwrap: Node[] = [];
+                    let firstElementSuit: boolean;
+                    Dom.find(font.firstChild, (elm: HTMLElement) => {
+                        if (elm && isSuitElement(elm)) {
+                            if (firstElementSuit === undefined) {
+                                firstElementSuit = true;
+                            }
+                            needUnwrap.push(elm);
+                        } else {
+                            if (firstElementSuit === undefined) {
+                                firstElementSuit = false;
+                            }
+                        }
+                        return false;
+                    }, font, true);
+
+                    needUnwrap.forEach(Dom.unwrap);
+
+                    if (!firstElementSuit) {
+                        if (mode === undefined) {
+                            mode = WRAP;
+                        }
+                        if (mode === WRAP) {
+                            css(Dom.replace(font, nodeName, false, false, this.parent.doc), cssRules);
+                        } else {
+                            Dom.unwrap(font);
+                        }
+                    } else {
+                        Dom.unwrap(font);
+                    }
+                }
+            });
+
+            this.restore(selInfo);
+        } else {
+            let clearStyle: boolean = false;
+            if (this.current() && Dom.closest(<Node>this.current(), nodeName, this.parent.editor)) {
+                clearStyle = true;
+                this.setCursorAfter(Dom.closest(<Node>this.current(), nodeName, this.parent.editor));
+            }
+
+            if (nodeName.toUpperCase() === defaultTag || !clearStyle) {
+                const node = Dom.create(nodeName, consts.INVISIBLE_SPACE, this.parent.doc);
+                this.insertNode(node);
+                css(<HTMLElement>node, cssRules);
+
+                this.setCursorIn(node);
+            }
+        }
+    };
+
 }

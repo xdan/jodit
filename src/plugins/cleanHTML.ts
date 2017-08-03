@@ -69,9 +69,11 @@ Jodit.plugins.cleanHTML = function (editor: Jodit) {
     }
 
     if (editor.options.cleanHTML.allowTags) {
-        let attributesReg = /([^\[]*)\[([^\]]+)]/,
+        const
+            attributesReg = /([^\[]*)\[([^\]]+)]/,
             seperator = /[\s]*,[\s]*/,
-            attrReg = /^(.*)[\s]*=[\s]*(.*)$/,
+            attrReg = /^(.*)[\s]*=[\s]*(.*)$/;
+        let
             allowTagsHash = {};
 
         if (typeof editor.options.cleanHTML.allowTags === 'string') {

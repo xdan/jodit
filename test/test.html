@@ -9,6 +9,7 @@
 </head>
 <body>
 <div id="mocha"></div>
+
 <script src="../node_modules/mocha/mocha.js"></script>
 <script src="../node_modules/chai/chai.js"></script>
 
@@ -16,12 +17,14 @@
     mocha.ui('bdd');
     mocha.reporter('html');
 </script>
+
 <link rel="stylesheet" href="/app.css" />
 <link rel="stylesheet" href="../dist/jodit.css" />
 <script src="../dist/jodit.js"></script>
 
 <script src="bootstrap.js"></script>
 <script src="tests/editorTest.js"></script>
+<script src="tests/selectionTest.js"></script>
 <script src="tests/eventsTest.js"></script>
 <script src="tests/interfaceTest.js"></script>
 <script src="tests/enterTest.js"></script>

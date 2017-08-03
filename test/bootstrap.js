@@ -1,4 +1,6 @@
 Jodit.defaultOptions.observer.timeout = 0;
+Jodit.defaultOptions.language = 'en';
+
 console.log(screen.width);
 var expect = chai.expect;
 var stuff = [];

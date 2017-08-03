@@ -62,3 +62,6 @@ export const  MODE_SPLIT = 3;
  * @property {string} TEXT_PLAIN='text/plain'  For IE11 it will be 'text'. Need for dataTransfer.setData
  */
 export const TEXT_PLAIN = isIE() ? 'text' : 'text/plain';
+
+
+export const MARKER_CLASS = 'jodit_selection_marker';

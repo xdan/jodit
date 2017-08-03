@@ -130,14 +130,14 @@ Jodit.plugins.imageProperties = function (editor: Jodit) {
 
             positionTab: HTMLDivElement = <HTMLDivElement>dom('<div style="' + (!editor.options.image.editMargins ? 'display:none' : '') + '" class="jodit_form_group">' +
                     '<label for="marginTop">' + editor.i18n('Margins') + '</label>' +
-                    '<div class="jodit_input_group jodit_grid">' +
+                    '<div class="jodit_grid">' +
                         '<input class="jodit_col-lg-1-5 margins" type="text" placeholder="' + editor.i18n('top') + '" id="marginTop"/>' +
                         '<a style="text-align: center;" class="jodit_lock_helper jodit_lock_margin jodit_col-lg-1-5" href="javascript:void(0)">' +
                             Toolbar.getIcon('lock') +
                         '</a>' +
-                        '<input disabled="true" style="margin-left:-1px" class="jodit_col-lg-1-5 margins" type="text" placeholder="' + editor.i18n('right') + '" id="marginRight"/>' +
-                        '<input disabled="true" style="margin-left:-1px" class="jodit_col-lg-1-5 margins" type="text" placeholder="' + editor.i18n('bottom') + '" id="marginBottom"/>' +
-                        '<input disabled="true" style="margin-left:-1px" class="jodit_col-lg-1-5 margins" type="text" placeholder="' + editor.i18n('left') + '" id="marginLeft"/>' +
+                        '<input disabled="true" class="jodit_col-lg-1-5 margins" type="text" placeholder="' + editor.i18n('right') + '" id="marginRight"/>' +
+                        '<input disabled="true" class="jodit_col-lg-1-5 margins" type="text" placeholder="' + editor.i18n('bottom') + '" id="marginBottom"/>' +
+                        '<input disabled="true" class="jodit_col-lg-1-5 margins" type="text" placeholder="' + editor.i18n('left') + '" id="marginLeft"/>' +
                     '</div>' +
                 '</div>' +
                 '<div style="' + (!editor.options.image.editStyle ? 'display:none' : '') + '" class="jodit_form_group">' +

@@ -67,12 +67,12 @@ describe('Test interface', function() {
 
                 expect(editor.getEditorValue()).to.equal('tex<span style="background-color: rgb(249, 203, 156);">t2t</span>ext');
 
-                simulateEvent('mousedown', 0, editor.editor)
+                // simulateEvent('mousedown', 0, editor.editor)
 
                 expect(list.style.display).to.equal('none');
 
-                range.setStart(editor.editor.querySelector('span').firstChild, 1)
-                range.collapse(true);
+                range.selectNodeContents(editor.editor.querySelector('span'))
+                // range.collapse(true);
                 sel.removeAllRanges();
                 sel.addRange(range)
 

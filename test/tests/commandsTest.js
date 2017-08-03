@@ -84,7 +84,7 @@ describe('Commands Jodit Editor Tests', function() {
         editor.execCommand('bold');
         // editor.execCommand('bold');
 
-        expect(editor.getEditorValue()).to.equal('<span>test</span>');
+        expect(editor.getEditorValue()).to.equal('test');
     });
     it('Exec command "bold" insert a few chars and again exec bold. Bold mode should be switch off', function() {
         var editor = new Jodit('#tested_area');
@@ -109,7 +109,7 @@ describe('Commands Jodit Editor Tests', function() {
         expect(editor.getEditorValue()).to.equal('test<strong>abc</strong>def');
 
     });
-    it('Exec command "bold" fot some text should wrap this text in STRONG element', function() {
+    it('Exec command "bold" for some text should wrap this text in STRONG element', function() {
         var editor = new Jodit('#tested_area');
         editor.setEditorValue('test');
 
@@ -125,7 +125,7 @@ describe('Commands Jodit Editor Tests', function() {
         expect(editor.getEditorValue()).to.equal('<strong>test</strong>');
 
     });
-    it('Exec command "bold" fot some text inside STRONG element from start of this element, should unwrap this text', function() {
+    it('Exec command "bold" for some text inside STRONG element from start of this element, should unwrap this text', function() {
         var editor = new Jodit('#tested_area');
         editor.setEditorValue('<strong>test</strong>');
 
@@ -142,7 +142,7 @@ describe('Commands Jodit Editor Tests', function() {
         expect(editor.getEditorValue()).to.equal('te<strong>st</strong>');
 
     });
-    it('Exec command "bold" fot some text inside STRONG element near end of this element, should unwrap this text', function() {
+    it('Exec command "bold" for some text inside STRONG element near end of this element, should unwrap this text', function() {
         var editor = new Jodit('#tested_area');
         editor.setEditorValue('<strong>test</strong>');
 
@@ -159,7 +159,7 @@ describe('Commands Jodit Editor Tests', function() {
         expect(editor.getEditorValue()).to.equal('<strong>te</strong>st');
 
     });
-    it('Exec command "bold" fot some text inside STRONG element in the middle of this element, should unwrap this text', function() {
+    it('Exec command "bold" for some text inside STRONG element in the middle of this element, should unwrap this text', function() {
         var editor = new Jodit('#tested_area');
         editor.setEditorValue('<strong>test</strong>');
 
@@ -177,7 +177,7 @@ describe('Commands Jodit Editor Tests', function() {
 
     });
 
-    it('Exec command "bold" fot some text that contains a few STRONG elements, should wrap all of these in one STRONG', function() {
+    it('Exec command "bold" for some text that contains a few STRONG elements, should unwrap all of these', function() {
         var editor = new Jodit('#tested_area');
         editor.setEditorValue('<strong>test</strong> test <strong>test</strong>');
 
@@ -195,7 +195,7 @@ describe('Commands Jodit Editor Tests', function() {
 
     });
 
-    it('Exec command "bold" fot some text inside STRONG elements, should unwrap this part and after exec "bold" again it should create 3 STRONG elements', function() {
+    it('Exec command "bold" for some text inside STRONG elements, should unwrap this part and after exec "bold" again it should create 3 STRONG elements', function() {
         var editor = new Jodit('#tested_area');
         editor.setEditorValue('<strong>1 2 3</strong>');
 
@@ -341,6 +341,22 @@ describe('Commands Jodit Editor Tests', function() {
         });
     });
     describe('Colors', function() {
+        it('Set colour for all selection should create <span></span> tags inside all paragraps', function () {
+            var editor = new Jodit('#tested_area');
+            editor.setEditorValue('<p>1</p><p>2</p><p>3</p>');
+
+            var sel = editor.win.getSelection(),
+                range = editor.doc.createRange();
+
+            range.selectNodeContents(editor.editor);
+
+            sel.removeAllRanges();
+            sel.addRange(range);
+
+            editor.execCommand('foreColor', false, '#f00');
+
+            expect(editor.getEditorValue()).to.equal('<p><span style="color: rgb(255, 0, 0);">1</span></p><p><span style="color: rgb(255, 0, 0);">2</span></p><p><span style="color: rgb(255, 0, 0);">3</span></p>');
+        });
         it('Set colour to collapsed position should create empty span and insert inward cursor', function () {
             var editor = new Jodit('#tested_area');
             editor.setEditorValue('testy oprst <span>lets go</span>');

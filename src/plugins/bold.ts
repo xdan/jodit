@@ -60,9 +60,14 @@ Jodit.plugins.bold = function (editor: Jodit) {
 
 
         if (commands.indexOf(command) !== -1) {
-            Dom.apply(Jodit.defaultOptions.controls[command], (commandOptions) => {
-                return wrapAndSelect(editor, Dom.create(commandOptions.tags[0], '', editor.doc),  commandOptions.tagRegExp);
-            }, editor);
+            // Dom.apply(Jodit.defaultOptions.controls[command], (commandOptions) => {
+            //     return wrapAndSelect(editor, Dom.create(commandOptions.tags[0], '', editor.doc),  commandOptions.tagRegExp);
+            // }, editor);
+
+            // editor.doc.execCommand('fontsize', false, 7)
+
+            editor.selection.applyCSS({}, Jodit.defaultOptions.controls[command].tags[0], Jodit.defaultOptions.controls[command] && Jodit.defaultOptions.controls[command].css)
+
             editor.setEditorValue();
             return false;
         }

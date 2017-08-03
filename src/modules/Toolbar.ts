@@ -13,7 +13,7 @@ export type ControlType = {
     tagRegExp?: RegExp;
     tags?: string[];
     options?: any;
-    css?: any;
+    css?: {[key: string]: string|string[]}|{[key: string]: (editor: Jodit, value: string) => boolean};
     iconURL?: string;
     tooltip?: string;
     exec?: (editor: Jodit, current: Node|false, control: ControlType, originalEvent: Event,  btn: HTMLLIElement) => void;
@@ -158,10 +158,10 @@ export default class Toolbar extends Component{
                     Object.keys(cssObject).forEach((cssProperty) => {
                         const cssValue = cssObject[cssProperty];
                         if (typeof cssValue === 'function') {
-                            if (cssValue({
-                                    editor: this.parent,
-                                    value: getCSS(node, cssProperty).toLowerCase()
-                                })) {
+                            if (cssValue(
+                                    this.parent,
+                                    getCSS(node, cssProperty).toLowerCase()
+                                )) {
                                 matches += 1;
                             }
                         } else {

@@ -60,10 +60,12 @@
 </html>
 
 <script>
-    function expect() {
+    function expect(value) {
         return {
             to: {
-                equal: function () {}
+                equal: function (val) {
+                    console.log(value === val);
+                }
             }
         };
     }
@@ -112,40 +114,37 @@
     editor.editor.addEventListener('input', callback)
     editor.events.on('change', callback)
 
+    editor.setEditorValue('text2text')
+    var sel = editor.win.getSelection(), range = editor.doc.createRange();
+    range.setStart(editor.editor.firstChild, 3)
+    range.setEnd(editor.editor.firstChild, 6)
+    sel.removeAllRanges();
+    sel.addRange(range)
+    simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-brush'))
+    var list = editor.container.querySelector('.jodit_toolbar_popup');
+    expect(list.style.display).to.equal('block');
+    simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-brush [data-color="#F9CB9C"]'))
+    expect(editor.getEditorValue()).to.equal('tex<span style="background-color: rgb(249, 203, 156);">t2t</span>ext');
+    // simulateEvent('mousedown', 0, editor.editor)
+    expect(list.style.display).to.equal('none');
+    range.selectNodeContents(editor.editor.querySelector('span'))
+    // range.collapse(true);
+    sel.removeAllRanges();
+    sel.addRange(range)
+    simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-brush'))
+    expect(list.style.display).to.equal('block');
+    simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-brush .jodit_colorpicker > a > svg'))
+    expect(editor.getEditorValue()).to.equal('text2text');
+//    simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-brush'))
+//    expect(list.style.display).to.equal('block');
+//    simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-brush .jodit_colorpicker > a > svg'))
+//    expect(editor.getEditorValue()).to.equal('text2text');
 
-    uniqbox.style.width = '202px';
-    editor.setEditorValue('<table style="width: 100px; border-collapse: separate;" cellspacing="0">' +
-        '<tr><td>1</td><td>2</td><td>3</td><td>5</td></tr>' +
-        '</table>');
-    console.log(editor.editor.firstChild.offsetWidth);
-    var td = editor.editor.querySelectorAll('td')[3], box = td.getBoundingClientRect();
-    simulateEvent('mousemove', 1, td, function (options) {
-        options.clientX = box.left + box.width;
-        options.offsetX = box.width;
-    });
-    simulateEvent('mousedown', 1, editor.container.querySelector('.jodit_table_resizer'), function (options) {
-        options.clientX = box.left + box.width;
-    });
-    simulateEvent('mousemove', 1, window, function (options) {
-        options.clientX = box.left + box.width + 50;
-    });
+//    editor.selection.insertNode(document.createTextNode(' 2 '));
+//    expect(editor.getEditorValue()).to.be.equal('<p>test 2 </p>');
 
-    simulateEvent('mouseup', 1, window, function (options) {
-        options.clientX = box.left + box.width + 50;
-    });
-    expect(editor.editor.innerHTML.toLowerCase()).to.equal(
-        '<table style="width: 83.3333%; border-collapse: separate;" cellspacing="0"><tbody>' +
-        '<tr>' +
-        '<td>1</td>' +
-        '<td>2</td>' +
-        '<td>3</td>' +
-        '<td>5</td>' +
-        '</tr>' +
-        '</tbody></table>'
-    );
-
-
-
+//    editor.execCommand('fontSize', false, '12%');
+//    expect(editor.getEditorValue()).to.equal('<p> testy oprst <span style="font-size: 12%;">lets go</span></p>');
 
     //    expect(parseInt(editor.container.querySelector('.jodit_table_resizer').style.left, 10) < 50).to.equal(true);
 

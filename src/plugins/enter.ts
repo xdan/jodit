@@ -68,7 +68,7 @@ Jodit.plugins.enter = function (editor: Jodit) {
             }
 
             let fake;
-            let currentBox = current ? Dom.up(current, Dom.isBlock, editor.editor) : false;
+            let currentBox: HTMLElement|false = current ? <HTMLElement>Dom.up(current, Dom.isBlock, editor.editor) : false;
 
             if (!currentBox && current) {
                 currentBox = Dom.wrap(current, editor.options.enter, editor);
@@ -113,12 +113,12 @@ Jodit.plugins.enter = function (editor: Jodit) {
                 }
 
 
-                if (editor.selection.cursorInTheEdge(true)) {
+                if (editor.selection.cursorInTheEdge(true, currentBox)) {
                     // if we are in the left edge of paragraph
                     fake = editor.selection.setCursorBefore(currentBox);
                     insertParagraph(editor, fake, currentBox.nodeName === 'LI' ? 'li' : editor.options.enter);
                     editor.selection.setCursorIn(currentBox, true);
-                } else if (!editor.selection.cursorInTheEdge(false)) {
+                } else if (!editor.selection.cursorInTheEdge(false, currentBox)) {
                     // if we are not in right edge of paragraph
                     // split p,h1 etc on two parts
                     let leftRange = editor.doc.createRange();

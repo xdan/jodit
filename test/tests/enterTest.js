@@ -18,6 +18,24 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
             expect(editor.getEditorValue()).to.be.equal('<p>Some text</p><p> a </p>');
         })
+        it('If Enter was pressed in the end of SPAN inside P it should clone SPAN copy it in new created P and move cursor inside new SPAN', function () {
+            var editor = new Jodit(appendTestArea())
+            editor.setEditorValue('<p>Some <span>text</span></p>');
+
+            var sel = editor.win.getSelection(),
+                range = editor.doc.createRange();
+
+            range.selectNodeContents(editor.editor.firstChild.lastChild);
+            range.collapse(false);
+            sel.removeAllRanges();
+            sel.addRange(range);
+
+            simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
+
+            editor.selection.insertNode(editor.doc.createTextNode(' a '))
+
+            expect(editor.getEditorValue()).to.be.equal('<p>Some <span>text</span></p><p> a </p>');
+        })
         it('If Enter was pressed inside text without wrapper and near were some another elements', function () {
             var editor = new Jodit(appendTestArea())
             editor.setEditorValue('as<span style="color: rgb(147, 101, 184);">da</span>s');

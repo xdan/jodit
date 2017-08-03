@@ -129,6 +129,15 @@ describe('Jodit Editor Tests', function() {
                 var area = appendTestArea();
                 var editor = new Jodit(area);
                 editor.setEditorValue('<div>Test<div>');
+
+                var sel = window.getSelection(),
+                    range = document.createRange();
+
+                range.selectNodeContents(editor.editor.firstChild);
+                range.collapse(false);
+                sel.removeAllRanges();
+                sel.addRange(range);
+
                 expect(editor.getElementValue()).to.be.equal('<div>Test<div></div></div>');
             });
             it('Check synchronization between editor and element', function () {
@@ -141,14 +150,24 @@ describe('Jodit Editor Tests', function() {
             it('Check synchronization between editor and element with wrong html', function () {
                 var area = appendTestArea();
                 var editor = new Jodit(area);
-                editor.setElementValue('<div>Test<div>');
+                editor.setElementValue('<div>Test</div>');
                 expect(editor.getEditorValue()).to.be.equal(editor.getElementValue());
             });
             it('Check synchronization between editor and element when was pressed button', function () {
                 var area = appendTestArea();
                 var editor = new Jodit(area);
-                editor.setElementValue('<div>Test<div>');
+                editor.setElementValue('<div>Test</div>');
                 expect(editor.getEditorValue()).to.be.equal(editor.getElementValue());
+
+                var sel = window.getSelection(),
+                    range = document.createRange();
+
+                range.selectNodeContents(editor.editor.firstChild);
+                range.collapse(false);
+                sel.removeAllRanges();
+                sel.addRange(range);
+
+
                 simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
                 expect(editor.getEditorValue()).to.be.equal(editor.getElementValue());
             });

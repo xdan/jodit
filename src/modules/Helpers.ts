@@ -728,7 +728,7 @@ export const throttle = function (fn: Function, timeout: number, ctx?: any) {
  * @param {string|int} value A value to set for the property.
  */
 export const css = (element: HTMLElement, key: string|object, value?: string|number) => {
-    let numberFieldsReg = /^left|top|bottom|right|width|min|max|height|margin|padding/i;
+    let numberFieldsReg = /^left|top|bottom|right|width|min|max|height|margin|padding|font-size/i;
 
     if (isPlainObject(key) || value !== undefined) {
         const setValue = (elm, key, value) => {
@@ -750,7 +750,7 @@ export const css = (element: HTMLElement, key: string|object, value?: string|num
         return this;
     }
 
-    let key2 = <string>fromCamelCase(<string>key),
+    const key2 = <string>fromCamelCase(<string>key),
         doc  = element.ownerDocument,
         win = doc.defaultView || doc['parentWindow'];
 

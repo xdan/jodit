@@ -1,15 +1,7 @@
 var webpackConfig = require('./webpack.config');
 var path = require('path');
 
-// webpackConfig.entry = 'test/runner.ts';
-// webpackConfig.output = {
-//     filename: 'dist/bundle.js',
-//     libraryTarget: 'umd',
-//     library: 'Jodit',
-//     umdNamedDefine: true
-// };
-
-    module.exports = function(config) {
+module.exports = function(config) {
     config.set({
         basePath: '',
         frameworks: ['mocha', 'chai'],
@@ -24,7 +16,7 @@ var path = require('path');
             'test/tests/*.js'
         ],
         reporters: ['progress'],
-        port: 9876,  // karma web server port
+        port: 9876,
         colors: true,
         logLevel: config.LOG_INFO,
         browsers: ['ChromeHeadless', 'IE', 'IE9', 'Firefox'],
@@ -35,7 +27,13 @@ var path = require('path');
             },
             ChromeHeadless: {
                 base: 'Chrome',
-               flags: [/*'--no-sandbox', */'--window-size=1920,1000', '--disable-gpu', /*'--headless', */'--disable-extensions', '--disable-translate', /*'--disable-web-security'*/]
+               flags: [
+                   '--window-size=1920,1000',
+                   '--disable-gpu',
+                   //'--headless', //not work in chrome 60
+                   '--disable-extensions',
+                   '--disable-translate',
+               ]
             }
         },
         autoWatch: true,
@@ -43,8 +41,6 @@ var path = require('path');
         concurrency: Infinity,
         preprocessors: {
             'src/index.ts': ['webpack'],
-            // 'test/bootstrap.js': ['webpack'],
-            // 'test/tests/*.js': ['webpack'],
         },
         plugins: [
             'karma-ie-launcher',
@@ -62,17 +58,14 @@ var path = require('path');
             resolve: webpackConfig.resolve
         },
         client: {
-            // log console output in our test console
             captureConsole: true
         },
         webpackMiddleware: {
             quiet: true,
             stats: {
-                // options i.e.
                chunks: false
             },
             noInfo:true,
-            // publicPath: webpackConfig.output.publicPath
         }
     })
 }
