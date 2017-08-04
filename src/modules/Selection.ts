@@ -1,19 +1,20 @@
 import * as consts from '../constants';
 import Component from './Component';
-import {each, dom, trim, $$, css, asArray} from './Helpers';
+import {each, dom, trim, $$, css, normilizeCSSValue} from './Helpers';
 import Dom from "./Dom";
+import Jodit from "../Jodit";
 
 export default class Selection extends Component{
 
-    __normalizeSelection(range: Range, atStart) {
-        if (!this.isCollapsed() && this.cursorInTheEdge(!atStart, elm => elm && elm.nodeType !== Node.TEXT_NODE && elm !== this.parent.editor, true)) {
-            if (atStart) {
-                range.setStartAfter(range.startContainer)
-            } else {
-                range.setEndBefore(range.endContainer)
-            }
-        }
-    }
+    // private __normalizeSelection(range: Range, atStart) {
+    //     if (!this.isCollapsed() && this.cursorInTheEdge(!atStart, elm => elm && elm.nodeType !== Node.TEXT_NODE && elm !== this.parent.editor, true)) {
+    //         if (atStart) {
+    //             range.setStartAfter(range.startContainer)
+    //         } else {
+    //             range.setEndBefore(range.endContainer)
+    //         }
+    //     }
+    // }
 
     /**
      * Insert the cursor to any point x, y
@@ -718,63 +719,76 @@ export default class Selection extends Component{
         sel.addRange(range);
     }
 
-    applyCSS = (cssRules ?: {[key:string]: string}, nodeName:string = 'span', options?: any) => {
+
+    /**
+     * Apply some css rules for all selections. It method wraps selections in nodeName tag.
+     *
+     * @param {object} cssRules
+     * @param {string} nodeName
+     * @param {object} options
+     */
+    applyCSS = (cssRules ?: {[key:string]: string}, nodeName:string = 'span', options?: {[key: string]: string|string[]}|{[key: string]: (editor: Jodit, value: string) => boolean}) => {
         const WRAP  = 1;
         const UNWRAP  = 0;
-        let mode;
+
+        let mode: 1|0;
 
         const defaultTag = 'SPAN';
 
-        const findNext = (elm: HTMLElement) => (elm && !Dom.isEmptyTextNode(elm) && !(elm.nodeType === Node.ELEMENT_NODE && elm.classList.contains(consts.MARKER_CLASS)));
+        const findNextCondition = (elm: HTMLElement) => (elm && !Dom.isEmptyTextNode(elm) && !(elm.nodeType === Node.ELEMENT_NODE && elm.classList.contains(consts.MARKER_CLASS)));
+
         const checkCssRulesFor = (elm: HTMLElement) => {
             return elm.nodeName !== 'FONT' && elm.nodeType === Node.ELEMENT_NODE && each(options, (cssPropertyKey: string, cssPropertyValues: string[]) => {
                 const value = css(elm, cssPropertyKey);
-                return  cssPropertyValues.indexOf(value.toLowerCase()) !== -1
+                return  cssPropertyValues.indexOf(value.toString().toLowerCase()) !== -1;
             }) !== false
         };
 
         const isSuitElement = (elm: HTMLElement) => {
-            return ((elm.nodeName === nodeName.toUpperCase()) || (options && checkCssRulesFor(elm))) && elm.nodeType === Node.ELEMENT_NODE && !elm.classList.contains(consts.MARKER_CLASS);
+            const reg = new RegExp('^' + elm.nodeName + '$', 'i');
+            return ((reg.test(nodeName)) || (options && checkCssRulesFor(elm))) && findNextCondition(elm);
         };
 
-        const canUnwrap = (elm: HTMLElement) => {
-            if (elm.nodeName === defaultTag && !elm.getAttribute('style')) {
-                Dom.unwrap(elm);
+        const toggleStyles =  (elm: HTMLElement) => {
+            if (isSuitElement(elm)) {
+                // toggle CSS rules
+                if (elm.nodeName === defaultTag) {
+                    Object.keys(cssRules).forEach((rule: string) => {
+                        if (mode === UNWRAP || css(elm, rule) == normilizeCSSValue(rule, <string>cssRules[rule])) {
+                            css(elm, rule, '');
+                            if (mode === undefined) {
+                                mode = UNWRAP;
+                            }
+                        } else {
+                            css(elm, rule, cssRules[rule]);
+                            if (mode === undefined) {
+                                mode = WRAP;
+                            }
+                        }
+                    });
+                }
+
+                if (!elm.getAttribute('style') || elm.nodeName !== defaultTag) {
+                    Dom.unwrap(elm); // toggle `<strong>test</strong>` to `test`, and `<span style="">test</span>` to `test`
+                    if (mode === undefined) {
+                        mode = UNWRAP;
+                    }
+                }
             }
         };
 
+
+
         if (!this.isCollapsed()) {
             const selInfo = this.save();
-            this.parent.editor.normalize();
+            this.parent.editor.normalize(); // FF fix for test "commandsTest - Exec command "bold" for some text that contains a few STRONG elements, should unwrap all of these"
             this.parent.doc.execCommand('fontsize', false, 7);
 
-            $$('font[size="7"]', this.parent.editor).forEach((font) => {
-                if (!Dom.next(font, findNext, <HTMLElement>font.parentNode) && !Dom.prev(font, findNext, <HTMLElement>font.parentNode) && isSuitElement(<HTMLElement>font.parentNode)) {
-                    css(<HTMLElement>font.parentNode, cssRules);
-                    if (nodeName.toUpperCase() !== defaultTag && isSuitElement(<HTMLElement>font.parentNode)) {
-                        Dom.unwrap(font.parentNode);
-                    } else {
-                        canUnwrap(<HTMLElement>font.parentNode); // TODO for style="font-weight; font-style"
-                    }
-
-                    if (mode === undefined) {
-                        mode = UNWRAP;
-                    }
-
-                    Dom.unwrap(font);
-                } else if (!Dom.next(font.firstChild, findNext, <HTMLElement>font) && !Dom.prev(font.firstChild, findNext, <HTMLElement>font) && isSuitElement(<HTMLElement>font.firstChild)) {
-                    css(<HTMLElement>font.firstChild, cssRules);
-                    if (nodeName.toUpperCase() !== defaultTag && isSuitElement(<HTMLElement>font.firstChild)) {
-                        Dom.unwrap(font.firstChild);
-                    } else {
-                        canUnwrap(<HTMLElement>font.firstChild); // TODO for style="font-weight; font-style"
-                    }
-
-                    if (mode === undefined) {
-                        mode = UNWRAP;
-                    }
-
-                    Dom.unwrap(font);
+            $$('font[size="7"]', this.parent.editor).forEach((font: HTMLFontElement) => {
+                if (!Dom.next(font, findNextCondition, <HTMLElement>font.parentNode) && !Dom.prev(font, findNextCondition, <HTMLElement>font.parentNode) && isSuitElement(<HTMLElement>font.parentNode)) {
+                    toggleStyles(<HTMLElement>font.parentNode);
+                } else if (!Dom.next(font.firstChild, findNextCondition, <HTMLElement>font) && !Dom.prev(font.firstChild, findNextCondition, <HTMLElement>font) && isSuitElement(<HTMLElement>font.firstChild)) {
+                    toggleStyles(<HTMLElement>font.firstChild);
                 } else if (Dom.closest(font, isSuitElement, this.parent.editor)) {
                     const leftRange = this.doc.createRange(),
                         wrapper = <HTMLElement>Dom.closest(font, isSuitElement, this.parent.editor);
@@ -792,20 +806,18 @@ export default class Selection extends Component{
                     leftRange.setEndAfter(wrapper);
                     const rightFragment = leftRange.extractContents();
 
+                    // case then marker can be inside fragnment
                     if (!trim(rightFragment.textContent).length) {
                         Dom.unwrap(rightFragment.firstChild);
                     }
 
                     Dom.after(wrapper, rightFragment);
 
-                    if (mode === undefined) {
-                        mode = UNWRAP;
-                    }
-
-                    Dom.unwrap(font);
-                    Dom.unwrap(wrapper);
+                    toggleStyles(wrapper);
 
                 } else {
+
+                    // unwrap all suit elements inside
                     const needUnwrap: Node[] = [];
                     let firstElementSuit: boolean;
                     Dom.find(font.firstChild, (elm: HTMLElement) => {
@@ -829,13 +841,13 @@ export default class Selection extends Component{
                             mode = WRAP;
                         }
                         if (mode === WRAP) {
-                            css(Dom.replace(font, nodeName, false, false, this.parent.doc), cssRules);
-                        } else {
-                            Dom.unwrap(font);
+                            css(Dom.replace(font, nodeName, false, false, this.parent.doc), nodeName.toUpperCase() === defaultTag ? cssRules : {});
                         }
-                    } else {
-                        Dom.unwrap(font);
                     }
+                }
+
+                if (font.parentNode) {
+                    Dom.unwrap(font);
                 }
             });
 
@@ -850,7 +862,9 @@ export default class Selection extends Component{
             if (nodeName.toUpperCase() === defaultTag || !clearStyle) {
                 const node = Dom.create(nodeName, consts.INVISIBLE_SPACE, this.parent.doc);
                 this.insertNode(node);
-                css(<HTMLElement>node, cssRules);
+                if (nodeName.toUpperCase() === defaultTag) {
+                    css(<HTMLElement>node, cssRules);
+                }
 
                 this.setCursorIn(node);
             }

@@ -484,11 +484,11 @@ export class Config {
 
     /**
      * Behavior for buttons
-     * @type {Object}
      */
     controls: {[key: string]: ControlType} = {
         about: {
             exec: (editor: Jodit) => {
+                // don't use new Dialog + import Dialog, because of Config used inside Dialog.ts
                 const dialog = new (require('./modules/Dialog').default)(editor);
                 dialog.setTitle(editor.i18n('About Jodit'));
                 dialog.setContent(

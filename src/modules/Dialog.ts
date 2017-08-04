@@ -326,9 +326,9 @@ export default class Dialog extends Component{
     /**
      * It opens a dialog box to center it, and causes the two event.
      *
-     * @param {string|string[]|Element|Element[]} [content]  specifies the contents of the dialog box. Can be false или undefined. see {@link module:Dialog~setContent|setContent}
+     * @param {string|string[]|Element|Element[]} [content]  specifies the contents of the dialog box. Can be false или undefined. see {@link Dialog~setContent|setContent}
      * @param {string|string[]|Element|Element[]} [title]  specifies the title of the dialog box, @see setTitle
-     * @param {boolean} [destroyAfter] true - After closing the window , the destructor will be called. see {@link module:Dialog~destroy|destroy}
+     * @param {boolean} [destroyAfter] true - After closing the window , the destructor will be called. see {@link Dialog~destruct|destruct}
      * @param {boolean} [modal] - true window will be opened in modal mode
      * @fires {@link event:beforeOpen} id returns 'false' then the window will not open
      * @fires {@link event:afterOpen}
@@ -423,8 +423,8 @@ export default class Dialog extends Component{
 
         this.startX = e.clientX;
         this.startY = e.clientY;
-        this.startPoint.x = css(this.dialog, 'left');
-        this.startPoint.y = css(this.dialog, 'top');
+        this.startPoint.x = <number>css(this.dialog, 'left');
+        this.startPoint.y = <number>css(this.dialog, 'top');
 
         this.setMaxZIndex();
         e.preventDefault();
@@ -498,7 +498,7 @@ export default class Dialog extends Component{
     }
 
     /**
-     * Closes the dialog box , if you want to call the method {@link module:Dialog~destroy|destroy}
+     * Closes the dialog box , if you want to call the method {@link module:Dialog~destruct|destruct}
      *
      * @see destroy
      * @method close

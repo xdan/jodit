@@ -114,27 +114,14 @@
     editor.editor.addEventListener('input', callback)
     editor.events.on('change', callback)
 
-    editor.setEditorValue('text2text')
-    var sel = editor.win.getSelection(), range = editor.doc.createRange();
-    range.setStart(editor.editor.firstChild, 3)
-    range.setEnd(editor.editor.firstChild, 6)
+    editor.setEditorValue('<table><tr><td>1</td></tr></table>');
+    var sel = editor.win.getSelection(),
+        range = editor.doc.createRange();
+    range.selectNodeContents(editor.editor.querySelector('td'));
     sel.removeAllRanges();
-    sel.addRange(range)
-    simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-brush'))
-    var list = editor.container.querySelector('.jodit_toolbar_popup');
-    expect(list.style.display).to.equal('block');
-    simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-brush [data-color="#F9CB9C"]'))
-    expect(editor.getEditorValue()).to.equal('tex<span style="background-color: rgb(249, 203, 156);">t2t</span>ext');
-    // simulateEvent('mousedown', 0, editor.editor)
-    expect(list.style.display).to.equal('none');
-    range.selectNodeContents(editor.editor.querySelector('span'))
-    // range.collapse(true);
-    sel.removeAllRanges();
-    sel.addRange(range)
-    simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-brush'))
-    expect(list.style.display).to.equal('block');
-    simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-brush .jodit_colorpicker > a > svg'))
-    expect(editor.getEditorValue()).to.equal('text2text');
+    sel.addRange(range);
+    editor.execCommand('formatBlock', false, 'h1');
+    expect(editor.getEditorValue()).to.equal('<table><tbody><tr><td><h1>1</h1></td></tr></tbody></table>');
 //    simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-brush'))
 //    expect(list.style.display).to.equal('block');
 //    simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-brush .jodit_colorpicker > a > svg'))

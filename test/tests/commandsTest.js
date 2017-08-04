@@ -7,14 +7,50 @@ describe('Commands Jodit Editor Tests', function() {
         var sel = editor.win.getSelection(),
             range = editor.doc.createRange();
 
-        range.setStart(editor.editor.firstChild, 0);
-        range.setEnd(editor.editor.lastChild, 0);
+        range.setStartBefore(editor.editor.firstChild);
+        range.setEndAfter(editor.editor.lastChild);
         sel.removeAllRanges();
         sel.addRange(range);
 
         editor.execCommand('formatBlock', false, 'h1');
 
         expect(editor.getEditorValue()).to.equal('<h1>test</h1><h1>test2</h1>');
+    });
+    it('Try exec the command "formatBlock" in text node then selection is collapsed it should wrap it node in H1', function() {
+        var editor = new Jodit('#tested_area');
+        editor.setEditorValue('test');
+
+        var sel = editor.win.getSelection(),
+            range = editor.doc.createRange();
+
+        range.setStart(editor.editor.firstChild, 2);
+
+        sel.removeAllRanges();
+        sel.addRange(range);
+
+        editor.execCommand('formatBlock', false, 'h1');
+
+        editor.selection.insertNode(document.createTextNode(' a '));
+
+        expect(editor.getEditorValue()).to.equal('<h1>te a st</h1>');
+    });
+    it('Try exec the command "formatBlock" in the end of text node then selection is collapsed it should wrap it node in H1', function() {
+        var editor = new Jodit('#tested_area');
+        editor.setEditorValue('test');
+
+        var sel = editor.win.getSelection(),
+            range = editor.doc.createRange();
+
+        range.setStart(editor.editor.firstChild, 4);
+
+        sel.removeAllRanges();
+        sel.addRange(range);
+
+        editor.execCommand('formatBlock', false, 'h1');
+
+        editor.selection.insertNode(document.createTextNode(' a '));
+
+        expect(editor.getEditorValue()).to.equal('<h1>test a </h1>');
     });
 
     it('Try exec the command "formatBlock" for several text nodes', function() {
@@ -338,6 +374,21 @@ describe('Commands Jodit Editor Tests', function() {
             editor.execCommand('fontSize', false, 14);
 
             expect(editor.getEditorValue()).to.equal('<h5 style="text-align: left;">testy<span style="font-size: 14px;"></span> oprst <span>lets go</span></h5>');
+        });
+        it('Insert H1 inside TD should crearte new H1 withow replacement', function () {
+            var editor = new Jodit('#tested_area');
+            editor.setEditorValue('<table><tr><td>1</td></tr></table>');
+
+            var sel = editor.win.getSelection(),
+                range = editor.doc.createRange();
+
+            range.selectNodeContents(editor.editor.querySelector('td'));
+            sel.removeAllRanges();
+            sel.addRange(range);
+
+            editor.execCommand('formatBlock', false, 'h1');
+
+            expect(editor.getEditorValue()).to.equal('<table><tbody><tr><td><h1>1</h1></td></tr></tbody></table>');
         });
     });
     describe('Colors', function() {

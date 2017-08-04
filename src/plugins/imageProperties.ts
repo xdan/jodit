@@ -195,9 +195,9 @@ Jodit.plugins.imageProperties = function (editor: Jodit) {
 
             updateAlign = () => {
                 if (image.style.cssFloat && ['left', 'right'].indexOf(image.style.cssFloat.toLowerCase()) !== -1) {
-                    val(prop, '#align', css(image, 'float'));
+                    val(prop, '#align', <string>css(image, 'float'));
                 } else {
-                    if (css(image, 'display') === 'block' && image.style.marginLeft  === 'auto' && image.style.marginRight === 'auto') {
+                    if (<string>css(image, 'display') === 'block' && image.style.marginLeft  === 'auto' && image.style.marginRight === 'auto') {
                         val(prop, '#align', 'center');
                     }
                 }
@@ -511,7 +511,7 @@ Jodit.plugins.imageProperties = function (editor: Jodit) {
                         });
                     }
                 } else {
-                    if (css(image, 'float') && ['right', 'left'].indexOf(css(image, 'float').toLowerCase()) !== -1) {
+                    if (css(image, 'float') && ['right', 'left'].indexOf(css(image, 'float').toString().toLowerCase()) !== -1) {
                         css(image, 'float', '');
                     }
                     clearCenterAlign();

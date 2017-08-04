@@ -37,16 +37,16 @@ export default class Toolbar extends Component{
     list: HTMLDivElement;
 
 
-    __popapOpened = false;
-    __listOpened = false;
+    private __popapOpened: boolean = false;
+    private __listOpened: boolean = false;
 
     /**
      *
-     * @param {Jodit} parent
+     * @param {Jodit} editor
      *
      */
-    constructor(parent: Jodit) {
-        super(parent);
+    constructor(editor: Jodit) {
+        super(editor);
         this.container = <HTMLDivElement>dom('<div class="jodit_toolbar"/>');
         this.popup = <HTMLDivElement>dom('<div class="jodit_toolbar_popup"/>');
         this.list = <HTMLDivElement>dom('<ul class="jodit_dropdownlist"/>');
@@ -152,8 +152,8 @@ export default class Toolbar extends Component{
                 },
 
                 checkActiveStatus = (cssObject, node) => {
-                    let matches = 0,
-                        total = 0;
+                    let matches: number = 0,
+                        total: number = 0;
 
                     Object.keys(cssObject).forEach((cssProperty) => {
                         const cssValue = cssObject[cssProperty];
@@ -347,6 +347,7 @@ export default class Toolbar extends Component{
      *
      * @param {Array|Object} buttons
      * @param {HTMLDivElement} container
+     * @param {HTMLElement} target Work element
      */
     build(buttons: Array<ControlType|string>, container: HTMLElement, target?: HTMLElement) {
         let lastBtnSeparator: boolean = false;

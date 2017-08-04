@@ -342,8 +342,8 @@ export default class ImageEditor extends Component{
         let ratioX = this.cropImage.offsetWidth / this.naturalWidth,
             ratioY = this.cropImage.offsetHeight / this.naturalHeight;
 
-        this.cropBox.x = css(this.cropHandler, 'left') / ratioX;
-        this.cropBox.y = css(this.cropHandler, 'top') / ratioY;
+        this.cropBox.x = <number>css(this.cropHandler, 'left') / ratioX;
+        this.cropBox.y = <number>css(this.cropHandler, 'top') / ratioY;
         this.cropBox.w = this.cropHandler.offsetWidth / ratioX;
         this.cropBox.h = this.cropHandler.offsetHeight / ratioY;
 
@@ -368,7 +368,7 @@ export default class ImageEditor extends Component{
      * @method open
      * @param {string} url
      * @param {function} save
-     * @param {string|undefined} save.name new filename
+     * @param {string} [save.name] new filename
      * @param {object} save.data Bound box for resize and crop operation
      * @param {string} save.data.action resize or crop
      * @param {object} save.data.box Bound box
@@ -469,8 +469,8 @@ export default class ImageEditor extends Component{
             self.start_y = parseInt(e.clientY, 10);
 
             if (self.activeTab === 'crop') {
-                self.top_x = css(self.cropHandler, 'left');
-                self.top_y = css(self.cropHandler, 'top');
+                self.top_x = <number>css(self.cropHandler, 'left');
+                self.top_y = <number>css(self.cropHandler, 'top');
                 self.width = self.cropHandler.offsetWidth;
                 self.height = self.cropHandler.offsetHeight;
             } else {
@@ -629,8 +629,8 @@ export default class ImageEditor extends Component{
 
         self
             .parent.events.on(self.cropHandler, 'updatesize', () => {
-                let new_x = css(self.cropHandler, 'left'),
-                    new_y = css(self.cropHandler, 'top'),
+                let new_x: number = <number>css(self.cropHandler, 'left'),
+                    new_y: number = <number>css(self.cropHandler, 'top'),
                     new_width = self.cropHandler.offsetWidth,
                     new_height = self.cropHandler.offsetHeight;
 

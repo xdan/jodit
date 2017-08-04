@@ -130,7 +130,7 @@ Config.prototype.popup = {
                         });
                     }
                 } else {
-                    if (css(image, 'float') && ['right', 'left'].indexOf(css(image, 'float').toLowerCase()) !== -1) {
+                    if (css(image, 'float') && ['right', 'left'].indexOf((<string>css(image, 'float')).toLowerCase()) !== -1) {
                         css(image, 'float', '');
                     }
                     clearCenterAlign();
@@ -154,8 +154,8 @@ Config.prototype.popup = {
                     return false;
                 }
 
-                color = css(selected[0], 'color');
-                bg_color = css(selected[0], 'background-color');
+                color = <string>css(selected[0], 'color');
+                bg_color = <string>css(selected[0], 'background-color');
 
 
                 $bg = ColorPickerWidget(editor, (value: string) => {
@@ -327,7 +327,7 @@ Jodit.plugins.Popup = function (editor: Jodit) {
             clickOnImage = false;
         }
     });
-    editor.__on(window, 'mouseup', (event: MouseEvent) => {
+    editor.__on(window, 'mouseup', () => {
         if (!clickOnImage) {
             hidePopup();
         }

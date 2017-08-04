@@ -721,6 +721,14 @@ export const throttle = function (fn: Function, timeout: number, ctx?: any) {
 
 };
 
+export const normilizeCSSValue = (key: string, value: string|number): string|number => {
+    switch (key) {
+        case "font-weight":
+            return value === 'bold' ? 700 : value;
+    }
+    return value;
+};
+
 /**
  * Get the value of a computed style property for the first element in the set of matched elements or set one or more CSS properties for every matched element
  * @param {HTMLElement} element
@@ -728,14 +736,18 @@ export const throttle = function (fn: Function, timeout: number, ctx?: any) {
  * @param {string|int} value A value to set for the property.
  */
 export const css = (element: HTMLElement, key: string|object, value?: string|number) => {
-    let numberFieldsReg = /^left|top|bottom|right|width|min|max|height|margin|padding|font-size/i;
+    const numberFieldsReg = /^left|top|bottom|right|width|min|max|height|margin|padding|font-size/i;
+
+
 
     if (isPlainObject(key) || value !== undefined) {
-        const setValue = (elm, key, value) => {
-            if (value !== undefined && value !== null && numberFieldsReg.test(key) && /^[\-+]?[0-9.]+$/.test(value.toString())) {
-                value = parseInt(value, 10) + 'px';
+        const setValue = (elm, _key, _value) => {
+            if (_value !== undefined && _value !== null && numberFieldsReg.test(_key) && /^[\-+]?[0-9.]+$/.test(_value.toString())) {
+                _value = parseInt(_value, 10) + 'px';
             }
-            elm.style[key] = value;
+            if (css(elm, _key) != normilizeCSSValue(_key, _value)) {
+                elm.style[_key] = _value;
+            }
         };
 
         if (isPlainObject(key)) {
@@ -747,7 +759,7 @@ export const css = (element: HTMLElement, key: string|object, value?: string|num
             setValue(element, camelCase(<string>key), value);
         }
 
-        return this;
+        return;
     }
 
     const key2 = <string>fromCamelCase(<string>key),
@@ -760,7 +772,7 @@ export const css = (element: HTMLElement, key: string|object, value?: string|num
         result = parseInt(result, 10);
     }
 
-    return result;
+    return normilizeCSSValue(<string>key, result);
 };
 
 export const asArray = (a): Array<any> => (
