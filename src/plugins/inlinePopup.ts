@@ -303,7 +303,7 @@ Jodit.plugins.Popup = function (editor: Jodit) {
     editor.container
         .appendChild(popup);
 
-    editor.events.on('hidePopup afterCommand keydown', hidePopup);
+    editor.events.on('hidePopup afterCommand keydown resize', hidePopup);
     editor.events.on('showPopap', delayShowPopup);
     editor.events.on('beforeDestruct', () => {
         clearTimeout(timeout);

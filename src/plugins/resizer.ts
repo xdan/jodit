@@ -1,6 +1,6 @@
 import Jodit from '../Jodit';
 import {Config} from '../Config'
-import {$$, dom, isIE, offset} from '../modules/Helpers'
+import {$$, debounce, dom, isIE, offset} from '../modules/Helpers'
 import Dom from "../modules/Dom";
 
 /**
@@ -88,16 +88,26 @@ Jodit.plugins.Resizer = function (editor: Jodit) {
 
         updateSize = () => {
             if (resizerIsVisible) {
-                const pos = offset(currentElement, editor);
+                const pos = offset(currentElement, editor),
+                    left: number = parseInt(resizer.style.left, 10),
+                    top: number = parseInt(resizer.style.top, 10),
+                    width: number = resizer.offsetWidth,
+                    height: number = resizer.offsetHeight;
                 // 1 - because need move border higher and to the left than the picture
                 // 2 - in box-sizing: border-box mode width is real width indifferent by border-width.
-                resizer.style.top = (pos.top - 1) + 'px';
-                resizer.style.left = (pos.left - 1) + 'px';
-                resizer.style.width = (currentElement.offsetWidth) + 'px';
-                resizer.style.height = (currentElement.offsetHeight) + 'px';
+                if (top !== pos.top - 1 || left !== pos.left - 1 || width !== currentElement.offsetWidth || height !== currentElement.offsetHeight) {
+                    resizer.style.top = (pos.top - 1) + 'px';
+                    resizer.style.left = (pos.left - 1) + 'px';
+                    resizer.style.width = currentElement.offsetWidth + 'px';
+                    resizer.style.height = currentElement.offsetHeight + 'px';
 
-                editor.events.fire(currentElement, 'changesize');
-                editor.events.fire('resize');
+                    editor.events.fire(currentElement, 'changesize');
+
+                    // check for first init. Ex. inlinePopup hides when it was fired
+                    if (!isNaN(left)) {
+                        editor.events.fire('resize');
+                    }
+                }
             }
         },
 
@@ -245,7 +255,7 @@ Jodit.plugins.Resizer = function (editor: Jodit) {
     });
 
 
-    editor.events.on('change afterInit afterSetMode', () => {
+    editor.events.on('change afterInit afterSetMode', debounce(() => {
         if (resizerIsVisible && (!currentElement || !currentElement.parentNode)) {
             hideResizer();
         }
@@ -255,7 +265,7 @@ Jodit.plugins.Resizer = function (editor: Jodit) {
                 bind(elm);
             }
         });
-    });
+    }, editor.options.observer.timeout));
 
     editor.container.appendChild(resizer);
 };

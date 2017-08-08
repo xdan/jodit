@@ -522,6 +522,8 @@ Jodit.plugins.imageProperties = function (editor: Jodit) {
                 image.removeAttribute('style');
             }
 
+            editor.setEditorValue();
+
             dialog.close();
         });
 

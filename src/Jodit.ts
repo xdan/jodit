@@ -286,7 +286,7 @@ export default class Jodit extends Component{
                     css(this.iframe, 'height', this.editor.offsetHeight);
                 };
                 this.events.on('change afterInit afterSetMode resize', resizeIframe);
-                this.__on([this.iframe, this.win, doc.documentElement], 'load', alert);
+                this.__on([this.iframe, this.win, doc.documentElement], 'load', resizeIframe);
                 this.__on(doc, 'readystatechange DOMContentLoaded', resizeIframe);
                 // setTimeout(resizeIframe, 100);
             }
@@ -482,7 +482,7 @@ export default class Jodit extends Component{
             this.editor.innerHTML = value;
         }
 
-        let old_value = this.getElementValue();
+        const old_value = this.getElementValue();
         if (old_value !== this.getEditorValue()) {
             this.setElementValue(this.getEditorValue());
             this.events.fire('change', [old_value, this.getEditorValue()]);
