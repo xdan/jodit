@@ -1,16 +1,13 @@
 {
   "name": "jodit",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "description": "Jodit is awesome and usefully wysiwyg editor with filebrowser",
   "main": "index.js",
   "scripts": {
     "newversion": "npm version patch --no-git-tag-version && npm run build && npm run newversiongit",
     "newversiongit": "git add --all  && git commit -m \"New version %npm_package_version%. Read more http://xdsoft.net/jodit/#%npm_package_version% \" && git tag %npm_package_version% && git push --tags gitlab HEAD:master",
-
     "start": "node server.js",
-
     "build": "rm -f dist/* && cross-env NODE_ENV=production webpack --progress",
-
     "test": "karma start --browsers ChromeHeadless,IE,Firefox karma.conf.js"
   },
   "repository": {
