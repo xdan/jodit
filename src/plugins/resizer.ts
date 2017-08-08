@@ -97,6 +97,7 @@ Jodit.plugins.Resizer = function (editor: Jodit) {
                 resizer.style.height = (currentElement.offsetHeight) + 'px';
 
                 editor.events.fire(currentElement, 'changesize');
+                editor.events.fire('resize');
             }
         },
 

@@ -54,9 +54,16 @@ Jodit.plugins.imageProcessor = function (editor: Jodit) {
     editor.events.on('change afterInit', debounce(() => {
         if (editor.editor) {
             $$('img', editor.editor).forEach((elm: HTMLImageElement) => {
+
                 if (!elm[JODIT_IMAGE_PROCESSOR_BINDED]) {
                     elm[JODIT_IMAGE_PROCESSOR_BINDED] = true;
                     bind(elm);
+                    if (!(<HTMLImageElement>elm).complete) {
+                        elm.addEventListener('load', function ElementOnLoad() {
+                            editor.events.fire('resize');
+                            elm.removeEventListener('load', ElementOnLoad);
+                        });
+                    }
                 }
             });
         }

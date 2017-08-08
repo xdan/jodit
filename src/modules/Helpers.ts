@@ -679,7 +679,7 @@ export const  debounce = function (fn, timeout ?: number, invokeAsap?: boolean, 
         let args = arguments;
         ctx = ctx || this;
 
-        if (invokeAsap && !timer) {
+        if (invokeAsap || !timeout) {
             fn.apply(ctx, args);
         }
 

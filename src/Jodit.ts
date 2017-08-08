@@ -240,6 +240,7 @@ export default class Jodit extends Component{
             this.iframe = <HTMLIFrameElement>document.createElement("iframe");
             this.iframe.style.display = 'block';
             this.iframe.src = 'about:blank';
+            this.iframe.className = 'jodit_wysiwyg_iframe';
             this.iframe.frameBorder = '0';
 
             this.workplace.appendChild(this.iframe);
@@ -278,6 +279,17 @@ export default class Jodit extends Component{
                 height: this.options.height,
                 minHeight: this.options.minHeight
             });
+
+            if (this.options.height === 'auto') {
+                doc.documentElement.style.overflowY = 'hidden';
+                const resizeIframe = (e) => {
+                    css(this.iframe, 'height', this.editor.offsetHeight);
+                };
+                this.events.on('change afterInit afterSetMode resize', resizeIframe);
+                this.__on([this.iframe, this.win, doc.documentElement], 'load', alert);
+                this.__on(doc, 'readystatechange DOMContentLoaded', resizeIframe);
+                // setTimeout(resizeIframe, 100);
+            }
 
             css(this.editor, 'minHeight', this.options.minHeight);
 

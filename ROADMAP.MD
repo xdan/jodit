@@ -6,7 +6,7 @@
 - [x] Restore FileBrowser
 - [x] Restore Inline toolbar for Image and Table 3.0.1
 - [x] Auto choose language. Test language mode. 3.0.2
-- [ ] Restore Iframe mode 3.0.4
+- [x] Restore Iframe mode 3.0.4
 - [ ] Restore mobile version/Response mode. Switch buttons md - lg - sm 3.0.5
 - [ ] Restore themes 3.0.6
 - [ ] Restore mode without icons 3.0.7
