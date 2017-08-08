@@ -4,7 +4,7 @@ import 'classlist-polyfill';
 
 (function(e){
     e.matches || (e.matches = e['matchesSelector'] !== undefined ? e['matchesSelector'] : function (selector) {
-            const matches = document.querySelectorAll(selector), th = this;
+            const matches = this.ownerDocument.querySelectorAll(selector), th = this;
             return Array.prototype.some.call(matches, (e) => {
                 return e === th;
             });

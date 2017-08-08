@@ -8,7 +8,7 @@ Jodit.plugins.justify = function (editor: Jodit) {
     editor.events.on('beforeCommand', (command) => {
         if (/justify/.test(command)) {
             const justify = (box) => {
-                if (box instanceof HTMLElement) {
+                if (box instanceof (<any>editor.win).HTMLElement) {
                     switch (command) {
                         case 'justifyfull':
                             box.style.textAlign = 'justify';
@@ -37,7 +37,7 @@ Jodit.plugins.justify = function (editor: Jodit) {
                     }
                 }
 
-                if (!(current instanceof Node)) {
+                if (!(current instanceof (<any>editor.win).Node)) {
                     return;
                 }
 

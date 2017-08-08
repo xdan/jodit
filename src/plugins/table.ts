@@ -30,7 +30,7 @@ class TableProcessor extends Component{
      * @private
      */
     __deSelectAll(table: HTMLTableElement, current_cell ?: HTMLTableCellElement|false) {
-        let cells: HTMLTableCellElement[] = table ? Table.getAllSelectedCells(table) : Table.getAllSelectedCells(this.parent.editor);
+        let cells: HTMLTableCellElement[] = table ? Table.getAllSelectedCells(table) : Table.getAllSelectedCells(this.jodit.editor);
         if (cells.length) {
             each(cells, (i, cell) => {
                 if (!current_cell || current_cell !== cell) {
@@ -61,7 +61,7 @@ class TableProcessor extends Component{
     __setWorkCell(cell: HTMLTableCellElement, wholeTable = null) {
         this.__wholeTable = wholeTable;
         this.__workCell = cell;
-        this.__workTable = <HTMLTableElement>Dom.up(cell, (elm) => (elm.tagName === 'TABLE'), this.parent.editor);
+        this.__workTable = <HTMLTableElement>Dom.up(cell, (elm) => (elm.tagName === 'TABLE'), this.jodit.editor);
     }
 
     __minX: number;
@@ -69,9 +69,9 @@ class TableProcessor extends Component{
 
     __addResizer() {
         if (!this.__resizerHandler) {
-            this.__resizerHandler = <HTMLElement>this.parent.container.querySelector('.jodit_table_resizer');
+            this.__resizerHandler = <HTMLElement>this.jodit.container.querySelector('.jodit_table_resizer');
             if (!this.__resizerHandler) {
-                this.__resizerHandler = dom('<div class="jodit_table_resizer"></div>');
+                this.__resizerHandler = dom('<div class="jodit_table_resizer"></div>', document);
                 let startX = 0;//, startLeft = 0;
                 this.__resizerHandler.addEventListener('mousedown', (event: MouseEvent) => {
                     this.__drag = true;
@@ -79,7 +79,7 @@ class TableProcessor extends Component{
                     startX = event.clientX;
                     //startLeft = parseInt(this.__resizerHandler.style.left, 10);
 
-                    this.parent.startDrag();
+                    this.jodit.startDrag();
                     this.__resizerHandler.classList.add('jodit_table_resizer-moved');
 
                     let box,
@@ -123,14 +123,14 @@ class TableProcessor extends Component{
                         this.__resizerDelta = x - startX;
                         this.__resizerHandler.style.left =  x + 'px';
 
-                        this.win.getSelection().removeAllRanges();
+                        this.jodit.win.getSelection().removeAllRanges();
                         if(event.preventDefault) {
                             event.preventDefault();
                         }
                     }
                 });
 
-                this.parent.container.appendChild(this.__resizerHandler);
+                this.jodit.container.appendChild(this.__resizerHandler);
             }
         }
     }
@@ -146,9 +146,9 @@ class TableProcessor extends Component{
      * @private
      */
     __calcResizerPosition(table: HTMLTableElement, cell: HTMLTableCellElement, offsetX: number = 0, delta: number = 0) {
-        let box = cell.getBoundingClientRect();
+        const box = offset(cell, this.jodit);
         if (offsetX <= consts.NEARBY || box.width - offsetX <= consts.NEARBY) {
-            let parentBox = table.getBoundingClientRect();
+            const parentBox = offset(table, this.jodit);
             this.__resizerHandler.style.left = (offsetX <= consts.NEARBY ? box.left : box.left + box.width) + delta + 'px';
             this.__resizerHandler.style.height = parentBox.height  + 'px';
             this.__resizerHandler.style.top = parentBox.top  + 'px';
@@ -175,16 +175,16 @@ class TableProcessor extends Component{
         table[this.__key] = true;
         let start: HTMLTableCellElement;
         table.addEventListener('mousedown', (event: MouseEvent) => {
-            let cell: HTMLTableCellElement = <HTMLTableCellElement>Dom.up(<HTMLElement>event.target, TableProcessor.__isCell, table);
-            if (cell && cell instanceof  HTMLElement) {
+            const cell: HTMLTableCellElement = <HTMLTableCellElement>Dom.up(<HTMLElement>event.target, TableProcessor.__isCell, table);
+            if (cell && cell instanceof (<any>this.jodit.win).HTMLElement) {
                 if (!cell.firstChild) {
-                    cell.appendChild(Dom.create('br', '', this.doc))
+                    cell.appendChild(Dom.create('br', '', this.jodit.doc))
                 }
 
                 start = cell;
                 Table.addSelected(cell);
                 this.__selectMode = true;
-                this.parent.startDrag();
+                this.jodit.startDrag();
             }
         });
         table.addEventListener('mouseleave', (e: MouseEvent) => {
@@ -196,11 +196,11 @@ class TableProcessor extends Component{
             if (this.__drag) {
                 return;
             }
-            let cell = <HTMLTableCellElement>Dom.up(<HTMLElement>event.target, TableProcessor.__isCell, table);
+            const cell = <HTMLTableCellElement>Dom.up(<HTMLElement>event.target, TableProcessor.__isCell, table);
             if (cell) {
                 if (this.__selectMode) {
                     if (cell !== start) {
-                        this.win.getSelection().removeAllRanges();
+                        this.jodit.win.getSelection().removeAllRanges();
                         if(event.preventDefault) {
                             event.preventDefault();
                         }
@@ -218,8 +218,8 @@ class TableProcessor extends Component{
                     const   max = box[bound[1][0]][bound[1][1]],
                             min = box[bound[0][0]][bound[0][1]];
 
-                    this.parent.events
-                        .fire('showPopap', [table, offset(min).left + Math.round((offset(max).left + max.offsetWidth - offset(min).left) / 2), offset(max).top + max.offsetHeight]);
+                    this.jodit.events
+                        .fire('showPopap', [table, offset(min, this.jodit).left + Math.round((offset(max, this.jodit).left + max.offsetWidth - offset(min, this.jodit).left) / 2), offset(max, this.jodit).top + max.offsetHeight]);
                 } else {
                     this.__calcResizerPosition(table, cell, event.offsetX);
                 }
@@ -242,7 +242,7 @@ class TableProcessor extends Component{
         this.__on(window, 'mouseup', () => {
             if (this.__selectMode || this.__drag) {
                 this.__selectMode = false;
-                this.parent.endDrag();
+                this.jodit.endDrag();
             }
             if (this.__resizerHandler && this.__drag) {
                 this.__drag = false;
@@ -256,13 +256,13 @@ class TableProcessor extends Component{
                     Table.setColumnWidthByDelta(this.__workTable, Table.formalCoordinate(this.__workTable, nextTD)[1], -this.__resizerDelta, false, __marked);
                 } else {
                     const width = this.__workTable.offsetWidth,
-                        parentWidth = getContentWidth(<HTMLElement>this.__workTable.parentNode, this.win);
+                        parentWidth = getContentWidth(<HTMLElement>this.__workTable.parentNode, this.jodit.win);
 
                     // right side
                     if (this.__wholeTable === false) {
                         this.__workTable.style.width = ((width + this.__resizerDelta)/parentWidth) * 100 + '%';
                     } else {
-                        let margin = parseInt(this.win.getComputedStyle(this.__workTable).marginLeft || '0', 10);
+                        let margin = parseInt(this.jodit.win.getComputedStyle(this.__workTable).marginLeft || '0', 10);
                         this.__workTable.style.width = ((width - this.__resizerDelta)/parentWidth) * 100 + '%';
                         this.__workTable.style.marginLeft = ((margin + this.__resizerDelta)/parentWidth) * 100 + '%';
                     }
@@ -281,12 +281,13 @@ class TableProcessor extends Component{
             }
         });
         this.__on(window, 'mousedown', (event: MouseEvent) => {
-            const current_cell: HTMLTableCellElement = <HTMLTableCellElement>Dom.closest(<HTMLElement>event.target, 'TD|TH', this.parent.editor);
+            // need use event['originalEvent'] because of IE can not set target from another window to current window
+            const current_cell: HTMLTableCellElement = <HTMLTableCellElement>Dom.closest(<HTMLElement>event['originalEvent'].target, 'TD|TH', this.jodit.editor);
             let table: HTMLTableElement;
-            if (current_cell instanceof HTMLTableCellElement) {
-                table = <HTMLTableElement>Dom.closest(current_cell, 'table', this.parent.editor)
+            if (current_cell instanceof (<any>this.jodit.win).HTMLTableCellElement) {
+                table = <HTMLTableElement>Dom.closest(current_cell, 'table', this.jodit.editor)
             }
-            this.__deSelectAll(table, current_cell instanceof HTMLTableCellElement ? current_cell : false);
+            this.__deSelectAll(table, current_cell instanceof (<any>this.jodit.win).HTMLTableCellElement ? current_cell : false);
         });
         editor.events
             .on('afterGetValueFromEditor', (data) => {
@@ -323,10 +324,10 @@ class TableProcessor extends Component{
     onExecCommand = (command: string) => {
         if (/table(splitv|splitg|merge|empty|bin|binrow|bincolumn|addcolumn|addrow)/.test(command)) {
             command = command.replace('table', '');
-            const cells = Table.getAllSelectedCells(this.parent.editor);
+            const cells = Table.getAllSelectedCells(this.jodit.editor);
             if (cells.length) {
                 let cell: HTMLTableCellElement = cells.shift(),
-                    table = <HTMLTableElement>Dom.closest(cell, 'table', this.parent.editor);
+                    table = <HTMLTableElement>Dom.closest(cell, 'table', this.jodit.editor);
 
                 switch (command) {
                     case 'splitv':
@@ -339,7 +340,7 @@ class TableProcessor extends Component{
                         Table.mergeSelected(table);
                         break;
                     case 'empty':
-                        Table.getAllSelectedCells(this.parent.editor).forEach(cell => cell.innerHTML = '');
+                        Table.getAllSelectedCells(this.jodit.editor).forEach(cell => cell.innerHTML = '');
                         break;
                     case 'bin':
                         table.parentNode.removeChild(table);

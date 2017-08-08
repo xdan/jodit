@@ -18,7 +18,12 @@ describe('Jodit Editor Tests', function() {
             var area = appendTestArea();
             var editor = new Jodit(area);
             expect(area.style.display).to.equal('none');
-            expect(editor.editor).to.equal(document.querySelector('.jodit_wysiwyg'));
+
+            if (!editor.options.iframe) {
+                expect(editor.editor).to.equal(document.querySelector('.jodit_wysiwyg'));
+            } else {
+                expect(editor.editor).to.equal(editor.doc.body);
+            }
         })
         it('Options should be inherited from the default values', function() {
             var area = appendTestArea();
@@ -194,8 +199,10 @@ describe('Jodit Editor Tests', function() {
         });
         it('Current selection element', function () {
             var editor = new Jodit(appendTestArea()),
-                div = document.createElement('div'),
-                text = document.createTextNode('jingl');
+                div = editor.doc.createElement('div'),
+                text = editor.doc.createTextNode('jingl');
+
+            editor.setEditorValue('');
 
             div.appendChild(text);
 
@@ -207,7 +214,7 @@ describe('Jodit Editor Tests', function() {
         it('Insert simple text node in editor', function () {
             var area = appendTestArea();
             var editor = new Jodit(area);
-            editor.selection.insertNode(document.createTextNode('Test'));
+            editor.selection.insertNode(editor.doc.createTextNode('Test'));
             expect(editor.getEditorValue()).to.be.equal('Test');
             editor.destruct();
         });
@@ -216,7 +223,7 @@ describe('Jodit Editor Tests', function() {
             var editor = new Jodit(area);
 
             function insert(digit) {
-                var div = document.createElement('div');
+                var div = editor.doc.createElement('div');
                 div.innerHTML = digit;
                 editor.selection.insertNode(div);
             }
@@ -259,14 +266,14 @@ describe('Jodit Editor Tests', function() {
             it('Set cursor after node', function () {
                 var area = appendTestArea();
                 var editor = new Jodit(area);
-                var spans = [document.createElement('span'), document.createElement('span'), document.createElement('span')];
+                var spans = [editor.doc.createElement('span'), editor.doc.createElement('span'), editor.doc.createElement('span')];
 
                 editor.selection.insertNode(spans[0]);
                 editor.selection.insertNode(spans[1]);
                 editor.selection.insertNode(spans[2]);
 
                 editor.selection.setCursorAfter(spans[1]);
-                editor.selection.insertNode(document.createElement('i'));
+                editor.selection.insertNode(editor.doc.createElement('i'));
 
 
                 expect(editor.getEditorValue()).to.be.equal('<span></span><span></span><i></i><span></span>');
@@ -276,7 +283,7 @@ describe('Jodit Editor Tests', function() {
                 var editor = new Jodit(area);
 
                 expect(function () {
-                    var div = document.createElement('div')
+                    var div = editor.doc.createElement('div')
                     editor.selection.setCursorIn(div);
                 }).to.Throw(/in editor/)
             });

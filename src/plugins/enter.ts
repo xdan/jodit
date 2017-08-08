@@ -77,7 +77,7 @@ Jodit.plugins.enter = function (editor: Jodit) {
             }
 
             if (currentBox) {
-                if (!Dom.canSplitBlock(currentBox)) {
+                if (!Dom.canSplitBlock(currentBox, editor.win)) {
                     let br = editor.doc.createElement('br');
                     editor.selection.insertNode(br, false);
                     editor.selection.setCursorAfter(br);

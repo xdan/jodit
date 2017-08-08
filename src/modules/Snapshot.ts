@@ -39,12 +39,12 @@ export default class Snapshot extends Component {
             last = elms[j];
         }
     }
-    __decomposeHierarchyNodes (elm: Node): number[] {
-        let counts = [];
+    private __decomposeHierarchyNodes (elm: Node): number[] {
+        const counts = [];
         if (!elm.parentNode) {
             return [];
         }
-        while (elm && elm !== this.parent.editor) {
+        while (elm && elm !== this.jodit.editor) {
             counts.push(Snapshot.__countElementsBefore(elm));
             elm = elm.parentNode;
         }
@@ -66,7 +66,7 @@ export default class Snapshot extends Component {
      *
      * @return {object} {html: string, range: {startContainer: int, startOffset: int, endContainer: int, endOffset: int}} или {html: string} при отсутствии выделения
      */
-    make() {
+    make(): SnapshotType {
         const snapshot: SnapshotType = {
             html: '',
             range: {
@@ -76,8 +76,8 @@ export default class Snapshot extends Component {
                 endOffset: 0
             }
         };
-        snapshot.html = this.parent.getEditorValue();
-        const sel = this.parent.win.getSelection();
+        snapshot.html = this.jodit.getEditorValue();
+        const sel = this.jodit.win.getSelection();
 
         if (sel.rangeCount) {
             const range = sel.getRangeAt(0);
@@ -90,8 +90,8 @@ export default class Snapshot extends Component {
         }
         return snapshot;
     }
-    __restoreElementByLadder (ladder: number[]) {
-        let n = <Node>this.parent.editor,
+    private __restoreElementByLadder (ladder: number[]): Node {
+        let n = <Node>this.jodit.editor,
             i;
         for (i = 0; n && i < ladder.length; i += 1) {
             n = n.childNodes[ladder[i]];
@@ -106,7 +106,7 @@ export default class Snapshot extends Component {
      * @param {SnapshotType} second - second shot
      * @return {boolean}
      */
-    static equal (first: SnapshotType, second: SnapshotType) {
+    static equal (first: SnapshotType, second: SnapshotType): boolean {
         return first.html === second.html && JSON.stringify(first.range) === JSON.stringify(second.range);
     }
 
@@ -117,11 +117,11 @@ export default class Snapshot extends Component {
      * @see make
      */
     restore (snapshot: SnapshotType) {
-        this.parent.setEditorValue(snapshot.html);
+        this.jodit.setEditorValue(snapshot.html);
         try {
             if (snapshot.range) {
-                const sel = this.win.getSelection(),
-                    range = this.doc.createRange();
+                const sel = this.jodit.win.getSelection(),
+                    range = this.jodit.doc.createRange();
 
                 range.setStart(this.__restoreElementByLadder(snapshot.range.startContainer), snapshot.range.startOffset);
                 range.setEnd(this.__restoreElementByLadder(snapshot.range.endContainer), snapshot.range.endOffset);

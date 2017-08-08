@@ -56,14 +56,14 @@ export default class Events extends Component{
      */
     off(object?: any, list?: any, callback?: Function) {
         if (arguments.length === 0) {
-            this.parent.handlers = {};
+            this.jodit.handlers = {};
             return this;
         }
         let i, j;
         if (typeof object === 'string') {
             callback = list;
             list = object;
-            object = this.parent;
+            object = this.jodit;
         }
         if (object.handlers === undefined) {
             return this;
@@ -93,7 +93,7 @@ export default class Events extends Component{
      * @param {(String|Function)} list - List of events , separated by a space or comma
      * @param {function} [callback] - The event handler
      * @param {Boolean} [onTop=false] - Set handler in first
-     * @return {Jodit.Events} this
+     * @return {Events} this
      * @example
      * // set global handler
      * parent.on('beforeSetELementValue', function (data) {
@@ -106,7 +106,7 @@ export default class Events extends Component{
         if (typeof objectOrEvent === 'string') {
             callback = list;
             list = objectOrEvent;
-            objectOrEvent = this.parent;
+            objectOrEvent = this.jodit;
         }
 
          if (typeof list !== 'string') {
@@ -153,7 +153,7 @@ export default class Events extends Component{
         if (typeof object === 'string') {
             args = list;
             list = object;
-            object = this.parent;
+            object = this.jodit;
         }
 
         if (object.handlers === undefined) {

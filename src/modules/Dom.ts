@@ -159,8 +159,8 @@ export default class Dom {
      * It's block and it can be split
      *
      */
-    static canSplitBlock (node: any): boolean {
-        return node && node instanceof HTMLElement &&
+    static canSplitBlock (node: any, win: Window): boolean {
+        return node && node instanceof (<any>win||<any>window).HTMLElement &&
             this.isBlock(node) &&
             !/^(TD|TH|CAPTION|FORM)$/.test(node.nodeName) &&
             node.style !== void(0) && !/^(fixed|absolute)/i.test(node.style.position);
@@ -247,9 +247,9 @@ export default class Dom {
     /**
      * Returns true if it is a DOM node
      */
-    static isNode(object: any): boolean {
+    static isNode(object: any, win: Window): boolean {
         if (typeof Node === "object") {
-            return object instanceof Node;
+            return object instanceof (<any>win||<any>window).Node;
         }
 
         return typeof object === "object" && typeof object.nodeType === "number" && typeof object.nodeName === "string";

@@ -360,7 +360,7 @@ Jodit.plugins.imageProperties = function (editor: Jodit) {
         prop.querySelector('.jodit_lock_helper.jodit_lock_size').addEventListener('click', function () {
             lockSize = !lockSize;
             this.innerHTML = Toolbar.getIcon(lockSize ? 'lock' : 'unlock');
-            editor.__fire($w, 'change');
+            editor.__fire($w, 'change', document);
         });
 
         prop.querySelector('.jodit_lock_helper.jodit_lock_margin').addEventListener('click', function () {

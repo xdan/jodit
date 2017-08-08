@@ -30,7 +30,7 @@ describe('Commands Jodit Editor Tests', function() {
 
         editor.execCommand('formatBlock', false, 'h1');
 
-        editor.selection.insertNode(document.createTextNode(' a '));
+        editor.selection.insertNode(editor.doc.createTextNode(' a '));
 
         expect(editor.getEditorValue()).to.equal('<h1>te a st</h1>');
     });
@@ -48,7 +48,7 @@ describe('Commands Jodit Editor Tests', function() {
 
         editor.execCommand('formatBlock', false, 'h1');
 
-        editor.selection.insertNode(document.createTextNode(' a '));
+        editor.selection.insertNode(editor.doc.createTextNode(' a '));
 
         expect(editor.getEditorValue()).to.equal('<h1>test a </h1>');
     });

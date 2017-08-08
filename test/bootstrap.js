@@ -1,7 +1,17 @@
 Jodit.defaultOptions.observer.timeout = 0;
 Jodit.defaultOptions.language = 'en';
+Jodit.defaultOptions.iframe = true; // try uncomment sometime
+Jodit.defaultOptions.iframeCSSLinks.push('/app.css');
+Jodit.defaultOptions.iframeStyle += "* {\
+    -webkit-box-sizing: border-box;\
+    -moz-box-sizing: border-box;\
+    box-sizing: border-box;\
+}\
+td,th {\
+    padding: 2px 5px;\
+    vertical-align: top;\
+}";
 
-console.log(screen.width);
 var expect = chai.expect;
 var stuff = [];
 var removeStuff = function () {
@@ -115,7 +125,7 @@ var sortAtrtibutes = function (html) {
  * @param options
  */
 var simulateEvent = function (type, keyCodeArg, element, options) {
-    var evt = document.createEvent('HTMLEvents')
+    var evt = (element.ownerDocument || document).createEvent('HTMLEvents')
     evt.initEvent(type, true, true);
     evt.keyCode = keyCodeArg;
     evt.which = keyCodeArg;

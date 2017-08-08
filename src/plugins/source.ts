@@ -48,8 +48,8 @@ Config.prototype.sourceEditorCDNUrlsJS = [
  * @module codeMirror
  */
 Jodit.plugins.source = function (editor: Jodit) {
-    const mirrorContainer: HTMLDivElement = <HTMLDivElement>dom('<div class="jodit_source"/>'),
-        mirror: HTMLTextAreaElement = <HTMLTextAreaElement>dom('<textarea class="jodit_source_mirror"/>'),
+    const mirrorContainer: HTMLDivElement = <HTMLDivElement>dom('<div class="jodit_source"/>', document),
+        mirror: HTMLTextAreaElement = <HTMLTextAreaElement>dom('<textarea class="jodit_source_mirror"/>', document),
         from = () => {
             mirror.value = editor.getEditorValue();
         },
@@ -87,7 +87,7 @@ Jodit.plugins.source = function (editor: Jodit) {
             tryInitAceEditor = () => {
                 if (sourceEditor === undefined) {
                     if (window['ace'] !== undefined) {
-                        let fakeMirror = dom('<div class="jodit_source_mirror-fake"/>');
+                        let fakeMirror = dom('<div class="jodit_source_mirror-fake"/>', document);
                         mirrorContainer.insertBefore(fakeMirror, mirror);
 
                         sourceEditor = window['ace'].edit(fakeMirror);

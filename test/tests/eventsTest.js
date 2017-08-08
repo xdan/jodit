@@ -119,11 +119,11 @@ describe('Jodit Events system Tests', function() {
         it('Add event handler for several elements', function () {
             var editor = new Jodit(appendTestArea()),
                 work = '',
-                div1 = document.createElement('button'),
-                div2 = document.createElement('button');
+                div1 = editor.doc.createElement('button'),
+                div2 = editor.doc.createElement('button');
 
-            document.body.appendChild(div1)
-            document.body.appendChild(div2)
+            editor.doc.body.appendChild(div1)
+            editor.doc.body.appendChild(div2)
 
             div1.innerText = 'test1';
             div2.innerText = 'test2';
@@ -132,8 +132,8 @@ describe('Jodit Events system Tests', function() {
                 work += this.innerText;
             })
 
-            editor.__fire(div1, 'click');
-            editor.__fire(div2, 'click');
+            editor.__fire(div1, 'click', editor.doc);
+            editor.__fire(div2, 'click', editor.doc);
 
             expect(work).to.be.equal('test1test2');
 
@@ -151,7 +151,7 @@ describe('Jodit Events system Tests', function() {
                 work++;
             })
 
-            editor.__fire(div, 'click');
+            editor.__fire(div, 'click', document);
             expect(work).to.be.equal(1);
 
             div.parentNode.removeChild(div)
@@ -170,21 +170,21 @@ describe('Jodit Events system Tests', function() {
                 work++;
             })
 
-            editor.__fire(div, 'click');
+            editor.__fire(div, 'click', document);
             expect(work).to.be.equal(0);
 
 
-            editor.__fire(a, 'click');
+            editor.__fire(a, 'click', document);
             expect(work).to.be.equal(1);
 
             editor.__off(div, 'click')
-            editor.__fire(a, 'click');
+            editor.__fire(a, 'click', document);
             expect(work).to.be.equal(1);
 
             editor.__on(div, 'click', 'a', function () {
                 work++;
             })
-            editor.__fire(a, 'click');
+            editor.__fire(a, 'click', document);
             expect(work).to.be.equal(2);
 
             div.parentNode.removeChild(div)
@@ -203,16 +203,33 @@ describe('Jodit Events system Tests', function() {
                 work++;
             })
 
-            editor.__fire(div, 'click');
-            editor.__fire(div, 'mousedown');
+            editor.__fire(div, 'click', document);
+            editor.__fire(div, 'mousedown', document);
             expect(work).to.be.equal(2);
 
             editor.__off(div, '.test')
-            editor.__fire(div, 'click');
-            editor.__fire(div, 'mousedown');
+            editor.__fire(div, 'click', document);
+            editor.__fire(div, 'mousedown', document);
             expect(work).to.be.equal(2);
 
             div.parentNode.removeChild(div)
+        })
+        it('Proxy event from iframe.window to main.window', function () {
+            var editor = new Jodit(appendTestArea(), {
+                    iframe: true
+                }),
+                work = 0,
+                mousedown = function () {
+                    work++;
+                };
+
+            window.addEventListener('mousedown', mousedown);
+
+            editor.__fire(editor.win, 'mousedown', editor.doc);
+
+            expect(work).to.be.equal(1);
+
+            window.removeEventListener('mousedown', mousedown);
         })
     })
     describe('Jodit Events', function () {

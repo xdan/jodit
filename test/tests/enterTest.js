@@ -256,43 +256,43 @@ describe('Enter behavior Jodit Editor Tests', function() {
             editor.setEditorValue('');
 
             simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
-            editor.selection.insertNode(document.createTextNode('test'));
+            editor.selection.insertNode(editor.doc.createTextNode('test'));
 
             simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
-            editor.selection.insertNode(document.createTextNode('test2'));
+            editor.selection.insertNode(editor.doc.createTextNode('test2'));
 
             simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
-            editor.selection.insertNode(document.createTextNode('test3'));
+            editor.selection.insertNode(editor.doc.createTextNode('test3'));
 
             expect(editor.getEditorValue()).to.be.equal('<p></p><p>test</p><p>test2</p><p>test3</p>');
         })
         it('Split paragraph', function () {
             var editor = new Jodit(appendTestArea())
 
-            var p = document.createElement('p'),
-                node = document.createTextNode('Split paragraph');
+            var p = editor.doc.createElement('p'),
+                node = editor.doc.createTextNode('Split paragraph');
 
             p.appendChild(node);
 
             editor.selection.insertNode(p);
 
-            var range = document.createRange();
+            var range = editor.doc.createRange();
 
             range.setStart(node, 6);
-            window.getSelection().removeAllRanges();
-            window.getSelection().addRange(range);
+            editor.win.getSelection().removeAllRanges();
+            editor.win.getSelection().addRange(range);
 
             simulateEvent('keydown',    Jodit.KEY_ENTER, editor.editor);
 
-            editor.selection.insertNode(document.createTextNode('a '));
+            editor.selection.insertNode(editor.doc.createTextNode('a '));
 
             expect(editor.getEditorValue()).to.be.equal('<p>Split </p><p>a paragraph</p>');
         })
         it('If cursor in the right edge of paragraph after enter cursor should be in another new paragraph', function () {
             var editor = new Jodit(appendTestArea())
 
-            var p = document.createElement('p'),
-                p2 = document.createElement('p');
+            var p = editor.doc.createElement('p'),
+                p2 = editor.doc.createElement('p');
 
 
             p.innerHTML = 'Split paragraph';
@@ -307,7 +307,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
             simulateEvent('keydown',    Jodit.KEY_ENTER, editor.editor);
 
 
-            editor.selection.insertNode(document.createTextNode('a '));
+            editor.selection.insertNode(editor.doc.createTextNode('a '));
 
 
             expect(editor.getEditorValue()).to.be.equal('<p>Split paragraph</p><p>a </p><p>Test</p>');
@@ -316,8 +316,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
         it('If cursor in the left edge of paragraph after enter cursor should be in another new paragraph before old place', function () {
             var editor = new Jodit(appendTestArea())
 
-            var p = document.createElement('p'),
-                p2 = document.createElement('p');
+            var p = editor.doc.createElement('p'),
+                p2 = editor.doc.createElement('p');
 
 
             p.innerHTML = 'Split paragraph';
@@ -326,20 +326,20 @@ describe('Enter behavior Jodit Editor Tests', function() {
             editor.selection.insertNode(p2);
 
 
-            var range = document.createRange();
+            var range = editor.doc.createRange();
 
 
             // set cursor in start of element
             range.setStart(p.firstChild, 0);
             range.collapse(true);
-            window.getSelection().removeAllRanges();
-            window.getSelection().addRange(range);
+            editor.win.getSelection().removeAllRanges();
+            editor.win.getSelection().addRange(range);
 
 
             simulateEvent('keydown',    Jodit.KEY_ENTER, editor.editor);
 
 
-            editor.selection.insertNode(document.createTextNode('a '));
+            editor.selection.insertNode(editor.doc.createTextNode('a '));
 
 
             expect(editor.getEditorValue()).to.be.equal('<p></p><p>a Split paragraph</p><p>Test</p>');
@@ -349,16 +349,16 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
             editor.setEditorValue('<table><tr><td>text</td></tr></table>');
 
-            var range = document.createRange();
+            var range = editor.doc.createRange();
 
 
             // set cursor in start of element
             range.selectNodeContents(editor.editor.querySelector('td'));
             range.collapse(true);
-            window.getSelection().removeAllRanges();
-            window.getSelection().addRange(range);
+            editor.win.getSelection().removeAllRanges();
+            editor.win.getSelection().addRange(range);
 
-            editor.selection.insertNode(document.createTextNode('split '));
+            editor.selection.insertNode(editor.doc.createTextNode('split '));
 
             simulateEvent('keydown',    Jodit.KEY_ENTER, editor.editor);
 
@@ -369,20 +369,20 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
             editor.setEditorValue('test');
 
-            var range = document.createRange();
+            var range = editor.doc.createRange();
 
 
             // set cursor in start of element
             range.selectNodeContents(editor.editor.firstChild);
             range.collapse(false);
-            window.getSelection().removeAllRanges();
-            window.getSelection().addRange(range);
+            editor.win.getSelection().removeAllRanges();
+            editor.win.getSelection().addRange(range);
 
 
             simulateEvent('keydown',    Jodit.KEY_ENTER, editor.editor);
             simulateEvent('keydown',    Jodit.KEY_BACKSPACE, editor.editor);
 
-            editor.selection.insertNode(document.createTextNode(' 2 '));
+            editor.selection.insertNode(editor.doc.createTextNode(' 2 '));
 
             expect(editor.getEditorValue()).to.be.equal('<p>test 2 </p>');
         })

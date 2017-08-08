@@ -109,8 +109,8 @@ export default class Toolbar extends Component{
             btn.classList.remove('jodit_dropdown_open', 'jodit_popap_open');
         });
 
-        if (this.__popapOpened && this.parent.selection) {
-            this.parent.selection.clear();
+        if (this.__popapOpened && this.jodit.selection) {
+            this.jodit.selection.clear();
         }
 
         this.__popapOpened = false;
@@ -137,7 +137,7 @@ export default class Toolbar extends Component{
 
             let mode =  (control === undefined || control.mode === undefined) ? consts.MODE_WYSIWYG : control.mode;
 
-            Toolbar.__toggleButton(btn, mode === consts.MODE_SPLIT || mode === this.parent.getRealMode());
+            Toolbar.__toggleButton(btn, mode === consts.MODE_SPLIT || mode === this.jodit.getRealMode());
 
             if (!element) {
                 return;
@@ -148,7 +148,7 @@ export default class Toolbar extends Component{
                 css,
 
                 getCSS = (elm: HTMLElement, key: string): string => {
-                    return this.parent.win.getComputedStyle(elm).getPropertyValue(key).toString()
+                    return this.jodit.win.getComputedStyle(elm).getPropertyValue(key).toString()
                 },
 
                 checkActiveStatus = (cssObject, node) => {
@@ -159,7 +159,7 @@ export default class Toolbar extends Component{
                         const cssValue = cssObject[cssProperty];
                         if (typeof cssValue === 'function') {
                             if (cssValue(
-                                    this.parent,
+                                    this.jodit,
                                     getCSS(node, cssProperty).toLowerCase()
                                 )) {
                                 matches += 1;
@@ -186,7 +186,7 @@ export default class Toolbar extends Component{
                         btn.classList.add(active_class);
                         return true;
                     }
-                }, this.parent.editor);
+                }, this.jodit.editor);
             }
 
             //activate by supposed css
@@ -196,17 +196,17 @@ export default class Toolbar extends Component{
 
                 elm = element;
                 Dom.up(elm, (node: HTMLElement) => {
-                    if (node && node.nodeType !== Node.TEXT_NODE && !node.classList.contains(active_class)) {
+                    if (node && node.nodeType !== Node.TEXT_NODE/* && !node.classList.contains(active_class)*/) {
                         checkActiveStatus(css, node);
                     }
-                }, this.parent.editor);
+                }, this.jodit.editor);
 
             }
         });
     }
 
     defaultControl:ControlType  = {
-        template: (editor: Jodit, key: string, value: string) => (this.parent.i18n(value))
+        template: (editor: Jodit, key: string, value: string) => (this.jodit.i18n(value))
     };
 
     private buttonList: ButtonType[] = [];
@@ -238,7 +238,7 @@ export default class Toolbar extends Component{
         btn.classList.add('jodit_toolbar_btn-' + clearName);
 
 
-        this.parent.events.on(camelCase('can-' + clearName), (enable) => {
+        this.jodit.events.on(camelCase('can-' + clearName), (enable) => {
             Toolbar.__toggleButton(btn, enable);
         });
 
@@ -264,7 +264,7 @@ export default class Toolbar extends Component{
         }
 
         if (control.tooltip) {
-            btn.querySelector('.jodit_tooltip').innerHTML = this.parent.i18n(control.tooltip);
+            btn.querySelector('.jodit_tooltip').innerHTML = this.jodit.i18n(control.tooltip);
         } else {
             btn.removeChild(btn.querySelector('.jodit_tooltip'));
         }
@@ -283,10 +283,10 @@ export default class Toolbar extends Component{
                     this.openList(btn);
                     each(control.list, (key: string, value: string) => {
                         let elm;
-                        if (this.parent.options.controls[value] !== undefined) {
-                            elm = this.addButton(value, this.parent.options.controls[value], '', target); // list like array {"align": {list: ["left", "right"]}}
-                        } else if (this.parent.options.controls[key] !== undefined) {
-                            elm = this.addButton(key, extend({}, this.parent.options.controls[key], value),'', target); // list like object {"align": {list: {"left": {exec: alert}, "right": {}}}}
+                        if (this.jodit.options.controls[value] !== undefined) {
+                            elm = this.addButton(value, this.jodit.options.controls[value], '', target); // list like array {"align": {list: ["left", "right"]}}
+                        } else if (this.jodit.options.controls[key] !== undefined) {
+                            elm = this.addButton(key, extend({}, this.jodit.options.controls[key], value),'', target); // list like object {"align": {list: {"left": {exec: alert}, "right": {}}}}
                         } else {
                             elm = this.addButton(key, {
                                     exec: control.exec,
@@ -297,7 +297,7 @@ export default class Toolbar extends Component{
                                     ]
                                 },
                                 control.template && control.template(
-                                    this.parent,
+                                    this.jodit,
                                     key,
                                     value
                                 ),
@@ -310,25 +310,25 @@ export default class Toolbar extends Component{
                     btn.appendChild(this.list);
                 } else if (control.exec !== undefined && typeof control.exec === 'function') {
                     control.exec(
-                        this.parent,
-                        target || this.parent.selection.current(),
+                        this.jodit,
+                        target || this.jodit.selection.current(),
                         control,
                         originalEvent,
                         btn
                     );
-                    this.parent.setEditorValue();
-                    this.parent.events.fire('hidePopup');
+                    this.jodit.setEditorValue();
+                    this.jodit.events.fire('hidePopup');
                     this.closeAll();
                 } else if (control.popup !== undefined && typeof control.popup === 'function') {
                     this.openPopup(btn, control.popup(
-                        this.parent,
-                        target || this.parent.selection.current(),
+                        this.jodit,
+                        target || this.jodit.selection.current(),
                         control,
                         this.closeAll
                     ));
                 } else {
                     if (control.command || name) {
-                        this.parent.execCommand(control.command || name, (control.args && control.args[0]) || false, (control.args && control.args[1]) || null);
+                        this.jodit.execCommand(control.command || name, (control.args && control.args[0]) || false, (control.args && control.args[1]) || null);
                         this.closeAll();
                     }
                 }
@@ -357,7 +357,7 @@ export default class Toolbar extends Component{
         (<ControlType[]>buttons).forEach((button: ControlType|string) => {
             const name: string = typeof button === 'string' ? <string>button : button.name;
 
-            if (this.parent.options.removeButtons.indexOf(name) !== -1) {
+            if (this.jodit.options.removeButtons.indexOf(name) !== -1) {
                 return;
             }
 
@@ -376,8 +376,8 @@ export default class Toolbar extends Component{
 
                     lastBtnSeparator = false;
 
-                    if (typeof control !== 'object' && this.parent.options.controls[control] !== undefined) {
-                        control = this.parent.options.controls[control];
+                    if (typeof control !== 'object' && this.jodit.options.controls[control] !== undefined) {
+                        control = this.jodit.options.controls[control];
                     }
 
                     if (typeof control !== 'object') {
@@ -406,14 +406,14 @@ export default class Toolbar extends Component{
             }
         });
 
-        this.parent.events.on('mousedown keydown change afterSetMode', () => {
+        this.jodit.events.on('mousedown keydown change afterSetMode', () => {
             const callback = () => {
-                if (this.parent.selection) {
-                    this.checkActiveButtons(this.parent.selection.current())
+                if (this.jodit.selection) {
+                    this.checkActiveButtons(this.jodit.selection.current())
                 }
             };
-            if (this.parent.options.observer.timeout) {
-                setTimeout(callback, this.parent.options.observer.timeout)
+            if (this.jodit.options.observer.timeout) {
+                setTimeout(callback, this.jodit.options.observer.timeout)
             } else {
                 callback();
             }

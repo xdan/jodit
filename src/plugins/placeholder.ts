@@ -104,7 +104,7 @@ Jodit.plugins.placeholder = function (editor: Jodit) {
 
 
 
-    placeholder = dom('<span class="jodit_placeholder">' + editor.i18n(editor.options.placeholder) + '</span>');
+    placeholder = dom('<span class="jodit_placeholder">' + editor.i18n(editor.options.placeholder) + '</span>', document);
 
     if (editor.options.useInputsPlaceholder && editor.element.hasAttribute('placeholder')) {
         placeholder.innerHTML = editor.element.getAttribute('placeholder');
@@ -115,7 +115,7 @@ Jodit.plugins.placeholder = function (editor: Jodit) {
 
     show();
 
-    editor.events.on('change  keyup mouseup keydown mousedown  afterSetMode', () => {
+    editor.events.on('change keyup mouseup keydown mousedown afterSetMode', () => {
         toggle();
         timeout = setTimeout(toggle, 1)
     });

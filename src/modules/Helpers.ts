@@ -1,4 +1,5 @@
 import * as consts from '../constants';
+import Jodit from "../Jodit";
 const class2type = {};
 const toString = class2type.toString;
 const hasOwn = class2type.hasOwnProperty;
@@ -316,13 +317,13 @@ export const appendScript = (url: string, callback: (this: HTMLScriptElement, e:
  *
  * @return HTMLElement
  */
-export const dom = (html: string|HTMLElement, doc = document): HTMLElement => {
-    if (html instanceof HTMLElement) {
-        return html;
+export const dom = (html: string|HTMLElement, doc: Document = document): HTMLElement => {
+    if (html instanceof (<any>doc.defaultView).HTMLElement) {
+        return <HTMLElement>html;
     }
 
-    let div = doc.createElement('div');
-    div.innerHTML = html;
+    const div = doc.createElement('div');
+    div.innerHTML = <string>html;
 
     return div.firstChild !== div.lastChild ? div : <HTMLElement>div.firstChild;
 };
@@ -583,7 +584,7 @@ export const browser = (browser: string): boolean|string => {
  * @param {HTMLElement} elm
  * @return {{top: number, left: number}} returns an object containing the properties top and left.
  */
-export const offset =  (elm: HTMLElement) => {
+export const offset =  (elm: HTMLElement, jodit: Jodit, recurse: boolean = false): {top: number, left: number,  width: number, height: number} => {
     const rect: ClientRect = elm.getBoundingClientRect(),
         doc: Document = elm.ownerDocument,
         body: HTMLElement = doc.body,
@@ -592,13 +593,26 @@ export const offset =  (elm: HTMLElement) => {
         scrollTop: number = win.pageYOffset || docElem.scrollTop || body.scrollTop,
         scrollLeft: number = win.pageXOffset || docElem.scrollLeft || body.scrollLeft,
         clientTop: number = docElem.clientTop || body.clientTop || 0,
-        clientLeft: number = docElem.clientLeft || body.clientLeft || 0,
-        topValue: number  = rect.top +  scrollTop - clientTop,
-        leftValue: number = rect.left + scrollLeft - clientLeft;
+        clientLeft: number = docElem.clientLeft || body.clientLeft || 0;
+    let
+        topValue: number,
+        leftValue: number;
+
+    if (!recurse && jodit.options.iframe) {
+        const {top, left} = offset(jodit.iframe, jodit, true);
+        topValue = rect.top +  top;
+        leftValue = rect.left + left;
+    } else {
+        topValue = rect.top +  scrollTop - clientTop;
+        leftValue = rect.left + scrollLeft - clientLeft;
+    }
+
 
     return {
         top: Math.round(<number>topValue),
-        left: Math.round(leftValue)
+        left: Math.round(leftValue),
+        width: rect.width,
+        height: rect.height
     };
 };
 
@@ -764,9 +778,9 @@ export const css = (element: HTMLElement, key: string|object, value?: string|num
 
     const key2 = <string>fromCamelCase(<string>key),
         doc  = element.ownerDocument,
-        win = doc.defaultView || doc['parentWindow'];
+        win = doc ? doc.defaultView || doc['parentWindow'] : false;
 
-    let result = (element.style[<string>key] !== undefined && element.style[<string>key] !== '') ? element.style[<string>key] : win.getComputedStyle(element).getPropertyValue(key2);
+    let result = (element.style[<string>key] !== undefined && element.style[<string>key] !== '') ? element.style[<string>key] : (win ? win.getComputedStyle(element).getPropertyValue(key2) : '');
 
     if (numberFieldsReg.test(<string>key) && /^[\-+]?[0-9]+px$/.test(result.toString())) {
         result = parseInt(result, 10);
@@ -914,3 +928,5 @@ export const val = (elm: HTMLInputElement|HTMLElement, selector: string, value ?
 export  const defaultLanguage = (language?: string): string => (
     (language === 'auto' || language === undefined) ? document.documentElement.lang || (navigator.language && navigator.language.substr(0, 2)) || (navigator['browserLanguage'] && navigator['browserLanguage'].substr(0, 2)) || 'en' : language
 );
+
+

@@ -165,19 +165,19 @@ Config.prototype.uploader = <UploaderOptions>{
     },
 
     error: function (this: Uploader, e: Error) {
-        this.parent.events.fire('errorMessage', [e.message, 'error', 4000]);
+        this.jodit.events.fire('errorMessage', [e.message, 'error', 4000]);
     },
 
     defaultHandlerSuccess: function (this: Uploader, resp: UploaderData) {
         if (resp.files && resp.files.length) {
             resp.files.forEach((image) => {
-                this.parent.selection.insertImage(resp.baseurl + image);
+                this.jodit.selection.insertImage(resp.baseurl + image);
             })
         }
     },
 
     defaultHandlerError: function (this: Uploader, e: Error) {
-        this.parent.events.fire('errorMessage', [e.message]);
+        this.jodit.events.fire('errorMessage', [e.message]);
     }
 };
 
@@ -189,10 +189,10 @@ export default class Uploader extends Component {
 
     constructor(editor: Jodit, options) {
         super(editor);
-        this.options = <UploaderOptions>extend(true, {}, Config.prototype.uploader, this.parent.options.uploader, options);
-        if (this.parent.editor) {
-            if (this.parent.options.enableDragAndDropFileToEditor && this.parent.options.uploader && this.parent.options.uploader.url) {
-                this.bind(this.parent.editor);
+        this.options = <UploaderOptions>extend(true, {}, Config.prototype.uploader, this.jodit.options.uploader, options);
+        if (this.jodit.editor) {
+            if (this.jodit.options.enableDragAndDropFileToEditor && this.jodit.options.uploader && this.jodit.options.uploader.url) {
+                this.bind(this.jodit.editor);
             }
         }
     }
@@ -221,7 +221,7 @@ export default class Uploader extends Component {
     private __ajax: Ajax;
 
     send(data: object, success: (resp: UploaderAnswer) => void) {
-        this.__ajax = new Ajax(this.parent, {
+        this.__ajax = new Ajax(this.jodit, {
             xhr: () => {
                 let xhr = new XMLHttpRequest();
                 if (window['FormData'] !== undefined) {
@@ -230,16 +230,16 @@ export default class Uploader extends Component {
                             let percentComplete = evt.loaded / evt.total;
                             percentComplete = percentComplete * 100;
 
-                            this.parent.progress_bar.style.display = 'block';
-                            this.parent.progress_bar.style.width = percentComplete + '%';
+                            this.jodit.progress_bar.style.display = 'block';
+                            this.jodit.progress_bar.style.width = percentComplete + '%';
 
                             if (percentComplete === 100) {
-                                this.parent.progress_bar.style.display = 'none';
+                                this.jodit.progress_bar.style.display = 'none';
                             }
                         }
                     }, false);
                 } else {
-                    this.parent.progress_bar.style.display = 'none';
+                    this.jodit.progress_bar.style.display = 'none';
                 }
                 return xhr;
             },
@@ -385,8 +385,8 @@ export default class Uploader extends Component {
 
                 if (browser('ff')) {
                     if (!e.clipboardData.types.length && e.clipboardData.types[0] !== TEXT_PLAIN) {
-                        div = <HTMLDivElement>Dom.create('div', '', this.parent.doc);
-                        self.parent.selection.insertNode(div);
+                        div = <HTMLDivElement>Dom.create('div', '', this.jodit.doc);
+                        self.jodit.selection.insertNode(div);
                         div.focus();
                         setTimeout(() => {
                             if (div.firstChild && (<HTMLDivElement>div.firstChild).hasAttribute('src')) {
@@ -424,10 +424,10 @@ export default class Uploader extends Component {
                 if (event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files.length) {
                     event.preventDefault();
                     this.sendFiles(event.dataTransfer.files, handlerSuccess, handlerError);
-                } else if (event.dataTransfer && event.dataTransfer.getData(TEXT_PLAIN) && event.dataTransfer.getData(TEXT_PLAIN) !== '-' && form === self.parent.editor) {
+                } else if (event.dataTransfer && event.dataTransfer.getData(TEXT_PLAIN) && event.dataTransfer.getData(TEXT_PLAIN) !== '-' && form === self.jodit.editor) {
                     event.preventDefault();
                     event.stopPropagation();
-                    if (!this.parent.selection.insertCursorAtPoint(event.clientX, event.clientY)) {
+                    if (!this.jodit.selection.insertCursorAtPoint(event.clientX, event.clientY)) {
                         return false;
                     }
                     if (handlerSuccess || this.options.defaultHandlerSuccess) {

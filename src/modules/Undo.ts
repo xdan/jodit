@@ -1,10 +1,12 @@
 // import Component from './Component'
 
+import {Command} from "./Observer";
+
 export class Stack {
-    commands = [];
-    stackPosition = -1;
-    savePosition = -1;
-    execute(command) {
+    commands: Command[] = [];
+    stackPosition: number = -1;
+    savePosition: number = -1;
+    execute(command: Command) {
         this.__clearRedo();
         command.execute();
         this.commands.push(command);
@@ -18,7 +20,7 @@ export class Stack {
         this.stackPosition -= 1;
         this.changed();
     }
-    canUndo () {
+    canUndo (): boolean {
         return this.stackPosition >= 0;
     }
     redo () {
@@ -28,16 +30,14 @@ export class Stack {
         }
         this.changed();
     }
-    canRedo () {
+    canRedo (): boolean {
         return this.stackPosition < this.commands.length - 1;
     }
     save () {
         this.savePosition = this.stackPosition;
         this.changed();
     }
-    // dirty () {
-    //     return this.stackPosition != this.savePosition;
-    // }
+
     __clearRedo() {
         this.commands.length = this.stackPosition + 1;
     }
@@ -45,5 +45,3 @@ export class Stack {
         // do nothing, override
     }
 }
-
-// export default class Undo extends Component{}

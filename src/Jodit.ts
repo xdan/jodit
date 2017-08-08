@@ -28,6 +28,15 @@ export default class Jodit extends Component{
     static instances = {};
     static lang: any = {};
 
+    /**
+     * @prop {HTMLDocument} win
+     */
+    doc: HTMLDocument;
+    /**
+     * @prop {Window} win
+     */
+    win: Window;
+
     components: any = [];
 
     /**
@@ -56,9 +65,15 @@ export default class Jodit extends Component{
     element: HTMLInputElement;
 
     /**
-     * @prop {HTMLDivElement} editor It contains the root element editor
+     * @prop {HTMLDivElement|HTMLBodyElement} editor It contains the root element editor
      */
-    editor: HTMLDivElement;
+    editor: HTMLDivElement|HTMLBodyElement;
+
+
+    /**
+     * @prop {HTMLIFrameElement} iframe Iframe for iframe mode
+     */
+    iframe: HTMLIFrameElement;
 
 
     /**
@@ -109,6 +124,9 @@ export default class Jodit extends Component{
     constructor(element: HTMLInputElement|string, options?: object) {
         super();
 
+        this.doc = document;
+        this.win = window;
+
         const OptionsDefault = function () {};
         OptionsDefault.prototype = Jodit.defaultOptions;
 
@@ -135,6 +153,10 @@ export default class Jodit extends Component{
             throw new Error('Element "' + element + '" should be string or HTMLElement');
         }
 
+        this.selection = this.getInstance('Selection');
+        this.uploader = this.getInstance('Uploader');
+        this.events = this.getInstance('Events');
+
         this.container = <HTMLDivElement>dom('<div class="jodit_container" />');
         this.container.classList.add('jodit_' + (this.options.theme || 'default') + '_theme');
 
@@ -145,13 +167,14 @@ export default class Jodit extends Component{
         this.workplace = <HTMLDivElement>dom('<div class="jodit_workplace" />');
         this.progress_bar = <HTMLDivElement>dom('<div class="jodit_progress_bar"><div></div></div>');
 
-        this.selection = this.getInstance('Selection');
-        this.uploader = this.getInstance('Uploader');
-
-        this.events = this.getInstance('Events');
 
         this.toolbar = new Toolbar(this);
         this.toolbar.build(this.options.buttons, this.container);
+        this.container.appendChild(this.workplace);
+
+        this.workplace.appendChild(this.progress_bar);
+
+        this.element.parentNode.insertBefore(this.container, this.element);
 
         this.__createEditor();
 
@@ -201,14 +224,73 @@ export default class Jodit extends Component{
      *
      * @private
      */
-    __createEditor() {
-        this.editor = <HTMLDivElement>dom(`<div class="jodit_wysiwyg" contenteditable aria-disabled="false" tabindex="${this.options.tabIndex}"></div>`);
+    private __createEditor() {
+        if (!this.options.iframe) {
+            this.editor = <HTMLDivElement>dom(`<div class="jodit_wysiwyg" contenteditable aria-disabled="false" tabindex="${this.options.tabIndex}"></div>`);
+            css(this.editor, {
+                width: this.options.width,
+                height: this.options.height,
+                minHeight: this.options.minHeight
+            });
+            // fix fo ie
+            this.workplace.appendChild(document.createTextNode("\n"));
+            this.workplace.appendChild(this.editor);
+            this.workplace.appendChild(document.createTextNode("\n"));
+        } else {
+            this.iframe = <HTMLIFrameElement>document.createElement("iframe");
+            this.iframe.style.display = 'block';
+            this.iframe.src = 'about:blank';
+            this.iframe.frameBorder = '0';
 
-        css(this.editor, {
-            width: this.options.width,
-            height: this.options.height,
-            minHeight: this.options.minHeight
-        });
+            this.workplace.appendChild(this.iframe);
+
+            const doc = this.iframe.contentWindow.document;
+            this.doc = doc;
+            this.win = this.iframe.contentWindow;
+
+            doc.open();
+            doc.write(`<!DOCTYPE html>
+                <html class="jodit">
+                    <head>
+                        ${this.options.iframeBaseUrl ? `<base href="${this.options.iframeBaseUrl}"/>` : ''}
+                    </head>
+                    <body class="jodit_wysiwyg" style="outline:none" contenteditable="true"></body>
+                </html>`);
+
+            doc.close();
+            this.editor = <HTMLBodyElement>doc.body;
+
+            if (this.options.iframeCSSLinks) {
+                this.options.iframeCSSLinks.forEach((href) => {
+                    const link: HTMLLinkElement = <HTMLLinkElement>dom('<link rel="stylesheet" href="' + href + '">', doc);
+                    doc.head.appendChild(link);
+                });
+            }
+
+            if (this.options.iframeStyle) {
+                const style: HTMLStyleElement = doc.createElement('style');
+                style.innerHTML = this.options.iframeStyle;
+                doc.head.appendChild(style);
+            }
+
+            css(this.iframe, {
+                width: this.options.width === 'auto' ? '100%' : this.options.width,
+                height: this.options.height,
+                minHeight: this.options.minHeight
+            });
+
+            css(this.editor, 'minHeight', this.options.minHeight);
+
+
+            (function(e){
+                e.matches || (e.matches = Element.prototype.matches); // fix inside iframe polifill
+            })(this.win['Element'].prototype);
+
+            //proxy events
+            this.__on(this.win, 'mousedown click mouseup mousemove scroll', (e: Event) => {
+                this.__fire && this.__fire(window, e, document);
+            });
+        }
 
         // proxy events
         ['keydown', 'keyup', 'keypress', 'mousedown', 'mouseup', 'mousepress', 'paste', 'resize'].forEach((event_type) => {
@@ -230,15 +312,6 @@ export default class Jodit extends Component{
             this.editor.style.direction = this.options.direction.toLowerCase() === 'rtl' ? 'rtl' : 'ltr';
         }
 
-        // fix fo ie
-        this.workplace.appendChild(document.createTextNode("\n"));
-        this.workplace.appendChild(this.editor);
-        this.workplace.appendChild(document.createTextNode("\n"));
-
-        this.container.appendChild(this.workplace);
-        this.workplace.appendChild(this.progress_bar);
-
-        this.element.parentNode.insertBefore(this.container, this.element);
 
         // hide source element
         if (this.element.style.display) {

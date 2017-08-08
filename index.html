@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8"/>
+    <!--<meta http-equiv="x-ua-compatible" content="IE=8">-->
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <title>Jodit Example</title>
@@ -23,7 +24,7 @@
         <tr>
             <td style="width:50%;vertical-align: top">
                 <div id="uniqbox" class="box">
-                    <textarea id="editor">&lt;div&gt;
+                    <textarea id="area_editor">&lt;div&gt;
         &lt;img src="http://xdsoft.net/jodit/images/artio.jpg" style="width: 301px; float: right; margin-left: 15px; margin-top: 10px;"/&gt;
     &lt;/div&gt;
     &lt;ul&gt;
@@ -60,16 +61,28 @@
 </html>
 
 <script>
+    Jodit.defaultOptions.iframeCSSLinks.push('app.css');
+    Jodit.defaultOptions.iframeStyle += "* {\
+    -webkit-box-sizing: border-box;\
+    -moz-box-sizing: border-box;\
+    box-sizing: border-box;\
+}";
     function expect(value) {
+        var equal = function (val) {
+            console.log(value === val);
+        };
         return {
             to: {
-                equal: function (val) {
-                    console.log(value === val);
+                equal: equal,
+                be: {
+                    equal: equal
                 }
             }
         };
     }
-    editor = new Jodit('#editor', {
+    editor = new Jodit('#area_editor', {
+//        iframe: true,
+        //height: 100,
         observer: {
             timeout: 0
         },
@@ -104,7 +117,7 @@
         callback = function (e) {
             clearTimeout(timeout);
             timeout = setTimeout(function () {
-                mirror.value = editor.editor.innerHTML;
+                mirror.value = editor.editor ? editor.editor.innerHTML : '';
             }, 100)
         }
     editor.editor.addEventListener('keydown', callback)
@@ -114,46 +127,12 @@
     editor.editor.addEventListener('input', callback)
     editor.events.on('change', callback)
 
-    editor.setEditorValue('<table><tr><td>1</td></tr></table>');
-    var sel = editor.win.getSelection(),
-        range = editor.doc.createRange();
-    range.selectNodeContents(editor.editor.querySelector('td'));
-    sel.removeAllRanges();
-    sel.addRange(range);
-    editor.execCommand('formatBlock', false, 'h1');
-    expect(editor.getEditorValue()).to.equal('<table><tbody><tr><td><h1>1</h1></td></tr></tbody></table>');
-//    simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-brush'))
-//    expect(list.style.display).to.equal('block');
-//    simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-brush .jodit_colorpicker > a > svg'))
-//    expect(editor.getEditorValue()).to.equal('text2text');
+    editor.setEditorValue('<img src="/test/tests/artio.jpg"/>')
 
-//    editor.selection.insertNode(document.createTextNode(' 2 '));
-//    expect(editor.getEditorValue()).to.be.equal('<p>test 2 </p>');
+    simulateEvent('mousedown', 0, editor.editor.querySelector('img'));
 
-//    editor.execCommand('fontSize', false, '12%');
-//    expect(editor.getEditorValue()).to.equal('<p> testy oprst <span style="font-size: 12%;">lets go</span></p>');
-
-    //    expect(parseInt(editor.container.querySelector('.jodit_table_resizer').style.left, 10) < 50).to.equal(true);
-
-//    expect(list.style.display).to.equal('none');
-
-//    editor.setEditorValue('<img src="/test/tests/artio.jpg"/>')
-
-//    simulateEvent('mousedown', 0, editor.editor.querySelector('img'));
-//    simulateEvent('mouseup', 0, editor.editor.querySelector('img'));
-//    var resizer = document.querySelector('.jodit_resizer');
-
-//    console.log(resizer.style.display === 'block');
-//    editor.setEditorValue('Some text');
-//    var sel = editor.win.getSelection(),
-//        range = editor.doc.createRange();
-//    range.setStart(editor.editor.firstChild, 9);
-//    range.collapse(true);
-//    sel.removeAllRanges();
-//    sel.addRange(range);
-//    simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
-//    editor.selection.insertNode(editor.doc.createTextNode(' a '))
-//    expect(editor.getEditorValue()).to.be.equal('<p>Some text</p><p> a </p>');
+//    var dialogs = document.querySelectorAll('.jodit.jodit_dialog_box.jodit_text_icons.active');
+//    expect(dialogs.length).to.equal(1);
 
     callback();
 </script>

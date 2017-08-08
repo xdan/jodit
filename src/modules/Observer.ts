@@ -3,6 +3,7 @@ import Component from './Component'
 import Snapshot,{SnapshotType} from './Snapshot'
 import * as consts from '../constants';
 import {Stack} from './Undo'
+import Jodit from "../Jodit";
 /**
  * @memberof Jodit.defaultOptions
  * @prop {object} observer module settings {@link Observer|Observer}
@@ -20,23 +21,24 @@ Config.prototype.observer = {
     timeout: 100,
 };
 
-class Command {
-    parent;
-    oldValue: any;
-    newValue: any;
-    constructor(oldValue, newValue, parent) {
-        this.parent = parent;
+export class Command {
+    observer: Observer;
+    oldValue: SnapshotType;
+    newValue: SnapshotType;
+
+    constructor(oldValue: SnapshotType, newValue: SnapshotType, observer: Observer) {
+        this.observer = observer;
         this.oldValue = oldValue;
         this.newValue = newValue;
     }
     execute() {}
     undo () {
-        this.parent.block(true);
-        this.parent.snapshot.restore(this.oldValue);
+        this.observer.block(true);
+        this.observer.snapshot.restore(this.oldValue);
     }
     redo () {
-        this.parent.block(true);
-        this.parent.snapshot.restore(this.newValue);
+        this.observer.block(true);
+        this.observer.snapshot.restore(this.newValue);
     }
 }
 
@@ -58,13 +60,13 @@ export default class Observer extends Component {
      * @prop {Snapshot} snapshot
      */
     snapshot: Snapshot;
-    __blocked = false;
-    __timer;
+    private __blocked = false;
+    private __timer;
     // redobtn;
     // undobtn;
-    __startValue: SnapshotType;
-    __newValue: SnapshotType;
-    __timeouts = [];
+    private  __startValue: SnapshotType;
+    private __newValue: SnapshotType;
+    private __timeouts = [];
 
 
     __onChange() {
@@ -81,16 +83,16 @@ export default class Observer extends Component {
             return;
         }
 
-        if (this.parent.options.observer.timeout) {
+        if (this.jodit.options.observer.timeout) {
             clearTimeout(this.__timer);
-            this.__timer = setTimeout(this.__onChange.bind(this), this.parent.options.observer.timeout);
+            this.__timer = setTimeout(this.__onChange.bind(this), this.jodit.options.observer.timeout);
             this.__timeouts[this.__timeouts.length] = this.__timer;
         } else {
             this.__onChange();
         }
     }
 
-    constructor (editor) {
+    constructor (editor: Jodit) {
         super(editor);
 
         this.stack = new Stack();
@@ -155,9 +157,9 @@ export default class Observer extends Component {
         //     redobtn.toggleClass('disabled', !stack.canRedo());
         //     undobtn.toggleClass('disabled', !stack.canUndo());
         // }
-        if (this.parent.getMode() === consts.MODE_WYSIWYG) {
-            this.parent.events.fire('canRedo', [this.stack.canRedo()]);
-            this.parent.events.fire('canUndo', [this.stack.canUndo()]);
+        if (this.jodit.getMode() === consts.MODE_WYSIWYG) {
+            this.jodit.events.fire('canRedo', [this.stack.canRedo()]);
+            this.jodit.events.fire('canUndo', [this.stack.canUndo()]);
         }
     };
 

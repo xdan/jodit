@@ -64,7 +64,7 @@ export default class ContextMenu extends Component {
                 return false;
             });
 
-            action.querySelector('span').innerText = self.parent.i18n(item.title);
+            action.querySelector('span').innerText = self.jodit.i18n(item.title);
             self.context.appendChild(action);
         });
 

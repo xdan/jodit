@@ -146,7 +146,7 @@ export default class Ajax extends Component{
                     if (this.xhr.status === 200) {
                         resolve.call(this.xhr, __parse(resp));
                     } else {
-                        reject.call(this.xhr, new Error(this.xhr.statusText || this.parent.i18n('Connection error!')));
+                        reject.call(this.xhr, new Error(this.xhr.statusText || this.jodit.i18n('Connection error!')));
                     }
                 }
             };

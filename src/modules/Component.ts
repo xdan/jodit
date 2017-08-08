@@ -1,23 +1,14 @@
 import Jodit from "../Jodit";
+
 export default class Component {
     handlers: {};
     /**
      * @prop {Jodit} parent
      */
-    parent: Jodit;
-    /**
-     * @prop {HTMLDocument} win
-     */
-    doc: HTMLDocument;
-    /**
-     * @prop {Window} win
-     */
-    win: Window;
+    jodit: Jodit;
 
     constructor(parent?: Jodit) {
-        this.parent = parent;
-        this.doc = document;
-        this.win = window;
+        this.jodit = parent;
         if (parent && parent.components) {
             parent.components.push(this);
         }
@@ -26,11 +17,24 @@ export default class Component {
     __scope: any[] = [];
     __scopeNamespace: any = {};
 
-    __fire(element: Element, event: string) {
-        let evt = this.doc.createEvent('HTMLEvents');
-        evt.initEvent(event, true, true);
+    __fire(element: Document|Element|HTMLElement|Window, event: string|Event|MouseEvent, doc?: Document) {
+        let evt: Event = doc.createEvent('HTMLEvents');
+
+        if (typeof event === 'string') {
+            evt.initEvent(event, true, true);
+        } else {
+            evt.initEvent(event.type, event.bubbles, event.cancelable);
+
+            ['screenX', 'screenY', 'clientX', 'clientY', 'target', 'srcElement', 'currentTarget', 'timeStamp', 'which', 'keyCode'].forEach((property) => {
+                Object.defineProperty(evt, property, {value: event[property], enumerable: true});
+            });
+
+            Object.defineProperty(evt, 'originalEvent', {value: event, enumerable: true});
+        }
+
         element.dispatchEvent(evt);
     }
+
     __off(element: false|Document|Element|HTMLElement|Window|Array<HTMLElement> = false, event: string|false = false) {
         if (event && /^\./.test(event)) {
             let nameSpace = event.replace(/^\./, '');
@@ -57,14 +61,22 @@ export default class Component {
 
     classSeparator = /[\s]+/;
 
-    __on(element: Document|Element|HTMLElement|Window|Array<HTMLElement>, event: string, selectorOrCallback: false|string|Function, callback?: Function) {
+    __on(element: Document|Element|HTMLElement|Window|Array<HTMLElement|Window>, event: string, selectorOrCallback: false|string|Function, callback?: Function) {
         if (typeof selectorOrCallback === 'function') {
             callback = selectorOrCallback;
             selectorOrCallback = false;
         }
 
         let eventsArray = event ? event.split(this.classSeparator) : [],
-            temp: Function = callback;
+            temp: Function = function (event: MouseEvent) {
+                if (event.cancelBubble) {
+                    return;
+                }
+                if (!event['originalEvent']) {
+                    event['originalEvent'] = event;
+                }
+                callback.call(this, event);
+            };
 
         eventsArray.forEach((event: string) => {
             let namespace = '';
@@ -74,6 +86,12 @@ export default class Component {
 
             if (selectorOrCallback) {
                 temp = function (event) {
+                    if (event.cancelBubble) {
+                        return;
+                    }
+                    if (!event['originalEvent']) {
+                        event['originalEvent'] = event;
+                    }
                     let node = event.target;
                     while (node && node !== this) {
                         if (node.matches(selectorOrCallback)) {

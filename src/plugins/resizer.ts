@@ -1,6 +1,6 @@
 import Jodit from '../Jodit';
 import {Config} from '../Config'
-import {$$, dom, offset} from '../modules/Helpers'
+import {$$, dom, isIE, offset} from '../modules/Helpers'
 import Dom from "../modules/Dom";
 
 /**
@@ -77,7 +77,7 @@ Jodit.plugins.Resizer = function (editor: Jodit) {
             '<i class="jodit_resizer-topright"></i>' +
             '<i class="jodit_resizer-bottomright"></i>' +
             '<i class="jodit_resizer-bottomleft"></i>' +
-        '</div>'),
+        '</div>', document),
 
         hideResizer = () => {
             isResizing = false;
@@ -88,7 +88,7 @@ Jodit.plugins.Resizer = function (editor: Jodit) {
 
         updateSize = () => {
             if (resizerIsVisible) {
-                const pos = offset(currentElement);
+                const pos = offset(currentElement, editor);
                 // 1 - because need move border higher and to the left than the picture
                 // 2 - in box-sizing: border-box mode width is real width indifferent by border-width.
                 resizer.style.top = (pos.top - 1) + 'px';
@@ -115,10 +115,10 @@ Jodit.plugins.Resizer = function (editor: Jodit) {
         bind = (element: HTMLElement) => {
             let wrapper: HTMLElement;
             if (element.tagName === 'IFRAME') {
-                if (element.parentNode && (<HTMLElement>element.parentNode).classList.contains('jodit_iframe_wrapper')) {
+                if (element.parentNode && (<HTMLElement>element.parentNode).getAttribute('data-jodit_iframe_wrapper')) {
                     element = <HTMLElement>element.parentNode;
                 } else {
-                    wrapper = dom('<div data-jodit-temp="1" contenteditable="false" draggable="true" class="jodit_iframe_wrapper"></div>');
+                    wrapper = dom('<div data-jodit-temp="1" contenteditable="false" draggable="true" data-jodit_iframe_wrapper="1"></div>', document);
 
                     wrapper.style.display = element.style.display === 'inline-block' ? 'inline-block' : 'block';
                     wrapper.style.width = element.offsetWidth + 'px';
@@ -135,16 +135,15 @@ Jodit.plugins.Resizer = function (editor: Jodit) {
                 }
             }
 
-
             editor
-                //.__off(element, '.jodit-resizer')
                 .__on(element, 'dragstart', hideResizer)
-                // .__on(element, 'mousedown.jodit-resizer', () => {
-                //     resizeElementClicked = true;
-                // })
+                .__on(element, 'mousedown', (event: MouseEvent) => {
+                    // for IE don't show native resizer
+                    if (isIE()) {
+                        event.preventDefault();
+                    }
+                })
                 .__on(element, 'click', () => {
-                    // if (resizeElementClicked) {
-                    //     resizeElementClicked = false;
                     currentElement = element;
                     showResizer();
                     if (currentElement.tagName === 'IMG' && !(<HTMLImageElement>currentElement).complete) {
@@ -153,8 +152,6 @@ Jodit.plugins.Resizer = function (editor: Jodit) {
                             currentElement.removeEventListener('load', ElementOnLoad);
                         });
                     }
-
-                    // }
                 });
         };
 
@@ -188,7 +185,7 @@ Jodit.plugins.Resizer = function (editor: Jodit) {
 
 
     editor
-        .__on(editor.win, 'mousemove.jodit-resizer' + editor.id, (e: MouseEvent) => {
+        .__on(window, 'mousemove', (e: MouseEvent) => {
             if (isResizing) {
                 // resized = true;
 
@@ -224,40 +221,27 @@ Jodit.plugins.Resizer = function (editor: Jodit) {
                 e.stopImmediatePropagation();
             }
         })
-        .__on(editor.win, 'resize.jodit-resizer' + editor.id + ' updateresizer.jodit-resizer', () => {
+        .__on(window, 'resize', () => {
             if (resizerIsVisible) {
                 updateSize();
             }
         })
-        .__on(editor.win, 'mouseup.jodit-resizer' + editor.id + ' keydown.jodit-resizer', (e: MouseEvent) => {
+        .__on(window, 'mouseup keydown', (e: MouseEvent) => {
             if (resizerIsVisible) {
                 if (isResizing) {
-                    // if (resized) {
-                    //     editor.setEditorValue();
-                    // }
                     isResizing = false;
-                    // resized = false;
                     e.stopImmediatePropagation();
                 } else {
-                    // if (!resizeElementClicked || !(currentElement && currentElement.parentNode)) {
-                    // }
                     hideResizer()
                 }
             }
         });
 
-    editor.__on(editor.editor, 'scroll.jodit-resizer' + editor.id, () => {
-        if (resizerIsVisible) {
+    editor.__on([window, editor.editor], 'scroll', () => {
+        if (resizerIsVisible && !isResizing) {
             hideResizer()
         }
     });
-
-
-    // editor.events.on(editor, 'beforeDestruct', () => {
-    //     timeouts.forEach((timeout) => {
-    //         clearTimeout(timeout);
-    //     })
-    // });
 
 
     editor.events.on('change afterInit afterSetMode', () => {
@@ -265,7 +249,7 @@ Jodit.plugins.Resizer = function (editor: Jodit) {
             hideResizer();
         }
         $$('img, table, iframe', editor.editor).forEach((elm: HTMLElement) => {
-            if (!elm['__jodit_resizer_binded'] && (elm.tagName === 'IFRAME' && editor.options.useIframeResizer) || (elm.tagName === 'IMG' && editor.options.useImageResizer) || (elm.tagName === 'TABLE' && editor.options.useTableResizer)) {
+            if (!elm['__jodit_resizer_binded'] && ((elm.tagName === 'IFRAME' && editor.options.useIframeResizer) || (elm.tagName === 'IMG' && editor.options.useImageResizer) || (elm.tagName === 'TABLE' && editor.options.useTableResizer))) {
                 elm['__jodit_resizer_binded'] = true;
                 bind(elm);
             }

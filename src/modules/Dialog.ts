@@ -94,7 +94,7 @@ export default class Dialog extends Component{
         this.dialog = <HTMLDivElement>this.dialogbox.querySelector('.jodit_dialog');
         this.resizer = <HTMLDivElement>this.dialogbox.querySelector('.jodit_dialog_resizer');
 
-        if (this.parent && this.parent.options && this.parent.options.textIcons) {
+        if (this.jodit && this.jodit.options && this.jodit.options.textIcons) {
             this.dialogbox.classList.add('jodit_text_icons');
         }
 
@@ -340,8 +340,8 @@ export default class Dialog extends Component{
          * @event beforeOpen
          * @this {module:Dialog} current dialog
          */
-        if (this.parent && this.parent.events) {
-            if (this.parent.events.fire(this, 'beforeOpen') === false) {
+        if (this.jodit && this.jodit.events) {
+            if (this.jodit.events.fire(this, 'beforeOpen') === false) {
                 return;
             }
         }
@@ -377,8 +377,8 @@ export default class Dialog extends Component{
          * @event afterOpen
          * @this {module:Dialog} current dialog
          */
-        if (this.parent && this.parent.events) {
-            this.parent.events.fire(this, 'afterOpen');
+        if (this.jodit && this.jodit.events) {
+            this.jodit.events.fire(this, 'afterOpen');
         }
     }
 
@@ -401,12 +401,12 @@ export default class Dialog extends Component{
         if (this.draggable || this.resizeble) {
             this.draggable = false;
             this.resizeble = false;
-            if (this.parent && this.parent.events) {
+            if (this.jodit && this.jodit.events) {
                 /**
                  * Fired when dialog box is finished to resizing
                  * @event endResize
                  */
-                this.parent.events.fire(this, 'endResize endMove');
+                this.jodit.events.fire(this, 'endResize endMove');
             }
         }
     }
@@ -428,39 +428,39 @@ export default class Dialog extends Component{
 
         this.setMaxZIndex();
         e.preventDefault();
-        if (this.parent && this.parent.events) {
+        if (this.jodit && this.jodit.events) {
             /**
              * Fired when dialog box is started moving
              * @event startMove
              */
-            this.parent.events.fire(this, 'startMove');
+            this.jodit.events.fire(this, 'startMove');
         }
     }
     onMouseMove(e: MouseEvent) {
         if (this.draggable && this.options.draggable) {
             this.setPosition(this.startPoint.x + e.clientX - this.startX, this.startPoint.y + e.clientY - this.startY);
-            if (this.parent && this.parent.events) {
+            if (this.jodit && this.jodit.events) {
                 /**
                  * Fired when dialog box is moved
                  * @event move
                  * @param {int} dx Delta X
                  * @param {int} dy Delta Y
                  */
-                this.parent.events.fire(this, 'move', [e.clientX - this.startX, e.clientY - this.startY]);
+                this.jodit.events.fire(this, 'move', [e.clientX - this.startX, e.clientY - this.startY]);
             }
             e.stopImmediatePropagation();
             e.preventDefault();
         }
         if (this.resizeble && this.options.resizable) {
             this.setSize(this.startPoint.w + e.clientX - this.startX, this.startPoint.h + e.clientY - this.startY);
-            if (this.parent && this.parent.events) {
+            if (this.jodit && this.jodit.events) {
                 /**
                  * Fired when dialog box is resized
                  * @event resizeDialog
                  * @param {int} dx Delta X
                  * @param {int} dy Delta Y
                  */
-                this.parent.events.fire(this, 'resizeDialog', [e.clientX - this.startX, e.clientY - this.startY]);
+                this.jodit.events.fire(this, 'resizeDialog', [e.clientX - this.startX, e.clientY - this.startY]);
             }
             e.stopImmediatePropagation();
             e.preventDefault();
@@ -528,8 +528,8 @@ export default class Dialog extends Component{
          * @event beforeClose
          * @this {module:Dialog} current dialog
          */
-        if (this.parent && this.parent.events) {
-            this.parent.events.fire(this, 'beforeClose');
+        if (this.jodit && this.jodit.events) {
+            this.jodit.events.fire(this, 'beforeClose');
         }
         this.dialogbox.classList.remove('active');
 
@@ -547,8 +547,8 @@ export default class Dialog extends Component{
          * @event afterClose
          * @this {module:Dialog} current dialog
          */
-        if (this.parent) {
-            this.parent.events.fire(this, 'afterClose');
+        if (this.jodit) {
+            this.jodit.events.fire(this, 'afterClose');
         }
     };
     onResizerMouseDown(e: MouseEvent) {
@@ -558,12 +558,12 @@ export default class Dialog extends Component{
         this.startPoint.w = this.dialog.offsetWidth;
         this.startPoint.h = this.dialog.offsetHeight;
 
-        if (this.parent.events) {
+        if (this.jodit.events) {
             /**
              * Fired when dialog box is started resizing
              * @event startResize
              */
-            this.parent.events.fire(this, 'startResize');
+            this.jodit.events.fire(this, 'startResize');
         }
     }
 }

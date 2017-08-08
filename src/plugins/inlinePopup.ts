@@ -257,7 +257,7 @@ Config.prototype.popup = {
 Jodit.plugins.Popup = function (editor: Jodit) {
     let timeout: number;
     const toolbar: Toolbar = new Toolbar(editor),
-        popup: HTMLDivElement = <HTMLDivElement> dom('<div class="jodit_toolbar_popup-inline"></div>'),
+        popup: HTMLDivElement = <HTMLDivElement> dom('<div class="jodit_toolbar_popup-inline"></div>', document),
 
         hidePopup = () => {
             popup
@@ -314,13 +314,11 @@ Jodit.plugins.Popup = function (editor: Jodit) {
         e.stopPropagation();
     });
 
-    //editor.__on(window,'mouseup', hidePopup);
-
-    let clickOnImage = false;
+    let clickOnImage: boolean = false;
     editor.__on(editor.editor, 'mousedown', (event: MouseEvent) => {
         if ((<HTMLImageElement>event.target).tagName === 'IMG' || Dom.closest(<Node>event.target, 'table', editor.editor)) {
             const target: HTMLImageElement|HTMLTableElement = (<HTMLImageElement>event.target).tagName === 'IMG' ? <HTMLImageElement>event.target :  <HTMLTableElement>Dom.closest(<Node>event.target, 'table', editor.editor);
-            const pos = offset(target);
+            const pos = offset(target, editor);
             delayShowPopup(target, Math.round(pos.left + (target.offsetWidth / 2)), Math.round(pos.top + target.offsetHeight));
             clickOnImage = true;
         } else {

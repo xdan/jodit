@@ -115,12 +115,12 @@ describe('Test interface', function() {
             it('Open image dialog and insert image by url.', function() {
                 var editor = new Jodit('#table_editor_interface');
 
-                editor.setEditorValue('text2text')
+                editor.setEditorValue(Jodit.INVISIBLE_SPACE); // IE in iframe mode can loose focus and we can not check where it paste image in start or in finish. It is only in IE
 
                 var sel = editor.win.getSelection(), range = editor.doc.createRange();
 
-                range.selectNodeContents(editor.editor.firstChild)
-                range.collapse(true)
+                range.selectNodeContents(editor.editor)
+                range.collapse(false)
                 sel.removeAllRanges();
                 sel.addRange(range)
 
@@ -139,7 +139,7 @@ describe('Test interface', function() {
                 editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-image input[name=url]').value = 'http://xdsoft.net/jodit/images/artio.jpg'
                 simulateEvent('submit', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-image .jodit_form'))
 
-                expect(sortAtrtibutes(editor.getEditorValue())).to.equal('<img alt="123" src="http://xdsoft.net/jodit/images/artio.jpg">text2text');
+                expect(sortAtrtibutes(editor.getEditorValue())).to.equal('<img alt="123" src="http://xdsoft.net/jodit/images/artio.jpg">');
 
                 simulateEvent('mousedown', 0, editor.editor)
 
@@ -165,7 +165,7 @@ describe('Test interface', function() {
                 editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-video input[name=code]').value = 'https://www.youtube.com/watch?v=7CcEYRfxUOQ'
                 simulateEvent('submit', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-video .jodit_form'))
 
-                expect(sortAtrtibutes(editor.getEditorValue())).to.equal('<div class="jodit_iframe_wrapper" contenteditable="false" data-jodit-temp="1" draggable="true" style="display:block;height:345px;width:400px"><iframe allowfullscreen="" frameborder="0" height="345" src="//www.youtube.com/embed/7CcEYRfxUOQ" width="400"></iframe></div>');
+                expect(sortAtrtibutes(editor.getEditorValue())).to.equal('<div contenteditable="false" data-jodit-temp="1" data-jodit_iframe_wrapper="1" draggable="true" style="display:block;height:345px;width:400px"><iframe allowfullscreen="" frameborder="0" height="345" src="//www.youtube.com/embed/7CcEYRfxUOQ" width="400"></iframe></div>');
 
                 simulateEvent('mousedown', 0, editor.editor)
 
@@ -514,37 +514,11 @@ describe('Test interface', function() {
 
                 });
             });
-            it('Select table cell and fill it in yellow', function () {
+            it('Select table cell and change it vertical align', function () {
                 var editor = new Jodit('#table_editor_interface');
 
                 editor.setEditorValue('<table>' +
-                    '<tr><td>3</td></tr>' +
-                    '</table>');
-
-                var td = editor.editor.querySelector('td');
-
-                simulateEvent('mousedown', 0, td)
-
-                var popup = editor.container.querySelector('.jodit_toolbar_popup-inline');
-
-                expect(popup && popup.classList.contains('active')).to.equal(true);
-
-                simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-valign>a'))
-
-                var popupColor = popup.querySelector('.jodit_dropdownlist');
-                expect(popupColor && popupColor.style.display).to.equal('block');
-
-                simulateEvent('mousedown', 0, popupColor.querySelector('li>a'));
-
-
-                expect(td.style.verticalAlign).to.equal('top');
-
-            });
-            it('Select table cell and  set vertical align to Top', function () {
-                var editor = new Jodit('#table_editor_interface');
-
-                editor.setEditorValue('<table>' +
-                    '<tr><td>3</td></tr>' +
+                    '<tr><td style="vertical-align: middle">3</td></tr>' +
                     '</table>');
 
                 var td = editor.editor.querySelector('td');
