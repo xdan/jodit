@@ -782,7 +782,7 @@ export const css = (element: HTMLElement, key: string|object, value?: string|num
 
     let result = (element.style[<string>key] !== undefined && element.style[<string>key] !== '') ? element.style[<string>key] : (win ? win.getComputedStyle(element).getPropertyValue(key2) : '');
 
-    if (numberFieldsReg.test(<string>key) && /^[\-+]?[0-9]+px$/.test(result.toString())) {
+    if (numberFieldsReg.test(<string>key) && /^[\-+]?[0-9\.]+px$/.test(result.toString())) {
         result = parseInt(result, 10);
     }
 

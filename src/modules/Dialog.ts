@@ -44,6 +44,13 @@ Config.prototype.dialog = {
  * @param {Object} [opt] Extend Options
  */
 export default class Dialog extends Component{
+    private lockSelect = () => {
+        this.dialogbox.classList.add('jodit_dialog_box-moved');
+    };
+    private unlockSelect = () => {
+        this.dialogbox.classList.remove('jodit_dialog_box-moved');
+    };
+
     /**
      * @property {DialogOptions} options
      */
@@ -391,16 +398,17 @@ export default class Dialog extends Component{
         return this.dialogbox.classList.contains('active');
     }
 
-    resizeble = false;
-    draggable = false;
-    startX;
-    startY;
+    resizeble: boolean = false;
+    draggable: boolean = false;
+    startX: number = 0;
+    startY: number = 0;
     startPoint = {x: 0, y: 0, w: 0, h: 0};
 
     onMouseUp() {
         if (this.draggable || this.resizeble) {
             this.draggable = false;
             this.resizeble = false;
+            this.unlockSelect();
             if (this.jodit && this.jodit.events) {
                 /**
                  * Fired when dialog box is finished to resizing
@@ -420,7 +428,6 @@ export default class Dialog extends Component{
             return;
         }
         this.draggable = true;
-
         this.startX = e.clientX;
         this.startY = e.clientY;
         this.startPoint.x = <number>css(this.dialog, 'left');
@@ -428,6 +435,9 @@ export default class Dialog extends Component{
 
         this.setMaxZIndex();
         e.preventDefault();
+
+        this.lockSelect();
+
         if (this.jodit && this.jodit.events) {
             /**
              * Fired when dialog box is started moving
@@ -557,6 +567,8 @@ export default class Dialog extends Component{
         this.startY = e.clientY;
         this.startPoint.w = this.dialog.offsetWidth;
         this.startPoint.h = this.dialog.offsetHeight;
+
+        this.lockSelect();
 
         if (this.jodit.events) {
             /**
