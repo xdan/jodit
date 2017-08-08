@@ -126,11 +126,13 @@
     editor.editor.addEventListener('mouseup', callback)
     editor.editor.addEventListener('input', callback)
     editor.events.on('change', callback)
+    editor.setEditorValue('<table>' +
+        '<tr><td>1</td><td>2</td><td>3</td></tr>' +
+        '<tr><td rowspan="2">4</td><td>5</td><td>6</td></tr>' +
+        '<tr><td>7</td><td>8</td></tr>' +
+        '</table>');
 
-    editor.setEditorValue('<img src="/test/tests/artio.jpg"/>')
-    editor.events.fire('change')// only for FF staf
-
-    simulateEvent('mousedown', 0, editor.editor.querySelector('img'));
+    simulateEvent('mousedown', Jodit.KEY_TAB, editor.editor.querySelectorAll('td')[4]);
 
 //    var dialogs = document.querySelectorAll('.jodit.jodit_dialog_box.jodit_text_icons.active');
 //    expect(dialogs.length).to.equal(1);

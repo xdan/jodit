@@ -175,10 +175,13 @@ export default class Table extends Component{
                     while (box[rowIndex + 1][nextCell] === cell) {
                         nextCell += 1;
                     }
+
+                    const nextRow:HTMLTableRowElement  = <HTMLTableRowElement>Dom.next(cell.parentNode, (elm: HTMLTableRowElement) => elm.nodeType === Node.ELEMENT_NODE && elm.tagName === 'TR', table);
+
                     if (box[rowIndex + 1][nextCell]) {
-                        cell.parentNode.nextSibling.insertBefore(cell, box[rowIndex + 1][nextCell]);
+                        nextRow.insertBefore(cell, box[rowIndex + 1][nextCell]);
                     } else {
-                        cell.parentNode.nextSibling.appendChild(cell);
+                        nextRow.appendChild(cell);
                     }
                 }
             } else {

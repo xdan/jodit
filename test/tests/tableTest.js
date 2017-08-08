@@ -139,6 +139,26 @@ describe('Tables Jodit Editor Tests', function() {
                 '</tbody>' +
                 '</table>');
         });
+        it('Remove row should delete TR from table', function() {
+            var editor = new Jodit('#table_editor');
+
+            editor.setEditorValue('<table>' +
+                '<tr><td>1</td><td>2</td><td>3</td></tr>' +
+                '<tr><td rowspan="2">4</td><td>5</td><td>6</td></tr>' +
+                '<tr><td>7</td><td>8</td></tr>' +
+                '</table>');
+
+            simulateEvent('mousedown', Jodit.KEY_TAB, editor.editor.querySelectorAll('td')[4]);
+
+            Jodit.modules.Table.removeRow(editor.editor.firstChild, 1);
+
+            expect(editor.getEditorValue().toLowerCase()).to.equal('<table>' +
+                '<tbody>' +
+                '<tr><td>1</td><td>2</td><td>3</td></tr>' +
+                '<tr><td>4</td><td>7</td><td>8</td></tr>' +
+                '</tbody>' +
+                '</table>');
+        });
         describe('Method merge selected cells', function() {
             it('Simple should merge all selected cells into one ', function () {
                 var editor = new Jodit('#table_editor');

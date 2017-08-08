@@ -1,6 +1,6 @@
 Jodit.defaultOptions.observer.timeout = 0;
 Jodit.defaultOptions.language = 'en';
-Jodit.defaultOptions.iframe = true; // try uncomment sometime
+// Jodit.defaultOptions.iframe = true; // try uncomment sometime
 Jodit.defaultOptions.iframeCSSLinks.push('/app.css');
 Jodit.defaultOptions.iframeStyle += "* {\
     -webkit-box-sizing: border-box;\
