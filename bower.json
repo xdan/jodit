@@ -2,8 +2,8 @@
   "name": "jodit",
   "description": "Jodit is awesome and usefully wysiwyg editor with filebrowser",
   "main": [
-    "dist/jodit.js",
-    "dist/jodit.css"
+    "build/jodit.min.js",
+    "build/jodit.min.css"
   ],
   "authors": [
     {

@@ -65,11 +65,9 @@ module.exports = {
     },
 
     output: {
-        path: path.join(__dirname, 'dist'),
-        filename: 'jodit.js',
-        publicPath: '/dist/',
-        // hotUpdateChunkFilename: 'dist/hot-update.js',
-        // hotUpdateMainFilename: 'dist/hot-update.json',
+        path: path.join(__dirname, 'build'),
+        filename: 'jodit.min.js',
+        publicPath: '/build/',
         libraryTarget: "umd",
         // name of the global var: "Foo"
         library: "Jodit"
@@ -161,7 +159,6 @@ module.exports = {
 
 module.exports.plugins.push(new ExtractTextPlugin({
     disable: debug,
-    filename: 'jodit.css',
-    // path: path.join(__dirname, 'dist'),
+    filename: 'jodit.min.css',
     allChunks: true
 }));
