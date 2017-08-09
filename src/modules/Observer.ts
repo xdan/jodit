@@ -22,9 +22,9 @@ Config.prototype.observer = {
 };
 
 export class Command {
-    observer: Observer;
-    oldValue: SnapshotType;
-    newValue: SnapshotType;
+    private observer: Observer;
+    private oldValue: SnapshotType;
+    private newValue: SnapshotType;
 
     constructor(oldValue: SnapshotType, newValue: SnapshotType, observer: Observer) {
         this.observer = observer;

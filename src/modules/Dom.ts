@@ -357,7 +357,7 @@ export default class Dom {
         return root === child || Dom.contains(root, child);
     };
 
-     static apply = (options, addPropertyCallback, editor: Jodit) => {
+   /*static apply = (options, addPropertyCallback, editor: Jodit) => {
          const WRAP  = 1;
          const UNWRAP  = 0;
          let selectionInfo,
@@ -475,5 +475,5 @@ export default class Dom {
                  oldWrappers.push(wrapper);
              }
          });
-     }
+     }*/
 }

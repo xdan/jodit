@@ -20,7 +20,7 @@ import Component from "./Component";
  * @memberof Jodit.defaultOptions
  */
 
-declare let XDomainRequest: any;
+declare const XDomainRequest: any;
 
 type AjaxOptions  = {
     dataType: string;

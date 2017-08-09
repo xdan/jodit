@@ -66,7 +66,7 @@ export default class Selection extends Component{
         return false;
     }
 
-    isMarker = (elm: HTMLElement) => (
+    private isMarker = (elm: HTMLElement) => (
         Dom.isNode(elm, this.jodit.win) && elm.tagName === 'SPAN' && elm.getAttribute('data-' + consts.MARKER_CLASS)
     )
 
@@ -904,5 +904,4 @@ export default class Selection extends Component{
             }
         }
     };
-
 }

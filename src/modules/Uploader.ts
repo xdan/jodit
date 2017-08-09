@@ -182,10 +182,10 @@ Config.prototype.uploader = <UploaderOptions>{
 };
 
 export default class Uploader extends Component {
-    path: string = '';
-    source: string = 'default';
+    private path: string = '';
+    private source: string = 'default';
 
-    options: UploaderOptions;
+    private options: UploaderOptions;
 
     constructor(editor: Jodit, options) {
         super(editor);

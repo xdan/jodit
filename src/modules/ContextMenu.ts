@@ -16,7 +16,7 @@ type Action = {
  * @param {Object} parent Jodit main object
  */
 export default class ContextMenu extends Component {
-    context: HTMLElement;
+    private context: HTMLElement;
     constructor(editor: Jodit) {
         super(editor);
         this.context = dom('<div class="jodit_context_menu"></div>');

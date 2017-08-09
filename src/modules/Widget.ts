@@ -214,7 +214,7 @@ export namespace Widget {
      */
     export const ImageSelectorWidget = (editor: Jodit, callbacks: ImageSelectorCallbacks, elm: HTMLElement): HTMLDivElement =>{
         let currentImage: any;
-        let tabs: { [key: string]: HTMLElement | Function } = {};
+        const tabs: { [key: string]: HTMLElement | Function } = {};
 
         if (callbacks.upload && editor.options.uploader && editor.options.uploader.url) {
             const dragbox: HTMLElement = dom('<div class="jodit_draganddrop_file_box">' +

@@ -3,9 +3,9 @@
 import {Command} from "./Observer";
 
 export class Stack {
-    commands: Command[] = [];
-    stackPosition: number = -1;
-    savePosition: number = -1;
+    private commands: Command[] = [];
+    private stackPosition: number = -1;
+    private savePosition: number = -1;
     execute(command: Command) {
         this.__clearRedo();
         command.execute();
@@ -38,7 +38,7 @@ export class Stack {
         this.changed();
     }
 
-    __clearRedo() {
+    private __clearRedo() {
         this.commands.length = this.stackPosition + 1;
     }
     changed() {

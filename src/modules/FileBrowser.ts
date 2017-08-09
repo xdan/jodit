@@ -499,17 +499,16 @@ export default class FileBrowser extends Component {
     options: FileBrowserOptions;
     currentPath: string = '';
     currentSource: string = DEFAULT_SOURCE_NAME;
+    currentBaseUrl: string = '';
 
-    private currentBaseUrl: string = '';
+    private dialog: Dialog;
+    private loader: HTMLElement;
+    private browser: HTMLElement;
+    private status_line: HTMLElement;
+    private tree: HTMLElement;
+    private files: HTMLElement;
 
-    dialog: Dialog;
-    loader: HTMLElement;
-    browser: HTMLElement;
-    status_line: HTMLElement;
-    tree: HTMLElement;
-    files: HTMLElement;
-
-    buttons: {[key:string]: HTMLElement};
+    private buttons: {[key:string]: HTMLElement};
 
     uploader: Uploader;
 
@@ -868,8 +867,8 @@ export default class FileBrowser extends Component {
         }
     }
 
-    view = 'tiles';
-    sortBy = 'changed';
+    private view = 'tiles';
+    private sortBy = 'changed';
 
     // /**
     //  * Get base url. You can use this method in another modules
@@ -880,7 +879,7 @@ export default class FileBrowser extends Component {
     //     return this.currentBaseUrl;
     // }
 
-    dragger:false|HTMLElement = false;
+    private dragger:false|HTMLElement = false;
 
 
     /**
@@ -890,7 +889,7 @@ export default class FileBrowser extends Component {
     isOpened (): boolean {
         return this.dialog.isOpened() && this.browser.style.display !== 'none';
     }
-    statustimer;
+    private statustimer;
 
     /**
      * It displays a message in the status bar of filebrowser
@@ -919,7 +918,7 @@ export default class FileBrowser extends Component {
         }, this.options.howLongShowMsg);
     }
 
-    generateFolderTree(sources: ISourcesFiles) {
+    private generateFolderTree(sources: ISourcesFiles) {
         let folders = [];
 
         each(sources, (source_name : string, source: ISource) => {
@@ -947,9 +946,9 @@ export default class FileBrowser extends Component {
         this.tree.innerHTML = folders.join('');
     }
 
-    filterWord = '';
+    private filterWord = '';
 
-    generateItemsBox(sources: ISourcesFiles) {
+    private generateItemsBox(sources: ISourcesFiles) {
         let files = [];
 
         each(sources, (source_name: string, source: ISource) => {
@@ -982,7 +981,7 @@ export default class FileBrowser extends Component {
         return $$(':scope>a.active', this.files)
     }
 
-    someSelectedWasChanged() {
+    private someSelectedWasChanged() {
         let actives = this.__getActiveElements();
         this.buttons.remove.classList.toggle('disabled', !actives.length);
         this.buttons.select.classList.toggle('disabled', !actives.length);
@@ -991,7 +990,7 @@ export default class FileBrowser extends Component {
 
     private __ajax2: Ajax;
 
-    send(name, success, error) {
+    private send(name, success, error) {
         let xhr, opts = extend(true, {}, this.options.ajax, this.options[name] !== undefined ? this.options[name] : this.options.ajax);
         opts.data = opts.prepareData.call(this, opts.data);
         xhr = new Ajax(this.jodit, opts);
@@ -1029,7 +1028,7 @@ export default class FileBrowser extends Component {
         });
     };
 
-    loadItems = (path: string, source: string) => {
+    private loadItems = (path: string, source: string) => {
         const self: FileBrowser = this;
         self.options.items.data.path = path;
         self.options.items.data.source = source;
@@ -1052,7 +1051,7 @@ export default class FileBrowser extends Component {
     };
 
     private __ajax: Ajax;
-    loadTree(path: string, source: string) {
+    private loadTree(path: string, source: string) {
         const self: FileBrowser = this;
         self.options.folder.data.path = path;
         self.options.folder.data.source = source;
@@ -1169,7 +1168,7 @@ export default class FileBrowser extends Component {
         this.dialog.close();
     };
 
-    onSelect(callback: (data: FileBrowserCallBcackData) => void) {
+    private onSelect(callback: (data: FileBrowserCallBcackData) => void) {
         return () => {
             let actives = this.__getActiveElements();
             if (actives.length) {
@@ -1244,11 +1243,11 @@ export default class FileBrowser extends Component {
         }
     };
 
-    errorHandler = (resp) => {
+    private errorHandler = (resp) => {
         this.status(this.options.getMessage(resp));
     };
 
-    uploadHandler = () => {
+    private uploadHandler = () => {
         this.loadItems(this.currentPath, this.currentSource);
     };
 
@@ -1297,7 +1296,7 @@ export default class FileBrowser extends Component {
         });
     };
 
-    draggable: Element|false = false;
-    start = {top: 0, left: 0};
-    client = {x: 0, y: 0};
+    private draggable: Element|false = false;
+    private start = {top: 0, left: 0};
+    private client = {x: 0, y: 0};
 }

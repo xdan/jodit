@@ -33,8 +33,8 @@ type ButtonType = {
 export default class Toolbar extends Component{
     static icons = {};
     container: HTMLDivElement;
-    popup: HTMLDivElement;
-    list: HTMLDivElement;
+    private popup: HTMLDivElement;
+    private list: HTMLDivElement;
 
 
     private __popapOpened: boolean = false;
@@ -130,7 +130,7 @@ export default class Toolbar extends Component{
         }
     }
 
-    checkActiveButtons(element: Node|false) {
+    private checkActiveButtons(element: Node|false) {
         const active_class = 'jodit_active';
         this.buttonList.forEach(({control, btn}) => {
             btn.classList.remove(active_class);
@@ -205,7 +205,7 @@ export default class Toolbar extends Component{
         });
     }
 
-    defaultControl:ControlType  = {
+    private defaultControl:ControlType  = {
         template: (editor: Jodit, key: string, value: string) => (this.jodit.i18n(value))
     };
 
@@ -397,7 +397,7 @@ export default class Toolbar extends Component{
         container.appendChild(this.container);
     }
 
-    initEvents = () => {
+    private initEvents = () => {
         this.popup.addEventListener('mousedown', (e: MouseEvent) => {e.stopPropagation()});
         this.list.addEventListener('mousedown', (e: MouseEvent) => {e.stopPropagation()});
         this.__on(window, 'mousedown', () => {

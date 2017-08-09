@@ -7,9 +7,10 @@
 - [x] Restore Inline toolbar for Image and Table 3.0.1
 - [x] Auto choose language. Test language mode. 3.0.2
 - [x] Restore Iframe mode 3.0.4
-- [ ] Restore mobile version/Response mode. Switch buttons md - lg - sm 3.0.5
-- [ ] Restore themes 3.0.6
-- [ ] Restore mode without icons 3.0.7
-- [ ] Restore split mode 3.0.8
-- [ ] Hot keys for toolbar button  3.0.9
-- [ ] Copy/paste all styles from element  3.0.10
+- [ ] Statusbar. Node Path. Resizer for editor such as Dialog resizer 3.0.5
+- [ ] Restore mobile version/Response mode. Switch buttons md - lg - sm 3.0.6
+- [ ] Restore themes 3.0.7
+- [ ] Restore mode without icons 3.0.8
+- [ ] Restore split mode 3.0.9
+- [ ] Hot keys for toolbar button  3.0.10
+- [ ] Copy/paste all styles from element  3.0.11

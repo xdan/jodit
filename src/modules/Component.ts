@@ -14,8 +14,8 @@ export default class Component {
         }
     }
 
-    __scope: any[] = [];
-    __scopeNamespace: any = {};
+    private __scope: any[] = [];
+    private __scopeNamespace: any = {};
 
     __fire(element: Document|Element|HTMLElement|Window, event: string|Event|MouseEvent, doc?: Document) {
         let evt: Event = doc.createEvent('HTMLEvents');
@@ -59,7 +59,7 @@ export default class Component {
         return this;
     }
 
-    classSeparator = /[\s]+/;
+    private classSeparator = /[\s]+/;
 
     __on(element: Document|Element|HTMLElement|Window|Array<HTMLElement|Window>, event: string, selectorOrCallback: false|string|Function, callback?: Function) {
         if (typeof selectorOrCallback === 'function') {

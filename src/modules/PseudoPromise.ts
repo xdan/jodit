@@ -44,7 +44,7 @@ export default class PseudoPromise {
         }
 
         do {
-            let handler: Function = this.handlers[store].shift();
+            const handler: Function = this.handlers[store].shift();
             let tempResult;
 
             try {

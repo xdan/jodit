@@ -111,49 +111,49 @@ Config.prototype.imageeditor = {
 
 export default class ImageEditor extends Component{
     options: ImageEditorOptions;
-    resizeUseRatio: boolean = true;
-    cropUseRatio: boolean = true;
+    private resizeUseRatio: boolean = true;
+    private cropUseRatio: boolean = true;
 
-    dialog: Dialog;
-    image: HTMLImageElement;
-    cropImage: HTMLImageElement;
-    clicked = false;
-    target: HTMLElement;
+    private dialog: Dialog;
+    private image: HTMLImageElement;
+    private cropImage: HTMLImageElement;
+    private clicked = false;
+    private target: HTMLElement;
 
-    start_x: number;
-    start_y: number;
-    top_x: number;
-    top_y: number;
-
-
-    width: number;
-    height: number;
-
-    activeTab: string = 'resize';
+    private start_x: number;
+    private start_y: number;
+    private top_x: number;
+    private top_y: number;
 
 
-    naturalWidth: number;
-    naturalHeight: number;
+    private width: number;
+    private height: number;
 
-    ratio: number;
-    new_h: number;
-    new_w: number;
-    diff_x: number;
-    diff_y: number;
+    private activeTab: string = 'resize';
 
-    buttons: HTMLElement[];
 
-    editor: HTMLElement;
+    private naturalWidth: number;
+    private naturalHeight: number;
 
-    widthInput: HTMLInputElement;
-    heightInput: HTMLInputElement;
+    private ratio: number;
+    private new_h: number;
+    private new_w: number;
+    private diff_x: number;
+    private diff_y: number;
 
-    resize_box: HTMLElement;
-    crop_box: HTMLElement;
-    sizes: HTMLElement;
+    private buttons: HTMLElement[];
 
-    resizeHandler : HTMLElement;
-    cropHandler: HTMLElement;
+    private editor: HTMLElement;
+
+    private widthInput: HTMLInputElement;
+    private heightInput: HTMLInputElement;
+
+    private resize_box: HTMLElement;
+    private crop_box: HTMLElement;
+    private sizes: HTMLElement;
+
+    private resizeHandler : HTMLElement;
+    private cropHandler: HTMLElement;
 
     constructor(editor: Jodit) {
         super(editor);
@@ -260,7 +260,7 @@ export default class ImageEditor extends Component{
         this.dialog.close();
     };
 
-    calcValueByPercent =  (value: number|string, percent: string|number): number => {
+    private calcValueByPercent =  (value: number|string, percent: string|number): number => {
         let percentStr: string = percent.toString();
         let valueNbr: number = parseFloat(value.toString());
         let match: string[];
@@ -279,7 +279,7 @@ export default class ImageEditor extends Component{
         return valueNbr || 0;
     };
 
-    calcCropBox = () => {
+    private calcCropBox = () => {
         let w = (<HTMLElement>this.crop_box.parentNode).offsetWidth * 0.8,
             h = (<HTMLElement>this.crop_box.parentNode).offsetHeight * 0.8,
             wn: number = w,
@@ -302,7 +302,7 @@ export default class ImageEditor extends Component{
             height: hn
         });
     };
-    showCrop = () => {
+    private showCrop = () => {
         if (!this.cropImage) {
             return;
         }
@@ -328,13 +328,13 @@ export default class ImageEditor extends Component{
         this.jodit.events.fire(this.cropHandler, 'updatesize');
     };
 
-    cropBox = {
+    private cropBox = {
         x: 0,
         y: 0,
         w: 0,
         h: 0,
     };
-    updateCropBox =  () => {
+    private updateCropBox =  () => {
         if (!this.cropImage) {
             return;
         }
@@ -350,14 +350,14 @@ export default class ImageEditor extends Component{
         this.sizes.innerText = this.cropBox.w.toFixed(0) + 'x' + this.cropBox.h.toFixed(0);
     };
 
-    onSave;
+    onSave: Function;
 
-    resizeBox = {
+    private resizeBox = {
         w: 0,
         h: 0,
     };
 
-    updateResizeBox = () => {
+    private updateResizeBox = () => {
         this.resizeBox.w = this.image.offsetWidth || this.naturalWidth;
         this.resizeBox.h = this.image.offsetHeight || this.naturalHeight;
     };

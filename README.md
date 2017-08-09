@@ -89,6 +89,8 @@ ______________________
 
 
 ## Changelog
+### 3.0.4
+ * Restored `iframe` mode. It need for adding another stylesheets in editor. 
 ### 3.0.2
  * Now `options`.`language` by default equal `auto`. It means that after init Jodit, it try define page language (`<html lang="de">`), if it is impossible, editor define language by browser.language.
  * Added `options`.`debugLanguage`=`false` if true, editro ignore `options`.`language` and `editor.i18n(key)` return `'{key}'`  
