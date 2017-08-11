@@ -7,10 +7,10 @@ export default class Component {
      */
     jodit: Jodit;
 
-    constructor(parent?: Jodit) {
-        this.jodit = parent;
-        if (parent && parent.components) {
-            parent.components.push(this);
+    constructor(jodit?: Jodit) {
+        this.jodit = jodit;
+        if (jodit && jodit.components) {
+            jodit.components.push(this);
         }
     }
 
@@ -67,31 +67,39 @@ export default class Component {
             selectorOrCallback = false;
         }
 
-        let eventsArray = event ? event.split(this.classSeparator) : [],
-            temp: Function = function (event: MouseEvent) {
-                if (event.cancelBubble) {
-                    return;
-                }
-                if (!event['originalEvent']) {
-                    event['originalEvent'] = event;
-                }
-                callback.call(this, event);
-            };
+        const eventsArray: string[] = event ? event.split(this.classSeparator) : [];
+        const prepareEvent = (event: TouchEvent|MouseEvent) => {
+            if (event.cancelBubble) {
+                return;
+            }
+
+            if (event.type.match(/^touch/) && (<TouchEvent>event).changedTouches && (<TouchEvent>event).changedTouches.length) {
+                ['clientX', 'clientY', 'pageX', 'pageY'].forEach((key: string) => {
+                    Object.defineProperty(event, key, {value: (<TouchEvent>event).changedTouches[0][key], enumerable: true});
+                })
+            }
+
+            if (!event['originalEvent']) {
+                event['originalEvent'] = event;
+            }
+
+        };
+
+        let temp: Function = function (event: MouseEvent|TouchEvent) {
+            prepareEvent(<TouchEvent>event);
+            callback.call(this, event);
+        };
+
 
         eventsArray.forEach((event: string) => {
-            let namespace = '';
+            let namespace: string = '';
             if (/\./.test(event)) {
                 [event, namespace] = event.split('.');
             }
 
             if (selectorOrCallback) {
                 temp = function (event) {
-                    if (event.cancelBubble) {
-                        return;
-                    }
-                    if (!event['originalEvent']) {
-                        event['originalEvent'] = event;
-                    }
+                    prepareEvent(event);
                     let node = event.target;
                     while (node && node !== this) {
                         if (node.matches(selectorOrCallback)) {

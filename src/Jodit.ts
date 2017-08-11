@@ -176,6 +176,8 @@ export default class Jodit extends Component{
 
         this.element.parentNode.insertBefore(this.container, this.element);
 
+        this.initPlugines();
+
         this.__createEditor();
 
         this.helper = helper;
@@ -183,7 +185,7 @@ export default class Jodit extends Component{
         this.setElementValue(); // syncro
 
 
-        this.initPlugines();
+
 
         if (this.options.events) {
             each(this.options.events, (key, callback) => {
@@ -225,7 +227,7 @@ export default class Jodit extends Component{
      * @private
      */
     private __createEditor() {
-        if (!this.options.iframe) {
+        if (this.events.fire('createEditor') !== false) {
             this.editor = <HTMLDivElement>dom(`<div class="jodit_wysiwyg" contenteditable aria-disabled="false" tabindex="${this.options.tabIndex}"></div>`);
             css(this.editor, {
                 width: this.options.width,
@@ -236,72 +238,6 @@ export default class Jodit extends Component{
             this.workplace.appendChild(document.createTextNode("\n"));
             this.workplace.appendChild(this.editor);
             this.workplace.appendChild(document.createTextNode("\n"));
-        } else {
-            this.iframe = <HTMLIFrameElement>document.createElement("iframe");
-            this.iframe.style.display = 'block';
-            this.iframe.src = 'about:blank';
-            this.iframe.className = 'jodit_wysiwyg_iframe';
-            this.iframe.frameBorder = '0';
-
-            this.workplace.appendChild(this.iframe);
-
-            const doc = this.iframe.contentWindow.document;
-            this.doc = doc;
-            this.win = this.iframe.contentWindow;
-
-            doc.open();
-            doc.write(`<!DOCTYPE html>
-                <html class="jodit">
-                    <head>
-                        ${this.options.iframeBaseUrl ? `<base href="${this.options.iframeBaseUrl}"/>` : ''}
-                    </head>
-                    <body class="jodit_wysiwyg" style="outline:none" contenteditable="true"></body>
-                </html>`);
-
-            doc.close();
-            this.editor = <HTMLBodyElement>doc.body;
-
-            if (this.options.iframeCSSLinks) {
-                this.options.iframeCSSLinks.forEach((href) => {
-                    const link: HTMLLinkElement = <HTMLLinkElement>dom('<link rel="stylesheet" href="' + href + '">', doc);
-                    doc.head.appendChild(link);
-                });
-            }
-
-            if (this.options.iframeStyle) {
-                const style: HTMLStyleElement = doc.createElement('style');
-                style.innerHTML = this.options.iframeStyle;
-                doc.head.appendChild(style);
-            }
-
-            css(this.iframe, {
-                width: this.options.width === 'auto' ? '100%' : this.options.width,
-                height: this.options.height,
-                minHeight: this.options.minHeight
-            });
-
-            if (this.options.height === 'auto') {
-                doc.documentElement.style.overflowY = 'hidden';
-                const resizeIframe = (e) => {
-                    css(this.iframe, 'height', this.editor.offsetHeight);
-                };
-                this.events.on('change afterInit afterSetMode resize', resizeIframe);
-                this.__on([this.iframe, this.win, doc.documentElement], 'load', resizeIframe);
-                this.__on(doc, 'readystatechange DOMContentLoaded', resizeIframe);
-                // setTimeout(resizeIframe, 100);
-            }
-
-            css(this.editor, 'minHeight', this.options.minHeight);
-
-
-            (function(e){
-                e.matches || (e.matches = Element.prototype.matches); // fix inside iframe polifill
-            })(this.win['Element'].prototype);
-
-            //proxy events
-            this.__on(this.win, 'mousedown click mouseup mousemove scroll', (e: Event) => {
-                this.__fire && this.__fire(window, e, document);
-            });
         }
 
         // proxy events
@@ -421,9 +357,12 @@ export default class Jodit extends Component{
             return value;
         }
 
-
-        value = this.editor.innerHTML
-            .replace(consts.INVISIBLE_SPACE_REG_EXP, '');
+        if (this.editor) {
+            value =  this.editor.innerHTML
+                .replace(consts.INVISIBLE_SPACE_REG_EXP, '') ;
+        } else {
+            value = this.getElementValue();
+        }
 
 
         if (value === '<br>') {
@@ -554,18 +493,28 @@ export default class Jodit extends Component{
         return result;
     }
 
+    private __whoLocked: string|false = '';
+
     /**
      * Disable selecting
      */
-    startDrag() {
+    lock(name: string) {
+        this.__whoLocked = name;
         this.editor.classList.add('jodit_disabled');
     }
 
     /**
      * Enable selecting
      */
-    endDrag() {
+    unlock() {
+        this.__whoLocked = '';
         this.editor.classList.remove('jodit_disabled');
+    }
+    isLocked = (): boolean => {
+        return this.__whoLocked !== '';
+    }
+    isLockedNotBy = (name: string): boolean => {
+        return this.isLocked() && this.__whoLocked !== name;
     }
 
     mode = consts.MODE_WYSIWYG;

@@ -84,6 +84,12 @@ module.exports = {
                 })
             },
             {
+                test: /\.ts$/,
+                enforce: 'pre',
+                loader: 'tslint-loader',
+                options: { /* Loader options go here */ }
+            },
+            {
                 test: /\.(ts)$/,
                 loader: 'awesome-typescript-loader',
                 exclude: /(node_modules|bower_components)/,

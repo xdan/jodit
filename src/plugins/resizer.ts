@@ -51,6 +51,7 @@ Config.prototype.resizer = {
 Jodit.plugins.Resizer = function (editor: Jodit) {
     // let clicked = false,
     //     resized = false,
+    const LOCK_KEY = 'resizer';
     let
         handle: HTMLElement,
 
@@ -154,7 +155,7 @@ Jodit.plugins.Resizer = function (editor: Jodit) {
                         event.preventDefault();
                     }
                 })
-                .__on(element, 'click', () => {
+                .__on(element, 'click touchend', () => {
                     currentElement = element;
                     showResizer();
                     if (currentElement.tagName === 'IMG' && !(<HTMLImageElement>currentElement).complete) {
@@ -169,7 +170,7 @@ Jodit.plugins.Resizer = function (editor: Jodit) {
     // resizeElement = {};
 
     $$('i', resizer).forEach((resizeHandle: HTMLElement) => {
-        editor.__on(resizeHandle, 'mousedown', (e: MouseEvent) => {
+        editor.__on(resizeHandle, 'mousedown touchstart', (e: MouseEvent) => {
             if (!currentElement || !currentElement.parentNode) {
                 hideResizer();
                 return false;
@@ -191,68 +192,72 @@ Jodit.plugins.Resizer = function (editor: Jodit) {
 
             start_x = e.clientX;
             start_y = e.clientY;
+            editor.lock(LOCK_KEY);
         });
     });
 
-
-    editor
-        .__on(window, 'mousemove', (e: MouseEvent) => {
-            if (isResizing) {
-                // resized = true;
-
-                diff_x = e.clientX - start_x;
-                diff_y = e.clientY - start_y;
-
-                if ('IMG' === currentElement.tagName) {
-                    if (diff_x) {
-                        new_w = width + (handle.className.match(/left/) ? -1 : 1)  * diff_x;
-                        new_h = Math.round(new_w / ratio);
-                    } else {
-                        new_h = height + (handle.className.match(/top/) ? -1 : 1)  * diff_y;
-                        new_w = Math.round(new_h * ratio);
-                    }
-                } else {
-                    new_w = width + (handle.className.match(/left/) ? -1 : 1)  * diff_x;
-                    new_h = height + (handle.className.match(/top/) ? -1 : 1)  * diff_y;
-                }
-
-                if (new_w > editor.options.resizer.min_width) {
-                    if (new_w < (<HTMLElement>resizer.parentNode).offsetWidth) {
-                        currentElement.style.width = new_w + 'px';
-                    } else {
-                        currentElement.style.width = '100%';
-                    }
-                }
-
-                if (new_h > editor.options.resizer.min_height) {
-                    currentElement.style.height = new_h + 'px';
-                }
-
-                updateSize();
-                e.stopImmediatePropagation();
-            }
-        })
-        .__on(window, 'resize', () => {
-            if (resizerIsVisible) {
-                updateSize();
-            }
-        })
-        .__on(window, 'mouseup keydown', (e: MouseEvent) => {
-            if (resizerIsVisible) {
+    editor.events.on('afterInit', () => {
+        editor.container.appendChild(resizer);
+        editor
+            .__on(window, 'mousemove touchmove', (e: MouseEvent) => {
                 if (isResizing) {
-                    isResizing = false;
+                    // resized = true;
+                    diff_x = e.clientX - start_x;
+                    diff_y = e.clientY - start_y;
+
+                    if ('IMG' === currentElement.tagName) {
+                        if (diff_x) {
+                            new_w = width + (handle.className.match(/left/) ? -1 : 1)  * diff_x;
+                            new_h = Math.round(new_w / ratio);
+                        } else {
+                            new_h = height + (handle.className.match(/top/) ? -1 : 1)  * diff_y;
+                            new_w = Math.round(new_h * ratio);
+                        }
+                    } else {
+                        new_w = width + (handle.className.match(/left/) ? -1 : 1)  * diff_x;
+                        new_h = height + (handle.className.match(/top/) ? -1 : 1)  * diff_y;
+                    }
+
+                    if (new_w > editor.options.resizer.min_width) {
+                        if (new_w < (<HTMLElement>resizer.parentNode).offsetWidth) {
+                            currentElement.style.width = new_w + 'px';
+                        } else {
+                            currentElement.style.width = '100%';
+                        }
+                    }
+
+                    if (new_h > editor.options.resizer.min_height) {
+                        currentElement.style.height = new_h + 'px';
+                    }
+
+                    updateSize();
                     e.stopImmediatePropagation();
-                } else {
-                    hideResizer()
                 }
+            })
+            .__on(window, 'resize', () => {
+                if (resizerIsVisible) {
+                    updateSize();
+                }
+            })
+            .__on(window, 'mouseup keydown touchend', (e: MouseEvent) => {
+                if (resizerIsVisible) {
+                    if (isResizing) {
+                        editor.unlock();
+                        isResizing = false;
+                        editor.setEditorValue();
+                        e.stopImmediatePropagation();
+                    } else {
+                        hideResizer()
+                    }
+                }
+            });
+
+        editor.__on([window, editor.editor], 'scroll', () => {
+            if (resizerIsVisible && !isResizing) {
+                hideResizer()
             }
         });
-
-    editor.__on([window, editor.editor], 'scroll', () => {
-        if (resizerIsVisible && !isResizing) {
-            hideResizer()
-        }
-    });
+    })
 
 
     editor.events.on('change afterInit afterSetMode', debounce(() => {
@@ -266,6 +271,4 @@ Jodit.plugins.Resizer = function (editor: Jodit) {
             }
         });
     }, editor.options.observer.timeout));
-
-    editor.container.appendChild(resizer);
 };

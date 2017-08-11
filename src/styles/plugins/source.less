@@ -1,3 +1,4 @@
+@import (reference) "../variables";
 .jodit_source{
   display: none;
   position: relative;
@@ -15,5 +16,29 @@
   }
   .jodit_source {
     display: block !important;
+  }
+}
+
+.jodit_source_mirror {
+  border:0;
+  background:#3f3f3f;
+  margin:0;
+  height:100%;
+  box-shadow:none;
+  resize: none;
+  box-sizing:border-box;
+  color:#f0f0f0;
+  outline:none;
+  font-family: Menlo, Monaco, monospace, sans-serif;
+  font-size: 13px;
+  line-height: 1.3em;
+  overflow: auto;
+  z-index: 2;
+  padding: 10px;
+  overflow:auto;
+  white-space: pre-wrap;
+  tab-size: 2em;
+  &::selection {
+    background: @area_selection_color;
   }
 }

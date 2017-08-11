@@ -247,8 +247,8 @@ export namespace Widget {
 
         if (callbacks.url) {
             const form: HTMLFormElement = <HTMLFormElement>dom('<form onsubmit="return false;" class="jodit_form">' +
-                '<input required name="url" placeholder="http://"/>' +
-                '<input name="text" placeholder="' + editor.i18n('Alternative text') + '"/>' +
+                '<input type="text" required name="url" placeholder="http://"/>' +
+                '<input type="text" name="text" placeholder="' + editor.i18n('Alternative text') + '"/>' +
                 '<div style="text-align: right">' +
                 '<button>' + editor.i18n('Insert') + '</button>' +
                 '</div>' +

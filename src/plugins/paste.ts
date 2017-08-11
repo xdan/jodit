@@ -21,7 +21,8 @@ Config.prototype.askBeforePasteHTML = true;
  * @module insertHTML
  */
 Jodit.plugins.paste = function (editor: Jodit) {
-    editor.editor.addEventListener('paste', (event: ClipboardEvent) => {
+    editor.events.on('afterInit', () => {
+        editor.editor.addEventListener('paste', (event: ClipboardEvent) => {
         /**
          * Triggered before pasting something into the Jodit Editor
          *
@@ -101,6 +102,7 @@ Jodit.plugins.paste = function (editor: Jodit) {
         if (editor.events.fire('afterPaste', [event]) === false) {
             return false;
         }
+    });
     });
     if (editor.options.askBeforePasteHTML) {
         editor.events.on('beforePaste', (event: ClipboardEvent) => {

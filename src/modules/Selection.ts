@@ -4,10 +4,12 @@ import {each, dom, trim, $$, css, normilizeCSSValue, isIE} from './Helpers';
 import Dom from "./Dom";
 import Jodit from "../Jodit";
 
-type markerInfo = {
+export type markerInfo = {
     startId: string,
     endId?: string,
     collapsed: boolean,
+    startMarker: string
+    endMarker?: string
 }
 
 export default class Selection extends Component{
@@ -79,6 +81,27 @@ export default class Selection extends Component{
         })
     }
 
+    marker = (atStart = false, range?: Range): HTMLSpanElement => {
+        let newRange: Range;
+        if (range) {
+            newRange = range.cloneRange();
+            newRange.collapse(atStart);
+        }
+
+        const marker = this.jodit.doc.createElement('span');
+        marker.id = consts.MARKER_CLASS + '_' + (+new Date()) + "_" + ("" + Math.random()).slice(2);
+        marker.style.lineHeight = "0";
+        marker.style.display = "none";
+        marker.setAttribute('data-' + consts.MARKER_CLASS, (atStart ? 'start' : 'end'));
+        marker.appendChild(this.jodit.doc.createTextNode(consts.INVISIBLE_SPACE));
+
+        if (newRange) {
+            newRange.insertNode(marker);
+        }
+
+        return marker;
+    };
+
     /**
      * Restores user selections using marker invisible elements in the DOM.
      *
@@ -131,45 +154,32 @@ export default class Selection extends Component{
      *
      * @return {Array}
      */
-    save():any[]|null  {
+    save():markerInfo[]  {
         const sel = this.jodit.win.getSelection();
         if (!sel.rangeCount) {
             return null;
         }
-        const _marker = (range, atStart = false) => {
-            let newRange = range.cloneRange();
-            newRange.collapse(atStart);
-
-            let marker = this.jodit.doc.createElement('span');
-            marker.id = consts.MARKER_CLASS + '_' + (+new Date()) + "_" + ("" + Math.random()).slice(2);
-            marker.style.lineHeight = "0";
-            marker.style.display = "none";
-            marker.setAttribute('data-' + consts.MARKER_CLASS, (atStart ? 'start' : 'end'));
-            // marker.className = consts.MARKER_CLASS + " " + consts.MARKER_CLASS + '-' + (atStart ? 'start' : 'end');
-            marker.appendChild(this.jodit.doc.createTextNode(consts.INVISIBLE_SPACE));
-
-            newRange.insertNode(marker);
-
-            return marker;
-        };
 
 
         let info: markerInfo[] = [], length = sel.rangeCount, i, start, end, ranges = [];
         for (i = 0; i < length; i += 1) {
             ranges[i] = sel.getRangeAt(i);
             if (ranges[i].collapsed) {
-                start = _marker(ranges[i]);
+                start = this.marker(true, ranges[i]);
                 info[i] =  {
                     startId: start.id,
                     collapsed: true,
+                    startMarker: start.outerHTML,
                 };
             } else {
-                start = _marker(ranges[i], true);
-                end = _marker(ranges[i], false);
+                start = this.marker(true, ranges[i]);
+                end = this.marker(false, ranges[i]);
                 info[i] = {
                     startId: start.id,
                     endId: end.id,
                     collapsed: false,
+                    startMarker: start.outerHTML,
+                    endMarker: end.outerHTML,
                 };
             }
         }

@@ -299,36 +299,34 @@ Jodit.plugins.Popup = function (editor: Jodit) {
      * @method init
      */
 
-
-    editor.container
-        .appendChild(popup);
-
-    editor.events.on('hidePopup afterCommand keydown resize', hidePopup);
-    editor.events.on('showPopap', delayShowPopup);
-    editor.events.on('beforeDestruct', () => {
-        clearTimeout(timeout);
-    });
-
-
-    editor.__on(popup,'mouseup', (e: MouseEvent) => {
-        e.stopPropagation();
-    });
-
-    let clickOnImage: boolean = false;
-    editor.__on(editor.editor, 'mousedown', (event: MouseEvent) => {
-        if ((<HTMLImageElement>event.target).tagName === 'IMG' || Dom.closest(<Node>event.target, 'table', editor.editor)) {
-            const target: HTMLImageElement|HTMLTableElement = (<HTMLImageElement>event.target).tagName === 'IMG' ? <HTMLImageElement>event.target :  <HTMLTableElement>Dom.closest(<Node>event.target, 'table', editor.editor);
-            const pos = offset(target, editor);
-            delayShowPopup(target, Math.round(pos.left + (target.offsetWidth / 2)), Math.round(pos.top + target.offsetHeight));
-            clickOnImage = true;
-        } else {
-            clickOnImage = false;
-        }
-    });
-    editor.__on(window, 'mouseup', () => {
-        if (!clickOnImage) {
-            hidePopup();
-        }
-        clickOnImage = false;
-    });
+    editor.events
+        .on('hidePopup afterCommand keydown resize', hidePopup)
+        .on('showPopap', delayShowPopup)
+        .on('afterInit', () => {
+            editor.container
+                .appendChild(popup);
+            editor.__on(popup,'mouseup', (e: MouseEvent) => {
+                e.stopPropagation();
+            });
+            let clickOnImage: boolean = false;
+            editor.__on(editor.editor, 'mousedown', (event: MouseEvent) => {
+                if ((<HTMLImageElement>event.target).tagName === 'IMG' || Dom.closest(<Node>event.target, 'table', editor.editor)) {
+                    const target: HTMLImageElement|HTMLTableElement = (<HTMLImageElement>event.target).tagName === 'IMG' ? <HTMLImageElement>event.target :  <HTMLTableElement>Dom.closest(<Node>event.target, 'table', editor.editor);
+                    const pos = offset(target, editor);
+                    delayShowPopup(target, Math.round(pos.left + (target.offsetWidth / 2)), Math.round(pos.top + target.offsetHeight));
+                    clickOnImage = true;
+                } else {
+                    clickOnImage = false;
+                }
+            });
+            editor.__on(window, 'mouseup', () => {
+                if (!clickOnImage) {
+                    hidePopup();
+                }
+                clickOnImage = false;
+            });
+        })
+        .on('beforeDestruct', () => {
+            clearTimeout(timeout);
+        });
 };

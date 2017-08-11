@@ -22,23 +22,12 @@
 <body>
     <table style="width:100%">
         <tr>
-            <td style="width:50%;vertical-align: top">
+            <td id="maintab" style="width:50%;vertical-align: top">
                 <div id="uniqbox" class="box">
-                    <textarea id="area_editor">&lt;div&gt;
-        &lt;img src="http://xdsoft.net/jodit/images/artio.jpg" style="width: 301px; float: right; margin-left: 15px; margin-top: 10px;"/&gt;
-    &lt;/div&gt;
-    &lt;ul&gt;
-        &lt;li&gt;Copy/Paste image&lt;/li&gt;
-        &lt;li&gt;Drag&amp;Drop &lt;/li&gt;
-        &lt;li&gt;Split Mode&lt;/li&gt;
-        &lt;li&gt;Free for non-Commercial&lt;/li&gt;
-        &lt;li&gt;CodeMirror out of the box &lt;/li&gt;
-        &lt;li&gt;Pure JavaScript. No libraries&lt;/li&gt;
-        &lt;li&gt;Lightweight: ~32kB gzipped.&lt;/li&gt;
-    &lt;/ul&gt;</textarea>
+                    <textarea id="area_editor"></textarea>
                 </div>
             </td>
-            <td><textarea id="mirror"></textarea></td>
+            <td id="mirrortab"><textarea id="mirror"></textarea></td>
         </tr>
     </table>
     <style>
@@ -51,6 +40,14 @@
         }
         body {
             font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+        @media(max-width: 400px) {
+            #maintab {
+                width: 100%!important;
+            }
+            #mirrortab {
+                display: none !important;
+            }
         }
     </style>
 </body>
@@ -82,7 +79,7 @@
         };
     }
     editor = new Jodit('#area_editor', {
-        iframe: true,
+//        iframe: true,
         //height: 100,
         observer: {
             timeout: 0
@@ -121,19 +118,13 @@
                 mirror.value = editor.editor ? editor.editor.innerHTML : '';
             }, 100)
         }
+    editor.events.on('change', callback)
     editor.editor.addEventListener('keydown', callback)
     editor.editor.addEventListener('keyup', callback)
     editor.editor.addEventListener('mousedown', callback)
     editor.editor.addEventListener('mouseup', callback)
     editor.editor.addEventListener('input', callback)
-    editor.events.on('change', callback)
-    editor.setEditorValue('<table>' +
-        '<tr><td>1</td><td>2</td><td>3</td></tr>' +
-        '<tr><td rowspan="2">4</td><td>5</td><td>6</td></tr>' +
-        '<tr><td>7</td><td>8</td></tr>' +
-        '</table>');
 
-    simulateEvent('mousedown', Jodit.KEY_TAB, editor.editor.querySelectorAll('td')[4]);
 
 //    var dialogs = document.querySelectorAll('.jodit.jodit_dialog_box.jodit_text_icons.active');
 //    expect(dialogs.length).to.equal(1);

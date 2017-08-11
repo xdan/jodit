@@ -22,13 +22,9 @@
   ],
   "homepage": "http://xdsoft.net/jodit/",
   "ignore": [
-    "**/.*",
-    "index.html",
-    "README.MD",
-    "ROADMAP.MD",
-    "node_modules",
-    "bower_components",
-    "tests"
+    "*",
+    "!build/",
+    "!build/*"
   ],
   "repository": {
     "type": "git",

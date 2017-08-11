@@ -81,7 +81,9 @@ Jodit.plugins.fullsize = function (editor: Jodit) {
         };
 
     if (editor.options.fullsize) {
-        toggle(true);
+        editor.events.on('afterInit', () => {
+            toggle(true);
+        });
     }
 
     if (editor.options.globalFullsize) {

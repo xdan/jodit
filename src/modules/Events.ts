@@ -2,8 +2,6 @@ import Component from "./Component"
 
 /**
  * The module editor's event manager
- * @module Events
- * @params {Object} parent Jodit main object
  */
 export default class Events extends Component{
     current: string;
@@ -137,7 +135,7 @@ export default class Events extends Component{
      * Sets the handler for the specified event (Event List) for a given element .
      * @method fire
      * @param {object|string} object - The object which is caused by certain events
-     * @param {string|Array} list - List of events , separated by a space or comma
+     * @param {string|Array} eventOrArgs - List of events , separated by a space or comma
      * @param {Array} [args] - Options for the event handler
      * @return {boolean} `false` if one of the handlers return `false`
      * @example
@@ -147,27 +145,30 @@ export default class Events extends Component{
      * });
      * dialog.open('Hello world!!!');
      */
-    fire (object: any, list?: any, args?: any[]): false|void|any {
-        let i, j, result, result_value;
+    fire (object: any, eventOrArgs?: string|any[], args?: any[]): false|void|any {
+        let i: number,
+            j: number,
+            result: any,
+            result_value: any;
 
         if (typeof object === 'string') {
-            args = list;
-            list = object;
+            args = <any[]>eventOrArgs;
+            eventOrArgs = object;
             object = this.jodit;
         }
 
         if (object.handlers === undefined) {
             return;
         }
-        list = list.split(/[\s,]+/);
-        for (i = 0; i < list.length; i += 1) {
-            if (object.handlers[list[i]] === undefined) {
+        eventOrArgs = (<string>eventOrArgs).split(/[\s,]+/);
+        for (i = 0; i < eventOrArgs.length; i += 1) {
+            if (object.handlers[eventOrArgs[i]] === undefined) {
                 continue;
             }
-            this.stack.push(list[i]);
-            for (j = 0; j < object.handlers[list[i]].length; j += 1) {
-                this.current = list[i];
-                result_value = object.handlers[list[i]][j].apply(object, args || []);
+            this.stack.push(eventOrArgs[i]);
+            for (j = 0; j < object.handlers[eventOrArgs[i]].length; j += 1) {
+                this.current = eventOrArgs[i];
+                result_value = object.handlers[eventOrArgs[i]][j].apply(object, args || []);
                 if (result_value !== undefined) {
                     result = result_value;
                 }

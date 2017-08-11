@@ -540,15 +540,17 @@ Jodit.plugins.imageProperties = function (editor: Jodit) {
         return false;
     };
 
-    if (editor.options.image.openOnDblClick) {
-        editor.__on(editor.editor, 'dblclick', 'img', open);
-    } else {
-        editor.__on(editor.editor, 'dblclick', 'img', function () {
-            editor.selection.select(this);
+    editor.events
+        .on('afterInit', () => {
+            if (editor.options.image.openOnDblClick) {
+                editor.__on(editor.editor, 'dblclick', 'img', open);
+            } else {
+                editor.__on(editor.editor, 'dblclick', 'img', function () {
+                    editor.selection.select(this);
+                });
+            }
+        })
+        .on('openImageProperties', (image: HTMLImageElement) => {
+            open.call(image);
         });
-    }
-
-    editor.events.on(editor, 'openImageProperties', (image: HTMLImageElement) => {
-        open.call(image);
-    });
 };

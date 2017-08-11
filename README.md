@@ -4,35 +4,35 @@ An excellent WYSIWYG editor written in pure TypeScript without the use of additi
 > For old version, please follow here [https://github.com/xdan/jodit2](https://github.com/xdan/jodit2)
 
 ## For contributors:
-```$xslt
+```bash
 npm install
 ```
 
 Run webpack Hot Reload server:
-```$xslt
+```bash
 npm start
 ```
 
 Build min files:
-```$xslt
+```bash
 npm run build
 ```
 
 Run tests:
-```$xslt
+```bash
 karma start --browsers ChromeHeadless,IE,Firefox karma.conf.js
 ```
 or
-```$xslt
+```bash
 npm test
 ```
 or
-```$xslt
+```bash
 yarn test
 ```
 
 For checking tests in browser, open URL:
-```$xslt
+```bash
 http://localhost:2000/test/test.html
 ```
 
@@ -89,6 +89,10 @@ ______________________
 
 
 ## Changelog
+### 3.0.6
+ * Fixed bug in source plugin - when user does not need ace editor. Simple textarea had been created with bug.
+ * Iframe functional was separated in plugin
+ 
 ### 3.0.4
  * Restored `iframe` mode. It need for adding another stylesheets in editor. 
 ### 3.0.2

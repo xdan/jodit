@@ -110,13 +110,16 @@ Jodit.plugins.placeholder = function (editor: Jodit) {
         placeholder.innerHTML = editor.element.getAttribute('placeholder');
     }
 
-    editor.workplace
-        .appendChild(placeholder);
+    editor.events
+        .on('afterInit', () => {
+            editor.workplace
+                .appendChild(placeholder);
 
-    show();
-
-    editor.events.on('change keyup mouseup keydown mousedown afterSetMode', () => {
-        toggle();
-        timeout = setTimeout(toggle, 1)
-    });
+            show();
+            editor.events.fire('placeholder', [placeholder.innerHTML]);
+        })
+        .on('change keyup mouseup keydown mousedown afterSetMode', () => {
+            toggle();
+            timeout = setTimeout(toggle, 1)
+        });
 };

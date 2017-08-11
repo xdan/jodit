@@ -16,139 +16,80 @@ import ImageSelectorWidget = Widget.ImageSelectorWidget;
 export class Config {
 
     /**
-     * @prop {int} zIndex=0 zindex For editor
-     * @since 2.5.61
-     * @link http://xdsoft.net/jodit/doc/#2.5.61
+     * z-index For editor
      */
-    zIndex = 0;
+    zIndex: number = 0;
 
     /**
-     * @prop {int} offsetTopForAssix=0 For example, in Joomla, the top menu bar closes Jodit toolbar when scrolling. Therefore, it is necessary to move the toolbar Jodit by this amount [more](http://xdsoft.net/jodit/doc/#2.5.57)
-     * @since 2.4.57
-     * @link http://xdsoft.net/jodit/doc/#2.5.57
+     * For example, in Joomla, the top menu bar closes Jodit toolbar when scrolling. Therefore, it is necessary to move the toolbar Jodit by this amount [more](http://xdsoft.net/jodit/doc/#2.5.57)
      */
 
-    // offsetTopForAssix = 0;
+    offsetTopForAssix: number = 0;
+
 
     /**
-     * @prop {int} syncCodeTimeout=30 timeout synchronize data between the editor , source element and source code editor
-     * @since 2.4.16
-     */
-    // syncCodeTimeout = 30;
-
-    /**
-     * @prop {string} toolbarButtonSize=middle Size of icons in the toolbar (can be "small", "middle", "large")
-     * @since 2.4.12
+     * Size of icons in the toolbar (can be "small", "middle", "large")
+     *
      * @example
      * var editor  = new  Jodit(".dark_editor", {
      *      toolbarButtonSize: "small"
      * });
      */
-    // toolbarButtonSize = 'middle';
+     toolbarButtonSize: "small"|"middle"|"large" = 'middle';
 
     /**
-     * @prop {string} theme=default Theme (can be "dark")
-     * @since 2.4.2
+     * Theme (can be "dark")
      * @example
      * var editor  = new  Jodit(".dark_editor", {
      *      theme: "dark"
      * });
      */
-    theme = 'default';
+    theme: string = 'default';
 
     /**
-     * @prop {boolean} saveModeInCookie=false if it is true that the current mode is saved in a cookie , and is restored after a reload of the page
-     * @since 2.3.59
+     * if it is true that the current mode is saved in a cookie , and is restored after a reload of the page
      */
-    saveModeInCookie = false;
+    saveModeInCookie: boolean = false;
 
     /**
-     * @prop {boolean} spellcheck=true options specifies whether the editor is to have its spelling and grammar checked or not
+     * Options specifies whether the editor is to have its spelling and grammar checked or not
      * @see {@link http://www.w3schools.com/tags/att_global_spellcheck.asp}
-     * @since 2.3.48
      */
-    spellcheck = true;
+    spellcheck: boolean = true;
 
    /**
-     * @prop {string|false} editorCssClass=false Class name that can be appended to the editor
+     * Class name that can be appended to the editor
+     *
      * @see {@link Jodit.defaultOptions.iframeCSSLinks|iframeCSSLinks}
      * @see {@link Jodit.defaultOptions.iframeStyle|iframeStyle}
-     * @since 2.3.31
+     *
      * @example
-     * <script>
      * new Jodit('#editor', {
      *    editorCssClass: 'some_my_class'
      * });
-     * </script>
-     * <style>
+     * &lt;style>
      * .some_my_class p{
      *    line-height: 16px;
      * }
-     * </style>
+     * <&lt;/style>
      */
-    // editorCssClass = false;
+    editorCssClass: false|string = false;
 
    /**
-     * @prop {boolean} triggerChangeEvent=true After all changes in editors for textarea will call change trigger
-     * @since 2.3.30
+     * After all changes in editors for textarea will call change trigger
+     *
      * @example
      * new Jodit('#editor');
      * document.getElementById('editor').addEventListener('change', function () {
      *      console.log(this.value);
      * })
      */
-    // triggerChangeEvent = true;
+    triggerChangeEvent: boolean = true;
+
 
     /**
-     * @prop {boolean} iframe=false When this option is enabled, the editor's content will be placed in an iframe and isolated from the rest of the page.
-     * @example
-     * new Jodit('#editor', {
-     *    iframe = true;
-     *    iframeStyle = 'html{margin: 0px;}body{padding:10px;background:transparent;color:#000;position:relative;z-index: 2;user-select:auto;margin:0px;overflow:hidden;}body:after{content:"";clear:both;display:block}';
-     * })
-     */
-    iframe = false;
-
-    /**
-     * @prop {boolean|string} iframeBaseUrl=false Base URL where the root directory for {@link Jodit.defaultOptions.iframe|iframe} mode
-     * @example
-     * new Jodit('#editor', {
-     *    iframe: true,
-     *    iframeBaseUrl: 'http://xdsoft.net/jodit/docs/',
-     * })
-     */
-    iframeBaseUrl = false;
-
-    /**
-     * @prop {string} iframeStyle='html{margin: 0px;}body{padding:10px;background:transparent;color:#000;position:relative;z-index: 2;user-select:auto;margin:0px;overflow:auto;}body:after{content:"";clear:both;display:block}table{width:100%;border-collapse:collapse} th,td{border:1px solid #ccc;-webkit-user-select:text;-moz-user-select:text;-ms-user-select:text;user-select:text}p{margin-top:0;}' Custom style to be used inside the iframe to display content.
-     * @example
-     * new Jodit('#editor', {
-     *    iframe: true,
-     *    iframeStyle: 'html{margin: 0px;}',
-     * })
-     */
-
-    iframeStyle = 'html{margin: 0px;}body{padding:10px;background:transparent;color:#000;position:relative;z-index: 2;user-select:auto;margin:0px;overflow:auto;}body:after{content:"";clear:both;display:block}table{width:100%;border: none;border-collapse:collapse;empty-cells: show;max-width: 100%;} th,td{padding: 2px 5px;border:1px solid #ccc;-webkit-user-select:text;-moz-user-select:text;-ms-user-select:text;user-select:text}td[data-jodit-selected-cell],th[data-jodit-selected-cell]{border: 1px double #1e88e5}p{margin-top:0;}.jodit_editor .jodit_iframe_wrapper{display: block;clear: both;user-select: none;position: relative;}.jodit_editor .jodit_iframe_wrapper:after {position:absolute;content:"";z-index:1;top:0;left:0;right: 0;bottom: 0;cursor: pointer;display: block;background: rgba(0, 0, 0, 0);}';
-
-    /**
-     * @prop {array} iframeCSSLinks='[]' Custom stylesheet files to be used inside the iframe to display content.
-     * @example
-     * new Jodit('#editor', {
-     *    iframe: true,
-     *    iframeCSSLinks: ['styles/default.css'],
-     * })
-     */
-
-    iframeCSSLinks = [];
-
-    /**
-     * @prop {string} iframeIncludeJoditStyle=true Include jodit.min.css in iframe document
-     * @deprecated since version 2.3.31
-     */
-    // iframeIncludeJoditStyle = true;
-
-    /**
-     * @prop {string|int} width='auto' Editor's width
+     * Editor's width
+     *
      * @example
      * new Jodit('.editor', {
      *    width: '100%',
@@ -163,10 +104,11 @@ export class Config {
      * })
      */
 
-    width = 'auto';
+    width: number|string = 'auto';
 
     /**
-     * @prop {string|int} height='auto' Editor's height
+     * Editor's height
+     *
      * @example
      * new Jodit('.editor', {
      *    height: '100%',
@@ -180,10 +122,11 @@ export class Config {
      *    height: 'auto', // autosize
      * })
      */
-    height = 'auto';
+    height: string|number = 'auto';
 
     /**
-     * @prop {string|int} height=100 Editor's min-height
+     * Editor's min-height
+     *
      * @example
      * new Jodit('.editor', {
      *    minHeight: '30%' //min-height: 30%
@@ -193,19 +136,20 @@ export class Config {
      *    minHeight: 200 //min-height: 200px
      * })
      */
-    minHeight = 100;
+    minHeight: number|string = 100;
 
     /**
-     * @prop {string} direction='' The writing direction of the language which is used to create editor content. Allowed values are: '' (an empty string) – Indicates that content direction will be the same as either the editor UI direction or the page element direction. 'ltr' – Indicates a Left-To-Right text direction (like in English). 'rtl' – Indicates a Right-To-Left text direction (like in Arabic).
+     * The writing direction of the language which is used to create editor content. Allowed values are: '' (an empty string) – Indicates that content direction will be the same as either the editor UI direction or the page element direction. 'ltr' – Indicates a Left-To-Right text direction (like in English). 'rtl' – Indicates a Right-To-Left text direction (like in Arabic).
      * @example
      * new Jodit('.editor', {
      *    direction: 'rtl'
      * })
      */
-    direction = '';
+    direction: string = '';
 
     /**
-     * @prop {string} language=auto Language by default. if `auto` language set by document.documentElement.lang || (navigator.language && navigator.language.substr(0, 2)) || (navigator.browserLanguage && navigator.browserLanguage.substr(0, 2)) || 'en'
+     * Language by default. if `auto` language set by document.documentElement.lang || (navigator.language && navigator.language.substr(0, 2)) || (navigator.browserLanguage && navigator.browserLanguage.substr(0, 2)) || 'en'
+
      * @example
      * // include in you page lang file
      * <script src="jodit/lang/de.js"></script>
@@ -215,11 +159,12 @@ export class Config {
      * });
      * </script>
      */
-    language = 'auto';
+    language: string = 'auto';
 
 
     /**
-     * @prop {boolean} debugLanguage=false if true all Lang.i18n(key) return `{key}`
+     * if true all Lang.i18n(key) return `{key}`
+     *
      * @example
      * <script>
      * var editor = new Jodit('.editor', {
@@ -229,10 +174,11 @@ export class Config {
      * console.log(editor.i18n("Test")); // {Test}
      * </script>
      */
-    debugLanguage = false;
+    debugLanguage: boolean = false;
 
     /**
-     * @prop {PlainObject} i18n=Jodit.lang Collection of language pack data {en: {'Type something': 'Type something', ...}}
+     * Collection of language pack data {en: {'Type something': 'Type something', ...}}
+     *
      * @example
      * var editor = new Jodit('#editor', {
      *     language: 'ru',
@@ -244,17 +190,17 @@ export class Config {
      * });
      * console.log(editor.i18n('Type something')) //Начните что-либо вводить
      */
-    i18n = 'en';
+    i18n: object|string = 'en';
 
     /**
-     * @prop {int} tabIndex=-1 The tabindex global attribute is an integer indicating if the element can take input focus (is focusable), if it should participate to sequential keyboard navigation, and if so, at what position. It can take several values
+     * The tabindex global attribute is an integer indicating if the element can take input focus (is focusable), if it should participate to sequential keyboard navigation, and if so, at what position. It can take several values
      */
-    tabIndex = -1;
+    tabIndex: number = -1;
 
     /**
-     * @prop {boolean} toolbar=true true Show toolbar
+     * Show toolbar
      */
-    toolbar = true;
+    toolbar: boolean = true;
 
     // TODO
     // autosave: false, // false or url
@@ -263,12 +209,12 @@ export class Config {
     // TODO
 
     /**
-     * @prop {(Jodit.ENTER_P|Jodit.ENTER_DIV|Jodit.ENTER_BR)} enter=Jodit.ENTER_P Element that will be created when you press Enter
+     * Element that will be created when you press Enter
      */
-    enter = consts.PARAGRAPH;
+    enter: "P"|"DIV"|"BR" = consts.PARAGRAPH;
 
     /**
-     * @prop {(Jodit.MODE_WYSIWYG|Jodit.MODE_AREA|Jodit.MODE_SPLIT)} efaultMode=Jodit.MODE_SPLIT Jodit.MODE_WYSIWYG The HTML editor allows you to write like MSWord, Jodit.MODE_AREA syntax highlighting source editor
+     * Jodit.MODE_WYSIWYG The HTML editor allows you to write like MSWord, Jodit.MODE_AREA syntax highlighting source editor
      * @example
      * var editor = new Jodit('#editor', {
      *     defaultMode: Jodit.MODE_SPLIT
@@ -276,21 +222,19 @@ export class Config {
      * console.log(editor.getRealMode())
      *
      */
-    defaultMode = consts.MODE_WYSIWYG;
+    defaultMode: number = consts.MODE_WYSIWYG;
+
+
+    useSplitMode: boolean = false;
 
     /**
-     * @prop {boolean} useSplitMode=false
-     */
-    useSplitMode = false;
-
-    /**
-     * @prop {array} colors The colors in HEX representation to select a color for the background and for the text in colorpicker
+     * The colors in HEX representation to select a color for the background and for the text in colorpicker
      * @example
      *  new Jodit('#editor', {
      *     colors: ['#ff0000', '#00ff00', '#0000ff']
      * })
      */
-    colors = {
+    colors: {[key: string]: string[]}|string[] = {
         greyscale:  ['#000000', '#434343', '#666666', '#999999', '#B7B7B7', '#CCCCCC', '#D9D9D9', '#EFEFEF', '#F3F3F3', '#FFFFFF'],
         palette:    ['#980000', '#FF0000', '#FF9900', '#FFFF00', '#00F0F0', '#00FFFF', '#4A86E8', '#0000FF', '#9900FF', '#FF00FF'],
         full: [
@@ -304,52 +248,49 @@ export class Config {
     };
 
     /**
-     * @prop {('background'|'color')} colorPickerDefaultTab='background' The default tab color picker
+     * The default tab color picker
      * @example
      *  new Jodit('#editor2', {
      *     colorPickerDefaultTab: 'color'
      * })
      */
-    colorPickerDefaultTab = 'background';
+    colorPickerDefaultTab: 'background'|'color' = 'background';
 
     /**
-     * @property {int} imageDefaultWidth=300 Image size defaults to a larger image
+     * Image size defaults to a larger image
      */
-    imageDefaultWidth = 300;
+    imageDefaultWidth: number = 300;
 
     /**
-     * @property {string[]} removeButtons Do not display those buttons that are on the list
+     * Do not display these buttons that are on the list
      * @example
      * new Jodit('#editor2', {
      *     removeButtons: ['hr', 'source']
      * });
      */
-    removeButtons = [];
+    removeButtons: string[] = [];
 
     /**
-     * @property {int} sizeLG=900 The width of the editor, accepted as the biggest. Used to the responsive version of the editor
-     * @since 2.5.49
+     * The width of the editor, accepted as the biggest. Used to the responsive version of the editor
      */
-    // sizeLG = 900;
+    sizeLG: number = 900;
 
     /**
-     * @property {int} sizeMD=700 The width of the editor, accepted as the medium. Used to the responsive version of the editor
-     * @since 2.5.49
+     * The width of the editor, accepted as the medium. Used to the responsive version of the editor
      */
-    // sizeMD = 700;
+    sizeMD: number = 700;
 
     /**
-     * @property {int} sizeSM=700 The width of the editor, accepted as the small. Used to the responsive version of the editor
-     * @since 2.5.49
+     * The width of the editor, accepted as the small. Used to the responsive version of the editor
      */
-    // sizeSM = 400;
+    sizeSM: number = 400;
 
     /**
      * @property {string[]} buttons The list of buttons that appear in the editor's toolbar on large places (≥ options.sizeLG). Note - this is not the width of the device, the width of the editor
      * @property {string[]} buttonsMD The list of buttons that appear in the editor's toolbar on medium places (≥ options.sizeMD).
      * @property {string[]} buttonsSM The list of buttons that appear in the editor's toolbar on small places (≥ options.sizeSM).
      * @property {string[]} buttonsXS The list of buttons that appear in the editor's toolbar on extra small places (< options.sizeSM).
-     * @property {string|object} buttons.button Button. Clicking has the next priority popup, exec, list
+     * @property {string|ControlType} buttons.button Button. Clicking has the next priority popup, exec, list
      * @property {string} [buttons.button.icon] If there 'temp' button, then the tag is of the form <code>&lt;a class="icon icon-temp"&gt</code>. Of the existing can be used:
      * <code>addcolumn, addrow, attachment, bin, bold, brush, cancel, check, source, eraser, folder, font, fullsize, image, indent-decrease, indent-increase, italic, link, ol, ul, list2, lock, menu,  merge, hr, center, justify, left, right, pencil, paragraph, plus, redo, resize, shrink, splitg, splitv, strikethrough, table, fontsize, underline, undo, unlock, update, upload, valign</code>
      * @property {string} [buttons.button.iconURL] If you want to address , you can set a background image for the button . This icon should be 16 * 16 px
@@ -415,7 +356,7 @@ export class Config {
      *        }
      *  });
      */
-    buttons = [
+    buttons: Array<string|ControlType> = [
         'source', '|',
         'bold',
         'italic', '|',
@@ -436,7 +377,7 @@ export class Config {
         'fullsize',
         'about'
     ];
-   /* buttonsMD = [
+    buttonsMD: Array<string|ControlType> = [
         'source', '|',
         'bold',
         'italic', '|',
@@ -455,7 +396,7 @@ export class Config {
         'eraser',
         'fullsize'
     ];
-    buttonsSM = [
+    buttonsSM: Array<string|ControlType> = [
         'source', '|',
         'bold',
         'italic', '|',
@@ -472,7 +413,7 @@ export class Config {
         'eraser',
         'fullsize'
     ];
-    buttonsXS = [
+    buttonsXS: Array<string|ControlType> = [
         'bold',
         'image', '|',
         'brush',
@@ -480,7 +421,7 @@ export class Config {
         'align', '|',
         'undo', 'redo', '|',
         'eraser'
-    ];*/
+    ];
 
     /**
      * Behavior for buttons
@@ -761,7 +702,7 @@ export class Config {
             popup: (editor: Jodit, current: HTMLElement|false, self: ControlType, close: Function) => {
                 const sel: Selection = editor.win.getSelection(),
                     form: HTMLFormElement = <HTMLFormElement>dom('<form class="jodit_form">' +
-                        '<input required name="url" placeholder="http://" type="text"/>' +
+                        '<input required type="text" name="url" placeholder="http://" type="text"/>' +
                         '<input name="text" placeholder="' + editor.i18n('Text') + '" type="text"/>' +
                         '<label><input name="target" type="checkbox"/> ' + editor.i18n('Open in new tab') + '</label>' +
                         '<label><input name="nofollow" type="checkbox"/> ' + editor.i18n('No follow') + '</label>' +
@@ -1014,7 +955,7 @@ export class Config {
 
                 form.addEventListener('mousemove', mouseenter);
 
-                form.addEventListener('mousedown', (e: MouseEvent) => {
+                editor.__on(form, 'touchstart mousedown', (e: MouseEvent) => {
                     const div = <HTMLDivElement>e.target;
                     e.preventDefault();
                     e.stopImmediatePropagation();
@@ -1072,6 +1013,6 @@ export class Config {
         }
     };
 
-    events = {};
-    textIcons = true;
+    events: {[key: string]: Function} = {};
+    textIcons: boolean = true;
 }
