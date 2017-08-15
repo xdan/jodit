@@ -34,7 +34,7 @@ Config.prototype.iframe = false;
 Config.prototype.iframeBaseUrl = false;
 
 /**
- * Custom style to be used inside the iframe to display content.
+ * Custom style toWYSIWYG be used inside the iframe toWYSIWYG display content.
  * @example
  * new Jodit('#editor', {
  *    iframe: true,
@@ -111,7 +111,7 @@ Config.prototype.iframeStyle = 'html{' +
     '}';
 
 /**
- * Custom stylesheet files to be used inside the iframe to display content.
+ * Custom stylesheet files toWYSIWYG be used inside the iframe toWYSIWYG display content.
  *
  * @example
  * new Jodit('#editor', {

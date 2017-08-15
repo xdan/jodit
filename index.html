@@ -124,10 +124,16 @@
     editor.editor.addEventListener('mousedown', callback)
     editor.editor.addEventListener('mouseup', callback)
     editor.editor.addEventListener('input', callback)
+    editor.setMode(Jodit.MODE_SOURCE);
+    editor.setEditorValue('<p>test</p>')
 
-
+    var mirror2 = editor.container.querySelector('textarea.jodit_source_mirror');
+    mirror2.setSelectionRange(5, 5);
+    editor.setMode(Jodit.MODE_WYSIWYG);
+    editor.selection.insertNode(editor.doc.createTextNode(' a '));
+    expect(mirror2.value).to.equal('<p>te a st</p>');
 //    var dialogs = document.querySelectorAll('.jodit.jodit_dialog_box.jodit_text_icons.active');
-//    expect(dialogs.length).to.equal(1);
+//    expect(dialogs.length).toWYSIWYG.equal(1);
 
     callback();
 </script>

@@ -3,11 +3,8 @@ import {Config} from '../Config'
 import * as consts from '../constants';
 import {$$, appendScript, debounce, dom} from '../modules/Helpers';
 import {markerInfo} from "../modules/Selection";
+import Component from "../modules/Component";
 
-/**
-* @prop {boolean} useAceEditor=true Use ACE editor instead of usual textarea
-* @memberof Jodit.defaultOptions
-*/
 declare module "../Config" {
     interface Config {
         useAceEditor: boolean;
@@ -20,6 +17,11 @@ declare module "../Config" {
         sourceEditorCDNUrlsJS: string[];
     }
 }
+
+/**
+ * Use ACE editor instead of usual textarea
+ * @memberof Jodit.defaultOptions
+ */
 Config.prototype.useAceEditor = false;
 
 /**
@@ -57,217 +59,337 @@ Config.prototype.beautifyHTMLCDNUrlsJS = [
  *
  * @module codeMirror
  */
-Jodit.plugins.source = function (editor: Jodit) {
-    const className = 'jodit_ace_editor';
-    const loadNext = (i: number, urls: string[], eventOnFinalize: false|string = 'aceReady') => {
-        if (eventOnFinalize && urls[i] === undefined && editor && editor.events) {
-            editor.events.fire(eventOnFinalize);
+Jodit.plugins.source = class extends Component {
+    private className = 'jodit_ace_editor';
+
+    private loadNext = (i: number, urls: string[], eventOnFinalize: false|string = 'aceReady', className: string = this.className) => {
+        if (eventOnFinalize && urls[i] === undefined && this.jodit && this.jodit.events) {
+            this.jodit.events.fire(eventOnFinalize);
             return;
         }
         if (urls[i] !== undefined) {
             appendScript(urls[i], () => {
-                loadNext(i + 1, urls);
+                this.loadNext(i + 1, urls, eventOnFinalize, className);
             }, className);
         }
     };
-    const mirrorContainer: HTMLDivElement = <HTMLDivElement>dom('<div class="jodit_source"/>', document),
-        mirror: HTMLTextAreaElement = <HTMLTextAreaElement>dom('<textarea class="jodit_source_mirror"/>', document),
-        from = () => {
-            const new_value = editor.getEditorValue();
-            if (new_value !== mirror.value) {
-                mirror.value = editor.getEditorValue();
+
+    private mirrorContainer: HTMLDivElement;
+    mirror: HTMLTextAreaElement;
+
+    private fromWYSIWYG = (force: boolean = false) => {
+        if (!this.__lock && (this.jodit.getRealMode() === consts.MODE_SOURCE || force === true)) {
+            const new_value = this.jodit.getEditorValue();
+            if (new_value !== this.getMirrorValue()) {
+                this.setMirrorValue(new_value);
             }
-        },
-        to = () => {
-            editor.setEditorValue(mirror.value)
-        },
-        autosize = () => {
-            mirror.style.height = 'auto';
-            mirror.style.height = mirror.scrollHeight + 'px';
+        }
+    };
+
+    private __lock = false;
+    private toWYSIWYG = () => {
+        this.__lock = true;
+        this.jodit.setEditorValue(this.getMirrorValue());
+        this.__lock = false;
+    };
+
+    private autosize = () => {
+        this.mirror.style.height = 'auto';
+        this.mirror.style.height = this.mirror.scrollHeight + 'px';
+    };
+
+    private getNormalPosition = (pos: number, str: string): number => {
+        let start: number = pos;
+        while(start > 0) {
+            start--;
+
+            if (str[start] === '<' && str[start + 1] !== undefined && str[start + 1].match(/[\w\/]+/i)) {
+                return start;
+            }
+            if (str[start] === '>') {
+                return pos;
+            }
+
+        }
+        return pos;
+    };
+    constructor(editor: Jodit) {
+        super(editor);
+
+        this.mirrorContainer = <HTMLDivElement>dom('<div class="jodit_source"/>', document);
+        this.mirror = <HTMLTextAreaElement>dom('<textarea class="jodit_source_mirror"/>', document);
+
+        editor.__on(this.mirror, 'mousedown keydown touchstart input', debounce(this.toWYSIWYG, editor.options.observer.timeout));
+        editor.__on(this.mirror, 'change keydown mousedown touchstart input', debounce(this.autosize, editor.options.observer.timeout));
+
+        editor.events
+            .on('placeholder', (text: string) => {
+                this.mirror.setAttribute('placeholder', text);
+            })
+            .on('afterInit', () => {
+                this.mirrorContainer.appendChild(this.mirror);
+                editor.workplace.appendChild(this.mirrorContainer);
+
+                const className = 'beutyfy_html_jodit_helper';
+                if (window['html_beautify'] === undefined && !$$('script.' + className, document.body).length) {
+                    this.loadNext(0, editor.options.beautifyHTMLCDNUrlsJS, false, className);
+                }
+
+                if (editor.options.useAceEditor) {
+                    this.replaceMirrorToACE();
+                }
+
+                // save restore selection
+                editor.events
+                    .on('beforeSetMode', this.saveSelection)
+                    .on('afterSetMode', this.restoreSelection);
+            })
+            .on('change afterInit', this.fromWYSIWYG);
+    }
+
+    private tempMarkerStart = '{start-jodit-selection}';
+    private tempMarkerEnd = '{end-jodit-selection}';
+    private __clear = (str: string): string => str.replace(consts.INVISIBLE_SPACE_REG_EXP, '');
+
+    private selInfo: markerInfo[] = [];
+
+    // override it for ace editors
+    private getSelectionStart: () => number = (): number => {
+        return this.mirror.selectionStart;
+    };
+    private getSelectionEnd: () => number = (): number => {
+        return this.mirror.selectionEnd;
+    };
+    private getMirrorValue(): string {
+        return this.mirror.value;
+    }
+    private setMirrorValue(value: string) {
+        this.mirror.value = value;
+    }
+    private setFocusToMirror() {
+        this.mirror.focus();
+    }
+    public setMirrorSelectionRange: (start: number, end: number) => void = (start: number, end: number) => {
+        this.mirror.setSelectionRange(start, end);
+    };
+
+    private saveSelection = () => {
+        if (this.jodit.getMode() === consts.MODE_WYSIWYG) {
+            this.selInfo = this.jodit.selection.save() || [];
+            this.jodit.setEditorValue();
+            this.fromWYSIWYG(true);
+        } else {
+            this.selInfo.length = 0;
+            const value = this.getMirrorValue();
+            if (this.getSelectionStart() === this.getSelectionEnd()) {
+                const marker: HTMLSpanElement = this.jodit.selection.marker(true);
+                this.selInfo[0] = {
+                    startId: marker.id,
+                    collapsed: true,
+                    startMarker: marker.outerHTML
+                };
+                const selectionStart = this.getNormalPosition(this.getSelectionStart(), this.getMirrorValue());
+                this.setMirrorValue(value.substr(0, selectionStart) + this.__clear(this.selInfo[0].startMarker) + value.substr(selectionStart));
+            } else {
+                const markerStart: HTMLSpanElement = this.jodit.selection.marker(true);
+                const markerEnd: HTMLSpanElement = this.jodit.selection.marker(false);
+
+                this.selInfo[0] = {
+                    startId: markerStart.id,
+                    endId: markerEnd.id,
+                    collapsed: false,
+                    startMarker: markerStart.outerHTML,
+                    endMarker: markerEnd.outerHTML
+                };
+                const selectionStart = this.getNormalPosition(this.getSelectionStart(), value);
+                const selectionEnd = this.getNormalPosition(this.getSelectionEnd(), value);
+                this.setMirrorValue(value.substr(0, selectionStart) + this.__clear(this.selInfo[0].startMarker) + value.substr(selectionStart, selectionEnd - selectionStart) + this.__clear(this.selInfo[0].endMarker) + value.substr(selectionEnd));
+            }
+            this.toWYSIWYG();
+        }
+    };
+    private restoreSelection = () => {
+        if (!this.selInfo.length) {
+            return;
         }
 
-    editor.__on(mirror, 'change keydown mousedown touchstart input', debounce(to, editor.options.observer.timeout));
-    editor.__on(mirror, 'change keydown mousedown touchstart input', debounce(autosize, editor.options.observer.timeout));
+        if (this.jodit.getMode() === consts.MODE_WYSIWYG) {
+            this.jodit.selection.restore(this.selInfo);
+            this.fromWYSIWYG(true);
+            return;
+        }
 
-    editor.events
-        .on('placeholder', (text: string) => {
-            mirror.setAttribute('placeholder', text);
-        })
-        .on('afterInit', () => {
-            from();
-            mirrorContainer.appendChild(mirror);
-            editor.workplace.appendChild(mirrorContainer);
+        if (this.selInfo[0].startMarker) {
+            this.setMirrorValue(this.getMirrorValue().replace(this.__clear(this.selInfo[0].startMarker), this.tempMarkerStart));
+        }
 
-            loadNext(0, editor.options.beautifyHTMLCDNUrlsJS, false);
-            if (editor.options.useAceEditor) {
-                let aceEditor,
-                    undoManager,
-                    noChange: boolean = false;
+        if (this.selInfo[0].endMarker) {
+            this.setMirrorValue(this.getMirrorValue().replace(this.__clear(this.selInfo[0].endMarker), this.tempMarkerEnd));
+        }
 
-                const updateButtons = () => {
-                        if (undoManager && editor.getMode() === consts.MODE_SOURCE) {
-                            editor.events.fire('canRedo', [undoManager.hasRedo()]);
-                            editor.events.fire('canUndo', [undoManager.hasUndo()]);
-                        }
-                    },
-                    saveValue = () => {
-                        if (!noChange && aceEditor && editor.getRealMode() === consts.MODE_SOURCE) {
-                            mirror.value = aceEditor.getValue();
-                            updateButtons();
-                            to();
-                        }
-                    },
-                    tryInitAceEditor = () => {
-                        if (aceEditor === undefined) {
-                            if (window['ace'] !== undefined) {
-                                let fakeMirror = dom('<div class="jodit_source_mirror-fake"/>', document);
-                                mirrorContainer.insertBefore(fakeMirror, mirror);
+        if (window['html_beautify']) {
+            this.setMirrorValue(window['html_beautify'](this.getMirrorValue()));
+        }
 
-                                aceEditor = window['ace'].edit(fakeMirror);
+        let  selectionStart: number = this.getMirrorValue().indexOf(this.tempMarkerStart),
+            selectionEnd: number  = selectionStart;
 
-                                aceEditor.setTheme(editor.options.sourceEditorNativeOptions.theme);
-                                aceEditor.getSession().setMode(editor.options.sourceEditorNativeOptions.mode);
-                                aceEditor.setHighlightActiveLine(editor.options.sourceEditorNativeOptions.highlightActiveLine);
-                                aceEditor.$blockScrolling = Infinity;
+        this.setMirrorValue(this.getMirrorValue().replace(this.tempMarkerStart, ''));
+        if (!this.selInfo[0].collapsed || selectionStart === -1) {
+            selectionEnd = this.getMirrorValue().indexOf(this.tempMarkerEnd);
+            if (selectionStart === -1) {
+                selectionStart = selectionEnd;
+            }
+        }
 
-                                aceEditor.setValue(mirror.value);
+        this.setMirrorValue(this.getMirrorValue().replace(this.tempMarkerEnd, ''));
 
-                                aceEditor.setOptions({
-                                    maxLines: Infinity
-                                });
+        this.setMirrorSelectionRange(
+            selectionStart,
+            selectionEnd
+        );
 
-                                aceEditor.on('change', saveValue);
+        this.toWYSIWYG();
 
-                                mirror.style.display = 'none';
+        this.setFocusToMirror(); // need for setting focus after change mode
+    };
 
-                                undoManager = aceEditor.getSession().getUndoManager();
+    private replaceMirrorToACE() {
+        let editor: Jodit = this.jodit,
+            aceEditor: AceAjax.Editor,
+            undoManager: AceAjax.UndoManager;
 
-                                editor.events.fire('aceInited');
-                            }
-                        }
-                        if (aceEditor) {
-                            if (window['html_beautify']) {
-                                aceEditor.setValue(window['html_beautify'](mirror.value));
-                            } else {
-                                aceEditor.setValue(mirror.value);
-                            }
-                            updateButtons();
-                        }
-                    };
-
-                editor.events.on('afterSetMode', () => {
-                    if (editor.getMode() !== consts.MODE_SOURCE && editor.getMode() !== consts.MODE_SPLIT) {
-                        return;
+        const updateButtons = () => {
+                if (undoManager && editor.getMode() === consts.MODE_SOURCE) {
+                    editor.events.fire('canRedo', [undoManager.hasRedo()]);
+                    editor.events.fire('canUndo', [undoManager.hasUndo()]);
+                }
+            },
+            getLastColumnIndex = (row: number): number => {
+                return (<any>aceEditor.session.getDocumentLastRowColumnPosition(row, 0)).column;
+            },
+            getLastColumnIndices = (): number[] => {
+                const rows: number = aceEditor.session.getLength();
+                const lastColumnIndices: number[] = [];
+                let lastColIndex: number = 0;
+                for (let i = 0; i < rows; i++){
+                    lastColIndex += getLastColumnIndex(i);
+                    if (i>0) {
+                        lastColIndex += 1;
                     }
-                    from();
-                    tryInitAceEditor();
-                    editor.events.on('aceReady', tryInitAceEditor);
+                    lastColumnIndices[i] = lastColIndex;
+                }
+                return lastColumnIndices;
+            },
+            getRowColumnIndices = (characterIndex: number): {row: number, column: number} => {
+                const lastColumnIndices: number[] = getLastColumnIndices();
+                if (characterIndex <= lastColumnIndices[0]) {
+                    return {row: 0, column: characterIndex};
+                }
+                let row: number = 1;
+                for (let i = 1; i < lastColumnIndices.length; i++) {
+                    if (characterIndex > lastColumnIndices[i]) {
+                        row = i+1;
+                    }
+                }
+                let column: number = characterIndex - lastColumnIndices[row-1] - 1;
+                return {row: row, column: column};
+            },
+            setSelectionRangeIndices = (start: number, end: number) => {
+                const startRowColumn = getRowColumnIndices(start);
+                const endRowColumn = getRowColumnIndices(end);
+                aceEditor.getSelection().setSelectionRange({
+                    start: {
+                        row: startRowColumn.row,
+                        column: startRowColumn.column
+                    },
+                    end: {
+                        row: endRowColumn.row,
+                        column: endRowColumn.column
+                    }
                 });
+            },
+            getIndexByRowColumn = (row: number, column: number): number => {
+                const lastColumnIndices: number[] = getLastColumnIndices();
+                return lastColumnIndices[row] - getLastColumnIndex(row) + column;
+            },
+            tryInitAceEditor = () => {
+                if (aceEditor === undefined && window['ace'] !== undefined) {
+                    const fakeMirror = dom('<div class="jodit_source_mirror-fake"/>', document);
+                    this.mirrorContainer.insertBefore(fakeMirror, this.mirrorContainer.firstChild);
 
-                editor.events.on('beforeCommand', (command: string) => {
-                    if (editor.getMode() !== consts.MODE_WYSIWYG && (command === 'redo' || command === 'undo') && undoManager) {
-                        if (undoManager['has' + command.substr(0,1).toUpperCase() + command.substr(1)]) {
-                            aceEditor[command]();
+                    aceEditor = (<AceAjax.Ace>window['ace']).edit(fakeMirror);
+
+                    aceEditor.setTheme(editor.options.sourceEditorNativeOptions.theme);
+                    aceEditor.getSession().setMode(editor.options.sourceEditorNativeOptions.mode);
+                    aceEditor.setHighlightActiveLine(editor.options.sourceEditorNativeOptions.highlightActiveLine);
+                    aceEditor.$blockScrolling = Infinity;
+
+                    aceEditor.setValue(this.getMirrorValue());
+
+                    aceEditor.setOptions({
+                        maxLines: Infinity
+                    });
+
+                    aceEditor.on('change', this.toWYSIWYG);
+
+                    this.mirror.style.display = 'none';
+
+                    undoManager = aceEditor.getSession().getUndoManager();
+
+                    this.getMirrorValue = () => {
+                        return aceEditor.getValue();
+                    };
+                    this.setMirrorValue = (value: string) => {
+                        if (window['html_beautify']) {
+                            aceEditor.setValue(window['html_beautify'](value));
+                        } else {
+                            aceEditor.setValue(value);
                         }
                         updateButtons();
-                        return false;
-                    }
-                });
+                    };
+                    this.setFocusToMirror = () => {
+                        aceEditor.focus();
+                    };
+                    this.getSelectionStart = (): number => {
+                        const range: AceAjax.Range = aceEditor.selection.getRange();
+                        return getIndexByRowColumn(range.start.row, range.start.column);
+                    };
+                    this.getSelectionEnd = (): number => {
+                        const range: AceAjax.Range = aceEditor.selection.getRange();
+                        return getIndexByRowColumn(range.end.row, range.end.column);
+                    };
+                    this.setMirrorSelectionRange = (start: number, end: number) => {
+                        setSelectionRangeIndices(start, end);
+                    };
 
-                // global add ace editor in browser
-                if (window['ace'] === undefined && !$$('script.' + className, document.body).length) {
-                    loadNext(0, editor.options.sourceEditorCDNUrlsJS);
+
+                    editor.events.fire('aceInited');
                 }
-            } else {
-                const cl = (str: string): string => str.replace(consts.INVISIBLE_SPACE_REG_EXP, '');
-                let selInfo: markerInfo[];
-                editor.events.on('beforeSetMode', () => {
-                    if (editor.getMode() === consts.MODE_WYSIWYG) {
-                        selInfo = editor.selection.save();
-                        editor.setEditorValue();
-                    } else {
-                        const getNormalPosition = (pos: number, str: string) => {
-                            let start = pos
-                            while(start > 0) {
-                                start--;
+            };
 
-                                if (str[start] === '<' && str[start + 1] !== undefined && str[start + 1].match(/\w/i)) {
-                                    return start - 1;
-                                }
-                                if (str[start] === '>') {
-                                    return pos;
-                                }
-
-                            }
-                            return pos;
-                        }
-                        selInfo = [];
-                        if (mirror.selectionStart === mirror.selectionEnd) {
-                            const marker: HTMLSpanElement = editor.selection.marker(false);
-                            selInfo[0] = {
-                                startId: marker.id,
-                                collapsed: true,
-                                startMarker: marker.outerHTML
-                            };
-                            const selectionStart = getNormalPosition(mirror.selectionStart, mirror.value);
-                            mirror.value = mirror.value.substr(0, selectionStart) + selInfo[0].startMarker + mirror.value.substr(selectionStart + 1);
-                        } else {
-                            const markerStart: HTMLSpanElement = editor.selection.marker(true);
-                            const markerEnd: HTMLSpanElement = editor.selection.marker(false);
-
-                            selInfo[0] = {
-                                startId: markerStart.id,
-                                endId: markerEnd.id,
-                                collapsed: false,
-                                startMarker: markerStart.outerHTML,
-                                endMarker: markerEnd.outerHTML
-                            };
-                            const selectionStart = getNormalPosition(mirror.selectionStart, mirror.value);
-                            const selectionEnd = getNormalPosition(mirror.selectionEnd, mirror.value);
-                            mirror.value = mirror.value.substr(0, selectionStart) + selInfo[0].startMarker + mirror.value.substr(selectionStart, selectionEnd - selectionStart) + selInfo[0].endMarker + mirror.value.substr(selectionEnd);
-                        }
-                        editor.setEditorValue(mirror.value);
-                    }
-                });
-
-                const tempMarkerStart = '{start-jodit-selection}';
-                const tempMarkerEnd = '{end-jodit-selection}';
-                editor.events.on('afterSetMode', () => {
-                    if (editor.getMode() === consts.MODE_WYSIWYG) {
-                        editor.selection.restore(selInfo);
-                        return;
-                    }
-
-                    mirror.value = mirror.value
-                        .replace(cl(selInfo[0].startMarker), tempMarkerStart);
-                    if (!selInfo[0].collapsed) {
-                        mirror.value = mirror.value
-                            .replace(cl(selInfo[0].endMarker), tempMarkerEnd);
-                    }
-
-                    if (window['html_beautify']) {
-                        mirror.value = window['html_beautify'](mirror.value);
-                    }
-
-                    let  selectionStart: number = mirror.value.indexOf(tempMarkerStart),
-                         selectionEnd: number  = selectionStart;
-
-                    mirror.value = mirror.value.replace(tempMarkerStart, '');
-                    if (!selInfo[0].collapsed) {
-                        selectionEnd = mirror.value.indexOf(tempMarkerEnd);
-                    }
-                    mirror.value = mirror.value.replace(tempMarkerEnd, '');
-
-                    mirror.setSelectionRange(
-                        selectionStart,
-                        selectionEnd
-                    );
-
-                    to();
-
-                    mirror.focus();
-                });
+        editor.events
+            .on('aceReady', tryInitAceEditor)
+            .on('afterSetMode', () => {
+                if (editor.getMode() !== consts.MODE_SOURCE && editor.getMode() !== consts.MODE_SPLIT) {
+                    return;
+                }
+                this.fromWYSIWYG();
+                tryInitAceEditor();
+            })
+            .on('beforeCommand', (command: string) => {
+            if (editor.getMode() !== consts.MODE_WYSIWYG && (command === 'redo' || command === 'undo') && undoManager) {
+                if (undoManager['has' + command.substr(0,1).toUpperCase() + command.substr(1)]) {
+                    aceEditor[command]();
+                }
+                updateButtons();
+                return false;
             }
-        })
-        .on('change', from);
+        });
+
+        // global add ace editor in browser
+        if (window['ace'] === undefined && !$$('script.' + this.className, document.body).length) {
+            this.loadNext(0, editor.options.sourceEditorCDNUrlsJS);
+        }
+    }
 };

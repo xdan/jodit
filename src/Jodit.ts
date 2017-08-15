@@ -413,6 +413,10 @@ export default class Jodit extends Component{
      * @param {string} [value]
      */
     setEditorValue(value ?: string) {
+        if (!this.editor) {
+            return;
+        }
+
         if (typeof value !== 'string' && value !== undefined) {
             throw new Error('value must be string');
         }

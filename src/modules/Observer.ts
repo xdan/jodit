@@ -123,10 +123,10 @@ export default class Observer extends Component {
     }
 
     /**
-     * Do not remember changes to the stack Redo / Undo when it is not needed.
-     * For example, if group operations, it is best to remember only the result of the last operation .
-     * However, in some operations itself Jodit launches block (true) and off you do not need to own . therefore
-     * You can use 1 and 0. 1 - Set the value to true, but it will remember the current value . A 0 - restore the current value
+     * Do not remember changes toWYSIWYG the stack Redo / Undo when it is not needed.
+     * For example, if group operations, it is best toWYSIWYG remember only the result of the last operation .
+     * However, in some operations itself Jodit launches block (true) and off you do not need toWYSIWYG own . therefore
+     * You can use 1 and 0. 1 - Set the value toWYSIWYG true, but it will remember the current value . A 0 - restore the current value
      * @param {boolean|int} block = 1 do not remember . 1 can be used , and 0. 1 - establish a true value but will memorize the current value. A 0 - restore the current value
      * @example
      * parent.__nativeObserver.block(1);// если value has been true when you call parent.__nativeObserver.block(0); it will still be true

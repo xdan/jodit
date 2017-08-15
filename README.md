@@ -88,7 +88,7 @@ ______________________
 * Microsoft Edge
 
 
-## Changelog
+## Release Notes
 ### 3.0.6
  * Fixed bug in source plugin - when user does not need ace editor. Simple textarea had been created with bug.
  * Iframe functional was separated in plugin

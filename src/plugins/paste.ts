@@ -28,7 +28,7 @@ Jodit.plugins.paste = function (editor: Jodit) {
          *
          * @event beforePaste
          * @param {ClipboardEvent} event
-         * @return Returning false in the handler assigned to the event will cancel the current action.
+         * @return Returning false in the handler assigned toWYSIWYG the event will cancel the current action.
          * @example
          * var editor = new Jodit("#redactor");
          * editor.events.on('beforePaste', function (event) {

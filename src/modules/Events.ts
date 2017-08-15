@@ -28,8 +28,8 @@ export default class Events extends Component{
      * Disable all handlers specified event ( Event List ) for a given element. Either a specific event handler.
      * @method off
      * @param {object} [object] - The object which is disabled handlers
-     * @param {string} [list] - List of events, separated by a space or comma , which is necessary to disable the handlers for a given object
-     * @param {function} [callback] - Specific event handler to be removed
+     * @param {string} [list] - List of events, separated by a space or comma , which is necessary toWYSIWYG disable the handlers for a given object
+     * @param {function} [callback] - Specific event handler toWYSIWYG be removed
      * @return {Events} this
      * @example
      * var a = {name: "Anton"};
@@ -87,7 +87,7 @@ export default class Events extends Component{
      /**
      * Sets the handler for the specified event ( Event List ) for a given element .
      * @method on
-     * @param {Object|string} [objectOrEvent] - The object for which to set an event handler
+     * @param {Object|string} [objectOrEvent] - The object for which toWYSIWYG set an event handler
      * @param {(String|Function)} list - List of events , separated by a space or comma
      * @param {function} [callback] - The event handler
      * @param {Boolean} [onTop=false] - Set handler in first

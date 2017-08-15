@@ -53,11 +53,11 @@ describe('Selection Module functinal Tests', function() {
 
             editor.setMode(Jodit.MODE_SOURCE);
 
-            var mirror = editor.querySelector('textarea.jodit_source_mirror');
+            var mirror = editor.container.querySelector('textarea.jodit_source_mirror');
 
-            expect(editor.value).to.equal('<p>test</p>');
-            expect(editor.selectionStart).to.equal(4);
-            expect(editor.selectionEnd).to.equal(4);
+            expect(mirror.value).to.equal('<p>test</p>');
+            expect(mirror.selectionStart).to.equal(5);
+            expect(mirror.selectionEnd).to.equal(5);
         });
         it('Should restore collapsed selection when user change mode - from TEXTAREA to WYSIWYG', function () {
             var editor = new Jodit('#selection_tested_area', {
@@ -66,14 +66,13 @@ describe('Selection Module functinal Tests', function() {
             });
             editor.setEditorValue('<p>test</p>')
 
-
-            var mirror = editor.querySelector('textarea.jodit_source_mirror');
+            var mirror = editor.container.querySelector('textarea.jodit_source_mirror');
             mirror.setSelectionRange(5, 5);
 
             editor.setMode(Jodit.MODE_WYSIWYG);
             editor.selection.insertNode(editor.doc.createTextNode(' a '));
 
-            expect(editor.value).to.equal('<p>tes a t</p>');;
+            expect(editor.getEditorValue()).to.equal('<p>te a st</p>');
         });
 
         it('Should restore non collapsed selection when user change mode - from WYSIWYG to TEXTAREA', function () {
@@ -92,11 +91,11 @@ describe('Selection Module functinal Tests', function() {
 
             editor.setMode(Jodit.MODE_SOURCE);
 
-            var mirror = editor.querySelector('textarea.jodit_source_mirror');
+            var mirror = editor.container.querySelector('textarea.jodit_source_mirror');
 
-            expect(editor.value).to.equal('<p>test</p>');
-            expect(editor.selectionStart).to.equal(3);
-            expect(editor.selectionEnd).to.equal(5);
+            expect(mirror.value).to.equal('<p>test</p>');
+            expect(mirror.selectionStart).to.equal(4);
+            expect(mirror.selectionEnd).to.equal(6);
         });
         it('Should restore non collapsed selection when user change mode - from TEXTAREA to WYSIWYG', function () {
             var editor = new Jodit('#selection_tested_area', {
@@ -106,15 +105,30 @@ describe('Selection Module functinal Tests', function() {
             editor.setEditorValue('<p>test</p>')
 
 
-            var mirror = editor.querySelector('textarea.jodit_source_mirror');
-            mirror.setSelectionRange(2, 6);
+            var mirror = editor.container.querySelector('textarea.jodit_source_mirror');
+            mirror.setSelectionRange(2, 8);
 
             editor.setMode(Jodit.MODE_WYSIWYG);
             expect(editor.selection.isCollapsed()).to.equal(false);
             editor.selection.insertNode(editor.doc.createTextNode(' a '));
-            expect(editor.value).to.equal('<p>t a t</p>');
+            expect(editor.getEditorValue()).to.equal(' a ');
         });
+        it('Should restore collapsed selection inside empty element - from TEXTAREA to WYSIWYG', function () {
+            var editor = new Jodit('#selection_tested_area', {
+                useAceEditor: false,
+                defaultMode: Jodit.MODE_SOURCE
+            });
+            editor.setEditorValue('<a></a>')
 
+
+            var mirror = editor.container.querySelector('textarea.jodit_source_mirror');
+            mirror.setSelectionRange(3, 3);
+
+            editor.setMode(Jodit.MODE_WYSIWYG);
+            expect(editor.selection.isCollapsed()).to.equal(true);
+            editor.selection.insertNode(editor.doc.createTextNode(' a '));
+            expect(editor.getEditorValue()).to.equal('<a> a </a>');
+        });
 
     });
     after(function() {

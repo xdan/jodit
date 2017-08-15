@@ -13,6 +13,7 @@ describe('CodeMirror editor source code', function() {
                 },
                 editor = new Jodit(area, {
                     defaultMode: Jodit.MODE_SOURCE,
+                    useAceEditor: true,
                     events: {
                         beforeDestruct: function () {
                             return false;
@@ -30,7 +31,8 @@ describe('CodeMirror editor source code', function() {
         });
         it('Check lazy load', function() {
             var editor = new Jodit('#codemirror', {
-                defaultMode: Jodit.MODE_WYSIWYG
+                defaultMode: Jodit.MODE_WYSIWYG,
+                useAceEditor: true
             });
 
             expect(editor.container.querySelectorAll('.jodit_source_mirror-fake').length).to.equal(0);

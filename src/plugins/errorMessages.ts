@@ -28,7 +28,7 @@ Config.prototype.showMessageErrorTime = 3000;
 Config.prototype.showMessageErrorOffsetPx = 3;
 
 /**
- * Plugin to display pop-up messages in the lower right corner of the editor
+ * Plugin toWYSIWYG display pop-up messages in the lower right corner of the editor
  *
  * @module ErrorMessages
  */

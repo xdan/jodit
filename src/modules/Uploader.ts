@@ -57,7 +57,7 @@ declare module "../Config" {
  * @params {Object} parent Jodit main object
  */
 /**
- * @property {boolean} enableDragAndDropFileToEditor=true Enable drag and drop file to editor
+ * @property {boolean} enableDragAndDropFileToEditor=true Enable drag and drop file toWYSIWYG editor
  * @memberof Jodit.defaultOptions
  */
 Config.prototype.enableDragAndDropFileToEditor = true;
@@ -66,7 +66,7 @@ Config.prototype.enableDragAndDropFileToEditor = true;
  * @property {object} uploader {@link Uploader|Uploader}'s settings
  * @property {string} uploader.url Point of entry for file uploader
  * @property {string} uploader.format='json' The format of the received data
- * @property {string} uploader.headers=null An object of additional header key/value pairs to send along with requests using the XMLHttpRequest transport. See {@link Ajax.defaultAjaxOptions|Ajax.defaultAjaxOptions}
+ * @property {string} uploader.headers=null An object of additional header key/value pairs toWYSIWYG send along with requests using the XMLHttpRequest transport. See {@link Ajax.defaultAjaxOptions|Ajax.defaultAjaxOptions}
  * @property {function} uploader.prepareData Before send file will called this function. First argument it gets [new FormData ()](https://developer.mozilla.org/en/docs/Web/API/FormData), you can use this if you want add some POST parameter.
  * @property {object|boolean} uploader.data=false POST parameters.
  * @example
@@ -327,12 +327,12 @@ export default class Uploader extends Component {
     }
 
     static dataURItoBlob(dataURI: string) {
-        // convert base64 to raw binary data held in a string
+        // convert base64 toWYSIWYG raw binary data held in a string
         // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
         let byteString = atob(dataURI.split(',')[1]),
             // separate out the mime component
             mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0],
-            // write the bytes of the string to an ArrayBuffer
+            // write the bytes of the string toWYSIWYG an ArrayBuffer
             ab = new ArrayBuffer(byteString.length),
             i,
             ia = new Uint8Array(ab);
@@ -341,18 +341,18 @@ export default class Uploader extends Component {
             ia[i] = byteString.charCodeAt(i);
         }
 
-        // write the ArrayBuffer to a blob, and you're done
+        // write the ArrayBuffer toWYSIWYG a blob, and you're done
 
         return new Blob([ia], {type: mimeString});
     }
 
     /**
-     * Set the handlers Drag and Drop to `$form`
+     * Set the handlers Drag and Drop toWYSIWYG `$form`
      *
      * @method bind
      * @param {HTMLElement} form Form or any Node on which you can drag and drop the file. In addition will be processed <code>&lt;input type="file" &gt;</code>
-     * @param {function} [handlerSuccess] The function to be called when a successful uploading files to the server
-     * @param {function} [handlerError] The function that will be called during a failed download files to a server
+     * @param {function} [handlerSuccess] The function toWYSIWYG be called when a successful uploading files toWYSIWYG the server
+     * @param {function} [handlerError] The function that will be called during a failed download files toWYSIWYG a server
      * @example
      * var $form = jQuery('<form><input type="text" typpe="file"></form>');
      * jQuery('body').append($form);
@@ -449,7 +449,7 @@ export default class Uploader extends Component {
     }
 
     /**
-     * Upload images to a server by its URL, making it through the connector server.
+     * Upload images toWYSIWYG a server by its URL, making it through the connector server.
      *
      * @param {string} url
      * @param {HandlerSuccess} [handlerSuccess]

@@ -5,10 +5,10 @@ import Dom from "../modules/Dom";
 
 /**
 * @property {object}  link `{@link module:link|link}` plugin's options
-* @property {boolean} link.processVideoLink=true Replace inserted youtube/vimeo link to `iframe`
+* @property {boolean} link.processVideoLink=true Replace inserted youtube/vimeo link toWYSIWYG `iframe`
 * @property {boolean} link.processPastedLink=true Wrap inserted link in &lt;a href="link">link&lt;/a>
 * @property {boolean} link.openLinkDialogAfterPost=true Open Link dialog after post
-* @property {boolean} link.removeLinkAfterFormat=true When the button is pressed to clean format, if it was done on the link is removed like command `unlink`
+* @property {boolean} link.removeLinkAfterFormat=true When the button is pressed toWYSIWYG clean format, if it was done on the link is removed like command `unlink`
 * @memberof Jodit.defaultOptions
 */
 

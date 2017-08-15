@@ -116,6 +116,9 @@
         visibility: visible;
         opacity:1;
       }
+      &:active + .jodit_tooltip {
+        visibility: hidden !important;
+      }
     }
     &.jodit_disabled  .jodit_tooltip{
       display: none !important;

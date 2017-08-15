@@ -3,5 +3,6 @@
   "noImplicitAny": true,
   "module": "umd",
   "moduleResolution": "node",
+  "typeRoots": [ "node_modules/@types/" ],
   "allowSyntheticDefaultImports": true
 }

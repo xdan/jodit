@@ -7,15 +7,15 @@ import Component from "./Component";
 /**
  * @property {object} defaultAjaxOptions A set of key/value pairs that configure the Ajax request. All settings are optional
  * @memberof module:Dom
- * @property {object} defaultAjaxOptions.headers An object of additional header key/value pairs to send along with requests using the XMLHttpRequest transport. Uses in {@link module:FileBrowser|FileBrowser} and {@link module:Uploader|Uploader}
+ * @property {object} defaultAjaxOptions.headers An object of additional header key/value pairs toWYSIWYG send along with requests using the XMLHttpRequest transport. Uses in {@link module:FileBrowser|FileBrowser} and {@link module:Uploader|Uploader}
  * @property {string} defaultAjaxOptions.dataType='json' json or text The type of data that you're expecting back from the server. if `json` the return value passes through the `JSON.parse`
- * @property {string} defaultAjaxOptions.method='GET' The HTTP method to use for the request (e.g. "POST", "GET", "PUT")
- * @property {string} defaultAjaxOptions.url='' A string containing the URL to which the request is sent.
- * @property {string} defaultAjaxOptions.async=true By default, all requests are sent asynchronously (i.e. this is set to true by default). If you need synchronous requests, set this option to false
- * @property {object|string} defaultAjaxOptions.data=null Data to be sent to the server. It is converted to a query string, if not already a string. It's appended to the url for GET-requests.
- * @property {string} defaultAjaxOptions.contentType='application/x-www-form-urlencoded; charset=UTF-8' When sending data to the server, use this content type. Default is "application/x-www-form-urlencoded; charset=UTF-8", which is fine for most cases
- * @property {function} defaultAjaxOptions.error=function () {} A function to be called if the request fails
- * @property {function} defaultAjaxOptions.success=function (resp) {} A function to be called if the request succeeds
+ * @property {string} defaultAjaxOptions.method='GET' The HTTP method toWYSIWYG use for the request (e.g. "POST", "GET", "PUT")
+ * @property {string} defaultAjaxOptions.url='' A string containing the URL toWYSIWYG which the request is sent.
+ * @property {string} defaultAjaxOptions.async=true By default, all requests are sent asynchronously (i.e. this is set toWYSIWYG true by default). If you need synchronous requests, set this option toWYSIWYG false
+ * @property {object|string} defaultAjaxOptions.data=null Data toWYSIWYG be sent toWYSIWYG the server. It is converted toWYSIWYG a query string, if not already a string. It's appended toWYSIWYG the url for GET-requests.
+ * @property {string} defaultAjaxOptions.contentType='application/x-www-form-urlencoded; charset=UTF-8' When sending data toWYSIWYG the server, use this content type. Default is "application/x-www-form-urlencoded; charset=UTF-8", which is fine for most cases
+ * @property {function} defaultAjaxOptions.error=function () {} A function toWYSIWYG be called if the request fails
+ * @property {function} defaultAjaxOptions.success=function (resp) {} A function toWYSIWYG be called if the request succeeds
  * @property {function} defaultAjaxOptions.xhr=function () { return new XMLHttpRequest(); } Callback for creating the XMLHttpRequest object.
  * @memberof Jodit.defaultOptions
  */

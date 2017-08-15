@@ -22,8 +22,8 @@ declare module "../Config" {
 /**
  * @memberof Jodit.defaultOptions
  * @prop {object} popup plugin options
- * @prop {array} popup.img List of buttons to the toolbar pop-up window in the image
- * @prop {array} popup.table List of buttons to the toolbar pop-up window at the tables
+ * @prop {array} popup.img List of buttons toWYSIWYG the toolbar pop-up window in the image
+ * @prop {array} popup.table List of buttons toWYSIWYG the toolbar pop-up window at the tables
  * @example
  * new Jodit('#editor', {
  *     popup: {

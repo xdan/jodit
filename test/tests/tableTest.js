@@ -882,7 +882,7 @@ describe('Tables Jodit Editor Tests', function() {
             });
         });
         describe('Select cells', function () {
-            it('When we press mouse button over cell and move mouse to another cell, it should select all cells in bound', function () {
+            it('When we press mouse button over cell and move mouse toWYSIWYG another cell, it should select all cells in bound', function () {
                 var editor = new Jodit('#table_editor');
 
                 editor.setEditorValue('<table>' +
@@ -914,7 +914,7 @@ describe('Tables Jodit Editor Tests', function() {
                     '</table>'
                 );
             });
-            it('When we press mouse button over cell in subtable and move mouse to another cell, it should select all cells in bound in that table', function () {
+            it('When we press mouse button over cell in subtable and move mouse toWYSIWYG another cell, it should select all cells in bound in that table', function () {
                  var editor = new Jodit('#table_editor');
 
                  editor.setEditorValue('<table>' +
@@ -940,7 +940,7 @@ describe('Tables Jodit Editor Tests', function() {
 
                  expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal('<table><tbody><tr><td>1</td><td>2</td></tr><tr><td>3</td><td class="test"><table><tbody><tr><td data-jodit-selected-cell="1">1</td><td data-jodit-selected-cell="1">2</td></tr><tr><td data-jodit-selected-cell="1">3</td><td data-jodit-selected-cell="1">4</td></tr><tr><td>5</td><td>6</td></tr></tbody></table></td></tr><tr><td>5</td><td>6</td></tr></tbody></table>');
              });
-            it('When we press mouse button over cell and move mouse to another cell, it should select all cells in bound even if between be colspan and rowspan', function () {
+            it('When we press mouse button over cell and move mouse toWYSIWYG another cell, it should select all cells in bound even if between be colspan and rowspan', function () {
                 var editor = new Jodit('#table_editor');
 
                 editor.setEditorValue(
@@ -991,7 +991,7 @@ describe('Tables Jodit Editor Tests', function() {
                 expect(editor.container.querySelector('.jodit_table_resizer').style.display === 'none').to.equal(true);
                 done();
             });
-            it('When move mouse over left edge of cell and press mouse button and move cursor to right in 500 pixels - resizer should be nearby next edge', function (done) {
+            it('When move mouse over left edge of cell and press mouse button and move cursor toWYSIWYG right in 500 pixels - resizer should be nearby next edge', function (done) {
                 var editor = new Jodit('#table_editor');
 
                 editor.setEditorValue('<table style="width: 100px; border-collapse: separate;" cellspacing="0">' +
@@ -1015,7 +1015,7 @@ describe('Tables Jodit Editor Tests', function() {
                 expect(parseInt(editor.container.querySelector('.jodit_table_resizer').style.left, 10) < 55).to.equal(true);
                 done();
             });
-            it('When move mouse over left edge of cell and press mouse button and move cursor to right in 5 pixels - the width of the right column should decrease, the width of the left column should increase', function (done) {
+            it('When move mouse over left edge of cell and press mouse button and move cursor toWYSIWYG right in 5 pixels - the width of the right column should decrease, the width of the left column should increase', function (done) {
                 var editor = new Jodit('#table_editor');
 
                 editor.setEditorValue('<table style="width: 100px; border-collapse: separate;" cellspacing="0">' +
@@ -1051,7 +1051,7 @@ describe('Tables Jodit Editor Tests', function() {
                 );
                 done();
             });
-            it('When move mouse over right edge of last cell and press mouse button and move cursor to right in 50 pixels - the width of the whole table should increase', function () {
+            it('When move mouse over right edge of last cell and press mouse button and move cursor toWYSIWYG right in 50 pixels - the width of the whole table should increase', function () {
                 var editor = new Jodit('#table_editor');
 
                 getBox().style.width = '202px';
@@ -1089,7 +1089,7 @@ describe('Tables Jodit Editor Tests', function() {
                     '</tbody></table>'
                 );
             });
-            it('When move mouse over left edge of first cell and press mouse button and move cursor to left in 50 pixels - the width of the whole table should increase', function () {
+            it('When move mouse over left edge of first cell and press mouse button and move cursor toWYSIWYG left in 50 pixels - the width of the whole table should increase', function () {
                 var editor = new Jodit('#table_editor');
 
                 getBox().style.width = '202px';

@@ -427,7 +427,7 @@ describe('Test interface', function() {
             it('Click on Italic button when selection is collapsed should create new <em> element and set cursor into it', function() {
                 var editor = new Jodit('#table_editor_interface');
 
-                editor.setEditorValue('Text to text')
+                editor.setEditorValue('Text toWYSIWYG text')
 
                 var sel = editor.win.getSelection(), range = editor.doc.createRange();
                 range.setStart(editor.editor.firstChild, 0)
@@ -439,12 +439,12 @@ describe('Test interface', function() {
 
                 editor.selection.insertHTML('test');
 
-                expect(editor.getEditorValue()).to.equal('<em>test</em>Text to text');
+                expect(editor.getEditorValue()).to.equal('<em>test</em>Text toWYSIWYG text');
             });
             it('Click on unordered list button when selection is collapsed should wrap current box in  new <ul><li> element', function() {
                 var editor = new Jodit('#table_editor_interface');
 
-                editor.setEditorValue('<p>Text to text</p>')
+                editor.setEditorValue('<p>Text toWYSIWYG text</p>')
 
                 var sel = editor.win.getSelection(), range = editor.doc.createRange();
 
@@ -457,7 +457,7 @@ describe('Test interface', function() {
 
                 editor.selection.insertHTML('test ');
 
-                expect(editor.getEditorValue()).to.equal('<ul><li>Text test to text</li></ul>');
+                expect(editor.getEditorValue()).to.equal('<ul><li>Text test toWYSIWYG text</li></ul>');
             });
         });
         describe('Inline', function () {

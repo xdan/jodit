@@ -214,7 +214,7 @@ describe('Jodit Events system Tests', function() {
 
             div.parentNode.removeChild(div)
         })
-        it('Proxy event from iframe.window to main.window', function () {
+        it('Proxy event from iframe.window toWYSIWYG main.window', function () {
             var editor = new Jodit(appendTestArea(), {
                     iframe: true
                 }),

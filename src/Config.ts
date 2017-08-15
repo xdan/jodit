@@ -21,7 +21,7 @@ export class Config {
     zIndex: number = 0;
 
     /**
-     * For example, in Joomla, the top menu bar closes Jodit toolbar when scrolling. Therefore, it is necessary to move the toolbar Jodit by this amount [more](http://xdsoft.net/jodit/doc/#2.5.57)
+     * For example, in Joomla, the top menu bar closes Jodit toolbar when scrolling. Therefore, it is necessary toWYSIWYG move the toolbar Jodit by this amount [more](http://xdsoft.net/jodit/doc/#2.5.57)
      */
 
     offsetTopForAssix: number = 0;
@@ -52,13 +52,13 @@ export class Config {
     saveModeInCookie: boolean = false;
 
     /**
-     * Options specifies whether the editor is to have its spelling and grammar checked or not
+     * Options specifies whether the editor is toWYSIWYG have its spelling and grammar checked or not
      * @see {@link http://www.w3schools.com/tags/att_global_spellcheck.asp}
      */
     spellcheck: boolean = true;
 
    /**
-     * Class name that can be appended to the editor
+     * Class name that can be appended toWYSIWYG the editor
      *
      * @see {@link Jodit.defaultOptions.iframeCSSLinks|iframeCSSLinks}
      * @see {@link Jodit.defaultOptions.iframeStyle|iframeStyle}
@@ -139,7 +139,7 @@ export class Config {
     minHeight: number|string = 100;
 
     /**
-     * The writing direction of the language which is used to create editor content. Allowed values are: '' (an empty string) – Indicates that content direction will be the same as either the editor UI direction or the page element direction. 'ltr' – Indicates a Left-To-Right text direction (like in English). 'rtl' – Indicates a Right-To-Left text direction (like in Arabic).
+     * The writing direction of the language which is used toWYSIWYG create editor content. Allowed values are: '' (an empty string) – Indicates that content direction will be the same as either the editor UI direction or the page element direction. 'ltr' – Indicates a Left-To-Right text direction (like in English). 'rtl' – Indicates a Right-To-Left text direction (like in Arabic).
      * @example
      * new Jodit('.editor', {
      *    direction: 'rtl'
@@ -193,7 +193,7 @@ export class Config {
     i18n: object|string = 'en';
 
     /**
-     * The tabindex global attribute is an integer indicating if the element can take input focus (is focusable), if it should participate to sequential keyboard navigation, and if so, at what position. It can take several values
+     * The tabindex global attribute is an integer indicating if the element can take input focus (is focusable), if it should participate toWYSIWYG sequential keyboard navigation, and if so, at what position. It can take several values
      */
     tabIndex: number = -1;
 
@@ -214,7 +214,7 @@ export class Config {
     enter: "P"|"DIV"|"BR" = consts.PARAGRAPH;
 
     /**
-     * Jodit.MODE_WYSIWYG The HTML editor allows you to write like MSWord, Jodit.MODE_AREA syntax highlighting source editor
+     * Jodit.MODE_WYSIWYG The HTML editor allows you toWYSIWYG write like MSWord, Jodit.MODE_AREA syntax highlighting source editor
      * @example
      * var editor = new Jodit('#editor', {
      *     defaultMode: Jodit.MODE_SPLIT
@@ -228,7 +228,7 @@ export class Config {
     useSplitMode: boolean = false;
 
     /**
-     * The colors in HEX representation to select a color for the background and for the text in colorpicker
+     * The colors in HEX representation toWYSIWYG select a color for the background and for the text in colorpicker
      * @example
      *  new Jodit('#editor', {
      *     colors: ['#ff0000', '#00ff00', '#0000ff']
@@ -257,7 +257,7 @@ export class Config {
     colorPickerDefaultTab: 'background'|'color' = 'background';
 
     /**
-     * Image size defaults to a larger image
+     * Image size defaults toWYSIWYG a larger image
      */
     imageDefaultWidth: number = 300;
 
@@ -271,17 +271,17 @@ export class Config {
     removeButtons: string[] = [];
 
     /**
-     * The width of the editor, accepted as the biggest. Used to the responsive version of the editor
+     * The width of the editor, accepted as the biggest. Used toWYSIWYG the responsive version of the editor
      */
     sizeLG: number = 900;
 
     /**
-     * The width of the editor, accepted as the medium. Used to the responsive version of the editor
+     * The width of the editor, accepted as the medium. Used toWYSIWYG the responsive version of the editor
      */
     sizeMD: number = 700;
 
     /**
-     * The width of the editor, accepted as the small. Used to the responsive version of the editor
+     * The width of the editor, accepted as the small. Used toWYSIWYG the responsive version of the editor
      */
     sizeSM: number = 400;
 
@@ -293,13 +293,13 @@ export class Config {
      * @property {string|ControlType} buttons.button Button. Clicking has the next priority popup, exec, list
      * @property {string} [buttons.button.icon] If there 'temp' button, then the tag is of the form <code>&lt;a class="icon icon-temp"&gt</code>. Of the existing can be used:
      * <code>addcolumn, addrow, attachment, bin, bold, brush, cancel, check, source, eraser, folder, font, fullsize, image, indent-decrease, indent-increase, italic, link, ol, ul, list2, lock, menu,  merge, hr, center, justify, left, right, pencil, paragraph, plus, redo, resize, shrink, splitg, splitv, strikethrough, table, fontsize, underline, undo, unlock, update, upload, valign</code>
-     * @property {string} [buttons.button.iconURL] If you want to address , you can set a background image for the button . This icon should be 16 * 16 px
+     * @property {string} [buttons.button.iconURL] If you want toWYSIWYG address , you can set a background image for the button . This icon should be 16 * 16 px
      * @property {function} [buttons.button.exec] This function will be executed when the button is pressed . this it is the main instance Jodit
      * @property {function} [buttons.button.popup] By pressing a button the window falls , the contents of which will be something that will return 'popup'
      * @property {string} [buttons.button.tooltip] Description hover button
-     * @property {string} [buttons.button.command] The command to execute when the button is pressed. allowed all {@link https://developer.mozilla.org/ru/docs/Web/API/Document/execCommand#стандартные команды} а также несколько нестандартных (см. {@link Jodit~execCommand|execCommand})
-     * @property {string[]} [buttons.button.tags] Tag list when the cursor is to be highlighted on this button
-     * @property {string[]|object} [buttons.button.list] Drop-down list. A hash or array . You must specify the command which will be submitted to the hash key (array value) (see .{@link Jodit~execCommand|execCommand}) or define 'exec' function. See example
+     * @property {string} [buttons.button.command] The command toWYSIWYG execute when the button is pressed. allowed all {@link https://developer.mozilla.org/ru/docs/Web/API/Document/execCommand#стандартные команды} а также несколько нестандартных (см. {@link Jodit~execCommand|execCommand})
+     * @property {string[]} [buttons.button.tags] Tag list when the cursor is toWYSIWYG be highlighted on this button
+     * @property {string[]|object} [buttons.button.list] Drop-down list. A hash or array . You must specify the command which will be submitted toWYSIWYG the hash key (array value) (see .{@link Jodit~execCommand|execCommand}) or define 'exec' function. See example
      * @property {function(key, value): string} [buttons.button.template] The method that will be called for each element button.list
      * @default ['source', '|', 'bold', 'italic', '|', 'ul', 'ol', '|', 'font', 'fontsize', 'brush', 'paragraph', '|','image', 'video', 'table', 'link', '|', 'align', '|', 'undo', 'redo', '|', 'hr', 'eraser', 'fullsize']
      * @example

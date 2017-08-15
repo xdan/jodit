@@ -94,7 +94,7 @@ Jodit.plugins.Resizer = function (editor: Jodit) {
                     top: number = parseInt(resizer.style.top, 10),
                     width: number = resizer.offsetWidth,
                     height: number = resizer.offsetHeight;
-                // 1 - because need move border higher and to the left than the picture
+                // 1 - because need move border higher and toWYSIWYG the left than the picture
                 // 2 - in box-sizing: border-box mode width is real width indifferent by border-width.
                 if (top !== pos.top - 1 || left !== pos.left - 1 || width !== currentElement.offsetWidth || height !== currentElement.offsetHeight) {
                     resizer.style.top = (pos.top - 1) + 'px';
@@ -121,8 +121,8 @@ Jodit.plugins.Resizer = function (editor: Jodit) {
 
 
         /**
-         * Bind an edit element to element
-         * @param {HTMLElement} element The element that you want to add a function to resize
+         * Bind an edit element toWYSIWYG element
+         * @param {HTMLElement} element The element that you want toWYSIWYG add a function toWYSIWYG resize
          */
         bind = (element: HTMLElement) => {
             let wrapper: HTMLElement;

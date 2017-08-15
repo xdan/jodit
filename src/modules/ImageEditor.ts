@@ -103,7 +103,7 @@ Config.prototype.imageeditor = {
 };
 
 /**
- * The module allows you to edit the image: resize or cut any part of it
+ * The module allows you toWYSIWYG edit the image: resize or cut any part of it
  *
  * @module ImageEditor
  * @param {Object} parent Jodit main object

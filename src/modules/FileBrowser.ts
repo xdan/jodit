@@ -28,7 +28,7 @@ import Cookie from "./Cookie";
 
 /**
  * @prop {object} filebrowser module settings {@link module:FileBrowser|FileBrowser}
- * @prop {int} filebrowser.howLongShowMsg=3000 How long to show an error message in the status bar (ms)
+ * @prop {int} filebrowser.howLongShowMsg=3000 How long toWYSIWYG show an error message in the status bar (ms)
  * @prop {boolean} filebrowser.sort=function (a, b, sortBy, parent) { return b.changed - a.changed;} Items sort functions
  * @prop {boolean} filebrowser.sortBy='changed' Sort by field
  * @prop {boolean} filebrowser.filter=function (item, searchWord) { return item.name.toLowerCase().indexOf(searchWord.toLowerCase()) !== -1} Filter items
@@ -41,10 +41,10 @@ import Cookie from "./Cookie";
  * @prop {boolean} filebrowser.showPreviewNavigation=true Show navigation buttons in preview
  * @prop {boolean} filebrowser.showSelectButtonInPreview=true Show select button in preview
  * @prop {boolean} filebrowser.contextMenu=true use context menu
- * @prop {boolean} filebrowser.createNewFolder=true The ability to create a directory of the web browser
- * @prop {boolean} filebrowser.deleteFolder=true The ability to delete directories from the web browser
- * @prop {boolean} filebrowser.moveFolder=true The ability to move directories from the web browser
- * @prop {boolean} filebrowser.moveFile=true The ability to move file from the web browser
+ * @prop {boolean} filebrowser.createNewFolder=true The ability toWYSIWYG create a directory of the web browser
+ * @prop {boolean} filebrowser.deleteFolder=true The ability toWYSIWYG delete directories from the web browser
+ * @prop {boolean} filebrowser.moveFolder=true The ability toWYSIWYG move directories from the web browser
+ * @prop {boolean} filebrowser.moveFile=true The ability toWYSIWYG move file from the web browser
  * @prop {boolean} filebrowser.showFoldersPanel=true Show folders panel
  * @prop {px} filebrowser.width=763px The width of the web browser
  * @prop {px} filebrowser.height=400px The height of the file browser
@@ -64,7 +64,7 @@ import Cookie from "./Cookie";
  *        }],
  *    }
  * })
- * @prop {function} filebrowser.isSuccess method to check - whether the response positive
+ * @prop {function} filebrowser.isSuccess method toWYSIWYG check - whether the response positive
  * @prop {function} filebrowser.getMessage method for receiving a message from the response
  * @example
  * new Jodit('#editor', {
@@ -78,8 +78,8 @@ import Cookie from "./Cookie";
  *     }
  * })
  * @prop {string} filebrowser.view='tiles' Filelist view - `tiles` or `list`
- * @prop {object} filebrowser.ajax The default settings for AJAX connections to the server. Most of the settings like here {@link http://api.jquery.com/jQuery.ajax/|jQuery.ajax} but is not jQuery.ajax
- * @prop {function(data)} filebrowser.ajax.prepareData Method of preparation of data to be sent to the server
+ * @prop {object} filebrowser.ajax The default settings for AJAX connections toWYSIWYG the server. Most of the settings like here {@link http://api.jquery.com/jQuery.ajax/|jQuery.ajax} but is not jQuery.ajax
+ * @prop {function(data)} filebrowser.ajax.prepareData Method of preparation of data toWYSIWYG be sent toWYSIWYG the server
  * @prop {function(data)} filebrowser.ajax.process The method of processing the data obtained after administration of the server. Must return this PlainObject format `{
  * {
  *     files: resp.files || [], // {array} The names of files or folders, files can be ['image.jpg', 'image.jpg2', 'image3.jpg' ...] and [{file: 'image.jpg', thumb: '_thumbs/image.jpg'}, {file: 'image2.jpg', thumb: '_thumbs/image2.jpg'} ...]
@@ -89,16 +89,16 @@ import Cookie from "./Cookie";
  *     msg: resp.msg // {string}
  * };`
  * @prop {string} filebrowser.ajax.url='' Address entry point on the server for AJAX connection
- * @prop {object} filebrowser.ajax.data={} Default data to send to the server
+ * @prop {object} filebrowser.ajax.data={} Default data toWYSIWYG send toWYSIWYG the server
  * @prop {(json|text)} filebrowser.ajax.dataType='json' The format of the returned data
- * @prop {PlainObject} filebrowser.ajax.headers={} An object of additional header key/value pairs to send along with requests using the `XMLHttpRequest` transport. The header `X-Requested-With: XMLHttpRequest` is always added, but its default `XMLHttpRequest` value can be changed here.
- * @prop {object} filebrowser.resize Settings for AJAX connections to the server to resize image. By default, the uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} c параметром action=create
- * @prop {object} filebrowser.crop Settings for AJAX connections to the server to crop image. By default, the uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} c параметром action=create
- * @prop {object} filebrowser.create Settings for AJAX connections to the server to create the category . By default, the uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} c параметром action=create
- * @prop {object} filebrowser.move Settings for AJAX connections to the server for the moving image or category . By default uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} c параметром action=move
- * @prop {object} filebrowser.remove Settings for AJAX connections to the server to delete the image or category . By default uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} c параметром action=remove
- * @prop {object} filebrowser.folder Settings for AJAX connections to the server to download the list of categories . By default uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} c параметром action=folder
- * @prop {object} filebrowser.items Settings for AJAX connections to the server to download the image list in the specified category . By default uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} c параметром action=items
+ * @prop {PlainObject} filebrowser.ajax.headers={} An object of additional header key/value pairs toWYSIWYG send along with requests using the `XMLHttpRequest` transport. The header `X-Requested-With: XMLHttpRequest` is always added, but its default `XMLHttpRequest` value can be changed here.
+ * @prop {object} filebrowser.resize Settings for AJAX connections toWYSIWYG the server toWYSIWYG resize image. By default, the uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} c параметром action=create
+ * @prop {object} filebrowser.crop Settings for AJAX connections toWYSIWYG the server toWYSIWYG crop image. By default, the uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} c параметром action=create
+ * @prop {object} filebrowser.create Settings for AJAX connections toWYSIWYG the server toWYSIWYG create the category . By default, the uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} c параметром action=create
+ * @prop {object} filebrowser.move Settings for AJAX connections toWYSIWYG the server for the moving image or category . By default uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} c параметром action=move
+ * @prop {object} filebrowser.remove Settings for AJAX connections toWYSIWYG the server toWYSIWYG delete the image or category . By default uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} c параметром action=remove
+ * @prop {object} filebrowser.folder Settings for AJAX connections toWYSIWYG the server toWYSIWYG download the list of categories . By default uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} c параметром action=folder
+ * @prop {object} filebrowser.items Settings for AJAX connections toWYSIWYG the server toWYSIWYG download the image list in the specified category . By default uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} c параметром action=items
  * @prop {object} filebrowser.uploader=null Settings Module {@link module:Uploader|Uploader} for fast uploading images in category via Drag&Drop file in the file browser. The default settings of the module {@link module:Uploader|Uploader}
  * @example
  * // default values
@@ -1009,7 +1009,7 @@ export default class FileBrowser extends Component {
      * @method getPathByUrl
      * @param {string} url Full url
      * @param {function} success
-     * @param {string} success.path path to file from connector's root (without filename)
+     * @param {string} success.path path toWYSIWYG file from connector's root (without filename)
      * @param {string} success.name filename
      * @param {function} failed filename
      * @param {string} failed.message
@@ -1089,7 +1089,7 @@ export default class FileBrowser extends Component {
      *
      * @method create
      * @param {string} name Name the new folder
-     * @param {string} path Relative to the directory in which you want to create a folder
+     * @param {string} path Relative toWYSIWYG the directory in which you want toWYSIWYG create a folder
      * @param {string} source Server source key
      */
     create = (name, path, source) => {
@@ -1114,8 +1114,8 @@ export default class FileBrowser extends Component {
      * Move a file / directory on the server
      *
      * @method move
-     * @param {string} filepath The relative path to the file / folder source
-     * @param {string} path Relative to the directory where you want to move the file / folder
+     * @param {string} filepath The relative path toWYSIWYG the file / folder source
+     * @param {string} path Relative toWYSIWYG the directory where you want toWYSIWYG move the file / folder
      * @param {string} source Source
      */
     move = (filepath: string, path: string, source: string) => {
@@ -1138,7 +1138,7 @@ export default class FileBrowser extends Component {
      * Deleting a file / directory on the server
      *
      * @method remove
-     * @param {string} path Relative to the directory
+     * @param {string} path Relative toWYSIWYG the directory
      * @param {string} file The filename
      * @param {string} source Source
      */

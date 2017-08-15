@@ -10,7 +10,7 @@ import Toolbar from "../modules/Toolbar";
  */
 
 /**
-* @prop {boolean} fullsize=false true Editor to open to full screen
+* @prop {boolean} fullsize=false true Editor toWYSIWYG open toWYSIWYG full screen
 * @prop {boolean} globalFullsize=true if true, after `fullsize` -  all editors element get jodit_fullsize_box class (z-index: 100000 !important;)
 * @memberof Jodit.defaultOptions
 * @example

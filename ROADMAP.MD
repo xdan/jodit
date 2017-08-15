@@ -2,7 +2,7 @@
 - [x] Image resizer
 - [x] Disable buttons when they can not be used and set active then they have matches with current selection
 - [x] Disable buttons when mode was changed
-- [x] Restore copy/paste plugin. Move setting onpaste  handler to this plugin
+- [x] Restore copy/paste plugin. Move setting onpaste  handler toWYSIWYG this plugin
 - [x] Restore FileBrowser
 - [x] Restore Inline toolbar for Image and Table 3.0.1
 - [x] Auto choose language. Test language mode. 3.0.2

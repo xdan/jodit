@@ -152,7 +152,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
             expect(editor.getEditorValue()).to.be.equal('<ul><li></li><li> a Some text</li></ul>');
         })
 
-        it('If Enter was pressed inside start of first empty LI it should remove this LI, and insert new P element before parent UL, cursor should move to inside it', function () {
+        it('If Enter was pressed inside start of first empty LI it should remove this LI, and insert new P element before parent UL, cursor should move toWYSIWYG inside it', function () {
             var editor = new Jodit(appendTestArea())
             editor.setEditorValue('<ul><li></li><li>Some text</li></ul>');
 

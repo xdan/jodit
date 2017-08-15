@@ -7,8 +7,8 @@ import Dom from "../modules/Dom";
 /**
 * @property {object} cleanHTML {@link module:cleanHTML|cleanHTML}'s options
 * @property {boolean} cleanHTML.cleanOnPaste=true clean pasted html
-* @property {boolean} cleanHTML.replaceNBSP=true Replace &amp;nbsp; to plain space
-* @property {boolean} cleanHTML.allowTags=false The allowTags option defines which elements will remain in the edited text when the editor saves. You can use this to limit the returned HTML to a subset.
+* @property {boolean} cleanHTML.replaceNBSP=true Replace &amp;nbsp; toWYSIWYG plain space
+* @property {boolean} cleanHTML.allowTags=false The allowTags option defines which elements will remain in the edited text when the editor saves. You can use this toWYSIWYG limit the returned HTML toWYSIWYG a subset.
 * @memberof Jodit.defaultOptions
 * @example
 * var jodit = new Jodit('#editor', {

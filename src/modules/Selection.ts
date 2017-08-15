@@ -25,7 +25,7 @@ export default class Selection extends Component{
     // }
 
     /**
-     * Insert the cursor to any point x, y
+     * Insert the cursor toWYSIWYG any point x, y
      *
      * @method insertAtPoint
      * @param {int} x Coordinate by horizontal
@@ -107,22 +107,20 @@ export default class Selection extends Component{
      *
      * @param {Array} selectionInfo
      */
-    restore(selectionInfo: any[]|null = []) {
+    restore(selectionInfo: markerInfo[]|null = []) {
         if (Array.isArray(selectionInfo)) {
-            let sel = this.jodit.win.getSelection();
+            const sel = this.jodit.win.getSelection();
             sel.removeAllRanges();
 
-            each(selectionInfo, (i, selection) => {
+            selectionInfo.forEach((selection: markerInfo) => {
                 const range: Range = this.jodit.doc.createRange(),
-                    end: HTMLElement = this.jodit.doc.getElementById(selection.endId),
-                    start: HTMLElement = this.jodit.doc.getElementById(selection.startId);
+                    end: HTMLElement = <HTMLElement>this.jodit.editor.querySelector('#' + selection.endId),
+                    start: HTMLElement = <HTMLElement>this.jodit.editor.querySelector('#' + selection.startId);
 
                 if (!start) {
                     return;
                 }
 
-
-                //debugger
                 if (selection.collapsed || !end) {
                     let previousNode = start.previousSibling;
 
@@ -142,10 +140,9 @@ export default class Selection extends Component{
                 }
 
                 sel.addRange(range);
-
-                // this.__normalizeSelection(range, true);
-                // this.__normalizeSelection(range, false);
             });
+
+            //this.clear();
         }
     }
 
@@ -341,7 +338,7 @@ export default class Selection extends Component{
     /**
      * Inserts in the current cursor position some HTML snippet
      *
-     * @param  {string} html HTML The text to be inserted into the document
+     * @param  {string} html HTML The text toWYSIWYG be inserted into the document
      * @example
      * parent.selection.insertHTML('<img src="image.png"/>');
      */
@@ -813,7 +810,7 @@ export default class Selection extends Component{
                 }
 
                 if (!elm.getAttribute('style') || elm.nodeName !== defaultTag) {
-                    Dom.unwrap(elm); // toggle `<strong>test</strong>` to `test`, and `<span style="">test</span>` to `test`
+                    Dom.unwrap(elm); // toggle `<strong>test</strong>` toWYSIWYG `test`, and `<span style="">test</span>` toWYSIWYG `test`
                     if (mode === undefined) {
                         mode = UNWRAP;
                     }
