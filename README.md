@@ -79,6 +79,16 @@ $('textarea').each(function (elm) {
 });
 ```
 
+### Create plugin
+
+```javascript
+Jodit.plugins.yourplugin = function (editor) {
+    editor.events.on('afterInit', function () {
+    	editor.seleciotn.insertHTMl('Text');
+    });
+}
+```
+
 ## Browser Support
 ______________________
 * Internet Explorer 9
@@ -90,6 +100,7 @@ ______________________
 
 ## Release Notes
 ### 3.0.6
+ * Now work options buttonsXS,buttonsSM and buttonsMD for responsible interface
  * Restore selection after change mode. It is very usefully
  * Fixed bug in source plugin - when user does not need ace editor. Simple textarea had been created with bug.
  * Iframe functional was separated in plugin

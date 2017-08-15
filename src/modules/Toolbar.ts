@@ -394,7 +394,9 @@ export default class Toolbar extends Component{
             }
         });
 
-        container.appendChild(this.container);
+        if (this.container.parentNode !== container) {
+            container.appendChild(this.container);
+        }
     }
 
     private initEvents = () => {

@@ -1,7 +1,7 @@
 import Component from './modules/Component';
 import Events from './modules/Events';
 import Selection from './modules/Selection';
-import Toolbar from './modules/Toolbar';
+import Toolbar, {ControlType} from './modules/Toolbar';
 import Cookie from './modules/Cookie';
 import * as consts from './constants';
 import {extend, inArray, dom, each, sprintf, css, defaultLanguage} from './modules/Helpers';
@@ -170,8 +170,24 @@ export default class Jodit extends Component{
 
         this.toolbar = new Toolbar(this);
         this.toolbar.build(this.options.buttons, this.container);
-        this.events.on('resize', () => {
+        this.events.on('resize afterInit', () => {
+            let width: number = this.container.offsetWidth,
+                store: Array<string|ControlType>;
 
+            if (width >= this.options.sizeLG) {
+                store = this.options.buttons;
+            } else if (width >= this.options.sizeMD) {
+                store = this.options.buttonsMD;
+            } else if (width >= this.options.sizeSM) {
+                store = this.options.buttonsSM;
+            } else {
+                store = this.options.buttonsXS;
+            }
+            this.toolbar.build(store, this.container);
+        });
+
+        this.__on(window, 'resize', () => {
+            this.events.fire('resize');
         });
 
         this.container.appendChild(this.workplace);
