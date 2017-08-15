@@ -90,6 +90,7 @@ ______________________
 
 ## Release Notes
 ### 3.0.6
+ * Restore selection after change mode. It is very usefully
  * Fixed bug in source plugin - when user does not need ace editor. Simple textarea had been created with bug.
  * Iframe functional was separated in plugin
  

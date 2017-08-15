@@ -170,6 +170,10 @@ export default class Jodit extends Component{
 
         this.toolbar = new Toolbar(this);
         this.toolbar.build(this.options.buttons, this.container);
+        this.events.on('resize', () => {
+
+        });
+
         this.container.appendChild(this.workplace);
 
         this.workplace.appendChild(this.progress_bar);
@@ -414,7 +418,7 @@ export default class Jodit extends Component{
      */
     setEditorValue(value ?: string) {
         if (!this.editor) {
-            return;
+            return; // try change value before init or after destruct
         }
 
         if (typeof value !== 'string' && value !== undefined) {
