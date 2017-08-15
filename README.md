@@ -89,6 +89,21 @@ Jodit.plugins.yourplugin = function (editor) {
 }
 ```
 
+### Add custom button
+```javascript
+var editor = new Jodit('.someselector', {
+    buttons: Jodit.defaultOptions.buttons.concat([
+		{
+			 name: 'insertDate',
+			 iconURL: 'http://xdsoft.net/jodit/logo.png',
+			 exec: function (editor) {
+				 editor.selection.insertHTML((new Date).toDateString());
+			 }
+		}
+	])
+})
+```
+
 ## Browser Support
 ______________________
 * Internet Explorer 9
