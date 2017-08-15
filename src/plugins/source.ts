@@ -214,8 +214,10 @@ Jodit.plugins.source = class extends Component {
         }
 
         if (this.jodit.getMode() === consts.MODE_WYSIWYG) {
+            this.__lock = true;
             this.jodit.selection.restore(this.selInfo);
-            this.fromWYSIWYG(true);
+            this.__lock = false;
+            //this.fromWYSIWYG(true);
             return;
         }
 
