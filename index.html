@@ -125,7 +125,8 @@
     editor.editor.addEventListener('mouseup', callback)
     editor.editor.addEventListener('input', callback)
     editor.setMode(Jodit.MODE_SOURCE);
-    editor.setEditorValue('<p>test</p>')
+    editor.setEditorValue('<p>test</p>'.repeat(1000))
+
 
     var mirror2 = editor.container.querySelector('textarea.jodit_source_mirror');
     mirror2.setSelectionRange(5, 5);

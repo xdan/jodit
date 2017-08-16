@@ -169,22 +169,7 @@ export default class Jodit extends Component{
 
 
         this.toolbar = new Toolbar(this);
-        this.toolbar.build(this.options.buttons, this.container);
-        this.events.on('resize afterInit', () => {
-            let width: number = this.container.offsetWidth,
-                store: Array<string|ControlType>;
-
-            if (width >= this.options.sizeLG) {
-                store = this.options.buttons;
-            } else if (width >= this.options.sizeMD) {
-                store = this.options.buttonsMD;
-            } else if (width >= this.options.sizeSM) {
-                store = this.options.buttonsSM;
-            } else {
-                store = this.options.buttonsXS;
-            }
-            this.toolbar.build(store, this.container);
-        });
+        this.toolbar.build(this.options.buttons.concat(this.options.extraButtons), this.container);
 
         this.__on(window, 'resize', () => {
             this.events.fire('resize');
@@ -261,7 +246,7 @@ export default class Jodit extends Component{
         }
 
         // proxy events
-        ['keydown', 'keyup', 'keypress', 'mousedown', 'mouseup', 'mousepress', 'paste', 'resize'].forEach((event_type) => {
+        ['keydown', 'keyup', 'keypress', 'mousedown', 'mouseup', 'mousepress', 'paste', 'resize', 'touchstart', 'touchend'].forEach((event_type) => {
             this.editor.addEventListener(event_type, (e) => {
                 if (this.events.fire(event_type, [e]) === false) {
                     e.preventDefault();

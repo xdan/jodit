@@ -400,6 +400,27 @@ describe('Test interface', function() {
                     node = node.parentNode;
                 }
             });
+            it('Should add extra buttons', function() {
+                var editor = new Jodit('#table_editor_interface', {
+                    extraButtons: [
+                        {
+                            name: 'adddate',
+                            exec: function (editor) {
+                                var a = editor.doc.createTextNode('111');
+                                editor.selection.insertNode(a);
+                            }
+                        }
+                    ]
+                });
+
+                editor.setEditorValue('')
+
+                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-adddate').length).to.equal(1);
+
+                simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-adddate'));
+
+                expect(editor.getEditorValue()).to.equal('111');
+            });
         });
         describe('Commands', function () {
             it('Click on Source button should change current mode', function() {

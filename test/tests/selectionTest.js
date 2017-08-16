@@ -118,7 +118,7 @@ describe('Selection Module functinal Tests', function() {
                 useAceEditor: false,
                 defaultMode: Jodit.MODE_SOURCE
             });
-            editor.setEditorValue('<a></a>')
+            editor.setEditorValue('<a>1</a>')
 
 
             var mirror = editor.container.querySelector('textarea.jodit_source_mirror');
@@ -127,7 +127,7 @@ describe('Selection Module functinal Tests', function() {
             editor.setMode(Jodit.MODE_WYSIWYG);
             expect(editor.selection.isCollapsed()).to.equal(true);
             editor.selection.insertNode(editor.doc.createTextNode(' a '));
-            expect(editor.getEditorValue()).to.equal('<a> a </a>');
+            expect(editor.getEditorValue()).to.equal('<a> a 1</a>');
         });
 
     });

@@ -1,6 +1,9 @@
 # Jodit Editor 3
 An excellent WYSIWYG editor written in pure TypeScript without the use of additional libraries. Its file editor and image editor.
 
+ * [Official site](https://xdsoft.net/jodit/)
+ * [Documentation](https://xdsoft.net/jodit/doc/)
+ 
 > For old version, please follow here [https://github.com/xdan/jodit2](https://github.com/xdan/jodit2)
 
 ## For contributors:
@@ -32,16 +35,16 @@ yarn test
 ```
 
 For checking tests in browser, open URL:
-```bash
+```
 http://localhost:2000/test/test.html
 ```
 
 For testing FileBrowser and Uploader modules, need install [PHP Connector](https://github.com/xdan/jodit-connectors)
-```
+```bash
 composer create-project jodit/connector
 ```
 Run test PHP server
-```
+```bash
 php -S localhost:8181 -t ./
 ```
 
@@ -69,13 +72,15 @@ And some `<textarea>` element
 After this, you can init Jodit plugin
 
 ```javascript
-new Jodit('#editor');
+var editor = new Jodit('#editor');
+editor.setEditorValue('<p>start</p>')
 ```
 
 With jQuery
 ```javascript
 $('textarea').each(function (elm) {
-    new Jodit(elm);
+    var editor = new Jodit(elm);
+    editor.setEditorValue('<p>start</p>')
 });
 ```
 
@@ -114,6 +119,24 @@ ______________________
 
 
 ## Release Notes
+### 3.0.8
+* Added mobile plugin. It fixes the problem when the user on the Iphone Safari clicks on the element, the editor instead putting the cursor there, selects the word and looks for its definition
+* Separate response logic in mobile plugin
+* Added option - extraButtons
+```javascript
+var editor = new Jodit('#table_editor_interface', {
+	extraButtons: [
+		{
+			name: 'adddate',
+			exec: function (editor) {
+				var a = editor.doc.createTextNode('111');
+				editor.selection.insertNode(a);
+			}
+		}
+	]
+});
+```
+
 ### 3.0.6
  * Now work options buttonsXS,buttonsSM and buttonsMD for responsible interface
  * Restore selection after change mode. It is very usefully

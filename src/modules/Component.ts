@@ -118,7 +118,7 @@ export default class Component {
                 elm.addEventListener(event, <EventListenerOrEventListenerObject>temp, false);
             });
 
-            let eventData = {
+            const eventData = {
                 element,
                 event,
                 callback: temp

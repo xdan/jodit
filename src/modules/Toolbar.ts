@@ -400,13 +400,13 @@ export default class Toolbar extends Component{
     }
 
     private initEvents = () => {
-        this.popup.addEventListener('mousedown', (e: MouseEvent) => {e.stopPropagation()});
-        this.list.addEventListener('mousedown', (e: MouseEvent) => {e.stopPropagation()});
-        this.__on(window, 'mousedown', () => {
-            if (this.__popapOpened || this.__listOpened) {
-                this.closeAll();
-            }
-        });
+        this.__on(this.popup, 'mousedown touchstart', (e: MouseEvent) => {e.stopPropagation()})
+            .__on(this.list,'mousedown touchstart', (e: MouseEvent) => {e.stopPropagation()})
+            .__on(window, 'mousedown touchstart', () => {
+                if (this.__popapOpened || this.__listOpened) {
+                    this.closeAll();
+                }
+            });
 
         this.jodit.events.on('mousedown keydown change afterSetMode', () => {
             const callback = () => {

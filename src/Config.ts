@@ -271,6 +271,11 @@ export class Config {
     removeButtons: string[] = [];
 
     /**
+     * This buttons list will be added to option.buttons
+     */
+    extraButtons: Array<string|ControlType> = [];
+
+    /**
      * The width of the editor, accepted as the biggest. Used toWYSIWYG the responsive version of the editor
      */
     sizeLG: number = 900;
@@ -422,6 +427,7 @@ export class Config {
         'undo', 'redo', '|',
         'eraser'
     ];
+
 
     /**
      * Behavior for buttons
