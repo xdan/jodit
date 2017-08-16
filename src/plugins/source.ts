@@ -391,7 +391,7 @@ Jodit.plugins.source = class extends Component {
 
         // global add ace editor in browser
         if (window['ace'] === undefined && !$$('script.' + this.className, document.body).length) {
-            this.loadNext(0, editor.options.sourceEditorCDNUrlsJS);
+            this.loadNext(0, editor.options.sourceEditorCDNUrlsJS, 'aceReady', this.className);
         }
     }
 };

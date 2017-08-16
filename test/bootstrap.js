@@ -1,4 +1,5 @@
 Jodit.defaultOptions.observer.timeout = 0;
+Jodit.defaultOptions.useAceEditor = false;
 Jodit.defaultOptions.language = 'en';
 // Jodit.defaultOptions.iframe = true; // try uncomment sometime
 Jodit.defaultOptions.iframeCSSLinks.push('/app.css');

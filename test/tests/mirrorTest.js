@@ -27,7 +27,7 @@ describe('CodeMirror editor source code', function() {
             timeout = setTimeout(function () {
                 expect(false).to.equal(true);
                 __done.call(editor);
-            }, 500);
+            }, 1500);
         });
         it('Check lazy load', function() {
             var editor = new Jodit('#codemirror', {

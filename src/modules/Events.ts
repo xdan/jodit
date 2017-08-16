@@ -166,7 +166,7 @@ export default class Events extends Component{
                 continue;
             }
             this.stack.push(eventOrArgs[i]);
-            for (j = 0; j < object.handlers[eventOrArgs[i]].length; j += 1) {
+            for (j = 0; object.handlers[eventOrArgs[i]] && j < object.handlers[eventOrArgs[i]].length; j += 1) {
                 this.current = eventOrArgs[i];
                 result_value = object.handlers[eventOrArgs[i]][j].apply(object, args || []);
                 if (result_value !== undefined) {

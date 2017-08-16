@@ -1059,7 +1059,6 @@ describe('Tables Jodit Editor Tests', function() {
                 editor.setEditorValue('<table style="width: 100px; border-collapse: separate;" cellspacing="0">' +
                     '<tr><td>1</td><td>2</td><td>3</td><td>5</td></tr>' +
                     '</table>');
-                console.log(editor.editor.firstChild.offsetWidth);
                 var td = editor.editor.querySelectorAll('td')[3], box = td.getBoundingClientRect();
 
                 simulateEvent('mousemove', 1, td, function (options) {

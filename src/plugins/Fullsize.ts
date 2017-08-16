@@ -63,9 +63,11 @@ Jodit.plugins.fullsize = function (editor: Jodit) {
                 css(editor.toolbar.container, 'width', 'auto');
                 let icon = dom(Toolbar.getIcon(condition ? 'shrink' : 'fullsize')),
                     a = editor.toolbar.container.querySelector('.jodit_toolbar_btn-fullsize a');
-                icon.classList.add('jodit_icon');
-                a.innerHTML = '';
-                a.appendChild(icon);
+                if (a) {
+                    icon.classList.add('jodit_icon');
+                    a.innerHTML = '';
+                    a.appendChild(icon);
+                }
             }
 
             if (editor.options.globalFullsize) {
