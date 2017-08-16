@@ -7,6 +7,50 @@ An excellent WYSIWYG editor written in pure TypeScript without the use of additi
  
 > For old version, please follow here [https://github.com/xdan/jodit2](https://github.com/xdan/jodit2)
 
+## Get Started
+## How use
+Download latest [release](https://github.com/xdan/jodit/releases/latest) or
+### INSTALL VIA BOWER
+```
+bower install jodit
+```
+### INSTALL VIA NPM
+```
+npm install jodit
+```
+Include just two files
+
+```xml
+<link type="text/css" rel="stylesheet" href="build/jodit.min.css">
+<script type="text/javascript" src="build/jodit.min.js"></script>
+```
+### CDN
+```xml
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jodit/3.0.8/jodit.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/jodit/3.0.8/jodit.min.js"></script>
+```
+### USAGE
+
+And some `<textarea>` element
+
+```xml
+<textarea id="editor" name="editor"></textarea>
+```
+After this, you can init Jodit plugin
+
+```javascript
+var editor = new Jodit('#editor');
+editor.setEditorValue('<p>start</p>')
+```
+
+With jQuery
+```javascript
+$('textarea').each(function (elm) {
+    var editor = new Jodit(elm);
+    editor.setEditorValue('<p>start</p>')
+});
+```
+
 ## For contributors:
 ```bash
 npm install
@@ -60,28 +104,6 @@ var editor = new Jodit('#editor', {
             url: 'http://localhost:8181/index-test.php'
         }
     }
-});
-```
-
-## USAGE
-
-And some `<textarea>` element
-
-```xml
-<textarea id="editor" name="editor"></textarea>
-```
-After this, you can init Jodit plugin
-
-```javascript
-var editor = new Jodit('#editor');
-editor.setEditorValue('<p>start</p>')
-```
-
-With jQuery
-```javascript
-$('textarea').each(function (elm) {
-    var editor = new Jodit(elm);
-    editor.setEditorValue('<p>start</p>')
 });
 ```
 

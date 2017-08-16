@@ -15,3 +15,5 @@
 - [ ] Hot keys for toolbar button  3.0.10
 - [ ] Copy/paste all styles from element  3.0.11
 - [ ] Instead hiding buttons on small devices - create dropdown button with all extended buttons 3.0.12
+- [ ] Popup for inline editing links
+- [ ] Inline mode
