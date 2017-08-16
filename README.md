@@ -97,7 +97,7 @@ Jodit.plugins.yourplugin = function (editor) {
 ### Add custom button
 ```javascript
 var editor = new Jodit('.someselector', {
-    buttons: Jodit.defaultOptions.buttons.concat([
+    extraButtons: [
         {
             name: 'insertDate',
             iconURL: 'http://xdsoft.net/jodit/logo.png',
@@ -105,7 +105,7 @@ var editor = new Jodit('.someselector', {
                 editor.selection.insertHTML((new Date).toDateString());
             }
         }
-    ])
+    ]
 })
 ```
 
