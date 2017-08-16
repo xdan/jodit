@@ -3,6 +3,7 @@ An excellent WYSIWYG editor written in pure TypeScript without the use of additi
 
  * [Official site](https://xdsoft.net/jodit/)
  * [Documentation](https://xdsoft.net/jodit/doc/)
+ * [Download&Changes](https://github.com/xdan/jodit/releases)
  
 > For old version, please follow here [https://github.com/xdan/jodit2](https://github.com/xdan/jodit2)
 
@@ -117,37 +118,4 @@ ______________________
 * Latest Safari
 * Microsoft Edge
 
-
-## Release Notes
-### 3.0.8
-* Added mobile plugin. It fixes the problem when the user on the Iphone Safari clicks on the element, the editor instead putting the cursor there, selects the word and looks for its definition
-* Separate response logic in mobile plugin
-* Added option - extraButtons
-```javascript
-var editor = new Jodit('#table_editor_interface', {
-    extraButtons: [
-        {
-            name: 'adddate',
-            exec: function (editor) {
-                var a = editor.doc.createTextNode('111');
-                editor.selection.insertNode(a);
-            }
-        }
-    ]
-});
-```
-
-### 3.0.6
- * Now work options buttonsXS,buttonsSM and buttonsMD for responsible interface
- * Restore selection after change mode. It is very usefully
- * Fixed bug in source plugin - when user does not need ace editor. Simple textarea had been created with bug.
- * Iframe functional was separated in plugin
- 
-### 3.0.4
- * Restored `iframe` mode. It need for adding another stylesheets in editor. 
-### 3.0.2
- * Now `options`.`language` by default equal `auto`. It means that after init Jodit, it try define page language (`<html lang="de">`), if it is impossible, editor define language by browser.language.
- * Added `options`.`debugLanguage`=`false` if true, editro ignore `options`.`language` and `editor.i18n(key)` return `'{key}'`  
-### 3.0.1
- * Restore inline toolbar for Images and Tables
 
