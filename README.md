@@ -89,7 +89,7 @@ $('textarea').each(function (elm) {
 ```javascript
 Jodit.plugins.yourplugin = function (editor) {
     editor.events.on('afterInit', function () {
-    	editor.seleciotn.insertHTMl('Text');
+        editor.seleciotn.insertHTMl('Text');
     });
 }
 ```
@@ -98,14 +98,14 @@ Jodit.plugins.yourplugin = function (editor) {
 ```javascript
 var editor = new Jodit('.someselector', {
     buttons: Jodit.defaultOptions.buttons.concat([
-		{
-			 name: 'insertDate',
-			 iconURL: 'http://xdsoft.net/jodit/logo.png',
-			 exec: function (editor) {
-				 editor.selection.insertHTML((new Date).toDateString());
-			 }
-		}
-	])
+        {
+            name: 'insertDate',
+            iconURL: 'http://xdsoft.net/jodit/logo.png',
+            exec: function (editor) {
+                editor.selection.insertHTML((new Date).toDateString());
+            }
+        }
+    ])
 })
 ```
 
@@ -125,15 +125,15 @@ ______________________
 * Added option - extraButtons
 ```javascript
 var editor = new Jodit('#table_editor_interface', {
-	extraButtons: [
-		{
-			name: 'adddate',
-			exec: function (editor) {
-				var a = editor.doc.createTextNode('111');
-				editor.selection.insertNode(a);
-			}
-		}
-	]
+    extraButtons: [
+        {
+            name: 'adddate',
+            exec: function (editor) {
+                var a = editor.doc.createTextNode('111');
+                editor.selection.insertNode(a);
+            }
+        }
+    ]
 });
 ```
 
