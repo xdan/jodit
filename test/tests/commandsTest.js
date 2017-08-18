@@ -1,78 +1,92 @@
 describe('Commands Jodit Editor Tests', function() {
     appendTestArea('tested_area', true);
-    it('Try exec the command "formatBlock" for several elements', function() {
-        var editor = new Jodit('#tested_area');
-        editor.setEditorValue('<p>test</p><p>test2</p>');
+    describe('Command "formatBlock"', function() {
+        it('Try exec the command "formatBlock" for several elements', function() {
+            var editor = new Jodit('#tested_area');
+            editor.setEditorValue('<p>test</p><p>test2</p>');
 
-        var sel = editor.win.getSelection(),
-            range = editor.doc.createRange();
+            var sel = editor.win.getSelection(),
+                range = editor.doc.createRange();
 
-        range.setStartBefore(editor.editor.firstChild);
-        range.setEndAfter(editor.editor.lastChild);
-        sel.removeAllRanges();
-        sel.addRange(range);
+            range.setStartBefore(editor.editor.firstChild);
+            range.setEndAfter(editor.editor.lastChild);
+            sel.removeAllRanges();
+            sel.addRange(range);
 
-        editor.execCommand('formatBlock', false, 'h1');
+            editor.execCommand('formatBlock', false, 'h1');
 
-        expect(editor.getEditorValue()).to.equal('<h1>test</h1><h1>test2</h1>');
-    });
-    it('Try exec the command "formatBlock" in text node then selection is collapsed it should wrap it node in H1', function() {
-        var editor = new Jodit('#tested_area');
-        editor.setEditorValue('test');
+            expect(editor.getEditorValue()).to.equal('<h1>test</h1><h1>test2</h1>');
+        });
 
-        var sel = editor.win.getSelection(),
-            range = editor.doc.createRange();
+        it('Try exec the command "formatBlock" in text node then selection is collapsed it should wrap it node in H1', function() {
+            var editor = new Jodit('#tested_area');
+            editor.setEditorValue('test');
 
-        range.setStart(editor.editor.firstChild, 2);
+            var sel = editor.win.getSelection(),
+                range = editor.doc.createRange();
 
-        sel.removeAllRanges();
-        sel.addRange(range);
+            range.setStart(editor.editor.firstChild, 2);
 
-        editor.execCommand('formatBlock', false, 'h1');
+            sel.removeAllRanges();
+            sel.addRange(range);
 
-        editor.selection.insertNode(editor.doc.createTextNode(' a '));
+            editor.execCommand('formatBlock', false, 'h1');
 
-        expect(editor.getEditorValue()).to.equal('<h1>te a st</h1>');
-    });
-    it('Try exec the command "formatBlock" in the end of text node then selection is collapsed it should wrap it node in H1', function() {
-        var editor = new Jodit('#tested_area');
-        editor.setEditorValue('test');
+            editor.selection.insertNode(editor.doc.createTextNode(' a '));
 
-        var sel = editor.win.getSelection(),
-            range = editor.doc.createRange();
+            expect(editor.getEditorValue()).to.equal('<h1>te a st</h1>');
+        });
+        it('Try exec the command "formatBlock" in the end of text node then selection is collapsed it should wrap it node in H1', function() {
+            var editor = new Jodit('#tested_area');
+            editor.setEditorValue('test');
 
-        range.setStart(editor.editor.firstChild, 4);
+            var sel = editor.win.getSelection(),
+                range = editor.doc.createRange();
 
-        sel.removeAllRanges();
-        sel.addRange(range);
+            range.setStart(editor.editor.firstChild, 4);
 
-        editor.execCommand('formatBlock', false, 'h1');
+            sel.removeAllRanges();
+            sel.addRange(range);
 
-        editor.selection.insertNode(editor.doc.createTextNode(' a '));
+            editor.execCommand('formatBlock', false, 'h1');
 
-        expect(editor.getEditorValue()).to.equal('<h1>test a </h1>');
-    });
+            editor.selection.insertNode(editor.doc.createTextNode(' a '));
 
-    it('Try exec the command "formatBlock" for several text nodes', function() {
-        var editor = new Jodit('#tested_area');
-        editor.setEditorValue('');
+            expect(editor.getEditorValue()).to.equal('<h1>test a </h1>');
+        });
 
-        editor.selection.insertNode(Jodit.modules.Dom.create('text', 'test', editor.doc));
-        editor.selection.insertNode(Jodit.modules.Dom.create('text', ' test2', editor.doc));
-        editor.selection.insertNode(Jodit.modules.Dom.create('text', ' test3', editor.doc));
-        editor.selection.insertNode(Jodit.modules.Dom.create('span', ' test4', editor.doc));
+        it('Try exec the command "formatBlock" for several text nodes', function() {
+            var editor = new Jodit('#tested_area');
+            editor.setEditorValue('');
 
-        var sel = editor.win.getSelection(),
-            range = editor.doc.createRange();
+            editor.selection.insertNode(Jodit.modules.Dom.create('text', 'test', editor.doc));
+            editor.selection.insertNode(Jodit.modules.Dom.create('text', ' test2', editor.doc));
+            editor.selection.insertNode(Jodit.modules.Dom.create('text', ' test3', editor.doc));
+            editor.selection.insertNode(Jodit.modules.Dom.create('span', ' test4', editor.doc));
 
-        range.setStart(editor.editor.firstChild, 0);
-        range.setEnd(editor.editor.lastChild, 0);
-        sel.removeAllRanges();
-        sel.addRange(range);
+            var sel = editor.win.getSelection(),
+                range = editor.doc.createRange();
 
-        editor.execCommand('formatBlock', false, 'h1');
+            range.setStart(editor.editor.firstChild, 0);
+            range.setEnd(editor.editor.lastChild, 0);
+            sel.removeAllRanges();
+            sel.addRange(range);
 
-        expect(editor.getEditorValue()).to.equal('<h1>test test2 test3<span> test4</span></h1>');
+            editor.execCommand('formatBlock', false, 'h1');
+
+            expect(editor.getEditorValue()).to.equal('<h1>test test2 test3<span> test4</span></h1>');
+        });
+        it('Should create empty element and set cursor into it when editor is empty', function() {
+            var editor = new Jodit('#tested_area');
+            editor.setEditorValue('');
+            editor.selection.focus();
+
+            editor.execCommand('formatBlock', false, 'h1');
+
+            editor.selection.insertHTML('test');
+
+            expect(editor.getEditorValue()).to.equal('<h1>test</h1>');
+        });
     });
 
     it('Try exec the command "bold"', function() {
