@@ -4,6 +4,10 @@
 @width-icon: 30px;
 @height-icon: 20px;
 .jodit-add-new-line {
+  box-sizing: border-box;
+  * {
+    box-sizing: border-box;
+  }
   z-index: 5;
   position: absolute;
   height: @height-icon;
@@ -11,7 +15,7 @@
   cursor: pointer;
   outline: none;
   margin-top: -@padding-for-hover;
-  text-align: right;
+  //text-align: right;
   padding: 5px;
   vertical-align: middle;
   &:before {
@@ -31,9 +35,11 @@
     border: 1px solid @color-new-line;
     padding: 0 5px;
   }
+
   svg {
     width: 16px;
     fill: @color-new-line;
+    vertical-align: top;
   }
 
   &.jodit-add-new-line_after {

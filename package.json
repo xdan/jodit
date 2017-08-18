@@ -1,11 +1,11 @@
 {
   "name": "jodit",
-  "version": "3.0.10",
+  "version": "3.0.11",
   "description": "Jodit is awesome and usefully wysiwyg editor with filebrowser",
   "main": "index.js",
   "scripts": {
     "newversion": "npm version patch --no-git-tag-version && npm run build && npm run newversiongit && npm publish ./",
-    "newversiongit": "git add --all  && git commit -m \"New version %npm_package_version%. Read more http://xdsoft.net/jodit/#%npm_package_version% \" && git tag %npm_package_version% && git push --tags origin HEAD:master",
+    "newversiongit": "git add --all  && git commit -m \"New version %npm_package_version%. Read more https://github.com/xdan/jodit/releases/tag/%npm_package_version% \" && git tag %npm_package_version% && git push --tags origin HEAD:master",
     "start": "node server.js",
     "build": "rm -f build/* && cross-env NODE_ENV=production webpack --progress",
     "test": "karma start --browsers ChromeHeadless,IE,Firefox karma.conf.js"
@@ -20,12 +20,12 @@
     "rich",
     "jodit"
   ],
-  "author": "Chupurnov <chupurnov@gmail.com> (http://xdsoft.net/)",
+  "author": "Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)",
   "license": "SEE LICENSE IN <LICENSE>",
   "bugs": {
     "url": "https://github.com/xdan/jodit/issues"
   },
-  "homepage": "http://xdsoft.net/jodit/",
+  "homepage": "https://xdsoft.net/jodit/",
   "devDependencies": {
     "@types/node": "^7.0.39",
     "@types/ace": "^0.0.35",
