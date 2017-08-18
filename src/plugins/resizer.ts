@@ -57,7 +57,7 @@ Jodit.plugins.Resizer = function (editor: Jodit) {
         handle: HTMLElement,
 
         currentElement: null|HTMLElement,
-        // resizeElementClicked: boolean = false,
+        resizeElementClicked: boolean = false,
         isResizing: boolean = false,
 
         start_x: number,
@@ -148,6 +148,7 @@ Jodit.plugins.Resizer = function (editor: Jodit) {
                 }
             }
 
+            let timer;
             editor
                 .__on(element, 'dragstart', hideResizer)
                 .__on(element, 'mousedown', (event: MouseEvent) => {
@@ -156,7 +157,8 @@ Jodit.plugins.Resizer = function (editor: Jodit) {
                         event.preventDefault();
                     }
                 })
-                .__on(element, 'click touchend', () => {
+                .__on(element, 'mousedown touchstart', () => {
+                    resizeElementClicked = true;
                     currentElement = element;
                     showResizer();
                     if (currentElement.tagName === 'IMG' && !(<HTMLImageElement>currentElement).complete) {
@@ -165,6 +167,10 @@ Jodit.plugins.Resizer = function (editor: Jodit) {
                             currentElement.removeEventListener('load', ElementOnLoad);
                         });
                     }
+                    clearTimeout(timer);
+                    timer = setTimeout(() => {
+                        resizeElementClicked = false;
+                    }, 400);
                 });
         };
 
@@ -242,7 +248,7 @@ Jodit.plugins.Resizer = function (editor: Jodit) {
                 }
             })
             .__on(window, 'mouseup keydown touchend', (e: MouseEvent) => {
-                if (resizerIsVisible) {
+                if (resizerIsVisible && !resizeElementClicked) {
                     if (isResizing) {
                         editor.unlock();
                         isResizing = false;
@@ -263,9 +269,14 @@ Jodit.plugins.Resizer = function (editor: Jodit) {
         .on('afterGetValueFromEditor', (data: {value: string}) => {
             data.value = data.value.replace(/<jodit[^>]+data-jodit_iframe_wrapper[^>]+>(.*?<iframe[^>]+>[\s\n\r]*<\/iframe>.*?)<\/jodit>/ig, '$1');
         }).on('change afterInit afterSetMode', debounce(() => {
-            if (resizerIsVisible && (!currentElement || !currentElement.parentNode)) {
-                hideResizer();
+            if (resizerIsVisible) {
+                if (!currentElement || !currentElement.parentNode) {
+                    hideResizer();
+                } else {
+                    updateSize();
+                }
             }
+
             $$('img, table, iframe', editor.editor).forEach((elm: HTMLElement) => {
                 if (editor.getRealMode() !== consts.MODE_WYSIWYG) {
                     return;

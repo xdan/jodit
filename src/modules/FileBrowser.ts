@@ -1,6 +1,6 @@
 import Jodit from '../Jodit';
 import Component from './Component';
-import Dialog, {Confirm, Promt} from '../modules/Dialog';
+import Dialog, {Alert, Confirm, Promt} from '../modules/Dialog';
 import {Config} from '../Config';
 import {
     $$, css, ctrlKey, debounce, dom, each, extend, humanSizeToBytes, isPlainObject, offset,
@@ -10,7 +10,7 @@ import Toolbar from "./Toolbar";
 import ContextMenu from "./ContextMenu";
 import Uploader from "./Uploader";
 import Ajax from "./Ajax";
-import {TEXT_PLAIN} from "../constants";
+import * as consts from "../constants";
 import ImageEditor from "./ImageEditor";
 import Cookie from "./Cookie";
 
@@ -235,9 +235,12 @@ type FileBrowserAnswer = {
     success: boolean,
     time: string,
     data: {
-        messages?: string[],
-        sources: ISourcesFiles,
-        code: number
+        messages?: string[];
+        sources: ISourcesFiles;
+        code: number;
+        path: string;
+        name: string;
+        source: string;
     }
 };
 
@@ -690,7 +693,7 @@ export default class FileBrowser extends Component {
             })
             .__on(self.files, 'dragstart', 'a', function (this: HTMLElement, e: DragEvent) {
                 self.dragger = this;
-                e.dataTransfer.setData(TEXT_PLAIN, this.getAttribute('href'));
+                e.dataTransfer.setData(consts.TEXT_PLAIN, this.getAttribute('href'));
                 e.stopPropagation();
             })
             .__on(self.files, 'contextmenu', 'a', function (this: HTMLElement, e: DragEvent) {
@@ -990,8 +993,10 @@ export default class FileBrowser extends Component {
 
     private __ajax2: Ajax;
 
-    private send(name, success, error) {
-        let xhr, opts = extend(true, {}, this.options.ajax, this.options[name] !== undefined ? this.options[name] : this.options.ajax);
+    private send(name: string, success: (resp: FileBrowserAnswer) => void, error: (error: string) => void) {
+        let xhr: Ajax,
+            opts: FileBrowserAjaxOptions = extend(true, {}, this.options.ajax, this.options[name] !== undefined ? this.options[name] : this.options.ajax);
+
         opts.data = opts.prepareData.call(this, opts.data);
         xhr = new Ajax(this.jodit, opts);
 
@@ -1017,14 +1022,14 @@ export default class FileBrowser extends Component {
     getPathByUrl = (url: string, success: (path: string, name: string, source: string) => void, failed) => {
         let action = 'getlocalfilebyurl', self = this;
         this.options[action].data.url = url;
-        this.send(action, (resp) => {
+        this.send(action, (resp: FileBrowserAnswer) => {
             if (self.options.isSuccess(resp)) {
                 success(resp.data.path, resp.data.name, resp.data.source);
             } else {
-                failed(self.options.getMessage(resp));
+                failed(resp);
             }
         }, (resp)  => {
-            failed(self.options.getMessage(resp));
+            failed(resp);
         });
     };
 
@@ -1044,8 +1049,9 @@ export default class FileBrowser extends Component {
                 let respData = <FileBrowserAnswer>self.options.items.process.call(self, resp);
                 self.generateItemsBox(respData.data.sources);
                 self.someSelectedWasChanged();
-            }, () => {
-                self.status(self.jodit.i18n('Error on load list'));
+            }, (message: string) => {
+                Alert(message);
+                self.status(self.jodit.i18n(message));
             });
         }
     };
@@ -1170,9 +1176,9 @@ export default class FileBrowser extends Component {
 
     private onSelect(callback: (data: FileBrowserCallBcackData) => void) {
         return () => {
-            let actives = this.__getActiveElements();
+            const actives = this.__getActiveElements();
             if (actives.length) {
-                let urls = [];
+                const urls: string[] = [];
                 actives.forEach((elm) => {
                     urls.push(elm.getAttribute('data-url'));
                 });
@@ -1207,9 +1213,17 @@ export default class FileBrowser extends Component {
     open = (callback: (data: FileBrowserCallBcackData) => void) => {
         if (this.options.items.url) {
 
+            let localTimeot = 0;
             this
                 .__off(this.files, 'dblclick')
-                .__on(this.files, 'dblclick', 'a', this.onSelect(callback));
+                .__on(this.files, 'dblclick', 'a', this.onSelect(callback))
+                .__on(this.files, 'touchstart', 'a', () => {
+                    let now: number = (new Date()).getTime();
+                    if (now - localTimeot < consts.EMULATE_DBLCLICK_TIMEOUT) {
+                        this.onSelect(callback)();
+                    }
+                    localTimeot = now;
+                });
 
             this
                 .__off(this.buttons.select, 'click')
@@ -1287,10 +1301,10 @@ export default class FileBrowser extends Component {
                         onFailed(this.options.getMessage(resp));
                     }
                 }
-            }, (resp) => {
-                failed(this.options.getMessage(resp));
+            }, (resp: string) => {
+                failed(resp);
                 if (onFailed) {
-                    onFailed(this.options.getMessage(resp));
+                    onFailed(resp);
                 }
             });
         });

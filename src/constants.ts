@@ -65,3 +65,5 @@ export const TEXT_PLAIN = isIE() ? 'text' : 'text/plain';
 
 
 export const MARKER_CLASS = 'jodit_selection_marker';
+
+export const EMULATE_DBLCLICK_TIMEOUT = 300;

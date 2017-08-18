@@ -224,7 +224,7 @@ export default class Toolbar extends Component{
             name: string = typeof item === 'string' ? item : (item.name || 'empty'),
             a: HTMLAnchorElement = btn.querySelector('a');
 
-        let iconSVG = Toolbar.getIcon(name, false);
+        let iconSVG: string|false = Toolbar.getIcon(name, false);
 
         if (iconSVG === false) {
             iconSVG = Toolbar.getIcon(typeof control.name === 'string' ? control.name : 'empty');
@@ -242,7 +242,7 @@ export default class Toolbar extends Component{
             Toolbar.__toggleButton(btn, enable);
         });
 
-        let icon =  dom(iconSVG);
+        let icon =  dom(<string>iconSVG);
         icon.classList.add('jodit_icon', 'jodit_icon_' + clearName);
         a.appendChild(icon);
 
@@ -269,70 +269,69 @@ export default class Toolbar extends Component{
             btn.removeChild(btn.querySelector('.jodit_tooltip'));
         }
 
-        btn
-            .addEventListener('mousedown',  (originalEvent) => {
-                originalEvent.stopImmediatePropagation();
-                originalEvent.preventDefault();
+        this.__on(btn, 'mousedown touchend', (originalEvent) => {
+            originalEvent.stopImmediatePropagation();
+            originalEvent.preventDefault();
 
-                if (btn.classList.contains('jodit_disabled')) {
-                    return false;
-                }
+            if (btn.classList.contains('jodit_disabled')) {
+                return false;
+            }
 
 
-                if (control.list) {
-                    this.openList(btn);
-                    each(control.list, (key: string, value: string) => {
-                        let elm;
-                        if (this.jodit.options.controls[value] !== undefined) {
-                            elm = this.addButton(value, this.jodit.options.controls[value], '', target); // list like array {"align": {list: ["left", "right"]}}
-                        } else if (this.jodit.options.controls[key] !== undefined) {
-                            elm = this.addButton(key, extend({}, this.jodit.options.controls[key], value),'', target); // list like object {"align": {list: {"left": {exec: alert}, "right": {}}}}
-                        } else {
-                            elm = this.addButton(key, {
-                                    exec: control.exec,
-                                    command: control.command,
-                                    args: [
-                                        (control.args && control.args[0]) || key,
-                                        (control.args && control.args[1]) || value
-                                    ]
-                                },
-                                control.template && control.template(
-                                    this.jodit,
-                                    key,
-                                    value
-                                ),
-                                target
-                            );
-                        }
-
-                        this.list.appendChild(elm);
-                    });
-                    btn.appendChild(this.list);
-                } else if (control.exec !== undefined && typeof control.exec === 'function') {
-                    control.exec(
-                        this.jodit,
-                        target || this.jodit.selection.current(),
-                        control,
-                        originalEvent,
-                        btn
-                    );
-                    this.jodit.setEditorValue();
-                    this.jodit.events.fire('hidePopup');
-                    this.closeAll();
-                } else if (control.popup !== undefined && typeof control.popup === 'function') {
-                    this.openPopup(btn, control.popup(
-                        this.jodit,
-                        target || this.jodit.selection.current(),
-                        control,
-                        this.closeAll
-                    ));
-                } else {
-                    if (control.command || name) {
-                        this.jodit.execCommand(control.command || name, (control.args && control.args[0]) || false, (control.args && control.args[1]) || null);
-                        this.closeAll();
+            if (control.list) {
+                this.openList(btn);
+                each(control.list, (key: string, value: string) => {
+                    let elm;
+                    if (this.jodit.options.controls[value] !== undefined) {
+                        elm = this.addButton(value, this.jodit.options.controls[value], '', target); // list like array {"align": {list: ["left", "right"]}}
+                    } else if (this.jodit.options.controls[key] !== undefined) {
+                        elm = this.addButton(key, extend({}, this.jodit.options.controls[key], value),'', target); // list like object {"align": {list: {"left": {exec: alert}, "right": {}}}}
+                    } else {
+                        elm = this.addButton(key, {
+                                exec: control.exec,
+                                command: control.command,
+                                args: [
+                                    (control.args && control.args[0]) || key,
+                                    (control.args && control.args[1]) || value
+                                ]
+                            },
+                            control.template && control.template(
+                            this.jodit,
+                            key,
+                            value
+                            ),
+                            target
+                        );
                     }
+
+                    this.list.appendChild(elm);
+                });
+                btn.appendChild(this.list);
+            } else if (control.exec !== undefined && typeof control.exec === 'function') {
+                control.exec(
+                    this.jodit,
+                    target || this.jodit.selection.current(),
+                    control,
+                    originalEvent,
+                    btn
+                );
+                this.jodit.setEditorValue();
+                this.jodit.events.fire('hidePopup');
+                this.closeAll();
+            } else if (control.popup !== undefined && typeof control.popup === 'function') {
+                this.openPopup(btn, control.popup(
+                    this.jodit,
+                    target || this.jodit.selection.current(),
+                    control,
+                    this.closeAll
+                ));
+            } else {
+                if (control.command || name) {
+                    this.jodit.execCommand(control.command || name, (control.args && control.args[0]) || false, (control.args && control.args[1]) || null);
+                    this.closeAll();
                 }
-            });
+            }
+        })
 
         this.buttonList.push({
             control,

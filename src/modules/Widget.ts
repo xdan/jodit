@@ -50,13 +50,9 @@ export namespace Widget {
 
         form.appendChild(dom('<a data-color="" href="javascript:void(0)">' + Jodit.modules.Toolbar.getIcon('eraser') + '</a>'));
 
-        form
-            .addEventListener('mousedown', (e) => {
+        editor
+            .__on(form, 'mousedown touchstart', (e: MouseEvent) => {
                 e.stopPropagation();
-            });
-
-        form
-            .addEventListener('mousedown', (e: MouseEvent) => {
                 let target: HTMLElement = <HTMLElement>e.target;
 
                 if (target.tagName.toUpperCase() === 'SVG' || target.tagName.toUpperCase() === 'PATH') {
@@ -139,7 +135,8 @@ export namespace Widget {
             }
 
             tabBox.appendChild(tab);
-            button.addEventListener('mousedown', (e) => {
+
+            editor.__on(button, 'mousedown touchstart', (e) => {
                 $$('a', buttons).forEach((a) => {
                     a.classList.remove('active');
                 });
@@ -155,6 +152,7 @@ export namespace Widget {
                 e.stopPropagation();
                 return false;
             });
+
             tabcount += 1;
         });
         if (!tabcount) {

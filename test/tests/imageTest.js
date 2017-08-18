@@ -26,7 +26,7 @@ describe('Test image', function() {
 
         var img = editor.editor.querySelector('img');
 
-        simulateEvent('click', 0, img);
+        simulateEvent('mousedown', 0, img);
 
         var resizer = document.querySelector('.jodit_resizer');
 
@@ -38,7 +38,7 @@ describe('Test image', function() {
 
         var td = editor.editor.querySelector('td');
 
-        simulateEvent('click', 0, td);
+        simulateEvent('mousedown', 0, td);
 
         var resizer = document.querySelector('.jodit_resizer');
 

@@ -69,6 +69,10 @@
 	}
 	.jodit_filebrowser_tree.active{
 		width:@first_column;
+        @media(max-width: @screen-xs) {
+          display: none;
+        }
+
 		background-color:@filebrowser_folders_bg;
 		overflow-y: auto;
 
@@ -306,6 +310,10 @@
     
 	.jodit_filebrowser_tree.active + .jodit_filebrowser_files.active{
 		width:100% - @first_column;
+        @media(max-width: @screen-xs) {
+          width: auto;
+          display: block;
+        }
         /*@col_width: 100% / (@cols - 1);
         a {
             width: ~"calc(@{col_width} - 10px)";
