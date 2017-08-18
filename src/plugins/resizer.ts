@@ -1,5 +1,6 @@
 import Jodit from '../Jodit';
 import {Config} from '../Config'
+import * as consts from '../constants'
 import {$$, debounce, dom, isIE, offset} from '../modules/Helpers'
 import Dom from "../modules/Dom";
 
@@ -130,7 +131,7 @@ Jodit.plugins.Resizer = function (editor: Jodit) {
                 if (element.parentNode && (<HTMLElement>element.parentNode).getAttribute('data-jodit_iframe_wrapper')) {
                     element = <HTMLElement>element.parentNode;
                 } else {
-                    wrapper = dom('<div data-jodit-temp="1" contenteditable="false" draggable="true" data-jodit_iframe_wrapper="1"></div>', document);
+                    wrapper = dom('<jodit data-jodit-temp="1" contenteditable="false" draggable="true" data-jodit_iframe_wrapper="1"></jodit>', document);
 
                     wrapper.style.display = element.style.display === 'inline-block' ? 'inline-block' : 'block';
                     wrapper.style.width = element.offsetWidth + 'px';
@@ -196,7 +197,8 @@ Jodit.plugins.Resizer = function (editor: Jodit) {
         });
     });
 
-    editor.events.on('afterInit', () => {
+    editor.events
+        .on('afterInit', () => {
         editor.container.appendChild(resizer);
         editor
             .__on(window, 'mousemove touchmove', (e: MouseEvent) => {
@@ -258,17 +260,20 @@ Jodit.plugins.Resizer = function (editor: Jodit) {
             }
         });
     })
-
-
-    editor.events.on('change afterInit afterSetMode', debounce(() => {
-        if (resizerIsVisible && (!currentElement || !currentElement.parentNode)) {
-            hideResizer();
-        }
-        $$('img, table, iframe', editor.editor).forEach((elm: HTMLElement) => {
-            if (!elm['__jodit_resizer_binded'] && ((elm.tagName === 'IFRAME' && editor.options.useIframeResizer) || (elm.tagName === 'IMG' && editor.options.useImageResizer) || (elm.tagName === 'TABLE' && editor.options.useTableResizer))) {
-                elm['__jodit_resizer_binded'] = true;
-                bind(elm);
+        .on('afterGetValueFromEditor', (data: {value: string}) => {
+            data.value = data.value.replace(/<jodit[^>]+data-jodit_iframe_wrapper[^>]+>(.*?<iframe[^>]+>[\s\n\r]*<\/iframe>.*?)<\/jodit>/ig, '$1');
+        }).on('change afterInit afterSetMode', debounce(() => {
+            if (resizerIsVisible && (!currentElement || !currentElement.parentNode)) {
+                hideResizer();
             }
-        });
-    }, editor.options.observer.timeout));
+            $$('img, table, iframe', editor.editor).forEach((elm: HTMLElement) => {
+                if (editor.getRealMode() !== consts.MODE_WYSIWYG) {
+                    return;
+                }
+                if (!elm['__jodit_resizer_binded'] && ((elm.tagName === 'IFRAME' && editor.options.useIframeResizer) || (elm.tagName === 'IMG' && editor.options.useImageResizer) || (elm.tagName === 'TABLE' && editor.options.useTableResizer))) {
+                    elm['__jodit_resizer_binded'] = true;
+                    bind(elm);
+                }
+            });
+        }, editor.options.observer.timeout));
 };

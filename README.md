@@ -60,6 +60,10 @@ Run webpack Hot Reload server:
 ```bash
 npm start
 ```
+Demo will be available here
+```
+http://localhost:2000/
+```
 
 Build min files:
 ```bash
@@ -86,7 +90,7 @@ http://localhost:2000/test/test.html
 
 For testing FileBrowser and Uploader modules, need install [PHP Connector](https://github.com/xdan/jodit-connectors)
 ```bash
-composer create-project jodit/connector
+composer create-project --no-dev jodit/connector
 ```
 Run test PHP server
 ```bash

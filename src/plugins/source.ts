@@ -22,7 +22,7 @@ declare module "../Config" {
  * Use ACE editor instead of usual textarea
  * @memberof Jodit.defaultOptions
  */
-Config.prototype.useAceEditor = true;
+Config.prototype.useAceEditor = false;
 
 /**
 * Options for {@link https://ace.c9.io/#config|ace} editor

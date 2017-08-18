@@ -133,6 +133,15 @@ var simulateEvent = function (type, keyCodeArg, element, options) {
     if (options) {
         options(evt);
     }
+
+    if (type.match(/^mouse/)) {
+        ['pageX', 'pageY'].forEach(function (key) {
+            if (evt[key] === undefined) {
+                evt[key] = 0;
+            }
+        })
+    }
+
     element.dispatchEvent(evt);
 }
 
@@ -142,4 +151,12 @@ var setCursor = function (elm, inEnd) {
     range.collapse(!inEnd);
     window.getSelection().removeAllRanges();
     window.getSelection().addRange(range);
+}
+
+var createPoint = function createPoint(x, y) {
+    var div = document.createElement('div');
+    div.setAttribute('style', 'position: absolute; z-index: 100000;width: 5px; height: 5px; background: red;');
+    div.style.left = x +'px'
+    div.style.top = y +'px'
+    document.body.appendChild(div);
 }

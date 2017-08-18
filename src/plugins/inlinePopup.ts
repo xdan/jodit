@@ -259,9 +259,16 @@ Jodit.plugins.Popup = function (editor: Jodit) {
     const toolbar: Toolbar = new Toolbar(editor),
         popup: HTMLDivElement = <HTMLDivElement> dom('<div class="jodit_toolbar_popup-inline"></div>', document),
 
+        toogleEditor = (toggle: boolean) => {
+            if (editor.container) {
+                editor.container.classList.toggle('jodit_popup_active', toggle);
+            }
+        },
+
         hidePopup = () => {
             popup
                 .classList.remove('active');
+            toogleEditor(false);
         },
 
         showPopup = (elm: HTMLElement, x: number, y: number) => {
@@ -284,6 +291,8 @@ Jodit.plugins.Popup = function (editor: Jodit) {
                 top: y + 'px',
                 marginLeft: -Math.round(popup.offsetWidth / 2) + 'px'
             });
+
+            toogleEditor(true);
         },
 
         delayShowPopup = (elm: HTMLElement, x: number, y: number) => {

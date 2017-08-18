@@ -1,5 +1,127 @@
 describe('Test interface', function() {
     appendTestArea('table_editor_interface', true);
+    describe('Plugins', function () {
+        describe('Add new Line plugin', function () {
+            it('Should add new line element in container', function () {
+                var editor = new Jodit('#table_editor_interface');
+                expect(editor.container.querySelectorAll('.jodit-add-new-line').length).to.equal(1);
+            });
+            it('Should show .jodit-add-new-line after user move mouse under Table,Ifrmae or IMG ', function () {
+                var editor = new Jodit('#table_editor_interface');
+                editor.setEditorValue('<table>' +
+                    '<tr><td>1</td></tr>' +
+                    '<tr><td>2</td></tr>' +
+                    '<tr><td>3</td></tr>' +
+                    '<tr><td>4</td></tr>' +
+                '</table>');
+
+                window.scrollTo(0, 100000000) // elementFromPoint works only with visible part of view
+
+                simulateEvent('mousemove', 0, editor.editor, function (e) {
+                    var pos = editor.helper.offset(editor.editor.firstChild, editor);
+                    e.pageX = pos.left + 5;
+                    e.pageY = pos.top + 5;
+                    // createPoint(e.pageX, e.pageY)
+                    // console.log(editor.doc.elementFromPoint(e.pageX - editor.win.pageXOffset, e.pageY - editor.win.pageYOffset))
+                    // debugger;
+                });
+
+                var newline = editor.container.querySelector('.jodit-add-new-line');
+
+                expect(newline).not.to.equal(null);
+                expect(newline.style.display).to.equal('block');
+            });
+            it('Should add new paragraph after user clicked on newline ', function () {
+                var editor = new Jodit('#table_editor_interface');
+                editor.setEditorValue('<table><tbody>' +
+                    '<tr><td>2</td></tr>' +
+                    '<tr><td>2</td></tr>' +
+                    '<tr><td>3</td></tr>' +
+                    '<tr><td>4</td></tr>' +
+                    '</tbody></table>');
+
+                window.scrollTo(0, 100000000) // elementFromPoint works only with visible part of view
+
+                simulateEvent('mousemove', 0, editor.editor, function (data) {
+                    var pos = editor.helper.offset(editor.editor.firstChild, editor);
+                    data.pageX = pos.left + 5;
+                    data.pageY = pos.top + 5;
+                });
+
+                var newline = editor.container.querySelector('.jodit-add-new-line');
+
+                expect(newline).not.to.equal(null);
+                expect(newline.style.display).to.equal('block');
+
+
+                simulateEvent('mousedown', 0, newline);
+                expect(editor.getElementValue()).to.equal('<p></p><table><tbody>' +
+                    '<tr><td>2</td></tr>' +
+                    '<tr><td>2</td></tr>' +
+                    '<tr><td>3</td></tr>' +
+                    '<tr><td>4</td></tr>' +
+                    '</tbody></table>');
+            });
+            it('Should add new paragraph after user clicked on newline below table', function () {
+                var editor = new Jodit('#table_editor_interface');
+                editor.setEditorValue('<table><tbody>' +
+                    '<tr><td>3</td></tr>' +
+                    '<tr><td>2</td></tr>' +
+                    '</tbody></table>');
+
+
+                window.scrollTo(0, 100000000); // elementFromPoint works only with visible part of view
+
+                simulateEvent('mousemove', 0, editor.editor, function (data) {
+                    var pos = editor.helper.offset(editor.editor.firstChild, editor);
+                    data.pageX = pos.left + 5;
+                    data.pageY = pos.top + (pos.height - 5);
+                });
+
+                var newline = editor.container.querySelector('.jodit-add-new-line');
+
+                expect(newline).not.to.equal(null);
+                expect(newline.style.display).to.equal('block');
+
+
+                simulateEvent('mousedown', 0, newline);
+                expect(editor.getElementValue()).to.equal('<table><tbody>' +
+                    '<tr><td>3</td></tr>' +
+                    '<tr><td>2</td></tr>' +
+                    '</tbody></table><p></p>');
+            });
+            it('Should add new paragraph after user clicked on newline below table in IFRAME mode', function () {
+                var editor = new Jodit('#table_editor_interface', {
+                    ifarme: true
+                });
+                editor.setEditorValue('<table><tbody>' +
+                    '<tr><td>3</td></tr>' +
+                    '<tr><td>2</td></tr>' +
+                    '</tbody></table>');
+
+
+                window.scrollTo(0, 100000000); // elementFromPoint works only with visible part of view
+
+                simulateEvent('mousemove', 0, editor.editor, function (data) {
+                    var pos = editor.helper.offset(editor.editor.firstChild, editor);
+                    data.pageX = pos.left + 5;
+                    data.pageY = pos.top + (pos.height - 5);
+                });
+
+                var newline = editor.container.querySelector('.jodit-add-new-line');
+
+                expect(newline).not.to.equal(null);
+                expect(newline.style.display).to.equal('block');
+
+
+                simulateEvent('mousedown', 0, newline);
+                expect(editor.getElementValue()).to.equal('<table><tbody>' +
+                    '<tr><td>3</td></tr>' +
+                    '<tr><td>2</td></tr>' +
+                    '</tbody></table><p></p>');
+            });
+        });
+    });
     describe('Toolbar', function () {
         describe('Popups', function () {
             it('Open popup in toolbar', function () {
@@ -165,7 +287,7 @@ describe('Test interface', function() {
                 editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-video input[name=code]').value = 'https://www.youtube.com/watch?v=7CcEYRfxUOQ'
                 simulateEvent('submit', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-video .jodit_form'))
 
-                expect(sortAtrtibutes(editor.getEditorValue())).to.equal('<div contenteditable="false" data-jodit-temp="1" data-jodit_iframe_wrapper="1" draggable="true" style="display:block;height:345px;width:400px"><iframe allowfullscreen="" frameborder="0" height="345" src="//www.youtube.com/embed/7CcEYRfxUOQ" width="400"></iframe></div>');
+                expect(sortAtrtibutes(editor.getEditorValue())).to.equal('<iframe allowfullscreen="" frameborder="0" height="345" src="//www.youtube.com/embed/7CcEYRfxUOQ" width="400"></iframe>');
 
                 simulateEvent('mousedown', 0, editor.editor)
 

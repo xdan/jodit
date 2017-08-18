@@ -1,0 +1,50 @@
+@color-new-line: rgba(178, 78, 27, 0.38);
+@padding-for-scroll: 20px;
+@padding-for-hover: 10px;
+@width-icon: 30px;
+@height-icon: 20px;
+.jodit-add-new-line {
+  z-index: 5;
+  position: absolute;
+  height: @height-icon;
+  top: 0;
+  cursor: pointer;
+  outline: none;
+  margin-top: -@padding-for-hover;
+  text-align: right;
+  padding: 5px;
+  vertical-align: middle;
+  &:before {
+    vertical-align: top;
+    content: '';
+    //position: absolute;
+    border-top:1px solid @color-new-line;
+    display: inline-block;
+    width: ~'calc(100% - @{width-icon})';
+  }
+  span {
+    display: inline-block;
+    width: @width-icon;
+    height: @height-icon;
+    background: #f7f7f7;
+    vertical-align: top;
+    border: 1px solid @color-new-line;
+    padding: 0 5px;
+  }
+  svg {
+    width: 16px;
+    fill: @color-new-line;
+  }
+
+  &.jodit-add-new-line_after {
+    margin-top: -@height-icon;
+    &:before {
+      vertical-align: bottom;
+    }
+    span {
+      vertical-align: bottom;
+    }
+  }
+
+  display: none;
+}

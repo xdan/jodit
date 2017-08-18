@@ -221,11 +221,11 @@ class TableProcessor extends Component{
 
                         this.jodit.events
                             .fire('showPopap', [table, offset(min, this.jodit).left + Math.round((offset(max, this.jodit).left + max.offsetWidth - offset(min, this.jodit).left) / 2), offset(max, this.jodit).top + max.offsetHeight]);
+                        event.stopPropagation();
                     } else {
                         this.__calcResizerPosition(table, cell, event.offsetX);
                     }
                 }
-                event.stopPropagation();
             });
         this.__addResizer();
     }

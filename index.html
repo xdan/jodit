@@ -80,7 +80,7 @@
     }
     editor = new Jodit('#area_editor', {
 //        iframe: true,
-        //height: 100,
+//        height: 100,
         observer: {
             timeout: 0
         },
@@ -124,15 +124,17 @@
     editor.editor.addEventListener('mousedown', callback)
     editor.editor.addEventListener('mouseup', callback)
     editor.editor.addEventListener('input', callback)
-    editor.setMode(Jodit.MODE_SOURCE);
-    editor.setEditorValue('<p>test</p>')
+//    editor.setMode(Jodit.MODE_SOURCE);
+    editor.setEditorValue('<table><tbody>' +
+        '<tr><td>3</td></tr>' +
+        '<tr><td>2</td></tr>' +
+        '</tbody></table>');
 
-
-    var mirror2 = editor.container.querySelector('textarea.jodit_source_mirror');
-    mirror2.setSelectionRange(5, 5);
-    editor.setMode(Jodit.MODE_WYSIWYG);
-    editor.selection.insertNode(editor.doc.createTextNode(' a '));
-    expect(mirror2.value).to.equal('<p>te a st</p>');
+    simulateEvent('mousemove', 0, editor.editor, function (data) {
+        var pos = editor.helper.offset(editor.editor.firstChild, editor);
+        data.pageX = pos.left + 5;
+        data.pageY = pos.top + (pos.height - 5) + editor.win.pageYOffset;
+    });
 //    var dialogs = document.querySelectorAll('.jodit.jodit_dialog_box.jodit_text_icons.active');
 //    expect(dialogs.length).toWYSIWYG.equal(1);
 

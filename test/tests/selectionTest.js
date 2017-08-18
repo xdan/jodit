@@ -1,4 +1,4 @@
-describe('Selection Module functinal Tests', function() {
+describe('Selection Module Tests', function() {
     appendTestArea('selection_tested_area', true);
     it('If cursor in the end of P Selction.cursorInTheEdge(false) must return true', function() {
         var editor = new Jodit('#selection_tested_area');
@@ -118,16 +118,16 @@ describe('Selection Module functinal Tests', function() {
                 useAceEditor: false,
                 defaultMode: Jodit.MODE_SOURCE
             });
-            editor.setEditorValue('<a>1</a>')
+            editor.setEditorValue('<a>11</a>')
 
 
             var mirror = editor.container.querySelector('textarea.jodit_source_mirror');
-            mirror.setSelectionRange(3, 3);
+            mirror.setSelectionRange(4, 4);
 
             editor.setMode(Jodit.MODE_WYSIWYG);
             expect(editor.selection.isCollapsed()).to.equal(true);
             editor.selection.insertNode(editor.doc.createTextNode(' a '));
-            expect(editor.getEditorValue()).to.equal('<a> a 1</a>');
+            expect(editor.getEditorValue()).to.equal('<a>1 a 1</a>');
         });
 
     });

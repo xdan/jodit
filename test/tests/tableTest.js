@@ -979,6 +979,8 @@ describe('Tables Jodit Editor Tests', function() {
                     var box = editor.editor.querySelectorAll('td')[1].getBoundingClientRect();
                     options.clientX = box.left;
                     options.offsetX = 0;
+                    options.pageX = 0;
+                    options.pageY = 0;
                 });
 
                 expect(editor.container.querySelector('.jodit_table_resizer').style.display === 'block').to.equal(true);
@@ -1002,14 +1004,20 @@ describe('Tables Jodit Editor Tests', function() {
                 simulateEvent('mousemove', 1, td, function (options) {
                     options.clientX = box.left;
                     options.offsetX = 0;
+                    options.pageX = 0;
+                    options.pageY = 0;
                 });
 
                 simulateEvent('mousedown', 1, editor.container.querySelector('.jodit_table_resizer'), function (options) {
                     options.clientX = box.left;
+                    options.pageX = 0;
+                    options.pageY = 0;
                 });
 
                 simulateEvent('mousemove', 1, editor.win, function (options) {
                     options.clientX = box.left + 500; // can move only on 5 pixels
+                    options.pageX = 0;
+                    options.pageY = 0;
                 });
 
                 expect(parseInt(editor.container.querySelector('.jodit_table_resizer').style.left, 10) < 55).to.equal(true);
@@ -1026,17 +1034,25 @@ describe('Tables Jodit Editor Tests', function() {
                 simulateEvent('mousemove', 1, td, function (options) {
                     options.clientX = box.left;
                     options.offsetX = 0;
+                    options.pageX = 0;
+                    options.pageY = 0;
                 });
 
                 simulateEvent('mousedown', 1, editor.container.querySelector('.jodit_table_resizer'), function (options) {
                     options.clientX = box.left;
+                    options.pageX = 0;
+                    options.pageY = 0;
                 });
 
                 simulateEvent('mousemove', 1, editor.win, function (options) {
                     options.clientX = box.left + 5; // move on 5 pixels
+                    options.pageX = 0;
+                    options.pageY = 0;
                 });
                 simulateEvent('mouseup', 1, window, function (options) {
                     options.clientX = box.left + 5; // move on 5 pixels
+                    options.pageX = 0;
+                    options.pageY = 0;
                 });
 
                 expect(editor.editor.innerHTML.toLowerCase()).to.equal(

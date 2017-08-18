@@ -8,12 +8,12 @@
 - [x] Auto choose language. Test language mode. 3.0.2
 - [x] Restore Iframe mode 3.0.4
 - [x] Restore mobile version/Response mode. Switch buttons md - lg - sm 3.0.6
-- [ ] Statusbar. Node Path. Resizer for editor such as Dialog resizer 3.0.8
-- [ ] Restore themes 3.0.8
-- [ ] Restore mode without icons 3.0.8
-- [ ] Restore split mode 3.0.9
-- [ ] Hot keys for toolbar button  3.0.10
-- [ ] Copy/paste all styles from element  3.0.11
-- [ ] Instead hiding buttons on small devices - create dropdown button with all extended buttons 3.0.12
+- [ ] Statusbar. Node Path. Resizer for editor such as Dialog resizer
+- [ ] Restore themes
+- [ ] Restore mode without icons
+- [ ] Restore split mode
+- [ ] Hot keys for toolbar button
+- [ ] Copy/paste all styles from element
+- [ ] Instead hiding buttons on small devices - create dropdown button with all extended buttons
 - [ ] Popup for inline editing links
 - [ ] Inline mode

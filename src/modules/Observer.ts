@@ -18,7 +18,7 @@ declare module "../Config" {
 }
 
 Config.prototype.observer = {
-    timeout: 100,
+    timeout: 100
 };
 
 export class Command {
