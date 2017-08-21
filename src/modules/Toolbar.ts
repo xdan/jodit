@@ -61,7 +61,7 @@ export default class Toolbar extends Component{
      * @param {string|boolean} [defaultValue='<span></span>']
      * @return {string}
      */
-    static getIcon(name, defaultValue:string|false = '<span></span>') {
+    static getIcon(name: string, defaultValue:string|false = '<span></span>') {
         return Toolbar.icons[name] !== undefined ? Toolbar.icons[name] : defaultValue;
     }
 
@@ -224,11 +224,18 @@ export default class Toolbar extends Component{
             name: string = typeof item === 'string' ? item : (item.name || 'empty'),
             a: HTMLAnchorElement = btn.querySelector('a');
 
-        let iconSVG: string|false = Toolbar.getIcon(name, false);
+        let iconSVG: string|false;
 
-        if (iconSVG === false) {
-            iconSVG = Toolbar.getIcon(typeof control.name === 'string' ? control.name : 'empty');
+        if (!this.jodit.options.textIcons) {
+            iconSVG = Toolbar.getIcon(name, false);
+
+            if (iconSVG === false) {
+                iconSVG = Toolbar.getIcon(typeof control.name === 'string' ? control.name : 'empty');
+            }
+        } else {
+            iconSVG = `<span>${name}</span>`;
         }
+
 
         //btn.control =  control;
 
@@ -243,7 +250,11 @@ export default class Toolbar extends Component{
         });
 
         let icon =  dom(<string>iconSVG);
-        icon.classList.add('jodit_icon', 'jodit_icon_' + clearName);
+
+        if (icon && icon.nodeType !== Node.TEXT_NODE) {
+            icon.classList.add('jodit_icon', 'jodit_icon_' + clearName);
+        }
+
         a.appendChild(icon);
 
         if (control === undefined || typeof(control) !== 'object') {

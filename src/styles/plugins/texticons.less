@@ -1,0 +1,42 @@
+@jodit_text_icons-font: Arial, "Helvetica Neue", Helvetica, Tahoma, sans-serif;
+@jodit_text_icons-color: rgba(0, 0, 0, 0.75);
+@jodit_text_icons-padding: 0 12px;
+
+.jodit_text_icons {
+    .jodit_icon {
+        width: auto;
+        font-size:13px;
+        &::first-letter {
+            text-transform: uppercase;
+        }
+    }
+    .jodit_tabs .jodit_tabs_buttons > a {
+        width: auto;
+        font-family: @jodit_text_icons-font;
+        width: auto;
+        i {
+            width: auto;
+        }
+    }
+    .jodit_toolbar > li{
+        width: auto;
+        > a {
+            padding: @jodit_text_icons-padding;
+            font-family: @jodit_text_icons-font;
+            width: auto;
+            text-decoration: none;
+            color: @jodit_text_icons-color;
+        }
+    }
+    &.jodit_dialog_box .jodit_dialog {
+        .jodit_dialog_header a, .jodit_button {
+            width: auto;
+            padding: @jodit_text_icons-padding;
+            font-family: @jodit_text_icons-font;
+            color: @jodit_text_icons-color;
+            .jodit_icon {
+                width: auto;
+            }
+        }
+    }
+}

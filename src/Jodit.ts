@@ -19,7 +19,7 @@ interface JoditPlugin{
 
 /** Class Jodit. Main class*/
 export default class Jodit extends Component{
-    version: string = appVersion;
+    version: string = appVersion; // from webpack.config.js
 
 
     static defaultOptions: Config;
@@ -173,6 +173,10 @@ export default class Jodit extends Component{
 
         this.container.classList.add('jodit_toolbar_size-' + (['middle', 'large', 'small'].indexOf(this.options.toolbarButtonSize.toLowerCase()) !== -1 ? this.options.toolbarButtonSize.toLowerCase() : 'middle'));
 
+        if (this.options.textIcons) {
+            this.container.classList.add('jodit_text_icons');
+        }
+
         this.__on(window, 'resize', () => {
             this.events.fire('resize');
         });
@@ -228,6 +232,7 @@ export default class Jodit extends Component{
 
 
     private __defaultStyleDisplayKey = 'data-jodit-default-style-display';
+
     /**
      * Create main DIV element and replace source textarea
      *

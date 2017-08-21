@@ -435,7 +435,12 @@ export class Config {
     controls: {[key: string]: ControlType};
 
     events: {[key: string]: Function} = {};
-    textIcons: boolean = true;
+
+    /**
+     * Buttons in toolbat without SVG - only texts
+     * @type {boolean}
+     */
+    textIcons: boolean = false;
 };
 Config.prototype.controls = {
     about: {
