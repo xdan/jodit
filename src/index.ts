@@ -21,6 +21,7 @@ const requireAll = (r) => {
 
 requireAll(require.context('./plugins/', true, /\.ts$/));
 
+requireAll(require.context('./styles/themes/', true, /\.less$/));
 requireAll(require.context('./styles/modules/', true, /\.less$/));
 requireAll(require.context('./styles/widgets/', true, /\.less$/));
 requireAll(require.context('./styles/plugins/', true, /\.less$/));
