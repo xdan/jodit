@@ -4,7 +4,7 @@ import Selection from './modules/Selection';
 import Toolbar, {ControlType} from './modules/Toolbar';
 import Cookie from './modules/Cookie';
 import * as consts from './constants';
-import {extend, inArray, dom, each, sprintf, css, defaultLanguage} from './modules/Helpers';
+import {extend, inArray, dom, each, sprintf, css, defaultLanguage, debounce} from './modules/Helpers';
 import * as helper from './modules/Helpers';
 import FileBrowser from "./modules/FileBrowser";
 import Uploader from "./modules/Uploader";
@@ -171,6 +171,8 @@ export default class Jodit extends Component{
         this.toolbar = new Toolbar(this);
         this.toolbar.build(this.options.buttons.concat(this.options.extraButtons), this.container);
 
+        this.container.classList.add('jodit_toolbar_size-' + (['middle', 'large', 'small'].indexOf(this.options.toolbarButtonSize.toLowerCase()) !== -1 ? this.options.toolbarButtonSize.toLowerCase() : 'middle'));
+
         this.__on(window, 'resize', () => {
             this.events.fire('resize');
         });
@@ -245,6 +247,10 @@ export default class Jodit extends Component{
             this.workplace.appendChild(document.createTextNode("\n"));
         }
 
+        if (this.options.editorCssClass) {
+            this.editor.classList.add(this.options.editorCssClass);
+        }
+
         // proxy events
         ['keydown', 'keyup', 'keypress', 'mousedown', 'mouseup', 'mousepress', 'paste', 'resize', 'touchstart', 'touchend'].forEach((event_type) => {
             this.editor.addEventListener(event_type, (e) => {
@@ -272,6 +278,12 @@ export default class Jodit extends Component{
         }
 
         this.element.style.display = 'none';
+
+        if (this.options.triggerChangeEvent) {
+            this.events.on('change', debounce(() => {
+                this.__fire(this.element, 'change');
+            }, this.options.observer.timeout))
+        }
     }
 
     /**

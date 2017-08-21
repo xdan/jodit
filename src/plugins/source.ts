@@ -54,6 +54,15 @@ Config.prototype.beautifyHTMLCDNUrlsJS = [
 ];
 
 
+Config.prototype.controls.source = {
+    mode: consts.MODE_SPLIT,
+    exec: (editor: Jodit) => {
+        editor.toggleMode();
+    },
+    tooltip: "Change mode"
+};
+
+
 /**
  * Plug-in change simple textarea on CodeMirror editor in Source code mode
  *

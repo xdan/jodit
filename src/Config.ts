@@ -35,7 +35,7 @@ export class Config {
      *      toolbarButtonSize: "small"
      * });
      */
-     toolbarButtonSize: "small"|"middle"|"large" = 'middle';
+    toolbarButtonSize: "small"|"middle"|"large" = 'middle';
 
     /**
      * Theme (can be "dark")
@@ -73,7 +73,7 @@ export class Config {
      * }
      * <&lt;/style>
      */
-    editorCssClass: false|string = false;
+   editorCssClass: false|string = false;
 
    /**
      * After all changes in editors for textarea will call change trigger
@@ -84,7 +84,7 @@ export class Config {
      *      console.log(this.value);
      * })
      */
-    triggerChangeEvent: boolean = true;
+   triggerChangeEvent: boolean = true;
 
 
     /**
@@ -432,15 +432,20 @@ export class Config {
     /**
      * Behavior for buttons
      */
-    controls: {[key: string]: ControlType} = {
-        about: {
-            exec: (editor: Jodit) => {
-                // don't use new Dialog + import Dialog, because of Config used inside Dialog.ts
-                const dialog = new (require('./modules/Dialog').default)(editor);
-                dialog.setTitle(editor.i18n('About Jodit'));
-                dialog.setContent(
-                    '<div class="jodit_about">\
-                        <div>' + editor.i18n('Jodit Editor') + ' v.' + editor.getVersion() + ' ' + editor.i18n('Free Non-commercial Version') + '</div>\
+    controls: {[key: string]: ControlType};
+
+    events: {[key: string]: Function} = {};
+    textIcons: boolean = true;
+};
+Config.prototype.controls = {
+    about: {
+        exec: (editor: Jodit) => {
+            // don't use new Dialog + import Dialog, because of Config used inside Dialog.ts
+            const dialog = new (require('./modules/Dialog').default)(editor);
+            dialog.setTitle(editor.i18n('About Jodit'));
+            dialog.setContent(
+                '<div class="jodit_about">\
+                    <div>' + editor.i18n('Jodit Editor') + ' v.' + editor.getVersion() + ' ' + editor.i18n('Free Non-commercial Version') + '</div>\
                         <div><a href="http://xdsoft.net/jodit/" target="_blank">http://xdsoft.net/jodit/</a></div>\
                         <div><a href="http://xdsoft.net/jodit/doc/" target="_blank">' + editor.i18n('Jodit User\'s Guide') + '</a> ' + editor.i18n('contains detailed help for using') + '</div>\
                         <div>' + editor.i18n('For information about the license, please go to our website:') + '</div>\
@@ -448,577 +453,241 @@ export class Config {
                         <div><a href="http://xdsoft.net/jodit/#download" target="_blank">' + editor.i18n('Buy full version') + '</a></div>\
                         <div>' + editor.i18n('Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.') + '</div>\
                     </div>'
-                );
-                dialog.open();
-            },
-            tooltip: 'About Jodit',
-            mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG
+            );
+            dialog.open();
         },
-        fullsize: {
-            exec: (editor: Jodit) => {
-                editor.events.fire('toggleFullsize');
-            },
-            tooltip: 'Open editor in fullsize',
-            mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG
-        },
-        eraser: {
-            command: 'removeFormat',
-            tooltip: 'Clear Formatting'
-        },
-        brush: {
-            css: {
-                'backgroundColor' : (editor: Jodit, color: string) => {
-                    const  check = (colors: {[key:string]:string[]}|string[]) => {
-                            let i, keys;
-                            if (typeof colors === 'object') {
-                                keys = Object.keys(colors);
-                                for (i = 0; i < keys.length; i += 1) {
-                                    if (check(colors[keys[i]])) {
-                                        return true;
-                                    }
-                                }
-                            } else if (Array.isArray(colors)) {
-                                return (<Array<string>>colors).indexOf(normalizeColor(color) || '') !== -1;
-                            }
-                            return false;
-                        };
+        tooltip: 'About Jodit',
+        mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG
+    },
+    hr : {
+        command: 'insertHorizontalRule',
+        tags: ["hr"],
+        tooltip: "Insert Horizontal Line"
+    },
+    image : {
+        popup: (editor: Jodit, current: HTMLElement|false, self: ControlType, close) => {
+            const insertImage = (url) => {
+                editor.selection.insertNode(dom('<img src="' + url + '"/>', editor.doc));
+            };
 
-                    return check(editor.options.colors);
-                }
-            },
-            popup: (editor: Jodit, current, self, close) => {
-                let color = '', bg_color = '', tabs;
-               /* const sel = editor.win.getSelection(),
-                    checkRemoveOpportunity = () => {
-                        if (current && (!current.hasAttribute("style") || !current.getAttribute("style").length)) {
-                            let selInfo = editor.selection.save();
-                            while (current.firstChild) {
-                                current.parentNode.insertBefore(current.firstChild, current);
-                            }
-                            current.parentNode.removeChild(current);
-                            current = null;
-                            editor.selection.restore(selInfo);
-                        }
-                    },
-                    tryGetCurrent = () => {
-                        if (sel && sel.anchorNode) {
-                            [sel.anchorNode, sel.anchorNode.parentNode].forEach((elm: HTMLElement) => {
-                                if (elm && elm.hasAttribute && elm.hasAttribute("style") && elm.getAttribute('style').indexOf('background') !== -1 && elm.style.backgroundColor) {
-                                    current = elm;
-                                    bg_color = editor.win.getComputedStyle(current).getPropertyValue('background-color');
-                                }
+            let sourceImage;
 
-                                if (elm && elm.hasAttribute && elm.hasAttribute('style') && elm.getAttribute('style').indexOf('color') !== -1 && elm.style.color) {
-                                    current = elm;
-                                    color = current.style.color;
-                                }
-                            })
-                        }
-                    };*/
+            if (current && current.nodeType !== Node.TEXT_NODE && (current.tagName === 'IMG' || $$('img', current).length)) {
+                sourceImage = current.tagName === 'IMG' ? current : $$('img', current)[0];
+            }
 
-                //tryGetCurrent();
-
-                //const widget = new (require('./modules/Widget').default)(editor);
-
-                const backgroundTag: HTMLElement = ColorPickerWidget(editor, (value: string) => {
-                    //if (!current) {
-                        editor.execCommand('background', false, value);
-                        close();
-                        //tryGetCurrent();
-                   // } else {
-                   //     current.style.backgroundColor = value;
-                 //   }
-                    //checkRemoveOpportunity();
-                }, bg_color);
-
-                const colorTab: HTMLElement = ColorPickerWidget(editor, (value: string) => {
-                   // if (!current) {
-                    editor.execCommand('forecolor', false, value);
-                    close();
-                   //     tryGetCurrent();
-                   // } else {
-                    //    current.style.color = value;
-                   // }
-                    //checkRemoveOpportunity();
-                }, color);
-
-                if (editor.options.colorPickerDefaultTab === 'background') {
-                    tabs = {
-                        Background : backgroundTag,
-                        Text : colorTab
-                    };
-                } else {
-                    tabs = {
-                        Text : colorTab,
-                        Background : backgroundTag
-                    };
-                }
-
-                return TabsWidget(editor, tabs);
-            },
-            tooltip: "Fill color or set the text color"
-        },
-        redo: {
-            mode: consts.MODE_SPLIT,
-            tooltip: 'Redo'
-        },
-        undo: {
-            mode: consts.MODE_SPLIT,
-            tooltip: 'Undo'
-        },
-
-        bold: {
-            tagRegExp: /^(strong|b)$/i,
-            tags: ["strong", "b"],
-            css: {
-                "font-weight": ["bold", "700"]
-            },
-            tooltip: "Bold",
-        },
-        italic: {
-            tagRegExp: /^(em|i)$/i,
-            tags: ["em", "i"],
-            css: {
-                "font-style": "italic"
-            },
-            tooltip: "Italic",
-        },
-        underline: {
-            tagRegExp: /^(u)$/i,
-            tags: ['u'],
-            css: {
-                "text-decoration": "underline"
-            },
-            tooltip: "Underline",
-        },
-        strikethrough: {
-            tagRegExp: /^(s)$/i,
-            tags: ['s'],
-            css: {
-                "text-decoration": "line-through"
-            },
-            tooltip: "Strike through",
-        },
-
-        ul: {
-            command: 'insertUnorderedList',
-            controlName : 'ul',
-            tags: ["ul"],
-            tooltip: "Insert Unordered List"
-        },
-        ol: {
-            command: 'insertOrderedList',
-            controlName : 'ol',
-            tags: ["ol"],
-            tooltip: "Insert Ordered List"
-        },
-        align: {
-            tags: ["p", "div", "span", "td", "th", "img"],
-            name: 'left',
-            tooltip: "Align",
-            list: [
-                'center',
-                'left',
-                'right',
-                'justify',
-            ],
-        },
-        center: {
-            command: 'justifyCenter',
-            tags: ["center"],
-            css: {
-                "text-align": "center"
-            },
-            tooltip: "Align Center"
-        },
-        justify: {
-            command: 'justifyFull',
-            css: {
-                "text-align": "justify"
-            },
-            tooltip: "Align Justify"
-        },
-        left: {
-            command: 'justifyLeft',
-            css: {
-                "text-align": "left"
-            },
-            tooltip: "Align Left"
-        },
-        right: {
-            command: 'justifyRight',
-            css: {
-                "text-align": "right"
-            },
-            tooltip: "Align Right"
-        },
-        hr : {
-            command: 'insertHorizontalRule',
-            tags: ["hr"],
-            tooltip: "Insert Horizontal Line"
-        },
-        image : {
-            popup: (editor: Jodit, current: HTMLElement|false, self: ControlType, close) => {
-                const insertImage = (url) => {
-                    editor.selection.insertNode(dom('<img src="' + url + '"/>', editor.doc));
-                };
-
-                let sourceImage;
-
-                if (current && current.nodeType !== Node.TEXT_NODE && (current.tagName === 'IMG' || $$('img', current).length)) {
-                    sourceImage = current.tagName === 'IMG' ? current : $$('img', current)[0];
-                }
-
-                return ImageSelectorWidget(editor, {
-                    filebrowser: (data: FileBrowserCallBcackData) => {
-                        if (data.files && data.files.length) {
-                            let i;
-                            for (i = 0; i < data.files.length; i += 1) {
-                                insertImage(data.baseurl + data.files[i]);
-                            }
-                        }
-                        close();
-                    },
-                    upload: (data: FileBrowserCallBcackData) => {
+            return ImageSelectorWidget(editor, {
+                filebrowser: (data: FileBrowserCallBcackData) => {
+                    if (data.files && data.files.length) {
                         let i;
-                        if (data.files && data.files.length) {
-                            for (i = 0; i < data.files.length; i += 1) {
-                                insertImage(data.baseurl + data.files[i]);
-                            }
+                        for (i = 0; i < data.files.length; i += 1) {
+                            insertImage(data.baseurl + data.files[i]);
                         }
-                        close();
-                    },
-                    url: (url: string, text: string) => {
-                        const image = sourceImage || dom('<img/>', editor.doc);
-
-                        image.setAttribute('src', url);
-                        image.setAttribute('alt', text);
-
-                        if (!sourceImage) {
-                            editor.selection.insertNode(image);
-                        }
-                        close();
-                    }
-                }, sourceImage);
-            },
-            tags: ["img"],
-            tooltip: "Insert Image"
-        },
-        link : {
-            popup: (editor: Jodit, current: HTMLElement|false, self: ControlType, close: Function) => {
-                const sel: Selection = editor.win.getSelection(),
-                    form: HTMLFormElement = <HTMLFormElement>dom('<form class="jodit_form">' +
-                        '<input required type="text" name="url" placeholder="http://" type="text"/>' +
-                        '<input name="text" placeholder="' + editor.i18n('Text') + '" type="text"/>' +
-                        '<label><input name="target" type="checkbox"/> ' + editor.i18n('Open in new tab') + '</label>' +
-                        '<label><input name="nofollow" type="checkbox"/> ' + editor.i18n('No follow') + '</label>' +
-                        '<div style="text-align: right">' +
-                            '<button class="jodit_unlink_button" type="button">' + editor.i18n('Unlink') + '</button> &nbsp;&nbsp;' +
-                            '<button type="submit">' + editor.i18n('Insert') + '</button>' +
-                        '</div>' +
-                    '<form/>');
-
-                if (current && Dom.closest(current, 'A', editor.editor)) {
-                    current = <HTMLElement>Dom.closest(current, 'A', editor.editor)
-                } else {
-                    current = false;
-                }
-
-                if (current) {
-                    val(form, 'input[name=url]', current.getAttribute('href'));
-                    val(form, 'input[name=text]', current.innerText);
-
-                    (<HTMLInputElement>form.querySelector('input[name=target]')).checked = (current.getAttribute('target') === '_blank');
-                    (<HTMLInputElement>form.querySelector('input[name=nofollow]')).checked = (current.getAttribute('rel') === 'nofollow');
-                } else {
-                    (<HTMLDivElement>form.querySelector('.jodit_unlink_button')).style.display = 'none';
-                    val(form, 'input[name=text]', sel.toString());
-                }
-
-                const selInfo = editor.selection.save();
-
-                form.querySelector('.jodit_unlink_button').addEventListener('mousedown', () => {
-                    if (current) {
-                        Dom.unwrap(current);
                     }
                     close();
-                });
-
-                form.addEventListener('submit', (event: Event) => {
-                    event.preventDefault();
-                    editor.selection.restore(selInfo);
-
-                    let a: HTMLAnchorElement = <HTMLAnchorElement>current || <HTMLAnchorElement>Dom.create('a', '', editor.doc);
-
-                    if (!val(form, 'input[name=url]')) {
-                        (<HTMLInputElement>form.querySelector('input[name=url]')).focus();
-                        (<HTMLInputElement>form.querySelector('input[name=url]')).classList.add('jodit_error');
-                        return false;
+                },
+                upload: (data: FileBrowserCallBcackData) => {
+                    let i;
+                    if (data.files && data.files.length) {
+                        for (i = 0; i < data.files.length; i += 1) {
+                            insertImage(data.baseurl + data.files[i]);
+                        }
                     }
-
-
-                    a.setAttribute('href', val(form, 'input[name=url]'));
-                    a.innerText = val(form, 'input[name=text]');
-
-                    if ((<HTMLInputElement>form.querySelector('input[name=target]')).checked) {
-                        a.setAttribute('target', '_blank');
-                    } else {
-                        a.removeAttribute('target');
-                    }
-
-                    if ((<HTMLInputElement>form.querySelector('input[name=nofollow]')).checked) {
-                        a.setAttribute('rel', 'nofollow');
-                    } else {
-                        a.removeAttribute('rel');
-                    }
-
-                    if (!current) {
-                        editor.selection.insertNode(a);
-                    }
-
                     close();
-                    return false;
-                });
+                },
+                url: (url: string, text: string) => {
+                    const image = sourceImage || dom('<img/>', editor.doc);
 
-                return form;
-            },
-            tags: ["a"],
-            tooltip: "Insert link"
+                    image.setAttribute('src', url);
+                    image.setAttribute('alt', text);
+
+                    if (!sourceImage) {
+                        editor.selection.insertNode(image);
+                    }
+                    close();
+                }
+            }, sourceImage);
         },
-
-        video : {
-            popup: (editor: Jodit) => {
-                const bylink: HTMLFormElement = <HTMLFormElement>dom(`<form class="jodit_form">
+        tags: ["img"],
+        tooltip: "Insert Image"
+    },
+    video : {
+        popup: (editor: Jodit) => {
+            const bylink: HTMLFormElement = <HTMLFormElement>dom(`<form class="jodit_form">
                         <input required name="code" placeholder="http://" type="url"/>
                         <button type="submit">${editor.i18n('Insert')}</button>
                         </form>`),
 
-                    bycode: HTMLFormElement = <HTMLFormElement>dom(`<form class="jodit_form">
+                bycode: HTMLFormElement = <HTMLFormElement>dom(`<form class="jodit_form">
                         <textarea required name="code" placeholder="${editor.i18n('Embed code')}"></textarea>
                         <button type="submit">${editor.i18n('Insert')}</button>
                         </form>`),
 
-                    tab: {[key:string]: HTMLFormElement} = {},
-                    selinfo = editor.selection.save(),
-                    insertCode = (code) => {
-                        editor.selection.restore(selinfo);
-                        editor.selection.insertHTML(code);
-                    };
-
-                tab[(require('./modules/Toolbar').default).getIcon('link') + '&nbsp;' + editor.i18n('Link')] = bylink;
-                tab[(require('./modules/Toolbar').default).getIcon('source') + '&nbsp;' + editor.i18n('Code')] = bycode;
-
-                bycode.addEventListener('submit', (event) => {
-                    event.preventDefault();
-
-                    if (!trim(val(bycode, 'textarea[name=code]'))) {
-                        (<HTMLTextAreaElement>bycode.querySelector('textarea[name=code]')).focus();
-                        (<HTMLTextAreaElement>bycode.querySelector('textarea[name=code]')).classList.add('jodit_error');
-                        return false;
-                    }
-
-                    insertCode(val(bycode, 'textarea[name=code]'));
-                    return false;
-                });
-
-                bylink.addEventListener('submit',  (event) => {
-                    event.preventDefault();
-                    if (!isURL(val(bylink, 'input[name=code]'))) {
-                        (<HTMLInputElement>bylink.querySelector('input[name=code]')).focus();
-                        (<HTMLInputElement>bylink.querySelector('input[name=code]')).classList.add('jodit_error');
-                        return false;
-                    }
-                    insertCode(convertMediaURLToVideoEmbed(val(bylink, 'input[name=code]')));
-                    return false;
-                });
-
-
-                return TabsWidget(editor, tab);
-            },
-            tags: ["iframe"],
-            tooltip: "Insert youtube/vimeo video"
-        },
-
-        fontsize : {
-            command: 'fontSize',
-            list : ["8", "9", "10", "11", "12", "14", "18", "24", "30", "36", "48", "60", "72", "96"],
-            template : (editor: Jodit, key: string, value: string) => value,
-            tooltip: "Font size"
-        },
-        font : <ControlType>{
-            command: 'fontname',
-            exec: (editor: Jodit, event, control: ControlType) => {
-                editor.execCommand(control.command, false, control.args[0]);
-            },
-            list :  {
-                "Helvetica,sans-serif": "Helvetica",
-                "Arial,Helvetica,sans-serif": "Arial",
-                "Georgia,serif": "Georgia",
-                "Impact,Charcoal,sans-serif": "Impact",
-                "Tahoma,Geneva,sans-serif": "Tahoma",
-                "'Times New Roman',Times,serif": "Times New Roman",
-                "Verdana,Geneva,sans-serif": "Verdana"
-            },
-            template : (editor: Jodit, key: string, value: string) => {
-                return `<span style="font-family: ${key}">${value}</span>`;
-            },
-            tooltip: "Font family"
-        },
-        paragraph : {
-            command: 'formatBlock',
-            exec: (editor: Jodit, event, control: ControlType) => {
-                editor.execCommand(control.command, false, control.args[0]);
-            },
-            list: {
-                p : "Normal",
-                h1 : "Heading 1",
-                h2 : "Heading 2",
-                h3 : "Heading 3",
-                h4 : "Heading 4",
-                blockquote : "Quote",
-                pre : "Code"
-            },
-            template : (editor: Jodit, key: string, value: string) => {
-                return '<' + key + ' class="jodit_list_element"><span>' + editor.i18n(value) + '</span></' + key + '></li>';
-            },
-            tooltip: "Insert format block"
-        },
-        table : {
-            cols: 10,
-            popup: (editor: Jodit, current,  control: ControlType, close: Function) => {
-                let i: number,
-                    j: number,
-                    k: number,
-                    div: HTMLDivElement,
-                    rows_count: number = 1,
-                    cols_count: number = 1,
-                    default_cols_count: number = control.cols;
-
-                const form: HTMLFormElement = <HTMLFormElement>dom('<form class="jodit_form jodit_form_inserter">' +
-                        '<label>' +
-                            '<span>1</span> &times; <span>1</span>' +
-                        '</label>' +
-                        '</form>'),
-
-
-                    rows: HTMLSpanElement = form.querySelectorAll('span')[0],
-                    cols: HTMLSpanElement = form.querySelectorAll('span')[1],
-                    cells: HTMLDivElement[] = [];
-
-                const generateRows = (need_rows) => {
-                    const cnt: number = (need_rows + 1) * default_cols_count;
-                    if (cells.length > cnt) {
-                        for (i = cnt; i < cells.length; i += 1) {
-                            form.removeChild(cells[i]);
-                            delete cells[i];
-                        }
-                        cells.length = cnt;
-                    }
-                    for (i = 0; i < cnt; i += 1) {
-                        if (!cells[i]) {
-                            div = document.createElement('div');
-                            div.setAttribute('data-index', i.toString());
-                            cells.push(div);
-                        }
-                    }
-                    cells.forEach((cell: HTMLDivElement) => {
-                        form.appendChild(cell);
-                    });
-
-                    form.style.width = (cells[0].offsetWidth * default_cols_count) + 'px';
+                tab: {[key:string]: HTMLFormElement} = {},
+                selinfo = editor.selection.save(),
+                insertCode = (code) => {
+                    editor.selection.restore(selinfo);
+                    editor.selection.insertHTML(code);
                 };
 
-                generateRows(1);
+            tab[(require('./modules/Toolbar').default).getIcon('link') + '&nbsp;' + editor.i18n('Link')] = bylink;
+            tab[(require('./modules/Toolbar').default).getIcon('source') + '&nbsp;' + editor.i18n('Code')] = bycode;
 
-                cells[0].className = 'hovered';
+            bycode.addEventListener('submit', (event) => {
+                event.preventDefault();
 
-                const mouseenter = (e: MouseEvent, index?: number) => {
-                    const div = <HTMLDivElement>e.target;
-                    if (div.tagName !== 'DIV') {
-                        return;
+                if (!trim(val(bycode, 'textarea[name=code]'))) {
+                    (<HTMLTextAreaElement>bycode.querySelector('textarea[name=code]')).focus();
+                    (<HTMLTextAreaElement>bycode.querySelector('textarea[name=code]')).classList.add('jodit_error');
+                    return false;
+                }
+
+                insertCode(val(bycode, 'textarea[name=code]'));
+                return false;
+            });
+
+            bylink.addEventListener('submit',  (event) => {
+                event.preventDefault();
+                if (!isURL(val(bylink, 'input[name=code]'))) {
+                    (<HTMLInputElement>bylink.querySelector('input[name=code]')).focus();
+                    (<HTMLInputElement>bylink.querySelector('input[name=code]')).classList.add('jodit_error');
+                    return false;
+                }
+                insertCode(convertMediaURLToVideoEmbed(val(bylink, 'input[name=code]')));
+                return false;
+            });
+
+
+            return TabsWidget(editor, tab);
+        },
+        tags: ["iframe"],
+        tooltip: "Insert youtube/vimeo video"
+    },
+    table : {
+        cols: 10,
+        popup: (editor: Jodit, current,  control: ControlType, close: Function) => {
+            let i: number,
+                j: number,
+                k: number,
+                div: HTMLDivElement,
+                rows_count: number = 1,
+                cols_count: number = 1,
+                default_cols_count: number = control.cols;
+
+            const form: HTMLFormElement = <HTMLFormElement>dom('<form class="jodit_form jodit_form_inserter">' +
+                '<label>' +
+                '<span>1</span> &times; <span>1</span>' +
+                '</label>' +
+                '</form>'),
+
+
+                rows: HTMLSpanElement = form.querySelectorAll('span')[0],
+                cols: HTMLSpanElement = form.querySelectorAll('span')[1],
+                cells: HTMLDivElement[] = [];
+
+            const generateRows = (need_rows) => {
+                const cnt: number = (need_rows + 1) * default_cols_count;
+                if (cells.length > cnt) {
+                    for (i = cnt; i < cells.length; i += 1) {
+                        form.removeChild(cells[i]);
+                        delete cells[i];
                     }
-                    k = isNaN(index) ? parseInt(div.getAttribute('data-index'), 10) : index;
-                    rows_count = Math.ceil((k + 1) / default_cols_count);
-                    cols_count = k % default_cols_count + 1;
-                    generateRows(rows_count);
-
-                    if (cols_count === default_cols_count || (cols_count < default_cols_count - 1 && default_cols_count > 10)) {
-                        default_cols_count = cols_count === default_cols_count ? default_cols_count + 1 : default_cols_count - 1;
-                        return mouseenter(e, cols_count + (rows_count - 1)  * default_cols_count - 1);
+                    cells.length = cnt;
+                }
+                for (i = 0; i < cnt; i += 1) {
+                    if (!cells[i]) {
+                        div = document.createElement('div');
+                        div.setAttribute('data-index', i.toString());
+                        cells.push(div);
                     }
-
-                    for (i = 0; i < cells.length; i += 1) {
-                        if (cols_count >= i % default_cols_count + 1 &&  rows_count >= Math.ceil((i + 1) / default_cols_count)) {
-                            cells[i].className = 'hovered';
-                        } else {
-                            cells[i].className = '';
-                        }
-                    }
-
-                    cols.innerText = cols_count.toString();
-                    rows.innerText = rows_count.toString();
-                };
-
-                form.addEventListener('mousemove', mouseenter);
-
-                editor.__on(form, 'touchstart mousedown', (e: MouseEvent) => {
-                    const div = <HTMLDivElement>e.target;
-                    e.preventDefault();
-                    e.stopImmediatePropagation();
-                    if (div.tagName !== 'DIV') {
-                        return;
-                    }
-                    k =  parseInt(div.getAttribute('data-index'), 10);
-                    rows_count = Math.ceil((k + 1) / default_cols_count);
-                    cols_count = k % default_cols_count + 1;
-
-                    const table: HTMLTableElement = editor.doc.createElement('table');
-                    let first_td: HTMLTableCellElement,
-                        tr: HTMLTableRowElement,
-                        td: HTMLTableCellElement,
-                        br: HTMLBRElement,
-                        w: string = (100 / cols_count).toFixed(7);
-
-                    for (i = 1; i <= rows_count; i += 1) {
-                        tr = editor.doc.createElement('tr');
-                        for (j = 1; j <= cols_count; j += 1) {
-                            td = editor.doc.createElement('td');
-
-                            td.style.width = w + '%';
-                            if (!first_td) {
-                                first_td = td;
-                            }
-                            br = editor.doc.createElement('br');
-                            td.appendChild(br);
-                            tr.appendChild(editor.doc.createTextNode("\n"));
-                            tr.appendChild(editor.doc.createTextNode("\t"));
-                            tr.appendChild(td);
-                        }
-                        table.appendChild(editor.doc.createTextNode("\n"));
-                        table.appendChild(tr);
-                    }
-
-                    editor.selection.insertNode(editor.doc.createTextNode("\n"));
-                    editor.selection.insertNode(table);
-                    editor.selection.setCursorIn(first_td);
-
-                    close();
+                }
+                cells.forEach((cell: HTMLDivElement) => {
+                    form.appendChild(cell);
                 });
 
-                return form;
-            },
-            tags: ['table'],
-            tooltip: "Insert table"
-        },
-        source : {
-            mode: consts.MODE_SPLIT,
-            exec: (editor: Jodit) => {
-                editor.toggleMode();
-            },
-            tooltip: "Change mode"
-        }
-    };
+                form.style.width = (cells[0].offsetWidth * default_cols_count) + 'px';
+            };
 
-    events: {[key: string]: Function} = {};
-    textIcons: boolean = true;
-}
+            generateRows(1);
+
+            cells[0].className = 'hovered';
+
+            const mouseenter = (e: MouseEvent, index?: number) => {
+                const div = <HTMLDivElement>e.target;
+                if (div.tagName !== 'DIV') {
+                    return;
+                }
+                k = isNaN(index) ? parseInt(div.getAttribute('data-index'), 10) : index;
+                rows_count = Math.ceil((k + 1) / default_cols_count);
+                cols_count = k % default_cols_count + 1;
+                generateRows(rows_count);
+
+                if (cols_count === default_cols_count || (cols_count < default_cols_count - 1 && default_cols_count > 10)) {
+                    default_cols_count = cols_count === default_cols_count ? default_cols_count + 1 : default_cols_count - 1;
+                    return mouseenter(e, cols_count + (rows_count - 1)  * default_cols_count - 1);
+                }
+
+                for (i = 0; i < cells.length; i += 1) {
+                    if (cols_count >= i % default_cols_count + 1 &&  rows_count >= Math.ceil((i + 1) / default_cols_count)) {
+                        cells[i].className = 'hovered';
+                    } else {
+                        cells[i].className = '';
+                    }
+                }
+
+                cols.innerText = cols_count.toString();
+                rows.innerText = rows_count.toString();
+            };
+
+            form.addEventListener('mousemove', mouseenter);
+
+            editor.__on(form, 'touchstart mousedown', (e: MouseEvent) => {
+                const div = <HTMLDivElement>e.target;
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                if (div.tagName !== 'DIV') {
+                    return;
+                }
+                k =  parseInt(div.getAttribute('data-index'), 10);
+                rows_count = Math.ceil((k + 1) / default_cols_count);
+                cols_count = k % default_cols_count + 1;
+
+                const table: HTMLTableElement = editor.doc.createElement('table');
+                let first_td: HTMLTableCellElement,
+                    tr: HTMLTableRowElement,
+                    td: HTMLTableCellElement,
+                    br: HTMLBRElement,
+                    w: string = (100 / cols_count).toFixed(7);
+
+                for (i = 1; i <= rows_count; i += 1) {
+                    tr = editor.doc.createElement('tr');
+                    for (j = 1; j <= cols_count; j += 1) {
+                        td = editor.doc.createElement('td');
+
+                        td.style.width = w + '%';
+                        if (!first_td) {
+                            first_td = td;
+                        }
+                        br = editor.doc.createElement('br');
+                        td.appendChild(br);
+                        tr.appendChild(editor.doc.createTextNode("\n"));
+                        tr.appendChild(editor.doc.createTextNode("\t"));
+                        tr.appendChild(td);
+                    }
+                    table.appendChild(editor.doc.createTextNode("\n"));
+                    table.appendChild(tr);
+                }
+
+                editor.selection.insertNode(editor.doc.createTextNode("\n"));
+                editor.selection.insertNode(table);
+                editor.selection.setCursorIn(first_td);
+
+                close();
+            });
+
+            return form;
+        },
+        tags: ['table'],
+        tooltip: "Insert table"
+    }
+};

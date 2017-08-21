@@ -1,5 +1,20 @@
 import Jodit from '../Jodit';
 import Dom from "../modules/Dom";
+import {Config} from "../Config";
+
+
+Config.prototype.controls.ul = {
+    command: 'insertUnorderedList',
+    controlName : 'ul',
+    tags: ["ul"],
+    tooltip: "Insert Unordered List"
+};
+Config.prototype.controls.ol = {
+    command: 'insertOrderedList',
+    controlName : 'ol',
+    tags: ["ol"],
+    tooltip: "Insert Ordered List"
+};
 
 Jodit.plugins.orderedlist = function (editor: Jodit) {
     editor.events.on('afterCommand', (command) => {

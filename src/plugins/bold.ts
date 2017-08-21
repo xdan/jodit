@@ -1,57 +1,39 @@
 import Jodit from '../Jodit';
-// import * as consts from '../constants';
-// import Dom from "../modules/Dom";
+import {Config} from "../Config";
 
-// /**
-//  * Wrap selected content in special tag or return already wrapped
-//  *
-//  * @param {Jodit} editor
-//  * @param {Node} strong
-//  * @param {RegExp|string} reg tag list /A|TABLE|TD/i
-//  * @param {Boolean} [breakIfExists=true]
-//  * @return {HTMLElement}
-//  */
-// export const wrapAndSelect = (editor: Jodit, strong: Node, reg: RegExp|string, breakIfExists: boolean = true): HTMLElement => {
-//     editor.selection.focus();
-//     let sel = editor.win.getSelection(),
-//         range = sel.getRangeAt(0),
-//         current = editor.selection.current(),
-//         fake;
-//
-//     if (breakIfExists && current !== false && Dom.closest(current, reg, editor.editor)) {
-//         return <HTMLElement>Dom.closest(current, reg, editor.editor);
-//     }
-//
-//     let collapsed = editor.selection.isCollapsed();
-//
-//     if (!collapsed) {
-//         let fragment = range.extractContents();
-//         strong.appendChild(fragment);
-//     } else {
-//         fake = Dom.create('text', consts.INVISIBLE_SPACE, editor.doc);
-//         strong.appendChild(fake);
-//     }
-//
-//
-//     range.collapse(true);
-//     range.insertNode(strong);
-//
-//     let new_range = editor.doc.createRange();
-//
-//
-//
-//     if (collapsed) {
-//         new_range.setStartAfter(fake);
-//         new_range.collapse(true);
-//     } else {
-//         new_range.selectNodeContents(strong);
-//     }
-//
-//     sel.removeAllRanges();
-//     sel.addRange(new_range);
-//
-//     return <HTMLElement>strong;
-// };
+Config.prototype.controls.bold = {
+    tagRegExp: /^(strong|b)$/i,
+        tags: ["strong", "b"],
+        css: {
+        "font-weight": ["bold", "700"]
+    },
+    tooltip: "Bold",
+};
+Config.prototype.controls.italic = {
+    tagRegExp: /^(em|i)$/i,
+        tags: ["em", "i"],
+        css: {
+        "font-style": "italic"
+    },
+    tooltip: "Italic",
+};
+Config.prototype.controls.underline = {
+    tagRegExp: /^(u)$/i,
+        tags: ['u'],
+        css: {
+        "text-decoration": "underline"
+    },
+    tooltip: "Underline",
+};
+Config.prototype.controls.strikethrough = {
+    tagRegExp: /^(s)$/i,
+        tags: ['s'],
+        css: {
+        "text-decoration": "line-through"
+    },
+    tooltip: "Strike through",
+};
+
 
 Jodit.plugins.bold = function (editor: Jodit) {
     editor.events.on('beforeCommand', (command: string) => {

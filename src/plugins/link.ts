@@ -1,7 +1,8 @@
 import Jodit from '../Jodit';
 import {Config} from '../Config'
-import {isURL, convertMediaURLToVideoEmbed} from '../modules/Helpers'
+import {isURL, convertMediaURLToVideoEmbed, dom, val} from '../modules/Helpers'
 import Dom from "../modules/Dom";
+import {ControlType} from "../modules/Toolbar";
 
 /**
 * @property {object}  link `{@link module:link|link}` plugin's options
@@ -32,6 +33,88 @@ Config.prototype.link = {
     removeLinkAfterFormat: true,
 };
 
+
+Config.prototype.controls.link = {
+    popup: (editor: Jodit, current: HTMLElement|false, self: ControlType, close: Function) => {
+        const sel: Selection = editor.win.getSelection(),
+            form: HTMLFormElement = <HTMLFormElement>dom('<form class="jodit_form">' +
+                '<input required type="text" name="url" placeholder="http://" type="text"/>' +
+                '<input name="text" placeholder="' + editor.i18n('Text') + '" type="text"/>' +
+                '<label><input name="target" type="checkbox"/> ' + editor.i18n('Open in new tab') + '</label>' +
+                '<label><input name="nofollow" type="checkbox"/> ' + editor.i18n('No follow') + '</label>' +
+                '<div style="text-align: right">' +
+                '<button class="jodit_unlink_button" type="button">' + editor.i18n('Unlink') + '</button> &nbsp;&nbsp;' +
+                '<button type="submit">' + editor.i18n('Insert') + '</button>' +
+                '</div>' +
+                '<form/>');
+
+        if (current && Dom.closest(current, 'A', editor.editor)) {
+            current = <HTMLElement>Dom.closest(current, 'A', editor.editor)
+        } else {
+            current = false;
+        }
+
+        if (current) {
+            val(form, 'input[name=url]', current.getAttribute('href'));
+            val(form, 'input[name=text]', current.innerText);
+
+            (<HTMLInputElement>form.querySelector('input[name=target]')).checked = (current.getAttribute('target') === '_blank');
+            (<HTMLInputElement>form.querySelector('input[name=nofollow]')).checked = (current.getAttribute('rel') === 'nofollow');
+        } else {
+            (<HTMLDivElement>form.querySelector('.jodit_unlink_button')).style.display = 'none';
+            val(form, 'input[name=text]', sel.toString());
+        }
+
+        const selInfo = editor.selection.save();
+
+        form.querySelector('.jodit_unlink_button').addEventListener('mousedown', () => {
+            if (current) {
+                Dom.unwrap(current);
+            }
+            close();
+        });
+
+        form.addEventListener('submit', (event: Event) => {
+            event.preventDefault();
+            editor.selection.restore(selInfo);
+
+            let a: HTMLAnchorElement = <HTMLAnchorElement>current || <HTMLAnchorElement>Dom.create('a', '', editor.doc);
+
+            if (!val(form, 'input[name=url]')) {
+                (<HTMLInputElement>form.querySelector('input[name=url]')).focus();
+                (<HTMLInputElement>form.querySelector('input[name=url]')).classList.add('jodit_error');
+                return false;
+            }
+
+
+            a.setAttribute('href', val(form, 'input[name=url]'));
+            a.innerText = val(form, 'input[name=text]');
+
+            if ((<HTMLInputElement>form.querySelector('input[name=target]')).checked) {
+                a.setAttribute('target', '_blank');
+            } else {
+                a.removeAttribute('target');
+            }
+
+            if ((<HTMLInputElement>form.querySelector('input[name=nofollow]')).checked) {
+                a.setAttribute('rel', 'nofollow');
+            } else {
+                a.removeAttribute('rel');
+            }
+
+            if (!current) {
+                editor.selection.insertNode(a);
+            }
+
+            close();
+            return false;
+        });
+
+        return form;
+    },
+    tags: ["a"],
+    tooltip: "Insert link"
+};
 
 /**
  * Process link

@@ -2,6 +2,17 @@ import Jodit from '../Jodit';
 import Observer from '../modules/Observer';
 import * as consts from '../constants';
 import {ctrlKey} from '../modules/Helpers'
+import {Config} from "../Config";
+
+Config.prototype.controls.redo ={
+    mode: consts.MODE_SPLIT,
+    tooltip: 'Redo'
+};
+Config.prototype.controls.undo = {
+    mode: consts.MODE_SPLIT,
+    tooltip: 'Undo'
+};
+
 
 Jodit.plugins.redoundo = function (editor: Jodit) {
     const observer:Observer = new Observer(editor);

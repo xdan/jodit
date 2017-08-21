@@ -2,6 +2,7 @@ import Jodit from '../Jodit';
 import {Config} from '../Config'
 import {css, dom} from "../modules/Helpers";
 import Toolbar from "../modules/Toolbar";
+import * as consts from '../constants'
 
 /**
  * Fullsize plugin
@@ -33,6 +34,13 @@ declare module "../Config" {
 
 Config.prototype.fullsize = false;
 Config.prototype.globalFullsize = true;
+Config.prototype.controls.fullsize = {
+    exec: (editor: Jodit) => {
+        editor.events.fire('toggleFullsize');
+    },
+    tooltip: 'Open editor in fullsize',
+    mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG
+};
 
 
 Jodit.plugins.fullsize = function (editor: Jodit) {

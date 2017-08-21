@@ -1,8 +1,51 @@
 import Jodit from '../Jodit';
 import {$$} from '../modules/Helpers';
 import Dom from "../modules/Dom";
+import {Config} from "../Config";
 
 // import * as consts from '../constants';
+Config.prototype.controls.align = {
+    tags: ["p", "div", "span", "td", "th", "img"],
+        name: 'left',
+        tooltip: "Align",
+        list: [
+        'center',
+        'left',
+        'right',
+        'justify',
+    ],
+};
+
+Config.prototype.controls.center = {
+    command: 'justifyCenter',
+        tags: ["center"],
+        css: {
+        "text-align": "center"
+    },
+    tooltip: "Align Center"
+};
+Config.prototype.controls.justify = {
+    command: 'justifyFull',
+        css: {
+        "text-align": "justify"
+    },
+    tooltip: "Align Justify"
+};
+Config.prototype.controls.left = {
+    command: 'justifyLeft',
+        css: {
+        "text-align": "left"
+    },
+    tooltip: "Align Left"
+};
+Config.prototype.controls.right = {
+    command: 'justifyRight',
+        css: {
+        "text-align": "right"
+    },
+    tooltip: "Align Right"
+};
+
 
 Jodit.plugins.justify = function (editor: Jodit) {
     editor.events.on('beforeCommand', (command) => {

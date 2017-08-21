@@ -55,6 +55,12 @@ Config.prototype.cleanHTML = {
     allowTags: false
 };
 
+Config.prototype.controls.eraser = {
+    command: 'removeFormat',
+    tooltip: 'Clear Formatting'
+};
+
+
 /**
  * Clean HTML after removeFormat and insertHorizontalRule command
  *

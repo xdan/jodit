@@ -40,7 +40,10 @@
     }
     .jodit_wysiwyg{
         background-color: @dark_background_color;
-        color: @dark_text_color
+        color: @dark_text_color;
+        [data-jodit-selected-cell] {
+          border-color: @dark_color-border-selected;
+        }
     }
     .jodit_dropdownlist {
         background: @dark_toolbar_color;
@@ -90,5 +93,9 @@
           fill: @dark_text_color;
         }
       }
+    }
+    .jodit_resizer > i {
+      background: @dark_toolbar_seperator_color3;
+      border-color: @dark_icon_color;
     }
 }

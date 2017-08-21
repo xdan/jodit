@@ -1,6 +1,29 @@
 import Jodit from '../Jodit';
 import Dom from "../modules/Dom";
 import * as consts from '../constants';
+import {ControlType} from "../modules/Toolbar";
+import {Config} from "../Config";
+
+Config.prototype.controls.paragraph = {
+    command: 'formatBlock',
+        exec: (editor: Jodit, event, control: ControlType) => {
+        editor.execCommand(control.command, false, control.args[0]);
+    },
+    list: {
+        p : "Normal",
+            h1 : "Heading 1",
+            h2 : "Heading 2",
+            h3 : "Heading 3",
+            h4 : "Heading 4",
+            blockquote : "Quote",
+            pre : "Code"
+    },
+    template : (editor: Jodit, key: string, value: string) => {
+        return '<' + key + ' class="jodit_list_element"><span>' + editor.i18n(value) + '</span></' + key + '></li>';
+    },
+    tooltip: "Insert format block"
+};
+
 
 Jodit.plugins.formatblock = function (editor: Jodit) {
     editor.events.on('beforeCommand', (command: string, second, third: string) => {
