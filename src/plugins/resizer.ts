@@ -95,6 +95,7 @@ Jodit.plugins.Resizer = function (editor: Jodit) {
                     top: number = parseInt(resizer.style.top, 10),
                     width: number = resizer.offsetWidth,
                     height: number = resizer.offsetHeight;
+
                 // 1 - because need move border higher and toWYSIWYG the left than the picture
                 // 2 - in box-sizing: border-box mode width is real width indifferent by border-width.
                 if (top !== pos.top - 1 || left !== pos.left - 1 || width !== currentElement.offsetWidth || height !== currentElement.offsetHeight) {
@@ -103,11 +104,13 @@ Jodit.plugins.Resizer = function (editor: Jodit) {
                     resizer.style.width = currentElement.offsetWidth + 'px';
                     resizer.style.height = currentElement.offsetHeight + 'px';
 
-                    editor.events.fire(currentElement, 'changesize');
+                    if (editor.events) {
+                        editor.events.fire(currentElement, 'changesize');
 
-                    // check for first init. Ex. inlinePopup hides when it was fired
-                    if (!isNaN(left)) {
-                        editor.events.fire('resize');
+                        // check for first init. Ex. inlinePopup hides when it was fired
+                        if (!isNaN(left)) {
+                            editor.events.fire('resize');
+                        }
                     }
                 }
             }
@@ -164,7 +167,9 @@ Jodit.plugins.Resizer = function (editor: Jodit) {
                     if (currentElement.tagName === 'IMG' && !(<HTMLImageElement>currentElement).complete) {
                         currentElement.addEventListener('load', function ElementOnLoad() {
                             updateSize();
-                            currentElement.removeEventListener('load', ElementOnLoad);
+                            if (currentElement) {
+                                currentElement.removeEventListener('load', ElementOnLoad);
+                            }
                         });
                     }
                     clearTimeout(timer);
