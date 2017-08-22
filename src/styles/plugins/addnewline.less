@@ -1,4 +1,6 @@
-@color-new-line: rgba(178, 78, 27, 0.38);
+@import (reference) "../variables";
+
+@color-new-line: #ccc;
 @padding-for-scroll: 20px;
 @padding-for-hover: 10px;
 @width-icon: 30px;
@@ -12,7 +14,7 @@
   position: absolute;
   height: @height-icon;
   top: 0;
-  cursor: pointer;
+
   outline: none;
   margin-top: -@padding-for-hover;
   //text-align: right;
@@ -30,10 +32,14 @@
     display: inline-block;
     width: @width-icon;
     height: @height-icon;
-    background: #f7f7f7;
+    background: fade(@button_bg_hover, 30%);
     vertical-align: top;
     border: 1px solid @color-new-line;
     padding: 0 5px;
+    cursor: pointer;
+    &:hover {
+      background: fade(@button_bg_hover, 100%);
+    }
   }
 
   svg {

@@ -78,7 +78,7 @@ Jodit.plugins.addNewLine = function (editor: Jodit) {
                 .__on(line, 'mousemove', (e: MouseEvent) => {
                     e.stopPropagation();
                 })
-                .__on(line, 'mousedown touchstart', (e: MouseEvent) => {
+                .__on(line.querySelector('span'), 'mousedown touchstart', (e: MouseEvent) => {
                     const p: HTMLElement = editor.doc.createElement(editor.options.enter),
                         helper_node: Node = editor.doc.createTextNode(consts.INVISIBLE_SPACE);
 

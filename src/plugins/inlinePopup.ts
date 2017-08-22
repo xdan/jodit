@@ -145,9 +145,11 @@ Config.prototype.popup = {
             popup: function (editor: Jodit, elm: HTMLTableElement, control: ControlType, close: Function) {
                 let $bg: HTMLElement,
                     $cl: HTMLElement,
+                    $br: HTMLElement,
                     $tab: HTMLElement,
                     selected: HTMLTableCellElement[] = Table.getAllSelectedCells(elm),
                     color: string,
+                    br_color: string,
                     bg_color: string;
 
                 if (!selected.length) {
@@ -156,6 +158,7 @@ Config.prototype.popup = {
 
                 color = <string>css(selected[0], 'color');
                 bg_color = <string>css(selected[0], 'background-color');
+                br_color = <string>css(selected[0], 'border-color');
 
 
                 $bg = ColorPickerWidget(editor, (value: string) => {
@@ -172,9 +175,17 @@ Config.prototype.popup = {
                     close();
                 }, color);
 
+                $br = ColorPickerWidget(editor,(value: string) => {
+                    selected.forEach((cell: HTMLTableCellElement) => {
+                        css(cell, 'border-color', value);
+                    });
+                    close();
+                }, br_color);
+
                 $tab = TabsWidget(editor, {
                     Background : $bg,
-                    Text : $cl
+                    Text : $cl,
+                    Border : $br,
                 });
 
                 return $tab;

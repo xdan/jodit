@@ -54,7 +54,7 @@ describe('Test interface', function() {
                 expect(newline.style.display).to.equal('block');
 
 
-                simulateEvent('mousedown', 0, newline);
+                simulateEvent('mousedown', 0, newline.querySelector('span'));
                 expect(editor.getElementValue()).to.equal('<p></p><table><tbody>' +
                     '<tr><td>2</td></tr>' +
                     '<tr><td>2</td></tr>' +
@@ -84,7 +84,7 @@ describe('Test interface', function() {
                 expect(newline.style.display).to.equal('block');
 
 
-                simulateEvent('mousedown', 0, newline);
+                simulateEvent('mousedown', 0, newline.querySelector('span'));
                 expect(editor.getElementValue()).to.equal('<table><tbody>' +
                     '<tr><td>3</td></tr>' +
                     '<tr><td>2</td></tr>' +
@@ -114,7 +114,7 @@ describe('Test interface', function() {
                 expect(newline.style.display).to.equal('block');
 
 
-                simulateEvent('mousedown', 0, newline);
+                simulateEvent('mousedown', 0, newline.querySelector('span'));
                 expect(editor.getElementValue()).to.equal('<table><tbody>' +
                     '<tr><td>3</td></tr>' +
                     '<tr><td>2</td></tr>' +

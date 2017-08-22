@@ -21,7 +21,7 @@ export class Config {
     zIndex: number = 0;
 
     /**
-     * For example, in Joomla, the top menu bar closes Jodit toolbar when scrolling. Therefore, it is necessary toWYSIWYG move the toolbar Jodit by this amount [more](http://xdsoft.net/jodit/doc/#2.5.57)
+     * For example, in Joomla, the top menu bar closes Jodit toolbar when scrolling. Therefore, it is necessary to move the toolbar Jodit by this amount [more](http://xdsoft.net/jodit/doc/#2.5.57)
      */
 
     offsetTopForAssix: number = 0;
@@ -31,18 +31,22 @@ export class Config {
      * Size of icons in the toolbar (can be "small", "middle", "large")
      *
      * @example
+     * ```javascript
      * var editor  = new  Jodit(".dark_editor", {
      *      toolbarButtonSize: "small"
      * });
+     * ```
      */
     toolbarButtonSize: "small"|"middle"|"large" = 'middle';
 
     /**
      * Theme (can be "dark")
      * @example
+     * ```javascript
      * var editor  = new  Jodit(".dark_editor", {
      *      theme: "dark"
      * });
+     * ```
      */
     theme: string = 'default';
 
@@ -52,26 +56,30 @@ export class Config {
     saveModeInCookie: boolean = false;
 
     /**
-     * Options specifies whether the editor is toWYSIWYG have its spelling and grammar checked or not
+     * Options specifies whether the editor is to have its spelling and grammar checked or not
      * @see {@link http://www.w3schools.com/tags/att_global_spellcheck.asp}
      */
     spellcheck: boolean = true;
 
    /**
-     * Class name that can be appended toWYSIWYG the editor
+     * Class name that can be appended to the editor
      *
      * @see {@link Jodit.defaultOptions.iframeCSSLinks|iframeCSSLinks}
      * @see {@link Jodit.defaultOptions.iframeStyle|iframeStyle}
      *
      * @example
+    * ```javascript
      * new Jodit('#editor', {
      *    editorCssClass: 'some_my_class'
      * });
+    * ```
+    * ```css
      * &lt;style>
      * .some_my_class p{
      *    line-height: 16px;
      * }
-     * <&lt;/style>
+     * &lt;/style>
+    * ```
      */
    editorCssClass: false|string = false;
 
@@ -79,10 +87,12 @@ export class Config {
      * After all changes in editors for textarea will call change trigger
      *
      * @example
-     * new Jodit('#editor');
+    *  ```javascript
+     * var editor = new Jodit('#editor');
      * document.getElementById('editor').addEventListener('change', function () {
      *      console.log(this.value);
      * })
+    * ```
      */
    triggerChangeEvent: boolean = true;
 
@@ -91,17 +101,23 @@ export class Config {
      * Editor's width
      *
      * @example
+     * ```javascript
      * new Jodit('.editor', {
      *    width: '100%',
      * })
+     * ```
      * @example
+     * ```javascript
      * new Jodit('.editor', {
      *    width: 600, // equivalent for '600px'
      * })
+     * ```
      * @example
+     * ```javascript
      * new Jodit('.editor', {
      *    width: 'auto', // autosize
      * })
+     * ```
      */
 
     width: number|string = 'auto';
@@ -110,17 +126,23 @@ export class Config {
      * Editor's height
      *
      * @example
+     * ```javascript
      * new Jodit('.editor', {
      *    height: '100%',
      * })
+     * ```
      * @example
+     * ```javascript
      * new Jodit('.editor', {
      *    height: 600, // equivalent for '600px'
      * })
+     * ```
      * @example
+     * ```javascript
      * new Jodit('.editor', {
-     *    height: 'auto', // autosize
+     *    height: 'auto', // default - autosize
      * })
+     * ```
      */
     height: string|number = 'auto';
 
@@ -128,22 +150,28 @@ export class Config {
      * Editor's min-height
      *
      * @example
+     * ```javascript
      * new Jodit('.editor', {
      *    minHeight: '30%' //min-height: 30%
      * })
+     * ```
      * @example
+     * ```javascript
      * new Jodit('.editor', {
      *    minHeight: 200 //min-height: 200px
      * })
+     * ```
      */
     minHeight: number|string = 100;
 
     /**
-     * The writing direction of the language which is used toWYSIWYG create editor content. Allowed values are: '' (an empty string) – Indicates that content direction will be the same as either the editor UI direction or the page element direction. 'ltr' – Indicates a Left-To-Right text direction (like in English). 'rtl' – Indicates a Right-To-Left text direction (like in Arabic).
+     * The writing direction of the language which is used to create editor content. Allowed values are: '' (an empty string) – Indicates that content direction will be the same as either the editor UI direction or the page element direction. 'ltr' – Indicates a Left-To-Right text direction (like in English). 'rtl' – Indicates a Right-To-Left text direction (like in Arabic).
      * @example
+     * ```javascript
      * new Jodit('.editor', {
      *    direction: 'rtl'
      * })
+     * ```
      */
     direction: string = '';
 
@@ -151,13 +179,15 @@ export class Config {
      * Language by default. if `auto` language set by document.documentElement.lang || (navigator.language && navigator.language.substr(0, 2)) || (navigator.browserLanguage && navigator.browserLanguage.substr(0, 2)) || 'en'
 
      * @example
-     * // include in you page lang file
+     * ```html
+     * <!-- include in you page lang file -->
      * <script src="jodit/lang/de.js"></script>
      * <script>
      * var editor = new Jodit('.editor', {
      *    language: 'de'
      * });
      * </script>
+     * ```
      */
     language: string = 'auto';
 
@@ -166,6 +196,7 @@ export class Config {
      * if true all Lang.i18n(key) return `{key}`
      *
      * @example
+     * ```html
      * <script>
      * var editor = new Jodit('.editor', {
      *    debugLanguage: true
@@ -173,6 +204,7 @@ export class Config {
      *
      * console.log(editor.i18n("Test")); // {Test}
      * </script>
+     * ```
      */
     debugLanguage: boolean = false;
 
@@ -180,6 +212,7 @@ export class Config {
      * Collection of language pack data {en: {'Type something': 'Type something', ...}}
      *
      * @example
+     * ```javascript
      * var editor = new Jodit('#editor', {
      *     language: 'ru',
      *     i18n: {
@@ -189,11 +222,12 @@ export class Config {
      *     }
      * });
      * console.log(editor.i18n('Type something')) //Начните что-либо вводить
+     * ```
      */
     i18n: object|string = 'en';
 
     /**
-     * The tabindex global attribute is an integer indicating if the element can take input focus (is focusable), if it should participate toWYSIWYG sequential keyboard navigation, and if so, at what position. It can take several values
+     * The tabindex global attribute is an integer indicating if the element can take input focus (is focusable), if it should participate to sequential keyboard navigation, and if so, at what position. It can take several values
      */
     tabIndex: number = -1;
 
@@ -214,13 +248,14 @@ export class Config {
     enter: "P"|"DIV"|"BR" = consts.PARAGRAPH;
 
     /**
-     * Jodit.MODE_WYSIWYG The HTML editor allows you toWYSIWYG write like MSWord, Jodit.MODE_AREA syntax highlighting source editor
+     * Jodit.MODE_WYSIWYG The HTML editor allows you to write like MSWord, Jodit.MODE_AREA syntax highlighting source editor
      * @example
+     * ```javascript
      * var editor = new Jodit('#editor', {
      *     defaultMode: Jodit.MODE_SPLIT
      * });
      * console.log(editor.getRealMode())
-     *
+     * ```
      */
     defaultMode: number = consts.MODE_WYSIWYG;
 
@@ -228,11 +263,13 @@ export class Config {
     useSplitMode: boolean = false;
 
     /**
-     * The colors in HEX representation toWYSIWYG select a color for the background and for the text in colorpicker
+     * The colors in HEX representation to select a color for the background and for the text in colorpicker
      * @example
+     * ```javascript
      *  new Jodit('#editor', {
      *     colors: ['#ff0000', '#00ff00', '#0000ff']
      * })
+     * ```
      */
     colors: {[key: string]: string[]}|string[] = {
         greyscale:  ['#000000', '#434343', '#666666', '#999999', '#B7B7B7', '#CCCCCC', '#D9D9D9', '#EFEFEF', '#F3F3F3', '#FFFFFF'],
@@ -250,23 +287,27 @@ export class Config {
     /**
      * The default tab color picker
      * @example
+     * ```javascript
      *  new Jodit('#editor2', {
      *     colorPickerDefaultTab: 'color'
      * })
+     * ```
      */
     colorPickerDefaultTab: 'background'|'color' = 'background';
 
     /**
-     * Image size defaults toWYSIWYG a larger image
+     * Image size defaults to a larger image
      */
     imageDefaultWidth: number = 300;
 
     /**
      * Do not display these buttons that are on the list
      * @example
+     * ```javascript
      * new Jodit('#editor2', {
      *     removeButtons: ['hr', 'source']
      * });
+     * ```
      */
     removeButtons: string[] = [];
 
@@ -276,56 +317,44 @@ export class Config {
     extraButtons: Array<string|ControlType> = [];
 
     /**
-     * The width of the editor, accepted as the biggest. Used toWYSIWYG the responsive version of the editor
+     * The width of the editor, accepted as the biggest. Used to the responsive version of the editor
      */
     sizeLG: number = 900;
 
     /**
-     * The width of the editor, accepted as the medium. Used toWYSIWYG the responsive version of the editor
+     * The width of the editor, accepted as the medium. Used to the responsive version of the editor
      */
     sizeMD: number = 700;
 
     /**
-     * The width of the editor, accepted as the small. Used toWYSIWYG the responsive version of the editor
+     * The width of the editor, accepted as the small. Used to the responsive version of the editor
      */
     sizeSM: number = 400;
 
     /**
-     * @property {string[]} buttons The list of buttons that appear in the editor's toolbar on large places (≥ options.sizeLG). Note - this is not the width of the device, the width of the editor
-     * @property {string[]} buttonsMD The list of buttons that appear in the editor's toolbar on medium places (≥ options.sizeMD).
-     * @property {string[]} buttonsSM The list of buttons that appear in the editor's toolbar on small places (≥ options.sizeSM).
-     * @property {string[]} buttonsXS The list of buttons that appear in the editor's toolbar on extra small places (< options.sizeSM).
-     * @property {string|ControlType} buttons.button Button. Clicking has the next priority popup, exec, list
-     * @property {string} [buttons.button.icon] If there 'temp' button, then the tag is of the form <code>&lt;a class="icon icon-temp"&gt</code>. Of the existing can be used:
-     * <code>addcolumn, addrow, attachment, bin, bold, brush, cancel, check, source, eraser, folder, font, fullsize, image, indent-decrease, indent-increase, italic, link, ol, ul, list2, lock, menu,  merge, hr, center, justify, left, right, pencil, paragraph, plus, redo, resize, shrink, splitg, splitv, strikethrough, table, fontsize, underline, undo, unlock, update, upload, valign</code>
-     * @property {string} [buttons.button.iconURL] If you want toWYSIWYG address , you can set a background image for the button . This icon should be 16 * 16 px
-     * @property {function} [buttons.button.exec] This function will be executed when the button is pressed . this it is the main instance Jodit
-     * @property {function} [buttons.button.popup] By pressing a button the window falls , the contents of which will be something that will return 'popup'
-     * @property {string} [buttons.button.tooltip] Description hover button
-     * @property {string} [buttons.button.command] The command toWYSIWYG execute when the button is pressed. allowed all {@link https://developer.mozilla.org/ru/docs/Web/API/Document/execCommand#стандартные команды} а также несколько нестандартных (см. {@link Jodit~execCommand|execCommand})
-     * @property {string[]} [buttons.button.tags] Tag list when the cursor is toWYSIWYG be highlighted on this button
-     * @property {string[]|object} [buttons.button.list] Drop-down list. A hash or array . You must specify the command which will be submitted toWYSIWYG the hash key (array value) (see .{@link Jodit~execCommand|execCommand}) or define 'exec' function. See example
-     * @property {function(key, value): string} [buttons.button.template] The method that will be called for each element button.list
-     * @default ['source', '|', 'bold', 'italic', '|', 'ul', 'ol', '|', 'font', 'fontsize', 'brush', 'paragraph', '|','image', 'video', 'table', 'link', '|', 'align', '|', 'undo', 'redo', '|', 'hr', 'eraser', 'fullsize']
+     * The list of buttons that appear in the editor's toolbar on large places (≥ options.sizeLG). Note - this is not the width of the device, the width of the editor
      * @example
+     * ```javascript
      * new Jodit('#editor', {
      *     buttons: ['bold', 'italic', 'source'],
      *     buttonsMD: ['bold', 'italic'],
      *     buttonsXS: ['bold', 'fullsize'],
      * });
+     * ```
      * @example
+     * ```javascript
      * new Jodit('#editor2', {
      *     buttons: [{
      *         name: 'enty',
      *         icon: 'source',
      *         exec: function () {
-     *             var dialog = new {@link module:Dialog|Jodit.modules.Dialog}(this),
+     *             var dialog = new Jodit.modules.Dialog(this),
      *                 div = document.createElement('div'),
      *                 text = document.createElement('textarea');
      *             div.innerText = this.val();
-     *             dialog.{@link module:Dialog~setTitle|setTitle}('Source code');
-     *             dialog.{@link module:Dialog~setContent|setContent}(text);
-     *             dialog.{@link module:Dialog~setSize|setSize}(400, 300);
+     *             dialog.setTitle('Source code');
+     *             dialog.setContent(text);
+     *             dialog.setSize(400, 300);
      *             dom(text)
      *                 .css({
      *                     width: '100%',
@@ -336,7 +365,9 @@ export class Config {
      *         }
      *     }]
      * });
+     * ```
      * @example
+     * ```javascript
      * new Jodit('#editor2', {
      *     buttons: Jodit.defaultOptions.buttons.concat([{
      *        name: 'listsss',
@@ -353,13 +384,14 @@ export class Config {
      *                 this.val('');
      *                 return;
      *             }
-     *             this.selection.{@link module:Selection~insertNode|insertNode}(this.enterkey.{@link module:EnterKey~createNewBlock|createNewBlock}(key));
-     *             this.{@link module:Events|events}.fire('{@link event:errorMessage|errorMessage}', ['Was inserted ' + value]);
+     *             this.selection.insertNode(Jodit.modules.Dom.create(key, ''));
+     *             this.events.fire('errorMessage', ['Was inserted ' + value]);
      *        },
      *        template: function (key, value) {
      *            return '<div>' + value + '</div>';
      *        }
      *  });
+     *  ```
      */
     buttons: Array<string|ControlType> = [
         'source', '|',
@@ -382,6 +414,10 @@ export class Config {
         'fullsize',
         'about'
     ];
+
+    /**
+     * The list of buttons that appear in the editor's toolbar on medium places (≥ options.sizeMD).
+     */
     buttonsMD: Array<string|ControlType> = [
         'source', '|',
         'bold',
@@ -401,6 +437,10 @@ export class Config {
         'eraser',
         'fullsize'
     ];
+
+    /**
+     * The list of buttons that appear in the editor's toolbar on small places (≥ options.sizeSM).
+     */
     buttonsSM: Array<string|ControlType> = [
         'source', '|',
         'bold',
@@ -418,6 +458,10 @@ export class Config {
         'eraser',
         'fullsize'
     ];
+
+    /**
+     * The list of buttons that appear in the editor's toolbar on extra small places (< options.sizeSM).
+     */
     buttonsXS: Array<string|ControlType> = [
         'bold',
         'image', '|',
