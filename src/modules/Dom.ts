@@ -1,5 +1,5 @@
 import * as consts from '../constants';
-import {css, each} from './Helpers'
+import {each} from './Helpers'
 import Jodit from "../Jodit";
 
 export default class Dom {

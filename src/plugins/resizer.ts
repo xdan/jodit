@@ -2,7 +2,6 @@ import Jodit from '../Jodit';
 import {Config} from '../Config'
 import * as consts from '../constants'
 import {$$, debounce, dom, isIE, offset} from '../modules/Helpers'
-import Dom from "../modules/Dom";
 
 /**
  * The module creates a supporting frame for resizing of the elements img and table

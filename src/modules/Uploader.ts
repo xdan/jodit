@@ -13,6 +13,7 @@ export type UploaderData = {
     baseurl?: string,
     newfilename?: string;
 }
+
 export type UploaderAnswer = {
     success: boolean,
     time: string,
