@@ -118,7 +118,7 @@ export type ControlType = {
      * });
      * ```
      */
-    popup?:(editor: Jodit, current: Node|false, control: ControlType, close: Function) => HTMLElement|false;
+    popup?:(editor: Jodit, current: Node|false, control: ControlType, close: Function) => string|HTMLElement|false;
 }
 
 type ButtonType = {
@@ -169,18 +169,20 @@ export default class Toolbar extends Component{
      * @param {HTMLElement} content
      * @param {boolean} [rightAlign=false] Open popup on right side
      */
-    openPopup(btn: HTMLLIElement|HTMLAnchorElement, content: HTMLElement|false, rightAlign: boolean = false) {
-        // todo replace na position
+    openPopup(btn: HTMLLIElement|HTMLAnchorElement, content: string|HTMLElement|false, rightAlign: boolean = false) {
         this.closeAll();
         if (!content) {
             return;
         }
         btn.classList.add('jodit_popup_open');
         btn.appendChild(this.popup);
+
         this.__popapOpened = true;
+
         this.popup.innerHTML = '';
-        this.popup.appendChild(content);
+        this.popup.appendChild(dom(content));
         this.popup.style.display = 'block';
+
         this.popup.classList.toggle('jodit_right', rightAlign);
     }
 

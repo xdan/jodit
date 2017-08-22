@@ -355,7 +355,7 @@ export default class Jodit extends Component{
      * Return source element value
      */
     getElementValue() {
-        return this.element.value;
+        return this.element.value !== undefined ? this.element.value : this.element.innerHTML;
     }
 
     /**
@@ -421,7 +421,11 @@ export default class Jodit extends Component{
         }
 
         if (value !== undefined) {
-            this.element.value = value;
+            if (this.element.value !== undefined) {
+                this.element.value = value;
+            } else {
+                this.element.innerHTML = value;
+            }
         }
         if (this.getElementValue() !== this.getEditorValue()) {
             this.setEditorValue(this.getElementValue());
@@ -658,7 +662,7 @@ export default class Jodit extends Component{
      * console.log(Jodit.prototype.i18n('Hello world', 'mr.Perkins', 'day')) //Hello mr.Perkins Good day
      */
     i18n (key: string, ...params: Array<string|number>) {
-        if (this.options.debugLanguage) {
+        if (this.options !== undefined && this.options.debugLanguage) {
             return '{' + key + '}';
         }
 

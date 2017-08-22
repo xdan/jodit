@@ -597,7 +597,7 @@ export default class Dialog extends Component{
  *    $('form').hide();
  * });
  */
-export const Alert = (msg: string, title?: string|Function, callback?: Function) => {
+export const Alert = (msg: string, title?: string|Function, callback?: Function): Dialog => {
     if (typeof title === 'function') {
         callback = title;
         title = undefined;
@@ -607,7 +607,7 @@ export const Alert = (msg: string, title?: string|Function, callback?: Function)
         $div = dom('<div class="jodit_alert"></div>'),
         $ok = dom('<a href="javascript:void(0)" style="float:left;" class="jodit_button">' + Toolbar.getIcon('cancel') + '<span>' + Jodit.prototype.i18n('Ok') + '</span></a>');
 
-    $div.innerHTML = msg;
+    $div.appendChild(dom(msg));
 
     $ok.addEventListener('click', function () {
         if (!callback || typeof callback !== 'function' || callback(dialog) !== false) {
@@ -621,6 +621,8 @@ export const Alert = (msg: string, title?: string|Function, callback?: Function)
 
     dialog.open($div, <string>title || '&nbsp;', true, true);
     $ok.focus();
+
+    return dialog;
 };
 
 Jodit['Alert'] = Alert;
@@ -645,7 +647,7 @@ Jodit['Alert'] = Alert;
  *     // do something
  * });
  */
-export const Promt = (msg: string, title: string|Function, callback: Function, placeholder?: string) => {
+export const Promt = (msg: string, title: string|Function, callback: Function, placeholder?: string): Dialog => {
     const dialog: Dialog = new Dialog(),
         $cancel: HTMLAnchorElement = <HTMLAnchorElement>dom('<a href="javascript:void(0)" style="float:right;" class="jodit_button">' + Toolbar.getIcon('cancel') + '<span>' + Jodit.prototype.i18n('Cancel') + '</span></a>'),
         $ok: HTMLAnchorElement = <HTMLAnchorElement>dom('<a href="javascript:void(0)" style="float:left;" class="jodit_button">' + Toolbar.getIcon('check') + '<span>' + Jodit.prototype.i18n('Ok') + '</span></a>'),
@@ -662,7 +664,8 @@ export const Promt = (msg: string, title: string|Function, callback: Function, p
         $input.setAttribute('placeholder', placeholder);
     }
 
-    $label.innerHTML = msg;
+
+    $label.appendChild(dom(msg));
     $div.appendChild($label);
     $div.appendChild($input);
 
@@ -689,6 +692,8 @@ export const Promt = (msg: string, title: string|Function, callback: Function, p
 
     dialog.open($div, <string>title || '&nbsp;', true, true);
     $input.focus();
+
+    return dialog;
 };
 
 Jodit['Promt'] = Promt;
@@ -709,7 +714,7 @@ Jodit['Promt'] = Promt;
  *     }
  * });
  */
-export const Confirm = (msg: string, title: string|Function, callback?: Function) => {
+export const Confirm = (msg: string, title: string|Function, callback?: Function): Dialog => {
     let dialog = new Dialog(),
         $cancel,
         $ok,
@@ -721,7 +726,7 @@ export const Confirm = (msg: string, title: string|Function, callback?: Function
         title = undefined;
     }
 
-    $label.innerHTML = msg;
+    $label.appendChild(dom(msg));
     $div.appendChild($label);
 
     $cancel = dom('<a href="javascript:void(0)" style="float:right;" class="jodit_button">' + Toolbar.getIcon('cancel') + '<span>' + Jodit.prototype.i18n('Cancel') + '</span></a>');
@@ -756,5 +761,6 @@ export const Confirm = (msg: string, title: string|Function, callback?: Function
 
     dialog.open($div, <string>title || '&nbsp;', true, true);
     $ok.focus();
+    return dialog;
 };
 Jodit['Confirm'] = Confirm;

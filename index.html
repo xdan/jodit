@@ -24,7 +24,7 @@
         <tr>
             <td id="maintab" style="width:50%;vertical-align: top">
                 <div id="uniqbox" class="box">
-                    <textarea id="area_editor"></textarea>
+                    <textarea id="area_editor">Simple text</textarea>
                 </div>
             </td>
             <td id="mirrortab"><textarea id="mirror"></textarea></td>
@@ -127,16 +127,11 @@
     editor.editor.addEventListener('mouseup', callback)
     editor.editor.addEventListener('input', callback)
 //    editor.setMode(Jodit.MODE_SOURCE);
-    editor.setEditorValue('<table><tbody>' +
-        '<tr><td>3</td></tr>' +
-        '<tr><td>2</td></tr>' +
-        '</tbody></table>');
+//    editor.setEditorValue('<table><tbody>' +
+//        '<tr><td>3</td></tr>' +
+//        '<tr><td>2</td></tr>' +
+//        '</tbody></table>');
 
-    simulateEvent('mousemove', 0, editor.editor, function (data) {
-        var pos = editor.helper.offset(editor.editor.firstChild, editor);
-        data.pageX = pos.left + 5;
-        data.pageY = pos.top + (pos.height - 5) + editor.win.pageYOffset;
-    });
 //    var dialogs = document.querySelectorAll('.jodit.jodit_dialog_box.jodit_text_icons.active');
 //    expect(dialogs.length).toWYSIWYG.equal(1);
 
