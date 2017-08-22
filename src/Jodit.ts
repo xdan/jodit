@@ -183,15 +183,15 @@ export default class Jodit extends Component{
 
         this.container.appendChild(this.workplace);
 
+
         this.workplace.appendChild(this.progress_bar);
 
         this.element.parentNode.insertBefore(this.container, this.element);
+        this.helper = helper;
 
         this.initPlugines();
 
         this.__createEditor();
-
-        this.helper = helper;
 
         this.setElementValue(); // syncro
 
@@ -300,10 +300,12 @@ export default class Jodit extends Component{
          *
          * @event beforeDestruct
          * @example
+         * ```javascript
          * var editor = new Jodit("#redactor");
          * editor.events.on('beforeDestruct', function (data) {
          *     return false;
          * });
+         * ```
          */
         if (this.events.fire('beforeDestruct') === false) {
             return;
@@ -367,10 +369,12 @@ export default class Jodit extends Component{
          *
          * @event beforeGetValueFromEditor
          * @example
+         * ```javascript
          * var editor = new Jodit("#redactor");
          * editor.events.on('beforeGetValueFromEditor', function () {
          *     return editor.editor.innerHTML.replace(/a/g, 'b');
          * });
+         * ```
          */
         let value: string;
 
@@ -397,10 +401,12 @@ export default class Jodit extends Component{
          * @event afterGetValueFromEditor
          * @param string new_value
          * @example
+         * ```javascript
          * var editor = new Jodit("#redactor");
          * editor.events.on('afterGetValueFromEditor', function (new_value) {
          *     new_value.value = new_value.value.replace('a', 'b');
          * });
+         * ```
          */
         let new_value = {value};
 
@@ -469,10 +475,11 @@ export default class Jodit extends Component{
      * @fires beforeCommand
      * @fires afterCommand
      * @example
-     * this.execCommand('applyCSSProperty', 'color', '#fff'); // sets the color of the text for the current selection in white
+     * ```javascript
      * this.execCommand('fontSize', 12); // sets the size of 12 px
      * this.execCommand('underline');
      * this.execCommand('formatBlock', 'p'); // will be inserted paragraph
+     * ```
      */
     execCommand(command, second = false, third = null) {
         let result;
