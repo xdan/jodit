@@ -23,7 +23,7 @@ type HandlerSuccess = (resp: UploaderData) => void;
 type HandlerError = (e: Error) => void;
 type UploaderOptions = {
     url: string;
-    headers: null|string[],
+    headers?: {[key: string]: string},
     data: null|object,
     format: string;
 
@@ -201,7 +201,7 @@ export default class Uploader extends Component {
         }
     }
 
-    buildData(data: FormData|object): FormData|object {
+    buildData(data: FormData|{[key: string]: string}): FormData|{[key: string]: string} {
         if (window['FormData'] !== undefined) {
             if (data instanceof FormData) {
                 return data;
@@ -224,7 +224,7 @@ export default class Uploader extends Component {
 
     private __ajax: Ajax;
 
-    send(data: object, success: (resp: UploaderAnswer) => void) {
+    send(data: FormData|{[key: string]: string}, success: (resp: UploaderAnswer) => void) {
         this.__ajax = new Ajax(this.jodit, {
             xhr: () => {
                 let xhr = new XMLHttpRequest();
@@ -247,7 +247,7 @@ export default class Uploader extends Component {
                 }
                 return xhr;
             },
-            type: 'POST',
+            method: 'POST',
             data: this.buildData(data),
             url: this.options.url,
             headers: this.options.headers,
@@ -266,7 +266,7 @@ export default class Uploader extends Component {
     sendFiles(files: FileList|File[], handlerSuccess: HandlerSuccess, handlerError: HandlerError, process?: Function) {
         let len = files.length,
             i,
-            form,
+            form: FormData,
             extension,
             keys,
             uploader = this;

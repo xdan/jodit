@@ -23,22 +23,22 @@ import Component from "./Component";
 declare const XDomainRequest: any;
 
 type AjaxOptions  = {
-    dataType: string;
-    method: string;
+    dataType?: string;
+    method?: string;
 
-    url: string;
+    url?: string;
 
-    async: boolean;
+    async?: boolean;
 
-    data: {[key: string]: string}|null
+    data: {[key: string]: string}|null|FormData
 
-    contentType: string;
+    contentType?: string|false;
 
-    headers: {[key: string]: string}
+    headers?: {[key: string]: string}
 
-    withCredentials: boolean;
+    withCredentials?: boolean;
 
-    xhr: () => XMLHttpRequest;
+    xhr?: () => XMLHttpRequest;
 }
 
 declare module "../Config" {
@@ -99,7 +99,7 @@ export default class Ajax extends Component{
 
     options: AjaxOptions;
 
-    constructor(editor: Jodit, options?: any) {
+    constructor(editor: Jodit, options: AjaxOptions) {
         super(editor);
         this.options = <AjaxOptions>extend(true, {}, Config.prototype.defaultAjaxOptions, options);
         this.xhr = this.options.xhr();

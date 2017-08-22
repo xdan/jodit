@@ -12,7 +12,9 @@ export default class Dom {
      * @return {HTMLElement}
      */
     static wrap = (current, tag: Node|string, editor: Jodit): HTMLElement => {
-        let tmp, first = current, last = current;
+        let tmp,
+            first = current,
+            last = current;
 
         const selInfo = editor.selection.save();
 
