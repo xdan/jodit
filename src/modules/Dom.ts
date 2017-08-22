@@ -69,11 +69,13 @@ export default class Dom {
      * @param  {HTMLElement} elm elements , the internal node is necessary to sort out
      * @param  {Function} callback It called for each item found
      * @example
+     * ```javascript
      * parent.node.each(parent.selection.current(), function (node) {
      *  if (node.nodeType === Node.TEXT_NODE) {
      *      node.nodeValue = node.nodeValue.replace(Jodit.INVISIBLE_SPACE_REG_EX, '') // remove all of the text element codes invisible character
      *  }
      * });
+     * ```
      */
     static each (elm: HTMLElement, callback: Function) {
         let node: any = elm;
@@ -94,8 +96,10 @@ export default class Dom {
      * @param  {Document} doc
      * @return {HTMLElement|Text}
      * @example
+     * ```javascript
      * var textnode = parent.node.create('text', 'Hello world');
      * var div = parent.node.create('div', '<img src="test.jpg">');
+     * ```
      */
     static create(nodeName: string, content: string, doc: Document) : HTMLElement|Text {
         let newnode: HTMLElement|Text;
@@ -123,7 +127,9 @@ export default class Dom {
      * @param  {Document} [doc=document]
      * @return {Node} Returns a new tag
      * @example
+     * ```javascript
      * Jodit.modules.Dom.replace(parent.editor.getElementsByTagName('span')[0], 'p'); // Replace the first <span> element to the < p >
+     * ```
      */
     static replace (elm: HTMLElement, newTagName: string|HTMLElement, withAttributes = false, notMoveContent = false, doc: Document): HTMLElement {
         const tag: HTMLElement = typeof newTagName === 'string' ? <HTMLElement>Dom.create(newTagName, '', doc) : newTagName;

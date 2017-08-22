@@ -30,10 +30,12 @@ Jodit.plugins.paste = function (editor: Jodit) {
          * @param {ClipboardEvent} event
          * @return Returning false in the handler assigned toWYSIWYG the event will cancel the current action.
          * @example
+         * ```javascript
          * var editor = new Jodit("#redactor");
          * editor.events.on('beforePaste', function (event) {
-             *     return false; // deny paste
-             * });
+         *     return false; // deny paste
+         * });
+         * ```
          */
 
         if (editor.events.fire('beforePaste', [event]) === false) {
@@ -71,10 +73,12 @@ Jodit.plugins.paste = function (editor: Jodit) {
                  * @param {ClipboardEvent} event
                  * @return Return {string|undefined}
                  * @example
+                 * ```javascript
                  * var editor = new Jodit("#redactor");
                  * editor.events.on('beforePaste', function (event) {
-                     *     return false; // deny paste
-                     * });
+                 *     return false; // deny paste
+                 * });
+                 * ```
                  */
 
                 clipboard_html = editor.events.fire('processPaste', [event, clipboard_html]);
@@ -94,10 +98,12 @@ Jodit.plugins.paste = function (editor: Jodit) {
          * @param {ClipboardEvent} event
          * @return Return {string|undefined}
          * @example
+         * ```javascript
          * var editor = new Jodit("#redactor");
          * editor.events.on('afterPaste', function (event) {
-             *     return false; // deny paste
-             * });
+         *     return false; // deny paste
+         * });
+         * ```
          */
         if (editor.events.fire('afterPaste', [event]) === false) {
             return false;

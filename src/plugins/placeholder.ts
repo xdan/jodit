@@ -13,9 +13,11 @@ import {dom,each} from '../modules/Helpers'
  * @property {boolean} showPlaceholder=true Show placeholder
  * @memberof module:Placeholder
  * @example
+ * ```javascript
  * var editor = new Jodit('#editor', {
  *    showPlaceholder: false
  * });
+ * ```
  */
 declare module "../Config" {
     interface Config {
@@ -30,10 +32,12 @@ Config.prototype.showPlaceholder = true;
  * @property {boolean} useInputsPlaceholder=true use a placeholder from original input field, if it was set
  * @memberof module:Placeholder
  * @example
+ * ```javascript
  * //<textarea id="editor" placeholder="start typing text ..." cols="30" rows="10"></textarea>
  * var editor = new Jodit('#editor', {
  *    useInputsPlaceholder: true
  * });
+ * ```
  */
 Config.prototype.useInputsPlaceholder = true;
 
@@ -41,9 +45,11 @@ Config.prototype.useInputsPlaceholder = true;
  * @property {string} placeholder='Type something' Default placeholder
  * @memberof module:Placeholder
  * @example
+ * ```javascript
  * var editor = new Jodit('#editor', {
  *    placeholder: 'start typing text ...'
  * });
+ * ```
  */
 Config.prototype.placeholder = 'Type something';
 

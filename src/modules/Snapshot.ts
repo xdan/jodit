@@ -1,10 +1,6 @@
 import Component from './Component'
 
-/**
- * Module for creating snapshot of editor which includes html content and the current selection
- * @module Snapshot
- * @params {Object} parent Jodit main object
- */
+
 type RangeType = {
     startContainer: number[];
     startOffset: number;
@@ -15,6 +11,10 @@ export type SnapshotType = {
     html: string;
     range: RangeType;
 }
+
+/**
+ * Module for creating snapshot of editor which includes html content and the current selection
+ */
 export default class Snapshot extends Component {
     private static __countElementsBefore (elm: Node): number {
         if (!elm.parentNode) {

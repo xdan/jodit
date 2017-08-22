@@ -129,12 +129,14 @@ export default class Observer extends Component {
      * You can use 1 and 0. 1 - Set the value toWYSIWYG true, but it will remember the current value . A 0 - restore the current value
      * @param {boolean|int} block = 1 do not remember . 1 can be used , and 0. 1 - establish a true value but will memorize the current value. A 0 - restore the current value
      * @example
+     * ```javascript
      * parent.__nativeObserver.block(1);// если value has been true when you call parent.__nativeObserver.block(0); it will still be true
      * parent.selection.insertImage('some.png');
      * parent.selection.insertImage('some2.png');
      * parent.selection.insertImage('some4.png', 'Some image');
      * parent.__nativeObserver.block(0); // restore the value that was before parent.__nativeObserver.block(1)
      * parent.$editor.find('img').css('border', '1px solid #ccc'); // the stack will be filled soon , the last state
+     * ```
      */
     block = function (block: boolean|number = 1) {
         if (block === true || block === false) {

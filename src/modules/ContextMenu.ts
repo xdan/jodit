@@ -42,7 +42,9 @@ export default class ContextMenu extends Component {
      * @param {number} y Global coordinate by Y
      * @param {Action[]} actions Array with plainobjects {icon: 'bin', title: 'Delete', exec: function () { do smth}}
      * @example
+     * ```javascript
      * parent.show(e.clientX, e.clientY, [{icon: 'bin', title: 'Delete', exec: function () { alert(1) }]);
+     * ```
      */
     show(x: number, y: number, actions: Array<false|Action>) {
         const self = this;

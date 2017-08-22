@@ -50,6 +50,7 @@ import Cookie from "./Cookie";
  * @prop {px} filebrowser.height=400px The height of the file browser
  * @prop {array} filebrowser.buttons="['upload', 'remove', 'update', 'select', 'edit', 'tiles', 'list']" Toolbar browser
  * @example
+ * ```javascript
  * var editor = new Jodit('#editor', {
  *     filebrowser: {
  *         buttons: ['upload', 'remove', 'update', {
@@ -64,9 +65,11 @@ import Cookie from "./Cookie";
  *        }],
  *    }
  * })
+ * ```
  * @prop {function} filebrowser.isSuccess method toWYSIWYG check - whether the response positive
  * @prop {function} filebrowser.getMessage method for receiving a message from the response
  * @example
+ * ```javascript
  * new Jodit('#editor', {
  *     filebrowser: {
  *          isSuccess: function (resp) {
@@ -77,6 +80,7 @@ import Cookie from "./Cookie";
  *          },
  *     }
  * })
+ * ```
  * @prop {string} filebrowser.view='tiles' Filelist view - `tiles` or `list`
  * @prop {object} filebrowser.ajax The default settings for AJAX connections toWYSIWYG the server. Most of the settings like here {@link http://api.jquery.com/jQuery.ajax/|jQuery.ajax} but is not jQuery.ajax
  * @prop {function(data)} filebrowser.ajax.prepareData Method of preparation of data toWYSIWYG be sent toWYSIWYG the server
@@ -101,6 +105,7 @@ import Cookie from "./Cookie";
  * @prop {object} filebrowser.items Settings for AJAX connections toWYSIWYG the server toWYSIWYG download the image list in the specified category . By default uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} c параметром action=items
  * @prop {object} filebrowser.uploader=null Settings Module {@link module:Uploader|Uploader} for fast uploading images in category via Drag&Drop file in the file browser. The default settings of the module {@link module:Uploader|Uploader}
  * @example
+ * ```javascript
  * // default values
  * {
  *     isSuccess: function (resp) {
@@ -156,7 +161,9 @@ import Cookie from "./Cookie";
  *     },
  *     uploader: null // use default Uploader's settings
  * }
+ * ```
  * @example
+ * ```javascript
  * new Jodit('#editor2', {
  *         filebrowser: {
  *             isSuccess: function (resp) {
@@ -185,7 +192,9 @@ import Cookie from "./Cookie";
  *             }
  *         }
  *     })
+ * ```
  * @example
+ * ```javascript
  * new Jodit('#jodit', {
  *        uploader: {
  *            url: 'connector/upload.php',
@@ -209,7 +218,7 @@ import Cookie from "./Cookie";
  *            }
  *        }
  *    });
- * @memberof Jodit.defaultOptions
+ * ```
  */
 
 interface ISourceFile {
@@ -901,7 +910,9 @@ export default class FileBrowser extends Component {
      * @param {string} message Message
      * @param {boolean} [success] true It will be shown a message light . If no option is specified , an error will be shown the red
      * @example
+     * ```javascript
      * parent.filebrowser.status('There was an error uploading file', false);
+     * ```
      */
     status (message: string, success?: boolean) {
         clearTimeout(this.statustimer);
@@ -1202,6 +1213,7 @@ export default class FileBrowser extends Component {
      * @method open
      * @param {Function} callback The function that will be called after the file selection in the browser
      * @example
+     * ```javascript
      * var fb = new Jodit.modules.FileBrowser(parent);
      * fb.open(function (data) {
      *     var i;
@@ -1209,6 +1221,7 @@ export default class FileBrowser extends Component {
      *         parent.selection.insertImage(data.baseurl + data.files[i]);
      *     }
      * });
+     * ```
      */
     open = (callback: (data: FileBrowserCallBcackData) => void) => {
         if (this.options.items.url) {

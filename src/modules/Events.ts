@@ -12,6 +12,7 @@ export default class Events extends Component{
      *
      * @method current
      * @example
+     * ```javascript
      * parent.events.on('openDialog closeDialog', function () {
      *     if (parent.events.current() === 'closeDialog') {
      *         alert('Dialog was closed');
@@ -19,10 +20,8 @@ export default class Events extends Component{
      *         alert('Dialog was opened');
      *     }
      * });
+     * ```
      */
-    // getEventName() {
-    //     return this.current;
-    // }
 
     /**
      * Disable all handlers specified event ( Event List ) for a given element. Either a specific event handler.
@@ -32,6 +31,7 @@ export default class Events extends Component{
      * @param {function} [callback] - Specific event handler toWYSIWYG be removed
      * @return {Events} this
      * @example
+     * ```javascript
      * var a = {name: "Anton"};
      * parent.events.on(a, 'open', function () {
      *     alert(this.name);
@@ -51,6 +51,7 @@ export default class Events extends Component{
      * });
      * parent.events.fire('someGlobalEvents');
      * parent.events.off('someGlobalEvents');
+     * ```
      */
     off(object?: any, list?: any, callback?: Function) {
         if (arguments.length === 0) {
@@ -93,10 +94,12 @@ export default class Events extends Component{
      * @param {Boolean} [onTop=false] - Set handler in first
      * @return {Events} this
      * @example
+     * ```javascript
      * // set global handler
      * parent.on('beforeSetELementValue', function (data) {
      *     data.value = jQuery.trim(data.value);
      * });
+     * ```
      */
     on(objectOrEvent: any, list: any, callback?: string|Function, onTop: boolean = false) {
         let i;
@@ -139,11 +142,13 @@ export default class Events extends Component{
      * @param {Array} [args] - Options for the event handler
      * @return {boolean} `false` if one of the handlers return `false`
      * @example
+     * ```javascript
      * var dialog = new Jodit.modules.Dialog(parent);
      * parent.on(dialog, 'afterClose', function () {
      *     dialog.destroy(); // will be removed from DOM
      * });
      * dialog.open('Hello world!!!');
+     * ```
      */
     fire (object: any, eventOrArgs?: string|any[], args?: any[]): false|void|any {
         let i: number,

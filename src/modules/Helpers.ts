@@ -169,10 +169,12 @@ export const trim = (value: string): string => {
  * @param {string} color - string like rgba(red, green, blue, alpha) or rgb(red, green, blue)
  * @return {string|NaN} hex color view, NaN - for transparent color
  * @example
+ * ```javascript
  * var p = document.createElement('p');
  * p.style.color = '#ffffff';
  * console.log(p.getAttribute('style')); // color: rgb(255, 255, 255);
  * console.log(colorTohex(p.style.color)); // #ffffff
+ * ```
  */
 
 export const colorToHex = (color: string): string|false => {
@@ -547,11 +549,13 @@ export const convertMediaURLToVideoEmbed = (url, width:number = 400, height: num
  * Module returns method that is used to determine the browser
  * @params {Object} parent main Jodit object
  * @example
- console.log(editor.helper.browser('mse'));
- console.log(editor.helper.browser('chrome'));
- console.log($editor.helper.browser('opera'));
- console.log(editor.helper.browser('firefox'));
- console.log(editor.helper.browser('mse') && editor.helper.browser('version') > 10);
+ * ```javascript
+ * console.log(editor.helper.browser('mse'));
+ * console.log(editor.helper.browser('chrome'));
+ * console.log($editor.helper.browser('opera'));
+ * console.log(editor.helper.browser('firefox'));
+ * console.log(editor.helper.browser('mse') && editor.helper.browser('version') > 10);
+ * ```
  */
 export const browser = (browser: string): boolean|string => {
     let ua = navigator.userAgent.toLowerCase(),
@@ -661,10 +665,12 @@ export const htmlspecialchars = (html: string) => {
  * @param {context} [ctx] Context
  * @return {function}
  * @example
+ * ```javascript
  * var jodit = new Jodit('.editor');
  * Jodit.modules.Dom("input").on('keydown', jodit.helper.debounce(function() {
-             *     // Do expensive things
-             * }, 100));
+ *     // Do expensive things
+ * }, 100));
+ * ```
  */
 export const  debounce = function (fn, timeout ?: number, invokeAsap?: boolean, ctx?: any) {
     if (arguments.length === 3 && typeof invokeAsap !== 'boolean') {
@@ -704,10 +710,12 @@ export const  debounce = function (fn, timeout ?: number, invokeAsap?: boolean, 
  * @param {context} [ctx] Context
  * @return {function}
  * @example
+ * ```javascript
  * var jodit = new Jodit('.editor');
  * Jodit.modules.Dom("body").on('scroll', jodit.helper.throttle(function() {
-             *     // Do expensive things
-             * }, 100));
+ *     // Do expensive things
+ * }, 100));
+ * ```
  */
 export const throttle = function (fn: Function, timeout: number, ctx?: any) {
     let timer, args, needInvoke, callee;

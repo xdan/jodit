@@ -491,6 +491,7 @@ export default class Jodit extends Component{
          * @param {string} second The second parameter for the command
          * @param {string} third The third option is for the team
          * @example
+         * ```javascript
          * parent.events.on('beforeCommand', function (command) {
          *  if (command === 'justifyCenter') {
          *      var p = parent.getDocument().createElement('p')
@@ -500,6 +501,7 @@ export default class Jodit extends Component{
          *      return false; // break execute native command
          *  }
          * })
+         * ```
          */
         if (this.events.fire('beforeCommand', [command, second, third]) !== false) {
             this.selection.focus();
@@ -563,9 +565,10 @@ export default class Jodit extends Component{
      * Return current real work mode. When editor in MODE_SOURCE or MODE_WYSIWYG it will return them, but then editor in MODE_SPLIT it will return MODE_SOURCE if Textarea(CodeMirror) focused or MODE_WYSIWYG otherwise
      *
      * @example
+     * ```javascript
      * var editor = new Jodit('#editor');
      * console.log(editor.getRealMode());
-     * @method getRealMode
+     * ```
      */
     getRealMode() {
         return this.mode !== consts.MODE_SPLIT ? this.mode : ((document.activeElement && document.activeElement.tagName === 'TEXTAREA') ? consts.MODE_SOURCE : consts.MODE_WYSIWYG);
@@ -589,10 +592,12 @@ export default class Jodit extends Component{
          * @event beforeSetMode
          * @param {Object} data PlainObject {mode: {string}} In handler you can change data.mode
          * @example
+         * ```javascript
          * var editor = new Jodit("#redactor");
          * editor.events.on('beforeSetMode', function (data) {
-             *     data.mode = Jodit.MODE_SOURCE; // not respond to the mode change. Always make the source code mode
-             * });
+         *     data.mode = Jodit.MODE_SOURCE; // not respond to the mode change. Always make the source code mode
+         * });
+         * ```
          */
         if (this.events.fire('beforeSetMode', [data]) === false) {
             return;
@@ -613,10 +618,12 @@ export default class Jodit extends Component{
          * Triggered after {@link Jodit~setMode|setMode} executed
          * @event afterSetMode
          * @example
+         * ```javascript
          * var editor = new Jodit("#redactor");
          * editor.events.on('afterSetMode', function () {
-             *     editor.val(''); // clear editor's value after change mode
-             * });
+         *     editor.val(''); // clear editor's value after change mode
+         * });
+         * ```
          */
         this.events.fire('afterSetMode');
     }
@@ -625,9 +632,10 @@ export default class Jodit extends Component{
      * Toggle editor mode WYSIWYG to TEXTAREA(CodeMirror) to SPLIT(WYSIWYG and TEXTAREA) to again WYSIWYG
      *
      * @example
+     * ```javascript
      * var editor = new Jodit('#editor');
      * editor.toggleMode();
-     * @method toggleMode
+     * ```
      */
     toggleMode () {
         let mode = this.getMode();
@@ -648,6 +656,7 @@ export default class Jodit extends Component{
      * @param {string[]} params Some text
      * @return {string}
      * @example
+     * ```javascript
      * var editor = new Jodit("#redactor", {
      *      langusage: 'ru'
      * });
@@ -667,6 +676,7 @@ export default class Jodit extends Component{
      * };
      * Jodit.defaultOptions.language = 'cs';
      * console.log(Jodit.prototype.i18n('Hello world', 'mr.Perkins', 'day')) //Hello mr.Perkins Good day
+     * ```
      */
     i18n (key: string, ...params: Array<string|number>) {
         if (this.options !== undefined && this.options.debugLanguage) {

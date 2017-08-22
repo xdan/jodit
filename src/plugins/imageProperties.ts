@@ -33,12 +33,14 @@ import ImageSelectorWidget = Widget.ImageSelectorWidget;
  * @prop {boolean} image.selectImageAfterClose=true Select image after close dialog
  * @memberof Jodit.defaultOptions
  * @example
+ * ```javascript
  * var editor = new Jodit('#editor', {
  *     image: {
  *         editSrc: false,
  *         editLink: false
  *     }
  * });
+ * ```
  */
 
 declare module "../Config" {
@@ -89,6 +91,7 @@ Jodit.plugins.imageProperties = function (editor: Jodit) {
      * @memberof module:Image
      * @this HTMLImageElement
      * @example
+     * ```javascript
      * var editor = new Jodit('#editor');
      *     img = editor.doc.createElement('img');
      *
@@ -96,6 +99,7 @@ Jodit.plugins.imageProperties = function (editor: Jodit) {
      * editor.{@link Selection~select|select}(img);
      * // open the properties of the editing window
      * editor.plugins.image.open.call(img); // `this` must be HTMLImageElement
+     * ```
      */
     const open = function (e ?: MouseEvent) {
         const image = <HTMLImageElement>this,

@@ -340,7 +340,9 @@ export default class Selection extends Component{
      *
      * @param  {string} html HTML The text toWYSIWYG be inserted into the document
      * @example
+     * ```javascript
      * parent.selection.insertHTML('<img src="image.png"/>');
+     * ```
      */
     insertHTML(html) {
         let node = this.jodit.doc.createElement('DIV'),
@@ -436,10 +438,12 @@ export default class Selection extends Component{
          * @event afterInsertImage
          * @param {HTMLImageElement} image
          * @example
+         * ```javascript
          * var editor = new Jodit("#redactor");
          * editor.events.on('afterInsertImage', function (image) {
-                 *     image.className = 'bloghead4';
-                 * });
+         *     image.className = 'bloghead4';
+         * });
+         * ```
          */
         this.jodit.events.fire('afterInsertImage', [image]);
     }

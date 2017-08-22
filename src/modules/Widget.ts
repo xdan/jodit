@@ -13,7 +13,7 @@ export namespace Widget {
      * @param {function} callback Callback 'function (color) {}'
      * @param {string} [coldColor] Color value ex. #fff or rgb(123, 123, 123) or rgba(123, 123, 123, 1)
      * @example
-     *
+     * ```javascript
      * $tabs = TabsWidget(editor, {
      *    'Text' : ColorPickerWidget(editor, function (color) {
      *         box.style.color = color;
@@ -22,6 +22,7 @@ export namespace Widget {
      *         box.style.backgroundColor = color;
      *     }, box.style.backgroundColor),
      * });
+     * ```
      */
     export const ColorPickerWidget = (editor: Jodit, callback: (newColor: string) => void, coldColor: string): HTMLDivElement => {
         const valueHex = normalizeColor(coldColor),
@@ -102,7 +103,7 @@ export namespace Widget {
      * @param {object} tabs PlainObject where 'key' will be tab's Title and `value` is tab's content
      *
      * @example
-     *
+     * ```javascript
      * let tabs = widget.create('Tabs', {
      *    'Images': '<div>Images</div>',
      *    'Title 2': editor.helper.dom('<div>Some content</div>'),
@@ -110,7 +111,7 @@ export namespace Widget {
      *         box.style.color = color;
      *     }, box.style.color),
      * });
-
+     * ```
      */
     export const TabsWidget = (editor: Jodit, tabs: {[key: string]: string|HTMLElement|Function}): HTMLDivElement => {
         let box: HTMLDivElement = <HTMLDivElement>dom('<div class="jodit_tabs"></div>'),
@@ -181,19 +182,21 @@ export namespace Widget {
      * @param {Function} callbacks.filebrowser - function that will be called when the user clicks on the file browser tab, and then choose any image in the window that opens, faylbrauzera
      * @params {HTMLNode} image image object
      * @example
+     * ```javascript
      * let widget = new Jodit.modules.Widget(editor);
      *
      * return widget.create('ImageSelector', {
- *      url: function (url, alt) {
- *          editor.selections.insertImage(url);
- *      },
- *      upload: function (images) {
- *          editor.selections.insertImage(images[0]);
- *      },
- *      filebrowser: function (images) {
- *          editor.selections.insertImage(images[0]);
- *      }
- * }, image);
+     *      url: function (url, alt) {
+     *          editor.selections.insertImage(url);
+     *      },
+     *      upload: function (images) {
+     *          editor.selections.insertImage(images[0]);
+     *      },
+     *      filebrowser: function (images) {
+     *          editor.selections.insertImage(images[0]);
+     *      }
+     * }, image);
+     * ```
      */
 
     type ImageSelectorCallbacks = {

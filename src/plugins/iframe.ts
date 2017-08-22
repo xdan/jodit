@@ -15,10 +15,12 @@ declare module "../Config" {
  * When this option is enabled, the editor's content will be placed in an iframe and isolated from the rest of the page.
  *
  * @example
+ * ```javascript
  * new Jodit('#editor', {
  *    iframe = true;
  *    iframeStyle = 'html{margin: 0px;}body{padding:10px;background:transparent;color:#000;position:relative;z-index: 2;user-select:auto;margin:0px;overflow:hidden;}body:after{content:"";clear:both;display:block}';
- * })
+ * });
+ * ```
  */
 Config.prototype.iframe = false;
 
@@ -26,20 +28,24 @@ Config.prototype.iframe = false;
  * Base URL where the root directory for {@link Jodit.defaultOptions.iframe|iframe} mode
  *
  * @example
+ * ```javascript
  * new Jodit('#editor', {
  *    iframe: true,
  *    iframeBaseUrl: 'http://xdsoft.net/jodit/docs/',
- * })
+ * });
+ * ```
  */
 Config.prototype.iframeBaseUrl = false;
 
 /**
  * Custom style toWYSIWYG be used inside the iframe toWYSIWYG display content.
  * @example
+ * ```javascript
  * new Jodit('#editor', {
  *    iframe: true,
  *    iframeStyle: 'html{margin: 0px;}',
  * })
+ * ```
  */
 
 Config.prototype.iframeStyle = 'html{' +
@@ -114,10 +120,12 @@ Config.prototype.iframeStyle = 'html{' +
  * Custom stylesheet files toWYSIWYG be used inside the iframe toWYSIWYG display content.
  *
  * @example
+ * ```javascript
  * new Jodit('#editor', {
-     *    iframe: true,
-     *    iframeCSSLinks: ['styles/default.css'],
-     * })
+ *    iframe: true,
+ *    iframeCSSLinks: ['styles/default.css'],
+ * })
+ * ```
  */
 
 Config.prototype.iframeCSSLinks  = [];

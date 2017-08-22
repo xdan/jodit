@@ -221,10 +221,12 @@ export default class Dialog extends Component{
      *
      * @param {string|string[]|Element|Element[]} content - A string or an HTML element , or an array of strings and elements
      * @example
+     * ```javascript
      * var dialog = new Jodi.modules.Dialog(parent);
      * dialog.setTitle('Hello world');
      * dialog.setTitle(['Hello world', '<button>OK</button>', $('<div>some</div>')]);
      * dialog.open();
+     * ```
      */
     setTitle(content:  string|string[]|Element|Element[]) {
         this.setElements(this.dialogbox_header, content);
@@ -235,10 +237,12 @@ export default class Dialog extends Component{
      *
      * @param {string|string[]|Element|Element[]} content A string or an HTML element , or an array of strings and elements
      * @example
+     * ```javascript
      * var dialog = new Jodi.modules.Dialog(parent);
      * dialog.setTitle('Hello world');
      * dialog.setContent('<form onsubmit="alert(1);"><input type="text" /></form>');
      * dialog.open();
+     * ```
      */
     setContent(content: string|string[]|Element|Element[]) {
         this.setElements(this.dialogbox_content, content);
@@ -249,6 +253,7 @@ export default class Dialog extends Component{
      *
      * @param {string|string[]|Element|Element[]} content - A string or an HTML element , or an array of strings and elements
      * @example
+     * ```javascript
      * var dialog = new Jodi.modules.Dialog(parent);
      * dialog.setTitle('Hello world');
      * dialog.setContent('<form><input id="someText" type="text" /></form>');
@@ -259,6 +264,7 @@ export default class Dialog extends Component{
      *  })
      * ]);
      * dialog.open();
+     * ```
      */
     setFooter(content: string|string[]|Element|Element[]) {
         this.setElements(this.dialogbox_footer, content);
@@ -343,7 +349,6 @@ export default class Dialog extends Component{
          * Called before the opening of the dialog box
          *
          * @event beforeOpen
-         * @this {module:Dialog} current dialog
          */
         if (this.jodit && this.jodit.events) {
             if (this.jodit.events.fire(this, 'beforeOpen') === false) {
@@ -380,7 +385,6 @@ export default class Dialog extends Component{
          * Called after the opening of the dialog box
          *
          * @event afterOpen
-         * @this {module:Dialog} current dialog
          */
         if (this.jodit && this.jodit.events) {
             this.jodit.events.fire(this, 'afterOpen');
@@ -389,10 +393,10 @@ export default class Dialog extends Component{
 
     /**
      * Open if the current window
-     * @method isOpened
+     *
      * @return {boolean} - true window open
      */
-    isOpened() {
+    isOpened(): boolean {
         return this.dialogbox.classList.contains('active');
     }
 
@@ -513,6 +517,7 @@ export default class Dialog extends Component{
      * @fires beforeClose
      * @fires afterClose
      * @example
+     * ```javascript
      * //You can close dialog two ways
      * var dialog = new Jodit.modules.Dialog();
      * dialog.open('Hello world!', 'Title');
@@ -523,6 +528,7 @@ export default class Dialog extends Component{
      * dialog.setFooter($close);
      * // and second way, you can close dialog from content
      * dialog.open('<a onclick="$(this).closest('.jodit_dialog_box').trigger('close_dialog')">Close</a>', 'Title');
+     * ```
      */
     close = (e?: MouseEvent) => {
         if (e) {
@@ -588,6 +594,7 @@ export default class Dialog extends Component{
  * @memberof Jodit
  * @static
  * @example
+ * ```javascript
  * Jodit.Alert("File was uploaded");
  * Jodit.Alert("File was uploaded", "Message");
  * Jodit.Alert("File was uploaded", function() {
@@ -596,6 +603,7 @@ export default class Dialog extends Component{
  * Jodit.Alert("File wasn't uploaded", "Error", function() {
  *    $('form').hide();
  * });
+ * ```
  */
 export const Alert = (msg: string, title?: string|Function, callback?: Function): Dialog => {
     if (typeof title === 'function') {
@@ -639,6 +647,7 @@ Jodit['Alert'] = Alert;
  * @memberof Jodit
  * @static
  * @example
+ * ```javascript
  * Jodit.Promt("Enter your name", "Promt Dialog", function (name) {
  *     if (name.length < 3) {
  *         Jodit.Alert("The name must be at least 3 letters");
@@ -646,6 +655,7 @@ Jodit['Alert'] = Alert;
  *     }
  *     // do something
  * });
+ * ```
  */
 export const Promt = (msg: string, title: string|Function, callback: Function, placeholder?: string): Dialog => {
     const dialog: Dialog = new Dialog(),
@@ -708,11 +718,13 @@ Jodit['Promt'] = Promt;
  * @memberof Jodit
  * @static
  * @example
+ * ```javascript
  * Jodit.Confirm("Are you shure?", "Confirm Dialog", function (yes) {
  *     if (yes) {
  *         // do something
  *     }
  * });
+ * ```
  */
 export const Confirm = (msg: string, title: string|Function, callback?: Function): Dialog => {
     let dialog = new Dialog(),

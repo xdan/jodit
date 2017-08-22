@@ -70,6 +70,7 @@ Config.prototype.enableDragAndDropFileToEditor = true;
  * @property {function} uploader.prepareData Before send file will called this function. First argument it gets [new FormData ()](https://developer.mozilla.org/en/docs/Web/API/FormData), you can use this if you want add some POST parameter.
  * @property {object|boolean} uploader.data=false POST parameters.
  * @example
+ * ```javascript
  * new Jodit('#editor', {
  *      uploader: {
  *          prepareData: function (formdata) {
@@ -78,6 +79,7 @@ Config.prototype.enableDragAndDropFileToEditor = true;
  *          }
  *      }
  * });
+ * ```
  * @property {function} uploader.isSuccess Check if received data was positive
  * @property {function} uploader.getMessage If you need display a message use this
  * @property {function(data)} uploader.process The method of processing data received from the server. Must return this PlainObject format `{
@@ -94,6 +96,7 @@ Config.prototype.enableDragAndDropFileToEditor = true;
  * @memberof Jodit.defaultOptions
  * @tutorial uploader-settings
  * @example
+ * ```javascript
  * new Jodit('#editor', {
  *     uploader: {
  *         url: 'connector/index.php?action=upload',
@@ -135,6 +138,7 @@ Config.prototype.enableDragAndDropFileToEditor = true;
  *         }
  *     }
  * })
+ * ```
  */
 
 Config.prototype.uploader = <UploaderOptions>{
@@ -354,6 +358,7 @@ export default class Uploader extends Component {
      * @param {function} [handlerSuccess] The function toWYSIWYG be called when a successful uploading files toWYSIWYG the server
      * @param {function} [handlerError] The function that will be called during a failed download files toWYSIWYG a server
      * @example
+     * ```javascript
      * var $form = jQuery('<form><input type="text" typpe="file"></form>');
      * jQuery('body').append($form);
      * Jodit.editors.someidfoeditor.uploader.bind($form, function (files) {
@@ -362,6 +367,7 @@ export default class Uploader extends Component {
      *         parent.selection.insertImage(data.files[i])
      *     }
      * });
+     * ```
      */
 
     bind(form: HTMLElement, handlerSuccess?: HandlerSuccess, handlerError?: HandlerError) {

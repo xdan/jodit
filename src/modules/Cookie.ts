@@ -9,8 +9,9 @@ export default class Cookie extends Component {
      * @param {string|number} value
      * @param {int} [days] if it value < 0 cookie removed
      * @example
-     *
+     * ```javascript
      * Jodit.modules.Cookie.set('somename', somevalue, 5);
+     * ```
      */
     static set(name: string|number, value: string|number, days ?: number) {
         let expires: string, date;
@@ -31,8 +32,9 @@ export default class Cookie extends Component {
      * @param {string} name
      * @return {string}
      * @example
-     *
+     * ```javascript
      * console.log(Jodit.modules.Cookie.get('somename'));
+     * ```
      */
     static get (name: string): string|null {
         let nameEQ: string = name + '=',
@@ -59,8 +61,9 @@ export default class Cookie extends Component {
      * @method remove
      * @param {string} name
      * @example
-     *
+     * ```javascript
      * Jodit.modules.Cookie.remove('somename');
+     * ```
      */
     static remove(name: string) {
         Cookie.set(name, '', -1);

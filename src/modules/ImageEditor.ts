@@ -375,6 +375,7 @@ export default class ImageEditor extends Component{
      * @param {function} save.success called after success operation
      * @param {function} save.failed called after failed operation
      * @example
+     * ```javascript
      * var jodit = new Jodit('.editor', {
      *     imageeditor: {
      *         crop: false,
@@ -393,6 +394,7 @@ export default class ImageEditor extends Component{
      *     jodit.selection.insertNode(img);
      *     success();
      * });
+     * ```
      */
     open = (url: string, save: (newname: string|void, box: ActionBox, success: Function, failed: (message: string) => void) => void) => {
         let timestamp = (new Date()).getTime();

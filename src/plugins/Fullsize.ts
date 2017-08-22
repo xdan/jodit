@@ -11,19 +11,23 @@ import * as consts from '../constants'
  */
 
 /**
-* @prop {boolean} fullsize=false true Editor toWYSIWYG open toWYSIWYG full screen
-* @prop {boolean} globalFullsize=true if true, after `fullsize` -  all editors element get jodit_fullsize_box class (z-index: 100000 !important;)
-* @memberof Jodit.defaultOptions
-* @example
-* var editor = new jodit({
-*     fullsize: true // fullsize editor
-* });
-* @example
-* var editor = new Jodit();
-* editor.events.fire('toggleFullsize');
-* editor.events.fire('toggleFullsize', [true]); // fullsize
-* editor.events.fire('toggleFullsize', [false]); // usual mode
-*/
+ * @prop {boolean} fullsize=false true Editor toWYSIWYG open toWYSIWYG full screen
+ * @prop {boolean} globalFullsize=true if true, after `fullsize` -  all editors element get jodit_fullsize_box class (z-index: 100000 !important;)
+ * @memberof Jodit.defaultOptions
+ * @example
+  * ```javascript
+ * var editor = new jodit({
+ *     fullsize: true // fullsize editor
+ * });
+ * ```
+ * @example
+ * ```javascript
+ * var editor = new Jodit();
+ * editor.events.fire('toggleFullsize');
+ * editor.events.fire('toggleFullsize', [true]); // fullsize
+ * editor.events.fire('toggleFullsize', [false]); // usual mode
+ * ```
+ */
 
 declare module "../Config" {
     interface Config {
