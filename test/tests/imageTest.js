@@ -2,9 +2,10 @@ describe('Test image', function() {
     appendTestArea('table_editor_image', true);
     it('Double click on image should open image properties dialog', function () {
         var editor = new Jodit('#table_editor_image');
-        editor.setEditorValue('<img src="/test/tests/artio.jpg"/>')
+
+        editor.setEditorValue('<img src="https://xdsoft.net/jodit/images/artio.jpg"/>')
         simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
-        var dialogs = document.querySelectorAll('.jodit.jodit_dialog_box.jodit_text_icons.active');
+        var dialogs = document.querySelectorAll('.jodit.jodit_dialog_box.active');
 
         expect(dialogs.length).to.equal(1);
     });
@@ -12,9 +13,9 @@ describe('Test image', function() {
         var editor = new Jodit('#table_editor_image', {
             image: { openOnDblClick: false }
         });
-        editor.setEditorValue('<img src="/test/tests/artio.jpg"/>')
+        editor.setEditorValue('<img src="https://xdsoft.net/jodit/images/artio.jpg"/>')
         simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
-        var dialogs = document.querySelectorAll('.jodit.jodit_dialog_box.jodit_text_icons.active');
+        var dialogs = document.querySelectorAll('.jodit.jodit_dialog_box.active');
 
         expect(dialogs.length).to.equal(0);
 
@@ -22,7 +23,7 @@ describe('Test image', function() {
     });
     it('One click on image should show resizer', function () {
         var editor = new Jodit('#table_editor_image');
-        editor.setEditorValue('<img src="/test/tests/artio.jpg"/>')
+        editor.setEditorValue('<img src="https://xdsoft.net/jodit/images/artio.jpg"/>')
 
         var img = editor.editor.querySelector('img');
 

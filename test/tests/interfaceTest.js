@@ -382,7 +382,7 @@ describe('Test interface', function() {
                     buttons: Jodit.defaultOptions.buttons.concat([
                         {
                             name: 'insertDate',
-                            iconURL: 'http://xdsoft.net/jodit/logo.png',
+                            iconURL: 'http://xdsoft.net/jodit/images/logo.png',
                             exec: function (editor) {
                                 editor.selection.insertHTML((new Date('2016/03/16')).toDateString());
                             }

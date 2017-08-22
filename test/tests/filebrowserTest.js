@@ -4,7 +4,7 @@ describe('Jodit FileBrowser Tests', function() {
             var editor = new Jodit(appendTestArea(), {
                 filebrowser: {
                     ajax: {
-                        url: 'http://localhost:8181/index-test.php'
+                        url: 'https://xdsoft.net/jodit/connector/index.php'
                     }
                 }
             });
@@ -15,7 +15,7 @@ describe('Jodit FileBrowser Tests', function() {
             var editor = new Jodit(appendTestArea(), {
                 filebrowser: {
                     ajax: {
-                        url: 'http://localhost:8181/index-test.php'
+                        url: 'https://xdsoft.net/jodit/connector/index.php'
                     }
                 }
             });
@@ -26,11 +26,11 @@ describe('Jodit FileBrowser Tests', function() {
         it('Should add uploader icon in image buttons popup', function () {
             var editor = new Jodit(appendTestArea(), {
                 uploader: {
-                    url: 'http://localhost:8181/index-test.php?action=upload'
+                    url: 'https://xdsoft.net/jodit/connector/index.php?action=upload'
                 },
                 filebrowser: {
                     ajax: {
-                        url: 'http://localhost:8181/index-test.php'
+                        url: 'https://xdsoft.net/jodit/connector/index.php'
                     }
                 }
             });
