@@ -264,7 +264,7 @@ describe('Commands Jodit Editor Tests', function() {
 
     });
 
-    it('After exec some command selection should be restore toWYSIWYG previous', function() {
+    it('After exec some command selection should be restore to previous', function() {
         var editor = new Jodit('#tested_area');
         editor.setEditorValue('<p>test</p>');
 
@@ -303,7 +303,7 @@ describe('Commands Jodit Editor Tests', function() {
         expect(editor.getEditorValue()).to.equal('<p>te<u>data</u>st</p>');
     });
     describe('insertUnorderedList', function() {
-        it('Run command insertUnorderedList should wrap or replace all paragraphs toWYSIWYG ul>li', function () {
+        it('Run command insertUnorderedList should wrap or replace all paragraphs to ul>li', function () {
             var editor = new Jodit('#tested_area');
             editor.setEditorValue('<p>test</p><p>test</p><p>test</p>');
 
@@ -352,8 +352,8 @@ describe('Commands Jodit Editor Tests', function() {
         });
 
     });
-    describe('Blocks', function() {
-        it('Run command formatBlock should wrap or replace container toWYSIWYG specialize tag', function () {
+    describe('formatBlock', function() {
+        it('Should wrap or replace container to specialize tag', function () {
             var editor = new Jodit('#tested_area');
             editor.setEditorValue('<p>testy oprst <span>lets go</span></p>');
 
@@ -370,24 +370,43 @@ describe('Commands Jodit Editor Tests', function() {
 
             expect(editor.getEditorValue()).to.equal('<h5>testy oprst <span>lets go</span></h5>');
         });
-        it('Run command formatBlock and after this set justify', function () {
+        it('Should wrap text into H1 tag near Table, but table must be after this tag', function () {
             var editor = new Jodit('#tested_area');
-            editor.setEditorValue('testy oprst <span>lets go</span>');
+            editor.setEditorValue('test<table><tr><td>post</td></tr></table>');
 
             var sel = editor.win.getSelection(),
                 range = editor.doc.createRange();
 
-            range.setStart(editor.editor.firstChild, 5);
+            range.setStart(editor.editor.firstChild, 4);
             range.collapse(true);
 
             sel.removeAllRanges();
             sel.addRange(range);
 
-            editor.execCommand('formatBlock', false, 'h5');
-            editor.execCommand('justifyLeft');
-            editor.execCommand('fontSize', false, 14);
+            editor.execCommand('formatBlock', false, 'h1');
 
-            expect(editor.getEditorValue()).to.equal('<h5 style="text-align: left;">testy<span style="font-size: 14px;"></span> oprst <span>lets go</span></h5>');
+            expect(editor.getEditorValue()).to.equal('<h1>test</h1><table><tbody><tr><td>post</td></tr></tbody></table>');
+        });
+        describe('justifyLeft', function() {
+            it('Should set align for element which was created using formatBlock', function () {
+                var editor = new Jodit('#tested_area');
+                editor.setEditorValue('testy oprst <span>lets go</span>');
+
+                var sel = editor.win.getSelection(),
+                    range = editor.doc.createRange();
+
+                range.setStart(editor.editor.firstChild, 5);
+                range.collapse(true);
+
+                sel.removeAllRanges();
+                sel.addRange(range);
+
+                editor.execCommand('formatBlock', false, 'h5');
+                editor.execCommand('justifyLeft');
+                editor.execCommand('fontSize', false, 14);
+
+                expect(editor.getEditorValue()).to.equal('<h5 style="text-align: left;">testy<span style="font-size: 14px;"></span> oprst <span>lets go</span></h5>');
+            });
         });
         it('Insert H1 inside TD should crearte new H1 withow replacement', function () {
             var editor = new Jodit('#tested_area');
@@ -422,7 +441,7 @@ describe('Commands Jodit Editor Tests', function() {
 
             expect(editor.getEditorValue()).to.equal('<p><span style="color: rgb(255, 0, 0);">1</span></p><p><span style="color: rgb(255, 0, 0);">2</span></p><p><span style="color: rgb(255, 0, 0);">3</span></p>');
         });
-        it('Set colour toWYSIWYG collapsed position should create empty span and insert inward cursor', function () {
+        it('Set colour to collapsed position should create empty span and insert inward cursor', function () {
             var editor = new Jodit('#tested_area');
             editor.setEditorValue('testy oprst <span>lets go</span>');
 
@@ -479,7 +498,7 @@ describe('Commands Jodit Editor Tests', function() {
         });
     });
     describe('Align', function() {
-        it('Justify toWYSIWYG right', function () {
+        it('Justify to right', function () {
             var editor = new Jodit('#tested_area');
             editor.setEditorValue('<p>test</p>');
 
@@ -496,7 +515,7 @@ describe('Commands Jodit Editor Tests', function() {
 
             expect(editor.getEditorValue()).to.equal('<p style="text-align: right;">test</p>');
         });
-        it('Justify toWYSIWYG center', function () {
+        it('Justify to center', function () {
             var editor = new Jodit('#tested_area');
             editor.setEditorValue('test');
 
@@ -513,7 +532,7 @@ describe('Commands Jodit Editor Tests', function() {
 
             expect(editor.getEditorValue()).to.equal('<p style="text-align: center;">test</p>');
         });
-        it('Justify toWYSIWYG left', function () {
+        it('Justify to left', function () {
             var editor = new Jodit('#tested_area');
             editor.setEditorValue('test some text <span>test</span><br><p>data</p>');
 
@@ -530,7 +549,7 @@ describe('Commands Jodit Editor Tests', function() {
 
             expect(editor.getEditorValue()).to.equal('<p style="text-align: left;">test some text <span>test</span><br></p><p>data</p>');
         });
-        it('Justify toWYSIWYG left in element of unordered list', function () {
+        it('Justify to left in element of unordered list', function () {
             var editor = new Jodit('#tested_area');
             editor.setEditorValue('<ul><li>test</li><li>data</li></ul>');
 
@@ -547,7 +566,7 @@ describe('Commands Jodit Editor Tests', function() {
 
             expect(editor.getEditorValue()).to.equal('<ul><li style="text-align: left;">test</li><li>data</li></ul>');
         });
-        it('Justify toWYSIWYG full', function () {
+        it('Justify to full', function () {
             var editor = new Jodit('#tested_area');
             editor.setEditorValue('<h1>test some text <span>test</span></h1>');
 

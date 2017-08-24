@@ -5,6 +5,7 @@
 @padding-for-hover: 10px;
 @width-icon: 30px;
 @height-icon: 20px;
+
 .jodit-add-new-line {
   box-sizing: border-box;
   * {
@@ -59,4 +60,10 @@
   }
 
   display: none;
+}
+
+.jodit_source_mode {
+  .jodit-add-new-line {
+    display: none !important;
+  }
 }

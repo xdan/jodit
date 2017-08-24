@@ -175,11 +175,11 @@ Jodit.plugins.iframe = function (editor: Jodit) {
             doc.head.appendChild(style);
         }
 
-        css(editor.iframe, {
-            width: editor.options.width === 'auto' ? '100%' : editor.options.width,
-            height: editor.options.height,
-            minHeight: editor.options.minHeight
-        });
+        // css(editor.iframe, {
+        //     width: editor.options.width === 'auto' ? '100%' : editor.options.width,
+        //     height: editor.options.height,
+        //     minHeight: editor.options.minHeight
+        // });
 
         if (editor.options.height === 'auto') {
             doc.documentElement.style.overflowY = 'hidden';

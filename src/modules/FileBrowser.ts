@@ -1004,7 +1004,7 @@ export default class FileBrowser extends Component {
 
     private __ajax2: Ajax;
 
-    private send(name: string, success: (resp: FileBrowserAnswer) => void, error: (error: string) => void) {
+    private send(name: string, success: (resp: FileBrowserAnswer) => void, error: (error: Error) => void) {
         let xhr: Ajax,
             opts: FileBrowserAjaxOptions = extend(true, {}, this.options.ajax, this.options[name] !== undefined ? this.options[name] : this.options.ajax);
 
@@ -1027,20 +1027,20 @@ export default class FileBrowser extends Component {
      * @param {function} success
      * @param {string} success.path path toWYSIWYG file from connector's root (without filename)
      * @param {string} success.name filename
-     * @param {function} failed filename
-     * @param {string} failed.message
+     * @param {function} onFailed filename
+     * @param {string} onFailed.message
      */
-    getPathByUrl = (url: string, success: (path: string, name: string, source: string) => void, failed) => {
+    getPathByUrl = (url: string, success: (path: string, name: string, source: string) => void, onFailed: (error: Error) => void) => {
         let action = 'getlocalfilebyurl', self = this;
         this.options[action].data.url = url;
         this.send(action, (resp: FileBrowserAnswer) => {
             if (self.options.isSuccess(resp)) {
                 success(resp.data.path, resp.data.name, resp.data.source);
             } else {
-                failed(resp);
+                onFailed(new Error(this.options.getMessage(resp)));
             }
-        }, (resp)  => {
-            failed(resp);
+        }, (resp: Error)  => {
+            onFailed(resp);
         });
     };
 
@@ -1060,9 +1060,9 @@ export default class FileBrowser extends Component {
                 let respData = <FileBrowserAnswer>self.options.items.process.call(self, resp);
                 self.generateItemsBox(respData.data.sources);
                 self.someSelectedWasChanged();
-            }, (message: string) => {
-                Alert(message);
-                self.status(self.jodit.i18n(message));
+            }, (error: Error) => {
+                Alert(error.message);
+                self.status(self.jodit.i18n(error.message));
             });
         }
     };
@@ -1122,8 +1122,8 @@ export default class FileBrowser extends Component {
             } else {
                 this.status(this.options.getMessage(resp));
             }
-        }, (error) => {
-            this.status(error);
+        }, (error: Error) => {
+            this.status(error.message);
         });
     };
 
@@ -1146,8 +1146,8 @@ export default class FileBrowser extends Component {
             } else {
                 this.status(this.options.getMessage(resp));
             }
-        }, (error) => {
-            this.status(error);
+        }, (error: Error) => {
+            this.status(error.message);
         });
     };
 
@@ -1172,8 +1172,8 @@ export default class FileBrowser extends Component {
                 this.someSelectedWasChanged();
                 this.status(this.options.getMessage(resp), true);
             }
-        }, (error) => {
-            this.status(error);
+        }, (error: Error) => {
+            this.status(error.message);
         });
     }
 
@@ -1284,7 +1284,7 @@ export default class FileBrowser extends Component {
      *
      * @method openImageEditor
      */
-    openImageEditor = (href: string, name: string, path: string, source: string, onSuccess?: Function, onFailed?: Function) => {
+    openImageEditor = (href: string, name: string, path: string, source: string, onSuccess?: Function, onFailed?: (error: Error) => void) => {
         (<ImageEditor>this.jodit.getInstance('ImageEditor')).open(href, (newname, box, success, failed) => {
             if (this.options[box.action] === undefined) {
                 this.options[box.action] = {};
@@ -1309,15 +1309,15 @@ export default class FileBrowser extends Component {
                         onSuccess();
                     }
                 } else {
-                    failed(this.options.getMessage(resp));
+                    failed(new Error(this.options.getMessage(resp)));
                     if (onFailed) {
-                        onFailed(this.options.getMessage(resp));
+                        onFailed(new Error(this.options.getMessage(resp)));
                     }
                 }
-            }, (resp: string) => {
-                failed(resp);
+            }, (error: Error) => {
+                failed(error);
                 if (onFailed) {
-                    onFailed(resp);
+                    onFailed(error);
                 }
             });
         });

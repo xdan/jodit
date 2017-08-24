@@ -1,11 +1,11 @@
 import * as consts from './constants'
-import {dom, trim, $$, normalizeColor, isURL, convertMediaURLToVideoEmbed, val} from './modules/Helpers'
-import Dom from "./modules/Dom";
+import {dom, trim, $$, isURL, convertMediaURLToVideoEmbed, val} from './modules/Helpers'
+// import Dom from "./modules/Dom";
 import Jodit from "./Jodit";
 import {ControlType} from "./modules/Toolbar";
 import {FileBrowserCallBcackData} from "./modules/FileBrowser";
 import {Widget} from "./modules/Widget";
-import ColorPickerWidget = Widget.ColorPickerWidget;
+// import ColorPickerWidget = Widget.ColorPickerWidget;
 import TabsWidget = Widget.TabsWidget;
 import ImageSelectorWidget = Widget.ImageSelectorWidget;
 
@@ -24,7 +24,7 @@ export class Config {
      * For example, in Joomla, the top menu bar closes Jodit toolbar when scrolling. Therefore, it is necessary to move the toolbar Jodit by this amount [more](http://xdsoft.net/jodit/doc/#2.5.57)
      */
 
-    offsetTopForAssix: number = 0;
+    // offsetTopForAssix: number = 0;
 
 
     /**
@@ -259,8 +259,12 @@ export class Config {
      */
     defaultMode: number = consts.MODE_WYSIWYG;
 
-
-    useSplitMode: boolean = false;
+    /**
+     * Use split mode
+     *
+     * @type {boolean}
+     */
+    useSplitMode: boolean = true;
 
     /**
      * The colors in HEX representation to select a color for the background and for the text in colorpicker
@@ -485,7 +489,7 @@ export class Config {
      * @type {boolean}
      */
     textIcons: boolean = false;
-};
+}
 Config.prototype.controls = {
     about: {
         exec: (editor: Jodit) => {
@@ -494,14 +498,29 @@ Config.prototype.controls = {
             dialog.setTitle(editor.i18n('About Jodit'));
             dialog.setContent(
                 '<div class="jodit_about">\
-                    <div>' + editor.i18n('Jodit Editor') + ' v.' + editor.getVersion() + ' ' + editor.i18n('Free Non-commercial Version') + '</div>\
-                        <div><a href="http://xdsoft.net/jodit/" target="_blank">http://xdsoft.net/jodit/</a></div>\
-                        <div><a href="http://xdsoft.net/jodit/doc/" target="_blank">' + editor.i18n('Jodit User\'s Guide') + '</a> ' + editor.i18n('contains detailed help for using') + '</div>\
-                        <div>' + editor.i18n('For information about the license, please go to our website:') + '</div>\
-                        <div><a href="http://xdsoft.net/jodit/license.html" target="_blank">http://xdsoft.net/jodit/license.html</a></div>\
-                        <div><a href="http://xdsoft.net/jodit/#download" target="_blank">' + editor.i18n('Buy full version') + '</a></div>\
-                        <div>' + editor.i18n('Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.') + '</div>\
-                    </div>'
+                    <div>' +
+                        editor.i18n('Jodit Editor') + ' v.' + editor.getVersion() + ' ' + editor.i18n('Free Non-commercial Version') +
+                    '</div>' +
+                    '<div>' +
+                        '<a href="http://xdsoft.net/jodit/" target="_blank">http://xdsoft.net/jodit/</a>' +
+                    '</div>' +
+                    '<div>' +
+                        '<a href="http://xdsoft.net/jodit/doc/" target="_blank">' + editor.i18n('Jodit User\'s Guide') + '</a> ' +
+                        editor.i18n('contains detailed help for using') +
+                    '</div>' +
+                    '<div>' +
+                        editor.i18n('For information about the license, please go to our website:') +
+                    '</div>' +
+                    '<div>' +
+                        '<a href="http://xdsoft.net/jodit/license.html" target="_blank">http://xdsoft.net/jodit/license.html</a>' +
+                    '</div>' +
+                    '<div>' +
+                        '<a href="http://xdsoft.net/jodit/#download" target="_blank">' + editor.i18n('Buy full version') + '</a>' +
+                    '</div>' +
+                    '<div>' +
+                        editor.i18n('Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.') +
+                    '</div>' +
+                '</div>'
             );
             dialog.open();
         },
@@ -514,15 +533,15 @@ Config.prototype.controls = {
         tooltip: "Insert Horizontal Line"
     },
     image : {
-        popup: (editor: Jodit, current: HTMLElement|false, self: ControlType, close) => {
-            const insertImage = (url) => {
+        popup: (editor: Jodit, current: HTMLImageElement|false, self: ControlType, close) => {
+            const insertImage = (url: string) => {
                 editor.selection.insertNode(dom('<img src="' + url + '"/>', editor.doc));
             };
 
-            let sourceImage;
+            let sourceImage: HTMLImageElement;
 
             if (current && current.nodeType !== Node.TEXT_NODE && (current.tagName === 'IMG' || $$('img', current).length)) {
-                sourceImage = current.tagName === 'IMG' ? current : $$('img', current)[0];
+                sourceImage = current.tagName === 'IMG' ? current : <HTMLImageElement>$$('img', current)[0];
             }
 
             return ImageSelectorWidget(editor, {
@@ -611,132 +630,5 @@ Config.prototype.controls = {
         },
         tags: ["iframe"],
         tooltip: "Insert youtube/vimeo video"
-    },
-    table : {
-        cols: 10,
-        popup: (editor: Jodit, current,  control: ControlType, close: Function) => {
-            let i: number,
-                j: number,
-                k: number,
-                div: HTMLDivElement,
-                rows_count: number = 1,
-                cols_count: number = 1,
-                default_cols_count: number = control.cols;
-
-            const form: HTMLFormElement = <HTMLFormElement>dom('<form class="jodit_form jodit_form_inserter">' +
-                '<label>' +
-                '<span>1</span> &times; <span>1</span>' +
-                '</label>' +
-                '</form>'),
-
-
-                rows: HTMLSpanElement = form.querySelectorAll('span')[0],
-                cols: HTMLSpanElement = form.querySelectorAll('span')[1],
-                cells: HTMLDivElement[] = [];
-
-            const generateRows = (need_rows) => {
-                const cnt: number = (need_rows + 1) * default_cols_count;
-                if (cells.length > cnt) {
-                    for (i = cnt; i < cells.length; i += 1) {
-                        form.removeChild(cells[i]);
-                        delete cells[i];
-                    }
-                    cells.length = cnt;
-                }
-                for (i = 0; i < cnt; i += 1) {
-                    if (!cells[i]) {
-                        div = document.createElement('div');
-                        div.setAttribute('data-index', i.toString());
-                        cells.push(div);
-                    }
-                }
-                cells.forEach((cell: HTMLDivElement) => {
-                    form.appendChild(cell);
-                });
-
-                form.style.width = (cells[0].offsetWidth * default_cols_count) + 'px';
-            };
-
-            generateRows(1);
-
-            cells[0].className = 'hovered';
-
-            const mouseenter = (e: MouseEvent, index?: number) => {
-                const div = <HTMLDivElement>e.target;
-                if (div.tagName !== 'DIV') {
-                    return;
-                }
-                k = isNaN(index) ? parseInt(div.getAttribute('data-index'), 10) : index;
-                rows_count = Math.ceil((k + 1) / default_cols_count);
-                cols_count = k % default_cols_count + 1;
-                generateRows(rows_count);
-
-                if (cols_count === default_cols_count || (cols_count < default_cols_count - 1 && default_cols_count > 10)) {
-                    default_cols_count = cols_count === default_cols_count ? default_cols_count + 1 : default_cols_count - 1;
-                    return mouseenter(e, cols_count + (rows_count - 1)  * default_cols_count - 1);
-                }
-
-                for (i = 0; i < cells.length; i += 1) {
-                    if (cols_count >= i % default_cols_count + 1 &&  rows_count >= Math.ceil((i + 1) / default_cols_count)) {
-                        cells[i].className = 'hovered';
-                    } else {
-                        cells[i].className = '';
-                    }
-                }
-
-                cols.innerText = cols_count.toString();
-                rows.innerText = rows_count.toString();
-            };
-
-            form.addEventListener('mousemove', mouseenter);
-
-            editor.__on(form, 'touchstart mousedown', (e: MouseEvent) => {
-                const div = <HTMLDivElement>e.target;
-                e.preventDefault();
-                e.stopImmediatePropagation();
-                if (div.tagName !== 'DIV') {
-                    return;
-                }
-                k =  parseInt(div.getAttribute('data-index'), 10);
-                rows_count = Math.ceil((k + 1) / default_cols_count);
-                cols_count = k % default_cols_count + 1;
-
-                const table: HTMLTableElement = editor.doc.createElement('table');
-                let first_td: HTMLTableCellElement,
-                    tr: HTMLTableRowElement,
-                    td: HTMLTableCellElement,
-                    br: HTMLBRElement,
-                    w: string = (100 / cols_count).toFixed(7);
-
-                for (i = 1; i <= rows_count; i += 1) {
-                    tr = editor.doc.createElement('tr');
-                    for (j = 1; j <= cols_count; j += 1) {
-                        td = editor.doc.createElement('td');
-
-                        td.style.width = w + '%';
-                        if (!first_td) {
-                            first_td = td;
-                        }
-                        br = editor.doc.createElement('br');
-                        td.appendChild(br);
-                        tr.appendChild(editor.doc.createTextNode("\n"));
-                        tr.appendChild(editor.doc.createTextNode("\t"));
-                        tr.appendChild(td);
-                    }
-                    table.appendChild(editor.doc.createTextNode("\n"));
-                    table.appendChild(tr);
-                }
-
-                editor.selection.insertNode(editor.doc.createTextNode("\n"));
-                editor.selection.insertNode(table);
-                editor.selection.setCursorIn(first_td);
-
-                close();
-            });
-
-            return form;
-        },
-        tags: ['table'],
-        tooltip: "Insert table"
     }
 };

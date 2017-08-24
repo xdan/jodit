@@ -1,7 +1,7 @@
 import Component from './modules/Component';
 import Events from './modules/Events';
 import Selection from './modules/Selection';
-import Toolbar, {ControlType} from './modules/Toolbar';
+import Toolbar from './modules/Toolbar';
 import Cookie from './modules/Cookie';
 import * as consts from './constants';
 import {extend, inArray, dom, each, sprintf, css, defaultLanguage, debounce} from './modules/Helpers';
@@ -9,6 +9,7 @@ import * as helper from './modules/Helpers';
 import FileBrowser from "./modules/FileBrowser";
 import Uploader from "./modules/Uploader";
 import {Config} from "./Config";
+import Dom from "./modules/Dom";
 
 declare let appVersion: string;
 
@@ -178,7 +179,9 @@ export default class Jodit extends Component{
         }
 
         this.__on(window, 'resize', () => {
-            this.events.fire('resize');
+            if (this.events) {
+                this.events.fire('resize');
+            }
         });
 
         this.container.appendChild(this.workplace);
@@ -241,29 +244,35 @@ export default class Jodit extends Component{
     private __createEditor() {
         if (this.events.fire('createEditor') !== false) {
             this.editor = <HTMLDivElement>dom(`<div class="jodit_wysiwyg" contenteditable aria-disabled="false" tabindex="${this.options.tabIndex}"></div>`);
-            css(this.editor, {
-                width: this.options.width,
-                height: this.options.height,
-                minHeight: this.options.minHeight
-            });
             // fix fo ie
             this.workplace.appendChild(document.createTextNode("\n"));
             this.workplace.appendChild(this.editor);
             this.workplace.appendChild(document.createTextNode("\n"));
+            css(this.editor, {
+                minHeight: this.options.minHeight
+            });
         }
+
+        css(this.workplace, {
+            width: this.options.width,
+            height: this.options.height,
+            minHeight: this.options.minHeight
+        });
 
         if (this.options.editorCssClass) {
             this.editor.classList.add(this.options.editorCssClass);
         }
 
         // proxy events
-        ['keydown', 'keyup', 'keypress', 'mousedown', 'mouseup', 'mousepress', 'paste', 'resize', 'touchstart', 'touchend'].forEach((event_type) => {
-            this.editor.addEventListener(event_type, (e) => {
-                if (this.events.fire(event_type, [e]) === false) {
-                    e.preventDefault();
-                    return false;
+        ['keydown', 'keyup', 'keypress', 'mousedown', 'mouseup', 'mousepress', 'paste', 'resize', 'touchstart', 'touchend', 'focus', 'blur'].forEach((event_type) => {
+            this.__on(this.editor, event_type, (e) => {
+                if (this.events) {
+                    if (this.events.fire(event_type, [e]) === false) {
+                        e.preventDefault();
+                        return false;
+                    }
+                    this.setEditorValue(); // sync all events in element
                 }
-                this.setEditorValue(); // sync all events in element
             });
         });
 
@@ -327,11 +336,6 @@ export default class Jodit extends Component{
             this.element.removeAttribute('style');
         }
 
-        delete this['selection'];
-
-        this.events.off();
-        delete this['events'];
-
         Object.keys(this.__plugins).forEach((pluginName) => {
             if (this.__plugins[pluginName].destruct !== undefined && typeof this.__plugins[pluginName].destruct === 'function') {
                 this.__plugins[pluginName].destruct();
@@ -344,6 +348,11 @@ export default class Jodit extends Component{
                 component.destruct();
             }
         });
+
+        delete this['selection'];
+
+        this.events.off();
+        delete this['events'];
 
         this.container.parentNode.removeChild(this.container);
         delete this['container'];
@@ -457,7 +466,7 @@ export default class Jodit extends Component{
             this.editor.innerHTML = value;
         }
 
-        const old_value = this.getElementValue();
+        const old_value: string = this.getElementValue();
         if (old_value !== this.getEditorValue()) {
             this.setElementValue(this.getEditorValue());
             this.events.fire('change', [old_value, this.getEditorValue()]);
@@ -549,15 +558,16 @@ export default class Jodit extends Component{
         this.__whoLocked = '';
         this.editor.classList.remove('jodit_disabled');
     }
+
     isLocked = (): boolean => {
         return this.__whoLocked !== '';
-    }
+    };
     isLockedNotBy = (name: string): boolean => {
         return this.isLocked() && this.__whoLocked !== name;
-    }
+    };
 
-    mode = consts.MODE_WYSIWYG;
-    getMode() {
+    mode: number = consts.MODE_WYSIWYG;
+    getMode(): number {
         return this.mode;
     }
 
@@ -570,18 +580,17 @@ export default class Jodit extends Component{
      * console.log(editor.getRealMode());
      * ```
      */
-    getRealMode() {
-        return this.mode !== consts.MODE_SPLIT ? this.mode : ((document.activeElement && document.activeElement.tagName === 'TEXTAREA') ? consts.MODE_SOURCE : consts.MODE_WYSIWYG);
+    getRealMode(): number {
+        return this.getMode() !== consts.MODE_SPLIT ? this.getMode() : Dom.isOrContains(this.editor, document.activeElement) ? consts.MODE_WYSIWYG : consts.MODE_SOURCE;
     }
 
     /**
      * Set current mode
      *
-     * @method setMode
      * @fired beforeSetMode
      * @fired afterSetMode
      */
-    setMode(mode) {
+    setMode(mode: number) {
         let data = {
                 mode
             },
@@ -638,20 +647,19 @@ export default class Jodit extends Component{
      * ```
      */
     toggleMode () {
-        let mode = this.getMode();
+        let mode: number = this.getMode();
         if (inArray(mode + 1, [consts.MODE_SOURCE, consts.MODE_WYSIWYG, this.options.useSplitMode ? consts.MODE_SPLIT : 9])) {
             mode += 1;
         } else {
             mode = consts.MODE_WYSIWYG;
         }
+
         this.setMode(mode);
     }
 
     /**
      * Internationalization method. Uses Jodit.lang object
      *
-     * @method i18n
-     * @memberof module:Jodit
      * @param {string} key Some text
      * @param {string[]} params Some text
      * @return {string}
@@ -678,7 +686,7 @@ export default class Jodit extends Component{
      * console.log(Jodit.prototype.i18n('Hello world', 'mr.Perkins', 'day')) //Hello mr.Perkins Good day
      * ```
      */
-    i18n (key: string, ...params: Array<string|number>) {
+    i18n (key: string, ...params: Array<string|number>): string {
         if (this.options !== undefined && this.options.debugLanguage) {
             return '{' + key + '}';
         }

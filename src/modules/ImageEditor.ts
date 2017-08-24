@@ -396,7 +396,7 @@ export default class ImageEditor extends Component{
      * });
      * ```
      */
-    open = (url: string, save: (newname: string|void, box: ActionBox, success: Function, failed: (message: string) => void) => void) => {
+    open = (url: string, save: (newname: string|void, box: ActionBox, success: Function, failed: (error: Error) => void) => void) => {
         let timestamp = (new Date()).getTime();
 
         this.image = document.createElement('img');

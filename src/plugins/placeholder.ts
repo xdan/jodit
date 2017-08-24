@@ -69,6 +69,7 @@ Jodit.plugins.placeholder = function (editor: Jodit) {
     const show =  () => {
             let marginTop: number = 0,
                 marginLeft: number = 0;
+
             const style: CSSStyleDeclaration = editor.win.getComputedStyle(editor.editor);
 
             if (editor.editor.firstChild && editor.editor.firstChild.nodeType === Node.ELEMENT_NODE) {
@@ -98,7 +99,7 @@ Jodit.plugins.placeholder = function (editor: Jodit) {
             if (!editor.editor) {
                 return;
             }
-            if (editor.getMode() !== consts.MODE_WYSIWYG) {
+            if (editor.getRealMode() !== consts.MODE_WYSIWYG) {
                 return hide();
             }
             if (editor.getEditorValue()) {

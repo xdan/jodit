@@ -263,10 +263,10 @@ export default class Selection extends Component{
      * @return {boolean|Node} The element under the cursor or false if undefined or not in editor
      */
     current(): false|Node {
-        if (this.jodit.win.getSelection !== undefined) {
-            let sel = this.jodit.win.getSelection();
+        if (this.jodit.getRealMode() === consts.MODE_WYSIWYG && this.jodit.win.getSelection !== undefined) {
+            const sel = this.jodit.win.getSelection();
             if (sel.rangeCount > 0) {
-                let range = sel.getRangeAt(0);
+                const range: Range = sel.getRangeAt(0);
                 let node = range.startContainer;
                 if (range.startContainer.nodeType !== Node.TEXT_NODE && range.startContainer === range.endContainer && range.startOffset !== range.endOffset) {
                     node = range.startContainer.childNodes[range.startOffset];

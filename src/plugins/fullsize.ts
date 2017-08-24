@@ -50,16 +50,18 @@ Config.prototype.controls.fullsize = {
 Jodit.plugins.fullsize = function (editor: Jodit) {
     let shown = false,
         resize  = () => {
-            if (shown) {
-                css(editor.container, {
-                    height: window.innerHeight,
-                    width: window.innerWidth
-                });
-            } else {
-                css(editor.container, {
-                    height: null,
-                    width: null
-                });
+            if (editor.events) {
+                if (shown) {
+                    css(editor.container, {
+                        height: window.innerHeight,
+                        width: window.innerWidth
+                    });
+                } else {
+                    css(editor.container, {
+                        height: null,
+                        width: null
+                    });
+                }
             }
         },
         toggle = (condition) => {

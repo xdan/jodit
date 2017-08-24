@@ -162,11 +162,7 @@ Config.prototype.uploader = <UploaderOptions>{
     },
 
     process: function (this: Uploader, resp: UploaderAnswer): UploaderData {
-        return {
-            files: resp.data.files || [],
-            path: resp.data.path || '',
-            baseurl: resp.data.baseurl || '',
-        };
+        return resp.data;
     },
 
     error: function (this: Uploader, e: Error) {

@@ -314,57 +314,68 @@ describe('Test interface', function() {
 
                 expect(list.style.display).to.equal('none');
             });
-            it('Open LINK insert dialog and insert new link.', function() {
-                var editor = new Jodit('#table_editor_interface', {
-                    observer: {
-                        timeout: 0
-                    }
+            describe('Open LINK insert dialog and insert new link', function() {
+                it('Should insert new link', function() {
+                    var editor = new Jodit('#table_editor_interface', {
+                        observer: {
+                            timeout: 0
+                        }
+                    });
+
+                    editor.setEditorValue('')
+
+
+                    simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link'))
+
+                    var list = editor.container.querySelector('.jodit_toolbar_popup');
+
+                    expect(list.style.display).to.equal('block');
+                    expect(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_unlink_button').style.display).to.equal('none');
+
+                    editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=url]').value = '' // try wrong url
+                    editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=text]').value = '123'
+                    simulateEvent('submit', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_form'))
+
+                    expect(editor.container.querySelectorAll('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=url].jodit_error').length).to.equal(1);
+
+                    editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=url]').value = 'http://xdsoft.net/jodit/images/artio.jpg'
+                    simulateEvent('submit', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_form'))
+
+                    expect(sortAtrtibutes(editor.getEditorValue())).to.equal('<a href="http://xdsoft.net/jodit/images/artio.jpg">123</a>');
+
+                    simulateEvent('mousedown', 0, editor.editor)
+
+                    expect(list.style.display).to.equal('none');
                 });
+                it('Should restore source text after user clicked on Unlink button', function() {
+                    var editor = new Jodit('#table_editor_interface', {
+                        observer: {
+                            timeout: 0
+                        }
+                    });
+                    
+                    editor.setEditorValue('<a target="_blank" rel="nofollow" href="#test">test</a>')
 
-                editor.setEditorValue('')
+                    var sel = editor.win.getSelection(),
+                        range = editor.doc.createRange();
 
+                    range.selectNode(editor.editor.firstChild);
+                    sel.removeAllRanges();
+                    sel.addRange(range);
 
-                simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link'))
+                    
+                    simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link'))
 
-                var list = editor.container.querySelector('.jodit_toolbar_popup');
+                    expect(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=url]').value).to.equal('#test');
+                    expect(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=target]').checked).to.equal(true);
+                    expect(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=nofollow]').checked).to.equal(true);
+                    expect(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_unlink_button').style.display).to.not.equal('none');
+                    expect(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_link_insert_button').innerHTML).to.equal(editor.i18n('Update'));
 
-                expect(list.style.display).to.equal('block');
-                expect(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_unlink_button').style.display).to.equal('none');
+                    simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_unlink_button'))
 
-                editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=url]').value = '' // try wrong url
-                editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=text]').value = '123'
-                simulateEvent('submit', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_form'))
-
-                expect(editor.container.querySelectorAll('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=url].jodit_error').length).to.equal(1);
-
-                editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=url]').value = 'http://xdsoft.net/jodit/images/artio.jpg'
-                simulateEvent('submit', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_form'))
-
-                expect(sortAtrtibutes(editor.getEditorValue())).to.equal('<a href="http://xdsoft.net/jodit/images/artio.jpg">123</a>');
-
-                simulateEvent('mousedown', 0, editor.editor)
-
-                expect(list.style.display).to.equal('none');
-
-                editor.setEditorValue('<a target="_blank" rel="nofollow" href="#test">test</a>')
-
-                var sel = editor.win.getSelection(),
-                    range = editor.doc.createRange();
-
-                range.selectNode(editor.editor.firstChild);
-                sel.removeAllRanges();
-                sel.addRange(range);
-
-                simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link'))
-
-                expect(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=url]').value).to.equal('#test');
-                expect(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=target]').checked).to.equal(true);
-                expect(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=nofollow]').checked).to.equal(true);
-                expect(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_unlink_button').style.display).to.not.equal('none');
-
-                simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_unlink_button'))
-
-                expect(sortAtrtibutes(editor.getEditorValue())).to.equal('test')
+                    expect(sortAtrtibutes(editor.getEditorValue())).to.equal('test')
+                });
             });
         });
         describe('Buttons', function () {
@@ -570,7 +581,7 @@ describe('Test interface', function() {
             it('Click on Italic button when selection is collapsed should create new <em> element and set cursor into it', function() {
                 var editor = new Jodit('#table_editor_interface');
 
-                editor.setEditorValue('Text toWYSIWYG text')
+                editor.setEditorValue('Text to text')
 
                 var sel = editor.win.getSelection(), range = editor.doc.createRange();
                 range.setStart(editor.editor.firstChild, 0)
@@ -582,12 +593,12 @@ describe('Test interface', function() {
 
                 editor.selection.insertHTML('test');
 
-                expect(editor.getEditorValue()).to.equal('<em>test</em>Text toWYSIWYG text');
+                expect(editor.getEditorValue()).to.equal('<em>test</em>Text to text');
             });
             it('Click on unordered list button when selection is collapsed should wrap current box in  new <ul><li> element', function() {
                 var editor = new Jodit('#table_editor_interface');
 
-                editor.setEditorValue('<p>Text toWYSIWYG text</p>')
+                editor.setEditorValue('<p>Text to text</p>')
 
                 var sel = editor.win.getSelection(), range = editor.doc.createRange();
 
@@ -600,7 +611,7 @@ describe('Test interface', function() {
 
                 editor.selection.insertHTML('test ');
 
-                expect(editor.getEditorValue()).to.equal('<ul><li>Text test toWYSIWYG text</li></ul>');
+                expect(editor.getEditorValue()).to.equal('<ul><li>Text test to text</li></ul>');
             });
         });
         describe('Inline', function () {

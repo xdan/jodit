@@ -112,7 +112,7 @@ Jodit.plugins.cleanHTML = function (editor: Jodit) {
         }
 
         editor.events.on('beforeSetElementValue', function (data) {
-            if (editor.getMode() === consts.MODE_WYSIWYG) {
+            if (editor.getRealMode() === consts.MODE_WYSIWYG) {
                 const div: HTMLElement = <HTMLElement>Dom.create('div', '', editor.doc);
                 let node, remove = [], removeAttrs, i;
                 div['innerHTML'] = data.value;

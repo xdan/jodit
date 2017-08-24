@@ -201,10 +201,10 @@ export default class Dialog extends Component{
         this.dialog.style.top = (y || top) + 'px';
     }
 
-    private setElements(root: HTMLDivElement|HTMLHeadingElement, elements: string|string[]|Element|Element[]) {
+    private setElements(root: HTMLDivElement|HTMLHeadingElement, elements: string|Element|Array<string|Element>) {
         let elements_list: HTMLElement[] = [];
         asArray(elements).forEach((elm) => {
-            let element = dom(elm);
+            let element: HTMLElement = dom(elm);
             elements_list.push(element);
             if (element.parentNode !== root) {
                 root.appendChild(element);
@@ -228,7 +228,7 @@ export default class Dialog extends Component{
      * dialog.open();
      * ```
      */
-    setTitle(content:  string|string[]|Element|Element[]) {
+    setTitle(content:  string|Element|Array<string|Element>) {
         this.setElements(this.dialogbox_header, content);
     }
 
@@ -244,7 +244,7 @@ export default class Dialog extends Component{
      * dialog.open();
      * ```
      */
-    setContent(content: string|string[]|Element|Element[]) {
+    setContent(content: string|Element|Array<string|Element>) {
         this.setElements(this.dialogbox_content, content);
     }
 
@@ -266,7 +266,7 @@ export default class Dialog extends Component{
      * dialog.open();
      * ```
      */
-    setFooter(content: string|string[]|Element|Element[]) {
+    setFooter(content: string|Element|Array<string|Element>) {
         this.setElements(this.dialogbox_footer, content);
         this.dialog.classList.toggle('with_footer', !!content);
     }
@@ -344,7 +344,7 @@ export default class Dialog extends Component{
      * @fires {@link event:beforeOpen} id returns 'false' then the window will not open
      * @fires {@link event:afterOpen}
      */
-    open(content?: string|string[]|Element|Element[], title?: string|string[]|Element|Element[], destroyAfter?: boolean, modal?: boolean) {
+    open(content?: string|Element|Array<string|Element>, title?: string|Element|Array<string|Element>, destroyAfter?: boolean, modal?: boolean) {
         /**
          * Called before the opening of the dialog box
          *
@@ -500,6 +500,7 @@ export default class Dialog extends Component{
             this.setPosition();
         }
     }
+
     /**
      * It destroys all objects created for the windows and also includes all the handlers for the window object
      */
@@ -611,9 +612,9 @@ export const Alert = (msg: string, title?: string|Function, callback?: Function)
         title = undefined;
     }
 
-    let dialog = new Dialog(),
-        $div = dom('<div class="jodit_alert"></div>'),
-        $ok = dom('<a href="javascript:void(0)" style="float:left;" class="jodit_button">' + Toolbar.getIcon('cancel') + '<span>' + Jodit.prototype.i18n('Ok') + '</span></a>');
+    const dialog:Dialog = new Dialog(),
+        $div: HTMLDivElement = <HTMLDivElement>dom('<div class="jodit_alert"></div>'),
+        $ok: HTMLAnchorElement = <HTMLAnchorElement>dom('<a href="javascript:void(0)" style="float:left;" class="jodit_button">' + Toolbar.getIcon('cancel') + '<span>' + Jodit.prototype.i18n('Ok') + '</span></a>');
 
     $div.appendChild(dom(msg));
 
@@ -726,12 +727,10 @@ Jodit['Promt'] = Promt;
  * });
  * ```
  */
-export const Confirm = (msg: string, title: string|Function, callback?: Function): Dialog => {
-    let dialog = new Dialog(),
-        $cancel,
-        $ok,
-        $div = dom('<form class="jodit_promt"></form>'),
-        $label = dom('<label></label>');
+export const Confirm = (msg: string, title: string|((yes: boolean) => void), callback?: (yes: boolean) => void): Dialog => {
+    const dialog = new Dialog(),
+        $div: HTMLDivElement = <HTMLDivElement>dom('<form class="jodit_promt"></form>'),
+        $label: HTMLLabelElement = <HTMLLabelElement>dom('<label></label>');
 
     if (typeof title === 'function') {
         callback = title;
@@ -741,7 +740,12 @@ export const Confirm = (msg: string, title: string|Function, callback?: Function
     $label.appendChild(dom(msg));
     $div.appendChild($label);
 
-    $cancel = dom('<a href="javascript:void(0)" style="float:right;" class="jodit_button">' + Toolbar.getIcon('cancel') + '<span>' + Jodit.prototype.i18n('Cancel') + '</span></a>');
+    const $cancel: HTMLAnchorElement  = <HTMLAnchorElement>dom(
+        '<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
+            Toolbar.getIcon('cancel') +
+            '<span>' + Jodit.prototype.i18n('Cancel') + '</span>' +
+        '</a>'
+    );
 
     $cancel.addEventListener('click', () => {
         if (callback) {
@@ -757,7 +761,11 @@ export const Confirm = (msg: string, title: string|Function, callback?: Function
         dialog.close();
     };
 
-    $ok = dom('<a href="javascript:void(0)" style="float:left;" class="jodit_button">' + Toolbar.getIcon('check') + '<span>' + Jodit.prototype.i18n('Yes') + '</span></a>');
+    const $ok: HTMLAnchorElement  = <HTMLAnchorElement>dom(
+        '<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
+            Toolbar.getIcon('check') + '<span>' + Jodit.prototype.i18n('Yes') + '</span>' +
+        '</a>'
+    );
 
     $ok.addEventListener('click', onok);
 
@@ -773,6 +781,7 @@ export const Confirm = (msg: string, title: string|Function, callback?: Function
 
     dialog.open($div, <string>title || '&nbsp;', true, true);
     $ok.focus();
+
     return dialog;
 };
 Jodit['Confirm'] = Confirm;

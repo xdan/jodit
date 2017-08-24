@@ -434,7 +434,10 @@ export default class Toolbar extends Component{
                     this.jodit,
                     target || this.jodit.selection.current(),
                     control,
-                    this.closeAll
+                    () => {
+                        this.closeAll();
+                        this.jodit.selection.clear(); // remove all markers
+                    }
                 ));
             } else {
                 if (control.command || name) {
@@ -518,7 +521,7 @@ export default class Toolbar extends Component{
                 }
             });
 
-        this.jodit.events.on('mousedown keydown change afterSetMode', () => {
+        this.jodit.events.on('mousedown mouseup keydown change afterSetMode focus', () => {
             const callback = () => {
                 if (this.jodit.selection) {
                     this.checkActiveButtons(this.jodit.selection.current())

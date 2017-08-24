@@ -35,13 +35,13 @@ Jodit.plugins.redoundo = function (editor: Jodit) {
 
     editor.events
         .on('afterSetMode', () => {
-        if (editor.getMode() === consts.MODE_WYSIWYG) {
+        if (editor.getRealMode() === consts.MODE_WYSIWYG) {
             updateButton();
         }
     })
         .on('beforeCommand', (command: string) => {
         if (command === 'redo' || command === 'undo') {
-            if (editor.getMode() === consts.MODE_WYSIWYG) {
+            if (editor.getRealMode() === consts.MODE_WYSIWYG) {
                 if (observer.stack['can' + command.substr(0,1).toUpperCase() + command.substr(1)]()) {
                     observer.stack[command]();
                 }

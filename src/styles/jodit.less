@@ -7,11 +7,19 @@
     position: relative;
     height: ~'calc(100% - 23px)';
     overflow: auto;
+    display: block;
+    display: flex;
+
+    .jodit_wysiwyg,
+    .jodit_wysiwyg_iframe {
+      height: 100%;
+      width: 100%;
+    }
 
     .jodit_wysiwyg {
       margin : 0;
       padding: @padding-default;
-      min-height: 100px;
+
       outline: 0;
       overflow-x: auto;
       position: relative;

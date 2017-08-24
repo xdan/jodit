@@ -5,6 +5,7 @@ import {each, getContentWidth, $$, dom, offset} from '../modules/Helpers';
 import {Config} from '../Config'
 import Dom from "../modules/Dom";
 import Component from "../modules/Component";
+import {ControlType} from "../modules/Toolbar";
 
 /**
  * @prop {boolean} useTableProcessor=true true Use module {@link TableProcessor|TableProcessor}
@@ -16,6 +17,136 @@ declare module "../Config" {
     }
 }
 Config.prototype.useTableProcessor = true;
+Config.prototype.controls.table = {
+    cols: 10,
+    popup: (editor: Jodit, current,  control: ControlType, close: Function) => {
+        let i: number,
+            j: number,
+            k: number,
+            div: HTMLDivElement,
+            rows_count: number = 1,
+            cols_count: number = 1,
+            default_cols_count: number = control.cols;
+
+        const form: HTMLFormElement = <HTMLFormElement>dom(
+            '<form class="jodit_form jodit_form_inserter">' +
+                '<label>' +
+                    '<span>1</span> &times; <span>1</span>' +
+                '</label>' +
+            '</form>'),
+
+
+            rows: HTMLSpanElement = form.querySelectorAll('span')[0],
+            cols: HTMLSpanElement = form.querySelectorAll('span')[1],
+            cells: HTMLDivElement[] = [];
+
+        const generateRows = (need_rows: number) => {
+            const cnt: number = (need_rows + 1) * default_cols_count;
+            if (cells.length > cnt) {
+                for (i = cnt; i < cells.length; i += 1) {
+                    form.removeChild(cells[i]);
+                    delete cells[i];
+                }
+                cells.length = cnt;
+            }
+            for (i = 0; i < cnt; i += 1) {
+                if (!cells[i]) {
+                    div = document.createElement('div');
+                    div.setAttribute('data-index', i.toString());
+                    cells.push(div);
+                }
+            }
+            cells.forEach((cell: HTMLDivElement) => {
+                form.appendChild(cell);
+            });
+
+            form.style.width = (cells[0].offsetWidth * default_cols_count) + 'px';
+        };
+
+        generateRows(1);
+
+        cells[0].className = 'hovered';
+
+        const mouseenter = (e: MouseEvent, index?: number) => {
+            const div = <HTMLDivElement>e.target;
+            if (div.tagName !== 'DIV') {
+                return;
+            }
+            k = isNaN(index) ? parseInt(div.getAttribute('data-index'), 10) : index;
+            rows_count = Math.ceil((k + 1) / default_cols_count);
+            cols_count = k % default_cols_count + 1;
+            generateRows(rows_count);
+
+            if (cols_count === default_cols_count || (cols_count < default_cols_count - 1 && default_cols_count > 10)) {
+                default_cols_count = cols_count === default_cols_count ? default_cols_count + 1 : default_cols_count - 1;
+                return mouseenter(e, cols_count + (rows_count - 1)  * default_cols_count - 1);
+            }
+
+            for (i = 0; i < cells.length; i += 1) {
+                if (cols_count >= i % default_cols_count + 1 &&  rows_count >= Math.ceil((i + 1) / default_cols_count)) {
+                    cells[i].className = 'hovered';
+                } else {
+                    cells[i].className = '';
+                }
+            }
+
+            cols.innerText = cols_count.toString();
+            rows.innerText = rows_count.toString();
+        };
+
+        form.addEventListener('mousemove', mouseenter);
+
+        editor.__on(form, 'touchstart mousedown', (e: MouseEvent) => {
+            const div = <HTMLDivElement>e.target;
+            e.preventDefault();
+            e.stopImmediatePropagation();
+
+            if (div.tagName !== 'DIV') {
+                return;
+            }
+
+            k =  parseInt(div.getAttribute('data-index'), 10);
+            rows_count = Math.ceil((k + 1) / default_cols_count);
+            cols_count = k % default_cols_count + 1;
+
+            const table: HTMLTableElement = editor.doc.createElement('table');
+            let first_td: HTMLTableCellElement,
+                tr: HTMLTableRowElement,
+                td: HTMLTableCellElement,
+                br: HTMLBRElement,
+                w: string = (100 / cols_count).toFixed(7);
+
+            for (i = 1; i <= rows_count; i += 1) {
+                tr = editor.doc.createElement('tr');
+                for (j = 1; j <= cols_count; j += 1) {
+                    td = editor.doc.createElement('td');
+
+                    td.style.width = w + '%';
+                    if (!first_td) {
+                        first_td = td;
+                    }
+                    br = editor.doc.createElement('br');
+                    td.appendChild(br);
+                    tr.appendChild(editor.doc.createTextNode("\n"));
+                    tr.appendChild(editor.doc.createTextNode("\t"));
+                    tr.appendChild(td);
+                }
+                table.appendChild(editor.doc.createTextNode("\n"));
+                table.appendChild(tr);
+            }
+
+            editor.selection.insertNode(editor.doc.createTextNode("\n"));
+            editor.selection.insertNode(table, false);
+            editor.selection.setCursorIn(first_td);
+
+            close();
+        });
+
+        return form;
+    },
+    tags: ['table'],
+    tooltip: "Insert table"
+};
 /**
  *
  */

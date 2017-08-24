@@ -12,35 +12,40 @@ export default class Dom {
      * @return {HTMLElement}
      */
     static wrap = (current, tag: Node|string, editor: Jodit): HTMLElement => {
-        let tmp,
-            first = current,
-            last = current;
+        let tmp: false|Node|HTMLElement|HTMLTableCellElement,
+            first: Node = current,
+            last: Node = current;
 
         const selInfo = editor.selection.save();
 
+        let needFindNext: boolean = false;
         do {
-            tmp = Dom.prev(first, (elm) => (elm && !Dom.isBlock(elm)), editor.editor, false);
-            if (tmp) {
+            needFindNext = false;
+            tmp = Dom.prev(first, (elm) => !!elm, editor.editor, false);
+            if (tmp && !Dom.isBlock(tmp)) {
+                needFindNext = true;
                 first = tmp;
             }
-        } while(tmp);
+        } while(needFindNext);
 
         do {
-            tmp = Dom.next(last, (elm) => (elm && !Dom.isBlock(elm)), editor.editor, false);
-            if (tmp) {
+            needFindNext = false;
+            tmp = Dom.next(last, (elm) => !!elm, editor.editor, false);
+            if (tmp && !Dom.isBlock(tmp)) {
+                needFindNext = true;
                 last = tmp;
             }
-        } while(tmp);
+        } while(needFindNext);
 
 
-        const p = typeof tag === 'string' ? Dom.create(tag, '', editor.doc) : tag;
+        const wrapper = typeof tag === 'string' ? Dom.create(tag, '', editor.doc) : tag;
 
-        first.parentNode.insertBefore(p, first);
+        first.parentNode.insertBefore(wrapper, first);
 
         let next = first;
         while (next) {
             next = first.nextSibling;
-            p.appendChild(first);
+            wrapper.appendChild(first);
             if (first === last) {
                 break;
             }
@@ -50,7 +55,7 @@ export default class Dom {
 
         editor.selection.restore(selInfo);
 
-        return <HTMLElement>p;
+        return <HTMLElement>wrapper;
     };
 
     /**
@@ -58,10 +63,13 @@ export default class Dom {
      * @param node
      */
     static unwrap(node: Node) {
-        let parent = node.parentNode, el = node;
+        let parent = node.parentNode,
+            el = node;
+
         while (el.firstChild) {
             parent.insertBefore(el.firstChild, el);
         }
+
         parent.removeChild(el);
     }
 
@@ -197,7 +205,7 @@ export default class Dom {
      * @param {boolean} [withChild=true]
      * @return {boolean|Node|HTMLElement|HTMLTableCellElement}
      */
-    static next(node: Node, condition: (element: Node) => boolean, root: HTMLElement, withChild: Boolean = true): false|Node|HTMLElement|HTMLTableCellElement{
+    static next(node: Node, condition: (element: Node) => boolean, root: HTMLElement, withChild: Boolean = true): false|Node|HTMLElement|HTMLTableCellElement {
         return Dom.find(node, condition, root, undefined, undefined, withChild ? 'firstChild' : '');
     }
 
@@ -256,7 +264,7 @@ export default class Dom {
      * Returns true if it is a DOM node
      */
     static isNode(object: any, win: Window): boolean {
-        if (typeof Node === "object") {
+        if (typeof (<any>win||<any>window) === "object") {
             return object instanceof (<any>win||<any>window).Node;
         }
 

@@ -17,7 +17,7 @@ Jodit.plugins.imageProcessor = function (editor: Jodit) {
             });
     };
 
-    editor.events.on('change afterInit',() => {
+    editor.events.on('afterInit',() => {
         editor
             .__on(editor.editor, "mousemove", throttle((e: MouseEvent) => {
                 if (dragImage) {

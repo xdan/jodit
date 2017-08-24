@@ -166,6 +166,7 @@ Jodit.plugins.imageProperties = function (editor: Jodit) {
                         '</optgroup>' +
                     '</select>' +
                 '</div>'),
+
             mainTab: HTMLDivElement = <HTMLDivElement>dom('<div style="' + (!editor.options.image.editSrc ? 'display:none' : '') + '" class="jodit_form_group">' +
                     '<label for="imageSrc">' + editor.i18n('Src') + '</label>' +
                     '<div class="jodit_input_group">' +
@@ -192,6 +193,7 @@ Jodit.plugins.imageProperties = function (editor: Jodit) {
                 '<div style="' + (!editor.options.image.editLink ? 'display:none' : '') + '" class="jodit_form_group">' +
                     '<input type="checkbox" id="imageLinkOpenInNewTab"/> ' + editor.i18n('Open link in new tab') +
                 '</div>'),
+
             ratio: number = image.naturalWidth / image.naturalHeight || 1,
 
             $w: HTMLInputElement = <HTMLInputElement>prop.querySelector('#imageWidth'),
@@ -298,24 +300,28 @@ Jodit.plugins.imageProperties = function (editor: Jodit) {
         });
 
         $$('.jodit_use_image_editor', mainTab).forEach((btn) => {
-            btn.addEventListener('mousedown', () => {
+            editor.__on(btn,'mousedown touchstart', () => {
                 if (editor.options.image.useImageEditor) {
                     let url = image.getAttribute('src'),
                         a = document.createElement('a'),
                         loadExternal = () => {
                             if (a.host !== location.host) {
-                                Confirm(editor.i18n('You can only edit your own images. Download this image on the host?'), (yes) => {
+                                Confirm(editor.i18n('You can only edit your own images. Download this image on the host?'), (yes: boolean) => {
                                     if (yes && editor.uploader) {
-                                        editor.uploader.uploadRemoteImage(a.href.toString(), (resp: UploaderData) => {
-                                            Alert(editor.i18n('The image has been successfully uploaded to the host!'), () => {
-                                                if (typeof resp.newfilename === 'string') {
-                                                    image.setAttribute('src', resp.baseurl + resp.newfilename);
-                                                    updateSrc();
-                                                }
-                                            });
-                                        }, (error) => {
-                                            Alert(editor.i18n('There was an error loading %s',  error.message));
-                                        });
+                                        editor.uploader.uploadRemoteImage(
+                                            a.href.toString(),
+                                            (resp: UploaderData) => {
+                                                Alert(editor.i18n('The image has been successfully uploaded to the host!'), () => {
+                                                    if (typeof resp.newfilename === 'string') {
+                                                        image.setAttribute('src', resp.baseurl + resp.newfilename);
+                                                        updateSrc();
+                                                    }
+                                                });
+                                            },
+                                            (error: Error) => {
+                                                Alert(editor.i18n('There was an error loading %s',  error.message));
+                                            }
+                                        );
                                     }
                                 });
                                 return;
@@ -325,13 +331,23 @@ Jodit.plugins.imageProperties = function (editor: Jodit) {
                     a.href = url;
 
                     (<FileBrowser>editor.getInstance('FileBrowser')).getPathByUrl(a.href.toString(), (path: string, name: string, source: string) => {
-                        (<FileBrowser>editor.getInstance('FileBrowser')).openImageEditor(a.href, name, path, source, () => {
-                            let timestamp = (new Date()).getTime();
-                            image.setAttribute('src', url + (url.indexOf('?') !== -1 ? '' : '?') + '&_tmp=' + timestamp);
-                            updateSrc();
-                        }, Alert);
-                    }, (message) => {
-                        Alert(message, loadExternal);
+                        (<FileBrowser>editor.getInstance('FileBrowser'))
+                            .openImageEditor(
+                                a.href,
+                                name,
+                                path,
+                                source,
+                                () => {
+                                    const timestamp: number = (new Date()).getTime();
+                                    image.setAttribute('src', url + (url.indexOf('?') !== -1 ? '' : '?') + '&_tmp=' + timestamp.toString());
+                                    updateSrc();
+                                },
+                                (error: Error) => {
+                                    Alert(error.message)
+                                }
+                            );
+                    }, (error: Error) => {
+                        Alert(error.message, loadExternal);
                     });
                 }
             });

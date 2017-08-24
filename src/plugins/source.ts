@@ -11,6 +11,7 @@ declare module "../Config" {
         sourceEditorNativeOptions: {
             theme: string;
             mode: string;
+            wrap: string,
             highlightActiveLine: boolean;
         }
         beautifyHTMLCDNUrlsJS: string[];
@@ -29,8 +30,9 @@ Config.prototype.useAceEditor = true;
 * @memberof Jodit.defaultOptions
 */
 Config.prototype.sourceEditorNativeOptions = {
-    theme: 'ace/theme/textmate',
+    theme: 'ace/theme/idle_fingers',
     mode: 'ace/mode/html',
+    wrap: 'free',
     highlightActiveLine: true,
 };
 
@@ -87,19 +89,24 @@ Jodit.plugins.source = class extends Component {
     mirror: HTMLTextAreaElement;
 
     private fromWYSIWYG = (force: boolean = false) => {
-        if (!this.__lock && (this.jodit.getRealMode() === consts.MODE_SOURCE || force === true)) {
+        if (!this.__lock || force === true) {
+            this.__lock = true;
             const new_value = this.jodit.getEditorValue();
             if (new_value !== this.getMirrorValue()) {
                 this.setMirrorValue(new_value);
             }
+            this.__lock = false;
         }
     };
 
     private __lock = false;
+
     private toWYSIWYG = () => {
-        this.__lock = true;
-        this.jodit.setEditorValue(this.getMirrorValue());
-        this.__lock = false;
+        if (!this.__lock) {
+            this.__lock = true;
+            this.jodit.setEditorValue(this.getMirrorValue());
+            this.__lock = false;
+        }
     };
 
     private autosize = () => {
@@ -130,6 +137,9 @@ Jodit.plugins.source = class extends Component {
 
         editor.__on(this.mirror, 'mousedown keydown touchstart input', debounce(this.toWYSIWYG, editor.options.observer.timeout));
         editor.__on(this.mirror, 'change keydown mousedown touchstart input', debounce(this.autosize, editor.options.observer.timeout));
+        editor.__on(this.mirror, 'mousedown focus', (e: Event) => {
+            editor.events.fire(e.type, [e]);
+        });
 
         editor.events
             .on('placeholder', (text: string) => {
@@ -158,6 +168,7 @@ Jodit.plugins.source = class extends Component {
 
     private tempMarkerStart = '{start-jodit-selection}';
     private tempMarkerEnd = '{end-jodit-selection}';
+
     private __clear = (str: string): string => str.replace(consts.INVISIBLE_SPACE_REG_EXP, '');
 
     private selInfo: markerInfo[] = [];
@@ -183,7 +194,7 @@ Jodit.plugins.source = class extends Component {
     };
 
     private saveSelection = () => {
-        if (this.jodit.getMode() === consts.MODE_WYSIWYG) {
+        if (this.jodit.getRealMode() === consts.MODE_WYSIWYG) {
             this.selInfo = this.jodit.selection.save() || [];
             this.jodit.setEditorValue();
             this.fromWYSIWYG(true);
@@ -222,38 +233,41 @@ Jodit.plugins.source = class extends Component {
             return;
         }
 
-        if (this.jodit.getMode() === consts.MODE_WYSIWYG) {
+        if (this.jodit.getRealMode() === consts.MODE_WYSIWYG) {
             this.__lock = true;
             this.jodit.selection.restore(this.selInfo);
             this.__lock = false;
-            //this.fromWYSIWYG(true);
             return;
         }
 
+        let value: string = this.getMirrorValue();
+
         if (this.selInfo[0].startMarker) {
-            this.setMirrorValue(this.getMirrorValue().replace(this.__clear(this.selInfo[0].startMarker), this.tempMarkerStart));
+            value = value.replace(/<span[^>]+data-jodit_selection_marker="start"[^>]*>[<>]*?<\/span>/gmi, this.tempMarkerStart);
         }
 
         if (this.selInfo[0].endMarker) {
-            this.setMirrorValue(this.getMirrorValue().replace(this.__clear(this.selInfo[0].endMarker), this.tempMarkerEnd));
+            value = value.replace(/<span[^>]+data-jodit_selection_marker="end"[^>]*>[<>]*?<\/span>/gmi, this.tempMarkerEnd);
         }
 
         if (window['html_beautify']) {
-            this.setMirrorValue(window['html_beautify'](this.getMirrorValue()));
+            value = window['html_beautify'](value);
         }
 
-        let  selectionStart: number = this.getMirrorValue().indexOf(this.tempMarkerStart),
+        let  selectionStart: number = value.indexOf(this.tempMarkerStart),
             selectionEnd: number  = selectionStart;
 
-        this.setMirrorValue(this.getMirrorValue().replace(this.tempMarkerStart, ''));
+        value = value.replace(this.tempMarkerStart, '');
         if (!this.selInfo[0].collapsed || selectionStart === -1) {
-            selectionEnd = this.getMirrorValue().indexOf(this.tempMarkerEnd);
+            selectionEnd = value.indexOf(this.tempMarkerEnd);
             if (selectionStart === -1) {
                 selectionStart = selectionEnd;
             }
         }
 
-        this.setMirrorValue(this.getMirrorValue().replace(this.tempMarkerEnd, ''));
+        value = value.replace(this.tempMarkerEnd, '');
+
+        this.setMirrorValue(value);
 
         this.setMirrorSelectionRange(
             selectionStart,
@@ -271,7 +285,7 @@ Jodit.plugins.source = class extends Component {
             undoManager: AceAjax.UndoManager;
 
         const updateButtons = () => {
-                if (undoManager && editor.getMode() === consts.MODE_SOURCE) {
+                if (undoManager && editor.getRealMode() === consts.MODE_SOURCE) {
                     editor.events.fire('canRedo', [undoManager.hasRedo()]);
                     editor.events.fire('canUndo', [undoManager.hasUndo()]);
                 }
@@ -334,6 +348,8 @@ Jodit.plugins.source = class extends Component {
                     aceEditor.setTheme(editor.options.sourceEditorNativeOptions.theme);
                     aceEditor.getSession().setMode(editor.options.sourceEditorNativeOptions.mode);
                     aceEditor.setHighlightActiveLine(editor.options.sourceEditorNativeOptions.highlightActiveLine);
+                    aceEditor.setOption('wrap', editor.options.sourceEditorNativeOptions.wrap);
+
                     aceEditor.$blockScrolling = Infinity;
 
                     aceEditor.setValue(this.getMirrorValue());
@@ -343,6 +359,12 @@ Jodit.plugins.source = class extends Component {
                     });
 
                     aceEditor.on('change', this.toWYSIWYG);
+                    aceEditor.on('focus', (e) => {
+                        editor.events.fire('focus', [e]);
+                    });
+                    aceEditor.on('mousedown', (e) => {
+                        editor.events.fire('mousedown', [e]);
+                    });
 
                     this.mirror.style.display = 'none';
 
@@ -357,6 +379,7 @@ Jodit.plugins.source = class extends Component {
                         } else {
                             aceEditor.setValue(value);
                         }
+                        aceEditor.clearSelection();
                         updateButtons();
                     };
                     this.setFocusToMirror = () => {
@@ -382,21 +405,21 @@ Jodit.plugins.source = class extends Component {
         editor.events
             .on('aceReady', tryInitAceEditor)
             .on('afterSetMode', () => {
-                if (editor.getMode() !== consts.MODE_SOURCE && editor.getMode() !== consts.MODE_SPLIT) {
+                if (editor.getRealMode() !== consts.MODE_SOURCE && editor.getMode() !== consts.MODE_SPLIT) {
                     return;
                 }
                 this.fromWYSIWYG();
                 tryInitAceEditor();
             })
             .on('beforeCommand', (command: string) => {
-            if (editor.getMode() !== consts.MODE_WYSIWYG && (command === 'redo' || command === 'undo') && undoManager) {
-                if (undoManager['has' + command.substr(0,1).toUpperCase() + command.substr(1)]) {
-                    aceEditor[command]();
+                if (editor.getRealMode() !== consts.MODE_WYSIWYG && (command === 'redo' || command === 'undo') && undoManager) {
+                    if (undoManager['has' + command.substr(0,1).toUpperCase() + command.substr(1)]) {
+                        aceEditor[command]();
+                    }
+                    updateButtons();
+                    return false;
                 }
-                updateButtons();
-                return false;
-            }
-        });
+            });
 
         // global add ace editor in browser
         if (window['ace'] === undefined && !$$('script.' + this.className, document.body).length) {

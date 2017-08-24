@@ -1,6 +1,6 @@
 import Jodit from '../Jodit';
 import {Config} from '../Config';
-import {debounce, dom, offset} from "../modules/Helpers";
+import {debounce, dom, offset, trim} from "../modules/Helpers";
 import Toolbar from "../modules/Toolbar";
 import * as consts from '../constants';
 import Dom from "../modules/Dom";
@@ -60,8 +60,8 @@ Jodit.plugins.addNewLine = function (editor: Jodit) {
         line.style.display = 'none';
         hidden = true;
     };
-    const canGetFocus = (elm: HTMLElement): boolean => {
-        return Dom.isBlock(elm) && !!elm.childNodes.length;
+    const canGetFocus = (elm: Node): boolean => {
+        return Dom.isNode(elm, editor.win) && !Dom.isEmptyTextNode(elm) && trim(elm.nodeValue).length !== 0;
     };
     const hide = () => {
         if (hidden) {

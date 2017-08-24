@@ -6,17 +6,17 @@ import {Config} from "../Config";
 
 Config.prototype.controls.paragraph = {
     command: 'formatBlock',
-        exec: (editor: Jodit, event, control: ControlType) => {
+    exec: (editor: Jodit, event, control: ControlType) => {
         editor.execCommand(control.command, false, control.args[0]);
     },
     list: {
         p : "Normal",
-            h1 : "Heading 1",
-            h2 : "Heading 2",
-            h3 : "Heading 3",
-            h4 : "Heading 4",
-            blockquote : "Quote",
-            pre : "Code"
+        h1 : "Heading 1",
+        h2 : "Heading 2",
+        h3 : "Heading 3",
+        h4 : "Heading 4",
+        blockquote : "Quote",
+        pre : "Code"
     },
     template : (editor: Jodit, key: string, value: string) => {
         return '<' + key + ' class="jodit_list_element"><span>' + editor.i18n(value) + '</span></' + key + '></li>';
@@ -25,11 +25,12 @@ Config.prototype.controls.paragraph = {
 };
 
 
-Jodit.plugins.formatblock = function (editor: Jodit) {
+Jodit.plugins.formatBlock = function (editor: Jodit) {
     editor.events.on('beforeCommand', (command: string, second, third: string) => {
         if (command === 'formatblock') {
              editor.selection.focus();
              let work: boolean = false;
+
              editor.selection.eachSelection((current: Element) => {
                  const selectionInfo = editor.selection.save();
                  let currentBox: HTMLElement|false = current ? <HTMLElement>Dom.up(current, Dom.isBlock, editor.editor) : false;
@@ -52,6 +53,7 @@ Jodit.plugins.formatblock = function (editor: Jodit) {
                          Dom.wrap(current, third, editor);
                      }
                  }
+
                  work = true;
                  editor.selection.restore(selectionInfo);
              });
@@ -65,7 +67,6 @@ Jodit.plugins.formatblock = function (editor: Jodit) {
              editor.setEditorValue();
 
             return false;
-
         }
     });
 };

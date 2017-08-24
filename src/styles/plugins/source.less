@@ -2,11 +2,14 @@
 .jodit_source{
   display: none;
   position: relative;
+  background-color: #f8f8f8;
+  min-height: 100%;
+  flex: 1;
   .jodit_source_mirror {
 
   }
   .jodit_source_mirror-fake {
-    min-height: 100px;
+     min-height: 100%;
   }
 }
 
@@ -16,6 +19,15 @@
   }
   .jodit_source {
     display: block !important;
+  }
+}
+
+.jodit_container.jodit_split_mode {
+  .jodit_wysiwyg,.jodit_wysiwyg_iframe,
+  .jodit_source {
+    display: block !important;
+    width: 50%;
+    flex: 1;
   }
 }
 
@@ -39,6 +51,7 @@
   overflow:auto;
   white-space: pre-wrap;
   tab-size: 2em;
+  min-height: 100%;
   &::selection {
     background: @area_selection_color;
   }

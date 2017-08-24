@@ -28,7 +28,7 @@ describe('Undo/Redo behaviors', function() {
             editor.execCommand('redo');
             expect(editor.getEditorValue()).to.equal('test2');
         });
-        it('Check react UndoRedo toWYSIWYG another changes', function() {
+        it('Check react UndoRedo to another changes', function() {
             var editor = new Jodit('#table_editor_undoredo', {
                 observer: {
                     timeout: 0

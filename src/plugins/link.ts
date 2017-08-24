@@ -37,16 +37,22 @@ Config.prototype.link = {
 Config.prototype.controls.link = {
     popup: (editor: Jodit, current: HTMLElement|false, self: ControlType, close: Function) => {
         const sel: Selection = editor.win.getSelection(),
-            form: HTMLFormElement = <HTMLFormElement>dom('<form class="jodit_form">' +
-                '<input required type="text" name="url" placeholder="http://" type="text"/>' +
-                '<input name="text" placeholder="' + editor.i18n('Text') + '" type="text"/>' +
-                '<label><input name="target" type="checkbox"/> ' + editor.i18n('Open in new tab') + '</label>' +
-                '<label><input name="nofollow" type="checkbox"/> ' + editor.i18n('No follow') + '</label>' +
-                '<div style="text-align: right">' +
-                '<button class="jodit_unlink_button" type="button">' + editor.i18n('Unlink') + '</button> &nbsp;&nbsp;' +
-                '<button type="submit">' + editor.i18n('Insert') + '</button>' +
-                '</div>' +
-                '<form/>');
+            form: HTMLFormElement = <HTMLFormElement>dom(
+                '<form class="jodit_form">' +
+                    '<input required type="text" name="url" placeholder="http://" type="text"/>' +
+                    '<input name="text" placeholder="' + editor.i18n('Text') + '" type="text"/>' +
+                    '<label>' +
+                        '<input name="target" type="checkbox"/> ' + editor.i18n('Open in new tab') +
+                    '</label>' +
+                    '<label>' +
+                        '<input name="nofollow" type="checkbox"/> ' + editor.i18n('No follow') +
+                    '</label>' +
+                    '<div style="text-align: right">' +
+                        '<button class="jodit_unlink_button" type="button">' + editor.i18n('Unlink') + '</button> &nbsp;&nbsp;' +
+                        '<button class="jodit_link_insert_button" type="submit"></button>' +
+                    '</div>' +
+                '<form/>'
+            );
 
         if (current && Dom.closest(current, 'A', editor.editor)) {
             current = <HTMLElement>Dom.closest(current, 'A', editor.editor)
@@ -60,18 +66,23 @@ Config.prototype.controls.link = {
 
             (<HTMLInputElement>form.querySelector('input[name=target]')).checked = (current.getAttribute('target') === '_blank');
             (<HTMLInputElement>form.querySelector('input[name=nofollow]')).checked = (current.getAttribute('rel') === 'nofollow');
+
+            form.querySelector('.jodit_link_insert_button').innerHTML = editor.i18n('Update');
         } else {
-            (<HTMLDivElement>form.querySelector('.jodit_unlink_button')).style.display = 'none';
+            (<HTMLButtonElement>form.querySelector('.jodit_unlink_button')).style.display = 'none';
             val(form, 'input[name=text]', sel.toString());
+            form.querySelector('.jodit_link_insert_button').innerHTML = editor.i18n('Insert');
         }
 
         const selInfo = editor.selection.save();
 
-        form.querySelector('.jodit_unlink_button').addEventListener('mousedown', () => {
+        form.querySelector('.jodit_unlink_button').addEventListener('mousedown', (e: MouseEvent) => {
             if (current) {
                 Dom.unwrap(current);
             }
+            editor.selection.restore(selInfo);
             close();
+            e.preventDefault();
         });
 
         form.addEventListener('submit', (event: Event) => {
