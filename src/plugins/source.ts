@@ -376,6 +376,7 @@ Jodit.plugins.source = class extends Component {
                     aceEditor.$blockScrolling = Infinity;
 
                     aceEditor.setValue(this.getMirrorValue());
+                    aceEditor.clearSelection();
 
                     aceEditor.setOptions({
                         maxLines: Infinity
