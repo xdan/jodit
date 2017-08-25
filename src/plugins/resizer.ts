@@ -295,7 +295,7 @@ Jodit.plugins.Resizer = function (editor: Jodit) {
             }
 
             $$('img, table, iframe', editor.editor).forEach((elm: HTMLElement) => {
-                if (editor.getRealMode() !== consts.MODE_WYSIWYG) {
+                if (editor.getMode() !== consts.MODE_SOURCE) {
                     return;
                 }
                 if (!elm['__jodit_resizer_binded'] && ((elm.tagName === 'IFRAME' && editor.options.useIframeResizer) || (elm.tagName === 'IMG' && editor.options.useImageResizer) || (elm.tagName === 'TABLE' && editor.options.useTableResizer))) {

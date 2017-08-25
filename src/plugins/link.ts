@@ -34,6 +34,14 @@ Config.prototype.link = {
 };
 
 
+Config.prototype.controls.unlink = {
+    exec: (editor, current: Node) => {
+        let anchor: HTMLAnchorElement|false = <HTMLAnchorElement>Dom.closest(current, 'A', editor.editor);
+        if (anchor) {
+            Dom.unwrap(anchor);
+        }
+    }
+};
 Config.prototype.controls.link = {
     popup: (editor: Jodit, current: HTMLElement|false, self: ControlType, close: Function) => {
         const sel: Selection = editor.win.getSelection(),

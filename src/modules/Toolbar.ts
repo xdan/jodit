@@ -84,6 +84,7 @@ export type ControlType = {
      * This function will be executed when the button is pressed.
      */
     exec?: (editor: Jodit, current: Node|false, control: ControlType, originalEvent: Event,  btn: HTMLLIElement) => void;
+
     args?: any[];
     cols?: number;
 
@@ -322,12 +323,13 @@ export default class Toolbar extends Component{
                     '<div class="jodit_tooltip"></div>' +
                 '</li>'),
             name: string = typeof item === 'string' ? item : (item.name || 'empty'),
+            icon: string = typeof item === 'string' ? item : (item.icon || item.name || 'empty'),
             a: HTMLAnchorElement = btn.querySelector('a');
 
         let iconSVG: string|false;
 
         if (!this.jodit.options.textIcons) {
-            iconSVG = Toolbar.getIcon(name, false);
+            iconSVG = Toolbar.getIcon(icon, false);
 
             if (iconSVG === false) {
                 iconSVG = Toolbar.getIcon(typeof control.name === 'string' ? control.name : 'empty');
@@ -349,13 +351,13 @@ export default class Toolbar extends Component{
             Toolbar.__toggleButton(btn, enable);
         });
 
-        let icon =  dom(<string>iconSVG);
+        let iconElement =  dom(<string>iconSVG);
 
-        if (icon && icon.nodeType !== Node.TEXT_NODE) {
-            icon.classList.add('jodit_icon', 'jodit_icon_' + clearName);
+        if (iconElement && iconElement.nodeType !== Node.TEXT_NODE) {
+            iconElement.classList.add('jodit_icon', 'jodit_icon_' + clearName);
         }
 
-        a.appendChild(icon);
+        a.appendChild(iconElement);
 
         if (control === undefined || typeof(control) !== 'object') {
             control = {command: name};
@@ -521,7 +523,7 @@ export default class Toolbar extends Component{
                 }
             });
 
-        this.jodit.events.on('mousedown mouseup keydown change afterSetMode focus', () => {
+        this.jodit.events.on('mousedown mouseup keydown change afterSetMode focus', (e) => {
             const callback = () => {
                 if (this.jodit.selection) {
                     this.checkActiveButtons(this.jodit.selection.current())

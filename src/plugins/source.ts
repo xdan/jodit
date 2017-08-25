@@ -9,6 +9,7 @@ declare module "../Config" {
     interface Config {
         useAceEditor: boolean;
         sourceEditorNativeOptions: {
+            showGutter: boolean;
             theme: string;
             mode: string;
             wrap: string,
@@ -30,9 +31,27 @@ Config.prototype.useAceEditor = true;
 * @memberof Jodit.defaultOptions
 */
 Config.prototype.sourceEditorNativeOptions = {
+    /**
+     * Show gutter
+     */
+    showGutter: false,
+    /**
+     * Default theme
+     */
     theme: 'ace/theme/idle_fingers',
+    /**
+     * Default mode
+     */
     mode: 'ace/mode/html',
+
+    /**
+     * Wrap lines. Possible values - off, 80-100, free
+     */
     wrap: 'free',
+
+    /**
+     * Highlight active line
+     */
     highlightActiveLine: true,
 };
 
@@ -76,6 +95,7 @@ Jodit.plugins.source = class extends Component {
     private loadNext = (i: number, urls: string[], eventOnFinalize: false|string = 'aceReady', className: string = this.className) => {
         if (eventOnFinalize && urls[i] === undefined && this.jodit && this.jodit.events) {
             this.jodit.events.fire(eventOnFinalize);
+            this.__fire(window, eventOnFinalize);
             return;
         }
         if (urls[i] !== undefined) {
@@ -137,6 +157,7 @@ Jodit.plugins.source = class extends Component {
 
         editor.__on(this.mirror, 'mousedown keydown touchstart input', debounce(this.toWYSIWYG, editor.options.observer.timeout));
         editor.__on(this.mirror, 'change keydown mousedown touchstart input', debounce(this.autosize, editor.options.observer.timeout));
+
         editor.__on(this.mirror, 'mousedown focus', (e: Event) => {
             editor.events.fire(e.type, [e]);
         });
@@ -148,6 +169,7 @@ Jodit.plugins.source = class extends Component {
             .on('afterInit', () => {
                 this.mirrorContainer.appendChild(this.mirror);
                 editor.workplace.appendChild(this.mirrorContainer);
+                this.autosize();
 
                 const className = 'beutyfy_html_jodit_helper';
                 if (window['html_beautify'] === undefined && !$$('script.' + className, document.body).length) {
@@ -346,6 +368,7 @@ Jodit.plugins.source = class extends Component {
                     aceEditor = (<AceAjax.Ace>window['ace']).edit(fakeMirror);
 
                     aceEditor.setTheme(editor.options.sourceEditorNativeOptions.theme);
+                    aceEditor.renderer.setShowGutter(editor.options.sourceEditorNativeOptions.showGutter);
                     aceEditor.getSession().setMode(editor.options.sourceEditorNativeOptions.mode);
                     aceEditor.setHighlightActiveLine(editor.options.sourceEditorNativeOptions.highlightActiveLine);
                     aceEditor.setOption('wrap', editor.options.sourceEditorNativeOptions.wrap);
@@ -403,7 +426,7 @@ Jodit.plugins.source = class extends Component {
             };
 
         editor.events
-            .on('aceReady', tryInitAceEditor)
+            .__on(window, 'aceReady', tryInitAceEditor) // work in global scope
             .on('afterSetMode', () => {
                 if (editor.getRealMode() !== consts.MODE_SOURCE && editor.getMode() !== consts.MODE_SPLIT) {
                     return;

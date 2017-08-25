@@ -56,6 +56,10 @@ declare module "../Config" {
  * });
  */
 Config.prototype.popup = {
+    a: [
+        'link',
+        'unlink'
+    ],
     img: [
         {
             name: 'bin',
@@ -330,8 +334,8 @@ Jodit.plugins.Popup = function (editor: Jodit) {
             });
             let clickOnImage: boolean = false;
             editor.__on(editor.editor, 'mousedown', (event: MouseEvent) => {
-                if ((<HTMLImageElement>event.target).tagName === 'IMG' || Dom.closest(<Node>event.target, 'table', editor.editor)) {
-                    const target: HTMLImageElement|HTMLTableElement = (<HTMLImageElement>event.target).tagName === 'IMG' ? <HTMLImageElement>event.target :  <HTMLTableElement>Dom.closest(<Node>event.target, 'table', editor.editor);
+                if ((<HTMLImageElement>event.target).tagName === 'IMG' || Dom.closest(<Node>event.target, 'table|a', editor.editor)) {
+                    const target: HTMLImageElement|HTMLTableElement = (<HTMLImageElement>event.target).tagName === 'IMG' ? <HTMLImageElement>event.target :  <HTMLTableElement>Dom.closest(<Node>event.target, 'table|a', editor.editor);
                     const pos = offset(target, editor);
                     delayShowPopup(target, Math.round(pos.left + (target.offsetWidth / 2)), Math.round(pos.top + target.offsetHeight));
                     clickOnImage = true;

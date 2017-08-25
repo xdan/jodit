@@ -581,7 +581,7 @@ export default class Jodit extends Component{
      * ```
      */
     getRealMode(): number {
-        return this.getMode() !== consts.MODE_SPLIT ? this.getMode() : Dom.isOrContains(this.editor, document.activeElement) ? consts.MODE_WYSIWYG : consts.MODE_SOURCE;
+        return this.getMode() !== consts.MODE_SPLIT ? this.getMode() : (Dom.isOrContains(this.editor, document.activeElement) || Dom.isOrContains(this.toolbar.container, document.activeElement)) ? consts.MODE_WYSIWYG : consts.MODE_SOURCE;
     }
 
     /**
@@ -591,7 +591,7 @@ export default class Jodit extends Component{
      * @fired afterSetMode
      */
     setMode(mode: number) {
-        let data = {
+        const data = {
                 mode
             },
             modeClasses = ['jodit_wysiwyg_mode', 'jodit_source_mode', 'jodit_split_mode'];
