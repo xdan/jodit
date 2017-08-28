@@ -35,11 +35,12 @@ Config.prototype.link = {
 
 
 Config.prototype.controls.unlink = {
-    exec: (editor, current: Node) => {
+    exec: (editor: Jodit, current: Node) => {
         let anchor: HTMLAnchorElement|false = <HTMLAnchorElement>Dom.closest(current, 'A', editor.editor);
         if (anchor) {
             Dom.unwrap(anchor);
         }
+        editor.events.fire('hidePopup');
     }
 };
 Config.prototype.controls.link = {

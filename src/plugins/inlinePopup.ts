@@ -58,10 +58,21 @@ declare module "../Config" {
 Config.prototype.popup = {
     a: [
         {
+            name: 'eye',
+            tooltip: 'Open link',
+            exec: (editor: Jodit, current: HTMLAnchorElement) => {
+                if (current && current.getAttribute('href')) {
+                    window.open(current.getAttribute('href'));
+                }
+            }
+        },
+        {
             name: 'link',
+            tooltip: 'Edit link',
             icon: 'pencil'
         },
-        'unlink'
+        'unlink',
+        'brush'
     ],
     img: [
         {
@@ -332,7 +343,7 @@ Jodit.plugins.Popup = function (editor: Jodit) {
         .on('afterInit', () => {
             editor.container
                 .appendChild(popup);
-            editor.__on(popup,'mouseup', (e: MouseEvent) => {
+            editor.__on(popup,'mousedown', (e: MouseEvent) => {
                 e.stopPropagation();
             });
             let clickOnImage: boolean = false;
@@ -346,7 +357,7 @@ Jodit.plugins.Popup = function (editor: Jodit) {
                     clickOnImage = false;
                 }
             });
-            editor.__on(window, 'mouseup', () => {
+            editor.__on(window, 'mousedown', () => {
                 if (!clickOnImage) {
                     hidePopup();
                 }

@@ -28,7 +28,7 @@ export namespace Widget {
         const valueHex = normalizeColor(coldColor),
             form: HTMLDivElement = <HTMLDivElement>dom('<div class="jodit_colorpicker"></div>'),
             eachColor = (colors) => {
-                let stack = [];
+                const stack: string[] = [];
                 if (isPlainObject(colors)) {
                     Object.keys(colors).forEach((key) => {
                         stack.push('<div class="jodit_colorpicker_group jodit_colorpicker_group-' + key + '">');
@@ -101,6 +101,8 @@ export namespace Widget {
      *
      * @param {Jodit} editor
      * @param {object} tabs PlainObject where 'key' will be tab's Title and `value` is tab's content
+     * @param {object} state You can use for this param any HTML element for remembering active tab
+     * @param {string} state.activeTab
      *
      * @example
      * ```javascript
@@ -113,18 +115,22 @@ export namespace Widget {
      * });
      * ```
      */
-    export const TabsWidget = (editor: Jodit, tabs: {[key: string]: string|HTMLElement|Function}): HTMLDivElement => {
+    export const TabsWidget = (editor: Jodit, tabs: {[key: string]: string|HTMLElement|Function}, state?: {__activeTab: string}): HTMLDivElement => {
         let box: HTMLDivElement = <HTMLDivElement>dom('<div class="jodit_tabs"></div>'),
             tabBox: HTMLDivElement = <HTMLDivElement>dom('<div class="jodit_tabs_wrapper"></div>'),
             buttons: HTMLDivElement = <HTMLDivElement>dom('<div class="jodit_tabs_buttons"></div>'),
+            nameToTab: {[key: string]: {
+                button: HTMLDivElement,
+                tab: HTMLDivElement
+            }} = {},
             tabcount = 0;
 
         box.appendChild(buttons);
         box.appendChild(tabBox);
 
         each(tabs, (name: string, tabOptions: Function|HTMLElement) => {
-            const tab = dom('<div class="jodit_tab"></div>'),
-                button = dom('<a href="javascript:void(0);"></a>');
+            const tab: HTMLDivElement = <HTMLDivElement>dom('<div class="jodit_tab"></div>'),
+                button: HTMLDivElement = <HTMLDivElement>dom('<a href="javascript:void(0);"></a>');
 
             button.innerHTML = editor.i18n(name);
             buttons.appendChild(button);
@@ -137,7 +143,7 @@ export namespace Widget {
 
             tabBox.appendChild(tab);
 
-            editor.__on(button, 'mousedown touchstart', (e) => {
+            editor.__on(button, 'mousedown touchstart', (e: MouseEvent) => {
                 $$('a', buttons).forEach((a) => {
                     a.classList.remove('active');
                 });
@@ -151,11 +157,22 @@ export namespace Widget {
                     tabOptions.call(editor);
                 }
                 e.stopPropagation();
+
+                if (state) {
+                    state.__activeTab = name;
+                }
+
                 return false;
             });
 
+            nameToTab[name] = {
+                button,
+                tab,
+            };
+
             tabcount += 1;
         });
+
         if (!tabcount) {
             return;
         }
@@ -164,8 +181,13 @@ export namespace Widget {
             a.style.width = (100 / tabcount).toFixed(10) + '%';
         });
 
-        buttons.querySelector('a:first-child').classList.add('active');
-        tabBox.querySelector('.jodit_tab:first-child').classList.add('active');
+        if (!state || !state.__activeTab || !nameToTab[state.__activeTab]) {
+            buttons.querySelector('a:first-child').classList.add('active');
+            tabBox.querySelector('.jodit_tab:first-child').classList.add('active');
+        } else {
+            nameToTab[state.__activeTab].button.classList.add('active');
+            nameToTab[state.__activeTab].tab.classList.add('active');
+        }
 
         return box;
     };

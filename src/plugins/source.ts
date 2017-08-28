@@ -100,7 +100,6 @@ Jodit.plugins.source = class extends Component {
 
     private loadNext = (i: number, urls: string[], eventOnFinalize: false|string = 'aceReady', className: string = this.className) => {
         if (eventOnFinalize && urls[i] === undefined && this.jodit && this.jodit.events) {
-            debugger
             this.jodit.events.fire(eventOnFinalize);
             this.__fire(window, eventOnFinalize);
             return;

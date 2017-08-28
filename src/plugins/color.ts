@@ -1,15 +1,18 @@
 import Jodit from '../Jodit';
-import {normalizeColor} from '../modules/Helpers';
+import {css, normalizeColor} from '../modules/Helpers';
 import {Config} from "../Config";
 import {Widget} from "../modules/Widget";
 import TabsWidget = Widget.TabsWidget;
 import ColorPickerWidget = Widget.ColorPickerWidget;
+import Dom from "../modules/Dom";
 
 Config.prototype.controls.brush = {
     css: {
         'backgroundColor' : (editor: Jodit, color: string) => {
             const  check = (colors: {[key:string]:string[]}|string[]) => {
-                let i, keys;
+                let i: number,
+                    keys: string[];
+
                 if (typeof colors === 'object') {
                     keys = Object.keys(colors);
                     for (i = 0; i < keys.length; i += 1) {
@@ -26,10 +29,12 @@ Config.prototype.controls.brush = {
             return check(editor.options.colors);
         }
     },
-    popup: (editor: Jodit, current, self, close) => {
+    popup: (editor: Jodit, current: HTMLElement, self, close) => {
         let color: string = '',
             bg_color: string = '',
-            tabs: {[key: string]: HTMLElement};
+            tabs: {[key: string]: HTMLElement},
+            currentElement: HTMLElement;
+
         /* const sel = editor.win.getSelection(),
              checkRemoveOpportunity = () => {
                  if (current && (!current.hasAttribute("style") || !current.getAttribute("style").length)) {
@@ -58,30 +63,28 @@ Config.prototype.controls.brush = {
                  }
              };*/
 
-        //tryGetCurrent();
-
-        //const widget = new (require('./modules/Widget').default)(editor);
+        if (current && Dom.isNode(current, editor.win) && current.nodeType === Node.ELEMENT_NODE) {
+            color = css(current, 'color').toString();
+            bg_color = css(current, 'background-color').toString();
+            currentElement = current;
+        }
 
         const backgroundTag: HTMLElement = ColorPickerWidget(editor, (value: string) => {
-            //if (!current) {
-            editor.execCommand('background', false, value);
+            if (!currentElement) {
+                editor.execCommand('background', false, value);
+            } else {
+                currentElement.style.backgroundColor = value;
+            }
             close();
-            //tryGetCurrent();
-            // } else {
-            //     current.style.backgroundColor = value;
-            //   }
-            //checkRemoveOpportunity();
         }, bg_color);
 
         const colorTab: HTMLElement = ColorPickerWidget(editor, (value: string) => {
-            // if (!current) {
-            editor.execCommand('forecolor', false, value);
+            if (!currentElement) {
+                editor.execCommand('forecolor', false, value);
+            } else {
+                currentElement.style.color = value;
+            }
             close();
-            //     tryGetCurrent();
-            // } else {
-            //    current.style.color = value;
-            // }
-            //checkRemoveOpportunity();
         }, color);
 
         if (editor.options.colorPickerDefaultTab === 'background') {
@@ -96,7 +99,7 @@ Config.prototype.controls.brush = {
             };
         }
 
-        return TabsWidget(editor, tabs);
+        return TabsWidget(editor, tabs, <any>currentElement);
     },
         tooltip: "Fill color or set the text color"
 };

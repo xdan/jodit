@@ -22,8 +22,6 @@ describe('Test interface', function() {
                     e.pageX = pos.left + 5;
                     e.pageY = pos.top + 5;
                     // createPoint(e.pageX, e.pageY)
-                    // console.log(editor.doc.elementFromPoint(e.pageX - editor.win.pageXOffset, e.pageY - editor.win.pageYOffset))
-                    // debugger;
                 });
 
                 var newline = editor.container.querySelector('.jodit-add-new-line');

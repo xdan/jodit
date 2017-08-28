@@ -297,7 +297,6 @@ describe('Commands Jodit Editor Tests', function() {
         sel.addRange(range);
 
         editor.execCommand('underline');
-        //debugger
         editor.selection.insertNode(editor.doc.createTextNode('data'));
 
         expect(editor.getEditorValue()).to.equal('<p>te<u>data</u>st</p>');
