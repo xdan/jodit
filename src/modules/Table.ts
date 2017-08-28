@@ -28,7 +28,7 @@ export default class Table extends Component{
      * @return {HTMLTableCellElement[]}
      */
     static getAllSelectedCells(table: HTMLElement|HTMLTableElement): HTMLTableCellElement[] {
-        return <HTMLTableCellElement[]>$$(`td[${JODIT_SELECTED_CELL_MARKER}],th[${JODIT_SELECTED_CELL_MARKER}]`, table);
+        return table ? <HTMLTableCellElement[]>$$(`td[${JODIT_SELECTED_CELL_MARKER}],th[${JODIT_SELECTED_CELL_MARKER}]`, table) : [];
     }
 
     /**

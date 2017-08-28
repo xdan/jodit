@@ -11,6 +11,7 @@ module.exports = function(config) {
         },
         files: [
             'app.css',
+            'test/tests/artio.jpg',
             'src/index.ts',
             'test/bootstrap.js',
             'test/tests/*.js'

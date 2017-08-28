@@ -100,6 +100,7 @@ Jodit.plugins.source = class extends Component {
 
     private loadNext = (i: number, urls: string[], eventOnFinalize: false|string = 'aceReady', className: string = this.className) => {
         if (eventOnFinalize && urls[i] === undefined && this.jodit && this.jodit.events) {
+            debugger
             this.jodit.events.fire(eventOnFinalize);
             this.__fire(window, eventOnFinalize);
             return;
@@ -434,13 +435,13 @@ Jodit.plugins.source = class extends Component {
                         setSelectionRangeIndices(start, end);
                     };
 
-
                     editor.events.fire('aceInited');
                 }
             };
 
         editor.events
             .__on(window, 'aceReady', tryInitAceEditor) // work in global scope
+            .on('aceReady', tryInitAceEditor) // work in local scope
             .on('afterSetMode afterInit', () => {
                 if (editor.getRealMode() !== consts.MODE_SOURCE && editor.getMode() !== consts.MODE_SPLIT) {
                     return;

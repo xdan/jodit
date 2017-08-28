@@ -192,20 +192,18 @@ export default class Jodit extends Component{
         this.element.parentNode.insertBefore(this.container, this.element);
         this.helper = helper;
 
+        if (this.options.events) {
+            each(this.options.events, (key: string, callback: Function) => {
+                this.events.on(key, callback);
+            });
+        }
+
         this.initPlugines();
 
         this.__createEditor();
 
         this.setElementValue(); // syncro
 
-
-
-
-        if (this.options.events) {
-            each(this.options.events, (key, callback) => {
-                this.events.on(key, callback);
-            });
-        }
 
         this.id = this.element.getAttribute('id') || (new Date()).getTime().toString();
 
@@ -227,10 +225,9 @@ export default class Jodit extends Component{
     __plugins: {[key: string]: JoditPlugin} = {};
 
     initPlugines() {
-        let keys = Object.keys(Jodit.plugins), i;
-        for (i = 0; i < keys.length; i += 1) {
-            this.__plugins[keys[i]] = new Jodit.plugins[keys[i]](this);
-        }
+        Object.keys(Jodit.plugins).forEach((key: string) => {
+            this.__plugins[key] = new Jodit.plugins[key](this);
+        })
     }
 
 

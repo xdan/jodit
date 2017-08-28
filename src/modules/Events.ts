@@ -110,11 +110,11 @@ export default class Events extends Component{
             objectOrEvent = this.jodit;
         }
 
-         if (typeof list !== 'string') {
-            new Error('Parameter list must be string');
-         }
+        if (typeof list !== 'string') {
+           new Error('Parameter list must be string');
+        }
 
-         let actionsList:string[] = list.split(/[\s,]+/);
+        let actionsList:string[] = list.split(/[\s,]+/);
 
         for (i = 0; i < actionsList.length; i += 1) {
             if (objectOrEvent.handlers === undefined) {
