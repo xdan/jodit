@@ -15,7 +15,7 @@ describe('CodeMirror editor source code', function() {
             timeout = setTimeout(function () {
                 expect(false).to.equal(true);
                 __done.call(editor);
-            }, 1500);
+            }, 5000);
 
             editor = new Jodit(area, {
                 defaultMode: Jodit.MODE_SOURCE,
@@ -30,7 +30,8 @@ describe('CodeMirror editor source code', function() {
                     }
                 }
             });
-        });
+        }).timeout(5000);
+
         it('Check lazy load', function() {
             var editor = new Jodit('#codemirror', {
                 defaultMode: Jodit.MODE_WYSIWYG,
