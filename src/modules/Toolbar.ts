@@ -469,7 +469,7 @@ export default class Toolbar extends Component{
 
         this.container.innerHTML = '';
 
-        (<ControlType[]>buttons).forEach((button: ControlType|string) => {
+        (<Array<ControlType|string>>buttons).forEach((button: ControlType|string) => {
             const name: string = typeof button === 'string' ? <string>button : button.name;
 
             if (this.jodit.options.removeButtons.indexOf(name) !== -1) {
@@ -493,6 +493,10 @@ export default class Toolbar extends Component{
 
                     if (typeof control !== 'object' && this.jodit.options.controls[control] !== undefined) {
                         control = this.jodit.options.controls[control];
+                    }
+
+                    if (typeof control === 'object' && this.jodit.options.controls[control.name] !== undefined) {
+                        control = {...this.jodit.options.controls[control.name], ...control};
                     }
 
                     if (typeof control !== 'object') {

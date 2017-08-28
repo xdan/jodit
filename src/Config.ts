@@ -264,7 +264,7 @@ export class Config {
      *
      * @type {boolean}
      */
-    useSplitMode: boolean = true;
+    useSplitMode: boolean = false;
 
     /**
      * The colors in HEX representation to select a color for the background and for the text in colorpicker

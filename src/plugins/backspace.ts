@@ -22,34 +22,42 @@ Jodit.plugins.backspace = function (editor: Jodit) {
                 editor.execCommand('Delete');
                 return false;
             }
-            let sel = editor.win.getSelection(),
+
+            const sel = editor.win.getSelection(),
                 range = sel.rangeCount ? sel.getRangeAt(0) : false;
 
-            if (range && range.startOffset !== 0 && range.startContainer.nodeType === Node.TEXT_NODE) {
-                let textNode = range.startContainer,
-                    value = textNode.nodeValue,
-                    startOffset = range.startOffset;
+            if (range) {
+                if (
+                    range.startContainer.nodeType === Node.TEXT_NODE ||
+                    range.startContainer.childNodes[range.startOffset].nodeType === Node.TEXT_NODE
+                ) {
+                    let textNode = range.startContainer.nodeType === Node.TEXT_NODE ? range.startContainer : range.startContainer.childNodes[range.startOffset],
+                        value = textNode.nodeValue,
+                        startOffset = range.startOffset;
 
-                while (startOffset >= 0 && value[startOffset - 1] === consts.INVISIBLE_SPACE) {
-                    startOffset -= 1;
-                }
+                    while (startOffset >= 0 && value[startOffset - 1] === consts.INVISIBLE_SPACE) {
+                        startOffset -= 1;
+                    }
 
-                if (startOffset !== range.startOffset) {
-                    let oldStart = range.startOffset;
-                    value = value.substr(0, startOffset) + value.substr(oldStart);
-                    textNode.nodeValue = value;
+                    if (startOffset !== range.startOffset) {
+                        const oldStart = range.startOffset;
+                        value = value.substr(0, startOffset) + value.substr(oldStart);
+                        textNode.nodeValue = value;
 
-                    if (value) {
-                        range.setStart(textNode, startOffset);
-                        return;
+                        if (value) {
+                            range.setStart(textNode, startOffset);
+                            return;
+                        }
                     }
                 }
-                if (!textNode.previousSibling && startOffset === 0) {
-                    const prevBox = Dom.prev(textNode, Dom.isBlock, editor.editor);
+
+                if (range.startOffset === 0) {
+                    const prevBox = Dom.prev(range.startContainer, Dom.isBlock, editor.editor);
                     if (prevBox) {
                         editor.selection.setCursorIn(prevBox, false);
-                        const container = <HTMLElement>Dom.up(textNode, Dom.isBlock, editor.editor);
-                        if (!container.innerHTML) {
+                        const container = <HTMLElement>Dom.up(range.startContainer, Dom.isBlock, editor.editor);
+                        const html: string = container.innerHTML.replace(consts.INVISIBLE_SPACE_REG_EXP, '');
+                        if (!html.length || html == '<br>') {
                             container.parentNode.removeChild(container)
                         }
                         return false;

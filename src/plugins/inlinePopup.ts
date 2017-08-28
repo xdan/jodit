@@ -57,7 +57,10 @@ declare module "../Config" {
  */
 Config.prototype.popup = {
     a: [
-        'link',
+        {
+            name: 'link',
+            icon: 'pencil'
+        },
         'unlink'
     ],
     img: [

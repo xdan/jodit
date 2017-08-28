@@ -10,24 +10,26 @@ describe('CodeMirror editor source code', function() {
                     this.destruct();
                     area.parentNode.removeChild(area);
                     done();
-                },
-                editor = new Jodit(area, {
-                    defaultMode: Jodit.MODE_SOURCE,
-                    useAceEditor: true,
-                    events: {
-                        beforeDestruct: function () {
-                            return false;
-                        },
-                        aceInited: function () {
-                            expect(this.container.querySelectorAll('.jodit_source_mirror-fake').length).to.equal(1);
-                            __done.call(this);
-                        }
-                    }
-                });
+                };
+
             timeout = setTimeout(function () {
                 expect(false).to.equal(true);
                 __done.call(editor);
             }, 1500);
+
+            editor = new Jodit(area, {
+                defaultMode: Jodit.MODE_SOURCE,
+                useAceEditor: true,
+                events: {
+                    beforeDestruct: function () {
+                        return false;
+                    },
+                    aceInited: function () {
+                        expect(this.container.querySelectorAll('.jodit_source_mirror-fake').length).to.equal(1);
+                        __done.call(this);
+                    }
+                }
+            });
         });
         it('Check lazy load', function() {
             var editor = new Jodit('#codemirror', {

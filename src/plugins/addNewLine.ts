@@ -61,7 +61,7 @@ Jodit.plugins.addNewLine = function (editor: Jodit) {
         hidden = true;
     };
     const canGetFocus = (elm: Node): boolean => {
-        return Dom.isNode(elm, editor.win) && !Dom.isEmptyTextNode(elm) && trim(elm.nodeValue).length !== 0;
+        return Dom.isBlock(elm) && !/^(img|table|iframe|hr)$/i.test(elm.nodeName);
     };
     const hide = () => {
         if (hidden) {

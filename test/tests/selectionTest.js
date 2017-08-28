@@ -59,6 +59,38 @@ describe('Selection Module Tests', function() {
             expect(mirror.selectionStart).to.equal(5);
             expect(mirror.selectionEnd).to.equal(5);
         });
+        it('Should restore collapsed selection when user change mode - from WYSIWYG to TEXTAREA for long string', function (done) {
+            var editor = new Jodit('#selection_tested_area', {
+                useAceEditor: true,
+                beautifyHTML: false,
+                events: {
+                    aceInited: function () {
+                        editor.setEditorValue(('<p>' + 'test '.repeat(50) + '</p>').repeat(1));
+
+                        var sel = editor.win.getSelection(),
+                            range = editor.doc.createRange();
+
+                        range.selectNodeContents(editor.editor.querySelector('p'));
+                        range.collapse(false);
+                        sel.removeAllRanges();
+                        sel.addRange(range);
+
+                        editor.selection.insertHTML('hello');
+
+                        editor.setMode(Jodit.MODE_SOURCE);
+
+                        expect(editor.__plugins.source.aceEditor.getSelectionRange().start.column).to.equal(258);
+                        expect(editor.__plugins.source.aceEditor.getSelectionRange().start.row).to.equal(0);
+
+                        editor.__plugins.source.aceEditor.session.insert(editor.__plugins.source.aceEditor.getCursorPosition(), ' world');
+
+                        expect(editor.__plugins.source.aceEditor.getValue()).to.equal('<p>' + 'test '.repeat(49) + 'test hello world</p>');
+                        done();
+                    }
+                }
+            });
+
+        });
         it('Should restore collapsed selection when user change mode - from TEXTAREA to WYSIWYG', function () {
             var editor = new Jodit('#selection_tested_area', {
                 useAceEditor: false,

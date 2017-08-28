@@ -12,14 +12,20 @@ declare module "../Config" {
             showGutter: boolean;
             theme: string;
             mode: string;
-            wrap: string,
+            wrap: string|boolean|number,
             highlightActiveLine: boolean;
         }
+        beautifyHTML: boolean;
         beautifyHTMLCDNUrlsJS: string[];
         sourceEditorCDNUrlsJS: string[];
     }
 }
 
+/**
+ * Beautify HTML then it possible
+ * @type {boolean}
+ */
+Config.prototype.beautifyHTML = true;
 /**
  * Use ACE editor instead of usual textarea
  * @memberof Jodit.defaultOptions
@@ -45,9 +51,9 @@ Config.prototype.sourceEditorNativeOptions = {
     mode: 'ace/mode/html',
 
     /**
-     * Wrap lines. Possible values - off, 80-100, free
+     * Wrap lines. Possible values - "off", 80-100..., true, "free"
      */
-    wrap: 'free',
+    wrap: true,
 
     /**
      * Highlight active line
@@ -60,8 +66,8 @@ Config.prototype.sourceEditorNativeOptions = {
 * @memberof Jodit.defaultOptions
 */
 Config.prototype.sourceEditorCDNUrlsJS = [
-    '//cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js',
-    '//cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ext-emmet.js',
+    '//cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/ace.js',
+    '//cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/ext-emmet.js',
 ];
 
 
@@ -70,8 +76,8 @@ Config.prototype.sourceEditorCDNUrlsJS = [
  * @memberof Jodit.defaultOptions
  */
 Config.prototype.beautifyHTMLCDNUrlsJS = [
-    '//cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.12/beautify.min.js',
-    '//cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.12/beautify-html.min.js',
+    '//cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.14/beautify.min.js',
+    '//cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.14/beautify-html.min.js',
 ];
 
 
@@ -149,6 +155,9 @@ Jodit.plugins.source = class extends Component {
         }
         return pos;
     };
+
+    aceEditor: AceAjax.Editor;
+
     constructor(editor: Jodit) {
         super(editor);
 
@@ -172,7 +181,7 @@ Jodit.plugins.source = class extends Component {
                 this.autosize();
 
                 const className = 'beutyfy_html_jodit_helper';
-                if (window['html_beautify'] === undefined && !$$('script.' + className, document.body).length) {
+                if (editor.options.beautifyHTML && window['html_beautify'] === undefined && !$$('script.' + className, document.body).length) {
                     this.loadNext(0, editor.options.beautifyHTMLCDNUrlsJS, false, className);
                 }
 
@@ -272,7 +281,7 @@ Jodit.plugins.source = class extends Component {
             value = value.replace(/<span[^>]+data-jodit_selection_marker="end"[^>]*>[<>]*?<\/span>/gmi, this.tempMarkerEnd);
         }
 
-        if (window['html_beautify']) {
+        if (window['html_beautify'] && this.jodit.options.beautifyHTML) {
             value = window['html_beautify'](value);
         }
 
@@ -313,7 +322,7 @@ Jodit.plugins.source = class extends Component {
                 }
             },
             getLastColumnIndex = (row: number): number => {
-                return (<any>aceEditor.session.getDocumentLastRowColumnPosition(row, 0)).column;
+                return aceEditor.session.getLine(row).length;
             },
             getLastColumnIndices = (): number[] => {
                 const rows: number = aceEditor.session.getLength();
@@ -346,14 +355,8 @@ Jodit.plugins.source = class extends Component {
                 const startRowColumn = getRowColumnIndices(start);
                 const endRowColumn = getRowColumnIndices(end);
                 aceEditor.getSelection().setSelectionRange({
-                    start: {
-                        row: startRowColumn.row,
-                        column: startRowColumn.column
-                    },
-                    end: {
-                        row: endRowColumn.row,
-                        column: endRowColumn.column
-                    }
+                    start: startRowColumn,
+                    end: endRowColumn
                 });
             },
             getIndexByRowColumn = (row: number, column: number): number => {
@@ -365,18 +368,20 @@ Jodit.plugins.source = class extends Component {
                     const fakeMirror = dom('<div class="jodit_source_mirror-fake"/>', document);
                     this.mirrorContainer.insertBefore(fakeMirror, this.mirrorContainer.firstChild);
 
-                    aceEditor = (<AceAjax.Ace>window['ace']).edit(fakeMirror);
+                    this.aceEditor = aceEditor = (<AceAjax.Ace>window['ace']).edit(fakeMirror);
 
                     aceEditor.setTheme(editor.options.sourceEditorNativeOptions.theme);
                     aceEditor.renderer.setShowGutter(editor.options.sourceEditorNativeOptions.showGutter);
                     aceEditor.getSession().setMode(editor.options.sourceEditorNativeOptions.mode);
                     aceEditor.setHighlightActiveLine(editor.options.sourceEditorNativeOptions.highlightActiveLine);
+                    aceEditor.getSession().setUseWrapMode(true);
+                    aceEditor.setOption("indentedSoftWrap", false);
                     aceEditor.setOption('wrap', editor.options.sourceEditorNativeOptions.wrap);
 
                     aceEditor.$blockScrolling = Infinity;
 
-                    aceEditor.setValue(this.getMirrorValue());
-                    aceEditor.clearSelection();
+                    // aceEditor.setValue(this.getMirrorValue());
+                    // aceEditor.clearSelection();
 
                     aceEditor.setOptions({
                         maxLines: Infinity
@@ -394,29 +399,37 @@ Jodit.plugins.source = class extends Component {
 
                     undoManager = aceEditor.getSession().getUndoManager();
 
-                    this.getMirrorValue = () => {
-                        return aceEditor.getValue();
-                    };
                     this.setMirrorValue = (value: string) => {
-                        if (window['html_beautify']) {
+                        if (editor.options.beautifyHTML && window['html_beautify']) {
                             aceEditor.setValue(window['html_beautify'](value));
                         } else {
                             aceEditor.setValue(value);
                         }
+
                         aceEditor.clearSelection();
                         updateButtons();
                     };
+
+                    this.setMirrorValue(this.getMirrorValue());
+
+                    this.getMirrorValue = () => {
+                        return aceEditor.getValue();
+                    };
+
                     this.setFocusToMirror = () => {
                         aceEditor.focus();
                     };
+
                     this.getSelectionStart = (): number => {
                         const range: AceAjax.Range = aceEditor.selection.getRange();
                         return getIndexByRowColumn(range.start.row, range.start.column);
                     };
+
                     this.getSelectionEnd = (): number => {
                         const range: AceAjax.Range = aceEditor.selection.getRange();
                         return getIndexByRowColumn(range.end.row, range.end.column);
                     };
+
                     this.setMirrorSelectionRange = (start: number, end: number) => {
                         setSelectionRangeIndices(start, end);
                     };
@@ -428,7 +441,7 @@ Jodit.plugins.source = class extends Component {
 
         editor.events
             .__on(window, 'aceReady', tryInitAceEditor) // work in global scope
-            .on('afterSetMode', () => {
+            .on('afterSetMode afterInit', () => {
                 if (editor.getRealMode() !== consts.MODE_SOURCE && editor.getMode() !== consts.MODE_SPLIT) {
                     return;
                 }

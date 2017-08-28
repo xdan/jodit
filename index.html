@@ -24,10 +24,10 @@
         <tr>
             <td id="maintab" style="width:50%;vertical-align: top">
                 <div id="uniqbox" class="box">
-                    <textarea id="area_editor">Simple text</textarea>
+                    <textarea id="area_editor"></textarea>
                 </div>
             </td>
-            <td id="mirrortab"><textarea id="mirror"></textarea></td>
+            <td id="mirrortab"><textarea readonly disabled id="mirror"></textarea></td>
         </tr>
     </table>
     <style>
@@ -52,6 +52,15 @@
 </html>
 
 <script>
+    if (String.prototype.repeat === undefined) {
+        String.prototype.repeat = function (count) {
+            var result = [];
+            for (var i = 0; i < count; i++) {
+                result.push(this);
+            }
+            return result.join('');
+        };
+    }
     Jodit.defaultOptions.iframeCSSLinks.push('app.css');
     Jodit.defaultOptions.iframeStyle += "* {\
     -webkit-box-sizing: border-box;\
@@ -72,11 +81,12 @@
         };
     }
     editor = new Jodit('#area_editor', {
+//        useAceEditor: false,
 //        theme: 'dark',
 //        textIcons: true,
 //        iframe: true,
 //        height: 300,
-        defaultMode: Jodit.MODE_SPLIT,
+//        defaultMode: Jodit.MODE_SPLIT,
         observer: {
             timeout: 0
         },
@@ -119,8 +129,21 @@
     editor.editor.addEventListener('keyup', callback)
     editor.editor.addEventListener('mousedown', callback)
     editor.editor.addEventListener('mouseup', callback)
-    editor.editor.addEventListener('input', callback)
-//    editor.setMode(Jodit.MODE_SOURCE);
+    editor.editor.addEventListener('input', callback);
+
+    editor.events.on('aceInited', function () {
+        editor.setEditorValue(('<p>' + 'test '.repeat(50) + '</p>').repeat(1));
+
+        var sel = editor.win.getSelection(),
+            range = editor.doc.createRange();
+
+        range.selectNodeContents(editor.editor.querySelector('p'));
+        range.collapse(false);
+        sel.removeAllRanges();
+        sel.addRange(range);
+
+        editor.setMode(Jodit.MODE_SOURCE);
+    });
 //    editor.setEditorValue('<table><tbody>' +
 //        '<tr><td>3</td></tr>' +
 //        '<tr><td>2</td></tr>' +

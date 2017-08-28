@@ -1,4 +1,55 @@
 describe('Enter behavior Jodit Editor Tests', function() {
+    describe('Backspace key', function () {
+        it('Should return in first <p> after pressing enter', function () {
+            var editor = new Jodit(appendTestArea())
+
+            editor.setEditorValue('test');
+
+            var range = editor.doc.createRange();
+
+
+            // set cursor in start of element
+            range.selectNodeContents(editor.editor.firstChild);
+            range.collapse(false);
+            editor.win.getSelection().removeAllRanges();
+            editor.win.getSelection().addRange(range);
+
+
+            simulateEvent('keydown',    Jodit.KEY_ENTER, editor.editor);
+            simulateEvent('keydown',    Jodit.KEY_BACKSPACE, editor.editor);
+
+            editor.selection.insertNode(editor.doc.createTextNode(' 2 '));
+
+            expect(editor.getEditorValue()).to.be.equal('<p>test 2 </p>');
+        });
+        // it('Should remove empty tag and set cursor in previous element', function () {
+        //     var editor = new Jodit(appendTestArea())
+        //
+        //     editor.setEditorValue('<table><tbody>' +
+        //         '<tr><td></td></tr>' +
+        //         '</tbody></table><p>te<br></p>');
+        //
+        //     var range = editor.doc.createRange();
+        //
+        //
+        //     // set cursor in start of element
+        //     range.setStart(editor.editor.lastChild.firstChild, 2);
+        //     range.collapse(true);
+        //     editor.win.getSelection().removeAllRanges();
+        //     editor.win.getSelection().addRange(range);
+        //
+        //
+        //
+        //     simulateEvent('keydown',    Jodit.KEY_BACKSPACE, editor.editor);
+        //     simulateEvent('keydown',    Jodit.KEY_BACKSPACE, editor.editor);
+        //
+        //     editor.selection.insertNode(editor.doc.createTextNode(' 2 '));
+        //
+        //     expect(editor.getEditorValue()).to.be.equal('<table><tbody>' +
+        //         '<tr><td> 2 </td></tr>' +
+        //         '</tbody></table>');
+        // })
+    });
     describe('Enter key', function () {
         it('If Enter was pressed in not wrapped text in the end, it text should be wrap in paragraph and cursor should be in next new paragraph', function () {
             var editor = new Jodit(appendTestArea())
@@ -363,28 +414,6 @@ describe('Enter behavior Jodit Editor Tests', function() {
             simulateEvent('keydown',    Jodit.KEY_ENTER, editor.editor);
 
             expect(editor.getEditorValue()).to.be.equal('<table><tbody><tr><td>split <br>text</td></tr></tbody></table>');
-        })
-        it('Press packspace after enter', function () {
-            var editor = new Jodit(appendTestArea())
-
-            editor.setEditorValue('test');
-
-            var range = editor.doc.createRange();
-
-
-            // set cursor in start of element
-            range.selectNodeContents(editor.editor.firstChild);
-            range.collapse(false);
-            editor.win.getSelection().removeAllRanges();
-            editor.win.getSelection().addRange(range);
-
-
-            simulateEvent('keydown',    Jodit.KEY_ENTER, editor.editor);
-            simulateEvent('keydown',    Jodit.KEY_BACKSPACE, editor.editor);
-
-            editor.selection.insertNode(editor.doc.createTextNode(' 2 '));
-
-            expect(editor.getEditorValue()).to.be.equal('<p>test 2 </p>');
         })
     });
     afterEach(function () {

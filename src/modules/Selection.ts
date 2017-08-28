@@ -344,7 +344,7 @@ export default class Selection extends Component{
      * parent.selection.insertHTML('<img src="image.png"/>');
      * ```
      */
-    insertHTML(html) {
+    insertHTML(html: number|string|Node) {
         let node = this.jodit.doc.createElement('DIV'),
             fragment = this.jodit.doc.createDocumentFragment(),
             lastChild,
@@ -354,10 +354,10 @@ export default class Selection extends Component{
             this.jodit.editor.focus();
         }
 
-        if (typeof html === 'string') {
-            node.innerHTML = html;
+        if (!(html instanceof (<any>this.jodit.win).Node)) {
+            node.innerHTML = html.toString();
         } else if (Dom.isNode(html, this.jodit.win)) {
-            node.appendChild(html);
+            node.appendChild(<Node>html);
         }
 
         lastChild = node.lastChild;

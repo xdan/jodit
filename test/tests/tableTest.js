@@ -1071,7 +1071,7 @@ describe('Tables Jodit Editor Tests', function() {
                 var editor = new Jodit('#table_editor');
 
                 getBox().style.width = '202px';
-debugger
+
                 editor.setEditorValue('<table style="width: 100px; border-collapse: separate;" cellspacing="0">' +
                     '<tr><td>1</td><td>2</td><td>3</td><td>5</td></tr>' +
                     '</table>');
