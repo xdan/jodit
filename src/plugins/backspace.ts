@@ -18,6 +18,8 @@ Jodit.plugins.backspace = function (editor: Jodit) {
     });
     editor.events.on('keydown', (event) => {
         if (event.which === consts.KEY_BACKSPACE || event.keyCode === consts.KEY_DELETE) {
+            const toLeft: boolean = event.which === consts.KEY_BACKSPACE;
+
             if (!editor.selection.isCollapsed()) {
                 editor.execCommand('Delete');
                 return false;
@@ -27,43 +29,92 @@ Jodit.plugins.backspace = function (editor: Jodit) {
                 range = sel.rangeCount ? sel.getRangeAt(0) : false;
 
             if (range) {
-                if (
-                    range.startContainer.nodeType === Node.TEXT_NODE ||
-                    range.startContainer.childNodes[range.startOffset].nodeType === Node.TEXT_NODE
-                ) {
-                    let textNode = range.startContainer.nodeType === Node.TEXT_NODE ? range.startContainer : range.startContainer.childNodes[range.startOffset],
-                        value = textNode.nodeValue,
-                        startOffset = range.startOffset;
+                const textNode = range.startContainer.nodeType === Node.TEXT_NODE ? range.startContainer : range.startContainer.childNodes[range.startOffset];
+                if (textNode && textNode.nodeType === Node.TEXT_NODE) {
+                    let value = textNode.nodeValue,
+                        startOffset = range.startOffset,
+                        increment = toLeft ? -1 : 1;
 
-                    while (startOffset >= 0 && value[startOffset - 1] === consts.INVISIBLE_SPACE) {
-                        startOffset -= 1;
+                    while (startOffset >= 0 && startOffset <= value.length && value[startOffset + increment] === consts.INVISIBLE_SPACE) {
+                        startOffset += increment;
                     }
 
                     if (startOffset !== range.startOffset) {
                         const oldStart = range.startOffset;
-                        value = value.substr(0, startOffset) + value.substr(oldStart);
-                        textNode.nodeValue = value;
+                        if (toLeft) {
+                            value = value.substr(0, startOffset) + value.substr(oldStart);
+                        } else {
+                            value = value.substr(0, oldStart) + value.substr(startOffset);
+                        }
 
+                        textNode.nodeValue = value;
                         if (value) {
                             range.setStart(textNode, startOffset);
                             return;
                         }
                     }
                 }
-
-                if (range.startOffset === 0) {
-                    const prevBox = Dom.prev(range.startContainer, Dom.isBlock, editor.editor);
+                if (range.startOffset === 0 && toLeft) {
+                    const prevBox = Dom.prev(textNode, Dom.isBlock, editor.editor);
                     if (prevBox) {
                         editor.selection.setCursorIn(prevBox, false);
-                        const container = <HTMLElement>Dom.up(range.startContainer, Dom.isBlock, editor.editor);
-                        const html: string = container.innerHTML.replace(consts.INVISIBLE_SPACE_REG_EXP, '');
-                        if (!html.length || html == '<br>') {
-                            container.parentNode.removeChild(container)
-                        }
+                    }
+                    const container = <HTMLElement>Dom.up(range.startContainer, Dom.isBlock, editor.editor);
+                    const html: string = container.innerHTML.replace(consts.INVISIBLE_SPACE_REG_EXP, '');
+                    if (!html.length || html == '<br>') {
+                        container.parentNode.removeChild(container)
                         return false;
                     }
                 }
             }
         }
+        // if (event.which === consts.KEY_BACKSPACE || event.keyCode === consts.KEY_DELETE) {
+        //     if (!editor.selection.isCollapsed()) {
+        //         editor.execCommand('Delete');
+        //         return false;
+        //     }
+        //
+        //     const sel = editor.win.getSelection(),
+        //         range = sel.rangeCount ? sel.getRangeAt(0) : false;
+        //
+        //     if (range) {
+        //         if (
+        //             range.startContainer.nodeType === Node.TEXT_NODE ||
+        //             range.startContainer.childNodes[range.startOffset].nodeType === Node.TEXT_NODE
+        //         ) {
+        //             let textNode = range.startContainer.nodeType === Node.TEXT_NODE ? range.startContainer : range.startContainer.childNodes[range.startOffset],
+        //                 value = textNode.nodeValue,
+        //                 startOffset = range.startOffset;
+        //
+        //             while (startOffset >= 0 && value[startOffset - 1] === consts.INVISIBLE_SPACE) {
+        //                 startOffset -= 1;
+        //             }
+        //
+        //             if (startOffset !== range.startOffset) {
+        //                 const oldStart = range.startOffset;
+        //                 value = value.substr(0, startOffset) + value.substr(oldStart);
+        //                 textNode.nodeValue = value;
+        //
+        //                 if (value) {
+        //                     range.setStart(textNode, startOffset);
+        //                     return;
+        //                 }
+        //             }
+        //         }
+        //
+        //         if (range.startOffset === 0) {
+        //             const prevBox = Dom.prev(range.startContainer, Dom.isBlock, editor.editor);
+        //             if (prevBox) {
+        //                 editor.selection.setCursorIn(prevBox, false);
+        //                 const container = <HTMLElement>Dom.up(range.startContainer, Dom.isBlock, editor.editor);
+        //                 const html: string = container.innerHTML.replace(consts.INVISIBLE_SPACE_REG_EXP, '');
+        //                 if (!html.length || html == '<br>') {
+        //                     container.parentNode.removeChild(container)
+        //                 }
+        //                 return false;
+        //             }
+        //         }
+        //     }
+        // }
     })
 };

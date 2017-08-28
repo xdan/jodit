@@ -22,33 +22,33 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
             expect(editor.getEditorValue()).to.be.equal('<p>test 2 </p>');
         });
-        // it('Should remove empty tag and set cursor in previous element', function () {
-        //     var editor = new Jodit(appendTestArea())
-        //
-        //     editor.setEditorValue('<table><tbody>' +
-        //         '<tr><td></td></tr>' +
-        //         '</tbody></table><p>te<br></p>');
-        //
-        //     var range = editor.doc.createRange();
-        //
-        //
-        //     // set cursor in start of element
-        //     range.setStart(editor.editor.lastChild.firstChild, 2);
-        //     range.collapse(true);
-        //     editor.win.getSelection().removeAllRanges();
-        //     editor.win.getSelection().addRange(range);
-        //
-        //
-        //
-        //     simulateEvent('keydown',    Jodit.KEY_BACKSPACE, editor.editor);
-        //     simulateEvent('keydown',    Jodit.KEY_BACKSPACE, editor.editor);
-        //
-        //     editor.selection.insertNode(editor.doc.createTextNode(' 2 '));
-        //
-        //     expect(editor.getEditorValue()).to.be.equal('<table><tbody>' +
-        //         '<tr><td> 2 </td></tr>' +
-        //         '</tbody></table>');
-        // })
+        it('Should remove empty tag and set cursor in previous element', function () {
+            var editor = new Jodit(appendTestArea())
+
+            editor.setEditorValue('<table><tbody>' +
+                '<tr><td></td></tr>' +
+                '</tbody></table><p><br></p>');
+
+            var range = editor.doc.createRange();
+
+
+            // set cursor in start of element
+
+            range.selectNodeContents(editor.editor.lastChild);
+            range.collapse(true);
+            editor.win.getSelection().removeAllRanges();
+            editor.win.getSelection().addRange(range);
+
+
+
+            simulateEvent('keydown',    Jodit.KEY_BACKSPACE, editor.editor);
+
+            editor.selection.insertNode(editor.doc.createTextNode(' 2 '));
+
+            expect(editor.getEditorValue()).to.be.equal('<table><tbody>' +
+                '<tr><td> 2 </td></tr>' +
+                '</tbody></table>');
+        })
     });
     describe('Enter key', function () {
         it('If Enter was pressed in not wrapped text in the end, it text should be wrap in paragraph and cursor should be in next new paragraph', function () {
@@ -395,26 +395,48 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
             expect(editor.getEditorValue()).to.be.equal('<p></p><p>a Split paragraph</p><p>Test</p>');
         })
-        it('If cursor in TD tag', function () {
-            var editor = new Jodit(appendTestArea())
+        describe('with table', function () {
+            it('If cursor in TD tag', function () {
+                var editor = new Jodit(appendTestArea())
 
-            editor.setEditorValue('<table><tr><td>text</td></tr></table>');
+                editor.setEditorValue('<table><tr><td>text</td></tr></table>');
 
-            var range = editor.doc.createRange();
+                var range = editor.doc.createRange();
 
 
-            // set cursor in start of element
-            range.selectNodeContents(editor.editor.querySelector('td'));
-            range.collapse(true);
-            editor.win.getSelection().removeAllRanges();
-            editor.win.getSelection().addRange(range);
+                // set cursor in start of element
+                range.selectNodeContents(editor.editor.querySelector('td'));
+                range.collapse(true);
+                editor.win.getSelection().removeAllRanges();
+                editor.win.getSelection().addRange(range);
 
-            editor.selection.insertNode(editor.doc.createTextNode('split '));
+                editor.selection.insertNode(editor.doc.createTextNode('split '));
 
-            simulateEvent('keydown',    Jodit.KEY_ENTER, editor.editor);
+                simulateEvent('keydown',    Jodit.KEY_ENTER, editor.editor);
 
-            expect(editor.getEditorValue()).to.be.equal('<table><tbody><tr><td>split <br>text</td></tr></tbody></table>');
-        })
+                expect(editor.getEditorValue()).to.be.equal('<table><tbody><tr><td>split <br>text</td></tr></tbody></table>');
+            })
+            it('If cursor in right side of table', function () {
+                var editor = new Jodit(appendTestArea())
+
+                editor.setEditorValue('<table><tr><td>text</td></tr></table>');
+
+                var range = editor.doc.createRange();
+
+
+                // set cursor in start of element
+                range.setEndAfter(editor.editor.querySelector('table'));
+                range.collapse(false);
+                editor.win.getSelection().removeAllRanges();
+                editor.win.getSelection().addRange(range);
+
+                simulateEvent('keydown',    Jodit.KEY_ENTER, editor.editor);
+
+                editor.selection.insertNode(editor.doc.createTextNode('text'), false)
+
+                expect(editor.getEditorValue()).to.be.equal('<table><tbody><tr><td>text</td></tr></tbody></table><p>text</p>');
+            })
+        });
     });
     afterEach(function () {
         removeStuff();

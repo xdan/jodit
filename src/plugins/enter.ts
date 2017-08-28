@@ -54,6 +54,7 @@ Jodit.plugins.enter = function (editor: Jodit) {
                 editor.execCommand('Delete');
             }
             editor.selection.focus();
+
             let current = editor.selection.current();
 
             let sel = editor.win.getSelection(),
@@ -63,6 +64,7 @@ Jodit.plugins.enter = function (editor: Jodit) {
                 current = Dom.create('text', consts.INVISIBLE_SPACE, editor.doc);
                 editor.editor.appendChild(current);
                 range.selectNode(current);
+                range.collapse(false);
                 sel.removeAllRanges();
                 sel.addRange(range);
             }
@@ -70,7 +72,7 @@ Jodit.plugins.enter = function (editor: Jodit) {
             let fake;
             let currentBox: HTMLElement|false = current ? <HTMLElement>Dom.up(current, Dom.isBlock, editor.editor) : false;
 
-            if (!currentBox && current) {
+            if (!currentBox && current && !(current.previousSibling && current.previousSibling.nodeName === 'TABLE')) {
                 currentBox = Dom.wrap(current, editor.options.enter, editor);
                 sel = editor.win.getSelection();
                 range = sel.rangeCount ? sel.getRangeAt(0) : editor.doc.createRange();

@@ -131,19 +131,7 @@
     editor.editor.addEventListener('mouseup', callback)
     editor.editor.addEventListener('input', callback);
 
-    editor.events.on('aceInited', function () {
-        editor.setEditorValue(('<p>' + 'test '.repeat(50) + '</p>').repeat(1));
 
-        var sel = editor.win.getSelection(),
-            range = editor.doc.createRange();
-
-        range.selectNodeContents(editor.editor.querySelector('p'));
-        range.collapse(false);
-        sel.removeAllRanges();
-        sel.addRange(range);
-
-        editor.setMode(Jodit.MODE_SOURCE);
-    });
 //    editor.setEditorValue('<table><tbody>' +
 //        '<tr><td>3</td></tr>' +
 //        '<tr><td>2</td></tr>' +
