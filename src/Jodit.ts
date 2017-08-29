@@ -245,16 +245,7 @@ export default class Jodit extends Component{
             this.workplace.appendChild(document.createTextNode("\n"));
             this.workplace.appendChild(this.editor);
             this.workplace.appendChild(document.createTextNode("\n"));
-            css(this.editor, {
-                minHeight: this.options.minHeight
-            });
         }
-
-        css(this.workplace, {
-            width: this.options.width,
-            height: this.options.height,
-            minHeight: this.options.minHeight
-        });
 
         if (this.options.editorCssClass) {
             this.editor.classList.add(this.options.editorCssClass);
