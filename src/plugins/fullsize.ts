@@ -64,8 +64,8 @@ Jodit.plugins.fullsize = function (editor: Jodit) {
                     wasToggled = true;
                 } else if (wasToggled) {
                     css(editor.container, {
-                        height: oldHeight,
-                        width: oldWidth
+                        height: oldHeight || 'auto',
+                        width: oldWidth || 'auto'
                     });
                 }
             }
