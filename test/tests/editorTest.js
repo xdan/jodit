@@ -52,6 +52,17 @@ describe('Jodit Editor Tests', function() {
                     editor.setEditorValue('<p>test</p>'.repeat(100));
                     expect(editor.container.offsetHeight).to.be.below(1000);
                 });
+                it('Should not change size by content after window was resized', function () {
+                    var area = appendTestArea();
+                    var editor = new Jodit(area, {
+                        height: 300
+                    });
+                    editor.setEditorValue('<p>test</p>'.repeat(20))
+                    expect(editor.container.offsetHeight).to.be.equal(300);
+
+                    simulateEvent('resize', 0, window);
+                    expect(editor.container.offsetHeight).to.be.equal(300);
+                });
                 it('Should add resize handle', function () {
                     var area = appendTestArea();
                     var editor = new Jodit(area, {
