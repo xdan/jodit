@@ -66,8 +66,8 @@ Jodit.plugins.size = function (editor: Jodit) {
                     minHeight: '100%'
                 });
                 css(editor.workplace, {
-                    height: '100%',
-                    minHeight: '100%'
+                    height: '',
+                    minHeight: ''
                 });
                 css(editor.container, {
                     height: editor.options.height,
@@ -75,11 +75,11 @@ Jodit.plugins.size = function (editor: Jodit) {
             }
             if (editor.options.width !== 'auto') {
                 css(editor.workplace, {
-                    width: '100%'
+                    width: ''
                 });
                 css(editor.container, {
                     width: editor.options.width,
                 });
             }
-        });
+        }, '', true);
 }
