@@ -146,7 +146,7 @@ var simulateEvent = function (type, keyCodeArg, element, options) {
     }
 
     if (type.match(/^mouse/)) {
-        ['pageX', 'pageY'].forEach(function (key) {
+        ['pageX', 'pageY', 'clientX', 'clientY'].forEach(function (key) {
             if (evt[key] === undefined) {
                 evt[key] = 0;
             }

@@ -32,7 +32,119 @@ describe('Jodit Editor Tests', function() {
             });
             expect(editor.options.zIndex).to.equal(1986);
             expect(editor.options.spellcheck).to.equal(true);
-        })
+        });
+        describe('Sizes', function () {
+            describe('Set fixed height', function () {
+                it('Should set editor height by option', function () {
+                    var area = appendTestArea();
+                    var editor = new Jodit(area, {
+                        height: 300
+                    });
+                    editor.setEditorValue('<p>test</p>'.repeat(100));
+                    expect(editor.container.offsetHeight).to.be.below(1000);
+                });
+                it('Should set editor height by option for iframe', function () {
+                    var area = appendTestArea();
+                    var editor = new Jodit(area, {
+                        height: 300,
+                        iframe: true
+                    });
+                    editor.setEditorValue('<p>test</p>'.repeat(100));
+                    expect(editor.container.offsetHeight).to.be.below(1000);
+                });
+                it('Should add resize handle', function () {
+                    var area = appendTestArea();
+                    var editor = new Jodit(area, {
+                        height: 300,
+                        iframe: true
+                    });
+                    expect(editor.container.querySelectorAll('.jodit_editor_resize').length).to.be.equal(1);
+                });
+                it('Should not change size by content after window was resized', function () {
+                    var area = appendTestArea();
+                    var editor = new Jodit(area, {
+                        height: 300
+                    });
+                    editor.setEditorValue('<p>test</p>'.repeat(20))
+                    expect(editor.container.offsetHeight).to.be.equal(300);
+
+                    simulateEvent('resize', 0, window);
+                    expect(editor.container.offsetHeight).to.be.equal(300);
+                });
+                describe('Resize handle', function () {
+                    it('Should resize editor', function () {
+                        var area = appendTestArea();
+                        var editor = new Jodit(area, {
+                            height: 300,
+                            width: 400,
+                            allowResizeX: true,
+                            allowResizeY: true,
+                        });
+
+                        var handle = editor.container.querySelector('.jodit_editor_resize');
+
+                        expect(editor.container.offsetHeight).to.be.equal(300);
+
+                        simulateEvent('mousedown', 0, handle, function (options) {
+                            options.clientX = 100;
+                            options.clientY = 100;
+                        });
+                        simulateEvent('mousemove', 0, window, function (options) {
+                            options.clientX = 200;
+                            options.clientY = 200;
+                        });
+                        simulateEvent('mouseup', 0, window);
+
+                        expect(editor.container.offsetHeight).to.be.equal(400);
+                        expect(editor.container.offsetWidth).to.be.equal(500);
+                    });
+                    describe('Disable X resizing', function () {
+                        it('Should resize editor only by vertical', function () {
+                            var area = appendTestArea();
+                            var editor = new Jodit(area, {
+                                height: 300,
+                                width: 400,
+                                allowResizeX: false,
+                                allowResizeY: true,
+                            });
+
+                            var handle = editor.container.querySelector('.jodit_editor_resize');
+
+                            expect(editor.container.offsetHeight).to.be.equal(300);
+
+                            simulateEvent('mousedown', 0, handle, function (options) {
+                                options.clientX = 100;
+                                options.clientY = 100;
+                            });
+                            simulateEvent('mousemove', 0, window, function (options) {
+                                options.clientX = 200;
+                                options.clientY = 200;
+                            });
+                            simulateEvent('mouseup', 0, window);
+
+                            expect(editor.container.offsetHeight).to.be.equal(400);
+                            expect(editor.container.offsetWidth).to.be.equal(400);
+                        });
+                    });
+                });
+            });
+            describe('Autosize', function () {
+               it('Should set editor height by content', function () {
+                    var area = appendTestArea();
+                    var editor = new Jodit(area);
+                    editor.setEditorValue('<p>test</p>'.repeat(100));
+                    expect(editor.container.offsetHeight).to.be.above(1000);
+                });
+                it('Should set editor height by content in iframe mode', function () {
+                    var area = appendTestArea();
+                    var editor = new Jodit(area, {
+                        iframe: true
+                    });
+                    editor.setEditorValue('<p>test</p>'.repeat(100));
+                    expect(editor.container.offsetHeight).to.be.above(1000);
+                });
+            });
+        });
     });
     describe('Editors stack', function() {
         it('Jodit.instances should contain all instances of Jodit', function() {

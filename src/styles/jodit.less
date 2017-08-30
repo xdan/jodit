@@ -2,6 +2,9 @@
 
 .jodit_container {
    background: #fff;
+   &, * {
+    box-sizing: border-box;
+   }
   .jodit_workplace {
     border: 1px solid @color-border;
     position: relative;
@@ -36,7 +39,7 @@
 
       &::selection,
       *::selection {
-        background: @background-color-selection;
+        background: @color-background-selection;
         color: @color-selection;
       }
       &.jodit_disabled {

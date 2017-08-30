@@ -5,14 +5,17 @@ import {Config} from '../Config'
 
 declare module "../Config" {
     interface Config {
-        mobileTapTimeout: number;
+        allowResizeX: boolean;
+        allowResizeY: boolean;
     }
 }
 
+Config.prototype.allowResizeX = false;
+Config.prototype.allowResizeY = true;
 
-Jodit.plugins.resizeEditor = function (editor: Jodit) {
-    if (editor.options.height !== 'auto') {
-        const handle: HTMLAnchorElement = <HTMLAnchorElement>dom('<div class="jodit_editor_resize" ><a href="javascript:void(0)">' + Toolbar.getIcon('resize') + '</a></div>'),
+Jodit.plugins.size = function (editor: Jodit) {
+    if (editor.options.height !== 'auto' && (editor.options.allowResizeX || editor.options.allowResizeY)) {
+        const handle: HTMLAnchorElement = <HTMLAnchorElement>dom('<div class="jodit_editor_resize" ><a href="javascript:void(0)"></a></div>'),
             start: { x: number, y: number, w: number, h: number } = {
                 x: 0, y: 0, w: 0, h: 0
             };
@@ -31,8 +34,8 @@ Jodit.plugins.resizeEditor = function (editor: Jodit) {
             .__on(window, 'mousemove touchmove', throttle((e: MouseEvent) => {
                 if (isResized) {
                     css(editor.container, {
-                        width: start.w + e.clientX - start.x,
-                        height: start.h + e.clientY - start.y,
+                        width: editor.options.allowResizeX ? start.w + e.clientX - start.x : start.w,
+                        height: editor.options.allowResizeY ? start.h + e.clientY - start.y: start.h,
                     });
                     editor.events.fire('resize');
                 }
@@ -51,6 +54,7 @@ Jodit.plugins.resizeEditor = function (editor: Jodit) {
             css(editor.editor, {
                 minHeight: editor.options.minHeight
             });
+
             css(editor.workplace, {
                 width: editor.options.width,
                 height: editor.options.height,
@@ -58,11 +62,23 @@ Jodit.plugins.resizeEditor = function (editor: Jodit) {
             });
 
             if (editor.options.height !== 'auto') {
+                css(editor.editor, {
+                    minHeight: '100%'
+                });
                 css(editor.workplace, {
-                    height: '100%'
+                    height: '100%',
+                    minHeight: '100%'
                 });
                 css(editor.container, {
                     height: editor.options.height,
+                });
+            }
+            if (editor.options.width !== 'auto') {
+                css(editor.workplace, {
+                    width: '100%'
+                });
+                css(editor.container, {
+                    width: editor.options.width,
                 });
             }
         });

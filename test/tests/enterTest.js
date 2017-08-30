@@ -419,7 +419,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
             it('If cursor in right side of table', function () {
                 var editor = new Jodit(appendTestArea())
 
-                editor.setEditorValue('<table><tr><td>text</td></tr></table>');
+                editor.setEditorValue('<table><tr><td>test</td></tr></table>');
 
                 var range = editor.doc.createRange();
 
@@ -434,7 +434,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
                 editor.selection.insertNode(editor.doc.createTextNode('text'), false)
 
-                expect(editor.getEditorValue()).to.be.equal('<table><tbody><tr><td>text</td></tr></tbody></table><p>text</p>');
+                expect(editor.getEditorValue()).to.be.equal('<table><tbody><tr><td>test</td></tr></tbody></table><p>text</p>');
             })
         });
     });

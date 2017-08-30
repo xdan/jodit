@@ -49,17 +49,23 @@ Config.prototype.controls.fullsize = {
 
 Jodit.plugins.fullsize = function (editor: Jodit) {
     let shown = false,
+        oldHeight = null,
+        oldWidth = null,
+        wasToggled = false,
         resize  = () => {
             if (editor.events) {
                 if (shown) {
+                    oldHeight = css(editor.container, 'height');
+                    oldWidth = css(editor.container, 'width');
                     css(editor.container, {
                         height: window.innerHeight,
                         width: window.innerWidth
                     });
-                } else {
+                    wasToggled = true;
+                } else if (wasToggled) {
                     css(editor.container, {
-                        height: null,
-                        width: null
+                        height: oldHeight,
+                        width: oldWidth
                     });
                 }
             }
