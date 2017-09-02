@@ -28,8 +28,11 @@ export const insertParagraph = (editor: Jodit, fake ?: Node, wrapperTag ?: strin
     return p;
 };
 
-
-Jodit.plugins.enter = function (editor: Jodit) {
+/**
+ *
+ * @param {Jodit} editor
+ */
+export default  function (editor: Jodit) {
     editor.events.on('keyup', () => {
         let current: false|Node = editor.selection.current();
         if (current !== false) {

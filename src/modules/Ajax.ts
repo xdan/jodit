@@ -6,7 +6,6 @@ import Component from "./Component";
 
 /**
  * @property {object} defaultAjaxOptions A set of key/value pairs that configure the Ajax request. All settings are optional
- * @memberof module:Dom
  * @property {object} defaultAjaxOptions.headers An object of additional header key/value pairs toWYSIWYG send along with requests using the XMLHttpRequest transport. Uses in {@link module:FileBrowser|FileBrowser} and {@link module:Uploader|Uploader}
  * @property {string} defaultAjaxOptions.dataType='json' json or text The type of data that you're expecting back from the server. if `json` the return value passes through the `JSON.parse`
  * @property {string} defaultAjaxOptions.method='GET' The HTTP method toWYSIWYG use for the request (e.g. "POST", "GET", "PUT")
@@ -17,7 +16,6 @@ import Component from "./Component";
  * @property {function} defaultAjaxOptions.error=function () {} A function toWYSIWYG be called if the request fails
  * @property {function} defaultAjaxOptions.success=function (resp) {} A function toWYSIWYG be called if the request succeeds
  * @property {function} defaultAjaxOptions.xhr=function () { return new XMLHttpRequest(); } Callback for creating the XMLHttpRequest object.
- * @memberof Jodit.defaultOptions
  */
 
 declare const XDomainRequest: any;

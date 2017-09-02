@@ -3,14 +3,14 @@ import * as consts from './constants';
 import './polyfills';
 import Toolbar from './modules/Toolbar'
 
-module.exports = require('./Jodit').default;
+let Jodit = require('./Jodit').default;
 
-window['Jodit'] = module.exports;
+window['Jodit'] = Jodit;
 
 import './Config'
 
 Object.keys(consts).forEach((key) => {
-    module.exports[key] = consts[key];
+    Jodit[key] = consts[key];
 });
 
 declare let require: any;
@@ -18,8 +18,6 @@ declare let require: any;
 const requireAll = (r) => {
     r.keys().forEach(r);
 };
-
-requireAll(require.context('./plugins/', true, /\.ts$/));
 
 requireAll(require.context('./styles/themes/', true, /\.less$/));
 requireAll(require.context('./styles/modules/', true, /\.less$/));
@@ -34,11 +32,21 @@ context.keys().forEach(function (key) {
 
 const context2 = require.context('./modules/', true, /\.ts/);
 context2.keys().forEach(function (key) {
-    module.exports.modules[key.replace('.ts', '').replace('./', '')] = context2.apply(this, arguments).default;
+    var module = context2.apply(this, arguments);
+    Jodit.modules[key.replace('.ts', '').replace('./', '')] = module.default || module;
+});
+
+const plugins = require.context('./plugins/', true, /\.ts/);
+plugins.keys().forEach(function (key) {
+    var plugin = plugins.apply(this, arguments);
+    Jodit.plugins[key.replace('.ts', '').replace('./', '')] = plugin.default || plugin;
 });
 
 
 const context3 = require.context('./langs/', true, /\.ts$/);
 context3.keys().forEach(function (key) {
-    module.exports.lang[key.replace('.ts', '').replace('./', '')] = context3.apply(this, arguments).default;
+    Jodit.lang[key.replace('.ts', '').replace('./', '')] = context3.apply(this, arguments).default;
 });
+
+
+module.exports = Jodit;

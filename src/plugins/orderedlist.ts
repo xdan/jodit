@@ -16,7 +16,7 @@ Config.prototype.controls.ol = {
     tooltip: "Insert Ordered List"
 };
 
-Jodit.plugins.orderedlist = function (editor: Jodit) {
+export default function (editor: Jodit) {
     editor.events.on('afterCommand', (command) => {
         if (/insert(un)?orderedlist/i.test(command)) {
             const ul = Dom.up(<Node>editor.selection.current(), (tag) => (/^UL|OL$/i.test(tag.tagName)), editor.editor);

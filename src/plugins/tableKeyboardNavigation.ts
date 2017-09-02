@@ -7,7 +7,7 @@ import Dom from "../modules/Dom";
  *
  * @param {Jodit} editor
  */
-Jodit.plugins.tableKeyboardNavigation = function (editor: Jodit) {
+export default function (editor: Jodit) {
     editor.events.on('keydown', (event: KeyboardEvent) => {
         let current: Element,
             block: HTMLElement;

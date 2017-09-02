@@ -30,55 +30,55 @@ export default class Jodit extends Component{
     static lang: any = {};
 
     /**
-     * @prop {HTMLDocument} win
+     * @property{HTMLDocument} win
      */
     doc: HTMLDocument;
     /**
-     * @prop {Window} win
+     * @property{Window} win
      */
     win: Window;
 
     components: any = [];
 
     /**
-     * @prop {string} ID attribute for source element, id add {id}_editor it's editor's id
+     * @property{string} ID attribute for source element, id add {id}_editor it's editor's id
      */
     id: string;
 
     /**
-     * @prop {HTMLDivElement} progress_bar Progress bar
+     * @property{HTMLDivElement} progress_bar Progress bar
      */
     progress_bar: HTMLDivElement;
 
     /**
-     * @prop {HTMLDivElement} workplace It contains source and wysiwyg editors
+     * @property{HTMLDivElement} workplace It contains source and wysiwyg editors
      */
     workplace: HTMLDivElement;
 
     /**
-     * @prop {HTMLDivElement} container main editor's box
+     * @property{HTMLDivElement} container main editor's box
      */
     container: HTMLDivElement;
 
     /**
-     * @prop {HTMLElement} element It contains source element
+     * @property{HTMLElement} element It contains source element
      */
     element: HTMLInputElement;
 
     /**
-     * @prop {HTMLDivElement|HTMLBodyElement} editor It contains the root element editor
+     * @property{HTMLDivElement|HTMLBodyElement} editor It contains the root element editor
      */
     editor: HTMLDivElement|HTMLBodyElement;
 
 
     /**
-     * @prop {HTMLIFrameElement} iframe Iframe for iframe mode
+     * @property{HTMLIFrameElement} iframe Iframe for iframe mode
      */
     iframe: HTMLIFrameElement;
 
 
     /**
-     * @prop {Config} options All Jodit settings default + second arguments of constructor
+     * @property{Config} options All Jodit settings default + second arguments of constructor
      */
     options: Config;
 
@@ -618,7 +618,7 @@ export default class Jodit extends Component{
          * ```javascript
          * var editor = new Jodit("#redactor");
          * editor.events.on('afterSetMode', function () {
-         *     editor.val(''); // clear editor's value after change mode
+         *     editor.setEditorValue(''); // clear editor's value after change mode
          * });
          * ```
          */

@@ -7,12 +7,12 @@ import Dom from "../modules/Dom";
 import Component from "../modules/Component";
 import {ControlType} from "../modules/Toolbar";
 
-/**
- * @prop {boolean} useTableProcessor=true true Use module {@link TableProcessor|TableProcessor}
- * @memberof Jodit.defaultOptions
- */
+
 declare module "../Config" {
     interface Config {
+        /**
+         * Use module {@link TableProcessor|TableProcessor}
+         */
         useTableProcessor: boolean;
     }
 }
@@ -150,7 +150,7 @@ Config.prototype.controls.table = {
 /**
  *
  */
-class TableProcessor extends Component{
+export default class TableProcessor extends Component{
     private __key: string = 'table_processor_observer';
     private __selectMode: boolean = false;
 

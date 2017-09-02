@@ -20,11 +20,11 @@ declare module "../Config" {
     }
 }
 /**
- * @memberof Jodit.defaultOptions
- * @prop {object} popup plugin options
- * @prop {array} popup.img List of buttons toWYSIWYG the toolbar pop-up window in the image
- * @prop {array} popup.table List of buttons toWYSIWYG the toolbar pop-up window at the tables
+ * @property{object} popup plugin options
+ * @property{array} popup.img List of buttons toWYSIWYG the toolbar pop-up window in the image
+ * @property{array} popup.table List of buttons toWYSIWYG the toolbar pop-up window at the tables
  * @example
+ * ```javascript
  * new Jodit('#editor', {
  *     popup: {
  *         img: [
@@ -54,6 +54,7 @@ declare module "../Config" {
  *         ]
  *     }
  * });
+ * ```
  */
 Config.prototype.popup = {
     a: [
@@ -283,7 +284,7 @@ Config.prototype.popup = {
     ]
 };
 
-Jodit.plugins.Popup = function (editor: Jodit) {
+export default function (editor: Jodit) {
     let timeout: number;
     const toolbar: Toolbar = new Toolbar(editor),
         popup: HTMLDivElement = <HTMLDivElement> dom('<div class="jodit_toolbar_popup-inline"></div>', document),

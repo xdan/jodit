@@ -25,7 +25,7 @@ Config.prototype.controls.paragraph = {
 };
 
 
-Jodit.plugins.formatBlock = function (editor: Jodit) {
+export default function (editor: Jodit) {
     editor.events.on('beforeCommand', (command: string, second, third: string) => {
         if (command === 'formatblock') {
              editor.selection.focus();

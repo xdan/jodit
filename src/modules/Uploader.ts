@@ -59,7 +59,6 @@ declare module "../Config" {
  */
 /**
  * @property {boolean} enableDragAndDropFileToEditor=true Enable drag and drop file toWYSIWYG editor
- * @memberof Jodit.defaultOptions
  */
 Config.prototype.enableDragAndDropFileToEditor = true;
 
@@ -94,7 +93,6 @@ Config.prototype.enableDragAndDropFileToEditor = true;
  * @property {function} uploader.error Process negative situation. For example file wasn't uploaded because of file permoission
  * @property {function} uploader.defaultHandlerSuccess Default success result processor. In first param it get `uploader.process` result
  * @property {function} uploader.defaultHandlerError Default error result processor
- * @memberof Jodit.defaultOptions
  * @tutorial uploader-settings
  * @example
  * ```javascript

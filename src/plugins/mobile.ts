@@ -15,7 +15,7 @@ declare module "../Config" {
  */
 Config.prototype.mobileTapTimeout = 300;
 
-Jodit.plugins.mobile = function (editor: Jodit) {
+export default function (editor: Jodit) {
     let timeout: number = 0,
         now: number;
 

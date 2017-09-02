@@ -5,9 +5,8 @@ import * as consts from '../constants';
 import {Stack} from './Undo'
 import Jodit from "../Jodit";
 /**
- * @memberof Jodit.defaultOptions
- * @prop {object} observer module settings {@link Observer|Observer}
- * @prop {int} observer.timeout=100 Delay on every change
+ * @property{object} observer module settings {@link Observer|Observer}
+ * @property{int} observer.timeout=100 Delay on every change
  */
 declare module "../Config" {
     interface Config {
@@ -57,7 +56,7 @@ export default class Observer extends Component {
     stack: Stack;
 
     /**
-     * @prop {Snapshot} snapshot
+     * @property{Snapshot} snapshot
      */
     snapshot: Snapshot;
     private __blocked = false;

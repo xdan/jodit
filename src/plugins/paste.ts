@@ -5,8 +5,7 @@ import {Config} from '../Config'
 import {TEXT_PLAIN} from "../constants";
 
 /**
- * @prop {boolean} askBeforePasteHTML=true Ask before paste HTML in WYSIWYG mode
- * @memberof Jodit.defaultOptions
+ * @property{boolean} askBeforePasteHTML=true Ask before paste HTML in WYSIWYG mode
  */
 declare module "../Config" {
     interface Config {
@@ -20,7 +19,7 @@ Config.prototype.askBeforePasteHTML = true;
  *
  * @module insertHTML
  */
-Jodit.plugins.paste = function (editor: Jodit) {
+export default function (editor: Jodit) {
     editor.events.on('afterInit', () => {
         editor.editor.addEventListener('paste', (event: ClipboardEvent) => {
         /**

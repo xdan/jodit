@@ -13,7 +13,7 @@ declare module "../Config" {
 Config.prototype.allowResizeX = false;
 Config.prototype.allowResizeY = true;
 
-Jodit.plugins.size = function (editor: Jodit) {
+export default function (editor: Jodit) {
     if (editor.options.height !== 'auto' && (editor.options.allowResizeX || editor.options.allowResizeY)) {
         const handle: HTMLAnchorElement = <HTMLAnchorElement>dom('<div class="jodit_editor_resize" ><a href="javascript:void(0)"></a></div>'),
             start: { x: number, y: number, w: number, h: number } = {

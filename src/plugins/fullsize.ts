@@ -11,9 +11,8 @@ import * as consts from '../constants'
  */
 
 /**
- * @prop {boolean} fullsize=false true Editor toWYSIWYG open toWYSIWYG full screen
- * @prop {boolean} globalFullsize=true if true, after `fullsize` -  all editors element get jodit_fullsize_box class (z-index: 100000 !important;)
- * @memberof Jodit.defaultOptions
+ * @property{boolean} fullsize=false true Editor toWYSIWYG open toWYSIWYG full screen
+ * @property{boolean} globalFullsize=true if true, after `fullsize` -  all editors element get jodit_fullsize_box class (z-index: 100000 !important;)
  * @example
   * ```javascript
  * var editor = new jodit({
@@ -47,7 +46,7 @@ Config.prototype.controls.fullsize = {
 };
 
 
-Jodit.plugins.fullsize = function (editor: Jodit) {
+export default  function (editor: Jodit) {
     let shown = false,
         oldHeight = null,
         oldWidth = null,

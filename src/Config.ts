@@ -73,12 +73,12 @@ export class Config {
      *    editorCssClass: 'some_my_class'
      * });
     * ```
-    * ```css
-     * &lt;style>
+    * ```html
+     * <style>
      * .some_my_class p{
      *    line-height: 16px;
      * }
-     * &lt;/style>
+     * </style>
     * ```
      */
    editorCssClass: false|string = false;

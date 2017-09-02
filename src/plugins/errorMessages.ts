@@ -11,28 +11,23 @@ declare module "../Config" {
 }
 
 /**
-* @prop {boolean} showMessageErrors=true
-* @memberof Jodit.defaultOptions
+* @property{boolean} showMessageErrors=true
 */
 Config.prototype.showMessageErrors = true;
 /**
-* @prop {int} showMessageErrorTime=3000 How long show messages
-* @memberof Jodit.defaultOptions
+* @property{int} showMessageErrorTime=3000 How long show messages
 */
 Config.prototype.showMessageErrorTime = 3000;
 
 /**
-* @prop {int} showMessageErrorOffsetPx=3 Offset fo message
-* @memberof Jodit.defaultOptions
+* @property{int} showMessageErrorOffsetPx=3 Offset fo message
 */
 Config.prototype.showMessageErrorOffsetPx = 3;
 
 /**
  * Plugin toWYSIWYG display pop-up messages in the lower right corner of the editor
- *
- * @module ErrorMessages
  */
-Jodit.plugins.errorMessages = function (editor: Jodit) {
+export default  function (editor: Jodit) {
     if (editor.options.showMessageErrors) {
         let height: number;
         const messagesBox: HTMLDivElement = <HTMLDivElement>dom('<div class="jodit_error_box_for_messages"></div>'),

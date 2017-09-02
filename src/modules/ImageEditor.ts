@@ -5,8 +5,7 @@ import {$$, css, debounce, dom, throttle, trim} from "./Helpers";
 import Toolbar from "./Toolbar";
 import Dialog, {Alert, Promt} from "./Dialog";
 /**
- * @prop {plainobject} imageeditor module's options
- * @memberof module:ImageEditor
+ * @property{plainobject} imageeditor module's options
  */
 
 type ImageEditorOptions = {
@@ -40,63 +39,53 @@ declare module "../Config" {
 }
 Config.prototype.imageeditor = {
     /**
-     * @prop {boolean} imageeditor.closeAfterSave=false Close editor after save image
-     * @memberof module:ImageEditor
+     * @property{boolean} imageeditor.closeAfterSave=false Close editor after save image
      */
     closeAfterSave: false,
 
     /**
-     * @prop {string|int} imageeditor.width=85% Default dialog width by screen
-     * @memberof module:ImageEditor
+     * @property{string|int} imageeditor.width=85% Default dialog width by screen
      */
     width: '85%',
 
     /**
-     * @prop {string|int} imageeditor.height=85% Default dialog height by screen
-     * @memberof module:ImageEditor
+     * @property{string|int} imageeditor.height=85% Default dialog height by screen
      */
     height: '85%',
 
     /**
-     * @prop {boolean} imageeditor.crop=true Show tab cropping
-     * @memberof module:ImageEditor
+     * @property{boolean} imageeditor.crop=true Show tab cropping
      */
     crop: true,
 
     /**
-     * @prop {boolean} imageeditor.resize=true Show tab resizing
-     * @memberof module:ImageEditor
+     * @property{boolean} imageeditor.resize=true Show tab resizing
      */
     resize: true,
 
     /**
-     * @prop {boolean} imageeditor.resizeUseRatio=true Keep aspect ratio on resize
-     * @memberof module:ImageEditor
+     * @property{boolean} imageeditor.resizeUseRatio=true Keep aspect ratio on resize
      */
     resizeUseRatio: true,
 
     /**
-     * @prop {int} imageeditor.resizeMinWidth=20 minimal width on resize
-     * @memberof module:ImageEditor
+     * @property{int} imageeditor.resizeMinWidth=20 minimal width on resize
      */
     resizeMinWidth: 20,
 
     /**
-     * @prop {boolean} imageeditor.resizeMinHeight=20 minimal height on resize
-     * @memberof module:ImageEditor
+     * @property{boolean} imageeditor.resizeMinHeight=20 minimal height on resize
      */
     resizeMinHeight: 20,
 
     /**
-     * @prop {boolean} imageeditor.cropUseRatio=true Keep aspect ratio on crop
-     * @memberof module:ImageEditor
+     * @property{boolean} imageeditor.cropUseRatio=true Keep aspect ratio on crop
      */
     cropUseRatio: true,
 
     /**
-     * @prop {string} imageeditor.cropDefaultWidth=70% In the tab, crop the image is displayed not in real size. Boxing default size for it
-     * @prop {string} imageeditor.cropDefaultHeight=70%
-     * @memberof module:ImageEditor
+     * @property{string} imageeditor.cropDefaultWidth=70% In the tab, crop the image is displayed not in real size. Boxing default size for it
+     * @property{string} imageeditor.cropDefaultHeight=70%
      */
     cropDefaultWidth: '70%',
     cropDefaultHeight: '70%',
@@ -105,8 +94,6 @@ Config.prototype.imageeditor = {
 /**
  * The module allows you toWYSIWYG edit the image: resize or cut any part of it
  *
- * @module ImageEditor
- * @param {Object} parent Jodit main object
  */
 
 export default class ImageEditor extends Component{

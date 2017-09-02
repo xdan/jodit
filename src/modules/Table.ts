@@ -7,14 +7,13 @@
  * @param {HTMLTableElement} table Table for which to create a module
  */
 
-import Component from './Component';
 import {$$, each, trim} from './Helpers'
 import * as consts from '../constants';
 import Dom from "./Dom";
 
 export const JODIT_SELECTED_CELL_MARKER = 'data-jodit-selected-cell';
 
-export default class Table extends Component{
+export default class Table {
     static addSelected(td: HTMLTableCellElement) {
         td.setAttribute(JODIT_SELECTED_CELL_MARKER, '1');
     }

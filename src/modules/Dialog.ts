@@ -6,13 +6,12 @@ import Toolbar from "./Toolbar";
 
 
 /**
- * @prop {object} dialog module settings {@link module:Dialog|Dialog}
- * @prop {int} dialog.zIndex=1000 Default Z-index for dialog window. {@link module:Dialog|Dialog}'s settings
- * @prop {boolean} dialog.resizable=true This dialog can resize by trigger
- * @prop {boolean} dialog.draggable=true This dialog can move by header
- * @prop {boolean} dialog.fullsize=false A dialog window will open in full screen by default
- * @prop {boolean} dialog.fullsizeButton=false In header will shown expand button
- * @memberof Jodit.defaultOptions
+ * @property{object} dialog module settings {@link module:Dialog|Dialog}
+ * @property{int} dialog.zIndex=1000 Default Z-index for dialog window. {@link module:Dialog|Dialog}'s settings
+ * @property{boolean} dialog.resizable=true This dialog can resize by trigger
+ * @property{boolean} dialog.draggable=true This dialog can move by header
+ * @property{boolean} dialog.fullsize=false A dialog window will open in full screen by default
+ * @property{boolean} dialog.fullsizeButton=false In header will shown expand button
  */
 
 type DialogOptions = {
@@ -39,7 +38,7 @@ Config.prototype.dialog = {
 
 /**
  * Module to generate dialog windows
- * @module Dialog
+ *
  * @param {Object} parent Jodit main object
  * @param {Object} [opt] Extend Options
  */
@@ -522,13 +521,13 @@ export default class Dialog extends Component{
      * //You can close dialog two ways
      * var dialog = new Jodit.modules.Dialog();
      * dialog.open('Hello world!', 'Title');
-     * var $close = $('<a href="javascript:void(0)" style="float:left;" class="jodit_button"><i class="icon icon-check"></i>&nbsp;' + Jodit.prototype.i18n('Ok') + '</a>');
-     * $close.on('click', function () {
+     * var $close = Jodit.modules.helper.dom('<a href="javascript:void(0)" style="float:left;" class="jodit_button"><i class="icon icon-check"></i>&nbsp;' + Jodit.prototype.i18n('Ok') + '</a>');
+     * $close.addEventListener('click', function () {
      *     dialog.close();
      * });
      * dialog.setFooter($close);
      * // and second way, you can close dialog from content
-     * dialog.open('<a onclick="$(this).closest('.jodit_dialog_box').trigger('close_dialog')">Close</a>', 'Title');
+     * dialog.open('<a onclick="var event = doc.createEvent('HTMLEvents'); event.initEvent('close_dialog', true, true); this.dispatchEvent(event)">Close</a>', 'Title');
      * ```
      */
     close = (e?: MouseEvent) => {
@@ -592,8 +591,6 @@ export default class Dialog extends Component{
  * @param {string} msg Message
  * @param {string|function} [title] Title or callback
  * @param {function} [callback] callback
- * @memberof Jodit
- * @static
  * @example
  * ```javascript
  * Jodit.Alert("File was uploaded");
@@ -645,8 +642,6 @@ Jodit['Alert'] = Alert;
  * @param {string|function} [title] Title or callback
  * @param {function} [callback] callback. The first argument is the value entered
  * @param {string} [placeholder] Placeholder for input
- * @memberof Jodit
- * @static
  * @example
  * ```javascript
  * Jodit.Promt("Enter your name", "Promt Dialog", function (name) {
@@ -716,8 +711,6 @@ Jodit['Promt'] = Promt;
  * @param {string} msg Message
  * @param {string|function} [title] Title or callback
  * @param {function} [callback] callback. The first argument is the value entered
- * @memberof Jodit
- * @static
  * @example
  * ```javascript
  * Jodit.Confirm("Are you shure?", "Confirm Dialog", function (yes) {

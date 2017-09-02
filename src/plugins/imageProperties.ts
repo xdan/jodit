@@ -13,25 +13,23 @@ import ImageSelectorWidget = Widget.ImageSelectorWidget;
 /**
  * Plug-in for image editing window
  *
- * @module Image
  */
 /**
- * @prop {object} image Plugin {@link module:Image|Image}'s options
- * @prop {boolean} image.openOnDblClick=true Open editing dialog after double click on image
- * @prop {boolean} image.editSrc=true Show edit 'src' input
- * @prop {boolean} image.useImageEditor=true Show crop/resize btn
- * @prop {boolean} image.editTitle=true Show edit 'title' input
- * @prop {boolean} image.editAlt=true Show edit 'alt' input
- * @prop {boolean} image.editLink=true Show edit image link's options
- * @prop {boolean} image.editSize=true Show edit image size's inputs
- * @prop {boolean} image.editMargins=true Show edit margin inputs
- * @prop {boolean} image.editStyle=true Show style edit input
- * @prop {boolean} image.editClass=true Show edit classNames input
- * @prop {boolean} image.editId=true Show edit ID input
- * @prop {boolean} image.editAlign=true Show Alignment selector
- * @prop {boolean} image.showPreview=true Show preview image
- * @prop {boolean} image.selectImageAfterClose=true Select image after close dialog
- * @memberof Jodit.defaultOptions
+ * @property{object} image Plugin {@link module:Image|Image}'s options
+ * @property{boolean} image.openOnDblClick=true Open editing dialog after double click on image
+ * @property{boolean} image.editSrc=true Show edit 'src' input
+ * @property{boolean} image.useImageEditor=true Show crop/resize btn
+ * @property{boolean} image.editTitle=true Show edit 'title' input
+ * @property{boolean} image.editAlt=true Show edit 'alt' input
+ * @property{boolean} image.editLink=true Show edit image link's options
+ * @property{boolean} image.editSize=true Show edit image size's inputs
+ * @property{boolean} image.editMargins=true Show edit margin inputs
+ * @property{boolean} image.editStyle=true Show style edit input
+ * @property{boolean} image.editClass=true Show edit classNames input
+ * @property{boolean} image.editId=true Show edit ID input
+ * @property{boolean} image.editAlign=true Show Alignment selector
+ * @property{boolean} image.showPreview=true Show preview image
+ * @property{boolean} image.selectImageAfterClose=true Select image after close dialog
  * @example
  * ```javascript
  * var editor = new Jodit('#editor', {
@@ -82,14 +80,10 @@ Config.prototype.image =  {
      selectImageAfterClose: true,
 };
 
-Jodit.plugins.imageProperties = function (editor: Jodit) {
+export default function (editor: Jodit) {
     /**
      * Open dialog editing image properties
      *
-     * @method open
-     * @static
-     * @memberof module:Image
-     * @this HTMLImageElement
      * @example
      * ```javascript
      * var editor = new Jodit('#editor');
@@ -101,7 +95,7 @@ Jodit.plugins.imageProperties = function (editor: Jodit) {
      * editor.plugins.image.open.call(img); // `this` must be HTMLImageElement
      * ```
      */
-    const open = function (e ?: MouseEvent) {
+    const open = function (this: HTMLImageElement, e ?: MouseEvent) {
         const image = <HTMLImageElement>this,
             dialog: Dialog = new Dialog(editor),
             cancel: HTMLElement = dom('<a href="javascript:void(0)" style="float:right;" class="jodit_button">' + Toolbar.getIcon('cancel') + '<span>' + editor.i18n('Cancel') + '</span></a>'),

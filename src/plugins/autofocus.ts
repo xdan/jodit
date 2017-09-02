@@ -8,7 +8,7 @@ declare module "../Config" {
 }
 
 /**
- * @prop {boolean} autofocus=false true After loading the page into the editor once the focus is set
+ * @property{boolean} autofocus=false true After loading the page into the editor once the focus is set
  */
 Config.prototype.autofocus = false;
 
@@ -17,7 +17,7 @@ Config.prototype.autofocus = false;
  *
  * @param {Jodit} editor
  */
-Jodit.plugins.autoFocus = function (editor: Jodit) {
+export default function (editor: Jodit) {
     let timeout;
     editor.events
         .on('afterInit', () => {

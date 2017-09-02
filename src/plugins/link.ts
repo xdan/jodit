@@ -11,7 +11,6 @@ import {ControlType} from "../modules/Toolbar";
 * @property {boolean} link.processPastedLink=true Wrap inserted link in &lt;a href="link">link&lt;/a>
 * @property {boolean} link.openLinkDialogAfterPost=true Open Link dialog after post
 * @property {boolean} link.removeLinkAfterFormat=true When the button is pressed toWYSIWYG clean format, if it was done on the link is removed like command `unlink`
-* @memberof Jodit.defaultOptions
 */
 
 declare module "../Config" {
@@ -139,9 +138,9 @@ Config.prototype.controls.link = {
 /**
  * Process link
  *
- * @module link
+ * @module plugins/link
  */
-Jodit.plugins.link = function (jodit: Jodit) {
+export default function (jodit: Jodit) {
     if (jodit.options.link.followOnDblClick) {
         jodit.events.on('afterInit', () => {
             jodit.__on(jodit.editor, 'dblclick', 'a', function (this: HTMLAnchorElement, e: MouseEvent) {

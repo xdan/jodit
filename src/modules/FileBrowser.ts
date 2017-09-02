@@ -27,28 +27,28 @@ import Cookie from "./Cookie";
  */
 
 /**
- * @prop {object} filebrowser module settings {@link module:FileBrowser|FileBrowser}
- * @prop {int} filebrowser.howLongShowMsg=3000 How long toWYSIWYG show an error message in the status bar (ms)
- * @prop {boolean} filebrowser.sort=function (a, b, sortBy, parent) { return b.changed - a.changed;} Items sort functions
- * @prop {boolean} filebrowser.sortBy='changed' Sort by field
- * @prop {boolean} filebrowser.filter=function (item, searchWord) { return item.name.toLowerCase().indexOf(searchWord.toLowerCase()) !== -1} Filter items
- * @prop {boolean} filebrowser.showFileName=true Show filename in thumbs
- * @prop {boolean} filebrowser.showFileSize=true Show filesize in thumbs
- * @prop {boolean} filebrowser.showFileChangeTime=true Show the last modification time in thumbs
+ * @property{object} filebrowser module settings {@link module:FileBrowser|FileBrowser}
+ * @property{int} filebrowser.howLongShowMsg=3000 How long toWYSIWYG show an error message in the status bar (ms)
+ * @property{boolean} filebrowser.sort=function (a, b, sortBy, parent) { return b.changed - a.changed;} Items sort functions
+ * @property{boolean} filebrowser.sortBy='changed' Sort by field
+ * @property{boolean} filebrowser.filter=function (item, searchWord) { return item.name.toLowerCase().indexOf(searchWord.toLowerCase()) !== -1} Filter items
+ * @property{boolean} filebrowser.showFileName=true Show filename in thumbs
+ * @property{boolean} filebrowser.showFileSize=true Show filesize in thumbs
+ * @property{boolean} filebrowser.showFileChangeTime=true Show the last modification time in thumbs
 
- * @prop {boolean} filebrowser.editImage=true use {@link module:ImageEditor|Image editor module} - crop and resize image
- * @prop {boolean} filebrowser.preview=true Show preview button in context menu
- * @prop {boolean} filebrowser.showPreviewNavigation=true Show navigation buttons in preview
- * @prop {boolean} filebrowser.showSelectButtonInPreview=true Show select button in preview
- * @prop {boolean} filebrowser.contextMenu=true use context menu
- * @prop {boolean} filebrowser.createNewFolder=true The ability toWYSIWYG create a directory of the web browser
- * @prop {boolean} filebrowser.deleteFolder=true The ability toWYSIWYG delete directories from the web browser
- * @prop {boolean} filebrowser.moveFolder=true The ability toWYSIWYG move directories from the web browser
- * @prop {boolean} filebrowser.moveFile=true The ability toWYSIWYG move file from the web browser
- * @prop {boolean} filebrowser.showFoldersPanel=true Show folders panel
- * @prop {px} filebrowser.width=763px The width of the web browser
- * @prop {px} filebrowser.height=400px The height of the file browser
- * @prop {array} filebrowser.buttons="['upload', 'remove', 'update', 'select', 'edit', 'tiles', 'list']" Toolbar browser
+ * @property{boolean} filebrowser.editImage=true use {@link module:ImageEditor|Image editor module} - crop and resize image
+ * @property{boolean} filebrowser.preview=true Show preview button in context menu
+ * @property{boolean} filebrowser.showPreviewNavigation=true Show navigation buttons in preview
+ * @property{boolean} filebrowser.showSelectButtonInPreview=true Show select button in preview
+ * @property{boolean} filebrowser.contextMenu=true use context menu
+ * @property{boolean} filebrowser.createNewFolder=true The ability toWYSIWYG create a directory of the web browser
+ * @property{boolean} filebrowser.deleteFolder=true The ability toWYSIWYG delete directories from the web browser
+ * @property{boolean} filebrowser.moveFolder=true The ability toWYSIWYG move directories from the web browser
+ * @property{boolean} filebrowser.moveFile=true The ability toWYSIWYG move file from the web browser
+ * @property{boolean} filebrowser.showFoldersPanel=true Show folders panel
+ * @property{px} filebrowser.width=763px The width of the web browser
+ * @property{px} filebrowser.height=400px The height of the file browser
+ * @property{array} filebrowser.buttons="['upload', 'remove', 'update', 'select', 'edit', 'tiles', 'list']" Toolbar browser
  * @example
  * ```javascript
  * var editor = new Jodit('#editor', {
@@ -66,8 +66,8 @@ import Cookie from "./Cookie";
  *    }
  * })
  * ```
- * @prop {function} filebrowser.isSuccess method toWYSIWYG check - whether the response positive
- * @prop {function} filebrowser.getMessage method for receiving a message from the response
+ * @property{function} filebrowser.isSuccess method toWYSIWYG check - whether the response positive
+ * @property{function} filebrowser.getMessage method for receiving a message from the response
  * @example
  * ```javascript
  * new Jodit('#editor', {
@@ -81,29 +81,31 @@ import Cookie from "./Cookie";
  *     }
  * })
  * ```
- * @prop {string} filebrowser.view='tiles' Filelist view - `tiles` or `list`
- * @prop {object} filebrowser.ajax The default settings for AJAX connections toWYSIWYG the server. Most of the settings like here {@link http://api.jquery.com/jQuery.ajax/|jQuery.ajax} but is not jQuery.ajax
- * @prop {function(data)} filebrowser.ajax.prepareData Method of preparation of data toWYSIWYG be sent toWYSIWYG the server
- * @prop {function(data)} filebrowser.ajax.process The method of processing the data obtained after administration of the server. Must return this PlainObject format `{
- * {
+ * @property{string} filebrowser.view='tiles' Filelist view - `tiles` or `list`
+ * @property{object} filebrowser.ajax The default settings for AJAX connections toWYSIWYG the server. Most of the settings like here {@link http://api.jquery.com/jQuery.ajax/|jQuery.ajax} but is not jQuery.ajax
+ * @property{function(data)} filebrowser.ajax.prepareData Method of preparation of data toWYSIWYG be sent toWYSIWYG the server
+ * @property{function(data)} filebrowser.ajax.process The method of processing the data obtained after administration of the server. Must return this PlainObject format
+ * ```json
+ *  {
  *     files: resp.files || [], // {array} The names of files or folders, files can be ['image.jpg', 'image.jpg2', 'image3.jpg' ...] and [{file: 'image.jpg', thumb: '_thumbs/image.jpg'}, {file: 'image2.jpg', thumb: '_thumbs/image2.jpg'} ...]
  *     path: resp.path, // {string} Real relative path
  *     baseurl: resp.baseurl, // {string} Base url for filebrowser
  *     error: resp.error, // {int}
  *     msg: resp.msg // {string}
- * };`
- * @prop {string} filebrowser.ajax.url='' Address entry point on the server for AJAX connection
- * @prop {object} filebrowser.ajax.data={} Default data toWYSIWYG send toWYSIWYG the server
- * @prop {(json|text)} filebrowser.ajax.dataType='json' The format of the returned data
- * @prop {PlainObject} filebrowser.ajax.headers={} An object of additional header key/value pairs toWYSIWYG send along with requests using the `XMLHttpRequest` transport. The header `X-Requested-With: XMLHttpRequest` is always added, but its default `XMLHttpRequest` value can be changed here.
- * @prop {object} filebrowser.resize Settings for AJAX connections toWYSIWYG the server toWYSIWYG resize image. By default, the uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} c параметром action=create
- * @prop {object} filebrowser.crop Settings for AJAX connections toWYSIWYG the server toWYSIWYG crop image. By default, the uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} c параметром action=create
- * @prop {object} filebrowser.create Settings for AJAX connections toWYSIWYG the server toWYSIWYG create the category . By default, the uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} c параметром action=create
- * @prop {object} filebrowser.move Settings for AJAX connections toWYSIWYG the server for the moving image or category . By default uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} c параметром action=move
- * @prop {object} filebrowser.remove Settings for AJAX connections toWYSIWYG the server toWYSIWYG delete the image or category . By default uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} c параметром action=remove
- * @prop {object} filebrowser.folder Settings for AJAX connections toWYSIWYG the server toWYSIWYG download the list of categories . By default uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} c параметром action=folder
- * @prop {object} filebrowser.items Settings for AJAX connections toWYSIWYG the server toWYSIWYG download the image list in the specified category . By default uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} c параметром action=items
- * @prop {object} filebrowser.uploader=null Settings Module {@link module:Uploader|Uploader} for fast uploading images in category via Drag&Drop file in the file browser. The default settings of the module {@link module:Uploader|Uploader}
+ * };
+ * ```
+ * @property{string} filebrowser.ajax.url='' Address entry point on the server for AJAX connection
+ * @property{object} filebrowser.ajax.data={} Default data toWYSIWYG send toWYSIWYG the server
+ * @property{(json|text)} filebrowser.ajax.dataType='json' The format of the returned data
+ * @property{PlainObject} filebrowser.ajax.headers={} An object of additional header key/value pairs toWYSIWYG send along with requests using the `XMLHttpRequest` transport. The header `X-Requested-With: XMLHttpRequest` is always added, but its default `XMLHttpRequest` value can be changed here.
+ * @property{object} filebrowser.resize Settings for AJAX connections toWYSIWYG the server toWYSIWYG resize image. By default, the uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} c параметром action=create
+ * @property{object} filebrowser.crop Settings for AJAX connections toWYSIWYG the server toWYSIWYG crop image. By default, the uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} c параметром action=create
+ * @property{object} filebrowser.create Settings for AJAX connections toWYSIWYG the server toWYSIWYG create the category . By default, the uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} c параметром action=create
+ * @property{object} filebrowser.move Settings for AJAX connections toWYSIWYG the server for the moving image or category . By default uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} c параметром action=move
+ * @property{object} filebrowser.remove Settings for AJAX connections toWYSIWYG the server toWYSIWYG delete the image or category . By default uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} c параметром action=remove
+ * @property{object} filebrowser.folder Settings for AJAX connections toWYSIWYG the server toWYSIWYG download the list of categories . By default uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} c параметром action=folder
+ * @property{object} filebrowser.items Settings for AJAX connections toWYSIWYG the server toWYSIWYG download the image list in the specified category . By default uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} c параметром action=items
+ * @property{object} filebrowser.uploader=null Settings Module {@link module:Uploader|Uploader} for fast uploading images in category via Drag&Drop file in the file browser. The default settings of the module {@link module:Uploader|Uploader}
  * @example
  * ```javascript
  * // default values
@@ -117,7 +119,6 @@ import Cookie from "./Cookie";
  *     ajax: {
  *         url: '',
  *         async: true,
- *
  *         data: {},
  *         contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
  *         headers : {},
@@ -174,7 +175,7 @@ import Cookie from "./Cookie";
  *             },
  *             ajax: {
  *                 url: 'ajax.php',
-                   method: 'GET',
+ *                 method: 'GET',
  *                 dataType: 'text',
  *                 headers: {
  *                     'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')

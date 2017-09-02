@@ -3,7 +3,7 @@ import Jodit from "../Jodit";
 export default class Component {
     handlers: {};
     /**
-     * @prop {Jodit} parent
+     * @property{Jodit} parent
      */
     jodit: Jodit;
 

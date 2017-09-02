@@ -5,40 +5,45 @@ import {cleanFromWord, trim} from "../modules/Helpers";
 import Dom from "../modules/Dom";
 
 /**
-* @property {object} cleanHTML {@link module:cleanHTML|cleanHTML}'s options
-* @property {boolean} cleanHTML.cleanOnPaste=true clean pasted html
-* @property {boolean} cleanHTML.replaceNBSP=true Replace &amp;nbsp; toWYSIWYG plain space
-* @property {boolean} cleanHTML.allowTags=false The allowTags option defines which elements will remain in the edited text when the editor saves. You can use this toWYSIWYG limit the returned HTML toWYSIWYG a subset.
-* @memberof Jodit.defaultOptions
-* @example
-* var jodit = new Jodit('#editor', {
-*    cleanHTML: {
-*       cleanOnPasteL false
-*    }
-* });
-* @example
-* var editor = Jodit('#editor', {
-*     allowTags: 'p,a[href],table,tr,td, img[src=1.png]' // allow only <p>,<a>,<table>,<tr>,<td>,<img> tags and for <a> allow only `href` attribute and <img> allow only `src` atrribute == '1.png'
-* });
-* editor.val('Sorry! <strong>Goodby</strong> <span>mr.</span> <a style="color:red" href="http://xsoft.net">Freeman</a>');
-* console.log(editor.val()); //Sorry! <a href="http://xsoft.net">Freeman</a>
-*
-* @example
-* var editor = Jodit('#editor', {
-*     allowTags: {
-*         p: true,
-*         a: {
-*             href: true
-*         },
-*         table: true,
-*         tr: true,
-*         td: true,
-*         img: {
-*             src: '1.png'
-*         }
-*     }
-* });
-*/
+ * @property {object} cleanHTML {@link module:cleanHTML|cleanHTML}'s options
+ * @property {boolean} cleanHTML.cleanOnPaste=true clean pasted html
+ * @property {boolean} cleanHTML.replaceNBSP=true Replace &amp;nbsp; toWYSIWYG plain space
+ * @property {boolean} cleanHTML.allowTags=false The allowTags option defines which elements will remain in the edited text when the editor saves. You can use this toWYSIWYG limit the returned HTML toWYSIWYG a subset.
+ * @example
+ * ```javascript
+ * var jodit = new Jodit('#editor', {
+ *    cleanHTML: {
+ *       cleanOnPasteL false
+ *    }
+ * });
+ ```
+ * @example
+ * ```javascript
+ * var editor = Jodit('#editor', {
+ *     allowTags: 'p,a[href],table,tr,td, img[src=1.png]' // allow only <p>,<a>,<table>,<tr>,<td>,<img> tags and for <a> allow only `href` attribute and <img> allow only `src` atrribute == '1.png'
+ * });
+ * editor.setEditorValue('Sorry! <strong>Goodby</strong> <span>mr.</span> <a style="color:red" href="http://xdsoft.net">Freeman</a>');
+ * console.log(editor.getEditorValue()); //Sorry! <a href="http://xdsoft.net">Freeman</a>
+ * ```
+ *
+ * @example
+ * ```javascript
+ * var editor = Jodit('#editor', {
+ *     allowTags: {
+ *         p: true,
+ *         a: {
+ *             href: true
+ *         },
+ *         table: true,
+ *         tr: true,
+ *         td: true,
+ *         img: {
+ *             src: '1.png'
+ *         }
+ *     }
+ * });
+ * ```
+ */
 declare module "../Config" {
     interface Config {
         cleanHTML: {
@@ -63,10 +68,8 @@ Config.prototype.controls.eraser = {
 
 /**
  * Clean HTML after removeFormat and insertHorizontalRule command
- *
- * @module cleanHTML
  */
-Jodit.plugins.cleanHTML = function (editor: Jodit) {
+export default function (editor: Jodit) {
 
     if (editor.options.cleanHTML.cleanOnPaste) {
         editor.events.on('processPaste', (event, html) => {

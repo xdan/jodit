@@ -16,11 +16,11 @@ An excellent WYSIWYG editor written in pure TypeScript without the use of additi
 ## How use
 Download latest [release](https://github.com/xdan/jodit/releases/latest) or
 ### INSTALL VIA BOWER
-```
+```bash
 bower install jodit
 ```
 ### INSTALL VIA NPM
-```
+```bash
 npm install jodit
 ```
 Include just two files
@@ -148,5 +148,17 @@ ______________________
 * Latest Firefox
 * Latest Safari
 * Microsoft Edge
+
+
+##Contributing
+
+This project is maintained by a community of developers. Contributions are welcome and appreciated. You can find Jodit on GitHub; feel free to start an issue or create a pull requests:
+https://github.com/xdan/jodit
+
+## License
+
+Copyright (c) 2017 [Chupurnov Valeriy](https://xdsoft.net/jodit)<br>
+Licensed for non-commercial under  [Creative Commons Attribution-NonCommercial 3.0 License](https://creativecommons.org/licenses/by-nc/3.0/)<br>
+Another using  [license](https://xdsoft.net/jodit/license.html)<br>
 
 

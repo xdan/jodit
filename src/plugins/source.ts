@@ -7,7 +7,14 @@ import Component from "../modules/Component";
 
 declare module "../Config" {
     interface Config {
+        /**
+         * Use ACE editor instead of usual textarea
+         */
         useAceEditor: boolean;
+
+        /**
+         * Options for [ace](https://ace.c9.io/#config) editor
+         */
         sourceEditorNativeOptions: {
             showGutter: boolean;
             theme: string;
@@ -15,27 +22,28 @@ declare module "../Config" {
             wrap: string|boolean|number,
             highlightActiveLine: boolean;
         }
+        /**
+         * Beautify HTML then it possible
+         */
         beautifyHTML: boolean;
+
+        /**
+         * CDN URLs for HTML Beautifier
+         */
         beautifyHTMLCDNUrlsJS: string[];
+
+        /**
+         * CDN URLs for ACE editor
+         */
         sourceEditorCDNUrlsJS: string[];
     }
 }
 
-/**
- * Beautify HTML then it possible
- * @type {boolean}
- */
+
 Config.prototype.beautifyHTML = true;
-/**
- * Use ACE editor instead of usual textarea
- * @memberof Jodit.defaultOptions
- */
 Config.prototype.useAceEditor = true;
 
-/**
-* Options for {@link https://ace.c9.io/#config|ace} editor
-* @memberof Jodit.defaultOptions
-*/
+
 Config.prototype.sourceEditorNativeOptions = {
     /**
      * Show gutter
@@ -61,20 +69,13 @@ Config.prototype.sourceEditorNativeOptions = {
     highlightActiveLine: true,
 };
 
-/**
-* CDN URLs for ACE editor
-* @memberof Jodit.defaultOptions
-*/
+
 Config.prototype.sourceEditorCDNUrlsJS = [
     '//cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/ace.js',
     '//cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/ext-emmet.js',
 ];
 
 
-/**
- * HTML Beautifier
- * @memberof Jodit.defaultOptions
- */
 Config.prototype.beautifyHTMLCDNUrlsJS = [
     '//cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.14/beautify.min.js',
     '//cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.14/beautify-html.min.js',
@@ -95,7 +96,7 @@ Config.prototype.controls.source = {
  *
  * @module codeMirror
  */
-Jodit.plugins.source = class extends Component {
+export default class extends Component {
     private className = 'jodit_ace_editor';
 
     private loadNext = (i: number, urls: string[], eventOnFinalize: false|string = 'aceReady', className: string = this.className) => {

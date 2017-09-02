@@ -3,7 +3,7 @@ import * as consts from '../constants';
 import {trim} from '../modules/Helpers';
 import Dom from "../modules/Dom";
 
-Jodit.plugins.backspace = function (editor: Jodit) {
+export default function (editor: Jodit) {
     editor.events.on('afterCommand', (command) => {
         if (command === 'delete') {
             let current = editor.selection.current();

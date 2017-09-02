@@ -105,7 +105,7 @@ Config.prototype.controls.brush = {
 };
 
 
-Jodit.plugins.color = function (editor: Jodit) {
+export default function (editor: Jodit) {
     editor.events.on('beforeCommand', (command, second, third) => {
         if (/forecolor|background/.test(command)) {
             const color: string|false = normalizeColor(third);

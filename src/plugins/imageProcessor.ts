@@ -3,7 +3,7 @@ import {$$, debounce, throttle} from "../modules/Helpers";
 
 const JODIT_IMAGE_PROCESSOR_BINDED = '__jodit_imageprocessor_binded';
 
-Jodit.plugins.imageProcessor = function (editor: Jodit) {
+export default  function (editor: Jodit) {
     let dragImage: HTMLImageElement|false;
     const bind = (image: HTMLImageElement) => {
         editor

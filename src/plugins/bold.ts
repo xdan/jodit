@@ -34,8 +34,10 @@ Config.prototype.controls.strikethrough = {
     tooltip: "Strike through",
 };
 
-
-Jodit.plugins.bold = function (editor: Jodit) {
+/**
+ * Bold plugin
+ */
+export default function (editor: Jodit) {
     editor.events.on('beforeCommand', (command: string) => {
 
         const commands = ['bold', 'italic', 'underline', 'strikethrough'];

@@ -5,13 +5,10 @@ import {dom,each} from '../modules/Helpers'
 /**
  * Show placeholder
  *
- * @module Placeholder
- * @params {Object} parent Jodit main object
  */
 
 /**
  * @property {boolean} showPlaceholder=true Show placeholder
- * @memberof module:Placeholder
  * @example
  * ```javascript
  * var editor = new Jodit('#editor', {
@@ -30,7 +27,6 @@ Config.prototype.showPlaceholder = true;
 
 /**
  * @property {boolean} useInputsPlaceholder=true use a placeholder from original input field, if it was set
- * @memberof module:Placeholder
  * @example
  * ```javascript
  * //<textarea id="editor" placeholder="start typing text ..." cols="30" rows="10"></textarea>
@@ -43,7 +39,6 @@ Config.prototype.useInputsPlaceholder = true;
 
 /**
  * @property {string} placeholder='Type something' Default placeholder
- * @memberof module:Placeholder
  * @example
  * ```javascript
  * var editor = new Jodit('#editor', {
@@ -53,7 +48,7 @@ Config.prototype.useInputsPlaceholder = true;
  */
 Config.prototype.placeholder = 'Type something';
 
-Jodit.plugins.placeholder = function (editor: Jodit) {
+export default function (editor: Jodit) {
     let placeholder: HTMLElement,
         timeout;
 

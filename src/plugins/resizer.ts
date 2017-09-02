@@ -9,8 +9,7 @@ import {$$, debounce, dom, isIE, offset} from '../modules/Helpers'
  * @params {Object} parent Jodit main object
  */
 /**
- * @prop {boolean} useIframeResizer=true Use true frame for editing iframe size
- * @memberof Jodit.defaultOptions
+ * @property{boolean} useIframeResizer=true Use true frame for editing iframe size
  */
 declare module "../Config" {
     interface Config {
@@ -27,28 +26,25 @@ Config.prototype.useIframeResizer = true;
 
 
 /**
- * @prop {boolean} useTableResizer=true Use true frame for editing table size
- * @memberof Jodit.defaultOptions
+ * @property{boolean} useTableResizer=true Use true frame for editing table size
  */
 Config.prototype.useTableResizer = true;
 
 /**
- * @prop {boolean} useImageResizer=true Use true image editing frame size
- * @memberof Jodit.defaultOptions
+ * @property{boolean} useImageResizer=true Use true image editing frame size
  */
 Config.prototype.useImageResizer = true;
 /**
- * @prop {object} resizer
- * @prop {int} resizer.min_width=10 The minimum width for the editable element
- * @prop {int} resizer.min_height=10 The minimum height for the item being edited
- * @memberof Jodit.defaultOptions
+ * @property{object} resizer
+ * @property{int} resizer.min_width=10 The minimum width for the editable element
+ * @property{int} resizer.min_height=10 The minimum height for the item being edited
  */
 Config.prototype.resizer = {
     min_width : 10,
     min_height : 10
 };
 
-Jodit.plugins.Resizer = function (editor: Jodit) {
+export default function (editor: Jodit) {
     // let clicked = false,
     //     resized = false,
     const LOCK_KEY = 'resizer';
