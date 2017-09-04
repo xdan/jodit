@@ -40,6 +40,7 @@ export const ACCURACY = 10;
 //     Y:          89
 // };
 
+export const BR = 'br';
 export const PARAGRAPH = 'P';
 
 

@@ -245,7 +245,7 @@ export class Config {
     /**
      * Element that will be created when you press Enter
      */
-    enter: "P"|"DIV"|"BR" = consts.PARAGRAPH;
+    enter: "P"|"DIV"|"BR"|"p"|"div"|"br" = consts.PARAGRAPH;
 
     /**
      * Jodit.MODE_WYSIWYG The HTML editor allows you to write like MSWord, Jodit.MODE_AREA syntax highlighting source editor
@@ -574,7 +574,7 @@ Config.prototype.controls = {
                     }
                     close();
                 }
-            }, sourceImage);
+            }, sourceImage, close);
         },
         tags: ["img"],
         tooltip: "Insert Image"

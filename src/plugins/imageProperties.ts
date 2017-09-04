@@ -366,7 +366,7 @@ export default function (editor: Jodit) {
                             update();
                         }
                     }
-                }, image), true);
+                }, image, editor.toolbar.closeAll), true);
                 e.stopPropagation();
             });
         });

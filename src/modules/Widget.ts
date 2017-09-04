@@ -232,18 +232,19 @@ export namespace Widget {
      * @param {Jodit} editor
      * @param {Widget.ImageSelectorCallbacks} callbacks
      * @param {HTMLElement} elm
+     * @param {Function} close Close popup
      * @return {HTMLDivElement}
      * @constructor
      */
-    export const ImageSelectorWidget = (editor: Jodit, callbacks: ImageSelectorCallbacks, elm: HTMLElement): HTMLDivElement =>{
+    export const ImageSelectorWidget = (editor: Jodit, callbacks: ImageSelectorCallbacks, elm: HTMLElement, close: Function): HTMLDivElement =>{
         let currentImage: any;
         const tabs: { [key: string]: HTMLElement | Function } = {};
 
         if (callbacks.upload && editor.options.uploader && editor.options.uploader.url) {
             const dragbox: HTMLElement = dom('<div class="jodit_draganddrop_file_box">' +
-                '<strong>' + editor.i18n('Drop image') + '</strong>' +
-                '<span><br> ' + editor.i18n('or click') + '</span>' +
-                '<input type="file" accept="image/*" tabindex="-1" dir="auto" multiple=""/>' +
+                    '<strong>' + editor.i18n('Drop image') + '</strong>' +
+                    '<span><br> ' + editor.i18n('or click') + '</span>' +
+                    '<input type="file" accept="image/*" tabindex="-1" dir="auto" multiple=""/>' +
                 '</div>');
 
             (<Uploader>editor.getInstance('Uploader')).bind(dragbox, (resp: UploaderData) => {
@@ -263,6 +264,7 @@ export namespace Widget {
         if (callbacks.filebrowser) {
             if (editor.options.filebrowser.ajax.url || editor.options.filebrowser.items.url) {
                 tabs[Jodit.modules.Toolbar.getIcon('folder') + editor.i18n('Browse')] = function () {
+                    close && close();
                     (<FileBrowser>editor.getInstance('FileBrowser')).open(callbacks.filebrowser);
                 };
             }
@@ -273,7 +275,7 @@ export namespace Widget {
                 '<input type="text" required name="url" placeholder="http://"/>' +
                 '<input type="text" name="text" placeholder="' + editor.i18n('Alternative text') + '"/>' +
                 '<div style="text-align: right">' +
-                '<button>' + editor.i18n('Insert') + '</button>' +
+                    '<button>' + editor.i18n('Insert') + '</button>' +
                 '</div>' +
                 '</form>');
 

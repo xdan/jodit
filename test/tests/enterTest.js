@@ -437,6 +437,36 @@ describe('Enter behavior Jodit Editor Tests', function() {
                 expect(editor.getEditorValue()).to.be.equal('<table><tbody><tr><td>test</td></tr></tbody></table><p>text</p>');
             })
         });
+        describe('with SHIFT button', function () {
+            it('should insert <br> tag and move cursor after it.', function () {
+                var editor = new Jodit(appendTestArea())
+
+                editor.setEditorValue('test');
+
+                var range = editor.doc.createRange();
+
+
+                // set cursor in start of element
+                range.setStart(editor.editor.firstChild, 2);
+                range.collapse(true);
+                editor.win.getSelection().removeAllRanges();
+                editor.win.getSelection().addRange(range);
+
+                simulateEvent('keydown',    Jodit.KEY_ENTER, editor.editor, function (options) {
+                    options.shiftKey = true;
+                });
+
+                editor.selection.insertNode(editor.doc.createTextNode('split '));
+
+                expect(editor.getEditorValue()).to.be.equal('<p>te<br>split st</p>');
+
+                simulateEvent('keydown',    Jodit.KEY_ENTER, editor.editor, function (options) {
+                    options.shiftKey = true;
+                });
+
+                expect(editor.getEditorValue()).to.be.equal('<p>te<br>split <br>st</p>');
+            })
+        });
     });
     afterEach(function () {
         removeStuff();

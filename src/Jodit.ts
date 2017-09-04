@@ -154,9 +154,9 @@ export default class Jodit extends Component{
             throw new Error('Element "' + element + '" should be string or HTMLElement');
         }
 
+        this.events = this.getInstance('Events');
         this.selection = this.getInstance('Selection');
         this.uploader = this.getInstance('Uploader');
-        this.events = this.getInstance('Events');
 
         this.container = <HTMLDivElement>dom('<div class="jodit_container" />');
         this.container.classList.add('jodit_' + (this.options.theme || 'default') + '_theme');

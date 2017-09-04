@@ -712,7 +712,7 @@ export const  debounce = function (fn, timeout ?: number, invokeAsap?: boolean, 
  * @example
  * ```javascript
  * var jodit = new Jodit('.editor');
- * Jodit.modules.Dom("body").on('scroll', jodit.helper.throttle(function() {
+ * jodit.__on(document.body, 'scroll', jodit.helper.throttle(function() {
  *     // Do expensive things
  * }, 100));
  * ```

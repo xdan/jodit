@@ -188,11 +188,12 @@ export default class Uploader extends Component {
 
     constructor(editor: Jodit, options) {
         super(editor);
-        this.options = <UploaderOptions>extend(true, {}, Config.prototype.uploader, this.jodit.options.uploader, options);
-        if (this.jodit.editor) {
-            if (this.jodit.options.enableDragAndDropFileToEditor && this.jodit.options.uploader && this.jodit.options.uploader.url) {
-                this.bind(this.jodit.editor);
-            }
+        this.options = <UploaderOptions>extend(true, {}, Config.prototype.uploader, editor.options.uploader, options);
+
+        if (editor.options.enableDragAndDropFileToEditor && editor.options.uploader && editor.options.uploader.url) {
+            editor.events.on('afterInit', () => {
+                this.bind(editor.editor);
+            });
         }
     }
 
@@ -367,8 +368,10 @@ export default class Uploader extends Component {
 
     bind(form: HTMLElement, handlerSuccess?: HandlerSuccess, handlerError?: HandlerError) {
         const self: Uploader = this;
+
         self
             .__on(form, 'paste',  function (e: ClipboardEvent) {
+
                 let i: number,
                     file: File,
                     extension: string,

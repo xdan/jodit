@@ -136,7 +136,7 @@ Config.prototype.controls.link = {
 };
 
 /**
- * Process link
+ * Process link. Insert, dbclick or remove format
  *
  * @module plugins/link
  */

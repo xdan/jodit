@@ -29,8 +29,7 @@ export const insertParagraph = (editor: Jodit, fake ?: Node, wrapperTag ?: strin
 };
 
 /**
- *
- * @param {Jodit} editor
+ * One of most important core plugins. It is responsible for all the browsers to have the same effect when the Enter button is pressed. By default, it should insert the <p>
  */
 export default  function (editor: Jodit) {
     editor.events.on('keyup', () => {
@@ -117,6 +116,11 @@ export default  function (editor: Jodit) {
                     }
                 }
 
+                // if use <br> tag for break line or when was entered SHIFt key or in <td> or <th> or <blockquote>
+                if (editor.options.enter === consts.BR || event.shiftKey || Dom.closest(current, 'TH|TD|BLOCKQUOTE', editor.editor)) {
+                    editor.selection.insertHTML('<br>' + consts.INVISIBLE_SPACE);
+                    return false;
+                }
 
                 if (editor.selection.cursorInTheEdge(true, currentBox)) {
                     // if we are in the left edge of paragraph

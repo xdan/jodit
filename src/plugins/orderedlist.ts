@@ -16,6 +16,9 @@ Config.prototype.controls.ol = {
     tooltip: "Insert Ordered List"
 };
 
+/**
+ * Process commands insertOrderedList and insertUnOrderedList
+ */
 export default function (editor: Jodit) {
     editor.events.on('afterCommand', (command) => {
         if (/insert(un)?orderedlist/i.test(command)) {

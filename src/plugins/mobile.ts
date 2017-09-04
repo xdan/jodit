@@ -4,17 +4,19 @@ import {ControlType} from "../modules/Toolbar";
 
 declare module "../Config" {
     interface Config {
+        /**
+         * Mobile timeout for CLICK emulation
+         */
         mobileTapTimeout: number;
     }
 }
 
-/**
- * Mobile timeout for CLICK emulation
- *
- * @type {number}
- */
+
 Config.prototype.mobileTapTimeout = 300;
 
+/**
+ * Rebuild toolbar in depends of editor's width
+ */
 export default function (editor: Jodit) {
     let timeout: number = 0,
         now: number;
