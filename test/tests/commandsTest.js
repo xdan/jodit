@@ -431,14 +431,15 @@ describe('Commands Jodit Editor Tests', function() {
             var sel = editor.win.getSelection(),
                 range = editor.doc.createRange();
 
-            range.selectNodeContents(editor.editor);
+            range.setStart(editor.editor.firstChild, 0);
+            range.setEnd(editor.editor.lastChild, 1);
 
             sel.removeAllRanges();
             sel.addRange(range);
 
             editor.execCommand('foreColor', false, '#f00');
 
-            expect(editor.getEditorValue()).to.equal('<p><span style="color: rgb(255, 0, 0);">1</span></p><p><span style="color: rgb(255, 0, 0);">2</span></p><p><span style="color: rgb(255, 0, 0);">3</span></p>');
+            expect('<p><span style="color: rgb(255, 0, 0);">1</span></p><p><span style="color: rgb(255, 0, 0);">2</span></p><p><span style="color: rgb(255, 0, 0);">3</span></p>').to.equal(editor.getEditorValue());
         });
         it('Set colour to collapsed position should create empty span and insert inward cursor', function () {
             var editor = new Jodit('#tested_area');
