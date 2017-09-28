@@ -1,5 +1,5 @@
 import * as consts from '../constants';
-import {each} from './Helpers'
+import {each, trim} from './Helpers'
 import Jodit from "../Jodit";
 
 export default class Dom {
@@ -80,21 +80,26 @@ export default class Dom {
      * @param  {Function} callback It called for each item found
      * @example
      * ```javascript
-     * parent.node.each(parent.selection.current(), function (node) {
+     * Jodit.modules.Dom.each(parent.selection.current(), function (node) {
      *  if (node.nodeType === Node.TEXT_NODE) {
      *      node.nodeValue = node.nodeValue.replace(Jodit.INVISIBLE_SPACE_REG_EX, '') // remove all of the text element codes invisible character
      *  }
      * });
      * ```
      */
-    static each (elm: HTMLElement, callback: Function) {
-        let node: any = elm;
-        do {
-            node = Dom.next(node, (node) => (!!node), elm);
-            if (node) {
-                callback.call(node, node);
+    static each (elm: HTMLElement, callback: (this: Node, node: Node) => void|false): boolean {
+        let node: any = elm.firstChild;
+
+        if (node) {
+            while (node) {
+                if (callback.call(node, node) === false || Dom.each(node, callback) === false) {
+                    return false;
+                }
+                node = Dom.next(node, (node) => (!!node), elm);
             }
-        } while (node);
+        }
+
+        return true;
     }
 
     /**
@@ -167,8 +172,8 @@ export default class Dom {
      * @param node
      * @return {boolean}
      */
-    static isBlock(node) {
-        return (node && node.tagName && consts.IS_BLOCK.test(node.tagName));
+    static isBlock(node): boolean {
+        return (node && typeof node.tagName === 'string' && consts.IS_BLOCK.test(node.tagName));
     }
 
     /**
@@ -258,6 +263,22 @@ export default class Dom {
      */
     static isEmptyTextNode(node: Node): boolean {
         return node && node.nodeType === Node.TEXT_NODE && node.nodeValue.replace(consts.INVISIBLE_SPACE_REG_EXP, '').length === 0;
+    }
+
+    static isEmpty(node: Node): boolean {
+        if (!node) {
+            return true;
+        }
+
+        if (node.nodeType === Node.TEXT_NODE) {
+            return trim(node.nodeValue).length === 0;
+        }
+
+        return Dom.each(<HTMLElement>node, (elm: Node) => {
+            if ((elm.nodeType === Node.TEXT_NODE && trim(elm.nodeValue).length !== 0) || (elm.nodeType === Node.ELEMENT_NODE && elm.nodeName.match(/^(img|table)$/i))) {
+                return false;
+            }
+        });
     }
 
     /**

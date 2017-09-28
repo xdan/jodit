@@ -81,7 +81,6 @@
         };
     }
     editor = new Jodit('#area_editor', {
-//        disablePlugins: ['source'],
 //        useAceEditor: false,
 //        theme: 'dark',
 //        textIcons: true,
@@ -136,25 +135,14 @@
     editor.setEditorValue('<ul>' +
         '<li>1</li>' +
         '<li>2</li>' +
-        '<li>asd</li>' +
+        '<li><img width="20px" src="https://xdsoft.net/jodit/images/artio.jpg"></li>' +
         '</ul>');
-
-    editor.selection.focus();
-
     var range = editor.doc.createRange();
 
-
     // set cursor in start of element
-
-    range.setStartAfter(editor.editor.firstChild.lastChild.firstChild);
-    range.collapse(true);
-    editor.win.getSelection().removeAllRanges();
-    editor.win.getSelection().addRange(range);
-
-//    debugger
-//    simulateEvent('keydown',    Jodit.KEY_ENTER, editor.editor);
-//
-//    editor.selection.insertNode(editor.doc.createTextNode('split '));
+    editor.selection.setCursorBefore(editor.editor.firstChild.lastChild.firstChild);
+    simulateEvent('keydown',    Jodit.KEY_ENTER, editor.editor);
+    editor.selection.insertNode(editor.doc.createTextNode('split '));
 
 //    expect(editor.getEditorValue()).to.be.equal('<ul>' +
 //        '<li>1</li>' +
@@ -170,5 +158,5 @@
 //    var dialogs = document.querySelectorAll('.jodit.jodit_dialog_box.jodit_text_icons.active');
 //    expect(dialogs.length).toWYSIWYG.equal(1);
 
-   callback();
+//    callback();
 </script>

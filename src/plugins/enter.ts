@@ -1,5 +1,5 @@
 import Jodit from '../Jodit';
-import {trim,$$} from "../modules/Helpers"
+import {$$} from "../modules/Helpers"
 import * as consts from '../constants';
 import Dom from "../modules/Dom";
 /**
@@ -89,7 +89,7 @@ export default  function (editor: Jodit) {
                 }
 
                 if (currentBox.nodeName === 'LI') {
-                    if (trim(currentBox.textContent || currentBox['innerText']).length === 0) {
+                    if (Dom.isEmpty(currentBox)) {
                         const ul = <HTMLElement>Dom.closest(currentBox, 'ol|ul', editor.editor);
                         // If there is no LI element before
                         if (!Dom.prev(currentBox, (elm: HTMLElement) => elm && elm.tagName === 'LI', ul)) {

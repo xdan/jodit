@@ -411,7 +411,9 @@ export default class extends Component {
                         updateButtons();
                     };
 
-                    this.setMirrorValue(this.getMirrorValue());
+                    if (this.jodit.getRealMode() !== consts.MODE_WYSIWYG) {
+                        this.setMirrorValue(this.getMirrorValue());
+                    }
 
                     this.getMirrorValue = () => {
                         return aceEditor.getValue();
