@@ -12,7 +12,7 @@ export type markerInfo = {
     endMarker?: string
 }
 
-export default class Selection extends Component{
+export default class extends Component{
 
     // private __normalizeSelection(range: Range, atStart) {
     //     if (!this.isCollapsed() && this.cursorInTheEdge(!atStart, elm => elm && elm.nodeType !== Node.TEXT_NODE && elm !== this.jodit.editor, true)) {
@@ -68,9 +68,9 @@ export default class Selection extends Component{
         return false;
     }
 
-    private isMarker = (elm: HTMLElement) => (
-        Dom.isNode(elm, this.jodit.win) && elm.tagName === 'SPAN' && elm.getAttribute('data-' + consts.MARKER_CLASS)
-    )
+    private isMarker = (elm: HTMLElement): boolean => (
+        Dom.isNode(elm, this.jodit.win) && elm.tagName === 'SPAN' && elm.hasAttribute('data-' + consts.MARKER_CLASS)
+    );
 
     /**
      * Remove all markers
@@ -83,12 +83,14 @@ export default class Selection extends Component{
 
     marker = (atStart = false, range?: Range): HTMLSpanElement => {
         let newRange: Range;
+
         if (range) {
             newRange = range.cloneRange();
             newRange.collapse(atStart);
         }
 
-        const marker = this.jodit.doc.createElement('span');
+        const marker: HTMLSpanElement = this.jodit.doc.createElement('span');
+
         marker.id = consts.MARKER_CLASS + '_' + (+new Date()) + "_" + ("" + Math.random()).slice(2);
         marker.style.lineHeight = "0";
         marker.style.display = "none";
@@ -109,7 +111,7 @@ export default class Selection extends Component{
      */
     restore(selectionInfo: markerInfo[]|null = []) {
         if (Array.isArray(selectionInfo)) {
-            const sel = this.jodit.win.getSelection();
+            const sel: Selection = this.jodit.win.getSelection();
             sel.removeAllRanges();
 
             selectionInfo.forEach((selection: markerInfo) => {
@@ -122,9 +124,9 @@ export default class Selection extends Component{
                 }
 
                 if (selection.collapsed || !end) {
-                    let previousNode = start.previousSibling;
+                    const previousNode: Node = start.previousSibling;
 
-                    if (previousNode && previousNode.nodeType == Node.TEXT_NODE) {
+                    if (previousNode && previousNode.nodeType === Node.TEXT_NODE) {
                         range.setStart(previousNode, previousNode.nodeValue.length);
                     } else {
                         range.setStartBefore(start)
@@ -141,8 +143,6 @@ export default class Selection extends Component{
 
                 sel.addRange(range);
             });
-
-            //this.clear();
         }
     }
 
@@ -152,13 +152,20 @@ export default class Selection extends Component{
      * @return {Array}
      */
     save():markerInfo[]  {
-        const sel = this.jodit.win.getSelection();
+        const sel: Selection = this.jodit.win.getSelection();
+
         if (!sel.rangeCount) {
             return null;
         }
 
 
-        let info: markerInfo[] = [], length = sel.rangeCount, i, start, end, ranges = [];
+        let info: markerInfo[] = [],
+            length: number = sel.rangeCount,
+            i: number,
+            start: HTMLSpanElement,
+            end: HTMLSpanElement,
+            ranges: Range[] = [];
+
         for (i = 0; i < length; i += 1) {
             ranges[i] = sel.getRangeAt(i);
             if (ranges[i].collapsed) {
@@ -203,7 +210,7 @@ export default class Selection extends Component{
     /**
      * Set focus in editor
      */
-    focus = () => {
+    focus = (): boolean => {
         const jodit: Jodit = this.jodit;
         if (!this.isFocused()) {
             if (jodit.options.iframe && isIE()) {
@@ -217,8 +224,8 @@ export default class Selection extends Component{
             }
             jodit.win.focus();
             jodit.editor.focus();
-            const sel = jodit.win.getSelection(),
-                range = jodit.doc.createRange();
+            const sel: Selection = jodit.win.getSelection(),
+                range: Range = jodit.doc.createRange();
 
             if (!sel.rangeCount) {
                 if (!jodit.editor.firstChild) {
@@ -231,6 +238,7 @@ export default class Selection extends Component{
             }
             return true;
         }
+        return false;
     };
 
     /**
@@ -238,7 +246,7 @@ export default class Selection extends Component{
      *
      * @return {Boolean} true Selection does't have content
      */
-    isCollapsed () {
+    isCollapsed (): boolean {
         let sel = this.jodit.win.getSelection(), r;
         for (r = 0; r < sel.rangeCount; r += 1) {
             if (!sel.getRangeAt(r).collapsed) {
@@ -253,7 +261,7 @@ export default class Selection extends Component{
      *
      * @return {Boolean}
      */
-    isFocused (){
+    isFocused (): boolean {
         return (this.jodit.doc.hasFocus && this.jodit.doc.hasFocus()) && this.jodit.editor === this.jodit.doc.activeElement;
     }
 
@@ -292,7 +300,7 @@ export default class Selection extends Component{
             throw new Error('Parameter node most be instance of Node');
         }
 
-        const isOrContainsNode = (ancestor: Node, descendant: Node) => {
+        const isOrContainsNode = (ancestor: Node, descendant: Node): boolean => {
                 let node = descendant;
                 while (node) {
                     if (node === ancestor) {
@@ -306,14 +314,14 @@ export default class Selection extends Component{
         this.focus();
 
         if (this.jodit.win.getSelection) {
-            const sel = this.jodit.win.getSelection();
+            const sel: Selection = this.jodit.win.getSelection();
 
             if (!this.isCollapsed()) {
                 this.jodit.execCommand('Delete');
             }
 
             if (sel.rangeCount) {
-                const range = sel.getRangeAt(0);
+                const range: Range = sel.getRangeAt(0);
                 if (isOrContainsNode(this.jodit.editor, range.commonAncestorContainer)) {
                     range.deleteContents();
                     range.insertNode(node);
@@ -345,10 +353,11 @@ export default class Selection extends Component{
      * ```
      */
     insertHTML(html: number|string|Node) {
-        let node = this.jodit.doc.createElement('DIV'),
-            fragment = this.jodit.doc.createDocumentFragment(),
-            lastChild,
-            lastEditorElement;
+        const node: HTMLDivElement = <HTMLDivElement>this.jodit.doc.createElement('DIV'),
+            fragment: DocumentFragment = this.jodit.doc.createDocumentFragment();
+        let
+            lastChild: Node,
+            lastEditorElement: Node;
 
         if (!this.isFocused()) {
             this.jodit.editor.focus();
@@ -371,7 +380,7 @@ export default class Selection extends Component{
         this.setCursorAfter(lastChild);
 
         lastEditorElement = this.jodit.editor.lastChild;
-        while (lastEditorElement && lastEditorElement.nodeType === Node.TEXT_NODE && lastEditorElement.previousSibling && (/^\s*$/).test(lastEditorElement.data)) {
+        while (lastEditorElement && lastEditorElement.nodeType === Node.TEXT_NODE && lastEditorElement.previousSibling && (/^\s*$/).test(lastEditorElement.nodeValue)) {
             lastEditorElement = lastEditorElement.previousSibling;
         }
 
@@ -391,7 +400,7 @@ export default class Selection extends Component{
      *
      * @fired afterInsertImage
      */
-    insertImage(url, styles: {[key: string]: string} = {}) {
+    insertImage(url: string|HTMLImageElement, styles: {[key: string]: string} = {}) {
         let dw: string;
         const image: HTMLImageElement = typeof url === 'string' ? <HTMLImageElement>dom('<img/>', this.jodit.doc) : <HTMLImageElement>dom(url, this.jodit.doc);
 
@@ -410,6 +419,7 @@ export default class Selection extends Component{
         }
 
         styles.width = dw;
+
         if (styles && typeof styles === 'object') {
             each(styles, (value: string, key: string) => {
                 image.style[key] = value;
@@ -448,13 +458,13 @@ export default class Selection extends Component{
         this.jodit.events.fire('afterInsertImage', [image]);
     }
 
-    eachSelection = (callback: Function) => {
-        const sel = this.jodit.win.getSelection();
+    eachSelection = (callback: (current: Node)  => void) => {
+        const sel: Selection = this.jodit.win.getSelection();
         if (sel.rangeCount) {
-            let range = sel.getRangeAt(0);
-            let nodes = [],
-                start = range.startContainer === this.jodit.editor ? this.jodit.editor.childNodes[range.startOffset] : range.startContainer,
-                end = range.endContainer === this.jodit.editor ? this.jodit.editor.childNodes[range.endOffset - 1] : range.endContainer;
+            let range: Range = sel.getRangeAt(0);
+            let nodes: Node[] = [],
+                start: Node = range.startContainer === this.jodit.editor ? this.jodit.editor.childNodes[range.startOffset] : range.startContainer,
+                end: Node = range.endContainer === this.jodit.editor ? this.jodit.editor.childNodes[range.endOffset - 1] : range.endContainer;
 
             Dom.find(start, (node: Node|HTMLElement) => {
                 if (node && !Dom.isEmptyTextNode(node) && !this.isMarker(<HTMLElement>node)) {
@@ -467,7 +477,7 @@ export default class Selection extends Component{
                     return true;
                 }
             }, this.jodit.editor, true, 'nextSibling', false);
-            nodes.forEach((current) => {
+            nodes.forEach((current: Node) => {
                 callback(current);
             })
         }
@@ -479,7 +489,7 @@ export default class Selection extends Component{
      * @param {Node} node
      * @return {Node} fake invisible textnode. After insert it can be removed
      */
-    setCursorAfter(node) {
+    setCursorAfter(node:  Node | HTMLElement | HTMLTableElement | HTMLTableCellElement): Text {
         if (!(node instanceof (<any>this.jodit.win).Node)) {
             throw new Error('Parameter node most be instance of Node');
         }
@@ -488,9 +498,9 @@ export default class Selection extends Component{
             throw new Error('Node element must be in editor');
         }
 
-        let sel = this.jodit.win.getSelection(),
-            range = this.jodit.doc.createRange(),
-            fakeNode = this.jodit.doc.createTextNode(consts.INVISIBLE_SPACE);
+        const sel: Selection = this.jodit.win.getSelection(),
+            range: Range = this.jodit.doc.createRange(),
+            fakeNode: Text = this.jodit.doc.createTextNode(consts.INVISIBLE_SPACE);
 
 
 
@@ -522,7 +532,7 @@ export default class Selection extends Component{
      * @return {boolean} true - the cursor is at the end(start) block
      */
     cursorInTheEdge (start: boolean = false, parentBlock: HTMLElement|Function|false = false, inverse: boolean = false): boolean {
-        const sel = this.jodit.win.getSelection(),
+        const sel: Selection = this.jodit.win.getSelection(),
             isNoEmptyNode = (elm: Node) => (!Dom.isEmptyTextNode(elm));
         let
             container: HTMLElement = <HTMLElement>parentBlock;
@@ -532,10 +542,10 @@ export default class Selection extends Component{
         }
 
         const range: Range = sel.getRangeAt(0),
-            isStart = () => {
+            isStart = (): boolean => {
                 return inverse === false ? start : !start;
             },
-            startContainer = isStart() ? range.startContainer : range.endContainer;
+            startContainer: Node = isStart() ? range.startContainer : range.endContainer;
 
         if (parentBlock === false) {
             container = <HTMLElement>Dom.up(startContainer, Dom.isBlock, this.jodit.editor)
@@ -680,7 +690,7 @@ export default class Selection extends Component{
      * @param {Node} node
      * @return {Text} fake invisible textnode. After insert it can be removed
      */
-    setCursorBefore(node) {
+    setCursorBefore(node:  Node | HTMLElement | HTMLTableElement | HTMLTableCellElement): Text {
         if (!(node instanceof (<any>this.jodit.win).Node)) {
             throw new Error('Parameter node most be instance of Node');
         }
@@ -689,9 +699,9 @@ export default class Selection extends Component{
             throw new Error('Node element must be in editor');
         }
 
-        let sel = this.jodit.win.getSelection(),
-            range = this.jodit.doc.createRange(),
-            fakeNode = this.jodit.doc.createTextNode(consts.INVISIBLE_SPACE);
+        const sel: Selection = this.jodit.win.getSelection(),
+            range: Range = this.jodit.doc.createRange(),
+            fakeNode: Text = this.jodit.doc.createTextNode(consts.INVISIBLE_SPACE);
 
         if (node.nodeType !== Node.TEXT_NODE) {
             range.setStartBefore(node);
@@ -717,7 +727,7 @@ export default class Selection extends Component{
      * @param {Node} node
      * @param {boolean} [inStart=false] set cursor in start of element
      */
-    setCursorIn(node, inStart = false) {
+    setCursorIn(node: Node, inStart: boolean = false) {
         if (!(node instanceof (<any>this.jodit.win).Node)) {
             throw new Error('Parameter node most be instance of Node');
         }
@@ -725,9 +735,10 @@ export default class Selection extends Component{
             throw new Error('Node element must be in editor');
         }
 
-        let sel = this.jodit.win.getSelection(),
-            range = this.jodit.doc.createRange();
-        let start = node, last = node;
+        const sel: Selection = this.jodit.win.getSelection(),
+            range: Range = this.jodit.doc.createRange();
+        let start: Node = node,
+            last: Node = node;
 
         do {
             if (start.nodeType === Node.TEXT_NODE) {
@@ -748,7 +759,7 @@ export default class Selection extends Component{
      * @param {Node} node
      * @param {boolean} [inward=false] select all inside
      */
-    select(node: Node, inward = false) {
+    select(node: Node | HTMLElement | HTMLTableElement | HTMLTableCellElement, inward = false) {
         if (!(node instanceof (<any>this.jodit.win).Node)) {
             throw new Error('Parameter node most be instance of Node');
         }
@@ -756,8 +767,8 @@ export default class Selection extends Component{
             throw new Error('Node element must be in editor');
         }
 
-        const sel = this.jodit.win.getSelection(),
-            range = this.jodit.doc.createRange();
+        const sel: Selection = this.jodit.win.getSelection(),
+            range: Range = this.jodit.doc.createRange();
 
         range[inward ? 'selectNodeContents' : 'selectNode'](node);
         sel.removeAllRanges();
@@ -773,23 +784,23 @@ export default class Selection extends Component{
      * @param {object} options
      */
     applyCSS = (cssRules ?: {[key:string]: string}, nodeName:string = 'span', options?: {[key: string]: string|string[]}|{[key: string]: (editor: Jodit, value: string) => boolean}) => {
-        const WRAP  = 1;
-        const UNWRAP  = 0;
+        const WRAP: number  = 1;
+        const UNWRAP: number  = 0;
 
-        let mode: 1|0;
+        let mode: number;
 
-        const defaultTag = 'SPAN';
+        const defaultTag: string = 'SPAN';
 
-        const findNextCondition = (elm: HTMLElement) => (elm && !Dom.isEmptyTextNode(elm) && !this.isMarker(elm));
+        const findNextCondition = (elm: HTMLElement): boolean => (elm && !Dom.isEmptyTextNode(elm) && !this.isMarker(elm));
 
-        const checkCssRulesFor = (elm: HTMLElement) => {
+        const checkCssRulesFor = (elm: HTMLElement): boolean => {
             return elm.nodeName !== 'FONT' && elm.nodeType === Node.ELEMENT_NODE && each(options, (cssPropertyKey: string, cssPropertyValues: string[]) => {
                 const value = css(elm, cssPropertyKey);
                 return  cssPropertyValues.indexOf(value.toString().toLowerCase()) !== -1;
             }) !== false
         };
 
-        const isSuitElement = (elm: HTMLElement) => {
+        const isSuitElement = (elm: HTMLElement): boolean => {
             const reg = new RegExp('^' + elm.nodeName + '$', 'i');
             return ((reg.test(nodeName)) || (options && checkCssRulesFor(elm))) && findNextCondition(elm);
         };
@@ -825,7 +836,7 @@ export default class Selection extends Component{
 
 
         if (!this.isCollapsed()) {
-            const selInfo = this.save();
+            const selInfo: markerInfo[] = this.save();
             this.jodit.editor.normalize(); // FF fix for test "commandsTest - Exec command "bold" for some text that contains a few STRONG elements, should unwrap all of these"
             this.jodit.doc.execCommand('fontsize', false, 7);
 
@@ -901,11 +912,14 @@ export default class Selection extends Component{
             let clearStyle: boolean = false;
             if (this.current() && Dom.closest(<Node>this.current(), nodeName, this.jodit.editor)) {
                 clearStyle = true;
-                this.setCursorAfter(Dom.closest(<Node>this.current(), nodeName, this.jodit.editor));
+                const closest: Node = <Node>Dom.closest(<Node>this.current(), nodeName, this.jodit.editor);
+                if (closest) {
+                    this.setCursorAfter(closest);
+                }
             }
 
             if (nodeName.toUpperCase() === defaultTag || !clearStyle) {
-                const node = Dom.create(nodeName, consts.INVISIBLE_SPACE, this.jodit.doc);
+                const node: Node = Dom.create(nodeName, consts.INVISIBLE_SPACE, this.jodit.doc);
                 this.insertNode(node);
                 if (nodeName.toUpperCase() === defaultTag) {
                     css(<HTMLElement>node, cssRules);

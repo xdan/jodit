@@ -225,8 +225,14 @@ export default class Jodit extends Component{
     __plugins: {[key: string]: JoditPlugin} = {};
 
     initPlugines() {
+        const disable: string[] = Array.isArray(this.options.disablePlugins) ? this.options.disablePlugins.map((pluginName: string) => {
+            return pluginName.toLowerCase();
+        }) : this.options.disablePlugins.toLowerCase().split(/[\s,]+/);
+
         Object.keys(Jodit.plugins).forEach((key: string) => {
-            this.__plugins[key] = new Jodit.plugins[key](this);
+            if (disable.indexOf(key.toLowerCase()) === -1) {
+                this.__plugins[key] = new Jodit.plugins[key](this);
+            }
         })
     }
 
@@ -450,7 +456,7 @@ export default class Jodit extends Component{
             throw new Error('value must be string');
         }
 
-        if (value !== undefined) {
+        if (value !== undefined && this.editor.innerHTML !== value) {
             this.editor.innerHTML = value;
         }
 

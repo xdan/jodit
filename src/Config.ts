@@ -316,6 +316,21 @@ export class Config {
     removeButtons: string[] = [];
 
     /**
+     * Do not init these plugins
+     * @example
+     * ```typescript
+     * var editor = new Jodit('.editor', {
+     *    disablePlugins: 'table,iframe'
+     * });
+     * //or
+     * var editor = new Jodit('.editor', {
+     *    disablePlugins: ['table', 'iframe']
+     * });
+     * ```
+     */
+    disablePlugins: string[]|string = [];
+
+    /**
      * This buttons list will be added to option.buttons
      */
     extraButtons: Array<string|ControlType> = [];
@@ -547,7 +562,7 @@ Config.prototype.controls = {
             return ImageSelectorWidget(editor, {
                 filebrowser: (data: FileBrowserCallBcackData) => {
                     if (data.files && data.files.length) {
-                        let i;
+                        let i: number;
                         for (i = 0; i < data.files.length; i += 1) {
                             insertImage(data.baseurl + data.files[i]);
                         }
