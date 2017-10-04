@@ -74,6 +74,7 @@ export default class Ajax extends Component{
         if (typeof obj === 'string' || (window['FormData'] && obj instanceof window['FormData'])) {
             return obj;
         }
+
         let str = [], p, k, v;
         for (p in obj) {
             if (obj.hasOwnProperty(p)) {
@@ -82,6 +83,7 @@ export default class Ajax extends Component{
                 str.push(typeof v === "object" ? this.__buildParams(v, k) : encodeURIComponent(k) + "=" + encodeURIComponent(v));
             }
         }
+
         return str.join("&");
     }
 

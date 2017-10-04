@@ -167,6 +167,28 @@ export default class Dom {
     }
 
     /**
+     *  Check if element is table cell
+     *
+     * @param {Node} elm
+     * @param {Window} win
+     * @return {boolean}
+     */
+    static isCell(elm: Node, win: Window = window): boolean {
+        return Dom.isNode(elm, win) && /^(td|th)$/i.test(elm.nodeName)
+    }
+
+    /**
+     * Check is element is Image element
+     *
+     * @param {Node} elm
+     * @param {Window} win
+     * @return {boolean}
+     */
+    static isImage(elm: Node, win: Window = window): boolean {
+        return Dom.isNode(elm, win) && /^(img|svg|picture|canvas)$/i.test(elm.nodeName)
+    }
+
+    /**
      * Check the `node` is a block element
      *
      * @param node

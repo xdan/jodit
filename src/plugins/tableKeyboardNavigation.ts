@@ -25,8 +25,8 @@ export default function (editor: Jodit) {
                 return;
             }
 
-            const sel = editor.win.getSelection(),
-                range = sel.rangeCount ? sel.getRangeAt(0) : editor.doc.createRange();
+            const sel: Selection = editor.win.getSelection(),
+                range: Range = sel.rangeCount ? sel.getRangeAt(0) : editor.doc.createRange();
 
             if (event.which !== consts.KEY_TAB && current !== block) {
                 if (((event.which === consts.KEY_LEFT || event.which === consts.KEY_TOP) &&
@@ -48,15 +48,14 @@ export default function (editor: Jodit) {
 
         switch (event.which) {
             case consts.KEY_TAB:
-            case consts.KEY_RIGHT:
-            case consts.KEY_LEFT: {
-                const sibling = (event.which === consts.KEY_LEFT || event.shiftKey) ? 'prev' : 'next';
+            // case consts.KEY_RIGHT:
+            case consts.KEY_LEFT:
+                const sibling: string = (event.which === consts.KEY_LEFT || event.shiftKey) ? 'prev' : 'next';
                 next = <HTMLTableCellElement>Dom[sibling](block, (elm) => (elm && /^td|th$/i.test((<HTMLElement>elm).tagName)), table);
                 if (!next) {
                     Table.appendRow(table, sibling === 'next' ? false : <HTMLTableRowElement>table.querySelector('tr'), sibling === 'next');
-                    next = <HTMLTableCellElement>(Dom[sibling](block, (elm: HTMLElement) => (elm && /^td|th$/i.test((<HTMLElement>elm).tagName)), table));
+                    next = <HTMLTableCellElement>(Dom[sibling](block, (elm: HTMLElement) => (elm && Dom.isCell(elm, editor.win)), table));
                 }
-            }
             break;
             case consts.KEY_TOP:
             case consts.KEY_BOTTOM: {

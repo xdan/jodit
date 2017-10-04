@@ -212,6 +212,7 @@ export default class extends Component{
      */
     focus = (): boolean => {
         const jodit: Jodit = this.jodit;
+
         if (!this.isFocused()) {
             if (jodit.options.iframe && isIE()) {
                 let start: number = 0;
@@ -222,22 +223,27 @@ export default class extends Component{
             if (jodit.iframe) {
                 jodit.iframe.focus();
             }
+
             jodit.win.focus();
             jodit.editor.focus();
+
             const sel: Selection = jodit.win.getSelection(),
                 range: Range = jodit.doc.createRange();
 
-            if (!sel.rangeCount) {
+            if (!sel.rangeCount || !this.current()) {
                 if (!jodit.editor.firstChild) {
                     jodit.editor.appendChild(jodit.doc.createTextNode(consts.INVISIBLE_SPACE));
                 }
+
                 range.selectNodeContents(jodit.editor.firstChild);
                 range.collapse(true);
                 sel.removeAllRanges();
                 sel.addRange(range);
             }
+
             return true;
         }
+
         return false;
     };
 
@@ -286,6 +292,7 @@ export default class extends Component{
                 }
             }
         }
+
         return false;
     }
 

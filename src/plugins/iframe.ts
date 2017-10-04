@@ -184,7 +184,9 @@ export default function (editor: Jodit) {
         if (editor.options.height === 'auto') {
             doc.documentElement.style.overflowY = 'hidden';
             const resizeIframe = (e) => {
-                css(editor.iframe, 'height', editor.editor.offsetHeight);
+                if (editor.editor) {
+                    css(editor.iframe, 'height', editor.editor.offsetHeight);
+                }
             };
             editor.events.on('change afterInit afterSetMode resize', resizeIframe);
             editor.__on([editor.iframe, editor.win, doc.documentElement], 'load', resizeIframe);

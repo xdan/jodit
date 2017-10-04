@@ -10,7 +10,7 @@ export const SPACE_REG_EXP = /[\s\n\t\r\uFEFF\u200b]+/g;
 export const SPACE_REG_EXP_START = /^[\s\n\t\r\uFEFF\u200b]+/g;
 export const SPACE_REG_EXP_END = /[\s\n\t\r\uFEFF\u200b]+$/g;
 
-export const IS_BLOCK = /^(PRE|DIV|P|TD|TH|LI|H[1-6]|TABLE|BLOCKQUOTE|HTML|BODY)$/i;
+export const IS_BLOCK = /^(PRE|DIV|P|LI|H[1-6]|BLOCKQUOTE|TD|TH|TABLE|BODY|HTML)$/i;
 
 export const KEY_ENTER      = 13;
 export const KEY_BACKSPACE  = 8;

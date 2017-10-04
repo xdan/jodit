@@ -3,17 +3,59 @@ describe('Jodit Editor Tests', function() {
         it('Constructor Jodit most be in global scope', function() {
             expect(window.Jodit).to.be.a('function');
         });
-        it('First argument for Jodit should be valid selector or HTMLElement', function() {
-            var area = appendTestArea('editor');
+        describe('First argument', function() {
+            describe('String #id', function() {
+                it('Should be valid selector', function() {
+                    var area = appendTestArea('editor');
 
-            var editor = new Jodit('#editor');
-            expect(editor.element).to.equal(area);
-            editor.destruct();
+                    var editor = new Jodit('#editor');
+                    expect(editor.element).to.equal(area);
+                    editor.destruct();
+                });
+            });
+            describe('HTMLTextAreaElement', function() {
+                it('Should be instance of HTMLElement', function() {
+                    var area = appendTestArea('editor2');
 
-            var editor2 = new Jodit(area);
-            expect(editor2.element).to.equal(area);
-            editor2.destruct();
+                    var editor2 = new Jodit(area);
+                    expect(editor2.element).to.equal(area);
+                    editor2.destruct();
+                });
+            });
+            describe('HTMLDivElement', function() {
+                it('Should be instance of HTMLElement', function() {
+                    var div = document.createElement('div');
+                    div.innerHTML = '<h1>Test</h1>';
+                    document.body.appendChild(div);
+                    var editor3 = new Jodit(div);
+
+                    expect(editor3.element).to.equal(div);
+                    expect('<h1>Test</h1>').to.equal(editor3.getEditorValue());
+
+                    editor3.destruct();
+                    document.body.removeChild(div);
+                });
+            });
+            describe('Found element', function() {
+                it('Should be instance of HTMLElement', function() {
+                    var div = document.createElement('div');
+                    div.innerHTML = '<h1>Test</h1>';
+                    div.setAttribute('id', 'test2222')
+                    document.body.appendChild(div);
+
+                    var found = document.getElementById('test2222');
+
+                    var editor3 = new Jodit(found);
+
+                    expect(editor3.element).to.equal(found);
+                    expect('<h1>Test</h1>').to.equal(editor3.getEditorValue());
+                    editor3.destruct();
+
+                    document.body.removeChild(div);
+                });
+            });
         });
+
         it('Editor should replace and hide source textarea', function() {
             var area = appendTestArea();
             var editor = new Jodit(area);

@@ -1,6 +1,6 @@
 import Component from './modules/Component';
 import Events from './modules/Events';
-import Selection from './modules/Selection';
+import Select from './modules/Selection';
 import Toolbar from './modules/Toolbar';
 import Cookie from './modules/Cookie';
 import * as consts from './constants';
@@ -84,9 +84,9 @@ export default class Jodit extends Component{
 
     events: Events;
     /**
-     * @property {Selection} selection
+     * @property {Select} selection
      */
-    selection: Selection;
+    selection: Select;
 
     /**
      * @property {Uploader} uploader
@@ -151,7 +151,7 @@ export default class Jodit extends Component{
         }
 
         if (this.element === undefined || !(this.element instanceof HTMLElement)) {
-            throw new Error('Element "' + element + '" should be string or HTMLElement');
+            throw new Error('Element "' + element + '" should be string or HTMLElement instance');
         }
 
         this.events = this.getInstance('Events');

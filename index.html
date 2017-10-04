@@ -132,17 +132,12 @@
     editor.editor.addEventListener('mouseup', callback)
     editor.editor.addEventListener('input', callback);
 
-    editor.setEditorValue('<ul>' +
-        '<li>1</li>' +
-        '<li>2</li>' +
-        '<li><img width="20px" src="https://xdsoft.net/jodit/images/artio.jpg"></li>' +
-        '</ul>');
-    var range = editor.doc.createRange();
+//    var editor = new Jodit(appendTestArea())
 
-    // set cursor in start of element
-    editor.selection.setCursorBefore(editor.editor.firstChild.lastChild.firstChild);
-    simulateEvent('keydown',    Jodit.KEY_ENTER, editor.editor);
-    editor.selection.insertNode(editor.doc.createTextNode('split '));
+    (new Jodit.modules.FileBrowser(editor)).open(function () {});
+    expect(document.querySelectorAll('.jodit_dialog_box.active').length).to.be.equal(1);
+
+    expect(editor.getEditorValue()).to.be.equal('<p></p><p> a </p>');
 
 //    expect(editor.getEditorValue()).to.be.equal('<ul>' +
 //        '<li>1</li>' +

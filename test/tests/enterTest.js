@@ -265,15 +265,15 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 
             editor.setEditorValue(''); // empty
+            editor.selection.focus();
 
-
-            editor.editor.focus(),
 
 
             simulateEvent('keydown',  Jodit.KEY_ENTER, editor.editor);
 
 
             editor.selection.insertNode(editor.doc.createTextNode(' a '))
+
 
             expect(editor.getEditorValue()).to.be.equal('<p></p><p> a </p>');
         })
@@ -305,6 +305,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
         it('Content editor after pressing the Enter key must contain the specified tag settings and afte this cursor must be inside that tag', function () {
             var editor = new Jodit(appendTestArea())
             editor.setEditorValue('');
+            editor.selection.focus();
 
             simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
             editor.selection.insertNode(editor.doc.createTextNode('test'));
@@ -315,7 +316,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
             simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
             editor.selection.insertNode(editor.doc.createTextNode('test3'));
 
-            expect(editor.getEditorValue()).to.be.equal('<p></p><p>test</p><p>test2</p><p>test3</p>');
+            expect('<p></p><p>test</p><p>test2</p><p>test3</p>').to.be.equal(editor.getEditorValue());
         })
         it('Split paragraph', function () {
             var editor = new Jodit(appendTestArea())
@@ -467,16 +468,63 @@ describe('Enter behavior Jodit Editor Tests', function() {
                 expect(editor.getEditorValue()).to.be.equal('<p>te<br>split <br>st</p>');
             })
         });
+        describe('In PRE tag', function () {
+            it('Should add <br> element', function () {
+                var editor = new Jodit(appendTestArea())
+
+                editor.setEditorValue('<pre>test</pre>');
+
+                editor.selection.setCursorIn(editor.editor.querySelector('pre'), false);
+                simulateEvent('keydown',    Jodit.KEY_ENTER, editor.editor);
+                editor.selection.insertNode(editor.doc.createTextNode('split'));
+
+
+                expect('<pre>test<br>split</pre>').to.be.equal(sortAtrtibutes(editor.getEditorValue()));
+            });
+        });
         describe('In UL tag', function () {
+            describe('In LI tag inside table cell', function () {
+                it('Should work like usual', function () {
+                    var editor = new Jodit(appendTestArea())
+
+                    editor.setEditorValue('<table>' +
+                            '<tbody>' +
+                                '<tr>' +
+                                    '<td>' +
+                                        '<ul><li>test</li></ul>' +
+                                    '</td>' +
+                                '</tr>' +
+                            '</tbody>' +
+                        '</table>');
+
+                    editor.selection.setCursorIn(editor.editor.querySelector('ul>li'), false);
+                    simulateEvent('keydown',    Jodit.KEY_ENTER, editor.editor);
+                    editor.selection.insertNode(editor.doc.createTextNode('split'));
+
+
+                    expect('<table>' +
+                        '<tbody>' +
+                        '<tr>' +
+                        '<td>' +
+                        '<ul>' +
+                            '<li>test</li>' +
+                            '<li>split</li>' +
+                        '</ul>' +
+                        '</td>' +
+                        '</tr>' +
+                        '</tbody>' +
+                        '</table>').to.be.equal(sortAtrtibutes(editor.getEditorValue()));
+                });
+            })
             describe('In last LI tag', function () {
                 describe('In tag was only one Image element but cursor was before it', function () {
-                    it('Sholud add new P element and move image there', function () {
+                    it('Should not add new P element and move image there', function () {
                         var editor = new Jodit(appendTestArea())
 
                         editor.setEditorValue('<ul>' +
                             '<li>1</li>' +
                             '<li>2</li>' +
-                            '<li><img width="20px" src="https://xdsoft.net/jodit/images/artio.jpg"></li>' +
+                            '<li><img style="width:30px" src="https://xdsoft.net/jodit/images/artio.jpg"></li>' +
                             '</ul>');
 
                         editor.selection.setCursorBefore(editor.editor.firstChild.lastChild.firstChild);
@@ -488,7 +536,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
                             '<li>1</li>' +
                             '<li>2</li>' +
                             '<li></li>' +
-                            '<li>split <img src="https://xdsoft.net/jodit/images/artio.jpg" width="20px"></li>' +
+                            '<li>split <img src="https://xdsoft.net/jodit/images/artio.jpg" style="width:30px"></li>' +
                             '</ul>').to.be.equal(sortAtrtibutes(editor.getEditorValue()));
                     });
                 });
@@ -497,10 +545,10 @@ describe('Enter behavior Jodit Editor Tests', function() {
         });
     });
     afterEach(function () {
-        removeStuff();
         var i, keys = Object.keys(Jodit.instances);
         for (i = 0; i < keys.length; i += 1) {
             Jodit.instances[keys[i]].destruct();
         }
+        removeStuff();
     });
 });

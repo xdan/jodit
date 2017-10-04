@@ -2,21 +2,22 @@ import Jodit from '../Jodit';
 import {$$} from "../modules/Helpers"
 import * as consts from '../constants';
 import Dom from "../modules/Dom";
+
 /**
  * Insert default paragraph
  *
  * @param {Jodit} editor
  * @param {Node} [fake]
  * @param {String} [wrapperTag]
- * @return {Element}
+ * @return {HTMLElement}
  */
-export const insertParagraph = (editor: Jodit, fake ?: Node, wrapperTag ?: string) => {
+export const insertParagraph = (editor: Jodit, fake ?: Node, wrapperTag ?: string): HTMLElement => {
     if (!wrapperTag) {
         wrapperTag = editor.options.enter;
     }
 
-    let p = editor.doc.createElement(wrapperTag),
-        helper_node = editor.doc.createTextNode(consts.INVISIBLE_SPACE);
+    const p: HTMLElement = editor.doc.createElement(wrapperTag),
+        helper_node: Text = editor.doc.createTextNode(consts.INVISIBLE_SPACE);
 
     p.appendChild(helper_node);
     editor.selection.insertNode(p, false);
@@ -25,6 +26,7 @@ export const insertParagraph = (editor: Jodit, fake ?: Node, wrapperTag ?: strin
     if (fake && fake.parentNode) {
         fake.parentNode.removeChild(fake);
     }
+
     return p;
 };
 
@@ -55,16 +57,24 @@ export default  function (editor: Jodit) {
             if (!editor.selection.isCollapsed()) {
                 editor.execCommand('Delete');
             }
+
             editor.selection.focus();
 
-            let current = editor.selection.current();
+            let current: Node = <Node>editor.selection.current();
 
-            let sel = editor.win.getSelection(),
-                range = sel.rangeCount ? sel.getRangeAt(0) : editor.doc.createRange();
+            const sel: Selection = editor.win.getSelection();
+
+            let range: Range = sel.rangeCount ? sel.getRangeAt(0) : editor.doc.createRange();
 
             if (!current) {
                 current = Dom.create('text', consts.INVISIBLE_SPACE, editor.doc);
-                editor.editor.appendChild(current);
+
+                if (sel.rangeCount) {
+                    range.insertNode(current);
+                } else {
+                    editor.editor.appendChild(current);
+                }
+
                 range.selectNode(current);
                 range.collapse(false);
                 sel.removeAllRanges();
@@ -74,9 +84,8 @@ export default  function (editor: Jodit) {
             let fake;
             let currentBox: HTMLElement|false = current ? <HTMLElement>Dom.up(current, Dom.isBlock, editor.editor) : false;
 
-            if (!currentBox && current && !(current.previousSibling && current.previousSibling.nodeName === 'TABLE')) {
+            if (!currentBox && current && !Dom.prev(current, (elm: Node) => (Dom.isBlock(elm) || Dom.isImage(elm)), editor.editor)) {
                 currentBox = Dom.wrap(current, editor.options.enter, editor);
-                sel = editor.win.getSelection();
                 range = sel.rangeCount ? sel.getRangeAt(0) : editor.doc.createRange();
             }
 
@@ -90,7 +99,7 @@ export default  function (editor: Jodit) {
 
                 if (currentBox.nodeName === 'LI') {
                     if (Dom.isEmpty(currentBox)) {
-                        const ul = <HTMLElement>Dom.closest(currentBox, 'ol|ul', editor.editor);
+                        const ul: HTMLUListElement = <HTMLUListElement>Dom.closest(currentBox, 'ol|ul', editor.editor);
                         // If there is no LI element before
                         if (!Dom.prev(currentBox, (elm: HTMLElement) => elm && elm.tagName === 'LI', ul)) {
                             fake = editor.selection.setCursorBefore(ul);
@@ -117,7 +126,7 @@ export default  function (editor: Jodit) {
                 }
 
                 // if use <br> tag for break line or when was entered SHIFt key or in <td> or <th> or <blockquote>
-                if (editor.options.enter === consts.BR || event.shiftKey || Dom.closest(current, 'TH|TD|BLOCKQUOTE', editor.editor)) {
+                if (editor.options.enter === consts.BR || event.shiftKey || Dom.closest(current, 'PRE|BLOCKQUOTE', editor.editor)) {
                     editor.selection.insertHTML('<br>' + consts.INVISIBLE_SPACE);
                     return false;
                 }

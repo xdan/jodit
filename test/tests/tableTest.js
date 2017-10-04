@@ -529,24 +529,7 @@ describe('Tables Jodit Editor Tests', function() {
 
             expect(editor.getEditorValue()).to.equal('<table><tbody><tr><td>test</td><td>2</td></tr></tbody></table>');
         })
-        it('After press Right arrow in the end of cell it should be like Tab but without selection', function () {
-            var editor = new Jodit('#table_editor');
 
-            editor.setEditorValue('<table>' +
-                '<tr>' +
-                '<td>1</td>' +
-                '<td>2</td>' +
-                '</tr>' +
-                '</table>');
-
-            editor.selection.setCursorIn(editor.editor.querySelector('td'));
-
-            simulateEvent('keydown', Jodit.KEY_RIGHT, editor.editor);
-
-            editor.selection.insertNode(Jodit.modules.Dom.create('text', 'test',  editor.doc), false);
-
-            expect(editor.getEditorValue()).to.equal('<table><tbody><tr><td>1</td><td>test2</td></tr></tbody></table>');
-        })
         it('After press Right arrow not in the end of cell it should do nothing', function () {
             var editor = new Jodit('#table_editor');
 
