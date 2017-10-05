@@ -477,6 +477,7 @@ export class Config {
         'align','|',
         'undo', 'redo', '|',
         'eraser',
+        'copyformat',
         'fullsize'
     ];
 
