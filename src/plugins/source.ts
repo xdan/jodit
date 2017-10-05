@@ -5,7 +5,7 @@ import {$$, appendScript, debounce, dom} from '../modules/Helpers';
 import {markerInfo} from "../modules/Selection";
 import Component from "../modules/Component";
 
-declare module "../Config" {
+declare module "../Config"  {
     interface Config {
         /**
          * Use ACE editor instead of usual textarea
@@ -94,7 +94,7 @@ Config.prototype.controls.source = {
 /**
  * Plug-in change simple textarea on CodeMirror editor in Source code mode
  *
- * @module codeMirror
+ * @module source
  */
 export default class extends Component {
     private className = 'jodit_ace_editor';

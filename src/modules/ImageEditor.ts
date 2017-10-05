@@ -5,7 +5,7 @@ import {$$, css, debounce, dom, throttle, trim} from "./Helpers";
 import Toolbar from "./Toolbar";
 import Dialog, {Alert, Promt} from "./Dialog";
 /**
- * @property{plainobject} imageeditor module's options
+ * @property {ImageEditorOptions} imageeditor module's options
  */
 
 type ImageEditorOptions = {

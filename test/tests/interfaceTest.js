@@ -1,6 +1,100 @@
 describe('Test interface', function() {
     appendTestArea('table_editor_interface', true);
     describe('Plugins', function () {
+        describe('Copy format plugin', function () {
+            it('Should copy fontWeight from element and paste it in new selection', function () {
+                var editor = new Jodit('#table_editor_interface');
+                editor.setEditorValue('text <strong>test</strong> post');
+                editor.selection.setCursorIn(editor.editor.querySelector('strong'));
+                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-copyformat').length).to.equal(1);
+                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-copyformat.jodit_active').length).to.equal(0);
+
+                simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-copyformat'))
+
+                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-copyformat.jodit_active').length).to.equal(1);
+
+                var sel = editor.win.getSelection(),
+                    range = editor.doc.createRange();
+
+                range.selectNode(editor.editor.lastChild);
+                sel.removeAllRanges();
+                sel.addRange(range);
+
+                simulateEvent('mouseup', 0, editor.editor);
+
+                expect(editor.getEditorValue().replace('700', 'bold')).to.equal('text <strong>test</strong><span style="font-weight: bold;"> post</span>');
+            });
+            it('Should copy fontSize from element and paste it in new selection', function () {
+                var editor = new Jodit('#table_editor_interface');
+                editor.setEditorValue('text <span style="font-size: 11px;">test</span> post');
+                editor.selection.setCursorIn(editor.editor.querySelector('span'));
+                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-copyformat').length).to.equal(1);
+                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-copyformat.jodit_active').length).to.equal(0);
+
+                simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-copyformat'))
+
+                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-copyformat.jodit_active').length).to.equal(1);
+
+                var sel = editor.win.getSelection(),
+                    range = editor.doc.createRange();
+
+                range.selectNode(editor.editor.lastChild);
+                sel.removeAllRanges();
+                sel.addRange(range);
+
+                simulateEvent('mouseup', 0, editor.editor);
+
+                expect(editor.getEditorValue()).to.equal('text <span style="font-size: 11px;">test</span><span style="font-size: 11px;"> post</span>');
+            });
+            it('Should copy fontSize and color from element and paste it in new selection', function () {
+                var editor = new Jodit('#table_editor_interface');
+                editor.setEditorValue('text <span style="font-size: 11px;color: rgb(255, 0, 0);">test</span> post');
+                editor.selection.setCursorIn(editor.editor.querySelector('span'));
+                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-copyformat').length).to.equal(1);
+                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-copyformat.jodit_active').length).to.equal(0);
+
+                simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-copyformat'))
+
+                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-copyformat.jodit_active').length).to.equal(1);
+
+                var sel = editor.win.getSelection(),
+                    range = editor.doc.createRange();
+
+                range.selectNode(editor.editor.lastChild);
+                sel.removeAllRanges();
+                sel.addRange(range);
+
+                simulateEvent('mouseup', 0, editor.editor);
+
+                expect(sortAtrtibutes(editor.getEditorValue())).to.equal('text <span style="color:rgb(255, 0, 0);font-size:11px">test</span><span style="color:rgb(255, 0, 0);font-size:11px"> post</span>');
+            });
+            it('Should toggle active state after double click', function () {
+                var editor = new Jodit('#table_editor_interface');
+                editor.setEditorValue('text <span style="font-size: 11px;color: rgb(255, 0, 0);">test</span> post');
+                editor.selection.setCursorIn(editor.editor.querySelector('span'));
+                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-copyformat').length).to.equal(1);
+                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-copyformat.jodit_active').length).to.equal(0);
+
+                simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-copyformat'))
+
+                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-copyformat.jodit_active').length).to.equal(1);
+
+                simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-copyformat'))
+
+                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-copyformat.jodit_active').length).to.equal(0);
+
+                var sel = editor.win.getSelection(),
+                    range = editor.doc.createRange();
+
+                range.selectNode(editor.editor.lastChild);
+                sel.removeAllRanges();
+                sel.addRange(range);
+
+                simulateEvent('mouseup', 0, editor.editor);
+
+                expect(sortAtrtibutes(editor.getEditorValue())).to.equal('text <span style="color:rgb(255, 0, 0);font-size:11px">test</span> post');
+            });
+        });
         describe('Add new Line plugin', function () {
             it('Should add new line element in container', function () {
                 var editor = new Jodit('#table_editor_interface');

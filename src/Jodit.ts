@@ -22,6 +22,13 @@ interface JoditPlugin{
 export default class Jodit extends Component{
     version: string = appVersion; // from webpack.config.js
 
+    /**
+     * Some extra data inside editor
+     *
+     * @type {{}}
+     * @see copyformat plugin
+     */
+    public buffer: {[key: string]: any} = {};
 
     static defaultOptions: Config;
     static plugins: any =  {};

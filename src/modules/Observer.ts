@@ -45,7 +45,7 @@ export class Command {
  * The module monitors the status of the editor and creates / deletes the required number of Undo / Redo shots . To track changes in use {@link https://developer.mozilla.org/ru/docs/Web/API/MutationObserver|MutationObserver}
  *
  * @module Observer
- * @see {@link module:Snapshot|Snapshot}
+ * @see {@link Snapshot|Snapshot}
  * @params {Jodit} parent Jodit main object
  */
 export default class Observer extends Component {

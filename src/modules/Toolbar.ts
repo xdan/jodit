@@ -9,6 +9,36 @@ export type ControlType = {
     name?: string;
     mode?: number;
 
+    data?: {[key: string]: any},
+
+    /**
+     * You can use it function for control - active/not active button
+     * @param {Jodit} editor
+     * @param {ControlType} btn
+     * @return {boolean}
+     * @see copyformat plugin
+     * @example
+     * ```javascript
+     * var editor = new Jodit('.selectorclass', {
+     *     buttons: {
+     *          checkbox: {
+     *              data: {
+     *                  active: false,
+     *              },
+     *              iconURL: 'checkbox.png',
+     *              exec: function (a, b, btn) {
+     *                  btn.data.active = !btn.data.active;
+     *              },
+     *              isActive: function (editor, btn) {
+     *                  return !!btn.data.active;
+     *              }
+     *          }
+     *     }
+     * })
+     * ```
+     */
+    isActive?: (editor: Jodit, btn: ControlType) => boolean,
+
     /**
      * Drop-down list. A hash or array. You must specify the command which will be submitted for the hash key (or array value) (see .[[Jodit.execCommand]] or define 'exec' function. See example
      * @example
@@ -232,13 +262,50 @@ export default class Toolbar extends Component{
     }
 
     private checkActiveButtons(element: Node|false) {
-        const active_class = 'jodit_active';
-        this.buttonList.forEach(({control, btn}) => {
-            btn.classList.remove(active_class);
+        const active_class = 'jodit_active',
+            getCSS = (elm: HTMLElement, key: string): string => {
+                return this.jodit.win.getComputedStyle(elm).getPropertyValue(key).toString()
+            },
 
-            let mode =  (control === undefined || control.mode === undefined) ? consts.MODE_WYSIWYG : control.mode;
+            checkActiveStatus = (
+                btn: ButtonType,
+                cssObject: {[key: string]: string|string[]}|{[key: string]: (editor: Jodit, value: string) => boolean},
+                node: HTMLElement
+            ) => {
+                let matches: number = 0,
+                    total: number = 0;
 
-            Toolbar.__toggleButton(btn, mode === consts.MODE_SPLIT || mode === this.jodit.getRealMode());
+                Object.keys(cssObject).forEach((cssProperty) => {
+                    const cssValue = cssObject[cssProperty];
+                    if (typeof cssValue === 'function') {
+                        if (cssValue(
+                                this.jodit,
+                                getCSS(node, cssProperty).toLowerCase()
+                            )) {
+                            matches += 1;
+                        }
+                    } else {
+                        if (cssValue.indexOf(getCSS(node, cssProperty).toLowerCase()) !== -1) {
+                            matches += 1;
+                        }
+                    }
+                    total += 1;
+                });
+                if (total === matches) {
+                    btn.btn.classList.add(active_class);
+                }
+            };
+
+        this.buttonList.forEach((button: ButtonType) => {
+            button.btn.classList.remove(active_class);
+
+            const mode =  (button.control === undefined || button.control.mode === undefined) ? consts.MODE_WYSIWYG : button.control.mode;
+
+            Toolbar.__toggleButton(button.btn, mode === consts.MODE_SPLIT || mode === this.jodit.getRealMode());
+
+            if (typeof button.control.isActive === 'function') {
+                button.btn.classList.toggle(active_class,  button.control.isActive(this.jodit, button.control));
+            }
 
             if (!element) {
                 return;
@@ -246,62 +313,32 @@ export default class Toolbar extends Component{
 
             let tags,
                 elm,
-                css,
+                css;
 
-                getCSS = (elm: HTMLElement, key: string): string => {
-                    return this.jodit.win.getComputedStyle(elm).getPropertyValue(key).toString()
-                },
 
-                checkActiveStatus = (cssObject, node) => {
-                    let matches: number = 0,
-                        total: number = 0;
 
-                    Object.keys(cssObject).forEach((cssProperty) => {
-                        const cssValue = cssObject[cssProperty];
-                        if (typeof cssValue === 'function') {
-                            if (cssValue(
-                                    this.jodit,
-                                    getCSS(node, cssProperty).toLowerCase()
-                                )) {
-                                matches += 1;
-                            }
-                        } else {
-                            if (cssValue.indexOf(getCSS(node, cssProperty).toLowerCase()) !== -1) {
-                                matches += 1;
-                            }
-                        }
-                        total += 1;
-                    });
-
-                    if (total === matches) {
-                        btn.classList.add(active_class);
-                    }
-                };
-
-            if (control.tags || (control.options && control.options.tags)) {
-                tags = control.tags || (control.options && control.options.tags);
+            if (button.control.tags || (button.control.options && button.control.options.tags)) {
+                tags = button.control.tags || (button.control.options && button.control.options.tags);
 
                 elm = element;
                 Dom.up(elm, (node: Node) => {
                     if (tags.indexOf(node.nodeName.toLowerCase()) !== -1) {
-                        btn.classList.add(active_class);
+                        button.btn.classList.add(active_class);
                         return true;
                     }
                 }, this.jodit.editor);
             }
 
             //activate by supposed css
-            if (control.css || (control.options && control.options.css)) {
-                css = control.css || (control.options && control.options.css);
-
+            if (button.control.css || (button.control.options && button.control.options.css)) {
+                css = button.control.css || (button.control.options && button.control.options.css);
 
                 elm = element;
                 Dom.up(elm, (node: HTMLElement) => {
                     if (node && node.nodeType !== Node.TEXT_NODE/* && !node.classList.contains(active_class)*/) {
-                        checkActiveStatus(css, node);
+                        checkActiveStatus(button, css, node);
                     }
                 }, this.jodit.editor);
-
             }
         });
     }
@@ -428,6 +465,7 @@ export default class Toolbar extends Component{
                     originalEvent,
                     btn
                 );
+                this.checkActiveButtons(false);
                 this.jodit.setEditorValue();
                 this.jodit.events.fire('hidePopup');
                 this.closeAll();
@@ -447,7 +485,7 @@ export default class Toolbar extends Component{
                     this.closeAll();
                 }
             }
-        })
+        });
 
         this.buttonList.push({
             control,
@@ -516,6 +554,8 @@ export default class Toolbar extends Component{
         if (this.container.parentNode !== container) {
             container.appendChild(this.container);
         }
+
+        this.checkActiveButtons(false);
     }
 
     private initEvents = () => {
@@ -527,7 +567,7 @@ export default class Toolbar extends Component{
                 }
             });
 
-        this.jodit.events.on('mousedown mouseup keydown change afterSetMode focus', (e) => {
+        this.jodit.events.on('mousedown mouseup keydown change afterSetMode focus', () => {
             const callback = () => {
                 if (this.jodit.selection) {
                     this.checkActiveButtons(this.jodit.selection.current())

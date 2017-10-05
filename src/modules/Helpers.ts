@@ -20,8 +20,8 @@ export const $$ = (selector: string, root: HTMLElement|HTMLDocument): HTMLElemen
     let result: NodeList;
 
     if (/:scope/.test(selector) && isIE() && !(typeof HTMLDocument !== 'undefined' && root instanceof HTMLDocument)) {
-        const id = (<HTMLElement>root).id,
-            temp_id = id || '_selector_id_' + ("" + Math.random()).slice(2) + $$temp++;
+        const id: string = (<HTMLElement>root).id,
+            temp_id: string = id || '_selector_id_' + ("" + Math.random()).slice(2) + $$temp++;
 
         selector = selector.replace(/:scope/g, '#' + temp_id);
 
@@ -42,6 +42,7 @@ export const $$ = (selector: string, root: HTMLElement|HTMLDocument): HTMLElemen
 export const isWindow = (obj): boolean => {
     return obj !== null && obj === obj.window;
 };
+
 export const type = (obj): string => {
     if (obj === null) {
         return 'null';
@@ -263,7 +264,7 @@ export const normalizeSize = (value: string|number): string => {
 };
 
 export const getContentWidth = (element: HTMLElement, win: Window) => {
-    let pi = (value: string) => (parseInt(value, 10)),
+    let pi = (value: string): number => (parseInt(value, 10)),
         style: CSSStyleDeclaration = win.getComputedStyle(element),
         width: number = element.offsetWidth,
         paddingLeft: number = pi(style.getPropertyValue('padding-left') || '0'),
@@ -586,6 +587,8 @@ export const browser = (browser: string): boolean|string => {
  *
  * @method offset
  * @param {HTMLElement} elm
+ * @param {Jodit} jodit
+ * @param {boolean} recurse
  * @return {{top: number, left: number}} returns an object containing the properties top and left.
  */
 export const offset =  (elm: HTMLElement, jodit: Jodit, recurse: boolean = false): {top: number, left: number,  width: number, height: number} => {
@@ -757,7 +760,7 @@ export const normilizeCSSValue = (key: string, value: string|number): string|num
  * @param {string|object} key An object of property-value pairs to set. A CSS property name.
  * @param {string|int} value A value to set for the property.
  */
-export const css = (element: HTMLElement, key: string|object, value?: string|number) => {
+export const css = (element: HTMLElement, key: string|{[key: string]: number|string}, value?: string|number) => {
     const numberFieldsReg = /^left|top|bottom|right|width|min|max|height|margin|padding|font-size/i;
 
 
@@ -801,7 +804,7 @@ export const asArray = (a): Array<any> => (
     Array.isArray(a) ? a : [a]
 );
 
-export const sprintf = (...args) => {
+export const sprintf = (...args): string => {
     const regex = /%%|%(\d+\$)?([-+#0 ]*)(\*\d+\$|\*|\d+)?(\.(\*\d+\$|\*|\d+))?([scboxXuidfegEG])/g;
     let a = args,
         i = 0,

@@ -70,7 +70,7 @@ Config.prototype.defaultAjaxOptions = {
 };
 
 export default class Ajax extends Component{
-    private __buildParams (obj, prefix?: string) {
+    private __buildParams (obj, prefix?: string): string {
         if (typeof obj === 'string' || (window['FormData'] && obj instanceof window['FormData'])) {
             return obj;
         }
@@ -92,7 +92,7 @@ export default class Ajax extends Component{
     status: number;
     response: string;
 
-    abort () {
+    abort (): Ajax {
         this.xhr.abort();
         return this;
     }

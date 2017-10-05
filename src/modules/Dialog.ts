@@ -6,8 +6,8 @@ import Toolbar from "./Toolbar";
 
 
 /**
- * @property{object} dialog module settings {@link module:Dialog|Dialog}
- * @property{int} dialog.zIndex=1000 Default Z-index for dialog window. {@link module:Dialog|Dialog}'s settings
+ * @property{object} dialog module settings {@link Dialog|Dialog}
+ * @property{int} dialog.zIndex=1000 Default Z-index for dialog window. {@link Dialog|Dialog}'s settings
  * @property{boolean} dialog.resizable=true This dialog can resize by trigger
  * @property{boolean} dialog.draggable=true This dialog can move by header
  * @property{boolean} dialog.fullsize=false A dialog window will open in full screen by default
@@ -510,7 +510,7 @@ export default class Dialog extends Component{
     }
 
     /**
-     * Closes the dialog box , if you want to call the method {@link module:Dialog~destruct|destruct}
+     * Closes the dialog box , if you want to call the method {@link Dialog~destruct|destruct}
      *
      * @see destroy
      * @method close
@@ -540,7 +540,7 @@ export default class Dialog extends Component{
          * Called up to close the window
          *
          * @event beforeClose
-         * @this {module:Dialog} current dialog
+         * @this {Dialog} current dialog
          */
         if (this.jodit && this.jodit.events) {
             this.jodit.events.fire(this, 'beforeClose');
@@ -559,7 +559,7 @@ export default class Dialog extends Component{
          * It called after the window is closed
          *
          * @event afterClose
-         * @this {module:Dialog} current dialog
+         * @this {Dialog} current dialog
          */
         if (this.jodit) {
             this.jodit.events.fire(this, 'afterClose');

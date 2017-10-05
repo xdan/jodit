@@ -431,6 +431,7 @@ export class Config {
         'hr',
         'eraser',
         'fullsize',
+        'copyformat',
         'about'
     ];
 
@@ -454,6 +455,7 @@ export class Config {
         'undo', 'redo', '|',
         'hr',
         'eraser',
+        'copyformat',
         'fullsize'
     ];
 
