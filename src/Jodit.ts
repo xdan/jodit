@@ -157,7 +157,7 @@ export default class Jodit extends Component{
             this.element = element;
         }
 
-        if (this.element === undefined || !(this.element instanceof HTMLElement)) {
+        if (this.element === undefined || this.element.nodeType !== Node.ELEMENT_NODE) {
             throw new Error('Element "' + element + '" should be string or HTMLElement instance');
         }
 
