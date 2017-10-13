@@ -176,9 +176,9 @@ export default class Toolbar extends Component{
      */
     constructor(editor: Jodit) {
         super(editor);
-        this.container = <HTMLDivElement>dom('<div class="jodit_toolbar"/>');
-        this.popup = <HTMLDivElement>dom('<div class="jodit_toolbar_popup"/>');
-        this.list = <HTMLDivElement>dom('<ul class="jodit_dropdownlist"/>');
+        this.container = <HTMLDivElement>dom('<div class="jodit_toolbar"/>', editor.ownerDocument);
+        this.popup = <HTMLDivElement>dom('<div class="jodit_toolbar_popup"/>', editor.ownerDocument);
+        this.list = <HTMLDivElement>dom('<ul class="jodit_dropdownlist"/>', editor.ownerDocument);
 
         this.initEvents();
     }
@@ -211,7 +211,7 @@ export default class Toolbar extends Component{
         this.__popapOpened = true;
 
         this.popup.innerHTML = '';
-        this.popup.appendChild(dom(content));
+        this.popup.appendChild(dom(content, this.jodit.ownerDocument));
         this.popup.style.display = 'block';
 
         this.popup.classList.toggle('jodit_right', rightAlign);
@@ -264,7 +264,7 @@ export default class Toolbar extends Component{
     private checkActiveButtons(element: Node|false) {
         const active_class = 'jodit_active',
             getCSS = (elm: HTMLElement, key: string): string => {
-                return this.jodit.win.getComputedStyle(elm).getPropertyValue(key).toString()
+                return this.jodit.editorWindow.getComputedStyle(elm).getPropertyValue(key).toString()
             },
 
             checkActiveStatus = (
@@ -358,7 +358,7 @@ export default class Toolbar extends Component{
         const btn: HTMLLIElement = <HTMLLIElement>dom('<li>' +
                     '<a href="javascript:void(0)"></a>' +
                     '<div class="jodit_tooltip"></div>' +
-                '</li>'),
+                '</li>', this.jodit.ownerDocument),
             name: string = typeof item === 'string' ? item : (item.name || 'empty'),
             icon: string = typeof item === 'string' ? item : (item.icon || item.name || 'empty'),
             a: HTMLAnchorElement = btn.querySelector('a');
@@ -388,7 +388,7 @@ export default class Toolbar extends Component{
             Toolbar.__toggleButton(btn, enable);
         });
 
-        let iconElement =  dom(<string>iconSVG);
+        let iconElement =  dom(<string>iconSVG, this.jodit.ownerDocument);
 
         if (iconElement && iconElement.nodeType !== Node.TEXT_NODE) {
             iconElement.classList.add('jodit_icon', 'jodit_icon_' + clearName);
@@ -406,7 +406,7 @@ export default class Toolbar extends Component{
 
         if (control.list) {
             btn.classList.add('jodit_with_dropdownlist');
-            a.appendChild(dom('<span class="jodit_with_dropdownlist-trigger"></span>'))
+            a.appendChild(dom('<span class="jodit_with_dropdownlist-trigger"></span>', this.jodit.ownerDocument))
         }
 
         if (control.iconURL) {
@@ -516,12 +516,12 @@ export default class Toolbar extends Component{
 
             switch (name) {
                 case "\n":
-                    this.container.appendChild(dom('<li class="jodit_toolbar_btn jodit_toolbar_btn-break"></li>'));
+                    this.container.appendChild(dom('<li class="jodit_toolbar_btn jodit_toolbar_btn-break"></li>', this.jodit.ownerDocument));
                     break;
                 case '|':
                     if (!lastBtnSeparator) {
                         lastBtnSeparator = true;
-                        this.container.appendChild(dom('<li class="jodit_toolbar_btn jodit_toolbar_btn-separator"></li>'));
+                        this.container.appendChild(dom('<li class="jodit_toolbar_btn jodit_toolbar_btn-separator"></li>', this.jodit.ownerDocument));
                     }
                     break;
                 default:
@@ -561,7 +561,7 @@ export default class Toolbar extends Component{
     private initEvents = () => {
         this.__on(this.popup, 'mousedown touchstart', (e: MouseEvent) => {e.stopPropagation()})
             .__on(this.list,'mousedown touchstart', (e: MouseEvent) => {e.stopPropagation()})
-            .__on(window, 'mousedown touchstart', () => {
+            .__on(this.jodit.ownerWindow, 'mousedown touchstart', () => {
                 if (this.__popapOpened || this.__listOpened) {
                     this.closeAll();
                 }

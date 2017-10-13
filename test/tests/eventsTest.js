@@ -119,11 +119,11 @@ describe('Jodit Events system Tests', function() {
         it('Add event handler for several elements', function () {
             var editor = new Jodit(appendTestArea()),
                 work = '',
-                div1 = editor.doc.createElement('button'),
-                div2 = editor.doc.createElement('button');
+                div1 = editor.editorDocument.createElement('button'),
+                div2 = editor.editorDocument.createElement('button');
 
-            editor.doc.body.appendChild(div1)
-            editor.doc.body.appendChild(div2)
+            editor.editorDocument.body.appendChild(div1)
+            editor.editorDocument.body.appendChild(div2)
 
             div1.innerText = 'test1';
             div2.innerText = 'test2';
@@ -132,8 +132,8 @@ describe('Jodit Events system Tests', function() {
                 work += this.innerText;
             })
 
-            editor.__fire(div1, 'click', editor.doc);
-            editor.__fire(div2, 'click', editor.doc);
+            editor.__fire(div1, 'click', editor.editorDocument);
+            editor.__fire(div2, 'click', editor.editorDocument);
 
             expect(work).to.be.equal('test1test2');
 
@@ -225,7 +225,7 @@ describe('Jodit Events system Tests', function() {
 
             window.addEventListener('mousedown', mousedown);
 
-            editor.__fire(editor.win, 'mousedown', editor.doc);
+            editor.__fire(editor.editorWindow, 'mousedown', editor.editorDocument);
 
             expect(work).to.be.equal(1);
 

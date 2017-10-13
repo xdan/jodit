@@ -57,8 +57,8 @@ export default  function (editor: Jodit) {
                     oldHeight = css(editor.container, 'height');
                     oldWidth = css(editor.container, 'width');
                     css(editor.container, {
-                        height: window.innerHeight,
-                        width: window.innerWidth
+                        height: editor.ownerWindow.innerHeight,
+                        width: editor.ownerWindow.innerWidth
                     });
                     wasToggled = true;
                 } else if (wasToggled) {
@@ -80,7 +80,7 @@ export default  function (editor: Jodit) {
 
             if (editor.toolbar) {
                 css(editor.toolbar.container, 'width', 'auto');
-                let icon = dom(Toolbar.getIcon(condition ? 'shrink' : 'fullsize')),
+                let icon = dom(Toolbar.getIcon(condition ? 'shrink' : 'fullsize'), editor.ownerDocument),
                     a = editor.toolbar.container.querySelector('.jodit_toolbar_btn-fullsize a');
                 if (a) {
                     icon.classList.add('jodit_icon');
@@ -108,7 +108,7 @@ export default  function (editor: Jodit) {
     }
 
     if (editor.options.globalFullsize) {
-        editor.__on(window, 'resize', resize);
+        editor.__on(editor.ownerWindow, 'resize', resize);
     }
 
     editor.events.on('toggleFullsize', toggle);

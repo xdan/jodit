@@ -4,8 +4,8 @@ describe('Selection Module Tests', function() {
         var editor = new Jodit('#selection_tested_area');
         editor.setEditorValue('<p>test</p>>');
 
-        var sel = editor.win.getSelection(),
-            range = editor.doc.createRange();
+        var sel = editor.editorWindow.getSelection(),
+            range = editor.editorDocument.createRange();
 
         range.setStart(editor.editor.firstChild.firstChild, 4);
         range.collapse(true);
@@ -26,8 +26,8 @@ describe('Selection Module Tests', function() {
         var editor = new Jodit('#selection_tested_area');
         editor.setEditorValue('<p>test<span>1</span></p>');
 
-        var sel = editor.win.getSelection(),
-            range = editor.doc.createRange();
+        var sel = editor.editorWindow.getSelection(),
+            range = editor.editorDocument.createRange();
 
         range.selectNodeContents(editor.editor.firstChild.lastChild);
         range.collapse(false);
@@ -43,8 +43,8 @@ describe('Selection Module Tests', function() {
             });
             editor.setEditorValue('<p>test</p>');
 
-            var sel = editor.win.getSelection(),
-                range = editor.doc.createRange();
+            var sel = editor.editorWindow.getSelection(),
+                range = editor.editorDocument.createRange();
 
             range.setStart(editor.editor.firstChild.firstChild, 2);
             range.collapse(true);
@@ -83,8 +83,8 @@ describe('Selection Module Tests', function() {
                         this.setMode(Jodit.MODE_WYSIWYG);
                         this.setEditorValue(('<p>' + 'test '.repeat(50) + '</p>').repeat(1));
 
-                        var sel = this.win.getSelection(),
-                            range = this.doc.createRange();
+                        var sel = this.editorWindow.getSelection(),
+                            range = this.editorDocument.createRange();
 
                         range.selectNodeContents(this.editor.querySelector('p'));
                         range.collapse(false);
@@ -119,7 +119,7 @@ describe('Selection Module Tests', function() {
             mirror.setSelectionRange(5, 5);
 
             editor.setMode(Jodit.MODE_WYSIWYG);
-            editor.selection.insertNode(editor.doc.createTextNode(' a '));
+            editor.selection.insertNode(editor.editorDocument.createTextNode(' a '));
 
             expect(editor.getEditorValue()).to.equal('<p>te a st</p>');
         });
@@ -130,8 +130,8 @@ describe('Selection Module Tests', function() {
             });
             editor.setEditorValue('<p>test</p>');
 
-            var sel = editor.win.getSelection(),
-                range = editor.doc.createRange();
+            var sel = editor.editorWindow.getSelection(),
+                range = editor.editorDocument.createRange();
 
             range.setStart(editor.editor.firstChild.firstChild, 1);
             range.setEnd(editor.editor.firstChild.firstChild, 3);
@@ -159,7 +159,7 @@ describe('Selection Module Tests', function() {
 
             editor.setMode(Jodit.MODE_WYSIWYG);
             expect(editor.selection.isCollapsed()).to.equal(false);
-            editor.selection.insertNode(editor.doc.createTextNode(' a '));
+            editor.selection.insertNode(editor.editorDocument.createTextNode(' a '));
             expect(editor.getEditorValue()).to.equal(' a ');
         });
         it('Should restore collapsed selection inside empty element - from TEXTAREA to WYSIWYG', function () {
@@ -175,7 +175,7 @@ describe('Selection Module Tests', function() {
 
             editor.setMode(Jodit.MODE_WYSIWYG);
             expect(editor.selection.isCollapsed()).to.equal(true);
-            editor.selection.insertNode(editor.doc.createTextNode(' a '));
+            editor.selection.insertNode(editor.editorDocument.createTextNode(' a '));
             expect(editor.getEditorValue()).to.equal('<a>1 a 1</a>');
         });
 

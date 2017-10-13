@@ -71,7 +71,7 @@ Config.prototype.defaultAjaxOptions = {
 
 export default class Ajax extends Component{
     private __buildParams (obj, prefix?: string): string {
-        if (typeof obj === 'string' || (window['FormData'] && obj instanceof window['FormData'])) {
+        if (typeof obj === 'string' || (this.jodit.ownerWindow['FormData'] && obj instanceof this.jodit.ownerWindow['FormData'])) {
             return obj;
         }
 

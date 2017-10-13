@@ -148,9 +148,9 @@ export default class ImageEditor extends Component{
         this.resizeUseRatio = this.options.resizeUseRatio;
         this.cropUseRatio = this.options.cropUseRatio;
         this.buttons =  [
-            dom('<button data-action="reset" type="button" class="jodit_btn">' + Toolbar.getIcon('update') + ' ' + editor.i18n('Reset') + '</button>'),
-            dom('<button data-action="save" type="button" class="jodit_btn jodit_btn_success">' + Toolbar.getIcon('save') + ' ' + editor.i18n('Save') + '</button>'),
-            dom('<button data-action="saveas" type="button" class="jodit_btn jodit_btn_success">' + Toolbar.getIcon('save') + ' ' + editor.i18n('Save as ...') + '</button>'),
+            dom('<button data-action="reset" type="button" class="jodit_btn">' + Toolbar.getIcon('update') + ' ' + editor.i18n('Reset') + '</button>', editor.ownerDocument),
+            dom('<button data-action="save" type="button" class="jodit_btn jodit_btn_success">' + Toolbar.getIcon('save') + ' ' + editor.i18n('Save') + '</button>', editor.ownerDocument),
+            dom('<button data-action="saveas" type="button" class="jodit_btn jodit_btn_success">' + Toolbar.getIcon('save') + ' ' + editor.i18n('Save as ...') + '</button>', editor.ownerDocument),
         ];
         this.activeTab = this.options.resize ? 'resize' : 'crop';
         this.editor = dom(
@@ -217,7 +217,7 @@ export default class ImageEditor extends Component{
                         ) +
                     '</div>' +
                 '</div>' +
-            '</form>');
+            '</form>', editor.ownerDocument);
         this.widthInput = <HTMLInputElement>this.editor.querySelector('.jodit_image_editor_width');
         this.heightInput = <HTMLInputElement>this.editor.querySelector('.jodit_image_editor_height');
 
@@ -386,7 +386,7 @@ export default class ImageEditor extends Component{
     open = (url: string, save: (newname: string|void, box: ActionBox, success: Function, failed: (error: Error) => void) => void) => {
         let timestamp = (new Date()).getTime();
 
-        this.image = document.createElement('img');
+        this.image = this.jodit.ownerDocument.createElement('img');
         $$('img,.jodit_icon-loader', this.resize_box).forEach((elm: Node) => {
             elm.parentNode.removeChild(elm);
         });
@@ -397,8 +397,8 @@ export default class ImageEditor extends Component{
 
         this.onSave = save;
 
-        this.resize_box.appendChild(dom('<i class="jodit_icon-loader"></i>'));
-        this.crop_box.appendChild(dom('<i class="jodit_icon-loader"></i>'));
+        this.resize_box.appendChild(dom('<i class="jodit_icon-loader"></i>', this.jodit.ownerDocument));
+        this.crop_box.appendChild(dom('<i class="jodit_icon-loader"></i>', this.jodit.ownerDocument));
 
         if (/\?/.test(url)) {
             url += '&_tst=' + timestamp;
@@ -470,8 +470,8 @@ export default class ImageEditor extends Component{
 
 
         self
-            .__off(window, '.jodit_image_editor' + self.jodit.id)
-            .__on(window, 'mousemove.jodit_image_editor' + self.jodit.id, throttle((e) => {
+            .__off(this.jodit.ownerWindow, '.jodit_image_editor' + self.jodit.id)
+            .__on(this.jodit.ownerWindow, 'mousemove.jodit_image_editor' + self.jodit.id, throttle((e) => {
                 if (self.clicked) {
                     self.diff_x = parseInt(e.clientX, 10) - self.start_x;
                     self.diff_y = parseInt(e.clientY, 10) - self.start_y;
@@ -530,12 +530,12 @@ export default class ImageEditor extends Component{
                 }
             }, 30))
 
-            .__on(window, 'resize.jodit_image_editor' + self.jodit.id, () => {
+            .__on(this.jodit.ownerWindow, 'resize.jodit_image_editor' + self.jodit.id, () => {
                 this.jodit.events.fire(self.resizeHandler, 'updatesize');
                 self.showCrop();
                 this.jodit.events.fire(self.cropHandler, 'updatesize');
             })
-            .__on(window, 'mouseup.jodit_image_editor' + self.jodit.id + ' keydown.jodit_image_editor' + self.jodit.id, (e: MouseEvent) => {
+            .__on(this.jodit.ownerWindow, 'mouseup.jodit_image_editor' + self.jodit.id + ' keydown.jodit_image_editor' + self.jodit.id, (e: MouseEvent) => {
                 if (self.clicked) {
                     self.clicked = false;
                     e.stopImmediatePropagation();
@@ -551,7 +551,7 @@ export default class ImageEditor extends Component{
                 $$('button', group).forEach((button: HTMLButtonElement) => button.classList.remove('active'));
                 button.classList.add('active');
                 input.checked = !!button.getAttribute('data-yes');
-                self.__fire(input, 'change', document);
+                self.__fire(input, 'change', this.jodit.ownerDocument);
             });
         });
 

@@ -1,6 +1,6 @@
 describe('Jodit Editor Tests', function() {
     describe('Constructor', function() {
-        it('Constructor Jodit most be in global scope', function() {
+        it('Constructor Jodit must be in global scope', function() {
             expect(window.Jodit).to.be.a('function');
         });
         describe('First argument', function() {
@@ -64,7 +64,7 @@ describe('Jodit Editor Tests', function() {
             if (!editor.options.iframe) {
                 expect(editor.editor).to.equal(document.querySelector('.jodit_wysiwyg'));
             } else {
-                expect(editor.editor).to.equal(editor.doc.body);
+                expect(editor.editor).to.equal(editor.editorDocument.body);
             }
         })
         it('Options should be inherited from the default values', function() {
@@ -299,7 +299,7 @@ describe('Jodit Editor Tests', function() {
             var editor = new Jodit(area);
             editor.setEditorValue('');
             expect(editor.container.querySelectorAll('.jodit_placeholder').length && editor.container.querySelector('.jodit_placeholder').style.display === 'block').to.be.equal(true);
-            editor.selection.insertNode(Jodit.modules.Dom.create('text', 'test', editor.doc))
+            editor.selection.insertNode(Jodit.modules.Dom.create('text', 'test', editor.editorDocument))
             expect(editor.container.querySelectorAll('.jodit_placeholder').length && editor.container.querySelector('.jodit_placeholder').style.display === 'none').to.be.equal(true);
         });
         it("Placeholder's fontsize", function () {
@@ -379,13 +379,12 @@ describe('Jodit Editor Tests', function() {
         });
         it('Current selection element', function () {
             var editor = new Jodit(appendTestArea()),
-                div = editor.doc.createElement('div'),
-                text = editor.doc.createTextNode('jingl');
+                div = editor.editorDocument.createElement('div'),
+                text = editor.editorDocument.createTextNode('jingl');
+
 
             editor.setEditorValue('');
-
             div.appendChild(text);
-
             editor.selection.insertNode(div);
             editor.selection.setCursorIn(text);
 
@@ -394,7 +393,7 @@ describe('Jodit Editor Tests', function() {
         it('Insert simple text node in editor', function () {
             var area = appendTestArea();
             var editor = new Jodit(area);
-            editor.selection.insertNode(editor.doc.createTextNode('Test'));
+            editor.selection.insertNode(editor.editorDocument.createTextNode('Test'));
             expect(editor.getEditorValue()).to.be.equal('Test');
             editor.destruct();
         });
@@ -403,7 +402,7 @@ describe('Jodit Editor Tests', function() {
             var editor = new Jodit(area);
 
             function insert(digit) {
-                var div = editor.doc.createElement('div');
+                var div = editor.editorDocument.createElement('div');
                 div.innerHTML = digit;
                 editor.selection.insertNode(div);
             }
@@ -446,14 +445,14 @@ describe('Jodit Editor Tests', function() {
             it('Set cursor after node', function () {
                 var area = appendTestArea();
                 var editor = new Jodit(area);
-                var spans = [editor.doc.createElement('span'), editor.doc.createElement('span'), editor.doc.createElement('span')];
+                var spans = [editor.editorDocument.createElement('span'), editor.editorDocument.createElement('span'), editor.editorDocument.createElement('span')];
 
                 editor.selection.insertNode(spans[0]);
                 editor.selection.insertNode(spans[1]);
                 editor.selection.insertNode(spans[2]);
 
                 editor.selection.setCursorAfter(spans[1]);
-                editor.selection.insertNode(editor.doc.createElement('i'));
+                editor.selection.insertNode(editor.editorDocument.createElement('i'));
 
 
                 expect(editor.getEditorValue()).to.be.equal('<span></span><span></span><i></i><span></span>');
@@ -463,7 +462,7 @@ describe('Jodit Editor Tests', function() {
                 var editor = new Jodit(area);
 
                 expect(function () {
-                    var div = editor.doc.createElement('div')
+                    var div = editor.editorDocument.createElement('div')
                     editor.selection.setCursorIn(div);
                 }).to.Throw(/in editor/)
             });

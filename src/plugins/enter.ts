@@ -16,8 +16,8 @@ export const insertParagraph = (editor: Jodit, fake ?: Node, wrapperTag ?: strin
         wrapperTag = editor.options.enter;
     }
 
-    const p: HTMLElement = editor.doc.createElement(wrapperTag),
-        helper_node: Text = editor.doc.createTextNode(consts.INVISIBLE_SPACE);
+    const p: HTMLElement = editor.editorDocument.createElement(wrapperTag),
+        helper_node: Text = editor.editorDocument.createTextNode(consts.INVISIBLE_SPACE);
 
     p.appendChild(helper_node);
     editor.selection.insertNode(p, false);
@@ -62,12 +62,12 @@ export default  function (editor: Jodit) {
 
             let current: Node = <Node>editor.selection.current();
 
-            const sel: Selection = editor.win.getSelection();
+            const sel: Selection = editor.editorWindow.getSelection();
 
-            let range: Range = sel.rangeCount ? sel.getRangeAt(0) : editor.doc.createRange();
+            let range: Range = sel.rangeCount ? sel.getRangeAt(0) : editor.editorDocument.createRange();
 
-            if (!current) {
-                current = Dom.create('text', consts.INVISIBLE_SPACE, editor.doc);
+            if (!current || current === editor.editor) {
+                current = Dom.create('text', consts.INVISIBLE_SPACE, editor.editorDocument);
 
                 if (sel.rangeCount) {
                     range.insertNode(current);
@@ -84,14 +84,14 @@ export default  function (editor: Jodit) {
             let fake;
             let currentBox: HTMLElement|false = current ? <HTMLElement>Dom.up(current, Dom.isBlock, editor.editor) : false;
 
-            if (!currentBox && current && !Dom.prev(current, (elm: Node) => (Dom.isBlock(elm) || Dom.isImage(elm)), editor.editor)) {
+            if (!currentBox && current && !Dom.prev(current, (elm: Node) => (Dom.isBlock(elm) || Dom.isImage(elm, editor.ownerWindow)), editor.editor)) {
                 currentBox = Dom.wrap(current, editor.options.enter, editor);
-                range = sel.rangeCount ? sel.getRangeAt(0) : editor.doc.createRange();
+                range = sel.rangeCount ? sel.getRangeAt(0) : editor.editorDocument.createRange();
             }
 
             if (currentBox) {
-                if (!Dom.canSplitBlock(currentBox, editor.win)) {
-                    let br = editor.doc.createElement('br');
+                if (!Dom.canSplitBlock(currentBox, editor.editorWindow)) {
+                    let br = editor.editorDocument.createElement('br');
                     editor.selection.insertNode(br, false);
                     editor.selection.setCursorAfter(br);
                     return false;
@@ -107,7 +107,7 @@ export default  function (editor: Jodit) {
                         } else if (!Dom.next(currentBox, (elm: HTMLElement) => elm && elm.tagName === 'LI', ul)) {
                             fake = editor.selection.setCursorAfter(ul);
                         } else {
-                            let leftRange = editor.doc.createRange();
+                            let leftRange = editor.editorDocument.createRange();
                             leftRange.setStartBefore(ul);
                             leftRange.setEndAfter(currentBox);
                             let fragment = leftRange.extractContents();
@@ -139,7 +139,7 @@ export default  function (editor: Jodit) {
                 } else if (!editor.selection.cursorInTheEdge(false, currentBox)) {
                     // if we are not in right edge of paragraph
                     // split p,h1 etc on two parts
-                    let leftRange = editor.doc.createRange();
+                    let leftRange = editor.editorDocument.createRange();
 
                     leftRange.setStartBefore(currentBox);
                     leftRange.setEnd(range.startContainer, range.startOffset);

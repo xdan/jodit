@@ -30,7 +30,7 @@ Config.prototype.showMessageErrorOffsetPx = 3;
 export default  function (editor: Jodit) {
     if (editor.options.showMessageErrors) {
         let height: number;
-        const messagesBox: HTMLDivElement = <HTMLDivElement>dom('<div class="jodit_error_box_for_messages"></div>'),
+        const messagesBox: HTMLDivElement = <HTMLDivElement>dom('<div class="jodit_error_box_for_messages"></div>', editor.ownerDocument),
             recalcOffsets = function () {
                 height = 5;
                 [].slice.call(messagesBox.childNodes).forEach(function (elm) {
@@ -55,7 +55,7 @@ export default  function (editor: Jodit) {
          * ```
          */
         editor.events.on('errorMessage', (message: string, className: string, timeout: number) => {
-            const newmessage: HTMLDivElement = <HTMLDivElement>dom('<div class="active ' + (className || '') + '">' + message + '</div>');
+            const newmessage: HTMLDivElement = <HTMLDivElement>dom('<div class="active ' + (className || '') + '">' + message + '</div>', editor.ownerDocument);
             messagesBox.appendChild(newmessage);
             recalcOffsets();
             setTimeout(() => {

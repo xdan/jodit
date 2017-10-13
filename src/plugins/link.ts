@@ -5,7 +5,7 @@ import Dom from "../modules/Dom";
 import {ControlType} from "../modules/Toolbar";
 
 /**
-* @property {object}  link `{@link module:link|link}` plugin's options
+* @property {object}  link `{@link link|link}` plugin's options
 * @property {boolean} link.followOnDblClick=true Follow lnk address after dblclick
 * @property {boolean} link.processVideoLink=true Replace inserted youtube/vimeo link toWYSIWYG `iframe`
 * @property {boolean} link.processPastedLink=true Wrap inserted link in &lt;a href="link">link&lt;/a>
@@ -44,7 +44,7 @@ Config.prototype.controls.unlink = {
 };
 Config.prototype.controls.link = {
     popup: (editor: Jodit, current: HTMLElement|false, self: ControlType, close: Function) => {
-        const sel: Selection = editor.win.getSelection(),
+        const sel: Selection = editor.editorWindow.getSelection(),
             form: HTMLFormElement = <HTMLFormElement>dom(
                 '<form class="jodit_form">' +
                     '<input required type="text" name="url" placeholder="http://" type="text"/>' +
@@ -59,7 +59,8 @@ Config.prototype.controls.link = {
                         '<button class="jodit_unlink_button" type="button">' + editor.i18n('Unlink') + '</button> &nbsp;&nbsp;' +
                         '<button class="jodit_link_insert_button" type="submit"></button>' +
                     '</div>' +
-                '<form/>'
+                '<form/>',
+                editor.ownerDocument
             );
 
         if (current && Dom.closest(current, 'A', editor.editor)) {
@@ -97,7 +98,7 @@ Config.prototype.controls.link = {
             event.preventDefault();
             editor.selection.restore(selInfo);
 
-            let a: HTMLAnchorElement = <HTMLAnchorElement>current || <HTMLAnchorElement>Dom.create('a', '', editor.doc);
+            let a: HTMLAnchorElement = <HTMLAnchorElement>current || <HTMLAnchorElement>Dom.create('a', '', editor.editorDocument);
 
             if (!val(form, 'input[name=url]')) {
                 (<HTMLInputElement>form.querySelector('input[name=url]')).focus();
@@ -158,7 +159,7 @@ export default function (jodit: Jodit) {
                 if (convertMediaURLToVideoEmbed(html) !== html) {
                     a = convertMediaURLToVideoEmbed(html);
                 } else {
-                    a = jodit.doc.createElement('a');
+                    a = jodit.editorDocument.createElement('a');
                     a.setAttribute('href', html);
                     a.innerText = html;
                     if (jodit.options.link.openLinkDialogAfterPost) {
@@ -185,9 +186,9 @@ export default function (jodit: Jodit) {
                 }
                 if (node && node.tagName === 'A') {
                     if (node.innerHTML === node.innerText) {
-                        newtag = Dom.create('text', node.innerText, jodit.doc);
+                        newtag = Dom.create('text', node.innerText, jodit.editorDocument);
                     } else {
-                        newtag = Dom.create('span', node.innerHTML, jodit.doc);
+                        newtag = Dom.create('span', node.innerHTML, jodit.editorDocument);
                     }
                     node.parentNode.replaceChild(newtag, node);
                     jodit.selection.setCursorIn(newtag, true);

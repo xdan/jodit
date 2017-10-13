@@ -19,8 +19,8 @@ export default class ContextMenu extends Component {
     private context: HTMLElement;
     constructor(editor: Jodit) {
         super(editor);
-        this.context = dom('<div class="jodit_context_menu"></div>');
-        document.body.appendChild(this.context);
+        this.context = dom('<div class="jodit_context_menu"></div>', editor.ownerDocument);
+        this.jodit.ownerDocument.body.appendChild(this.context);
     }
 
     /**
@@ -30,7 +30,7 @@ export default class ContextMenu extends Component {
      */
     hide = () => {
         this.context.classList.remove('jodit_context_menu-show');
-        window
+        this.jodit.ownerWindow
             .removeEventListener('mouseup', this.hide);
     };
 
@@ -58,7 +58,7 @@ export default class ContextMenu extends Component {
             if (!item) {
                 return;
             }
-            let action = dom('<a href="javascript:void(0)">' + (item.icon ? Toolbar.getIcon(item.icon) : '') + '<span></span></a>');
+            let action = dom('<a href="javascript:void(0)">' + (item.icon ? Toolbar.getIcon(item.icon) : '') + '<span></span></a>', this.jodit.ownerDocument);
 
             action.addEventListener('click', (e) => {
                 item.exec.call(self, e);
@@ -76,7 +76,7 @@ export default class ContextMenu extends Component {
             top: y
         });
 
-        window
+        this.jodit.ownerWindow
             .addEventListener('mouseup', self.hide);
 
         this.context.classList.add('jodit_context_menu-show');

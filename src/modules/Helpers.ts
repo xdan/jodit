@@ -50,7 +50,6 @@ export const type = (obj): string => {
     return typeof obj === "object" || typeof obj === "function" ? class2type[toString.call(obj)] || "object" : typeof obj;
 };
 
-
 type eachCallback = (key: number|string, value: any|any[]) => boolean|void;
 
 
@@ -297,8 +296,8 @@ const formatUrl = (url: string): string => {
     return url;
 };
 
-export const appendScript = (url: string, callback: (this: HTMLScriptElement, e: Event) => any, className: string = '') => {
-    const script: HTMLScriptElement = document.createElement('script');
+export const appendScript = (url: string, callback: (this: HTMLScriptElement, e: Event) => any, className: string = '', doc: Document) => {
+    const script: HTMLScriptElement = doc.createElement('script');
     script.className = className;
     script.type = 'text/javascript';
     script.charset = 'utf-8';
@@ -309,7 +308,7 @@ export const appendScript = (url: string, callback: (this: HTMLScriptElement, e:
         script.onload = callback;
     }
 
-    document.body.appendChild(script);
+    doc.body.appendChild(script);
 };
 
 /**
@@ -320,7 +319,7 @@ export const appendScript = (url: string, callback: (this: HTMLScriptElement, e:
  *
  * @return HTMLElement
  */
-export const dom = (html: string|HTMLElement, doc: Document = document): HTMLElement => {
+export const dom = (html: string|HTMLElement, doc: Document): HTMLElement => {
     if (html instanceof (<any>doc.defaultView).HTMLElement) {
         return <HTMLElement>html;
     }

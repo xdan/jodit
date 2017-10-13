@@ -14,6 +14,8 @@ import ImageSelectorWidget = Widget.ImageSelectorWidget;
  **/
 
 export class Config {
+    ownerDocument: Document = document;
+    ownerWindow: Window = window;
 
     /**
      * z-index For editor
@@ -553,7 +555,7 @@ Config.prototype.controls = {
     image : {
         popup: (editor: Jodit, current: HTMLImageElement|false, self: ControlType, close) => {
             const insertImage = (url: string) => {
-                editor.selection.insertNode(dom('<img src="' + url + '"/>', editor.doc));
+                editor.selection.insertNode(dom('<img src="' + url + '"/>', editor.editorDocument));
             };
 
             let sourceImage: HTMLImageElement;
@@ -582,7 +584,7 @@ Config.prototype.controls = {
                     close();
                 },
                 url: (url: string, text: string) => {
-                    const image = sourceImage || dom('<img/>', editor.doc);
+                    const image = sourceImage || dom('<img/>', editor.editorDocument);
 
                     image.setAttribute('src', url);
                     image.setAttribute('alt', text);
@@ -602,12 +604,12 @@ Config.prototype.controls = {
             const bylink: HTMLFormElement = <HTMLFormElement>dom(`<form class="jodit_form">
                         <input required name="code" placeholder="http://" type="url"/>
                         <button type="submit">${editor.i18n('Insert')}</button>
-                        </form>`),
+                        </form>`, editor.ownerDocument),
 
                 bycode: HTMLFormElement = <HTMLFormElement>dom(`<form class="jodit_form">
                         <textarea required name="code" placeholder="${editor.i18n('Embed code')}"></textarea>
                         <button type="submit">${editor.i18n('Insert')}</button>
-                        </form>`),
+                        </form>`, editor.ownerDocument),
 
                 tab: {[key:string]: HTMLFormElement} = {},
                 selinfo = editor.selection.save(),

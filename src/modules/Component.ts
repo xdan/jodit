@@ -17,7 +17,7 @@ export default class Component {
     private __scope: any[] = [];
     private __scopeNamespace: any = {};
 
-    __fire(element: Document|Element|HTMLElement|Window, event: string|Event|MouseEvent, doc: Document = document) {
+    __fire(element: Document|Element|HTMLElement|Window, event: string|Event|MouseEvent, doc: Document) {
         let evt: Event = doc.createEvent('HTMLEvents');
 
         if (typeof event === 'string') {

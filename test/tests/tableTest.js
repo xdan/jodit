@@ -4,8 +4,8 @@ describe('Tables Jodit Editor Tests', function() {
         it('After init container must has one element .jodit_table_resizer', function() {
             var editor = new Jodit('#table_editor');
             expect(editor.editor.querySelector('.jodit_table_resizer')).to.equal(null);
-            editor.selection.insertNode(Jodit.modules.Dom.create('table', '', editor.doc));
-            editor.selection.insertNode(Jodit.modules.Dom.create('table', '', editor.doc));
+            editor.selection.insertNode(Jodit.modules.Dom.create('table', '', editor.editorDocument));
+            editor.selection.insertNode(Jodit.modules.Dom.create('table', '', editor.editorDocument));
             expect(editor.container.querySelectorAll('.jodit_table_resizer').length).to.equal(1);
         });
         it('Process wrong tabel', function() {
@@ -464,10 +464,10 @@ describe('Tables Jodit Editor Tests', function() {
 
             editor.setEditorValue('');
 
-            var table = Jodit.modules.Dom.create('table', '', editor.doc),
-                tr = Jodit.modules.Dom.create('tr', '', editor.doc),
-                td = Jodit.modules.Dom.create('td', '', editor.doc),
-                td2 = Jodit.modules.Dom.create('td', '', editor.doc);
+            var table = Jodit.modules.Dom.create('table', '', editor.editorDocument),
+                tr = Jodit.modules.Dom.create('tr', '', editor.editorDocument),
+                td = Jodit.modules.Dom.create('td', '', editor.editorDocument),
+                td2 = Jodit.modules.Dom.create('td', '', editor.editorDocument);
 
             tr.appendChild(td);
             tr.appendChild(td2);
@@ -475,7 +475,7 @@ describe('Tables Jodit Editor Tests', function() {
 
             editor.selection.insertNode(table, false);
             editor.selection.setCursorIn(table, false); // set cursor in last cell
-            editor.selection.insertNode(Jodit.modules.Dom.create('text', 'ok', editor.doc));
+            editor.selection.insertNode(Jodit.modules.Dom.create('text', 'ok', editor.editorDocument));
 
             expect(editor.getEditorValue()).to.equal('<table><tr><td></td><td>ok</td></tr></table>');
         });
@@ -505,7 +505,7 @@ describe('Tables Jodit Editor Tests', function() {
 
             simulateEvent('keydown', Jodit.KEY_TAB, editor.editor);
 
-            editor.selection.insertNode(Jodit.modules.Dom.create('text', 'test', editor.doc), false);
+            editor.selection.insertNode(Jodit.modules.Dom.create('text', 'test', editor.editorDocument), false);
 
             expect(editor.getEditorValue()).to.equal('<table><tbody><tr><td>1</td><td>test</td></tr></tbody></table>');
         })
@@ -525,7 +525,7 @@ describe('Tables Jodit Editor Tests', function() {
                 evnt.shiftKey = true;
             });
 
-            editor.selection.insertNode(Jodit.modules.Dom.create('text', 'test', editor.doc), false);
+            editor.selection.insertNode(Jodit.modules.Dom.create('text', 'test', editor.editorDocument), false);
 
             expect(editor.getEditorValue()).to.equal('<table><tbody><tr><td>test</td><td>2</td></tr></tbody></table>');
         })
@@ -544,7 +544,7 @@ describe('Tables Jodit Editor Tests', function() {
 
             simulateEvent('keydown', Jodit.KEY_RIGHT, editor.editor); // not work but in real cursor move after 1
 
-            editor.selection.insertNode(Jodit.modules.Dom.create('text', 'test',  editor.doc), false);
+            editor.selection.insertNode(Jodit.modules.Dom.create('text', 'test',  editor.editorDocument), false);
 
             expect(editor.getEditorValue()).to.equal('<table><tbody><tr><td>test1</td><td>2</td></tr></tbody></table>');
         })
@@ -562,7 +562,7 @@ describe('Tables Jodit Editor Tests', function() {
 
             simulateEvent('keydown', Jodit.KEY_LEFT, editor.editor); // not work but in real cursor move after 1
 
-            editor.selection.insertNode(Jodit.modules.Dom.create('text', 'test', editor.doc), false);
+            editor.selection.insertNode(Jodit.modules.Dom.create('text', 'test', editor.editorDocument), false);
 
             expect(editor.getEditorValue()).to.equal('<table><tbody>' +
                 '<tr>' +
@@ -589,7 +589,7 @@ describe('Tables Jodit Editor Tests', function() {
 
             simulateEvent('keydown', Jodit.KEY_TOP, editor.editor);
 
-            editor.selection.insertNode(Jodit.modules.Dom.create('text', 'test', editor.doc), false);
+            editor.selection.insertNode(Jodit.modules.Dom.create('text', 'test', editor.editorDocument), false);
 
             expect(editor.getEditorValue()).to.equal('<table><tbody>' +
                 '<tr>' +
@@ -623,7 +623,7 @@ describe('Tables Jodit Editor Tests', function() {
 
             simulateEvent('keydown', Jodit.KEY_BOTTOM, editor.editor);
 
-            editor.selection.insertNode(Jodit.modules.Dom.create('text', 'test', editor.doc), false);
+            editor.selection.insertNode(Jodit.modules.Dom.create('text', 'test', editor.editorDocument), false);
 
             expect(editor.getEditorValue()).to.equal('<table><tbody>' +
                 '<tr>' +
@@ -650,7 +650,7 @@ describe('Tables Jodit Editor Tests', function() {
 
             simulateEvent('keydown', Jodit.KEY_TAB, editor.editor);
 
-            editor.selection.insertNode(Jodit.modules.Dom.create('text', 'test', editor.doc), false);
+            editor.selection.insertNode(Jodit.modules.Dom.create('text', 'test', editor.editorDocument), false);
 
             expect(editor.getEditorValue()).to.equal('<table><tbody>' +
                 '<tr>' +
@@ -997,7 +997,7 @@ describe('Tables Jodit Editor Tests', function() {
                     options.pageY = 0;
                 });
 
-                simulateEvent('mousemove', 1, editor.win, function (options) {
+                simulateEvent('mousemove', 1, editor.editorWindow, function (options) {
                     options.clientX = box.left + 500; // can move only on 5 pixels
                     options.pageX = 0;
                     options.pageY = 0;
@@ -1027,7 +1027,7 @@ describe('Tables Jodit Editor Tests', function() {
                     options.pageY = 0;
                 });
 
-                simulateEvent('mousemove', 1, editor.win, function (options) {
+                simulateEvent('mousemove', 1, editor.editorWindow, function (options) {
                     options.clientX = box.left + 5; // move on 5 pixels
                     options.pageX = 0;
                     options.pageY = 0;

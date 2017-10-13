@@ -45,7 +45,7 @@ export default function (editor: Jodit) {
                  }
 
                  if (!currentBox.tagName.match(/TD|TH|TBODY|TABLE|THEAD/i)) {
-                    Dom.replace(currentBox, third, true, false, editor.doc);
+                    Dom.replace(currentBox, third, true, false, editor.editorDocument);
                  } else {
                      if (!editor.selection.isCollapsed()) {
                         editor.selection.applyCSS({}, third)
@@ -59,7 +59,7 @@ export default function (editor: Jodit) {
              });
 
              if (!work) {
-                 let currentBox: HTMLElement = <HTMLElement>Dom.create(third, consts.INVISIBLE_SPACE, editor.doc);
+                 let currentBox: HTMLElement = <HTMLElement>Dom.create(third, consts.INVISIBLE_SPACE, editor.editorDocument);
                  editor.selection.insertNode(currentBox, false);
                  editor.selection.setCursorIn(currentBox);
              }

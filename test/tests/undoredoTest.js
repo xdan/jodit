@@ -38,13 +38,13 @@ describe('Undo/Redo behaviors', function() {
 
             editor.setEditorValue('test');
 
-            var range = editor.doc.createRange();
+            var range = editor.editorDocument.createRange();
             range.setEnd(editor.editor.firstChild, 4);
             range.collapse(false);
-            editor.win.getSelection().removeAllRanges();
-            editor.win.getSelection().addRange(range);
+            editor.editorWindow.getSelection().removeAllRanges();
+            editor.editorWindow.getSelection().addRange(range);
 
-            editor.selection.insertNode(editor.doc.createTextNode('test2'));
+            editor.selection.insertNode(editor.editorDocument.createTextNode('test2'));
             editor.execCommand('undo');
             expect(editor.getEditorValue()).to.equal('test');
 

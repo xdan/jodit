@@ -63,7 +63,7 @@ Config.prototype.popup = {
             tooltip: 'Open link',
             exec: (editor: Jodit, current: HTMLAnchorElement) => {
                 if (current && current.getAttribute('href')) {
-                    window.open(current.getAttribute('href'));
+                    editor.ownerWindow.open(current.getAttribute('href'));
                 }
             }
         },
@@ -287,7 +287,7 @@ Config.prototype.popup = {
 export default function (editor: Jodit) {
     let timeout: number;
     const toolbar: Toolbar = new Toolbar(editor),
-        popup: HTMLDivElement = <HTMLDivElement> dom('<div class="jodit_toolbar_popup-inline"></div>', document),
+        popup: HTMLDivElement = <HTMLDivElement> dom('<div class="jodit_toolbar_popup-inline"></div>', editor.ownerDocument),
 
         toogleEditor = (toggle: boolean) => {
             if (editor.container) {
@@ -358,7 +358,7 @@ export default function (editor: Jodit) {
                     clickOnImage = false;
                 }
             });
-            editor.__on(window, 'mousedown', () => {
+            editor.__on(editor.ownerWindow, 'mousedown', () => {
                 if (!clickOnImage) {
                     hidePopup();
                 }

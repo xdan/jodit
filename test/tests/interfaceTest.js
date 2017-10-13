@@ -13,8 +13,8 @@ describe('Test interface', function() {
 
                 expect(editor.container.querySelectorAll('.jodit_toolbar_btn-copyformat.jodit_active').length).to.equal(1);
 
-                var sel = editor.win.getSelection(),
-                    range = editor.doc.createRange();
+                var sel = editor.editorWindow.getSelection(),
+                    range = editor.editorDocument.createRange();
 
                 range.selectNode(editor.editor.lastChild);
                 sel.removeAllRanges();
@@ -35,8 +35,8 @@ describe('Test interface', function() {
 
                 expect(editor.container.querySelectorAll('.jodit_toolbar_btn-copyformat.jodit_active').length).to.equal(1);
 
-                var sel = editor.win.getSelection(),
-                    range = editor.doc.createRange();
+                var sel = editor.editorWindow.getSelection(),
+                    range = editor.editorDocument.createRange();
 
                 range.selectNode(editor.editor.lastChild);
                 sel.removeAllRanges();
@@ -57,8 +57,8 @@ describe('Test interface', function() {
 
                 expect(editor.container.querySelectorAll('.jodit_toolbar_btn-copyformat.jodit_active').length).to.equal(1);
 
-                var sel = editor.win.getSelection(),
-                    range = editor.doc.createRange();
+                var sel = editor.editorWindow.getSelection(),
+                    range = editor.editorDocument.createRange();
 
                 range.selectNode(editor.editor.lastChild);
                 sel.removeAllRanges();
@@ -83,8 +83,8 @@ describe('Test interface', function() {
 
                 expect(editor.container.querySelectorAll('.jodit_toolbar_btn-copyformat.jodit_active').length).to.equal(0);
 
-                var sel = editor.win.getSelection(),
-                    range = editor.doc.createRange();
+                var sel = editor.editorWindow.getSelection(),
+                    range = editor.editorDocument.createRange();
 
                 range.selectNode(editor.editor.lastChild);
                 sel.removeAllRanges();
@@ -264,7 +264,7 @@ describe('Test interface', function() {
 
                 editor.setEditorValue('text2text')
 
-                var sel = editor.win.getSelection(), range = editor.doc.createRange();
+                var sel = editor.editorWindow.getSelection(), range = editor.editorDocument.createRange();
 
                 range.setStart(editor.editor.firstChild, 3)
                 range.setEnd(editor.editor.firstChild, 6)
@@ -301,7 +301,7 @@ describe('Test interface', function() {
 
                 editor.setEditorValue('text2text')
 
-                var sel = editor.win.getSelection(), range = editor.doc.createRange();
+                var sel = editor.editorWindow.getSelection(), range = editor.editorDocument.createRange();
 
                 range.setStart(editor.editor.firstChild, 3)
                 range.setEnd(editor.editor.firstChild, 6)
@@ -322,7 +322,7 @@ describe('Test interface', function() {
 
                 expect(list.style.display).to.equal('none');
 
-                editor.selection.insertNode(editor.doc.createTextNode(' a '))
+                editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
 
                 expect(editor.getEditorValue()).to.equal('<h1>tex a ext</h1>');
             });
@@ -331,7 +331,7 @@ describe('Test interface', function() {
 
                 editor.setEditorValue(Jodit.INVISIBLE_SPACE); // IE in iframe mode can loose focus and we can not check where it paste image in start or in finish. It is only in IE
 
-                var sel = editor.win.getSelection(), range = editor.doc.createRange();
+                var sel = editor.editorWindow.getSelection(), range = editor.editorDocument.createRange();
 
                 range.selectNodeContents(editor.editor)
                 range.collapse(false)
@@ -448,8 +448,8 @@ describe('Test interface', function() {
                     
                     editor.setEditorValue('<a target="_blank" rel="nofollow" href="#test">test</a>')
 
-                    var sel = editor.win.getSelection(),
-                        range = editor.doc.createRange();
+                    var sel = editor.editorWindow.getSelection(),
+                        range = editor.editorDocument.createRange();
 
                     range.selectNode(editor.editor.firstChild);
                     sel.removeAllRanges();
@@ -508,7 +508,7 @@ describe('Test interface', function() {
 
                 editor.setEditorValue('<strong>test</strong><em>test2</em><i>test3</i><b>test3</b>');
 
-                var sel = editor.win.getSelection(), range = editor.doc.createRange();
+                var sel = editor.editorWindow.getSelection(), range = editor.editorDocument.createRange();
 
                 range.setStart(editor.editor.firstChild.firstChild, 2)
                 range.collapse(true)
@@ -581,7 +581,7 @@ describe('Test interface', function() {
 
                 editor.setEditorValue('<span style="font-weight: bold">test</span>');
 
-                var sel = editor.win.getSelection(), range = editor.doc.createRange();
+                var sel = editor.editorWindow.getSelection(), range = editor.editorDocument.createRange();
                 range.setStart(editor.editor.firstChild.firstChild, 2)
                 range.collapse(true)
                 sel.removeAllRanges();
@@ -631,7 +631,7 @@ describe('Test interface', function() {
                         {
                             name: 'adddate',
                             exec: function (editor) {
-                                var a = editor.doc.createTextNode('111');
+                                var a = editor.editorDocument.createTextNode('111');
                                 editor.selection.insertNode(a);
                             }
                         }
@@ -660,7 +660,7 @@ describe('Test interface', function() {
 
                 editor.setEditorValue('Text to text')
 
-                var sel = editor.win.getSelection(), range = editor.doc.createRange();
+                var sel = editor.editorWindow.getSelection(), range = editor.editorDocument.createRange();
                 range.setStart(editor.editor.firstChild, 3)
                 range.setEnd(editor.editor.firstChild, 10)
                 sel.removeAllRanges();
@@ -675,7 +675,7 @@ describe('Test interface', function() {
 
                 editor.setEditorValue('Text to text')
 
-                var sel = editor.win.getSelection(), range = editor.doc.createRange();
+                var sel = editor.editorWindow.getSelection(), range = editor.editorDocument.createRange();
                 range.setStart(editor.editor.firstChild, 0)
                 range.collapse(true)
                 sel.removeAllRanges();
@@ -692,7 +692,7 @@ describe('Test interface', function() {
 
                 editor.setEditorValue('<p>Text to text</p>')
 
-                var sel = editor.win.getSelection(), range = editor.doc.createRange();
+                var sel = editor.editorWindow.getSelection(), range = editor.editorDocument.createRange();
 
                 range.setStart(editor.editor.firstChild.firstChild, 5)
                 range.collapse(true)

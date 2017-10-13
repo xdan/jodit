@@ -1,6 +1,5 @@
 import Jodit from "../Jodit";
-import {css, debounce, dom, throttle} from "../modules/Helpers";
-import Toolbar from "../modules/Toolbar";
+import {css, dom, throttle} from "../modules/Helpers";
 import {Config} from '../Config'
 
 declare module "../Config" {
@@ -15,7 +14,7 @@ Config.prototype.allowResizeY = true;
 
 export default function (editor: Jodit) {
     if (editor.options.height !== 'auto' && (editor.options.allowResizeX || editor.options.allowResizeY)) {
-        const handle: HTMLAnchorElement = <HTMLAnchorElement>dom('<div class="jodit_editor_resize" ><a href="javascript:void(0)"></a></div>'),
+        const handle: HTMLAnchorElement = <HTMLAnchorElement>dom('<div class="jodit_editor_resize" ><a href="javascript:void(0)"></a></div>', editor.ownerDocument),
             start: { x: number, y: number, w: number, h: number } = {
                 x: 0, y: 0, w: 0, h: 0
             };
@@ -31,7 +30,7 @@ export default function (editor: Jodit) {
                 start.h = editor.container.offsetHeight;
                 e.preventDefault();
             })
-            .__on(window, 'mousemove touchmove', throttle((e: MouseEvent) => {
+            .__on(editor.ownerWindow, 'mousemove touchmove', throttle((e: MouseEvent) => {
                 if (isResized) {
                     css(editor.container, {
                         width: editor.options.allowResizeX ? start.w + e.clientX - start.x : start.w,
@@ -40,7 +39,7 @@ export default function (editor: Jodit) {
                     editor.events.fire('resize');
                 }
             }, editor.options.observer.timeout))
-            .__on(window, 'mouseup touchsend', (e: MouseEvent) => {
+            .__on(editor.ownerWindow, 'mouseup touchsend', () => {
                 if (isResized) {
                     isResized = false;
                 }

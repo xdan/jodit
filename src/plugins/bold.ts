@@ -45,10 +45,10 @@ export default function (editor: Jodit) {
 
         if (commands.indexOf(command) !== -1) {
             // Dom.apply(Jodit.defaultOptions.controls[command], (commandOptions) => {
-            //     return wrapAndSelect(editor, Dom.create(commandOptions.tags[0], '', editor.doc),  commandOptions.tagRegExp);
+            //     return wrapAndSelect(editor, Dom.create(commandOptions.tags[0], '', editor.editorDocument),  commandOptions.tagRegExp);
             // }, editor);
 
-            // editor.doc.execCommand('fontsize', false, 7)
+            // editor.editorDocument.execCommand('fontsize', false, 7)
             const cssOptions = {...Jodit.defaultOptions.controls[command].css},
                 cssRules = {};
             Object.keys(cssOptions).forEach((key: string) => {

@@ -65,10 +65,10 @@ export default function (editor: Jodit) {
             let marginTop: number = 0,
                 marginLeft: number = 0;
 
-            const style: CSSStyleDeclaration = editor.win.getComputedStyle(editor.editor);
+            const style: CSSStyleDeclaration = editor.editorWindow.getComputedStyle(editor.editor);
 
             if (editor.editor.firstChild && editor.editor.firstChild.nodeType === Node.ELEMENT_NODE) {
-                const style2:CSSStyleDeclaration = editor.win.getComputedStyle(<Element>editor.editor.firstChild);
+                const style2:CSSStyleDeclaration = editor.editorWindow.getComputedStyle(<Element>editor.editor.firstChild);
                 marginTop = parseInt(style2.getPropertyValue('margin-top'), 10);
                 marginLeft = parseInt(style2.getPropertyValue('margin-left'), 10);
                 placeholder.style.fontSize = parseInt(style2.getPropertyValue('font-size'), 10) + 'px';
@@ -106,7 +106,7 @@ export default function (editor: Jodit) {
 
 
 
-    placeholder = dom('<span class="jodit_placeholder">' + editor.i18n(editor.options.placeholder) + '</span>', document);
+    placeholder = dom('<span class="jodit_placeholder">' + editor.i18n(editor.options.placeholder) + '</span>', editor.ownerDocument);
 
     if (editor.options.useInputsPlaceholder && editor.element.hasAttribute('placeholder')) {
         placeholder.innerHTML = editor.element.getAttribute('placeholder');

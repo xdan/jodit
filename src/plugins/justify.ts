@@ -51,7 +51,7 @@ export default function (editor: Jodit) {
     editor.events.on('beforeCommand', (command) => {
         if (/justify/.test(command)) {
             const justify = (box) => {
-                if (box instanceof (<any>editor.win).HTMLElement) {
+                if (box instanceof (<any>editor.editorWindow).HTMLElement) {
                     switch (command) {
                         case 'justifyfull':
                             box.style.textAlign = 'justify';
@@ -80,7 +80,7 @@ export default function (editor: Jodit) {
                     }
                 }
 
-                if (!(current instanceof (<any>editor.win).Node)) {
+                if (!(current instanceof (<any>editor.editorWindow).Node)) {
                     return;
                 }
 

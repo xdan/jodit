@@ -198,7 +198,7 @@ export default class Uploader extends Component {
     }
 
     buildData(data: FormData|{[key: string]: string}): FormData|{[key: string]: string} {
-        if (window['FormData'] !== undefined) {
+        if (this.jodit.ownerWindow['FormData'] !== undefined) {
             if (data instanceof FormData) {
                 return data;
             }
@@ -224,7 +224,7 @@ export default class Uploader extends Component {
         this.__ajax = new Ajax(this.jodit, {
             xhr: () => {
                 let xhr = new XMLHttpRequest();
-                if (window['FormData'] !== undefined) {
+                if (this.jodit.ownerWindow['FormData'] !== undefined) {
                     xhr.upload.addEventListener("progress", (evt) => {
                         if (evt.lengthComputable) {
                             let percentComplete = evt.loaded / evt.total;
@@ -248,7 +248,7 @@ export default class Uploader extends Component {
             url: this.options.url,
             headers: this.options.headers,
 
-            contentType: (window['FormData'] !== undefined && typeof data !== 'string') ? false : 'application/x-www-form-urlencoded; charset=UTF-8',
+            contentType: (this.jodit.ownerWindow['FormData'] !== undefined && typeof data !== 'string') ? false : 'application/x-www-form-urlencoded; charset=UTF-8',
             dataType: this.options.format  || 'json',
         });
 
@@ -389,7 +389,7 @@ export default class Uploader extends Component {
 
                 if (browser('ff')) {
                     if (!e.clipboardData.types.length && e.clipboardData.types[0] !== TEXT_PLAIN) {
-                        div = <HTMLDivElement>Dom.create('div', '', this.jodit.doc);
+                        div = <HTMLDivElement>Dom.create('div', '', this.jodit.editorDocument);
                         self.jodit.selection.insertNode(div);
                         div.focus();
                         setTimeout(() => {

@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div contenteditable id="test"><strong>12</strong>23</div>
+</body>
+<script>
+    function current() {
+        var sel = getSelection();
+        if (sel.rangeCount) {
+            var range = sel.getRangeAt(0);
+            var start = range.startContainer;
+            var end = range.endContainer;
+
+
+            if (range.startContainer.nodeType !== Node.TEXT_NODE && (start !== end || range.startOffset !== range.endOffset)) {
+                return range.startContainer.childNodes[range.startOffset];
+            }
+
+            return start;
+        }
+    }
+    var sel = getSelection();
+    var range = document.createRange();
+    range.setStart(test.childNodes[0], 1);
+    range.setEnd(test, 2);
+//    range.collapse(true);
+    sel.removeAllRanges()
+    sel.addRange(range)
+    console.log(current())
+
+</script>
+</html>

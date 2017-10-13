@@ -116,7 +116,7 @@ export default function (editor: Jodit) {
 
         editor.events.on('beforeSetElementValue', function (data) {
             if (editor.getRealMode() === consts.MODE_WYSIWYG) {
-                const div: HTMLElement = <HTMLElement>Dom.create('div', '', editor.doc);
+                const div: HTMLElement = <HTMLElement>Dom.create('div', '', editor.editorDocument);
                 let node, remove = [], removeAttrs, i;
                 div['innerHTML'] = data.value;
                 node = div.firstChild;
@@ -170,7 +170,7 @@ export default function (editor: Jodit) {
             if (hr) {
                 node = Dom.next(hr, Dom.isBlock, editor.editor, false);
                 if (!node) {
-                    node = Dom.create(editor.options.enter, '', editor.doc);
+                    node = Dom.create(editor.options.enter, '', editor.editorDocument);
                     Dom.after(hr, node)
                 }
                 sel.setCursorIn(node);
@@ -186,7 +186,7 @@ export default function (editor: Jodit) {
                     }
                     if (elm.tagName === 'FONT') {
                         Dom.each(elm, clean);
-                        elm = Dom.replace(elm, 'span', false, false, editor.doc);
+                        elm = Dom.replace(elm, 'span', false, false, editor.editorDocument);
                     }
                     if (elm.normalize) {
                         elm.normalize();
@@ -200,7 +200,7 @@ export default function (editor: Jodit) {
             };
 
             if (!sel.isCollapsed()) {
-                editor.win.getSelection().removeAllRanges();
+                editor.editorWindow.getSelection().removeAllRanges();
             } else {
                 while (node && node.nodeType !== Node.ELEMENT_NODE && node !== editor.editor) {
                     node = clean(node);

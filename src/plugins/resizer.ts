@@ -74,7 +74,7 @@ export default function (editor: Jodit) {
             '<i class="jodit_resizer-topright"></i>' +
             '<i class="jodit_resizer-bottomright"></i>' +
             '<i class="jodit_resizer-bottomleft"></i>' +
-        '</div>', document),
+        '</div>', editor.ownerDocument),
 
         hideResizer = () => {
             isResizing = false;
@@ -129,7 +129,7 @@ export default function (editor: Jodit) {
                 if (element.parentNode && (<HTMLElement>element.parentNode).getAttribute('data-jodit_iframe_wrapper')) {
                     element = <HTMLElement>element.parentNode;
                 } else {
-                    wrapper = dom('<jodit data-jodit-temp="1" contenteditable="false" draggable="true" data-jodit_iframe_wrapper="1"></jodit>', editor.doc);
+                    wrapper = dom('<jodit data-jodit-temp="1" contenteditable="false" draggable="true" data-jodit_iframe_wrapper="1"></jodit>', editor.editorDocument);
 
                     wrapper.style.display = element.style.display === 'inline-block' ? 'inline-block' : 'block';
                     wrapper.style.width = element.offsetWidth + 'px';
@@ -220,7 +220,7 @@ export default function (editor: Jodit) {
                         }
                     }
                 })
-                .__on(window, 'mousemove touchmove', (e: MouseEvent) => {
+                .__on(editor.ownerWindow, 'mousemove touchmove', (e: MouseEvent) => {
                     if (isResizing) {
                         // resized = true;
                         diff_x = e.clientX - start_x;
@@ -255,12 +255,12 @@ export default function (editor: Jodit) {
                         e.stopImmediatePropagation();
                     }
                 })
-                .__on(window, 'resize', () => {
+                .__on(editor.ownerWindow, 'resize', () => {
                     if (resizerIsVisible) {
                         updateSize();
                     }
                 })
-                .__on(window, 'mouseup keydown touchend', (e: MouseEvent) => {
+                .__on(editor.ownerWindow, 'mouseup keydown touchend', (e: MouseEvent) => {
                     if (resizerIsVisible && !resizeElementClicked) {
                         if (isResizing) {
                             editor.unlock();
@@ -273,7 +273,7 @@ export default function (editor: Jodit) {
                     }
                 });
 
-            editor.__on([window, editor.editor], 'scroll', () => {
+            editor.__on([editor.ownerWindow, editor.editor], 'scroll', () => {
                 if (resizerIsVisible && !isResizing) {
                     hideResizer()
                 }

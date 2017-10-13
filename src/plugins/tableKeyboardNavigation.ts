@@ -25,8 +25,8 @@ export default function (editor: Jodit) {
                 return;
             }
 
-            const sel: Selection = editor.win.getSelection(),
-                range: Range = sel.rangeCount ? sel.getRangeAt(0) : editor.doc.createRange();
+            const sel: Selection = editor.editorWindow.getSelection(),
+                range: Range = sel.rangeCount ? sel.getRangeAt(0) : editor.editorDocument.createRange();
 
             if (event.which !== consts.KEY_TAB && current !== block) {
                 if (((event.which === consts.KEY_LEFT || event.which === consts.KEY_TOP) &&
@@ -54,7 +54,7 @@ export default function (editor: Jodit) {
                 next = <HTMLTableCellElement>Dom[sibling](block, (elm) => (elm && /^td|th$/i.test((<HTMLElement>elm).tagName)), table);
                 if (!next) {
                     Table.appendRow(table, sibling === 'next' ? false : <HTMLTableRowElement>table.querySelector('tr'), sibling === 'next');
-                    next = <HTMLTableCellElement>(Dom[sibling](block, (elm: HTMLElement) => (elm && Dom.isCell(elm, editor.win)), table));
+                    next = <HTMLTableCellElement>(Dom[sibling](block, (elm: HTMLElement) => (elm && Dom.isCell(elm, editor.editorWindow)), table));
                 }
             break;
             case consts.KEY_TOP:
@@ -80,7 +80,7 @@ export default function (editor: Jodit) {
 
         if (next) {
             if (!next.firstChild) {
-                next.appendChild(Dom.create('br', '', editor.doc));
+                next.appendChild(Dom.create('br', '', editor.editorDocument));
                 editor.selection.setCursorBefore(next.firstChild);
             } else {
                 if (event.which === consts.KEY_TAB) {

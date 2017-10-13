@@ -15,7 +15,7 @@ import ImageSelectorWidget = Widget.ImageSelectorWidget;
  *
  */
 /**
- * @property{object} image Plugin {@link module:Image|Image}'s options
+ * @property{object} image Plugin {@link Image|Image}'s options
  * @property{boolean} image.openOnDblClick=true Open editing dialog after double click on image
  * @property{boolean} image.editSrc=true Show edit 'src' input
  * @property{boolean} image.useImageEditor=true Show crop/resize btn
@@ -87,7 +87,7 @@ export default function (editor: Jodit) {
      * @example
      * ```javascript
      * var editor = new Jodit('#editor');
-     *     img = editor.doc.createElement('img');
+     *     img = editor.editorDocument.createElement('img');
      *
      * img.setAttribute('src', 'images/someimage.png');
      * editor.{@link Selection~select|select}(img);
@@ -98,11 +98,11 @@ export default function (editor: Jodit) {
     const open = function (this: HTMLImageElement, e ?: MouseEvent) {
         const image = <HTMLImageElement>this,
             dialog: Dialog = new Dialog(editor),
-            cancel: HTMLElement = dom('<a href="javascript:void(0)" style="float:right;" class="jodit_button">' + Toolbar.getIcon('cancel') + '<span>' + editor.i18n('Cancel') + '</span></a>'),
-            check: HTMLElement  = dom('<a href="javascript:void(0)" style="float:left;" class="jodit_button">' + Toolbar.getIcon('check') + '<span>' +  editor.i18n('Ok') + '</span></a>'),
+            cancel: HTMLElement = dom('<a href="javascript:void(0)" style="float:right;" class="jodit_button">' + Toolbar.getIcon('cancel') + '<span>' + editor.i18n('Cancel') + '</span></a>', editor.ownerDocument),
+            check: HTMLElement  = dom('<a href="javascript:void(0)" style="float:left;" class="jodit_button">' + Toolbar.getIcon('check') + '<span>' +  editor.i18n('Ok') + '</span></a>', editor.ownerDocument),
 
             buttons = {
-                remove: dom('<a href="javascript:void(0)" class="jodit_button">' + Toolbar.getIcon('bin') + ' ' + editor.i18n('Delete') + '</a>')
+                remove: dom('<a href="javascript:void(0)" class="jodit_button">' + Toolbar.getIcon('bin') + ' ' + editor.i18n('Delete') + '</a>', editor.ownerDocument)
             },
 
 
@@ -124,7 +124,7 @@ export default function (editor: Jodit) {
                         '</div>' +
                         '<div id="tabsbox" class="jodit_col-lg-3-5"></div>' +
                     '</div>' +
-                '</form>'),
+                '</form>', editor.ownerDocument),
 
             positionTab: HTMLDivElement = <HTMLDivElement>dom('<div style="' + (!editor.options.image.editMargins ? 'display:none' : '') + '" class="jodit_form_group">' +
                     '<label for="marginTop">' + editor.i18n('Margins') + '</label>' +
@@ -159,7 +159,7 @@ export default function (editor: Jodit) {
                             '<option value="right">' + editor.i18n('Right') + '</option>' +
                         '</optgroup>' +
                     '</select>' +
-                '</div>'),
+                '</div>', editor.ownerDocument),
 
             mainTab: HTMLDivElement = <HTMLDivElement>dom('<div style="' + (!editor.options.image.editSrc ? 'display:none' : '') + '" class="jodit_form_group">' +
                     '<label for="imageSrc">' + editor.i18n('Src') + '</label>' +
@@ -186,7 +186,7 @@ export default function (editor: Jodit) {
                 '</div>' +
                 '<div style="' + (!editor.options.image.editLink ? 'display:none' : '') + '" class="jodit_form_group">' +
                     '<input type="checkbox" id="imageLinkOpenInNewTab"/> ' + editor.i18n('Open link in new tab') +
-                '</div>'),
+                '</div>', editor.ownerDocument),
 
             ratio: number = image.naturalWidth / image.naturalHeight || 1,
 
@@ -297,7 +297,7 @@ export default function (editor: Jodit) {
             editor.__on(btn,'mousedown touchstart', () => {
                 if (editor.options.image.useImageEditor) {
                     let url = image.getAttribute('src'),
-                        a = document.createElement('a'),
+                        a = editor.ownerDocument.createElement('a'),
                         loadExternal = () => {
                             if (a.host !== location.host) {
                                 Confirm(editor.i18n('You can only edit your own images. Download this image on the host?'), (yes: boolean) => {
@@ -374,7 +374,7 @@ export default function (editor: Jodit) {
         prop.querySelector('.jodit_lock_helper.jodit_lock_size').addEventListener('click', function () {
             lockSize = !lockSize;
             this.innerHTML = Toolbar.getIcon(lockSize ? 'lock' : 'unlock');
-            editor.__fire($w, 'change', document);
+            editor.__fire($w, 'change', editor.ownerDocument);
         });
 
         prop.querySelector('.jodit_lock_helper.jodit_lock_margin').addEventListener('click', function () {

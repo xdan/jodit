@@ -32,7 +32,7 @@ export default function (editor: Jodit) {
                 return false;
             }
 
-            const sel: Selection = editor.win.getSelection(),
+            const sel: Selection = editor.editorWindow.getSelection(),
                 range: Range|false = sel.rangeCount ? sel.getRangeAt(0) : false;
 
             if (range) {
@@ -73,8 +73,8 @@ export default function (editor: Jodit) {
                     const container: HTMLElement = <HTMLElement>Dom.up(range.startContainer, Dom.isBlock, editor.editor);
                     const html: string = container.innerHTML.replace(consts.INVISIBLE_SPACE_REG_EXP, '');
 
-                    if ((!html.length || html == '<br>') && !Dom.isCell(container, editor.win)) {
-                        container.parentNode.removeChild(container)
+                    if ((!html.length || html == '<br>') && !Dom.isCell(container, editor.editorWindow)) {
+                        container.parentNode.removeChild(container);
                         return false;
                     }
                 }

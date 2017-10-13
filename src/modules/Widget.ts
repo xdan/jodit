@@ -26,7 +26,7 @@ export namespace Widget {
      */
     export const ColorPickerWidget = (editor: Jodit, callback: (newColor: string) => void, coldColor: string): HTMLDivElement => {
         const valueHex = normalizeColor(coldColor),
-            form: HTMLDivElement = <HTMLDivElement>dom('<div class="jodit_colorpicker"></div>'),
+            form: HTMLDivElement = <HTMLDivElement>dom('<div class="jodit_colorpicker"></div>', editor.ownerDocument),
             eachColor = (colors) => {
                 const stack: string[] = [];
                 if (isPlainObject(colors)) {
@@ -47,9 +47,9 @@ export namespace Widget {
 
 
         form
-            .appendChild(dom('<div>' + eachColor(editor.options.colors) + '</div>'));
+            .appendChild(dom('<div>' + eachColor(editor.options.colors) + '</div>', editor.ownerDocument));
 
-        form.appendChild(dom('<a data-color="" href="javascript:void(0)">' + Jodit.modules.Toolbar.getIcon('eraser') + '</a>'));
+        form.appendChild(dom('<a data-color="" href="javascript:void(0)">' + Jodit.modules.Toolbar.getIcon('eraser') + '</a>', editor.ownerDocument));
 
         editor
             .__on(form, 'mousedown touchstart', (e: MouseEvent) => {
@@ -116,9 +116,9 @@ export namespace Widget {
      * ```
      */
     export const TabsWidget = (editor: Jodit, tabs: {[key: string]: string|HTMLElement|Function}, state?: {__activeTab: string}): HTMLDivElement => {
-        let box: HTMLDivElement = <HTMLDivElement>dom('<div class="jodit_tabs"></div>'),
-            tabBox: HTMLDivElement = <HTMLDivElement>dom('<div class="jodit_tabs_wrapper"></div>'),
-            buttons: HTMLDivElement = <HTMLDivElement>dom('<div class="jodit_tabs_buttons"></div>'),
+        let box: HTMLDivElement = <HTMLDivElement>dom('<div class="jodit_tabs"></div>', editor.ownerDocument),
+            tabBox: HTMLDivElement = <HTMLDivElement>dom('<div class="jodit_tabs_wrapper"></div>', editor.ownerDocument),
+            buttons: HTMLDivElement = <HTMLDivElement>dom('<div class="jodit_tabs_buttons"></div>', editor.ownerDocument),
             nameToTab: {[key: string]: {
                 button: HTMLDivElement,
                 tab: HTMLDivElement
@@ -129,16 +129,16 @@ export namespace Widget {
         box.appendChild(tabBox);
 
         each(tabs, (name: string, tabOptions: Function|HTMLElement) => {
-            const tab: HTMLDivElement = <HTMLDivElement>dom('<div class="jodit_tab"></div>'),
-                button: HTMLDivElement = <HTMLDivElement>dom('<a href="javascript:void(0);"></a>');
+            const tab: HTMLDivElement = <HTMLDivElement>dom('<div class="jodit_tab"></div>', editor.ownerDocument),
+                button: HTMLDivElement = <HTMLDivElement>dom('<a href="javascript:void(0);"></a>', editor.ownerDocument);
 
             button.innerHTML = editor.i18n(name);
             buttons.appendChild(button);
 
             if (typeof tabOptions !== 'function') {
-                tab.appendChild(dom(tabOptions));
+                tab.appendChild(dom(tabOptions, editor.ownerDocument));
             } else {
-                tab.appendChild(dom('<div class="jodit_tab_empty"></div>'));
+                tab.appendChild(dom('<div class="jodit_tab_empty"></div>', editor.ownerDocument));
             }
 
             tabBox.appendChild(tab);
@@ -245,7 +245,7 @@ export namespace Widget {
                     '<strong>' + editor.i18n('Drop image') + '</strong>' +
                     '<span><br> ' + editor.i18n('or click') + '</span>' +
                     '<input type="file" accept="image/*" tabindex="-1" dir="auto" multiple=""/>' +
-                '</div>');
+                '</div>', editor.ownerDocument);
 
             (<Uploader>editor.getInstance('Uploader')).bind(dragbox, (resp: UploaderData) => {
                 if (typeof(callbacks.upload) === 'function') {
@@ -272,12 +272,12 @@ export namespace Widget {
 
         if (callbacks.url) {
             const form: HTMLFormElement = <HTMLFormElement>dom('<form onsubmit="return false;" class="jodit_form">' +
-                '<input type="text" required name="url" placeholder="http://"/>' +
-                '<input type="text" name="text" placeholder="' + editor.i18n('Alternative text') + '"/>' +
-                '<div style="text-align: right">' +
-                    '<button>' + editor.i18n('Insert') + '</button>' +
-                '</div>' +
-                '</form>');
+                    '<input type="text" required name="url" placeholder="http://"/>' +
+                    '<input type="text" name="text" placeholder="' + editor.i18n('Alternative text') + '"/>' +
+                    '<div style="text-align: right">' +
+                        '<button>' + editor.i18n('Insert') + '</button>' +
+                    '</div>' +
+                '</form>', editor.ownerDocument);
 
             currentImage = null;
 

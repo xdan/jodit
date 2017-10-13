@@ -38,7 +38,7 @@ export default class Dom {
         } while(needFindNext);
 
 
-        const wrapper = typeof tag === 'string' ? Dom.create(tag, '', editor.doc) : tag;
+        const wrapper = typeof tag === 'string' ? Dom.create(tag, '', editor.editorDocument) : tag;
 
         first.parentNode.insertBefore(wrapper, first);
 
@@ -173,7 +173,7 @@ export default class Dom {
      * @param {Window} win
      * @return {boolean}
      */
-    static isCell(elm: Node, win: Window = window): boolean {
+    static isCell(elm: Node, win: Window): boolean {
         return Dom.isNode(elm, win) && /^(td|th)$/i.test(elm.nodeName)
     }
 
@@ -184,7 +184,7 @@ export default class Dom {
      * @param {Window} win
      * @return {boolean}
      */
-    static isImage(elm: Node, win: Window = window): boolean {
+    static isImage(elm: Node, win: Window): boolean {
         return Dom.isNode(elm, win) && /^(img|svg|picture|canvas)$/i.test(elm.nodeName)
     }
 
@@ -203,7 +203,7 @@ export default class Dom {
      *
      */
     static canSplitBlock (node: any, win: Window): boolean {
-        return node && node instanceof (<any>win||<any>window).HTMLElement &&
+        return node && node instanceof (<any>win).HTMLElement &&
             this.isBlock(node) &&
             !/^(TD|TH|CAPTION|FORM)$/.test(node.nodeName) &&
             node.style !== void(0) && !/^(fixed|absolute)/i.test(node.style.position);
@@ -307,8 +307,8 @@ export default class Dom {
      * Returns true if it is a DOM node
      */
     static isNode(object: any, win: Window): boolean {
-        if (typeof (<any>win||<any>window) === "object") {
-            return object instanceof (<any>win||<any>window).Node;
+        if (typeof (<any>win) === "object") {
+            return object instanceof (<any>win).Node;
         }
 
         return typeof object === "object" && typeof object.nodeType === "number" && typeof object.nodeName === "string";
@@ -423,7 +423,7 @@ export default class Dom {
              mode;
 
          // const getCSS = (elm: HTMLElement, key: string): string => {
-         //         return editor.win.getComputedStyle(elm).getPropertyValue(key).toString()
+         //         return editor.editorWindow.getComputedStyle(elm).getPropertyValue(key).toString()
          //     },
          const checkCssRulesFor = (elm: HTMLElement) => {
              return elm.nodeType === Node.ELEMENT_NODE && each(options.css, (cssPropertyKey: string, cssPropertyValues: string[]) => {
@@ -435,7 +435,7 @@ export default class Dom {
          const oldWrappers = [];
 
          editor.selection.eachSelection((current) => {
-             let sel = editor.win.getSelection(),
+             let sel = editor.editorWindow.getSelection(),
                  wrapper,
                  range = sel.getRangeAt(0);
 
@@ -462,7 +462,7 @@ export default class Dom {
                      selectionInfo = editor.selection.save();
 
                      if (cursorInTheStart === false || cursorInTheEnd === false) {
-                         let leftRange = editor.doc.createRange();
+                         let leftRange = editor.editorDocument.createRange();
 
                          if (cursorInTheStart) {
                              leftRange.setStart(range.endContainer, range.endOffset);

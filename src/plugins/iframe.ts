@@ -138,7 +138,8 @@ export default function (editor: Jodit) {
         if (!editor.options.iframe) {
             return;
         }
-        editor.iframe = <HTMLIFrameElement>document.createElement("iframe");
+
+        editor.iframe = <HTMLIFrameElement>editor.ownerDocument.createElement("iframe");
         editor.iframe.style.display = 'block';
         editor.iframe.src = 'about:blank';
         editor.iframe.className = 'jodit_wysiwyg_iframe';
@@ -147,8 +148,8 @@ export default function (editor: Jodit) {
         editor.workplace.appendChild(editor.iframe);
 
         const doc = editor.iframe.contentWindow.document;
-        editor.doc = doc;
-        editor.win = editor.iframe.contentWindow;
+        editor.editorDocument = doc;
+        editor.editorWindow = editor.iframe.contentWindow;
 
         doc.open();
         doc.write(`<!DOCTYPE html>
@@ -189,7 +190,7 @@ export default function (editor: Jodit) {
                 }
             };
             editor.events.on('change afterInit afterSetMode resize', resizeIframe);
-            editor.__on([editor.iframe, editor.win, doc.documentElement], 'load', resizeIframe);
+            editor.__on([editor.iframe, editor.editorWindow, doc.documentElement], 'load', resizeIframe);
             editor.__on(doc, 'readystatechange DOMContentLoaded', resizeIframe);
         }
 
@@ -198,11 +199,11 @@ export default function (editor: Jodit) {
 
         (function(e){
             e.matches || (e.matches = Element.prototype.matches); // fix inside iframe polifill
-        })(editor.win['Element'].prototype);
+        })(editor.editorWindow['Element'].prototype);
 
         //proxy events
-        editor.__on(editor.win, 'mousedown click mouseup mousemove scroll', (e: Event) => {
-            editor.__fire && editor.__fire(window, e, document);
+        editor.__on(editor.editorWindow, 'mousedown click mouseup mousemove scroll', (e: Event) => {
+            editor.__fire && editor.__fire(window, e, editor.ownerDocument);
         });
 
         return false;

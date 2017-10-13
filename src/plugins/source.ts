@@ -102,13 +102,13 @@ export default class extends Component {
     private loadNext = (i: number, urls: string[], eventOnFinalize: false|string = 'aceReady', className: string = this.className) => {
         if (eventOnFinalize && urls[i] === undefined && this.jodit && this.jodit.events) {
             this.jodit.events.fire(eventOnFinalize);
-            this.__fire(window, eventOnFinalize);
+            this.__fire(this.jodit.ownerWindow, eventOnFinalize, this.jodit.ownerDocument);
             return;
         }
         if (urls[i] !== undefined) {
             appendScript(urls[i], () => {
                 this.loadNext(i + 1, urls, eventOnFinalize, className);
-            }, className);
+            }, className, this.jodit.ownerDocument);
         }
     };
 
@@ -162,8 +162,8 @@ export default class extends Component {
     constructor(editor: Jodit) {
         super(editor);
 
-        this.mirrorContainer = <HTMLDivElement>dom('<div class="jodit_source"/>', document);
-        this.mirror = <HTMLTextAreaElement>dom('<textarea class="jodit_source_mirror"/>', document);
+        this.mirrorContainer = <HTMLDivElement>dom('<div class="jodit_source"/>', this.jodit.ownerDocument);
+        this.mirror = <HTMLTextAreaElement>dom('<textarea class="jodit_source_mirror"/>', this.jodit.ownerDocument);
 
         editor.__on(this.mirror, 'mousedown keydown touchstart input', debounce(this.toWYSIWYG, editor.options.observer.timeout));
         editor.__on(this.mirror, 'change keydown mousedown touchstart input', debounce(this.autosize, editor.options.observer.timeout));
@@ -282,8 +282,8 @@ export default class extends Component {
             value = value.replace(/<span[^>]+data-jodit_selection_marker="end"[^>]*>[<>]*?<\/span>/gmi, this.tempMarkerEnd);
         }
 
-        if (window['html_beautify'] && this.jodit.options.beautifyHTML) {
-            value = window['html_beautify'](value);
+        if (this.jodit.ownerWindow['html_beautify'] && this.jodit.options.beautifyHTML) {
+            value = this.jodit.ownerWindow['html_beautify'](value);
         }
 
         let  selectionStart: number = value.indexOf(this.tempMarkerStart),
@@ -365,11 +365,11 @@ export default class extends Component {
                 return lastColumnIndices[row] - getLastColumnIndex(row) + column;
             },
             tryInitAceEditor = () => {
-                if (aceEditor === undefined && window['ace'] !== undefined) {
-                    const fakeMirror = dom('<div class="jodit_source_mirror-fake"/>', document);
+                if (aceEditor === undefined && this.jodit.ownerWindow['ace'] !== undefined) {
+                    const fakeMirror = dom('<div class="jodit_source_mirror-fake"/>', this.jodit.ownerDocument);
                     this.mirrorContainer.insertBefore(fakeMirror, this.mirrorContainer.firstChild);
 
-                    this.aceEditor = aceEditor = (<AceAjax.Ace>window['ace']).edit(fakeMirror);
+                    this.aceEditor = aceEditor = (<AceAjax.Ace>this.jodit.ownerWindow['ace']).edit(fakeMirror);
 
                     aceEditor.setTheme(editor.options.sourceEditorNativeOptions.theme);
                     aceEditor.renderer.setShowGutter(editor.options.sourceEditorNativeOptions.showGutter);
@@ -401,8 +401,8 @@ export default class extends Component {
                     undoManager = aceEditor.getSession().getUndoManager();
 
                     this.setMirrorValue = (value: string) => {
-                        if (editor.options.beautifyHTML && window['html_beautify']) {
-                            aceEditor.setValue(window['html_beautify'](value));
+                        if (editor.options.beautifyHTML && this.jodit.ownerWindow['html_beautify']) {
+                            aceEditor.setValue(this.jodit.ownerWindow['html_beautify'](value));
                         } else {
                             aceEditor.setValue(value);
                         }
@@ -442,7 +442,7 @@ export default class extends Component {
             };
 
         editor.events
-            .__on(window, 'aceReady', tryInitAceEditor) // work in global scope
+            .__on(this.jodit.ownerWindow, 'aceReady', tryInitAceEditor) // work in global scope
             .on('aceReady', tryInitAceEditor) // work in local scope
             .on('afterSetMode afterInit', () => {
                 if (editor.getRealMode() !== consts.MODE_SOURCE && editor.getMode() !== consts.MODE_SPLIT) {
@@ -462,7 +462,7 @@ export default class extends Component {
             });
 
         // global add ace editor in browser
-        if (window['ace'] === undefined && !$$('script.' + this.className, document.body).length) {
+        if (this.jodit.ownerWindow['ace'] === undefined && !$$('script.' + this.className, this.jodit.ownerDocument.body).length) {
             this.loadNext(0, editor.options.sourceEditorCDNUrlsJS, 'aceReady', this.className);
         }
     }

@@ -77,7 +77,7 @@ export default class Snapshot extends Component {
             }
         };
         snapshot.html = this.jodit.getEditorValue();
-        const sel = this.jodit.win.getSelection();
+        const sel = this.jodit.editorWindow.getSelection();
 
         if (sel.rangeCount) {
             const range = sel.getRangeAt(0);
@@ -120,8 +120,8 @@ export default class Snapshot extends Component {
         this.jodit.setEditorValue(snapshot.html);
         try {
             if (snapshot.range) {
-                const sel = this.jodit.win.getSelection(),
-                    range = this.jodit.doc.createRange();
+                const sel = this.jodit.editorWindow.getSelection(),
+                    range = this.jodit.editorDocument.createRange();
 
                 range.setStart(this.__restoreElementByLadder(snapshot.range.startContainer), snapshot.range.startOffset);
                 range.setEnd(this.__restoreElementByLadder(snapshot.range.endContainer), snapshot.range.endOffset);

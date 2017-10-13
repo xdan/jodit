@@ -35,7 +35,7 @@ export default function (editor: Jodit) {
         return;
     }
 
-    const line: HTMLDivElement = <HTMLDivElement>dom('<div role="button" tabIndex="-1" title="' + editor.i18n("Break") + '" class="jodit-add-new-line"><span>' + Toolbar.getIcon('enter') + '</span></div>');
+    const line: HTMLDivElement = <HTMLDivElement>dom('<div role="button" tabIndex="-1" title="' + editor.i18n("Break") + '" class="jodit-add-new-line"><span>' + Toolbar.getIcon('enter') + '</span></div>', editor.ownerDocument);
     const delta = 10;
     const isMatchedTag = new RegExp('^(' + editor.options.addNewLineTagsTriggers.join('|') + ')$', 'i');
 
@@ -79,8 +79,8 @@ export default function (editor: Jodit) {
                     e.stopPropagation();
                 })
                 .__on(line.querySelector('span'), 'mousedown touchstart', (e: MouseEvent) => {
-                    const p: HTMLElement = editor.doc.createElement(editor.options.enter),
-                        helper_node: Node = editor.doc.createTextNode(consts.INVISIBLE_SPACE);
+                    const p: HTMLElement = editor.editorDocument.createElement(editor.options.enter),
+                        helper_node: Node = editor.editorDocument.createTextNode(consts.INVISIBLE_SPACE);
 
                     p.appendChild(helper_node);
 
@@ -106,7 +106,7 @@ export default function (editor: Jodit) {
                     hide();
                 })
                 .__on(editor.editor, 'mousemove', debounce(function (this: HTMLElement, e: MouseEvent) {
-                    let currentElement: HTMLElement = <HTMLElement>editor.doc.elementFromPoint(e.pageX - editor.win.pageXOffset, e.pageY - editor.win.pageYOffset);
+                    let currentElement: HTMLElement = <HTMLElement>editor.editorDocument.elementFromPoint(e.pageX - editor.editorWindow.pageXOffset, e.pageY - editor.editorWindow.pageYOffset);
 
                     if (!currentElement || currentElement === line || !Dom.isOrContains(editor.editor, currentElement)) {
                         return;

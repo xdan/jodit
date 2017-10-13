@@ -35,7 +35,7 @@ Config.prototype.controls.brush = {
             tabs: {[key: string]: HTMLElement},
             currentElement: HTMLElement;
 
-        /* const sel = editor.win.getSelection(),
+        /* const sel = editor.editorWindow.getSelection(),
              checkRemoveOpportunity = () => {
                  if (current && (!current.hasAttribute("style") || !current.getAttribute("style").length)) {
                      let selInfo = editor.selection.save();
@@ -52,7 +52,7 @@ Config.prototype.controls.brush = {
                      [sel.anchorNode, sel.anchorNode.parentNode].forEach((elm: HTMLElement) => {
                          if (elm && elm.hasAttribute && elm.hasAttribute("style") && elm.getAttribute('style').indexOf('background') !== -1 && elm.style.backgroundColor) {
                              current = elm;
-                             bg_color = editor.win.getComputedStyle(current).getPropertyValue('background-color');
+                             bg_color = editor.editorWindow.getComputedStyle(current).getPropertyValue('background-color');
                          }
 
                          if (elm && elm.hasAttribute && elm.hasAttribute('style') && elm.getAttribute('style').indexOf('color') !== -1 && elm.style.color) {
@@ -63,7 +63,7 @@ Config.prototype.controls.brush = {
                  }
              };*/
 
-        if (current && Dom.isNode(current, editor.win) && current.nodeType === Node.ELEMENT_NODE) {
+        if (current && Dom.isNode(current, editor.editorWindow) && current.nodeType === Node.ELEMENT_NODE) {
             color = css(current, 'color').toString();
             bg_color = css(current, 'background-color').toString();
             currentElement = current;

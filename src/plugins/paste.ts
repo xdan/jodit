@@ -64,7 +64,7 @@ export default function (editor: Jodit) {
                 clipboard_html = htmlentities(event.clipboardData.getData(TEXT_PLAIN)).replace(/\n/g, "<br/>");
             }
 
-            if (clipboard_html !== '' || clipboard_html instanceof (<any>editor.win).Node) {
+            if (clipboard_html !== '' || clipboard_html instanceof (<any>editor.editorWindow).Node) {
                 /**
                  * Triggered after the content is pasted from the clipboard into the Jodit. If a string is returned the new string will be used as the pasted content.
                  *
@@ -82,7 +82,7 @@ export default function (editor: Jodit) {
 
                 clipboard_html = editor.events.fire('processPaste', [event, clipboard_html]);
 
-                if (typeof clipboard_html === 'string' || clipboard_html instanceof (<any>editor.win).Node) {
+                if (typeof clipboard_html === 'string' || clipboard_html instanceof (<any>editor.editorWindow).Node) {
                     editor.selection.insertHTML(clipboard_html);
                 }
                 event.preventDefault();

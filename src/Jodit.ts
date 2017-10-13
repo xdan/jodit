@@ -4,7 +4,7 @@ import Select from './modules/Selection';
 import Toolbar from './modules/Toolbar';
 import Cookie from './modules/Cookie';
 import * as consts from './constants';
-import {extend, inArray, dom, each, sprintf, css, defaultLanguage, debounce} from './modules/Helpers';
+import {extend, inArray, dom, each, sprintf, defaultLanguage, debounce} from './modules/Helpers';
 import * as helper from './modules/Helpers';
 import FileBrowser from "./modules/FileBrowser";
 import Uploader from "./modules/Uploader";
@@ -37,15 +37,27 @@ export default class Jodit extends Component{
     static lang: any = {};
 
     /**
-     * @property{HTMLDocument} win
+     * @property {HTMLDocument} editorDocument
      */
-    doc: HTMLDocument;
+    editorDocument: HTMLDocument;
+
     /**
-     * @property{Window} win
+     * @property {Window} editorWindow
      */
-    win: Window;
+    editorWindow: Window;
 
     components: any = [];
+
+    /**
+     * @property {HTMLDocument} ownerDocument
+     */
+    ownerDocument: HTMLDocument;
+
+    /**
+     * @property {Window} ownerWindow
+     */
+    ownerWindow: Window;
+
 
     /**
      * @property{string} ID attribute for source element, id add {id}_editor it's editor's id
@@ -132,9 +144,6 @@ export default class Jodit extends Component{
     constructor(element: HTMLInputElement|string, options?: object) {
         super();
 
-        this.doc = document;
-        this.win = window;
-
         const OptionsDefault = function () {};
         OptionsDefault.prototype = Jodit.defaultOptions;
 
@@ -149,31 +158,42 @@ export default class Jodit extends Component{
                 }
             })
         }
-
+        // in iframe it can be changed
+        this.editorDocument = this.options.ownerDocument;
+        this.editorWindow = this.options.ownerWindow;
+        this.ownerDocument = this.options.ownerDocument;
+        this.ownerWindow = this.options.ownerWindow;
 
         if (typeof element === 'string') {
-            this.element = <HTMLInputElement>document.querySelector(element);
+            this.element = <HTMLInputElement>this.ownerDocument.querySelector(element);
         } else {
             this.element = element;
         }
 
-        if (this.element === undefined || this.element.nodeType !== Node.ELEMENT_NODE) {
+        if (
+            this.element === undefined ||
+            typeof this.element !== "object" ||
+            !("nodeType" in this.element) ||
+            this.element.nodeType !== Node.ELEMENT_NODE ||
+            !this.element.cloneNode
+        ) {
             throw new Error('Element "' + element + '" should be string or HTMLElement instance');
         }
+
 
         this.events = this.getInstance('Events');
         this.selection = this.getInstance('Selection');
         this.uploader = this.getInstance('Uploader');
 
-        this.container = <HTMLDivElement>dom('<div class="jodit_container" />');
+        this.container = <HTMLDivElement>dom('<div class="jodit_container" />', this.ownerDocument);
         this.container.classList.add('jodit_' + (this.options.theme || 'default') + '_theme');
 
         if (this.options.zIndex) {
             this.container.style.zIndex = parseInt(this.options.zIndex.toString(), 10).toString();
         }
 
-        this.workplace = <HTMLDivElement>dom('<div class="jodit_workplace" />');
-        this.progress_bar = <HTMLDivElement>dom('<div class="jodit_progress_bar"><div></div></div>');
+        this.workplace = <HTMLDivElement>dom('<div class="jodit_workplace" />', this.ownerDocument);
+        this.progress_bar = <HTMLDivElement>dom('<div class="jodit_progress_bar"><div></div></div>', this.ownerDocument);
 
 
         this.toolbar = new Toolbar(this);
@@ -185,7 +205,7 @@ export default class Jodit extends Component{
             this.container.classList.add('jodit_text_icons');
         }
 
-        this.__on(window, 'resize', () => {
+        this.__on(this.ownerWindow, 'resize', () => {
             if (this.events) {
                 this.events.fire('resize');
             }
@@ -218,8 +238,8 @@ export default class Jodit extends Component{
 
         // fix for native resizing
         try {
-            this.doc.execCommand('enableObjectResizing', false, false);
-            this.doc.execCommand('enableInlineTableEditing', false, false);
+            this.editorDocument.execCommand('enableObjectResizing', false, false);
+            this.editorDocument.execCommand('enableInlineTableEditing', false, false);
         } catch (ignore) {
             // continue regardless of error
         }
@@ -253,11 +273,11 @@ export default class Jodit extends Component{
      */
     private __createEditor() {
         if (this.events.fire('createEditor') !== false) {
-            this.editor = <HTMLDivElement>dom(`<div class="jodit_wysiwyg" contenteditable aria-disabled="false" tabindex="${this.options.tabIndex}"></div>`);
+            this.editor = <HTMLDivElement>dom(`<div class="jodit_wysiwyg" contenteditable aria-disabled="false" tabindex="${this.options.tabIndex}"></div>`, this.ownerDocument);
             // fix fo ie
-            this.workplace.appendChild(document.createTextNode("\n"));
+            this.workplace.appendChild(this.ownerDocument.createTextNode("\n"));
             this.workplace.appendChild(this.editor);
-            this.workplace.appendChild(document.createTextNode("\n"));
+            this.workplace.appendChild(this.ownerDocument.createTextNode("\n"));
         }
 
         if (this.options.editorCssClass) {
@@ -296,7 +316,7 @@ export default class Jodit extends Component{
 
         if (this.options.triggerChangeEvent) {
             this.events.on('change', debounce(() => {
-                this.__fire(this.element, 'change');
+                this.__fire(this.element, 'change', this.ownerDocument);
             }, this.options.observer.timeout))
         }
     }
@@ -521,7 +541,7 @@ export default class Jodit extends Component{
                     break;
                 default:
                     try {
-                        result = this.doc.execCommand(command, second, third);
+                        result = this.editorDocument.execCommand(command, second, third);
                     } catch (e) {
 
                     }
@@ -582,7 +602,7 @@ export default class Jodit extends Component{
      * ```
      */
     getRealMode(): number {
-        return this.getMode() !== consts.MODE_SPLIT ? this.getMode() : (Dom.isOrContains(this.editor, document.activeElement) || Dom.isOrContains(this.toolbar.container, document.activeElement)) ? consts.MODE_WYSIWYG : consts.MODE_SOURCE;
+        return this.getMode() !== consts.MODE_SPLIT ? this.getMode() : (Dom.isOrContains(this.editor, this.ownerDocument.activeElement) || Dom.isOrContains(this.toolbar.container, this.ownerDocument.activeElement)) ? consts.MODE_WYSIWYG : consts.MODE_SOURCE;
     }
 
     /**
