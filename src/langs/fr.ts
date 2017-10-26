@@ -68,7 +68,7 @@ export default {
     'Open link in new tab': 'Ouvrir le lien dans un nouvel onglet',
     'Image': 'Image',
     'Advansed': 'Avancé',
-    'Image properties': 'Proriétés de l\'image',
+    'Image properties': 'Propriétés de l\'image',
     'Cancel': 'Effacer',
     'Ok': 'OK',
     
