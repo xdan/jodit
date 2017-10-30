@@ -22,12 +22,13 @@ export default {
     'Italic': 'Наклонный',
     'Insert Unordered List': 'Вставка маркированного списка',
     'Insert Ordered List': 'Вставить нумерованный список',
-    'Justify Center': 'Выровнять по центру',
-    'Justify Full': 'Выровнять по ширине',
-    'Justify Left': 'Выровнять по левому краю',
-    'Justify Right': 'Выровнять по правому краю',
+    'Align Center': 'Выровнять по центру',
+    'Align Justify': 'Выровнять по ширине',
+    'Align Left': 'Выровнять по левому краю',
+    'Align Right': 'Выровнять по правому краю',
     'Insert Horizontal Line': 'Вставить горизонтальную линию',
     'Insert Image': 'Вставить изображение',
+    'Insert youtube/vimeo video': 'Вставьте видео',
     'Insert link': 'Вставить ссылку',
     'Font size': 'Размер шрифта',
     'Font family': 'Шрифт',
@@ -43,6 +44,8 @@ export default {
 
     'Insert': 'Вставить',
     'Insert table': 'Вставить таблицу',
+
+    'Paint format': 'Формат краски',
     'Change mode': 'Источник',
 
     //plugin Image

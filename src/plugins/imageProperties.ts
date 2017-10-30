@@ -476,9 +476,9 @@ export default function (editor: Jodit) {
             });
 
             if (editor.options.image.editMargins) {
-                if ((<HTMLElement>prop.querySelector('.jodit_lock_margin').firstChild).classList.contains('jodit_icon_unlock')) {
-                    $$('.margins', prop).forEach(function () {
-                        css(image, this.id, normalSize(this.value));
+                if (!lockMargin) {
+                    $$('.margins', prop).forEach(function (margin) {
+                        css(image, margin.id, normalSize(margin.value));
                     });
                 } else {
                     css(image, 'margin', normalSize(val(prop, '#marginTop')));

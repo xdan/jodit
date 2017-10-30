@@ -12,6 +12,7 @@ export default {
     
     // Toolbar
     'Anchor': '',
+    'Open in new tab': '',
     'Open editor in fullsize': '',
     'Clear Formatting': '',
     'Fill color or set the text color': '',
@@ -21,12 +22,13 @@ export default {
     'Italic': '',
     'Insert Unordered List': '',
     'Insert Ordered List': '',
-    'Justify Center': '',
-    'Justify Full': '',
-    'Justify Left': '',
-    'Justify Right': '',
+    'Align Center': '',
+    'Align Justify': '',
+    'Align Left': '',
+    'Align Right': '',
     'Insert Horizontal Line': '',
     'Insert Image': '',
+    'Insert youtube/vimeo video': '',
     'Insert link': '',
     'Font size': '',
     'Font family': '',
@@ -40,7 +42,10 @@ export default {
     'Quote': '',
     'Code': '',
 
+    'Insert': '',
     'Insert table': '',
+
+    'Paint format': '',
     'Change mode': '',
     
     //plugin Image
@@ -80,6 +85,7 @@ export default {
     'Drop image': '',
     'or click': '',
     'Alternative text': '',
+    'Upload': '',
     'Browse': '',
     'Background': '',
     'Text': '',
@@ -95,5 +101,5 @@ export default {
     'Delete table': '',
     'Delete row': '',
     'Delete column': '',
-    'Empty cell': '',
+    'Empty cell': ''
 };

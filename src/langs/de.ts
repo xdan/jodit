@@ -22,12 +22,13 @@ export default {
     'Italic': 'Kursiv',
     'Insert Unordered List': 'Ungeordnete Liste einfügen',
     'Insert Ordered List': 'Legen Sie Sortierte Liste',
-    'Justify Center': 'einmitten',
-    'Justify Full': 'Begründen Voll',
-    'Justify Left': 'Begründen links',
-    'Justify Right': 'Begründen Rechts',
+    'Align Center': 'einmitten',
+    'Align Justify': 'Begründen Voll',
+    'Align Left': 'Begründen links',
+    'Align Right': 'Begründen Rechts',
     'Insert Horizontal Line': 'Legen Horizontale Linie',
     'Insert Image': 'Bild einfügen',
+    'Insert youtube/vimeo video': 'Youtube/vimeo video einfügen',
     'Insert link': 'Link einfügen',
     'Font size': 'Schriftgröße',
     'Font family': 'Schriftfamilie',
@@ -43,6 +44,8 @@ export default {
 
     'Insert': 'Einfügen',
     'Insert table': 'Tabelle einfügen',
+
+    'Paint format': 'Format klonen',
     'Change mode': 'Änderungsmodus',
     
     //plugin Image
@@ -84,7 +87,6 @@ export default {
     'Alternative text': 'Alternativer Text',
     'Browse': 'Blättern',
     'Upload': 'Hochladen',
-
     'Background': 'Hintergrund',
     'Text': 'Text',
     
