@@ -646,6 +646,23 @@ describe('Test interface', function() {
 
                 expect(editor.getEditorValue()).to.equal('111');
             });
+            describe('Button Bold', function () {
+                it('Should reactivate Bold button after second click and move cursor out of Strong element', function () {
+                    var editor = new Jodit('#table_editor_interface', {
+                        buttons: ['bold']
+                    });
+
+                    editor.setEditorValue('<p>test</p>')
+                    editor.selection.setCursorAfter(editor.editor.firstChild.firstChild);
+
+                    simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-bold'));
+                    editor.selection.insertHTML('text');
+                    simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-bold'));
+                    editor.selection.insertHTML('text');
+
+                    expect(editor.getEditorValue()).to.equal('<p>test<strong>text</strong>text</p>');
+                });
+            });
         });
         describe('Commands', function () {
             it('Click on Source button should change current mode', function() {

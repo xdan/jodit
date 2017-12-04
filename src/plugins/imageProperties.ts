@@ -477,7 +477,7 @@ export default function (editor: Jodit) {
 
             if (editor.options.image.editMargins) {
                 if (!lockMargin) {
-                    $$('.margins', prop).forEach(function (margin) {
+                    $$('.margins', prop).forEach((margin: HTMLInputElement) => {
                         css(image, margin.id, normalSize(margin.value));
                     });
                 } else {
