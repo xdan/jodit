@@ -51,6 +51,7 @@ export default function (editor: Jodit) {
             // editor.editorDocument.execCommand('fontsize', false, 7)
             const cssOptions = {...Jodit.defaultOptions.controls[command].css},
                 cssRules = {};
+
             Object.keys(cssOptions).forEach((key: string) => {
                 cssRules[key] = Array.isArray(cssOptions[key]) ?  cssOptions[key][0] : cssOptions[key];
             });

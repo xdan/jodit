@@ -46,6 +46,72 @@ describe('Test image', function() {
         expect(resizer.style.display === 'block').to.equal(true);
     });
 
+    describe('Popup box', function () {
+        describe('In relative object', function () {
+            it('should be under image', function () {
+                var div = document.createElement('div');
+                div.innerHTML = '<div style="width:800px; margin:auto; border:1px solid red;">\n' +
+                    '        wrong image selection\n' +
+                    '        <div style="position:relative;text-align: left">\n' +
+                    '            <textarea id="text_area0"> <img src="https://xdsoft.net/jodit/build/images/artio.jpg" style="border:1px solid red;width:100px;height:100px;"/></textarea>\n' +
+                    '        </div>\n' +
+                    '    </div>';
+
+                document.body.appendChild(div);
+                var editor = new Jodit('#text_area0', {
+                    observer: {
+                        timeout: 0
+                    }
+                });
+                simulateEvent('mousedown', 0, editor.editor.querySelector('img'));
+
+                var popup = document.querySelector('.jodit_toolbar_popup-inline');
+
+                expect(popup.classList.contains('active')).to.equal(true);
+
+                var positionPopup = offset(popup);
+                var positionImg = offset(editor.editor.querySelector('img'));
+
+
+                expect(Math.abs(positionPopup.left - positionImg.left) < 20).to.be.true;
+                expect(Math.abs(positionPopup.top - (positionImg.top + positionImg.height)) < 20).to.be.true;
+
+
+                editor.destruct();
+                document.body.removeChild(div);
+            });
+        });
+    });
+    describe('Resize box', function () {
+        describe('In relative object', function () {
+            it('should be in front of image', function () {
+                var div = document.createElement('div');
+                div.innerHTML = '<div style="width:800px; margin:auto; border:1px solid red;">\n' +
+                    '        wrong image selection\n' +
+                    '        <div style="position:relative;text-align: left">\n' +
+                    '            <textarea id="text_area0"> <img src="https://xdsoft.net/jodit/build/images/artio.jpg" style="border:1px solid red;width:100px;height:100px;"/></textarea>\n' +
+                    '        </div>\n' +
+                    '    </div>';
+
+                document.body.appendChild(div);
+                var editor = new Jodit('#text_area0');
+                simulateEvent('mousedown', 0, editor.editor.querySelector('img'));
+
+                var resizer = document.querySelector('.jodit_resizer');
+                expect(resizer.style.display === 'block').to.equal(true);
+
+                var positionResizer = offset(resizer);
+                var positionImg = offset(editor.editor.querySelector('img'));
+
+                expect(positionResizer.left + 1).to.be.equal(positionImg.left);
+                expect(positionResizer.top + 1).to.be.equal(positionImg.top);
+
+                editor.destruct();
+                document.body.removeChild(div);
+            });
+        });
+    });
+
     after(function() {
         table_editor_image.parentNode.removeChild(table_editor_image);
     });

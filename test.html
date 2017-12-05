@@ -8,32 +8,20 @@
     <title>Document</title>
 </head>
 <body>
-    <div contenteditable id="test"><strong>12</strong>23</div>
+    <div style="width:800px; margin:auto; border:1px solid red;">
+        wrong image selection
+        <div style="position:relative;">
+            <textarea id="text_area0"> <img src="https://xdsoft.net/jodit/build/images/artio.jpg" style="width:100px;"/></textarea>
+        </div>
+    </div>
+    <link rel="stylesheet" href="build/jodit.min.css" />
+    <link rel="stylesheet" href="app.css" />
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,700,700i" rel="stylesheet">
+
+    <script src="build/jodit.min.js"></script>
 </body>
 <script>
-    function current() {
-        var sel = getSelection();
-        if (sel.rangeCount) {
-            var range = sel.getRangeAt(0);
-            var start = range.startContainer;
-            var end = range.endContainer;
-
-
-            if (range.startContainer.nodeType !== Node.TEXT_NODE && (start !== end || range.startOffset !== range.endOffset)) {
-                return range.startContainer.childNodes[range.startOffset];
-            }
-
-            return start;
-        }
-    }
-    var sel = getSelection();
-    var range = document.createRange();
-    range.setStart(test.childNodes[0], 1);
-    range.setEnd(test, 2);
-//    range.collapse(true);
-    sel.removeAllRanges()
-    sel.addRange(range)
-    console.log(current())
-
+    var object = document.getElementById("text_area0");
+    new Jodit(object);
 </script>
 </html>

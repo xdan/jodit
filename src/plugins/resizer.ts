@@ -206,8 +206,13 @@ export default function (editor: Jodit) {
     });
 
     editor.events
+        .on('beforeDestruct', () => {
+            if (resizer.parentNode) {
+                resizer.parentNode.removeChild(resizer);
+            }
+        })
         .on('afterInit', () => {
-            editor.container.appendChild(resizer);
+            editor.editorDocument.body.appendChild(resizer);
             editor
                 .__on(editor.editor, 'keydown', (e: KeyboardEvent) => {
                     if (resizerIsVisible && e.keyCode === consts.KEY_DELETE && currentElement && currentElement.tagName.toLowerCase() !== 'table') {

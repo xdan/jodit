@@ -342,7 +342,7 @@ export default function (editor: Jodit) {
         .on('hidePopup afterCommand keydown resize', hidePopup)
         .on('showPopap', delayShowPopup)
         .on('afterInit', () => {
-            editor.container
+            editor.editorDocument.body
                 .appendChild(popup);
             editor.__on(popup,'mousedown', (e: MouseEvent) => {
                 e.stopPropagation();
@@ -366,6 +366,9 @@ export default function (editor: Jodit) {
             });
         })
         .on('beforeDestruct', () => {
+            if (popup.parentNode) {
+                popup.parentNode.removeChild(popup);
+            }
             clearTimeout(timeout);
         });
 };
