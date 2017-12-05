@@ -225,16 +225,22 @@ export default function (editor: Jodit) {
                     if (!value) {
                         return;
                     }
-                    if (/^[0-9]+$/.test(value) || /^[0-9]+px$/i.test(value)) {
+                    if (/^[0-9]+(px)?$/.test(value)) {
                         value = parseInt(value, 10);
                     }
+
                     elm.value = value.toString() || '';
+
                     if (!notequal && elm.id !== 'marginTop' && elm.value !== val(prop, '#marginTop')) {
-                        prop.querySelector('.jodit_lock_margin').innerHTML = Toolbar.getIcon('unlock');
-                        $$('.margins', prop).forEach((elm:HTMLElement) => elm.classList.remove('disabled'));
                         notequal = true;
                     }
                 });
+
+                lockMargin = !notequal;
+
+                prop.querySelector('.jodit_lock_margin').innerHTML = Toolbar.getIcon(lockMargin ? 'lock' : 'unlock');
+                $$('.margins:not(#marginTop)', prop).forEach((elm:HTMLElement) => !lockMargin ? elm.removeAttribute('disabled') : elm.setAttribute('disabled', 'true'));
+
             },
 
             updateSizes = () => {

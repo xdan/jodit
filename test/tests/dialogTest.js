@@ -27,6 +27,44 @@ describe('Dialog system tests', function() {
 
         });
     });
+    describe('Dialog image', function () {
+        describe('Opened dialog image', function () {
+            it('Should disable margin inputs for left, bottom, right if element has equals margins(margin:10px;)', function () {
+                var editor = new Jodit('#dialog_area', {
+                    observer: {
+                        timeout: 0
+                    },
+                    image: {
+                        openOnDblClick: true
+                    }
+                });
+                editor.setEditorValue('<img src="https://xdsoft.net/jodit/build/images/artio.jpg" style="margin:10px;border:1px solid red;width:100px;height:100px;"/>');
+                simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
+
+                var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active');
+
+                expect(dialog.style.display).to.not.equal('none');
+                expect(dialog.querySelectorAll('input.margins[disabled]').length).to.equal(3);
+            });
+            it('Should enable margin inputs for left, bottom, right if element has not equals margins(margin:10px 5px;)', function () {
+                var editor = new Jodit('#dialog_area', {
+                    observer: {
+                        timeout: 0
+                    },
+                    image: {
+                        openOnDblClick: true
+                    }
+                });
+                editor.setEditorValue('<img src="https://xdsoft.net/jodit/build/images/artio.jpg" style="margin:10px 5px;border:1px solid red;width:100px;height:100px;"/>');
+                simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
+
+                var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active');
+
+                expect(dialog.style.display).to.not.equal('none');
+                expect(dialog.querySelectorAll('input.margins[disabled]').length).to.equal(0);
+            });
+        });
+    });
     after(function() {
         dialog_area.parentNode.removeChild(dialog_area);
     });
