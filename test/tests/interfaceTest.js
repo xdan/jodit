@@ -217,19 +217,23 @@ describe('Test interface', function() {
     describe('Toolbar', function () {
         describe('Popups', function () {
             it('Open popup in toolbar', function () {
-                var editor = new Jodit('#table_editor_interface');
+                var editor = new Jodit('#table_editor_interface', {
+                    disablePlugins: 'mobile'
+                });
                 simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-video'))
 
-                var popup = editor.container.querySelector('.jodit_toolbar_popup');
+                var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup');
 
                 expect(popup && popup.style.display === 'block').to.equal(true);
             });
             it('Open and close popap after clicking in another place', function() {
-                var editor = new Jodit('#table_editor_interface');
+                var editor = new Jodit('#table_editor_interface', {
+                    disablePlugins: 'mobile'
+                });
 
                 simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-video'))
 
-                var popup = editor.container.querySelector('.jodit_toolbar_popup');
+                var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup');
 
                 expect(popup && popup.style.display === 'block').to.equal(true);
 
@@ -360,30 +364,32 @@ describe('Test interface', function() {
                 expect(list.style.display).to.equal('none');
             });
             it('Open video dialog and insert video by url from youtube.', function() {
-                var editor = new Jodit('#table_editor_interface');
+                var editor = new Jodit('#table_editor_interface', {
+                    disablePlugins: 'mobile'
+                });
 
                 editor.setEditorValue('')
 
 
                 simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-video'))
 
-                var list = editor.container.querySelector('.jodit_toolbar_popup');
+                var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup');
 
-                expect(list.style.display).to.equal('block');
+                expect(popup.style.display).to.equal('block');
 
-                editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-video input[name=code]').value = 'sddhttps://www.youtube.com/watch?v=7CcEYRfxUOQ' // try wrong url
-                simulateEvent('submit', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-video .jodit_form'))
+                popup.querySelector('input[name=code]').value = 'sddhttps://www.youtube.com/watch?v=7CcEYRfxUOQ' // try wrong url
+                simulateEvent('submit', 0, popup.querySelector('.jodit_form'))
 
-                expect(editor.container.querySelectorAll('.jodit_toolbar_btn.jodit_toolbar_btn-video input[name=code].jodit_error').length).to.equal(1);
+                expect(popup.querySelectorAll('input[name=code].jodit_error').length).to.equal(1);
 
-                editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-video input[name=code]').value = 'https://www.youtube.com/watch?v=7CcEYRfxUOQ'
-                simulateEvent('submit', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-video .jodit_form'))
+                popup.querySelector('input[name=code]').value = 'https://www.youtube.com/watch?v=7CcEYRfxUOQ'
+                simulateEvent('submit', 0, popup.querySelector('.jodit_form'))
 
                 expect(sortAtrtibutes(editor.getEditorValue())).to.equal('<iframe allowfullscreen="" frameborder="0" height="345" src="//www.youtube.com/embed/7CcEYRfxUOQ" width="400"></iframe>');
 
                 simulateEvent('mousedown', 0, editor.editor)
 
-                expect(list.style.display).to.equal('none');
+                expect(popup.style.display).to.equal('none');
             });
             it('Open align list and choose Right align.', function() {
                 var editor = new Jodit('#table_editor_interface');
@@ -482,6 +488,7 @@ describe('Test interface', function() {
             });
             it('Add own button', function() {
                 var editor = new Jodit('#table_editor_interface', {
+                    disablePlugins: ['mobile'],
                     buttons: Jodit.defaultOptions.buttons.concat([
                         {
                             name: 'insertDate',
@@ -731,7 +738,7 @@ describe('Test interface', function() {
 
                 simulateEvent('mousedown', 0, editor.editor.querySelector('img'))
 
-                var popup = editor.container.querySelector('.jodit_toolbar_popup-inline');
+                var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
 
                 expect(popup && popup.classList.contains('active')).to.equal(true);
             });
@@ -744,7 +751,7 @@ describe('Test interface', function() {
 
                 simulateEvent('mousedown', 0, editor.editor.querySelector('td'))
 
-                var popup = editor.container.querySelector('.jodit_toolbar_popup-inline');
+                var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
 
                 expect(popup && popup.classList.contains('active')).to.equal(true);
             });
@@ -761,7 +768,7 @@ describe('Test interface', function() {
                     simulateEvent('mousedown', 0, td)
                     simulateEvent('mousemove', 0, td)
 
-                    var popup = editor.container.querySelector('.jodit_toolbar_popup-inline');
+                    var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
 
                     expect(popup && popup.classList.contains('active')).to.equal(true);
 
@@ -788,7 +795,7 @@ describe('Test interface', function() {
 
                 simulateEvent('mousedown', 0, td)
 
-                var popup = editor.container.querySelector('.jodit_toolbar_popup-inline');
+                var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
 
                 expect(popup && popup.classList.contains('active')).to.equal(true);
 
@@ -814,7 +821,7 @@ describe('Test interface', function() {
 
                 simulateEvent('mousedown', 0, td)
 
-                var popup = editor.container.querySelector('.jodit_toolbar_popup-inline');
+                var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
 
                 simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-splitv>a'))
 
@@ -832,7 +839,7 @@ describe('Test interface', function() {
 
                 simulateEvent('mousedown', 0, td)
 
-                var popup = editor.container.querySelector('.jodit_toolbar_popup-inline');
+                var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
 
                 simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-splitg>a'))
 
@@ -851,7 +858,7 @@ describe('Test interface', function() {
                 simulateEvent('mousedown', 0, td)
                 simulateEvent('mousemove', 0, editor.editor.querySelectorAll('td')[1])
 
-                var popup = editor.container.querySelector('.jodit_toolbar_popup-inline');
+                var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
 
                 simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-merge>a'))
 
@@ -868,7 +875,7 @@ describe('Test interface', function() {
 
                 simulateEvent('mousedown', 0, td)
 
-                var popup = editor.container.querySelector('.jodit_toolbar_popup-inline');
+                var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
 
                 expect(popup && popup.classList.contains('active')).to.equal(true);
 
@@ -894,7 +901,7 @@ describe('Test interface', function() {
 
                 simulateEvent('mousedown', 0, td)
 
-                var popup = editor.container.querySelector('.jodit_toolbar_popup-inline');
+                var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
 
                 expect(popup && popup.classList.contains('active')).to.equal(true);
 
@@ -922,7 +929,7 @@ describe('Test interface', function() {
 
                 simulateEvent('mousedown', 0, td)
 
-                var popup = editor.container.querySelector('.jodit_toolbar_popup-inline');
+                var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
 
                 expect(popup && popup.classList.contains('active')).to.equal(true);
 
@@ -950,7 +957,7 @@ describe('Test interface', function() {
 
                 simulateEvent('mousedown', 0, td)
 
-                var popup = editor.container.querySelector('.jodit_toolbar_popup-inline');
+                var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
 
                 expect(popup && popup.classList.contains('active')).to.equal(true);
 

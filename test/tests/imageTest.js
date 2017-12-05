@@ -29,7 +29,7 @@ describe('Test image', function() {
 
         simulateEvent('mousedown', 0, img);
 
-        var resizer = document.querySelector('.jodit_resizer');
+        var resizer = document.querySelector('.jodit_resizer[data-editor_id=table_editor_image]');
 
         expect(resizer.style.display === 'block').to.equal(true);
     });
@@ -41,7 +41,7 @@ describe('Test image', function() {
 
         simulateEvent('mousedown', 0, td);
 
-        var resizer = document.querySelector('.jodit_resizer');
+        var resizer = document.querySelector('.jodit_resizer[data-editor_id=table_editor_image]');
 
         expect(resizer.style.display === 'block').to.equal(true);
     });
@@ -65,7 +65,7 @@ describe('Test image', function() {
                 });
                 simulateEvent('mousedown', 0, editor.editor.querySelector('img'));
 
-                var popup = document.querySelector('.jodit_toolbar_popup-inline');
+                var popup = document.querySelector('.jodit_toolbar_popup-inline[data-editor_id=text_area0]');
 
                 expect(popup.classList.contains('active')).to.equal(true);
 
@@ -97,14 +97,14 @@ describe('Test image', function() {
                 var editor = new Jodit('#text_area0');
                 simulateEvent('mousedown', 0, editor.editor.querySelector('img'));
 
-                var resizer = document.querySelector('.jodit_resizer');
+                var resizer = document.querySelector('.jodit_resizer[data-editor_id=text_area0]');
                 expect(resizer.style.display === 'block').to.equal(true);
 
                 var positionResizer = offset(resizer);
                 var positionImg = offset(editor.editor.querySelector('img'));
 
-                expect(positionResizer.left + 1).to.be.equal(positionImg.left);
-                expect(positionResizer.top + 1).to.be.equal(positionImg.top);
+                expect(Math.abs(positionResizer.left - positionImg.left) < 2).to.be.true;
+                expect(Math.abs(positionResizer.top - positionImg.top) < 2).to.be.true;
 
                 editor.destruct();
                 document.body.removeChild(div);

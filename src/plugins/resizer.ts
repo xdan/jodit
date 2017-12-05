@@ -69,7 +69,7 @@ export default function (editor: Jodit) {
 
         resizerIsVisible: boolean = false;
 
-    const resizer: HTMLElement = dom('<div style="display:none" class="jodit_resizer">' +
+    const resizer: HTMLElement = dom('<div data-editor_id="' + editor.id + '" style="display:none" class="jodit_resizer">' +
             '<i class="jodit_resizer-topleft"></i>' +
             '<i class="jodit_resizer-topright"></i>' +
             '<i class="jodit_resizer-bottomright"></i>' +

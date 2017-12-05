@@ -459,13 +459,13 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
                 editor.selection.insertNode(editor.editorDocument.createTextNode('split '));
 
-                expect(editor.getEditorValue()).to.be.equal('<p>te<br>split st</p>');
+                expect(editor.getEditorValue()).to.be.equal('te<br>split st');
 
                 simulateEvent('keydown',    Jodit.KEY_ENTER, editor.editor, function (options) {
                     options.shiftKey = true;
                 });
 
-                expect(editor.getEditorValue()).to.be.equal('<p>te<br>split <br>st</p>');
+                expect(editor.getEditorValue()).to.be.equal('te<br>split <br>st');
             })
         });
         describe('In PRE tag', function () {
@@ -541,6 +541,32 @@ describe('Enter behavior Jodit Editor Tests', function() {
                     });
                 });
 
+            });
+        });
+        describe('Use BR instead P', function () {
+            describe('Enter 3 times', function () {
+                it('should create 3 BR elements and set cursor after these', function () {
+                    var editor = new Jodit(appendTestArea(), {
+                        enter: Jodit.BR
+                    });
+                    editor.setEditorValue('Some text');
+
+                    var sel = editor.editorWindow.getSelection(),
+                        range = editor.editorDocument.createRange();
+
+                    range.setStart(editor.editor.firstChild, 9);
+                    range.collapse(true);
+                    sel.removeAllRanges();
+                    sel.addRange(range);
+
+                    simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
+                    simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
+                    simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
+
+                    editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
+
+                    expect(editor.getEditorValue()).to.be.equal('Some text<br><br><br> a ');
+                });
             });
         });
     });

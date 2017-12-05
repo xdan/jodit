@@ -225,14 +225,14 @@ export default class Jodit extends Component{
             });
         }
 
+        this.id = this.element.getAttribute('id') || (new Date()).getTime().toString();
+
         this.initPlugines();
 
         this.__createEditor();
 
         this.setElementValue(); // syncro
 
-
-        this.id = this.element.getAttribute('id') || (new Date()).getTime().toString();
 
         Jodit.instances[this.id] = this;
 

@@ -287,7 +287,7 @@ Config.prototype.popup = {
 export default function (editor: Jodit) {
     let timeout: number;
     const toolbar: Toolbar = new Toolbar(editor),
-        popup: HTMLDivElement = <HTMLDivElement> dom('<div class="jodit_toolbar_popup-inline"></div>', editor.ownerDocument),
+        popup: HTMLDivElement = <HTMLDivElement> dom('<div data-editor_id="' + editor.id + '" class="jodit_toolbar_popup-inline"></div>', editor.ownerDocument),
 
         toogleEditor = (toggle: boolean) => {
             if (editor.container) {

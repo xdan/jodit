@@ -84,6 +84,14 @@ export default  function (editor: Jodit) {
             let fake;
             let currentBox: HTMLElement|false = current ? <HTMLElement>Dom.up(current, Dom.isBlock, editor.editor) : false;
 
+
+            // if use <br> tag for break line or when was entered SHIFt key or in <td> or <th> or <blockquote>
+            if (editor.options.enter === consts.BR || event.shiftKey || Dom.closest(current, 'PRE|BLOCKQUOTE', editor.editor)) {
+                editor.selection.insertNode(Dom.create('br', undefined, editor.editorDocument));
+                return false;
+            }
+
+
             if (!currentBox && current && !Dom.prev(current, (elm: Node) => (Dom.isBlock(elm) || Dom.isImage(elm, editor.ownerWindow)), editor.editor)) {
                 currentBox = Dom.wrap(current, editor.options.enter, editor);
                 range = sel.rangeCount ? sel.getRangeAt(0) : editor.editorDocument.createRange();
@@ -123,12 +131,6 @@ export default  function (editor: Jodit) {
                         return false;
 
                     }
-                }
-
-                // if use <br> tag for break line or when was entered SHIFt key or in <td> or <th> or <blockquote>
-                if (editor.options.enter === consts.BR || event.shiftKey || Dom.closest(current, 'PRE|BLOCKQUOTE', editor.editor)) {
-                    editor.selection.insertHTML('<br>' + consts.INVISIBLE_SPACE);
-                    return false;
                 }
 
                 if (editor.selection.cursorInTheEdge(true, currentBox)) {
