@@ -626,6 +626,10 @@ export default class ImageEditor extends Component{
 
         self
             .jodit.events.on(self.cropHandler, 'updatesize', () => {
+                if (!self.cropImage) {
+                    return;
+                }
+
                 let new_x: number = <number>css(self.cropHandler, 'left'),
                     new_y: number = <number>css(self.cropHandler, 'top'),
                     new_width = self.cropHandler.offsetWidth,
