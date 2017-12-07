@@ -1,9 +1,14 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
 import Jodit from '../Jodit';
 import {$$} from '../modules/Helpers';
 import Dom from "../modules/Dom";
 import {Config} from "../Config";
 
-// import * as consts from '../constants';
 Config.prototype.controls.align = {
     tags: ["p", "div", "span", "td", "th", "img"],
         name: 'left',

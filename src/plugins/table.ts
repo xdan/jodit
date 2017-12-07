@@ -1,3 +1,9 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
 import Jodit from '../Jodit';
 import Table, {JODIT_SELECTED_CELL_MARKER} from '../modules/Table';
 import * as consts from '../constants';

@@ -1,3 +1,9 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
 import * as consts from './constants'
 import {dom, trim, $$, isURL, convertMediaURLToVideoEmbed, val} from './modules/Helpers'
 // import Dom from "./modules/Dom";

@@ -1,9 +1,15 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
 import Jodit from '../Jodit';
 import {Config} from '../Config'
 import {$$, css, dom, trim, val} from "../modules/Helpers";
 import {Alert, Confirm, default as Dialog} from "../modules/Dialog";
 import Toolbar from "../modules/Toolbar";
-//import {} from "../modules/Widget";
+
 import FileBrowser, {FileBrowserCallBcackData} from "../modules/FileBrowser";
 import Dom from "../modules/Dom";
 import {UploaderData} from "../modules/Uploader";
@@ -298,60 +304,59 @@ export default function (editor: Jodit) {
             image.parentNode.removeChild(image);
             dialog.close();
         });
-
-        $$('.jodit_use_image_editor', mainTab).forEach((btn) => {
-            editor.__on(btn,'mousedown touchstart', () => {
-                if (editor.options.image.useImageEditor) {
-                    let url = image.getAttribute('src'),
-                        a = editor.ownerDocument.createElement('a'),
-                        loadExternal = () => {
-                            if (a.host !== location.host) {
-                                Confirm(editor.i18n('You can only edit your own images. Download this image on the host?'), (yes: boolean) => {
-                                    if (yes && editor.uploader) {
-                                        editor.uploader.uploadRemoteImage(
-                                            a.href.toString(),
-                                            (resp: UploaderData) => {
-                                                Alert(editor.i18n('The image has been successfully uploaded to the host!'), () => {
-                                                    if (typeof resp.newfilename === 'string') {
-                                                        image.setAttribute('src', resp.baseurl + resp.newfilename);
-                                                        updateSrc();
-                                                    }
-                                                });
-                                            },
-                                            (error: Error) => {
-                                                Alert(editor.i18n('There was an error loading %s',  error.message));
-                                            }
-                                        );
-                                    }
-                                });
-                                return;
-                            }
-                        };
-
-                    a.href = url;
-
-                    (<FileBrowser>editor.getInstance('FileBrowser')).getPathByUrl(a.href.toString(), (path: string, name: string, source: string) => {
-                        (<FileBrowser>editor.getInstance('FileBrowser'))
-                            .openImageEditor(
-                                a.href,
-                                name,
-                                path,
-                                source,
-                                () => {
-                                    const timestamp: number = (new Date()).getTime();
-                                    image.setAttribute('src', url + (url.indexOf('?') !== -1 ? '' : '?') + '&_tmp=' + timestamp.toString());
-                                    updateSrc();
-                                },
-                                (error: Error) => {
-                                    Alert(error.message)
+        if (editor.options.image.useImageEditor) {
+            $$('.jodit_use_image_editor', mainTab).forEach((btn: HTMLAnchorElement) => {
+                editor.__on(btn,'mousedown touchstart', () => {
+                        const url: string = image.getAttribute('src'),
+                            a: HTMLAnchorElement = editor.ownerDocument.createElement('a'),
+                            loadExternal = () => {
+                                if (a.host !== location.host) {
+                                    Confirm(editor.i18n('You can only edit your own images. Download this image on the host?'), (yes: boolean) => {
+                                        if (yes && editor.uploader) {
+                                            editor.uploader.uploadRemoteImage(
+                                                a.href.toString(),
+                                                (resp: UploaderData) => {
+                                                    Alert(editor.i18n('The image has been successfully uploaded to the host!'), () => {
+                                                        if (typeof resp.newfilename === 'string') {
+                                                            image.setAttribute('src', resp.baseurl + resp.newfilename);
+                                                            updateSrc();
+                                                        }
+                                                    });
+                                                },
+                                                (error: Error) => {
+                                                    Alert(editor.i18n('There was an error loading %s',  error.message));
+                                                }
+                                            );
+                                        }
+                                    });
+                                    return;
                                 }
-                            );
-                    }, (error: Error) => {
-                        Alert(error.message, loadExternal);
-                    });
-                }
+                            };
+
+                        a.href = url;
+
+                        (<FileBrowser>editor.getInstance('FileBrowser')).getPathByUrl(a.href.toString(), (path: string, name: string, source: string) => {
+                            (<FileBrowser>editor.getInstance('FileBrowser'))
+                                .openImageEditor(
+                                    a.href,
+                                    name,
+                                    path,
+                                    source,
+                                    () => {
+                                        const timestamp: number = (new Date()).getTime();
+                                        image.setAttribute('src', url + (url.indexOf('?') !== -1 ? '' : '?') + '&_tmp=' + timestamp.toString());
+                                        updateSrc();
+                                    },
+                                    (error: Error) => {
+                                        Alert(error.message)
+                                    }
+                                );
+                        }, (error: Error) => {
+                            Alert(error.message, loadExternal);
+                        });
+                });
             });
-        });
+        }
 
 
         $$('.jodit_rechange', mainTab).forEach((imagebtn: HTMLAnchorElement) => {

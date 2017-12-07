@@ -1,3 +1,9 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
 import Jodit from '../Jodit';
 import Component from './Component';
 import Dialog, {Alert, Confirm, Promt} from '../modules/Dialog';
@@ -11,7 +17,7 @@ import ContextMenu from "./ContextMenu";
 import Uploader from "./Uploader";
 import Ajax from "./Ajax";
 import * as consts from "../constants";
-import ImageEditor from "./ImageEditor";
+import ImageEditor, {ActionBox} from "./ImageEditor";
 import Cookie from "./Cookie";
 
 /**
@@ -1286,7 +1292,7 @@ export default class FileBrowser extends Component {
      * @method openImageEditor
      */
     openImageEditor = (href: string, name: string, path: string, source: string, onSuccess?: Function, onFailed?: (error: Error) => void) => {
-        (<ImageEditor>this.jodit.getInstance('ImageEditor')).open(href, (newname, box, success, failed) => {
+        (<ImageEditor>this.jodit.getInstance('ImageEditor')).open(href, (newname: string, box: ActionBox, success: Function, failed: (error: Error) => void) => {
             if (this.options[box.action] === undefined) {
                 this.options[box.action] = {};
             }
@@ -1296,7 +1302,7 @@ export default class FileBrowser extends Component {
                 };
             }
 
-            this.options[box.action].data.newname = newname;
+            this.options[box.action].data.newname = newname || name;
             this.options[box.action].data.box = box.box;
             this.options[box.action].data.path = path;
             this.options[box.action].data.name = name;

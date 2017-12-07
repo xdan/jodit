@@ -1,5 +1,10 @@
-import Component from './Component'
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
 
+import Component from './Component'
 
 type RangeType = {
     startContainer: number[];
@@ -7,6 +12,7 @@ type RangeType = {
     endContainer: number[];
     endOffset: number;
 }
+
 export type SnapshotType = {
     html: string;
     range: RangeType;

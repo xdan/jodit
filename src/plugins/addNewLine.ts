@@ -1,6 +1,12 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
 import Jodit from '../Jodit';
 import {Config} from '../Config';
-import {debounce, dom, offset, trim} from "../modules/Helpers";
+import {debounce, dom, offset} from "../modules/Helpers";
 import Toolbar from "../modules/Toolbar";
 import * as consts from '../constants';
 import Dom from "../modules/Dom";

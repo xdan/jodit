@@ -24,6 +24,16 @@ if (String.prototype.repeat === undefined) {
 }
 
 
+(function(e){
+    e.matches || (e.matches = e['matchesSelector'] !== undefined ? e['matchesSelector'] : function (selector) {
+        var matches = this.ownerDocument.querySelectorAll(selector), th = this;
+        return Array.prototype.some.call(matches, function (e) {
+            return e === th;
+        });
+    });
+
+})(Element.prototype);
+
 var expect = chai.expect;
 var stuff = [];
 var removeStuff = function () {
@@ -166,7 +176,7 @@ var setCursor = function (elm, inEnd) {
 
 var createPoint = function createPoint(x, y, color) {
     var div = document.createElement('div');
-    div.setAttribute('style', 'position: absolute; z-index: 100000;width: 5px; height: 5px; background: ' + (color || 'red') + ';');
+    div.setAttribute('style', 'position: absolute; z-index: 1000000000;width: 5px; height: 5px; background: ' + (color || 'red') + ';');
     div.style.left = parseInt(x, 10) + 'px'
     div.style.top = parseInt(y, 10) +'px'
     document.body.appendChild(div);

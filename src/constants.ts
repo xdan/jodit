@@ -1,10 +1,12 @@
-/*eslint no-unused-vars: 0*/
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
 import {isIE} from "./modules/Helpers";
 export const INVISIBLE_SPACE = "\uFEFF";
 export const INVISIBLE_SPACE_REG_EXP = /[\uFEFF]/g;
-
-// export const INVISIBLE_SPACE_REG_EXP_START = /^[\uFEFF]+/g;
-// export const INVISIBLE_SPACE_REG_EXP_END = /[\uFEFF]+$/g;
 
 export const SPACE_REG_EXP = /[\s\n\t\r\uFEFF\u200b]+/g;
 export const SPACE_REG_EXP_START = /^[\s\n\t\r\uFEFF\u200b]+/g;

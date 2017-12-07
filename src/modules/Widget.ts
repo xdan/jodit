@@ -1,3 +1,9 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
 import Jodit from '../Jodit'
 import {normalizeColor, dom, isPlainObject, each, $$, hexToRgb, val} from './Helpers'
 import Dom from "./Dom";

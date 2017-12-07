@@ -1,3 +1,9 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
 import Jodit from '../Jodit';
 import Component from './Component';
 import {Config} from '../Config'
@@ -22,7 +28,7 @@ type ImageEditorOptions = {
     cropDefaultHeight: string|number;
 }
 
-type ActionBox = {
+export type ActionBox = {
     action: string,
     box: {
         w: number;
@@ -393,6 +399,7 @@ export default class ImageEditor extends Component{
         $$('img,.jodit_icon-loader', this.crop_box).forEach((elm: Node) => {
             elm.parentNode.removeChild(elm);
         });
+
         css(this.cropHandler, 'background', 'transparent');
 
         this.onSave = save;
@@ -409,7 +416,7 @@ export default class ImageEditor extends Component{
         this.image.setAttribute('src', url);
 
         this.dialog.open();
-        let onload = () => {
+        const onload = () => {
             this.image.removeEventListener("load", onload);
             this.naturalWidth = this.image.naturalWidth;
             this.naturalHeight = this.image.naturalHeight;
@@ -437,6 +444,7 @@ export default class ImageEditor extends Component{
             this.jodit.events.fire(this.cropHandler, 'updatesize');
 
             this.dialog.setPosition();
+            this.jodit.events.fire('afterImageEditor');
         };
         this.image.addEventListener("load", onload);
         if (this.image.complete) {
@@ -445,7 +453,7 @@ export default class ImageEditor extends Component{
     };
 
     private setHandlers = () => {
-        let self = this;
+        const self = this;
         self.__on(<HTMLElement[]>[self.editor.querySelector('.jodit_bottomright'), self.cropHandler], 'mousedown', (e) => {
             self.target = e.target || e.srcElement;
 
@@ -551,7 +559,7 @@ export default class ImageEditor extends Component{
                 $$('button', group).forEach((button: HTMLButtonElement) => button.classList.remove('active'));
                 button.classList.add('active');
                 input.checked = !!button.getAttribute('data-yes');
-                self.__fire(input, 'change', this.jodit.ownerDocument);
+                self.__fire(input, 'change', self.jodit.ownerDocument);
             });
         });
 

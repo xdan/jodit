@@ -1,3 +1,9 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
 import Jodit from '../Jodit'
 import Component from './Component'
 import {Config} from '../Config'
@@ -97,6 +103,10 @@ export default class Dialog extends Component{
               '') +
              '</div>' +
         '</div>', this.document);
+
+        if (jodit && jodit instanceof Jodit) {
+            self.dialogbox.setAttribute('data-editor_id', jodit.id);
+        }
 
         self.dialogbox['__jodit_dialog'] = self;
 
