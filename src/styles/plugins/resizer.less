@@ -5,6 +5,7 @@
  */
 
 @import (reference) "../variables";
+
 [data-jodit_iframe_wrapper] {
   display: block;
   clear: both;
@@ -39,8 +40,7 @@
   > i {
     position: absolute;
     display: inline-block;
-    width: 9px;
-    height: 9px;
+
 
     z-index:4;
     pointer-events: all ;
@@ -48,21 +48,30 @@
     border: 1px solid @resize_border_color;
     background-color: #10732e;
 
-    &:nth-child(1) {
-      left:-5px; top:-5px;
-      cursor: nw-resize;
+    .handleSizes(@size-resizer-handle) {
+      width: @size-resizer-handle;
+      height: @size-resizer-handle;
+      &:nth-child(1) {
+        left:-@size-resizer-handle/2; top:-@size-resizer-handle/2;
+        cursor: nw-resize;
+      }
+      &:nth-child(2) {
+        right:-@size-resizer-handle/2; top:-@size-resizer-handle/2;
+        cursor: ne-resize;
+      }
+      &:nth-child(3) {
+        right:-@size-resizer-handle/2; bottom:-@size-resizer-handle/2;
+        cursor: se-resize;
+      }
+      &:nth-child(4) {
+        left:-@size-resizer-handle/2; bottom:-@size-resizer-handle/2;
+        cursor: sw-resize;
+      }
     }
-    &:nth-child(2) {
-      right:-5px; top:-5px;
-      cursor: ne-resize;
-    }
-    &:nth-child(3) {
-      right:-5px; bottom:-5px;
-      cursor: se-resize;
-    }
-    &:nth-child(4) {
-      left:-5px; bottom:-5px;
-      cursor: sw-resize;
+
+    .handleSizes(10px);
+    @media (max-width: @screen-sm) {
+      .handleSizes(20px);
     }
   }
 }
