@@ -283,7 +283,7 @@ describe('Test interface', function() {
                             });
 
                             simulateEvent('mousedown', 0, dialog.querySelector('a.jodit_use_image_editor'));
-                        })
+                        }).timeout(5000);
                     });
                     describe('Disable ratio', function () {
                         it('Should allow crop image without ratio', function (done) {
@@ -356,7 +356,7 @@ describe('Test interface', function() {
                             });
 
                             simulateEvent('mousedown', 0, dialog.querySelector('a.jodit_use_image_editor'));
-                        })
+                        }).timeout(5000);
                     });
                 });
                 describe('Resize mode', function () {
@@ -426,7 +426,7 @@ describe('Test interface', function() {
                             });
 
                             simulateEvent('mousedown', 0, dialog.querySelector('a.jodit_use_image_editor'));
-                        })
+                        }).timeout(5000);
                     });
                     describe('Disable ratio', function () {
                         it('Should allow resize image without ratio', function (done) {
@@ -501,7 +501,7 @@ describe('Test interface', function() {
                             });
 
                             simulateEvent('mousedown', 0, dialog.querySelector('a.jodit_use_image_editor'));
-                        })
+                        }).timeout(5000);
                     });
                 });
             });

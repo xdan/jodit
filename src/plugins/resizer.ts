@@ -164,18 +164,22 @@ export default function (editor: Jodit) {
                     }
                 })
                 .__on(element, 'mousedown touchstart', () => {
-                    resizeElementClicked = true;
-                    currentElement = element;
-                    showResizer();
-                    if (currentElement.tagName === 'IMG' && !(<HTMLImageElement>currentElement).complete) {
-                        currentElement.addEventListener('load', function ElementOnLoad() {
-                            updateSize();
-                            if (currentElement) {
-                                currentElement.removeEventListener('load', ElementOnLoad);
-                            }
-                        });
+
+                    if (!resizeElementClicked) {
+                        resizeElementClicked = true;
+                        currentElement = element;
+                        showResizer();
+                        if (currentElement.tagName === 'IMG' && !(<HTMLImageElement>currentElement).complete) {
+                            currentElement.addEventListener('load', function ElementOnLoad() {
+                                updateSize();
+                                if (currentElement) {
+                                    currentElement.removeEventListener('load', ElementOnLoad);
+                                }
+                            });
+                        }
+                        clearTimeout(timer);
                     }
-                    clearTimeout(timer);
+
                     timer = setTimeout(() => {
                         resizeElementClicked = false;
                     }, 400);

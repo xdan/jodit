@@ -1126,6 +1126,29 @@ describe('Tables Jodit Editor Tests', function() {
                     '</table>');
             });
         });
+        describe('Resize table', function () {
+            describe('Image in cell', function () {
+                describe('Mouse down on the Image', function () {
+                    it('should show resizer for this image', function () {
+                        var editor = new Jodit('#table_editor');
+
+                        editor.setEditorValue('<table>' +
+                                '<tr><td>1</td><td><img style="width:30px" src="https://xdsoft.net/jodit/images/artio.jpg"></td></tr>' +
+                            '</table>');
+
+                        simulateEvent('mousedown', 1, editor.editor.querySelector('img'));
+
+                        expect(editor.ownerDocument.querySelector('.jodit_resizer').style.display === 'block').to.equal(true);
+
+                        var positionResizer = offset(editor.ownerDocument.querySelector('.jodit_resizer'));
+                        var positionImg = offset(editor.editor.querySelector('img'));
+
+                        expect(Math.abs(positionResizer.left - positionImg.left) < 10).to.be.true;
+                        expect(Math.abs(positionResizer.top - positionImg.top) < 10).to.be.true;
+                    });
+                });
+            });
+        });
     });
     after(function() {
         table_editor.parentNode.removeChild(table_editor);

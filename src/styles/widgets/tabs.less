@@ -14,8 +14,6 @@
             display:inline-block;
             text-decoration:none;
             
-            outline: none;
-            
             font-size: 11px;
             font-weight: bold;
             text-align: center;
@@ -23,7 +21,6 @@
             height: 29px;
             line-height: 27px;
 
-            color: @text_color;
             position:relative;
             vertical-align:middle;
             transition:background .1s linear;
@@ -32,14 +29,12 @@
             overflow: hidden;
             
             box-shadow: none;
-            background-color: #f5f5f5;
-            /*background-image: linear-gradient(toWYSIWYG top,#f5f5f5,#f1f1f1);*/
-            
-            color: #333;
 
-            border: 1px solid rgba(0,0,0,0.1);
+            background-color: @background-tab;
+            color: @color-tab;
+            border: 1px solid @border-color-tab;
+
             outline: none;
-            font-weight: bold;
             
             @media (max-width: @screen-sm) {
                 width: 100% !important;
@@ -50,51 +45,36 @@
                 margin-left: -1px;
             }
 
-            /*&:first-child{
-                border-top-left-radius: 2px;
-                border-bottom-left-radius: 2px;
-            }
-            &:last-child{
-                border-top-right-radius: 2px;
-                border-bottom-right-radius: 2px;
-            }*/
-            
-            &:hover{
-                /*background-image: linear-gradient(toWYSIWYG top,#f8f8f8,#f1f1f1);*/
-                border: 1px solid #c6c6c6;
-                color: #111;
-                box-shadow: none;
-                background-color: #f8f8f8;
-                outline: none;
-            }
-            /*&::after {
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                width: 100%;
-                height: 1px;
-                background-color: transparent;
-                content: '';
-                transition:background .3s linear;
-            }*/
-            &:active, &.active{
-                outline: none;
-                /*background-image: linear-gradient(toWYSIWYG top,#eee,#e0e0e0);
-                box-shadow: inset 0 1px 2px rgba(0,0,0,.1);*/
-                background: #fff;
-                border: 1px solid #ccc;
-                color: @active_border;
-                &::after {
-                    background-color: @active_border;
-                }
-            }
             i,svg {
                 width:16px;
                 height:16px;
                 display:inline-block;
                 vertical-align:sub;
                 margin-right:5px;
+                fill: @color-tab;
             }
+
+            &:hover{
+                border: 1px solid @border-color-tab_hover;
+                color: @color-tab_hover;
+                box-shadow: none;
+                background-color: @background-tab_hover;
+                outline: none;
+                i, svg {
+                    fill: @color-tab_hover;
+                }
+            }
+
+            &:active, &.active{
+                outline: none;
+                background: @background-tab_active;
+                border: 1px solid @border-color-tab_active;
+                color: @color-tab_active;
+                i, svg {
+                    fill: @color-tab_active;
+                }
+            }
+
         }
     }
     .jodit_tabs_wrapper{

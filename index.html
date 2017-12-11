@@ -132,7 +132,9 @@
     editor.editor.addEventListener('mousedown', callback)
     editor.editor.addEventListener('mouseup', callback)
     editor.editor.addEventListener('input', callback);
-
+    editor.setEditorValue('<table>' +
+        '<tr><td>1</td><td><img style="width:30px" src="https://xdsoft.net/jodit/images/artio.jpg"></td></tr>' +
+        '</table>');
 //    var editor = new Jodit(appendTestArea())
 
 //    (new Jodit.modules.FileBrowser(editor)).open(function () {});

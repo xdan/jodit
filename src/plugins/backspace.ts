@@ -69,7 +69,7 @@ export default function (editor: Jodit) {
                     }
                 }
 
-                if (range.startOffset === 0 && toLeft) {
+                if (range.startOffset === 0 && toLeft && textNode) {
                     const prevBox = Dom.prev(textNode, Dom.isBlock, editor.editor);
 
                     if (prevBox) {
