@@ -1130,21 +1130,37 @@ describe('Tables Jodit Editor Tests', function() {
             describe('Image in cell', function () {
                 describe('Mouse down on the Image', function () {
                     it('should show resizer for this image', function () {
-                        var editor = new Jodit('#table_editor');
+                        var area = document.createElement('textarea');
+                        area.setAttribute('id', 'should_show_resizer_for_this_image');
+                        document.body.appendChild(area);
+                        var editor = new Jodit(area);
 
                         editor.setEditorValue('<table>' +
-                                '<tr><td>1</td><td><img style="width:30px" src="https://xdsoft.net/jodit/images/artio.jpg"></td></tr>' +
+                                '<tr>' +
+                                    '<td>1</td>' +
+                                    '<td>2</td>' +
+                                    '<td>3</td>' +
+                                    '<td>4</td>' +
+                                    '<td>5</td>' +
+                                    '<td>6</td>' +
+                                    '<td>7</td>' +
+                                    '<td><img style="width:30px" src="https://xdsoft.net/jodit/images/artio.jpg"></td>' +
+                                '</tr>' +
                             '</table>');
 
                         simulateEvent('mousedown', 1, editor.editor.querySelector('img'));
 
-                        expect(editor.ownerDocument.querySelector('.jodit_resizer').style.display === 'block').to.equal(true);
+                        var resizer = editor.ownerDocument.querySelector('.jodit_resizer[data-editor_id=should_show_resizer_for_this_image]');
 
-                        var positionResizer = offset(editor.ownerDocument.querySelector('.jodit_resizer'));
+                        expect(resizer && resizer.style.display === 'block').to.equal(true);
+
+                        var positionResizer = offset(resizer);
                         var positionImg = offset(editor.editor.querySelector('img'));
 
                         expect(Math.abs(positionResizer.left - positionImg.left) < 10).to.be.true;
                         expect(Math.abs(positionResizer.top - positionImg.top) < 10).to.be.true;
+
+                        document.body.removeChild(area);
                     });
                 });
             });
