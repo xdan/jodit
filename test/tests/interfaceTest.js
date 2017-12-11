@@ -635,7 +635,7 @@ describe('Test interface', function() {
                 sel.removeAllRanges();
                 sel.addRange(range)
 
-                simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-image'))
+                simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-image'));
 
                 var list = editor.container.querySelector('.jodit_toolbar_popup');
 
@@ -1266,6 +1266,35 @@ describe('Test interface', function() {
 
                 expect(popup && popup.classList.contains('active')).to.equal(false);
 
+            });
+        });
+        describe('In fileBrowser', function () {
+            describe('Hide buttons ', function () {
+                it('should hide toolbar buttons', function() {
+                    var editor = new Jodit('#table_editor_interface', {
+                        filebrowser: {
+                            buttons: ['list', 'tiles', 'sort'],
+                            ajax: {
+                                url: 'https://xdsoft.net/jodit/connector/index.php'
+                            }
+                        },
+                    });
+
+                    simulateEvent('mousedown', 0, editor.ownerDocument.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-image'))
+
+                    var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup');
+
+                    expect(popup && popup.style.display !== 'none').to.equal(true);
+                    simulateEvent('mousedown', 0, popup.querySelectorAll('.jodit_tabs_buttons > a')[0]);
+
+
+                    var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=table_editor_interface]');
+
+                    expect(dialog).to.be.not.equal(null);
+
+                    expect(4).to.equal(dialog.querySelectorAll('.jodit_dialog_header .jodit_button').length);
+
+                });
             });
         });
     });

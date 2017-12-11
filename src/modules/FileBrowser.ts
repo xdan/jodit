@@ -202,7 +202,7 @@ import Cookie from "./Cookie";
  * ```
  * @example
  * ```javascript
- * new Jodit('#jodit', {
+ * var editor = new Jodit('#jodit', {
  *        uploader: {
  *            url: 'connector/upload.php',
  *            baseurl: 'images/'
@@ -863,13 +863,16 @@ export default class FileBrowser extends Component {
 
 
         this.view = this.options.view === 'list' ? 'list' : 'tiles';
+
         if (Cookie.get('jodit_filebrowser_view')) {
             this.view = Cookie.get('jodit_filebrowser_view') === 'list' ? 'list' : 'tiles';
         }
+
         this.buttons[this.view].classList.remove('disabled');
         this.files.classList.add('jodit_filebrowser_files_view-' + this.view);
 
         this.sortBy = (['changed', 'name', 'size']).indexOf(this.options.sortBy) !== -1 ? this.options.sortBy : 'changed';
+
         if (Cookie.get('jodit_filebrowser_sortby')) {
             this.sortBy = (['changed', 'name', 'size']).indexOf(Cookie.get('jodit_filebrowser_sortby')) !== -1 ? Cookie.get('jodit_filebrowser_sortby') : 'changed';
         }
@@ -940,7 +943,7 @@ export default class FileBrowser extends Component {
     }
 
     private generateFolderTree(sources: ISourcesFiles) {
-        let folders = [];
+        const folders: string[] = [];
 
         each(sources, (source_name : string, source: ISource) => {
             if (source_name && source_name !== DEFAULT_SOURCE_NAME) {
@@ -970,7 +973,7 @@ export default class FileBrowser extends Component {
     private filterWord = '';
 
     private generateItemsBox(sources: ISourcesFiles) {
-        let files = [];
+        const files: string[] = [];
 
         each(sources, (source_name: string, source: ISource) => {
             if (source_name && source_name !== DEFAULT_SOURCE_NAME) {
@@ -1038,7 +1041,9 @@ export default class FileBrowser extends Component {
      * @param {string} onFailed.message
      */
     getPathByUrl = (url: string, success: (path: string, name: string, source: string) => void, onFailed: (error: Error) => void) => {
-        let action = 'getlocalfilebyurl', self = this;
+        const action: string = 'getlocalfilebyurl',
+            self: FileBrowser = this;
+
         this.options[action].data.url = url;
         this.send(action, (resp: FileBrowserAnswer) => {
             if (self.options.isSuccess(resp)) {
@@ -1053,6 +1058,7 @@ export default class FileBrowser extends Component {
 
     private loadItems = (path: string, source: string) => {
         const self: FileBrowser = this;
+
         self.options.items.data.path = path;
         self.options.items.data.source = source;
 
@@ -1077,6 +1083,7 @@ export default class FileBrowser extends Component {
     private __ajax: Ajax;
     private loadTree(path: string, source: string) {
         const self: FileBrowser = this;
+
         self.options.folder.data.path = path;
         self.options.folder.data.source = source;
 
