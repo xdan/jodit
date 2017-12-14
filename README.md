@@ -106,7 +106,7 @@ and set options for Jodit:
 ```javascript
 var editor = new Jodit('#editor', {
     uploader: {
-        url: 'http://localhost:8181/index-test.php?action=upload'
+        url: 'http://localhost:8181/index-test.php?action=fileUpload'
     },
     filebrowser: {
         ajax: {

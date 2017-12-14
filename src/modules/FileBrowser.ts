@@ -146,25 +146,25 @@ import Cookie from "./Cookie";
  *         }
  *     },
  *     resize: {
- *         data: {action: 'resize'},
+ *         data: {action: 'imageResize'},
  *     },
  *     crop: {
- *         data: {action: 'crop'},
+ *         data: {action: 'imageCrop'},
  *     },
  *     create: {
- *         data: {action: 'create'},
+ *         data: {action: 'folderCreate'},
  *     },
  *     move: {
- *         data: {action: 'move'},
+ *         data: {action: 'fileMove'},
  *     },
  *     remove: {
- *         data: {action: 'remove'},
+ *         data: {action: 'fileRemove'},
  *     },
  *     items: {
- *         data: {action: 'items'},
+ *         data: {action: 'files'},
  *     },
- *     folder: {
- *         data: {action: 'folder'},
+ *     folders: {
+ *         data: {action: 'folders'},
  *     },
  *     uploader: null // use default Uploader's settings
  * }
@@ -483,22 +483,22 @@ Config.prototype.filebrowser = <FileBrowserOptions>{
         }
     },
     create: {
-        data: {action: 'create'},
+        data: {action: 'folderCreate'},
     },
     getlocalfilebyurl: {
-        data: {action: 'getlocalfilebyurl'},
+        data: {action: 'getLocalFileByUrl'},
     },
     resize: {
-        data: {action: 'resize'},
+        data: {action: 'imageResize'},
     },
     crop: {
-        data: {action: 'crop'},
+        data: {action: 'imageCrop'},
     },
     move: {
-        data: {action: 'move'},
+        data: {action: 'fileMove'},
     },
     remove: {
-        data: {action: 'remove'},
+        data: {action: 'fileRemove'},
     },
     items: {
         data: {action: 'files'},
