@@ -322,7 +322,7 @@ type FileBrowserOptions = {
 
     ajax: FileBrowserAjaxOptions;
     create: FileBrowserAjaxOptions;
-    getlocalfilebyurl: FileBrowserAjaxOptions;
+    getLocalFileByUrl: FileBrowserAjaxOptions;
     resize: FileBrowserAjaxOptions;
     crop: FileBrowserAjaxOptions;
     move: FileBrowserAjaxOptions;
@@ -485,7 +485,7 @@ Config.prototype.filebrowser = <FileBrowserOptions>{
     create: {
         data: {action: 'folderCreate'},
     },
-    getlocalfilebyurl: {
+    getLocalFileByUrl: {
         data: {action: 'getLocalFileByUrl'},
     },
     resize: {
@@ -852,7 +852,7 @@ export default class FileBrowser extends Component {
 
         this.dialog.setSize(this.options.width, this.options.height);
 
-        this.options.getlocalfilebyurl = extend(true, {}, this.options.ajax, this.options.getlocalfilebyurl);
+        this.options.getLocalFileByUrl = extend(true, {}, this.options.ajax, this.options.getLocalFileByUrl);
         this.options.crop = extend(true, {}, this.options.ajax, this.options.crop);
         this.options.resize = extend(true, {}, this.options.ajax, this.options.resize);
         this.options.create = extend(true, {}, this.options.ajax, this.options.create);
@@ -1041,7 +1041,7 @@ export default class FileBrowser extends Component {
      * @param {string} onFailed.message
      */
     getPathByUrl = (url: string, success: (path: string, name: string, source: string) => void, onFailed: (error: Error) => void) => {
-        const action: string = 'getlocalfilebyurl',
+        const action: string = 'getLocalFileByUrl',
             self: FileBrowser = this;
 
         this.options[action].data.url = url;
