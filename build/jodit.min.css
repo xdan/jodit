@@ -2,7 +2,7 @@
  * 
  *    jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  *    Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- *    Version: v3.1.2
+ *    Version: v3.1.3
  *    Url: https://xdsoft.net/jodit/
  *    License(s): SEE LICENSE IN <LICENSE>
  * 
@@ -11,7 +11,19 @@
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License https://xdsoft.net/jodit/license.html
  * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ *//*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ *//*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
  */.jodit_container{background:#fff}.jodit_container,.jodit_container *{box-sizing:border-box}.jodit_container .jodit_workplace{border:1px solid #ccc;position:relative;height:calc(100% - 23px);overflow:auto;display:-webkit-box;display:-ms-flexbox;display:flex}.jodit_container .jodit_workplace .jodit_wysiwyg,.jodit_container .jodit_workplace .jodit_wysiwyg_iframe{height:100%;width:100%}.jodit_container .jodit_workplace .jodit_wysiwyg{margin:0;padding:10px;outline:0;overflow-x:auto;position:relative}.jodit_container .jodit_workplace .jodit_wysiwyg img{position:relative}.jodit_container .jodit_workplace .jodit_wysiwyg p,.jodit_container .jodit_workplace .jodit_wysiwyg pre{margin:0 0 10px}.jodit_container .jodit_workplace .jodit_wysiwyg h1,.jodit_container .jodit_workplace .jodit_wysiwyg h2,.jodit_container .jodit_workplace .jodit_wysiwyg h3,.jodit_container .jodit_workplace .jodit_wysiwyg h4,.jodit_container .jodit_workplace .jodit_wysiwyg h5{margin-top:0}.jodit_container .jodit_workplace .jodit_wysiwyg ::-moz-selection,.jodit_container .jodit_workplace .jodit_wysiwyg::-moz-selection{background:#b5d6fd;color:#000}.jodit_container .jodit_workplace .jodit_wysiwyg ::selection,.jodit_container .jodit_workplace .jodit_wysiwyg::selection{background:#b5d6fd;color:#000}.jodit_container .jodit_workplace .jodit_wysiwyg.jodit_disabled{-webkit-user-select:none!important;-moz-user-select:none!important;-ms-user-select:none!important;user-select:none!important}/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */.jodit_clearfix:after,.jodit_clearfix:before{content:" ";display:table}.jodit_clearfix:after{clear:both}/*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License https://xdsoft.net/jodit/license.html
  * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
@@ -67,15 +79,15 @@
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License https://xdsoft.net/jodit/license.html
  * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */.jodit_form input[type=text],.jodit_form input[type=url],.jodit_form textarea{-webkit-appearance:none;-moz-appearance:none;display:block;outline:0;border:1px solid #b5b5b5;height:28px;line-height:28px;padding:0 5px;min-width:220px;margin-top:10px}.jodit_form input[type=text].jodit_error,.jodit_form input[type=url].jodit_error,.jodit_form textarea.jodit_error{border-color:#f7d1d1;box-shadow:inset 0 0 3px 0 rgba(189,189,189,.3)}@media (max-width:768px){.jodit_form input[type=text],.jodit_form input[type=url],.jodit_form textarea{min-width:150px}}.jodit_form textarea{height:128px}.jodit_form button{height:36px;line-height:1;color:#000;padding:10px;cursor:pointer;text-decoration:none;border:none;background:#d6d6d6;font-size:16px;outline:0;transition:background .2s ease 0s;margin-top:10px;margin-bottom:10px}.jodit_form button:hover{background-color:#ecebe9;color:#000}.jodit_form button:active{background:#ecebe9;color:#000}.jodit_form input[type=checkbox]{display:inline-block;z-index:2;border:0 none;cursor:pointer;height:16px;margin:0;padding:0;width:16px;position:relative;top:3px}.jodit_form input[type=checkbox]:after{content:'';background:#fff;border:solid 1px rgba(225,225,225,.99);border-radius:2px;background-clip:padding-box;width:16px;height:16px;display:inline-block;position:relative;z-index:1;box-sizing:border-box;transition:background .2s ease 0s,border-color .2s ease 0s}.jodit_form input[type=checkbox]:checked:after{background:url(data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%2032%2032%22%3E%3Cpath%20d%3D%22M27%204l-15%2015-7-7-5%205%2012%2012%2020-20z%22%20fill%3D%22%23FFF%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E) no-repeat center center;background-color:#b5b5b5;border-color:#b5b5b5}.jodit_form label{margin-top:10px;display:block;text-align:left}.jodit_form form:after{content:"";display:table;clear:both}/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
  */.jodit_about{padding:20px}.jodit_about a{color:#459ce7;text-decoration:none}.jodit_about a:focus,.jodit_about a:hover{color:#23527c;text-decoration:underline;outline:0}.jodit_about div{margin-bottom:5px}/*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License https://xdsoft.net/jodit/license.html
  * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
  */.jodit_colorpicker{min-width:180px;text-align:left;margin:0;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.jodit_colorpicker .jodit_colorpicker_group{margin-bottom:5px}.jodit_colorpicker a{width:18px;height:18px;line-height:16px;display:inline-block;vertical-align:middle;text-align:center}.jodit_colorpicker a:before{content:'';display:inline-block;height:100%;vertical-align:middle;width:0}.jodit_colorpicker a svg{display:inline-block;vertical-align:middle;font-smoothing:antialiased;max-width:14px}.jodit_colorpicker a:hover{border-color:#000}.jodit_colorpicker a:active{background:#d6d6d6;color:#b5b5b5}/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * License https://xdsoft.net/jodit/license.html
- * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
- */.jodit_form input[type=text],.jodit_form input[type=url],.jodit_form textarea{-webkit-appearance:none;-moz-appearance:none;display:block;outline:0;border:1px solid #b5b5b5;height:28px;line-height:28px;padding:0 5px;min-width:220px;margin-top:10px}.jodit_form input[type=text].jodit_error,.jodit_form input[type=url].jodit_error,.jodit_form textarea.jodit_error{border-color:#f7d1d1;box-shadow:inset 0 0 3px 0 rgba(189,189,189,.3)}@media (max-width:768px){.jodit_form input[type=text],.jodit_form input[type=url],.jodit_form textarea{min-width:150px}}.jodit_form textarea{height:128px}.jodit_form button{height:36px;line-height:1;color:#000;padding:10px;cursor:pointer;text-decoration:none;border:none;background:#d6d6d6;font-size:16px;outline:0;transition:background .2s ease 0s;margin-top:10px;margin-bottom:10px}.jodit_form button:hover{background-color:#ecebe9;color:#000}.jodit_form button:active{background:#ecebe9;color:#000}.jodit_form input[type=checkbox]{display:inline-block;z-index:2;border:0 none;cursor:pointer;height:16px;margin:0;padding:0;width:16px;position:relative;top:3px}.jodit_form input[type=checkbox]:after{content:'';background:#fff;border:solid 1px rgba(225,225,225,.99);border-radius:2px;background-clip:padding-box;width:16px;height:16px;display:inline-block;position:relative;z-index:1;box-sizing:border-box;transition:background .2s ease 0s,border-color .2s ease 0s}.jodit_form input[type=checkbox]:checked:after{background:url(data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%2032%2032%22%3E%3Cpath%20d%3D%22M27%204l-15%2015-7-7-5%205%2012%2012%2020-20z%22%20fill%3D%22%23FFF%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E) no-repeat center center;background-color:#b5b5b5;border-color:#b5b5b5}.jodit_form label{margin-top:10px;display:block;text-align:left}.jodit_form form:after{content:"";display:table;clear:both}/*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License https://xdsoft.net/jodit/license.html
  * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
