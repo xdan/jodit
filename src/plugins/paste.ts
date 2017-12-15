@@ -25,7 +25,7 @@ Config.prototype.askBeforePasteHTML = true;
  *
  * @module insertHTML
  */
-export default function (editor: Jodit) {
+export function paste(editor: Jodit) {
     editor.events.on('afterInit', () => {
         editor.editor.addEventListener('paste', (event: ClipboardEvent) => {
         /**

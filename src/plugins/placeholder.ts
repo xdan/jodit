@@ -54,7 +54,7 @@ Config.prototype.useInputsPlaceholder = true;
  */
 Config.prototype.placeholder = 'Type something';
 
-export default function (editor: Jodit) {
+export function placeholder(editor: Jodit) {
     let placeholder: HTMLElement,
         timeout;
 

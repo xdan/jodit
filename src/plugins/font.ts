@@ -36,7 +36,7 @@ Config.prototype.controls.font = <ControlType>{
 };
 
 
-export default function (editor: Jodit) {
+export function font(editor: Jodit) {
     editor.events.on('beforeCommand', (command: string, second, third: string) => {
         if (/font/.test(command)) {
             switch (command) {

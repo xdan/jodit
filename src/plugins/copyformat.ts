@@ -54,7 +54,7 @@ Config.prototype.controls.copyformat = {
 
 
 
-export default function (editor: Jodit) {
+export function copyformat(editor: Jodit) {
     editor.buffer[key] = {
         active: false,
         format: {

@@ -33,7 +33,7 @@ Config.prototype.showMessageErrorOffsetPx = 3;
 /**
  * Plugin toWYSIWYG display pop-up messages in the lower right corner of the editor
  */
-export default  function (editor: Jodit) {
+export function errorMessages(editor: Jodit) {
     if (editor.options.showMessageErrors) {
         let height: number;
         const messagesBox: HTMLDivElement = <HTMLDivElement>dom('<div class="jodit_error_box_for_messages"></div>', editor.ownerDocument),

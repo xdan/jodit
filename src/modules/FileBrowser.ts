@@ -14,7 +14,7 @@ import {
 } from "./Helpers";
 import Toolbar from "./Toolbar";
 import ContextMenu from "./ContextMenu";
-import Uploader from "./Uploader";
+import Uploader, {UploaderOptions} from "./Uploader";
 import Ajax from "./Ajax";
 import * as consts from "../constants";
 import ImageEditor, {ActionBox} from "./ImageEditor";
@@ -881,7 +881,7 @@ export default class FileBrowser extends Component {
         this.currentBaseUrl = $$('base', this.jodit.editorDocument).length ? $$('base', this.jodit.editorDocument)[0].getAttribute('href') : location.protocol + '//' + location.host;
 
         if (Jodit.modules.Uploader !== undefined) {
-            this.uploader = new Uploader(this.jodit, {...this.jodit.options.uploader, ...this.options.uploader});
+            this.uploader = new Uploader(this.jodit, <UploaderOptions>{...<UploaderOptions>this.jodit.options.uploader, ...<UploaderOptions>this.options.uploader});
             this.uploader.setPath(this.currentPath);
             this.uploader.setSource(this.currentSource);
             this.uploader.bind(this.browser, this.uploadHandler, this.errorHandler);

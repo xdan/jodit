@@ -13,7 +13,7 @@ import Dom from "../modules/Dom";
  *
  * @param {Jodit} editor
  */
-export default function (editor: Jodit) {
+export function tableKeyboardNavigation(editor: Jodit) {
     editor.events.on('keydown', (event: KeyboardEvent) => {
         let current: Element,
             block: HTMLElement;

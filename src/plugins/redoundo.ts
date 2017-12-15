@@ -20,7 +20,7 @@ Config.prototype.controls.undo = {
 };
 
 
-export default function (editor: Jodit) {
+export function redoundo(editor: Jodit) {
     const observer:Observer = new Observer(editor);
     const updateButton = () => {
         editor.events.fire('canRedo', [observer.stack.canRedo()]);

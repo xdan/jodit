@@ -23,7 +23,7 @@ Config.prototype.mobileTapTimeout = 300;
 /**
  * Rebuild toolbar in depends of editor's width
  */
-export default function (editor: Jodit) {
+export function mobile(editor: Jodit) {
     let timeout: number = 0,
         now: number;
 

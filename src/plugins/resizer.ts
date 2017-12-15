@@ -50,7 +50,7 @@ Config.prototype.resizer = {
     min_height : 10
 };
 
-export default function (editor: Jodit) {
+export function resizer(editor: Jodit) {
     // let clicked = false,
     //     resized = false,
     const LOCK_KEY = 'resizer';

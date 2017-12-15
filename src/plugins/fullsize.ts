@@ -52,7 +52,7 @@ Config.prototype.controls.fullsize = {
 };
 
 
-export default  function (editor: Jodit) {
+export  function fullsize(editor: Jodit) {
     let shown = false,
         oldHeight = null,
         oldWidth = null,

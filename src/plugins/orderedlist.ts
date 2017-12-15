@@ -25,7 +25,7 @@ Config.prototype.controls.ol = {
 /**
  * Process commands insertOrderedList and insertUnOrderedList
  */
-export default function (editor: Jodit) {
+export function orderedlist(editor: Jodit) {
     editor.events.on('afterCommand', (command) => {
         if (/insert(un)?orderedlist/i.test(command)) {
             const ul = Dom.up(<Node>editor.selection.current(), (tag) => (/^UL|OL$/i.test(tag.tagName)), editor.editor);

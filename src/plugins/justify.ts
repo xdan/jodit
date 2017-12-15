@@ -52,7 +52,7 @@ Config.prototype.controls.right = {
 };
 
 
-export default function (editor: Jodit) {
+export function justify(editor: Jodit) {
     editor.events.on('beforeCommand', (command) => {
         if (/justify/.test(command)) {
             const justify = (box) => {

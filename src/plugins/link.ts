@@ -147,7 +147,7 @@ Config.prototype.controls.link = {
  *
  * @module plugins/link
  */
-export default function (jodit: Jodit) {
+export function link(jodit: Jodit) {
     if (jodit.options.link.followOnDblClick) {
         jodit.events.on('afterInit', () => {
             jodit.__on(jodit.editor, 'dblclick', 'a', function (this: HTMLAnchorElement, e: MouseEvent) {

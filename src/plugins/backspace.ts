@@ -14,7 +14,7 @@ import Dom from "../modules/Dom";
  *
  * @module backspace
  */
-export default function (editor: Jodit) {
+export function backspace(editor: Jodit) {
 
     editor.events.on('afterCommand', (command) => {
         if (command === 'delete') {

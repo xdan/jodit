@@ -102,7 +102,7 @@ Config.prototype.controls.source = {
  *
  * @module source
  */
-export default class extends Component {
+export class source extends Component {
     private className = 'jodit_ace_editor';
 
     private loadNext = (i: number, urls: string[], eventOnFinalize: false|string = 'aceReady', className: string = this.className) => {

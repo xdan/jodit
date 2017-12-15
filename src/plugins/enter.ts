@@ -39,7 +39,7 @@ export const insertParagraph = (editor: Jodit, fake ?: Node, wrapperTag ?: strin
 /**
  * One of most important core plugins. It is responsible for all the browsers to have the same effect when the Enter button is pressed. By default, it should insert the <p>
  */
-export default  function (editor: Jodit) {
+export function enter(editor: Jodit) {
     editor.events.on('keyup', () => {
         let current: false|Node = editor.selection.current();
         if (current !== false) {

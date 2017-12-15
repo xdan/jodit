@@ -75,7 +75,7 @@ Config.prototype.controls.eraser = {
 /**
  * Clean HTML after removeFormat and insertHorizontalRule command
  */
-export default function (editor: Jodit) {
+export function cleanHTML(editor: Jodit) {
 
     if (editor.options.cleanHTML.cleanOnPaste) {
         editor.events.on('processPaste', (event, html) => {

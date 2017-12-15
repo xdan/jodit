@@ -11,7 +11,6 @@ import Jodit from "./Jodit";
 import {ControlType} from "./modules/Toolbar";
 import {FileBrowserCallBcackData} from "./modules/FileBrowser";
 import {Widget} from "./modules/Widget";
-// import ColorPickerWidget = Widget.ColorPickerWidget;
 import TabsWidget = Widget.TabsWidget;
 import ImageSelectorWidget = Widget.ImageSelectorWidget;
 

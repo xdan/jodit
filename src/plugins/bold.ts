@@ -43,7 +43,7 @@ Config.prototype.controls.strikethrough = {
 /**
  * Bold plugin
  */
-export default function (editor: Jodit) {
+export function bold(editor: Jodit) {
     editor.events.on('beforeCommand', (command: string) => {
 
         const commands = ['bold', 'italic', 'underline', 'strikethrough'];

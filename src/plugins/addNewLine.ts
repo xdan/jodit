@@ -36,7 +36,7 @@ Config.prototype.addNewLineTagsTriggers = ['table','iframe', 'img', 'hr', 'jodit
  * @param {Jodit} editor
  */
 
-export default function (editor: Jodit) {
+export function addNewLine(editor: Jodit) {
     if (!editor.options.addNewLine) {
         return;
     }

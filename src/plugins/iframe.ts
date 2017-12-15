@@ -139,7 +139,7 @@ Config.prototype.iframeCSSLinks  = [];
 /**
  * Iframe plugin
  */
-export default function (editor: Jodit) {
+export function iframe(editor: Jodit) {
     editor.events.on('createEditor', () => {
         if (!editor.options.iframe) {
             return;

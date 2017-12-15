@@ -23,7 +23,7 @@ Config.prototype.autofocus = false;
  *
  * @param {Jodit} editor
  */
-export default function (editor: Jodit) {
+export function autofocus(editor: Jodit) {
     let timeout;
     editor.events
         .on('afterInit', () => {

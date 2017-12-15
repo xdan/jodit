@@ -22,7 +22,9 @@ declare module "../Config" {
         useTableProcessor: boolean;
     }
 }
+
 Config.prototype.useTableProcessor = true;
+
 Config.prototype.controls.table = {
     cols: 10,
     popup: (editor: Jodit, current,  control: ControlType, close: Function) => {
@@ -156,7 +158,7 @@ Config.prototype.controls.table = {
 /**
  *
  */
-export default class TableProcessor extends Component{
+export class TableProcessor extends Component{
     private __key: string = 'table_processor_observer';
     private __selectMode: boolean = false;
 
@@ -510,4 +512,3 @@ export default class TableProcessor extends Component{
         this.__off();
     }
 }
-Jodit.plugins.table = TableProcessor;

@@ -6,7 +6,7 @@
 
 import {Command} from "./Observer";
 
-export class Stack {
+export default class Stack {
     private commands: Command[] = [];
     private stackPosition: number = -1;
     private savePosition: number = -1;

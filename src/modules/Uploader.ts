@@ -28,7 +28,8 @@ export type UploaderAnswer = {
 
 type HandlerSuccess = (resp: UploaderData) => void;
 type HandlerError = (e: Error) => void;
-type UploaderOptions = {
+
+export type UploaderOptions = {
     url: string;
     headers?: {[key: string]: string},
     data: null|object,
@@ -192,7 +193,7 @@ export default class Uploader extends Component {
 
     private options: UploaderOptions;
 
-    constructor(editor: Jodit, options) {
+    constructor(editor: Jodit, options: UploaderOptions) {
         super(editor);
         this.options = <UploaderOptions>extend(true, {}, Config.prototype.uploader, editor.options.uploader, options);
 

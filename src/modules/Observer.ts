@@ -8,7 +8,7 @@ import {Config} from '../Config'
 import Component from './Component'
 import Snapshot,{SnapshotType} from './Snapshot'
 import * as consts from '../constants';
-import {Stack} from './Undo'
+import Stack from './Stack'
 import Jodit from "../Jodit";
 /**
  * @property{object} observer module settings {@link Observer|Observer}

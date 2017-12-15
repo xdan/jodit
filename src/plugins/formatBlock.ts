@@ -31,7 +31,7 @@ Config.prototype.controls.paragraph = {
 };
 
 
-export default function (editor: Jodit) {
+export function formatBlock(editor: Jodit) {
     editor.events.on('beforeCommand', (command: string, second, third: string) => {
         if (command === 'formatblock') {
              editor.selection.focus();
