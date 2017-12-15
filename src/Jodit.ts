@@ -757,6 +757,4 @@ export default class Jodit extends Component{
     }
 }
 
-Jodit.defaultOptions = new Config();
-
 

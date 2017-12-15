@@ -130,4 +130,4 @@ export function placeholder(editor: Jodit) {
             toggle();
             timeout = setTimeout(toggle, 1)
         });
-};
+}

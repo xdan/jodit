@@ -202,4 +202,4 @@ export function link(jodit: Jodit) {
             }
         });
     }
-};
+}

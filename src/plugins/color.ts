@@ -7,7 +7,7 @@
 import Jodit from '../Jodit';
 import {css, normalizeColor} from '../modules/Helpers';
 import {Config} from "../Config";
-import {Widget} from "../modules/Widget";
+import {Widget} from "../modules";
 import TabsWidget = Widget.TabsWidget;
 import ColorPickerWidget = Widget.ColorPickerWidget;
 import Dom from "../modules/Dom";
@@ -133,4 +133,4 @@ export function color(editor: Jodit) {
             return false;
         }
     });
-};
+}

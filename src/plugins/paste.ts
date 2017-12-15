@@ -133,4 +133,4 @@ export function paste(editor: Jodit) {
             }
         });
     }
-};
+}

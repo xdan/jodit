@@ -87,4 +87,4 @@ export function backspace(editor: Jodit) {
             }
         }
     })
-};
+}

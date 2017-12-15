@@ -75,4 +75,4 @@ export function imageProcessor(editor: Jodit) {
             });
         }
     }, editor.options.observer.timeout));
-};
+}

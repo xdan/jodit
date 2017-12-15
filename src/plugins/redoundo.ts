@@ -61,4 +61,4 @@ export function redoundo(editor: Jodit) {
     this.destruct = () => {
         observer.destruct();
     };
-};
+}

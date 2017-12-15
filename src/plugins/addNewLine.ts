@@ -108,7 +108,7 @@ export function addNewLine(editor: Jodit) {
                 .__on(editor.editor, 'scroll', () => {
                     hideForce();
                 })
-                .__on(editor.container, 'mouseleave', function (this: HTMLElement, e: MouseEvent) {
+                .__on(editor.container, 'mouseleave', () => {
                     hide();
                 })
                 .__on(editor.editor, 'mousemove', debounce(function (this: HTMLElement, e: MouseEvent) {
@@ -151,4 +151,4 @@ export function addNewLine(editor: Jodit) {
                     }
                 }, editor.options.observer.timeout));
         }, editor.options.observer.timeout));
-};
+}

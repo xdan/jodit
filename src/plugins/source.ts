@@ -472,4 +472,4 @@ export class source extends Component {
             this.loadNext(0, editor.options.sourceEditorCDNUrlsJS, 'aceReady', this.className);
         }
     }
-};
+}

@@ -12,4 +12,4 @@ export function imageInlineToolbar(editor: Jodit) {
             //alert(1);
         }
     });
-};
+}

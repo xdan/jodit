@@ -101,4 +101,4 @@ export function justify(editor: Jodit) {
             return false;
         }
     });
-};
+}

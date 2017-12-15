@@ -38,4 +38,4 @@ export function autofocus(editor: Jodit) {
         .on('beforeDestruct', () => {
             clearTimeout(timeout);
         })
-};
+}

@@ -16,7 +16,7 @@ import {css, dom, offset} from "../modules/Helpers";
 import {ControlType} from "../modules/Toolbar";
 import Dom from "../modules/Dom";
 import Table from "../modules/Table";
-import {Widget} from "../modules/Widget";
+import {Widget} from "../modules/";
 import ColorPickerWidget = Widget.ColorPickerWidget;
 import TabsWidget = Widget.TabsWidget;
 
@@ -377,4 +377,4 @@ export function inlinePopup(editor: Jodit) {
             }
             clearTimeout(timeout);
         });
-};
+}

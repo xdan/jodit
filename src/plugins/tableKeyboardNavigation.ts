@@ -4,12 +4,13 @@
  * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
  */
 
-import Jodit from '../Jodit';
-import * as consts from '../constants';
-import Table from '../modules/Table'
-import Dom from "../modules/Dom";
+import Jodit        from '../Jodit';
+import * as consts  from '../constants';
+import Table        from '../modules/Table'
+import Dom          from "../modules/Dom";
 
 /**
+ * Process navigate keypressing in table cell
  *
  * @param {Jodit} editor
  */
@@ -99,4 +100,4 @@ export function tableKeyboardNavigation(editor: Jodit) {
         }
 
     });
-};
+}

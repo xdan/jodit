@@ -13,7 +13,7 @@ import Toolbar from "../modules/Toolbar";
 import FileBrowser, {FileBrowserCallBcackData} from "../modules/FileBrowser";
 import Dom from "../modules/Dom";
 import {UploaderData} from "../modules/Uploader";
-import {Widget} from "../modules/Widget";
+import {Widget} from "../modules/";
 import TabsWidget = Widget.TabsWidget;
 import ImageSelectorWidget = Widget.ImageSelectorWidget;
 /**
@@ -578,4 +578,4 @@ export function imageProperties(editor: Jodit) {
         .on('openImageProperties', (image: HTMLImageElement) => {
             open.call(image);
         });
-};
+}

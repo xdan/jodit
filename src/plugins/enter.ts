@@ -166,4 +166,4 @@ export function enter(editor: Jodit) {
             return false;
         }
     });
-};
+}

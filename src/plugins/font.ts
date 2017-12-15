@@ -56,4 +56,4 @@ export function font(editor: Jodit) {
             return false;
         }
     });
-};
+}

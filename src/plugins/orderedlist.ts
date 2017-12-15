@@ -42,4 +42,4 @@ export function orderedlist(editor: Jodit) {
             editor.setEditorValue();
         }
     });
-};
+}

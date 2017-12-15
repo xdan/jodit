@@ -6,14 +6,15 @@
 
 import "./styles/bundle.less";
 import './polyfills';
-import * as consts from './constants';
-import Toolbar from './modules/Toolbar';
-import Jodit from './Jodit';
-import './Config';
-import * as Plugins from "./plugins/index";
-import * as Modules from "./modules/index";
-import * as Languages from "./langs/index";
-import * as Icons from "./styles/icons/index";
+
+import * as consts      from './constants';
+import Toolbar          from './modules/Toolbar';
+import Jodit            from './Jodit';
+import * as Plugins     from "./plugins/";
+import * as Modules     from "./modules/";
+import * as Languages   from "./langs/";
+import * as Icons       from "./styles/icons/";
+import {Config}         from "./Config";
 
 // copy constants in Jodit
 Object.keys(consts).forEach((key) => {
@@ -39,5 +40,7 @@ Object.keys(Plugins).filter((key) => key !== '__esModule').forEach((key) => {
 Object.keys(Languages).filter((key) => key !== '__esModule').forEach((key) => {
     Jodit.lang[key] = Languages[key];
 });
+
+Jodit.defaultOptions = new Config();
 
 export = Jodit;

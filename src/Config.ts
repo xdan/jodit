@@ -6,7 +6,6 @@
 
 import * as consts from './constants'
 import {dom, trim, $$, isURL, convertMediaURLToVideoEmbed, val} from './modules/Helpers'
-// import Dom from "./modules/Dom";
 import Jodit from "./Jodit";
 import {ControlType} from "./modules/Toolbar";
 import {FileBrowserCallBcackData} from "./modules/FileBrowser";

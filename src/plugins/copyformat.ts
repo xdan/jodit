@@ -6,7 +6,6 @@
 
 import {Config} from '../Config'
 import Jodit from "../Jodit";
-import {ControlType} from "../modules/Toolbar";
 import Dom from "../modules/Dom";
 import {css} from "../modules/Helpers";
 

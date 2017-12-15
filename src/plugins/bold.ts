@@ -72,4 +72,4 @@ export function bold(editor: Jodit) {
             return false;
         }
     });
-};
+}

@@ -73,4 +73,4 @@ export function errorMessages(editor: Jodit) {
             }, timeout || editor.options.showMessageErrorTime);
         });
     }
-};
+}

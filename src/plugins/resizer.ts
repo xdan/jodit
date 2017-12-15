@@ -315,4 +315,4 @@ export function resizer(editor: Jodit) {
                 }
             });
         }, editor.options.observer.timeout));
-};
+}

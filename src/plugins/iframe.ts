@@ -190,7 +190,7 @@ export function iframe(editor: Jodit) {
 
         if (editor.options.height === 'auto') {
             doc.documentElement.style.overflowY = 'hidden';
-            const resizeIframe = (e) => {
+            const resizeIframe = () => {
                 if (editor.editor) {
                     css(editor.iframe, 'height', editor.editor.offsetHeight);
                 }

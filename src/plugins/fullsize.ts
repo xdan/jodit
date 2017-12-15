@@ -121,4 +121,4 @@ export  function fullsize(editor: Jodit) {
     editor.events.on('beforeDestruct', () => {
         toggle(false);
     });
-};
+}

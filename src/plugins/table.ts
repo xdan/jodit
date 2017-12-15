@@ -379,7 +379,7 @@ export class TableProcessor extends Component{
             return;
         }
 
-        this.__on(this.jodit.ownerWindow, 'mouseup touchend', (e: MouseEvent|TouchEvent) => {
+        this.__on(this.jodit.ownerWindow, 'mouseup touchend', () => {
             if (this.__selectMode || this.__drag) {
                 this.__selectMode = false;
                 this.jodit.unlock();

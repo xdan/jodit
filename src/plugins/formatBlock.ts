@@ -75,4 +75,4 @@ export function formatBlock(editor: Jodit) {
             return false;
         }
     });
-};
+}
