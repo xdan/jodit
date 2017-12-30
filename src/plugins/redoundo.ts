@@ -1,5 +1,11 @@
-import Jodit from '../Jodit';
-import Observer from '../modules/Observer';
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
+import {Jodit} from '../Jodit';
+import {Observer} from '../modules/Observer';
 import * as consts from '../constants';
 import {ctrlKey} from '../modules/Helpers'
 import {Config} from "../Config";
@@ -14,7 +20,7 @@ Config.prototype.controls.undo = {
 };
 
 
-export default function (editor: Jodit) {
+export function redoundo(editor: Jodit) {
     const observer:Observer = new Observer(editor);
     const updateButton = () => {
         editor.events.fire('canRedo', [observer.stack.canRedo()]);
@@ -30,7 +36,7 @@ export default function (editor: Jodit) {
                     return false;
                 }
             }
-        }, null, true);
+        }, undefined, true);
 
 
     editor.events
@@ -55,4 +61,4 @@ export default function (editor: Jodit) {
     this.destruct = () => {
         observer.destruct();
     };
-};
+}

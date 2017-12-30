@@ -6,7 +6,7 @@ An excellent WYSIWYG editor written in pure TypeScript without the use of additi
 [![npm](https://img.shields.io/npm/dm/jodit.svg)](https://www.npmjs.com/package/jodit)
 [![Gitter](https://badges.gitter.im/xdan/jodit.svg)](https://gitter.im/xdan/jodit?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
- * [Official site](https://xdsoft.net/jodit/)
+ * [Demo and Official site](https://xdsoft.net/jodit/)
  * [Documentation](https://xdsoft.net/jodit/doc/)
  * [Download&Changes](https://github.com/xdan/jodit/releases)
  
@@ -31,8 +31,8 @@ Include just two files
 ```
 ### CDN
 ```xml
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jodit/3.0.35/jodit.min.css">
-<script src="//cdnjs.cloudflare.com/ajax/libs/jodit/3.0.35/jodit.min.js"></script>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jodit/3.0.37/jodit.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/jodit/3.0.37/jodit.min.js"></script>
 ```
 ### USAGE
 
@@ -106,7 +106,7 @@ and set options for Jodit:
 ```javascript
 var editor = new Jodit('#editor', {
     uploader: {
-        url: 'http://localhost:8181/index-test.php?action=upload'
+        url: 'http://localhost:8181/index-test.php?action=fileUpload'
     },
     filebrowser: {
         ajax: {
@@ -150,7 +150,7 @@ ______________________
 * Microsoft Edge
 
 
-##Contributing
+## Contributing
 
 This project is maintained by a community of developers. Contributions are welcome and appreciated. You can find Jodit on GitHub; feel free to start an issue or create a pull requests:
 https://github.com/xdan/jodit

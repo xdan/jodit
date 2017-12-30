@@ -1,8 +1,14 @@
-import Jodit from '../Jodit'
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
+import {Jodit} from '../Jodit'
 import {normalizeColor, dom, isPlainObject, each, $$, hexToRgb, val} from './Helpers'
-import Dom from "./Dom";
-import Uploader, {UploaderData} from "./Uploader";
-import FileBrowser, {FileBrowserCallBcackData} from "./FileBrowser";
+import {Dom} from "./Dom";
+import {Uploader, UploaderData} from "./Uploader";
+import {FileBrowser, FileBrowserCallBcackData} from "./FileBrowser";
 
 export namespace Widget {
 
@@ -56,7 +62,7 @@ export namespace Widget {
                 e.stopPropagation();
                 let target: HTMLElement = <HTMLElement>e.target;
 
-                if (target.tagName.toUpperCase() === 'SVG' || target.tagName.toUpperCase() === 'PATH') {
+                if ((target.tagName.toUpperCase() === 'SVG' || target.tagName.toUpperCase() === 'PATH') && target.parentNode) {
                     target = <HTMLElement>Dom.closest(target.parentNode, 'A', editor.editor);
                 }
                 if (target.tagName.toUpperCase() !== 'A') {
@@ -79,8 +85,10 @@ export namespace Widget {
                     target.innerHTML = Jodit.modules.Toolbar.getIcon('eye');
                     target.classList.add('active');
 
-                    let colorRGB = hexToRgb(color);
-                    (<HTMLElement>target.firstChild).style.fill = 'rgb(' + (255 - colorRGB.r) + ',' + (255 - colorRGB.g) + ',' + (255 - colorRGB.b) + ')'
+                    const colorRGB: RGB|null = hexToRgb(color);
+                    if (colorRGB) {
+                        (<HTMLElement>target.firstChild).style.fill = 'rgb(' + (255 - colorRGB.r) + ',' + (255 - colorRGB.g) + ',' + (255 - colorRGB.b) + ')'
+                    }
                 }
 
 
@@ -123,7 +131,8 @@ export namespace Widget {
                 button: HTMLDivElement,
                 tab: HTMLDivElement
             }} = {},
-            tabcount = 0;
+            firstTab: string = '',
+            tabcount: number = 0;
 
         box.appendChild(buttons);
         box.appendChild(tabBox);
@@ -131,6 +140,10 @@ export namespace Widget {
         each(tabs, (name: string, tabOptions: Function|HTMLElement) => {
             const tab: HTMLDivElement = <HTMLDivElement>dom('<div class="jodit_tab"></div>', editor.ownerDocument),
                 button: HTMLDivElement = <HTMLDivElement>dom('<a href="javascript:void(0);"></a>', editor.ownerDocument);
+
+            if (!firstTab) {
+                firstTab = name;
+            }
 
             button.innerHTML = editor.i18n(name);
             buttons.appendChild(button);
@@ -174,7 +187,7 @@ export namespace Widget {
         });
 
         if (!tabcount) {
-            return;
+            return box;
         }
 
         $$('a', buttons).forEach((a) => {
@@ -182,8 +195,8 @@ export namespace Widget {
         });
 
         if (!state || !state.__activeTab || !nameToTab[state.__activeTab]) {
-            buttons.querySelector('a:first-child').classList.add('active');
-            tabBox.querySelector('.jodit_tab:first-child').classList.add('active');
+            nameToTab[firstTab].button.classList.add('active');
+            nameToTab[firstTab].tab.classList.add('active');
         } else {
             nameToTab[state.__activeTab].button.classList.add('active');
             nameToTab[state.__activeTab].tab.classList.add('active');
@@ -265,7 +278,9 @@ export namespace Widget {
             if (editor.options.filebrowser.ajax.url || editor.options.filebrowser.items.url) {
                 tabs[Jodit.modules.Toolbar.getIcon('folder') + editor.i18n('Browse')] = function () {
                     close && close();
-                    (<FileBrowser>editor.getInstance('FileBrowser')).open(callbacks.filebrowser);
+                    if (callbacks.filebrowser) {
+                        (<FileBrowser>editor.getInstance('FileBrowser')).open(callbacks.filebrowser);
+                    }
                 };
             }
         }
@@ -277,7 +292,9 @@ export namespace Widget {
                     '<div style="text-align: right">' +
                         '<button>' + editor.i18n('Insert') + '</button>' +
                     '</div>' +
-                '</form>', editor.ownerDocument);
+                '</form>', editor.ownerDocument),
+                button: HTMLButtonElement = <HTMLButtonElement>form.querySelector('button'),
+                url: HTMLInputElement = <HTMLInputElement>form.querySelector('input[name=url]');
 
             currentImage = null;
 
@@ -285,7 +302,7 @@ export namespace Widget {
                 currentImage = elm.tagName === 'IMG' ? elm : $$('img', elm)[0];
                 val(form, 'input[name=url]', currentImage.getAttribute('src'));
                 val(form, 'input[name=text]', currentImage.getAttribute('alt'));
-                form.querySelector('button').innerText = editor.i18n('Update');
+                button.innerText = editor.i18n('Update');
             }
 
             form.addEventListener('submit', (event: Event) => {
@@ -293,8 +310,8 @@ export namespace Widget {
                 event.stopPropagation();
 
                 if (!val(form, 'input[name=url]')) {
-                    (<HTMLInputElement>form.querySelector('input[name=url]')).focus();
-                    form.querySelector('input[name=url]').classList.add('jodit_error');
+                    url.focus();
+                    url.classList.add('jodit_error');
                     return false;
                 }
                 if (typeof(callbacks.url) === 'function') {

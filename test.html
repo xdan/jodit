@@ -8,32 +8,50 @@
     <title>Document</title>
 </head>
 <body>
-    <div contenteditable id="test"><strong>12</strong>23</div>
+    <div style="width:800px; margin:auto; border:1px solid red;">
+        <div style="position:relative;">
+            <textarea id="text_area0"></textarea>
+        </div>
+    </div>
 </body>
 <script>
-    function current() {
-        var sel = getSelection();
-        if (sel.rangeCount) {
-            var range = sel.getRangeAt(0);
-            var start = range.startContainer;
-            var end = range.endContainer;
-
-
-            if (range.startContainer.nodeType !== Node.TEXT_NODE && (start !== end || range.startOffset !== range.endOffset)) {
-                return range.startContainer.childNodes[range.startOffset];
-            }
-
-            return start;
+    // DOM 3 Events
+    var dispatchKeyboardEvent = function(target, initKeyboradEvent_args) {
+        var e = document.createEvent("KeyboardEvents");
+        e.initKeyboardEvent.apply(e, Array.prototype.slice.call(arguments, 1));
+        return target.dispatchEvent(e);
+    };
+    var dispatchTextEvent = function(target, initTextEvent_args) {
+        var e = document.createEvent("TextEvent");
+        e.initTextEvent.apply(e, Array.prototype.slice.call(arguments, 1));
+        return target.dispatchEvent(e);
+    };
+    var dispatchSimpleEvent = function(target, type, canBubble, cancelable) {
+        var e = document.createEvent("Event");
+        e.initEvent.apply(e, Array.prototype.slice.call(arguments, 1));
+        return target.dispatchEvent(e);
+    };
+    var element = text_area0;
+    var canceled = !dispatchKeyboardEvent(element,
+        'keydown', true, true,  // type, bubbles, cancelable
+        null,  // window
+        'h',  // key
+        0, // location: 0=standard, 1=left, 2=right, 3=numpad, 4=mobile, 5=joystick
+        '');  // space-sparated Shift, Control, Alt, etc.
+    dispatchKeyboardEvent(
+        element, 'keypress', true, true, null, 'h', 0, '');
+    if (!canceled) {
+        if (dispatchTextEvent(element, 'textInput', true, true, null, 'h', 0)) {
+            element.value += 'h';
+            dispatchSimpleEvent(element, 'input', false, false);
+            // not supported in Chrome yet
+            // if (element.form) element.form.dispatchFormInput();
+            dispatchSimpleEvent(element, 'change', false, false);
+            // not supported in Chrome yet
+            // if (element.form) element.form.dispatchFormChange();
         }
     }
-    var sel = getSelection();
-    var range = document.createRange();
-    range.setStart(test.childNodes[0], 1);
-    range.setEnd(test, 2);
-//    range.collapse(true);
-    sel.removeAllRanges()
-    sel.addRange(range)
-    console.log(current())
-
+    dispatchKeyboardEvent(
+        element, 'keyup', true, true, null, 'h', 0, '');
 </script>
 </html>

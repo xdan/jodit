@@ -1,39 +1,75 @@
-import Jodit from '../Jodit';
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
+import {Jodit} from '../Jodit';
 import {css, normalizeColor} from '../modules/Helpers';
 import {Config} from "../Config";
 import {Widget} from "../modules/Widget";
 import TabsWidget = Widget.TabsWidget;
 import ColorPickerWidget = Widget.ColorPickerWidget;
-import Dom from "../modules/Dom";
+import {Dom} from "../modules/";
+import {ButtonType, ControlType} from "../modules/Toolbar";
 
-Config.prototype.controls.brush = {
-    css: {
-        'backgroundColor' : (editor: Jodit, color: string) => {
-            const  check = (colors: {[key:string]:string[]}|string[]) => {
-                let i: number,
-                    keys: string[];
+Config.prototype.controls.brush = <ControlType>{
+    isActive: (editor: Jodit, btn: ControlType, button: ButtonType): boolean => {
+        const current: Node|false = editor.selection.current();
+        const icon: SVGSVGElement|null = button.btn.querySelector('svg');
 
-                if (typeof colors === 'object') {
-                    keys = Object.keys(colors);
-                    for (i = 0; i < keys.length; i += 1) {
-                        if (check(colors[keys[i]])) {
-                            return true;
-                        }
-                    }
-                } else if (Array.isArray(colors)) {
-                    return (<Array<string>>colors).indexOf(normalizeColor(color) || '') !== -1;
-                }
-                return false;
-            };
+        if (current) {
+            const currentBpx: HTMLElement = <HTMLElement>Dom.closest(current, (elm: Node): boolean => {
+                return Dom.isBlock(elm) || (Dom.isNode(elm, editor.editorWindow) && elm.nodeType === Node.ELEMENT_NODE);
+            }, editor.editor) || editor.editor;
 
-            return check(editor.options.colors);
+            let color: string = css(currentBpx, 'color').toString();
+            let bg: string = css(currentBpx, 'background-color').toString();
+
+            if (color !== css(editor.editor, 'color').toString()) {
+                icon && (icon.style.fill = color);
+                return true;
+            }
+
+            if (bg !== css(editor.editor, 'background-color').toString()) {
+                icon && (icon.style.fill = bg);
+                return true;
+            }
         }
+
+        if (icon && icon.style.fill) {
+            icon.style.fill = null;
+        }
+
+        return false;
     },
+    // css: {
+    //     'backgroundColor' : (editor: Jodit, color: string) => {
+    //         const  check = (colors: {[key:string]:string[]}|string[]) => {
+    //             let i: number,
+    //                 keys: string[];
+    //
+    //             if (typeof colors === 'object') {
+    //                 keys = Object.keys(colors);
+    //                 for (i = 0; i < keys.length; i += 1) {
+    //                     if (check(colors[keys[i]])) {
+    //                         return true;
+    //                     }
+    //                 }
+    //             } else if (Array.isArray(colors)) {
+    //                 return (<Array<string>>colors).indexOf(normalizeColor(color) || '') !== -1;
+    //             }
+    //             return false;
+    //         };
+    //
+    //         return check(editor.options.colors);
+    //     }
+    // },
     popup: (editor: Jodit, current: HTMLElement, self, close) => {
         let color: string = '',
             bg_color: string = '',
             tabs: {[key: string]: HTMLElement},
-            currentElement: HTMLElement;
+            currentElement: HTMLElement|null = null;
 
         /* const sel = editor.editorWindow.getSelection(),
              checkRemoveOpportunity = () => {
@@ -101,11 +137,11 @@ Config.prototype.controls.brush = {
 
         return TabsWidget(editor, tabs, <any>currentElement);
     },
-        tooltip: "Fill color or set the text color"
+    tooltip: "Fill color or set the text color"
 };
 
 
-export default function (editor: Jodit) {
+export function color(editor: Jodit) {
     editor.events.on('beforeCommand', (command, second, third) => {
         if (/forecolor|background/.test(command)) {
             const color: string|false = normalizeColor(third);
@@ -127,4 +163,4 @@ export default function (editor: Jodit) {
             return false;
         }
     });
-};
+}

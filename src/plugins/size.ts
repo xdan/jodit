@@ -1,4 +1,10 @@
-import Jodit from "../Jodit";
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
+import {Jodit} from "../Jodit";
 import {css, dom, throttle} from "../modules/Helpers";
 import {Config} from '../Config'
 
@@ -12,7 +18,7 @@ declare module "../Config" {
 Config.prototype.allowResizeX = false;
 Config.prototype.allowResizeY = true;
 
-export default function (editor: Jodit) {
+export function size(editor: Jodit) {
     if (editor.options.height !== 'auto' && (editor.options.allowResizeX || editor.options.allowResizeY)) {
         const handle: HTMLAnchorElement = <HTMLAnchorElement>dom('<div class="jodit_editor_resize" ><a href="javascript:void(0)"></a></div>', editor.ownerDocument),
             start: { x: number, y: number, w: number, h: number } = {

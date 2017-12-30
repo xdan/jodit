@@ -1,18 +1,24 @@
-import Jodit from '../Jodit';
-import Component from './Component';
-import Dialog, {Alert, Confirm, Promt} from '../modules/Dialog';
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
+import {Jodit} from '../Jodit';
+import {Component} from './Component';
+import {Dialog, Alert, Confirm, Promt} from '../modules/Dialog';
 import {Config} from '../Config';
 import {
     $$, css, ctrlKey, debounce, dom, each, extend, humanSizeToBytes, isPlainObject, offset,
     pathNormalize, urlNormalize
 } from "./Helpers";
-import Toolbar from "./Toolbar";
-import ContextMenu from "./ContextMenu";
-import Uploader from "./Uploader";
-import Ajax from "./Ajax";
+import {Toolbar} from "./Toolbar";
+import {ContextMenu} from "./ContextMenu";
+import {Uploader, UploaderOptions} from "./Uploader";
+import {Ajax} from "./Ajax";
 import * as consts from "../constants";
-import ImageEditor from "./ImageEditor";
-import Cookie from "./Cookie";
+import {ImageEditor, ActionBox} from "./ImageEditor";
+import {Cookie} from "./Cookie";
 
 /**
  * The module creates a web browser dialog box . In a Web browser , you can select an image , remove , drag it . Upload new
@@ -140,25 +146,25 @@ import Cookie from "./Cookie";
  *         }
  *     },
  *     resize: {
- *         data: {action: 'resize'},
+ *         data: {action: 'imageResize'},
  *     },
  *     crop: {
- *         data: {action: 'crop'},
+ *         data: {action: 'imageCrop'},
  *     },
  *     create: {
- *         data: {action: 'create'},
+ *         data: {action: 'folderCreate'},
  *     },
  *     move: {
- *         data: {action: 'move'},
+ *         data: {action: 'fileMove'},
  *     },
  *     remove: {
- *         data: {action: 'remove'},
+ *         data: {action: 'fileRemove'},
  *     },
  *     items: {
- *         data: {action: 'items'},
+ *         data: {action: 'files'},
  *     },
- *     folder: {
- *         data: {action: 'folder'},
+ *     folders: {
+ *         data: {action: 'folders'},
  *     },
  *     uploader: null // use default Uploader's settings
  * }
@@ -196,7 +202,7 @@ import Cookie from "./Cookie";
  * ```
  * @example
  * ```javascript
- * new Jodit('#jodit', {
+ * var editor = new Jodit('#jodit', {
  *        uploader: {
  *            url: 'connector/upload.php',
  *            baseurl: 'images/'
@@ -230,10 +236,10 @@ interface ISourceFile {
 }
 
 interface ISource {
-    path?: string
-    baseurl?: string
-    files?: ISourceFile[]
-    folders?: string[]
+    path: string
+    baseurl: string
+    files: ISourceFile[]
+    folders: string[]
 }
 
 
@@ -268,9 +274,9 @@ type FileBrowserAjaxOptions = {
 
     headers?: { [key: string]: string };
 
-    prepareData?: (this: Uploader, data: { [key: string]: string }) => { [key: string]: string };
+    prepareData?: (data: { [key: string]: string }) => { [key: string]: string };
 
-    process?: (this: Uploader, resp: FileBrowserAnswer) => FileBrowserAnswer;
+    process?: (resp: FileBrowserAnswer) => FileBrowserAnswer;
 }
 
 type ExecButton = {
@@ -316,13 +322,14 @@ type FileBrowserOptions = {
 
     ajax: FileBrowserAjaxOptions;
     create: FileBrowserAjaxOptions;
-    getlocalfilebyurl: FileBrowserAjaxOptions;
+    getLocalFileByUrl: FileBrowserAjaxOptions;
     resize: FileBrowserAjaxOptions;
     crop: FileBrowserAjaxOptions;
     move: FileBrowserAjaxOptions;
     remove: FileBrowserAjaxOptions;
     items: FileBrowserAjaxOptions;
     folder: FileBrowserAjaxOptions;
+    permissions: FileBrowserAjaxOptions;
 
     uploader: null // use default Uploader's settings
 }
@@ -355,8 +362,8 @@ Config.prototype.filebrowser = <FileBrowserOptions>{
 
     sortBy: 'changed',
 
-    sort: function (this: FileBrowser, a, b, sortBy) {
-        let compareStr = function (f, s) {
+    sort: function (this: FileBrowser, a, b, sortBy: string) {
+        let compareStr = (f, s): number => {
                 if (f < s) {
                     return -1;
                 }
@@ -415,6 +422,7 @@ Config.prototype.filebrowser = <FileBrowserOptions>{
     isSuccess: function (this: FileBrowser, resp: FileBrowserAnswer): boolean {
         return resp.success;
     },
+
     getMessage: function (this: FileBrowser, resp: FileBrowserAnswer) {
         return (resp.data.messages!== undefined && Array.isArray(resp.data.messages)) ? resp.data.messages.join(' ') : '';
     },
@@ -424,8 +432,8 @@ Config.prototype.filebrowser = <FileBrowserOptions>{
     showFileChangeTime: true,
 
     getThumbTemplate: function (this: FileBrowser, item: ISourceFile, source: ISource, source_name: string): string {
-        let name: string,
-            thumb: string,
+        let name: string = '',
+            thumb: string = '',
             info: string,
             timestamp: string = (new Date()).getTime().toString();
 
@@ -444,14 +452,14 @@ Config.prototype.filebrowser = <FileBrowserOptions>{
 
         info = `<div class="${ITEM_CLASS}-info">
             ${this.options.showFileName ? `<span class="${ITEM_CLASS}-info-filename">${name}</span>` : ''}
-            ${(this.options.showFileSize && item.size) ? `<span class="' + ITEM_CLASS + '-info-filesize">${item.size}</span>` : ''}
-            ${(this.options.showFileChangeTime && item.changed) ? `<span class="${ITEM_CLASS}-info-filesize">${item.changed}</span>` : ''}
+            ${(this.options.showFileSize && item.size) ? `<span class="${ITEM_CLASS}-info-filesize">${item.size}</span>` : ''}
+            ${(this.options.showFileChangeTime && item.changed) ? `<span class="${ITEM_CLASS}-info-filechanged">${item.changed}</span>` : ''}
         </div>`;
 
         return `<a draggable="true" class="${ITEM_CLASS}" href="${urlNormalize(source.baseurl + source.path +  name)}" data-source="${source_name}" data-path="${pathNormalize(source.path ? source.path + '/' : '/')}" data-name="${name}" title="${name}" data-url="${urlNormalize(source.baseurl + source.path + name)}">
-                <img src="${urlNormalize(source.baseurl + source.path + thumb)}?_tmst=${timestamp}" alt="${name}"/>
-                ${(this.options.showFileName || (this.options.showFileSize && item.size) || (this.options.showFileChangeTime && item.changed)) ? info : ''}
-            </a>`;
+            <img src="${urlNormalize(source.baseurl + source.path + thumb)}?_tmst=${timestamp}" alt="${name}"/>
+            ${(this.options.showFileName || (this.options.showFileSize && item.size) || (this.options.showFileChangeTime && item.changed)) ? info : ''}
+        </a>`;
     },
 
     ajax: {
@@ -477,28 +485,31 @@ Config.prototype.filebrowser = <FileBrowserOptions>{
         }
     },
     create: {
-        data: {action: 'create'},
+        data: {action: 'folderCreate'},
     },
-    getlocalfilebyurl: {
-        data: {action: 'getlocalfilebyurl'},
+    getLocalFileByUrl: {
+        data: {action: 'getLocalFileByUrl'},
     },
     resize: {
-        data: {action: 'resize'},
+        data: {action: 'imageResize'},
     },
     crop: {
-        data: {action: 'crop'},
+        data: {action: 'imageCrop'},
     },
     move: {
-        data: {action: 'move'},
+        data: {action: 'fileMove'},
     },
     remove: {
-        data: {action: 'remove'},
+        data: {action: 'fileRemove'},
     },
     items: {
         data: {action: 'files'},
     },
     folder: {
         data: {action: 'folders'},
+    },
+    permissions: {
+        data: {action: 'permissions'},
     },
 
     uploader: null // use default Uploader's settings
@@ -508,7 +519,7 @@ Config.prototype.filebrowser = <FileBrowserOptions>{
 const DEFAULT_SOURCE_NAME = 'default';
 const ITEM_CLASS = 'jodit_filebrowser_files_item';
 
-export default class FileBrowser extends Component {
+export class FileBrowser extends Component {
     options: FileBrowserOptions;
     currentPath: string = '';
     currentSource: string = DEFAULT_SOURCE_NAME;
@@ -527,7 +538,9 @@ export default class FileBrowser extends Component {
 
     constructor(editor: Jodit) {
         super(editor);
-        const self = this;
+        const
+            self: FileBrowser = this,
+            doc: HTMLDocument = editor.ownerDocument;
 
         self.options = extend(true, {}, Config.prototype.filebrowser, self.jodit.options.filebrowser);
 
@@ -535,33 +548,31 @@ export default class FileBrowser extends Component {
             fullsizeButton: true
         });
 
-        self.loader = dom('<div class="jodit_filebrowser_loader"><i class="jodit_icon-loader"></i></div>', editor.ownerDocument);
+        self.loader = dom('<div class="jodit_filebrowser_loader"><i class="jodit_icon-loader"></i></div>', doc);
 
         self.browser = dom('<div class="jodit_filebrowser non-selected">' +
             (self.options.showFoldersPanel ? '<div class="jodit_filebrowser_tree"></div>' : '') +
             '<div class="jodit_filebrowser_files"></div>' +
             '<div class="jodit_filebrowser_status"></div>' +
-         '</div>', editor.ownerDocument);
+         '</div>', doc);
 
         self.status_line = <HTMLElement>self.browser.querySelector('.jodit_filebrowser_status');
 
-
-
         self.buttons = {
-            upload : dom('<div class="jodit_uploadfile_button jodit_button">' + Toolbar.getIcon('plus') + '<input type="file" accept="image/*" tabindex="-1" dir="auto" multiple=""/></div>', editor.ownerDocument),
-            remove : dom('<div class="jodit_button disabled">' + Toolbar.getIcon('bin') + '</div>', editor.ownerDocument),
-            update : dom('<div class="jodit_button">' + Toolbar.getIcon('update') + '</div>', editor.ownerDocument),
-            select : dom('<div class="jodit_button disabled">' + Toolbar.getIcon('check') + '</div>', editor.ownerDocument),
-            edit : dom('<div class="jodit_button disabled">' + Toolbar.getIcon('pencil') + '</div>', editor.ownerDocument),
-            tiles : dom('<div class="jodit_button jodit_button_tiles disabled">' + Toolbar.getIcon('th') + '</div>', editor.ownerDocument),
-            list : dom('<div class="jodit_button disabled">' + Toolbar.getIcon('th-list') + '</div>', editor.ownerDocument),
-            filter: dom('<input class="jodit_input" placeholder="' + editor.i18n('Filter') + '"/>', editor.ownerDocument),
+            upload : dom('<div class="jodit_uploadfile_button jodit_button">' + Toolbar.getIcon('plus') + '<input type="file" accept="image/*" tabindex="-1" dir="auto" multiple=""/></div>', doc),
+            remove : dom('<div class="jodit_button disabled">' + Toolbar.getIcon('bin') + '</div>', doc),
+            update : dom('<div class="jodit_button">' + Toolbar.getIcon('update') + '</div>', doc),
+            select : dom('<div class="jodit_button disabled">' + Toolbar.getIcon('check') + '</div>', doc),
+            edit   : dom('<div class="jodit_button disabled">' + Toolbar.getIcon('pencil') + '</div>', doc),
+            tiles  : dom('<div class="jodit_button jodit_button_tiles disabled">' + Toolbar.getIcon('th') + '</div>', doc),
+            list   : dom('<div class="jodit_button disabled">' + Toolbar.getIcon('th-list') + '</div>', doc),
+            filter : dom('<input class="jodit_input" placeholder="' + editor.i18n('Filter') + '"/>', doc),
 
             sort: dom('<select class="jodit_input">' +
-                    '<option value="changed">' + editor.i18n('Sort by changed') + '</option>' +
-                    '<option value="name">' + editor.i18n('Sort by name') + '</option>' +
-                    '<option value="size">' + editor.i18n('Sort by size') + '</option>' +
-                '</select>', editor.ownerDocument),
+                '<option value="changed">' + editor.i18n('Sort by changed') + '</option>' +
+                '<option value="name">' + editor.i18n('Sort by name') + '</option>' +
+                '<option value="size">' + editor.i18n('Sort by size') + '</option>' +
+            '</select>', doc),
         };
 
 
@@ -611,7 +622,7 @@ export default class FileBrowser extends Component {
                 Confirm(editor.i18n('Are you shure?'), '', (yes) => {
                     if (yes) {
                         this.__getActiveElements().forEach((a) => {
-                            self.remove(self.currentPath, a.getAttribute('data-name'), a.getAttribute('data-source'));
+                            self.remove(self.currentPath, a.getAttribute('data-name') || '', a.getAttribute('data-source') || '');
                         });
                         self.someSelectedWasChanged();
                         self.loadTree(self.currentPath, self.currentSource);
@@ -623,7 +634,7 @@ export default class FileBrowser extends Component {
         self.__on(self.buttons.edit, 'click', () => {
             let files = this.__getActiveElements();
             if (files.length === 1) {
-                self.openImageEditor(files[0].getAttribute('href'), files[0].getAttribute('data-name'), files[0].getAttribute('data-path'), files[0].getAttribute('data-source'));
+                self.openImageEditor(files[0].getAttribute('href') || '', files[0].getAttribute('data-name') || '', files[0].getAttribute('data-path') || '', files[0].getAttribute('data-source') || '');
             }
         });
 
@@ -634,7 +645,7 @@ export default class FileBrowser extends Component {
         self
             .__on(self.tree, 'click', 'a>i.remove', function (e)  {
                 let a = this.parentNode, path = a.getAttribute('data-path');
-                Confirm(editor.i18n('Are you shure?'), '', (yes) => {
+                Confirm(editor.i18n('Are you shure?'), '', (yes: boolean) => {
                     if (yes) {
                         self.remove(path, a.getAttribute('data-name'), a.getAttribute('data-source'));
                         self.loadTree(self.currentPath, self.currentSource);
@@ -659,7 +670,7 @@ export default class FileBrowser extends Component {
             })
             .__on(this.tree, 'drop',  'a', function () {
                 if (self.options.moveFolder && self.dragger) {
-                    let path = self.dragger.getAttribute('data-path');
+                    let path: string = self.dragger.getAttribute('data-path') || '';
 
                     //move folder
                     if (!self.options.moveFolder && self.dragger.classList.contains('jodit_filebrowser_tree_item')) {
@@ -699,11 +710,11 @@ export default class FileBrowser extends Component {
                     height: this.offsetHeight
                 });
 
-                editor.ownerDocument.body.appendChild(self.draggable)
+                doc.body.appendChild(self.draggable)
             })
             .__on(self.files, 'dragstart', 'a', function (this: HTMLElement, e: DragEvent) {
                 self.dragger = this;
-                e.dataTransfer.setData(consts.TEXT_PLAIN, this.getAttribute('href'));
+                e.dataTransfer.setData(consts.TEXT_PLAIN, this.getAttribute('href') || '');
                 e.stopPropagation();
             })
             .__on(self.files, 'contextmenu', 'a', function (this: HTMLElement, e: DragEvent) {
@@ -714,14 +725,14 @@ export default class FileBrowser extends Component {
                             icon: 'pencil',
                             title: 'Edit',
                             exec: () => {
-                                self.openImageEditor(item.getAttribute('href'), item.getAttribute('data-name'), item.getAttribute('data-path'), item.getAttribute('data-source'));
+                                self.openImageEditor(item.getAttribute('href') || '', item.getAttribute('data-name') || '', item.getAttribute('data-path') || '', item.getAttribute('data-source') || '');
                             }
                         } : false,
                         {
                             icon: 'bin',
                             title: 'Delete',
                             exec: () => {
-                                self.remove(self.currentPath, item.getAttribute('data-name'), item.getAttribute('data-source'));
+                                self.remove(self.currentPath, item.getAttribute('data-name') || '', item.getAttribute('data-source') || '');
                                 self.someSelectedWasChanged();
                                 self.loadTree(self.currentPath, self.currentSource);
                             }
@@ -730,18 +741,18 @@ export default class FileBrowser extends Component {
                             icon: 'eye',
                             title: 'Preview',
                             exec: () => {
-                                let preview = new Dialog(self.jodit),
-                                    temp_content: HTMLElement = dom('<div class="jodit_filebrowser_preview"><i class="jodit_icon-loader"></i></div>', editor.ownerDocument),
-                                    src = item.getAttribute('href'),
-                                    selectBtn = <HTMLElement>self.buttons.select.cloneNode(true),
-                                    image = editor.ownerDocument.createElement('img'),
+                                let src: string = item.getAttribute('href') || '';
+                                const preview: Dialog = new Dialog(self.jodit),
+                                    temp_content: HTMLElement = dom('<div class="jodit_filebrowser_preview"><i class="jodit_icon-loader"></i></div>', doc),
+                                    selectBtn: HTMLElement = <HTMLElement>self.buttons.select.cloneNode(true),
+                                    image: HTMLImageElement = doc.createElement('img'),
                                     addLoadHandler = () => {
                                         let onload = () => {
                                             this.removeEventListener('load', <EventListenerOrEventListenerObject>onload);
                                             temp_content.innerHTML = '';
                                             if (self.options.showPreviewNavigation) {
-                                                let next = dom('<a href="javascript:void(0)" class="jodit_filebrowser_preview_navigation jodit_filebrowser_preview_navigation-next">' + Toolbar.getIcon('angle-right') + '</a>', editor.ownerDocument),
-                                                    prev = dom('<a href="javascript:void(0)" class="jodit_filebrowser_preview_navigation jodit_filebrowser_preview_navigation-prev">' + Toolbar.getIcon('angle-left') + '</a>', editor.ownerDocument);
+                                                let next = dom('<a href="javascript:void(0)" class="jodit_filebrowser_preview_navigation jodit_filebrowser_preview_navigation-next">' + Toolbar.getIcon('angle-right') + '</a>', doc),
+                                                    prev = dom('<a href="javascript:void(0)" class="jodit_filebrowser_preview_navigation jodit_filebrowser_preview_navigation-prev">' + Toolbar.getIcon('angle-left') + '</a>', doc);
 
                                                 if (item.previousSibling && (<HTMLElement>item.previousSibling).classList && (<HTMLElement>item.previousSibling).classList.contains(ITEM_CLASS)) {
                                                     temp_content.appendChild(prev);
@@ -757,7 +768,7 @@ export default class FileBrowser extends Component {
                                                         item = <HTMLElement>item.previousSibling;
                                                     }
                                                     temp_content.innerHTML = '<i class="jodit_icon-loader"></i>';
-                                                    src = item.getAttribute('href');
+                                                    src = item.getAttribute('href') || '';
                                                     image.setAttribute('src', src);
                                                     addLoadHandler();
                                                 });
@@ -781,9 +792,9 @@ export default class FileBrowser extends Component {
                                     selectBtn.removeAttribute('disabled');
                                     preview.setTitle(selectBtn);
                                     selectBtn.addEventListener('click', () => {
-                                        self.files.querySelector('a.active').classList.add('active');
+                                        $$('a.active', self.files).forEach((a: HTMLAnchorElement) => a.classList.add('active'));
                                         item.classList.add('active');
-                                        self.__fire(self.buttons.select, 'click', editor.ownerDocument);
+                                        self.__fire(self.buttons.select, 'click', doc);
                                         preview.close();
                                     });
                                 }
@@ -795,7 +806,11 @@ export default class FileBrowser extends Component {
                             icon: 'upload',
                             title: 'Download',
                             exec: () => {
-                                self.jodit.ownerWindow.open(item.getAttribute('href'));
+                                let url : string|null = item.getAttribute('href');
+
+                                if (url) {
+                                    self.jodit.ownerWindow.open();
+                                }
                             }
                         }
                     ]);
@@ -834,45 +849,50 @@ export default class FileBrowser extends Component {
             })
             .__on(self.jodit.ownerWindow, 'keydown', (e: KeyboardEvent) => {
                 if (self.isOpened() && e.which === 46) {
-                    self.__fire(self.buttons.remove, 'click', editor.ownerDocument);
+                    self.__fire(self.buttons.remove, 'click', doc);
                 }
             })
             .__on(self.jodit.ownerWindow, 'mouseup dragend',() => {
                 if (self.draggable) {
-                    self.draggable.parentNode.removeChild(self.draggable);
+                    self.draggable.parentNode && self.draggable.parentNode.removeChild(self.draggable);
                     self.draggable = false;
                 }
             });
 
         this.dialog.setSize(this.options.width, this.options.height);
 
-        this.options.getlocalfilebyurl = extend(true, {}, this.options.ajax, this.options.getlocalfilebyurl);
-        this.options.crop = extend(true, {}, this.options.ajax, this.options.crop);
-        this.options.resize = extend(true, {}, this.options.ajax, this.options.resize);
-        this.options.create = extend(true, {}, this.options.ajax, this.options.create);
-        this.options.move = extend(true, {}, this.options.ajax, this.options.move);
-        this.options.remove = extend(true, {}, this.options.ajax, this.options.remove);
-        this.options.folder = extend(true, {}, this.options.ajax, this.options.folder);
-        this.options.items = extend(true, {}, this.options.ajax, this.options.items);
+        this.options.getLocalFileByUrl =    extend(true, {}, this.options.ajax, this.options.getLocalFileByUrl);
+        this.options.crop =                 extend(true, {}, this.options.ajax, this.options.crop);
+        this.options.resize =               extend(true, {}, this.options.ajax, this.options.resize);
+        this.options.create =               extend(true, {}, this.options.ajax, this.options.create);
+        this.options.move =                 extend(true, {}, this.options.ajax, this.options.move);
+        this.options.remove =               extend(true, {}, this.options.ajax, this.options.remove);
+        this.options.folder =               extend(true, {}, this.options.ajax, this.options.folder);
+        this.options.items =                extend(true, {}, this.options.ajax, this.options.items);
+        this.options.permissions =          extend(true, {}, this.options.ajax, this.options.permissions);
 
 
         this.view = this.options.view === 'list' ? 'list' : 'tiles';
+
         if (Cookie.get('jodit_filebrowser_view')) {
             this.view = Cookie.get('jodit_filebrowser_view') === 'list' ? 'list' : 'tiles';
         }
+
         this.buttons[this.view].classList.remove('disabled');
         this.files.classList.add('jodit_filebrowser_files_view-' + this.view);
 
         this.sortBy = (['changed', 'name', 'size']).indexOf(this.options.sortBy) !== -1 ? this.options.sortBy : 'changed';
+
         if (Cookie.get('jodit_filebrowser_sortby')) {
-            this.sortBy = (['changed', 'name', 'size']).indexOf(Cookie.get('jodit_filebrowser_sortby')) !== -1 ? Cookie.get('jodit_filebrowser_sortby') : 'changed';
+            this.sortBy = (['changed', 'name', 'size']).indexOf(Cookie.get('jodit_filebrowser_sortby') || '') !== -1 ? Cookie.get('jodit_filebrowser_sortby') || '' : 'changed';
         }
+
         (<HTMLInputElement>this.buttons.sort).value = this.sortBy;
 
-        this.currentBaseUrl = $$('base', this.jodit.editorDocument).length ? $$('base', this.jodit.editorDocument)[0].getAttribute('href') : location.protocol + '//' + location.host;
+        this.currentBaseUrl = $$('base', this.jodit.editorDocument).length ? $$('base', this.jodit.editorDocument)[0].getAttribute('href') || '' : location.protocol + '//' + location.host;
 
         if (Jodit.modules.Uploader !== undefined) {
-            this.uploader = new Uploader(this.jodit, {...this.jodit.options.uploader, ...this.options.uploader});
+            this.uploader = new Uploader(this.jodit, <UploaderOptions>{...<UploaderOptions>this.jodit.options.uploader, ...<UploaderOptions>(this.options.uploader ? this.options.uploader : {})});
             this.uploader.setPath(this.currentPath);
             this.uploader.setSource(this.currentSource);
             this.uploader.bind(this.browser, this.uploadHandler, this.errorHandler);
@@ -880,8 +900,8 @@ export default class FileBrowser extends Component {
         }
     }
 
-    private view = 'tiles';
-    private sortBy = 'changed';
+    private view: string = 'tiles';
+    private sortBy: string = 'changed';
 
     // /**
     //  * Get base url. You can use this method in another modules
@@ -934,7 +954,7 @@ export default class FileBrowser extends Component {
     }
 
     private generateFolderTree(sources: ISourcesFiles) {
-        let folders = [];
+        const folders: string[] = [];
 
         each(sources, (source_name : string, source: ISource) => {
             if (source_name && source_name !== DEFAULT_SOURCE_NAME) {
@@ -964,7 +984,7 @@ export default class FileBrowser extends Component {
     private filterWord = '';
 
     private generateItemsBox(sources: ISourcesFiles) {
-        let files = [];
+        const files: string[] = [];
 
         each(sources, (source_name: string, source: ISource) => {
             if (source_name && source_name !== DEFAULT_SOURCE_NAME) {
@@ -1009,7 +1029,10 @@ export default class FileBrowser extends Component {
         let xhr: Ajax,
             opts: FileBrowserAjaxOptions = extend(true, {}, this.options.ajax, this.options[name] !== undefined ? this.options[name] : this.options.ajax);
 
-        opts.data = opts.prepareData.call(this, opts.data);
+        if (opts.prepareData) {
+            opts.data = opts.prepareData.call(this, opts.data);
+        }
+
         xhr = new Ajax(this.jodit, opts);
 
         xhr
@@ -1032,7 +1055,9 @@ export default class FileBrowser extends Component {
      * @param {string} onFailed.message
      */
     getPathByUrl = (url: string, success: (path: string, name: string, source: string) => void, onFailed: (error: Error) => void) => {
-        let action = 'getlocalfilebyurl', self = this;
+        const action: string = 'getLocalFileByUrl',
+            self: FileBrowser = this;
+
         this.options[action].data.url = url;
         this.send(action, (resp: FileBrowserAnswer) => {
             if (self.options.isSuccess(resp)) {
@@ -1047,6 +1072,7 @@ export default class FileBrowser extends Component {
 
     private loadItems = (path: string, source: string) => {
         const self: FileBrowser = this;
+
         self.options.items.data.path = path;
         self.options.items.data.source = source;
 
@@ -1058,9 +1084,16 @@ export default class FileBrowser extends Component {
                 self.__ajax2.abort();
             }
             self.__ajax2 = self.send('items', (resp) => {
-                let respData = <FileBrowserAnswer>self.options.items.process.call(self, resp);
-                self.generateItemsBox(respData.data.sources);
-                self.someSelectedWasChanged();
+                let process: ((resp: FileBrowserAnswer) => FileBrowserAnswer)|undefined = self.options.items.process;
+                if (!process) {
+                    process = this.options.ajax.process;
+                }
+
+                if (process) {
+                    let respData: FileBrowserAnswer = <FileBrowserAnswer>process.call(self, resp);
+                    self.generateItemsBox(respData.data.sources);
+                    self.someSelectedWasChanged();
+                }
             }, (error: Error) => {
                 Alert(error.message);
                 self.status(self.jodit.i18n(error.message));
@@ -1069,8 +1102,36 @@ export default class FileBrowser extends Component {
     };
 
     private __ajax: Ajax;
+    private __permissions: Ajax;
+
+    private loadPermissions(path: string, source: string) {
+        const self: FileBrowser = this;
+
+        self.options.permissions.data.path = path;
+        self.options.permissions.data.source = source;
+
+        if (self.options.permissions.url) {
+            if (self.__permissions && self.__permissions.abort) {
+                self.__permissions.abort();
+            }
+            self.__permissions = self.send('permissions', (resp: FileBrowserAnswer) => {
+                let process: ((resp: FileBrowserAnswer) => FileBrowserAnswer)|undefined = self.options.permissions.process;
+                if (!process) {
+                    process = this.options.ajax.process;
+                }
+
+                if (process) {
+                    const respData: FileBrowserAnswer = <FileBrowserAnswer>process.call(self, resp);
+                }
+            }, (error: Error) => {
+                Alert(error.message);
+                self.status(self.jodit.i18n(error.message));
+            });
+        }
+    }
     private loadTree(path: string, source: string) {
         const self: FileBrowser = this;
+
         self.options.folder.data.path = path;
         self.options.folder.data.source = source;
 
@@ -1088,10 +1149,16 @@ export default class FileBrowser extends Component {
                     self.__ajax.abort();
                 }
                 self.__ajax = this.send('folder', (resp) => {
-                    let respData = <FileBrowserAnswer>self.options.folder.process.call(self, resp);
-                    // this.currentPath = data.path;
-                    self.generateFolderTree(respData.data.sources);
-                }, () => {
+                    let process: ((resp: FileBrowserAnswer) => FileBrowserAnswer)|undefined = self.options.folder.process;
+                    if (!process) {
+                        process = this.options.ajax.process;
+                    }
+                    if (process) {
+                        let respData = <FileBrowserAnswer>process.call(self, resp);
+                        // this.currentPath = data.path;
+                        self.generateFolderTree(respData.data.sources);
+                    }
+                    }, () => {
                     self.status(self.jodit.i18n('Error on load folders'));
                 });
             } else {
@@ -1099,6 +1166,7 @@ export default class FileBrowser extends Component {
             }
         }
 
+        this.loadPermissions(path, source);
         this.loadItems(path, source);
     }
 
@@ -1165,8 +1233,10 @@ export default class FileBrowser extends Component {
         this.options.remove.data.name = file;
         this.options.remove.data.source = source;
 
-        this.send('remove', (resp) => {
-            resp = this.options.remove.process.call(this, resp);
+        this.send('remove', (resp: FileBrowserAnswer) => {
+            if (this.options.remove.process) {
+                resp = this.options.remove.process.call(this, resp);
+            }
             if (!this.options.isSuccess(resp)) {
                 this.status(this.options.getMessage(resp));
             } else {
@@ -1191,8 +1261,9 @@ export default class FileBrowser extends Component {
             const actives = this.__getActiveElements();
             if (actives.length) {
                 const urls: string[] = [];
-                actives.forEach((elm) => {
-                    urls.push(elm.getAttribute('data-url'));
+                actives.forEach((elm: HTMLElement) => {
+                    let url: string|null = elm.getAttribute('data-url');
+                    url && urls.push(url);
                 });
 
                 this.close();
@@ -1243,6 +1314,7 @@ export default class FileBrowser extends Component {
                 .__off(this.buttons.select, 'click')
                 .__on(this.buttons.select, 'click', this.onSelect(callback));
 
+
             this.loadTree(this.currentPath, this.currentSource);
 
 
@@ -1260,7 +1332,7 @@ export default class FileBrowser extends Component {
                     if (typeof btn === 'function') {
                         header.push((<Function>btn).call(this));
                     } else if (isPlainObject(btn) && (<ExecButton>btn).exec && (<ExecButton>btn).name) {
-                        button = dom('<div class="jodit_button">' + Toolbar.getIcon((<ExecButton>btn).icon || (<ExecButton>btn).name) + '</div>', this.jodit.ownerDocument);
+                        button = dom('<div class="jodit_button">' + Toolbar.getIcon((<ExecButton>btn).icon || (<ExecButton>btn).name || '') + '</div>', this.jodit.ownerDocument);
                         header.push(button);
                         button.addEventListener('click', <EventListenerOrEventListenerObject>(<ExecButton>btn).exec);
                     }
@@ -1286,7 +1358,7 @@ export default class FileBrowser extends Component {
      * @method openImageEditor
      */
     openImageEditor = (href: string, name: string, path: string, source: string, onSuccess?: Function, onFailed?: (error: Error) => void) => {
-        (<ImageEditor>this.jodit.getInstance('ImageEditor')).open(href, (newname, box, success, failed) => {
+        (<ImageEditor>this.jodit.getInstance('ImageEditor')).open(href, (newname: string, box: ActionBox, success: Function, failed: (error: Error) => void) => {
             if (this.options[box.action] === undefined) {
                 this.options[box.action] = {};
             }
@@ -1296,7 +1368,7 @@ export default class FileBrowser extends Component {
                 };
             }
 
-            this.options[box.action].data.newname = newname;
+            this.options[box.action].data.newname = newname || name;
             this.options[box.action].data.box = box.box;
             this.options[box.action].data.path = path;
             this.options[box.action].data.name = name;

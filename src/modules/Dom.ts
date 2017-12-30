@@ -1,8 +1,14 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
 import * as consts from '../constants';
 import {each, trim} from './Helpers'
-import Jodit from "../Jodit";
+import {Jodit} from "../Jodit";
 
-export default class Dom {
+export class Dom {
     /**
      *
      * @param {Node} current
@@ -40,13 +46,16 @@ export default class Dom {
 
         const wrapper = typeof tag === 'string' ? Dom.create(tag, '', editor.editorDocument) : tag;
 
-        first.parentNode.insertBefore(wrapper, first);
+        if (first.parentNode) {
+            first.parentNode.insertBefore(wrapper, first);
+        }
 
-        let next = first;
+        let next: Node|null = first;
+
         while (next) {
             next = first.nextSibling;
             wrapper.appendChild(first);
-            if (first === last) {
+            if (first === last || !next) {
                 break;
             }
             first = next;
@@ -63,14 +72,15 @@ export default class Dom {
      * @param node
      */
     static unwrap(node: Node) {
-        let parent = node.parentNode,
+        let parent: Node|null = node.parentNode,
             el = node;
 
-        while (el.firstChild) {
-            parent.insertBefore(el.firstChild, el);
+        if (parent) {
+            while (el.firstChild) {
+                parent.insertBefore(el.firstChild, el);
+            }
+            parent.removeChild(el);
         }
-
-        parent.removeChild(el);
     }
 
     /**
@@ -116,7 +126,7 @@ export default class Dom {
      * var div = parent.node.create('div', '<img src="test.jpg">');
      * ```
      */
-    static create(nodeName: string, content: string, doc: Document) : HTMLElement|Text {
+    static create(nodeName: string, content: string|undefined, doc: Document) : HTMLElement|Text {
         let newnode: HTMLElement|Text;
         nodeName = nodeName.toLowerCase();
 
@@ -161,7 +171,9 @@ export default class Dom {
             });
         }
 
-        elm.parentNode.replaceChild(tag, elm);
+        if (elm.parentNode) {
+            elm.parentNode.replaceChild(tag, elm);
+        }
 
         return tag;
     }
@@ -284,7 +296,7 @@ export default class Dom {
      * @return {Boolean} true element is empty
      */
     static isEmptyTextNode(node: Node): boolean {
-        return node && node.nodeType === Node.TEXT_NODE && node.nodeValue.replace(consts.INVISIBLE_SPACE_REG_EXP, '').length === 0;
+        return node && node.nodeType === Node.TEXT_NODE && (!node.nodeValue || node.nodeValue.replace(consts.INVISIBLE_SPACE_REG_EXP, '').length === 0);
     }
 
     static isEmpty(node: Node): boolean {
@@ -293,11 +305,23 @@ export default class Dom {
         }
 
         if (node.nodeType === Node.TEXT_NODE) {
-            return trim(node.nodeValue).length === 0;
+            return !node.nodeValue || trim(node.nodeValue).length === 0;
         }
 
         return Dom.each(<HTMLElement>node, (elm: Node) => {
-            if ((elm.nodeType === Node.TEXT_NODE && trim(elm.nodeValue).length !== 0) || (elm.nodeType === Node.ELEMENT_NODE && elm.nodeName.match(/^(img|table)$/i))) {
+            if (
+                (
+                    elm.nodeType === Node.TEXT_NODE &&
+                    (
+                        elm.nodeValue &&
+                        trim(elm.nodeValue).length !== 0
+                    )
+                ) ||
+                (
+                    elm.nodeType === Node.ELEMENT_NODE &&
+                    elm.nodeName.match(/^(img|table)$/i)
+                )
+            ) {
                 return false;
             }
         });
@@ -331,7 +355,7 @@ export default class Dom {
             if (condition(start)) {
                 return start;
             }
-            if (start === root) {
+            if (start === root || !start.parentNode) {
                 break;
             }
             start = start.parentNode;
@@ -367,7 +391,12 @@ export default class Dom {
      * @param newElement
      */
     static after(elm: HTMLElement, newElement: HTMLElement|DocumentFragment) {
-        const parentNode = elm.parentNode;
+        const parentNode: Node|null = elm.parentNode;
+
+        if (!parentNode) {
+            return;
+        }
+
         if (parentNode.lastChild === elm) {
             parentNode.appendChild(newElement);
         } else {

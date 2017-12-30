@@ -4,9 +4,7 @@
  * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
  */
 
-.jodit_widget {
-    box-sizing: border-box;
-    * {
-        box-sizing: border-box;
-    }
-}
+export {default as de} from './de';
+export {default as en} from './en';
+export {default as fr} from './fr';
+export {default as ru} from './ru';

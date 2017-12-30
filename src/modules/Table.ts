@@ -1,3 +1,9 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
 /**
  * Module for working with tables . Delete, insert , merger, division of cells , rows and columns. When creating elements such as <table> for each of them
  * creates a new instance Jodit.modules.TableProcessor and it can be accessed via $('table').data('table-processor')
@@ -9,11 +15,11 @@
 
 import {$$, each, trim} from './Helpers'
 import * as consts from '../constants';
-import Dom from "./Dom";
+import {Dom} from "./Dom";
 
 export const JODIT_SELECTED_CELL_MARKER = 'data-jodit-selected-cell';
 
-export default class Table {
+export class Table {
     static addSelected(td: HTMLTableCellElement) {
         td.setAttribute(JODIT_SELECTED_CELL_MARKER, '1');
     }
@@ -58,7 +64,7 @@ export default class Table {
      * @return {Array}
      */
     static formalMatrix(table: HTMLTableElement, callback ?: (cell: HTMLTableCellElement, row: number, col: number, colSpan?: number, rowSpan?: number) => false|void): HTMLTableCellElement[][] {
-        const matrix = [[],];
+        const matrix: HTMLTableCellElement[][] = [[],];
         const rows  = Array.prototype.slice.call(table.rows);
 
         const setCell = (cell, i) => {
@@ -110,7 +116,7 @@ export default class Table {
             width: number = 1,
             height: number = 1;
 
-        Table.formalMatrix(table, (td, ii, jj, colSpan, rowSpan) => {
+        Table.formalMatrix(table, (td: HTMLTableCellElement, ii: number, jj: number, colSpan: number, rowSpan: number) => {
             if (cell === td) {
                 i = ii;
                 j = jj;
@@ -135,18 +141,18 @@ export default class Table {
      * @param {Boolean} [after=true] Insert a new line after line contains the selected cell
      */
     static appendRow(table: HTMLTableElement, line:false|HTMLTableRowElement = false, after = true) {
-        let columnsCount = Table.getColumnsCount(table),
-            row = Dom.create('tr', '', table.ownerDocument),
-            j;
+        let columnsCount: number = Table.getColumnsCount(table),
+            row: HTMLTableRowElement = <HTMLTableRowElement>Dom.create('tr', '', table.ownerDocument),
+            j: number;
 
         for (j = 0; j < columnsCount; j += 1) {
             row.appendChild(Dom.create('td', '', table.ownerDocument))
         }
 
         if (after && line && line.nextSibling) {
-            line.parentNode.insertBefore(row, line.nextSibling)
+            line.parentNode && line.parentNode.insertBefore(row, line.nextSibling)
         }else if (!after && line) {
-            line.parentNode.insertBefore(row, line)
+            line.parentNode && line.parentNode.insertBefore(row, line)
         } else {
             ($$(':scope>tbody', table)[0]  || table).appendChild(row);
         }
@@ -196,7 +202,7 @@ export default class Table {
             }
         });
 
-        if (row) {
+        if (row && row.parentNode) {
             row.parentNode.removeChild(row);
         }
     }
@@ -206,30 +212,34 @@ export default class Table {
      *
      */
     static appendColumn(table: HTMLTableElement, j: number, after = true) {
-        let box = Table.formalMatrix(table), i;
+        const box: HTMLTableCellElement[][] = Table.formalMatrix(table);
+        let i: number;
+
         if (j === undefined) {
             j = Table.getColumnsCount(table) - 1;
         }
+
         for (i = 0; i < box.length; i += 1) {
-            const cell = Dom.create('td', '', table.ownerDocument);
-            let added = false;
+            const cell: HTMLTableCellElement = <HTMLTableCellElement>Dom.create('td', '', table.ownerDocument);
+            const td: HTMLTableCellElement = box[i][j];
+            let added: boolean = false;
             if (after) {
-                if (j + 1 >= box[i].length || box[i][j] !== box[i][j + 1]) {
-                    if (box[i][j].nextSibling) {
-                        box[i][j].parentNode.insertBefore(cell, box[i][j].nextSibling);
+                if (box[i] && td && j + 1 >= box[i].length || td !== box[i][j + 1]) {
+                    if (td.nextSibling) {
+                        td.parentNode && td.parentNode.insertBefore(cell, td.nextSibling);
                     } else {
-                        box[i][j].parentNode.appendChild(cell)
+                        td.parentNode && td.parentNode.appendChild(cell)
                     }
                     added = true;
                 }
             } else {
-                if (j - 1 < 0 || box[i][j] !== box[i][j - 1]) {
-                    box[i][j].parentNode.insertBefore(cell, box[i][j]);
+                if (j - 1 < 0 || box[i][j] !== box[i][j - 1] && box[i][j].parentNode) {
+                    td.parentNode && td.parentNode.insertBefore(cell, box[i][j]);
                     added = true;
                 }
             }
             if (!added) {
-                box[i][j].setAttribute('colspan', (parseInt(box[i][j].getAttribute('colspan'), 10) + 1).toString());
+                box[i][j].setAttribute('colspan', (parseInt(box[i][j].getAttribute('colspan') || '1', 10) + 1).toString());
             }
         }
     }
@@ -241,23 +251,24 @@ export default class Table {
      * @param {int} [j]
      */
     static removeColumn(table: HTMLTableElement, j: number) {
-        const box = Table.formalMatrix(table);
+        const box: HTMLTableCellElement[][] = Table.formalMatrix(table);
         let dec: boolean;
         each(box, (i: number, cells: HTMLTableCellElement[]) => {
+            const td: HTMLTableCellElement = cells[j];
             dec = false;
-            if (j - 1 >= 0 && box[i][j - 1] === cells[j]) {
+            if (j - 1 >= 0 && box[i][j - 1] === td) {
                 dec = true;
-            } else if (j + 1 < cells.length && box[i][j + 1] === cells[j]) {
+            } else if (j + 1 < cells.length && box[i][j + 1] === td) {
                 dec = true;
             } else {
-                cells[j].parentNode && cells[j].parentNode.removeChild(cells[j]);
+                td.parentNode && td.parentNode.removeChild(td);
             }
-            if (dec && (i - 1 < 0 || cells[j] !== box[i - 1][j])) {
-                const colSpan:number = cells[j].colSpan;
+            if (dec && (i - 1 < 0 || td !== box[i - 1][j])) {
+                const colSpan:number = td.colSpan;
                 if (colSpan - 1 > 1) {
-                    cells[j].setAttribute('colspan', (colSpan - 1).toString());
+                    td.setAttribute('colspan', (colSpan - 1).toString());
                 } else {
-                    cells[j].removeAttribute('colspan');
+                    td.removeAttribute('colspan');
                 }
             }
         });
@@ -406,30 +417,31 @@ export default class Table {
      *
      */
     static mergeSelected(table: HTMLTableElement) {
-        let bound = Table.getSelectedBound(table, Table.getAllSelectedCells(table)),
-            w = 0,
-            first,
-            first_j,
-            td,
-            html = [],
-            cols = 0,
-            rows = 0;
+        let bound: number[][] = Table.getSelectedBound(table, Table.getAllSelectedCells(table)),
+            w: number = 0,
+            first: HTMLTableCellElement|null = null,
+            first_j: number = 0,
+            td: HTMLTableCellElement,
+            html: string[] = [],
+            cols: number = 0,
+            rows: number = 0;
 
         const __marked: HTMLTableCellElement[] = [];
 
         if (bound && (bound[0][0] - bound[1][0] || bound[0][1] - bound[1][1])) {
-            Table.formalMatrix(table, (cell, i, j, cs, rs) => {
+            Table.formalMatrix(table, (cell: HTMLTableCellElement, i: number, j: number, cs: number, rs: number) => {
                 if (i >= bound[0][0] && i <= bound[1][0]) {
                     if (j >= bound[0][1] && j <= bound[1][1]) {
                         td = cell;
-                        if (td.__i_am_already_was) {
+
+                        if (td['__i_am_already_was']) {
                             return;
                         }
 
-                        td.__i_am_already_was = true;
+                        td['__i_am_already_was'] = true;
 
                         if (i === bound[0][0] && td.style.width) {
-                            w += parseInt(td.offsetWidth, 10);
+                            w += td.offsetWidth;
                         }
 
                         if (trim(cell.innerHTML.replace(/<br(\/)?>/g, '')) !== '') {
@@ -444,7 +456,7 @@ export default class Table {
                         }
 
                         if (!first) {
-                            first = cell;
+                            first = <HTMLTableCellElement>cell;
                             first_j = j;
                         } else {
                             Table.__mark(td, 'remove', 1, __marked);
@@ -472,9 +484,11 @@ export default class Table {
                     }
                 }
 
-                delete first.__i_am_already_was;
 
-                first.innerHTML = html.join('<br/>');
+                (<HTMLTableCellElement>first).innerHTML = html.join('<br/>');
+
+
+                delete first['__i_am_already_was'];
 
                 Table.__unmark(__marked);
 
@@ -612,7 +626,7 @@ export default class Table {
                 each(cell['__marked_value'], (key, value) => {
                     switch (key) {
                         case 'remove':
-                            cell.parentNode.removeChild(cell);
+                            cell.parentNode && cell.parentNode.removeChild(cell);
                             break;
                         case 'rowspan':
                             if (value > 1) {

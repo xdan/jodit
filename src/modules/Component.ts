@@ -1,6 +1,12 @@
-import Jodit from "../Jodit";
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
 
-export default class Component {
+import {Jodit} from "../Jodit";
+
+export class Component {
     handlers: {};
     /**
      * @property{Jodit} parent
@@ -8,6 +14,7 @@ export default class Component {
     jodit: Jodit;
 
     constructor(jodit?: Jodit) {
+        // @ts-ignore: Object is possibly 'undefined'
         this.jodit = jodit;
         if (jodit && jodit.components) {
             jodit.components.push(this);
@@ -87,7 +94,7 @@ export default class Component {
 
         let temp: Function = function (event: MouseEvent|TouchEvent) {
             prepareEvent(<TouchEvent>event);
-            callback.call(this, event);
+            callback && callback.call(this, event);
         };
 
 
@@ -103,7 +110,7 @@ export default class Component {
                     let node = event.target;
                     while (node && node !== this) {
                         if (node.matches(selectorOrCallback)) {
-                            if (callback.call(node, event) === false) {
+                            if (callback && callback.call(node, event) === false) {
                                 event.preventDefault();
                                 return false;
                             }

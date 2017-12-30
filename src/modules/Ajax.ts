@@ -1,8 +1,14 @@
-import Jodit from "../Jodit"
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
+import {Jodit} from "../Jodit"
 import {Config} from '../Config'
 import {each, extend} from "./Helpers";
-import PseudoPromise from "./PseudoPromise";
-import Component from "./Component";
+import {PseudoPromise} from "./PseudoPromise";
+import {Component} from "./Component";
 
 /**
  * @property {object} defaultAjaxOptions A set of key/value pairs that configure the Ajax request. All settings are optional
@@ -26,13 +32,11 @@ type AjaxOptions  = {
 
     url?: string;
 
-    async?: boolean;
-
     data: {[key: string]: string}|null|FormData
 
     contentType?: string|false;
 
-    headers?: {[key: string]: string}
+    headers?: {[key: string]: string}|null
 
     withCredentials?: boolean;
 
@@ -45,13 +49,11 @@ declare module "../Config" {
     }
 }
 
-Config.prototype.defaultAjaxOptions = {
+Config.prototype.defaultAjaxOptions = <AjaxOptions>{
     dataType: 'json',
     method: 'GET',
 
     url: '',
-
-    async: true,
 
     data: null,
 
@@ -63,19 +65,23 @@ Config.prototype.defaultAjaxOptions = {
 
     withCredentials: true,
 
-   xhr(): XMLHttpRequest {
+    xhr(): XMLHttpRequest {
         const XHR = typeof XDomainRequest === 'undefined' ? XMLHttpRequest : XDomainRequest;
         return new XHR();
     }
 };
 
-export default class Ajax extends Component{
+export class Ajax extends Component{
     private __buildParams (obj, prefix?: string): string {
         if (typeof obj === 'string' || (this.jodit.ownerWindow['FormData'] && obj instanceof this.jodit.ownerWindow['FormData'])) {
             return obj;
         }
 
-        let str = [], p, k, v;
+        let str: string[] = [],
+            p: string,
+            k: string,
+            v: string;
+
         for (p in obj) {
             if (obj.hasOwnProperty(p)) {
                 k = prefix ? prefix + "[" + p + "]" : p;
@@ -102,7 +108,10 @@ export default class Ajax extends Component{
     constructor(editor: Jodit, options: AjaxOptions) {
         super(editor);
         this.options = <AjaxOptions>extend(true, {}, Config.prototype.defaultAjaxOptions, options);
-        this.xhr = this.options.xhr();
+
+        if (this.options.xhr) {
+            this.xhr = this.options.xhr();
+        }
     }
 
     send(): PseudoPromise {
@@ -151,9 +160,11 @@ export default class Ajax extends Component{
                 }
             };
 
-            this.xhr.withCredentials = this.options.withCredentials;
+            this.xhr.withCredentials = this.options.withCredentials || false;
 
-            this.xhr.open(this.options.method, this.options.url, this.options.async);
+            if (this.options.url) {
+                this.xhr.open(this.options.method || 'get', this.options.url, true);
+            }
 
             if (this.options.contentType && this.xhr.setRequestHeader) {
                 this.xhr.setRequestHeader("Content-type", this.options.contentType);
@@ -172,3 +183,4 @@ export default class Ajax extends Component{
         });
     }
 }
+

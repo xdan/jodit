@@ -1,18 +1,38 @@
-import Jodit from '../Jodit';
-import {normalizeSize} from '../modules/Helpers';
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
+import {Jodit} from '../Jodit';
+import {css, normalizeSize} from '../modules/Helpers';
 import {Config} from "../Config";
 import {ControlType} from "../modules/Toolbar";
+import {Dom} from "../modules/Dom";
 
-Config.prototype.controls.fontsize = {
+Config.prototype.controls.fontsize = <ControlType>{
     command: 'fontSize',
     list : ["8", "9", "10", "11", "12", "14", "18", "24", "30", "36", "48", "60", "72", "96"],
     template : (editor: Jodit, key: string, value: string) => value,
-    tooltip: "Font size"
+    tooltip: "Font size",
+    isActive: (editor: Jodit, btn: ControlType): boolean => {
+        const current: Node|false = editor.selection.current();
+
+        if (current) {
+            const currentBpx: HTMLElement = <HTMLElement>Dom.closest(current, (elm: Node): boolean => {
+                return Dom.isBlock(elm) || (Dom.isNode(elm, editor.editorWindow) && elm.nodeType === Node.ELEMENT_NODE);
+            }, editor.editor) || editor.editor;
+
+            return css(currentBpx, 'font-size').toString() !== css(editor.editor, 'font-size').toString();
+        }
+
+        return false;
+    }
 };
 Config.prototype.controls.font = <ControlType>{
     command: 'fontname',
     exec: (editor: Jodit, event, control: ControlType) => {
-        editor.execCommand(control.command, false, control.args[0]);
+        editor.execCommand(control.command, false, control.args ? control.args[0] : undefined);
     },
     list :  {
         "Helvetica,sans-serif": "Helvetica",
@@ -30,7 +50,7 @@ Config.prototype.controls.font = <ControlType>{
 };
 
 
-export default function (editor: Jodit) {
+export function font(editor: Jodit) {
     editor.events.on('beforeCommand', (command: string, second, third: string) => {
         if (/font/.test(command)) {
             switch (command) {
@@ -50,4 +70,4 @@ export default function (editor: Jodit) {
             return false;
         }
     });
-};
+}

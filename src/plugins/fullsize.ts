@@ -1,7 +1,13 @@
-import Jodit from '../Jodit';
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
+import {Jodit} from '../Jodit';
 import {Config} from '../Config'
 import {css, dom} from "../modules/Helpers";
-import Toolbar from "../modules/Toolbar";
+import {Toolbar} from "../modules/Toolbar";
 import * as consts from '../constants'
 
 /**
@@ -46,16 +52,16 @@ Config.prototype.controls.fullsize = {
 };
 
 
-export default  function (editor: Jodit) {
-    let shown = false,
-        oldHeight = null,
-        oldWidth = null,
+export  function fullsize(editor: Jodit) {
+    let shown: boolean = false,
+        oldHeight: number = 0,
+        oldWidth: number = 0,
         wasToggled = false,
         resize  = () => {
             if (editor.events) {
                 if (shown) {
-                    oldHeight = css(editor.container, 'height');
-                    oldWidth = css(editor.container, 'width');
+                    oldHeight = <number>css(editor.container, 'height');
+                    oldWidth = <number>css(editor.container, 'width');
                     css(editor.container, {
                         height: editor.ownerWindow.innerHeight,
                         width: editor.ownerWindow.innerWidth
@@ -115,4 +121,4 @@ export default  function (editor: Jodit) {
     editor.events.on('beforeDestruct', () => {
         toggle(false);
     });
-};
+}

@@ -1,3 +1,9 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
 @import (reference) "../variables";
 .jodit_form {
   textarea,
@@ -11,7 +17,7 @@
     height: 28px;
     line-height: 28px;
     padding: 0 5px;
-    min-width: 200px;
+    min-width: @width-input-min;
     margin-top: 10px;
     &.jodit_error {
       border-color: @color-error;

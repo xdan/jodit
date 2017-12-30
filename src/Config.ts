@@ -1,11 +1,15 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
 import * as consts from './constants'
 import {dom, trim, $$, isURL, convertMediaURLToVideoEmbed, val} from './modules/Helpers'
-// import Dom from "./modules/Dom";
-import Jodit from "./Jodit";
-import {ControlType} from "./modules/Toolbar";
+import {Jodit} from "./Jodit";
+import {ControlType, Toolbar} from "./modules/Toolbar";
 import {FileBrowserCallBcackData} from "./modules/FileBrowser";
 import {Widget} from "./modules/Widget";
-// import ColorPickerWidget = Widget.ColorPickerWidget;
 import TabsWidget = Widget.TabsWidget;
 import ImageSelectorWidget = Widget.ImageSelectorWidget;
 
@@ -558,7 +562,7 @@ Config.prototype.controls = {
                 editor.selection.insertNode(dom('<img src="' + url + '"/>', editor.editorDocument));
             };
 
-            let sourceImage: HTMLImageElement;
+            let sourceImage: HTMLImageElement|null = null;
 
             if (current && current.nodeType !== Node.TEXT_NODE && (current.tagName === 'IMG' || $$('img', current).length)) {
                 sourceImage = current.tagName === 'IMG' ? current : <HTMLImageElement>$$('img', current)[0];
@@ -584,7 +588,7 @@ Config.prototype.controls = {
                     close();
                 },
                 url: (url: string, text: string) => {
-                    const image = sourceImage || dom('<img/>', editor.editorDocument);
+                    const image = sourceImage || dom('<img src=""/>', editor.editorDocument);
 
                     image.setAttribute('src', url);
                     image.setAttribute('alt', text);
@@ -594,7 +598,7 @@ Config.prototype.controls = {
                     }
                     close();
                 }
-            }, sourceImage, close);
+            }, <HTMLImageElement>sourceImage, close);
         },
         tags: ["img"],
         tooltip: "Insert Image"
@@ -618,8 +622,8 @@ Config.prototype.controls = {
                     editor.selection.insertHTML(code);
                 };
 
-            tab[(require('./modules/Toolbar').default).getIcon('link') + '&nbsp;' + editor.i18n('Link')] = bylink;
-            tab[(require('./modules/Toolbar').default).getIcon('source') + '&nbsp;' + editor.i18n('Code')] = bycode;
+            tab[Toolbar.getIcon('link') + '&nbsp;' + editor.i18n('Link')] = bylink;
+            tab[Toolbar.getIcon('source') + '&nbsp;' + editor.i18n('Code')] = bycode;
 
             bycode.addEventListener('submit', (event) => {
                 event.preventDefault();

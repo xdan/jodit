@@ -1,15 +1,21 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
 /**
 * Module popup edit img elements and table
 * @module popup
 * @params {Object} parent Jodit main object
 */
-import Jodit from "../Jodit";
-import Toolbar from "../modules/Toolbar";
+import {Jodit} from "../Jodit";
+import {Toolbar} from "../modules/Toolbar";
 import {Config} from '../Config'
 import {css, dom, offset} from "../modules/Helpers";
 import {ControlType} from "../modules/Toolbar";
-import Dom from "../modules/Dom";
-import Table from "../modules/Table";
+import {Dom} from "../modules/Dom";
+import {Table} from "../modules/Table";
 import {Widget} from "../modules/Widget";
 import ColorPickerWidget = Widget.ColorPickerWidget;
 import TabsWidget = Widget.TabsWidget;
@@ -62,8 +68,9 @@ Config.prototype.popup = {
             name: 'eye',
             tooltip: 'Open link',
             exec: (editor: Jodit, current: HTMLAnchorElement) => {
-                if (current && current.getAttribute('href')) {
-                    editor.ownerWindow.open(current.getAttribute('href'));
+                const href: string|null = current.getAttribute('href');
+                if (current && href) {
+                    editor.ownerWindow.open(href);
                 }
             }
         },
@@ -80,7 +87,9 @@ Config.prototype.popup = {
             name: 'bin',
             tooltip: 'Delete',
             exec: (editor: Jodit, image: HTMLElement) => {
-                image.parentNode.removeChild(image);
+                if (image.parentNode) {
+                    image.parentNode.removeChild(image);
+                }
             }
         },
         {
@@ -106,7 +115,9 @@ Config.prototype.popup = {
                 if (tagName !== 'img') {
                     return;
                 }
-                const command = control.args[1].toLowerCase();
+
+                const command: string = (control.args && typeof control.args[1] === 'string') ? control.args[1].toLowerCase() : '';
+
                 css(image, 'vertical-align', command);
             }
         },
@@ -134,7 +145,7 @@ Config.prototype.popup = {
                     }
                 };
 
-                const command = control.args[1].toLowerCase();
+                const command: string = (control.args && typeof control.args[1] === 'string') ? control.args[1].toLowerCase() : '';
 
                 if (command !== 'normal') {
                     if (['right', 'left'].indexOf(command) !== -1) {
@@ -219,7 +230,9 @@ Config.prototype.popup = {
                 'Bottom'
             ],
             exec: (editor: Jodit, table: HTMLTableElement, control: ControlType) => {
-                const command = control.args[1].toLowerCase();
+
+                const command: string = (control.args && typeof control.args[1] === 'string') ? control.args[1].toLowerCase() : '';
+
                 Table.getAllSelectedCells(table).forEach((cell: HTMLTableCellElement) => {
                     css(cell, 'vertical-align', command);
                 })
@@ -250,7 +263,8 @@ Config.prototype.popup = {
                 tableaddcolumnafter: 'Insert column after'
             },
             exec: (editor: Jodit, table: HTMLTableElement, control: ControlType) => {
-                const command = control.args[0].toLowerCase();
+                const command: string = (control.args && typeof control.args[0] === 'string') ? control.args[0].toLowerCase() : '';
+
                 editor.execCommand(command, false, table);
             },
             tooltip: 'Add column'
@@ -262,7 +276,8 @@ Config.prototype.popup = {
                 tableaddrowafter: 'Insert row below'
             },
             exec: (editor: Jodit, table: HTMLTableElement, control: ControlType) => {
-                const command = control.args[0].toLowerCase();
+                const command: string = (control.args && typeof control.args[0] === 'string') ? control.args[0].toLowerCase() : '';
+
                 editor.execCommand(command, false, table);
             },
             tooltip: 'Add row'
@@ -276,7 +291,8 @@ Config.prototype.popup = {
                 tableempty: 'Empty cell'
             },
             exec: (editor: Jodit, table: HTMLTableElement, control: ControlType) => {
-                const command = control.args[0].toLowerCase();
+                const command: string = (control.args && typeof control.args[0] === 'string') ? control.args[0].toLowerCase() : '';
+
                 editor.execCommand(command, false, table);
             },
             tooltip: 'Delete'
@@ -284,10 +300,10 @@ Config.prototype.popup = {
     ]
 };
 
-export default function (editor: Jodit) {
+export function inlinePopup(editor: Jodit) {
     let timeout: number;
     const toolbar: Toolbar = new Toolbar(editor),
-        popup: HTMLDivElement = <HTMLDivElement> dom('<div class="jodit_toolbar_popup-inline"></div>', editor.ownerDocument),
+        popup: HTMLDivElement = <HTMLDivElement> dom('<div data-editor_id="' + editor.id + '" class="jodit_toolbar_popup-inline"></div>', editor.ownerDocument),
 
         toogleEditor = (toggle: boolean) => {
             if (editor.container) {
@@ -342,7 +358,7 @@ export default function (editor: Jodit) {
         .on('hidePopup afterCommand keydown resize', hidePopup)
         .on('showPopap', delayShowPopup)
         .on('afterInit', () => {
-            editor.container
+            editor.editorDocument.body
                 .appendChild(popup);
             editor.__on(popup,'mousedown', (e: MouseEvent) => {
                 e.stopPropagation();
@@ -366,6 +382,9 @@ export default function (editor: Jodit) {
             });
         })
         .on('beforeDestruct', () => {
+            if (popup.parentNode) {
+                popup.parentNode.removeChild(popup);
+            }
             clearTimeout(timeout);
         });
-};
+}

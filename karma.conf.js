@@ -55,7 +55,8 @@ module.exports = function(config) {
             devtool: 'inline-sourcemap',
             module: webpackConfig.module,
             plugins: webpackConfig.plugins,
-            resolve: webpackConfig.resolve
+            resolve: webpackConfig.resolve,
+            output: webpackConfig.output
         },
         client: {
             captureConsole: true

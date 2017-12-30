@@ -1,5 +1,11 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
 import * as consts from '../constants';
-import Jodit from "../Jodit";
+import {Jodit} from "../Jodit";
 const class2type = {};
 const toString = class2type.toString;
 const hasOwn = class2type.hasOwnProperty;
@@ -324,23 +330,25 @@ export const dom = (html: string|HTMLElement, doc: Document): HTMLElement => {
         return <HTMLElement>html;
     }
 
-    const div = doc.createElement('div');
+    const div: HTMLDivElement = doc.createElement('div');
+
     div.innerHTML = <string>html;
 
-    return div.firstChild !== div.lastChild ? div : <HTMLElement>div.firstChild;
+    return (div.firstChild !== div.lastChild || !div.firstChild) ? div : <HTMLElement>div.firstChild;
 };
 
 /**
  * @param {string} hex
  * @method hexToRgb
  */
-export const hexToRgb = (hex: string): {r: number, g: number, b: number}|null => {
-    let shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+export const hexToRgb = (hex: string): RGB|null => {
+    const shorthandRegex: RegExp = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
     hex = hex.replace(shorthandRegex, (m, r, g, b) => {
         return r + r + g + g + b + b;
     });
 
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+
     return result ? {
         r: parseInt(result[1], 16),
         g: parseInt(result[2], 16),
@@ -590,7 +598,7 @@ export const browser = (browser: string): boolean|string => {
  * @param {boolean} recurse
  * @return {{top: number, left: number}} returns an object containing the properties top and left.
  */
-export const offset =  (elm: HTMLElement, jodit: Jodit, recurse: boolean = false): {top: number, left: number,  width: number, height: number} => {
+export const offset =  (elm: HTMLElement, jodit: Jodit, recurse: boolean = false): Bound => {
     const rect: ClientRect = elm.getBoundingClientRect(),
         doc: Document = elm.ownerDocument,
         body: HTMLElement = doc.body,
@@ -720,10 +728,12 @@ export const  debounce = function (fn, timeout ?: number, invokeAsap?: boolean, 
  * ```
  */
 export const throttle = function (fn: Function, timeout: number, ctx?: any) {
-    let timer, args, needInvoke, callee;
+    let timer: number|null = null,
+        args: IArguments,
+        needInvoke: boolean,
+        callee: Function;
 
     return function () {
-
         args = arguments;
         needInvoke = true;
         ctx = ctx || this;
@@ -759,10 +769,8 @@ export const normilizeCSSValue = (key: string, value: string|number): string|num
  * @param {string|object} key An object of property-value pairs to set. A CSS property name.
  * @param {string|int} value A value to set for the property.
  */
-export const css = (element: HTMLElement, key: string|{[key: string]: number|string}, value?: string|number) => {
+export const css = (element: HTMLElement, key: string|{[key: string]: number|string|null}, value?: string|number): string|number => {
     const numberFieldsReg = /^left|top|bottom|right|width|min|max|height|margin|padding|font-size/i;
-
-
 
     if (isPlainObject(key) || value !== undefined) {
         const setValue = (elm, _key, _value) => {
@@ -775,7 +783,7 @@ export const css = (element: HTMLElement, key: string|{[key: string]: number|str
         };
 
         if (isPlainObject(key)) {
-            let keys = Object.keys(key), j;
+            let keys: string[] = Object.keys(key), j;
             for (j = 0; j < keys.length; j += 1) {
                 setValue(element, camelCase(keys[j]), key[keys[j]]);
             }
@@ -783,16 +791,16 @@ export const css = (element: HTMLElement, key: string|{[key: string]: number|str
             setValue(element, camelCase(<string>key), value);
         }
 
-        return;
+        return '';
     }
 
-    const key2 = <string>fromCamelCase(<string>key),
-        doc  = element.ownerDocument,
+    const key2: string = <string>fromCamelCase(<string>key),
+        doc: Document  = element.ownerDocument,
         win = doc ? doc.defaultView || doc['parentWindow'] : false;
 
     let result = (element.style[<string>key] !== undefined && element.style[<string>key] !== '') ? element.style[<string>key] : (win ? win.getComputedStyle(element).getPropertyValue(key2) : '');
 
-    if (numberFieldsReg.test(<string>key) && /^[\-+]?[0-9\.]+px$/.test(result.toString())) {
+    if (numberFieldsReg.test(<string>key) && /^[\-+]?[0-9.]+px$/.test(result.toString())) {
         result = parseInt(result, 10);
     }
 
@@ -938,5 +946,3 @@ export const val = (elm: HTMLInputElement|HTMLElement, selector: string, value ?
 export  const defaultLanguage = (language?: string): string => (
     (language === 'auto' || language === undefined) ? document.documentElement.lang || (navigator.language && navigator.language.substr(0, 2)) || (navigator['browserLanguage'] && navigator['browserLanguage'].substr(0, 2)) || 'en' : language
 );
-
-

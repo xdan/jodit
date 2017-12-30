@@ -1,7 +1,13 @@
-import Jodit from '../Jodit';
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
+import {Jodit} from '../Jodit';
 import {$$} from "../modules/Helpers"
 import * as consts from '../constants';
-import Dom from "../modules/Dom";
+import {Dom} from "../modules/Dom";
 
 /**
  * Insert default paragraph
@@ -33,7 +39,7 @@ export const insertParagraph = (editor: Jodit, fake ?: Node, wrapperTag ?: strin
 /**
  * One of most important core plugins. It is responsible for all the browsers to have the same effect when the Enter button is pressed. By default, it should insert the <p>
  */
-export default  function (editor: Jodit) {
+export function enter(editor: Jodit) {
     editor.events.on('keyup', () => {
         let current: false|Node = editor.selection.current();
         if (current !== false) {
@@ -41,7 +47,7 @@ export default  function (editor: Jodit) {
             if (currentParagraph) {
                 Dom.all(currentParagraph, (node: Node) => {
                     if (node.nodeType === Node.TEXT_NODE) {
-                        if (consts.INVISIBLE_SPACE_REG_EXP.test(node.nodeValue) && node.nodeValue.replace(consts.INVISIBLE_SPACE_REG_EXP, '').length !== 0) {
+                        if (node.nodeValue && consts.INVISIBLE_SPACE_REG_EXP.test(node.nodeValue) && node.nodeValue.replace(consts.INVISIBLE_SPACE_REG_EXP, '').length !== 0) {
                             node.nodeValue = node.nodeValue.replace(consts.INVISIBLE_SPACE_REG_EXP, '');
                             if (node === current) {
                                 editor.selection.setCursorAfter(node);
@@ -84,6 +90,14 @@ export default  function (editor: Jodit) {
             let fake;
             let currentBox: HTMLElement|false = current ? <HTMLElement>Dom.up(current, Dom.isBlock, editor.editor) : false;
 
+
+            // if use <br> tag for break line or when was entered SHIFt key or in <td> or <th> or <blockquote>
+            if (editor.options.enter === consts.BR || event.shiftKey || Dom.closest(current, 'PRE|BLOCKQUOTE', editor.editor)) {
+                editor.selection.insertNode(Dom.create('br', undefined, editor.editorDocument));
+                return false;
+            }
+
+
             if (!currentBox && current && !Dom.prev(current, (elm: Node) => (Dom.isBlock(elm) || Dom.isImage(elm, editor.ownerWindow)), editor.editor)) {
                 currentBox = Dom.wrap(current, editor.options.enter, editor);
                 range = sel.rangeCount ? sel.getRangeAt(0) : editor.editorDocument.createRange();
@@ -110,25 +124,25 @@ export default  function (editor: Jodit) {
                             let leftRange = editor.editorDocument.createRange();
                             leftRange.setStartBefore(ul);
                             leftRange.setEndAfter(currentBox);
-                            let fragment = leftRange.extractContents();
-                            ul.parentNode.insertBefore(fragment, ul);
+                            let fragment: DocumentFragment = leftRange.extractContents();
+                            if (ul.parentNode) {
+                                ul.parentNode.insertBefore(fragment, ul);
+                            }
                             fake = editor.selection.setCursorBefore(ul);
                         }
 
-                        currentBox.parentNode.removeChild(currentBox);
+                        if (currentBox.parentNode) {
+                            currentBox.parentNode.removeChild(currentBox);
+                        }
+
                         insertParagraph(editor, fake);
-                        if (!$$('li', ul).length) {
+
+                        if (!$$('li', ul).length && ul.parentNode) {
                             ul.parentNode.removeChild(ul);
                         }
                         return false;
 
                     }
-                }
-
-                // if use <br> tag for break line or when was entered SHIFt key or in <td> or <th> or <blockquote>
-                if (editor.options.enter === consts.BR || event.shiftKey || Dom.closest(current, 'PRE|BLOCKQUOTE', editor.editor)) {
-                    editor.selection.insertHTML('<br>' + consts.INVISIBLE_SPACE);
-                    return false;
                 }
 
                 if (editor.selection.cursorInTheEdge(true, currentBox)) {
@@ -139,12 +153,15 @@ export default  function (editor: Jodit) {
                 } else if (!editor.selection.cursorInTheEdge(false, currentBox)) {
                     // if we are not in right edge of paragraph
                     // split p,h1 etc on two parts
-                    let leftRange = editor.editorDocument.createRange();
+                    let leftRange: Range = editor.editorDocument.createRange();
 
                     leftRange.setStartBefore(currentBox);
                     leftRange.setEnd(range.startContainer, range.startOffset);
-                    let fragment = leftRange.extractContents();
-                    currentBox.parentNode.insertBefore(fragment, currentBox);
+                    let fragment: DocumentFragment = leftRange.extractContents();
+
+                    if (currentBox.parentNode) {
+                        currentBox.parentNode.insertBefore(fragment, currentBox);
+                    }
 
                     editor.selection.setCursorIn(currentBox, true);
                 } else {
@@ -158,4 +175,4 @@ export default  function (editor: Jodit) {
             return false;
         }
     });
-};
+}

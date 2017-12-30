@@ -1,14 +1,20 @@
-import Jodit from '../Jodit';
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
+import {Jodit} from '../Jodit';
 import * as consts from '../constants';
 import {trim} from '../modules/Helpers';
-import Dom from "../modules/Dom";
+import {Dom} from "../modules/Dom";
 
 /**
  * Plug-in process entering Backspace key
  *
  * @module backspace
  */
-export default function (editor: Jodit) {
+export function backspace(editor: Jodit) {
 
     editor.events.on('afterCommand', (command) => {
         if (command === 'delete') {
@@ -38,10 +44,10 @@ export default function (editor: Jodit) {
             if (range) {
                 const textNode: Node = range.startContainer.nodeType === Node.TEXT_NODE ? range.startContainer : range.startContainer.childNodes[range.startOffset];
 
-                if (textNode && textNode.nodeType === Node.TEXT_NODE) {
-                    let value = textNode.nodeValue,
-                        startOffset = range.startOffset,
-                        increment = toLeft ? -1 : 1;
+                if (textNode && textNode.nodeType === Node.TEXT_NODE && textNode.nodeValue) {
+                    let value: string = textNode.nodeValue,
+                        startOffset: number = range.startOffset,
+                        increment: number = toLeft ? -1 : 1;
 
                     while (startOffset >= 0 && startOffset <= value.length && value[startOffset + increment] === consts.INVISIBLE_SPACE) {
                         startOffset += increment;
@@ -63,7 +69,7 @@ export default function (editor: Jodit) {
                     }
                 }
 
-                if (range.startOffset === 0 && toLeft) {
+                if (range.startOffset === 0 && toLeft && textNode) {
                     const prevBox = Dom.prev(textNode, Dom.isBlock, editor.editor);
 
                     if (prevBox) {
@@ -73,7 +79,7 @@ export default function (editor: Jodit) {
                     const container: HTMLElement = <HTMLElement>Dom.up(range.startContainer, Dom.isBlock, editor.editor);
                     const html: string = container.innerHTML.replace(consts.INVISIBLE_SPACE_REG_EXP, '');
 
-                    if ((!html.length || html == '<br>') && !Dom.isCell(container, editor.editorWindow)) {
+                    if ((!html.length || html == '<br>') && !Dom.isCell(container, editor.editorWindow) && container.parentNode) {
                         container.parentNode.removeChild(container);
                         return false;
                     }
@@ -81,4 +87,4 @@ export default function (editor: Jodit) {
             }
         }
     })
-};
+}

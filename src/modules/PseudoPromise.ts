@@ -1,7 +1,13 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
 const REJECT = 0;
 const RESOLVE = 1;
 
-export default class PseudoPromise {
+export class PseudoPromise {
 
 
     private handlers: {'0': Function[], '1': Function[]} = {'0': [], '1': []};

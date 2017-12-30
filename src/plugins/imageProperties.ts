@@ -1,11 +1,17 @@
-import Jodit from '../Jodit';
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
+import {Jodit} from '../Jodit';
 import {Config} from '../Config'
 import {$$, css, dom, trim, val} from "../modules/Helpers";
-import {Alert, Confirm, default as Dialog} from "../modules/Dialog";
-import Toolbar from "../modules/Toolbar";
-//import {} from "../modules/Widget";
-import FileBrowser, {FileBrowserCallBcackData} from "../modules/FileBrowser";
-import Dom from "../modules/Dom";
+import {Alert, Confirm, Dialog} from "../modules/Dialog";
+import {Toolbar} from "../modules/Toolbar";
+
+import {FileBrowser,FileBrowserCallBcackData} from "../modules/FileBrowser";
+import {Dom} from "../modules/Dom";
 import {UploaderData} from "../modules/Uploader";
 import {Widget} from "../modules/Widget";
 import TabsWidget = Widget.TabsWidget;
@@ -80,7 +86,7 @@ Config.prototype.image =  {
      selectImageAfterClose: true,
 };
 
-export default function (editor: Jodit) {
+export function imageProperties(editor: Jodit) {
     /**
      * Open dialog editing image properties
      *
@@ -204,11 +210,11 @@ export default function (editor: Jodit) {
             },
 
             updateId = () => {
-                val(prop, '#id', image.getAttribute('id'));
+                val(prop, '#id', image.getAttribute('id') || '');
             },
 
             updateStyle = () => {
-                val(prop, '#style', image.getAttribute('style'));
+                val(prop, '#style', image.getAttribute('style') || '');
             },
 
             updateClasses = () => {
@@ -225,16 +231,24 @@ export default function (editor: Jodit) {
                     if (!value) {
                         return;
                     }
-                    if (/^[0-9]+$/.test(value) || /^[0-9]+px$/i.test(value)) {
+                    if (/^[0-9]+(px)?$/.test(value)) {
                         value = parseInt(value, 10);
                     }
+
                     elm.value = value.toString() || '';
+
                     if (!notequal && elm.id !== 'marginTop' && elm.value !== val(prop, '#marginTop')) {
-                        prop.querySelector('.jodit_lock_margin').innerHTML = Toolbar.getIcon('unlock');
-                        $$('.margins', prop).forEach((elm:HTMLElement) => elm.classList.remove('disabled'));
                         notequal = true;
                     }
                 });
+
+                lockMargin = !notequal;
+                let lock_margin: HTMLAnchorElement|null = prop.querySelector('.jodit_lock_margin');
+                if (lock_margin) {
+                    lock_margin.innerHTML = Toolbar.getIcon(lockMargin ? 'lock' : 'unlock');
+                }
+                $$('.margins:not(#marginTop)', prop).forEach((elm:HTMLElement) => !lockMargin ? elm.removeAttribute('disabled') : elm.setAttribute('disabled', 'true'));
+
             },
 
             updateSizes = () => {
@@ -243,19 +257,24 @@ export default function (editor: Jodit) {
             },
             updateText = () => {
                 if (image.hasAttribute('title')) {
-                    val(prop, '#imageTitle', image.getAttribute('title'));
+                    val(prop, '#imageTitle', image.getAttribute('title') || '');
                 }
                 if (image.hasAttribute('alt')) {
-                    val(prop, '#imageAlt', image.getAttribute('alt'));
+                    val(prop, '#imageAlt', image.getAttribute('alt') || '');
                 }
-                if (Dom.closest(image, 'a', editor.editor)) {
-                    val(prop, '#imageLink', (<HTMLAnchorElement>Dom.closest(image, 'a', editor.editor)).getAttribute('href'));
-                    (<HTMLInputElement>prop.querySelector('#imageLinkOpenInNewTab')).checked = (<HTMLAnchorElement>Dom.closest(image, 'a', editor.editor)).getAttribute('target') === '_blank';
+
+                let a: HTMLAnchorElement|null = <HTMLAnchorElement>Dom.closest(image, 'a', editor.editor);
+                if (a) {
+                    val(prop, '#imageLink', a.getAttribute('href') || '');
+                    (<HTMLInputElement>prop.querySelector('#imageLinkOpenInNewTab')).checked = a.getAttribute('target') === '_blank';
                 }
             },
             updateSrc = () => {
-                val(prop, '#imageSrc', image.getAttribute('src'));
-                prop.querySelector('#imageViewSrc').setAttribute('src', image.getAttribute('src'));
+                val(prop, '#imageSrc', image.getAttribute('src') || '');
+                let imageViewSrc: HTMLInputElement|null = prop.querySelector('#imageViewSrc');
+                if (imageViewSrc) {
+                    imageViewSrc.setAttribute('src', image.getAttribute('src') || '');
+                }
             },
 
             update = () => {
@@ -271,13 +290,17 @@ export default function (editor: Jodit) {
 
 
         let timer,
-            lockSize = true,
-            lockMargin = true,
-            tabs = {};
+            lockSize: boolean = true,
+            lockMargin: boolean = true,
+            tabs = {},
+            tabsbox: HTMLElement|null = prop.querySelector('#tabsbox');
 
         tabs[editor.i18n('Image')] = mainTab;
         tabs[editor.i18n('Advansed')] = positionTab;
-        prop.querySelector('#tabsbox').appendChild(TabsWidget(editor, tabs));
+
+        if (tabsbox) {
+            tabsbox.appendChild(TabsWidget(editor, tabs));
+        }
 
         update();
 
@@ -289,63 +312,64 @@ export default function (editor: Jodit) {
         });
 
         buttons.remove.addEventListener('click', () => {
-            image.parentNode.removeChild(image);
+            if (image.parentNode) {
+                image.parentNode.removeChild(image);
+            }
             dialog.close();
         });
-
-        $$('.jodit_use_image_editor', mainTab).forEach((btn) => {
-            editor.__on(btn,'mousedown touchstart', () => {
-                if (editor.options.image.useImageEditor) {
-                    let url = image.getAttribute('src'),
-                        a = editor.ownerDocument.createElement('a'),
-                        loadExternal = () => {
-                            if (a.host !== location.host) {
-                                Confirm(editor.i18n('You can only edit your own images. Download this image on the host?'), (yes: boolean) => {
-                                    if (yes && editor.uploader) {
-                                        editor.uploader.uploadRemoteImage(
-                                            a.href.toString(),
-                                            (resp: UploaderData) => {
-                                                Alert(editor.i18n('The image has been successfully uploaded to the host!'), () => {
-                                                    if (typeof resp.newfilename === 'string') {
-                                                        image.setAttribute('src', resp.baseurl + resp.newfilename);
-                                                        updateSrc();
-                                                    }
-                                                });
-                                            },
-                                            (error: Error) => {
-                                                Alert(editor.i18n('There was an error loading %s',  error.message));
-                                            }
-                                        );
-                                    }
-                                });
-                                return;
-                            }
-                        };
-
-                    a.href = url;
-
-                    (<FileBrowser>editor.getInstance('FileBrowser')).getPathByUrl(a.href.toString(), (path: string, name: string, source: string) => {
-                        (<FileBrowser>editor.getInstance('FileBrowser'))
-                            .openImageEditor(
-                                a.href,
-                                name,
-                                path,
-                                source,
-                                () => {
-                                    const timestamp: number = (new Date()).getTime();
-                                    image.setAttribute('src', url + (url.indexOf('?') !== -1 ? '' : '?') + '&_tmp=' + timestamp.toString());
-                                    updateSrc();
-                                },
-                                (error: Error) => {
-                                    Alert(error.message)
+        if (editor.options.image.useImageEditor) {
+            $$('.jodit_use_image_editor', mainTab).forEach((btn: HTMLAnchorElement) => {
+                editor.__on(btn,'mousedown touchstart', () => {
+                        const url: string = image.getAttribute('src') || '',
+                            a: HTMLAnchorElement = editor.ownerDocument.createElement('a'),
+                            loadExternal = () => {
+                                if (a.host !== location.host) {
+                                    Confirm(editor.i18n('You can only edit your own images. Download this image on the host?'), (yes: boolean) => {
+                                        if (yes && editor.uploader) {
+                                            editor.uploader.uploadRemoteImage(
+                                                a.href.toString(),
+                                                (resp: UploaderData) => {
+                                                    Alert(editor.i18n('The image has been successfully uploaded to the host!'), () => {
+                                                        if (typeof resp.newfilename === 'string') {
+                                                            image.setAttribute('src', resp.baseurl + resp.newfilename);
+                                                            updateSrc();
+                                                        }
+                                                    });
+                                                },
+                                                (error: Error) => {
+                                                    Alert(editor.i18n('There was an error loading %s',  error.message));
+                                                }
+                                            );
+                                        }
+                                    });
+                                    return;
                                 }
-                            );
-                    }, (error: Error) => {
-                        Alert(error.message, loadExternal);
-                    });
-                }
+                            };
+
+                        a.href = url;
+
+                        (<FileBrowser>editor.getInstance('FileBrowser')).getPathByUrl(a.href.toString(), (path: string, name: string, source: string) => {
+                            (<FileBrowser>editor.getInstance('FileBrowser'))
+                                .openImageEditor(
+                                    a.href,
+                                    name,
+                                    path,
+                                    source,
+                                    () => {
+                                        const timestamp: number = (new Date()).getTime();
+                                        image.setAttribute('src', url + (url.indexOf('?') !== -1 ? '' : '?') + '&_tmp=' + timestamp.toString());
+                                        updateSrc();
+                                    },
+                                    (error: Error) => {
+                                        Alert(error.message)
+                                    }
+                                );
+                        }, (error: Error) => {
+                            Alert(error.message, loadExternal);
+                        });
+                });
             });
-        });
+        }
 
 
         $$('.jodit_rechange', mainTab).forEach((imagebtn: HTMLAnchorElement) => {
@@ -371,21 +395,28 @@ export default function (editor: Jodit) {
             });
         });
 
-        prop.querySelector('.jodit_lock_helper.jodit_lock_size').addEventListener('click', function () {
-            lockSize = !lockSize;
-            this.innerHTML = Toolbar.getIcon(lockSize ? 'lock' : 'unlock');
-            editor.__fire($w, 'change', editor.ownerDocument);
-        });
+        let jodit_lock_size: HTMLAnchorElement|null = prop.querySelector('.jodit_lock_helper.jodit_lock_size');
+        let jodit_lock_margin: HTMLAnchorElement|null = prop.querySelector('.jodit_lock_helper.jodit_lock_margin');
 
-        prop.querySelector('.jodit_lock_helper.jodit_lock_margin').addEventListener('click', function () {
-            lockMargin = !lockMargin;
-            this.innerHTML = Toolbar.getIcon(lockMargin ? 'lock' : 'unlock');
-            if (!lockMargin) {
-                $$('.margins', prop).forEach((elm) => {if (!elm.matches('#marginTop')) elm.removeAttribute('disabled');})
-            } else {
-                $$('.margins', prop).forEach((elm) => {if (!elm.matches('#marginTop')) elm.setAttribute('disabled', 'true');})
-            }
-        });
+        if (jodit_lock_size) {
+            jodit_lock_size.addEventListener('click', function () {
+                lockSize = !lockSize;
+                this.innerHTML = Toolbar.getIcon(lockSize ? 'lock' : 'unlock');
+                editor.__fire($w, 'change', editor.ownerDocument);
+            });
+        }
+
+        if (jodit_lock_margin) {
+            jodit_lock_margin.addEventListener('click', function () {
+                lockMargin = !lockMargin;
+                this.innerHTML = Toolbar.getIcon(lockMargin ? 'lock' : 'unlock');
+                if (!lockMargin) {
+                    $$('.margins', prop).forEach((elm) => {if (!elm.matches('#marginTop')) elm.removeAttribute('disabled');})
+                } else {
+                    $$('.margins', prop).forEach((elm) => {if (!elm.matches('#marginTop')) elm.setAttribute('disabled', 'true');})
+                }
+            });
+        }
 
         editor.__on($$('#imageWidth,#imageHeight', prop), 'change keydown mousedown paste', (e: any) => {
             if (!lockSize) {
@@ -412,7 +443,6 @@ export default function (editor: Jodit) {
             dialog.close();
         });
         check.addEventListener('click', () => {
-            let link;
             // styles
             if (editor.options.image.editStyle) {
                 if (val(prop, '#style')) {
@@ -425,7 +455,9 @@ export default function (editor: Jodit) {
             if (val(prop, '#imageSrc')) {
                 image.setAttribute('src', val(prop, '#imageSrc'));
             } else {
-                image.parentNode.removeChild(image);
+                if (image.parentNode) {
+                    image.parentNode.removeChild(image);
+                }
                 dialog.close();
                 return;
             }
@@ -445,11 +477,13 @@ export default function (editor: Jodit) {
             }
 
             // Link
+            let link: HTMLAnchorElement|null = <HTMLAnchorElement>Dom.closest(image, 'a', editor.editor);
+
             if (val(prop, '#imageLink')) {
-                if (!Dom.closest(image, 'a', editor.editor)) {
-                    Dom.wrap(image, 'a', editor);
+                if (!link) {
+                    link = <HTMLAnchorElement>Dom.wrap(image, 'a', editor);
                 }
-                link = Dom.closest(image, 'a', editor.editor);
+
                 link.setAttribute('href', val(prop, '#imageLink'));
                 if ((<HTMLInputElement>prop.querySelector('#imageLinkOpenInNewTab')).checked) {
                     link.setAttribute('target', '_blank');
@@ -457,8 +491,7 @@ export default function (editor: Jodit) {
                     link.removeAttribute('target');
                 }
             } else {
-                if (Dom.closest(image, 'a', editor.editor)) {
-                    link = Dom.closest(image, 'a', editor.editor);
+                if (link && link.parentNode) {
                     link.parentNode.replaceChild(image, link);
                 }
             }
@@ -567,4 +600,4 @@ export default function (editor: Jodit) {
         .on('openImageProperties', (image: HTMLImageElement) => {
             open.call(image);
         });
-};
+}

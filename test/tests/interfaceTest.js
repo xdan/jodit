@@ -213,23 +213,320 @@ describe('Test interface', function() {
                     '</tbody></table><p></p>');
             });
         });
+
+        describe('Edit image tests', function () {
+            describe('Image editor', function () {
+                describe('Crop mode', function () {
+                    describe('Enable ratio', function () {
+                        it('Should deny crop image without ratio', function (done) {
+                            var area = appendTestArea();
+                            var editor = new Jodit(area, {
+                                observer: {
+                                    timeout: 0
+                                },
+                                uploader: {
+                                    url: 'https://xdsoft.net/jodit/connector/index.php?action=upload'
+                                },
+                                filebrowser: {
+                                    ajax: {
+                                        url: 'https://xdsoft.net/jodit/connector/index.php'
+                                    }
+                                },
+                            });
+                            editor.setEditorValue('<img src="https://xdsoft.net/jodit/files/th.jpg">');
+
+                            simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
+
+                            var dialog = editor.ownerDocument.querySelector('[data-editor_id=' + area.id + '].jodit.jodit_dialog_box.active');
+
+                            expect(dialog.style.display).to.be.not.equal('none');
+                            expect(dialog.querySelectorAll('a.jodit_use_image_editor').length).to.equal(1);
+
+                            editor.events.on('afterImageEditor', function () {
+                                var imageEditor = editor.ownerDocument.querySelector('[data-editor_id=' + area.id + '].jodit.jodit_dialog_box.active .jodit_image_editor');
+                                expect(imageEditor).to.be.not.equal(null);
+
+                                expect(imageEditor.querySelectorAll('[data-area=crop]').length).to.equal(1);
+                                expect(imageEditor.querySelectorAll('[data-area=crop].active').length).to.equal(0);
+
+                                simulateEvent('click', 0, imageEditor.querySelector('[data-area=crop] > div'));
+
+                                expect(imageEditor.querySelectorAll('[data-area=crop].active').length).to.equal(1);
+
+                                var cropper = imageEditor.querySelector('.jodit_image_editor_croper');
+
+                                expect(cropper).not.to.equal(null);
+
+                                var oldRatio = cropper.offsetWidth / cropper.offsetHeight;
+                                simulateEvent('mousedown', 0, cropper.querySelector('.jodit_bottomright'), function (e) {
+                                    var pos = editor.helper.offset(cropper, editor);
+                                    e.clientX = pos.left + pos.width;
+                                    e.clientY = pos.top + pos.height;
+                                });
+
+                                simulateEvent('mousemove', 0, editor.ownerWindow, function (e) {
+                                    var pos = editor.helper.offset(cropper, editor);
+                                    e.clientX = pos.left + pos.width - 50;
+                                    e.clientY = pos.top + pos.height - 150;
+                                });
+
+                                simulateEvent('mouseup', 0, editor.ownerWindow, function (e) {
+                                    var pos = editor.helper.offset(cropper, editor);
+                                    e.clientX = pos.left + pos.width - 50;
+                                    e.clientY = pos.top + pos.height - 150;
+                                });
+
+                                expect(Math.abs(cropper.offsetWidth / cropper.offsetHeight - oldRatio) < 0.005).to.be.equal(true);
+
+                                done();
+                            });
+
+                            simulateEvent('mousedown', 0, dialog.querySelector('a.jodit_use_image_editor'));
+                        }).timeout(7000);
+                    });
+                    describe('Disable ratio', function () {
+                        it('Should allow crop image without ratio', function (done) {
+                            var area = appendTestArea();
+
+                            var editor = new Jodit(area, {
+                                observer: {
+                                    timeout: 0
+                                },
+                                uploader: {
+                                    url: 'https://xdsoft.net/jodit/connector/index.php?action=upload'
+                                },
+                                filebrowser: {
+                                    ajax: {
+                                        url: 'https://xdsoft.net/jodit/connector/index.php'
+                                    }
+                                },
+                            });
+                            editor.setEditorValue('<img src="https://xdsoft.net/jodit/files/th.jpg">');
+
+                            simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
+
+                            var dialog = editor.ownerDocument.querySelector('[data-editor_id=' + area.id + '].jodit.jodit_dialog_box.active');
+
+                            expect(dialog.style.display).to.be.not.equal('none');
+                            expect(dialog.querySelectorAll('a.jodit_use_image_editor').length).to.equal(1);
+
+                            editor.events.on('afterImageEditor', function () {
+                                var imageEditor = editor.ownerDocument.querySelector('[data-editor_id=' + area.id + '].jodit.jodit_dialog_box.active .jodit_image_editor');
+                                expect(imageEditor).to.be.not.equal(null);
+
+                                expect(imageEditor.querySelectorAll('[data-area=crop]').length).to.equal(1);
+                                expect(imageEditor.querySelectorAll('[data-area=crop].active').length).to.equal(0);
+
+                                simulateEvent('click', 0, imageEditor.querySelector('[data-area=crop] > div'));
+
+                                expect(imageEditor.querySelectorAll('[data-area=crop].active').length).to.equal(1);
+
+                                var cropper = imageEditor.querySelector('.jodit_image_editor_croper');
+
+                                expect(cropper).not.to.equal(null);
+
+                                var oldRatio = cropper.offsetWidth / cropper.offsetHeight;
+
+                                var disableRatioBtn = imageEditor.querySelector('[data-area=crop].active').querySelector('.jodit_btn_radio_group button:last-child');
+
+                                expect(disableRatioBtn).not.to.equal(null);
+                                simulateEvent('click', 0, disableRatioBtn);
+
+                                simulateEvent('mousedown', 0, cropper.querySelector('.jodit_bottomright'), function (e) {
+                                    var pos = editor.helper.offset(cropper, editor);
+                                    e.clientX = pos.left + pos.width;
+                                    e.clientY = pos.top + pos.height;
+                                });
+                                simulateEvent('mousemove', 0, editor.ownerWindow, function (e) {
+                                    var pos = editor.helper.offset(cropper, editor);
+                                    e.clientX = pos.left + pos.width - 50;
+                                    e.clientY = pos.top + pos.height - 150;
+                                });
+
+                                simulateEvent('mouseup', 0, editor.ownerWindow, function (e) {
+                                    var pos = editor.helper.offset(cropper, editor);
+                                    e.clientX = pos.left + pos.width - 50;
+                                    e.clientY = pos.top + pos.height - 150;
+                                });
+
+                                expect(Math.abs(cropper.offsetWidth / cropper.offsetHeight - oldRatio) > 1).to.be.equal(true);
+
+                                done();
+                            });
+
+                            simulateEvent('mousedown', 0, dialog.querySelector('a.jodit_use_image_editor'));
+                        }).timeout(7000);
+                    });
+                });
+                describe('Resize mode', function () {
+                    describe('Enable ratio', function () {
+                        it('Should deny resize image without ratio', function (done) {
+                            var area = appendTestArea();
+                            var editor = new Jodit(area, {
+                                observer: {
+                                    timeout: 0
+                                },
+                                uploader: {
+                                    url: 'https://xdsoft.net/jodit/connector/index.php?action=upload'
+                                },
+                                filebrowser: {
+                                    ajax: {
+                                        url: 'https://xdsoft.net/jodit/connector/index.php'
+                                    }
+                                },
+                            });
+                            editor.setEditorValue('<img src="https://xdsoft.net/jodit/files/th.jpg">');
+
+                            simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
+
+                            var dialog = editor.ownerDocument.querySelector('[data-editor_id=' + area.id + '].jodit.jodit_dialog_box.active');
+
+                            expect(dialog.style.display).to.be.not.equal('none');
+                            expect(dialog.querySelectorAll('a.jodit_use_image_editor').length).to.equal(1);
+
+                            editor.events.on('afterImageEditor', function () {
+                                var imageEditor = editor.ownerDocument.querySelector('[data-editor_id=' + area.id + '].jodit.jodit_dialog_box.active .jodit_image_editor');
+                                expect(imageEditor).to.be.not.equal(null);
+
+                                expect(imageEditor.querySelectorAll('[data-area=resize]').length).to.equal(1);
+                                expect(imageEditor.querySelectorAll('[data-area=resize].active').length).to.equal(1); // default mode
+
+                                simulateEvent('click', 0, imageEditor.querySelector('[data-area=resize] > div'));
+
+                                expect(imageEditor.querySelectorAll('[data-area=resize].active').length).to.equal(1);
+
+                                var resizer = imageEditor.querySelector('.jodit_image_editor_resizer');
+
+                                expect(resizer).not.to.equal(null);
+
+                                var oldRatio = resizer.offsetWidth / resizer.offsetHeight;
+
+                                simulateEvent('mousedown', 0, resizer.querySelector('.jodit_bottomright'), function (e) {
+                                    var pos = editor.helper.offset(resizer, editor);
+                                    e.clientX = pos.left + pos.width;
+                                    e.clientY = pos.top + pos.height;
+                                });
+
+                                simulateEvent('mousemove', 0, editor.ownerWindow, function (e) {
+                                    var pos = editor.helper.offset(resizer, editor);
+                                    e.clientX = pos.left + pos.width - 250;
+                                    e.clientY = pos.top + pos.height - 150;
+                                });
+
+                                simulateEvent('mouseup', 0, editor.ownerWindow, function (e) {
+                                    var pos = editor.helper.offset(resizer, editor);
+                                    e.clientX = pos.left + pos.width - 250;
+                                    e.clientY = pos.top + pos.height - 150;
+                                });
+
+
+                                expect(Math.abs(resizer.offsetWidth / resizer.offsetHeight - oldRatio) < 0.005).to.be.equal(true);
+
+                                done();
+                            });
+
+                            simulateEvent('mousedown', 0, dialog.querySelector('a.jodit_use_image_editor'));
+                        }).timeout(7000);
+                    });
+                    describe('Disable ratio', function () {
+                        it('Should allow resize image without ratio', function (done) {
+                            var area = appendTestArea();
+                            var editor = new Jodit(area, {
+                                observer: {
+                                    timeout: 0
+                                },
+                                uploader: {
+                                    url: 'https://xdsoft.net/jodit/connector/index.php?action=upload'
+                                },
+                                filebrowser: {
+                                    ajax: {
+                                        url: 'https://xdsoft.net/jodit/connector/index.php'
+                                    }
+                                },
+                            });
+                            editor.setEditorValue('<img src="https://xdsoft.net/jodit/files/th.jpg">');
+
+                            simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
+
+                            var dialog = editor.ownerDocument.querySelector('[data-editor_id=' + area.id + '].jodit.jodit_dialog_box.active');
+
+                            expect(dialog.style.display).to.be.not.equal('none');
+                            expect(dialog.querySelectorAll('a.jodit_use_image_editor').length).to.equal(1);
+
+                            editor.events.on('afterImageEditor', function () {
+                                var imageEditor = editor.ownerDocument.querySelector('[data-editor_id=' + area.id + '].jodit.jodit_dialog_box.active .jodit_image_editor');
+                                expect(imageEditor).to.be.not.equal(null);
+
+                                expect(imageEditor.querySelectorAll('[data-area=resize]').length).to.equal(1);
+                                expect(imageEditor.querySelectorAll('[data-area=resize].active').length).to.equal(1); // default mode
+
+                                simulateEvent('click', 0, imageEditor.querySelector('[data-area=resize] > div'));
+
+                                expect(imageEditor.querySelectorAll('[data-area=resize].active').length).to.equal(1);
+
+
+                                var disableRatioBtn = imageEditor.querySelector('[data-area=resize].active').querySelector('.jodit_btn_radio_group button:last-child');
+
+                                expect(disableRatioBtn).not.to.equal(null);
+                                simulateEvent('click', 0, disableRatioBtn);
+
+
+                                var resizer = imageEditor.querySelector('.jodit_image_editor_resizer');
+
+                                expect(resizer).not.to.equal(null);
+
+                                var oldRatio = resizer.offsetWidth / resizer.offsetHeight;
+
+                                simulateEvent('mousedown', 0, resizer.querySelector('.jodit_bottomright'), function (e) {
+                                    var pos = editor.helper.offset(resizer, editor);
+                                    e.clientX = pos.left + pos.width;
+                                    e.clientY = pos.top + pos.height;
+                                });
+
+                                simulateEvent('mousemove', 0, editor.ownerWindow, function (e) {
+                                    var pos = editor.helper.offset(resizer, editor);
+                                    e.clientX = pos.left + pos.width - 50;
+                                    e.clientY = pos.top + pos.height - 150;
+                                });
+
+                                simulateEvent('mouseup', 0, editor.ownerWindow, function (e) {
+                                    var pos = editor.helper.offset(resizer, editor);
+                                    e.clientX = pos.left + pos.width - 50;
+                                    e.clientY = pos.top + pos.height - 150;
+                                });
+
+                                expect(Math.abs(resizer.offsetWidth / resizer.offsetHeight - oldRatio) > 1).to.be.equal(true);
+
+                                done();
+                            });
+
+                            simulateEvent('mousedown', 0, dialog.querySelector('a.jodit_use_image_editor'));
+                        }).timeout(7000);
+                    });
+                });
+            });
+        });
     });
     describe('Toolbar', function () {
         describe('Popups', function () {
             it('Open popup in toolbar', function () {
-                var editor = new Jodit('#table_editor_interface');
+                var editor = new Jodit('#table_editor_interface', {
+                    disablePlugins: 'mobile'
+                });
                 simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-video'))
 
-                var popup = editor.container.querySelector('.jodit_toolbar_popup');
+                var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup');
 
                 expect(popup && popup.style.display === 'block').to.equal(true);
             });
             it('Open and close popap after clicking in another place', function() {
-                var editor = new Jodit('#table_editor_interface');
+                var editor = new Jodit('#table_editor_interface', {
+                    disablePlugins: 'mobile'
+                });
 
                 simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-video'))
 
-                var popup = editor.container.querySelector('.jodit_toolbar_popup');
+                var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup');
 
                 expect(popup && popup.style.display === 'block').to.equal(true);
 
@@ -338,7 +635,7 @@ describe('Test interface', function() {
                 sel.removeAllRanges();
                 sel.addRange(range)
 
-                simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-image'))
+                simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-image'));
 
                 var list = editor.container.querySelector('.jodit_toolbar_popup');
 
@@ -360,30 +657,32 @@ describe('Test interface', function() {
                 expect(list.style.display).to.equal('none');
             });
             it('Open video dialog and insert video by url from youtube.', function() {
-                var editor = new Jodit('#table_editor_interface');
+                var editor = new Jodit('#table_editor_interface', {
+                    disablePlugins: 'mobile'
+                });
 
                 editor.setEditorValue('')
 
 
                 simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-video'))
 
-                var list = editor.container.querySelector('.jodit_toolbar_popup');
+                var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup');
 
-                expect(list.style.display).to.equal('block');
+                expect(popup.style.display).to.equal('block');
 
-                editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-video input[name=code]').value = 'sddhttps://www.youtube.com/watch?v=7CcEYRfxUOQ' // try wrong url
-                simulateEvent('submit', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-video .jodit_form'))
+                popup.querySelector('input[name=code]').value = 'sddhttps://www.youtube.com/watch?v=7CcEYRfxUOQ' // try wrong url
+                simulateEvent('submit', 0, popup.querySelector('.jodit_form'))
 
-                expect(editor.container.querySelectorAll('.jodit_toolbar_btn.jodit_toolbar_btn-video input[name=code].jodit_error').length).to.equal(1);
+                expect(popup.querySelectorAll('input[name=code].jodit_error').length).to.equal(1);
 
-                editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-video input[name=code]').value = 'https://www.youtube.com/watch?v=7CcEYRfxUOQ'
-                simulateEvent('submit', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-video .jodit_form'))
+                popup.querySelector('input[name=code]').value = 'https://www.youtube.com/watch?v=7CcEYRfxUOQ'
+                simulateEvent('submit', 0, popup.querySelector('.jodit_form'))
 
                 expect(sortAtrtibutes(editor.getEditorValue())).to.equal('<iframe allowfullscreen="" frameborder="0" height="345" src="//www.youtube.com/embed/7CcEYRfxUOQ" width="400"></iframe>');
 
                 simulateEvent('mousedown', 0, editor.editor)
 
-                expect(list.style.display).to.equal('none');
+                expect(popup.style.display).to.equal('none');
             });
             it('Open align list and choose Right align.', function() {
                 var editor = new Jodit('#table_editor_interface');
@@ -435,7 +734,8 @@ describe('Test interface', function() {
 
                     expect(sortAtrtibutes(editor.getEditorValue())).to.equal('<a href="http://xdsoft.net/jodit/images/artio.jpg">123</a>');
 
-                    simulateEvent('mousedown', 0, editor.editor)
+                    simulateEvent('mousedown', 0, editor.editor);
+
 
                     expect(list.style.display).to.equal('none');
                 });
@@ -445,7 +745,7 @@ describe('Test interface', function() {
                             timeout: 0
                         }
                     });
-                    
+
                     editor.setEditorValue('<a target="_blank" rel="nofollow" href="#test">test</a>')
 
                     var sel = editor.editorWindow.getSelection(),
@@ -455,18 +755,37 @@ describe('Test interface', function() {
                     sel.removeAllRanges();
                     sel.addRange(range);
 
-                    
+
                     simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link'))
 
                     expect(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=url]').value).to.equal('#test');
                     expect(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=target]').checked).to.equal(true);
                     expect(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=nofollow]').checked).to.equal(true);
-                    expect(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_unlink_button').style.display).to.not.equal('none');
+                    expect(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_unlink_button').style.display).to.be.not.equal('none');
                     expect(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_link_insert_button').innerHTML).to.equal(editor.i18n('Update'));
 
                     simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_unlink_button'))
 
                     expect(sortAtrtibutes(editor.getEditorValue())).to.equal('test')
+                });
+            });
+            describe('Create table', function () {
+                describe('Mouse move', function () {
+                    it('Should highlight cells in table-creator', function() {
+                        var editor = new Jodit('#table_editor_interface', {
+                            observer: {
+                                timeout: 0
+                            }
+                        });
+                        simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-table'))
+
+                        var list = editor.container.querySelector('.jodit_toolbar_popup');
+
+                        expect(list.style.display).to.equal('block');
+
+                        simulateEvent('mousemove', 0, list.querySelectorAll('div')[14])
+                        expect(list.querySelectorAll('div.hovered').length).to.equal(10);
+                    });
                 });
             });
         });
@@ -482,6 +801,7 @@ describe('Test interface', function() {
             });
             it('Add own button', function() {
                 var editor = new Jodit('#table_editor_interface', {
+                    disablePlugins: ['mobile'],
                     buttons: Jodit.defaultOptions.buttons.concat([
                         {
                             name: 'insertDate',
@@ -663,6 +983,82 @@ describe('Test interface', function() {
                     expect(editor.getEditorValue()).to.equal('<p>test<strong>text</strong>text</p>');
                 });
             });
+            describe('Active button', function () {
+                it('Should not be activated then element has default style', function () {
+                    var editor = new Jodit('#table_editor_interface', {
+                        observer: {
+                            timeout: 0
+                        }
+                    });
+                    editor.setEditorValue('<p>test<strong>bold</strong></p>')
+                    var p = editor.editor.firstChild;
+                    editor.selection.setCursorAfter(p.firstChild);
+
+                    simulateEvent('mousedown', 0, p);
+
+                    var bold = editor.container.querySelector('.jodit_toolbar_btn-bold');
+                    var align = editor.container.querySelector('.jodit_toolbar_btn-align');
+
+                    expect(false).to.equal(align.classList.contains('jodit_active'));
+                    expect(false).to.equal(bold.classList.contains('jodit_active'));
+
+                    editor.selection.setCursorIn(p.querySelector('strong').firstChild);
+                    simulateEvent('mousedown', 0, p);
+                    // editor.selection.insertHTML('ddd');
+                    expect(false).to.equal(align.classList.contains('jodit_active'));
+                    expect(true).to.equal(bold.classList.contains('jodit_active'));
+
+                    p.style.textAlign = 'right';
+                    simulateEvent('mousedown', 0, p);
+                    expect(true).to.equal(align.classList.contains('jodit_active'));
+                    expect(true).to.equal(bold.classList.contains('jodit_active'));
+                })
+                describe('Fontsize button', function () {
+                    it('Should be activated then element has no default font-size', function () {
+                        var editor = new Jodit('#table_editor_interface', {
+                            observer: {
+                                timeout: 0
+                            }
+                        });
+                        editor.setEditorValue('<p>test<span style="font-size: 12px">bold</span></p>')
+
+                        var p = editor.editor.firstChild;
+                        var fontsize = editor.container.querySelector('.jodit_toolbar_btn-fontsize');
+
+                        editor.selection.setCursorAfter(p.firstChild);
+                        simulateEvent('mousedown', 0, p);
+                        expect(false).to.equal(fontsize.classList.contains('jodit_active'));
+
+                        editor.selection.setCursorIn(p.lastChild);
+                        simulateEvent('mousedown', 0, p);
+                        expect(true).to.equal(fontsize.classList.contains('jodit_active'));
+                    });
+                });
+                describe('Color button', function () {
+                    it('Should be activated then element has some color', function () {
+                        var editor = new Jodit('#table_editor_interface', {
+                            observer: {
+                                timeout: 0
+                            }
+                        });
+                        editor.setEditorValue('<p>test<span style="color: #ccc">bold</span></p>')
+
+                        var p = editor.editor.firstChild;
+                        var brush = editor.container.querySelector('.jodit_toolbar_btn-brush');
+                        var brushIcon = editor.container.querySelector('.jodit_toolbar_btn-brush svg');
+
+                        editor.selection.setCursorAfter(p.firstChild);
+                        simulateEvent('mousedown', 0, p);
+                        expect(false).to.equal(brush.classList.contains('jodit_active'));
+                        expect('').to.equal(brushIcon.style.fill);
+
+                        editor.selection.setCursorIn(p.lastChild);
+                        simulateEvent('mousedown', 0, p);
+                        expect(true).to.equal(brush.classList.contains('jodit_active'));
+                        expect('rgb(204, 204, 204)').to.equal(brushIcon.style.fill);
+                    });
+                });
+            });
         });
         describe('Commands', function () {
             it('Click on Source button should change current mode', function() {
@@ -731,7 +1127,7 @@ describe('Test interface', function() {
 
                 simulateEvent('mousedown', 0, editor.editor.querySelector('img'))
 
-                var popup = editor.container.querySelector('.jodit_toolbar_popup-inline');
+                var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
 
                 expect(popup && popup.classList.contains('active')).to.equal(true);
             });
@@ -744,7 +1140,7 @@ describe('Test interface', function() {
 
                 simulateEvent('mousedown', 0, editor.editor.querySelector('td'))
 
-                var popup = editor.container.querySelector('.jodit_toolbar_popup-inline');
+                var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
 
                 expect(popup && popup.classList.contains('active')).to.equal(true);
             });
@@ -761,7 +1157,7 @@ describe('Test interface', function() {
                     simulateEvent('mousedown', 0, td)
                     simulateEvent('mousemove', 0, td)
 
-                    var popup = editor.container.querySelector('.jodit_toolbar_popup-inline');
+                    var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
 
                     expect(popup && popup.classList.contains('active')).to.equal(true);
 
@@ -788,7 +1184,7 @@ describe('Test interface', function() {
 
                 simulateEvent('mousedown', 0, td)
 
-                var popup = editor.container.querySelector('.jodit_toolbar_popup-inline');
+                var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
 
                 expect(popup && popup.classList.contains('active')).to.equal(true);
 
@@ -814,7 +1210,7 @@ describe('Test interface', function() {
 
                 simulateEvent('mousedown', 0, td)
 
-                var popup = editor.container.querySelector('.jodit_toolbar_popup-inline');
+                var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
 
                 simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-splitv>a'))
 
@@ -832,7 +1228,7 @@ describe('Test interface', function() {
 
                 simulateEvent('mousedown', 0, td)
 
-                var popup = editor.container.querySelector('.jodit_toolbar_popup-inline');
+                var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
 
                 simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-splitg>a'))
 
@@ -851,7 +1247,7 @@ describe('Test interface', function() {
                 simulateEvent('mousedown', 0, td)
                 simulateEvent('mousemove', 0, editor.editor.querySelectorAll('td')[1])
 
-                var popup = editor.container.querySelector('.jodit_toolbar_popup-inline');
+                var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
 
                 simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-merge>a'))
 
@@ -868,7 +1264,7 @@ describe('Test interface', function() {
 
                 simulateEvent('mousedown', 0, td)
 
-                var popup = editor.container.querySelector('.jodit_toolbar_popup-inline');
+                var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
 
                 expect(popup && popup.classList.contains('active')).to.equal(true);
 
@@ -894,7 +1290,7 @@ describe('Test interface', function() {
 
                 simulateEvent('mousedown', 0, td)
 
-                var popup = editor.container.querySelector('.jodit_toolbar_popup-inline');
+                var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
 
                 expect(popup && popup.classList.contains('active')).to.equal(true);
 
@@ -922,7 +1318,7 @@ describe('Test interface', function() {
 
                 simulateEvent('mousedown', 0, td)
 
-                var popup = editor.container.querySelector('.jodit_toolbar_popup-inline');
+                var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
 
                 expect(popup && popup.classList.contains('active')).to.equal(true);
 
@@ -950,7 +1346,7 @@ describe('Test interface', function() {
 
                 simulateEvent('mousedown', 0, td)
 
-                var popup = editor.container.querySelector('.jodit_toolbar_popup-inline');
+                var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
 
                 expect(popup && popup.classList.contains('active')).to.equal(true);
 
@@ -968,14 +1364,44 @@ describe('Test interface', function() {
 
             });
         });
+        describe('In fileBrowser', function () {
+            describe('Hide buttons ', function () {
+                it('should hide toolbar buttons', function() {
+                    var editor = new Jodit('#table_editor_interface', {
+                        filebrowser: {
+                            buttons: ['list', 'tiles', 'sort'],
+                            ajax: {
+                                url: 'https://xdsoft.net/jodit/connector/index.php'
+                            }
+                        },
+                    });
+
+                    simulateEvent('mousedown', 0, editor.ownerDocument.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-image'))
+
+                    var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup');
+
+                    expect(popup && popup.style.display !== 'none').to.equal(true);
+                    simulateEvent('mousedown', 0, popup.querySelectorAll('.jodit_tabs_buttons > a')[0]);
+
+
+                    var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=table_editor_interface]');
+
+                    expect(dialog).to.be.not.equal(null);
+
+                    expect(4).to.equal(dialog.querySelectorAll('.jodit_dialog_header .jodit_button').length);
+
+                });
+            });
+        });
     });
     after(function() {
-        table_editor_interface.parentNode.removeChild(table_editor_interface);
+         table_editor_interface.parentNode.removeChild(table_editor_interface);
     });
     afterEach(function () {
+        removeStuff();
         var i, keys = Object.keys(Jodit.instances);
         for (i = 0; i < keys.length; i += 1) {
-            Jodit.instances[keys[i]].destruct();
+             Jodit.instances[keys[i]].destruct();
         }
     });
 });

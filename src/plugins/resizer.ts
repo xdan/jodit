@@ -1,4 +1,10 @@
-import Jodit from '../Jodit';
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
+import {Jodit} from '../Jodit';
 import {Config} from '../Config'
 import * as consts from '../constants'
 import {$$, debounce, dom, isIE, offset} from '../modules/Helpers'
@@ -44,7 +50,7 @@ Config.prototype.resizer = {
     min_height : 10
 };
 
-export default function (editor: Jodit) {
+export function resizer(editor: Jodit) {
     // let clicked = false,
     //     resized = false,
     const LOCK_KEY = 'resizer';
@@ -69,7 +75,7 @@ export default function (editor: Jodit) {
 
         resizerIsVisible: boolean = false;
 
-    const resizer: HTMLElement = dom('<div style="display:none" class="jodit_resizer">' +
+    const resizer: HTMLElement = dom('<div data-editor_id="' + editor.id + '" style="display:none" class="jodit_resizer">' +
             '<i class="jodit_resizer-topleft"></i>' +
             '<i class="jodit_resizer-topright"></i>' +
             '<i class="jodit_resizer-bottomright"></i>' +
@@ -84,10 +90,10 @@ export default function (editor: Jodit) {
         },
 
         updateSize = () => {
-            if (resizerIsVisible) {
-                const pos = offset(currentElement, editor),
-                    left: number = parseInt(resizer.style.left, 10),
-                    top: number = parseInt(resizer.style.top, 10),
+            if (resizerIsVisible && currentElement && resizer) {
+                const pos: Bound = offset(currentElement, editor),
+                    left: number = parseInt(resizer.style.left || '0', 10),
+                    top: number = parseInt(resizer.style.top || '0', 10),
                     width: number = resizer.offsetWidth,
                     height: number = resizer.offsetHeight;
 
@@ -135,7 +141,10 @@ export default function (editor: Jodit) {
                     wrapper.style.width = element.offsetWidth + 'px';
                     wrapper.style.height = element.offsetHeight + 'px';
 
-                    element.parentNode.insertBefore(wrapper, element);
+                    if (element.parentNode) {
+                        element.parentNode.insertBefore(wrapper, element);
+                    }
+
                     wrapper.appendChild(element);
 
                     let iframe = element;
@@ -158,18 +167,22 @@ export default function (editor: Jodit) {
                     }
                 })
                 .__on(element, 'mousedown touchstart', () => {
-                    resizeElementClicked = true;
-                    currentElement = element;
-                    showResizer();
-                    if (currentElement.tagName === 'IMG' && !(<HTMLImageElement>currentElement).complete) {
-                        currentElement.addEventListener('load', function ElementOnLoad() {
-                            updateSize();
-                            if (currentElement) {
-                                currentElement.removeEventListener('load', ElementOnLoad);
-                            }
-                        });
+
+                    if (!resizeElementClicked) {
+                        resizeElementClicked = true;
+                        currentElement = element;
+                        showResizer();
+                        if (currentElement.tagName === 'IMG' && !(<HTMLImageElement>currentElement).complete) {
+                            currentElement.addEventListener('load', function ElementOnLoad() {
+                                updateSize();
+                                if (currentElement) {
+                                    currentElement.removeEventListener('load', ElementOnLoad);
+                                }
+                            });
+                        }
+                        clearTimeout(timer);
                     }
-                    clearTimeout(timer);
+
                     timer = setTimeout(() => {
                         resizeElementClicked = false;
                     }, 400);
@@ -206,15 +219,23 @@ export default function (editor: Jodit) {
     });
 
     editor.events
+        .on('beforeDestruct', () => {
+            if (resizer.parentNode) {
+                resizer.parentNode.removeChild(resizer);
+            }
+        })
         .on('afterInit', () => {
-            editor.container.appendChild(resizer);
+            editor.editorDocument.body.appendChild(resizer);
             editor
                 .__on(editor.editor, 'keydown', (e: KeyboardEvent) => {
                     if (resizerIsVisible && e.keyCode === consts.KEY_DELETE && currentElement && currentElement.tagName.toLowerCase() !== 'table') {
                         if (currentElement.tagName !== 'JODIT') {
                             editor.selection.select(currentElement);
                         } else {
-                            currentElement.parentNode.removeChild(currentElement);
+                            if (currentElement.parentNode) {
+                                currentElement.parentNode.removeChild(currentElement);
+                            }
+
                             hideResizer();
                             e.preventDefault();
                         }
@@ -225,6 +246,10 @@ export default function (editor: Jodit) {
                         // resized = true;
                         diff_x = e.clientX - start_x;
                         diff_y = e.clientY - start_y;
+
+                        if (!currentElement) {
+                            return;
+                        }
 
                         if ('IMG' === currentElement.tagName) {
                             if (diff_x) {
@@ -300,4 +325,4 @@ export default function (editor: Jodit) {
                 }
             });
         }, editor.options.observer.timeout));
-};
+}

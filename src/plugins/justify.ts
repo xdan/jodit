@@ -1,14 +1,30 @@
-import Jodit from '../Jodit';
-import {$$} from '../modules/Helpers';
-import Dom from "../modules/Dom";
-import {Config} from "../Config";
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
 
-// import * as consts from '../constants';
-Config.prototype.controls.align = {
-    tags: ["p", "div", "span", "td", "th", "img"],
-        name: 'left',
-        tooltip: "Align",
-        list: [
+import {Jodit} from '../Jodit';
+import {$$, css} from '../modules/Helpers';
+import {Dom} from "../modules/Dom";
+import {Config} from "../Config";
+import {ControlType} from "../modules/Toolbar";
+
+Config.prototype.controls.align = <ControlType>{
+    name: 'left',
+    tooltip: "Align",
+    isActive: (editor: Jodit, btn: ControlType): boolean => {
+        const current: Node|false = editor.selection.current();
+
+        if (current && btn.defaultValue) {
+            let currentBpx: HTMLElement = <HTMLElement>Dom.closest(current, Dom.isBlock, editor.editor) || editor.editor;
+            return btn.defaultValue.indexOf(css(currentBpx, 'text-align').toString()) === -1;
+        }
+
+        return false;
+    },
+    defaultValue: ['left', 'start', 'inherit'],
+    list: [
         'center',
         'left',
         'right',
@@ -47,7 +63,7 @@ Config.prototype.controls.right = {
 };
 
 
-export default function (editor: Jodit) {
+export function justify(editor: Jodit) {
     editor.events.on('beforeCommand', (command) => {
         if (/justify/.test(command)) {
             const justify = (box) => {
@@ -96,4 +112,4 @@ export default function (editor: Jodit) {
             return false;
         }
     });
-};
+}

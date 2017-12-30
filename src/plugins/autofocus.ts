@@ -1,4 +1,10 @@
-import Jodit from '../Jodit';
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
+import {Jodit} from '../Jodit';
 import {Config} from '../Config';
 
 declare module "../Config" {
@@ -17,7 +23,7 @@ Config.prototype.autofocus = false;
  *
  * @param {Jodit} editor
  */
-export default function (editor: Jodit) {
+export function autofocus(editor: Jodit) {
     let timeout;
     editor.events
         .on('afterInit', () => {
@@ -32,4 +38,4 @@ export default function (editor: Jodit) {
         .on('beforeDestruct', () => {
             clearTimeout(timeout);
         })
-};
+}

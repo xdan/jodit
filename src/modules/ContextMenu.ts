@@ -1,7 +1,13 @@
-import Jodit from '../Jodit';
-import Component from './Component';
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
+import {Jodit} from '../Jodit';
+import {Component} from './Component';
 import {css, dom} from "./Helpers";
-import Toolbar from "./Toolbar";
+import {Toolbar} from "./Toolbar";
 
 type Action = {
     icon ?: string;
@@ -15,7 +21,7 @@ type Action = {
  * @module ContextMenu
  * @param {Object} parent Jodit main object
  */
-export default class ContextMenu extends Component {
+export class ContextMenu extends Component {
     private context: HTMLElement;
     constructor(editor: Jodit) {
         super(editor);
@@ -58,15 +64,17 @@ export default class ContextMenu extends Component {
             if (!item) {
                 return;
             }
-            let action = dom('<a href="javascript:void(0)">' + (item.icon ? Toolbar.getIcon(item.icon) : '') + '<span></span></a>', this.jodit.ownerDocument);
 
-            action.addEventListener('click', (e) => {
-                item.exec.call(self, e);
+            const action: HTMLAnchorElement = <HTMLAnchorElement>dom('<a href="javascript:void(0)">' + (item.icon ? Toolbar.getIcon(item.icon) : '') + '<span></span></a>', this.jodit.ownerDocument);
+            const span: HTMLSpanElement = <HTMLSpanElement>action.querySelector('span');
+
+            action.addEventListener('click', (e: MouseEvent) => {
+                item.exec && item.exec.call(self, e);
                 self.hide();
                 return false;
             });
 
-            action.querySelector('span').innerText = self.jodit.i18n(item.title);
+            span.innerText = self.jodit.i18n(item.title || '');
             self.context.appendChild(action);
         });
 

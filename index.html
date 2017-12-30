@@ -92,9 +92,10 @@
             timeout: 0
         },
         uploader: {
-            url: 'https://xdsoft.net/jodit/connector/index.php?action=upload'
+            url: 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'
         },
         filebrowser: {
+           // buttons: ['list', 'tiles', 'sort'],
             ajax: {
                 url: 'https://xdsoft.net/jodit/connector/index.php'
             }
@@ -131,7 +132,24 @@
     editor.editor.addEventListener('mousedown', callback)
     editor.editor.addEventListener('mouseup', callback)
     editor.editor.addEventListener('input', callback);
+    editor.setEditorValue('<table>' +
+        '<tr><td>3</td></tr>' +
+        '</table>');
 
+    var td = editor.editor.querySelector('td');
+
+    simulateEvent('mousedown', 0, td)
+
+    var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
+
+    expect(popup && popup.classList.contains('active')).to.equal(true);
+
+    simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-addcolumn>a'))
+
+    var popupColor = popup.querySelector('.jodit_dropdownlist');
+    expect(popupColor && popupColor.style.display).to.equal('block');
+
+    simulateEvent('mousedown', 0, popupColor.querySelector('li>a'));
 //    var editor = new Jodit(appendTestArea())
 
 //    (new Jodit.modules.FileBrowser(editor)).open(function () {});

@@ -1,9 +1,15 @@
-import Jodit from '../Jodit';
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
+import {Jodit} from '../Jodit';
 import {$$, debounce, throttle} from "../modules/Helpers";
 
 const JODIT_IMAGE_PROCESSOR_BINDED = '__jodit_imageprocessor_binded';
 
-export default  function (editor: Jodit) {
+export function imageProcessor(editor: Jodit) {
     let dragImage: HTMLImageElement|false;
     const bind = (image: HTMLImageElement) => {
         editor
@@ -38,7 +44,7 @@ export default  function (editor: Jodit) {
                         return false;
                     }
 
-                    if (img.parentNode && (<HTMLElement>img.parentNode).tagName === 'A' && !img.parentNode.textContent.length) {
+                    if (img.parentNode && (<HTMLElement>img.parentNode).tagName === 'A' && (!img.parentNode.textContent || !img.parentNode.textContent.length)) {
                         elm = img.parentNode;
                     } else {
                         elm = img;
@@ -69,4 +75,4 @@ export default  function (editor: Jodit) {
             });
         }
     }, editor.options.observer.timeout));
-};
+}

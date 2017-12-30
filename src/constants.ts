@@ -1,10 +1,11 @@
-/*eslint no-unused-vars: 0*/
-import {isIE} from "./modules/Helpers";
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
 export const INVISIBLE_SPACE = "\uFEFF";
 export const INVISIBLE_SPACE_REG_EXP = /[\uFEFF]/g;
-
-// export const INVISIBLE_SPACE_REG_EXP_START = /^[\uFEFF]+/g;
-// export const INVISIBLE_SPACE_REG_EXP_END = /[\uFEFF]+$/g;
 
 export const SPACE_REG_EXP = /[\s\n\t\r\uFEFF\u200b]+/g;
 export const SPACE_REG_EXP_START = /^[\s\n\t\r\uFEFF\u200b]+/g;
@@ -62,7 +63,7 @@ export const  MODE_SPLIT = 3;
 /**
  * @property {string} TEXT_PLAIN='text/plain'  For IE11 it will be 'text'. Need for dataTransfer.setData
  */
-export const TEXT_PLAIN = isIE() ? 'text' : 'text/plain';
+export const TEXT_PLAIN = navigator.userAgent.indexOf("MSIE") != -1 || /rv:11.0/i.test(navigator.userAgent) ? 'text' : 'text/plain';
 
 
 export const MARKER_CLASS = 'jodit_selection_marker';

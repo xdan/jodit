@@ -1,15 +1,21 @@
-import Component from './modules/Component';
-import Events from './modules/Events';
-import Select from './modules/Selection';
-import Toolbar from './modules/Toolbar';
-import Cookie from './modules/Cookie';
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
+import {Component}from './modules/Component';
+import {Events}from './modules/Events';
+import {Select}from './modules/Selection';
+import {Toolbar} from './modules/Toolbar';
+import {Cookie} from './modules/Cookie';
 import * as consts from './constants';
 import {extend, inArray, dom, each, sprintf, defaultLanguage, debounce} from './modules/Helpers';
 import * as helper from './modules/Helpers';
-import FileBrowser from "./modules/FileBrowser";
-import Uploader from "./modules/Uploader";
+import {FileBrowser} from "./modules/FileBrowser";
+import {Uploader} from "./modules/Uploader";
 import {Config} from "./Config";
-import Dom from "./modules/Dom";
+import {Dom} from "./modules/Dom";
 
 declare let appVersion: string;
 
@@ -19,7 +25,7 @@ interface JoditPlugin{
 }
 
 /** Class Jodit. Main class*/
-export default class Jodit extends Component{
+export class Jodit extends Component{
     version: string = appVersion; // from webpack.config.js
 
     /**
@@ -182,7 +188,7 @@ export default class Jodit extends Component{
 
 
         this.events = this.getInstance('Events');
-        this.selection = this.getInstance('Selection');
+        this.selection = this.getInstance('Select');
         this.uploader = this.getInstance('Uploader');
 
         this.container = <HTMLDivElement>dom('<div class="jodit_container" />', this.ownerDocument);
@@ -216,7 +222,10 @@ export default class Jodit extends Component{
 
         this.workplace.appendChild(this.progress_bar);
 
-        this.element.parentNode.insertBefore(this.container, this.element);
+        if (this.element.parentNode) {
+            this.element.parentNode.insertBefore(this.container, this.element);
+        }
+
         this.helper = helper;
 
         if (this.options.events) {
@@ -225,14 +234,14 @@ export default class Jodit extends Component{
             });
         }
 
+        this.id = this.element.getAttribute('id') || (new Date()).getTime().toString();
+
         this.initPlugines();
 
         this.__createEditor();
 
         this.setElementValue(); // syncro
 
-
-        this.id = this.element.getAttribute('id') || (new Date()).getTime().toString();
 
         Jodit.instances[this.id] = this;
 
@@ -357,8 +366,9 @@ export default class Jodit extends Component{
             this.element.removeAttribute('style');
         }
 
-        Object.keys(this.__plugins).forEach((pluginName) => {
-            if (this.__plugins[pluginName].destruct !== undefined && typeof this.__plugins[pluginName].destruct === 'function') {
+        Object.keys(this.__plugins).forEach((pluginName: string) => {
+            if (this.__plugins !== undefined && this.__plugins[pluginName] !== undefined && this.__plugins[pluginName].destruct !== undefined && typeof this.__plugins[pluginName].destruct === 'function') {
+                // @ts-ignore: Object is possibly 'undefined'
                 this.__plugins[pluginName].destruct();
             }
             delete this.__plugins[pluginName];
@@ -375,7 +385,10 @@ export default class Jodit extends Component{
         this.events.off();
         delete this['events'];
 
-        this.container.parentNode.removeChild(this.container);
+        if (this.container.parentNode) {
+            this.container.parentNode.removeChild(this.container);
+        }
+
         delete this['container'];
         delete this['editor'];
         delete this['workplace'];
@@ -511,7 +524,7 @@ export default class Jodit extends Component{
      * this.execCommand('formatBlock', 'p'); // will be inserted paragraph
      * ```
      */
-    execCommand(command, second = false, third = null) {
+    execCommand(command, second = false, third: null|any = null) {
         let result;
         command = command.toLowerCase();
         /**
@@ -750,7 +763,5 @@ export default class Jodit extends Component{
         return this.version;
     }
 }
-
-Jodit.defaultOptions = new Config();
 
 

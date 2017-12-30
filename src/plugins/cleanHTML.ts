@@ -1,11 +1,17 @@
-import Jodit from '../Jodit';
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
+import {Jodit} from '../Jodit';
 import {Config} from '../Config'
 import * as consts from '../constants';
 import {cleanFromWord, trim} from "../modules/Helpers";
-import Dom from "../modules/Dom";
+import {Dom} from "../modules/Dom";
 
 /**
- * @property {object} cleanHTML {@link module:cleanHTML|cleanHTML}'s options
+ * @property {object} cleanHTML {@link cleanHTML|cleanHTML}'s options
  * @property {boolean} cleanHTML.cleanOnPaste=true clean pasted html
  * @property {boolean} cleanHTML.replaceNBSP=true Replace &amp;nbsp; toWYSIWYG plain space
  * @property {boolean} cleanHTML.allowTags=false The allowTags option defines which elements will remain in the edited text when the editor saves. You can use this toWYSIWYG limit the returned HTML toWYSIWYG a subset.
@@ -69,7 +75,7 @@ Config.prototype.controls.eraser = {
 /**
  * Clean HTML after removeFormat and insertHorizontalRule command
  */
-export default function (editor: Jodit) {
+export function cleanHTML(editor: Jodit) {
 
     if (editor.options.cleanHTML.cleanOnPaste) {
         editor.events.on('processPaste', (event, html) => {
@@ -117,25 +123,29 @@ export default function (editor: Jodit) {
         editor.events.on('beforeSetElementValue', function (data) {
             if (editor.getRealMode() === consts.MODE_WYSIWYG) {
                 const div: HTMLElement = <HTMLElement>Dom.create('div', '', editor.editorDocument);
-                let node, remove = [], removeAttrs, i;
+                let node: Element|null = null,
+                    remove: Element[] = [],
+                    removeAttrs: string[],
+                    i: number = 0;
+
                 div['innerHTML'] = data.value;
-                node = div.firstChild;
+
+                if (div.firstChild) {
+                    node = <Element>div.firstChild;
+                }
 
                 while (node) {
-                    if (node.tagName) {
-                        if (!allowTagsHash[node.tagName]) {
+                    if (node && node.nodeName) {
+                        if (!allowTagsHash[node.nodeName]) {
                             remove.push(node);
-                            node = Dom.next(node, elm => !!elm, div, true);
-                            continue;
-                        }
-                        if (allowTagsHash[node.tagName] !== true) {
+                        } else if (allowTagsHash[node.nodeName] !== true) {
                             if (node.attributes && node.attributes.length) {
                                 removeAttrs = [];
                                 for (i = 0; i < node.attributes.length; i += 1) {
-                                    if (!allowTagsHash[node.tagName][node.attributes[i].name] ||
+                                    if (!allowTagsHash[node.nodeName][node.attributes[i].name] ||
                                             (
-                                                allowTagsHash[node.tagName][node.attributes[i].name] !== true &&
-                                                allowTagsHash[node.tagName][node.attributes[i].name] !== node.attributes[i].value
+                                                allowTagsHash[node.nodeName][node.attributes[i].name] !== true &&
+                                                allowTagsHash[node.nodeName][node.attributes[i].name] !== node.attributes[i].value
                                             )
                                             ) {
                                         removeAttrs.push(node.attributes[i].name);
@@ -147,13 +157,17 @@ export default function (editor: Jodit) {
                             }
                         }
                     }
-                    node = Dom.next(node, elm => !!elm, div, true);
+                    node = <Element>Dom.next(node, elm => !!elm, div, true);
                 }
+
+                let parent: Node|null;
                 for (i = 0; i < remove.length; i += 1) {
-                    if (remove[i].parentNode) {
-                        remove[i].parentNode.removeChild(remove[i]);
+                    parent = remove[i].parentNode;
+                    if (remove[i] && parent) {
+                        parent.removeChild(remove[i]);
                     }
                 }
+
                 data.value = div['innerHTML'];
             }
         });
@@ -211,4 +225,4 @@ export default function (editor: Jodit) {
             break;
         }
     });
-};
+}

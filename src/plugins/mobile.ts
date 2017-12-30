@@ -1,4 +1,10 @@
-import Jodit from "../Jodit";
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
+import {Jodit} from "../Jodit";
 import {Config} from '../Config'
 import {ControlType} from "../modules/Toolbar";
 
@@ -17,7 +23,7 @@ Config.prototype.mobileTapTimeout = 300;
 /**
  * Rebuild toolbar in depends of editor's width
  */
-export default function (editor: Jodit) {
+export function mobile(editor: Jodit) {
     let timeout: number = 0,
         now: number;
 

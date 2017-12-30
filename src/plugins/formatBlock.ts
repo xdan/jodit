@@ -1,13 +1,19 @@
-import Jodit from '../Jodit';
-import Dom from "../modules/Dom";
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
+import {Jodit} from '../Jodit';
+import {Dom} from "../modules/Dom";
 import * as consts from '../constants';
 import {ControlType} from "../modules/Toolbar";
 import {Config} from "../Config";
 
-Config.prototype.controls.paragraph = {
+Config.prototype.controls.paragraph = <ControlType>{
     command: 'formatBlock',
     exec: (editor: Jodit, event, control: ControlType) => {
-        editor.execCommand(control.command, false, control.args[0]);
+        editor.execCommand(control.command, false, control.args ? control.args[0] : undefined);
     },
     list: {
         p : "Normal",
@@ -25,7 +31,7 @@ Config.prototype.controls.paragraph = {
 };
 
 
-export default function (editor: Jodit) {
+export function formatBlock(editor: Jodit) {
     editor.events.on('beforeCommand', (command: string, second, third: string) => {
         if (command === 'formatblock') {
              editor.selection.focus();
@@ -69,4 +75,4 @@ export default function (editor: Jodit) {
             return false;
         }
     });
-};
+}

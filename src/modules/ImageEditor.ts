@@ -1,9 +1,15 @@
-import Jodit from '../Jodit';
-import Component from './Component';
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
+import {Jodit} from '../Jodit';
+import {Component} from './Component';
 import {Config} from '../Config'
 import {$$, css, debounce, dom, throttle, trim} from "./Helpers";
-import Toolbar from "./Toolbar";
-import Dialog, {Alert, Promt} from "./Dialog";
+import {Toolbar} from "./Toolbar";
+import {Dialog, Alert, Promt} from "./Dialog";
 /**
  * @property {ImageEditorOptions} imageeditor module's options
  */
@@ -22,7 +28,7 @@ type ImageEditorOptions = {
     cropDefaultHeight: string|number;
 }
 
-type ActionBox = {
+export type ActionBox = {
     action: string,
     box: {
         w: number;
@@ -96,7 +102,7 @@ Config.prototype.imageeditor = {
  *
  */
 
-export default class ImageEditor extends Component{
+export class ImageEditor extends Component{
     options: ImageEditorOptions;
     private resizeUseRatio: boolean = true;
     private cropUseRatio: boolean = true;
@@ -250,7 +256,7 @@ export default class ImageEditor extends Component{
     private calcValueByPercent =  (value: number|string, percent: string|number): number => {
         let percentStr: string = percent.toString();
         let valueNbr: number = parseFloat(value.toString());
-        let match: string[];
+        let match: string[]|null;
 
         match = /^[\-+]?[0-9]+(px)?$/.exec(percentStr);
         if (match) {
@@ -388,11 +394,12 @@ export default class ImageEditor extends Component{
 
         this.image = this.jodit.ownerDocument.createElement('img');
         $$('img,.jodit_icon-loader', this.resize_box).forEach((elm: Node) => {
-            elm.parentNode.removeChild(elm);
+            elm.parentNode && elm.parentNode.removeChild(elm);
         });
         $$('img,.jodit_icon-loader', this.crop_box).forEach((elm: Node) => {
-            elm.parentNode.removeChild(elm);
+            elm.parentNode && elm.parentNode.removeChild(elm);
         });
+
         css(this.cropHandler, 'background', 'transparent');
 
         this.onSave = save;
@@ -409,7 +416,7 @@ export default class ImageEditor extends Component{
         this.image.setAttribute('src', url);
 
         this.dialog.open();
-        let onload = () => {
+        const onload = () => {
             this.image.removeEventListener("load", onload);
             this.naturalWidth = this.image.naturalWidth;
             this.naturalHeight = this.image.naturalHeight;
@@ -426,7 +433,7 @@ export default class ImageEditor extends Component{
             this.crop_box.appendChild(this.cropImage);
 
             $$('.jodit_icon-loader', this.editor).forEach((elm: Node) => {
-                elm.parentNode.removeChild(elm);
+                elm.parentNode && elm.parentNode.removeChild(elm);
             });
 
             if (this.activeTab === 'crop') {
@@ -437,6 +444,7 @@ export default class ImageEditor extends Component{
             this.jodit.events.fire(this.cropHandler, 'updatesize');
 
             this.dialog.setPosition();
+            this.jodit.events.fire('afterImageEditor');
         };
         this.image.addEventListener("load", onload);
         if (this.image.complete) {
@@ -445,7 +453,7 @@ export default class ImageEditor extends Component{
     };
 
     private setHandlers = () => {
-        let self = this;
+        const self = this;
         self.__on(<HTMLElement[]>[self.editor.querySelector('.jodit_bottomright'), self.cropHandler], 'mousedown', (e) => {
             self.target = e.target || e.srcElement;
 
@@ -528,7 +536,7 @@ export default class ImageEditor extends Component{
 
                     e.stopImmediatePropagation();
                 }
-            }, 30))
+            }, 5))
 
             .__on(this.jodit.ownerWindow, 'resize.jodit_image_editor' + self.jodit.id, () => {
                 this.jodit.events.fire(self.resizeHandler, 'updatesize');
@@ -551,7 +559,7 @@ export default class ImageEditor extends Component{
                 $$('button', group).forEach((button: HTMLButtonElement) => button.classList.remove('active'));
                 button.classList.add('active');
                 input.checked = !!button.getAttribute('data-yes');
-                self.__fire(input, 'change', this.jodit.ownerDocument);
+                self.__fire(input, 'change', self.jodit.ownerDocument);
             });
         });
 
@@ -559,8 +567,13 @@ export default class ImageEditor extends Component{
                 $$('.jodit_image_editor_slider,.jodit_image_editor_area', self.editor).forEach(elm => elm.classList.remove('active'));
                 let slide = <HTMLElement>this.parentNode;
                 slide.classList.add('active');
-                self.activeTab = slide.getAttribute('data-area');
-                self.editor.querySelector('.jodit_image_editor_area.jodit_image_editor_area_' + self.activeTab).classList.add('active');
+                self.activeTab = slide.getAttribute('data-area') || '';
+
+                const tab: HTMLDivElement|null =  self.editor.querySelector('.jodit_image_editor_area.jodit_image_editor_area_' + self.activeTab);
+                if (tab) {
+                    tab.classList.add('active');
+                }
+
                 if (self.activeTab === 'crop') {
                     self.showCrop();
                 }
@@ -596,13 +609,19 @@ export default class ImageEditor extends Component{
             this.jodit.events.fire(self.resizeHandler, 'updatesize');
         }, 200));
 
+        const rationResizeButton: HTMLInputElement|null = self.editor.querySelector('.jodit_image_editor_keep_spect_ratio');
+        if (rationResizeButton) {
+            rationResizeButton.addEventListener('change', () => {
+                self.resizeUseRatio = rationResizeButton.checked;
+            });
+        }
         // use ratio
-        self.editor.querySelector('.jodit_image_editor_keep_spect_ratio').addEventListener('change', function () {
-            self.resizeUseRatio = this.checked;
-        });
-        self.editor.querySelector('.jodit_image_editor_keep_spect_ratio_crop').addEventListener('change', function () {
-            self.cropUseRatio = this.checked;
-        });
+        const rationCropButton: HTMLInputElement|null = self.editor.querySelector('.jodit_image_editor_keep_spect_ratio_crop');
+        if (rationCropButton) {
+            rationCropButton.addEventListener('change', () => {
+                self.cropUseRatio = rationCropButton.checked;
+            });
+        }
 
         self
             .jodit.events.on(self.resizeHandler, 'updatesize', () => {
@@ -618,6 +637,10 @@ export default class ImageEditor extends Component{
 
         self
             .jodit.events.on(self.cropHandler, 'updatesize', () => {
+                if (!self.cropImage) {
+                    return;
+                }
+
                 let new_x: number = <number>css(self.cropHandler, 'left'),
                     new_y: number = <number>css(self.cropHandler, 'top'),
                     new_width = self.cropHandler.offsetWidth,
@@ -649,7 +672,7 @@ export default class ImageEditor extends Component{
                     height: new_height,
                     left: new_x,
                     top: new_y,
-                    backgroundPosition: (-new_x) + 'px ' + (-new_y) + 'px',
+                    backgroundPosition: (-new_x - 1) + 'px ' + (-new_y - 1) + 'px',
                     backgroundSize: self.cropImage.offsetWidth + 'px ' + self.cropImage.offsetHeight + 'px'
                 });
 

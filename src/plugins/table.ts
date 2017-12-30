@@ -1,10 +1,15 @@
-import Jodit from '../Jodit';
-import Table, {JODIT_SELECTED_CELL_MARKER} from '../modules/Table';
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
+import {Jodit} from '../Jodit';
+import {Table, JODIT_SELECTED_CELL_MARKER} from '../modules/Table';
 import * as consts from '../constants';
 import {each, getContentWidth, $$, dom, offset} from '../modules/Helpers';
 import {Config} from '../Config'
-import Dom from "../modules/Dom";
-import Component from "../modules/Component";
+import {Dom, Component} from "../modules/";
 import {ControlType} from "../modules/Toolbar";
 
 
@@ -16,7 +21,9 @@ declare module "../Config" {
         useTableProcessor: boolean;
     }
 }
+
 Config.prototype.useTableProcessor = true;
+
 Config.prototype.controls.table = {
     cols: 10,
     popup: (editor: Jodit, current,  control: ControlType, close: Function) => {
@@ -26,7 +33,7 @@ Config.prototype.controls.table = {
             div: HTMLDivElement,
             rows_count: number = 1,
             cols_count: number = 1,
-            default_cols_count: number = control.cols;
+            default_cols_count: number = control.cols || 10;
 
         const form: HTMLFormElement = <HTMLFormElement>dom(
             '<form class="jodit_form jodit_form_inserter">' +
@@ -68,11 +75,13 @@ Config.prototype.controls.table = {
         cells[0].className = 'hovered';
 
         const mouseenter = (e: MouseEvent, index?: number) => {
-            const div = <HTMLDivElement>e.target;
-            if (div.tagName !== 'DIV') {
+            const div: HTMLDivElement = <HTMLDivElement>e.target;
+            if (!div || div.tagName !== 'DIV') {
                 return;
             }
-            k = isNaN(index) ? parseInt(div.getAttribute('data-index'), 10) : index;
+
+            k = (index === undefined || isNaN(index)) ? parseInt(div.getAttribute('data-index') || '0', 10) : index || 0;
+
             rows_count = Math.ceil((k + 1) / default_cols_count);
             cols_count = k % default_cols_count + 1;
             generateRows(rows_count);
@@ -105,12 +114,12 @@ Config.prototype.controls.table = {
                 return;
             }
 
-            k =  parseInt(div.getAttribute('data-index'), 10);
+            k =  parseInt(div.getAttribute('data-index') || '0', 10);
             rows_count = Math.ceil((k + 1) / default_cols_count);
             cols_count = k % default_cols_count + 1;
 
             const table: HTMLTableElement = editor.editorDocument.createElement('table');
-            let first_td: HTMLTableCellElement,
+            let first_td: HTMLTableCellElement|null = null,
                 tr: HTMLTableRowElement,
                 td: HTMLTableCellElement,
                 br: HTMLBRElement,
@@ -122,9 +131,11 @@ Config.prototype.controls.table = {
                     td = editor.editorDocument.createElement('td');
 
                     td.style.width = w + '%';
+
                     if (!first_td) {
                         first_td = td;
                     }
+
                     br = editor.editorDocument.createElement('br');
                     td.appendChild(br);
                     tr.appendChild(editor.editorDocument.createTextNode("\n"));
@@ -137,20 +148,22 @@ Config.prototype.controls.table = {
 
             editor.selection.insertNode(editor.editorDocument.createTextNode("\n"));
             editor.selection.insertNode(table, false);
-            editor.selection.setCursorIn(first_td);
+
+            if (first_td) {
+                editor.selection.setCursorIn(first_td);
+            }
 
             close();
         });
 
         return form;
     },
-    tags: ['table'],
     tooltip: "Insert table"
 };
 /**
  *
  */
-export default class TableProcessor extends Component{
+export class TableProcessor extends Component{
     private __key: string = 'table_processor_observer';
     private __selectMode: boolean = false;
 
@@ -189,7 +202,7 @@ export default class TableProcessor extends Component{
      * @param {boolean|null} [wholeTable=null] true - resize whole table by left side, false - resize whole table by right side, null - resize column
      * @private
      */
-    private __setWorkCell(cell: HTMLTableCellElement, wholeTable = null) {
+    private __setWorkCell(cell: HTMLTableCellElement, wholeTable: boolean|null = null) {
         this.__wholeTable = wholeTable;
         this.__workCell = cell;
         this.__workTable = <HTMLTableElement>Dom.up(cell, (elm) => (elm.tagName === 'TABLE'), this.jodit.editor);
@@ -371,7 +384,7 @@ export default class TableProcessor extends Component{
             return;
         }
 
-        this.__on(this.jodit.ownerWindow, 'mouseup touchend', (e: MouseEvent|TouchEvent) => {
+        this.__on(this.jodit.ownerWindow, 'mouseup touchend', () => {
             if (this.__selectMode || this.__drag) {
                 this.__selectMode = false;
                 this.jodit.unlock();
@@ -416,11 +429,15 @@ export default class TableProcessor extends Component{
         this.__on(this.jodit.ownerWindow, 'mousedown touchend', (event: MouseEvent) => {
             // need use event['originalEvent'] because of IE can not set target from another window to current window
             const current_cell: HTMLTableCellElement = <HTMLTableCellElement>Dom.closest(<HTMLElement>event['originalEvent'].target, 'TD|TH', this.jodit.editor);
-            let table: HTMLTableElement;
+            let table: HTMLTableElement|null = null;
+
             if (current_cell instanceof (<any>this.jodit.editorWindow).HTMLTableCellElement) {
                 table = <HTMLTableElement>Dom.closest(current_cell, 'table', this.jodit.editor)
             }
-            this.__deSelectAll(table, current_cell instanceof (<any>this.jodit.editorWindow).HTMLTableCellElement ? current_cell : false);
+
+            if (table) {
+                this.__deSelectAll(table, current_cell instanceof (<any>this.jodit.editorWindow).HTMLTableCellElement ? current_cell : false);
+            }
         });
         editor.events
             .on('afterGetValueFromEditor', (data) => {
@@ -459,8 +476,13 @@ export default class TableProcessor extends Component{
             command = command.replace('table', '');
             const cells = Table.getAllSelectedCells(this.jodit.editor);
             if (cells.length) {
-                let cell: HTMLTableCellElement = cells.shift(),
-                    table = <HTMLTableElement>Dom.closest(cell, 'table', this.jodit.editor);
+                let cell: HTMLTableCellElement|undefined = cells.shift();
+
+                if (!cell) {
+                    return;
+                }
+
+                const  table = <HTMLTableElement>Dom.closest(cell, 'table', this.jodit.editor);
 
                 switch (command) {
                     case 'splitv':
@@ -476,7 +498,9 @@ export default class TableProcessor extends Component{
                         Table.getAllSelectedCells(this.jodit.editor).forEach(cell => cell.innerHTML = '');
                         break;
                     case 'bin':
-                        table.parentNode.removeChild(table);
+                        if (table.parentNode) {
+                            table.parentNode.removeChild(table);
+                        }
                         break;
                     case 'binrow':
                         Table.removeRow(table, (<HTMLTableRowElement>cell.parentNode).rowIndex);
@@ -504,4 +528,3 @@ export default class TableProcessor extends Component{
         this.__off();
     }
 }
-Jodit.plugins.table = TableProcessor;

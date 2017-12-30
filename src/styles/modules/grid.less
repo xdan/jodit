@@ -1,3 +1,9 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
 @import (reference) "../variables";
 @import (reference) "../mixins";
 
@@ -8,15 +14,14 @@
     float: left;
   }
   .jodit_col-lg {
-    &-2-5 {
-      width: (100%/5) * 2;
+    .loop(@counter: 5, @max: 5) when (@counter > 0) {
+      &-@{counter}-@{max} {
+        width: (100%/@max) * @counter;
+      }
+      .loop((@counter - 1), @max)
     }
-    &-3-5 {
-      width: (100%/5) * 3;
-    }
-    &-1-5 {
-      width: (100%/5) * 1;
-    }
+    .loop(5, 5);
+    .loop(4, 4);
   }
 
   .clearfix();

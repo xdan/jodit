@@ -1,9 +1,15 @@
-import Jodit from '../Jodit';
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
+import {Jodit} from '../Jodit';
 import {Config} from '../Config';
-import {debounce, dom, offset, trim} from "../modules/Helpers";
-import Toolbar from "../modules/Toolbar";
+import {debounce, dom, offset} from "../modules/Helpers";
+import {Toolbar} from "../modules/Toolbar";
 import * as consts from '../constants';
-import Dom from "../modules/Dom";
+import {Dom} from "../modules/Dom";
 
 declare module "../Config" {
     interface Config {
@@ -30,12 +36,13 @@ Config.prototype.addNewLineTagsTriggers = ['table','iframe', 'img', 'hr', 'jodit
  * @param {Jodit} editor
  */
 
-export default function (editor: Jodit) {
+export function addNewLine(editor: Jodit) {
     if (!editor.options.addNewLine) {
         return;
     }
 
     const line: HTMLDivElement = <HTMLDivElement>dom('<div role="button" tabIndex="-1" title="' + editor.i18n("Break") + '" class="jodit-add-new-line"><span>' + Toolbar.getIcon('enter') + '</span></div>', editor.ownerDocument);
+    const span: HTMLSpanElement = <HTMLSpanElement>line.querySelector('span');
     const delta = 10;
     const isMatchedTag = new RegExp('^(' + editor.options.addNewLineTagsTriggers.join('|') + ')$', 'i');
 
@@ -71,6 +78,7 @@ export default function (editor: Jodit) {
         timeout = setTimeout(hideForce, 500)
     };
 
+
     editor.events
         .on('afterInit', () => {
             editor.container.appendChild(line);
@@ -78,7 +86,7 @@ export default function (editor: Jodit) {
                 .__on(line, 'mousemove', (e: MouseEvent) => {
                     e.stopPropagation();
                 })
-                .__on(line.querySelector('span'), 'mousedown touchstart', (e: MouseEvent) => {
+                .__on(span, 'mousedown touchstart', (e: MouseEvent) => {
                     const p: HTMLElement = editor.editorDocument.createElement(editor.options.enter),
                         helper_node: Node = editor.editorDocument.createTextNode(consts.INVISIBLE_SPACE);
 
@@ -102,7 +110,7 @@ export default function (editor: Jodit) {
                 .__on(editor.editor, 'scroll', () => {
                     hideForce();
                 })
-                .__on(editor.container, 'mouseleave', function (this: HTMLElement, e: MouseEvent) {
+                .__on(editor.container, 'mouseleave', () => {
                     hide();
                 })
                 .__on(editor.editor, 'mousemove', debounce(function (this: HTMLElement, e: MouseEvent) {
@@ -145,4 +153,4 @@ export default function (editor: Jodit) {
                     }
                 }, editor.options.observer.timeout));
         }, editor.options.observer.timeout));
-};
+}

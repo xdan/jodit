@@ -1,5 +1,12 @@
-import Jodit from '../Jodit';
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
+import {Jodit} from '../Jodit';
 import {Config} from "../Config";
+import {ControlType} from "../modules/Toolbar";
 
 Config.prototype.controls.bold = {
     tagRegExp: /^(strong|b)$/i,
@@ -37,32 +44,30 @@ Config.prototype.controls.strikethrough = {
 /**
  * Bold plugin
  */
-export default function (editor: Jodit) {
+export function bold(editor: Jodit) {
     editor.events.on('beforeCommand', (command: string) => {
 
         const commands = ['bold', 'italic', 'underline', 'strikethrough'];
 
 
         if (commands.indexOf(command) !== -1) {
-            // Dom.apply(Jodit.defaultOptions.controls[command], (commandOptions) => {
-            //     return wrapAndSelect(editor, Dom.create(commandOptions.tags[0], '', editor.editorDocument),  commandOptions.tagRegExp);
-            // }, editor);
-
-            // editor.editorDocument.execCommand('fontsize', false, 7)
             const cssOptions = {...Jodit.defaultOptions.controls[command].css},
                 cssRules = {};
+
             Object.keys(cssOptions).forEach((key: string) => {
                 cssRules[key] = Array.isArray(cssOptions[key]) ?  cssOptions[key][0] : cssOptions[key];
             });
 
+            let control: ControlType = Jodit.defaultOptions.controls[command];
+
             editor.selection.applyCSS(
                 cssRules,
-                Jodit.defaultOptions.controls[command].tags[0],
-                Jodit.defaultOptions.controls[command].css
+                control.tags ? control.tags[0] : undefined,
+                <any>control.css
             );
 
             editor.setEditorValue();
             return false;
         }
     });
-};
+}

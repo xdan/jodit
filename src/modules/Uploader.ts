@@ -1,10 +1,16 @@
-import Jodit from '../Jodit';
-import Component from './Component';
-import Ajax from './Ajax';
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
+import {Jodit} from '../Jodit';
+import {Component} from './Component';
+import {Ajax} from './Ajax';
 import {Config} from '../Config'
 import {browser, extend, isPlainObject} from "./Helpers";
 import {TEXT_PLAIN} from "../constants";
-import Dom from "./Dom";
+import {Dom} from "./Dom";
 
 export type UploaderData = {
     messages?: string[],
@@ -22,9 +28,10 @@ export type UploaderAnswer = {
 
 type HandlerSuccess = (resp: UploaderData) => void;
 type HandlerError = (e: Error) => void;
-type UploaderOptions = {
+
+export type UploaderOptions = {
     url: string;
-    headers?: {[key: string]: string},
+    headers?: {[key: string]: string}|null,
     data: null|object,
     format: string;
 
@@ -180,13 +187,13 @@ Config.prototype.uploader = <UploaderOptions>{
     }
 };
 
-export default class Uploader extends Component {
+export class Uploader extends Component {
     private path: string = '';
     private source: string = 'default';
 
     private options: UploaderOptions;
 
-    constructor(editor: Jodit, options) {
+    constructor(editor: Jodit, options: UploaderOptions) {
         super(editor);
         this.options = <UploaderOptions>extend(true, {}, Config.prototype.uploader, editor.options.uploader, options);
 
@@ -259,7 +266,11 @@ export default class Uploader extends Component {
             });
     }
 
-    sendFiles(files: FileList|File[], handlerSuccess: HandlerSuccess, handlerError: HandlerError, process?: Function) {
+    sendFiles(files: FileList|File[]|null, handlerSuccess?: HandlerSuccess, handlerError?: HandlerError, process?: Function) {
+        if (!files) {
+            return;
+        }
+
         let len = files.length,
             i,
             form: FormData,
@@ -276,9 +287,14 @@ export default class Uploader extends Component {
         form.append('path', uploader.path);
         form.append('source', uploader.source);
 
+        let file: File;
         for (i = 0; i < len; i += 1) {
-            extension = files[i].type.match(/\/([a-z0-9]+)/i)[1].toLowerCase();
-            form.append("files[" + i + "]", files[i], files[i].name || Math.random().toString().replace('.', '') + '.' + extension);
+            file = files[i];
+            if (file && file.type) {
+                const mime: string[] = <string[]>file.type.match(/\/([a-z0-9]+)/i);
+                extension = mime[1] ? mime[1].toLowerCase() : '';
+                form.append("files[" + i + "]", files[i], files[i].name || Math.random().toString().replace('.', '') + '.' + extension);
+            }
         }
 
         uploader.options.prepareData(form);
@@ -373,12 +389,14 @@ export default class Uploader extends Component {
             .__on(form, 'paste',  function (e: ClipboardEvent) {
 
                 let i: number,
-                    file: File,
+                    file: File|null,
                     extension: string,
                     div: HTMLDivElement,
                     process = (formdata) => {
-                        formdata.append('extension', extension);
-                        formdata.append("mimetype", file.type);
+                        if (file) {
+                            formdata.append('extension', extension);
+                            formdata.append("mimetype", file.type);
+                        }
                     };
 
                 // send data on server
@@ -393,9 +411,14 @@ export default class Uploader extends Component {
                         self.jodit.selection.insertNode(div);
                         div.focus();
                         setTimeout(() => {
-                            if (div.firstChild && (<HTMLDivElement>div.firstChild).hasAttribute('src')) {
-                                let src = (<HTMLDivElement>div.firstChild).getAttribute('src');
-                                div.parentNode.removeChild(div);
+                            let child: HTMLDivElement|null = <HTMLDivElement>div.firstChild;
+                            if (child && child.hasAttribute('src')) {
+                                const src: string = child.getAttribute('src') || '';
+
+                                if (div.parentNode) {
+                                    div.parentNode.removeChild(div);
+                                }
+
                                 this.sendFiles([Uploader.dataURItoBlob(src)], handlerSuccess, handlerError);
                             }
                         }, 200);
@@ -407,8 +430,11 @@ export default class Uploader extends Component {
                     for (i = 0; i < e.clipboardData.items.length; i += 1) {
                         if (e.clipboardData.items[i].kind === "file" && e.clipboardData.items[i].type === "image/png") {
                             file = e.clipboardData.items[i].getAsFile();
-                            extension = file.type.match(/\/([a-z0-9]+)/i)[1].toLowerCase();
-                            self.sendFiles([file], handlerSuccess, handlerError, process);
+                            if (file) {
+                                let mime: string[] = <string[]>file.type.match(/\/([a-z0-9]+)/i);
+                                extension = mime[1] ? mime[1].toLowerCase() : '';
+                                self.sendFiles([file], handlerSuccess, handlerError, process);
+                            }
                             e.preventDefault();
                             break;
                         }
@@ -435,7 +461,13 @@ export default class Uploader extends Component {
                         return false;
                     }
                     if (handlerSuccess || this.options.defaultHandlerSuccess) {
-                        let data = {baseurl: '', files: []};
+                        let data: {
+                            baseurl: string,
+                            files: string[]
+                        } = {
+                            baseurl: '',
+                            files: []
+                        };
                         data.files = [event.dataTransfer.getData(TEXT_PLAIN)];
 
                         (handlerSuccess || this.options.defaultHandlerSuccess).call(this, data);
@@ -444,8 +476,10 @@ export default class Uploader extends Component {
                 }
             });
 
-        if (form.querySelector('input[type=file]')) {
-            self.__on(form.querySelector('input[type=file]'), 'change', function (this: HTMLInputElement) {
+        const inputFile: HTMLInputElement|null = form.querySelector('input[type=file]');
+
+        if (inputFile) {
+            self.__on(inputFile, 'change', function (this: HTMLInputElement) {
                 self.sendFiles(this.files, handlerSuccess, handlerError);
             });
         }

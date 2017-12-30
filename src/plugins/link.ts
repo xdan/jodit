@@ -1,8 +1,15 @@
-import Jodit from '../Jodit';
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
+import {Jodit} from '../Jodit';
 import {Config} from '../Config'
 import {isURL, convertMediaURLToVideoEmbed, dom, val} from '../modules/Helpers'
-import Dom from "../modules/Dom";
+import {Dom} from "../modules/Dom";
 import {ControlType} from "../modules/Toolbar";
+import {markerInfo} from "../modules/Selection";
 
 /**
 * @property {object}  link `{@link link|link}` plugin's options
@@ -69,30 +76,42 @@ Config.prototype.controls.link = {
             current = false;
         }
 
+        const link: HTMLAnchorElement|null = form.querySelector('.jodit_link_insert_button');
+        const unlink: HTMLButtonElement|null = form.querySelector('.jodit_unlink_button');
+
         if (current) {
-            val(form, 'input[name=url]', current.getAttribute('href'));
+            val(form, 'input[name=url]', current.getAttribute('href') || '');
             val(form, 'input[name=text]', current.innerText);
 
             (<HTMLInputElement>form.querySelector('input[name=target]')).checked = (current.getAttribute('target') === '_blank');
             (<HTMLInputElement>form.querySelector('input[name=nofollow]')).checked = (current.getAttribute('rel') === 'nofollow');
-
-            form.querySelector('.jodit_link_insert_button').innerHTML = editor.i18n('Update');
+            if (link) {
+                link.innerHTML = editor.i18n('Update');
+            }
         } else {
-            (<HTMLButtonElement>form.querySelector('.jodit_unlink_button')).style.display = 'none';
+            if (unlink) {
+                unlink.style.display = 'none';
+            }
+
             val(form, 'input[name=text]', sel.toString());
-            form.querySelector('.jodit_link_insert_button').innerHTML = editor.i18n('Insert');
+
+            if (link) {
+                link.innerHTML = editor.i18n('Insert');
+            }
         }
 
-        const selInfo = editor.selection.save();
+        const selInfo: markerInfo[] = editor.selection.save();
 
-        form.querySelector('.jodit_unlink_button').addEventListener('mousedown', (e: MouseEvent) => {
-            if (current) {
-                Dom.unwrap(current);
-            }
-            editor.selection.restore(selInfo);
-            close();
-            e.preventDefault();
-        });
+        if (unlink) {
+            unlink.addEventListener('mousedown', (e: MouseEvent) => {
+                if (current) {
+                    Dom.unwrap(current);
+                }
+                editor.selection.restore(selInfo);
+                close();
+                e.preventDefault();
+            });
+        }
 
         form.addEventListener('submit', (event: Event) => {
             event.preventDefault();
@@ -141,12 +160,13 @@ Config.prototype.controls.link = {
  *
  * @module plugins/link
  */
-export default function (jodit: Jodit) {
+export function link(jodit: Jodit) {
     if (jodit.options.link.followOnDblClick) {
         jodit.events.on('afterInit', () => {
             jodit.__on(jodit.editor, 'dblclick', 'a', function (this: HTMLAnchorElement, e: MouseEvent) {
-                if (this.getAttribute('href')) {
-                    location.href = this.getAttribute('href');
+                let href: string|null = this.getAttribute('href');
+                if (href) {
+                    location.href = href;
                     e.preventDefault();
                 }
             });
@@ -196,4 +216,4 @@ export default function (jodit: Jodit) {
             }
         });
     }
-};
+}

@@ -1,13 +1,20 @@
-import Jodit from '../Jodit';
-import * as consts from '../constants';
-import Table from '../modules/Table'
-import Dom from "../modules/Dom";
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
+import {Jodit}        from '../Jodit';
+import * as consts  from '../constants';
+import {Table}        from '../modules/Table'
+import {Dom}          from "../modules/Dom";
 
 /**
+ * Process navigate keypressing in table cell
  *
  * @param {Jodit} editor
  */
-export default function (editor: Jodit) {
+export function tableKeyboardNavigation(editor: Jodit) {
     editor.events.on('keydown', (event: KeyboardEvent) => {
         let current: Element,
             block: HTMLElement;
@@ -32,7 +39,7 @@ export default function (editor: Jodit) {
                 if (((event.which === consts.KEY_LEFT || event.which === consts.KEY_TOP) &&
                         (Dom.prev(current, (elm) => (event.which === consts.KEY_TOP ? (elm && elm['tagName'] === 'BR') : !!elm), block) || (event.which !== consts.KEY_TOP && current.nodeType === Node.TEXT_NODE && range.startOffset !== 0))
                     ) || ((event.which === consts.KEY_RIGHT || event.which === consts.KEY_BOTTOM) &&
-                        (Dom.next(current, (elm) => (event.which === consts.KEY_BOTTOM ? (elm && elm['tagName'] === 'BR') : !!elm), block) || (event.which !== consts.KEY_BOTTOM && current.nodeType === Node.TEXT_NODE && range.startOffset !== current.nodeValue.length))
+                        (Dom.next(current, (elm) => (event.which === consts.KEY_BOTTOM ? (elm && elm['tagName'] === 'BR') : !!elm), block) || (event.which !== consts.KEY_BOTTOM && current.nodeType === Node.TEXT_NODE && current.nodeValue && range.startOffset !== current.nodeValue.length))
                     )) {
                     return;
                 }
@@ -44,7 +51,7 @@ export default function (editor: Jodit) {
 
 
          const table = <HTMLTableElement>Dom.up(block, (elm) => (elm && /^table$/i.test(elm.tagName)), editor.editor);
-         let next: HTMLTableCellElement;
+         let next: HTMLTableCellElement|null = null;
 
         switch (event.which) {
             case consts.KEY_TAB:
@@ -80,8 +87,9 @@ export default function (editor: Jodit) {
 
         if (next) {
             if (!next.firstChild) {
-                next.appendChild(Dom.create('br', '', editor.editorDocument));
-                editor.selection.setCursorBefore(next.firstChild);
+                let first: Node = Dom.create('br', '', editor.editorDocument);
+                next.appendChild(first);
+                editor.selection.setCursorBefore(first);
             } else {
                 if (event.which === consts.KEY_TAB) {
                     editor.selection.select(next, true)
@@ -93,4 +101,4 @@ export default function (editor: Jodit) {
         }
 
     });
-};
+}

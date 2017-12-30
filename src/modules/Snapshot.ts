@@ -1,5 +1,10 @@
-import Component from './Component'
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
 
+import {Component} from './Component'
 
 type RangeType = {
     startContainer: number[];
@@ -7,6 +12,7 @@ type RangeType = {
     endContainer: number[];
     endOffset: number;
 }
+
 export type SnapshotType = {
     html: string;
     range: RangeType;
@@ -15,16 +21,16 @@ export type SnapshotType = {
 /**
  * Module for creating snapshot of editor which includes html content and the current selection
  */
-export default class Snapshot extends Component {
-    private static __countElementsBefore (elm: Node): number {
-        if (!elm.parentNode) {
+export class Snapshot extends Component {
+    private static __countElementsBefore (elm: Node|null): number {
+        if (!elm || !elm.parentNode) {
             return 0;
         }
 
-        let elms = elm.parentNode.childNodes,
-            count = 0,
-            last,
-            j;
+        let elms: NodeList = elm.parentNode.childNodes,
+            count: number = 0,
+            last: Node|null = null,
+            j: number;
 
         for (j = 0; j < elms.length; j += 1) {
             if (last && (
@@ -38,16 +44,22 @@ export default class Snapshot extends Component {
             }
             last = elms[j];
         }
+
+        return 0;
     }
-    private __decomposeHierarchyNodes (elm: Node): number[] {
-        const counts = [];
-        if (!elm.parentNode) {
+    private __decomposeHierarchyNodes (elm: Node|null): number[] {
+        const counts: number[] = [];
+        if (!elm || !elm.parentNode) {
             return [];
         }
+
         while (elm && elm !== this.jodit.editor) {
-            counts.push(Snapshot.__countElementsBefore(elm));
+            if (elm) {
+                counts.push(Snapshot.__countElementsBefore(elm));
+            }
             elm = elm.parentNode;
         }
+
         return counts.reverse();
     }
 

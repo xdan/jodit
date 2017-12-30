@@ -1,8 +1,14 @@
-import Jodit from '../Jodit'
-import Component from './Component'
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
+import {Jodit} from '../Jodit'
+import {Component} from './Component'
 import {Config} from '../Config'
 import {dom, $$, asArray, css} from './Helpers'
-import Toolbar from "./Toolbar";
+import {Toolbar} from "./Toolbar";
 
 
 /**
@@ -42,7 +48,7 @@ Config.prototype.dialog = {
  * @param {Object} parent Jodit main object
  * @param {Object} [opt] Extend Options
  */
-export default class Dialog extends Component{
+export class Dialog extends Component{
     private lockSelect = () => {
         this.dialogbox.classList.add('jodit_dialog_box-moved');
     };
@@ -98,6 +104,10 @@ export default class Dialog extends Component{
              '</div>' +
         '</div>', this.document);
 
+        if (jodit && jodit instanceof Jodit) {
+            self.dialogbox.setAttribute('data-editor_id', jodit.id);
+        }
+
         self.dialogbox['__jodit_dialog'] = self;
 
         self.dialog = <HTMLDivElement>self.dialogbox.querySelector('.jodit_dialog');
@@ -115,7 +125,7 @@ export default class Dialog extends Component{
 
         self.destinition.appendChild(self.dialogbox);
 
-        self.dialogbox.addEventListener('close_dialog', self.close);
+        self.dialogbox.addEventListener('close_dialog', <any>self.close);
 
         self.dialogbox_close.addEventListener('mousedown', self.close);
 
@@ -131,9 +141,9 @@ export default class Dialog extends Component{
            .__on(this.window, 'keydown', self.onKeyDown.bind(self))
             .__on(this.window, 'resize', self.onResize.bind(self));
 
+        const headerBox: HTMLDivElement|null = self.dialogbox.querySelector('.jodit_dialog_header');
 
-        self.dialogbox.querySelector('.jodit_dialog_header')
-            .addEventListener('mousedown', self.onHeaderMouseDown.bind(self));
+        headerBox && headerBox.addEventListener('mousedown', self.onHeaderMouseDown.bind(self));
 
         if (self.options.resizable) {
             self.resizer
@@ -364,7 +374,7 @@ export default class Dialog extends Component{
 
         this.destroyAfterClose = (destroyAfter === true);
 
-        if (this.options.fullsizeButton) {
+        if (this.options.fullsizeButton && this.dialogbox_close.parentNode) {
             this.dialogbox_close.parentNode.appendChild(this.dialogbox_fullsize)
         }
 
@@ -511,7 +521,10 @@ export default class Dialog extends Component{
      * It destroys all objects created for the windows and also includes all the handlers for the window object
      */
     destruct () {
-        this.dialogbox.parentNode.removeChild(this.dialogbox);
+        if (this.dialogbox.parentNode) {
+            this.dialogbox.parentNode.removeChild(this.dialogbox);
+        }
+
         delete this.dialogbox;
         super.destruct();
     }
@@ -660,7 +673,7 @@ Jodit['Alert'] = Alert;
  * });
  * ```
  */
-export const Promt = (msg: string, title: string|Function, callback: Function, placeholder?: string): Dialog => {
+export const Promt = (msg: string, title: string|Function|undefined, callback: Function, placeholder?: string): Dialog => {
     const dialog: Dialog = new Dialog(),
         $cancel: HTMLAnchorElement = <HTMLAnchorElement>dom('<a href="javascript:void(0)" style="float:right;" class="jodit_button">' + Toolbar.getIcon('cancel') + '<span>' + Jodit.prototype.i18n('Cancel') + '</span></a>', dialog.document),
         $ok: HTMLAnchorElement = <HTMLAnchorElement>dom('<a href="javascript:void(0)" style="float:left;" class="jodit_button">' + Toolbar.getIcon('check') + '<span>' + Jodit.prototype.i18n('Ok') + '</span></a>', dialog.document),
@@ -727,7 +740,7 @@ Jodit['Promt'] = Promt;
  * });
  * ```
  */
-export const Confirm = (msg: string, title: string|((yes: boolean) => void), callback?: (yes: boolean) => void): Dialog => {
+export const Confirm = (msg: string, title: string|((yes: boolean) => void)|undefined, callback?: (yes: boolean) => void): Dialog => {
     const dialog = new Dialog(),
         $div: HTMLDivElement = <HTMLDivElement>dom('<form class="jodit_promt"></form>', dialog.document),
         $label: HTMLLabelElement = <HTMLLabelElement>dom('<label></label>', dialog.document);

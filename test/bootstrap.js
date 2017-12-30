@@ -1,3 +1,5 @@
+chai.config.includeStack = true;
+
 Jodit.defaultOptions.observer.timeout = 0;
 Jodit.defaultOptions.useAceEditor = false;
 Jodit.defaultOptions.language = 'en';
@@ -23,6 +25,16 @@ if (String.prototype.repeat === undefined) {
     };
 }
 
+
+(function(e){
+    e.matches || (e.matches = e['matchesSelector'] !== undefined ? e['matchesSelector'] : function (selector) {
+        var matches = this.ownerDocument.querySelectorAll(selector), th = this;
+        return Array.prototype.some.call(matches, function (e) {
+            return e === th;
+        });
+    });
+
+})(Element.prototype);
 
 var expect = chai.expect;
 var stuff = [];
@@ -164,10 +176,17 @@ var setCursor = function (elm, inEnd) {
     window.getSelection().addRange(range);
 }
 
-var createPoint = function createPoint(x, y) {
+var createPoint = function createPoint(x, y, color) {
     var div = document.createElement('div');
-    div.setAttribute('style', 'position: absolute; z-index: 100000;width: 5px; height: 5px; background: red;');
-    div.style.left = x +'px'
-    div.style.top = y +'px'
+    div.setAttribute('style', 'position: absolute; z-index: 1000000000;width: 5px; height: 5px; background: ' + (color || 'red') + ';');
+    div.style.left = parseInt(x, 10) + 'px'
+    div.style.top = parseInt(y, 10) +'px'
     document.body.appendChild(div);
+}
+
+function offset(el) {
+    var rect = el.getBoundingClientRect(),
+        scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
+        scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    return { top: rect.top + scrollTop, left: rect.left + scrollLeft, width: rect.width, height: rect.height }
 }

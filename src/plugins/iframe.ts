@@ -1,4 +1,10 @@
-import Jodit from '../Jodit';
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
+import {Jodit} from '../Jodit';
 import {Config} from '../Config';
 import {css, dom} from "../modules/Helpers";
 
@@ -133,7 +139,7 @@ Config.prototype.iframeCSSLinks  = [];
 /**
  * Iframe plugin
  */
-export default function (editor: Jodit) {
+export function iframe(editor: Jodit) {
     editor.events.on('createEditor', () => {
         if (!editor.options.iframe) {
             return;
@@ -184,7 +190,7 @@ export default function (editor: Jodit) {
 
         if (editor.options.height === 'auto') {
             doc.documentElement.style.overflowY = 'hidden';
-            const resizeIframe = (e) => {
+            const resizeIframe = () => {
                 if (editor.editor) {
                     css(editor.iframe, 'height', editor.editor.offsetHeight);
                 }

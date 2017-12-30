@@ -1,9 +1,15 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
 import {Config} from '../Config'
-import Component from './Component'
-import Snapshot,{SnapshotType} from './Snapshot'
+import {Component} from './Component'
+import {Snapshot, SnapshotType} from './Snapshot'
 import * as consts from '../constants';
-import {Stack} from './Undo'
-import Jodit from "../Jodit";
+import {Stack} from './Stack'
+import {Jodit} from "../Jodit";
 /**
  * @property{object} observer module settings {@link Observer|Observer}
  * @property{int} observer.timeout=100 Delay on every change
@@ -48,7 +54,7 @@ export class Command {
  * @see {@link Snapshot|Snapshot}
  * @params {Jodit} parent Jodit main object
  */
-export default class Observer extends Component {
+export class Observer extends Component {
 
     /**
      * @property {Stack} stack
@@ -65,7 +71,7 @@ export default class Observer extends Component {
     // undobtn;
     private  __startValue: SnapshotType;
     private __newValue: SnapshotType;
-    private __timeouts = [];
+    private __timeouts: number[] = [];
 
 
     __onChange() {

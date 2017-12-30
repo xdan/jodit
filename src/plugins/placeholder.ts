@@ -1,4 +1,10 @@
-import Jodit from '../Jodit';
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
+import {Jodit} from '../Jodit';
 import {Config} from '../Config'
 import * as consts from '../constants';
 import {dom,each} from '../modules/Helpers'
@@ -48,16 +54,18 @@ Config.prototype.useInputsPlaceholder = true;
  */
 Config.prototype.placeholder = 'Type something';
 
-export default function (editor: Jodit) {
-    let placeholder: HTMLElement,
-        timeout;
+export function placeholder(editor: Jodit) {
+    let timeout;
 
     if (!editor.options.showPlaceholder) {
         return;
     }
 
     this.destruct  = () => {
-        placeholder.parentNode.removeChild(placeholder);
+        if (placeholder.parentNode) {
+            placeholder.parentNode.removeChild(placeholder);
+        }
+
         clearTimeout(timeout);
     };
 
@@ -106,10 +114,10 @@ export default function (editor: Jodit) {
 
 
 
-    placeholder = dom('<span class="jodit_placeholder">' + editor.i18n(editor.options.placeholder) + '</span>', editor.ownerDocument);
+    const placeholder: HTMLElement = dom('<span class="jodit_placeholder">' + editor.i18n(editor.options.placeholder) + '</span>', editor.ownerDocument);
 
     if (editor.options.useInputsPlaceholder && editor.element.hasAttribute('placeholder')) {
-        placeholder.innerHTML = editor.element.getAttribute('placeholder');
+        placeholder.innerHTML = editor.element.getAttribute('placeholder') || '';
     }
 
     editor.events
@@ -124,4 +132,4 @@ export default function (editor: Jodit) {
             toggle();
             timeout = setTimeout(toggle, 1)
         });
-};
+}

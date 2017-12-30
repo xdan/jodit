@@ -1,9 +1,15 @@
-import Jodit from '../Jodit';
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
+import {Jodit} from '../Jodit';
 import {Config} from '../Config'
 import * as consts from '../constants';
 import {$$, appendScript, debounce, dom} from '../modules/Helpers';
 import {markerInfo} from "../modules/Selection";
-import Component from "../modules/Component";
+import {Component} from "../modules/";
 
 declare module "../Config"  {
     interface Config {
@@ -96,7 +102,7 @@ Config.prototype.controls.source = {
  *
  * @module source
  */
-export default class extends Component {
+export class source extends Component {
     private className = 'jodit_ace_editor';
 
     private loadNext = (i: number, urls: string[], eventOnFinalize: false|string = 'aceReady', className: string = this.className) => {
@@ -232,7 +238,7 @@ export default class extends Component {
             this.fromWYSIWYG(true);
         } else {
             this.selInfo.length = 0;
-            const value = this.getMirrorValue();
+            const value: string = this.getMirrorValue();
             if (this.getSelectionStart() === this.getSelectionEnd()) {
                 const marker: HTMLSpanElement = this.jodit.selection.marker(true);
                 this.selInfo[0] = {
@@ -250,12 +256,20 @@ export default class extends Component {
                     startId: markerStart.id,
                     endId: markerEnd.id,
                     collapsed: false,
-                    startMarker: markerStart.outerHTML,
-                    endMarker: markerEnd.outerHTML
+                    startMarker: this.__clear(markerStart.outerHTML),
+                    endMarker: this.__clear(markerEnd.outerHTML)
                 };
+
                 const selectionStart = this.getNormalPosition(this.getSelectionStart(), value);
                 const selectionEnd = this.getNormalPosition(this.getSelectionEnd(), value);
-                this.setMirrorValue(value.substr(0, selectionStart) + this.__clear(this.selInfo[0].startMarker) + value.substr(selectionStart, selectionEnd - selectionStart) + this.__clear(this.selInfo[0].endMarker) + value.substr(selectionEnd));
+
+                this.setMirrorValue(
+                    value.substr(0, selectionStart) +
+                    this.selInfo[0].startMarker +
+                    value.substr(selectionStart, selectionEnd - selectionStart) +
+                    this.selInfo[0].endMarker +
+                    value.substr(selectionEnd)
+                );
             }
             this.toWYSIWYG();
         }
@@ -466,4 +480,4 @@ export default class extends Component {
             this.loadNext(0, editor.options.sourceEditorCDNUrlsJS, 'aceReady', this.className);
         }
     }
-};
+}

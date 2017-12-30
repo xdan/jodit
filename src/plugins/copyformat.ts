@@ -1,9 +1,12 @@
-import Component from "../modules/Component";
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+
 import {Config} from '../Config'
-import * as consts from '../constants';
-import Jodit from "../Jodit";
-import {ControlType} from "../modules/Toolbar";
-import Dom from "../modules/Dom";
+import {Jodit} from "../Jodit";
+import {Dom} from "../modules/Dom";
 import {css} from "../modules/Helpers";
 
 const key = 'copyformat';
@@ -28,7 +31,7 @@ const getStyles = (editor: Jodit, elm: Node) => {
 };
 
 Config.prototype.controls.copyformat = {
-    exec: (editor: Jodit, current: Node|false, btn: ControlType) => {
+    exec: (editor: Jodit, current: Node|false) => {
         if (current) {
             if (editor.buffer[key].active) {
                 editor.buffer[key].active = false;
@@ -41,7 +44,7 @@ Config.prototype.controls.copyformat = {
         }
     },
 
-    isActive: (editor: Jodit, btn: ControlType) => {
+    isActive: (editor: Jodit) => {
         return editor.buffer[key] !== undefined ? editor.buffer[key].active : false;
     },
 
@@ -50,7 +53,7 @@ Config.prototype.controls.copyformat = {
 
 
 
-export default function (editor: Jodit) {
+export function copyformat(editor: Jodit) {
     editor.buffer[key] = {
         active: false,
         format: {
