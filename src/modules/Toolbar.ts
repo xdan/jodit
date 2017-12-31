@@ -247,6 +247,8 @@ export class Toolbar extends Component{
         this.popup.style.display = 'none';
         this.list.style.display = 'none';
 
+        this.jodit.events.fire('hidePopup');
+
         $$('.jodit_dropdown_open, .jodit_popap_open', this.container).forEach((btn) => {
             btn.classList.remove('jodit_dropdown_open', 'jodit_popap_open');
         });
@@ -261,6 +263,7 @@ export class Toolbar extends Component{
 
     private static __toggleButton(btn: HTMLElement, enable: boolean) {
         btn.classList.toggle('jodit_disabled', !enable);
+
         if (enable) {
             if (btn.hasAttribute('disabled')) {
                 btn.removeAttribute('disabled');

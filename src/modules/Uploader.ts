@@ -271,12 +271,12 @@ export class Uploader extends Component {
             return;
         }
 
-        let len = files.length,
-            i,
+        let len: number = files.length,
+            i: number,
             form: FormData,
-            extension,
-            keys,
-            uploader = this;
+            extension: string,
+            keys: string[],
+            uploader: Uploader = this;
 
         if (!len) {
             return false;

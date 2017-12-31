@@ -257,6 +257,7 @@ type FileBrowserAnswer = {
         path: string;
         name: string;
         source: string;
+        permissions?: Permissions|null;
     }
 };
 
@@ -363,17 +364,19 @@ Config.prototype.filebrowser = <FileBrowserOptions>{
     sortBy: 'changed',
 
     sort: function (this: FileBrowser, a, b, sortBy: string) {
-        let compareStr = (f, s): number => {
+        let compareStr = (f: string, s: string): number => {
                 if (f < s) {
                     return -1;
                 }
+
                 if (f > s) {
                     return 1;
                 }
+
                 return 0;
             },
-            first,
-            second;
+            first: Date,
+            second: Date;
 
         if (typeof a === 'string') {
             return compareStr(a.toLowerCase(), b.toLowerCase());
@@ -388,12 +391,13 @@ Config.prototype.filebrowser = <FileBrowserOptions>{
             }
             return 0;
         }
+
         switch (sortBy) {
             case 'changed':
                 first = new Date(a.changed);
                 second = new Date(b.changed);
 
-                return second - first;
+                return second.getTime() - first.getTime();
             case 'size':
                 return humanSizeToBytes(a.size) - humanSizeToBytes(b.size);
         }
@@ -480,7 +484,7 @@ Config.prototype.filebrowser = <FileBrowserOptions>{
             return data;
         },
 
-        process: function (this: Uploader, resp: FileBrowserAnswer) {
+        process: function (this: Uploader, resp: FileBrowserAnswer): FileBrowserAnswer {
             return resp;
         }
     },
@@ -535,6 +539,18 @@ export class FileBrowser extends Component {
     private buttons: {[key:string]: HTMLElement};
 
     uploader: Uploader;
+
+    private __currentPerpissions: Permissions|null = null;
+
+    public canI(action: string): boolean {
+        return this.__currentPerpissions && (this.__currentPerpissions['allow' + action] === undefined || this.__currentPerpissions['allow' + action]);
+    }
+
+    toggleButtonsByPermissions() {
+        this.buttons.upload.classList.toggle('jodit_hidden', !this.canI('FileUpload'));
+        this.buttons.remove.classList.toggle('jodit_hidden', !this.canI('FileRemove'));
+        this.buttons.edit.classList.toggle('jodit_hidden', !this.canI('ImageResize') && !this.canI('ImageCrop'));
+    }
 
     constructor(editor: Jodit) {
         super(editor);
@@ -632,7 +648,7 @@ export class FileBrowser extends Component {
         });
 
         self.__on(self.buttons.edit, 'click', () => {
-            let files = this.__getActiveElements();
+            const files: HTMLElement[] = this.__getActiveElements();
             if (files.length === 1) {
                 self.openImageEditor(files[0].getAttribute('href') || '', files[0].getAttribute('data-name') || '', files[0].getAttribute('data-path') || '', files[0].getAttribute('data-source') || '');
             }
@@ -643,32 +659,35 @@ export class FileBrowser extends Component {
         });
 
         self
-            .__on(self.tree, 'click', 'a>i.remove', function (e)  {
-                let a = this.parentNode, path = a.getAttribute('data-path');
+            .__on(self.tree, 'click', 'a>i.remove', function (this: HTMLElement, e: MouseEvent)  {
+                const a: HTMLAnchorElement = <HTMLAnchorElement>this.parentNode,
+                    path: string = a.getAttribute('data-path') || '';
+
                 Confirm(editor.i18n('Are you shure?'), '', (yes: boolean) => {
                     if (yes) {
-                        self.remove(path, a.getAttribute('data-name'), a.getAttribute('data-source'));
+                        self.remove(path, a.getAttribute('data-name') || '', a.getAttribute('data-source') || '');
                         self.loadTree(self.currentPath, self.currentSource);
                     }
                 });
+
                 e.stopImmediatePropagation();
                 return false;
             })
-            .__on(self.tree, 'click', 'a', function () {
+            .__on(self.tree, 'click', 'a', function (this: HTMLAnchorElement) {
                 if (this.classList.contains('addfolder')) {
-                    Promt(self.jodit.i18n('Enter Directory name'), self.jodit.i18n('Create directory'), (name) => {
+                    Promt(self.jodit.i18n('Enter Directory name'), self.jodit.i18n('Create directory'), (name: string) => {
                         self.create(name, this.getAttribute('data-path'), this.getAttribute('data-source'));
                     }, self.jodit.i18n('type name'));
                 } else {
-                    self.currentPath = this.getAttribute('data-path');
-                    self.currentSource = this.getAttribute('data-source');
-                    self.loadTree(this.getAttribute('data-path'), this.getAttribute('data-source'));
+                    self.currentPath = this.getAttribute('data-path') || '';
+                    self.currentSource = this.getAttribute('data-source') || '';
+                    self.loadTree(self.currentPath, self.currentSource);
                 }
             })
-            .__on(this.tree, 'dragstart', 'a', function () {
+            .__on(this.tree, 'dragstart', 'a', function (this: HTMLAnchorElement) {
                 self.dragger = this;
             })
-            .__on(this.tree, 'drop',  'a', function () {
+            .__on(this.tree, 'drop',  'a', function (this: HTMLAnchorElement) {
                 if (self.options.moveFolder && self.dragger) {
                     let path: string = self.dragger.getAttribute('data-path') || '';
 
@@ -685,11 +704,11 @@ export class FileBrowser extends Component {
                         }
                     }
 
-                    self.move(path, this.getAttribute('data-path'), this.getAttribute('data-source'));
+                    self.move(path, this.getAttribute('data-path') || '', this.getAttribute('data-source') || '');
                 }
             });
 
-        const contextmenu = new ContextMenu(this.jodit);
+        const contextmenu: ContextMenu = new ContextMenu(this.jodit);
 
         self
             .__on(self.files, 'mousedown', 'a>img', function (this: HTMLElement, e: DragEvent) {
@@ -698,7 +717,7 @@ export class FileBrowser extends Component {
 
                 self.start = offset(this, self.jodit);
 
-                self.draggable = <Element>this.cloneNode(true);
+                self.draggable = <HTMLElement>this.cloneNode(true);
 
                 css(<HTMLElement>self.draggable, {
                     'z-index': 100000000000000,
@@ -719,16 +738,16 @@ export class FileBrowser extends Component {
             })
             .__on(self.files, 'contextmenu', 'a', function (this: HTMLElement, e: DragEvent) {
                 if (self.options.contextMenu) {
-                    let item = this;
+                    let item: HTMLElement = this;
                     contextmenu.show(e.pageX, e.pageY, [
-                        self.options.editImage ? {
+                        (self.options.editImage && (self.canI('ImageResize') || self.canI('ImageCrop'))) ? {
                             icon: 'pencil',
                             title: 'Edit',
                             exec: () => {
                                 self.openImageEditor(item.getAttribute('href') || '', item.getAttribute('data-name') || '', item.getAttribute('data-path') || '', item.getAttribute('data-source') || '');
                             }
                         } : false,
-                        {
+                        self.canI('FileRemove') ? {
                             icon: 'bin',
                             title: 'Delete',
                             exec: () => {
@@ -736,7 +755,7 @@ export class FileBrowser extends Component {
                                 self.someSelectedWasChanged();
                                 self.loadTree(self.currentPath, self.currentSource);
                             }
-                        },
+                        } : false,
                         self.options.preview ? {
                             icon: 'eye',
                             title: 'Preview',
@@ -840,7 +859,7 @@ export class FileBrowser extends Component {
             })
             .__on(self.jodit.ownerDocument, 'dragover', function (e: MouseEvent) {
                 if (self.isOpened() && self.draggable && e.clientX !== undefined) {
-                    css(<HTMLElement>self.draggable, {
+                    css(self.draggable, {
                         left: e.clientX + 20,
                         top: e.clientY + 20,
                         display: 'block'
@@ -848,7 +867,7 @@ export class FileBrowser extends Component {
                 }
             })
             .__on(self.jodit.ownerWindow, 'keydown', (e: KeyboardEvent) => {
-                if (self.isOpened() && e.which === 46) {
+                if (self.isOpened() && e.which === consts.KEY_DELETE) {
                     self.__fire(self.buttons.remove, 'click', doc);
                 }
             })
@@ -922,6 +941,7 @@ export class FileBrowser extends Component {
     isOpened (): boolean {
         return this.dialog.isOpened() && this.browser.style.display !== 'none';
     }
+
     private statustimer;
 
     /**
@@ -962,7 +982,7 @@ export class FileBrowser extends Component {
             }
 
             source.folders.forEach((name: string) => {
-                let folder = '<a draggable="draggable" class="jodit_filebrowser_tree_item" href="javascript:void(0)" data-path="' + pathNormalize(source.path + name) + '/" data-source="' + source_name + '">' +
+                let folder: string = '<a draggable="draggable" class="jodit_filebrowser_tree_item" href="javascript:void(0)" data-path="' + pathNormalize(source.path + name) + '/" data-source="' + source_name + '">' +
                     '<span>' + name + '</span>';
 
                 if (this.options.deleteFolder && name !== '..' && name !== '.') {
@@ -973,7 +993,8 @@ export class FileBrowser extends Component {
 
                 folders.push(folder);
             });
-            if (this.options.createNewFolder) {
+
+            if (this.options.createNewFolder && this.canI('FolderCreate')) {
                 folders.push('<a class="jodit_button addfolder" href="javascript:void(0)" data-path="' + pathNormalize(source.path + name) + '/" data-source="' + source_name + '">' + Toolbar.getIcon('plus') + ' ' + this.jodit.i18n('Add folder') + '</a>');
             }
         });
@@ -981,7 +1002,7 @@ export class FileBrowser extends Component {
         this.tree.innerHTML = folders.join('');
     }
 
-    private filterWord = '';
+    private filterWord: string = '';
 
     private generateItemsBox(sources: ISourcesFiles) {
         const files: string[] = [];
@@ -1096,7 +1117,7 @@ export class FileBrowser extends Component {
                 }
             }, (error: Error) => {
                 Alert(error.message);
-                self.status(self.jodit.i18n(error.message));
+                self.errorHandler(error);
             });
         }
     };
@@ -1104,7 +1125,7 @@ export class FileBrowser extends Component {
     private __ajax: Ajax;
     private __permissions: Ajax;
 
-    private loadPermissions(path: string, source: string) {
+    private loadPermissions(path: string, source: string, callback: Function) {
         const self: FileBrowser = this;
 
         self.options.permissions.data.path = path;
@@ -1122,52 +1143,61 @@ export class FileBrowser extends Component {
 
                 if (process) {
                     const respData: FileBrowserAnswer = <FileBrowserAnswer>process.call(self, resp);
+                    if (respData.data.permissions) {
+                        this.__currentPerpissions = respData.data.permissions;
+                        this.toggleButtonsByPermissions();
+                        callback();
+                    }
                 }
             }, (error: Error) => {
                 Alert(error.message);
-                self.status(self.jodit.i18n(error.message));
+                self.errorHandler(error);
+                callback();
             });
+        } else {
+            callback();
         }
     }
     private loadTree(path: string, source: string) {
-        const self: FileBrowser = this;
+        this.loadPermissions(path, source, () => {
+            const self: FileBrowser = this;
 
-        self.options.folder.data.path = path;
-        self.options.folder.data.source = source;
+            self.options.folder.data.path = path;
+            self.options.folder.data.source = source;
 
-        if (self.uploader) {
-            self.uploader.setPath(path);
-            self.uploader.setSource(source);
-        }
-
-        if (self.options.showFoldersPanel) {
-            if (self.options.folder.url) {
-                self.tree.classList.add('active');
-                self.tree.innerHTML = '';
-                self.tree.appendChild(self.loader.cloneNode(true));
-                if (self.__ajax && self.__ajax.abort) {
-                    self.__ajax.abort();
-                }
-                self.__ajax = this.send('folder', (resp) => {
-                    let process: ((resp: FileBrowserAnswer) => FileBrowserAnswer)|undefined = self.options.folder.process;
-                    if (!process) {
-                        process = this.options.ajax.process;
-                    }
-                    if (process) {
-                        let respData = <FileBrowserAnswer>process.call(self, resp);
-                        // this.currentPath = data.path;
-                        self.generateFolderTree(respData.data.sources);
-                    }
-                    }, () => {
-                    self.status(self.jodit.i18n('Error on load folders'));
-                });
-            } else {
-                self.tree.classList.remove('active');
+            if (self.uploader) {
+                self.uploader.setPath(path);
+                self.uploader.setSource(source);
             }
-        }
 
-        this.loadPermissions(path, source);
-        this.loadItems(path, source);
+            if (self.options.showFoldersPanel) {
+                if (self.options.folder.url) {
+                    self.tree.classList.add('active');
+                    self.tree.innerHTML = '';
+                    self.tree.appendChild(self.loader.cloneNode(true));
+                    if (self.__ajax && self.__ajax.abort) {
+                        self.__ajax.abort();
+                    }
+                    self.__ajax = this.send('folder', (resp) => {
+                        let process: ((resp: FileBrowserAnswer) => FileBrowserAnswer)|undefined = self.options.folder.process;
+                        if (!process) {
+                            process = this.options.ajax.process;
+                        }
+                        if (process) {
+                            let respData = <FileBrowserAnswer>process.call(self, resp);
+                            // this.currentPath = data.path;
+                            self.generateFolderTree(respData.data.sources);
+                        }
+                    }, () => {
+                        self.errorHandler(new Error(self.jodit.i18n('Error on load folders')));
+                    });
+                } else {
+                    self.tree.classList.remove('active');
+                }
+            }
+
+            this.loadItems(path, source);
+        });
     }
 
     /**
@@ -1343,8 +1373,12 @@ export class FileBrowser extends Component {
         }
     };
 
-    private errorHandler = (resp) => {
-        this.status(this.options.getMessage(resp));
+    private errorHandler = (resp: Error|FileBrowserAnswer) => {
+        if (resp instanceof Error) {
+            this.status(this.jodit.i18n(resp.message));
+        } else {
+            this.status(this.options.getMessage(resp));
+        }
     };
 
     private uploadHandler = () => {
@@ -1396,7 +1430,7 @@ export class FileBrowser extends Component {
         });
     };
 
-    private draggable: Element|false = false;
+    private draggable: HTMLElement|false = false;
     private start = {top: 0, left: 0};
     private client = {x: 0, y: 0};
 }
