@@ -27,10 +27,9 @@ Object.keys(consts).forEach((key) => {
 const esFilter = (key: string): boolean => key !== '__esModule';
 
 // Icons
-Object.keys(Icons).filter(esFilter).forEach((key) => {
+Object.keys(Icons).filter(esFilter).forEach((key: string) => {
     Toolbar.icons[key.replace('_', '-')] = Icons[key];
 });
-
 // Modules
 Object.keys(Modules).filter(esFilter).forEach((key: string) => {
     Jodit.modules[key] = Modules[key];

@@ -1393,6 +1393,51 @@ describe('Test interface', function() {
                 });
             });
         });
+        describe('Search', function () {
+            describe('CTRL + F', function () {
+                it('Should show search form and query field must have focus', function () {
+                    var editor = new Jodit('#table_editor_interface', {
+                        observer: {
+                            timeout: 0
+                        }
+                    });
+                    var search = editor.container.querySelector('.jodit_search');
+                    expect(false).to.equal(search.classList.contains('jodit_search-active'));
+                    simulateEvent('keydown', 70, editor.editor, function (options) {
+                        options.ctrlKey = true
+                    });
+                    expect(true).to.equal(search.classList.contains('jodit_search-active'));
+                    expect(true).to.equal(editor.ownerDocument.activeElement === search.querySelector('.jodit_search-query'));
+                });
+            });
+            describe('Esc in query field', function () {
+                it('Should hide search form and restore selection', function () {
+                    var editor = new Jodit('#table_editor_interface', {
+                        observer: {
+                            timeout: 0
+                        }
+                    });
+                    editor.setEditorValue('<p>text</p>');
+                    var range = editor.editorDocument.createRange();
+                    range.setStart(editor.editor.firstChild.firstChild, 1)
+                    range.setEnd(editor.editor.firstChild.firstChild, 3);
+                    var sel = editor.editorWindow.getSelection();
+                    sel.removeAllRanges();
+                    sel.addRange(range);
+
+                    var search = editor.container.querySelector('.jodit_search');
+                    expect(false).to.equal(search.classList.contains('jodit_search-active'));
+                    simulateEvent('keydown', 70, editor.editor, function (options) {
+                        options.ctrlKey = true
+                    });
+                    expect(true).to.equal(search.classList.contains('jodit_search-active'));
+                    expect(true).to.equal(editor.ownerDocument.activeElement === search.querySelector('.jodit_search-query'));
+                    simulateEvent('keydown', 27, search.querySelector('.jodit_search-query'));
+                    expect(false).to.equal(search.classList.contains('jodit_search-active'));
+                    expect('ex').to.equal(sel.toString());
+                });
+            });
+        });
     });
     after(function() {
          table_editor_interface.parentNode.removeChild(table_editor_interface);

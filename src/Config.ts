@@ -617,7 +617,7 @@ Config.prototype.controls = {
 
                 tab: {[key:string]: HTMLFormElement} = {},
                 selinfo = editor.selection.save(),
-                insertCode = (code) => {
+                insertCode = (code: string) => {
                     editor.selection.restore(selinfo);
                     editor.selection.insertHTML(code);
                 };

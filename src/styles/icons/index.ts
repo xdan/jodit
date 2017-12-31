@@ -3,7 +3,9 @@ import * as about from  "./about.svg";
 import * as addcolumn from  "./addcolumn.svg";
 import * as addrow from  "./addrow.svg";
 import * as angle_left from  "./angle-left.svg";
+import * as angle_down from  "./angle-down.svg";
 import * as angle_right from  "./angle-right.svg";
+import * as angle_up from  "./angle-up.svg";
 import * as arrows_alt from  "./arrows-alt.svg";
 import * as arrows_h from  "./arrows-h.svg";
 import * as attachment from  "./attachment.svg";
@@ -63,7 +65,7 @@ import * as valign from  "./valign.svg";
 import * as video from  "./video.svg";
 
 export {
-    about,addcolumn,addrow,angle_left,angle_right,arrows_alt,
+    about,addcolumn,addrow,angle_left,angle_right,angle_down,angle_up,arrows_alt,
     arrows_h,attachment,bin,bold,brush,cancel,center,chain_broken,
     check_square,check,copyformat,crop,dedent,enter,eraser,eye,
     folder,font,fontsize,fullsize,hr,image,

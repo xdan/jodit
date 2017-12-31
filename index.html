@@ -132,9 +132,7 @@
     editor.editor.addEventListener('mousedown', callback)
     editor.editor.addEventListener('mouseup', callback)
     editor.editor.addEventListener('input', callback);
-    editor.setEditorValue('<table>' +
-        '<tr><td>3</td></tr>' +
-        '</table>');
+    editor.setEditorValue('a<br>b<br>c<br>d <span>last</span><br><span>esc</span> e<br><p>test <a>best ze best</a></p>');
 
     var td = editor.editor.querySelector('td');
 

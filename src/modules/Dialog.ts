@@ -9,6 +9,7 @@ import {Component} from './Component'
 import {Config} from '../Config'
 import {dom, $$, asArray, css} from './Helpers'
 import {Toolbar} from "./Toolbar";
+import {KEY_ESC} from "../constants";
 
 
 /**
@@ -499,7 +500,7 @@ export class Dialog extends Component{
      * @param {MouseEvent} e
      */
     private onKeyDown(e: KeyboardEvent) {
-        if (this.isOpened() && e.which === 27) {
+        if (this.isOpened() && e.which === KEY_ESC) {
             let me = this.getMaxZIndexDialog();
 
             if (me) {

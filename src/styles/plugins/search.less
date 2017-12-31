@@ -1,0 +1,73 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ */
+@height-search: 30px;
+@width-search: 320px;
+@width-search-input-box: 70%;
+
+.jodit_search {
+  visibility: hidden;
+  &.jodit_search-active {
+    visibility: visible;
+  }
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+
+  .jodit_search_box {
+    width: @width-search;
+    position: absolute;
+    right: 0;
+    background-color: @color-toolbar;
+    border: 1px solid @color-border;
+    border-width: 0 0 1px 1px;
+    padding: @padding-default / 2;
+    input {
+      margin: 0;
+      min-width: 100%;
+      height: 100%;
+      border: 0;
+      background-color: transparent;
+      border-right: 1px solid @color-border;
+      outline: none;
+      padding: 0 @padding-default;
+    }
+    .jodit_search_buttons,
+    .jodit_search_inputs {
+      height: @height-search;
+      display: inline-block;
+      vertical-align: top;
+    }
+    .jodit_search_inputs {
+      width: @width-search-input-box;
+    }
+    .jodit_search_buttons {
+      padding-left: @padding-default;
+      width: 100% - @width-search-input-box;
+      button {
+        outline: 0;
+        width: 33.33333333%;
+        height: 100%;
+        border: 1px solid transparent;
+        background-color: transparent;
+        &:hover {
+          background-color: @button_bg_hover;
+        }
+        &:active {
+          border: 1px solid @color-border;
+        }
+      }
+    }
+  }
+
+  @media(max-width: @width-search) {
+    width: 100%;
+    .jodit_search_box {
+      width: 100%;
+    }
+  }
+}

@@ -6,12 +6,12 @@
 
 import 'classlist-polyfill';
 
-(function(e){
-    e.matches || (e.matches = e['matchesSelector'] !== undefined ? e['matchesSelector'] : function (selector: string) {
-            const matches = this.ownerDocument.querySelectorAll(selector),
+(function(e: Element){
+    e.matches || (e.matches = e['matchesSelector'] !== undefined ? e['matchesSelector'] : function (this: Element, selector: string) {
+            const matches: NodeList = this.ownerDocument.querySelectorAll(selector),
                 th = this;
 
-            return Array.prototype.some.call(matches, (e) => {
+            return Array.prototype.some.call(matches, (e: Element) => {
                 return e === th;
             });
         });

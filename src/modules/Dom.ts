@@ -97,8 +97,8 @@ export class Dom {
      * });
      * ```
      */
-    static each (elm: HTMLElement, callback: (this: Node, node: Node) => void|false): boolean {
-        let node: any = elm.firstChild;
+    static each (elm: Node|HTMLElement, callback: (this: Node, node: Node) => void|false): boolean {
+        let node: Node|null|false = elm.firstChild;
 
         if (node) {
             while (node) {
@@ -244,7 +244,7 @@ export class Dom {
      * @param {boolean} [withChild=true]
      * @return {boolean|Node|HTMLElement|HTMLTableCellElement}
      */
-    static next(node: Node, condition: (element: Node) => boolean, root: HTMLElement, withChild: Boolean = true): false|Node|HTMLElement|HTMLTableCellElement {
+    static next(node: Node, condition: (element: Node) => boolean, root: Node|HTMLElement, withChild: Boolean = true): false|Node|HTMLElement|HTMLTableCellElement {
         return Dom.find(node, condition, root, undefined, undefined, withChild ? 'firstChild' : '');
     }
 
@@ -260,7 +260,7 @@ export class Dom {
      * @param {string|boolean} [child=firstChild] firstChild or lastChild
      * @return {Node|Boolean}
      */
-    static find(node: Node, condition: (element: Node) => boolean, root: HTMLElement, recurse = false, sibling = 'nextSibling', child: string|false = 'firstChild') : false|Node {
+    static find(node: Node, condition: (element: Node) => boolean, root: HTMLElement|Node, recurse = false, sibling = 'nextSibling', child: string|false = 'firstChild') : false|Node {
         if (recurse && condition(node)) {
             return node;
         }
@@ -404,16 +404,19 @@ export class Dom {
         }
     }
 
-    static all(node: Node, condition: (element: Node) => boolean|void) {
-        const start = node,
-            nodes = start.childNodes ? Array.prototype.slice.call(start.childNodes) : [];
+    static all(node: Node, condition: (element: Node) => boolean|void, prev: boolean = false): Node|void {
+        let nodes: Node[] = node.childNodes ? Array.prototype.slice.call(node.childNodes) : [];
 
-        if (condition(start)) {
-            return start;
+        if (condition(node)) {
+            return node;
+        }
+
+        if (prev) {
+            nodes = nodes.reverse();
         }
 
         nodes.forEach((child) => {
-            Dom.all(child, condition);
+            Dom.all(child, condition, prev);
         })
     }
 
