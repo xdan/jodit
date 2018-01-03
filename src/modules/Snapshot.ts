@@ -1,7 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License https://xdsoft.net/jodit/license.html
- * Copyright 2013-2017 Valeriy Chupurnov xdsoft.net
+ * Copyright 2013-2018 Valeriy Chupurnov xdsoft.net
  */
 
 import {Component} from './Component'
@@ -39,9 +39,11 @@ export class Snapshot extends Component {
                 )) {
                 count += 1;
             }
+
             if (elms[j] === elm) {
                 return count;
             }
+
             last = elms[j];
         }
 
@@ -49,6 +51,7 @@ export class Snapshot extends Component {
     }
     private __decomposeHierarchyNodes (elm: Node|null): number[] {
         const counts: number[] = [];
+
         if (!elm || !elm.parentNode) {
             return [];
         }
@@ -63,10 +66,10 @@ export class Snapshot extends Component {
         return counts.reverse();
     }
 
-    private static __strokeOffset (elm, offset): number {
+    private static __strokeOffset (elm: Node|null, offset: number): number {
         while (elm && elm.nodeType === Node.TEXT_NODE) {
             elm = elm.previousSibling;
-            if (elm && elm.nodeType === Node.TEXT_NODE) {
+            if (elm && elm.nodeType === Node.TEXT_NODE && elm.textContent !== null) {
                 offset += elm.textContent.length;
             }
         }
@@ -89,10 +92,10 @@ export class Snapshot extends Component {
             }
         };
         snapshot.html = this.jodit.getEditorValue();
-        const sel = this.jodit.editorWindow.getSelection();
+        const sel: Selection = this.jodit.editorWindow.getSelection();
 
         if (sel.rangeCount) {
-            const range = sel.getRangeAt(0);
+            const range: Range = sel.getRangeAt(0);
             snapshot.range = {
                 startContainer: this.__decomposeHierarchyNodes(range.startContainer),
                 startOffset: Snapshot.__strokeOffset(range.startContainer, range.startOffset),
@@ -102,12 +105,15 @@ export class Snapshot extends Component {
         }
         return snapshot;
     }
+
     private __restoreElementByLadder (ladder: number[]): Node {
-        let n = <Node>this.jodit.editor,
-            i;
+        let n: Node = <Node>this.jodit.editor,
+            i: number;
+
         for (i = 0; n && i < ladder.length; i += 1) {
             n = n.childNodes[ladder[i]];
         }
+
         return n;
     }
 
@@ -130,10 +136,11 @@ export class Snapshot extends Component {
      */
     restore (snapshot: SnapshotType) {
         this.jodit.setEditorValue(snapshot.html);
+
         try {
             if (snapshot.range) {
-                const sel = this.jodit.editorWindow.getSelection(),
-                    range = this.jodit.editorDocument.createRange();
+                const sel: Selection = this.jodit.editorWindow.getSelection(),
+                    range: Range = this.jodit.editorDocument.createRange();
 
                 range.setStart(this.__restoreElementByLadder(snapshot.range.startContainer), snapshot.range.startOffset);
                 range.setEnd(this.__restoreElementByLadder(snapshot.range.endContainer), snapshot.range.endOffset);

@@ -4,7 +4,9 @@ declare module "*.svg" {
 }
 
 type Bound = {top: number, left: number,  width: number, height: number};
+
 type RGB = {r: number, g: number, b: number};
+
 type Permissions = {
     allowFiles: boolean,
     allowFileMove: boolean,

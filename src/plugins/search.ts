@@ -1,6 +1,6 @@
 import {Jodit} from "../Jodit";
 import {Config} from "../Config";
-import {ctrlKey, debounce, dom} from "../modules/Helpers";
+import {ctrlKey, debounce, dom, val} from "../modules/Helpers";
 import {Component, Dom, Toolbar} from "../modules";
 import * as consts from "../constants";
 import {markerInfo} from "../modules/Selection";
@@ -34,23 +34,45 @@ export class search extends Component {
     cancel: HTMLButtonElement;
     next: HTMLButtonElement;
     prev: HTMLButtonElement;
+
     private eachMap = (node: Node, callback, next: boolean) => {
         Dom.find(node, (child: Node): boolean => {
             child && callback(child);
             return false;
         }, this.jodit.editor, true, next ? 'nextSibling' : 'previousSibling', next ? 'firstChild' : 'lastChild')
     };
+
+    private static compareStrings(first: string, second: string, start: boolean): boolean {
+        first = first.toLowerCase();
+        second = second.toLowerCase();
+
+        let i: number = start ? 0 : first.length,
+            inc: number = start ? 1 : -1;
+
+        for (; first[i] !== undefined && second[i] !== undefined; i += inc) {
+            if (first[i] !== second[i]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     search = (value: string, next: boolean) => {
          let start: Node|null = this.current || this.jodit.editor.firstChild;
          if (start) {
              let sentence: string = '';
-             console.log('------------------------------------')
              this.eachMap(start, (elm: Node) => {
-                 if (Dom.isBlock(elm) || elm.nodeName === 'BR') {
-                     console.log(sentence);
-                     sentence = '';
-                 } else if (elm.nodeType === Node.TEXT_NODE && !Dom.isEmptyTextNode(elm)) {
-                     sentence = next ? sentence + elm.nodeValue : elm.nodeValue + sentence;
+                 if (elm.nodeType === Node.TEXT_NODE && elm.nodeValue !== null && elm.nodeValue.length) {
+                     let tmpSentence: string = next ? sentence + elm.nodeValue : elm.nodeValue + sentence;
+
+                     if (search.compareStrings(tmpSentence, value, next)) {
+                         sentence = tmpSentence;
+                     } else {
+                         sentence = '';
+                     }
+                 } else if (Dom.isBlock(elm) && sentence !== '') {
+                     sentence = next ? sentence + ' ' : ' ' + sentence;
                  }
              }, next);
 
