@@ -33,6 +33,8 @@ export const insertParagraph = (editor: Jodit, fake ?: Node, wrapperTag ?: strin
         fake.parentNode.removeChild(fake);
     }
 
+    p.scrollIntoView();
+
     return p;
 };
 
@@ -93,7 +95,9 @@ export function enter(editor: Jodit) {
 
             // if use <br> tag for break line or when was entered SHIFt key or in <td> or <th> or <blockquote>
             if (editor.options.enter === consts.BR || event.shiftKey || Dom.closest(current, 'PRE|BLOCKQUOTE', editor.editor)) {
-                editor.selection.insertNode(Dom.create('br', undefined, editor.editorDocument));
+                const br: HTMLBRElement = <HTMLBRElement>Dom.create('br', undefined, editor.editorDocument);
+                editor.selection.insertNode(br);
+                br.scrollIntoView();
                 return false;
             }
 
