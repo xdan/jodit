@@ -19,17 +19,6 @@ export type markerInfo = {
 }
 
 export class Select extends Component{
-
-    // private __normalizeSelection(range: Range, atStart) {
-    //     if (!this.isCollapsed() && this.cursorInTheEdge(!atStart, elm => elm && elm.nodeType !== Node.TEXT_NODE && elm !== this.jodit.editor, true)) {
-    //         if (atStart) {
-    //             range.setStartAfter(range.startContainer)
-    //         } else {
-    //             range.setEndBefore(range.endContainer)
-    //         }
-    //     }
-    // }
-
     /**
      * Insert the cursor toWYSIWYG any point x, y
      *
@@ -792,6 +781,13 @@ export class Select extends Component{
         sel.removeAllRanges();
         sel.addRange(range);
     }
+
+    selectRange(range: Range) {
+        const sel: Selection = this.jodit.editorWindow.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+    }
+
     /**
      * Select node
      *

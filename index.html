@@ -132,22 +132,19 @@
     editor.editor.addEventListener('mousedown', callback)
     editor.editor.addEventListener('mouseup', callback)
     editor.editor.addEventListener('input', callback);
-    editor.setEditorValue('a<br>b<br>c<br>d <span>last</span><br><span>esc</span> e<br><p>test <a>best ze best</a></p>');
+    editor.setEditorValue('<p><span>Mr</span> <span>John</span> <span>Smith</span> <span>washed</span> <span>window</span></p>');
+    var sel = editor.editorWindow.getSelection();
+    sel.removeAllRanges();
 
-    var td = editor.editor.querySelector('td');
+    editor.events.fire('search', ['th was']);
+    expect(1).to.be.equal(sel.rangeCount);
+    var range = sel.getRangeAt(0);
 
-    simulateEvent('mousedown', 0, td)
+    expect(editor.editor.firstChild.childNodes[4]).to.be.equal(range.startContainer);
+    expect(3).to.be.equal(range.startOffset);
 
-    var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
-
-    expect(popup && popup.classList.contains('active')).to.equal(true);
-
-    simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-addcolumn>a'))
-
-    var popupColor = popup.querySelector('.jodit_dropdownlist');
-    expect(popupColor && popupColor.style.display).to.equal('block');
-
-    simulateEvent('mousedown', 0, popupColor.querySelector('li>a'));
+    expect(editor.editor.firstChild.childNodes[6]).to.be.equal(range.endContainer);
+    expect(3).to.be.equal(range.startOffset);
 //    var editor = new Jodit(appendTestArea())
 
 //    (new Jodit.modules.FileBrowser(editor)).open(function () {});

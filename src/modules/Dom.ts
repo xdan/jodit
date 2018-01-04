@@ -260,20 +260,21 @@ export class Dom {
      * @param {string|boolean} [child=firstChild] firstChild or lastChild
      * @return {Node|Boolean}
      */
-    static find(node: Node, condition: (element: Node) => boolean, root: HTMLElement|Node, recurse = false, sibling = 'nextSibling', child: string|false = 'firstChild') : false|Node {
+    static find(node: Node, condition: (element: Node|null) => boolean, root: HTMLElement|Node, recurse = false, sibling = 'nextSibling', child: string|false = 'firstChild') : false|Node {
         if (recurse && condition(node)) {
             return node;
         }
 
-        let start = node, next;
+        let start: Node|null = node, next: Node|null;
+
         do {
             next = start[sibling];
             if (condition(next)) {
-                return next;
+                return next ? next : false;
             }
 
             if (child && next && next[child]) {
-                const nextOne = Dom.find(next[child], condition, next, true, sibling, child);
+                const nextOne: Node|false = Dom.find(next[child], condition, next, true, sibling, child);
                 if (nextOne) {
                     return nextOne;
                 }
@@ -285,6 +286,42 @@ export class Dom {
 
             start = next;
         } while (start && start !== root);
+
+        return false;
+    }
+    /**
+     * Find next/prev node what `condition(next) === true`
+     *
+     * @param {Node} node
+     * @param {function} condition
+     * @param {Node} root
+     * @param {string} [sibling=nextSibling] nextSibling or previousSibling
+     * @param {string|boolean} [child=firstChild] firstChild or lastChild
+     * @return {Node|Boolean}
+     */
+    static findWithCurrent(node: Node, condition: (element: Node|null) => boolean, root: HTMLElement|Node, sibling: 'nextSibling'|'previousSibling' = 'nextSibling', child: 'firstChild' | 'lastChild' = 'firstChild') : false|Node {
+        let next: Node|null = node;
+
+        do {
+            if (condition(next)) {
+                return next ? next : false;
+            }
+
+            if (child && next && next[child]) {
+                const nextOne: Node|false = Dom.findWithCurrent(<Node>next[child], condition, next, sibling, child);
+                if (nextOne) {
+                    return nextOne;
+                }
+            }
+
+            while (next && !next[sibling] && next !== root) {
+                next = next.parentNode;
+            }
+
+            if (next && next[sibling] && next !== root) {
+                next = next[sibling];
+            }
+        } while (next && next !== root);
 
         return false;
     }
