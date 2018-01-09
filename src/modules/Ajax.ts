@@ -164,6 +164,8 @@ export class Ajax extends Component{
 
             if (this.options.url) {
                 this.xhr.open(this.options.method || 'get', this.options.url, true);
+            } else {
+                throw new Error('Need URL for AJAX request');
             }
 
             if (this.options.contentType && this.xhr.setRequestHeader) {

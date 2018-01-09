@@ -7,7 +7,7 @@
 import {Jodit} from '../Jodit';
 import {Config} from '../Config'
 import * as consts from '../constants';
-import {cleanFromWord, trim} from "../modules/Helpers";
+import {cleanFromWord, normalizeNode, trim} from "../modules/Helpers";
 import {Dom} from "../modules/Dom";
 
 /**
@@ -192,21 +192,21 @@ export function cleanHTML(editor: Jodit) {
             break;
         case 'removeFormat':
             node = sel.current();
-            clean = (elm) => {
+            clean = (elm: HTMLElement) => {
                 if (elm.nodeType === Node.ELEMENT_NODE) {
                     // clean some "style" attributes in selected range
                     if (elm.hasAttribute('style')) {
                         elm.removeAttribute('style');
                     }
+
                     if (elm.tagName === 'FONT') {
                         Dom.each(elm, clean);
                         elm = Dom.replace(elm, 'span', false, false, editor.editorDocument);
                     }
-                    if (elm.normalize) {
-                        elm.normalize();
-                    }
+
+                    normalizeNode(elm);
                 } else {
-                    if (editor.options.cleanHTML.replaceNBSP && elm.nodeType === Node.TEXT_NODE && elm.nodeValue.match(consts.SPACE_REG_EXP)) {
+                    if (editor.options.cleanHTML.replaceNBSP && elm.nodeType === Node.TEXT_NODE && elm.nodeValue !== null && elm.nodeValue.match(consts.SPACE_REG_EXP)) {
                         elm.nodeValue = elm.nodeValue.replace(consts.SPACE_REG_EXP, ' ');
                     }
                 }

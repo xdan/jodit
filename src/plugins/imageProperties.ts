@@ -346,7 +346,7 @@ export function imageProperties(editor: Jodit) {
                                 }
                             };
 
-                        a.href = url;
+                        a.href  = url;
 
                         (<FileBrowser>editor.getInstance('FileBrowser')).getPathByUrl(a.href.toString(), (path: string, name: string, source: string) => {
                             (<FileBrowser>editor.getInstance('FileBrowser'))

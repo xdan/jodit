@@ -6,7 +6,7 @@
 
 import * as consts from '../constants';
 import {Component} from './Component';
-import {each, dom, trim, $$, css, normilizeCSSValue, isIE, isPlainObject} from './Helpers';
+import {each, dom, trim, $$, css, normilizeCSSValue, isIE, isPlainObject, normalizeNode} from './Helpers';
 import {Dom} from "./Dom";
 import {Jodit} from "../Jodit";
 
@@ -298,7 +298,7 @@ export class Select extends Component{
             const sel: Selection = this.jodit.editorWindow.getSelection();
             if (sel.rangeCount > 0) {
                 const range: Range = sel.getRangeAt(0);
-                let node = range.startContainer;
+                let node: Node = range.startContainer;
                 if (range.startContainer.nodeType !== Node.TEXT_NODE && (range.startContainer === range.endContainer && range.startOffset !== range.endOffset)) {
                     node = range.startContainer.childNodes[range.startOffset];
                 }
@@ -884,7 +884,7 @@ export class Select extends Component{
 
         if (!this.isCollapsed()) {
             const selInfo: markerInfo[] = this.save();
-            this.jodit.editor.normalize(); // FF fix for test "commandsTest - Exec command "bold" for some text that contains a few STRONG elements, should unwrap all of these"
+            normalizeNode(this.jodit.editor.firstChild); // FF fix for test "commandsTest - Exec command "bold" for some text that contains a few STRONG elements, should unwrap all of these"
             this.jodit.editorDocument.execCommand('fontsize', false, 7);
 
             $$('font[size="7"]', this.jodit.editor).forEach((font: HTMLFontElement) => {

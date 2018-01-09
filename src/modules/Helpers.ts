@@ -946,3 +946,23 @@ export const val = (elm: HTMLInputElement|HTMLElement, selector: string, value ?
 export  const defaultLanguage = (language?: string): string => (
     (language === 'auto' || language === undefined) ? document.documentElement.lang || (navigator.language && navigator.language.substr(0, 2)) || (navigator['browserLanguage'] && navigator['browserLanguage'].substr(0, 2)) || 'en' : language
 );
+
+export  const normalizeNode = (node: Node | null) => {
+    if (!node) {
+        return;
+    }
+
+    if (node.nodeType === Node.TEXT_NODE && node.nodeValue !== null && node.parentNode) {
+        while (node.nextSibling && node.nextSibling.nodeType == 3) {
+            if (node.nextSibling.nodeValue !== null) {
+                node.nodeValue += node.nextSibling.nodeValue;
+            }
+
+            node.parentNode.removeChild(node.nextSibling);
+        }
+    } else {
+        normalizeNode(node.firstChild);
+    }
+
+    normalizeNode(node.nextSibling);
+}

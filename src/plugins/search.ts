@@ -133,7 +133,7 @@ export class search extends Component {
                         let currentPart: string|true = <string|true>(search.findSomePartOfString(query, value, next) || search.findSomePartOfString(value, query, next));
 
                         if (currentPart === true) {
-                            currentPart = query;
+                            currentPart = trim(query);
                         }
 
                         let currentPartIndex: false|number = search.getSomePartOfStringIndex(query, value, next);
@@ -157,6 +157,9 @@ export class search extends Component {
                             if (bound.startContainer === bound.endContainer && bound.endOffset === bound.startOffset) {
                                 bound.endOffset += currentPart.length;
                             }
+                            if (bound.endOffset > elm.nodeValue.length) {
+                                bound.endOffset = elm.nodeValue.length;
+                            }
                             return true;
                          }
                     } else {
@@ -177,14 +180,14 @@ export class search extends Component {
             if (bound.startContainer && bound.endContainer) {
                 const range: Range = this.jodit.editorDocument.createRange();
 
+
                 try {
                     range.setStart(bound.startContainer, <number>bound.startOffset);
                     range.setEnd(bound.endContainer, <number>bound.endOffset);
+                    this.jodit.selection.selectRange(range);
                 } catch (e) {
-
+                    debugger
                 }
-
-                this.jodit.selection.selectRange(range);
 
                 // find scrollable element
                 let parentBox: HTMLElement|false = <HTMLElement|false>Dom.closest(bound.startContainer, (elm: Node) => elm && elm.nodeType === Node.ELEMENT_NODE, this.jodit.editor);
@@ -271,7 +274,7 @@ export class search extends Component {
                     }
                 })
                 .__on([self.nextButton, self.prevButton], 'mousedown', function (this: HTMLButtonElement, e: MouseEvent) {
-                    self.find(self.current || self.jodit.editor.firstChild, self.queryInput.value, self.nextButton === this);
+                    editor.events.fire(self.nextButton === this ? 'searchNext' : 'searchPrevious');
                     e.preventDefault();
                     e.stopImmediatePropagation();
                 })
@@ -280,7 +283,7 @@ export class search extends Component {
                         case  consts.KEY_ENTER:
                             e.preventDefault();
                             e.stopImmediatePropagation();
-                            if (this.find(self.current || self.jodit.editor.firstChild, this.queryInput.value, true)) {
+                            if (editor.events.fire('searchNext')) {
                                 this.close();
                             }
                             break;
@@ -325,10 +328,10 @@ export class search extends Component {
                         }
                     })
                     .on('searchNext', () => {
-                        self.find(self.current || self.jodit.editor.firstChild, self.queryInput.value, true);
+                        return self.find(this.jodit.selection.current() || self.jodit.editor.firstChild, self.queryInput.value, true);
                     })
                     .on('searchPrevious', () => {
-                        self.find(self.current || self.jodit.editor.firstChild, self.queryInput.value, false);
+                        return self.find(this.jodit.selection.current() || self.jodit.editor.firstChild, self.queryInput.value, false);
                     })
                     .on('search', (value: string, startNode?: Node, next: boolean = true) => {
                         this.find(startNode || self.jodit.editor.firstChild, value, next);

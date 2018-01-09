@@ -26,9 +26,9 @@ declare module "../Config" {
     }
 }
 /**
- * @property{object} popup plugin options
- * @property{array} popup.img List of buttons toWYSIWYG the toolbar pop-up window in the image
- * @property{array} popup.table List of buttons toWYSIWYG the toolbar pop-up window at the tables
+ * @property {object} popup plugin options
+ * @property {array} popup.img List of buttons toWYSIWYG the toolbar pop-up window in the image
+ * @property {array} popup.table List of buttons toWYSIWYG the toolbar pop-up window at the tables
  * @example
  * ```javascript
  * new Jodit('#editor', {
@@ -312,8 +312,10 @@ export function inlinePopup(editor: Jodit) {
         },
 
         hidePopup = () => {
-            popup
-                .classList.remove('active');
+            if (popup.classList) {
+                popup
+                    .classList.remove('active');
+            }
             toogleEditor(false);
         },
 
