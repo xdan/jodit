@@ -102,7 +102,7 @@ export class search extends Component {
         return getIndex ? (startAtIndex !== null ? startAtIndex : false) : (tmp.length ? (start ? tmp.join('') : tmp.reverse().join('')) : false);
     }
 
-    public find = (start: Node|null, query: string, next: boolean): boolean => {
+    public find = (start: Node|null, query: string, next: boolean, deep: number = 0): boolean => {
         const sel: Selection = this.jodit.editorWindow.getSelection(),
             range: Range = sel.rangeCount ? sel.getRangeAt(0) : this.jodit.editorDocument.createRange();
 
@@ -120,9 +120,9 @@ export class search extends Component {
                     let value: string = elm.nodeValue;
 
                     if (!next && elm === range.startContainer) {
-                        value = value.substr(0, range.startOffset);
+                        value = !deep ? value.substr(0, range.startOffset) : value.substr(range.endOffset);
                     } else if (next && elm === range.endContainer) {
-                        value = value.substr(range.endOffset);
+                        value = !deep ? value.substr(range.endOffset) : value.substr(0, range.startOffset);
                     }
 
                     let tmpSentence: string = next ? sentence + value : value + sentence;
@@ -137,11 +137,12 @@ export class search extends Component {
                         }
 
                         let currentPartIndex: false|number = search.getSomePartOfStringIndex(query, value, next);
+
                         if (currentPartIndex === false) {
                             currentPartIndex = !next ? 0 : value.length - currentPart.length;
                         }
 
-                        if (next && elm.nodeValue.length - value.length) {
+                        if (((next && !deep) || (!next && deep)) && elm.nodeValue.length - value.length) {
                             currentPartIndex += elm.nodeValue.length - value.length;
                         }
 
@@ -202,14 +203,9 @@ export class search extends Component {
                 return true;
             }
 
-            if (next && start !== this.jodit.editor.firstChild) {
-                this.current = <Node>this.jodit.editor.firstChild;
-                return this.find(<Node>this.jodit.editor.firstChild, query, next);
-            }
-
-            if (!next && start !== this.jodit.editor.lastChild) {
-                this.current = <Node>this.jodit.editor.lastChild;
-                return this.find(<Node>this.jodit.editor.lastChild, query, next);
+            if (!deep) {
+                this.current = next ? <Node>this.jodit.editor.firstChild : <Node>this.jodit.editor.lastChild;
+                return this.find(this.current, query, next, deep + 1);
             }
         }
 
@@ -298,7 +294,7 @@ export class search extends Component {
                             this.close();
                             break;
                         case  consts.KEY_F3:
-                            if (self.isOpened) {
+                            if (self.queryInput.value) {
                                 editor.events.fire(!e.shiftKey ? 'searchNext' : 'searchPrevious');
                                 e.preventDefault();
                             }

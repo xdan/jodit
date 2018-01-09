@@ -576,6 +576,56 @@ describe('Test plugins', function () {
                 expect(editor.editor.firstChild).to.equal(range.endContainer);
                 expect(9).to.equal(range.endOffset);
             });
+            describe('with SHIFT key', function () {
+                it('Should find a previous match', function () {
+
+                    var editor = new Jodit('#editor_plugins_test', {
+                        observer: {
+                            timeout: 0
+                        }
+                    });
+
+                    editor.setEditorValue('test test test');
+
+                    var range = editor.editorDocument.createRange();
+                    range.setStart(editor.editor.firstChild, 0);
+                    range.setEnd(editor.editor.firstChild, 4);
+                    editor.selection.selectRange(range);
+
+                    var search = editor.container.querySelector('.jodit_search');
+                    expect(false).to.equal(search.classList.contains('jodit_search-active'));
+
+                    // press ctrl(cmd) + f
+                    simulateEvent('keydown', Jodit.KEY_F, editor.editor, function (options) {
+                        options.ctrlKey = true
+                    });
+
+                    expect(true).to.equal(search.classList.contains('jodit_search-active'));
+                    expect(true).to.equal(editor.ownerDocument.activeElement === search.querySelector('.jodit_search-query'));
+
+                    editor.selection.removeMarkers();
+                    Jodit.modules.Helpers.normalizeNode(editor.editor.firstChild); // because Select module splits text node
+
+                    editor.events.fire('searchNext');
+
+                    simulateEvent('keydown', Jodit.KEY_F3, editor.editor, function (options) {
+                        options.shiftKey = true
+                    }); //
+
+
+
+                    var sel = editor.editorWindow.getSelection();
+
+                    expect(1).to.equal(sel.rangeCount);
+                    range = sel.getRangeAt(0);
+
+                    expect(editor.editor.firstChild).to.equal(range.startContainer);
+                    expect(5).to.equal(range.startOffset);
+
+                    expect(editor.editor.firstChild).to.equal(range.endContainer);
+                    expect(9).to.equal(range.endOffset);
+                });
+            });
         });
         describe('Esc in query field', function () {
             it('Should hide search form and restore selection', function () {
