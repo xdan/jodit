@@ -171,7 +171,9 @@ export class Events extends Component{
         if (object.handlers === undefined) {
             return;
         }
+
         eventOrArgs = (<string>eventOrArgs).split(/[\s,]+/);
+
         for (i = 0; i < eventOrArgs.length; i += 1) {
             if (object.handlers[eventOrArgs[i]] === undefined) {
                 continue;
@@ -186,6 +188,7 @@ export class Events extends Component{
             }
             this.stack.pop();
         }
+
         return result;
     }
 }

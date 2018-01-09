@@ -36,23 +36,31 @@ export class search extends Component {
     private template: string = '<div class="jodit_search">' +
         '<div class="jodit_search_box">' +
             '<div class="jodit_search_inputs">' +
-                '<input class="jodit_search-query" type="text"/>' +
+                '<input tabindex="0" class="jodit_search-query" placeholder="' + this.jodit.i18n('Search for')  + '" type="text"/>' +
+                '<input tabindex="0" class="jodit_search-replace" placeholder="' + this.jodit.i18n('Replace with')  + '" type="text"/>' +
+            '</div>' +
+            '<div class="jodit_search_counts">' +
+                '<span>0/0</span>' +
             '</div>' +
             '<div class="jodit_search_buttons">' +
-                '<button type="button" class="jodit_search_buttons-next">' + Toolbar.getIcon('angle-down') + '</button>' +
-                '<button type="button" class="jodit_search_buttons-prev">' + Toolbar.getIcon('angle-up') + '</button>' +
-                '<button type="button" class="jodit_search_buttons-cancel">' + Toolbar.getIcon('cancel') + '</button>' +
+                '<button tabindex="0" type="button" class="jodit_search_buttons-next">' + Toolbar.getIcon('angle-down') + '</button>' +
+                '<button tabindex="0" type="button" class="jodit_search_buttons-prev">' + Toolbar.getIcon('angle-up') + '</button>' +
+                '<button tabindex="0" type="button" class="jodit_search_buttons-cancel">' + Toolbar.getIcon('cancel') + '</button>' +
+                '<button tabindex="0" type="button" class="jodit_search_buttons-replace">' + this.jodit.i18n('Replace')  + '</button>' +
             '</div>' +
         '</div>' +
     '</div>';
 
     searchBox: HTMLDivElement;
     queryInput: HTMLInputElement;
+    replaceInput: HTMLInputElement;
     closeButton: HTMLButtonElement;
     nextButton: HTMLButtonElement;
     prevButton: HTMLButtonElement;
+    replaceButton: HTMLButtonElement;
+    counterBox: HTMLSpanElement;
 
-    private eachMap = (node: Node, callback, next: boolean) => {
+    private eachMap = (node: Node, callback: (elm: Node) => boolean, next: boolean) => {
         Dom.findWithCurrent(node, (child: Node): boolean => {
             return child && callback(child) === true;
         }, this.jodit.editor, next ? 'nextSibling' : 'previousSibling', next ? 'firstChild' : 'lastChild')
@@ -102,10 +110,122 @@ export class search extends Component {
         return getIndex ? (startAtIndex !== null ? startAtIndex : false) : (tmp.length ? (start ? tmp.join('') : tmp.reverse().join('')) : false);
     }
 
-    public find = (start: Node|null, query: string, next: boolean, deep: number = 0): boolean => {
-        const sel: Selection = this.jodit.editorWindow.getSelection(),
-            range: Range = sel.rangeCount ? sel.getRangeAt(0) : this.jodit.editorDocument.createRange();
+    private updateCounters = () => {
+        if (!this.isOpened) {
+            return;
+        }
 
+        this.counterBox.style.display = this.queryInput.value.length ? 'inline-block' : 'none'
+
+        const sel: Selection = this.jodit.editorWindow.getSelection(),
+            range: Range = sel.rangeCount ? sel.getRangeAt(0) : this.jodit.editorDocument.createRange(),
+            counts: [number, number] = this.calcCounts(this.queryInput.value, range);
+
+        this.counterBox.innerText = counts.join('/');
+    };
+
+
+    private boundAlreadyWas(current: SelectionRange, bounds: SelectionRange[]): boolean {
+        return bounds.some((bound: SelectionRange) => {
+            return bound.startContainer === current.startContainer && bound.endContainer === current.endContainer &&
+                bound.startOffset === current.startOffset && bound.endOffset === current.endOffset;
+        }, false);
+    }
+
+    public calcCounts = (query: string, current: SelectionRange|false = false): [number, number] => {
+        let currentIndex: number = 0,
+            count: number = 0,
+            bounds: SelectionRange[] = [],
+            bound: SelectionRange|false = false,
+            start: Node | null = this.jodit.editor.firstChild;
+
+        while (start && query.length) {
+            bound = this.find(start, query, true, 0, <Range>bound || this.jodit.editorDocument.createRange());
+            if (bound) {
+                if (this.boundAlreadyWas(bound, bounds)) {
+                    break;
+                }
+                bounds.push(bound);
+                start = bound.startContainer;
+                count += 1;
+                if (current && this.boundAlreadyWas(current, [bound])) {
+                    currentIndex = count;
+                }
+            } else {
+                start = null;
+            }
+        }
+
+        return [currentIndex, count];
+    };
+
+    private tryScrollToElement(startContainer: Node) {
+        // find scrollable element
+        let parentBox: HTMLElement|false = <HTMLElement|false>Dom.closest(startContainer, (elm: Node) => elm && elm.nodeType === Node.ELEMENT_NODE, this.jodit.editor);
+
+        if (!parentBox) {
+            parentBox = <HTMLElement|false>Dom.prev(startContainer, (elm: Node) => elm && elm.nodeType === Node.ELEMENT_NODE, this.jodit.editor);
+        }
+
+        parentBox && parentBox !== this.jodit.editor && parentBox.scrollIntoView();
+    }
+    public findAndReplace = (start: Node|null, query: string): boolean => {
+        const sel: Selection = this.jodit.editorWindow.getSelection(),
+            range: Range = sel.rangeCount ? sel.getRangeAt(0) : this.jodit.editorDocument.createRange(),
+            bound: SelectionRange|false = this.find(start, query, true, 0, range);
+
+        if (bound && bound.startContainer && bound.endContainer) {
+            let range: Range = this.jodit.editorDocument.createRange();
+
+            try {
+
+                setTimeout(() => {
+                    if (bound && bound.startContainer && bound.endContainer) {
+                        range.setStart(bound.startContainer, <number>bound.startOffset);
+                        range.setEnd(bound.endContainer, <number>bound.endOffset);
+                        range.deleteContents();
+                        let textNode: Node = this.jodit.editorDocument.createTextNode(this.replaceInput.value);
+                        range.insertNode(textNode);
+                        this.jodit.selection.select(textNode)
+                        this.tryScrollToElement(textNode);
+                    }
+                }, this.jodit.options.observer.timeout);
+            } catch (e) {
+
+            }
+
+            return true;
+        }
+
+        return false;
+    };
+    public findAndSelect = (start: Node|null, query: string, next: boolean): boolean => {
+        const sel: Selection = this.jodit.editorWindow.getSelection(),
+            range: Range = sel.rangeCount ? sel.getRangeAt(0) : this.jodit.editorDocument.createRange(),
+            bound: SelectionRange|false = this.find(start, query, next, 0, range);
+
+        if (bound && bound.startContainer && bound.endContainer) {
+            const range: Range = this.jodit.editorDocument.createRange();
+
+            try {
+                range.setStart(bound.startContainer, <number>bound.startOffset);
+                range.setEnd(bound.endContainer, <number>bound.endOffset);
+                this.jodit.selection.selectRange(range);
+            } catch (e) {
+            }
+
+            this.tryScrollToElement(bound.startContainer);
+
+            this.current = bound.startContainer;
+            this.updateCounters();
+
+            return true;
+        }
+
+        return false;
+    };
+
+    public find = (start: Node|null, query: string, next: boolean, deep: number, range: Range): false|SelectionRange => {
         if (start && query.length) {
             let sentence: string = '',
                 bound: SelectionRange = {
@@ -115,7 +235,7 @@ export class search extends Component {
                     endOffset: null,
                 };
 
-            this.eachMap(start, (elm: Node) => {
+            this.eachMap(start, (elm: Node): boolean => {
                 if (elm.nodeType === Node.TEXT_NODE && elm.nodeValue !== null && elm.nodeValue.length) {
                     let value: string = elm.nodeValue;
 
@@ -130,19 +250,20 @@ export class search extends Component {
                     let part: boolean|string = <boolean|string>search.findSomePartOfString(query, tmpSentence, next);
 
                     if (part !== false) {
-                        let currentPart: string|true = <string|true>(search.findSomePartOfString(query, value, next) || search.findSomePartOfString(value, query, next));
+                        let currentPart: string|boolean = <string|boolean>search.findSomePartOfString(query, value, next);
 
                         if (currentPart === true) {
                             currentPart = trim(query);
+                        } else if (currentPart === false) {
+                            currentPart = <string|true>search.findSomePartOfString(value, query, next);
+                            if (currentPart === true) {
+                                currentPart = trim(value);
+                            }
                         }
 
-                        let currentPartIndex: false|number = search.getSomePartOfStringIndex(query, value, next);
+                        let currentPartIndex: number = search.getSomePartOfStringIndex(query, value, next) || 0;
 
-                        if (currentPartIndex === false) {
-                            currentPartIndex = !next ? 0 : value.length - currentPart.length;
-                        }
-
-                        if (((next && !deep) || (!next && deep)) && elm.nodeValue.length - value.length) {
+                        if (((next && !deep) || (!next && deep)) && elm.nodeValue.length - value.length > 0) {
                             currentPartIndex += elm.nodeValue.length - value.length;
                         }
 
@@ -155,12 +276,8 @@ export class search extends Component {
                         } else {
                             bound.endContainer = elm;
                             bound.endOffset = currentPartIndex;
-                            if (bound.startContainer === bound.endContainer && bound.endOffset === bound.startOffset) {
-                                bound.endOffset += currentPart.length;
-                            }
-                            if (bound.endOffset > elm.nodeValue.length) {
-                                bound.endOffset = elm.nodeValue.length;
-                            }
+                            bound.endOffset += (<string>currentPart).length;
+
                             return true;
                          }
                     } else {
@@ -176,37 +293,19 @@ export class search extends Component {
                 } else if (Dom.isBlock(elm) && sentence !== '') {
                     sentence = next ? sentence + ' ' : ' ' + sentence;
                 }
+
+                return false;
             }, next);
 
             if (bound.startContainer && bound.endContainer) {
-                const range: Range = this.jodit.editorDocument.createRange();
-
-
-                try {
-                    range.setStart(bound.startContainer, <number>bound.startOffset);
-                    range.setEnd(bound.endContainer, <number>bound.endOffset);
-                    this.jodit.selection.selectRange(range);
-                } catch (e) {
-                    debugger
-                }
-
-                // find scrollable element
-                let parentBox: HTMLElement|false = <HTMLElement|false>Dom.closest(bound.startContainer, (elm: Node) => elm && elm.nodeType === Node.ELEMENT_NODE, this.jodit.editor);
-
-                if (!parentBox) {
-                    parentBox = <HTMLElement|false>Dom.prev(bound.startContainer, (elm: Node) => elm && elm.nodeType === Node.ELEMENT_NODE, this.jodit.editor);
-                }
-
-                parentBox && parentBox.scrollIntoView();
-
-                this.current = bound.startContainer;
-                return true;
+                return bound;
             }
 
             if (!deep) {
                 this.current = next ? <Node>this.jodit.editor.firstChild : <Node>this.jodit.editor.lastChild;
-                return this.find(this.current, query, next, deep + 1);
+                return this.find(this.current, query, next, deep + 1, range);
             }
+
         }
 
         return false;
@@ -214,11 +313,13 @@ export class search extends Component {
 
     private isOpened: boolean = false;
 
-    open = () => {
+    open = (searchAndReplace: boolean = false) => {
         if (!this.isOpened) {
             this.searchBox.classList.add('jodit_search-active');
             this.isOpened = true;
         }
+
+        this.searchBox.classList.toggle('jodit_search-and-replace', searchAndReplace);
 
         this.current = this.jodit.selection.current();
         this.selInfo = this.jodit.selection.save();
@@ -227,6 +328,11 @@ export class search extends Component {
 
         if (sel) {
             this.queryInput.value = sel;
+        }
+
+        this.updateCounters();
+
+        if (sel) {
             this.queryInput.select();
         } else {
             this.queryInput.focus();
@@ -257,9 +363,12 @@ export class search extends Component {
 
             self.searchBox = <HTMLDivElement>dom(self.template, editor.ownerDocument);
             self.queryInput = <HTMLInputElement>self.searchBox.querySelector('input.jodit_search-query');
+            self.replaceInput = <HTMLInputElement>self.searchBox.querySelector('input.jodit_search-replace');
             self.closeButton = <HTMLButtonElement>self.searchBox.querySelector('.jodit_search_buttons-cancel');
             self.nextButton = <HTMLButtonElement>self.searchBox.querySelector('.jodit_search_buttons-next');
             self.prevButton = <HTMLButtonElement>self.searchBox.querySelector('.jodit_search_buttons-prev');
+            self.replaceButton = <HTMLButtonElement>self.searchBox.querySelector('.jodit_search_buttons-replace');
+            self.counterBox = <HTMLButtonElement>self.searchBox.querySelector('.jodit_search_counts span');
 
             editor
                 .__on(self.closeButton, 'click', this.close)
@@ -269,7 +378,16 @@ export class search extends Component {
                         self.selInfo = editor.selection.save();
                     }
                 })
-                .__on([self.nextButton, self.prevButton], 'mousedown', function (this: HTMLButtonElement, e: MouseEvent) {
+                .__on(self.replaceButton, 'click', (e: MouseEvent) => {
+
+                    self.findAndReplace(editor.selection.current() || editor.editor.firstChild, self.queryInput.value);
+
+                    this.updateCounters();
+
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                })
+                .__on([self.nextButton, self.prevButton], 'click', function (this: HTMLButtonElement, e: MouseEvent) {
                     editor.events.fire(self.nextButton === this ? 'searchNext' : 'searchPrevious');
                     e.preventDefault();
                     e.stopImmediatePropagation();
@@ -284,7 +402,7 @@ export class search extends Component {
                             }
                             break;
                         default:
-                            // this.jodit.options.searchByInput && this.search(this.query.value, true);
+                            this.updateCounters();
                             break;
                     }
                 }, this.jodit.options.observer.timeout))
@@ -299,9 +417,10 @@ export class search extends Component {
                                 e.preventDefault();
                             }
                             break;
+                        case  consts.KEY_R:
                         case  consts.KEY_F:
                             if (ctrlKey(e)) {
-                                this.open();
+                                this.open(e.which === consts.KEY_R);
                                 e.preventDefault();
                             }
                             break;
@@ -321,16 +440,14 @@ export class search extends Component {
                         }
                         if (this.isOpened) {
                             this.current = this.jodit.selection.current();
+                            this.updateCounters();
                         }
                     })
-                    .on('searchNext', () => {
-                        return self.find(this.jodit.selection.current() || self.jodit.editor.firstChild, self.queryInput.value, true);
-                    })
-                    .on('searchPrevious', () => {
-                        return self.find(this.jodit.selection.current() || self.jodit.editor.firstChild, self.queryInput.value, false);
+                    .on('searchNext searchPrevious', () => {
+                        return self.findAndSelect(editor.selection.current() || editor.editor.firstChild, self.queryInput.value, editor.events.current === 'searchNext');
                     })
                     .on('search', (value: string, startNode?: Node, next: boolean = true) => {
-                        this.find(startNode || self.jodit.editor.firstChild, value, next);
+                        self.findAndSelect(startNode || self.jodit.editor.firstChild, value, next);
                     });
         }
     }

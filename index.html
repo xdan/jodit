@@ -89,7 +89,7 @@
         height: 300,
 //        defaultMode: Jodit.MODE_SPLIT,
         observer: {
-            timeout: 0
+            // timeout: 0
         },
         uploader: {
             url: 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'
@@ -137,6 +137,7 @@
     sel.removeAllRanges();
 
     editor.events.fire('search', ['th was']);
+    editor.__plugins.search.open();
     expect(1).to.be.equal(sel.rangeCount);
     var range = sel.getRangeAt(0);
 
