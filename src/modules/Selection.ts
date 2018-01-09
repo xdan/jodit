@@ -25,13 +25,13 @@ export class Select extends Component{
      * @method insertAtPoint
      * @param {int} x Coordinate by horizontal
      * @param {int} y Coordinate by vertical
-     * @return {boolean} Something went wrong
+     * @return boolean Something went wrong
      */
     insertCursorAtPoint(x: number, y: number): boolean {
         let caret;
         const doc: Document = this.jodit.editorDocument;
 
-        this.clear();
+        this.removeMarkers();
 
         try {
             let rng: Range = doc.createRange();
@@ -70,7 +70,7 @@ export class Select extends Component{
     /**
      * Remove all markers
      */
-    clear() {
+    removeMarkers() {
         $$('span[data-' + consts.MARKER_CLASS + ']', this.jodit.editor).forEach((marker: HTMLElement) => {
             if (marker.parentNode) {
                 marker.parentNode.removeChild(marker)
@@ -104,7 +104,7 @@ export class Select extends Component{
     /**
      * Restores user selections using marker invisible elements in the DOM.
      *
-     * @param {Array} selectionInfo
+     * @param {markerInfo[]|null} selectionInfo
      */
     restore(selectionInfo: markerInfo[]|null = []) {
         if (Array.isArray(selectionInfo)) {
@@ -153,7 +153,7 @@ export class Select extends Component{
     /**
      * Saves selections using marker invisible elements in the DOM.
      *
-     * @return {Array}
+     * @return markerInfo[]
      */
     save():markerInfo[]  {
         const sel: Selection = this.jodit.editorWindow.getSelection();
@@ -267,7 +267,7 @@ export class Select extends Component{
     /**
      * Checks whether the current selection is something or just set the cursor is
      *
-     * @return {Boolean} true Selection does't have content
+     * @return boolean true Selection does't have content
      */
     isCollapsed (): boolean {
         let sel = this.jodit.editorWindow.getSelection(), r;
@@ -282,7 +282,7 @@ export class Select extends Component{
     /**
      * Checks whether the editor currently in focus
      *
-     * @return {Boolean}
+     * @return boolean
      */
     isFocused (): boolean {
         return (this.jodit.editorDocument.hasFocus && this.jodit.editorDocument.hasFocus()) && this.jodit.editor === this.jodit.editorDocument.activeElement;
@@ -291,7 +291,7 @@ export class Select extends Component{
     /**
      * Returns the current element under the cursor inside editor
      *
-     * @return {boolean|Node} The element under the cursor or false if undefined or not in editor
+     * @return false|Node The element under the cursor or false if undefined or not in editor
      */
     current(): false|Node {
         if (this.jodit.getRealMode() === consts.MODE_WYSIWYG && this.jodit.editorWindow.getSelection !== undefined) {

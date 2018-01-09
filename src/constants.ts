@@ -24,6 +24,7 @@ export const KEY_BOTTOM     = 40;
 export const KEY_Z          = 90;
 export const KEY_Y          = 89;
 export const KEY_F          = 70;
+export const KEY_F3         = 114;
 export const KEY_ESC        = 27;
 // export const KEY_CTRL       = 17;
 

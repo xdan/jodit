@@ -254,7 +254,7 @@ export class Toolbar extends Component{
         });
 
         if (this.__popapOpened && this.jodit.selection) {
-            this.jodit.selection.clear();
+            this.jodit.selection.removeMarkers();
         }
 
         this.__popapOpened = false;
@@ -498,7 +498,7 @@ export class Toolbar extends Component{
                     control,
                     () => {
                         this.closeAll();
-                        this.jodit.selection.clear(); // remove all markers
+                        this.jodit.selection.removeMarkers(); // remove all markers
                     }
                 ));
             } else {

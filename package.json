@@ -61,9 +61,5 @@
     "webpack-dev-middleware": "^1.12.2",
     "webpack-dev-server": "^2.9.7",
     "webpack-hot-middleware": "^2.21.0"
-  },
-  "dependencies": {
-    "tslint": "^5.8.0",
-    "tslint-loader": "^3.5.3"
   }
 }

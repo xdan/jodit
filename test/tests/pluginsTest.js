@@ -23,7 +23,7 @@ describe('Test plugins', function () {
 
             simulateEvent('mouseup', 0, editor.editor);
 
-            expect(editor.getEditorValue().replace('700', 'bold')).to.equal('text <strong>test</strong><span style="font-weight: bold;"> post</span>');
+            expect(editor.getEditorValue().replace('Jodit.KEY_F0', 'bold')).to.equal('text <strong>test</strong><span style="font-weight: bold;"> post</span>');
         });
         it('Should copy fontSize from element and paste it in new selection', function () {
             getBox().style.width = 'auto';
@@ -287,7 +287,7 @@ describe('Test plugins', function () {
                         });
 
                         simulateEvent('mousedown', 0, dialog.querySelector('a.jodit_use_image_editor'));
-                    }).timeout(7000);
+                    }).timeout(Jodit.KEY_F00);
                 });
                 describe('Disable ratio', function () {
                     it('Should allow crop image without ratio', function (done) {
@@ -360,7 +360,7 @@ describe('Test plugins', function () {
                         });
 
                         simulateEvent('mousedown', 0, dialog.querySelector('a.jodit_use_image_editor'));
-                    }).timeout(7000);
+                    }).timeout(Jodit.KEY_F00);
                 });
             });
             describe('Resize mode', function () {
@@ -431,7 +431,7 @@ describe('Test plugins', function () {
                         });
 
                         simulateEvent('mousedown', 0, dialog.querySelector('a.jodit_use_image_editor'));
-                    }).timeout(7000);
+                    }).timeout(Jodit.KEY_F00);
                 });
                 describe('Disable ratio', function () {
                     it('Should allow resize image without ratio', function (done) {
@@ -506,7 +506,7 @@ describe('Test plugins', function () {
                         });
 
                         simulateEvent('mousedown', 0, dialog.querySelector('a.jodit_use_image_editor'));
-                    }).timeout(7000);
+                    }).timeout(Jodit.KEY_F00);
                 });
             });
         });
@@ -521,11 +521,58 @@ describe('Test plugins', function () {
                 });
                 var search = editor.container.querySelector('.jodit_search');
                 expect(false).to.equal(search.classList.contains('jodit_search-active'));
-                simulateEvent('keydown', 70, editor.editor, function (options) {
+                simulateEvent('keydown', Jodit.KEY_F, editor.editor, function (options) {
                     options.ctrlKey = true
                 });
                 expect(true).to.equal(search.classList.contains('jodit_search-active'));
                 expect(true).to.equal(editor.ownerDocument.activeElement === search.querySelector('.jodit_search-query'));
+            });
+        });
+        describe('F3 after search', function () {
+            it('Should find a next match', function () {
+
+                var editor = new Jodit('#editor_plugins_test', {
+                    observer: {
+                        timeout: 0
+                    }
+                });
+
+                editor.setEditorValue('test test test')
+                var range = editor.editorDocument.createRange();
+                range.setStart(editor.editor.firstChild, 0)
+                range.setEnd(editor.editor.firstChild, 4)
+                editor.selection.selectRange(range);
+
+                var search = editor.container.querySelector('.jodit_search');
+                expect(false).to.equal(search.classList.contains('jodit_search-active'));
+
+                // press ctrl(cmd) + f
+                simulateEvent('keydown', Jodit.KEY_F, editor.editor, function (options) {
+                    options.ctrlKey = true
+                });
+
+                expect(true).to.equal(search.classList.contains('jodit_search-active'));
+                expect(true).to.equal(editor.ownerDocument.activeElement === search.querySelector('.jodit_search-query'));
+
+                editor.events.fire('searchNext');
+
+                simulateEvent('keydown', Jodit.KEY_F3, editor.editor, function (options) {
+                    options.shiftKey = false
+                }); //
+
+                editor.selection.removeMarkers();
+                editor.editor.normalize(); // because Select module splits text node
+
+                var sel = editor.editorWindow.getSelection();
+
+                expect(1).to.equal(sel.rangeCount);
+                range = sel.getRangeAt(0);
+
+                expect(editor.editor.firstChild).to.equal(range.startContainer);
+                expect(5).to.equal(range.startOffset);
+
+                expect(editor.editor.firstChild).to.equal(range.endContainer);
+                expect(9).to.equal(range.endOffset);
             });
         });
         describe('Esc in query field', function () {
@@ -545,7 +592,7 @@ describe('Test plugins', function () {
 
                 var search = editor.container.querySelector('.jodit_search');
                 expect(false).to.equal(search.classList.contains('jodit_search-active'));
-                simulateEvent('keydown', 70, editor.editor, function (options) {
+                simulateEvent('keydown', Jodit.KEY_F, editor.editor, function (options) {
                     options.ctrlKey = true
                 });
                 expect(true).to.equal(search.classList.contains('jodit_search-active'));
