@@ -56,6 +56,7 @@ export class Component {
             }
             return this;
         }
+
         this.__scope.forEach((data) => {
             (Array.isArray(element) ? element : [element]).forEach((elm) => {
                 if (data.element && data.element.removeEventListener && (elm === false || elm === data.element) && (event === false || event === data.event)) {
@@ -63,6 +64,7 @@ export class Component {
                 }
             });
         });
+
         return this;
     }
 

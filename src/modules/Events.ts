@@ -64,20 +64,26 @@ export class Events extends Component{
             this.jodit.handlers = {};
             return this;
         }
-        let i, j;
+
+        let i: number, j: number;
+
         if (typeof object === 'string') {
             callback = list;
             list = object;
             object = this.jodit;
         }
+
         if (object.handlers === undefined) {
             return this;
         }
-        let actions = list.split(/[\s,]+/);
+
+        let actions: string[] = list.split(/[\s,]+/);
+
         for (i = 0; i < actions.length; i += 1) {
             if (object.handlers[actions[i]] === undefined) {
                 continue;
             }
+
             if (callback !== undefined) {
                 for (j = 0; j < object.handlers[actions[i]].length; j += 1) {
                     if (object.handlers[actions[i]][j] === callback) {
@@ -87,7 +93,9 @@ export class Events extends Component{
             } else {
                 delete object.handlers[actions[i]];
             }
+
         }
+
         return this;
     }
 
@@ -108,7 +116,7 @@ export class Events extends Component{
      * ```
      */
     on(objectOrEvent: any, list: any, callback?: string|Function, onTop: boolean = false) {
-        let i;
+        let i: number;
 
         if (typeof objectOrEvent === 'string') {
             callback = list;
@@ -156,6 +164,7 @@ export class Events extends Component{
      * dialog.open('Hello world!!!');
      * ```
      */
+
     fire (object: any, eventOrArgs?: string|any[], args?: any[]): false|void|any {
         let i: number,
             j: number,
@@ -178,6 +187,7 @@ export class Events extends Component{
             if (object.handlers[eventOrArgs[i]] === undefined) {
                 continue;
             }
+
             this.stack.push(eventOrArgs[i]);
             for (j = 0; object.handlers[eventOrArgs[i]] && j < object.handlers[eventOrArgs[i]].length; j += 1) {
                 this.current = eventOrArgs[i];
