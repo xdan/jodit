@@ -528,6 +528,58 @@ describe('Test plugins', function () {
                 expect(true).to.equal(editor.ownerDocument.activeElement === search.querySelector('.jodit_search-query'));
             });
         });
+        describe('CTRL + R', function () {
+            it('Should show search and replace form and query field must have focus', function () {
+                var editor = new Jodit('#editor_plugins_test', {
+                    observer: {
+                        timeout: 0
+                    }
+                });
+
+                var search = editor.container.querySelector('.jodit_search');
+                expect(false).to.equal(search.classList.contains('jodit_search-active'));
+                simulateEvent('keydown', Jodit.KEY_R, editor.editor, function (options) {
+                    options.ctrlKey = true
+                });
+                expect(true).to.equal(search.classList.contains('jodit_search-active'));
+                expect(true).to.equal(search.classList.contains('jodit_search-and-replace'));
+                expect(true).to.equal(editor.ownerDocument.activeElement === search.querySelector('.jodit_search-query'));
+            });
+            describe('Press Replace button', function () {
+                it('Should replace value form query field to value from replace field in editor', function () {
+                    var editor = new Jodit('#editor_plugins_test', {
+                        observer: {
+                            timeout: 0
+                        }
+                    });
+
+                    editor.setEditorValue('test test test')
+
+                    var search = editor.container.querySelector('.jodit_search');
+                    expect(false).to.equal(search.classList.contains('jodit_search-active'));
+                    simulateEvent('keydown', Jodit.KEY_R, editor.editor, function (options) {
+                        options.ctrlKey = true
+                    });
+                    expect(true).to.be.equal(search.classList.contains('jodit_search-active'));
+                    expect(true).to.be.equal(search.classList.contains('jodit_search-and-replace'));
+                    expect(true).to.be.equal(editor.ownerDocument.activeElement === search.querySelector('.jodit_search-query'));
+
+                    var query = search.querySelector('.jodit_search-query');
+                    var replace = search.querySelector('.jodit_search-replace');
+                    var replaceButton = search.querySelector('.jodit_search_buttons-replace');
+
+                    query.value = 't';
+                    replace.value = 'w';
+
+                    simulateEvent('click', 0, replaceButton);
+                    simulateEvent('click', 0, replaceButton);
+                    simulateEvent('click', 0, replaceButton);
+                    simulateEvent('click', 0, replaceButton);
+
+                    expect('wesw wesw test').to.be.equal(editor.getEditorValue());
+                });
+            });
+        });
         describe('F3 after search', function () {
             it('Should find a next match', function () {
 

@@ -115,7 +115,7 @@ export class search extends Component {
             return;
         }
 
-        this.counterBox.style.display = this.queryInput.value.length ? 'inline-block' : 'none'
+        this.counterBox.style.display = this.queryInput.value.length ? 'inline-block' : 'none';
 
         const sel: Selection = this.jodit.editorWindow.getSelection(),
             range: Range = sel.rangeCount ? sel.getRangeAt(0) : this.jodit.editorDocument.createRange(),
@@ -178,18 +178,15 @@ export class search extends Component {
             let range: Range = this.jodit.editorDocument.createRange();
 
             try {
-
-                setTimeout(() => {
-                    if (bound && bound.startContainer && bound.endContainer) {
-                        range.setStart(bound.startContainer, <number>bound.startOffset);
-                        range.setEnd(bound.endContainer, <number>bound.endOffset);
-                        range.deleteContents();
-                        let textNode: Node = this.jodit.editorDocument.createTextNode(this.replaceInput.value);
-                        range.insertNode(textNode);
-                        this.jodit.selection.select(textNode)
-                        this.tryScrollToElement(textNode);
-                    }
-                }, this.jodit.options.observer.timeout);
+                if (bound && bound.startContainer && bound.endContainer) {
+                    range.setStart(bound.startContainer, <number>bound.startOffset);
+                    range.setEnd(bound.endContainer, <number>bound.endOffset);
+                    range.deleteContents();
+                    const textNode: Node = this.jodit.editorDocument.createTextNode(this.replaceInput.value);
+                    range.insertNode(textNode);
+                    this.jodit.selection.select(textNode);
+                    this.tryScrollToElement(textNode);
+                }
             } catch (e) {
 
             }
