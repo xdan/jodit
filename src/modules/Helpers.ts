@@ -519,14 +519,13 @@ export const parseQuery = (queryString: string): {[key: string]: string} => {
  * @param {int} [height=345]
  * return {string} embed code
  */
-export const convertMediaURLToVideoEmbed = (url, width:number = 400, height: number = 345) => {
+export const convertMediaURLToVideoEmbed = (url: string, width:number = 400, height: number = 345): string => {
     if (!isURL(url)) {
         return url;
     }
 
-    let parser = document.createElement('a'),
-        pattern1 = /(?:http?s?:\/\/)?(?:www\.)?(?:vimeo\.com)\/?(.+)/g,
-        query;
+    const parser: HTMLAnchorElement = document.createElement('a'),
+        pattern1: RegExp = /(?:http?s?:\/\/)?(?:www\.)?(?:vimeo\.com)\/?(.+)/g;
 
     parser.href = url;
 
@@ -545,7 +544,7 @@ export const convertMediaURLToVideoEmbed = (url, width:number = 400, height: num
         case 'www.youtube.com':
         case 'youtu.be':
         case 'www.youtu.be':
-            query = parser.search ? parseQuery(parser.search) : {v: parser.pathname.substr(1)};
+            const query: {[key: string]: number|string} = parser.search ? parseQuery(parser.search) : {v: parser.pathname.substr(1)};
             return query.v ? '<iframe width="' + width + '" height="' + height + '" src="//www.youtube.com/embed/' + query.v + '" frameborder="0" allowfullscreen></iframe>' : url;
     }
 

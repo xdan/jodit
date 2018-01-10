@@ -305,8 +305,8 @@ export function inlinePopup(editor: Jodit) {
     const toolbar: Toolbar = new Toolbar(editor),
         popup: HTMLDivElement = <HTMLDivElement> dom('<div data-editor_id="' + editor.id + '" class="jodit_toolbar_popup-inline"></div>', editor.ownerDocument),
 
-        toogleEditor = (toggle: boolean) => {
-            if (editor.container) {
+        toggleEditor = (toggle: boolean) => {
+            if (editor.container && editor.container.classList) {
                 editor.container.classList.toggle('jodit_popup_active', toggle);
             }
         },
@@ -316,7 +316,7 @@ export function inlinePopup(editor: Jodit) {
                 popup
                     .classList.remove('active');
             }
-            toogleEditor(false);
+            toggleEditor(false);
         },
 
         showPopup = (elm: HTMLElement, x: number, y: number) => {
@@ -340,7 +340,7 @@ export function inlinePopup(editor: Jodit) {
                 marginLeft: -Math.round(popup.offsetWidth / 2) + 'px'
             });
 
-            toogleEditor(true);
+            toggleEditor(true);
         },
 
         delayShowPopup = (elm: HTMLElement, x: number, y: number) => {

@@ -10,6 +10,7 @@ import {isURL, convertMediaURLToVideoEmbed, dom, val} from '../modules/Helpers'
 import {Dom} from "../modules/Dom";
 import {ControlType} from "../modules/Toolbar";
 import {markerInfo} from "../modules/Selection";
+import {Select} from "../modules";
 
 /**
 * @property {object}  link `{@link link|link}` plugin's options
@@ -164,7 +165,7 @@ export function link(jodit: Jodit) {
     if (jodit.options.link.followOnDblClick) {
         jodit.events.on('afterInit', () => {
             jodit.__on(jodit.editor, 'dblclick', 'a', function (this: HTMLAnchorElement, e: MouseEvent) {
-                let href: string|null = this.getAttribute('href');
+                const href: string|null = this.getAttribute('href');
                 if (href) {
                     location.href = href;
                     e.preventDefault();
@@ -173,45 +174,50 @@ export function link(jodit: Jodit) {
         });
     }
     if (jodit.options.link.processPastedLink) {
-        jodit.events.on('processPaste', function (event, html) {
+        jodit.events.on('processPaste',  (event, html): HTMLAnchorElement|void => {
             if (isURL(html)) {
-                let a;
-                if (convertMediaURLToVideoEmbed(html) !== html) {
-                    a = convertMediaURLToVideoEmbed(html);
-                } else {
-                    a = jodit.editorDocument.createElement('a');
-                    a.setAttribute('href', html);
-                    a.innerText = html;
-                    if (jodit.options.link.openLinkDialogAfterPost) {
-                        setTimeout(() => {
-                            //parent.selection.moveCursorTo(a, true);
-                            //editor.selection.selectNodes(Array.prototype.slice.call(a.childNodes));
-                        }, 100);
-                    }
+                const embed: string = convertMediaURLToVideoEmbed(html);
+
+                if (embed !== html) {
+                    return <HTMLAnchorElement>dom(embed, jodit.editorDocument);
                 }
+
+                const a: HTMLAnchorElement = jodit.editorDocument.createElement('a');
+                a.setAttribute('href', html);
+                a.innerText = html;
+                if (jodit.options.link.openLinkDialogAfterPost) {
+                    setTimeout(() => {
+                        //parent.selection.moveCursorTo(a, true);
+                        //editor.selection.selectNodes(Array.prototype.slice.call(a.childNodes));
+                    }, 100);
+                }
+
                 return a;
             }
         });
     }
     if (jodit.options.link.removeLinkAfterFormat) {
-        jodit.events.on('afterCommand', function (command) {
-            let sel = jodit.selection,
-                newtag,
-                node;
+        jodit.events.on('afterCommand', (command: string) => {
+            let sel: Select = jodit.selection,
+                newtag: Node,
+                node: Node|false;
 
             if (command === 'removeFormat') {
                 node = sel.current();
-                if (node && node.tagName !== 'A') {
+                if (node && node.nodeName !== 'A') {
                     node = Dom.closest(node, 'A', jodit.editor);
                 }
-                if (node && node.tagName === 'A') {
-                    if (node.innerHTML === node.innerText) {
-                        newtag = Dom.create('text', node.innerText, jodit.editorDocument);
+                if (node && node.nodeName === 'A') {
+                    if ((<HTMLElement>node).innerHTML === (<HTMLElement>node).innerText) {
+                        newtag = Dom.create('text', (<HTMLElement>node).innerText, jodit.editorDocument);
                     } else {
-                        newtag = Dom.create('span', node.innerHTML, jodit.editorDocument);
+                        newtag = Dom.create('span', (<HTMLElement>node).innerHTML, jodit.editorDocument);
                     }
-                    node.parentNode.replaceChild(newtag, node);
-                    jodit.selection.setCursorIn(newtag, true);
+
+                    if (node.parentNode) {
+                        node.parentNode.replaceChild(newtag, node);
+                        jodit.selection.setCursorIn(newtag, true);
+                    }
                 }
             }
         });

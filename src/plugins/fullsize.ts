@@ -75,7 +75,7 @@ export  function fullsize(editor: Jodit) {
                 }
             }
         },
-        toggle = (condition) => {
+        toggle = (condition?: boolean) => {
             if (condition === undefined) {
                 condition = !editor.container.classList.contains('jodit_fullsize');
             }
@@ -86,8 +86,9 @@ export  function fullsize(editor: Jodit) {
 
             if (editor.toolbar) {
                 css(editor.toolbar.container, 'width', 'auto');
-                let icon = dom(Toolbar.getIcon(condition ? 'shrink' : 'fullsize'), editor.ownerDocument),
-                    a = editor.toolbar.container.querySelector('.jodit_toolbar_btn-fullsize a');
+                const icon: HTMLElement = dom(<string>Toolbar.getIcon(condition ? 'shrink' : 'fullsize'), editor.ownerDocument),
+                    a: HTMLAnchorElement|null = editor.toolbar.container.querySelector('.jodit_toolbar_btn-fullsize a');
+
                 if (a) {
                     icon.classList.add('jodit_icon');
                     a.innerHTML = '';

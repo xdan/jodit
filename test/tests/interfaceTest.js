@@ -198,6 +198,53 @@ describe('Test interface', function() {
 
                 expect(list.style.display).to.equal('none');
             });
+
+            describe('Click inside the link', function() {
+                it('Should open link popup', function() {
+                    var editor = new Jodit('#table_editor_interface', {
+                        observer: {
+                            timeout: 0
+                        }
+                    });
+
+                    editor.setEditorValue('test test <a href="#">test</a>')
+
+
+                    simulateEvent('mousedown', 0, editor.editor.querySelector('a'))
+
+                    var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline.active[data-editor_id=table_editor_interface]');
+
+                    expect(popup).to.be.not.equal(null);
+                });
+                describe('Click on pencil', function() {
+                    it('Should open edit link popup', function() {
+                        var editor = new Jodit('#table_editor_interface', {
+                            observer: {
+                                timeout: 0
+                            }
+                        });
+
+                        editor.setEditorValue('test test <a href="#">test</a>')
+
+
+                        simulateEvent('mousedown', 0, editor.editor.querySelector('a'))
+                        var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=table_editor_interface]');
+
+                        expect(popup).to.be.not.equal(null);
+                        expect(popup.classList.contains('active')).to.be.equal(true);
+
+                        var pencil = popup.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link a');
+                        expect(pencil).to.be.not.equal(null);
+
+                        simulateEvent('mousedown', 0, pencil);
+                        var subpopup = popup.querySelector('.jodit_toolbar_popup');
+
+                        expect(subpopup).to.be.not.equal(null);
+                        expect(subpopup.style.display).to.be.equal('block');
+                        expect(popup.classList.contains('active')).to.be.equal(true);
+                    });
+                });
+            });
             describe('Open LINK insert dialog and insert new link', function() {
                 it('Should insert new link', function() {
                     var editor = new Jodit('#table_editor_interface', {

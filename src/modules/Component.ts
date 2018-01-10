@@ -107,16 +107,16 @@ export class Component {
             if (selectorOrCallback) {
                 temp = function (event) {
                     prepareEvent(event);
-                    let node = event.target;
+                    let node: Element|null = event.target;
                     while (node && node !== this) {
-                        if (node.matches(selectorOrCallback)) {
+                        if (node.matches(<string>selectorOrCallback)) {
                             if (callback && callback.call(node, event) === false) {
                                 event.preventDefault();
                                 return false;
                             }
                             return;
                         }
-                        node = node.parentNode;
+                        node = <Element|null>node.parentNode;
                     }
                 }
             }

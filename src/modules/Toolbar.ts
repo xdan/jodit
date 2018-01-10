@@ -169,7 +169,7 @@ export type ButtonType = {
 
 
 export class Toolbar extends Component{
-    static icons = {};
+    static icons: {[key: string]: string} = {};
     container: HTMLDivElement;
     private popup: HTMLDivElement;
     private list: HTMLDivElement;
@@ -196,10 +196,10 @@ export class Toolbar extends Component{
      * Return SVG icon
      *
      * @param {string} name icon
-     * @param {string|boolean} [defaultValue='<span></span>']
+     * @param {string} [defaultValue='<span></span>']
      * @return {string}
      */
-    static getIcon(name: string, defaultValue:string|false = '<span></span>') {
+    static getIcon(name: string, defaultValue:string = '<span></span>'): string {
         return Toolbar.icons[name] !== undefined ? Toolbar.icons[name] : defaultValue;
     }
 
@@ -247,7 +247,7 @@ export class Toolbar extends Component{
         this.popup.style.display = 'none';
         this.list.style.display = 'none';
 
-        this.jodit.events.fire('hidePopup');
+        // this.jodit.events.fire('hidePopup');
 
         $$('.jodit_dropdown_open, .jodit_popap_open', this.container).forEach((btn) => {
             btn.classList.remove('jodit_dropdown_open', 'jodit_popap_open');
@@ -381,9 +381,9 @@ export class Toolbar extends Component{
         let iconSVG: string|false;
 
         if (!this.jodit.options.textIcons) {
-            iconSVG = Toolbar.getIcon(icon, false);
+            iconSVG = Toolbar.getIcon(icon, '');
 
-            if (iconSVG === false) {
+            if (iconSVG === '') {
                 iconSVG = Toolbar.getIcon(typeof control.name === 'string' ? control.name : 'empty');
             }
         } else {
@@ -441,7 +441,7 @@ export class Toolbar extends Component{
             }
         }
 
-        this.__on(btn, 'mousedown touchend', (originalEvent) => {
+        this.__on(btn, 'mousedown touchend', (originalEvent: MouseEvent) => {
             originalEvent.stopImmediatePropagation();
             originalEvent.preventDefault();
 

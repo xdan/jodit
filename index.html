@@ -132,20 +132,9 @@
     editor.editor.addEventListener('mousedown', callback)
     editor.editor.addEventListener('mouseup', callback)
     editor.editor.addEventListener('input', callback);
-    editor.setEditorValue('<p><span>Mr</span> <span>John</span> <span>Smith</span> <span>washed</span> <span>window</span></p>');
-    var sel = editor.editorWindow.getSelection();
-    sel.removeAllRanges();
-
-    editor.events.fire('search', ['th was']);
-    editor.__plugins.search.open();
-    expect(1).to.be.equal(sel.rangeCount);
-    var range = sel.getRangeAt(0);
-
-    expect(editor.editor.firstChild.childNodes[4]).to.be.equal(range.startContainer);
-    expect(3).to.be.equal(range.startOffset);
-
-    expect(editor.editor.firstChild.childNodes[6]).to.be.equal(range.endContainer);
-    expect(3).to.be.equal(range.startOffset);
+    editor.setEditorValue('<p><span>Mr</span> <span>John</span> <span>Smith</span> <span>washed</span> <a href="#">window</a></p>');
+    debugger
+    simulateEvent('mousedown', 0, editor.editor.querySelector('a'))
 //    var editor = new Jodit(appendTestArea())
 
 //    (new Jodit.modules.FileBrowser(editor)).open(function () {});
