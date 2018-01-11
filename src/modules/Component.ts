@@ -5,6 +5,7 @@
  */
 
 import {Jodit} from "../Jodit";
+import {EventsNative} from "./EventsNative";
 
 export class Component {
     handlers: {};
@@ -12,20 +13,24 @@ export class Component {
      * @property{Jodit} parent
      */
     jodit: Jodit;
+    events: EventsNative;
 
     constructor(jodit?: Jodit) {
         // @ts-ignore: Object is possibly 'undefined'
         this.jodit = jodit;
+
+        this.events = new EventsNative();
+
         if (jodit && jodit.components) {
             jodit.components.push(this);
         }
     }
-
+    /*
     private __scope: any[] = [];
     private __scopeNamespace: any = {};
 
     __fire(element: Document|Element|HTMLElement|Window, event: string|Event|MouseEvent, doc: Document) {
-        let evt: Event = doc.createEvent('HTMLEvents');
+        const evt: Event = doc.createEvent('HTMLEvents');
 
         if (typeof event === 'string') {
             evt.initEvent(event, true, true);
@@ -144,7 +149,9 @@ export class Component {
         return this;
     }
 
+
+    */
     destruct() {
-        this.__off();
+        this.events.off(this.events);
     }
 }

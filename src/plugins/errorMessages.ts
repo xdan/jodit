@@ -55,9 +55,9 @@ export function errorMessages(editor: Jodit) {
          * @param {string} timeout Сколько миллисекунд показывать. По умолчанию используется options.showMessageErrorTime = 2000
          * @example
          * ```javascript
-         * parent.events.fire('errorMessage', ['Error 123. File has not been upload']);
-         * parent.events.fire('errorMessage', ['You can upload file', 'info', 4000]);
-         * parent.events.fire('errorMessage', ['File was uploaded', 'success', 4000]);
+         * parent.events.fire('errorMessage', 'Error 123. File has not been upload');
+         * parent.events.fire('errorMessage', 'You can upload file', 'info', 4000);
+         * parent.events.fire('errorMessage', 'File was uploaded', 'success', 4000);
          * ```
          */
         editor.events.on('errorMessage', (message: string, className: string, timeout: number) => {

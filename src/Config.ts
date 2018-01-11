@@ -410,7 +410,7 @@ export class Config {
      *                 return;
      *             }
      *             this.selection.insertNode(Jodit.modules.Dom.create(key, ''));
-     *             this.events.fire('errorMessage', ['Was inserted ' + value]);
+     *             this.events.fire('errorMessage', 'Was inserted ' + value);
      *        },
      *        template: function (key, value) {
      *            return '<div>' + value + '</div>';

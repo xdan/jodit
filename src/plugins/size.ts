@@ -27,8 +27,8 @@ export function size(editor: Jodit) {
 
         let isResized: boolean = false;
 
-        editor
-            .__on(handle, 'mousedown touchstart', (e: MouseEvent) => {
+        editor.events
+            .on(handle, 'mousedown touchstart', (e: MouseEvent) => {
                 isResized = true;
                 start.x = e.clientX;
                 start.y = e.clientY;
@@ -36,7 +36,7 @@ export function size(editor: Jodit) {
                 start.h = editor.container.offsetHeight;
                 e.preventDefault();
             })
-            .__on(editor.ownerWindow, 'mousemove touchmove', throttle((e: MouseEvent) => {
+            .on(editor.ownerWindow, 'mousemove touchmove', throttle((e: MouseEvent) => {
                 if (isResized) {
                     css(editor.container, {
                         width: editor.options.allowResizeX ? start.w + e.clientX - start.x : start.w,
@@ -45,15 +45,16 @@ export function size(editor: Jodit) {
                     editor.events.fire('resize');
                 }
             }, editor.options.observer.timeout))
-            .__on(editor.ownerWindow, 'mouseup touchsend', () => {
+            .on(editor.ownerWindow, 'mouseup touchsend', () => {
                 if (isResized) {
                     isResized = false;
                 }
             })
-            .events.on('afterInit', () => {
+            .on('afterInit', () => {
                 editor.container.appendChild(handle);
             });
     }
+
     editor.events
         .on('afterInit', () => {
             css(editor.editor, {
@@ -86,5 +87,5 @@ export function size(editor: Jodit) {
                     width: editor.options.width,
                 });
             }
-        }, '', true);
+        }, undefined, undefined,true);
 }

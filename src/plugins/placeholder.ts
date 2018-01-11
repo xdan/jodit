@@ -126,7 +126,7 @@ export function placeholder(editor: Jodit) {
                 .appendChild(placeholder);
 
             show();
-            editor.events.fire('placeholder', [placeholder.innerHTML]);
+            editor.events.fire('placeholder', placeholder.innerHTML);
         })
         .on('change keyup mouseup keydown mousedown afterSetMode', () => {
             toggle();

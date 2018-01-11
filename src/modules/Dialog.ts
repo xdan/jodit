@@ -67,7 +67,7 @@ export class Dialog extends Component{
      * @property {HTMLDivElement} dialog
      */
     dialog: HTMLDivElement;
-
+    
     /**
      * @property {HTMLDivElement} resizer
      */
@@ -81,12 +81,14 @@ export class Dialog extends Component{
 
     constructor(jodit ?: Jodit, options: DialogOptions = {}) {
         super(jodit);
+        
         if (jodit && jodit instanceof Jodit) {
             this.window = jodit.ownerWindow;
             this.document = jodit.ownerDocument;
         }
 
-        const self = this;
+        const self: Dialog = this;
+
         self.options = (jodit && jodit.options) ? jodit.options.dialog : Config.prototype.dialog;
         self.options = {...self.options, ...options};
 
@@ -137,10 +139,11 @@ export class Dialog extends Component{
             }
         });
 
-        self.__on(this.window, 'mousemove', self.onMouseMove.bind(self))
-           .__on(this.window, 'mouseup', self.onMouseUp.bind(self))
-           .__on(this.window, 'keydown', self.onKeyDown.bind(self))
-            .__on(this.window, 'resize', self.onResize.bind(self));
+        self.events
+            .on(this.window, 'mousemove', self.onMouseMove.bind(self))
+            .on(this.window, 'mouseup', self.onMouseUp.bind(self))
+            .on(this.window, 'keydown', self.onKeyDown.bind(self))
+            .on(this.window, 'resize', self.onResize.bind(self));
 
         const headerBox: HTMLDivElement|null = self.dialogbox.querySelector('.jodit_dialog_header');
 
@@ -475,7 +478,7 @@ export class Dialog extends Component{
                  * @param {int} dx Delta X
                  * @param {int} dy Delta Y
                  */
-                this.jodit.events.fire(this, 'move', [e.clientX - this.startX, e.clientY - this.startY]);
+                this.jodit.events.fire(this, 'move', e.clientX - this.startX, e.clientY - this.startY);
             }
             e.stopImmediatePropagation();
             e.preventDefault();
@@ -489,7 +492,7 @@ export class Dialog extends Component{
                  * @param {int} dx Delta X
                  * @param {int} dy Delta Y
                  */
-                this.jodit.events.fire(this, 'resizeDialog', [e.clientX - this.startX, e.clientY - this.startY]);
+                this.jodit.events.fire(this, 'resizeDialog', e.clientX - this.startX, e.clientY - this.startY);
             }
             e.stopImmediatePropagation();
             e.preventDefault();
@@ -527,7 +530,7 @@ export class Dialog extends Component{
         }
 
         delete this.dialogbox;
-        super.destruct();
+        this.events.destruct();
     }
 
     /**
@@ -679,7 +682,7 @@ export const Promt = (msg: string, title: string|Function|undefined, callback: F
         $cancel: HTMLAnchorElement = <HTMLAnchorElement>dom('<a href="javascript:void(0)" style="float:right;" class="jodit_button">' + Toolbar.getIcon('cancel') + '<span>' + Jodit.prototype.i18n('Cancel') + '</span></a>', dialog.document),
         $ok: HTMLAnchorElement = <HTMLAnchorElement>dom('<a href="javascript:void(0)" style="float:left;" class="jodit_button">' + Toolbar.getIcon('check') + '<span>' + Jodit.prototype.i18n('Ok') + '</span></a>', dialog.document),
         $div: HTMLDivElement = <HTMLDivElement>dom('<form class="jodit_promt"></form>', dialog.document),
-        $input: HTMLInputElement = <HTMLInputElement>dom('<input autofocus="true"/>', dialog.document),
+        $input: HTMLInputElement = <HTMLInputElement>dom('<input autofocus/>', dialog.document),
         $label: HTMLLabelElement = <HTMLLabelElement>dom('<label></label>', dialog.document);
 
     if (typeof title === 'function') {

@@ -82,11 +82,11 @@ export function addNewLine(editor: Jodit) {
     editor.events
         .on('afterInit', () => {
             editor.container.appendChild(line);
-            editor
-                .__on(line, 'mousemove', (e: MouseEvent) => {
+            editor.events
+                .on(line, 'mousemove', (e: MouseEvent) => {
                     e.stopPropagation();
                 })
-                .__on(span, 'mousedown touchstart', (e: MouseEvent) => {
+                .on(span, 'mousedown touchstart', (e: MouseEvent) => {
                     const p: HTMLElement = editor.editorDocument.createElement(editor.options.enter),
                         helper_node: Node = editor.editorDocument.createTextNode(consts.INVISIBLE_SPACE);
 
@@ -106,14 +106,14 @@ export function addNewLine(editor: Jodit) {
                 })
         })
         .on('change afterInit afterSetMode', debounce(() => {
-            editor
-                .__on(editor.editor, 'scroll', () => {
+            editor.events
+                .on(editor.editor, 'scroll', () => {
                     hideForce();
                 })
-                .__on(editor.container, 'mouseleave', () => {
+                .on(editor.container, 'mouseleave', () => {
                     hide();
                 })
-                .__on(editor.editor, 'mousemove', debounce(function (this: HTMLElement, e: MouseEvent) {
+                .on(editor.editor, 'mousemove', debounce(function (this: HTMLElement, e: MouseEvent) {
                     let currentElement: HTMLElement = <HTMLElement>editor.editorDocument.elementFromPoint(e.pageX - editor.editorWindow.pageXOffset, e.pageY - editor.editorWindow.pageYOffset);
 
                     if (!currentElement || currentElement === line || !Dom.isOrContains(editor.editor, currentElement)) {

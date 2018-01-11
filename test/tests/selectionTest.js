@@ -77,30 +77,30 @@ describe('Selection Module Tests', function() {
                 beautifyHTML: false,
                 events: {
                     /**
-                     * @this Jodit
+                     * @this Events
                      */
                     aceInited: function () {
-                        this.setMode(Jodit.MODE_WYSIWYG);
-                        this.setEditorValue(('<p>' + 'test '.repeat(50) + '</p>').repeat(1));
+                        editor.setMode(Jodit.MODE_WYSIWYG);
+                        editor.setEditorValue(('<p>' + 'test '.repeat(50) + '</p>').repeat(1));
 
-                        var sel = this.editorWindow.getSelection(),
-                            range = this.editorDocument.createRange();
+                        var sel = editor.editorWindow.getSelection(),
+                            range = editor.editorDocument.createRange();
 
-                        range.selectNodeContents(this.editor.querySelector('p'));
+                        range.selectNodeContents(editor.editor.querySelector('p'));
                         range.collapse(false);
                         sel.removeAllRanges();
                         sel.addRange(range);
 
-                        this.selection.insertHTML('hello');
+                        editor.selection.insertHTML('hello');
 
-                        this.setMode(Jodit.MODE_SOURCE);
+                        editor.setMode(Jodit.MODE_SOURCE);
 
-                        expect(this.__plugins.source.aceEditor.getSelectionRange().start.column).to.equal(258);
-                        expect(this.__plugins.source.aceEditor.getSelectionRange().start.row).to.equal(0);
+                        expect(editor.__plugins.source.aceEditor.getSelectionRange().start.column).to.equal(258);
+                        expect(editor.__plugins.source.aceEditor.getSelectionRange().start.row).to.equal(0);
 
-                        this.__plugins.source.aceEditor.session.insert(this.__plugins.source.aceEditor.getCursorPosition(), ' world');
+                        editor.__plugins.source.aceEditor.session.insert(editor.__plugins.source.aceEditor.getCursorPosition(), ' world');
 
-                        expect(this.__plugins.source.aceEditor.getValue()).to.equal('<p>' + 'test '.repeat(49) + 'test hello world</p>');
+                        expect(editor.__plugins.source.aceEditor.getValue()).to.equal('<p>' + 'test '.repeat(49) + 'test hello world</p>');
                         __done();
                     }
                 }

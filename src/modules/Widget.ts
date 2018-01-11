@@ -57,8 +57,8 @@ export namespace Widget {
 
         form.appendChild(dom('<a data-color="" href="javascript:void(0)">' + Jodit.modules.Toolbar.getIcon('eraser') + '</a>', editor.ownerDocument));
 
-        editor
-            .__on(form, 'mousedown touchstart', (e: MouseEvent) => {
+        editor.events
+            .on(form, 'mousedown touchstart', (e: MouseEvent) => {
                 e.stopPropagation();
                 let target: HTMLElement = <HTMLElement>e.target;
 
@@ -66,7 +66,6 @@ export namespace Widget {
                     target = <HTMLElement>Dom.closest(target.parentNode, 'A', editor.editor);
                 }
                 if (target.tagName.toUpperCase() !== 'A') {
-                    console.log(target.tagName.toUpperCase());
                     return;
                 }
 
@@ -156,7 +155,7 @@ export namespace Widget {
 
             tabBox.appendChild(tab);
 
-            editor.__on(button, 'mousedown touchstart', (e: MouseEvent) => {
+            editor.events.on(button, 'mousedown touchstart', (e: MouseEvent) => {
                 $$('a', buttons).forEach((a) => {
                     a.classList.remove('active');
                 });
@@ -268,7 +267,7 @@ export namespace Widget {
                     });
                 }
             }, (error: Error) => {
-                editor.events.fire('errorMessage', [error.message]);
+                editor.events.fire('errorMessage', error.message);
             });
 
             tabs[Jodit.modules.Toolbar.getIcon('upload') + editor.i18n('Upload')] = dragbox;

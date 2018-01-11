@@ -67,7 +67,7 @@ export type ControlType = {
      *                 return;
      *             }
      *             this.selection.insertNode(Jodit.modules.Dom.create(key, ''));
-     *             this.events.fire('errorMessage', ['Was inserted ' + value]);
+     *             this.events.fire('errorMessage', 'Was inserted ' + value);
      *        },
      *        template: function (key, value) {
      *            return '<div>' + value + '</div>';
@@ -441,7 +441,7 @@ export class Toolbar extends Component{
             }
         }
 
-        this.__on(btn, 'mousedown touchend', (originalEvent: MouseEvent) => {
+        this.events.on(btn, 'mousedown touchend', (originalEvent: MouseEvent) => {
             originalEvent.stopImmediatePropagation();
             originalEvent.preventDefault();
 
@@ -581,9 +581,10 @@ export class Toolbar extends Component{
     }
 
     private initEvents = () => {
-        this.__on(this.popup, 'mousedown touchstart', (e: MouseEvent) => {e.stopPropagation()})
-            .__on(this.list,'mousedown touchstart', (e: MouseEvent) => {e.stopPropagation()})
-            .__on(this.jodit.ownerWindow, 'mousedown touchstart', () => {
+        this.events
+            .on(this.popup, 'mousedown touchstart', (e: MouseEvent) => {e.stopPropagation()})
+            .on(this.list,'mousedown touchstart', (e: MouseEvent) => {e.stopPropagation()})
+            .on(this.jodit.ownerWindow, 'mousedown touchstart', () => {
                 if (this.__popapOpened || this.__listOpened) {
                     this.closeAll();
                 }

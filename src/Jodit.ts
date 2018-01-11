@@ -5,7 +5,6 @@
  */
 
 import {Component}from './modules/Component';
-import {Events}from './modules/Events';
 import {Select}from './modules/Selection';
 import {Toolbar} from './modules/Toolbar';
 import {Cookie} from './modules/Cookie';
@@ -16,6 +15,7 @@ import {FileBrowser} from "./modules/FileBrowser";
 import {Uploader} from "./modules/Uploader";
 import {Config} from "./Config";
 import {Dom} from "./modules/Dom";
+import {EventsNative} from "./modules/EventsNative";
 
 declare let appVersion: string;
 
@@ -107,7 +107,6 @@ export class Jodit extends Component{
      */
     options: Config;
 
-    events: Events;
     /**
      * @property {Select} selection
      */
@@ -187,7 +186,6 @@ export class Jodit extends Component{
         }
 
 
-        this.events = this.getInstance('Events');
         this.selection = this.getInstance('Select');
         this.uploader = this.getInstance('Uploader');
 
@@ -211,7 +209,7 @@ export class Jodit extends Component{
             this.container.classList.add('jodit_text_icons');
         }
 
-        this.__on(this.ownerWindow, 'resize', () => {
+        this.events.on(this.ownerWindow, 'resize', () => {
             if (this.events) {
                 this.events.fire('resize');
             }
@@ -294,16 +292,14 @@ export class Jodit extends Component{
         }
 
         // proxy events
-        ['keydown', 'keyup', 'keypress', 'mousedown', 'mouseup', 'mousepress', 'paste', 'resize', 'touchstart', 'touchend', 'focus', 'blur'].forEach((event_type) => {
-            this.__on(this.editor, event_type, (e) => {
-                if (this.events) {
-                    if (this.events.fire(event_type, [e]) === false) {
-                        e.preventDefault();
-                        return false;
-                    }
-                    this.setEditorValue(); // sync all events in element
+        this.events.on(this.editor, 'keydown keyup keypress mousedown mouseup mousepress paste resize touchstart touchend focus blur', (e: Event) => {
+            if (this.events) {
+                if (this.events.fire(e.type, e) === false) {
+                    e.preventDefault();
+                    return false;
                 }
-            });
+                this.setEditorValue(); // sync all events in element
+            }
         });
 
         if (this.options.spellcheck) {
@@ -325,7 +321,7 @@ export class Jodit extends Component{
 
         if (this.options.triggerChangeEvent) {
             this.events.on('change', debounce(() => {
-                this.__fire(this.element, 'change', this.ownerDocument);
+                this.events.fire(this.element, 'change');
             }, this.options.observer.timeout))
         }
     }
@@ -382,7 +378,10 @@ export class Jodit extends Component{
 
         delete this['selection'];
 
-        this.events.off();
+        this.events.off(this.events);
+        this.events.off(this.ownerWindow);
+        this.events.off(this.editor);
+
         delete this['events'];
 
         if (this.container.parentNode) {
@@ -451,9 +450,9 @@ export class Jodit extends Component{
          * });
          * ```
          */
-        let new_value = {value};
+        const new_value: {value: string} = {value};
 
-        this.events.fire('afterGetValueFromEditor', [new_value]);
+        this.events.fire('afterGetValueFromEditor', new_value);
 
         return new_value.value;
     }
@@ -503,7 +502,7 @@ export class Jodit extends Component{
         const old_value: string = this.getElementValue();
         if (old_value !== this.getEditorValue()) {
             this.setElementValue(this.getEditorValue());
-            this.events.fire('change', [old_value, this.getEditorValue()]);
+            this.events.fire('change', old_value, this.getEditorValue());
         }
     }
 
@@ -546,7 +545,7 @@ export class Jodit extends Component{
          * })
          * ```
          */
-        if (this.events.fire('beforeCommand', [command, second, third]) !== false) {
+        if (this.events.fire('beforeCommand', command, second, third) !== false) {
             this.selection.focus();
             switch (command) {
                 case 'selectall':
@@ -568,7 +567,7 @@ export class Jodit extends Component{
          * @param {*} second The second parameter for the command
          * @param {*} third The third option is for the team
          */
-        this.events.fire('afterCommand', [command, second, third]);
+        this.events.fire('afterCommand', command, second, third);
 
         this.setEditorValue();// synchrony
 
@@ -642,7 +641,7 @@ export class Jodit extends Component{
          * });
          * ```
          */
-        if (this.events.fire('beforeSetMode', [data]) === false) {
+        if (this.events.fire('beforeSetMode', data) === false) {
             return;
         }
 

@@ -159,14 +159,9 @@ export class Observer extends Component {
      * @method changed
      */
     changed = function () {
-        //TODO этот код надо будет привязать к тулбару
-        // if (parent.getRealMode() === Jodit.MODE_WYSIWYG) {
-        //     redobtn.toggleClass('disabled', !stack.canRedo());
-        //     undobtn.toggleClass('disabled', !stack.canUndo());
-        // }
         if (this.jodit.getMode() === consts.MODE_WYSIWYG) {
-            this.jodit.events.fire('canRedo', [this.stack.canRedo()]);
-            this.jodit.events.fire('canUndo', [this.stack.canUndo()]);
+            this.jodit.events.fire('canRedo', this.stack.canRedo());
+            this.jodit.events.fire('canUndo', this.stack.canUndo());
         }
     };
 

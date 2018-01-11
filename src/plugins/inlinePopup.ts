@@ -97,7 +97,7 @@ Config.prototype.popup = {
             exec: function (editor: Jodit, current: Node) {
                 const tagName: string = (<HTMLElement>current).tagName.toLowerCase();
                 if (tagName === 'img') {
-                    editor.events.fire(editor,'openImageProperties', [current]);
+                    editor.events.fire(editor,'openImageProperties', current);
                 }
             },
             tooltip: 'Edit'
@@ -362,11 +362,14 @@ export function inlinePopup(editor: Jodit) {
         .on('afterInit', () => {
             editor.editorDocument.body
                 .appendChild(popup);
-            editor.__on(popup,'mousedown', (e: MouseEvent) => {
-                e.stopPropagation();
-            });
+
             let clickOnImage: boolean = false;
-            editor.__on(editor.editor, 'mousedown', (event: MouseEvent) => {
+
+            editor.events
+                .on(popup,'mousedown', (e: MouseEvent) => {
+                e.stopPropagation();
+            })
+                .on(editor.editor, 'mousedown', (event: MouseEvent) => {
                 if ((<HTMLImageElement>event.target).tagName === 'IMG' || Dom.closest(<Node>event.target, 'table|a', editor.editor)) {
                     const target: HTMLImageElement|HTMLTableElement = (<HTMLImageElement>event.target).tagName === 'IMG' ? <HTMLImageElement>event.target :  <HTMLTableElement>Dom.closest(<Node>event.target, 'table|a', editor.editor);
                     const pos = offset(target, editor);
@@ -375,8 +378,8 @@ export function inlinePopup(editor: Jodit) {
                 } else {
                     clickOnImage = false;
                 }
-            });
-            editor.__on(editor.ownerWindow, 'mousedown', () => {
+            })
+                .on(editor.ownerWindow, 'mousedown', () => {
                 if (!clickOnImage) {
                     hidePopup();
                 }

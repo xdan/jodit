@@ -10,6 +10,7 @@ export {Cookie} from './Cookie';
 export {Dialog} from './Dialog';
 export {Dom} from './Dom';
 export {Events} from './Events';
+export {EventsNative} from './EventsNative';
 export {FileBrowser} from './FileBrowser';
 import * as Helpers from "./Helpers";
 export {Helpers};

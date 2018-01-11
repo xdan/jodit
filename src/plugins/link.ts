@@ -164,13 +164,13 @@ Config.prototype.controls.link = {
 export function link(jodit: Jodit) {
     if (jodit.options.link.followOnDblClick) {
         jodit.events.on('afterInit', () => {
-            jodit.__on(jodit.editor, 'dblclick', 'a', function (this: HTMLAnchorElement, e: MouseEvent) {
+            jodit.events.on(jodit.editor, 'dblclick', function (this: HTMLAnchorElement, e: MouseEvent) {
                 const href: string|null = this.getAttribute('href');
                 if (href) {
                     location.href = href;
                     e.preventDefault();
                 }
-            });
+            }, 'a');
         });
     }
     if (jodit.options.link.processPastedLink) {

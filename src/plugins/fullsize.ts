@@ -29,8 +29,8 @@ import * as consts from '../constants'
  * ```javascript
  * var editor = new Jodit();
  * editor.events.fire('toggleFullsize');
- * editor.events.fire('toggleFullsize', [true]); // fullsize
- * editor.events.fire('toggleFullsize', [false]); // usual mode
+ * editor.events.fire('toggleFullsize', true); // fullsize
+ * editor.events.fire('toggleFullsize', false); // usual mode
  * ```
  */
 
@@ -115,7 +115,7 @@ export  function fullsize(editor: Jodit) {
     }
 
     if (editor.options.globalFullsize) {
-        editor.__on(editor.ownerWindow, 'resize', resize);
+        editor.events.on(editor.ownerWindow, 'resize', resize);
     }
 
     editor.events.on('toggleFullsize', toggle);

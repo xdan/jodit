@@ -486,7 +486,7 @@ export class Select extends Component{
          * });
          * ```
          */
-        this.jodit.events.fire('afterInsertImage', [image]);
+        this.jodit.events.fire('afterInsertImage', image);
     }
 
     eachSelection = (callback: (current: Node)  => void) => {

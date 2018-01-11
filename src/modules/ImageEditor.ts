@@ -453,33 +453,31 @@ export class ImageEditor extends Component{
     };
 
     private setHandlers = () => {
-        const self = this;
-        self.__on(<HTMLElement[]>[self.editor.querySelector('.jodit_bottomright'), self.cropHandler], 'mousedown', (e) => {
-            self.target = e.target || e.srcElement;
+        const self: ImageEditor = this;
+        self.events
+            .on(<HTMLElement[]>[self.editor.querySelector('.jodit_bottomright'), self.cropHandler], 'mousedown', (e) => {
+                self.target = e.target || e.srcElement;
 
-            e.preventDefault();
-            e.stopImmediatePropagation();
+                e.preventDefault();
+                e.stopImmediatePropagation();
 
-            self.clicked = true;
+                self.clicked = true;
 
-            self.start_x = parseInt(e.clientX, 10);
-            self.start_y = parseInt(e.clientY, 10);
+                self.start_x = parseInt(e.clientX, 10);
+                self.start_y = parseInt(e.clientY, 10);
 
-            if (self.activeTab === 'crop') {
-                self.top_x = <number>css(self.cropHandler, 'left');
-                self.top_y = <number>css(self.cropHandler, 'top');
-                self.width = self.cropHandler.offsetWidth;
-                self.height = self.cropHandler.offsetHeight;
-            } else {
-                self.width = self.image.offsetWidth;
-                self.height = self.image.offsetHeight;
-            }
-        });
-
-
-        self
-            .__off(this.jodit.ownerWindow, '.jodit_image_editor' + self.jodit.id)
-            .__on(this.jodit.ownerWindow, 'mousemove.jodit_image_editor' + self.jodit.id, throttle((e) => {
+                if (self.activeTab === 'crop') {
+                    self.top_x = <number>css(self.cropHandler, 'left');
+                    self.top_y = <number>css(self.cropHandler, 'top');
+                    self.width = self.cropHandler.offsetWidth;
+                    self.height = self.cropHandler.offsetHeight;
+                } else {
+                    self.width = self.image.offsetWidth;
+                    self.height = self.image.offsetHeight;
+                }
+            })
+            .off(this.jodit.ownerWindow, '.jodit_image_editor' + self.jodit.id)
+            .on(this.jodit.ownerWindow, 'mousemove.jodit_image_editor' + self.jodit.id, throttle((e) => {
                 if (self.clicked) {
                     self.diff_x = parseInt(e.clientX, 10) - self.start_x;
                     self.diff_y = parseInt(e.clientY, 10) - self.start_y;
@@ -538,12 +536,12 @@ export class ImageEditor extends Component{
                 }
             }, 5))
 
-            .__on(this.jodit.ownerWindow, 'resize.jodit_image_editor' + self.jodit.id, () => {
+            .on(this.jodit.ownerWindow, 'resize.jodit_image_editor' + self.jodit.id, () => {
                 this.jodit.events.fire(self.resizeHandler, 'updatesize');
                 self.showCrop();
                 this.jodit.events.fire(self.cropHandler, 'updatesize');
             })
-            .__on(this.jodit.ownerWindow, 'mouseup.jodit_image_editor' + self.jodit.id + ' keydown.jodit_image_editor' + self.jodit.id, (e: MouseEvent) => {
+            .on(this.jodit.ownerWindow, 'mouseup.jodit_image_editor' + self.jodit.id + ' keydown.jodit_image_editor' + self.jodit.id, (e: MouseEvent) => {
                 if (self.clicked) {
                     self.clicked = false;
                     e.stopImmediatePropagation();
@@ -553,19 +551,20 @@ export class ImageEditor extends Component{
         // btn group
 
         $$('.jodit_btn_group', self.editor).forEach((group) => {
-            let input =  <HTMLInputElement>group.querySelector('input');
-            self.__on(group, 'click change','button', function () {
+            const input: HTMLInputElement =  <HTMLInputElement>group.querySelector('input');
+            self.events.on(group, 'click change', function () {
                 let button = <HTMLButtonElement>this;
                 $$('button', group).forEach((button: HTMLButtonElement) => button.classList.remove('active'));
                 button.classList.add('active');
                 input.checked = !!button.getAttribute('data-yes');
-                self.__fire(input, 'change', self.jodit.ownerDocument);
-            });
+                self.events.fire(input, 'change');
+            }, 'button');
         });
 
-        self.__on(this.editor, 'click', '.jodit_image_editor_slider-title', function () {
+        self.events
+            .on(this.editor, 'click', function () {
                 $$('.jodit_image_editor_slider,.jodit_image_editor_area', self.editor).forEach(elm => elm.classList.remove('active'));
-                let slide = <HTMLElement>this.parentNode;
+                const slide: HTMLElement = <HTMLElement>this.parentNode;
                 slide.classList.add('active');
                 self.activeTab = slide.getAttribute('data-area') || '';
 
@@ -577,37 +576,37 @@ export class ImageEditor extends Component{
                 if (self.activeTab === 'crop') {
                     self.showCrop();
                 }
-            });
-
-        self.__on(self.widthInput, 'change mousedown keydown', debounce(() => {
-            let value = parseInt(self.widthInput.value, 10), another;
-            if (value > self.jodit.options.resizer.min_width) {
-                css(self.image, 'width', value + 'px');
-                if (self.resizeUseRatio) {
-                    another = Math.round(value / self.ratio);
-                    if (another > self.jodit.options.resizer.min_height) {
-                        css(self.image, 'height', another + 'px');
-                        self.heightInput.value = another;
+            }, '.jodit_image_editor_slider-title')
+            .on(self.widthInput, 'change mousedown keydown', debounce(() => {
+                const value: number = parseInt(self.widthInput.value, 10);
+                let another: number;
+                if (value > self.jodit.options.resizer.min_width) {
+                    css(self.image, 'width', value + 'px');
+                    if (self.resizeUseRatio) {
+                        another = Math.round(value / self.ratio);
+                        if (another > self.jodit.options.resizer.min_height) {
+                            css(self.image, 'height', another + 'px');
+                            self.heightInput.value = another.toString();
+                        }
                     }
                 }
-            }
-            this.jodit.events.fire(self.resizeHandler, 'updatesize');
-        }, 200));
-
-        self.__on(self.heightInput, 'change mousedown keydown', debounce(() => {
-            let value = parseInt(self.heightInput.value, 10), another;
-            if (value > self.jodit.options.resizer.min_height) {
-                css(self.image, 'height', value + 'px');
-                if (self.resizeUseRatio) {
-                    another = Math.round(value * self.ratio);
-                    if (another > self.jodit.options.resizer.min_width) {
-                        css(self.image, 'width', another + 'px');
-                        self.widthInput.value  = another;
+                this.jodit.events.fire(self.resizeHandler, 'updatesize');
+            }, 200))
+            .on(self.heightInput, 'change mousedown keydown', debounce(() => {
+                const value: number = parseInt(self.heightInput.value, 10);
+                let another: number;
+                if (value > self.jodit.options.resizer.min_height) {
+                    css(self.image, 'height', value + 'px');
+                    if (self.resizeUseRatio) {
+                        another = Math.round(value * self.ratio);
+                        if (another > self.jodit.options.resizer.min_width) {
+                            css(self.image, 'width', another + 'px');
+                            self.widthInput.value  = another.toString();
+                        }
                     }
                 }
-            }
-            this.jodit.events.fire(self.resizeHandler, 'updatesize');
-        }, 200));
+                this.jodit.events.fire(self.resizeHandler, 'updatesize');
+            }, 200));
 
         const rationResizeButton: HTMLInputElement|null = self.editor.querySelector('.jodit_image_editor_keep_spect_ratio');
         if (rationResizeButton) {

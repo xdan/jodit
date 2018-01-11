@@ -1,3 +1,10 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2018 Valeriy Chupurnov xdsoft.net
+ */
+
+
 import {Jodit} from "../Jodit";
 import {Config} from "../Config";
 import {ctrlKey, debounce, dom, trim} from "../modules/Helpers";
@@ -367,15 +374,15 @@ export class search extends Component {
             self.replaceButton = <HTMLButtonElement>self.searchBox.querySelector('.jodit_search_buttons-replace');
             self.counterBox = <HTMLButtonElement>self.searchBox.querySelector('.jodit_search_counts span');
 
-            editor
-                .__on(self.closeButton, 'click', this.close)
-                .__on(self.queryInput, 'mousedown', () => {
+            editor.events
+                .on(self.closeButton, 'click', this.close)
+                .on(self.queryInput, 'mousedown', () => {
                     if (editor.selection.isFocused()) {
                         editor.selection.removeMarkers();
                         self.selInfo = editor.selection.save();
                     }
                 })
-                .__on(self.replaceButton, 'click', (e: MouseEvent) => {
+                .on(self.replaceButton, 'click', (e: MouseEvent) => {
 
                     self.findAndReplace(editor.selection.current() || editor.editor.firstChild, self.queryInput.value);
 
@@ -384,12 +391,12 @@ export class search extends Component {
                     e.preventDefault();
                     e.stopImmediatePropagation();
                 })
-                .__on([self.nextButton, self.prevButton], 'click', function (this: HTMLButtonElement, e: MouseEvent) {
+                .on([self.nextButton, self.prevButton], 'click', function (this: HTMLButtonElement, e: MouseEvent) {
                     editor.events.fire(self.nextButton === this ? 'searchNext' : 'searchPrevious');
                     e.preventDefault();
                     e.stopImmediatePropagation();
                 })
-                .__on(this.queryInput, 'keydown', debounce((e: KeyboardEvent) => {
+                .on(this.queryInput, 'keydown', debounce((e: KeyboardEvent) => {
                     switch (e.which) {
                         case  consts.KEY_ENTER:
                             e.preventDefault();
@@ -403,7 +410,7 @@ export class search extends Component {
                             break;
                     }
                 }, this.jodit.options.observer.timeout))
-                .__on(this.jodit.container, 'keydown', (e: KeyboardEvent) => {
+                .on(this.jodit.container, 'keydown', (e: KeyboardEvent) => {
                     switch (e.which) {
                         case  consts.KEY_ESC:
                             this.close();
@@ -423,29 +430,28 @@ export class search extends Component {
                             break;
                     }
                 })
-                .events
-                    .on('beforeSetMode', () => {
-                       this.close();
-                    })
-                    .on('afterInit', () => {
-                        editor.workplace.appendChild(this.searchBox);
-                    })
-                    .on('keydown mousedown', () => {
-                        if (this.selInfo) {
-                            editor.selection.removeMarkers();
-                            this.selInfo = null;
-                        }
-                        if (this.isOpened) {
-                            this.current = this.jodit.selection.current();
-                            this.updateCounters();
-                        }
-                    })
-                    .on('searchNext searchPrevious', () => {
-                        return self.findAndSelect(editor.selection.current() || editor.editor.firstChild, self.queryInput.value, editor.events.current === 'searchNext');
-                    })
-                    .on('search', (value: string, startNode?: Node, next: boolean = true) => {
-                        self.findAndSelect(startNode || self.jodit.editor.firstChild, value, next);
-                    });
+                .on('beforeSetMode', () => {
+                   this.close();
+                })
+                .on('afterInit', () => {
+                    editor.workplace.appendChild(this.searchBox);
+                })
+                .on('keydown mousedown', () => {
+                    if (this.selInfo) {
+                        editor.selection.removeMarkers();
+                        this.selInfo = null;
+                    }
+                    if (this.isOpened) {
+                        this.current = this.jodit.selection.current();
+                        this.updateCounters();
+                    }
+                })
+                .on('searchNext searchPrevious', () => {
+                    return self.findAndSelect(editor.selection.current() || editor.editor.firstChild, self.queryInput.value, editor.events.current === 'searchNext');
+                })
+                .on('search', (value: string, startNode?: Node, next: boolean = true) => {
+                    self.findAndSelect(startNode || self.jodit.editor.firstChild, value, next);
+                });
         }
     }
 }

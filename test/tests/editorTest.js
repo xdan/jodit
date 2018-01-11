@@ -58,6 +58,7 @@ describe('Jodit Editor Tests', function() {
 
         it('Editor should replace and hide source textarea', function() {
             var area = appendTestArea();
+
             var editor = new Jodit(area);
             expect(area.style.display).to.equal('none');
 
@@ -113,10 +114,10 @@ describe('Jodit Editor Tests', function() {
                     editor.setEditorValue('<p>test</p>'.repeat(20))
                     expect(editor.container.offsetHeight).to.be.equal(300);
 
-                    editor.events.fire('toggleFullsize', [true]);
+                    editor.events.fire('toggleFullsize', true);
                     expect(editor.container.offsetHeight).to.be.above(300);
 
-                    editor.events.fire('toggleFullsize', [false]);
+                    editor.events.fire('toggleFullsize', false);
                     expect(editor.container.offsetHeight).to.be.equal(300);
                     expect(editor.container.offsetWidth).to.be.above(300);
                 });

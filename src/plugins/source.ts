@@ -108,7 +108,7 @@ export class source extends Component {
     private loadNext = (i: number, urls: string[], eventOnFinalize: false|string = 'aceReady', className: string = this.className) => {
         if (eventOnFinalize && urls[i] === undefined && this.jodit && this.jodit.events) {
             this.jodit.events.fire(eventOnFinalize);
-            this.__fire(this.jodit.ownerWindow, eventOnFinalize, this.jodit.ownerDocument);
+            this.events.fire(this.jodit.ownerWindow, eventOnFinalize);
             return;
         }
         if (urls[i] !== undefined) {
@@ -171,12 +171,12 @@ export class source extends Component {
         this.mirrorContainer = <HTMLDivElement>dom('<div class="jodit_source"/>', this.jodit.ownerDocument);
         this.mirror = <HTMLTextAreaElement>dom('<textarea class="jodit_source_mirror"/>', this.jodit.ownerDocument);
 
-        editor.__on(this.mirror, 'mousedown keydown touchstart input', debounce(this.toWYSIWYG, editor.options.observer.timeout));
-        editor.__on(this.mirror, 'change keydown mousedown touchstart input', debounce(this.autosize, editor.options.observer.timeout));
-
-        editor.__on(this.mirror, 'mousedown focus', (e: Event) => {
-            editor.events.fire(e.type, [e]);
-        });
+        editor.events
+            .on(this.mirror, 'mousedown keydown touchstart input', debounce(this.toWYSIWYG, editor.options.observer.timeout))
+            .on(this.mirror, 'change keydown mousedown touchstart input', debounce(this.autosize, editor.options.observer.timeout))
+            .on(this.mirror, 'mousedown focus', (e: Event) => {
+                editor.events.fire(e.type, e);
+            });
 
         editor.events
             .on('placeholder', (text: string) => {
@@ -332,8 +332,8 @@ export class source extends Component {
 
         const updateButtons = () => {
                 if (undoManager && editor.getRealMode() === consts.MODE_SOURCE) {
-                    editor.events.fire('canRedo', [undoManager.hasRedo()]);
-                    editor.events.fire('canUndo', [undoManager.hasUndo()]);
+                    editor.events.fire('canRedo', undoManager.hasRedo());
+                    editor.events.fire('canUndo', undoManager.hasUndo());
                 }
             },
             getLastColumnIndex = (row: number): number => {
@@ -403,11 +403,11 @@ export class source extends Component {
                     });
 
                     aceEditor.on('change', this.toWYSIWYG);
-                    aceEditor.on('focus', (e) => {
-                        editor.events.fire('focus', [e]);
+                    aceEditor.on('focus', (e: MouseEvent) => {
+                        editor.events.fire('focus', e);
                     });
-                    aceEditor.on('mousedown', (e) => {
-                        editor.events.fire('mousedown', [e]);
+                    aceEditor.on('mousedown', (e: MouseEvent) => {
+                        editor.events.fire('mousedown', e);
                     });
 
                     this.mirror.style.display = 'none';
@@ -456,7 +456,7 @@ export class source extends Component {
             };
 
         editor.events
-            .__on(this.jodit.ownerWindow, 'aceReady', tryInitAceEditor) // work in global scope
+            .on(this.jodit.ownerWindow, 'aceReady', tryInitAceEditor) // work in global scope
             .on('aceReady', tryInitAceEditor) // work in local scope
             .on('afterSetMode afterInit', () => {
                 if (editor.getRealMode() !== consts.MODE_SOURCE && editor.getMode() !== consts.MODE_SPLIT) {

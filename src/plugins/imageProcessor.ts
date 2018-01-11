@@ -12,28 +12,28 @@ const JODIT_IMAGE_PROCESSOR_BINDED = '__jodit_imageprocessor_binded';
 export function imageProcessor(editor: Jodit) {
     let dragImage: HTMLImageElement|false;
     const bind = (image: HTMLImageElement) => {
-        editor
-            .__off(image, '.imageProcessor')
-            .__on(image, 'dragstart.imageProcessor', (e) => {
+        editor.events
+            .off(image, '.imageProcessor')
+            .on(image, 'dragstart.imageProcessor', (e) => {
                 dragImage = <HTMLImageElement>image;
                 e.preventDefault(); // stop default dragging
             })
-            .__on(image, 'mousedown.imageProcessor', () => {
+            .on(image, 'mousedown.imageProcessor', () => {
                 dragImage = <HTMLImageElement>image;
             });
     };
 
     editor.events.on('afterInit',() => {
-        editor
-            .__on(editor.editor, "mousemove", throttle((e: MouseEvent) => {
+        editor.events
+            .on(editor.editor, "mousemove", throttle((e: MouseEvent) => {
                 if (dragImage) {
                     editor.selection.insertCursorAtPoint(e.clientX, e.clientY);
                 }
             }, editor.options.observer.timeout))
-            .__on(window, "mouseup", () => {
+            .on(window, "mouseup", () => {
                 dragImage = false;
             })
-            .__on(editor.editor, "mouseup", (e: DragEvent) => {
+            .on(editor.editor, "mouseup", (e: DragEvent) => {
                 let img: HTMLImageElement = <HTMLImageElement>dragImage,
                     elm;
 

@@ -15,7 +15,7 @@ Config.prototype.controls.fontsize = <ControlType>{
     list : ["8", "9", "10", "11", "12", "14", "18", "24", "30", "36", "48", "60", "72", "96"],
     template : (editor: Jodit, key: string, value: string) => value,
     tooltip: "Font size",
-    isActive: (editor: Jodit, btn: ControlType): boolean => {
+    isActive: (editor: Jodit): boolean => {
         const current: Node|false = editor.selection.current();
 
         if (current) {

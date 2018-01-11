@@ -23,8 +23,8 @@ Config.prototype.controls.undo = {
 export function redoundo(editor: Jodit) {
     const observer:Observer = new Observer(editor);
     const updateButton = () => {
-        editor.events.fire('canRedo', [observer.stack.canRedo()]);
-        editor.events.fire('canUndo', [observer.stack.canUndo()]);
+        editor.events.fire('canRedo', observer.stack.canRedo());
+        editor.events.fire('canUndo', observer.stack.canUndo());
     };
     editor.events
         .on('keydown', (e: KeyboardEvent) => {
@@ -36,26 +36,26 @@ export function redoundo(editor: Jodit) {
                     return false;
                 }
             }
-        }, undefined, true);
+        }, undefined, undefined,true);
 
 
     editor.events
         .on('afterSetMode', () => {
-        if (editor.getRealMode() === consts.MODE_WYSIWYG) {
-            updateButton();
-        }
-    })
-        .on('beforeCommand', (command: string) => {
-        if (command === 'redo' || command === 'undo') {
             if (editor.getRealMode() === consts.MODE_WYSIWYG) {
-                if (observer.stack['can' + command.substr(0,1).toUpperCase() + command.substr(1)]()) {
-                    observer.stack[command]();
-                }
                 updateButton();
             }
-            return false;
-        }
-    });
+        })
+        .on('beforeCommand', (command: string) => {
+            if (command === 'redo' || command === 'undo') {
+                if (editor.getRealMode() === consts.MODE_WYSIWYG) {
+                    if (observer.stack['can' + command.substr(0,1).toUpperCase() + command.substr(1)]()) {
+                        observer.stack[command]();
+                    }
+                    updateButton();
+                }
+                return false;
+            }
+        });
 
 
     this.destruct = () => {

@@ -319,7 +319,8 @@ export function imageProperties(editor: Jodit) {
         });
         if (editor.options.image.useImageEditor) {
             $$('.jodit_use_image_editor', mainTab).forEach((btn: HTMLAnchorElement) => {
-                editor.__on(btn,'mousedown touchstart', () => {
+                editor.events
+                    .on(btn,'mousedown touchstart', () => {
                         const url: string = image.getAttribute('src') || '',
                             a: HTMLAnchorElement = editor.ownerDocument.createElement('a'),
                             loadExternal = () => {
@@ -402,7 +403,7 @@ export function imageProperties(editor: Jodit) {
             jodit_lock_size.addEventListener('click', function () {
                 lockSize = !lockSize;
                 this.innerHTML = Toolbar.getIcon(lockSize ? 'lock' : 'unlock');
-                editor.__fire($w, 'change', editor.ownerDocument);
+                editor.events.fire($w, 'change');
             });
         }
 
@@ -418,7 +419,7 @@ export function imageProperties(editor: Jodit) {
             });
         }
 
-        editor.__on($$('#imageWidth,#imageHeight', prop), 'change keydown mousedown paste', (e: any) => {
+        editor.events.on($$('#imageWidth,#imageHeight', prop), 'change keydown mousedown paste', (e: any) => {
             if (!lockSize) {
                 return;
             }
@@ -590,11 +591,11 @@ export function imageProperties(editor: Jodit) {
     editor.events
         .on('afterInit', () => {
             if (editor.options.image.openOnDblClick) {
-                editor.__on(editor.editor, 'dblclick', 'img', open);
+                editor.events.on(editor.editor, 'dblclick',  open, 'img');
             } else {
-                editor.__on(editor.editor, 'dblclick', 'img', function () {
+                editor.events.on(editor.editor, 'dblclick',  function () {
                     editor.selection.select(this);
-                });
+                }, 'img');
             }
         })
         .on('openImageProperties', (image: HTMLImageElement) => {

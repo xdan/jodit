@@ -171,7 +171,7 @@ Config.prototype.uploader = <UploaderOptions>{
     },
 
     error: function (this: Uploader, e: Error) {
-        this.jodit.events.fire('errorMessage', [e.message, 'error', 4000]);
+        this.jodit.events.fire('errorMessage', e.message, 'error', 4000);
     },
 
     defaultHandlerSuccess: function (this: Uploader, resp: UploaderData) {
@@ -183,7 +183,7 @@ Config.prototype.uploader = <UploaderOptions>{
     },
 
     defaultHandlerError: function (this: Uploader, e: Error) {
-        this.jodit.events.fire('errorMessage', [e.message]);
+        this.jodit.events.fire('errorMessage', e.message);
     }
 };
 
@@ -385,14 +385,14 @@ export class Uploader extends Component {
     bind(form: HTMLElement, handlerSuccess?: HandlerSuccess, handlerError?: HandlerError) {
         const self: Uploader = this;
 
-        self
-            .__on(form, 'paste',  function (e: ClipboardEvent) {
+        self.events
+            .on(form, 'paste',  function (e: ClipboardEvent) {
 
                 let i: number,
                     file: File|null,
                     extension: string,
                     div: HTMLDivElement,
-                    process = (formdata) => {
+                    process = (formdata: FormData) => {
                         if (file) {
                             formdata.append('extension', extension);
                             formdata.append("mimetype", file.type);
@@ -441,15 +441,15 @@ export class Uploader extends Component {
                     }
                 }
             })
-            .__on(form, "dragover", (event: DragEvent) => {
+            .on(form, "dragover", (event: DragEvent) => {
                 form.classList.add('draghover');
                 event.preventDefault();
             })
-            .__on(form, "dragleave dragend", (event: DragEvent) => {
+            .on(form, "dragleave dragend", (event: DragEvent) => {
                 form.classList.remove('draghover');
                 event.preventDefault();
             })
-            .__on(form, "drop", (event: DragEvent) => {
+            .on(form, "drop", (event: DragEvent) => {
                 form.classList.remove('draghover');
                 if (event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files.length) {
                     event.preventDefault();
@@ -479,7 +479,7 @@ export class Uploader extends Component {
         const inputFile: HTMLInputElement|null = form.querySelector('input[type=file]');
 
         if (inputFile) {
-            self.__on(inputFile, 'change', function (this: HTMLInputElement) {
+            self.events.on(inputFile, 'change', function (this: HTMLInputElement) {
                 self.sendFiles(this.files, handlerSuccess, handlerError);
             });
         }

@@ -43,7 +43,7 @@ export function paste(editor: Jodit) {
          * ```
          */
 
-        if (editor.events.fire('beforePaste', [event]) === false) {
+        if (editor.events.fire('beforePaste', event) === false) {
             event.preventDefault();
             return false;
         }
@@ -86,7 +86,7 @@ export function paste(editor: Jodit) {
                  * ```
                  */
 
-                clipboard_html = editor.events.fire('processPaste', [event, clipboard_html]);
+                clipboard_html = editor.events.fire('processPaste', event, clipboard_html);
 
                 if (typeof clipboard_html === 'string' || clipboard_html instanceof (<any>editor.editorWindow).Node) {
                     editor.selection.insertHTML(clipboard_html);
@@ -110,7 +110,7 @@ export function paste(editor: Jodit) {
          * });
          * ```
          */
-        if (editor.events.fire('afterPaste', [event]) === false) {
+        if (editor.events.fire('afterPaste', event) === false) {
             return false;
         }
     });

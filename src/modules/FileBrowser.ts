@@ -530,6 +530,8 @@ export class FileBrowser extends Component {
     currentBaseUrl: string = '';
 
     private dialog: Dialog;
+
+
     private loader: HTMLElement;
     private browser: HTMLElement;
     private status_line: HTMLElement;
@@ -595,71 +597,65 @@ export class FileBrowser extends Component {
         self.tree = <HTMLElement>self.browser.querySelector('.jodit_filebrowser_tree');
         self.files = <HTMLElement>self.browser.querySelector('.jodit_filebrowser_files');
 
-        self.__on([self.buttons.tiles, self.buttons.list], 'click', (event: Event) => {
-            let target = <HTMLElement>event.currentTarget;
-            if (target.classList.contains('jodit_button_tiles')) {
-                self.view = 'tiles';
-                self.buttons.list.classList.add('disabled');
-            } else {
-                self.view = 'list';
-                self.buttons.tiles.classList.add('disabled');
-            }
+        self.events
+            .on([self.buttons.tiles, self.buttons.list], 'click', (event: Event) => {
+                let target = <HTMLElement>event.currentTarget;
+                if (target.classList.contains('jodit_button_tiles')) {
+                    self.view = 'tiles';
+                    self.buttons.list.classList.add('disabled');
+                } else {
+                    self.view = 'list';
+                    self.buttons.tiles.classList.add('disabled');
+                }
 
-            target.classList.remove('disabled');
-            self.files.classList.remove('jodit_filebrowser_files_view-tiles');
-            self.files.classList.remove('jodit_filebrowser_files_view-list');
-            self.files.classList.add('jodit_filebrowser_files_view-' + self.view);
+                target.classList.remove('disabled');
+                self.files.classList.remove('jodit_filebrowser_files_view-tiles');
+                self.files.classList.remove('jodit_filebrowser_files_view-list');
+                self.files.classList.add('jodit_filebrowser_files_view-' + self.view);
 
-            Cookie.set('jodit_filebrowser_view', self.view, 31);
-        });
+                Cookie.set('jodit_filebrowser_view', self.view, 31);
+            })
 
-        self.__on(self.buttons.sort, 'change', () => {
-            self.sortBy = (<HTMLInputElement>self.buttons.sort).value;
-            Cookie.set('jodit_filebrowser_sortby', self.sortBy, 31);
-            self.loadItems(self.currentPath, self.currentSource);
-        });
+            .on(self.buttons.sort, 'change', () => {
+                self.sortBy = (<HTMLInputElement>self.buttons.sort).value;
+                Cookie.set('jodit_filebrowser_sortby', self.sortBy, 31);
+                self.loadItems(self.currentPath, self.currentSource);
+            })
 
-        self.__on(self.buttons.sort, 'click mousedown', (e) => {
-            e.stopPropagation();
-        });
-
-
-        self
-            .__on(self.buttons.filter, 'click mousedown', (e) => {
+            .on(self.buttons.sort, 'click mousedown', (e: MouseEvent) => {
                 e.stopPropagation();
             })
-            .__on(self.buttons.filter, 'keydown', debounce(() => {
+
+            .on(self.buttons.filter, 'click mousedown', (e: MouseEvent) => {
+                e.stopPropagation();
+            })
+            .on(self.buttons.filter, 'keydown', debounce(() => {
                 self.filterWord = (<HTMLInputElement>self.buttons.filter).value;
                 self.loadItems(self.currentPath, self.currentSource);
-            }, 300));
-
-        self.__on(self.buttons.remove, 'click', () => {
-            if (this.__getActiveElements().length) {
-                Confirm(editor.i18n('Are you shure?'), '', (yes) => {
-                    if (yes) {
-                        this.__getActiveElements().forEach((a) => {
-                            self.remove(self.currentPath, a.getAttribute('data-name') || '', a.getAttribute('data-source') || '');
-                        });
-                        self.someSelectedWasChanged();
-                        self.loadTree(self.currentPath, self.currentSource);
-                    }
-                });
-            }
-        });
-
-        self.__on(self.buttons.edit, 'click', () => {
-            const files: HTMLElement[] = this.__getActiveElements();
-            if (files.length === 1) {
-                self.openImageEditor(files[0].getAttribute('href') || '', files[0].getAttribute('data-name') || '', files[0].getAttribute('data-path') || '', files[0].getAttribute('data-source') || '');
-            }
-        });
-
-        self.__on(self.buttons.update, 'click', () => {
-            self.loadTree(this.currentPath, this.currentSource);
-        });
-
-        self
-            .__on(self.tree, 'click', 'a>i.remove', function (this: HTMLElement, e: MouseEvent)  {
+            }, 300))
+            .on(self.buttons.remove, 'click', () => {
+                if (this.__getActiveElements().length) {
+                    Confirm(editor.i18n('Are you shure?'), '', (yes: boolean) => {
+                        if (yes) {
+                            this.__getActiveElements().forEach((a: HTMLAnchorElement) => {
+                                self.remove(self.currentPath, a.getAttribute('data-name') || '', a.getAttribute('data-source') || '');
+                            });
+                            self.someSelectedWasChanged();
+                            self.loadTree(self.currentPath, self.currentSource);
+                        }
+                    });
+                }
+            })
+            .on(self.buttons.edit, 'click', () => {
+                const files: HTMLElement[] = this.__getActiveElements();
+                if (files.length === 1) {
+                    self.openImageEditor(files[0].getAttribute('href') || '', files[0].getAttribute('data-name') || '', files[0].getAttribute('data-path') || '', files[0].getAttribute('data-source') || '');
+                }
+            })
+            .on(self.buttons.update, 'click', () => {
+                self.loadTree(this.currentPath, this.currentSource);
+            })
+            .on(self.tree, 'click',  function (this: HTMLElement, e: MouseEvent)  {
                 const a: HTMLAnchorElement = <HTMLAnchorElement>this.parentNode,
                     path: string = a.getAttribute('data-path') || '';
 
@@ -672,8 +668,8 @@ export class FileBrowser extends Component {
 
                 e.stopImmediatePropagation();
                 return false;
-            })
-            .__on(self.tree, 'click', 'a', function (this: HTMLAnchorElement) {
+            }, 'a>i.remove')
+            .on(self.tree, 'click',  function (this: HTMLAnchorElement) {
                 if (this.classList.contains('addfolder')) {
                     Promt(self.jodit.i18n('Enter Directory name'), self.jodit.i18n('Create directory'), (name: string) => {
                         self.create(name, this.getAttribute('data-path'), this.getAttribute('data-source'));
@@ -683,11 +679,11 @@ export class FileBrowser extends Component {
                     self.currentSource = this.getAttribute('data-source') || '';
                     self.loadTree(self.currentPath, self.currentSource);
                 }
-            })
-            .__on(this.tree, 'dragstart', 'a', function (this: HTMLAnchorElement) {
+            }, 'a')
+            .on(this.tree, 'dragstart', function (this: HTMLAnchorElement) {
                 self.dragger = this;
-            })
-            .__on(this.tree, 'drop',  'a', function (this: HTMLAnchorElement) {
+            }, 'a')
+            .on(this.tree, 'drop',   function (this: HTMLAnchorElement) {
                 if (self.options.moveFolder && self.dragger) {
                     let path: string = self.dragger.getAttribute('data-path') || '';
 
@@ -706,12 +702,12 @@ export class FileBrowser extends Component {
 
                     self.move(path, this.getAttribute('data-path') || '', this.getAttribute('data-source') || '');
                 }
-            });
+            }, 'a');
 
         const contextmenu: ContextMenu = new ContextMenu(this.jodit);
 
-        self
-            .__on(self.files, 'mousedown', 'a>img', function (this: HTMLElement, e: DragEvent) {
+        self.events
+            .on(self.files, 'mousedown', function (this: HTMLElement, e: DragEvent) {
                 self.client.x = e.clientX;
                 self.client.y = e.clientY;
 
@@ -730,13 +726,13 @@ export class FileBrowser extends Component {
                 });
 
                 doc.body.appendChild(self.draggable)
-            })
-            .__on(self.files, 'dragstart', 'a', function (this: HTMLElement, e: DragEvent) {
+            },  'a>img')
+            .on(self.files, 'dragstart', function (this: HTMLElement, e: DragEvent) {
                 self.dragger = this;
                 e.dataTransfer.setData(consts.TEXT_PLAIN, this.getAttribute('href') || '');
                 e.stopPropagation();
-            })
-            .__on(self.files, 'contextmenu', 'a', function (this: HTMLElement, e: DragEvent) {
+            }, 'a')
+            .on(self.files, 'contextmenu', function (this: HTMLElement, e: DragEvent) {
                 if (self.options.contextMenu) {
                     let item: HTMLElement = this;
                     contextmenu.show(e.pageX, e.pageY, [
@@ -780,7 +776,7 @@ export class FileBrowser extends Component {
                                                     temp_content.appendChild(next);
                                                 }
 
-                                                self.__on([next, prev], 'click', function (this: HTMLElement) {
+                                                self.events.on([next, prev], 'click', function (this: HTMLElement) {
                                                     if (this.classList.contains('jodit_filebrowser_preview_navigation-next')) {
                                                         item = <HTMLElement>item.nextSibling;
                                                     } else {
@@ -813,7 +809,7 @@ export class FileBrowser extends Component {
                                     selectBtn.addEventListener('click', () => {
                                         $$('a.active', self.files).forEach((a: HTMLAnchorElement) => a.classList.add('active'));
                                         item.classList.add('active');
-                                        self.__fire(self.buttons.select, 'click', doc);
+                                        self.events.fire(self.buttons.select, 'click');
                                         preview.close();
                                     });
                                 }
@@ -837,8 +833,8 @@ export class FileBrowser extends Component {
                     e.preventDefault();
                     return false;
                 }
-            })
-            .__on(self.files, 'click', (e: MouseEvent) => {
+            }, 'a')
+            .on(self.files, 'click', (e: MouseEvent) => {
                 if (!ctrlKey(e)) {
                     this.__getActiveElements().forEach((elm: HTMLElement) => {
                         elm.classList.remove('active');
@@ -846,7 +842,7 @@ export class FileBrowser extends Component {
                     self.someSelectedWasChanged();
                 }
             })
-            .__on(self.files, 'click', 'a', function (this: HTMLElement, e: MouseEvent) {
+            .on(self.files, 'click', function (this: HTMLElement, e: MouseEvent) {
                 if (!ctrlKey(e)) {
                     self.__getActiveElements().forEach((elm: HTMLElement) => {
                         elm.classList.remove('active');
@@ -856,8 +852,8 @@ export class FileBrowser extends Component {
                 self.someSelectedWasChanged();
                 e.stopPropagation();
                 return false;
-            })
-            .__on(self.jodit.ownerDocument, 'dragover', function (e: MouseEvent) {
+            }, 'a')
+            .on(self.jodit.ownerDocument, 'dragover', function (e: MouseEvent) {
                 if (self.isOpened() && self.draggable && e.clientX !== undefined) {
                     css(self.draggable, {
                         left: e.clientX + 20,
@@ -866,12 +862,12 @@ export class FileBrowser extends Component {
                     });
                 }
             })
-            .__on(self.jodit.ownerWindow, 'keydown', (e: KeyboardEvent) => {
+            .on(self.jodit.ownerWindow, 'keydown', (e: KeyboardEvent) => {
                 if (self.isOpened() && e.which === consts.KEY_DELETE) {
-                    self.__fire(self.buttons.remove, 'click', doc);
+                    self.events.fire(self.buttons.remove, 'click');
                 }
             })
-            .__on(self.jodit.ownerWindow, 'mouseup dragend',() => {
+            .on(self.jodit.ownerWindow, 'mouseup dragend',() => {
                 if (self.draggable) {
                     self.draggable.parentNode && self.draggable.parentNode.removeChild(self.draggable);
                     self.draggable = false;
@@ -1328,21 +1324,19 @@ export class FileBrowser extends Component {
     open = (callback: (data: FileBrowserCallBcackData) => void) => {
         if (this.options.items.url) {
 
-            let localTimeot = 0;
-            this
-                .__off(this.files, 'dblclick')
-                .__on(this.files, 'dblclick', 'a', this.onSelect(callback))
-                .__on(this.files, 'touchstart', 'a', () => {
+            let localTimeot: number = 0;
+            this.events
+                .off(this.files, 'dblclick')
+                .on(this.files, 'dblclick', this.onSelect(callback), 'a')
+                .on(this.files, 'touchstart', () => {
                     let now: number = (new Date()).getTime();
                     if (now - localTimeot < consts.EMULATE_DBLCLICK_TIMEOUT) {
                         this.onSelect(callback)();
                     }
                     localTimeot = now;
-                });
-
-            this
-                .__off(this.buttons.select, 'click')
-                .__on(this.buttons.select, 'click', this.onSelect(callback));
+                }, 'a')
+                .off(this.buttons.select, 'click')
+                .on(this.buttons.select, 'click', this.onSelect(callback));
 
 
             this.loadTree(this.currentPath, this.currentSource);

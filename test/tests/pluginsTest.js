@@ -840,7 +840,7 @@ describe('Test plugins', function () {
                 var sel = editor.editorWindow.getSelection();
                 sel.removeAllRanges();
 
-                editor.events.fire('search', ['th was']);
+                editor.events.fire('search', 'th was');
                 expect(1).to.be.equal(sel.rangeCount);
                 var range = sel.getRangeAt(0);
 

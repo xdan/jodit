@@ -195,9 +195,10 @@ export function iframe(editor: Jodit) {
                     css(editor.iframe, 'height', editor.editor.offsetHeight);
                 }
             };
-            editor.events.on('change afterInit afterSetMode resize', resizeIframe);
-            editor.__on([editor.iframe, editor.editorWindow, doc.documentElement], 'load', resizeIframe);
-            editor.__on(doc, 'readystatechange DOMContentLoaded', resizeIframe);
+            editor.events
+                .on('change afterInit afterSetMode resize', resizeIframe)
+                .on([editor.iframe, editor.editorWindow, doc.documentElement], 'load', resizeIframe)
+                .on(doc, 'readystatechange DOMContentLoaded', resizeIframe);
         }
 
         css(editor.editor, 'minHeight', editor.options.minHeight);
@@ -207,10 +208,11 @@ export function iframe(editor: Jodit) {
             e.matches || (e.matches = Element.prototype.matches); // fix inside iframe polifill
         })(editor.editorWindow['Element'].prototype);
 
-        //proxy events
-        editor.__on(editor.editorWindow, 'mousedown click mouseup mousemove scroll', (e: Event) => {
-            editor.__fire && editor.__fire(window, e, editor.ownerDocument);
-        });
+        //throw events in our word
+        editor.events
+            .on(editor.editorWindow, 'mousedown click mouseup mousemove scroll', (e: Event) => {
+                editor.events && editor.events.fire && editor.events.fire(window, e);
+            });
 
         return false;
     });
