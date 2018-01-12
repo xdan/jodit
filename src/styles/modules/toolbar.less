@@ -18,8 +18,11 @@
   list-style: none !important;
   font-size: 0;
   background: @color-toolbar;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 4px 4px -2px rgba(0, 0, 0, 0.14);;
   z-index: 5;
+  border: 1px solid @color-border;
+  border-bottom: 0;
+
   & + .jodit_toolbar_dummy{
     display:none;
   }
@@ -72,7 +75,7 @@
       border-left: 0px solid rgba(211, 211, 211, 0.6);
       border-right: 1px solid #f1f1f1;
       padding: 0;
-      margin: 2px -1px 0 !important;
+      margin: 2px 3px 0 !important;
       cursor: default;
     }
 
