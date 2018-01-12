@@ -385,7 +385,7 @@ export class Uploader extends Component {
     bind(form: HTMLElement, handlerSuccess?: HandlerSuccess, handlerError?: HandlerError) {
         const self: Uploader = this;
 
-        self.events
+        self.jodit.events
             .on(form, 'paste',  function (e: ClipboardEvent) {
 
                 let i: number,
@@ -479,7 +479,7 @@ export class Uploader extends Component {
         const inputFile: HTMLInputElement|null = form.querySelector('input[type=file]');
 
         if (inputFile) {
-            self.events.on(inputFile, 'change', function (this: HTMLInputElement) {
+            self.jodit.events.on(inputFile, 'change', function (this: HTMLInputElement) {
                 self.sendFiles(this.files, handlerSuccess, handlerError);
             });
         }

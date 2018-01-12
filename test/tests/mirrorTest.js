@@ -24,23 +24,13 @@ describe('CodeMirror editor source code', function() {
                     beforeDestruct: function () {
                         return false;
                     },
-                    aceInited: function () {
-                        expect(this.container.querySelectorAll('.jodit_source_mirror-fake').length).to.equal(1);
-                        __done.call(this);
+                    aceInited: function (editor) {
+                        expect(editor.container.querySelectorAll('.jodit_source_mirror-fake').length).to.equal(1);
+                        __done.call(editor);
                     }
                 }
             });
-        }).timeout(5000);
-
-        it('Check lazy load', function() {
-            var editor = new Jodit('#codemirror', {
-                defaultMode: Jodit.MODE_WYSIWYG,
-                useAceEditor: true
-            });
-
-            expect(editor.container.querySelectorAll('.jodit_source_mirror-fake').length).to.equal(0);
-            editor.destruct();
-        });
+        }).timeout(6000);
     });
     after(function() {
         codemirror.parentNode.removeChild(codemirror);

@@ -165,6 +165,7 @@ export type ButtonType = {
     btn: HTMLLIElement,
     control: ControlType,
     name: string,
+    canActionCallback?: Function
 }
 
 
@@ -276,7 +277,7 @@ export class Toolbar extends Component{
     }
 
     private checkActiveButtons(element: Node|false) {
-        const active_class = 'jodit_active',
+        const active_class: string = 'jodit_active',
             getCSS = (elm: HTMLElement, key: string): string => {
                 return this.jodit.editorWindow.getComputedStyle(elm).getPropertyValue(key).toString()
             },
@@ -356,6 +357,9 @@ export class Toolbar extends Component{
 
             }
         });
+
+        this.jodit.events
+            .fire('updateToolbar');
     }
 
     private defaultControl:ControlType  = {
@@ -366,7 +370,7 @@ export class Toolbar extends Component{
     /**
      *
      */
-    addButton(item: string|ControlType, controlOption?: ControlType, content?: string, target?: HTMLElement) {
+    addButton(item: string|ControlType, controlOption?: ControlType, content?: string, target?: HTMLElement): HTMLElement {
 
         let control: ControlType = <ControlType>extend(true, {}, controlOption, this.defaultControl);
 
@@ -393,17 +397,18 @@ export class Toolbar extends Component{
 
         //btn.control =  control;
 
-        const clearName = name.replace(/[^a-zA-Z0-9]/g, '_');
+        const clearName: string = name.replace(/[^a-zA-Z0-9]/g, '_');
 
         btn.classList.add('jodit_toolbar_btn'); // fix for ie You can not simply add class and add second parameter
         btn.classList.add('jodit_toolbar_btn-' + clearName);
 
-
-        this.jodit.events.on(camelCase('can-' + clearName), (enable) => {
+        const canActionCallback: Function = (enable: boolean) => {
             Toolbar.__toggleButton(btn, enable);
-        });
+        };
 
-        let iconElement =  dom(<string>iconSVG, this.jodit.ownerDocument);
+        this.jodit.events.on(camelCase('can-' + clearName), canActionCallback);
+
+        let iconElement: HTMLElement =  dom(<string>iconSVG, this.jodit.ownerDocument);
 
         if (iconElement && iconElement.nodeType !== Node.TEXT_NODE) {
             iconElement.classList.add('jodit_icon', 'jodit_icon_' + clearName);
@@ -441,7 +446,7 @@ export class Toolbar extends Component{
             }
         }
 
-        this.events.on(btn, 'mousedown touchend', (originalEvent: MouseEvent) => {
+        this.jodit.events.on(btn, 'mousedown touchend', (originalEvent: MouseEvent) => {
             originalEvent.stopImmediatePropagation();
             originalEvent.preventDefault();
 
@@ -453,7 +458,7 @@ export class Toolbar extends Component{
             if (control.list) {
                 this.openList(btn);
                 each(control.list, (key: string, value: string) => {
-                    let elm;
+                    let elm: HTMLElement;
                     if (this.jodit.options.controls[value] !== undefined) {
                         elm = this.addButton(value, this.jodit.options.controls[value], '', target); // list like array {"align": {list: ["left", "right"]}}
                     } else if (this.jodit.options.controls[key] !== undefined) {
@@ -513,10 +518,12 @@ export class Toolbar extends Component{
             control,
             btn,
             name,
+            canActionCallback
         });
 
         return btn;
     }
+
 
     /**
      *
@@ -527,7 +534,7 @@ export class Toolbar extends Component{
     build(buttons: Array<ControlType|string>, container: HTMLElement, target?: HTMLElement) {
         let lastBtnSeparator: boolean = false;
 
-        this.container.innerHTML = '';
+        this.clear();
 
         (<Array<ControlType|string>>buttons).forEach((button: ControlType|string) => {
             const name: string = typeof button === 'string' ? <string>button : button.name || '';
@@ -565,12 +572,6 @@ export class Toolbar extends Component{
 
                     this.container.appendChild(this.addButton(button, <ControlType>control, '', target));
             }
-
-            // if (name !== '|') {
-            //
-            // } else {
-            //
-            // }
         });
 
         if (this.container.parentNode !== container) {
@@ -580,8 +581,25 @@ export class Toolbar extends Component{
         this.checkActiveButtons(false);
     }
 
+    clear() {
+        this.buttonList.forEach((button: ButtonType) => {
+            if (button.btn.parentNode) {
+                button.btn.parentNode.removeChild(button.btn);
+            }
+            this.jodit.events.off(button.btn);
+            delete button.btn;
+
+            const clearName: string = button.name.replace(/[^a-zA-Z0-9]/g, '_');
+
+            this.jodit.events.off(camelCase('can-' + clearName), button.canActionCallback);
+
+        });
+        this.buttonList.length = 0;
+        this.container.innerHTML = '';
+    }
+
     private initEvents = () => {
-        this.events
+        this.jodit.events
             .on(this.popup, 'mousedown touchstart', (e: MouseEvent) => {e.stopPropagation()})
             .on(this.list,'mousedown touchstart', (e: MouseEvent) => {e.stopPropagation()})
             .on(this.jodit.ownerWindow, 'mousedown touchstart', () => {
@@ -590,7 +608,7 @@ export class Toolbar extends Component{
                 }
             });
 
-        let timeout;
+        let timeout: number;
         this.jodit.events.on('mousedown mouseup keydown change afterSetMode focus afterInit', () => {
             const callback = () => {
                 if (this.jodit.selection) {
@@ -599,7 +617,7 @@ export class Toolbar extends Component{
             };
             if (this.jodit.options.observer.timeout) {
                 clearTimeout(timeout);
-                timeout = setTimeout(callback, this.jodit.options.observer.timeout)
+                timeout = window.setTimeout(callback, this.jodit.options.observer.timeout)
             } else {
                 callback();
             }

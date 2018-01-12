@@ -454,7 +454,7 @@ export class ImageEditor extends Component{
 
     private setHandlers = () => {
         const self: ImageEditor = this;
-        self.events
+        self.jodit.events
             .on(<HTMLElement[]>[self.editor.querySelector('.jodit_bottomright'), self.cropHandler], 'mousedown', (e) => {
                 self.target = e.target || e.srcElement;
 
@@ -552,16 +552,16 @@ export class ImageEditor extends Component{
 
         $$('.jodit_btn_group', self.editor).forEach((group) => {
             const input: HTMLInputElement =  <HTMLInputElement>group.querySelector('input');
-            self.events.on(group, 'click change', function () {
+            self.jodit.events.on(group, 'click change', function () {
                 let button = <HTMLButtonElement>this;
                 $$('button', group).forEach((button: HTMLButtonElement) => button.classList.remove('active'));
                 button.classList.add('active');
                 input.checked = !!button.getAttribute('data-yes');
-                self.events.fire(input, 'change');
+                self.jodit.events.fire(input, 'change');
             }, 'button');
         });
 
-        self.events
+        self.jodit.events
             .on(this.editor, 'click', function () {
                 $$('.jodit_image_editor_slider,.jodit_image_editor_area', self.editor).forEach(elm => elm.classList.remove('active'));
                 const slide: HTMLElement = <HTMLElement>this.parentNode;
@@ -622,8 +622,8 @@ export class ImageEditor extends Component{
             });
         }
 
-        self
-            .jodit.events.on(self.resizeHandler, 'updatesize', () => {
+        self.jodit.events
+            .on(self.resizeHandler, 'updatesize', () => {
                 css(self.resizeHandler, {
                     top: 0,
                     left: 0,
@@ -632,10 +632,8 @@ export class ImageEditor extends Component{
                 });
 
                 this.updateResizeBox();
-            });
-
-        self
-            .jodit.events.on(self.cropHandler, 'updatesize', () => {
+            })
+            .on(self.cropHandler, 'updatesize', () => {
                 if (!self.cropImage) {
                     return;
                 }

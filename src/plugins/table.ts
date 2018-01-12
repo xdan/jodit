@@ -5,7 +5,7 @@
  */
 
 import {Jodit} from '../Jodit';
-import {Table, JODIT_SELECTED_CELL_MARKER} from '../modules/Table';
+import {Table} from '../modules/Table';
 import * as consts from '../constants';
 import {each, getContentWidth, $$, dom, offset} from '../modules/Helpers';
 import {Config} from '../Config'
@@ -218,7 +218,7 @@ export class TableProcessor extends Component{
             if (!this.__resizerHandler) {
                 this.__resizerHandler = dom('<div class="jodit_table_resizer"></div>', this.jodit.ownerDocument);
                 let startX: number = 0;//, startLeft = 0;
-                this.events
+                this.jodit.events
                     .on(this.__resizerHandler,'mousedown touchstart', (event: MouseEvent) => {
                         this.__drag = true;
 
@@ -318,7 +318,7 @@ export class TableProcessor extends Component{
     observe(table: HTMLTableElement) {
         table[this.__key] = true;
         let start: HTMLTableCellElement;
-        this.events
+        this.jodit.events
             .on(table, 'mousedown touchstart', (event: MouseEvent) => {
                 const cell: HTMLTableCellElement = <HTMLTableCellElement>Dom.up(<HTMLElement>event.target, TableProcessor.isCell, table);
                 if (cell && cell instanceof (<any>this.jodit.editorWindow).HTMLElement) {
@@ -381,11 +381,12 @@ export class TableProcessor extends Component{
      */
     constructor(editor: Jodit) {
         super(editor);
+
         if (!editor.options.useTableProcessor) {
             return;
         }
 
-        this.events
+        editor.events
             .on(this.jodit.ownerWindow, 'mouseup touchend', () => {
                 if (this.__selectMode || this.__drag) {
                     this.__selectMode = false;
@@ -442,7 +443,7 @@ export class TableProcessor extends Component{
                 }
             })
             .on('afterGetValueFromEditor', (data) => {
-                data.value = data.value.replace(new RegExp(`([\s]*)${JODIT_SELECTED_CELL_MARKER}="1"`, 'g'), '');
+                data.value = data.value.replace(new RegExp(`([\s]*)${consts.JODIT_SELECTED_CELL_MARKER}="1"`, 'g'), '');
             })
             .on('change afterCommand afterSetMode', () => {
                 $$('table', editor.editor).forEach((table: HTMLTableElement) => {

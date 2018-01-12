@@ -13,13 +13,11 @@ export class Component {
      * @property{Jodit} parent
      */
     jodit: Jodit;
-    events: EventsNative;
+
 
     constructor(jodit?: Jodit) {
         // @ts-ignore: Object is possibly 'undefined'
         this.jodit = jodit;
-
-        this.events = new EventsNative();
 
         if (jodit && jodit.components) {
             jodit.components.push(this);
@@ -151,7 +149,4 @@ export class Component {
 
 
     */
-    destruct() {
-        this.events.off(this.events);
-    }
 }

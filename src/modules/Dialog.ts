@@ -10,6 +10,7 @@ import {Config} from '../Config'
 import {dom, $$, asArray, css} from './Helpers'
 import {Toolbar} from "./Toolbar";
 import {KEY_ESC} from "../constants";
+import {EventsNative} from "./EventsNative";
 
 
 /**
@@ -50,6 +51,8 @@ Config.prototype.dialog = {
  * @param {Object} [opt] Extend Options
  */
 export class Dialog extends Component{
+    events: EventsNative = new EventsNative();
+
     private lockSelect = () => {
         this.dialogbox.classList.add('jodit_dialog_box-moved');
     };

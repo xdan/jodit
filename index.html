@@ -132,9 +132,18 @@
     editor.editor.addEventListener('mousedown', callback)
     editor.editor.addEventListener('mouseup', callback)
     editor.editor.addEventListener('input', callback);
-    editor.setEditorValue('<p><span>Mr</span> <span>John</span> <span>Smith</span> <span>washed</span> <a href="#">window</a></p>');
-    debugger
-    simulateEvent('mousedown', 0, editor.editor.querySelector('a'))
+
+
+    // editor.setEditorValue('Test');
+
+    // expect(editor.container.querySelectorAll('.jodit_toolbar_btn-redo.jodit_disabled').length).to.equal(1);
+    // expect(editor.container.querySelectorAll('.jodit_toolbar_btn-undo.jodit_disabled').length).to.equal(0);
+
+    // simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-undo'))
+
+    // expect(editor.container.querySelectorAll('.jodit_toolbar_btn-redo.jodit_disabled').length).to.equal(0);
+    // expect(editor.container.querySelectorAll('.jodit_toolbar_btn-undo.jodit_disabled').length).to.equal(1);
+    // expect(editor.getEditorValue()).to.equal('top');
 //    var editor = new Jodit(appendTestArea())
 
 //    (new Jodit.modules.FileBrowser(editor)).open(function () {});

@@ -323,6 +323,27 @@ describe('Jodit Events system Tests', function() {
                 });
             });
         });
+        describe('Return value', function () {
+            it('Should return last not undefined value from fire', function () {
+                var eventer = new Jodit.modules.EventsNative(),
+                    simpleObject = {},
+                    clicked = 0;
+
+                eventer.on(simpleObject, 'click', function () {
+                    return 50;
+                });
+                eventer.on(simpleObject, 'click', function () {
+                    return 60;
+                });
+                eventer.on(simpleObject, 'click', function () {
+                    return void(0)
+                });
+
+                clicked = eventer.fire(simpleObject, 'click');
+
+                expect(60).to.be.equal(clicked);
+            });
+        });
         describe('Add event to simple object', function () {
             it('Should work with on handler', function () {
                 var eventer = new Jodit.modules.EventsNative(),

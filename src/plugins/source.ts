@@ -108,7 +108,7 @@ export class source extends Component {
     private loadNext = (i: number, urls: string[], eventOnFinalize: false|string = 'aceReady', className: string = this.className) => {
         if (eventOnFinalize && urls[i] === undefined && this.jodit && this.jodit.events) {
             this.jodit.events.fire(eventOnFinalize);
-            this.events.fire(this.jodit.ownerWindow, eventOnFinalize);
+            this.jodit.events.fire(this.jodit.ownerWindow, eventOnFinalize);
             return;
         }
         if (urls[i] !== undefined) {
@@ -188,6 +188,7 @@ export class source extends Component {
                 this.autosize();
 
                 const className = 'beutyfy_html_jodit_helper';
+
                 if (editor.options.beautifyHTML && window['html_beautify'] === undefined && !$$('script.' + className, document.body).length) {
                     this.loadNext(0, editor.options.beautifyHTMLCDNUrlsJS, false, className);
                 }
@@ -451,17 +452,18 @@ export class source extends Component {
                         setSelectionRangeIndices(start, end);
                     };
 
-                    editor.events.fire('aceInited');
+                    editor.events.fire('aceInited', editor);
                 }
             };
 
         editor.events
             .on(this.jodit.ownerWindow, 'aceReady', tryInitAceEditor) // work in global scope
             .on('aceReady', tryInitAceEditor) // work in local scope
-            .on('afterSetMode afterInit', () => {
+            .on('afterSetMode', () => {
                 if (editor.getRealMode() !== consts.MODE_SOURCE && editor.getMode() !== consts.MODE_SPLIT) {
                     return;
                 }
+
                 this.fromWYSIWYG();
                 tryInitAceEditor();
             })
@@ -474,6 +476,8 @@ export class source extends Component {
                     return false;
                 }
             });
+
+        tryInitAceEditor();
 
         // global add ace editor in browser
         if (this.jodit.ownerWindow['ace'] === undefined && !$$('script.' + this.className, this.jodit.ownerDocument.body).length) {

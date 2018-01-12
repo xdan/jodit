@@ -120,11 +120,17 @@ export class EventsNative {
 
             Object.defineProperty(subject, this.__key, {
                 enumerable: false,
+                configurable: true,
                 value: store
             });
         }
 
         return subject[this.__key];
+    }
+    private clearStore(subject: object) {
+        if (subject[this.__key] !== undefined) {
+            delete subject[this.__key];
+        }
     }
 
     private prepareEvent = (event: TouchEvent|MouseEvent) => {
@@ -200,13 +206,13 @@ export class EventsNative {
 
         let self: EventsNative = this,
             syntheticCallback: Function = function () {
-                callback && callback.apply(this, arguments);
+                return callback && callback.apply(this, arguments);
             };
 
         if (isDOMElement) {
             syntheticCallback = function (event: MouseEvent|TouchEvent) {
                 self.prepareEvent(<TouchEvent>event);
-                callback && callback.call(this, event);
+                return callback && callback.call(this, event);
             };
             if (selector) {
                 syntheticCallback = function (event) {
@@ -294,6 +300,9 @@ export class EventsNative {
             store.namespaces().forEach((namespace: string) => {
                 this.off(subject, '.' + namespace);
             });
+
+            this.clearStore(subject);
+
             return this;
         }
 

@@ -117,6 +117,8 @@ export class Jodit extends Component{
      */
     uploader: Uploader;
 
+    events: EventsNative;
+
     /**
      * @property {FileBrowser} filebrowser
      */
@@ -148,6 +150,8 @@ export class Jodit extends Component{
      */
     constructor(element: HTMLInputElement|string, options?: object) {
         super();
+
+        this.events = new EventsNative();
 
         const OptionsDefault = function () {};
         OptionsDefault.prototype = Jodit.defaultOptions;
@@ -380,6 +384,7 @@ export class Jodit extends Component{
 
         this.events.off(this.events);
         this.events.off(this.ownerWindow);
+        this.events.off(this.element);
         this.events.off(this.editor);
 
         delete this['events'];
@@ -500,6 +505,7 @@ export class Jodit extends Component{
         }
 
         const old_value: string = this.getElementValue();
+
         if (old_value !== this.getEditorValue()) {
             this.setElementValue(this.getEditorValue());
             this.events.fire('change', old_value, this.getEditorValue());

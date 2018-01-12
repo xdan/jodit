@@ -597,7 +597,7 @@ export class FileBrowser extends Component {
         self.tree = <HTMLElement>self.browser.querySelector('.jodit_filebrowser_tree');
         self.files = <HTMLElement>self.browser.querySelector('.jodit_filebrowser_files');
 
-        self.events
+        self.jodit.events
             .on([self.buttons.tiles, self.buttons.list], 'click', (event: Event) => {
                 let target = <HTMLElement>event.currentTarget;
                 if (target.classList.contains('jodit_button_tiles')) {
@@ -706,7 +706,7 @@ export class FileBrowser extends Component {
 
         const contextmenu: ContextMenu = new ContextMenu(this.jodit);
 
-        self.events
+        self.jodit.events
             .on(self.files, 'mousedown', function (this: HTMLElement, e: DragEvent) {
                 self.client.x = e.clientX;
                 self.client.y = e.clientY;
@@ -776,7 +776,7 @@ export class FileBrowser extends Component {
                                                     temp_content.appendChild(next);
                                                 }
 
-                                                self.events.on([next, prev], 'click', function (this: HTMLElement) {
+                                                self.jodit.events.on([next, prev], 'click', function (this: HTMLElement) {
                                                     if (this.classList.contains('jodit_filebrowser_preview_navigation-next')) {
                                                         item = <HTMLElement>item.nextSibling;
                                                     } else {
@@ -809,7 +809,7 @@ export class FileBrowser extends Component {
                                     selectBtn.addEventListener('click', () => {
                                         $$('a.active', self.files).forEach((a: HTMLAnchorElement) => a.classList.add('active'));
                                         item.classList.add('active');
-                                        self.events.fire(self.buttons.select, 'click');
+                                        self.jodit.events.fire(self.buttons.select, 'click');
                                         preview.close();
                                     });
                                 }
@@ -864,7 +864,7 @@ export class FileBrowser extends Component {
             })
             .on(self.jodit.ownerWindow, 'keydown', (e: KeyboardEvent) => {
                 if (self.isOpened() && e.which === consts.KEY_DELETE) {
-                    self.events.fire(self.buttons.remove, 'click');
+                    self.jodit.events.fire(self.buttons.remove, 'click');
                 }
             })
             .on(self.jodit.ownerWindow, 'mouseup dragend',() => {
@@ -1325,7 +1325,7 @@ export class FileBrowser extends Component {
         if (this.options.items.url) {
 
             let localTimeot: number = 0;
-            this.events
+            this.jodit.events
                 .off(this.files, 'dblclick')
                 .on(this.files, 'dblclick', this.onSelect(callback), 'a')
                 .on(this.files, 'touchstart', () => {

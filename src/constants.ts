@@ -77,3 +77,5 @@ export const TEXT_PLAIN = navigator.userAgent.indexOf("MSIE") != -1 || /rv:11.0/
 export const MARKER_CLASS = 'jodit_selection_marker';
 
 export const EMULATE_DBLCLICK_TIMEOUT = 300;
+
+export const JODIT_SELECTED_CELL_MARKER = 'data-jodit-selected-cell';

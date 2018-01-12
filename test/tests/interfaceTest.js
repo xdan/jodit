@@ -684,33 +684,51 @@ describe('Test interface', function() {
 
                 expect(popup && popup.classList.contains('active')).to.equal(true);
             });
-            describe('Table buttone', function () {
-                it('Select table cell and fill it in yellow', function () {
-                    var editor = new Jodit('#table_editor_interface');
+            describe('Table button', function () {
+                describe('Select table cell', function () {
+                    it('Should Select table cell', function () {
+                        var editor = new Jodit('#table_editor_interface');
 
-                    editor.setEditorValue('<table>' +
-                        '<tr><td>2</td></tr>' +
-                        '</table>');
+                        editor.setEditorValue('<table>' +
+                            '<tr><td>2</td></tr>' +
+                            '</table>');
 
-                    var td = editor.editor.querySelector('td');
+                        var td = editor.editor.querySelector('td');
 
-                    simulateEvent('mousedown', 0, td)
-                    simulateEvent('mousemove', 0, td)
+                        simulateEvent('mousedown', 0, td)
 
-                    var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
+                        expect(td.hasAttribute(Jodit.JODIT_SELECTED_CELL_MARKER)).to.equal(true);
 
-                    expect(popup && popup.classList.contains('active')).to.equal(true);
+                    });
+                    describe('and press brushh button', function () {
+                        it('Should Select table cell and fill it in yellow', function () {
+                            var editor = new Jodit('#table_editor_interface');
 
-                    simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-brush>a'))
+                            editor.setEditorValue('<table>' +
+                                '<tr><td>3</td></tr>' +
+                                '</table>');
 
-                    var popupColor = popup.querySelector('.jodit_toolbar_popup');
-                    expect(popupColor && popupColor.style.display).to.equal('block');
+                            var td = editor.editor.querySelector('td');
 
-                    simulateEvent('mousedown', 0, popupColor.querySelector('.jodit_colorpicker_group>a'));
+                            simulateEvent('mousedown', 0, td)
+                            simulateEvent('mousemove', 0, td)
+
+                            var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
+
+                            expect(popup && popup.classList.contains('active')).to.equal(true);
+
+                            simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-brush>a'))
+
+                            var popupColor = popup.querySelector('.jodit_toolbar_popup');
+                            expect(popupColor && popupColor.style.display).to.equal('block');
+
+                            simulateEvent('mousedown', 0, popupColor.querySelector('.jodit_colorpicker_group>a'));
 
 
-                    expect(editor.helper.normalizeColor(td.style.backgroundColor)).to.equal('#000000');
+                            expect(editor.helper.normalizeColor(td.style.backgroundColor)).to.equal('#000000');
 
+                        });
+                    });
                 });
             });
             it('Select table cell and change it vertical align', function () {
@@ -723,6 +741,7 @@ describe('Test interface', function() {
                 var td = editor.editor.querySelector('td');
 
                 simulateEvent('mousedown', 0, td)
+
 
                 var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
 

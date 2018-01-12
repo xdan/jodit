@@ -17,14 +17,12 @@ import {$$, each, trim} from './Helpers'
 import * as consts from '../constants';
 import {Dom} from "./Dom";
 
-export const JODIT_SELECTED_CELL_MARKER = 'data-jodit-selected-cell';
-
 export class Table {
     static addSelected(td: HTMLTableCellElement) {
-        td.setAttribute(JODIT_SELECTED_CELL_MARKER, '1');
+        td.setAttribute(consts.JODIT_SELECTED_CELL_MARKER, '1');
     }
     static restoreSelection(td: HTMLTableCellElement) {
-        td.removeAttribute(JODIT_SELECTED_CELL_MARKER);
+        td.removeAttribute(consts.JODIT_SELECTED_CELL_MARKER);
     }
 
     /**
@@ -33,7 +31,7 @@ export class Table {
      * @return {HTMLTableCellElement[]}
      */
     static getAllSelectedCells(table: HTMLElement|HTMLTableElement): HTMLTableCellElement[] {
-        return table ? <HTMLTableCellElement[]>$$(`td[${JODIT_SELECTED_CELL_MARKER}],th[${JODIT_SELECTED_CELL_MARKER}]`, table) : [];
+        return table ? <HTMLTableCellElement[]>$$(`td[${consts.JODIT_SELECTED_CELL_MARKER}],th[${consts.JODIT_SELECTED_CELL_MARKER}]`, table) : [];
     }
 
     /**

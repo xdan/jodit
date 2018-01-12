@@ -65,8 +65,10 @@ export class Observer extends Component {
      * @property{Snapshot} snapshot
      */
     snapshot: Snapshot;
-    private __blocked = false;
-    private __timer;
+
+    private __blocked: boolean = false;
+    private oldblock: boolean = false;
+    private __timer: number;
     // redobtn;
     // undobtn;
     private  __startValue: SnapshotType;
@@ -74,7 +76,7 @@ export class Observer extends Component {
     private __timeouts: number[] = [];
 
 
-    __onChange() {
+    private __onChange() {
         this.__newValue = this.snapshot.make();
         if (!Snapshot.equal(this.__newValue, this.__startValue)) {
             this.stack.execute(new Command(this.__startValue, this.__newValue, this));
@@ -82,7 +84,7 @@ export class Observer extends Component {
         }
     }
 
-    __changeHandler() {
+    private __changeHandler() {
         if (this.__blocked) {
             this.block(false);
             return;
@@ -101,9 +103,11 @@ export class Observer extends Component {
         super(editor);
 
         this.stack = new Stack();
+
         this.stack.changed = () => {
             this.changed()
         };
+
         this.snapshot = new Snapshot(editor);
 
         this.__startValue = this.snapshot.make();
@@ -111,11 +115,15 @@ export class Observer extends Component {
         this.stack.changed();
 
 
-        editor.events.on('change afterCommand', (command) => {
-            if (command !== 'undo' && command !== 'redo') {
-                this.__changeHandler()
-            }
-        });
+        editor.events
+            .on('updateToolbar', () => {
+                this.stack.changed();
+            })
+            .on('change afterCommand', (command: string) => {
+                if (command !== 'undo' && command !== 'redo') {
+                    this.__changeHandler()
+                }
+            });
     }
 
     /**
@@ -143,7 +151,7 @@ export class Observer extends Component {
      * parent.$editor.find('img').css('border', '1px solid #ccc'); // the stack will be filled soon , the last state
      * ```
      */
-    block = function (block: boolean|number = 1) {
+    block(block: boolean|number = 1) {
         if (block === true || block === false) {
             this.__blocked = block;
         } else if (block === 1) {
@@ -156,9 +164,10 @@ export class Observer extends Component {
 
     /**
      * There has been a change in the stack Undo/Redo
+     *
      * @method changed
      */
-    changed = function () {
+    changed () {
         if (this.jodit.getMode() === consts.MODE_WYSIWYG) {
             this.jodit.events.fire('canRedo', this.stack.canRedo());
             this.jodit.events.fire('canUndo', this.stack.canUndo());
