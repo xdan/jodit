@@ -149,7 +149,8 @@ export class source extends Component {
 
     private getNormalPosition = (pos: number, str: string): number => {
         let start: number = pos;
-        while(start > 0) {
+
+        while (start > 0) {
             start--;
 
             if (str[start] === '<' && str[start + 1] !== undefined && str[start + 1].match(/[\w\/]+/i)) {
@@ -160,6 +161,7 @@ export class source extends Component {
             }
 
         }
+
         return pos;
     };
 
@@ -182,6 +184,12 @@ export class source extends Component {
             .on('placeholder', (text: string) => {
                 this.mirror.setAttribute('placeholder', text);
             })
+            .on('afterInit aceInited', () => {
+                // save restore selection
+                editor.events
+                    .on('beforeSetMode', this.saveSelection)
+                    .on('afterSetMode', this.restoreSelection);
+            })
             .on('afterInit', () => {
                 this.mirrorContainer.appendChild(this.mirror);
                 editor.workplace.appendChild(this.mirrorContainer);
@@ -197,10 +205,7 @@ export class source extends Component {
                     this.replaceMirrorToACE();
                 }
 
-                // save restore selection
-                editor.events
-                    .on('beforeSetMode', this.saveSelection)
-                    .on('afterSetMode', this.restoreSelection);
+
             })
             .on('change afterInit', this.fromWYSIWYG);
     }
@@ -305,6 +310,7 @@ export class source extends Component {
             selectionEnd: number  = selectionStart;
 
         value = value.replace(this.tempMarkerStart, '');
+
         if (!this.selInfo[0].collapsed || selectionStart === -1) {
             selectionEnd = value.indexOf(this.tempMarkerEnd);
             if (selectionStart === -1) {

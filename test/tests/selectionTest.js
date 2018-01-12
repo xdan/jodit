@@ -79,28 +79,28 @@ describe('Selection Module Tests', function() {
                     /**
                      * @this Events
                      */
-                    aceInited: function () {
-                        editor.setMode(Jodit.MODE_WYSIWYG);
-                        editor.setEditorValue(('<p>' + 'test '.repeat(50) + '</p>').repeat(1));
+                    aceInited: function (jodit) {
+                        jodit.setMode(Jodit.MODE_WYSIWYG);
+                        jodit.setEditorValue(('<p>' + 'test '.repeat(50) + '</p>').repeat(1));
 
-                        var sel = editor.editorWindow.getSelection(),
-                            range = editor.editorDocument.createRange();
+                        var sel = jodit.editorWindow.getSelection(),
+                            range = jodit.editorDocument.createRange();
 
-                        range.selectNodeContents(editor.editor.querySelector('p'));
+                        range.selectNodeContents(jodit.editor.querySelector('p'));
                         range.collapse(false);
                         sel.removeAllRanges();
                         sel.addRange(range);
 
-                        editor.selection.insertHTML('hello');
+                        jodit.selection.insertHTML('hello');
 
-                        editor.setMode(Jodit.MODE_SOURCE);
+                        jodit.setMode(Jodit.MODE_SOURCE);
 
-                        expect(editor.__plugins.source.aceEditor.getSelectionRange().start.column).to.equal(258);
-                        expect(editor.__plugins.source.aceEditor.getSelectionRange().start.row).to.equal(0);
+                        expect(jodit.__plugins.source.aceEditor.getSelectionRange().start.column).to.equal(258);
+                        expect(jodit.__plugins.source.aceEditor.getSelectionRange().start.row).to.equal(0);
 
-                        editor.__plugins.source.aceEditor.session.insert(editor.__plugins.source.aceEditor.getCursorPosition(), ' world');
+                        jodit.__plugins.source.aceEditor.session.insert(jodit.__plugins.source.aceEditor.getCursorPosition(), ' world');
 
-                        expect(editor.__plugins.source.aceEditor.getValue()).to.equal('<p>' + 'test '.repeat(49) + 'test hello world</p>');
+                        expect(jodit.__plugins.source.aceEditor.getValue()).to.equal('<p>' + 'test '.repeat(49) + 'test hello world</p>');
                         __done();
                     }
                 }

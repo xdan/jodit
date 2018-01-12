@@ -318,6 +318,7 @@ export class TableProcessor extends Component{
     observe(table: HTMLTableElement) {
         table[this.__key] = true;
         let start: HTMLTableCellElement;
+
         this.jodit.events
             .on(table, 'mousedown touchstart', (event: MouseEvent) => {
                 const cell: HTMLTableCellElement = <HTMLTableCellElement>Dom.up(<HTMLElement>event.target, TableProcessor.isCell, table);

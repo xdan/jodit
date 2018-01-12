@@ -10,7 +10,7 @@ import {$$, css, dom, trim, val} from "../modules/Helpers";
 import {Alert, Confirm, Dialog} from "../modules/Dialog";
 import {Toolbar} from "../modules/Toolbar";
 
-import {FileBrowser,FileBrowserCallBcackData} from "../modules/FileBrowser";
+import {FileBrowser,FileBrowserCallBackData} from "../modules/FileBrowser";
 import {Dom} from "../modules/Dom";
 import {UploaderData} from "../modules/Uploader";
 import {Widget} from "../modules/Widget";
@@ -377,14 +377,14 @@ export function imageProperties(editor: Jodit) {
             imagebtn.addEventListener('mousedown', (e: MouseEvent) => {
                 imagebtn.classList.toggle('active');
                 editor.toolbar.openPopup(imagebtn, ImageSelectorWidget(editor, {
-                    upload: (data: FileBrowserCallBcackData) => {
+                    upload: (data: FileBrowserCallBackData) => {
                         if (data.files && data.files.length) {
                             image.setAttribute('src', data.baseurl + data.files[0]);
                         }
                         update();
                         editor.toolbar.closeAll();
                     },
-                    filebrowser: (data: FileBrowserCallBcackData) => {
+                    filebrowser: (data: FileBrowserCallBackData) => {
                         if (data && data.files && Array.isArray(data.files) && data.files.length) {
                             image.setAttribute('src', data.files[0]);
                             editor.toolbar.closeAll();

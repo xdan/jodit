@@ -335,7 +335,7 @@ type FileBrowserOptions = {
     uploader: null // use default Uploader's settings
 }
 
-export type FileBrowserCallBcackData = {
+export type FileBrowserCallBackData = {
     baseurl: string,
     files: string[]
 };
@@ -1282,7 +1282,7 @@ export class FileBrowser extends Component {
         this.dialog.close();
     };
 
-    private onSelect(callback: (data: FileBrowserCallBcackData) => void) {
+    private onSelect(callback: (data: FileBrowserCallBackData) => void) {
         return () => {
             const actives = this.__getActiveElements();
             if (actives.length) {
@@ -1295,7 +1295,7 @@ export class FileBrowser extends Component {
                 this.close();
 
                 if (typeof callback === 'function') {
-                    callback(<FileBrowserCallBcackData>{
+                    callback(<FileBrowserCallBackData>{
                         baseurl: '',
                         files: urls
                     });
@@ -1321,7 +1321,7 @@ export class FileBrowser extends Component {
      * });
      * ```
      */
-    open = (callback: (data: FileBrowserCallBcackData) => void) => {
+    open = (callback: (data: FileBrowserCallBackData) => void) => {
         if (this.options.items.url) {
 
             let localTimeot: number = 0;

@@ -379,8 +379,9 @@ export class Select extends Component{
      * ```
      */
     insertHTML(html: number|string|Node) {
-        const node: HTMLDivElement = <HTMLDivElement>this.jodit.editorDocument.createElement('DIV'),
+        const node: HTMLDivElement = this.jodit.editorDocument.createElement('div'),
             fragment: DocumentFragment = this.jodit.editorDocument.createDocumentFragment();
+
         let
             lastChild: Node|null,
             lastEditorElement: Node|null;
@@ -416,7 +417,7 @@ export class Select extends Component{
         }
 
         if (lastChild) {
-            if (lastEditorElement && lastChild === lastEditorElement && lastChild.nodeType === 1) {
+            if (lastEditorElement && lastChild === lastEditorElement && lastChild.nodeType === Node.ELEMENT_NODE) {
                 this.jodit.editor.appendChild(this.jodit.editorDocument.createElement('br'));
             }
             this.setCursorAfter(lastChild);

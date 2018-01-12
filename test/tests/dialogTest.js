@@ -1,5 +1,20 @@
 describe('Dialog system tests', function() {
     appendTestArea('dialog_area', true);
+    describe('About dialog', function() {
+        it('Should be opened when use clicks on the About button', function () {
+            var editor = new Jodit('#dialog_area');
+
+            var about = editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-about');
+            expect(about).to.be.not.equal(null);
+
+            simulateEvent('mousedown', 0, about);
+
+            var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active');
+            expect(dialog).to.be.not.equal(null);
+
+            expect(dialog.innerHTML.indexOf('xdsoft.net') !== -1).to.be.equal(true);
+        });
+    });
     describe('Short Jodit.Alert etc static methods', function() {
         it('Should work without Jodit instance', function () {
             var dialog = Jodit.Alert('Hello');

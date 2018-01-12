@@ -120,15 +120,16 @@ export function cleanHTML(editor: Jodit) {
             allowTagsHash = editor.options.cleanHTML.allowTags;
         }
 
-        editor.events.on('beforeSetElementValue', function (data) {
+        editor.events.on('beforeSetElementValue', (data: {value: string}) => {
             if (editor.getRealMode() === consts.MODE_WYSIWYG) {
                 const div: HTMLElement = <HTMLElement>Dom.create('div', '', editor.editorDocument);
+
                 let node: Element|null = null,
                     remove: Element[] = [],
                     removeAttrs: string[],
                     i: number = 0;
 
-                div['innerHTML'] = data.value;
+                div.innerHTML = data.value;
 
                 if (div.firstChild) {
                     node = <Element>div.firstChild;
@@ -161,6 +162,7 @@ export function cleanHTML(editor: Jodit) {
                 }
 
                 let parent: Node|null;
+
                 for (i = 0; i < remove.length; i += 1) {
                     parent = remove[i].parentNode;
                     if (remove[i] && parent) {
@@ -168,7 +170,7 @@ export function cleanHTML(editor: Jodit) {
                     }
                 }
 
-                data.value = div['innerHTML'];
+                data.value = div.innerHTML;
             }
         });
     }

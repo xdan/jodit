@@ -88,6 +88,9 @@ export class Dialog extends Component{
         if (jodit && jodit instanceof Jodit) {
             this.window = jodit.ownerWindow;
             this.document = jodit.ownerDocument;
+            jodit.events.on('beforeDestruct', () => {
+                this.destruct();
+            });
         }
 
         const self: Dialog = this;
@@ -528,7 +531,7 @@ export class Dialog extends Component{
      * It destroys all objects created for the windows and also includes all the handlers for the window object
      */
     destruct () {
-        if (this.dialogbox.parentNode) {
+        if (this.dialogbox && this.dialogbox.parentNode) {
             this.dialogbox.parentNode.removeChild(this.dialogbox);
         }
 
@@ -572,6 +575,8 @@ export class Dialog extends Component{
         if (this.jodit && this.jodit.events) {
             this.jodit.events.fire(this, 'beforeClose');
         }
+
+
         this.dialogbox.classList.remove('active');
 
         if (this.iSetMaximization) {

@@ -8,7 +8,7 @@ import {Jodit} from '../Jodit'
 import {normalizeColor, dom, isPlainObject, each, $$, hexToRgb, val} from './Helpers'
 import {Dom} from "./Dom";
 import {Uploader, UploaderData} from "./Uploader";
-import {FileBrowser, FileBrowserCallBcackData} from "./FileBrowser";
+import {FileBrowser, FileBrowserCallBackData} from "./FileBrowser";
 
 export namespace Widget {
 
@@ -235,8 +235,8 @@ export namespace Widget {
 
     type ImageSelectorCallbacks = {
         url?: (this: Jodit, url: string, alt: string) => void;
-        filebrowser?: (data: FileBrowserCallBcackData) => void,
-        upload?: (this: Jodit, data: FileBrowserCallBcackData) => void;
+        filebrowser?: (data: FileBrowserCallBackData) => void,
+        upload?: (this: Jodit, data: FileBrowserCallBackData) => void;
     };
 
     /**

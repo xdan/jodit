@@ -8,10 +8,11 @@ import * as consts from './constants'
 import {dom, trim, $$, isURL, convertMediaURLToVideoEmbed, val} from './modules/Helpers'
 import {Jodit} from "./Jodit";
 import {ControlType, Toolbar} from "./modules/Toolbar";
-import {FileBrowserCallBcackData} from "./modules/FileBrowser";
+import {FileBrowserCallBackData} from "./modules/FileBrowser";
 import {Widget} from "./modules/Widget";
 import TabsWidget = Widget.TabsWidget;
 import ImageSelectorWidget = Widget.ImageSelectorWidget;
+
 
 /**
  * Default Editor's Configuration
@@ -517,8 +518,7 @@ export class Config {
 Config.prototype.controls = {
     about: {
         exec: (editor: Jodit) => {
-            // don't use new Dialog + import Dialog, because of Config used inside Dialog.ts
-            const dialog = new (require('./modules/Dialog').default)(editor);
+            const dialog = new (require('./modules/Dialog').Dialog)(editor);
             dialog.setTitle(editor.i18n('About Jodit'));
             dialog.setContent(
                 '<div class="jodit_about">\
@@ -569,7 +569,7 @@ Config.prototype.controls = {
             }
 
             return ImageSelectorWidget(editor, {
-                filebrowser: (data: FileBrowserCallBcackData) => {
+                filebrowser: (data: FileBrowserCallBackData) => {
                     if (data.files && data.files.length) {
                         let i: number;
                         for (i = 0; i < data.files.length; i += 1) {
@@ -578,7 +578,7 @@ Config.prototype.controls = {
                     }
                     close();
                 },
-                upload: (data: FileBrowserCallBcackData) => {
+                upload: (data: FileBrowserCallBackData) => {
                     let i;
                     if (data.files && data.files.length) {
                         for (i = 0; i < data.files.length; i += 1) {
