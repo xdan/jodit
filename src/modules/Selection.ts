@@ -28,7 +28,7 @@ export class Select extends Component{
      * @return boolean Something went wrong
      */
     insertCursorAtPoint(x: number, y: number): boolean {
-        let caret;
+        let caret: any;
         const doc: Document = this.jodit.editorDocument;
 
         this.removeMarkers();
@@ -36,8 +36,8 @@ export class Select extends Component{
         try {
             let rng: Range = doc.createRange();
 
-            if (doc['caretPositionFromPoint']) {
-                caret = doc['caretPositionFromPoint'](x, y);
+            if ((<any>doc).caretPositionFromPoint) {
+                caret = (<any>doc).caretPositionFromPoint(x, y);
                 rng.setStart(caret.offsetNode, caret.offset);
             } else if (this.jodit.editorDocument.caretRangeFromPoint) {
                 caret = this.jodit.editorDocument.caretRangeFromPoint(x, y);
@@ -50,8 +50,8 @@ export class Select extends Component{
                 let sel = this.jodit.editorWindow.getSelection();
                 sel.removeAllRanges();
                 sel.addRange(rng);
-            } else if (typeof this.jodit.editorDocument.body['createTextRange'] != "undefined") {
-                let range = this.jodit.editorDocument.body['createTextRange']();
+            } else if (typeof (<any>doc).body.createTextRange !== "undefined") {
+                let range: any = (<any>doc).body.createTextRange();
                 range.moveToPoint(x, y);
                 range.select();
             }
@@ -454,7 +454,7 @@ export class Select extends Component{
 
         if (styles && typeof styles === 'object') {
             each(styles, (value: string, key: string) => {
-                image.style[key] = value;
+                (<any>image.style)[key] = value;
             });
         }
 
@@ -498,7 +498,7 @@ export class Select extends Component{
                 start: Node = range.startContainer === this.jodit.editor ? this.jodit.editor.childNodes[range.startOffset] : range.startContainer,
                 end: Node = range.endContainer === this.jodit.editor ? this.jodit.editor.childNodes[range.endOffset - 1] : range.endContainer;
 
-            Dom.find(start, (node: Node) => {
+            Dom.find(start, (node: Node | null) => {
                 if (node && !Dom.isEmptyTextNode(node) && !this.isMarker(<HTMLElement>node)) {
                     nodes.push(node);
                 }
@@ -522,7 +522,7 @@ export class Select extends Component{
             throw new Error('Parameter node most be instance of Node');
         }
 
-        if (!Dom.up(node, (elm) => (elm === this.jodit.editor || elm.parentNode === this.jodit.editor), this.jodit.editor)) {
+        if (!Dom.up(node, (elm: Node | null) => (elm === this.jodit.editor || (elm && elm.parentNode === this.jodit.editor)), this.jodit.editor)) {
             throw new Error('Node element must be in editor');
         }
 
@@ -561,7 +561,7 @@ export class Select extends Component{
      */
     cursorInTheEdge (start: boolean = false, parentBlock: HTMLElement|Function|false = false, inverse: boolean = false): boolean|null {
         const sel: Selection = this.jodit.editorWindow.getSelection(),
-            isNoEmptyNode = (elm: Node) => (!Dom.isEmptyTextNode(elm));
+            isNoEmptyNode = (elm: Node | null) => (elm && !Dom.isEmptyTextNode(elm));
         let
             container: HTMLElement = <HTMLElement>parentBlock;
 
@@ -723,7 +723,7 @@ export class Select extends Component{
             throw new Error('Parameter node most be instance of Node');
         }
 
-        if (!Dom.up(node, (elm) => (elm === this.jodit.editor || elm.parentNode === this.jodit.editor), this.jodit.editor)) {
+        if (!Dom.up(node, (elm: Node | null) => (elm === this.jodit.editor || (elm && elm.parentNode === this.jodit.editor)), this.jodit.editor)) {
             throw new Error('Node element must be in editor');
         }
 
@@ -759,7 +759,7 @@ export class Select extends Component{
         if (!(node instanceof (<any>this.jodit.editorWindow).Node)) {
             throw new Error('Parameter node most be instance of Node');
         }
-        if (!Dom.up(node, (elm) => (elm === this.jodit.editor || elm.parentNode === this.jodit.editor), this.jodit.editor)) {
+        if (!Dom.up(node, (elm: Node | null) => (elm === this.jodit.editor || (elm && elm.parentNode === this.jodit.editor)), this.jodit.editor)) {
             throw new Error('Node element must be in editor');
         }
 
@@ -799,7 +799,7 @@ export class Select extends Component{
         if (!(node instanceof (<any>this.jodit.editorWindow).Node)) {
             throw new Error('Parameter node most be instance of Node');
         }
-        if (!Dom.up(node, (elm) => (elm === this.jodit.editor || elm.parentNode === this.jodit.editor), this.jodit.editor)) {
+        if (!Dom.up(node, (elm: Node | null) => (elm === this.jodit.editor || (elm && elm.parentNode === this.jodit.editor)), this.jodit.editor)) {
             throw new Error('Node element must be in editor');
         }
 
@@ -828,7 +828,7 @@ export class Select extends Component{
         const defaultTag: string = 'SPAN';
         const FONT: string = 'FONT';
 
-        const findNextCondition = (elm: HTMLElement): boolean => (elm && !Dom.isEmptyTextNode(elm) && !this.isMarker(elm));
+        const findNextCondition = (elm: Node | null): boolean => (elm !== null && !Dom.isEmptyTextNode(elm) && !this.isMarker(<HTMLElement>elm));
 
         const checkCssRulesFor = (elm: HTMLElement): boolean => {
             return elm.nodeName !== FONT &&
@@ -888,7 +888,7 @@ export class Select extends Component{
             normalizeNode(this.jodit.editor.firstChild); // FF fix for test "commandsTest - Exec command "bold" for some text that contains a few STRONG elements, should unwrap all of these"
             this.jodit.editorDocument.execCommand('fontsize', false, 7);
 
-            $$('font[size="7"]', this.jodit.editor).forEach((font: HTMLFontElement) => {
+            $$('font[size="7"]', this.jodit.editor).forEach((font: HTMLElement) => {
                 if (!Dom.next(font, findNextCondition, <HTMLElement>font.parentNode) && !Dom.prev(font, findNextCondition, <HTMLElement>font.parentNode) && isSuitElement(<HTMLElement>font.parentNode)) {
                     toggleStyles(<HTMLElement>font.parentNode);
                 } else if (font.firstChild && !Dom.next(font.firstChild, findNextCondition, <HTMLElement>font) && !Dom.prev(font.firstChild, findNextCondition, <HTMLElement>font) && isSuitElement(<HTMLElement>font.firstChild)) {
@@ -930,8 +930,8 @@ export class Select extends Component{
                     let firstElementSuit: boolean|undefined = undefined;
 
                     if (font.firstChild) {
-                        Dom.find(font.firstChild, (elm: HTMLElement) => {
-                            if (elm && isSuitElement(elm)) {
+                        Dom.find(font.firstChild, (elm: Node | null) => {
+                            if (elm && isSuitElement(<HTMLElement>elm)) {
                                 if (firstElementSuit === undefined) {
                                     firstElementSuit = true;
                                 }

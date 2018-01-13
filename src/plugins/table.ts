@@ -5,11 +5,10 @@
  */
 
 import {Jodit} from '../Jodit';
-import {Table} from '../modules/Table';
 import * as consts from '../constants';
 import {each, getContentWidth, $$, dom, offset} from '../modules/Helpers';
 import {Config} from '../Config'
-import {Dom, Component} from "../modules/";
+import {Dom, Component, Table} from "../modules/index";
 import {ControlType} from "../modules/Toolbar";
 
 
@@ -74,7 +73,7 @@ Config.prototype.controls.table = {
 
         cells[0].className = 'hovered';
 
-        const mouseenter = (e: MouseEvent, index?: number) => {
+        const mouseenter = (e: MouseEvent, index?: number): void => {
             const div: HTMLDivElement = <HTMLDivElement>e.target;
             if (!div || div.tagName !== 'DIV') {
                 return;
@@ -193,8 +192,8 @@ export class TableProcessor extends Component{
     private __workCell: HTMLTableCellElement;
     private __workTable: HTMLTableElement;
 
-    static isCell(tag: HTMLElement): boolean {
-        return tag && /^TD|TH$/i.test(tag.tagName)
+    static isCell(tag: Node | null): boolean {
+        return !!tag && /^TD|TH$/i.test(tag.nodeName)
     }
 
     /**
@@ -206,7 +205,7 @@ export class TableProcessor extends Component{
     private __setWorkCell(cell: HTMLTableCellElement, wholeTable: boolean|null = null) {
         this.__wholeTable = wholeTable;
         this.__workCell = cell;
-        this.__workTable = <HTMLTableElement>Dom.up(cell, (elm) => (elm.tagName === 'TABLE'), this.jodit.editor);
+        this.__workTable = <HTMLTableElement>Dom.up(cell, (elm: Node | null) => (elm && elm.nodeName === 'TABLE'), this.jodit.editor);
     }
 
     private __minX: number;
@@ -316,7 +315,7 @@ export class TableProcessor extends Component{
     }
 
     observe(table: HTMLTableElement) {
-        table[this.__key] = true;
+        (<any>table)[this.__key] = true;
         let start: HTMLTableCellElement;
 
         this.jodit.events
@@ -423,7 +422,7 @@ export class TableProcessor extends Component{
             })
             .on(this.jodit.ownerWindow, 'scroll', () => {
                 if (this.__drag) {
-                    let parent = <HTMLElement>Dom.up(this.__workCell, (elm) => (elm.tagName === 'TABLE'), editor.editor);
+                    let parent = <HTMLElement>Dom.up(this.__workCell, (elm: Node | null) => (elm && elm.nodeName === 'TABLE'), editor.editor);
                     if (parent) {
                         let parentBox = parent.getBoundingClientRect();
                         this.__resizerHandler.style.top = parentBox.top  + 'px';
@@ -432,7 +431,7 @@ export class TableProcessor extends Component{
             })
             .on(this.jodit.ownerWindow, 'mousedown touchend', (event: MouseEvent) => {
                 // need use event['originalEvent'] because of IE can not set target from another window to current window
-                const current_cell: HTMLTableCellElement = <HTMLTableCellElement>Dom.closest(<HTMLElement>event['originalEvent'].target, 'TD|TH', this.jodit.editor);
+                const current_cell: HTMLTableCellElement = <HTMLTableCellElement>Dom.closest(<HTMLElement>(<any>event)['originalEvent'].target, 'TD|TH', this.jodit.editor);
                 let table: HTMLTableElement|null = null;
 
                 if (current_cell instanceof (<any>this.jodit.editorWindow).HTMLTableCellElement) {
@@ -443,12 +442,12 @@ export class TableProcessor extends Component{
                     this.__deSelectAll(table, current_cell instanceof (<any>this.jodit.editorWindow).HTMLTableCellElement ? current_cell : false);
                 }
             })
-            .on('afterGetValueFromEditor', (data) => {
+            .on('afterGetValueFromEditor', (data: {value: string}) => {
                 data.value = data.value.replace(new RegExp(`([\s]*)${consts.JODIT_SELECTED_CELL_MARKER}="1"`, 'g'), '');
             })
             .on('change afterCommand afterSetMode', () => {
-                $$('table', editor.editor).forEach((table: HTMLTableElement) => {
-                    if (!table[this.__key]) {
+                (<HTMLTableElement[]>$$('table', editor.editor)).forEach((table: HTMLTableElement) => {
+                    if (!(<any>table)[this.__key]) {
                         this.observe(table);
                     }
                 })
@@ -459,9 +458,9 @@ export class TableProcessor extends Component{
                     Table.normalizeTable(<HTMLTableElement>Dom.closest(td, 'table', editor.editor))
                 })
             })
-            .on('keydown', (event) => {
+            .on('keydown', (event: KeyboardEvent) => {
                 if (event.which === consts.KEY_TAB) {
-                    $$('table', editor.editor).forEach((table: HTMLTableElement) => {
+                    (<HTMLTableElement[]>$$('table', editor.editor)).forEach((table: HTMLTableElement) => {
                         this.__deSelectAll(table);
                     })
                 }
@@ -474,7 +473,7 @@ export class TableProcessor extends Component{
      *
      * @param {string} command
      */
-    private onExecCommand = (command: string) => {
+    private onExecCommand = (command: string): false | void => {
         if (/table(splitv|splitg|merge|empty|bin|binrow|bincolumn|addcolumn|addrow)/.test(command)) {
             command = command.replace('table', '');
             const cells = Table.getAllSelectedCells(this.jodit.editor);

@@ -226,8 +226,8 @@ export function imageProperties(editor: Jodit) {
                     return;
                 }
                 let notequal = false;
-                $$('.margins', prop).forEach((elm: HTMLInputElement) => {
-                    let value: number|string = <string>image.style[elm.id];
+                $$('.margins', prop).forEach((elm: HTMLElement) => {
+                    let value: number|string = <string>(<any>image.style)[elm.id];
                     if (!value) {
                         return;
                     }
@@ -235,9 +235,9 @@ export function imageProperties(editor: Jodit) {
                         value = parseInt(value, 10);
                     }
 
-                    elm.value = value.toString() || '';
+                    (<HTMLInputElement>elm).value = value.toString() || '';
 
-                    if (!notequal && elm.id !== 'marginTop' && elm.value !== val(prop, '#marginTop')) {
+                    if (!notequal && elm.id !== 'marginTop' && (<HTMLInputElement>elm).value !== val(prop, '#marginTop')) {
                         notequal = true;
                     }
                 });
@@ -247,6 +247,7 @@ export function imageProperties(editor: Jodit) {
                 if (lock_margin) {
                     lock_margin.innerHTML = Toolbar.getIcon(lockMargin ? 'lock' : 'unlock');
                 }
+
                 $$('.margins:not(#marginTop)', prop).forEach((elm:HTMLElement) => !lockMargin ? elm.removeAttribute('disabled') : elm.setAttribute('disabled', 'true'));
 
             },
@@ -289,10 +290,10 @@ export function imageProperties(editor: Jodit) {
             };
 
 
-        let timer,
+        let timer: number,
             lockSize: boolean = true,
             lockMargin: boolean = true,
-            tabs = {},
+            tabs: {[key: string]: HTMLElement} = {},
             tabsbox: HTMLElement|null = prop.querySelector('#tabsbox');
 
         tabs[editor.i18n('Image')] = mainTab;
@@ -318,7 +319,7 @@ export function imageProperties(editor: Jodit) {
             dialog.close();
         });
         if (editor.options.image.useImageEditor) {
-            $$('.jodit_use_image_editor', mainTab).forEach((btn: HTMLAnchorElement) => {
+            (<HTMLAnchorElement[]>$$('.jodit_use_image_editor', mainTab)).forEach((btn: HTMLAnchorElement) => {
                 editor.events
                     .on(btn,'mousedown touchstart', () => {
                         const url: string = image.getAttribute('src') || '',
@@ -373,7 +374,7 @@ export function imageProperties(editor: Jodit) {
         }
 
 
-        $$('.jodit_rechange', mainTab).forEach((imagebtn: HTMLAnchorElement) => {
+        (<HTMLAnchorElement[]>$$('.jodit_rechange', mainTab)).forEach((imagebtn: HTMLAnchorElement) => {
             imagebtn.addEventListener('mousedown', (e: MouseEvent) => {
                 imagebtn.classList.toggle('active');
                 editor.toolbar.openPopup(imagebtn, ImageSelectorWidget(editor, {
@@ -424,9 +425,9 @@ export function imageProperties(editor: Jodit) {
                 return;
             }
             clearTimeout(timer);
-            timer = setTimeout(() => {
-                let w = parseInt($w.value, 10),
-                    h = parseInt($h.value, 10);
+            timer = window.setTimeout(() => {
+                let w: number = parseInt($w.value, 10),
+                    h: number = parseInt($h.value, 10);
                 if (e.target.getAttribute('id') === 'imageWidth') {
                     $h.value = Math.round(w / ratio).toString();
                 } else {
@@ -497,7 +498,7 @@ export function imageProperties(editor: Jodit) {
                 }
             }
 
-            const normalSize = (val) => {
+            const normalSize = (val: string): string => {
                 val = trim(val);
                 return (/^[0-9]+$/).test(val) ? val + 'px' : val;
             };
@@ -511,7 +512,7 @@ export function imageProperties(editor: Jodit) {
 
             if (editor.options.image.editMargins) {
                 if (!lockMargin) {
-                    $$('.margins', prop).forEach((margin: HTMLInputElement) => {
+                    (<HTMLInputElement[]>$$('.margins', prop)).forEach((margin: HTMLInputElement) => {
                         css(image, margin.id, normalSize(margin.value));
                     });
                 } else {
@@ -593,7 +594,7 @@ export function imageProperties(editor: Jodit) {
             if (editor.options.image.openOnDblClick) {
                 editor.events.on(editor.editor, 'dblclick',  open, 'img');
             } else {
-                editor.events.on(editor.editor, 'dblclick',  function () {
+                editor.events.on(editor.editor, 'dblclick',  function (this: HTMLImageElement) {
                     editor.selection.select(this);
                 }, 'img');
             }

@@ -7,7 +7,6 @@
 import {Jodit} from "../Jodit"
 import {Config} from '../Config'
 import {each, extend} from "./Helpers";
-import {PseudoPromise} from "./PseudoPromise";
 import {Component} from "./Component";
 
 /**
@@ -72,21 +71,21 @@ Config.prototype.defaultAjaxOptions = <AjaxOptions>{
 };
 
 export class Ajax extends Component{
-    private __buildParams (obj, prefix?: string): string {
-        if (typeof obj === 'string' || (this.jodit.ownerWindow['FormData'] && obj instanceof this.jodit.ownerWindow['FormData'])) {
-            return obj;
+    private __buildParams (obj: string | {[key: string] : string | object} | FormData, prefix?: string): string | FormData{
+        if (typeof obj === 'string' || ((<any>this.jodit.ownerWindow)['FormData'] && obj instanceof (<any>this.jodit.ownerWindow)['FormData'])) {
+            return <string | FormData>obj;
         }
 
         let str: string[] = [],
             p: string,
             k: string,
-            v: string;
+            v: any;
 
         for (p in obj) {
             if (obj.hasOwnProperty(p)) {
                 k = prefix ? prefix + "[" + p + "]" : p;
-                v = obj[p];
-                str.push(typeof v === "object" ? this.__buildParams(v, k) : encodeURIComponent(k) + "=" + encodeURIComponent(v));
+                v = (<{[key: string] : string}>obj)[p];
+                str.push(typeof v === "object" ? <string>this.__buildParams(v, k) : encodeURIComponent(k) + "=" + encodeURIComponent(<string>v));
             }
         }
 
@@ -114,8 +113,8 @@ export class Ajax extends Component{
         }
     }
 
-    send(): PseudoPromise {
-        return new PseudoPromise((resolve: (this: XMLHttpRequest, resp: object) => any, reject: (error: Error) => any) => {
+    send(): Promise<any> {
+        return new Promise((resolve: (this: XMLHttpRequest, resp: object) => any, reject: (error: Error) => any) => {
             const __parse = (resp: string) => {
                 switch (this.options.dataType) {
                     case 'json':

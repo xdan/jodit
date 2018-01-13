@@ -13,7 +13,6 @@ import {Widget} from "./modules/Widget";
 import TabsWidget = Widget.TabsWidget;
 import ImageSelectorWidget = Widget.ImageSelectorWidget;
 
-
 /**
  * Default Editor's Configuration
  **/
@@ -231,7 +230,7 @@ export class Config {
      * console.log(editor.i18n('Type something')) //Начните что-либо вводить
      * ```
      */
-    i18n: object|string = 'en';
+    i18n: {[key: string] : any} | string = 'en';
 
     /**
      * The tabindex global attribute is an integer indicating if the element can take input focus (is focusable), if it should participate to sequential keyboard navigation, and if so, at what position. It can take several values
@@ -516,9 +515,9 @@ export class Config {
     textIcons: boolean = false;
 }
 Config.prototype.controls = {
-    about: {
+    about: <ControlType>{
         exec: (editor: Jodit) => {
-            const dialog = new (require('./modules/Dialog').Dialog)(editor);
+            const dialog: any = editor.getInstance('Dialog');
             dialog.setTitle(editor.i18n('About Jodit'));
             dialog.setContent(
                 '<div class="jodit_about">\
@@ -551,12 +550,12 @@ Config.prototype.controls = {
         tooltip: 'About Jodit',
         mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG
     },
-    hr : {
+    hr : <ControlType>{
         command: 'insertHorizontalRule',
         tags: ["hr"],
         tooltip: "Insert Horizontal Line"
     },
-    image : {
+    image : <ControlType> {
         popup: (editor: Jodit, current: HTMLImageElement|false, self: ControlType, close) => {
             const insertImage = (url: string) => {
                 editor.selection.insertNode(dom('<img src="' + url + '"/>', editor.editorDocument));

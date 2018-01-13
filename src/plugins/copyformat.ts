@@ -17,8 +17,8 @@ const key = 'copyformat';
  * @module copyformat
  */
 
-const getStyles = (editor: Jodit, elm: Node) => {
-    const box: HTMLElement = <HTMLElement>Dom.up(elm, (elm) => (elm && elm.nodeType !== Node.TEXT_NODE), editor.editor) || editor.editor;
+const getStyles = (editor: Jodit, elm: Node): {[key: string]: string | number} | void => {
+    const box: HTMLElement = <HTMLElement>Dom.up(elm, (elm: Node | null) => (elm && elm.nodeType !== Node.TEXT_NODE), editor.editor) || editor.editor;
     if (box) {
         return {
             fontSize: css(box, 'fontSize'),

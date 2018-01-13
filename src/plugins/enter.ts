@@ -60,7 +60,7 @@ export function enter(editor: Jodit) {
             }
         }
     });
-    editor.events.on('keydown', (event: KeyboardEvent) => {
+    editor.events.on('keydown', (event: KeyboardEvent): false | void => {
         if (event.which === consts.KEY_ENTER || event.keyCode === consts.KEY_ENTER) {
             if (!editor.selection.isCollapsed()) {
                 editor.execCommand('Delete');
@@ -102,7 +102,7 @@ export function enter(editor: Jodit) {
             }
 
 
-            if (!currentBox && current && !Dom.prev(current, (elm: Node) => (Dom.isBlock(elm) || Dom.isImage(elm, editor.ownerWindow)), editor.editor)) {
+            if (!currentBox && current && !Dom.prev(current, (elm: Node | null) => (Dom.isBlock(elm) || (!!elm && Dom.isImage(elm, editor.ownerWindow))), editor.editor)) {
                 currentBox = Dom.wrap(current, editor.options.enter, editor);
                 range = sel.rangeCount ? sel.getRangeAt(0) : editor.editorDocument.createRange();
             }
@@ -119,10 +119,10 @@ export function enter(editor: Jodit) {
                     if (Dom.isEmpty(currentBox)) {
                         const ul: HTMLUListElement = <HTMLUListElement>Dom.closest(currentBox, 'ol|ul', editor.editor);
                         // If there is no LI element before
-                        if (!Dom.prev(currentBox, (elm: HTMLElement) => elm && elm.tagName === 'LI', ul)) {
+                        if (!Dom.prev(currentBox, (elm: Node | null) => elm && elm.nodeName === 'LI', ul)) {
                             fake = editor.selection.setCursorBefore(ul);
                             // If there is no LI element after
-                        } else if (!Dom.next(currentBox, (elm: HTMLElement) => elm && elm.tagName === 'LI', ul)) {
+                        } else if (!Dom.next(currentBox, (elm: Node | null) => elm && elm.nodeName === 'LI', ul)) {
                             fake = editor.selection.setCursorAfter(ul);
                         } else {
                             let leftRange = editor.editorDocument.createRange();

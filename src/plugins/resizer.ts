@@ -157,7 +157,7 @@ export function resizer(editor: Jodit) {
                 }
             }
 
-            let timer;
+            let timer: number;
             editor.events
                 .on(element, 'dragstart', hideResizer)
                 .on(element, 'mousedown', (event: MouseEvent) => {
@@ -183,7 +183,7 @@ export function resizer(editor: Jodit) {
                         clearTimeout(timer);
                     }
 
-                    timer = setTimeout(() => {
+                    timer = window.setTimeout(() => {
                         resizeElementClicked = false;
                     }, 400);
                 });
@@ -193,7 +193,7 @@ export function resizer(editor: Jodit) {
 
     $$('i', resizer).forEach((resizeHandle: HTMLElement) => {
         editor.events
-            .on(resizeHandle, 'mousedown touchstart', (e: MouseEvent) => {
+            .on(resizeHandle, 'mousedown touchstart', (e: MouseEvent): false | void => {
                 if (!currentElement || !currentElement.parentNode) {
                     hideResizer();
                     return false;
@@ -319,8 +319,8 @@ export function resizer(editor: Jodit) {
                 if (editor.getMode() === consts.MODE_SOURCE) {
                     return;
                 }
-                if (!elm['__jodit_resizer_binded'] && ((elm.tagName === 'IFRAME' && editor.options.useIframeResizer) || (elm.tagName === 'IMG' && editor.options.useImageResizer) || (elm.tagName === 'TABLE' && editor.options.useTableResizer))) {
-                    elm['__jodit_resizer_binded'] = true;
+                if (!(<any>elm)['__jodit_resizer_binded'] && ((elm.tagName === 'IFRAME' && editor.options.useIframeResizer) || (elm.tagName === 'IMG' && editor.options.useImageResizer) || (elm.tagName === 'TABLE' && editor.options.useTableResizer))) {
+                    (<any>elm)['__jodit_resizer_binded'] = true;
                     bind(elm);
                 }
             });

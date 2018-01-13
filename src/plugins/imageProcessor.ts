@@ -14,7 +14,7 @@ export function imageProcessor(editor: Jodit) {
     const bind = (image: HTMLImageElement) => {
         editor.events
             .off(image, '.imageProcessor')
-            .on(image, 'dragstart.imageProcessor', (e) => {
+            .on(image, 'dragstart.imageProcessor', (e: MouseEvent) => {
                 dragImage = <HTMLImageElement>image;
                 e.preventDefault(); // stop default dragging
             })
@@ -33,9 +33,9 @@ export function imageProcessor(editor: Jodit) {
             .on(window, "mouseup", () => {
                 dragImage = false;
             })
-            .on(editor.editor, "mouseup", (e: DragEvent) => {
+            .on(editor.editor, "mouseup", (e: DragEvent): false | void => {
                 let img: HTMLImageElement = <HTMLImageElement>dragImage,
-                    elm;
+                    elm: Node;
 
                 if (img && e.target !== img) {
                     //e.preventDefault();
@@ -50,9 +50,13 @@ export function imageProcessor(editor: Jodit) {
                         elm = img;
                     }
 
-                    elm.parentNode.removeChild(elm);
+                    if (elm.parentNode) {
+                        elm.parentNode.removeChild(elm);
+                    }
 
-                    editor.selection.insertImage(elm);
+                    if (elm) {
+                        editor.selection.insertImage(<HTMLImageElement>elm);
+                    }
 
                     editor.selection.select(elm);
                 }
@@ -61,10 +65,10 @@ export function imageProcessor(editor: Jodit) {
 
     editor.events.on('change afterInit', debounce(() => {
         if (editor.editor) {
-            $$('img', editor.editor).forEach((elm: HTMLImageElement) => {
-                if (!elm[JODIT_IMAGE_PROCESSOR_BINDED]) {
-                    elm[JODIT_IMAGE_PROCESSOR_BINDED] = true;
-                    bind(elm);
+            $$('img', editor.editor).forEach((elm: HTMLElement) => {
+                if (!(<any>elm)[JODIT_IMAGE_PROCESSOR_BINDED]) {
+                    (<any>elm)[JODIT_IMAGE_PROCESSOR_BINDED] = true;
+                    bind(<HTMLImageElement>elm);
                     if (!(<HTMLImageElement>elm).complete) {
                         elm.addEventListener('load', function ElementOnLoad() {
                             editor.events && editor.events.fire && editor.events.fire('resize');

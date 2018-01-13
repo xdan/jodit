@@ -27,4 +27,5 @@ type Permissions = {
     allowFolderRename: boolean,
     allowImageResize: boolean,
     allowImageCrop: boolean,
+    [key: string]: boolean;
 };

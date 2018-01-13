@@ -4,18 +4,19 @@
  * Copyright 2013-2018 Valeriy Chupurnov xdsoft.net
  */
 
-import {Component}from './modules/Component';
-import {Select}from './modules/Selection';
+import {Component} from './modules/Component';
+import {Select} from './modules/Selection';
 import {Toolbar} from './modules/Toolbar';
 import {Cookie} from './modules/Cookie';
+import {FileBrowser} from './modules/FileBrowser';
+import {Uploader} from './modules/Uploader';
+import {Dom} from './modules/Dom';
+import {EventsNative} from './modules/EventsNative';
 import * as consts from './constants';
 import {extend, inArray, dom, each, sprintf, defaultLanguage, debounce} from './modules/Helpers';
 import * as helper from './modules/Helpers';
-import {FileBrowser} from "./modules/FileBrowser";
-import {Uploader} from "./modules/Uploader";
 import {Config} from "./Config";
-import {Dom} from "./modules/Dom";
-import {EventsNative} from "./modules/EventsNative";
+
 
 declare let appVersion: string;
 
@@ -39,7 +40,7 @@ export class Jodit extends Component{
     static defaultOptions: Config;
     static plugins: any =  {};
     static modules: any =  {};
-    static instances = {};
+    static instances: {[key: string]: Jodit} = {};
     static lang: any = {};
 
     /**
@@ -128,9 +129,9 @@ export class Jodit extends Component{
 
     toolbar: Toolbar;
 
-    private __modulesInstances = {};
+    private __modulesInstances: {[key: string]: Component} = {};
 
-    getInstance(moduleName, options?: object) {
+    getInstance(moduleName: string, options?: object): Component {
         if (Jodit.modules[moduleName] === undefined) {
             throw new Error('Need real module name')
         }
@@ -153,17 +154,17 @@ export class Jodit extends Component{
 
         this.events = new EventsNative();
 
-        const OptionsDefault = function () {};
+        const OptionsDefault: any = function () {};
         OptionsDefault.prototype = Jodit.defaultOptions;
 
         this.options = <Config>(new OptionsDefault());
 
         if (options !== undefined && typeof options === 'object') {
-            Object.keys(options).forEach((key) => {
-                if (typeof Jodit.defaultOptions[key] === 'object' && !Array.isArray(Jodit.defaultOptions[key])) {
-                    this.options[key] = extend(true, {}, Jodit.defaultOptions[key], options[key]);
+            Object.keys(options).forEach((key: string) => {
+                if (typeof (<any>Jodit.defaultOptions)[key] === 'object' && !Array.isArray((<any>Jodit.defaultOptions)[key])) {
+                    (<any>this.options)[key] = extend(true, {}, (<any>Jodit.defaultOptions)[key], (<any>options)[key]);
                 } else {
-                    this.options[key] = options[key];
+                    (<any>this.options)[key] = (<any>options)[key];
                 }
             })
         }
@@ -190,8 +191,8 @@ export class Jodit extends Component{
         }
 
 
-        this.selection = this.getInstance('Select');
-        this.uploader = this.getInstance('Uploader');
+        this.selection = new Select(this);
+        this.uploader = new Uploader(this);
 
         this.container = <HTMLDivElement>dom('<div class="jodit_container" />', this.ownerDocument);
         this.container.classList.add('jodit_' + (this.options.theme || 'default') + '_theme');
@@ -296,7 +297,7 @@ export class Jodit extends Component{
         }
 
         // proxy events
-        this.events.on(this.editor, 'keydown keyup keypress mousedown mouseup mousepress paste resize touchstart touchend focus blur', (e: Event) => {
+        this.events.on(this.editor, 'keydown keyup keypress mousedown mouseup mousepress paste resize touchstart touchend focus blur', (e: Event): false | void => {
             if (this.events) {
                 if (this.events.fire(e.type, e) === false) {
                     e.preventDefault();
@@ -374,7 +375,7 @@ export class Jodit extends Component{
             delete this.__plugins[pluginName];
         });
 
-        this.components.forEach((component) => {
+        this.components.forEach((component: Component) => {
             if (component.destruct !== undefined && typeof component.destruct === 'function') {
                 component.destruct();
             }
@@ -529,8 +530,8 @@ export class Jodit extends Component{
      * this.execCommand('formatBlock', 'p'); // will be inserted paragraph
      * ```
      */
-    execCommand(command, second = false, third: null|any = null) {
-        let result;
+    execCommand(command: string, second = false, third: null|any = null) {
+        let result: any;
         command = command.toLowerCase();
         /**
          * Called before any command
@@ -731,7 +732,7 @@ export class Jodit extends Component{
         }
 
         let store,
-            parse = value => sprintf.apply(this, [value].concat(params));
+            parse = (value: string): string => sprintf.apply(this, [value].concat(<string[]>params));
 
         if (this.options !== undefined && Jodit.lang[defaultLanguage(this.options.language)] !== undefined) {
             store = Jodit.lang[defaultLanguage(this.options.language)];
@@ -743,8 +744,8 @@ export class Jodit extends Component{
             }
         }
 
-        if (this.options !== undefined && this.options.i18n[defaultLanguage(this.options.language)] !== undefined && this.options.i18n[defaultLanguage(this.options.language)][key]) {
-            return parse(this.options.i18n[defaultLanguage(this.options.language)][key]);
+        if (this.options !== undefined && (<any>this.options.i18n)[defaultLanguage(this.options.language)] !== undefined && (<any>this.options.i18n)[defaultLanguage(this.options.language)][key]) {
+            return parse((<any>this.options.i18n)[defaultLanguage(this.options.language)][key]);
         }
 
         if (typeof store[key] === 'string' && store[key]) {

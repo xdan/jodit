@@ -33,12 +33,12 @@ export namespace Widget {
     export const ColorPickerWidget = (editor: Jodit, callback: (newColor: string) => void, coldColor: string): HTMLDivElement => {
         const valueHex = normalizeColor(coldColor),
             form: HTMLDivElement = <HTMLDivElement>dom('<div class="jodit_colorpicker"></div>', editor.ownerDocument),
-            eachColor = (colors) => {
+            eachColor = (colors: string[] | {[key: string]: string[]}) => {
                 const stack: string[] = [];
                 if (isPlainObject(colors)) {
                     Object.keys(colors).forEach((key) => {
                         stack.push('<div class="jodit_colorpicker_group jodit_colorpicker_group-' + key + '">');
-                        stack.push(eachColor(colors[key]));
+                        stack.push(eachColor((<any>colors)[key]));
                         stack.push('</div>');
                     })
                 } else if (Array.isArray(colors)) {

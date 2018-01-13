@@ -8,7 +8,7 @@ import {Jodit} from '../Jodit';
 
 export function imageInlineToolbar(editor: Jodit) {
     editor.events.on('click', (event: Event) => {
-        if (event.target && event.target['tagName'] === 'IMG') {
+        if (event.target && (<Element>event.target)['tagName'] === 'IMG') {
             //alert(1);
         }
     });

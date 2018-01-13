@@ -193,7 +193,7 @@ export class Uploader extends Component {
 
     private options: UploaderOptions;
 
-    constructor(editor: Jodit, options: UploaderOptions) {
+    constructor(editor: Jodit, options?: UploaderOptions) {
         super(editor);
         this.options = <UploaderOptions>extend(true, {}, Config.prototype.uploader, editor.options.uploader, options);
 
@@ -205,7 +205,7 @@ export class Uploader extends Component {
     }
 
     buildData(data: FormData|{[key: string]: string}): FormData|{[key: string]: string} {
-        if (this.jodit.ownerWindow['FormData'] !== undefined) {
+        if ((<any>this.jodit.ownerWindow).FormData !== undefined) {
             if (data instanceof FormData) {
                 return data;
             }
@@ -230,8 +230,8 @@ export class Uploader extends Component {
     send(data: FormData|{[key: string]: string}, success: (resp: UploaderAnswer) => void) {
         this.__ajax = new Ajax(this.jodit, {
             xhr: () => {
-                let xhr = new XMLHttpRequest();
-                if (this.jodit.ownerWindow['FormData'] !== undefined) {
+                let xhr: XMLHttpRequest = new XMLHttpRequest();
+                if ((<any>this.jodit.ownerWindow).FormData !== undefined) {
                     xhr.upload.addEventListener("progress", (evt) => {
                         if (evt.lengthComputable) {
                             let percentComplete = evt.loaded / evt.total;
@@ -255,7 +255,7 @@ export class Uploader extends Component {
             url: this.options.url,
             headers: this.options.headers,
 
-            contentType: (this.jodit.ownerWindow['FormData'] !== undefined && typeof data !== 'string') ? false : 'application/x-www-form-urlencoded; charset=UTF-8',
+            contentType: ((<any>this.jodit.ownerWindow).FormData !== undefined && typeof data !== 'string') ? false : 'application/x-www-form-urlencoded; charset=UTF-8',
             dataType: this.options.format  || 'json',
         });
 
@@ -266,7 +266,7 @@ export class Uploader extends Component {
             });
     }
 
-    sendFiles(files: FileList|File[]|null, handlerSuccess?: HandlerSuccess, handlerError?: HandlerError, process?: Function) {
+    sendFiles(files: FileList|File[]|null, handlerSuccess?: HandlerSuccess, handlerError?: HandlerError, process?: Function): false | void {
         if (!files) {
             return;
         }
@@ -306,7 +306,7 @@ export class Uploader extends Component {
         if (uploader.options.data && isPlainObject(uploader.options.data)) {
             keys = Object.keys(uploader.options.data);
             for (i = 0; i < keys.length; i += 1) {
-                form.append(keys[i], uploader.options.data[keys[i]]);
+                form.append(keys[i], (<any>uploader.options.data)[keys[i]]);
             }
         }
 
@@ -386,7 +386,7 @@ export class Uploader extends Component {
         const self: Uploader = this;
 
         self.jodit.events
-            .on(form, 'paste',  function (e: ClipboardEvent) {
+            .on(form, 'paste',  function (e: ClipboardEvent): false | void {
 
                 let i: number,
                     file: File|null,
@@ -407,7 +407,7 @@ export class Uploader extends Component {
 
                 if (browser('ff')) {
                     if (!e.clipboardData.types.length && e.clipboardData.types[0] !== TEXT_PLAIN) {
-                        div = <HTMLDivElement>Dom.create('div', '', this.jodit.editorDocument);
+                        div = <HTMLDivElement>Dom.create('div', '', self.jodit.editorDocument);
                         self.jodit.selection.insertNode(div);
                         div.focus();
                         setTimeout(() => {
@@ -419,7 +419,7 @@ export class Uploader extends Component {
                                     div.parentNode.removeChild(div);
                                 }
 
-                                this.sendFiles([Uploader.dataURItoBlob(src)], handlerSuccess, handlerError);
+                                self.sendFiles([<File>Uploader.dataURItoBlob(src)], handlerSuccess, handlerError);
                             }
                         }, 200);
                     }
@@ -449,7 +449,7 @@ export class Uploader extends Component {
                 form.classList.remove('draghover');
                 event.preventDefault();
             })
-            .on(form, "drop", (event: DragEvent) => {
+            .on(form, "drop", (event: DragEvent): false | void => {
                 form.classList.remove('draghover');
                 if (event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files.length) {
                     event.preventDefault();

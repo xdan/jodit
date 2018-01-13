@@ -27,7 +27,7 @@ Config.prototype.askBeforePasteHTML = true;
  */
 export function paste(editor: Jodit) {
     editor.events.on('afterInit', () => {
-        editor.editor.addEventListener('paste', (event: ClipboardEvent) => {
+        editor.editor.addEventListener('paste', <EventListener>((event: ClipboardEvent): false | void => {
         /**
          * Triggered before pasting something into the Jodit Editor
          *
@@ -113,10 +113,10 @@ export function paste(editor: Jodit) {
         if (editor.events.fire('afterPaste', event) === false) {
             return false;
         }
-    });
+    }));
     });
     if (editor.options.askBeforePasteHTML) {
-        editor.events.on('beforePaste', (event: ClipboardEvent) => {
+        editor.events.on('beforePaste', (event: ClipboardEvent): false | void => {
             if (event && event.clipboardData && event.clipboardData.getData && event.clipboardData.types[0] === TEXT_PLAIN) {
                 let html = event.clipboardData.getData(TEXT_PLAIN);
                 if (isHTML(html)) {

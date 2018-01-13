@@ -6,7 +6,7 @@
 
 import {Jodit} from '../Jodit';
 import {Component} from './Component';
-import {Dialog, Alert, Confirm, Promt} from '../modules/Dialog';
+import {Dialog, Alert, Confirm, Promt} from './Dialog';
 import {Config} from '../Config';
 import {
     $$, css, ctrlKey, debounce, dom, each, extend, humanSizeToBytes, isPlainObject, offset,
@@ -287,11 +287,11 @@ type ExecButton = {
 }
 
 type FileBrowserOptions = {
-    filter: (item, search) => boolean;
+    filter: (item: any, search: any) => boolean;
 
     sortBy: string;
 
-    sort: (a, b, sortBy, editor?: Jodit) => number;
+    sort: (a: any, b: any, sortBy?: string, editor?: Jodit) => number;
 
     editImage: boolean;
     preview: boolean;
@@ -333,6 +333,7 @@ type FileBrowserOptions = {
     permissions: FileBrowserAjaxOptions;
 
     uploader: null // use default Uploader's settings
+    [key: string]: any
 }
 
 export type FileBrowserCallBackData = {
@@ -363,7 +364,7 @@ Config.prototype.filebrowser = <FileBrowserOptions>{
 
     sortBy: 'changed',
 
-    sort: function (this: FileBrowser, a, b, sortBy: string) {
+    sort: function (this: FileBrowser, a: any, b: any, sortBy: string): number {
         let compareStr = (f: string, s: string): number => {
                 if (f < s) {
                     return -1;
@@ -401,6 +402,8 @@ Config.prototype.filebrowser = <FileBrowserOptions>{
             case 'size':
                 return humanSizeToBytes(a.size) - humanSizeToBytes(b.size);
         }
+
+        return 0;
     },
 
     editImage: true,
@@ -545,7 +548,7 @@ export class FileBrowser extends Component {
     private __currentPerpissions: Permissions|null = null;
 
     public canI(action: string): boolean {
-        return this.__currentPerpissions && (this.__currentPerpissions['allow' + action] === undefined || this.__currentPerpissions['allow' + action]);
+        return this.__currentPerpissions !== null && (this.__currentPerpissions['allow' + action] === undefined || this.__currentPerpissions['allow' + action]);
     }
 
     toggleButtonsByPermissions() {
@@ -637,7 +640,7 @@ export class FileBrowser extends Component {
                 if (this.__getActiveElements().length) {
                     Confirm(editor.i18n('Are you shure?'), '', (yes: boolean) => {
                         if (yes) {
-                            this.__getActiveElements().forEach((a: HTMLAnchorElement) => {
+                            this.__getActiveElements().forEach((a: HTMLElement) => {
                                 self.remove(self.currentPath, a.getAttribute('data-name') || '', a.getAttribute('data-source') || '');
                             });
                             self.someSelectedWasChanged();
@@ -672,7 +675,7 @@ export class FileBrowser extends Component {
             .on(self.tree, 'click',  function (this: HTMLAnchorElement) {
                 if (this.classList.contains('addfolder')) {
                     Promt(self.jodit.i18n('Enter Directory name'), self.jodit.i18n('Create directory'), (name: string) => {
-                        self.create(name, this.getAttribute('data-path'), this.getAttribute('data-source'));
+                        self.create(name, this.getAttribute('data-path') || '', this.getAttribute('data-source') || '');
                     }, self.jodit.i18n('type name'));
                 } else {
                     self.currentPath = this.getAttribute('data-path') || '';
@@ -683,7 +686,7 @@ export class FileBrowser extends Component {
             .on(this.tree, 'dragstart', function (this: HTMLAnchorElement) {
                 self.dragger = this;
             }, 'a')
-            .on(this.tree, 'drop',   function (this: HTMLAnchorElement) {
+            .on(this.tree, 'drop',   function (this: HTMLAnchorElement) : boolean | void {
                 if (self.options.moveFolder && self.dragger) {
                     let path: string = self.dragger.getAttribute('data-path') || '';
 
@@ -732,7 +735,7 @@ export class FileBrowser extends Component {
                 e.dataTransfer.setData(consts.TEXT_PLAIN, this.getAttribute('href') || '');
                 e.stopPropagation();
             }, 'a')
-            .on(self.files, 'contextmenu', function (this: HTMLElement, e: DragEvent) {
+            .on(self.files, 'contextmenu', function (this: HTMLElement, e: DragEvent): boolean | void {
                 if (self.options.contextMenu) {
                     let item: HTMLElement = this;
                     contextmenu.show(e.pageX, e.pageY, [
@@ -807,7 +810,7 @@ export class FileBrowser extends Component {
                                     selectBtn.removeAttribute('disabled');
                                     preview.setTitle(selectBtn);
                                     selectBtn.addEventListener('click', () => {
-                                        $$('a.active', self.files).forEach((a: HTMLAnchorElement) => a.classList.add('active'));
+                                        $$('a.active', self.files).forEach((a: HTMLElement) => a.classList.add('active'));
                                         item.classList.add('active');
                                         self.jodit.events.fire(self.buttons.select, 'click');
                                         preview.close();
@@ -938,7 +941,7 @@ export class FileBrowser extends Component {
         return this.dialog.isOpened() && this.browser.style.display !== 'none';
     }
 
-    private statustimer;
+    private statustimer: number;
 
     /**
      * It displays a message in the status bar of filebrowser
@@ -955,15 +958,18 @@ export class FileBrowser extends Component {
         clearTimeout(this.statustimer);
         this.status_line
             .classList.remove('success');
+
         this.status_line
             .classList.add('active');
+
         this.status_line.innerHTML = message;
 
         if (success) {
             this.status_line
                 .classList.add('success');
         }
-        this.statustimer = setTimeout(() => {
+
+        this.statustimer = window.setTimeout(() => {
             this.status_line
                 .classList.remove('active');
         }, this.options.howLongShowMsg);
@@ -1204,7 +1210,7 @@ export class FileBrowser extends Component {
      * @param {string} path Relative toWYSIWYG the directory in which you want toWYSIWYG create a folder
      * @param {string} source Server source key
      */
-    create = (name, path, source) => {
+    create = (name: string, path: string, source: string) => {
         this.options.create.data.source = source;
         this.options.create.data.path = path;
         this.options.create.data.name = name;
@@ -1386,7 +1392,7 @@ export class FileBrowser extends Component {
      * @method openImageEditor
      */
     openImageEditor = (href: string, name: string, path: string, source: string, onSuccess?: Function, onFailed?: (error: Error) => void) => {
-        (<ImageEditor>this.jodit.getInstance('ImageEditor')).open(href, (newname: string, box: ActionBox, success: Function, failed: (error: Error) => void) => {
+        (<ImageEditor>this.jodit.getInstance('ImageEditor')).open(href, (newname: string | void, box: ActionBox, success: Function, failed: (error: Error) => void) => {
             if (this.options[box.action] === undefined) {
                 this.options[box.action] = {};
             }

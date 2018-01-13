@@ -62,13 +62,14 @@ declare module "../Config" {
  * });
  * ```
  */
-Config.prototype.popup = {
+//
+Config.prototype.popup = <{[key: string]: Array<ControlType|string>}>{
     a: [
-        {
+        <ControlType>{
             name: 'eye',
             tooltip: 'Open link',
-            exec: (editor: Jodit, current: HTMLAnchorElement) => {
-                const href: string|null = current.getAttribute('href');
+            exec: (editor: Jodit, current: Node) => {
+                const href: string|null = (<HTMLElement>current).getAttribute('href');
                 if (current && href) {
                     editor.ownerWindow.open(href);
                 }
@@ -86,7 +87,7 @@ Config.prototype.popup = {
         {
             name: 'bin',
             tooltip: 'Delete',
-            exec: (editor: Jodit, image: HTMLElement) => {
+            exec: (editor: Jodit, image: Node) => {
                 if (image.parentNode) {
                     image.parentNode.removeChild(image);
                 }

@@ -5,24 +5,25 @@
  */
 
 import {Jodit} from "../Jodit";
-import {EventsNative} from "./EventsNative";
 
 export class Component {
-    handlers: {};
+    //handlers: {};
+
     /**
-     * @property{Jodit} parent
+     * @property{Jodit} jodit
      */
     jodit: Jodit;
 
 
     constructor(jodit?: Jodit) {
-        // @ts-ignore: Object is possibly 'undefined'
-        this.jodit = jodit;
-
-        if (jodit && jodit.components) {
-            jodit.components.push(this);
+        if (jodit && jodit instanceof Jodit) {
+            this.jodit = jodit;
+            if (jodit.components) {
+                jodit.components.push(this);
+            }
         }
     }
+    destruct() {}
     /*
     private __scope: any[] = [];
     private __scopeNamespace: any = {};

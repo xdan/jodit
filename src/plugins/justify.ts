@@ -64,9 +64,9 @@ Config.prototype.controls.right = {
 
 
 export function justify(editor: Jodit) {
-    editor.events.on('beforeCommand', (command) => {
+    editor.events.on('beforeCommand', (command: string): false | void => {
         if (/justify/.test(command)) {
-            const justify = (box) => {
+            const justify = (box: HTMLElement) => {
                 if (box instanceof (<any>editor.editorWindow).HTMLElement) {
                     switch (command) {
                         case 'justifyfull':
@@ -88,7 +88,7 @@ export function justify(editor: Jodit) {
 
 
             editor.selection.focus();
-            editor.selection.eachSelection((current: Element) => {
+            editor.selection.eachSelection((current: Node): false | void => {
                 if (!current) {
                     if (editor.editor.querySelector('.jodit_selected_cell')) {
                         $$('.jodit_selected_cell', editor.editor).forEach(justify);
@@ -100,14 +100,14 @@ export function justify(editor: Jodit) {
                     return;
                 }
 
-                let currentBox = current ? Dom.up(current, Dom.isBlock, editor.editor) : false;
+                let currentBox: HTMLElement |false | null = current ? <HTMLElement>Dom.up(current, Dom.isBlock, editor.editor) : false;
 
 
                 if (!currentBox && current) {
                     currentBox = Dom.wrap(current, editor.options.enter, editor);
                 }
 
-                justify(currentBox);
+                justify(<HTMLElement>currentBox);
             });
             return false;
         }

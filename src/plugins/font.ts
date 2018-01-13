@@ -32,7 +32,7 @@ Config.prototype.controls.fontsize = <ControlType>{
 Config.prototype.controls.font = <ControlType>{
     command: 'fontname',
     exec: (editor: Jodit, event, control: ControlType) => {
-        editor.execCommand(control.command, false, control.args ? control.args[0] : undefined);
+        editor.execCommand(<string>control.command, false, control.args ? control.args[0] : undefined);
     },
     list :  {
         "Helvetica,sans-serif": "Helvetica",
@@ -51,7 +51,7 @@ Config.prototype.controls.font = <ControlType>{
 
 
 export function font(editor: Jodit) {
-    editor.events.on('beforeCommand', (command: string, second, third: string) => {
+    editor.events.on('beforeCommand', (command: string, second: string, third: string): false | void => {
         if (/font/.test(command)) {
             switch (command) {
                 case 'fontsize':

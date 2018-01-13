@@ -46,7 +46,7 @@ export function addNewLine(editor: Jodit) {
     const delta = 10;
     const isMatchedTag = new RegExp('^(' + editor.options.addNewLineTagsTriggers.join('|') + ')$', 'i');
 
-    let timeout;
+    let timeout: number;
     let hidden: boolean = false;
     let preview: boolean = false;
     let current: HTMLElement|false;
@@ -67,15 +67,15 @@ export function addNewLine(editor: Jodit) {
         line.style.display = 'none';
         hidden = true;
     };
-    const canGetFocus = (elm: Node): boolean => {
-        return Dom.isBlock(elm) && !/^(img|table|iframe|hr)$/i.test(elm.nodeName);
+    const canGetFocus = (elm: Node | null): boolean => {
+        return elm !== null && Dom.isBlock(elm) && !/^(img|table|iframe|hr)$/i.test(elm.nodeName);
     };
     const hide = () => {
         if (hidden) {
             return;
         }
         clearTimeout(timeout);
-        timeout = setTimeout(hideForce, 500)
+        timeout = window.setTimeout(hideForce, 500)
     };
 
 

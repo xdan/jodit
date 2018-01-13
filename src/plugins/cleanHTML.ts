@@ -9,6 +9,7 @@ import {Config} from '../Config'
 import * as consts from '../constants';
 import {cleanFromWord, normalizeNode, trim} from "../modules/Helpers";
 import {Dom} from "../modules/Dom";
+import {Select} from "../modules/Selection";
 
 /**
  * @property {object} cleanHTML {@link cleanHTML|cleanHTML}'s options
@@ -78,7 +79,7 @@ Config.prototype.controls.eraser = {
 export function cleanHTML(editor: Jodit) {
 
     if (editor.options.cleanHTML.cleanOnPaste) {
-        editor.events.on('processPaste', (event, html) => {
+        editor.events.on('processPaste', (event: Event, html: string) => {
             return cleanFromWord(html);
         });
     }
@@ -89,16 +90,16 @@ export function cleanHTML(editor: Jodit) {
             seperator = /[\s]*,[\s]*/,
             attrReg = /^(.*)[\s]*=[\s]*(.*)$/;
         let
-            allowTagsHash = {};
+            allowTagsHash: {[key: string]: any} = {};
 
         if (typeof editor.options.cleanHTML.allowTags === 'string') {
             editor.options.cleanHTML.allowTags.split(seperator).map((elm) => {
                 elm = trim(elm);
                 let attr = attributesReg.exec(elm),
-                    allowAttributes = {},
-                    attributeMap = function (attr) {
+                    allowAttributes: {[key: string]: string | boolean} = {},
+                    attributeMap = function (attr: string) {
                         attr = trim(attr);
-                        let val = attrReg.exec(attr);
+                        const val: Array<string> | null = attrReg.exec(attr);
                         if (val) {
                             allowAttributes[val[1]] = val[2];
                         } else {
@@ -174,26 +175,28 @@ export function cleanHTML(editor: Jodit) {
             }
         });
     }
-    editor.events.on('afterCommand', function (command) {
-        let sel = editor.selection,
+    editor.events.on('afterCommand', function (command: string) {
+        let sel: Select = editor.selection,
             hr,
-            node,
-            clean;
+            node: Node | null,
+            clean: any;
 
         switch (command) {
         case 'insertHorizontalRule':
             hr = editor.editor.querySelector('hr[id=null]');
             if (hr) {
-                node = Dom.next(hr, Dom.isBlock, editor.editor, false);
+                node = <Node | null>Dom.next(hr, Dom.isBlock, editor.editor, false);
                 if (!node) {
-                    node = Dom.create(editor.options.enter, '', editor.editorDocument);
-                    Dom.after(hr, node)
+                    node = <Node>Dom.create(editor.options.enter, '', editor.editorDocument);
+                    if (node) {
+                        Dom.after(hr, <HTMLElement>node)
+                    }
                 }
                 sel.setCursorIn(node);
             }
             break;
         case 'removeFormat':
-            node = sel.current();
+            node = <Node>sel.current();
             clean = (elm: HTMLElement) => {
                 if (elm.nodeType === Node.ELEMENT_NODE) {
                     // clean some "style" attributes in selected range
@@ -220,7 +223,9 @@ export function cleanHTML(editor: Jodit) {
             } else {
                 while (node && node.nodeType !== Node.ELEMENT_NODE && node !== editor.editor) {
                     node = clean(node);
-                    node = node.parentNode;
+                    if (node) {
+                        node = node.parentNode;
+                    }
                 }
             }
 

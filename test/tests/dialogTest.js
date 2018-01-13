@@ -2,6 +2,7 @@ describe('Dialog system tests', function() {
     appendTestArea('dialog_area', true);
     describe('About dialog', function() {
         it('Should be opened when use clicks on the About button', function () {
+            getBox().style.width = '100%';
             var editor = new Jodit('#dialog_area');
 
             var about = editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-about');

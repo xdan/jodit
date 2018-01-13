@@ -6,8 +6,8 @@
 
 import {Jodit}        from '../Jodit';
 import * as consts  from '../constants';
-import {Table}        from '../modules/Table'
-import {Dom}          from "../modules/Dom";
+import {Table, Dom}        from '../modules/index'
+
 
 /**
  * Process navigate keypressing in table cell
@@ -15,7 +15,7 @@ import {Dom}          from "../modules/Dom";
  * @param {Jodit} editor
  */
 export function tableKeyboardNavigation(editor: Jodit) {
-    editor.events.on('keydown', (event: KeyboardEvent) => {
+    editor.events.on('keydown', (event: KeyboardEvent): false | void => {
         let current: Element,
             block: HTMLElement;
 
@@ -27,7 +27,7 @@ export function tableKeyboardNavigation(editor: Jodit) {
             event.which === consts.KEY_BOTTOM
         ) {
             current = <Element>editor.selection.current();
-            block = <HTMLTableCellElement>Dom.up(current, (elm) => (elm && elm['tagName'] && /^td|th$/i.test(elm['tagName'])), editor.editor);
+            block = <HTMLTableCellElement>Dom.up(current, (elm: Node | false) => (elm && elm.nodeName && /^td|th$/i.test(elm.nodeName)), editor.editor);
             if (!block) {
                 return;
             }
@@ -37,9 +37,9 @@ export function tableKeyboardNavigation(editor: Jodit) {
 
             if (event.which !== consts.KEY_TAB && current !== block) {
                 if (((event.which === consts.KEY_LEFT || event.which === consts.KEY_TOP) &&
-                        (Dom.prev(current, (elm) => (event.which === consts.KEY_TOP ? (elm && elm['tagName'] === 'BR') : !!elm), block) || (event.which !== consts.KEY_TOP && current.nodeType === Node.TEXT_NODE && range.startOffset !== 0))
+                        (Dom.prev(current, (elm: Node | null) => (event.which === consts.KEY_TOP ? (elm && elm.nodeName === 'BR') : !!elm), block) || (event.which !== consts.KEY_TOP && current.nodeType === Node.TEXT_NODE && range.startOffset !== 0))
                     ) || ((event.which === consts.KEY_RIGHT || event.which === consts.KEY_BOTTOM) &&
-                        (Dom.next(current, (elm) => (event.which === consts.KEY_BOTTOM ? (elm && elm['tagName'] === 'BR') : !!elm), block) || (event.which !== consts.KEY_BOTTOM && current.nodeType === Node.TEXT_NODE && current.nodeValue && range.startOffset !== current.nodeValue.length))
+                        (Dom.next(current, (elm: Node | null) => (event.which === consts.KEY_BOTTOM ? (elm && elm.nodeName === 'BR') : !!elm), block) || (event.which !== consts.KEY_BOTTOM && current.nodeType === Node.TEXT_NODE && current.nodeValue && range.startOffset !== current.nodeValue.length))
                     )) {
                     return;
                 }
@@ -50,7 +50,7 @@ export function tableKeyboardNavigation(editor: Jodit) {
         }
 
 
-         const table = <HTMLTableElement>Dom.up(block, (elm) => (elm && /^table$/i.test(elm.tagName)), editor.editor);
+         const table = <HTMLTableElement>Dom.up(block, (elm: Node | null) => (elm && /^table$/i.test(elm.nodeName)), editor.editor);
          let next: HTMLTableCellElement|null = null;
 
         switch (event.which) {
@@ -58,10 +58,10 @@ export function tableKeyboardNavigation(editor: Jodit) {
             // case consts.KEY_RIGHT:
             case consts.KEY_LEFT:
                 const sibling: string = (event.which === consts.KEY_LEFT || event.shiftKey) ? 'prev' : 'next';
-                next = <HTMLTableCellElement>Dom[sibling](block, (elm) => (elm && /^td|th$/i.test((<HTMLElement>elm).tagName)), table);
+                next = <HTMLTableCellElement>(<any>Dom)[sibling](block, (elm: Node | null) => (elm && /^td|th$/i.test((<HTMLElement>elm).tagName)), table);
                 if (!next) {
                     Table.appendRow(table, sibling === 'next' ? false : <HTMLTableRowElement>table.querySelector('tr'), sibling === 'next');
-                    next = <HTMLTableCellElement>(Dom[sibling](block, (elm: HTMLElement) => (elm && Dom.isCell(elm, editor.editorWindow)), table));
+                    next = <HTMLTableCellElement>(<any>Dom)[sibling](block, (elm: Node | null) => (elm && Dom.isCell(elm, editor.editorWindow)), table);
                 }
             break;
             case consts.KEY_TOP:

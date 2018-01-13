@@ -5,9 +5,10 @@
  */
 
 import 'classlist-polyfill';
+import 'es6-promise/auto';
 
 (function(e: Element){
-    e.matches || (e.matches = e['matchesSelector'] !== undefined ? e['matchesSelector'] : function (this: Element, selector: string) {
+    e.matches || (e.matches = (<any>e).matchesSelector !== undefined ? (<any>e).matchesSelector : function (this: Element, selector: string) {
             const matches: NodeList = this.ownerDocument.querySelectorAll(selector),
                 th = this;
 
@@ -17,3 +18,5 @@ import 'classlist-polyfill';
         });
 
 })(Element.prototype);
+
+

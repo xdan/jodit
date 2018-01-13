@@ -17,7 +17,7 @@ export class Dom {
      *
      * @return {HTMLElement}
      */
-    static wrap = (current, tag: Node|string, editor: Jodit): HTMLElement => {
+    static wrap = (current: Node, tag: Node|string, editor: Jodit): HTMLElement => {
         let tmp: false|Node|HTMLElement|HTMLTableCellElement,
             first: Node = current,
             last: Node = current;
@@ -206,8 +206,8 @@ export class Dom {
      * @param node
      * @return {boolean}
      */
-    static isBlock(node): boolean {
-        return (node && typeof node.tagName === 'string' && consts.IS_BLOCK.test(node.tagName));
+    static isBlock(node: Node | null): boolean {
+        return (!!node && typeof node.nodeName === 'string' && consts.IS_BLOCK.test(node.nodeName));
     }
 
     /**
@@ -231,7 +231,7 @@ export class Dom {
      *
      * @return {boolean|Node|HTMLElement|HTMLTableCellElement} false if not found
      */
-    static prev(node: Node, condition: (element: Node) => boolean, root: HTMLElement, withChild: Boolean = true): false|Node|HTMLElement|HTMLTableCellElement{
+    static prev(node: Node, condition: (element: Node | null) => boolean | null, root: HTMLElement, withChild: Boolean = true): false|Node|HTMLElement|HTMLTableCellElement{
         return Dom.find(node, condition, root, false, 'previousSibling', withChild ? 'lastChild' : false);
     }
 
@@ -244,7 +244,7 @@ export class Dom {
      * @param {boolean} [withChild=true]
      * @return {boolean|Node|HTMLElement|HTMLTableCellElement}
      */
-    static next(node: Node, condition: (element: Node) => boolean, root: Node|HTMLElement, withChild: Boolean = true): false|Node|HTMLElement|HTMLTableCellElement {
+    static next(node: Node, condition: (element: Node | null) => boolean | null, root: Node|HTMLElement, withChild: Boolean = true): false|Node|HTMLElement|HTMLTableCellElement {
         return Dom.find(node, condition, root, undefined, undefined, withChild ? 'firstChild' : '');
     }
 
@@ -260,7 +260,7 @@ export class Dom {
      * @param {string|boolean} [child=firstChild] firstChild or lastChild
      * @return {Node|Boolean}
      */
-    static find(node: Node, condition: (element: Node|null) => boolean, root: HTMLElement|Node, recurse = false, sibling = 'nextSibling', child: string|false = 'firstChild') : false|Node {
+    static find(node: Node, condition: (element: Node|null) => boolean | null, root: HTMLElement|Node, recurse = false, sibling = 'nextSibling', child: string|false = 'firstChild') : false|Node {
         if (recurse && condition(node)) {
             return node;
         }
@@ -268,13 +268,13 @@ export class Dom {
         let start: Node|null = node, next: Node|null;
 
         do {
-            next = start[sibling];
+            next = (<any>start)[sibling];
             if (condition(next)) {
                 return next ? next : false;
             }
 
-            if (child && next && next[child]) {
-                const nextOne: Node|false = Dom.find(next[child], condition, next, true, sibling, child);
+            if (child && next && (<any>next)[child]) {
+                const nextOne: Node|false = Dom.find((<any>next)[child], condition, next, true, sibling, child);
                 if (nextOne) {
                     return nextOne;
                 }
@@ -345,17 +345,17 @@ export class Dom {
             return !node.nodeValue || trim(node.nodeValue).length === 0;
         }
 
-        return Dom.each(<HTMLElement>node, (elm: Node) => {
+        return Dom.each(<HTMLElement>node, (elm: Node | null): false | void => {
             if (
                 (
-                    elm.nodeType === Node.TEXT_NODE &&
+                    elm && elm.nodeType === Node.TEXT_NODE &&
                     (
                         elm.nodeValue &&
                         trim(elm.nodeValue).length !== 0
                     )
                 ) ||
                 (
-                    elm.nodeType === Node.ELEMENT_NODE &&
+                    elm && elm.nodeType === Node.ELEMENT_NODE &&
                     elm.nodeName.match(/^(img|table)$/i)
                 )
             ) {
@@ -410,14 +410,16 @@ export class Dom {
      * @return {Boolean|Node}
      */
     static closest(node: Node, tags: string|Function|RegExp, root: HTMLElement): Node|HTMLTableElement|HTMLElement|false|HTMLTableCellElement {
-        let condition;
+        let condition: Function;
+
         if (typeof tags  === 'function') {
             condition = tags
         } else if (tags instanceof RegExp) {
-            condition = tag => tags.test(tag.tagName)
+            condition = (tag: Node) => tags.test(tag.nodeName)
         } else {
-            condition = tag => (new RegExp('^(' + tags + ')$', 'i')).test(tag.tagName)
+            condition = (tag: Node) => (new RegExp('^(' + tags + ')$', 'i')).test(tag.nodeName)
         }
+
         return Dom.up(node, condition, root);
     }
 

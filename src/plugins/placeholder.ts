@@ -7,7 +7,7 @@
 import {Jodit} from '../Jodit';
 import {Config} from '../Config'
 import * as consts from '../constants';
-import {dom,each} from '../modules/Helpers'
+import {css, dom} from '../modules/Helpers'
 /**
  * Show placeholder
  *
@@ -54,22 +54,22 @@ Config.prototype.useInputsPlaceholder = true;
  */
 Config.prototype.placeholder = 'Type something';
 
-export function placeholder(editor: Jodit) {
-    let timeout;
-
+export function placeholder(this: any, editor: Jodit) {
     if (!editor.options.showPlaceholder) {
         return;
     }
 
-    this.destruct  = () => {
+    (<any>this).destruct  = () => {
         if (placeholder.parentNode) {
             placeholder.parentNode.removeChild(placeholder);
         }
-
-        clearTimeout(timeout);
     };
 
     const show =  () => {
+            if (!placeholder.parentNode) {
+                return;
+            }
+
             let marginTop: number = 0,
                 marginLeft: number = 0;
 
@@ -86,17 +86,16 @@ export function placeholder(editor: Jodit) {
                 placeholder.style.lineHeight = style.getPropertyValue('line-height');
             }
 
-
-            each({
+            css(placeholder, {
                 display: 'block',
                 marginTop: Math.max(parseInt(style.getPropertyValue('margin-top'), 10), marginTop),
                 marginLeft: Math.max(parseInt(style.getPropertyValue('margin-left'), 10), marginLeft)
-            }, (key, value) => {
-                placeholder.style[key] = value;
             })
         },
         hide = function () {
-            placeholder.style.display = 'none';
+            if (placeholder.parentNode) {
+                placeholder.style.display = 'none';
+            }
         },
         toggle = () => {
             if (!editor.editor) {
@@ -114,7 +113,7 @@ export function placeholder(editor: Jodit) {
 
 
 
-    const placeholder: HTMLElement = dom('<span class="jodit_placeholder">' + editor.i18n(editor.options.placeholder) + '</span>', editor.ownerDocument);
+    const placeholder: HTMLElement = dom('<span style="display: none;" class="jodit_placeholder">' + editor.i18n(editor.options.placeholder) + '</span>', editor.ownerDocument);
 
     if (editor.options.useInputsPlaceholder && editor.element.hasAttribute('placeholder')) {
         placeholder.innerHTML = editor.element.getAttribute('placeholder') || '';
@@ -129,7 +128,10 @@ export function placeholder(editor: Jodit) {
             editor.events.fire('placeholder', placeholder.innerHTML);
         })
         .on('change keyup mouseup keydown mousedown afterSetMode', () => {
+            if (placeholder.parentNode === null) {
+                return;
+            }
+
             toggle();
-            timeout = setTimeout(toggle, 1)
         });
 }

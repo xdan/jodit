@@ -9,7 +9,7 @@ import {Config} from '../Config'
 import * as consts from '../constants';
 import {$$, appendScript, debounce, dom} from '../modules/Helpers';
 import {markerInfo} from "../modules/Selection";
-import {Component} from "../modules/";
+import {Component} from "../modules/Component";
 
 declare module "../Config"  {
     interface Config {
@@ -107,8 +107,8 @@ export class source extends Component {
 
     private loadNext = (i: number, urls: string[], eventOnFinalize: false|string = 'aceReady', className: string = this.className) => {
         if (eventOnFinalize && urls[i] === undefined && this.jodit && this.jodit.events) {
-            this.jodit.events.fire(eventOnFinalize);
-            this.jodit.events.fire(this.jodit.ownerWindow, eventOnFinalize);
+            this.jodit.events && this.jodit.events.fire(eventOnFinalize);
+            this.jodit.events && this.jodit.events.fire(this.jodit.ownerWindow, eventOnFinalize);
             return;
         }
         if (urls[i] !== undefined) {
@@ -197,7 +197,7 @@ export class source extends Component {
 
                 const className = 'beutyfy_html_jodit_helper';
 
-                if (editor.options.beautifyHTML && window['html_beautify'] === undefined && !$$('script.' + className, document.body).length) {
+                if (editor.options.beautifyHTML && (<any>editor.ownerWindow)['html_beautify'] === undefined && !$$('script.' + className, editor.ownerDocument.body).length) {
                     this.loadNext(0, editor.options.beautifyHTMLCDNUrlsJS, false, className);
                 }
 
@@ -302,8 +302,8 @@ export class source extends Component {
             value = value.replace(/<span[^>]+data-jodit_selection_marker="end"[^>]*>[<>]*?<\/span>/gmi, this.tempMarkerEnd);
         }
 
-        if (this.jodit.ownerWindow['html_beautify'] && this.jodit.options.beautifyHTML) {
-            value = this.jodit.ownerWindow['html_beautify'](value);
+        if ((<any>this.jodit.ownerWindow)['html_beautify'] && this.jodit.options.beautifyHTML) {
+            value = (<any>this.jodit.ownerWindow)['html_beautify'](value);
         }
 
         let  selectionStart: number = value.indexOf(this.tempMarkerStart),
@@ -386,11 +386,11 @@ export class source extends Component {
                 return lastColumnIndices[row] - getLastColumnIndex(row) + column;
             },
             tryInitAceEditor = () => {
-                if (aceEditor === undefined && this.jodit.ownerWindow['ace'] !== undefined) {
+                if (aceEditor === undefined && (<any>this.jodit.ownerWindow)['ace'] !== undefined) {
                     const fakeMirror = dom('<div class="jodit_source_mirror-fake"/>', this.jodit.ownerDocument);
                     this.mirrorContainer.insertBefore(fakeMirror, this.mirrorContainer.firstChild);
 
-                    this.aceEditor = aceEditor = (<AceAjax.Ace>this.jodit.ownerWindow['ace']).edit(fakeMirror);
+                    this.aceEditor = aceEditor = (<AceAjax.Ace>(<any>this.jodit.ownerWindow)['ace']).edit(fakeMirror);
 
                     aceEditor.setTheme(editor.options.sourceEditorNativeOptions.theme);
                     aceEditor.renderer.setShowGutter(editor.options.sourceEditorNativeOptions.showGutter);
@@ -422,8 +422,8 @@ export class source extends Component {
                     undoManager = aceEditor.getSession().getUndoManager();
 
                     this.setMirrorValue = (value: string) => {
-                        if (editor.options.beautifyHTML && this.jodit.ownerWindow['html_beautify']) {
-                            aceEditor.setValue(this.jodit.ownerWindow['html_beautify'](value));
+                        if (editor.options.beautifyHTML && (<any>this.jodit.ownerWindow)['html_beautify']) {
+                            aceEditor.setValue((<any>this.jodit.ownerWindow)['html_beautify'](value));
                         } else {
                             aceEditor.setValue(value);
                         }
@@ -473,9 +473,9 @@ export class source extends Component {
                 this.fromWYSIWYG();
                 tryInitAceEditor();
             })
-            .on('beforeCommand', (command: string) => {
+            .on('beforeCommand', (command: string): false | void => {
                 if (editor.getRealMode() !== consts.MODE_WYSIWYG && (command === 'redo' || command === 'undo') && undoManager) {
-                    if (undoManager['has' + command.substr(0,1).toUpperCase() + command.substr(1)]) {
+                    if ((<any>undoManager)['has' + command.substr(0,1).toUpperCase() + command.substr(1)]) {
                         aceEditor[command]();
                     }
                     updateButtons();
@@ -486,7 +486,7 @@ export class source extends Component {
         tryInitAceEditor();
 
         // global add ace editor in browser
-        if (this.jodit.ownerWindow['ace'] === undefined && !$$('script.' + this.className, this.jodit.ownerDocument.body).length) {
+        if ((<any>this.jodit.ownerWindow)['ace'] === undefined && !$$('script.' + this.className, this.jodit.ownerDocument.body).length) {
             this.loadNext(0, editor.options.sourceEditorCDNUrlsJS, 'aceReady', this.className);
         }
     }

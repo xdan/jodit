@@ -16,10 +16,10 @@ import {Dom} from "../modules/Dom";
  */
 export function backspace(editor: Jodit) {
 
-    editor.events.on('afterCommand', (command) => {
+    editor.events.on('afterCommand', (command: string) => {
         if (command === 'delete') {
             let current = editor.selection.current();
-            if (current && current.firstChild && current.firstChild['tagName'] ==='BR') {
+            if (current && current.firstChild && current.firstChild.nodeName ==='BR') {
                 current.removeChild(current.firstChild);
             }
             if (!trim(editor.editor.innerText) && !editor.editor.querySelector('img')) {
@@ -29,7 +29,7 @@ export function backspace(editor: Jodit) {
         }
     });
 
-    editor.events.on('keydown', (event) => {
+    editor.events.on('keydown', (event: KeyboardEvent): false | void => {
         if (event.which === consts.KEY_BACKSPACE || event.keyCode === consts.KEY_DELETE) {
             const toLeft: boolean = event.which === consts.KEY_BACKSPACE;
 

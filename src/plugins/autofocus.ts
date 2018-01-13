@@ -24,12 +24,12 @@ Config.prototype.autofocus = false;
  * @param {Jodit} editor
  */
 export function autofocus(editor: Jodit) {
-    let timeout;
+    let timeout: number;
     editor.events
         .on('afterInit', () => {
             if (editor.options.autofocus) {
                 if (editor.options.observer.timeout) {
-                    timeout = setTimeout(editor.selection.focus, 300)
+                    timeout = window.setTimeout(editor.selection.focus, 300)
                 } else {
                     editor.selection.focus();
                 }

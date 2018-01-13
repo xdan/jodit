@@ -39,7 +39,7 @@ export function errorMessages(editor: Jodit) {
         const messagesBox: HTMLDivElement = <HTMLDivElement>dom('<div class="jodit_error_box_for_messages"></div>', editor.ownerDocument),
             recalcOffsets = function () {
                 height = 5;
-                [].slice.call(messagesBox.childNodes).forEach(function (elm) {
+                [].slice.call(messagesBox.childNodes).forEach((elm: HTMLElement) => {
                     css(messagesBox, 'bottom', height + 'px');
                     height += elm.offsetWidth + editor.options.showMessageErrorOffsetPx;
                 });

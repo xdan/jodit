@@ -335,8 +335,8 @@ export class Toolbar extends Component{
                     tags = button.control.tags || (button.control.options && button.control.options.tags);
 
                     elm = element;
-                    Dom.up(elm, (node: Node) => {
-                        if (tags.indexOf(node.nodeName.toLowerCase()) !== -1) {
+                    Dom.up(elm, (node: Node | null): boolean | void => {
+                        if (node && tags.indexOf(node.nodeName.toLowerCase()) !== -1) {
                             button.btn.classList.add(active_class);
                             return true;
                         }
@@ -446,7 +446,7 @@ export class Toolbar extends Component{
             }
         }
 
-        this.jodit.events.on(btn, 'mousedown touchend', (originalEvent: MouseEvent) => {
+        this.jodit.events.on(btn, 'mousedown touchend', (originalEvent: MouseEvent): false | void => {
             originalEvent.stopImmediatePropagation();
             originalEvent.preventDefault();
 

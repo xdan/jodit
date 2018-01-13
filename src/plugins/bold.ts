@@ -45,17 +45,17 @@ Config.prototype.controls.strikethrough = {
  * Bold plugin
  */
 export function bold(editor: Jodit) {
-    editor.events.on('beforeCommand', (command: string) => {
+    editor.events.on('beforeCommand', (command: string): false | void => {
 
         const commands = ['bold', 'italic', 'underline', 'strikethrough'];
 
 
         if (commands.indexOf(command) !== -1) {
-            const cssOptions = {...Jodit.defaultOptions.controls[command].css},
-                cssRules = {};
+            const cssOptions: {[key: string]: string|string[]}|{[key: string]: (editor: Jodit, value: string) => boolean} = {...Jodit.defaultOptions.controls[command].css},
+                cssRules: {[key: string]: string} = {};
 
             Object.keys(cssOptions).forEach((key: string) => {
-                cssRules[key] = Array.isArray(cssOptions[key]) ?  cssOptions[key][0] : cssOptions[key];
+                cssRules[key] = Array.isArray(cssOptions[key]) ?  (<any>cssOptions[key])[0] : cssOptions[key];
             });
 
             let control: ControlType = Jodit.defaultOptions.controls[command];

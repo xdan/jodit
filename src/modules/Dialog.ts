@@ -117,7 +117,9 @@ export class Dialog extends Component{
             self.dialogbox.setAttribute('data-editor_id', jodit.id);
         }
 
-        self.dialogbox['__jodit_dialog'] = self;
+        Object.defineProperty(self.dialogbox, '__jodit_dialog',{
+            value: self
+        });
 
         self.dialog = <HTMLDivElement>self.dialogbox.querySelector('.jodit_dialog');
         self.resizer = <HTMLDivElement>self.dialogbox.querySelector('.jodit_dialog_resizer');
@@ -308,14 +310,16 @@ export class Dialog extends Component{
             dlg: Dialog,
             zIndex: number,
             res: Dialog = this;
-        $$('.jodit_dialog_box', this.destinition).forEach((dialog: HTMLDivElement) => {
-            dlg = <Dialog>dialog['__jodit_dialog'];
+
+        $$('.jodit_dialog_box', this.destinition).forEach((dialog: HTMLElement) => {
+            dlg = <Dialog>(<any>dialog)['__jodit_dialog'];
             zIndex = parseInt(<string>css(dialog, 'zIndex'), 10);
             if (dlg.isOpened() && !isNaN(zIndex) && zIndex > maxzi) {
                 res = dlg;
                 maxzi = zIndex;
             }
         });
+
         return res;
     }
 
@@ -351,8 +355,8 @@ export class Dialog extends Component{
         this.dialogbox.classList
             .toggle('jodit_dialog_box-fullsize', condition);
 
-        [this.destinition, this.destinition.parentNode].forEach((box: HTMLElement) => {
-            box.classList.toggle('jodit_fullsize_box', condition);
+        [this.destinition, this.destinition.parentNode].forEach((box: Node | null) => {
+            box && (<HTMLElement>box).classList && (<HTMLElement>box).classList.toggle('jodit_fullsize_box', condition);
         });
 
         this.iSetMaximization = condition;
@@ -663,7 +667,7 @@ export const Alert = (msg: string, title?: string|Function, callback?: Function)
     return dialog;
 };
 
-Jodit['Alert'] = Alert;
+(<any>Jodit)['Alert'] = Alert;
 
 
 /**
@@ -734,7 +738,7 @@ export const Promt = (msg: string, title: string|Function|undefined, callback: F
     return dialog;
 };
 
-Jodit['Promt'] = Promt;
+(<any>Jodit)['Promt'] = Promt;
 
 /**
  * Show `confirm` dialog. Work without Jodit object
@@ -811,4 +815,4 @@ export const Confirm = (msg: string, title: string|((yes: boolean) => void)|unde
 
     return dialog;
 };
-Jodit['Confirm'] = Confirm;
+(<any>Jodit)['Confirm'] = Confirm;

@@ -20,14 +20,14 @@ Config.prototype.controls.undo = {
 };
 
 
-export function redoundo(editor: Jodit) {
+export function redoundo(this: any, editor: Jodit) {
     const observer:Observer = new Observer(editor);
     const updateButton = () => {
         editor.events.fire('canRedo', observer.stack.canRedo());
         editor.events.fire('canUndo', observer.stack.canUndo());
     };
     editor.events
-        .on('keydown', (e: KeyboardEvent) => {
+        .on('keydown', (e: KeyboardEvent): void | false => {
             if (ctrlKey(e)) {
                 if (e.which === consts.KEY_Z || e.which === consts.KEY_Y) {
                     editor.execCommand(e.which === consts.KEY_Z ? 'Undo' : 'Redo');
@@ -45,10 +45,10 @@ export function redoundo(editor: Jodit) {
                 updateButton();
             }
         })
-        .on('beforeCommand', (command: string) => {
+        .on('beforeCommand', (command: string): void | false => {
             if (command === 'redo' || command === 'undo') {
                 if (editor.getRealMode() === consts.MODE_WYSIWYG) {
-                    if (observer.stack['can' + command.substr(0,1).toUpperCase() + command.substr(1)]()) {
+                    if ((<any>observer.stack)['can' + command.substr(0,1).toUpperCase() + command.substr(1)]()) {
                         observer.stack[command]();
                     }
                     updateButton();

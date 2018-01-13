@@ -8,7 +8,7 @@
 import {Jodit} from "../Jodit";
 import {Config} from "../Config";
 import {ctrlKey, debounce, dom, trim} from "../modules/Helpers";
-import {Component, Dom, Toolbar} from "../modules";
+import {Component, Dom, Toolbar} from "../modules/index";
 import * as consts from "../constants";
 import {markerInfo} from "../modules/Selection";
 
@@ -68,8 +68,8 @@ export class search extends Component {
     counterBox: HTMLSpanElement;
 
     private eachMap = (node: Node, callback: (elm: Node) => boolean, next: boolean) => {
-        Dom.findWithCurrent(node, (child: Node): boolean => {
-            return child && callback(child) === true;
+        Dom.findWithCurrent(node, (child: Node | null): boolean => {
+            return !!child && callback(child) === true;
         }, this.jodit.editor, next ? 'nextSibling' : 'previousSibling', next ? 'firstChild' : 'lastChild')
     };
 
@@ -171,7 +171,7 @@ export class search extends Component {
         let parentBox: HTMLElement|false = <HTMLElement|false>Dom.closest(startContainer, (elm: Node) => elm && elm.nodeType === Node.ELEMENT_NODE, this.jodit.editor);
 
         if (!parentBox) {
-            parentBox = <HTMLElement|false>Dom.prev(startContainer, (elm: Node) => elm && elm.nodeType === Node.ELEMENT_NODE, this.jodit.editor);
+            parentBox = <HTMLElement|false>Dom.prev(startContainer, (elm: Node | null) => elm && elm.nodeType === Node.ELEMENT_NODE, this.jodit.editor);
         }
 
         parentBox && parentBox !== this.jodit.editor && parentBox.scrollIntoView();

@@ -61,11 +61,11 @@ export class Table {
      * @param {function(HTMLTableCellElement, int, int, int, int):boolean} [callback] if return false cycle break
      * @return {Array}
      */
-    static formalMatrix(table: HTMLTableElement, callback ?: (cell: HTMLTableCellElement, row: number, col: number, colSpan?: number, rowSpan?: number) => false|void): HTMLTableCellElement[][] {
+    static formalMatrix(table: HTMLTableElement, callback ?: (cell: HTMLTableCellElement, row: number, col: number, colSpan: number, rowSpan: number) => false|void): HTMLTableCellElement[][] {
         const matrix: HTMLTableCellElement[][] = [[],];
         const rows  = Array.prototype.slice.call(table.rows);
 
-        const setCell = (cell, i) => {
+        const setCell = (cell: HTMLTableCellElement, i: number): false | HTMLTableCellElement[][] | void => {
             if (matrix[i] === undefined) {
                 matrix[i] = [];
             }
@@ -114,15 +114,15 @@ export class Table {
             width: number = 1,
             height: number = 1;
 
-        Table.formalMatrix(table, (td: HTMLTableCellElement, ii: number, jj: number, colSpan: number, rowSpan: number) => {
+        Table.formalMatrix(table, (td: HTMLTableCellElement, ii: number, jj: number, colSpan: number | void, rowSpan: number| void): false | void => {
             if (cell === td) {
                 i = ii;
                 j = jj;
-                width = colSpan;
-                height = rowSpan;
+                width = colSpan || 1;
+                height = rowSpan || 1;
                 if (max) {
-                    j += colSpan - 1;
-                    i += rowSpan - 1;
+                    j += (colSpan || 1) - 1;
+                    i += (rowSpan || 1) - 1;
                 }
                 return false;
             }
@@ -179,7 +179,7 @@ export class Table {
                         nextCell += 1;
                     }
 
-                    const nextRow:HTMLTableRowElement  = <HTMLTableRowElement>Dom.next(cell.parentNode, (elm: HTMLTableRowElement) => elm.nodeType === Node.ELEMENT_NODE && elm.tagName === 'TR', table);
+                    const nextRow:HTMLTableRowElement  = <HTMLTableRowElement>Dom.next(cell.parentNode, (elm: Node | null) => elm && elm.nodeType === Node.ELEMENT_NODE && elm.nodeName === 'TR', table);
 
                     if (box[rowIndex + 1][nextCell]) {
                         nextRow.insertBefore(cell, box[rowIndex + 1][nextCell]);
@@ -279,7 +279,7 @@ export class Table {
      * @param {Array.<HTMLTableCellElement>} selectedCells
      * @return {[[left, top], [right, bottom]]}
      */
-    static getSelectedBound (table, selectedCells): number[][] {
+    static getSelectedBound (table: HTMLTableElement, selectedCells: HTMLTableCellElement[]): number[][] {
         const bound = [[Infinity, Infinity], [0, 0]];
         const box = Table.formalMatrix(table);
         let i, j, k;
@@ -432,11 +432,11 @@ export class Table {
                     if (j >= bound[0][1] && j <= bound[1][1]) {
                         td = cell;
 
-                        if (td['__i_am_already_was']) {
+                        if ((<any>td)['__i_am_already_was']) {
                             return;
                         }
 
-                        td['__i_am_already_was'] = true;
+                        (<any>td)['__i_am_already_was'] = true;
 
                         if (i === bound[0][0] && td.style.width) {
                             w += td.offsetWidth;
@@ -486,7 +486,7 @@ export class Table {
                 (<HTMLTableCellElement>first).innerHTML = html.join('<br/>');
 
 
-                delete first['__i_am_already_was'];
+                delete (<any>first)['__i_am_already_was'];
 
                 Table.__unmark(__marked);
 
@@ -612,16 +612,16 @@ export class Table {
      */
     private static __mark (cell: HTMLTableCellElement, key: string, value: string|number, __marked: HTMLTableCellElement[]) {
         __marked.push(cell);
-        if (!cell['__marked_value']) {
-            cell['__marked_value'] = {};
+        if (!(<any>cell)['__marked_value']) {
+            (<any>cell)['__marked_value'] = {};
         }
-        cell['__marked_value'][key] = value === undefined ? 1 : value;
+        (<any>cell)['__marked_value'][key] = value === undefined ? 1 : value;
     }
 
     private static __unmark (__marked: HTMLTableCellElement[]) {
         __marked.forEach((cell) => {
-            if (cell['__marked_value']) {
-                each(cell['__marked_value'], (key, value) => {
+            if ((<any>cell)['__marked_value']) {
+                each((<any>cell)['__marked_value'], (key, value) => {
                     switch (key) {
                         case 'remove':
                             cell.parentNode && cell.parentNode.removeChild(cell);
@@ -644,7 +644,7 @@ export class Table {
                             cell.style.width = value;
                             break;
                     }
-                    delete cell['__marked_value'][key];
+                    delete (<any>cell)['__marked_value'][key];
                 });
                 delete (<any>cell).__marked_value;
             }

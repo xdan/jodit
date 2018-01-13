@@ -10,7 +10,7 @@ import {Config} from "../Config";
 import {Widget} from "../modules/Widget";
 import TabsWidget = Widget.TabsWidget;
 import ColorPickerWidget = Widget.ColorPickerWidget;
-import {Dom} from "../modules/";
+import {Dom} from "../modules/Dom";
 import {ButtonType, ControlType} from "../modules/Toolbar";
 
 Config.prototype.controls.brush = <ControlType>{
@@ -65,7 +65,7 @@ Config.prototype.controls.brush = <ControlType>{
     //         return check(editor.options.colors);
     //     }
     // },
-    popup: (editor: Jodit, current: HTMLElement, self, close) => {
+    popup: (editor: Jodit, current: Node | false, self: ControlType, close: Function) => {
         let color: string = '',
             bg_color: string = '',
             tabs: {[key: string]: HTMLElement},
@@ -100,9 +100,9 @@ Config.prototype.controls.brush = <ControlType>{
              };*/
 
         if (current && Dom.isNode(current, editor.editorWindow) && current.nodeType === Node.ELEMENT_NODE) {
-            color = css(current, 'color').toString();
-            bg_color = css(current, 'background-color').toString();
-            currentElement = current;
+            color = css(<HTMLElement>current, 'color').toString();
+            bg_color = css(<HTMLElement>current, 'background-color').toString();
+            currentElement = <HTMLElement>current;
         }
 
         const backgroundTag: HTMLElement = ColorPickerWidget(editor, (value: string) => {
@@ -142,7 +142,7 @@ Config.prototype.controls.brush = <ControlType>{
 
 
 export function color(editor: Jodit) {
-    editor.events.on('beforeCommand', (command, second, third) => {
+    editor.events.on('beforeCommand', (command: string, second: string, third: string): false | void => {
         if (/forecolor|background/.test(command)) {
             const color: string|false = normalizeColor(third);
 

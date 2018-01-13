@@ -206,7 +206,7 @@ export function iframe(editor: Jodit) {
 
         (function(e){
             e.matches || (e.matches = Element.prototype.matches); // fix inside iframe polifill
-        })(editor.editorWindow['Element'].prototype);
+        })((<any>editor.editorWindow).Element.prototype);
 
         //throw events in our word
         editor.events

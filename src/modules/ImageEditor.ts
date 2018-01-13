@@ -455,16 +455,16 @@ export class ImageEditor extends Component{
     private setHandlers = () => {
         const self: ImageEditor = this;
         self.jodit.events
-            .on(<HTMLElement[]>[self.editor.querySelector('.jodit_bottomright'), self.cropHandler], 'mousedown', (e) => {
-                self.target = e.target || e.srcElement;
+            .on(<HTMLElement[]>[self.editor.querySelector('.jodit_bottomright'), self.cropHandler], 'mousedown', (e: MouseEvent) => {
+                self.target = <HTMLElement>e.target || <HTMLElement>e.srcElement;
 
                 e.preventDefault();
                 e.stopImmediatePropagation();
 
                 self.clicked = true;
 
-                self.start_x = parseInt(e.clientX, 10);
-                self.start_y = parseInt(e.clientY, 10);
+                self.start_x = e.clientX;
+                self.start_y = e.clientY;
 
                 if (self.activeTab === 'crop') {
                     self.top_x = <number>css(self.cropHandler, 'left');
@@ -477,10 +477,10 @@ export class ImageEditor extends Component{
                 }
             })
             .off(this.jodit.ownerWindow, '.jodit_image_editor' + self.jodit.id)
-            .on(this.jodit.ownerWindow, 'mousemove.jodit_image_editor' + self.jodit.id, throttle((e) => {
+            .on(this.jodit.ownerWindow, 'mousemove.jodit_image_editor' + self.jodit.id, throttle((e: MouseEvent) => {
                 if (self.clicked) {
-                    self.diff_x = parseInt(e.clientX, 10) - self.start_x;
-                    self.diff_y = parseInt(e.clientY, 10) - self.start_y;
+                    self.diff_x = e.clientX - self.start_x;
+                    self.diff_y = e.clientY - self.start_y;
 
                     if ((self.activeTab === 'resize' && self.resizeUseRatio) || (self.activeTab === 'crop' && self.cropUseRatio)) {
                         if (self.diff_x) {
@@ -552,9 +552,9 @@ export class ImageEditor extends Component{
 
         $$('.jodit_btn_group', self.editor).forEach((group) => {
             const input: HTMLInputElement =  <HTMLInputElement>group.querySelector('input');
-            self.jodit.events.on(group, 'click change', function () {
-                let button = <HTMLButtonElement>this;
-                $$('button', group).forEach((button: HTMLButtonElement) => button.classList.remove('active'));
+            self.jodit.events.on(group, 'click change', function (this: HTMLButtonElement) {
+                let button: HTMLButtonElement = <HTMLButtonElement>this;
+                $$('button', group).forEach((button: HTMLElement) => button.classList.remove('active'));
                 button.classList.add('active');
                 input.checked = !!button.getAttribute('data-yes');
                 self.jodit.events.fire(input, 'change');
@@ -562,7 +562,7 @@ export class ImageEditor extends Component{
         });
 
         self.jodit.events
-            .on(this.editor, 'click', function () {
+            .on(this.editor, 'click', function (this: HTMLElement) {
                 $$('.jodit_image_editor_slider,.jodit_image_editor_area', self.editor).forEach(elm => elm.classList.remove('active'));
                 const slide: HTMLElement = <HTMLElement>this.parentNode;
                 slide.classList.add('active');
@@ -688,7 +688,7 @@ export class ImageEditor extends Component{
 
                 switch (button.getAttribute('data-action')) {
                     case 'saveas':
-                        Promt(self.jodit.i18n('Enter new name'), self.jodit.i18n('Save in new file'), (name: string) => {
+                        Promt(self.jodit.i18n('Enter new name'), self.jodit.i18n('Save in new file'), (name: string): false | void => {
                             if (!trim(name)) {
                                 Alert(self.jodit.i18n('The name should not be empty'));
                                 return false;

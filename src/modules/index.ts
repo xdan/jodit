@@ -7,16 +7,14 @@
 export {Component} from './Component';
 export {ContextMenu} from './ContextMenu';
 export {Cookie} from './Cookie';
-export {Dialog} from './Dialog';
+export {Dialog, Alert, Confirm, Promt} from './Dialog';
 export {Dom} from './Dom';
-export {Events} from './Events';
 export {EventsNative} from './EventsNative';
 export {FileBrowser} from './FileBrowser';
 import * as Helpers from "./Helpers";
 export {Helpers};
 export {ImageEditor} from './ImageEditor';
 export {Observer} from './Observer';
-export {PseudoPromise} from './PseudoPromise';
 export {Select} from './Selection';
 export {Snapshot} from './Snapshot';
 export {Table} from './Table';

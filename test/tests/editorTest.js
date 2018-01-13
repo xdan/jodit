@@ -298,8 +298,11 @@ describe('Jodit Editor Tests', function() {
         it('Show placeholder', function () {
             var area = appendTestArea();
             var editor = new Jodit(area);
+
             editor.setEditorValue('');
+
             expect(editor.container.querySelectorAll('.jodit_placeholder').length && editor.container.querySelector('.jodit_placeholder').style.display === 'block').to.be.equal(true);
+
             editor.selection.insertNode(Jodit.modules.Dom.create('text', 'test', editor.editorDocument))
             expect(editor.container.querySelectorAll('.jodit_placeholder').length && editor.container.querySelector('.jodit_placeholder').style.display === 'none').to.be.equal(true);
         });

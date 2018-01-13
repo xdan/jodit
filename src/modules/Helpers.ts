@@ -6,7 +6,7 @@
 
 import * as consts from '../constants';
 import {Jodit} from "../Jodit";
-const class2type = {};
+const class2type: {[key: string]: string} = {};
 const toString = class2type.toString;
 const hasOwn = class2type.hasOwnProperty;
 
@@ -22,7 +22,7 @@ let $$temp:number = 1;
  *
  * @return {Array.<HTMLElement>}
  */
-export const $$ = (selector: string, root: HTMLElement|HTMLDocument): HTMLElement[] => {
+export const $$ = (selector: string, root: HTMLElement|HTMLDocument): Array<HTMLElement> => {
     let result: NodeList;
 
     if (/:scope/.test(selector) && isIE() && !(typeof HTMLDocument !== 'undefined' && root instanceof HTMLDocument)) {
@@ -45,11 +45,11 @@ export const $$ = (selector: string, root: HTMLElement|HTMLDocument): HTMLElemen
     return [].slice.call(result);
 };
 
-export const isWindow = (obj): boolean => {
+export const isWindow = (obj: any): boolean => {
     return obj !== null && obj === obj.window;
 };
 
-export const type = (obj): string => {
+export const type = (obj: any): string => {
     if (obj === null) {
         return 'null';
     }
@@ -59,7 +59,7 @@ export const type = (obj): string => {
 type eachCallback = (key: number|string, value: any|any[]) => boolean|void;
 
 
-export const each = (obj: Array<any>|object, callback: eachCallback) => {
+export const each = (obj: Array<any>|any, callback: eachCallback|Function) => {
     let length: number,
         keys: string[],
         i: number;
@@ -90,7 +90,7 @@ each(['Boolean', 'Number', 'String', 'Function', 'Array', 'Date', 'RegExp', 'Obj
 
 export const inArray = (needle: string|number, haystack: Array<number|string>): boolean => (haystack.indexOf(needle) !== -1);
 
-export const isPlainObject = (obj): boolean => {
+export const isPlainObject = (obj: any): boolean => {
     if (typeof obj !== "object" || obj.nodeType || isWindow(obj)) {
         return false;
     }
@@ -98,7 +98,7 @@ export const isPlainObject = (obj): boolean => {
     return !(obj.constructor && !hasOwn.call(obj.constructor.prototype, "isPrototypeOf"));
 };
 
-export const extend = (...args) => {
+export const extend = function (this: any, ...args: any[]) {
     let options,
         name,
         src,
@@ -302,7 +302,7 @@ const formatUrl = (url: string): string => {
     return url;
 };
 
-export const appendScript = (url: string, callback: (this: HTMLScriptElement, e: Event) => any, className: string = '', doc: Document) => {
+export const appendScript = (url: string, callback: (this: HTMLElement, e: Event) => any, className: string = '', doc: Document) => {
     const script: HTMLScriptElement = doc.createElement('script');
     script.className = className;
     script.type = 'text/javascript';
@@ -364,7 +364,7 @@ export const hexToRgb = (hex: string): RGB|null => {
  * @param {boolean} [removeEmptyBlocks] if true remove empty blocks
  * @return {string}
  */
-export const clear = (value, removeEmptyBlocks = false): string => {
+export const clear = (value: string, removeEmptyBlocks = false): string => {
     value = trim(value)
         .replace(consts.INVISIBLE_SPACE_REG_EXP, '')
         .replace(/[\s]*class=""/g, '');
@@ -450,7 +450,7 @@ export const cleanFromWord = (text: string): string => {
  * @param {string} str
  * @return {boolean}
  */
-export const isURL = function (str) {
+export const isURL = function (str: string) {
     const pattern = new RegExp('^(https?:\\/\\/)' + // protocol
         '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' + // domain name
         '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
@@ -461,9 +461,9 @@ export const isURL = function (str) {
     return pattern.test(str);
 };
 
-export const pathNormalize = (path) => (path.replace(/([^:])[\\\/]+/g, '$1/'));
+export const pathNormalize = (path: string) => (path.replace(/([^:])[\\\/]+/g, '$1/'));
 
-export const urlNormalize = (url) => (url.replace(/([^:])[\\\/]+/g, '$1/'));
+export const urlNormalize = (url: string) => (url.replace(/([^:])[\\\/]+/g, '$1/'));
 
 /**
  * Check if a string is html or not
@@ -472,7 +472,7 @@ export const urlNormalize = (url) => (url.replace(/([^:])[\\\/]+/g, '$1/'));
  * @param {string} str
  * @return {boolean}
  */
-export const isHTML = (str) => ((/<([A-Za-z][A-Za-z0-9]*)\b[^>]*>(.*?)<\/\1>/m).test(str));
+export const isHTML = (str: string) => ((/<([A-Za-z][A-Za-z0-9]*)\b[^>]*>(.*?)<\/\1>/m).test(str));
 
 /**
  * Converts from human readable file size (kb,mb,gb,tb) to bytes
@@ -481,14 +481,14 @@ export const isHTML = (str) => ((/<([A-Za-z][A-Za-z0-9]*)\b[^>]*>(.*?)<\/\1>/m).
  * @param {string|int} human readable file size. Example 1gb or 11.2mb
  * @return {int}
  */
-export const humanSizeToBytes = (human) => {
+export const humanSizeToBytes = (human: string): number => {
     if (/^[0-9.]+$/.test(human.toString())) {
-        return human;
+        return parseFloat(human);
     }
 
-    const format = human.substr(-2, 2).toUpperCase(),
-        formats = ["KB", "MB", "GB", "TB"],
-        number = human.substr(0, human.length - 2);
+    const format: string = human.substr(-2, 2).toUpperCase(),
+        formats: string[] = ["KB", "MB", "GB", "TB"],
+        number: number = parseFloat(human.substr(0, human.length - 2));
 
     return formats.indexOf(format) !== -1 ? number * Math.pow(1024, formats.indexOf(format) + 1) : parseInt(human, 10);
 };
@@ -544,7 +544,7 @@ export const convertMediaURLToVideoEmbed = (url: string, width:number = 400, hei
         case 'www.youtube.com':
         case 'youtu.be':
         case 'www.youtu.be':
-            const query: {[key: string]: number|string} = parser.search ? parseQuery(parser.search) : {v: parser.pathname.substr(1)};
+            const query: any = parser.search ? parseQuery(parser.search) : {v: parser.pathname.substr(1)};
             return query.v ? '<iframe width="' + width + '" height="' + height + '" src="//www.youtube.com/embed/' + query.v + '" frameborder="0" allowfullscreen></iframe>' : url;
     }
 
@@ -565,8 +565,8 @@ export const convertMediaURLToVideoEmbed = (url: string, width:number = 400, hei
  * ```
  */
 export const browser = (browser: string): boolean|string => {
-    let ua = navigator.userAgent.toLowerCase(),
-        match = ((/(firefox)[\s\/]([\w.]+)/.exec(ua) || /(chrome)[\s\/]([\w.]+)/.exec(ua) || /(webkit)[\s\/]([\w.]+)/.exec(ua) || /(opera)(?:.*version)[\s\/]([\w.]+)/.exec(ua) || /(msie)[\s]([\w.]+)/.exec(ua) || /(trident)\/([\w.]+)/.exec(ua) || ua.indexOf("compatible") < 0)) || [];
+    let ua: string = navigator.userAgent.toLowerCase(),
+        match: any = ((/(firefox)[\s\/]([\w.]+)/.exec(ua) || /(chrome)[\s\/]([\w.]+)/.exec(ua) || /(webkit)[\s\/]([\w.]+)/.exec(ua) || /(opera)(?:.*version)[\s\/]([\w.]+)/.exec(ua) || /(msie)[\s]([\w.]+)/.exec(ua) || /(trident)\/([\w.]+)/.exec(ua) || ua.indexOf("compatible") < 0)) || [];
 
     if (browser === 'version') {
         return match[2];
@@ -602,7 +602,7 @@ export const offset =  (elm: HTMLElement, jodit: Jodit, recurse: boolean = false
         doc: Document = elm.ownerDocument,
         body: HTMLElement = doc.body,
         docElem: HTMLElement = doc.documentElement,
-        win: Window = doc.defaultView || doc['parentWindow'],
+        win: Window = doc.defaultView || (<any>doc).parentWindow,
         scrollTop: number = win.pageYOffset || docElem.scrollTop || body.scrollTop,
         scrollLeft: number = win.pageXOffset || docElem.scrollLeft || body.scrollLeft,
         clientTop: number = docElem.clientTop || body.clientTop || 0,
@@ -681,15 +681,15 @@ export const htmlspecialchars = (html: string) => {
  * }, 100));
  * ```
  */
-export const  debounce = function (fn, timeout ?: number, invokeAsap?: boolean, ctx?: any) {
+export const  debounce = function (this: any, fn: Function, timeout ?: number, invokeAsap?: boolean, ctx?: any) {
     if (arguments.length === 3 && typeof invokeAsap !== 'boolean') {
         ctx = invokeAsap;
         invokeAsap = false;
     }
 
-    let timer;
+    let timer: number;
 
-    return function () {
+    return function (this: any) {
 
         let args = arguments;
         ctx = ctx || this;
@@ -701,11 +701,11 @@ export const  debounce = function (fn, timeout ?: number, invokeAsap?: boolean, 
         clearTimeout(timer);
 
         if (timeout) {
-            timer = setTimeout(function () {
+            timer = window.setTimeout(function () {
                 if (!invokeAsap) {
                     fn.apply(ctx, args);
                 }
-                timer = null;
+                timer = 0;
             }, timeout);
         }
     };
@@ -732,7 +732,7 @@ export const throttle = function (fn: Function, timeout: number, ctx?: any) {
         needInvoke: boolean,
         callee: Function;
 
-    return function () {
+    return function (this: any) {
         args = arguments;
         needInvoke = true;
         ctx = ctx || this;
@@ -772,19 +772,19 @@ export const css = (element: HTMLElement, key: string|{[key: string]: number|str
     const numberFieldsReg = /^left|top|bottom|right|width|min|max|height|margin|padding|font-size/i;
 
     if (isPlainObject(key) || value !== undefined) {
-        const setValue = (elm, _key, _value) => {
+        const setValue = (elm: HTMLElement, _key: string, _value: string | number | undefined) => {
             if (_value !== undefined && _value !== null && numberFieldsReg.test(_key) && /^[\-+]?[0-9.]+$/.test(_value.toString())) {
-                _value = parseInt(_value, 10) + 'px';
+                _value = parseInt(_value.toString(), 10) + 'px';
             }
-            if (css(elm, _key) != normilizeCSSValue(_key, _value)) {
-                elm.style[_key] = _value;
+            if (_value !== undefined && css(elm, _key) !== normilizeCSSValue(_key, _value)) {
+                (<any>elm.style)[_key] = _value;
             }
         };
 
         if (isPlainObject(key)) {
             let keys: string[] = Object.keys(key), j;
             for (j = 0; j < keys.length; j += 1) {
-                setValue(element, camelCase(keys[j]), key[keys[j]]);
+                setValue(element, camelCase(keys[j]), (<any>key)[keys[j]]);
             }
         } else {
             setValue(element, camelCase(<string>key), value);
@@ -795,9 +795,11 @@ export const css = (element: HTMLElement, key: string|{[key: string]: number|str
 
     const key2: string = <string>fromCamelCase(<string>key),
         doc: Document  = element.ownerDocument,
-        win = doc ? doc.defaultView || doc['parentWindow'] : false;
+        win = doc ? doc.defaultView || (<any>doc).parentWindow : false;
 
-    let result = (element.style[<string>key] !== undefined && element.style[<string>key] !== '') ? element.style[<string>key] : (win ? win.getComputedStyle(element).getPropertyValue(key2) : '');
+    const currentValue: string | undefined = (<any>element.style)[<string>key];
+
+    let result: string | number = (currentValue !== undefined && currentValue !== '') ? currentValue : (win ? win.getComputedStyle(element).getPropertyValue(key2) : '');
 
     if (numberFieldsReg.test(<string>key) && /^[\-+]?[0-9.]+px$/.test(result.toString())) {
         result = parseInt(result, 10);
@@ -806,25 +808,26 @@ export const css = (element: HTMLElement, key: string|{[key: string]: number|str
     return normilizeCSSValue(<string>key, result);
 };
 
-export const asArray = (a): Array<any> => (
+export const asArray = (a: any): Array<any> => (
     Array.isArray(a) ? a : [a]
 );
 
-export const sprintf = (...args): string => {
-    const regex = /%%|%(\d+\$)?([-+#0 ]*)(\*\d+\$|\*|\d+)?(\.(\*\d+\$|\*|\d+))?([scboxXuidfegEG])/g;
-    let a = args,
-        i = 0,
-        format = a[i++];
+export const sprintf = (...args: Array<string|number>): string => {
+    const regex: RegExp = /%%|%(\d+\$)?([-+#0 ]*)(\*\d+\$|\*|\d+)?(\.(\*\d+\$|\*|\d+))?([scboxXuidfegEG])/g;
+    let a: Array<string|number> = args,
+        i: number = 0,
+        format: string = <string>a[i++];
 
 
-    const pad = function(str, len, chr, leftJustify) {
+    const pad = function(str: string, len: number, chr: string, leftJustify: boolean): string {
         const padding = (str.length >= len) ? '' : Array(1 + len - str.length >>> 0).join(chr);
         return leftJustify ? str + padding : padding + str;
     };
 
     // justify()
-    const justify = function(value, prefix, leftJustify, minWidth, zeroPad) {
-        const diff = minWidth - value.length;
+    const justify = function(value: string, prefix: string, leftJustify: boolean, minWidth: number, zeroPad: boolean): string {
+        const diff: number = minWidth - value.length;
+
         if (diff > 0) {
             if (leftJustify || !zeroPad) {
                 value = pad(value, minWidth, ' ', leftJustify);
@@ -832,27 +835,32 @@ export const sprintf = (...args): string => {
                 value = value.slice(0, prefix.length) + pad('', diff, '0', true) + value.slice(prefix.length);
             }
         }
+
         return value;
     };
 
-    const formatBaseX = function(value, base, prefix, leftJustify, minWidth, precision, zeroPad) {
+    const formatBaseX = function(value: any, base: any, prefix: any, leftJustify: any, minWidth: number, precision: number, zeroPad: boolean) {
         const number = value >>> 0;
-        prefix = prefix && number && {'2': '0b', '8': '0', '16': '0x'}[base] || '';
-        value = prefix + pad(number.toString(base), precision || 0, '0', false);
-        return justify(value, prefix, leftJustify, minWidth, zeroPad);
+        prefix = prefix && number &&(<any>{'2': '0b', '8': '0', '16': '0x'})[base] || '';
+        const newValue: string = prefix + pad(number.toString(base), precision || 0, '0', false);
+        return justify(newValue, prefix, leftJustify, minWidth, zeroPad);
     };
 
-    const formatString = function(value, leftJustify, minWidth, precision, zeroPad) {
+    const formatString = function(value: string, leftJustify: boolean, minWidth: number, precision: number, zeroPad: any) {
         if (precision != null) {
             value = value.slice(0, precision);
         }
         return justify(value, '', leftJustify, minWidth, zeroPad);
     };
 
-    const doFormat = function(substring, valueIndex, flags, minWidth, _, precision, type) {
+    const doFormat = function(substring: string, valueIndex: number, flags: string, minWidth: number | string, _: any, precision: any | undefined | string | string[], type: string) {
         if (substring == '%%') return '%';
 
-        let leftJustify = false, positivePrefix = '', zeroPad = false, prefixBaseX = false;
+        let leftJustify: boolean = false,
+            positivePrefix: string = '',
+            zeroPad: boolean = false,
+            prefixBaseX: boolean = false;
+
         for (let j = 0; flags && j < flags.length; j++) switch (flags.charAt(j)) {
             case ' ': positivePrefix = ' '; break;
             case '+': positivePrefix = '+'; break;
@@ -865,8 +873,8 @@ export const sprintf = (...args): string => {
             minWidth = 0;
         } else if (minWidth === '*') {
             minWidth = +a[i++];
-        } else if (minWidth.charAt(0) === '*') {
-            minWidth = +a[minWidth.slice(1, -1)];
+        } else if (minWidth.toString().charAt(0) === '*') {
+            minWidth = +(<any>a)[minWidth.toString().slice(1, -1)];
         } else {
             minWidth = +minWidth;
         }
@@ -885,14 +893,14 @@ export const sprintf = (...args): string => {
             precision = 'fFeE'.indexOf(type) > -1 ? 6 : (type == 'd') ? 0 : void(0);
         } else if (precision === '*') {
             precision = +a[i++];
-        } else if (precision[0] === '*') {
-            precision = +a[precision.slice(1, -1)];
+        } else if ((<any>precision)[0] === '*') {
+            precision = +a[(<any>precision).slice(1, -1)];
         } else {
             precision = +precision;
         }
 
         // grab value using valueIndex if required?
-        let value = valueIndex ? a[valueIndex.slice(0, -1)] : a[i++];
+        let value: string | number = valueIndex ? a[(<any>valueIndex).slice(0, -1)] : a[i++];
 
         switch (type) {
             case 's': return formatString(String(value), leftJustify, minWidth, precision, zeroPad);
@@ -919,8 +927,8 @@ export const sprintf = (...args): string => {
                 let prefix = number < 0 ? '-' : positivePrefix;
                 let method = ['toExponential', 'toFixed', 'toPrecision']['efg'.indexOf(type.toLowerCase())];
                 let textTransform = ['toString', 'toUpperCase']['eEfFgG'.indexOf(type) % 2];
-                value = prefix + Math.abs(number)[method](precision);
-                return justify(value, prefix, leftJustify, minWidth, zeroPad)[textTransform]();
+                value = prefix + (<any>Math.abs(number))[method](precision);
+                return (<any>justify(value, prefix, leftJustify, minWidth, zeroPad))[textTransform]();
             }
             default: return substring;
         }
@@ -943,7 +951,12 @@ export const val = (elm: HTMLInputElement|HTMLElement, selector: string, value ?
 
 
 export  const defaultLanguage = (language?: string): string => (
-    (language === 'auto' || language === undefined) ? document.documentElement.lang || (navigator.language && navigator.language.substr(0, 2)) || (navigator['browserLanguage'] && navigator['browserLanguage'].substr(0, 2)) || 'en' : language
+    (language === 'auto' || language === undefined) ?
+            document.documentElement.lang ||
+            (navigator.language && navigator.language.substr(0, 2)) ||
+            ((<any>navigator).browserLanguage ? (<any>navigator).browserLanguage.substr(0, 2) : false) ||
+            'en' :
+        language
 );
 
 export  const normalizeNode = (node: Node | null) => {
@@ -964,4 +977,4 @@ export  const normalizeNode = (node: Node | null) => {
     }
 
     normalizeNode(node.nextSibling);
-}
+};

@@ -114,7 +114,7 @@ export class EventsNative {
         });
     }
 
-    private getStore(subject: object): EventHandlersStore {
+    private getStore(subject: any): EventHandlersStore {
         if (subject[this.__key] === undefined) {
             const store: EventHandlersStore = new EventHandlersStore();
 
@@ -127,7 +127,7 @@ export class EventsNative {
 
         return subject[this.__key];
     }
-    private clearStore(subject: object) {
+    private clearStore(subject: any) {
         if (subject[this.__key] !== undefined) {
             delete subject[this.__key];
         }
@@ -140,12 +140,12 @@ export class EventsNative {
 
         if (event.type.match(/^touch/) && (<TouchEvent>event).changedTouches && (<TouchEvent>event).changedTouches.length) {
             ['clientX', 'clientY', 'pageX', 'pageY'].forEach((key: string) => {
-                Object.defineProperty(event, key, {value: (<TouchEvent>event).changedTouches[0][key], enumerable: true});
+                Object.defineProperty(event, key, {value: (<any>(<TouchEvent>event).changedTouches[0])[key], enumerable: true});
             })
         }
 
-        if (!event['originalEvent']) {
-            event['originalEvent'] = event;
+        if (!(<any>event)['originalEvent']) {
+            (<any>event)['originalEvent'] = event;
         }
 
     };
@@ -202,22 +202,22 @@ export class EventsNative {
             return this;
         }
 
-        const isDOMElement: boolean = typeof subject['addEventListener'] === 'function';
+        const isDOMElement: boolean = typeof (<any>subject)['addEventListener'] === 'function';
 
         let self: EventsNative = this,
-            syntheticCallback: Function = function () {
+            syntheticCallback: Function = function (this: any) {
                 return callback && callback.apply(this, arguments);
             };
 
         if (isDOMElement) {
-            syntheticCallback = function (event: MouseEvent|TouchEvent) {
+            syntheticCallback = function (this: any, event: MouseEvent|TouchEvent) {
                 self.prepareEvent(<TouchEvent>event);
                 return callback && callback.call(this, event);
             };
             if (selector) {
-                syntheticCallback = function (event) {
+                syntheticCallback = function (this: any, event: TouchEvent|MouseEvent): false | void {
                     self.prepareEvent(event);
-                    let node: Element|null = event.target;
+                    let node: Element|null = <any>event.target;
                     while (node && node !== this) {
                         if (node.matches(<string>selector)) {
                             if (callback && callback.call(node, event) === false) {
@@ -310,7 +310,7 @@ export class EventsNative {
             callback = <Function>eventsOrCallback;
         }
 
-        const isDOMElement: boolean = typeof subject['removeEventListener'] === 'function',
+        const isDOMElement: boolean = typeof (<any>subject)['removeEventListener'] === 'function',
             removeEventListener = (block: EventHandlerBlock) => {
                 if (isDOMElement) {
                     (<HTMLElement>subject).removeEventListener(block.event, <EventListener>block.syntheticCallback, false);
@@ -370,7 +370,7 @@ export class EventsNative {
             evt.initEvent(event.type, event.bubbles, event.cancelable);
 
             ['screenX', 'screenY', 'clientX', 'clientY', 'target', 'srcElement', 'currentTarget', 'timeStamp', 'which', 'keyCode'].forEach((property) => {
-                Object.defineProperty(evt, property, {value: event[property], enumerable: true});
+                Object.defineProperty(evt, property, {value: (<any>event)[property], enumerable: true});
             });
 
             Object.defineProperty(evt, 'originalEvent', {value: event, enumerable: true});
@@ -404,7 +404,7 @@ export class EventsNative {
      *  ```
      *
      */
-    fire(subjectOrEvents: object|string, eventsList?: string|any|Event, ...args): any {
+    fire(subjectOrEvents: object|string, eventsList?: string|any|Event, ...args: any[]): any {
         let result: any = void(0),
             result_value: any;
 
@@ -412,7 +412,7 @@ export class EventsNative {
         const events: string = typeof subjectOrEvents === 'string' ? subjectOrEvents : <string>eventsList;
         const argumentsList: Array<any> = typeof subjectOrEvents === 'string' ? [eventsList, ...args] : args;
 
-        const isDOMElement: boolean = typeof subject['dispatchEvent'] === 'function';
+        const isDOMElement: boolean = typeof (<any>subject)['dispatchEvent'] === 'function';
 
         if (!isDOMElement && typeof events !== 'string') {
             throw new Error('Need events names');

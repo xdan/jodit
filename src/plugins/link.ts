@@ -10,7 +10,7 @@ import {isURL, convertMediaURLToVideoEmbed, dom, val} from '../modules/Helpers'
 import {Dom} from "../modules/Dom";
 import {ControlType} from "../modules/Toolbar";
 import {markerInfo} from "../modules/Selection";
-import {Select} from "../modules";
+import {Select} from "../modules/Selection";
 
 /**
 * @property {object}  link `{@link link|link}` plugin's options
@@ -41,7 +41,7 @@ Config.prototype.link = {
 };
 
 
-Config.prototype.controls.unlink = {
+Config.prototype.controls.unlink = <ControlType>{
     exec: (editor: Jodit, current: Node) => {
         let anchor: HTMLAnchorElement|false = <HTMLAnchorElement>Dom.closest(current, 'A', editor.editor);
         if (anchor) {
@@ -50,7 +50,7 @@ Config.prototype.controls.unlink = {
         editor.events.fire('hidePopup');
     }
 };
-Config.prototype.controls.link = {
+Config.prototype.controls.link = <ControlType>{
     popup: (editor: Jodit, current: HTMLElement|false, self: ControlType, close: Function) => {
         const sel: Selection = editor.editorWindow.getSelection(),
             form: HTMLFormElement = <HTMLFormElement>dom(
@@ -174,7 +174,7 @@ export function link(jodit: Jodit) {
         });
     }
     if (jodit.options.link.processPastedLink) {
-        jodit.events.on('processPaste',  (event, html): HTMLAnchorElement|void => {
+        jodit.events.on('processPaste',  (event: ClipboardEvent, html: string): HTMLAnchorElement|void => {
             if (isURL(html)) {
                 const embed: string = convertMediaURLToVideoEmbed(html);
 

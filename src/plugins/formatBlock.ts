@@ -13,7 +13,7 @@ import {Config} from "../Config";
 Config.prototype.controls.paragraph = <ControlType>{
     command: 'formatBlock',
     exec: (editor: Jodit, event, control: ControlType) => {
-        editor.execCommand(control.command, false, control.args ? control.args[0] : undefined);
+        editor.execCommand(<string>control.command, false, control.args ? control.args[0] : undefined);
     },
     list: {
         p : "Normal",
@@ -32,12 +32,12 @@ Config.prototype.controls.paragraph = <ControlType>{
 
 
 export function formatBlock(editor: Jodit) {
-    editor.events.on('beforeCommand', (command: string, second, third: string) => {
+    editor.events.on('beforeCommand', (command: string, second: string, third: string): false | void => {
         if (command === 'formatblock') {
              editor.selection.focus();
              let work: boolean = false;
 
-             editor.selection.eachSelection((current: Element) => {
+             editor.selection.eachSelection((current: Node): false | void => {
                  const selectionInfo = editor.selection.save();
                  let currentBox: HTMLElement|false = current ? <HTMLElement>Dom.up(current, Dom.isBlock, editor.editor) : false;
 
