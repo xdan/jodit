@@ -10,6 +10,7 @@ import * as arrows_alt from  "./arrows-alt.svg";
 import * as arrows_h from  "./arrows-h.svg";
 import * as attachment from  "./attachment.svg";
 import * as bin from  "./bin.svg";
+import * as dots from  "./dots.svg";
 import * as bold from  "./bold.svg";
 import * as brush from  "./brush.svg";
 import * as cancel from  "./cancel.svg";
@@ -67,7 +68,7 @@ import * as video from  "./video.svg";
 export {
     about,addcolumn,addrow,angle_left,angle_right,angle_down,angle_up,arrows_alt,
     arrows_h,attachment,bin,bold,brush,cancel,center,chain_broken,
-    check_square,check,copyformat,crop,dedent,enter,eraser,eye,
+    check_square,check,copyformat,crop,dedent,dots,enter,eraser,eye,
     folder,font,fontsize,fullsize,hr,image,
     info_circle,italic,justify,left,link,lock,menu,merge,ol,paragraph,
     pencil,plus,redo,resize,resizer,right,save,shrink,source,splitg,splitv,

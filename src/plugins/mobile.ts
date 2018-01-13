@@ -7,6 +7,8 @@
 import {Jodit} from "../Jodit";
 import {Config} from '../Config'
 import {ControlType} from "../modules/Toolbar";
+import {Toolbar} from "../modules";
+import * as consts from "../constants";
 
 declare module "../Config" {
     interface Config {
@@ -20,12 +22,49 @@ declare module "../Config" {
 
 Config.prototype.mobileTapTimeout = 300;
 
+Config.prototype.controls.dots = <ControlType> {
+    mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG,
+    popup: (editor: Jodit, current: false | Node, control: ControlType, close: Function) => {
+        let store: {
+            container: HTMLDivElement,
+            toolbar: Toolbar,
+            rebuild: Function
+        } | undefined = <any>control.data;
+
+        if (store === undefined) {
+
+            store = {
+                container: editor.ownerDocument.createElement('div'),
+                toolbar: new Toolbar(editor),
+                rebuild: () => {
+                    const buttons: Array<string|ControlType> | undefined = editor.events.fire('getDiffButtons.mobile');
+
+                    if (buttons && store) {
+                        store.toolbar.build(buttons, store.container);
+                    }
+                }
+            };
+
+            store.container.style.width = '100px';
+
+            editor.events.on('resize', store.rebuild);
+
+            control.data = store;
+        }
+
+        store.rebuild();
+
+        return store.container;
+    }
+};
+
 /**
  * Rebuild toolbar in depends of editor's width
  */
 export function mobile(editor: Jodit) {
     let timeout: number = 0,
-        now: number;
+        now: number,
+        store: Array<string|ControlType> = editor.options.buttons;
 
     editor.events
         .on('touchend', (e: TouchEvent) => {
@@ -37,9 +76,13 @@ export function mobile(editor: Jodit) {
                 }
             }
         })
+        .on('getDiffButtons.mobile', () => {
+            return editor.options.buttons.filter((i: string|ControlType) => {
+                return store.indexOf(i) < 0;
+            });
+        })
         .on('resize afterInit', () => {
-            let width: number = editor.container.offsetWidth,
-                store: Array<string|ControlType>;
+            let width: number = editor.container.offsetWidth;
 
             if (width >= editor.options.sizeLG) {
                 store = editor.options.buttons;
@@ -50,6 +93,7 @@ export function mobile(editor: Jodit) {
             } else {
                 store = editor.options.buttonsXS;
             }
+
             editor.toolbar.build(store.concat(editor.options.extraButtons), editor.container);
         });
 }

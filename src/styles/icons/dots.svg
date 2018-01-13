@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<svg
+        enable-background="new 0 0 24 24"
+        viewBox="0 0 24 24"
+        xml:space="preserve"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink">
+    <circle cx="12" cy="12" r="2.2"/>
+    <circle cx="12" cy="5" r="2.2"/>
+    <circle cx="12" cy="19" r="2.2"/>
+</svg>

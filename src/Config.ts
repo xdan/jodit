@@ -484,7 +484,8 @@ export class Config {
         'undo', 'redo', '|',
         'eraser',
         'copyformat',
-        'fullsize'
+        'fullsize',
+        'dots'
     ];
 
     /**
@@ -497,7 +498,8 @@ export class Config {
         'paragraph', '|',
         'align', '|',
         'undo', 'redo', '|',
-        'eraser'
+        'eraser',
+        'dots'
     ];
 
 
