@@ -28,15 +28,17 @@
   "homepage": "https://xdsoft.net/jodit/",
   "devDependencies": {
     "@types/ace": "^0.0.35",
-    "@types/node": "^7.0.51",
     "@types/es6-promise": "^3.3.0",
+    "@types/node": "^7.0.51",
     "autoprefixer": "^6.7.7",
     "awesome-typescript-loader": "^3.4.1",
     "chai": "^3.5.0",
+    "classlist-polyfill": "^1.2.0",
     "clean-css-loader": "0.0.4",
     "compression": "^1.7.1",
     "cross-env": "^3.2.4",
     "css-loader": "^0.26.4",
+    "es6-promise": "^4.2.2",
     "express": "^4.16.2",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^0.10.1",
@@ -60,9 +62,7 @@
     "webpack": "^3.10.0",
     "webpack-dev-middleware": "^1.12.2",
     "webpack-dev-server": "^2.9.7",
-    "webpack-hot-middleware": "^2.21.0",
-    "classlist-polyfill": "^1.2.0",
-    "es6-promise": "^4.2.2"
+    "webpack-hot-middleware": "^2.21.0"
   },
   "dependencies": {}
 }

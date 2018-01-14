@@ -42,7 +42,8 @@ var loaders = [
     {
         loader: 'less-loader',
         options: {
-            sourceMap: true
+            sourceMap: true,
+            noIeCompat: true
         }
     },
 ];
@@ -92,6 +93,7 @@ module.exports = {
                 test: /\.(svg)$/i,
                 include: [
                     path.resolve(__dirname, "src/styles/icons"),
+                    path.resolve(__dirname, "src/styles/widgets"),
                 ],
                 use: [
                     {
