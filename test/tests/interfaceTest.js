@@ -734,16 +734,37 @@ describe('Test interface', function() {
             });
         });
         describe('Inline', function () {
-            it('Open inline popup after click on the image', function () {
-                var editor = new Jodit('#table_editor_interface');
+            describe('Сlick on the image', function () {
+                it('Should Open inline popup', function () {
+                    var editor = new Jodit('#table_editor_interface');
 
-                editor.setEditorValue('<img src="/test/tests/artio.jpg"/>');
+                    editor.setEditorValue('<img src="/test/tests/artio.jpg"/>');
 
-                simulateEvent('mousedown', 0, editor.editor.querySelector('img'))
+                    simulateEvent('mousedown', 0, editor.editor.querySelector('img'))
 
-                var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
+                    var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
 
-                expect(popup && popup.classList.contains('active')).to.equal(true);
+                    expect(popup && popup.classList.contains('active')).to.equal(true);
+                });
+                describe('and click in opened popup on pencil button', function () {
+                    it('Should Open edit image dialog', function () {
+                        var editor = new Jodit('#table_editor_interface');
+
+                        editor.setEditorValue('<img src="/test/tests/artio.jpg"/>');
+
+                        simulateEvent('mousedown', 0, editor.editor.querySelector('img'))
+
+                        var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
+
+                        expect(popup && popup.classList.contains('active')).to.equal(true);
+
+                        simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-pencil'))
+
+                        var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=table_editor_interface]');
+
+                        expect(dialog).to.be.not.equal(null);
+                    });
+                });
             });
             it('Open inline popup after click inside the cell', function () {
                 var editor = new Jodit('#table_editor_interface');

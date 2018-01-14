@@ -98,7 +98,7 @@ Config.prototype.popup = <{[key: string]: Array<ControlType|string>}>{
             exec: function (editor: Jodit, current: Node) {
                 const tagName: string = (<HTMLElement>current).tagName.toLowerCase();
                 if (tagName === 'img') {
-                    editor.events.fire(editor,'openImageProperties', current);
+                    editor.events.fire('openImageProperties', current);
                 }
             },
             tooltip: 'Edit'

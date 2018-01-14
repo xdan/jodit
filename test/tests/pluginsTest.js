@@ -782,7 +782,6 @@ describe('Test plugins', function () {
                 it('Should find needle in haystack steb by step in back direction', function () {
                     var str = 'Mr John Smith washed window';
                     expect(false).to.be.equal(Jodit.plugins.search.getSomePartOfStringIndex('th was', 'window', false));
-                    // debugger
                     expect(0).to.be.equal(Jodit.plugins.search.getSomePartOfStringIndex('th was', 'washed window', false));
                     expect(0).to.be.equal(Jodit.plugins.search.getSomePartOfStringIndex('th was', 'h washed window', false));
                     expect(3).to.be.equal(Jodit.plugins.search.getSomePartOfStringIndex('th was', 'Smith washed window', false));
@@ -804,7 +803,6 @@ describe('Test plugins', function () {
                     expect('th').to.be.equal(Jodit.plugins.search.findSomePartOfString('th was', 'Mr John Smith'));
                     expect('th wa').to.be.equal(Jodit.plugins.search.findSomePartOfString('th was', 'Mr John Smith wa'));
                     expect('th wa').to.be.equal(Jodit.plugins.search.findSomePartOfString('th  was', 'Mr John Smith wa'));
-                     // debugger
                     expect('th  wa').to.be.equal(Jodit.plugins.search.findSomePartOfString('th was', 'Mr John Smith  wa'));
                     expect(false).to.be.equal(Jodit.plugins.search.findSomePartOfString('th was', 'Mr John Smith s'));
 
@@ -815,7 +813,6 @@ describe('Test plugins', function () {
                 it('Should find needle in haystack steb by step in back direction', function () {
                     var str = 'Mr John Smith washed window';
                     expect(false).to.be.equal(Jodit.plugins.search.findSomePartOfString('th was', 'window', false));
-                    // debugger
                     expect('was').to.be.equal(Jodit.plugins.search.findSomePartOfString('th was', 'washed window', false));
                     expect('h was').to.be.equal(Jodit.plugins.search.findSomePartOfString('th was', 'h washed window', false));
                     expect(true).to.be.equal(Jodit.plugins.search.findSomePartOfString('th was', 'Smith washed window', false));
