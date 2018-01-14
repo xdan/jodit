@@ -1,6 +1,6 @@
 {
   "name": "jodit",
-  "version": "3.1.8",
+  "version": "3.1.9",
   "description": "Jodit is awesome and usefully wysiwyg editor with filebrowser",
   "main": "index.js",
   "scripts": {
@@ -64,7 +64,5 @@
     "classlist-polyfill": "^1.2.0",
     "es6-promise": "^4.2.2"
   },
-  "dependencies": {
-
-  }
+  "dependencies": {}
 }
