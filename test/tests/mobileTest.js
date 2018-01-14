@@ -26,7 +26,7 @@ describe('Test mobile mode', function () {
     });
 
     after(function() {
-        editor_mobile_test.parentNode.removeChild(editor_plugins_test);
+        editor_mobile_test.parentNode.removeChild(editor_mobile_test);
     });
 
     afterEach(function () {

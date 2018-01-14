@@ -6,7 +6,7 @@
 
 import {Jodit} from "../Jodit"
 import {Component} from "./Component"
-import {dom, each, $$, extend, camelCase} from "./Helpers"
+import {dom, each, $$, extend, camelCase, offset, css} from "./Helpers"
 import * as consts from "../constants";
 import {Dom} from "./Dom";
 
@@ -210,7 +210,7 @@ export class Toolbar extends Component{
      * @param {HTMLElement} content
      * @param {boolean} [rightAlign=false] Open popup on right side
      */
-    openPopup(btn: HTMLLIElement|HTMLAnchorElement, content: string|HTMLElement|false, rightAlign: boolean = false) {
+    openPopup(btn: HTMLLIElement|HTMLAnchorElement, content: string|HTMLElement|false, rightAlign?: boolean) {
         this.closeAll();
 
         if (!content) {
@@ -222,21 +222,59 @@ export class Toolbar extends Component{
 
         this.__popapOpened = true;
 
-        this.popup.innerHTML = '';
+        this.popup.innerHTML = '<span class="jodit_popup_triangle"></span>';
         this.popup.appendChild(dom(content, this.jodit.ownerDocument));
         this.popup.style.display = 'block';
+        this.popup.style.marginLeft = null;
 
-        this.popup.classList.toggle('jodit_right', rightAlign);
+        if (rightAlign !== undefined) {
+            this.popup.classList.toggle('jodit_right', rightAlign);
+        }
+
+
+        this.jodit.events.fire('afterOpenPopup', this.popup, this.container);
     }
 
     /**
      *
      */
-    openList(btn: HTMLLIElement) {
+    openList(btn: HTMLLIElement, control: ControlType, target?: HTMLElement) {
         btn.classList.add('jodit_dropdown_open');
         this.closeAll();
         this.__listOpened = true;
+
+        each(control.list, (key: string, value: string) => {
+            let elm: HTMLElement;
+            if (this.jodit.options.controls[value] !== undefined) {
+                elm = this.addButton(value, this.jodit.options.controls[value], '', target); // list like array {"align": {list: ["left", "right"]}}
+            } else if (this.jodit.options.controls[key] !== undefined) {
+                elm = this.addButton(key, extend({}, this.jodit.options.controls[key], value),'', target); // list like object {"align": {list: {"left": {exec: alert}, "right": {}}}}
+            } else {
+                elm = this.addButton(key, {
+                        exec: control.exec,
+                        command: control.command,
+                        args: [
+                            (control.args && control.args[0]) || key,
+                            (control.args && control.args[1]) || value
+                        ]
+                    },
+                    control.template && control.template(
+                    this.jodit,
+                    key,
+                    value
+                    ),
+                    target
+                );
+            }
+
+            this.list.appendChild(elm);
+        });
+
         this.list.style.display = 'block';
+        this.list.style.marginLeft = null;
+        btn.appendChild(this.list);
+
+        this.jodit.events.fire('afterOpenList', this.list, this.container);
     }
 
     /**
@@ -456,34 +494,7 @@ export class Toolbar extends Component{
 
 
             if (control.list) {
-                this.openList(btn);
-                each(control.list, (key: string, value: string) => {
-                    let elm: HTMLElement;
-                    if (this.jodit.options.controls[value] !== undefined) {
-                        elm = this.addButton(value, this.jodit.options.controls[value], '', target); // list like array {"align": {list: ["left", "right"]}}
-                    } else if (this.jodit.options.controls[key] !== undefined) {
-                        elm = this.addButton(key, extend({}, this.jodit.options.controls[key], value),'', target); // list like object {"align": {list: {"left": {exec: alert}, "right": {}}}}
-                    } else {
-                        elm = this.addButton(key, {
-                                exec: control.exec,
-                                command: control.command,
-                                args: [
-                                    (control.args && control.args[0]) || key,
-                                    (control.args && control.args[1]) || value
-                                ]
-                            },
-                            control.template && control.template(
-                                this.jodit,
-                                key,
-                                value
-                            ),
-                            target
-                        );
-                    }
-
-                    this.list.appendChild(elm);
-                });
-                btn.appendChild(this.list);
+                this.openList(btn, control, target);
             } else if (control.exec !== undefined && typeof control.exec === 'function') {
                 control.exec(
                     this.jodit,
@@ -495,7 +506,6 @@ export class Toolbar extends Component{
                 this.checkActiveButtons(false);
                 this.jodit.setEditorValue();
                 this.jodit.events.fire('hidePopup');
-                this.closeAll();
             } else if (control.popup !== undefined && typeof control.popup === 'function') {
                 this.openPopup(btn, control.popup(
                     this.jodit,
@@ -599,6 +609,7 @@ export class Toolbar extends Component{
     }
 
     private initEvents = () => {
+        let timeout: number;
         this.jodit.events
             .on(this.popup, 'mousedown touchstart', (e: MouseEvent) => {e.stopPropagation()})
             .on(this.list,'mousedown touchstart', (e: MouseEvent) => {e.stopPropagation()})
@@ -606,21 +617,57 @@ export class Toolbar extends Component{
                 if (this.__popapOpened || this.__listOpened) {
                     this.closeAll();
                 }
-            });
+            })
+            .on('afterOpenPopup afterOpenList', (popup: HTMLElement) => {
 
-        let timeout: number;
-        this.jodit.events.on('mousedown mouseup keydown change afterSetMode focus afterInit', () => {
-            const callback = () => {
-                if (this.jodit.selection) {
-                    this.checkActiveButtons(this.jodit.selection.current())
+                const offsetConainer: Bound = offset(<HTMLDivElement>this.jodit.container, this.jodit, true);
+                let offsetPopup: Bound = offset(popup, this.jodit, true);
+                let marginLeft: number = <number>css(popup, 'marginLeft');
+                let diffLeft: number = 0;
+
+                if (offsetPopup.left + offsetPopup.width > offsetConainer.left + offsetConainer.width) {
+                    diffLeft =  -((offsetPopup.left + offsetPopup.width) - (offsetConainer.left + offsetConainer.width));
+                    css(popup, {
+                        marginLeft: diffLeft + marginLeft
+                    });
+                    offsetPopup = offset(popup, this.jodit, true);
                 }
-            };
-            if (this.jodit.options.observer.timeout) {
-                clearTimeout(timeout);
-                timeout = window.setTimeout(callback, this.jodit.options.observer.timeout)
-            } else {
-                callback();
-            }
-        });
+
+                if (offsetPopup.left  < offsetConainer.left) {
+                    if (offsetPopup.left + offsetPopup.width > offsetConainer.left + offsetConainer.width) {
+                        css(popup, {
+                            width: offsetConainer.width
+                        });
+                    } else {
+                        diffLeft = offsetConainer.left  - offsetPopup.left;
+                        css(popup, {
+                            marginLeft: diffLeft  + marginLeft
+                        });
+                    }
+                }
+
+                if (diffLeft) {
+                    let triangle: HTMLSpanElement | null = popup.querySelector('.jodit_popup_triangle');
+                    if (triangle) {
+                        triangle.style.marginLeft = -diffLeft + 'px';
+                    }
+                }
+            })
+            .on('hidePopup', () => {
+                this.closeAll();
+            })
+            .on('mousedown mouseup keydown change afterSetMode focus afterInit', () => {
+                const callback = () => {
+                    if (this.jodit.selection) {
+                        this.checkActiveButtons(this.jodit.selection.current())
+                    }
+                };
+                if (this.jodit.options.observer.timeout) {
+                    clearTimeout(timeout);
+                    timeout = window.setTimeout(callback, this.jodit.options.observer.timeout)
+                } else {
+                    callback();
+                }
+            });
     };
 }

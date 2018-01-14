@@ -328,7 +328,7 @@ export function inlinePopup(editor: Jodit) {
                 return;
             }
 
-            popup.innerHTML = '';
+            popup.innerHTML = '<span class="jodit_popup_triangle"></span>';
 
             toolbar.build(editor.options.popup[tagName], popup, elm);
 
@@ -338,10 +338,13 @@ export function inlinePopup(editor: Jodit) {
             css(popup, {
                 left: x + 'px',
                 top: y + 'px',
-                marginLeft: -Math.round(popup.offsetWidth / 2) + 'px'
             });
 
+            popup.style.marginLeft =  -Math.round(popup.offsetWidth / 2) + 'px';
+
             toggleEditor(true);
+
+            editor.events.fire('afterOpenPopup', popup,  editor.container);
         },
 
         delayShowPopup = (elm: HTMLElement, x: number, y: number) => {

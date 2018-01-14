@@ -47,8 +47,6 @@ Config.prototype.controls.dots = <ControlType> {
 
             store.container.style.width = '100px';
 
-            editor.events.on('resize', store.rebuild);
-
             control.data = store;
         }
 

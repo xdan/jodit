@@ -323,6 +323,7 @@ export class search extends Component {
             this.isOpened = true;
         }
 
+        this.jodit.events.fire('hidePopup');
         this.searchBox.classList.toggle('jodit_search-and-replace', searchAndReplace);
 
         this.current = this.jodit.selection.current();

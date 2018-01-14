@@ -2,16 +2,90 @@ describe('Test interface', function() {
     appendTestArea('table_editor_interface', true);
     describe('Toolbar', function () {
         describe('Popups', function () {
-            it('Open popup in toolbar', function () {
-                var editor = new Jodit('#table_editor_interface', {
-                    disablePlugins: 'mobile'
+            describe('Click on some link', function () {
+                describe('in the left side of editor', function () {
+                    it('Should open inline popup with float by left editor side', function () {
+                        var editor = new Jodit('#table_editor_interface', {
+                        });
+
+                        editor.setEditorValue('asas <a href="#">test</a>')
+
+                        simulateEvent('mousedown', 0, editor.editor.querySelector('a'))
+
+                        var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
+
+                        expect(popup && popup.style.display === '').to.be.equal(true);
+
+                        var positionPopup = offset(popup);
+                        var positionContainer = offset(editor.container);
+
+                        expect(true).to.be.equal(positionPopup.left >= positionContainer.left);
+                    });
                 });
-                simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-video'))
-
-                var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup');
-
-                expect(popup && popup.style.display === 'block').to.equal(true);
             });
+            describe('Click on some button with defined popup field', function () {
+                it('Should open popup in toolbar', function () {
+                    var editor = new Jodit('#table_editor_interface', {
+                        disablePlugins: 'mobile'
+                    });
+                    simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-video'))
+
+                    var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup');
+
+                    expect(popup && popup.style.display === 'block').to.equal(true);
+                });
+                describe('in the left side', function () {
+                    it('Should open popup in toolbar with float by left editor side', function () {
+                        var editor = new Jodit('#table_editor_interface', {
+                            buttons: ['video'],
+                            disablePlugins: 'mobile'
+                        });
+
+                        simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-video'))
+
+                        var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup');
+
+                        expect(popup && popup.style.display === 'block').to.be.equal(true);
+
+                        var positionPopup = offset(popup);
+                        var positionContainer = offset(editor.container);
+
+                        expect(true).to.be.equal(positionPopup.left >= positionContainer.left);
+                    });
+                });
+                describe('in the right side', function () {
+                    it('Should open popup in toolbar with float by left editor side', function () {
+                        var editor = new Jodit('#table_editor_interface', {
+                            width: 300,
+                            buttons: [
+                                'video',
+                                'video',
+                                'video',
+                                'video',
+                                'video',
+                                'video',
+                                'video',
+                                'video',
+                                'video',
+                            ],
+                            disablePlugins: 'mobile'
+                        });
+
+                        simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-video:last-child'))
+
+                        var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup');
+
+                        expect(popup && popup.style.display === 'block').to.be.equal(true);
+
+                        var positionPopup = offset(popup);
+                        var positionContainer = offset(editor.container);
+
+                        expect(true).to.be.equal(positionPopup.left + positionPopup.width <= positionContainer.left + positionContainer.width);
+                        // getBox().style.width = 'auto';
+                    });
+                });
+            });
+            getBox().style.width = 'auto';
             it('Open and close popap after clicking in another place', function() {
                 var editor = new Jodit('#table_editor_interface', {
                     disablePlugins: 'mobile'

@@ -85,7 +85,6 @@
 //        theme: 'dark',
 //        textIcons: true,
 //      iframe: true,
-//        width: 400,
         height: 300,
 //        defaultMode: Jodit.MODE_SPLIT,
         observer: {
@@ -100,16 +99,8 @@
                 url: 'https://xdsoft.net/jodit/connector/index.php'
             }
         },
-        //debugLanguage: true,
-        buttons: Jodit.defaultOptions.buttons.concat([
-            {
-                name: 'insertDate',
-                iconURL: 'https://xdsoft.net/jodit/images/logo.png',
-                exec: function (editor) {
-                    editor.selection.insertHTML((new Date).toDateString());
-                }
-            }
-        ])
+        // buttons: ['video', 'video','video','video','video','video','video'],
+        disablePlugins: 'mobile'
     });
 
     function simpleKeys (original) {
@@ -134,7 +125,7 @@
     editor.editor.addEventListener('input', callback);
 
 
-    // editor.setEditorValue('Test');
+    editor.setEditorValue('<a href="#">Test</a>TestTestTest<a href="#">Test</a>TestTestTestTest<a href="#">Test</a>');
 
     // expect(editor.container.querySelectorAll('.jodit_toolbar_btn-redo.jodit_disabled').length).to.equal(1);
     // expect(editor.container.querySelectorAll('.jodit_toolbar_btn-undo.jodit_disabled').length).to.equal(0);
