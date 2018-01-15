@@ -1,7 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License https://xdsoft.net/jodit/license.html
- * Copyright 2013-2018 Valeriy Chupurnov xdsoft.net
+ * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
 import {Jodit} from "../Jodit"
@@ -245,6 +245,7 @@ export class Toolbar extends Component{
 
         each(control.list, (key: string, value: string) => {
             let elm: HTMLElement;
+
             if (this.jodit.options.controls[value] !== undefined) {
                 elm = this.addButton(value, this.jodit.options.controls[value], '', target); // list like array {"align": {list: ["left", "right"]}}
             } else if (this.jodit.options.controls[key] !== undefined) {
@@ -259,9 +260,9 @@ export class Toolbar extends Component{
                         ]
                     },
                     control.template && control.template(
-                    this.jodit,
-                    key,
-                    value
+                        this.jodit,
+                        key,
+                        value
                     ),
                     target
                 );
@@ -410,7 +411,7 @@ export class Toolbar extends Component{
      */
     addButton(item: string|ControlType, controlOption?: ControlType, content?: string, target?: HTMLElement): HTMLElement {
 
-        let control: ControlType = <ControlType>extend(true, {}, controlOption, this.defaultControl);
+        let control: ControlType = <ControlType>extend(true, {}, this.defaultControl, controlOption);
 
         const btn: HTMLLIElement = <HTMLLIElement>dom('<li>' +
                     '<a href="javascript:void(0)"></a>' +

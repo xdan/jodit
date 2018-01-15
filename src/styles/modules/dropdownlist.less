@@ -1,16 +1,14 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License https://xdsoft.net/jodit/license.html
- * Copyright 2013-2018 Valeriy Chupurnov xdsoft.net
+ * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-@import (reference) "../variables";
-.jodit_dropdownlist{
+.jodit_toolbar > li.jodit_toolbar_btn .jodit_dropdownlist{
     background: #ffffff;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16),0 3px 6px rgba(0,0,0,0.23);
     padding: 0;
     margin: auto;
-    display: block;
     text-align: left;
     position: absolute;
     box-sizing: border-box;
@@ -20,46 +18,43 @@
     font-size:16px;
     z-index:@dropdownlist_z_index;
     display:none;
-    left: 0px;
+    left: 0;
     top: 100%;
 
+    h5,h4,h3,h2,h1,p,blockquote, pre {
+      font-family: @font_jodit;
+      margin: 0;
+      padding: 0;
+      font-weight: 400;
+    }
     h5 {
         font-size: 0.8em;
         line-height: 1.4;
-        font-weight: 400;
-        margin: 0;
     }
     h3{
         font-size: 1.31em;
         line-height: 1.4;
-        font-weight: 400;
-        margin: 0
     }
     p,
     h4 {
         font-size: 1em;
         line-height: 1.5em;
-        font-weight: 400;
-        margin: 0;
     }
     h2{
         font-size: 1.74em;
         line-height: 1.4;
-        font-weight: 400;
-        margin: 0;
     }
     h1{
         font-size: 2.17em;
         line-height: 1.4;
-        font-weight: 400;
-        margin: 0;
-    }
-    blockquote,
-    pre{
-        margin: 0;
     }
 
-    > li {
+    blockquote,
+    pre {
+        font-family: monospace;
+    }
+
+    > li.jodit_toolbar_btn {
         display: block;
         cursor: pointer;
         white-space: nowrap;
@@ -68,16 +63,20 @@
         width:100%;
         box-sizing:border-box;
         text-align:left;
-    }
-    li > a {
-        background-image: none;
-        padding: 0px 24px;
-        cursor: pointer;
-        line-height: 200%;
-        width: auto;
-        height:auto;
-        &:hover {
-            background-color: #F3F0F0;
+        > a {
+            background-image: none;
+            padding: 7px 24px;
+            cursor: pointer;
+            line-height: 100%;
+            width: auto;
+            height:auto;
+            display: block;
+            &:hover {
+                background-color: #F3F0F0;
+            }
+          &:after {
+            display: none;
+          }
         }
     }
 }

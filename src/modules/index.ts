@@ -1,7 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License https://xdsoft.net/jodit/license.html
- * Copyright 2013-2018 Valeriy Chupurnov xdsoft.net
+ * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
 export {Component} from './Component';
@@ -21,4 +21,3 @@ export {Table} from './Table';
 export {Toolbar} from './Toolbar';
 export {Stack} from './Stack';
 export {Uploader} from './Uploader';
-// export * from './Widget';
