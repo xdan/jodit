@@ -11,6 +11,7 @@ import {ctrlKey, debounce, dom, trim} from "../modules/Helpers";
 import {Component, Dom, Toolbar} from "../modules/index";
 import * as consts from "../constants";
 import {markerInfo} from "../modules/Selection";
+import {MODE_WYSIWYG} from "../constants";
 
 declare module "../Config" {
     interface Config {
@@ -412,6 +413,10 @@ export class search extends Component {
                     }
                 }, this.jodit.options.observer.timeout))
                 .on(this.jodit.container, 'keydown', (e: KeyboardEvent) => {
+                    if (editor.getRealMode() !== MODE_WYSIWYG) {
+                        return;
+                    }
+
                     switch (e.which) {
                         case  consts.KEY_ESC:
                             this.close();

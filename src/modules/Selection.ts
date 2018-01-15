@@ -544,9 +544,8 @@ export class Select extends Component{
         sel.removeAllRanges();
         sel.addRange(range);
 
-        // if (textNode.parentNode) {
-        //     textNode.parentNode.removeChild(textNode);
-        // }
+        this.jodit.events.fire('changeSelection');
+
         return fakeNode;
     }
 
@@ -743,9 +742,8 @@ export class Select extends Component{
         sel.removeAllRanges();
         sel.addRange(range);
 
-        // if (textNode.parentNode) {
-        //     textNode.parentNode.removeChild(textNode);
-        // }
+        this.jodit.events.fire('changeSelection');
+
         return fakeNode;
     }
 
@@ -781,12 +779,15 @@ export class Select extends Component{
         range.collapse(inStart);
         sel.removeAllRanges();
         sel.addRange(range);
+
+        this.jodit.events.fire('changeSelection');
     }
 
     selectRange(range: Range) {
         const sel: Selection = this.jodit.editorWindow.getSelection();
         sel.removeAllRanges();
         sel.addRange(range);
+        this.jodit.events.fire('changeSelection');
     }
 
     /**

@@ -424,6 +424,7 @@ export class Config {
         'italic', '|',
         'ul',
         'ol', '|',
+        'outdent', 'indent',  '|',
         'font',
         'fontsize',
         'brush',

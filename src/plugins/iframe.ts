@@ -6,7 +6,7 @@
 
 import {Jodit} from '../Jodit';
 import {Config} from '../Config';
-import {css, dom} from "../modules/Helpers";
+import {css, defaultLanguage, dom} from "../modules/Helpers";
 
 declare module "../Config" {
     interface Config {
@@ -150,6 +150,9 @@ export function iframe(editor: Jodit) {
         editor.iframe.src = 'about:blank';
         editor.iframe.className = 'jodit_wysiwyg_iframe';
         editor.iframe.frameBorder = '0';
+        editor.iframe.setAttribute('allowtransparency', 'true');
+        editor.iframe.setAttribute('tabindex', '0');
+        editor.iframe.setAttribute('frameborder', '0');
 
         editor.workplace.appendChild(editor.iframe);
 
@@ -159,7 +162,7 @@ export function iframe(editor: Jodit) {
 
         doc.open();
         doc.write(`<!DOCTYPE html>
-                <html class="jodit">
+                <html dir="${editor.options.direction}" class="jodit" lang="${defaultLanguage(editor.options.language)}">
                     <head>
                         ${editor.options.iframeBaseUrl ? `<base href="${editor.options.iframeBaseUrl}"/>` : ''}
                     </head>

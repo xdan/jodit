@@ -580,6 +580,19 @@ describe('Test interface', function() {
 
                 expect(editor.getEditorValue()).to.equal('111');
             });
+            describe('Add button', function () {
+                it('Should create buttons in toolbar', function () {
+                    var editor = new Jodit('#table_editor_interface', {
+                        buttons: ['indent', 'outdent', 'bold', 'customxxx']
+                    });
+
+                    expect(null).to.be.not.equal(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-indent'));
+                    expect(null).to.be.not.equal(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-outdent'));
+                    expect(null).to.be.not.equal(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-bold'));
+                    expect(null).to.be.not.equal(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-customxxx'));
+                    expect(null).to.be.equal(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-source'));
+                });
+            });
             describe('Button Bold', function () {
                 it('Should reactivate Bold button after second click and move cursor out of Strong element', function () {
                     var editor = new Jodit('#table_editor_interface', {

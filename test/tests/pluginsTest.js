@@ -849,6 +849,51 @@ describe('Test plugins', function () {
             });
         });
     });
+    describe('Indent plugin', function () {
+        it('Should set active outdent button if current container has marginLeft', function () {
+            var area = appendTestArea();
+            var editor = new Jodit(area, {
+                buttons: 'indent,outdent'
+            });
+            editor.setEditorValue('<p>text</p>');
+            editor.selection.setCursorIn(editor.editor.firstChild.firstChild);
+
+            simulateEvent('mousedown', 0, editor.editor.firstChild);
+
+            expect(null).to.be.not.equal(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-outdent.jodit_disabled'));
+
+            editor.editor.firstChild.style.marginLeft = '100px'
+            simulateEvent('mousedown', 0, editor.editor.firstChild);
+            expect(null).to.be.equal(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-outdent.jodit_disabled'));
+
+        });
+        describe('Press Indent button', function () {
+            it('Should increase indent for current blocks', function () {
+                var area = appendTestArea();
+                var editor = new Jodit(area, {
+                    buttons: 'indent,outdent',
+                    indentMargin: 5,
+                });
+                editor.setEditorValue('<h1>test</h1><p>text</p><p>text</p>');
+                var range = editor.editorDocument.createRange();
+                range.setStartBefore(editor.editor.firstChild)
+                range.setEndAfter(editor.editor.firstChild.nextSibling)
+                editor.selection.selectRange(range);
+                simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-indent'));
+                simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-indent'));
+                simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-indent'));
+
+                expect('<h1 style="margin-left: 15px;">test</h1><p style="margin-left: 15px;">text</p><p>text</p>').to.be.equal(editor.getEditorValue());
+
+                simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-outdent'));
+                simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-outdent'));
+                simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-outdent'));
+
+                expect('<h1>test</h1><p>text</p><p>text</p>').to.be.equal(editor.getEditorValue());
+
+            });
+        });
+    });
     after(function() {
         editor_plugins_test.parentNode.removeChild(editor_plugins_test);
     });

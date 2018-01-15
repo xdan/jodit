@@ -46,6 +46,35 @@ export type ControlType = {
     isActive?: (editor: Jodit, btn: ControlType, button?: ButtonType) => boolean,
 
     /**
+     * You can use it function for control - disable/enable button
+     *
+     * @param {Jodit} editor
+     * @param {ControlType} btn
+     * @return {boolean}
+     * @see copyformat plugin
+     * @example
+     * ```javascript
+     * var editor = new Jodit('.selectorclass', {
+     *     buttons: {
+     *          checkbox: {
+     *              data: {
+     *                  enable: false,
+     *              },
+     *              iconURL: 'checkbox.png',
+     *              exec: function (a, b, btn) {
+     *                  btn.data.active = !btn.data.active;
+     *              },
+     *              isDisable: function (editor, btn) {
+     *                  return !!btn.data.enable;
+     *              }
+     *          }
+     *     }
+     * })
+     * ```
+     */
+    isDisable?: (editor: Jodit, btn: ControlType, button?: ButtonType) => boolean,
+
+    /**
      * Drop-down list. A hash or array. You must specify the command which will be submitted for the hash key (or array value) (see .[[Jodit.execCommand]] or define 'exec' function. See example
      * @example
      * ```javascript
@@ -355,7 +384,13 @@ export class Toolbar extends Component{
 
             const mode =  (button.control === undefined || button.control.mode === undefined) ? consts.MODE_WYSIWYG : button.control.mode;
 
-            Toolbar.__toggleButton(button.btn, mode === consts.MODE_SPLIT || mode === this.jodit.getRealMode());
+            let isDisabled: boolean = mode === consts.MODE_SPLIT || mode === this.jodit.getRealMode();
+
+            if (typeof button.control.isDisable === 'function') {
+                isDisabled = isDisabled && button.control.isDisable(this.jodit, button.control, button);
+            }
+
+            Toolbar.__toggleButton(button.btn, isDisabled);
 
             if (typeof button.control.isActive === 'function') {
                 button.btn.classList.toggle(active_class,  button.control.isActive(this.jodit, button.control, button));
@@ -542,10 +577,14 @@ export class Toolbar extends Component{
      * @param {HTMLDivElement} container
      * @param {HTMLElement} target Work element
      */
-    build(buttons: Array<ControlType|string>, container: HTMLElement, target?: HTMLElement) {
+    build(buttons: Array<ControlType|string> | string, container: HTMLElement, target?: HTMLElement) {
         let lastBtnSeparator: boolean = false;
 
         this.clear();
+
+        if (typeof buttons === 'string') {
+            buttons = buttons.split(/[\s,]+/);
+        }
 
         (<Array<ControlType|string>>buttons).forEach((button: ControlType|string) => {
             const name: string = typeof button === 'string' ? <string>button : button.name || '';
@@ -578,7 +617,12 @@ export class Toolbar extends Component{
                     }
 
                     if (typeof control !== 'object') {
-                        throw new Error('Need ControlType ' + control);
+                        control = {
+                            name: control,
+                            command: control,
+                            tooltip: control,
+                        };
+                        //throw new Error('Need ControlType ' + control);
                     }
 
                     this.container.appendChild(this.addButton(button, <ControlType>control, '', target));

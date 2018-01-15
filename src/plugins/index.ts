@@ -17,6 +17,7 @@ export {font} from "./font";
 export {formatBlock} from "./formatBlock";
 export {fullsize} from "./fullsize";
 export {iframe} from "./iframe";
+export {indent} from "./indent";
 export {imageInlineToolbar} from "./imageInlineToolbar";
 export {imageProcessor} from "./imageProcessor";
 export {imageProperties} from "./imageProperties";

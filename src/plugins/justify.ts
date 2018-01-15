@@ -17,8 +17,8 @@ Config.prototype.controls.align = <ControlType>{
         const current: Node|false = editor.selection.current();
 
         if (current && btn.defaultValue) {
-            let currentBpx: HTMLElement = <HTMLElement>Dom.closest(current, Dom.isBlock, editor.editor) || editor.editor;
-            return btn.defaultValue.indexOf(css(currentBpx, 'text-align').toString()) === -1;
+            let currentBox: HTMLElement = <HTMLElement>Dom.closest(current, Dom.isBlock, editor.editor) || editor.editor;
+            return btn.defaultValue.indexOf(css(currentBox, 'text-align').toString()) === -1;
         }
 
         return false;
