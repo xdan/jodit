@@ -140,83 +140,85 @@ Config.prototype.iframeCSSLinks  = [];
  * Iframe plugin
  */
 export function iframe(editor: Jodit) {
-    editor.events.on('createEditor', () => {
-        if (!editor.options.iframe) {
-            return;
-        }
+    editor.events
+        .on('generateDocumentStructure.iframe', (doc: Document) => {
+            doc.open();
+            doc.write(`<!DOCTYPE html>
+                    <html dir="${editor.options.direction}" class="jodit" lang="${defaultLanguage(editor.options.language)}">
+                        <head>
+                            ${editor.options.iframeBaseUrl ? `<base href="${editor.options.iframeBaseUrl}"/>` : ''}
+                        </head>
+                        <body class="jodit_wysiwyg" style="outline:none" contenteditable="true"></body>
+                    </html>`);
 
-        editor.iframe = <HTMLIFrameElement>editor.ownerDocument.createElement("iframe");
-        editor.iframe.style.display = 'block';
-        editor.iframe.src = 'about:blank';
-        editor.iframe.className = 'jodit_wysiwyg_iframe';
-        editor.iframe.frameBorder = '0';
-        editor.iframe.setAttribute('allowtransparency', 'true');
-        editor.iframe.setAttribute('tabindex', '0');
-        editor.iframe.setAttribute('frameborder', '0');
+            doc.close();
 
-        editor.workplace.appendChild(editor.iframe);
+            if (editor.options.iframeCSSLinks) {
+                editor.options.iframeCSSLinks.forEach((href) => {
+                    const link: HTMLLinkElement = <HTMLLinkElement>dom('<link rel="stylesheet" href="' + href + '">', doc);
+                    doc.head.appendChild(link);
+                });
+            }
 
-        const doc = editor.iframe.contentWindow.document;
-        editor.editorDocument = doc;
-        editor.editorWindow = editor.iframe.contentWindow;
+            if (editor.options.iframeStyle) {
+                const style: HTMLStyleElement = doc.createElement('style');
+                style.innerHTML = editor.options.iframeStyle;
+                doc.head.appendChild(style);
+            }
 
-        doc.open();
-        doc.write(`<!DOCTYPE html>
-                <html dir="${editor.options.direction}" class="jodit" lang="${defaultLanguage(editor.options.language)}">
-                    <head>
-                        ${editor.options.iframeBaseUrl ? `<base href="${editor.options.iframeBaseUrl}"/>` : ''}
-                    </head>
-                    <body class="jodit_wysiwyg" style="outline:none" contenteditable="true"></body>
-                </html>`);
+        })
+        .on('createEditor', () => {
+            if (!editor.options.iframe) {
+                return;
+            }
 
-        doc.close();
-        editor.editor = <HTMLBodyElement>doc.body;
+            editor.iframe = <HTMLIFrameElement>editor.ownerDocument.createElement("iframe");
+            editor.iframe.style.display = 'block';
+            editor.iframe.src = 'about:blank';
+            editor.iframe.className = 'jodit_wysiwyg_iframe';
+            editor.iframe.frameBorder = '0';
+            editor.iframe.setAttribute('allowtransparency', 'true');
+            editor.iframe.setAttribute('tabindex', '0');
+            editor.iframe.setAttribute('frameborder', '0');
 
-        if (editor.options.iframeCSSLinks) {
-            editor.options.iframeCSSLinks.forEach((href) => {
-                const link: HTMLLinkElement = <HTMLLinkElement>dom('<link rel="stylesheet" href="' + href + '">', doc);
-                doc.head.appendChild(link);
-            });
-        }
+            editor.workplace.appendChild(editor.iframe);
 
-        if (editor.options.iframeStyle) {
-            const style: HTMLStyleElement = doc.createElement('style');
-            style.innerHTML = editor.options.iframeStyle;
-            doc.head.appendChild(style);
-        }
+            const doc: Document = editor.iframe.contentWindow.document;
 
-        // css(editor.iframe, {
-        //     width: editor.options.width === 'auto' ? '100%' : editor.options.width,
-        //     height: editor.options.height,
-        //     minHeight: editor.options.minHeight
-        // });
+            editor.events.fire('generateDocumentStructure.iframe', doc);
 
-        if (editor.options.height === 'auto') {
-            doc.documentElement.style.overflowY = 'hidden';
-            const resizeIframe = () => {
-                if (editor.editor) {
-                    css(editor.iframe, 'height', editor.editor.offsetHeight);
-                }
-            };
+            editor.editorDocument = doc;
+            editor.editorWindow = editor.iframe.contentWindow;
+
+            editor.editor = <HTMLBodyElement>doc.body;
+
+
+            if (editor.options.height === 'auto') {
+                doc.documentElement.style.overflowY = 'hidden';
+                const resizeIframe = () => {
+                    if (editor.editor) {
+                        css(editor.iframe, 'height', editor.editor.offsetHeight);
+                    }
+                };
+                editor.events
+                    .on('change afterInit afterSetMode resize', resizeIframe)
+                    .on([editor.iframe, editor.editorWindow, doc.documentElement], 'load', resizeIframe)
+                    .on(doc, 'readystatechange DOMContentLoaded', resizeIframe);
+            }
+
+            css(editor.editor, 'minHeight', editor.options.minHeight);
+
+
+            (function(e){
+                e.matches || (e.matches = Element.prototype.matches); // fix inside iframe polifill
+            })((<any>editor.editorWindow).Element.prototype);
+
+            //throw events in our word
             editor.events
-                .on('change afterInit afterSetMode resize', resizeIframe)
-                .on([editor.iframe, editor.editorWindow, doc.documentElement], 'load', resizeIframe)
-                .on(doc, 'readystatechange DOMContentLoaded', resizeIframe);
-        }
+                .on(editor.editorWindow, 'mousedown click mouseup mousemove scroll', (e: Event) => {
+                    editor.events && editor.events.fire && editor.events.fire(window, e);
+                });
 
-        css(editor.editor, 'minHeight', editor.options.minHeight);
-
-
-        (function(e){
-            e.matches || (e.matches = Element.prototype.matches); // fix inside iframe polifill
-        })((<any>editor.editorWindow).Element.prototype);
-
-        //throw events in our word
-        editor.events
-            .on(editor.editorWindow, 'mousedown click mouseup mousemove scroll', (e: Event) => {
-                editor.events && editor.events.fire && editor.events.fire(window, e);
-            });
-
-        return false;
-    });
+            return false;
+        });
 }

@@ -421,6 +421,7 @@ export class Config {
     buttons: Array<string|ControlType> = [
         'source', '|',
         'bold',
+        'strikethrough',
         'italic', '|',
         'ul',
         'ol', '|',
@@ -437,8 +438,9 @@ export class Config {
         'undo', 'redo', '|',
         'hr',
         'eraser',
+        'copyformat', '|',
         'fullsize',
-        'copyformat',
+        'print',
         'about'
     ];
 
@@ -518,6 +520,25 @@ export class Config {
     textIcons: boolean = false;
 }
 Config.prototype.controls = {
+    print: <ControlType>{
+        exec: (editor: Jodit) => {
+            const mywindow: Window | null = window.open('', 'PRINT');
+
+            if (mywindow) {
+                if (editor.options.iframe) {
+                    editor.events.fire('generateDocumentStructure.iframe', mywindow.document);
+                    mywindow.document.body.innerHTML = editor.getEditorValue();
+                } else {
+                    mywindow.document.write(`<html><head><title></title></head><body>${editor.getEditorValue()}</body></html>`);
+                    mywindow.document.close();
+                }
+                mywindow.focus();
+
+                mywindow.print();
+                mywindow.close();
+            }
+        }
+    },
     about: <ControlType>{
         exec: (editor: Jodit) => {
             const dialog: any = editor.getInstance('Dialog');
