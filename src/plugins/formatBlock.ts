@@ -7,13 +7,33 @@
 import {Jodit} from '../Jodit';
 import {Dom} from "../modules/Dom";
 import * as consts from '../constants';
-import {ControlType} from "../modules/Toolbar";
+import {ButtonType, ControlType, Toolbar} from "../modules/Toolbar";
 import {Config} from "../Config";
+import {css} from "../modules/Helpers";
 
 Config.prototype.controls.paragraph = <ControlType>{
     command: 'formatBlock',
+    getLabel: (editor: Jodit, btn: ControlType, button: ButtonType): boolean => {
+        const current: Node|false = editor.selection.current();
+
+        if (current && editor.options.textIcons) {
+            const currentBox: HTMLElement = <HTMLElement>Dom.closest(current, Dom.isBlock, editor.editor) || editor.editor,
+                currentValue: string = currentBox.nodeName.toLowerCase();
+
+            if (btn.data && btn.data.currentValue !== currentValue && btn.list && (<any>btn.list)[currentValue]) {
+                button.container.innerHTML = `<span>${(<any>btn.list)[currentValue]}</span>`;
+                (<HTMLElement>button.container.firstChild).classList.add('jodit_icon');
+                btn.data.currentValue = currentValue;
+            }
+        }
+
+        return false;
+    },
     exec: (editor: Jodit, event, control: ControlType) => {
         editor.execCommand(<string>control.command, false, control.args ? control.args[0] : undefined);
+    },
+    data: {
+        currentValue: 'left'
     },
     list: {
         p : "Normal",

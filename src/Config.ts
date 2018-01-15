@@ -422,6 +422,7 @@ export class Config {
         'source', '|',
         'bold',
         'strikethrough',
+        'underline',
         'italic', '|',
         'ul',
         'ol', '|',
