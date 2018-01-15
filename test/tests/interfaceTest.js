@@ -404,6 +404,15 @@ describe('Test interface', function() {
             });
         });
         describe('Buttons', function () {
+            describe('Text mode', function () {
+                it('Should create buttons with text', function () {
+                    var editor = new Jodit('#table_editor_interface', {
+                        textIcons: true
+                    });
+                    expect(editor.container.querySelectorAll('.jodit_toolbar_btn-source').length).to.be.equal(1);
+                    expect(editor.container.querySelectorAll('.jodit_toolbar_btn-source svg').length).to.be.equal(0);
+                });
+            });
             it('Remove default buttons functionality', function() {
                 var editor = new Jodit('#table_editor_interface');
                 expect(editor.container.querySelectorAll('.jodit_toolbar_btn-source').length).to.equal(1);

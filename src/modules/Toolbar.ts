@@ -74,6 +74,8 @@ export type ControlType = {
      */
     isDisable?: (editor: Jodit, btn: ControlType, button?: ButtonType) => boolean,
 
+    getLabel?: (editor: Jodit, btn: ControlType, button?: ButtonType) => boolean,
+
     /**
      * Drop-down list. A hash or array. You must specify the command which will be submitted for the hash key (or array value) (see .[[Jodit.execCommand]] or define 'exec' function. See example
      * @example
@@ -192,6 +194,7 @@ export type ControlType = {
 
 export type ButtonType = {
     btn: HTMLLIElement,
+    container: HTMLSpanElement,
     control: ControlType,
     name: string,
     canActionCallback?: Function
@@ -392,6 +395,10 @@ export class Toolbar extends Component{
 
             Toolbar.__toggleButton(button.btn, isDisabled);
 
+            if (typeof button.control.getLabel === 'function') {
+                button.control.getLabel(this.jodit, button.control, button);
+            }
+
             if (typeof button.control.isActive === 'function') {
                 button.btn.classList.toggle(active_class,  button.control.isActive(this.jodit, button.control, button));
             } else {
@@ -441,22 +448,10 @@ export class Toolbar extends Component{
     };
 
     private buttonList: ButtonType[] = [];
-    /**
-     *
-     */
-    addButton(item: string|ControlType, controlOption?: ControlType, content?: string, target?: HTMLElement): HTMLElement {
 
-        let control: ControlType = <ControlType>extend(true, {}, this.defaultControl, controlOption);
-
-        const btn: HTMLLIElement = <HTMLLIElement>dom('<li>' +
-                    '<a href="javascript:void(0)"></a>' +
-                    '<div class="jodit_tooltip"></div>' +
-                '</li>', this.jodit.ownerDocument),
-            name: string = typeof item === 'string' ? item : (item.name || 'empty'),
-            icon: string = typeof item === 'string' ? item : (item.icon || item.name || 'empty'),
-            a: HTMLAnchorElement|null = btn.querySelector('a');
-
-        let iconSVG: string|false;
+    private setLabel(item: string|ControlType, container: HTMLSpanElement, clearName: string, icon: string, control: ControlType, content?: string) {
+        let iconSVG: string|false,
+            name: string = typeof item === 'string' ? item : (item.name || 'empty');
 
         if (!this.jodit.options.textIcons) {
             iconSVG = Toolbar.getIcon(icon, '');
@@ -468,12 +463,43 @@ export class Toolbar extends Component{
             iconSVG = `<span>${name}</span>`;
         }
 
+        const iconElement: HTMLElement =  dom(<string>iconSVG, this.jodit.ownerDocument);
 
-        //btn.control =  control;
+        if (iconElement && iconElement.nodeType !== Node.TEXT_NODE) {
+            iconElement.classList.add('jodit_icon', 'jodit_icon_' + clearName);
+        }
+
+        if (container) {
+            container.appendChild(iconElement);
+        }
+
+        if (content !== undefined && content !== '' && container) {
+            container.innerHTML = content;
+        }
+
+        if (control.iconURL && container) {
+            container.style.backgroundImage =  'url(' + control.iconURL + ')'
+        }
+    }
+    /**
+     *
+     */
+    addButton(item: string|ControlType, controlOption?: ControlType, content?: string, target?: HTMLElement): HTMLElement {
+        let control: ControlType = <ControlType>extend(true, {}, this.defaultControl, controlOption);
+
+        const btn: HTMLLIElement = <HTMLLIElement>dom('<li class="jodit_toolbar_btn">' +
+                    '<a href="javascript:void(0)"><span></span></a>' +
+                    '<div class="jodit_tooltip"></div>' +
+                '</li>', this.jodit.ownerDocument),
+            name: string = typeof item === 'string' ? item : (item.name || 'empty'),
+            icon: string = typeof item === 'string' ? item : (item.icon || item.name || 'empty'),
+            a: HTMLAnchorElement = <HTMLAnchorElement>btn.querySelector('a');
+
 
         const clearName: string = name.replace(/[^a-zA-Z0-9]/g, '_');
 
-        btn.classList.add('jodit_toolbar_btn'); // fix for ie You can not simply add class and add second parameter
+        this.setLabel(item, <HTMLSpanElement>a.firstChild, clearName, icon, control, content);
+
         btn.classList.add('jodit_toolbar_btn-' + clearName);
 
         const canActionCallback: Function = (enable: boolean) => {
@@ -482,31 +508,13 @@ export class Toolbar extends Component{
 
         this.jodit.events.on(camelCase('can-' + clearName), canActionCallback);
 
-        let iconElement: HTMLElement =  dom(<string>iconSVG, this.jodit.ownerDocument);
-
-        if (iconElement && iconElement.nodeType !== Node.TEXT_NODE) {
-            iconElement.classList.add('jodit_icon', 'jodit_icon_' + clearName);
-        }
-
-        if (a) {
-            a.appendChild(iconElement);
-        }
-
         if (control === undefined || typeof(control) !== 'object') {
             control = {command: name};
-        }
-
-        if (content !== undefined && content !== '' && a) {
-            a.innerHTML = content;
         }
 
         if (control.list && a) {
             btn.classList.add('jodit_with_dropdownlist');
             a.appendChild(dom('<span class="jodit_with_dropdownlist-trigger"></span>', this.jodit.ownerDocument))
-        }
-
-        if (control.iconURL && a) {
-            a.style.backgroundImage =  'url(' + control.iconURL + ')'
         }
 
         if (btn) {
@@ -563,6 +571,7 @@ export class Toolbar extends Component{
         this.buttonList.push({
             control,
             btn,
+            container:  <HTMLSpanElement>a.firstChild,
             name,
             canActionCallback
         });
@@ -604,7 +613,7 @@ export class Toolbar extends Component{
                     }
                     break;
                 default:
-                    let control: string|ControlType = button;
+                    let control: string | ControlType = button;
 
                     lastBtnSeparator = false;
 
@@ -622,7 +631,6 @@ export class Toolbar extends Component{
                             command: control,
                             tooltip: control,
                         };
-                        //throw new Error('Need ControlType ' + control);
                     }
 
                     this.container.appendChild(this.addButton(button, <ControlType>control, '', target));

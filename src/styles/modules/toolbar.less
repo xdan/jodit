@@ -99,6 +99,7 @@
       & + .jodit_tooltip {
         opacity:0;
         visibility: hidden;
+        display: none;
         position:absolute;
         transition: opacity .4s linear;
         background: #727171;
@@ -124,6 +125,7 @@
       }
       &:hover + .jodit_tooltip {
         visibility: visible;
+        display: block;
         opacity:1;
       }
       &:active + .jodit_tooltip {
@@ -155,7 +157,7 @@
       }
     }
     &:active, &.jodit_active{
-      background-color: #ddd;
+      background-color: fade(#dddddd, 40);
       outline: none;
     }
 
