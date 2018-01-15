@@ -45,6 +45,9 @@ export default {
     'Insert': 'Insérer',
     'Insert table': 'Insérer un tableau',
 
+    'Decrease Indent': 'Diminuer le retrait',
+    'Increase Indent': 'Retrait plus',
+
     'Paint format': 'Cloner le format',
     'Change mode': 'Mode wysiwyg <-> code html',
 

@@ -45,6 +45,9 @@ export default {
     'Insert': 'Einfügen',
     'Insert table': 'Tabelle einfügen',
 
+    'Decrease Indent': 'Indent verringern',
+    'Increase Indent': 'Einrücken mehr',
+
     'Paint format': 'Format klonen',
     'Change mode': 'Änderungsmodus',
     

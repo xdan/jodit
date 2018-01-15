@@ -45,6 +45,9 @@ export default {
     'Insert': 'Вставить',
     'Insert table': 'Вставить таблицу',
 
+    'Decrease Indent': 'Уменьшить отступ',
+    'Increase Indent': 'Увеличить отступ',
+
     'Paint format': 'Формат краски',
     'Change mode': 'Источник',
 

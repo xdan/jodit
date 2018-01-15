@@ -850,6 +850,28 @@ describe('Test plugins', function () {
         });
     });
     describe('Indent plugin', function () {
+        describe('Check i18n tooltip', function () {
+            it('Should have different tooltip for each language', function () {
+                var area = appendTestArea();
+                var editor = new Jodit(area, {
+                    buttons: 'indent,outdent',
+                    language: 'en'
+                });
+                expect(null).to.be.not.equal(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-outdent .jodit_tooltip'));
+                var title = editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-outdent .jodit_tooltip').innerText;
+                editor.destruct();
+
+
+                var editor = new Jodit(area, {
+                    buttons: 'indent,outdent',
+                    language: 'ru'
+                });
+                expect(null).to.be.not.equal(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-outdent .jodit_tooltip'));
+
+                expect(title).to.be.not.equal(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-outdent .jodit_tooltip').innerText);
+
+            });
+        });
         it('Should set active outdent button if current container has marginLeft', function () {
             var area = appendTestArea();
             var editor = new Jodit(area, {
