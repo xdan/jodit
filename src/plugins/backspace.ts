@@ -76,12 +76,14 @@ export function backspace(editor: Jodit) {
                         editor.selection.setCursorIn(prevBox, false);
                     }
 
-                    const container: HTMLElement = <HTMLElement>Dom.up(range.startContainer, Dom.isBlock, editor.editor);
-                    const html: string = container.innerHTML.replace(consts.INVISIBLE_SPACE_REG_EXP, '');
+                    const container: HTMLElement | null = <HTMLElement | null>Dom.up(range.startContainer, Dom.isBlock, editor.editor);
 
-                    if ((!html.length || html == '<br>') && !Dom.isCell(container, editor.editorWindow) && container.parentNode) {
-                        container.parentNode.removeChild(container);
-                        return false;
+                    if (container) {
+                        const html: string = container.innerHTML.replace(consts.INVISIBLE_SPACE_REG_EXP, '');
+                        if ((!html.length || html == '<br>') && !Dom.isCell(container, editor.editorWindow) && container.parentNode) {
+                            container.parentNode.removeChild(container);
+                            return false;
+                        }
                     }
                 }
             }

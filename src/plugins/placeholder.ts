@@ -115,6 +115,11 @@ export function placeholder(this: any, editor: Jodit) {
 
     const placeholder: HTMLElement = dom('<span style="display: none;" class="jodit_placeholder">' + editor.i18n(editor.options.placeholder) + '</span>', editor.ownerDocument);
 
+    if (editor.options.direction === 'rtl') {
+        placeholder.style.right = '0px';
+        placeholder.style.direction = 'rtl';
+    }
+
     if (editor.options.useInputsPlaceholder && editor.element.hasAttribute('placeholder')) {
         placeholder.innerHTML = editor.element.getAttribute('placeholder') || '';
     }
