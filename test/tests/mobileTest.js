@@ -5,13 +5,49 @@ describe('Test mobile mode', function () {
     describe('Toollbar', function () {
         it('Should have different count buttons for different container sizes', function () {
             getBox().style.width = '1000px';
-            var editor = new Jodit(editor_mobile_test);
+            var editor = new Jodit(editor_mobile_test, {
+                buttons: [
+                    'source',
+                    '|',
+                    'bold',
+                    'strikethrough',
+                    'underline',
+                    'italic',
+                    '|',
+                    'ul',
+                    'ol',
+                    '|',
+                    'outdent', 'indent',
+                    '|',
+                    'font',
+                    'fontsize',
+                    'brush',
+                    'paragraph',
+                    '|',
+                    'image',
+                    'video',
+                    'table',
+                    'link',
+                    '|',
+                    'align', 'undo', 'redo',
+                    '|',
+                    'hr',
+                    'eraser',
+                    'copyformat',
+                    '|',
+                    'symbol',
+                    'fullsize',
+                    'print',
+                    'about'
+                ]
+            });
+
             expect(27).to.be.below(editor.container.querySelectorAll('.jodit_toolbar > li').length);
 
             getBox().style.width = '790px';
             simulateEvent('resize', 0, window)
 
-            expect(27).to.be.above(editor.container.querySelectorAll('.jodit_toolbar > li').length);
+            expect(28).to.be.above(editor.container.querySelectorAll('.jodit_toolbar > li').length);
 
             getBox().style.width = '690px';
             simulateEvent('resize', 0, window)

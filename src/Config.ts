@@ -466,7 +466,8 @@ export class Config {
         'hr',
         'eraser',
         'copyformat',
-        'fullsize'
+        'fullsize',
+        'dots'
     ];
 
     /**
