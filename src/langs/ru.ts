@@ -47,6 +47,7 @@ export default {
 
     'Decrease Indent': 'Уменьшить отступ',
     'Increase Indent': 'Увеличить отступ',
+    'Select Special Character': 'Выберите специальный символ',
 
     'Paint format': 'Формат краски',
     'Change mode': 'Источник',

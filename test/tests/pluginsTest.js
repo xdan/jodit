@@ -1019,7 +1019,7 @@ describe('Test plugins', function () {
                         data.target = currentActive;
                     });
 
-                    expect(editor.ownerDocument.activeElement).to.be.equal(dialog.getElementsByTagName('a')[10]);
+                    expect(editor.ownerDocument.activeElement).to.be.equal(dialog.getElementsByTagName('a')[13]);
 
 
                     currentActive = dialog.getElementsByTagName('a')[10];
@@ -1028,7 +1028,7 @@ describe('Test plugins', function () {
                         data.target = currentActive;
                     });
 
-                    expect(editor.ownerDocument.activeElement).to.be.equal(dialog.getElementsByTagName('a')[190]);
+                    expect(editor.ownerDocument.activeElement).to.be.equal(dialog.getElementsByTagName('a')[197]);
                 });
             });
             describe('Press key bottom', function () {
@@ -1052,16 +1052,16 @@ describe('Test plugins', function () {
                         data.target = currentActive;
                     });
 
-                    expect(editor.ownerDocument.activeElement).to.be.equal(dialog.getElementsByTagName('a')[50]);
+                    expect(editor.ownerDocument.activeElement).to.be.equal(dialog.getElementsByTagName('a')[47]);
 
 
-                    currentActive = dialog.getElementsByTagName('a')[190];
+                    currentActive = dialog.getElementsByTagName('a')[200];
 
                     simulateEvent('keydown', Jodit.KEY_BOTTOM, currentActive, function (data) {
                         data.target = currentActive;
                     });
 
-                    expect(editor.ownerDocument.activeElement).to.be.equal(dialog.getElementsByTagName('a')[10]);
+                    expect(editor.ownerDocument.activeElement).to.be.equal(dialog.getElementsByTagName('a')[13]);
                 });
             });
             describe('Press Enter or mousdown on element', function () {
@@ -1097,6 +1097,34 @@ describe('Test plugins', function () {
                     expect('&amp;½test').to.be.equal(editor.getEditorValue());
 
                 });
+            });
+        });
+        describe('Symbols popup', function () {
+            it('Should create popup this symbols', function () {
+                var area = appendTestArea();
+                var editor = new Jodit(area, {
+                    buttons: 'symbol',
+                    usePopupForSpecialCharacters: true
+                });
+                editor.setEditorValue('test');
+
+                var btn = editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-symbol');
+                expect(null).to.be.not.equal(btn);
+
+                simulateEvent('mousedown', 0, btn);
+                var dialog = editor.ownerDocument.querySelector('.jodit_dialog_box.active.jodit_modal .jodit_dialog_content .jodit_symbols');
+                expect(null).to.be.equal(dialog);
+
+                var popup = editor.container.querySelector('.jodit_toolbar_popup');
+                expect(null).to.be.not.equal(popup);
+                expect('block').to.be.equal(popup.style.display);
+
+                var currentActive = popup.getElementsByTagName('a')[125];
+
+                simulateEvent('mousedown', 0, currentActive);
+
+                expect('½test').to.be.equal(editor.getEditorValue());
+                expect('block').to.be.not.equal(popup.style.display);
             });
         });
     });

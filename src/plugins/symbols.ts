@@ -6,7 +6,7 @@
 
 import {Jodit} from "../Jodit";
 import {Config} from "../Config";
-import {ButtonType, ControlType} from "../modules/Toolbar";
+import {ControlType} from "../modules/Toolbar";
 import {Alert, Dialog} from "../modules/Dialog";
 import {dom} from "../modules/Helpers";
 import {KEY_BOTTOM, KEY_ENTER, KEY_LEFT, KEY_RIGHT, KEY_TOP} from "../constants";
@@ -14,8 +14,11 @@ import {KEY_BOTTOM, KEY_ENTER, KEY_LEFT, KEY_RIGHT, KEY_TOP} from "../constants"
 declare module "../Config" {
     interface Config {
         specialCharacters: string[],
+        usePopupForSpecialCharacters: boolean,
     }
 }
+
+Config.prototype.usePopupForSpecialCharacters = false;
 
 Config.prototype.specialCharacters = [
     '!', '&quot;', '#', '$', '%', '&amp;', "'", '(', ')', '*', '+', '-', '.', '/',
@@ -44,15 +47,23 @@ Config.prototype.specialCharacters = [
 
 Config.prototype.controls.symbol = <ControlType> {
     icon: 'omega',
-    exec: (editor: Jodit) => {
+    popup: (editor: Jodit, current: Node|false, control: ControlType, close: Function): any => {
         const container : HTMLElement | undefined = editor.events.fire('generateSpecialCharactersTable.symbols');
         if (container) {
-            const dialog: Dialog = Alert(container, editor.i18n('Select Special Character'), void(0), 'jodit_symbols');
-            const a: HTMLAnchorElement | null = container.querySelector('a');
-            a && a.focus();
-            editor.events.on('beforeDestruct', () => {
-                dialog && dialog.close();
-            });
+            if (editor.options.usePopupForSpecialCharacters) {
+                const box: HTMLDivElement = editor.ownerDocument.createElement('div');
+                box.classList.add('jodit_symbols')
+                box.appendChild(container);
+                editor.events.on(container, 'close_dialog', close);
+                return box;
+            } else {
+                const dialog: Dialog = Alert(container, editor.i18n('Select Special Character'), void(0), 'jodit_symbols');
+                const a: HTMLAnchorElement | null = container.querySelector('a');
+                a && a.focus();
+                editor.events.on('beforeDestruct', () => {
+                    dialog && dialog.close();
+                });
+            }
         }
     }
 };
@@ -61,17 +72,20 @@ Config.prototype.controls.symbol = <ControlType> {
  * The plugin inserts characters that are not part of the standard keyboard.
  */
 export class symbols {
-    private countInRow: number = 20;
+    private countInRow: number = 17;
+
     constructor(editor: Jodit) {
         editor.events
             .on('generateSpecialCharactersTable.symbols', () => {
-                const container: HTMLDivElement = editor.ownerDocument.createElement('div'),
-                    // dialog: Dialog = new Dialog(editor),
-                    table: HTMLTableElement = <HTMLTableElement>dom('<table><tbody></tbody></table>', editor.ownerDocument),
+                const container: HTMLDivElement = <HTMLDivElement>dom('<div class="jodit_symbols-container">' +
+                        '<div class="jodit_symbols-container_table"><table><tbody></tbody></table></div>' +
+                        '<div class="jodit_symbols-container_preview"><div class="jodit_symbols-preview"></div></div>' +
+                    '</div>', editor.ownerDocument),
+
+                    preview: HTMLDivElement = <HTMLDivElement>container.querySelector('.jodit_symbols-preview'),
+                    table: HTMLTableElement = <HTMLTableElement>container.querySelector('table'),
                     body: HTMLTableSectionElement = table.tBodies[0],
                     chars: HTMLAnchorElement[] = [];
-
-                container.classList.add('jodit_symbols-container')
 
                 for (let i: number = 0; i < editor.options.specialCharacters.length;) {
                     const tr: HTMLTableRowElement = editor.ownerDocument.createElement('tr');
@@ -86,9 +100,12 @@ export class symbols {
                     body.appendChild(tr);
                 }
 
-                container.appendChild(table);
+                const self: symbols = this;
 
                 editor.events
+                    .on(chars, 'focus', function (this: HTMLAnchorElement, e: MouseEvent) {
+                        preview.innerHTML = this.innerHTML;
+                    })
                     .on(chars, 'mousedown', function (this: HTMLAnchorElement, e: MouseEvent) {
                         if (this && this.nodeName === 'A') {
                             editor.events.fire(this, 'close_dialog');
@@ -108,14 +125,15 @@ export class symbols {
                             let index: number = parseInt(target.getAttribute('data-index') || '0', 0),
                                 jIndex: number = parseInt(target.getAttribute('data-index-j') || '0', 0),
                                 newIndex: number;
+
                             switch (e.which) {
                                 case KEY_TOP:
                                 case KEY_BOTTOM:
-                                    newIndex = e.which === KEY_TOP ? index - this.countInRow : index + this.countInRow;
+                                    newIndex = e.which === KEY_TOP ? index - self.countInRow : index + self.countInRow;
                                     if (chars[newIndex] === undefined) {
-                                        newIndex = e.which === KEY_TOP ? Math.floor(chars.length / this.countInRow) * this.countInRow + jIndex : jIndex;
+                                        newIndex = e.which === KEY_TOP ? Math.floor(chars.length / self.countInRow) * self.countInRow + jIndex : jIndex;
                                         if (newIndex > chars.length - 1) {
-                                            newIndex -= this.countInRow;
+                                            newIndex -= self.countInRow;
                                         }
                                     }
 
@@ -127,17 +145,16 @@ export class symbols {
                                     if (chars[newIndex] === undefined) {
                                         newIndex = e.which === KEY_LEFT ? chars.length - 1 : 0;
                                     }
+
                                     chars[newIndex] && chars[newIndex].focus();
                                     break;
                                 case KEY_ENTER:
-                                    editor.events.fire(target, 'close_dialog');
-                                    editor.selection.insertHTML(target.innerHTML);
+                                    editor.events.fire(target, 'mousedown');
+                                    e.stopImmediatePropagation();
+                                    e.preventDefault();
                                     break;
                             }
                         }
-
-                        e.stopImmediatePropagation();
-                        e.preventDefault();
                     });
 
                 return container;

@@ -427,7 +427,7 @@ export class Dialog extends Component{
      * @return {boolean} - true window open
      */
     isOpened(): boolean {
-        return this.dialogbox.classList.contains('active');
+        return !this.__isDestructed && this.dialogbox.classList.contains('active');
     }
 
     private resizeble: boolean = false;
