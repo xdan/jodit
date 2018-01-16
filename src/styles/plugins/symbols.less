@@ -1,0 +1,30 @@
+.jodit_symbols {
+  width: auto;
+  padding: @padding-default;
+  table {
+    border: 0;
+    border-spacing: 0;
+    table-layout: fixed;
+    //width: 100%;
+    td {
+      padding: 0;
+      a {
+        font-size: 16px;
+        text-decoration: none;
+        color: @color-default;
+        display: inline-block;
+        box-sizing: border-box;
+        width: @width_element_default * 1.5;
+        height:@height_element_default * 1.5;
+        border: 1px solid transparent;
+        text-align: center;
+        line-height: @height_element_default * 1.5;
+        vertical-align: top;
+        &:hover,
+        &:focus {
+          border: 1px solid @color-border-selected;
+        }
+      }
+    }
+  }
+}

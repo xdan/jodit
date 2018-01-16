@@ -18,10 +18,12 @@ declare module "../Config" {
          * Use module {@link TableProcessor|TableProcessor}
          */
         useTableProcessor: boolean;
+        // useBootstrapClasses: boolean; TODO use this option
     }
 }
 
 Config.prototype.useTableProcessor = true;
+// Config.prototype.useBootstrapClasses = true;
 
 Config.prototype.controls.table = {
     cols: 10,
@@ -39,22 +41,26 @@ Config.prototype.controls.table = {
                 '<label>' +
                     '<span>1</span> &times; <span>1</span>' +
                 '</label>' +
+                '<p class="jodit_form-container"></p>' +
             '</form>', editor.ownerDocument),
 
 
             rows: HTMLSpanElement = form.querySelectorAll('span')[0],
             cols: HTMLSpanElement = form.querySelectorAll('span')[1],
+            blocksContainer: HTMLDivElement = <HTMLDivElement>form.querySelector('.jodit_form-container'),
             cells: HTMLDivElement[] = [];
 
         const generateRows = (need_rows: number) => {
             const cnt: number = (need_rows + 1) * default_cols_count;
+
             if (cells.length > cnt) {
                 for (i = cnt; i < cells.length; i += 1) {
-                    form.removeChild(cells[i]);
+                    blocksContainer.removeChild(cells[i]);
                     delete cells[i];
                 }
                 cells.length = cnt;
             }
+
             for (i = 0; i < cnt; i += 1) {
                 if (!cells[i]) {
                     div = editor.ownerDocument.createElement('div');
@@ -62,11 +68,12 @@ Config.prototype.controls.table = {
                     cells.push(div);
                 }
             }
+
             cells.forEach((cell: HTMLDivElement) => {
-                form.appendChild(cell);
+                blocksContainer.appendChild(cell);
             });
 
-            form.style.width = (cells[0].offsetWidth * default_cols_count) + 'px';
+            blocksContainer.style.width = (cells[0].offsetWidth * default_cols_count) + 'px';
         };
 
         generateRows(1);
@@ -102,10 +109,10 @@ Config.prototype.controls.table = {
             rows.innerText = rows_count.toString();
         };
 
-        form.addEventListener('mousemove', mouseenter);
+        blocksContainer.addEventListener('mousemove', mouseenter);
 
         editor.events
-            .on(form, 'touchstart mousedown', (e: MouseEvent) => {
+            .on(blocksContainer, 'touchstart mousedown', (e: MouseEvent) => {
                 const div: HTMLDivElement = <HTMLDivElement>e.target;
                 e.preventDefault();
                 e.stopImmediatePropagation();

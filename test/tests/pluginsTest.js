@@ -916,6 +916,190 @@ describe('Test plugins', function () {
             });
         });
     });
+    describe('Symbols plugin', function () {
+        it('Should create symbol button in toolbar and after click open dialog with symbols', function () {
+            var area = appendTestArea();
+            var editor = new Jodit(area, {
+                buttons: 'symbol',
+            });
+            editor.setEditorValue('test');
+
+            var btn = editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-symbol');
+            expect(null).to.be.not.equal(btn);
+
+            simulateEvent('mousedown', 0, btn);
+            var dialog = editor.ownerDocument.querySelector('.jodit_dialog_box.active.jodit_modal .jodit_dialog_content .jodit_symbols');
+            expect(null).to.be.not.equal(dialog);
+
+        });
+        describe('Symbols dialog', function () {
+            it('Should have focus on first element after open', function () {
+                var area = appendTestArea();
+                var editor = new Jodit(area, {
+                    buttons: 'symbol',
+                });
+                editor.setEditorValue('test');
+
+                var btn = editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-symbol');
+                expect(null).to.be.not.equal(btn);
+
+                simulateEvent('mousedown', 0, btn);
+                var dialog = editor.ownerDocument.querySelector('.jodit_dialog_box.active.jodit_modal .jodit_dialog_content .jodit_symbols');
+                expect(null).to.be.not.equal(dialog);
+
+
+                expect(dialog.querySelector('a')).to.be.equal(editor.ownerDocument.activeElement);
+            });
+            describe('Press key left', function () {
+                it('Should select previous element', function () {
+                    var area = appendTestArea();
+                    var editor = new Jodit(area, {
+                        buttons: 'symbol',
+                    });
+                    editor.setEditorValue('test');
+
+                    var btn = editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-symbol');
+                    expect(null).to.be.not.equal(btn);
+
+                    simulateEvent('mousedown', 0, btn);
+                    var dialog = editor.ownerDocument.querySelector('.jodit_dialog_box.active.jodit_modal .jodit_dialog_content .jodit_symbols');
+                    expect(null).to.be.not.equal(dialog);
+
+                    var currentActive = dialog.getElementsByTagName('a')[10];
+
+                    simulateEvent('keydown', Jodit.KEY_LEFT, currentActive, function (data) {
+                        data.target = currentActive;
+                    });
+
+                    expect(editor.ownerDocument.activeElement).to.be.equal(dialog.getElementsByTagName('a')[9]);
+                });
+            });
+            describe('Press key right', function () {
+                it('Should select next element', function () {
+                    var area = appendTestArea();
+                    var editor = new Jodit(area, {
+                        buttons: 'symbol',
+                    });
+                    editor.setEditorValue('test');
+
+                    var btn = editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-symbol');
+                    expect(null).to.be.not.equal(btn);
+
+                    simulateEvent('mousedown', 0, btn);
+                    var dialog = editor.ownerDocument.querySelector('.jodit_dialog_box.active.jodit_modal .jodit_dialog_content .jodit_symbols');
+                    expect(null).to.be.not.equal(dialog);
+
+                    var currentActive = dialog.getElementsByTagName('a')[10];
+
+                    simulateEvent('keydown', Jodit.KEY_RIGHT, currentActive, function (data) {
+                        data.target = currentActive;
+                    });
+
+                    expect(editor.ownerDocument.activeElement).to.be.equal(dialog.getElementsByTagName('a')[11]);
+                });
+            });
+            describe('Press key top', function () {
+                it('Should select element above', function () {
+                    var area = appendTestArea();
+                    var editor = new Jodit(area, {
+                        buttons: 'symbol',
+                    });
+                    editor.setEditorValue('test');
+
+                    var btn = editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-symbol');
+                    expect(null).to.be.not.equal(btn);
+
+                    simulateEvent('mousedown', 0, btn);
+                    var dialog = editor.ownerDocument.querySelector('.jodit_dialog_box.active.jodit_modal .jodit_dialog_content .jodit_symbols');
+                    expect(null).to.be.not.equal(dialog);
+
+                    var currentActive = dialog.getElementsByTagName('a')[30];
+
+                    simulateEvent('keydown', Jodit.KEY_TOP, currentActive, function (data) {
+                        data.target = currentActive;
+                    });
+
+                    expect(editor.ownerDocument.activeElement).to.be.equal(dialog.getElementsByTagName('a')[10]);
+
+
+                    currentActive = dialog.getElementsByTagName('a')[10];
+
+                    simulateEvent('keydown', Jodit.KEY_TOP, currentActive, function (data) {
+                        data.target = currentActive;
+                    });
+
+                    expect(editor.ownerDocument.activeElement).to.be.equal(dialog.getElementsByTagName('a')[190]);
+                });
+            });
+            describe('Press key bottom', function () {
+                it('Should select element below', function () {
+                    var area = appendTestArea();
+                    var editor = new Jodit(area, {
+                        buttons: 'symbol',
+                    });
+                    editor.setEditorValue('test');
+
+                    var btn = editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-symbol');
+                    expect(null).to.be.not.equal(btn);
+
+                    simulateEvent('mousedown', 0, btn);
+                    var dialog = editor.ownerDocument.querySelector('.jodit_dialog_box.active.jodit_modal .jodit_dialog_content .jodit_symbols');
+                    expect(null).to.be.not.equal(dialog);
+
+                    var currentActive = dialog.getElementsByTagName('a')[30];
+
+                    simulateEvent('keydown', Jodit.KEY_BOTTOM, currentActive, function (data) {
+                        data.target = currentActive;
+                    });
+
+                    expect(editor.ownerDocument.activeElement).to.be.equal(dialog.getElementsByTagName('a')[50]);
+
+
+                    currentActive = dialog.getElementsByTagName('a')[190];
+
+                    simulateEvent('keydown', Jodit.KEY_BOTTOM, currentActive, function (data) {
+                        data.target = currentActive;
+                    });
+
+                    expect(editor.ownerDocument.activeElement).to.be.equal(dialog.getElementsByTagName('a')[10]);
+                });
+            });
+            describe('Press Enter or mousdown on element', function () {
+                it('Should insert character', function () {
+                    var area = appendTestArea();
+                    var editor = new Jodit(area, {
+                        buttons: 'symbol',
+                    });
+
+                    editor.setEditorValue('test');
+
+                    var btn = editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-symbol');
+                    expect(null).to.be.not.equal(btn);
+
+                    simulateEvent('mousedown', 0, btn);
+                    var dialog = editor.ownerDocument.querySelector('.jodit_dialog_box.active.jodit_modal .jodit_dialog_content .jodit_symbols');
+                    expect(null).to.be.not.equal(dialog);
+
+                    var currentActive = dialog.getElementsByTagName('a')[5];
+
+                    simulateEvent('keydown', Jodit.KEY_ENTER, currentActive);
+
+                    expect('&amp;test').to.be.equal(editor.getEditorValue());
+
+                    simulateEvent('mousedown', 0, btn);
+                    dialog = editor.ownerDocument.querySelector('.jodit_dialog_box.active.jodit_modal .jodit_dialog_content .jodit_symbols');
+                    expect(null).to.be.not.equal(dialog);
+
+                    var currentActive = dialog.getElementsByTagName('a')[125];
+
+                    simulateEvent('mousedown', 0, currentActive);
+
+                    expect('&amp;½test').to.be.equal(editor.getEditorValue());
+
+                });
+            });
+        });
+    });
     after(function() {
         editor_plugins_test.parentNode.removeChild(editor_plugins_test);
     });

@@ -74,7 +74,7 @@ export type ControlType = {
      */
     isDisable?: (editor: Jodit, btn: ControlType, button?: ButtonType) => boolean,
 
-    getLabel?: (editor: Jodit, btn: ControlType, button?: ButtonType) => boolean,
+    getLabel?: (editor: Jodit, btn: ControlType, button?: ButtonType) => boolean | void,
 
     /**
      * Drop-down list. A hash or array. You must specify the command which will be submitted for the hash key (or array value) (see .[[Jodit.execCommand]] or define 'exec' function. See example
@@ -456,8 +456,12 @@ export class Toolbar extends Component{
         if (!this.jodit.options.textIcons) {
             iconSVG = Toolbar.getIcon(icon, '');
 
+            if (iconSVG === '' && typeof control.icon === 'string') {
+                iconSVG = Toolbar.getIcon(control.icon, '');
+            }
+
             if (iconSVG === '') {
-                iconSVG = Toolbar.getIcon(typeof control.name === 'string' ? control.name : 'empty');
+                iconSVG = Toolbar.getIcon( typeof control.name === 'string' ? control.name : 'empty', '');
             }
         } else {
             iconSVG = `<span>${name}</span>`;

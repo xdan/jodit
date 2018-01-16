@@ -67,13 +67,14 @@ import * as video from  "./video.svg";
 import * as outdent from  "./outdent.svg";
 import * as indent from  "./indent.svg";
 import * as print from  "./print.svg";
+import * as omega from  "./omega.svg";
 
 export {
     about,addcolumn,addrow,angle_left,angle_right,angle_down,angle_up,arrows_alt,
     arrows_h,attachment,bin,bold,brush,cancel,center,chain_broken,
     check_square,check,copyformat,crop,dedent,dots,enter,eraser,eye,
     folder,font,fontsize,fullsize,hr,image,
-    info_circle,indent,italic,justify,left,link,lock,menu,merge,ol,outdent,paragraph,
+    info_circle,indent,italic,justify,left,link,lock,menu,merge,ol,omega,outdent,paragraph,
     pencil,plus,print,redo,resize,resizer,right,save,shrink,source,splitg,splitv,
     strikethrough,table,th_list,th,ul,underline,undo,unlink,unlock,update,
     upload,valign,video

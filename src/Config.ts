@@ -439,6 +439,7 @@ export class Config {
         'hr',
         'eraser',
         'copyformat', '|',
+        'symbol',
         'fullsize',
         'print',
         'about'

@@ -32,6 +32,7 @@ export {redoundo} from "./redoundo";
 export {resizer} from "./resizer";
 export {size} from "./size";
 export {source} from "./source";
+export {symbols} from "./symbols";
 export {TableProcessor as table} from "./table";
 export {tableKeyboardNavigation} from "./tableKeyboardNavigation";
 export {search} from "./search";

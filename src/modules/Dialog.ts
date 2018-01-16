@@ -531,6 +531,7 @@ export class Dialog extends Component{
         }
     }
 
+    private __isDestructed: boolean = false;
     /**
      * It destroys all objects created for the windows and also includes all the handlers for the window object
      */
@@ -541,6 +542,7 @@ export class Dialog extends Component{
 
         delete this.dialogbox;
         this.events.destruct();
+        this.__isDestructed = true;
     }
 
     /**
@@ -565,6 +567,9 @@ export class Dialog extends Component{
      * ```
      */
     close = (e?: MouseEvent) => {
+        if (this.__isDestructed) {
+            return;
+        }
         if (e) {
             e.stopImmediatePropagation();
             e.preventDefault();
@@ -581,7 +586,7 @@ export class Dialog extends Component{
         }
 
 
-        this.dialogbox.classList.remove('active');
+        this.dialogbox.classList && this.dialogbox.classList.remove('active');
 
         if (this.iSetMaximization) {
             this.maximization(false);
@@ -639,15 +644,15 @@ export class Dialog extends Component{
  * });
  * ```
  */
-export const Alert = (msg: string, title?: string|Function, callback?: Function): Dialog => {
+export const Alert = (msg: string | HTMLElement, title?: string|Function, callback?: Function, className: string = 'jodit_alert'): Dialog => {
     if (typeof title === 'function') {
         callback = title;
         title = undefined;
     }
 
     const dialog: Dialog = new Dialog(),
-        $div: HTMLDivElement = <HTMLDivElement>dom('<div class="jodit_alert"></div>', dialog.document),
-        $ok: HTMLAnchorElement = <HTMLAnchorElement>dom('<a href="javascript:void(0)" style="float:left;" class="jodit_button">' + Toolbar.getIcon('cancel') + '<span>' + Jodit.prototype.i18n('Ok') + '</span></a>', dialog.document);
+        $div: HTMLDivElement = <HTMLDivElement>dom('<div class="' + className + '"></div>', dialog.document),
+        $ok: HTMLAnchorElement = <HTMLAnchorElement>dom('<a href="javascript:void(0)" style="float:right;" class="jodit_button">' + Toolbar.getIcon('cancel') + '<span>' + Jodit.prototype.i18n('Ok') + '</span></a>', dialog.document);
 
     $div.appendChild(dom(msg, dialog.document));
 

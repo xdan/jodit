@@ -50,3 +50,39 @@
     }
   }
 }
+
+.jodit_form_inserter{
+  .jodit_form-container {
+    padding: 0;
+    margin: 0;
+    min-width:190px;
+    > div {
+      width: @width_element_default;
+      height:@height_element_default;
+      display:inline-block;
+      position:relative;
+      &:after{
+        content:'';
+        position:absolute;
+        top:0px;
+        left:0px;
+        display:inline-block;
+        width: 12px;
+        height:12px;
+        border:1px solid #ccc;
+      }
+      &.hovered:after{
+        background: @hovered_bg;
+        border: solid 1px @active_border;
+      }
+    }
+  }
+
+  label {
+    text-align: center;
+    font-size: 14px;
+    padding: 8px;
+    display:block;
+    margin:0;
+  }
+}
