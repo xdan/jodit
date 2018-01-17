@@ -210,9 +210,16 @@ export class EventsNative {
             };
 
         if (isDOMElement) {
-            syntheticCallback = function (this: any, event: MouseEvent|TouchEvent) {
+            syntheticCallback = function (this: any, event: MouseEvent | TouchEvent) {
                 self.prepareEvent(<TouchEvent>event);
-                return callback && callback.call(this, event);
+
+                if (callback && callback.call(this, event) === false) {
+                    event.preventDefault();
+                    event.stopImmediatePropagation();
+                    return false;
+                }
+
+                return;
             };
             if (selector) {
                 syntheticCallback = function (this: any, event: TouchEvent|MouseEvent): false | void {

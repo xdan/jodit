@@ -588,6 +588,44 @@ describe('Commands Jodit Editor Tests', function() {
             expect(editor.getEditorValue()).to.equal('<h1 style="text-align: justify;">test some text <span>test</span></h1>');
         });
     });
+
+    describe('Register sustom command', function () {
+        it('Should register command and hotkeys for it', function () {
+            var editor = new Jodit('#tested_area');
+
+            editor.setEditorValue('test test test')
+            var range = editor.editorDocument.createRange();
+            range.setStart(editor.editor.firstChild, 4);
+            range.setEnd(editor.editor.firstChild, 8);
+            editor.selection.selectRange(range);
+
+            editor.registerCommand('someCommand', function () {
+               this.setEditorValue('stop');
+            });
+
+            expect('stop').to.be.not.equal(editor.getEditorValue());
+
+            editor.execCommand('someCommand');
+            expect('stop').to.be.equal(editor.getEditorValue());
+
+
+            editor.registerCommand('someCommands', {
+                hotkeys: 'ctrl+d',
+                exec: function () {
+                    this.setEditorValue('even');
+                }
+            });
+
+
+            expect('even').to.be.not.equal(editor.getEditorValue());
+            // ctrl+d
+            simulateEvent('keydown', 68, editor.editor, function (data) {
+                // data.shiftKey = true;
+                data.ctrlKey = true;
+            });
+            expect('even').to.be.equal(editor.getEditorValue());
+        });
+    });
     after(function() {
         tested_area.parentNode.removeChild(tested_area);
     });

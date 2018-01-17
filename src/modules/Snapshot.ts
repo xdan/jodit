@@ -128,6 +128,7 @@ export class Snapshot extends Component {
         return first.html === second.html && JSON.stringify(first.range) === JSON.stringify(second.range);
     }
 
+    public isBlocked: boolean = false;
     /**
      * Restores the state of the editor of the picture. Rebounding is not only html but selected text
      *
@@ -135,6 +136,7 @@ export class Snapshot extends Component {
      * @see make
      */
     restore (snapshot: SnapshotType) {
+        this.isBlocked = true;
         this.jodit.setEditorValue(snapshot.html);
 
         try {
@@ -151,5 +153,7 @@ export class Snapshot extends Component {
         } catch(__ignore) {
 
         }
+
+        this.isBlocked = false;
     }
 }

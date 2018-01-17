@@ -427,13 +427,6 @@ export class search extends Component {
                                 e.preventDefault();
                             }
                             break;
-                        case  consts.KEY_R:
-                        case  consts.KEY_F:
-                            if (ctrlKey(e)) {
-                                this.open(e.which === consts.KEY_R);
-                                e.preventDefault();
-                            }
-                            break;
                     }
                 })
                 .on('beforeSetMode', () => {
@@ -455,9 +448,30 @@ export class search extends Component {
                 .on('searchNext searchPrevious', () => {
                     return self.findAndSelect(editor.selection.current() || editor.editor.firstChild, self.queryInput.value, editor.events.current === 'searchNext');
                 })
-                .on('search', (value: string, startNode?: Node, next: boolean = true) => {
-                    self.findAndSelect(startNode || self.jodit.editor.firstChild, value, next);
+                .on('search', (value: string, next: boolean = true) => {
+                    editor.execCommand('search', value, next);
                 });
+
+            editor.registerCommand('search', {
+                exec: (command: string, value: string, next: boolean = true) => {
+                    self.findAndSelect(editor.selection.current() || editor.editor.firstChild, value, next);
+                    return false;
+                }
+            });
+            editor.registerCommand('openSearchDialog', {
+                exec: () => {
+                    self.open();
+                    return false;
+                },
+                hotkeys: 'ctrl+f'
+            });
+            editor.registerCommand('openReplaceDialog', {
+                exec: () => {
+                    self.open(true);
+                    return false;
+                },
+                hotkeys: 'ctrl+r'
+            });
         }
     }
 }

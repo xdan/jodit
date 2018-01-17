@@ -175,6 +175,7 @@ export function cleanHTML(editor: Jodit) {
             }
         });
     }
+
     editor.events.on('afterCommand', function (command: string) {
         let sel: Select = editor.selection,
             hr,

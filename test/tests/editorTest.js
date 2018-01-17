@@ -289,11 +289,23 @@ describe('Jodit Editor Tests', function() {
             editor.setEditorValue('<div>Test<div>');
             expect(editor.editor.innerHTML).to.be.equal('<div>Test<div></div></div>');
         });
-        it('Hide placeholder', function () {
-            var area = appendTestArea();
-            var editor = new Jodit(area);
-            editor.setEditorValue('<div>Test<div>');
-            expect(editor.container.querySelectorAll('.jodit_placeholder').length && editor.container.querySelector('.jodit_placeholder').style.display === 'none').to.be.equal(true);
+        describe('Placeholder', function () {
+            describe('After init on empty textarea', function () {
+                it('Should show placeholder', function () {
+                    var area = appendTestArea();
+                    area.value = '';
+                    var editor = new Jodit(area);
+                    expect(editor.container.querySelectorAll('.jodit_placeholder').length && editor.container.querySelector('.jodit_placeholder').style.display === 'block').to.be.equal(true);
+                });
+            });
+            describe('After init on not empty textarea', function () {
+                it('Should hide placeholder', function () {
+                    var area = appendTestArea();
+                    area.value = '111';
+                    var editor = new Jodit(area);
+                    expect(editor.container.querySelectorAll('.jodit_placeholder').length && editor.container.querySelector('.jodit_placeholder').style.display === 'none').to.be.equal(true);
+                });
+            });
         });
         it('Show placeholder', function () {
             var area = appendTestArea();

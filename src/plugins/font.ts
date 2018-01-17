@@ -51,23 +51,23 @@ Config.prototype.controls.font = <ControlType>{
 
 
 export function font(editor: Jodit) {
-    editor.events.on('beforeCommand', (command: string, second: string, third: string): false | void => {
-        if (/font/.test(command)) {
-            switch (command) {
-                case 'fontsize':
-                    editor.selection.applyCSS({
-                        fontSize: normalizeSize(third)
-                    });
-                    break;
-                case 'fontname':
-                    editor.selection.applyCSS({
-                        fontFamily: third
-                    });
-                    break;
-            }
-
-            editor.setEditorValue();
-            return false;
+    const callback: Function = (command: string, second: string, third: string): false | void => {
+        switch (command) {
+            case 'fontsize':
+                editor.selection.applyCSS({
+                    fontSize: normalizeSize(third)
+                });
+                break;
+            case 'fontname':
+                editor.selection.applyCSS({
+                    fontFamily: third
+                });
+                break;
         }
-    });
+
+        editor.setEditorValue();
+        return false;
+    };
+    editor.registerCommand('fontsize', callback);
+    editor.registerCommand('fontname', callback);
 }

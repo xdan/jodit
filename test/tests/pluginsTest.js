@@ -237,6 +237,7 @@ describe('Test plugins', function () {
                                     url: 'https://xdsoft.net/jodit/connector/index.php'
                                 }
                             },
+                            disablePlugins: 'mobile'
                         });
                         editor.setEditorValue('<img src="https://xdsoft.net/jodit/files/th.jpg">');
 
@@ -1106,7 +1107,12 @@ describe('Test plugins', function () {
                     buttons: 'symbol',
                     usePopupForSpecialCharacters: true
                 });
+
                 editor.setEditorValue('test');
+                var range = editor.editorDocument.createRange();
+                range.setStart(editor.editor.firstChild, 0);
+                range.collapse(true)
+                editor.selection.selectRange(range)
 
                 var btn = editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-symbol');
                 expect(null).to.be.not.equal(btn);
@@ -1125,6 +1131,124 @@ describe('Test plugins', function () {
 
                 expect('½test').to.be.equal(editor.getEditorValue());
                 expect('block').to.be.not.equal(popup.style.display);
+            });
+        });
+    });
+    describe('Hotkeys', function () {
+        describe('Override default shortcuts for some commands', function () {
+            it('Should work default shortcuts for another commands', function () {
+                var area = appendTestArea(),
+                    editor = new Jodit(area, {
+                        commandToHotkeys: {
+                            bold: 'ctrl+shift+b',
+                            italic: ['ctrl+i', 'ctrl+shift+i'],
+                        }
+                    });
+
+                editor.setEditorValue('test test test')
+                var range = editor.editorDocument.createRange();
+                range.setStart(editor.editor.firstChild, 4);
+                range.setEnd(editor.editor.firstChild, 8);
+                editor.selection.selectRange(range);
+
+                // standart ctrl+u
+                simulateEvent('keydown', 85, editor.editor, function (data) {
+                    // data.shiftKey = true;
+                    data.ctrlKey = true;
+                });
+
+                expect('test<u> tes</u>t test').to.be.equal(editor.getEditorValue());
+            });
+            describe('Replace ctrl+b to ctrl+shift+b for bold command', function () {
+                it('Should not execute bold on ctrl+b', function () {
+                    var area = appendTestArea(),
+                        editor = new Jodit(area, {
+                            commandToHotkeys: {
+                                bold: 'ctrl+shift+b',
+                                italic: ['ctrl+i', 'ctrl+shift+i'],
+                            }
+                        });
+                    editor.setEditorValue('test test test')
+                    var range = editor.editorDocument.createRange();
+                    range.setStart(editor.editor.firstChild, 4);
+                    range.setEnd(editor.editor.firstChild, 8);
+                    editor.selection.selectRange(range);
+
+                    // standart ctrl+b
+                    simulateEvent('keydown', 66, editor.editor, function (data) {
+                        // data.shiftKey = true;
+                        data.ctrlKey = true;
+                    });
+
+                    expect('test test test').to.be.equal(editor.getEditorValue()); // should not sork
+
+                    simulateEvent('keydown', 66, editor.editor, function (data) {
+                        data.shiftKey = true;
+                        data.ctrlKey = true;
+                    });
+
+                    expect('test<strong> tes</strong>t test').to.be.equal(editor.getEditorValue());
+                });
+                it('Should execute bold on ctrl+shift+b', function () {
+                    var area = appendTestArea(),
+                        editor = new Jodit(area, {
+                            commandToHotkeys: {
+                                bold: 'ctrl+shift+b',
+                                italic: ['ctrl+i', 'ctrl+shift+i'],
+                            }
+                        });
+                    editor.setEditorValue('test test test')
+                    var range = editor.editorDocument.createRange();
+                    range.setStart(editor.editor.firstChild, 4);
+                    range.setEnd(editor.editor.firstChild, 8);
+                    editor.selection.selectRange(range);
+
+                    simulateEvent('keydown', 66, editor.editor, function (data) {
+                        data.shiftKey = true;
+                        data.ctrlKey = true;
+                    });
+
+                    expect('test<strong> tes</strong>t test').to.be.equal(editor.getEditorValue());
+                });
+            });
+            describe('Add ctrl+shift+i to default ctrl+i shortcut for italic command', function () {
+                it('Should work with each of shortcuts', function () {
+                    var area = appendTestArea(),
+                        editor = new Jodit(area, {
+                            commandToHotkeys: {
+                                bold: 'ctrl+shift+b',
+                                italic: ['ctrl+i', 'ctrl+shift+i'],
+                            }
+                        });
+
+                    editor.setEditorValue('test test test')
+                    var range = editor.editorDocument.createRange();
+                    range.setStart(editor.editor.firstChild, 4);
+                    range.setEnd(editor.editor.firstChild, 8);
+                    editor.selection.selectRange(range);
+
+                    // standart ctrl+i
+                    simulateEvent('keydown', 73, editor.editor, function (data) {
+                        // data.shiftKey = true;
+                        data.ctrlKey = true;
+                    });
+
+                    expect('test<em> tes</em>t test').to.be.equal(editor.getEditorValue());
+
+                    editor.setEditorValue('test test test')
+                    var range = editor.editorDocument.createRange();
+                    range.setStart(editor.editor.firstChild, 4);
+                    range.setEnd(editor.editor.firstChild, 8);
+                    editor.selection.selectRange(range);
+
+                    // standart ctrl+shift+i
+                    simulateEvent('keydown', 73, editor.editor, function (data) {
+                        data.shiftKey = true;
+                        data.ctrlKey = true;
+                    });
+
+                    expect('test<em> tes</em>t test').to.be.equal(editor.getEditorValue());
+                });
             });
         });
     });

@@ -6,7 +6,7 @@
 
 import {Jodit} from "../Jodit"
 import {Component} from "./Component"
-import {dom, each, $$, extend, camelCase, offset, css} from "./Helpers"
+import {dom, each, $$, extend, camelCase, offset, css, asArray} from "./Helpers"
 import * as consts from "../constants";
 import {Dom} from "./Dom";
 
@@ -14,8 +14,8 @@ export type ControlType = {
     controlName?: string;
     name?: string;
     mode?: number;
-
-    data?: {[key: string]: any},
+    hotkeys?: string | string[];
+    data?: {[key: string]: any};
 
     /**
      * You can use it function for control - active/not active button
@@ -198,6 +198,7 @@ export type ButtonType = {
     control: ControlType,
     name: string,
     canActionCallback?: Function
+    hotKeyCallback?: Function
 }
 
 
@@ -512,6 +513,17 @@ export class Toolbar extends Component{
 
         this.jodit.events.on(camelCase('can-' + clearName), canActionCallback);
 
+        let hotKeyCallback: Function | null = null;
+
+        if (control.hotkeys) {
+            const hotkeys: string[] = Array.isArray(control.hotkeys) ? control.hotkeys : control.hotkeys.split(/[\s,]/);
+            hotKeyCallback = (hotkey: string) => {
+                this.jodit.events.fire(btn, 'mousedown');
+                return false;
+            };
+            this.jodit.events.on(hotkeys.join(' '), hotKeyCallback);
+        }
+
         if (control === undefined || typeof(control) !== 'object') {
             control = {command: name};
         }
@@ -525,7 +537,7 @@ export class Toolbar extends Component{
             const tooltip: HTMLElement|null = btn.querySelector('.jodit_tooltip');
             if (tooltip) {
                 if (control.tooltip) {
-                    tooltip.innerHTML = this.jodit.i18n(control.tooltip);
+                    tooltip.innerHTML = this.jodit.i18n(control.tooltip) + (control.hotkeys ? '<br>' + asArray(control.hotkeys).join(' ') : '');
                 } else {
                     btn.removeChild(tooltip);
                 }
@@ -577,7 +589,8 @@ export class Toolbar extends Component{
             btn,
             container:  <HTMLSpanElement>a.firstChild,
             name,
-            canActionCallback
+            canActionCallback,
+            hotKeyCallback: hotKeyCallback || void(0)
         });
 
         return btn;
@@ -660,6 +673,10 @@ export class Toolbar extends Component{
 
             this.jodit.events.off(camelCase('can-' + clearName), button.canActionCallback);
 
+            if (button.control.hotkeys && button.hotKeyCallback) {
+                const hotkeys: string[] = Array.isArray(button.control.hotkeys) ? button.control.hotkeys : button.control.hotkeys.split(/[\s,]/);
+                this.jodit.events.off(hotkeys.join(' '), button.hotKeyCallback);
+            }
         });
         this.buttonList.length = 0;
         this.container.innerHTML = '';

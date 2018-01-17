@@ -7,7 +7,7 @@
 import {Jodit} from '../Jodit';
 import {Config} from '../Config'
 import * as consts from '../constants';
-import {css, dom} from '../modules/Helpers'
+import {css, debounce, dom} from '../modules/Helpers'
 /**
  * Show placeholder
  *
@@ -97,7 +97,7 @@ export function placeholder(this: any, editor: Jodit) {
                 placeholder.style.display = 'none';
             }
         },
-        toggle = () => {
+        toggle = debounce(() => {
             if (!editor.editor) {
                 return;
             }
@@ -109,7 +109,7 @@ export function placeholder(this: any, editor: Jodit) {
             } else {
                 show();
             }
-        };
+        }, editor.options.observer.timeout / 100);
 
 
 
@@ -129,14 +129,16 @@ export function placeholder(this: any, editor: Jodit) {
             editor.workplace
                 .appendChild(placeholder);
 
-            show();
-            editor.events.fire('placeholder', placeholder.innerHTML);
-        })
-        .on('change keyup mouseup keydown mousedown afterSetMode', () => {
-            if (placeholder.parentNode === null) {
-                return;
-            }
-
             toggle();
-        });
+
+            editor.events.fire('placeholder', placeholder.innerHTML);
+            editor.events.on('change keyup mouseup keydown mousedown afterSetMode', () => {
+                if (placeholder.parentNode === null) {
+                    return;
+                }
+
+                toggle();
+            });
+        })
+
 }

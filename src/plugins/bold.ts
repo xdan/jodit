@@ -16,6 +16,7 @@ Config.prototype.controls.bold = {
     },
     tooltip: "Bold",
 };
+
 Config.prototype.controls.italic = {
     tagRegExp: /^(em|i)$/i,
         tags: ["em", "i"],
@@ -24,6 +25,7 @@ Config.prototype.controls.italic = {
     },
     tooltip: "Italic",
 };
+
 Config.prototype.controls.underline = {
     tagRegExp: /^(u)$/i,
         tags: ['u'],
@@ -45,29 +47,39 @@ Config.prototype.controls.strikethrough = {
  * Bold plugin
  */
 export function bold(editor: Jodit) {
-    editor.events.on('beforeCommand', (command: string): false | void => {
+    const callBack: Function = (command: string): false | void => {
+        const cssOptions: {[key: string]: string|string[]}|{[key: string]: (editor: Jodit, value: string) => boolean} = {...Jodit.defaultOptions.controls[command].css},
+            cssRules: {[key: string]: string} = {};
 
-        const commands = ['bold', 'italic', 'underline', 'strikethrough'];
+        Object.keys(cssOptions).forEach((key: string) => {
+            cssRules[key] = Array.isArray(cssOptions[key]) ?  (<any>cssOptions[key])[0] : cssOptions[key];
+        });
 
+        let control: ControlType = Jodit.defaultOptions.controls[command];
 
-        if (commands.indexOf(command) !== -1) {
-            const cssOptions: {[key: string]: string|string[]}|{[key: string]: (editor: Jodit, value: string) => boolean} = {...Jodit.defaultOptions.controls[command].css},
-                cssRules: {[key: string]: string} = {};
+        editor.selection.applyCSS(
+            cssRules,
+            control.tags ? control.tags[0] : undefined,
+            <any>control.css
+        );
 
-            Object.keys(cssOptions).forEach((key: string) => {
-                cssRules[key] = Array.isArray(cssOptions[key]) ?  (<any>cssOptions[key])[0] : cssOptions[key];
-            });
+        editor.setEditorValue();
+        return false;
+    };
 
-            let control: ControlType = Jodit.defaultOptions.controls[command];
-
-            editor.selection.applyCSS(
-                cssRules,
-                control.tags ? control.tags[0] : undefined,
-                <any>control.css
-            );
-
-            editor.setEditorValue();
-            return false;
-        }
+    editor.registerCommand('bold', {
+        exec: callBack,
+        hotkeys: 'ctrl+b'
+    });
+    editor.registerCommand('italic', {
+        exec: callBack,
+        hotkeys: 'ctrl+i'
+    });
+    editor.registerCommand('underline', {
+        exec: callBack,
+        hotkeys: 'ctrl+u'
+    });
+    editor.registerCommand('strikethrough', {
+        exec: callBack
     });
 }

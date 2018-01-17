@@ -29,3 +29,8 @@ type Permissions = {
     allowImageCrop: boolean,
     [key: string]: boolean;
 };
+
+type CommandType = {
+    exec: Function,
+    hotkeys?: string | string[]
+}

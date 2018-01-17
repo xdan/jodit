@@ -83,52 +83,54 @@ Config.prototype.controls.right = {
 
 
 export function justify(editor: Jodit) {
-    editor.events.on('beforeCommand', (command: string): false | void => {
-        if (/justify/.test(command)) {
-            const justify = (box: HTMLElement) => {
-                if (box instanceof (<any>editor.editorWindow).HTMLElement) {
-                    switch (command) {
-                        case 'justifyfull':
-                            box.style.textAlign = 'justify';
-                            break;
-                        case 'justifyright':
-                            box.style.textAlign = 'right';
-                            break;
-                        case 'justifyleft':
-                            box.style.textAlign = 'left';
-                            break;
-                        case 'justifycenter':
-                            box.style.textAlign = 'center';
-                            break;
-                    }
-
-                }
-            };
-
-
-            editor.selection.focus();
-            editor.selection.eachSelection((current: Node): false | void => {
-                if (!current) {
-                    if (editor.editor.querySelector('.jodit_selected_cell')) {
-                        $$('.jodit_selected_cell', editor.editor).forEach(justify);
-                        return false;
-                    }
+    const callback: Function = (command: string): false | void => {
+        const justify = (box: HTMLElement) => {
+            if (box instanceof (<any>editor.editorWindow).HTMLElement) {
+                switch (command) {
+                    case 'justifyfull':
+                        box.style.textAlign = 'justify';
+                        break;
+                    case 'justifyright':
+                        box.style.textAlign = 'right';
+                        break;
+                    case 'justifyleft':
+                        box.style.textAlign = 'left';
+                        break;
+                    case 'justifycenter':
+                        box.style.textAlign = 'center';
+                        break;
                 }
 
-                if (!(current instanceof (<any>editor.editorWindow).Node)) {
-                    return;
+            }
+        };
+
+
+        editor.selection.focus();
+        editor.selection.eachSelection((current: Node): false | void => {
+            if (!current) {
+                if (editor.editor.querySelector('.jodit_selected_cell')) {
+                    $$('.jodit_selected_cell', editor.editor).forEach(justify);
+                    return false;
                 }
+            }
 
-                let currentBox: HTMLElement |false | null = current ? <HTMLElement>Dom.up(current, Dom.isBlock, editor.editor) : false;
+            if (!(current instanceof (<any>editor.editorWindow).Node)) {
+                return;
+            }
+
+            let currentBox: HTMLElement |false | null = current ? <HTMLElement>Dom.up(current, Dom.isBlock, editor.editor) : false;
 
 
-                if (!currentBox && current) {
-                    currentBox = Dom.wrap(current, editor.options.enter, editor);
-                }
+            if (!currentBox && current) {
+                currentBox = Dom.wrap(current, editor.options.enter, editor);
+            }
 
-                justify(<HTMLElement>currentBox);
-            });
-            return false;
-        }
-    });
+            justify(<HTMLElement>currentBox);
+        });
+        return false;
+    };
+    editor.registerCommand('justifyfull', callback);
+    editor.registerCommand('justifyright', callback);
+    editor.registerCommand('justifyleft', callback);
+    editor.registerCommand('justifycenter', callback);
 }

@@ -7,8 +7,8 @@
 import {Jodit} from '../Jodit';
 import {Observer} from '../modules/Observer';
 import * as consts from '../constants';
-import {ctrlKey} from '../modules/Helpers'
 import {Config} from "../Config";
+import {Component} from "../modules/Component";
 
 Config.prototype.controls.redo ={
     mode: consts.MODE_SPLIT,
@@ -20,45 +20,44 @@ Config.prototype.controls.undo = {
 };
 
 
-export function redoundo(this: any, editor: Jodit) {
-    const observer:Observer = new Observer(editor);
-    const updateButton = () => {
-        editor.events.fire('canRedo', observer.stack.canRedo());
-        editor.events.fire('canUndo', observer.stack.canUndo());
-    };
-    editor.events
-        .on('keydown', (e: KeyboardEvent): void | false => {
-            if (ctrlKey(e)) {
-                if (e.which === consts.KEY_Z || e.which === consts.KEY_Y) {
-                    editor.execCommand(e.which === consts.KEY_Z ? 'Undo' : 'Redo');
-                    e.preventDefault();
-                    e.stopImmediatePropagation();
-                    return false;
-                }
-            }
-        }, undefined, undefined,true);
+export class redoundo extends Component  {
+    private observer:Observer = new Observer(this.jodit);
+    constructor(editor: Jodit) {
+        super(editor);
+        const updateButton = () => {
+            editor.events.fire('canRedo', this.observer.stack.canRedo());
+            editor.events.fire('canUndo', this.observer.stack.canUndo());
+        };
 
 
-    editor.events
-        .on('afterSetMode', () => {
-            if (editor.getRealMode() === consts.MODE_WYSIWYG) {
-                updateButton();
-            }
-        })
-        .on('beforeCommand', (command: string): void | false => {
-            if (command === 'redo' || command === 'undo') {
+        editor.events
+            .on('afterSetMode', () => {
                 if (editor.getRealMode() === consts.MODE_WYSIWYG) {
-                    if ((<any>observer.stack)['can' + command.substr(0,1).toUpperCase() + command.substr(1)]()) {
-                        observer.stack[command]();
-                    }
                     updateButton();
                 }
-                return false;
+            });
+
+        const callback = (command: 'undo' | 'redo'): void | false => {
+            if (editor.getRealMode() === consts.MODE_WYSIWYG) {
+                if ((<any>this.observer.stack)['can' + command.substr(0,1).toUpperCase() + command.substr(1)]()) {
+                    this.observer.stack[command]();
+                }
+                updateButton();
             }
+            return false;
+        };
+
+        editor.registerCommand('redo', {
+            exec: callback,
+            hotkeys: 'ctrl+y'
+        });
+        editor.registerCommand('undo', {
+            exec: callback,
+            hotkeys: 'ctrl+z'
         });
 
-
-    this.destruct = () => {
-        observer.destruct();
-    };
+    }
+    destruct() {
+        this.observer.destruct();
+    }
 }

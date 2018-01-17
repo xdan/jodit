@@ -101,7 +101,7 @@
             }
         },
         // buttons: ['symbol'],
-        disablePlugins: 'mobile'
+        // disablePlugins: 'hotkeys,mobile'
     });
 
     function simpleKeys (original) {
@@ -126,7 +126,7 @@
     editor.editor.addEventListener('input', callback);
 
 
-    editor.setEditorValue('<a href="#">Test</a>TestTestTest<a href="#">Test</a>TestTestTestTest<a href="#">Test</a>');
+    // editor.setEditorValue('<a href="#">Test</a>TestTestTest<a href="#">Test</a>TestTestTestTest<a href="#">Test</a>');
 
     // expect(editor.container.querySelectorAll('.jodit_toolbar_btn-redo.jodit_disabled').length).to.equal(1);
     // expect(editor.container.querySelectorAll('.jodit_toolbar_btn-undo.jodit_disabled').length).to.equal(0);

@@ -71,34 +71,6 @@ Config.prototype.controls.brush = <ControlType>{
             tabs: {[key: string]: HTMLElement},
             currentElement: HTMLElement|null = null;
 
-        /* const sel = editor.editorWindow.getSelection(),
-             checkRemoveOpportunity = () => {
-                 if (current && (!current.hasAttribute("style") || !current.getAttribute("style").length)) {
-                     let selInfo = editor.selection.save();
-                     while (current.firstChild) {
-                         current.parentNode.insertBefore(current.firstChild, current);
-                     }
-                     current.parentNode.removeChild(current);
-                     current = null;
-                     editor.selection.restore(selInfo);
-                 }
-             },
-             tryGetCurrent = () => {
-                 if (sel && sel.anchorNode) {
-                     [sel.anchorNode, sel.anchorNode.parentNode].forEach((elm: HTMLElement) => {
-                         if (elm && elm.hasAttribute && elm.hasAttribute("style") && elm.getAttribute('style').indexOf('background') !== -1 && elm.style.backgroundColor) {
-                             current = elm;
-                             bg_color = editor.editorWindow.getComputedStyle(current).getPropertyValue('background-color');
-                         }
-
-                         if (elm && elm.hasAttribute && elm.hasAttribute('style') && elm.getAttribute('style').indexOf('color') !== -1 && elm.style.color) {
-                             current = elm;
-                             color = current.style.color;
-                         }
-                     })
-                 }
-             };*/
-
         if (current && Dom.isNode(current, editor.editorWindow) && current.nodeType === Node.ELEMENT_NODE) {
             color = css(<HTMLElement>current, 'color').toString();
             bg_color = css(<HTMLElement>current, 'background-color').toString();
@@ -142,25 +114,26 @@ Config.prototype.controls.brush = <ControlType>{
 
 
 export function color(editor: Jodit) {
-    editor.events.on('beforeCommand', (command: string, second: string, third: string): false | void => {
-        if (/forecolor|background/.test(command)) {
-            const color: string|false = normalizeColor(third);
+    const callback: Function = (command: string, second: string, third: string): false | void => {
+        const color: string|false = normalizeColor(third);
 
-            switch (command) {
-                case 'background':
-                    editor.selection.applyCSS({
-                        backgroundColor: !color ? '' : <string>color
-                    });
-                    break;
-                case 'forecolor':
-                    editor.selection.applyCSS({
-                        color: !color ? '' : <string>color
-                    });
-                    break;
-            }
-
-            editor.setEditorValue();
-            return false;
+        switch (command) {
+            case 'background':
+                editor.selection.applyCSS({
+                    backgroundColor: !color ? '' : <string>color
+                });
+                break;
+            case 'forecolor':
+                editor.selection.applyCSS({
+                    color: !color ? '' : <string>color
+                });
+                break;
         }
-    });
+
+        editor.setEditorValue();
+        return false;
+    };
+
+    editor.registerCommand('forecolor', callback);
+    editor.registerCommand('background', callback);
 }

@@ -47,6 +47,8 @@ Config.prototype.specialCharacters = [
 
 Config.prototype.controls.symbol = <ControlType> {
     icon: 'omega',
+    hotkeys: 'ctrl+shift+i',
+    tooltip: 'Insert Special Character',
     popup: (editor: Jodit, current: Node|false, control: ControlType, close: Function): any => {
         const container : HTMLElement | undefined = editor.events.fire('generateSpecialCharactersTable.symbols');
         if (container) {
@@ -106,12 +108,12 @@ export class symbols {
                     .on(chars, 'focus', function (this: HTMLAnchorElement, e: MouseEvent) {
                         preview.innerHTML = this.innerHTML;
                     })
-                    .on(chars, 'mousedown', function (this: HTMLAnchorElement, e: MouseEvent) {
+                    .on(chars, 'mousedown', function (this: HTMLAnchorElement, e ?: MouseEvent) {
                         if (this && this.nodeName === 'A') {
-                            editor.events.fire(this, 'close_dialog');
                             editor.selection.insertHTML(this.innerHTML);
-                            e.preventDefault();
-                            e.stopImmediatePropagation()
+                            editor.events.fire(this, 'close_dialog');
+                            e && e.preventDefault();
+                            e && e.stopImmediatePropagation()
                         }
                     })
                     .on(chars, 'mouseenter', function (this: HTMLAnchorElement) {

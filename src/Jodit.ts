@@ -13,7 +13,7 @@ import {Uploader} from './modules/Uploader';
 import {Dom} from './modules/Dom';
 import {EventsNative} from './modules/EventsNative';
 import * as consts from './constants';
-import {extend, inArray, dom, each, sprintf, defaultLanguage, debounce} from './modules/Helpers';
+import {extend, inArray, dom, each, sprintf, defaultLanguage, debounce, asArray} from './modules/Helpers';
 import * as helper from './modules/Helpers';
 import {Config} from "./Config";
 
@@ -297,15 +297,16 @@ export class Jodit extends Component{
         }
 
         // proxy events
-        this.events.on(this.editor, 'keydown keyup keypress mousedown mouseup mousepress paste resize touchstart touchend focus blur', (e: Event): false | void => {
-            if (this.events) {
-                if (this.events.fire(e.type, e) === false) {
-                    e.preventDefault();
-                    return false;
+        this.events
+            .on(this.editor, 'keydown keyup keypress mousedown mouseup mousepress paste resize touchstart touchend focus blur', (e: Event): false | void => {
+                if (this.events && this.events.fire) {
+                    if (this.events.fire(e.type, e) === false) {
+                        return false;
+                    }
+
+                    this.setEditorValue();
                 }
-                this.setEditorValue(); // sync all events in element
-            }
-        });
+            });
 
         if (this.options.spellcheck) {
             this.editor.setAttribute('spellcheck', "true");
@@ -480,9 +481,12 @@ export class Jodit extends Component{
             } else {
                 this.element.innerHTML = value;
             }
+        } else {
+            value = this.getElementValue();
         }
-        if (this.getElementValue() !== this.getEditorValue()) {
-            this.setEditorValue(this.getElementValue());
+
+        if (value !== this.getEditorValue()) {
+            this.setEditorValue(value);
         }
     }
 
@@ -505,11 +509,89 @@ export class Jodit extends Component{
             this.editor.innerHTML = value;
         }
 
-        const old_value: string = this.getElementValue();
+        const old_value: string = this.getElementValue(),
+            new_value: string = this.getEditorValue();
 
-        if (old_value !== this.getEditorValue()) {
-            this.setElementValue(this.getEditorValue());
-            this.events.fire('change', old_value, this.getEditorValue());
+        if (old_value !== new_value) {
+            this.setElementValue(new_value);
+            this.events.fire('change', old_value, new_value);
+        }
+    }
+
+    private commands: {[key: string]: Array<CommandType | Function>} = {};
+
+    private execCustomCommands(commandName: string, second = false, third: null|any = null): false | void {
+        commandName = commandName.toLowerCase();
+
+        if (this.commands[commandName] !== undefined) {
+            let result: any;
+
+            this.commands[commandName].forEach((command: CommandType | Function) => {
+                let callback: Function;
+                if (typeof command === 'function') {
+                    callback = command;
+                } else {
+                    callback = command.exec;
+                }
+                let resultCurrent: any = callback.call(this, commandName, second, third);
+                if (resultCurrent !== undefined) {
+                    result = resultCurrent;
+                }
+            });
+
+            return result;
+        }
+    }
+
+    /**
+     * Register custom handler for command
+     *
+     * @example
+     * ```javascript
+     * var jodit = new Jodit('#editor);
+     *
+     * jodit.setEditorValue('test test test');
+     *
+     * jodit.registerCommand('replaceString', function (command, needle, replace) {
+     *      var value = this.getEditorValue();
+     *      this.setEditorValue(value.replace(needle, replace));
+     *      return false; // stop execute native command
+     * });
+     *
+     * jodit.execCommand('replaceString', 'test', 'stop');
+     *
+     * console.log(jodit.getEditorValue()); // stop test test
+     *
+     * // and you can add hotkeys for command
+     * jodit.registerCommand('replaceString', {
+     *    hotkeys: 'ctrl+r',
+     *    exec: function (command, needle, replace) {
+     *     var value = this.getEditorValue();
+     *     this.setEditorValue(value.replace(needle, replace));
+     *    }
+     * });
+     *
+     * ```
+     *
+     * @param {string} commandName
+     * @param {CommandType | Function} command
+     */
+    registerCommand(commandName: string, command: CommandType | Function) {
+        commandName = commandName.toLowerCase();
+
+        if (this.commands[commandName] === undefined) {
+            this.commands[commandName] = [];
+        }
+        this.commands[commandName].push(command);
+
+        if (typeof command !== 'function') {
+            const hotkeys: string | string[] | void = this.options.commandToHotkeys[commandName] || command.hotkeys;
+
+            if (hotkeys) {
+                this.events.on(asArray(hotkeys).map((hotkey: string) => hotkey + '.hotkey').join(' '), () => {
+                    return this.execCommand(commandName); // because need `beforeCommand`
+                });
+            }
         }
     }
 
@@ -530,7 +612,7 @@ export class Jodit extends Component{
      * this.execCommand('formatBlock', 'p'); // will be inserted paragraph
      * ```
      */
-    execCommand(command: string, second = false, third: null|any = null) {
+    execCommand(command: string, second: any = false, third: null|any = null) {
         let result: any;
         command = command.toLowerCase();
         /**
@@ -552,7 +634,14 @@ export class Jodit extends Component{
          * })
          * ```
          */
-        if (this.events.fire('beforeCommand', command, second, third) !== false) {
+
+        result = this.events.fire('beforeCommand', command, second, third);
+
+        if (result !== false) {
+            result = this.execCustomCommands(command, second, third);
+        }
+
+        if (result !== false) {
             this.selection.focus();
             switch (command) {
                 case 'selectall':

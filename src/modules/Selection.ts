@@ -379,6 +379,10 @@ export class Select extends Component{
      * ```
      */
     insertHTML(html: number|string|Node) {
+        if (html === '') {
+            return;
+        }
+
         const node: HTMLDivElement = this.jodit.editorDocument.createElement('div'),
             fragment: DocumentFragment = this.jodit.editorDocument.createDocumentFragment();
 
