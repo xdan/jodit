@@ -48,7 +48,7 @@ export default {
     'Decrease Indent': 'Indent verringern',
     'Increase Indent': 'Einrücken mehr',
     'Select Special Character': 'Wählen Sie ein Sonderzeichen',
-
+    'Insert Special Character': 'Sonderzeichen einfügen',
 
     'Paint format': 'Format klonen',
     'Change mode': 'Änderungsmodus',

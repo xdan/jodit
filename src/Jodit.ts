@@ -26,7 +26,7 @@ interface JoditPlugin{
 }
 
 /** Class Jodit. Main class*/
-export class Jodit extends Component{
+export class Jodit extends Component {
     version: string = appVersion; // from webpack.config.js
 
     /**

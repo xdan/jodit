@@ -48,7 +48,7 @@ export default {
     'Decrease Indent': 'Diminuer le retrait',
     'Increase Indent': 'Retrait plus',
     'Select Special Character': 'Sélectionnez un caractère spécial',
-
+    'Insert Special Character': 'Insérer un caractère spécial',
 
     'Paint format': 'Cloner le format',
     'Change mode': 'Mode wysiwyg <-> code html',
