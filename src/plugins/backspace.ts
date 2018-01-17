@@ -70,7 +70,7 @@ export function backspace(editor: Jodit) {
                 }
 
                 if (range.startOffset === 0 && toLeft && textNode) {
-                    const prevBox = Dom.prev(textNode, Dom.isBlock, editor.editor);
+                    const prevBox: Node | false = Dom.prev(textNode, Dom.isBlock, editor.editor);
 
                     if (prevBox) {
                         editor.selection.setCursorIn(prevBox, false);
@@ -80,7 +80,7 @@ export function backspace(editor: Jodit) {
 
                     if (container) {
                         const html: string = container.innerHTML.replace(consts.INVISIBLE_SPACE_REG_EXP, '');
-                        if ((!html.length || html == '<br>') && !Dom.isCell(container, editor.editorWindow) && container.parentNode) {
+                        if ((!html.length || html == '<br>') && !Dom.isCell(container, editor.editorWindow) && container.parentNode && container !== editor.editor) {
                             container.parentNode.removeChild(container);
                             return false;
                         }

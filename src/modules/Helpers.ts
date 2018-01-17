@@ -6,6 +6,7 @@
 
 import * as consts from '../constants';
 import {Jodit} from "../Jodit";
+import {Dom} from "./Dom";
 const class2type: {[key: string]: string} = {};
 const toString = class2type.toString;
 const hasOwn = class2type.hasOwnProperty;
@@ -390,56 +391,7 @@ export const htmlentities = (text: string): string => {
         .replace(/'/gi, "&apos;");
 };
 
-/**
- * The method automatically cleans up content from Microsoft Word and other HTML sources to ensure clean, compliant content that matches the look and feel of the site.
- */
-export const cleanFromWord = (text: string): string => {
-    text = text.replace(/<o:p>\s*<\/o:p>/g, "") ;
-    text = text.replace(/<o:p>.*?<\/o:p>/g, "&nbsp;") ;
-    text = text.replace( /\s*mso-[^:]+:[^;"]+;?/gi, "" ) ;
-    text = text.replace( /\s*MARGIN: 0cm 0cm 0pt\s*;/gi, "" ) ;
-    text = text.replace( /\s*MARGIN: 0cm 0cm 0pt\s*"/gi, "\"" ) ;
-    text = text.replace( /\s*TEXT-INDENT: 0cm\s*;/gi, "" ) ;
-    text = text.replace( /\s*TEXT-INDENT: 0cm\s*"/gi, "\"" ) ;
-    text = text.replace( /\s*TEXT-ALIGN: [^\s;]+;?"/gi, "\"" ) ;
-    text = text.replace( /\s*PAGE-BREAK-BEFORE: [^\s;]+;?"/gi, "\"" ) ;
-    text = text.replace( /\s*FONT-VARIANT: [^\s;]+;?"/gi, "\"" ) ;
-    text = text.replace( /\s*tab-stops:[^;"]*;?/gi, "" ) ;
-    text = text.replace( /\s*tab-stops:[^"]*/gi, "" ) ;
-    text = text.replace( /\s*face="[^"]*"/gi, "" ) ;
-    text = text.replace( /\s*face=[^ >]*/gi, "" ) ;
-    text = text.replace( /\s*FONT-FAMILY:[^;"]*;?/gi, "" ) ;
-    text = text.replace(/<(\w[^>]*) class=([^ |>]*)([^>]*)/gi, "<$1$3") ;
-    text = text.replace( /<(\w[^>]*) style="([^"]*)"([^>]*)/gi, "<$1$3" ) ;
-    text = text.replace( /\s*style="\s*"/gi, '' ) ;
-    text = text.replace( /<SPAN\s*[^>]*>\s*&nbsp;\s*<\/SPAN>/gi, '&nbsp;' ) ;
-    text = text.replace( /<SPAN\s*[^>]*><\/SPAN>/gi, '' ) ;
-    text = text.replace(/<(\w[^>]*) lang=([^ |>]*)([^>]*)/gi, "<$1$3") ;
-    text = text.replace( /<SPAN\s*>(.*?)<\/SPAN>/gi, '$1' ) ;
-    text = text.replace( /<FONT\s*>(.*?)<\/FONT>/gi, '$1' ) ;
-    text = text.replace(/<\\?\?xml[^>]*>/gi, "") ;
-    text = text.replace(/<\/?\w+:[^>]*>/gi, "") ;
-    text = text.replace( /<H\d>\s*<\/H\d>/gi, '' ) ;
-    text = text.replace( /<H1([^>]*)>/gi, '' ) ;
-    text = text.replace( /<H2([^>]*)>/gi, '' ) ;
-    text = text.replace( /<H3([^>]*)>/gi, '' ) ;
-    text = text.replace( /<H4([^>]*)>/gi, '' ) ;
-    text = text.replace( /<H5([^>]*)>/gi, '' ) ;
-    text = text.replace( /<H6([^>]*)>/gi, '' ) ;
-    text = text.replace( /<\/H\d>/gi, '<br>' ) ; //remove this to take out breaks where Heading tags were 
-    text = text.replace( /<(U|I|STRIKE)>&nbsp;<\/\1>/g, '&nbsp;' ) ;
-    text = text.replace( /<(b)>&nbsp;<\/\b>/ig, '' ) ;
-    text = text.replace( /<([^\s>]+)[^>]*>\s*<\/\1>/g, '' ) ;
-    text = text.replace( /<([^\s>]+)[^>]*>\s*<\/\1>/g, '' ) ;
-    text = text.replace( /<([^\s>]+)[^>]*>\s*<\/\1>/g, '' ) ;
-//some RegEx code for the picky browsers
-    let re = new RegExp("(<P)([^>]*>.*?)(<\/P>)","gi") ;
-    text = text.replace( re, "<div$2</div>" ) ;
-    let re2 =/(<font|<FONT)([^*>]*>.*?)(<\/FONT>|<\/font>)/gi;
-    text = text.replace( re2, "<div$2</div>") ;
-    text = text.replace( /size|SIZE = ([\d])/g, '' ) ;
-    return text ;
-};
+
 
 
 
@@ -472,7 +424,19 @@ export const urlNormalize = (url: string) => (url.replace(/([^:])[\\\/]+/g, '$1/
  * @param {string} str
  * @return {boolean}
  */
-export const isHTML = (str: string) => ((/<([A-Za-z][A-Za-z0-9]*)\b[^>]*>(.*?)<\/\1>/m).test(str));
+export const isHTML = (str: string): boolean => ((/<([A-Za-z][A-Za-z0-9]*)\b[^>]*>(.*?)<\/\1>/m).test(str));
+
+/**
+ * Detect if string is HTML from MS Word or Excel
+ *
+ * @param {string} data
+ * @return {boolean}
+ */
+export const isHTMLFromWord = (data: string): boolean => {
+    return  data.search( /<meta.*?Microsoft Excel\s[\d].*?>/ ) !== -1 ||
+        data.search( /<meta.*?Microsoft Word\s[\d].*?>/ ) !== -1 ||
+    (data.search( /style="[^"]*mso-/ ) !== -1 && data.search( /<font/ ) !== -1);
+};
 
 /**
  * Converts from human readable file size (kb,mb,gb,tb) to bytes
@@ -977,4 +941,112 @@ export  const normalizeNode = (node: Node | null) => {
     }
 
     normalizeNode(node.nextSibling);
+};
+
+
+/**
+ * The method automatically cleans up content from Microsoft Word and other HTML sources to ensure clean, compliant content that matches the look and feel of the site.
+ */
+export const cleanFromWord = (html: string): string => {
+    if (html.indexOf( '<html ' ) !== -1) {
+        html = html.substring( html.indexOf( '<html ' ), html.length );
+        html = html.substring( 0, html.lastIndexOf( '</html>' ) + '</html>'.length );
+    }
+
+
+    let convertedString: string = '';
+
+    try {
+        const div: HTMLDivElement = document.createElement('div');
+        div.innerHTML = html;
+
+        const marks: Node[] = [];
+
+        if (div.firstChild) {
+            Dom.all(div, (node: Node) => {
+                switch (node.nodeType) {
+                    case Node.ELEMENT_NODE:
+                        (<Element>node).removeAttribute('class');
+                        (<Element>node).removeAttribute('style');
+                        if (node.nodeName === 'FONT') {
+                            Dom.unwrap(node);
+                        }
+                        break;
+                    case Node.TEXT_NODE:
+                        break;
+                    default:
+                        marks.push(node);
+                }
+            });
+        }
+
+        marks.forEach((node: Node) => node.parentNode && node.parentNode.removeChild(node));
+
+        convertedString = div.innerHTML;
+    } catch (e) {
+
+    }
+
+    if (convertedString) {
+        html = convertedString;
+    }
+
+    return html.replace(/<(\/)?(html|colgroup|col|o:p)[^>]*>/g, '').replace(/<\!--[^>]*>/g, '');
+};
+
+export  const applyStyles = (html: string): string => {
+    if (html.indexOf( '<html ' ) === -1) {
+        return html;
+    }
+
+    html = html.substring( html.indexOf( '<html ' ), html.length );
+    html = html.substring( 0, html.lastIndexOf( '</html>' ) + '</html>'.length );
+
+    const iframe: HTMLIFrameElement = document.createElement( 'iframe' );
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+
+    let convertedString: string = '',
+        collection: HTMLElement[] = [],
+        rules: CSSStyleRule[] = [];
+
+    try {
+        const iframeDoc: Document = iframe.contentDocument ||  iframe.contentWindow.document;
+
+        iframeDoc.open();
+        iframeDoc.write(html);
+        iframeDoc.close();
+
+
+
+        if (iframeDoc.styleSheets.length) {
+            rules = (<any>iframeDoc.styleSheets[iframeDoc.styleSheets.length - 1]).cssRules;
+        }
+
+        for (let idx = 0; idx < rules.length; idx += 1) {
+            if (rules[idx].selectorText === '') {
+                continue;
+            }
+
+            collection = $$(rules[idx].selectorText, iframeDoc.body);
+
+            collection.forEach((elm: HTMLElement) => {
+                elm.style.cssText += rules[idx].style.cssText
+                    .replace(/mso-[a-z\-]+:[\s]*[^;]+;/g, '')
+                    .replace(/border[a-z\-]*:[\s]*[^;]+;/g, '')
+            });
+        }
+
+        convertedString = iframeDoc.firstChild ? iframeDoc.body.innerHTML : '';
+    } catch (e) {
+
+    } finally {
+        iframe.parentNode && iframe.parentNode.removeChild( iframe );
+    }
+
+    if (convertedString) {
+       html = convertedString;
+    }
+
+    return html.replace(/<(\/)?(html|colgroup|col|o:p)[^>]*>/g, '').replace(/<\!--[^>]*>/g, '');
 };

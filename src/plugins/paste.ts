@@ -5,10 +5,14 @@
  */
 
 import {Jodit} from '../Jodit';
-import {Confirm} from '../modules/Dialog';
-import {isHTML, browser, htmlentities, htmlspecialchars} from '../modules/Helpers';
+import {Confirm, Dialog} from '../modules/Dialog';
+import {
+    isHTML, browser, htmlentities, htmlspecialchars, isHTMLFromWord, applyStyles, dom,
+    cleanFromWord
+} from '../modules/Helpers';
 import {Config} from '../Config'
-import {TEXT_PLAIN} from "../constants";
+import {TEXT_HTML, TEXT_PLAIN} from "../constants";
+import {Toolbar} from "../modules/Toolbar";
 
 /**
  * @property{boolean} askBeforePasteHTML=true Ask before paste HTML in WYSIWYG mode
@@ -16,9 +20,11 @@ import {TEXT_PLAIN} from "../constants";
 declare module "../Config" {
     interface Config {
         askBeforePasteHTML: boolean;
+        askBeforePasteFromWord: boolean;
     }
 }
 Config.prototype.askBeforePasteHTML = true;
+Config.prototype.askBeforePasteFromWord = true;
 
 /**
  * Ask before paste HTML source
@@ -26,8 +32,7 @@ Config.prototype.askBeforePasteHTML = true;
  * @module insertHTML
  */
 export function paste(editor: Jodit) {
-    editor.events.on('afterInit', () => {
-        editor.editor.addEventListener('paste', <EventListener>((event: ClipboardEvent): false | void => {
+    editor.events.on('paste', (event: ClipboardEvent): false | void => {
         /**
          * Triggered before pasting something into the Jodit Editor
          *
@@ -38,8 +43,8 @@ export function paste(editor: Jodit) {
          * ```javascript
          * var editor = new Jodit("#redactor");
          * editor.events.on('beforePaste', function (event) {
-         *     return false; // deny paste
-         * });
+             *     return false; // deny paste
+             * });
          * ```
          */
 
@@ -81,8 +86,8 @@ export function paste(editor: Jodit) {
                  * ```javascript
                  * var editor = new Jodit("#redactor");
                  * editor.events.on('beforePaste', function (event) {
-                 *     return false; // deny paste
-                 * });
+                     *     return false; // deny paste
+                     * });
                  * ```
                  */
 
@@ -106,31 +111,136 @@ export function paste(editor: Jodit) {
          * ```javascript
          * var editor = new Jodit("#redactor");
          * editor.events.on('afterPaste', function (event) {
-         *     return false; // deny paste
-         * });
+             *     return false; // deny paste
+             * });
          * ```
          */
         if (editor.events.fire('afterPaste', event) === false) {
             return false;
         }
-    }));
     });
-    if (editor.options.askBeforePasteHTML) {
-        editor.events.on('beforePaste', (event: ClipboardEvent): false | void => {
-            if (event && event.clipboardData && event.clipboardData.getData && event.clipboardData.types[0] === TEXT_PLAIN) {
-                let html = event.clipboardData.getData(TEXT_PLAIN);
-                if (isHTML(html)) {
-                    Confirm(editor.i18n('Your code is similar to HTML. Paste as HTML?'), editor.i18n('Paste as HTML'), (agree) => {
-                        if (agree) {
-                            editor.selection.insertHTML(html);
-                        } else {
-                            editor.selection.insertHTML(htmlspecialchars(html));
-                        }
-                        editor.setEditorValue();
-                    });
-                    return false;
-                }
-            }
+
+    const ClearOrKeep: Function = (msg: string, title: string, callback: (yes: boolean) => void, clearButton: string = 'Clean'): Dialog => {
+        const dialog: Dialog = Confirm(`<div style="word-break: normal; white-space: normal">${msg}</div>`, title, callback);
+
+        const keep: HTMLAnchorElement  = <HTMLAnchorElement>dom(
+            '<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
+                '<span>' + Jodit.prototype.i18n('Keep') + '</span>' +
+            '</a>',
+            dialog.document
+        );
+
+        const clear: HTMLAnchorElement  = <HTMLAnchorElement>dom(
+            '<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
+                '<span>' + Jodit.prototype.i18n(clearButton) + '</span>' +
+            '</a>',
+            dialog.document
+        );
+
+        const cancel: HTMLAnchorElement  = <HTMLAnchorElement>dom(
+            '<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
+                '<span>' + Jodit.prototype.i18n('Cancel') + '</span>' +
+            '</a>',
+            dialog.document
+        );
+
+        editor.events.on(keep, 'click', () => {
+            dialog.close();
+            callback && callback(true);
         });
+
+        editor.events.on(clear, 'click', () => {
+            dialog.close();
+            callback && callback(false);
+        });
+
+        editor.events.on(cancel, 'click', () => {
+            dialog.close();
+        });
+
+        dialog.setFooter([
+            keep,
+            clear,
+            cancel
+        ]);
+
+        return dialog;
+    };
+
+    if (editor.options.askBeforePasteHTML) {
+        editor.events
+            .on('beforePaste', (event: ClipboardEvent): false | void => {
+                if (event && event.clipboardData && event.clipboardData.getData && event.clipboardData.getData(TEXT_PLAIN)) {
+                    let html: string = event.clipboardData.getData(TEXT_PLAIN);
+                    if (isHTML(html)) {
+                        ClearOrKeep(editor.i18n('Your code is similar to HTML. Keep as HTML?'), editor.i18n('Paste as HTML'), (agree: boolean) => {
+                            if (!agree) {
+                                html = htmlspecialchars(html);
+                            }
+
+                            editor.selection.insertHTML(html);
+                            editor.setEditorValue();
+                        }, 'Insert as Text');
+                        return false;
+                    }
+                }
+            });
+    }
+
+    if (editor.options.askBeforePasteFromWord) {
+        editor.events
+            .on('beforePaste', (event: ClipboardEvent): false | void => {
+                if (event && event.clipboardData && event.clipboardData.getData && event.clipboardData.getData(TEXT_HTML)) {
+                    const processHTMLData: Function = (html: string): void | false => {
+                        if (isHTML(html) && isHTMLFromWord(html)) {
+                            ClearOrKeep(editor.i18n('The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?'), editor.i18n('Word Paste Detected'), (agree: boolean) => {
+                                if (agree) {
+                                    html = applyStyles(html);
+
+                                    if (editor.options.beautifyHTML && (<any>editor.ownerWindow)['html_beautify']) {
+                                        html = (<any>editor.ownerWindow)['html_beautify'](html);
+                                    }
+                                } else {
+                                    html = cleanFromWord(html);
+                                }
+
+                                editor.selection.insertHTML(html);
+                                editor.setEditorValue();
+                            });
+                            return false;
+                        }
+                    };
+
+                    if (event.clipboardData.types && event.clipboardData.types.indexOf("text/html") !== -1) {
+                        let html: string = event.clipboardData.getData(TEXT_HTML);
+                        return processHTMLData(html);
+                    } else {
+                        const div: HTMLDivElement = <HTMLDivElement>dom('<div tabindex="-1" style="left: -9999px; top: 0px; width: 0px; height: 100%; line-height: 140%; overflow: hidden; position: fixed; z-index: 2147483647; -ms-word-break: break-all;" contenteditable="true"></div>', editor.ownerDocument);
+                        editor.container.appendChild(div);
+                        div.focus();
+                        let tick: number = 0;
+                        const waitData: Function = () => {
+                            tick += 1;
+                            // If data has been processes by browser, process it
+                            if (div.childNodes && div.childNodes.length > 0) {
+                                const pastedData: string = div.innerHTML;
+                                div.parentNode && div.parentNode.removeChild(div);
+                                if (processHTMLData(pastedData) !== false) {
+                                    editor.selection.insertHTML(pastedData);
+                                }
+                            } else {
+                                if (tick < 5) {
+                                    setTimeout(function () {
+                                        waitData()
+                                    }, 20);
+                                } else {
+                                    div.parentNode && div.parentNode.removeChild(div);
+                                }
+                            }
+                        };
+                        waitData();
+                    }
+                }
+            });
     }
 }

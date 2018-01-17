@@ -422,8 +422,8 @@ export class source extends Component {
                     undoManager = aceEditor.getSession().getUndoManager();
 
                     this.setMirrorValue = (value: string) => {
-                        if (editor.options.beautifyHTML && (<any>this.jodit.ownerWindow)['html_beautify']) {
-                            aceEditor.setValue((<any>this.jodit.ownerWindow)['html_beautify'](value));
+                        if (editor.options.beautifyHTML && (<any>editor.ownerWindow)['html_beautify']) {
+                            aceEditor.setValue((<any>editor.ownerWindow)['html_beautify'](value));
                         } else {
                             aceEditor.setValue(value);
                         }

@@ -362,6 +362,8 @@ export class Uploader extends Component {
         return new Blob([ia], {type: mimeString});
     }
 
+
+
     /**
      * Set the handlers Drag and Drop toWYSIWYG `$form`
      *
@@ -383,11 +385,8 @@ export class Uploader extends Component {
      */
 
     bind(form: HTMLElement, handlerSuccess?: HandlerSuccess, handlerError?: HandlerError) {
-        const self: Uploader = this;
-
-        self.jodit.events
-            .on(form, 'paste',  function (e: ClipboardEvent): false | void {
-
+        const self: Uploader = this,
+            onPaste = (e: ClipboardEvent): false | void => {
                 let i: number,
                     file: File|null,
                     extension: string,
@@ -401,14 +400,14 @@ export class Uploader extends Component {
 
                 // send data on server
                 if (e.clipboardData && e.clipboardData.files && e.clipboardData.files.length) {
-                    self.sendFiles(e.clipboardData.files, handlerSuccess, handlerError);
+                    this.sendFiles(e.clipboardData.files, handlerSuccess, handlerError);
                     return false;
                 }
 
                 if (browser('ff')) {
                     if (!e.clipboardData.types.length && e.clipboardData.types[0] !== TEXT_PLAIN) {
-                        div = <HTMLDivElement>Dom.create('div', '', self.jodit.editorDocument);
-                        self.jodit.selection.insertNode(div);
+                        div = <HTMLDivElement>Dom.create('div', '', this.jodit.editorDocument);
+                        this.jodit.selection.insertNode(div);
                         div.focus();
                         setTimeout(() => {
                             let child: HTMLDivElement|null = <HTMLDivElement>div.firstChild;
@@ -433,14 +432,24 @@ export class Uploader extends Component {
                             if (file) {
                                 let mime: string[] = <string[]>file.type.match(/\/([a-z0-9]+)/i);
                                 extension = mime[1] ? mime[1].toLowerCase() : '';
-                                self.sendFiles([file], handlerSuccess, handlerError, process);
+                                this.sendFiles([file], handlerSuccess, handlerError, process);
                             }
                             e.preventDefault();
                             break;
                         }
                     }
                 }
-            })
+            };
+
+        if (this.jodit.editor !== form) {
+            self.jodit.events
+                .on(form, 'paste',  onPaste)
+        } else {
+            self.jodit.events
+                .on('processPaste',  onPaste)
+        }
+
+        self.jodit.events
             .on(form, "dragover", (event: DragEvent) => {
                 form.classList.add('draghover');
                 event.preventDefault();

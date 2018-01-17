@@ -53,6 +53,8 @@ export default {
     'Paint format': 'Cloner le format',
     'Change mode': 'Mode wysiwyg <-> code html',
 
+
+
     //plugin Image
     'Margins': 'Marges',
     'top': 'haut',
@@ -76,7 +78,18 @@ export default {
     'Image properties': 'Propriétés de l\'image',
     'Cancel': 'Effacer',
     'Ok': 'OK',
-    
+
+
+    //plugin paste
+    'Your code is similar to HTML. Keep as HTML?': 'Votre texte que vous essayez de coller est similaire au HTML. Collez-le en HTML?',
+    'Paste as HTML': 'Coller en HTML?',
+    'Keep': 'Sauvegarder l\'original',
+    'Clean': 'Nettoyer',
+    'Insert as Text': 'Coller en tant que texte',
+    'Word Paste Detected': 'C\'est peut-être un fragment de Word ou Excel',
+    'The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?': 'Le contenu que vous insérez provient d\'un document Microsoft Word / Excel. Voulez-vous enregistrer le format ou l\'effacer?',
+
+
     // File Browser module
     'File Browser': 'Explorateur de fichiers',
     'Error on load list': 'Erreur de liste de chargement',

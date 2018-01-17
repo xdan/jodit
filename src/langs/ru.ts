@@ -77,9 +77,14 @@ export default {
     'Cancel': 'Отмена',
     'Ok': 'Ok',
 
-    //plugin insertHTML
-    'Your code is similar to HTML. Paste as HTML?': 'Ваш текст, который вы пытаетесь вставить похож на HTML. Вставить его как HTML?',
+    //plugin paste
+    'Your code is similar to HTML. Keep as HTML?': 'Ваш текст, который вы пытаетесь вставить похож на HTML. Вставить его как HTML?',
     'Paste as HTML': 'Вставить как HTML?',
+    'Keep': 'Сохранить оригинал',
+    'Clean': 'Почистить',
+    'Insert as Text': 'Вставить как текст',
+    'Word Paste Detected': 'Возможно это фрагмент Word или Excel',
+    'The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?': 'Контент который вы вставляете поступает из документа Microsoft Word / Excel. Вы хотите сохранить формат или очистить его?',
 
     // File Browser module
     'File Browser': 'Браузер файлов',

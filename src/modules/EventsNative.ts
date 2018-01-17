@@ -133,7 +133,7 @@ export class EventsNative {
         }
     }
 
-    private prepareEvent = (event: TouchEvent|MouseEvent) => {
+    private prepareEvent = (event: TouchEvent | MouseEvent | ClipboardEvent) => {
         if (event.cancelBubble) {
             return;
         }
@@ -148,6 +148,14 @@ export class EventsNative {
             (<any>event)['originalEvent'] = event;
         }
 
+        if (event.type === 'paste' && (<ClipboardEvent>event).clipboardData === undefined && (<any>this.doc.defaultView).clipboardData) {
+            Object.defineProperty(event, 'clipboardData', {
+                get: () => {
+                    return (<any>this.doc.defaultView).clipboardData;
+                },
+                enumerable: true
+            });
+        }
     };
 
     /**
