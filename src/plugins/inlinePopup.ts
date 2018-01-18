@@ -370,25 +370,26 @@ export function inlinePopup(editor: Jodit) {
             let clickOnImage: boolean = false;
 
             editor.events
+                .on([editor.ownerWindow, editor.editor], 'scroll', hidePopup)
                 .on(popup,'mousedown', (e: MouseEvent) => {
-                e.stopPropagation();
-            })
+                    e.stopPropagation();
+                })
                 .on(editor.editor, 'mousedown', (event: MouseEvent) => {
-                if ((<HTMLImageElement>event.target).tagName === 'IMG' || Dom.closest(<Node>event.target, 'table|a', editor.editor)) {
-                    const target: HTMLImageElement|HTMLTableElement = (<HTMLImageElement>event.target).tagName === 'IMG' ? <HTMLImageElement>event.target :  <HTMLTableElement>Dom.closest(<Node>event.target, 'table|a', editor.editor);
-                    const pos = offset(target, editor);
-                    delayShowPopup(target, Math.round(pos.left + (target.offsetWidth / 2)), Math.round(pos.top + target.offsetHeight));
-                    clickOnImage = true;
-                } else {
-                    clickOnImage = false;
-                }
-            })
+                    if ((<HTMLImageElement>event.target).tagName === 'IMG' || Dom.closest(<Node>event.target, 'table|a', editor.editor)) {
+                        const target: HTMLImageElement|HTMLTableElement = (<HTMLImageElement>event.target).tagName === 'IMG' ? <HTMLImageElement>event.target :  <HTMLTableElement>Dom.closest(<Node>event.target, 'table|a', editor.editor);
+                        const pos = offset(target, editor);
+                        delayShowPopup(target, Math.round(pos.left + (target.offsetWidth / 2)), Math.round(pos.top + target.offsetHeight));
+                        clickOnImage = true;
+                    } else {
+                        clickOnImage = false;
+                    }
+                })
                 .on(editor.ownerWindow, 'mousedown', () => {
-                if (!clickOnImage) {
-                    hidePopup();
-                }
-                clickOnImage = false;
-            });
+                    if (!clickOnImage) {
+                        hidePopup();
+                    }
+                    clickOnImage = false;
+                });
         })
         .on('beforeDestruct', () => {
             if (popup.parentNode) {

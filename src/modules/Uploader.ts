@@ -505,7 +505,7 @@ export class Uploader extends Component {
     uploadRemoteImage(url: string, handlerSuccess?: HandlerSuccess, handlerError?: HandlerError) {
         let uploader = this;
         uploader.send({
-            action: 'uploadremote',
+            action: 'fileUploadRemote',
             url: url
         }, (resp: UploaderAnswer) => {
             if (uploader.options.isSuccess.call(uploader, resp)) {
