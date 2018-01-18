@@ -966,11 +966,12 @@ export const cleanFromWord = (html: string): string => {
             Dom.all(div, (node: Node) => {
                 switch (node.nodeType) {
                     case Node.ELEMENT_NODE:
-                        (<Element>node).removeAttribute('class');
-                        (<Element>node).removeAttribute('style');
                         if (node.nodeName === 'FONT') {
                             Dom.unwrap(node);
                         }
+                        [].slice.call((<Element>node).attributes).forEach((attr: Attr) => {
+                            (<Element>node).removeAttribute(attr.name);
+                        });
                         break;
                     case Node.TEXT_NODE:
                         break;
