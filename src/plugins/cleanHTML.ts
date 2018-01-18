@@ -178,12 +178,11 @@ export function cleanHTML(editor: Jodit) {
 
     editor.events.on('afterCommand', function (command: string) {
         let sel: Select = editor.selection,
-            hr,
-            node: Node | null,
-            clean: any;
+            hr: HTMLHRElement | null,
+            node: Node | null;
 
-        switch (command) {
-        case 'insertHorizontalRule':
+        switch (command.toLowerCase()) {
+            case 'inserthorizontalrule':
             hr = editor.editor.querySelector('hr[id=null]');
             if (hr) {
                 node = <Node | null>Dom.next(hr, Dom.isBlock, editor.editor, false);
@@ -196,39 +195,46 @@ export function cleanHTML(editor: Jodit) {
                 sel.setCursorIn(node);
             }
             break;
-        case 'removeFormat':
-            node = <Node>sel.current();
-            clean = (elm: HTMLElement) => {
-                if (elm.nodeType === Node.ELEMENT_NODE) {
-                    // clean some "style" attributes in selected range
-                    if (elm.hasAttribute('style')) {
-                        elm.removeAttribute('style');
+            case 'removeformat':
+                node = <Node>sel.current();
+                const clean: (elm: Node) => false | void = (elm: Node) => {
+                    switch (elm.nodeType) {
+                        case Node.ELEMENT_NODE:
+                            Dom.each(elm, clean);
+                            if (elm.nodeName === 'FONT') {
+                                Dom.unwrap(elm);
+                            } else {
+                                // clean some "style" attributes in selected range
+                                [].slice.call((<Element>elm).attributes).forEach((attr: Attr) => {
+                                    if (['src', 'href', 'rel', 'content'].indexOf(attr.name.toLowerCase()) === -1) {
+                                        (<Element>elm).removeAttribute(attr.name);
+                                    }
+                                });
+                                normalizeNode(elm);
+                            }
+                            break;
+                        case Node.TEXT_NODE:
+                            if (editor.options.cleanHTML.replaceNBSP && elm.nodeType === Node.TEXT_NODE && elm.nodeValue !== null && elm.nodeValue.match(consts.SPACE_REG_EXP)) {
+                                elm.nodeValue = elm.nodeValue.replace(consts.SPACE_REG_EXP, ' ');
+                            }
+                            break;
+                        default:
+                            elm.parentNode && elm.parentNode.removeChild(elm);
                     }
+                };
 
-                    if (elm.tagName === 'FONT') {
-                        Dom.each(elm, clean);
-                        elm = Dom.replace(elm, 'span', false, false, editor.editorDocument);
-                    }
-
-                    normalizeNode(elm);
+                if (!sel.isCollapsed()) {
+                    editor.selection.eachSelection((current: Node): false | void => {
+                        clean(current);
+                    });
                 } else {
-                    if (editor.options.cleanHTML.replaceNBSP && elm.nodeType === Node.TEXT_NODE && elm.nodeValue !== null && elm.nodeValue.match(consts.SPACE_REG_EXP)) {
-                        elm.nodeValue = elm.nodeValue.replace(consts.SPACE_REG_EXP, ' ');
+                    while (node && node.nodeType !== Node.ELEMENT_NODE && node !== editor.editor) {
+                        clean(node);
+                        if (node) {
+                            node = node.parentNode;
+                        }
                     }
                 }
-                return elm;
-            };
-
-            if (!sel.isCollapsed()) {
-                editor.editorWindow.getSelection().removeAllRanges();
-            } else {
-                while (node && node.nodeType !== Node.ELEMENT_NODE && node !== editor.editor) {
-                    node = clean(node);
-                    if (node) {
-                        node = node.parentNode;
-                    }
-                }
-            }
 
             break;
         }

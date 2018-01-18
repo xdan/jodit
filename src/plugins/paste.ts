@@ -119,8 +119,12 @@ export function paste(editor: Jodit) {
             return false;
         }
     });
-
-    const ClearOrKeep: Function = (msg: string, title: string, callback: (yes: boolean) => void, clearButton: string = 'Clean'): Dialog => {
+    const strip_tags: Function = (html: string): string => {
+        const div: HTMLDivElement = document.createElement('div');
+        div.innerHTML = html;
+        return div.innerText;
+    };
+    const ClearOrKeep: Function = (msg: string, title: string, callback: (yes: boolean | number) => void, clearButton: string = 'Clean', clear2Button: string = 'Insert only Text'): Dialog => {
         const dialog: Dialog = Confirm(`<div style="word-break: normal; white-space: normal">${msg}</div>`, title, callback);
 
         const keep: HTMLAnchorElement  = <HTMLAnchorElement>dom(
@@ -133,6 +137,13 @@ export function paste(editor: Jodit) {
         const clear: HTMLAnchorElement  = <HTMLAnchorElement>dom(
             '<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
                 '<span>' + Jodit.prototype.i18n(clearButton) + '</span>' +
+            '</a>',
+            dialog.document
+        );
+
+        const clear2: HTMLAnchorElement  = <HTMLAnchorElement>dom(
+            '<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
+            '<span>' + Jodit.prototype.i18n(clear2Button) + '</span>' +
             '</a>',
             dialog.document
         );
@@ -153,6 +164,10 @@ export function paste(editor: Jodit) {
             dialog.close();
             callback && callback(false);
         });
+        editor.events.on(clear2, 'click', () => {
+            dialog.close();
+            callback && callback(0);
+        });
 
         editor.events.on(cancel, 'click', () => {
             dialog.close();
@@ -161,28 +176,35 @@ export function paste(editor: Jodit) {
         dialog.setFooter([
             keep,
             clear,
-            cancel
+            clear2Button ? clear2 : '',
+            cancel,
         ]);
 
         return dialog;
     };
+    const insertHTML: Function = (html: string) : void | false => {
+        if (isHTML(html)) {
+            ClearOrKeep(editor.i18n('Your code is similar to HTML. Keep as HTML?'), editor.i18n('Paste as HTML'), (agree: boolean | number) => {
+                if (agree === false) {
+                    html = htmlspecialchars(html);
+                }
 
+                if (agree === 0) {
+                    html = strip_tags(html);
+                }
+
+                editor.selection.insertHTML(html);
+                editor.setEditorValue();
+            }, 'Insert as Text');
+            return false;
+        }
+    };
     if (editor.options.askBeforePasteHTML) {
         editor.events
             .on('beforePaste', (event: ClipboardEvent): false | void => {
                 if (event && event.clipboardData && event.clipboardData.getData && event.clipboardData.getData(TEXT_PLAIN)) {
                     let html: string = event.clipboardData.getData(TEXT_PLAIN);
-                    if (isHTML(html)) {
-                        ClearOrKeep(editor.i18n('Your code is similar to HTML. Keep as HTML?'), editor.i18n('Paste as HTML'), (agree: boolean) => {
-                            if (!agree) {
-                                html = htmlspecialchars(html);
-                            }
-
-                            editor.selection.insertHTML(html);
-                            editor.setEditorValue();
-                        }, 'Insert as Text');
-                        return false;
-                    }
+                    return insertHTML(html);
                 }
             });
     }
@@ -192,21 +214,30 @@ export function paste(editor: Jodit) {
             .on('beforePaste', (event: ClipboardEvent): false | void => {
                 if (event && event.clipboardData && event.clipboardData.getData && event.clipboardData.getData(TEXT_HTML)) {
                     const processHTMLData: Function = (html: string): void | false => {
-                        if (isHTML(html) && isHTMLFromWord(html)) {
-                            ClearOrKeep(editor.i18n('The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?'), editor.i18n('Word Paste Detected'), (agree: boolean) => {
-                                if (agree) {
-                                    html = applyStyles(html);
+                        if (isHTML(html)) {
+                            if (isHTMLFromWord(html)) {
+                                ClearOrKeep(editor.i18n('The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?'), editor.i18n('Word Paste Detected'), (agree: boolean | number) => {
+                                    if (agree === true) {
+                                        html = applyStyles(html);
 
-                                    if (editor.options.beautifyHTML && (<any>editor.ownerWindow)['html_beautify']) {
-                                        html = (<any>editor.ownerWindow)['html_beautify'](html);
+                                        if (editor.options.beautifyHTML && (<any>editor.ownerWindow)['html_beautify']) {
+                                            html = (<any>editor.ownerWindow)['html_beautify'](html);
+                                        }
                                     }
-                                } else {
-                                    html = cleanFromWord(html);
-                                }
+                                    if (agree === false) {
+                                        html = cleanFromWord(html);
+                                    }
 
-                                editor.selection.insertHTML(html);
-                                editor.setEditorValue();
-                            });
+                                    if (agree === 0) {
+                                        html = strip_tags(cleanFromWord(html));
+                                    }
+
+                                    editor.selection.insertHTML(html);
+                                    editor.setEditorValue();
+                                });
+                            } else {
+                                insertHTML(html);
+                            }
                             return false;
                         }
                     };

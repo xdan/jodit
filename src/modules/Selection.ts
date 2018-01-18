@@ -509,6 +509,7 @@ export class Select extends Component{
 
                 return node === end;
             }, this.jodit.editor, true, 'nextSibling', false);
+
             nodes.forEach((current: Node) => {
                 callback(current);
             })

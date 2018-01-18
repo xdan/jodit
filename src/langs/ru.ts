@@ -83,6 +83,7 @@ export default {
     'Keep': 'Сохранить оригинал',
     'Clean': 'Почистить',
     'Insert as Text': 'Вставить как текст',
+    'Insert only Text': 'Вставить только текст',
     'Word Paste Detected': 'Возможно это фрагмент Word или Excel',
     'The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?': 'Контент который вы вставляете поступает из документа Microsoft Word / Excel. Вы хотите сохранить формат или очистить его?',
 

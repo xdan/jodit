@@ -85,7 +85,7 @@ export default {
     'Insert as Text': 'Einfügen als Text',
     'Word Paste Detected': 'Vielleicht ist dies ein Fragment von Word oder Excel',
     'The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?': 'Der Inhalt, den Sie einfügen, stammt aus einem Microsoft Word / Excel-Dokument. Möchten Sie das Format speichern oder löschen?',
-
+    'Insert only Text': 'Fügen Sie nur Text ein',
 
     // File Browser module
     'File Browser': 'Dateibrowser',

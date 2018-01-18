@@ -968,10 +968,13 @@ export const cleanFromWord = (html: string): string => {
                     case Node.ELEMENT_NODE:
                         if (node.nodeName === 'FONT') {
                             Dom.unwrap(node);
+                        } else {
+                            [].slice.call((<Element>node).attributes).forEach((attr: Attr) => {
+                                if (['src', 'href', 'rel', 'content'].indexOf(attr.name.toLowerCase()) === -1) {
+                                    (<Element>node).removeAttribute(attr.name);
+                                }
+                            });
                         }
-                        [].slice.call((<Element>node).attributes).forEach((attr: Attr) => {
-                            (<Element>node).removeAttribute(attr.name);
-                        });
                         break;
                     case Node.TEXT_NODE:
                         break;
