@@ -86,7 +86,7 @@ export function justify(editor: Jodit) {
     const callback: Function = (command: string): false | void => {
         const justify = (box: HTMLElement) => {
             if (box instanceof (<any>editor.editorWindow).HTMLElement) {
-                switch (command) {
+                switch (command.toLowerCase()) {
                     case 'justifyfull':
                         box.style.textAlign = 'justify';
                         break;
