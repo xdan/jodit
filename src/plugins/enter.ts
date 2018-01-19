@@ -43,6 +43,9 @@ export const insertParagraph = (editor: Jodit, fake ?: Node, wrapperTag ?: strin
  */
 export function enter(editor: Jodit) {
     editor.events.on('keyup', () => {
+        if (editor.options.readonly) {
+            return;
+        }
         let current: false|Node = editor.selection.current();
         if (current !== false) {
             let currentParagraph = Dom.up(current, (node: HTMLElement) => (node.tagName === editor.options.enter.toUpperCase()), editor.editor);

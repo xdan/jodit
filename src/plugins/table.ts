@@ -327,6 +327,10 @@ export class TableProcessor extends Component{
 
         this.jodit.events
             .on(table, 'mousedown touchstart', (event: MouseEvent) => {
+                if (this.jodit.options.readonly) {
+                    return;
+                }
+
                 const cell: HTMLTableCellElement = <HTMLTableCellElement>Dom.up(<HTMLElement>event.target, TableProcessor.isCell, table);
                 if (cell && cell instanceof (<any>this.jodit.editorWindow).HTMLElement) {
                     if (!cell.firstChild) {
@@ -345,6 +349,10 @@ export class TableProcessor extends Component{
                 }
             })
             .on(table,'mousemove touchmove', (event: MouseEvent) => {
+                if (this.jodit.options.readonly) {
+                    return;
+                }
+
                 if (this.__drag || this.jodit.isLockedNotBy(this.__key)) {
                     return;
                 }

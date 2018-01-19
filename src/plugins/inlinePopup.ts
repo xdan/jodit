@@ -348,6 +348,9 @@ export function inlinePopup(editor: Jodit) {
         },
 
         delayShowPopup = (elm: HTMLElement, x: number, y: number) => {
+            if (editor.options.readonly) {
+                return;
+            }
             clearTimeout(timeout);
             if (editor.options.observer.timeout) {
                 timeout = setTimeout(showPopup.bind(editor, elm, x, y), editor.options.observer.timeout);

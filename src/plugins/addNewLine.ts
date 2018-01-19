@@ -52,6 +52,10 @@ export function addNewLine(editor: Jodit) {
     let current: HTMLElement|false;
 
     const show = () => {
+        if (editor.options.readonly) {
+            return;
+        }
+
         if (editor.container.classList.contains('jodit_popup_active')) {
             return;
         }

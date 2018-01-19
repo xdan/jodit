@@ -24,7 +24,25 @@
         <tr>
             <td id="maintab" style="width:50%;vertical-align: top">
                 <div id="uniqbox" class="box">
-                    <textarea id="area_editor"><p style="margin-left: 100px">asdasdas</p></textarea>
+                    <textarea id="area_editor">&lt;div>
+    &lt;img src="https://xdsoft.net/jodit/build/images/artio.jpg" style="width: 301px; float: right; margin-left: 15px; margin-top: 10px;">
+&lt;/div>
+&lt;ul>
+    &lt;li>Copy/Paste image&lt;/li>
+    &lt;li>Drag&amp;Drop &lt;/li>
+    &lt;li>Free for non-Commercial &lt;a href="license.html">Read more</a> &lt;/li>
+    &lt;li>ACE editor out of the box &lt;/li>
+    &lt;li>Pure TypeScript. No libraries&lt;/li>
+    &lt;li>Lightweight: ~63.63kB gzipped.&lt;/li>
+&lt;/ul>
+
+                    <table><tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                    </tr></table>
+                    </textarea>
                 </div>
             </td>
             <td id="mirrortab"><textarea readonly disabled id="mirror"></textarea></td>
@@ -83,7 +101,7 @@
     editor = new Jodit('#area_editor', {
         // direction: 'rtl',
         // theme: 'dark',
-        // readonly: true,
+        readonly: true,
         textIcons: false,
 //         iframe: true,
         iframeStyle: '*,.jodit_wysiwyg {color:red;}',

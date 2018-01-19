@@ -304,7 +304,9 @@ export class Jodit extends Component {
         // proxy events
         this.events
             .on(this.editor, 'keydown keyup keypress mousedown mouseup mousepress paste resize touchstart touchend focus blur', (event: Event): false | void => {
-
+                if (this.options.readonly) {
+                    return;
+                }
                 if (this.events && this.events.fire) {
                     if (this.events.fire(event.type, event) === false) {
                         return false;
@@ -619,6 +621,10 @@ export class Jodit extends Component {
      * ```
      */
     execCommand(command: string, second: any = false, third: null|any = null) {
+        if (this.options.readonly) {
+            return;
+        }
+
         let result: any;
         command = command.toLowerCase();
         /**

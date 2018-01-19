@@ -118,6 +118,9 @@ export function resizer(editor: Jodit) {
         },
 
         showResizer = () => {
+            if (editor.options.readonly) {
+                return;
+            }
             resizerIsVisible = true;
             resizer.style.display = 'block';
             updateSize();
@@ -220,6 +223,11 @@ export function resizer(editor: Jodit) {
         });
 
     editor.events
+        .on('readonly', (isReadOnly: boolean) => {
+            if (isReadOnly) {
+                hideResizer();
+            }
+        })
         .on('beforeDestruct', () => {
             if (resizer.parentNode) {
                 resizer.parentNode.removeChild(resizer);

@@ -102,6 +102,10 @@ export function imageProperties(editor: Jodit) {
      * ```
      */
     const open = function (this: HTMLImageElement, e ?: MouseEvent) {
+        if (editor.options.readonly) {
+            return;
+        }
+
         const image = <HTMLImageElement>this,
             dialog: Dialog = new Dialog(editor),
             cancel: HTMLElement = dom('<a href="javascript:void(0)" style="float:right;" class="jodit_button">' + Toolbar.getIcon('cancel') + '<span>' + editor.i18n('Cancel') + '</span></a>', editor.ownerDocument),
