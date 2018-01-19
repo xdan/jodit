@@ -488,6 +488,7 @@ export class Toolbar extends Component{
 
         if (control.iconURL && container) {
             container.style.backgroundImage =  'url(' + control.iconURL + ')'
+            container.style.display =  'inline-block'
         }
     }
     /**

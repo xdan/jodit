@@ -263,7 +263,7 @@ export class Jodit extends Component {
             this.setReadOnly(true);
         }
 
-        this.events.fire('afterInit');
+        this.events.fire('afterInit', this);
     }
 
     __plugins: {[key: string]: JoditPlugin} = {};
