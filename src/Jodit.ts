@@ -258,6 +258,11 @@ export class Jodit extends Component {
 
 
         this.setMode(this.options.defaultMode);
+
+        if (this.options.readonly) {
+            this.setReadOnly(true);
+        }
+
         this.events.fire('afterInit');
     }
 
@@ -858,6 +863,23 @@ export class Jodit extends Component {
     getVersion = () => {
         return this.version;
     }
+
+    /**
+     * Change the read-only state of the editor
+     *
+     * @param {boolean} isReadOnly
+     */
+    setReadOnly(isReadOnly: boolean) {
+        this.options.readonly = isReadOnly;
+
+        if (isReadOnly) {
+            this.editor.removeAttribute('contenteditable');
+        } else {
+            this.editor.setAttribute('contenteditable', 'true');
+        }
+
+        this.events.fire('readonly', isReadOnly);
+    };
 }
 
 

@@ -1071,6 +1071,156 @@ describe('Test interface', function() {
             });
         });
     });
+    describe('ReadOnly', function () {
+        describe('Set readonly mode in options', function () {
+            describe('For iframe', function () {
+                it('Should deny edit content in iframe\'s body', function () {
+                    var editor = new Jodit('#table_editor_interface', {
+                        readonly: true,
+                        iframe: true
+                    });
+                    expect(false).to.equal(editor.editor.hasAttribute('contenteditable'));
+                    expect('BODY').to.equal(editor.editor.nodeName);
+                });
+            });
+            it('Should deny edit content in wysiwyg', function () {
+                var editor = new Jodit('#table_editor_interface', {
+                    readonly: true
+                });
+                expect(false).to.equal(editor.editor.hasAttribute('contenteditable'));
+            });
+            it('Should deny exec any commands', function () {
+                var editor = new Jodit('#table_editor_interface', {
+                    readonly: true
+                });
+
+                editor.setEditorValue('test');
+
+                editor.selection.select(editor.editor.firstChild);
+
+                editor.execCommand('bold');
+
+                expect('test').to.equal(editor.getEditorValue());
+            });
+            it('Should disable all toolbar buttons besides source, print, about, fullsize', function () {
+                var editor = new Jodit('#table_editor_interface', {
+                    readonly: true,
+                    observer: {
+                        timeout: 0
+                    }
+                });
+
+                editor.setEditorValue('test');
+                var buttons = [].slice.call(editor.container.querySelectorAll('.jodit_toolbar_btn'));
+                buttons.forEach(function (btn) {
+                    if (!/(source|print|about|fullsize|separator)/.test(btn.className)) {
+                        expect(true).to.be.equal(btn.classList.contains('jodit_disabled'));
+                        expect(true).to.be.equal(btn.hasAttribute('disabled'));
+                    }
+                });
+            });
+            it('Should deny edit content in simple source editor', function () {
+                var editor = new Jodit('#table_editor_interface', {
+                    readonly: true,
+                    useAceEditor: false
+                });
+                editor.setMode(Jodit.MODE_SOURCE);
+                expect(true).to.equal(editor.__plugins.source.mirror.hasAttribute('readonly'));
+            });
+            it('Should deny edit content in ace source editor', function (done) {
+                var editor = new Jodit('#table_editor_interface', {
+                    readonly: true,
+                    useAceEditor: true,
+                    events: {
+                        'aceInited': function (editor) {
+                            expect(null).to.be.not.equal(editor.__plugins.source.aceEditor);
+                            expect(true).to.be.equal(editor.__plugins.source.aceEditor.getReadOnly());
+                            done();
+                        }
+                    }
+                });
+                editor.setMode(Jodit.MODE_SOURCE);
+                expect(true).to.be.equal(editor.__plugins.source.mirror.hasAttribute('readonly'));
+
+            }).timeout(6000);
+            it('Should hide placeholder', function () {
+                table_editor_interface.value = '';
+                var editor = new Jodit('#table_editor_interface', {
+                    readonly: true
+                });
+                expect(editor.container.querySelectorAll('.jodit_placeholder').length && editor.container.querySelector('.jodit_placeholder').style.display === 'none').to.be.equal(true);
+                editor.setEditorValue('test');
+                expect(editor.container.querySelectorAll('.jodit_placeholder').length && editor.container.querySelector('.jodit_placeholder').style.display === 'none').to.be.equal(true);
+            });
+            describe('Search plugin', function () {
+                describe('CTRL + R', function () {
+                    describe('In readonly editor', function () {
+                        it('Should be deny', function () {
+                            var editor = new Jodit('#table_editor_interface', {
+                                readonly: true,
+                                observer: {
+                                    timeout: 0
+                                }
+                            });
+
+                            var search = editor.container.querySelector('.jodit_search');
+                            expect(false).to.equal(search.classList.contains('jodit_search-active'));
+                            simulateEvent('keydown', Jodit.KEY_R, editor.editor, function (options) {
+                                options.ctrlKey = true
+                            });
+                            expect(false).to.equal(search.classList.contains('jodit_search-active'));
+                            expect(false).to.equal(search.classList.contains('jodit_search-and-replace'));
+                            expect(false).to.equal(editor.ownerDocument.activeElement === search.querySelector('.jodit_search-query'));
+                        });
+                    });
+                });
+            });
+        });
+        describe('Disable readonly mode', function () {
+            it('Should allow edit content in wysiwyg', function () {
+                var editor = new Jodit('#table_editor_interface', {
+                    readonly: true
+                });
+                expect(false).to.equal(editor.editor.hasAttribute('contenteditable'));
+                editor.setReadOnly(false);
+                expect(true).to.equal(editor.editor.hasAttribute('contenteditable'));
+            });
+            it('Should allow edit content in simple source editor', function () {
+                var editor = new Jodit('#table_editor_interface', {
+                    readonly: true,
+                    useAceEditor: false
+                });
+                editor.setMode(Jodit.MODE_SOURCE);
+                expect(true).to.equal(editor.__plugins.source.mirror.hasAttribute('readonly'));
+
+                editor.setReadOnly(false);
+
+                expect(false).to.equal(editor.__plugins.source.mirror.hasAttribute('readonly'));
+            });
+            it('Should allow edit content in ace source editor', function (done) {
+                var editor = new Jodit('#table_editor_interface', {
+                    readonly: true,
+                    useAceEditor: true,
+                    defaultMode: Jodit.MODE_SOURCE,
+                    events: {
+                        'aceInited': function (editor) {
+                            expect(null).to.be.not.equal(editor.__plugins.source.aceEditor);
+                            expect(true).to.be.equal(editor.__plugins.source.aceEditor.getReadOnly());
+
+                            editor.setReadOnly(false);
+                            expect(false).to.be.equal(editor.__plugins.source.mirror.hasAttribute('readonly'));
+                            expect(false).to.be.equal(editor.__plugins.source.aceEditor.getReadOnly());
+
+                            done();
+                        }
+                    }
+                });
+                editor.setMode(Jodit.MODE_SOURCE);
+                expect(true).to.be.equal(editor.__plugins.source.mirror.hasAttribute('readonly'));
+
+            }).timeout(6000);
+        });
+    });
     after(function() {
          table_editor_interface.parentNode.removeChild(table_editor_interface);
     });

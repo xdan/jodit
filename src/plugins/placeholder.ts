@@ -66,7 +66,7 @@ export function placeholder(this: any, editor: Jodit) {
     };
 
     const show =  () => {
-            if (!placeholder.parentNode) {
+            if (!placeholder.parentNode || editor.options.readonly) {
                 return;
             }
 
@@ -125,6 +125,13 @@ export function placeholder(this: any, editor: Jodit) {
     }
 
     editor.events
+        .on('readonly', (isReadOnly: boolean) => {
+            if (isReadOnly) {
+                hide();
+            } else {
+                show();
+            }
+        })
         .on('afterInit', () => {
             editor.workplace
                 .appendChild(placeholder);

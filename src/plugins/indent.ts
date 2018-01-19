@@ -21,11 +21,11 @@ Config.prototype.controls.outdent = <ControlType>{
         if (current) {
             const currentBox: HTMLElement | false = <HTMLElement | false>Dom.closest(current, Dom.isBlock, editor.editor);
             if (currentBox && currentBox.style && currentBox.style.marginLeft) {
-                return parseInt(currentBox.style.marginLeft, 10) > 0;
+                return parseInt(currentBox.style.marginLeft, 10) <= 0;
             }
         }
 
-        return false;
+        return true;
     },
     tooltip: "Decrease Indent",
 };

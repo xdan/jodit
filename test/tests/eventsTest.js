@@ -286,6 +286,110 @@ describe('Jodit Events system Tests', function() {
                 expect(6).to.be.equal(clicked);
             });
         });
+        describe('Queue operations', function () {
+            it('Should call handlers in order how the were added but handler with onTop option should be called first', function () {
+                var eventer = new Jodit.modules.EventsNative(),
+                    simpleObject = {},
+                    clicked = [];
+
+                eventer.on(simpleObject, 'click', function () {
+                    clicked.push(1);
+                });
+                eventer.on(simpleObject, 'click', function () {
+                    clicked.push(2);
+                });
+                eventer.on(simpleObject, 'click', function () {
+                    clicked.push(3);
+                });
+                eventer.on(simpleObject, 'click', function () {
+                    clicked.push(4);
+                }, undefined, true);
+
+                eventer.fire(simpleObject, 'click');
+
+
+                expect('4,1,2,3').to.be.equal(clicked.toString());
+            });
+            describe('Stop propagation', function () {
+                it('Should stop all calls for this event but another events should be called', function () {
+                    var eventer = new Jodit.modules.EventsNative(),
+                        simpleObject = {},
+                        clicked = [];
+
+                    eventer.on(simpleObject, 'lope', function () {
+                        clicked.push(15);
+                    });
+                    eventer.on(simpleObject, 'pop', function () {
+                        clicked.push(16);
+                    });
+
+                    eventer.on(simpleObject, 'click', function () {
+                        clicked.push(1);
+                    });
+
+                    eventer.on(simpleObject, 'click', function () {
+                        clicked.push(2);
+                        eventer.fire(simpleObject, 'pop');
+                        eventer.stopPropagation(simpleObject, 'click');
+                        eventer.fire(simpleObject, 'lope');
+                    });
+
+                    // this handler will not be called
+                    eventer.on(simpleObject, 'click', function () {
+                        clicked.push(3);
+                    });
+
+                    eventer.on(simpleObject, 'click', function () {
+                        clicked.push(4);
+                    }, undefined, true);
+
+                    eventer.fire(simpleObject, 'click');
+                    eventer.fire(simpleObject, 'click');
+
+
+                    expect('4,1,2,16,15,4,1,2,16,15').to.be.equal(clicked.toString());
+                });
+                describe('Default object', function () {
+                    it('Should stop all calls for this event but another events should be called', function () {
+                        var eventer = new Jodit.modules.EventsNative(),
+                            clicked = [];
+
+                        eventer.on('lope', function () {
+                            clicked.push(15);
+                        });
+                        eventer.on('pop', function () {
+                            clicked.push(16);
+                        });
+
+                        eventer.on('click', function () {
+                            clicked.push(1);
+                        });
+
+                        eventer.on('click', function () {
+                            clicked.push(2);
+                            eventer.fire('pop');
+                            eventer.stopPropagation('click');
+                            eventer.fire('lope');
+                        });
+
+                        // this handler will not be called
+                        eventer.on('click', function () {
+                            clicked.push(3);
+                        });
+
+                        eventer.on('click', function () {
+                            clicked.push(4);
+                        }, undefined, undefined, true);
+
+                        eventer.fire('click');
+                        eventer.fire('click');
+
+
+                        expect('4,1,2,16,15,4,1,2,16,15').to.be.equal(clicked.toString());
+                    });
+                });
+            });
+        });
         describe('Short form', function () {
             describe('Add event to simple object', function () {
                 it('Should work with on handler', function () {

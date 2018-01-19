@@ -388,13 +388,17 @@ export class Toolbar extends Component{
 
             const mode =  (button.control === undefined || button.control.mode === undefined) ? consts.MODE_WYSIWYG : button.control.mode;
 
-            let isDisabled: boolean = mode === consts.MODE_SPLIT || mode === this.jodit.getRealMode();
+            let isEnable: boolean = mode === consts.MODE_SPLIT || mode === this.jodit.getRealMode();
 
             if (typeof button.control.isDisable === 'function') {
-                isDisabled = isDisabled && button.control.isDisable(this.jodit, button.control, button);
+                isEnable = isEnable && !button.control.isDisable(this.jodit, button.control, button);
             }
 
-            Toolbar.__toggleButton(button.btn, isDisabled);
+            if (this.jodit.options.readonly && this.jodit.options.activeButtonsInReadOnly.indexOf(button.name) === -1) {
+                isEnable = false;
+            }
+
+            Toolbar.__toggleButton(button.btn, isEnable);
 
             if (typeof button.control.getLabel === 'function') {
                 button.control.getLabel(this.jodit, button.control, button);
@@ -507,9 +511,18 @@ export class Toolbar extends Component{
 
         btn.classList.add('jodit_toolbar_btn-' + clearName);
 
-        const canActionCallback: Function = (enable: boolean) => {
-            Toolbar.__toggleButton(btn, enable);
+        const canActionCallback: Function = (enable?: boolean) => {
+            if (this.jodit.options.readonly && this.jodit.options.activeButtonsInReadOnly.indexOf(name) === -1) {
+                enable = false;
+            }
+
+            if (enable !== undefined) {
+                Toolbar.__toggleButton(btn, enable);
+            }
         };
+
+        canActionCallback();
+
 
         this.jodit.events.on(camelCase('can-' + clearName), canActionCallback);
 
@@ -730,7 +743,7 @@ export class Toolbar extends Component{
             .on('hidePopup', () => {
                 this.closeAll();
             })
-            .on('mousedown mouseup keydown change afterSetMode focus afterInit', () => {
+            .on('mousedown mouseup keydown change afterSetMode focus afterInit readonly', () => {
                 const callback = () => {
                     if (this.jodit.selection) {
                         this.checkActiveButtons(this.jodit.selection.current())

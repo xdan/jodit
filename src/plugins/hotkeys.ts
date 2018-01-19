@@ -175,14 +175,18 @@ export class hotkeys extends Component{
                 };
 
                 let itIsHotkey: boolean = false;
+                const self = this;
 
                 editor.events
                     .on('keydown', (event: KeyboardEvent) : void | false => {
-                        this.possible = {};
-                        this.onKeyPress(event);
+                        self.possible = {};
+                        self.onKeyPress(event);
 
                         if (runPossible(event) === false) {
                             itIsHotkey = true;
+
+                            editor.events.stopPropagation('keydown');
+
                             return false;
                         }
 

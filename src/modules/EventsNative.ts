@@ -259,7 +259,7 @@ export class EventsNative {
                     syntheticCallback
                 };
 
-                store.set(event, namespace, block);
+                store.set(event, namespace, block, onTop);
 
                 if (namespace !== this.__defaultNameSpace) {
                     store.set(event, this.__defaultNameSpace, block, onTop);
@@ -394,6 +394,35 @@ export class EventsNative {
         element.dispatchEvent(evt);
     }
 
+    private __stopped: Array<EventHandlerBlock[]> = [];
+
+    stopPropagation(subjectOrEvents: object|string, eventsList?: string) {
+        const subject: object = typeof subjectOrEvents === 'string' ? this : subjectOrEvents;
+        const events: string = typeof subjectOrEvents === 'string' ? subjectOrEvents : <string>eventsList;
+
+        if (typeof events !== 'string') {
+            throw new Error('Need event names');
+        }
+        const store: EventHandlersStore = this.getStore(subject);
+
+        this.eachEvent(events, (event: string, namespace: string): void => {
+            const blocks: EventHandlerBlock[] | void = store.get(event, namespace);
+            if (blocks) {
+                this.__stopped.push(blocks);
+            }
+        });
+    }
+
+    private removeStop(__currentBlocks: EventHandlerBlock[]) {
+        if (__currentBlocks) {
+            const index: number = this.__stopped.indexOf(__currentBlocks);
+            index !== -1 && this.__stopped.splice(index, 1);
+        }
+    }
+    private isStopped(__currentBlocks: EventHandlerBlock[]): boolean {
+        return __currentBlocks !== undefined && this.__stopped.indexOf(__currentBlocks) !== -1;
+    }
+
     /**
      * Sets the handler for the specified event (Event List) for a given element .
      *
@@ -445,12 +474,23 @@ export class EventsNative {
                     const blocks: EventHandlerBlock[] | void = store.get(event, namespace);
                     if (blocks) {
                         this.current = event;
-                        blocks.forEach((block: EventHandlerBlock) => {
-                            result_value = block.syntheticCallback.apply(subject, argumentsList);
-                            if (result_value !== undefined) {
-                                result = result_value;
-                            }
-                        });
+
+                        try {
+                            blocks.every((block: EventHandlerBlock): boolean => {
+                                if (this.isStopped(blocks)) {
+                                    return false;
+                                }
+
+                                result_value = block.syntheticCallback.apply(subject, argumentsList);
+                                if (result_value !== undefined) {
+                                    result = result_value;
+                                }
+
+                                return true;
+                            });
+                        } finally {
+                            this.removeStop(blocks);
+                        }
                     }
 
                 }

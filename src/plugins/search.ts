@@ -330,7 +330,7 @@ export class search extends Component {
         this.current = this.jodit.selection.current();
         this.selInfo = this.jodit.selection.save();
 
-        let sel: string = this.jodit.ownerWindow.getSelection().toString();
+        const sel: string = this.jodit.ownerWindow.getSelection().toString();
 
         if (sel) {
             this.queryInput.value = sel;
@@ -467,7 +467,9 @@ export class search extends Component {
             });
             editor.registerCommand('openReplaceDialog', {
                 exec: () => {
-                    self.open(true);
+                    if (!editor.options.readonly) {
+                        self.open(true);
+                    }
                     return false;
                 },
                 hotkeys: 'ctrl+r'

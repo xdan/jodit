@@ -181,6 +181,24 @@ export class source extends Component {
             });
 
         editor.events
+            .on('aceInited', () => {
+                if (editor.options.readonly) {
+                    if (this.aceEditor) {
+                        this.aceEditor.setReadOnly(true);
+                    }
+                }
+            }, void(0), void(0), true)
+            .on('readonly', (isReadOnly: boolean) => {
+                if (isReadOnly) {
+                    this.mirror.setAttribute('readonly', 'true');
+                } else {
+                    this.mirror.removeAttribute('readonly');
+                }
+
+                if (this.aceEditor) {
+                    this.aceEditor.setReadOnly(isReadOnly);
+                }
+            })
             .on('placeholder', (text: string) => {
                 this.mirror.setAttribute('placeholder', text);
             })

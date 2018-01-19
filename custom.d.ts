@@ -30,6 +30,7 @@ type Permissions = {
     [key: string]: boolean;
 };
 
+
 type CommandType = {
     exec: Function,
     hotkeys?: string | string[]

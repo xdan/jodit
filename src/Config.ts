@@ -27,6 +27,13 @@ export class Config {
     zIndex: number = 0;
 
     /**
+     * Change the read-only state of the editor
+     * @type {boolean}
+     */
+    readonly: boolean = false;
+    activeButtonsInReadOnly: string[] = ['source', 'fullsize', 'print', 'about'];
+
+    /**
      * For example, in Joomla, the top menu bar closes Jodit toolbar when scrolling. Therefore, it is necessary to move the toolbar Jodit by this amount [more](http://xdsoft.net/jodit/doc/#2.5.57)
      */
 
@@ -539,7 +546,8 @@ Config.prototype.controls = {
                 mywindow.print();
                 mywindow.close();
             }
-        }
+        },
+        mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG
     },
     about: <ControlType>{
         exec: (editor: Jodit) => {
