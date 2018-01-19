@@ -129,7 +129,7 @@ export function placeholder(this: any, editor: Jodit) {
             if (isReadOnly) {
                 hide();
             } else {
-                show();
+                toggle();
             }
         })
         .on('afterInit', () => {
