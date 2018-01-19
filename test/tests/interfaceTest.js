@@ -1175,6 +1175,20 @@ describe('Test interface', function() {
                     });
                 });
             });
+            describe('Method get read only', function () {
+                it('Should return enable/disable readonly', function () {
+                    var editor = new Jodit('#table_editor_interface', {
+                        readonly: true
+                    });
+                    expect(true).to.equal(editor.getReadOnly());
+                    editor.setReadOnly(false)
+                    expect(false).to.equal(editor.getReadOnly());
+                    editor.destruct();
+
+                    var editor = new Jodit('#table_editor_interface');
+                    expect(false).to.equal(editor.getReadOnly());
+                });
+            });
         });
         describe('Disable readonly mode', function () {
             it('Should allow edit content in wysiwyg', function () {

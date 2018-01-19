@@ -873,13 +873,21 @@ export class Jodit extends Component {
         this.options.readonly = isReadOnly;
 
         if (isReadOnly) {
-            this.editor.removeAttribute('contenteditable');
+            this.editor && this.editor.removeAttribute('contenteditable');
         } else {
-            this.editor.setAttribute('contenteditable', 'true');
+            this.editor && this.editor.setAttribute('contenteditable', 'true');
         }
 
-        this.events.fire('readonly', isReadOnly);
-    };
+        this.events && this.events.fire('readonly', isReadOnly);
+    }
+
+    /**
+     * Return true if editor in read-only mode
+     *
+     */
+    getReadOnly(): boolean {
+        return this.options.readonly;
+    }
 }
 
 
