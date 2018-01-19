@@ -865,7 +865,9 @@ export class Jodit extends Component {
     }
 
     /**
-     * Change the read-only state of the editor
+     * Switch on/off the editor into the read-only state.
+     * When in readonly, the user is not able to change the editor content, but can still use some editor functions (show source code, print content, or seach).
+     * This function firing the `readonly` event.
      *
      * @param {boolean} isReadOnly
      */
@@ -883,7 +885,6 @@ export class Jodit extends Component {
 
     /**
      * Return true if editor in read-only mode
-     *
      */
     getReadOnly(): boolean {
         return this.options.readonly;
