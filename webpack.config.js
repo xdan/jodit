@@ -2,6 +2,7 @@ var path = require('path');
 var debug = process.env.NODE_ENV !== "production";
 var webpack = require('webpack');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 var pkg = require("./package.json");
 
 process.deprecated = false
@@ -21,7 +22,8 @@ var loaders = [
         loader: 'css-loader',
         options: {
             sourceMap: true,
-            importLoaders: 1
+            importLoaders: 1,
+            minimize: !debug
         }
     },
     {
@@ -146,8 +148,7 @@ module.exports = {
                 beautify: false,
             },
             minimize: true
-        }),
-        new webpack.BannerPlugin( banner ),
+        })
     ],
     node: {
         global: true,
@@ -164,3 +165,13 @@ module.exports.plugins.push(new ExtractTextPlugin({
     filename: 'jodit.min.css',
     allChunks: true
 }));
+
+if (!debug) {
+    module.exports.plugins.push(
+        new OptimizeCssAssetsPlugin({
+            assetNameRegExp: /\.min\.css$/,
+            cssProcessorOptions: { discardComments: { removeAll: true } }
+        }),
+        new webpack.BannerPlugin(banner),
+    );
+}
