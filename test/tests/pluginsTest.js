@@ -1252,6 +1252,86 @@ describe('Test plugins', function () {
             });
         });
     });
+    describe('Sticky plugin', function () {
+        describe('Without scrolling', function () {
+            it('Should not have `jodit_sticky` class and toolbar must be in normal state', function () {
+                var area = appendTestArea(),
+                    editor = new Jodit(area);
+
+                editor.setEditorValue('<p>stop</p>'.repeat(100));
+                expect(false).to.be.equal(editor.container.classList.contains('jodit_sticky'));
+            });
+        });
+        describe('Create editor in page with long text', function () {
+            describe('and scroll page to bottom', function () {
+                it('Should add to editor class `jodit_sticky` and toolbar must be always on the top', function () {
+                    var area = appendTestArea(),
+                        editor = new Jodit(area);
+
+                    editor.setEditorValue('<p>stop</p>'.repeat(100));
+                    var offset = Jodit.modules.Helpers.offset(editor.container, editor);
+
+                    window.scroll(0, offset.top + offset.height / 2); // scroll page to bottom
+                    simulateEvent('scroll', 0, window);
+
+                    expect(true).to.be.equal(editor.container.classList.contains('jodit_sticky'));
+                    expect(0).to.be.equal(editor.toolbar.container.getBoundingClientRect().top);
+                });
+                describe('add offset for toolbar', function () {
+                    it('Should add offset for sticky toolbar', function () {
+                        var area = appendTestArea(),
+                            editor = new Jodit(area, {
+                                toolbarStickyOffset: 100
+                            });
+
+                        editor.setEditorValue('<p>stop</p>'.repeat(100));
+                        var offset = Jodit.modules.Helpers.offset(editor.container, editor);
+
+                        window.scroll(0, offset.top + offset.height / 2); // scroll page to bottom
+                        simulateEvent('scroll', 0, window);
+
+                        expect(true).to.be.equal(editor.container.classList.contains('jodit_sticky'));
+                        expect(100).to.be.equal(editor.toolbar.container.getBoundingClientRect().top);
+                    });
+                });
+                describe('with toolbarSticky false', function () {
+                    it('Should do nothing with toolbar', function () {
+                        var area = appendTestArea(),
+                            editor = new Jodit(area, {
+                                toolbarStickyOffset: 100,
+                                toolbarSticky: false
+                            });
+
+                        editor.setEditorValue('<p>stop</p>'.repeat(100));
+                        var offset = Jodit.modules.Helpers.offset(editor.container, editor);
+
+                        window.scroll(0, offset.top + offset.height / 2); // scroll page to bottom
+                        simulateEvent('scroll', 0, window);
+
+                        expect(false).to.be.equal(editor.container.classList.contains('jodit_sticky'));
+                        expect(100).to.be.not.equal(editor.toolbar.container.getBoundingClientRect().top);
+                        expect(0).to.be.not.equal(editor.toolbar.container.getBoundingClientRect().top);
+                    });
+                });
+            });
+
+            describe('and scroll page to the top', function () {
+                it('Should remove class `jodit_sticky` from editor and toolbar must have normal position', function () {
+                    var area = appendTestArea(),
+                        editor = new Jodit(area);
+
+                    editor.setEditorValue('<p>stop</p>'.repeat(100));
+                    var offset = Jodit.modules.Helpers.offset(editor.container, editor);
+
+                    window.scroll(0, offset.top - 200); // scroll page above editor
+                    simulateEvent('scroll', 0, window);
+
+                    expect(false).to.be.equal(editor.container.classList.contains('jodit_sticky'));
+                    expect(200).to.be.equal(editor.toolbar.container.getBoundingClientRect().top);
+                });
+            });
+        });
+    });
     after(function() {
         editor_plugins_test.parentNode.removeChild(editor_plugins_test);
     });

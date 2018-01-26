@@ -61,6 +61,59 @@
             }
         }
     </style>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
 </body>
 <link rel="stylesheet" href="build/jodit.min.css" />
 <link rel="stylesheet" href="app.css" />
@@ -101,7 +154,7 @@
     editor = new Jodit('#area_editor', {
         // direction: 'rtl',
         // theme: 'dark',
-        readonly: true,
+        // readonly: true,
         textIcons: false,
 //         iframe: true,
         iframeStyle: '*,.jodit_wysiwyg {color:red;}',
@@ -144,37 +197,5 @@
     editor.editor.addEventListener('mouseup', callback)
     editor.editor.addEventListener('input', callback);
 
-
-    // editor.setEditorValue('<a href="#">Test</a>TestTestTest<a href="#">Test</a>TestTestTestTest<a href="#">Test</a>');
-
-    // expect(editor.container.querySelectorAll('.jodit_toolbar_btn-redo.jodit_disabled').length).to.equal(1);
-    // expect(editor.container.querySelectorAll('.jodit_toolbar_btn-undo.jodit_disabled').length).to.equal(0);
-
-    // simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-undo'))
-
-    // expect(editor.container.querySelectorAll('.jodit_toolbar_btn-redo.jodit_disabled').length).to.equal(0);
-    // expect(editor.container.querySelectorAll('.jodit_toolbar_btn-undo.jodit_disabled').length).to.equal(1);
-    // expect(editor.getEditorValue()).to.equal('top');
-//    var editor = new Jodit(appendTestArea())
-
-//    (new Jodit.modules.FileBrowser(editor)).open(function () {});
-//    expect(document.querySelectorAll('.jodit_dialog_box.active').length).to.be.equal(1);
-
-//    expect(editor.getEditorValue()).to.be.equal('<p></p><p> a </p>');
-
-//    expect(editor.getEditorValue()).to.be.equal('<ul>' +
-//        '<li>1</li>' +
-//        '<li>2</li>' +
-//        '</ul>' + '<p>split <img src="https://xdsoft.net/jodit/images/artio.jpg"></p>');
-
-
-//    editor.setEditorValue('<table><tbody>' +
-//        '<tr><td>3</td></tr>' +
-//        '<tr><td>2</td></tr>' +
-//        '</tbody></table>');
-
-//    var dialogs = document.querySelectorAll('.jodit.jodit_dialog_box.jodit_text_icons.active');
-//    expect(dialogs.length).toWYSIWYG.equal(1);
-
-//    callback();
+    editor.setEditorValue('<p>stop</p>'.repeat(100))
 </script>

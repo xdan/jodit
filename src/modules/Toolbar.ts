@@ -219,6 +219,7 @@ export class Toolbar extends Component{
      */
     constructor(editor: Jodit) {
         super(editor);
+
         this.container = <HTMLDivElement>dom('<div class="jodit_toolbar"/>', editor.ownerDocument);
         this.popup = <HTMLDivElement>dom('<div class="jodit_toolbar_popup"/>', editor.ownerDocument);
         this.list = <HTMLDivElement>dom('<ul class="jodit_dropdownlist"/>', editor.ownerDocument);
