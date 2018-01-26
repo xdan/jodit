@@ -146,7 +146,8 @@ export class Jodit extends Component {
     /**
      * Create instance of Jodit
      * @constructor
-     * @param {string|HTMLElement} element Selector or HTMLElement
+     *
+     * @param {HTMLInputElement | string} element Selector or HTMLElement
      * @param {object} options Editor's options
      */
     constructor(element: HTMLInputElement|string, options?: object) {
@@ -168,6 +169,7 @@ export class Jodit extends Component {
                 }
             })
         }
+
         // in iframe it can be changed
         this.editorDocument = this.options.ownerDocument;
         this.editorWindow = this.options.ownerWindow;
@@ -175,15 +177,19 @@ export class Jodit extends Component {
         this.ownerWindow = this.options.ownerWindow;
 
         if (typeof element === 'string') {
-            this.element = <HTMLInputElement>this.ownerDocument.querySelector(element);
+            try {
+                this.element = <HTMLInputElement>this.ownerDocument.querySelector(element);
+            } catch (e) {
+                throw new Error('String "' + element + '" should be valid HTML selector');
+            }
         } else {
             this.element = element;
         }
 
+        // Duck checking
         if (
-            this.element === undefined ||
+            !this.element ||
             typeof this.element !== "object" ||
-            !("nodeType" in this.element) ||
             this.element.nodeType !== Node.ELEMENT_NODE ||
             !this.element.cloneNode
         ) {
@@ -532,7 +538,7 @@ export class Jodit extends Component {
         commandName = commandName.toLowerCase();
 
         if (this.commands[commandName] !== undefined) {
-            let result: any;
+            let result: any = void(0);
 
             this.commands[commandName].forEach((command: CommandType | Function) => {
                 let callback: Function;
@@ -868,7 +874,7 @@ export class Jodit extends Component {
      */
     getVersion = () => {
         return this.version;
-    }
+    };
 
     /**
      * Switch on/off the editor into the read-only state.

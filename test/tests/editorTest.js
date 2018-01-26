@@ -1,3 +1,5 @@
+import {document} from "../../src/modules/Dialog";
+
 describe('Jodit Editor Tests', function() {
     describe('Constructor', function() {
         it('Constructor Jodit must be in global scope', function() {
@@ -11,6 +13,39 @@ describe('Jodit Editor Tests', function() {
                     var editor = new Jodit('#editor');
                     expect(editor.element).to.equal(area);
                     editor.destruct();
+                });
+            });
+            describe('Undefined,null,false,bad seelctor,function,number, text node', function() {
+                it('Should be not valid selector', function() {
+                    expect(function () {
+                        new Jodit(0)
+                    }).to.throw(Error);
+                    expect(function () {
+                        new Jodit()
+                    }).to.throw(Error);
+                    expect(function () {
+                        new Jodit(null)
+                    }).to.throw(Error);
+                    expect(function () {
+                        new Jodit(false)
+                    }).to.throw(Error);
+                    expect(function () {
+                        new Jodit('.salomon')
+                    }).to.throw(Error);
+                    expect(function () {
+                        new Jodit('>asdsad.salomon')
+                    }).to.throw(Error);
+                    expect(function () {
+                        new Jodit(function () {})
+                    }).to.throw(Error);
+                    expect(function () {
+                        new Jodit(233)
+                    }).to.throw(Error);
+
+                    var elm = document.createTextNode('stop');
+                    expect(function () {
+                        new Jodit(elm)
+                    }).to.throw(Error);
                 });
             });
             describe('HTMLTextAreaElement', function() {
