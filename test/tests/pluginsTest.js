@@ -1327,7 +1327,7 @@ describe('Test plugins', function () {
                     simulateEvent('scroll', 0, window);
 
                     expect(false).to.be.equal(editor.container.classList.contains('jodit_sticky'));
-                    expect(200).to.be.equal(editor.toolbar.container.getBoundingClientRect().top);
+                    expect(5).to.be.above(Math.abs(200 - editor.toolbar.container.getBoundingClientRect().top));
                 });
             });
         });
