@@ -545,7 +545,7 @@ export class Select extends Component{
             range.setStart(node, node.nodeValue ? node.nodeValue.length : 0);
         }
 
-        range.collapse(true);
+        range.collapse(false);
         sel.removeAllRanges();
         sel.addRange(range);
 
@@ -970,6 +970,7 @@ export class Select extends Component{
 
             this.restore(selInfo);
         } else {
+
             let clearStyle: boolean = false;
             if (this.current() && Dom.closest(<Node>this.current(), nodeName, this.jodit.editor)) {
                 clearStyle = true;

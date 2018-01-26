@@ -172,6 +172,9 @@
                 url: 'https://xdsoft.net/jodit/connector/index.php'
             }
         },
+        commandToHotkeys: {
+            'openreplacedialog': 'ctrl+p'
+        }
         // buttons: ['symbol'],
         // disablePlugins: 'hotkeys,mobile'
     });
@@ -197,5 +200,5 @@
     editor.editor.addEventListener('mouseup', callback)
     editor.editor.addEventListener('input', callback);
 
-    editor.setEditorValue('<p>stop</p>'.repeat(100))
+    editor.setEditorValue('<p>stop</p>')
 </script>

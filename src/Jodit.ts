@@ -590,8 +590,8 @@ export class Jodit extends Component {
      * @param {string} commandName
      * @param {CommandType | Function} command
      */
-    registerCommand(commandName: string, command: CommandType | Function) {
-        commandName = commandName.toLowerCase();
+    registerCommand(commandNameOriginal: string, command: CommandType | Function) {
+        const commandName: string = commandNameOriginal.toLowerCase();
 
         if (this.commands[commandName] === undefined) {
             this.commands[commandName] = [];
@@ -599,7 +599,7 @@ export class Jodit extends Component {
         this.commands[commandName].push(command);
 
         if (typeof command !== 'function') {
-            const hotkeys: string | string[] | void = this.options.commandToHotkeys[commandName] || command.hotkeys;
+            const hotkeys: string | string[] | void = this.options.commandToHotkeys[commandName] || this.options.commandToHotkeys[commandNameOriginal] || command.hotkeys;
 
             if (hotkeys) {
                 this.events.on(asArray(hotkeys).map((hotkey: string) => hotkey + '.hotkey').join(' '), () => {

@@ -465,6 +465,7 @@ export class search extends Component {
                 },
                 hotkeys: 'ctrl+f'
             });
+
             editor.registerCommand('openReplaceDialog', {
                 exec: () => {
                     if (!editor.options.readonly) {

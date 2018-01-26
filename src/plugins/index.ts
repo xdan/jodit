@@ -8,7 +8,7 @@ export {addNewLine} from "./addNewLine";
 export {autofocus} from "./autofocus";
 export {backspace} from "./backspace";
 export {bold} from "./bold";
-export {cleanHTML} from "./cleanHTML";
+// export {cleanHTML} from "./cleanHTML";
 export {color} from "./color";
 export {copyformat} from "./copyformat";
 export {enter} from "./enter";
