@@ -1318,7 +1318,14 @@ describe('Test plugins', function () {
             describe('and scroll page to the top', function () {
                 it('Should remove class `jodit_sticky` from editor and toolbar must have normal position', function () {
                     var area = appendTestArea(),
-                        editor = new Jodit(area);
+                        editor = new Jodit(area),
+                        brs = [0,0,0,0,0,0,0,0,0].map(function () {
+                            return editor.ownerDocument.createElement('br');
+                        });
+
+                    brs.forEach(function (br) {
+                        editor.container.parentNode.insertBefore(br, editor.container);
+                    });
 
                     editor.setEditorValue('<p>stop</p>'.repeat(100));
                     var offset = Jodit.modules.Helpers.offset(editor.container, editor);
@@ -1327,7 +1334,12 @@ describe('Test plugins', function () {
                     simulateEvent('scroll', 0, window);
 
                     expect(false).to.be.equal(editor.container.classList.contains('jodit_sticky'));
+
                     expect(5).to.be.above(Math.abs(200 - editor.toolbar.container.getBoundingClientRect().top));
+
+                    brs.forEach(function (br) {
+                        br.parentNode.removeChild(br);
+                    });
                 });
             });
         });

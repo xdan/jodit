@@ -125,17 +125,17 @@ export class hotkeys extends Component{
 
         let modif: string = "";
 
-        ["alt", "ctrl", "shift"].forEach( function(specialKey) {
+        if (event.metaKey && !event.ctrlKey) {
+            modif += "ctrl+"; // for mac OS -  CMD will be CTRL
+        }
+
+        ["alt", "ctrl", "shift"].forEach( (specialKey) => {
             if ((<any>event)[specialKey + 'Key'] && special !== specialKey) {
                 modif += specialKey + '+';
             }
         });
 
-        if (event.metaKey && !event.ctrlKey && special !== "meta") {
-            modif += "meta+";
-        }
-
-        if (event.metaKey && special !== "meta" && modif.indexOf("alt+ctrl+shift+") > -1) {
+        if (event.metaKey && modif.indexOf("alt+ctrl+shift+") > -1) {
             modif = modif.replace("alt+ctrl+shift+", "hyper+");
         }
 
