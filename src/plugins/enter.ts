@@ -5,7 +5,7 @@
  */
 
 import {Jodit} from '../Jodit';
-import {$$} from "../modules/Helpers"
+import {$$, scrollIntoView} from "../modules/Helpers"
 import * as consts from '../constants';
 import {Dom} from "../modules/Dom";
 
@@ -33,7 +33,7 @@ export const insertParagraph = (editor: Jodit, fake ?: Node, wrapperTag ?: strin
         fake.parentNode.removeChild(fake);
     }
 
-    p.scrollIntoView();
+    scrollIntoView(p, editor.editor);
 
     return p;
 };
@@ -100,7 +100,7 @@ export function enter(editor: Jodit) {
             if (editor.options.enter === consts.BR || event.shiftKey || Dom.closest(current, 'PRE|BLOCKQUOTE', editor.editor)) {
                 const br: HTMLBRElement = <HTMLBRElement>Dom.create('br', undefined, editor.editorDocument);
                 editor.selection.insertNode(br);
-                br.scrollIntoView();
+                scrollIntoView(br, editor.editor);
                 return false;
             }
 

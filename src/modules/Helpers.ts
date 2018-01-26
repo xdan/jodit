@@ -1054,3 +1054,38 @@ export  const applyStyles = (html: string): string => {
 
     return html.replace(/<(\/)?(html|colgroup|col|o:p)[^>]*>/g, '').replace(/<\!--[^>]*>/g, '');
 };
+
+export  const inView = (elm: HTMLElement) => {
+    let rect: ClientRect = elm.getBoundingClientRect(),
+        top: number = rect.top,
+        height: number = rect.height,
+        el: HTMLElement | null = <HTMLElement | null>elm.parentNode;
+
+    do {
+        if (el) {
+            rect = el.getBoundingClientRect();
+            if (top <= rect.bottom === false) {
+                return false;
+            }
+            // Check if the element is out of view due to a container scrolling
+            if ((top + height) <= rect.top) {
+                return false
+            }
+            el = <HTMLElement | null>el.parentNode;
+        }
+    } while (el && el != document.body);
+
+    // Check its within the document viewport
+    return top <= document.documentElement.clientHeight;
+};
+
+export const scrollIntoView = (elm: HTMLElement, parent: HTMLElement) => {
+    if (!inView(elm)) {
+        if (parent.clientHeight !== parent.scrollHeight) {
+            parent.scrollTop = elm.offsetTop;
+        }
+        if (!inView(elm)) {
+            elm.scrollIntoView()
+        }
+    }
+};
