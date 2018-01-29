@@ -24,28 +24,10 @@
         <tr>
             <td id="maintab" style="width:50%;vertical-align: top">
                 <div id="uniqbox" class="box">
-                    <textarea id="area_editor">&lt;div>
-    &lt;img src="https://xdsoft.net/jodit/build/images/artio.jpg" style="width: 301px; float: right; margin-left: 15px; margin-top: 10px;">
-&lt;/div>
-&lt;ul>
-    &lt;li>Copy/Paste image&lt;/li>
-    &lt;li>Drag&amp;Drop &lt;/li>
-    &lt;li>Free for non-Commercial &lt;a href="license.html">Read more</a> &lt;/li>
-    &lt;li>ACE editor out of the box &lt;/li>
-    &lt;li>Pure TypeScript. No libraries&lt;/li>
-    &lt;li>Lightweight: ~63.63kB gzipped.&lt;/li>
-&lt;/ul>
-
-                    <table><tr>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                    </tr></table>
-                    </textarea>
+                    <textarea id="area_editor"></textarea>
                 </div>
             </td>
-            <td id="mirrortab"><textarea readonly disabled id="mirror"></textarea></td>
+            <td id="mirrortab"><div readonly disabled id="mirror"></div></td>
         </tr>
     </table>
     <style>
@@ -61,59 +43,6 @@
             }
         }
     </style>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
 </body>
 <link rel="stylesheet" href="build/jodit.min.css" />
 <link rel="stylesheet" href="app.css" />
@@ -190,15 +119,11 @@
         callback = function (e) {
             clearTimeout(timeout);
             timeout = setTimeout(function () {
-                mirror.value = editor.editor ? editor.editor.innerHTML : '';
+                mirror.innerHTML = editor.getEditorValue();
             }, 100)
-        }
-    editor.events.on('change', callback)
-    editor.editor.addEventListener('keydown', callback)
-    editor.editor.addEventListener('keyup', callback)
-    editor.editor.addEventListener('mousedown', callback)
-    editor.editor.addEventListener('mouseup', callback)
-    editor.editor.addEventListener('input', callback);
+        };
 
-    editor.setEditorValue('<p>stop</p>')
+    editor.events.on('change', callback)
+
+
 </script>

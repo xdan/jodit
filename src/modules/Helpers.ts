@@ -732,7 +732,7 @@ export const normilizeCSSValue = (key: string, value: string|number): string|num
  * @param {string|object} key An object of property-value pairs to set. A CSS property name.
  * @param {string|int} value A value to set for the property.
  */
-export const css = (element: HTMLElement, key: string|{[key: string]: number|string|null}, value?: string|number): string|number => {
+export const css = (element: HTMLElement, key: string|{[key: string]: number|string|null}, value?: string|number, onlyStyleMode: boolean = false): string|number => {
     const numberFieldsReg = /^left|top|bottom|right|width|min|max|height|margin|padding|font-size/i;
 
     if (isPlainObject(key) || value !== undefined) {
@@ -740,7 +740,7 @@ export const css = (element: HTMLElement, key: string|{[key: string]: number|str
             if (_value !== undefined && _value !== null && numberFieldsReg.test(_key) && /^[\-+]?[0-9.]+$/.test(_value.toString())) {
                 _value = parseInt(_value.toString(), 10) + 'px';
             }
-            if (_value !== undefined && css(elm, _key) !== normilizeCSSValue(_key, _value)) {
+            if (_value !== undefined && css(elm, _key, void(0), true) !== normilizeCSSValue(_key, _value)) {
                 (<any>elm.style)[_key] = _value;
             }
         };
@@ -763,7 +763,7 @@ export const css = (element: HTMLElement, key: string|{[key: string]: number|str
 
     const currentValue: string | undefined = (<any>element.style)[<string>key];
 
-    let result: string | number = (currentValue !== undefined && currentValue !== '') ? currentValue : (win ? win.getComputedStyle(element).getPropertyValue(key2) : '');
+    let result: string | number = (currentValue !== undefined && currentValue !== '') ? currentValue : ((win && !onlyStyleMode) ? win.getComputedStyle(element).getPropertyValue(key2) : '');
 
     if (numberFieldsReg.test(<string>key) && /^[\-+]?[0-9.]+px$/.test(result.toString())) {
         result = parseInt(result, 10);

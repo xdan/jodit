@@ -8,6 +8,7 @@ import {Config} from '../Config'
 import {Jodit} from "../Jodit";
 import {Dom} from "../modules/Dom";
 import {css} from "../modules/Helpers";
+import {ControlType} from "../modules/Toolbar";
 
 const key = 'copyformat';
 
@@ -30,7 +31,7 @@ const getStyles = (editor: Jodit, elm: Node): {[key: string]: string | number} |
     }
 };
 
-Config.prototype.controls.copyformat = {
+Config.prototype.controls.copyformat = <ControlType>{
     exec: (editor: Jodit, current: Node|false) => {
         if (current) {
             if (editor.buffer[key].active) {

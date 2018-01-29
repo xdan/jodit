@@ -19,8 +19,8 @@ Config.prototype.controls.bold = {
 
 Config.prototype.controls.italic = {
     tagRegExp: /^(em|i)$/i,
-        tags: ["em", "i"],
-        css: {
+    tags: ["em", "i"],
+    css: {
         "font-style": "italic"
     },
     tooltip: "Italic",
@@ -28,16 +28,16 @@ Config.prototype.controls.italic = {
 
 Config.prototype.controls.underline = {
     tagRegExp: /^(u)$/i,
-        tags: ['u'],
-        css: {
+    tags: ['u'],
+    css: {
         "text-decoration": "underline"
     },
     tooltip: "Underline",
 };
 Config.prototype.controls.strikethrough = {
     tagRegExp: /^(s)$/i,
-        tags: ['s'],
-        css: {
+    tags: ['s'],
+    css: {
         "text-decoration": "line-through"
     },
     tooltip: "Strike through",

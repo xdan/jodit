@@ -89,54 +89,31 @@ describe('Commands Jodit Editor Tests', function() {
         });
     });
 
-    it('Try exec the command "bold"', function() {
-        var editor = new Jodit('#tested_area');
-        editor.setEditorValue('<p>test</p>');
 
-        var sel = editor.editorWindow.getSelection(),
-            range = editor.editorDocument.createRange();
+    describe('Bold command', function () {
+        describe('For box with style="font-weight:bold"', function() {
+            it('should wrap selected text in STRONG element without questions', function() {
+                var editor = new Jodit('#tested_area'),
+                    style = document.createElement('style');
 
-        range.selectNodeContents(editor.editor.firstChild);
-        sel.removeAllRanges();
-        sel.addRange(range);
+                editor.setEditorValue('<p>test</p>');
+                style.innerHTML = 'p {font-weight: bold !important};';
+                document.body.appendChild(style);
 
-        editor.execCommand('bold');
+                var sel = editor.editorWindow.getSelection(),
+                    range = editor.editorDocument.createRange();
 
-        expect(editor.getEditorValue()).to.equal('<p><strong>test</strong></p>');
-    });
-    it('Try exec the command "bold" twice', function() {
-        var editor = new Jodit('#tested_area');
-        editor.setEditorValue('<p>test</p>');
+                range.setStart(editor.editor.firstChild.firstChild, 0);
+                range.setEnd(editor.editor.firstChild.firstChild, 4);
+                sel.removeAllRanges();
+                sel.addRange(range);
 
-        var sel = editor.editorWindow.getSelection(),
-            range = editor.editorDocument.createRange();
+                editor.execCommand('bold');
 
-        range.selectNodeContents(editor.editor.firstChild);
-        sel.removeAllRanges();
-        sel.addRange(range);
-
-        editor.execCommand('bold');
-        editor.execCommand('bold');
-
-        expect(editor.getEditorValue()).to.equal('<p>test</p>');
-    });
-    it('Try exec the command "bold" for font-weight: 700 Element', function() {
-        var editor = new Jodit('#tested_area');
-        editor.setEditorValue('<span style="font-weight: 700">test</span>');
-
-        var sel = editor.editorWindow.getSelection(),
-            range = editor.editorDocument.createRange();
-
-        range.selectNodeContents(editor.editor.firstChild);
-        sel.removeAllRanges();
-        sel.addRange(range);
-
-        editor.execCommand('bold');
-        // editor.execCommand('bold');
-
-        expect(editor.getEditorValue()).to.equal('test');
-    });
-    describe('Exec command "bold"', function () {
+                style.parentNode.removeChild(style);
+                expect(editor.getEditorValue()).to.equal('<p><strong>test</strong></p>');
+            });
+        });
         it('Should insert a few chars and again exec bold. Bold mode should be switch off', function() {
             var editor = new Jodit('#tested_area');
             editor.setEditorValue('test');
@@ -264,6 +241,59 @@ describe('Commands Jodit Editor Tests', function() {
 
                 expect(editor.getEditorValue()).to.equal('test test test');
 
+            });
+        });
+        describe('Try exec the command "bold"', function() {
+            it('Should wrap selected text in STRONG element', function() {
+                var editor = new Jodit('#tested_area');
+                editor.setEditorValue('<p>test</p>');
+
+                var sel = editor.editorWindow.getSelection(),
+                    range = editor.editorDocument.createRange();
+
+                range.selectNodeContents(editor.editor.firstChild);
+                sel.removeAllRanges();
+                sel.addRange(range);
+
+                editor.execCommand('bold');
+
+                expect(editor.getEditorValue()).to.equal('<p><strong>test</strong></p>');
+            });
+            describe('Try exec the command "bold" twice', function() {
+                it('Should unwrap strong elements', function () {
+                    var editor = new Jodit('#tested_area');
+                    editor.setEditorValue('<p>test</p>');
+
+                    var sel = editor.editorWindow.getSelection(),
+                        range = editor.editorDocument.createRange();
+
+                    range.selectNodeContents(editor.editor.firstChild);
+                    sel.removeAllRanges();
+                    sel.addRange(range);
+
+                    editor.execCommand('bold');
+                    editor.execCommand('bold');
+
+                    expect(editor.getEditorValue()).to.equal('<p>test</p>');
+                });
+            });
+        });
+        describe('Try exec the command "bold" for font-weight: 700 Element', function() {
+            it('should ubnwrap selected srtong element', function() {
+                var editor = new Jodit('#tested_area');
+                editor.setEditorValue('<span style="font-weight: 700">test</span>');
+
+                var sel = editor.editorWindow.getSelection(),
+                    range = editor.editorDocument.createRange();
+
+                range.selectNodeContents(editor.editor.firstChild);
+                sel.removeAllRanges();
+                sel.addRange(range);
+
+                editor.execCommand('bold');
+                // editor.execCommand('bold');
+
+                expect(editor.getEditorValue()).to.equal('test');
             });
         });
     });
@@ -464,41 +494,85 @@ describe('Commands Jodit Editor Tests', function() {
         });
     })
     describe('Fonts', function() {
-        it('Set font size should create attribute style="font-size:value"', function () {
-            var editor = new Jodit('#tested_area');
-            editor.setEditorValue('<p> testy oprst <span>lets go</span></p>');
+        describe('Set font size', function () {
+            it('should create attribute style="font-size:value"', function () {
+                var editor = new Jodit('#tested_area');
+                editor.setEditorValue('<p> testy oprst <span>lets go</span></p>');
 
-            var sel = editor.editorWindow.getSelection(),
-                range = editor.editorDocument.createRange();
+                var sel = editor.editorWindow.getSelection(),
+                    range = editor.editorDocument.createRange();
 
-            range.selectNode(editor.editor.querySelector('span'));
+                range.selectNode(editor.editor.querySelector('span'));
 
-            sel.removeAllRanges();
-            sel.addRange(range);
+                sel.removeAllRanges();
+                sel.addRange(range);
 
-            editor.execCommand('fontSize', false, 12);
+                editor.execCommand('fontSize', false, 12);
 
-            expect(editor.getEditorValue()).to.equal('<p> testy oprst <span style="font-size: 12px;">lets go</span></p>');
+                expect(editor.getEditorValue()).to.equal('<p> testy oprst <span style="font-size: 12px;">lets go</span></p>');
 
-            editor.execCommand('fontSize', false, '12%');
-            expect(editor.getEditorValue()).to.equal('<p> testy oprst <span style="font-size: 12%;">lets go</span></p>');
+                editor.execCommand('fontSize', false, '12%');
+                expect(editor.getEditorValue()).to.equal('<p> testy oprst <span style="font-size: 12%;">lets go</span></p>');
+            });
+            describe('For box with style="font-size:12px"', function() {
+                it('should wrap selected text in SPAN with style="font-size:12px" element without questions', function() {
+                    var editor = new Jodit('#tested_area');
+                    editor.setEditorValue('test');
+
+                    var sel = editor.editorWindow.getSelection(),
+                        range = editor.editorDocument.createRange();
+
+                    range.selectNodeContents(editor.editor.firstChild);
+                    sel.removeAllRanges();
+                    sel.addRange(range);
+
+                    editor.editor.style.fontSize = '12px';
+
+                    editor.execCommand('fontSize', false, 12);
+
+                    expect(editor.getEditorValue()).to.equal('<span style="font-size: 12px;">test</span>');
+                });
+            });
         });
-        it('Set font family should create attribute style="font-family:value"', function () {
-            var editor = new Jodit('#tested_area');
-            editor.setEditorValue('<p>test</p>');
+        describe('Set font family', function() {
+            describe('For box with style="font-name:Arial"', function() {
+                it('should wrap selected text in SPAN with style="font-family:Arial" element without questions', function() {
+                    var editor = new Jodit('#tested_area');
+                    editor.setEditorValue('<p>test</p>');
 
-            var sel = editor.editorWindow.getSelection(),
-                range = editor.editorDocument.createRange();
+                    var sel = editor.editorWindow.getSelection(),
+                        range = editor.editorDocument.createRange();
 
-            range.setStart(editor.editor.firstChild.firstChild, 2);
-            range.setEnd(editor.editor.firstChild.firstChild, 4);
+                    range.setStart(editor.editor.firstChild.firstChild, 2);
+                    range.setEnd(editor.editor.firstChild.firstChild, 4);
 
-            sel.removeAllRanges();
-            sel.addRange(range);
+                    sel.removeAllRanges();
+                    sel.addRange(range);
 
-            editor.execCommand('fontName', false, 'Arial');
+                    editor.editor.style.fontFamily = 'Arial';
 
-            expect(editor.getEditorValue()).to.equal('<p>te<span style="font-family: Arial;">st</span></p>');
+                    editor.execCommand('fontName', false, 'Arial');
+
+                    expect(editor.getEditorValue()).to.equal('<p>te<span style="font-family: Arial;">st</span></p>');
+                });
+            });
+            it('should create attribute style="font-family:value"', function () {
+                var editor = new Jodit('#tested_area');
+                editor.setEditorValue('<p>test</p>');
+
+                var sel = editor.editorWindow.getSelection(),
+                    range = editor.editorDocument.createRange();
+
+                range.setStart(editor.editor.firstChild.firstChild, 2);
+                range.setEnd(editor.editor.firstChild.firstChild, 4);
+
+                sel.removeAllRanges();
+                sel.addRange(range);
+
+                editor.execCommand('fontName', false, 'Arial');
+
+                expect(editor.getEditorValue()).to.equal('<p>te<span style="font-family: Arial;">st</span></p>');
+            });
         });
     });
     describe('Align', function() {

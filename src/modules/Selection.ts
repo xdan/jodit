@@ -843,7 +843,7 @@ export class Select extends Component{
                     (
                         isPlainObject(options) &&
                         each(<object>options, (cssPropertyKey: string, cssPropertyValues: string[]) => {
-                                    const value = css(elm, cssPropertyKey);
+                                    const value = css(elm, cssPropertyKey, void(0), true);
                             return  cssPropertyValues.indexOf(value.toString().toLowerCase()) !== -1;
                         }) !== false
                     ) ||
@@ -878,7 +878,7 @@ export class Select extends Component{
                     });
                 }
 
-                if (!elm.getAttribute('style') || elm.nodeName !== defaultTag) {
+                if (!Dom.isBlock(elm) && (!elm.getAttribute('style') || elm.nodeName !== defaultTag)) {
                     Dom.unwrap(elm); // toggle `<strong>test</strong>` toWYSIWYG `test`, and `<span style="">test</span>` toWYSIWYG `test`
                     if (mode === undefined) {
                         mode = UNWRAP;
@@ -895,7 +895,7 @@ export class Select extends Component{
             this.jodit.editorDocument.execCommand('fontsize', false, 7);
 
             $$('font[size="7"]', this.jodit.editor).forEach((font: HTMLElement) => {
-                if (!Dom.next(font, findNextCondition, <HTMLElement>font.parentNode) && !Dom.prev(font, findNextCondition, <HTMLElement>font.parentNode) && isSuitElement(<HTMLElement>font.parentNode)) {
+                if (!Dom.next(font, findNextCondition, <HTMLElement>font.parentNode) && !Dom.prev(font, findNextCondition, <HTMLElement>font.parentNode) && isSuitElement(<HTMLElement>font.parentNode) && font.parentNode !== this.jodit.editor && (!Dom.isBlock(font.parentNode) || consts.IS_BLOCK.test(nodeName))) {
                     toggleStyles(<HTMLElement>font.parentNode);
                 } else if (font.firstChild && !Dom.next(font.firstChild, findNextCondition, <HTMLElement>font) && !Dom.prev(font.firstChild, findNextCondition, <HTMLElement>font) && isSuitElement(<HTMLElement>font.firstChild)) {
                     toggleStyles(<HTMLElement>font.firstChild);
