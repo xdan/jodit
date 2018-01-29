@@ -298,43 +298,48 @@ describe('Commands Jodit Editor Tests', function() {
         });
     });
 
-    it('After exec some command selection should be restore to previous', function() {
-        var editor = new Jodit('#tested_area');
-        editor.setEditorValue('<p>test</p>');
+    describe('After exec some command', function() {
+        it('should restore selection to previous', function() {
+            var editor = new Jodit('#tested_area');
+            editor.setEditorValue('<p>test</p>');
 
-        var sel = editor.editorWindow.getSelection(),
-            range = editor.editorDocument.createRange();
+            var sel = editor.editorWindow.getSelection(),
+                range = editor.editorDocument.createRange();
 
-        range.setStart(editor.editor.firstChild.firstChild, 2);
-        range.setEnd(editor.editor.firstChild.firstChild, 3);
-        //range.collapse(true);
-        sel.removeAllRanges();
-        sel.addRange(range);
+            range.setStart(editor.editor.firstChild.firstChild, 2);
+            range.setEnd(editor.editor.firstChild.firstChild, 3);
+            //range.collapse(true);
+            sel.removeAllRanges();
+            sel.addRange(range);
 
-        editor.execCommand('italic');
+            editor.execCommand('italic');
 
-        editor.selection.insertNode(editor.editorDocument.createTextNode('top'));
+            editor.selection.insertNode(editor.editorDocument.createTextNode('top'));
 
-        expect(editor.getEditorValue()).to.equal('<p>tetopt</p>');
+            expect(editor.getEditorValue()).to.equal('<p>tetopt</p>');
+        });
+        describe('in collapsed selection', function() {
+            it('should place cursor inward', function() {
+                var editor = new Jodit('#tested_area');
+                editor.setEditorValue('<p>test</p>');
+
+                var sel = editor.editorWindow.getSelection(),
+                    range = editor.editorDocument.createRange();
+
+                range.setStart(editor.editor.firstChild.firstChild, 2);
+                range.collapse(true);
+
+                sel.removeAllRanges();
+                sel.addRange(range);
+
+                editor.execCommand('underline');
+                editor.selection.insertNode(editor.editorDocument.createTextNode('data'));
+
+                expect(editor.getEditorValue()).to.equal('<p>te<u>data</u>st</p>');
+            });
+        });
     });
-    it('After exec some command in collapsed selection - cursor should be inward', function() {
-        var editor = new Jodit('#tested_area');
-        editor.setEditorValue('<p>test</p>');
 
-        var sel = editor.editorWindow.getSelection(),
-            range = editor.editorDocument.createRange();
-
-        range.setStart(editor.editor.firstChild.firstChild, 2);
-        range.collapse(true);
-
-        sel.removeAllRanges();
-        sel.addRange(range);
-
-        editor.execCommand('underline');
-        editor.selection.insertNode(editor.editorDocument.createTextNode('data'));
-
-        expect(editor.getEditorValue()).to.equal('<p>te<u>data</u>st</p>');
-    });
     describe('insertUnorderedList', function() {
         it('Run command insertUnorderedList should wrap or replace all paragraphs to ul>li', function () {
             var editor = new Jodit('#tested_area');

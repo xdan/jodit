@@ -844,7 +844,7 @@ export class Select extends Component{
                         isPlainObject(options) &&
                         each(<object>options, (cssPropertyKey: string, cssPropertyValues: string[]) => {
                                     const value = css(elm, cssPropertyKey, void(0), true);
-                            return  cssPropertyValues.indexOf(value.toString().toLowerCase()) !== -1;
+                            return  value !== null && value !== '' && cssPropertyValues.indexOf(value.toString().toLowerCase()) !== -1;
                         }) !== false
                     ) ||
                     (
