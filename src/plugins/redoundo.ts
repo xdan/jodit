@@ -49,7 +49,7 @@ export class redoundo extends Component  {
 
         editor.registerCommand('redo', {
             exec: callback,
-            hotkeys: 'ctrl+y'
+            hotkeys: 'ctrl+y,ctrl+shift+z'
         });
         editor.registerCommand('undo', {
             exec: callback,

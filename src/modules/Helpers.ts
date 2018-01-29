@@ -731,8 +731,9 @@ export const normilizeCSSValue = (key: string, value: string|number): string|num
  * @param {HTMLElement} element
  * @param {string|object} key An object of property-value pairs to set. A CSS property name.
  * @param {string|int} value A value to set for the property.
+ * @param {boolean} onlyStyleMode Get value from style attribute, without calculating
  */
-export const css = (element: HTMLElement, key: string|{[key: string]: number|string|null}, value?: string|number, onlyStyleMode: boolean = false): string|number => {
+export const css = (element: HTMLElement, key: string|{[key: string]: number | string | null | undefined}, value?: string|number, onlyStyleMode: boolean = false): string|number => {
     const numberFieldsReg = /^left|top|bottom|right|width|min|max|height|margin|padding|font-size/i;
 
     if (isPlainObject(key) || value !== undefined) {
@@ -995,7 +996,7 @@ export const cleanFromWord = (html: string): string => {
         html = convertedString;
     }
 
-    return html.replace(/<(\/)?(html|colgroup|col|o:p)[^>]*>/g, '').replace(/<\!--[^>]*>/g, '');
+    return html.replace(/<(\/)?(html|colgroup|col|o:p)[^>]*>/g, '').replace(/<!--[^>]*>/g, '');
 };
 
 export  const applyStyles = (html: string): string => {
@@ -1052,7 +1053,7 @@ export  const applyStyles = (html: string): string => {
        html = convertedString;
     }
 
-    return html.replace(/<(\/)?(html|colgroup|col|o:p)[^>]*>/g, '').replace(/<\!--[^>]*>/g, '');
+    return html.replace(/<(\/)?(html|colgroup|col|o:p)[^>]*>/g, '').replace(/<!--[^>]*>/g, '');
 };
 
 export  const inView = (elm: HTMLElement) => {

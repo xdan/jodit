@@ -24,12 +24,14 @@
 .jodit_icon {
     font-style: normal;
     display:inline-block;
-    .size(@icon_middle_size);
+    //.size(@icon_middle_size);
+    width: @icon_middle_size;
     font-size:8px;
     //overflow:hidden;
     vertical-align:middle;
     fill: @icon_color;
     transform-origin: 0px 0px!important;
+    overflow: visible;
 }
 .jodit_toolbar_size{
     &-small .jodit_icon{

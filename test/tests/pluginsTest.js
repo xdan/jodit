@@ -23,7 +23,7 @@ describe('Test plugins', function () {
 
             simulateEvent('mouseup', 0, editor.editor);
 
-            expect(editor.getEditorValue().replace('700', 'bold')).to.equal('text <strong>test</strong><span style="font-size: 16px; font-weight: bold; font-style: normal; color: rgb(0, 0, 0); background-color: rgba(0, 0, 0, 0);"> post</span>');
+            expect(editor.getEditorValue().replace('700', 'bold')).to.equal('text <strong>test</strong><span style="font-weight: bold;"> post</span>');
         });
         it('Should copy fontSize from element and paste it in new selection', function () {
             getBox().style.width = 'auto';
@@ -47,7 +47,7 @@ describe('Test plugins', function () {
 
             simulateEvent('mouseup', 0, editor.editor);
 
-            expect(editor.getEditorValue()).to.equal('text <span style="font-size: 11px;">test</span><span style="font-size: 11px; font-weight: 400; font-style: normal; color: rgb(0, 0, 0); background-color: rgba(0, 0, 0, 0);"> post</span>');
+            expect(editor.getEditorValue()).to.equal('text <span style="font-size: 11px;">test</span><span style="font-size: 11px;"> post</span>');
         });
         it('Should copy fontSize and color from element and paste it in new selection', function () {
             getBox().style.width = 'auto';
@@ -70,7 +70,7 @@ describe('Test plugins', function () {
 
             simulateEvent('mouseup', 0, editor.editor);
 
-            expect(sortAtrtibutes(editor.getEditorValue())).to.equal('text <span style="color:rgb(255, 0, 0);font-size:11px">test</span><span style="background-color:rgba(0, 0, 0, 0);color:rgb(255, 0, 0);font-size:11px;font-style:normal;font-weight:400"> post</span>');
+            expect(sortAtrtibutes(editor.getEditorValue())).to.equal('text <span style="color:rgb(255, 0, 0);font-size:11px">test</span><span style="color:rgb(255, 0, 0);font-size:11px"> post</span>');
         });
         it('Should toggle active state after double click', function () {
             getBox().style.width = 'auto';
@@ -98,6 +98,33 @@ describe('Test plugins', function () {
             simulateEvent('mouseup', 0, editor.editor);
 
             expect(sortAtrtibutes(editor.getEditorValue())).to.equal('text <span style="color:rgb(255, 0, 0);font-size:11px">test</span> post');
+        });
+
+        describe('Set cursor inside em[style=background] > strong elements', function () {
+            it('Should copy fontWeight from strong element, copy italic and background  style from em  and paste it in new selection', function () {
+                getBox().style.width = 'auto';
+                var editor = new Jodit('#editor_plugins_test');
+                editor.setEditorValue('text <em style="background-color: #ff0000"><strong>test</strong></em> post');
+
+                editor.selection.setCursorIn(editor.editor.querySelector('strong'));
+                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-copyformat').length).to.equal(1);
+                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-copyformat.jodit_active').length).to.equal(0);
+
+                simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-copyformat'))
+
+                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-copyformat.jodit_active').length).to.equal(1);
+
+                var sel = editor.editorWindow.getSelection(),
+                    range = editor.editorDocument.createRange();
+
+                range.selectNode(editor.editor.lastChild);
+                sel.removeAllRanges();
+                sel.addRange(range);
+
+                simulateEvent('mouseup', 0, editor.editor);
+
+                expect(sortAtrtibutes(editor.getEditorValue().replace('700', 'bold'))).to.equal('text <em style="background-color:#ff0000"><strong>test</strong></em><span style="background-color:rgb(255, 0, 0);font-style:italic;font-weight:bold"> post</span>');
+            });
         });
     });
     describe('Add new Line plugin', function () {

@@ -10,7 +10,7 @@ export {backspace} from "./backspace";
 export {bold} from "./bold";
 // export {cleanHTML} from "./cleanHTML";
 export {color} from "./color";
-export {copyformat} from "./copyformat";
+import "./copyformat";
 export {enter} from "./enter";
 export {errorMessages} from "./errorMessages";
 export {font} from "./font";

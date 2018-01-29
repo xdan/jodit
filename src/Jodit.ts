@@ -35,7 +35,7 @@ export class Jodit extends Component {
      * @type {{}}
      * @see copyformat plugin
      */
-    public buffer: {[key: string]: any} = {};
+    public buffer: {[key: string]: any};
 
     static defaultOptions: Config;
     static plugins: any =  {};
@@ -152,6 +152,8 @@ export class Jodit extends Component {
      */
     constructor(element: HTMLInputElement|string, options?: object) {
         super();
+
+        this.buffer = {}; // empty new object for every Jodit instance
 
         this.events = new EventsNative();
 

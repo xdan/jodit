@@ -10,7 +10,7 @@ import {Dom} from "../modules/Dom";
 import {css} from "../modules/Helpers";
 import {ControlType} from "../modules/Toolbar";
 
-const key = 'copyformat';
+const pluginKey: string = 'copyformat';
 
 /**
  * Plug-in copy and paste formatting from elements
@@ -18,54 +18,78 @@ const key = 'copyformat';
  * @module copyformat
  */
 
-const getStyles = (editor: Jodit, elm: Node): {[key: string]: string | number} | void => {
-    const box: HTMLElement = <HTMLElement>Dom.up(elm, (elm: Node | null) => (elm && elm.nodeType !== Node.TEXT_NODE), editor.editor) || editor.editor;
-    if (box) {
-        return {
-            fontSize: css(box, 'fontSize'),
-            fontWeight: css(box, 'fontWeight'),
-            fontStyle: css(box, 'fontStyle'),
-            color: css(box, 'color'),
-            backgroundColor: css(box, 'backgroundColor'),
-        };
+const copyStyles: string[] = [
+    'fontWeight',
+    'fontStyle',
+    'fontSize',
+    'color',
+    'backgroundColor',
+    'textDecorationLine',
+    'fontFamily'
+];
+
+const getStyle = (editor: Jodit, key: string, box: HTMLElement, defaultStyles: {[key: string]: string | number}):  string | number | undefined => {
+    let result:  string | number  | undefined = css(box, key);
+
+    if (result == defaultStyles[key]) {
+        if (box.parentNode && box !== editor.editor && box.parentNode !== editor.editor) {
+            result = getStyle(editor, key, <HTMLElement>box.parentNode, defaultStyles);
+        } else {
+            result = void(0);
+        }
     }
+
+    return result;
+};
+
+const getStyles = (editor: Jodit, box: HTMLElement, defaultStyles: {[key: string]: string | number}): {[key: string]: string | number | undefined} => {
+    const result: {[key: string]: string | number | undefined} = {};
+
+    if (box) {
+        copyStyles.forEach((key: string) => {
+            result[key] = getStyle(editor, key, box, defaultStyles);
+        });
+    }
+
+    return result;
 };
 
 Config.prototype.controls.copyformat = <ControlType>{
     exec: (editor: Jodit, current: Node|false) => {
         if (current) {
-            if (editor.buffer[key].active) {
-                editor.buffer[key].active = false;
+            if (editor.buffer[pluginKey]) {
+                editor.buffer[pluginKey] = false;
+                editor.events.off(editor.editor,'mouseup.' + pluginKey);
             } else {
-                editor.buffer[key].format = getStyles(editor, current);
-                if (editor.buffer[key].format) {
-                    editor.buffer[key].active = true;
-                }
+                const defaultStyles: {[key: string]: string | number} = {};
+                copyStyles.forEach((key: string) => {
+                    defaultStyles[key] = css(editor.editor, key);
+                });
+
+                const box: HTMLElement = <HTMLElement>Dom.up(current, (elm: Node | null) => (elm && elm.nodeType !== Node.TEXT_NODE), editor.editor) || editor.editor;
+                const format: {[key: string]: string | number | undefined}  = getStyles(editor, box, defaultStyles);
+
+                const onmousedown: Function = () => {
+                    editor.buffer[pluginKey] = false;
+
+                    if (editor.selection.current()) {
+                        editor.selection.applyCSS(format);
+                    }
+
+                    editor.events.off(editor.editor,'mouseup.' + pluginKey);
+                };
+
+                editor.events.on(editor.editor,'mouseup.' + pluginKey, onmousedown);
+
+                editor.buffer[pluginKey] = true;
             }
         }
     },
 
     isActive: (editor: Jodit) => {
-        return editor.buffer[key] !== undefined ? editor.buffer[key].active : false;
+        return !!editor.buffer[pluginKey];
     },
 
     tooltip: "Paint format"
 };
 
-
-
-export function copyformat(editor: Jodit) {
-    editor.buffer[key] = {
-        active: false,
-        format: {
-
-        },
-    };
-
-    editor.events.on('mouseup', () => {
-        if (editor.buffer[key].active) {
-            editor.buffer[key].active = false;
-            editor.selection.applyCSS(editor.buffer[key].format);
-        }
-    });
-}

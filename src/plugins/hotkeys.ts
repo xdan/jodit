@@ -21,7 +21,9 @@ declare module "../Config" {
  * @type {{}}
  */
 Config.prototype.commandToHotkeys = {
-
+    removeFormat: 'ctrl+shift+m',
+    insertOrderedList: 'ctrl+shift+7',
+    insertUnorderedList: 'ctrl+shift+8',
 };
 
 /**
