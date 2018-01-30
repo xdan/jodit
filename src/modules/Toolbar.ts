@@ -202,6 +202,7 @@ export type ButtonType = {
 }
 
 
+
 export class Toolbar extends Component{
     static icons: {[key: string]: string} = {};
     container: HTMLDivElement;
@@ -220,8 +221,11 @@ export class Toolbar extends Component{
     constructor(editor: Jodit) {
         super(editor);
 
-        this.container = <HTMLDivElement>dom('<div class="jodit_toolbar"/>', editor.ownerDocument);
+        this.container = editor.ownerDocument.createElement('div');
+        this.container.classList.add('jodit_toolbar');
+
         this.popup = <HTMLDivElement>dom('<div class="jodit_toolbar_popup"/>', editor.ownerDocument);
+
         this.list = <HTMLDivElement>dom('<ul class="jodit_dropdownlist"/>', editor.ownerDocument);
 
         this.initEvents();
