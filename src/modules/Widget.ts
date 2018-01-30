@@ -44,7 +44,7 @@ export namespace Widget {
                 } else if (Array.isArray(colors)) {
                     colors.forEach((color) => {
                         stack.push('<a ' + (valueHex === color ? ' class="active" ' : '') + ' title="' + color + '" style="background-color:' + color + '" data-color="' + color + '" href="javascript:void(0)">' +
-                            (valueHex === color ? Jodit.modules.Toolbar.getIcon('eye') : '') +
+                            (valueHex === color ? Jodit.modules.ToolbarIcon.getIcon('eye') : '') +
                             '</a>');
                     })
                 }
@@ -55,7 +55,7 @@ export namespace Widget {
         form
             .appendChild(dom('<div>' + eachColor(editor.options.colors) + '</div>', editor.ownerDocument));
 
-        form.appendChild(dom('<a data-color="" href="javascript:void(0)">' + Jodit.modules.Toolbar.getIcon('eraser') + '</a>', editor.ownerDocument));
+        form.appendChild(dom('<a data-color="" href="javascript:void(0)">' + Jodit.modules.ToolbarIcon.getIcon('eraser') + '</a>', editor.ownerDocument));
 
         editor.events
             .on(form, 'mousedown touchstart', (e: MouseEvent) => {
@@ -81,7 +81,7 @@ export namespace Widget {
 
 
                 if (color) {
-                    target.innerHTML = Jodit.modules.Toolbar.getIcon('eye');
+                    target.innerHTML = Jodit.modules.ToolbarIcon.getIcon('eye');
                     target.classList.add('active');
 
                     const colorRGB: RGB|null = hexToRgb(color);
@@ -270,12 +270,12 @@ export namespace Widget {
                 editor.events.fire('errorMessage', error.message);
             });
 
-            tabs[Jodit.modules.Toolbar.getIcon('upload') + editor.i18n('Upload')] = dragbox;
+            tabs[Jodit.modules.ToolbarIcon.getIcon('upload') + editor.i18n('Upload')] = dragbox;
         }
 
         if (callbacks.filebrowser) {
             if (editor.options.filebrowser.ajax.url || editor.options.filebrowser.items.url) {
-                tabs[Jodit.modules.Toolbar.getIcon('folder') + editor.i18n('Browse')] = function () {
+                tabs[Jodit.modules.ToolbarIcon.getIcon('folder') + editor.i18n('Browse')] = function () {
                     close && close();
                     if (callbacks.filebrowser) {
                         (<FileBrowser>editor.getInstance('FileBrowser')).open(callbacks.filebrowser);
@@ -319,7 +319,7 @@ export namespace Widget {
                 return false;
             }, false);
 
-            tabs[Jodit.modules.Toolbar.getIcon('link') + ' URL'] = form;
+            tabs[Jodit.modules.ToolbarIcon.getIcon('link') + ' URL'] = form;
 
         }
 

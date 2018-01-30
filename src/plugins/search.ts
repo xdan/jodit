@@ -8,7 +8,7 @@
 import {Jodit} from "../Jodit";
 import {Config} from "../Config";
 import {ctrlKey, debounce, dom, trim} from "../modules/Helpers";
-import {Component, Dom, Toolbar} from "../modules/index";
+import {Component, Dom, ToolbarIcon} from "../modules/index";
 import * as consts from "../constants";
 import {markerInfo} from "../modules/Selection";
 import {MODE_WYSIWYG} from "../constants";
@@ -51,9 +51,9 @@ export class search extends Component {
                 '<span>0/0</span>' +
             '</div>' +
             '<div class="jodit_search_buttons">' +
-                '<button tabindex="0" type="button" class="jodit_search_buttons-next">' + Toolbar.getIcon('angle-down') + '</button>' +
-                '<button tabindex="0" type="button" class="jodit_search_buttons-prev">' + Toolbar.getIcon('angle-up') + '</button>' +
-                '<button tabindex="0" type="button" class="jodit_search_buttons-cancel">' + Toolbar.getIcon('cancel') + '</button>' +
+                '<button tabindex="0" type="button" class="jodit_search_buttons-next">' + ToolbarIcon.getIcon('angle-down') + '</button>' +
+                '<button tabindex="0" type="button" class="jodit_search_buttons-prev">' + ToolbarIcon.getIcon('angle-up') + '</button>' +
+                '<button tabindex="0" type="button" class="jodit_search_buttons-cancel">' + ToolbarIcon.getIcon('cancel') + '</button>' +
                 '<button tabindex="0" type="button" class="jodit_search_buttons-replace">' + this.jodit.i18n('Replace')  + '</button>' +
             '</div>' +
         '</div>' +

@@ -6,7 +6,6 @@
 
 import {Component} from './modules/Component';
 import {Select} from './modules/Selection';
-import {Toolbar} from './modules/Toolbar';
 import {Cookie} from './modules/Cookie';
 import {FileBrowser} from './modules/FileBrowser';
 import {Uploader} from './modules/Uploader';
@@ -16,6 +15,7 @@ import * as consts from './constants';
 import {extend, inArray, dom, each, sprintf, defaultLanguage, debounce, asArray} from './modules/Helpers';
 import * as helper from './modules/Helpers';
 import {Config} from "./Config";
+import {ToolbarCollection} from "./modules/ToolbarCollection";
 
 
 declare let appVersion: string;
@@ -127,7 +127,7 @@ export class Jodit extends Component {
 
     helper: any;
 
-    toolbar: Toolbar;
+    toolbar: ToolbarCollection;
 
     private __modulesInstances: {[key: string]: Component} = {};
 
@@ -213,7 +213,7 @@ export class Jodit extends Component {
         this.progress_bar = <HTMLDivElement>dom('<div class="jodit_progress_bar"><div></div></div>', this.ownerDocument);
 
 
-        this.toolbar = new Toolbar(this);
+        this.toolbar = new ToolbarCollection(this);
         this.toolbar.build(this.options.buttons.concat(this.options.extraButtons), this.container);
 
         this.container.classList.add('jodit_toolbar_size-' + (['middle', 'large', 'small'].indexOf(this.options.toolbarButtonSize.toLowerCase()) !== -1 ? this.options.toolbarButtonSize.toLowerCase() : 'middle'));
@@ -589,7 +589,7 @@ export class Jodit extends Component {
      *
      * ```
      *
-     * @param {string} commandName
+     * @param {string} commandNameOriginal
      * @param {CommandType | Function} command
      */
     registerCommand(commandNameOriginal: string, command: CommandType | Function) {

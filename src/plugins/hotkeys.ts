@@ -1,5 +1,5 @@
 import {Jodit} from "../Jodit";
-import {ControlType} from "../modules/Toolbar";
+import {ControlType} from "../modules/ToolbarCollection";
 import {Config} from "../Config";
 import {Component} from "../modules/Component";
 

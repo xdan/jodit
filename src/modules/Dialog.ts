@@ -8,7 +8,7 @@ import {Jodit} from '../Jodit'
 import {Component} from './Component'
 import {Config} from '../Config'
 import {dom, $$, asArray, css} from './Helpers'
-import {Toolbar} from "./Toolbar";
+import {ToolbarIcon} from "./ToolbarCollection";
 import {KEY_ESC} from "../constants";
 import {EventsNative} from "./EventsNative";
 
@@ -103,7 +103,7 @@ export class Dialog extends Component{
              '<div class="jodit_dialog">' +
                 '<div class="jodit_dialog_header non-selected">' +
                     '<h4></h4>' +
-                    '<a href="javascript:void(0)" title="Close" class="jodit_close">' + (Jodit.modules.Toolbar ? Jodit.modules.Toolbar.getIcon('cancel') : '&times;') + '</a>' +
+                    '<a href="javascript:void(0)" title="Close" class="jodit_close">' + (Jodit.modules.Toolbar ? Jodit.modules.ToolbarIcon.getIcon('cancel') : '&times;') + '</a>' +
                  '</div>' +
              '<div class="jodit_dialog_content"></div>' +
              '<div class="jodit_dialog_footer"></div>' +
@@ -132,7 +132,7 @@ export class Dialog extends Component{
         self.dialogbox_content = <HTMLDivElement>self.dialogbox.querySelector('.jodit_dialog_content');
         self.dialogbox_footer = <HTMLDivElement>self.dialogbox.querySelector('.jodit_dialog_footer');
         self.dialogbox_close = <HTMLAnchorElement>self.dialogbox.querySelector('.jodit_dialog_header>a.jodit_close');
-        self.dialogbox_fullsize = <HTMLAnchorElement>dom('<a href="javascript:void(0)" class="jodit_dialog_header_fullsize">' + ((Jodit.modules.Toolbar.getIcon) ? Jodit.modules.Toolbar.getIcon(options.fullsize ? 'fullsize' : 'shrink') : '') + '</a>', this.document);
+        self.dialogbox_fullsize = <HTMLAnchorElement>dom('<a href="javascript:void(0)" class="jodit_dialog_header_fullsize">' + ((Jodit.modules.ToolbarIcon.getIcon) ? Jodit.modules.ToolbarIcon.getIcon(options.fullsize ? 'fullsize' : 'shrink') : '') + '</a>', this.document);
 
         self.destinition.appendChild(self.dialogbox);
 
@@ -143,7 +143,7 @@ export class Dialog extends Component{
         self.dialogbox_fullsize.addEventListener('click', () => {
             let fullSize = self.maximization();
             if (Jodit.modules.Toolbar) {
-                self.dialogbox_fullsize.innerHTML = Jodit.modules.Toolbar.getIcon(!fullSize ? 'fullsize' : 'shrink');
+                self.dialogbox_fullsize.innerHTML = Jodit.modules.ToolbarIcon.getIcon(!fullSize ? 'fullsize' : 'shrink');
             }
         });
 
@@ -652,7 +652,7 @@ export const Alert = (msg: string | HTMLElement, title?: string|Function, callba
 
     const dialog: Dialog = new Dialog(),
         $div: HTMLDivElement = <HTMLDivElement>dom('<div class="' + className + '"></div>', dialog.document),
-        $ok: HTMLAnchorElement = <HTMLAnchorElement>dom('<a href="javascript:void(0)" style="float:right;" class="jodit_button">' + Toolbar.getIcon('cancel') + '<span>' + Jodit.prototype.i18n('Ok') + '</span></a>', dialog.document);
+        $ok: HTMLAnchorElement = <HTMLAnchorElement>dom('<a href="javascript:void(0)" style="float:right;" class="jodit_button">' + ToolbarIcon.getIcon('cancel') + '<span>' + Jodit.prototype.i18n('Ok') + '</span></a>', dialog.document);
 
     $div.appendChild(dom(msg, dialog.document));
 
@@ -696,8 +696,8 @@ export const Alert = (msg: string | HTMLElement, title?: string|Function, callba
  */
 export const Promt = (msg: string, title: string|Function|undefined, callback: Function, placeholder?: string): Dialog => {
     const dialog: Dialog = new Dialog(),
-        $cancel: HTMLAnchorElement = <HTMLAnchorElement>dom('<a href="javascript:void(0)" style="float:right;" class="jodit_button">' + Toolbar.getIcon('cancel') + '<span>' + Jodit.prototype.i18n('Cancel') + '</span></a>', dialog.document),
-        $ok: HTMLAnchorElement = <HTMLAnchorElement>dom('<a href="javascript:void(0)" style="float:left;" class="jodit_button">' + Toolbar.getIcon('check') + '<span>' + Jodit.prototype.i18n('Ok') + '</span></a>', dialog.document),
+        $cancel: HTMLAnchorElement = <HTMLAnchorElement>dom('<a href="javascript:void(0)" style="float:right;" class="jodit_button">' + ToolbarIcon.getIcon('cancel') + '<span>' + Jodit.prototype.i18n('Cancel') + '</span></a>', dialog.document),
+        $ok: HTMLAnchorElement = <HTMLAnchorElement>dom('<a href="javascript:void(0)" style="float:left;" class="jodit_button">' + ToolbarIcon.getIcon('check') + '<span>' + Jodit.prototype.i18n('Ok') + '</span></a>', dialog.document),
         $div: HTMLDivElement = <HTMLDivElement>dom('<form class="jodit_promt"></form>', dialog.document),
         $input: HTMLInputElement = <HTMLInputElement>dom('<input autofocus/>', dialog.document),
         $label: HTMLLabelElement = <HTMLLabelElement>dom('<label></label>', dialog.document);
@@ -776,7 +776,7 @@ export const Confirm = (msg: string, title: string|((yes: boolean) => void)|unde
 
     const $cancel: HTMLAnchorElement  = <HTMLAnchorElement>dom(
         '<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
-            Toolbar.getIcon('cancel') +
+            ToolbarIcon.getIcon('cancel') +
             '<span>' + Jodit.prototype.i18n('Cancel') + '</span>' +
         '</a>',
         dialog.document
@@ -798,7 +798,7 @@ export const Confirm = (msg: string, title: string|((yes: boolean) => void)|unde
 
     const $ok: HTMLAnchorElement  = <HTMLAnchorElement>dom(
         '<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
-            Toolbar.getIcon('check') + '<span>' + Jodit.prototype.i18n('Yes') + '</span>' +
+            ToolbarIcon.getIcon('check') + '<span>' + Jodit.prototype.i18n('Yes') + '</span>' +
         '</a>',
         dialog.document
     );

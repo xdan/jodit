@@ -7,7 +7,7 @@
 import {Jodit} from '../Jodit';
 import {Config} from '../Config';
 import {debounce, dom, offset} from "../modules/Helpers";
-import {Toolbar} from "../modules/Toolbar";
+import {ToolbarIcon} from "../modules/ToolbarCollection";
 import * as consts from '../constants';
 import {Dom} from "../modules/Dom";
 
@@ -41,7 +41,7 @@ export function addNewLine(editor: Jodit) {
         return;
     }
 
-    const line: HTMLDivElement = <HTMLDivElement>dom('<div role="button" tabIndex="-1" title="' + editor.i18n("Break") + '" class="jodit-add-new-line"><span>' + Toolbar.getIcon('enter') + '</span></div>', editor.ownerDocument);
+    const line: HTMLDivElement = <HTMLDivElement>dom('<div role="button" tabIndex="-1" title="' + editor.i18n("Break") + '" class="jodit-add-new-line"><span>' + ToolbarIcon.getIcon('enter') + '</span></div>', editor.ownerDocument);
     const span: HTMLSpanElement = <HTMLSpanElement>line.querySelector('span');
     const delta = 10;
     const isMatchedTag = new RegExp('^(' + editor.options.addNewLineTagsTriggers.join('|') + ')$', 'i');

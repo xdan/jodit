@@ -8,7 +8,7 @@ import {Jodit} from '../Jodit';
 import {Config} from '../Config'
 import {isURL, convertMediaURLToVideoEmbed, dom, val} from '../modules/Helpers'
 import {Dom} from "../modules/Dom";
-import {ControlType} from "../modules/Toolbar";
+import {ControlType} from "../modules/ToolbarCollection";
 import {markerInfo} from "../modules/Selection";
 import {Select} from "../modules/Selection";
 

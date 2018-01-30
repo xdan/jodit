@@ -6,7 +6,7 @@
 
 import {Jodit} from "../Jodit";
 import {Config} from "../Config";
-import {ControlType} from "../modules/Toolbar";
+import {ControlType} from "../modules/ToolbarCollection";
 import {Alert, Dialog} from "../modules/Dialog";
 import {dom} from "../modules/Helpers";
 import {KEY_BOTTOM, KEY_ENTER, KEY_LEFT, KEY_RIGHT, KEY_TOP} from "../constants";

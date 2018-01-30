@@ -7,11 +7,12 @@
 import * as consts from './constants'
 import {dom, trim, $$, isURL, convertMediaURLToVideoEmbed, val} from './modules/Helpers'
 import {Jodit} from "./Jodit";
-import {ControlType, Toolbar} from "./modules/Toolbar";
+import {ControlType} from "./modules/ToolbarCollection";
 import {FileBrowserCallBackData} from "./modules/FileBrowser";
 import {Widget} from "./modules/Widget";
 import TabsWidget = Widget.TabsWidget;
 import ImageSelectorWidget = Widget.ImageSelectorWidget;
+import {ToolbarIcon} from "./modules/ToolbarCollection";
 
 /**
  * Default Editor's Configuration
@@ -655,8 +656,8 @@ Config.prototype.controls = {
                     editor.selection.insertHTML(code);
                 };
 
-            tab[Toolbar.getIcon('link') + '&nbsp;' + editor.i18n('Link')] = bylink;
-            tab[Toolbar.getIcon('source') + '&nbsp;' + editor.i18n('Code')] = bycode;
+            tab[ToolbarIcon.getIcon('link') + '&nbsp;' + editor.i18n('Link')] = bylink;
+            tab[ToolbarIcon.getIcon('source') + '&nbsp;' + editor.i18n('Code')] = bycode;
 
             bycode.addEventListener('submit', (event) => {
                 event.preventDefault();

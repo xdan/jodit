@@ -6,8 +6,8 @@
 
 import {Jodit} from "../Jodit";
 import {Config} from '../Config'
-import {ControlType} from "../modules/Toolbar";
-import {Toolbar} from "../modules";
+import {ControlType} from "../modules/ToolbarCollection";
+import {ToolbarCollection} from "../modules/ToolbarCollection";
 import * as consts from "../constants";
 
 declare module "../Config" {
@@ -24,10 +24,10 @@ Config.prototype.mobileTapTimeout = 300;
 
 Config.prototype.controls.dots = <ControlType> {
     mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG,
-    popup: (editor: Jodit, current: false | Node, control: ControlType, close: Function) => {
+    popup: (editor: Jodit, current: false | Node, control: ControlType) => {
         let store: {
             container: HTMLDivElement,
-            toolbar: Toolbar,
+            toolbar: ToolbarCollection,
             rebuild: Function
         } | undefined = <any>control.data;
 
@@ -35,7 +35,7 @@ Config.prototype.controls.dots = <ControlType> {
 
             store = {
                 container: editor.ownerDocument.createElement('div'),
-                toolbar: new Toolbar(editor),
+                toolbar: new ToolbarCollection(editor),
                 rebuild: () => {
                     const buttons: Array<string|ControlType> | undefined = editor.events.fire('getDiffButtons.mobile');
 

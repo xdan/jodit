@@ -4,8 +4,8 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-.jodit_toolbar > li.jodit_toolbar_btn .jodit_dropdownlist{
-    background: #ffffff;
+.jodit_toolbar_list > .jodit_toolbar {
+    background: @color-toolbar;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16),0 3px 6px rgba(0,0,0,0.23);
     padding: 0;
     margin: auto;
@@ -17,7 +17,6 @@
     list-style-type: none;
     font-size:16px;
     z-index:@dropdownlist_z_index;
-    display:none;
     left: 0;
     top: 100%;
 
@@ -54,13 +53,14 @@
         font-family: monospace;
     }
 
-    > li.jodit_toolbar_btn {
+    li.jodit_toolbar_btn {
         display: block;
         cursor: pointer;
         white-space: nowrap;
         color: inherit;
         text-decoration: none;
         width:100%;
+        height: auto;
         box-sizing:border-box;
         text-align:left;
         > a {
@@ -71,6 +71,9 @@
             width: auto;
             height:auto;
             display: block;
+            > span {
+                display: inline-block;
+            }
             &:hover {
                 background-color: #F3F0F0;
             }
@@ -79,8 +82,4 @@
           }
         }
     }
-}
-
-.jodit_dropdown_open .jodit_dropdownlist{
-    display:block;
 }

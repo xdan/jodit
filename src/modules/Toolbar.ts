@@ -10,7 +10,7 @@ import {dom, each, $$, extend, camelCase, offset, css, asArray} from "./Helpers"
 import * as consts from "../constants";
 import {Dom} from "./Dom";
 
-export type ControlType = {
+type ControlType = {
     controlName?: string;
     name?: string;
     mode?: number;
@@ -43,7 +43,7 @@ export type ControlType = {
      * })
      * ```
      */
-    isActive?: (editor: Jodit, btn: ControlType, button?: ButtonType) => boolean,
+    isActive?: (editor: Jodit, btn: ControlType, button?: any) => boolean,
 
     /**
      * You can use it function for control - disable/enable button
@@ -72,7 +72,7 @@ export type ControlType = {
      * })
      * ```
      */
-    isDisable?: (editor: Jodit, btn: ControlType, button?: ButtonType) => boolean,
+    isDisable?: (editor: Jodit, btn: ControlType, button?: any) => boolean,
 
     getLabel?: (editor: Jodit, btn: ControlType, button?: ButtonType) => boolean | void,
 
@@ -203,7 +203,7 @@ export type ButtonType = {
 
 
 
-export class Toolbar extends Component{
+export class ToolbarOld extends Component{
     static icons: {[key: string]: string} = {};
     container: HTMLDivElement;
     private popup: HTMLDivElement;
@@ -239,7 +239,7 @@ export class Toolbar extends Component{
      * @return {string}
      */
     static getIcon(name: string, defaultValue:string = '<span></span>'): string {
-        return Toolbar.icons[name] !== undefined ? Toolbar.icons[name] : defaultValue;
+        return ToolbarOld.icons[name] !== undefined ? ToolbarOld.icons[name] : defaultValue;
     }
 
     /**
@@ -285,7 +285,7 @@ export class Toolbar extends Component{
             let elm: HTMLElement;
 
             if (this.jodit.options.controls[value] !== undefined) {
-                elm = this.addButton(value, this.jodit.options.controls[value], '', target); // list like array {"align": {list: ["left", "right"]}}
+                elm = this.addButton(value, <ControlType>this.jodit.options.controls[value], '', target); // list like array {"align": {list: ["left", "right"]}}
             } else if (this.jodit.options.controls[key] !== undefined) {
                 elm = this.addButton(key, extend({}, this.jodit.options.controls[key], value),'', target); // list like object {"align": {list: {"left": {exec: alert}, "right": {}}}}
             } else {
@@ -403,7 +403,7 @@ export class Toolbar extends Component{
                 isEnable = false;
             }
 
-            Toolbar.__toggleButton(button.btn, isEnable);
+            ToolbarOld.__toggleButton(button.btn, isEnable);
 
             if (typeof button.control.getLabel === 'function') {
                 button.control.getLabel(this.jodit, button.control, button);
@@ -464,14 +464,14 @@ export class Toolbar extends Component{
             name: string = typeof item === 'string' ? item : (item.name || 'empty');
 
         if (!this.jodit.options.textIcons) {
-            iconSVG = Toolbar.getIcon(icon, '');
+            iconSVG = ToolbarOld.getIcon(icon, '');
 
             if (iconSVG === '' && typeof control.icon === 'string') {
-                iconSVG = Toolbar.getIcon(control.icon, '');
+                iconSVG = ToolbarOld.getIcon(control.icon, '');
             }
 
             if (iconSVG === '') {
-                iconSVG = Toolbar.getIcon( typeof control.name === 'string' ? control.name : 'empty', '');
+                iconSVG = ToolbarOld.getIcon( typeof control.name === 'string' ? control.name : 'empty', '');
             }
         } else {
             iconSVG = `<span>${name}</span>`;
@@ -523,7 +523,7 @@ export class Toolbar extends Component{
             }
 
             if (enable !== undefined) {
-                Toolbar.__toggleButton(btn, enable);
+                ToolbarOld.__toggleButton(btn, enable);
             }
         };
 
@@ -654,11 +654,11 @@ export class Toolbar extends Component{
                     lastBtnSeparator = false;
 
                     if (typeof control !== 'object' && this.jodit.options.controls[control] !== undefined) {
-                        control = this.jodit.options.controls[control];
+                        control = <ControlType>this.jodit.options.controls[control];
                     }
 
                     if (typeof control === 'object' && control.name && this.jodit.options.controls[control.name] !== undefined) {
-                        control = {...this.jodit.options.controls[control.name], ...control};
+                        control = <ControlType>{...this.jodit.options.controls[control.name], ...control};
                     }
 
                     if (typeof control !== 'object') {

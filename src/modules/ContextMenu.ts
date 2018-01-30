@@ -7,7 +7,7 @@
 import {Jodit} from '../Jodit';
 import {Component} from './Component';
 import {css, dom} from "./Helpers";
-import {Toolbar} from "./Toolbar";
+import {ToolbarIcon} from "./ToolbarCollection";
 
 type Action = {
     icon ?: string;
@@ -65,7 +65,7 @@ export class ContextMenu extends Component {
                 return;
             }
 
-            const action: HTMLAnchorElement = <HTMLAnchorElement>dom('<a href="javascript:void(0)">' + (item.icon ? Toolbar.getIcon(item.icon) : '') + '<span></span></a>', this.jodit.ownerDocument);
+            const action: HTMLAnchorElement = <HTMLAnchorElement>dom('<a href="javascript:void(0)">' + (item.icon ? ToolbarIcon.getIcon(item.icon) : '') + '<span></span></a>', this.jodit.ownerDocument);
             const span: HTMLSpanElement = <HTMLSpanElement>action.querySelector('span');
 
             action.addEventListener('click', (e: MouseEvent) => {

@@ -9,7 +9,7 @@ import * as consts from '../constants';
 import {each, getContentWidth, $$, dom, offset} from '../modules/Helpers';
 import {Config} from '../Config'
 import {Dom, Component, Table} from "../modules/index";
-import {ControlType} from "../modules/Toolbar";
+import {ControlType} from "../modules/ToolbarCollection";
 
 
 declare module "../Config" {
@@ -25,7 +25,7 @@ declare module "../Config" {
 Config.prototype.useTableProcessor = true;
 // Config.prototype.useBootstrapClasses = true;
 
-Config.prototype.controls.table = {
+Config.prototype.controls.table = <ControlType> {
     cols: 10,
     popup: (editor: Jodit, current,  control: ControlType, close: Function) => {
         let i: number,

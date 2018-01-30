@@ -8,7 +8,7 @@ import {Jodit} from '../Jodit';
 import {Config} from '../Config'
 import {$$, css, dom, trim, val} from "../modules/Helpers";
 import {Alert, Confirm, Dialog} from "../modules/Dialog";
-import {Toolbar} from "../modules/Toolbar";
+import {ToolbarIcon, ToolbarPopup} from "../modules/ToolbarCollection";
 
 import {FileBrowser,FileBrowserCallBackData} from "../modules/FileBrowser";
 import {Dom} from "../modules/Dom";
@@ -108,11 +108,11 @@ export function imageProperties(editor: Jodit) {
 
         const image = <HTMLImageElement>this,
             dialog: Dialog = new Dialog(editor),
-            cancel: HTMLElement = dom('<a href="javascript:void(0)" style="float:right;" class="jodit_button">' + Toolbar.getIcon('cancel') + '<span>' + editor.i18n('Cancel') + '</span></a>', editor.ownerDocument),
-            check: HTMLElement  = dom('<a href="javascript:void(0)" style="float:left;" class="jodit_button">' + Toolbar.getIcon('check') + '<span>' +  editor.i18n('Ok') + '</span></a>', editor.ownerDocument),
+            cancel: HTMLElement = dom('<a href="javascript:void(0)" style="float:right;" class="jodit_button">' + ToolbarIcon.getIcon('cancel') + '<span>' + editor.i18n('Cancel') + '</span></a>', editor.ownerDocument),
+            check: HTMLElement  = dom('<a href="javascript:void(0)" style="float:left;" class="jodit_button">' + ToolbarIcon.getIcon('check') + '<span>' +  editor.i18n('Ok') + '</span></a>', editor.ownerDocument),
 
             buttons = {
-                remove: dom('<a href="javascript:void(0)" class="jodit_button">' + Toolbar.getIcon('bin') + ' ' + editor.i18n('Delete') + '</a>', editor.ownerDocument)
+                remove: dom('<a href="javascript:void(0)" class="jodit_button">' + ToolbarIcon.getIcon('bin') + ' ' + editor.i18n('Delete') + '</a>', editor.ownerDocument)
             },
 
 
@@ -126,7 +126,7 @@ export function imageProperties(editor: Jodit) {
                                 '<div style="' + (!editor.options.image.editSize ? 'display:none' : '') + '" class="jodit_form_group jodit_properties_image_sizes">' +
                                     '<input type="number" id="imageWidth"/>' +
                                     '<a class="jodit_lock_helper jodit_lock_size" href="javascript:void(0)">' +
-                                        Toolbar.getIcon('lock') +
+                                        ToolbarIcon.getIcon('lock') +
                                     '</a>' +
                                     '<input type="number" id="imageHeight"/>' +
                                 '</div>' +
@@ -141,7 +141,7 @@ export function imageProperties(editor: Jodit) {
                     '<div class="jodit_grid">' +
                         '<input class="jodit_col-lg-1-5 margins" type="text" placeholder="' + editor.i18n('top') + '" id="marginTop"/>' +
                         '<a style="text-align: center;" class="jodit_lock_helper jodit_lock_margin jodit_col-lg-1-5" href="javascript:void(0)">' +
-                            Toolbar.getIcon('lock') +
+                            ToolbarIcon.getIcon('lock') +
                         '</a>' +
                         '<input disabled="true" class="jodit_col-lg-1-5 margins" type="text" placeholder="' + editor.i18n('right') + '" id="marginRight"/>' +
                         '<input disabled="true" class="jodit_col-lg-1-5 margins" type="text" placeholder="' + editor.i18n('bottom') + '" id="marginBottom"/>' +
@@ -177,8 +177,8 @@ export function imageProperties(editor: Jodit) {
                         '<input type="text" id="imageSrc"/>' +
                         ((editor.options.filebrowser.ajax.url || editor.options.uploader.url) ?
                         '<div class="jodit_input_group-buttons">' +
-                            ((editor.options.filebrowser.ajax.url || editor.options.uploader.url) ? '<a class="jodit_button jodit_rechange" href="javascript:void(0)">' + Toolbar.getIcon('image') + '</a>' : '') +
-                            ((editor.options.image.useImageEditor && Jodit.modules.ImageEditor !== undefined && editor.options.filebrowser.ajax.url) ? '<a class="jodit_button jodit_use_image_editor" href="javascript:void(0)">' + Toolbar.getIcon('crop') + '</a>' : '') +
+                            ((editor.options.filebrowser.ajax.url || editor.options.uploader.url) ? '<a class="jodit_button jodit_rechange" href="javascript:void(0)">' + ToolbarIcon.getIcon('image') + '</a>' : '') +
+                            ((editor.options.image.useImageEditor && Jodit.modules.ImageEditor !== undefined && editor.options.filebrowser.ajax.url) ? '<a class="jodit_button jodit_use_image_editor" href="javascript:void(0)">' + ToolbarIcon.getIcon('crop') + '</a>' : '') +
                         '</div>' : '') +
                     '</div>' +
                 '</div>' +
@@ -249,7 +249,7 @@ export function imageProperties(editor: Jodit) {
                 lockMargin = !notequal;
                 let lock_margin: HTMLAnchorElement|null = prop.querySelector('.jodit_lock_margin');
                 if (lock_margin) {
-                    lock_margin.innerHTML = Toolbar.getIcon(lockMargin ? 'lock' : 'unlock');
+                    lock_margin.innerHTML = ToolbarIcon.getIcon(lockMargin ? 'lock' : 'unlock');
                 }
 
                 $$('.margins:not(#marginTop)', prop).forEach((elm:HTMLElement) => !lockMargin ? elm.removeAttribute('disabled') : elm.setAttribute('disabled', 'true'));
@@ -381,22 +381,23 @@ export function imageProperties(editor: Jodit) {
         (<HTMLAnchorElement[]>$$('.jodit_rechange', mainTab)).forEach((imagebtn: HTMLAnchorElement) => {
             imagebtn.addEventListener('mousedown', (e: MouseEvent) => {
                 imagebtn.classList.toggle('active');
-                editor.toolbar.openPopup(imagebtn, ImageSelectorWidget(editor, {
+                const popup: ToolbarPopup = new ToolbarPopup(editor, imagebtn);
+                popup.open(ImageSelectorWidget(editor, {
                     upload: (data: FileBrowserCallBackData) => {
                         if (data.files && data.files.length) {
                             image.setAttribute('src', data.baseurl + data.files[0]);
                         }
                         update();
-                        editor.toolbar.closeAll();
+                        popup.close();
                     },
                     filebrowser: (data: FileBrowserCallBackData) => {
                         if (data && data.files && Array.isArray(data.files) && data.files.length) {
                             image.setAttribute('src', data.files[0]);
-                            editor.toolbar.closeAll();
+                            popup.close();
                             update();
                         }
                     }
-                }, image, editor.toolbar.closeAll), true);
+                }, image, popup.close), true);
                 e.stopPropagation();
             });
         });
@@ -407,7 +408,7 @@ export function imageProperties(editor: Jodit) {
         if (jodit_lock_size) {
             jodit_lock_size.addEventListener('click', function () {
                 lockSize = !lockSize;
-                this.innerHTML = Toolbar.getIcon(lockSize ? 'lock' : 'unlock');
+                this.innerHTML = ToolbarIcon.getIcon(lockSize ? 'lock' : 'unlock');
                 editor.events.fire($w, 'change');
             });
         }
@@ -415,7 +416,7 @@ export function imageProperties(editor: Jodit) {
         if (jodit_lock_margin) {
             jodit_lock_margin.addEventListener('click', function () {
                 lockMargin = !lockMargin;
-                this.innerHTML = Toolbar.getIcon(lockMargin ? 'lock' : 'unlock');
+                this.innerHTML = ToolbarIcon.getIcon(lockMargin ? 'lock' : 'unlock');
                 if (!lockMargin) {
                     $$('.margins', prop).forEach((elm) => {if (!elm.matches('#marginTop')) elm.removeAttribute('disabled');})
                 } else {

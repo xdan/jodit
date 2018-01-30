@@ -8,7 +8,7 @@ import {Jodit} from '../Jodit';
 import {Component} from './Component';
 import {Config} from '../Config'
 import {$$, css, debounce, dom, throttle, trim} from "./Helpers";
-import {Toolbar} from "./Toolbar";
+import {ToolbarIcon} from "./ToolbarCollection";
 import {Dialog, Alert, Promt} from "./Dialog";
 /**
  * @property {ImageEditorOptions} imageeditor module's options
@@ -154,9 +154,9 @@ export class ImageEditor extends Component{
         this.resizeUseRatio = this.options.resizeUseRatio;
         this.cropUseRatio = this.options.cropUseRatio;
         this.buttons =  [
-            dom('<button data-action="reset" type="button" class="jodit_btn">' + Toolbar.getIcon('update') + ' ' + editor.i18n('Reset') + '</button>', editor.ownerDocument),
-            dom('<button data-action="save" type="button" class="jodit_btn jodit_btn_success">' + Toolbar.getIcon('save') + ' ' + editor.i18n('Save') + '</button>', editor.ownerDocument),
-            dom('<button data-action="saveas" type="button" class="jodit_btn jodit_btn_success">' + Toolbar.getIcon('save') + ' ' + editor.i18n('Save as ...') + '</button>', editor.ownerDocument),
+            dom('<button data-action="reset" type="button" class="jodit_btn">' + ToolbarIcon.getIcon('update') + ' ' + editor.i18n('Reset') + '</button>', editor.ownerDocument),
+            dom('<button data-action="save" type="button" class="jodit_btn jodit_btn_success">' + ToolbarIcon.getIcon('save') + ' ' + editor.i18n('Save') + '</button>', editor.ownerDocument),
+            dom('<button data-action="saveas" type="button" class="jodit_btn jodit_btn_success">' + ToolbarIcon.getIcon('save') + ' ' + editor.i18n('Save as ...') + '</button>', editor.ownerDocument),
         ];
         this.activeTab = this.options.resize ? 'resize' : 'crop';
         this.editor = dom(
@@ -185,7 +185,7 @@ export class ImageEditor extends Component{
                     '<div class="jodit_col-lg-1-4">' +
                         (this.options.resize ?
                         '<div data-area="resize" class="jodit_image_editor_slider active">\
-                                <div class="jodit_image_editor_slider-title">' + Toolbar.getIcon('resize') + editor.i18n('Resize') + '</div>\
+                                <div class="jodit_image_editor_slider-title">' + ToolbarIcon.getIcon('resize') + editor.i18n('Resize') + '</div>\
                                 <div class="jodit_image_editor_slider-content">\
                                     <div class="jodit_form_group">\
                                         <label for="jodit_image_editor_width">' + editor.i18n('Width') + '</label>\
@@ -208,7 +208,7 @@ export class ImageEditor extends Component{
                          ) +
                         (this.options.crop ?
                         '<div data-area="crop" class="jodit_image_editor_slider' + (!this.options.resize ? ' active' : '') + '">\
-                                <div class="jodit_image_editor_slider-title">' + Toolbar.getIcon('crop') + editor.i18n('Crop') + '</div>\
+                                <div class="jodit_image_editor_slider-title">' + ToolbarIcon.getIcon('crop') + editor.i18n('Crop') + '</div>\
                                 <div class="jodit_image_editor_slider-content">\
                                     <div class="jodit_form_group">\
                                         <label>' + editor.i18n('Keep Aspect Ratio') + '</label>\

@@ -7,7 +7,7 @@
 import {Jodit} from '../Jodit';
 import {Config} from '../Config'
 import {css, dom} from "../modules/Helpers";
-import {Toolbar} from "../modules/Toolbar";
+import {ToolbarIcon} from "../modules/ToolbarCollection";
 import * as consts from '../constants'
 
 /**
@@ -86,7 +86,7 @@ export  function fullsize(editor: Jodit) {
 
             if (editor.toolbar) {
                 css(editor.toolbar.container, 'width', 'auto');
-                const icon: HTMLElement = dom(<string>Toolbar.getIcon(condition ? 'shrink' : 'fullsize'), editor.ownerDocument),
+                const icon: HTMLElement = dom(<string>ToolbarIcon.getIcon(condition ? 'shrink' : 'fullsize'), editor.ownerDocument),
                     a: HTMLAnchorElement|null = editor.toolbar.container.querySelector('.jodit_toolbar_btn-fullsize a');
 
                 if (a) {

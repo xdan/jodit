@@ -11,12 +11,12 @@ import {Widget} from "../modules/Widget";
 import TabsWidget = Widget.TabsWidget;
 import ColorPickerWidget = Widget.ColorPickerWidget;
 import {Dom} from "../modules/Dom";
-import {ButtonType, ControlType} from "../modules/Toolbar";
+import {ControlType, ToolbarButton} from "../modules/ToolbarCollection";
 
 Config.prototype.controls.brush = <ControlType>{
-    isActive: (editor: Jodit, btn: ControlType, button: ButtonType): boolean => {
+    isActive: (editor: Jodit, btn: ControlType, button: ToolbarButton): boolean => {
         const current: Node|false = editor.selection.current();
-        const icon: SVGSVGElement|null = button.btn.querySelector('svg');
+        const icon: SVGSVGElement|null = button.container.querySelector('svg');
 
         if (current) {
             const currentBpx: HTMLElement = <HTMLElement>Dom.closest(current, (elm: Node): boolean => {
@@ -43,35 +43,14 @@ Config.prototype.controls.brush = <ControlType>{
 
         return false;
     },
-    // css: {
-    //     'backgroundColor' : (editor: Jodit, color: string) => {
-    //         const  check = (colors: {[key:string]:string[]}|string[]) => {
-    //             let i: number,
-    //                 keys: string[];
-    //
-    //             if (typeof colors === 'object') {
-    //                 keys = Object.keys(colors);
-    //                 for (i = 0; i < keys.length; i += 1) {
-    //                     if (check(colors[keys[i]])) {
-    //                         return true;
-    //                     }
-    //                 }
-    //             } else if (Array.isArray(colors)) {
-    //                 return (<Array<string>>colors).indexOf(normalizeColor(color) || '') !== -1;
-    //             }
-    //             return false;
-    //         };
-    //
-    //         return check(editor.options.colors);
-    //     }
-    // },
+
     popup: (editor: Jodit, current: Node | false, self: ControlType, close: Function) => {
         let color: string = '',
             bg_color: string = '',
             tabs: {[key: string]: HTMLElement},
             currentElement: HTMLElement|null = null;
 
-        if (current && Dom.isNode(current, editor.editorWindow) && current.nodeType === Node.ELEMENT_NODE) {
+        if (current && current !== editor.editor && Dom.isNode(current, editor.editorWindow) && current.nodeType === Node.ELEMENT_NODE) {
             color = css(<HTMLElement>current, 'color').toString();
             bg_color = css(<HTMLElement>current, 'background-color').toString();
             currentElement = <HTMLElement>current;

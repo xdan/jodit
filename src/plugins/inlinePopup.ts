@@ -10,10 +10,9 @@
 * @params {Object} parent Jodit main object
 */
 import {Jodit} from "../Jodit";
-import {Toolbar} from "../modules/Toolbar";
+import {ToolbarCollection, ControlType} from "../modules/ToolbarCollection";
 import {Config} from '../Config'
 import {css, dom, offset} from "../modules/Helpers";
-import {ControlType} from "../modules/Toolbar";
 import {Dom} from "../modules/Dom";
 import {Table} from "../modules/Table";
 import {Widget} from "../modules/Widget";
@@ -303,7 +302,7 @@ Config.prototype.popup = <{[key: string]: Array<ControlType|string>}>{
 
 export function inlinePopup(editor: Jodit) {
     let timeout: number;
-    const toolbar: Toolbar = new Toolbar(editor),
+    const toolbar: ToolbarCollection = new ToolbarCollection(editor),
         popup: HTMLDivElement = <HTMLDivElement> dom('<div data-editor_id="' + editor.id + '" class="jodit_toolbar_popup-inline"></div>', editor.ownerDocument),
 
         toggleEditor = (toggle: boolean) => {

@@ -8,7 +8,7 @@ import {Config} from '../Config'
 import {Jodit} from "../Jodit";
 import {Dom} from "../modules/Dom";
 import {css} from "../modules/Helpers";
-import {ControlType} from "../modules/Toolbar";
+import {ControlType} from "../modules/ToolbarCollection";
 
 const pluginKey: string = 'copyformat';
 

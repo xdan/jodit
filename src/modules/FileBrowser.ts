@@ -12,7 +12,7 @@ import {
     $$, css, ctrlKey, debounce, dom, each, extend, humanSizeToBytes, isPlainObject, offset,
     pathNormalize, urlNormalize
 } from "./Helpers";
-import {Toolbar} from "./Toolbar";
+import {ToolbarIcon} from "./ToolbarCollection";
 import {ContextMenu} from "./ContextMenu";
 import {Uploader, UploaderOptions} from "./Uploader";
 import {Ajax} from "./Ajax";
@@ -580,13 +580,13 @@ export class FileBrowser extends Component {
         self.status_line = <HTMLElement>self.browser.querySelector('.jodit_filebrowser_status');
 
         self.buttons = {
-            upload : dom('<div class="jodit_uploadfile_button jodit_button">' + Toolbar.getIcon('plus') + '<input type="file" accept="image/*" tabindex="-1" dir="auto" multiple=""/></div>', doc),
-            remove : dom('<div class="jodit_button disabled">' + Toolbar.getIcon('bin') + '</div>', doc),
-            update : dom('<div class="jodit_button">' + Toolbar.getIcon('update') + '</div>', doc),
-            select : dom('<div class="jodit_button disabled">' + Toolbar.getIcon('check') + '</div>', doc),
-            edit   : dom('<div class="jodit_button disabled">' + Toolbar.getIcon('pencil') + '</div>', doc),
-            tiles  : dom('<div class="jodit_button jodit_button_tiles disabled">' + Toolbar.getIcon('th') + '</div>', doc),
-            list   : dom('<div class="jodit_button disabled">' + Toolbar.getIcon('th-list') + '</div>', doc),
+            upload : dom('<div class="jodit_uploadfile_button jodit_button">' + ToolbarIcon.getIcon('plus') + '<input type="file" accept="image/*" tabindex="-1" dir="auto" multiple=""/></div>', doc),
+            remove : dom('<div class="jodit_button disabled">' + ToolbarIcon.getIcon('bin') + '</div>', doc),
+            update : dom('<div class="jodit_button">' + ToolbarIcon.getIcon('update') + '</div>', doc),
+            select : dom('<div class="jodit_button disabled">' + ToolbarIcon.getIcon('check') + '</div>', doc),
+            edit   : dom('<div class="jodit_button disabled">' + ToolbarIcon.getIcon('pencil') + '</div>', doc),
+            tiles  : dom('<div class="jodit_button jodit_button_tiles disabled">' + ToolbarIcon.getIcon('th') + '</div>', doc),
+            list   : dom('<div class="jodit_button disabled">' + ToolbarIcon.getIcon('th-list') + '</div>', doc),
             filter : dom('<input class="jodit_input" placeholder="' + editor.i18n('Filter') + '"/>', doc),
 
             sort: dom('<select class="jodit_input">' +
@@ -769,8 +769,8 @@ export class FileBrowser extends Component {
                                             this.removeEventListener('load', <EventListenerOrEventListenerObject>onload);
                                             temp_content.innerHTML = '';
                                             if (self.options.showPreviewNavigation) {
-                                                let next = dom('<a href="javascript:void(0)" class="jodit_filebrowser_preview_navigation jodit_filebrowser_preview_navigation-next">' + Toolbar.getIcon('angle-right') + '</a>', doc),
-                                                    prev = dom('<a href="javascript:void(0)" class="jodit_filebrowser_preview_navigation jodit_filebrowser_preview_navigation-prev">' + Toolbar.getIcon('angle-left') + '</a>', doc);
+                                                let next = dom('<a href="javascript:void(0)" class="jodit_filebrowser_preview_navigation jodit_filebrowser_preview_navigation-next">' + ToolbarIcon.getIcon('angle-right') + '</a>', doc),
+                                                    prev = dom('<a href="javascript:void(0)" class="jodit_filebrowser_preview_navigation jodit_filebrowser_preview_navigation-prev">' + ToolbarIcon.getIcon('angle-left') + '</a>', doc);
 
                                                 if (item.previousSibling && (<HTMLElement>item.previousSibling).classList && (<HTMLElement>item.previousSibling).classList.contains(ITEM_CLASS)) {
                                                     temp_content.appendChild(prev);
@@ -997,7 +997,7 @@ export class FileBrowser extends Component {
             });
 
             if (this.options.createNewFolder && this.canI('FolderCreate')) {
-                folders.push('<a class="jodit_button addfolder" href="javascript:void(0)" data-path="' + pathNormalize(source.path + name) + '/" data-source="' + source_name + '">' + Toolbar.getIcon('plus') + ' ' + this.jodit.i18n('Add folder') + '</a>');
+                folders.push('<a class="jodit_button addfolder" href="javascript:void(0)" data-path="' + pathNormalize(source.path + name) + '/" data-source="' + source_name + '">' + ToolbarIcon.getIcon('plus') + ' ' + this.jodit.i18n('Add folder') + '</a>');
             }
         });
 
@@ -1362,7 +1362,7 @@ export class FileBrowser extends Component {
                     if (typeof btn === 'function') {
                         header.push((<Function>btn).call(this));
                     } else if (isPlainObject(btn) && (<ExecButton>btn).exec && (<ExecButton>btn).name) {
-                        button = dom('<div class="jodit_button">' + Toolbar.getIcon((<ExecButton>btn).icon || (<ExecButton>btn).name || '') + '</div>', this.jodit.ownerDocument);
+                        button = dom('<div class="jodit_button">' + ToolbarIcon.getIcon((<ExecButton>btn).icon || (<ExecButton>btn).name || '') + '</div>', this.jodit.ownerDocument);
                         header.push(button);
                         button.addEventListener('click', <EventListenerOrEventListenerObject>(<ExecButton>btn).exec);
                     }

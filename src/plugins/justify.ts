@@ -8,21 +8,25 @@ import {Jodit} from '../Jodit';
 import {$$, css} from '../modules/Helpers';
 import {Dom} from "../modules/Dom";
 import {Config} from "../Config";
-import {ButtonType, ControlType, Toolbar} from "../modules/Toolbar";
+import {ToolbarIcon, ControlType, ToolbarButton} from "../modules/ToolbarCollection";
 
 Config.prototype.controls.align = <ControlType>{
     name: 'left',
     tooltip: "Align",
-    getLabel: (editor: Jodit, btn: ControlType, button: ButtonType): boolean => {
+    getLabel: (editor: Jodit, btn: ControlType, button: ToolbarButton): boolean => {
         const current: Node|false = editor.selection.current();
 
         if (current) {
-            const currentBox: HTMLElement = <HTMLElement>Dom.closest(current, Dom.isBlock, editor.editor) || editor.editor,
-                currentValue: string = css(currentBox, 'text-align').toString();
+            const currentBox: HTMLElement = <HTMLElement>Dom.closest(current, Dom.isBlock, editor.editor) || editor.editor;
+            let currentValue: string = css(currentBox, 'text-align').toString();
+
+            if (btn.defaultValue && btn.defaultValue.indexOf(currentValue) !== - 1) {
+                currentValue = 'left'
+            }
 
             if (btn.data && btn.data.currentValue !== currentValue && btn.list && (<string[]>btn.list).indexOf(currentValue) !== -1) {
-                button.container.innerHTML = !editor.options.textIcons ? Toolbar.getIcon(currentValue, '') :  `<span>${currentValue}</span>`;
-                (<HTMLElement>button.container.firstChild).classList.add('jodit_icon');
+                button.textBox.innerHTML = !editor.options.textIcons ? ToolbarIcon.getIcon(currentValue, '') :  `<span>${currentValue}</span>`;
+                (<HTMLElement>button.textBox.firstChild).classList.add('jodit_icon');
                 btn.data.currentValue = currentValue;
             }
         }

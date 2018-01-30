@@ -12,7 +12,6 @@ import {
 } from '../modules/Helpers';
 import {Config} from '../Config'
 import {TEXT_HTML, TEXT_PLAIN} from "../constants";
-import {Toolbar} from "../modules/Toolbar";
 
 /**
  * @property{boolean} askBeforePasteHTML=true Ask before paste HTML in WYSIWYG mode
@@ -246,7 +245,7 @@ export function paste(editor: Jodit) {
                         let html: string = event.clipboardData.getData(TEXT_HTML);
                         return processHTMLData(html);
                     } else {
-                        const div: HTMLDivElement = <HTMLDivElement>dom('<div tabindex="-1" style="left: -9999px; top: 0px; width: 0px; height: 100%; line-height: 140%; overflow: hidden; position: fixed; z-index: 2147483647; -ms-word-break: break-all;" contenteditable="true"></div>', editor.ownerDocument);
+                        const div: HTMLDivElement = <HTMLDivElement>dom('<div tabindex="-1" style="left: -9999px; top: 0; width: 0; height: 100%; line-height: 140%; overflow: hidden; position: fixed; z-index: 2147483647; -ms-word-break: break-all;" contenteditable="true"></div>', editor.ownerDocument);
                         editor.container.appendChild(div);
                         div.focus();
                         let tick: number = 0;

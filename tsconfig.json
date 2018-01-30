@@ -6,6 +6,7 @@
     "strictFunctionTypes": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
+    "target": "es5",
     "lib": [
       "ES5",
       "ES2015",

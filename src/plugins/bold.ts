@@ -6,9 +6,9 @@
 
 import {Jodit} from '../Jodit';
 import {Config} from "../Config";
-import {ControlType} from "../modules/Toolbar";
+import {ControlType} from "../modules/ToolbarCollection";
 
-Config.prototype.controls.bold = {
+Config.prototype.controls.bold = <ControlType>{
     tagRegExp: /^(strong|b)$/i,
         tags: ["strong", "b"],
         css: {
@@ -17,7 +17,7 @@ Config.prototype.controls.bold = {
     tooltip: "Bold",
 };
 
-Config.prototype.controls.italic = {
+Config.prototype.controls.italic = <ControlType>{
     tagRegExp: /^(em|i)$/i,
     tags: ["em", "i"],
     css: {
@@ -26,7 +26,7 @@ Config.prototype.controls.italic = {
     tooltip: "Italic",
 };
 
-Config.prototype.controls.underline = {
+Config.prototype.controls.underline = <ControlType>{
     tagRegExp: /^(u)$/i,
     tags: ['u'],
     css: {
@@ -34,7 +34,7 @@ Config.prototype.controls.underline = {
     },
     tooltip: "Underline",
 };
-Config.prototype.controls.strikethrough = {
+Config.prototype.controls.strikethrough = <ControlType>{
     tagRegExp: /^(s)$/i,
     tags: ['s'],
     css: {
