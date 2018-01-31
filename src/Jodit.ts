@@ -604,9 +604,11 @@ export class Jodit extends Component {
             const hotkeys: string | string[] | void = this.options.commandToHotkeys[commandName] || this.options.commandToHotkeys[commandNameOriginal] || command.hotkeys;
 
             if (hotkeys) {
-                this.events.on(asArray(hotkeys).map((hotkey: string) => hotkey + '.hotkey').join(' '), () => {
-                    return this.execCommand(commandName); // because need `beforeCommand`
-                });
+                this.events
+                    .off(asArray(hotkeys).map((hotkey: string) => hotkey + '.hotkey').join(' '))
+                    .on(asArray(hotkeys).map((hotkey: string) => hotkey + '.hotkey').join(' '), () => {
+                        return this.execCommand(commandName); // because need `beforeCommand`
+                    });
             }
         }
     }

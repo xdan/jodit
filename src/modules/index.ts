@@ -18,7 +18,6 @@ export {Observer} from './Observer';
 export {Select} from './Selection';
 export {Snapshot} from './Snapshot';
 export {Table} from './Table';
-export {ToolbarOld} from './Toolbar';
-export {ToolbarIcon} from './ToolbarCollection';
+export {ToolbarIcon, ToolbarCollection, ToolbarButton} from './ToolbarCollection';
 export {Stack} from './Stack';
 export {Uploader} from './Uploader';

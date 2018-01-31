@@ -2,6 +2,7 @@ import {Jodit} from "../Jodit";
 import {ControlType} from "../modules/ToolbarCollection";
 import {Config} from "../Config";
 import {Component} from "../modules/Component";
+import {asArray} from "../modules/Helpers";
 
 declare module "../Config" {
     interface Config {
@@ -160,6 +161,21 @@ export class hotkeys extends Component{
 
     constructor(editor: Jodit) {
         super(editor);
+
+        const commands: string[] = Object.keys(editor.options.commandToHotkeys);
+        commands.forEach((commandName: string) => {
+            const hotkeys: string | string[] | void = editor.options.commandToHotkeys[commandName];
+
+            if (hotkeys) {
+                editor.events
+                    .off(asArray(hotkeys).map((hotkey: string) => hotkey + '.hotkey').join(' '))
+                    .on(asArray(hotkeys).map((hotkey: string) => hotkey + '.hotkey').join(' '), () => {
+                        return editor.execCommand(commandName); // because need `beforeCommand`
+                    });
+            }
+        });
+
+
         editor.events
             .on('afterInit', () => {
                 const runPossible: Function = (event: KeyboardEvent): void | false => {

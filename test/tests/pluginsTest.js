@@ -1281,6 +1281,14 @@ describe('Test plugins', function () {
                     });
 
                     expect('test<em> tes</em>t test').to.be.equal(editor.getEditorValue());
+
+                    // standart ctrl+shift+7
+                    simulateEvent('keydown', 103, editor.editor, function (data) {
+                        data.shiftKey = true;
+                        data.ctrlKey = true;
+                    });
+
+                    expect('<ol><li>test<em> tes</em>t test<br></li></ol>').to.be.equal(editor.getEditorValue());
                 });
             });
         });
