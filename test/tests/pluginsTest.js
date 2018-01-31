@@ -1288,7 +1288,7 @@ describe('Test plugins', function () {
                         data.ctrlKey = true;
                     });
 
-                    expect('<ol><li>test<em> tes</em>t test<br></li></ol>').to.be.equal(editor.getEditorValue());
+                    expect('<ol><li>test<em> tes</em>t test</li></ol>').to.be.equal(editor.getEditorValue().replace('<br>', ''));
                 });
             });
         });
