@@ -210,10 +210,12 @@ abstract class ToolbarElement extends Component {
 }
 
 export  class ToolbarPopup extends ToolbarElement {
-    constructor(jodit: Jodit, readonly target: HTMLElement, readonly className: string = 'jodit_toolbar_popup') {
+    constructor(jodit: Jodit, readonly target: HTMLElement, readonly current?: HTMLElement,  readonly className: string = 'jodit_toolbar_popup') {
         super(jodit, 'div', className);
         this.jodit.events
-            .on(this.container, 'mousedown touchstart', (e: MouseEvent) => {e.stopPropagation()});
+            .on(this.container, 'mousedown touchstart', (e: MouseEvent) => {
+                e.stopPropagation();
+            });
     }
 
     protected doOpen(content: any) {
@@ -248,8 +250,8 @@ export  class ToolbarPopup extends ToolbarElement {
         this.jodit.events.fire('afterOpenPopup', this.container);
     }
 
-    public close = (current?: ToolbarPopup) => {
-        if (!current || current !== this) {
+    public close = (current?: HTMLElement) => {
+        if (!current || !Dom.isOrContains(this.container, current)) {
             this.jodit.events.off('closeAllPopups', this.close);
             if (this.container.parentNode) {
                 this.container.parentNode.removeChild(this.container);
@@ -262,9 +264,14 @@ export  class ToolbarPopup extends ToolbarElement {
 }
 
 export  class ToolbarList extends ToolbarPopup {
-    constructor(jodit: Jodit, readonly target: HTMLElement, readonly className: string = 'jodit_toolbar_list') {
-        super(jodit, target, className);
+    private defaultControl  = {
+        template: (editor: Jodit, key: string, value: string) => (this.jodit.i18n(value))
+    };
+
+    constructor(jodit: Jodit, readonly target: HTMLElement, readonly current?: HTMLElement, readonly className: string = 'jodit_toolbar_list') {
+        super(jodit, target, current, className);
     }
+
     protected doOpen(control: ControlTypeStrong) {
         const toolbar: ToolbarCollection = new ToolbarCollection(this.jodit);
 
@@ -272,9 +279,9 @@ export  class ToolbarList extends ToolbarPopup {
             let button: ToolbarButton;
 
             if (this.jodit.options.controls[value] !== undefined) {
-                button = new ToolbarButton(this.jodit, {name: value.toString(), ...this.jodit.options.controls[value]}); // list like array {"align": {list: ["left", "right"]}}
+                button = new ToolbarButton(this.jodit, {name: value.toString(), ...this.jodit.options.controls[value]}, this.current); // list like array {"align": {list: ["left", "right"]}}
             } else if (this.jodit.options.controls[key] !== undefined && typeof value === 'object') {
-                button = new ToolbarButton(this.jodit, {name: key.toString(), ...this.jodit.options.controls[key], ...(<ControlType>value)});// list like object {"align": {list: {"left": {exec: alert}, "right": {}}}}
+                button = new ToolbarButton(this.jodit, {name: key.toString(), ...this.jodit.options.controls[key], ...(<ControlType>value)}, this.current);// list like object {"align": {list: {"left": {exec: alert}, "right": {}}}}
             } else {
                 button = new ToolbarButton(this.jodit, {
                     name: key.toString(),
@@ -284,15 +291,13 @@ export  class ToolbarList extends ToolbarPopup {
                         (control.args && control.args[0]) || key,
                         (control.args && control.args[1]) || value
                     ]
-                });// list like object {"align": {list: {"left": {exec: alert}, "right": {}}}}
-
-                if (control.template) {
-                    button.textBox.innerHTML =  control.template(
-                        this.jodit,
-                        key,
-                        value
-                    );
-                }
+                }, this.current);// list like object {"align": {list: {"left": {exec: alert}, "right": {}}}}
+                const template: Function = control.template || this.defaultControl.template;
+                button.textBox.innerHTML =  template(
+                    this.jodit,
+                    key,
+                    value
+                );
             }
 
             toolbar.appendChild(button);
@@ -311,6 +316,16 @@ export  class ToolbarButton extends ToolbarElement {
     set disable(disable: boolean) {
         this.__disabled = disable;
         this.container.classList.toggle('jodit_disabled', disable);
+
+        if (!disable) {
+            if (this.container.hasAttribute('disabled')) {
+                this.container.removeAttribute('disabled');
+            }
+        } else {
+            if (!this.container.hasAttribute('disabled')) {
+                this.container.setAttribute('disabled', 'disabled');
+            }
+        }
     }
 
     get disable() {
@@ -488,9 +503,9 @@ export  class ToolbarButton extends ToolbarElement {
             }
 
             if (control.list) {
-                const list: ToolbarList = new ToolbarList(this.jodit, this.container);
+                const list: ToolbarList = new ToolbarList(this.jodit, this.container, this.target);
                 list.open(control);
-                this.jodit.events.fire('closeAllPopups', list);
+                this.jodit.events.fire('closeAllPopups hidePopup', list.container);
             } else if (control.exec !== undefined && typeof control.exec === 'function') {
                 control.exec(
                     this.jodit,
@@ -501,9 +516,14 @@ export  class ToolbarButton extends ToolbarElement {
                 );
 
                 this.jodit.setEditorValue();
-                this.jodit.events.fire('closeAllPopups');
+
+                if (this.parentToolbar) {
+                    this.parentToolbar.checkActiveButtons();
+                }
+
+                this.jodit.events.fire('closeAllPopups hidePopup');
             } else if (control.popup !== undefined && typeof control.popup === 'function') {
-                const popup: ToolbarPopup = new ToolbarPopup(this.jodit, this.container);
+                const popup: ToolbarPopup = new ToolbarPopup(this.jodit, this.container, this.target);
 
                 popup.open(control.popup(
                     this.jodit,
@@ -512,11 +532,11 @@ export  class ToolbarButton extends ToolbarElement {
                     popup.close
                 ));
 
-                this.jodit.events.fire('closeAllPopups', popup);
+                this.jodit.events.fire('closeAllPopups hidePopup', popup.container);
             } else {
                 if (control.command || control.name) {
                     this.jodit.execCommand(control.command || control.name, (control.args && control.args[0]) || false, (control.args && control.args[1]) || null);
-                    this.jodit.events.fire('closeAllPopups');
+                    this.jodit.events.fire('closeAllPopups hidePopup');
                 }
             }
 
@@ -622,6 +642,10 @@ export class ToolbarCollection extends ToolbarElement {
             .forEach((buttonControl: ControlTypeStrong) => {
                 let button: ToolbarElement | null = null;
 
+                if (this.jodit.options.removeButtons.indexOf(buttonControl.name) !== -1) {
+                    return;
+                }
+
                 switch (buttonControl.name) {
                     case "\n":
                         button = new ToolbarBreak(this.jodit);
@@ -644,6 +668,8 @@ export class ToolbarCollection extends ToolbarElement {
         if (this.container.parentNode !== container) {
             container.appendChild(this.container);
         }
+
+        this.checkActiveButtons();
     }
 
     clear() {
@@ -656,7 +682,7 @@ export class ToolbarCollection extends ToolbarElement {
         this.__buttons.length = 0;
     }
 
-    private checkActiveButtons = debounce(() => {
+    checkActiveButtons = debounce(() => {
         (<ToolbarButton[]>this.__buttons.filter((button: ToolbarElement) => button instanceof ToolbarButton))
             .forEach((button: ToolbarButton) => {
                 button.disable = button.isDisable();

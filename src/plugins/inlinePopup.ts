@@ -311,12 +311,14 @@ export function inlinePopup(editor: Jodit) {
             }
         },
 
-        hidePopup = () => {
-            if (popup.classList) {
-                popup
-                    .classList.remove('active');
+        hidePopup = (current?: HTMLElement) => {
+            if (!current || !(current instanceof (<any>editor.ownerWindow).Node) || !Dom.isOrContains(popup, current)) {
+                if (popup.classList) {
+                    popup
+                        .classList.remove('active');
+                }
+                toggleEditor(false);
             }
-            toggleEditor(false);
         },
 
         showPopup = (elm: HTMLElement, x: number, y: number) => {

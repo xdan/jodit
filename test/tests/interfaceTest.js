@@ -99,29 +99,29 @@ describe('Test interface', function() {
 
                 simulateEvent('mousedown', 0, window)
 
-                expect(popup && popup.style.display === 'none').to.equal(true);
+                expect(popup && popup.parentNode === null).to.equal(true);
             });
             it('Open list in toolbar', function() {
                 var editor = new Jodit('#table_editor_interface');
 
                 simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_with_dropdownlist'))
 
-                var list = editor.container.querySelector('.jodit_dropdownlist');
+                var list = editor.container.querySelector('.jodit_toolbar_list');
 
-                expect(list && list.style.display === 'block').to.equal(true);
+                expect(list && window.getComputedStyle(list).display === 'block').to.equal(true);
             });
             it('Open and close list after clicking in another place', function() {
                 var editor = new Jodit('#table_editor_interface');
 
                 simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_with_dropdownlist'))
 
-                var list = editor.container.querySelector('.jodit_dropdownlist');
+                var list = editor.container.querySelector('.jodit_toolbar_list');
 
-                expect(list && list.style.display === 'block').to.equal(true);
+                expect(list && window.getComputedStyle(list).display === 'block').to.equal(true);
 
                 simulateEvent('mousedown', 0, window)
 
-                expect(list && list.style.display === 'none').to.equal(true);
+                expect(list && list.parentNode === null).to.equal(true);
             });
             it('Open colorpicker set background and color. After this click in another any place. White when popap will be closed. Open again and remove all styles.', function() {
                 var editor = new Jodit('#table_editor_interface');
@@ -139,15 +139,14 @@ describe('Test interface', function() {
 
                 var list = editor.container.querySelector('.jodit_toolbar_popup');
 
-                expect(list.style.display).to.equal('block');
+                expect(window.getComputedStyle(list).display).to.equal('block');
 
                 simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-brush [data-color="#F9CB9C"]'))
 
                 expect(editor.getEditorValue()).to.equal('tex<span style="background-color: rgb(249, 203, 156);">t2t</span>ext');
 
                 // simulateEvent('mousedown', 0, editor.editor)
-
-                expect(list.style.display).to.equal('none');
+                expect(list.parentNode).to.equal(null);
 
                 range.selectNodeContents(editor.editor.querySelector('span'))
                 // range.collapse(true);
@@ -155,7 +154,8 @@ describe('Test interface', function() {
                 sel.addRange(range)
 
                 simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-brush'))
-                expect(list.style.display).to.equal('block');
+                list = editor.container.querySelector('.jodit_toolbar_popup.jodit_toolbar_popup-open');
+                expect(window.getComputedStyle(list).display).to.equal('block');
 
                 simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-brush .jodit_colorpicker > a > svg'))
                 expect(editor.getEditorValue()).to.equal('text2text');
@@ -174,9 +174,9 @@ describe('Test interface', function() {
 
                 simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-paragraph'))
 
-                var list = editor.container.querySelector('.jodit_dropdownlist');
+                var list = editor.container.querySelector('.jodit_toolbar_list');
 
-                expect(list.style.display).to.equal('block');
+                expect(window.getComputedStyle(list).display).to.equal('block');
 
                 simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-paragraph .jodit_toolbar_btn.jodit_toolbar_btn-h1'))
 
@@ -184,7 +184,7 @@ describe('Test interface', function() {
 
                 simulateEvent('mousedown', 0, editor.editor)
 
-                expect(list.style.display).to.equal('none');
+                expect(list.parentNode).to.equal(null);
 
                 editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
 
@@ -206,7 +206,7 @@ describe('Test interface', function() {
 
                 var list = editor.container.querySelector('.jodit_toolbar_popup');
 
-                expect(list.style.display).to.equal('block');
+                expect(window.getComputedStyle(list).display).to.equal('block');
 
                 editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-image input[name=url]').value = '' // try wrong url
                 editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-image input[name=text]').value = '123'
@@ -221,7 +221,7 @@ describe('Test interface', function() {
 
                 simulateEvent('mousedown', 0, editor.editor)
 
-                expect(list.style.display).to.equal('none');
+                expect(list.parentNode).to.equal(null);
             });
             it('Open video dialog and insert video by url from youtube.', function() {
                 var editor = new Jodit('#table_editor_interface', {
@@ -249,7 +249,7 @@ describe('Test interface', function() {
 
                 simulateEvent('mousedown', 0, editor.editor)
 
-                expect(popup.style.display).to.equal('none');
+                expect(popup.parentNode).to.equal(null);
             });
             it('Open align list and choose Right align.', function() {
                 var editor = new Jodit('#table_editor_interface');
@@ -257,20 +257,20 @@ describe('Test interface', function() {
                 editor.setEditorValue('Test')
 
 
-                simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-align'))
+                simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-left'))
 
-                var list = editor.container.querySelector('.jodit_dropdownlist');
+                var list = editor.container.querySelector('.jodit_toolbar_list');
 
-                expect(list.style.display).to.equal('block');
+                expect(window.getComputedStyle(list).display).to.equal('block');
 
-                simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-align .jodit_toolbar_btn.jodit_toolbar_btn-right'))
+                simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-left .jodit_toolbar_btn.jodit_toolbar_btn-right'))
 
 
                 expect(sortAtrtibutes(editor.getEditorValue())).to.equal('<p style="text-align:right">Test</p>');
 
                 simulateEvent('mousedown', 0, editor.editor)
 
-                expect(list.style.display).to.equal('none');
+                expect(list.parentNode).to.equal(null);
             });
 
             describe('Click inside the link', function() {
@@ -334,7 +334,7 @@ describe('Test interface', function() {
 
                     var list = editor.container.querySelector('.jodit_toolbar_popup');
 
-                    expect(list.style.display).to.equal('block');
+                    expect(window.getComputedStyle(list).display).to.equal('block');
                     expect(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_unlink_button').style.display).to.equal('none');
 
                     editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=url]').value = '' // try wrong url
@@ -351,7 +351,7 @@ describe('Test interface', function() {
                     simulateEvent('mousedown', 0, editor.editor);
 
 
-                    expect(list.style.display).to.equal('none');
+                    expect(list.parentNode).to.equal(null);
                 });
                 it('Should restore source text after user clicked on Unlink button', function() {
                     var editor = new Jodit('#table_editor_interface', {
@@ -395,7 +395,7 @@ describe('Test interface', function() {
 
                         var list = editor.container.querySelector('.jodit_toolbar_popup');
 
-                        expect(list.style.display).to.equal('block');
+                        expect(window.getComputedStyle(list).display).to.equal('block');
 
                         simulateEvent('mousemove', 0, list.querySelectorAll('div')[14])
                         expect(list.querySelectorAll('div.hovered').length).to.equal(10);
@@ -634,7 +634,7 @@ describe('Test interface', function() {
                     simulateEvent('mousedown', 0, p);
 
                     var bold = editor.container.querySelector('.jodit_toolbar_btn-bold');
-                    var align = editor.container.querySelector('.jodit_toolbar_btn-align');
+                    var align = editor.container.querySelector('.jodit_toolbar_btn-left');
 
                     expect(false).to.equal(align.classList.contains('jodit_active'));
                     expect(false).to.equal(bold.classList.contains('jodit_active'));
@@ -838,7 +838,7 @@ describe('Test interface', function() {
                             simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-brush>a'))
 
                             var popupColor = popup.querySelector('.jodit_toolbar_popup');
-                            expect(popupColor && popupColor.style.display).to.equal('block');
+                            expect(popupColor && window.getComputedStyle(popupColor).display).to.equal('block');
 
                             simulateEvent('mousedown', 0, popupColor.querySelector('.jodit_colorpicker_group>a'));
 
@@ -867,8 +867,8 @@ describe('Test interface', function() {
 
                 simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-valign>a'))
 
-                var popupColor = popup.querySelector('.jodit_dropdownlist');
-                expect(popupColor && popupColor.style.display).to.equal('block');
+                var popupColor = popup.querySelector('.jodit_toolbar_list');
+                expect(popupColor && window.getComputedStyle(popupColor).display).to.equal('block');
 
                 simulateEvent('mousedown', 0, popupColor.querySelector('li>a'));
 
@@ -947,8 +947,8 @@ describe('Test interface', function() {
 
                 simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-addcolumn>a'))
 
-                var popupColor = popup.querySelector('.jodit_dropdownlist');
-                expect(popupColor && popupColor.style.display).to.equal('block');
+                var popupColor = popup.querySelector('.jodit_toolbar_list');
+                expect(popupColor && window.getComputedStyle(popupColor).display).to.equal('block');
 
                 simulateEvent('mousedown', 0, popupColor.querySelector('li>a'));
 
@@ -973,8 +973,8 @@ describe('Test interface', function() {
 
                 simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-addrow>a'))
 
-                var popupColor = popup.querySelector('.jodit_dropdownlist');
-                expect(popupColor && popupColor.style.display).to.equal('block');
+                var popupColor = popup.querySelector('.jodit_toolbar_list');
+                expect(popupColor && window.getComputedStyle(popupColor).display).to.equal('block');
 
                 simulateEvent('mousedown', 0, popupColor.querySelector('li>a'));
 
@@ -1001,8 +1001,8 @@ describe('Test interface', function() {
 
                 simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-bin>a'))
 
-                var popupColor = popup.querySelector('.jodit_dropdownlist');
-                expect(popupColor && popupColor.style.display).to.equal('block');
+                var popupColor = popup.querySelector('.jodit_toolbar_list');
+                expect(popupColor && window.getComputedStyle(popupColor).display).to.equal('block');
 
                 simulateEvent('mousedown', 0, popupColor.querySelectorAll('li>a')[1]);
 
@@ -1029,8 +1029,8 @@ describe('Test interface', function() {
 
                 simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-bin>a'))
 
-                var popupColor = popup.querySelector('.jodit_dropdownlist');
-                expect(popupColor && popupColor.style.display).to.equal('block');
+                var popupColor = popup.querySelector('.jodit_toolbar_list');
+                expect(popupColor && window.getComputedStyle(popupColor).display).to.equal('block');
 
                 simulateEvent('mousedown', 0, popupColor.querySelectorAll('li>a')[0]);
 

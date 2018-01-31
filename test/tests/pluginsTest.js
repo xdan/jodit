@@ -123,7 +123,13 @@ describe('Test plugins', function () {
 
                 simulateEvent('mouseup', 0, editor.editor);
 
-                expect(sortAtrtibutes(editor.getEditorValue().replace('700', 'bold'))).to.equal('text <em style="background-color:#ff0000"><strong>test</strong></em><span style="background-color:rgb(255, 0, 0);font-style:italic;font-weight:bold"> post</span>');
+                expect(
+                    sortAtrtibutes(
+                        editor.getEditorValue()
+                           .replace(/700/g, 'bold')
+                           .replace(/rgb\(255, 0, 0\)/g, '#ff0000')
+                    )
+                ).to.equal('text <em style="background-color:#ff0000"><strong>test</strong></em><span style="background-color:#ff0000;font-style:italic;font-weight:bold"> post</span>');
             });
         });
     });
@@ -1150,14 +1156,14 @@ describe('Test plugins', function () {
 
                 var popup = editor.container.querySelector('.jodit_toolbar_popup');
                 expect(null).to.be.not.equal(popup);
-                expect('block').to.be.equal(popup.style.display);
+                expect('block').to.be.equal(window.getComputedStyle(popup).display);
 
                 var currentActive = popup.getElementsByTagName('a')[125];
 
                 simulateEvent('mousedown', 0, currentActive);
 
                 expect('½test').to.be.equal(editor.getEditorValue());
-                expect('block').to.be.not.equal(popup.style.display);
+                expect(null).to.be.equal(popup.parentNode);
             });
         });
     });
