@@ -657,6 +657,7 @@ export class ToolbarCollection extends ToolbarElement {
                         }
                         break;
                     default:
+                        lastBtnSeparator = false;
                         button = new ToolbarButton(this.jodit, buttonControl, target);
                 }
 
