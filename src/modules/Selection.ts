@@ -494,11 +494,12 @@ export class Select extends Component{
         this.jodit.events.fire('afterInsertImage', image);
     }
 
+    // TODO need cover this method unit tests
     eachSelection = (callback: (current: Node)  => void) => {
         const sel: Selection = this.jodit.editorWindow.getSelection();
         if (sel.rangeCount) {
-            let range: Range = sel.getRangeAt(0);
-            let nodes: Node[] = [],
+            const range: Range = sel.getRangeAt(0);
+            const nodes: Node[] = [],
                 start: Node = range.startContainer === this.jodit.editor ? this.jodit.editor.childNodes[range.startOffset] : range.startContainer,
                 end: Node = range.endContainer === this.jodit.editor ? this.jodit.editor.childNodes[range.endOffset - 1] : range.endContainer;
 

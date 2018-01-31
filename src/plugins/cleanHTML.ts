@@ -20,7 +20,7 @@ import {Select} from "../modules/Selection";
  * ```javascript
  * var jodit = new Jodit('#editor', {
  *    cleanHTML: {
- *       cleanOnPasteL false
+ *       cleanOnPaste: false
  *    }
  * });
  ```

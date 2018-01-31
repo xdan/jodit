@@ -1385,6 +1385,27 @@ describe('Test plugins', function () {
             });
         });
     });
+    describe('Clean html plugin', function () {
+        describe('Click remove format button', function () {
+            it('Should clear selected HTML fragment', function () {
+                var area = appendTestArea(),
+                    editor = new Jodit(area);
+
+                editor.setEditorValue('start <span style="background-color: red; color: blue;">test test test</span> elm')
+                var range = editor.editorDocument.createRange();
+                range.setStartBefore(editor.editor.querySelector('span'));
+                range.setEndAfter(editor.editor.querySelector('span'));
+                editor.selection.selectRange(range);
+
+                var button = editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-eraser');
+                expect(null).to.be.not.equal(button);
+
+                simulateEvent('mousedown', 0, button);
+
+                expect('start test test test elm').to.be.equal(editor.getEditorValue().replace('<span>', '').replace('</span>', ''));
+            });
+        });
+    });
     after(function() {
         editor_plugins_test.parentNode.removeChild(editor_plugins_test);
     });
