@@ -30,9 +30,9 @@
             
             box-shadow: none;
 
-            background-color: @background-tab;
+            background-color: @color-background-tab;
             color: @color-tab;
-            border: 1px solid @border-color-tab;
+            border: 1px solid @color-border-tab;
 
             outline: none;
             
@@ -55,10 +55,10 @@
             }
 
             &:hover{
-                border: 1px solid @border-color-tab_hover;
+                border: 1px solid @color-border-tab_hover;
                 color: @color-tab_hover;
                 box-shadow: none;
-                background-color: @background-tab_hover;
+                background-color: @color-background-default-hover;
                 outline: none;
                 i, svg {
                     fill: @color-tab_hover;
@@ -67,8 +67,8 @@
 
             &:active, &.active{
                 outline: none;
-                background: @background-tab_active;
-                border: 1px solid @border-color-tab_active;
+                background: @color-background-tab_active;
+                border: 1px solid @color-border-tab_active;
                 color: @color-tab_active;
                 i, svg {
                     fill: @color-tab_active;

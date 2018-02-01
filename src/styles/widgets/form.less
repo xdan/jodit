@@ -14,7 +14,7 @@
     -moz-appearance: none;
     display: block;
     outline: none;
-    border: 1px solid @active_border;
+    border: 1px solid @color-border-active;
     height: 28px;
     line-height: 28px;
     padding: 0 5px;
@@ -34,7 +34,7 @@
   button {
     height: 36px;
     line-height: 1;
-    color: @button_color;
+    color: @color-button;
     padding: 10px;
     cursor: pointer;
     text-decoration: none;
@@ -47,12 +47,12 @@
     margin-top: 10px;
     margin-bottom: 10px;
     &:hover {
-      background-color: @button_bg_hover;
-      color: @button_color;
+      background-color: @color-background-button-hover;
+      color: @color-button;
     }
     &:active {
-      background: @button_bg_hover;
-      color: @button_color;
+      background: @color-background-button-hover;
+      color: @color-button;
     }
   }
 
@@ -70,7 +70,7 @@
     &:after {
       content: '';
       background: #fff;
-      border: solid 1px @main_bg_color;
+      border: solid 1px @color-background-default;
       border-radius: 2px;
       background-clip: padding-box;
       width: 16px;
@@ -83,8 +83,8 @@
     }
     &:checked:after {
       background: data-uri("../widgets/ok.svg") no-repeat center center;
-      background-color: @active_border;
-      border-color: @active_border;
+      background-color: @color-border-active;
+      border-color: @color-border-active;
     }
   }
 

@@ -15,7 +15,7 @@
 	height: 100%;
 
 	&.draghover{
-		background-color: @button_bg_hover;
+		background-color: @color-background-button-hover;
 	}
 	.jodit_filebrowser_loader{
 		height:100%;
@@ -80,7 +80,7 @@
           display: none;
         }
 
-		background-color:@filebrowser_folders_bg;
+		background-color:@color-background-filebrowser-folders;
 		overflow-y: auto;
 
         &::-webkit-scrollbar {
@@ -141,7 +141,7 @@
 			}
 			&:hover{
 				color:#222;
-				background-color: @button_bg_hover;
+				background-color: @color-background-button-hover;
 				i.remove{
 					opacity:.6;
 				}
@@ -158,7 +158,7 @@
 					vertical-align:top;
 				}
 				&:not(.disabled):hover{
-					background-color: @button_bg_hover;
+					background-color: @color-background-button-hover;
 				}
 				&.disabled, &:hover i {
 					opacity:.7;
@@ -209,8 +209,8 @@
                 border-color: #433b5c;
 			}
 			&.active{
-                border-color: @active_border;
-                background-color: @active_border;
+                border-color: @color-border-active;
+                background-color: @color-border-active;
 			}
             
             .jodit_filebrowser_files_item-info {
@@ -244,7 +244,7 @@
             }
             &.active{
                 .jodit_filebrowser_files_item-info {
-                    background-color: @active_border;
+                    background-color: @color-border-active;
                     color: white;
                     text-shadow: none;
                 }

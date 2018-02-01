@@ -26,7 +26,7 @@
   width: 100px;
   height: 100px;
   position: absolute;
-  border: 1px solid @resize_border_color;
+  border: 1px solid @color-border-resize;
   top:0px;
   left:0px;
   display: none;
@@ -43,8 +43,12 @@
     z-index:4;
     pointer-events: all ;
 
-    border: 1px solid @resize_border_color;
-    background-color: #10732e;
+    border: 1px solid @color-border-resize;
+    background-color: @color-background-default;
+
+    &:hover {
+      background-color: @color-background-default-hover;
+    }
 
     .handleSizes(@size-resizer-handle) {
       width: @size-resizer-handle;

@@ -705,6 +705,7 @@ export class ToolbarCollection extends ToolbarElement {
     private closeAll = () => {
         this.jodit.events.fire('closeAllPopups');
     };
+
     private afterOpen = (popup: HTMLElement) => {
         const offsetConainer: Bound = offset(<HTMLDivElement>this.jodit.container, this.jodit, true);
         let offsetPopup: Bound = offset(popup, this.jodit, true);

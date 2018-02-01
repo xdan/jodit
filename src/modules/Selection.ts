@@ -826,7 +826,7 @@ export class Select extends Component{
      * @param {string} nodeName
      * @param {object} options
      */
-    applyCSS = (cssRules ?: {[key:string]: string | number | undefined}, nodeName:string = 'span', options?: {[key: string]: string|string[]}|{[key: string]: (editor: Jodit, elm: HTMLElement) => boolean}) => {
+    applyCSS = (cssRules ?: {[key:string]: string | number | undefined}, nodeName:string = 'span', options?: Function | {[key: string]: string | string[]} | {[key: string]: (editor: Jodit, elm: HTMLElement) => boolean}) => {
         const WRAP: number  = 1;
         const UNWRAP: number  = 0;
 
@@ -849,8 +849,7 @@ export class Select extends Component{
                         }) !== false
                     ) ||
                     (
-                        typeof options === 'function' &&
-                        options(this.jodit, elm)
+                        typeof options === 'function' && options(this.jodit, elm)
                     )
                 );
         };

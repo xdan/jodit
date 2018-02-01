@@ -250,6 +250,33 @@ describe('Test plugins', function () {
                 '<tr><td>2</td></tr>' +
                 '</tbody></table><p></p>');
         });
+        describe('Insert line on top of IMG element that was inside P element', function () {
+            it('Should insert new P before parent P element', function () {
+                var editor = new Jodit('#editor_plugins_test');
+                editor.setEditorValue('<p><img src="https://xdsoft.net/jodit/images/artio.jpg" style="width: 100px; height: 100px;" alt=""></p>');
+
+                window.scrollTo(0, 100000000) // elementFromPoint works only with visible part of view
+
+                var img = editor.editor.querySelector('img');
+                expect(null).to.be.not.equal(img);
+
+                simulateEvent('mousemove', 0, editor.editor, function (e) {
+                    var pos = editor.helper.offset(img, editor);
+                    e.pageX = pos.left + 5;
+                    e.pageY = pos.top + 5;
+                });
+
+                var newline = editor.container.querySelector('.jodit-add-new-line');
+
+                expect(null).to.be.not.equal(newline);
+                expect(newline.style.display).to.equal('block');
+                simulateEvent('mousedown', 0, newline.querySelector('span'));
+
+                editor.selection.insertHTML('stop');
+
+                expect('<p>stop</p><p><img src="https://xdsoft.net/jodit/images/artio.jpg" style="width: 100px; height: 100px;" alt=""></p>').to.be.equal(editor.getEditorValue());
+            });
+        });
     });
 
     describe('Edit image tests', function () {

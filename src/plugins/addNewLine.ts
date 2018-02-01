@@ -96,8 +96,8 @@ export function addNewLine(editor: Jodit) {
 
                     p.appendChild(helper_node);
 
-                    if (preview && current) {
-                        editor.editor.insertBefore(p, current);
+                    if (preview && current && current.parentNode) {
+                        current.parentNode.insertBefore(p, current);
                     } else {
                         editor.editor.appendChild(p)
                     }
@@ -131,6 +131,13 @@ export function addNewLine(editor: Jodit) {
                         if (!current) {
                             hide();
                             return;
+                        }
+                    }
+
+                    if (current.nodeName.match(isMatchedTag)) {
+                        const parentBox: Node | false = Dom.up(current, Dom.isBlock, editor.editor);
+                        if (parentBox && parentBox !== editor.editor) {
+                            current = <HTMLElement>parentBox;
                         }
                     }
 
