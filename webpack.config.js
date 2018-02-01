@@ -172,6 +172,6 @@ if (!debug) {
             assetNameRegExp: /\.min\.css$/,
             cssProcessorOptions: { discardComments: { removeAll: true } }
         }),
-        new webpack.BannerPlugin(banner),
+        new webpack.BannerPlugin(banner)
     );
 }
