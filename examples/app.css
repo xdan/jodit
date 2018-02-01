@@ -1,0 +1,61 @@
+html {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+body {
+    font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizelegibility;
+    line-height: 1.5;
+    height: 100%;
+    margin: 0;
+}
+.jodit_wysiwyg{
+    color: #000;
+    padding: 10px;
+    overflow-x: auto;
+    color: #000;
+    padding: 10px;
+    min-height: 40px;
+}
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.table, .p {
+    margin: 0 0 16px 0;
+}
+
+.table {
+    border: 0;
+    border-collapse: collapse;
+    empty-cells: show;
+    max-width: 100%;
+    border-spacing: 0;
+    *border-collapse: collapse;
+}
+. table tr {
+    user-select: none;
+    -o-user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+. table td, . table th {
+    user-select: text;
+    -o-user-select: text;
+    -moz-user-select: text;
+    -khtml-user-select: text;
+    -webkit-user-select: text;
+    -ms-user-select: text;
+}
+. table th,.  table td {
+    box-sizeing: border-box;
+    padding: 2px 5px;
+    vertical-align: top;
+}
+.table td, . table th {
+    border: 1px solid #ddd;
+}

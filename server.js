@@ -11,6 +11,8 @@ var port = 2000
 
 var compiler = webpack(config)
 
+var examples = `${__dirname}/examples`
+
 app.use(webpackDevMiddleware(compiler, {
     stats: { colors: true },
     noInfo: true,
@@ -19,8 +21,14 @@ app.use(webpackDevMiddleware(compiler, {
 
 app.use(webpackHotMiddleware(compiler))
 
+app.use('/app.css', require('express').static(examples + '/app.css'));
+
 app.get("/", function(req, res) {
-    res.sendFile(__dirname + '/index.html')
+    res.sendFile(examples + '/index.html')
+})
+
+app.get("/arabic.html", function(req, res) {
+    res.sendFile(examples + '/arabic.html')
 })
 
 app.get("/test.html", function(req, res) {
@@ -34,7 +42,6 @@ app.get("/dist/jodit.*", function(req, res) {
 app.use('/node_modules', require('express').static(__dirname + '/node_modules'));
 
 app.use('/test', require('express').static(__dirname + '/test'));
-app.use('/app.css', require('express').static(__dirname + '/app.css'));
 
 app.listen(port, function(error) {
     if (error) {
