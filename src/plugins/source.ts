@@ -10,6 +10,7 @@ import * as consts from '../constants';
 import {$$, appendScript, debounce, dom} from '../modules/Helpers';
 import {markerInfo} from "../modules/Selection";
 import {Component} from "../modules/Component";
+import {ControlType} from "../modules/ToolbarCollection";
 
 declare module "../Config"  {
     interface Config {
@@ -88,10 +89,13 @@ Config.prototype.beautifyHTMLCDNUrlsJS = [
 ];
 
 
-Config.prototype.controls.source = {
+Config.prototype.controls.source = <ControlType>{
     mode: consts.MODE_SPLIT,
     exec: (editor: Jodit) => {
         editor.toggleMode();
+    },
+    isActive: (editor: Jodit) => {
+        return editor.getRealMode() === consts.MODE_SOURCE;
     },
     tooltip: "Change mode"
 };

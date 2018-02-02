@@ -7,14 +7,28 @@
 import {Jodit} from '../Jodit';
 import {css, normalizeSize} from '../modules/Helpers';
 import {Config} from "../Config";
-import {ControlType} from "../modules/ToolbarCollection";
+import {ControlType, ToolbarButton} from "../modules/ToolbarCollection";
 import {Dom} from "../modules/Dom";
 
 Config.prototype.controls.fontsize = <ControlType>{
     command: 'fontSize',
-    list : ["8", "9", "10", "11", "12", "14", "18", "24", "30", "36", "48", "60", "72", "96"],
+    list : ["8", "9", "10", "11", "12", "14", "16", "18", "24", "30", "36", "48", "60", "72", "96"],
     template : (editor: Jodit, key: string, value: string) => value,
     tooltip: "Font size",
+    isActiveChild: (editor: Jodit, control: ControlType, button?: ToolbarButton): boolean => {
+        const current: Node|false = editor.selection.current();
+
+        if (current) {
+            const currentBpx: HTMLElement = <HTMLElement>Dom.closest(current, (elm: Node): boolean => {
+                return Dom.isBlock(elm) || (Dom.isNode(elm, editor.editorWindow) && elm.nodeType === Node.ELEMENT_NODE);
+            }, editor.editor) || editor.editor;
+
+            let fontSize: number = <number>css(currentBpx, 'font-size');
+            return !!(fontSize && control.args && control.args[1].toString() === fontSize.toString());
+        }
+
+        return false;
+    },
     isActive: (editor: Jodit): boolean => {
         const current: Node|false = editor.selection.current();
 
@@ -31,9 +45,11 @@ Config.prototype.controls.fontsize = <ControlType>{
 };
 Config.prototype.controls.font = <ControlType>{
     command: 'fontname',
+
     exec: (editor: Jodit, event, control: ControlType) => {
         editor.execCommand(<string>control.command, false, control.args ? control.args[0] : undefined);
     },
+
     list :  {
         "Helvetica,sans-serif": "Helvetica",
         "Arial,Helvetica,sans-serif": "Arial",
@@ -43,9 +59,44 @@ Config.prototype.controls.font = <ControlType>{
         "'Times New Roman',Times,serif": "Times New Roman",
         "Verdana,Geneva,sans-serif": "Verdana"
     },
+
     template : (editor: Jodit, key: string, value: string) => {
         return `<span style="font-family: ${key}">${value}</span>`;
     },
+
+    isActiveChild: (editor: Jodit, control: ControlType): boolean => {
+        const current: Node|false = editor.selection.current();
+        const normFonts = (font: string): string => {
+            return font.toLowerCase()
+                .replace(/['"]+/g, '')
+                .replace(/[^a-z0-9]+/g, ',')
+        };
+        if (current) {
+            const currentBpx: HTMLElement = <HTMLElement>Dom.closest(current, (elm: Node): boolean => {
+                return Dom.isBlock(elm) || (Dom.isNode(elm, editor.editorWindow) && elm.nodeType === Node.ELEMENT_NODE);
+            }, editor.editor) || editor.editor;
+
+            const font: string = css(currentBpx, 'font-family').toString();
+            return !!(font && control.args && normFonts(control.args[0].toString()) === normFonts(font));
+        }
+
+        return false;
+    },
+
+    isActive: (editor: Jodit): boolean => {
+        const current: Node|false = editor.selection.current();
+
+        if (current) {
+            const currentBpx: HTMLElement = <HTMLElement>Dom.closest(current, (elm: Node): boolean => {
+                return Dom.isBlock(elm) || (Dom.isNode(elm, editor.editorWindow) && elm.nodeType === Node.ELEMENT_NODE);
+            }, editor.editor) || editor.editor;
+
+            return css(currentBpx, 'font-family').toString() !== css(editor.editor, 'font-family').toString();
+        }
+
+        return false;
+    },
+
     tooltip: "Font family"
 };
 

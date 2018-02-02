@@ -918,8 +918,8 @@ describe('Test plugins', function () {
                     buttons: 'indent,outdent',
                     language: 'en'
                 });
-                expect(null).to.be.not.equal(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-outdent .jodit_tooltip'));
-                var title = editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-outdent .jodit_tooltip').innerText;
+                expect(null).to.be.not.equal(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-outdent [title]'));
+                var title = editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-outdent [title]').getAttribute('title');
                 editor.destruct();
 
 
@@ -927,9 +927,9 @@ describe('Test plugins', function () {
                     buttons: 'indent,outdent',
                     language: 'ru'
                 });
-                expect(null).to.be.not.equal(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-outdent .jodit_tooltip'));
+                expect(null).to.be.not.equal(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-outdent [title]'));
 
-                expect(title).to.be.not.equal(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-outdent .jodit_tooltip').innerText);
+                expect(title).to.be.not.equal(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-outdent [title]').getAttribute('title'));
 
             });
         });

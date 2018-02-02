@@ -569,6 +569,20 @@ describe('Enter behavior Jodit Editor Tests', function() {
                 });
             });
         });
+        describe('Press Enter inside SPAN with some color', function () {
+            it('Should add new P element after this span and this SPAN sholud wrap in P', function () {
+                var editor = new Jodit(appendTestArea())
+
+                editor.setEditorValue('<span style="color:red">test</span>');
+
+                editor.selection.setCursorIn(editor.editor.querySelector('span'), false);
+                simulateEvent('keydown',    Jodit.KEY_ENTER, editor.editor);
+
+                editor.selection.insertNode(editor.editorDocument.createTextNode('test'));
+
+                expect('<p><span style="color:red">test</span></p><p>test</p>').to.be.equal(sortAtrtibutes(editor.getEditorValue()));
+            });
+        });
     });
     afterEach(function () {
         var i, keys = Object.keys(Jodit.instances);

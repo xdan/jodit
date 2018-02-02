@@ -9,6 +9,7 @@ import {Dom} from "../modules/Dom";
 import * as consts from '../constants';
 import {Config} from "../Config";
 import {ToolbarButton, ControlType} from "../modules/ToolbarCollection";
+import {css} from "../modules/Helpers";
 
 Config.prototype.controls.paragraph = <ControlType>{
     command: 'formatBlock',
@@ -42,6 +43,35 @@ Config.prototype.controls.paragraph = <ControlType>{
         h4 : "Heading 4",
         blockquote : "Quote",
         pre : "Code"
+    },
+    isActiveChild: (editor: Jodit, control: ControlType, button?: ToolbarButton): boolean => {
+        const current: Node|false = editor.selection.current();
+
+        if (current) {
+            const currentBox: HTMLElement = <HTMLElement>Dom.closest(current, Dom.isBlock, editor.editor);
+
+            return currentBox &&
+                currentBox !== editor.editor &&
+                control.args !== undefined &&
+                currentBox.nodeName.toLowerCase() === control.args[0];
+        }
+
+        return false;
+    },
+    isActive: (editor: Jodit, control: ControlType): boolean => {
+        const current: Node|false = editor.selection.current();
+
+        if (current) {
+            const currentBpx: HTMLElement = <HTMLElement>Dom.closest(current, Dom.isBlock, editor.editor);
+
+            return currentBpx &&
+                currentBpx !== editor.editor &&
+                control.list !== undefined &&
+                currentBpx.nodeName.toLowerCase() !== 'p' &&
+                (<any>(<any>control.list)[currentBpx.nodeName.toLowerCase()]) !== undefined;
+        }
+
+        return false;
     },
     template : (editor: Jodit, key: string, value: string) => {
         return '<' + key + ' class="jodit_list_element"><span>' + editor.i18n(value) + '</span></' + key + '></li>';

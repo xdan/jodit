@@ -28,7 +28,7 @@
     position: absolute;
     left:0px;
     right:0px;
-    z-index:@fly_toolbar_z_index;
+    z-index:@z-index-fly-toolbar;
     background:#fff;
   }
   &.jodit_sticky {
@@ -107,7 +107,7 @@
         font-family: Arial, sans-serif;
         left: 50%;
         margin-left: -45px;
-        z-index: @dropdownlist_z_index + 1;
+        z-index: @z-index-dropdownlist + 1;
         width:90px;
         transition: opacity .3s linear;
         @media (max-width: @screen-sm) {

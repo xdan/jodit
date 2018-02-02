@@ -651,20 +651,19 @@ export const  debounce = function (this: any, fn: Function, timeout ?: number, i
         invokeAsap = false;
     }
 
-    let timer: number;
+    let timer: number = 0;
 
     return function (this: any) {
 
         let args = arguments;
         ctx = ctx || this;
 
-        if (invokeAsap || !timeout) {
+        if ((invokeAsap && !timer) || !timeout) {
             fn.apply(ctx, args);
         }
 
-        clearTimeout(timer);
-
         if (timeout) {
+            clearTimeout(timer);
             timer = window.setTimeout(function () {
                 if (!invokeAsap) {
                     fn.apply(ctx, args);

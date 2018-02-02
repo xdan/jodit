@@ -695,6 +695,98 @@ describe('Test interface', function() {
                         expect('rgb(204, 204, 204)').to.equal(brushIcon.style.fill);
                     });
                 });
+                describe('In list', function () {
+                    describe('Fontsize button', function () {
+                        it('Should be activated then element has some style value', function () {
+                            var editor = new Jodit('#table_editor_interface', {
+                                observer: {
+                                    timeout: 0
+                                }
+                            });
+                            editor.setEditorValue('<p>test<span style="font-size: 14px">bold</span></p>')
+
+                            var p = editor.editor.firstChild;
+                            var font = editor.container.querySelector('.jodit_toolbar_btn-fontsize');
+
+                            expect(null).to.be.not.equal(font);
+
+                            editor.selection.setCursorAfter(p.firstChild);
+                            simulateEvent('mousedown', 0, p);
+                            expect(false).to.equal(font.classList.contains('jodit_active'));
+
+                            editor.selection.setCursorIn(p.lastChild);
+
+                            simulateEvent('mousedown', 0, p);
+                            expect(true).to.equal(font.classList.contains('jodit_active'));
+
+                            simulateEvent('mousedown', 0, font);
+
+                            var font16 = font.querySelector('.jodit_toolbar_btn-5');
+                            expect(true).to.equal(font16.classList.contains('jodit_active'));
+                        });
+                    });
+                    describe('Font family button', function () {
+                        it('Should be activated then element has some style value', function () {
+                            var editor = new Jodit('#table_editor_interface', {
+                                observer: {
+                                    timeout: 0
+                                }
+                            });
+                            editor.setEditorValue('<p>test<span style="font-family: Georgia, serif;">bold</span></p>')
+
+                            var p = editor.editor.firstChild;
+                            var font = editor.container.querySelector('.jodit_toolbar_btn-font');
+
+                            expect(null).to.be.not.equal(font);
+
+                            editor.selection.setCursorAfter(p.firstChild);
+                            simulateEvent('mousedown', 0, p);
+                            expect(false).to.equal(font.classList.contains('jodit_active'));
+
+                            editor.selection.setCursorIn(p.lastChild);
+
+                            simulateEvent('mousedown', 0, p);
+                            expect(true).to.equal(font.classList.contains('jodit_active'));
+
+                            simulateEvent('mousedown', 0, font);
+
+                            var fontGeorgia = font.querySelector('.jodit_toolbar_btn-Georgia_serif');
+                            expect(fontGeorgia).to.be.not.equal(font);
+                            expect(true).to.equal(fontGeorgia.classList.contains('jodit_active'));
+                        });
+                    });
+                    describe('Format block button', function () {
+                        it('Should be activated then element has some tagname', function () {
+                            var editor = new Jodit('#table_editor_interface', {
+                                observer: {
+                                    timeout: 0
+                                }
+                            });
+                            editor.setEditorValue('<p>test</p>' +
+                                '<h1>test</h1>' +
+                                '<code>test</code>')
+
+                            var p = editor.editor.firstChild;
+                            var paragraph = editor.container.querySelector('.jodit_toolbar_btn-paragraph');
+
+                            expect(null).to.be.not.equal(paragraph);
+
+                            editor.selection.setCursorAfter(p.firstChild);
+                            simulateEvent('mousedown', 0, p);
+                            expect(false).to.equal(paragraph.classList.contains('jodit_active'));
+
+                            editor.selection.setCursorIn(editor.editor.childNodes[1]);
+
+                            simulateEvent('mousedown', 0, p);
+                            expect(true).to.equal(paragraph.classList.contains('jodit_active'));
+
+                            simulateEvent('mousedown', 0, paragraph);
+
+                            var header = paragraph.querySelector('.jodit_toolbar_btn-h1');
+                            expect(true).to.equal(header.classList.contains('jodit_active'));
+                        });
+                    });
+                });
             });
         });
         describe('Commands', function () {
