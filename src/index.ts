@@ -8,7 +8,6 @@ import "./styles/bundle.less";
 import './polyfills';
 
 import {Jodit}            from './Jodit';
-// import {Toolbar}          from './modules/Toolbar';
 import {ToolbarIcon}          from './modules/ToolbarCollection';
 
 
@@ -29,9 +28,9 @@ const esFilter = (key: string): boolean => key !== '__esModule';
 
 // Icons
 Object.keys(Icons).filter(esFilter).forEach((key: string) => {
-    // Toolbar.icons[key.replace('_', '-')] = (<any>Icons)[key]; // TODO delete
     ToolbarIcon.icons[key.replace('_', '-')] = (<any>Icons)[key];
 });
+
 // Modules
 Object.keys(Modules).filter(esFilter).forEach((key: string) => {
     Jodit.modules[key] = (<any>Modules)[key];

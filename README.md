@@ -157,7 +157,7 @@ https://github.com/xdan/jodit
 
 ## License
 
-Copyright (c) 2017 [Chupurnov Valeriy](https://xdsoft.net/jodit)<br>
+Copyright (c) 2018 [Chupurnov Valeriy](https://xdsoft.net/jodit)<br>
 Licensed for non-commercial under  [Creative Commons Attribution-NonCommercial 3.0 License](https://creativecommons.org/licenses/by-nc/3.0/)<br>
 Another using  [license](https://xdsoft.net/jodit/license.html)<br>
 
