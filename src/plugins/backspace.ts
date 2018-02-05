@@ -82,6 +82,21 @@ export function backspace(editor: Jodit) {
                         const html: string = container.innerHTML.replace(consts.INVISIBLE_SPACE_REG_EXP, '');
                         if ((!html.length || html == '<br>') && !Dom.isCell(container, editor.editorWindow) && container.parentNode && container !== editor.editor) {
                             container.parentNode.removeChild(container);
+
+                            // Ul near with UL
+                            if (prevBox && prevBox.nodeName === 'LI') {
+                                const UL: Node | false = Dom.closest(prevBox, 'Ul|OL', editor.editor);
+                                if (UL) {
+                                    const nextBox: Node | null = UL.nextSibling;
+                                    if (nextBox && nextBox.nodeName === UL.nodeName) {
+                                        [].slice.call(nextBox.childNodes).forEach(function (node: HTMLLIElement) {
+                                            UL.appendChild(node);
+                                        });
+                                        nextBox.parentNode && nextBox.parentNode.removeChild(nextBox);
+                                    }
+                                }
+                            }
+
                             return false;
                         }
                     }
