@@ -46,6 +46,10 @@ export function backspace(editor: Jodit) {
                 const startOffsetInRange: number = range.startContainer.nodeType === Node.TEXT_NODE ? range.startOffset : 0;
                 let startOffset: number = startOffsetInRange;
 
+                if (!Dom.isOrContains(editor.editor, textNode) || textNode === editor.editor) {
+                    return;
+                }
+
                 if (textNode && textNode.nodeType === Node.TEXT_NODE && textNode.nodeValue) {
                     let value: string = textNode.nodeValue,
                         increment: number = toLeft ? -1 : 1;
