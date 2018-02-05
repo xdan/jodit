@@ -50,30 +50,54 @@ describe('Enter behavior Jodit Editor Tests', function() {
                 '</tbody></table>');
         });
         describe('Enter backspace in the middle of two UL elements', function () {
-            it('Should connect both UL in one element', function () {
-                var editor = new Jodit(appendTestArea())
-                editor.setEditorValue('<ul><li>Test</li><li></li><li>Some text</li></ul>');
+            describe('In the P element', function () {
+                it('Should connect both UL in one element', function () {
+                    var editor = new Jodit(appendTestArea())
+                    editor.setEditorValue('<ul><li>Test</li><li></li><li>Some text</li></ul>');
 
-                var sel = editor.editorWindow.getSelection(),
-                    range = editor.editorDocument.createRange();
+                    var sel = editor.editorWindow.getSelection(),
+                        range = editor.editorDocument.createRange();
 
-                range.setStart(editor.editor.firstChild.childNodes[1], 0);
-                range.collapse(true);
-                sel.removeAllRanges();
-                sel.addRange(range);
+                    range.setStart(editor.editor.firstChild.childNodes[1], 0);
+                    range.collapse(true);
+                    sel.removeAllRanges();
+                    sel.addRange(range);
 
-                simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
+                    simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
 
-                expect(editor.getEditorValue()).to.be.equal('<ul><li>Test</li></ul><p></p><ul><li>Some text</li></ul>');
+                    expect(editor.getEditorValue()).to.be.equal('<ul><li>Test</li></ul><p></p><ul><li>Some text</li></ul>');
 
-                simulateEvent('keydown',     Jodit.KEY_BACKSPACE, editor.editor);
+                    simulateEvent('keydown',     Jodit.KEY_BACKSPACE, editor.editor);
 
-                expect(editor.getEditorValue()).to.be.equal('<ul><li>Test</li><li>Some text</li></ul>');
+                    expect(editor.getEditorValue()).to.be.equal('<ul><li>Test</li><li>Some text</li></ul>');
 
 
-                editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
-                expect(editor.getEditorValue()).to.be.equal('<ul><li>Test a </li><li>Some text</li></ul>');
-            })
+                    editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
+                    expect(editor.getEditorValue()).to.be.equal('<ul><li>Test a </li><li>Some text</li></ul>');
+                })
+            });
+            describe('In the empty space', function () {
+                it('Should connect both UL in one element', function () {
+                    var editor = new Jodit(appendTestArea())
+                    editor.setEditorValue('<ul><li>Test</li></ul><ul><li>Some text</li></ul>');
+
+                    var sel = editor.editorWindow.getSelection(),
+                        range = editor.editorDocument.createRange();
+
+                    range.setStartBefore(editor.editor.childNodes[1]);
+                    range.collapse(true);
+                    sel.removeAllRanges();
+                    sel.addRange(range);
+
+                    simulateEvent('keydown',     Jodit.KEY_BACKSPACE, editor.editor);
+
+                    expect(editor.getEditorValue()).to.be.equal('<ul><li>Test</li><li>Some text</li></ul>');
+
+
+                    editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
+                    expect(editor.getEditorValue()).to.be.equal('<ul><li>Test a </li><li>Some text</li></ul>');
+                })
+            });
         });
     });
     describe('Enter key', function () {
