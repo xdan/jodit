@@ -429,8 +429,8 @@ export class Dom {
      * @param elm
      * @param newElement
      */
-    static after(elm: HTMLElement, newElement: HTMLElement|DocumentFragment) {
-        const parentNode: Node|null = elm.parentNode;
+    static after(elm: HTMLElement, newElement: HTMLElement | DocumentFragment) {
+        const parentNode: Node | null = elm.parentNode;
 
         if (!parentNode) {
             return;
@@ -440,6 +440,25 @@ export class Dom {
             parentNode.appendChild(newElement);
         } else {
             parentNode.insertBefore(newElement, elm.nextSibling);
+        }
+    }
+
+    /**
+     * Move all content to another element
+     *
+     * @param {Node} from
+     * @param {Node} to
+     * @param {boolean} inStart
+     */
+    static moveContent(from: Node, to: Node, inStart: boolean = false) {
+        const fragment: DocumentFragment = from.ownerDocument.createDocumentFragment();
+        [].slice.call(from.childNodes).forEach((node: Node) => {
+            fragment.appendChild(node);
+        });
+        if (!inStart || !to.firstChild) {
+            to.appendChild(fragment);
+        } else {
+            to.insertBefore(fragment, to.firstChild);
         }
     }
 

@@ -1,5 +1,4 @@
 describe('CodeMirror editor source code', function() {
-    appendTestArea('codemirror', true);
     describe('Init', function() {
         it('After init container must has codeeditor container', function(done) {
             var timeout,
@@ -31,8 +30,5 @@ describe('CodeMirror editor source code', function() {
                 }
             });
         }).timeout(6000);
-    });
-    after(function() {
-        codemirror.parentNode.removeChild(codemirror);
     });
 });

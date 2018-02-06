@@ -1,10 +1,9 @@
 describe('Test plugins', function () {
-    appendTestArea('editor_plugins_test', true);
     getBox().style.width = 'auto';
     describe('Copy format plugin', function () {
         it('Should copy fontWeight from element and paste it in new selection', function () {
             getBox().style.width = 'auto';
-            var editor = new Jodit('#editor_plugins_test');
+            var editor = new Jodit(appendTestArea());
             editor.setEditorValue('text <strong>test</strong> post');
             editor.selection.setCursorIn(editor.editor.querySelector('strong'));
             expect(editor.container.querySelectorAll('.jodit_toolbar_btn-copyformat').length).to.equal(1);
@@ -27,7 +26,7 @@ describe('Test plugins', function () {
         });
         it('Should copy fontSize from element and paste it in new selection', function () {
             getBox().style.width = 'auto';
-            var editor = new Jodit('#editor_plugins_test');
+            var editor = new Jodit(appendTestArea());
             editor.setEditorValue('text <span style="font-size: 11px;">test</span> post');
             editor.selection.setCursorIn(editor.editor.querySelector('span'));
 
@@ -51,7 +50,7 @@ describe('Test plugins', function () {
         });
         it('Should copy fontSize and color from element and paste it in new selection', function () {
             getBox().style.width = 'auto';
-            var editor = new Jodit('#editor_plugins_test');
+            var editor = new Jodit(appendTestArea());
             editor.setEditorValue('text <span style="font-size: 11px;color: rgb(255, 0, 0);">test</span> post');
             editor.selection.setCursorIn(editor.editor.querySelector('span'));
             expect(editor.container.querySelectorAll('.jodit_toolbar_btn-copyformat').length).to.equal(1);
@@ -74,7 +73,7 @@ describe('Test plugins', function () {
         });
         it('Should toggle active state after double click', function () {
             getBox().style.width = 'auto';
-            var editor = new Jodit('#editor_plugins_test');
+            var editor = new Jodit(appendTestArea());
             editor.setEditorValue('text <span style="font-size: 11px;color: rgb(255, 0, 0);">test</span> post');
             editor.selection.setCursorIn(editor.editor.querySelector('span'));
             expect(editor.container.querySelectorAll('.jodit_toolbar_btn-copyformat').length).to.equal(1);
@@ -103,7 +102,7 @@ describe('Test plugins', function () {
         describe('Set cursor inside em[style=background] > strong elements', function () {
             it('Should copy fontWeight from strong element, copy italic and background  style from em  and paste it in new selection', function () {
                 getBox().style.width = 'auto';
-                var editor = new Jodit('#editor_plugins_test');
+                var editor = new Jodit(appendTestArea());
                 editor.setEditorValue('text <em style="background-color: #ff0000"><strong>test</strong></em> post');
 
                 editor.selection.setCursorIn(editor.editor.querySelector('strong'));
@@ -135,11 +134,11 @@ describe('Test plugins', function () {
     });
     describe('Add new Line plugin', function () {
         it('Should add new line element in container', function () {
-            var editor = new Jodit('#editor_plugins_test');
+            var editor = new Jodit(appendTestArea());
             expect(editor.container.querySelectorAll('.jodit-add-new-line').length).to.equal(1);
         });
         it('Should show .jodit-add-new-line after user move mouse under Table,Ifrmae or IMG ', function () {
-            var editor = new Jodit('#editor_plugins_test');
+            var editor = new Jodit(appendTestArea());
             editor.setEditorValue('<table>' +
                 '<tr><td>1</td></tr>' +
                 '<tr><td>2</td></tr>' +
@@ -162,7 +161,7 @@ describe('Test plugins', function () {
             expect(newline.style.display).to.equal('block');
         });
         it('Should add new paragraph after user clicked on newline ', function () {
-            var editor = new Jodit('#editor_plugins_test');
+            var editor = new Jodit(appendTestArea());
             editor.setEditorValue('<table><tbody>' +
                 '<tr><td>2</td></tr>' +
                 '<tr><td>2</td></tr>' +
@@ -193,7 +192,7 @@ describe('Test plugins', function () {
                 '</tbody></table>');
         });
         it('Should add new paragraph after user clicked on newline below table', function () {
-            var editor = new Jodit('#editor_plugins_test');
+            var editor = new Jodit(appendTestArea());
             editor.setEditorValue('<table><tbody>' +
                 '<tr><td>3</td></tr>' +
                 '<tr><td>2</td></tr>' +
@@ -221,7 +220,7 @@ describe('Test plugins', function () {
                 '</tbody></table><p></p>');
         });
         it('Should add new paragraph after user clicked on newline below table in IFRAME mode', function () {
-            var editor = new Jodit('#editor_plugins_test', {
+            var editor = new Jodit(appendTestArea(), {
                 ifarme: true
             });
             editor.setEditorValue('<table><tbody>' +
@@ -252,7 +251,7 @@ describe('Test plugins', function () {
         });
         describe('Insert line on top of IMG element that was inside P element', function () {
             it('Should insert new P before parent P element', function () {
-                var editor = new Jodit('#editor_plugins_test');
+                var editor = new Jodit(appendTestArea());
                 editor.setEditorValue('<p><img src="https://xdsoft.net/jodit/images/artio.jpg" style="width: 100px; height: 100px;" alt=""></p>');
 
                 window.scrollTo(0, 100000000) // elementFromPoint works only with visible part of view
@@ -575,7 +574,7 @@ describe('Test plugins', function () {
     describe('Search plugin', function () {
         describe('CTRL + F', function () {
             it('Should show search form and query field must have focus', function () {
-                var editor = new Jodit('#editor_plugins_test', {
+                var editor = new Jodit(appendTestArea(), {
                     observer: {
                         timeout: 0
                     }
@@ -591,7 +590,7 @@ describe('Test plugins', function () {
         });
         describe('CTRL + R', function () {
             it('Should show search and replace form and query field must have focus', function () {
-                var editor = new Jodit('#editor_plugins_test', {
+                var editor = new Jodit(appendTestArea(), {
                     observer: {
                         timeout: 0
                     }
@@ -608,7 +607,7 @@ describe('Test plugins', function () {
             });
             describe('Press Replace button', function () {
                 it('Should replace value form query field to value from replace field in editor', function () {
-                    var editor = new Jodit('#editor_plugins_test', {
+                    var editor = new Jodit(appendTestArea(), {
                         observer: {
                             timeout: 0
                         }
@@ -644,7 +643,7 @@ describe('Test plugins', function () {
         describe('F3 after search', function () {
             it('Should find a next match', function () {
 
-                var editor = new Jodit('#editor_plugins_test', {
+                var editor = new Jodit(appendTestArea(), {
                     observer: {
                         timeout: 0
                     }
@@ -691,7 +690,7 @@ describe('Test plugins', function () {
             });
             it('Should find the next match in a circle', function () {
 
-                var editor = new Jodit('#editor_plugins_test', {
+                var editor = new Jodit(appendTestArea(), {
                     observer: {
                         timeout: 0
                     }
@@ -745,7 +744,7 @@ describe('Test plugins', function () {
             describe('with SHIFT key', function () {
                 it('Should find a previous match', function () {
 
-                    var editor = new Jodit('#editor_plugins_test', {
+                    var editor = new Jodit(appendTestArea(), {
                         observer: {
                             timeout: 0
                         }
@@ -795,7 +794,7 @@ describe('Test plugins', function () {
         });
         describe('Esc in query field', function () {
             it('Should hide search form and restore selection', function () {
-                var editor = new Jodit('#editor_plugins_test', {
+                var editor = new Jodit(appendTestArea(), {
                     observer: {
                         timeout: 0
                     }
@@ -889,7 +888,7 @@ describe('Test plugins', function () {
         });
         describe('Fire search event', function () {
             it('Should select some elements which consists query string', function () {
-                var editor = new Jodit('#editor_plugins_test', {
+                var editor = new Jodit(appendTestArea(), {
                     observer: {
                         timeout: 0
                     }
@@ -1432,9 +1431,6 @@ describe('Test plugins', function () {
                 expect('start test test test elm').to.be.equal(editor.getEditorValue().replace('<span>', '').replace('</span>', ''));
             });
         });
-    });
-    after(function() {
-        editor_plugins_test.parentNode.removeChild(editor_plugins_test);
     });
     afterEach(function () {
         removeStuff();

@@ -1,55 +1,287 @@
 describe('Enter behavior Jodit Editor Tests', function() {
-    describe('Backspace key', function () {
-        it('Should return in first <p> after pressing enter', function () {
-            var editor = new Jodit(appendTestArea())
+    describe('Backspace/Delete key', function () {
+        describe('inside empty TD', function () {
+            it('Should doing nothing', function () {
+                var editor = new Jodit(appendTestArea())
 
-            editor.setEditorValue('test');
-
-            var range = editor.editorDocument.createRange();
-
-
-            // set cursor in start of element
-            range.selectNodeContents(editor.editor.firstChild);
-            range.collapse(false);
-            editor.editorWindow.getSelection().removeAllRanges();
-            editor.editorWindow.getSelection().addRange(range);
+                editor.setEditorValue('<table><tbody>' +
+                    '<tr><td></td></tr>' +
+                    '</tbody></table>');
 
 
-            simulateEvent('keydown',    Jodit.KEY_ENTER, editor.editor);
-            simulateEvent('keydown',    Jodit.KEY_BACKSPACE, editor.editor);
 
-            editor.selection.insertNode(editor.editorDocument.createTextNode(' 2 '));
+                editor.selection.setCursorIn(editor.editor.querySelector('td'));
 
-            expect(editor.getEditorValue()).to.be.equal('<p>test 2 </p>');
-        });
-        it('Should remove empty tag and set cursor in previous element', function () {
-            var editor = new Jodit(appendTestArea())
-
-            editor.setEditorValue('<table><tbody>' +
+                simulateEvent('keydown',    Jodit.KEY_BACKSPACE, editor.editor);
+                expect('<table><tbody>' +
                 '<tr><td></td></tr>' +
-                '</tbody></table><p><br></p>');
+                '</tbody></table>').to.be.equal(editor.getEditorValue());
 
-            var range = editor.editorDocument.createRange();
+                editor.selection.insertNode(editor.editorDocument.createTextNode(' 2 '));
 
-
-            // set cursor in start of element
-
-            range.selectNodeContents(editor.editor.lastChild);
-            range.collapse(true);
-            editor.editorWindow.getSelection().removeAllRanges();
-            editor.editorWindow.getSelection().addRange(range);
-
-
-
-            simulateEvent('keydown',    Jodit.KEY_BACKSPACE, editor.editor);
-
-            editor.selection.insertNode(editor.editorDocument.createTextNode(' 2 '));
-
-            expect(editor.getEditorValue()).to.be.equal('<table><tbody>' +
+                expect('<table><tbody>' +
                 '<tr><td> 2 </td></tr>' +
-                '</tbody></table>');
+                '</tbody></table>').to.be.equal(editor.getEditorValue());
+            });
+        });
+
+        describe('inside empty P', function () {
+            it('Should remove empty tag and set cursor in previous element', function () {
+                var editor = new Jodit(appendTestArea())
+
+                editor.setEditorValue('<table><tbody>' +
+                    '<tr><td></td></tr>' +
+                    '</tbody></table><p><br></p>');
+
+                var range = editor.editorDocument.createRange();
+
+
+                // set cursor in start of element
+
+                range.selectNodeContents(editor.editor.lastChild);
+                range.collapse(true);
+                editor.editorWindow.getSelection().removeAllRanges();
+                editor.editorWindow.getSelection().addRange(range);
+
+
+
+                simulateEvent('keydown',    Jodit.KEY_BACKSPACE, editor.editor);
+
+                editor.selection.insertNode(editor.editorDocument.createTextNode(' 2 '));
+
+                expect(editor.getEditorValue()).to.be.equal('<table><tbody>' +
+                    '<tr><td> 2 </td></tr>' +
+                    '</tbody></table>');
+            });
+        });
+
+        describe('In text node', function () {
+            describe('Backspace key', function () {
+                describe('in the middle', function () {
+                    it('Should delete one char before cursor', function () {
+                        var editor = new Jodit(appendTestArea())
+                        editor.setEditorValue('test');
+
+                        var sel = editor.editorWindow.getSelection(),
+                            range = editor.editorDocument.createRange();
+
+                        range.setStart(editor.editor.firstChild, 2);
+                        range.collapse(true);
+                        sel.removeAllRanges();
+                        sel.addRange(range);
+
+                        simulateEvent('keydown',     Jodit.KEY_BACKSPACE, editor.editor);
+
+                        expect('tst').to.be.equal(editor.getEditorValue());
+
+
+                        editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
+                        expect('t a st').to.be.equal(editor.getEditorValue());
+                    })
+                });
+                describe('after SPAN', function () {
+                    it('Should move cursor in SPAN and delete one char inside that', function () {
+                        var editor = new Jodit(appendTestArea())
+                        editor.setEditorValue('te<span>stop</span>st');
+
+                        var sel = editor.editorWindow.getSelection(),
+                            range = editor.editorDocument.createRange();
+
+                        range.setStart(editor.editor.lastChild, 0);
+                        range.collapse(true);
+                        sel.removeAllRanges();
+                        sel.addRange(range);
+
+                        simulateEvent('keydown',     Jodit.KEY_BACKSPACE, editor.editor);
+
+                        expect('te<span>sto</span>st').to.be.equal(editor.getEditorValue());
+
+
+                        editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
+                        expect('te<span>sto a </span>st').to.be.equal(editor.getEditorValue());
+                    })
+                });
+                describe('in the start of some text node after text node', function () {
+                    it('Should delete one char before cursor in previous text node', function () {
+                        var editor = new Jodit(appendTestArea())
+                        editor.setEditorValue('test');
+
+
+                        var sel = editor.editorWindow.getSelection(),
+                            range = editor.editorDocument.createRange();
+
+                        range.setStart(editor.editor.firstChild, 4);
+                        range.collapse(true);
+                        sel.removeAllRanges();
+                        sel.addRange(range);
+
+                        var node = editor.ownerDocument.createTextNode('stop');
+                        editor.selection.insertNode(node, false);
+                        expect('teststop').to.be.equal(editor.getEditorValue());
+
+                        range.setStart(node, 0);
+                        range.collapse(true);
+                        sel.removeAllRanges();
+                        sel.addRange(range);
+
+                        simulateEvent('keydown',     Jodit.KEY_BACKSPACE, editor.editor);
+
+                        expect('tesstop').to.be.equal(editor.getEditorValue());
+
+
+                        editor.selection.insertNode(editor.editorDocument.createTextNode(' a '), false)
+                        expect('tes a stop').to.be.equal(editor.getEditorValue());
+                    })
+                });
+            });
+            describe('Delete key', function () {
+                describe('in the middle', function () {
+                    it('Should delete one char after cursor', function () {
+                        var editor = new Jodit(appendTestArea())
+                        editor.setEditorValue('test');
+
+                        var sel = editor.editorWindow.getSelection(),
+                            range = editor.editorDocument.createRange();
+
+                        range.setStart(editor.editor.firstChild, 2);
+                        range.collapse(true);
+                        sel.removeAllRanges();
+                        sel.addRange(range);
+
+                        simulateEvent('keydown',     Jodit.KEY_DELETE, editor.editor);
+
+                        expect('tet').to.be.equal(editor.getEditorValue());
+
+
+                        editor.selection.insertNode(editor.editorDocument.createTextNode(' a '), false)
+                        expect('te a t').to.be.equal(editor.getEditorValue());
+                    })
+                    describe('before SPAN', function () {
+                        it('Should move cursor in SPAN and delete one char inside that', function () {
+                            var editor = new Jodit(appendTestArea())
+                            editor.setEditorValue('te<span>stop</span>st');
+
+                            var sel = editor.editorWindow.getSelection(),
+                                range = editor.editorDocument.createRange();
+
+                            range.setStart(editor.editor.firstChild, 2);
+                            range.collapse(true);
+                            sel.removeAllRanges();
+                            sel.addRange(range);
+
+                            simulateEvent('keydown',     Jodit.KEY_DELETE, editor.editor);
+
+                            expect('te<span>top</span>st').to.be.equal(editor.getEditorValue());
+
+
+                            editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
+                            expect('te<span> a top</span>st').to.be.equal(editor.getEditorValue());
+                        })
+                    });
+                });
+                describe('in the end of some text node before text node', function () {
+                    it('Should delete one char after cursor in next text node', function () {
+                        var editor = new Jodit(appendTestArea())
+                        editor.setEditorValue('test');
+
+
+                        var sel = editor.editorWindow.getSelection(),
+                            range = editor.editorDocument.createRange();
+
+                        range.setStart(editor.editor.firstChild, 4);
+                        range.collapse(true);
+                        sel.removeAllRanges();
+                        sel.addRange(range);
+
+                        var node = editor.ownerDocument.createTextNode('stop');
+                        editor.selection.insertNode(node, false);
+                        expect('teststop').to.be.equal(editor.getEditorValue());
+
+                        range.setStart(editor.editor.firstChild, 4);
+                        range.collapse(true);
+                        sel.removeAllRanges();
+                        sel.addRange(range);
+
+                        simulateEvent('keydown',     Jodit.KEY_DELETE, editor.editor);
+
+                        expect('testtop').to.be.equal(editor.getEditorValue());
+
+
+                        editor.selection.insertNode(editor.editorDocument.createTextNode(' a '), false)
+                        expect('test a top').to.be.equal(editor.getEditorValue());
+                    })
+                });
+            });
+        });
+        describe('Cursor after/before element', function () {
+            describe('Backspace key', function () {
+                it('Should remove that element', function () {
+                    var editor = new Jodit(appendTestArea())
+                    editor.setEditorValue('<p><img src="https://xdsoft.net/jodit/images/artio.jpg"/>test</p>');
+
+                    var sel = editor.editorWindow.getSelection(),
+                        range = editor.editorDocument.createRange();
+
+                    range.setStartAfter(editor.editor.firstChild.firstChild);
+                    range.collapse(true);
+                    sel.removeAllRanges();
+                    sel.addRange(range);
+
+                    simulateEvent('keydown',     Jodit.KEY_BACKSPACE, editor.editor);
+
+                    expect('<p>test</p>').to.be.equal(editor.getEditorValue());
+
+
+                    editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
+                    expect('<p> a test</p>').to.be.equal(editor.getEditorValue());
+                });
+            });
+            describe('Delete key', function () {
+                it('Should remove that element', function () {
+                    var editor = new Jodit(appendTestArea())
+                    editor.setEditorValue('<p>test<img src="https://xdsoft.net/jodit/images/artio.jpg"/></p>');
+
+                    var sel = editor.editorWindow.getSelection(),
+                        range = editor.editorDocument.createRange();
+
+                    range.setStartBefore(editor.editor.querySelector('img'));
+                    range.collapse(true);
+                    sel.removeAllRanges();
+                    sel.addRange(range);
+
+                    simulateEvent('keydown',     Jodit.KEY_DELETE, editor.editor);
+
+                    expect('<p>test</p>').to.be.equal(editor.getEditorValue());
+
+
+                    editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
+                    expect('<p>test a </p>').to.be.equal(editor.getEditorValue());
+                });
+            });
         });
         describe('Enter backspace in the middle of two UL elements', function () {
+            describe('In first LI of second UL', function () {
+                it('Should connect both UL in one element', function () {
+                    var editor = new Jodit(appendTestArea())
+                    editor.setEditorValue('<ul><li>Test</li></ul><ul><li>Some text</li></ul>');
+
+                    var sel = editor.editorWindow.getSelection(),
+                        range = editor.editorDocument.createRange();
+
+                    range.setStart(editor.editor.lastChild.firstChild.firstChild, 0);
+                    range.collapse(true);
+                    sel.removeAllRanges();
+                    sel.addRange(range);
+
+                    simulateEvent('keydown',     Jodit.KEY_BACKSPACE, editor.editor);
+
+                    expect('<ul><li>Test</li><li>Some text</li></ul>').to.be.equal(editor.getEditorValue());
+
+
+                    editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
+                    expect('<ul><li>Test a </li><li>Some text</li></ul>').to.be.equal(editor.getEditorValue());
+                })
+            });
             describe('In the P element', function () {
                 it('Should connect both UL in one element', function () {
                     var editor = new Jodit(appendTestArea())
@@ -65,38 +297,112 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
                     simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
 
-                    expect(editor.getEditorValue()).to.be.equal('<ul><li>Test</li></ul><p></p><ul><li>Some text</li></ul>');
+                    expect('<ul><li>Test</li></ul><p></p><ul><li>Some text</li></ul>').to.be.equal(editor.getEditorValue());
 
                     simulateEvent('keydown',     Jodit.KEY_BACKSPACE, editor.editor);
 
-                    expect(editor.getEditorValue()).to.be.equal('<ul><li>Test</li><li>Some text</li></ul>');
+                    expect('<ul><li>Test</li><li>Some text</li></ul>').to.be.equal(editor.getEditorValue());
 
 
                     editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
-                    expect(editor.getEditorValue()).to.be.equal('<ul><li>Test a </li><li>Some text</li></ul>');
+                    expect('<ul><li>Test a </li><li>Some text</li></ul>').to.be.equal(editor.getEditorValue());
                 })
             });
-            describe('In the empty space', function () {
-                it('Should connect both UL in one element', function () {
+        });
+        describe('Enter backspace/delete in the start of some LI', function () {
+            describe('in first LI', function () {
+                describe('Enter backspace', function () {
+                    it('Should remove this LI and move all conntent in P', function () {
+                        var editor = new Jodit(appendTestArea())
+                        editor.setEditorValue('<ul><li>Test</li><li>Some text</li></ul>');
+
+                        var sel = editor.editorWindow.getSelection(),
+                            range = editor.editorDocument.createRange();
+
+                        range.setStart(editor.editor.firstChild.firstChild.firstChild, 0);
+                        range.collapse(true);
+                        sel.removeAllRanges();
+                        sel.addRange(range);
+
+                        simulateEvent('keydown',     Jodit.KEY_BACKSPACE, editor.editor);
+
+                        expect('<p>Test</p><ul><li>Some text</li></ul>').to.be.equal(editor.getEditorValue());
+
+
+                        editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
+                        expect('<p> a Test</p><ul><li>Some text</li></ul>').to.be.equal(editor.getEditorValue());
+                    });
+                });
+                describe('Enter delete', function () {
+                    it('Should remove all text content and after this remove that LI', function () {
+                        var editor = new Jodit(appendTestArea())
+                        editor.setEditorValue('<ul><li>Test</li><li>Some text</li></ul>');
+
+                        var sel = editor.editorWindow.getSelection(),
+                            range = editor.editorDocument.createRange();
+
+                        range.setStart(editor.editor.firstChild.firstChild.firstChild, 0);
+                        range.collapse(true);
+                        sel.removeAllRanges();
+                        sel.addRange(range);
+
+                        simulateEvent('keydown',     Jodit.KEY_DELETE, editor.editor);
+                        expect('<ul><li>est</li><li>Some text</li></ul>').to.be.equal(editor.getEditorValue());
+                        simulateEvent('keydown',     Jodit.KEY_DELETE, editor.editor);
+                        expect('<ul><li>st</li><li>Some text</li></ul>').to.be.equal(editor.getEditorValue());
+                        simulateEvent('keydown',     Jodit.KEY_DELETE, editor.editor);
+                        expect('<ul><li>t</li><li>Some text</li></ul>').to.be.equal(editor.getEditorValue());
+                        simulateEvent('keydown',     Jodit.KEY_DELETE, editor.editor);
+                        expect('<ul><li></li><li>Some text</li></ul>').to.be.equal(editor.getEditorValue());
+                        simulateEvent('keydown',     Jodit.KEY_DELETE, editor.editor);
+                        expect('<ul><li>Some text</li></ul>').to.be.equal(editor.getEditorValue());
+
+                        editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
+                        expect('<ul><li> a Some text</li></ul>').to.be.equal(editor.getEditorValue());
+                    });
+                });
+            });
+            describe('in alone LI', function () {
+                it('Should remove this LI and UL and move all conntent in P', function () {
                     var editor = new Jodit(appendTestArea())
-                    editor.setEditorValue('<ul><li>Test</li></ul><ul><li>Some text</li></ul>');
+                    editor.setEditorValue('<ul><li>Test</li></ul>');
 
                     var sel = editor.editorWindow.getSelection(),
                         range = editor.editorDocument.createRange();
 
-                    range.setStartBefore(editor.editor.childNodes[1]);
+                    range.setStart(editor.editor.firstChild.childNodes[0].firstChild, 0);
                     range.collapse(true);
                     sel.removeAllRanges();
                     sel.addRange(range);
 
                     simulateEvent('keydown',     Jodit.KEY_BACKSPACE, editor.editor);
 
-                    expect(editor.getEditorValue()).to.be.equal('<ul><li>Test</li><li>Some text</li></ul>');
+                    expect('<p>Test</p>').to.be.equal(editor.getEditorValue());
 
 
                     editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
-                    expect(editor.getEditorValue()).to.be.equal('<ul><li>Test a </li><li>Some text</li></ul>');
-                })
+                    expect('<p> a Test</p>').to.be.equal(editor.getEditorValue());
+                });
+            });
+            it('Should connect this LI with previous', function () {
+                var editor = new Jodit(appendTestArea())
+                editor.setEditorValue('<ul><li>Test</li><li>Some text</li></ul>');
+
+                var sel = editor.editorWindow.getSelection(),
+                    range = editor.editorDocument.createRange();
+
+                range.setStart(editor.editor.firstChild.childNodes[1].firstChild, 0);
+                range.collapse(true);
+                sel.removeAllRanges();
+                sel.addRange(range);
+
+                simulateEvent('keydown',     Jodit.KEY_BACKSPACE, editor.editor);
+
+                expect('<ul><li>TestSome text</li></ul>').to.be.equal(editor.getEditorValue());
+
+
+                editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
+                expect(editor.getEditorValue()).to.be.equal('<ul><li>Test a Some text</li></ul>');
             });
         });
     });

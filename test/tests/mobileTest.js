@@ -1,11 +1,10 @@
 describe('Test mobile mode', function () {
-    appendTestArea('editor_mobile_test', true);
     getBox().style.width = 'auto';
 
     describe('Toollbar', function () {
         it('Should have different count buttons for different container sizes', function () {
             getBox().style.width = '1000px';
-            var editor = new Jodit(editor_mobile_test, {
+            var editor = new Jodit(appendTestArea(), {
                 buttons: [
                     'source',
                     '|',
@@ -61,9 +60,6 @@ describe('Test mobile mode', function () {
         });
     });
 
-    after(function() {
-        editor_mobile_test.parentNode.removeChild(editor_mobile_test);
-    });
 
     afterEach(function () {
         removeStuff();

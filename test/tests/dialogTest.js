@@ -1,9 +1,8 @@
 describe('Dialog system tests', function() {
-    appendTestArea('dialog_area', true);
     describe('About dialog', function() {
         it('Should be opened when use clicks on the About button', function () {
             getBox().style.width = '100%';
-            var editor = new Jodit('#dialog_area', {
+            var editor = new Jodit(appendTestArea(), {
                 disablePlugins: 'mobile'
             });
 
@@ -48,7 +47,7 @@ describe('Dialog system tests', function() {
     describe('Dialog image', function () {
         describe('Opened dialog image', function () {
             it('Should disable margin inputs for left, bottom, right if element has equals margins(margin:10px;)', function () {
-                var editor = new Jodit('#dialog_area', {
+                var editor = new Jodit(appendTestArea(), {
                     observer: {
                         timeout: 0
                     },
@@ -65,7 +64,7 @@ describe('Dialog system tests', function() {
                 expect(dialog.querySelectorAll('input.margins[disabled]').length).to.equal(3);
             });
             it('Should enable margin inputs for left, bottom, right if element has not equals margins(margin:10px 5px;)', function () {
-                var editor = new Jodit('#dialog_area', {
+                var editor = new Jodit(appendTestArea(), {
                     observer: {
                         timeout: 0
                     },
@@ -83,13 +82,11 @@ describe('Dialog system tests', function() {
             });
         });
     });
-    after(function() {
-        dialog_area.parentNode.removeChild(dialog_area);
-    });
     afterEach(function () {
         var i, keys = Object.keys(Jodit.instances);
         for (i = 0; i < keys.length; i += 1) {
             Jodit.instances[keys[i]].destruct();
         }
+        removeStuff();
     });
 });

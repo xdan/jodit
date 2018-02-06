@@ -2,7 +2,7 @@
   "name": "jodit",
   "version": "3.1.27",
   "description": "Jodit is awesome and usefully wysiwyg editor with filebrowser",
-  "main": "index.js",
+  "main": "build/jodit.min.js",
   "scripts": {
     "newversion": "npm test && npm version patch --no-git-tag-version && npm run build && npm run newversiongit && npm publish ./",
     "newversiongit": "git add --all  && git commit -m \"New version %npm_package_version%. Read more https://github.com/xdan/jodit/releases/tag/%npm_package_version% \" && git tag %npm_package_version% && git push --tags origin HEAD:master",
