@@ -879,6 +879,86 @@ describe('Jodit Events system Tests', function() {
                 window.removeEventListener('mousedown', mousedown);
             })
         })
+        describe('Check destruct', function () {
+            describe('For window', function () {
+                it('Should remove all handlers', function () {
+                    var editor = new Jodit(appendTestArea());
+                    var checker = 0;
+                    editor.events.on(window, 'updateSome1', function () {
+                        checker += 1;
+                    });
+
+                    editor.events.fire(window, 'updateSome1');
+
+                    expect(1).to.be.equal(checker);
+
+                    simulateEvent('updateSome1', 0, window);
+
+                    expect(2).to.be.equal(checker);
+
+                    editor.destruct();
+
+                    simulateEvent('updateSome1', 0, window);
+                    simulateEvent('updateSome1', 0, window);
+                    simulateEvent('updateSome1', 0, window);
+
+                    expect(2).to.be.equal(checker);
+
+                });
+            });
+            describe('For document', function () {
+                it('Should remove all handlers', function () {
+                    var editor = new Jodit(appendTestArea());
+                    var checker = 0;
+                    editor.events.on(document, 'updateSome1', function () {
+                        checker += 1;
+                    });
+
+                    editor.events.fire(document, 'updateSome1');
+
+                    expect(1).to.be.equal(checker);
+
+                    simulateEvent('updateSome1', 0, document);
+
+                    expect(2).to.be.equal(checker);
+
+                    editor.destruct();
+
+                    simulateEvent('updateSome1', 0, document);
+                    simulateEvent('updateSome1', 0, document);
+                    simulateEvent('updateSome1', 0, document);
+
+                    expect(2).to.be.equal(checker);
+
+                });
+            });
+            describe('For body', function () {
+                it('Should remove all handlers', function () {
+                    var editor = new Jodit(appendTestArea());
+                    var checker = 0;
+                    editor.events.on(document.body, 'updateSome1', function () {
+                        checker += 1;
+                    });
+
+                    editor.events.fire(document.body, 'updateSome1');
+
+                    expect(1).to.be.equal(checker);
+
+                    simulateEvent('updateSome1', 0, document.body);
+
+                    expect(2).to.be.equal(checker);
+
+                    editor.destruct();
+
+                    simulateEvent('updateSome1', 0, document.body);
+                    simulateEvent('updateSome1', 0, document.body);
+                    simulateEvent('updateSome1', 0, document.body);
+
+                    expect(2).to.be.equal(checker);
+
+                });
+            });
+        });
     });
     afterEach(function () {
         removeStuff();

@@ -100,6 +100,7 @@ export class EventsNative {
         if (doc) {
             this.doc = doc;
         }
+        this.__key += (new Date()).getTime();
     }
 
     private eachEvent(events: string, callback: (event: string, namespace: string) => void) {

@@ -402,6 +402,8 @@ export class Jodit extends Component {
 
         this.events.off(this.events);
         this.events.off(this.ownerWindow);
+        this.events.off(this.ownerDocument);
+        this.events.off(this.ownerDocument.body);
         this.events.off(this.element);
         this.events.off(this.editor);
 
