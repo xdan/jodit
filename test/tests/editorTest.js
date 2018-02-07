@@ -295,11 +295,22 @@ describe('Jodit Editor Tests', function() {
         });
     });
     describe('Set/Get', function () {
-        it('Set element value', function () {
-            var area = appendTestArea();
-            var editor = new Jodit(area);
-            editor.setElementValue('Test');
-            expect(area.value).to.be.equal('Test');
+
+        describe('Set value', function () {
+            it('Set element value', function () {
+                var area = appendTestArea();
+                var editor = new Jodit(area);
+                editor.setElementValue('Test');
+                expect(area.value).to.be.equal('Test');
+            });
+            it('Set value by magic property', function () {
+                var area = appendTestArea();
+                var editor = new Jodit(area);
+                editor.value = 'Test';
+                expect(area.value).to.be.equal('Test');
+                expect(editor.getEditorValue()).to.be.equal('Test');
+                expect(editor.value).to.be.equal('Test');
+            });
         });
         it('Set wrong element value', function () {
             var area = appendTestArea();

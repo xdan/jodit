@@ -534,6 +534,13 @@ export class Jodit extends Component {
         }
     }
 
+    get value(): string {
+        return this.getEditorValue();
+    }
+    set value(html: string) {
+        this.setEditorValue(html);
+    }
+
     private commands: {[key: string]: Array<CommandType | Function>} = {};
 
     private execCustomCommands(commandName: string, second = false, third: null|any = null): false | void {
