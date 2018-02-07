@@ -292,6 +292,31 @@ export class Dom {
 
         return false;
     }
+
+    static findInline = (node: Node | null, toLeft: boolean, root: Node): Node | null => {
+        let prevElement: Node | null = node,
+            nextElement: Node | null = null;
+
+        do {
+            if (prevElement) {
+                nextElement = toLeft ? prevElement.previousSibling : prevElement.nextSibling;
+                if (!nextElement && prevElement.parentNode && prevElement.parentNode !== root && Dom.isInlineBlock(prevElement.parentNode)) {
+                    prevElement = prevElement.parentNode;
+                } else {
+                    break;
+                }
+            } else {
+                break;
+            }
+        } while(!nextElement);
+
+        while (nextElement && Dom.isInlineBlock(nextElement) && (!toLeft ? nextElement.firstChild : nextElement.lastChild)) {
+            nextElement = !toLeft ? nextElement.firstChild : nextElement.lastChild;
+        }
+
+        return nextElement;
+    };
+
     /**
      * Find next/prev node what `condition(next) === true`
      *
@@ -345,7 +370,7 @@ export class Dom {
         }
 
         if (node.nodeType === Node.TEXT_NODE) {
-            return !node.nodeValue || trim(node.nodeValue).length === 0;
+            return node.nodeValue === null || trim(node.nodeValue).length === 0;
         }
 
         return Dom.each(<HTMLElement>node, (elm: Node | null): false | void => {
@@ -353,7 +378,7 @@ export class Dom {
                 (
                     elm && elm.nodeType === Node.TEXT_NODE &&
                     (
-                        elm.nodeValue &&
+                        elm.nodeValue !== null &&
                         trim(elm.nodeValue).length !== 0
                     )
                 ) ||
@@ -455,9 +480,13 @@ export class Dom {
      */
     static moveContent(from: Node, to: Node, inStart: boolean = false) {
         const fragment: DocumentFragment = from.ownerDocument.createDocumentFragment();
+
         [].slice.call(from.childNodes).forEach((node: Node) => {
-            fragment.appendChild(node);
+            if (node.nodeType !== Node.TEXT_NODE || node.nodeValue !== consts.INVISIBLE_SPACE) {
+                fragment.appendChild(node);
+            }
         });
+
         if (!inStart || !to.firstChild) {
             to.appendChild(fragment);
         } else {
@@ -495,6 +524,7 @@ export class Dom {
             }
             child = child.parentNode;
         }
+
         return false;
     };
 
@@ -506,7 +536,7 @@ export class Dom {
      * @return {boolean}
      */
     static isOrContains = (root: Node, child: Node): boolean => {
-        return root === child || Dom.contains(root, child);
+        return child && root && (root === child || Dom.contains(root, child));
     };
 
    /*static apply = (options, addPropertyCallback, editor: Jodit) => {

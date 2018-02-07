@@ -7,7 +7,7 @@
 import {Jodit} from '../Jodit';
 import {css, normalizeSize} from '../modules/Helpers';
 import {Config} from "../Config";
-import {ControlType, ToolbarButton} from "../modules/ToolbarCollection";
+import {ControlType} from "../modules/ToolbarCollection";
 import {Dom} from "../modules/Dom";
 
 Config.prototype.controls.fontsize = <ControlType>{
@@ -15,7 +15,7 @@ Config.prototype.controls.fontsize = <ControlType>{
     list : ["8", "9", "10", "11", "12", "14", "16", "18", "24", "30", "36", "48", "60", "72", "96"],
     template : (editor: Jodit, key: string, value: string) => value,
     tooltip: "Font size",
-    isActiveChild: (editor: Jodit, control: ControlType, button?: ToolbarButton): boolean => {
+    isActiveChild: (editor: Jodit, control: ControlType): boolean => {
         const current: Node|false = editor.selection.current();
 
         if (current) {

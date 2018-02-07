@@ -293,7 +293,7 @@ export class Select extends Component{
      *
      * @return false|Node The element under the cursor or false if undefined or not in editor
      */
-    current(): false|Node {
+    current(): false | Node {
         if (this.jodit.getRealMode() === consts.MODE_WYSIWYG && this.jodit.editorWindow.getSelection !== undefined) {
             const sel: Selection = this.jodit.editorWindow.getSelection();
             if (sel.rangeCount > 0) {
@@ -532,8 +532,7 @@ export class Select extends Component{
             throw new Error('Node element must be in editor');
         }
 
-        const sel: Selection = this.jodit.editorWindow.getSelection(),
-            range: Range = this.jodit.editorDocument.createRange(),
+        const range: Range = this.jodit.editorDocument.createRange(),
             fakeNode: Text = this.jodit.editorDocument.createTextNode(consts.INVISIBLE_SPACE);
 
 
@@ -543,7 +542,7 @@ export class Select extends Component{
             range.insertNode(fakeNode);
             range.selectNode(fakeNode);
         } else {
-            range.setStart(node, node.nodeValue ? node.nodeValue.length : 0);
+            range.setStart(node, node.nodeValue !== null ? node.nodeValue.length : 0);
         }
 
         range.collapse(false);
@@ -564,6 +563,7 @@ export class Select extends Component{
     cursorInTheEdge (start: boolean = false, parentBlock: HTMLElement|Function|false = false, inverse: boolean = false): boolean|null {
         const sel: Selection = this.jodit.editorWindow.getSelection(),
             isNoEmptyNode = (elm: Node | null) => (elm && !Dom.isEmptyTextNode(elm));
+
         let
             container: HTMLElement = <HTMLElement>parentBlock;
 
@@ -729,8 +729,7 @@ export class Select extends Component{
             throw new Error('Node element must be in editor');
         }
 
-        const sel: Selection = this.jodit.editorWindow.getSelection(),
-            range: Range = this.jodit.editorDocument.createRange(),
+        const range: Range = this.jodit.editorDocument.createRange(),
             fakeNode: Text = this.jodit.editorDocument.createTextNode(consts.INVISIBLE_SPACE);
 
         if (node.nodeType !== Node.TEXT_NODE) {
@@ -738,7 +737,7 @@ export class Select extends Component{
             range.insertNode(fakeNode);
             range.selectNode(fakeNode);
         } else {
-            range.setStart(node, node.nodeValue ? node.nodeValue.length : 0);
+            range.setStart(node, node.nodeValue !== null ? node.nodeValue.length : 0);
         }
 
         range.collapse(true);
@@ -761,10 +760,9 @@ export class Select extends Component{
             throw new Error('Node element must be in editor');
         }
 
-        const sel: Selection = this.jodit.editorWindow.getSelection(),
-            range: Range = this.jodit.editorDocument.createRange();
+        const range: Range = this.jodit.editorDocument.createRange();
 
-        let start: Node|null = node,
+        let start: Node | null = node,
             last: Node = node;
 
         do {
@@ -772,7 +770,7 @@ export class Select extends Component{
                 break;
             }
             last = start;
-            start = start[inStart ? 'firstChild' : 'lastChild'];
+            start = inStart ? start.firstChild : start.lastChild
         } while (start);
 
         if (last === node && node.nodeType !== Node.TEXT_NODE) {
@@ -809,8 +807,7 @@ export class Select extends Component{
             throw new Error('Node element must be in editor');
         }
 
-        const sel: Selection = this.jodit.editorWindow.getSelection(),
-            range: Range = this.jodit.editorDocument.createRange();
+        const range: Range = this.jodit.editorDocument.createRange();
 
         range[inward ? 'selectNodeContents' : 'selectNode'](node);
 

@@ -52,7 +52,7 @@ export function enter(editor: Jodit) {
             if (currentParagraph) {
                 Dom.all(currentParagraph, (node: Node) => {
                     if (node.nodeType === Node.TEXT_NODE) {
-                        if (node.nodeValue && consts.INVISIBLE_SPACE_REG_EXP.test(node.nodeValue) && node.nodeValue.replace(consts.INVISIBLE_SPACE_REG_EXP, '').length !== 0) {
+                        if (node.nodeValue !== null && consts.INVISIBLE_SPACE_REG_EXP.test(node.nodeValue) && node.nodeValue.replace(consts.INVISIBLE_SPACE_REG_EXP, '').length !== 0) {
                             node.nodeValue = node.nodeValue.replace(consts.INVISIBLE_SPACE_REG_EXP, '');
                             if (node === current) {
                                 editor.selection.setCursorAfter(node);

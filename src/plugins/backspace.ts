@@ -6,7 +6,7 @@
 
 import {Jodit} from '../Jodit';
 import * as consts from '../constants';
-import {css, trim} from '../modules/Helpers';
+import {normalizeNode, trim} from '../modules/Helpers';
 import {Dom} from "../modules/Dom";
 
 /**
@@ -15,21 +15,12 @@ import {Dom} from "../modules/Dom";
  * @module backspace
  */
 export function backspace(editor: Jodit) {
-
-    editor.events.on('afterCommand', (command: string) => {
-        if (command === 'delete') {
-            let current = editor.selection.current();
-            if (current && current.firstChild && current.firstChild.nodeName ==='BR') {
-                current.removeChild(current.firstChild);
-            }
-            if (!trim(editor.editor.innerText) && !editor.editor.querySelector('img')) {
-                editor.editor.innerHTML = '';
-                editor.selection.setCursorIn(editor.editor);
-            }
-        }
-    });
     const removeEmptyBlocks = (container: HTMLElement) => {
-        let box: HTMLElement | null = container, parent: Node | null;
+        let box: HTMLElement | null = container,
+            parent: Node | null;
+
+        normalizeNode(container);
+
         do {
             const html: string = box.innerHTML.replace(consts.INVISIBLE_SPACE_REG_EXP, '');
 
@@ -70,19 +61,7 @@ export function backspace(editor: Jodit) {
             range.collapse(true);
             editor.selection.selectRange(range);
 
-            let prevElement: Node | null = box.node;
-            let nextElement: Node | null = null;
-
-            do {
-                if (prevElement) {
-                    nextElement = toLeft ? prevElement.previousSibling : prevElement.nextSibling;
-                    if (!nextElement && prevElement.parentNode && prevElement.parentNode !== editor.editor && Dom.isInlineBlock(prevElement.parentNode)) {
-                        prevElement = prevElement.parentNode;
-                    } else {
-                        break;
-                    }
-                }
-            } while(!nextElement);
+            let nextElement: Node | null = Dom.findInline(box.node, toLeft, editor.editor);
 
             if (value.length) {
                 if (toLeft) {
@@ -131,219 +110,144 @@ export function backspace(editor: Jodit) {
         }
     };
 
-    editor.events.on('keydown', (event: KeyboardEvent): false | void => {
-        if (event.which === consts.KEY_BACKSPACE || event.keyCode === consts.KEY_DELETE) {
-            const toLeft: boolean = event.which === consts.KEY_BACKSPACE;
-
-            if (!editor.selection.isFocused()) {
-                !editor.selection.focus();
+    editor.events
+        .on('afterCommand', (command: string) => {
+            if (command === 'delete') {
+                let current = editor.selection.current();
+                if (current && current.firstChild && current.firstChild.nodeName ==='BR') {
+                    current.removeChild(current.firstChild);
+                }
+                if (!trim(editor.editor.innerText) && !editor.editor.querySelector('img')) {
+                    editor.editor.innerHTML = '';
+                    let node : Node = editor.selection.setCursorIn(editor.editor);
+                    node.parentNode && node.parentNode.removeChild(node);
+                }
             }
+        })
+        .on('keydown', (event: KeyboardEvent): false | void => {
+            if (event.which === consts.KEY_BACKSPACE || event.keyCode === consts.KEY_DELETE) {
+                const toLeft: boolean = event.which === consts.KEY_BACKSPACE;
 
-            if (!editor.selection.isCollapsed()) {
-                editor.execCommand('Delete');
-                return false;
-            }
+                if (!editor.selection.isFocused()) {
+                    !editor.selection.focus();
+                }
 
-            const sel: Selection = editor.editorWindow.getSelection(),
-                range: Range | false = sel.rangeCount ? sel.getRangeAt(0) : false;
-
-            if (!range) {
-                return false;
-            }
-
-            const fakeNode: Node = editor.ownerDocument.createTextNode(consts.INVISIBLE_SPACE);
-            const marker: HTMLElement = editor.editorDocument.createElement('span');
-
-            try {
-                range.insertNode(fakeNode);
-                if (!Dom.isOrContains(editor.editor, fakeNode)) {
+                if (!editor.selection.isCollapsed()) {
+                    editor.execCommand('Delete');
                     return false;
                 }
 
-                let container: HTMLElement | null = <HTMLElement | null>Dom.up(fakeNode, Dom.isBlock, editor.editor);
+                const sel: Selection = editor.editorWindow.getSelection(),
+                    range: Range | false = sel.rangeCount ? sel.getRangeAt(0) : false;
 
-                let workElement: Node | null;
-                workElement = toLeft ? fakeNode.previousSibling : fakeNode.nextSibling;
-
-                while (workElement && Dom.isInlineBlock(workElement) && (!toLeft ? workElement.firstChild : workElement.lastChild)) {
-                    workElement = !toLeft ? workElement.firstChild : workElement.lastChild;
-                }
-
-                if (workElement) {
-                    const box = {node: workElement};
-
-                    if (removeChar(box, toLeft, range) === false) {
-                        return false;
-                    }
-
-
-                    workElement = box.node || fakeNode.parentNode;
-
-                    if (workElement === editor.editor) {
-                        return false;
-                    }
-
-                    if (workElement && workElement.nodeName.match(/^(IMG|BR|IFRAME|SCRIPT|INPUT|TEXTAREA|TABLE|HR)$/)) {
-                        workElement.parentNode && workElement.parentNode.removeChild(workElement);
-                        return false;
-                    }
-                }
-
-                if (container && container.nodeName.match(/^(TD)$/)) {
+                if (!range) {
                     return false;
                 }
 
-                let prevBox: Node | false | null = toLeft ? Dom.prev(workElement || fakeNode, Dom.isBlock, editor.editor) : Dom.next(workElement || fakeNode, Dom.isBlock, editor.editor);
+                const fakeNode: Node = editor.ownerDocument.createTextNode(consts.INVISIBLE_SPACE);
+                const marker: HTMLElement = editor.editorDocument.createElement('span');
 
-                if (!prevBox && container && container.parentNode) {
-                    prevBox = editor.editorDocument.createElement(editor.options.enter);
-                    let box: Node = container;
-
-                    while (box && box.parentNode && box.parentNode !== editor.editor) {
-                        box = box.parentNode;
+                try {
+                    range.insertNode(fakeNode);
+                    if (!Dom.isOrContains(editor.editor, fakeNode)) {
+                        return false;
                     }
 
-                    box.parentNode && box.parentNode.insertBefore(prevBox, box);
-                }
+                    let container: HTMLElement | null = <HTMLElement | null>Dom.up(fakeNode, Dom.isBlock, editor.editor);
 
+                    let workElement: Node | null = Dom.findInline(fakeNode, toLeft, editor.editor);
 
-                prevBox && editor.selection.setCursorIn(prevBox, !toLeft) && editor.selection.insertNode(marker, false);
+                    if (workElement) {
+                        const box = {node: workElement};
 
-                if (container) {
-                    removeEmptyBlocks(container);
-
-                    if (prevBox && container.parentNode) {
-                        if (
-                            container.nodeName === prevBox.nodeName &&
-                            container.parentNode && prevBox.parentNode &&
-                            container.parentNode !== editor.editor && prevBox.parentNode !== editor.editor &&
-                            container.parentNode !== prevBox.parentNode &&
-                            container.parentNode.nodeName === prevBox.parentNode.nodeName
-                        ) {
-                            container = <HTMLElement>container.parentNode;
-                            prevBox = <HTMLElement>prevBox.parentNode;
+                        if (removeChar(box, toLeft, range) === false) {
+                            return false;
                         }
-                        Dom.moveContent(container, prevBox, !toLeft);
+
+
+                        workElement = box.node || fakeNode.parentNode;
+
+                        if (workElement === editor.editor) {
+                            return false;
+                        }
+
+                        if (workElement && workElement.nodeName.match(/^(IMG|BR|IFRAME|SCRIPT|INPUT|TEXTAREA|TABLE|HR)$/)) {
+                            workElement.parentNode && workElement.parentNode.removeChild(workElement);
+                            return false;
+                        }
                     }
 
-                    if (prevBox && prevBox.nodeName === 'LI') {
-                        const UL: Node | false = Dom.closest(prevBox, 'Ul|OL', editor.editor);
-                        if (UL) {
-                            const nextBox: Node | null = UL.nextSibling;
-                            if (nextBox && nextBox.nodeName === UL.nodeName && UL !== nextBox) {
-                                Dom.moveContent(nextBox, UL, !toLeft);
-                                nextBox.parentNode && nextBox.parentNode.removeChild(nextBox);
+                    if (container && container.nodeName.match(/^(TD)$/)) {
+                        return false;
+                    }
+
+                    let prevBox: Node | false | null = toLeft ? Dom.prev(workElement || fakeNode, Dom.isBlock, editor.editor) : Dom.next(workElement || fakeNode, Dom.isBlock, editor.editor);
+
+                    if (!prevBox && container && container.parentNode) {
+                        prevBox = editor.editorDocument.createElement(editor.options.enter);
+                        let box: Node = container;
+
+                        while (box && box.parentNode && box.parentNode !== editor.editor) {
+                            box = box.parentNode;
+                        }
+
+                        box.parentNode && box.parentNode.insertBefore(prevBox, box);
+                    }
+
+
+                    if (prevBox) {
+                        let tmpNode: Node = editor.selection.setCursorIn(prevBox, !toLeft);
+                        editor.selection.insertNode(marker, false);
+                        if (tmpNode.nodeType === Node.TEXT_NODE && tmpNode.nodeValue === consts.INVISIBLE_SPACE) {
+                            tmpNode.parentNode && tmpNode.parentNode.removeChild(tmpNode);
+                        }
+                    }
+
+                    if (container) {
+                        removeEmptyBlocks(container);
+
+                        if (prevBox && container.parentNode) {
+                            if (
+                                container.nodeName === prevBox.nodeName &&
+                                container.parentNode && prevBox.parentNode &&
+                                container.parentNode !== editor.editor && prevBox.parentNode !== editor.editor &&
+                                container.parentNode !== prevBox.parentNode &&
+                                container.parentNode.nodeName === prevBox.parentNode.nodeName
+                            ) {
+                                container = <HTMLElement>container.parentNode;
+                                prevBox = <HTMLElement>prevBox.parentNode;
+                            }
+                            Dom.moveContent(container, prevBox, !toLeft);
+                            normalizeNode(prevBox);
+                        }
+
+                        if (prevBox && prevBox.nodeName === 'LI') {
+                            const UL: Node | false = Dom.closest(prevBox, 'Ul|OL', editor.editor);
+                            if (UL) {
+                                const nextBox: Node | null = UL.nextSibling;
+                                if (nextBox && nextBox.nodeName === UL.nodeName && UL !== nextBox) {
+                                    Dom.moveContent(nextBox, UL, !toLeft);
+                                    nextBox.parentNode && nextBox.parentNode.removeChild(nextBox);
+                                }
                             }
                         }
+
+                        removeEmptyBlocks(container);
+
+
+                        if (marker) {
+                            let tmpNode: Node = editor.selection.setCursorBefore(marker);
+                            tmpNode.parentNode && tmpNode.parentNode.removeChild(tmpNode);
+                        }
+
+                        return false;
                     }
-
-                    removeEmptyBlocks(container);
-
-
-                    if (marker) {
-                        editor.selection.setCursorBefore(marker);
-                    }
-
-                    return false;
+                } finally {
+                    marker.parentNode && marker.parentNode.removeChild(marker);
+                    fakeNode.parentNode && fakeNode.nodeValue === consts.INVISIBLE_SPACE && fakeNode.parentNode.removeChild(fakeNode);
                 }
-            } finally {
-                marker.parentNode && marker.parentNode.removeChild(marker);
-                fakeNode.parentNode && fakeNode.parentNode.removeChild(fakeNode);
+
+                return false;
             }
-
-
-
-            // let currentNode: Node | null = null,
-            //     startOffset: number = 0;
-            //
-            // if (range.startContainer.nodeType === Node.TEXT_NODE) {
-            //     currentNode = range.startContainer;
-            //     startOffset = range.startOffset;
-            // } else {
-            //     if (toLeft) {
-            //         currentNode = range.startContainer.childNodes[range.startOffset - 1];
-            //         if (currentNode && currentNode.nodeType === Node.TEXT_NODE && currentNode.nodeValue) {
-            //             startOffset = currentNode.nodeValue.length;
-            //         }
-            //     } else {
-            //         currentNode = range.startContainer.childNodes[range.startOffset];
-            //     }
-            //     if (!currentNode) {
-            //
-            //     }
-            // }
-            //
-            // if (currentNode && currentNode.nodeType === Node.TEXT_NODE) {
-            //     if (removeChar(currentNode, startOffset, startOffset, toLeft, range) === false) {
-            //         return false;
-            //     }
-            // }
-
-
-
-            // const textNode: Node = range.startContainer.nodeType === Node.TEXT_NODE ? range.startContainer : range.startContainer.childNodes[range.startOffset];
-            // const startOffsetInRange: number = range.startContainer.nodeType === Node.TEXT_NODE ? range.startOffset : 0;
-            //
-            // let startOffset: number = startOffsetInRange;
-            //
-            // if (!Dom.isOrContains(editor.editor, textNode) || textNode === editor.editor) {
-            //     return false;
-            // }
-            //
-            // const nextElement: Node | null | false = removeChar(textNode, startOffset, startOffsetInRange, toLeft, range);
-            //
-            // if (nextElement === false) {
-            //     return false;
-            // }
-            //
-            // if (nextElement && nextElement.nodeName.match(/^(IMG|BR|IFRAME|SCRIPT|INPUT|TEXTAREA|TABLE)$/)) {
-            //     nextElement.parentNode && nextElement.parentNode.removeChild(nextElement);
-            //     return false;
-            // }
-
-
-
-            // if (startOffset === 0 && toLeft && textNode) {
-            //     const prevBox: Node | false = Dom.prev(textNode, Dom.isBlock, editor.editor);
-            //
-            //     if (prevBox) {
-            //         editor.selection.setCursorIn(prevBox, false);
-            //     }
-            //
-            //     try {
-            //         const container: HTMLElement | null = <HTMLElement | null>Dom.up(range.startContainer, Dom.isBlock, editor.editor);
-            //
-            //         if (container) {
-            //             const html: string = container.innerHTML.replace(consts.INVISIBLE_SPACE_REG_EXP, '');
-            //             if ((!html.length || html === '<br>') && !Dom.isCell(container, editor.editorWindow) && container.parentNode && container !== editor.editor) {
-            //                 container.parentNode.removeChild(container);
-            //
-            //                 return false;
-            //             }
-            //
-            //             if (container && container.nodeName === 'LI') {
-            //
-            //             }
-            //         }
-            //     } finally {
-            //         // Ul near with UL
-            //         if (prevBox && prevBox.nodeName === 'LI') {
-            //             const UL: Node | false = Dom.closest(prevBox, 'Ul|OL', editor.editor);
-            //             if (UL) {
-            //                 const nextBox: Node | null = UL.nextSibling;
-            //                 if (nextBox && nextBox.nodeName === UL.nodeName && UL !== nextBox) {
-            //                     [].slice.call(nextBox.childNodes).forEach(function (node: HTMLLIElement) {
-            //                         UL.appendChild(node);
-            //                     });
-            //                     nextBox.parentNode && nextBox.parentNode.removeChild(nextBox);
-            //                 }
-            //             }
-            //         }
-            //     }
-            // }
-
-
-            return false;
-        }
-    })
+        })
 }

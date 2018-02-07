@@ -54,7 +54,7 @@ Config.prototype.controls.symbol = <ControlType> {
         if (container) {
             if (editor.options.usePopupForSpecialCharacters) {
                 const box: HTMLDivElement = editor.ownerDocument.createElement('div');
-                box.classList.add('jodit_symbols')
+                box.classList.add('jodit_symbols');
                 box.appendChild(container);
                 editor.events.on(container, 'close_dialog', close);
                 return box;
@@ -93,7 +93,7 @@ export class symbols {
                     const tr: HTMLTableRowElement = editor.ownerDocument.createElement('tr');
                     for (let j: number = 0; j < this.countInRow && i < editor.options.specialCharacters.length; j += 1, i += 1) {
                         const td: HTMLTableCellElement = editor.ownerDocument.createElement('td'),
-                            a: HTMLAnchorElement = <HTMLAnchorElement>dom(`<a data-index="${i}" data-index-j="${j}" href="javascript:void(0)" role="option" tabindex="-1">${editor.options.specialCharacters[i]}</a>`, editor.ownerDocument)
+                            a: HTMLAnchorElement = <HTMLAnchorElement>dom(`<a data-index="${i}" data-index-j="${j}" href="javascript:void(0)" role="option" tabindex="-1">${editor.options.specialCharacters[i]}</a>`, editor.ownerDocument);
 
                         chars.push(a);
                         td.appendChild(a);
@@ -105,7 +105,7 @@ export class symbols {
                 const self: symbols = this;
 
                 editor.events
-                    .on(chars, 'focus', function (this: HTMLAnchorElement, e: MouseEvent) {
+                    .on(chars, 'focus', function (this: HTMLAnchorElement) {
                         preview.innerHTML = this.innerHTML;
                     })
                     .on(chars, 'mousedown', function (this: HTMLAnchorElement, e ?: MouseEvent) {

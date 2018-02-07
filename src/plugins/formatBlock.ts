@@ -9,7 +9,6 @@ import {Dom} from "../modules/Dom";
 import * as consts from '../constants';
 import {Config} from "../Config";
 import {ToolbarButton, ControlType} from "../modules/ToolbarCollection";
-import {css} from "../modules/Helpers";
 
 Config.prototype.controls.paragraph = <ControlType>{
     command: 'formatBlock',
@@ -44,7 +43,7 @@ Config.prototype.controls.paragraph = <ControlType>{
         blockquote : "Quote",
         pre : "Code"
     },
-    isActiveChild: (editor: Jodit, control: ControlType, button?: ToolbarButton): boolean => {
+    isActiveChild: (editor: Jodit, control: ControlType): boolean => {
         const current: Node|false = editor.selection.current();
 
         if (current) {

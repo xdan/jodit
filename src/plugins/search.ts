@@ -7,7 +7,7 @@
 
 import {Jodit} from "../Jodit";
 import {Config} from "../Config";
-import {ctrlKey, debounce, dom, trim} from "../modules/Helpers";
+import {debounce, dom, trim} from "../modules/Helpers";
 import {Component, Dom, ToolbarIcon} from "../modules/index";
 import * as consts from "../constants";
 import {markerInfo} from "../modules/Selection";

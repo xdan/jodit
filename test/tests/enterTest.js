@@ -26,7 +26,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
         });
         describe('inside some inline element', function () {
             describe('in the start', function () {
-                it('Should move cursor befoer this element and delete char', function () {
+                it('Should move cursor before this element and delete char', function () {
                     var editor = new Jodit(appendTestArea())
                     editor.setEditorValue('te<strong>stop</strong>st');
 
@@ -426,6 +426,28 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
                 editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
                 expect(editor.getEditorValue()).to.be.equal('<ul><li>Test a Some text</li></ul>');
+            });
+            describe('And enter Enter', function () {
+                it('Should split this LI on two again', function () {
+                    var editor = new Jodit(appendTestArea())
+                    editor.setEditorValue('<ul><li>Test</li><li>Some text</li></ul>');
+
+                    var sel = editor.editorWindow.getSelection(),
+                        range = editor.editorDocument.createRange();
+
+                    range.setStart(editor.editor.firstChild.childNodes[1].firstChild, 0);
+                    range.collapse(true);
+                    sel.removeAllRanges();
+                    sel.addRange(range);
+
+                    simulateEvent('keydown',     Jodit.KEY_BACKSPACE, editor.editor);
+
+                    expect('<ul><li>TestSome text</li></ul>').to.be.equal(editor.getEditorValue());
+
+
+                    simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
+                    expect(editor.getEditorValue()).to.be.equal('<ul><li>Test</li><li>Some text</li></ul>');
+                });
             });
         });
     });

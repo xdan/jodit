@@ -5,17 +5,15 @@
  */
 
 import {Jodit} from '../Jodit';
-import * as consts from "../constants";
 import {Config} from "../Config";
 import {Dom} from "../modules/Dom";
-import {css} from "../modules/Helpers";
-import {ControlType, ToolbarButton} from "../modules/ToolbarCollection";
+import {ControlType} from "../modules/ToolbarCollection";
 
 Config.prototype.controls.indent = <ControlType>{
     tooltip: "Increase Indent",
 };
 Config.prototype.controls.outdent = <ControlType>{
-    isDisable: (editor: Jodit, btn: ControlType, button?: ToolbarButton): boolean => {
+    isDisable: (editor: Jodit): boolean => {
         const current: Node | false = editor.selection.current();
 
         if (current) {

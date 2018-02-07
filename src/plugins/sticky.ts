@@ -1,5 +1,5 @@
 import {Jodit} from "../Jodit";
-import {css, offset, throttle} from "../modules/Helpers";
+import {css, offset} from "../modules/Helpers";
 import {Component} from "../modules/Component";
 import {Config} from "../Config";
 

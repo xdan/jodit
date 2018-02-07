@@ -176,67 +176,81 @@ export function cleanHTML(editor: Jodit) {
         });
     }
 
-    editor.events.on('afterCommand', function (command: string) {
-        let sel: Select = editor.selection,
-            hr: HTMLHRElement | null,
-            node: Node | null;
-
-        switch (command.toLowerCase()) {
-            case 'inserthorizontalrule':
-            hr = editor.editor.querySelector('hr[id=null]');
-            if (hr) {
-                node = <Node | null>Dom.next(hr, Dom.isBlock, editor.editor, false);
-                if (!node) {
-                    node = <Node>Dom.create(editor.options.enter, '', editor.editorDocument);
-                    if (node) {
-                        Dom.after(hr, <HTMLElement>node)
-                    }
-                }
-                sel.setCursorIn(node);
-            }
-            break;
-            case 'removeformat':
-                node = <Node>sel.current();
-                const clean: (elm: Node) => false | void = (elm: Node) => {
-                    switch (elm.nodeType) {
-                        case Node.ELEMENT_NODE:
-                            Dom.each(elm, clean);
-                            if (elm.nodeName === 'FONT') {
-                                Dom.unwrap(elm);
-                            } else {
-                                // clean some "style" attributes in selected range
-                                [].slice.call((<Element>elm).attributes).forEach((attr: Attr) => {
-                                    if (['src', 'href', 'rel', 'content'].indexOf(attr.name.toLowerCase()) === -1) {
-                                        (<Element>elm).removeAttribute(attr.name);
-                                    }
-                                });
-                                normalizeNode(elm);
-                            }
-                            break;
-                        case Node.TEXT_NODE:
-                            if (editor.options.cleanHTML.replaceNBSP && elm.nodeType === Node.TEXT_NODE && elm.nodeValue !== null && elm.nodeValue.match(consts.SPACE_REG_EXP)) {
-                                elm.nodeValue = elm.nodeValue.replace(consts.SPACE_REG_EXP, ' ');
-                            }
-                            break;
-                        default:
-                            elm.parentNode && elm.parentNode.removeChild(elm);
-                    }
-                };
-
-                if (!sel.isCollapsed()) {
-                    editor.selection.eachSelection((current: Node): false | void => {
-                        clean(current);
-                    });
-                } else {
-                    while (node && node.nodeType !== Node.ELEMENT_NODE && node !== editor.editor) {
-                        clean(node);
-                        if (node) {
-                            node = node.parentNode;
+    editor.events
+        // remove invisible spaces then they already not need
+        .on('keyup',  () => {
+            if (editor.selection.isCollapsed()) {
+                let node: Node | null = <Node | null> editor.selection.current();
+                if (node && node.nodeType === Node.TEXT_NODE && node.nodeValue !== consts.INVISIBLE_SPACE) {
+                    while (node = Dom.findInline(node, true, editor.editor)) {
+                        if (node && node.nodeType === Node.TEXT_NODE && node.nodeValue && node.nodeValue.match(consts.INVISIBLE_SPACE_REG_EXP)) {
+                            node.nodeValue = node.nodeValue.replace(consts.INVISIBLE_SPACE_REG_EXP, '');
                         }
                     }
                 }
+            }
+        })
+        .on('afterCommand',  (command: string) => {
+            let sel: Select = editor.selection,
+                hr: HTMLHRElement | null,
+                node: Node | null;
 
-            break;
-        }
-    });
+            switch (command.toLowerCase()) {
+                case 'inserthorizontalrule':
+                hr = editor.editor.querySelector('hr[id=null]');
+                if (hr) {
+                    node = <Node | null>Dom.next(hr, Dom.isBlock, editor.editor, false);
+                    if (!node) {
+                        node = <Node>Dom.create(editor.options.enter, '', editor.editorDocument);
+                        if (node) {
+                            Dom.after(hr, <HTMLElement>node)
+                        }
+                    }
+                    sel.setCursorIn(node);
+                }
+                break;
+                case 'removeformat':
+                    node = <Node>sel.current();
+                    const clean: (elm: Node) => false | void = (elm: Node) => {
+                        switch (elm.nodeType) {
+                            case Node.ELEMENT_NODE:
+                                Dom.each(elm, clean);
+                                if (elm.nodeName === 'FONT') {
+                                    Dom.unwrap(elm);
+                                } else {
+                                    // clean some "style" attributes in selected range
+                                    [].slice.call((<Element>elm).attributes).forEach((attr: Attr) => {
+                                        if (['src', 'href', 'rel', 'content'].indexOf(attr.name.toLowerCase()) === -1) {
+                                            (<Element>elm).removeAttribute(attr.name);
+                                        }
+                                    });
+                                    normalizeNode(elm);
+                                }
+                                break;
+                            case Node.TEXT_NODE:
+                                if (editor.options.cleanHTML.replaceNBSP && elm.nodeType === Node.TEXT_NODE && elm.nodeValue !== null && elm.nodeValue.match(consts.SPACE_REG_EXP)) {
+                                    elm.nodeValue = elm.nodeValue.replace(consts.SPACE_REG_EXP, ' ');
+                                }
+                                break;
+                            default:
+                                elm.parentNode && elm.parentNode.removeChild(elm);
+                        }
+                    };
+
+                    if (!sel.isCollapsed()) {
+                        editor.selection.eachSelection((current: Node): false | void => {
+                            clean(current);
+                        });
+                    } else {
+                        while (node && node.nodeType !== Node.ELEMENT_NODE && node !== editor.editor) {
+                            clean(node);
+                            if (node) {
+                                node = node.parentNode;
+                            }
+                        }
+                    }
+
+                break;
+            }
+        });
 }

@@ -1,5 +1,4 @@
 import {Jodit} from "../Jodit";
-import {ControlType} from "../modules/ToolbarCollection";
 import {Config} from "../Config";
 import {Component} from "../modules/Component";
 import {asArray} from "../modules/Helpers";
@@ -25,6 +24,7 @@ Config.prototype.commandToHotkeys = {
     removeFormat: 'ctrl+shift+m',
     insertOrderedList: 'ctrl+shift+7',
     insertUnorderedList: 'ctrl+shift+8',
+    selectall: 'ctrl+a',
 };
 
 /**
@@ -212,6 +212,7 @@ export class hotkeys extends Component{
                     .on('keyup', (event: KeyboardEvent) : void | false => {
                         if (itIsHotkey) {
                             itIsHotkey = false;
+                            editor.events.stopPropagation('keyup');
                             return false;
                         }
                     }, void(0), void(0), true);

@@ -929,11 +929,11 @@ export  const normalizeNode = (node: Node | null) => {
     }
 
     if (node.nodeType === Node.TEXT_NODE && node.nodeValue !== null && node.parentNode) {
-        while (node.nextSibling && node.nextSibling.nodeType == 3) {
+        while (node.nextSibling && node.nextSibling.nodeType === Node.TEXT_NODE) {
             if (node.nextSibling.nodeValue !== null) {
                 node.nodeValue += node.nextSibling.nodeValue;
             }
-
+            node.nodeValue = node.nodeValue.replace(consts.INVISIBLE_SPACE_REG_EXP, '');
             node.parentNode.removeChild(node.nextSibling);
         }
     } else {
