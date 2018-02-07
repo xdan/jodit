@@ -5,7 +5,7 @@
  */
 
 import * as consts from '../constants';
-import {each, trim} from './Helpers'
+import {css, each, trim} from './Helpers'
 import {Jodit} from "../Jodit";
 
 export class Dom {
@@ -210,6 +210,9 @@ export class Dom {
         return (!!node && typeof node.nodeName === 'string' && consts.IS_BLOCK.test(node.nodeName));
     }
 
+    static isInlineBlock(node: Node | null): boolean {
+        return !!node && node.nodeType === Node.ELEMENT_NODE && ['inline', 'inline-block'].indexOf(css(<HTMLElement>node, 'display').toString()) !== -1;
+    }
     /**
      * It's block and it can be split
      *

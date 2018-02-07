@@ -273,7 +273,7 @@ describe('Test plugins', function () {
 
                 editor.selection.insertHTML('stop');
 
-                expect('<p>stop</p><p><img src="https://xdsoft.net/jodit/images/artio.jpg" style="width: 100px; height: 100px;" alt=""></p>').to.be.equal(editor.getEditorValue());
+                expect('<p>stop</p><p><img alt="" src="https://xdsoft.net/jodit/images/artio.jpg" style="height:100px;width:100px"></p>').to.be.equal(sortAtrtibutes(editor.getEditorValue()));
             });
         });
     });

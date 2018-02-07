@@ -24,7 +24,30 @@ describe('Enter behavior Jodit Editor Tests', function() {
                 '</tbody></table>').to.be.equal(editor.getEditorValue());
             });
         });
+        describe('inside some inline element', function () {
+            describe('in the start', function () {
+                it('Should move cursor befoer this element and delete char', function () {
+                    var editor = new Jodit(appendTestArea())
+                    editor.setEditorValue('te<strong>stop</strong>st');
 
+                    var sel = editor.editorWindow.getSelection(),
+                        range = editor.editorDocument.createRange();
+
+                    range.selectNodeContents(editor.editor.querySelector('strong'));
+                    range.collapse(true);
+                    sel.removeAllRanges();
+                    sel.addRange(range);
+
+                    simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+
+                    expect('t<strong>stop</strong>st').to.be.equal(editor.getEditorValue());
+
+
+                    editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
+                    expect('t a <strong>stop</strong>st').to.be.equal(editor.getEditorValue());
+                })
+            });
+        });
         describe('inside empty P', function () {
             it('Should remove empty tag and set cursor in previous element', function () {
                 var editor = new Jodit(appendTestArea())
@@ -87,7 +110,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
                         var sel = editor.editorWindow.getSelection(),
                             range = editor.editorDocument.createRange();
 
-                        range.setStart(editor.editor.lastChild, 0);
+                        range.setStartAfter(editor.editor.querySelector('span'));
                         range.collapse(true);
                         sel.removeAllRanges();
                         sel.addRange(range);
