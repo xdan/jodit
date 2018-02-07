@@ -1165,6 +1165,7 @@ describe('Test interface', function() {
     });
     describe('ReadOnly', function () {
         describe('Set readonly mode in options', function () {
+
             describe('For iframe', function () {
                 it('Should deny edit content in iframe\'s body', function () {
                     var editor = new Jodit('#table_editor_interface', {

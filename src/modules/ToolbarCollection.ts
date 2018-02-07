@@ -544,7 +544,7 @@ export  class ToolbarButton extends ToolbarElement {
                 this.jodit.setEditorValue();
 
                 if (this.parentToolbar) {
-                    this.parentToolbar.checkActiveButtons();
+                    this.parentToolbar.immedateCheckActiveButtons();
                 }
 
                 this.jodit.events.fire('closeAllPopups hidePopup');
@@ -696,7 +696,7 @@ export class ToolbarCollection extends ToolbarElement {
             container.appendChild(this.container);
         }
 
-        this.checkActiveButtons();
+        this.immedateCheckActiveButtons();
     }
 
     clear() {
@@ -709,7 +709,7 @@ export class ToolbarCollection extends ToolbarElement {
         this.__buttons.length = 0;
     }
 
-    checkActiveButtons = debounce(() => {
+    immedateCheckActiveButtons = () => {
         (<ToolbarButton[]>this.__buttons.filter((button: ToolbarElement) => button instanceof ToolbarButton))
             .forEach((button: ToolbarButton) => {
                 button.disable = button.isDisable();
@@ -726,7 +726,9 @@ export class ToolbarCollection extends ToolbarElement {
 
         this.jodit.events
             .fire('updateToolbar');
-    }, this.jodit.options.observer.timeout, true);
+    };
+
+    checkActiveButtons = debounce(this.immedateCheckActiveButtons, this.jodit.options.observer.timeout, true);
 
     private closeAll = () => {
         this.jodit.events.fire('closeAllPopups');
