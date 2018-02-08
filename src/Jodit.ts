@@ -767,9 +767,9 @@ export class Jodit extends Component {
      * @fired beforeSetMode
      * @fired afterSetMode
      */
-    setMode(mode: number) {
+    setMode(mode: number | string) {
         const data = {
-                mode
+                mode: parseInt(mode.toString(), 10)
             },
             modeClasses = ['jodit_wysiwyg_mode', 'jodit_source_mode', 'jodit_split_mode'];
 
