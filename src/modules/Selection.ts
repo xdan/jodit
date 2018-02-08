@@ -95,7 +95,9 @@ export class Select extends Component{
         marker.appendChild(this.jodit.editorDocument.createTextNode(consts.INVISIBLE_SPACE));
 
         if (newRange) {
-            newRange.insertNode(marker);
+            if (Dom.isOrContains(this.jodit.editor, atStart ? newRange.startContainer : newRange.endContainer)) {
+                newRange.insertNode(marker);
+            }
         }
 
         return marker;

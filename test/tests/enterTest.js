@@ -452,6 +452,19 @@ describe('Enter behavior Jodit Editor Tests', function() {
         });
     });
     describe('Enter key', function () {
+        describe('Enter BR', function () {
+            it('Should simple insert BR element', function () {
+                var editor = new Jodit(appendTestArea(), {
+                    enter: 'BR'
+                });
+                editor.value = 'test';
+                editor.selection.setCursorAfter(editor.editor.firstChild)
+                simulateEvent('keydown', Jodit.KEY_ENTER,  editor.editor);
+                expect(editor.value).to.be.equal('test<br>');
+                editor.selection.insertHTML('stop');
+                expect(editor.value).to.be.equal('test<br>stop');
+            });
+        });
         it('If Enter was pressed in not wrapped text in the end, it text should be wrap in paragraph and cursor should be in next new paragraph', function () {
             var editor = new Jodit(appendTestArea())
             editor.setEditorValue('Some text');

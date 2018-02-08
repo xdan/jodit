@@ -19,7 +19,7 @@ import {Dom} from "../modules/Dom";
  */
 export const insertParagraph = (editor: Jodit, fake ?: Node, wrapperTag ?: string): HTMLElement => {
     if (!wrapperTag) {
-        wrapperTag = editor.options.enter;
+        wrapperTag = editor.options.enter.toLowerCase();
     }
 
     const p: HTMLElement = editor.editorDocument.createElement(wrapperTag),
@@ -97,7 +97,7 @@ export function enter(editor: Jodit) {
 
 
             // if use <br> tag for break line or when was entered SHIFt key or in <td> or <th> or <blockquote>
-            if (editor.options.enter === consts.BR || event.shiftKey || Dom.closest(current, 'PRE|BLOCKQUOTE', editor.editor)) {
+            if (editor.options.enter.toLowerCase() === consts.BR.toLowerCase() || event.shiftKey || Dom.closest(current, 'PRE|BLOCKQUOTE', editor.editor)) {
                 const br: HTMLBRElement = <HTMLBRElement>Dom.create('br', undefined, editor.editorDocument);
                 editor.selection.insertNode(br);
                 scrollIntoView(br, editor.editor);
