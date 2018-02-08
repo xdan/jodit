@@ -189,9 +189,102 @@ describe('Selection Module Tests', function() {
             expect('<p></p><p>test</p><p></p>').to.be.equal(editor.value);
         });
     });
+    describe('Method setCursorIn', function () {
+        describe('Call for not Node element', function () {
+            it('Should throw exception', function () {
+                var editor = new Jodit(appendTestArea());
+                editor.value = '<p>1</p><p>2</p>'
+                expect(function () {
+                    editor.selection.setCursorIn(editor.editor.querySelector('strong'));
+                }).to.throw();
+            });
+        });
+        describe('Call for element what is not inside the current editor', function () {
+            it('Should throw exception', function () {
+                var editor = new Jodit(appendTestArea());
+                editor.value = '<p>1</p><p>2</p>'
+                expect(function () {
+                    editor.selection.setCursorIn(document.body);
+                }).to.throw();
+            });
+        });
+        it('Should move cursor inside node in the end', function () {
+            var editor = new Jodit(appendTestArea());
+            editor.value = '<p>1</p><p>2</p>'
+
+            editor.selection.setCursorIn(editor.editor.lastChild);
+            editor.selection.insertHTML('test');
+
+            expect(editor.value).to.be.equal('<p>1</p><p>2test</p>');
+        });
+        describe('With inStart = true', function () {
+            it('Should move cursor inside node in the start', function () {
+                var editor = new Jodit(appendTestArea());
+                editor.value = '<p>1</p><p>2</p>'
+
+                editor.selection.setCursorIn(editor.editor.lastChild, true);
+                editor.selection.insertHTML('test');
+
+                expect(editor.value).to.be.equal('<p>1</p><p>test2</p>');
+            });
+        });
+    });
     describe('Method eachSelection', function () {
         it('Should call callback for each node in selection', function () {
+            var editor = new Jodit(appendTestArea());
+            editor.value = '<p>1</p><p>2</p><strong><span>22</span></strong><p>4</p>stop'
+            var range = editor.editorDocument.createRange();
+            range.setStartBefore(editor.editor.firstChild);
+            range.setEndAfter(editor.editor.lastChild);
+            editor.selection.selectRange(range);
 
+            var nodesNames = [];
+            editor.selection.eachSelection((node) => {
+                nodesNames.push(node.nodeName);
+            });
+
+            expect(['P', 'P', 'STRONG', 'P', '#text'].toString().toLowerCase()).to.be.equal(nodesNames.toString().toLowerCase());
+        });
+        it('Should call callback for each node in selection range', function () {
+            var editor = new Jodit(appendTestArea());
+            editor.value = '<p>1</p><p>2</p><strong><span>22</span></strong><p>4</p>stop'
+            var range = editor.editorDocument.createRange();
+            range.setStartBefore(editor.editor.firstChild.nextSibling);
+            range.setEndAfter(editor.editor.lastChild.previousSibling);
+            editor.selection.selectRange(range);
+
+            var nodesNames = [];
+            editor.selection.eachSelection((node) => {
+                nodesNames.push(node.nodeName);
+            });
+
+            expect(['p','strong','p'].toString().toLowerCase()).to.be.equal(nodesNames.toString().toLowerCase());
+        });
+        it('Should not call callback for editor', function () {
+            var editor = new Jodit(appendTestArea());
+            editor.value = '';
+
+            editor.selection.setCursorIn(editor.editor);
+
+            var nodesNames = [];
+            editor.selection.eachSelection((node) => {
+                nodesNames.push(node.nodeName);
+            });
+
+            expect([].toString().toLowerCase()).to.be.equal(nodesNames.toString().toLowerCase());
+        });
+        it('Should call callback for current node if selection is collapsed', function () {
+            var editor = new Jodit(appendTestArea());
+            editor.value = '<p>1</p><p>2</p>';
+
+            editor.selection.setCursorIn(editor.editor.firstChild);
+
+            var nodesNames = [];
+            editor.selection.eachSelection((node) => {
+                nodesNames.push(node.nodeName);
+            });
+
+            expect(['#text'].toString().toLowerCase()).to.be.equal(nodesNames.toString().toLowerCase());
         });
     });
     after(function() {
