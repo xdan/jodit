@@ -202,7 +202,6 @@ describe('Selection Module Tests', function() {
         describe('Call for element what is not inside the current editor', function () {
             it('Should throw exception', function () {
                 var editor = new Jodit(appendTestArea());
-                editor.value = '<p>1</p><p>2</p>'
                 expect(function () {
                     editor.selection.setCursorIn(document.body);
                 }).to.throw();
