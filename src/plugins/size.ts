@@ -55,6 +55,12 @@ export function size(editor: Jodit) {
             });
     }
 
+    const resizeWorkspace = () => {
+        css(editor.workplace, {
+            height: editor.container.offsetHeight - editor.toolbar.container.offsetHeight
+        });
+    };
+
     editor.events
         .on('afterInit', () => {
             css(editor.editor, {
@@ -78,6 +84,7 @@ export function size(editor: Jodit) {
                 css(editor.container, {
                     height: editor.options.height,
                 });
+                resizeWorkspace();
             }
             if (editor.options.width !== 'auto') {
                 css(editor.workplace, {
@@ -88,4 +95,10 @@ export function size(editor: Jodit) {
                 });
             }
         }, undefined, undefined,true);
+
+    if (editor.options.height !== 'auto') {
+        editor.events
+            .on(window, 'load', resizeWorkspace)
+            .on('afterInit resize updateToolbar scroll', resizeWorkspace)
+    }
 }

@@ -5,7 +5,13 @@
  */
 
 @resizer-size: 7px;
-
+.jodit_container {
+  min-height: 100px;
+  .jodit_workplace {
+    height: ~'calc(100% - 33px)';
+    min-height: 50px;
+  }
+}
 .jodit_editor_resize {
   position: relative;
   a{
