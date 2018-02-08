@@ -341,7 +341,7 @@ describe('Test plugins', function () {
                                 e.clientY = pos.top + pos.height - 150;
                             });
 
-                            expect(Math.abs(cropper.offsetWidth / cropper.offsetHeight - oldRatio) < 0.005).to.be.equal(true);
+                            expect(Math.abs(cropper.offsetWidth / cropper.offsetHeight - oldRatio) < 0.02).to.be.equal(true);
 
                             done();
                         });

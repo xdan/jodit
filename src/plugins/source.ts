@@ -128,7 +128,7 @@ export class source extends Component {
     private fromWYSIWYG = (force: boolean = false) => {
         if (!this.__lock || force === true) {
             this.__lock = true;
-            const new_value = this.jodit.getEditorValue();
+            const new_value = this.jodit.getEditorValue(false);
             if (new_value !== this.getMirrorValue()) {
                 this.setMirrorValue(new_value);
             }

@@ -428,9 +428,23 @@ export class Jodit extends Component {
     }
 
     /**
+     * Return real HTML value from WYSIWYG editor.
+     *
+     * @return {string}
+     */
+    getNativeEditorValue(): string {
+        if (this.editor) {
+            return this.editor.innerHTML
+                .replace(consts.INVISIBLE_SPACE_REG_EXP, '') ;
+        }
+
+        return this.getElementValue();
+    }
+
+    /**
      * Return editor value
      */
-    getEditorValue(): string {
+    getEditorValue(removeSelectionMarkers: boolean = true): string {
         /**
          * Triggered before {@link Jodit~getEditorValue|getEditorValue} executed. If returned not undefined getEditorValue will return this value
          *
@@ -446,17 +460,17 @@ export class Jodit extends Component {
         let value: string;
 
         value = this.events.fire('beforeGetValueFromEditor');
+
         if (value !== undefined) {
             return value;
         }
 
-        if (this.editor) {
-            value =  this.editor.innerHTML
-                .replace(consts.INVISIBLE_SPACE_REG_EXP, '') ;
-        } else {
-            value = this.getElementValue();
-        }
+        value = this.getNativeEditorValue();
 
+        if (removeSelectionMarkers) {
+            value = value
+                .replace(/<span[^>]+id="jodit_selection_marker_[^>]+><\/span>/g, '');
+        }
 
         if (value === '<br>') {
             value = '';
@@ -528,11 +542,11 @@ export class Jodit extends Component {
         }
 
         const old_value: string = this.getElementValue(),
-            new_value: string = this.getEditorValue();
+            new_value: string = this.getEditorValue(); // value may be not equal new_value becouse of afterGetValueFromEditor events
 
         if (old_value !== new_value) {
             this.setElementValue(new_value);
-            this.events.fire('change', old_value, new_value);
+            this.events.fire('change', new_value, old_value);
         }
     }
 
@@ -729,6 +743,9 @@ export class Jodit extends Component {
     mode: number = consts.MODE_WYSIWYG;
     getMode(): number {
         return this.mode;
+    }
+    isEditorMode(): boolean {
+        return this.getRealMode() === consts.MODE_WYSIWYG;
     }
 
     /**

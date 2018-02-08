@@ -425,6 +425,18 @@ describe('Jodit Editor Tests', function() {
                 expect(editor.getEditorValue()).to.be.equal(editor.getElementValue());
             });
         });
+        describe('Save selection stuf', function () {
+            describe('Set false in getEditorValue method', function () {
+                it('Should return HTML with selections markers', function () {
+                    var editor = new Jodit(appendTestArea());
+                    editor.value = 'test';
+                    editor.selection.setCursorAfter(editor.editor.firstChild);
+                    editor.selection.save(); // add selection markers
+                    expect(/<span[^>]+id="jodit_selection_marker_[^>]+><\/span>/.test(editor.getEditorValue(false))).to.be.true;
+                    expect(/<span[^>]+id="jodit_selection_marker_[^>]+><\/span>/.test(editor.getEditorValue(true))).to.be.false;
+                });
+            });
+        });
 
     });
     describe('Selection module', function () {

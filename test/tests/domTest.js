@@ -29,6 +29,25 @@ describe('Check Dom module', function() {
         });
     });
 
+    describe('Method isInlineBlock', function () {
+        it('Should return true then it gets inline or inline-block element', function () {
+            var box = document.createElement('div');
+            box.innerHTML = '<p>' +
+                    '<span>test</span>' +
+                    '<strong>test</strong>' +
+                    '<span style="display: block">test</span>' +
+                '</p>'
+            document.body.appendChild(box);
+
+            expect(true).to.equal(Jodit.modules.Dom.isInlineBlock(box.firstChild.childNodes[0]));
+            expect(true).to.equal(Jodit.modules.Dom.isInlineBlock(box.firstChild.childNodes[1]));
+            expect(false).to.equal(Jodit.modules.Dom.isInlineBlock(box.firstChild.childNodes[2]));
+            expect(false).to.equal(Jodit.modules.Dom.isInlineBlock(box.firstChild));
+
+            document.body.removeChild(box);
+        });
+    });
+
     describe('Method isEmpty', function () {
         it('Should return true then element is empty', function () {
             expect(true).to.equal(Jodit.modules.Dom.isEmpty(document.createElement('div')));

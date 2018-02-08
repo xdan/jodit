@@ -180,6 +180,20 @@ describe('Selection Module Tests', function() {
         });
 
     });
+    describe('Click on empty tag', function () {
+        it('Should move cursore inside that', function () {
+            var editor = new Jodit(appendTestArea());
+            editor.value = '<p></p><p></p><p></p>'
+            simulateEvent('mousedown', 0, editor.editor.getElementsByTagName('p')[1])
+            editor.selection.insertHTML('test');
+            expect('<p></p><p>test</p><p></p>').to.be.equal(editor.value);
+        });
+    });
+    describe('Method eachSelection', function () {
+        it('Should call callback for each node in selection', function () {
+
+        });
+    });
     after(function() {
         selection_tested_area.parentNode.removeChild(selection_tested_area);
     });

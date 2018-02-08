@@ -31,4 +31,36 @@ describe('CodeMirror editor source code', function() {
             });
         }).timeout(6000);
     });
+    describe('Change mode', function() {
+        describe('In WYSIWYG mode isEditorMode', function() {
+            it('Should return true', function() {
+                var editor = new Jodit(appendTestArea());
+                expect(editor.isEditorMode()).to.be.true;
+                editor.toggleMode();
+                expect(editor.isEditorMode()).to.be.false;
+            });
+        });
+        it('Should not fire Change event', function() {
+            var editor = new Jodit(appendTestArea());
+            var defaultValue = 'test';
+            var count = 0;
+
+            editor.value = defaultValue;
+
+            editor.events.on('change', function (value, oldvalue) {
+                expect(oldvalue).to.be.not.equal(value);
+                expect(defaultValue).to.be.not.equal(value);
+                count++;
+            });
+
+
+            editor.selection.setCursorAfter(editor.editor.firstChild);
+            editor.setMode(Jodit.MODE_SOURCE);
+            editor.setMode(Jodit.MODE_WYSIWYG);
+            editor.value = defaultValue;
+            editor.value = 'another';
+
+            expect(1).to.be.equal(count);
+        })
+    })
 });

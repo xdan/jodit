@@ -6,6 +6,7 @@
 
 import {Jodit} from '../Jodit';
 import {Config} from '../Config';
+import {Dom} from "../modules/Dom";
 
 declare module "../Config" {
     interface Config {
@@ -33,6 +34,11 @@ export function autofocus(editor: Jodit) {
                 } else {
                     editor.selection.focus();
                 }
+            }
+        })
+        .on('mousedown', (e: MouseEvent) => {
+            if (editor.isEditorMode() && e.target && Dom.isBlock(<Node>e.target) && !(<HTMLElement>e.target).childNodes.length) {
+                editor.selection.setCursorIn(<HTMLElement>e.target);
             }
         })
         .on('beforeDestruct', () => {
