@@ -413,6 +413,20 @@ describe('Test interface', function() {
         });
         describe('Buttons', function () {
             describe('Text mode', function () {
+                it('Should work i18n', function () {
+                    var editor = new Jodit(appendTestArea(), {
+                        textIcons: true,
+                        "language": "ru"
+                    });
+                    var editor2 = new Jodit(appendTestArea(), {
+                        textIcons: true,
+                        "language": "en"
+                    });
+
+                    var label1 = editor.container.querySelector('.jodit_toolbar_btn-source').innerText;
+                    var label2 = editor2.container.querySelector('.jodit_toolbar_btn-source').innerText;
+                    expect(label1).to.be.not.equal(label2);
+                });
                 it('Should create buttons with text', function () {
                     var editor = new Jodit('#table_editor_interface', {
                         textIcons: true
