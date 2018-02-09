@@ -33,6 +33,8 @@ export namespace Widget {
     export const ColorPickerWidget = (editor: Jodit, callback: (newColor: string) => void, coldColor: string): HTMLDivElement => {
         const valueHex = normalizeColor(coldColor),
             form: HTMLDivElement = <HTMLDivElement>dom('<div class="jodit_colorpicker"></div>', editor.ownerDocument),
+            iconEye: string = editor.options.textIcons ? '' : Jodit.modules.ToolbarIcon.getIcon('eye'),
+            iconEraser: string = editor.options.textIcons ? `<span>${editor.i18n('eraser')}</span>` : Jodit.modules.ToolbarIcon.getIcon('eraser'),
             eachColor = (colors: string[] | {[key: string]: string[]}) => {
                 const stack: string[] = [];
                 if (isPlainObject(colors)) {
@@ -44,7 +46,7 @@ export namespace Widget {
                 } else if (Array.isArray(colors)) {
                     colors.forEach((color) => {
                         stack.push('<a ' + (valueHex === color ? ' class="active" ' : '') + ' title="' + color + '" style="background-color:' + color + '" data-color="' + color + '" href="javascript:void(0)">' +
-                            (valueHex === color ? Jodit.modules.ToolbarIcon.getIcon('eye') : '') +
+                            (valueHex === color ? iconEye : '') +
                             '</a>');
                     })
                 }
@@ -55,7 +57,7 @@ export namespace Widget {
         form
             .appendChild(dom('<div>' + eachColor(editor.options.colors) + '</div>', editor.ownerDocument));
 
-        form.appendChild(dom('<a data-color="" href="javascript:void(0)">' + Jodit.modules.ToolbarIcon.getIcon('eraser') + '</a>', editor.ownerDocument));
+        form.appendChild(dom('<a ' + (editor.options.textIcons ? 'class="jodit_text_icon"' : '') + ' data-color="" href="javascript:void(0)">' + iconEraser + '</a>', editor.ownerDocument));
 
         editor.events
             .on(form, 'mousedown touchstart', (e: MouseEvent) => {
@@ -269,13 +271,14 @@ export namespace Widget {
             }, (error: Error) => {
                 editor.events.fire('errorMessage', error.message);
             });
-
-            tabs[Jodit.modules.ToolbarIcon.getIcon('upload') + editor.i18n('Upload')] = dragbox;
+            const icon = editor.options.textIcons ? '' : Jodit.modules.ToolbarIcon.getIcon('upload');
+            tabs[icon + editor.i18n('Upload')] = dragbox;
         }
 
         if (callbacks.filebrowser) {
             if (editor.options.filebrowser.ajax.url || editor.options.filebrowser.items.url) {
-                tabs[Jodit.modules.ToolbarIcon.getIcon('folder') + editor.i18n('Browse')] = function () {
+                const icon = editor.options.textIcons ? '' : Jodit.modules.ToolbarIcon.getIcon('folder');
+                tabs[icon + editor.i18n('Browse')] = function () {
                     close && close();
                     if (callbacks.filebrowser) {
                         (<FileBrowser>editor.getInstance('FileBrowser')).open(callbacks.filebrowser);
@@ -319,7 +322,8 @@ export namespace Widget {
                 return false;
             }, false);
 
-            tabs[Jodit.modules.ToolbarIcon.getIcon('link') + ' URL'] = form;
+            const icon = editor.options.textIcons ? '' : Jodit.modules.ToolbarIcon.getIcon('link');
+            tabs[icon + ' URL'] = form;
 
         }
 

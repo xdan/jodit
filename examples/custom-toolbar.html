@@ -4,12 +4,12 @@
  * License https://xdsoft.net/jodit/license.html
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
 -->
-<html dir="rtl">
+<html>
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <title>Jodit Example Arabic and RTL</title>
+    <title>Jodit Example</title>
 </head>
 <body>
 <header>
@@ -36,9 +36,11 @@
         </pre>
         <h3>JavaScript</h3>
         <pre>
-            var editor = new Jodit('#editor', {
-                direction: 'rtl',
-                language: 'ar'
+           var editor = new Jodit('#editor', {
+                buttons: 'source,about,print,bold',
+                buttonsMD: 'source,about,print',
+                buttonsSM:  'source,about',
+                buttonsXS: 'source'
             });
         </pre>
     </div>
@@ -67,8 +69,10 @@
 <script src="app.js"></script>
 <script>
     var editor = new Jodit('#area_editor', {
-        direction: 'rtl',
-        language: 'ar'
+        buttons: 'source,about,print,bold',
+        buttonsMD: 'source,about,print',
+        buttonsSM:  'source,about',
+        buttonsXS: 'source'
     });
 </script>
 </html>

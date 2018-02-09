@@ -474,7 +474,7 @@ export  class ToolbarButton extends ToolbarElement {
                 }
             }
         } else {
-            this.textBox.innerHTML = control.name;
+            this.textBox.innerHTML = `<span class="jodit_icon">${control.name}</span>`;
         }
     }
 

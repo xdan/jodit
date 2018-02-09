@@ -20,9 +20,14 @@
         height: @color-cell-size;
         line-height:@color-cell-size - 2;
         display:inline-block;
+        text-decoration: none;
         vertical-align: middle;
         text-align:center;
-
+        &.jodit_text_icon {
+            width: auto;
+            text-decoration: none;
+            color: @color-default;
+        }
         &:before {
             content: '';
             display: inline-block;

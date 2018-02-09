@@ -426,7 +426,7 @@ export class Config {
      *  });
      *  ```
      */
-    buttons: Array<string|ControlType> = [
+    buttons: Array<string|ControlType> | string = [
         'source', '|',
         'bold',
         'strikethrough',
@@ -456,7 +456,7 @@ export class Config {
     /**
      * The list of buttons that appear in the editor's toolbar on medium places (≥ options.sizeMD).
      */
-    buttonsMD: Array<string|ControlType> = [
+    buttonsMD: Array<string|ControlType> | string = [
         'source', '|',
         'bold',
         'italic', '|',
@@ -481,7 +481,7 @@ export class Config {
     /**
      * The list of buttons that appear in the editor's toolbar on small places (≥ options.sizeSM).
      */
-    buttonsSM: Array<string|ControlType> = [
+    buttonsSM: Array<string|ControlType> | string = [
         'source', '|',
         'bold',
         'italic', '|',
@@ -504,7 +504,7 @@ export class Config {
     /**
      * The list of buttons that appear in the editor's toolbar on extra small places (< options.sizeSM).
      */
-    buttonsXS: Array<string|ControlType> = [
+    buttonsXS: Array<string|ControlType> | string = [
         'bold',
         'image', '|',
         'brush',
@@ -656,8 +656,13 @@ Config.prototype.controls = {
                     editor.selection.insertHTML(code);
                 };
 
-            tab[ToolbarIcon.getIcon('link') + '&nbsp;' + editor.i18n('Link')] = bylink;
-            tab[ToolbarIcon.getIcon('source') + '&nbsp;' + editor.i18n('Code')] = bycode;
+            if (editor.options.textIcons) {
+                tab[editor.i18n('Link')] = bylink;
+                tab[editor.i18n('Code')] = bycode;
+            } else {
+                tab[ToolbarIcon.getIcon('link') + '&nbsp;' + editor.i18n('Link')] = bylink;
+                tab[ToolbarIcon.getIcon('source') + '&nbsp;' + editor.i18n('Code')] = bycode;
+            }
 
             bycode.addEventListener('submit', (event) => {
                 event.preventDefault();

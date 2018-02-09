@@ -5,7 +5,9 @@
  */
 
 .jodit_container {
-   background: #fff;
+   background: @color-background-default;
+   font-size: @font-size-default;
+   font-family: @font-default;
    &, * {
     box-sizing: border-box;
    }
@@ -13,8 +15,6 @@
     border: 1px solid @color-border;
     position: relative;
     overflow: auto;
-    //width: 100%;
-    //display: table;
 
     .jodit_wysiwyg,
     .jodit_wysiwyg_iframe {

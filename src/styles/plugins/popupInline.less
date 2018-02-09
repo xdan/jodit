@@ -7,18 +7,18 @@
 .jodit_toolbar_popup-inline {
     position: absolute;
     display: none;
-    color: @color-background-default;
+    color: @color-background-gray;
     background: @popap-bg-color;
     box-shadow: none;
     background-clip: padding-box;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: @font-default;
     box-sizing: border-box;
     user-select: none;
     margin-top: 10px;
     z-index: @z-index-popap !important;
     text-align: left;
     border: 0px;
-    border: 1px solid @color-background-default;
+    border: 1px solid @color-background-gray;
     &.active {
         display:block;
     }
@@ -34,7 +34,7 @@
         display: inline-block;
         transform: rotate(45deg);
         background:  @popap-bg-color;
-        border: 1px solid @color-background-default;
+        border: 1px solid @color-background-gray;
         border-width: 1px 0 0 1px;
         z-index: 6;
     }

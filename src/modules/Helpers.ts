@@ -776,6 +776,10 @@ export const asArray = (a: any): Array<any> => (
     Array.isArray(a) ? a : [a]
 );
 
+export const splitArray = (a: Array<any> | string): Array<any> => (
+    Array.isArray(a) ? a : a.split(/[,\s]+/)
+);
+
 export const sprintf = (...args: Array<string|number>): string => {
     const regex: RegExp = /%%|%(\d+\$)?([-+#0 ]*)(\*\d+\$|\*|\d+)?(\.(\*\d+\$|\*|\d+))?([scboxXuidfegEG])/g;
     let a: Array<string|number> = args,

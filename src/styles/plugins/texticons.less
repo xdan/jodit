@@ -4,21 +4,18 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-@jodit_text_icons-font: Arial, "Helvetica Neue", Helvetica, Tahoma, sans-serif;
-@jodit_text_icons-color: rgba(0, 0, 0, 0.75);
-@jodit_text_icons-padding: 0 12px;
 
 .jodit_text_icons {
     .jodit_icon {
         width: auto;
-        font-size:13px;
+        font-size: @font-size-default;
         &::first-letter {
             text-transform: uppercase;
         }
     }
     .jodit_tabs .jodit_tabs_buttons > a {
         width: auto;
-        font-family: @jodit_text_icons-font;
+        font-family: @font-default;
         width: auto;
         i {
             width: auto;
@@ -27,19 +24,19 @@
     .jodit_toolbar > li{
         width: auto;
         > a {
-            padding: @jodit_text_icons-padding;
-            font-family: @jodit_text_icons-font;
+            padding: @padding-text-icons;
+            font-family: @font-default;
             width: auto;
             text-decoration: none;
-            color: @jodit_text_icons-color;
+            color: @color-text-icons;
         }
     }
     &.jodit_dialog_box .jodit_dialog {
         .jodit_dialog_header a, .jodit_button {
             width: auto;
-            padding: @jodit_text_icons-padding;
-            font-family: @jodit_text_icons-font;
-            color: @jodit_text_icons-color;
+            padding: @padding-text-icons;
+            font-family: @font-default;
+            color: @color-text-icons;
             .jodit_icon {
                 width: auto;
             }

@@ -420,6 +420,69 @@ describe('Test interface', function() {
                     expect(editor.container.querySelectorAll('.jodit_toolbar_btn-source').length).to.be.equal(1);
                     expect(editor.container.querySelectorAll('.jodit_toolbar_btn-source svg').length).to.be.equal(0);
                 });
+                it('Should add jodit_text_icons class to editor\'s container', function () {
+                    var editor = new Jodit('#table_editor_interface', {
+                        textIcons: true
+                    });
+                    expect(editor.container.classList.contains('jodit_text_icons')).to.be.true;
+                });
+                it('Should set font-size more them 0', function () {
+                    var editor = new Jodit('#table_editor_interface', {
+                        textIcons: true
+                    });
+                    expect(parseInt(editor.ownerWindow.getComputedStyle(editor.container.querySelector('.jodit_toolbar_btn-source .jodit_icon')).fontSize, 10)).to.be.above(10);
+                });
+                describe('In tabs', function () {
+                    it('Should be also only text', function () {
+                        var editor = new Jodit('#table_editor_interface', {
+                            textIcons: true
+                        });
+
+                        expect(editor.container.querySelector('.jodit_toolbar_btn-image')).to.be.not.equal(null)
+
+                        simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-image'));
+
+                        var popup = editor.container.querySelector('.jodit_toolbar_btn-image .jodit_toolbar_popup.jodit_toolbar_popup-open');
+
+                        expect(popup).to.be.not.equal(null)
+
+                        expect(popup.querySelectorAll('svg, img').length).to.be.equal(0);
+                    });
+                });
+                describe('In brush popup', function () {
+                    it('Should be also only text', function () {
+                        var editor = new Jodit('#table_editor_interface', {
+                            textIcons: true
+                        });
+
+                        expect(editor.container.querySelector('.jodit_toolbar_btn-brush')).to.be.not.equal(null)
+
+                        simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-brush'));
+
+                        var popup = editor.container.querySelector('.jodit_toolbar_btn-brush .jodit_toolbar_popup.jodit_toolbar_popup-open');
+
+                        expect(popup).to.be.not.equal(null)
+
+                        expect(popup.querySelectorAll('svg, img').length).to.be.equal(0);
+                    });
+                });
+                describe('In video popup', function () {
+                    it('Should be also only text', function () {
+                        var editor = new Jodit('#table_editor_interface', {
+                            textIcons: true
+                        });
+
+                        expect(editor.container.querySelector('.jodit_toolbar_btn-video')).to.be.not.equal(null)
+
+                        simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-video'));
+
+                        var popup = editor.container.querySelector('.jodit_toolbar_btn-video .jodit_toolbar_popup.jodit_toolbar_popup-open');
+
+                        expect(popup).to.be.not.equal(null)
+
+                        expect(popup.querySelectorAll('svg, img').length).to.be.equal(0);
+                    });
+                });
             });
             it('Remove default buttons functionality', function() {
                 var editor = new Jodit('#table_editor_interface');
@@ -711,7 +774,7 @@ describe('Test interface', function() {
                                     timeout: 0
                                 }
                             });
-                            editor.setEditorValue('<p>test<span style="font-size: 14px">bold</span></p>')
+                            editor.setEditorValue('<p>test<span style="font-size: 16px">bold</span></p>')
 
                             var p = editor.editor.firstChild;
                             var font = editor.container.querySelector('.jodit_toolbar_btn-fontsize');
@@ -729,7 +792,7 @@ describe('Test interface', function() {
 
                             simulateEvent('mousedown', 0, font);
 
-                            var font16 = font.querySelector('.jodit_toolbar_btn-5');
+                            var font16 = font.querySelector('.jodit_toolbar_btn-6');
                             expect(true).to.equal(font16.classList.contains('jodit_active'));
                         });
                     });

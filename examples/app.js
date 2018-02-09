@@ -3,6 +3,7 @@ var main_container = document.getElementById('main_container');
 var links = {
     'index.html': 'All options',
     'arabic.lang.html': 'Arabic Language',
+    'custom-toolbar.html': 'Custom toolbar',
 };
 
 if (examples) {

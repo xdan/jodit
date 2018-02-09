@@ -12,7 +12,7 @@ import {Uploader} from './modules/Uploader';
 import {Dom} from './modules/Dom';
 import {EventsNative} from './modules/EventsNative';
 import * as consts from './constants';
-import {extend, inArray, dom, each, sprintf, defaultLanguage, debounce, asArray} from './modules/Helpers';
+import {extend, inArray, dom, each, sprintf, defaultLanguage, debounce, asArray, splitArray} from './modules/Helpers';
 import * as helper from './modules/Helpers';
 import {Config} from "./Config";
 import {ToolbarCollection} from "./modules/ToolbarCollection";
@@ -216,7 +216,7 @@ export class Jodit extends Component {
         this.toolbar = new ToolbarCollection(this);
 
         if (this.options.toolbar) {
-            this.toolbar.build(this.options.buttons.concat(this.options.extraButtons), this.container);
+            this.toolbar.build(splitArray(this.options.buttons).concat(this.options.extraButtons), this.container);
         }
 
         this.container.classList.add('jodit_toolbar_size-' + (['middle', 'large', 'small'].indexOf(this.options.toolbarButtonSize.toLowerCase()) !== -1 ? this.options.toolbarButtonSize.toLowerCase() : 'middle'));

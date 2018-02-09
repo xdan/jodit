@@ -58,6 +58,35 @@ describe('Test mobile mode', function () {
 
             expect(15).to.be.above(editor.container.querySelectorAll('.jodit_toolbar > li').length);
         });
+        describe('If buttons were setted like string', function () {
+            it('Should have different count buttons for different container sizes', function () {
+                getBox().style.width = '1000px';
+                var editor = new Jodit(appendTestArea(), {
+                    buttons: 'source,about,print,bold',
+                    buttonsMD: 'source,about,print',
+                    buttonsSM:  'source,about',
+                    buttonsXS: 'source'
+                });
+
+
+                expect(4).to.be.equal(editor.container.querySelectorAll('.jodit_toolbar > li').length);
+
+                getBox().style.width = '790px';
+                simulateEvent('resize', 0, window)
+
+                expect(3).to.be.equal(editor.container.querySelectorAll('.jodit_toolbar > li').length);
+
+                getBox().style.width = '690px';
+                simulateEvent('resize', 0, window)
+
+                expect(2).to.be.equal(editor.container.querySelectorAll('.jodit_toolbar > li').length);
+
+                getBox().style.width = '390px';
+                simulateEvent('resize', 0, window)
+
+                expect(1).to.be.equal(editor.container.querySelectorAll('.jodit_toolbar > li').length);
+            });
+        });
     });
 
 

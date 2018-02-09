@@ -9,6 +9,7 @@ import {Config} from '../Config'
 import {ControlType} from "../modules/ToolbarCollection";
 import {ToolbarCollection} from "../modules/ToolbarCollection";
 import * as consts from "../constants";
+import {splitArray} from "../modules/Helpers";
 
 declare module "../Config" {
     interface Config {
@@ -40,7 +41,7 @@ Config.prototype.controls.dots = <ControlType> {
                     const buttons: Array<string|ControlType> | undefined = editor.events.fire('getDiffButtons.mobile');
 
                     if (buttons && store) {
-                        store.toolbar.build(buttons, store.container);
+                        store.toolbar.build(splitArray(buttons), store.container);
                     }
                 }
             };
@@ -62,7 +63,7 @@ Config.prototype.controls.dots = <ControlType> {
 export function mobile(editor: Jodit) {
     let timeout: number = 0,
         now: number,
-        store: Array<string|ControlType> = editor.options.buttons;
+        store: Array<string|ControlType> = splitArray(editor.options.buttons);
 
     editor.events
         .on('touchend', (e: TouchEvent) => {
@@ -75,7 +76,7 @@ export function mobile(editor: Jodit) {
             }
         })
         .on('getDiffButtons.mobile', () => {
-            return editor.options.buttons.filter((i: string|ControlType) => {
+            return splitArray(editor.options.buttons).filter((i: string|ControlType) => {
                 return store.indexOf(i) < 0;
             });
         })
@@ -87,13 +88,13 @@ export function mobile(editor: Jodit) {
             let width: number = editor.container.offsetWidth;
 
             if (width >= editor.options.sizeLG) {
-                store = editor.options.buttons;
+                store = splitArray(editor.options.buttons);
             } else if (width >= editor.options.sizeMD) {
-                store = editor.options.buttonsMD;
+                store = splitArray(editor.options.buttonsMD);
             } else if (width >= editor.options.sizeSM) {
-                store = editor.options.buttonsSM;
+                store = splitArray(editor.options.buttonsSM);
             } else {
-                store = editor.options.buttonsXS;
+                store = splitArray(editor.options.buttonsXS);
             }
 
             editor.toolbar.build(store.concat(editor.options.extraButtons), editor.container);
