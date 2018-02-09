@@ -1,6 +1,14 @@
 describe('Test interface', function() {
     appendTestArea('table_editor_interface', true);
     describe('Toolbar', function () {
+        describe('Set toolbar options to false', function () {
+            it('Should hide toolbar', function () {
+                var editor = new Jodit(appendTestArea(), {
+                    toolbar: false
+                });
+                expect(null).to.be.equal(editor.container.querySelector('jodit_toolbar'));
+            });
+        });
         describe('Popups', function () {
             describe('Click on some link', function () {
                 describe('in the left side of editor', function () {

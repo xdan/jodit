@@ -80,6 +80,10 @@ export function mobile(editor: Jodit) {
             });
         })
         .on('resize afterInit', () => {
+            if (!editor.options.toolbar) {
+                return;
+            }
+
             let width: number = editor.container.offsetWidth;
 
             if (width >= editor.options.sizeLG) {

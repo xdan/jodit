@@ -214,7 +214,10 @@ export class Jodit extends Component {
 
 
         this.toolbar = new ToolbarCollection(this);
-        this.toolbar.build(this.options.buttons.concat(this.options.extraButtons), this.container);
+
+        if (this.options.toolbar) {
+            this.toolbar.build(this.options.buttons.concat(this.options.extraButtons), this.container);
+        }
 
         this.container.classList.add('jodit_toolbar_size-' + (['middle', 'large', 'small'].indexOf(this.options.toolbarButtonSize.toLowerCase()) !== -1 ? this.options.toolbarButtonSize.toLowerCase() : 'middle'));
 
