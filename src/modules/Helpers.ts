@@ -777,7 +777,7 @@ export const asArray = (a: any): Array<any> => (
 );
 
 export const splitArray = (a: Array<any> | string): Array<any> => (
-    Array.isArray(a) ? a : a.split(/[,\s]+/)
+    typeof a === 'string' ? a.split(/[,\s]+/) : a
 );
 
 export const sprintf = (...args: Array<string|number>): string => {
