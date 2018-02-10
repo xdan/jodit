@@ -26,7 +26,7 @@ export const insertParagraph = (editor: Jodit, fake ?: Node, wrapperTag ?: strin
         helper_node: Text = editor.editorDocument.createTextNode(consts.INVISIBLE_SPACE);
 
     p.appendChild(helper_node);
-    editor.selection.insertNode(p, false);
+    editor.selection.insertNode(p, false, false);
     editor.selection.setCursorIn(p);
 
     if (fake && fake.parentNode) {
@@ -34,6 +34,8 @@ export const insertParagraph = (editor: Jodit, fake ?: Node, wrapperTag ?: strin
     }
 
     scrollIntoView(p, editor.editor, editor.editorDocument);
+
+    editor.setEditorValue(); // fire change
 
     return p;
 };

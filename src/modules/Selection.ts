@@ -320,8 +320,9 @@ export class Select extends Component{
      *
      * @param {Node} node
      * @param {Boolean} [insertCursorAfter=true] After insert, cursor will move after element
+     * @param {Boolean} [fireChange=true] After insert, editor fire change event. You can prevent this behavior
      */
-    insertNode (node: Node, insertCursorAfter = true) {
+    insertNode (node: Node, insertCursorAfter = true, fireChange: boolean = true) {
         if (!(node instanceof (<any>this.jodit.editorWindow).Node)) {
             throw new Error('Parameter node most be instance of Node');
         }
@@ -367,7 +368,9 @@ export class Select extends Component{
             throw new Error('Jodit does\'n support this browser')
         }
 
-        this.jodit.setEditorValue();
+        if (fireChange) {
+            this.jodit.setEditorValue();
+        }
     }
 
 
@@ -782,6 +785,7 @@ export class Select extends Component{
 
         range.selectNodeContents(start || last);
         range.collapse(inStart);
+
         this.selectRange(range);
 
         return last;
