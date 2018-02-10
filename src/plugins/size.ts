@@ -52,6 +52,9 @@ export function size(editor: Jodit) {
             })
             .on('afterInit', () => {
                 editor.container.appendChild(handle);
+            })
+            .on('toggleFullsize', (fullsize: boolean) => {
+                handle.style.display = fullsize ? 'none' : 'block';
             });
     }
 

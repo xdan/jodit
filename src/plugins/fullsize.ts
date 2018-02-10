@@ -7,7 +7,7 @@
 import {Jodit} from '../Jodit';
 import {Config} from '../Config'
 import {css, dom} from "../modules/Helpers";
-import {ToolbarIcon} from "../modules/ToolbarCollection";
+import {ControlType, ToolbarButton, ToolbarIcon} from "../modules/ToolbarCollection";
 import * as consts from '../constants'
 
 /**
@@ -43,9 +43,16 @@ declare module "../Config" {
 
 Config.prototype.fullsize = false;
 Config.prototype.globalFullsize = true;
-Config.prototype.controls.fullsize = {
+Config.prototype.controls.fullsize = <ControlType>{
     exec: (editor: Jodit) => {
         editor.events.fire('toggleFullsize');
+    },
+    getLabel: (editor: Jodit, btn: ControlType, button: ToolbarButton) => {
+        const mode: string = editor.options.fullsize ? 'shrink' : 'fullsize';
+
+        button.textBox.innerHTML = !editor.options.textIcons ? ToolbarIcon.getIcon(mode) : `<span>${editor.i18n(mode)}</span>`;
+
+        (<HTMLElement>button.textBox.firstChild).classList.add('jodit_icon');
     },
     tooltip: 'Open editor in fullsize',
     mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG
@@ -88,14 +95,6 @@ export  function fullsize(editor: Jodit) {
 
             if (editor.toolbar) {
                 css(editor.toolbar.container, 'width', 'auto');
-                const icon: HTMLElement = dom(<string>ToolbarIcon.getIcon(condition ? 'shrink' : 'fullsize'), editor.ownerDocument),
-                    a: HTMLAnchorElement|null = editor.toolbar.container.querySelector('.jodit_toolbar_btn-fullsize a');
-
-                if (a) {
-                    icon.classList.add('jodit_icon');
-                    a.innerHTML = '';
-                    a.appendChild(icon);
-                }
             }
 
             if (editor.options.globalFullsize) {

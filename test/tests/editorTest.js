@@ -127,8 +127,7 @@ describe('Jodit Editor Tests', function() {
                     expect(editor.container.offsetHeight).to.be.below(1000);
                 });
                 it('Should set editor height by option for iframe', function () {
-                    var area = appendTestArea();
-                    var editor = new Jodit(area, {
+                    var editor = new Jodit(appendTestArea(), {
                         height: 300,
                         iframe: true
                     });
@@ -136,8 +135,7 @@ describe('Jodit Editor Tests', function() {
                     expect(editor.container.offsetHeight).to.be.below(1000);
                 });
                 it('Should not change size by content after window was resized', function () {
-                    var area = appendTestArea();
-                    var editor = new Jodit(area, {
+                    var editor = new Jodit(appendTestArea(), {
                         height: 300
                     });
                     editor.setEditorValue('<p>test</p>'.repeat(20))
@@ -151,8 +149,7 @@ describe('Jodit Editor Tests', function() {
 
                 describe('Fullsize mode', function () {
                     it('Should set heights of workplace to 100% - toolbar\'s height', function () {
-                        var area = appendTestArea();
-                        var editor = new Jodit(area, {
+                        var editor = new Jodit(appendTestArea(), {
                             fullsize: true
                         });
 
@@ -160,8 +157,7 @@ describe('Jodit Editor Tests', function() {
 
                     });
                     it('Should restore size after fullsized mode', function () {
-                        var area = appendTestArea();
-                        var editor = new Jodit(area, {
+                        var editor = new Jodit(appendTestArea(), {
                             height: 300
                         });
                         editor.setEditorValue('<p>test</p>'.repeat(20))
@@ -176,14 +172,47 @@ describe('Jodit Editor Tests', function() {
                     });
 
                     it('Should hide resizer', function () {
-                        var area = appendTestArea();
-                        var editor = new Jodit(area, {
+                        var editor = new Jodit(appendTestArea(), {
                             height: 300,
                             iframe: true
                         });
-                        expect(editor.container.querySelectorAll('.jodit_editor_resize').length).to.be.equal(1);
-                        editor.events.fire('toggleFullsize', true);
+                        var handle = editor.container.querySelector('.jodit_editor_resize');
 
+                        expect(handle).to.be.not.equal(null);
+                        editor.events.fire('toggleFullsize', true);
+                        expect(editor.ownerWindow.getComputedStyle(handle).display).to.be.equal('none');
+                    });
+                    it('Should change the icon in toolbar', function () {
+                        var editor = new Jodit(appendTestArea());
+                        var button = editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-fullsize');
+                        expect(button).to.be.not.equal(null);
+
+                        expect(button.querySelector('svg')).to.be.not.equal(null);
+                        var old_icon = button.querySelector('svg').innerHTML;
+
+                        editor.events.fire('toggleFullsize', true);
+                        expect(button.querySelector('svg').innerHTML).to.be.not.equal(old_icon);
+
+                        editor.events.fire('toggleFullsize', false);
+                        expect(button.querySelector('svg').innerHTML).to.be.equal(old_icon);
+                    });
+                    describe('For text icons', function () {
+                        it('Should change the text in toolbar', function () {
+                            var editor = new Jodit(appendTestArea(), {
+                                "textIcons": true
+                            });
+                            var button = editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-fullsize');
+                            expect(button).to.be.not.equal(null);
+                            expect(button.querySelector('svg')).to.be.equal(null);
+
+                            var old_icon = button.innerText;
+
+                            editor.events.fire('toggleFullsize', true);
+                            expect(button.innerText).to.be.not.equal(old_icon);
+
+                            editor.events.fire('toggleFullsize', false);
+                            expect(button.innerText).to.be.equal(old_icon);
+                        });
                     });
                 });
                 it('Should add resize handle', function () {
