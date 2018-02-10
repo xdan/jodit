@@ -80,6 +80,8 @@ export  function fullsize(editor: Jodit) {
                 condition = !editor.container.classList.contains('jodit_fullsize');
             }
 
+            editor.options.fullsize = !!condition;
+
             shown = condition;
 
             editor.container.classList.toggle('jodit_fullsize', condition);

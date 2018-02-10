@@ -446,7 +446,7 @@ export class search extends Component {
                     }
                 })
                 .on('searchNext searchPrevious', () => {
-                    return self.findAndSelect(editor.selection.current() || editor.editor.firstChild, self.queryInput.value, editor.events.current === 'searchNext');
+                    return self.findAndSelect(editor.selection.current() || editor.editor.firstChild, self.queryInput.value, editor.events.current[editor.events.current.length - 1] === 'searchNext');
                 })
                 .on('search', (value: string, next: boolean = true) => {
                     editor.execCommand('search', value, next);

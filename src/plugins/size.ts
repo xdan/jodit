@@ -5,7 +5,7 @@
  */
 
 import {Jodit} from "../Jodit";
-import {css, dom, throttle} from "../modules/Helpers";
+import {css, debounce, dom, throttle} from "../modules/Helpers";
 import {Config} from '../Config'
 
 declare module "../Config" {
@@ -55,11 +55,13 @@ export function size(editor: Jodit) {
             });
     }
 
-    const resizeWorkspace = () => {
-        css(editor.workplace, {
-            height: editor.container.offsetHeight - editor.toolbar.container.offsetHeight
-        });
-    };
+    const resizeWorkspace = debounce(() => {
+        if (editor.options.height !== 'auto' || editor.options.fullsize) {
+            css(editor.workplace, {
+                height: editor.container.offsetHeight - editor.toolbar.container.offsetHeight
+            });
+        }
+    }, editor.options.observer.timeout);
 
     editor.events
         .on('afterInit', () => {
@@ -94,11 +96,8 @@ export function size(editor: Jodit) {
                     width: editor.options.width,
                 });
             }
-        }, undefined, undefined,true);
+        }, undefined, undefined,true)
+        .on(window, 'load', resizeWorkspace)
+        .on('afterInit resize updateToolbar scroll afterResize', resizeWorkspace)
 
-    if (editor.options.height !== 'auto') {
-        editor.events
-            .on(window, 'load', resizeWorkspace)
-            .on('afterInit resize updateToolbar scroll', resizeWorkspace)
-    }
 }

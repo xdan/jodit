@@ -93,7 +93,7 @@ export class EventsNative {
      * });
      * ```
      */
-    current: string = '';
+    current: string[] = [];
 
     private doc: Document = document;
     constructor(doc?: Document){
@@ -474,7 +474,7 @@ export class EventsNative {
                 } else {
                     const blocks: EventHandlerBlock[] | void = store.get(event, namespace);
                     if (blocks) {
-                        this.current = event;
+
 
                         try {
                             blocks.every((block: EventHandlerBlock): boolean => {
@@ -482,7 +482,10 @@ export class EventsNative {
                                     return false;
                                 }
 
+                                this.current.push(event);
                                 result_value = block.syntheticCallback.apply(subject, argumentsList);
+                                this.current.pop();
+
                                 if (result_value !== undefined) {
                                     result = result_value;
                                 }

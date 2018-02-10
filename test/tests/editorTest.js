@@ -146,20 +146,45 @@ describe('Jodit Editor Tests', function() {
                     simulateEvent('resize', 0, window);
                     expect(editor.container.offsetHeight).to.be.equal(300);
                 });
-                it('Should restore size after fullsized mode', function () {
-                    var area = appendTestArea();
-                    var editor = new Jodit(area, {
-                        height: 300
+
+
+
+                describe('Fullsize mode', function () {
+                    it('Should set heights of workplace to 100% - toolbar\'s height', function () {
+                        var area = appendTestArea();
+                        var editor = new Jodit(area, {
+                            fullsize: true
+                        });
+
+                        expect(editor.workplace.offsetHeight).to.be.above(300);
+
                     });
-                    editor.setEditorValue('<p>test</p>'.repeat(20))
-                    expect(editor.container.offsetHeight).to.be.equal(300);
+                    it('Should restore size after fullsized mode', function () {
+                        var area = appendTestArea();
+                        var editor = new Jodit(area, {
+                            height: 300
+                        });
+                        editor.setEditorValue('<p>test</p>'.repeat(20))
+                        expect(editor.container.offsetHeight).to.be.equal(300);
 
-                    editor.events.fire('toggleFullsize', true);
-                    expect(editor.container.offsetHeight).to.be.above(300);
+                        editor.events.fire('toggleFullsize', true);
+                        expect(editor.container.offsetHeight).to.be.above(300);
 
-                    editor.events.fire('toggleFullsize', false);
-                    expect(editor.container.offsetHeight).to.be.equal(300);
-                    expect(editor.container.offsetWidth).to.be.above(300);
+                        editor.events.fire('toggleFullsize', false);
+                        expect(editor.container.offsetHeight).to.be.equal(300);
+                        expect(editor.container.offsetWidth).to.be.above(300);
+                    });
+
+                    it('Should hide resizer', function () {
+                        var area = appendTestArea();
+                        var editor = new Jodit(area, {
+                            height: 300,
+                            iframe: true
+                        });
+                        expect(editor.container.querySelectorAll('.jodit_editor_resize').length).to.be.equal(1);
+                        editor.events.fire('toggleFullsize', true);
+
+                    });
                 });
                 it('Should add resize handle', function () {
                     var area = appendTestArea();
