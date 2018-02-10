@@ -140,7 +140,8 @@ export default {
     'strikethrough': 'перечеркнутый',
     'indent': 'отступ',
     'outdent': 'выступ',
-    'fullsize': 'полный размер',
+    'fullsize': 'во весь экран',
+    'shrink': 'обычный размер',
     'copyformat': 'Копировать формат',
     'hr': 'линия',
 };
