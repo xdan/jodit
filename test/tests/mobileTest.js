@@ -87,6 +87,39 @@ describe('Test mobile mode', function () {
                 expect(1).to.be.equal(editor.container.querySelectorAll('.jodit_toolbar > li').length);
             });
         });
+        describe('Custom media points', function () {
+            it('Should works like as usual', function () {
+                getBox().style.width = '500px';
+
+                var editor = new Jodit(appendTestArea(), {
+                    buttons: 'source,about,print,bold',
+                    buttonsMD: 'source,about,print',
+                    buttonsSM:  'source,about',
+                    buttonsXS: 'source',
+                    sizeLG: 400,
+                    sizeMD: 300,
+                    sizeSM: 200,
+                });
+
+
+                expect(4).to.be.equal(editor.container.querySelectorAll('.jodit_toolbar > li').length);
+
+                getBox().style.width = '390px';
+                simulateEvent('resize', 0, window)
+
+                expect(3).to.be.equal(editor.container.querySelectorAll('.jodit_toolbar > li').length);
+
+                getBox().style.width = '290px';
+                simulateEvent('resize', 0, window)
+
+                expect(2).to.be.equal(editor.container.querySelectorAll('.jodit_toolbar > li').length);
+
+                getBox().style.width = '190px';
+                simulateEvent('resize', 0, window)
+
+                expect(1).to.be.equal(editor.container.querySelectorAll('.jodit_toolbar > li').length);
+            });
+        });
     });
 
 
