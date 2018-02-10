@@ -33,7 +33,7 @@ export const insertParagraph = (editor: Jodit, fake ?: Node, wrapperTag ?: strin
         fake.parentNode.removeChild(fake);
     }
 
-    scrollIntoView(p, editor.editor);
+    scrollIntoView(p, editor.editor, editor.editorDocument);
 
     return p;
 };
@@ -100,7 +100,7 @@ export function enter(editor: Jodit) {
             if (editor.options.enter.toLowerCase() === consts.BR.toLowerCase() || event.shiftKey || Dom.closest(current, 'PRE|BLOCKQUOTE', editor.editor)) {
                 const br: HTMLBRElement = <HTMLBRElement>Dom.create('br', undefined, editor.editorDocument);
                 editor.selection.insertNode(br);
-                scrollIntoView(br, editor.editor);
+                scrollIntoView(br, editor.editor, editor.editorDocument);
                 return false;
             }
 

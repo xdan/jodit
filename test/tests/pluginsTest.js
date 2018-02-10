@@ -1344,6 +1344,22 @@ describe('Test plugins', function () {
                     expect(true).to.be.equal(editor.container.classList.contains('jodit_sticky'));
                     expect(0).to.be.equal(editor.toolbar.container.getBoundingClientRect().top);
                 });
+                describe('In iframe mode', function () {
+                    it('Should work some way', function () {
+                        var editor = new Jodit(appendTestArea(), {
+                            iframe: true
+                        });
+
+                        editor.setEditorValue('<p>stop</p>'.repeat(100));
+                        var offset = Jodit.modules.Helpers.offset(editor.container, editor);
+
+                        window.scroll(0, offset.top + offset.height / 2); // scroll page to bottom
+                        simulateEvent('scroll', 0, window);
+
+                        expect(true).to.be.equal(editor.container.classList.contains('jodit_sticky'));
+                        expect(0).to.be.equal(editor.toolbar.container.getBoundingClientRect().top);
+                    });
+                });
                 describe('add offset for toolbar', function () {
                     it('Should add offset for sticky toolbar', function () {
                         var area = appendTestArea(),

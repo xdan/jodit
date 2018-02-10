@@ -98,6 +98,10 @@ export function placeholder(this: any, editor: Jodit) {
             }
         },
         toggle = debounce(() => {
+            if (placeholder.parentNode === null) {
+                return;
+            }
+
             if (!editor.editor) {
                 return;
             }
@@ -109,7 +113,7 @@ export function placeholder(this: any, editor: Jodit) {
             } else {
                 show();
             }
-        }, editor.options.observer.timeout / 100);
+        }, editor.options.observer.timeout / 10);
 
 
 
@@ -139,13 +143,9 @@ export function placeholder(this: any, editor: Jodit) {
             toggle();
 
             editor.events.fire('placeholder', placeholder.innerHTML);
-            editor.events.on('change keyup mouseup keydown mousedown afterSetMode', () => {
-                if (placeholder.parentNode === null) {
-                    return;
-                }
-
-                toggle();
-            });
+            editor.events
+                .on('change keyup mouseup keydown mousedown afterSetMode', toggle)
+                .on(window, 'load', toggle);
         })
 
 }

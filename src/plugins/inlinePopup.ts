@@ -368,7 +368,7 @@ export function inlinePopup(editor: Jodit) {
         .on('hidePopup afterCommand keydown resize', hidePopup)
         .on('showPopap', delayShowPopup)
         .on('afterInit', () => {
-            editor.editorDocument.body
+            editor.ownerDocument.body
                 .appendChild(popup);
 
             let clickOnImage: boolean = false;

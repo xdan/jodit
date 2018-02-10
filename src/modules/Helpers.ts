@@ -1059,7 +1059,7 @@ export  const applyStyles = (html: string): string => {
     return html.replace(/<(\/)?(html|colgroup|col|o:p)[^>]*>/g, '').replace(/<!--[^>]*>/g, '');
 };
 
-export  const inView = (elm: HTMLElement, root: HTMLElement) => {
+export  const inView = (elm: HTMLElement, root: HTMLElement, doc: Document) => {
     let rect: ClientRect = elm.getBoundingClientRect(),
         top: number = rect.top,
         height: number = rect.height,
@@ -1080,15 +1080,15 @@ export  const inView = (elm: HTMLElement, root: HTMLElement) => {
     } while (el && el != root && el.parentNode);
 
     // Check its within the document viewport
-    return top <= document.documentElement.clientHeight;
+    return top <= doc.documentElement.clientHeight;
 };
 
-export const scrollIntoView = (elm: HTMLElement, root: HTMLElement) => {
-    if (!inView(elm, root)) {
+export const scrollIntoView = (elm: HTMLElement, root: HTMLElement, doc: Document) => {
+    if (!inView(elm, root, doc)) {
         if (root.clientHeight !== root.scrollHeight) {
             root.scrollTop = elm.offsetTop;
         }
-        if (!inView(elm, root)) {
+        if (!inView(elm, root, doc)) {
             elm.scrollIntoView()
         }
     }

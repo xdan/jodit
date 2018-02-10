@@ -311,7 +311,7 @@ export class Config {
      * })
      * ```
      */
-    colorPickerDefaultTab: 'background'|'color' = 'background';
+    colorPickerDefaultTab: 'background' | 'color' = 'background';
 
     /**
      * Image size defaults to a larger image

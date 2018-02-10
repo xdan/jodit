@@ -234,7 +234,7 @@ export function resizer(editor: Jodit) {
             }
         })
         .on('afterInit', () => {
-            editor.editorDocument.body.appendChild(resizer);
+            editor.ownerDocument.body.appendChild(resizer);
             editor.events
                 .on(editor.editor, 'keydown', (e: KeyboardEvent) => {
                     if (resizerIsVisible && e.keyCode === consts.KEY_DELETE && currentElement && currentElement.tagName.toLowerCase() !== 'table') {

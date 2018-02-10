@@ -4,6 +4,7 @@ var links = {
     'index.html': 'All options',
     'arabic.lang.html': 'Arabic Language',
     'custom-toolbar.html': 'Custom toolbar',
+    'fullsize.html': 'Fullsize mode',
 };
 
 if (examples) {

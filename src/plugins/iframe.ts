@@ -56,8 +56,10 @@ Config.prototype.iframeBaseUrl = false;
 
 Config.prototype.iframeStyle = 'html{' +
         'margin: 0px;' +
+        'min-height: 100%;' +
     '}' +
     'body{' +
+        //'height: 100%;' +
         'padding:10px;' +
         'background:transparent;' +
         'color:#000;' +
@@ -67,11 +69,6 @@ Config.prototype.iframeStyle = 'html{' +
         'user-select:auto;' +
         'margin:0px;' +
         'overflow:auto;' +
-    '}' +
-    'body:after{' +
-        'content:"";' +
-        'clear:both;' +
-        'display:block' +
     '}' +
     'table{' +
         'width:100%;' +
@@ -215,6 +212,14 @@ export function iframe(editor: Jodit) {
 
             //throw events in our word
             editor.events
+                .on(editor.editorDocument.documentElement, 'mousedown', (e: Event) => {
+                    if (!editor.selection.isFocused()) {
+                        editor.selection.focus();
+                        editor.selection.setCursorIn(editor.editor);
+                        e.preventDefault();
+                        e.stopImmediatePropagation();
+                    }
+                })
                 .on(editor.editorWindow, 'mousedown click mouseup mousemove scroll', (e: Event) => {
                     editor.events && editor.events.fire && editor.events.fire(window, e);
                 });
