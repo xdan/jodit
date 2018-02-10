@@ -60,7 +60,7 @@ export namespace Widget {
         form.appendChild(dom('<a ' + (editor.options.textIcons ? 'class="jodit_text_icon"' : '') + ' data-color="" href="javascript:void(0)">' + iconEraser + '</a>', editor.ownerDocument));
 
         editor.events
-            .on(form, 'mousedown touchstart', (e: MouseEvent) => {
+            .on(form, 'mousedown touchend', (e: MouseEvent) => {
                 e.stopPropagation();
                 let target: HTMLElement = <HTMLElement>e.target;
 
@@ -157,7 +157,7 @@ export namespace Widget {
 
             tabBox.appendChild(tab);
 
-            editor.events.on(button, 'mousedown touchstart', (e: MouseEvent) => {
+            editor.events.on(button, 'mousedown touchend', (e: MouseEvent) => {
                 $$('a', buttons).forEach((a) => {
                     a.classList.remove('active');
                 });

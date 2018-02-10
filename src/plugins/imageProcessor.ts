@@ -18,26 +18,27 @@ export function imageProcessor(editor: Jodit) {
                 dragImage = <HTMLImageElement>image;
                 e.preventDefault(); // stop default dragging
             })
-            .on(image, 'mousedown.imageProcessor', () => {
+            .on(image, 'mousedown.imageProcessor touchstart.imageProcessor', () => {
                 dragImage = <HTMLImageElement>image;
             });
     };
 
     editor.events.on('afterInit',() => {
         editor.events
-            .on(editor.editor, "mousemove", throttle((e: MouseEvent) => {
+            .on(editor.editor, "mousemove touchmove", throttle((e: MouseEvent) => {
                 if (dragImage) {
+                    editor.events.fire('hidePopup');
                     editor.selection.insertCursorAtPoint(e.clientX, e.clientY);
                 }
             }, editor.options.observer.timeout))
-            .on(window, "mouseup", () => {
+            .on(window, "mouseup touchend", () => {
                 dragImage = false;
             })
-            .on(editor.editor, "mouseup", (e: DragEvent): false | void => {
+            .on(editor.editor, "mouseup touchend", (e: DragEvent): false | void => {
                 let img: HTMLImageElement = <HTMLImageElement>dragImage,
                     elm: Node;
 
-                if (img && e.target !== img) {
+                if (img) {
                     //e.preventDefault();
 
                     if (editor.selection.insertCursorAtPoint(e.clientX, e.clientY) === false) {

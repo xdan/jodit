@@ -10,6 +10,48 @@ describe('Test interface', function() {
             });
         });
         describe('Popups', function () {
+            describe('Click on dots buttons in mobile size', function () {
+                it('Should open popup with several buttons', function () {
+                    getBox().style.width = '300px';
+                    var editor = new Jodit(appendTestArea());
+                    var dots = editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-dots');
+                    expect(dots).to.be.not.equal(null);
+                    simulateEvent('mousedown', 0, dots);
+                    var popup = dots.querySelector('.jodit_toolbar_popup.jodit_toolbar_popup-open');
+
+                    expect(popup).to.be.not.equal(null);
+
+                    var video = popup.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-video');
+                    expect(video).to.be.not.equal(null);
+
+                    simulateEvent('mousedown', 0, video);
+
+                    var popup2 = video.querySelector('.jodit_toolbar_popup.jodit_toolbar_popup-open');
+                    expect(popup2).to.be.not.equal(null);
+                    getBox().style.width = 'auto';
+                });
+                describe('Some with touchend', function () {
+                    it('Should open popup with several buttons', function () {
+                        getBox().style.width = '300px';
+                        var editor = new Jodit(appendTestArea());
+                        var dots = editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-dots');
+                        expect(dots).to.be.not.equal(null);
+                        simulateEvent('touchend', 0, dots);
+                        var popup = dots.querySelector('.jodit_toolbar_popup.jodit_toolbar_popup-open');
+
+                        expect(popup).to.be.not.equal(null);
+
+                        var video = popup.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-video');
+                        expect(video).to.be.not.equal(null);
+
+                        simulateEvent('touchend', 0, video);
+
+                        var popup2 = video.querySelector('.jodit_toolbar_popup.jodit_toolbar_popup-open');
+                        expect(popup2).to.be.not.equal(null);
+                        getBox().style.width = 'auto';
+                    });
+                });
+            });
             describe('Click on some link', function () {
                 describe('in the left side of editor', function () {
                     it('Should open inline popup with float by left editor side', function () {

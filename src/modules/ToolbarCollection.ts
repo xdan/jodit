@@ -254,8 +254,8 @@ export  class ToolbarPopup extends ToolbarElement {
 
     protected doClose() {}
 
-    public close = (current?: HTMLElement) => {
-        if (!current || !Dom.isOrContains(this.container, current)) {
+    public close = (current?: HTMLElement | ToolbarPopup) => {
+        if (!current || !Dom.isOrContains(this.container, current instanceof ToolbarPopup ? current.target : current)) {
             this.jodit.events.off('closeAllPopups', this.close);
 
             this.doClose();

@@ -212,15 +212,13 @@ export function iframe(editor: Jodit) {
 
             //throw events in our word
             editor.events
-                .on(editor.editorDocument.documentElement, 'mousedown', (e: Event) => {
+                .on(editor.editorDocument.documentElement, 'mousedown touchend', (e: Event) => {
                     if (!editor.selection.isFocused()) {
                         editor.selection.focus();
                         editor.selection.setCursorIn(editor.editor);
-                        e.preventDefault();
-                        e.stopImmediatePropagation();
                     }
                 })
-                .on(editor.editorWindow, 'mousedown click mouseup mousemove scroll', (e: Event) => {
+                .on(editor.editorWindow, 'mousedown touchend click mouseup mousemove scroll', (e: Event) => {
                     editor.events && editor.events.fire && editor.events.fire(window, e);
                 });
 
