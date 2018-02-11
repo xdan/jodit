@@ -120,6 +120,40 @@ describe('Test mobile mode', function () {
                 expect(1).to.be.equal(editor.container.querySelectorAll('.jodit_toolbar > li').length);
             });
         });
+        describe('With toolbarAdaptive false', function () {
+            it('Should not change toolbar', function () {
+                getBox().style.width = '500px';
+
+                var editor = new Jodit(appendTestArea(), {
+                    buttons: 'source,about,print,bold',
+                    buttonsMD: 'source,about,print',
+                    buttonsSM:  'source,about',
+                    buttonsXS: 'source',
+                    sizeLG: 400,
+                    sizeMD: 300,
+                    sizeSM: 200,
+                    toolbarAdaptive: false
+                });
+
+
+                expect(4).to.be.equal(editor.container.querySelectorAll('.jodit_toolbar > li').length);
+
+                getBox().style.width = '390px';
+                simulateEvent('resize', 0, window)
+
+                expect(4).to.be.equal(editor.container.querySelectorAll('.jodit_toolbar > li').length);
+
+                getBox().style.width = '290px';
+                simulateEvent('resize', 0, window)
+
+                expect(4).to.be.equal(editor.container.querySelectorAll('.jodit_toolbar > li').length);
+
+                getBox().style.width = '190px';
+                simulateEvent('resize', 0, window)
+
+                expect(4).to.be.equal(editor.container.querySelectorAll('.jodit_toolbar > li').length);
+            });
+        });
     });
 
 

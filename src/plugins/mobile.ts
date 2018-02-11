@@ -17,11 +17,19 @@ declare module "../Config" {
          * Mobile timeout for CLICK emulation
          */
         mobileTapTimeout: number;
+        toolbarAdaptive: boolean;
     }
 }
 
 
 Config.prototype.mobileTapTimeout = 300;
+
+/**
+ * After resize it will change buttons set for different sizes
+ *
+ * @type {boolean}
+ */
+Config.prototype.toolbarAdaptive = true;
 
 Config.prototype.controls.dots = <ControlType> {
     mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG,
@@ -79,8 +87,10 @@ export function mobile(editor: Jodit) {
             return splitArray(editor.options.buttons).filter((i: string|ControlType) => {
                 return store.indexOf(i) < 0;
             });
-        })
-        .on('resize afterInit', () => {
+        });
+
+    if (editor.options.toolbarAdaptive) {
+        editor.events.on('resize afterInit', () => {
             if (!editor.options.toolbar) {
                 return;
             }
@@ -99,4 +109,5 @@ export function mobile(editor: Jodit) {
 
             editor.toolbar.build(store.concat(editor.options.extraButtons), editor.container);
         });
+    }
 }
