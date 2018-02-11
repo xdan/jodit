@@ -11,7 +11,7 @@ import {css, defaultLanguage, dom} from "../modules/Helpers";
 declare module "../Config" {
     interface Config {
         iframe: boolean;
-        iframeBaseUrl: false|string;
+        iframeBaseUrl: string;
         iframeStyle: string;
         iframeCSSLinks: string[];
     }
@@ -41,7 +41,7 @@ Config.prototype.iframe = false;
  * });
  * ```
  */
-Config.prototype.iframeBaseUrl = false;
+Config.prototype.iframeBaseUrl = '';
 
 /**
  * Custom style toWYSIWYG be used inside the iframe toWYSIWYG display content.
