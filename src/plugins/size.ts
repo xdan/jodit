@@ -61,7 +61,7 @@ export function size(editor: Jodit) {
     const resizeWorkspace = debounce(() => {
         if (editor.options.height !== 'auto' || editor.options.fullsize) {
             css(editor.workplace, {
-                height: editor.container.offsetHeight - editor.toolbar.container.offsetHeight
+                height: editor.container.offsetHeight - (editor.options.toolbar ? editor.toolbar.container.offsetHeight : 0)
             });
         }
     }, editor.options.observer.timeout);

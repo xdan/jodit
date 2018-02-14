@@ -83,7 +83,7 @@ export class sticky extends Component{
                         offsetEditor: Bound = offset(jodit.container, jodit, true),
                         doSticky: boolean = (scrollWindowTop + jodit.options.toolbarStickyOffset > offsetEditor.top && scrollWindowTop + jodit.options.toolbarStickyOffset < offsetEditor.top + offsetEditor.height);
 
-                    if (jodit.options.toolbarSticky) {
+                    if (jodit.options.toolbarSticky && jodit.options.toolbar) {
                         doSticky ? this.addSticky(jodit.toolbar.container) : this.removeSticky(jodit.toolbar.container);
                     }
 
