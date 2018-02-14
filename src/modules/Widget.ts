@@ -261,7 +261,7 @@ export namespace Widget {
                     '<input type="file" accept="image/*" tabindex="-1" dir="auto" multiple=""/>' +
                 '</div>', editor.ownerDocument);
 
-            (<Uploader>editor.getInstance('Uploader')).bind(dragbox, (resp: UploaderData) => {
+            new Uploader(editor).bind(dragbox, (resp: UploaderData) => {
                 if (typeof(callbacks.upload) === 'function') {
                     callbacks.upload.call(editor, {
                         baseurl: resp.baseurl,

@@ -4,12 +4,12 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Jodit} from '../Jodit';
-import {Component} from './Component';
+import {Component, ViewBased} from './Component';
 import {Config} from '../Config'
 import {$$, css, debounce, dom, throttle, trim} from "./Helpers";
 import {ToolbarIcon} from "./ToolbarCollection";
 import {Dialog, Alert, Promt} from "./Dialog";
+import {Jodit} from "../Jodit";
 /**
  * @property {ImageEditorOptions} imageeditor module's options
  */
@@ -148,9 +148,9 @@ export class ImageEditor extends Component{
     private resizeHandler : HTMLElement;
     private cropHandler: HTMLElement;
 
-    constructor(editor: Jodit) {
+    constructor(editor: ViewBased) {
         super(editor);
-        this.options = editor.options.imageeditor;
+        this.options = (editor && (<Jodit>editor).options) ? (<Jodit>editor).options.imageeditor : Jodit.defaultOptions.imageeditor;
         this.resizeUseRatio = this.options.resizeUseRatio;
         this.cropUseRatio = this.options.cropUseRatio;
         this.buttons =  [

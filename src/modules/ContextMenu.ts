@@ -5,7 +5,7 @@
  */
 
 import {Jodit} from '../Jodit';
-import {Component} from './Component';
+import {Component, ViewBased} from './Component';
 import {css, dom} from "./Helpers";
 import {ToolbarIcon} from "./ToolbarCollection";
 
@@ -24,10 +24,10 @@ type Action = {
 export class ContextMenu extends Component {
     private context: HTMLElement;
 
-    constructor(editor: Jodit) {
+    constructor(editor: ViewBased) {
         super(editor);
         this.context = dom('<div class="jodit_context_menu"></div>', editor.ownerDocument);
-        this.jodit.ownerDocument.body.appendChild(this.context);
+        editor.ownerDocument.body.appendChild(this.context);
         editor.events.on('beforeDestruct', () => {
             this.context.parentNode && this.context.parentNode.removeChild(this.context);
         });

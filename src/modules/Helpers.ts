@@ -575,7 +575,7 @@ export const offset =  (elm: HTMLElement, jodit: Jodit, recurse: boolean = false
         topValue: number,
         leftValue: number;
 
-    if (!recurse && jodit.options.iframe) {
+    if (!recurse && jodit && jodit.options && jodit.options.iframe) {
         const {top, left} = offset(jodit.iframe, jodit, true);
         topValue = rect.top +  top;
         leftValue = rect.left + left;

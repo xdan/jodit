@@ -7,7 +7,7 @@
 import {Jodit} from "../Jodit"
 import {Config} from '../Config'
 import {each, extend} from "./Helpers";
-import {Component} from "./Component";
+import {Component, ViewBased} from "./Component";
 
 /**
  * @property {object} defaultAjaxOptions A set of key/value pairs that configure the Ajax request. All settings are optional
@@ -70,7 +70,7 @@ Config.prototype.defaultAjaxOptions = <AjaxOptions>{
     }
 };
 
-export class Ajax extends Component{
+export class Ajax {
     private __buildParams (obj: string | {[key: string] : string | object} | FormData, prefix?: string): string | FormData{
         if (typeof obj === 'string' || ((<any>this.jodit.ownerWindow)['FormData'] && obj instanceof (<any>this.jodit.ownerWindow)['FormData'])) {
             return <string | FormData>obj;
@@ -103,9 +103,9 @@ export class Ajax extends Component{
     }
 
     options: AjaxOptions;
-
-    constructor(editor: Jodit, options: AjaxOptions) {
-        super(editor);
+    jodit: ViewBased;
+    constructor(editor: ViewBased, options: AjaxOptions) {
+        this.jodit = editor;
         this.options = <AjaxOptions>extend(true, {}, Config.prototype.defaultAjaxOptions, options);
 
         if (this.options.xhr) {

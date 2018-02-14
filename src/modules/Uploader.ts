@@ -5,12 +5,13 @@
  */
 
 import {Jodit} from '../Jodit';
-import {Component} from './Component';
+import {Component, ViewBased} from './Component';
 import {Ajax} from './Ajax';
 import {Config} from '../Config'
 import {browser, extend, isPlainObject} from "./Helpers";
 import {TEXT_PLAIN} from "../constants";
 import {Dom} from "./Dom";
+import {Select} from "./Selection";
 
 export type UploaderData = {
     messages?: string[],
@@ -177,7 +178,7 @@ Config.prototype.uploader = <UploaderOptions>{
     defaultHandlerSuccess: function (this: Uploader, resp: UploaderData) {
         if (resp.files && resp.files.length) {
             resp.files.forEach((image) => {
-                this.jodit.selection.insertImage(resp.baseurl + image);
+                this.selection.insertImage(resp.baseurl + image);
             })
         }
     },
@@ -187,17 +188,27 @@ Config.prototype.uploader = <UploaderOptions>{
     }
 };
 
-export class Uploader extends Component {
+export class Uploader {
     private path: string = '';
     private source: string = 'default';
 
     private options: UploaderOptions;
+    jodit: ViewBased;
+    selection: Select;
 
-    constructor(editor: Jodit, options?: UploaderOptions) {
-        super(editor);
-        this.options = <UploaderOptions>extend(true, {}, Config.prototype.uploader, editor.options.uploader, options);
+    constructor(editor: ViewBased, options?: UploaderOptions) {
+        this.jodit = editor;
+        this.selection = editor instanceof Jodit ? editor.selection : new Select(editor);
 
-        if (editor.options.enableDragAndDropFileToEditor && editor.options.uploader && editor.options.uploader.url) {
+        this.options = <UploaderOptions>extend(
+            true,
+            {},
+            Config.prototype.uploader,
+            editor instanceof Jodit ? editor.options.uploader : null,
+            options
+        );
+
+        if (editor instanceof Jodit && editor.options.enableDragAndDropFileToEditor && editor.options.uploader && editor.options.uploader.url) {
             editor.events.on('afterInit', () => {
                 this.bind(editor.editor);
             });
@@ -228,7 +239,7 @@ export class Uploader extends Component {
     private __ajax: Ajax;
 
     send(data: FormData|{[key: string]: string}, success: (resp: UploaderAnswer) => void) {
-        this.__ajax = new Ajax(this.jodit, {
+        this.__ajax = new Ajax(this.jodit || this, {
             xhr: () => {
                 let xhr: XMLHttpRequest = new XMLHttpRequest();
                 if ((<any>this.jodit.ownerWindow).FormData !== undefined) {
@@ -407,7 +418,7 @@ export class Uploader extends Component {
                 if (browser('ff')) {
                     if (!e.clipboardData.types.length && e.clipboardData.types[0] !== TEXT_PLAIN) {
                         div = <HTMLDivElement>Dom.create('div', '', this.jodit.editorDocument);
-                        this.jodit.selection.insertNode(div);
+                        this.selection.insertNode(div);
                         div.focus();
                         setTimeout(() => {
                             let child: HTMLDivElement|null = <HTMLDivElement>div.firstChild;
@@ -441,7 +452,7 @@ export class Uploader extends Component {
                 }
             };
 
-        if (this.jodit.editor !== form) {
+        if (this.jodit && this.jodit.editor !== form) {
             self.jodit.events
                 .on(form, 'paste',  onPaste)
         } else {
@@ -466,7 +477,7 @@ export class Uploader extends Component {
                 } else if (event.dataTransfer && event.dataTransfer.getData(TEXT_PLAIN) && event.dataTransfer.getData(TEXT_PLAIN) !== '-' && form === self.jodit.editor) {
                     event.preventDefault();
                     event.stopPropagation();
-                    if (!this.jodit.selection.insertCursorAtPoint(event.clientX, event.clientY)) {
+                    if (!this.selection.insertCursorAtPoint(event.clientX, event.clientY)) {
                         return false;
                     }
                     if (handlerSuccess || this.options.defaultHandlerSuccess) {

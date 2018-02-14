@@ -5,7 +5,7 @@
  */
 
 import {Jodit} from '../Jodit'
-import {Component} from './Component'
+import {Component, ViewBased} from './Component'
 import {Config} from '../Config'
 import {dom, $$, asArray, css} from './Helpers'
 import {ToolbarIcon} from "./ToolbarCollection";
@@ -82,7 +82,7 @@ export class Dialog extends Component{
     private dialogbox_close: HTMLAnchorElement;
     private dialogbox_fullsize: HTMLAnchorElement;
 
-    constructor(jodit ?: Jodit, options: DialogOptions = {}) {
+    constructor(jodit ?: ViewBased, options: DialogOptions = {}) {
         super(jodit);
         
         if (jodit && jodit instanceof Jodit) {
@@ -95,7 +95,7 @@ export class Dialog extends Component{
 
         const self: Dialog = this;
 
-        self.options = (jodit && jodit.options) ? jodit.options.dialog : Config.prototype.dialog;
+        self.options = (jodit && (<Jodit>jodit).options) ? (<Jodit>jodit).options.dialog : Config.prototype.dialog;
         self.options = {...self.options, ...options};
 
         self.dialogbox = <HTMLDivElement>dom('<div style="z-index:' + self.options.zIndex + '" class="jodit jodit_dialog_box">' +

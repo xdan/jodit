@@ -1,5 +1,18 @@
 describe('Jodit FileBrowser Tests', function() {
     describe('Constructor/Destructor', function () {
+        describe('Without Jodit', function () {
+            it('Should create dialog and load files', function () {
+                var filebrowser = new Jodit.modules.FileBrowser(null, {
+                    ajax: {
+                        url: 'https://xdsoft.net/jodit/connector/index.php'
+                    }
+                });
+                filebrowser.open(function () {});
+                expect(document.querySelectorAll('.jodit_dialog_box.active').length).to.be.equal(1);
+                filebrowser.close();
+                expect(document.querySelectorAll('.jodit_dialog_box.active').length).to.be.equal(0);
+            })
+        });
         it('Should create dialog and load files', function () {
             var editor = new Jodit(appendTestArea(), {
                 filebrowser: {
