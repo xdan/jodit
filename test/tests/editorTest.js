@@ -163,10 +163,10 @@ describe('Jodit Editor Tests', function() {
                         editor.setEditorValue('<p>test</p>'.repeat(20))
                         expect(editor.container.offsetHeight).to.be.equal(300);
 
-                        editor.events.fire('toggleFullsize', true);
+                        editor.toggleFullSize(true);
                         expect(editor.container.offsetHeight).to.be.above(300);
 
-                        editor.events.fire('toggleFullsize', false);
+                        editor.toggleFullSize(false);
                         expect(editor.container.offsetHeight).to.be.equal(300);
                         expect(editor.container.offsetWidth).to.be.above(300);
                     });
@@ -179,7 +179,7 @@ describe('Jodit Editor Tests', function() {
                         var handle = editor.container.querySelector('.jodit_editor_resize');
 
                         expect(handle).to.be.not.equal(null);
-                        editor.events.fire('toggleFullsize', true);
+                        editor.toggleFullSize(true);
                         expect(editor.ownerWindow.getComputedStyle(handle).display).to.be.equal('none');
                     });
                     it('Should change the icon in toolbar', function () {
@@ -190,10 +190,10 @@ describe('Jodit Editor Tests', function() {
                         expect(button.querySelector('svg')).to.be.not.equal(null);
                         var old_icon = button.querySelector('svg').innerHTML;
 
-                        editor.events.fire('toggleFullsize', true);
+                        editor.toggleFullSize(true);
                         expect(button.querySelector('svg').innerHTML).to.be.not.equal(old_icon);
 
-                        editor.events.fire('toggleFullsize', false);
+                        editor.toggleFullSize(false);
                         expect(button.querySelector('svg').innerHTML).to.be.equal(old_icon);
                     });
                     describe('For text icons', function () {
@@ -207,10 +207,10 @@ describe('Jodit Editor Tests', function() {
 
                             var old_icon = button.innerText;
 
-                            editor.events.fire('toggleFullsize', true);
+                            editor.toggleFullSize(true);
                             expect(button.innerText).to.be.not.equal(old_icon);
 
-                            editor.events.fire('toggleFullsize', false);
+                            editor.toggleFullSize(false);
                             expect(button.innerText).to.be.equal(old_icon);
                         });
                     });

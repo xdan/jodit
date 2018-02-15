@@ -31,93 +31,8 @@ Config.prototype.askBeforePasteFromWord = true;
  * @module insertHTML
  */
 export function paste(editor: Jodit) {
-    editor.events.on('paste', (event: ClipboardEvent): false | void => {
-        /**
-         * Triggered before pasting something into the Jodit Editor
-         *
-         * @event beforePaste
-         * @param {ClipboardEvent} event
-         * @return Returning false in the handler assigned toWYSIWYG the event will cancel the current action.
-         * @example
-         * ```javascript
-         * var editor = new Jodit("#redactor");
-         * editor.events.on('beforePaste', function (event) {
-             *     return false; // deny paste
-             * });
-         * ```
-         */
+    let buffer: string = '';
 
-        if (editor.events.fire('beforePaste', event) === false) {
-            event.preventDefault();
-            return false;
-        }
-
-        if (event && event.clipboardData && event.clipboardData.getData) {
-            let i,
-                types = event.clipboardData.types,
-                types_str: string = '',
-                clipboard_html: any = '';
-
-            if (Array.isArray(types)) {
-                for (i = 0; i < types.length; i += 1) {
-                    types_str += types[i] + ";";
-                }
-            } else {
-                types_str = types;
-            }
-
-            if (/text\/html/.test(types_str)) {
-                clipboard_html = event.clipboardData.getData("text/html");
-            } else if (/text\/rtf/.test(types_str) && browser('safari')) {
-                clipboard_html = event.clipboardData.getData("text/rtf");
-            } else if (/text\/plain/.test(types_str) && !browser('mozilla')) {
-                clipboard_html = htmlentities(event.clipboardData.getData(TEXT_PLAIN)).replace(/\n/g, "<br/>");
-            }
-
-            if (clipboard_html !== '' || clipboard_html instanceof (<any>editor.editorWindow).Node) {
-                /**
-                 * Triggered after the content is pasted from the clipboard into the Jodit. If a string is returned the new string will be used as the pasted content.
-                 *
-                 * @event beforePaste
-                 * @param {ClipboardEvent} event
-                 * @return Return {string|undefined}
-                 * @example
-                 * ```javascript
-                 * var editor = new Jodit("#redactor");
-                 * editor.events.on('beforePaste', function (event) {
-                     *     return false; // deny paste
-                     * });
-                 * ```
-                 */
-
-                clipboard_html = editor.events.fire('processPaste', event, clipboard_html);
-
-                if (typeof clipboard_html === 'string' || clipboard_html instanceof (<any>editor.editorWindow).Node) {
-                    editor.selection.insertHTML(clipboard_html);
-                }
-                event.preventDefault();
-                event.stopPropagation();
-            }
-        }
-
-        /**
-         * Triggered after pasting something into the Jodit
-         *
-         * @event afterPaste
-         * @param {ClipboardEvent} event
-         * @return Return {string|undefined}
-         * @example
-         * ```javascript
-         * var editor = new Jodit("#redactor");
-         * editor.events.on('afterPaste', function (event) {
-             *     return false; // deny paste
-             * });
-         * ```
-         */
-        if (editor.events.fire('afterPaste', event) === false) {
-            return false;
-        }
-    });
     const strip_tags: Function = (html: string): string => {
         const div: HTMLDivElement = document.createElement('div');
         div.innerHTML = html;
@@ -128,14 +43,14 @@ export function paste(editor: Jodit) {
 
         const keep: HTMLAnchorElement  = <HTMLAnchorElement>dom(
             '<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
-                '<span>' + Jodit.prototype.i18n('Keep') + '</span>' +
+            '<span>' + Jodit.prototype.i18n('Keep') + '</span>' +
             '</a>',
             dialog.document
         );
 
         const clear: HTMLAnchorElement  = <HTMLAnchorElement>dom(
             '<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
-                '<span>' + Jodit.prototype.i18n(clearButton) + '</span>' +
+            '<span>' + Jodit.prototype.i18n(clearButton) + '</span>' +
             '</a>',
             dialog.document
         );
@@ -149,7 +64,7 @@ export function paste(editor: Jodit) {
 
         const cancel: HTMLAnchorElement  = <HTMLAnchorElement>dom(
             '<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
-                '<span>' + Jodit.prototype.i18n('Cancel') + '</span>' +
+            '<span>' + Jodit.prototype.i18n('Cancel') + '</span>' +
             '</a>',
             dialog.document
         );
@@ -181,8 +96,10 @@ export function paste(editor: Jodit) {
 
         return dialog;
     };
+
     const insertHTML: Function = (html: string) : void | false => {
-        if (isHTML(html)) {
+        if (isHTML(html) && buffer !== trimFragment(html)) {
+            html = trimFragment(html);
             ClearOrKeep(editor.i18n('Your code is similar to HTML. Keep as HTML?'), editor.i18n('Paste as HTML'), (agree: boolean | number) => {
                 if (agree === false) {
                     html = htmlspecialchars(html);
@@ -198,6 +115,128 @@ export function paste(editor: Jodit) {
             return false;
         }
     };
+
+    const trimFragment = (html: string): string => {
+        let start: number = html.search(/<\!--StartFragment-->/i);
+        if (start !== -1) {
+            html = html.substr(start + 20);
+        }
+
+        let end: number = html.search(/<\!--EndFragment-->/i);
+        if (end !== -1) {
+            html = html.substr(0, end);
+        }
+
+        return html;
+    };
+
+    editor.events
+        .on('copy', (event: ClipboardEvent): false | void => {
+            const selectedText: string = editor.selection.getHTML();
+
+            const clipboardData: DataTransfer = event.clipboardData || (<any>editor.editorWindow).clipboardData || (<any>event).originalEvent.clipboardData;
+
+            console.log(clipboardData);
+
+            clipboardData.setData(TEXT_PLAIN, strip_tags(selectedText));
+            clipboardData.setData(TEXT_HTML, selectedText);
+
+            buffer = selectedText;
+
+            event.preventDefault();
+        })
+        .on('paste', (event: ClipboardEvent): false | void => {
+            /**
+             * Triggered before pasting something into the Jodit Editor
+             *
+             * @event beforePaste
+             * @param {ClipboardEvent} event
+             * @return Returning false in the handler assigned toWYSIWYG the event will cancel the current action.
+             * @example
+             * ```javascript
+             * var editor = new Jodit("#redactor");
+             * editor.events.on('beforePaste', function (event) {
+                 *     return false; // deny paste
+                 * });
+             * ```
+             */
+
+            if (editor.events.fire('beforePaste', event) === false) {
+                event.preventDefault();
+                return false;
+            }
+
+            if (event && event.clipboardData && event.clipboardData.getData) {
+                let i,
+                    types = event.clipboardData.types,
+                    types_str: string = '',
+                    clipboard_html: any = '';
+
+                if (Array.isArray(types)) {
+                    for (i = 0; i < types.length; i += 1) {
+                        types_str += types[i] + ";";
+                    }
+                } else {
+                    types_str = types;
+                }
+
+                if (/text\/html/.test(types_str)) {
+                    clipboard_html = event.clipboardData.getData("text/html");
+                } else if (/text\/rtf/.test(types_str) && browser('safari')) {
+                    clipboard_html = event.clipboardData.getData("text/rtf");
+                } else if (/text\/plain/.test(types_str) && !browser('mozilla')) {
+                    clipboard_html = htmlentities(event.clipboardData.getData(TEXT_PLAIN)).replace(/\n/g, "<br/>");
+                }
+
+                if (clipboard_html !== '' || clipboard_html instanceof (<any>editor.editorWindow).Node) {
+                    /**
+                     * Triggered after the content is pasted from the clipboard into the Jodit. If a string is returned the new string will be used as the pasted content.
+                     *
+                     * @event beforePaste
+                     * @param {ClipboardEvent} event
+                     * @return Return {string|undefined}
+                     * @example
+                     * ```javascript
+                     * var editor = new Jodit("#redactor");
+                     * editor.events.on('beforePaste', function (event) {
+                         *     return false; // deny paste
+                         * });
+                     * ```
+                     */
+
+                    clipboard_html = trimFragment(clipboard_html);
+
+                    if (buffer !== clipboard_html) {
+                        clipboard_html = editor.events.fire('processPaste', event, clipboard_html);
+                    }
+
+                    if (typeof clipboard_html === 'string' || clipboard_html instanceof (<any>editor.editorWindow).Node) {
+                        editor.selection.insertHTML(clipboard_html);
+                    }
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+            }
+
+            /**
+             * Triggered after pasting something into the Jodit
+             *
+             * @event afterPaste
+             * @param {ClipboardEvent} event
+             * @return Return {string|undefined}
+             * @example
+             * ```javascript
+             * var editor = new Jodit("#redactor");
+             * editor.events.on('afterPaste', function (event) {
+                 *     return false; // deny paste
+                 * });
+             * ```
+             */
+            if (editor.events.fire('afterPaste', event) === false) {
+                return false;
+            }
+        });
+
     if (editor.options.askBeforePasteHTML) {
         editor.events
             .on('beforePaste', (event: ClipboardEvent): false | void => {
@@ -211,9 +250,9 @@ export function paste(editor: Jodit) {
     if (editor.options.askBeforePasteFromWord) {
         editor.events
             .on('beforePaste', (event: ClipboardEvent): false | void => {
-                if (event && event.clipboardData && event.clipboardData.getData && event.clipboardData.getData(TEXT_HTML)) {
+                if (event && event.clipboardData  && event.clipboardData.getData && event.clipboardData.getData(TEXT_HTML)) {
                     const processHTMLData: Function = (html: string): void | false => {
-                        if (isHTML(html)) {
+                        if (isHTML(html) && buffer !== trimFragment(html)) {
                             if (isHTMLFromWord(html)) {
                                 ClearOrKeep(editor.i18n('The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?'), editor.i18n('Word Paste Detected'), (agree: boolean | number) => {
                                     if (agree === true) {

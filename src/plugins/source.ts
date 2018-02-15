@@ -233,7 +233,9 @@ export class source extends Component {
     }
 
     private tempMarkerStart = '{start-jodit-selection}';
+    private tempMarkerStartReg = /\{start-jodit-selection\}/g;
     private tempMarkerEnd = '{end-jodit-selection}';
+    private tempMarkerEndReg = /\{end-jodit-selection\}/g;
 
     private __clear = (str: string): string => str.replace(consts.INVISIBLE_SPACE_REG_EXP, '');
 
@@ -315,32 +317,41 @@ export class source extends Component {
         }
 
         let value: string = this.getMirrorValue();
+        let  selectionStart: number = 0,
+            selectionEnd: number  = 0;
+        try {
 
-        if (this.selInfo[0].startMarker) {
-            value = value.replace(/<span[^>]+data-jodit_selection_marker="start"[^>]*>[<>]*?<\/span>/gmi, this.tempMarkerStart);
-        }
-
-        if (this.selInfo[0].endMarker) {
-            value = value.replace(/<span[^>]+data-jodit_selection_marker="end"[^>]*>[<>]*?<\/span>/gmi, this.tempMarkerEnd);
-        }
-
-        if ((<any>this.jodit.ownerWindow)['html_beautify'] && this.jodit.options.beautifyHTML) {
-            value = (<any>this.jodit.ownerWindow)['html_beautify'](value);
-        }
-
-        let  selectionStart: number = value.indexOf(this.tempMarkerStart),
-            selectionEnd: number  = selectionStart;
-
-        value = value.replace(this.tempMarkerStart, '');
-
-        if (!this.selInfo[0].collapsed || selectionStart === -1) {
-            selectionEnd = value.indexOf(this.tempMarkerEnd);
-            if (selectionStart === -1) {
-                selectionStart = selectionEnd;
+            if (this.selInfo[0].startMarker) {
+                value = value.replace(/<span[^>]+data-jodit_selection_marker="start"[^>]*>[<>]*?<\/span>/gmi, this.tempMarkerStart);
             }
+
+            if (this.selInfo[0].endMarker) {
+                value = value.replace(/<span[^>]+data-jodit_selection_marker="end"[^>]*>[<>]*?<\/span>/gmi, this.tempMarkerEnd);
+            }
+
+            if ((<any>this.jodit.ownerWindow)['html_beautify'] && this.jodit.options.beautifyHTML) {
+                value = (<any>this.jodit.ownerWindow)['html_beautify'](value);
+            }
+
+            selectionStart = value.indexOf(this.tempMarkerStart),
+            selectionEnd  = selectionStart;
+
+            value = value.replace(this.tempMarkerStartReg, '');
+
+            if (!this.selInfo[0].collapsed || selectionStart === -1) {
+                selectionEnd = value.indexOf(this.tempMarkerEnd);
+                if (selectionStart === -1) {
+                    selectionStart = selectionEnd;
+                }
+            }
+
+            value = value.replace(this.tempMarkerEndReg, '');
+        } finally {
+            value = value
+                .replace(this.tempMarkerEndReg, '')
+                .replace(this.tempMarkerStartReg, '')
         }
 
-        value = value.replace(this.tempMarkerEnd, '');
 
         this.setMirrorValue(value);
 

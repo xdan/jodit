@@ -575,7 +575,7 @@ export const offset =  (elm: HTMLElement, jodit: Jodit, recurse: boolean = false
         topValue: number,
         leftValue: number;
 
-    if (!recurse && jodit && jodit.options && jodit.options.iframe) {
+    if (!recurse && jodit && jodit.options && jodit.options.iframe && jodit.iframe) {
         const {top, left} = offset(jodit.iframe, jodit, true);
         topValue = rect.top +  top;
         leftValue = rect.left + left;
@@ -699,6 +699,11 @@ export const throttle = function (fn: Function, timeout: number, ctx?: any) {
         args = arguments;
         needInvoke = true;
         ctx = ctx || this;
+
+        if (!timeout) {
+            fn.apply(ctx, args);
+            return;
+        }
 
         if (!timer) {
             callee = function () {

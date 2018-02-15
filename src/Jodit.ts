@@ -100,7 +100,7 @@ export class Jodit extends Component {
     /**
      * @property{HTMLIFrameElement} iframe Iframe for iframe mode
      */
-    iframe: HTMLIFrameElement;
+    iframe: HTMLIFrameElement | null = null;
 
 
     /**
@@ -314,7 +314,7 @@ export class Jodit extends Component {
 
         // proxy events
         this.events
-            .on(this.editor, 'keydown keyup keypress mousedown mouseup mousepress paste resize touchstart touchend focus blur', (event: Event): false | void => {
+            .on(this.editor, 'keydown keyup keypress mousedown mouseup mousepress copy paste resize touchstart touchend focus blur', (event: Event): false | void => {
                 if (this.options.readonly) {
                     return;
                 }
@@ -723,7 +723,7 @@ export class Jodit extends Component {
     /**
      * Disable selecting
      */
-    lock(name: string) {
+    lock(name: string = 'any') {
         this.__whoLocked = name;
         this.editor.classList.add('jodit_disabled');
     }
@@ -739,6 +739,7 @@ export class Jodit extends Component {
     isLocked = (): boolean => {
         return this.__whoLocked !== '';
     };
+
     isLockedNotBy = (name: string): boolean => {
         return this.isLocked() && this.__whoLocked !== name;
     };
@@ -933,6 +934,22 @@ export class Jodit extends Component {
      */
     getReadOnly(): boolean {
         return this.options.readonly;
+    }
+
+    private __isFullSize: boolean = false;
+    isFullSize = (): boolean => this.__isFullSize;
+
+    toggleFullSize(isFullSize?: boolean) {
+        if (isFullSize === undefined) {
+            isFullSize = !this.__isFullSize;
+        }
+
+        if (isFullSize === this.__isFullSize) {
+            return;
+        }
+
+        this.__isFullSize = isFullSize;
+        this.events && this.events.fire('toggleFullSize', isFullSize);
     }
 }
 

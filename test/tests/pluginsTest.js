@@ -1448,6 +1448,60 @@ describe('Test plugins', function () {
             });
         });
     });
+    describe('Size plugin', function () {
+        describe('In iframe mode after change mode', function () {
+            it('Should set min-height to iframe', function () {
+                var editor = new Jodit(appendTestArea(), {
+                    iframe: true,
+                    minHeight: 300
+                });
+
+                editor.setEditorValue('');
+
+                editor.toggleMode();
+                editor.toggleMode();
+
+                expect(editor.editor.offsetHeight).to.be.above(200);
+            });
+        });
+        describe('Set height', function () {
+            it('Should set container height', function () {
+                var editor = new Jodit(appendTestArea(), {
+                    height: 222
+                });
+
+                expect(editor.container.offsetHeight).to.be.equal(222);
+            });
+        });
+    });
+    describe('Fullsize plugin', function () {
+        describe('Toggle fullsize', function () {
+            it('Should resize all boxes to first state', function () {
+                var editor = new Jodit(appendTestArea(), {
+                    observer: {
+                        timeout: 0
+                    }
+                });
+                var chacksizes = [
+                    'container', 'workplace', 'editor'
+                ];
+                var sizes = chacksizes.map(function (key) {
+                    return editor[key].offsetHeight;
+                });
+
+                editor.toggleFullSize(true);
+                chacksizes.map(function (key, index) {
+                    expect(editor[key].offsetHeight).to.be.not.equal(sizes[index]);
+                });
+
+                editor.toggleFullSize(false);
+
+                chacksizes.map(function (key, index) {
+                    expect(editor[key].offsetHeight).to.be.equal(sizes[index]);
+                });
+            });
+        });
+    });
     afterEach(function () {
         removeStuff();
         var i, keys = Object.keys(Jodit.instances);

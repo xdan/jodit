@@ -94,7 +94,7 @@ export class Snapshot extends Component {
         snapshot.html = this.jodit.getEditorValue();
         const sel: Selection = this.jodit.editorWindow.getSelection();
 
-        if (sel.rangeCount) {
+        if (sel && sel.rangeCount) {
             const range: Range = sel.getRangeAt(0);
             snapshot.range = {
                 startContainer: this.__decomposeHierarchyNodes(range.startContainer),
@@ -103,6 +103,7 @@ export class Snapshot extends Component {
                 endOffset: Snapshot.__strokeOffset(range.endContainer, range.endOffset)
             }
         }
+
         return snapshot;
     }
 

@@ -19,6 +19,12 @@ Config.prototype.allowResizeX = false;
 Config.prototype.allowResizeY = true;
 
 export function size(editor: Jodit) {
+    const setHeight = (height: number | string) => css(editor.container, 'height', height);
+    const setWidth = (width: number | string) => css(editor.container, 'width', width);
+    const setHeightWorkPlace = (height: number | string) => css(editor.workplace, 'height', height);
+    // const setWidthWorkPlace = (width: number | string) => css(editor.workplace, 'width', width);
+
+
     if (editor.options.height !== 'auto' && (editor.options.allowResizeX || editor.options.allowResizeY)) {
         const handle: HTMLAnchorElement = <HTMLAnchorElement>dom('<div class="jodit_editor_resize" ><a href="javascript:void(0)"></a></div>', editor.ownerDocument),
             start: { x: number, y: number, w: number, h: number } = {
@@ -34,71 +40,61 @@ export function size(editor: Jodit) {
                 start.y = e.clientY;
                 start.w = editor.container.offsetWidth;
                 start.h = editor.container.offsetHeight;
+                editor.lock();
                 e.preventDefault();
             })
             .on(editor.ownerWindow, 'mousemove touchmove', throttle((e: MouseEvent) => {
                 if (isResized) {
-                    css(editor.container, {
-                        width: editor.options.allowResizeX ? start.w + e.clientX - start.x : start.w,
-                        height: editor.options.allowResizeY ? start.h + e.clientY - start.y: start.h,
-                    });
+                    setHeight(editor.options.allowResizeY ? start.h + e.clientY - start.y: start.h);
+                    setWidth(editor.options.allowResizeX ? start.w + e.clientX - start.x : start.w);
                     editor.events.fire('resize');
                 }
-            }, editor.options.observer.timeout))
+            }, editor.options.observer.timeout / 10))
             .on(editor.ownerWindow, 'mouseup touchsend', () => {
                 if (isResized) {
                     isResized = false;
+                    editor.unlock();
                 }
             })
             .on('afterInit', () => {
                 editor.container.appendChild(handle);
             })
-            .on('toggleFullsize', (fullsize: boolean) => {
+            .on('toggleFullSize', (fullsize: boolean) => {
                 handle.style.display = fullsize ? 'none' : 'block';
             });
     }
 
+    const calcMinHeightWorkspace = () => {
+        const minHeight: number = <number>css(editor.container, 'minHeight') - (editor.options.toolbar ? editor.toolbar.container.offsetHeight : 0);
+        [editor.workplace, editor.iframe, editor.editor].map(elm => elm && css(<HTMLElement>elm, 'minHeight', minHeight));
+    };
+
     const resizeWorkspace = debounce(() => {
-        if (editor.options.height !== 'auto' || editor.options.fullsize) {
-            css(editor.workplace, {
-                height: editor.container.offsetHeight - (editor.options.toolbar ? editor.toolbar.container.offsetHeight : 0)
-            });
+        calcMinHeightWorkspace();
+
+        if (editor.container && (editor.options.height !== 'auto' || editor.isFullSize())) {
+            setHeightWorkPlace(editor.container.offsetHeight - (editor.options.toolbar ? editor.toolbar.container.offsetHeight : 0))
         }
     }, editor.options.observer.timeout);
 
     editor.events
+        .on('toggleFullSize', (fullsize: boolean) => {
+            if (!fullsize && editor.options.height === 'auto') {
+                setHeightWorkPlace('auto');
+            }
+        })
         .on('afterInit', () => {
             css(editor.editor, {
+                minHeight: '100%'
+            });
+            css(editor.container, {
                 minHeight: editor.options.minHeight
             });
 
-            css(editor.workplace, {
-                width: editor.options.width,
-                height: editor.options.height,
-                minHeight: editor.options.minHeight
-            });
+            setHeight(editor.options.height);
+            setWidth(editor.options.width);
 
-            if (editor.options.height !== 'auto') {
-                css(editor.editor, {
-                    minHeight: '100%'
-                });
-                css(editor.workplace, {
-                    height: '',
-                    minHeight: ''
-                });
-                css(editor.container, {
-                    height: editor.options.height,
-                });
-                resizeWorkspace();
-            }
-            if (editor.options.width !== 'auto') {
-                css(editor.workplace, {
-                    width: ''
-                });
-                css(editor.container, {
-                    width: editor.options.width,
-                });
-            }
+            resizeWorkspace();
         }, undefined, undefined,true)
         .on(window, 'load', resizeWorkspace)
         .on('afterInit resize updateToolbar scroll afterResize', resizeWorkspace)

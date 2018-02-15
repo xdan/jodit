@@ -47,7 +47,7 @@ export class Select extends Component{
 
             if (rng && typeof this.jodit.editorWindow.getSelection != "undefined") {
                 rng.collapse(true);
-                let sel = this.jodit.editorWindow.getSelection();
+                let sel: Selection = this.jodit.editorWindow.getSelection();
                 sel.removeAllRanges();
                 sel.addRange(rng);
             } else if (typeof (<any>doc).body.createTextRange !== "undefined") {
@@ -298,7 +298,7 @@ export class Select extends Component{
     current(): false | Node {
         if (this.jodit.getRealMode() === consts.MODE_WYSIWYG && this.jodit.editorWindow.getSelection !== undefined) {
             const sel: Selection = this.jodit.editorWindow.getSelection();
-            if (sel.rangeCount > 0) {
+            if (sel && sel.rangeCount > 0) {
                 const range: Range = sel.getRangeAt(0);
                 let node: Node = range.startContainer;
                 if (range.startContainer.nodeType !== Node.TEXT_NODE && (range.startContainer === range.endContainer && range.startOffset !== range.endOffset)) {
@@ -819,6 +819,19 @@ export class Select extends Component{
         this.selectRange(range);
     }
 
+    getHTML(): string {
+        const selection: Selection = this.jodit.editorWindow.getSelection();
+
+        if (selection.rangeCount > 0) {
+            const range: Range = selection.getRangeAt(0);
+            const clonedSelection: DocumentFragment = range.cloneContents();
+            const div: HTMLElement = this.jodit.editorDocument.createElement('div');
+            div.appendChild(clonedSelection);
+            return div.innerHTML;
+        }
+
+        return '';
+    }
 
     /**
      * Apply some css rules for all selections. It method wraps selections in nodeName tag.

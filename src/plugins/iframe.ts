@@ -6,7 +6,7 @@
 
 import {Jodit} from '../Jodit';
 import {Config} from '../Config';
-import {css, defaultLanguage, dom} from "../modules/Helpers";
+import {css, defaultLanguage, dom, throttle} from "../modules/Helpers";
 
 declare module "../Config" {
     interface Config {
@@ -140,6 +140,11 @@ Config.prototype.iframeCSSLinks  = [];
  */
 export function iframe(editor: Jodit) {
     editor.events
+        .on('afterSetMode', () => {
+            if (editor.isEditorMode()) {
+                editor.selection.focus();
+            }
+        })
         .on('generateDocumentStructure.iframe', (doc: Document) => {
             doc.open();
             doc.write(`<!DOCTYPE html>
@@ -194,11 +199,11 @@ export function iframe(editor: Jodit) {
 
             if (editor.options.height === 'auto') {
                 doc.documentElement.style.overflowY = 'hidden';
-                const resizeIframe = () => {
-                    if (editor.editor) {
+                const resizeIframe = throttle(() => {
+                    if (editor.editor && editor.iframe) {
                         css(editor.iframe, 'height', editor.editor.offsetHeight);
                     }
-                };
+                }, editor.options.observer.timeout / 2);
                 editor.events
                     .on('change afterInit afterSetMode resize', resizeIframe)
                     .on([editor.iframe, editor.editorWindow, doc.documentElement], 'load', resizeIframe)
@@ -215,6 +220,7 @@ export function iframe(editor: Jodit) {
             //throw events in our word
             editor.events
                 .on(editor.editorDocument.documentElement, 'mousedown touchend', (e: Event) => {
+                    console.log(editor.selection.isFocused());
                     if (!editor.selection.isFocused()) {
                         editor.selection.focus();
                         editor.selection.setCursorIn(editor.editor);

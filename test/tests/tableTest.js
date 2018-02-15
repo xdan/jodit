@@ -1,5 +1,4 @@
 describe('Tables Jodit Editor Tests', function() {
-    appendTestArea('table_editor', true);
     describe('Methods', function() {
         it('After init container must has one element .jodit_table_resizer', function() {
             var editor = new Jodit(appendTestArea());

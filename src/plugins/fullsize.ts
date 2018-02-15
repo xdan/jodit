@@ -28,9 +28,9 @@ import * as consts from '../constants'
  * @example
  * ```javascript
  * var editor = new Jodit();
- * editor.events.fire('toggleFullsize');
- * editor.events.fire('toggleFullsize', true); // fullsize
- * editor.events.fire('toggleFullsize', false); // usual mode
+ * editor.events.fire('toggleFullSize');
+ * editor.events.fire('toggleFullSize', true); // fullsize
+ * editor.events.fire('toggleFullSize', false); // usual mode
  * ```
  */
 
@@ -45,10 +45,10 @@ Config.prototype.fullsize = false;
 Config.prototype.globalFullsize = true;
 Config.prototype.controls.fullsize = <ControlType>{
     exec: (editor: Jodit) => {
-        editor.events.fire('toggleFullsize');
+        editor.toggleFullSize();
     },
     getLabel: (editor: Jodit, btn: ControlType, button: ToolbarButton) => {
-        const mode: string = editor.options.fullsize ? 'shrink' : 'fullsize';
+        const mode: string = editor.isFullSize() ? 'shrink' : 'fullsize';
 
         button.textBox.innerHTML = !editor.options.textIcons ? ToolbarIcon.getIcon(mode) : `<span>${editor.i18n(mode)}</span>`;
 
@@ -109,18 +109,16 @@ export  function fullsize(editor: Jodit) {
             editor.events.fire('afterResize');
         };
 
-    if (editor.options.fullsize) {
-        editor.events.on('afterInit', () => {
-            toggle(true);
-        });
-    }
-
     if (editor.options.globalFullsize) {
         editor.events.on(editor.ownerWindow, 'resize', resize);
     }
 
-    editor.events.on('toggleFullsize', toggle);
-    editor.events.on('beforeDestruct', () => {
-        toggle(false);
-    });
+    editor.events
+        .on('afterInit', () => {
+            editor.toggleFullSize(editor.options.fullsize);
+        })
+        .on('toggleFullSize', toggle)
+        .on('beforeDestruct', () => {
+            toggle(false);
+        });
 }

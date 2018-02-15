@@ -710,6 +710,9 @@ export class ToolbarCollection extends ToolbarElement {
     }
 
     immedateCheckActiveButtons = () => {
+        if (this.jodit.isLocked()) {
+            return;
+        }
         (<ToolbarButton[]>this.__buttons.filter((button: ToolbarElement) => button instanceof ToolbarButton))
             .forEach((button: ToolbarButton) => {
                 button.disable = button.isDisable();

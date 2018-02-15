@@ -96,18 +96,21 @@ export function mobile(editor: Jodit) {
             }
 
             let width: number = editor.container.offsetWidth;
-
+            let newStore: Array<string|ControlType> = [];
             if (width >= editor.options.sizeLG) {
-                store = splitArray(editor.options.buttons);
+                newStore = splitArray(editor.options.buttons);
             } else if (width >= editor.options.sizeMD) {
-                store = splitArray(editor.options.buttonsMD);
+                newStore = splitArray(editor.options.buttonsMD);
             } else if (width >= editor.options.sizeSM) {
-                store = splitArray(editor.options.buttonsSM);
+                newStore = splitArray(editor.options.buttonsSM);
             } else {
-                store = splitArray(editor.options.buttonsXS);
+                newStore = splitArray(editor.options.buttonsXS);
             }
 
-            editor.toolbar.build(store.concat(editor.options.extraButtons), editor.container);
+            if (newStore.toString() !== store.toString()) {
+                store = newStore;
+                editor.toolbar.build(store.concat(editor.options.extraButtons), editor.container);
+            }
         });
     }
 }

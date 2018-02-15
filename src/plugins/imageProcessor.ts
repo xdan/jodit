@@ -36,9 +36,9 @@ export function imageProcessor(editor: Jodit) {
             })
             .on(editor.editor, "mouseup touchend", (e: DragEvent): false | void => {
                 let img: HTMLImageElement = <HTMLImageElement>dragImage,
-                    elm: Node;
+                    elm: Node | null = null;
 
-                if (img) {
+                if (img && e.target !== img) {
                     //e.preventDefault();
 
                     if (editor.selection.insertCursorAtPoint(e.clientX, e.clientY) === false) {
@@ -58,8 +58,10 @@ export function imageProcessor(editor: Jodit) {
                     if (elm) {
                         editor.selection.insertImage(<HTMLImageElement>elm);
                     }
+                }
 
-                    editor.selection.select(elm);
+                if ((elm && elm.nodeName === 'IMG') || (<Node>e.target).nodeName === 'IMG') {
+                    editor.selection.select((elm && elm.nodeName === 'IMG') ? elm : <Node>e.target);
                 }
             });
     });
