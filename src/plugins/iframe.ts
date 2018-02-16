@@ -210,8 +210,6 @@ export function iframe(editor: Jodit) {
                     .on(doc, 'readystatechange DOMContentLoaded', resizeIframe);
             }
 
-            css(editor.editor, 'minHeight', editor.options.minHeight);
-
 
             (function(e){
                 e.matches || (e.matches = Element.prototype.matches); // fix inside iframe polifill
@@ -220,7 +218,6 @@ export function iframe(editor: Jodit) {
             //throw events in our word
             editor.events
                 .on(editor.editorDocument.documentElement, 'mousedown touchend', (e: Event) => {
-                    console.log(editor.selection.isFocused());
                     if (!editor.selection.isFocused()) {
                         editor.selection.focus();
                         editor.selection.setCursorIn(editor.editor);

@@ -588,7 +588,7 @@ describe('Test plugins', function () {
                 expect(true).to.equal(editor.ownerDocument.activeElement === search.querySelector('.jodit_search-query'));
             });
         });
-        describe('CTRL + R', function () {
+        describe('CTRL + H', function () {
             it('Should show search and replace form and query field must have focus', function () {
                 var editor = new Jodit(appendTestArea(), {
                     observer: {
@@ -598,7 +598,7 @@ describe('Test plugins', function () {
 
                 var search = editor.container.querySelector('.jodit_search');
                 expect(false).to.equal(search.classList.contains('jodit_search-active'));
-                simulateEvent('keydown', Jodit.KEY_R, editor.editor, function (options) {
+                simulateEvent('keydown', Jodit.KEY_H, editor.editor, function (options) {
                     options.ctrlKey = true
                 });
                 expect(true).to.equal(search.classList.contains('jodit_search-active'));
@@ -617,7 +617,7 @@ describe('Test plugins', function () {
 
                     var search = editor.container.querySelector('.jodit_search');
                     expect(false).to.equal(search.classList.contains('jodit_search-active'));
-                    simulateEvent('keydown', Jodit.KEY_R, editor.editor, function (options) {
+                    simulateEvent('keydown', Jodit.KEY_H, editor.editor, function (options) {
                         options.ctrlKey = true
                     });
                     expect(true).to.be.equal(search.classList.contains('jodit_search-active'));

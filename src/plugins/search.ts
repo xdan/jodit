@@ -473,7 +473,7 @@ export class search extends Component {
                     }
                     return false;
                 },
-                hotkeys: 'ctrl+r'
+                hotkeys: 'ctrl+h'
             });
         }
     }

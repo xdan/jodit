@@ -583,12 +583,12 @@ export class FileBrowser extends Component implements ViewBased {
         this.ownerDocument = doc;
         this.ownerWindow = editor ? editor.ownerWindow : window;
 
-        this.progress_bar = editor ? editor.progress_bar : document.createElement('div')
-        this.editor = editor ? editor.editor : document.createElement('div')
+        this.progress_bar = editor ? editor.progress_bar : document.createElement('div');
+        this.editor = editor ? editor.editor : document.createElement('div');
 
         this.events = editor ? editor.events : new EventsNative(doc);
 
-        self.options = extend(true, {}, Config.prototype.filebrowser, options, self.jodit ? self.jodit.options.filebrowser : void(0));
+        self.options = extend(true, {}, Jodit.defaultOptions.filebrowser, options, self.jodit ? self.jodit.options.filebrowser : void(0));
 
         self.dialog = new Dialog(editor, {
             fullsizeButton: true
@@ -935,6 +935,7 @@ export class FileBrowser extends Component implements ViewBased {
         this.currentBaseUrl = $$('base', editorDoc).length ? $$('base', editorDoc)[0].getAttribute('href') || '' : location.protocol + '//' + location.host;
 
         if (Jodit.modules.Uploader !== undefined) {
+            debugger
             const uploaderOptions: UploaderOptions = <UploaderOptions>extend(
                 true,
                 {},

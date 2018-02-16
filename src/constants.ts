@@ -27,6 +27,7 @@ export const KEY_DELETE     = 46;
 
 export const KEY_F          = 70;
 export const KEY_R          = 82;
+export const KEY_H          = 72;
 export const KEY_Y          = 89;
 export const KEY_Z          = 90;
 

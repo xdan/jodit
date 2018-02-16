@@ -1373,7 +1373,7 @@ describe('Test interface', function() {
                 expect(editor.container.querySelectorAll('.jodit_placeholder').length && editor.container.querySelector('.jodit_placeholder').style.display === 'none').to.be.equal(true);
             });
             describe('Search plugin', function () {
-                describe('CTRL + R', function () {
+                describe('CTRL + H', function () {
                     describe('In readonly editor', function () {
                         it('Should be deny', function () {
                             var editor = new Jodit('#table_editor_interface', {
@@ -1385,7 +1385,7 @@ describe('Test interface', function() {
 
                             var search = editor.container.querySelector('.jodit_search');
                             expect(false).to.equal(search.classList.contains('jodit_search-active'));
-                            simulateEvent('keydown', Jodit.KEY_R, editor.editor, function (options) {
+                            simulateEvent('keydown', Jodit.KEY_H, editor.editor, function (options) {
                                 options.ctrlKey = true
                             });
                             expect(false).to.equal(search.classList.contains('jodit_search-active'));
