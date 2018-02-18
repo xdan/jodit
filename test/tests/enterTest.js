@@ -457,6 +457,62 @@ describe('Enter behavior Jodit Editor Tests', function() {
                 });
             });
         });
+        describe('For non collapsed range', function () {
+            describe('Select part of text inside P element', function () {
+                it('Should remove only selected range', function () {
+                    var editor = new Jodit(appendTestArea());
+                    editor.setEditorValue('<p>test</p>');
+
+                    var sel = editor.editorWindow.getSelection(),
+                        range = editor.editorDocument.createRange();
+
+                    range.setStart(editor.editor.firstChild.firstChild, 2);
+                    range.setEnd(editor.editor.firstChild.firstChild, 4);
+                    sel.removeAllRanges();
+                    sel.addRange(range);
+
+                    simulateEvent('keydown',     Jodit.KEY_BACKSPACE, editor.editor);
+
+                    expect('<p>te</p>').to.be.equal(editor.getEditorValue());
+                });
+            });
+            describe('Select whole text inside element', function () {
+                describe('Inside P', function () {
+                    it('Should remove selected range and remove this P', function () {
+                        var editor = new Jodit(appendTestArea());
+                        editor.setEditorValue('<p>test</p>');
+
+                        var sel = editor.editorWindow.getSelection(),
+                            range = editor.editorDocument.createRange();
+
+                        range.selectNodeContents(editor.editor.firstChild);
+                        sel.removeAllRanges();
+                        sel.addRange(range);
+
+                        simulateEvent('keydown',     Jodit.KEY_BACKSPACE, editor.editor);
+
+                        expect('').to.be.equal(editor.getEditorValue());
+                    });
+                });
+                describe('Inside table cell', function () {
+                    it('Should only remove selected range', function () {
+                        var editor = new Jodit(appendTestArea());
+                        editor.setEditorValue('<table><tbody><tr><td>test</td><td></td></tr></tbody></table>');
+
+                        var sel = editor.editorWindow.getSelection(),
+                            range = editor.editorDocument.createRange();
+
+                        range.selectNodeContents(editor.editor.querySelector('td'));
+                        sel.removeAllRanges();
+                        sel.addRange(range);
+
+                        simulateEvent('keydown',     Jodit.KEY_BACKSPACE, editor.editor);
+
+                        expect('<table><tbody><tr><td></td><td></td></tr></tbody></table>').to.be.equal(editor.getEditorValue());
+                    });
+                });
+            });
+        });
     });
     describe('Enter key', function () {
         describe('Enter BR', function () {

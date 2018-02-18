@@ -116,11 +116,11 @@ export function backspace(editor: Jodit) {
     editor.events
         .on('afterCommand', (command: string) => {
             if (command === 'delete') {
-                let current = editor.selection.current();
+                let current: Node | false = editor.selection.current();
                 if (current && current.firstChild && current.firstChild.nodeName ==='BR') {
                     current.removeChild(current.firstChild);
                 }
-                if (!trim(editor.editor.innerText) && !editor.editor.querySelector('img')) {
+                if (!trim(editor.editor.innerText) && !editor.editor.querySelector('img') && (!current || !Dom.closest(current, 'table', editor.editor))) {
                     editor.editor.innerHTML = '';
                     let node : Node = editor.selection.setCursorIn(editor.editor);
                     node.parentNode && node.parentNode.removeChild(node);
