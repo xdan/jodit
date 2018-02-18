@@ -459,7 +459,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
                 });
                 editor.value = 'test';
                 editor.selection.setCursorAfter(editor.editor.firstChild)
-                simulateEvent('keydown', Jodit.KEY_ENTER,  editor.editor);
+                simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
                 expect(editor.value).to.be.equal('test<br>');
                 editor.selection.insertHTML('stop');
                 expect(editor.value).to.be.equal('test<br>stop');
@@ -477,7 +477,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
             sel.removeAllRanges();
             sel.addRange(range);
 
-            simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
+            simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
             editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
 
@@ -495,7 +495,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
             sel.removeAllRanges();
             sel.addRange(range);
 
-            simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
+            simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
             editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
 
@@ -514,7 +514,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
             sel.removeAllRanges();
             sel.addRange(range);
 
-            simulateEvent('keydown',  Jodit.KEY_ENTER, editor.editor);
+            simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
             editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
 
@@ -532,7 +532,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
             sel.removeAllRanges();
             sel.addRange(range);
 
-            simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
+            simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
             editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
 
@@ -551,7 +551,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
             sel.removeAllRanges();
             sel.addRange(range);
 
-            simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
+            simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
             editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
 
@@ -570,7 +570,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
             sel.removeAllRanges();
             sel.addRange(range);
 
-            simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
+            simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
             editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
 
@@ -590,7 +590,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
             sel.removeAllRanges();
             sel.addRange(range);
 
-            simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
+            simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
             editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
 
@@ -610,7 +610,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
             sel.removeAllRanges();
             sel.addRange(range);
 
-            simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
+            simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
             editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
 
@@ -648,7 +648,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
             sel.removeAllRanges();
             sel.addRange(range);
 
-            simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
+            simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
             editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
 
@@ -656,24 +656,29 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
         })
 
-        it('If Enter was pressed in not wrapped text in the start, it text should be wrap in paragraph and cursor should be in that, and before should be empty new paragraph', function () {
-            var editor = new Jodit(appendTestArea())
-            editor.setEditorValue('Some text');
+        describe('If Enter was pressed', function () {
+            describe('in not wrapped text in the start', function () {
+                it('should wrap this text in paragraph and cursor should be in that, and before should be empty new paragraph', function () {
+                    var editor = new Jodit(appendTestArea())
+                    editor.setEditorValue('Some text');
 
-            var sel = editor.editorWindow.getSelection(),
-                range = editor.editorDocument.createRange();
+                    var sel = editor.editorWindow.getSelection(),
+                        range = editor.editorDocument.createRange();
 
-            range.setStart(editor.editor.firstChild, 0);
-            range.collapse(true);
-            sel.removeAllRanges();
-            sel.addRange(range);
+                    range.setStart(editor.editor.firstChild, 0);
+                    range.collapse(true);
+                    sel.removeAllRanges();
+                    sel.addRange(range);
 
-            simulateEvent('keydown',  Jodit.KEY_ENTER, editor.editor);
+                    simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-            editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
+                    editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
 
-            expect(editor.getEditorValue()).to.be.equal('<p></p><p> a Some text</p>');
-        })
+                    expect(editor.getEditorValue()).to.be.equal('<p></p><p> a Some text</p>');
+                });
+            });
+        });
+
         it('If Enter was pressed inside empty editor, should be added 2 paragraph and cursor must be in second', function () {
             var editor = new Jodit(appendTestArea())
 
@@ -682,8 +687,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
             editor.selection.focus();
 
 
-
-            simulateEvent('keydown',  Jodit.KEY_ENTER, editor.editor);
+            simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
 
             editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
@@ -703,7 +707,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
             sel.removeAllRanges();
             sel.addRange(range);
 
-            simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
+            simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
             editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
 
@@ -711,9 +715,9 @@ describe('Enter behavior Jodit Editor Tests', function() {
         })
         it('Content editor after pressing the Enter key must contain the specified tag settings', function () {
             var editor = new Jodit(appendTestArea())
-            simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
-            simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
-            simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
+            simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
+            simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
+            simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
             expect(editor.getEditorValue()).to.be.equal('<p></p><p></p><p></p><p></p>');
         })
         it('Content editor after pressing the Enter key must contain the specified tag settings and afte this cursor must be inside that tag', function () {
@@ -721,95 +725,157 @@ describe('Enter behavior Jodit Editor Tests', function() {
             editor.setEditorValue('');
             editor.selection.focus();
 
-            simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
+            simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
             editor.selection.insertNode(editor.editorDocument.createTextNode('test'));
 
-            simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
+            simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
             editor.selection.insertNode(editor.editorDocument.createTextNode('test2'));
 
-            simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
+            simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
             editor.selection.insertNode(editor.editorDocument.createTextNode('test3'));
 
             expect('<p></p><p>test</p><p>test2</p><p>test3</p>').to.be.equal(editor.getEditorValue());
         })
-        it('Split paragraph', function () {
-            var editor = new Jodit(appendTestArea())
+        describe('Enter pressed inside P element', function () {
+            describe('In the middle of element', function () {
+                it('Should split paragraph', function () {
+                    var editor = new Jodit(appendTestArea())
 
-            var p = editor.editorDocument.createElement('p'),
-                node = editor.editorDocument.createTextNode('Split paragraph');
+                    var p = editor.editorDocument.createElement('p'),
+                        node = editor.editorDocument.createTextNode('Split paragraph');
 
-            p.appendChild(node);
+                    p.appendChild(node);
 
-            editor.selection.insertNode(p);
+                    editor.selection.insertNode(p);
 
-            var range = editor.editorDocument.createRange();
+                    var range = editor.editorDocument.createRange();
 
-            range.setStart(node, 6);
-            editor.editorWindow.getSelection().removeAllRanges();
-            editor.editorWindow.getSelection().addRange(range);
+                    range.setStart(node, 6);
+                    editor.editorWindow.getSelection().removeAllRanges();
+                    editor.editorWindow.getSelection().addRange(range);
 
-            simulateEvent('keydown',    Jodit.KEY_ENTER, editor.editor);
+                    simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-            editor.selection.insertNode(editor.editorDocument.createTextNode('a '));
+                    editor.selection.insertNode(editor.editorDocument.createTextNode('a '));
 
-            expect(editor.getEditorValue()).to.be.equal('<p>Split </p><p>a paragraph</p>');
-        })
-        it('If cursor in the right edge of paragraph after enter cursor should be in another new paragraph', function () {
-            var editor = new Jodit(appendTestArea())
+                    expect(editor.getEditorValue()).to.be.equal('<p>Split </p><p>a paragraph</p>');
+                });
+                it('Should create new paragraph with same styles like as original', function () {
+                    var editor = new Jodit(appendTestArea())
 
-            var p = editor.editorDocument.createElement('p'),
-                p2 = editor.editorDocument.createElement('p');
+                    var p = editor.editorDocument.createElement('p'),
+                        node = editor.editorDocument.createTextNode('Split paragraph');
 
+                    p.appendChild(node);
+                    p.style.textAlign = 'right';
+                    p.style.color = '#ff0000';
 
-            p.innerHTML = 'Split paragraph';
-            p2.innerHTML = 'Test';
-            editor.selection.insertNode(p);
-            editor.selection.insertNode(p2);
+                    editor.selection.insertNode(p);
 
-            // set cursor in end of element
-            editor.selection.setCursorIn(p, false);
+                    var range = editor.editorDocument.createRange();
 
+                    range.setStart(node, 6);
+                    editor.editorWindow.getSelection().removeAllRanges();
+                    editor.editorWindow.getSelection().addRange(range);
 
-            simulateEvent('keydown',    Jodit.KEY_ENTER, editor.editor);
+                    simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
+                    editor.selection.insertNode(editor.editorDocument.createTextNode('a '));
 
-            editor.selection.insertNode(editor.editorDocument.createTextNode('a '));
+                    expect(sortAtrtibutes(editor.getEditorValue())).to.be.equal('<p style="color:rgb(255, 0, 0);text-align:right">Split </p><p style="color:rgb(255, 0, 0);text-align:right">a paragraph</p>');
+                });
+            });
+            describe('Enter pressed inside P element in the edge', function () {
+                describe('If cursor in the right edge of paragraph after enter', function () {
+                    it('should move  cursor in another new paragraph', function () {
+                        var editor = new Jodit(appendTestArea())
 
-
-            expect(editor.getEditorValue()).to.be.equal('<p>Split paragraph</p><p>a </p><p>Test</p>');
-        })
-
-        it('If cursor in the left edge of paragraph after enter cursor should be in another new paragraph before old place', function () {
-            var editor = new Jodit(appendTestArea())
-
-            var p = editor.editorDocument.createElement('p'),
-                p2 = editor.editorDocument.createElement('p');
-
-
-            p.innerHTML = 'Split paragraph';
-            p2.innerHTML = 'Test';
-            editor.selection.insertNode(p);
-            editor.selection.insertNode(p2);
+                        var p = editor.editorDocument.createElement('p'),
+                            p2 = editor.editorDocument.createElement('p');
 
 
-            var range = editor.editorDocument.createRange();
+                        p.innerHTML = 'Split paragraph';
+                        p2.innerHTML = 'Test';
+                        editor.selection.insertNode(p);
+                        editor.selection.insertNode(p2);
+
+                        // set cursor in end of element
+                        editor.selection.setCursorIn(p, false);
 
 
-            // set cursor in start of element
-            range.setStart(p.firstChild, 0);
-            range.collapse(true);
-            editor.editorWindow.getSelection().removeAllRanges();
-            editor.editorWindow.getSelection().addRange(range);
+                        simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
 
-            simulateEvent('keydown',    Jodit.KEY_ENTER, editor.editor);
+                        editor.selection.insertNode(editor.editorDocument.createTextNode('a '));
 
 
-            editor.selection.insertNode(editor.editorDocument.createTextNode('a '));
+                        expect(editor.getEditorValue()).to.be.equal('<p>Split paragraph</p><p>a </p><p>Test</p>');
+                    })
+                });
+                describe('If cursor in the left edge of paragraph after enter', function () {
+                    it('should move cursor in another new paragraph before old place', function () {
+                    var editor = new Jodit(appendTestArea())
+
+                    var p = editor.editorDocument.createElement('p'),
+                        p2 = editor.editorDocument.createElement('p');
 
 
-            expect(editor.getEditorValue()).to.be.equal('<p></p><p>a Split paragraph</p><p>Test</p>');
-        })
+                    p.innerHTML = 'Split paragraph';
+                    p2.innerHTML = 'Test';
+                    editor.selection.insertNode(p);
+                    editor.selection.insertNode(p2);
+
+
+                    var range = editor.editorDocument.createRange();
+
+
+                    // set cursor in start of element
+                    range.setStart(p.firstChild, 0);
+                    range.collapse(true);
+                    editor.editorWindow.getSelection().removeAllRanges();
+                    editor.editorWindow.getSelection().addRange(range);
+
+
+                    simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
+
+
+                    editor.selection.insertNode(editor.editorDocument.createTextNode('a '));
+
+
+                    expect(editor.getEditorValue()).to.be.equal('<p></p><p>a Split paragraph</p><p>Test</p>');
+                })
+                });
+                describe('Copys styles', function () {
+                    it('should move  cursor in new paragraph an copy all styles from old', function () {
+                        var editor = new Jodit(appendTestArea())
+
+                        var p = editor.editorDocument.createElement('p'),
+                            p2 = editor.editorDocument.createElement('p');
+
+                        p.style.color = '#ff0000';
+                        p.style.textAlign = 'right';
+
+                        p.innerHTML = 'Split paragraph';
+                        p2.innerHTML = 'Test';
+                        editor.selection.insertNode(p);
+                        editor.selection.insertNode(p2);
+
+                        // set cursor in end of element
+                        editor.selection.setCursorIn(p, false);
+
+
+                        simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
+
+
+                        editor.selection.insertNode(editor.editorDocument.createTextNode('a '));
+
+
+                        expect(sortAtrtibutes(editor.getEditorValue())).to.be
+                            .equal('<p style="color:rgb(255, 0, 0);text-align:right">Split paragraph</p><p style="color:rgb(255, 0, 0);text-align:right">a </p><p>Test</p>');
+                    })
+                });
+            });
+        });
         describe('with table', function () {
             it('If cursor in TD tag', function () {
                 var editor = new Jodit(appendTestArea())

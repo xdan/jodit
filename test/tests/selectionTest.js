@@ -1,7 +1,6 @@
 describe('Selection Module Tests', function() {
-    appendTestArea('selection_tested_area', true);
     it('If cursor in the end of P Selction.cursorInTheEdge(false) must return true', function() {
-        var editor = new Jodit('#selection_tested_area');
+        var editor = new Jodit(appendTestArea());
         editor.setEditorValue('<p>test</p>>');
 
         var sel = editor.editorWindow.getSelection(),
@@ -23,7 +22,7 @@ describe('Selection Module Tests', function() {
         expect(editor.selection.cursorInTheEdge(false)).to.equal(false);
     });
     it('If cursor inside of SPAN in the end of P Selction.cursorInTheEdge(false) must return true', function() {
-        var editor = new Jodit('#selection_tested_area');
+        var editor = new Jodit(appendTestArea());
         editor.setEditorValue('<p>test<span>1</span></p>');
 
         var sel = editor.editorWindow.getSelection(),
@@ -38,7 +37,7 @@ describe('Selection Module Tests', function() {
     });
     describe('Change mode', function () {
         it('Should restore collapsed selection when user change mode - from WYSIWYG to TEXTAREA', function () {
-            var editor = new Jodit('#selection_tested_area', {
+            var editor = new Jodit(appendTestArea(), {
                 useAceEditor: false
             });
             editor.setEditorValue('<p>test</p>');
@@ -71,7 +70,7 @@ describe('Selection Module Tests', function() {
                 __done();
             }, 4000);
 
-            var editor = new Jodit('#selection_tested_area', {
+            var editor = new Jodit(appendTestArea(), {
                 defaultMode: Jodit.MODE_SOURCE,
                 useAceEditor: true,
                 beautifyHTML: false,
@@ -109,7 +108,7 @@ describe('Selection Module Tests', function() {
         }).timeout(6000);
 
         it('Should restore collapsed selection when user change mode - from TEXTAREA to WYSIWYG', function () {
-            var editor = new Jodit('#selection_tested_area', {
+            var editor = new Jodit(appendTestArea(), {
                 useAceEditor: false,
                 defaultMode: Jodit.MODE_SOURCE
             });
@@ -125,7 +124,7 @@ describe('Selection Module Tests', function() {
         });
 
         it('Should restore non collapsed selection when user change mode - from WYSIWYG to TEXTAREA', function () {
-            var editor = new Jodit('#selection_tested_area', {
+            var editor = new Jodit(appendTestArea(), {
                 useAceEditor: false
             });
             editor.setEditorValue('<p>test</p>');
@@ -147,7 +146,7 @@ describe('Selection Module Tests', function() {
             expect(mirror.selectionEnd).to.equal(6);
         });
         it('Should restore non collapsed selection when user change mode - from TEXTAREA to WYSIWYG', function () {
-            var editor = new Jodit('#selection_tested_area', {
+            var editor = new Jodit(appendTestArea(), {
                 useAceEditor: false,
                 defaultMode: Jodit.MODE_SOURCE
             });
@@ -163,7 +162,7 @@ describe('Selection Module Tests', function() {
             expect(editor.getEditorValue()).to.equal(' a ');
         });
         it('Should restore collapsed selection inside empty element - from TEXTAREA to WYSIWYG', function () {
-            var editor = new Jodit('#selection_tested_area', {
+            var editor = new Jodit(appendTestArea(), {
                 useAceEditor: false,
                 defaultMode: Jodit.MODE_SOURCE
             });
@@ -238,7 +237,7 @@ describe('Selection Module Tests', function() {
             editor.selection.selectRange(range);
 
             var nodesNames = [];
-            editor.selection.eachSelection((node) => {
+            editor.selection.eachSelection(function (node) {
                 nodesNames.push(node.nodeName);
             });
 
@@ -253,7 +252,7 @@ describe('Selection Module Tests', function() {
             editor.selection.selectRange(range);
 
             var nodesNames = [];
-            editor.selection.eachSelection((node) => {
+            editor.selection.eachSelection(function (node) {
                 nodesNames.push(node.nodeName);
             });
 
@@ -266,7 +265,7 @@ describe('Selection Module Tests', function() {
             editor.selection.setCursorIn(editor.editor);
 
             var nodesNames = [];
-            editor.selection.eachSelection((node) => {
+            editor.selection.eachSelection(function (node) {
                 nodesNames.push(node.nodeName);
             });
 
@@ -279,15 +278,12 @@ describe('Selection Module Tests', function() {
             editor.selection.setCursorIn(editor.editor.firstChild);
 
             var nodesNames = [];
-            editor.selection.eachSelection((node) => {
+            editor.selection.eachSelection(function (node) {
                 nodesNames.push(node.nodeName);
             });
 
             expect(['#text'].toString().toLowerCase()).to.be.equal(nodesNames.toString().toLowerCase());
         });
-    });
-    after(function() {
-        selection_tested_area.parentNode.removeChild(selection_tested_area);
     });
     afterEach(function () {
         var i, keys = Object.keys(Jodit.instances);

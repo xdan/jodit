@@ -15,9 +15,10 @@ import {Dom} from "../modules/Dom";
  * @param {Jodit} editor
  * @param {Node} [fake]
  * @param {String} [wrapperTag]
+ * @param {CSSStyleSheet} [style]
  * @return {HTMLElement}
  */
-export const insertParagraph = (editor: Jodit, fake ?: Node, wrapperTag ?: string): HTMLElement => {
+export const insertParagraph = (editor: Jodit, fake ?: Node, wrapperTag ?: string, style?: CSSStyleDeclaration): HTMLElement => {
     if (!wrapperTag) {
         wrapperTag = editor.options.enter.toLowerCase();
     }
@@ -26,6 +27,11 @@ export const insertParagraph = (editor: Jodit, fake ?: Node, wrapperTag ?: strin
         helper_node: Text = editor.editorDocument.createTextNode(consts.INVISIBLE_SPACE);
 
     p.appendChild(helper_node);
+
+    if (style && style.cssText) {
+        p.setAttribute('style', style.cssText);
+    }
+
     editor.selection.insertNode(p, false, false);
     editor.selection.setCursorIn(p);
 
@@ -97,7 +103,6 @@ export function enter(editor: Jodit) {
             let fake;
             let currentBox: HTMLElement|false = current ? <HTMLElement>Dom.up(current, Dom.isBlock, editor.editor) : false;
 
-
             // if use <br> tag for break line or when was entered SHIFt key or in <td> or <th> or <blockquote>
             if (editor.options.enter.toLowerCase() === consts.BR.toLowerCase() || event.shiftKey || Dom.closest(current, 'PRE|BLOCKQUOTE', editor.editor)) {
                 const br: HTMLBRElement = <HTMLBRElement>Dom.create('br', undefined, editor.editorDocument);
@@ -163,7 +168,9 @@ export function enter(editor: Jodit) {
                 if (editor.selection.cursorInTheEdge(true, currentBox)) {
                     // if we are in the left edge of paragraph
                     fake = editor.selection.setCursorBefore(currentBox);
-                    insertParagraph(editor, fake, currentBox.nodeName === 'LI' ? 'li' : editor.options.enter);
+
+                    insertParagraph(editor, fake, currentBox.nodeName === 'LI' ? 'li' : editor.options.enter, currentBox.style);
+
                     editor.selection.setCursorIn(currentBox, true);
                 } else if (!editor.selection.cursorInTheEdge(false, currentBox)) {
                     // if we are not in right edge of paragraph
@@ -181,7 +188,7 @@ export function enter(editor: Jodit) {
                     editor.selection.setCursorIn(currentBox, true);
                 } else {
                     fake = editor.selection.setCursorAfter(currentBox);
-                    insertParagraph(editor, fake,  currentBox.nodeName === 'LI' ? 'li' : editor.options.enter);
+                    insertParagraph(editor, fake,  currentBox.nodeName === 'LI' ? 'li' : editor.options.enter, currentBox.style);
                 }
             } else {
                 insertParagraph(editor);
