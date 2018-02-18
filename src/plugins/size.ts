@@ -47,6 +47,7 @@ export function size(editor: Jodit) {
                 if (isResized) {
                     setHeight(editor.options.allowResizeY ? start.h + e.clientY - start.y: start.h);
                     setWidth(editor.options.allowResizeX ? start.w + e.clientX - start.x : start.w);
+                    resizeWorkspaceImd();
                     editor.events.fire('resize');
                 }
             }, editor.options.observer.timeout / 10))
@@ -66,16 +67,21 @@ export function size(editor: Jodit) {
 
     const calcMinHeightWorkspace = () => {
         const minHeight: number = <number>css(editor.container, 'minHeight') - (editor.options.toolbar ? editor.toolbar.container.offsetHeight : 0);
-        [editor.workplace, editor.iframe, editor.editor].map(elm => elm && css(<HTMLElement>elm, 'minHeight', minHeight));
+        [editor.workplace, editor.iframe, editor.editor].map(elm => {
+            let minHeightD : number = elm === editor.editor ? minHeight - 2 : minHeight; // borders
+            elm && css(<HTMLElement>elm, 'minHeight', minHeightD)
+        });
     };
 
-    const resizeWorkspace = debounce(() => {
+    const resizeWorkspaceImd = () => {
         calcMinHeightWorkspace();
 
         if (editor.container && (editor.options.height !== 'auto' || editor.isFullSize())) {
             setHeightWorkPlace(editor.container.offsetHeight - (editor.options.toolbar ? editor.toolbar.container.offsetHeight : 0))
         }
-    }, editor.options.observer.timeout);
+    };
+
+    const resizeWorkspace = debounce(resizeWorkspaceImd, editor.options.observer.timeout);
 
     editor.events
         .on('toggleFullSize', (fullsize: boolean) => {

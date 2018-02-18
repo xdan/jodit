@@ -950,30 +950,57 @@ describe('Tables Jodit Editor Tests', function() {
             });
         });
         describe('Resize column', function () {
-            it('When move mouse over edge of cell jodit should show resizer element', function (done) {
-                var editor = new Jodit(appendTestArea());
+            describe('Move mouse over edge of cell', function () {
+                var brs = [];
+                for (i =0; i < 100; i += 1) {
+                    brs.push(document.createElement('br'));
+                    document.body.appendChild(brs[brs.length - 1])
+                }
 
-                editor.setEditorValue('<table>' +
-                    '<tr><td>1</td><td>2</td></tr>' +
-                    '</table><p>3</p>');
+                describe('Normal scroll', function () {
+                    it('should show resizer element', function (done) {
 
-                simulateEvent('mousemove', 1, editor.editor.querySelectorAll('td')[1], function (options) {
-                    var box = editor.editor.querySelectorAll('td')[1].getBoundingClientRect();
-                    options.clientX = box.left;
-                    options.offsetX = 0;
-                    options.pageX = 0;
-                    options.pageY = 0;
+                        var editor = new Jodit(appendTestArea());
+                        window.scrollTo(0, Jodit.modules.Helpers.offset(editor.container, editor).top + 50);
+
+                        editor.setEditorValue('<table>' +
+                            '<tr><td>1</td><td>2</td></tr>' +
+                            '</table><p>3</p>');
+
+                        var box = Jodit.modules.Helpers.offset(editor.editor.querySelectorAll('td')[1], editor);
+                        var tablebox = Jodit.modules.Helpers.offset(editor.editor.querySelector('table'), editor);
+
+
+                        simulateEvent('mousemove', 1, editor.editor.getElementsByTagName('td')[1], function (options) {
+                            options.clientX = box.left;
+                            options.clientY = box.top;
+                            options.pageX = 0;
+                            options.pageY = 0;
+                        });
+
+                        var resizer = editor.container.querySelector('.jodit_table_resizer');
+                        expect(resizer).to.be.not.equal(null);
+                        expect(resizer.style.display === 'block').to.equal(true);
+
+                        var resizerBox = Jodit.modules.Helpers.offset(resizer, editor);
+
+                        expect(Math.abs(resizerBox.left - box.left) < 10).to.be.true;
+                        expect(Math.abs(resizerBox.top - tablebox.top) < 10).to.be.true;
+
+                        simulateEvent('mouseleave', 1, editor.editor.querySelector('table'), function (options) {
+                            options.relatedTarget = editor.editor.querySelector('p');
+                        });
+                        simulateEvent('mousemove', 1, editor.editor.querySelector('p'));
+
+                        expect(resizer.style.display === 'none').to.equal(true);
+                        done();
+                    });
                 });
-
-                expect(editor.container.querySelector('.jodit_table_resizer').style.display === 'block').to.equal(true);
-
-                simulateEvent('mouseleave', 1, editor.editor.querySelector('table'), function (options) {
-                    options.relatedTarget = editor.editor.querySelector('p');
+                after(function () {
+                    brs.forEach(function (br) {
+                        br.parentNode && br.parentNode.removeChild(br)
+                    });
                 });
-                simulateEvent('mousemove', 1, editor.editor.querySelector('p'));
-
-                expect(editor.container.querySelector('.jodit_table_resizer').style.display === 'none').to.equal(true);
-                done();
             });
             it('When move mouse over left edge of cell and press mouse button and move cursor to right in 500 pixels - resizer should be nearby next edge', function (done) {
                 var editor = new Jodit(appendTestArea());

@@ -34,7 +34,7 @@ export function backspace(editor: Jodit) {
             box = <HTMLElement | null>parent;
         } while (box && box !== editor.editor);
     };
-    const removeChar = (box: {node : Node | null}, toLeft: boolean, range: Range) :  void | false => {
+    const removeChar = (box: {node : Node | null}, toLeft: boolean, range: Range) :  void | boolean => {
         if (box.node && box.node.nodeType === Node.TEXT_NODE && typeof box.node.nodeValue === 'string') {
             // remove invisible spaces
             let startOffset: number = toLeft ? box.node.nodeValue.length : 0;
@@ -64,28 +64,31 @@ export function backspace(editor: Jodit) {
             let nextElement: Node | null = Dom.findInline(box.node, toLeft, editor.editor);
 
             if (value.length) {
+                let setRange : boolean = false;
                 if (toLeft) {
                     if (startOffset) {
-                        box.node.nodeValue = value.substr(0, startOffset - 1) + value.substr(startOffset);
-                        if (!box.node.nodeValue.length) {
-                            box.node.nodeValue = consts.INVISIBLE_SPACE;
-                        }
-                        range.setStart(box.node, startOffset - 1);
-                        range.collapse(true);
-                        editor.selection.selectRange(range);
-                        return false;
+                        // box.node.nodeValue = value.substr(0, startOffset - 1) + value.substr(startOffset);
+                        // if (!box.node.nodeValue.length) {
+                        //     box.node.nodeValue = consts.INVISIBLE_SPACE;
+                        // }
+                        // startOffset -= 1;
+                        setRange = true;
                     }
                 } else {
                     if (startOffset < value.length) {
-                        box.node.nodeValue = value.substr(0, startOffset) + value.substr(startOffset + 1);
-                        if (!box.node.nodeValue.length) {
-                            box.node.nodeValue = consts.INVISIBLE_SPACE;
-                        }
-                        range.setStart(box.node, startOffset);
-                        range.collapse(true);
-                        editor.selection.selectRange(range);
-                        return false;
+                        // box.node.nodeValue = value.substr(0, startOffset) + value.substr(startOffset + 1);
+                        // if (!box.node.nodeValue.length) {
+                        //     box.node.nodeValue = consts.INVISIBLE_SPACE;
+                        // }
+                        setRange = true;
                     }
+                }
+
+                if (setRange) {
+                    // range.setStart(box.node, startOffset);
+                    // range.collapse(true);
+                    // editor.selection.selectRange(range);
+                    return true;
                 }
             } else {
                 range.setStartBefore(box.node);
@@ -159,9 +162,9 @@ export function backspace(editor: Jodit) {
 
                     if (workElement) {
                         const box = {node: workElement};
-
-                        if (removeChar(box, toLeft, range) === false) {
-                            return false;
+                        const removeCharFlag: void | boolean = removeChar(box, toLeft, range);
+                        if (removeCharFlag !== undefined) {
+                            return void(0);
                         }
 
 
@@ -197,7 +200,7 @@ export function backspace(editor: Jodit) {
 
                     if (prevBox) {
                         let tmpNode: Node = editor.selection.setCursorIn(prevBox, !toLeft);
-                        editor.selection.insertNode(marker, false);
+                        editor.selection.insertNode(marker, false, false);
                         if (tmpNode.nodeType === Node.TEXT_NODE && tmpNode.nodeValue === consts.INVISIBLE_SPACE) {
                             tmpNode.parentNode && tmpNode.parentNode.removeChild(tmpNode);
                         }
@@ -234,17 +237,18 @@ export function backspace(editor: Jodit) {
 
                         removeEmptyBlocks(container);
 
-
-                        if (marker) {
-                            let tmpNode: Node = editor.selection.setCursorBefore(marker);
-                            tmpNode.parentNode && tmpNode.parentNode.removeChild(tmpNode);
-                        }
-
                         return false;
                     }
                 } finally {
-                    marker.parentNode && marker.parentNode.removeChild(marker);
                     fakeNode.parentNode && fakeNode.nodeValue === consts.INVISIBLE_SPACE && fakeNode.parentNode.removeChild(fakeNode);
+                    if (marker && Dom.isOrContains(editor.editor, marker, true)) {
+                        let tmpNode: Node = editor.selection.setCursorBefore(marker);
+                        marker.parentNode && marker.parentNode.removeChild(marker);
+                        if (tmpNode.parentNode && (Dom.findInline(tmpNode, true, tmpNode.parentNode) || Dom.findInline(tmpNode, true, tmpNode.parentNode))) {
+                             tmpNode.parentNode.removeChild(tmpNode);
+                        }
+                    }
+                    editor.setEditorValue();
                 }
 
                 return false;

@@ -935,7 +935,6 @@ export class FileBrowser extends Component implements ViewBased {
         this.currentBaseUrl = $$('base', editorDoc).length ? $$('base', editorDoc)[0].getAttribute('href') || '' : location.protocol + '//' + location.host;
 
         if (Jodit.modules.Uploader !== undefined) {
-            debugger
             const uploaderOptions: UploaderOptions = <UploaderOptions>extend(
                 true,
                 {},

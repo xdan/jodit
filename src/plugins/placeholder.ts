@@ -108,7 +108,8 @@ export function placeholder(this: any, editor: Jodit) {
             if (editor.getRealMode() !== consts.MODE_WYSIWYG) {
                 return hide();
             }
-            if (editor.getEditorValue()) {
+            let value: string = editor.getEditorValue();
+            if (value && !/^<(p|div|h[1-6])><\/\1>$/.test(value)) {
                 hide();
             } else {
                 show();

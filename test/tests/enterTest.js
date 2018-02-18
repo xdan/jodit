@@ -24,6 +24,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
                 '</tbody></table>').to.be.equal(editor.getEditorValue());
             });
         });
+        /**
+         * Because backspace plugin use native behavior for simple characters
         describe('inside some inline element', function () {
             describe('in the start', function () {
                 it('Should move cursor before this element and delete char', function () {
@@ -48,6 +50,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
                 })
             });
         });
+         */
         describe('inside empty P', function () {
             it('Should remove empty tag and set cursor in previous element', function () {
                 var editor = new Jodit(appendTestArea())
@@ -77,7 +80,8 @@ describe('Enter behavior Jodit Editor Tests', function() {
                     '</tbody></table>');
             });
         });
-
+        /*
+         Because backspace plugin use native behavior for simple characters
         describe('In text node', function () {
             describe('Backspace key', function () {
                 describe('in the middle', function () {
@@ -236,6 +240,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
                 });
             });
         });
+        */
         describe('Cursor after/before element', function () {
             describe('Backspace key', function () {
                 it('Should remove that element', function () {
@@ -359,7 +364,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
                 describe('Enter delete', function () {
                     it('Should remove all text content and after this remove that LI', function () {
                         var editor = new Jodit(appendTestArea())
-                        editor.setEditorValue('<ul><li>Test</li><li>Some text</li></ul>');
+                        editor.setEditorValue('<ul><li>' + Jodit.INVISIBLE_SPACE + '</li><li>Some text</li></ul>');
 
                         var sel = editor.editorWindow.getSelection(),
                             range = editor.editorDocument.createRange();
@@ -369,14 +374,16 @@ describe('Enter behavior Jodit Editor Tests', function() {
                         sel.removeAllRanges();
                         sel.addRange(range);
 
-                        simulateEvent('keydown',     Jodit.KEY_DELETE, editor.editor);
-                        expect('<ul><li>est</li><li>Some text</li></ul>').to.be.equal(editor.getEditorValue());
-                        simulateEvent('keydown',     Jodit.KEY_DELETE, editor.editor);
-                        expect('<ul><li>st</li><li>Some text</li></ul>').to.be.equal(editor.getEditorValue());
-                        simulateEvent('keydown',     Jodit.KEY_DELETE, editor.editor);
-                        expect('<ul><li>t</li><li>Some text</li></ul>').to.be.equal(editor.getEditorValue());
-                        simulateEvent('keydown',     Jodit.KEY_DELETE, editor.editor);
-                        expect('<ul><li></li><li>Some text</li></ul>').to.be.equal(editor.getEditorValue());
+                        // Because backspace plugin use native behavior for simple characters
+                        // simulateEvent('keydown',     Jodit.KEY_DELETE, editor.editor);
+                        // expect('<ul><li>est</li><li>Some text</li></ul>').to.be.equal(editor.getEditorValue());
+                        // simulateEvent('keydown',     Jodit.KEY_DELETE, editor.editor);
+                        // expect('<ul><li>st</li><li>Some text</li></ul>').to.be.equal(editor.getEditorValue());
+                        // simulateEvent('keydown',     Jodit.KEY_DELETE, editor.editor);
+                        // expect('<ul><li>t</li><li>Some text</li></ul>').to.be.equal(editor.getEditorValue());
+                        // simulateEvent('keydown',     Jodit.KEY_DELETE, editor.editor);
+                        // expect('<ul><li></li><li>Some text</li></ul>').to.be.equal(editor.getEditorValue());
+
                         simulateEvent('keydown',     Jodit.KEY_DELETE, editor.editor);
                         expect('<ul><li>Some text</li></ul>').to.be.equal(editor.getEditorValue());
 

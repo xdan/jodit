@@ -298,7 +298,8 @@ export class TableProcessor extends Component{
     private __calcResizerPosition(table: HTMLTableElement, cell: HTMLTableCellElement, offsetX: number = 0, delta: number = 0) {
         const box = offset(cell, this.jodit);
         if (offsetX <= consts.NEARBY || box.width - offsetX <= consts.NEARBY) {
-            const parentBox = offset(table, this.jodit);
+            const parentBox: Bound = offset(table, this.jodit);
+
             this.__resizerHandler.style.left = (offsetX <= consts.NEARBY ? box.left : box.left + box.width) + delta + 'px';
             this.__resizerHandler.style.height = parentBox.height  + 'px';
             this.__resizerHandler.style.top = parentBox.top  + 'px';
