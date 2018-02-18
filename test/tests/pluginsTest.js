@@ -146,7 +146,7 @@ describe('Test plugins', function () {
                 '<tr><td>4</td></tr>' +
                 '</table>');
 
-            window.scrollTo(0, 100000000) // elementFromPoint works only with visible part of view
+            window.scrollTo(0, editor.helper.offset(editor.editor, editor).top); // elementFromPoint works only with visible part of view
 
             simulateEvent('mousemove', 0, editor.editor, function (e) {
                 var pos = editor.helper.offset(editor.editor.firstChild, editor);
@@ -158,7 +158,7 @@ describe('Test plugins', function () {
             var newline = editor.container.querySelector('.jodit-add-new-line');
 
             expect(newline).not.to.equal(null);
-            expect(newline.style.display).to.equal('block');
+            expect(editor.ownerWindow.getComputedStyle(newline).display).to.equal('block');
         });
         it('Should add new paragraph after user clicked on newline ', function () {
             var editor = new Jodit(appendTestArea());
@@ -169,7 +169,7 @@ describe('Test plugins', function () {
                 '<tr><td>4</td></tr>' +
                 '</tbody></table>');
 
-            window.scrollTo(0, 100000000) // elementFromPoint works only with visible part of view
+            window.scrollTo(0, editor.helper.offset(editor.editor, editor).top) // elementFromPoint works only with visible part of view
 
             simulateEvent('mousemove', 0, editor.editor, function (data) {
                 var pos = editor.helper.offset(editor.editor.firstChild, editor);
@@ -180,7 +180,7 @@ describe('Test plugins', function () {
             var newline = editor.container.querySelector('.jodit-add-new-line');
 
             expect(newline).not.to.equal(null);
-            expect(newline.style.display).to.equal('block');
+            expect(editor.ownerWindow.getComputedStyle(newline).display).to.equal('block');
 
 
             simulateEvent('mousedown', 0, newline.querySelector('span'));
@@ -199,7 +199,7 @@ describe('Test plugins', function () {
                 '</tbody></table>');
 
 
-            window.scrollTo(0, 100000000); // elementFromPoint works only with visible part of view
+            window.scrollTo(0, editor.helper.offset(editor.editor, editor).top); // elementFromPoint works only with visible part of view
 
             simulateEvent('mousemove', 0, editor.editor, function (data) {
                 var pos = editor.helper.offset(editor.editor.firstChild, editor);
@@ -210,7 +210,7 @@ describe('Test plugins', function () {
             var newline = editor.container.querySelector('.jodit-add-new-line');
 
             expect(newline).not.to.equal(null);
-            expect(newline.style.display).to.equal('block');
+            expect(editor.ownerWindow.getComputedStyle(newline).display).to.equal('block');
 
 
             simulateEvent('mousedown', 0, newline.querySelector('span'));
@@ -229,7 +229,7 @@ describe('Test plugins', function () {
                 '</tbody></table>');
 
 
-            window.scrollTo(0, 100000000); // elementFromPoint works only with visible part of view
+            window.scrollTo(0, editor.helper.offset(editor.editor, editor).top); // elementFromPoint works only with visible part of view
 
             simulateEvent('mousemove', 0, editor.editor, function (data) {
                 var pos = editor.helper.offset(editor.editor.firstChild, editor);
@@ -240,7 +240,7 @@ describe('Test plugins', function () {
             var newline = editor.container.querySelector('.jodit-add-new-line');
 
             expect(newline).not.to.equal(null);
-            expect(newline.style.display).to.equal('block');
+            expect(editor.ownerWindow.getComputedStyle(newline).display).to.equal('block');
 
 
             simulateEvent('mousedown', 0, newline.querySelector('span'));
@@ -254,7 +254,7 @@ describe('Test plugins', function () {
                 var editor = new Jodit(appendTestArea());
                 editor.setEditorValue('<p><img src="https://xdsoft.net/jodit/images/artio.jpg" style="width: 100px; height: 100px;" alt=""></p>');
 
-                window.scrollTo(0, 100000000) // elementFromPoint works only with visible part of view
+                window.scrollTo(0, editor.helper.offset(editor.editor, editor).top) // elementFromPoint works only with visible part of view
 
                 var img = editor.editor.querySelector('img');
                 expect(null).to.be.not.equal(img);
