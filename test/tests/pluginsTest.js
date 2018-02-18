@@ -924,6 +924,7 @@ describe('Test plugins', function () {
 
 
                 var editor = new Jodit(area, {
+                    toolbarAdaptive: false,
                     buttons: 'indent,outdent',
                     language: 'ru'
                 });
