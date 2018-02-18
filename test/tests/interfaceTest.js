@@ -525,7 +525,8 @@ describe('Test interface', function() {
                 describe('In video popup', function () {
                     it('Should be also only text', function () {
                         var editor = new Jodit('#table_editor_interface', {
-                            textIcons: true
+                            textIcons: true,
+                            toolbarAdaptive: false,
                         });
 
                         expect(editor.container.querySelector('.jodit_toolbar_btn-video')).to.be.not.equal(null)
@@ -1325,6 +1326,7 @@ describe('Test interface', function() {
             it('Should disable all toolbar buttons besides source, print, about, fullsize', function () {
                 var editor = new Jodit('#table_editor_interface', {
                     readonly: true,
+                    toolbarAdaptive: false,
                     observer: {
                         timeout: 0
                     }

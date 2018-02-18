@@ -914,6 +914,7 @@ describe('Test plugins', function () {
             it('Should have different tooltip for each language', function () {
                 var area = appendTestArea();
                 var editor = new Jodit(area, {
+                    toolbarAdaptive: false,
                     buttons: 'indent,outdent',
                     language: 'en'
                 });
@@ -935,6 +936,7 @@ describe('Test plugins', function () {
         it('Should set active outdent button if current container has marginLeft', function () {
             var area = appendTestArea();
             var editor = new Jodit(area, {
+                toolbarAdaptive: false,
                 buttons: 'indent,outdent'
             });
             editor.setEditorValue('<p>text</p>');
@@ -953,6 +955,7 @@ describe('Test plugins', function () {
             it('Should increase indent for current blocks', function () {
                 var area = appendTestArea();
                 var editor = new Jodit(area, {
+                    toolbarAdaptive: false,
                     buttons: 'indent,outdent',
                     indentMargin: 5,
                 });
@@ -980,6 +983,7 @@ describe('Test plugins', function () {
         it('Should create symbol button in toolbar and after click open dialog with symbols', function () {
             var area = appendTestArea();
             var editor = new Jodit(area, {
+                toolbarAdaptive: false,
                 buttons: 'symbol',
             });
             editor.setEditorValue('test');
@@ -996,6 +1000,7 @@ describe('Test plugins', function () {
             it('Should have focus on first element after open', function () {
                 var area = appendTestArea();
                 var editor = new Jodit(area, {
+                    toolbarAdaptive: false,
                     buttons: 'symbol',
                 });
                 editor.setEditorValue('test');
@@ -1014,6 +1019,7 @@ describe('Test plugins', function () {
                 it('Should select previous element', function () {
                     var area = appendTestArea();
                     var editor = new Jodit(area, {
+                        toolbarAdaptive: false,
                         buttons: 'symbol',
                     });
                     editor.setEditorValue('test');
@@ -1038,6 +1044,7 @@ describe('Test plugins', function () {
                 it('Should select next element', function () {
                     var area = appendTestArea();
                     var editor = new Jodit(area, {
+                        toolbarAdaptive: false,
                         buttons: 'symbol',
                     });
                     editor.setEditorValue('test');
@@ -1062,6 +1069,7 @@ describe('Test plugins', function () {
                 it('Should select element above', function () {
                     var area = appendTestArea();
                     var editor = new Jodit(area, {
+                        toolbarAdaptive: false,
                         buttons: 'symbol',
                     });
                     editor.setEditorValue('test');
@@ -1095,6 +1103,7 @@ describe('Test plugins', function () {
                 it('Should select element below', function () {
                     var area = appendTestArea();
                     var editor = new Jodit(area, {
+                        toolbarAdaptive: false,
                         buttons: 'symbol',
                     });
                     editor.setEditorValue('test');
@@ -1128,6 +1137,7 @@ describe('Test plugins', function () {
                 it('Should insert character', function () {
                     var area = appendTestArea();
                     var editor = new Jodit(area, {
+                        toolbarAdaptive: false,
                         buttons: 'symbol',
                     });
 
@@ -1163,6 +1173,7 @@ describe('Test plugins', function () {
             it('Should create popup this symbols', function () {
                 var area = appendTestArea();
                 var editor = new Jodit(area, {
+                    toolbarAdaptive: false,
                     buttons: 'symbol',
                     usePopupForSpecialCharacters: true
                 });
