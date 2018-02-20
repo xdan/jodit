@@ -938,9 +938,9 @@ export class FileBrowser extends Component implements ViewBased {
             const uploaderOptions: UploaderOptions = <UploaderOptions>extend(
                 true,
                 {},
-                self.options.uploader,
                 Jodit.defaultOptions.uploader,
-                this.options.uploader !== null ? {...<UploaderOptions>this.options.uploader} : {},
+                self.options.uploader,
+                (this.jodit && this.jodit.options && this.jodit.options.uploader !== null) ? {...<UploaderOptions>this.jodit.options.uploader} : {},
             );
 
             this.uploader = new Uploader(this.jodit || this, uploaderOptions);
