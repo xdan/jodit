@@ -139,5 +139,7 @@ export default {
     'Add column': 'Spalte hinzufügen',
     'Add row': 'Zeile hinzufügen',
     'Border': 'Rand',
+    'Embed code': 'Code einbetten',
+    'Update': 'Aktualisieren',
     '': '',
 };
