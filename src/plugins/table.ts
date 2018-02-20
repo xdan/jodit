@@ -113,7 +113,9 @@ Config.prototype.controls.table = <ControlType> {
 
         editor.events
             .on(blocksContainer, 'touchstart mousedown', (e: MouseEvent) => {
-                const div: HTMLDivElement = <HTMLDivElement>e.target;
+                const div: HTMLDivElement = <HTMLDivElement>e.target,
+                    doc: Document = editor.editorDocument;
+
                 e.preventDefault();
                 e.stopImmediatePropagation();
 
@@ -125,7 +127,8 @@ Config.prototype.controls.table = <ControlType> {
                 rows_count = Math.ceil((k + 1) / default_cols_count);
                 cols_count = k % default_cols_count + 1;
 
-                const table: HTMLTableElement = editor.editorDocument.createElement('table');
+                const table: HTMLTableElement = doc.createElement('table');
+
                 let first_td: HTMLTableCellElement|null = null,
                     tr: HTMLTableRowElement,
                     td: HTMLTableCellElement,
@@ -133,9 +136,10 @@ Config.prototype.controls.table = <ControlType> {
                     w: string = (100 / cols_count).toFixed(7);
 
                 for (i = 1; i <= rows_count; i += 1) {
-                    tr = editor.editorDocument.createElement('tr');
+                    tr = doc.createElement('tr');
+
                     for (j = 1; j <= cols_count; j += 1) {
-                        td = editor.editorDocument.createElement('td');
+                        td = doc.createElement('td');
 
                         td.style.width = w + '%';
 
@@ -143,17 +147,27 @@ Config.prototype.controls.table = <ControlType> {
                             first_td = td;
                         }
 
-                        br = editor.editorDocument.createElement('br');
+                        br = doc.createElement('br');
                         td.appendChild(br);
-                        tr.appendChild(editor.editorDocument.createTextNode("\n"));
-                        tr.appendChild(editor.editorDocument.createTextNode("\t"));
+                        tr.appendChild(doc.createTextNode("\n"));
+                        tr.appendChild(doc.createTextNode("\t"));
                         tr.appendChild(td);
                     }
-                    table.appendChild(editor.editorDocument.createTextNode("\n"));
+
+                    table.appendChild(doc.createTextNode("\n"));
                     table.appendChild(tr);
                 }
 
-                editor.selection.insertNode(editor.editorDocument.createTextNode("\n"));
+                const current: Node | false = editor.selection.current();
+
+                if (current && editor.selection.isCollapsed()) {
+                    const block: HTMLElement | false = <HTMLElement | false>Dom.closest(current, Dom.isBlock, editor.editor);
+                    if (block && block !== editor.editor) {
+                        editor.selection.setCursorAfter(block);
+                    }
+                }
+
+                editor.selection.insertNode(doc.createTextNode("\n"));
                 editor.selection.insertNode(table, false);
 
                 if (first_td) {

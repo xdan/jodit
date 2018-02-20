@@ -437,7 +437,7 @@ export class Dom {
      * @param {HTMLElement} root
      * @return {Boolean|Node}
      */
-    static closest(node: Node, tags: string|Function|RegExp, root: HTMLElement): Node|HTMLTableElement|HTMLElement|false|HTMLTableCellElement {
+    static closest(node: Node, tags: string|Function|RegExp, root: HTMLElement): Node | HTMLTableElement | HTMLElement | false | HTMLTableCellElement {
         let condition: Function;
 
         if (typeof tags  === 'function') {
