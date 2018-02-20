@@ -66,6 +66,10 @@ export function size(editor: Jodit) {
     }
 
     const calcMinHeightWorkspace = () => {
+        if (!editor.container || !editor.container.parentNode) {
+            return;
+        }
+
         const minHeight: number = <number>css(editor.container, 'minHeight') - (editor.options.toolbar ? editor.toolbar.container.offsetHeight : 0);
         [editor.workplace, editor.iframe, editor.editor].map(elm => {
             let minHeightD : number = elm === editor.editor ? minHeight - 2 : minHeight; // borders
