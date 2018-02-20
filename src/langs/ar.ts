@@ -72,7 +72,7 @@ export default {
     'Link': 'الرابط',
     'Open link in new tab': 'افتح الرابط في نافذة جديدة',
     'Image': 'الصورة',
-    'Advansed': 'متقدم',
+    'Advanced': 'متقدم',
     'Image properties': 'خصائص الصورة',
     'Cancel': 'إلغاء',
     'Ok': 'حسنا',

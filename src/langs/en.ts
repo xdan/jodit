@@ -67,7 +67,7 @@ export default {
     'Link': '',
     'Open link in new tab': '',
     'Image': '',
-    'Advansed': '',
+    'Advanced': '',
     'Image properties': '',
     'Cancel': '',
     'Ok': '',

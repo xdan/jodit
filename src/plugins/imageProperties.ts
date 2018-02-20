@@ -301,7 +301,7 @@ export function imageProperties(editor: Jodit) {
             tabsbox: HTMLElement|null = prop.querySelector('#tabsbox');
 
         tabs[editor.i18n('Image')] = mainTab;
-        tabs[editor.i18n('Advansed')] = positionTab;
+        tabs[editor.i18n('Advanced')] = positionTab;
 
         if (tabsbox) {
             tabsbox.appendChild(TabsWidget(editor, tabs));
