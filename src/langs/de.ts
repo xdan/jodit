@@ -1,6 +1,7 @@
 export default {
     'Type something'                                    : 'Bitte geben Sie einen Text ein',
-        // About
+
+    // About
     'About Jodit'                                       : 'Über Jodit',
     'Jodit Editor'                                      : 'Jodit Editor',
     'Free Non-commercial Version'                       : 'Freie Nicht-kommerzielle Version',
@@ -11,7 +12,7 @@ export default {
     'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.':
         'Copyright © XDSoft.net - Chupurnov Valeriy. Alle Rechte vorbehalten.',
 
-        // Toolbar
+     // Toolbar
     'Anchor'                                            : 'Anker',
     'Open in new tab'                                   : 'In neuer Registerkarte öffnen',
     'Open editor in fullsize'                           : 'Editor in voller Größe öffnen',
