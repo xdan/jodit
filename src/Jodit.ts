@@ -868,28 +868,44 @@ export class Jodit extends Component {
      * ```
      */
     i18n (key: string, ...params: Array<string|number>): string {
-        if (this.options !== undefined && this.options.debugLanguage) {
-            return '{' + key + '}';
-        }
+        const debug: boolean = this.options !== undefined && this.options.debugLanguage;
 
         let store,
-            parse = (value: string): string => sprintf.apply(this, [value].concat(<string[]>params));
+            parse = (value: string): string => sprintf.apply(this, [value].concat(<string[]>params)),
+            default_language: string = Jodit.defaultOptions.language === 'auto' ? defaultLanguage(Jodit.defaultOptions.language) : Jodit.defaultOptions.language,
+            language: string = defaultLanguage(this.options ? this.options.language : default_language);
 
-        if (this.options !== undefined && Jodit.lang[defaultLanguage(this.options.language)] !== undefined) {
-            store = Jodit.lang[defaultLanguage(this.options.language)];
+        if (
+            this.options !== undefined &&
+            Jodit.lang[language] !== undefined
+        ) {
+            store = Jodit.lang[language];
         } else {
-            if (Jodit.lang[defaultLanguage(Jodit.defaultOptions.language)] !== undefined) {
-                store = Jodit.lang[defaultLanguage(Jodit.defaultOptions.language)];
+            if (Jodit.lang[default_language] !== undefined) {
+                store = Jodit.lang[default_language];
             } else {
                 store = Jodit.lang.en;
             }
         }
 
-        if (this.options !== undefined && (<any>this.options.i18n)[defaultLanguage(this.options.language)] !== undefined && (<any>this.options.i18n)[defaultLanguage(this.options.language)][key]) {
-            return parse((<any>this.options.i18n)[defaultLanguage(this.options.language)][key]);
+        if (
+            this.options !== undefined &&
+            (<any>this.options.i18n)[language] !== undefined &&
+            (<any>this.options.i18n)[language][key]
+        ) {
+            return parse((<any>this.options.i18n)[language][key]);
         }
 
-        if (typeof store[key] === 'string' && store[key]) {
+
+        if (debug && store[key] === undefined) {
+            console.warn(`In ${language} not exists "${key}"`);
+        }
+
+        if (debug) {
+            return '{' + key + '}';
+        }
+
+        if (typeof store[key] === 'string') {
             return parse(store[key]);
         }
 
