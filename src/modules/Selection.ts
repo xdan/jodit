@@ -157,7 +157,7 @@ export class Select extends Component{
      *
      * @return markerInfo[]
      */
-    save():markerInfo[]  {
+    save(): markerInfo[]  {
         const sel: Selection = this.jodit.editorWindow.getSelection();
 
         if (!sel.rangeCount) {

@@ -226,6 +226,7 @@ export class TableProcessor extends Component{
                 let startX: number = 0;//, startLeft = 0;
                 this.jodit.events
                     .on(this.__resizerHandler,'mousedown touchstart', (event: MouseEvent) => {
+
                         this.__drag = true;
 
                         startX = event.clientX;
@@ -258,6 +259,8 @@ export class TableProcessor extends Component{
                                 }
                             });
                         }
+
+                        return false;
                     })
                     .on(this.jodit.ownerWindow, 'mousemove touchmoove', (event: MouseEvent) => {
                         if (this.__drag) {
@@ -341,7 +344,6 @@ export class TableProcessor extends Component{
                     start = cell;
                     Table.addSelected(cell);
                     this.__selectMode = true;
-                    this.jodit.lock(this.__key);
                 }
             })
             .on(table,'mouseleave', (e: MouseEvent) => {
@@ -362,6 +364,7 @@ export class TableProcessor extends Component{
                 if (cell) {
                     if (this.__selectMode) {
                         if (cell !== start) {
+                            this.jodit.lock(this.__key);
                             this.jodit.editorWindow.getSelection().removeAllRanges();
                             if(event.preventDefault) {
                                 event.preventDefault();

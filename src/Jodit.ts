@@ -5,7 +5,7 @@
  */
 
 import {Component} from './modules/Component';
-import {Select} from './modules/Selection';
+import {markerInfo, Select} from './modules/Selection';
 import {Cookie} from './modules/Cookie';
 import {FileBrowser} from './modules/FileBrowser';
 import {Uploader} from './modules/Uploader';
@@ -719,21 +719,30 @@ export class Jodit extends Component {
     }
 
     private __whoLocked: string|false = '';
+    private __selectionLocked: markerInfo[] | null = null;
 
     /**
      * Disable selecting
      */
     lock(name: string = 'any') {
-        this.__whoLocked = name;
-        this.editor.classList.add('jodit_disabled');
+        if (!this.isLocked()) {
+            this.__whoLocked = name;
+            this.__selectionLocked = this.selection.save();
+            this.editor.classList.add('jodit_disabled');
+        }
     }
 
     /**
      * Enable selecting
      */
     unlock() {
-        this.__whoLocked = '';
-        this.editor.classList.remove('jodit_disabled');
+        if (this.isLocked()) {
+            this.__whoLocked = '';
+            this.editor.classList.remove('jodit_disabled');
+            if (this.__selectionLocked) {
+                this.selection.restore(this.__selectionLocked)
+            }
+        }
     }
 
     isLocked = (): boolean => {
