@@ -15,6 +15,7 @@ declare module "../Config" {
          * ```
          */
         toolbarSticky: boolean,
+        toolbarDisableStickyForMobile: boolean,
         /**
          * For example, in Joomla, the top menu bar closes Jodit toolbar when scrolling. Therefore, it is necessary to move the toolbar Jodit by this amount [more](http://xdsoft.net/jodit/doc/#2.5.57)
          *
@@ -30,6 +31,7 @@ declare module "../Config" {
 }
 
 Config.prototype.toolbarSticky = true;
+Config.prototype.toolbarDisableStickyForMobile = true;
 Config.prototype.toolbarStickyOffset = 0;
 
 export class sticky extends Component{
@@ -74,6 +76,10 @@ export class sticky extends Component{
         }
     };
 
+    private isMobile() : boolean {
+        return this.jodit && this.jodit.options && this.jodit.container && this.jodit.options.sizeSM >= this.jodit.container.offsetWidth;
+    }
+
     constructor(jodit: Jodit) {
         super(jodit);
         jodit.events
@@ -81,7 +87,7 @@ export class sticky extends Component{
                 jodit.events.on(jodit.ownerWindow, 'scroll wheel mousewheel resize', () => {
                     const scrollWindowTop: number = jodit.ownerWindow.pageYOffset || jodit.ownerDocument.documentElement.scrollTop,
                         offsetEditor: Bound = offset(jodit.container, jodit, true),
-                        doSticky: boolean = (scrollWindowTop + jodit.options.toolbarStickyOffset > offsetEditor.top && scrollWindowTop + jodit.options.toolbarStickyOffset < offsetEditor.top + offsetEditor.height);
+                        doSticky: boolean = (scrollWindowTop + jodit.options.toolbarStickyOffset > offsetEditor.top && scrollWindowTop + jodit.options.toolbarStickyOffset < offsetEditor.top + offsetEditor.height) && !(jodit.options.toolbarDisableStickyForMobile && this.isMobile());
 
                     if (jodit.options.toolbarSticky && jodit.options.toolbar) {
                         doSticky ? this.addSticky(jodit.toolbar.container) : this.removeSticky(jodit.toolbar.container);

@@ -1356,6 +1356,24 @@ describe('Test plugins', function () {
                     expect(true).to.be.equal(editor.container.classList.contains('jodit_sticky'));
                     expect(0).to.be.equal(editor.toolbar.container.getBoundingClientRect().top);
                 });
+                describe('On mobile devices - with toolbarDisableStickyForMobile = true', function () {
+                    it('Should not add to editor class `jodit_sticky`', function () {
+                        getBox().style.width = '370px'; // IPhone 7
+
+                        var area = appendTestArea(),
+                            editor = new Jodit(area);
+
+                        editor.setEditorValue('<p>stop</p>'.repeat(100));
+                        var offset = Jodit.modules.Helpers.offset(editor.container, editor);
+
+                        window.scroll(0, offset.top + offset.height / 2); // scroll page to bottom
+                        simulateEvent('scroll', 0, window);
+
+                        expect(false).to.be.equal(editor.container.classList.contains('jodit_sticky'));
+                        expect(0).to.be.not.equal(editor.toolbar.container.getBoundingClientRect().top);
+                        getBox().style.width = 'auto'; // IPhone 7
+                    });
+                });
                 describe('In iframe mode', function () {
                     it('Should work some way', function () {
                         var editor = new Jodit(appendTestArea(), {

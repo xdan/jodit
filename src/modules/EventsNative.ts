@@ -220,11 +220,6 @@ export class EventsNative {
 
         if (isDOMElement) {
             syntheticCallback = function (this: any, event: MouseEvent | TouchEvent) {
-                event.type !== 'mousemove' &&
-                event.type !== 'mouseleave' &&
-                event.type !== 'scroll' &&
-                console.log(event.type ,event.target);
-
                 self.prepareEvent(<TouchEvent>event);
 
                 if (callback && callback.call(this, event) === false) {

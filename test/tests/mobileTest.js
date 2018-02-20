@@ -1,7 +1,7 @@
 describe('Test mobile mode', function () {
     getBox().style.width = 'auto';
 
-    describe('Toollbar', function () {
+    describe('Toolbar', function () {
         it('Should have different count buttons for different container sizes', function () {
             getBox().style.width = '1000px';
             var editor = new Jodit(appendTestArea(), {
@@ -58,7 +58,7 @@ describe('Test mobile mode', function () {
 
             expect(15).to.be.above(editor.container.querySelectorAll('.jodit_toolbar > li').length);
         });
-        describe('If buttons were setted like string', function () {
+        describe('If buttons were set like string', function () {
             it('Should have different count buttons for different container sizes', function () {
                 getBox().style.width = '1000px';
                 var editor = new Jodit(appendTestArea(), {
