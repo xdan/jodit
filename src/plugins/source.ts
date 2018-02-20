@@ -55,11 +55,12 @@ Config.prototype.sourceEditorNativeOptions = {
     /**
      * Show gutter
      */
-    showGutter: false,
+    showGutter: true,
     /**
      * Default theme
      */
     theme: 'ace/theme/idle_fingers',
+
     /**
      * Default mode
      */
@@ -78,14 +79,13 @@ Config.prototype.sourceEditorNativeOptions = {
 
 
 Config.prototype.sourceEditorCDNUrlsJS = [
-    '//cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/ace.js',
-    '//cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/ext-emmet.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.1/ace.js',
 ];
 
 
 Config.prototype.beautifyHTMLCDNUrlsJS = [
-    '//cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.14/beautify.min.js',
-    '//cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.14/beautify-html.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.7.5/beautify.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.7.5/beautify-html.min.js',
 ];
 
 
@@ -432,7 +432,7 @@ export class source extends Component {
                     aceEditor.getSession().setUseWrapMode(true);
                     aceEditor.setOption("indentedSoftWrap", false);
                     aceEditor.setOption('wrap', editor.options.sourceEditorNativeOptions.wrap);
-
+                    aceEditor.getSession().setUseWorker(false)
                     aceEditor.$blockScrolling = Infinity;
 
                     // aceEditor.setValue(this.getMirrorValue());

@@ -2,6 +2,7 @@ import {Jodit} from "../Jodit";
 import {css, offset} from "../modules/Helpers";
 import {Component} from "../modules/Component";
 import {Config} from "../Config";
+import {MODE_WYSIWYG} from "../constants";
 
 declare module "../Config" {
     interface Config {
@@ -87,7 +88,11 @@ export class sticky extends Component{
                 jodit.events.on(jodit.ownerWindow, 'scroll wheel mousewheel resize', () => {
                     const scrollWindowTop: number = jodit.ownerWindow.pageYOffset || jodit.ownerDocument.documentElement.scrollTop,
                         offsetEditor: Bound = offset(jodit.container, jodit, true),
-                        doSticky: boolean = (scrollWindowTop + jodit.options.toolbarStickyOffset > offsetEditor.top && scrollWindowTop + jodit.options.toolbarStickyOffset < offsetEditor.top + offsetEditor.height) && !(jodit.options.toolbarDisableStickyForMobile && this.isMobile());
+                        doSticky: boolean = jodit.getMode() === MODE_WYSIWYG && (
+                            scrollWindowTop + jodit.options.toolbarStickyOffset > offsetEditor.top &&
+                            scrollWindowTop + jodit.options.toolbarStickyOffset < offsetEditor.top + offsetEditor.height
+                            ) &&
+                            !(jodit.options.toolbarDisableStickyForMobile && this.isMobile());
 
                     if (jodit.options.toolbarSticky && jodit.options.toolbar) {
                         doSticky ? this.addSticky(jodit.toolbar.container) : this.removeSticky(jodit.toolbar.container);
