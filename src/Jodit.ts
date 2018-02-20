@@ -914,7 +914,7 @@ export class Jodit extends Component {
             return '{' + key + '}';
         }
 
-        if (typeof store[key] === 'string') {
+        if (typeof store[key] === 'string' && store[key]) {
             return parse(store[key]);
         }
 

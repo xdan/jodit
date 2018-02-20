@@ -919,6 +919,7 @@ describe('Tables Jodit Editor Tests', function() {
 
                  simulateEvent('mousedown', 1, editor.editor.querySelector('.test').querySelector('td'));
                  simulateEvent('mousemove', 1, editor.editor.querySelector('.test').querySelectorAll('td')[3]);
+                 simulateEvent('mouseup', 1, editor.editor.querySelector('.test').querySelectorAll('td')[3]);
 
                  expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal('<table><tbody><tr><td>1</td><td>2</td></tr><tr><td>3</td><td class="test"><table><tbody><tr><td data-jodit-selected-cell="1">1</td><td data-jodit-selected-cell="1">2</td></tr><tr><td data-jodit-selected-cell="1">3</td><td data-jodit-selected-cell="1">4</td></tr><tr><td>5</td><td>6</td></tr></tbody></table></td></tr><tr><td>5</td><td>6</td></tr></tbody></table>');
              });
@@ -941,6 +942,7 @@ describe('Tables Jodit Editor Tests', function() {
 
                 simulateEvent('mousedown', 1, editor.editor.querySelectorAll('td')[0]);
                 simulateEvent('mousemove', 1, editor.editor.querySelectorAll('td')[7]);
+                simulateEvent('mouseup', 1, editor.editor.querySelectorAll('td')[7]);
 
                 expect(
                     sortAtrtibutes(editor.editor.innerHTML) // ie change position between colspan and class
@@ -1032,49 +1034,105 @@ describe('Tables Jodit Editor Tests', function() {
                 expect(parseInt(editor.container.querySelector('.jodit_table_resizer').style.left, 10) < 55).to.equal(true);
                 done();
             });
-            it('When move mouse over left edge of cell and press mouse button and move cursor to right in 5 pixels - the width of the right column should decrease, the width of the left column should increase', function (done) {
-                var editor = new Jodit(appendTestArea());
+            describe('Resize column', function () {
+                describe('When move mouse over left edge of cell and press mouse button and move cursor to right in 5 pixels', function (done) {
+                    it('should decrease the width of the right column and the width of the left column should increase', function (done) {
+                        var editor = new Jodit(appendTestArea());
 
-                editor.setEditorValue('<table style="width: 100px; border-collapse: separate;" cellspacing="0">' +
-                    '<tr><td>1</td><td>2</td><td>3</td><td>4</td></tr>' +
-                    '</table>');
+                        editor.setEditorValue('<table style="width: 100px; border-collapse: separate;" cellspacing="0">' +
+                            '<tr><td>1</td><td>2</td><td>3</td><td>4</td></tr>' +
+                            '</table>');
 
-                var td = editor.editor.querySelectorAll('td')[1], box = td.getBoundingClientRect();
-                simulateEvent('mousemove', 1, td, function (options) {
-                    options.clientX = box.left;
-                    options.offsetX = 0;
-                    options.pageX = 0;
-                    options.pageY = 0;
+                        var td = editor.editor.querySelectorAll('td')[1], box = td.getBoundingClientRect();
+                        simulateEvent('mousemove', 1, td, function (options) {
+                            options.clientX = box.left;
+                            options.offsetX = 0;
+                            options.pageX = 0;
+                            options.pageY = 0;
+                        });
+
+                        simulateEvent('mousedown', 1, editor.container.querySelector('.jodit_table_resizer'), function (options) {
+                            options.clientX = box.left;
+                            options.pageX = 0;
+                            options.pageY = 0;
+                        });
+
+                        simulateEvent('mousemove', 1, editor.editorWindow, function (options) {
+                            options.clientX = box.left + 5; // move on 5 pixels
+                            options.pageX = 0;
+                            options.pageY = 0;
+                        });
+                        simulateEvent('mouseup', 1, window, function (options) {
+                            options.clientX = box.left + 5; // move on 5 pixels
+                            options.pageX = 0;
+                            options.pageY = 0;
+                        });
+
+                        expect(editor.editor.innerHTML.toLowerCase()).to.equal(
+                            '<table style="width: 100px; border-collapse: separate;" cellspacing="0"><tbody>' +
+                            '<tr>' +
+                            '<td style="width: 30%;">1</td>' +
+                            '<td style="width: 20%;">2</td>' +
+                            '<td>3</td>' +
+                            '<td>4</td>' +
+                            '</tr>' +
+                            '</tbody></table>'
+                        );
+                        done();
+                    });
+                    describe('After resize', function () {
+                        it('it should restore selection', function (done) {
+                            var editor = new Jodit(appendTestArea());
+
+                            editor.setEditorValue('<p>test</p><table style="width: 100px; border-collapse: separate;" cellspacing="0">' +
+                                '<tr><td>1</td><td>2</td><td>3</td><td>4</td></tr>' +
+                                '</table>');
+
+                            var td = editor.editor.querySelectorAll('td')[1], box = td.getBoundingClientRect();
+
+                            editor.selection.setCursorIn(editor.editor.firstChild);
+
+                            simulateEvent('mousemove', 1, td, function (options) {
+                                options.clientX = box.left;
+                                options.offsetX = 0;
+                                options.pageX = 0;
+                                options.pageY = 0;
+                            });
+
+                            simulateEvent('mousedown', 1, editor.container.querySelector('.jodit_table_resizer'), function (options) {
+                                options.clientX = box.left;
+                                options.pageX = 0;
+                                options.pageY = 0;
+                            });
+
+                            simulateEvent('mousemove', 1, editor.editorWindow, function (options) {
+                                options.clientX = box.left + 5; // move on 5 pixels
+                                options.pageX = 0;
+                                options.pageY = 0;
+                            });
+                            simulateEvent('mouseup', 1, window, function (options) {
+                                options.clientX = box.left + 5; // move on 5 pixels
+                                options.pageX = 0;
+                                options.pageY = 0;
+                            });
+
+
+                            editor.selection.insertHTML('stop')
+
+                            expect(editor.editor.innerHTML.toLowerCase()).to.equal(
+                                '<p>teststop﻿</p><table style="width: 100px; border-collapse: separate;" cellspacing="0"><tbody>' +
+                                '<tr>' +
+                                '<td style="width: 30%;">1</td>' +
+                                '<td style="width: 20%;">2</td>' +
+                                '<td>3</td>' +
+                                '<td>4</td>' +
+                                '</tr>' +
+                                '</tbody></table>'
+                            );
+                            done();
+                        });
+                    });
                 });
-
-                simulateEvent('mousedown', 1, editor.container.querySelector('.jodit_table_resizer'), function (options) {
-                    options.clientX = box.left;
-                    options.pageX = 0;
-                    options.pageY = 0;
-                });
-
-                simulateEvent('mousemove', 1, editor.editorWindow, function (options) {
-                    options.clientX = box.left + 5; // move on 5 pixels
-                    options.pageX = 0;
-                    options.pageY = 0;
-                });
-                simulateEvent('mouseup', 1, window, function (options) {
-                    options.clientX = box.left + 5; // move on 5 pixels
-                    options.pageX = 0;
-                    options.pageY = 0;
-                });
-
-                expect(editor.editor.innerHTML.toLowerCase()).to.equal(
-                    '<table style="width: 100px; border-collapse: separate;" cellspacing="0"><tbody>' +
-                    '<tr>' +
-                    '<td style="width: 30%;">1</td>' +
-                    '<td style="width: 20%;">2</td>' +
-                    '<td>3</td>' +
-                    '<td>4</td>' +
-                    '</tr>' +
-                    '</tbody></table>'
-                );
-                done();
             });
             it('When move mouse over right edge of last cell and press mouse button and move cursor to right in 50 pixels - the width of the whole table should increase', function () {
                 var editor = new Jodit(appendTestArea());
