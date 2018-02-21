@@ -54,6 +54,7 @@ export function enter(editor: Jodit) {
         if (editor.options.readonly) {
             return;
         }
+
         let current: false|Node = editor.selection.current();
         if (current !== false) {
             let currentParagraph = Dom.up(current, (node: HTMLElement) => (node.tagName === editor.options.enter.toUpperCase()), editor.editor);

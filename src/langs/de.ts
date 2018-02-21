@@ -148,4 +148,8 @@ export default {
     'Embed code'                                        : 'Code einbetten',
     'Update'                                            : 'Aktualisieren',
     '': '',
+
+    // stat
+    'Chars: %d': 'Symbole: %d',
+    'Words: %d': 'Wörter: %d',
 };

@@ -1,3 +1,9 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ */
+
 import {Jodit} from "../Jodit";
 import {css, offset} from "../modules/Helpers";
 import {Component} from "../modules/Component";

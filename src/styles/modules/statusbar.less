@@ -1,0 +1,26 @@
+.jodit_statusbar {
+  border: 1px solid @color-border;
+  border-top: 0;
+  font-size: 0;
+  background-color: @color-toolbar;
+  .jodit_statusbar_item {
+    font-size: @font-size-default - 2px;
+    float: left;
+    line-height: 1.57142857em;
+    margin: 0 1em 0;
+    padding: 0;
+
+    &.jodit_statusbar_item-right {
+      float: right;
+    }
+  }
+  &:after {
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    font-size: 0;
+    height: 0;
+    float: none;
+    clear: both;
+  }
+}

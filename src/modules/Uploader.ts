@@ -5,7 +5,7 @@
  */
 
 import {Jodit} from '../Jodit';
-import {Component, ViewBased} from './Component';
+import {Component, IViewBased} from './Component';
 import {Ajax} from './Ajax';
 import {Config} from '../Config'
 import {browser, extend, isPlainObject} from "./Helpers";
@@ -193,10 +193,10 @@ export class Uploader {
     private source: string = 'default';
 
     private options: UploaderOptions;
-    jodit: ViewBased;
+    jodit: IViewBased;
     selection: Select;
 
-    constructor(editor: ViewBased, options?: UploaderOptions) {
+    constructor(editor: IViewBased, options?: UploaderOptions) {
         this.jodit = editor;
         this.selection = editor instanceof Jodit ? editor.selection : new Select(editor);
 

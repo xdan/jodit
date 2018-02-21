@@ -16,6 +16,7 @@ import {extend, inArray, dom, each, sprintf, defaultLanguage, debounce, asArray,
 import * as helper from './modules/Helpers';
 import {Config} from "./Config";
 import {ToolbarCollection} from "./modules/ToolbarCollection";
+import {StatusBar} from "./modules/StatusBar";
 
 
 declare let appVersion: string;
@@ -85,6 +86,8 @@ export class Jodit extends Component {
      * @property{HTMLDivElement} container main editor's box
      */
     container: HTMLDivElement;
+
+    statusbar: StatusBar;
 
     /**
      * @property{HTMLElement} element It contains source element
@@ -212,7 +215,6 @@ export class Jodit extends Component {
         this.workplace = <HTMLDivElement>dom('<div class="jodit_workplace" />', this.ownerDocument);
         this.progress_bar = <HTMLDivElement>dom('<div class="jodit_progress_bar"><div></div></div>', this.ownerDocument);
 
-
         this.toolbar = new ToolbarCollection(this);
 
         if (this.options.toolbar) {
@@ -232,7 +234,7 @@ export class Jodit extends Component {
         });
 
         this.container.appendChild(this.workplace);
-
+        this.statusbar = new StatusBar(this, this.container);
 
         this.workplace.appendChild(this.progress_bar);
 
@@ -497,6 +499,10 @@ export class Jodit extends Component {
         this.events.fire('afterGetValueFromEditor', new_value);
 
         return new_value.value;
+    }
+
+    getEditorText(): string {
+        return this.editor.innerText;
     }
 
     /**

@@ -7,7 +7,7 @@
 import {Jodit} from "../Jodit"
 import {Config} from '../Config'
 import {each, extend} from "./Helpers";
-import {Component, ViewBased} from "./Component";
+import {Component, IViewBased} from "./Component";
 
 /**
  * @property {object} defaultAjaxOptions A set of key/value pairs that configure the Ajax request. All settings are optional
@@ -103,8 +103,8 @@ export class Ajax {
     }
 
     options: AjaxOptions;
-    jodit: ViewBased;
-    constructor(editor: ViewBased, options: AjaxOptions) {
+    jodit: IViewBased;
+    constructor(editor: IViewBased, options: AjaxOptions) {
         this.jodit = editor;
         this.options = <AjaxOptions>extend(true, {}, Config.prototype.defaultAjaxOptions, options);
 

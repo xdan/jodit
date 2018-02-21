@@ -65,12 +65,14 @@ export function size(editor: Jodit) {
             });
     }
 
+    const getNotWorkHeight = (): number => (editor.options.toolbar ? editor.toolbar.container.offsetHeight : 0) + (editor.statusbar ? editor.statusbar.container.offsetHeight : 0);;
     const calcMinHeightWorkspace = () => {
         if (!editor.container || !editor.container.parentNode) {
             return;
         }
 
-        const minHeight: number = <number>css(editor.container, 'minHeight') - (editor.options.toolbar ? editor.toolbar.container.offsetHeight : 0);
+        const minHeight: number = <number>css(editor.container, 'minHeight') - getNotWorkHeight();
+
         [editor.workplace, editor.iframe, editor.editor].map(elm => {
             let minHeightD : number = elm === editor.editor ? minHeight - 2 : minHeight; // borders
             elm && css(<HTMLElement>elm, 'minHeight', minHeightD)
@@ -81,7 +83,7 @@ export function size(editor: Jodit) {
         calcMinHeightWorkspace();
 
         if (editor.container && (editor.options.height !== 'auto' || editor.isFullSize())) {
-            setHeightWorkPlace(editor.container.offsetHeight - (editor.options.toolbar ? editor.toolbar.container.offsetHeight : 0))
+            setHeightWorkPlace(editor.container.offsetHeight - getNotWorkHeight())
         }
     };
 

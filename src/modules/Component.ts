@@ -9,7 +9,8 @@ import {EventsNative} from "./EventsNative";
 
 
 
-export interface ViewBased {
+
+export interface IViewBased {
     progress_bar: HTMLElement;
 
     editorWindow: Window;
@@ -24,6 +25,7 @@ export interface ViewBased {
     i18n: (text: string, ...params: Array<string|number>) => string;
 }
 
+
 export class Component {
     /**
      * @property{Jodit} jodit
@@ -31,11 +33,11 @@ export class Component {
     jodit: Jodit;
 
 
-    constructor(jodit?: ViewBased) {
-        if (jodit && jodit instanceof Jodit) {
-            this.jodit = jodit;
-            if (jodit.components) {
-                jodit.components.push(this);
+    constructor(jodit?: IViewBased) {
+        if (jodit) {
+            this.jodit = <Jodit>jodit;
+            if (this.jodit.components) {
+                this.jodit.components.push(this);
             }
         }
     }

@@ -106,5 +106,10 @@ export default {
     'Delete table': 'حذف الجدول',
     'Delete row': 'حذف الصف',
     'Delete column': 'حذف العمود',
-    'Empty cell': 'خلية فارغة'
+    'Empty cell': 'خلية فارغة',
+
+
+    // stat
+    'Chars: %d': '%d حرف',
+    'Words: %d': '%d كلام',
 };

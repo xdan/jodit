@@ -4,7 +4,7 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Component, ViewBased} from './Component';
+import {Component, IViewBased} from './Component';
 import {Config} from '../Config'
 import {$$, css, debounce, dom, throttle, trim} from "./Helpers";
 import {ToolbarIcon} from "./ToolbarCollection";
@@ -148,7 +148,7 @@ export class ImageEditor extends Component{
     private resizeHandler : HTMLElement;
     private cropHandler: HTMLElement;
 
-    constructor(editor: ViewBased) {
+    constructor(editor: IViewBased) {
         super(editor);
         this.options = (editor && (<Jodit>editor).options) ? (<Jodit>editor).options.imageeditor : Jodit.defaultOptions.imageeditor;
         this.resizeUseRatio = this.options.resizeUseRatio;

@@ -119,5 +119,9 @@ export default {
     'Delete table': 'Supprimer le tableau',
     'Delete row': 'Supprimer la ligne',
     'Delete column': 'Supprimer la colonne',
-    'Empty cell': 'Vider la cellule'
-    }
+    'Empty cell': 'Vider la cellule',
+
+    // stat
+    'Chars: %d': 'Symboles: %d',
+    'Words: %d': 'Mots: %d',
+}

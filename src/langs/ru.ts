@@ -144,4 +144,8 @@ export default {
     'shrink': 'обычный размер',
     'copyformat': 'Копировать формат',
     'hr': 'линия',
+
+    // stat
+    'Chars: %d': 'Символов: %d',
+    'Words: %d': 'Слов: %d',
 };

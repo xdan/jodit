@@ -38,3 +38,4 @@ export {TableProcessor as table} from "./table";
 export {tableKeyboardNavigation} from "./tableKeyboardNavigation";
 export {search} from "./search";
 export {sticky} from "./sticky";
+export {stat} from "./stat";

@@ -5,7 +5,7 @@
  */
 
 import {Jodit} from '../Jodit';
-import {Component, ViewBased} from './Component';
+import {Component, IViewBased} from './Component';
 import {Dialog, Alert, Confirm, Promt} from './Dialog';
 import {Config} from '../Config';
 import {
@@ -527,7 +527,7 @@ Config.prototype.filebrowser = <FileBrowserOptions>{
 const DEFAULT_SOURCE_NAME = 'default';
 const ITEM_CLASS = 'jodit_filebrowser_files_item';
 
-export class FileBrowser extends Component implements ViewBased {
+export class FileBrowser extends Component implements IViewBased {
     options: FileBrowserOptions;
     currentPath: string = '';
     currentSource: string = DEFAULT_SOURCE_NAME;
