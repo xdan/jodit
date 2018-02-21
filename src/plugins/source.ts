@@ -79,24 +79,27 @@ Config.prototype.sourceEditorNativeOptions = {
 
 
 Config.prototype.sourceEditorCDNUrlsJS = [
-    'https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.1/ace.js',
+    '//cdnjs.cloudflare.com/ajax/libs/ace/1.3.1/ace.js',
 ];
 
 
 Config.prototype.beautifyHTMLCDNUrlsJS = [
-    'https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.7.5/beautify.min.js',
-    'https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.7.5/beautify-html.min.js',
+    '//cdnjs.cloudflare.com/ajax/libs/js-beautify/1.7.5/beautify.min.js',
+    '//cdnjs.cloudflare.com/ajax/libs/js-beautify/1.7.5/beautify-html.min.js',
 ];
 
 
 Config.prototype.controls.source = <ControlType>{
     mode: consts.MODE_SPLIT,
+
     exec: (editor: Jodit) => {
         editor.toggleMode();
     },
+
     isActive: (editor: Jodit) => {
         return editor.getRealMode() === consts.MODE_SOURCE;
     },
+
     tooltip: "Change mode"
 };
 
@@ -233,9 +236,9 @@ export class source extends Component {
     }
 
     private tempMarkerStart = '{start-jodit-selection}';
-    private tempMarkerStartReg = /\{start-jodit-selection\}/g;
+    private tempMarkerStartReg = /{start-jodit-selection}/g;
     private tempMarkerEnd = '{end-jodit-selection}';
-    private tempMarkerEndReg = /\{end-jodit-selection\}/g;
+    private tempMarkerEndReg = /{end-jodit-selection}/g;
 
     private __clear = (str: string): string => str.replace(consts.INVISIBLE_SPACE_REG_EXP, '');
 
@@ -333,7 +336,7 @@ export class source extends Component {
                 value = (<any>this.jodit.ownerWindow)['html_beautify'](value);
             }
 
-            selectionStart = value.indexOf(this.tempMarkerStart),
+            selectionStart = value.indexOf(this.tempMarkerStart);
             selectionEnd  = selectionStart;
 
             value = value.replace(this.tempMarkerStartReg, '');
@@ -432,7 +435,7 @@ export class source extends Component {
                     aceEditor.getSession().setUseWrapMode(true);
                     aceEditor.setOption("indentedSoftWrap", false);
                     aceEditor.setOption('wrap', editor.options.sourceEditorNativeOptions.wrap);
-                    aceEditor.getSession().setUseWorker(false)
+                    aceEditor.getSession().setUseWorker(false);
                     aceEditor.$blockScrolling = Infinity;
 
                     // aceEditor.setValue(this.getMirrorValue());
