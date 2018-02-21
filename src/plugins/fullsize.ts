@@ -47,6 +47,7 @@ Config.prototype.controls.fullsize = <ControlType>{
     exec: (editor: Jodit) => {
         editor.toggleFullSize();
     },
+    isActive: editor => editor.isFullSize(),
     getLabel: (editor: Jodit, btn: ControlType, button: ToolbarButton) => {
         const mode: string = editor.isFullSize() ? 'shrink' : 'fullsize';
 

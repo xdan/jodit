@@ -162,7 +162,7 @@ Config.prototype.controls.table = <ControlType> {
 
                 if (current && editor.selection.isCollapsed()) {
                     const block: HTMLElement | false = <HTMLElement | false>Dom.closest(current, Dom.isBlock, editor.editor);
-                    if (block && block !== editor.editor) {
+                    if (block && block !== editor.editor && !block.nodeName.match(/^TD|TH|TBODY|TABLE|THEADER|TFOOTER$/)) {
                         editor.selection.setCursorAfter(block);
                     }
                 }
