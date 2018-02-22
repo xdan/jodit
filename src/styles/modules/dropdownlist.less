@@ -5,7 +5,9 @@
  */
 
 .jodit_toolbar_list > .jodit_toolbar {
-    background: @color-toolbar;
+    &, .jodit_toolbar {
+        background: @color-toolbar;
+    }
     box-shadow: 0 3px 6px rgba(0,0,0,0.16),0 3px 6px rgba(0,0,0,0.23);
     padding: 0;
     margin: auto;

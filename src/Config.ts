@@ -433,7 +433,7 @@ export class Config {
         'underline',
         'italic', '|',
         'superscript',
-        'subscript',
+        'subscript', '|',
         'ul',
         'ol', '|',
         'outdent', 'indent',  '|',
