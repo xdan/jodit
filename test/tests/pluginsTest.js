@@ -1532,6 +1532,202 @@ describe('Test plugins', function () {
             });
         });
     });
+    describe('Stat plugin', function () {
+        describe('After init and change', function () {
+            it('Should show chars count and words count', function () {
+                var editor = new Jodit(appendTestArea(), {
+                    language: 'en',
+                    showCharsCounter: true,
+                    showWordsCounter: true,
+                    observer: {
+                        timeout: 0
+                    }
+                });
+
+                editor.value = '<p>Simple text</p>';
+                var statusbar = editor.container.querySelector('.jodit_statusbar');
+
+                expect(statusbar).to.be.not.equal(null);
+
+                expect(statusbar.innerText.match(/Chars: 10/)).to.be.not.equal(null);
+                expect(statusbar.innerText.match(/Words: 2/)).to.be.not.equal(null);
+
+            });
+            describe('Hide chars count', function () {
+                it('Should show only words count', function () {
+                    var editor = new Jodit(appendTestArea(), {
+                        language: 'en',
+                        showCharsCounter: false,
+                        showWordsCounter: true,
+                        observer: {
+                            timeout: 0
+                        }
+                    });
+
+                    editor.value = '<p>Simple text</p>';
+                    var statusbar = editor.container.querySelector('.jodit_statusbar');
+
+                    expect(statusbar).to.be.not.equal(null);
+
+                    expect(statusbar.innerText.match(/Chars: 10/)).to.be.equal(null);
+                    expect(statusbar.innerText.match(/Words: 2/)).to.be.not.equal(null);
+
+                });
+            });
+            describe('Hide words count', function () {
+                it('Should show only chars count', function () {
+                    var editor = new Jodit(appendTestArea(), {
+                        language: 'en',
+                        showCharsCounter: true,
+                        showWordsCounter: false,
+                        observer: {
+                            timeout: 0
+                        }
+                    });
+
+                    editor.value = '<p>Simple text</p>';
+                    var statusbar = editor.container.querySelector('.jodit_statusbar');
+
+                    expect(statusbar).to.be.not.equal(null);
+
+                    expect(statusbar.innerText.match(/Chars: 10/)).to.be.not.equal(null);
+                    expect(statusbar.innerText.match(/Words: 2/)).to.be.equal(null);
+
+                });
+            });
+            describe('Hide words and chars count', function () {
+                it('Should hide status bar', function () {
+                    var editor = new Jodit(appendTestArea(), {
+                        language: 'en',
+                        showCharsCounter: false,
+                        showWordsCounter: false,
+                        showXPathInStatusbar: false,
+                        observer: {
+                            timeout: 0
+                        }
+                    });
+
+                    editor.value = '<p>Simple text</p>';
+                    var statusbar = editor.container.querySelector('.jodit_statusbar');
+
+                    expect(statusbar).to.be.not.equal(null);
+
+                    expect(statusbar.innerText.match(/Chars: 10/)).to.be.equal(null);
+                    expect(statusbar.innerText.match(/Words: 2/)).to.be.equal(null);
+                    expect(statusbar.offsetHeight).to.be.equal(0);
+
+                });
+            });
+        });
+    });
+    describe('Path plugin', function () {
+        describe('After init', function () {
+            describe('With showXPathInStatusbar=true', function () {
+                it('Should show status bar', function () {
+                    var editor = new Jodit(appendTestArea(), {
+                        language: 'en',
+                        showXPathInStatusbar: true,
+                        showCharsCounter: false,
+                        showWordsCounter: false,
+                        observer: {
+                            timeout: 0
+                        }
+                    });
+
+                    editor.value = '<p>Simple text</p>';
+                    var statusbar = editor.container.querySelector('.jodit_statusbar');
+
+                    expect(editor.ownerWindow.getComputedStyle(statusbar).display).to.be.equal('block');
+
+                });
+                it('Should show path to selection element', function () {
+                    var editor = new Jodit(appendTestArea(), {
+                        language: 'en',
+                        showXPathInStatusbar: true,
+                        observer: {
+                            timeout: 0
+                        }
+                    });
+
+                    editor.value = '<p>Simple text <a href="#">sss</a></p>';
+                    editor.selection.setCursorIn(editor.editor.querySelector('a'))
+
+                    var statusbar = editor.container.querySelector('.jodit_statusbar ul');
+                    expect(statusbar).to.be.not.equal(null);
+                    expect(statusbar.firstChild.innerText).to.be.equal('editor');
+                    expect(statusbar.childNodes[1].innerText).to.be.equal('p');
+                    expect(statusbar.childNodes[2].innerText).to.be.equal('a');
+
+                });
+                describe('After change selection', function () {
+                    it('Should change path to selection element', function () {
+                        var editor = new Jodit(appendTestArea(), {
+                            language: 'en',
+                            showXPathInStatusbar: true,
+                            observer: {
+                                timeout: 0
+                            }
+                        });
+
+                        editor.value = '<p>Simple text <a href="#">sss</a><span>s</span></p>';
+                        editor.selection.setCursorIn(editor.editor.querySelector('a'))
+
+                        var statusbar = editor.container.querySelector('.jodit_statusbar ul');
+
+                        expect(statusbar).to.be.not.equal(null);
+                        expect(statusbar.firstChild.innerText).to.be.equal('editor');
+                        expect(statusbar.childNodes[1].innerText).to.be.equal('p');
+                        expect(statusbar.childNodes[2].innerText).to.be.equal('a');
+
+                        editor.selection.setCursorIn(editor.editor.querySelector('span'))
+
+                        expect(statusbar.firstChild.innerText).to.be.equal('editor');
+                        expect(statusbar.childNodes[1].innerText).to.be.equal('p');
+                        expect(statusbar.childNodes[2].innerText).to.be.equal('span');
+                    });
+                });
+                describe('After click on element of path', function () {
+                    it('Should select this element', function () {
+                        var editor = new Jodit(appendTestArea(), {
+                            language: 'en',
+                            showXPathInStatusbar: true,
+                            observer: {
+                                timeout: 0
+                            }
+                        });
+
+                        editor.value = '<p>Simple text <a href="#">sss</a><span>s</span></p>';
+                        editor.selection.setCursorIn(editor.editor.querySelector('a'))
+
+                        var statusbar = editor.container.querySelector('.jodit_statusbar ul');
+
+                        expect(statusbar).to.be.not.equal(null);
+                        expect(statusbar.firstChild.innerText).to.be.equal('editor');
+                        expect(statusbar.childNodes[1].innerText).to.be.equal('p');
+                        expect(statusbar.childNodes[2].innerText).to.be.equal('a');
+
+                        simulateEvent('click', 0, statusbar, function (evt) {
+                            Object.defineProperty(evt, 'target', {
+                                value: statusbar.childNodes[2].firstChild
+                            })
+                        });
+
+                        expect(editor.helper.trim(editor.ownerWindow.getSelection().toString())).to.be.equal('sss');
+                        expect(statusbar.childNodes[2].innerText).to.be.equal('a');
+
+                        simulateEvent('click', 0, statusbar, function (evt) {
+                            Object.defineProperty(evt, 'target', {
+                                value: statusbar.childNodes[1].firstChild
+                            })
+                        });
+
+                        expect(editor.helper.trim(editor.ownerWindow.getSelection().toString())).to.be.equal('Simple text sss﻿s');
+                        expect(statusbar.childNodes.length).to.be.equal(2);
+                    });
+                });
+            });
+        });
+    });
     afterEach(function () {
         removeStuff();
         var i, keys = Object.keys(Jodit.instances);

@@ -47,6 +47,7 @@ import * as resize from  "./resize.svg";
 import * as resizer from  "./resizer.svg";
 import * as right from  "./right.svg";
 import * as save from  "./save.svg";
+import * as select_all from  "./select-all.svg";
 import * as shrink from  "./shrink.svg";
 import * as source from  "./source.svg";
 import * as splitg from  "./splitg.svg";
@@ -75,7 +76,7 @@ export {
     check_square,check,copyformat,crop,dedent,dots,enter,eraser,eye,
     folder,font,fontsize,fullsize,hr,image,
     info_circle,indent,italic,justify,left,link,lock,menu,merge,ol,omega,outdent,paragraph,
-    pencil,plus,print,redo,resize,resizer,right,save,shrink,source,splitg,splitv,
+    pencil,plus,print,redo,resize,resizer,right,save,select_all,shrink,source,splitg,splitv,
     strikethrough,table,th_list,th,ul,underline,undo,unlink,unlock,update,
     upload,valign,video
 };

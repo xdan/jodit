@@ -148,4 +148,8 @@ export default {
     // stat
     'Chars: %d': 'Символов: %d',
     'Words: %d': 'Слов: %d',
+
+    'All': 'Выделить dct',
+    'Select %s': 'Выделить: %s',
+    'Select all': 'Выделить все',
 };

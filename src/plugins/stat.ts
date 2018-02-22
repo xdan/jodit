@@ -23,7 +23,7 @@ export class stat extends Plugin{
     private charCounter: HTMLElement;
     private wordCounter: HTMLElement;
 
-    calc =  throttle(() => {
+    private  calc =  throttle(() => {
         let text: string = this.jodit.getEditorText();
         if (this.jodit.options.showCharsCounter) {
             this.charCounter.innerText = this.jodit.i18n('Chars: %d', text.replace(SPACE_REG_EXP, '').length);
@@ -36,15 +36,15 @@ export class stat extends Plugin{
                     .filter((e: string) => e.length).length
             );
         }
-    }, 100);
+    }, this.jodit.options.observer.timeout);
 
     afterInit() {
         if (this.jodit.options.showCharsCounter) {
-            this.charCounter = this.jodit.ownerDocument.createElement('div');
+            this.charCounter = this.jodit.ownerDocument.createElement('span');
             this.jodit.statusbar.append(this.charCounter, true);
         }
         if (this.jodit.options.showWordsCounter) {
-            this.wordCounter = this.jodit.ownerDocument.createElement('div');
+            this.wordCounter = this.jodit.ownerDocument.createElement('span');
             this.jodit.statusbar.append(this.wordCounter, true);
         }
 

@@ -449,6 +449,7 @@ export class Config {
         'copyformat', '|',
         'symbol',
         'fullsize',
+        'selectall',
         'print',
         'about'
     ];

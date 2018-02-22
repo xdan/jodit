@@ -502,7 +502,14 @@ export class Jodit extends Component {
     }
 
     getEditorText(): string {
-        return this.editor.innerText;
+        if (this.editor) {
+            return this.editor.innerText;
+        }
+
+        const div: HTMLDivElement = this.ownerDocument.createElement('div');
+        div.innerHTML = this.getElementValue();
+
+        return div.innerText;
     }
 
     /**

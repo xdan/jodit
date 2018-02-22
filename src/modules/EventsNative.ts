@@ -236,6 +236,9 @@ export class EventsNative {
                     let node: Element|null = <any>event.target;
                     while (node && node !== this) {
                         if (node.matches(<string>selector)) {
+                            Object.defineProperty(event, 'target', {
+                                value: node
+                            });
                             if (callback && callback.call(node, event) === false) {
                                 event.preventDefault();
                                 return false;

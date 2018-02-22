@@ -200,7 +200,7 @@ export function iframe(editor: Jodit) {
             if (editor.options.height === 'auto') {
                 doc.documentElement.style.overflowY = 'hidden';
                 const resizeIframe = throttle(() => {
-                    if (editor.editor && editor.iframe) {
+                    if (editor.editor && editor.iframe && editor.options.height === 'auto') {
                         css(editor.iframe, 'height', editor.editor.offsetHeight);
                     }
                 }, editor.options.observer.timeout / 2);
