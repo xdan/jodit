@@ -188,6 +188,7 @@ describe('Jodit Editor Tests', function() {
                         expect(button).to.be.not.equal(null);
 
                         expect(button.querySelector('svg')).to.be.not.equal(null);
+
                         var old_icon = button.querySelector('svg').innerHTML;
 
                         editor.toggleFullSize(true);

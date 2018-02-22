@@ -52,7 +52,11 @@ Config.prototype.controls.unlink = <ControlType>{
         editor.events.fire('hidePopup');
     }
 };
-Config.prototype.controls.link = <ControlType>{
+Config.prototype.controls.link = <ControlType> {
+    isActive: (editor, control): boolean => {
+        const current: Node | false = editor.selection.current();
+        return current && Dom.closest(current, 'a', editor.editor) !== false;
+    },
     popup: (editor: Jodit, current: HTMLElement|false, self: ControlType, close: Function) => {
         const sel: Selection = editor.editorWindow.getSelection(),
             form: HTMLFormElement = <HTMLFormElement>dom(

@@ -731,7 +731,7 @@ export class ToolbarCollection extends ToolbarElement {
             .fire('updateToolbar');
     };
 
-    checkActiveButtons = debounce(this.immedateCheckActiveButtons, this.jodit.options.observer.timeout, true);
+    checkActiveButtons = debounce(this.immedateCheckActiveButtons, this.jodit.options.observer.timeout);
 
     private closeAll = () => {
         this.jodit.events.fire('closeAllPopups');
@@ -776,7 +776,7 @@ export class ToolbarCollection extends ToolbarElement {
         this.jodit.events
             .on(this.jodit.ownerWindow, 'mousedown touchend', this.closeAll)
             .on( 'afterOpenPopup', this.afterOpen)
-            .on('mousedown mouseup keydown change afterInit readonly afterResize', this.checkActiveButtons)
+            .on('mousedown mouseup keydown change afterInit readonly afterResize focus afterSetMode touchstart', this.checkActiveButtons)
             .on('afterSetMode focus', this.immedateCheckActiveButtons);
     };
 

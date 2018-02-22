@@ -1142,7 +1142,7 @@ describe('Test plugins', function () {
                         buttons: 'symbol',
                     });
 
-                    editor.setEditorValue('test');
+                    editor.setEditorValue('');
 
                     var btn = editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-symbol');
                     expect(null).to.be.not.equal(btn);
@@ -1153,9 +1153,10 @@ describe('Test plugins', function () {
 
                     var currentActive = dialog.getElementsByTagName('a')[5];
 
+
                     simulateEvent('keydown', Jodit.KEY_ENTER, currentActive);
 
-                    expect('&amp;test').to.be.equal(editor.getEditorValue());
+                    expect('&amp;').to.be.equal(editor.getEditorValue());
 
                     simulateEvent('mousedown', 0, btn);
                     dialog = editor.ownerDocument.querySelector('.jodit_dialog_box.active.jodit_modal .jodit_dialog_content .jodit_symbols');
@@ -1165,7 +1166,7 @@ describe('Test plugins', function () {
 
                     simulateEvent('mousedown', 0, currentActive);
 
-                    expect('&amp;½test').to.be.equal(editor.getEditorValue());
+                    expect('&amp;½').to.be.equal(editor.getEditorValue());
 
                 });
             });
@@ -1517,17 +1518,20 @@ describe('Test plugins', function () {
                 ];
                 var sizes = chacksizes.map(function (key) {
                     return editor[key].offsetHeight;
-                });
+                }),
+                    equal = function (a, b) {
+                        return Math.abs(a - b) <= 2;
+                    };
 
                 editor.toggleFullSize(true);
                 chacksizes.map(function (key, index) {
-                    expect(editor[key].offsetHeight).to.be.not.equal(sizes[index]);
+                    expect(equal(editor[key].offsetHeight, sizes[index])).to.be.false;
                 });
 
                 editor.toggleFullSize(false);
 
                 chacksizes.map(function (key, index) {
-                    expect(editor[key].offsetHeight).to.be.equal(sizes[index]);
+                    expect(equal(editor[key].offsetHeight, sizes[index])).to.be.true;
                 });
             });
         });
@@ -1715,6 +1719,37 @@ describe('Test plugins', function () {
 
                         expect(editor.helper.trim(editor.editorWindow.getSelection().toString())).to.be.equal('Simple text sss﻿s');
                         expect(statusbar.childNodes.length).to.be.equal(3);
+                    });
+                });
+                describe('Context menu on element of path', function () {
+                    it('Should open context menu', function () {
+                        var editor = new Jodit(appendTestArea(), {
+                            language: 'en',
+                            showXPathInStatusbar: true,
+                            observer: {
+                                timeout: 0
+                            }
+                        });
+
+                        editor.value = '<p>Simple text <a href="#">sss</a><span>s</span></p>';
+                        editor.selection.setCursorIn(editor.editor.querySelector('a'))
+
+                        var statusbar = editor.container.querySelector('.jodit_statusbar ul');
+
+                        expect(statusbar).to.be.not.equal(null);
+                        expect(statusbar.firstChild.innerText).to.be.equal('');
+                        expect(statusbar.childNodes[1].innerText).to.be.equal('p');
+                        expect(statusbar.childNodes[2].innerText).to.be.equal('a');
+
+                        simulateEvent('contextmenu', 0, statusbar.childNodes[2].firstChild);
+
+                        var context = editor.ownerDocument.querySelector('.jodit_context_menu[data-editor_id=' + editor.id + ']');
+                        expect(context).to.be.not.equal(null);
+                        expect(editor.ownerWindow.getComputedStyle(context).display).to.be.equal('block');
+
+                        simulateEvent('click', 0, context.querySelector('a'));
+                        expect(editor.value).to.be.equal('<p>Simple text <span>s</span></p>');
+                        expect(editor.ownerWindow.getComputedStyle(context).display).to.be.equal('none');
                     });
                 });
             });

@@ -110,6 +110,7 @@ export class symbols {
                     })
                     .on(chars, 'mousedown', function (this: HTMLAnchorElement, e ?: MouseEvent) {
                         if (this && this.nodeName === 'A') {
+                            editor.selection.focus();
                             editor.selection.insertHTML(this.innerHTML);
                             editor.events.fire(this, 'close_dialog');
                             e && e.preventDefault();

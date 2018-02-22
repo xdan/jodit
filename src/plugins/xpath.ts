@@ -31,16 +31,21 @@ export class xpath extends Plugin{
     menu: ContextMenu;
 
     private onContext = (bindElement: Node, event: MouseEvent) => {
+        if (!this.menu) {
+            this.menu = new ContextMenu(this.jodit);
+        }
+
         this.menu.show(event.clientX, event.clientY, [
             {
                 icon: 'bin',
-                title: 'Remove',
+                title: bindElement === this.jodit.editor ? 'Clear' : 'Remove',
                 exec: () => {
                     if (bindElement !== this.jodit.editor) {
                         bindElement.parentNode && bindElement.parentNode.removeChild(bindElement);
                     } else {
                         this.jodit.value = '';
                     }
+                    this.jodit.setEditorValue();
                 }
             },
             {
@@ -129,7 +134,6 @@ export class xpath extends Plugin{
 
     afterInit() {
         if (this.jodit.options.showXPathInStatusbar) {
-            this.menu = new ContextMenu(this.jodit);
             this.container = this.jodit.ownerDocument.createElement('ul');
             this.container.classList.add('jodit_xpath');
             this.jodit.statusbar.append(this.container);

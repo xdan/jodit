@@ -26,7 +26,7 @@ export class ContextMenu extends Component {
 
     constructor(editor: IViewBased) {
         super(editor);
-        this.context = dom('<div class="jodit_context_menu"></div>', editor.ownerDocument);
+        this.context = dom(`<div data-editor_id="${this.jodit.id}" class="jodit_context_menu"></div>`, editor.ownerDocument);
         editor.ownerDocument.body.appendChild(this.context);
         editor.events.on('beforeDestruct', () => {
             this.context.parentNode && this.context.parentNode.removeChild(this.context);

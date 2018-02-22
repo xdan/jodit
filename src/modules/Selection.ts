@@ -396,7 +396,7 @@ export class Select extends Component{
             lastEditorElement: Node|null;
 
         if (!this.isFocused()) {
-            this.jodit.editor.focus();
+            this.focus();
         }
 
         if (!(html instanceof (<any>this.jodit.editorWindow).Node)) {
