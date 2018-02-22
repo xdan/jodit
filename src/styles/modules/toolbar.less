@@ -52,7 +52,7 @@
     vertical-align:top;
     margin: 0 !important;
     padding: 0;
-    padding-right: 0;
+
     list-style: none !important;
     outline: none;
     position:relative;
@@ -71,8 +71,8 @@
     }
 
     &.jodit_toolbar_btn-separator {
-      border-left: 0px solid rgba(211, 211, 211, 0.6);
-      border-right: 1px solid #e6e6e6;
+      border-left: 0;
+      border-right: 1px solid @color-separator;
       padding: 0;
       margin: 2px 3px 0 !important;
       cursor: default;
@@ -81,8 +81,7 @@
     &.jodit_toolbar_btn-break{
       display:block !important;
       width: auto;
-      border-top: 1px solid #f1f1f1;
-      border-bottom: 1px solid rgba(211, 211, 211, 0.6);
+      border-top: 1px solid @color-separator;
       height: 0;
     }
 
