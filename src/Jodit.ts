@@ -316,7 +316,7 @@ export class Jodit extends Component {
 
         // proxy events
         this.events
-            .on(this.editor, 'keydown keyup keypress mousedown mouseup mousepress copy paste resize touchstart touchend focus blur', (event: Event): false | void => {
+            .on(this.editor, 'keydown keyup keypress mousedown mouseup mousepress click copy paste resize touchstart touchend focus blur', (event: Event): false | void => {
                 if (this.options.readonly) {
                     return;
                 }

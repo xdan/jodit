@@ -37,5 +37,6 @@ export class StatusBar extends Component {
 
         this.container.appendChild(wrapper);
         this.show();
+        this.jodit.events.fire('resize');
     }
 }

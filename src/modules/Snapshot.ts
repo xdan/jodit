@@ -76,6 +76,7 @@ export class Snapshot extends Component {
         return offset;
     }
 
+
     /**
      * Creates object a snapshot of editor: html and the current selection. Current selection calculate by offset by start document
      *
@@ -91,6 +92,7 @@ export class Snapshot extends Component {
                 endOffset: 0
             }
         };
+
         snapshot.html = this.jodit.getEditorValue();
         const sel: Selection = this.jodit.editorWindow.getSelection();
 

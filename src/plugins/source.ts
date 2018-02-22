@@ -11,6 +11,7 @@ import {$$, appendScript, debounce, dom} from '../modules/Helpers';
 import {markerInfo} from "../modules/Selection";
 import {Component} from "../modules/Component";
 import {ControlType} from "../modules/ToolbarCollection";
+import {MODE_SOURCE} from "../constants";
 
 declare module "../Config"  {
     interface Config {
@@ -232,6 +233,7 @@ export class source extends Component {
 
 
             })
+            .on('beforeCommand', this.onSelectAll)
             .on('change afterInit', this.fromWYSIWYG);
     }
 
@@ -243,6 +245,15 @@ export class source extends Component {
     private __clear = (str: string): string => str.replace(consts.INVISIBLE_SPACE_REG_EXP, '');
 
     private selInfo: markerInfo[] = [];
+    private selectAll = () => {
+        this.mirror.select();
+    };
+    private onSelectAll = (command: string) : void | false => {
+        if (command.toLowerCase() === 'selectall' && this.jodit.getRealMode() === MODE_SOURCE) {
+           this.selectAll();
+           return false;
+        }
+    };
 
     // override it for ace editors
     private getSelectionStart: () => number = (): number => {
@@ -488,6 +499,10 @@ export class source extends Component {
                     this.getSelectionEnd = (): number => {
                         const range: AceAjax.Range = aceEditor.selection.getRange();
                         return getIndexByRowColumn(range.end.row, range.end.column);
+                    };
+
+                    this.selectAll = () => {
+                        aceEditor.selection.selectAll();
                     };
 
                     this.setMirrorSelectionRange = (start: number, end: number) => {

@@ -10,8 +10,8 @@ import {ControlType} from "../modules/ToolbarCollection";
 
 Config.prototype.controls.bold = <ControlType>{
     tagRegExp: /^(strong|b)$/i,
-        tags: ["strong", "b"],
-        css: {
+    tags: ["strong", "b"],
+    css: {
         "font-weight": ["bold", "700"]
     },
     tooltip: "Bold",

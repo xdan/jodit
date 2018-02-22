@@ -432,6 +432,8 @@ export class Config {
         'strikethrough',
         'underline',
         'italic', '|',
+        'superscript',
+        'subscript',
         'ul',
         'ol', '|',
         'outdent', 'indent',  '|',

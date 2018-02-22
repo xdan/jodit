@@ -1654,7 +1654,7 @@ describe('Test plugins', function () {
 
                     var statusbar = editor.container.querySelector('.jodit_statusbar ul');
                     expect(statusbar).to.be.not.equal(null);
-                    expect(statusbar.firstChild.innerText).to.be.equal('editor');
+                    expect(statusbar.firstChild.innerText).to.be.equal('');
                     expect(statusbar.childNodes[1].innerText).to.be.equal('p');
                     expect(statusbar.childNodes[2].innerText).to.be.equal('a');
 
@@ -1675,13 +1675,13 @@ describe('Test plugins', function () {
                         var statusbar = editor.container.querySelector('.jodit_statusbar ul');
 
                         expect(statusbar).to.be.not.equal(null);
-                        expect(statusbar.firstChild.innerText).to.be.equal('editor');
+                        expect(statusbar.firstChild.innerText).to.be.equal('');
                         expect(statusbar.childNodes[1].innerText).to.be.equal('p');
                         expect(statusbar.childNodes[2].innerText).to.be.equal('a');
 
                         editor.selection.setCursorIn(editor.editor.querySelector('span'))
 
-                        expect(statusbar.firstChild.innerText).to.be.equal('editor');
+                        expect(statusbar.firstChild.innerText).to.be.equal('');
                         expect(statusbar.childNodes[1].innerText).to.be.equal('p');
                         expect(statusbar.childNodes[2].innerText).to.be.equal('span');
                     });
@@ -1702,27 +1702,19 @@ describe('Test plugins', function () {
                         var statusbar = editor.container.querySelector('.jodit_statusbar ul');
 
                         expect(statusbar).to.be.not.equal(null);
-                        expect(statusbar.firstChild.innerText).to.be.equal('editor');
+                        expect(statusbar.firstChild.innerText).to.be.equal('');
                         expect(statusbar.childNodes[1].innerText).to.be.equal('p');
                         expect(statusbar.childNodes[2].innerText).to.be.equal('a');
 
-                        simulateEvent('click', 0, statusbar, function (evt) {
-                            Object.defineProperty(evt, 'target', {
-                                value: statusbar.childNodes[2].firstChild
-                            })
-                        });
+                        simulateEvent('click', 0, statusbar.childNodes[2].firstChild);
 
-                        expect(editor.helper.trim(editor.ownerWindow.getSelection().toString())).to.be.equal('sss');
+                        expect(editor.helper.trim(editor.editorWindow.getSelection().toString())).to.be.equal('sss');
                         expect(statusbar.childNodes[2].innerText).to.be.equal('a');
 
-                        simulateEvent('click', 0, statusbar, function (evt) {
-                            Object.defineProperty(evt, 'target', {
-                                value: statusbar.childNodes[1].firstChild
-                            })
-                        });
+                        simulateEvent('click', 0, statusbar.childNodes[1].firstChild);
 
-                        expect(editor.helper.trim(editor.ownerWindow.getSelection().toString())).to.be.equal('Simple text sss﻿s');
-                        expect(statusbar.childNodes.length).to.be.equal(2);
+                        expect(editor.helper.trim(editor.editorWindow.getSelection().toString())).to.be.equal('Simple text sss﻿s');
+                        expect(statusbar.childNodes.length).to.be.equal(3);
                     });
                 });
             });

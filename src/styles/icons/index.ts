@@ -53,6 +53,8 @@ import * as source from  "./source.svg";
 import * as splitg from  "./splitg.svg";
 import * as splitv from  "./splitv.svg";
 import * as strikethrough from  "./strikethrough.svg";
+import * as subscript from  "./subscript.svg";
+import * as superscript from  "./superscript.svg";
 import * as table from  "./table.svg";
 import * as th_list from  "./th-list.svg";
 import * as th from  "./th.svg";
@@ -77,6 +79,6 @@ export {
     folder,font,fontsize,fullsize,hr,image,
     info_circle,indent,italic,justify,left,link,lock,menu,merge,ol,omega,outdent,paragraph,
     pencil,plus,print,redo,resize,resizer,right,save,select_all,shrink,source,splitg,splitv,
-    strikethrough,table,th_list,th,ul,underline,undo,unlink,unlock,update,
+    strikethrough,subscript, superscript, table,th_list,th,ul,underline,undo,unlink,unlock,update,
     upload,valign,video
 };

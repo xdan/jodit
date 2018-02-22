@@ -89,7 +89,32 @@ describe('Commands Jodit Editor Tests', function() {
         });
     });
 
-
+    describe('Sub/Supscript native', function () {
+        describe('sub', function () {
+            it('Should insert selection im SUB element', function () {
+                var editor = new Jodit(appendTestArea());
+                editor.value = '<p>test</p>';
+                var range = editor.editorDocument.createRange();
+                range.setStart(editor.editor.firstChild.firstChild, 2)
+                range.setEnd(editor.editor.firstChild.firstChild, 4)
+                editor.selection.selectRange(range);
+                editor.execCommand('subscript');
+                expect(editor.value).to.be.equal('<p>te<sub>st</sub></p>');
+            });
+        });
+        describe('sup', function () {
+            it('Should insert selection im SUP element', function () {
+                var editor = new Jodit(appendTestArea());
+                editor.value = '<p>test</p>';
+                var range = editor.editorDocument.createRange();
+                range.setStart(editor.editor.firstChild.firstChild, 2)
+                range.setEnd(editor.editor.firstChild.firstChild, 4)
+                editor.selection.selectRange(range);
+                editor.execCommand('superscript');
+                expect(editor.value).to.be.equal('<p>te<sup>st</sup></p>');
+            });
+        });
+    });
     describe('Bold command', function () {
         describe('For box with style="font-weight:bold"', function() {
             it('should wrap selected text in STRONG element without questions', function() {

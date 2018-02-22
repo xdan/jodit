@@ -93,6 +93,7 @@ export function size(editor: Jodit) {
         .on('toggleFullSize', (fullsize: boolean) => {
             if (!fullsize && editor.options.height === 'auto') {
                 setHeightWorkPlace('auto');
+                calcMinHeightWorkspace();
             }
         })
         .on('afterInit', () => {

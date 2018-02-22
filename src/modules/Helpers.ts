@@ -1098,3 +1098,22 @@ export const scrollIntoView = (elm: HTMLElement, root: HTMLElement, doc: Documen
         }
     }
 };
+
+
+export const getXPathByElement = (element: HTMLElement, root: HTMLElement): string => {
+    if (!element || element.nodeType != 1) {
+        return ''
+    }
+
+    if (!element.parentNode || root === element) {
+        return '';
+    }
+
+    if (element.id) {
+        return "//*[@id='" + element.id + "']"
+    }
+
+    const sames: Node[] = [].filter.call(element.parentNode.childNodes, (x: Node) => x.nodeName === element.nodeName);
+
+    return getXPathByElement(<HTMLElement>element.parentNode, root) + '/' + element.nodeName.toLowerCase() + (sames.length > 1 ? '['+([].indexOf.call(sames, element)+1)+']' : '')
+};
