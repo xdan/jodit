@@ -152,4 +152,6 @@ export default {
     'All': 'Выделить dct',
     'Select %s': 'Выделить: %s',
     'Select all': 'Выделить все',
+
+
 };

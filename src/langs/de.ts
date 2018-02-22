@@ -12,7 +12,7 @@ export default {
     'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.':
         'Copyright © XDSoft.net - Chupurnov Valeriy. Alle Rechte vorbehalten.',
 
-     // Toolbar
+    // Toolbar
     'Anchor'                                            : 'Anker',
     'Open in new tab'                                   : 'In neuer Registerkarte öffnen',
     'Open editor in fullsize'                           : 'Editor in voller Größe öffnen',
@@ -55,7 +55,7 @@ export default {
     'Paint format'                                      : 'Format kopieren',
     'Change mode'                                       : 'Änderungsmodus',
 
-        //plugin Image
+    //plugin Image
     'Margins'                                           : 'Ränder',
     'top'                                               : 'Oben',
     'right'                                             : 'Rechts',
@@ -80,7 +80,7 @@ export default {
     'Ok'                                                : 'OK',
 
     //plugin paste
-    'Your code is similar to HTML. Keep as HTML?'       : 'Es scheint als dass Sie HTML-Text eubgegeben haben. Als HTML einfügen?',
+    'Your code is similar to HTML. Keep as HTML?'       : 'Es scheint als dass Sie HTML-Text einfügen möchten',
     'Paste as HTML'                                     : 'Als HTML einfügen?',
     'Keep'                                              : 'Original speichern',
     'Clean'                                             : 'Säubern',
@@ -92,7 +92,7 @@ export default {
 
     'Insert only Text'                                  : 'Als Text einfügen',
 
-        // File Browser module
+    // File Browser module
     'File Browser'                                      : 'Dateibrowser',
     'Error on load list'                                : 'Fehler beim Laden der Liste',
     'Error on load folders'                             : 'Fehler beim Laden der Ordner',
@@ -102,7 +102,7 @@ export default {
     'type name'                                         : 'Typname',
 
 
-        // Form module
+    // Form module
     'Drop image'                                        : 'Bild hier hinziehen',
     'or click'                                          : 'oder hier klicken',
     'Alternative text'                                  : 'Alternativtext',
@@ -111,7 +111,7 @@ export default {
     'Background'                                        : 'Hintergrund',
     'Text'                                              : 'Text',
 
-         // popap module
+    // popap module
     'Top'                                               : 'Oben',
     'Middle'                                            : 'Mittig',
     'Bottom'                                            : 'Unten',
@@ -150,6 +150,6 @@ export default {
     '': '',
 
     // stat
-    'Chars: %d': 'Symbole: %d',
+    'Chars: %d': 'Zeichen: %d',
     'Words: %d': 'Wörter: %d',
 };

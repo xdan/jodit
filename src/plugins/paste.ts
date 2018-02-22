@@ -43,28 +43,28 @@ export function paste(editor: Jodit) {
 
         const keep: HTMLAnchorElement  = <HTMLAnchorElement>dom(
             '<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
-            '<span>' + Jodit.prototype.i18n('Keep') + '</span>' +
+            '<span>' + editor.i18n('Keep') + '</span>' +
             '</a>',
             dialog.document
         );
 
         const clear: HTMLAnchorElement  = <HTMLAnchorElement>dom(
             '<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
-            '<span>' + Jodit.prototype.i18n(clearButton) + '</span>' +
+            '<span>' + editor.i18n(clearButton) + '</span>' +
             '</a>',
             dialog.document
         );
 
         const clear2: HTMLAnchorElement  = <HTMLAnchorElement>dom(
             '<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
-            '<span>' + Jodit.prototype.i18n(clear2Button) + '</span>' +
+            '<span>' + editor.i18n(clear2Button) + '</span>' +
             '</a>',
             dialog.document
         );
 
         const cancel: HTMLAnchorElement  = <HTMLAnchorElement>dom(
             '<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
-            '<span>' + Jodit.prototype.i18n('Cancel') + '</span>' +
+            '<span>' + editor.i18n('Cancel') + '</span>' +
             '</a>',
             dialog.document
         );
