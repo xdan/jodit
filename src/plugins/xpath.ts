@@ -10,6 +10,7 @@ import {debounce, dom, getXPathByElement, throttle} from "../modules/Helpers";
 import {Dom} from "../modules/Dom";
 import {ControlType, ToolbarIcon} from "../modules/ToolbarCollection";
 import {INVISIBLE_SPACE, MODE_WYSIWYG} from "../constants";
+import {ContextMenu} from "../modules/ContextMenu";
 
 declare module "../Config" {
     interface Config {
@@ -27,7 +28,31 @@ Config.prototype.showXPathInStatusbar = true;
 
 export class xpath extends Plugin{
     container: HTMLElement;
+    menu: ContextMenu;
 
+    private onContext = (bindElement: Node, event: MouseEvent) => {
+        this.menu.show(event.clientX, event.clientY, [
+            {
+                icon: 'bin',
+                title: 'Remove',
+                exec: () => {
+                    if (bindElement !== this.jodit.editor) {
+                        bindElement.parentNode && bindElement.parentNode.removeChild(bindElement);
+                    } else {
+                        this.jodit.value = '';
+                    }
+                }
+            },
+            {
+                icon: 'select-all',
+                title: 'Select',
+                exec: () => {
+                    this.jodit.selection.select(bindElement);
+                }
+            }
+        ]);
+        return false;
+    };
     private onSelectPath = (bindElement: Node, event: MouseEvent) => {
         this.jodit.selection.focus();
 
@@ -61,7 +86,9 @@ export class xpath extends Plugin{
         const li: HTMLLIElement = <HTMLLIElement>dom(`<li><a role="button" data-path="${path}" href="javascript:void(0)" title="${title}" tabindex="-1">${name}</a></li>`, this.jodit.ownerDocument);
         const a : HTMLAnchorElement = <HTMLAnchorElement>li.firstChild;
 
-        a.addEventListener('click', this.onSelectPath.bind(this, bindElement));
+        this.jodit.events
+            .on(a, 'click', this.onSelectPath.bind(this, bindElement))
+            .on(a, 'contextmenu', this.onContext.bind(this, bindElement))
 
         return li;
     };
@@ -102,6 +129,7 @@ export class xpath extends Plugin{
 
     afterInit() {
         if (this.jodit.options.showXPathInStatusbar) {
+            this.menu = new ContextMenu(this.jodit);
             this.container = this.jodit.ownerDocument.createElement('ul');
             this.container.classList.add('jodit_xpath');
             this.jodit.statusbar.append(this.container);
