@@ -17,6 +17,7 @@ import * as helper from './modules/Helpers';
 import {Config} from "./Config";
 import {ToolbarCollection} from "./modules/ToolbarCollection";
 import {StatusBar} from "./modules/StatusBar";
+import {localStorageProvider, Storage} from "./modules/Storage";
 
 
 declare let appVersion: string;
@@ -66,6 +67,11 @@ export class Jodit extends Component {
      */
     ownerWindow: Window;
 
+    /**
+     * Container for set/get value
+     * @type {Storage}
+     */
+    storage: Storage = new Storage(new localStorageProvider());
 
     /**
      * @property{string} ID attribute for source element, id add {id}_editor it's editor's id
@@ -269,8 +275,16 @@ export class Jodit extends Component {
             // continue regardless of error
         }
 
+        let mode: number = this.options.defaultMode;
 
-        this.setMode(this.options.defaultMode);
+        if (this.options.saveModeInStorage) {
+            let localMode: string | null = this.storage.get('jodit_default_mode');
+            if (localMode !== null) {
+                mode = parseInt(localMode, 10);
+            }
+        }
+
+        this.setMode(mode);
 
         if (this.options.readonly) {
             this.setReadOnly(true);
@@ -817,8 +831,8 @@ export class Jodit extends Component {
 
         this.mode = inArray(data.mode, [consts.MODE_SOURCE, consts.MODE_WYSIWYG, consts.MODE_SPLIT]) ? data.mode : consts.MODE_WYSIWYG;
 
-        if (this.options.saveModeInCookie) {
-            Cookie.set('jodit_default_mode', this.mode, 31);
+        if (this.options.saveModeInStorage) {
+            this.storage.set('jodit_default_mode', this.mode);
         }
 
         modeClasses.forEach((className) => {

@@ -65,9 +65,14 @@ export class Config {
     theme: string = 'default';
 
     /**
-     * if it is true that the current mode is saved in a cookie , and is restored after a reload of the page
+     * if set true then the current mode is saved in a cookie , and is restored after a reload of the page
      */
-    saveModeInCookie: boolean = false;
+    saveModeInStorage: boolean = false;
+
+    /**
+     * if set true and height !== auto then after reload editor will be have latest height
+     */
+    saveHeightInStorage: boolean = false;
 
     /**
      * Options specifies whether the editor is to have its spelling and grammar checked or not

@@ -18,8 +18,8 @@ import {Uploader, UploaderOptions} from "./Uploader";
 import {Ajax} from "./Ajax";
 import * as consts from "../constants";
 import {ImageEditor, ActionBox} from "./ImageEditor";
-import {Cookie} from "./Cookie";
 import {EventsNative} from "./EventsNative";
+import {localStorageProvider, Storage} from "./Storage";
 
 /**
  * The module creates a web browser dialog box . In a Web browser , you can select an image , remove , drag it . Upload new
@@ -535,6 +535,11 @@ export class FileBrowser extends Component implements IViewBased {
 
     private dialog: Dialog;
 
+    /**
+     * Container for set/get value
+     * @type {Storage}
+     */
+    storage: Storage = new Storage(new localStorageProvider());
 
     private loader: HTMLElement;
     private browser: HTMLElement;
@@ -641,12 +646,12 @@ export class FileBrowser extends Component implements IViewBased {
                 self.files.classList.remove('jodit_filebrowser_files_view-list');
                 self.files.classList.add('jodit_filebrowser_files_view-' + self.view);
 
-                Cookie.set('jodit_filebrowser_view', self.view, 31);
+                this.storage.set('jodit_filebrowser_view', self.view);
             })
 
             .on(self.buttons.sort, 'change', () => {
                 self.sortBy = (<HTMLInputElement>self.buttons.sort).value;
-                Cookie.set('jodit_filebrowser_sortby', self.sortBy, 31);
+                this.storage.set('jodit_filebrowser_sortby', self.sortBy);
                 self.loadItems(self.currentPath, self.currentSource);
             })
 
@@ -917,8 +922,8 @@ export class FileBrowser extends Component implements IViewBased {
 
         this.view = this.options.view === 'list' ? 'list' : 'tiles';
 
-        if (Cookie.get('jodit_filebrowser_view')) {
-            this.view = Cookie.get('jodit_filebrowser_view') === 'list' ? 'list' : 'tiles';
+        if ( this.storage.get('jodit_filebrowser_view')) {
+            this.view =  this.storage.get('jodit_filebrowser_view') === 'list' ? 'list' : 'tiles';
         }
 
         this.buttons[this.view].classList.remove('disabled');
@@ -926,8 +931,8 @@ export class FileBrowser extends Component implements IViewBased {
 
         this.sortBy = (['changed', 'name', 'size']).indexOf(this.options.sortBy) !== -1 ? this.options.sortBy : 'changed';
 
-        if (Cookie.get('jodit_filebrowser_sortby')) {
-            this.sortBy = (['changed', 'name', 'size']).indexOf(Cookie.get('jodit_filebrowser_sortby') || '') !== -1 ? Cookie.get('jodit_filebrowser_sortby') || '' : 'changed';
+        if ( this.storage.get('jodit_filebrowser_sortby')) {
+            this.sortBy = (['changed', 'name', 'size']).indexOf( this.storage.get('jodit_filebrowser_sortby') || '') !== -1 ?  this.storage.get('jodit_filebrowser_sortby') || '' : 'changed';
         }
 
         (<HTMLInputElement>this.buttons.sort).value = this.sortBy;

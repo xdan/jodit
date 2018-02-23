@@ -172,7 +172,7 @@ Config.prototype.popup = <{[key: string]: Array<ControlType|string>}>{
     table: [
         {
             name: 'brush',
-            popup: function (editor: Jodit, elm: HTMLTableElement, control: ControlType, close: Function) {
+            popup: (editor: Jodit, elm: HTMLTableElement, control: ControlType, close: Function) => {
                 let $bg: HTMLElement,
                     $cl: HTMLElement,
                     $br: HTMLElement,
@@ -195,21 +195,24 @@ Config.prototype.popup = <{[key: string]: Array<ControlType|string>}>{
                     selected.forEach((cell: HTMLTableCellElement) => {
                         css(cell, 'background-color', value);
                     });
-                    close();
+                    editor.setEditorValue();
+                    // close();
                 }, bg_color);
 
                 $cl = ColorPickerWidget(editor,(value: string) => {
                     selected.forEach((cell: HTMLTableCellElement) => {
                         css(cell, 'color', value);
                     });
-                    close();
+                    editor.setEditorValue();
+                    // close();
                 }, color);
 
                 $br = ColorPickerWidget(editor,(value: string) => {
                     selected.forEach((cell: HTMLTableCellElement) => {
                         css(cell, 'border-color', value);
                     });
-                    close();
+                    editor.setEditorValue();
+                    // close();
                 }, br_color);
 
                 $tab = TabsWidget(editor, {
@@ -217,6 +220,7 @@ Config.prototype.popup = <{[key: string]: Array<ControlType|string>}>{
                     Text : $cl,
                     Border : $br,
                 });
+
 
                 return $tab;
             },

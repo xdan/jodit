@@ -72,14 +72,14 @@ export namespace Widget {
                 }
 
 
-                const active = form.querySelector('a.active');
+                const active: HTMLElement | null = form.querySelector('a.active');
                 if (active) {
                     active.classList
                         .remove('active');
                     active.innerHTML = '';
                 }
 
-                let color = target.getAttribute('data-color') || '';
+                const color: string = target.getAttribute('data-color') || '';
 
 
                 if (color) {

@@ -599,7 +599,7 @@ export const offset =  (elm: HTMLElement, jodit: Jodit, recurse: boolean = false
  * @return {string}
  */
 export const camelCase = (key: string): string => {
-    return key.replace(/-(.)/g, (m, letter) => {
+    return key.replace(/(-|_)(.)/g, (m, code, letter) => {
         return letter.toUpperCase();
     });
 };

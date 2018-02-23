@@ -19,7 +19,12 @@ Config.prototype.allowResizeX = false;
 Config.prototype.allowResizeY = true;
 
 export function size(editor: Jodit) {
-    const setHeight = (height: number | string) => css(editor.container, 'height', height);
+    const setHeight = (height: number | string) => {
+        css(editor.container, 'height', height);
+        if (editor.options.saveHeightInStorage) {
+            editor.storage.set('height', height);
+        }
+    };
     const setWidth = (width: number | string) => css(editor.container, 'width', width);
     const setHeightWorkPlace = (height: number | string) => css(editor.workplace, 'height', height);
     // const setWidthWorkPlace = (width: number | string) => css(editor.workplace, 'width', width);
@@ -104,7 +109,15 @@ export function size(editor: Jodit) {
                 minHeight: editor.options.minHeight
             });
 
-            setHeight(editor.options.height);
+            let height: string | number = editor.options.height;
+            if (editor.options.saveHeightInStorage) {
+                let localHeight: string | null = editor.storage.get('height');
+                if (localHeight) {
+                    height = localHeight;
+                }
+            }
+
+            setHeight(height);
             setWidth(editor.options.width);
 
             resizeWorkspace();

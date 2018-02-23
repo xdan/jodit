@@ -4,9 +4,9 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Component} from "./Component"
+import {IStorage} from "./Storage";
 
-export class Cookie extends Component {
+export class Cookie implements IStorage{
     /**
      * Set cookie value
      *
@@ -19,7 +19,7 @@ export class Cookie extends Component {
      * Jodit.modules.Cookie.set('somename', somevalue, 5);
      * ```
      */
-    static set(name: string|number, value: string|number, days ?: number) {
+    set(name: string|number, value: string|number, days ?: number) {
         let expires: string, date;
         if (days) {
             date = new Date();
@@ -42,7 +42,7 @@ export class Cookie extends Component {
      * console.log(Jodit.modules.Cookie.get('somename'));
      * ```
      */
-    static get (name: string): string|null {
+    get(name: string): string | null {
         let nameEQ: string = name + '=',
             i: number,
             c: string,
@@ -71,7 +71,7 @@ export class Cookie extends Component {
      * Jodit.modules.Cookie.remove('somename');
      * ```
      */
-    static remove(name: string) {
-        Cookie.set(name, '', -1);
+    remove(name: string) {
+        this.set(name, '', -1);
     }
 }
