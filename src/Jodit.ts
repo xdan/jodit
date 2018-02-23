@@ -1001,7 +1001,11 @@ export class Jodit extends Component {
         }
 
         this.__isFullSize = isFullSize;
-        this.events && this.events.fire('toggleFullSize', isFullSize);
+
+
+        if (this.events) {
+            this.events.fire('toggleFullSize', isFullSize);
+        }
     }
 }
 

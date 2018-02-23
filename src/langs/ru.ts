@@ -149,7 +149,7 @@ export default {
     'Chars: %d': 'Символов: %d',
     'Words: %d': 'Слов: %d',
 
-    'All': 'Выделить dct',
+    'All': 'Выделить все',
     'Select %s': 'Выделить: %s',
     'Select all': 'Выделить все',
 

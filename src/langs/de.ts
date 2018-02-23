@@ -152,4 +152,8 @@ export default {
     // stat
     'Chars: %d': 'Zeichen: %d',
     'Words: %d': 'Wörter: %d',
+
+    'All': 'Wählen Sie Alle aus',
+    'Select %s': 'Markieren: %s',
+    'Select all': 'Wählen Sie Alle aus',
 };

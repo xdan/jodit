@@ -1111,6 +1111,10 @@ describe('Test interface', function() {
 
                 simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-splitv>a'))
 
+                var list = popup.querySelector('.jodit_toolbar_list.jodit_toolbar_list-open');
+                expect(list).to.be.not.equal(null);
+                simulateEvent('mousedown', 0, list.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-tablesplitv a'))
+
                 expect(sortAtrtibutes(editor.getEditorValue())).to.equal('<table style="width:300px"><tbody><tr><td style="width:49.83%">3</td><td style="width:49.83%"><br></td></tr></tbody></table>');
 
             });
@@ -1127,7 +1131,10 @@ describe('Test interface', function() {
 
                 var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
 
-                simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-splitg>a'))
+                simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-splitv>a'))
+                var list = popup.querySelector('.jodit_toolbar_list.jodit_toolbar_list-open');
+                expect(list).to.be.not.equal(null);
+                simulateEvent('mousedown', 0, list.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-tablesplitg a'))
 
                 expect(sortAtrtibutes(editor.getEditorValue())).to.equal('<table style="width:300px"><tbody><tr><td>5</td></tr><tr><td><br></td></tr></tbody></table>');
 

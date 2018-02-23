@@ -509,7 +509,11 @@ export class source extends Component {
                         setSelectionRangeIndices(start, end);
                     };
 
-                    editor.events.fire('aceInited', editor);
+                    editor.events
+                        .on('afterResize', () => {
+                            aceEditor.resize();
+                        })
+                        .fire('aceInited', editor);
                 }
             };
 

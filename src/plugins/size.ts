@@ -113,7 +113,7 @@ export function size(editor: Jodit) {
             if (editor.options.saveHeightInStorage) {
                 let localHeight: string | null = editor.storage.get('height');
                 if (localHeight) {
-                    height = localHeight;
+                    height = localHeight
                 }
             }
 
