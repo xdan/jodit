@@ -129,6 +129,8 @@ Config.prototype.controls.table = <ControlType> {
 
                 const table: HTMLTableElement = doc.createElement('table');
 
+                table.style.width = '100%';
+
                 let first_td: HTMLTableCellElement|null = null,
                     tr: HTMLTableRowElement,
                     td: HTMLTableCellElement,

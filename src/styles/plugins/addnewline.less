@@ -16,25 +16,39 @@
   * {
     box-sizing: border-box;
   }
-  z-index: 4;
+  z-index: 10;
   position: absolute;
   height: @height-icon;
+  line-height: 100%;;
+  vertical-align: middle;
+  font-size: 0;
   top: 0;
+
 
   outline: none;
   margin-top: -@padding-for-hover;
   //text-align: right;
-  padding: 5px;
-  vertical-align: middle;
+  //padding: 5px;
+  //vertical-align: middle;
   &:before {
-    vertical-align: top;
+    height: 100%;
+    display: inline-block;
+    vertical-align: middle;
+    content: '';
+  }
+  &:after {
+    box-sizing: border-box;
+    vertical-align: middle;
     content: '';
     //position: absolute;
     border-top:1px solid @color-new-line;
+    height: 1px;
     display: inline-block;
     width: ~'calc(100% - @{width-icon})';
   }
   span {
+    right: 0;
+    position: absolute;
     display: inline-block;
     width: @width-icon;
     height: @height-icon;
@@ -55,12 +69,12 @@
   }
 
   &.jodit-add-new-line_after {
-    margin-top: -@height-icon;
+    //margin-top: -@height-icon;
     &:before {
-      vertical-align: bottom;
+      //vertical-align: bottom;
     }
     span {
-      vertical-align: bottom;
+      //vertical-align: bottom;
     }
   }
 

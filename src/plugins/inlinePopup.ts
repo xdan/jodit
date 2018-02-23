@@ -239,16 +239,17 @@ Config.prototype.popup = <{[key: string]: Array<ControlType|string>}>{
             },
             tooltip: 'Vertical align'
         },
-        //'|',
         {
             name: 'splitv',
-            command: 'tablesplitv',
-            tooltip: 'Split vertical'
+            list: {
+                tablesplitv: 'Split vertical',
+                tablesplitg: 'Split horizontal'
+            },
+            tooltip: 'Split'
         },
         {
-            name: 'splitg',
-            command: 'tablesplitg',
-            tooltip: 'Split horizontal'
+            name: 'align',
+            icon: 'left'
         },
         "\n",
         {

@@ -154,7 +154,8 @@ export default {
     'Select all': 'Выделить все',
 
     'Vertical align': 'Вертикальное выравнивание',
-    'Split vertical': 'Разделить по вретикали',
+    'Split': 'Разделить',
+    'Split vertical': 'Разделить по вертикали',
     'Split horizontal': 'Разделить по горизонтали',
     'Merge': 'Объеденить в одну',
     'Add column': 'Добавить столбец',

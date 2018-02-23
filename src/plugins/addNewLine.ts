@@ -59,6 +59,7 @@ export function addNewLine(editor: Jodit) {
         if (editor.container.classList.contains('jodit_popup_active')) {
             return;
         }
+
         clearTimeout(timeout);
         line.classList.toggle('jodit-add-new-line_after', !preview);
         line.style.display = 'block';
@@ -71,9 +72,11 @@ export function addNewLine(editor: Jodit) {
         line.style.display = 'none';
         hidden = true;
     };
+
     const canGetFocus = (elm: Node | null): boolean => {
         return elm !== null && Dom.isBlock(elm) && !/^(img|table|iframe|hr)$/i.test(elm.nodeName);
     };
+
     const hide = () => {
         if (hidden) {
             return;
