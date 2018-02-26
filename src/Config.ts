@@ -645,8 +645,8 @@ Config.prototype.controls = {
         tags: ["img"],
         tooltip: "Insert Image"
     },
-    video : {
-        popup: (editor: Jodit) => {
+    video : <ControlType> {
+        popup: (editor: Jodit, current, control, close) => {
             const bylink: HTMLFormElement = <HTMLFormElement>dom(`<form class="jodit_form">
                         <input required name="code" placeholder="http://" type="url"/>
                         <button type="submit">${editor.i18n('Insert')}</button>
@@ -658,10 +658,13 @@ Config.prototype.controls = {
                         </form>`, editor.ownerDocument),
 
                 tab: {[key:string]: HTMLFormElement} = {},
+
                 selinfo = editor.selection.save(),
+
                 insertCode = (code: string) => {
                     editor.selection.restore(selinfo);
                     editor.selection.insertHTML(code);
+                    close();
                 };
 
             if (editor.options.textIcons) {
@@ -699,6 +702,7 @@ Config.prototype.controls = {
 
             return TabsWidget(editor, tab);
         },
+
         tags: ["iframe"],
         tooltip: "Insert youtube/vimeo video"
     }
