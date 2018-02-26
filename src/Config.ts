@@ -32,7 +32,7 @@ export class Config {
      * @type {boolean}
      */
     readonly: boolean = false;
-    activeButtonsInReadOnly: string[] = ['source', 'fullsize', 'print', 'about', 'dots'];
+    activeButtonsInReadOnly: string[] = ['source', 'fullsize', 'print', 'about', 'dots', 'selectall'];
 
     /**
      * For example, in Joomla, the top menu bar closes Jodit toolbar when scrolling. Therefore, it is necessary to move the toolbar Jodit by this amount [more](http://xdsoft.net/jodit/doc/#2.5.57)

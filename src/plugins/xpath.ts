@@ -8,7 +8,7 @@ import {Config} from "../Config";
 import {Plugin} from "../modules/Plugin";
 import {debounce, dom, getXPathByElement, throttle} from "../modules/Helpers";
 import {Dom} from "../modules/Dom";
-import {ControlType, ToolbarIcon} from "../modules/ToolbarCollection";
+import {ControlType, ControlTypeStrong, ToolbarButton, ToolbarIcon} from "../modules/ToolbarCollection";
 import {INVISIBLE_SPACE, MODE_WYSIWYG} from "../constants";
 import {ContextMenu} from "../modules/ContextMenu";
 
@@ -98,9 +98,9 @@ export class xpath extends Plugin{
         return li;
     };
     private  appendSelectAll = () => {
-        const li: HTMLElement = this.tpl(this.jodit.editor, '/', this.jodit.options.textIcons ? this.jodit.i18n('Select all') : ToolbarIcon.getIcon('select-all'), this.jodit.i18n('Select all'));
+        const li: ToolbarButton = new ToolbarButton(this.jodit, {name: 'selectall', ...this.jodit.options.controls.selectall});
 
-        this.container.insertBefore(li, this.container.firstChild);
+        this.container.insertBefore(li.container, this.container.firstChild);
     };
     private  calcPathImd = () => {
 

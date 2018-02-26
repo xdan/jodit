@@ -208,6 +208,12 @@ export class Jodit extends Component {
         }
 
 
+        if (this.options.events) {
+            Object.keys(this.options.events).forEach((key: string) => {
+                this.events.on(key, this.options.events[key]);
+            });
+        }
+
         this.selection = new Select(this);
         this.uploader = new Uploader(this);
 
@@ -249,12 +255,6 @@ export class Jodit extends Component {
         }
 
         this.helper = helper;
-
-        if (this.options.events) {
-            each(this.options.events, (key: string, callback: Function) => {
-                this.events.on(key, callback);
-            });
-        }
 
         this.id = this.element.getAttribute('id') || (new Date()).getTime().toString();
 
@@ -684,7 +684,7 @@ export class Jodit extends Component {
      * ```
      */
     execCommand(command: string, second: any = false, third: null|any = null) {
-        if (this.options.readonly) {
+        if (this.options.readonly && command !== 'selectall') {
             return;
         }
 

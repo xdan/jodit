@@ -1342,7 +1342,7 @@ describe('Test interface', function() {
                 editor.setEditorValue('test');
                 var buttons = [].slice.call(editor.container.querySelectorAll('.jodit_toolbar_btn'));
                 buttons.forEach(function (btn) {
-                    if (!/(source|print|about|fullsize|separator)/.test(btn.className)) {
+                    if (!/(source|print|about|fullsize|separator|selectall)/.test(btn.className)) {
                         expect(true).to.be.equal(btn.classList.contains('jodit_disabled'));
                         expect(true).to.be.equal(btn.hasAttribute('disabled'));
                     }

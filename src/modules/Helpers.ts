@@ -326,7 +326,7 @@ export const appendScript = (url: string, callback: (this: HTMLElement, e: Event
  *
  * @return HTMLElement
  */
-export const dom = (html: string|HTMLElement, doc: Document): HTMLElement => {
+export const dom = (html: string | HTMLElement, doc: Document): HTMLElement => {
     if (html instanceof (<any>doc.defaultView).HTMLElement) {
         return <HTMLElement>html;
     }

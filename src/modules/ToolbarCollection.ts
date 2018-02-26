@@ -204,6 +204,37 @@ abstract class ToolbarElement extends Component {
 
     public parentToolbar: ToolbarCollection | null = null;
 
+    public createIcon(clearName: string, control ?: ControlTypeStrong) : HTMLElement {
+        const icon: string = control ? control.icon || control.name : clearName;
+
+        if (!this.jodit.options.textIcons) {
+            let iconSVG: string | undefined | HTMLElement = this.jodit.events.fire('getIcon', icon, control, clearName);
+            let iconElement: HTMLElement;
+
+            if (control && control.iconURL && iconSVG === undefined) {
+                iconElement = dom('<i></i>', this.jodit.ownerDocument);
+                iconElement.style.backgroundImage =  'url(' + control.iconURL + ')';
+            } else {
+                if (iconSVG === undefined) {
+                    if (ToolbarIcon.exists(icon)) {
+                        iconSVG =  ToolbarIcon.getIcon(icon);
+                    } else {
+                        iconSVG =  ToolbarIcon.getIcon('empty');
+                    }
+                }
+
+                iconElement = dom(iconSVG, this.jodit.ownerDocument);
+
+            }
+
+            iconElement.classList.add('jodit_icon', 'jodit_icon_' + clearName);
+
+            return iconElement;
+        }
+
+        return dom(`<span class="jodit_icon">${this.jodit.i18n(control ? control.name : clearName)}</span>`, this.jodit.ownerDocument);
+    }
+
     constructor(jodit: Jodit, containerTag: string = 'li', containerClass: string = 'jodit_toolbar_btn') {
         super(jodit);
         this.container = this.jodit.ownerDocument.createElement(containerTag);
@@ -286,6 +317,7 @@ export  class ToolbarList extends ToolbarPopup {
     }
 
     public toolbar: ToolbarCollection;
+
     protected doOpen(control: ControlTypeStrong) {
         this.toolbar = new ToolbarCollection(this.jodit);
 
@@ -338,6 +370,7 @@ export  class ToolbarButton extends ToolbarElement {
     readonly target: HTMLElement | undefined;
 
     private __disabled: boolean = false;
+
     set disable(disable: boolean) {
         this.__disabled = disable;
         this.container.classList.toggle('jodit_disabled', disable);
@@ -358,6 +391,7 @@ export  class ToolbarButton extends ToolbarElement {
     }
 
     private __actived: boolean = false;
+
     set active(enable: boolean) {
         this.__actived = enable;
         this.container.classList.toggle('jodit_active', enable);
@@ -426,6 +460,7 @@ export  class ToolbarButton extends ToolbarElement {
             tags = this.control.tags || (this.control.options && this.control.options.tags);
 
             elm = element;
+
             if (Dom.up(elm, (node: Node | null): boolean | void => {
                 if (node && tags.indexOf(node.nodeName.toLowerCase()) !== -1) {
                     return true;
@@ -459,22 +494,6 @@ export  class ToolbarButton extends ToolbarElement {
             // this.container.appendChild(tooltip);
             // tooltip.innerHTML = this.jodit.i18n(control.tooltip) + (control.hotkeys ? '<br>' + asArray(control.hotkeys).join(' ') : '');
             link.setAttribute('title', this.jodit.i18n(control.tooltip) + (control.hotkeys ? '<br>' + asArray(control.hotkeys).join(' ') : ''));
-        }
-    }
-
-    private createIcon(control: ControlTypeStrong, clearName: string) {
-        if (!this.jodit.options.textIcons) {
-            if (this.control.iconURL) {
-                this.textBox.style.backgroundImage =  'url(' + control.iconURL + ')';
-            } else {
-                if (ToolbarIcon.exists(control.icon || control.name)) {
-                    const iconElement: HTMLElement =  dom(ToolbarIcon.getIcon(control.icon || control.name, 'empty'), this.jodit.ownerDocument);
-                    iconElement.classList.add('jodit_icon', 'jodit_icon_' + clearName);
-                    this.textBox.appendChild(iconElement);
-                }
-            }
-        } else {
-            this.textBox.innerHTML = `<span class="jodit_icon">${this.jodit.i18n(control.name)}</span>`;
         }
     }
 
@@ -516,7 +535,7 @@ export  class ToolbarButton extends ToolbarElement {
 
         const clearName: string = control.name.replace(/[^a-zA-Z0-9]/g, '_');
 
-        this.createIcon(control, clearName);
+        this.textBox.appendChild(this.createIcon(clearName, control));
 
         this.container.classList.add('jodit_toolbar_btn-' + clearName);
 

@@ -5,6 +5,7 @@ var links = {
     'arabic.lang.html': 'Arabic Language',
     'custom-toolbar.html': 'Custom toolbar',
     'fullsize.html': 'Fullsize mode',
+    'custom-icons.html': 'Custom Icons / Font Awesome',
 };
 
 if (examples) {
