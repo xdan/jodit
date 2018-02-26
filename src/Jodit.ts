@@ -808,6 +808,7 @@ export class Jodit extends Component {
      * @fired afterSetMode
      */
     setMode(mode: number | string) {
+        const oldmode: number = this.getMode();
         const data = {
                 mode: parseInt(mode.toString(), 10)
             },
@@ -851,7 +852,9 @@ export class Jodit extends Component {
          * });
          * ```
          */
-        this.events.fire('afterSetMode');
+        if (oldmode !== this.getMode()) {
+            this.events.fire('afterSetMode');
+        }
     }
 
     /**
