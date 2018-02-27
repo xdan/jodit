@@ -25,6 +25,7 @@ export function size(editor: Jodit) {
             editor.storage.set('height', height);
         }
     };
+
     const setWidth = (width: number | string) => css(editor.container, 'width', width);
     const setHeightWorkPlace = (height: number | string) => css(editor.workplace, 'height', height);
     // const setWidthWorkPlace = (width: number | string) => css(editor.workplace, 'width', width);
@@ -110,6 +111,7 @@ export function size(editor: Jodit) {
             });
 
             let height: string | number = editor.options.height;
+
             if (editor.options.saveHeightInStorage) {
                 let localHeight: string | null = editor.storage.get('height');
                 if (localHeight) {
@@ -120,7 +122,7 @@ export function size(editor: Jodit) {
             setHeight(height);
             setWidth(editor.options.width);
 
-            resizeWorkspace();
+            resizeWorkspaceImd();
         }, undefined, undefined,true)
         .on(window, 'load', resizeWorkspace)
         .on('afterInit resize updateToolbar scroll afterResize', resizeWorkspace)
