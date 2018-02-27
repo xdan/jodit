@@ -108,12 +108,13 @@ export class xpath extends Plugin{
 
         let index: number = 0;
 
+        this.container.innerHTML = INVISIBLE_SPACE;
+
         if (current) {
-            this.container.innerHTML = INVISIBLE_SPACE;
             Dom.up(current, (elm: Node) => {
                 if (this.jodit.editor !== elm && elm.nodeType !== Node.TEXT_NODE) {
                     const name: string = elm.nodeName.toLowerCase(),
-                         xpath: string = getXPathByElement(<HTMLElement>elm, this.jodit.editor).replace(/^\//, '');
+                        xpath: string = getXPathByElement(<HTMLElement>elm, this.jodit.editor).replace(/^\//, '');
 
                     const li: HTMLElement = this.tpl(elm, xpath, name, this.jodit.i18n('Select %s', name));
 
@@ -121,12 +122,9 @@ export class xpath extends Plugin{
                 }
                 index += 1;
             }, this.jodit.editor);
-
-            this.appendSelectAll();
         }
 
-
-
+        this.appendSelectAll();
     };
 
     private  calcPath = debounce(this.calcPathImd, this.jodit.options.observer.timeout * 2);
@@ -139,7 +137,7 @@ export class xpath extends Plugin{
             this.jodit.statusbar.append(this.container);
             this.jodit.events
                 .on('mouseup change keydown changeSelection', this.calcPath)
-                .on('afterSetMode', () => {
+                .on('afterSetMode afterInit', () => {
                     if (this.jodit.getRealMode() === MODE_WYSIWYG) {
                         this.calcPath()
                     } else {
