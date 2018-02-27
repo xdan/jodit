@@ -99,7 +99,7 @@ export function paste(editor: Jodit) {
         return dialog;
     };
 
-    const insertHTML: Function = (html: string) : void | false => {
+    const insertHTML: Function = (html: string, event: DragEvent | ClipboardEvent) : void | false => {
         if (isHTML(html) && buffer !== trimFragment(html)) {
             html = trimFragment(html);
             ClearOrKeep(editor.i18n('Your code is similar to HTML. Keep as HTML?'), editor.i18n('Paste as HTML'), (agree: boolean | number) => {
@@ -111,7 +111,13 @@ export function paste(editor: Jodit) {
                     html = strip_tags(html);
                 }
 
+                if (event.type === 'drop') {
+                    editor.selection.insertCursorAtPoint((<DragEvent>event).clientX, (<DragEvent>event).clientY);
+                }
+
                 editor.selection.insertHTML(html);
+
+
                 editor.setEditorValue();
             }, 'Insert as Text');
             return false;
@@ -141,7 +147,7 @@ export function paste(editor: Jodit) {
     };
 
     editor.events
-        .on('copy', (event: ClipboardEvent | DragEvent): false | void => {
+        .on('copy', (event: ClipboardEvent): false | void => {
             const selectedText: string = editor.selection.getHTML();
 
             const clipboardData: DataTransfer = getDataTransfer(event) || getDataTransfer(<any>editor.editorWindow) || getDataTransfer((<any>event).originalEvent);
@@ -221,6 +227,9 @@ export function paste(editor: Jodit) {
                     }
 
                     if (typeof clipboard_html === 'string' || clipboard_html instanceof (<any>editor.editorWindow).Node) {
+                        if (event.type === 'drop') {
+                            editor.selection.insertCursorAtPoint((<DragEvent>event).clientX, (<DragEvent>event).clientY);
+                        }
                         editor.selection.insertHTML(editor.options.defaultActionOnPaste === INSERT_AS_HTML ? clipboard_html : htmlentities(clipboard_html));
                     }
 
@@ -250,10 +259,10 @@ export function paste(editor: Jodit) {
 
     if (editor.options.askBeforePasteHTML) {
         editor.events
-            .on('beforePaste', (event: ClipboardEvent): false | void => {
+            .on('beforePaste', (event: ClipboardEvent | DragEvent): false | void => {
                 if (event && getDataTransfer(event).getData(TEXT_PLAIN)) {
                     let html: string = getDataTransfer(event).getData(TEXT_PLAIN);
-                    return insertHTML(html);
+                    return insertHTML(html, event);
                 }
             });
     }
@@ -285,7 +294,7 @@ export function paste(editor: Jodit) {
                                     editor.setEditorValue();
                                 });
                             } else {
-                                insertHTML(html);
+                                insertHTML(html, event);
                             }
                             return false;
                         }
