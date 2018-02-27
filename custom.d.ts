@@ -4,6 +4,7 @@ declare module "*.svg" {
 }
 
 type Bound = {top: number, left: number,  width: number, height: number};
+type Point = {x: number, y: number};
 type SelectionRange = {
     startContainer: Node|null,
     startOffset: number|null,

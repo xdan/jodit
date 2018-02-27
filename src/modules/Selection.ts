@@ -34,25 +34,29 @@ export class Select extends Component{
         this.removeMarkers();
 
         try {
-            let rng: Range = doc.createRange();
+            let rng: Range | null = null;
 
             if ((<any>doc).caretPositionFromPoint) {
                 caret = (<any>doc).caretPositionFromPoint(x, y);
+                rng = doc.createRange();
                 rng.setStart(caret.offsetNode, caret.offset);
-            } else if (this.jodit.editorDocument.caretRangeFromPoint) {
-                caret = this.jodit.editorDocument.caretRangeFromPoint(x, y);
-                rng = this.jodit.editorDocument.createRange();
+            } else if (doc.caretRangeFromPoint) {
+                caret = doc.caretRangeFromPoint(x, y);
+                rng = doc.createRange();
                 rng.setStart(caret.startContainer, caret.startOffset);
             }
 
             if (rng && typeof this.jodit.editorWindow.getSelection != "undefined") {
                 rng.collapse(true);
-                let sel: Selection = this.jodit.editorWindow.getSelection();
+                const sel: Selection = this.jodit.editorWindow.getSelection();
                 sel.removeAllRanges();
                 sel.addRange(rng);
             } else if (typeof (<any>doc).body.createTextRange !== "undefined") {
-                let range: any = (<any>doc).body.createTextRange();
+                const range: any = (<any>doc).body.createTextRange();
                 range.moveToPoint(x, y);
+                const endRange: any = range.duplicate();
+                endRange.moveToPoint(x, y);
+                range.setEndPoint("EndToEnd", endRange);
                 range.select();
             }
 

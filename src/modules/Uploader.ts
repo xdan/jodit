@@ -9,7 +9,7 @@ import {Component, IViewBased} from './Component';
 import {Ajax} from './Ajax';
 import {Config} from '../Config'
 import {browser, extend, isPlainObject} from "./Helpers";
-import {TEXT_PLAIN} from "../constants";
+import {TEXT_HTML, TEXT_PLAIN, URL_LIST} from "../constants";
 import {Dom} from "./Dom";
 import {Select} from "./Selection";
 
@@ -460,39 +460,30 @@ export class Uploader {
                 .on('processPaste',  onPaste)
         }
 
+        const hasFiles = (event: DragEvent) : boolean => event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files.length !== 0;
+
         self.jodit.events
             .on(form, "dragover", (event: DragEvent) => {
-                form.classList.add('draghover');
+                if (hasFiles(event)) {
+                    form.classList.contains('jodit_draghover') ||
+                    form.classList.add('jodit_draghover');
+                }
+
                 event.preventDefault();
             })
-            .on(form, "dragleave dragend", (event: DragEvent) => {
-                form.classList.remove('draghover');
-                event.preventDefault();
+            .on(form, "dragend", (event: DragEvent) => {
+                if (hasFiles(event)) {
+                    form.classList.contains('jodit_draghover') && form.classList.remove('jodit_draghover');
+                    event.preventDefault();
+                }
             })
             .on(form, "drop", (event: DragEvent): false | void => {
-                form.classList.remove('draghover');
-                if (event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files.length) {
-                    event.preventDefault();
-                    this.sendFiles(event.dataTransfer.files, handlerSuccess, handlerError);
-                } else if (event.dataTransfer && event.dataTransfer.getData(TEXT_PLAIN) && event.dataTransfer.getData(TEXT_PLAIN) !== '-' && form === self.jodit.editor) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    if (!this.selection.insertCursorAtPoint(event.clientX, event.clientY)) {
-                        return false;
-                    }
-                    if (handlerSuccess || this.options.defaultHandlerSuccess) {
-                        let data: {
-                            baseurl: string,
-                            files: string[]
-                        } = {
-                            baseurl: '',
-                            files: []
-                        };
-                        data.files = [event.dataTransfer.getData(TEXT_PLAIN)];
+                form.classList.remove('jodit_draghover');
 
-                        (handlerSuccess || this.options.defaultHandlerSuccess).call(this, data);
-                    }
+                if (hasFiles(event)) {
                     event.preventDefault();
+                    event.stopImmediatePropagation();
+                    this.sendFiles(event.dataTransfer.files, handlerSuccess, handlerError);
                 }
             });
 

@@ -1117,3 +1117,22 @@ export const getXPathByElement = (element: HTMLElement, root: HTMLElement): stri
 
     return getXPathByElement(<HTMLElement>element.parentNode, root) + '/' + element.nodeName.toLowerCase() + (sames.length > 1 ? '['+([].indexOf.call(sames, element)+1)+']' : '')
 };
+
+const dataBindKey = 'JoditDataBindkey';
+export const dataBind = (elm: any, key: string, value?: any) => {
+    let store = elm[dataBindKey];
+    if (!store) {
+        store = {};
+        Object.defineProperty(elm, dataBindKey, {
+            enumerable: false,
+            configurable: true,
+            value: store
+        });
+    }
+
+    if (value === undefined) {
+        return store[key];
+    }
+
+    store[key] = value;
+};

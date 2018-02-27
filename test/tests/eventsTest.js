@@ -960,6 +960,18 @@ describe('Jodit Events system Tests', function() {
             });
         });
     });
+    describe('Helpers', function () {
+        describe('dataBind', function () {
+            it('Should save value in object', function () {
+                var obj = {
+                    stop: 2
+                };
+                Jodit.modules.helper.dataBind(obj, 'test', 1);
+                expect(Object.keys(obj).toString()).to.be.equal('stop')
+                expect(Jodit.modules.helper.dataBind(obj, 'test')).to.be.equal(1)
+            });
+        });
+    });
     afterEach(function () {
         removeStuff();
         var i, keys = Object.keys(Jodit.instances);

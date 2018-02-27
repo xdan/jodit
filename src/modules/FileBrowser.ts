@@ -464,8 +464,10 @@ Config.prototype.filebrowser = <FileBrowserOptions>{
             ${(this.options.showFileChangeTime && item.changed) ? `<span class="${ITEM_CLASS}-info-filechanged">${item.changed}</span>` : ''}
         </div>`;
 
-        return `<a draggable="true" class="${ITEM_CLASS}" href="${urlNormalize(source.baseurl + source.path +  name)}" data-source="${source_name}" data-path="${pathNormalize(source.path ? source.path + '/' : '/')}" data-name="${name}" title="${name}" data-url="${urlNormalize(source.baseurl + source.path + name)}">
-            <img src="${urlNormalize(source.baseurl + source.path + thumb)}?_tmst=${timestamp}" alt="${name}"/>
+        let imageURL: string = urlNormalize(source.baseurl + source.path + name);
+
+        return `<a draggable="true" class="${ITEM_CLASS}" href="${imageURL}" data-source="${source_name}" data-path="${pathNormalize(source.path ? source.path + '/' : '/')}" data-name="${name}" title="${name}" data-url="${imageURL}">
+            <img data-src="${imageURL}" src="${urlNormalize(source.baseurl + source.path + thumb)}?_tmst=${timestamp}" alt="${name}"/>
             ${(this.options.showFileName || (this.options.showFileSize && item.size) || (this.options.showFileChangeTime && item.changed)) ? info : ''}
         </a>`;
     },
@@ -740,31 +742,44 @@ export class FileBrowser extends Component implements IViewBased {
         const contextmenu: ContextMenu = new ContextMenu(this.jodit || this);
 
         self.events
-            .on(self.files, 'mousedown', function (this: HTMLElement, e: DragEvent) {
-                self.client.x = e.clientX;
-                self.client.y = e.clientY;
-
-                self.start = offset(this, self.jodit);
-
-                self.draggable = <HTMLElement>this.cloneNode(true);
-
-                css(<HTMLElement>self.draggable, {
-                    'z-index': 100000000000000,
-                    position: 'fixed',
-                    display: 'none',
-                    left: self.start.left,
-                    top: self.start.top,
-                    width: this.offsetWidth,
-                    height: this.offsetHeight
-                });
-
-                doc.body.appendChild(self.draggable)
-            },  'a>img')
-            .on(self.files, 'dragstart', function (this: HTMLElement, e: DragEvent) {
-                self.dragger = this;
-                e.dataTransfer.setData(consts.TEXT_PLAIN, this.getAttribute('href') || '');
-                e.stopPropagation();
-            }, 'a')
+            // .on(self.files, 'mousedown', function (this: HTMLElement, e: DragEvent) {
+            //     self.client.x = e.clientX;
+            //     self.client.y = e.clientY;
+            //
+            //     self.start = offset(this, self.jodit);
+            //
+            //     self.draggable = <HTMLElement>this.cloneNode(true);
+            //
+            //     css(<HTMLElement>self.draggable, {
+            //         'z-index': 100000000000000,
+            //         position: 'fixed',
+            //         display: 'none',
+            //         left: self.start.left,
+            //         top: self.start.top,
+            //         width: this.offsetWidth,
+            //         height: this.offsetHeight
+            //     });
+            //
+            //     doc.body.appendChild(self.draggable)
+            // },  'a>img')
+            // .on(self.files, 'dragstart', function (this: HTMLElement, e: DragEvent) {
+            //     self.dragger = this;
+            //     let img = new Image();
+            //     img.src = this.getAttribute('href') || '';
+            //     // e.dataTransfer.clearData();
+            //     e.dataTransfer.dropEffect = "copy";
+            //
+            //     if (e.dataTransfer.setDragImage) {
+            //         e.dataTransfer.setDragImage(img, 10, 10);
+            //     } else {
+            //         e.dataTransfer.setData(consts.TEXT_PLAIN, this.getAttribute('href') || '');
+            //     }
+            //
+            //     // e.dataTransfer.setDragImage(<HTMLElement>this.querySelector('img'), 1, 1);//add(consts.TEXT_PLAIN, this.getAttribute('href') || '');
+            //     // e.dataTransfer.setData(consts.TEXT_PLAIN, this.getAttribute('href') || '');
+            //     e.stopPropagation();
+            //     // e.preventDefault();
+            // }, 'a')
             .on(self.files, 'contextmenu', function (this: HTMLElement, e: DragEvent): boolean | void {
                 if (self.options.contextMenu) {
                     let item: HTMLElement = this;
@@ -886,26 +901,27 @@ export class FileBrowser extends Component implements IViewBased {
                 e.stopPropagation();
                 return false;
             }, 'a')
-            .on(self.ownerDocument, 'dragover', function (e: MouseEvent) {
-                if (self.isOpened() && self.draggable && e.clientX !== undefined) {
-                    css(self.draggable, {
-                        left: e.clientX + 20,
-                        top: e.clientY + 20,
-                        display: 'block'
-                    });
-                }
-            })
+            // .on(self.ownerDocument, 'dragover', function (e: MouseEvent) {
+            //     if (self.isOpened() && self.draggable && e.clientX !== undefined) {
+            //         css(self.draggable, {
+            //             left: e.clientX + 20,
+            //             top: e.clientY + 20,
+            //             display: 'block'
+            //         });
+            //     }
+            // })
+            .on(self.dialog.dialogbox, 'drop', (e: DragEvent) => e.preventDefault())
             .on(self.ownerWindow, 'keydown', (e: KeyboardEvent) => {
                 if (self.isOpened() && e.which === consts.KEY_DELETE) {
                     self.events.fire(self.buttons.remove, 'click');
                 }
             })
-            .on(self.ownerWindow, 'mouseup dragend',() => {
-                if (self.draggable) {
-                    self.draggable.parentNode && self.draggable.parentNode.removeChild(self.draggable);
-                    self.draggable = false;
-                }
-            });
+            // .on(self.ownerWindow, 'mouseup dragend',() => {
+            //     if (self.draggable) {
+            //         self.draggable.parentNode && self.draggable.parentNode.removeChild(self.draggable);
+            //         self.draggable = false;
+            //     }
+            // });
 
         this.dialog.setSize(this.options.width, this.options.height);
 
@@ -1468,7 +1484,7 @@ export class FileBrowser extends Component implements IViewBased {
         });
     };
 
-    private draggable: HTMLElement|false = false;
+    private draggable: HTMLElement | false = false;
     private start = {top: 0, left: 0};
     private client = {x: 0, y: 0};
 }

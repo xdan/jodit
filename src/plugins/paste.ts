@@ -130,13 +130,20 @@ export function paste(editor: Jodit) {
         return html;
     };
 
+    const getDataTransfer = (event: ClipboardEvent | DragEvent) : DataTransfer => {
+        if ((<ClipboardEvent>event).clipboardData) {
+            return (<ClipboardEvent>event).clipboardData;
+        }
+
+        return (<DragEvent>event).dataTransfer;
+    };
+
     editor.events
-        .on('copy', (event: ClipboardEvent): false | void => {
+        .on('copy', (event: ClipboardEvent | DragEvent): false | void => {
             const selectedText: string = editor.selection.getHTML();
 
-            const clipboardData: DataTransfer = event.clipboardData || (<any>editor.editorWindow).clipboardData || (<any>event).originalEvent.clipboardData;
+            const clipboardData: DataTransfer = getDataTransfer(event) || getDataTransfer(<any>editor.editorWindow) || getDataTransfer((<any>event).originalEvent);
 
-            console.log(clipboardData);
 
             clipboardData.setData(TEXT_PLAIN, strip_tags(selectedText));
             clipboardData.setData(TEXT_HTML, selectedText);
@@ -145,7 +152,8 @@ export function paste(editor: Jodit) {
 
             event.preventDefault();
         })
-        .on('paste', (event: ClipboardEvent): false | void => {
+        .on('paste', (event: ClipboardEvent | DragEvent): false | void => {
+
             /**
              * Triggered before pasting something into the Jodit Editor
              *
@@ -166,9 +174,9 @@ export function paste(editor: Jodit) {
                 return false;
             }
 
-            if (event && event.clipboardData && event.clipboardData.getData) {
-                let i,
-                    types = event.clipboardData.types,
+            if (event && getDataTransfer(event)) {
+                let i: number,
+                    types: string[] = getDataTransfer(event).types,
                     types_str: string = '',
                     clipboard_html: any = '';
 
@@ -181,11 +189,11 @@ export function paste(editor: Jodit) {
                 }
 
                 if (/text\/html/.test(types_str)) {
-                    clipboard_html = event.clipboardData.getData("text/html");
+                    clipboard_html = getDataTransfer(event).getData("text/html");
                 } else if (/text\/rtf/.test(types_str) && browser('safari')) {
-                    clipboard_html = event.clipboardData.getData("text/rtf");
+                    clipboard_html = getDataTransfer(event).getData("text/rtf");
                 } else if (/text\/plain/.test(types_str) && !browser('mozilla')) {
-                    clipboard_html = htmlentities(event.clipboardData.getData(TEXT_PLAIN)).replace(/\n/g, "<br/>");
+                    clipboard_html = htmlentities(getDataTransfer(event).getData(TEXT_PLAIN)).replace(/\n/g, "<br/>");
                 }
 
                 if (clipboard_html !== '' || clipboard_html instanceof (<any>editor.editorWindow).Node) {
@@ -213,6 +221,7 @@ export function paste(editor: Jodit) {
                     if (typeof clipboard_html === 'string' || clipboard_html instanceof (<any>editor.editorWindow).Node) {
                         editor.selection.insertHTML(clipboard_html);
                     }
+
                     event.preventDefault();
                     event.stopPropagation();
                 }
@@ -240,8 +249,8 @@ export function paste(editor: Jodit) {
     if (editor.options.askBeforePasteHTML) {
         editor.events
             .on('beforePaste', (event: ClipboardEvent): false | void => {
-                if (event && event.clipboardData && event.clipboardData.getData && event.clipboardData.getData(TEXT_PLAIN)) {
-                    let html: string = event.clipboardData.getData(TEXT_PLAIN);
+                if (event && getDataTransfer(event).getData(TEXT_PLAIN)) {
+                    let html: string = getDataTransfer(event).getData(TEXT_PLAIN);
                     return insertHTML(html);
                 }
             });
@@ -250,7 +259,7 @@ export function paste(editor: Jodit) {
     if (editor.options.askBeforePasteFromWord) {
         editor.events
             .on('beforePaste', (event: ClipboardEvent): false | void => {
-                if (event && event.clipboardData  && event.clipboardData.getData && event.clipboardData.getData(TEXT_HTML)) {
+                if (event && getDataTransfer(event).getData && getDataTransfer(event).getData(TEXT_HTML)) {
                     const processHTMLData: Function = (html: string): void | false => {
                         if (isHTML(html) && buffer !== trimFragment(html)) {
                             if (isHTMLFromWord(html)) {
@@ -280,8 +289,8 @@ export function paste(editor: Jodit) {
                         }
                     };
 
-                    if (event.clipboardData.types && event.clipboardData.types.indexOf("text/html") !== -1) {
-                        let html: string = event.clipboardData.getData(TEXT_HTML);
+                    if (getDataTransfer(event).types && getDataTransfer(event).types.indexOf("text/html") !== -1) {
+                        const html: string = getDataTransfer(event).getData(TEXT_HTML);
                         return processHTMLData(html);
                     } else {
                         const div: HTMLDivElement = <HTMLDivElement>dom('<div tabindex="-1" style="left: -9999px; top: 0; width: 0; height: 100%; line-height: 140%; overflow: hidden; position: fixed; z-index: 2147483647; -ms-word-break: break-all;" contenteditable="true"></div>', editor.ownerDocument);

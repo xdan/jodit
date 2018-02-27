@@ -15,5 +15,6 @@ export abstract class Plugin extends Component{
     }
 
     abstract afterInit(): void;
+
     beforeDestruct() {};
 }

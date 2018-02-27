@@ -533,11 +533,11 @@ export class Dom {
      *
      * @param root
      * @param child
-     * @param boolean [onliConatins]
+     * @param boolean [onlyContains]
      * @return {boolean}
      */
-    static isOrContains = (root: Node, child: Node, onliConatins: boolean = false): boolean => {
-        return child && root && ((root === child && !onliConatins) || Dom.contains(root, child));
+    static isOrContains = (root: Node, child: Node, onlyContains: boolean = false): boolean => {
+        return child && root && ((root === child && !onlyContains) || Dom.contains(root, child));
     };
 
    /*static apply = (options, addPropertyCallback, editor: Jodit) => {
