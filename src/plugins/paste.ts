@@ -11,7 +11,7 @@ import {
     cleanFromWord
 } from '../modules/Helpers';
 import {Config} from '../Config'
-import {TEXT_HTML, TEXT_PLAIN} from "../constants";
+import {INSERT_AS_HTML, TEXT_HTML, TEXT_PLAIN} from "../constants";
 
 /**
  * @property{boolean} askBeforePasteHTML=true Ask before paste HTML in WYSIWYG mode
@@ -20,10 +20,12 @@ declare module "../Config" {
     interface Config {
         askBeforePasteHTML: boolean;
         askBeforePasteFromWord: boolean;
+        defaultActionOnPaste: string;
     }
 }
 Config.prototype.askBeforePasteHTML = true;
 Config.prototype.askBeforePasteFromWord = true;
+Config.prototype.defaultActionOnPaste =  INSERT_AS_HTML;
 
 /**
  * Ask before paste HTML source
@@ -193,7 +195,7 @@ export function paste(editor: Jodit) {
                 } else if (/text\/rtf/.test(types_str) && browser('safari')) {
                     clipboard_html = getDataTransfer(event).getData("text/rtf");
                 } else if (/text\/plain/.test(types_str) && !browser('mozilla')) {
-                    clipboard_html = htmlentities(getDataTransfer(event).getData(TEXT_PLAIN)).replace(/\n/g, "<br/>");
+                    clipboard_html = getDataTransfer(event).getData(TEXT_PLAIN);
                 }
 
                 if (clipboard_html !== '' || clipboard_html instanceof (<any>editor.editorWindow).Node) {
@@ -219,7 +221,7 @@ export function paste(editor: Jodit) {
                     }
 
                     if (typeof clipboard_html === 'string' || clipboard_html instanceof (<any>editor.editorWindow).Node) {
-                        editor.selection.insertHTML(clipboard_html);
+                        editor.selection.insertHTML(editor.options.defaultActionOnPaste === INSERT_AS_HTML ? clipboard_html : htmlentities(clipboard_html));
                     }
 
                     event.preventDefault();
@@ -289,7 +291,7 @@ export function paste(editor: Jodit) {
                         }
                     };
 
-                    if (getDataTransfer(event).types && getDataTransfer(event).types.indexOf("text/html") !== -1) {
+                    if (getDataTransfer(event).types && [].slice.call(getDataTransfer(event).types).indexOf("text/html") !== -1) {
                         const html: string = getDataTransfer(event).getData(TEXT_HTML);
                         return processHTMLData(html);
                     } else {

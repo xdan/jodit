@@ -966,9 +966,23 @@ describe('Jodit Events system Tests', function() {
                 var obj = {
                     stop: 2
                 };
-                Jodit.modules.helper.dataBind(obj, 'test', 1);
+                Jodit.modules.Helpers.dataBind(obj, 'test', 1);
                 expect(Object.keys(obj).toString()).to.be.equal('stop')
-                expect(Jodit.modules.helper.dataBind(obj, 'test')).to.be.equal(1)
+                expect(Jodit.modules.Helpers.dataBind(obj, 'test')).to.be.equal(1)
+            });
+            describe('remove value', function () {
+                it('Should save value in object', function () {
+                    var obj = {
+                        stop: 2
+                    };
+                    Jodit.modules.Helpers.dataBind(obj, 'test', 1);
+                    expect(Object.keys(obj).toString()).to.be.equal('stop')
+                    expect(Jodit.modules.Helpers.dataBind(obj, 'test')).to.be.equal(1);
+                    Jodit.modules.Helpers.dataBind(obj, 'test', 2);
+                    expect(Jodit.modules.Helpers.dataBind(obj, 'test')).to.be.equal(2);
+                    Jodit.modules.Helpers.dataBind(obj, 'test', null);
+                    expect(Jodit.modules.Helpers.dataBind(obj, 'test')).to.be.not.equal(2);
+                });
             });
         });
     });
