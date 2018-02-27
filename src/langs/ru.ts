@@ -162,5 +162,6 @@ export default {
     'Add row': 'Добавить строку',
     'Delete': 'Удалить',
     'Border': 'Рамка',
+    'License: %s': 'Лицензия: %s',
     '': '',
 };

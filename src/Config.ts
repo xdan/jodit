@@ -5,7 +5,7 @@
  */
 
 import * as consts from './constants'
-import {dom, trim, $$, isURL, convertMediaURLToVideoEmbed, val} from './modules/Helpers'
+import {dom, trim, $$, isURL, convertMediaURLToVideoEmbed, val, isLicense, normalizeLicense} from './modules/Helpers'
 import {Jodit} from "./Jodit";
 import {ControlType} from "./modules/ToolbarCollection";
 import {FileBrowserCallBackData} from "./modules/FileBrowser";
@@ -19,6 +19,8 @@ import {ToolbarIcon} from "./modules/ToolbarCollection";
  **/
 
 export class Config {
+    license: string = '';
+
     ownerDocument: Document = document;
     ownerWindow: Window = window;
 
@@ -565,7 +567,10 @@ Config.prototype.controls = {
             dialog.setContent(
                 '<div class="jodit_about">\
                     <div>' +
-                        editor.i18n('Jodit Editor') + ' v.' + editor.getVersion() + ' ' + editor.i18n('Free Non-commercial Version') +
+                        editor.i18n('Jodit Editor') + ' v.' + editor.getVersion() + ' ' +
+                    '</div>' +
+                    '<div>' +
+                         editor.i18n('License: %s', !isLicense(editor.options.license) ? editor.i18n('Free Non-commercial Version') : normalizeLicense(editor.options.license)) +
                     '</div>' +
                     '<div>' +
                         '<a href="http://xdsoft.net/jodit/" target="_blank">http://xdsoft.net/jodit/</a>' +

@@ -1136,3 +1136,15 @@ export const dataBind = (elm: any, key: string, value?: any) => {
 
     store[key] = value;
 };
+
+export const isLicense = (license: any): boolean => typeof license === 'string' && license.length === 32 && /^[a-z0-9]+$/.test(license);
+export const normalizeLicense = (license: string): string => {
+    let parts: string[] = [];
+
+    while (license.length) {
+        parts.push(license.substr(0, 8));
+        license = license.substr(8)
+    }
+
+    return parts.join('-');
+};
