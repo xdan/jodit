@@ -1464,6 +1464,43 @@ describe('Test interface', function() {
             }).timeout(6000);
         });
     });
+    describe('About dialog', function () {
+        it('Should conteins License element', function () {
+            var area = appendTestArea(),
+                editor = new Jodit(area, {
+                    license: '111',
+                    toolbarAdaptive: false
+                });
+            var aboutButton = editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-about');
+
+            expect(aboutButton).to.be.not.equal(null);
+            simulateEvent('mousedown', 0 , aboutButton);
+
+            var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + area.id + ']');
+            expect(dialog).to.be.not.equal(null);
+
+            expect(dialog.innerText.match(/License:.*Free/)).to.be.not.equal(null);
+        });
+        describe('Set license', function () {
+            it('Should show License in about dialog', function () {
+                var area = appendTestArea(),
+                    editor = new Jodit(area, {
+                        license: '12345678901234567890123456789022', // don't use this key - it is wrong
+                        toolbarAdaptive: false
+                    });
+                var aboutButton = editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-about');
+
+                expect(aboutButton).to.be.not.equal(null);
+                simulateEvent('mousedown', 0 , aboutButton);
+
+                var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + area.id + ']');
+                expect(dialog).to.be.not.equal(null);
+
+                expect(dialog.innerText.match(/License:.*Free/)).to.be.equal(null);
+                expect(dialog.innerText.match(/License: 12345678-90123456-78901234-56789022/)).to.be.not.equal(null);
+            });
+        });
+    });
     after(function() {
          table_editor_interface.parentNode.removeChild(table_editor_interface);
     });
