@@ -391,10 +391,6 @@ export const htmlentities = (text: string): string => {
         .replace(/'/gi, "&apos;");
 };
 
-
-
-
-
 /**
  * Check if a string is a url
  *

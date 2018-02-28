@@ -11,7 +11,7 @@ import {
     cleanFromWord
 } from '../modules/Helpers';
 import {Config} from '../Config'
-import {INSERT_AS_HTML, TEXT_HTML, TEXT_PLAIN} from "../constants";
+import {INSERT_AS_HTML, INSERT_AS_TEXT, INSERT_CLEAR_HTML, INSERT_ONLY_TEXT, TEXT_HTML, TEXT_PLAIN} from "../constants";
 
 /**
  * @property{boolean} askBeforePasteHTML=true Ask before paste HTML in WYSIWYG mode
@@ -99,24 +99,41 @@ export function paste(editor: Jodit) {
         return dialog;
     };
 
+    const insertByType = (html: string, type: string) => {
+        switch (type) {
+            case INSERT_CLEAR_HTML:
+                html = cleanFromWord(html);
+                break;
+            case INSERT_ONLY_TEXT:
+                html = strip_tags(html);
+                break;
+            case INSERT_AS_TEXT:
+                html = htmlspecialchars(html);
+                break;
+            default:
+        }
+
+        editor.selection.insertHTML(html);
+    };
+
     const insertHTML: Function = (html: string, event: DragEvent | ClipboardEvent) : void | false => {
         if (isHTML(html) && buffer !== trimFragment(html)) {
             html = trimFragment(html);
             ClearOrKeep(editor.i18n('Your code is similar to HTML. Keep as HTML?'), editor.i18n('Paste as HTML'), (agree: boolean | number) => {
+                let insertType: string = INSERT_AS_HTML;
                 if (agree === false) {
-                    html = htmlspecialchars(html);
+                    insertType = INSERT_AS_TEXT;
                 }
 
                 if (agree === 0) {
-                    html = strip_tags(html);
+                    insertType = INSERT_ONLY_TEXT;
                 }
 
                 if (event.type === 'drop') {
                     editor.selection.insertCursorAtPoint((<DragEvent>event).clientX, (<DragEvent>event).clientY);
                 }
 
-                editor.selection.insertHTML(html);
-
+                insertByType(html, insertType);
 
                 editor.setEditorValue();
             }, 'Insert as Text');
@@ -125,12 +142,12 @@ export function paste(editor: Jodit) {
     };
 
     const trimFragment = (html: string): string => {
-        let start: number = html.search(/<\!--StartFragment-->/i);
+        let start: number = html.search(/<!--StartFragment-->/i);
         if (start !== -1) {
             html = html.substr(start + 20);
         }
 
-        let end: number = html.search(/<\!--EndFragment-->/i);
+        let end: number = html.search(/<!--EndFragment-->/i);
         if (end !== -1) {
             html = html.substr(0, end);
         }
@@ -145,6 +162,7 @@ export function paste(editor: Jodit) {
 
         return (<DragEvent>event).dataTransfer;
     };
+
 
     editor.events
         .on('copy', (event: ClipboardEvent): false | void => {
@@ -230,7 +248,8 @@ export function paste(editor: Jodit) {
                         if (event.type === 'drop') {
                             editor.selection.insertCursorAtPoint((<DragEvent>event).clientX, (<DragEvent>event).clientY);
                         }
-                        editor.selection.insertHTML(editor.options.defaultActionOnPaste === INSERT_AS_HTML ? clipboard_html : htmlentities(clipboard_html));
+
+                        insertByType(clipboard_html, editor.options.defaultActionOnPaste);
                     }
 
                     event.preventDefault();
@@ -282,6 +301,7 @@ export function paste(editor: Jodit) {
                                             html = (<any>editor.ownerWindow)['html_beautify'](html);
                                         }
                                     }
+
                                     if (agree === false) {
                                         html = cleanFromWord(html);
                                     }

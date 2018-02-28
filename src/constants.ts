@@ -84,4 +84,6 @@ export const EMULATE_DBLCLICK_TIMEOUT = 300;
 export const JODIT_SELECTED_CELL_MARKER = 'data-jodit-selected-cell';
 
 export const INSERT_AS_HTML = 'insert_as_html';
+export const INSERT_CLEAR_HTML = 'insert_clear_html';
 export const INSERT_AS_TEXT = 'insert_as_text';
+export const INSERT_ONLY_TEXT = 'insert_only_text';
