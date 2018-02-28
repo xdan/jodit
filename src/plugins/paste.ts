@@ -118,6 +118,9 @@ export function paste(editor: Jodit) {
 
     const insertHTML: Function = (html: string, event: DragEvent | ClipboardEvent) : void | false => {
         if (isHTML(html) && buffer !== trimFragment(html)) {
+
+            editor.events.stopPropagation('beforePaste');
+
             html = trimFragment(html);
             ClearOrKeep(editor.i18n('Your code is similar to HTML. Keep as HTML?'), editor.i18n('Paste as HTML'), (agree: boolean | number) => {
                 let insertType: string = INSERT_AS_HTML;

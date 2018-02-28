@@ -6,7 +6,7 @@ var OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 var pkg = require("./package.json");
 
 process.deprecated = false
-// process.traceDeprecation = true;
+process.traceDeprecation = true;
 
 
 var banner = `
