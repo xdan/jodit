@@ -145,12 +145,12 @@ export function paste(editor: Jodit) {
     };
 
     const trimFragment = (html: string): string => {
-        let start: number = html.search(/<!--StartFragment-->/i);
+        const start: number = html.search(/<!--StartFragment-->/i);
         if (start !== -1) {
             html = html.substr(start + 20);
         }
 
-        let end: number = html.search(/<!--EndFragment-->/i);
+        const end: number = html.search(/<!--EndFragment-->/i);
         if (end !== -1) {
             html = html.substr(0, end);
         }
