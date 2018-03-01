@@ -20,6 +20,22 @@ export type markerInfo = {
 
 export class Select extends Component{
     /**
+     * Remove all selected content
+     */
+    remove() {
+        const sel: Selection = this.jodit.editorWindow.getSelection(),
+            current: false | Node = this.current();
+
+        if (current) {
+            for (let i = 0; i < sel.rangeCount; i += 1) {
+                sel.getRangeAt(i).deleteContents();
+                sel.getRangeAt(i).collapse(true);
+            }
+        }
+
+    }
+
+    /**
      * Insert the cursor toWYSIWYG any point x, y
      *
      * @method insertAtPoint

@@ -8,10 +8,11 @@ import {Jodit} from '../Jodit';
 import {Confirm, Dialog} from '../modules/Dialog';
 import {
     isHTML, browser, htmlentities, htmlspecialchars, isHTMLFromWord, applyStyles, dom,
-    cleanFromWord
+    cleanFromWord, trim
 } from '../modules/Helpers';
 import {Config} from '../Config'
 import {INSERT_AS_HTML, INSERT_AS_TEXT, INSERT_CLEAR_HTML, INSERT_ONLY_TEXT, TEXT_HTML, TEXT_PLAIN} from "../constants";
+import {ControlType} from "../modules/ToolbarCollection";
 
 /**
  * @property{boolean} askBeforePasteHTML=true Ask before paste HTML in WYSIWYG mode
@@ -26,6 +27,14 @@ declare module "../Config" {
 Config.prototype.askBeforePasteHTML = true;
 Config.prototype.askBeforePasteFromWord = true;
 Config.prototype.defaultActionOnPaste =  INSERT_AS_HTML;
+
+Config.prototype.controls.cut = <ControlType>{
+    command: 'cut',
+    isDisable: (editor: Jodit, control: ControlType) => {
+        return trim(editor.editorWindow.getSelection().toString()).length === 0;
+    },
+    tooltip: 'Cut selection'
+};
 
 /**
  * Ask before paste HTML source
@@ -166,9 +175,8 @@ export function paste(editor: Jodit) {
         return (<DragEvent>event).dataTransfer;
     };
 
-
     editor.events
-        .on('copy', (event: ClipboardEvent): false | void => {
+        .on('copy cut', (event: ClipboardEvent): false | void => {
             const selectedText: string = editor.selection.getHTML();
 
             const clipboardData: DataTransfer = getDataTransfer(event) || getDataTransfer(<any>editor.editorWindow) || getDataTransfer((<any>event).originalEvent);
@@ -178,6 +186,11 @@ export function paste(editor: Jodit) {
             clipboardData.setData(TEXT_HTML, selectedText);
 
             buffer = selectedText;
+
+            if (event.type === 'cut') {
+                editor.selection.remove();
+                editor.selection.focus();
+            }
 
             event.preventDefault();
         })

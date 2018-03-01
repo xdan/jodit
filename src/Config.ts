@@ -469,6 +469,7 @@ export class Config {
         'table',
         'link', '|',
         'align', 'undo', 'redo', '\n',
+        'cut',
         'hr',
         'eraser',
         'copyformat', '|',
