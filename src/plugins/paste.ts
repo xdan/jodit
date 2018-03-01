@@ -33,7 +33,7 @@ Config.prototype.controls.cut = <ControlType>{
     command: 'cut',
     isDisable: (editor: Jodit) => {
         const sel: Selection = editor.editorWindow.getSelection();
-        return sel && trim(sel.toString()).length === 0
+        return !sel || sel.isCollapsed;
     },
     tooltip: 'Cut selection'
 };

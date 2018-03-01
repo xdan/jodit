@@ -625,6 +625,7 @@ export class Tooltip {
             button.jodit.events
                 .on(button.container, 'mouseenter', this.onHoverIn)
                 .on(button.container, 'mouseleave', this.onHoverOut)
+                .on('change updateToolbar scroll hidePipup closeAllPopups', this.onHoverOut)
         }
     }
 }
