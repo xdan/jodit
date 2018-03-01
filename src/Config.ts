@@ -468,7 +468,7 @@ export class Config {
         'video',
         'table',
         'link', '|',
-        'align', 'undo', 'redo', '|',
+        'align', 'undo', 'redo', '\n',
         'hr',
         'eraser',
         'copyformat', '|',
@@ -601,9 +601,11 @@ Config.prototype.controls = {
                     '<div>' +
                         '<a href="http://xdsoft.net/jodit/license.html" target="_blank">http://xdsoft.net/jodit/license.html</a>' +
                     '</div>' +
+                    (isLicense(editor.options.license) ? '' :
                     '<div>' +
                         '<a href="http://xdsoft.net/jodit/#download" target="_blank">' + editor.i18n('Buy full version') + '</a>' +
-                    '</div>' +
+                    '</div>'
+                    ) +
                     '<div>' +
                         editor.i18n('Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.') +
                     '</div>' +
