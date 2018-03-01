@@ -92,38 +92,14 @@
       display: inline-block;
       outline: none;
       text-decoration: none;
-      & + .jodit_tooltip {
-        opacity:0;
-        visibility: hidden;
-        display: none;
-        position:absolute;
-        transition: opacity .4s linear;
-        background: #727171;
-        color:#fff;
-        font-size: 12px;
-        line-height: 15px;
-        padding: 4px 5px;
-        font-family: Arial, sans-serif;
-        left: 50%;
-        margin-left: -45px;
-        z-index: @z-index-dropdownlist + 1;
-        width:90px;
-        transition: opacity .3s linear;
-        @media (max-width: @screen-sm) {
-          display: none;
-        }
-      }
+
       &:after {
         content: '';
         display: inline-block;
         height: 100%;
         vertical-align: middle;
       }
-      &:hover + .jodit_tooltip {
-        visibility: visible;
-        display: block;
-        opacity:1;
-      }
+
       &:active + .jodit_tooltip {
         visibility: hidden !important;
       }
@@ -175,6 +151,25 @@
   }
 
   .toolbar_size(@toolbar_middle_size);
+}
+
+.jodit_tooltip {
+  position:absolute;
+  transition: opacity .4s linear;
+  background: #727171;
+  color:#fff;
+  font-size: 12px;
+  line-height: 15px;
+  padding: 4px 5px;
+  font-family: Arial, sans-serif;
+  left: 50%;
+  margin-left: -45px;
+  z-index: @z-index-dropdownlist + 1;
+  width:90px;
+  transition: opacity .3s linear;
+  @media (max-width: @screen-sm) {
+    display: none;
+  }
 }
 
 .jodit_toolbar_size{

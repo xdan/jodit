@@ -257,6 +257,16 @@ export class Config {
      */
     toolbar: boolean = true;
 
+    /**
+     * Show tooltip after mouse enter on the button
+     */
+    showTooltip: boolean = true;
+
+    /**
+     * Delay before show tooltip
+     */
+    showTooltipDelay: number = 500;
+
     // TODO
     // autosave: false, // false or url
     // autosaveCallback: false, // function

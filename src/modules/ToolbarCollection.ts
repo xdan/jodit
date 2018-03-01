@@ -9,6 +9,7 @@ import {Jodit} from "../Jodit";
 import {asArray, camelCase, css, debounce, dom, each, offset} from "./Helpers";
 import * as consts from "../constants";
 import {Dom} from "./Dom";
+import {Config} from "../Config";
 
 
 export type ControlType = {
@@ -487,16 +488,6 @@ export  class ToolbarButton extends ToolbarElement {
         return false;
     }
 
-    private createTooltip(control: ControlTypeStrong, link: HTMLAnchorElement) {
-        if (control.tooltip) {
-            // const tooltip: HTMLDivElement = this.jodit.ownerDocument.createElement('div');
-            // tooltip.classList.add('jodit_tooltip');
-            // this.container.appendChild(tooltip);
-            // tooltip.innerHTML = this.jodit.i18n(control.tooltip) + (control.hotkeys ? '<br>' + asArray(control.hotkeys).join(' ') : '');
-            link.setAttribute('title', this.jodit.i18n(control.tooltip) + (control.hotkeys ? '<br>' + asArray(control.hotkeys).join(' ') : ''));
-        }
-    }
-
     destruct() {
         const clearName: string = this.control.name.replace(/[^a-zA-Z0-9]/g, '_');
         this.jodit.events.off(this.container);
@@ -512,6 +503,8 @@ export  class ToolbarButton extends ToolbarElement {
         }
     };
 
+    private tooltip: Tooltip;
+
     constructor(jodit: Jodit, control: ControlTypeStrong, target?: HTMLElement) {
         super(jodit);
 
@@ -521,7 +514,9 @@ export  class ToolbarButton extends ToolbarElement {
         const a: HTMLAnchorElement = this.jodit.ownerDocument.createElement('a');
         this.container.appendChild(a);
 
-        this.createTooltip(control, a);
+        if (jodit.options.showTooltip && control.tooltip) {
+            this.tooltip = new Tooltip(this);
+        }
 
         this.textBox = this.jodit.ownerDocument.createElement('span');
         a.appendChild(this.textBox);
@@ -589,6 +584,37 @@ export  class ToolbarButton extends ToolbarElement {
         });
 
         this.jodit.events.on(camelCase('can-' + clearName), this.canActionCallback);
+    }
+}
+
+/**
+ * Class create tooltip for buttons in toolbar
+ */
+export class Tooltip {
+    public container: HTMLElement;
+    private timeout: number = 0;
+
+    private onHoverIn = () => {
+        this.timeout = window.setTimeout(() => {
+            this.button.container.appendChild(this.container);
+        }, this.button.jodit.options.showTooltipDelay);
+    };
+
+    private onHoverOut = () => {
+        window.clearTimeout(this.timeout);
+        this.container.parentNode && this.container.parentNode.removeChild(this.container);
+    };
+
+    constructor(readonly button: ToolbarButton) {
+        if (button.control.tooltip) {
+            this.container = button.jodit.ownerDocument.createElement('div');
+            this.container.classList.add('jodit_tooltip');
+            this.container.innerHTML = button.jodit.i18n(button.control.tooltip) + (button.control.hotkeys ? '<br>' + asArray(button.control.hotkeys).join(' ') : '');
+
+            button.jodit.events
+                .on(button.container, 'mouseenter', this.onHoverIn)
+                .on(button.container, 'mouseleave', this.onHoverOut)
+        }
     }
 }
 
