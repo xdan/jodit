@@ -1,5 +1,4 @@
 describe('Test interface', function() {
-    appendTestArea('table_editor_interface', true);
     describe('Toolbar', function () {
         describe('Set toolbar options to false', function () {
             it('Should hide toolbar', function () {
@@ -55,7 +54,7 @@ describe('Test interface', function() {
             describe('Click on some link', function () {
                 describe('in the left side of editor', function () {
                     it('Should open inline popup with float by left editor side', function () {
-                        var editor = new Jodit('#table_editor_interface', {
+                        var editor = new Jodit(appendTestArea(), {
                         });
 
                         editor.setEditorValue('asas <a href="#">test</a>')
@@ -75,7 +74,7 @@ describe('Test interface', function() {
             });
             describe('Click on some button with defined popup field', function () {
                 it('Should open popup in toolbar', function () {
-                    var editor = new Jodit('#table_editor_interface', {
+                    var editor = new Jodit(appendTestArea(), {
                         disablePlugins: 'mobile'
                     });
                     simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-video'))
@@ -86,7 +85,7 @@ describe('Test interface', function() {
                 });
                 describe('in the left side', function () {
                     it('Should open popup in toolbar with float by left editor side', function () {
-                        var editor = new Jodit('#table_editor_interface', {
+                        var editor = new Jodit(appendTestArea(), {
                             buttons: ['video'],
                             disablePlugins: 'mobile'
                         });
@@ -105,7 +104,7 @@ describe('Test interface', function() {
                 });
                 describe('in the right side', function () {
                     it('Should open popup in toolbar with float by left editor side', function () {
-                        var editor = new Jodit('#table_editor_interface', {
+                        var editor = new Jodit(appendTestArea(), {
                             width: 300,
                             buttons: [
                                 'video',
@@ -137,7 +136,7 @@ describe('Test interface', function() {
             });
             getBox().style.width = 'auto';
             it('Open and close popap after clicking in another place', function() {
-                var editor = new Jodit('#table_editor_interface', {
+                var editor = new Jodit(appendTestArea(), {
                     disablePlugins: 'mobile'
                 });
 
@@ -152,7 +151,7 @@ describe('Test interface', function() {
                 expect(popup && popup.parentNode === null).to.equal(true);
             });
             it('Open list in toolbar', function() {
-                var editor = new Jodit('#table_editor_interface');
+                var editor = new Jodit(appendTestArea());
 
                 simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_with_dropdownlist'))
 
@@ -161,7 +160,7 @@ describe('Test interface', function() {
                 expect(list && window.getComputedStyle(list).display === 'block').to.equal(true);
             });
             it('Open and close list after clicking in another place', function() {
-                var editor = new Jodit('#table_editor_interface');
+                var editor = new Jodit(appendTestArea());
 
                 simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_with_dropdownlist'))
 
@@ -174,7 +173,7 @@ describe('Test interface', function() {
                 expect(list && list.parentNode === null).to.equal(true);
             });
             it('Open colorpicker set background and color. After this click in another any place. White when popap will be closed. Open again and remove all styles.', function() {
-                var editor = new Jodit('#table_editor_interface');
+                var editor = new Jodit(appendTestArea());
 
                 editor.setEditorValue('text2text')
 
@@ -211,7 +210,7 @@ describe('Test interface', function() {
                 expect(editor.getEditorValue()).to.equal('text2text');
             });
             it('Open format list set H1 for current cursor position. Restore selection after that', function() {
-                var editor = new Jodit('#table_editor_interface');
+                var editor = new Jodit(appendTestArea());
 
                 editor.setEditorValue('text2text')
 
@@ -241,7 +240,7 @@ describe('Test interface', function() {
                 expect(editor.getEditorValue()).to.equal('<h1>tex a ext</h1>');
             });
             it('Open image dialog and insert image by url.', function() {
-                var editor = new Jodit('#table_editor_interface');
+                var editor = new Jodit(appendTestArea());
 
                 editor.setEditorValue(Jodit.INVISIBLE_SPACE); // IE in iframe mode can loose focus and we can not check where it paste image in start or in finish. It is only in IE
 
@@ -274,7 +273,7 @@ describe('Test interface', function() {
                 expect(list.parentNode).to.equal(null);
             });
             it('Open video dialog and insert video by url from youtube.', function() {
-                var editor = new Jodit('#table_editor_interface', {
+                var editor = new Jodit(appendTestArea(), {
                     disablePlugins: 'mobile'
                 });
 
@@ -302,7 +301,7 @@ describe('Test interface', function() {
                 expect(popup.parentNode).to.equal(null);
             });
             it('Open align list and choose Right align.', function() {
-                var editor = new Jodit('#table_editor_interface');
+                var editor = new Jodit(appendTestArea());
 
                 editor.setEditorValue('Test')
 
@@ -325,7 +324,7 @@ describe('Test interface', function() {
 
             describe('Click inside the link', function() {
                 it('Should open link popup', function() {
-                    var editor = new Jodit('#table_editor_interface', {
+                    var editor = new Jodit(appendTestArea(), {
                         observer: {
                             timeout: 0
                         }
@@ -336,13 +335,13 @@ describe('Test interface', function() {
 
                     simulateEvent('mousedown', 0, editor.editor.querySelector('a'))
 
-                    var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline.active[data-editor_id=table_editor_interface]');
+                    var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline.active[data-editor_id=' + editor.id + ']');
 
                     expect(popup).to.be.not.equal(null);
                 });
                 describe('Click on pencil', function() {
                     it('Should open edit link popup', function() {
-                        var editor = new Jodit('#table_editor_interface', {
+                        var editor = new Jodit(appendTestArea(), {
                             observer: {
                                 timeout: 0
                             }
@@ -352,7 +351,7 @@ describe('Test interface', function() {
 
 
                         simulateEvent('mousedown', 0, editor.editor.querySelector('a'))
-                        var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=table_editor_interface]');
+                        var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
 
                         expect(popup).to.be.not.equal(null);
                         expect(popup.classList.contains('active')).to.be.equal(true);
@@ -371,7 +370,7 @@ describe('Test interface', function() {
             });
             describe('Open LINK insert dialog and insert new link', function() {
                 it('Should insert new link', function() {
-                    var editor = new Jodit('#table_editor_interface', {
+                    var editor = new Jodit(appendTestArea(), {
                         observer: {
                             timeout: 0
                         }
@@ -404,7 +403,7 @@ describe('Test interface', function() {
                     expect(list.parentNode).to.equal(null);
                 });
                 it('Should restore source text after user clicked on Unlink button', function() {
-                    var editor = new Jodit('#table_editor_interface', {
+                    var editor = new Jodit(appendTestArea(), {
                         observer: {
                             timeout: 0
                         }
@@ -436,7 +435,7 @@ describe('Test interface', function() {
             describe('Create table', function () {
                 describe('Mouse move', function () {
                     it('Should highlight cells in table-creator', function() {
-                        var editor = new Jodit('#table_editor_interface', {
+                        var editor = new Jodit(appendTestArea(), {
                             observer: {
                                 timeout: 0
                             }
@@ -470,27 +469,27 @@ describe('Test interface', function() {
                     expect(label1).to.be.not.equal(label2);
                 });
                 it('Should create buttons with text', function () {
-                    var editor = new Jodit('#table_editor_interface', {
+                    var editor = new Jodit(appendTestArea(), {
                         textIcons: true
                     });
                     expect(editor.container.querySelectorAll('.jodit_toolbar_btn-source').length).to.be.equal(1);
                     expect(editor.container.querySelectorAll('.jodit_toolbar_btn-source svg').length).to.be.equal(0);
                 });
                 it('Should add jodit_text_icons class to editor\'s container', function () {
-                    var editor = new Jodit('#table_editor_interface', {
+                    var editor = new Jodit(appendTestArea(), {
                         textIcons: true
                     });
                     expect(editor.container.classList.contains('jodit_text_icons')).to.be.true;
                 });
                 it('Should set font-size more them 0', function () {
-                    var editor = new Jodit('#table_editor_interface', {
+                    var editor = new Jodit(appendTestArea(), {
                         textIcons: true
                     });
                     expect(parseInt(editor.ownerWindow.getComputedStyle(editor.container.querySelector('.jodit_toolbar_btn-source .jodit_icon')).fontSize, 10)).to.be.above(10);
                 });
                 describe('In tabs', function () {
                     it('Should be also only text', function () {
-                        var editor = new Jodit('#table_editor_interface', {
+                        var editor = new Jodit(appendTestArea(), {
                             textIcons: true
                         });
 
@@ -507,7 +506,7 @@ describe('Test interface', function() {
                 });
                 describe('In brush popup', function () {
                     it('Should be also only text', function () {
-                        var editor = new Jodit('#table_editor_interface', {
+                        var editor = new Jodit(appendTestArea(), {
                             textIcons: true
                         });
 
@@ -524,7 +523,7 @@ describe('Test interface', function() {
                 });
                 describe('In video popup', function () {
                     it('Should be also only text', function () {
-                        var editor = new Jodit('#table_editor_interface', {
+                        var editor = new Jodit(appendTestArea(), {
                             textIcons: true,
                             toolbarAdaptive: false,
                         });
@@ -542,16 +541,16 @@ describe('Test interface', function() {
                 });
             });
             it('Remove default buttons functionality', function() {
-                var editor = new Jodit('#table_editor_interface');
+                var editor = new Jodit(appendTestArea());
                 expect(editor.container.querySelectorAll('.jodit_toolbar_btn-source').length).to.equal(1);
                 editor.destruct();
-                editor = new Jodit('#table_editor_interface', {
+                editor = new Jodit(appendTestArea(), {
                     removeButtons: ['source']
                 });
                 expect(editor.container.querySelectorAll('.jodit_toolbar_btn-source').length).to.equal(0);
             });
             it('Add own button', function() {
-                var editor = new Jodit('#table_editor_interface', {
+                var editor = new Jodit(appendTestArea(), {
                     disablePlugins: ['mobile'],
                     buttons: Jodit.defaultOptions.buttons.concat([
                         {
@@ -571,7 +570,7 @@ describe('Test interface', function() {
                 expect(editor.getEditorValue()).to.equal('Wed Mar 16 2016');
             });
             it('When cursor inside STRONG tag, Bold button should be selected', function() {
-                var editor = new Jodit('#table_editor_interface', {
+                var editor = new Jodit(appendTestArea(), {
                     observer: {
                         timeout: 0 // disable delay
                     }
@@ -623,7 +622,7 @@ describe('Test interface', function() {
                 expect(editor.container.querySelectorAll('.jodit_toolbar_btn-italic.jodit_active').length).to.equal(0);
             });
             it('Disable buttons which can not be used in that mode', function() {
-                var editor = new Jodit('#table_editor_interface', {
+                var editor = new Jodit(appendTestArea(), {
                     observer: {
                         timeout: 0 // disable delay
                     }
@@ -644,7 +643,7 @@ describe('Test interface', function() {
             });
 
             it('When cursor inside SPAN tag with style="font-weight: bold" or style="font-weight: 700", Bold button should be selected', function() {
-                var editor = new Jodit('#table_editor_interface', {
+                var editor = new Jodit(appendTestArea(), {
                     observer: {
                         timeout: 0 // disable delay
                     }
@@ -663,8 +662,9 @@ describe('Test interface', function() {
                 expect(editor.container.querySelectorAll('.jodit_toolbar_btn-bold.jodit_active').length).to.equal(1);
             });
             it('Check Redo Undo functionality', function() {
+                var table_editor_interface = appendTestArea();
                 table_editor_interface.value = 'top';
-                var editor = new Jodit('#table_editor_interface', {
+                var editor = new Jodit(table_editor_interface, {
                     observer: {
                         timeout: 0 // disable delay
                     }
@@ -682,7 +682,7 @@ describe('Test interface', function() {
                 expect(editor.getEditorValue()).to.equal('top');
             });
             it('Full size button', function() {
-                var editor = new Jodit('#table_editor_interface', {
+                var editor = new Jodit(appendTestArea(), {
                     observer: {
                         timeout: 0 // disable delay
                     }
@@ -697,7 +697,7 @@ describe('Test interface', function() {
                 }
             });
             it('Should add extra buttons', function() {
-                var editor = new Jodit('#table_editor_interface', {
+                var editor = new Jodit(appendTestArea(), {
                     extraButtons: [
                         {
                             name: 'adddate',
@@ -719,7 +719,7 @@ describe('Test interface', function() {
             });
             describe('Add button', function () {
                 it('Should create buttons in toolbar', function () {
-                    var editor = new Jodit('#table_editor_interface', {
+                    var editor = new Jodit(appendTestArea(), {
                         buttons: ['indent', 'outdent', 'bold', 'customxxx'],
                         disablePlugins: 'mobile'
                     });
@@ -733,7 +733,7 @@ describe('Test interface', function() {
             });
             describe('Button Bold', function () {
                 it('Should reactivate Bold button after second click and move cursor out of Strong element', function () {
-                    var editor = new Jodit('#table_editor_interface', {
+                    var editor = new Jodit(appendTestArea(), {
                         buttons: ['bold']
                     });
 
@@ -750,7 +750,7 @@ describe('Test interface', function() {
             });
             describe('Active button', function () {
                 it('Should not be activated then element has default style', function () {
-                    var editor = new Jodit('#table_editor_interface', {
+                    var editor = new Jodit(appendTestArea(), {
                         observer: {
                             timeout: 0
                         }
@@ -780,7 +780,7 @@ describe('Test interface', function() {
                 })
                 describe('Fontsize button', function () {
                     it('Should be activated then element has no default font-size', function () {
-                        var editor = new Jodit('#table_editor_interface', {
+                        var editor = new Jodit(appendTestArea(), {
                             observer: {
                                 timeout: 0
                             }
@@ -801,7 +801,7 @@ describe('Test interface', function() {
                 });
                 describe('Color button', function () {
                     it('Should be activated then element has some color', function () {
-                        var editor = new Jodit('#table_editor_interface', {
+                        var editor = new Jodit(appendTestArea(), {
                             observer: {
                                 timeout: 0
                             }
@@ -826,7 +826,7 @@ describe('Test interface', function() {
                 describe('In list', function () {
                     describe('Fontsize button', function () {
                         it('Should be activated then element has some style value', function () {
-                            var editor = new Jodit('#table_editor_interface', {
+                            var editor = new Jodit(appendTestArea(), {
                                 observer: {
                                     timeout: 0
                                 }
@@ -855,7 +855,7 @@ describe('Test interface', function() {
                     });
                     describe('Font family button', function () {
                         it('Should be activated then element has some style value', function () {
-                            var editor = new Jodit('#table_editor_interface', {
+                            var editor = new Jodit(appendTestArea(), {
                                 observer: {
                                     timeout: 0
                                 }
@@ -885,7 +885,7 @@ describe('Test interface', function() {
                     });
                     describe('Format block button', function () {
                         it('Should be activated then element has some tagname', function () {
-                            var editor = new Jodit('#table_editor_interface', {
+                            var editor = new Jodit(appendTestArea(), {
                                 observer: {
                                     timeout: 0
                                 }
@@ -919,14 +919,14 @@ describe('Test interface', function() {
         });
         describe('Commands', function () {
             it('Click on Source button should change current mode', function() {
-                var editor = new Jodit('#table_editor_interface');
+                var editor = new Jodit(appendTestArea());
 
                 simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-source'))
 
                 expect(editor.getMode()).to.equal(Jodit.MODE_SOURCE);
             });
             it('Click on Bold button should wrap current selection in <strong>', function() {
-                var editor = new Jodit('#table_editor_interface');
+                var editor = new Jodit(appendTestArea());
 
                 editor.setEditorValue('Text to text')
 
@@ -941,7 +941,7 @@ describe('Test interface', function() {
                 expect(editor.getEditorValue()).to.equal('Tex<strong>t to te</strong>xt');
             });
             it('Click on Italic button when selection is collapsed should create new <em> element and set cursor into it', function() {
-                var editor = new Jodit('#table_editor_interface');
+                var editor = new Jodit(appendTestArea());
 
                 editor.setEditorValue('Text to text')
 
@@ -958,7 +958,7 @@ describe('Test interface', function() {
                 expect(editor.getEditorValue()).to.equal('<em>test</em>Text to text');
             });
             it('Click on unordered list button when selection is collapsed should wrap current box in  new <ul><li> element', function() {
-                var editor = new Jodit('#table_editor_interface');
+                var editor = new Jodit(appendTestArea());
 
                 editor.setEditorValue('<p>Text to text</p>')
 
@@ -979,7 +979,7 @@ describe('Test interface', function() {
         describe('Inline', function () {
             describe('Сlick on the image', function () {
                 it('Should Open inline popup', function () {
-                    var editor = new Jodit('#table_editor_interface');
+                    var editor = new Jodit(appendTestArea());
 
                     editor.setEditorValue('<img src="/test/tests/artio.jpg"/>');
 
@@ -991,7 +991,7 @@ describe('Test interface', function() {
                 });
                 describe('and click in opened popup on pencil button', function () {
                     it('Should Open edit image dialog', function () {
-                        var editor = new Jodit('#table_editor_interface');
+                        var editor = new Jodit(appendTestArea());
 
                         editor.setEditorValue('<img src="/test/tests/artio.jpg"/>');
 
@@ -1003,14 +1003,14 @@ describe('Test interface', function() {
 
                         simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-pencil'))
 
-                        var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=table_editor_interface]');
+                        var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
 
                         expect(dialog).to.be.not.equal(null);
                     });
                 });
             });
             it('Open inline popup after click inside the cell', function () {
-                var editor = new Jodit('#table_editor_interface');
+                var editor = new Jodit(appendTestArea());
 
                 editor.setEditorValue('<table>' +
                         '<tr><td>1</td></tr>' +
@@ -1025,7 +1025,7 @@ describe('Test interface', function() {
             describe('Table button', function () {
                 describe('Select table cell', function () {
                     it('Should Select table cell', function () {
-                        var editor = new Jodit('#table_editor_interface');
+                        var editor = new Jodit(appendTestArea());
 
                         editor.setEditorValue('<table>' +
                             '<tr><td>2</td></tr>' +
@@ -1040,7 +1040,7 @@ describe('Test interface', function() {
                     });
                     describe('and press brushh button', function () {
                         it('Should Select table cell and fill it in yellow', function () {
-                            var editor = new Jodit('#table_editor_interface');
+                            var editor = new Jodit(appendTestArea());
 
                             editor.setEditorValue('<table>' +
                                 '<tr><td>3</td></tr>' +
@@ -1070,7 +1070,7 @@ describe('Test interface', function() {
                 });
             });
             it('Select table cell and change it vertical align', function () {
-                var editor = new Jodit('#table_editor_interface');
+                var editor = new Jodit(appendTestArea());
 
                 editor.setEditorValue('<table>' +
                     '<tr><td style="vertical-align: middle">3</td></tr>' +
@@ -1097,7 +1097,7 @@ describe('Test interface', function() {
 
             });
             it('Select table cell and split it by vertical', function () {
-                var editor = new Jodit('#table_editor_interface');
+                var editor = new Jodit(appendTestArea());
 
                 editor.setEditorValue('<table style="width: 300px;">' +
                     '<tr><td>3</td></tr>' +
@@ -1119,7 +1119,7 @@ describe('Test interface', function() {
 
             });
             it('Select table cell and split it by horizontal', function () {
-                var editor = new Jodit('#table_editor_interface');
+                var editor = new Jodit(appendTestArea());
 
                 editor.setEditorValue('<table style="width: 300px;">' +
                     '<tr><td>5</td></tr>' +
@@ -1140,7 +1140,7 @@ describe('Test interface', function() {
 
             });
             it('Select two table cells and merge then in one', function () {
-                var editor = new Jodit('#table_editor_interface');
+                var editor = new Jodit(appendTestArea());
 
                 editor.setEditorValue('<table style="width: 300px;">' +
                     '<tr><td>5</td><td>6</td></tr>' +
@@ -1158,7 +1158,7 @@ describe('Test interface', function() {
                 expect(editor.getEditorValue()).to.equal('<table style="width: 300px;"><tbody><tr><td >5<br>6</td></tr></tbody></table>');
             });
             it('Select table cell add column before this', function () {
-                var editor = new Jodit('#table_editor_interface');
+                var editor = new Jodit(appendTestArea());
 
                 editor.setEditorValue('<table>' +
                     '<tr><td>3</td></tr>' +
@@ -1184,7 +1184,7 @@ describe('Test interface', function() {
 
             });
             it('Select table cell and add row above this', function () {
-                var editor = new Jodit('#table_editor_interface');
+                var editor = new Jodit(appendTestArea());
 
                 editor.setEditorValue('<table>' +
                     '<tr><td>3</td></tr>' +
@@ -1210,7 +1210,7 @@ describe('Test interface', function() {
 
             });
             it('Select table cell and remove it row', function () {
-                var editor = new Jodit('#table_editor_interface');
+                var editor = new Jodit(appendTestArea());
 
                 editor.setEditorValue('<table>' +
                     '<tr><td>1</td></tr>' +
@@ -1238,7 +1238,7 @@ describe('Test interface', function() {
 
             });
             it('Select table cell and remove whole table should hide inline popup', function () {
-                var editor = new Jodit('#table_editor_interface');
+                var editor = new Jodit(appendTestArea());
 
                 editor.setEditorValue('<table>' +
                     '<tr><td>1</td></tr>' +
@@ -1271,7 +1271,7 @@ describe('Test interface', function() {
         describe('In fileBrowser', function () {
             describe('Hide buttons ', function () {
                 it('should hide toolbar buttons', function() {
-                    var editor = new Jodit('#table_editor_interface', {
+                    var editor = new Jodit(appendTestArea(), {
                         filebrowser: {
                             buttons: ['list', 'tiles', 'sort'],
                             ajax: {
@@ -1288,7 +1288,7 @@ describe('Test interface', function() {
                     simulateEvent('mousedown', 0, popup.querySelectorAll('.jodit_tabs_buttons > a')[0]);
 
 
-                    var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=table_editor_interface]');
+                    var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
 
                     expect(dialog).to.be.not.equal(null);
 
@@ -1303,7 +1303,7 @@ describe('Test interface', function() {
 
             describe('For iframe', function () {
                 it('Should deny edit content in iframe\'s body', function () {
-                    var editor = new Jodit('#table_editor_interface', {
+                    var editor = new Jodit(appendTestArea(), {
                         readonly: true,
                         iframe: true
                     });
@@ -1312,13 +1312,13 @@ describe('Test interface', function() {
                 });
             });
             it('Should deny edit content in wysiwyg', function () {
-                var editor = new Jodit('#table_editor_interface', {
+                var editor = new Jodit(appendTestArea(), {
                     readonly: true
                 });
                 expect(false).to.equal(editor.editor.hasAttribute('contenteditable'));
             });
             it('Should deny exec any commands', function () {
-                var editor = new Jodit('#table_editor_interface', {
+                var editor = new Jodit(appendTestArea(), {
                     readonly: true
                 });
 
@@ -1331,7 +1331,7 @@ describe('Test interface', function() {
                 expect('test').to.equal(editor.getEditorValue());
             });
             it('Should disable all toolbar buttons besides source, print, about, fullsize', function () {
-                var editor = new Jodit('#table_editor_interface', {
+                var editor = new Jodit(appendTestArea(), {
                     readonly: true,
                     toolbarAdaptive: false,
                     observer: {
@@ -1342,14 +1342,14 @@ describe('Test interface', function() {
                 editor.setEditorValue('test');
                 var buttons = [].slice.call(editor.container.querySelectorAll('.jodit_toolbar_btn'));
                 buttons.forEach(function (btn) {
-                    if (!/(source|print|about|fullsize|separator|selectall)/.test(btn.className)) {
+                    if (!/(source|print|about|fullsize|separator|selectall|break)/.test(btn.className)) {
                         expect(true).to.be.equal(btn.classList.contains('jodit_disabled'));
                         expect(true).to.be.equal(btn.hasAttribute('disabled'));
                     }
                 });
             });
             it('Should deny edit content in simple source editor', function () {
-                var editor = new Jodit('#table_editor_interface', {
+                var editor = new Jodit(appendTestArea(), {
                     readonly: true,
                     useAceEditor: false
                 });
@@ -1357,7 +1357,7 @@ describe('Test interface', function() {
                 expect(true).to.equal(editor.__plugins.source.mirror.hasAttribute('readonly'));
             });
             it('Should deny edit content in ace source editor', function (done) {
-                var editor = new Jodit('#table_editor_interface', {
+                var editor = new Jodit(appendTestArea(), {
                     readonly: true,
                     useAceEditor: true,
                     events: {
@@ -1373,8 +1373,9 @@ describe('Test interface', function() {
 
             }).timeout(6000);
             it('Should hide placeholder', function () {
+                var table_editor_interface = appendTestArea();
                 table_editor_interface.value = '';
-                var editor = new Jodit('#table_editor_interface', {
+                var editor = new Jodit(table_editor_interface, {
                     readonly: true
                 });
                 expect(editor.container.querySelectorAll('.jodit_placeholder').length && editor.container.querySelector('.jodit_placeholder').style.display === 'none').to.be.equal(true);
@@ -1385,7 +1386,7 @@ describe('Test interface', function() {
                 describe('CTRL + H', function () {
                     describe('In readonly editor', function () {
                         it('Should be deny', function () {
-                            var editor = new Jodit('#table_editor_interface', {
+                            var editor = new Jodit(appendTestArea(), {
                                 readonly: true,
                                 observer: {
                                     timeout: 0
@@ -1406,7 +1407,7 @@ describe('Test interface', function() {
             });
             describe('Method get read only', function () {
                 it('Should return enable/disable readonly', function () {
-                    var editor = new Jodit('#table_editor_interface', {
+                    var editor = new Jodit(appendTestArea(), {
                         readonly: true
                     });
                     expect(true).to.equal(editor.getReadOnly());
@@ -1414,14 +1415,14 @@ describe('Test interface', function() {
                     expect(false).to.equal(editor.getReadOnly());
                     editor.destruct();
 
-                    var editor = new Jodit('#table_editor_interface');
+                    var editor = new Jodit(appendTestArea());
                     expect(false).to.equal(editor.getReadOnly());
                 });
             });
         });
         describe('Disable readonly mode', function () {
             it('Should allow edit content in wysiwyg', function () {
-                var editor = new Jodit('#table_editor_interface', {
+                var editor = new Jodit(appendTestArea(), {
                     readonly: true
                 });
                 expect(false).to.equal(editor.editor.hasAttribute('contenteditable'));
@@ -1429,7 +1430,7 @@ describe('Test interface', function() {
                 expect(true).to.equal(editor.editor.hasAttribute('contenteditable'));
             });
             it('Should allow edit content in simple source editor', function () {
-                var editor = new Jodit('#table_editor_interface', {
+                var editor = new Jodit(appendTestArea(), {
                     readonly: true,
                     useAceEditor: false
                 });
@@ -1441,7 +1442,7 @@ describe('Test interface', function() {
                 expect(false).to.equal(editor.__plugins.source.mirror.hasAttribute('readonly'));
             });
             it('Should allow edit content in ace source editor', function (done) {
-                var editor = new Jodit('#table_editor_interface', {
+                var editor = new Jodit(appendTestArea(), {
                     readonly: true,
                     useAceEditor: true,
                     defaultMode: Jodit.MODE_SOURCE,
@@ -1501,9 +1502,6 @@ describe('Test interface', function() {
                 expect(dialog.innerText.match(/License: 12345678-\*\*\*\*\*\*\*\*-\*\*\*\*\*\*\*\*-56789022/)).to.be.not.equal(null);
             });
         });
-    });
-    after(function() {
-         table_editor_interface.parentNode.removeChild(table_editor_interface);
     });
     afterEach(function () {
         removeStuff();

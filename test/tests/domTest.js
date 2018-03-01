@@ -1,5 +1,4 @@
 describe('Check Dom module', function() {
-    appendTestArea('tested__dom_area', true);
     describe('Method each', function () {
         it('Should pass through all child nodes', function () {
             var node = document.createElement('div');
@@ -79,9 +78,6 @@ describe('Check Dom module', function() {
         });
     });
 
-    after(function() {
-        tested__dom_area.parentNode.removeChild(tested__dom_area);
-    });
     afterEach(function () {
         var i, keys = Object.keys(Jodit.instances);
         for (i = 0; i < keys.length; i += 1) {

@@ -31,7 +31,10 @@ Config.prototype.defaultActionOnPaste =  INSERT_AS_HTML;
 
 Config.prototype.controls.cut = <ControlType>{
     command: 'cut',
-    isDisable: (editor: Jodit) => trim(editor.editorWindow.getSelection().toString()).length === 0,
+    isDisable: (editor: Jodit) => {
+        const sel: Selection = editor.editorWindow.getSelection();
+        return sel && trim(sel.toString()).length === 0
+    },
     tooltip: 'Cut selection'
 };
 
