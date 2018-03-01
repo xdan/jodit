@@ -911,27 +911,73 @@ describe('Test plugins', function () {
     });
     describe('Indent plugin', function () {
         describe('Check i18n tooltip', function () {
-            it('Should have different tooltip for each language', function () {
-                var area = appendTestArea();
-                var editor = new Jodit(area, {
-                    toolbarAdaptive: false,
-                    buttons: 'indent,outdent',
-                    language: 'en'
+            describe('Native tooltip', function () {
+                it('Should have different tooltip for each language', function () {
+                    var area = appendTestArea();
+                    var editor = new Jodit(area, {
+                        toolbarAdaptive: false,
+                        useNativeTooltip: true,
+                        buttons: 'indent,outdent',
+                        language: 'en'
+                    });
+                    expect(null).to.be.not.equal(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-outdent [title]'));
+                    var title = editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-outdent [title]').getAttribute('title');
+                    editor.destruct();
+
+
+                    var editor = new Jodit(area, {
+                        toolbarAdaptive: false,
+                        useNativeTooltip: true,
+                        buttons: 'indent,outdent',
+                        language: 'ru'
+                    });
+                    expect(null).to.be.not.equal(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-outdent [title]'));
+
+                    expect(title).to.be.not.equal(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-outdent [title]').getAttribute('title'));
                 });
-                expect(null).to.be.not.equal(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-outdent [title]'));
-                var title = editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-outdent [title]').getAttribute('title');
-                editor.destruct();
+            });
+            describe('Jodits tooltip', function () {
+                it('Should have different tooltip for each language', function () {
+                    var area = appendTestArea();
+                    var editor = new Jodit(area, {
+                        toolbarAdaptive: false,
+                        useNativeTooltip: false,
+                        buttons: 'indent,outdent',
+                        showTooltipDelay: 0,
+                        language: 'en'
+                    });
+
+                    var button = editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-outdent');
+                    expect(null).to.be.not.equal(button);
+
+                    simulateEvent('mouseenter', 0, button);
+
+                    var tooltip = button.querySelector('.jodit_tooltip');
+                    expect(null).to.be.not.equal(tooltip);
+                    var title = tooltip.innerText;
+                    editor.destruct();
 
 
-                var editor = new Jodit(area, {
-                    toolbarAdaptive: false,
-                    buttons: 'indent,outdent',
-                    language: 'ru'
+                    editor = new Jodit(area, {
+                        toolbarAdaptive: false,
+                        useNativeTooltip: false,
+                        showTooltipDelay: 0,
+                        buttons: 'indent,outdent',
+                        language: 'ru'
+                    });
+
+                    button = editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-outdent');
+                    expect(null).to.be.not.equal(button);
+
+                    simulateEvent('mouseenter', 0, button);
+
+                    tooltip = button.querySelector('.jodit_tooltip');
+                    expect(null).to.be.not.equal(tooltip);
+                    simulateEvent('mouseleave', 0, button);
+                    expect(null).to.be.equal(tooltip.parentNode);
+
+                    expect(title).to.be.not.equal(tooltip.innerText);
                 });
-                expect(null).to.be.not.equal(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-outdent [title]'));
-
-                expect(title).to.be.not.equal(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-outdent [title]').getAttribute('title'));
-
             });
         });
         it('Should set active outdent button if current container has marginLeft', function () {

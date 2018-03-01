@@ -267,6 +267,12 @@ export class Config {
      */
     showTooltipDelay: number = 500;
 
+    /**
+     * Instead of create custop tooltip - use native title tooltips
+     * @type {boolean}
+     */
+    useNativeTooltip: boolean = false;
+
     // TODO
     // autosave: false, // false or url
     // autosaveCallback: false, // function

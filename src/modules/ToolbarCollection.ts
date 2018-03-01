@@ -515,7 +515,11 @@ export  class ToolbarButton extends ToolbarElement {
         this.container.appendChild(a);
 
         if (jodit.options.showTooltip && control.tooltip) {
-            this.tooltip = new Tooltip(this);
+            if (!jodit.options.useNativeTooltip) {
+                this.tooltip = new Tooltip(this);
+            } else {
+                a.setAttribute('title', this.jodit.i18n(control.tooltip) + (control.hotkeys ? '<br>' + asArray(control.hotkeys).join(' ') : ''));
+            }
         }
 
         this.textBox = this.jodit.ownerDocument.createElement('span');
@@ -595,9 +599,16 @@ export class Tooltip {
     private timeout: number = 0;
 
     private onHoverIn = () => {
-        this.timeout = window.setTimeout(() => {
+        const showElement = () => {
             this.button.container.appendChild(this.container);
-        }, this.button.jodit.options.showTooltipDelay);
+        },
+        delay: number = this.button.jodit.options.showTooltipDelay;
+
+        if (delay) {
+            this.timeout = window.setTimeout(showElement, delay);
+        } else {
+            showElement();
+        }
     };
 
     private onHoverOut = () => {
