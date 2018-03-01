@@ -59,7 +59,11 @@ Config.prototype.controls.fullsize = <ControlType>{
     mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG
 };
 
-
+/**
+ * Process `toggleFullSize` event, and behavior - set/unset fullsize mode
+ *
+ * @param {Jodit} editor
+ */
 export  function fullsize(editor: Jodit) {
     let shown: boolean = false,
         oldHeight: number = 0,

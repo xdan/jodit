@@ -78,7 +78,11 @@ Config.prototype.controls.paragraph = <ControlType>{
     tooltip: "Insert format block"
 };
 
-
+/**
+ * Process command - `formatblock`
+ *
+ * @param {Jodit} editor
+ */
 export function formatBlock(editor: Jodit) {
     editor.registerCommand('formatblock', (command: string, second: string, third: string): false | void => {
         editor.selection.focus();

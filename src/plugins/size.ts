@@ -18,6 +18,10 @@ declare module "../Config" {
 Config.prototype.allowResizeX = false;
 Config.prototype.allowResizeY = true;
 
+/**
+ * Resize editor
+ * @param {Jodit} editor
+ */
 export function size(editor: Jodit) {
     const setHeight = (height: number | string) => {
         css(editor.container, 'height', height);

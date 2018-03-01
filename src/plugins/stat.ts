@@ -19,6 +19,10 @@ declare module "../Config" {
 Config.prototype.showCharsCounter = true;
 Config.prototype.showWordsCounter = true;
 
+
+/**
+ * Show stat data - words and chars count
+ */
 export class stat extends Plugin{
     private charCounter: HTMLElement;
     private wordCounter: HTMLElement;

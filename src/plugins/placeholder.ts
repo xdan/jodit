@@ -54,6 +54,12 @@ Config.prototype.useInputsPlaceholder = true;
  */
 Config.prototype.placeholder = 'Type something';
 
+
+/**
+ * Show placeholder inside empty editor
+ *
+ * @param {Jodit} editor
+ */
 export function placeholder(this: any, editor: Jodit) {
     if (!editor.options.showPlaceholder) {
         return;

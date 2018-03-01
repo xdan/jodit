@@ -91,7 +91,10 @@ Config.prototype.controls.brush = <ControlType>{
     tooltip: "Fill color or set the text color"
 };
 
-
+/**
+ * Process commands `background` and `forecolor`
+ * @param {Jodit} editor
+ */
 export function color(editor: Jodit) {
     const callback: Function = (command: string, second: string, third: string): false | void => {
         const color: string|false = normalizeColor(third);

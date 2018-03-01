@@ -20,7 +20,7 @@ declare module "../Config" {
 Config.prototype.autofocus = false;
 
 /**
- * Autofocus plugin
+ * Autofocus plugin - set focus inside the editor after reload
  *
  * @param {Jodit} editor
  */

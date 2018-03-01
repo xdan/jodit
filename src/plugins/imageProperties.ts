@@ -86,6 +86,11 @@ Config.prototype.image =  {
      selectImageAfterClose: true,
 };
 
+/**
+ * Show dialog with image's options
+ *
+ * @param {Jodit} editor
+ */
 export function imageProperties(editor: Jodit) {
     /**
      * Open dialog editing image properties

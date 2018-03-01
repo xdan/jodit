@@ -26,6 +26,10 @@ Config.prototype.controls.selectall = <ControlType>{
 
 Config.prototype.showXPathInStatusbar = true;
 
+
+/**
+ * Show path to current element in status bar
+ */
 export class xpath extends Plugin{
     container: HTMLElement;
     menu: ContextMenu;

@@ -305,6 +305,12 @@ Config.prototype.popup = <{[key: string]: Array<ControlType|string>}>{
     ]
 };
 
+
+/**
+ * Support inline toolbar
+ *
+ * @param {Jodit} editor
+ */
 export function inlinePopup(editor: Jodit) {
     let timeout: number;
     const toolbar: ToolbarCollection = new ToolbarCollection(editor),

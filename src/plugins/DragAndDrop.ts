@@ -11,6 +11,10 @@ import {TEXT_HTML, TEXT_PLAIN, URL_LIST} from "../constants";
 import {UploaderData} from "../modules/Uploader";
 import {Dom} from "../modules/Dom";
 
+
+/**
+ * Process drag and drop image from FileBrowser and movev image inside the editor
+ */
 export class DragAndDrop extends Plugin {
     private isFragmentFromEditor: boolean = false;
     private isCopyMode: boolean = false;

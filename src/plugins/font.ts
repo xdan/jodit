@@ -100,7 +100,10 @@ Config.prototype.controls.font = <ControlType>{
     tooltip: "Font family"
 };
 
-
+/**
+ * Process commands `fontsize` and `fontname`
+ * @param {Jodit} editor
+ */
 export function font(editor: Jodit) {
     const callback: Function = (command: string, second: string, third: string): false | void => {
         switch (command) {

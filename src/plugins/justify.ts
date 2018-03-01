@@ -85,7 +85,11 @@ Config.prototype.controls.right = {
     tooltip: "Align Right"
 };
 
-
+/**
+ * Process commands: `justifyfull`, `justifyleft`, `justifyright`, `justifycenter`
+ *
+ * @param {Jodit} editor
+ */
 export function justify(editor: Jodit) {
     const callback: Function = (command: string): false | void => {
         const justify = (box: HTMLElement) => {

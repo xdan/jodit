@@ -50,6 +50,11 @@ Config.prototype.resizer = {
     min_height : 10
 };
 
+
+/**
+ * Resize table and img
+ * @param {Jodit} editor
+ */
 export function resizer(editor: Jodit) {
     // let clicked = false,
     //     resized = false,

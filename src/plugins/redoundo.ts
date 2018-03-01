@@ -19,7 +19,9 @@ Config.prototype.controls.undo = {
     tooltip: 'Undo'
 };
 
-
+/**
+ * Custom processs Redo and Undo functionality
+ */
 export class redoundo extends Component  {
     private observer:Observer = new Observer(this.jodit);
     constructor(editor: Jodit) {

@@ -44,7 +44,7 @@ Config.prototype.controls.strikethrough = <ControlType>{
 };
 
 /**
- * Bold plugin
+ * Bold plugin - change B to Strong, i to Em
  */
 export function bold(editor: Jodit) {
     const callBack: Function = (command: string): false | void => {
