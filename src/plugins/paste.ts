@@ -7,10 +7,10 @@
 import {Jodit} from '../Jodit';
 import {Confirm, Dialog} from '../modules/Dialog';
 import {
-    isHTML, browser, htmlentities, htmlspecialchars, isHTMLFromWord, applyStyles, dom,
+    isHTML, browser, htmlspecialchars, isHTMLFromWord, applyStyles, dom,
     cleanFromWord, trim
 } from '../modules/Helpers';
-import {Config} from '../Config'
+import {Config} from '../Config';
 import {INSERT_AS_HTML, INSERT_AS_TEXT, INSERT_CLEAR_HTML, INSERT_ONLY_TEXT, TEXT_HTML, TEXT_PLAIN} from "../constants";
 import {ControlType} from "../modules/ToolbarCollection";
 
@@ -24,15 +24,14 @@ declare module "../Config" {
         defaultActionOnPaste: string;
     }
 }
+
 Config.prototype.askBeforePasteHTML = true;
 Config.prototype.askBeforePasteFromWord = true;
 Config.prototype.defaultActionOnPaste =  INSERT_AS_HTML;
 
 Config.prototype.controls.cut = <ControlType>{
     command: 'cut',
-    isDisable: (editor: Jodit, control: ControlType) => {
-        return trim(editor.editorWindow.getSelection().toString()).length === 0;
-    },
+    isDisable: (editor: Jodit) => trim(editor.editorWindow.getSelection().toString()).length === 0,
     tooltip: 'Cut selection'
 };
 
@@ -340,7 +339,7 @@ export function paste(editor: Jodit) {
                         const html: string = getDataTransfer(event).getData(TEXT_HTML);
                         return processHTMLData(html);
                     } else {
-                        const div: HTMLDivElement = <HTMLDivElement>dom('<div tabindex="-1" style="left: -9999px; top: 0; width: 0; height: 100%; line-height: 140%; overflow: hidden; position: fixed; z-index: 2147483647; -ms-word-break: break-all;" contenteditable="true"></div>', editor.ownerDocument);
+                        const div: HTMLDivElement = <HTMLDivElement>dom('<div tabindex="-1" style="left: -9999px; top: 0; width: 0; height: 100%; line-height: 140%; overflow: hidden; position: fixed; z-index: 2147483647; word-break: break-all;" contenteditable="true"></div>', editor.ownerDocument);
                         editor.container.appendChild(div);
                         div.focus();
                         let tick: number = 0;
