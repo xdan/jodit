@@ -183,7 +183,7 @@ export class Config {
      * })
      * ```
      */
-    minHeight: number|string = 150;
+    minHeight: number|string = 200;
 
     /**
      * The writing direction of the language which is used to create editor content. Allowed values are: '' (an empty string) – Indicates that content direction will be the same as either the editor UI direction or the page element direction. 'ltr' – Indicates a Left-To-Right text direction (like in English). 'rtl' – Indicates a Right-To-Left text direction (like in Arabic).
