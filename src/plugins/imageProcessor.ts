@@ -27,7 +27,6 @@ export function imageProcessor(editor: Jodit) {
                         });
                     }
                     editor.events.on(elm, 'mousedown touchstart', () => {
-                        debugger
                         editor.selection.select(elm);
                     });
                 }

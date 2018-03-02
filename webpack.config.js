@@ -1,15 +1,15 @@
-var path = require('path');
-var debug = process.env.NODE_ENV !== "production";
-var webpack = require('webpack');
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
-var OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-var pkg = require("./package.json");
+const path = require('path');
+const debug = process.env.NODE_ENV !== "production";
+const webpack = require('webpack');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const pkg = require("./package.json");
 
-process.deprecated = false
+process.deprecated = false;
 process.traceDeprecation = true;
 
 
-var banner = `
+const banner = `
    ${pkg.name} - ${pkg.description}
    Author: ${pkg.author}
    Version: v${pkg.version}
@@ -17,7 +17,7 @@ var banner = `
    License(s): ${pkg.license}
 `;
 
-var loaders = [
+const loaders = [
     {
         loader: 'css-loader',
         options: {
@@ -72,7 +72,7 @@ module.exports = {
         filename: 'jodit.min.js',
         publicPath: '/build/',
         libraryTarget: "umd",
-        // name of the global var: "Foo"
+        // name of the global var: "Jodit"
         library: "Jodit"
     },
 
@@ -158,7 +158,7 @@ module.exports = {
         clearImmediate: false,
         setImmediate: false
     }
-}
+};
 
 module.exports.plugins.push(new ExtractTextPlugin({
     disable: debug,

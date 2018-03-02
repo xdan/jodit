@@ -256,7 +256,7 @@ export class Dialog extends Component{
      * dialog.open();
      * ```
      */
-    setTitle(content:  string|Element|Array<string|Element>) {
+    setTitle(content:  string | Element | Array<string | Element>) {
         this.setElements(this.dialogbox_header, content);
     }
 

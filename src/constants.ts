@@ -11,7 +11,7 @@ export const SPACE_REG_EXP = /[\s\n\t\r\uFEFF\u200b]+/g;
 export const SPACE_REG_EXP_START = /^[\s\n\t\r\uFEFF\u200b]+/g;
 export const SPACE_REG_EXP_END = /[\s\n\t\r\uFEFF\u200b]+$/g;
 
-export const IS_BLOCK = /^(PRE|DIV|P|LI|H[1-6]|BLOCKQUOTE|TD|TH|TABLE|BODY|HTML)$/i;
+export const IS_BLOCK = /^(PRE|DIV|P|LI|H[1-6]|BLOCKQUOTE|TD|TH|TABLE|BODY|HTML|FIGCAPTION|FIGURE)$/i;
 
 export const KEY_BACKSPACE  = 8;
 export const KEY_TAB        = 9;
@@ -29,6 +29,7 @@ export const KEY_F          = 70;
 export const KEY_R          = 82;
 export const KEY_H          = 72;
 export const KEY_Y          = 89;
+export const KEY_V          = 86;
 export const KEY_Z          = 90;
 
 export const KEY_F3         = 114;

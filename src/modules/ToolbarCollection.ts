@@ -598,11 +598,13 @@ export class Tooltip {
     public container: HTMLElement;
     private timeout: number = 0;
 
-    private onHoverIn = () => {
+    private show = () => {
         const showElement = () => {
-            this.button.container.appendChild(this.container);
-        },
-        delay: number = this.button.jodit.options.showTooltipDelay;
+                this.button.container.appendChild(this.container);
+             },
+            delay: number = this.button.jodit.options.showTooltipDelay;
+
+        this.button.jodit.events.fire('hideTooltip');
 
         if (delay) {
             this.timeout = window.setTimeout(showElement, delay);
@@ -611,7 +613,7 @@ export class Tooltip {
         }
     };
 
-    private onHoverOut = () => {
+    private hide = () => {
         window.clearTimeout(this.timeout);
         this.container.parentNode && this.container.parentNode.removeChild(this.container);
     };
@@ -623,9 +625,9 @@ export class Tooltip {
             this.container.innerHTML = button.jodit.i18n(button.control.tooltip) + (button.control.hotkeys ? '<br>' + asArray(button.control.hotkeys).join(' ') : '');
 
             button.jodit.events
-                .on(button.container, 'mouseenter', this.onHoverIn)
-                .on(button.container, 'mouseleave', this.onHoverOut)
-                .on('change updateToolbar scroll hidePipup closeAllPopups', this.onHoverOut)
+                .on(button.container, 'mouseenter', this.show)
+                .on(button.container, 'mouseleave', this.hide)
+                .on('change updateToolbar scroll hidePopup closeAllPopups hideTooltip', this.hide)
         }
     }
 }

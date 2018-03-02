@@ -43,3 +43,4 @@ export {sticky} from "./sticky";
 export {stat} from "./stat";
 export {xpath} from "./xpath";
 export {DragAndDrop} from "./DragAndDrop";
+export {pasteStorage} from "./paste-storage";

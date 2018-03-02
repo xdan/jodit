@@ -1801,6 +1801,75 @@ describe('Test plugins', function () {
             });
         });
     });
+    /*
+    describe('Paste storage', function () {
+        describe('Empty list', function () {
+            it('Sholud not show dialog', function () {
+                var editor = new Jodit(appendTestArea());
+                simulateEvent('keydown', Jodit.KEY_V , editor.editor, function (data) {
+                    data.ctrlKey = true;
+                    data.shiftKey = true;
+                });
+                var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor=' + editor.id + ']');
+                expect(dialog).to.be.equal(null);
+            });
+        });
+        describe('After copy elements', function () {
+            it('Sholud show dialog with pasted list', function () {
+                var editor = new Jodit(appendTestArea());
+                editor.selection.focus();
+                editor.value = 'abcde'
+                var range = editor.ownerDocument.createRange();
+                editor.selection.selectRange(range);
+
+                range.setStart(editor.editor.firstChild, 0);
+                range.setEnd(editor.editor.firstChild, 1);
+                editor.execCommand('copy');
+
+                range.setStart(editor.editor.firstChild, 1);
+                range.setEnd(editor.editor.firstChild, 2);
+                editor.execCommand('copy');
+
+
+                simulateEvent('keydown', Jodit.KEY_V , editor.editor, function (data) {
+                    data.ctrlKey = true;
+                    data.shiftKey = true;
+                });
+                var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor=' + editor.id + ']');
+                expect(dialog).to.be.not.equal(null);
+            });
+            describe('After click on some of elements', function () {
+                it('Sholud select this', function () {
+                    var editor = new Jodit(appendTestArea());
+
+                    editor.value = 'abcde'
+                    var range = editor.ownerDocument.createRange();
+                    editor.selection.selectRange(range);
+
+                    range.setStart(editor.editor.firstChild, 0);
+                    range.setEnd(editor.editor.firstChild, 1);
+                    editor.execCommand('copy');
+
+                    range.setStart(editor.editor.firstChild, 1);
+                    range.setEnd(editor.editor.firstChild, 2);
+                    editor.execCommand('copy');
+
+
+                    simulateEvent('keydown', Jodit.KEY_V , editor.editor, function (data) {
+                        data.ctrlKey = true;
+                        data.shiftKey = true;
+                    });
+
+                    var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor=' + editor.id + ']');
+                    expect(dialog).to.be.not.equal(null);
+
+                    simulateEvent('click', 0, dialog.querySelectorAll('a')[1]);
+                    expect(dialog.querySelectorAll('a')[1].classList.contains('jodit_active')).to.be.equal(true);
+                });
+            });
+        });
+
+    });*/
     afterEach(function () {
         removeStuff();
         var i, keys = Object.keys(Jodit.instances);

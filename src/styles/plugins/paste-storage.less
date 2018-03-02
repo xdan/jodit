@@ -1,0 +1,32 @@
+.jodit_paste_storage {
+  padding: @padding-default;
+  > div {
+    border: 1px solid @color-border;
+    &:first-child {
+      a {
+        box-sizing: border-box;
+        display: block;
+        max-width: 100%;
+        white-space: pre;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding: @padding-default / 2;
+        margin: 0;
+        border: 1px solid transparent;
+        text-decoration: none;
+        color: @color-default;
+        &.jodit_active {
+          color: @color-white;
+          background-color: @dark_background_color;
+        }
+        &:focus {
+          border-color: @color-background-selection;
+        }
+      }
+      margin-bottom: @padding-default;
+    }
+    &:last-child {
+      padding: @padding-default;
+    }
+  }
+}

@@ -195,6 +195,8 @@ export function paste(editor: Jodit) {
             }
 
             event.preventDefault();
+
+            editor.events.fire('afterCopy', selectedText);
         })
         .on('paste', (event: ClipboardEvent | DragEvent): false | void => {
 
