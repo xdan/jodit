@@ -586,7 +586,7 @@ describe('Tables Jodit Editor Tests', function() {
 
             editor.selection.setCursorAfter(editor.editor.querySelectorAll('td')[3].firstChild); // set cursor after 4
 
-            simulateEvent('keydown', Jodit.KEY_TOP, editor.editor);
+            simulateEvent('keydown', Jodit.KEY_UP, editor.editor);
 
             editor.selection.insertNode(Jodit.modules.Dom.create('text', 'test', editor.editorDocument), false);
 
@@ -620,7 +620,7 @@ describe('Tables Jodit Editor Tests', function() {
 
             editor.selection.setCursorAfter(editor.editor.querySelectorAll('td')[1].lastChild); // set cursor after 3
 
-            simulateEvent('keydown', Jodit.KEY_BOTTOM, editor.editor);
+            simulateEvent('keydown', Jodit.KEY_DOWN, editor.editor);
 
             editor.selection.insertNode(Jodit.modules.Dom.create('text', 'test', editor.editorDocument), false);
 

@@ -1130,7 +1130,7 @@ describe('Test plugins', function () {
 
                     var currentActive = dialog.getElementsByTagName('a')[30];
 
-                    simulateEvent('keydown', Jodit.KEY_TOP, currentActive, function (data) {
+                    simulateEvent('keydown', Jodit.KEY_UP, currentActive, function (data) {
                         data.target = currentActive;
                     });
 
@@ -1139,7 +1139,7 @@ describe('Test plugins', function () {
 
                     currentActive = dialog.getElementsByTagName('a')[10];
 
-                    simulateEvent('keydown', Jodit.KEY_TOP, currentActive, function (data) {
+                    simulateEvent('keydown', Jodit.KEY_UP, currentActive, function (data) {
                         data.target = currentActive;
                     });
 
@@ -1164,7 +1164,7 @@ describe('Test plugins', function () {
 
                     var currentActive = dialog.getElementsByTagName('a')[30];
 
-                    simulateEvent('keydown', Jodit.KEY_BOTTOM, currentActive, function (data) {
+                    simulateEvent('keydown', Jodit.KEY_DOWN, currentActive, function (data) {
                         data.target = currentActive;
                     });
 
@@ -1173,7 +1173,7 @@ describe('Test plugins', function () {
 
                     currentActive = dialog.getElementsByTagName('a')[200];
 
-                    simulateEvent('keydown', Jodit.KEY_BOTTOM, currentActive, function (data) {
+                    simulateEvent('keydown', Jodit.KEY_DOWN, currentActive, function (data) {
                         data.target = currentActive;
                     });
 
@@ -1801,7 +1801,7 @@ describe('Test plugins', function () {
             });
         });
     });
-    /*
+
     describe('Paste storage', function () {
         describe('Empty list', function () {
             it('Sholud not show dialog', function () {
@@ -1824,35 +1824,68 @@ describe('Test plugins', function () {
 
                 range.setStart(editor.editor.firstChild, 0);
                 range.setEnd(editor.editor.firstChild, 1);
-                editor.execCommand('copy');
+
+                simulateEvent('copy', 0 , editor.editor, function (data) {
+                   Object.defineProperty(data, 'clipboardData',{
+                        value: {
+                            getData: function () {},
+                            setData: function () {},
+                        }
+                   })
+                });
 
                 range.setStart(editor.editor.firstChild, 1);
                 range.setEnd(editor.editor.firstChild, 2);
-                editor.execCommand('copy');
+
+                simulateEvent('copy', 0 , editor.editor, function (data) {
+                    Object.defineProperty(data, 'clipboardData',{
+                        value: {
+                            getData: function () {},
+                            setData: function () {},
+                        }
+                    })
+                });
 
 
                 simulateEvent('keydown', Jodit.KEY_V , editor.editor, function (data) {
                     data.ctrlKey = true;
                     data.shiftKey = true;
                 });
-                var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor=' + editor.id + ']');
+
+                var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
                 expect(dialog).to.be.not.equal(null);
             });
             describe('After click on some of elements', function () {
                 it('Sholud select this', function () {
                     var editor = new Jodit(appendTestArea());
 
-                    editor.value = 'abcde'
+                    editor.value = 'abcde';
                     var range = editor.ownerDocument.createRange();
                     editor.selection.selectRange(range);
 
                     range.setStart(editor.editor.firstChild, 0);
                     range.setEnd(editor.editor.firstChild, 1);
-                    editor.execCommand('copy');
+
+                    simulateEvent('copy', 0 , editor.editor, function (data) {
+                        Object.defineProperty(data, 'clipboardData',{
+                            value: {
+                                getData: function () {},
+                                setData: function () {},
+                            }
+                        })
+                    });
 
                     range.setStart(editor.editor.firstChild, 1);
                     range.setEnd(editor.editor.firstChild, 2);
-                    editor.execCommand('copy');
+
+                    simulateEvent('copy', 0 , editor.editor, function (data) {
+                        Object.defineProperty(data, 'clipboardData',{
+                            value: {
+                                getData: function () {},
+                                setData: function () {},
+                            }
+                        })
+                    });
 
 
                     simulateEvent('keydown', Jodit.KEY_V , editor.editor, function (data) {
@@ -1860,16 +1893,83 @@ describe('Test plugins', function () {
                         data.shiftKey = true;
                     });
 
-                    var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor=' + editor.id + ']');
+                    var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
                     expect(dialog).to.be.not.equal(null);
 
-                    simulateEvent('click', 0, dialog.querySelectorAll('a')[1]);
-                    expect(dialog.querySelectorAll('a')[1].classList.contains('jodit_active')).to.be.equal(true);
+                    simulateEvent('click', 0, dialog.querySelectorAll('.jodit_paste_storage a')[1]);
+                    expect(dialog.querySelectorAll('.jodit_paste_storage a')[1].classList.contains('jodit_active')).to.be.equal(true);
+
+                    simulateEvent('dblclick', 0, dialog.querySelectorAll('.jodit_paste_storage a')[1]);
+
+                    expect(editor.ownerWindow.getComputedStyle(dialog).display).to.be.equal('none');
+
+                    expect(editor.value).to.be.equal('aacde');
+                });
+            });
+            describe('Press key up/down/enter', function () {
+                it('Sholud select next/previos element of list and insert selected value after Enter', function () {
+                    var editor = new Jodit(appendTestArea());
+
+                    editor.value = 'abcde';
+                    var range = editor.ownerDocument.createRange();
+                    editor.selection.selectRange(range);
+
+                    range.setStart(editor.editor.firstChild, 0);
+                    range.setEnd(editor.editor.firstChild, 1);
+
+                    simulateEvent('copy', 0 , editor.editor, function (data) {
+                        Object.defineProperty(data, 'clipboardData',{
+                            value: {
+                                getData: function () {},
+                                setData: function () {},
+                            }
+                        })
+                    });
+
+                    range.setStart(editor.editor.firstChild, 1);
+                    range.setEnd(editor.editor.firstChild, 2);
+
+                    simulateEvent('copy', 0 , editor.editor, function (data) {
+                        Object.defineProperty(data, 'clipboardData',{
+                            value: {
+                                getData: function () {},
+                                setData: function () {},
+                            }
+                        })
+                    });
+
+
+                    simulateEvent('keydown', Jodit.KEY_V , editor.editor, function (data) {
+                        data.ctrlKey = true;
+                        data.shiftKey = true;
+                    });
+
+                    var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
+                    expect(dialog).to.be.not.equal(null);
+
+                    simulateEvent('click', 0, dialog.querySelectorAll('.jodit_paste_storage a')[0]);
+                    expect(dialog.querySelectorAll('.jodit_paste_storage a')[0].classList.contains('jodit_active')).to.be.equal(true);
+
+
+                    simulateEvent('keydown', Jodit.KEY_UP, dialog.querySelectorAll('.jodit_paste_storage a')[0]);
+                    expect(dialog.querySelectorAll('.jodit_paste_storage a')[1].classList.contains('jodit_active')).to.be.equal(true);
+
+                    simulateEvent('keydown', Jodit.KEY_UP, dialog.querySelectorAll('.jodit_paste_storage a')[1]);
+                    expect(dialog.querySelectorAll('.jodit_paste_storage a')[0].classList.contains('jodit_active')).to.be.equal(true);
+
+                    simulateEvent('keydown', Jodit.KEY_DOWN, dialog.querySelectorAll('.jodit_paste_storage a')[0]);
+                    expect(dialog.querySelectorAll('.jodit_paste_storage a')[1].classList.contains('jodit_active')).to.be.equal(true);
+
+                    simulateEvent('keydown', Jodit.KEY_ENTER, dialog.querySelectorAll('.jodit_paste_storage a')[0]);
+
+                    expect(editor.ownerWindow.getComputedStyle(dialog).display).to.be.equal('none');
+
+                    expect(editor.value).to.be.equal('aacde');
                 });
             });
         });
 
-    });*/
+    });
     afterEach(function () {
         removeStuff();
         var i, keys = Object.keys(Jodit.instances);

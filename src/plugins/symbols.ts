@@ -9,7 +9,7 @@ import {Config} from "../Config";
 import {ControlType} from "../modules/ToolbarCollection";
 import {Alert, Dialog} from "../modules/Dialog";
 import {dom} from "../modules/Helpers";
-import {KEY_BOTTOM, KEY_ENTER, KEY_LEFT, KEY_RIGHT, KEY_TOP} from "../constants";
+import {KEY_DOWN, KEY_ENTER, KEY_LEFT, KEY_RIGHT, KEY_UP} from "../constants";
 
 declare module "../Config" {
     interface Config {
@@ -130,11 +130,11 @@ export class symbols {
                                 newIndex: number;
 
                             switch (e.which) {
-                                case KEY_TOP:
-                                case KEY_BOTTOM:
-                                    newIndex = e.which === KEY_TOP ? index - self.countInRow : index + self.countInRow;
+                                case KEY_UP:
+                                case KEY_DOWN:
+                                    newIndex = e.which === KEY_UP ? index - self.countInRow : index + self.countInRow;
                                     if (chars[newIndex] === undefined) {
-                                        newIndex = e.which === KEY_TOP ? Math.floor(chars.length / self.countInRow) * self.countInRow + jIndex : jIndex;
+                                        newIndex = e.which === KEY_UP ? Math.floor(chars.length / self.countInRow) * self.countInRow + jIndex : jIndex;
                                         if (newIndex > chars.length - 1) {
                                             newIndex -= self.countInRow;
                                         }

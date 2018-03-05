@@ -23,8 +23,8 @@ export function tableKeyboardNavigation(editor: Jodit) {
             event.which === consts.KEY_TAB ||
             event.which === consts.KEY_LEFT ||
             event.which === consts.KEY_RIGHT ||
-            event.which === consts.KEY_TOP ||
-            event.which === consts.KEY_BOTTOM
+            event.which === consts.KEY_UP ||
+            event.which === consts.KEY_DOWN
         ) {
             current = <Element>editor.selection.current();
             block = <HTMLTableCellElement>Dom.up(current, (elm: Node | false) => (elm && elm.nodeName && /^td|th$/i.test(elm.nodeName)), editor.editor);
@@ -36,10 +36,10 @@ export function tableKeyboardNavigation(editor: Jodit) {
                 range: Range = sel.rangeCount ? sel.getRangeAt(0) : editor.editorDocument.createRange();
 
             if (event.which !== consts.KEY_TAB && current !== block) {
-                if (((event.which === consts.KEY_LEFT || event.which === consts.KEY_TOP) &&
-                        (Dom.prev(current, (elm: Node | null) => (event.which === consts.KEY_TOP ? (elm && elm.nodeName === 'BR') : !!elm), block) || (event.which !== consts.KEY_TOP && current.nodeType === Node.TEXT_NODE && range.startOffset !== 0))
-                    ) || ((event.which === consts.KEY_RIGHT || event.which === consts.KEY_BOTTOM) &&
-                        (Dom.next(current, (elm: Node | null) => (event.which === consts.KEY_BOTTOM ? (elm && elm.nodeName === 'BR') : !!elm), block) || (event.which !== consts.KEY_BOTTOM && current.nodeType === Node.TEXT_NODE && current.nodeValue && range.startOffset !== current.nodeValue.length))
+                if (((event.which === consts.KEY_LEFT || event.which === consts.KEY_UP) &&
+                        (Dom.prev(current, (elm: Node | null) => (event.which === consts.KEY_UP ? (elm && elm.nodeName === 'BR') : !!elm), block) || (event.which !== consts.KEY_UP && current.nodeType === Node.TEXT_NODE && range.startOffset !== 0))
+                    ) || ((event.which === consts.KEY_RIGHT || event.which === consts.KEY_DOWN) &&
+                        (Dom.next(current, (elm: Node | null) => (event.which === consts.KEY_DOWN ? (elm && elm.nodeName === 'BR') : !!elm), block) || (event.which !== consts.KEY_DOWN && current.nodeType === Node.TEXT_NODE && current.nodeValue && range.startOffset !== current.nodeValue.length))
                     )) {
                     return;
                 }
@@ -64,15 +64,15 @@ export function tableKeyboardNavigation(editor: Jodit) {
                     next = <HTMLTableCellElement>(<any>Dom)[sibling](block, (elm: Node | null) => (elm && Dom.isCell(elm, editor.editorWindow)), table);
                 }
             break;
-            case consts.KEY_TOP:
-            case consts.KEY_BOTTOM: {
+            case consts.KEY_UP:
+            case consts.KEY_DOWN: {
                 let i = 0, j = 0, matrix = Table.formalMatrix(table, (elm, _i, _j) => {
                     if (elm === block) {
                         i = _i;
                         j = _j;
                     }
                 });
-                if (event.which === consts.KEY_TOP) {
+                if (event.which === consts.KEY_UP) {
                     if (matrix[i - 1] !== undefined) {
                         next = matrix[i - 1][j];
                     }
@@ -94,7 +94,7 @@ export function tableKeyboardNavigation(editor: Jodit) {
                 if (event.which === consts.KEY_TAB) {
                     editor.selection.select(next, true)
                 } else {
-                    editor.selection.setCursorIn(next, event.which === consts.KEY_RIGHT || event.which === consts.KEY_BOTTOM)
+                    editor.selection.setCursorIn(next, event.which === consts.KEY_RIGHT || event.which === consts.KEY_DOWN)
                 }
             }
             return false;

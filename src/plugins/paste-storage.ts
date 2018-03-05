@@ -1,9 +1,8 @@
 import {Plugin} from "../modules/Plugin";
 import {Dialog} from "../modules/Dialog";
-import {KEY_BOTTOM, KEY_ENTER, KEY_TOP} from "../constants";
-import {ToolbarIcon} from "../modules/ToolbarCollection";
+import {KEY_DOWN, KEY_ENTER, KEY_UP, SPACE_REG_EXP} from "../constants";
 import {dom} from "../modules/Helpers";
-import {Jodit} from "../Jodit";
+
 
 /**
  * Show dialog choose content to paste
@@ -19,22 +18,23 @@ export class pasteStorage extends Plugin {
             this.list[this.currentIndex] = buffer;
         }
         this.dialog.close();
+        this.jodit.setEditorValue();
     };
 
     private onKeyDown = (e: KeyboardEvent) => {
         let index: number = this.currentIndex;
-        if ([KEY_TOP, KEY_BOTTOM, KEY_ENTER].indexOf(e.which) === -1) {
+        if ([KEY_UP, KEY_DOWN, KEY_ENTER].indexOf(e.which) === -1) {
             return;
         }
 
-        if (e.which === KEY_TOP) {
+        if (e.which === KEY_UP) {
             if (index === 0) {
                 index = this.list.length - 1;
             } else {
                 index -= 1;
             }
         }
-        if (e.which === KEY_BOTTOM) {
+        if (e.which === KEY_DOWN) {
             if (index === this.list.length - 1) {
                 index = 0;
             } else {
@@ -76,7 +76,7 @@ export class pasteStorage extends Plugin {
 
         this.list.forEach((html: string, index: number) => {
             const a: HTMLElement = this.jodit.ownerDocument.createElement('a');
-            a.innerText = (index + 1) + '. ' + html;
+            a.innerText = (index + 1) + '. ' + html.replace(SPACE_REG_EXP, '');
 
             a.addEventListener('keydown', this.onKeyDown);
 

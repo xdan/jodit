@@ -1498,7 +1498,7 @@ describe('Test interface', function() {
                 expect(dialog).to.be.not.equal(null);
 
                 expect(dialog.innerText.match(/License:.*Free/)).to.be.equal(null);
-                debugger
+
                 expect(dialog.innerText.match(/License: 12345678-\*\*\*\*\*\*\*\*-\*\*\*\*\*\*\*\*-56789022/)).to.be.not.equal(null);
             });
         });
