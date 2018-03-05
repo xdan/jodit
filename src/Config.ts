@@ -142,6 +142,7 @@ export class Config {
      */
 
     width: number|string = 'auto';
+    minWidth: number|string = '200px';
     maxWidth: number|string = '100%';
 
     /**

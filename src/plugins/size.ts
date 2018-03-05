@@ -112,6 +112,7 @@ export function size(editor: Jodit) {
             });
             css(editor.container, {
                 minHeight: editor.options.minHeight,
+                minWidth: editor.options.minWidth,
                 maxWidth: editor.options.maxWidth,
             });
 
