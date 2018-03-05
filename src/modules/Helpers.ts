@@ -174,7 +174,7 @@ export const trim = (value: string): string => {
 /**
  * Converts rgba text representation of color in hex
  * @param {string} color - string like rgba(red, green, blue, alpha) or rgb(red, green, blue)
- * @return {string|NaN} hex color view, NaN - for transparent color
+ * @return {string | NaN} hex color view, NaN - for transparent color
  * @example
  * ```javascript
  * var p = document.createElement('p');

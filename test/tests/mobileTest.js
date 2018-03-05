@@ -96,6 +96,7 @@ describe('Test mobile mode', function () {
                     buttonsMD: 'source,about,print',
                     buttonsSM:  'source,about',
                     buttonsXS: 'source',
+                    minWidth: 100,
                     sizeLG: 400,
                     sizeMD: 300,
                     sizeSM: 200,
