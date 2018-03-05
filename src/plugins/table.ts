@@ -18,15 +18,23 @@ declare module "../Config" {
          * Use module {@link TableProcessor|TableProcessor}
          */
         useTableProcessor: boolean;
-        // useBootstrapClasses: boolean; TODO use this option
+        useExtraClassesOptions: boolean;
     }
 }
 
 Config.prototype.useTableProcessor = true;
-// Config.prototype.useBootstrapClasses = true;
+Config.prototype.useExtraClassesOptions = true;
 
 Config.prototype.controls.table = <ControlType> {
-    cols: 10,
+    data: {
+        cols: 10,
+        rows: 10,
+        classList: {
+            'table table-bordered': 'Bootstrap Bordered',
+            'table table-striped': 'Bootstrap Striped',
+            'table table-dark': 'Bootstrap Dark',
+        }
+    },
     popup: (editor: Jodit, current,  control: ControlType, close: Function) => {
         let i: number,
             j: number,
@@ -34,24 +42,47 @@ Config.prototype.controls.table = <ControlType> {
             div: HTMLDivElement,
             rows_count: number = 1,
             cols_count: number = 1,
-            default_cols_count: number = control.cols || 10;
+            default_rows_count: number = (control.data && control.data.rows) ? control.data.rows : 10,
+            default_cols_count: number = (control.data && control.data.cols) ? control.data.cols : 10;
+
+        const generateExtraClasses = (): string => {
+            if (!editor.options.useExtraClassesOptions) {
+                return '';
+            }
+
+            const out: string[] = [];
+            if (control.data) {
+                const classList: {[key: string]: string} = control.data.classList;
+                Object.keys(classList).forEach((classes: string) => {
+                    out.push(`<label><input value="${classes}" type="checkbox"/>${classList[classes]}</label>`);
+                });
+            }
+            return out.join('');
+        };
 
         const form: HTMLFormElement = <HTMLFormElement>dom(
             '<form class="jodit_form jodit_form_inserter">' +
                 '<label>' +
                     '<span>1</span> &times; <span>1</span>' +
                 '</label>' +
-                '<p class="jodit_form-container"></p>' +
+                '<div class="jodit_form-table-creator-box">' +
+                    '<div class="jodit_form-container"></div>' +
+                    '<div class="jodit_form-options">' + generateExtraClasses() + '</div>' +
+                '</div>' +
             '</form>', editor.ownerDocument),
 
 
             rows: HTMLSpanElement = form.querySelectorAll('span')[0],
             cols: HTMLSpanElement = form.querySelectorAll('span')[1],
             blocksContainer: HTMLDivElement = <HTMLDivElement>form.querySelector('.jodit_form-container'),
+            mainBox: HTMLDivElement = <HTMLDivElement>form.querySelector('.jodit_form-table-creator-box'),
+            options: HTMLDivElement = <HTMLDivElement>form.querySelector('.jodit_form-options'),
             cells: HTMLDivElement[] = [];
 
+
+
         const generateRows = (need_rows: number) => {
-            const cnt: number = (need_rows + 1) * default_cols_count;
+            const cnt: number = need_rows * default_cols_count;
 
             if (cells.length > cnt) {
                 for (i = cnt; i < cells.length; i += 1) {
@@ -73,12 +104,11 @@ Config.prototype.controls.table = <ControlType> {
                 blocksContainer.appendChild(cell);
             });
 
-            blocksContainer.style.width = (cells[0].offsetWidth * default_cols_count) + 'px';
+            const width: number = (cells[0].offsetWidth || 18) * default_cols_count;
+            blocksContainer.style.width = width + 'px';
+            mainBox.style.width = (width + options.offsetWidth + 1) + 'px';
         };
 
-        generateRows(1);
-
-        cells[0].className = 'hovered';
 
         const mouseenter = (e: MouseEvent, index?: number): void => {
             const div: HTMLDivElement = <HTMLDivElement>e.target;
@@ -90,7 +120,7 @@ Config.prototype.controls.table = <ControlType> {
 
             rows_count = Math.ceil((k + 1) / default_cols_count);
             cols_count = k % default_cols_count + 1;
-            generateRows(rows_count);
+            generateRows(rows_count + 1 > default_rows_count ? rows_count + 1 : default_rows_count);
 
             if (cols_count === default_cols_count || (cols_count < default_cols_count - 1 && default_cols_count > 10)) {
                 default_cols_count = cols_count === default_cols_count ? default_cols_count + 1 : default_cols_count - 1;
@@ -131,7 +161,7 @@ Config.prototype.controls.table = <ControlType> {
 
                 table.style.width = '100%';
 
-                let first_td: HTMLTableCellElement|null = null,
+                let first_td: HTMLTableCellElement | null = null,
                     tr: HTMLTableRowElement,
                     td: HTMLTableCellElement,
                     br: HTMLBRElement,
@@ -143,7 +173,7 @@ Config.prototype.controls.table = <ControlType> {
                     for (j = 1; j <= cols_count; j += 1) {
                         td = doc.createElement('td');
 
-                        td.style.width = w + '%';
+                        // td.style.width = w + '%';
 
                         if (!first_td) {
                             first_td = td;
@@ -169,6 +199,12 @@ Config.prototype.controls.table = <ControlType> {
                     }
                 }
 
+                $$('input[type=checkbox]:checked', options).forEach((input: HTMLElement) => {
+                    (<HTMLInputElement>input).value.split(/[\s]+/).forEach((className: string) => {
+                        table.classList.add(className);
+                    });
+                });
+
                 editor.selection.insertNode(doc.createTextNode("\n"));
                 editor.selection.insertNode(table, false);
 
@@ -178,14 +214,22 @@ Config.prototype.controls.table = <ControlType> {
                 }
 
                 close();
+            })
+            .off('afterOpenPopup.tableGenerator')
+            .on('afterOpenPopup.tableGenerator', () => {
+                generateRows(default_rows_count);
+                if (cells[0]) {
+                    cells[0].className = 'hovered';
+                }
             });
 
         return form;
     },
     tooltip: "Insert table"
 };
+
 /**
- *
+ * Process tables in editor
  */
 export class TableProcessor extends Component{
     private __key: string = 'table_processor_observer';

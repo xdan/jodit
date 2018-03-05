@@ -916,6 +916,30 @@ describe('Test interface', function() {
                     });
                 });
             });
+            describe('Disable button', function () {
+                describe('Cut', function () {
+                    it('Should be activated editor has some selected text', function () {
+                        var editor = new Jodit(appendTestArea(), {
+                            toolbarAdaptive: false,
+                            observer: {
+                                timeout: 0
+                            }
+                        });
+
+                        var cut = editor.container.querySelector('.jodit_toolbar_btn-cut');
+
+                        editor.setEditorValue('<p>test<strong>bold</strong></p>')
+                        expect(true).to.equal(cut.classList.contains('jodit_disabled'));
+
+                        var p = editor.editor.firstChild;
+
+                        editor.selection.select(p.firstChild);
+
+                        expect(false).to.equal(cut.classList.contains('jodit_disabled'));
+
+                    });
+                });
+            });
         });
         describe('Commands', function () {
             it('Click on Source button should change current mode', function() {

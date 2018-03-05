@@ -9,7 +9,6 @@ import {Jodit} from "../Jodit";
 import {asArray, camelCase, css, debounce, dom, each, offset} from "./Helpers";
 import * as consts from "../constants";
 import {Dom} from "./Dom";
-import {Config} from "../Config";
 
 
 export type ControlType = {
@@ -157,8 +156,6 @@ export type ControlType = {
     exec?: (editor: Jodit, current: Node|false, control: ControlType, originalEvent: Event,  btn: HTMLLIElement) => void;
 
     args?: any[];
-
-    cols?: number;
 
     /**
      * The method which will be called for each element of button.list
@@ -835,7 +832,7 @@ export class ToolbarCollection extends ToolbarElement {
         this.jodit.events
             .on(this.jodit.ownerWindow, 'mousedown touchend', this.closeAll)
             .on( 'afterOpenPopup', this.afterOpen)
-            .on('mousedown mouseup keydown change afterInit readonly afterResize focus afterSetMode touchstart', this.checkActiveButtons)
+            .on('mousedown mouseup keydown change afterInit readonly afterResize changeSelection focus afterSetMode touchstart', this.checkActiveButtons)
             .on('afterSetMode focus', this.immedateCheckActiveButtons);
     };
 
