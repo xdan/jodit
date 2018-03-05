@@ -11,6 +11,13 @@
   .jodit_workplace {
     border-color: fade(@dark_background_color, 80%);
   }
+  .jodit_statusbar {
+    background-color: fade(@dark_toolbar_color, 80);
+    border-color: fade(@dark_background_color, 80%);
+    &, .jodit_statusbar_item span {
+      color: @dark_text_color;
+    }
+  }
   .jodit_toolbar_popup-inline,
   .jodit_toolbar_popup {
       background: @dark_background_color;
@@ -20,6 +27,7 @@
   }
   .jodit_toolbar {
       background: @dark_toolbar_color;
+      border-color: fade(@dark_background_color, 80%);
       li.jodit_toolbar_btn {
           > a {
             color: @dark_text_color;
