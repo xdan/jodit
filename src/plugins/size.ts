@@ -108,10 +108,11 @@ export function size(editor: Jodit) {
         })
         .on('afterInit', () => {
             css(editor.editor, {
-                minHeight: '100%'
+                minHeight: '100%',
             });
             css(editor.container, {
-                minHeight: editor.options.minHeight
+                minHeight: editor.options.minHeight,
+                maxWidth: editor.options.maxWidth,
             });
 
             let height: string | number = editor.options.height;

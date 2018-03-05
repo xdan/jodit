@@ -142,6 +142,7 @@ export class Config {
      */
 
     width: number|string = 'auto';
+    maxWidth: number|string = '100%';
 
     /**
      * Editor's height
