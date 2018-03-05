@@ -120,12 +120,13 @@ Config.prototype.controls.table = <ControlType> {
 
             rows_count = Math.ceil((k + 1) / default_cols_count);
             cols_count = k % default_cols_count + 1;
-            generateRows(rows_count + 1 > default_rows_count ? rows_count + 1 : default_rows_count);
 
-            if (cols_count === default_cols_count || (cols_count < default_cols_count - 1 && default_cols_count > 10)) {
-                default_cols_count = cols_count === default_cols_count ? default_cols_count + 1 : default_cols_count - 1;
-                return mouseenter(e, cols_count + (rows_count - 1)  * default_cols_count - 1);
-            }
+            // generateRows(rows_count + 1 > default_rows_count ? rows_count + 1 : default_rows_count);
+
+            // if (cols_count === default_cols_count || (cols_count < default_cols_count - 1 && default_cols_count > 10)) {
+            //     default_cols_count = cols_count === default_cols_count ? default_cols_count + 1 : default_cols_count - 1;
+            //     return mouseenter(e, cols_count + (rows_count - 1)  * default_cols_count - 1);
+            // }
 
             for (i = 0; i < cells.length; i += 1) {
                 if (cols_count >= i % default_cols_count + 1 &&  rows_count >= Math.ceil((i + 1) / default_cols_count)) {
@@ -164,8 +165,8 @@ Config.prototype.controls.table = <ControlType> {
                 let first_td: HTMLTableCellElement | null = null,
                     tr: HTMLTableRowElement,
                     td: HTMLTableCellElement,
-                    br: HTMLBRElement,
-                    w: string = (100 / cols_count).toFixed(7);
+                    br: HTMLBRElement;
+                    // w: string = (100 / cols_count).toFixed(7);
 
                 for (i = 1; i <= rows_count; i += 1) {
                     tr = doc.createElement('tr');
