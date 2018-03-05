@@ -446,8 +446,8 @@ describe('Test interface', function() {
 
                         expect(window.getComputedStyle(list).display).to.equal('block');
 
-                        simulateEvent('mousemove', 0, list.querySelectorAll('div')[14])
-                        expect(list.querySelectorAll('div.hovered').length).to.equal(10);
+                        simulateEvent('mousemove', 0, list.querySelectorAll('.jodit_form-container div')[14])
+                        expect(list.querySelectorAll('.jodit_form-container div.hovered').length).to.equal(10);
                     });
                 });
             });
