@@ -783,7 +783,7 @@ export class ToolbarCollection extends ToolbarElement {
 
             });
 
-        this.jodit.events
+        this.jodit.events && this.jodit.events
             .fire('updateToolbar');
     };
 
@@ -842,7 +842,8 @@ export class ToolbarCollection extends ToolbarElement {
         this.jodit.events
             .off(this.jodit.ownerWindow, 'mousedown touchstart', this.closeAll)
             .off( 'afterOpenPopup', this.afterOpen)
-            .off('mousedown mouseup keydown change afterSetMode focus afterInit readonly', this.checkActiveButtons);
+            .off('mousedown mouseup keydown change afterInit readonly afterResize changeSelection focus afterSetMode touchstart', this.checkActiveButtons)
+            .off('afterSetMode focus', this.immedateCheckActiveButtons);
 
         this.clear();
     }
