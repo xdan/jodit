@@ -141,9 +141,9 @@ export class Config {
      * ```
      */
 
-    width: number|string = 'auto';
-    minWidth: number|string = '200px';
-    maxWidth: number|string = '100%';
+    width: number | string = 'auto';
+    minWidth: number | string = '200px';
+    maxWidth: number | string = '100%';
 
     /**
      * Editor's height

@@ -59,7 +59,7 @@ Config.prototype.iframeStyle = 'html{' +
         'min-height: 100%;' +
     '}' +
     'body{' +
-        //'height: 100%;' +
+        'box-sizing: border-box;' +
         'font-size: 13px;' +
     '    line-height: 1.6;' +
         'padding:10px;' +
