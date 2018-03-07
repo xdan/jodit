@@ -661,25 +661,29 @@ describe('Test interface', function() {
 
                 expect(editor.container.querySelectorAll('.jodit_toolbar_btn-bold.jodit_active').length).to.equal(1);
             });
-            it('Check Redo Undo functionality', function() {
-                var table_editor_interface = appendTestArea();
-                table_editor_interface.value = 'top';
-                var editor = new Jodit(table_editor_interface, {
-                    observer: {
-                        timeout: 0 // disable delay
-                    }
+            describe('Check Redo Undo functionality', function() {
+                it('Should change disable in icon then then can not be executed', function() {
+                    var area = appendTestArea();
+                    area.value = 'top';
+                    var editor = new Jodit(area, {
+                        observer: {
+                            timeout: 0 // disable delay
+                        }
+                    });
+                    editor.selection.focus();
+
+                    editor.value = 'Test';
+
+                    expect(editor.container.querySelectorAll('.jodit_toolbar_btn-undo.jodit_disabled').length).to.equal(0);
+                    expect(editor.container.querySelectorAll('.jodit_toolbar_btn-redo.jodit_disabled').length).to.equal(1);
+
+                    simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-undo'))
+
+                    expect(editor.container.querySelectorAll('.jodit_toolbar_btn-undo.jodit_disabled').length).to.equal(1);
+                    expect(editor.container.querySelectorAll('.jodit_toolbar_btn-redo.jodit_disabled').length).to.equal(0);
+
+                    expect(editor.value).to.equal('top');
                 });
-
-                editor.setEditorValue('Test');
-
-                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-redo.jodit_disabled').length).to.equal(1);
-                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-undo.jodit_disabled').length).to.equal(0);
-
-                simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-undo'))
-
-                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-redo.jodit_disabled').length).to.equal(0);
-                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-undo.jodit_disabled').length).to.equal(1);
-                expect(editor.getEditorValue()).to.equal('top');
             });
             it('Full size button', function() {
                 var editor = new Jodit(appendTestArea(), {
@@ -856,10 +860,12 @@ describe('Test interface', function() {
                     describe('Font family button', function () {
                         it('Should be activated then element has some style value', function () {
                             var editor = new Jodit(appendTestArea(), {
+                                toolbarAdaptive: false,
                                 observer: {
                                     timeout: 0
                                 }
                             });
+
                             editor.setEditorValue('<p>test<span style="font-family: Georgia, serif;">bold</span></p>')
 
                             var p = editor.editor.firstChild;

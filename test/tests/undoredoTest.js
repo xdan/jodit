@@ -51,6 +51,51 @@ describe('Undo/Redo behaviors', function() {
             expect(editor.getEditorValue()).to.equal('testtest2');
         });
     });
+    describe('Clear stack', function () {
+        it('Should disable both buttons in toolbar and all calls redo and undo must do nothing', function () {
+            var editor = new Jodit(appendTestArea(), {
+                toolbarAdaptive: false,
+                observer: {
+                    timeout: 0
+                }
+            });
+
+            var undo = editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-undo');
+            expect(undo).to.be.not.equal(null);
+            var redo = editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-redo');
+            expect(redo).to.be.not.equal(null);
+
+            expect(undo.classList.contains('jodit_disabled')).to.be.true;
+            expect(redo.classList.contains('jodit_disabled')).to.be.true;
+
+            editor.value = 'test';
+            editor.value = 'stop';
+
+            expect(undo.classList.contains('jodit_disabled')).to.be.false;
+            expect(redo.classList.contains('jodit_disabled')).to.be.true;
+
+            simulateEvent('mousedown', 0 , undo);
+            expect(editor.value).to.be.equal('test');
+            expect(undo.classList.contains('jodit_disabled')).to.be.false;
+            expect(redo.classList.contains('jodit_disabled')).to.be.false;
+
+            simulateEvent('mousedown', 0 , redo);
+            expect(editor.value).to.be.equal('stop');
+            expect(undo.classList.contains('jodit_disabled')).to.be.false;
+            expect(redo.classList.contains('jodit_disabled')).to.be.true;
+
+            editor.observer.clear();
+
+            expect(undo.classList.contains('jodit_disabled')).to.be.true;
+            expect(redo.classList.contains('jodit_disabled')).to.be.true;
+            expect(editor.value).to.be.equal('stop');
+
+            editor.execCommand('undo');
+            expect(undo.classList.contains('jodit_disabled')).to.be.true;
+            expect(redo.classList.contains('jodit_disabled')).to.be.true;
+            expect(editor.value).to.be.equal('stop');
+        });
+    });
     afterEach(function () {
         var i, keys = Object.keys(Jodit.instances);
         for (i = 0; i < keys.length; i += 1) {

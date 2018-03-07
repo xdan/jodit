@@ -5,6 +5,7 @@
  */
 
 import {Component} from './Component'
+import {Dom} from "./Dom";
 
 type RangeType = {
     startContainer: number[];
@@ -66,7 +67,7 @@ export class Snapshot extends Component {
     private calcHierarchyLadder (elm: Node | null): number[] {
         const counts: number[] = [];
 
-        if (!elm || !elm.parentNode) {
+        if (!elm || !elm.parentNode || !Dom.isOrContains(this.jodit.editor, elm)) {
             return [];
         }
 
@@ -121,12 +122,26 @@ export class Snapshot extends Component {
 
         if (sel && sel.rangeCount) {
             const range: Range = sel.getRangeAt(0);
-            
+
+            let
+                startContainer  = this.calcHierarchyLadder(range.startContainer),
+                startOffset     = Snapshot.strokeOffset(range.startContainer, range.startOffset),
+                endContainer    = this.calcHierarchyLadder(range.endContainer),
+                endOffset       = Snapshot.strokeOffset(range.endContainer, range.endOffset)
+
+            if (!startContainer.length && range.startContainer !== this.jodit.editor) {
+                startOffset = 0;
+            }
+
+            if (!endContainer.length && range.endContainer !== this.jodit.editor) {
+                endOffset = 0;
+            }
+
             snapshot.range = {
-                startContainer  : this.calcHierarchyLadder(range.startContainer),
-                startOffset     : Snapshot.strokeOffset(range.startContainer, range.startOffset),
-                endContainer    : this.calcHierarchyLadder(range.endContainer),
-                endOffset       : Snapshot.strokeOffset(range.endContainer, range.endOffset)
+                startContainer,
+                startOffset,
+                endContainer,
+                endOffset
             };
         }
 

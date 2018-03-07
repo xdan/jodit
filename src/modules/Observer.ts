@@ -119,6 +119,12 @@ export class Observer extends Component {
         this.stack.undo() && this.changeStack();
     }
 
+    clear() {
+        this.__startValue = this.snapshot.make();
+        this.stack.clear();
+        this.changeStack();
+    }
+
     changeStack() {
         this.jodit && this.jodit.events && this.jodit.events.fire('changeStack');
     }

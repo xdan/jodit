@@ -14,6 +14,11 @@ export class Stack {
         this.commands.length = this.stackPosition + 1;
     }
 
+    clear() {
+        this.commands.length = 0;
+        this.stackPosition = -1;
+    }
+
     push(command: Command) {
         this.clearRedo();
         this.commands.push(command);
