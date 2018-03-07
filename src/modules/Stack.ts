@@ -9,49 +9,44 @@ import {Command} from "./Observer";
 export class Stack {
     private commands: Command[] = [];
     private stackPosition: number = -1;
-    private savePosition: number = -1;
 
-    execute(command: Command) {
-        this.__clearRedo();
-        command.execute();
-        this.commands.push(command);
-        this.stackPosition += 1;
-        this.changed();
+    private clearRedo() {
+        this.commands.length = this.stackPosition + 1;
     }
 
-    undo() {
-        if (this.commands[this.stackPosition]) {
-            this.commands[this.stackPosition].undo();
+    push(command: Command) {
+        this.clearRedo();
+        this.commands.push(command);
+        this.stackPosition += 1;
+    }
+
+    undo() : boolean {
+        if (this.canUndo()) {
+            if (this.commands[this.stackPosition]) {
+                this.commands[this.stackPosition].undo();
+            }
+            this.stackPosition -= 1;
+            return true;
         }
-        this.stackPosition -= 1;
-        this.changed();
+        return false;
+    }
+
+    redo () : boolean {
+        if (this.canRedo()) {
+            this.stackPosition += 1;
+            if (this.commands[this.stackPosition]) {
+                this.commands[this.stackPosition].redo();
+            }
+            return true;
+        }
+        return false;
     }
 
     canUndo (): boolean {
         return this.stackPosition >= 0;
     }
 
-    redo () {
-        this.stackPosition += 1;
-        if (this.commands[this.stackPosition]) {
-            this.commands[this.stackPosition].redo();
-        }
-        this.changed();
-    }
-
     canRedo (): boolean {
         return this.stackPosition < this.commands.length - 1;
-    }
-
-    save () {
-        this.savePosition = this.stackPosition;
-        this.changed();
-    }
-
-    private __clearRedo() {
-        this.commands.length = this.stackPosition + 1;
-    }
-    changed() {
-        // do nothing, override
     }
 }

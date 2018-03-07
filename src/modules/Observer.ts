@@ -29,6 +29,7 @@ Config.prototype.observer = {
 
 export class Command {
     private observer: Observer;
+
     private oldValue: SnapshotType;
     private newValue: SnapshotType;
 
@@ -37,7 +38,7 @@ export class Command {
         this.oldValue = oldValue;
         this.newValue = newValue;
     }
-    execute() {}
+
     undo () {
         this.observer.snapshot.restore(this.oldValue);
     }
@@ -72,8 +73,9 @@ export class Observer extends Component {
     private onChangeStack = () => {
         this.__newValue = this.snapshot.make();
         if (!Snapshot.equal(this.__newValue, this.__startValue)) {
-            this.stack.execute(new Command(this.__startValue, this.__newValue, this));
+            this.stack.push(new Command(this.__startValue, this.__newValue, this));
             this.__startValue = this.__newValue;
+            this.changeStack();
         }
     };
 
@@ -84,33 +86,40 @@ export class Observer extends Component {
 
         this.snapshot = new Snapshot(editor);
 
-        this.__startValue = this.snapshot.make();
-
-        this.stack.changed();
-
         const onChangeStack: Function = debounce(this.onChangeStack, this.jodit.options.observer.timeout);
 
         editor.events
-            .on('change', () => {
-                if (!this.snapshot.isBlocked) {
-                    onChangeStack();
-                }
+            .on('afterInit', () => {
+                this.__startValue = this.snapshot.make();
+                editor.events
+                    .on('changeSelection selectionstart selectionchange mousedown mouseup keydown keyup', () => {
+                        if (this.__startValue.html === this.jodit.getNativeEditorValue()) {
+                            this.__startValue = this.snapshot.make();
+                        }
+                    })
+                    .on('change', () => {
+                        if (!this.snapshot.isBlocked) {
+                            onChangeStack();
+                        }
+                    });
             });
     }
 
     /**
      * Return state of the WYSIWYG editor to step back
-     * @method redo
      */
     redo () {
-        this.stack.redo();
+        this.stack.redo() && this.changeStack();
     }
 
     /**
      * Return the state of the WYSIWYG editor to step forward
-     * @method undo
      */
     undo () {
-        this.stack.undo();
+        this.stack.undo() && this.changeStack();
+    }
+
+    changeStack() {
+        this.jodit && this.jodit.events && this.jodit.events.fire('changeStack');
     }
 }

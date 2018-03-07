@@ -488,17 +488,11 @@ export  class ToolbarButton extends ToolbarElement {
     destruct() {
         const clearName: string = this.control.name.replace(/[^a-zA-Z0-9]/g, '_');
         this.jodit.events.off(this.container);
-        this.jodit.events.off(camelCase('can-' + clearName), this.canActionCallback);
     }
 
 
     public textBox: HTMLSpanElement;
 
-    private canActionCallback = (enable?: boolean) => {
-        if (!this.isDisable()) {
-            this.disable = !enable;
-        }
-    };
 
     private tooltip: Tooltip;
 
@@ -583,8 +577,6 @@ export  class ToolbarButton extends ToolbarElement {
 
 
         });
-
-        this.jodit.events.on(camelCase('can-' + clearName), this.canActionCallback);
     }
 }
 
@@ -830,11 +822,13 @@ export class ToolbarCollection extends ToolbarElement {
         }
     };
 
+
+    private listenEvents: string = 'changeStack mousedown mouseup keydown change afterInit readonly afterResize selectionchange changeSelection focus afterSetMode touchstart';
     private initEvents = () => {
         this.jodit.events
             .on(this.jodit.ownerWindow, 'mousedown touchend', this.closeAll)
             .on( 'afterOpenPopup', this.afterOpen)
-            .on('mousedown mouseup keydown change afterInit readonly afterResize changeSelection focus afterSetMode touchstart', this.checkActiveButtons)
+            .on(this.listenEvents, this.checkActiveButtons)
             .on('afterSetMode focus', this.immedateCheckActiveButtons);
     };
 
@@ -844,7 +838,7 @@ export class ToolbarCollection extends ToolbarElement {
         this.jodit.events
             .off(this.jodit.ownerWindow, 'mousedown touchstart', this.closeAll)
             .off( 'afterOpenPopup', this.afterOpen)
-            .off('mousedown mouseup keydown change afterInit readonly afterResize changeSelection focus afterSetMode touchstart', this.checkActiveButtons)
+            .off(this.listenEvents, this.checkActiveButtons)
             .off('afterSetMode focus', this.immedateCheckActiveButtons);
 
         this.clear();
