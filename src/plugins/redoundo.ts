@@ -9,42 +9,31 @@ import {Observer} from '../modules/Observer';
 import * as consts from '../constants';
 import {Config} from "../Config";
 import {Component} from "../modules/Component";
+import {ControlType} from "../modules/ToolbarCollection";
 
-Config.prototype.controls.redo ={
+Config.prototype.controls.redo = <ControlType> {
     mode: consts.MODE_SPLIT,
+    isDisable: (editor: Jodit): boolean => !editor.observer.stack.canRedo(),
     tooltip: 'Redo'
 };
 Config.prototype.controls.undo = {
     mode: consts.MODE_SPLIT,
+    isDisable: (editor: Jodit): boolean => !editor.observer.stack.canUndo(),
     tooltip: 'Undo'
 };
 
 /**
- * Custom processs Redo and Undo functionality
+ * Custom process Redo and Undo functionality
  */
 export class redoundo extends Component  {
-    private observer:Observer = new Observer(this.jodit);
     constructor(editor: Jodit) {
         super(editor);
-        const updateButton = () => {
-            editor.events.fire('canRedo', this.observer.stack.canRedo());
-            editor.events.fire('canUndo', this.observer.stack.canUndo());
-        };
-
-
-        editor.events
-            .on('afterSetMode', () => {
-                if (editor.getRealMode() === consts.MODE_WYSIWYG) {
-                    updateButton();
-                }
-            });
 
         const callback = (command: 'undo' | 'redo'): void | false => {
             if (editor.getRealMode() === consts.MODE_WYSIWYG) {
-                if ((<any>this.observer.stack)['can' + command.substr(0,1).toUpperCase() + command.substr(1)]()) {
-                    this.observer.stack[command]();
+                if ((<any>this.jodit.observer.stack)['can' + command.substr(0,1).toUpperCase() + command.substr(1)]()) {
+                    this.jodit.observer.stack[command]();
                 }
-                updateButton();
             }
             return false;
         };
@@ -58,8 +47,5 @@ export class redoundo extends Component  {
             hotkeys: 'ctrl+z'
         });
 
-    }
-    destruct() {
-        this.observer.destruct();
     }
 }

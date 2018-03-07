@@ -150,6 +150,23 @@ export function backspace(editor: Jodit) {
                 const fakeNode: Node = editor.ownerDocument.createTextNode(consts.INVISIBLE_SPACE);
                 const marker: HTMLElement = editor.editorDocument.createElement('span');
 
+                const potentialRemovable: RegExp = /^(IMG|BR|IFRAME|SCRIPT|INPUT|TEXTAREA|TABLE|HR)$/;
+                const isEmpty = (node: Node): boolean => {
+                    if (node.nodeName.match(/^(TD|TH|TR|TABLE|LI)$/) !== null) {
+                        return false;
+                    }
+
+                    if (Dom.isEmpty(node) || node.nodeName.match(potentialRemovable) !== null) {
+                        return true;
+                    }
+
+                    if (node.nodeType === Node.TEXT_NODE && !Dom.isEmptyTextNode(node)) {
+                        return false;
+                    }
+
+                    return node.childNodes.length ? [].slice.call(node.childNodes).every(isEmpty) : true;
+                };
+
                 try {
                     range.insertNode(fakeNode);
                     if (!Dom.isOrContains(editor.editor, fakeNode)) {
@@ -161,7 +178,9 @@ export function backspace(editor: Jodit) {
                     let workElement: Node | null = Dom.findInline(fakeNode, toLeft, editor.editor);
 
                     if (workElement) {
-                        const box = {node: workElement};
+                        const box = {
+                            node: workElement
+                        };
                         const removeCharFlag: void | boolean = removeChar(box, toLeft, range);
                         if (removeCharFlag !== undefined) {
                             return void(0);
@@ -174,7 +193,7 @@ export function backspace(editor: Jodit) {
                             return false;
                         }
 
-                        if (workElement && workElement.nodeName.match(/^(IMG|BR|IFRAME|SCRIPT|INPUT|TEXTAREA|TABLE|HR)$/)) {
+                        if (workElement && workElement.nodeName.match(potentialRemovable) !== null) {
                             workElement.parentNode && workElement.parentNode.removeChild(workElement);
                             return false;
                         }
@@ -195,10 +214,16 @@ export function backspace(editor: Jodit) {
                         }
 
                         box.parentNode && box.parentNode.insertBefore(prevBox, box);
+                    } else {
+                        if (prevBox && isEmpty(prevBox)) {
+                            prevBox.parentNode && prevBox.parentNode.removeChild(prevBox);
+                            return false;
+                        }
                     }
 
 
                     if (prevBox) {
+
                         let tmpNode: Node = editor.selection.setCursorIn(prevBox, !toLeft);
                         editor.selection.insertNode(marker, false, false);
                         if (tmpNode.nodeType === Node.TEXT_NODE && tmpNode.nodeValue === consts.INVISIBLE_SPACE) {

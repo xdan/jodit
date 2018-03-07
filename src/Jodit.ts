@@ -6,18 +6,18 @@
 
 import {Component} from './modules/Component';
 import {markerInfo, Select} from './modules/Selection';
-import {Cookie} from './modules/Cookie';
 import {FileBrowser} from './modules/FileBrowser';
 import {Uploader} from './modules/Uploader';
 import {Dom} from './modules/Dom';
 import {EventsNative} from './modules/EventsNative';
 import * as consts from './constants';
-import {extend, inArray, dom, each, sprintf, defaultLanguage, debounce, asArray, splitArray} from './modules/Helpers';
+import {extend, inArray, dom, sprintf, defaultLanguage, debounce, asArray, splitArray} from './modules/Helpers';
 import * as helper from './modules/Helpers';
 import {Config} from "./Config";
 import {ToolbarCollection} from "./modules/ToolbarCollection";
 import {StatusBar} from "./modules/StatusBar";
 import {localStorageProvider, Storage} from "./modules/Storage";
+import {Observer} from "./modules/Observer";
 
 
 declare let appVersion: string;
@@ -94,11 +94,11 @@ export class Jodit extends Component {
     container: HTMLDivElement;
 
     statusbar: StatusBar;
-
+    observer: Observer;
     /**
      * @property{HTMLElement} element It contains source element
      */
-    element: HTMLInputElement;
+    element: HTMLElement;
 
     /**
      * @property{HTMLDivElement|HTMLBodyElement} editor It contains the root element editor
@@ -216,8 +216,23 @@ export class Jodit extends Component {
 
         this.selection = new Select(this);
         this.uploader = new Uploader(this);
+        this.observer = new Observer(this);
 
         this.container = <HTMLDivElement>dom('<div class="jodit_container" />', this.ownerDocument);
+
+        let buffer: null | string = null;
+
+        if (this.options.inline) {
+            if (['TEXTAREA', 'INPUT'].indexOf(this.element.nodeName) === -1) {
+                this.container = <HTMLDivElement>this.element;
+                this.element.setAttribute(this.__defaultClassesKey, this.element.className.toString())
+                buffer = this.container.innerHTML;
+                this.container.innerHTML = '';
+                this.container.classList.add('jodit_inline');
+            }
+            this.container.classList.add('jodit_container');
+        }
+
         this.container.classList.add('jodit_' + (this.options.theme || 'default') + '_theme');
 
         if (this.options.zIndex) {
@@ -250,7 +265,7 @@ export class Jodit extends Component {
 
         this.workplace.appendChild(this.progress_bar);
 
-        if (this.element.parentNode) {
+        if (this.element.parentNode && this.element !== this.container) {
             this.element.parentNode.insertBefore(this.container, this.element);
         }
 
@@ -262,7 +277,12 @@ export class Jodit extends Component {
 
         this.__createEditor();
 
-        this.setElementValue(); // syncro
+        // syncro
+        if (this.element !== this.container) {
+            this.setElementValue();
+        } else {
+            buffer !== null && this.setEditorValue(buffer); // inline mode
+        }
 
 
         Jodit.instances[this.id] = this;
@@ -309,6 +329,7 @@ export class Jodit extends Component {
 
 
     private __defaultStyleDisplayKey = 'data-jodit-default-style-display';
+    private __defaultClassesKey = 'data-jodit-default-classes';
 
     /**
      * Create main DIV element and replace source textarea
@@ -352,13 +373,15 @@ export class Jodit extends Component {
             this.editor.style.direction = this.options.direction.toLowerCase() === 'rtl' ? 'rtl' : 'ltr';
         }
 
+        // actual for inline mode
+        if (this.element !== this.container) {
+            // hide source element
+            if (this.element.style.display) {
+                this.element.setAttribute(this.__defaultStyleDisplayKey, this.element.style.display)
+            }
 
-        // hide source element
-        if (this.element.style.display) {
-            this.element.setAttribute(this.__defaultStyleDisplayKey, this.element.style.display)
+            this.element.style.display = 'none';
         }
-
-        this.element.style.display = 'none';
 
         if (this.options.triggerChangeEvent) {
             this.events.on('change', debounce(() => {
@@ -392,11 +415,20 @@ export class Jodit extends Component {
             return;
         }
 
-        if (this.element.hasAttribute(this.__defaultStyleDisplayKey)) {
-            this.element.style.display = this.element.getAttribute(this.__defaultStyleDisplayKey);
-            this.element.removeAttribute(this.__defaultStyleDisplayKey);
+        let buffer: string = this.value;
+
+        if (this.element !== this.container) {
+            if (this.element.hasAttribute(this.__defaultStyleDisplayKey)) {
+                this.element.style.display = this.element.getAttribute(this.__defaultStyleDisplayKey);
+                this.element.removeAttribute(this.__defaultStyleDisplayKey);
+            } else {
+                this.element.style.display = '';
+            }
         } else {
-            this.element.style.display = '';
+            if (this.element.hasAttribute(this.__defaultClassesKey)) {
+                this.element.className = this.element.getAttribute(this.__defaultClassesKey) || '';
+                this.element.removeAttribute(this.__defaultClassesKey);
+            }
         }
 
         if (this.element.hasAttribute('style') && !this.element.getAttribute('style')) {
@@ -419,31 +451,52 @@ export class Jodit extends Component {
 
         delete this['selection'];
 
-        this.events.off(this.events);
         this.events.off(this.ownerWindow);
         this.events.off(this.ownerDocument);
         this.events.off(this.ownerDocument.body);
         this.events.off(this.element);
         this.events.off(this.editor);
+        this.events.destruct();
 
         delete this['events'];
 
-        if (this.container.parentNode) {
+
+        if (this.workplace.parentNode) {
+            this.workplace.parentNode.removeChild(this.workplace);
+        }
+
+        if (this.editor.parentNode) {
+            this.editor.parentNode.removeChild(this.editor);
+        }
+
+        if (this.iframe && this.iframe.parentNode) {
+            this.iframe.parentNode.removeChild(this.iframe);
+        }
+
+        if (this.container.parentNode && this.container !== this.element) {
             this.container.parentNode.removeChild(this.container);
         }
 
-        delete this['container'];
+
         delete this['editor'];
         delete this['workplace'];
 
+
+
+        // inline mode
+        if (this.container === this.element) {
+            this.element.innerHTML = buffer;
+        }
+
         delete Jodit.instances[this.id];
+        delete this['container'];
     }
 
     /**
      * Return source element value
      */
     getElementValue() {
-        return this.element.value !== undefined ? this.element.value : this.element.innerHTML;
+        return (<HTMLInputElement>this.element).value !== undefined ? (<HTMLInputElement>this.element).value : this.element.innerHTML;
     }
 
     /**
@@ -453,8 +506,7 @@ export class Jodit extends Component {
      */
     getNativeEditorValue(): string {
         if (this.editor) {
-            return this.editor.innerHTML
-                .replace(consts.INVISIBLE_SPACE_REG_EXP, '') ;
+            return this.editor.innerHTML;
         }
 
         return this.getElementValue();
@@ -484,7 +536,8 @@ export class Jodit extends Component {
             return value;
         }
 
-        value = this.getNativeEditorValue();
+        value = this.getNativeEditorValue()
+            .replace(consts.INVISIBLE_SPACE_REG_EXP, '');
 
         if (removeSelectionMarkers) {
             value = value
@@ -538,10 +591,12 @@ export class Jodit extends Component {
         }
 
         if (value !== undefined) {
-            if (this.element.value !== undefined) {
-                this.element.value = value;
-            } else {
-                this.element.innerHTML = value;
+            if (this.element !== this.container) {
+                if ((<HTMLInputElement>this.element).value !== undefined) {
+                    (<HTMLInputElement>this.element).value = value;
+                } else {
+                    this.element.innerHTML = value;
+                }
             }
         } else {
             value = this.getElementValue();

@@ -22,7 +22,7 @@ export type SnapshotType = {
  * Module for creating snapshot of editor which includes html content and the current selection
  */
 export class Snapshot extends Component {
-    private static __countElementsBefore (elm: Node|null): number {
+    private static __countElementsBefore (elm: Node | null): number {
         if (!elm || !elm.parentNode) {
             return 0;
         }
@@ -49,7 +49,7 @@ export class Snapshot extends Component {
 
         return 0;
     }
-    private __decomposeHierarchyNodes (elm: Node|null): number[] {
+    private __decomposeHierarchyNodes (elm: Node | null): number[] {
         const counts: number[] = [];
 
         if (!elm || !elm.parentNode) {
@@ -66,7 +66,7 @@ export class Snapshot extends Component {
         return counts.reverse();
     }
 
-    private static __strokeOffset (elm: Node|null, offset: number): number {
+    private static __strokeOffset (elm: Node | null, offset: number): number {
         while (elm && elm.nodeType === Node.TEXT_NODE) {
             elm = elm.previousSibling;
             if (elm && elm.nodeType === Node.TEXT_NODE && elm.textContent !== null) {
@@ -93,7 +93,8 @@ export class Snapshot extends Component {
             }
         };
 
-        snapshot.html = this.jodit.getEditorValue();
+        snapshot.html = this.jodit.getNativeEditorValue();
+
         const sel: Selection = this.jodit.editorWindow.getSelection();
 
         if (sel && sel.rangeCount) {
@@ -132,8 +133,9 @@ export class Snapshot extends Component {
     }
 
     public isBlocked: boolean = false;
+
     /**
-     * Restores the state of the editor of the picture. Rebounding is not only html but selected text
+     * Restores the state of the editor of the snapshot. Rebounding is not only html but selected text
      *
      * @param {object} snapshot - snapshot of editor resulting from the `{@link Snapshot~make|make}`
      * @see make
@@ -154,7 +156,9 @@ export class Snapshot extends Component {
                 sel.addRange(range);
             }
         } catch(__ignore) {
-
+            if (process.env.NODE_ENV !== 'production') {
+                throw __ignore;
+            }
         }
 
         this.isBlocked = false;

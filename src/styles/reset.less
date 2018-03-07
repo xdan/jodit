@@ -1,0 +1,28 @@
+.jodit_wysiwyg {
+  margin : 0;
+  padding: @padding-default;
+
+  outline: 0;
+  overflow-x: auto;
+  position: relative;
+  img {
+    position: relative;
+  }
+  p, pre {
+    margin: 0 0 10px;
+  }
+  h1,h2,h3,h4,h5 {
+    margin-top: 0;
+  }
+  blockquote {
+    border-left: solid 2px @color-text;
+    margin-left: 0;
+    padding-left: 5px;
+    color: @color-text;
+  }
+  &::selection,
+  *::selection {
+    background: @color-background-selection;
+    color: @color-selection;
+  }
+}

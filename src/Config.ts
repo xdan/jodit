@@ -56,6 +56,13 @@ export class Config {
     toolbarButtonSize: "small"|"middle"|"large" = 'middle';
 
     /**
+     * Inline editing mode
+     *
+     * @type {boolean}
+     */
+    inline: boolean = false;
+
+    /**
      * Theme (can be "dark")
      * @example
      * ```javascript

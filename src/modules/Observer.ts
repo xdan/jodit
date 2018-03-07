@@ -82,10 +82,6 @@ export class Observer extends Component {
 
         this.stack = new Stack();
 
-        this.stack.changed = () => {
-            this.changed()
-        };
-
         this.snapshot = new Snapshot(editor);
 
         this.__startValue = this.snapshot.make();
@@ -95,27 +91,12 @@ export class Observer extends Component {
         const onChangeStack: Function = debounce(this.onChangeStack, this.jodit.options.observer.timeout);
 
         editor.events
-            .on('updateToolbar', () => {
-                this.stack.changed();
-            })
             .on('change', () => {
                 if (!this.snapshot.isBlocked) {
                     onChangeStack();
                 }
             });
     }
-
-    /**
-     * There has been a change in the stack Undo/Redo
-     *
-     * @method changed
-     */
-    changed () {
-        if (this.jodit.getMode() === consts.MODE_WYSIWYG) {
-            this.jodit.events.fire('canRedo', this.stack.canRedo());
-            this.jodit.events.fire('canUndo', this.stack.canUndo());
-        }
-    };
 
     /**
      * Return state of the WYSIWYG editor to step back

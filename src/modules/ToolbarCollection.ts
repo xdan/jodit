@@ -763,6 +763,8 @@ export class ToolbarCollection extends ToolbarElement {
         });
 
         this.__buttons.length = 0;
+
+        this.container.parentNode && this.container.parentNode.removeChild(this.container);
     }
 
     immedateCheckActiveButtons = () => {

@@ -35,6 +35,7 @@ app.use('/node_modules', require('express').static(__dirname + '/node_modules'))
 
 app.use('/test', require('express').static(__dirname + '/test'));
 app.use('/app.css', require('express').static(__dirname + '/app.css'));
+app.use('/examples/download.jpg', require('express').static(__dirname + '/examples/download.jpg'));
 
 app.listen(port, function(error) {
     if (error) {

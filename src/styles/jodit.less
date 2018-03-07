@@ -4,15 +4,11 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-.jodit_container {
-   background: @color-background-default;
-   font-size: @font-size-default;
-   font-family: @font-default;
-   &, * {
+.jodit,.jodit_container {
+  &, * {
     box-sizing: border-box;
-   }
+  }
   .jodit_workplace {
-    border: 1px solid @color-border;
     position: relative;
     overflow: auto;
 
@@ -21,32 +17,19 @@
       height: 100%;
       width: 100%;
     }
-
-    .jodit_wysiwyg {
-      margin : 0;
-      padding: @padding-default;
-
-      outline: 0;
-      overflow-x: auto;
-      position: relative;
-      img {
-        position: relative;
-      }
-      p, pre {
-        margin: 0 0 10px;
-      }
-      h1,h2,h3,h4,h5 {
-        margin-top: 0;
-      }
-
-      &::selection,
-      *::selection {
-        background: @color-background-selection;
-        color: @color-selection;
-      }
-    }
   }
 }
+
+.jodit_container:not(.jodit_inline) {
+   background: @color-background-default;
+   font-size: @font-size-default;
+   font-family: @font-default;
+
+  .jodit_workplace {
+    border: 1px solid @color-border;
+  }
+}
+
 .jodit_disabled {
   user-select: none !important;
 }

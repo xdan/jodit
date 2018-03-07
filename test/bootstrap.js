@@ -42,25 +42,32 @@ var removeStuff = function () {
     stuff.forEach(function (elm) {
         elm && elm.parentNode && elm.parentNode.removeChild(elm);
         delete elm;
-    })
+    });
     stuff.length = 0;
 };
 var box = document.createElement('div');
 document.body.appendChild(box);
 var getBox = function () {
     return box;
-}
+};
 var appendTestArea = function (id, noput) {
     var textarea = document.createElement('textarea');
     textarea.setAttribute('id', id || ('editor_' + (new Date()).getTime()));
     box.appendChild(textarea);
     !noput && stuff.push(textarea);
     return textarea;
-}
+};
+var appendTestDiv = function (id, noput) {
+    var textarea = document.createElement('div');
+    textarea.setAttribute('id', id || ('editor_' + (new Date()).getTime()));
+    box.appendChild(textarea);
+    !noput && stuff.push(textarea);
+    return textarea;
+};
 
 var trim = function (value) {
     return value.replace(/^[\s\r\t\n]+/g, '').replace(/[\s\r\t\n]+$/g, '')
-}
+};
 
 function toFixedWithoutRounding (value, precision) {
     var factorError = Math.pow(10, 14);

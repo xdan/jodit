@@ -1,5 +1,99 @@
 describe('Enter behavior Jodit Editor Tests', function() {
     describe('Backspace/Delete key', function () {
+        describe('near empty tag', function () {
+            describe('Backspace and Previous was empty H1', function () {
+                it('Should simple remove this H1', function () {
+                    var editor = new Jodit(appendTestArea())
+
+                    editor.setEditorValue('<h1></h1><p>test</p>');
+
+                    var range = editor.editorDocument.createRange();
+
+
+                    // set cursor in start of element
+
+                    range.selectNodeContents(editor.editor.lastChild);
+                    range.collapse(true);
+                    editor.editorWindow.getSelection().removeAllRanges();
+                    editor.editorWindow.getSelection().addRange(range);
+
+
+                    simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+
+
+                    expect(editor.value).to.be.equal('<p>test</p>');
+                });
+                describe('H1 with BR', function () {
+                    it('Should simple remove this H1', function () {
+                        var editor = new Jodit(appendTestArea())
+
+                        editor.setEditorValue('<h1><br></h1><p>test</p>');
+
+                        var range = editor.editorDocument.createRange();
+
+
+                        // set cursor in start of element
+
+                        range.selectNodeContents(editor.editor.lastChild);
+                        range.collapse(true);
+                        editor.editorWindow.getSelection().removeAllRanges();
+                        editor.editorWindow.getSelection().addRange(range);
+
+
+                        simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+
+
+                        expect(editor.value).to.be.equal('<p>test</p>');
+                    });
+                });
+            });
+            describe('Delete and next was empty H1', function () {
+                it('Should simple remove this H1', function () {
+                    var editor = new Jodit(appendTestArea())
+
+                    editor.setEditorValue('<p>test</p><h1></h1>');
+
+                    var range = editor.editorDocument.createRange();
+
+
+                    // set cursor in start of element
+
+                    range.selectNodeContents(editor.editor.firstChild);
+                    range.collapse(false);
+                    editor.editorWindow.getSelection().removeAllRanges();
+                    editor.editorWindow.getSelection().addRange(range);
+
+
+                    simulateEvent('keydown', Jodit.KEY_DELETE, editor.editor);
+
+
+                    expect(editor.value).to.be.equal('<p>test</p>');
+                });
+                describe('H1 with BR', function () {
+                    it('Should simple remove this H1', function () {
+                        var editor = new Jodit(appendTestArea())
+
+                        editor.setEditorValue('<p>test</p><h1><br></h1>');
+
+                        var range = editor.editorDocument.createRange();
+
+
+                        // set cursor in start of element
+
+                        range.selectNodeContents(editor.editor.firstChild);
+                        range.collapse(false);
+                        editor.editorWindow.getSelection().removeAllRanges();
+                        editor.editorWindow.getSelection().addRange(range);
+
+
+                        simulateEvent('keydown', Jodit.KEY_DELETE, editor.editor);
+
+
+                        expect(editor.value).to.be.equal('<p>test</p>');
+                    });
+                });
+            });
+        });
         describe('inside empty TD', function () {
             it('Should doing nothing', function () {
                 var editor = new Jodit(appendTestArea())

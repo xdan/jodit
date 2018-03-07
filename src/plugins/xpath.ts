@@ -6,9 +6,9 @@
 
 import {Config} from "../Config";
 import {Plugin} from "../modules/Plugin";
-import {debounce, dom, getXPathByElement, throttle} from "../modules/Helpers";
+import {debounce, dom, getXPathByElement} from "../modules/Helpers";
 import {Dom} from "../modules/Dom";
-import {ControlType, ControlTypeStrong, ToolbarButton, ToolbarIcon} from "../modules/ToolbarCollection";
+import {ControlType, ToolbarButton} from "../modules/ToolbarCollection";
 import {INVISIBLE_SPACE, MODE_WYSIWYG} from "../constants";
 import {ContextMenu} from "../modules/ContextMenu";
 
@@ -67,8 +67,6 @@ export class xpath extends Plugin{
 
         const path: string = (<HTMLElement>event.target).getAttribute('data-path') || '/';
 
-        let i: number = 0;
-
         if (path === '/') {
             this.jodit.execCommand('selectall');
             return false;
@@ -97,7 +95,7 @@ export class xpath extends Plugin{
 
         this.jodit.events
             .on(a, 'click', this.onSelectPath.bind(this, bindElement))
-            .on(a, 'contextmenu', this.onContext.bind(this, bindElement))
+            .on(a, 'contextmenu', this.onContext.bind(this, bindElement));
 
         return li;
     };

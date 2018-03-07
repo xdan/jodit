@@ -116,6 +116,9 @@ module.exports = {
     plugins: debug ? [
         new webpack.DefinePlugin({
             'appVersion': JSON.stringify(pkg.version),
+            'process.env': {
+                'NODE_ENV': '"developer"'
+            }
         }),
         new webpack.HotModuleReplacementPlugin(),
     ] : [

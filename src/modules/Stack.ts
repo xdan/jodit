@@ -10,6 +10,7 @@ export class Stack {
     private commands: Command[] = [];
     private stackPosition: number = -1;
     private savePosition: number = -1;
+
     execute(command: Command) {
         this.__clearRedo();
         command.execute();
@@ -17,6 +18,7 @@ export class Stack {
         this.stackPosition += 1;
         this.changed();
     }
+
     undo() {
         if (this.commands[this.stackPosition]) {
             this.commands[this.stackPosition].undo();
@@ -24,9 +26,11 @@ export class Stack {
         this.stackPosition -= 1;
         this.changed();
     }
+
     canUndo (): boolean {
         return this.stackPosition >= 0;
     }
+
     redo () {
         this.stackPosition += 1;
         if (this.commands[this.stackPosition]) {
@@ -34,9 +38,11 @@ export class Stack {
         }
         this.changed();
     }
+
     canRedo (): boolean {
         return this.stackPosition < this.commands.length - 1;
     }
+
     save () {
         this.savePosition = this.stackPosition;
         this.changed();
