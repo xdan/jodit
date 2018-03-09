@@ -9,6 +9,7 @@ import {Component} from './Component';
 import {each, dom, trim, $$, css, normilizeCSSValue, isIE, isPlainObject, normalizeNode} from './Helpers';
 import {Dom} from "./Dom";
 import {Jodit} from "../Jodit";
+import {INVISIBLE_SPACE_REG_EXP_END, INVISIBLE_SPACE_REG_EXP_START} from "../constants";
 
 export type markerInfo = {
     startId: string,
@@ -315,18 +316,41 @@ export class Select extends Component{
      *
      * @return false|Node The element under the cursor or false if undefined or not in editor
      */
-    current(): false | Node {
+    current(checkChild: boolean = true): false | Node {
         if (this.jodit.getRealMode() === consts.MODE_WYSIWYG && this.jodit.editorWindow.getSelection !== undefined) {
             const sel: Selection = this.jodit.editorWindow.getSelection();
             if (sel && sel.rangeCount > 0) {
                 const range: Range = sel.getRangeAt(0);
-                let node: Node = range.startContainer;
-                if (range.startContainer.nodeType !== Node.TEXT_NODE && (range.startContainer === range.endContainer && range.startOffset !== range.endOffset)) {
+                let node: Node | null = range.startContainer,
+                    rightMode: boolean = false,
+                    sibling = (node: Node): Node | null => rightMode ? node.nextSibling : node.previousSibling,
+                    child = (node: Node): Node | null => rightMode ? node.lastChild : node.firstChild;
+
+                if (node.nodeType !== Node.TEXT_NODE) {
                     node = range.startContainer.childNodes[range.startOffset];
+                    if (!node) {
+                        node = range.startContainer.childNodes[range.startOffset - 1];
+                        rightMode = true;
+                    }
+                    if (node && sel.isCollapsed && node.nodeType !== Node.TEXT_NODE) {
+                        // test Current method - Cursor in the left of some SPAN
+                        if (!rightMode && node.previousSibling && node.previousSibling.nodeType === Node.TEXT_NODE) {
+                            node = node.previousSibling;
+                        } else if (checkChild) {
+                            let current: Node | null = child(node);
+                            while(current) {
+                                if (current && current.nodeType === Node.TEXT_NODE) {
+                                    node = current;
+                                    break;
+                                }
+                                current = child(current);
+                            }
+                        }
+                    }
                 }
 
                 // check - cursor inside editor
-                if (Dom.isOrContains(this.jodit.editor, node)) {
+                if (node && Dom.isOrContains(this.jodit.editor, node)) {
                     return node;
                 }
             }
@@ -547,7 +571,7 @@ export class Select extends Component{
      * @param {Node} node
      * @return {Node} fake invisible textnode. After insert it can be removed
      */
-    setCursorAfter(node:  Node | HTMLElement | HTMLTableElement | HTMLTableCellElement): Text {
+    setCursorAfter(node:  Node | HTMLElement | HTMLTableElement | HTMLTableCellElement): Text | false {
         if (!(node instanceof (<any>this.jodit.editorWindow).Node)) {
             throw new Error('Parameter node most be instance of Node');
         }
@@ -556,12 +580,13 @@ export class Select extends Component{
             throw new Error('Node element must be in editor');
         }
 
-        const range: Range = this.jodit.editorDocument.createRange(),
-            fakeNode: Text = this.jodit.editorDocument.createTextNode(consts.INVISIBLE_SPACE);
+        const range: Range = this.jodit.editorDocument.createRange();
+        let fakeNode: Text | false = false;
 
 
 
         if (node.nodeType !== Node.TEXT_NODE) {
+            fakeNode = this.jodit.editorDocument.createTextNode(consts.INVISIBLE_SPACE);
             range.setStartAfter(node);
             range.insertNode(fakeNode);
             range.selectNode(fakeNode);
@@ -578,164 +603,62 @@ export class Select extends Component{
     /**
      * Checks if the cursor is at the end(start) block
      *
-     * @param  {boolean} [start=false] true - check whether the cursor is at the start block
+     * @param  {boolean} start=false true - check whether the cursor is at the start block
      * @param {HTMLElement} parentBlock - Find in this
-     * @param {boolean} [inverse=false] - find last element on left side and inverse
      *
-     * @return {boolean|null} true - the cursor is at the end(start) block, null - cursor ni the middle od element
+     * @return {boolean | null} true - the cursor is at the end(start) block, null - cursor somewhere outside
      */
-    cursorInTheEdge (start: boolean = false, parentBlock: HTMLElement|Function|false = false, inverse: boolean = false): boolean|null {
-        const sel: Selection = this.jodit.editorWindow.getSelection(),
-            isNoEmptyNode = (elm: Node | null) => (elm && !Dom.isEmptyTextNode(elm));
+    cursorInTheEdge (start: boolean, parentBlock: HTMLElement): boolean | null {
+        const sel: Selection = this.jodit.editorWindow.getSelection();
+        let range: Range | null = sel.rangeCount ? sel.getRangeAt(0) : null;
 
-        let
-            container: HTMLElement = <HTMLElement>parentBlock;
-
-        if (!sel.rangeCount) {
-            return false;
+        if (!range) {
+            return null;
         }
 
-        const range: Range = sel.getRangeAt(0),
-            isStart = (): boolean => {
-                return inverse === false ? start : !start;
+        const container = start ? range.startContainer : range.endContainer,
+            sibling = (node: Node): Node | false => {
+                return start ? Dom.prev(node, elm => !!elm, parentBlock) : Dom.next(node, elm => !!elm, parentBlock);
             },
-            startContainer: Node = isStart() ? range.startContainer : range.endContainer;
-
-        if (parentBlock === false) {
-            container = <HTMLElement>Dom.up(startContainer, Dom.isBlock, this.jodit.editor)
-        } else if (typeof parentBlock === 'function') {
-            container = <HTMLElement>Dom.up(startContainer, parentBlock, this.jodit.editor)
-        } else {
-            if (!Dom.isOrContains(parentBlock, range.startContainer)) {
-                return null;
-            }
-        }
-
-        if (!container) {
-            return false;
-        }
-
-
-        if (startContainer === container) {
-            if (start) {
-                return range.startOffset === 0;
-            } else {
-                return range.endOffset === [].slice.call(container.childNodes).filter(isNoEmptyNode).length;
-            }
-        } else {
-            if (start) {
-                return (startContainer.nodeType !== Node.TEXT_NODE || range.startOffset === 0) && !Dom.prev(<HTMLElement>startContainer, isNoEmptyNode, container);
-            } else {
-                return (startContainer.nodeType !== Node.TEXT_NODE || !!(range.startContainer.nodeValue && range.endOffset === range.startContainer.nodeValue.length)) && !Dom.next(<HTMLElement>startContainer,isNoEmptyNode, container);
-            }
-        }
-
-        /*let sel = this.jodit.editorWindow.getSelection();
-        if (!sel.rangeCount) {
-            return false;
-        }
-
-        let rng: Range = sel.getRangeAt(0),
-            isStart = () => {
-                return inverse === false ? start : !start;
-            },
-            container = isStart() ? rng.startContainer : rng.endContainer,
-            node,
-            nodeValue,
-            newNodeValue,
-            isAfterLastNodeInContainer = false,
-            offset = isStart() ? rng.startOffset : rng.endOffset;
-
-        if (parentBlock === false) {
-            parentBlock = <HTMLElement>Dom.up(container, Dom.isBlock, this.jodit.editor)
-        } else if (typeof parentBlock === 'function') {
-            parentBlock = <HTMLElement>Dom.up(container, parentBlock, this.jodit.editor)
-        } else {
-            if (!Dom.isOrContains(parentBlock, container)) {
-                return null;
-            }
-        }
-
-        if (!container) {
-            return false;
-        }
-        
-        if (container.nodeType === Node.ELEMENT_NODE && container.hasChildNodes()) {
-            isAfterLastNodeInContainer = offset > container.childNodes.length - 1;
-            container = container.childNodes[Math.min(offset, container.childNodes.length - 1)] || container;
-
-            if (isAfterLastNodeInContainer && container.nodeType === Node.TEXT_NODE) {
-                offset = container.nodeValue.length;
-            } else {
-                offset = 0;
-            }
-        }
+            checkSiblings = (next: Node | false): false | void => {
+                while (next) {
+                    next = sibling(next);
+                    if (next && !Dom.isEmptyTextNode(next)) {
+                        return false;
+                    }
+                }
+            };
 
         if (container.nodeType === Node.TEXT_NODE) {
-            newNodeValue = nodeValue = container.nodeValue;
-            if (consts.SPACE_REG_EXP_START.test(nodeValue) && offset) {
-                newNodeValue = nodeValue.replace(consts.INVISIBLE_SPACE_REG_EXP_START, '');
-                offset -= nodeValue.length - newNodeValue.length;
+            const value: string = container.nodeValue || '';
+            if (start && range.startOffset > value.length - value.replace(INVISIBLE_SPACE_REG_EXP_START, '').length) {
+                return false;
             }
-            nodeValue = newNodeValue;
-            if (consts.SPACE_REG_EXP_END.test(nodeValue) && offset) {
-                newNodeValue = trim(nodeValue);
-                if (offset > newNodeValue.length) {
-                    offset = newNodeValue.length;
-                }
-            }
-            if (offset < 0) {
-                offset = 0;
-            }
-        }
-
-        // Inside TEXT_NODE and text
-        if (container.nodeType === Node.TEXT_NODE && (start ? offset > 0 : offset < newNodeValue.length)) {
-            return false;
-        }
-
-        // In start some of ELEMENT_NODE
-        if (start && container.nodeType === Node.ELEMENT_NODE && ((parentBlock && container === parentBlock.firstChild) || (container === this.jodit.editor.firstChild))) {
-            return true;
-        }
-
-        // In end some of ELEMENT_NODE
-        if (!start && container.nodeType === Node.ELEMENT_NODE && ((parentBlock && container === parentBlock.lastChild) || (container === this.jodit.editor.lastChild))) {
-            return true;
-        }
-
-        // Caret can be before/after a table
-        if (container.nodeName === "TABLE" || (container.previousSibling && container.previousSibling.nodeName === "TABLE")) {
-            return (isAfterLastNodeInContainer && !start) || (!isAfterLastNodeInContainer && start);
-        }
-
-        node = container;
-
-        if (container.nodeType === Node.TEXT_NODE) {
-            if (start && offset === 0) {
-                node = Dom.find(node, node => !!node, parentBlock, false, 'previousSibling', 'lastChild');
-            } else if (!start && offset === newNodeValue.length) {
-                node = Dom.next(node, node => !!node, parentBlock);
-            }
-        }
-
-        while (node) {
-            if (node.nodeType === Node.ELEMENT_NODE) {
-                if (node.nodeName !== 'BR') {
-                    return false;
-                }
-            } else if (node.nodeType === Node.TEXT_NODE && !/^[ \t\r\n]*$/.test(node.nodeValue) && !Dom.isEmptyTextNode(node)) {
+            if (!start  && range.startOffset < value.replace(INVISIBLE_SPACE_REG_EXP_END, '').length - 1) {
                 return false;
             }
 
-            if (start) {
-                node = Dom.find(node, node => !!node, parentBlock, false,  'previousSibling', 'lastChild');
-            } else {
-                node = Dom.next(node, node => !!node, parentBlock);
+            if (checkSiblings(container) === false) {
+                return false;
             }
         }
 
-        return true;*/
+        const current: Node | false = this.current(false);
+        if (!current || !Dom.isOrContains(parentBlock, current, true)) {
+            return null;
+        }
+
+        if (!start && range.startContainer.childNodes[range.startOffset]) {
+            if (current && !Dom.isEmptyTextNode(current)) {
+                return false;
+            }
+        }
+
+        if (checkSiblings(current) === false) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -744,7 +667,7 @@ export class Select extends Component{
      * @param {Node} node
      * @return {Text} fake invisible textnode. After insert it can be removed
      */
-    setCursorBefore(node:  Node | HTMLElement | HTMLTableElement | HTMLTableCellElement): Text {
+    setCursorBefore(node:  Node | HTMLElement | HTMLTableElement | HTMLTableCellElement): Text | false {
         if (!(node instanceof (<any>this.jodit.editorWindow).Node)) {
             throw new Error('Parameter node most be instance of Node');
         }
@@ -753,10 +676,11 @@ export class Select extends Component{
             throw new Error('Node element must be in editor');
         }
 
-        const range: Range = this.jodit.editorDocument.createRange(),
-            fakeNode: Text = this.jodit.editorDocument.createTextNode(consts.INVISIBLE_SPACE);
+        const range: Range = this.jodit.editorDocument.createRange();
+        let fakeNode: Text | false = false;
 
         if (node.nodeType !== Node.TEXT_NODE) {
+            fakeNode = this.jodit.editorDocument.createTextNode(consts.INVISIBLE_SPACE);
             range.setStartBefore(node);
             range.insertNode(fakeNode);
             range.selectNode(fakeNode);

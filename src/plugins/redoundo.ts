@@ -5,7 +5,6 @@
  */
 
 import {Jodit} from '../Jodit';
-import {Observer} from '../modules/Observer';
 import * as consts from '../constants';
 import {Config} from "../Config";
 import {Component} from "../modules/Component";
@@ -16,7 +15,7 @@ Config.prototype.controls.redo = <ControlType> {
     isDisable: (editor: Jodit): boolean => !editor.observer.stack.canRedo(),
     tooltip: 'Redo'
 };
-Config.prototype.controls.undo = {
+Config.prototype.controls.undo = <ControlType>{
     mode: consts.MODE_SPLIT,
     isDisable: (editor: Jodit): boolean => !editor.observer.stack.canUndo(),
     tooltip: 'Undo'

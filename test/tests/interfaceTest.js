@@ -61,9 +61,9 @@ describe('Test interface', function() {
 
                         simulateEvent('mousedown', 0, editor.editor.querySelector('a'))
 
-                        var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
+                        var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline.jodit_toolbar_popup-inline-open');
 
-                        expect(popup && popup.style.display === '').to.be.equal(true);
+                        expect(popup && popup.style.display !== 'none').to.be.equal(true);
 
                         var positionPopup = offset(popup);
                         var positionContainer = offset(editor.container);
@@ -335,7 +335,7 @@ describe('Test interface', function() {
 
                     simulateEvent('mousedown', 0, editor.editor.querySelector('a'))
 
-                    var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline.active[data-editor_id=' + editor.id + ']');
+                    var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline.jodit_toolbar_popup-inline-open[data-editor_id=' + editor.id + ']');
 
                     expect(popup).to.be.not.equal(null);
                 });
@@ -354,7 +354,7 @@ describe('Test interface', function() {
                         var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
 
                         expect(popup).to.be.not.equal(null);
-                        expect(popup.classList.contains('active')).to.be.equal(true);
+                        expect(popup.classList.contains('jodit_toolbar_popup-inline-open')).to.be.equal(true);
 
                         var pencil = popup.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link a');
                         expect(pencil).to.be.not.equal(null);
@@ -364,7 +364,8 @@ describe('Test interface', function() {
 
                         expect(subpopup).to.be.not.equal(null);
                         expect(subpopup.style.display).to.be.equal('block');
-                        expect(popup.classList.contains('active')).to.be.equal(true);
+                        expect(popup.classList.contains('jodit_toolbar_popup-inline-open')).to.be.equal(true);
+                        expect(popup.parentNode.parentNode.parentNode).to.be.not.equal(null);
                     });
                 });
             });
@@ -1017,7 +1018,7 @@ describe('Test interface', function() {
 
                     var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
 
-                    expect(popup && popup.classList.contains('active')).to.equal(true);
+                    expect(popup && popup.parentNode.parentNode !== null).to.equal(true);
                 });
                 describe('and click in opened popup on pencil button', function () {
                     it('Should Open edit image dialog', function () {
@@ -1029,7 +1030,7 @@ describe('Test interface', function() {
 
                         var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
 
-                        expect(popup && popup.classList.contains('active')).to.equal(true);
+                        expect(popup && popup.parentNode.parentNode !== null).to.equal(true);
 
                         simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-pencil'))
 
@@ -1050,7 +1051,7 @@ describe('Test interface', function() {
 
                 var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
 
-                expect(popup && popup.classList.contains('active')).to.equal(true);
+                expect(popup && popup.parentNode.parentNode !== null).to.equal(true);
             });
             describe('Table button', function () {
                 describe('Select table cell', function () {
@@ -1083,7 +1084,7 @@ describe('Test interface', function() {
 
                             var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
 
-                            expect(popup && popup.classList.contains('active')).to.equal(true);
+                            expect(popup && popup.parentNode.parentNode !== null).to.equal(true);
 
                             simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-brush>a'))
 
@@ -1113,7 +1114,7 @@ describe('Test interface', function() {
 
                 var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
 
-                expect(popup && popup.classList.contains('active')).to.equal(true);
+                expect(popup && popup.parentNode.parentNode !== null).to.equal(true);
 
                 simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-valign>a'))
 
@@ -1200,7 +1201,7 @@ describe('Test interface', function() {
 
                 var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
 
-                expect(popup && popup.classList.contains('active')).to.equal(true);
+                expect(popup && popup.parentNode.parentNode !== null).to.equal(true);
 
                 simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-addcolumn>a'))
 
@@ -1226,7 +1227,7 @@ describe('Test interface', function() {
 
                 var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
 
-                expect(popup && popup.classList.contains('active')).to.equal(true);
+                expect(popup && popup.parentNode.parentNode !== null).to.equal(true);
 
                 simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-addrow>a'))
 
@@ -1254,7 +1255,7 @@ describe('Test interface', function() {
 
                 var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
 
-                expect(popup && popup.classList.contains('active')).to.equal(true);
+                expect(popup && popup.parentNode.parentNode !== null).to.equal(true);
 
                 simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-bin>a'))
 
@@ -1282,7 +1283,7 @@ describe('Test interface', function() {
 
                 var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
 
-                expect(popup && popup.classList.contains('active')).to.equal(true);
+                expect(popup && popup.parentNode.parentNode !== null).to.equal(true);
 
                 simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-bin>a'))
 
@@ -1294,7 +1295,7 @@ describe('Test interface', function() {
 
                 expect(editor.getEditorValue()).to.equal('');
 
-                expect(popup && popup.classList.contains('active')).to.equal(false);
+                expect(popup && popup.parentNode.parentNode !== null).to.equal(true);
 
             });
         });

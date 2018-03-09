@@ -96,6 +96,56 @@ describe('Test Inline mode', function () {
             });
         });
     });
+    describe('Inline popups', function () {
+        describe('Click on Image', function () {
+            it('Should show inline popup', function () {
+                var editor = new Jodit(appendTestDiv(), {
+                    inline: true
+                });
+                editor.value = '<p>test <img/> test</p>'
+                var img = editor.editor.querySelector('img');
+                simulateEvent('mousedown', 0, img);
+                var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
+                expect(popup).to.be.not.equal(null);
+            });
+        });
+        describe('Click on link', function () {
+            it('Should show inline popup', function () {
+                var editor = new Jodit(appendTestDiv(), {
+                    inline: true
+                });
+                editor.value = '<p>test <a href="#test">test</a> test</p>'
+                var a = editor.editor.querySelector('a');
+                simulateEvent('mousedown', 0, a);
+                var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
+                expect(popup).to.be.not.equal(null);
+            });
+        });
+        describe('Click on table cell', function () {
+            it('Should show inline popup', function () {
+                var editor = new Jodit(appendTestDiv(), {
+                    inline: true
+                });
+                editor.value = '<table><tr><td>test test</a> test</td></tr></table>'
+                var td = editor.editor.querySelector('td');
+                simulateEvent('mousedown', 0, td);
+                var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
+                expect(popup).to.be.not.equal(null);
+            });
+        });
+        describe('Selection some text inside the editor', function () {
+            it('Should show inline popup', function () {
+                var editor = new Jodit(appendTestDiv(), {
+                    inline: true
+                });
+                editor.value = 'test<br>test';
+                editor.selection.select(editor.editor.firstChild);
+                simulateEvent('selectionchange', 0, editor.editor);
+                var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
+                expect(popup).to.be.not.equal(null);
+            });
+        });
+    });
     afterEach(function () {
         Object.keys(Jodit.instances).forEach(function (key) {
             Jodit.instances[key].destruct();

@@ -127,7 +127,7 @@ export class Snapshot extends Component {
                 startContainer  = this.calcHierarchyLadder(range.startContainer),
                 startOffset     = Snapshot.strokeOffset(range.startContainer, range.startOffset),
                 endContainer    = this.calcHierarchyLadder(range.endContainer),
-                endOffset       = Snapshot.strokeOffset(range.endContainer, range.endOffset)
+                endOffset       = Snapshot.strokeOffset(range.endContainer, range.endOffset);
 
             if (!startContainer.length && range.startContainer !== this.jodit.editor) {
                 startOffset = 0;

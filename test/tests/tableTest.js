@@ -963,14 +963,14 @@ describe('Tables Jodit Editor Tests', function() {
                     it('should show resizer element', function (done) {
 
                         var editor = new Jodit(appendTestArea());
-                        window.scrollTo(0, Jodit.modules.Helpers.offset(editor.container, editor).top + 50);
+                        window.scrollTo(0, Jodit.modules.Helpers.offset(editor.container, editor, editor.ownerDocument).top + 50);
 
                         editor.setEditorValue('<table>' +
                             '<tr><td>1</td><td>2</td></tr>' +
                             '</table><p>3</p>');
 
-                        var box = Jodit.modules.Helpers.offset(editor.editor.querySelectorAll('td')[1], editor);
-                        var tablebox = Jodit.modules.Helpers.offset(editor.editor.querySelector('table'), editor);
+                        var box = Jodit.modules.Helpers.offset(editor.editor.querySelectorAll('td')[1], editor, editor.editorDocument);
+                        var tablebox = Jodit.modules.Helpers.offset(editor.editor.querySelector('table'), editor, editor.editorDocument);
 
 
                         simulateEvent('mousemove', 1, editor.editor.getElementsByTagName('td')[1], function (options) {
@@ -984,7 +984,7 @@ describe('Tables Jodit Editor Tests', function() {
                         expect(resizer).to.be.not.equal(null);
                         expect(resizer.style.display === 'block').to.equal(true);
 
-                        var resizerBox = Jodit.modules.Helpers.offset(resizer, editor);
+                        var resizerBox = Jodit.modules.Helpers.offset(resizer, editor, editor.ownerDocument);
 
                         expect(Math.abs(resizerBox.left - box.left) < 10).to.be.true;
                         expect(Math.abs(resizerBox.top - tablebox.top) < 10).to.be.true;

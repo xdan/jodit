@@ -6,7 +6,7 @@
 
 import {Component} from "./Component";
 import {Jodit} from "../Jodit";
-import {asArray, camelCase, css, debounce, dom, each, offset} from "./Helpers";
+import {asArray, css, debounce, dom, each, offset} from "./Helpers";
 import * as consts from "../constants";
 import {Dom} from "./Dom";
 
@@ -188,7 +188,7 @@ export type ControlType = {
      * });
      * ```
      */
-    popup?:(editor: Jodit, current: Node|false, control: ControlType, close: Function) => string|HTMLElement|false;
+    popup?:(editor: Jodit, current: Node|false, control: ControlType, close: Function, button?: ToolbarButton) => string | HTMLElement | false;
 
     defaultValue?: string|string[];
 }
@@ -243,6 +243,8 @@ abstract class ToolbarElement extends Component {
 export  class ToolbarPopup extends ToolbarElement {
     constructor(jodit: Jodit, readonly target: HTMLElement, readonly current?: HTMLElement,  readonly className: string = 'jodit_toolbar_popup') {
         super(jodit, 'div', className);
+        this.container.setAttribute('data-editor_id', jodit.id);
+
         this.jodit.events
             .on(this.container, 'mousedown touchstart', (e: MouseEvent) => {
                 e.stopPropagation();
@@ -254,8 +256,12 @@ export  class ToolbarPopup extends ToolbarElement {
             return;
         }
 
+        Dom.detach(this.container);
+
         this.container.innerHTML = '<span class="jodit_popup_triangle"></span>';
+
         this.container.appendChild(dom(content, this.jodit.ownerDocument));
+
         this.container.style.display = 'block';
         this.container.style.marginLeft = null;
     }
@@ -264,9 +270,9 @@ export  class ToolbarPopup extends ToolbarElement {
      * @param {HTMLElement} content
      * @param {boolean} [rightAlign=false] Open popup on right side
      */
-    public open(content: any, rightAlign?: boolean) {
+    public open(content: any, rightAlign?: boolean, noStandartActions: boolean = false) {
         this.jodit.events.fire('beforeOpenPopup closeAllPopups', this);
-        this.jodit.events.on('closeAllPopups', this.close);
+        noStandartActions || this.jodit.events.on('closeAllPopups', this.close);
 
         this.container.classList.add(this.className + '-open');
         this.doOpen(content);
@@ -278,7 +284,7 @@ export  class ToolbarPopup extends ToolbarElement {
         }
 
 
-        this.jodit.events.fire('afterOpenPopup', this.container);
+        noStandartActions || this.jodit.events.fire('afterOpenPopup', this.container);
     }
 
     protected doClose() {}
@@ -486,41 +492,91 @@ export  class ToolbarButton extends ToolbarElement {
     }
 
     destruct() {
-        const clearName: string = this.control.name.replace(/[^a-zA-Z0-9]/g, '_');
         this.jodit.events.off(this.container);
     }
 
 
     public textBox: HTMLSpanElement;
+    public anchor: HTMLAnchorElement;
 
 
     private tooltip: Tooltip;
 
+    onMouseDown = (originalEvent: MouseEvent): false | void => {
+        originalEvent.stopImmediatePropagation();
+        originalEvent.preventDefault();
+
+        if (this.disable) {
+            return false;
+        }
+
+        const control: ControlTypeStrong = this.control;
+
+        if (control.list) {
+            const list: ToolbarList = new ToolbarList(this.jodit, this.container, this.target);
+            list.open(control);
+            this.jodit.events.fire('closeAllPopups', list.container);
+        } else if (control.exec !== undefined && typeof control.exec === 'function') {
+            control.exec(
+                this.jodit,
+                this.target || this.jodit.selection.current(),
+                control,
+                originalEvent,
+                <HTMLLIElement>this.container
+            );
+
+            this.jodit.setEditorValue();
+
+            if (this.parentToolbar) {
+                this.parentToolbar.immedateCheckActiveButtons();
+            }
+
+            this.jodit.events.fire('closeAllPopups afterExec');
+        } else if (control.popup !== undefined && typeof control.popup === 'function') {
+            const popup: ToolbarPopup = new ToolbarPopup(this.jodit, this.container, this.target);
+
+            popup.open(control.popup(
+                this.jodit,
+                this.target || this.jodit.selection.current(),
+                control,
+                popup.close,
+                this
+            ));
+
+            this.jodit.events.fire('closeAllPopups', popup.container);
+        } else {
+            if (control.command || control.name) {
+                this.jodit.execCommand(control.command || control.name, (control.args && control.args[0]) || false, (control.args && control.args[1]) || null);
+                this.jodit.events.fire('closeAllPopups');
+            }
+        }
+
+    }
     constructor(jodit: Jodit, control: ControlTypeStrong, target?: HTMLElement) {
         super(jodit);
 
         this.control = control;
         this.target = target;
 
-        const a: HTMLAnchorElement = this.jodit.ownerDocument.createElement('a');
-        this.container.appendChild(a);
+        this.anchor = this.jodit.ownerDocument.createElement('a');
+        this.container.appendChild(this.anchor);
 
         if (jodit.options.showTooltip && control.tooltip) {
             if (!jodit.options.useNativeTooltip) {
                 this.tooltip = new Tooltip(this);
             } else {
-                a.setAttribute('title', this.jodit.i18n(control.tooltip) + (control.hotkeys ? '<br>' + asArray(control.hotkeys).join(' ') : ''));
+                this.anchor.setAttribute('title', this.jodit.i18n(control.tooltip) + (control.hotkeys ? '<br>' + asArray(control.hotkeys).join(' ') : ''));
             }
         }
 
         this.textBox = this.jodit.ownerDocument.createElement('span');
-        a.appendChild(this.textBox);
+        this.anchor.appendChild(this.textBox);
 
-        if (control.list && a) {
+        if (control.list && this.anchor) {
             const trigger: HTMLSpanElement = this.jodit.ownerDocument.createElement('span');
             trigger.classList.add('jodit_with_dropdownlist-trigger');
             this.container.classList.add('jodit_with_dropdownlist');
-            a.appendChild(trigger);
+            this.anchor.appendChild(trigger);
         }
 
         const clearName: string = control.name.replace(/[^a-zA-Z0-9]/g, '_');
@@ -529,54 +585,7 @@ export  class ToolbarButton extends ToolbarElement {
 
         this.container.classList.add('jodit_toolbar_btn-' + clearName);
 
-        this.jodit.events.on(this.container, 'mousedown touchend', (originalEvent: MouseEvent): false | void => {
-            originalEvent.stopImmediatePropagation();
-            originalEvent.preventDefault();
-
-            if (this.disable) {
-                return false;
-            }
-
-            if (control.list) {
-                const list: ToolbarList = new ToolbarList(this.jodit, this.container, this.target);
-                list.open(control);
-                this.jodit.events.fire('closeAllPopups hidePopup', list.container);
-            } else if (control.exec !== undefined && typeof control.exec === 'function') {
-                control.exec(
-                    this.jodit,
-                    this.target || this.jodit.selection.current(),
-                    control,
-                    originalEvent,
-                    <HTMLLIElement>this.container
-                );
-
-                this.jodit.setEditorValue();
-
-                if (this.parentToolbar) {
-                    this.parentToolbar.immedateCheckActiveButtons();
-                }
-
-                this.jodit.events.fire('closeAllPopups hidePopup');
-            } else if (control.popup !== undefined && typeof control.popup === 'function') {
-                const popup: ToolbarPopup = new ToolbarPopup(this.jodit, this.container, this.target);
-
-                popup.open(control.popup(
-                    this.jodit,
-                    this.target || this.jodit.selection.current(),
-                    control,
-                    popup.close
-                ));
-
-                this.jodit.events.fire('closeAllPopups hidePopup', popup.container);
-            } else {
-                if (control.command || control.name) {
-                    this.jodit.execCommand(control.command || control.name, (control.args && control.args[0]) || false, (control.args && control.args[1]) || null);
-                    this.jodit.events.fire('closeAllPopups hidePopup');
-                }
-            }
-
-
-        });
+        this.jodit.events.on(this.container, 'mousedown touchend', this.onMouseDown);
     }
 }
 
@@ -614,8 +623,8 @@ export class Tooltip {
             this.container.innerHTML = button.jodit.i18n(button.control.tooltip) + (button.control.hotkeys ? '<br>' + asArray(button.control.hotkeys).join(' ') : '');
 
             button.jodit.events
-                .on(button.container, 'mouseenter', this.show)
-                .on(button.container, 'mouseleave', this.hide)
+                .on(button.anchor, 'mouseenter', this.show)
+                .on(button.anchor, 'mouseleave', this.hide)
                 .on('change updateToolbar scroll hidePopup closeAllPopups hideTooltip', this.hide)
         }
     }
@@ -662,6 +671,11 @@ export class ToolbarCollection extends ToolbarElement {
     }
 
     private __buttons: ToolbarElement[] = [];
+    getButtonsList(): string[] {
+        return this.__buttons
+            .map((a: ToolbarElement) => a instanceof ToolbarButton ? a.control.name : '')
+            .filter(a => a !== '');
+    }
 
     appendChild(button: ToolbarElement) {
         this.__buttons.push(button);
@@ -705,6 +719,7 @@ export class ToolbarCollection extends ToolbarElement {
 
         return buttonControl;
     };
+
 
     build(buttons: Array<ControlType|string> | string, container: HTMLElement, target?: HTMLElement) {
         let lastBtnSeparator: boolean = false;
@@ -755,8 +770,7 @@ export class ToolbarCollection extends ToolbarElement {
         });
 
         this.__buttons.length = 0;
-
-        this.container.parentNode && this.container.parentNode.removeChild(this.container);
+        // this.container.parentNode && this.container.parentNode.removeChild(this.container);
     }
 
     immedateCheckActiveButtons = () => {
@@ -788,8 +802,8 @@ export class ToolbarCollection extends ToolbarElement {
     };
 
     private afterOpen = (popup: HTMLElement) => {
-        const offsetConainer: Bound = offset(<HTMLDivElement>this.jodit.container, this.jodit, true);
-        let offsetPopup: Bound = offset(popup, this.jodit, true);
+        const offsetConainer: Bound = offset(<HTMLDivElement>this.jodit.container, this.jodit, this.jodit.ownerDocument, true);
+        let offsetPopup: Bound = offset(popup, this.jodit, this.jodit.ownerDocument, true);
         let marginLeft: number = <number>css(popup, 'marginLeft');
         let diffLeft: number = 0;
 
@@ -798,7 +812,7 @@ export class ToolbarCollection extends ToolbarElement {
             css(popup, {
                 marginLeft: diffLeft + marginLeft
             });
-            offsetPopup = offset(popup, this.jodit, true);
+            offsetPopup = offset(popup, this.jodit, this.jodit.ownerDocument, true);
         }
 
         if (offsetPopup.left  < offsetConainer.left) {

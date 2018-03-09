@@ -96,7 +96,7 @@ export function resizer(editor: Jodit) {
 
         updateSize = () => {
             if (resizerIsVisible && currentElement && resizer) {
-                const pos: Bound = offset(currentElement, editor),
+                const pos: Bound = offset(currentElement, editor, editor.editorDocument),
                     left: number = parseInt(resizer.style.left || '0', 10),
                     top: number = parseInt(resizer.style.top || '0', 10),
                     width: number = resizer.offsetWidth,
@@ -180,6 +180,7 @@ export function resizer(editor: Jodit) {
                         resizeElementClicked = true;
                         currentElement = element;
                         showResizer();
+
                         if (currentElement.tagName === 'IMG' && !(<HTMLImageElement>currentElement).complete) {
                             currentElement.addEventListener('load', function ElementOnLoad() {
                                 updateSize();

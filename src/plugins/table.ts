@@ -242,10 +242,10 @@ export class TableProcessor extends Component{
      * @param {HTMLTableCellElement} [current_cell]
      * @private
      */
-    private __deSelectAll(table: HTMLTableElement, current_cell ?: HTMLTableCellElement|false) {
+    private __deSelectAll(table?: HTMLTableElement, current_cell ?: HTMLTableCellElement | false) {
         let cells: HTMLTableCellElement[] = table ? Table.getAllSelectedCells(table) : Table.getAllSelectedCells(this.jodit.editor);
         if (cells.length) {
-            each(cells, (i, cell) => {
+            cells.forEach((cell: HTMLTableCellElement) => {
                 if (!current_cell || current_cell !== cell) {
                     Table.restoreSelection(cell);
                 }
@@ -361,9 +361,9 @@ export class TableProcessor extends Component{
      * @private
      */
     private __calcResizerPosition(table: HTMLTableElement, cell: HTMLTableCellElement, offsetX: number = 0, delta: number = 0) {
-        const box = offset(cell, this.jodit);
+        const box = offset(cell, this.jodit, this.jodit.editorDocument);
         if (offsetX <= consts.NEARBY || box.width - offsetX <= consts.NEARBY) {
-            const parentBox: Bound = offset(table, this.jodit);
+            const parentBox: Bound = offset(table, this.jodit, this.jodit.editorDocument);
 
             this.__resizerHandler.style.left = (offsetX <= consts.NEARBY ? box.left : box.left + box.width) + delta + 'px';
             this.__resizerHandler.style.height = parentBox.height  + 'px';
@@ -423,6 +423,7 @@ export class TableProcessor extends Component{
                 }
 
                 const cell = <HTMLTableCellElement>Dom.up(<HTMLElement>event.target, TableProcessor.isCell, table);
+
                 if (cell) {
                     if (this.__selectMode) {
                         if (cell !== start) {
@@ -446,7 +447,18 @@ export class TableProcessor extends Component{
                                 min = box[bound[0][0]][bound[0][1]];
 
                         this.jodit.events
-                            .fire('showPopap', table, offset(min, this.jodit).left + Math.round((offset(max, this.jodit).left + max.offsetWidth - offset(min, this.jodit).left) / 2), offset(max, this.jodit).top + max.offsetHeight);
+                            .fire('showPopup', table, (): Bound => {
+                                const minOffset: Bound = offset(min, this.jodit, this.jodit.editorDocument);
+                                const maxOffset: Bound = offset(max, this.jodit, this.jodit.editorDocument);
+
+                                return  {
+                                    left: minOffset.left,
+                                    top: minOffset.top,
+                                    width: maxOffset.left - minOffset.left + maxOffset.width,
+                                    height: maxOffset.top - minOffset.top + maxOffset.height
+                                };
+                            });
+
                         event.stopPropagation();
                     } else {
                         this.__calcResizerPosition(table, cell, event.offsetX);
@@ -521,6 +533,8 @@ export class TableProcessor extends Component{
 
                 if (table) {
                     this.__deSelectAll(table, current_cell instanceof (<any>this.jodit.editorWindow).HTMLTableCellElement ? current_cell : false);
+                } else {
+                    this.__deSelectAll();
                 }
             })
             .on('afterGetValueFromEditor', (data: {value: string}) => {

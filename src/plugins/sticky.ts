@@ -93,7 +93,7 @@ export class sticky extends Component{
             .on('afterInit', () => {
                 jodit.events.on(jodit.ownerWindow, 'scroll wheel mousewheel resize', () => {
                     const scrollWindowTop: number = jodit.ownerWindow.pageYOffset || jodit.ownerDocument.documentElement.scrollTop,
-                        offsetEditor: Bound = offset(jodit.container, jodit, true),
+                        offsetEditor: Bound = offset(jodit.container, jodit, jodit.ownerDocument, true),
                         doSticky: boolean = jodit.getMode() === MODE_WYSIWYG && (
                             scrollWindowTop + jodit.options.toolbarStickyOffset > offsetEditor.top &&
                             scrollWindowTop + jodit.options.toolbarStickyOffset < offsetEditor.top + offsetEditor.height

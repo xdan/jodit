@@ -149,7 +149,7 @@ export function addNewLine(editor: Jodit) {
 
 
                     // const parentPosition = offset(<HTMLElement>editor.workplace, editor);
-                    const position: Bound = offset(<HTMLElement>current, editor);
+                    const position: Bound = offset(<HTMLElement>current, editor, editor.editorDocument);
                     let top: false|number = false;
 
                     if (Math.abs(e.pageY - position.top) < delta) {

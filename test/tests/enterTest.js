@@ -640,23 +640,25 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
             expect(editor.getEditorValue()).to.be.equal('<p>Some text</p><p> a </p>');
         })
-        it('If Enter was pressed in the end of SPAN inside P it should clone SPAN copy it in new created P and move cursor inside new SPAN', function () {
-            var editor = new Jodit(appendTestArea())
-            editor.setEditorValue('<p>Some <span>text</span></p>');
+        describe('If Enter was pressed in the end of SPAN inside P', function () {
+            it('should simple create P and move cursor inside this', function () {
+                var editor = new Jodit(appendTestArea())
+                editor.setEditorValue('<p>Some <span>text</span></p>');
 
-            var sel = editor.editorWindow.getSelection(),
-                range = editor.editorDocument.createRange();
+                var sel = editor.editorWindow.getSelection(),
+                    range = editor.editorDocument.createRange();
 
-            range.selectNodeContents(editor.editor.firstChild.lastChild);
-            range.collapse(false);
-            sel.removeAllRanges();
-            sel.addRange(range);
+                range.selectNodeContents(editor.editor.firstChild.lastChild);
+                range.collapse(false);
+                sel.removeAllRanges();
+                sel.addRange(range);
 
-            simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
+                simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-            editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
+                editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
 
-            expect(editor.getEditorValue()).to.be.equal('<p>Some <span>text</span></p><p> a </p>');
+                expect(editor.getEditorValue()).to.be.equal('<p>Some <span>text</span></p><p> a </p>');
+            })
         })
         it('If Enter was pressed inside text without wrapper and near were some another elements', function () {
             var editor = new Jodit(appendTestArea())

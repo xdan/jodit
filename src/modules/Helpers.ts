@@ -557,9 +557,8 @@ export const browser = (browser: string): boolean|string => {
  * @param {boolean} recurse
  * @return {{top: number, left: number}} returns an object containing the properties top and left.
  */
-export const offset =  (elm: HTMLElement, jodit: Jodit, recurse: boolean = false): Bound => {
+export const offset =  (elm: HTMLElement | Range, jodit: Jodit, doc: Document, recurse: boolean = false): Bound => {
     const rect: ClientRect = elm.getBoundingClientRect(),
-        doc: Document = elm.ownerDocument,
         body: HTMLElement = doc.body,
         docElem: HTMLElement = doc.documentElement,
         win: Window = doc.defaultView || (<any>doc).parentWindow,
@@ -572,7 +571,7 @@ export const offset =  (elm: HTMLElement, jodit: Jodit, recurse: boolean = false
         leftValue: number;
 
     if (!recurse && jodit && jodit.options && jodit.options.iframe && jodit.iframe) {
-        const {top, left} = offset(jodit.iframe, jodit, true);
+        const {top, left} = offset(jodit.iframe, jodit, jodit.ownerDocument, true);
         topValue = rect.top +  top;
         leftValue = rect.left + left;
     } else {

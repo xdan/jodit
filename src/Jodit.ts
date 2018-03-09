@@ -225,7 +225,7 @@ export class Jodit extends Component {
         if (this.options.inline) {
             if (['TEXTAREA', 'INPUT'].indexOf(this.element.nodeName) === -1) {
                 this.container = <HTMLDivElement>this.element;
-                this.element.setAttribute(this.__defaultClassesKey, this.element.className.toString())
+                this.element.setAttribute(this.__defaultClassesKey, this.element.className.toString());
                 buffer = this.container.innerHTML;
                 this.container.innerHTML = '';
                 this.container.classList.add('jodit_inline');
@@ -351,7 +351,7 @@ export class Jodit extends Component {
 
         // proxy events
         this.events
-            .on(this.editor, 'selectionchange selectstart keydown keyup keypress mousedown mouseup mousepress click copy cut dragstart drop dragover paste resize touchstart touchend focus blur', (event: Event): false | void => {
+            .on(this.editor, 'selectionchange selectionstart keydown keyup keypress mousedown mouseup mousepress click copy cut dragstart drop dragover paste resize touchstart touchend focus blur', (event: Event): false | void => {
                 if (this.options.readonly) {
                     return;
                 }

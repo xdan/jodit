@@ -6,7 +6,7 @@
 
 import {Jodit} from "../Jodit";
 import {Config} from '../Config'
-import {ControlType} from "../modules/ToolbarCollection";
+import {ControlType, ToolbarButton} from "../modules/ToolbarCollection";
 import {ToolbarCollection} from "../modules/ToolbarCollection";
 import * as consts from "../constants";
 import {splitArray} from "../modules/Helpers";
@@ -33,7 +33,7 @@ Config.prototype.toolbarAdaptive = true;
 
 Config.prototype.controls.dots = <ControlType> {
     mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG,
-    popup: (editor: Jodit, current: false | Node, control: ControlType) => {
+    popup: (editor: Jodit, current: false | Node, control: ControlType, close, button: ToolbarButton) => {
         let store: {
             container: HTMLDivElement,
             toolbar: ToolbarCollection,
@@ -46,7 +46,7 @@ Config.prototype.controls.dots = <ControlType> {
                 container: editor.ownerDocument.createElement('div'),
                 toolbar: new ToolbarCollection(editor),
                 rebuild: () => {
-                    const buttons: Array<string|ControlType> | undefined = editor.events.fire('getDiffButtons.mobile');
+                    const buttons: Array<string|ControlType> | undefined = editor.events.fire('getDiffButtons.mobile', button.parentToolbar);
 
                     if (buttons && store) {
                         store.toolbar.build(splitArray(buttons), store.container);
@@ -83,10 +83,12 @@ export function mobile(editor: Jodit) {
                 }
             }
         })
-        .on('getDiffButtons.mobile', () => {
-            return splitArray(editor.options.buttons).filter((i: string|ControlType) => {
-                return store.indexOf(i) < 0;
-            });
+        .on('getDiffButtons.mobile', (toolbar: ToolbarCollection) : void | string[] => {
+            if (toolbar === editor.toolbar) {
+                return splitArray(editor.options.buttons).filter((i: string|ControlType) => {
+                    return store.indexOf(i) < 0;
+                });
+            }
         });
 
     if (editor.options.toolbarAdaptive) {

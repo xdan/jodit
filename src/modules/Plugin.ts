@@ -5,16 +5,17 @@
  */
 
 import {Component, IViewBased} from "./Component";
+import {Jodit} from "../Jodit";
 
 export abstract class Plugin extends Component{
     constructor(jodit: IViewBased) {
         super(jodit);
         jodit.events
-            .on('afterInit', this.afterInit.bind(this))
-            .on('beforeDestruct', this.beforeDestruct.bind(this));
+            .on('afterInit', this.afterInit.bind(this, jodit))
+            .on('beforeDestruct', this.beforeDestruct.bind(this, jodit));
     }
 
-    abstract afterInit(): void;
+    abstract afterInit(jodit?: IViewBased): void;
 
-    beforeDestruct() {};
+    beforeDestruct(jodit?: IViewBased) {};
 }

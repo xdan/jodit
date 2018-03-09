@@ -30,7 +30,7 @@ export class Table {
      * @param {HTMLTableElement} table
      * @return {HTMLTableCellElement[]}
      */
-    static getAllSelectedCells(table: HTMLElement|HTMLTableElement): HTMLTableCellElement[] {
+    static getAllSelectedCells(table: HTMLElement | HTMLTableElement): HTMLTableCellElement[] {
         return table ? <HTMLTableCellElement[]>$$(`td[${consts.JODIT_SELECTED_CELL_MARKER}],th[${consts.JODIT_SELECTED_CELL_MARKER}]`, table) : [];
     }
 

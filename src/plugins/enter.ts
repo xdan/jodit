@@ -18,7 +18,7 @@ import {Dom} from "../modules/Dom";
  * @param {CSSStyleSheet} [style]
  * @return {HTMLElement}
  */
-export const insertParagraph = (editor: Jodit, fake ?: Node, wrapperTag ?: string, style?: CSSStyleDeclaration): HTMLElement => {
+export const insertParagraph = (editor: Jodit, fake ?: Text | false, wrapperTag ?: string, style?: CSSStyleDeclaration): HTMLElement => {
     if (!wrapperTag) {
         wrapperTag = editor.options.enter.toLowerCase();
     }
@@ -55,9 +55,10 @@ export function enter(editor: Jodit) {
             return;
         }
 
-        let current: false|Node = editor.selection.current();
-        if (current !== false) {
-            let currentParagraph = Dom.up(current, (node: HTMLElement) => (node.tagName === editor.options.enter.toUpperCase()), editor.editor);
+        const current: false | Node = editor.selection.current();
+
+        if (current) {
+            const currentParagraph: Node | false = Dom.up(current, Dom.isBlock, editor.editor);
             if (currentParagraph) {
                 Dom.all(currentParagraph, (node: Node) => {
                     if (node.nodeType === Node.TEXT_NODE) {
@@ -80,14 +81,16 @@ export function enter(editor: Jodit) {
 
             editor.selection.focus();
 
-            let current: Node = <Node>editor.selection.current();
+            let current: Node = <Node>editor.selection.current(false);
 
             const sel: Selection = editor.editorWindow.getSelection();
 
             let range: Range = sel.rangeCount ? sel.getRangeAt(0) : editor.editorDocument.createRange();
 
             if (!current || current === editor.editor) {
-                current = Dom.create('text', consts.INVISIBLE_SPACE, editor.editorDocument);
+                editor.selection.current();
+
+                current = editor.editorDocument.createTextNode(consts.INVISIBLE_SPACE);
 
                 if (sel.rangeCount) {
                     range.insertNode(current);
@@ -99,10 +102,11 @@ export function enter(editor: Jodit) {
                 range.collapse(false);
                 sel.removeAllRanges();
                 sel.addRange(range);
+
             }
 
-            let fake;
-            let currentBox: HTMLElement|false = current ? <HTMLElement>Dom.up(current, Dom.isBlock, editor.editor) : false;
+
+            let currentBox: HTMLElement | false = current ? <HTMLElement>Dom.up(current, Dom.isBlock, editor.editor) : false;
 
             // if use <br> tag for break line or when was entered SHIFt key or in <td> or <th> or <blockquote>
             if (editor.options.enter.toLowerCase() === consts.BR.toLowerCase() || event.shiftKey || Dom.closest(current, 'PRE|BLOCKQUOTE', editor.editor)) {
@@ -134,6 +138,7 @@ export function enter(editor: Jodit) {
 
                 if (currentBox.nodeName === 'LI') {
                     if (Dom.isEmpty(currentBox)) {
+                        let fake: Text | false = false;
                         const ul: HTMLUListElement = <HTMLUListElement>Dom.closest(currentBox, 'ol|ul', editor.editor);
                         // If there is no LI element before
                         if (!Dom.prev(currentBox, (elm: Node | null) => elm && elm.nodeName === 'LI', ul)) {
@@ -166,14 +171,15 @@ export function enter(editor: Jodit) {
                     }
                 }
 
+
                 if (editor.selection.cursorInTheEdge(true, currentBox)) {
                     // if we are in the left edge of paragraph
-                    fake = editor.selection.setCursorBefore(currentBox);
+                    let fake: Text | false = editor.selection.setCursorBefore(currentBox);
 
                     insertParagraph(editor, fake, currentBox.nodeName === 'LI' ? 'li' : editor.options.enter, currentBox.style);
 
                     editor.selection.setCursorIn(currentBox, true);
-                } else if (!editor.selection.cursorInTheEdge(false, currentBox)) {
+                } else if (editor.selection.cursorInTheEdge(false, currentBox) === false) {
                     // if we are not in right edge of paragraph
                     // split p,h1 etc on two parts
                     let leftRange: Range = editor.editorDocument.createRange();
@@ -188,7 +194,7 @@ export function enter(editor: Jodit) {
 
                     editor.selection.setCursorIn(currentBox, true);
                 } else {
-                    fake = editor.selection.setCursorAfter(currentBox);
+                    let fake: Text | false = editor.selection.setCursorAfter(currentBox);
                     insertParagraph(editor, fake,  currentBox.nodeName === 'LI' ? 'li' : editor.options.enter, currentBox.style);
                 }
             } else {

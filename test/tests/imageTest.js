@@ -63,17 +63,18 @@ describe('Test image', function() {
                         timeout: 0
                     }
                 });
+                window.scrollTo(0, offset(div).top);
                 simulateEvent('mousedown', 0, editor.editor.querySelector('img'));
 
                 var popup = document.querySelector('.jodit_toolbar_popup-inline[data-editor_id=text_area0]');
 
-                expect(popup.classList.contains('active')).to.equal(true);
+                expect(popup.parentNode.parentNode !== null).to.equal(true);
 
-                var positionPopup = offset(popup);
+                var positionPopup = offset(popup.parentNode);
                 var positionImg = offset(editor.editor.querySelector('img'));
 
 
-                expect(Math.abs(positionPopup.left - positionImg.left) < 20).to.be.true;
+                expect(Math.abs(positionPopup.left - (positionImg.left + positionImg.width/2)) < 20).to.be.true;
                 expect(Math.abs(positionPopup.top - (positionImg.top + positionImg.height)) < 20).to.be.true;
 
 

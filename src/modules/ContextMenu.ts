@@ -28,9 +28,10 @@ export class ContextMenu extends Component {
         super(editor);
         this.context = dom(`<div data-editor_id="${this.jodit.id}" class="jodit_context_menu"></div>`, editor.ownerDocument);
         editor.ownerDocument.body.appendChild(this.context);
-        editor.events.on('beforeDestruct', () => {
-            this.context.parentNode && this.context.parentNode.removeChild(this.context);
-        });
+    }
+
+    destruct() {
+        this.context && this.context.parentNode && this.context.parentNode.removeChild(this.context);
     }
 
     /**

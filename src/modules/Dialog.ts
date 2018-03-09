@@ -536,6 +536,10 @@ export class Dialog extends Component{
      * It destroys all objects created for the windows and also includes all the handlers for the window object
      */
     destruct () {
+        if (this.__isDestructed) {
+            return;
+        }
+
         if (this.dialogbox && this.dialogbox.parentNode) {
             this.dialogbox.parentNode.removeChild(this.dialogbox);
         }

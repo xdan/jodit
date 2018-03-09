@@ -193,7 +193,7 @@ export function backspace(editor: Jodit) {
                             return false;
                         }
 
-                        if (workElement && workElement.nodeName.match(potentialRemovable) !== null) {
+                        if (workElement && potentialRemovable.test(workElement.nodeName)) {
                             workElement.parentNode && workElement.parentNode.removeChild(workElement);
                             return false;
                         }
@@ -266,13 +266,15 @@ export function backspace(editor: Jodit) {
                     }
                 } finally {
                     fakeNode.parentNode && fakeNode.nodeValue === consts.INVISIBLE_SPACE && fakeNode.parentNode.removeChild(fakeNode);
+
                     if (marker && Dom.isOrContains(editor.editor, marker, true)) {
-                        let tmpNode: Node = editor.selection.setCursorBefore(marker);
+                        let tmpNode: Text | false = editor.selection.setCursorBefore(marker);
                         marker.parentNode && marker.parentNode.removeChild(marker);
-                        if (tmpNode.parentNode && (Dom.findInline(tmpNode, true, tmpNode.parentNode) || Dom.findInline(tmpNode, true, tmpNode.parentNode))) {
+                        if (tmpNode && tmpNode.parentNode && (Dom.findInline(tmpNode, true, tmpNode.parentNode) || Dom.findInline(tmpNode, true, tmpNode.parentNode))) {
                              tmpNode.parentNode.removeChild(tmpNode);
                         }
                     }
+
                     editor.setEditorValue();
                 }
 

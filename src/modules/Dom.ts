@@ -10,6 +10,16 @@ import {Jodit} from "../Jodit";
 
 export class Dom {
     /**
+     * Remove all connetn form element
+     *
+     * @param {Node} node
+     */
+    static detach(node: Node) {
+        while (node.firstChild) {
+            node.removeChild(node.firstChild);
+        }
+    }
+    /**
      *
      * @param {Node} current
      * @param {String|Node} tag
@@ -314,7 +324,7 @@ export class Dom {
             nextElement = !toLeft ? nextElement.firstChild : nextElement.lastChild;
         }
 
-        return nextElement;
+        return nextElement;//(nextElement !== root && Dom.isInlineBlock(nextElement)) ? nextElement : null;
     };
 
     /**
@@ -539,124 +549,4 @@ export class Dom {
     static isOrContains = (root: Node, child: Node, onlyContains: boolean = false): boolean => {
         return child && root && ((root === child && !onlyContains) || Dom.contains(root, child));
     };
-
-   /*static apply = (options, addPropertyCallback, editor: Jodit) => {
-         const WRAP  = 1;
-         const UNWRAP  = 0;
-         let selectionInfo,
-             mode;
-
-         // const getCSS = (elm: HTMLElement, key: string): string => {
-         //         return editor.editorWindow.getComputedStyle(elm).getPropertyValue(key).toString()
-         //     },
-         const checkCssRulesFor = (elm: HTMLElement) => {
-             return elm.nodeType === Node.ELEMENT_NODE && each(options.css, (cssPropertyKey: string, cssPropertyValues: string[]) => {
-                 const value = css(elm, cssPropertyKey);
-                 return  cssPropertyValues.indexOf(value.toString().toLowerCase()) !== -1
-             }) !== false
-         };
-
-         const oldWrappers = [];
-
-         editor.selection.eachSelection((current) => {
-             let sel = editor.editorWindow.getSelection(),
-                 wrapper,
-                 range = sel.getRangeAt(0);
-
-             wrapper = <HTMLElement>Dom.closest(current, (elm) => {
-                 return checkCssRulesFor(<HTMLElement>elm);
-             }, editor.editor);
-
-             if (wrapper && oldWrappers.reduce((was, oldWprapper) => {
-                     return was || oldWprapper === wrapper
-                 }, false)) {
-                 return;
-             }
-
-             if (mode === undefined) {
-                 mode = wrapper ? UNWRAP : WRAP;
-             }
-
-             if (wrapper) {
-                 // element full selected !range.collapsed && editor.selection.cursorInTheEdge(true, wrapper) && editor.selection.cursorInTheEdge(false, wrapper)
-                 if (!range.collapsed) {
-                     let cursorInTheStart = editor.selection.cursorInTheEdge(true, wrapper),
-                         cursorInTheEnd = editor.selection.cursorInTheEdge(false, wrapper);
-
-                     selectionInfo = editor.selection.save();
-
-                     if (cursorInTheStart === false || cursorInTheEnd === false) {
-                         let leftRange = editor.editorDocument.createRange();
-
-                         if (cursorInTheStart) {
-                             leftRange.setStart(range.endContainer, range.endOffset);
-                             leftRange.setEndAfter(wrapper);
-                             let fragment = leftRange.extractContents();
-                             Dom.after(wrapper, fragment)
-                         } else if (cursorInTheEnd) {
-                             leftRange.setStartBefore(wrapper);
-                             leftRange.setEnd(range.startContainer, range.startOffset);
-                             let fragment = leftRange.extractContents();
-                             wrapper.parentNode.insertBefore(fragment, wrapper);
-                         } else {
-                             let cloneRange = range.cloneRange();
-                             leftRange.setStartBefore(wrapper);
-                             leftRange.setEnd(cloneRange.startContainer, cloneRange.startOffset);
-                             let fragment = leftRange.extractContents();
-                             wrapper.parentNode.insertBefore(fragment, wrapper);
-                             leftRange.setStart(cloneRange.endContainer, cloneRange.endOffset);
-                             leftRange.setEndAfter(wrapper);
-                             fragment = leftRange.extractContents();
-                             Dom.after(wrapper, fragment)
-                         }
-                     }
-
-                 } else {
-                     if (editor.selection.cursorInTheEdge(true, wrapper)) {
-                         editor.selection.setCursorBefore(wrapper);
-                     } else {
-                         editor.selection.setCursorAfter(wrapper);
-                     }
-                     return false;
-                 }
-
-
-
-
-                 // wrapper already exists
-                 if (options.tagRegExp && wrapper.tagName.toLowerCase().match(options.tagRegExp)) {
-                     while (wrapper.firstChild) {
-                         wrapper.parentNode.insertBefore(wrapper.firstChild, wrapper);
-                     }
-
-                     editor.selection.restore(selectionInfo);
-                     wrapper.parentNode.removeChild(wrapper); // because in FF selection can be inside wrapper
-                 } else {
-                     each(options.css, (cssPropertyKey) => {
-                         wrapper.style.removeProperty(cssPropertyKey);
-                     });
-
-                     if (!wrapper.getAttribute('style')) {
-                         wrapper.removeAttribute('style')
-                     }
-
-                     wrapper.normalize();
-
-                     editor.selection.restore(selectionInfo);
-                 }
-
-                 editor.setEditorValue();
-                 return false;
-             }
-
-             if (mode === WRAP) {
-                 wrapper = addPropertyCallback(options);
-                 wrapper.normalize();
-             }
-
-             if (wrapper) {
-                 oldWrappers.push(wrapper);
-             }
-         });
-     }*/
 }

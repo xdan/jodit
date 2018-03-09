@@ -23,7 +23,7 @@ export {iframe} from "./iframe";
 export {indent} from "./indent";
 export {imageProcessor} from "./imageProcessor";
 export {imageProperties} from "./imageProperties";
-export {inlinePopup} from "./inlinePopup";
+export {inlinePopup} from "./inline-popup";
 export {justify} from "./justify";
 export {link} from "./link";
 export {mobile} from "./mobile";
