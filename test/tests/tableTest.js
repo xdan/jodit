@@ -506,7 +506,7 @@ describe('Tables Jodit Editor Tests', function() {
 
             editor.selection.insertNode(Jodit.modules.Dom.create('text', 'test', editor.editorDocument), false);
 
-            expect(editor.getEditorValue()).to.equal('<table><tbody><tr><td>1</td><td>test</td></tr></tbody></table>');
+            expect(editor.value.replace('<br>', '')).to.equal('<table><tbody><tr><td>1</td><td>test</td></tr></tbody></table>');
         })
         it('After press Tab + Shift buttons cursor should be in next cell in table', function () {
             var editor = new Jodit(appendTestArea());
@@ -526,7 +526,7 @@ describe('Tables Jodit Editor Tests', function() {
 
             editor.selection.insertNode(Jodit.modules.Dom.create('text', 'test', editor.editorDocument), false);
 
-            expect(editor.getEditorValue()).to.equal('<table><tbody><tr><td>test</td><td>2</td></tr></tbody></table>');
+            expect(editor.value.replace('<br>', '')).to.equal('<table><tbody><tr><td>test</td><td>2</td></tr></tbody></table>');
         })
 
         it('After press Right arrow not in the end of cell it should do nothing', function () {

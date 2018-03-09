@@ -602,7 +602,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
                         simulateEvent('keydown',     Jodit.KEY_BACKSPACE, editor.editor);
 
-                        expect('<table><tbody><tr><td></td><td></td></tr></tbody></table>').to.be.equal(editor.getEditorValue());
+                        expect('<table><tbody><tr><td></td><td></td></tr></tbody></table>').to.be.equal(editor.value.replace('<br>',''));
                     });
                 });
             });
