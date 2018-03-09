@@ -591,7 +591,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
                 describe('Inside table cell', function () {
                     it('Should only remove selected range', function () {
                         var editor = new Jodit(appendTestArea());
-                        editor.setEditorValue('<table><tbody><tr><td>test</td><td></td></tr></tbody></table>');
+                        editor.setEditorValue('<table><tbody><tr><td>test</td><td>1</td></tr></tbody></table>');
 
                         var sel = editor.editorWindow.getSelection(),
                             range = editor.editorDocument.createRange();
@@ -602,7 +602,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
                         simulateEvent('keydown',     Jodit.KEY_BACKSPACE, editor.editor);
 
-                        expect('<table><tbody><tr><td></td><td></td></tr></tbody></table>').to.be.equal(editor.value.replace('<br>',''));
+                        expect('<table><tbody><tr><td></td><td>1</td></tr></tbody></table>').to.be.equal(editor.value.replace('<br>',''));
                     });
                 });
             });
