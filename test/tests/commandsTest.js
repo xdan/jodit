@@ -86,6 +86,26 @@ describe('Commands Jodit Editor Tests', function() {
 
             expect(editor.getEditorValue()).to.equal('<h1>test</h1>');
         });
+        describe('For UL>li elements', function () {
+            it('Should replace all LI elements to P and unwrap it from UL', function () {
+                var editor = new Jodit(appendTestArea());
+                editor.value = '<ul>' +
+                    '<li>1</li>' +
+                    '<li>2</li>' +
+                    '<li>3</li>' +
+                '</ul>';
+
+                var range = editor.editorDocument.createRange();
+                range.selectNodeContents(editor.editor.firstChild);
+                editor.selection.selectRange(range);
+
+                editor.execCommand('formatBlock', false, 'p');
+                except(editor.value).to.be.equal('<p>1</p>' +
+                    '<p>2</p>' +
+                    '<p>3</p>'
+                )
+            });
+        });
     });
 
     describe('Sub/Supscript native', function () {
