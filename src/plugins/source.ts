@@ -150,10 +150,10 @@ export class source extends Component {
         }
     };
 
-    private autosize = () => {
+    private autosize = debounce(() => {
         this.mirror.style.height = 'auto';
         this.mirror.style.height = this.mirror.scrollHeight + 'px';
-    };
+    }, this.jodit.options.observer.timeout);
 
     private getNormalPosition = (pos: number, str: string): number => {
         let start: number = pos;
@@ -183,7 +183,8 @@ export class source extends Component {
 
         editor.events
             .on(this.mirror, 'mousedown keydown touchstart input', debounce(this.toWYSIWYG, editor.options.observer.timeout))
-            .on(this.mirror, 'change keydown mousedown touchstart input', debounce(this.autosize, editor.options.observer.timeout))
+            .on(this.mirror, 'change keydown mousedown touchstart input', this.autosize)
+            .on('afterSetMode', this.autosize)
             .on(this.mirror, 'mousedown focus', (e: Event) => {
                 editor.events.fire(e.type, e);
             });
