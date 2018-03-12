@@ -1,4 +1,4 @@
-chai.config.includeStack = true;
+(typeof chai !== 'undefined') && (chai.config.includeStack = true);
 
 Jodit.defaultOptions.observer.timeout = 0;
 Jodit.defaultOptions.useAceEditor = false;
@@ -36,7 +36,7 @@ if (String.prototype.repeat === undefined) {
 
 })(Element.prototype);
 
-var expect = chai.expect;
+var expect = typeof chai !== 'undefined' ? chai.expect : function () {};
 var stuff = [];
 var removeStuff = function () {
     stuff.forEach(function (elm) {

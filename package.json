@@ -8,7 +8,8 @@
     "newversiongit": "git add --all  && git commit -m \"New version %npm_package_version%. Read more https://github.com/xdan/jodit/releases/tag/%npm_package_version% \" && git tag %npm_package_version% && git push --tags origin HEAD:master",
     "start": "node server.js",
     "build": "rm -f build/* && cross-env NODE_ENV=production webpack --progress",
-    "test": "karma start --browsers Firefox karma.conf.js --single-run"
+    "test": "karma start --browsers Firefox karma.conf.js --single-run",
+    "jodit": "cd ../jodit-angular/ && npm run newversion && cd ../jodit-joomla && npm run newversion"
   },
   "repository": {
     "type": "git",
@@ -29,7 +30,7 @@
   "devDependencies": {
     "@types/ace": "^0.0.35",
     "@types/es6-promise": "^3.3.0",
-    "@types/node": "^7.0.55",
+    "@types/node": "^7.0.56",
     "autoprefixer": "^6.7.7",
     "awesome-typescript-loader": "^3.4.1",
     "chai": "^3.5.0",
@@ -51,7 +52,7 @@
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^2.0.9",
     "less": "^2.7.3",
-    "less-loader": "^4.0.5",
+    "less-loader": "^4.1.0",
     "mocha": "^3.4.2",
     "optimize-css-assets-webpack-plugin": "^3.2.0",
     "postcss-loader": "^2.1.0",
@@ -63,7 +64,7 @@
     "webpack": "^3.11.0",
     "webpack-dev-middleware": "^1.12.2",
     "webpack-dev-server": "^2.11.1",
-    "webpack-hot-middleware": "^2.21.0"
+    "webpack-hot-middleware": "^2.21.2"
   },
   "dependencies": {}
 }

@@ -9,6 +9,7 @@ import {Dom} from "../modules/Dom";
 import * as consts from '../constants';
 import {Config} from "../Config";
 import {ToolbarButton, ControlType} from "../modules/ToolbarCollection";
+import {markerInfo} from "../modules/Selection";
 
 
 Config.prototype.controls.paragraph = <ControlType>{
@@ -89,8 +90,8 @@ export function formatBlock(editor: Jodit) {
         let work: boolean = false;
 
         editor.selection.eachSelection((current: Node): false | void => {
-            const selectionInfo = editor.selection.save();
-            let currentBox: HTMLElement|false = current ? <HTMLElement>Dom.up(current, Dom.isBlock, editor.editor) : false;
+            const selectionInfo: markerInfo[] = editor.selection.save();
+            let currentBox: HTMLElement | false = current ? <HTMLElement>Dom.up(current, Dom.isBlock, editor.editor) : false;
 
             if (!currentBox && current) {
                 currentBox = Dom.wrap(current, editor.options.enter, editor);

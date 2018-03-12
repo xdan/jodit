@@ -63,22 +63,54 @@ describe('CodeMirror editor source code', function() {
             expect(1).to.be.equal(count);
         });
         describe('After change mode to source mode and use insertHTML method', function () {
-            it('Should insert text on caret position', function () {
+            it('Should insert text on caret position', function (done) {
                 var editor = new Jodit(appendTestArea(), {
+                    useAceEditor: true,
+                    beautifyHTML: false,
+                    events: {
+                        aceInited: function (jodit) {
+                            jodit.value = '<p>test <span>test</span> test</p>'
+                            var range = jodit.editorDocument.createRange();
+                            range.selectNodeContents(jodit.editor.querySelector('span'));
+                            range.collapse(false);
+                            jodit.selection.selectRange(range)
 
+                            jodit.setMode(Jodit.MODE_SOURCE);
+                            jodit.selection.insertHTML('loop');
+
+                            expect(jodit.value).to.be.equal('<p>test <span>testloop</span> test</p>');
+                            done();
+                        },
+                    }
                 });
-                editor.value = '<p>test <span>test</span> test</p>'
-                var range = editor.editorDocument.createRange();
-                range.selectNodeContents(editor.editor.querySelector('span'));
-                range.collapse(false);
+            }).timeout(4000);
+            describe('Without ace', function () {
+                it('Should insert text on caret position', function () {
+                    var editor = new Jodit(appendTestArea(), {
+                        useAceEditor: false
+                    });
+                    editor.value = '<p>one <span>two</span> three</p>'
+                    var range = editor.editorDocument.createRange();
+                    range.selectNodeContents(editor.editor.querySelector('span'));
+                    range.collapse(false);
+                    editor.selection.selectRange(range)
 
-                editor.selection.insertHTML('stop');
-                except(editor.value).to.be.equal('<p>test <span>teststop</span> test</p>');
+                    editor.selection.insertHTML('stop');
+                    expect(editor.value).to.be.equal('<p>one <span>twostop</span> three</p>');
 
-                seditor.setMode(Jodit.MODE_SOURCE);
-                editor.selection.insertHTML('loop');
-                except(editor.value).to.be.equal('<p>test <span>teststoploop</span> test</p>');
+                    editor.setMode(Jodit.MODE_SOURCE);
+
+                    editor.selection.insertHTML('loop');
+                    expect(editor.value).to.be.equal('<p>one <span>twostoploop</span> three</p>');
+                });
             });
         });
     })
+    afterEach(function () {
+        var i, keys = Object.keys(Jodit.instances);
+        for (i = 0; i < keys.length; i += 1) {
+            Jodit.instances[keys[i]].destruct();
+        }
+        removeStuff();
+    });
 });

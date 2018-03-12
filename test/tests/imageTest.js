@@ -111,6 +111,47 @@ describe('Test image', function() {
                 document.body.removeChild(div);
             });
         });
+        describe('After resize - popup', function () {
+            it('should be hidden and after this should be shown', function () {
+                var div = document.createElement('div');
+                div.innerHTML = '<div style="width:800px; margin:auto; border:1px solid red;">\n' +
+                    '        wrong image selection\n' +
+                    '        <div style="position:relative;text-align: left">\n' +
+                    '            <textarea id="text_area1"> <img src="https://xdsoft.net/jodit/build/images/artio.jpg" style="border:1px solid red;width:100px;height:100px;"/></textarea>\n' +
+                    '        </div>\n' +
+                    '    </div>';
+
+                document.body.appendChild(div);
+                var editor = new Jodit('#text_area1');
+                simulateEvent('mousedown', 0, editor.editor.querySelector('img'));
+
+                var popup = document.querySelector('.jodit_toolbar_popup-inline[data-editor_id=text_area1]');
+
+                expect(popup.parentNode.parentNode !== null).to.equal(true);
+
+                var resizer = document.querySelector('.jodit_resizer[data-editor_id=text_area1]');
+                expect(resizer.style.display === 'block').to.equal(true);
+
+                var positionResizer = offset(resizer);
+                var positionImg = offset(editor.editor.querySelector('img'));
+
+                simulateEvent('mousedown', 0, resizer.getElementsByTagName('i')[0]);
+                simulateEvent('mousemove', 0, editor.ownerWindow, function (data) {
+                    data.clientX = positionResizer.left - 10;
+                    data.clientY = positionResizer.top - 10;
+                });
+
+                expect(popup.parentNode.parentNode).to.be.equal(null);
+                simulateEvent('mouseup', 0, editor.ownerWindow, function (data) {
+                    data.clientX = positionResizer.left - 10;
+                    data.clientY = positionResizer.top - 10;
+                });
+                expect(popup.parentNode.parentNode).to.be.not.equal(null);
+
+                editor.destruct();
+                document.body.removeChild(div);
+            });
+        });
     });
 
 

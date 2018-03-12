@@ -427,7 +427,7 @@ export class Select extends Component{
      * parent.selection.insertHTML('<img src="image.png"/>');
      * ```
      */
-    insertHTML(html: number|string|Node) {
+    insertHTML(html: number | string | Node) {
         if (html === '') {
             return;
         }
@@ -439,7 +439,7 @@ export class Select extends Component{
             lastChild: Node|null,
             lastEditorElement: Node|null;
 
-        if (!this.isFocused()) {
+        if (!this.isFocused() && this.jodit.isEditorMode()) {
             this.focus();
         }
 
@@ -447,6 +447,10 @@ export class Select extends Component{
             node.innerHTML = html.toString();
         } else if (Dom.isNode(html, this.jodit.editorWindow)) {
             node.appendChild(<Node>html);
+        }
+
+        if (!this.jodit.isEditorMode() && this.jodit.events.fire('insertHTML', node.innerHTML) === false) {
+            return;
         }
 
         lastChild = node.lastChild;

@@ -86,24 +86,67 @@ describe('Commands Jodit Editor Tests', function() {
 
             expect(editor.getEditorValue()).to.equal('<h1>test</h1>');
         });
+
         describe('For UL>li elements', function () {
-            it('Should replace all LI elements to P and unwrap it from UL', function () {
-                var editor = new Jodit(appendTestArea());
-                editor.value = '<ul>' +
-                    '<li>1</li>' +
-                    '<li>2</li>' +
-                    '<li>3</li>' +
-                '</ul>';
+            describe('Select only LI', function () {
+                it('Should replace all LI elements to P and unwrap it from UL', function () {
+                    var editor = new Jodit(appendTestArea());
+                    editor.value = '<ul>' +
+                        '<li>1</li>' +
+                        '<li>2</li>' +
+                        '<li>3</li>' +
+                        '</ul>';
 
-                var range = editor.editorDocument.createRange();
-                range.selectNodeContents(editor.editor.firstChild);
-                editor.selection.selectRange(range);
+                    var range = editor.editorDocument.createRange();
+                    range.setStart(editor.editor.firstChild.firstChild.firstChild, 0);
+                    range.setEnd(editor.editor.firstChild.lastChild.firstChild, 1);
+                    editor.selection.selectRange(range);
 
-                editor.execCommand('formatBlock', false, 'p');
-                except(editor.value).to.be.equal('<p>1</p>' +
-                    '<p>2</p>' +
-                    '<p>3</p>'
-                )
+                    editor.execCommand('formatBlock', false, 'h1');
+                    expect(editor.value).to.be.equal('<ul>' +
+                        '<li><h1>1</h1></li>' +
+                        '<li><h1>2</h1></li>' +
+                        '<li><h1>3</h1></li>' +
+                        '</ul>'
+                    )
+
+                    editor.execCommand('formatBlock', false, 'p');
+                    expect(editor.value).to.be.equal('<ul>' +
+                        '<li>1</li>' +
+                        '<li>2</li>' +
+                        '<li>3</li>' +
+                        '</ul>'
+                    )
+                });
+            });
+            describe('Select UL', function () {
+                it('Should replace all LI elements to P and unwrap it from UL', function () {
+                    var editor = new Jodit(appendTestArea());
+                    editor.value = '<ul>' +
+                        '<li>1</li>' +
+                        '<li>2</li>' +
+                        '<li>3</li>' +
+                        '</ul>';
+
+                    var range = editor.editorDocument.createRange();
+                    range.selectNode(editor.editor.firstChild);
+                    editor.selection.selectRange(range);
+
+                    editor.execCommand('formatBlock', false, 'h1');
+                    expect(editor.value).to.be.equal('<ul>' +
+                        '<li><h1>1</h1></li>' +
+                        '<li><h1>2</h1></li>' +
+                        '<li><h1>3</h1></li>' +
+                    '</ul>');
+
+                    editor.execCommand('formatBlock', false, 'p');
+                    expect(editor.value).to.be.equal('<ul>' +
+                        '<li>1</li>' +
+                        '<li>2</li>' +
+                        '<li>3</li>' +
+                     '</ul>'
+                    )
+                });
             });
         });
     });
@@ -338,6 +381,26 @@ describe('Commands Jodit Editor Tests', function() {
                 // editor.execCommand('bold');
 
                 expect(editor.getEditorValue()).to.equal('test');
+            });
+        });
+        describe('Exec bold for collapsed range and move cursor in another place', function () {
+            it('Should remove stron element', function () {
+                var editor = new Jodit(appendTestArea());
+                editor.value = 'testtest';
+                var range = editor.editorDocument.createRange();
+                range.setStart(editor.editor.firstChild, 4);
+                range.collapse(true)
+                editor.selection.selectRange(range);
+
+                editor.execCommand('bold')
+                expect(editor.value).to.be.equal('test<strong></strong>test');
+
+                range.setStart(editor.editor.lastChild, 2);
+                range.collapse(true)
+                editor.selection.selectRange(range);
+                simulateEvent('mousedown', 0, editor.editor)
+                expect(editor.value).to.be.equal('testtest');
+
             });
         });
     });

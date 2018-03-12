@@ -140,6 +140,21 @@ export class source extends Component {
         }
     };
 
+    private insertHTML = (html: string) => {
+        if (this.mirror.selectionStart || this.mirror.selectionStart === 0) {
+            let startPos: number = this.mirror.selectionStart,
+                endPos: number = this.mirror.selectionEnd;
+
+            this.mirror.value = this.mirror.value.substring(0, startPos)
+                + html
+                + this.mirror.value.substring(endPos, this.mirror.value.length);
+        } else {
+            this.mirror.value += this.mirror;
+        }
+
+        this.toWYSIWYG();
+    };
+
     private __lock = false;
 
     private toWYSIWYG = () => {
@@ -190,6 +205,12 @@ export class source extends Component {
             });
 
         editor.events
+            .on('insertHTML', (html: string): void | false => {
+                if (!editor.options.readonly && !this.jodit.isEditorMode()) {
+                    this.insertHTML(html);
+                    return false;
+                }
+            })
             .on('aceInited', () => {
                 if (editor.options.readonly) {
                     if (this.aceEditor) {
@@ -504,6 +525,14 @@ export class source extends Component {
 
                     this.selectAll = () => {
                         aceEditor.selection.selectAll();
+                    };
+                    this.insertHTML = (html: string) => {
+                        let start: AceAjax.Position = aceEditor.selection.getCursor(),
+                            end: AceAjax.Position = aceEditor.session.insert(start, html);
+
+                        aceEditor.selection.setRange(<AceAjax.Range>{
+                            start, end
+                        }, false);
                     };
 
                     this.setMirrorSelectionRange = (start: number, end: number) => {
