@@ -362,6 +362,10 @@ export class inlinePopup extends Plugin{
     private isSelectionStarted = false;
 
     private onSelectionEnd = () => {
+        if (!this.jodit.isEditorMode()) {
+            return;
+        }
+
         if (this.isSelectionStarted && !this.isTargetAction) {
             this.isSelectionStarted = false;
             this.onChangeSelection();
@@ -372,6 +376,10 @@ export class inlinePopup extends Plugin{
     private isSelectionPopup: boolean = false;
 
     private onSelectionStart = (event: MouseEvent) => {
+        if (!this.jodit.isEditorMode()) {
+            return;
+        }
+
         this.isTargetAction = false;
         this.isSelectionPopup = false;
 
@@ -387,6 +395,9 @@ export class inlinePopup extends Plugin{
     };
 
     onChangeSelection = () => {
+        if (!this.jodit.isEditorMode()) {
+            return;
+        }
         if ((this.jodit.options.inline || this.jodit.options.toolbarInline) && this.jodit.options.popup.selection !== undefined) {
             if (!this.jodit.selection.isCollapsed()) {
                 this.isSelectionPopup = true;
