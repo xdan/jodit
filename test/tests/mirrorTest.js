@@ -61,6 +61,24 @@ describe('CodeMirror editor source code', function() {
             editor.value = 'another';
 
             expect(1).to.be.equal(count);
-        })
+        });
+        describe('After change mode to source mode and use insertHTML method', function () {
+            it('Should insert text on caret position', function () {
+                var editor = new Jodit(appendTestArea(), {
+
+                });
+                editor.value = '<p>test <span>test</span> test</p>'
+                var range = editor.editorDocument.createRange();
+                range.selectNodeContents(editor.editor.querySelector('span'));
+                range.collapse(false);
+
+                editor.selection.insertHTML('stop');
+                except(editor.value).to.be.equal('<p>test <span>teststop</span> test</p>');
+
+                seditor.setMode(Jodit.MODE_SOURCE);
+                editor.selection.insertHTML('loop');
+                except(editor.value).to.be.equal('<p>test <span>teststoploop</span> test</p>');
+            });
+        });
     })
 });
