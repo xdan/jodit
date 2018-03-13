@@ -614,6 +614,9 @@ describe('Selection Module Tests', function() {
 
             expect(['#text'].toString().toLowerCase()).to.be.equal(nodesNames.toString().toLowerCase());
         });
+        describe('If selected element is UL or LI or content in LI', function () {
+
+        });
     });
     afterEach(function () {
         var i, keys = Object.keys(Jodit.instances);

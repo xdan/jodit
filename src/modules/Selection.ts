@@ -10,6 +10,7 @@ import {each, dom, trim, $$, css, normilizeCSSValue, isIE, isPlainObject, normal
 import {Dom} from "./Dom";
 import {Jodit} from "../Jodit";
 import {INVISIBLE_SPACE_REG_EXP_END, INVISIBLE_SPACE_REG_EXP_START} from "../constants";
+import {INVISIBLE_SPACE} from "../constants";
 
 export type markerInfo = {
     startId: string,
@@ -563,9 +564,25 @@ export class Select extends Component{
                 return node === end;
             }, this.jodit.editor, true, 'nextSibling', false);
 
-            nodes.forEach((current: Node) => {
+            let forEvery = (current: Node) => {
+                if (current.nodeName.match(/^(UL|OL)$/)) {
+                    return [].slice.call(current.childNodes).forEach(forEvery);
+                }
+
+                if (current.nodeName === 'LI') {
+                    if (current.firstChild) {
+                        current = current.firstChild;
+                    } else {
+                        let currentB: Node = this.jodit.editorDocument.createTextNode(INVISIBLE_SPACE);
+                        current.appendChild(currentB);
+                        current = currentB;
+                    }
+                }
+
                 callback(current);
-            })
+            };
+
+            nodes.forEach(forEvery)
         }
     };
 
@@ -868,7 +885,7 @@ export class Select extends Component{
                     leftRange.setStartBefore(wrapper);
                     leftRange.setEndBefore(font);
 
-                    const leftFragment = leftRange.extractContents();
+                    const leftFragment: DocumentFragment = leftRange.extractContents();
 
                     if ((!leftFragment.textContent || !trim(leftFragment.textContent).length) && leftFragment.firstChild) {
                         Dom.unwrap(leftFragment.firstChild);
@@ -944,7 +961,7 @@ export class Select extends Component{
 
             if (nodeName.toUpperCase() === defaultTag || !clearStyle) {
                 const node: Node = Dom.create(nodeName, consts.INVISIBLE_SPACE, this.jodit.editorDocument);
-                this.insertNode(node);
+                this.insertNode(node, false, false);
                 if (nodeName.toUpperCase() === defaultTag && cssRules) {
                     css(<HTMLElement>node, cssRules);
                 }

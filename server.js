@@ -1,35 +1,35 @@
-var webpack = require('webpack')
-var webpackDevMiddleware = require('webpack-dev-middleware')
-var webpackHotMiddleware = require('webpack-hot-middleware')
-var config = require('./webpack.config')
-var compression = require('compression')
-var app = new (require('express'))()
+const webpack = require('webpack');
+const webpackDevMiddleware = require('webpack-dev-middleware');
+const webpackHotMiddleware = require('webpack-hot-middleware');
+const config = require('./webpack.config');
+const compression = require('compression');
+const app = new (require('express'))();
 
-app.use(compression())
+app.use(compression());
 
-var port = 2000
+const port = 2000;
 
-var compiler = webpack(config)
+const compiler = webpack(config);
 
 app.use(webpackDevMiddleware(compiler, {
     stats: { colors: true },
     noInfo: true,
     publicPath: config.output.publicPath
-}))
+}));
 
-app.use(webpackHotMiddleware(compiler))
+app.use(webpackHotMiddleware(compiler));
 
 app.get("/", function(req, res) {
     res.sendFile(__dirname + '/index.html')
-})
+});
 
 app.get("/test.html", function(req, res) {
     res.sendFile(__dirname + '/test.html')
-})
+});
 
-app.get("/dist/jodit.*", function(req, res) {
+app.get("/build/jodit.*", function(req, res) {
     res.sendFile(__dirname + '/' + req.url)
-})
+});
 
 app.use('/node_modules', require('express').static(__dirname + '/node_modules'));
 

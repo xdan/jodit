@@ -92,9 +92,9 @@ describe('Test interface', function() {
 
                         simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-video'))
 
-                        var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup');
+                        var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup[data-editor_id=' + editor.id + ']');
 
-                        expect(popup && popup.style.display === 'block').to.be.equal(true);
+                        expect(popup).to.be.not.equal(null);
 
                         var positionPopup = offset(popup);
                         var positionContainer = offset(editor.container);
@@ -122,15 +122,14 @@ describe('Test interface', function() {
 
                         simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-video:last-child'))
 
-                        var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup');
+                        var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup[data-editor_id=' + editor.id + ']');
 
-                        expect(popup && popup.style.display === 'block').to.be.equal(true);
+                        expect(popup).to.be.not.equal(null);
 
                         var positionPopup = offset(popup);
                         var positionContainer = offset(editor.container);
 
-                        expect(true).to.be.equal(positionPopup.left + positionPopup.width <= positionContainer.left + positionContainer.width);
-                        // getBox().style.width = 'auto';
+                        expect(Math.abs((positionPopup.left + positionPopup.width) - (positionContainer.left + positionContainer.width)) < 2).to.be.true;
                     });
                 });
             });
@@ -168,7 +167,7 @@ describe('Test interface', function() {
 
                 expect(list && window.getComputedStyle(list).display === 'block').to.equal(true);
 
-                simulateEvent('mousedown', 0, window)
+                simulateEvent('mousedown', 0, window);
 
                 expect(list && list.parentNode === null).to.equal(true);
             });

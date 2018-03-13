@@ -224,6 +224,7 @@ export function resizer(editor: Jodit) {
 
                 start_x = e.clientX;
                 start_y = e.clientY;
+                editor.events.fire('hidePopup');
                 editor.lock(LOCK_KEY);
             });
         });

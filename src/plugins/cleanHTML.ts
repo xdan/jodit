@@ -7,9 +7,10 @@
 import {Jodit} from '../Jodit';
 import {Config} from '../Config'
 import * as consts from '../constants';
-import {cleanFromWord, normalizeNode, trim} from "../modules/Helpers";
+import {cleanFromWord, debounce, normalizeNode, trim} from "../modules/Helpers";
 import {Dom} from "../modules/Dom";
 import {Select} from "../modules/Selection";
+import {IS_SPAN} from "../constants";
 
 /**
  * @property {object} cleanHTML {@link cleanHTML|cleanHTML}'s options
@@ -29,8 +30,8 @@ import {Select} from "../modules/Selection";
  * var editor = Jodit('#editor', {
  *     allowTags: 'p,a[href],table,tr,td, img[src=1.png]' // allow only <p>,<a>,<table>,<tr>,<td>,<img> tags and for <a> allow only `href` attribute and <img> allow only `src` atrribute == '1.png'
  * });
- * editor.setEditorValue('Sorry! <strong>Goodby</strong> <span>mr.</span> <a style="color:red" href="http://xdsoft.net">Freeman</a>');
- * console.log(editor.getEditorValue()); //Sorry! <a href="http://xdsoft.net">Freeman</a>
+ * editor.value = 'Sorry! <strong>Goodby</strong> <span>mr.</span> <a style="color:red" href="http://xdsoft.net">Freeman</a>';
+ * console.log(editor.value); //Sorry! <a href="http://xdsoft.net">Freeman</a>
  * ```
  *
  * @example
@@ -54,17 +55,23 @@ import {Select} from "../modules/Selection";
 declare module "../Config" {
     interface Config {
         cleanHTML: {
+            timeout: number;
             replaceNBSP: boolean,
             cleanOnPaste: boolean,
-            allowTags: false|string|{[key:string]: string}
+            removeEmptyElements: boolean,
+            allowTags: false | string | {[key:string]: string},
+            denyTags: false | string | {[key:string]: string}
         }
     }
 }
 
 Config.prototype.cleanHTML = {
+    timeout: 0,
+    removeEmptyElements: true,
     replaceNBSP: true,
     cleanOnPaste: true,
-    allowTags: false
+    allowTags: false,
+    denyTags: false,
 };
 
 Config.prototype.controls.eraser = {
@@ -77,27 +84,26 @@ Config.prototype.controls.eraser = {
  * Clean HTML after removeFormat and insertHorizontalRule command
  */
 export function cleanHTML(editor: Jodit) {
-
     if (editor.options.cleanHTML.cleanOnPaste) {
         editor.events.on('processPaste', (event: Event, html: string) => {
             return cleanFromWord(html);
         });
     }
 
-    if (editor.options.cleanHTML.allowTags) {
-        const
-            attributesReg = /([^\[]*)\[([^\]]+)]/,
-            seperator = /[\s]*,[\s]*/,
-            attrReg = /^(.*)[\s]*=[\s]*(.*)$/;
-        let
-            allowTagsHash: {[key: string]: any} = {};
+    const
+        attributesReg = /([^\[]*)\[([^\]]+)]/,
+        seperator = /[\s]*,[\s]*/,
+        attrReg = /^(.*)[\s]*=[\s]*(.*)$/;
 
-        if (typeof editor.options.cleanHTML.allowTags === 'string') {
-            editor.options.cleanHTML.allowTags.split(seperator).map((elm) => {
+    const getHash = (tags: false | string | {[key:string]: string}): {[key: string]: any} | false=> {
+        const tagsHash: {[key: string]: any} = {};
+
+        if (typeof tags === 'string') {
+            tags.split(seperator).map((elm) => {
                 elm = trim(elm);
-                let attr = attributesReg.exec(elm),
+                let attr: RegExpExecArray | null = attributesReg.exec(elm),
                     allowAttributes: {[key: string]: string | boolean} = {},
-                    attributeMap = function (attr: string) {
+                    attributeMap = (attr: string) => {
                         attr = trim(attr);
                         const val: Array<string> | null = attrReg.exec(attr);
                         if (val) {
@@ -108,75 +114,121 @@ export function cleanHTML(editor: Jodit) {
                     };
 
                 if (attr) {
-                    let attr2 = attr[2].split(seperator);
+                    const attr2: string[] = attr[2].split(seperator);
                     if (attr[1]) {
                         attr2.map(attributeMap);
-                        allowTagsHash[attr[1].toUpperCase()] = allowAttributes;
+                        tagsHash[attr[1].toUpperCase()] = allowAttributes;
                     }
                 } else {
-                    allowTagsHash[elm.toUpperCase()] = true;
+                    tagsHash[elm.toUpperCase()] = true;
                 }
             });
-        } else {
-            allowTagsHash = editor.options.cleanHTML.allowTags;
+
+            return tagsHash;
         }
 
-        editor.events.on('beforeSetElementValue', (data: {value: string}) => {
-            if (editor.getRealMode() === consts.MODE_WYSIWYG) {
-                const div: HTMLElement = <HTMLElement>Dom.create('div', '', editor.editorDocument);
+        if (tags) {
+            Object.keys(tags).forEach((tagName: string) => {
+                tagsHash[tagName.toUpperCase()] = tags[tagName];
+            });
+            return tagsHash;
+        }
 
-                let node: Element|null = null,
-                    remove: Element[] = [],
-                    removeAttrs: string[],
-                    i: number = 0;
+        return false;
+    };
 
-                div.innerHTML = data.value;
+    let
+        current: Node | false,
+        allowTagsHash: {[key: string]: any} | false = getHash(editor.options.cleanHTML.allowTags),
+        denyTagsHash: {[key: string]: any} | false = getHash(editor.options.cleanHTML.denyTags);
 
-                if (div.firstChild) {
-                    node = <Element>div.firstChild;
-                }
+    const isRemovableNode = (node: Node): boolean => {
+        if (
+            node.nodeType !== Node.TEXT_NODE &&
+            (
+                (allowTagsHash && !allowTagsHash[node.nodeName]) ||
+                (denyTagsHash && denyTagsHash[node.nodeName])
+            )
+        ) {
+            return true;
+        }
 
-                while (node) {
-                    if (node && node.nodeName) {
-                        if (!allowTagsHash[node.nodeName]) {
-                            remove.push(node);
-                        } else if (allowTagsHash[node.nodeName] !== true) {
-                            if (node.attributes && node.attributes.length) {
-                                removeAttrs = [];
-                                for (i = 0; i < node.attributes.length; i += 1) {
-                                    if (!allowTagsHash[node.nodeName][node.attributes[i].name] ||
-                                            (
-                                                allowTagsHash[node.nodeName][node.attributes[i].name] !== true &&
-                                                allowTagsHash[node.nodeName][node.attributes[i].name] !== node.attributes[i].value
-                                            )
-                                            ) {
-                                        removeAttrs.push(node.attributes[i].name);
-                                    }
-                                }
-                                for (i = 0; i <= removeAttrs.length; i += 1) {
-                                    node.removeAttribute(removeAttrs[i]);
-                                }
-                            }
-                        }
-                    }
-                    node = <Element>Dom.next(node, elm => !!elm, div, true);
-                }
+        if (
+            editor.options.cleanHTML.removeEmptyElements &&
+            current &&
+            node.nodeType === Node.ELEMENT_NODE &&
+            node.nodeName.match(IS_SPAN) &&
+            trim((<Element>node).innerHTML).length === 0 &&
+            !Dom.isOrContains(node, current)
+        ) {
+            return true;
+        }
 
-                let parent: Node|null;
+        return false;
+    };
 
-                for (i = 0; i < remove.length; i += 1) {
-                    parent = remove[i].parentNode;
-                    if (remove[i] && parent) {
-                        parent.removeChild(remove[i]);
-                    }
-                }
-
-                data.value = div.innerHTML;
-            }
-        });
-    }
 
     editor.events
+        .on('change afterSetMode afterInit mousedown keydown', debounce(() => {
+        if (!editor.isDestructed && editor.isEditorMode()) {
+            current = editor.selection.current();
+
+            let node: Node | null = null,
+                remove: Node[] = [],
+                work: boolean = false,
+                i: number = 0;
+
+            const checkNode = (node: Node | null): void => {
+                if (node) {
+                    if (isRemovableNode(node)) {
+                        remove.push(node);
+                        return checkNode(node.nextSibling);
+                    }
+
+                    if (allowTagsHash && allowTagsHash[node.nodeName] !== true) {
+                        if (node.attributes && node.attributes.length) {
+                            const removeAttrs: string[] = [];
+                            for (i = 0; i < node.attributes.length; i += 1) {
+                                if (!allowTagsHash[node.nodeName][node.attributes[i].name] ||
+                                    (
+                                        allowTagsHash[node.nodeName][node.attributes[i].name] !== true &&
+                                        allowTagsHash[node.nodeName][node.attributes[i].name] !== node.attributes[i].value
+                                    )
+                                ) {
+                                    removeAttrs.push(node.attributes[i].name);
+                                }
+                            }
+
+                            if (removeAttrs.length) {
+                                work = true;
+                            }
+
+                            removeAttrs.forEach((attr: string) => {
+                                (<Element>node).removeAttribute(attr);
+                            });
+                        }
+                    }
+
+                    checkNode(node.firstChild);
+                    checkNode(node.nextSibling);
+                }
+            };
+
+            if (editor.editor.firstChild) {
+                node = <Element>editor.editor.firstChild;
+            }
+
+
+            checkNode(node);
+
+
+            remove.forEach((node: Node) => node.parentNode && node.parentNode.removeChild(node));
+
+            if (remove.length || work) {
+                editor.setEditorValue();
+            }
+        }
+    }, editor.options.cleanHTML.timeout))
         // remove invisible spaces then they already not need
         .on('keyup',  () => {
             if (editor.selection.isCollapsed()) {

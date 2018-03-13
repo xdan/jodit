@@ -51,7 +51,7 @@ export  function indent(editor: Jodit) {
             let currentBox: HTMLElement|false = current ? <HTMLElement>Dom.up(current, Dom.isBlock, editor.editor) : false;
 
             if (!currentBox && current) {
-                currentBox = Dom.wrap(current, editor.options.enter, editor);
+                currentBox = Dom.wrapInline(current, editor.options.enter, editor);
             }
 
             if (!currentBox) {

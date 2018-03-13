@@ -16,6 +16,20 @@ describe('Commands Jodit Editor Tests', function() {
 
             expect(editor.getEditorValue()).to.equal('<h1>test</h1><h1>test2</h1>');
         });
+        describe('Exec formatBlock for one inline element', function () {
+            it('Should wrap this element and all nearest inine element in block', function () {
+                var jodit = new Jodit(appendTestArea());
+                jodit.value = 'stop <span>post</span> ice';
+                var range = jodit.editorDocument.createRange();
+                range.setStart(jodit.editor.firstChild, 0);
+                range.setEnd(jodit.editor.firstChild, 2);
+                jodit.selection.selectRange(range);
+
+                jodit.execCommand('formatBlock', false, 'h1');
+
+                expect(jodit.value).to.equal('<h1>stop <span>post</span> ice</h1>');
+            });
+        });
 
         it('Try exec the command "formatBlock" in text node then selection is collapsed it should wrap it node in H1', function() {
             var editor = new Jodit(appendTestArea());
@@ -108,7 +122,7 @@ describe('Commands Jodit Editor Tests', function() {
                         '<li><h1>2</h1></li>' +
                         '<li><h1>3</h1></li>' +
                         '</ul>'
-                    )
+                    );
 
                     editor.execCommand('formatBlock', false, 'p');
                     expect(editor.value).to.be.equal('<ul>' +
@@ -384,8 +398,13 @@ describe('Commands Jodit Editor Tests', function() {
             });
         });
         describe('Exec bold for collapsed range and move cursor in another place', function () {
-            it('Should remove stron element', function () {
-                var editor = new Jodit(appendTestArea());
+            it('Should remove STRONG element', function () {
+                var editor = new Jodit(appendTestArea(), {
+                    cleanHTML: {
+                        timeout: 0
+                    }
+                });
+
                 editor.value = 'testtest';
                 var range = editor.editorDocument.createRange();
                 range.setStart(editor.editor.firstChild, 4);
@@ -396,7 +415,7 @@ describe('Commands Jodit Editor Tests', function() {
                 expect(editor.value).to.be.equal('test<strong></strong>test');
 
                 range.setStart(editor.editor.lastChild, 2);
-                range.collapse(true)
+                range.collapse(true);
                 editor.selection.selectRange(range);
                 simulateEvent('mousedown', 0, editor.editor)
                 expect(editor.value).to.be.equal('testtest');

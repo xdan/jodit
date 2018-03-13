@@ -1524,6 +1524,75 @@ describe('Test plugins', function () {
                 expect('start test test test elm').to.be.equal(editor.getEditorValue().replace('<span>', '').replace('</span>', ''));
             });
         });
+        describe('Deny tags', function () {
+            describe('Parameter like string', function () {
+                it('Should remove all tags in denyTags options', function () {
+                    var editor = new Jodit(appendTestArea(), {
+                        cleanHTML: {
+                            denyTags: 'p'
+                        },
+                    });
+                    editor.value = '<p>te<strong>stop</strong>st</p><h1>pop</h1>';
+                    expect(editor.value).to.be.equal('<h1>pop</h1>');
+                });
+            });
+        });
+        describe('Allow tags', function () {
+            describe('Parameter like string', function () {
+                it('Should remove all tags not in allowTags options', function () {
+                    var editor = new Jodit(appendTestArea(), {
+                        cleanHTML: {
+                            allowTags: 'p'
+                        },
+                    });
+                    editor.value = '<p>te<strong>stop</strong>st</p><h1>pop</h1>';
+                    expect(editor.value).to.be.equal('<p>test</p>');
+                });
+            });
+            describe('Parameter like hash', function () {
+                it('Should remove all tags not in allowTags options', function () {
+                    var editor = new Jodit(appendTestArea(), {
+                        cleanHTML: {
+                            allowTags: {
+                                p: true
+                            }
+                        },
+                    });
+                    editor.value = '<p>te<strong>stop</strong>st</p><h1>pop</h1>';
+                    expect(editor.value).to.be.equal('<p>test</p>');
+                });
+            });
+            describe('Allow attributes', function () {
+                it('Should remove all attributes from element and remove not in allowTags options', function () {
+                    var editor = new Jodit(appendTestArea(), {
+                        cleanHTML: {
+                            allowTags: {
+                                p: {
+                                    style: true
+                                }
+                            }
+                        },
+                    });
+                    editor.value = '<p style="color: red;" data-id="111">te<strong>stop</strong>st</p><h1>pop</h1>';
+                    expect(editor.value).to.be.equal('<p style="color: red;">test</p>');
+                });
+            });
+            describe('Time checking', function () {
+                it('Should work fast', function () {
+                    var editor = new Jodit(appendTestArea(), {
+                        cleanHTML: {
+                            allowTags: {
+                                p: {
+                                    style: true
+                                }
+                            }
+                        },
+                    });
+                    editor.value = '<p style="color: red;" data-id="111">te<strong>stop</strong>st</p><h1>pop</h1>'.repeat(500);
+                    expect(editor.value).to.be.equal('<p style="color: red;">test</p>'.repeat(500));
+                }).timeout(700);
+            });
+        });
     });
     describe('Size plugin', function () {
         describe('In iframe mode after change mode', function () {

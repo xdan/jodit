@@ -390,10 +390,16 @@ export class Jodit extends Component {
         }
     }
 
+    isDestructed: boolean = false;
     /**
      * Jodit's Destructor. Remove editor, and return source input
      */
     destruct() {
+        if (this.isDestructed) {
+            return;
+        }
+
+        this.isDestructed = true;
         /**
          * Triggered before {@link events:beforeDestruct|beforeDestruct} executed. If returned false method stopped
          *

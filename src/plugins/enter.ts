@@ -119,12 +119,14 @@ export function enter(editor: Jodit) {
 
             if (!currentBox && current && !Dom.prev(current, (elm: Node | null) => (Dom.isBlock(elm) || (!!elm && Dom.isImage(elm, editor.ownerWindow))), editor.editor)) {
                 let needWrap: Node = current;
+
                 Dom.up(needWrap, (node: Node) => {
                     if (node && node.hasChildNodes() && node !== editor.editor) {
                         needWrap = node;
                     }
                 }, editor.editor);
-                currentBox = Dom.wrap(needWrap, editor.options.enter, editor);
+
+                currentBox = Dom.wrapInline(needWrap, editor.options.enter, editor);
                 range = sel.rangeCount ? sel.getRangeAt(0) : editor.editorDocument.createRange();
             }
 

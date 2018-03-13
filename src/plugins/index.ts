@@ -4,8 +4,6 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {xpath} from "./xpath";
-
 export {addNewLine} from "./addNewLine";
 export {autofocus} from "./autofocus";
 export {backspace} from "./backspace";
@@ -13,7 +11,6 @@ export {bold} from "./bold";
 export {cleanHTML} from "./cleanHTML";
 export {color} from "./color";
 import "./copyformat";
-import {DragAndDrop} from "./DragAndDrop";
 export {enter} from "./enter";
 export {errorMessages} from "./errorMessages";
 export {font} from "./font";

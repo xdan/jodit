@@ -953,11 +953,15 @@ describe('Tables Jodit Editor Tests', function() {
         });
         describe('Resize column', function () {
             describe('Move mouse over edge of cell', function () {
-                var brs = [];
-                for (i =0; i < 100; i += 1) {
-                    brs.push(document.createElement('br'));
-                    document.body.appendChild(brs[brs.length - 1])
-                }
+                before(function () {
+                    var brs = [];
+                    for (i =0; i < 100; i += 1) {
+                        brs.push(document.createElement('br'));
+                        brs[brs.length - 1].classList.add('test');
+                        document.body.appendChild(brs[brs.length - 1])
+                    }
+                })
+
 
                 describe('Normal scroll', function () {
                     it('should show resizer element', function (done) {
@@ -999,7 +1003,7 @@ describe('Tables Jodit Editor Tests', function() {
                     });
                 });
                 after(function () {
-                    brs.forEach(function (br) {
+                    [].slice.call(document.querySelectorAll('br.test')).forEach(function (br) {
                         br.parentNode && br.parentNode.removeChild(br)
                     });
                 });

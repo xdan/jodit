@@ -577,9 +577,13 @@ describe('Jodit Editor Tests', function() {
             editor.destruct();
         });
         describe('Cursor position', function () {
-            it('Set cursor after node', function () {
+            it('Should set cursor after node', function () {
                 var area = appendTestArea();
-                var editor = new Jodit(area);
+                var editor = new Jodit(area, {
+                    cleanHTML: {
+                        removeEmptyElements: false,
+                    }
+                });
                 var spans = [editor.editorDocument.createElement('span'), editor.editorDocument.createElement('span'), editor.editorDocument.createElement('span')];
 
                 editor.selection.insertNode(spans[0]);

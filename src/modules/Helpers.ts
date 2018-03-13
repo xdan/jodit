@@ -659,7 +659,7 @@ export const  debounce = function (this: any, fn: Function, timeout ?: number, i
 
         if (timeout) {
             clearTimeout(timer);
-            timer = window.setTimeout(function () {
+            timer = window.setTimeout(() => {
                 if (!invokeAsap) {
                     fn.apply(ctx, args);
                 }

@@ -10,6 +10,7 @@ import * as consts from '../constants';
 import {Config} from "../Config";
 import {ToolbarButton, ControlType} from "../modules/ToolbarCollection";
 import {markerInfo} from "../modules/Selection";
+import {INVISIBLE_SPACE} from "../constants";
 
 
 Config.prototype.controls.paragraph = <ControlType>{
@@ -93,8 +94,8 @@ export function formatBlock(editor: Jodit) {
             const selectionInfo: markerInfo[] = editor.selection.save();
             let currentBox: HTMLElement | false = current ? <HTMLElement>Dom.up(current, Dom.isBlock, editor.editor) : false;
 
-            if (!currentBox && current) {
-                currentBox = Dom.wrap(current, editor.options.enter, editor);
+            if ((!currentBox || currentBox.nodeName === 'LI') && current) {
+                currentBox = Dom.wrapInline(current, editor.options.enter, editor);
             }
 
             if (!currentBox) {
@@ -103,12 +104,20 @@ export function formatBlock(editor: Jodit) {
             }
 
             if (!currentBox.tagName.match(/TD|TH|TBODY|TABLE|THEAD/i)) {
-                Dom.replace(currentBox, third, true, false, editor.editorDocument);
+                if (
+                    third === editor.options.enter.toLowerCase() &&
+                    currentBox.parentNode &&
+                    currentBox.parentNode.nodeName === 'LI'
+                ) {
+                    Dom.unwrap(currentBox);
+                } else {
+                    Dom.replace(currentBox, third, true, false, editor.editorDocument);
+                }
             } else {
                 if (!editor.selection.isCollapsed()) {
                     editor.selection.applyCSS({}, third)
                 } else {
-                    Dom.wrap(current, third, editor);
+                    Dom.wrapInline(current, third, editor);
                 }
             }
 

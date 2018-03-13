@@ -22,13 +22,13 @@ export class Dom {
     /**
      *
      * @param {Node} current
-     * @param {String|Node} tag
+     * @param {String | Node} tag
      * @param {Jodit} editor
      *
      * @return {HTMLElement}
      */
-    static wrap = (current: Node, tag: Node|string, editor: Jodit): HTMLElement => {
-        let tmp: false|Node|HTMLElement|HTMLTableCellElement,
+    static wrapInline = (current: Node, tag: Node|string, editor: Jodit): HTMLElement => {
+        let tmp: null | Node,
             first: Node = current,
             last: Node = current;
 
@@ -37,7 +37,7 @@ export class Dom {
         let needFindNext: boolean = false;
         do {
             needFindNext = false;
-            tmp = Dom.prev(first, (elm) => !!elm, editor.editor, false);
+            tmp = first.previousSibling;
             if (tmp && !Dom.isBlock(tmp)) {
                 needFindNext = true;
                 first = tmp;
@@ -46,7 +46,7 @@ export class Dom {
 
         do {
             needFindNext = false;
-            tmp = Dom.next(last, (elm) => !!elm, editor.editor, false);
+            tmp = last.nextSibling;
             if (tmp && !Dom.isBlock(tmp)) {
                 needFindNext = true;
                 last = tmp;
@@ -60,7 +60,7 @@ export class Dom {
             first.parentNode.insertBefore(wrapper, first);
         }
 
-        let next: Node|null = first;
+        let next: Node | null = first;
 
         while (next) {
             next = first.nextSibling;
@@ -76,13 +76,39 @@ export class Dom {
 
         return <HTMLElement>wrapper;
     };
+    /**
+     *
+     * @param {Node} current
+     * @param {String | Node} tag
+     * @param {Jodit} editor
+     *
+     * @return {HTMLElement}
+     */
+    static wrap = (current: Node, tag: Node|string, editor: Jodit): HTMLElement | null => {
+
+        const selInfo = editor.selection.save();
+
+        const wrapper = typeof tag === 'string' ? Dom.create(tag, '', editor.editorDocument) : tag;
+
+        if (!current.parentNode) {
+            return null;
+        }
+
+        current.parentNode.insertBefore(wrapper, current);
+
+        wrapper.appendChild(current);
+
+        editor.selection.restore(selInfo);
+
+        return <HTMLElement>wrapper;
+    };
 
     /**
      *
      * @param node
      */
     static unwrap(node: Node) {
-        let parent: Node|null = node.parentNode,
+        let parent: Node | null = node.parentNode,
             el = node;
 
         if (parent) {
@@ -108,7 +134,7 @@ export class Dom {
      * ```
      */
     static each (elm: Node|HTMLElement, callback: (this: Node, node: Node) => void|false): boolean {
-        let node: Node|null|false = elm.firstChild;
+        let node: Node | null | false = elm.firstChild;
 
         if (node) {
             while (node) {
@@ -375,6 +401,8 @@ export class Dom {
     }
 
     static isEmpty(node: Node): boolean {
+        const isNoEmtyElement: RegExp = /^(img|svg|canvas|input|textarea|form)$/;
+
         if (!node) {
             return true;
         }
@@ -383,7 +411,7 @@ export class Dom {
             return node.nodeValue === null || trim(node.nodeValue).length === 0;
         }
 
-        return Dom.each(<HTMLElement>node, (elm: Node | null): false | void => {
+        return !node.nodeName.toLowerCase().match(isNoEmtyElement) && Dom.each(<HTMLElement>node, (elm: Node | null): false | void => {
             if (
                 (
                     elm && elm.nodeType === Node.TEXT_NODE &&
@@ -394,7 +422,7 @@ export class Dom {
                 ) ||
                 (
                     elm && elm.nodeType === Node.ELEMENT_NODE &&
-                    elm.nodeName.match(/^(img|table)$/i)
+                    elm.nodeName.toLowerCase().match(isNoEmtyElement)
                 )
             ) {
                 return false;

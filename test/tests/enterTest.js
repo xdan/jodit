@@ -111,6 +111,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
                 '<tr><td></td></tr>' +
                 '</tbody></table>').to.be.equal(editor.getEditorValue());
 
+                editor.selection.focus();
                 editor.selection.insertNode(editor.editorDocument.createTextNode(' 2 '));
 
                 expect('<table><tbody>' +
