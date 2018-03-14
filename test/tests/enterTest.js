@@ -158,16 +158,15 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 
                 // set cursor in start of element
-
+                editor.selection.focus();
                 range.selectNodeContents(editor.editor.lastChild);
                 range.collapse(true);
-                editor.editorWindow.getSelection().removeAllRanges();
-                editor.editorWindow.getSelection().addRange(range);
+                editor.selection.selectRange(range);
 
 
 
                 simulateEvent('keydown',    Jodit.KEY_BACKSPACE, editor.editor);
-
+                editor.selection.focus();
                 editor.selection.insertNode(editor.editorDocument.createTextNode(' 2 '));
 
                 expect(editor.getEditorValue()).to.be.equal('<table><tbody>' +

@@ -251,6 +251,8 @@ export  class ToolbarPopup extends ToolbarElement {
             });
     }
 
+    isOpened: boolean = false;
+
     protected doOpen(content: any) {
         if (!content) {
             return;
@@ -285,12 +287,17 @@ export  class ToolbarPopup extends ToolbarElement {
 
 
         noStandartActions || this.jodit.events.fire('afterOpenPopup', this.container);
+        this.isOpened = true;
     }
 
     protected doClose() {}
 
     public close = (current?: HTMLElement | ToolbarPopup) => {
+        if (!this.isOpened) {
+            return;
+        }
         if (!current || !Dom.isOrContains(this.container, current instanceof ToolbarPopup ? current.target : current)) {
+            this.isOpened = false;
             this.jodit.events.off('closeAllPopups', this.close);
 
             this.doClose();

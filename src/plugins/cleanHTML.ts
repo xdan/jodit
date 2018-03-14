@@ -158,6 +158,7 @@ export function cleanHTML(editor: Jodit) {
             current &&
             node.nodeType === Node.ELEMENT_NODE &&
             node.nodeName.match(IS_SPAN) &&
+            !editor.selection.isMarker(node) &&
             trim((<Element>node).innerHTML).length === 0 &&
             !Dom.isOrContains(node, current)
         ) {

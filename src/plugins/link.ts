@@ -83,8 +83,8 @@ Config.prototype.controls.link = <ControlType> {
             current = false;
         }
 
-        const link: HTMLAnchorElement|null = form.querySelector('.jodit_link_insert_button');
-        const unlink: HTMLButtonElement|null = form.querySelector('.jodit_unlink_button');
+        const link: HTMLAnchorElement | null = form.querySelector('.jodit_link_insert_button');
+        const unlink: HTMLButtonElement | null = form.querySelector('.jodit_unlink_button');
 
         if (current) {
             val(form, 'input[name=url]', current.getAttribute('href') || '');

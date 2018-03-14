@@ -460,8 +460,8 @@ describe('Tables Jodit Editor Tests', function() {
     describe('Work with tables', function() {
         it('Create table and insert into cell some text', function() {
             var editor = new Jodit(appendTestArea());
-
-            editor.setEditorValue('');
+            editor.ownerWindow.focus();
+            editor.value = '';
 
             var table = Jodit.modules.Dom.create('table', '', editor.editorDocument),
                 tr = Jodit.modules.Dom.create('tr', '', editor.editorDocument),
@@ -472,11 +472,12 @@ describe('Tables Jodit Editor Tests', function() {
             tr.appendChild(td2);
             table.appendChild(tr);
 
+            editor.selection.focus();
             editor.selection.insertNode(table, false);
             editor.selection.setCursorIn(table, false); // set cursor in last cell
             editor.selection.insertNode(Jodit.modules.Dom.create('text', 'ok', editor.editorDocument));
 
-            expect(editor.getEditorValue()).to.equal('<table><tr><td></td><td>ok</td></tr></table>');
+            expect(editor.value).to.equal('<table><tr><td></td><td>ok</td></tr></table>');
         });
         it('After insert table like html without tbody, it should be appear', function () {
             var editor = new Jodit(appendTestArea());

@@ -376,31 +376,76 @@ describe('Test interface', function() {
                         }
                     });
 
-                    editor.setEditorValue('')
+                    editor.value = '';
 
 
                     simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link'))
 
                     var list = editor.container.querySelector('.jodit_toolbar_popup');
 
-                    expect(window.getComputedStyle(list).display).to.equal('block');
+                    expect(editor.ownerWindow.getComputedStyle(list).display).to.equal('block');
                     expect(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_unlink_button').style.display).to.equal('none');
 
-                    editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=url]').value = '' // try wrong url
+                    var url = editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=url]');
+                    expect(url).to.be.not.equal(null);
+
+                    url.focus();
+                    url.value = '' // try wrong url
                     editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=text]').value = '123'
                     simulateEvent('submit', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_form'))
 
-                    expect(editor.container.querySelectorAll('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=url].jodit_error').length).to.equal(1);
+                    expect(url.classList.contains('jodit_error')).to.be.true;
 
-                    editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=url]').value = 'http://xdsoft.net/jodit/images/artio.jpg'
+                    url.focus();
+                    url.value = 'https://xdsoft.net/jodit/images/artio.jpg'
                     simulateEvent('submit', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_form'))
 
-                    expect(sortAtrtibutes(editor.getEditorValue())).to.equal('<a href="http://xdsoft.net/jodit/images/artio.jpg">123</a>');
+                    expect(sortAtrtibutes(editor.value)).to.equal('<a href="https://xdsoft.net/jodit/images/artio.jpg">123</a>');
 
                     simulateEvent('mousedown', 0, editor.editor);
 
 
                     expect(list.parentNode).to.equal(null);
+                });
+                describe('On selected text', function () {
+                    it('Should wrap selected text in link', function() {
+                        var editor = new Jodit(appendTestArea(), {
+                            toolbarAdaptive: false,
+                            observer: {
+                                timeout: 0
+                            }
+                        });
+
+                        editor.value = 'test <span>select</span> stop';
+                        var range = editor.editorDocument.createRange();
+                        range.selectNodeContents(editor.editor.querySelector('span'));
+                        editor.selection.selectRange(range);
+
+                        simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link'))
+
+                        var popup = editor.container.querySelector('.jodit_toolbar_popup');
+                        expect(popup).to.be.not.equal(null);
+                        expect(editor.ownerWindow.getComputedStyle(popup).display).to.equal('block');
+                        expect(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_unlink_button').style.display).to.equal('none');
+
+                        var url = popup.querySelector('input[name=url]');
+                        expect(url).to.be.not.equal(null);
+                        var text = popup.querySelector('input[name=text]');
+                        expect(text).to.be.not.equal(null);
+
+                        expect(text.value).to.be.equal('select');
+
+                        url.focus();
+                        url.value = 'https://xdsoft.net/jodit/images/artio.jpg'
+                        simulateEvent('submit', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_form'))
+
+                        expect(sortAtrtibutes(editor.value)).to.equal('test <a href="https://xdsoft.net/jodit/images/artio.jpg">select</a> stop');
+
+                        simulateEvent('mousedown', 0, editor.editor);
+
+
+                        expect(popup.parentNode).to.equal(null);
+                    });
                 });
                 it('Should restore source text after user clicked on Unlink button', function() {
                     var editor = new Jodit(appendTestArea(), {

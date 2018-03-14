@@ -85,8 +85,8 @@ export class Select extends Component{
         return false;
     }
 
-    private isMarker = (elm: HTMLElement): boolean => (
-        Dom.isNode(elm, this.jodit.editorWindow) && elm.tagName === 'SPAN' && elm.hasAttribute('data-' + consts.MARKER_CLASS)
+    isMarker = (elm: Node): boolean => (
+        Dom.isNode(elm, this.jodit.editorWindow) && elm.nodeType === Node.ELEMENT_NODE && elm.nodeName === 'SPAN' && (<Element>elm).hasAttribute('data-' + consts.MARKER_CLASS)
     );
 
     /**
@@ -742,9 +742,9 @@ export class Select extends Component{
             start = inStart ? start.firstChild : start.lastChild
         } while (start);
 
-        if (last === node && node.nodeType !== Node.TEXT_NODE) {
+        if (!start) {
             const fakeNode: Text = this.jodit.editorDocument.createTextNode(consts.INVISIBLE_SPACE);
-            node.appendChild(fakeNode);
+            last.appendChild(fakeNode);
             last = fakeNode;
         }
 

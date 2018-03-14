@@ -145,7 +145,7 @@ var sortAtrtibutes = function (html) {
         html = html.replace(elm.name, elm.value);
     });
 
-    return html;
+    return html.replace(/&nbsp;/g, ' ');
 }
 
 /**
