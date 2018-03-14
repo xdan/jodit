@@ -39,6 +39,9 @@ if (String.prototype.repeat === undefined) {
 var expect = typeof chai !== 'undefined' ? chai.expect : function () {};
 var stuff = [];
 var removeStuff = function () {
+    Object.keys(Jodit.instances).forEach(function (key) {
+        Jodit.instances[key].destruct();
+    });
     stuff.forEach(function (elm) {
         elm && elm.parentNode && elm.parentNode.removeChild(elm);
         delete elm;

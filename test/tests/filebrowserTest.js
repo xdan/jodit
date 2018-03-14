@@ -52,11 +52,5 @@ describe('Jodit FileBrowser Tests', function() {
             expect(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-image .jodit_tabs_buttons .active').innerText).to.equal('Upload');
         })
     })
-    afterEach(function () {
-        removeStuff();
-        var i, keys = Object.keys(Jodit.instances);
-        for (i = 0; i < keys.length; i += 1) {
-            Jodit.instances[keys[i]].destruct();
-        }
-    });
+    afterEach(removeStuff);
 });

@@ -36,11 +36,5 @@ describe('Iframe mode', function() {
             });
         });
     });
-    afterEach(function () {
-        var i, keys = Object.keys(Jodit.instances);
-        for (i = 0; i < keys.length; i += 1) {
-            Jodit.instances[keys[i]].destruct();
-        }
-        removeStuff();
-    });
+    afterEach(removeStuff);
 });

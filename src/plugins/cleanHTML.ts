@@ -28,7 +28,9 @@ import {IS_SPAN} from "../constants";
  * @example
  * ```javascript
  * var editor = Jodit('#editor', {
- *     allowTags: 'p,a[href],table,tr,td, img[src=1.png]' // allow only <p>,<a>,<table>,<tr>,<td>,<img> tags and for <a> allow only `href` attribute and <img> allow only `src` atrribute == '1.png'
+ *     cleanHTML: {
+ *         allowTags: 'p,a[href],table,tr,td, img[src=1.png]' // allow only <p>,<a>,<table>,<tr>,<td>,<img> tags and for <a> allow only `href` attribute and <img> allow only `src` atrribute == '1.png'
+ *     }
  * });
  * editor.value = 'Sorry! <strong>Goodby</strong> <span>mr.</span> <a style="color:red" href="http://xdsoft.net">Freeman</a>';
  * console.log(editor.value); //Sorry! <a href="http://xdsoft.net">Freeman</a>
@@ -37,16 +39,18 @@ import {IS_SPAN} from "../constants";
  * @example
  * ```javascript
  * var editor = Jodit('#editor', {
- *     allowTags: {
- *         p: true,
- *         a: {
- *             href: true
- *         },
- *         table: true,
- *         tr: true,
- *         td: true,
- *         img: {
- *             src: '1.png'
+ *     cleanHTML: {
+ *         allowTags: {
+ *             p: true,
+ *             a: {
+ *                 href: true
+ *             },
+ *             table: true,
+ *             tr: true,
+ *             td: true,
+ *             img: {
+ *                 src: '1.png'
+ *             }
  *         }
  *     }
  * });

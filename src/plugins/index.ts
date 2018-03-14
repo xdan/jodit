@@ -4,7 +4,7 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-export {addNewLine} from "./addNewLine";
+export {addNewLine} from "./add-new-line";
 export {autofocus} from "./autofocus";
 export {backspace} from "./backspace";
 export {bold} from "./bold";

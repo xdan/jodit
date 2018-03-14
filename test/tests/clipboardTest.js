@@ -91,10 +91,5 @@ describe('Clipboard text', function () {
             });
         });
     });
-    afterEach(function () {
-        Object.keys(Jodit.instances).forEach(function (key) {
-            Jodit.instances[key].destruct();
-        });
-        removeStuff();
-    });
+    afterEach(removeStuff);
 });
