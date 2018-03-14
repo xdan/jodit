@@ -217,7 +217,7 @@ export function iframe(editor: Jodit) {
 
             //throw events in our word
             editor.events
-                .on(editor.editorDocument.documentElement, 'mousedown touchend', (e: Event) => {
+                .on(editor.editorDocument.documentElement, 'mousedown touchend', () => {
                     if (!editor.selection.isFocused()) {
                         editor.selection.focus();
                         editor.selection.setCursorIn(editor.editor);

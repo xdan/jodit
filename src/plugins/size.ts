@@ -75,7 +75,7 @@ export function size(editor: Jodit) {
             });
     }
 
-    const getNotWorkHeight = (): number => (editor.options.toolbar ? editor.toolbar.container.offsetHeight : 0) + (editor.statusbar ? editor.statusbar.container.offsetHeight : 0);;
+    const getNotWorkHeight = (): number => (editor.options.toolbar ? editor.toolbar.container.offsetHeight : 0) + (editor.statusbar ? editor.statusbar.container.offsetHeight : 0);
     const calcMinHeightWorkspace = () => {
         if (!editor.container || !editor.container.parentNode) {
             return;

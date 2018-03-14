@@ -4,10 +4,9 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Jodit} from "../Jodit"
 import {Config} from '../Config'
 import {each, extend} from "./Helpers";
-import {Component, IViewBased} from "./Component";
+import {IViewBased} from "./Component";
 
 /**
  * @property {object} defaultAjaxOptions A set of key/value pairs that configure the Ajax request. All settings are optional

@@ -7,8 +7,7 @@
 
 import {Plugin} from "../modules/Plugin";
 import {css, ctrlKey, dataBind, dom, throttle} from "../modules/Helpers";
-import {TEXT_HTML, TEXT_PLAIN, URL_LIST} from "../constants";
-import {UploaderData} from "../modules/Uploader";
+import {TEXT_HTML, TEXT_PLAIN} from "../constants";
 import {Dom} from "../modules/Dom";
 
 

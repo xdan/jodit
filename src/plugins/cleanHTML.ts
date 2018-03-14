@@ -116,7 +116,7 @@ export function cleanHTML(editor: Jodit) {
                 if (attr) {
                     const attr2: string[] = attr[2].split(seperator);
                     if (attr[1]) {
-                        attr2.map(attributeMap);
+                        attr2.forEach(attributeMap);
                         tagsHash[attr[1].toUpperCase()] = allowAttributes;
                     }
                 } else {
@@ -153,19 +153,15 @@ export function cleanHTML(editor: Jodit) {
             return true;
         }
 
-        if (
+        return (
             editor.options.cleanHTML.removeEmptyElements &&
-            current &&
+            current !== false &&
             node.nodeType === Node.ELEMENT_NODE &&
-            node.nodeName.match(IS_SPAN) &&
+            node.nodeName.match(IS_SPAN) !== null &&
             !editor.selection.isMarker(node) &&
             trim((<Element>node).innerHTML).length === 0 &&
             !Dom.isOrContains(node, current)
-        ) {
-            return true;
-        }
-
-        return false;
+        );
     };
 
 

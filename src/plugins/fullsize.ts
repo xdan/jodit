@@ -6,7 +6,7 @@
 
 import {Jodit} from '../Jodit';
 import {Config} from '../Config'
-import {css, dom} from "../modules/Helpers";
+import {css} from "../modules/Helpers";
 import {ControlType, ToolbarButton, ToolbarIcon} from "../modules/ToolbarCollection";
 import * as consts from '../constants'
 

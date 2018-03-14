@@ -271,6 +271,7 @@ export  class ToolbarPopup extends ToolbarElement {
     /**
      * @param {HTMLElement} content
      * @param {boolean} [rightAlign=false] Open popup on right side
+     * @param {boolean} [noStandartActions=false] No call standarts action
      */
     public open(content: any, rightAlign?: boolean, noStandartActions: boolean = false) {
         this.jodit.events.fire('beforeOpenPopup closeAllPopups', this);
@@ -558,7 +559,7 @@ export  class ToolbarButton extends ToolbarElement {
             }
         }
 
-    }
+    };
     constructor(jodit: Jodit, control: ControlTypeStrong, target?: HTMLElement) {
         super(jodit);
 

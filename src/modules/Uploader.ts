@@ -5,11 +5,11 @@
  */
 
 import {Jodit} from '../Jodit';
-import {Component, IViewBased} from './Component';
+import {IViewBased} from './Component';
 import {Ajax} from './Ajax';
 import {Config} from '../Config'
 import {browser, extend, isPlainObject} from "./Helpers";
-import {TEXT_HTML, TEXT_PLAIN, URL_LIST} from "../constants";
+import {TEXT_PLAIN} from "../constants";
 import {Dom} from "./Dom";
 import {Select} from "./Selection";
 

@@ -569,9 +569,9 @@ export class Dom {
     /**
      * Check root contains child or equal child
      *
-     * @param root
-     * @param child
-     * @param boolean [onlyContains]
+     * @param {Node} root
+     * @param {Node} child
+     * @param {boolean} onlyContains
      * @return {boolean}
      */
     static isOrContains = (root: Node, child: Node, onlyContains: boolean = false): boolean => {

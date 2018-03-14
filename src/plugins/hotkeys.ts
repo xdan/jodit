@@ -1,3 +1,9 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ */
+
 import {Jodit} from "../Jodit";
 import {Config} from "../Config";
 import {Component} from "../modules/Component";
@@ -209,7 +215,7 @@ export class hotkeys extends Component{
                         }
 
                     }, void(0), void(0), true)
-                    .on('keyup', (event: KeyboardEvent) : void | false => {
+                    .on('keyup', () : void | false => {
                         if (itIsHotkey) {
                             itIsHotkey = false;
                             editor.events.stopPropagation('keyup');

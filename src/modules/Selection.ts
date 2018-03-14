@@ -324,7 +324,6 @@ export class Select extends Component{
                 const range: Range = sel.getRangeAt(0);
                 let node: Node | null = range.startContainer,
                     rightMode: boolean = false,
-                    sibling = (node: Node): Node | null => rightMode ? node.nextSibling : node.previousSibling,
                     child = (node: Node): Node | null => rightMode ? node.lastChild : node.firstChild;
 
                 if (node.nodeType !== Node.TEXT_NODE) {
@@ -675,11 +674,7 @@ export class Select extends Component{
             }
         }
 
-        if (checkSiblings(current) === false) {
-            return false;
-        }
-
-        return true;
+        return checkSiblings(current) !== false;
     }
 
     /**

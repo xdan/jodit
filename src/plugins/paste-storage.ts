@@ -1,3 +1,9 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ */
+
 import {Plugin} from "../modules/Plugin";
 import {Dialog} from "../modules/Dialog";
 import {KEY_DOWN, KEY_ENTER, KEY_UP, SPACE_REG_EXP} from "../constants";

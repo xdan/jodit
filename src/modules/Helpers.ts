@@ -377,19 +377,19 @@ export const clear = (value: string, removeEmptyBlocks = false): string => {
     return value;
 };
 
-/**
- * Convert all `<,>,",'` characters to HTML entities
- *
- * @method htmlentities
- * @param {string} text
- * @return {string}
- */
-export const htmlentities = (text: string): string => {
-    return text.replace(/</gi, "&lt;")
-        .replace(/>/gi, "&gt;")
-        .replace(/"/gi, "&quot;")
-        .replace(/'/gi, "&apos;");
-};
+// /**
+//  * Convert all `<,>,",'` characters to HTML entities
+//  *
+//  * @method htmlentities
+//  * @param {string} text
+//  * @return {string}
+//  */
+// export const htmlentities = (text: string): string => {
+//     return text.replace(/</gi, "&lt;")
+//         .replace(/>/gi, "&gt;")
+//         .replace(/"/gi, "&quot;")
+//         .replace(/'/gi, "&apos;");
+// };
 
 /**
  * Check if a string is a url
@@ -554,6 +554,7 @@ export const browser = (browser: string): boolean|string => {
  * @method offset
  * @param {HTMLElement} elm
  * @param {Jodit} jodit
+ * @param {Document} doc
  * @param {boolean} recurse
  * @return {{top: number, left: number}} returns an object containing the properties top and left.
  */
@@ -594,7 +595,7 @@ export const offset =  (elm: HTMLElement | Range, jodit: Jodit, doc: Document, r
  * @return {string}
  */
 export const camelCase = (key: string): string => {
-    return key.replace(/(-|_)(.)/g, (m, code, letter) => {
+    return key.replace(/([-_])(.)/g, (m, code, letter) => {
         return letter.toUpperCase();
     });
 };
@@ -1141,8 +1142,8 @@ export const normalizeLicense = (license: string, count: number = 8): string => 
         license = license.substr(count);
     }
 
-    parts[1] = parts[1].replace(/.{1}/g, '*');
-    parts[2] = parts[2].replace(/.{1}/g, '*');
+    parts[1] = parts[1].replace(/./g, '*');
+    parts[2] = parts[2].replace(/./g, '*');
 
     return parts.join('-');
 };

@@ -4,7 +4,6 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Jodit} from '../Jodit';
 import {Component, IViewBased} from './Component';
 import {css, dom} from "./Helpers";
 import {ToolbarIcon} from "./ToolbarCollection";

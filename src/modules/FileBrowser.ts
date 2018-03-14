@@ -9,7 +9,7 @@ import {Component, IViewBased} from './Component';
 import {Dialog, Alert, Confirm, Promt} from './Dialog';
 import {Config} from '../Config';
 import {
-    $$, css, ctrlKey, debounce, dom, each, extend, humanSizeToBytes, isPlainObject, offset,
+    $$, ctrlKey, debounce, dom, each, extend, humanSizeToBytes, isPlainObject,
     pathNormalize, urlNormalize
 } from "./Helpers";
 import {ToolbarIcon} from "./ToolbarCollection";
@@ -915,7 +915,7 @@ export class FileBrowser extends Component implements IViewBased {
                 if (self.isOpened() && e.which === consts.KEY_DELETE) {
                     self.events.fire(self.buttons.remove, 'click');
                 }
-            })
+            });
             // .on(self.ownerWindow, 'mouseup dragend',() => {
             //     if (self.draggable) {
             //         self.draggable.parentNode && self.draggable.parentNode.removeChild(self.draggable);
@@ -1483,8 +1483,4 @@ export class FileBrowser extends Component implements IViewBased {
             });
         });
     };
-
-    private draggable: HTMLElement | false = false;
-    private start = {top: 0, left: 0};
-    private client = {x: 0, y: 0};
 }

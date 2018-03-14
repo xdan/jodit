@@ -8,7 +8,7 @@ import {Jodit} from '../Jodit';
 import {Confirm, Dialog} from '../modules/Dialog';
 import {
     isHTML, browser, htmlspecialchars, isHTMLFromWord, applyStyles, dom,
-    cleanFromWord, trim
+    cleanFromWord
 } from '../modules/Helpers';
 import {Config} from '../Config';
 import {INSERT_AS_HTML, INSERT_AS_TEXT, INSERT_CLEAR_HTML, INSERT_ONLY_TEXT, TEXT_HTML, TEXT_PLAIN} from "../constants";

@@ -5,7 +5,6 @@
  */
 
 import {Component, IViewBased} from "./Component";
-import {Jodit} from "../Jodit";
 
 export abstract class Plugin extends Component{
     constructor(jodit: IViewBased) {

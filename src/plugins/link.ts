@@ -53,7 +53,7 @@ Config.prototype.controls.unlink = <ControlType>{
     }
 };
 Config.prototype.controls.link = <ControlType> {
-    isActive: (editor, control): boolean => {
+    isActive: (editor): boolean => {
         const current: Node | false = editor.selection.current();
         return current && Dom.closest(current, 'a', editor.editor) !== false;
     },

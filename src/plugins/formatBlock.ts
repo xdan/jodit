@@ -10,7 +10,6 @@ import * as consts from '../constants';
 import {Config} from "../Config";
 import {ToolbarButton, ControlType} from "../modules/ToolbarCollection";
 import {markerInfo} from "../modules/Selection";
-import {INVISIBLE_SPACE} from "../constants";
 
 
 Config.prototype.controls.paragraph = <ControlType>{

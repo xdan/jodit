@@ -6,7 +6,7 @@
 
 import {Jodit} from '../Jodit';
 import * as consts from '../constants';
-import {each, getContentWidth, $$, dom, offset, scrollIntoView} from '../modules/Helpers';
+import {getContentWidth, $$, dom, offset, scrollIntoView} from '../modules/Helpers';
 import {Config} from '../Config'
 import {Dom, Component, Table} from "../modules/index";
 import {ControlType} from "../modules/ToolbarCollection";
