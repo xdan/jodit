@@ -1825,14 +1825,14 @@ describe('Test plugins', function () {
                         expect(statusbar.childNodes[1].innerText).to.be.equal('p');
                         expect(statusbar.childNodes[2].innerText).to.be.equal('a');
 
-                        simulateEvent('click', 0, statusbar.childNodes[2].firstChild);
+                        simulateEvent('click', 0, statusbar.childNodes[2].firstChild); // click on A
 
                         expect(editor.helper.trim(editor.editorWindow.getSelection().toString())).to.be.equal('sss');
                         expect(statusbar.childNodes[2].innerText).to.be.equal('a');
 
-                        simulateEvent('click', 0, statusbar.childNodes[1].firstChild);
+                        simulateEvent('click', 0, statusbar.childNodes[1].firstChild);// click on P
 
-                        expect(editor.helper.trim(editor.editorWindow.getSelection().toString())).to.be.equal('Simple text sss﻿s');
+                        expect(editor.helper.trim(editor.editorWindow.getSelection().toString())).to.be.equal('Simple text ssss');
                         expect(statusbar.childNodes.length).to.be.equal(3);
                     });
                 });

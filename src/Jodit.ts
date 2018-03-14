@@ -172,13 +172,21 @@ export class Jodit extends Component {
         this.options = <Config>(new OptionsDefault());
 
         if (options !== undefined && typeof options === 'object') {
-            Object.keys(options).forEach((key: string) => {
+            const extendKey = (options: object, key: string) => {
+                if (key === 'preset') {
+                    if (this.options.presets[(<any>options).preset] !== undefined) {
+                        const preset = this.options.presets[(<any>options).preset];
+                        Object.keys(preset).forEach(extendKey.bind(this, preset));
+                    }
+                }
                 if (typeof (<any>Jodit.defaultOptions)[key] === 'object' && !Array.isArray((<any>Jodit.defaultOptions)[key])) {
                     (<any>this.options)[key] = extend(true, {}, (<any>Jodit.defaultOptions)[key], (<any>options)[key]);
                 } else {
                     (<any>this.options)[key] = (<any>options)[key];
                 }
-            })
+            };
+
+            Object.keys(options).forEach(extendKey.bind(this, options));
         }
 
         // in iframe it can be changed

@@ -744,8 +744,12 @@ export class Select extends Component{
 
         if (!start) {
             const fakeNode: Text = this.jodit.editorDocument.createTextNode(consts.INVISIBLE_SPACE);
-            last.appendChild(fakeNode);
-            last = fakeNode;
+            if (!/^(img|br|input)$/i.test(last.nodeName)) {
+                last.appendChild(fakeNode);
+                last = fakeNode;
+            } else {
+                start = last;
+            }
         }
 
         range.selectNodeContents(start || last);

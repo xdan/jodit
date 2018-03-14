@@ -1089,9 +1089,9 @@ describe('Tables Jodit Editor Tests', function() {
                         it('it should restore selection', function (done) {
                             var editor = new Jodit(appendTestArea());
 
-                            editor.setEditorValue('<p>test</p><table style="width: 100px; border-collapse: separate;" cellspacing="0">' +
+                            editor.value = '<p>test</p><table style="width: 100px; border-collapse: separate;" cellspacing="0">' +
                                 '<tr><td>1</td><td>2</td><td>3</td><td>4</td></tr>' +
-                                '</table>');
+                                '</table>';
 
                             var td = editor.editor.querySelectorAll('td')[1], box = td.getBoundingClientRect();
 
@@ -1115,25 +1115,29 @@ describe('Tables Jodit Editor Tests', function() {
                                 options.pageX = 0;
                                 options.pageY = 0;
                             });
-                            simulateEvent('mouseup', 1, window, function (options) {
+                            simulateEvent('mouseup', 1, editor.ownerWindow, function (options) {
                                 options.clientX = box.left + 5; // move on 5 pixels
                                 options.pageX = 0;
                                 options.pageY = 0;
                             });
 
 
-                            editor.selection.insertHTML('stop')
+                            editor.selection.insertHTML('stop');
 
-                            expect(editor.editor.innerHTML.toLowerCase()).to.equal(
-                                '<p>teststop﻿</p><table style="width: 100px; border-collapse: separate;" cellspacing="0"><tbody>' +
-                                '<tr>' +
-                                '<td style="width: 30%;">1</td>' +
-                                '<td style="width: 20%;">2</td>' +
-                                '<td>3</td>' +
-                                '<td>4</td>' +
-                                '</tr>' +
-                                '</tbody></table>'
+                            expect(sortAtrtibutes(editor.value)).to.equal(
+                                '<p>teststop</p>' +
+                                '<table cellspacing="0" style="border-collapse:separate;width:100px">' +
+                                    '<tbody>' +
+                                        '<tr>' +
+                                            '<td style="width:30%">1</td>' +
+                                            '<td style="width:20%">2</td>' +
+                                            '<td>3</td>' +
+                                            '<td>4</td>' +
+                                        '</tr>' +
+                                    '</tbody>' +
+                                '</table>'
                             );
+
                             done();
                         });
                     });

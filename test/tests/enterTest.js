@@ -399,35 +399,37 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
                     expect('<ul><li>Test</li><li>Some text</li></ul>').to.be.equal(editor.getEditorValue());
 
-
-                    editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
+                    editor.selection.focus();
+                    editor.selection.insertNode(editor.editorDocument.createTextNode(' a '));
                     expect('<ul><li>Test a </li><li>Some text</li></ul>').to.be.equal(editor.getEditorValue());
                 })
             });
             describe('In the P element', function () {
                 it('Should connect both UL in one element', function () {
-                    var editor = new Jodit(appendTestArea())
-                    editor.setEditorValue('<ul><li>Test</li><li></li><li>Some text</li></ul>');
+                    var editor = new Jodit(appendTestArea());
+                    editor.ownerWindow.focus();
+                    editor.value = '<ul><li>Test</li><li></li><li>Some text</li></ul>';
 
-                    var sel = editor.editorWindow.getSelection(),
-                        range = editor.editorDocument.createRange();
+                    var range = editor.editorDocument.createRange();
 
                     range.setStart(editor.editor.firstChild.childNodes[1], 0);
                     range.collapse(true);
-                    sel.removeAllRanges();
-                    sel.addRange(range);
+
+                    editor.selection.focus();
+                    editor.selection.selectRange(range);
 
                     simulateEvent('keydown',     Jodit.KEY_ENTER, editor.editor);
 
-                    expect('<ul><li>Test</li></ul><p></p><ul><li>Some text</li></ul>').to.be.equal(editor.getEditorValue());
+                    expect('<ul><li>Test</li></ul><p></p><ul><li>Some text</li></ul>').to.be.equal(editor.value);
 
+                    editor.selection.focus();
                     simulateEvent('keydown',     Jodit.KEY_BACKSPACE, editor.editor);
 
-                    expect('<ul><li>Test</li><li>Some text</li></ul>').to.be.equal(editor.getEditorValue());
+                    expect('<ul><li>Test</li><li>Some text</li></ul>').to.be.equal(editor.value);
 
-
-                    editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
-                    expect('<ul><li>Test a </li><li>Some text</li></ul>').to.be.equal(editor.getEditorValue());
+                    editor.selection.focus();
+                    editor.selection.insertNode(editor.editorDocument.createTextNode(' a '));
+                    expect('<ul><li>Test a </li><li>Some text</li></ul>').to.be.equal(editor.value);
                 })
             });
         });

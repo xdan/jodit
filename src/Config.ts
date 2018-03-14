@@ -20,6 +20,16 @@ import {ToolbarIcon} from "./modules/ToolbarCollection";
 
 export class Config {
     license: string = '';
+    preset: string = 'custom';
+    presets: {[key: string]: any} = {
+        inline: {
+            inline: true,
+            toolbar: false,
+            showXPathInStatusbar: false,
+            showCharsCounter: false,
+            showWordsCounter: false,
+        }
+    };
 
     ownerDocument: Document = document;
     ownerWindow: Window = window;
@@ -89,40 +99,40 @@ export class Config {
      */
     spellcheck: boolean = true;
 
-   /**
+    /**
      * Class name that can be appended to the editor
      *
      * @see {@link Jodit.defaultOptions.iframeCSSLinks|iframeCSSLinks}
      * @see {@link Jodit.defaultOptions.iframeStyle|iframeStyle}
      *
      * @example
-    * ```javascript
+     * ```javascript
      * new Jodit('#editor', {
      *    editorCssClass: 'some_my_class'
      * });
-    * ```
-    * ```html
+     * ```
+     * ```html
      * <style>
      * .some_my_class p{
      *    line-height: 16px;
      * }
      * </style>
-    * ```
+     * ```
      */
-   editorCssClass: false|string = false;
+    editorCssClass: false|string = false;
 
-   /**
+    /**
      * After all changes in editors for textarea will call change trigger
      *
      * @example
-    *  ```javascript
+     *  ```javascript
      * var editor = new Jodit('#editor');
      * document.getElementById('editor').addEventListener('change', function () {
      *      console.log(this.value);
      * })
-    * ```
+     * ```
      */
-   triggerChangeEvent: boolean = true;
+    triggerChangeEvent: boolean = true;
 
 
     /**
