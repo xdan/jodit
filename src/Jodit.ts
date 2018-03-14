@@ -295,6 +295,13 @@ export class Jodit extends Component {
 
         Jodit.instances[this.id] = this;
 
+        // if enter plugin not installed
+        try {
+            this.editorDocument.execCommand("defaultParagraphSeparator", false, this.options.enter);
+        } catch (ignore) {
+            // continue regardless of error
+        }
+
         // fix for native resizing
         try {
             this.editorDocument.execCommand('enableObjectResizing', false, false);

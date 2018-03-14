@@ -585,7 +585,7 @@ Config.prototype.controls = {
                     editor.events.fire('generateDocumentStructure.iframe', mywindow.document);
                     mywindow.document.body.innerHTML = editor.getEditorValue();
                 } else {
-                    mywindow.document.write(`<html><head><title></title></head><body>${editor.getEditorValue()}</body></html>`);
+                    mywindow.document.write(`<!doctype html><html><head><title></title></head><body>${editor.getEditorValue()}</body></html>`);
                     mywindow.document.close();
                 }
                 mywindow.focus();
