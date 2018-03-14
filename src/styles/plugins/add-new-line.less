@@ -6,10 +6,8 @@
 
 
 @color-new-line: #ccc;
-@padding-for-scroll: 20px;
-@padding-for-hover: 20px;
 @width-icon: 30px;
-@height-icon: 20px;
+@height-icon: @padding-default * 2;
 
 .jodit-add-new-line {
   box-sizing: border-box;
@@ -24,7 +22,7 @@
   font-size: 0;
   top: 0;
   outline: none;
-  margin-top: -@padding-for-hover;
+  margin-top: -@padding-default;
   //text-align: right;
   //padding: 5px;
   //vertical-align: middle;
@@ -64,16 +62,6 @@
     width: 16px;
     fill: @color-new-line;
     vertical-align: top;
-  }
-
-  &.jodit-add-new-line_after {
-    //margin-top: -@height-icon;
-    &:before {
-      //vertical-align: bottom;
-    }
-    span {
-      //vertical-align: bottom;
-    }
   }
 
   display: none;

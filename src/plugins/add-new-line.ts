@@ -49,8 +49,9 @@ export function addNewLine(editor: Jodit) {
     let timeout: number;
     let hidden: boolean = false;
     let preview: boolean = false;
-    let current: HTMLElement|false;
+    let current: HTMLElement | false;
 
+    let lineInFocus: boolean = false;
     const show = () => {
         if (editor.options.readonly) {
             return;
@@ -69,6 +70,7 @@ export function addNewLine(editor: Jodit) {
 
     const hideForce = () => {
         clearTimeout(timeout);
+        lineInFocus = false;
         line.style.display = 'none';
         hidden = true;
     };
@@ -78,7 +80,7 @@ export function addNewLine(editor: Jodit) {
     };
 
     const hide = () => {
-        if (hidden) {
+        if (hidden || lineInFocus) {
             return;
         }
         clearTimeout(timeout);
@@ -120,54 +122,70 @@ export function addNewLine(editor: Jodit) {
                 .on(editor.editor, 'scroll', () => {
                     hideForce();
                 })
-                .on(editor.container, 'mouseleave', () => {
-                    hide();
+                .on(editor.container, 'mouseleave', hide)
+                .on(line, 'mouseenter', () => {
+                    clearTimeout(timeout);
+                    lineInFocus = true;
                 })
-                .on(editor.editor, 'mousemove', debounce(function (this: HTMLElement, e: MouseEvent) {
+                .on(line, 'mouseleave', () => {
+                    lineInFocus = false;
+                })
+                .on(editor.editor, 'mousemove', debounce((e: MouseEvent) => {
                     let currentElement: HTMLElement = <HTMLElement>editor.editorDocument.elementFromPoint(e.pageX - editor.editorWindow.pageXOffset, e.pageY - editor.editorWindow.pageYOffset);
 
-                    if (!currentElement || currentElement === line || !Dom.isOrContains(editor.editor, currentElement)) {
+                    if (currentElement && Dom.isOrContains(line, currentElement)) {
                         return;
                     }
 
-                    current = currentElement;
+                    if (!currentElement || !Dom.isOrContains(editor.editor, currentElement)) {
+                        return;
+                    }
 
-                    if (!current || !current.nodeName.match(isMatchedTag) || !Dom.isOrContains(editor.editor, current)) {
-                        current = <HTMLElement>Dom.closest(current, isMatchedTag, editor.editor);
-                        if (!current) {
+                    if (!currentElement || !currentElement.nodeName.match(isMatchedTag) || !Dom.isOrContains(editor.editor, currentElement)) {
+                        currentElement = <HTMLElement>Dom.closest(currentElement, isMatchedTag, editor.editor);
+                        if (!currentElement) {
                             hide();
                             return;
                         }
                     }
 
-                    if (current.nodeName.match(isMatchedTag)) {
-                        const parentBox: Node | false = Dom.up(current, Dom.isBlock, editor.editor);
+                    if (currentElement.nodeName.match(isMatchedTag)) {
+                        const parentBox: Node | false = Dom.up(currentElement, Dom.isBlock, editor.editor);
                         if (parentBox && parentBox !== editor.editor) {
-                            current = <HTMLElement>parentBox;
+                            currentElement = <HTMLElement>parentBox;
                         }
                     }
 
+                    const editorBound: Bound = offset(editor.editor, editor, editor.editorDocument);
+                    const position: Bound = offset(<HTMLElement>currentElement, editor, editor.editorDocument);
 
-                    // const parentPosition = offset(<HTMLElement>editor.workplace, editor);
-                    const position: Bound = offset(<HTMLElement>current, editor, editor.editorDocument);
-                    let top: false|number = false;
+                    let top: false | number = false;
 
                     if (Math.abs(e.pageY - position.top) < delta) {
                         top = position.top;
+                        if (top - editorBound.top >= 20) {
+                            top -= 15;
+                        }
                         preview = true;
                     }
                     if (Math.abs(e.pageY - (position.top + position.height)) < delta) {
                         top = position.top + position.height;
+                        if ((editorBound.top + editorBound.height) - top >= 25) {
+                            top += 15;
+                        }
                         preview = false;
                     }
 
-                    if (top !== false && ((preview && !Dom.prev(current, canGetFocus, editor.editor)) || (!preview && !Dom.next(current, canGetFocus, editor.editor)))) {
+                    if (top !== false && ((preview && !Dom.prev(currentElement, canGetFocus, editor.editor)) || (!preview && !Dom.next(currentElement, canGetFocus, editor.editor)))) {
                         line.style.top = top + 'px';
+                        current = currentElement;
                         show();
                     } else {
                         current = false;
                         hide();
                     }
+
                 }, editor.options.observer.timeout));
+
         }, editor.options.observer.timeout));
 }
