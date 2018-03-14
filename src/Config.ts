@@ -28,6 +28,7 @@ export class Config {
             showXPathInStatusbar: false,
             showCharsCounter: false,
             showWordsCounter: false,
+            showPlaceholder: false
         }
     };
 

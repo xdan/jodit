@@ -309,6 +309,33 @@ describe('Jodit Editor Tests', function() {
                 });
             });
         });
+        describe('Check preset', function () {
+            it('Should set option by preset', function () {
+                var editor2 = new Jodit(appendTestArea());
+                expect(editor2.options.inline).to.be.false;
+                expect(editor2.options.toolbar).to.be.true;
+                expect(editor2.options.readonly).to.be.false;
+
+                var editor = new Jodit(appendTestArea(), {
+                    preset: 'inline'
+                });
+                expect(editor.options.inline).to.be.true;
+                expect(editor.options.toolbar).to.be.false;
+
+                Jodit.defaultOptions.presets.custom = {readonly: true}
+                var editor3 = new Jodit(appendTestArea(), {
+                    preset: 'custom'
+                });
+                expect(editor3.options.readonly).to.be.true;
+
+                var editor4 = new Jodit(appendTestArea(), {
+                    preset: 'inline',
+                    inline: false
+                });
+                expect(editor4.options.inline).to.be.false;
+                expect(editor4.options.toolbar).to.be.false;
+            })
+        });
     });
     describe('Editors stack', function() {
         it('Jodit.instances should contain all instances of Jodit', function() {

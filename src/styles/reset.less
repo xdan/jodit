@@ -1,3 +1,11 @@
+.jodit_wysiwyg {
+  outline: 0;
+  &::selection,
+  *::selection {
+    background: @color-background-selection;
+    color: @color-selection;
+  }
+}
 .jodit_container:not(.jodit_inline) .jodit_wysiwyg {
   margin : 0;
   padding: @padding-default;
@@ -10,8 +18,10 @@
   }
   p, pre {
     margin: 0 0 10px;
-    max-width: 100%;
     overflow: auto;
+  }
+  pre {
+    max-width: 100%;
   }
   h1,h2,h3,h4,h5 {
     margin-top: 0;
@@ -21,10 +31,5 @@
     margin-left: 0;
     padding-left: 5px;
     color: @color-text;
-  }
-  &::selection,
-  *::selection {
-    background: @color-background-selection;
-    color: @color-selection;
   }
 }
