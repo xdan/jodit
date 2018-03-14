@@ -128,8 +128,7 @@ export function addNewLine(editor: Jodit) {
                     lineInFocus = false;
                 })
                 .on(editor.editor, 'dblclick', (e: MouseEvent) => {
-                    let currentElement: HTMLElement = <HTMLElement>editor.editorDocument.elementFromPoint(e.pageX - editor.editorWindow.pageXOffset, e.pageY - editor.editorWindow.pageYOffset);
-                    if (currentElement === editor.editor) {
+                    if (e.target === editor.editor) {
                         const editorBound: Bound = offset(editor.editor, editor, editor.editorDocument);
                         let top: number = (e.pageY - editor.editorWindow.pageYOffset);
                         const p: HTMLElement = editor.editorDocument.createElement(editor.options.enter);
