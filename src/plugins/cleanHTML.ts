@@ -250,7 +250,7 @@ export function cleanHTML(editor: Jodit) {
                 if (hr) {
                     node = <Node | null>Dom.next(hr, Dom.isBlock, editor.editor, false);
                     if (!node) {
-                        node = <Node>Dom.create(editor.options.enter, '', editor.editorDocument);
+                        node = editor.editorDocument.createElement(editor.options.enter);
                         if (node) {
                             Dom.after(hr, <HTMLElement>node)
                         }

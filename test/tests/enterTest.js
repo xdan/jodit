@@ -408,7 +408,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
                 it('Should connect both UL in one element', function () {
                     var editor = new Jodit(appendTestArea());
                     editor.ownerWindow.focus();
-                    editor.value = '<ul><li>Test</li><li></li><li>Some text</li></ul>';
+                    editor.value = '<ul><li>Test</li><li> </li><li>Some text</li></ul>';
 
                     var range = editor.editorDocument.createRange();
 
@@ -733,34 +733,36 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
             simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-            editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
+            editor.selection.insertNode(editor.editorDocument.createTextNode(' a '));
 
             expect(editor.getEditorValue()).to.be.equal('<ul><li>Some text</li></ul><p> a </p>');
 
-        })
+        });
+        describe('If Enter was pressed inside empty middle LI', function () {
+            it('should split parent UL, remove LI, insert new P in the middle of two new Ul and insert cursor inside this', function () {
+                var editor = new Jodit(appendTestArea());
+                editor.setEditorValue('<ul><li>Test</li><li> </li><li>Some text</li></ul>');
 
-        it('If Enter was pressed inside empty middle LI it should split parent UL, remove LI, insert new P in the middle of two new Ul and insert cursor inside this', function () {
-            var editor = new Jodit(appendTestArea())
-            editor.setEditorValue('<ul><li>Test</li><li></li><li>Some text</li></ul>');
+                var sel = editor.editorWindow.getSelection(),
+                    range = editor.editorDocument.createRange();
 
-            var sel = editor.editorWindow.getSelection(),
-                range = editor.editorDocument.createRange();
+                range.setStart(editor.editor.firstChild.childNodes[1], 0);
+                range.collapse(true);
+                sel.removeAllRanges();
+                sel.addRange(range);
 
-            range.setStart(editor.editor.firstChild.childNodes[1], 0);
-            range.collapse(true);
-            sel.removeAllRanges();
-            sel.addRange(range);
+                simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-            simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
+                editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
 
-            editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
+                expect(editor.getEditorValue()).to.be.equal('<ul><li>Test</li></ul><p> a </p><ul><li>Some text</li></ul>');
 
-            expect(editor.getEditorValue()).to.be.equal('<ul><li>Test</li></ul><p> a </p><ul><li>Some text</li></ul>');
+            });
+        });
 
-        })
 
         it('If Enter was pressed inside start of first(not empty) LI it should add empty LI and cursor should not move', function () {
-            var editor = new Jodit(appendTestArea())
+            var editor = new Jodit(appendTestArea());
             editor.setEditorValue('<ul><li>Some text</li></ul>');
 
             var sel = editor.editorWindow.getSelection(),

@@ -109,6 +109,20 @@ describe('Test Inline mode', function () {
                 expect(popup).to.be.not.equal(null);
             });
         });
+        describe('Click on Image', function () {
+            describe('On mobile', function () {
+                it('Should show inline popup', function () {
+                    var editor = new Jodit(appendTestDiv(), {
+                        inline: true
+                    });
+                    editor.value = '<p>test <img/> test</p>'
+                    var img = editor.editor.querySelector('img');
+                    simulateEvent('touchstart', 0, img);
+                    var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
+                    expect(popup).to.be.not.equal(null);
+                });
+            });
+        });
         describe('Click on link', function () {
             it('Should show inline popup', function () {
                 var editor = new Jodit(appendTestDiv(), {

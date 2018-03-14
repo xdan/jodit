@@ -110,7 +110,7 @@ export function enter(editor: Jodit) {
 
             // if use <br> tag for break line or when was entered SHIFt key or in <td> or <th> or <blockquote>
             if (editor.options.enter.toLowerCase() === consts.BR.toLowerCase() || event.shiftKey || Dom.closest(current, 'PRE|BLOCKQUOTE', editor.editor)) {
-                const br: HTMLBRElement = <HTMLBRElement>Dom.create('br', undefined, editor.editorDocument);
+                const br: HTMLBRElement = editor.editorDocument.createElement('br');
                 editor.selection.insertNode(br);
                 scrollIntoView(br, editor.editor, editor.editorDocument);
                 return false;

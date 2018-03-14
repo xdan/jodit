@@ -49,6 +49,7 @@ Config.prototype.popup = <{[key: string]: Array<ControlType|string>}>{
             exec: (editor: Jodit, image: Node) => {
                 if (image.parentNode) {
                     image.parentNode.removeChild(image);
+                    editor.events.fire('hidePopup');
                 }
             }
         },
@@ -446,10 +447,10 @@ export class inlinePopup extends Plugin{
 
             })
 
-            .on('mousedown keydown', this.onSelectionStart)
+            .on('mousedown keydown touchstart', this.onSelectionStart)
             .on([editor.ownerWindow, editor.editorWindow], 'scroll', this.hidePopup)
-            .on([editor.ownerWindow, editor.editorWindow],'mouseup keyup', this.onSelectionEnd)
-            .on([editor.ownerWindow, editor.editorWindow],'mousedown keydown', this.checkIsTargetEvent)
+            .on([editor.ownerWindow, editor.editorWindow],'mouseup keyup touchend', this.onSelectionEnd)
+            .on([editor.ownerWindow, editor.editorWindow],'mousedown keydown touchstart', this.checkIsTargetEvent)
 
     }
     beforeDestruct(editor: Jodit) {
@@ -459,8 +460,8 @@ export class inlinePopup extends Plugin{
 
         editor.events
             .off([editor.ownerWindow, editor.editorWindow], 'scroll', this.hidePopup)
-            .off([editor.ownerWindow, editor.editorWindow],'mouseup keyup', this.onSelectionEnd)
-            .off([editor.ownerWindow, editor.editorWindow],'mousedown keydown', this.checkIsTargetEvent);
+            .off([editor.ownerWindow, editor.editorWindow],'mouseup keyup touchend', this.onSelectionEnd)
+            .off([editor.ownerWindow, editor.editorWindow],'mousedown keydown touchstart', this.checkIsTargetEvent);
 
         super.destruct();
     }

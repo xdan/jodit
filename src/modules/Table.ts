@@ -140,11 +140,11 @@ export class Table {
      */
     static appendRow(table: HTMLTableElement, line:false|HTMLTableRowElement = false, after = true) {
         let columnsCount: number = Table.getColumnsCount(table),
-            row: HTMLTableRowElement = <HTMLTableRowElement>Dom.create('tr', '', table.ownerDocument),
+            row: HTMLTableRowElement = table.ownerDocument.createElement('tr'),
             j: number;
 
         for (j = 0; j < columnsCount; j += 1) {
-            row.appendChild(Dom.create('td', '', table.ownerDocument))
+            row.appendChild(table.ownerDocument.createElement('td'))
         }
 
         if (after && line && line.nextSibling) {
@@ -218,7 +218,7 @@ export class Table {
         }
 
         for (i = 0; i < box.length; i += 1) {
-            const cell: HTMLTableCellElement = <HTMLTableCellElement>Dom.create('td', '', table.ownerDocument);
+            const cell: HTMLTableCellElement = table.ownerDocument.createElement('td');
             const td: HTMLTableCellElement = box[i][j];
             let added: boolean = false;
             if (after) {
@@ -515,9 +515,9 @@ export class Table {
         const __marked: HTMLTableCellElement[] = [];
 
         Table.getAllSelectedCells(table).forEach((cell: HTMLTableCellElement) => {
-            td = <HTMLTableCellElement>Dom.create('td', '', table.ownerDocument);
-            td.appendChild(Dom.create('br', '', table.ownerDocument));
-            tr = <HTMLTableRowElement>Dom.create('tr', '', table.ownerDocument);
+            td = table.ownerDocument.createElement('td');
+            td.appendChild(table.ownerDocument.createElement('br'));
+            tr = table.ownerDocument.createElement('tr');
 
             coord = Table.formalCoordinate(table, cell);
 
@@ -580,8 +580,8 @@ export class Table {
                 Table.__mark(cell, 'colspan', cell.colSpan - 1, __marked);
             }
 
-            td = <HTMLTableCellElement>Dom.create('td', '', table.ownerDocument);
-            td.appendChild(Dom.create('br', '',  table.ownerDocument));
+            td = table.ownerDocument.createElement('td');
+            td.appendChild(table.ownerDocument.createElement('br'));
 
             if (cell.rowSpan > 1) {
                 Table.__mark(td, 'rowspan', cell.rowSpan, __marked);

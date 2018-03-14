@@ -87,7 +87,7 @@ export function tableKeyboardNavigation(editor: Jodit) {
 
         if (next) {
             if (!next.firstChild) {
-                let first: Node = Dom.create('br', '', editor.editorDocument);
+                let first: Node = editor.editorDocument.createElement('br');
                 next.appendChild(first);
                 editor.selection.setCursorBefore(first);
             } else {

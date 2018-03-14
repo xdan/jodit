@@ -124,7 +124,7 @@ Config.prototype.controls.link = <ControlType> {
             event.preventDefault();
             editor.selection.restore(selInfo);
 
-            let a: HTMLAnchorElement = <HTMLAnchorElement>current || <HTMLAnchorElement>Dom.create('a', '', editor.editorDocument);
+            let a: HTMLAnchorElement = <HTMLAnchorElement>current || editor.editorDocument.createElement('a');
 
             if (!val(form, 'input[name=url]')) {
                 (<HTMLInputElement>form.querySelector('input[name=url]')).focus();
@@ -215,9 +215,10 @@ export function link(jodit: Jodit) {
                 }
                 if (node && node.nodeName === 'A') {
                     if ((<HTMLElement>node).innerHTML === (<HTMLElement>node).innerText) {
-                        newtag = Dom.create('text', (<HTMLElement>node).innerText, jodit.editorDocument);
+                        newtag = jodit.editorDocument.createTextNode((<HTMLElement>node).innerHTML);
                     } else {
-                        newtag = Dom.create('span', (<HTMLElement>node).innerHTML, jodit.editorDocument);
+                        newtag = jodit.editorDocument.createElement('span');
+                        (<HTMLElement>newtag).innerHTML = (<HTMLElement>node).innerHTML;
                     }
 
                     if (node.parentNode) {

@@ -959,7 +959,9 @@ export class Select extends Component{
             }
 
             if (nodeName.toUpperCase() === defaultTag || !clearStyle) {
-                const node: Node = Dom.create(nodeName, consts.INVISIBLE_SPACE, this.jodit.editorDocument);
+                const node: Node = this.jodit.editorDocument.createElement(nodeName);
+                node.appendChild(this.jodit.editorDocument.createTextNode(consts.INVISIBLE_SPACE));
+
                 this.insertNode(node, false, false);
                 if (nodeName.toUpperCase() === defaultTag && cssRules) {
                     css(<HTMLElement>node, cssRules);

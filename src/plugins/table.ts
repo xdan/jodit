@@ -400,7 +400,7 @@ export class TableProcessor extends Component{
                 const cell: HTMLTableCellElement = <HTMLTableCellElement>Dom.up(<HTMLElement>event.target, TableProcessor.isCell, table);
                 if (cell && cell instanceof (<any>this.jodit.editorWindow).HTMLElement) {
                     if (!cell.firstChild) {
-                        cell.appendChild(Dom.create('br', '', this.jodit.editorDocument))
+                        cell.appendChild(this.jodit.editorDocument.createElement('br'))
                     }
 
                     start = cell;

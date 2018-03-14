@@ -10,7 +10,6 @@ import {Ajax} from './Ajax';
 import {Config} from '../Config'
 import {browser, extend, isPlainObject} from "./Helpers";
 import {TEXT_PLAIN} from "../constants";
-import {Dom} from "./Dom";
 import {Select} from "./Selection";
 
 export type UploaderData = {
@@ -417,7 +416,7 @@ export class Uploader {
 
                 if (browser('ff')) {
                     if (!e.clipboardData.types.length && e.clipboardData.types[0] !== TEXT_PLAIN) {
-                        div = <HTMLDivElement>Dom.create('div', '', this.jodit.editorDocument);
+                        div = this.jodit.editorDocument.createElement('div');
                         this.selection.insertNode(div);
                         div.focus();
                         setTimeout(() => {

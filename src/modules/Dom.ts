@@ -54,7 +54,7 @@ export class Dom {
         } while(needFindNext);
 
 
-        const wrapper = typeof tag === 'string' ? Dom.create(tag, '', editor.editorDocument) : tag;
+        const wrapper = typeof tag === 'string' ? editor.editorDocument.createElement(tag) : tag;
 
         if (first.parentNode) {
             first.parentNode.insertBefore(wrapper, first);
@@ -84,11 +84,11 @@ export class Dom {
      *
      * @return {HTMLElement}
      */
-    static wrap = (current: Node, tag: Node|string, editor: Jodit): HTMLElement | null => {
+    static wrap = (current: Node, tag: Node | string, editor: Jodit): HTMLElement | null => {
 
         const selInfo = editor.selection.save();
 
-        const wrapper = typeof tag === 'string' ? Dom.create(tag, '', editor.editorDocument) : tag;
+        const wrapper = typeof tag === 'string' ? editor.editorDocument.createElement(tag) : tag;
 
         if (!current.parentNode) {
             return null;
@@ -161,8 +161,9 @@ export class Dom {
      * var textnode = parent.node.create('text', 'Hello world');
      * var div = parent.node.create('div', '<img src="test.jpg">');
      * ```
+     * @deprecated
      */
-    static create(nodeName: string, content: string|undefined, doc: Document) : HTMLElement|Text {
+    static create(nodeName: string, content: string|undefined, doc: Document) : HTMLElement | Text {
         let newnode: HTMLElement|Text;
         nodeName = nodeName.toLowerCase();
 
@@ -192,8 +193,8 @@ export class Dom {
      * Jodit.modules.Dom.replace(parent.editor.getElementsByTagName('span')[0], 'p'); // Replace the first <span> element to the < p >
      * ```
      */
-    static replace (elm: HTMLElement, newTagName: string|HTMLElement, withAttributes = false, notMoveContent = false, doc: Document): HTMLElement {
-        const tag: HTMLElement = typeof newTagName === 'string' ? <HTMLElement>Dom.create(newTagName, '', doc) : newTagName;
+    static replace (elm: HTMLElement, newTagName: string | HTMLElement, withAttributes = false, notMoveContent = false, doc: Document): HTMLElement {
+        const tag: HTMLElement = typeof newTagName === 'string' ? doc.createElement(newTagName) : newTagName;
 
         if (!notMoveContent) {
             while (elm.firstChild) {

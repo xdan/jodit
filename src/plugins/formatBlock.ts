@@ -125,7 +125,8 @@ export function formatBlock(editor: Jodit) {
         });
 
         if (!work) {
-            let currentBox: HTMLElement = <HTMLElement>Dom.create(third, consts.INVISIBLE_SPACE, editor.editorDocument);
+            let currentBox: HTMLElement = editor.editorDocument.createElement(third);
+            currentBox.innerHTML = consts.INVISIBLE_SPACE;
             editor.selection.insertNode(currentBox, false);
             editor.selection.setCursorIn(currentBox);
         }

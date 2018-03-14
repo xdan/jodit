@@ -64,7 +64,7 @@ describe('Selection Module Tests', function() {
                     range.collapse(true);
                     editor.selection.selectRange(range);
 
-                    expect(editor.selection.current(false)).to.be.equal(editor.editor.firstChild)// h1
+                    expect([editor.editor.firstChild, editor.editor.firstChild.firstChild]).to.be.include(editor.selection.current(false))// h1
                 });
             });
         });
