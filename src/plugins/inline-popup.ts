@@ -423,7 +423,7 @@ export class inlinePopup extends Plugin{
 
     afterInit(editor: Jodit) {
         editor.events
-            .on(this.target,'mousedown', (e: MouseEvent) => {
+            .on(this.target,'mousedown keydown touchstart', (e: MouseEvent) => {
                 e.stopPropagation();
             })
             .on('beforeOpenPopup hidePopup', this.hidePopup)
