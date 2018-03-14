@@ -98,11 +98,8 @@ export function addNewLine(editor: Jodit) {
                 .on(line, 'mousemove', (e: MouseEvent) => {
                     e.stopPropagation();
                 })
-                .on(span, 'mousedown touchstart', (e: MouseEvent) => {
-                    const p: HTMLElement = editor.editorDocument.createElement(editor.options.enter),
-                        helper_node: Node = editor.editorDocument.createTextNode(consts.INVISIBLE_SPACE);
-
-                    p.appendChild(helper_node);
+                .on(line, 'mousedown touchstart', (e: MouseEvent) => {
+                    const p: HTMLElement = editor.editorDocument.createElement(editor.options.enter);
 
                     if (preview && current && current.parentNode) {
                         current.parentNode.insertBefore(p, current);
@@ -117,7 +114,7 @@ export function addNewLine(editor: Jodit) {
                     e.preventDefault();
                 })
         })
-        .on('change afterInit afterSetMode', debounce(() => {
+        .on('afterInit', () => {
             editor.events
                 .on(editor.editor, 'scroll', () => {
                     hideForce();
@@ -129,6 +126,25 @@ export function addNewLine(editor: Jodit) {
                 })
                 .on(line, 'mouseleave', () => {
                     lineInFocus = false;
+                })
+                .on(editor.editor, 'dblclick', (e: MouseEvent) => {
+                    let currentElement: HTMLElement = <HTMLElement>editor.editorDocument.elementFromPoint(e.pageX - editor.editorWindow.pageXOffset, e.pageY - editor.editorWindow.pageYOffset);
+                    if (currentElement === editor.editor) {
+                        const editorBound: Bound = offset(editor.editor, editor, editor.editorDocument);
+                        let top: number = (e.pageY - editor.editorWindow.pageYOffset);
+                        const p: HTMLElement = editor.editorDocument.createElement(editor.options.enter);
+
+                        if (Math.abs(top - editorBound.top) < Math.abs(top - (editorBound.height + editorBound.top)) && editor.editor.firstChild) {
+                            editor.editor.insertBefore(p, editor.editor.firstChild);
+                        } else {
+                            editor.editor.appendChild(p);
+                        }
+
+                        editor.selection.setCursorIn(p);
+                        editor.setEditorValue();
+                        hideForce();
+                        e.preventDefault();
+                    }
                 })
                 .on(editor.editor, 'mousemove', debounce((e: MouseEvent) => {
                     let currentElement: HTMLElement = <HTMLElement>editor.editorDocument.elementFromPoint(e.pageX - editor.editorWindow.pageXOffset, e.pageY - editor.editorWindow.pageYOffset);
@@ -187,5 +203,5 @@ export function addNewLine(editor: Jodit) {
 
                 }, editor.options.observer.timeout));
 
-        }, editor.options.observer.timeout));
+        });
 }
