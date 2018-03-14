@@ -7,7 +7,7 @@
 import {Jodit} from '../Jodit';
 import {Config} from '../Config'
 import * as consts from '../constants';
-import {$$, appendScript, debounce, dom} from '../modules/Helpers';
+import {$$, appendScript, css, debounce, dom} from '../modules/Helpers';
 import {markerInfo} from "../modules/Selection";
 import {Component} from "../modules/Component";
 import {ControlType} from "../modules/ToolbarCollection";
@@ -205,6 +205,9 @@ export class source extends Component {
             });
 
         editor.events
+            .on('setMinHeight', (minHeightD: number) => {
+                this.mirror && css(this.mirror, 'minHeight', minHeightD);
+            })
             .on('insertHTML', (html: string): void | false => {
                 if (!editor.options.readonly && !this.jodit.isEditorMode()) {
                     this.insertHTML(html);

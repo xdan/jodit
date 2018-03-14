@@ -85,7 +85,8 @@ export function size(editor: Jodit) {
 
         [editor.workplace, editor.iframe, editor.editor].map(elm => {
             let minHeightD : number = elm === editor.editor ? minHeight - 2 : minHeight; // borders
-            elm && css(<HTMLElement>elm, 'minHeight', minHeightD)
+            elm && css(<HTMLElement>elm, 'minHeight', minHeightD);
+            editor.events.fire('setMinHeight', minHeightD);
         });
     };
 

@@ -11,7 +11,7 @@ import {Uploader} from './modules/Uploader';
 import {Dom} from './modules/Dom';
 import {EventsNative} from './modules/EventsNative';
 import * as consts from './constants';
-import {extend, inArray, dom, sprintf, defaultLanguage, debounce, asArray, splitArray} from './modules/Helpers';
+import {extend, inArray, dom, sprintf, defaultLanguage, debounce, asArray, splitArray, isIE} from './modules/Helpers';
 import * as helper from './modules/Helpers';
 import {Config} from "./Config";
 import {ToolbarCollection} from "./modules/ToolbarCollection";
@@ -296,18 +296,26 @@ export class Jodit extends Component {
         Jodit.instances[this.id] = this;
 
         // if enter plugin not installed
-        try {
-            this.editorDocument.execCommand("defaultParagraphSeparator", false, this.options.enter);
-        } catch (ignore) {
-            // continue regardless of error
-        }
+        // try {
+        //     this.editorDocument.execCommand("defaultParagraphSeparator", false, this.options.enter.toLowerCase());
+        // } catch (ignore) {
+        //     // continue regardless of error
+        // }
 
         // fix for native resizing
         try {
             this.editorDocument.execCommand('enableObjectResizing', false, false);
-            this.editorDocument.execCommand('enableInlineTableEditing', false, false);
         } catch (ignore) {
             // continue regardless of error
+            // For browsers in which the above method failed, we can cancel the resizing on the fly (#4208)
+            this.events.on(this.editorWindow, 'resizestart mscontrolselect', (evt: Event) => {
+                evt.preventDefault();
+            } );
+        }
+
+        try {
+            this.editorDocument.execCommand('enableInlineTableEditing', false, false);
+        } catch (ignore) {
         }
 
         let mode: number = this.options.defaultMode;

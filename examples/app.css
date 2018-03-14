@@ -24,14 +24,14 @@ header,
     flex: 1 0 auto;
 }
 
-.jodit_wysiwyg{
-    color: #000;
-    padding: 10px;
-    overflow-x: auto;
-    color: #000;
-    padding: 10px;
-    min-height: 40px;
-}
+/*.jodit_wysiwyg{*/
+    /*color: #000;*/
+    /*padding: 10px;*/
+    /*overflow-x: auto;*/
+    /*color: #000;*/
+    /*padding: 10px;*/
+    /*min-height: 40px;*/
+/*}*/
 * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;

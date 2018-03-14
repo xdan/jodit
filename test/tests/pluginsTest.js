@@ -1590,7 +1590,7 @@ describe('Test plugins', function () {
                     });
                     editor.value = '<p style="color: red;" data-id="111">te<strong>stop</strong>st</p><h1>pop</h1>'.repeat(500);
                     expect(editor.value).to.be.equal('<p style="color: red;">test</p>'.repeat(500));
-                }).timeout(700);
+                }).timeout(1500);
             });
         });
     });
