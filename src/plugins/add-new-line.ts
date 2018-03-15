@@ -8,13 +8,13 @@ import {Jodit} from '../Jodit';
 import {Config} from '../Config';
 import {debounce, dom, offset} from "../modules/Helpers";
 import {ToolbarIcon} from "../modules/ToolbarCollection";
-import * as consts from '../constants';
 import {Dom} from "../modules/Dom";
 
 declare module "../Config" {
     interface Config {
         addNewLine: boolean;
         addNewLineTagsTriggers: string[];
+        addNewLineOnDBLClick: boolean;
     }
 }
 
@@ -23,6 +23,12 @@ declare module "../Config" {
  * @type {boolean}
  */
 Config.prototype.addNewLine = true;
+
+/**
+ * On dbl click on empty space of editor it add new P element
+ * @type {boolean}
+ */
+Config.prototype.addNewLineOnDBLClick = true;
 
 /**
  * Whar kind of tags it will be impact
@@ -42,7 +48,6 @@ export function addNewLine(editor: Jodit) {
     }
 
     const line: HTMLDivElement = <HTMLDivElement>dom('<div role="button" tabIndex="-1" title="' + editor.i18n("Break") + '" class="jodit-add-new-line"><span>' + ToolbarIcon.getIcon('enter') + '</span></div>', editor.ownerDocument);
-    const span: HTMLSpanElement = <HTMLSpanElement>line.querySelector('span');
     const delta = 10;
     const isMatchedTag = new RegExp('^(' + editor.options.addNewLineTagsTriggers.join('|') + ')$', 'i');
 
@@ -128,7 +133,7 @@ export function addNewLine(editor: Jodit) {
                     lineInFocus = false;
                 })
                 .on(editor.editor, 'dblclick', (e: MouseEvent) => {
-                    if (e.target === editor.editor) {
+                    if (editor.options.addNewLineOnDBLClick && e.target === editor.editor) {
                         const editorBound: Bound = offset(editor.editor, editor, editor.editorDocument);
                         let top: number = (e.pageY - editor.editorWindow.pageYOffset);
                         const p: HTMLElement = editor.editorDocument.createElement(editor.options.enter);

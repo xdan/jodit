@@ -990,7 +990,7 @@ export class Jodit extends Component {
         const debug: boolean = this.options !== undefined && this.options.debugLanguage;
 
         let store,
-            parse = (value: string): string => sprintf.apply(this, [value].concat(<string[]>params)),
+            parse = (value: string): string => params.length ? sprintf.apply(this, [value].concat(<string[]>params)) : value,
             default_language: string = Jodit.defaultOptions.language === 'auto' ? defaultLanguage(Jodit.defaultOptions.language) : Jodit.defaultOptions.language,
             language: string = defaultLanguage(this.options ? this.options.language : default_language);
 
@@ -1015,17 +1015,13 @@ export class Jodit extends Component {
             return parse((<any>this.options.i18n)[language][key]);
         }
 
-
-        if (debug && store[key] === undefined) {
-            console.warn(`In ${language} not exists "${key}"`);
+        if (typeof store[key] === 'string' && store[key]) {
+            return parse(store[key]);
         }
 
         if (debug) {
+            console.warn(`In ${language} not exists "${key}"`);
             return '{' + key + '}';
-        }
-
-        if (typeof store[key] === 'string' && store[key]) {
-            return parse(store[key]);
         }
 
         if (typeof Jodit.lang.en[key] === 'string' && Jodit.lang.en[key]) {

@@ -77,6 +77,8 @@ export class pasteStorage extends Plugin {
             return;
         }
 
+        this.dialog || this.createDialog();
+
         this.listBox.innerHTML = '';
         this.previewBox.innerHTML = '';
 
@@ -107,13 +109,12 @@ export class pasteStorage extends Plugin {
     private previewBox: HTMLElement;
 
     private dialog: Dialog;
-
-    afterInit() {
+    private createDialog() {
         this.dialog = new Dialog(this.jodit);
 
         const pasteButton: HTMLAnchorElement = <HTMLAnchorElement>dom(
             '<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
-                '<span>' + this.jodit.i18n('Paste') + '</span>' +
+            '<span>' + this.jodit.i18n('Paste') + '</span>' +
             '</a>',
             this.jodit.ownerDocument
         );
@@ -122,7 +123,7 @@ export class pasteStorage extends Plugin {
 
         const cancelButton: HTMLAnchorElement = <HTMLAnchorElement>dom(
             '<a href="javascript:void(0)" style="float:right; margin-right: 10px;" class="jodit_button">' +
-                '<span>' + this.jodit.i18n('Cancel') + '</span>' +
+            '<span>' + this.jodit.i18n('Cancel') + '</span>' +
             '</a>',
             this.jodit.ownerDocument
         );
@@ -153,7 +154,8 @@ export class pasteStorage extends Plugin {
 
                 return false;
             }, 'a');
-
+    }
+    afterInit() {
         this.jodit.events.on('afterCopy', (html: string) => {
             if (this.list.indexOf(html) !== -1) {
                 this.list.splice(this.list.indexOf(html), 1);

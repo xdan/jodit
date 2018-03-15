@@ -1,5 +1,12 @@
 (typeof chai !== 'undefined') && (chai.config.includeStack = true);
 
+var oldI18n = Jodit.prototype.i18n;
+var i18nkeys = [];
+Jodit.prototype.i18n = function (key) {
+    i18nkeys.indexOf(key) === -1 && key.indexOf('<svg') === -1 && i18nkeys.push(key);
+    return oldI18n.apply(this, arguments);
+};
+
 Jodit.defaultOptions.observer.timeout = 0;
 Jodit.defaultOptions.useAceEditor = false;
 Jodit.defaultOptions.language = 'en';
