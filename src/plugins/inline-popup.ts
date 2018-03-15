@@ -19,8 +19,12 @@ declare module "../Config" {
     interface Config {
         popup: {[key: string]: Array<ControlType|string>},
         toolbarInline: boolean;
+        toolbarInlineDisableFor: string | string[];
     }
 }
+
+Config.prototype.toolbarInline = true;
+Config.prototype.toolbarInlineDisableFor = [];
 
 Config.prototype.popup = <{[key: string]: Array<ControlType|string>}>{
     a: [
@@ -263,23 +267,7 @@ Config.prototype.popup = <{[key: string]: Array<ControlType|string>}>{
             },
             tooltip: 'Delete'
         }
-    ],
-    selection: [
-        'bold',
-        'underline',
-        'italic',
-        'ul',
-        'ol',
-        'outdent',
-        'indent','\n',
-        'fontsize',
-        'brush',
-        'paragraph',
-        'link',
-        'align',
-        'cut',
-        'dots',
-    ],
+    ]
 };
 
 /**
@@ -331,7 +319,7 @@ export class inlinePopup extends Plugin{
     };
     
     private showPopup = (rect: () => Bound, type: string, elm?: HTMLElement): boolean => {
-        if (!this.jodit.options.popup[type.toLowerCase()]) {
+        if (!this.jodit.options.toolbarInline || !this.jodit.options.popup[type.toLowerCase()] || this.jodit.options.toolbarInlineDisableFor.indexOf(type.toLowerCase()) !== -1) {
             return false;
         }
 
@@ -396,10 +384,10 @@ export class inlinePopup extends Plugin{
     };
 
     onChangeSelection = () => {
-        if (!this.jodit.isEditorMode()) {
+        if (!this.jodit.options.toolbarInline || !this.jodit.isEditorMode()) {
             return;
         }
-        if ((this.jodit.options.inline || this.jodit.options.toolbarInline) && this.jodit.options.popup.selection !== undefined) {
+        if (this.jodit.options.popup.selection !== undefined) {
             if (!this.jodit.selection.isCollapsed()) {
                 this.isSelectionPopup = true;
                 const sel: Selection = this.jodit.editorWindow.getSelection();

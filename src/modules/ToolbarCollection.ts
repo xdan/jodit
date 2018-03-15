@@ -6,7 +6,7 @@
 
 import {Component} from "./Component";
 import {Jodit} from "../Jodit";
-import {asArray, css, debounce, dom, each, offset} from "./Helpers";
+import {asArray, camelCase, css, debounce, dom, each, offset} from "./Helpers";
 import * as consts from "../constants";
 import {Dom} from "./Dom";
 
@@ -109,7 +109,7 @@ export type ControlType = {
      *  });
      *  ```
      */
-    list?: {[key: string]: string} | string[];
+    list?: {[key: string]: string} | string[] | string;
 
     /**
      * The command executes when the button is pressed. Allowed all {@link https://developer.mozilla.org/ru/docs/Web/API/Document/execCommand#commands} and several specific [[Jodit.execCommand]]
@@ -274,7 +274,7 @@ export  class ToolbarPopup extends ToolbarElement {
      * @param {boolean} [noStandartActions=false] No call standarts action
      */
     public open(content: any, rightAlign?: boolean, noStandartActions: boolean = false) {
-        this.jodit.events.fire('beforeOpenPopup closeAllPopups', this);
+        this.jodit.events.fire('beforeOpenPopup closeAllPopups', this, content);
         noStandartActions || this.jodit.events.on('closeAllPopups', this.close);
 
         this.container.classList.add(this.className + '-open');
@@ -333,7 +333,8 @@ export  class ToolbarList extends ToolbarPopup {
     protected doOpen(control: ControlTypeStrong) {
         this.toolbar = new ToolbarCollection(this.jodit);
 
-        each(control.list, (key: string, value: string) => {
+        const list: any = typeof control.list === 'string' ? control.list.split(/[\s,]/) : control.list;
+        each(list, (key: string, value: string) => {
             let button: ToolbarButton;
 
             if (this.jodit.options.controls[value] !== undefined) {
@@ -543,15 +544,17 @@ export  class ToolbarButton extends ToolbarElement {
         } else if (control.popup !== undefined && typeof control.popup === 'function') {
             const popup: ToolbarPopup = new ToolbarPopup(this.jodit, this.container, this.target);
 
-            popup.open(control.popup(
-                this.jodit,
-                this.target || this.jodit.selection.current(),
-                control,
-                popup.close,
-                this
-            ));
+            if (this.jodit.events.fire(camelCase('before-' + control.name + '-OpenPopup'), this.target || this.jodit.selection.current(), control, popup) !== false) {
+                popup.open(control.popup(
+                    this.jodit,
+                    this.target || this.jodit.selection.current(),
+                    control,
+                    popup.close,
+                    this
+                ));
+            }
 
-            this.jodit.events.fire('closeAllPopups', popup.container);
+            this.jodit.events.fire(camelCase('after-' + control.name + '-OpenPopup')+' closeAllPopups', popup.container);
         } else {
             if (control.command || control.name) {
                 this.jodit.execCommand(control.command || control.name, (control.args && control.args[0]) || false, (control.args && control.args[1]) || null);

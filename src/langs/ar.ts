@@ -191,4 +191,9 @@ export default {
     'Split vertical': 'انقسام عمودي',
     'Split horizontal': 'تقسيم أفقي',
     'Border': 'الحدود',
+    'Your code is similar to HTML. Keep as HTML?': 'يشبه الكود الخاص بك HTML. تبقي كما HTML؟',
+    'Paste as HTML': 'الصق ك HTML',
+    'Keep': 'احتفظ',
+    'Insert as Text': 'إدراج كنص',
+    'Insert only Text': 'إدراج النص فقط',
 };

@@ -25,6 +25,25 @@ export class Config {
         inline: {
             inline: true,
             toolbar: false,
+            toolbarInline: true,
+            popup: {
+                selection: [
+                    'bold',
+                    'underline',
+                    'italic',
+                    'ul',
+                    'ol',
+                    'outdent',
+                    'indent','\n',
+                    'fontsize',
+                    'brush',
+                    'paragraph',
+                    'link',
+                    'align',
+                    'cut',
+                    'dots',
+                ]
+            },
             showXPathInStatusbar: false,
             showCharsCounter: false,
             showWordsCounter: false,

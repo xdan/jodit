@@ -245,6 +245,7 @@ describe('Jodit Events system Tests', function() {
             simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
             expect(enable).to.be.equal(true);
         });
+
         it('Delete event handler', function () {
             var enable = false, callback = function (event) {
                 enable = true;

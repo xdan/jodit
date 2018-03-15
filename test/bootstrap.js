@@ -54,6 +54,9 @@ var removeStuff = function () {
         delete elm;
     });
     stuff.length = 0;
+    [].slice.call(document.querySelectorAll('.jodit.jodit_dialog_box.active.jodit_modal')).forEach(function (dialog) {
+        simulateEvent('close_dialog', 0, dialog)
+    });
 };
 var box = document.createElement('div');
 document.body.appendChild(box);

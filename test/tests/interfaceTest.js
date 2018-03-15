@@ -149,14 +149,65 @@ describe('Test interface', function() {
 
                 expect(popup && popup.parentNode === null).to.equal(true);
             });
-            it('Open list in toolbar', function() {
-                var editor = new Jodit(appendTestArea());
+            describe('Open list', function() {
+                it('Should Open list in toolbar', function() {
+                    var editor = new Jodit(appendTestArea(), {
+                        toolbarAdaptive: false
+                    });
 
-                simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_with_dropdownlist'))
+                    simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_with_dropdownlist.jodit_toolbar_btn-font'))
 
-                var list = editor.container.querySelector('.jodit_toolbar_list');
+                    var list = editor.container.querySelector('.jodit_toolbar_list');
 
-                expect(list && window.getComputedStyle(list).display === 'block').to.equal(true);
+                    expect(list && window.getComputedStyle(list).display === 'block' && list.parentNode !== null).to.equal(true);
+                });
+                describe('Change defaiult list', function () {
+                    it('Should change default FONT list in toolbar', function() {
+                        var editor = new Jodit(appendTestArea(), {
+                            toolbarAdaptive: false,
+                            controls: {
+                                font: {
+                                    list: {
+                                        "font-family: -apple-system,BlinkMacSystemFont,Segoe WPC,Segoe UI,HelveticaNeue-Light,Ubuntu,Droid Sans,sans-serif;": "Custom",
+                                        "Helvetica,sans-serif": "Helvetica",
+                                        "Arial,Helvetica,sans-serif": "Arial",
+                                        "Georgia,serif": "Georgia",
+                                        "Impact,Charcoal,sans-serif": "Impact",
+                                        "Tahoma,Geneva,sans-serif": "Tahoma",
+                                        "'Times New Roman',Times,serif": "Times New Roman",
+                                        "Verdana,Geneva,sans-serif": "Verdana"
+                                    }
+                                }
+                            }
+                        });
+
+                        simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_with_dropdownlist.jodit_toolbar_btn-font'))
+
+                        var list = editor.container.querySelector('.jodit_toolbar_list');
+
+                        expect(list && window.getComputedStyle(list).display === 'block' && list.parentNode !== null).to.equal(true);
+
+                        expect(list.innerText.match('Custom')).to.be.not.equal(null);
+
+                    });
+                    it('Should change default FONT size list in toolbar', function() {
+                        var editor = new Jodit(appendTestArea(), {
+                            toolbarAdaptive: false,
+                            controls: {
+                                fontsize: {
+                                    list: "8,9,10",
+                                }
+                            }
+                        });
+
+                        simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_with_dropdownlist.jodit_toolbar_btn-fontsize'))
+
+                        var list = editor.container.querySelector('.jodit_toolbar_list');
+
+                        expect(list.getElementsByTagName('li').length).to.be.equal(3);
+
+                    });
+                });
             });
             it('Open and close list after clicking in another place', function() {
                 var editor = new Jodit(appendTestArea());
@@ -370,7 +421,26 @@ describe('Test interface', function() {
             });
             describe('Open LINK insert dialog and insert new link', function() {
                 it('Should insert new link', function() {
+                    var popup_opened = 0;
                     var editor = new Jodit(appendTestArea(), {
+                        events: {
+                            /**
+                             * @param {Node} target
+                             * @param {ControlType} control
+                             * @param {ToolbarPopup} popup
+                             * @return false | undefined - if return false - popup will not be shown
+                             */
+                            beforeLinkOpenPopup: function (target, control, popup) {
+                                popup_opened+=1;
+                            },
+                            /**
+                             *
+                             * @param {HTMLElement} popup_container
+                             */
+                            afterLinkOpenPopup: function (popup_container) {
+                                popup_opened+=1;
+                            },
+                        },
                         observer: {
                             timeout: 0
                         }
@@ -383,6 +453,7 @@ describe('Test interface', function() {
 
                     var list = editor.container.querySelector('.jodit_toolbar_popup');
 
+                    expect(popup_opened).to.be.equal(2);
                     expect(editor.ownerWindow.getComputedStyle(list).display).to.equal('block');
                     expect(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_unlink_button').style.display).to.equal('none');
 

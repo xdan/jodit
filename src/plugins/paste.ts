@@ -51,8 +51,14 @@ export function paste(editor: Jodit) {
         div.innerHTML = html;
         return div.innerText;
     };
-    const ClearOrKeep: Function = (msg: string, title: string, callback: (yes: boolean | number) => void, clearButton: string = 'Clean', clear2Button: string = 'Insert only Text'): Dialog => {
+
+    const ClearOrKeep: Function = (msg: string, title: string, callback: (yes: boolean | number) => void, clearButton: string = 'Clean', clear2Button: string = 'Insert only Text'): Dialog | void => {
+        if (editor.events && editor.events.fire('beforeOpenPasteDialog', msg, title, callback, clearButton, clear2Button) === false) {
+            return;
+        }
+
         const dialog: Dialog = Confirm(`<div style="word-break: normal; white-space: normal">${msg}</div>`, title, callback);
+        dialog.dialogbox.setAttribute('data-editor_id', editor.id);
 
         const keep: HTMLAnchorElement  = <HTMLAnchorElement>dom(
             '<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
@@ -106,6 +112,8 @@ export function paste(editor: Jodit) {
             clear2Button ? clear2 : '',
             cancel,
         ]);
+
+        editor.events && editor.events.fire('afterOpenPasteDialog', dialog, msg, title, callback, clearButton, clear2Button);
 
         return dialog;
     };
