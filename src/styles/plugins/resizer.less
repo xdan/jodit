@@ -31,9 +31,29 @@
   left:0px;
   display: none;
   pointer-events: none;
-
+  font-size: 0;
   * {
     box-sizing: border-box;
+  }
+  @viewer_width: 70px;
+  @viewer_height: 24px;
+  > span {
+    position: absolute;
+    display: inline-block;
+    opacity: 0;
+    transition: opacity .2s linear;
+    left: 50%;
+    top: 50%;
+    height: @viewer_height;
+    line-height: @viewer_height;
+    font-size: 12px;
+    width: @viewer_width;
+    margin-left: -@viewer_width/2;
+    margin-top: -@viewer_height/2;
+    text-align: center;
+    overflow: visible;
+    color: @color-white;
+    background-color: @color-placeholder;
   }
   > i {
     position: absolute;

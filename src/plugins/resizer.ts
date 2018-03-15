@@ -22,7 +22,9 @@ declare module "../Config" {
         useIframeResizer: boolean;
         useTableResizer: boolean;
         useImageResizer: boolean;
+
         resizer: {
+            showSize: boolean
             min_width : number;
             min_height : number;
         }
@@ -41,11 +43,13 @@ Config.prototype.useTableResizer = true;
  */
 Config.prototype.useImageResizer = true;
 /**
- * @property{object} resizer
- * @property{int} resizer.min_width=10 The minimum width for the editable element
- * @property{int} resizer.min_height=10 The minimum height for the item being edited
+ * @property {object} resizer
+ * @property {int} resizer.min_width=10 The minimum width for the editable element
+ * @property {int} resizer.min_height=10 The minimum height for the item being edited
+ * @property {boolean} resizer.showSize=true Show size
  */
 Config.prototype.resizer = {
+    showSize: true,
     min_width : 10,
     min_height : 10
 };
@@ -78,20 +82,34 @@ export function resizer(editor: Jodit) {
 
         // timeouts = [],
 
-        resizerIsVisible: boolean = false;
+        resizerIsVisible: boolean = false,
+        timeoutSizeViewer: number = 0;
 
     const resizer: HTMLElement = dom('<div data-editor_id="' + editor.id + '" style="display:none" class="jodit_resizer">' +
             '<i class="jodit_resizer-topleft"></i>' +
             '<i class="jodit_resizer-topright"></i>' +
             '<i class="jodit_resizer-bottomright"></i>' +
             '<i class="jodit_resizer-bottomleft"></i>' +
+            '<span>100x100</span>' +
         '</div>', editor.ownerDocument),
-
+        sizeViewer: HTMLSpanElement = resizer.getElementsByTagName('span')[0],
         hideResizer = () => {
             isResizing = false;
             resizerIsVisible = false;
             currentElement = null;
             resizer.style.display = 'none';
+        },
+
+        showSizeViewer = (w: number, h: number) => {
+            if (!editor.options.resizer.showSize) {
+                return;
+            }
+            sizeViewer.style.opacity = '1';
+            sizeViewer.innerHTML = `${w} x ${h}`;
+            window.clearTimeout(timeoutSizeViewer);
+            timeoutSizeViewer = window.setTimeout(() => {
+                sizeViewer.style.opacity = '0';
+            }, 1000);
         },
 
         updateSize = () => {
@@ -126,8 +144,10 @@ export function resizer(editor: Jodit) {
             if (editor.options.readonly) {
                 return;
             }
+
             resizerIsVisible = true;
             resizer.style.display = 'block';
+
             updateSize();
         },
 
@@ -179,6 +199,7 @@ export function resizer(editor: Jodit) {
                     if (!resizeElementClicked) {
                         resizeElementClicked = true;
                         currentElement = element;
+
                         showResizer();
 
                         if (currentElement.tagName === 'IMG' && !(<HTMLImageElement>currentElement).complete) {
@@ -293,6 +314,9 @@ export function resizer(editor: Jodit) {
                         }
 
                         updateSize();
+
+                        showSizeViewer(currentElement.offsetWidth, currentElement.offsetHeight);
+
                         e.stopImmediatePropagation();
                     }
                 })

@@ -58,7 +58,7 @@ export function addNewLine(editor: Jodit) {
 
     let lineInFocus: boolean = false;
     const show = () => {
-        if (editor.options.readonly) {
+        if (editor.options.readonly || editor.isLocked()) {
             return;
         }
 
