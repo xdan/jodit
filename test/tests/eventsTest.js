@@ -805,7 +805,37 @@ describe('Jodit Events system Tests', function() {
                 expect(work).to.be.equal(1);
 
                 div.parentNode.removeChild(div)
-            })
+            });
+            describe('Add handler like live jQuery method', function () {
+                it('Should work for all feature elements', function () {
+                    var eventer = new Jodit.modules.EventsNative(),
+                        work = 0,
+                        div = document.createElement('div');
+
+                    eventer.on(div, 'click',  function () {
+                        work++;
+                    }, 'img')
+
+                    document.body.appendChild(div);
+
+                    eventer.fire(div, 'click');
+                    expect(work).to.be.equal(0);
+
+                    div.appendChild(document.createElement('a'))
+                    eventer.fire(div.querySelector('a'), 'click');
+                    expect(work).to.be.equal(0);
+
+
+                    div.querySelector('a').appendChild(document.createElement('img'))
+                    eventer.fire(div.querySelector('img'), 'click');
+                    expect(work).to.be.equal(1);
+
+                    simulateEvent('click', 0, div.querySelector('img'));
+                    expect(work).to.be.equal(2);
+
+                    div.parentNode.removeChild(div)
+                });
+            });
             it('Remove handler should remove full handler with selector options', function () {
                 var eventer = new Jodit.modules.EventsNative(),
                     work = 0,

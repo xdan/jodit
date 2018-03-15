@@ -69,7 +69,7 @@ describe('Test plugins', function () {
 
             simulateEvent('mouseup', 0, editor.editor);
 
-            expect(sortAtrtibutes(editor.getEditorValue())).to.equal('text <span style="color:rgb(255, 0, 0);font-size:11px">test</span><span style="color:rgb(255, 0, 0);font-size:11px"> post</span>');
+            expect(sortAtrtibutes(editor.getEditorValue())).to.equal('text <span style="color:#FF0000;font-size:11px">test</span><span style="color:#FF0000;font-size:11px"> post</span>');
         });
         it('Should toggle active state after double click', function () {
             getBox().style.width = 'auto';
@@ -96,7 +96,7 @@ describe('Test plugins', function () {
 
             simulateEvent('mouseup', 0, editor.editor);
 
-            expect(sortAtrtibutes(editor.getEditorValue())).to.equal('text <span style="color:rgb(255, 0, 0);font-size:11px">test</span> post');
+            expect(sortAtrtibutes(editor.getEditorValue())).to.equal('text <span style="color:#FF0000;font-size:11px">test</span> post');
         });
 
         describe('Set cursor inside em[style=background] > strong elements', function () {

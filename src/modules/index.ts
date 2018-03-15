@@ -5,6 +5,7 @@
  */
 
 export {Component} from './Component';
+export {Ajax} from './Ajax';
 export {ContextMenu} from './ContextMenu';
 export {Cookie} from './Cookie';
 export {Dialog, Alert, Confirm, Promt} from './Dialog';

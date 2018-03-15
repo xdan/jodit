@@ -209,4 +209,7 @@ export default {
     'No': 'Nein',
     'Remove': 'Entfernen',
     'Select': 'Markieren',
+    'You can only edit your own images. Download this image on the host?': 'Sie können nur Ihre eigenen Bilder bearbeiten. Laden Sie dieses Bild auf dem Host herunter?',
+    'The image has been successfully uploaded to the host!': 'Das Bild wurde erfolgreich auf den Server hochgeladen!null',
+
 };

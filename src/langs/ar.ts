@@ -196,4 +196,7 @@ export default {
     'Keep': 'احتفظ',
     'Insert as Text': 'إدراج كنص',
     'Insert only Text': 'إدراج النص فقط',
+    'You can only edit your own images. Download this image on the host?': 'يمكنك فقط تحرير صورك الخاصة. تحميل هذه الصورة على المضيف؟',
+    'The image has been successfully uploaded to the host!': 'تم تحميل الصورة بنجاح على الخادم!',
+
 };

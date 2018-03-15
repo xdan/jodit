@@ -184,7 +184,7 @@ export const trim = (value: string): string => {
  * ```
  */
 
-export const colorToHex = (color: string): string|false => {
+export const colorToHex = (color: string): string | false => {
     if (color === 'rgba(0, 0, 0, 0)' || color === '') {
         return false;
     }
@@ -342,7 +342,7 @@ export const dom = (html: string | HTMLElement, doc: Document): HTMLElement => {
  * @param {string} hex
  * @method hexToRgb
  */
-export const hexToRgb = (hex: string): RGB|null => {
+export const hexToRgb = (hex: string): RGB | null => {
     const shorthandRegex: RegExp = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
     hex = hex.replace(shorthandRegex, (m, r, g, b) => {
         return r + r + g + g + b + b;
@@ -909,12 +909,15 @@ export const sprintf = (...args: Array<string|number>): string => {
 
 export const val = (elm: HTMLInputElement|HTMLElement, selector: string, value ?: string): string => {
     const child = <HTMLInputElement>elm.querySelector(selector);
+
     if (!child) {
         return '';
     }
+
     if (value) {
         child.value = value;
     }
+
     return child.value;
 };
 

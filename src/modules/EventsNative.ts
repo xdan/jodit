@@ -147,7 +147,7 @@ export class EventsNative {
 
         if (event.type.match(/^touch/) && (<TouchEvent>event).changedTouches && (<TouchEvent>event).changedTouches.length) {
             ['clientX', 'clientY', 'pageX', 'pageY'].forEach((key: string) => {
-                Object.defineProperty(event, key, {value: (<any>(<TouchEvent>event).changedTouches[0])[key], enumerable: true});
+                Object.defineProperty(event, key, {value: (<any>(<TouchEvent>event).changedTouches[0])[key], configurable: true, enumerable: true});
             })
         }
 
@@ -160,6 +160,7 @@ export class EventsNative {
                 get: () => {
                     return (<any>this.doc.defaultView).clipboardData;
                 },
+                configurable: true,
                 enumerable: true
             });
         }
@@ -243,12 +244,16 @@ export class EventsNative {
                     while (node && node !== this) {
                         if (node.matches(<string>selector)) {
                             Object.defineProperty(event, 'target', {
-                                value: node
+                                value: node,
+                                configurable: true,
+                                enumerable: true
                             });
+
                             if (callback && callback.call(node, event) === false) {
                                 event.preventDefault();
                                 return false;
                             }
+
                             return;
                         }
                         node = <Element|null>node.parentNode;

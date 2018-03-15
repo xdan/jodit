@@ -226,7 +226,7 @@ export class Jodit extends Component {
         this.uploader = new Uploader(this);
         this.observer = new Observer(this);
 
-        this.container = <HTMLDivElement>dom('<div class="jodit_container" />', this.ownerDocument);
+        this.container = <HTMLDivElement>dom('<div contenteditable="false" class="jodit_container" />', this.ownerDocument);
 
         let buffer: null | string = null;
 
@@ -247,7 +247,7 @@ export class Jodit extends Component {
             this.container.style.zIndex = parseInt(this.options.zIndex.toString(), 10).toString();
         }
 
-        this.workplace = <HTMLDivElement>dom('<div class="jodit_workplace" />', this.ownerDocument);
+        this.workplace = <HTMLDivElement>dom('<div contenteditable="false" class="jodit_workplace" />', this.ownerDocument);
         this.progress_bar = <HTMLDivElement>dom('<div class="jodit_progress_bar"><div></div></div>', this.ownerDocument);
 
         this.toolbar = new ToolbarCollection(this);

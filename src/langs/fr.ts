@@ -197,4 +197,7 @@ export default {
     'Sort by name': 'Trier par nom',
     'Sort by size': 'Classer par taille',
     'Add folder': 'Ajouter le dossier',
+    'You can only edit your own images. Download this image on the host?': 'Vous ne pouvez éditer que vos propres images. Téléchargez cette image sur l\'hôte?',
+    'The image has been successfully uploaded to the host!': 'L\'image a été téléchargée avec succès sur le serveur!null',
+
 }

@@ -945,7 +945,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
                     editor.selection.insertNode(editor.editorDocument.createTextNode('a '));
 
-                    expect(sortAtrtibutes(editor.getEditorValue())).to.be.equal('<p style="color:rgb(255, 0, 0);text-align:right">Split </p><p style="color:rgb(255, 0, 0);text-align:right">a paragraph</p>');
+                    expect(sortAtrtibutes(editor.getEditorValue())).to.be.equal('<p style="color:#FF0000;text-align:right">Split </p><p style="color:#FF0000;text-align:right">a paragraph</p>');
                 });
             });
             describe('Enter pressed inside P element in the edge', function () {
@@ -1034,7 +1034,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 
                         expect(sortAtrtibutes(editor.getEditorValue())).to.be
-                            .equal('<p style="color:rgb(255, 0, 0);text-align:right">Split paragraph</p><p style="color:rgb(255, 0, 0);text-align:right">a </p><p>Test</p>');
+                            .equal('<p style="color:#FF0000;text-align:right">Split paragraph</p><p style="color:#FF0000;text-align:right">a </p><p>Test</p>');
                     })
                 });
             });

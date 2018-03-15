@@ -205,6 +205,6 @@ export default {
     'Replace': 'Заменить',
     'Paste': 'Вставить',
     'Choose Content to Paste': 'Выбрать контент для вставки',
-
-
+    'You can only edit your own images. Download this image on the host?': 'Вы можете редактировать только свои собственные изображения. Загрузить это изображение на ваш сервер?',
+    'The image has been successfully uploaded to the host!': 'Изображение успешно загружено на сервер!',
 };
