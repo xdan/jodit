@@ -395,7 +395,7 @@ describe('Test image', function() {
                 it('should remove image wrapper', function () {
                     var editor = new Jodit(appendTestArea());
 
-                    editor.setEditorValue('<a href="https://xdan.ru" target="_blank"><img src="https://xdsoft.net/jodit/images/artio.jpg"/></a>')
+                    editor.setEditorValue('<a href="https://xdan.ru" target="_blank"><img style="width:100px; height: 100px;" src="https://xdsoft.net/jodit/images/artio.jpg"/></a>')
                     simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
 
                     var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
@@ -411,7 +411,7 @@ describe('Test image', function() {
 
                     simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
 
-                    expect(sortAtrtibutes(editor.value)).to.be.equal('<img src="https://xdsoft.net/jodit/images/artio.jpg">');
+                    expect(sortAtrtibutes(editor.value)).to.be.equal('<img src="https://xdsoft.net/jodit/images/artio.jpg" style="height:100px;width:100px">');
 
                 });
             });
