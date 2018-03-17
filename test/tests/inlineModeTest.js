@@ -8,6 +8,7 @@ describe('Test Inline mode', function () {
                     });
 
                 expect(editor.container).to.be.not.equal(area);
+                expect(editor.container.classList.contains('jodit_inline')).to.be.true;
                 expect(editor.container.nextSibling).to.be.equal(area);
                 expect(area.style.display).to.be.equal('none');
                 expect(area.value).to.be.equal(editor.value);
@@ -27,6 +28,7 @@ describe('Test Inline mode', function () {
                 });
 
                 expect(editor.container).to.be.equal(div);
+                expect(editor.container.classList.contains('jodit_inline')).to.be.true;
                 expect(editor.container.querySelector('.jodit_workplace')).to.be.not.equal(null);
                 expect(editor.container.querySelector('.jodit_wysiwyg')).to.be.not.equal(null);
                 expect(editor.ownerWindow.getComputedStyle(div).display).to.be.equal('block');
@@ -51,6 +53,7 @@ describe('Test Inline mode', function () {
 
 
                 expect(editor.container).to.be.equal(div);
+                expect(editor.container.classList.contains('jodit_inline')).to.be.true;
                 expect(editor.container.querySelector('.jodit_workplace')).to.be.not.equal(null);
                 expect(editor.container.querySelector('.jodit_wysiwyg')).to.be.not.equal(null);
                 expect(editor.ownerWindow.getComputedStyle(div).display).to.be.equal('block');

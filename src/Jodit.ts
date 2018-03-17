@@ -236,8 +236,9 @@ export class Jodit extends Component {
                 this.element.setAttribute(this.__defaultClassesKey, this.element.className.toString());
                 buffer = this.container.innerHTML;
                 this.container.innerHTML = '';
-                this.container.classList.add('jodit_inline');
             }
+
+            this.container.classList.add('jodit_inline');
             this.container.classList.add('jodit_container');
         }
 
