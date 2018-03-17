@@ -297,7 +297,7 @@ describe('Test interface', function() {
                         });
 
                         editor.value = '<p>test</p>';
-                        editor.selection.select(editor.editor.firstChild);
+                        editor.selection.select(editor.editor.firstChild.firstChild);
 
                         var fontname = editor.container.querySelector('.jodit_toolbar_btn.jodit_with_dropdownlist.jodit_toolbar_btn-font')
                         expect(fontname).to.be.not.equal(null);
@@ -332,7 +332,7 @@ describe('Test interface', function() {
                             });
 
                             editor.value = '<p>test</p>';
-                            editor.selection.select(editor.editor.firstChild);
+                            editor.selection.select(editor.editor.firstChild.firstChild);
 
                             var fontname = editor.container.querySelector('.jodit_toolbar_btn.jodit_with_dropdownlist.jodit_toolbar_btn-font')
                             expect(fontname).to.be.not.equal(null);
