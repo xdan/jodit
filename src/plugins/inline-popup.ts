@@ -417,9 +417,11 @@ export class inlinePopup extends Plugin{
             .on('beforeOpenPopup hidePopup', this.hidePopup)
             .on('getDiffButtons.mobile', (_toolbar: ToolbarCollection) : void | string[] => {
                 if (this.toolbar === _toolbar) {
-                    return splitArray(editor.options.buttons).filter((name: string) => {
-                        return this.toolbar.getButtonsList().indexOf(name) < 0;
-                    });
+                    return splitArray(editor.options.buttons)
+                        .filter((name: string) => name !=='|' && name !== '\n')
+                        .filter((name: string) => {
+                            return this.toolbar.getButtonsList().indexOf(name) < 0;
+                        });
                 }
             })
             .on('selectionchange', this.onChangeSelection)
