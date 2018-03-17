@@ -317,10 +317,23 @@ export class inlinePopup extends Plugin{
             this.container.style.marginLeft = (-rect.width / 2) + 'px';
         }
     };
-    
+
+    private isExcludedTarget(type: string): boolean {
+        return splitArray(this.jodit.options.toolbarInlineDisableFor)
+            .map(a => a.toLowerCase())
+            .indexOf(type.toLowerCase()) !== -1
+    }
+
     private showPopup = (rect: () => Bound, type: string, elm?: HTMLElement): boolean => {
-        if (!this.jodit.options.toolbarInline || !this.jodit.options.popup[type.toLowerCase()] || this.jodit.options.toolbarInlineDisableFor.indexOf(type.toLowerCase()) !== -1) {
+        if (
+            !this.jodit.options.toolbarInline ||
+            !this.jodit.options.popup[type.toLowerCase()]
+        ) {
             return false;
+        }
+
+        if (this.isExcludedTarget(type)) {
+            return true;
         }
 
         this.isShown = true;
@@ -379,7 +392,6 @@ export class inlinePopup extends Plugin{
             if (!target || !this.showPopup(() => offset(target, this.jodit, this.jodit.editorDocument), target.nodeName, target)) {
                 this.isSelectionStarted = true;
             }
-
         }
     };
 
@@ -418,7 +430,7 @@ export class inlinePopup extends Plugin{
             .on('getDiffButtons.mobile', (_toolbar: ToolbarCollection) : void | string[] => {
                 if (this.toolbar === _toolbar) {
                     return splitArray(editor.options.buttons)
-                        .filter((name: string) => name !=='|' && name !== '\n')
+                        .filter(name => name !=='|' && name !== '\n')
                         .filter((name: string) => {
                             return this.toolbar.getButtonsList().indexOf(name) < 0;
                         });
