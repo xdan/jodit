@@ -289,6 +289,71 @@ describe('Test interface', function() {
 
                 expect(editor.getEditorValue()).to.equal('<h1>tex a ext</h1>');
             });
+            describe('FontName', function () {
+                describe('Open fontname list and select some element', function () {
+                    it('Should apply this font to current selection elements', function() {
+                        var editor = new Jodit(appendTestArea(), {
+                            toolbarAdaptive: false
+                        });
+
+                        editor.value = '<p>test</p>';
+                        editor.selection.select(editor.editor.firstChild);
+
+                        var fontname = editor.container.querySelector('.jodit_toolbar_btn.jodit_with_dropdownlist.jodit_toolbar_btn-font')
+                        expect(fontname).to.be.not.equal(null);
+
+                        function openFontnameList() {
+                           simulateEvent('mousedown', 0, fontname);
+
+                           return fontname.querySelector('.jodit_toolbar_list.jodit_toolbar_list-open > ul')
+                        }
+
+                        expect(openFontnameList()).to.be.not.equal(null);
+
+                        [].slice.call(openFontnameList().childNodes).forEach(function (font, index) {
+                            font = openFontnameList().childNodes[index];
+                            simulateEvent('mousedown', 0, font);
+                            var fontFamily = font.querySelector('span[style]').getAttribute('style');
+
+                            expect(sortAtrtibutes(editor.value)).to.be.equal(sortAtrtibutes('<p><span style="' + fontFamily + '">test</span></p>'));
+                        });
+                    });
+                    describe('Extends standart font list', function () {
+                        it('Should standart font list elements', function() {
+                            var editor = new Jodit(appendTestArea(), {
+                                toolbarAdaptive: false,
+                                controls: {
+                                    font: {
+                                        list: {
+                                            "-apple-system,BlinkMacSystemFont,\'Segoe WPC\',\'Segoe UI\',HelveticaNeue-Light,Ubuntu,\'Droid Sans\',sans-serif": "OS System Font",
+                                        }
+                                    }
+                                }
+                            });
+
+                            editor.value = '<p>test</p>';
+                            editor.selection.select(editor.editor.firstChild);
+
+                            var fontname = editor.container.querySelector('.jodit_toolbar_btn.jodit_with_dropdownlist.jodit_toolbar_btn-font')
+                            expect(fontname).to.be.not.equal(null);
+
+
+                            simulateEvent('mousedown', 0, fontname);
+
+                            var list = fontname.querySelector('.jodit_toolbar_list.jodit_toolbar_list-open > ul')
+
+
+                            expect(list).to.be.not.equal(null);
+
+                            var font = list.childNodes[list.childNodes.length - 1];
+                            simulateEvent('mousedown', 0, font);
+
+                            expect(sortAtrtibutes(editor.value)).to.be.equal(sortAtrtibutes('<p><span style="font-family:-apple-system,BlinkMacSystemFont,\'Segoe WPC\',\'Segoe UI\',HelveticaNeue-Light,Ubuntu,\'Droid Sans\',sans-serif">test</span></p>'));
+
+                        });
+                    });
+                });
+            });
             it('Open image dialog and insert image by url.', function() {
                 var editor = new Jodit(appendTestArea());
 

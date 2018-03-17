@@ -163,7 +163,7 @@ function toFixedWithoutRounding (value, precision) {
     return Math.floor(Math.floor(value * factorError + 1) / factorTruncate) / factorDecimal;
 }
 var sortStyles = function (matches) {
-    var styles = matches.split(';');
+    var styles = matches.replace(/&quot;/g, "'").split(';');
     styles = styles.map(trim).filter(function (elm) {
         return elm.length;
     }).sort(function (a, b) {
@@ -176,6 +176,11 @@ var sortStyles = function (matches) {
         if (/rgb\(/.test(keyvalue[1])) {
             keyvalue[1] = Jodit.modules.Helpers.normalizeColor(keyvalue[1]);
         }
+
+        if (/font-family/i.test(keyvalue[0])) {
+            keyvalue[1] = keyvalue[1].split(',').map(Jodit.modules.Helpers.trim).join(',');
+        }
+
         if (/%$/.test(keyvalue[1])) {
             var fl = parseFloat(keyvalue[1]),
                 nt = parseInt(keyvalue[1], 10);
