@@ -490,7 +490,7 @@ export class Select extends Component{
      *
      * @fired afterInsertImage
      */
-    insertImage(url: string|HTMLImageElement, styles: {[key: string]: string} = {}) {
+    insertImage(url: string | HTMLImageElement, styles: {[key: string]: string} = {}) {
         let dw: string;
         const image: HTMLImageElement = typeof url === 'string' ? <HTMLImageElement>dom('<img src=""/>', this.jodit.editorDocument) : <HTMLImageElement>dom(url, this.jodit.editorDocument);
 

@@ -29,46 +29,6 @@ export type UploaderAnswer = {
 type HandlerSuccess = (resp: UploaderData) => void;
 type HandlerError = (e: Error) => void;
 
-export type UploaderOptions = {
-    url: string;
-    headers?: {[key: string]: string}|null,
-    data: null|object,
-    format: string;
-
-    prepareData: (formData: FormData) => any;
-
-    isSuccess: (resp: UploaderAnswer) => boolean;
-
-    getMessage: (resp: UploaderAnswer) => string;
-
-    process: (resp: UploaderAnswer) => UploaderData;
-
-    error: (e: Error) => void;
-
-    defaultHandlerSuccess:  HandlerSuccess;
-    defaultHandlerError: HandlerError;
-}
-
-
-declare module "../Config" {
-    interface Config {
-        enableDragAndDropFileToEditor: boolean;
-        uploader: UploaderOptions
-    }
-}
-
-/**
- * Module for processing download documents and images by Drag and Drop
- *
- * @tutorial {@link http://xdsoft.net/jodit/doc/tutorial-uploader-settings.html|Uploader options and Drag and Drop files}
- * @module Uploader
- * @params {Object} parent Jodit main object
- */
-/**
- * @property {boolean} enableDragAndDropFileToEditor=true Enable drag and drop file toWYSIWYG editor
- */
-Config.prototype.enableDragAndDropFileToEditor = true;
-
 /**
  * @property {object} uploader {@link Uploader|Uploader}'s settings
  * @property {string} uploader.url Point of entry for file uploader
@@ -100,10 +60,10 @@ Config.prototype.enableDragAndDropFileToEditor = true;
  * @property {function} uploader.error Process negative situation. For example file wasn't uploaded because of file permoission
  * @property {function} uploader.defaultHandlerSuccess Default success result processor. In first param it get `uploader.process` result
  * @property {function} uploader.defaultHandlerError Default error result processor
- * @tutorial uploader-settings
+ *
  * @example
  * ```javascript
- * new Jodit('#editor', {
+ * var editor = new Jodit('#editor', {
  *     uploader: {
  *         url: 'connector/index.php?action=upload',
  *         format: 'json',
@@ -112,6 +72,9 @@ Config.prototype.enableDragAndDropFileToEditor = true;
  *         },
  *         prepareData: function (data) {
  *             data.append('id', 24); //
+ *         },
+ *         buildData: function (data) {
+ *             return {some: 'data'}
  *         },
  *         data: {
  *              csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
@@ -145,7 +108,67 @@ Config.prototype.enableDragAndDropFileToEditor = true;
  *     }
  * })
  * ```
+ * @example
+ * ```javascript
+ * var editor = new Jodit('#editor', {
+ *     uploader: {
+ *          url: 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload',
+ *          queryBuild: function (data) {
+ *              return JSON.stringify(data);
+ *          },
+ *          contentType: function () {
+ *              return 'application/json';
+ *          },
+ *          buildData: function (data) {
+ *              return {hello: 'Hello world'}
+ *          }
+ *      },
+ * });
+ * ```
  */
+export type UploaderOptions = {
+    url: string;
+    headers?: {[key: string]: string} | null,
+    data: null|object,
+    format: string;
+
+    prepareData: (this: Uploader, formData: FormData) => any;
+    buildData?: (this: Uploader, formData: any) => any;
+    queryBuild?: (this: Ajax, obj: string | {[key: string] : string | object} | FormData, prefix?: string) => string | object;
+
+    isSuccess: (this: Uploader, resp: UploaderAnswer) => boolean;
+
+    getMessage: (this: Uploader, resp: UploaderAnswer) => string;
+
+    process: (this: Uploader, resp: UploaderAnswer) => UploaderData;
+
+    error: (this: Uploader, e: Error) => void;
+
+    defaultHandlerSuccess:  HandlerSuccess;
+    defaultHandlerError: HandlerError;
+
+    contentType: (this: Uploader, requestData: any) => string | false;
+}
+
+
+declare module "../Config" {
+    interface Config {
+        enableDragAndDropFileToEditor: boolean;
+        uploader: UploaderOptions
+    }
+}
+
+/**
+ * Module for processing download documents and images by Drag and Drop
+ *
+ * @tutorial {@link http://xdsoft.net/jodit/doc/tutorial-uploader-settings.html|Uploader options and Drag and Drop files}
+ * @module Uploader
+ * @params {Object} parent Jodit main object
+ */
+/**
+ * @property {boolean} enableDragAndDropFileToEditor=true Enable drag and drop file toWYSIWYG editor
+ */
+Config.prototype.enableDragAndDropFileToEditor = true;
 
 Config.prototype.uploader = <UploaderOptions>{
     url: '',
@@ -184,6 +207,10 @@ Config.prototype.uploader = <UploaderOptions>{
 
     defaultHandlerError: function (this: Uploader, e: Error) {
         this.jodit.events.fire('errorMessage', e.message);
+    },
+
+    contentType: function (this: Uploader, requestData: any) {
+        return ((<any>this.jodit.ownerWindow).FormData !== undefined && typeof requestData !== 'string') ? false : 'application/x-www-form-urlencoded; charset=UTF-8';
     }
 };
 
@@ -214,7 +241,11 @@ export class Uploader {
         }
     }
 
-    buildData(data: FormData|{[key: string]: string}): FormData|{[key: string]: string} {
+    buildData(data: FormData | {[key: string]: string}): FormData | {[key: string]: string} {
+        if (this.options.buildData && typeof this.options.buildData === 'function') {
+            return this.options.buildData.call(this, data);
+        }
+
         if ((<any>this.jodit.ownerWindow).FormData !== undefined) {
             if (data instanceof FormData) {
                 return data;
@@ -237,7 +268,9 @@ export class Uploader {
 
     private __ajax: Ajax;
 
-    send(data: FormData|{[key: string]: string}, success: (resp: UploaderAnswer) => void) {
+    send(data: FormData | {[key: string]: string}, success: (resp: UploaderAnswer) => void) {
+        const requestData = this.buildData(data);
+
         this.__ajax = new Ajax(this.jodit || this, {
             xhr: () => {
                 let xhr: XMLHttpRequest = new XMLHttpRequest();
@@ -261,11 +294,11 @@ export class Uploader {
                 return xhr;
             },
             method: 'POST',
-            data: this.buildData(data),
+            data: requestData,
             url: this.options.url,
             headers: this.options.headers,
-
-            contentType: ((<any>this.jodit.ownerWindow).FormData !== undefined && typeof data !== 'string') ? false : 'application/x-www-form-urlencoded; charset=UTF-8',
+            queryBuild: this.options.queryBuild,
+            contentType: this.options.contentType.call(this, requestData),
             dataType: this.options.format  || 'json',
         });
 
@@ -307,7 +340,6 @@ export class Uploader {
             }
         }
 
-        uploader.options.prepareData(form);
 
         if (process) {
             process(form);
@@ -320,6 +352,8 @@ export class Uploader {
             }
         }
 
+        uploader.options.prepareData.call(this, form);
+
         uploader.send(form, (resp: UploaderAnswer) => {
             if (this.options.isSuccess.call(uploader, resp)) {
                 if (typeof (handlerSuccess || uploader.options.defaultHandlerSuccess) === 'function') {
@@ -327,7 +361,7 @@ export class Uploader {
                 }
             } else {
                 if (typeof (handlerError || uploader.options.defaultHandlerError)) {
-                    (<HandlerError>(handlerError || uploader.options.defaultHandlerError)).call(uploader, new Error(uploader.options.getMessage(resp)));
+                    (<HandlerError>(handlerError || uploader.options.defaultHandlerError)).call(uploader, new Error(uploader.options.getMessage.call(uploader, resp)));
                     return;
                 }
             }
@@ -511,13 +545,13 @@ export class Uploader {
         }, (resp: UploaderAnswer) => {
             if (uploader.options.isSuccess.call(uploader, resp)) {
                 if (typeof handlerSuccess === 'function') {
-                    handlerSuccess.call(uploader, this.options.process(resp));
+                    handlerSuccess.call(uploader, this.options.process.call(this, resp));
                 } else {
-                    this.options.defaultHandlerSuccess.call(uploader, this.options.process(resp));
+                    this.options.defaultHandlerSuccess.call(uploader, this.options.process.call(this, resp));
                 }
             } else {
                 if (typeof (handlerError || uploader.options.defaultHandlerError) === 'function') {
-                    (handlerError || this.options.defaultHandlerError).call(uploader, new Error(uploader.options.getMessage(resp)));
+                    (handlerError || this.options.defaultHandlerError).call(uploader, new Error(uploader.options.getMessage.call(this, resp)));
                     return;
                 }
             }

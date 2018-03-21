@@ -32,11 +32,13 @@ type AjaxOptions  = {
 
     data: {[key: string]: string}|null|FormData
 
-    contentType?: string|false;
+    contentType?: string | false;
 
     headers?: {[key: string]: string}|null
 
     withCredentials?: boolean;
+
+    queryBuild?: (this: Ajax, obj: string | {[key: string] : string | object} | FormData, prefix?: string) => string | object;
 
     xhr?: () => XMLHttpRequest;
 }
@@ -70,7 +72,10 @@ Config.prototype.defaultAjaxOptions = <AjaxOptions>{
 };
 
 export class Ajax {
-    private __buildParams (obj: string | {[key: string] : string | object} | FormData, prefix?: string): string | FormData{
+    private __buildParams (obj: string | {[key: string] : string | object} | FormData, prefix?: string): string | FormData {
+        if (this.options.queryBuild && typeof this.options.queryBuild === 'function') {
+            return this.options.queryBuild.call(this, obj, prefix);
+        }
         if (typeof obj === 'string' || ((<any>this.jodit.ownerWindow)['FormData'] && obj instanceof (<any>this.jodit.ownerWindow)['FormData'])) {
             return <string | FormData>obj;
         }
@@ -103,6 +108,7 @@ export class Ajax {
 
     options: AjaxOptions;
     jodit: IViewBased;
+
     constructor(editor: IViewBased, options: AjaxOptions) {
         this.jodit = editor;
         this.options = <AjaxOptions>extend(true, {}, Config.prototype.defaultAjaxOptions, options);
