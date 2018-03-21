@@ -540,6 +540,10 @@ export  class ToolbarButton extends ToolbarElement {
                 this.parentToolbar.immedateCheckActiveButtons();
             }
 
+            /**
+             * Fired after calling `button.exec` function
+             * @event afterExec
+             */
             this.jodit.events.fire('closeAllPopups afterExec');
         } else if (control.popup !== undefined && typeof control.popup === 'function') {
             const popup: ToolbarPopup = new ToolbarPopup(this.jodit, this.container, this.target);
@@ -553,7 +557,15 @@ export  class ToolbarButton extends ToolbarElement {
                     this
                 ));
             }
-
+            /**
+             * Fired after popup was opened for some control button
+             * @event after{CONTROLNAME}OpenPopup
+             */
+            /**
+             * Close all opened popups
+             *
+             * @event closeAllPopups
+             */
             this.jodit.events.fire(camelCase('after-' + control.name + '-OpenPopup')+' closeAllPopups', popup.container);
         } else {
             if (control.command || control.name) {

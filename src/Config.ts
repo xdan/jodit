@@ -139,7 +139,7 @@ export class Config {
      * </style>
      * ```
      */
-    editorCssClass: false|string = false;
+    editorCssClass: false | string = false;
 
     /**
      * After all changes in editors for textarea will call change trigger
@@ -602,6 +602,10 @@ Config.prototype.controls = {
 
             if (mywindow) {
                 if (editor.options.iframe) {
+                    /**
+                     * @event generateDocumentStructure.iframe
+                     * @property {Document} doc Iframe document
+                     */
                     editor.events.fire('generateDocumentStructure.iframe', mywindow.document);
                     mywindow.document.body.innerHTML = editor.getEditorValue();
                 } else {

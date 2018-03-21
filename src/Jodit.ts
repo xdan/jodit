@@ -771,6 +771,7 @@ export class Jodit extends Component {
 
         let result: any;
         command = command.toLowerCase();
+
         /**
          * Called before any command
          * @event beforeCommand
@@ -783,14 +784,13 @@ export class Jodit extends Component {
          *  if (command === 'justifyCenter') {
          *      var p = parent.getDocument().createElement('p')
          *      parent.selection.insertNode(p)
-         *      parent.selection.moveCursorTo(p);
+         *      parent.selection.setCursorIn(p);
          *      p.style.textAlign = 'justyfy';
          *      return false; // break execute native command
          *  }
          * })
          * ```
          */
-
         result = this.events.fire('beforeCommand', command, second, third);
 
         if (result !== false) {
@@ -862,6 +862,11 @@ export class Jodit extends Component {
     };
 
     mode: number = consts.MODE_WYSIWYG;
+
+    /**
+     * Return current editor mode: Jodit.MODE_WYSIWYG, Jodit.MODE_SOURCE or Jodit.MODE_SPLIT
+     * @return {number}
+     */
     getMode(): number {
         return this.mode;
     }

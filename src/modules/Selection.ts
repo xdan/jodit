@@ -755,10 +755,21 @@ export class Select extends Component{
         return last;
     }
 
+    /**
+     * Set range selection
+     *
+     * @param range
+     * @fires changeSelection
+     */
     selectRange(range: Range) {
         const sel: Selection = this.jodit.editorWindow.getSelection();
         sel.removeAllRanges();
         sel.addRange(range);
+        /**
+         * Fired after change selection
+         *
+         * @event changeSelection
+         */
         this.jodit.events.fire('changeSelection');
     }
 

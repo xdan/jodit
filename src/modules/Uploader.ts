@@ -140,7 +140,7 @@ Config.prototype.enableDragAndDropFileToEditor = true;
  *            }
  *         },
  *         error: function (e) {
- *             this.events.fire('{@link event:errorMessage|errorMessage}', [e.getMessage(), 'error', 4000])
+ *             this.events.fire('errorMessage', [e.getMessage(), 'error', 4000])
  *         }
  *     }
  * })

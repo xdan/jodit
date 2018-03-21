@@ -193,7 +193,7 @@ export function link(jodit: Jodit) {
                 a.innerText = html;
                 if (jodit.options.link.openLinkDialogAfterPost) {
                     setTimeout(() => {
-                        //parent.selection.moveCursorTo(a, true);
+                        //parent.selection.setCursorIn(a, true);
                         //editor.selection.selectNodes(Array.prototype.slice.call(a.childNodes));
                     }, 100);
                 }

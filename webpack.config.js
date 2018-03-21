@@ -1,5 +1,8 @@
 const path = require('path');
-const debug = process.env.NODE_ENV !== "production";
+const debug = !process.env.NODE_ENV  || !process.env.NODE_ENV.match(/production/);
+const production = debug ? 'none' : process.env.NODE_ENV;
+
+
 const webpack = require('webpack');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
@@ -69,7 +72,7 @@ module.exports = {
 
     output: {
         path: path.join(__dirname, 'build'),
-        filename: 'jodit.min.js',
+        filename: production  !== 'production-no-uflify' ? 'jodit.min.js' : 'jodit.js',
         publicPath: '/build/',
         libraryTarget: "umd",
         // name of the global var: "Jodit"
@@ -128,29 +131,6 @@ module.exports = {
             'process.env': {
                 'NODE_ENV': '"production"'
             }
-        }),
-        new webpack.optimize.UglifyJsPlugin({
-            ie8: false,
-            mangle: { reserved: ['Jodit'] },
-            compress: {
-                if_return: true,
-                unused: true,
-                booleans: true,
-                properties: true,
-                dead_code: true,
-                warnings: false, // Suppress uglification warnings
-                pure_getters: true,
-                unsafe: true,
-                unsafe_comps: true,
-                screw_ie8: true,
-                drop_console: true,
-                passes: 2
-            },
-            output: {
-                comments: false,
-                beautify: false,
-            },
-            minimize: true
         })
     ],
     node: {
@@ -170,6 +150,36 @@ module.exports.plugins.push(new ExtractTextPlugin({
 }));
 
 if (!debug) {
+    switch (production) {
+        case 'production':
+            module.exports.plugins.push(
+                new webpack.optimize.UglifyJsPlugin({
+                    ie8: false,
+                    mangle: { reserved: ['Jodit'] },
+                    compress: {
+                        if_return: true,
+                        unused: true,
+                        booleans: true,
+                        properties: true,
+                        dead_code: true,
+                        warnings: false, // Suppress uglification warnings
+                        pure_getters: true,
+                        unsafe: true,
+                        unsafe_comps: true,
+                        screw_ie8: true,
+                        drop_console: true,
+                        passes: 2
+                    },
+                    output: {
+                        comments: false,
+                        beautify: false,
+                    },
+                    minimize: true
+                })
+            );
+            break;
+    }
+
     module.exports.plugins.push(
         new OptimizeCssAssetsPlugin({
             assetNameRegExp: /\.min\.css$/,

@@ -277,7 +277,7 @@ export class Table {
      *
      * @param {HTMLTableElement} table
      * @param {Array.<HTMLTableCellElement>} selectedCells
-     * @return {[[left, top], [right, bottom]]}
+     * @return {number[][]}
      */
     static getSelectedBound (table: HTMLTableElement, selectedCells: HTMLTableCellElement[]): number[][] {
         const bound = [[Infinity, Infinity], [0, 0]];
