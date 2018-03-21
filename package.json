@@ -1,6 +1,6 @@
 {
   "name": "jodit",
-  "version": "3.1.73",
+  "version": "3.1.74",
   "description": "Jodit is awesome and usefully wysiwyg editor with filebrowser",
   "main": "build/jodit.min.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "build": "rm -f build/* && cross-env NODE_ENV=production webpack --progress  && npm run build-no-uglify",
     "build-no-uglify": "cross-env NODE_ENV=production-no-uflify webpack --progress",
     "test": "karma start --browsers Firefox karma.conf.js --single-run",
-    "jodit": "cd ../jodit-angular/ && npm run newversion && cd ../jodit-joomla && npm run newversion"
+    "jodit": "cd ../jodit-angular/ && npm run newversion && cd ../jodit-joomla && npm run newversion && cd ../jodit-docs && npm run newversion"
   },
   "repository": {
     "type": "git",
