@@ -439,6 +439,7 @@ export class Select extends Component{
             lastChild: Node|null,
             lastEditorElement: Node|null;
 
+
         if (!this.isFocused() && this.jodit.isEditorMode()) {
             this.focus();
         }
@@ -611,10 +612,11 @@ export class Select extends Component{
             range.insertNode(fakeNode);
             range.selectNode(fakeNode);
         } else {
-            range.setStart(node, node.nodeValue !== null ? node.nodeValue.length : 0);
+            range.setEnd(node, node.nodeValue !== null ? node.nodeValue.length : 0);
         }
 
         range.collapse(false);
+
         this.selectRange(range);
 
         return fakeNode;

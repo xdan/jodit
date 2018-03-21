@@ -24,12 +24,7 @@ import {localStorageProvider, Storage} from "./Storage";
 /**
  * The module creates a web browser dialog box . In a Web browser , you can select an image , remove , drag it . Upload new
  *
- * @tutorial {@link http://xdsoft.net/jodit/doc/tutorial-filebrowser-options.html|FileBrowser options}
- * @tutorial {@link http://xdsoft.net/jodit/doc/tutorial-integrate-filebrowser-in-joomla.html|Integrate filebrowser in Joomla CMS}
- * @tutorial {@link http://xdsoft.net/jodit/doc/tutorial-elfinder-integration.html|Integration with ElFinder}
- * @tutorial {@link http://xdsoft.net/jodit/doc/tutorial-uploader-settings.html|Uploader options and Drag and Drop files}
  * @module FileBrowser
- * @see {@link Dialog|Dialog}
  * @params {Object} parent Jodit main object
  */
 
@@ -62,7 +57,7 @@ type FileBrowserAnswer = {
         path: string;
         name: string;
         source: string;
-        permissions?: Permissions|null;
+        permissions?: Permissions | null;
     }
 };
 

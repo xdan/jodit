@@ -354,14 +354,21 @@ export function paste(editor: Jodit) {
                     } else {
                         const div: HTMLDivElement = <HTMLDivElement>dom('<div tabindex="-1" style="left: -9999px; top: 0; width: 0; height: 100%; line-height: 140%; overflow: hidden; position: fixed; z-index: 2147483647; word-break: break-all;" contenteditable="true"></div>', editor.ownerDocument);
                         editor.container.appendChild(div);
+                        const selData = editor.selection.save();
                         div.focus();
                         let tick: number = 0;
+
+                        const removeFakeFocus = () => {
+                            div.parentNode && div.parentNode.removeChild(div);
+                            editor.selection.restore(selData);
+                        };
+
                         const waitData: Function = () => {
                             tick += 1;
                             // If data has been processes by browser, process it
                             if (div.childNodes && div.childNodes.length > 0) {
                                 const pastedData: string = div.innerHTML;
-                                div.parentNode && div.parentNode.removeChild(div);
+                                removeFakeFocus();
                                 if (processHTMLData(pastedData) !== false) {
                                     editor.selection.insertHTML(pastedData);
                                 }
@@ -371,7 +378,7 @@ export function paste(editor: Jodit) {
                                         waitData()
                                     }, 20);
                                 } else {
-                                    div.parentNode && div.parentNode.removeChild(div);
+                                    removeFakeFocus();
                                 }
                             }
                         };
