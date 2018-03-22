@@ -1017,5 +1017,25 @@ describe('Jodit Events system Tests', function() {
             });
         });
     });
+    describe('Check case insensetive', function () {
+        it('Should call event listener for any char case', function () {
+            var eventer = new Jodit.modules.EventsNative(),
+                simpleObject = {},
+                clicked = 0;
+
+            eventer.on(simpleObject, 'click', function (count) {
+                clicked += count;
+            });
+            eventer.on(simpleObject, 'CLICK', function (count) {
+                clicked += count;
+            });
+
+            eventer.fire(simpleObject, 'Click', 1);
+            eventer.fire(simpleObject, 'CLICK', 2);
+            eventer.fire(simpleObject, 'click', 3);
+
+            expect(12).to.be.equal(clicked);
+        });
+    });
     afterEach(removeStuff);
 });

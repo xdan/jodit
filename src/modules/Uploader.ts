@@ -161,7 +161,7 @@ export type UploaderOptions = {
     format: string;
 
     prepareData: (this: Uploader, formData: FormData) => any;
-    buildData?: (this: Uploader, formData: any) => any;
+    buildData?: (this: Uploader, formData: any) => FormData | {[key: string]: string} | Promise<FormData | {[key: string]: string}>;
     queryBuild?: (this: Ajax, obj: string | {[key: string] : string | object} | FormData, prefix?: string) => string | object;
 
     isSuccess: (this: Uploader, resp: UploaderAnswer) => boolean;
