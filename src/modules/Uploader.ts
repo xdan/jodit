@@ -125,6 +125,34 @@ type HandlerError = (e: Error) => void;
  *      },
  * });
  * ```
+ * @example
+ * // buildData can return Promise
+ * // this example demonstrate how send file like as base64 text. Work only in Firefox and Chrome
+ * var editor = new Jodit('#editor',  {
+ *      uploader: {
+ *          url: 'index.php?action=fileUpload',
+ *          queryBuild: function (data) {
+ *              return JSON.stringify(data);
+ *          },
+ *          contentType: function () {
+ *              return 'application/json';
+ *          },
+ *          buildData: function (data) {
+ *              return new Promise(function (resolve, reject) {
+ *                  var reader = new FileReader();
+ *                  reader.readAsDataURL(data.getAll('files[0]')[0]);
+ *                  reader.onload = function  () {
+ *                      return resolve({
+ *                          image: reader.result
+ *                      });
+ *                  };
+ *                  reader.onerror =  function  (error) {
+ *                      reject(error);
+ *                  }
+ *              });
+ *          }
+ *      },
+ *  });
  */
 export type UploaderOptions = {
     url: string;
@@ -241,7 +269,7 @@ export class Uploader {
         }
     }
 
-    buildData(data: FormData | {[key: string]: string}): FormData | {[key: string]: string} {
+    buildData(data: FormData | {[key: string]: string}): FormData | {[key: string]: string} | Promise<FormData | {[key: string]: string}>{
         if (this.options.buildData && typeof this.options.buildData === 'function') {
             return this.options.buildData.call(this, data);
         }
@@ -269,44 +297,55 @@ export class Uploader {
     private __ajax: Ajax;
 
     send(data: FormData | {[key: string]: string}, success: (resp: UploaderAnswer) => void) {
-        const requestData = this.buildData(data);
+        const requestData = this.buildData(data),
+            sendData = (request: FormData | {[key: string]: string}) => {
+                this.__ajax = new Ajax(this.jodit || this, {
+                    xhr: () => {
+                        let xhr: XMLHttpRequest = new XMLHttpRequest();
+                        if ((<any>this.jodit.ownerWindow).FormData !== undefined) {
+                            xhr.upload.addEventListener("progress", (evt) => {
+                                if (evt.lengthComputable) {
+                                    let percentComplete = evt.loaded / evt.total;
+                                    percentComplete = percentComplete * 100;
 
-        this.__ajax = new Ajax(this.jodit || this, {
-            xhr: () => {
-                let xhr: XMLHttpRequest = new XMLHttpRequest();
-                if ((<any>this.jodit.ownerWindow).FormData !== undefined) {
-                    xhr.upload.addEventListener("progress", (evt) => {
-                        if (evt.lengthComputable) {
-                            let percentComplete = evt.loaded / evt.total;
-                            percentComplete = percentComplete * 100;
+                                    this.jodit.progress_bar.style.display = 'block';
+                                    this.jodit.progress_bar.style.width = percentComplete + '%';
 
-                            this.jodit.progress_bar.style.display = 'block';
-                            this.jodit.progress_bar.style.width = percentComplete + '%';
-
-                            if (percentComplete === 100) {
-                                this.jodit.progress_bar.style.display = 'none';
-                            }
+                                    if (percentComplete === 100) {
+                                        this.jodit.progress_bar.style.display = 'none';
+                                    }
+                                }
+                            }, false);
+                        } else {
+                            this.jodit.progress_bar.style.display = 'none';
                         }
-                    }, false);
-                } else {
-                    this.jodit.progress_bar.style.display = 'none';
-                }
-                return xhr;
-            },
-            method: 'POST',
-            data: requestData,
-            url: this.options.url,
-            headers: this.options.headers,
-            queryBuild: this.options.queryBuild,
-            contentType: this.options.contentType.call(this, requestData),
-            dataType: this.options.format  || 'json',
-        });
+                        return xhr;
+                    },
+                    method: 'POST',
+                    data: request,
+                    url: this.options.url,
+                    headers: this.options.headers,
+                    queryBuild: this.options.queryBuild,
+                    contentType: this.options.contentType.call(this, request),
+                    dataType: this.options.format  || 'json',
+                });
 
-        this.__ajax.send()
-            .then(success)
-            .catch(error => {
-                this.options.error.call(this, error);
-            });
+                this.__ajax.send()
+                    .then(success)
+                    .catch(error => {
+                        this.options.error.call(this, error);
+                    });
+            };
+
+        if (requestData instanceof Promise) {
+            requestData
+                .then(sendData)
+                .catch(error => {
+                    this.options.error.call(this, error);
+                });
+        } else {
+            sendData(requestData);
+        }
     }
 
     sendFiles(files: FileList|File[]|null, handlerSuccess?: HandlerSuccess, handlerError?: HandlerError, process?: Function): false | void {
