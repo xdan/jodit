@@ -243,13 +243,14 @@ export class Table {
     }
 
     /**
-     * Insert column before / after all the columns containing the selected cells
+     * Remove column by index
      *
      * @param {HTMLTableElement} table
      * @param {int} [j]
      */
     static removeColumn(table: HTMLTableElement, j: number) {
         const box: HTMLTableCellElement[][] = Table.formalMatrix(table);
+
         let dec: boolean;
         each(box, (i: number, cells: HTMLTableCellElement[]) => {
             const td: HTMLTableCellElement = cells[j];
@@ -282,7 +283,7 @@ export class Table {
     static getSelectedBound (table: HTMLTableElement, selectedCells: HTMLTableCellElement[]): number[][] {
         const bound = [[Infinity, Infinity], [0, 0]];
         const box = Table.formalMatrix(table);
-        let i, j, k;
+        let i: number, j: number, k: number;
 
         for (i = 0; i < box.length; i += 1) {
             for (j = 0; j < box[i].length; j += 1) {

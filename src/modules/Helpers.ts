@@ -16,14 +16,24 @@ export const isIE = () => {
 };
 
 let $$temp:number = 1;
+
 /**
+ * Find all elements by selector and return Array. If it did not find any element it return empty array
  *
- * @param {string} selector CSS like selector
- * @param {HTMLElement} root
+ * @example
+ * ```javascript
+ * Jodit.modules.Helpres.$$('.someselector').forEach(function (elm) {
+ *      elm.addEventListener('click', function () {
+ *          alert(''Clicked');
+ *      });
+ * })
+ * ```
+ * @param selector CSS like selector
+ * @param root
  *
- * @return {Array.<HTMLElement>}
+ * @return {HTMLElement[]}
  */
-export const $$ = (selector: string, root: HTMLElement|HTMLDocument): Array<HTMLElement> => {
+export const $$ = (selector: string, root: HTMLElement | HTMLDocument): HTMLElement[] => {
     let result: NodeList;
 
     if (/:scope/.test(selector) && isIE() && !(typeof HTMLDocument !== 'undefined' && root instanceof HTMLDocument)) {

@@ -820,6 +820,24 @@ describe('Enter behavior Jodit Editor Tests', function() {
         })
 
         describe('If Enter was pressed', function () {
+            describe('Prevent plugin work', function () {
+                it('Should prevent plugin work', function () {
+                    var editor = new Jodit(appendTestArea(), {
+                        enter: 'BR',
+                        events: {
+                            beforeEnter: function () {
+                                return false;
+                            }
+                        }
+                    });
+                    editor.value = 'test';
+                    editor.selection.setCursorAfter(editor.editor.firstChild)
+                    simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
+                    expect(editor.value).to.be.equal('test');
+                    editor.selection.insertHTML('stop');
+                    expect(editor.value).to.be.equal('teststop');
+                });
+            });
             describe('in not wrapped text in the start', function () {
                 it('should wrap this text in paragraph and cursor should be in that, and before should be empty new paragraph', function () {
                     var editor = new Jodit(appendTestArea())
@@ -840,6 +858,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
                     expect(editor.getEditorValue()).to.be.equal('<p></p><p> a Some text</p>');
                 });
             });
+
         });
 
         it('If Enter was pressed inside empty editor, should be added 2 paragraph and cursor must be in second', function () {

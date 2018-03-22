@@ -75,6 +75,16 @@ export function enter(editor: Jodit) {
     });
     editor.events.on('keydown', (event: KeyboardEvent): false | void => {
         if (event.which === consts.KEY_ENTER || event.keyCode === consts.KEY_ENTER) {
+            /**
+             * Fired on processing `Enter` key. If return some value, plugin `enter` will do nothing. if return false - prevent default Enter behavior
+             *
+             * @event beforeEnter
+             */
+            const beforeEnter = editor.events.fire('beforeEnter', event);
+            if (beforeEnter !== undefined) {
+                return beforeEnter;
+            }
+
             if (!editor.selection.isCollapsed()) {
                 editor.execCommand('Delete');
             }
