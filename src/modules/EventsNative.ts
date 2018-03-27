@@ -110,7 +110,7 @@ export class EventsNative {
     }
 
     private eachEvent(events: string, callback: (event: string, namespace: string) => void) {
-        const eventParts: string[] = events.toLowerCase().split(/[\s,]+/);
+        const eventParts: string[] = events.split(/[\s,]+/);
 
         eventParts.forEach((eventNameSpace: string) => {
             const eventAndNameSpace: string[] = eventNameSpace.split('.');

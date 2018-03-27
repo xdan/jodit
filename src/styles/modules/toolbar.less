@@ -123,12 +123,6 @@
       outline: none;
     }
 
-    &:first-child{
-      .jodit_tooltip {
-        left:0;
-        margin:0;
-      }
-    }
     &:active, &.jodit_active{
       background-color: fade(#dddddd, 40);
       outline: none;
@@ -155,16 +149,13 @@
 }
 
 .jodit_tooltip {
-  position:absolute;
-  transition: opacity .4s linear;
+  position:fixed;
   background: #727171;
   color:#fff;
   font-size: 12px;
   line-height: 15px;
   padding: 4px 5px;
   font-family: Arial, sans-serif;
-  left: 50%;
-  margin-left: -45px;
   z-index: @z-index-dropdownlist + 1;
   width:90px;
   transition: opacity .3s linear;

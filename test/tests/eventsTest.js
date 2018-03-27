@@ -83,38 +83,40 @@ describe('Jodit Events system Tests', function() {
 
             div.parentNode.removeChild(div)
         })
-        it('Add a few handlers for several evens and remove all handlers', function () {
-            var editor = new Jodit(appendTestArea()),
-                work = 0,
-                div = document.createElement('button');
+        describe('Add a few handlers for several evens and remove all handlers', function () {
+            it('Should stop listening events', function () {
+                var editor = new Jodit(appendTestArea()),
+                    work = 0,
+                    div = document.createElement('button');
 
-            document.body.appendChild(div)
+                document.body.appendChild(div)
 
-            editor.events.on(div, 'click', function () {
-                work++;
+                editor.events.on(div, 'click', function () {
+                    work++;
+                })
+                editor.events.on(div, 'dblclick', function () {
+                    work++;
+                })
+                editor.events.on(div, 'mousedown', function () {
+                    work++;
+                })
+
+                simulateEvent('click', 0, div);
+                simulateEvent('dblclick', 0, div);
+                simulateEvent('mousedown', 0, div);
+
+                expect(work).to.be.equal(3);
+
+                editor.events.off(div)
+
+                simulateEvent('click', 0, div);
+                simulateEvent('dblclick', 0, div);
+                simulateEvent('mousedown', 0, div);
+
+                expect(work).to.be.equal(3);
+
+                div.parentNode.removeChild(div)
             })
-            editor.events.on(div, 'dblclick', function () {
-                work++;
-            })
-            editor.events.on(div, 'mousedown', function () {
-                work++;
-            })
-
-            simulateEvent('click', 0, div);
-            simulateEvent('dblclick', 0, div);
-            simulateEvent('mousedown', 0, div);
-
-            expect(work).to.be.equal(3);
-
-            editor.events.off(div)
-
-            simulateEvent('click', 0, div);
-            simulateEvent('dblclick', 0, div);
-            simulateEvent('mousedown', 0, div);
-
-            expect(work).to.be.equal(3);
-
-            div.parentNode.removeChild(div)
         })
         it('Add event handler for several elements', function () {
             var editor = new Jodit(appendTestArea()),
@@ -1017,11 +1019,11 @@ describe('Jodit Events system Tests', function() {
             });
         });
     });
-    describe('Check case insensetive', function () {
-        it('Should call event listener for any char case', function () {
+    describe('Check case sensitive', function () {
+        it('Should call event listener only when match case', function () {
             var eventer = new Jodit.modules.EventsNative(),
                 simpleObject = {},
-                clicked = 0;
+                clicked = '';
 
             eventer.on(simpleObject, 'click', function (count) {
                 clicked += count;
@@ -1030,11 +1032,11 @@ describe('Jodit Events system Tests', function() {
                 clicked += count;
             });
 
-            eventer.fire(simpleObject, 'Click', 1);
-            eventer.fire(simpleObject, 'CLICK', 2);
-            eventer.fire(simpleObject, 'click', 3);
+            eventer.fire(simpleObject, 'Click', '1');
+            eventer.fire(simpleObject, 'CLICK', '2');
+            eventer.fire(simpleObject, 'click', '3');
 
-            expect(12).to.be.equal(clicked);
+            expect('23').to.be.equal(clicked);
         });
     });
     afterEach(removeStuff);

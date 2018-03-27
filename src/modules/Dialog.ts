@@ -606,7 +606,7 @@ export class Dialog extends Component{
          * @event afterClose
          * @this {Dialog} current dialog
          */
-        if (this.jodit) {
+        if (this.jodit && this.jodit.events) {
             this.jodit.events.fire(this, 'afterClose');
         }
     };

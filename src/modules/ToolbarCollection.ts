@@ -622,6 +622,8 @@ export class Tooltip {
     private show = () => {
         const showElement = () => {
                 this.button.container.appendChild(this.container);
+                const diff: number = this.container.offsetWidth - this.button.container.offsetWidth;
+                this.container.style.marginLeft = (-diff / 2) + 'px';
              },
             delay: number = this.button.jodit.options.showTooltipDelay;
 
