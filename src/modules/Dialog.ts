@@ -299,7 +299,13 @@ export class Dialog extends Component{
         this.dialog.classList.toggle('with_footer', !!content);
     }
 
-
+    /**
+     * Return current Z-index
+     * @return {number}
+     */
+    getZIndex(): number {
+        return parseInt(this.dialogbox.style.zIndex || '0', 10);
+    }
     /**
      * Get dialog instance with maximum z-index displaying it on top of all the dialog boxes
      *

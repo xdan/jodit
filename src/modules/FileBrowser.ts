@@ -737,44 +737,6 @@ export class FileBrowser extends Component implements IViewBased {
         const contextmenu: ContextMenu = new ContextMenu(this.jodit || this);
 
         self.events
-            // .on(self.files, 'mousedown', function (this: HTMLElement, e: DragEvent) {
-            //     self.client.x = e.clientX;
-            //     self.client.y = e.clientY;
-            //
-            //     self.start = offset(this, self.jodit);
-            //
-            //     self.draggable = <HTMLElement>this.cloneNode(true);
-            //
-            //     css(<HTMLElement>self.draggable, {
-            //         'z-index': 100000000000000,
-            //         position: 'fixed',
-            //         display: 'none',
-            //         left: self.start.left,
-            //         top: self.start.top,
-            //         width: this.offsetWidth,
-            //         height: this.offsetHeight
-            //     });
-            //
-            //     doc.body.appendChild(self.draggable)
-            // },  'a>img')
-            // .on(self.files, 'dragstart', function (this: HTMLElement, e: DragEvent) {
-            //     self.dragger = this;
-            //     let img = new Image();
-            //     img.src = this.getAttribute('href') || '';
-            //     // e.dataTransfer.clearData();
-            //     e.dataTransfer.dropEffect = "copy";
-            //
-            //     if (e.dataTransfer.setDragImage) {
-            //         e.dataTransfer.setDragImage(img, 10, 10);
-            //     } else {
-            //         e.dataTransfer.setData(consts.TEXT_PLAIN, this.getAttribute('href') || '');
-            //     }
-            //
-            //     // e.dataTransfer.setDragImage(<HTMLElement>this.querySelector('img'), 1, 1);//add(consts.TEXT_PLAIN, this.getAttribute('href') || '');
-            //     // e.dataTransfer.setData(consts.TEXT_PLAIN, this.getAttribute('href') || '');
-            //     e.stopPropagation();
-            //     // e.preventDefault();
-            // }, 'a')
             .on(self.files, 'contextmenu', function (this: HTMLElement, e: DragEvent): boolean | void {
                 if (self.options.contextMenu) {
                     let item: HTMLElement = this;
@@ -871,7 +833,7 @@ export class FileBrowser extends Component implements IViewBased {
                                 }
                             }
                         }
-                    ]);
+                    ], self.dialog.getZIndex() + 1);
                     e.stopPropagation();
                     e.preventDefault();
                     return false;

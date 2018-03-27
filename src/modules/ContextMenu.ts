@@ -56,10 +56,14 @@ export class ContextMenu extends Component {
      * parent.show(e.clientX, e.clientY, [{icon: 'bin', title: 'Delete', exec: function () { alert(1) }]);
      * ```
      */
-    show(x: number, y: number, actions: Array<false|Action>) {
+    show(x: number, y: number, actions: Array<false|Action>, zIndex?: number) {
         const self = this;
         if (!Array.isArray(actions)) {
             return;
+        }
+
+        if (zIndex) {
+            this.context.style.zIndex = zIndex.toString();
         }
 
         this.context.innerHTML = '';
