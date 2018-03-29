@@ -389,67 +389,71 @@ export class ImageEditor extends Component{
      * });
      * ```
      */
-    open = (url: string, save: (newname: string|void, box: ActionBox, success: Function, failed: (error: Error) => void) => void) => {
-        let timestamp = (new Date()).getTime();
+    open = (url: string, save: (newname: string|void, box: ActionBox, success: Function, failed: (error: Error) => void) => void): Promise<Dialog> => {
+        return new Promise((resolve) => {
+            let timestamp = (new Date()).getTime();
 
-        this.image = this.jodit.ownerDocument.createElement('img');
-        $$('img,.jodit_icon-loader', this.resize_box).forEach((elm: Node) => {
-            elm.parentNode && elm.parentNode.removeChild(elm);
-        });
-        $$('img,.jodit_icon-loader', this.crop_box).forEach((elm: Node) => {
-            elm.parentNode && elm.parentNode.removeChild(elm);
-        });
-
-        css(this.cropHandler, 'background', 'transparent');
-
-        this.onSave = save;
-
-        this.resize_box.appendChild(dom('<i class="jodit_icon-loader"></i>', this.jodit.ownerDocument));
-        this.crop_box.appendChild(dom('<i class="jodit_icon-loader"></i>', this.jodit.ownerDocument));
-
-        if (/\?/.test(url)) {
-            url += '&_tst=' + timestamp;
-        } else {
-            url += '?_tst=' + timestamp;
-        }
-
-        this.image.setAttribute('src', url);
-
-        this.dialog.open();
-        const onload = () => {
-            this.image.removeEventListener("load", onload);
-            this.naturalWidth = this.image.naturalWidth;
-            this.naturalHeight = this.image.naturalHeight;
-
-            this.widthInput.value = this.naturalWidth.toString();
-            this.heightInput.value = this.naturalHeight.toString();
-
-            this.ratio = this.naturalWidth / this.naturalHeight;
-
-            this.resize_box.appendChild(this.image);
-
-            this.cropImage = <HTMLImageElement>this.image.cloneNode();
-
-            this.crop_box.appendChild(this.cropImage);
-
-            $$('.jodit_icon-loader', this.editor).forEach((elm: Node) => {
+            this.image = this.jodit.ownerDocument.createElement('img');
+            $$('img,.jodit_icon-loader', this.resize_box).forEach((elm: Node) => {
+                elm.parentNode && elm.parentNode.removeChild(elm);
+            });
+            $$('img,.jodit_icon-loader', this.crop_box).forEach((elm: Node) => {
                 elm.parentNode && elm.parentNode.removeChild(elm);
             });
 
-            if (this.activeTab === 'crop') {
-                this.showCrop();
+            css(this.cropHandler, 'background', 'transparent');
+
+            this.onSave = save;
+
+            this.resize_box.appendChild(dom('<i class="jodit_icon-loader"></i>', this.jodit.ownerDocument));
+            this.crop_box.appendChild(dom('<i class="jodit_icon-loader"></i>', this.jodit.ownerDocument));
+
+            if (/\?/.test(url)) {
+                url += '&_tst=' + timestamp;
+            } else {
+                url += '?_tst=' + timestamp;
             }
 
-            this.jodit.events.fire(this.resizeHandler, 'updatesize');
-            this.jodit.events.fire(this.cropHandler, 'updatesize');
+            this.image.setAttribute('src', url);
 
-            this.dialog.setPosition();
-            this.jodit.events.fire('afterImageEditor');
-        };
-        this.image.addEventListener("load", onload);
-        if (this.image.complete) {
-            onload();
-        }
+            this.dialog.open();
+            const onload = () => {
+                this.image.removeEventListener("load", onload);
+                this.naturalWidth = this.image.naturalWidth;
+                this.naturalHeight = this.image.naturalHeight;
+
+                this.widthInput.value = this.naturalWidth.toString();
+                this.heightInput.value = this.naturalHeight.toString();
+
+                this.ratio = this.naturalWidth / this.naturalHeight;
+
+                this.resize_box.appendChild(this.image);
+
+                this.cropImage = <HTMLImageElement>this.image.cloneNode();
+
+                this.crop_box.appendChild(this.cropImage);
+
+                $$('.jodit_icon-loader', this.editor).forEach((elm: Node) => {
+                    elm.parentNode && elm.parentNode.removeChild(elm);
+                });
+
+                if (this.activeTab === 'crop') {
+                    this.showCrop();
+                }
+
+                this.jodit.events.fire(this.resizeHandler, 'updatesize');
+                this.jodit.events.fire(this.cropHandler, 'updatesize');
+
+                this.dialog.setPosition();
+                this.jodit.events.fire('afterImageEditor');
+
+                resolve(this.dialog);
+            };
+            this.image.addEventListener("load", onload);
+            if (this.image.complete) {
+                onload();
+            }
+        });
     };
 
     private setHandlers = () => {

@@ -13,7 +13,6 @@
 	font-family: @font-default;
 	font-size: 0;
 	height: 100%;
-
 	.jodit_filebrowser_loader{
 		height:100%;
 		width:100%;
@@ -209,7 +208,7 @@
                 border-color: #433b5c;
 			}
 			&.active{
-                border-color: @color-border-active;
+                border-color: @color-border-selected;
                 background-color: @color-border-active;
 			}
             
@@ -267,6 +266,7 @@
                 text-align: left;
                 white-space: nowrap;
                 img {
+                    min-width: 16px;
                     max-width: 16px;
                     vertical-align: middle;
                     display:inline-block;
@@ -362,4 +362,47 @@
 }
 .jodit_draghover{
   background-color: @color-background-button-hover;
+}
+.jodit_dialog_box .jodit_dialog .jodit_dialog_header .jodit_dialog_header-title {
+  .jodit_upload_button{
+    position:relative;
+    width: 220px;
+
+    border: 0;
+    padding: 25px 0;
+    margin: 10px 0;
+    overflow:hidden;
+
+    input {
+      cursor: pointer;
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      bottom:0;
+      right:0;
+      margin: 0 -10px 0 0;
+      padding:0;
+      opacity: 0;
+      font-size: 400px;
+    }
+  }
+  .jodit_toolbar {
+    background: transparent;
+    display: block;
+    height: 100%;
+    border: 0;
+    > li.jodit_toolbar_btn {
+      vertical-align: middle;
+      input,
+      select {
+        margin: 0 @padding-default / 2;
+        padding-left: @padding-default;
+        width: auto;
+      }
+    }
+  }
+  &.jodit_filebrowser_title_box {
+    padding-left: @padding-default;
+  }
 }

@@ -29,7 +29,7 @@ export function autofocus(editor: Jodit) {
     editor.events
         .on('afterInit', () => {
             if (editor.options.autofocus) {
-                if (editor.options.observer.timeout) {
+                if (editor.defaultTimeout) {
                     timeout = window.setTimeout(editor.selection.focus, 300)
                 } else {
                     editor.selection.focus();

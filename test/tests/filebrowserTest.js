@@ -22,8 +22,8 @@ describe('Jodit FileBrowser Tests', function() {
                 }
             });
             (new Jodit.modules.FileBrowser(editor)).open(function () {});
-            expect(document.querySelectorAll('.jodit_dialog_box.active').length).to.be.equal(1);
-        })
+            expect(editor.ownerDocument.querySelectorAll('.jodit_dialog_box.active[data-editor_id=' + editor.id + ']').length).to.be.equal(1);
+        });
         it('Should add filebrowser icon in image buttons popup', function () {
             var editor = new Jodit(appendTestArea(), {
                 filebrowser: {
@@ -35,7 +35,7 @@ describe('Jodit FileBrowser Tests', function() {
             simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-image'))
 
             expect(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-image .jodit_tabs_buttons .active').innerText).to.equal('Browse');
-        })
+        });
         it('Should add uploader icon in image buttons popup', function () {
             var editor = new Jodit(appendTestArea(), {
                 uploader: {
@@ -50,7 +50,7 @@ describe('Jodit FileBrowser Tests', function() {
             simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-image'))
 
             expect(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-image .jodit_tabs_buttons .active').innerText).to.equal('Upload');
-        })
-    })
+        });
+    });
     afterEach(removeStuff);
 });

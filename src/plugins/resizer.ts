@@ -363,5 +363,5 @@ export function resizer(editor: Jodit) {
                     bind(elm);
                 }
             });
-        }, editor.options.observer.timeout));
+        }, editor.defaultTimeout));
 }

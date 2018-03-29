@@ -301,7 +301,8 @@ export class Uploader {
             sendData = (request: FormData | {[key: string]: string}) => {
                 this.__ajax = new Ajax(this.jodit || this, {
                     xhr: () => {
-                        let xhr: XMLHttpRequest = new XMLHttpRequest();
+                        const xhr: XMLHttpRequest = new XMLHttpRequest();
+
                         if ((<any>this.jodit.ownerWindow).FormData !== undefined) {
                             xhr.upload.addEventListener("progress", (evt) => {
                                 if (evt.lengthComputable) {
@@ -319,6 +320,7 @@ export class Uploader {
                         } else {
                             this.jodit.progress_bar.style.display = 'none';
                         }
+
                         return xhr;
                     },
                     method: 'POST',

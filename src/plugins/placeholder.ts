@@ -120,7 +120,7 @@ export function placeholder(this: any, editor: Jodit) {
             } else {
                 show();
             }
-        }, editor.options.observer.timeout / 10);
+        }, editor.defaultTimeout / 10);
 
 
 

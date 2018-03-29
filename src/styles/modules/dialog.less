@@ -141,7 +141,7 @@
 			cursor:move;
 			height:48px;
 			overflow:hidden;
-			h4 {
+			.jodit_dialog_header-title {
 				font-size: 18px;
 				padding: 0;
 				padding-left: 20px;
@@ -157,23 +157,25 @@
             button {
                 margin-right: 10px;
             }
-			a {
-				color: #222222;
-				font-size: 24px;
-				font-weight: 700;
-				display: inline-block;
-				transition: background-color 0.2s ease 0s;
-				width:48px;
-				height:48px;
-				vertical-align:top;
-				line-height: 48px;
-				text-decoration:none;
-				text-align:center;
-				float:right;
-				&:hover {
-					background-color: @color-background-button-hover;
-				}
-			}
+
+            .jodit_dialog_header-button {
+                color: #222222;
+                font-size: 24px;
+                font-weight: 700;
+                display: inline-block;
+                transition: background-color 0.2s ease 0s;
+                width:48px;
+                height:48px;
+                vertical-align:top;
+                line-height: 48px;
+                text-decoration:none;
+                text-align:center;
+                float:right;
+                &:hover {
+                    background-color: @color-background-button-hover;
+                }
+            }
+
 			.jodit_close svg{
 				width: 18px;
 				height: 18px;

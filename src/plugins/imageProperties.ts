@@ -463,9 +463,9 @@ export function imageProperties(editor: Jodit) {
                 return;
             }
 
-            if (editor.options.observer.timeout) {
+            if (editor.defaultTimeout) {
                 clearTimeout(timer);
-                timer = window.setTimeout(changeSizes.bind(this, e), editor.options.observer.timeout);
+                timer = window.setTimeout(changeSizes.bind(this, e), editor.defaultTimeout);
             } else {
                 changeSizes(e);
             }

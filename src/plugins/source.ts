@@ -168,7 +168,7 @@ export class source extends Component {
     private autosize = debounce(() => {
         this.mirror.style.height = 'auto';
         this.mirror.style.height = this.mirror.scrollHeight + 'px';
-    }, this.jodit.options.observer.timeout);
+    }, this.jodit.defaultTimeout);
 
     private getNormalPosition = (pos: number, str: string): number => {
         let start: number = pos;
@@ -197,7 +197,7 @@ export class source extends Component {
         this.mirror = <HTMLTextAreaElement>dom('<textarea class="jodit_source_mirror"/>', this.jodit.ownerDocument);
 
         editor.events
-            .on(this.mirror, 'mousedown keydown touchstart input', debounce(this.toWYSIWYG, editor.options.observer.timeout))
+            .on(this.mirror, 'mousedown keydown touchstart input', debounce(this.toWYSIWYG, editor.defaultTimeout))
             .on(this.mirror, 'change keydown mousedown touchstart input', this.autosize)
             .on('afterSetMode', this.autosize)
             .on(this.mirror, 'mousedown focus', (e: Event) => {

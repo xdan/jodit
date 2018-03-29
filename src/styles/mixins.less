@@ -5,7 +5,7 @@
  */
 
 .size (@size) {
-  width: @size;
+  min-width: @size;
   height: @size;
   line-height: @size;
 }
@@ -16,6 +16,7 @@
     &.jodit_toolbar_btn-separator {
       height: @size * 2 - 4px;
       width: 0;
+      min-width: 0;
     }
     /*> a {
         width: @size;

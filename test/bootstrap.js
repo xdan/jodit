@@ -47,7 +47,48 @@ if ((typeof window.chai !== 'undefined')) {
         return new SyncPromise(function (resolve, reject) {
             switch (action) {
                 case 'files':
-                    resolve({"success":true,"time":"2018-03-15 12:49:49","data":{"sources":{"default":{"baseurl":"https:\/\/xdsoft.net\/jodit\/files\/","path":"","files":[{"file":"1966051_524428741092238_1051008806888563137_o.jpg","thumb":"_thumbs\/1966051_524428741092238_1051008806888563137_o.jpg","changed":"03\/15\/2018 12:40 PM","size":"126.59kB"},{"file":"images.jpg","thumb":"_thumbs\/images.jpg","changed":"03\/15\/2018 12:40 PM","size":"6.84kB"},{"file":"ibanez-s520-443140.jpg","thumb":"_thumbs\/ibanez-s520-443140.jpg","changed":"03\/15\/2018 12:40 PM","size":"18.72kB"},{"file":"6901229-free-serene-wallpaper.jpg","thumb":"_thumbs\/6901229-free-serene-wallpaper.jpg","changed":"03\/15\/2018 12:40 PM","size":"277.10kB"},{"file":"g635i.jpg","thumb":"_thumbs\/g635i.jpg","changed":"03\/15\/2018 12:40 PM","size":"380.37kB"},{"file":"PT_hero_42_153645159.jpg","thumb":"_thumbs\/PT_hero_42_153645159.jpg","changed":"03\/15\/2018 12:40 PM","size":"161.13kB"},{"file":"woman.png","thumb":"_thumbs\/woman.png","changed":"03\/15\/2018 12:40 PM","size":"56.42kB"},{"file":"funny-face.jpg","thumb":"_thumbs\/funny-face.jpg","changed":"03\/15\/2018 12:40 PM","size":"74.58kB"},{"file":"artio.jpg","thumb":"_thumbs\/artio.jpg","changed":"03\/15\/2018 12:45 PM","size":"53.50kB"},{"file":"tola.png","thumb":"_thumbs\/tola.png","changed":"03\/15\/2018 12:40 PM","size":"143.07kB"},{"file":"13828_985968411418511_2954558705761166512_n.jpg","thumb":"_thumbs\/13828_985968411418511_2954558705761166512_n.jpg","changed":"03\/15\/2018 12:40 PM","size":"48.86kB"},{"file":"th.jpg","thumb":"_thumbs\/th.jpg","changed":"03\/15\/2018 12:40 PM","size":"14.26kB"},{"file":"profesor.2.jpg","thumb":"_thumbs\/profesor.2.jpg","changed":"03\/15\/2018 12:40 PM","size":"62.06kB"},{"file":"db4ed-baros-maldives.jpg","thumb":"_thumbs\/db4ed-baros-maldives.jpg","changed":"03\/15\/2018 12:40 PM","size":"66.55kB"},{"file":"793.jpg","thumb":"_thumbs\/793.jpg","changed":"03\/15\/2018 12:40 PM","size":"54.91kB"},{"file":"timthumb.jpg","thumb":"_thumbs\/timthumb.jpg","changed":"03\/15\/2018 12:40 PM","size":"16.65kB"},{"file":"podberi-sobaku-thumb.jpg","thumb":"_thumbs\/podberi-sobaku-thumb.jpg","changed":"03\/15\/2018 12:40 PM","size":"14.00kB"},{"file":"car4.jpg","thumb":"_thumbs\/car4.jpg","changed":"03\/15\/2018 12:40 PM","size":"45.60kB"},{"file":"12.jpg","thumb":"_thumbs\/12.jpg","changed":"03\/15\/2018 12:40 PM","size":"39.77kB"},{"file":"bhart200.jpg","thumb":"_thumbs\/bhart200.jpg","changed":"03\/15\/2018 12:40 PM","size":"6.79kB"},{"file":"Background-Image.jpg","thumb":"_thumbs\/Background-Image.jpg","changed":"03\/15\/2018 12:40 PM","size":"70.59kB"}]}},"code":220}});
+                    resolve({
+                        "success":true,
+                        "time":"2018-03-15 12:49:49",
+                        "data": {
+                            "sources": {
+                                "default": {
+                                    "baseurl":"https:\/\/xdsoft.net\/jodit\/files\/",
+                                    "path":"",
+                                    "files":[
+                                        {
+                                            "file":"1966051_524428741092238_1051008806888563137_o.jpg",
+                                            "thumb":"_thumbs\/1966051_524428741092238_1051008806888563137_o.jpg",
+                                            "changed":"03\/15\/2018 12:40 PM",
+                                            "size":"126.59kB",
+                                            "isImage": true,
+                                        },
+                                        {
+                                            "file":"images.jpg","thumb":"_thumbs\/images.jpg",
+                                            "changed":"03\/15\/2018 12:40 PM",
+                                            "size":"6.84kB",
+                                            "isImage": true,
+                                        },
+                                        {
+                                            "file":"ibanez-s520-443140.jpg",
+                                            "thumb":"_thumbs\/ibanez-s520-443140.jpg",
+                                            "changed":"03\/15\/2018 12:40 PM",
+                                            "size":"18.72kB",
+                                            "isImage": true,
+                                        },
+                                        {
+                                            "file":"test.txt",
+                                            "thumb":"_thumbs\/test.txt.png",
+                                            "changed":"03\/15\/2018 12:40 PM",
+                                            "size":"18.72kB",
+                                            "isImage": false,
+                                        },
+                                    ]
+                                }
+                            },
+                            "code":220
+                        }
+                    });
                     break;
                 case 'folders':
                     resolve({"success":true,"time":"2018-03-15 12:49:49","data":{"sources":{"default":{"baseurl":"https:\/\/xdsoft.net\/jodit\/files\/","path":"","folders":[".","ceicom","test"]}},"code":220}});

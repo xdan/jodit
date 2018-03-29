@@ -48,14 +48,13 @@ Config.prototype.controls.strikethrough = <ControlType>{
  */
 export function bold(editor: Jodit) {
     const callBack: Function = (command: string): false | void => {
-        const cssOptions: {[key: string]: string|string[]}|{[key: string]: (editor: Jodit, value: string) => boolean} = {...Jodit.defaultOptions.controls[command].css},
+        const control: ControlType = <ControlType>Jodit.defaultOptions.controls[command];
+        const cssOptions: {[key: string]: string|string[]}|{[key: string]: (editor: Jodit, value: string) => boolean} = {...control.css},
             cssRules: {[key: string]: string} = {};
 
         Object.keys(cssOptions).forEach((key: string) => {
             cssRules[key] = Array.isArray(cssOptions[key]) ?  (<any>cssOptions[key])[0] : cssOptions[key];
         });
-
-        let control: ControlType = Jodit.defaultOptions.controls[command];
 
         editor.selection.applyCSS(
             cssRules,

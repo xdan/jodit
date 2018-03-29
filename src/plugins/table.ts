@@ -9,7 +9,7 @@ import * as consts from '../constants';
 import {getContentWidth, $$, dom, offset, scrollIntoView} from '../modules/Helpers';
 import {Config} from '../Config'
 import {Dom, Component, Table} from "../modules/index";
-import {ControlType} from "../modules/ToolbarCollection";
+import {ControlType, ToolbarButton} from "../modules/ToolbarCollection";
 
 
 declare module "../Config" {
@@ -35,7 +35,7 @@ Config.prototype.controls.table = <ControlType> {
             'table table-dark': 'Bootstrap Dark',
         }
     },
-    popup: (editor: Jodit, current,  control: ControlType, close: Function) => {
+    popup: (editor: Jodit, current,  control: ControlType, close: Function, button: ToolbarButton) => {
         let i: number,
             j: number,
             k: number,
@@ -216,8 +216,8 @@ Config.prototype.controls.table = <ControlType> {
 
                 close();
             })
-            .off('afterOpenPopup.tableGenerator')
-            .on('afterOpenPopup.tableGenerator', () => {
+            .off(<object>button.parentToolbar, 'afterOpenPopup.tableGenerator')
+            .on(<object>button.parentToolbar,'afterOpenPopup.tableGenerator', () => {
                 generateRows(default_rows_count);
                 if (cells[0]) {
                     cells[0].className = 'hovered';

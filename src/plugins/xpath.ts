@@ -129,7 +129,7 @@ export class xpath extends Plugin{
         this.appendSelectAll();
     };
 
-    private  calcPath = debounce(this.calcPathImd, this.jodit.options.observer.timeout * 2);
+    private  calcPath = debounce(this.calcPathImd, this.jodit.defaultTimeout * 2);
 
 
     afterInit() {

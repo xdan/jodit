@@ -106,8 +106,12 @@ export class DragAndDrop extends Plugin {
                 fragment = this.isCopyMode ? range.cloneContents() : range.extractContents();
             } else if (this.draggable) {
                 if (this.isCopyMode) {
-                    fragment = this.jodit.editorDocument.createElement('img');
-                    fragment.setAttribute('src', this.draggable.getAttribute('data-src') || this.draggable.getAttribute('src') || '');
+                    const [tagName , attr]: string[] = this.draggable.getAttribute('data-is-file') === "1" ?  ['a', 'href'] : ['img', 'src'];
+                    fragment = this.jodit.editorDocument.createElement(tagName);
+                    fragment.setAttribute(attr, this.draggable.getAttribute('data-src') || this.draggable.getAttribute('src') || '');
+                    if (tagName === 'a') {
+                        fragment.innerText = fragment.getAttribute(attr) || '';
+                    }
                 } else {
                     fragment = dataBind(this.draggable, 'target');
                 }

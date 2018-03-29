@@ -205,7 +205,7 @@ export function addNewLine(editor: Jodit) {
                         hide();
                     }
 
-                }, editor.options.observer.timeout));
+                }, editor.defaultTimeout));
 
         });
 }

@@ -203,7 +203,7 @@ export function iframe(editor: Jodit) {
                     if (editor.editor && editor.iframe && editor.options.height === 'auto') {
                         css(editor.iframe, 'height', editor.editor.offsetHeight);
                     }
-                }, editor.options.observer.timeout / 2);
+                }, editor.defaultTimeout / 2);
                 editor.events
                     .on('change afterInit afterSetMode resize', resizeIframe)
                     .on([editor.iframe, editor.editorWindow, doc.documentElement], 'load', resizeIframe)

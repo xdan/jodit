@@ -5,7 +5,10 @@
  */
 
 import * as consts from './constants'
-import {dom, trim, $$, isURL, convertMediaURLToVideoEmbed, val, isLicense, normalizeLicense} from './modules/Helpers'
+import {
+    dom, trim, $$, isURL, convertMediaURLToVideoEmbed, val, isLicense, normalizeLicense,
+    extend
+} from './modules/Helpers'
 import {Jodit} from "./Jodit";
 import {ControlType} from "./modules/ToolbarCollection";
 import {FileBrowserCallBackData} from "./modules/FileBrowser";
@@ -585,7 +588,7 @@ export class Config {
     /**
      * Behavior for buttons
      */
-    controls: {[key: string]: ControlType};
+    controls: {[key: string]: ControlType | {[key: string]: ControlType}};
 
     events: {[key: string]: Function} = {};
 
@@ -595,6 +598,30 @@ export class Config {
      */
     textIcons: boolean = false;
 }
+
+export const OptionsDefault: any = function (this: any, options: any) {
+    const self: any = this;
+    if (options !== undefined && typeof options === 'object') {
+        const extendKey = (options: object, key: string) => {
+            if (key === 'preset') {
+                if (this.options.presets[(<any>options).preset] !== undefined) {
+                    const preset = this.options.presets[(<any>options).preset];
+                    Object.keys(preset).forEach(extendKey.bind(this, preset));
+                }
+            }
+            if (typeof (<any>Jodit.defaultOptions)[key] === 'object' && !Array.isArray((<any>Jodit.defaultOptions)[key])) {
+                self[key] = extend(true, {}, (<any>Jodit.defaultOptions)[key], (<any>options)[key]);
+            } else {
+                self[key] = (<any>options)[key];
+            }
+        };
+
+        Object.keys(options).forEach(extendKey.bind(this, options));
+    }
+};
+
+OptionsDefault.prototype = new Config();
+
 Config.prototype.controls = {
     print: <ControlType>{
         exec: (editor: Jodit) => {

@@ -102,6 +102,7 @@ export class EventsNative {
     current: string[] = [];
 
     private doc: Document = document;
+
     constructor(doc?: Document){
         if (doc) {
             this.doc = doc;
@@ -190,7 +191,7 @@ export class EventsNative {
      * }, 'a');
      * ```
      */
-    on(subjectOrEvents: object|string, eventsOrCallback: string|Function, handlerOrSelector?: Function, selector?: string, onTop: boolean = false): EventsNative {
+    on(subjectOrEvents: object | string, eventsOrCallback: string|Function, handlerOrSelector?: Function, selector?: string, onTop: boolean = false): EventsNative {
         const subject: object = typeof subjectOrEvents === 'string' ? this : subjectOrEvents;
         const events: string = typeof eventsOrCallback === 'string' ? eventsOrCallback : <string>subjectOrEvents;
 
@@ -391,7 +392,7 @@ export class EventsNative {
         return this;
     }
 
-    private triggerNativeEvent(element: Document|Element|HTMLElement|Window, event: string|Event|MouseEvent) {
+    private triggerNativeEvent(element: Document | Element | HTMLElement | Window, event: string | Event | MouseEvent) {
         const evt: Event = this.doc.createEvent('HTMLEvents');
 
         if (typeof event === 'string') {

@@ -40,7 +40,7 @@ export class stat extends Plugin{
                     .filter((e: string) => e.length).length
             );
         }
-    }, this.jodit.options.observer.timeout);
+    }, this.jodit.defaultTimeout);
 
     afterInit() {
         if (this.jodit.options.showCharsCounter) {

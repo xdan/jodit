@@ -50,8 +50,8 @@ Config.prototype.dialog = {
  * @param {Object} parent Jodit main object
  * @param {Object} [opt] Extend Options
  */
-export class Dialog extends Component{
-    events: EventsNative = new EventsNative();
+export class Dialog extends Component {
+    events: EventsNative;
 
     private lockSelect = () => {
         this.dialogbox.classList.add('jodit_dialog_box-moved');
@@ -59,6 +59,7 @@ export class Dialog extends Component{
     private unlockSelect = () => {
         this.dialogbox.classList.remove('jodit_dialog_box-moved');
     };
+
     private options: DialogOptions;
 
     /**
@@ -76,11 +77,11 @@ export class Dialog extends Component{
      */
     private resizer: HTMLDivElement;
 
-    private dialogbox_header: HTMLHeadingElement;
-    private dialogbox_content: HTMLDivElement;
-    private dialogbox_footer: HTMLDivElement;
-    private dialogbox_close: HTMLAnchorElement;
-    private dialogbox_fullsize: HTMLAnchorElement;
+    public dialogbox_header: HTMLHeadingElement;
+    public dialogbox_content: HTMLDivElement;
+    public dialogbox_footer: HTMLDivElement;
+    public dialogbox_close: HTMLAnchorElement;
+    public dialogbox_fullsize: HTMLAnchorElement;
 
     constructor(jodit ?: IViewBased, options: DialogOptions = {}) {
         super(jodit);
@@ -93,6 +94,8 @@ export class Dialog extends Component{
             });
         }
 
+        this.events = (jodit && jodit.events) ? jodit.events : new EventsNative();
+
         const self: Dialog = this;
 
         self.options = (jodit && (<Jodit>jodit).options) ? (<Jodit>jodit).options.dialog : Config.prototype.dialog;
@@ -102,8 +105,8 @@ export class Dialog extends Component{
              '<div class="jodit_dialog_overlay"></div>' +
              '<div class="jodit_dialog">' +
                 '<div class="jodit_dialog_header non-selected">' +
-                    '<h4></h4>' +
-                    '<a href="javascript:void(0)" title="Close" class="jodit_close">' + (Jodit.modules.Toolbar ? Jodit.modules.ToolbarIcon.getIcon('cancel') : '&times;') + '</a>' +
+                    '<div class="jodit_dialog_header-title"></div>' +
+                    '<a href="javascript:void(0)" title="Close" class="jodit_dialog_header-button jodit_close">' + (Jodit.modules.Toolbar ? Jodit.modules.ToolbarIcon.getIcon('cancel') : '&times;') + '</a>' +
                  '</div>' +
              '<div class="jodit_dialog_content"></div>' +
              '<div class="jodit_dialog_footer"></div>' +
@@ -128,11 +131,11 @@ export class Dialog extends Component{
             self.dialogbox.classList.add('jodit_text_icons');
         }
 
-        self.dialogbox_header = <HTMLHeadingElement>self.dialogbox.querySelector('.jodit_dialog_header>h4');
+        self.dialogbox_header = <HTMLHeadingElement>self.dialogbox.querySelector('.jodit_dialog_header>.jodit_dialog_header-title');
         self.dialogbox_content = <HTMLDivElement>self.dialogbox.querySelector('.jodit_dialog_content');
         self.dialogbox_footer = <HTMLDivElement>self.dialogbox.querySelector('.jodit_dialog_footer');
         self.dialogbox_close = <HTMLAnchorElement>self.dialogbox.querySelector('.jodit_dialog_header>a.jodit_close');
-        self.dialogbox_fullsize = <HTMLAnchorElement>dom('<a href="javascript:void(0)" class="jodit_dialog_header_fullsize">' + ((Jodit.modules.ToolbarIcon.getIcon) ? Jodit.modules.ToolbarIcon.getIcon(options.fullsize ? 'fullsize' : 'shrink') : '') + '</a>', this.document);
+        self.dialogbox_fullsize = <HTMLAnchorElement>dom('<a href="javascript:void(0)" class="jodit_dialog_header-button jodit_dialog_header_fullsize">' + ToolbarIcon.getIcon(!options.fullsize ? 'fullsize' : 'shrink') + '</a>', this.document);
 
         self.destinition.appendChild(self.dialogbox);
 
@@ -141,10 +144,8 @@ export class Dialog extends Component{
         self.dialogbox_close.addEventListener('mousedown', self.close);
 
         self.dialogbox_fullsize.addEventListener('click', () => {
-            let fullSize = self.maximization();
-            if (Jodit.modules.Toolbar) {
-                self.dialogbox_fullsize.innerHTML = Jodit.modules.ToolbarIcon.getIcon(!fullSize ? 'fullsize' : 'shrink');
-            }
+            const fullSize: boolean = self.maximization();
+            self.dialogbox_fullsize.innerHTML = ToolbarIcon.getIcon(!fullSize ? 'fullsize' : 'shrink');
         });
 
         self.events
@@ -462,7 +463,8 @@ export class Dialog extends Component{
      * @param {MouseEvent} e
      */
     private onHeaderMouseDown(e: MouseEvent) {
-        if (!this.options.draggable) {
+        const target: HTMLElement = <HTMLElement>e.target;
+        if (!this.options.draggable || (target && target.nodeName.match(/^(INPUT|SELECT)$/))) {
             return;
         }
         this.draggable = true;

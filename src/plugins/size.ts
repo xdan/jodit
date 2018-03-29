@@ -60,7 +60,7 @@ export function size(editor: Jodit) {
                     resizeWorkspaceImd();
                     editor.events.fire('resize');
                 }
-            }, editor.options.observer.timeout / 10))
+            }, editor.defaultTimeout / 10))
             .on(editor.ownerWindow, 'mouseup touchsend', () => {
                 if (isResized) {
                     isResized = false;
@@ -98,7 +98,7 @@ export function size(editor: Jodit) {
         }
     };
 
-    const resizeWorkspace = debounce(resizeWorkspaceImd, editor.options.observer.timeout);
+    const resizeWorkspace = debounce(resizeWorkspaceImd, editor.defaultTimeout);
 
     editor.events
         .on('toggleFullSize', (fullsize: boolean) => {

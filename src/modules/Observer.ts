@@ -85,7 +85,7 @@ export class Observer extends Component {
 
         this.snapshot = new Snapshot(editor);
 
-        const onChangeStack: Function = debounce(this.onChangeStack, this.jodit.options.observer.timeout);
+        const onChangeStack: Function = debounce(this.onChangeStack, this.defaultTimeout);
 
         editor.events
             .on('afterInit', () => {

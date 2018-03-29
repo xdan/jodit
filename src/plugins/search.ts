@@ -411,7 +411,7 @@ export class search extends Component {
                             this.updateCounters();
                             break;
                     }
-                }, this.jodit.options.observer.timeout))
+                }, this.jodit.defaultTimeout))
                 .on(this.jodit.container, 'keydown', (e: KeyboardEvent) => {
                     if (editor.getRealMode() !== MODE_WYSIWYG) {
                         return;

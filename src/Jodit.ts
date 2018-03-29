@@ -11,9 +11,9 @@ import {Uploader} from './modules/Uploader';
 import {Dom} from './modules/Dom';
 import {EventsNative} from './modules/EventsNative';
 import * as consts from './constants';
-import {extend, inArray, dom, sprintf, defaultLanguage, debounce, asArray, splitArray} from './modules/Helpers';
+import {inArray, dom, sprintf, defaultLanguage, debounce, asArray, splitArray} from './modules/Helpers';
 import * as helper from './modules/Helpers';
-import {Config} from "./Config";
+import {Config, OptionsDefault} from "./Config";
 import {ToolbarCollection} from "./modules/ToolbarCollection";
 import {StatusBar} from "./modules/StatusBar";
 import {localStorageProvider, Storage} from "./modules/Storage";
@@ -63,7 +63,7 @@ export class Jodit extends Component {
     ownerDocument: HTMLDocument;
 
     /**
-     * @property {Window} ownerWindow
+     * ownerWindow
      */
     ownerWindow: Window;
 
@@ -74,46 +74,44 @@ export class Jodit extends Component {
     storage: Storage = new Storage(new localStorageProvider());
 
     /**
-     * @property{string} ID attribute for source element, id add {id}_editor it's editor's id
-     */
-    id: string;
-
-    /**
-     * @property{HTMLDivElement} progress_bar Progress bar
+     * progress_bar Progress bar
      */
     progress_bar: HTMLDivElement;
 
     /**
-     * @property{HTMLDivElement} workplace It contains source and wysiwyg editors
+     * workplace It contains source and wysiwyg editors
      */
     workplace: HTMLDivElement;
 
     /**
-     * @property{HTMLDivElement} container main editor's box
+     * container main editor's box
      */
     container: HTMLDivElement;
 
     statusbar: StatusBar;
     observer: Observer;
+
+    events: EventsNative;
+
     /**
-     * @property{HTMLElement} element It contains source element
+     * element It contains source element
      */
     element: HTMLElement;
 
     /**
-     * @property{HTMLDivElement|HTMLBodyElement} editor It contains the root element editor
+     * editor It contains the root element editor
      */
     editor: HTMLDivElement|HTMLBodyElement;
 
 
     /**
-     * @property{HTMLIFrameElement} iframe Iframe for iframe mode
+     * iframe Iframe for iframe mode
      */
     iframe: HTMLIFrameElement | null = null;
 
 
     /**
-     * @property{Config} options All Jodit settings default + second arguments of constructor
+     * options All Jodit settings default + second arguments of constructor
      */
     options: Config;
 
@@ -127,8 +125,6 @@ export class Jodit extends Component {
      */
     uploader: Uploader;
 
-    events: EventsNative;
-
     /**
      * @property {FileBrowser} filebrowser
      */
@@ -137,20 +133,6 @@ export class Jodit extends Component {
     helper: any;
 
     toolbar: ToolbarCollection;
-
-    private __modulesInstances: {[key: string]: Component} = {};
-
-    getInstance(moduleName: string, options?: object): Component {
-        if (Jodit.modules[moduleName] === undefined) {
-            throw new Error('Need real module name')
-        }
-
-        if (this.__modulesInstances[moduleName] === undefined) {
-            this.__modulesInstances[moduleName] = new Jodit.modules[moduleName](this, options);
-        }
-
-        return this.__modulesInstances[moduleName];
-    }
 
     /**
      * Create instance of Jodit
@@ -164,36 +146,15 @@ export class Jodit extends Component {
 
         this.buffer = {}; // empty new object for every Jodit instance
 
-        this.events = new EventsNative();
-
-        const OptionsDefault: any = function () {};
-        OptionsDefault.prototype = Jodit.defaultOptions;
-
-        this.options = <Config>(new OptionsDefault());
-
-        if (options !== undefined && typeof options === 'object') {
-            const extendKey = (options: object, key: string) => {
-                if (key === 'preset') {
-                    if (this.options.presets[(<any>options).preset] !== undefined) {
-                        const preset = this.options.presets[(<any>options).preset];
-                        Object.keys(preset).forEach(extendKey.bind(this, preset));
-                    }
-                }
-                if (typeof (<any>Jodit.defaultOptions)[key] === 'object' && !Array.isArray((<any>Jodit.defaultOptions)[key])) {
-                    (<any>this.options)[key] = extend(true, {}, (<any>Jodit.defaultOptions)[key], (<any>options)[key]);
-                } else {
-                    (<any>this.options)[key] = (<any>options)[key];
-                }
-            };
-
-            Object.keys(options).forEach(extendKey.bind(this, options));
-        }
+        this.options = <Config>(new OptionsDefault(options));
 
         // in iframe it can be changed
         this.editorDocument = this.options.ownerDocument;
         this.editorWindow = this.options.ownerWindow;
         this.ownerDocument = this.options.ownerDocument;
         this.ownerWindow = this.options.ownerWindow;
+
+        this.events = new EventsNative(this.ownerDocument);
 
         if (typeof element === 'string') {
             try {
@@ -406,7 +367,7 @@ export class Jodit extends Component {
         if (this.options.triggerChangeEvent) {
             this.events.on('change', debounce(() => {
                 this.events.fire(this.element, 'change');
-            }, this.options.observer.timeout))
+            }, this.defaultTimeout))
         }
     }
 
@@ -826,7 +787,7 @@ export class Jodit extends Component {
         return result;
     }
 
-    private __whoLocked: string|false = '';
+
     private __selectionLocked: markerInfo[] | null = null;
 
     /**
@@ -852,10 +813,6 @@ export class Jodit extends Component {
             }
         }
     }
-
-    isLocked = (): boolean => {
-        return this.__whoLocked !== '';
-    };
 
     isLockedNotBy = (name: string): boolean => {
         return this.isLocked() && this.__whoLocked !== name;
@@ -1072,9 +1029,6 @@ export class Jodit extends Component {
     getReadOnly(): boolean {
         return this.options.readonly;
     }
-
-    private __isFullSize: boolean = false;
-    isFullSize = (): boolean => this.__isFullSize;
 
     toggleFullSize(isFullSize?: boolean) {
         if (isFullSize === undefined) {
