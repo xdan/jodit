@@ -52,5 +52,23 @@ describe('Jodit FileBrowser Tests', function() {
             expect(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-image .jodit_tabs_buttons .active').innerText).to.equal('Upload');
         });
     });
+    describe('Toolbar', function () {
+        describe('Without Jodit', function () {
+            it('Should create filebrowser and show standart toolbar', function (done) {
+                var filebrowser = new Jodit.modules.FileBrowser(null, {
+                    ajax: {
+                        url: 'https://xdsoft.net/jodit/connector/index.php'
+                    }
+                });
+                filebrowser
+                    .open(function () {})
+                    .then(function () {
+                        expect(filebrowser.browser.querySelectorAll('.jodit_toolbar_btn').length).to.be.equal(9);
+                        filebrowser.close();
+                        done();
+                    });
+            })
+        });
+    });
     afterEach(removeStuff);
 });
