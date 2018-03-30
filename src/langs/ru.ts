@@ -73,6 +73,7 @@ export default {
     'Link': 'Ссылка',
     'Open link in new tab': 'Открывать ссылку в новом окне',
     'Image': 'Изображение',
+    'file': 'Файл',
     'Advanced': 'Расширенные',
     'Image properties': 'Свойства изображения',
     'Cancel': 'Отмена',

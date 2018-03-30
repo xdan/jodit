@@ -76,6 +76,7 @@ export default {
     'Link'                                              : 'Link',
     'Open link in new tab'                              : 'Link in neuem Tab öffnen',
     'Image'                                             : 'Bild',
+    'file'                                              : 'Datei',
     'Advansed'                                          : 'Erweitert',
     'Image properties'                                  : 'Bildeigenschaften',
     'Cancel'                                            : 'Abbrechen',

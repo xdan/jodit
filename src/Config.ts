@@ -744,15 +744,15 @@ Config.prototype.controls = {
         tooltip: "Insert Image"
     },
     file : <ControlType> {
-        popup: (editor: Jodit, current: HTMLAnchorElement | false, self: ControlType, close) => {
+        popup: (editor: Jodit, current: Node | false, self: ControlType, close) => {
             const insert = (url: string, title: string = '') => {
                 editor.selection.insertNode(dom('<a href="' + url + '" title="' + title + '">' + (title || url) + '</a>', editor.editorDocument));
             };
 
             let sourceAnchor: HTMLAnchorElement | null = null;
 
-            if (current && current.nodeType !== Node.TEXT_NODE && (current.tagName === 'A' || Dom.closest(current, 'A', editor.editor))) {
-                sourceAnchor = current.tagName === 'A' ? current : <HTMLAnchorElement>Dom.closest(current, 'A', editor.editor);
+            if (current && (current.nodeName === 'A' || Dom.closest(current, 'A', editor.editor))) {
+                sourceAnchor = current.nodeName === 'A' ? <HTMLAnchorElement>current : <HTMLAnchorElement>Dom.closest(current, 'A', editor.editor);
             }
 
             return FileSelectorWidget(editor, {

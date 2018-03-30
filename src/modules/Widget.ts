@@ -314,6 +314,12 @@ export namespace Widget {
                 button.innerText = editor.i18n('Update');
             }
 
+            if (elm && elm.nodeType !== Node.TEXT_NODE && elm.nodeName === 'A') {
+                val(form, 'input[name=url]', elm.getAttribute('href') || '');
+                val(form, 'input[name=text]', elm.getAttribute('title') || '');
+                button.innerText = editor.i18n('Update');
+            }
+
             form.addEventListener('submit', (event: Event) => {
                 event.preventDefault();
                 event.stopPropagation();
