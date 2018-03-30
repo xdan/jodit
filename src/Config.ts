@@ -14,8 +14,9 @@ import {ControlType} from "./modules/ToolbarCollection";
 import {FileBrowserCallBackData} from "./modules/FileBrowser";
 import {Widget} from "./modules/Widget";
 import TabsWidget = Widget.TabsWidget;
-import ImageSelectorWidget = Widget.ImageSelectorWidget;
+import FileSelectorWidget = Widget.FileSelectorWidget;
 import {ToolbarIcon} from "./modules/ToolbarCollection";
+import {Dom} from "./modules/Dom";
 
 /**
  * Default Editor's Configuration
@@ -507,6 +508,7 @@ export class Config {
         'brush',
         'paragraph', '|',
         'image',
+        'file',
         'video',
         'table',
         'link', '|',
@@ -706,7 +708,7 @@ Config.prototype.controls = {
                 sourceImage = current.tagName === 'IMG' ? current : <HTMLImageElement>$$('img', current)[0];
             }
 
-            return ImageSelectorWidget(editor, {
+            return FileSelectorWidget(editor, {
                 filebrowser: (data: FileBrowserCallBackData) => {
                     if (data.files && data.files.length) {
                         let i: number;
@@ -736,10 +738,55 @@ Config.prototype.controls = {
                     }
                     close();
                 }
-            }, <HTMLImageElement>sourceImage, close);
+            }, sourceImage, close);
         },
         tags: ["img"],
         tooltip: "Insert Image"
+    },
+    file : <ControlType> {
+        popup: (editor: Jodit, current: HTMLAnchorElement | false, self: ControlType, close) => {
+            const insert = (url: string, title: string = '') => {
+                editor.selection.insertNode(dom('<a href="' + url + '" title="' + title + '">' + (title || url) + '</a>', editor.editorDocument));
+            };
+
+            let sourceAnchor: HTMLAnchorElement | null = null;
+
+            if (current && current.nodeType !== Node.TEXT_NODE && (current.tagName === 'A' || Dom.closest(current, 'A', editor.editor))) {
+                sourceAnchor = current.tagName === 'A' ? current : <HTMLAnchorElement>Dom.closest(current, 'A', editor.editor);
+            }
+
+            return FileSelectorWidget(editor, {
+                filebrowser: (data: FileBrowserCallBackData) => {
+                    if (data.files && data.files.length) {
+                        let i: number;
+                        for (i = 0; i < data.files.length; i += 1) {
+                            insert(data.baseurl + data.files[i]);
+                        }
+                    }
+                    close();
+                },
+                upload: (data: FileBrowserCallBackData) => {
+                    let i;
+                    if (data.files && data.files.length) {
+                        for (i = 0; i < data.files.length; i += 1) {
+                            insert(data.baseurl + data.files[i]);
+                        }
+                    }
+                    close();
+                },
+                url: (url: string, text: string) => {
+                    if (sourceAnchor) {
+                        sourceAnchor.setAttribute('href', url);
+                        sourceAnchor.setAttribute('title', text);
+                    } else {
+                        insert(url, text);
+                    }
+                    close();
+                }
+            }, sourceAnchor, close, false);
+        },
+        tags: ["img"],
+        tooltip: "Insert file"
     },
     video : <ControlType> {
         popup: (editor: Jodit, current, control, close) => {

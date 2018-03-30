@@ -28,6 +28,7 @@ export default {
     'Align Right': 'محاذاة لليمين',
     'Insert Horizontal Line': 'إدراج خط أفقي',
     'Insert Image': 'إدراج صورة',
+    'Insert file': 'ادخال الملف',
     'Insert youtube/vimeo video': 'إدراج فيديو يوتيوب/فيميو ',
     'Insert link': 'إدراج رابط',
     'Font size': 'حجم الخط',
@@ -88,6 +89,7 @@ export default {
 
     // Form module
     'Drop image': 'إسقاط صورة',
+    'Drop file': 'إسقاط الملف',
     'or click': 'أو أنقر',
     'Alternative text': 'النص البديل',
     'Upload': 'رفع',

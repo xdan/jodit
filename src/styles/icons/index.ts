@@ -25,6 +25,7 @@ import * as dedent from  "./dedent.svg";
 import * as enter from  "./enter.svg";
 import * as eraser from  "./eraser.svg";
 import * as eye from  "./eye.svg";
+import * as file from  "./file.svg";
 import * as folder from  "./folder.svg";
 import * as font from  "./font.svg";
 import * as fontsize from  "./fontsize.svg";
@@ -76,7 +77,7 @@ import * as omega from  "./omega.svg";
 export {
     about,addcolumn,addrow,angle_left,angle_right,angle_down,angle_up,arrows_alt,
     arrows_h,attachment,bin,bold,brush,cancel,center,chain_broken,
-    check_square,check,copyformat,crop,cut,dedent,dots,enter,eraser,eye,
+    check_square,check,copyformat,crop,cut,dedent,dots,enter,eraser,eye,file,
     folder,font,fontsize,fullsize,hr,image,
     info_circle,indent,italic,justify,left,link,lock,menu,merge,ol,omega,outdent,paragraph,
     pencil,plus,print,redo,resize,resizer,right,save,select_all,shrink,source,splitg,splitv,

@@ -28,6 +28,7 @@ export default {
     'Align Right': 'Выровнять по правому краю',
     'Insert Horizontal Line': 'Вставить горизонтальную линию',
     'Insert Image': 'Вставить изображение',
+    'Insert file': 'Вставить файл',
     'Insert youtube/vimeo video': 'Вставьте видео',
     'Insert link': 'Вставить ссылку',
     'Font size': 'Размер шрифта',
@@ -98,6 +99,7 @@ export default {
 
     // Form module
     'Drop image': 'Перетащите сюда изображение',
+    'Drop file': 'Перетащите сюда файл',
     'or click': 'или нажмите',
     'Alternative text': 'Альтернативный текст',
     'Browse': 'Сервер',

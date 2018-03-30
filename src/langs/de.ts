@@ -31,6 +31,7 @@ export default {
     'Align Right'                                       : 'Rechts ausrichten',
     'Insert Horizontal Line'                            : 'Horizontale Linie einfügen',
     'Insert Image'                                      : 'Bild einfügen',
+    'Insert file'                                       : 'Datei einfügen',
     'Insert youtube/vimeo video'                        : 'Youtube/vimeo Video einfügen',
     'Insert link'                                       : 'Link einfügen',
     'Font size'                                         : 'Schriftgröße',
@@ -105,6 +106,7 @@ export default {
 
     // Form module
     'Drop image'                                        : 'Bild hier hinziehen',
+    'Drop file'                                         : 'Datei löschen',
     'or click'                                          : 'oder hier klicken',
     'Alternative text'                                  : 'Alternativtext',
     'Browse'                                            : 'Auswählen',

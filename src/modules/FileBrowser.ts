@@ -557,7 +557,7 @@ Config.prototype.controls.filebrowser = <{[key: string]: ControlType}> {
         getContent: (editor: IViewBased, control: ControlType): HTMLElement => {
             const btn: HTMLElement = dom('<span class="jodit_upload_button">' +
                     ToolbarIcon.getIcon('plus') +
-                    '<input type="file" accept="image/*" tabindex="-1" dir="auto" multiple=""/>' +
+                    '<input type="file" accept="' + (editor.buffer.fileBrowserOnlyImages ? 'image/*' : '*') + '" tabindex="-1" dir="auto" multiple=""/>' +
                 '</span>', editor.ownerDocument),
                 input: HTMLInputElement = <HTMLInputElement>btn.querySelector('input');
 
@@ -1131,7 +1131,9 @@ export class FileBrowser extends Component implements IViewBased {
 
                 source.files.forEach((item: ISourceFile) => {
                     if (this.options.filter === undefined ||this.options.filter(item, this.filterWord)) {
-                        files.push(this.options.getThumbTemplate.call(this, item, source, source_name));
+                        if (!this.onlyImages || item.isImage === undefined || item.isImage) {
+                            files.push(this.options.getThumbTemplate.call(this, item, source, source_name));
+                        }
                     }
                 });
             } else {
@@ -1441,6 +1443,8 @@ export class FileBrowser extends Component implements IViewBased {
         };
     }
 
+    private onlyImages: boolean = false;
+
     /**
      * It opens a web browser window
      *
@@ -1457,20 +1461,23 @@ export class FileBrowser extends Component implements IViewBased {
      * });
      * ```
      */
-    open = (callback: (data: FileBrowserCallBackData) => void): Promise<void> => {
+    open = (callback: (data: FileBrowserCallBackData) => void, onlyImages: boolean = false): Promise<void> => {
+        this.onlyImages = onlyImages;
+        this.buffer.fileBrowserOnlyImages = onlyImages;
+
         return new Promise((resolve) => {
             if (this.options.items.url) {
 
-                let localTimeot: number = 0;
+                let localTimeout: number = 0;
                 this.events
                     .off(this.files, 'dblclick')
                     .on(this.files, 'dblclick', this.onSelect(callback), 'a')
                     .on(this.files, 'touchstart', () => {
                         let now: number = (new Date()).getTime();
-                        if (now - localTimeot < consts.EMULATE_DBLCLICK_TIMEOUT) {
+                        if (now - localTimeout < consts.EMULATE_DBLCLICK_TIMEOUT) {
                             this.onSelect(callback)();
                         }
-                        localTimeot = now;
+                        localTimeout = now;
                     }, 'a')
                     .off('select.filebrowser')
                     .on( 'select.filebrowser', this.onSelect(callback));
@@ -1488,6 +1495,8 @@ export class FileBrowser extends Component implements IViewBased {
 
                 this.loadTree(this.currentPath, this.currentSource)
                     .then(resolve);
+            } else {
+                throw new Error('Need set options.filebrowser.ajax.url');
             }
         });
     };

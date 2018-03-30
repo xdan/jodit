@@ -247,18 +247,25 @@ export namespace Widget {
      * @param {Widget.ImageSelectorCallbacks} callbacks
      * @param {HTMLElement} elm
      * @param {Function} close Close popup
+     * @param {boolean} isImage
      * @return {HTMLDivElement}
      * @constructor
      */
-    export const ImageSelectorWidget = (editor: Jodit, callbacks: ImageSelectorCallbacks, elm: HTMLElement, close: Function): HTMLDivElement =>{
+    export const FileSelectorWidget = (
+        editor: Jodit,
+        callbacks: ImageSelectorCallbacks,
+        elm: HTMLElement | null,
+        close: Function,
+        isImage: boolean = true
+    ): HTMLDivElement =>{
         let currentImage: any;
         const tabs: { [key: string]: HTMLElement | Function } = {};
 
         if (callbacks.upload && editor.options.uploader && editor.options.uploader.url) {
             const dragbox: HTMLElement = dom('<div class="jodit_draganddrop_file_box">' +
-                    '<strong>' + editor.i18n('Drop image') + '</strong>' +
+                    '<strong>' + editor.i18n(isImage ? 'Drop image' : 'Drop file') + '</strong>' +
                     '<span><br> ' + editor.i18n('or click') + '</span>' +
-                    '<input type="file" accept="image/*" tabindex="-1" dir="auto" multiple=""/>' +
+                    '<input type="file" accept="' + (isImage ? 'image/*' : '*') + 'image/*" tabindex="-1" dir="auto" multiple=""/>' +
                 '</div>', editor.ownerDocument);
 
             new Uploader(editor).bind(dragbox, (resp: UploaderData) => {
@@ -281,7 +288,7 @@ export namespace Widget {
                 tabs[icon + editor.i18n('Browse')] = function () {
                     close && close();
                     if (callbacks.filebrowser) {
-                        (<FileBrowser>editor.getInstance('FileBrowser')).open(callbacks.filebrowser);
+                        (<FileBrowser>editor.getInstance('FileBrowser')).open(callbacks.filebrowser, isImage);
                     }
                 };
             }
@@ -316,13 +323,16 @@ export namespace Widget {
                     url.classList.add('jodit_error');
                     return false;
                 }
+
                 if (typeof(callbacks.url) === 'function') {
                     callbacks.url.call(editor, val(form, 'input[name=url]'), val(form, 'input[name=text]'));
                 }
+
                 return false;
             }, false);
 
             const icon = editor.options.textIcons ? '' : Jodit.modules.ToolbarIcon.getIcon('link');
+
             tabs[icon + ' URL'] = form;
 
         }

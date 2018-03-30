@@ -15,7 +15,7 @@ import {Dom} from "../modules/Dom";
 import {UploaderData} from "../modules/Uploader";
 import {Widget} from "../modules/Widget";
 import TabsWidget = Widget.TabsWidget;
-import ImageSelectorWidget = Widget.ImageSelectorWidget;
+import FileSelectorWidget = Widget.FileSelectorWidget;
 /**
  * Plug-in for image editing window
  *
@@ -403,7 +403,7 @@ export function imageProperties(editor: Jodit) {
             imagebtn.addEventListener('mousedown', (e: MouseEvent) => {
                 imagebtn.classList.toggle('active');
                 const popup: ToolbarPopup = new ToolbarPopup(editor, imagebtn);
-                popup.open(ImageSelectorWidget(editor, {
+                popup.open(FileSelectorWidget(editor, {
                     upload: (data: FileBrowserCallBackData) => {
                         if (data.files && data.files.length) {
                             image.setAttribute('src', data.baseurl + data.files[0]);
