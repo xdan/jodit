@@ -187,12 +187,12 @@ export function iframe(editor: Jodit) {
 
             editor.workplace.appendChild(editor.iframe);
 
-            const doc: Document = editor.iframe.contentWindow.document;
+            const doc: Document = (<Window>editor.iframe.contentWindow).document;
 
             editor.events.fire('generateDocumentStructure.iframe', doc);
 
             editor.editorDocument = doc;
-            editor.editorWindow = editor.iframe.contentWindow;
+            editor.editorWindow = <Window>editor.iframe.contentWindow;
 
             editor.editor = <HTMLBodyElement>doc.body;
 

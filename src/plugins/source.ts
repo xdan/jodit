@@ -80,13 +80,13 @@ Config.prototype.sourceEditorNativeOptions = {
 
 
 Config.prototype.sourceEditorCDNUrlsJS = [
-    '//cdnjs.cloudflare.com/ajax/libs/ace/1.3.1/ace.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.1/ace.js',
 ];
 
 
 Config.prototype.beautifyHTMLCDNUrlsJS = [
-    '//cdnjs.cloudflare.com/ajax/libs/js-beautify/1.7.5/beautify.min.js',
-    '//cdnjs.cloudflare.com/ajax/libs/js-beautify/1.7.5/beautify-html.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.7.5/beautify.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.7.5/beautify-html.min.js',
 ];
 
 
@@ -113,7 +113,7 @@ Config.prototype.controls.source = <ControlType>{
 export class source extends Component {
     private className = 'jodit_ace_editor';
 
-    private loadNext = (i: number, urls: string[], eventOnFinalize: false|string = 'aceReady', className: string = this.className) => {
+    private loadNext = (i: number, urls: string[], eventOnFinalize: false | string = 'aceReady', className: string = this.className) => {
         if (eventOnFinalize && urls[i] === undefined && this.jodit && this.jodit.events) {
             this.jodit.events && this.jodit.events.fire(eventOnFinalize);
             this.jodit.events && this.jodit.events.fire(this.jodit.ownerWindow, eventOnFinalize);

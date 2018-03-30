@@ -47,15 +47,6 @@ export class Component {
 
     jodit: Jodit;
 
-    /**
-     * Return default timeout period in milliseconds for some debounce or throttle functions. By default return {observer.timeout} options
-     *
-     * @return {number}
-     */
-    get defaultTimeout(): number {
-        return (this.jodit && this.jodit.options && this.jodit.options.observer) ? this.jodit.defaultTimeout : 100;
-    }
-
     constructor(jodit?: IViewBased) {
         if (jodit) {
             this.jodit = <Jodit>jodit;

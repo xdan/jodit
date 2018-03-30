@@ -150,6 +150,7 @@ export class ImageEditor extends Component{
 
     constructor(editor: IViewBased) {
         super(editor);
+
         this.options = (editor && (<Jodit>editor).options) ? (<Jodit>editor).options.imageeditor : Jodit.defaultOptions.imageeditor;
         this.resizeUseRatio = this.options.resizeUseRatio;
         this.cropUseRatio = this.options.cropUseRatio;

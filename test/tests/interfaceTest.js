@@ -313,7 +313,7 @@ describe('Test interface', function() {
                         [].slice.call(openFontnameList().childNodes).forEach(function (font, index) {
                             font = openFontnameList().childNodes[index];
                             simulateEvent('mousedown', 0, font);
-                            var fontFamily = font.querySelector('span[style]').getAttribute('style');
+                            var fontFamily = font.querySelector('span[style]').getAttribute('style').replace(/"/g, "'");
 
                             expect(sortAtrtibutes(editor.value)).to.be.equal(sortAtrtibutes('<p><span style="' + fontFamily + '">test</span></p>'));
                         });
@@ -1484,7 +1484,7 @@ describe('Test interface', function() {
                 it('should hide toolbar buttons', function() {
                     var editor = new Jodit(appendTestArea(), {
                         filebrowser: {
-                            buttons: ['list', 'tiles', 'sort'],
+                            buttons: Jodit.Array(['filebrowser.list', 'filebrowser.tiles', 'filebrowser.sort']),
                             ajax: {
                                 url: 'https://xdsoft.net/jodit/connector/index.php'
                             }
@@ -1503,7 +1503,7 @@ describe('Test interface', function() {
 
                     expect(dialog).to.be.not.equal(null);
 
-                    expect(4).to.equal(dialog.querySelectorAll('.jodit_dialog_header .jodit_button').length);
+                    expect(3).to.equal(dialog.querySelectorAll('.jodit_dialog_header .jodit_toolbar_btn').length);
 
                 });
             });

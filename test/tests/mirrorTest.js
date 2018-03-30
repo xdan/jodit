@@ -41,17 +41,21 @@ describe('CodeMirror editor source code', function() {
             });
         });
         it('Should not fire Change event', function() {
-            var editor = new Jodit(appendTestArea());
+            var editor = new Jodit(appendTestArea(), {
+                useAceEditor: false // because onChange can be fired after aceInited
+            });
+
             var defaultValue = 'test';
             var count = 0;
 
             editor.value = defaultValue;
 
-            editor.events.on('change', function (value, oldvalue) {
-                expect(oldvalue).to.be.not.equal(value);
-                expect(defaultValue).to.be.not.equal(value);
-                count++;
-            });
+            editor.events
+                .on('change', function (value, oldvalue) {
+                    expect(oldvalue).to.be.not.equal(value);
+                    expect(defaultValue).to.be.not.equal(value);
+                    count++;
+                });
 
 
             editor.selection.setCursorAfter(editor.editor.firstChild);
@@ -84,6 +88,7 @@ describe('CodeMirror editor source code', function() {
                     }
                 });
             }).timeout(4000);
+
             describe('Without ace', function () {
                 it('Should insert text on caret position', function () {
                     var editor = new Jodit(appendTestArea(), {

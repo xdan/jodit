@@ -604,23 +604,25 @@ export const OptionsDefault: any = function (this: any, options: any) {
     if (options !== undefined && typeof options === 'object') {
         const extendKey = (options: object, key: string) => {
             if (key === 'preset') {
-                if (this.options.presets[(<any>options).preset] !== undefined) {
-                    const preset = this.options.presets[(<any>options).preset];
+                if (Jodit.defaultOptions.presets[(<any>options).preset] !== undefined) {
+                    const preset = Jodit.defaultOptions.presets[(<any>options).preset];
                     Object.keys(preset).forEach(extendKey.bind(this, preset));
                 }
             }
-            if (typeof (<any>Jodit.defaultOptions)[key] === 'object' && !Array.isArray((<any>Jodit.defaultOptions)[key])) {
+            if (
+                typeof (<any>Jodit.defaultOptions)[key] === 'object' &&
+                !Array.isArray((<any>Jodit.defaultOptions)[key])
+            ) {
                 self[key] = extend(true, {}, (<any>Jodit.defaultOptions)[key], (<any>options)[key]);
             } else {
                 self[key] = (<any>options)[key];
             }
         };
 
-        Object.keys(options).forEach(extendKey.bind(this, options));
+        Object.keys(options)
+            .forEach(extendKey.bind(this, options));
     }
 };
-
-OptionsDefault.prototype = new Config();
 
 Config.prototype.controls = {
     print: <ControlType>{
@@ -641,7 +643,7 @@ Config.prototype.controls = {
                 }
                 mywindow.focus();
 
-                mywindow.print();
+                (<any>mywindow).print();
                 mywindow.close();
             }
         },

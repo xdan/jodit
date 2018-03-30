@@ -179,7 +179,7 @@ export function cleanHTML(editor: Jodit) {
                 work: boolean = false,
                 i: number = 0;
 
-            const checkNode = (node: Node | null): void => {
+            const checkNode = (node: Element | Node | null): void => {
                 if (node) {
                     if (isRemovableNode(node)) {
                         remove.push(node);
@@ -187,16 +187,16 @@ export function cleanHTML(editor: Jodit) {
                     }
 
                     if (allowTagsHash && allowTagsHash[node.nodeName] !== true) {
-                        if (node.attributes && node.attributes.length) {
+                        if ((<Element>node).attributes && (<Element>node).attributes.length) {
                             const removeAttrs: string[] = [];
-                            for (i = 0; i < node.attributes.length; i += 1) {
-                                if (!allowTagsHash[node.nodeName][node.attributes[i].name] ||
+                            for (i = 0; i < (<Element>node).attributes.length; i += 1) {
+                                if (!allowTagsHash[node.nodeName][(<Element>node).attributes[i].name] ||
                                     (
-                                        allowTagsHash[node.nodeName][node.attributes[i].name] !== true &&
-                                        allowTagsHash[node.nodeName][node.attributes[i].name] !== node.attributes[i].value
+                                        allowTagsHash[node.nodeName][(<Element>node).attributes[i].name] !== true &&
+                                        allowTagsHash[node.nodeName][(<Element>node).attributes[i].name] !== (<Element>node).attributes[i].value
                                     )
                                 ) {
-                                    removeAttrs.push(node.attributes[i].name);
+                                    removeAttrs.push((<Element>node).attributes[i].name);
                                 }
                             }
 

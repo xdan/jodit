@@ -116,7 +116,7 @@ export class Dialog extends Component {
              '</div>' +
         '</div>', this.document);
 
-        if (jodit && jodit instanceof Jodit) {
+        if (jodit && jodit.id) {
             self.dialogbox.setAttribute('data-editor_id', jodit.id);
         }
 

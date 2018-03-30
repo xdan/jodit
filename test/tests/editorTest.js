@@ -107,15 +107,90 @@ describe('Jodit Editor Tests', function() {
             } else {
                 expect(editor.editor).to.equal(editor.editorDocument.body);
             }
-        })
-        it('Options should be inherited from the default values', function() {
-            var area = appendTestArea();
-            var editor = new Jodit(area, {
-                zIndex: 1986
-            });
-            expect(editor.options.zIndex).to.equal(1986);
-            expect(editor.options.spellcheck).to.equal(true);
         });
+        describe('Options', function () {
+            it('Options should be inherited from the default values', function() {
+                var area = appendTestArea();
+                var editor = new Jodit(area, {
+                    zIndex: 1986
+                });
+                expect(editor.options.zIndex).to.equal(1986);
+                expect(editor.options.spellcheck).to.equal(true);
+            });
+            describe('Set nested array', function () {
+                it('Should create editor with merged default array and set array', function() {
+                    var area = appendTestArea();
+                    Jodit.defaultOptions.someArray = {
+                        data: [1, 2 ,3, 4]
+                    };
+                    var editor = new Jodit(area, {
+                        someArray: {
+                            data: [5 ,6 ,7]
+                        }
+                    });
+
+                    expect(editor.options.someArray.data.toString()).to.equal('5,6,7,4');
+                });
+                describe('Set nested array like Jodit.Array', function () {
+                    it('Should create editor with set array', function() {
+                        var area = appendTestArea();
+                        Jodit.defaultOptions.someArray = {
+                            data: [1, 2 ,3, 4]
+                        };
+                        var editor = new Jodit(area, {
+                            someArray: {
+                                data: Jodit.Array([5 ,6 ,7])
+                            }
+                        });
+
+                        expect(editor.options.someArray.data.toString()).to.equal('5,6,7');
+                    });
+                });
+            });
+            describe('Set nested object', function () {
+                it('Should create editor with merged default object and set object', function() {
+                    var area = appendTestArea();
+                    Jodit.defaultOptions.someObject = {
+                        data: {
+                            left: 10,
+                            right: 20
+                        }
+                    };
+                    var editor = new Jodit(area, {
+                        someObject: {
+                            data: {
+                                top: 10,
+                                right: 10
+                            }
+                        }
+                    });
+
+                    expect(JSON.stringify(editor.options.someObject.data)).to.equal('{"left":10,"right":10,"top":10}');
+                });
+                describe('Set nested object like Jodit.Object', function () {
+                    it('Should create editor with set object', function() {
+                        var area = appendTestArea();
+                        Jodit.defaultOptions.someObject = {
+                            data: {
+                                left: 10,
+                                right: 20
+                            }
+                        };
+                        var editor = new Jodit(area, {
+                            someObject: {
+                                data: Jodit.Object({
+                                    top: 10,
+                                    right: 10
+                                })
+                            }
+                        });
+
+                        expect(JSON.stringify(editor.options.someObject.data)).to.equal('{"top":10,"right":10}');
+                    });
+                });
+            });
+        });
+
         describe('Sizes', function () {
             describe('Set fixed height', function () {
                 it('Should set editor height by option', function () {

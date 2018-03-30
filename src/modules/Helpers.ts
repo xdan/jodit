@@ -146,11 +146,19 @@ export const extend = function (this: any, ...args: any[]) {
                 name = keys[j];
                 src = target[name];
                 copy = options[name];
+
                 if (target === copy) {
                     continue;
                 }
-                if (deep && copy && (isPlainObject(copy) || Array.isArray(copy))) {
+
+                if (deep &&
+                    copy && (
+                        (isPlainObject(copy) && !(copy instanceof JoditObject)) ||
+                        (Array.isArray(copy) && !(copy instanceof JoditArray))
+                    )
+                ) {
                     copyIsArray = Array.isArray(copy);
+
                     if (copyIsArray) {
                         copyIsArray = false;
                         clone = src && Array.isArray(src) ? src : [];
@@ -165,6 +173,7 @@ export const extend = function (this: any, ...args: any[]) {
             }
         }
     }
+
     return target;
 };
 
@@ -319,11 +328,11 @@ export const appendScript = (url: string, callback: (this: HTMLElement, e: Event
     script.type = 'text/javascript';
     script.charset = 'utf-8';
 
-    script.src = formatUrl(url);
-
     if (callback !== undefined) {
-        script.onload = callback;
+        script.addEventListener ("load", callback, false);
     }
+
+    script.src = formatUrl(url);
 
     doc.body.appendChild(script);
 };
@@ -1033,33 +1042,36 @@ export  const applyStyles = (html: string): string => {
         rules: CSSStyleRule[] = [];
 
     try {
-        const iframeDoc: Document = iframe.contentDocument ||  iframe.contentWindow.document;
+        const iframeDoc: Document | null= iframe.contentDocument ||  (iframe.contentWindow ? iframe.contentWindow.document : null);
 
-        iframeDoc.open();
-        iframeDoc.write(html);
-        iframeDoc.close();
+        if (iframeDoc) {
+            iframeDoc.open();
+            iframeDoc.write(html);
+            iframeDoc.close();
 
 
 
-        if (iframeDoc.styleSheets.length) {
-            rules = (<any>iframeDoc.styleSheets[iframeDoc.styleSheets.length - 1]).cssRules;
-        }
-
-        for (let idx = 0; idx < rules.length; idx += 1) {
-            if (rules[idx].selectorText === '') {
-                continue;
+            if (iframeDoc.styleSheets.length) {
+                rules = (<any>iframeDoc.styleSheets[iframeDoc.styleSheets.length - 1]).cssRules;
             }
 
-            collection = $$(rules[idx].selectorText, iframeDoc.body);
+            for (let idx = 0; idx < rules.length; idx += 1) {
+                if (rules[idx].selectorText === '') {
+                    continue;
+                }
 
-            collection.forEach((elm: HTMLElement) => {
-                elm.style.cssText += rules[idx].style.cssText
-                    .replace(/mso-[a-z\-]+:[\s]*[^;]+;/g, '')
-                    .replace(/border[a-z\-]*:[\s]*[^;]+;/g, '')
-            });
+                collection = $$(rules[idx].selectorText, iframeDoc.body);
+
+                collection.forEach((elm: HTMLElement) => {
+                    elm.style.cssText += rules[idx].style.cssText
+                        .replace(/mso-[a-z\-]+:[\s]*[^;]+;/g, '')
+                        .replace(/border[a-z\-]*:[\s]*[^;]+;/g, '')
+                });
+            }
+
+            convertedString = iframeDoc.firstChild ? iframeDoc.body.innerHTML : '';
         }
 
-        convertedString = iframeDoc.firstChild ? iframeDoc.body.innerHTML : '';
     } catch (e) {
 
     } finally {
@@ -1160,3 +1172,28 @@ export const normalizeLicense = (license: string, count: number = 8): string => 
 
     return parts.join('-');
 };
+
+export class JoditArray {
+    length: number = 0;
+    constructor(data: Array<any>) {
+        extend(true, this, data);
+        this.length = data.length;
+        const proto: any = (<any>Array.prototype);
+        ['map', 'forEach', 'reduce', 'push', 'pop', 'shift', 'unshift', 'slice', 'splice'].forEach((method: string) => {
+            (<any>this)[method] = proto[method];
+        })
+    }
+    toString() {
+        const out = [];
+        for (let i = 0; i < this.length; i += 1) {
+            out[i] = (<any>this)[i];
+        }
+        return out.toString();
+    }
+}
+
+export class JoditObject {
+    constructor(data: any) {
+        extend(true, this, data);
+    }
+}

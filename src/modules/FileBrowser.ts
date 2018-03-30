@@ -109,7 +109,7 @@ type FileBrowserOptions = {
     height: number;
 
 
-    view: string;
+    view: string | null;
 
     isSuccess: (resp: FileBrowserAnswer) => boolean;
     getMessage: (resp: FileBrowserAnswer) => string;
@@ -446,7 +446,7 @@ Config.prototype.filebrowser = <FileBrowserOptions>{
         'filebrowser.sort',
     ],
 
-    view: 'tiles',
+    view: null,
 
     isSuccess: function (this: FileBrowser, resp: FileBrowserAnswer): boolean {
         return resp.success;
@@ -719,6 +719,9 @@ export class FileBrowser extends Component implements IViewBased {
             doc: HTMLDocument = editor ? editor.ownerDocument : document,
             editorDoc: HTMLDocument = editor ? editor.editorDocument : doc;
 
+        if (editor) {
+            this.id = editor.id;
+        }
 
         this.ownerDocument = doc;
         this.ownerWindow = editor ? editor.ownerWindow : window;
@@ -731,7 +734,7 @@ export class FileBrowser extends Component implements IViewBased {
 
         self.options = <FileBrowserOptions>(new OptionsDefault(extend(true, {}, Jodit.defaultOptions.filebrowser, options, self.jodit ? self.jodit.options.filebrowser : void(0))));
 
-        self.dialog = new Dialog(self, {
+        self.dialog = new Dialog(editor || self, {
             fullsizeButton: true
         });
 
@@ -862,7 +865,7 @@ export class FileBrowser extends Component implements IViewBased {
                     let item: HTMLElement = this;
 
                     contextmenu.show(e.pageX, e.pageY, [
-                        (self.options.editImage && (self.canI('ImageResize') || self.canI('ImageCrop'))) ? {
+                        (item.getAttribute('data-is-file') !== "1" && self.options.editImage && (self.canI('ImageResize') || self.canI('ImageCrop'))) ? {
                             icon: 'pencil',
                             title: 'Edit',
                             exec: () => {
@@ -944,8 +947,10 @@ export class FileBrowser extends Component implements IViewBased {
                             }
                         }
                     ], self.dialog.getZIndex() + 1);
+
                     e.stopPropagation();
                     e.preventDefault();
+
                     return false;
                 }
             }, 'a')
@@ -991,10 +996,10 @@ export class FileBrowser extends Component implements IViewBased {
         this.options.permissions =          extend(true, {}, this.options.ajax, this.options.permissions);
 
 
-        this.view = this.options.view === 'list' ? 'list' : 'tiles';
-
-        if ( this.storage.get('jodit_filebrowser_view')) {
+        if (this.storage.get('jodit_filebrowser_view') && this.options.view === null) {
             this.view =  this.storage.get('jodit_filebrowser_view') === 'list' ? 'list' : 'tiles';
+        } else {
+            this.view = this.options.view === 'list' ? 'list' : 'tiles';
         }
 
 
@@ -1471,9 +1476,6 @@ export class FileBrowser extends Component implements IViewBased {
                     .on( 'select.filebrowser', this.onSelect(callback));
 
 
-                this.loadTree(this.currentPath, this.currentSource)
-                    .then(resolve);
-
                 const header: HTMLElement = this.ownerDocument.createElement('div');
                 this.toolbar.build(this.options.buttons, header);
 
@@ -1483,6 +1485,9 @@ export class FileBrowser extends Component implements IViewBased {
 
                 this.events
                     .fire('sort.filebrowser', this.sortBy);
+
+                this.loadTree(this.currentPath, this.currentSource)
+                    .then(resolve);
             }
         });
     };
@@ -1544,4 +1549,13 @@ export class FileBrowser extends Component implements IViewBased {
                 });
             });
     };
+
+    /**
+     * Return default timeout period in milliseconds for some debounce or throttle functions. By default return {observer.timeout} options
+     *
+     * @return {number}
+     */
+    get defaultTimeout(): number {
+        return (this.jodit) ? this.jodit.defaultTimeout : Jodit.defaultOptions.observer.timeout;
+    }
 }

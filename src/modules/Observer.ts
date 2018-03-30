@@ -85,7 +85,7 @@ export class Observer extends Component {
 
         this.snapshot = new Snapshot(editor);
 
-        const onChangeStack: Function = debounce(this.onChangeStack, this.defaultTimeout);
+        const onChangeStack: Function = debounce(this.onChangeStack, editor.defaultTimeout);
 
         editor.events
             .on('afterInit', () => {

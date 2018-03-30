@@ -17,7 +17,7 @@ import * as Modules     from "./modules/index";
 import * as Languages   from "./langs/index";
 import * as Icons       from "./styles/icons/index";
 
-import {Config}         from "./Config";
+import {Config, OptionsDefault} from "./Config";
 
 // copy constants in Jodit
 Object.keys(consts).forEach((key: string) => {
@@ -47,5 +47,6 @@ Object.keys(Languages).filter(esFilter).forEach((key: string) => {
 });
 
 Jodit.defaultOptions = new Config();
+OptionsDefault.prototype = Jodit.defaultOptions;
 
 export = Jodit;

@@ -11,7 +11,10 @@ import {Uploader} from './modules/Uploader';
 import {Dom} from './modules/Dom';
 import {EventsNative} from './modules/EventsNative';
 import * as consts from './constants';
-import {inArray, dom, sprintf, defaultLanguage, debounce, asArray, splitArray} from './modules/Helpers';
+import {
+    inArray, dom, sprintf, defaultLanguage, debounce, asArray, splitArray, JoditArray,
+    JoditObject
+} from './modules/Helpers';
 import * as helper from './modules/Helpers';
 import {Config, OptionsDefault} from "./Config";
 import {ToolbarCollection} from "./modules/ToolbarCollection";
@@ -332,6 +335,9 @@ export class Jodit extends Component {
 
         // proxy events
         this.events
+            .on('synchro', () => {
+                this.setEditorValue();
+            })
             .on(this.editor, 'selectionchange selectionstart keydown keyup keypress mousedown mouseup mousepress click copy cut dragstart drop dragover paste resize touchstart touchend focus blur', (event: Event): false | void => {
                 if (this.options.readonly) {
                     return;
@@ -1046,6 +1052,23 @@ export class Jodit extends Component {
             this.events.fire('toggleFullSize', isFullSize);
         }
     }
+
+    /**
+     * Return default timeout period in milliseconds for some debounce or throttle functions. By default return {observer.timeout} options
+     *
+     * @return {number}
+     */
+    get defaultTimeout(): number {
+        return (this.options && this.options.observer) ? this.options.observer.timeout : Jodit.defaultOptions.observer.timeout;
+    }
+
+    static Array(array: Array<any>): JoditArray {
+        return new JoditArray(array);
+    }
+    static Object(object: any): JoditObject {
+        return new JoditObject(object);
+    }
 }
+
 
 

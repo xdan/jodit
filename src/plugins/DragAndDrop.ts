@@ -142,4 +142,7 @@ export class DragAndDrop extends Plugin {
             .on(window, 'dragend drop mouseup', this.onDragEnd)
             // .on('drop', this.onDropImageURLFromFileBrowser)
     }
+    beforeDestruct() {
+        this.onDragEnd();
+    }
 }

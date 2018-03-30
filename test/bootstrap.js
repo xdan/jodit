@@ -19,6 +19,7 @@ function SyncPromise(workfunction) {
         }
         return self;
     };
+
     this.catch = function (callback) {
         if (!resolve) {
             callback.apply(self, args);
@@ -27,7 +28,23 @@ function SyncPromise(workfunction) {
     };
 }
 
+SyncPromise.all = function (promises) {
+    return new SyncPromise(function (resolve, reject) {
+        var resolved = 0;
+
+        promises.forEach(function (promise) {
+            promise
+                .then(function () {
+                    resolved++;
+                })
+        });
+
+        resolved === promises.length ? resolve() : reject();
+    });
+};
+
 if ((typeof window.chai !== 'undefined')) {
+    window.Promise = SyncPromise;
     window.FormData = function () {
         this.data = {};
         this.append = function (key, value) {
@@ -65,21 +82,21 @@ if ((typeof window.chai !== 'undefined')) {
                                         },
                                         {
                                             "file":"images.jpg","thumb":"_thumbs\/images.jpg",
-                                            "changed":"03\/15\/2018 12:40 PM",
+                                            "changed":"01\/15\/2018 12:40 PM",
                                             "size":"6.84kB",
                                             "isImage": true,
                                         },
                                         {
                                             "file":"ibanez-s520-443140.jpg",
                                             "thumb":"_thumbs\/ibanez-s520-443140.jpg",
-                                            "changed":"03\/15\/2018 12:40 PM",
+                                            "changed":"04\/15\/2018 12:40 PM",
                                             "size":"18.72kB",
                                             "isImage": true,
                                         },
                                         {
                                             "file":"test.txt",
                                             "thumb":"_thumbs\/test.txt.png",
-                                            "changed":"03\/15\/2018 12:40 PM",
+                                            "changed":"05\/15\/2018 12:40 PM",
                                             "size":"18.72kB",
                                             "isImage": false,
                                         },
@@ -169,7 +186,7 @@ var removeStuff = function () {
         delete elm;
     });
     stuff.length = 0;
-    [].slice.call(document.querySelectorAll('.jodit.jodit_dialog_box.active.jodit_modal')).forEach(function (dialog) {
+    [].slice.call(document.querySelectorAll('.jodit.jodit_dialog_box.active')).forEach(function (dialog) {
         simulateEvent('close_dialog', 0, dialog)
     });
 };
@@ -204,7 +221,11 @@ function toFixedWithoutRounding (value, precision) {
     return Math.floor(Math.floor(value * factorError + 1) / factorTruncate) / factorDecimal;
 }
 var sortStyles = function (matches) {
-    var styles = matches.replace(/&quot;/g, "'").split(';');
+    var styles = matches
+        .replace(/&quot;/g, "'")
+        .replace(/"/g, "'")
+        .split(';');
+
     styles = styles.map(trim).filter(function (elm) {
         return elm.length;
     }).sort(function (a, b) {

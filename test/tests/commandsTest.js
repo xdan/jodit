@@ -541,8 +541,8 @@ describe('Commands Jodit Editor Tests', function() {
             var sel = editor.editorWindow.getSelection(),
                 range = editor.editorDocument.createRange();
 
-            range.setStart(editor.editor.firstChild, 4);
-            range.collapse(true);
+            range.setEnd(editor.editor.firstChild, 4);
+            range.collapse(false);
 
             sel.removeAllRanges();
             sel.addRange(range);

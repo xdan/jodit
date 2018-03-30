@@ -290,7 +290,10 @@ export  class ToolbarPopup extends ToolbarElement {
         }
 
 
-        noStandartActions || this.jodit.events.fire(this, 'afterOpenPopup', this.container);
+        if (!noStandartActions && this.parentToolbar) {
+            this.jodit.events.fire(this.parentToolbar, 'afterOpenPopup', this.container);
+        }
+
         this.isOpened = true;
     }
 
@@ -529,6 +532,9 @@ export  class ToolbarButton extends ToolbarElement {
 
         if (control.list) {
             const list: ToolbarList = new ToolbarList(this.jodit, this.container, this.target);
+
+            list.parentToolbar = this.parentToolbar;
+
             list.open(control);
             this.jodit.events.fire('closeAllPopups', list.container);
         } else if (control.exec !== undefined && typeof control.exec === 'function') {
@@ -540,7 +546,7 @@ export  class ToolbarButton extends ToolbarElement {
                 <HTMLLIElement>this.container
             );
 
-            this.jodit.events.fire('change');
+            this.jodit.events.fire('synchro');
 
             if (this.parentToolbar) {
                 this.parentToolbar.immedateCheckActiveButtons();
@@ -553,6 +559,8 @@ export  class ToolbarButton extends ToolbarElement {
             this.jodit.events.fire('closeAllPopups afterExec');
         } else if (control.popup !== undefined && typeof control.popup === 'function') {
             const popup: ToolbarPopup = new ToolbarPopup(this.jodit, this.container, this.target);
+
+            popup.parentToolbar = this.parentToolbar;
 
             if (this.jodit.events.fire(camelCase('before-' + control.name + '-OpenPopup'), this.target || (this.jodit.selection ? this.jodit.selection.current() : false), control, popup) !== false) {
                 popup.open(control.popup(
@@ -847,7 +855,7 @@ export class ToolbarCollection extends ToolbarElement {
             .fire('updateToolbar');
     };
 
-    checkActiveButtons = debounce(this.immedateCheckActiveButtons, this.defaultTimeout);
+    checkActiveButtons = debounce(this.immedateCheckActiveButtons, this.jodit.defaultTimeout);
 
     private closeAll = () => {
         this.jodit.events.fire('closeAllPopups');
