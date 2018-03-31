@@ -1156,8 +1156,8 @@ export class FileBrowser extends Component implements IViewBased {
     /**
      *
      * @param {string} name
-     * @param {(resp: FileBrowserAnswer) => void} success
-     * @param {(error: Error) => void} error
+     * @param {Function} success
+     * @param {Function} error
      * @return {Promise}
      */
     private send(name: string, success: (resp: FileBrowserAnswer) => void, error: (error: Error) => void): Promise<void> {
@@ -1448,8 +1448,8 @@ export class FileBrowser extends Component implements IViewBased {
     /**
      * It opens a web browser window
      *
-     * @method open
      * @param {Function} callback The function that will be called after the file selection in the browser
+     * @param {boolean} [onlyImages=false] Show only images
      * @example
      * ```javascript
      * var fb = new Jodit.modules.FileBrowser(parent);
@@ -1460,6 +1460,7 @@ export class FileBrowser extends Component implements IViewBased {
      *     }
      * });
      * ```
+     * @return Promise
      */
     open = (callback: (data: FileBrowserCallBackData) => void, onlyImages: boolean = false): Promise<void> => {
         this.onlyImages = onlyImages;
