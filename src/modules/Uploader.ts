@@ -8,7 +8,7 @@ import {Jodit} from '../Jodit';
 import {IViewBased} from './Component';
 import {Ajax} from './Ajax';
 import {Config} from '../Config'
-import {browser, extend, isPlainObject} from "./Helpers";
+import {browser, dom, extend, isIE, isPlainObject} from "./Helpers";
 import {TEXT_PLAIN} from "../constants";
 import {Select} from "./Selection";
 
@@ -359,9 +359,9 @@ export class Uploader {
         }
     }
 
-    sendFiles(files: FileList | File[] | null, handlerSuccess?: HandlerSuccess, handlerError?: HandlerError, process?: Function): false | void {
+    sendFiles(files: FileList | File[] | null, handlerSuccess?: HandlerSuccess, handlerError?: HandlerError, process?: Function): Promise<any> {
         if (!files) {
-            return;
+            return Promise.reject(new Error('Need files'));
         }
 
         let len: number = files.length,
@@ -372,7 +372,7 @@ export class Uploader {
             uploader: Uploader = this;
 
         if (!len) {
-            return false;
+            return Promise.reject(new Error('Need files'));
         }
 
         form = new FormData();
@@ -404,7 +404,7 @@ export class Uploader {
 
         uploader.options.prepareData.call(this, form);
 
-        uploader
+        return uploader
             .send(form, (resp: UploaderAnswer) => {
                 if (this.options.isSuccess.call(uploader, resp)) {
                     if (typeof (handlerSuccess || uploader.options.defaultHandlerSuccess) === 'function') {
@@ -486,9 +486,8 @@ export class Uploader {
         const self: Uploader = this,
             onPaste = (e: ClipboardEvent): false | void => {
                 let i: number,
-                    file: File|null,
+                    file: File | null,
                     extension: string,
-                    div: HTMLDivElement,
                     process = (formdata: FormData) => {
                         if (file) {
                             formdata.append('extension', extension);
@@ -502,21 +501,27 @@ export class Uploader {
                     return false;
                 }
 
-                if (browser('ff')) {
+                if (browser('ff') || isIE()) {
                     if (!e.clipboardData.types.length && e.clipboardData.types[0] !== TEXT_PLAIN) {
-                        div = this.jodit.editorDocument.createElement('div');
-                        this.selection.insertNode(div);
+                        const div: HTMLDivElement = <HTMLDivElement>dom('<div tabindex="-1" style="left: -9999px; top: 0; width: 0; height: 100%; line-height: 140%; overflow: hidden; position: fixed; z-index: 2147483647; word-break: break-all;" contenteditable="true"></div>', this.jodit.ownerDocument);
+                        this.jodit.ownerDocument.body.appendChild(div);
+
+                        const selection = (this.jodit && this.jodit instanceof Jodit) ? this.jodit.selection.save() : null,
+                            restore = () => selection && (this.jodit && this.jodit instanceof Jodit) && this.jodit.selection.restore(selection);
+
                         div.focus();
+
                         setTimeout(() => {
                             let child: HTMLDivElement|null = <HTMLDivElement>div.firstChild;
+                            if (div.parentNode) {
+                                div.parentNode.removeChild(div);
+                            }
+
                             if (child && child.hasAttribute('src')) {
                                 const src: string = child.getAttribute('src') || '';
-
-                                if (div.parentNode) {
-                                    div.parentNode.removeChild(div);
-                                }
-
-                                self.sendFiles([<File>Uploader.dataURItoBlob(src)], handlerSuccess, handlerError);
+                                restore();
+                                self
+                                    .sendFiles([<File>Uploader.dataURItoBlob(src)], handlerSuccess, handlerError);
                             }
                         }, 200);
                     }
@@ -544,7 +549,7 @@ export class Uploader {
                 .on(form, 'paste',  onPaste)
         } else {
             self.jodit.events
-                .on('processPaste',  onPaste)
+                .on('beforePaste',  onPaste)
         }
 
         const hasFiles = (event: DragEvent) : boolean => event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files.length !== 0;
