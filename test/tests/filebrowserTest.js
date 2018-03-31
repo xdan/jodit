@@ -430,5 +430,73 @@ describe('Jodit FileBrowser Tests', function() {
             });
         });
     });
+    describe('Uploader', function () {
+        describe('Drag and drop', function () {
+            describe('Image', function (done) {
+                it('Should create IMG element', function (done) {
+                    var editor = new Jodit(appendTestArea(), {
+                        uploader: {
+                            'url': 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'
+                        },
+                        filebrowser: {
+                            ajax: {
+                                url: 'https://xdsoft.net/jodit/connector/index.php'
+                            }
+                        }
+                    });
+
+                    editor.value = '';
+
+                    editor.events.on('filesWereUploaded', function () {
+                        expect(editor.value).to.be.equal('<img src="https://xdsoft.net/jodit/files/test.png">');
+                        done();
+                    });
+
+                    simulateEvent('drop', 0, editor.editor, function (data) {
+                        Object.defineProperty(data, 'dataTransfer',{
+                            value: {
+                                files: [
+                                    {name: 'test.png', type: 'image/png'}
+                                ],
+                            }
+                        })
+                    });
+
+                });
+            });
+            describe('File', function (done) {
+                it('Should create A element', function (done) {
+                    var editor = new Jodit(appendTestArea(), {
+                        uploader: {
+                            'url': 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'
+                        },
+                        filebrowser: {
+                            ajax: {
+                                url: 'https://xdsoft.net/jodit/connector/index.php'
+                            }
+                        }
+                    });
+
+                    editor.value = '';
+
+                    editor.events.on('filesWereUploaded', function () {
+                        expect(editor.value).to.be.equal('<a href="https://xdsoft.net/jodit/files/test.txt">https://xdsoft.net/jodit/files/test.txt</a>');
+                        done();
+                    });
+
+                    simulateEvent('drop', 0, editor.editor, function (data) {
+                        Object.defineProperty(data, 'dataTransfer',{
+                            value: {
+                                files: [
+                                    {name: 'test.txt', type: 'plain/text'}
+                                ],
+                            }
+                        })
+                    });
+
+                });
+            });
+        });
+    });
     afterEach(removeStuff);
 });

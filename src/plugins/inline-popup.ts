@@ -44,7 +44,8 @@ Config.prototype.popup = <{[key: string]: Array<ControlType|string>}>{
             icon: 'pencil'
         },
         'unlink',
-        'brush'
+        'brush',
+        'file',
     ],
     img: [
         {

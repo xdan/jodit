@@ -61,8 +61,31 @@ if ((typeof window.chai !== 'undefined')) {
             action = ajax.options.data.get('action');
         }
 
+        if (action === undefined && this.options.url && this.options.url.match(/action=/)) {
+            var actioExec = /action=([\w]+)/.exec(this.options.url)
+            action = actioExec[1];
+        }
+
         return new SyncPromise(function (resolve, reject) {
             switch (action) {
+                case 'fileUpload':
+                    var file = ajax.options.data.get('files[0]');
+                    resolve({
+                        "success": true,
+                        "time": "2018-03-31 23:38:54",
+                        "data": {
+                            "baseurl": "https://xdsoft.net/jodit/files/",
+                            "messages": [],
+                            "files": [
+                                file.name
+                            ],
+                            "isImages": [
+                                /\.(png|jpg|gif)$/.test(file.name)
+                            ],
+                            "code": 220
+                        }
+                    });
+                    break;
                 case 'files':
                     resolve({
                         "success":true,

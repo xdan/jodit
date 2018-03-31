@@ -15,6 +15,7 @@ import {Select} from "./Selection";
 export type UploaderData = {
     messages?: string[],
     files?: string[],
+    isImages?: boolean[],
     path?: string,
     baseurl?: string,
     newfilename?: string;
@@ -227,8 +228,17 @@ Config.prototype.uploader = <UploaderOptions>{
 
     defaultHandlerSuccess: function (this: Uploader, resp: UploaderData) {
         if (resp.files && resp.files.length) {
-            resp.files.forEach((image) => {
-                this.selection.insertImage(resp.baseurl + image);
+            resp.files.forEach((filename, index: number) => {
+                const [tagName , attr]: string[] = (resp.isImages && resp.isImages[index]) ?   ['img', 'src'] : ['a', 'href'];
+                const elm: HTMLElement = this.jodit.editorDocument.createElement(tagName);
+
+                elm.setAttribute(attr, resp.baseurl + filename);
+
+                if (tagName === 'a') {
+                    elm.innerText = resp.baseurl + filename;
+                }
+
+                this.selection.insertNode(elm);
             })
         }
     },
@@ -294,16 +304,15 @@ export class Uploader {
         return data;
     }
 
-    private __ajax: Ajax;
 
-    send(data: FormData | {[key: string]: string}, success: (resp: UploaderAnswer) => void) {
+    send(data: FormData | {[key: string]: string}, success: (resp: UploaderAnswer) => void): Promise<any> {
         const requestData = this.buildData(data),
-            sendData = (request: FormData | {[key: string]: string}) => {
-                this.__ajax = new Ajax(this.jodit || this, {
+            sendData = (request: FormData | {[key: string]: string}): Promise<any> => {
+                const ajax: Ajax = new Ajax(this.jodit || this, {
                     xhr: () => {
                         const xhr: XMLHttpRequest = new XMLHttpRequest();
 
-                        if ((<any>this.jodit.ownerWindow).FormData !== undefined) {
+                        if ((<any>this.jodit.ownerWindow).FormData !== undefined && xhr.upload) {
                             xhr.upload.addEventListener("progress", (evt) => {
                                 if (evt.lengthComputable) {
                                     let percentComplete = evt.loaded / evt.total;
@@ -332,7 +341,7 @@ export class Uploader {
                     dataType: this.options.format  || 'json',
                 });
 
-                this.__ajax.send()
+                return ajax.send()
                     .then(success)
                     .catch(error => {
                         this.options.error.call(this, error);
@@ -340,17 +349,17 @@ export class Uploader {
             };
 
         if (requestData instanceof Promise) {
-            requestData
+            return requestData
                 .then(sendData)
                 .catch(error => {
                     this.options.error.call(this, error);
                 });
         } else {
-            sendData(requestData);
+            return sendData(requestData);
         }
     }
 
-    sendFiles(files: FileList|File[]|null, handlerSuccess?: HandlerSuccess, handlerError?: HandlerError, process?: Function): false | void {
+    sendFiles(files: FileList | File[] | null, handlerSuccess?: HandlerSuccess, handlerError?: HandlerError, process?: Function): false | void {
         if (!files) {
             return;
         }
@@ -395,18 +404,22 @@ export class Uploader {
 
         uploader.options.prepareData.call(this, form);
 
-        uploader.send(form, (resp: UploaderAnswer) => {
-            if (this.options.isSuccess.call(uploader, resp)) {
-                if (typeof (handlerSuccess || uploader.options.defaultHandlerSuccess) === 'function') {
-                    (<HandlerSuccess>(handlerSuccess || uploader.options.defaultHandlerSuccess)).call(uploader, <UploaderData>uploader.options.process.call(uploader, resp));
+        uploader
+            .send(form, (resp: UploaderAnswer) => {
+                if (this.options.isSuccess.call(uploader, resp)) {
+                    if (typeof (handlerSuccess || uploader.options.defaultHandlerSuccess) === 'function') {
+                        (<HandlerSuccess>(handlerSuccess || uploader.options.defaultHandlerSuccess)).call(uploader, <UploaderData>uploader.options.process.call(uploader, resp));
+                    }
+                } else {
+                    if (typeof (handlerError || uploader.options.defaultHandlerError)) {
+                        (<HandlerError>(handlerError || uploader.options.defaultHandlerError)).call(uploader, new Error(uploader.options.getMessage.call(uploader, resp)));
+                        return;
+                    }
                 }
-            } else {
-                if (typeof (handlerError || uploader.options.defaultHandlerError)) {
-                    (<HandlerError>(handlerError || uploader.options.defaultHandlerError)).call(uploader, new Error(uploader.options.getMessage.call(uploader, resp)));
-                    return;
-                }
-            }
-        });
+            })
+            .then(() => {
+                this.jodit.events && this.jodit.events.fire('filesWereUploaded');
+            });
     }
     /**
      * It sets the path for uploading files

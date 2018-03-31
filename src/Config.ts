@@ -785,7 +785,7 @@ Config.prototype.controls = {
                 }
             }, sourceAnchor, close, false);
         },
-        tags: ["img"],
+        tags: ["a"],
         tooltip: "Insert file"
     },
     video : <ControlType> {
