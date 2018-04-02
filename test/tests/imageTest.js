@@ -654,18 +654,38 @@ describe('Test image', function() {
 
         expect(editor.selection.current().tagName).to.equal('IMG');
     });
-    it('One click on image should show resizer', function () {
+    describe('One click on image', function () {
+        it('should show resizer', function () {
 
-        var editor = new Jodit(appendTestArea());
-        editor.setEditorValue('<img src="https://xdsoft.net/jodit/images/artio.jpg"/>')
+            var editor = new Jodit(appendTestArea());
+            editor.setEditorValue('<img src="https://xdsoft.net/jodit/images/artio.jpg"/>')
 
-        var img = editor.editor.querySelector('img');
+            var img = editor.editor.querySelector('img');
 
-        simulateEvent('mousedown', 0, img);
+            simulateEvent('mousedown', 0, img);
 
-        var resizer = document.querySelector('.jodit_resizer[data-editor_id=' + editor.id + ']');
+            var resizer = document.querySelector('.jodit_resizer[data-editor_id=' + editor.id + ']');
 
-        expect(resizer.style.display === 'block').to.equal(true);
+            expect(resizer.style.display === 'block').to.equal(true);
+        });
+        describe('in full size mode', function () {
+            it('should show resizer and set mmaximum zIndex', function () {
+
+                var editor = new Jodit(appendTestArea(), {
+                    fullsize: true
+                });
+                editor.setEditorValue('<img src="https://xdsoft.net/jodit/images/artio.jpg"/>')
+
+                var img = editor.editor.querySelector('img');
+
+                simulateEvent('mousedown', 0, img);
+
+                var resizer = document.querySelector('.jodit_resizer[data-editor_id=' + editor.id + ']');
+
+                expect(resizer.style.display).to.be.equal('block');
+                expect(resizer.style.zIndex).to.be.equal(editor.container.style.zIndex);
+            });
+        });
     });
     it('One click inside table cell should show resizer', function () {
         var editor = new Jodit(appendTestArea());

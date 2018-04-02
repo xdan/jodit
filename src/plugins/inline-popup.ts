@@ -304,6 +304,11 @@ export class inlinePopup extends Plugin{
 
         this.target.style.left = (rect.left + rect.width / 2) + 'px';
         this.target.style.top = (rect.top + rect.height + 10) + 'px';
+
+        if (this.jodit.isFullSize()) {
+            this.target.style.zIndex = css(this.jodit.container, 'zIndex').toString();
+        }
+
         this.container.style.marginLeft = (-this.container.offsetWidth/2) + 'px';
         this.popup.container.classList.remove('jodit_toolbar_popup-inline-top');
 

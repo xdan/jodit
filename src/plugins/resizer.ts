@@ -7,7 +7,7 @@
 import {Jodit} from '../Jodit';
 import {Config} from '../Config'
 import * as consts from '../constants'
-import {$$, debounce, dom, isIE, offset} from '../modules/Helpers'
+import {$$, css, debounce, dom, isIE, offset} from '../modules/Helpers'
 
 /**
  * The module creates a supporting frame for resizing of the elements img and table
@@ -147,6 +147,10 @@ export function resizer(editor: Jodit) {
 
             resizerIsVisible = true;
             resizer.style.display = 'block';
+
+            if (editor.isFullSize()) {
+                resizer.style.zIndex = css(editor.container, 'zIndex').toString();
+            }
 
             updateSize();
         },
