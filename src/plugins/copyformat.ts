@@ -23,6 +23,12 @@ const copyStyles: string[] = [
     'fontStyle',
     'fontSize',
     'color',
+    'margin',
+    'padding',
+    'borderWidth',
+    'borderStyle',
+    'borderColor',
+    'borderRadius',
     'backgroundColor',
     'textDecorationLine',
     'fontFamily'
@@ -46,8 +52,12 @@ const getStyles = (editor: Jodit, box: HTMLElement, defaultStyles: {[key: string
     const result: {[key: string]: string | number | undefined} = {};
 
     if (box) {
+
         copyStyles.forEach((key: string) => {
             result[key] = getStyle(editor, key, box, defaultStyles);
+            if (key.match(/border(Style|Color)/) && !result['borderWidth']) {
+                result[key] = void(0);
+            }
         });
     }
 
@@ -55,25 +65,41 @@ const getStyles = (editor: Jodit, box: HTMLElement, defaultStyles: {[key: string
 };
 
 Config.prototype.controls.copyformat = <ControlType>{
-    exec: (editor: Jodit, current: Node|false) => {
+    exec: (editor: Jodit, current: Node | false) => {
         if (current) {
             if (editor.buffer[pluginKey]) {
                 editor.buffer[pluginKey] = false;
                 editor.events.off(editor.editor,'mouseup.' + pluginKey);
             } else {
                 const defaultStyles: {[key: string]: string | number} = {};
+                const box: HTMLElement = <HTMLElement>Dom.up(current, (elm: Node | null) => (elm && elm.nodeType !== Node.TEXT_NODE), editor.editor) || editor.editor;
+
+
+                let ideal: HTMLElement = editor.editorDocument.createElement('span');
+                editor.editor.appendChild(ideal);
+
+
                 copyStyles.forEach((key: string) => {
-                    defaultStyles[key] = css(editor.editor, key);
+                    defaultStyles[key] = css(ideal, key);
                 });
 
-                const box: HTMLElement = <HTMLElement>Dom.up(current, (elm: Node | null) => (elm && elm.nodeType !== Node.TEXT_NODE), editor.editor) || editor.editor;
+
+                if (ideal !== editor.editor) {
+                    ideal.parentNode && ideal.parentNode.removeChild(ideal);
+                }
+
                 const format: {[key: string]: string | number | undefined}  = getStyles(editor, box, defaultStyles);
 
                 const onmousedown: Function = () => {
                     editor.buffer[pluginKey] = false;
+                    const current: Node | false = editor.selection.current();
 
-                    if (editor.selection.current()) {
-                        editor.selection.applyCSS(format);
+                    if (current) {
+                        if (current.nodeName === 'IMG') {
+                            css(<HTMLElement>current, format);
+                        } else {
+                            editor.selection.applyCSS(format);
+                        }
                     }
 
                     editor.events.off(editor.editor,'mouseup.' + pluginKey);

@@ -674,7 +674,8 @@ describe('Test image', function() {
                 var editor = new Jodit(appendTestArea(), {
                     fullsize: true
                 });
-                editor.setEditorValue('<img src="https://xdsoft.net/jodit/images/artio.jpg"/>')
+                editor.value = '<img src="https://xdsoft.net/jodit/images/artio.jpg"/>'
+
 
                 var img = editor.editor.querySelector('img');
 
@@ -683,7 +684,7 @@ describe('Test image', function() {
                 var resizer = document.querySelector('.jodit_resizer[data-editor_id=' + editor.id + ']');
 
                 expect(resizer.style.display).to.be.equal('block');
-                expect(resizer.style.zIndex).to.be.equal(editor.container.style.zIndex);
+                expect(resizer.style.zIndex).to.be.equal(window.getComputedStyle(editor.container).zIndex);
             });
         });
     });

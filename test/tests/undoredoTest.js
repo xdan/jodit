@@ -1,4 +1,37 @@
 describe('Undo/Redo behaviors', function() {
+    describe('Do some changes', function () {
+        it('Should change redo/undo stack', function() {
+            var editor = new Jodit(appendTestArea(), {
+                observer: {
+                    timeout: 0
+                }
+            });
+
+            editor.setEditorValue('test');
+
+            var range = editor.editorDocument.createRange();
+            range.setEnd(editor.editor.firstChild, 4);
+            range.collapse(false);
+            editor.selection.selectRange(range)
+
+
+            simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-paragraph'))
+
+            var list = editor.container.querySelector('.jodit_toolbar_list');
+
+            simulateEvent('mousedown', 0, list.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-h1'))
+
+            expect(editor.value).to.be.equal('<h1>test</h1>');
+
+            editor.execCommand('undo');
+
+            expect(editor.value).to.be.equal('test');
+
+            editor.execCommand('redo');
+
+            expect(editor.value).to.be.equal('<h1>test</h1>');
+        });
+    });
     describe('Commands', function () {
         it('Undo. Enter text wait and again enter text. After execute "undo" command. First text should be returned', function() {
             var editor = new Jodit(appendTestArea(), {
