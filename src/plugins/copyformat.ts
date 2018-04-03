@@ -75,7 +75,7 @@ Config.prototype.controls.copyformat = <ControlType>{
                 const box: HTMLElement = <HTMLElement>Dom.up(current, (elm: Node | null) => (elm && elm.nodeType !== Node.TEXT_NODE), editor.editor) || editor.editor;
 
 
-                let ideal: HTMLElement = editor.editorDocument.createElement('span');
+                const ideal: HTMLElement = editor.editorDocument.createElement('span');
                 editor.editor.appendChild(ideal);
 
 
@@ -112,7 +112,7 @@ Config.prototype.controls.copyformat = <ControlType>{
         }
     },
 
-    isActive: (editor: Jodit) => {
+    isActive: (editor: Jodit): boolean => {
         return !!editor.buffer[pluginKey];
     },
 

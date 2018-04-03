@@ -466,18 +466,15 @@ Config.prototype.filebrowser = <FileBrowserOptions>{
             info: string,
             timestamp: string = (new Date()).getTime().toString();
 
-        if (typeof item === 'string') {
-            name = item;
-            thumb = item;
-        } else {
-            if (item.file !== undefined) {
-                name = item.file;
-                thumb = item.file;
-            }
-            if (item.thumb) {
-                thumb = item.thumb;
-            }
+
+        if (item.file !== undefined) {
+            name = item.file;
+            thumb = item.file;
         }
+        if (item.thumb) {
+            thumb = item.thumb;
+        }
+
 
         info = `<div class="${ITEM_CLASS}-info">
             ${this.options.showFileName ? `<span class="${ITEM_CLASS}-info-filename">${name}</span>` : ''}
@@ -710,6 +707,9 @@ export class FileBrowser extends Component implements IViewBased {
     getRealMode(): number {
         return consts.MODE_WYSIWYG;
     }
+
+    private view: string = 'tiles';
+    private sortBy: string = 'changed';
 
     constructor(editor?: IViewBased, options = {}) {
         super(editor);
@@ -975,12 +975,7 @@ export class FileBrowser extends Component implements IViewBased {
                 e.stopPropagation();
                 return false;
             }, 'a')
-            .on(self.dialog.dialogbox, 'drop', (e: DragEvent) => e.preventDefault())
-            .on(self.ownerWindow, 'keydown', (e: KeyboardEvent) => {
-                if (self.isOpened() && e.which === consts.KEY_DELETE) {
-                    // self.events.fire(self.buttons.remove, 'click');
-                }
-            });
+            .on(self.dialog.dialogbox, 'drop', (e: DragEvent) => e.preventDefault());
 
         this.dialog.setSize(this.options.width, this.options.height);
 
@@ -1034,11 +1029,9 @@ export class FileBrowser extends Component implements IViewBased {
         }
     }
 
-    private view: string = 'tiles';
-    private sortBy: string = 'changed';
 
 
-    private dragger:false | HTMLElement = false;
+    private dragger: false | HTMLElement = false;
 
 
     /**

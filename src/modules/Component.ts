@@ -6,7 +6,6 @@
 
 import {Jodit} from "../Jodit";
 import {EventsNative} from "./EventsNative";
-import {Select} from "./Selection";
 
 
 
@@ -47,7 +46,7 @@ export class Component {
 
     jodit: Jodit;
 
-    constructor(jodit?: IViewBased) {
+    constructor(jodit?: IViewBased | Jodit) {
         if (jodit) {
             this.jodit = <Jodit>jodit;
             if (jodit instanceof Jodit && this.jodit.components) {
