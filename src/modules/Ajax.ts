@@ -97,7 +97,7 @@ export class Ajax {
     }
 
     private xhr: XMLHttpRequest;
-
+    private success_response_codes = [200, 201, 202];
     status: number;
     response: string;
 
@@ -156,7 +156,7 @@ export class Ajax {
                     this.response = resp;
                     this.status = this.xhr.status;
 
-                    if (this.xhr.status === 200) {
+                    if (this.success_response_codes.indexOf(this.xhr.status) > -1) {
                         resolve.call(this.xhr, __parse(resp));
                     } else {
                         reject.call(this.xhr, new Error(this.xhr.statusText || this.jodit.i18n('Connection error!')));
