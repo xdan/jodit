@@ -156,7 +156,6 @@ export class Ajax {
                     this.response = resp;
                     this.status = this.xhr.status;
 
-console.info('ONREADYSTATE')
                     if (this.success_response_codes.indexOf(this.xhr.status) > -1) {
                         resolve.call(this.xhr, __parse(resp));
                     } else {
