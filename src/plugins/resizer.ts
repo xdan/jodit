@@ -92,7 +92,9 @@ export function resizer(editor: Jodit) {
             '<i class="jodit_resizer-bottomleft"></i>' +
             '<span>100x100</span>' +
         '</div>', editor.ownerDocument),
+
         sizeViewer: HTMLSpanElement = resizer.getElementsByTagName('span')[0],
+
         hideResizer = () => {
             isResizing = false;
             resizerIsVisible = false;
@@ -190,11 +192,12 @@ export function resizer(editor: Jodit) {
             }
 
             let timer: number;
+
             editor.events
                 .on(element, 'dragstart', hideResizer)
                 .on(element, 'mousedown', (event: MouseEvent) => {
                     // for IE don't show native resizer
-                    if (isIE()) {
+                    if (isIE() && element.nodeName === 'IMG') {
                         event.preventDefault();
                     }
                 })

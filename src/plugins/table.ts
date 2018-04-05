@@ -465,6 +465,7 @@ export class TableProcessor extends Component{
                     }
                 }
             });
+
         this.__addResizer();
     }
 
