@@ -553,7 +553,11 @@ export class Dialog extends Component {
         }
 
         delete this.dialogbox;
-        this.events.destruct();
+
+        if (!this.jodit || !this.jodit.events) {
+            this.events.destruct();
+        }
+
         this.__isDestructed = true;
     }
 
