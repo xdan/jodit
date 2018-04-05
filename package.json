@@ -1,6 +1,6 @@
 {
   "name": "jodit",
-  "version": "3.1.83",
+  "version": "3.1.84",
   "description": "Jodit is awesome and usefully wysiwyg editor with filebrowser",
   "main": "build/jodit.min.js",
   "scripts": {
@@ -31,7 +31,7 @@
   "devDependencies": {
     "@types/ace": "^0.0.35",
     "@types/es6-promise": "^3.3.0",
-    "@types/node": "^7.0.58",
+    "@types/node": "^7.0.59",
     "autoprefixer": "^6.7.7",
     "awesome-typescript-loader": "^3.4.1",
     "chai": "^3.5.0",
