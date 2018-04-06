@@ -8,7 +8,7 @@ import {Jodit} from '../Jodit';
 import {Confirm, Dialog} from '../modules/Dialog';
 import {
     isHTML, browser, htmlspecialchars, isHTMLFromWord, applyStyles, dom,
-    cleanFromWord
+    cleanFromWord, isIE, type, trim
 } from '../modules/Helpers';
 import {Config} from '../Config';
 import {INSERT_AS_HTML, INSERT_AS_TEXT, INSERT_CLEAR_HTML, INSERT_ONLY_TEXT, TEXT_HTML, TEXT_PLAIN} from "../constants";
@@ -234,7 +234,7 @@ export function paste(editor: Jodit) {
                     types_str: string = '',
                     clipboard_html: any = '';
 
-                if (Array.isArray(types)) {
+                if (Array.isArray(types) || type(types) === 'domstringlist') {
                     for (i = 0; i < types.length; i += 1) {
                         types_str += types[i] + ";";
                     }
@@ -242,15 +242,17 @@ export function paste(editor: Jodit) {
                     types_str = types;
                 }
 
-                if (/text\/html/.test(types_str)) {
+                if (/text\/html/i.test(types_str)) {
                     clipboard_html = getDataTransfer(event).getData("text/html");
-                } else if (/text\/rtf/.test(types_str) && browser('safari')) {
+                } else if (/text\/rtf/i.test(types_str) && browser('safari')) {
                     clipboard_html = getDataTransfer(event).getData("text/rtf");
-                } else if (/text\/plain/.test(types_str) && !browser('mozilla')) {
+                } else if (/text\/plain/i.test(types_str) && !browser('mozilla')) {
+                    clipboard_html = getDataTransfer(event).getData(TEXT_PLAIN);
+                } else if (/text/i.test(types_str) && isIE) {
                     clipboard_html = getDataTransfer(event).getData(TEXT_PLAIN);
                 }
 
-                if (clipboard_html !== '' || clipboard_html instanceof (<any>editor.editorWindow).Node) {
+                if (clipboard_html instanceof (<any>editor.editorWindow).Node || trim(clipboard_html) !== '') {
                     /**
                      * Triggered after the content is pasted from the clipboard into the Jodit. If a string is returned the new string will be used as the pasted content.
                      *
@@ -351,7 +353,7 @@ export function paste(editor: Jodit) {
                     if (getDataTransfer(event).types && [].slice.call(getDataTransfer(event).types).indexOf("text/html") !== -1) {
                         const html: string = getDataTransfer(event).getData(TEXT_HTML);
                         return processHTMLData(html);
-                    } else {
+                    } else if (event.type !== 'drop') {
                         const div: HTMLDivElement = <HTMLDivElement>dom('<div tabindex="-1" style="left: -9999px; top: 0; width: 0; height: 100%; line-height: 140%; overflow: hidden; position: fixed; z-index: 2147483647; word-break: break-all;" contenteditable="true"></div>', editor.ownerDocument);
                         editor.container.appendChild(div);
                         const selData = editor.selection.save();

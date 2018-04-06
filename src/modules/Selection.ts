@@ -371,19 +371,6 @@ export class Select extends Component{
             throw new Error('Parameter node most be instance of Node');
         }
 
-        const isOrContainsNode = (ancestor: Node, descendant: Node): boolean => {
-                let node: Node|null = descendant;
-
-                while (node) {
-                    if (node === ancestor) {
-                        return true;
-                    }
-                    node = node.parentNode;
-                }
-
-                return false;
-            };
-
         this.focus();
 
         if (this.jodit.editorWindow.getSelection) {
@@ -395,7 +382,7 @@ export class Select extends Component{
 
             if (sel.rangeCount) {
                 const range: Range = sel.getRangeAt(0);
-                if (isOrContainsNode(this.jodit.editor, range.commonAncestorContainer)) {
+                if (Dom.isOrContains(this.jodit.editor, range.commonAncestorContainer)) {
                     range.deleteContents();
                     range.insertNode(node);
                 } else {

@@ -93,7 +93,7 @@ export const each = (obj: Array<any>|any, callback: eachCallback|Function) => {
     return obj;
 };
 
-each(['Boolean', 'Number', 'String', 'Function', 'Array', 'Date', 'RegExp', 'Object', 'Error', 'Symbol', 'HTMLDocument', 'Window', 'HTMLElement', 'HTMLBodyElement', 'Text', 'DocumentFragment'],
+each(['Boolean', 'Number', 'String', 'Function', 'Array', 'Date', 'RegExp', 'Object', 'Error', 'Symbol', 'HTMLDocument', 'Window', 'HTMLElement', 'HTMLBodyElement', 'Text', 'DocumentFragment', 'DOMStringList'],
     (i, name) => {
         class2type["[object " + name + "]"] = name.toLowerCase();
     }
@@ -792,6 +792,11 @@ export const css = (element: HTMLElement, key: string|{[key: string]: number | s
     return normilizeCSSValue(<string>key, result);
 };
 
+/**
+ * Always return Array
+ * @param a
+ * @return {Array<any>}
+ */
 export const asArray = (a: any): Array<any> => (
     Array.isArray(a) ? a : [a]
 );

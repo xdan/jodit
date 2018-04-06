@@ -45,6 +45,8 @@ export class DragAndDrop extends Plugin {
         }
     }, 10);
 
+    private bufferRange: Range | null = null;
+
     private onDragStart = (event: DragEvent) => {
         let target: HTMLElement = (<HTMLElement>event.target);
         this.onDragEnd(); // remove olddraggable
@@ -52,6 +54,15 @@ export class DragAndDrop extends Plugin {
         this.isFragmentFromEditor = Dom.isOrContains(this.jodit.editor, target, true);
         this.isCopyMode = this.isFragmentFromEditor ? ctrlKey(event) : true; // we can move only element from editor
 
+        if (this.isFragmentFromEditor) {
+            const sel: Selection = this.jodit.editorWindow.getSelection();
+            const range: Range | null = sel.rangeCount ? sel.getRangeAt(0) : null;
+            if (range) {
+               this.bufferRange = range.cloneRange();
+            }
+        } else {
+            this.bufferRange = null;
+        }
 
         this.startDragPoint.x = event.clientX;
         this.startDragPoint.y = event.clientY;
@@ -97,7 +108,7 @@ export class DragAndDrop extends Plugin {
             }
 
             const sel: Selection = this.jodit.editorWindow.getSelection();
-            const range: Range | null = sel.rangeCount ? sel.getRangeAt(0) : null;
+            const range: Range | null = this.bufferRange || (sel.rangeCount ? sel.getRangeAt(0) : null);
 
 
             let fragment: DocumentFragment | HTMLElement | null = null;
@@ -124,7 +135,13 @@ export class DragAndDrop extends Plugin {
             this.jodit.selection.insertCursorAtPoint(event.clientX, event.clientY);
 
             if (fragment) {
-                this.jodit.selection.insertNode(fragment, false);
+                this.jodit.selection.insertNode(fragment, false, false);
+                if (range && fragment.firstChild && fragment.lastChild) {
+                    range.setStartBefore(fragment.firstChild);
+                    range.setEndAfter(fragment.lastChild);
+                    this.jodit.selection.selectRange(range);
+                    this.jodit.events.fire('synchro');
+                }
             }
 
             event.preventDefault();

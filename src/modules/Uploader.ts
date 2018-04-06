@@ -502,7 +502,7 @@ export class Uploader {
                 }
 
                 if (browser('ff') || isIE()) {
-                    if (!e.clipboardData.types.length && e.clipboardData.types[0] !== TEXT_PLAIN) {
+                    if (e.clipboardData && (!e.clipboardData.types.length && e.clipboardData.types[0] !== TEXT_PLAIN)) {
                         const div: HTMLDivElement = <HTMLDivElement>dom('<div tabindex="-1" style="left: -9999px; top: 0; width: 0; height: 100%; line-height: 140%; overflow: hidden; position: fixed; z-index: 2147483647; word-break: break-all;" contenteditable="true"></div>', this.jodit.ownerDocument);
                         this.jodit.ownerDocument.body.appendChild(div);
 
@@ -559,9 +559,8 @@ export class Uploader {
                 if (hasFiles(event)) {
                     form.classList.contains('jodit_draghover') ||
                     form.classList.add('jodit_draghover');
+                    event.preventDefault();
                 }
-
-                event.preventDefault();
             })
             .on(form, "dragend", (event: DragEvent) => {
                 if (hasFiles(event)) {
