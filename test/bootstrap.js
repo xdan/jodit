@@ -480,3 +480,32 @@ function offset(el) {
 
 })();
 
+// Files
+var FileImage = function () {
+    return {
+        name: 'logo.gif',
+        dataURI: 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==',
+        type : 'image/gif'
+    };
+};
+// Files
+var FileXLS = function () {
+    return {
+        name: 'file.xls',
+        type : 'application/xls'
+    };
+};
+
+window.FileReader = function () {
+    var self = this;
+    self.result = null;
+    /**
+     *
+     * @param {FileImage} file
+     */
+    self.readAsDataURL = function (file) {
+        self.result = file.dataURI;
+        self.onloadend && self.onloadend();
+    }
+};
+

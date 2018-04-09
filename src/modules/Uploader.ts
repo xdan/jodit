@@ -29,6 +29,7 @@ export type UploaderAnswer = {
 
 type HandlerSuccess = (resp: UploaderData) => void;
 type HandlerError = (e: Error) => void;
+type BuildDataResult = FormData | {[key: string]: string} | Promise<FormData | {[key: string]: string}> | string;
 
 /**
  * @property {object} uploader {@link Uploader|Uploader}'s settings
@@ -157,12 +158,14 @@ type HandlerError = (e: Error) => void;
  */
 export type UploaderOptions = {
     url: string;
+    insertImageAsBase64URI: boolean;
+    imagesExtensions: string[];
     headers?: {[key: string]: string} | null,
     data: null|object,
     format: string;
 
     prepareData: (this: Uploader, formData: FormData) => any;
-    buildData?: (this: Uploader, formData: any) => FormData | {[key: string]: string} | Promise<FormData | {[key: string]: string}>;
+    buildData?: (this: Uploader, formData: any) => BuildDataResult;
     queryBuild?: (this: Ajax, obj: string | {[key: string] : string | object} | FormData, prefix?: string) => string | object;
 
     isSuccess: (this: Uploader, resp: UploaderAnswer) => boolean;
@@ -199,8 +202,11 @@ declare module "../Config" {
  */
 Config.prototype.enableDragAndDropFileToEditor = true;
 
+
 Config.prototype.uploader = <UploaderOptions>{
     url: '',
+    insertImageAsBase64URI: false,
+    imagesExtensions: ['jpg', 'png', 'jpeg', 'gif'],
     headers: null,
     data: null,
 
@@ -238,7 +244,12 @@ Config.prototype.uploader = <UploaderOptions>{
                     elm.innerText = resp.baseurl + filename;
                 }
 
-                this.selection.insertNode(elm);
+
+                if (tagName === 'img') {
+                    this.selection.insertImage(<HTMLImageElement>elm);
+                } else {
+                    this.selection.insertNode(elm);
+                }
             })
         }
     },
@@ -272,14 +283,16 @@ export class Uploader {
             options
         );
 
-        if (editor instanceof Jodit && editor.options.enableDragAndDropFileToEditor && editor.options.uploader && editor.options.uploader.url) {
+        if (editor instanceof Jodit && editor.options.enableDragAndDropFileToEditor && editor.options.uploader && (
+            editor.options.uploader.url || editor.options.uploader.insertImageAsBase64URI
+        )) {
             editor.events.on('afterInit', () => {
                 this.bind(editor.editor);
             });
         }
     }
 
-    buildData(data: FormData | {[key: string]: string}): FormData | {[key: string]: string} | Promise<FormData | {[key: string]: string}>{
+    buildData(data: FormData | {[key: string]: string} | string): BuildDataResult {
         if (this.options.buildData && typeof this.options.buildData === 'function') {
             return this.options.buildData.call(this, data);
         }
@@ -306,8 +319,8 @@ export class Uploader {
 
 
     send(data: FormData | {[key: string]: string}, success: (resp: UploaderAnswer) => void): Promise<any> {
-        const requestData = this.buildData(data),
-            sendData = (request: FormData | {[key: string]: string}): Promise<any> => {
+        const requestData: BuildDataResult = this.buildData(data),
+            sendData = (request: FormData | {[key: string]: string} | string): Promise<any> => {
                 const ajax: Ajax = new Ajax(this.jodit || this, {
                     xhr: () => {
                         const xhr: XMLHttpRequest = new XMLHttpRequest();
@@ -359,67 +372,105 @@ export class Uploader {
         }
     }
 
-    sendFiles(files: FileList | File[] | null, handlerSuccess?: HandlerSuccess, handlerError?: HandlerError, process?: Function): Promise<any> {
+    sendFiles(files: FileList | Array<File> | null, handlerSuccess?: HandlerSuccess, handlerError?: HandlerError, process?: Function): Promise<any> {
         if (!files) {
             return Promise.reject(new Error('Need files'));
         }
 
-        let len: number = files.length,
-            i: number,
-            form: FormData,
-            extension: string,
-            keys: string[],
-            uploader: Uploader = this;
+        const uploader: Uploader = this;
 
-        if (!len) {
+
+        let fileList: File[] = [].slice.call(files);
+
+        if (!fileList.length) {
             return Promise.reject(new Error('Need files'));
         }
 
-        form = new FormData();
+        const promises: Promise<any>[] = [];
 
-        form.append('path', uploader.path);
-        form.append('source', uploader.source);
+        if (this.options.insertImageAsBase64URI) {
+            let file: File, i: number;
+            for (i = 0; i < fileList.length; i += 1) {
+                file = fileList[i];
+                if (file && file.type) {
+                    const mime: string[] = <string[]>file.type.match(/\/([a-z0-9]+)/i);
+                    const extension: string = mime[1] ? mime[1].toLowerCase() : '';
+                    if (this.options.imagesExtensions.indexOf(extension) !== - 1) {
+                        const reader: FileReader  = new FileReader();
+                        promises.push(new Promise<any>((resolve, reject) => {
+                            reader.onerror = reject;
+                            reader.onloadend = function () {
+                                const resp: UploaderData = <UploaderData>{
+                                    baseurl: '',
+                                    files: [reader.result],
+                                    isImages: [true],
+                                };
 
-        let file: File;
-        for (i = 0; i < len; i += 1) {
-            file = files[i];
-            if (file && file.type) {
-                const mime: string[] = <string[]>file.type.match(/\/([a-z0-9]+)/i);
-                extension = mime[1] ? mime[1].toLowerCase() : '';
-                form.append("files[" + i + "]", files[i], files[i].name || Math.random().toString().replace('.', '') + '.' + extension);
-            }
-        }
+                                if (typeof (handlerSuccess || uploader.options.defaultHandlerSuccess) === 'function') {
+                                    (<HandlerSuccess>(handlerSuccess || uploader.options.defaultHandlerSuccess)).call(uploader, resp);
+                                }
 
-
-        if (process) {
-            process(form);
-        }
-
-        if (uploader.options.data && isPlainObject(uploader.options.data)) {
-            keys = Object.keys(uploader.options.data);
-            for (i = 0; i < keys.length; i += 1) {
-                form.append(keys[i], (<any>uploader.options.data)[keys[i]]);
-            }
-        }
-
-        uploader.options.prepareData.call(this, form);
-
-        return uploader
-            .send(form, (resp: UploaderAnswer) => {
-                if (this.options.isSuccess.call(uploader, resp)) {
-                    if (typeof (handlerSuccess || uploader.options.defaultHandlerSuccess) === 'function') {
-                        (<HandlerSuccess>(handlerSuccess || uploader.options.defaultHandlerSuccess)).call(uploader, <UploaderData>uploader.options.process.call(uploader, resp));
-                    }
-                } else {
-                    if (typeof (handlerError || uploader.options.defaultHandlerError)) {
-                        (<HandlerError>(handlerError || uploader.options.defaultHandlerError)).call(uploader, new Error(uploader.options.getMessage.call(uploader, resp)));
-                        return;
+                                resolve(resp);
+                            };
+                            reader.readAsDataURL(file);
+                        }));
+                        (<any>fileList[i]) = null;
                     }
                 }
-            })
-            .then(() => {
-                this.jodit.events && this.jodit.events.fire('filesWereUploaded');
-            });
+            }
+        }
+
+        fileList = fileList.filter(a => a);
+
+        if (fileList.length) {
+            const form: FormData = new FormData();
+
+            form.append('path', uploader.path);
+            form.append('source', uploader.source);
+
+            let file: File;
+            for (let i = 0; i < fileList.length; i += 1) {
+                file = fileList[i];
+                if (file && file.type) {
+                    const mime: string[] = <string[]>file.type.match(/\/([a-z0-9]+)/i);
+                    const extension: string = mime[1] ? mime[1].toLowerCase() : '';
+                    form.append("files[" + i + "]", fileList[i], fileList[i].name || Math.random().toString().replace('.', '') + '.' + extension);
+                }
+            }
+
+
+            if (process) {
+                process(form);
+            }
+
+            if (uploader.options.data && isPlainObject(uploader.options.data)) {
+                Object.keys(uploader.options.data).forEach((key: string) => {
+                    form.append(key, (<any>uploader.options.data)[key]);
+                });
+            }
+
+            uploader.options.prepareData.call(this, form);
+
+            promises.push(uploader
+                .send(form, (resp: UploaderAnswer) => {
+                    if (this.options.isSuccess.call(uploader, resp)) {
+                        if (typeof (handlerSuccess || uploader.options.defaultHandlerSuccess) === 'function') {
+                            (<HandlerSuccess>(handlerSuccess || uploader.options.defaultHandlerSuccess)).call(uploader, <UploaderData>uploader.options.process.call(uploader, resp));
+                        }
+                    } else {
+                        if (typeof (handlerError || uploader.options.defaultHandlerError)) {
+                            (<HandlerError>(handlerError || uploader.options.defaultHandlerError)).call(uploader, new Error(uploader.options.getMessage.call(uploader, resp)));
+                            return;
+                        }
+                    }
+                })
+                .then(() => {
+                    this.jodit.events && this.jodit.events.fire('filesWereUploaded');
+                })
+            );
+        }
+
+        return Promise.all(promises);
     }
     /**
      * It sets the path for uploading files
@@ -440,16 +491,22 @@ export class Uploader {
         this.source = source;
     }
 
-    static dataURItoBlob(dataURI: string) {
+    /**
+     * Convert dataURI to Blob
+     *
+     * @param {string} dataURI
+     * @return {Blob}
+     */
+    static dataURItoBlob(dataURI: string): Blob {
         // convert base64 toWYSIWYG raw binary data held in a string
         // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
-        let byteString = atob(dataURI.split(',')[1]),
+        let byteString: string = atob(dataURI.split(',')[1]),
             // separate out the mime component
-            mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0],
+            mimeString: string = dataURI.split(',')[0].split(':')[1].split(';')[0],
             // write the bytes of the string toWYSIWYG an ArrayBuffer
-            ab = new ArrayBuffer(byteString.length),
-            i,
-            ia = new Uint8Array(ab);
+            ab: ArrayBuffer = new ArrayBuffer(byteString.length),
+            i: number,
+            ia: Uint8Array = new Uint8Array(ab);
 
         for (i = 0; i < byteString.length; i += 1) {
             ia[i] = byteString.charCodeAt(i);
@@ -473,7 +530,7 @@ export class Uploader {
      * ```javascript
      * var $form = jQuery('<form><input type="text" typpe="file"></form>');
      * jQuery('body').append($form);
-     * Jodit.editors.someidfoeditor.uploader.bind($form, function (files) {
+     * Jodit.editors.someidfoeditor.uploader.bind($form[0], function (files) {
      *     var i;
      *     for (i = 0; i < data.files.length; i += 1) {
      *         parent.selection.insertImage(data.files[i])
@@ -555,6 +612,9 @@ export class Uploader {
         const hasFiles = (event: DragEvent) : boolean => event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files.length !== 0;
 
         self.jodit.events
+            .on(form,'dragend dragover dragenter dragleave drop', (e: DragEvent) => {
+                e.preventDefault();
+            })
             .on(form, "dragover", (event: DragEvent) => {
                 if (hasFiles(event)) {
                     form.classList.contains('jodit_draghover') ||
@@ -570,7 +630,6 @@ export class Uploader {
             })
             .on(form, "drop", (event: DragEvent): false | void => {
                 form.classList.remove('jodit_draghover');
-
                 if (hasFiles(event)) {
                     event.preventDefault();
                     event.stopImmediatePropagation();
@@ -578,7 +637,7 @@ export class Uploader {
                 }
             });
 
-        const inputFile: HTMLInputElement|null = form.querySelector('input[type=file]');
+        const inputFile: HTMLInputElement | null = form.querySelector('input[type=file]');
 
         if (inputFile) {
             self.jodit.events.on(inputFile, 'change', function (this: HTMLInputElement) {

@@ -30,7 +30,7 @@ type AjaxOptions  = {
 
     url?: string;
 
-    data: {[key: string]: string}|null|FormData
+    data: {[key: string]: string} | null | FormData | string
 
     contentType?: string | false;
 
@@ -116,6 +116,10 @@ export class Ajax {
         if (this.options.xhr) {
             this.xhr = this.options.xhr();
         }
+
+        editor && editor.events && editor.events.on('beforeDestruct', () => {
+            this.abort();
+        });
     }
 
     send(): Promise<any> {

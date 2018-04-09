@@ -698,10 +698,6 @@ Config.prototype.controls = {
     },
     image : <ControlType> {
         popup: (editor: Jodit, current: HTMLImageElement|false, self: ControlType, close) => {
-            const insertImage = (url: string) => {
-                editor.selection.insertNode(dom('<img src="' + url + '"/>', editor.editorDocument));
-            };
-
             let sourceImage: HTMLImageElement | null = null;
 
             if (current && current.nodeType !== Node.TEXT_NODE && (current.tagName === 'IMG' || $$('img', current).length)) {
@@ -713,7 +709,7 @@ Config.prototype.controls = {
                     if (data.files && data.files.length) {
                         let i: number;
                         for (i = 0; i < data.files.length; i += 1) {
-                            insertImage(data.baseurl + data.files[i]);
+                            editor.selection.insertImage(data.baseurl + data.files[i]);
                         }
                     }
                     close();
@@ -722,20 +718,21 @@ Config.prototype.controls = {
                     let i;
                     if (data.files && data.files.length) {
                         for (i = 0; i < data.files.length; i += 1) {
-                            insertImage(data.baseurl + data.files[i]);
+                            editor.selection.insertImage(data.baseurl + data.files[i]);
                         }
                     }
                     close();
                 },
                 url: (url: string, text: string) => {
-                    const image = sourceImage || dom('<img src=""/>', editor.editorDocument);
+                    const image: HTMLImageElement = sourceImage || <HTMLImageElement>dom('<img src=""/>', editor.editorDocument);
 
                     image.setAttribute('src', url);
                     image.setAttribute('alt', text);
 
                     if (!sourceImage) {
-                        editor.selection.insertNode(image);
+                        editor.selection.insertImage(image);
                     }
+
                     close();
                 }
             }, sourceImage, close);

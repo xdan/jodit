@@ -399,8 +399,12 @@ export class Select extends Component{
             throw new Error('Jodit does\'n support this browser')
         }
 
-        if (fireChange) {
-            this.jodit.setEditorValue();
+        if (fireChange && this.jodit.events) {
+            this.jodit.events.fire('synchro');
+        }
+
+        if (this.jodit.events) {
+            this.jodit.events.fire('afterInsertNode', node);
         }
     }
 
@@ -478,19 +482,14 @@ export class Select extends Component{
      * @fired afterInsertImage
      */
     insertImage(url: string | HTMLImageElement, styles: {[key: string]: string} = {}) {
-        let dw: string;
-        const image: HTMLImageElement = typeof url === 'string' ? <HTMLImageElement>dom('<img src=""/>', this.jodit.editorDocument) : <HTMLImageElement>dom(url, this.jodit.editorDocument);
 
-        // delete selected
-        if (!this.isCollapsed()) {
-            this.jodit.execCommand('Delete');
-        }
+        const image: HTMLImageElement = typeof url === 'string' ? <HTMLImageElement>dom('<img src=""/>', this.jodit.editorDocument) : <HTMLImageElement>dom(url, this.jodit.editorDocument);
 
         if (typeof url === 'string') {
             image.setAttribute('src', url);
         }
 
-        dw = this.jodit.options.imageDefaultWidth.toString();
+        let dw: string = this.jodit.options.imageDefaultWidth.toString();
         if (dw && "auto" !== dw && (String(dw)).indexOf("px") < 0 && (String(dw)).indexOf("%") < 0) {
             dw += "px";
         }

@@ -99,7 +99,7 @@ export class DragAndDrop extends Plugin {
     };
 
     private onDrop = (event: DragEvent): false | void => {
-        if (!event.dataTransfer.files.length) {
+        if (!event.dataTransfer.files || !event.dataTransfer.files.length) {
             if (!this.isFragmentFromEditor && !this.draggable) {
                 this.jodit.events.fire('paste', event);
                 event.preventDefault();
@@ -141,6 +141,9 @@ export class DragAndDrop extends Plugin {
                     range.setEndAfter(fragment.lastChild);
                     this.jodit.selection.selectRange(range);
                     this.jodit.events.fire('synchro');
+                }
+                if (fragment.nodeName === 'IMG' && this.jodit.events) {
+                    this.jodit.events.fire('afterInsertImage', fragment);
                 }
             }
 
