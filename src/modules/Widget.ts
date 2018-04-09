@@ -261,7 +261,9 @@ export namespace Widget {
         let currentImage: any;
         const tabs: { [key: string]: HTMLElement | Function } = {};
 
-        if (callbacks.upload && editor.options.uploader && editor.options.uploader.url) {
+        if (callbacks.upload && editor.options.uploader &&
+            (editor.options.uploader.url || editor.options.uploader.insertImageAsBase64URI)
+        ) {
             const dragbox: HTMLElement = dom('<div class="jodit_draganddrop_file_box">' +
                     '<strong>' + editor.i18n(isImage ? 'Drop image' : 'Drop file') + '</strong>' +
                     '<span><br> ' + editor.i18n('or click') + '</span>' +
