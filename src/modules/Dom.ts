@@ -300,7 +300,7 @@ export class Dom {
      * @param {string|boolean} [child=firstChild] firstChild or lastChild
      * @return {Node|Boolean}
      */
-    static find(node: Node, condition: (element: Node|null) => boolean | null, root: HTMLElement|Node, recurse = false, sibling = 'nextSibling', child: string|false = 'firstChild') : false|Node {
+    static find(node: Node, condition: (element: Node|null) => boolean | null, root: HTMLElement | Node, recurse = false, sibling = 'nextSibling', child: string|false = 'firstChild') : false|Node {
         if (recurse && condition(node)) {
             return node;
         }

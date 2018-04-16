@@ -641,7 +641,14 @@ export class Uploader {
 
         if (inputFile) {
             self.jodit.events.on(inputFile, 'change', function (this: HTMLInputElement) {
-                self.sendFiles(this.files, handlerSuccess, handlerError);
+                self.sendFiles(this.files, handlerSuccess, handlerError).then(() => {
+                    inputFile.value = '';
+
+                    if(!/safari/i.test(navigator.userAgent)){
+                        inputFile.type = '';
+                        inputFile.type = 'file'
+                    }
+                });
             });
         }
 

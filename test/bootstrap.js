@@ -163,6 +163,7 @@ Jodit.prototype.i18n = function (key) {
 };
 
 Jodit.defaultOptions.observer.timeout = 0;
+Jodit.defaultOptions.cleanHTML.timeout = 0;
 Jodit.defaultOptions.useAceEditor = false;
 Jodit.defaultOptions.language = 'en';
 // Jodit.defaultOptions.iframe = true; // try uncomment sometime
@@ -495,17 +496,18 @@ var FileXLS = function () {
         type : 'application/xls'
     };
 };
-
-window.FileReader = function () {
-    var self = this;
-    self.result = null;
-    /**
-     *
-     * @param {FileImage} file
-     */
-    self.readAsDataURL = function (file) {
-        self.result = file.dataURI;
-        self.onloadend && self.onloadend();
-    }
-};
+if ((typeof window.chai !== 'undefined')) {
+    window.FileReader = function () {
+        var self = this;
+        self.result = null;
+        /**
+         *
+         * @param {FileImage} file
+         */
+        self.readAsDataURL = function (file) {
+            self.result = file.dataURI;
+            self.onloadend && self.onloadend();
+        }
+    };
+}
 

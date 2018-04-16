@@ -1202,3 +1202,8 @@ export class JoditObject {
         extend(true, this, data);
     }
 }
+
+export const getRange = () => {
+    var range = window.getSelection().getRangeAt(0);
+    return [range.startContainer, range.startOffset, range.endContainer, range.endOffset];
+};

@@ -82,6 +82,20 @@ describe('Selection Module Tests', function() {
     });
     describe('cursorInTheEdge', function () {
         describe('Cursor in the text', function () {
+            describe('Cursor in the end of text node but after this has BR', function () {
+                it('Should return true', function() {
+                    var editor = new Jodit(appendTestArea());
+                    editor.setEditorValue('<p>test<br></p>');
+
+                    var range = editor.editorDocument.createRange();
+
+                    range.setStart(editor.editor.firstChild.firstChild, 4);
+                    range.collapse(true);
+                    editor.selection.selectRange(range);
+
+                    expect(editor.selection.cursorInTheEdge(false, editor.editor.firstChild)).to.be.true
+                });
+            });
             describe('Cursor in the end of text node but after this has image', function () {
                 it('Should return false', function() {
                     var editor = new Jodit(appendTestArea());

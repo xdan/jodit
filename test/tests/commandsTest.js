@@ -493,7 +493,7 @@ describe('Commands Jodit Editor Tests', function() {
 
             editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
 
-            expect(editor.getEditorValue()).to.equal('<ul><li>test</li><li> a </li></ul>');
+            expect(editor.getEditorValue()).to.equal('<ul><li>test</li><li> a <br></li></ul>');
         });
         it('If press Enter inside <li> inside some text should split that text and created new <li> and cursor must be in it', function () {
             var editor = new Jodit(appendTestArea());

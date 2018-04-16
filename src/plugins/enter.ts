@@ -5,7 +5,7 @@
  */
 
 import {Jodit} from '../Jodit';
-import {$$, scrollIntoView} from "../modules/Helpers"
+import {$$, getRange, scrollIntoView} from "../modules/Helpers"
 import * as consts from '../constants';
 import {Dom} from "../modules/Dom";
 
@@ -24,7 +24,7 @@ export const insertParagraph = (editor: Jodit, fake ?: Text | false, wrapperTag 
     }
 
     const p: HTMLElement = editor.editorDocument.createElement(wrapperTag),
-        helper_node: Text = editor.editorDocument.createTextNode(consts.INVISIBLE_SPACE);
+        helper_node: HTMLBRElement = editor.editorDocument.createElement('br');
 
     p.appendChild(helper_node);
 
@@ -33,7 +33,13 @@ export const insertParagraph = (editor: Jodit, fake ?: Text | false, wrapperTag 
     }
 
     editor.selection.insertNode(p, false, false);
-    editor.selection.setCursorIn(p);
+    editor.selection.setCursorBefore(helper_node);
+
+    const range: Range = editor.editorDocument.createRange();
+    range.setStartBefore(helper_node);
+    range.collapse(true);
+
+    editor.selection.selectRange(range);
 
     if (fake && fake.parentNode) {
         fake.parentNode.removeChild(fake);
@@ -41,7 +47,7 @@ export const insertParagraph = (editor: Jodit, fake ?: Text | false, wrapperTag 
 
     scrollIntoView(p, editor.editor, editor.editorDocument);
 
-    editor.setEditorValue(); // fire change
+    editor.events && editor.events.fire('synchro'); // fire change
 
     return p;
 };
@@ -50,37 +56,15 @@ export const insertParagraph = (editor: Jodit, fake ?: Text | false, wrapperTag 
  * One of most important core plugins. It is responsible for all the browsers to have the same effect when the Enter button is pressed. By default, it should insert the <p>
  */
 export function enter(editor: Jodit) {
-    editor.events.on('keyup', () => {
-        if (editor.options.readonly) {
-            return;
-        }
-
-        const current: false | Node = editor.selection.current();
-
-        if (current) {
-            const currentParagraph: Node | false = Dom.up(current, Dom.isBlock, editor.editor);
-            if (currentParagraph) {
-                Dom.all(currentParagraph, (node: Node) => {
-                    if (node.nodeType === Node.TEXT_NODE) {
-                        if (node.nodeValue !== null && consts.INVISIBLE_SPACE_REG_EXP.test(node.nodeValue) && node.nodeValue.replace(consts.INVISIBLE_SPACE_REG_EXP, '').length !== 0) {
-                            node.nodeValue = node.nodeValue.replace(consts.INVISIBLE_SPACE_REG_EXP, '');
-                            if (node === current && editor.selection.isCollapsed()) {
-                                editor.selection.setCursorAfter(node);
-                            }
-                        }
-                    }
-                });
-            }
-        }
-    });
     editor.events.on('keydown', (event: KeyboardEvent): false | void => {
-        if (event.which === consts.KEY_ENTER || event.keyCode === consts.KEY_ENTER) {
+        if (event.which === consts.KEY_ENTER) {
             /**
              * Fired on processing `Enter` key. If return some value, plugin `enter` will do nothing. if return false - prevent default Enter behavior
              *
              * @event beforeEnter
              */
             const beforeEnter = editor.events.fire('beforeEnter', event);
+
             if (beforeEnter !== undefined) {
                 return beforeEnter;
             }
@@ -112,7 +96,6 @@ export function enter(editor: Jodit) {
                 range.collapse(false);
                 sel.removeAllRanges();
                 sel.addRange(range);
-
             }
 
 
@@ -121,12 +104,12 @@ export function enter(editor: Jodit) {
             // if use <br> tag for break line or when was entered SHIFt key or in <td> or <th> or <blockquote>
             if (editor.options.enter.toLowerCase() === consts.BR.toLowerCase() || event.shiftKey || Dom.closest(current, 'PRE|BLOCKQUOTE', editor.editor)) {
                 const br: HTMLBRElement = editor.editorDocument.createElement('br');
-                editor.selection.insertNode(br);
+                editor.selection.insertNode(br, true);
                 scrollIntoView(br, editor.editor, editor.editorDocument);
                 return false;
             }
 
-
+            // wrap no wrapped element
             if (!currentBox && current && !Dom.prev(current, (elm: Node | null) => (Dom.isBlock(elm) || (!!elm && Dom.isImage(elm, editor.ownerWindow))), editor.editor)) {
                 let needWrap: Node = current;
 
@@ -137,18 +120,32 @@ export function enter(editor: Jodit) {
                 }, editor.editor);
 
                 currentBox = Dom.wrapInline(needWrap, editor.options.enter, editor);
+
+                if (Dom.isEmpty(currentBox)) {
+                    const helper_node: HTMLBRElement = editor.editorDocument.createElement('br');
+
+                    currentBox.appendChild(helper_node);
+                    editor.selection.setCursorBefore(helper_node);
+                }
+
                 range = sel.rangeCount ? sel.getRangeAt(0) : editor.editorDocument.createRange();
             }
 
+            let isLi: boolean = false,
+                fake: Text | false = false,
+                insertNew: boolean = false;
+
             if (currentBox) {
                 if (!Dom.canSplitBlock(currentBox, editor.editorWindow)) {
-                    let br = editor.editorDocument.createElement('br');
+                    const br: HTMLBRElement = editor.editorDocument.createElement('br');
                     editor.selection.insertNode(br, false);
                     editor.selection.setCursorAfter(br);
                     return false;
                 }
 
-                if (currentBox.nodeName === 'LI') {
+
+                isLi = currentBox.nodeName === 'LI';
+                if (isLi) {
                     if (Dom.isEmpty(currentBox)) {
                         let fake: Text | false = false;
                         const ul: HTMLUListElement = <HTMLUListElement>Dom.closest(currentBox, 'ol|ul', editor.editor);
@@ -186,19 +183,21 @@ export function enter(editor: Jodit) {
 
                 if (editor.selection.cursorInTheEdge(true, currentBox)) {
                     // if we are in the left edge of paragraph
-                    let fake: Text | false = editor.selection.setCursorBefore(currentBox);
-
-                    insertParagraph(editor, fake, currentBox.nodeName === 'LI' ? 'li' : editor.options.enter, currentBox.style);
-
+                    fake = editor.selection.setCursorBefore(currentBox);
+                    insertParagraph(editor, fake, isLi ? 'li' : editor.options.enter, currentBox.style);
                     editor.selection.setCursorIn(currentBox, true);
-                } else if (editor.selection.cursorInTheEdge(false, currentBox) === false) {
+                    return false;
+                }
+
+                if (editor.selection.cursorInTheEdge(false, currentBox) === false) {
                     // if we are not in right edge of paragraph
                     // split p,h1 etc on two parts
-                    let leftRange: Range = editor.editorDocument.createRange();
+                    const leftRange: Range = editor.editorDocument.createRange();
 
                     leftRange.setStartBefore(currentBox);
                     leftRange.setEnd(range.startContainer, range.startOffset);
-                    let fragment: DocumentFragment = leftRange.extractContents();
+
+                    const fragment: DocumentFragment = leftRange.extractContents();
 
                     if (currentBox.parentNode) {
                         currentBox.parentNode.insertBefore(fragment, currentBox);
@@ -206,11 +205,14 @@ export function enter(editor: Jodit) {
 
                     editor.selection.setCursorIn(currentBox, true);
                 } else {
-                    let fake: Text | false = editor.selection.setCursorAfter(currentBox);
-                    insertParagraph(editor, fake,  currentBox.nodeName === 'LI' ? 'li' : editor.options.enter, currentBox.style);
+                    fake = editor.selection.setCursorAfter(currentBox);
                 }
             } else {
-                insertParagraph(editor);
+                insertNew = true;
+            }
+
+            if (insertNew || fake) {
+                insertParagraph(editor, fake, isLi ? 'li' : editor.options.enter, currentBox ? currentBox.style : void(0));
             }
 
             return false;

@@ -631,7 +631,7 @@ export class Select extends Component{
             checkSiblings = (next: Node | false): false | void => {
                 while (next) {
                     next = sibling(next);
-                    if (next && !Dom.isEmptyTextNode(next)) {
+                    if (next && !Dom.isEmptyTextNode(next) && next.nodeName !== 'BR') {
                         return false;
                     }
                 }
@@ -642,7 +642,7 @@ export class Select extends Component{
             if (start && range.startOffset > value.length - value.replace(INVISIBLE_SPACE_REG_EXP_START, '').length) {
                 return false;
             }
-            if (!start  && range.startOffset < value.replace(INVISIBLE_SPACE_REG_EXP_END, '').length - 1) {
+            if (!start  && range.startOffset < value.replace(INVISIBLE_SPACE_REG_EXP_END, '').length) {
                 return false;
             }
 
@@ -686,6 +686,7 @@ export class Select extends Component{
         if (node.nodeType !== Node.TEXT_NODE) {
             fakeNode = this.jodit.editorDocument.createTextNode(consts.INVISIBLE_SPACE);
             range.setStartBefore(node);
+            range.collapse(true);
             range.insertNode(fakeNode);
             range.selectNode(fakeNode);
         } else {

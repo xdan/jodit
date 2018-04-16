@@ -128,7 +128,7 @@ export function backspace(editor: Jodit) {
             }
         })
         .on('keydown', (event: KeyboardEvent): false | void => {
-            if (event.which === consts.KEY_BACKSPACE || event.keyCode === consts.KEY_DELETE) {
+            if (event.which === consts.KEY_BACKSPACE || event.which === consts.KEY_DELETE) {
                 const toLeft: boolean = event.which === consts.KEY_BACKSPACE;
 
                 if (!editor.selection.isFocused()) {
