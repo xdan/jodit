@@ -12,7 +12,7 @@
       "homepage": "http://xdsoft.net/contacts.html"
     }
   ],
-  "license": "http://xdsoft.net/jodit/license.html",
+  "license": "GPL-2.0-or-later",
   "keywords": [
     "wysiwyg",
     "jquery",

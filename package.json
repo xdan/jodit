@@ -23,7 +23,7 @@
     "jodit"
   ],
   "author": "Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)",
-  "license": "SEE LICENSE IN <LICENSE>",
+  "license": "GPL-2.0-or-later",
   "bugs": {
     "url": "https://github.com/xdan/jodit/issues"
   },
@@ -60,12 +60,12 @@
     "precss": "^2.0.0",
     "style-loader": "^0.13.2",
     "svg-inline-loader": "^0.8.0",
-    "typescript": "^2.8.1",
+    "typescript": "^2.8.3",
     "url-loader": "^0.5.9",
     "webpack": "^3.11.0",
     "webpack-dev-middleware": "^1.12.2",
     "webpack-dev-server": "^2.11.1",
-    "webpack-hot-middleware": "^2.22.0"
+    "webpack-hot-middleware": "^2.22.1"
   },
   "dependencies": {}
 }
