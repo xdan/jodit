@@ -617,7 +617,7 @@ describe('Selection Module Tests', function() {
                 nodesNames.push(node.nodeName);
             });
 
-            expect([].toString().toLowerCase()).to.be.equal(nodesNames.toString().toLowerCase());
+            expect(['#text'].toString().toLowerCase()).to.be.equal(nodesNames.toString().toLowerCase());
         });
         it('Should call callback for current node if selection is collapsed', function () {
             var editor = new Jodit(appendTestArea());

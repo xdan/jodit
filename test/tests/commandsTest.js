@@ -831,6 +831,28 @@ describe('Commands Jodit Editor Tests', function() {
             expect('even').to.be.equal(editor.getEditorValue());
         });
     });
+    describe('Indent', function () {
+        describe('Exec Indent command several times', function () {
+            it('Should increase margin-left', function () {
+                var editor = new Jodit(appendTestArea());
+                editor.value = '<ul><li>test</li></ul>'
 
+                var range = editor.editorDocument.createRange();
+                range.setStart(editor.editor.firstChild.firstChild.firstChild, 0);
+                range.collapse(true);
+                editor.selection.selectRange(range);
+
+                editor.execCommand('indent');
+                expect(editor.value).to.be.equal('<ul><li style="margin-left: 10px;">test</li></ul>')
+
+                editor.execCommand('indent');
+                expect(editor.value).to.be.equal('<ul><li style="margin-left: 20px;">test</li></ul>')
+                editor.execCommand('indent');
+                expect(editor.value).to.be.equal('<ul><li style="margin-left: 30px;">test</li></ul>')
+                editor.execCommand('outdent');
+                expect(editor.value).to.be.equal('<ul><li style="margin-left: 20px;">test</li></ul>')
+            });
+        });
+    });
     afterEach(removeStuff);
 });

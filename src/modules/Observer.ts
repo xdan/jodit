@@ -91,6 +91,7 @@ export class Observer extends Component {
             .on('afterInit', () => {
                 this.__startValue = this.snapshot.make();
                 editor.events
+                    // save selection
                     .on('changeSelection selectionstart selectionchange mousedown mouseup keydown keyup', () => {
                         if (this.__startValue.html === this.jodit.getNativeEditorValue()) {
                             this.__startValue = this.snapshot.make();
@@ -108,14 +109,20 @@ export class Observer extends Component {
      * Return state of the WYSIWYG editor to step back
      */
     redo () {
-        this.stack.redo() && this.changeStack();
+        if (this.stack.redo()) {
+            this.__startValue = this.snapshot.make();
+            this.changeStack();
+        }
     }
 
     /**
      * Return the state of the WYSIWYG editor to step forward
      */
     undo () {
-        this.stack.undo() && this.changeStack();
+        if (this.stack.undo()) {
+            this.__startValue = this.snapshot.make();
+            this.changeStack();
+        }
     }
 
     clear() {

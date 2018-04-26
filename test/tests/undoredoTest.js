@@ -31,6 +31,42 @@ describe('Undo/Redo behaviors', function() {
 
             expect(editor.value).to.be.equal('<h1>test</h1>');
         });
+        describe('Several oprations', function () {
+            it('Should work perfect', function () {
+                var editor = new Jodit(appendTestArea());
+                editor.value = '<p>test</p>' +
+                    '<ul>' +
+                        '<li>test2</li>' +
+                        '<li>test3</li>' +
+                        '<li><a>test4</a></li>' +
+                    '</ul>';
+
+                var range = editor.editorDocument.createRange();
+                range.setStart(editor.editor.firstChild, 0);
+                range.setEnd(editor.editor.lastChild.firstChild, 1);
+                editor.selection.selectRange(range);
+
+                simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+
+                expect(editor.value).to.be.equal('<p><br></p><ul><li>test3</li><li><a>test4</a></li></ul>');
+
+                editor.execCommand('undo');
+
+                expect(editor.value).to.be.equal('<p>test</p><ul><li>test2</li><li>test3</li><li><a>test4</a></li></ul>');
+
+                range.setStart(editor.editor.firstChild.firstChild, 0);
+                range.setEnd(editor.editor.firstChild.firstChild, 3);
+                editor.selection.selectRange(range);
+
+                simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+
+                expect(editor.value).to.be.equal('<p>t</p><ul><li>test2</li><li>test3</li><li><a>test4</a></li></ul>');
+
+                editor.execCommand('undo');
+
+                expect(editor.value).to.be.equal('<p>test</p><ul><li>test2</li><li>test3</li><li><a>test4</a></li></ul>');
+            });
+        });
     });
     describe('Commands', function () {
         it('Undo. Enter text wait and again enter text. After execute "undo" command. First text should be returned', function() {

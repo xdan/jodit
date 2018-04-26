@@ -27,23 +27,30 @@ export class Stack {
 
     undo() : boolean {
         if (this.canUndo()) {
+
             if (this.commands[this.stackPosition]) {
                 this.commands[this.stackPosition].undo();
             }
+
             this.stackPosition -= 1;
+
             return true;
         }
+
         return false;
     }
 
     redo () : boolean {
         if (this.canRedo()) {
             this.stackPosition += 1;
+
             if (this.commands[this.stackPosition]) {
                 this.commands[this.stackPosition].redo();
             }
+
             return true;
         }
+
         return false;
     }
 

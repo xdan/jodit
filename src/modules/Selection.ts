@@ -568,6 +568,10 @@ export class Select extends Component{
                 callback(current);
             };
 
+            if (nodes.length === 0 && Dom.isEmptyTextNode(start)) {
+                nodes.push(start);
+            }
+
             nodes.forEach(forEvery)
         }
     };
