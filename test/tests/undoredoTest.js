@@ -42,13 +42,13 @@ describe('Undo/Redo behaviors', function() {
                     '</ul>';
 
                 var range = editor.editorDocument.createRange();
-                range.setStart(editor.editor.firstChild, 0);
+                range.setStart(editor.editor.firstChild.firstChild, 1);
                 range.setEnd(editor.editor.lastChild.firstChild, 1);
                 editor.selection.selectRange(range);
 
                 simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
 
-                expect(editor.value).to.be.equal('<p><br></p><ul><li>test3</li><li><a>test4</a></li></ul>');
+                expect(editor.value).to.be.equal('<p>t</p><ul><li>test3</li><li><a>test4</a></li></ul>');
 
                 editor.execCommand('undo');
 

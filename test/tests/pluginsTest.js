@@ -104,19 +104,27 @@ describe('Test plugins', function () {
         describe('For image', function () {
             it('Should copy format from one image to another', function () {
                 getBox().style.width = 'auto';
-                var editor = new Jodit(appendTestArea());
-                editor.value = '<img src="https://xdsoft.net/jodit/images/artio.jpg" style="height: 100px;width: 100px; margin: 20px; border: 1px solid #ccc; border-radius: 50%;"> test <img style="height: 100px;width: 100px;"  src="https://xdsoft.net/jodit/images/artio.jpg">';
+                var editor = new Jodit(appendTestArea()),
+                    html = '<img src="https://xdsoft.net/jodit/images/artio.jpg" ' +
+                        'style="height: 100px;width: 100px; margin: 20px; border-image: none; border:1px solid #CCCCCC; border-radius: 50%;"> test ' +
+                        '<img style="height: 100px;width: 100px;" src="https://xdsoft.net/jodit/images/artio.jpg">';
+
+                editor.value = html;
+                expect(sortAtrtibutes(editor.value)).to.be.equal(sortAtrtibutes(html));
 
                 simulateEvent('mousedown', 0, editor.editor.querySelector('img'));
 
-                simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-copyformat'))
+                simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-copyformat'));
 
                 simulateEvent('mousedown', 0, editor.editor.querySelectorAll('img')[1]);
                 simulateEvent('mouseup', 0, editor.editor.querySelectorAll('img')[1]);
 
-                expect(sortAtrtibutes(editor.value)).to.be.equal(
-                    '<img src="https://xdsoft.net/jodit/images/artio.jpg" style="border-radius:50%;border:1px solid #ccc;height:100px;margin:20px;width:100px"> test ' +
-                    '<img src="https://xdsoft.net/jodit/images/artio.jpg" style="border-color:#CCCCCC;border-radius:50%;border-style:solid;border-width:1px;height:100px;margin:20px;width:100px">'
+                expect(sortAtrtibutes(editor.value)).to.be.equal(sortAtrtibutes(
+                    '<img src="https://xdsoft.net/jodit/images/artio.jpg" ' +
+                        'style="border-image:none;border-radius:50%;border:1px solid #CCCCCC;height:100px;margin:20px;width:100px"> test ' +
+                    '<img src="https://xdsoft.net/jodit/images/artio.jpg" ' +
+                        'style="border-image:none;border-color:#CCCCCC;border-radius:50%;border-style:solid;border-width:1px;height:100px;margin:20px;width:100px">'
+                    )
                 );
 
             });

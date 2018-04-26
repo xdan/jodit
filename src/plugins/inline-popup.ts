@@ -456,9 +456,9 @@ export class inlinePopup extends Plugin{
             })
 
             .on('mousedown keydown touchstart', this.onSelectionStart)
-            .on([editor.ownerWindow, editor.editorWindow], 'scroll', this.hidePopup)
-            .on([editor.ownerWindow, editor.editorWindow],'mouseup keyup touchend', this.onSelectionEnd)
-            .on([editor.ownerWindow, editor.editorWindow],'mousedown keydown touchstart', this.checkIsTargetEvent)
+            .on([editor.ownerWindow], 'scroll', this.hidePopup)
+            .on([editor.ownerWindow],'mouseup keyup touchend', this.onSelectionEnd)
+            .on([editor.ownerWindow],'mousedown keydown touchstart', this.checkIsTargetEvent)
 
     }
     beforeDestruct(editor: Jodit) {
@@ -467,9 +467,9 @@ export class inlinePopup extends Plugin{
         this.target.parentNode && this.target.parentNode.removeChild(this.target);
 
         editor.events
-            .off([editor.ownerWindow, editor.editorWindow], 'scroll', this.hidePopup)
-            .off([editor.ownerWindow, editor.editorWindow],'mouseup keyup touchend', this.onSelectionEnd)
-            .off([editor.ownerWindow, editor.editorWindow],'mousedown keydown touchstart', this.checkIsTargetEvent);
+            .off([editor.ownerWindow], 'scroll', this.hidePopup)
+            .off([editor.ownerWindow],'mouseup keyup touchend', this.onSelectionEnd)
+            .off([editor.ownerWindow],'mousedown keydown touchstart', this.checkIsTargetEvent);
 
         super.destruct();
     }

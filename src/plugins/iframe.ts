@@ -223,7 +223,7 @@ export function iframe(editor: Jodit) {
                         editor.selection.setCursorIn(editor.editor);
                     }
                 })
-                .on(editor.editorWindow, 'mousedown touchend click mouseup mousemove scroll', (e: Event) => {
+                .on(editor.editorWindow, 'mousedown touchstart keydown keyup touchend click mouseup mousemove scroll', (e: Event) => {
                     editor.events && editor.events.fire && editor.events.fire(window, e);
                 });
 

@@ -228,6 +228,7 @@ describe('Test Inline mode', function () {
                     });
                     editor.value = '<p>test <img/> test</p>'
                     var img = editor.editor.querySelector('img');
+
                     simulateEvent('mousedown', 0, img);
                     var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
                     expect(popup).to.be.not.equal(null);

@@ -252,31 +252,63 @@ var sortStyles = function (matches) {
 
     styles = styles.map(trim).filter(function (elm) {
         return elm.length;
-    }).sort(function (a, b) {
-        return  (a < b) ? -1 : (a > b) ? 1 : 0;
-    });
-
-    styles = styles.map(function (elm) {
-        var keyvalue = elm.split(':').map(trim);
-
-        if (/rgb\(/.test(keyvalue[1])) {
-            keyvalue[1] = Jodit.modules.Helpers.normalizeColor(keyvalue[1]);
-        }
-
-        if (/font-family/i.test(keyvalue[0])) {
-            keyvalue[1] = keyvalue[1].split(',').map(Jodit.modules.Helpers.trim).join(',');
-        }
-
-        if (/%$/.test(keyvalue[1])) {
-            var fl = parseFloat(keyvalue[1]),
-                nt = parseInt(keyvalue[1], 10);
-            if (fl - nt > 0) {
-                keyvalue[1] = toFixedWithoutRounding(fl, 2) + '%'
-            }
-        }
-
-        return keyvalue.join(':');
     })
+
+    var border = null;
+    styles = styles
+        .map(function (elm) {
+            var keyvalue = elm.split(':').map(trim);
+
+            if (keyvalue[0] === 'border-image') {
+                return null;
+            }
+
+            if (/rgb\(/.test(keyvalue[1])) {
+                keyvalue[1] = keyvalue[1].replace(/rgb\([^\)]+\)/, function (match) {
+                    return Jodit.modules.Helpers.normalizeColor(match)
+                });
+            }
+
+            if (keyvalue[0].match(/^border$/)) {
+                keyvalue[1] = keyvalue[1].split(/[\s]+/)
+            }
+
+            if (keyvalue[0].match(/^border-(style|width|color)/)) {
+                if (border === null) {
+                    border = keyvalue;
+                    keyvalue[0] = 'border'
+                    keyvalue[1] = [keyvalue[1]]
+                } else {
+                    border[1].push(keyvalue[1]);
+                    return null;
+                }
+            }
+
+            if (/font-family/i.test(keyvalue[0])) {
+                keyvalue[1] = keyvalue[1].split(',').map(Jodit.modules.Helpers.trim).join(',');
+            }
+
+            if (/%$/.test(keyvalue[1])) {
+                var fl = parseFloat(keyvalue[1]),
+                    nt = parseInt(keyvalue[1], 10);
+                if (fl - nt > 0) {
+                    keyvalue[1] = toFixedWithoutRounding(fl, 2) + '%'
+                }
+            }
+
+            return keyvalue;
+        })
+        .filter(function (a) {
+            return a !== null
+        })
+        .map(function (a) {
+            return  a.map(function (item) {
+                return typeof item === 'string' ? item : item.sort().join(' ');
+            }).join(':');
+        })
+        .sort(function (a, b) {
+            return  (a < b) ? -1 : (a > b) ? 1 : 0;
+        });
 
     return styles.join(';')
 }
