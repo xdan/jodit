@@ -63,6 +63,7 @@ declare module "../Config" {
             replaceNBSP: boolean,
             cleanOnPaste: boolean,
             removeEmptyElements: boolean,
+            replaceOldTags: {[key:string]: string} | false,
             allowTags: false | string | {[key:string]: string},
             denyTags: false | string | {[key:string]: string}
         }
@@ -74,6 +75,10 @@ Config.prototype.cleanHTML = {
     removeEmptyElements: true,
     replaceNBSP: true,
     cleanOnPaste: true,
+    replaceOldTags: {
+        i: 'em',
+        b: 'strong',
+    },
     allowTags: false,
     denyTags: false,
 };
@@ -161,6 +166,7 @@ export function cleanHTML(editor: Jodit) {
 
         return false;
     };
+
     const isRemovableNode = (node: Node): boolean => {
         if (
             node.nodeType !== Node.TEXT_NODE &&
@@ -203,7 +209,21 @@ export function cleanHTML(editor: Jodit) {
                 let node: Node | null = null,
                     remove: Node[] = [],
                     work: boolean = false,
-                    i: number = 0;
+                    i: number = 0,
+                    replaceOldTags: {[key:string]: string} | false = editor.options.cleanHTML.replaceOldTags;
+
+                if (replaceOldTags && current) {
+                    const tags: string = Object.keys(replaceOldTags).join('|');
+                    if (editor.selection.isCollapsed()) {
+                        const oldParent: Node | false = Dom.closest(current, tags, editor.editor);
+                        if (oldParent) {
+                            const selInfo = editor.selection.save();
+                            const tagName: string = replaceOldTags[oldParent.nodeName.toLowerCase()] || replaceOldTags[oldParent.nodeName];
+                            Dom.replace(<HTMLElement>oldParent, tagName, true, false, editor.editorDocument);
+                            editor.selection.restore(selInfo);
+                        }
+                    }
+                }
 
                 const checkNode = (node: Element | Node | null): void => {
                     if (node) {

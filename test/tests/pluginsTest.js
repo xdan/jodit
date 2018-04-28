@@ -1555,6 +1555,26 @@ describe('Test plugins', function () {
                 expect('start test test test elm').to.be.equal(editor.getEditorValue().replace('<span>', '').replace('</span>', ''));
             });
         });
+        describe('Replace old tags', function () {
+            it('Should replace old tags to new', function () {
+                var editor = new Jodit(appendTestArea(), {
+                    cleanHTML: {
+                        timeout: 0
+                    }
+                });
+                editor.value = 'test <b>old</b> test';
+                var range = editor.editorDocument.createRange();
+                range.setStart(editor.editor.querySelector('b').firstChild, 2);
+                range.collapse(true);
+                editor.selection.selectRange(range);
+
+                simulateEvent('mousedown', 0, editor.editor);
+
+                editor.selection.insertHTML(' some ');
+
+                expect(editor.value).to.be.equal('test <strong>ol some d</strong> test');
+            });
+        });
         describe('Deny tags', function () {
             describe('Parameter like string', function () {
                 it('Should remove all tags in denyTags options', function () {
