@@ -1574,6 +1574,50 @@ describe('Test plugins', function () {
 
                 expect(editor.value).to.be.equal('test <strong>ol some d</strong> test');
             });
+            describe('Replace custom tags', function () {
+                it('Should replace tags', function () {
+                    var editor = new Jodit(appendTestArea(), {
+                        cleanHTML: {
+                            replaceOldTags: {
+                                p: 'div'
+                            },
+                            timeout: 0
+                        }
+                    });
+                    editor.value = '<p>test <b>old</b> test</p>';
+                    var range = editor.editorDocument.createRange();
+                    range.setStart(editor.editor.querySelector('b').firstChild, 2);
+                    range.collapse(true);
+                    editor.selection.selectRange(range);
+
+                    simulateEvent('mousedown', 0, editor.editor);
+
+                    editor.selection.insertHTML(' some ');
+
+                    expect(editor.value).to.be.equal('<div>test <strong>ol some d</strong> test</div>');
+                });
+            })
+            describe('Disable', function () {
+                it('Should not replace old tags to new', function () {
+                    var editor = new Jodit(appendTestArea(), {
+                        cleanHTML: {
+                            replaceOldTags: false,
+                            timeout: 0
+                        }
+                    });
+                    editor.value = 'test <b>old</b> test';
+                    var range = editor.editorDocument.createRange();
+                    range.setStart(editor.editor.querySelector('b').firstChild, 2);
+                    range.collapse(true);
+                    editor.selection.selectRange(range);
+
+                    simulateEvent('mousedown', 0, editor.editor);
+
+                    editor.selection.insertHTML(' some ');
+
+                    expect(editor.value).to.be.equal('test <b>ol some d</b> test');
+                });
+            });
         });
         describe('Deny tags', function () {
             describe('Parameter like string', function () {
