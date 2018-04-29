@@ -809,6 +809,9 @@ describe('Test image', function() {
                 div.parentNode && div.parentNode.removeChild(div);
             });
         });
+        // describe('Resize image', function () {
+        //     it('Should not be allow mo');
+        // });
     });
 
 
