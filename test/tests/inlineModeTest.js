@@ -217,6 +217,57 @@ describe('Test Inline mode', function () {
                 var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
                 expect(popup).to.be.not.equal(null);
             });
+            describe('After then selection was collapsed', function () {
+                it('Should hide inline popup', function () {
+                    var editor = new Jodit(appendTestDiv(), {
+                        preset: 'inline'
+                    });
+                    editor.value = 'test<br>test';
+                    editor.selection.select(editor.editor.firstChild);
+                    simulateEvent('selectionchange', 0, editor.editor);
+                    var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
+                    expect(popup).to.be.not.null;
+                    var range = editor.editorDocument.createRange();
+                    range.setStart(editor.editor.firstChild, 0);
+                    range.collapse(true);
+                    editor.selection.selectRange(range);
+                    simulateEvent('mousedown', 0, editor.editor)
+                    expect(popup.parentNode).to.be.null;
+                });
+            });
+            describe('Select some text in one editor and after this select focus in another', function () {
+                it('Should hide inline popup in first', function () {
+                    var editor = new Jodit(appendTestDiv(), {
+                            preset: 'inline',
+                            observer: {
+                                timeout: 0
+                            }
+                        }),
+                        editor2 = new Jodit(appendTestDiv(), {
+                            preset: 'inline',
+                            observer: {
+                                timeout: 0
+                            }
+                        });
+                    editor.value = 'test<br>test';
+                    editor2.value = 'test<br>test';
+
+                    editor.selection.select(editor.editor.firstChild);
+                    simulateEvent('mousedown', 0, editor.editor);
+                    simulateEvent('mouseup', 0, editor.editor);
+                    var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
+                    expect(popup).to.be.not.null;
+                    expect(popup.parentNode).to.be.not.null;
+
+                    var range = editor2.editorDocument.createRange();
+                    range.setStart(editor2.editor.firstChild, 0);
+                    range.collapse(true);
+                    editor2.selection.selectRange(range);
+                    simulateEvent('mousedown', 0, editor2.ownerWindow)
+
+                    expect(popup.parentNode).to.be.null;
+                });
+            });
         });
     });
     describe('In iframe mode', function () {

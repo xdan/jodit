@@ -7,7 +7,7 @@
 import {Jodit} from "../Jodit";
 import {Plugin} from "../modules/Plugin";
 import {ControlType, ToolbarCollection, ToolbarPopup} from "../modules/ToolbarCollection";
-import {css, offset, splitArray} from "../modules/Helpers";
+import {css, debounce, offset, splitArray} from "../modules/Helpers";
 import {Table} from "../modules/Table";
 import {Config} from "../Config";
 import {Widget} from "../modules/Widget";
@@ -357,30 +357,44 @@ export class inlinePopup extends Plugin{
         return true;
     };
 
-    private hidePopup = (root?: HTMLElement) => {
-        if (root && Dom.isOrContains(this.target, root instanceof ToolbarPopup ? root.target : root)) {
+    private hidePopup = (root?: HTMLElement | ToolbarPopup) => {
+        if (root && (
+            root instanceof (<any>this.jodit.editorWindow).Node || root instanceof ToolbarPopup
+        ) && Dom.isOrContains(this.target, root instanceof ToolbarPopup ? root.target : root)) {
             return;
         }
 
+        this.isTargetAction = false;
         this.isShown = false;
         this.popup.close();
         this.target.parentNode && this.target.parentNode.removeChild(this.target);
     };
 
+    // was started selection
     private isSelectionStarted = false;
 
-    private onSelectionEnd = () => {
+    private onSelectionEnd = debounce(() => {
         if (!this.jodit.isEditorMode()) {
             return;
         }
 
-        if (this.isSelectionStarted && !this.isTargetAction) {
-            this.isSelectionStarted = false;
-            this.onChangeSelection();
+        if (this.isSelectionStarted) {
+            if (!this.isTargetAction) {
+                this.onChangeSelection();
+            }
         }
-    };
+
+        this.isSelectionStarted = false;
+        this.isTargetAction = false
+
+    }, this.jodit.defaultTimeout);
 
     private isTargetAction: boolean = false;
+
+    /**
+     * Popup was opened for some selection text (not for image or link)
+     * @type {boolean}
+     */
     private isSelectionPopup: boolean = false;
 
     private onSelectionStart = (event: MouseEvent) => {
@@ -401,20 +415,30 @@ export class inlinePopup extends Plugin{
         }
     };
 
+    private hideIfCollapsed(): boolean{
+        if (this.jodit.selection.isCollapsed()) {
+            this.hidePopup();
+            return true;
+        }
+
+        return false;
+    };
+
     onChangeSelection = () => {
         if (!this.jodit.options.toolbarInline || !this.jodit.isEditorMode()) {
             return;
         }
+
+        if (this.hideIfCollapsed()) {
+            return;
+        }
+
         if (this.jodit.options.popup.selection !== undefined) {
-            if (!this.jodit.selection.isCollapsed()) {
+            const sel: Selection = this.jodit.editorWindow.getSelection();
+            if (sel.rangeCount) {
                 this.isSelectionPopup = true;
-                const sel: Selection = this.jodit.editorWindow.getSelection();
-                if (sel.rangeCount) {
-                    const range: Range = sel.getRangeAt(0);
-                    this.showPopup(() => offset(range, this.jodit, this.jodit.editorDocument), 'selection');
-                }
-            } else {
-                this.hidePopup();
+                const range: Range = sel.getRangeAt(0);
+                this.showPopup(() => offset(range, this.jodit, this.jodit.editorDocument), 'selection');
             }
         }
     };
@@ -450,7 +474,7 @@ export class inlinePopup extends Plugin{
             })
             .on('showPopup', (elm: HTMLElement | string, rect: () => Bound) => {
                 const elementName: string = (typeof elm === 'string' ? elm : elm.nodeName).toLowerCase();
-
+                this.isSelectionPopup = false;
                 this.showPopup(rect, elementName, typeof elm === 'string' ? void(0) : elm);
 
             })
