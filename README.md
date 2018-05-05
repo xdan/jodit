@@ -34,8 +34,8 @@ Include just two files
 ```
 ### CDN
 ```xml
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jodit/3.1.28/jodit.min.css">
-<script src="//cdnjs.cloudflare.com/ajax/libs/jodit/3.1.28/jodit.min.js"></script>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jodit/3.1.92/jodit.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/jodit/3.1.92/jodit.min.js"></script>
 ```
 ### USAGE
 
@@ -48,14 +48,14 @@ After this, you can init Jodit plugin
 
 ```javascript
 var editor = new Jodit('#editor');
-editor.setEditorValue('<p>start</p>')
+editor.value = '<p>start</p>';
 ```
 
 With jQuery
 ```javascript
 $('textarea').each(function (elm) {
     var editor = new Jodit(elm);
-    editor.setEditorValue('<p>start</p>')
+    editor.value = '<p>start</p>';
 });
 ```
 
@@ -160,10 +160,6 @@ https://github.com/xdan/jodit
 
 ## License
 
-Copyright (c) 2018 [Chupurnov Valeriy](https://xdsoft.net/jodit)
-
-Licensed for non-commercial under  [Creative Commons Attribution-NonCommercial 3.0 License](https://creativecommons.org/licenses/by-nc/3.0/)
-
-Another using  [license](https://xdsoft.net/jodit/license.html)
+Licensed under GNU General Public License v2.0 or later
 
 
