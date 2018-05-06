@@ -11,12 +11,12 @@ body {
     margin: 0;
 }
 .jodit_wysiwyg{
-    /*color: #000;*/
-    /*padding: 10px;*/
-    /*overflow-x: auto;*/
-    /*color: #000;*/
-    /*padding: 10px;*/
-    /*min-height: 40px;*/
+    color: #000;
+    padding: 10px;
+    overflow-x: auto;
+    color: #000;
+    padding: 10px;
+    min-height: 40px;
 }
 * {
     -webkit-box-sizing: border-box;
