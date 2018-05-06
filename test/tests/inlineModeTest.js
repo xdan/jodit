@@ -123,11 +123,13 @@ describe('Test Inline mode', function () {
             });
             describe('Click in the right side of editor', function () {
                 it('Should open inline-popup with float by right editor side', function () {
+                    box.style.width = 'auto'
                     var editor = new Jodit(appendTestArea(), {
                         disablePlugins: 'mobile'
                     });
 
                     editor.value = '<p>test <img style="width: 30px; float: right"/> test</p>'
+
                     simulateEvent('mousedown', 0, editor.editor.querySelector('img'))
 
 
@@ -142,12 +144,14 @@ describe('Test Inline mode', function () {
                 });
                 describe('Click in the right side of editor in window with scroll', function () {
                     it('Should open inline-popup with float by right editor side', function () {
+                        box.style.width = 'auto'
                         var i, br, brs = [];
                         for (i = 0; i < 100; i += 1) {
                             br = document.createElement('br');
                             document.body.appendChild(br);
                             brs.push(br);
                         }
+
                         var editor = new Jodit(appendTestArea(), {
                             disablePlugins: 'mobile'
                         });
@@ -162,7 +166,7 @@ describe('Test Inline mode', function () {
 
                         var positionPopup = offset(popup);
                         var positionContainer = offset(editor.container);
-debugger
+
                         expect(Math.abs((positionPopup.left + positionPopup.width) - (positionContainer.left + positionContainer.width)) < 2).to.be.true;
 
                         brs.forEach(function (br) {
