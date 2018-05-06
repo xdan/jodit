@@ -293,7 +293,7 @@ export class inlinePopup extends Plugin{
 
     isShown: boolean = false;
 
-    private calcPosition = (rect: Bound) => {
+    private calcWindSizes = (): Bound => {
         const win: Window = this.jodit.ownerWindow;
         const docElement: HTMLElement = this.jodit.ownerDocument.documentElement;
         const body: HTMLElement = this.jodit.ownerDocument.body;
@@ -302,26 +302,47 @@ export class inlinePopup extends Plugin{
         const scrollLeft: number = win.pageXOffset || docElement.scrollLeft || body.scrollLeft;
         const clientLeft: number = docElement.clientLeft || body.clientLeft || 0;
 
-        this.target.style.left = (rect.left + rect.width / 2) + 'px';
+        const windWidth: number = this.jodit.ownerWindow.innerWidth + scrollLeft - clientLeft;
+        const windHeight: number = this.jodit.ownerWindow.innerHeight + scrollTop - clientTop;
+
+        return  {
+            left: clientLeft,
+            top: clientTop,
+            width: windWidth,
+            height: windHeight
+        };
+    };
+
+    private calcPosition = (rect: Bound, windowSize: Bound) => {
+        const selectionCenterLeft: number = rect.left + rect.width / 2;
+
+        this.target.style.left = selectionCenterLeft + 'px';
         this.target.style.top = (rect.top + rect.height + 10) + 'px';
 
         if (this.jodit.isFullSize()) {
             this.target.style.zIndex = css(this.jodit.container, 'zIndex').toString();
         }
 
-        this.container.style.marginLeft = (-this.container.offsetWidth/2) + 'px';
+        const halfWidthPopup: number = this.container.offsetWidth / 2;
+        let marginLeft: number = -halfWidthPopup;
         this.popup.container.classList.remove('jodit_toolbar_popup-inline-top');
 
-        if (rect.top + rect.height + 10 + this.container.offsetHeight > this.jodit.ownerWindow.innerHeight + scrollTop - clientTop) {
+        if (rect.top + rect.height + 10 + this.container.offsetHeight > windowSize.height) {
             this.target.style.top = (rect.top - this.container.offsetHeight - 10) + 'px';
             this.popup.container.classList.add('jodit_toolbar_popup-inline-top');
         }
-        if ((rect.left + rect.width / 2) - this.container.offsetWidth/2 < 0) {
-            this.container.style.marginLeft = (-rect.width / 2) + 'px';
+
+
+        if (selectionCenterLeft - halfWidthPopup < 0) {
+            marginLeft = -(rect.width / 2 + rect.left);
         }
-        if ((rect.left + rect.width / 2) + this.container.offsetWidth/2 > this.jodit.ownerWindow.innerWidth + scrollLeft - clientLeft) {
-            this.container.style.marginLeft = (-rect.width / 2) + 'px';
+
+
+        if (selectionCenterLeft + halfWidthPopup > windowSize.width) {
+            marginLeft = -(this.container.offsetWidth - (windowSize.width - selectionCenterLeft));
         }
+
+        this.container.style.marginLeft = marginLeft + 'px';
     };
 
     private isExcludedTarget(type: string): boolean {
@@ -345,14 +366,17 @@ export class inlinePopup extends Plugin{
         this.isShown = true;
         this.isTargetAction = true;
 
+        const windSize: Bound = this.calcWindSizes();
+
         this.target.parentNode || this.jodit.ownerDocument.body.appendChild(this.target);
 
         this.toolbar.build(this.jodit.options.popup[type.toLowerCase()], this.container, elm);
 
 
+
         this.popup.open(this.container, false, true);
 
-        this.calcPosition(rect());
+        this.calcPosition(rect(), windSize);
 
         return true;
     };

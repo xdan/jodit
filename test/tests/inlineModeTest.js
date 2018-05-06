@@ -121,6 +121,26 @@ describe('Test Inline mode', function () {
                     expect(popup).to.be.equal(null);
                 });
             });
+            describe('Click in the right side of editor', function () {
+                it('Should open inline-popup with float by right editor side', function () {
+                    var editor = new Jodit(appendTestArea(), {
+                        disablePlugins: 'mobile'
+                    });
+
+                    editor.value = '<p>test <img style="width: 30px; float: right"/> test</p>'
+                    simulateEvent('mousedown', 0, editor.editor.querySelector('img'))
+debugger
+
+                    var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
+
+                    expect(popup).to.be.not.null;
+
+                    var positionPopup = offset(popup);
+                    var positionContainer = offset(editor.container);
+
+                    expect(Math.abs((positionPopup.left + positionPopup.width) - (positionContainer.left + positionContainer.width)) < 2).to.be.true;
+                });
+            });
         });
         describe('Click on Image', function () {
             describe('On mobile', function () {
