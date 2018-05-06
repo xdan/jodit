@@ -852,6 +852,8 @@ describe('Test image', function() {
                         data.clientY = positionResizer.top + 1000;
                     });
                     var newratio = img.offsetWidth / img.offsetHeight;
+                    console.log(img.offsetWidth);
+                    console.log(img.offsetHeight);
                     console.log(newratio);
                     expect(img.offsetWidth).to.be.equal(editor.editor.offsetWidth - 20);
 
