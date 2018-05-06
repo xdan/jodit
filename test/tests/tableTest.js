@@ -1237,7 +1237,7 @@ describe('Tables Jodit Editor Tests', function() {
                                     '<td>5</td>' +
                                     '<td>6</td>' +
                                     '<td>7</td>' +
-                                    '<td><img style="width:30px" src="https://xdsoft.net/jodit/images/artio.jpg"></td>' +
+                                    '<td><img style="width:30px" src="tests/artio.jpg"></td>' +
                                 '</tr>' +
                             '</table>');
 

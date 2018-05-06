@@ -4,7 +4,7 @@ describe('Test image', function() {
             it('should open image properties dialog', function () {
                 var editor = new Jodit(appendTestArea());
 
-                editor.setEditorValue('<img src="https://xdsoft.net/jodit/images/artio.jpg"/>')
+                editor.setEditorValue('<img src="tests/artio.jpg"/>')
                 simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
                 var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
 
@@ -18,7 +18,7 @@ describe('Test image', function() {
                         }
                     });
 
-                    editor.setEditorValue('<img src="https://xdsoft.net/jodit/images/artio.jpg"/>')
+                    editor.setEditorValue('<img src="tests/artio.jpg"/>')
                     simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
                     var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
 
@@ -31,7 +31,7 @@ describe('Test image', function() {
             it('should change image border radius', function () {
                 var editor = new Jodit(appendTestArea());
 
-                editor.setEditorValue('<img style="width:100px; height: 100px; border-radius: 10px;" src="https://xdsoft.net/jodit/images/artio.jpg"/>')
+                editor.setEditorValue('<img style="width:100px; height: 100px; border-radius: 10px;" src="tests/artio.jpg"/>')
                 simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
                 var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
 
@@ -48,7 +48,7 @@ describe('Test image', function() {
                 tab.querySelector('.border_radius').value = 100;
                 simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
 
-                expect(sortAtrtibutes(editor.value)).to.be.equal('<img src="https://xdsoft.net/jodit/images/artio.jpg" style="border-radius:100px;height:100px;width:100px">');
+                expect(sortAtrtibutes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="border-radius:100px;height:100px;width:100px">');
 
             });
         });
@@ -56,7 +56,7 @@ describe('Test image', function() {
             it('should change image classlist', function () {
                 var editor = new Jodit(appendTestArea());
 
-                editor.setEditorValue('<img class="images123" style="width:100px; height: 100px;" src="https://xdsoft.net/jodit/images/artio.jpg"/>')
+                editor.setEditorValue('<img class="images123" style="width:100px; height: 100px;" src="tests/artio.jpg"/>')
                 simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
                 var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
 
@@ -73,7 +73,7 @@ describe('Test image', function() {
                 tab.querySelector('.classes').value = 'tavble ';
                 simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
 
-                expect(sortAtrtibutes(editor.value)).to.be.equal('<img class="tavble " src="https://xdsoft.net/jodit/images/artio.jpg" style="height:100px;width:100px">');
+                expect(sortAtrtibutes(editor.value)).to.be.equal('<img class="tavble " src="tests/artio.jpg" style="height:100px;width:100px">');
 
             });
         });
@@ -81,7 +81,7 @@ describe('Test image', function() {
             it('should change image styles', function () {
                 var editor = new Jodit(appendTestArea());
 
-                editor.setEditorValue('<img style="padding:10px;width:100px; height: 100px;" src="https://xdsoft.net/jodit/images/artio.jpg"/>')
+                editor.setEditorValue('<img style="padding:10px;width:100px; height: 100px;" src="tests/artio.jpg"/>')
                 simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
                 var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
 
@@ -98,7 +98,7 @@ describe('Test image', function() {
                 tab.querySelector('.style').value = 'padding:20px;background-color: #ff0000;';
                 simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
 
-                expect(sortAtrtibutes(editor.value)).to.be.equal('<img src="https://xdsoft.net/jodit/images/artio.jpg" style="background-color:#FF0000;height:100px;padding:20px;width:100px">');
+                expect(sortAtrtibutes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="background-color:#FF0000;height:100px;padding:20px;width:100px">');
 
             });
         });
@@ -106,7 +106,7 @@ describe('Test image', function() {
             it('should change image id', function () {
                 var editor = new Jodit(appendTestArea());
 
-                editor.setEditorValue('<img id="stop123"  style="width:100px; height: 100px;"  src="https://xdsoft.net/jodit/images/artio.jpg"/>')
+                editor.setEditorValue('<img id="stop123"  style="width:100px; height: 100px;"  src="tests/artio.jpg"/>')
                 simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
                 var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
 
@@ -123,7 +123,7 @@ describe('Test image', function() {
                 tab.querySelector('.id').value = 'fast12';
                 simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
 
-                expect(sortAtrtibutes(editor.value)).to.be.equal('<img id="fast12" src="https://xdsoft.net/jodit/images/artio.jpg" style="height:100px;width:100px">');
+                expect(sortAtrtibutes(editor.value)).to.be.equal('<img id="fast12" src="tests/artio.jpg" style="height:100px;width:100px">');
 
             });
         });
@@ -132,7 +132,7 @@ describe('Test image', function() {
                 it('should change image horizontal align', function () {
                     var editor = new Jodit(appendTestArea());
 
-                    editor.setEditorValue('<img  style="width:100px; height: 100px;"  src="https://xdsoft.net/jodit/images/artio.jpg"/>')
+                    editor.setEditorValue('<img  style="width:100px; height: 100px;"  src="tests/artio.jpg"/>')
                     simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
                     var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
 
@@ -147,7 +147,7 @@ describe('Test image', function() {
                     tab.querySelector('.align').value = 'left';
                     simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
 
-                    expect(sortAtrtibutes(editor.value)).to.be.equal('<img src="https://xdsoft.net/jodit/images/artio.jpg" style="float:left;height:100px;width:100px">');
+                    expect(sortAtrtibutes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="float:left;height:100px;width:100px">');
 
                 });
             });
@@ -155,7 +155,7 @@ describe('Test image', function() {
                 it('should change image horizontal align', function () {
                     var editor = new Jodit(appendTestArea());
 
-                    editor.setEditorValue('<img  style="width:100px; height: 100px;"  src="https://xdsoft.net/jodit/images/artio.jpg"/>')
+                    editor.setEditorValue('<img  style="width:100px; height: 100px;"  src="tests/artio.jpg"/>')
                     simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
                     var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
 
@@ -170,7 +170,7 @@ describe('Test image', function() {
                     tab.querySelector('.align').value = 'right';
                     simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
 
-                    expect(sortAtrtibutes(editor.value)).to.be.equal('<img src="https://xdsoft.net/jodit/images/artio.jpg" style="float:right;height:100px;width:100px">');
+                    expect(sortAtrtibutes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="float:right;height:100px;width:100px">');
 
                 });
             });
@@ -178,7 +178,7 @@ describe('Test image', function() {
                 it('should change image horizontal align', function () {
                     var editor = new Jodit(appendTestArea());
 
-                    editor.setEditorValue('<img style="float:left;width:100px; height: 100px;" src="https://xdsoft.net/jodit/images/artio.jpg"/>')
+                    editor.setEditorValue('<img style="float:left;width:100px; height: 100px;" src="tests/artio.jpg"/>')
                     simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
                     var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
 
@@ -193,7 +193,7 @@ describe('Test image', function() {
                     tab.querySelector('.align').value = 'center';
                     simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
 
-                    expect(sortAtrtibutes(editor.value)).to.be.equal('<img src="https://xdsoft.net/jodit/images/artio.jpg" style="display:block;height:100px;margin-left:auto;margin-right:auto;width:100px">');
+                    expect(sortAtrtibutes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="display:block;height:100px;margin-left:auto;margin-right:auto;width:100px">');
 
                 });
             });
@@ -201,7 +201,7 @@ describe('Test image', function() {
                 it('should clear some align', function () {
                     var editor = new Jodit(appendTestArea());
 
-                    editor.setEditorValue('<img src="https://xdsoft.net/jodit/images/artio.jpg" style="width:100px; height: 100px;display:block;margin-left:auto;margin-right:auto">')
+                    editor.setEditorValue('<img src="tests/artio.jpg" style="width:100px; height: 100px;display:block;margin-left:auto;margin-right:auto">')
                     simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
                     var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
 
@@ -216,7 +216,7 @@ describe('Test image', function() {
                     tab.querySelector('.align').value = '';
                     simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
 
-                    expect(sortAtrtibutes(editor.value)).to.be.equal('<img src="https://xdsoft.net/jodit/images/artio.jpg" style="height:100px;width:100px">');
+                    expect(sortAtrtibutes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="height:100px;width:100px">');
 
                 });
             });
@@ -226,7 +226,7 @@ describe('Test image', function() {
                 it('should change all margins', function () {
                     var editor = new Jodit(appendTestArea());
 
-                    editor.setEditorValue('<img style="margin: 10px;width:100px; height: 100px;" src="https://xdsoft.net/jodit/images/artio.jpg"/>')
+                    editor.setEditorValue('<img style="margin: 10px;width:100px; height: 100px;" src="tests/artio.jpg"/>')
                     simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
                     var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
 
@@ -243,7 +243,7 @@ describe('Test image', function() {
                     tab.querySelector('.marginTop').value = 100;
                     simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
 
-                    expect(sortAtrtibutes(editor.value)).to.be.equal('<img src="https://xdsoft.net/jodit/images/artio.jpg" style="height:100px;margin:100px;width:100px">');
+                    expect(sortAtrtibutes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="height:100px;margin:100px;width:100px">');
 
                 });
             });
@@ -251,7 +251,7 @@ describe('Test image', function() {
                 it('should change only marginTop', function () {
                     var editor = new Jodit(appendTestArea());
 
-                    editor.setEditorValue('<img style="margin: 10px;width:100px; height: 100px;" src="https://xdsoft.net/jodit/images/artio.jpg"/>')
+                    editor.setEditorValue('<img style="margin: 10px;width:100px; height: 100px;" src="tests/artio.jpg"/>')
                     simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
                     var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
 
@@ -277,7 +277,7 @@ describe('Test image', function() {
                     tab.querySelector('.marginLeft').value = 220;
                     simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
 
-                    expect(sortAtrtibutes(editor.value)).to.be.equal('<img src="https://xdsoft.net/jodit/images/artio.jpg" style="height:100px;margin:100px 20px 10px 220px;width:100px">');
+                    expect(sortAtrtibutes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="height:100px;margin:100px 20px 10px 220px;width:100px">');
 
                 });
             });
@@ -286,7 +286,7 @@ describe('Test image', function() {
             it('should change image title', function () {
                 var editor = new Jodit(appendTestArea());
 
-                editor.setEditorValue('<img title="sting" style="width:100px; height: 100px;" src="https://xdsoft.net/jodit/images/artio.jpg"/>')
+                editor.setEditorValue('<img title="sting" style="width:100px; height: 100px;" src="tests/artio.jpg"/>')
                 simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
 
                 var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
@@ -299,7 +299,7 @@ describe('Test image', function() {
                 dialog.querySelector('.imageTitle').value = 'Stop';
                 simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
 
-                expect(sortAtrtibutes(editor.value)).to.be.equal('<img src="https://xdsoft.net/jodit/images/artio.jpg" style="height:100px;width:100px" title="Stop">');
+                expect(sortAtrtibutes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="height:100px;width:100px" title="Stop">');
 
             });
         });
@@ -307,7 +307,7 @@ describe('Test image', function() {
             it('should change image alt', function () {
                 var editor = new Jodit(appendTestArea());
 
-                editor.setEditorValue('<img alt="test" style="width:100px; height: 100px;" src="https://xdsoft.net/jodit/images/artio.jpg"/>')
+                editor.setEditorValue('<img alt="test" style="width:100px; height: 100px;" src="tests/artio.jpg"/>')
                 simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
 
                 var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
@@ -320,7 +320,7 @@ describe('Test image', function() {
                 dialog.querySelector('.imageAlt').value = 'Stop';
                 simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
 
-                expect(sortAtrtibutes(editor.value)).to.be.equal('<img alt="Stop" src="https://xdsoft.net/jodit/images/artio.jpg" style="height:100px;width:100px">');
+                expect(sortAtrtibutes(editor.value)).to.be.equal('<img alt="Stop" src="tests/artio.jpg" style="height:100px;width:100px">');
 
             });
         });
@@ -328,7 +328,7 @@ describe('Test image', function() {
             it('should change image wrapper', function () {
                 var editor = new Jodit(appendTestArea());
 
-                editor.setEditorValue('<img  style="width:100px; height: 100px;"  src="https://xdsoft.net/jodit/images/artio.jpg"/>')
+                editor.setEditorValue('<img  style="width:100px; height: 100px;"  src="tests/artio.jpg"/>')
                 simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
 
                 var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
@@ -341,14 +341,14 @@ describe('Test image', function() {
                 dialog.querySelector('.imageLink').value = 'https://xdsoft.net/';
                 simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
 
-                expect(sortAtrtibutes(editor.value)).to.be.equal('<a href="https://xdsoft.net/"><img src="https://xdsoft.net/jodit/images/artio.jpg" style="height:100px;width:100px"></a>');
+                expect(sortAtrtibutes(editor.value)).to.be.equal('<a href="https://xdsoft.net/"><img src="tests/artio.jpg" style="height:100px;width:100px"></a>');
 
             });
             describe('open link in new tab', function () {
                 it('should change image wrapper with target="_blank"', function () {
                     var editor = new Jodit(appendTestArea());
 
-                    editor.setEditorValue('<img style="width:100px; height: 100px;" src="https://xdsoft.net/jodit/images/artio.jpg"/>')
+                    editor.setEditorValue('<img style="width:100px; height: 100px;" src="tests/artio.jpg"/>')
                     simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
 
                     var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
@@ -363,7 +363,7 @@ describe('Test image', function() {
 
                     simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
 
-                    expect(sortAtrtibutes(editor.value)).to.be.equal('<a href="https://xdsoft.net/" target="_blank"><img src="https://xdsoft.net/jodit/images/artio.jpg" style="height:100px;width:100px"></a>');
+                    expect(sortAtrtibutes(editor.value)).to.be.equal('<a href="https://xdsoft.net/" target="_blank"><img src="tests/artio.jpg" style="height:100px;width:100px"></a>');
 
                 });
             });
@@ -371,7 +371,7 @@ describe('Test image', function() {
                 it('should change image wrapper', function () {
                     var editor = new Jodit(appendTestArea());
 
-                    editor.setEditorValue('<a href="https://xdan.ru" target="_blank"><img  style="width:100px; height: 100px;"  src="https://xdsoft.net/jodit/images/artio.jpg"/></a>')
+                    editor.setEditorValue('<a href="https://xdan.ru" target="_blank"><img  style="width:100px; height: 100px;"  src="tests/artio.jpg"/></a>')
                     simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
 
                     var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
@@ -387,7 +387,7 @@ describe('Test image', function() {
 
                     simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
 
-                    expect(sortAtrtibutes(editor.value)).to.be.equal('<a href="https://xdsoft.net/"><img src="https://xdsoft.net/jodit/images/artio.jpg" style="height:100px;width:100px"></a>');
+                    expect(sortAtrtibutes(editor.value)).to.be.equal('<a href="https://xdsoft.net/"><img src="tests/artio.jpg" style="height:100px;width:100px"></a>');
 
                 });
             });
@@ -395,7 +395,7 @@ describe('Test image', function() {
                 it('should remove image wrapper', function () {
                     var editor = new Jodit(appendTestArea());
 
-                    editor.setEditorValue('<a href="https://xdan.ru" target="_blank"><img style="width:100px; height: 100px;" src="https://xdsoft.net/jodit/images/artio.jpg"/></a>')
+                    editor.setEditorValue('<a href="https://xdan.ru" target="_blank"><img style="width:100px; height: 100px;" src="tests/artio.jpg"/></a>')
                     simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
 
                     var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
@@ -411,7 +411,7 @@ describe('Test image', function() {
 
                     simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
 
-                    expect(sortAtrtibutes(editor.value)).to.be.equal('<img src="https://xdsoft.net/jodit/images/artio.jpg" style="height:100px;width:100px">');
+                    expect(sortAtrtibutes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="height:100px;width:100px">');
 
                 });
             });
@@ -420,7 +420,7 @@ describe('Test image', function() {
             it('should create connected inputs with width and height', function (done) {
                 var editor = new Jodit(appendTestArea());
 
-                editor.value = '<img src="https://xdsoft.net/jodit/images/artio.jpg"/>';
+                editor.value = '<img src="tests/artio.jpg"/>';
                 var img= editor.editor.querySelector('img');
 
                 function doTest() {
@@ -447,7 +447,7 @@ describe('Test image', function() {
 
                     simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
 
-                    expect(sortAtrtibutes(editor.value)).to.be.equal('<img src="https://xdsoft.net/jodit/images/artio.jpg" style="height:200px;width:356px">');
+                    expect(sortAtrtibutes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="height:200px;width:356px">');
 
                     done();
                 }
@@ -463,7 +463,7 @@ describe('Test image', function() {
                 it('should create connected inputs with width and height', function (done) {
                     var editor = new Jodit(appendTestArea());
 
-                    editor.value = '<img src="https://xdsoft.net/jodit/images/artio.jpg"/>';
+                    editor.value = '<img src="tests/artio.jpg"/>';
                     var img= editor.editor.querySelector('img');
 
                     function doTest() {
@@ -493,7 +493,7 @@ describe('Test image', function() {
 
                         simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
 
-                        expect(sortAtrtibutes(editor.value)).to.be.equal('<img src="https://xdsoft.net/jodit/images/artio.jpg" style="height:200px;width:100px">');
+                        expect(sortAtrtibutes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="height:200px;width:100px">');
 
                         done();
                     }
@@ -509,7 +509,7 @@ describe('Test image', function() {
                     it('should create connected inputs with width and height', function (done) {
                         var editor = new Jodit(appendTestArea());
 
-                        editor.value = '<img src="https://xdsoft.net/jodit/images/artio.jpg"/>';
+                        editor.value = '<img src="tests/artio.jpg"/>';
                         var img= editor.editor.querySelector('img');
 
                         function doTest() {
@@ -536,7 +536,7 @@ describe('Test image', function() {
 
                             simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
 
-                            expect(sortAtrtibutes(editor.value)).to.be.equal('<img src="https://xdsoft.net/jodit/images/artio.jpg" style="height:200px;width:356px">');
+                            expect(sortAtrtibutes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="height:200px;width:356px">');
 
                             done();
                         }
@@ -556,7 +556,7 @@ describe('Test image', function() {
                 it('should not show buttons', function () {
                     var editor = new Jodit(appendTestArea());
 
-                    editor.setEditorValue('<img src="https://xdsoft.net/jodit/images/artio.jpg"/>')
+                    editor.setEditorValue('<img src="tests/artio.jpg"/>')
                     simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
                     var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
 
@@ -565,7 +565,7 @@ describe('Test image', function() {
                     expect(dialog.querySelector('.jodit_button.jodit_use_image_editor')).to.be.equal(null)
                 });
             });
-            describe('Uploader and filebrowser settings setted', function () {
+            describe('Uploader and filebrowser settings set', function () {
                 var settings = {
                     uploader: {
                         url: 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'
@@ -582,7 +582,7 @@ describe('Test image', function() {
                 it('should not show buttons', function () {
                     var editor = new Jodit(appendTestArea(), settings);
 
-                    editor.setEditorValue('<img src="https://xdsoft.net/jodit/images/artio.jpg"/>')
+                    editor.setEditorValue('<img src="tests/artio.jpg"/>')
                     simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
                     var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
 
@@ -594,7 +594,7 @@ describe('Test image', function() {
                     it('should open popup', function () {
                         var editor = new Jodit(appendTestArea(), settings);
 
-                        editor.setEditorValue('<img src="https://xdsoft.net/jodit/images/artio.jpg"/>')
+                        editor.setEditorValue('<img src="tests/artio.jpg"/>')
                         simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
                         var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
                         var rechange = dialog.querySelector('.jodit_button.jodit_rechange');
@@ -604,39 +604,41 @@ describe('Test image', function() {
                     });
                 });
                 describe('Click on edit button', function () {
-                    it('should open image editor', function (done) {
+                    describe('When photo it is not my', function () {
+                        it('should open image editor', function (done) {
+                            var editor = new Jodit(appendTestArea(), settings);
 
+                            editor.value = '<img src="https://xdsoft.net/jodit/build/images/artio.jpg"/>'
+                            simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
+                            var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
+                            expect(dialog).to.be.not.null;
 
-                        var editor = new Jodit(appendTestArea(), settings);
+                            var edi = dialog.querySelector('.jodit_button.jodit_use_image_editor');
+                            expect(edi).to.be.not.null;
 
-                        editor.setEditorValue('<img src="https://xdsoft.net/jodit/images/artio.jpg"/>')
-                        simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
-                        var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
-                        var edi = dialog.querySelector('.jodit_button.jodit_use_image_editor');
-                        expect(edi).to.be.not.equal(null);
+                            simulateEvent('mousedown', 0, edi);
 
-                        simulateEvent('mousedown', 0, edi);
+                            var dialog2 = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active.jodit_modal');
+                            expect(dialog2).to.be.not.equal(null);
+                            expect(dialog2).to.be.not.equal(dialog);
 
-                        var dialog2 = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active.jodit_modal');
-                        expect(dialog2).to.be.not.equal(null);
-                        expect(dialog2).to.be.not.equal(dialog);
+                            simulateEvent('click', 0, dialog2.querySelector('a.jodit_button'));
 
-                        simulateEvent('click', 0, dialog2.querySelector('a.jodit_button'));
+                            var dialog3 = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active.jodit_modal');
+                            expect(dialog3).to.be.not.equal(null);
+                            expect(dialog3).to.be.not.equal(dialog2);
 
-                        var dialog3 = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active.jodit_modal');
-                        expect(dialog3).to.be.not.equal(null);
-                        expect(dialog3).to.be.not.equal(dialog2);
+                            simulateEvent('click', 0, dialog3.querySelector('a.jodit_button'));
 
-                        simulateEvent('click', 0, dialog3.querySelector('a.jodit_button'));
+                            var dialog4 = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active.jodit_modal');
+                            expect(dialog4).to.be.not.equal(null);
+                            expect(dialog4).to.be.not.equal(dialog3);
+                            simulateEvent('click', 0, dialog4.querySelector('a.jodit_button'));
 
-                        var dialog4 = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active.jodit_modal');
-                        expect(dialog4).to.be.not.equal(null);
-                        expect(dialog4).to.be.not.equal(dialog3);
-                        simulateEvent('click', 0, dialog4.querySelector('a.jodit_button'));
+                            expect(dialog.querySelector('.imageSrc').value).to.be.equal('https://xdsoft.net/jodit/files/artio.jpg')
 
-                        expect(dialog.querySelector('.imageSrc').value).to.be.equal('https://xdsoft.net/jodit/files/artio.jpg')
-
-                        done();
+                            done();
+                        });
                     });
                 });
             });
@@ -646,7 +648,7 @@ describe('Test image', function() {
         var editor = new Jodit(appendTestArea(), {
             image: { openOnDblClick: false }
         });
-        editor.setEditorValue('<img src="https://xdsoft.net/jodit/images/artio.jpg"/>')
+        editor.setEditorValue('<img src="tests/artio.jpg"/>')
         simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
         var dialogs = document.querySelectorAll('.jodit.jodit_dialog_box.active');
 
@@ -658,7 +660,7 @@ describe('Test image', function() {
         it('should show resizer', function () {
 
             var editor = new Jodit(appendTestArea());
-            editor.setEditorValue('<img src="https://xdsoft.net/jodit/images/artio.jpg"/>')
+            editor.setEditorValue('<img src="tests/artio.jpg"/>')
 
             var img = editor.editor.querySelector('img');
 
@@ -674,7 +676,7 @@ describe('Test image', function() {
                 var editor = new Jodit(appendTestArea(), {
                     fullsize: true
                 });
-                editor.value = '<img src="https://xdsoft.net/jodit/images/artio.jpg"/>'
+                editor.value = '<img src="tests/artio.jpg"/>'
 
 
                 var img = editor.editor.querySelector('img');
@@ -809,9 +811,50 @@ describe('Test image', function() {
                 div.parentNode && div.parentNode.removeChild(div);
             });
         });
-        // describe('Resize image', function () {
-        //     it('Should not be allow mo');
-        // });
+        describe('Resize image', function () {
+            it('Should not allow to resize image more then width of editor', function (done) {
+                box.style.width = '500px';
+                var editor = new Jodit(appendTestArea());
+                var image = new Image();
+                image.src = 'tests/artio.jpg'
+                var doit = function () {
+                    var ratio = image.naturalWidth / image.naturalHeight;
+                    editor.value = '<img src="tests/artio.jpg" style="width:300px"/>';
+                    var img = editor.editor.querySelector('img');
+                    simulateEvent('mousedown', 0, editor.editor.querySelector('img'));
+                    var resizer = document.querySelector('.jodit_resizer[data-editor_id=' + editor.id + ']');
+                    expect(resizer).to.be.not.null;
+
+                    var positionResizer = offset(resizer);
+                    //
+
+                    simulateEvent('mousedown', 0, resizer.getElementsByTagName('i')[1]);
+                    simulateEvent('mousemove', 0, editor.ownerWindow, function (data) {
+                        data.clientX = positionResizer.left + 1000;
+                        data.clientY = positionResizer.top + 1000;
+                    });
+
+
+                    simulateEvent('mouseup', 0, editor.ownerWindow, function (data) {
+                        data.clientX = positionResizer.left + 1000;
+                        data.clientY = positionResizer.top + 1000;
+                    });
+
+                    var newratio = img.offsetWidth / img.offsetHeight;
+                    expect(img.offsetWidth).to.be.equal(editor.editor.offsetWidth - 20);
+                    console.log(Math.abs(newratio - ratio));
+                    expect(Math.abs(newratio - ratio) < 0.003).to.be.true
+                    done();
+                };
+
+                if (image.complete) {
+                    doit();
+                } else {
+                    image.onload = doit;
+                }
+                // expect(popup.parentNode).to.be.equal(null);
+            });
+        });
     });
 
 

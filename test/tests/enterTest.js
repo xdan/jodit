@@ -339,7 +339,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
             describe('Backspace key', function () {
                 it('Should remove that element', function () {
                     var editor = new Jodit(appendTestArea())
-                    editor.setEditorValue('<p><img src="https://xdsoft.net/jodit/images/artio.jpg"/>test</p>');
+                    editor.setEditorValue('<p><img src="tests/artio.jpg"/>test</p>');
 
                     var sel = editor.editorWindow.getSelection(),
                         range = editor.editorDocument.createRange();
@@ -361,7 +361,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
             describe('Delete key', function () {
                 it('Should remove that element', function () {
                     var editor = new Jodit(appendTestArea())
-                    editor.setEditorValue('<p>test<img src="https://xdsoft.net/jodit/images/artio.jpg"/></p>');
+                    editor.setEditorValue('<p>test<img src="tests/artio.jpg"/></p>');
 
                     var sel = editor.editorWindow.getSelection(),
                         range = editor.editorDocument.createRange();
@@ -1190,7 +1190,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
                         editor.setEditorValue('<ul>' +
                             '<li>1</li>' +
                             '<li>2</li>' +
-                            '<li><img style="width:30px" src="https://xdsoft.net/jodit/images/artio.jpg"></li>' +
+                            '<li><img style="width:30px" src="tests/artio.jpg"></li>' +
                             '</ul>');
 
                         editor.selection.setCursorBefore(editor.editor.firstChild.lastChild.firstChild);
@@ -1202,7 +1202,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
                             '<li>1</li>' +
                             '<li>2</li>' +
                             '<li><br></li>' +
-                            '<li>split <img src="https://xdsoft.net/jodit/images/artio.jpg" style="width:30px"></li>' +
+                            '<li>split <img src="tests/artio.jpg" style="width:30px"></li>' +
                             '</ul>').to.be.equal(sortAtrtibutes(editor.getEditorValue()));
                     });
                 });

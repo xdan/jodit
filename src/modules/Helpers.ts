@@ -354,7 +354,11 @@ export const dom = (html: string | HTMLElement, doc: Document): HTMLElement => {
 
     div.innerHTML = <string>html;
 
-    return (div.firstChild !== div.lastChild || !div.firstChild) ? div : <HTMLElement>div.firstChild;
+    const child: HTMLElement = (div.firstChild !== div.lastChild || !div.firstChild) ? div : <HTMLElement>div.firstChild;
+
+    child.parentNode && child.parentNode.removeChild(child);
+
+    return child;
 };
 
 /**
@@ -1206,4 +1210,14 @@ export class JoditObject {
 export const getRange = () => {
     var range = window.getSelection().getRangeAt(0);
     return [range.startContainer, range.startOffset, range.endContainer, range.endOffset];
+};
+
+export const innerWidth = (element: HTMLElement, win: Window): number => {
+    const computedStyle: CSSStyleDeclaration = win.getComputedStyle(element);
+
+    let elementWidth: number = element.clientWidth;   // width with padding
+
+    elementWidth -= parseFloat(computedStyle.paddingLeft || '0') + parseFloat(computedStyle.paddingRight || '0');
+
+    return elementWidth;
 };

@@ -105,9 +105,9 @@ describe('Test plugins', function () {
             it('Should copy format from one image to another', function () {
                 getBox().style.width = 'auto';
                 var editor = new Jodit(appendTestArea()),
-                    html = '<img src="https://xdsoft.net/jodit/images/artio.jpg" ' +
+                    html = '<img src="tests/artio.jpg" ' +
                         'style="height: 100px;width: 100px; margin: 20px; border-image: none; border:1px solid #CCCCCC; border-radius: 50%;"> test ' +
-                        '<img style="height: 100px;width: 100px;" src="https://xdsoft.net/jodit/images/artio.jpg">';
+                        '<img style="height: 100px;width: 100px;" src="tests/artio.jpg">';
 
                 editor.value = html;
                 expect(sortAtrtibutes(editor.value)).to.be.equal(sortAtrtibutes(html));
@@ -120,9 +120,9 @@ describe('Test plugins', function () {
                 simulateEvent('mouseup', 0, editor.editor.querySelectorAll('img')[1]);
 
                 expect(sortAtrtibutes(editor.value)).to.be.equal(sortAtrtibutes(
-                    '<img src="https://xdsoft.net/jodit/images/artio.jpg" ' +
+                    '<img src="tests/artio.jpg" ' +
                         'style="border-image:none;border-radius:50%;border:1px solid #CCCCCC;height:100px;margin:20px;width:100px"> test ' +
-                    '<img src="https://xdsoft.net/jodit/images/artio.jpg" ' +
+                    '<img src="tests/artio.jpg" ' +
                         'style="border-image:none;border-color:#CCCCCC;border-radius:50%;border-style:solid;border-width:1px;height:100px;margin:20px;width:100px">'
                     )
                 );
@@ -283,7 +283,7 @@ describe('Test plugins', function () {
         describe('Insert line on top of IMG element that was inside P element', function () {
             it('Should insert new P before parent P element', function () {
                 var editor = new Jodit(appendTestArea());
-                editor.setEditorValue('<p><img src="https://xdsoft.net/jodit/images/artio.jpg" style="width: 100px; height: 100px;" alt=""></p>');
+                editor.setEditorValue('<p><img src="tests/artio.jpg" style="width: 100px; height: 100px;" alt=""></p>');
 
                 window.scrollTo(0, editor.helper.offset(editor.editor, editor, editor.ownerDocument).top) // elementFromPoint works only with visible part of view
 
@@ -304,7 +304,7 @@ describe('Test plugins', function () {
 
                 editor.selection.insertHTML('stop');
 
-                expect('<p>stop</p><p><img alt="" src="https://xdsoft.net/jodit/images/artio.jpg" style="height:100px;width:100px"></p>').to.be.equal(sortAtrtibutes(editor.getEditorValue()));
+                expect('<p>stop</p><p><img alt="" src="tests/artio.jpg" style="height:100px;width:100px"></p>').to.be.equal(sortAtrtibutes(editor.getEditorValue()));
             });
         });
     });
@@ -329,7 +329,7 @@ describe('Test plugins', function () {
                             },
                             disablePlugins: 'mobile'
                         });
-                        editor.setEditorValue('<img src="https://xdsoft.net/jodit/files/th.jpg">');
+                        editor.setEditorValue('<img src="tests/artio.jpg">');
 
                         simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
 
@@ -397,7 +397,7 @@ describe('Test plugins', function () {
                                 }
                             },
                         });
-                        editor.setEditorValue('<img src="https://xdsoft.net/jodit/files/th.jpg">');
+                        editor.setEditorValue('<img src="tests/artio.jpg">');
 
                         simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
 
@@ -471,7 +471,7 @@ describe('Test plugins', function () {
                                 }
                             },
                         });
-                        editor.setEditorValue('<img src="https://xdsoft.net/jodit/files/th.jpg">');
+                        editor.setEditorValue('<img src="tests/artio.jpg">');
 
                         simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
 
@@ -516,7 +516,7 @@ describe('Test plugins', function () {
                             });
 
 
-                            expect(Math.abs(resizer.offsetWidth / resizer.offsetHeight - oldRatio) < 0.005).to.be.equal(true);
+                            expect(Math.abs(resizer.offsetWidth / resizer.offsetHeight - oldRatio) < 0.009).to.be.equal(true);
 
                             done();
                         });
@@ -540,7 +540,7 @@ describe('Test plugins', function () {
                                 }
                             },
                         });
-                        editor.setEditorValue('<img src="https://xdsoft.net/jodit/files/th.jpg">');
+                        editor.setEditorValue('<img src="tests/artio.jpg">');
 
                         simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
 

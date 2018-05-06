@@ -31,7 +31,7 @@
   "devDependencies": {
     "@types/ace": "^0.0.35",
     "@types/es6-promise": "^3.3.0",
-    "@types/node": "^7.0.61",
+    "@types/node": "^7.0.63",
     "autoprefixer": "^6.7.7",
     "awesome-typescript-loader": "^3.4.1",
     "chai": "^3.5.0",
@@ -56,7 +56,7 @@
     "less-loader": "^4.1.0",
     "mocha": "^3.4.2",
     "optimize-css-assets-webpack-plugin": "^3.2.0",
-    "postcss-loader": "^2.1.4",
+    "postcss-loader": "^2.1.5",
     "precss": "^2.0.0",
     "style-loader": "^0.13.2",
     "svg-inline-loader": "^0.8.0",

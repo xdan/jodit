@@ -7,7 +7,7 @@
 import {Jodit} from '../Jodit';
 import {Config} from '../Config'
 import * as consts from '../constants'
-import {$$, css, debounce, dom, isIE, offset} from '../modules/Helpers'
+import {$$, css, debounce, dom, innerWidth, isIE, offset} from '../modules/Helpers'
 
 /**
  * The module creates a supporting frame for resizing of the elements img and table
@@ -106,8 +106,10 @@ export function resizer(editor: Jodit) {
             if (!editor.options.resizer.showSize) {
                 return;
             }
+
             sizeViewer.style.opacity = '1';
             sizeViewer.innerHTML = `${w} x ${h}`;
+
             window.clearTimeout(timeoutSizeViewer);
             timeoutSizeViewer = window.setTimeout(() => {
                 sizeViewer.style.opacity = '0';
@@ -145,6 +147,10 @@ export function resizer(editor: Jodit) {
         showResizer = () => {
             if (editor.options.readonly) {
                 return;
+            }
+
+            if (!resizer.parentNode) {
+                editor.ownerDocument.body.appendChild(resizer);
             }
 
             resizerIsVisible = true;
@@ -269,7 +275,6 @@ export function resizer(editor: Jodit) {
             }
         })
         .on('afterInit', () => {
-            editor.ownerDocument.body.appendChild(resizer);
             editor.events
                 .on(editor.editor, 'keydown', (e: KeyboardEvent) => {
                     if (resizerIsVisible && e.keyCode === consts.KEY_DELETE && currentElement && currentElement.tagName.toLowerCase() !== 'table') {
@@ -287,7 +292,6 @@ export function resizer(editor: Jodit) {
                 })
                 .on(editor.ownerWindow, 'mousemove touchmove', (e: MouseEvent) => {
                     if (isResizing) {
-                        // resized = true;
                         diff_x = e.clientX - start_x;
                         diff_y = e.clientY - start_y;
 
@@ -295,17 +299,25 @@ export function resizer(editor: Jodit) {
                             return;
                         }
 
+                        const className: string = handle.className;
+
                         if ('IMG' === currentElement.tagName) {
                             if (diff_x) {
-                                new_w = width + (handle.className.match(/left/) ? -1 : 1)  * diff_x;
+                                new_w = width + (className.match(/left/) ? -1 : 1) * diff_x;
                                 new_h = Math.round(new_w / ratio);
                             } else {
-                                new_h = height + (handle.className.match(/top/) ? -1 : 1)  * diff_y;
+                                new_h = height + (className.match(/top/) ? -1 : 1)  * diff_y;
                                 new_w = Math.round(new_h * ratio);
                             }
+
+                            if (new_w > innerWidth(editor.editor, editor.ownerWindow)) {
+                                new_w = innerWidth(editor.editor, editor.ownerWindow);
+                                new_h = Math.round(new_w / ratio);
+                            }
+
                         } else {
-                            new_w = width + (handle.className.match(/left/) ? -1 : 1)  * diff_x;
-                            new_h = height + (handle.className.match(/top/) ? -1 : 1)  * diff_y;
+                            new_w = width + (className.match(/left/) ? -1 : 1)  * diff_x;
+                            new_h = height + (className.match(/top/) ? -1 : 1)  * diff_y;
                         }
 
                         if (new_w > editor.options.resizer.min_width) {

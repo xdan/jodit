@@ -150,7 +150,7 @@ describe('Test Inline mode', function () {
                             toolbarInline: true,
                             toolbarInlineDisableFor: 'a,IMG'
                         });
-                        editor.value = '<table><tr><td>1</td></tr></table><p>test <a href="#test">test</a> <img style="width:30px" src="https://xdsoft.net/jodit/images/artio.jpg">> test</p>'
+                        editor.value = '<table><tr><td>1</td></tr></table><p>test <a href="#test">test</a> <img style="width:30px" src="tests/artio.jpg">> test</p>'
                         var a = editor.editor.querySelector('a');
                         var img = editor.editor.querySelector('img');
                         var td = editor.editor.querySelector('td');
@@ -175,7 +175,7 @@ describe('Test Inline mode', function () {
                             toolbarInline: true,
                             toolbarInlineDisableFor: ['A','table']
                         });
-                        editor.value = '<table><tr><td>1</td></tr></table><p>test <a href="#test">test</a> <img style="width:30px" src="https://xdsoft.net/jodit/images/artio.jpg">> test</p>'
+                        editor.value = '<table><tr><td>1</td></tr></table><p>test <a href="#test">test</a> <img style="width:30px" src="tests/artio.jpg">> test</p>'
                         var a = editor.editor.querySelector('a');
                         var img = editor.editor.querySelector('img');
                         var td = editor.editor.querySelector('td');
@@ -330,7 +330,7 @@ describe('Test Inline mode', function () {
                                 toolbarInline: true,
                                 toolbarInlineDisableFor: 'a,IMG'
                             });
-                            editor.value = '<table><tr><td>1</td></tr></table><p>test <a href="#test">test</a> <img style="width:30px" src="https://xdsoft.net/jodit/images/artio.jpg">> test</p>'
+                            editor.value = '<table><tr><td>1</td></tr></table><p>test <a href="#test">test</a> <img style="width:30px" src="tests/artio.jpg">> test</p>'
                             var a = editor.editor.querySelector('a');
                             var img = editor.editor.querySelector('img');
                             var td = editor.editor.querySelector('td');
@@ -356,7 +356,7 @@ describe('Test Inline mode', function () {
                                 toolbarInline: true,
                                 toolbarInlineDisableFor: ['A','table']
                             });
-                            editor.value = '<table><tr><td>1</td></tr></table><p>test <a href="#test">test</a> <img style="width:30px" src="https://xdsoft.net/jodit/images/artio.jpg">> test</p>'
+                            editor.value = '<table><tr><td>1</td></tr></table><p>test <a href="#test">test</a> <img style="width:30px" src="tests/artio.jpg">> test</p>'
                             var a = editor.editor.querySelector('a');
                             var img = editor.editor.querySelector('img');
                             var td = editor.editor.querySelector('td');

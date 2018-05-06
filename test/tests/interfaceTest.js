@@ -533,10 +533,10 @@ describe('Test interface', function() {
                     expect(url.classList.contains('jodit_error')).to.be.true;
 
                     url.focus();
-                    url.value = 'https://xdsoft.net/jodit/images/artio.jpg'
+                    url.value = 'tests/artio.jpg'
                     simulateEvent('submit', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_form'))
 
-                    expect(sortAtrtibutes(editor.value)).to.equal('<a href="https://xdsoft.net/jodit/images/artio.jpg">123</a>');
+                    expect(sortAtrtibutes(editor.value)).to.equal('<a href="tests/artio.jpg">123</a>');
 
                     simulateEvent('mousedown', 0, editor.editor);
 
@@ -572,10 +572,10 @@ describe('Test interface', function() {
                         expect(text.value).to.be.equal('select');
 
                         url.focus();
-                        url.value = 'https://xdsoft.net/jodit/images/artio.jpg'
+                        url.value = 'tests/artio.jpg'
                         simulateEvent('submit', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_form'))
 
-                        expect(sortAtrtibutes(editor.value)).to.equal('test <a href="https://xdsoft.net/jodit/images/artio.jpg">select</a> stop');
+                        expect(sortAtrtibutes(editor.value)).to.equal('test <a href="tests/artio.jpg">select</a> stop');
 
                         simulateEvent('mousedown', 0, editor.editor);
 
@@ -1192,7 +1192,7 @@ describe('Test interface', function() {
                 it('Should Open inline popup', function () {
                     var editor = new Jodit(appendTestArea());
 
-                    editor.setEditorValue('<img src="/test/tests/artio.jpg"/>');
+                    editor.setEditorValue('<img src="/tests/artio.jpg"/>');
 
                     simulateEvent('mousedown', 0, editor.editor.querySelector('img'))
 
@@ -1204,7 +1204,7 @@ describe('Test interface', function() {
                     it('Should Open edit image dialog', function () {
                         var editor = new Jodit(appendTestArea());
 
-                        editor.setEditorValue('<img src="/test/tests/artio.jpg"/>');
+                        editor.setEditorValue('<img src="/tests/artio.jpg"/>');
 
                         simulateEvent('mousedown', 0, editor.editor.querySelector('img'))
 
