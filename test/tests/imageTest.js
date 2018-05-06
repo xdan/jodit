@@ -823,7 +823,7 @@ describe('Test image', function() {
         });
         describe('Resize image', function () {
             it('Should not allow to resize image more then width of editor', function (done) {
-                box.style.width = '500px';
+                box.style.width = '600px';
                 var editor = new Jodit(appendTestArea());
                 var image = new Image();
                 image.src = 'tests/artio.jpg';
@@ -831,7 +831,7 @@ describe('Test image', function() {
                 var doit = function () {
                     var ratio = image.naturalWidth / image.naturalHeight;
 
-                    editor.value = '<img src="tests/artio.jpg" style="width:300px;height: 100px;"/>';
+                    editor.value = '<img src="tests/artio.jpg" style="width:500px;height: 281px;"/>';
                     var img = editor.editor.querySelector('img');
                     simulateEvent('mousedown', 0, editor.editor.querySelector('img'));
                     var resizer = document.querySelector('.jodit_resizer[data-editor_id=' + editor.id + ']');
