@@ -826,7 +826,8 @@ describe('Test image', function() {
                 box.style.width = '500px';
                 var editor = new Jodit(appendTestArea());
                 var image = new Image();
-                image.src = 'tests/artio.jpg'
+                image.src = 'tests/artio.jpg';
+
                 var doit = function () {
                     var ratio = image.naturalWidth / image.naturalHeight;
                     console.log(ratio);
@@ -850,8 +851,8 @@ describe('Test image', function() {
                         data.clientX = positionResizer.left + 1000;
                         data.clientY = positionResizer.top + 1000;
                     });
-                    console.log(newratio);
                     var newratio = img.offsetWidth / img.offsetHeight;
+                    console.log(newratio);
                     expect(img.offsetWidth).to.be.equal(editor.editor.offsetWidth - 20);
 
                     expect(Math.abs(newratio - ratio) < 0.003).to.be.true
