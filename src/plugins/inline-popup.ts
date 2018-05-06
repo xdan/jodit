@@ -302,8 +302,8 @@ export class inlinePopup extends Plugin{
         const scrollLeft: number = win.pageXOffset || docElement.scrollLeft || body.scrollLeft;
         const clientLeft: number = docElement.clientLeft || body.clientLeft || 0;
 
-        const windWidth: number = this.jodit.ownerWindow.innerWidth + scrollLeft - clientLeft;
-        const windHeight: number = this.jodit.ownerWindow.innerHeight + scrollTop - clientTop;
+        const windWidth: number = docElement.clientWidth + scrollLeft - clientLeft;
+        const windHeight: number = docElement.clientHeight + scrollTop - clientTop;
 
         return  {
             left: clientLeft,
