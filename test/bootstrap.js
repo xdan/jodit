@@ -141,6 +141,7 @@ if ((typeof window.chai !== 'undefined')) {
                     break;
                 case 'getLocalFileByUrl':
                     switch (ajax.options.data.url) {
+                        case location.protocol + '//' + location.host + '/tests/artio.jpg':
                         case location.protocol + '//' + location.host + '/test/tests/artio.jpg':
                         case 'https://xdsoft.net/jodit/files/th.jpg':
                             resolve({"success":true,"time":"2018-03-15 12:55:00","data":{"path":"","name":"th.jpg","source":"default","code":220}});

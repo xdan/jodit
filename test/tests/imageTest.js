@@ -304,24 +304,34 @@ describe('Test image', function() {
             });
         });
         describe('Change alt', function () {
-            it('should change image alt', function () {
+            it('should change image alt', function (done) {
                 var editor = new Jodit(appendTestArea());
+                var image = new Image();
+                var doTest = function () {
+                    editor.value = '<img alt="test" style="width:100px; height: 100px;" src="tests/artio.jpg"/>';
+                    simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
 
-                editor.setEditorValue('<img alt="test" style="width:100px; height: 100px;" src="tests/artio.jpg"/>')
-                simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
+                    var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
+                    var tab = dialog.querySelector('.jodit_tab.active');
 
-                var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
-                var tab = dialog.querySelector('.jodit_tab.active');
+                    expect(tab).to.be.not.equal(null);
+                    expect(tab.querySelector('.imageAlt')).to.be.not.equal(null);
+                    expect(tab.querySelector('.imageAlt').value).to.be.equal('test');
 
-                expect(tab).to.be.not.equal(null);
-                expect(tab.querySelector('.imageAlt')).to.be.not.equal(null);
-                expect(tab.querySelector('.imageAlt').value).to.be.equal('test');
+                    dialog.querySelector('.imageAlt').value = 'Stop';
+                    simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
 
-                dialog.querySelector('.imageAlt').value = 'Stop';
-                simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
+                    expect(sortAtrtibutes(editor.value)).to.be.equal('<img alt="Stop" src="tests/artio.jpg" style="height:100px;width:100px">');
+                    done();
+                };
 
-                expect(sortAtrtibutes(editor.value)).to.be.equal('<img alt="Stop" src="tests/artio.jpg" style="height:100px;width:100px">');
+                image.src = 'tests/artio.jpg';
 
+                if (image.complete) {
+                    doTest();
+                } else {
+                    image.onload = doTest;
+                }
             });
         });
         describe('Change link', function () {
@@ -421,7 +431,7 @@ describe('Test image', function() {
                 var editor = new Jodit(appendTestArea());
 
                 editor.value = '<img src="tests/artio.jpg"/>';
-                var img= editor.editor.querySelector('img');
+                var img = editor.editor.querySelector('img');
 
                 function doTest() {
                     simulateEvent('dblclick', 0, editor.editor.querySelector('img'));

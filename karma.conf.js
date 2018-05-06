@@ -5,15 +5,20 @@ module.exports = function(config) {
         basePath: '',
         frameworks: ['mocha', 'chai'],
         mime: {
+            'text/css': ['css'],
             'text/x-typescript': ['ts','tsx'],
             'image/jpeg': ['jpg'],
         },
         files: [
+            {pattern: './test/tests/artio.jpg', watched: false, included: false, served: true},
             'app.css',
             'src/index.ts',
             'test/bootstrap.js',
             'test/tests/*.js'
         ],
+        proxies: {
+            "/tests/artio.jpg" : "/base/test/tests/artio.jpg"
+        },
         reporters: ['progress'],
         port: 9876,
         colors: true,
