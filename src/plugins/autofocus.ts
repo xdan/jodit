@@ -38,7 +38,11 @@ export function autofocus(editor: Jodit) {
         })
         .on('mousedown', (e: MouseEvent) => {
             if (editor.isEditorMode() && e.target && Dom.isBlock(<Node>e.target) && !(<HTMLElement>e.target).childNodes.length) {
-                editor.selection.setCursorIn(<HTMLElement>e.target);
+                if (editor.editor === e.target) {
+                    editor.selection.focus()
+                } else {
+                    editor.selection.setCursorIn(<HTMLElement>e.target);
+                }
             }
         })
         .on('beforeDestruct', () => {

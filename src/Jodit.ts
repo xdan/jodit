@@ -323,10 +323,7 @@ export class Jodit extends Component {
     private __createEditor() {
         if (this.events.fire('createEditor') !== false) {
             this.editor = <HTMLDivElement>dom(`<div class="jodit_wysiwyg" contenteditable aria-disabled="false" tabindex="${this.options.tabIndex}"></div>`, this.ownerDocument);
-            // fix fo ie
-            this.workplace.appendChild(this.ownerDocument.createTextNode("\n"));
             this.workplace.appendChild(this.editor);
-            this.workplace.appendChild(this.ownerDocument.createTextNode("\n"));
         }
 
         if (this.options.editorCssClass) {
@@ -377,7 +374,13 @@ export class Jodit extends Component {
         }
     }
 
+    /**
+     * Editor was destructed
+     *
+     * @type {boolean}
+     */
     isDestructed: boolean = false;
+
     /**
      * Jodit's Destructor. Remove editor, and return source input
      */
@@ -387,6 +390,7 @@ export class Jodit extends Component {
         }
 
         this.isDestructed = true;
+
         /**
          * Triggered before {@link events:beforeDestruct|beforeDestruct} executed. If returned false method stopped
          *

@@ -269,14 +269,14 @@ export class Select extends Component{
                 range: Range = jodit.editorDocument.createRange();
 
             if (!sel.rangeCount || !this.current()) {
-                let child: Node|null = jodit.editor.firstChild;
+                // let child: Node|null = jodit.editor.firstChild;
+                //
+                // if (!child) {
+                //     child = jodit.editorDocument.createTextNode(consts.INVISIBLE_SPACE);
+                //     jodit.editor.appendChild(child);
+                // }
 
-                if (!child) {
-                    child = jodit.editorDocument.createTextNode(consts.INVISIBLE_SPACE);
-                    jodit.editor.appendChild(child);
-                }
-
-                range.selectNodeContents(child);
+                range.setStart(jodit.editor, 0);
                 range.collapse(true);
                 sel.removeAllRanges();
                 sel.addRange(range);
