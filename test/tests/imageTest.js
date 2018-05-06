@@ -830,8 +830,8 @@ describe('Test image', function() {
 
                 var doit = function () {
                     var ratio = image.naturalWidth / image.naturalHeight;
-                    console.log(ratio);
-                    editor.value = '<img src="tests/artio.jpg" style="width:300px"/>';
+
+                    editor.value = '<img src="tests/artio.jpg" style="width:300px;height: 100px;"/>';
                     var img = editor.editor.querySelector('img');
                     simulateEvent('mousedown', 0, editor.editor.querySelector('img'));
                     var resizer = document.querySelector('.jodit_resizer[data-editor_id=' + editor.id + ']');
@@ -852,9 +852,7 @@ describe('Test image', function() {
                         data.clientY = positionResizer.top + 1000;
                     });
                     var newratio = img.offsetWidth / img.offsetHeight;
-                    console.log(img.offsetWidth);
-                    console.log(img.offsetHeight);
-                    console.log(newratio);
+
                     expect(img.offsetWidth).to.be.equal(editor.editor.offsetWidth - 20);
 
                     expect(Math.abs(newratio - ratio) < 0.003).to.be.true
