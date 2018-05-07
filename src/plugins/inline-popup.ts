@@ -85,6 +85,8 @@ Config.prototype.popup = <{[key: string]: Array<ControlType|string>}>{
                 const command: string = (control.args && typeof control.args[1] === 'string') ? control.args[1].toLowerCase() : '';
 
                 css(image, 'vertical-align', command);
+
+                editor.events.fire('recalcPositionPopup');
             }
         },
         {
@@ -131,6 +133,8 @@ Config.prototype.popup = <{[key: string]: Array<ControlType|string>}>{
                     }
                     clearCenterAlign();
                 }
+
+                editor.events.fire('recalcPositionPopup');
             },
             tooltip: 'Horizontal align'
         }
@@ -351,6 +355,14 @@ export class inlinePopup extends Plugin{
             .indexOf(type.toLowerCase()) !== -1
     }
 
+
+    private __getRect: () => Bound;
+    private reCalcPosition = () => {
+        if (this.__getRect) {
+            this.calcPosition(this.__getRect(), this.calcWindSizes());
+        }
+    };
+
     private showPopup = (rect: () => Bound, type: string, elm?: HTMLElement): boolean => {
         if (
             !this.jodit.options.toolbarInline ||
@@ -376,6 +388,7 @@ export class inlinePopup extends Plugin{
 
         this.popup.open(this.container, false, true);
 
+        this.__getRect = rect;
         this.calcPosition(rect(), windSize);
 
         return true;
@@ -481,6 +494,7 @@ export class inlinePopup extends Plugin{
                 e.stopPropagation();
             })
             .on('beforeOpenPopup hidePopup', this.hidePopup)
+            .on('recalcPositionPopup', this.reCalcPosition)
             .on('getDiffButtons.mobile', (_toolbar: ToolbarCollection) : void | string[] => {
                 if (this.toolbar === _toolbar) {
                     return splitArray(editor.options.buttons)
