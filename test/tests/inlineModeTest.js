@@ -175,6 +175,57 @@ describe('Test Inline mode', function () {
                     });
                 });
             });
+            describe('Recalk position after Scroll', function () {
+                it('Should reacalc inline popup position', function () {
+                    var editor = new Jodit(appendTestArea(), {
+                        height: 500
+                    });
+                    editor.value = '<p>test' + ('<br>'.repeat(20)) + ' <img style="width:100px;height:100px;" src="tests/artio.jpg"/> ' + ('<br>'.repeat(20)) + 'test</p>'
+                    var img = editor.editor.querySelector('img');
+                    img.scrollIntoView();
+                    simulateEvent('mousedown', 0, img);
+                    var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
+                    expect(popup).to.be.not.null;
+
+                    var imgPosition = offset(img);
+                    var popupPosition = offset(popup);
+
+                    expect(Math.abs(popupPosition.top - (imgPosition.top + imgPosition.height) - 10) < 2).to.be.true;
+
+                    editor.editor.scrollTo(0, editor.editor.scrollTop + 50);
+                    simulateEvent('scroll', 0 , editor.editor);
+
+                    imgPosition = offset(img);
+                    popupPosition = offset(popup);
+
+                    expect(Math.abs(popupPosition.top - (imgPosition.top + imgPosition.height) - 10) < 2).to.be.true;
+
+                });
+            });
+            describe('Popup position ouside of editor', function () {
+                it('Should hide inline popup', function () {
+                    var editor = new Jodit(appendTestArea(), {
+                        height: 500
+                    });
+                    editor.value = '<p>test' + ('<br>'.repeat(20)) + ' <img style="width:100px;height:100px;" src="tests/artio.jpg"/> ' + ('<br>'.repeat(120)) + 'test</p>'
+                    var img = editor.editor.querySelector('img');
+                    img.scrollIntoView();
+                    simulateEvent('mousedown', 0, img);
+                    var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
+                    expect(popup).to.be.not.null;
+
+                    var imgPosition = offset(img);
+                    var popupPosition = offset(popup);
+
+                    expect(Math.abs(popupPosition.top - (imgPosition.top + imgPosition.height) - 10) < 2).to.be.true;
+
+                    editor.editor.scrollTo(0, editor.editor.scrollTop + 1000);
+                    simulateEvent('scroll', 0 , editor.editor);
+
+                    expect(popup.parentNode).to.be.null;
+
+                });
+            });
         });
         describe('Click on Image', function () {
             describe('On mobile', function () {

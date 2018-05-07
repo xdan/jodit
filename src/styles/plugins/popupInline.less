@@ -7,10 +7,14 @@
     position: absolute;
     width: 0;
     height: 0;
+    &.jodit_toolbar_popup-inline-target-hidden {
+        display: none;
+    }
 }
 
 .jodit_toolbar_popup-inline {
     display: inline-block!important;
+
     position: relative!important;
     > div {
         color: @color-background-gray;

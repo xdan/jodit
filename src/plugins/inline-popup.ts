@@ -317,11 +317,20 @@ export class inlinePopup extends Plugin{
         };
     };
 
+    private _hiddenClass = 'jodit_toolbar_popup-inline-target-hidden';
     private calcPosition = (rect: Bound, windowSize: Bound) => {
+        this.popup.target.classList.remove(this._hiddenClass);
+
         const selectionCenterLeft: number = rect.left + rect.width / 2;
 
+        const workplacePosition: Bound = offset(this.jodit.workplace, this.jodit, this.jodit.ownerDocument, true);
+
+        let targetTop: number = rect.top + rect.height + 10;
+        const diff = 50;
+
         this.target.style.left = selectionCenterLeft + 'px';
-        this.target.style.top = (rect.top + rect.height + 10) + 'px';
+        this.target.style.top = targetTop + 'px';
+
 
         if (this.jodit.isFullSize()) {
             this.target.style.zIndex = css(this.jodit.container, 'zIndex').toString();
@@ -331,11 +340,11 @@ export class inlinePopup extends Plugin{
         let marginLeft: number = -halfWidthPopup;
         this.popup.container.classList.remove('jodit_toolbar_popup-inline-top');
 
-        if (rect.top + rect.height + 10 + this.container.offsetHeight > windowSize.height) {
-            this.target.style.top = (rect.top - this.container.offsetHeight - 10) + 'px';
+        if (targetTop + this.container.offsetHeight > windowSize.height) {
+            targetTop = rect.top - this.container.offsetHeight - 10;
+            this.target.style.top = targetTop + 'px';
             this.popup.container.classList.add('jodit_toolbar_popup-inline-top');
         }
-
 
         if (selectionCenterLeft - halfWidthPopup < 0) {
             marginLeft = -(rect.width / 2 + rect.left);
@@ -347,6 +356,10 @@ export class inlinePopup extends Plugin{
         }
 
         this.container.style.marginLeft = marginLeft + 'px';
+
+        if (workplacePosition.top - targetTop > diff || targetTop - (workplacePosition.top + workplacePosition.height)  > diff) {
+            this.popup.target.classList.add(this._hiddenClass);
+        }
     };
 
     private isExcludedTarget(type: string): boolean {
@@ -505,7 +518,7 @@ export class inlinePopup extends Plugin{
                 }
             })
             .on('selectionchange', this.onChangeSelection)
-            .on('afterCommand resize afterExec', () => {
+            .on('afterCommand afterExec', () => {
                 if (this.isShown && this.isSelectionPopup) {
                     this.onChangeSelection();
                 }
@@ -518,7 +531,7 @@ export class inlinePopup extends Plugin{
             })
 
             .on('mousedown keydown touchstart', this.onSelectionStart)
-            .on([editor.ownerWindow, editor.editor], 'scroll', this.reCalcPosition)
+            .on([editor.ownerWindow, editor.editor], 'scroll resize', this.reCalcPosition)
             .on([editor.ownerWindow],'mouseup keyup touchend', this.onSelectionEnd)
             .on([editor.ownerWindow],'mousedown keydown touchstart', this.checkIsTargetEvent)
 
@@ -529,7 +542,7 @@ export class inlinePopup extends Plugin{
         this.target.parentNode && this.target.parentNode.removeChild(this.target);
 
         editor.events
-            .off([editor.ownerWindow], 'scroll', this.reCalcPosition)
+            .off([editor.ownerWindow], 'scroll resize', this.reCalcPosition)
             .off([editor.ownerWindow],'mouseup keyup touchend', this.onSelectionEnd)
             .off([editor.ownerWindow],'mousedown keydown touchstart', this.checkIsTargetEvent);
 
