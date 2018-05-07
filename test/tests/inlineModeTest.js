@@ -222,8 +222,12 @@ describe('Test Inline mode', function () {
                     editor.editor.scrollTo(0, editor.editor.scrollTop + 1000);
                     simulateEvent('scroll', 0 , editor.editor);
 
-                    expect(popup.parentNode).to.be.null;
+                    expect(popup.parentNode.classList.contains('jodit_toolbar_popup-inline-target-hidden')).to.be.true;
 
+                    img.scrollIntoView();
+                    simulateEvent('scroll', 0 , editor.editor);
+
+                    expect(popup.parentNode.classList.contains('jodit_toolbar_popup-inline-target-hidden')).to.be.false;
                 });
             });
         });
