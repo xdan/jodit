@@ -1691,7 +1691,7 @@ describe('Test interface', function() {
             var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + area.id + ']');
             expect(dialog).to.be.not.equal(null);
 
-            expect(dialog.innerText.match(/License:.*Free/)).to.be.not.equal(null);
+            expect(dialog.innerText.match(/License:.*(GPL|GNU)/)).to.be.not.equal(null);
         });
         describe('Set license', function () {
             it('Should show License in about dialog', function () {
@@ -1708,7 +1708,7 @@ describe('Test interface', function() {
                 var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + area.id + ']');
                 expect(dialog).to.be.not.equal(null);
 
-                expect(dialog.innerText.match(/License:.*Free/)).to.be.equal(null);
+                expect(dialog.innerText.match(/License:.*(GPL|GNU)/)).to.be.equal(null);
 
                 expect(dialog.innerText.match(/License: 12345678-\*\*\*\*\*\*\*\*-\*\*\*\*\*\*\*\*-56789022/)).to.be.not.equal(null);
             });
