@@ -80,7 +80,7 @@ Config.prototype.sourceEditorNativeOptions = {
 
 
 Config.prototype.sourceEditorCDNUrlsJS = [
-    'https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.1/ace.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.3/ace.js',
 ];
 
 

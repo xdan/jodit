@@ -661,7 +661,7 @@ Config.prototype.controls = {
                         editor.i18n('Jodit Editor') + ' v.' + editor.getVersion() + ' ' +
                     '</div>' +
                     '<div>' +
-                         editor.i18n('License: %s', !isLicense(editor.options.license) ? editor.i18n('Free Non-commercial Version') : normalizeLicense(editor.options.license)) +
+                         editor.i18n('License: %s', !isLicense(editor.options.license) ? editor.i18n('GNU General Public License, version 2 or later') : normalizeLicense(editor.options.license)) +
                     '</div>' +
                     '<div>' +
                         '<a href="https://xdsoft.net/jodit/" target="_blank">http://xdsoft.net/jodit/</a>' +
@@ -670,17 +670,17 @@ Config.prototype.controls = {
                         '<a href="https://xdsoft.net/jodit/doc/" target="_blank">' + editor.i18n('Jodit User\'s Guide') + '</a> ' +
                         editor.i18n('contains detailed help for using') +
                     '</div>' +
-                    '<div>' +
-                        editor.i18n('For information about the license, please go to our website:') +
-                    '</div>' +
-                    '<div>' +
-                        '<a href="https://xdsoft.net/jodit/license.html" target="_blank">http://xdsoft.net/jodit/license.html</a>' +
-                    '</div>' +
-                    (isLicense(editor.options.license) ? '' :
-                    '<div>' +
-                        '<a href="https://xdsoft.net/jodit/buy.html" target="_blank">' + editor.i18n('Buy full version') + '</a>' +
-                    '</div>'
-                    ) +
+                    // '<div>' +
+                    //     editor.i18n('For information about the license, please go to our website:') +
+                    // '</div>' +
+                    // '<div>' +
+                    //     '<a href="https://xdsoft.net/jodit/license.html" target="_blank">http://xdsoft.net/jodit/license.html</a>' +
+                    // '</div>' +
+                    // (isLicense(editor.options.license) ? '' :
+                    // '<div>' +
+                    //     '<a href="https://xdsoft.net/jodit/buy.html" target="_blank">' + editor.i18n('Buy full version') + '</a>' +
+                    // '</div>'
+                    //) +
                     '<div>' +
                         editor.i18n('Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.') +
                     '</div>' +
