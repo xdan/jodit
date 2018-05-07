@@ -518,7 +518,7 @@ export class inlinePopup extends Plugin{
             })
 
             .on('mousedown keydown touchstart', this.onSelectionStart)
-            .on([editor.ownerWindow], 'scroll', this.hidePopup)
+            .on([editor.ownerWindow, editor.editor], 'scroll', this.reCalcPosition)
             .on([editor.ownerWindow],'mouseup keyup touchend', this.onSelectionEnd)
             .on([editor.ownerWindow],'mousedown keydown touchstart', this.checkIsTargetEvent)
 
@@ -529,7 +529,7 @@ export class inlinePopup extends Plugin{
         this.target.parentNode && this.target.parentNode.removeChild(this.target);
 
         editor.events
-            .off([editor.ownerWindow], 'scroll', this.hidePopup)
+            .off([editor.ownerWindow], 'scroll', this.reCalcPosition)
             .off([editor.ownerWindow],'mouseup keyup touchend', this.onSelectionEnd)
             .off([editor.ownerWindow],'mousedown keydown touchstart', this.checkIsTargetEvent);
 

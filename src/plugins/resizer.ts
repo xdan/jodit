@@ -118,7 +118,8 @@ export function resizer(editor: Jodit) {
 
         updateSize = () => {
             if (resizerIsVisible && currentElement && resizer) {
-                const pos: Bound = offset(currentElement, editor, editor.editorDocument),
+                const workplacePosition: Bound = offset(<HTMLElement>(resizer.parentNode || editor.ownerDocument.documentElement), editor, editor.ownerDocument, true),
+                    pos: Bound = offset(currentElement, editor, editor.editorDocument),
                     left: number = parseInt(resizer.style.left || '0', 10),
                     top: number = parseInt(resizer.style.top || '0', 10),
                     width: number = resizer.offsetWidth,
@@ -126,9 +127,13 @@ export function resizer(editor: Jodit) {
 
                 // 1 - because need move border higher and toWYSIWYG the left than the picture
                 // 2 - in box-sizing: border-box mode width is real width indifferent by border-width.
-                if (top !== pos.top - 1 || left !== pos.left - 1 || width !== currentElement.offsetWidth || height !== currentElement.offsetHeight) {
-                    resizer.style.top = (pos.top - 1) + 'px';
-                    resizer.style.left = (pos.left - 1) + 'px';
+
+                const newTop: number = pos.top - 1 - workplacePosition.top;
+                const newLeft: number = pos.left - 1 - workplacePosition.left;
+
+                if (top !== newTop || left !== newLeft || width !== currentElement.offsetWidth || height !== currentElement.offsetHeight) {
+                    resizer.style.top = newTop + 'px';
+                    resizer.style.left = newLeft + 'px';
                     resizer.style.width = currentElement.offsetWidth + 'px';
                     resizer.style.height = currentElement.offsetHeight + 'px';
 
@@ -150,7 +155,7 @@ export function resizer(editor: Jodit) {
             }
 
             if (!resizer.parentNode) {
-                editor.ownerDocument.body.appendChild(resizer);
+                editor.workplace.appendChild(resizer);
             }
 
             resizerIsVisible = true;
