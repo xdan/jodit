@@ -1,6 +1,29 @@
 describe('Enter behavior Jodit Editor Tests', function() {
     describe('Backspace/Delete key', function () {
         describe('near empty tag', function () {
+            describe('BR before P', function () {
+                it('Should simple remove BR but cursor should leave inside P', function () {
+                    var editor = new Jodit(appendTestArea())
+
+                    editor.value = '<br><p>test</p>';
+
+                    var range = editor.editorDocument.createRange();
+
+
+                    // set cursor in start of element
+
+                    range.selectNodeContents(editor.editor.lastChild);
+                    range.collapse(true);
+                    editor.editorWindow.getSelection().removeAllRanges();
+                    editor.editorWindow.getSelection().addRange(range);
+
+
+                    simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+
+                    editor.selection.insertNode(editor.editorDocument.createTextNode(' 2 '));
+                    expect(editor.value).to.be.equal('<p> 2 test</p>');
+                });
+            });
             describe('Backspace and Previous was empty H1', function () {
                 it('Should simple remove this H1', function () {
                     var editor = new Jodit(appendTestArea())

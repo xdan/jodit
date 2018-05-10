@@ -369,7 +369,7 @@ export class Jodit extends Component {
 
         if (this.options.triggerChangeEvent) {
             this.events.on('change', debounce(() => {
-                this.events.fire(this.element, 'change');
+                this.events && this.events.fire(this.element, 'change');
             }, this.defaultTimeout))
         }
     }

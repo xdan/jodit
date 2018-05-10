@@ -378,14 +378,16 @@ export function resizer(editor: Jodit) {
                 }
             }
 
-            $$('img, table, iframe', editor.editor).forEach((elm: HTMLElement) => {
-                if (editor.getMode() === consts.MODE_SOURCE) {
-                    return;
-                }
-                if (!(<any>elm)['__jodit_resizer_binded'] && ((elm.tagName === 'IFRAME' && editor.options.useIframeResizer) || (elm.tagName === 'IMG' && editor.options.useImageResizer) || (elm.tagName === 'TABLE' && editor.options.useTableResizer))) {
-                    (<any>elm)['__jodit_resizer_binded'] = true;
-                    bind(elm);
-                }
-            });
+            if (!editor.isDestructed) {
+                $$('img, table, iframe', editor.editor).forEach((elm: HTMLElement) => {
+                    if (editor.getMode() === consts.MODE_SOURCE) {
+                        return;
+                    }
+                    if (!(<any>elm)['__jodit_resizer_binded'] && ((elm.tagName === 'IFRAME' && editor.options.useIframeResizer) || (elm.tagName === 'IMG' && editor.options.useImageResizer) || (elm.tagName === 'TABLE' && editor.options.useTableResizer))) {
+                        (<any>elm)['__jodit_resizer_binded'] = true;
+                        bind(elm);
+                    }
+                });
+            }
         }, editor.defaultTimeout));
 }

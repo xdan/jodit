@@ -91,6 +91,10 @@ export function size(editor: Jodit) {
     };
 
     const resizeWorkspaceImd = () => {
+        if (editor.options.inline) {
+            return;
+        }
+
         calcMinHeightWorkspace();
 
         if (editor.container && (editor.options.height !== 'auto' || editor.isFullSize())) {
@@ -108,14 +112,18 @@ export function size(editor: Jodit) {
             }
         })
         .on('afterInit', () => {
-            css(editor.editor, {
-                minHeight: '100%',
-            });
-            css(editor.container, {
-                minHeight: editor.options.minHeight,
-                minWidth: editor.options.minWidth,
-                maxWidth: editor.options.maxWidth,
-            });
+            if (!editor.options.inline) {
+                css(editor.editor, {
+                    minHeight: '100%',
+                });
+
+                css(editor.container, {
+                    minHeight: editor.options.minHeight,
+                    minWidth: editor.options.minWidth,
+                    maxWidth: editor.options.maxWidth,
+                });
+            }
+
 
             let height: string | number = editor.options.height;
 
@@ -126,8 +134,10 @@ export function size(editor: Jodit) {
                 }
             }
 
-            setHeight(height);
-            setWidth(editor.options.width);
+            if (!editor.options.inline) {
+                setHeight(height);
+                setWidth(editor.options.width);
+            }
 
             resizeWorkspaceImd();
         }, undefined, undefined,true)
