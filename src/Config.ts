@@ -603,6 +603,8 @@ export class Config {
 
 export const OptionsDefault: any = function (this: any, options: any) {
     const self: any = this;
+    self.plainOptions = options;
+
     if (options !== undefined && typeof options === 'object') {
         const extendKey = (options: object, key: string) => {
             if (key === 'preset') {

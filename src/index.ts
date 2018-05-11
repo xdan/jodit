@@ -36,6 +36,7 @@ Object.keys(Modules).filter(esFilter).forEach((key: string) => {
     Jodit.modules[key] = (<any>Modules)[key];
 });
 
+
 //Plugins
 Object.keys(Plugins).filter(esFilter).forEach((key: string) => {
     Jodit.plugins[key] = (<any>Plugins)[key];
@@ -48,5 +49,16 @@ Object.keys(Languages).filter(esFilter).forEach((key: string) => {
 
 Jodit.defaultOptions = new Config();
 OptionsDefault.prototype = Jodit.defaultOptions;
+
+declare let module: { hot: any };
+if (module.hot) {
+    module.hot.accept('./plugins/index', function() {
+        Object.keys(Jodit.instances).forEach((id: string) => {
+            let plainOptions = {...(<any>Jodit.instances[id].options).plainOptions};
+            Jodit.instances[id].destruct();
+            new Jodit('#' + id, plainOptions);
+        });
+    })
+}
 
 export = Jodit;

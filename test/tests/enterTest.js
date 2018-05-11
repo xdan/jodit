@@ -1087,15 +1087,28 @@ describe('Enter behavior Jodit Editor Tests', function() {
                 // set cursor in start of element
                 range.selectNodeContents(editor.editor.querySelector('td'));
                 range.collapse(true);
-                editor.editorWindow.getSelection().removeAllRanges();
-                editor.editorWindow.getSelection().addRange(range);
+                editor.selection.selectRange(range)
 
                 editor.selection.insertNode(editor.editorDocument.createTextNode('split '));
+
+                expect(editor.value).to.be.equal('<table><tbody><tr><td>split text</td></tr></tbody></table>');
 
                 simulateEvent('keydown',    Jodit.KEY_ENTER, editor.editor);
 
                 expect(editor.getEditorValue()).to.be.equal('<table><tbody><tr><td>split <br>text</td></tr></tbody></table>');
-            })
+
+                editor.selection.insertNode(editor.editorDocument.createTextNode(' test '));
+
+                expect(editor.value).to.be.equal('<table><tbody><tr><td>split <br> test text</td></tr></tbody></table>');
+
+                simulateEvent('keydown',    Jodit.KEY_ENTER, editor.editor);
+
+                expect(editor.value).to.be.equal('<table><tbody><tr><td>split <br> test <br>text</td></tr></tbody></table>');
+
+                editor.selection.insertNode(editor.editorDocument.createTextNode(' stop '));
+
+                expect(editor.value).to.be.equal('<table><tbody><tr><td>split <br> test <br> stop text</td></tr></tbody></table>');
+            });
             it('If cursor in right side of table', function () {
                 var editor = new Jodit(appendTestArea())
 

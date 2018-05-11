@@ -192,7 +192,7 @@ describe('Test Inline mode', function () {
 
                     expect(Math.abs(popupPosition.top - (imgPosition.top + imgPosition.height) - 10) < 2).to.be.true;
 
-                    editor.editor.scrollTo(0, editor.editor.scrollTop + 50);
+                    editor.editor.scrollTop = editor.editor.scrollTop + 50;
                     simulateEvent('scroll', 0 , editor.editor);
 
                     imgPosition = offset(img);
@@ -219,7 +219,7 @@ describe('Test Inline mode', function () {
 
                     expect(Math.abs(popupPosition.top - (imgPosition.top + imgPosition.height) - 10) < 2).to.be.true;
 
-                    editor.editor.scrollTo(0, editor.editor.scrollTop + 1000);
+                    editor.editor.scrollTop = editor.editor.scrollTop + 1000;
                     simulateEvent('scroll', 0 , editor.editor);
 
                     expect(popup.parentNode.classList.contains('jodit_toolbar_popup-inline-target-hidden')).to.be.true;

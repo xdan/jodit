@@ -123,6 +123,7 @@ module.exports = {
                 'NODE_ENV': '"developer"'
             }
         }),
+        new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin(),
     ] : [
         new webpack.optimize.OccurrenceOrderPlugin(),

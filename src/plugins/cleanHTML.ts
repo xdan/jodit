@@ -211,8 +211,9 @@ export function cleanHTML(editor: Jodit) {
                 let node: Node | null = null,
                     remove: Node[] = [],
                     work: boolean = false,
-                    i: number = 0,
+                    i: number =   0,
                     replaceOldTags: {[key:string]: string} | false = editor.options.cleanHTML.replaceOldTags;
+
 
                 if (replaceOldTags && current) {
                     const tags: string = Object.keys(replaceOldTags).join('|');
@@ -309,18 +310,21 @@ export function cleanHTML(editor: Jodit) {
         })
         // remove invisible spaces then they already not need
         // TODO refactor this and code above
-        .on('keyup',  () => {
-            if (editor.selection.isCollapsed()) {
-                let node: Node | null = <Node | null> editor.selection.current();
-                if (node && node.nodeType === Node.TEXT_NODE && node.nodeValue !== consts.INVISIBLE_SPACE) {
-                    while (node = Dom.findInline(node, true, editor.editor)) {
-                        if (node && node.nodeType === Node.TEXT_NODE && node.nodeValue && node.nodeValue.match(consts.INVISIBLE_SPACE_REG_EXP)) {
-                            node.nodeValue = node.nodeValue.replace(consts.INVISIBLE_SPACE_REG_EXP, '');
-                        }
-                    }
-                }
-            }
-        })
+        // .on('keyup',  () => {
+        //     if (editor.selection.isCollapsed()) {
+        //         let node: Node | null = <Node | null> editor.selection.current();
+        //         if (node && node.nodeType === Node.TEXT_NODE && node.nodeValue !== consts.INVISIBLE_SPACE) {
+        //             console.log(node);
+        //             while (node = Dom.findInline(node, true, editor.editor)) {
+        //                 console.log(node);
+        //                 debugger
+        //                 if (node && node.nodeType === Node.TEXT_NODE && node.nodeValue && node.nodeValue.match(consts.INVISIBLE_SPACE_REG_EXP)) {
+        //                     node.nodeValue = node.nodeValue.replace(consts.INVISIBLE_SPACE_REG_EXP, '');
+        //                 }
+        //             }
+        //         }
+        //     }
+        // })
         .on('afterCommand',  (command: string) => {
             let sel: Select = editor.selection,
                 hr: HTMLHRElement | null,
