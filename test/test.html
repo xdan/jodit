@@ -4,14 +4,26 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <title> Tests </title>
-    <link rel="stylesheet" href="../node_modules/mocha/mocha.css" />
+    <title>Jodit Tests </title>
+    <script>
+        if (!location.host.match(/localhost/)) {
+            document.write(
+                '<' + 'link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/5.1.1/mocha.min.css" />' +
+                '<' + 'script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/5.1.1/mocha.min.js"><' + '/script>' +
+                '<' + 'script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.1.2/chai.min.js"><' + '/script>'
+            )
+        } else {
+            document.write(
+                '<' + 'link rel="stylesheet" href="../node_modules/mocha/mocha.css" />' +
+                '<' + 'script src="../node_modules/mocha/mocha.js"><' + '/script>' +
+                '<' + 'script src="../node_modules/chai/chai.js"><' + '/script>'
+            )
+        }
+    </script>
+
 </head>
 <body>
 <div id="mocha"></div>
-
-<script src="../node_modules/mocha/mocha.js"></script>
-<script src="../node_modules/chai/chai.js"></script>
 
 <script>
     mocha.ui('bdd');
