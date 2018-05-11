@@ -493,21 +493,11 @@ describe('Enter behavior Jodit Editor Tests', function() {
                         sel.removeAllRanges();
                         sel.addRange(range);
 
-                        // Because backspace plugin use native behavior for simple characters
-                        // simulateEvent('keydown',     Jodit.KEY_DELETE, editor.editor);
-                        // expect('<ul><li>est</li><li>Some text</li></ul>').to.be.equal(editor.getEditorValue());
-                        // simulateEvent('keydown',     Jodit.KEY_DELETE, editor.editor);
-                        // expect('<ul><li>st</li><li>Some text</li></ul>').to.be.equal(editor.getEditorValue());
-                        // simulateEvent('keydown',     Jodit.KEY_DELETE, editor.editor);
-                        // expect('<ul><li>t</li><li>Some text</li></ul>').to.be.equal(editor.getEditorValue());
-                        // simulateEvent('keydown',     Jodit.KEY_DELETE, editor.editor);
-                        // expect('<ul><li></li><li>Some text</li></ul>').to.be.equal(editor.getEditorValue());
-
                         simulateEvent('keydown',     Jodit.KEY_DELETE, editor.editor);
-                        expect('<ul><li>Some text</li></ul>').to.be.equal(editor.getEditorValue());
+                        expect('<ul><li>Some text</li></ul>').to.be.equal(editor.value);
 
                         editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
-                        expect('<ul><li> a Some text</li></ul>').to.be.equal(editor.getEditorValue());
+                        expect('<ul><li> a Some text</li></ul>').to.be.equal(editor.value);
                     });
                 });
             });

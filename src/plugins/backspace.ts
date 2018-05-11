@@ -112,6 +112,64 @@ export function backspace(editor: Jodit) {
             }
         }
     };
+    const potentialRemovable: RegExp = /^(IMG|BR|IFRAME|SCRIPT|INPUT|TEXTAREA|HR)$/;
+    const removePotential = (node: Node | null): false | void => {
+        if (node && potentialRemovable.test(node.nodeName)) {
+            node.parentNode && node.parentNode.removeChild(node);
+            return false;
+        }
+    };
+    const removeInline = (box: {node : Node | null}, toLeft: boolean, range: Range): boolean | void => {
+        if (box.node) {
+            const workElement: Node = box.node;
+            const removeCharFlag: void | boolean = removeChar(box, toLeft, range);
+
+            if (removeCharFlag !== undefined) {
+                return true;
+            }
+
+            if (!box.node) {
+                box.node = workElement.parentNode;
+            }
+
+            if (box.node === editor.editor) {
+                return false;
+            }
+
+            let node: Node | null = box.node;
+
+            if (removePotential(node) === false) {
+                return false;
+            }
+
+
+            if (node) {
+                node = toLeft ? node.previousSibling : node.nextSibling;;
+            }
+
+            while (node && node.nodeType === Node.TEXT_NODE && node.nodeValue && node.nodeValue.match(/^[\n\r]+$/)) {
+                node = toLeft ? node.previousSibling : node.nextSibling;
+            }
+
+            return removePotential(node);
+
+        }
+    };
+    const isEmpty = (node: Node): boolean => {
+        if (node.nodeName.match(/^(TD|TH|TR|TABLE|LI)$/) !== null) {
+            return false;
+        }
+
+        if (Dom.isEmpty(node) || node.nodeName.match(potentialRemovable) !== null) {
+            return true;
+        }
+
+        if (node.nodeType === Node.TEXT_NODE && !Dom.isEmptyTextNode(node)) {
+            return false;
+        }
+
+        return node.childNodes.length ? [].slice.call(node.childNodes).every(isEmpty) : true;
+    };
 
     editor.events
         .on('afterCommand', (command: string) => {
@@ -150,23 +208,6 @@ export function backspace(editor: Jodit) {
                 const fakeNode: Node = editor.ownerDocument.createTextNode(consts.INVISIBLE_SPACE);
                 const marker: HTMLElement = editor.editorDocument.createElement('span');
 
-                const potentialRemovable: RegExp = /^(IMG|BR|IFRAME|SCRIPT|INPUT|TEXTAREA|TABLE|HR)$/;
-                const isEmpty = (node: Node): boolean => {
-                    if (node.nodeName.match(/^(TD|TH|TR|TABLE|LI)$/) !== null) {
-                        return false;
-                    }
-
-                    if (Dom.isEmpty(node) || node.nodeName.match(potentialRemovable) !== null) {
-                        return true;
-                    }
-
-                    if (node.nodeType === Node.TEXT_NODE && !Dom.isEmptyTextNode(node)) {
-                        return false;
-                    }
-
-                    return node.childNodes.length ? [].slice.call(node.childNodes).every(isEmpty) : true;
-                };
-
                 try {
                     range.insertNode(fakeNode);
                     if (!Dom.isOrContains(editor.editor, fakeNode)) {
@@ -174,36 +215,31 @@ export function backspace(editor: Jodit) {
                     }
 
                     let container: HTMLElement | null = <HTMLElement | null>Dom.up(fakeNode, Dom.isBlock, editor.editor);
-
                     let workElement: Node | null = Dom.findInline(fakeNode, toLeft, editor.editor);
 
+                    const box = {
+                        node: workElement
+                    };
+
+                    let tryRemoveInline: boolean | void;
                     if (workElement) {
-                        const box = {
-                            node: workElement
-                        };
-                        const removeCharFlag: void | boolean = removeChar(box, toLeft, range);
-                        if (removeCharFlag !== undefined) {
-                            return void(0);
-                        }
+                        tryRemoveInline = removeInline(box, toLeft, range);
 
+                    } else if (fakeNode.parentNode) {
+                         tryRemoveInline = removeInline({
+                            node: toLeft ? fakeNode.parentNode.previousSibling : fakeNode.parentNode.nextSibling
+                        }, toLeft, range);
+                    }
 
-                        workElement = box.node || fakeNode.parentNode;
-
-                        if (workElement === editor.editor) {
-                            return false;
-                        }
-
-                        if (workElement && potentialRemovable.test(workElement.nodeName)) {
-                            workElement.parentNode && workElement.parentNode.removeChild(workElement);
-                            return false;
-                        }
+                    if (tryRemoveInline !== void(0)) {
+                        return tryRemoveInline ? void(0) : false;
                     }
 
                     if (container && container.nodeName.match(/^(TD)$/)) {
                         return false;
                     }
 
-                    let prevBox: Node | false | null = toLeft ? Dom.prev(workElement || fakeNode, Dom.isBlock, editor.editor) : Dom.next(workElement || fakeNode, Dom.isBlock, editor.editor);
+                    let prevBox: Node | false | null = toLeft ? Dom.prev(box.node || fakeNode, Dom.isBlock, editor.editor) : Dom.next(box.node || fakeNode, Dom.isBlock, editor.editor);
 
                     if (!prevBox && container && container.parentNode) {
                         prevBox = editor.editorDocument.createElement(editor.options.enter);

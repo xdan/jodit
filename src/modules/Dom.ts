@@ -401,8 +401,14 @@ export class Dom {
         return node && node.nodeType === Node.TEXT_NODE && (!node.nodeValue || node.nodeValue.replace(consts.INVISIBLE_SPACE_REG_EXP, '').length === 0);
     }
 
-    static isEmpty(node: Node): boolean {
-        const isNoEmtyElement: RegExp = /^(img|svg|canvas|input|textarea|form)$/;
+    /**
+     * Check if element is not empty
+     *
+     * @param {Node} node
+     * @param {RegExp} condNoEmptyElement
+     * @return {boolean}
+     */
+    static isEmpty(node: Node, condNoEmptyElement: RegExp = /^(img|svg|canvas|input|textarea|form)$/): boolean {
 
         if (!node) {
             return true;
@@ -412,7 +418,7 @@ export class Dom {
             return node.nodeValue === null || trim(node.nodeValue).length === 0;
         }
 
-        return !node.nodeName.toLowerCase().match(isNoEmtyElement) && Dom.each(<HTMLElement>node, (elm: Node | null): false | void => {
+        return !node.nodeName.toLowerCase().match(condNoEmptyElement) && Dom.each(<HTMLElement>node, (elm: Node | null): false | void => {
             if (
                 (
                     elm && elm.nodeType === Node.TEXT_NODE &&
@@ -423,7 +429,7 @@ export class Dom {
                 ) ||
                 (
                     elm && elm.nodeType === Node.ELEMENT_NODE &&
-                    elm.nodeName.toLowerCase().match(isNoEmtyElement)
+                    elm.nodeName.toLowerCase().match(condNoEmptyElement)
                 )
             ) {
                 return false;

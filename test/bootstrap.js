@@ -166,6 +166,7 @@ Jodit.prototype.i18n = function (key) {
 
 Jodit.defaultOptions.observer.timeout = 0;
 Jodit.defaultOptions.cleanHTML.timeout = 0;
+Jodit.defaultOptions.cleanHTML.fillEmptyParagraph = false;
 Jodit.defaultOptions.useAceEditor = false;
 Jodit.defaultOptions.language = 'en';
 // Jodit.defaultOptions.iframe = true; // try uncomment sometime

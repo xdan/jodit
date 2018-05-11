@@ -1688,6 +1688,28 @@ describe('Test plugins', function () {
                 }).timeout(1500);
             });
         });
+        describe('Fullfill empty paragraph', function () {
+            it('Should fill in empty paragraph', function () {
+                var editor = new Jodit(appendTestArea(), {
+                    cleanHTML: {
+                        fillEmptyParagraph: true
+                    }
+                });
+                editor.value = '<p></p><p></p><div></div>';
+                expect(editor.value).to.be.equal('<p><br></p><p><br></p><div><br></div>');
+            });
+            describe('Switch off fillEmptyParagraph option', function () {
+                it('Should not fill in empty paragraph', function () {
+                    var editor = new Jodit(appendTestArea(), {
+                        cleanHTML: {
+                            fillEmptyParagraph: false
+                        }
+                    });
+                    editor.value = '<p></p><p></p><div></div>';
+                    expect(editor.value).to.be.equal('<p></p><p></p><div></div>');
+                });
+            });
+        });
     });
     describe('Size plugin', function () {
         describe('In iframe mode after change mode', function () {

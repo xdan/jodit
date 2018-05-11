@@ -62,6 +62,7 @@ declare module "../Config" {
             timeout: number;
             replaceNBSP: boolean,
             cleanOnPaste: boolean,
+            fillEmptyParagraph: boolean,
             removeEmptyElements: boolean,
             replaceOldTags: {[key:string]: string} | false,
             allowTags: false | string | {[key:string]: string},
@@ -73,6 +74,7 @@ declare module "../Config" {
 Config.prototype.cleanHTML = {
     timeout: 300,
     removeEmptyElements: true,
+    fillEmptyParagraph: true,
     replaceNBSP: true,
     cleanOnPaste: true,
     replaceOldTags: {
@@ -230,6 +232,11 @@ export function cleanHTML(editor: Jodit) {
                         if (isRemovableNode(node)) {
                             remove.push(node);
                             return checkNode(node.nextSibling);
+                        }
+
+                        if (editor.options.cleanHTML.fillEmptyParagraph && Dom.isBlock(node) && Dom.isEmpty(node, /^(img|svg|canvas|input|textarea|form|br)$/)) {
+                            const br: HTMLBRElement = editor.editorDocument.createElement('br');
+                            node.appendChild(br);
                         }
 
                         if (allowTagsHash && allowTagsHash[node.nodeName] !== true) {
