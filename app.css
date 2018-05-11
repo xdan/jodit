@@ -27,13 +27,9 @@ body {
     margin: 0 0 16px 0;
 }
 
-.table {
-    border: 0;
-    border-collapse: collapse;
-    empty-cells: show;
-    max-width: 100%;
-    border-spacing: 0;
-    *border-collapse: collapse;
+table {
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 . table tr {
     user-select: none;
@@ -53,7 +49,7 @@ body {
 }
 . table th,.  table td {
     box-sizeing: border-box;
-    padding: 2px 5px;
+    padding: 6px 5px;
     vertical-align: top;
 }
 .table td, . table th {
