@@ -17,7 +17,7 @@ export default {
     'Open in new tab': '在新窗口打开',
 
     'Open editor in fullsize': '全屏编辑',
-    'Clear Formatting': '清楚样式',
+    'Clear Formatting': '清除样式',
     'Fill color or set the text color': '颜色',
     'Redo': '重做',
     'Undo': '撤销',
@@ -105,14 +105,14 @@ export default {
     'type name': 'type name',
 
     // Form module
-    'Drop image': '删除图片',
-    'Drop file': '删除文件',
-    'or click': 'or click',
+    'Drop image': '拖动图片到此',
+    'Drop file': '拖动文件到此',
+    'or click': '或点击',
     'Alternative text': 'Alternative text',
     'Browse': '浏览',
     'Upload': '上传',
-    'Background': 'Background',
-    'Text': 'Text',
+    'Background': '背景色',
+    'Text': '字体颜色',
 
     // popap module
     'Top': '顶部',
@@ -125,7 +125,7 @@ export default {
     'Delete table': '删除表格',
     'Delete row': '删除行',
     'Delete column': '删除列',
-    'Empty cell': '清楚内容',
+    'Empty cell': '清除内容',
 
     // stat
     'Chars: %d': '字符数: %d',
