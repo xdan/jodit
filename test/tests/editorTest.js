@@ -594,6 +594,25 @@ describe('Jodit Editor Tests', function() {
                 });
             });
         });
+        describe('Change returning value', function () {
+            describe('Event "beforeGetValueFromEditor"', function () {
+                it('Should restore &gt; to normal value in Liquid expressions', function () {
+                    var editor = new Jodit(appendTestArea());
+                    editor.value = 'test {% if a > b %} stop {% if a < b %}';
+                    expect(editor.value).to.be.equal('test {% if a &gt; b %} stop {% if a &lt; b %}');
+
+                    editor.events.on('beforeGetValueFromEditor', function () {
+                        return editor.getNativeEditorValue().replace(/\{%[^\}]+%\}/g, function (match) {
+                            return match
+                                .replace(/&gt;/g,  '>')
+                                .replace(/&lt;/g,  '<');
+                        });
+                    });
+
+                    expect(editor.value).to.be.equal('test {% if a > b %} stop {% if a < b %}')
+                });
+            });
+        });
 
     });
     describe('Selection module', function () {

@@ -169,7 +169,6 @@ export function iframe(editor: Jodit) {
                 style.innerHTML = editor.options.iframeStyle;
                 doc.head.appendChild(style);
             }
-
         })
         .on('createEditor', () => {
             if (!editor.options.iframe) {
@@ -189,7 +188,7 @@ export function iframe(editor: Jodit) {
 
             const doc: Document = (<Window>editor.iframe.contentWindow).document;
 
-            editor.events.fire('generateDocumentStructure.iframe', doc);
+            editor.events.fire('generateDocumentStructure.iframe', doc, editor);
 
             editor.editorDocument = doc;
             editor.editorWindow = <Window>editor.iframe.contentWindow;

@@ -321,7 +321,7 @@ export class Jodit extends Component {
      * @private
      */
     private __createEditor() {
-        if (this.events.fire('createEditor') !== false) {
+        if (this.events.fire('createEditor', this) !== false) {
             this.editor = <HTMLDivElement>dom(`<div class="jodit_wysiwyg" contenteditable aria-disabled="false" tabindex="${this.options.tabIndex}"></div>`, this.ownerDocument);
             this.workplace.appendChild(this.editor);
         }

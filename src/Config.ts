@@ -638,8 +638,9 @@ Config.prototype.controls = {
                     /**
                      * @event generateDocumentStructure.iframe
                      * @property {Document} doc Iframe document
+                     * @property {Jodit} editor
                      */
-                    editor.events.fire('generateDocumentStructure.iframe', mywindow.document);
+                    editor.events.fire('generateDocumentStructure.iframe', mywindow.document, editor);
                     mywindow.document.body.innerHTML = editor.getEditorValue();
                 } else {
                     mywindow.document.write(`<!doctype html><html><head><title></title></head><body>${editor.getEditorValue()}</body></html>`);
