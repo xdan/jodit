@@ -802,25 +802,123 @@ describe('Test interface', function() {
                 expect(editor.container.querySelectorAll('.jodit_toolbar_btn-bold.jodit_active').length).to.equal(1);
                 expect(editor.container.querySelectorAll('.jodit_toolbar_btn-italic.jodit_active').length).to.equal(0);
             });
-            it('Disable buttons which can not be used in that mode', function() {
-                var editor = new Jodit(appendTestArea(), {
-                    observer: {
-                        timeout: 0 // disable delay
-                    }
+
+            describe('Disable for mode', function () {
+                it('Should disable buttons which can not be used in that mode', function() {
+                    var editor = new Jodit(appendTestArea(), {
+                        observer: {
+                            timeout: 0 // disable delay
+                        },
+                    });
+
+                    editor.setEditorValue('<strong>test</strong><em>test2</em><i>test3</i><b>test3</b>');
+
+                    editor.setMode(Jodit.MODE_SOURCE);
+
+                    expect(editor.container.querySelectorAll('.jodit_toolbar_btn-bold.jodit_disabled').length).to.equal(1);
+                    expect(editor.container.querySelectorAll('.jodit_toolbar_btn-source.jodit_disabled').length).to.equal(0);
+
+                    editor.setMode(Jodit.MODE_WYSIWYG);
+
+                    expect(editor.container.querySelectorAll('.jodit_toolbar_btn-bold.jodit_disabled').length).to.equal(0);
+                    expect(editor.container.querySelectorAll('.jodit_toolbar_btn-source.jodit_disabled').length).to.equal(0);
+
                 });
+                describe('For list', function () {
+                    describe('enable', function () {
+                        it('Should enable buttons which can be used in that mode', function() {
+                            var editor = new Jodit(appendTestArea(), {
+                                observer: {
+                                    timeout: 0 // disable delay
+                                },
+                                defaultMode: Jodit.MODE_SOURCE,
+                                buttons: [
+                                    {
+                                        name    : 'list_test',
+                                        mode    : Jodit.MODE_SPLIT,
+                                        list    : {
+                                            h1: 'insert Header 1',
+                                            h2: 'insert Header 2',
+                                            clear: 'Empty editor'
+                                        },
+                                        exec    : function(editor) {
+                                            var key = this.args[0],
+                                                value = this.args[1];
 
-                editor.setEditorValue('<strong>test</strong><em>test2</em><i>test3</i><b>test3</b>');
+                                            if (key === 'clear') {
+                                                this.val('');
+                                                return;
+                                            }
 
-                editor.setMode(Jodit.MODE_SOURCE);
+                                            editor.selection.insertHTML('&nbsp;{{test'+key+'}}&nbsp;');
+                                        },
+                                        template: function(key, value){
+                                            return '<div>' + value + '</div>';
+                                        }
+                                    }
+                                ]
+                            });
 
-                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-bold.jodit_disabled').length).to.equal(1);
-                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-source.jodit_disabled').length).to.equal(0);
+                            var btn = editor.container.querySelector('.jodit_toolbar_btn-list_test');
+                            expect(btn).to.be.not.null;
 
-                editor.setMode(Jodit.MODE_WYSIWYG);
+                            expect(btn.classList.contains('jodit_disabled')).to.be.false;
 
-                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-bold.jodit_disabled').length).to.equal(0);
-                expect(editor.container.querySelectorAll('.jodit_toolbar_btn-source.jodit_disabled').length).to.equal(0);
+                            simulateEvent('mousedown', 0, btn);
 
+                            var list = btn.querySelector('.jodit_toolbar_list');
+                            expect(list).to.be.not.null;
+
+                            expect(list.querySelectorAll('.jodit_disabled').length).to.be.equal(0);
+                        });
+                    });
+                    describe('disable', function () {
+                        it('Should disable buttons which can not be used in that mode', function() {
+                            var editor = new Jodit(appendTestArea(), {
+                                observer: {
+                                    timeout: 0 // disable delay
+                                },
+                                defaultMode: Jodit.MODE_SOURCE,
+                                buttons: [
+                                    {
+                                        name    : 'list_test',
+                                        mode    : Jodit.MODE_WYSIWYG,
+                                        list    : {
+                                            h1: 'insert Header 1',
+                                            h2: 'insert Header 2',
+                                            clear: 'Empty editor'
+                                        },
+                                        exec    : function(editor) {
+                                            var key = this.args[0],
+                                                value = this.args[1];
+
+                                            if (key === 'clear') {
+                                                this.val('');
+                                                return;
+                                            }
+
+                                            editor.selection.insertHTML('&nbsp;{{test'+key+'}}&nbsp;');
+                                        },
+                                        template: function(key, value){
+                                            return '<div>' + value + '</div>';
+                                        }
+                                    }
+                                ]
+                            });
+
+                            var btn = editor.container.querySelector('.jodit_toolbar_btn-list_test');
+                            expect(btn).to.be.not.null;
+
+                            expect(btn.classList.contains('jodit_disabled')).to.be.true;
+
+                            simulateEvent('mousedown', 0, btn);
+
+                            var list = btn.querySelector('.jodit_toolbar_list');
+                            expect(list).to.be.null;
+
+                        });
+                    });
+                });
             });
 
             it('When cursor inside SPAN tag with style="font-weight: bold" or style="font-weight: 700", Bold button should be selected', function() {

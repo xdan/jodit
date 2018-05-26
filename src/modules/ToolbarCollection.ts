@@ -362,6 +362,7 @@ export  class ToolbarList extends ToolbarPopup {
                     command: control.command,
                     isActive: control.isActiveChild,
                     isDisable: control.isDisableChild,
+                    mode: control.mode,
                     args: [
                         (control.args && control.args[0]) || key,
                         (control.args && control.args[1]) || value
