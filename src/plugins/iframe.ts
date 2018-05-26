@@ -170,7 +170,7 @@ export function iframe(editor: Jodit) {
                 doc.head.appendChild(style);
             }
         })
-        .on('createEditor', () => {
+        .on('createEditor', async () => {
             if (!editor.options.iframe) {
                 return;
             }
@@ -188,7 +188,7 @@ export function iframe(editor: Jodit) {
 
             const doc: Document = (<Window>editor.iframe.contentWindow).document;
 
-            editor.events.fire('generateDocumentStructure.iframe', doc, editor);
+            await editor.events.fire('generateDocumentStructure.iframe', doc, editor);
 
             editor.editorDocument = doc;
             editor.editorWindow = <Window>editor.iframe.contentWindow;

@@ -42,9 +42,17 @@ SyncPromise.all = function (promises) {
         resolved === promises.length ? resolve() : reject();
     });
 };
+var naturalPromise = window.Promise;
+
+function mocPromise() {
+    window.Promise = SyncPromise;
+}
+function unmocPromise() {
+    window.Promise = naturalPromise;
+}
 
 if ((typeof window.chai !== 'undefined')) {
-    window.Promise = SyncPromise;
+    mocPromise();
     window.FormData = function () {
         this.data = {};
         this.append = function (key, value) {
@@ -219,6 +227,7 @@ var removeStuff = function () {
     [].slice.call(document.querySelectorAll('.jodit.jodit_dialog_box.active')).forEach(function (dialog) {
         simulateEvent('close_dialog', 0, dialog)
     });
+    mocPromise();
 };
 var box = document.createElement('div');
 document.body.appendChild(box);

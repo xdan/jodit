@@ -1513,13 +1513,21 @@ describe('Test interface', function() {
         describe('Set readonly mode in options', function () {
 
             describe('For iframe', function () {
-                it('Should deny edit content in iframe\'s body', function () {
+                it('Should deny edit content in iframe\'s body', function (done) {
+                    unmocPromise();
+
                     var editor = new Jodit(appendTestArea(), {
                         readonly: true,
-                        iframe: true
+                        iframe: true,
+                        events: {
+                            afterConstructor: function () {
+                                expect(false).to.equal(editor.editor.hasAttribute('contenteditable'));
+                                expect('BODY').to.equal(editor.editor.nodeName);
+                                done();
+                            }
+                        }
                     });
-                    expect(false).to.equal(editor.editor.hasAttribute('contenteditable'));
-                    expect('BODY').to.equal(editor.editor.nodeName);
+
                 });
             });
             it('Should deny edit content in wysiwyg', function () {

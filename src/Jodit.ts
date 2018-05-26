@@ -246,9 +246,15 @@ export class Jodit extends Component {
 
         this.id = this.element.getAttribute('id') || (new Date()).getTime().toString();
 
-        this.initPlugines();
+        this.__initPlugines();
+        this.__initEditor(buffer).then(async () => {
+            await this.events.fire('afterInit', this);
+            this.events.fire('afterConstructor', this);
+        });
+    }
 
-        this.__createEditor();
+    private async __initEditor(buffer: null | string) {
+        await this.__createEditor();
 
         // syncro
         if (this.element !== this.container) {
@@ -291,15 +297,11 @@ export class Jodit extends Component {
             this.editorDocument.execCommand('enableInlineTableEditing', false, false);
         } catch (ignore) {
         }
-
-
-
-        this.events.fire('afterInit', this);
     }
 
     __plugins: {[key: string]: JoditPlugin} = {};
 
-    initPlugines() {
+    private __initPlugines() {
         const disable: string[] = Array.isArray(this.options.disablePlugins) ? this.options.disablePlugins.map((pluginName: string) => {
             return pluginName.toLowerCase();
         }) : this.options.disablePlugins.toLowerCase().split(/[\s,]+/);
@@ -320,8 +322,9 @@ export class Jodit extends Component {
      *
      * @private
      */
-    private __createEditor() {
-        if (this.events.fire('createEditor', this) !== false) {
+    private async __createEditor() {
+        const createDefault: boolean | undefined = await this.events.fire('createEditor', this);
+        if (createDefault !== false) {
             this.editor = <HTMLDivElement>dom(`<div class="jodit_wysiwyg" contenteditable aria-disabled="false" tabindex="${this.options.tabIndex}"></div>`, this.ownerDocument);
             this.workplace.appendChild(this.editor);
         }
@@ -612,6 +615,9 @@ export class Jodit extends Component {
      */
     setEditorValue(value ?: string) {
         if (!this.editor) {
+            if (value !== undefined) {
+                this.setElementValue(value);
+            }
             return; // try change value before init or after destruct
         }
 

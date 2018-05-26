@@ -382,133 +382,185 @@ describe('Test Inline mode', function () {
     describe('In iframe mode', function () {
         describe('Inline popups', function () {
             describe('Click on Image', function () {
-                it('Should show inline popup', function () {
+                it('Should show inline popup', function (done) {
+                    unmocPromise();
                     var editor = new Jodit(appendTestDiv(), {
-                        iframe: true
-                    });
-                    editor.value = '<p>test <img/> test</p>'
-                    var img = editor.editor.querySelector('img');
+                        iframe: true,
+                        events: {
+                            afterConstructor: function (editor) {
+                                editor.value = '<p>test <img/> test</p>'
+                                var img = editor.editor.querySelector('img');
 
-                    simulateEvent('mousedown', 0, img);
-                    var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
-                    expect(popup).to.be.not.equal(null);
+                                simulateEvent('mousedown', 0, img);
+                                var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
+                                expect(popup).to.be.not.equal(null);
+                                done();
+                            }
+                        }
+                    });
+
                 });
                 describe('Disable toolbarInline = false', function () {
-                    it('Should show inline popup', function () {
+                    it('Should show inline popup', function (done) {
+                        unmocPromise();
                         var editor = new Jodit(appendTestDiv(), {
-                            toolbarInline: false, iframe: true
+                            toolbarInline: false,
+                            iframe: true,
+                            events: {
+                                afterConstructor: function (editor) {
+                                    editor.value = '<p>test <img/> test</p>'
+                                    var img = editor.editor.querySelector('img');
+                                    simulateEvent('mousedown', 0, img);
+                                    var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
+                                    expect(popup).to.be.equal(null);
+                                    done();
+                                }
+                            }
                         });
-                        editor.value = '<p>test <img/> test</p>'
-                        var img = editor.editor.querySelector('img');
-                        simulateEvent('mousedown', 0, img);
-                        var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
-                        expect(popup).to.be.equal(null);
                     });
                 });
             });
             describe('Click on Image', function () {
                 describe('On mobile', function () {
-                    it('Should show inline popup', function () {
+                    it('Should show inline popup', function (done) {
+                        unmocPromise();
                         var editor = new Jodit(appendTestDiv(), {
-                            iframe: true
+                            iframe: true,
+                            events: {
+                                afterConstructor: function (editor) {
+                                    editor.value = '<p>test <img/> test</p>'
+                                    var img = editor.editor.querySelector('img');
+                                    simulateEvent('touchstart', 0, img);
+                                    var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
+                                    expect(popup).to.be.not.equal(null);
+                                    done();
+                                }
+                            }
                         });
-                        editor.value = '<p>test <img/> test</p>'
-                        var img = editor.editor.querySelector('img');
-                        simulateEvent('touchstart', 0, img);
-                        var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
-                        expect(popup).to.be.not.equal(null);
                     });
                 });
             });
             describe('Click on link', function () {
-                it('Should show inline popup', function () {
+                it('Should show inline popup', function (done) {
+                    unmocPromise();
                     var editor = new Jodit(appendTestDiv(), {
-                        iframe: true
+                        iframe: true,
+                        events: {
+                            afterConstructor: function (editor) {
+                                editor.value = '<p>test <a href="#test">test</a> test</p>'
+                                var a = editor.editor.querySelector('a');
+                                simulateEvent('mousedown', 0, a);
+                                var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
+                                expect(popup).to.be.not.equal(null);
+                                done();
+                            }
+                        }
                     });
-                    editor.value = '<p>test <a href="#test">test</a> test</p>'
-                    var a = editor.editor.querySelector('a');
-                    simulateEvent('mousedown', 0, a);
-                    var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
-                    expect(popup).to.be.not.equal(null);
+
                 });
                 describe('Disable with toolbarInlineDisableFor', function () {
                     describe('Option like string', function () {
-                        it('Should now show inline popup for link', function () {
+                        it('Should now show inline popup for link', function (done) {
+                            unmocPromise();
                             var editor = new Jodit(appendTestDiv(), {
                                 iframe: true,
                                 toolbarInline: true,
-                                toolbarInlineDisableFor: 'a,IMG'
+                                toolbarInlineDisableFor: 'a,IMG',
+                                events: {
+                                    afterConstructor: function (editor) {
+                                        editor.value = '<table><tr><td>1</td></tr></table><p>test <a href="#test">test</a> <img style="width:30px" src="tests/artio.jpg">> test</p>'
+                                        var a = editor.editor.querySelector('a');
+                                        var img = editor.editor.querySelector('img');
+                                        var td = editor.editor.querySelector('td');
+                                        simulateEvent('mousedown', 0, a);
+                                        var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
+                                        expect(popup).to.be.equal(null);
+
+                                        simulateEvent('mousedown', 0, img);
+                                        popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
+
+                                        expect(popup).to.be.equal(null);
+
+                                        simulateEvent('mousedown', 0, td);
+                                        popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
+
+                                        expect(popup).to.be.not.equal(null);
+                                        done();
+                                    }
+                                }
                             });
-                            editor.value = '<table><tr><td>1</td></tr></table><p>test <a href="#test">test</a> <img style="width:30px" src="tests/artio.jpg">> test</p>'
-                            var a = editor.editor.querySelector('a');
-                            var img = editor.editor.querySelector('img');
-                            var td = editor.editor.querySelector('td');
-                            simulateEvent('mousedown', 0, a);
-                            var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
-                            expect(popup).to.be.equal(null);
-
-                            simulateEvent('mousedown', 0, img);
-                            popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
-
-                            expect(popup).to.be.equal(null);
-
-                            simulateEvent('mousedown', 0, td);
-                            popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
-
-                            expect(popup).to.be.not.equal(null);
                         });
                     });
                     describe('Option like srray', function () {
-                        it('Should now show inline popup for link', function () {
+                        it('Should now show inline popup for link', function (done) {
+                            unmocPromise();
                             var editor = new Jodit(appendTestDiv(), {
                                 iframe: true,
                                 toolbarInline: true,
-                                toolbarInlineDisableFor: ['A','table']
+                                toolbarInlineDisableFor: ['A','table'],
+                                events: {
+                                    afterConstructor: function (editor) {
+                                        editor.value = '<table><tr><td>1</td></tr></table><p>test <a href="#test">test</a> <img style="width:30px" src="tests/artio.jpg">> test</p>'
+                                        var a = editor.editor.querySelector('a');
+                                        var img = editor.editor.querySelector('img');
+                                        var td = editor.editor.querySelector('td');
+                                        simulateEvent('mousedown', 0, a);
+                                        var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
+                                        expect(popup).to.be.equal(null);
+
+                                        simulateEvent('mousedown', 0, img);
+                                        popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
+
+                                        expect(popup).to.be.not.equal(null);
+
+                                        simulateEvent('mousedown', 0, td);
+                                        popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
+
+                                        expect(popup).to.be.equal(null);
+                                        done();
+                                    }
+                                }
                             });
-                            editor.value = '<table><tr><td>1</td></tr></table><p>test <a href="#test">test</a> <img style="width:30px" src="tests/artio.jpg">> test</p>'
-                            var a = editor.editor.querySelector('a');
-                            var img = editor.editor.querySelector('img');
-                            var td = editor.editor.querySelector('td');
-                            simulateEvent('mousedown', 0, a);
-                            var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
-                            expect(popup).to.be.equal(null);
 
-                            simulateEvent('mousedown', 0, img);
-                            popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
-
-                            expect(popup).to.be.not.equal(null);
-
-                            simulateEvent('mousedown', 0, td);
-                            popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
-
-                            expect(popup).to.be.equal(null);
                         });
                     });
                 });
             });
             describe('Click on table cell', function () {
-                it('Should show inline popup', function () {
+                it('Should show inline popup', function (done) {
+                    unmocPromise();
                     var editor = new Jodit(appendTestDiv(), {
-                        iframe: true
+                        iframe: true,
+                        events: {
+                            afterConstructor: function (editor) {
+                                editor.value = '<table><tr><td>test test</a> test</td></tr></table>'
+                                var td = editor.editor.querySelector('td');
+                                simulateEvent('mousedown', 0, td);
+                                var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
+                                expect(popup).to.be.not.equal(null);
+                                done();
+                            }
+                        }
                     });
-                    editor.value = '<table><tr><td>test test</a> test</td></tr></table>'
-                    var td = editor.editor.querySelector('td');
-                    simulateEvent('mousedown', 0, td);
-                    var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
-                    expect(popup).to.be.not.equal(null);
                 });
             });
             describe('Selection some text inside the editor', function () {
-                it('Should show inline popup', function () {
+                it('Should show inline popup', function (done) {
+                    unmocPromise();
                     var editor = new Jodit(appendTestDiv(), {
                         preset: 'inline',
-                        iframe: true
+                        iframe: true,
+                        events: {
+                            afterConstructor: function (editor) {
+                                editor.value = 'test<br>test';
+                                editor.selection.select(editor.editor.firstChild);
+                                simulateEvent('selectionchange', 0, editor.editor);
+                                var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
+                                expect(popup).to.be.not.equal(null);
+                                done();
+                            }
+                        }
                     });
-                    editor.value = 'test<br>test';
-                    editor.selection.select(editor.editor.firstChild);
-                    simulateEvent('selectionchange', 0, editor.editor);
-                    var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
-                    expect(popup).to.be.not.equal(null);
                 });
             });
         });
