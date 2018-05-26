@@ -25,6 +25,7 @@ declare module "../Config" {
 
         resizer: {
             showSize: boolean
+            hideSizeTimeout: number
             min_width : number;
             min_height : number;
         }
@@ -50,6 +51,7 @@ Config.prototype.useImageResizer = true;
  */
 Config.prototype.resizer = {
     showSize: true,
+    hideSizeTimeout: 1000,
     min_width : 10,
     min_height : 10
 };
@@ -102,8 +104,16 @@ export function resizer(editor: Jodit) {
             resizer.style.display = 'none';
         },
 
+        hideSizeViewer = () => {
+            sizeViewer.style.opacity = '0';
+        },
         showSizeViewer = (w: number, h: number) => {
             if (!editor.options.resizer.showSize) {
+                return;
+            }
+
+            if (w < sizeViewer.offsetWidth || h < sizeViewer.offsetHeight) {
+                hideSizeViewer();
                 return;
             }
 
@@ -111,9 +121,7 @@ export function resizer(editor: Jodit) {
             sizeViewer.innerHTML = `${w} x ${h}`;
 
             window.clearTimeout(timeoutSizeViewer);
-            timeoutSizeViewer = window.setTimeout(() => {
-                sizeViewer.style.opacity = '0';
-            }, 1000);
+            timeoutSizeViewer = window.setTimeout(hideSizeViewer, editor.options.resizer.hideSizeTimeout);
         },
 
         updateSize = () => {

@@ -822,6 +822,78 @@ describe('Test image', function() {
             });
         });
         describe('Resize image', function () {
+            describe('Size box', function () {
+                it('Should show size for image', function (done) {
+                    var editor = new Jodit(appendTestArea(), {
+                        observer: {
+                            timeout: 0
+                        },
+                        resizer: {
+                            hideSizeTimeout: 400
+                        }
+                    });
+                    editor.value = '<img src="tests/artio.jpg" style="width:500px;height: 281px;"/>';
+                    simulateEvent('mousedown', 0, editor.editor.querySelector('img'));
+                    var resizer = document.querySelector('.jodit_resizer[data-editor_id=' + editor.id + ']');
+                    expect(resizer).to.be.not.null;
+                    var sizer = resizer.querySelector('span');
+                    expect(sizer).to.be.not.null;
+                    expect(editor.ownerWindow.getComputedStyle(sizer).opacity).to.be.equal('0');
+
+                    var positionResizer = offset(resizer);
+
+                    simulateEvent('mousedown', 0, resizer.getElementsByTagName('i')[1]);
+                    simulateEvent('mousemove', 0, editor.ownerWindow, function (data) {
+                        data.clientX = positionResizer.left + 10;
+                        data.clientY = positionResizer.top + 10;
+                    });
+                    simulateEvent('mouseup', 0, editor.ownerWindow, function (data) {
+                        data.clientX = positionResizer.left + 10;
+                        data.clientY = positionResizer.top + 10;
+                    });
+
+                    expect(sizer.style.opacity).to.be.equal('1');
+
+                    setTimeout(function () {
+                        expect(sizer.style.opacity).to.be.equal('0');
+                        done();
+                    }, 500)
+                });
+                describe('For small state', function () {
+                    it('Should hide size', function () {
+                        var editor = new Jodit(appendTestArea(), {
+                            observer: {
+                                timeout: 0
+                            },
+                            resizer: {
+                                hideSizeTimeout: 400
+                            }
+                        });
+
+                        editor.value = '<img src="tests/artio.jpg" style="width:500px;height: 281px;"/>';
+                        simulateEvent('mousedown', 0, editor.editor.querySelector('img'));
+                        var resizer = document.querySelector('.jodit_resizer[data-editor_id=' + editor.id + ']');
+                        expect(resizer).to.be.not.null;
+                        var sizer = resizer.querySelector('span');
+                        expect(sizer).to.be.not.null;
+                        expect(editor.ownerWindow.getComputedStyle(sizer).opacity).to.be.equal('0');
+
+                        var positionResizer = offset(resizer);
+
+                        simulateEvent('mousedown', 0, resizer.getElementsByTagName('i')[1]);
+                        simulateEvent('mousemove', 0, editor.ownerWindow, function (data) {
+                            data.clientX = positionResizer.left - 480;
+                            data.clientY = positionResizer.top - 200;
+                        });
+                        simulateEvent('mouseup', 0, editor.ownerWindow, function (data) {
+                            data.clientX = positionResizer.left - 480;
+                            data.clientY = positionResizer.top - 200;
+                        });
+
+                        expect(sizer.style.opacity).to.be.equal('0');
+                    });
+                });
+            });
             it('Should not allow to resize image more then width of editor', function (done) {
                 box.style.width = '600px';
                 var editor = new Jodit(appendTestArea());
