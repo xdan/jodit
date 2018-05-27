@@ -68,5 +68,31 @@ describe('Iframe mode', function() {
             });
         });
     });
+    describe('Define document for iframe from some site', function () {
+        it('Should work perfect', function (done) {
+            unmocPromise();
+            var editor = new Jodit(appendTestArea(), {
+                iframe: true,
+                // preset: "inline",
+                // fullsize: true,
+                events: {
+                    afterConstructor: (jodit) => {
+                        expect(jodit.editor.getAttribute('secret-attriute')).to.be.equal('435'); // loaded from index.html
+                        done();
+                    },
+                    ['generateDocumentStructure.iframe']: (doc, jodit) => {
+                        jodit.events.stopPropagation('generateDocumentStructure.iframe');
+                        return new Promise((resolve) => {
+                            jodit.iframe.onload = () => {
+                                resolve();
+                            };
+
+                            jodit.iframe.src = 'test.index.html';
+                        })
+                    }
+                }
+            });
+        }).timeout(5000);
+    });
     afterEach(removeStuff);
 });

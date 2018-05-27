@@ -11,6 +11,7 @@ import {css, defaultLanguage, dom, throttle} from "../modules/Helpers";
 declare module "../Config" {
     interface Config {
         iframe: boolean;
+        iframeDefaultSrc: string;
         iframeBaseUrl: string;
         iframeStyle: string;
         iframeCSSLinks: string[];
@@ -42,6 +43,19 @@ Config.prototype.iframe = false;
  * ```
  */
 Config.prototype.iframeBaseUrl = '';
+
+/**
+ * You can redefine default page
+ *
+ * @example
+ * ```javascript
+ * new Jodit('#editor', {
+ *    iframe: true,
+ *    iframeDefaultSrc: 'http://xdsoft.net/jodit/docs/',
+ * });
+ * ```
+ */
+Config.prototype.iframeDefaultSrc = 'about:blank';
 
 /**
  * Custom style toWYSIWYG be used inside the iframe toWYSIWYG display content.
@@ -145,7 +159,9 @@ export function iframe(editor: Jodit) {
                 editor.selection.focus();
             }
         })
-        .on('generateDocumentStructure.iframe', (doc: Document) => {
+        .on('generateDocumentStructure.iframe', (__doc: Document | undefined, editor: Jodit) => {
+            const doc: Document = __doc || (<Window>(<HTMLIFrameElement>editor.iframe).contentWindow).document;
+
             doc.open();
             doc.write(`<!DOCTYPE html>
                     <html dir="${editor.options.direction}" class="jodit" lang="${defaultLanguage(editor.options.language)}">
@@ -186,10 +202,10 @@ export function iframe(editor: Jodit) {
 
             editor.workplace.appendChild(editor.iframe);
 
+
+            await editor.events.fire('generateDocumentStructure.iframe', null, editor);
+
             const doc: Document = (<Window>editor.iframe.contentWindow).document;
-
-            await editor.events.fire('generateDocumentStructure.iframe', doc, editor);
-
             editor.editorDocument = doc;
             editor.editorWindow = <Window>editor.iframe.contentWindow;
 
