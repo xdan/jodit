@@ -247,10 +247,11 @@ export class Jodit extends Component {
         this.id = this.element.getAttribute('id') || (new Date()).getTime().toString();
 
         this.__initPlugines();
-        this.__initEditor(buffer).then(async () => {
-            await this.events.fire('afterInit', this);
-            this.events.fire('afterConstructor', this);
-        });
+        this.__initEditor(buffer)
+            .then(async () => {
+                await this.events.fire('afterInit', this);
+                this.events.fire('afterConstructor', this);
+            });
     }
 
     private async __initEditor(buffer: null | string) {
@@ -415,7 +416,7 @@ export class Jodit extends Component {
             return;
         }
 
-        let buffer: string = this.value;
+        let buffer: string = this.getEditorValue();
 
         if (this.element !== this.container) {
             if (this.element.hasAttribute(this.__defaultStyleDisplayKey)) {
@@ -610,10 +611,37 @@ export class Jodit extends Component {
     /**
      * Set editor html value and if set sync fill source element value
      * When method was called without arguments - it is simple way to synchronize editor to element
-     *
+     * @event beforeSetValueToEditor
      * @param {string} [value]
      */
     setEditorValue(value ?: string) {
+        /**
+         * Triggered before  {@link Jodit~getEditorValue|setEditorValue} set value to wysiwyg.
+         *
+         * @event beforeSetValueToEditor
+         * @param string old_value
+         * @returns string | undefined | false
+         * @example
+         * ```javascript
+         * var editor = new Jodit("#redactor");
+         * editor.events.on('beforeSetValueToEditor', function (old_value) {
+         *     return old_value.value.replace('a', 'b');
+         * });
+         * editor.events.on('beforeSetValueToEditor', function () {
+         *     return false; // disable setEditorValue method
+         * });
+         * ```
+         */
+        const newValue: string | undefined | false = this.events.fire('beforeSetValueToEditor', value);
+
+        if (newValue === false) {
+            return;
+        }
+
+        if (typeof newValue === 'string') {
+            value = newValue;
+        }
+
         if (!this.editor) {
             if (value !== undefined) {
                 this.setElementValue(value);

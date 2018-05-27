@@ -71,25 +71,33 @@ describe('Iframe mode', function() {
     describe('Define document for iframe from some site', function () {
         it('Should work perfect', function (done) {
             unmocPromise();
-            var editor = new Jodit(appendTestArea(), {
+            var area = appendTestArea();
+
+            area.value = "start value";
+
+            var editor = new Jodit(area, {
                 iframe: true,
                 // preset: "inline",
                 // fullsize: true,
                 events: {
-                    afterConstructor: (jodit) => {
+                    afterConstructor: function (jodit)  {
                         expect(jodit.editor.getAttribute('secret-attriute')).to.be.equal('435'); // loaded from index.html
+                        expect(Jodit.modules.Helpers.trim(jodit.value)).to.be.equal('test 435'); // loaded from index.html
                         done();
                     },
-                    ['generateDocumentStructure.iframe']: (doc, jodit) => {
+                    ['beforeSetValueToEditor']: function () {
+                        return false;
+                    },
+                    ['generateDocumentStructure.iframe']: function (doc, jodit) {
                         jodit.events.stopPropagation('generateDocumentStructure.iframe');
                         return new Promise((resolve) => {
-                            jodit.iframe.onload = () => {
+                            jodit.iframe.onload = function () {
                                 resolve();
                             };
 
-                            setTimeout(() => {
+                            setTimeout(function () {
                                 resolve();
-                            }, 4000)
+                            }, 4000);
 
                             jodit.iframe.src = 'test.index.html';
                         })

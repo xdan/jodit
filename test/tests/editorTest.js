@@ -612,6 +612,29 @@ describe('Jodit Editor Tests', function() {
                     expect(editor.value).to.be.equal('test {% if a > b %} stop {% if a < b %}')
                 });
             });
+            describe('Event "beforeSetValueToEditor"', function () {
+                it('Should be fired before set editor value', function () {
+                    var editor = new Jodit(appendTestArea());
+                    editor.value = 'test';
+                    expect(editor.value).to.be.equal('test');
+
+                    editor.events.on('beforeSetValueToEditor', function (old_value) {
+                        return old_value + ' stop';
+                    });
+
+                    editor.value = 'test';
+
+                    expect(editor.value).to.be.equal('test stop')
+
+                    editor.events.on('beforeSetValueToEditor', function (old_value) {
+                        return false;
+                    });
+
+                    editor.value = 'uuups';
+
+                    expect(editor.value).to.be.equal('test stop')
+                });
+            });
         });
 
     });
