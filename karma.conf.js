@@ -11,13 +11,15 @@ module.exports = function(config) {
         },
         files: [
             {pattern: './test/tests/artio.jpg', watched: false, included: false, served: true},
+            {pattern: './test/test.index.html', watched: false, included: false, served: true},
             'app.css',
             'src/index.ts',
             'test/bootstrap.js',
             'test/tests/*.js'
         ],
         proxies: {
-            "/tests/artio.jpg" : "/base/test/tests/artio.jpg"
+            "/tests/artio.jpg" : "/base/test/tests/artio.jpg",
+            "/test.index.html" : "/base/test/test.index.html"
         },
         reporters: ['progress'],
         port: 9876,

@@ -87,6 +87,10 @@ describe('Iframe mode', function() {
                                 resolve();
                             };
 
+                            setTimeout(() => {
+                                resolve();
+                            }, 4000)
+
                             jodit.iframe.src = 'test.index.html';
                         })
                     }
