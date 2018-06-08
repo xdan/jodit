@@ -55,8 +55,8 @@ export class Config {
         }
     };
 
-    ownerDocument: Document = document;
-    ownerWindow: Window = window;
+    ownerDocument: Document = <Document>(typeof document !== 'undefined' ? document : null);
+    ownerWindow: Window = <Window>(typeof window !== 'undefined' ? window : null);
 
     /**
      * z-index For editor
