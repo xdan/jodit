@@ -5,7 +5,11 @@
  */
 
 import "./styles/bundle.less";
-import './polyfills';
+
+// for SSR
+if (typeof window !== 'undefined') {
+    require('./polyfills');
+}
 
 import {Jodit}            from './Jodit';
 import {ToolbarIcon}          from './modules/ToolbarCollection';

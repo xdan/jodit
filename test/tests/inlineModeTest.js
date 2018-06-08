@@ -326,6 +326,40 @@ describe('Test Inline mode', function () {
                 var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
                 expect(popup).to.be.not.equal(null);
             });
+            describe('In readonly mode', function () {
+                it('Should not show inline popup', function () {
+                    var editor = new Jodit(appendTestDiv(), {
+                        preset: 'inline',
+                        readonly: true
+                    });
+                    editor.value = 'test<br>test';
+                    editor.selection.select(editor.editor.firstChild);
+                    simulateEvent('selectionchange', 0, editor.editor);
+                    var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
+                    expect(popup).to.be.null;
+                });
+                describe('After disable readonly mode', function () {
+                    it('Should show inline popup', function () {
+                        var editor = new Jodit(appendTestDiv(), {
+                            preset: 'inline',
+                            readonly: true
+                        });
+                        editor.value = 'test<br>test';
+                        editor.selection.select(editor.editor.firstChild);
+                        simulateEvent('selectionchange', 0, editor.editor);
+                        var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
+                        expect(popup).to.be.null;
+
+                        editor.setReadOnly(false)
+
+                        editor.selection.select(editor.editor.firstChild);
+                        simulateEvent('selectionchange', 0, editor.editor);
+                        popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
+                        expect(popup).to.be.not.null;
+                        expect(editor.ownerWindow.getComputedStyle(popup).display).to.be.equal('inline-block');
+                    });
+                });
+            });
             describe('After then selection was collapsed', function () {
                 it('Should hide inline popup', function () {
                     var editor = new Jodit(appendTestDiv(), {

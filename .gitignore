@@ -6,3 +6,4 @@ yarn-error.log
 
 /vendor/
 /build/jodit.js
+/fake.html
