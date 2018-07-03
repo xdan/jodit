@@ -99,7 +99,7 @@ export default {
     'File Browser': 'Explorateur de fichiers',
     'Error on load list': 'Erreur de liste de chargement',
     'Error on load folders': 'Erreur de dossier de chargement',
-    'Are you shure?': 'Etes-vous sûrs ?',
+    'Are you sure?': 'Etes-vous sûrs ?',
     'Enter Directory name': 'Entrer le non de dossier',
     'Create directory': 'Créer un dossier',
     'type name': 'type de fichier',

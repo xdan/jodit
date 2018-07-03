@@ -84,7 +84,7 @@ export default {
     'File Browser': 'متصفح الملفات',
     'Error on load list': 'حدث خطأ في تحميل القائمة ',
     'Error on load folders': 'حدث خطأ في تحميل المجلدات',
-    'Are you shure?': 'هل أنت واثق؟',
+    'Are you sure?': 'هل أنت واثق؟',
     'Enter Directory name': 'أدخل اسم المجلد',
     'Create directory': 'إنشاء مجلد',
     'type name': 'أكتب إسم',

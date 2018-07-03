@@ -99,7 +99,7 @@ export default {
     'File Browser': '文件管理',
     'Error on load list': '加载list错误',
     'Error on load folders': '加载folders错误',
-    'Are you shure?': '你确定吗？',
+    'Are you sure?': '你确定吗？',
     'Enter Directory name': '输入路径',
     'Create directory': '创建路径',
     'type name': 'type name',
