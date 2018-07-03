@@ -780,7 +780,7 @@ export class FileBrowser extends Component implements IViewBased {
             })
             .on('fileRemove.filebrowser', () => {
                 if (this.getActiveElements().length) {
-                    Confirm(self.i18n('Are you shure?'), '', (yes: boolean) => {
+                    Confirm(self.i18n('Are you sure?'), '', (yes: boolean) => {
                         if (yes) {
                             const promises: Promise<any>[] = [];
                             self.getActiveElements().forEach((a: HTMLElement) => {
@@ -809,7 +809,7 @@ export class FileBrowser extends Component implements IViewBased {
                 const a: HTMLAnchorElement = <HTMLAnchorElement>this.parentNode,
                     path: string = a.getAttribute('data-path') || '';
 
-                Confirm(self.i18n('Are you shure?'), '', (yes: boolean) => {
+                Confirm(self.i18n('Are you sure?'), '', (yes: boolean) => {
                     if (yes) {
                         self
                             .folderRemove(path, a.getAttribute('data-name') || '', a.getAttribute('data-source') || '')
