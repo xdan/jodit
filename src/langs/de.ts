@@ -100,7 +100,7 @@ export default {
     'File Browser'                                      : 'Dateibrowser',
     'Error on load list'                                : 'Fehler beim Laden der Liste',
     'Error on load folders'                             : 'Fehler beim Laden der Ordner',
-    'Are you shure?'                                    : 'Sind Sie sicher?',
+    'Are you sure?'                                    : 'Sind Sie sicher?',
     'Enter Directory name'                              : 'Geben Sie den Verzeichnisnamen ein',
     'Create directory'                                  : 'Verzeichnis erstellen',
     'type name'                                         : 'Typname',

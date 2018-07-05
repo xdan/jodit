@@ -95,7 +95,7 @@ export default {
     'File Browser': 'Браузер файлов',
     'Error on load list': 'Ошибка при загрузке списка изображений',
     'Error on load folders': 'Ошибка при загрузке списка директорий',
-    'Are you shure?': 'Вы уверены?',
+    'Are you sure?': 'Вы уверены?',
     'Enter Directory name': 'Введите название директории',
     'Create directory': 'Создать директорию',
     'type name': 'введите название',
