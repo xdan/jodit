@@ -15,7 +15,7 @@ export  class ToolbarPopup extends ToolbarElement {
         this.container.setAttribute('data-editor_id', jodit.id);
 
         this.jodit.events
-            .on(this.container, 'mousedown touchstart', (e: MouseEvent) => {
+            .on(this.container, 'mousedown touchstart touchend', (e: MouseEvent) => {
                 e.stopPropagation();
             })
             .on([this.jodit.ownerWindow, this.jodit.events], 'resize', this.calcPosition);

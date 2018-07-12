@@ -394,8 +394,10 @@
     border: 0;
     > li.jodit_toolbar_btn {
       vertical-align: middle;
-      input,
-      select {
+        select,
+        input[type=text],
+        input[type=number],
+        input[type=url] {
         margin: 0 @padding-default / 2;
         padding-left: @padding-default;
         width: auto;

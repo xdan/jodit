@@ -551,6 +551,7 @@ Config.prototype.filebrowser = <FileBrowserOptions>{
 Config.prototype.controls.filebrowser = <{[key: string]: ControlType}> {
     upload: <ControlType>{
         icon: 'plus',
+        isInput: true,
         exec: () => {},
         isDisable: (browser: any): boolean => !browser.canI('FileUpload'),
         getContent: (editor: IViewBased, control: ControlType): HTMLElement => {
