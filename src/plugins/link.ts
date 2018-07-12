@@ -29,6 +29,8 @@ declare module "../Config" {
             processPastedLink: boolean;
             openLinkDialogAfterPost: boolean;
             removeLinkAfterFormat: boolean;
+            noFollowCheckbox: boolean;
+            openInNewTabCheckbox: boolean;
         }
     }
 }
@@ -38,12 +40,14 @@ Config.prototype.link = {
     processPastedLink: true,
     openLinkDialogAfterPost: true,
     removeLinkAfterFormat: true,
+    noFollowCheckbox: true,
+    openInNewTabCheckbox: true,
 };
 
 
 Config.prototype.controls.unlink = <ControlType>{
     exec: (editor: Jodit, current: Node) => {
-        let anchor: HTMLAnchorElement|false = <HTMLAnchorElement>Dom.closest(current, 'A', editor.editor);
+        const anchor: HTMLAnchorElement|false = <HTMLAnchorElement>Dom.closest(current, 'A', editor.editor);
 
         if (anchor) {
             Dom.unwrap(anchor);
@@ -63,12 +67,15 @@ Config.prototype.controls.link = <ControlType> {
                 '<form class="jodit_form">' +
                     '<input required type="text" name="url" placeholder="http://" type="text"/>' +
                     '<input name="text" placeholder="' + editor.i18n('Text') + '" type="text"/>' +
+                    (editor.options.link.openInNewTabCheckbox ?
                     '<label>' +
                         '<input name="target" type="checkbox"/> ' + editor.i18n('Open in new tab') +
-                    '</label>' +
+                    '</label>' : '') +
+                    (editor.options.link.noFollowCheckbox ?
                     '<label>' +
                         '<input name="nofollow" type="checkbox"/> ' + editor.i18n('No follow') +
-                    '</label>' +
+                    '</label>' :
+                    '') +
                     '<div style="text-align: right">' +
                         '<button class="jodit_unlink_button" type="button">' + editor.i18n('Unlink') + '</button> &nbsp;&nbsp;' +
                         '<button class="jodit_link_insert_button" type="submit"></button>' +
@@ -90,8 +97,12 @@ Config.prototype.controls.link = <ControlType> {
             val(form, 'input[name=url]', current.getAttribute('href') || '');
             val(form, 'input[name=text]', current.innerText);
 
-            (<HTMLInputElement>form.querySelector('input[name=target]')).checked = (current.getAttribute('target') === '_blank');
-            (<HTMLInputElement>form.querySelector('input[name=nofollow]')).checked = (current.getAttribute('rel') === 'nofollow');
+            if (editor.options.link.openInNewTabCheckbox) {
+                (<HTMLInputElement>form.querySelector('input[name=target]')).checked = (current.getAttribute('target') === '_blank');
+            }
+            if (editor.options.link.noFollowCheckbox) {
+                (<HTMLInputElement>form.querySelector('input[name=nofollow]')).checked = (current.getAttribute('rel') === 'nofollow');
+            }
             if (link) {
                 link.innerHTML = editor.i18n('Update');
             }
@@ -136,16 +147,20 @@ Config.prototype.controls.link = <ControlType> {
             a.setAttribute('href', val(form, 'input[name=url]'));
             a.innerText = val(form, 'input[name=text]');
 
-            if ((<HTMLInputElement>form.querySelector('input[name=target]')).checked) {
-                a.setAttribute('target', '_blank');
-            } else {
-                a.removeAttribute('target');
+            if (editor.options.link.openInNewTabCheckbox) {
+                if ((<HTMLInputElement>form.querySelector('input[name=target]')).checked) {
+                    a.setAttribute('target', '_blank');
+                } else {
+                    a.removeAttribute('target');
+                }
             }
 
-            if ((<HTMLInputElement>form.querySelector('input[name=nofollow]')).checked) {
-                a.setAttribute('rel', 'nofollow');
-            } else {
-                a.removeAttribute('rel');
+            if (editor.options.link.noFollowCheckbox) {
+                if ((<HTMLInputElement>form.querySelector('input[name=nofollow]')).checked) {
+                    a.setAttribute('rel', 'nofollow');
+                } else {
+                    a.removeAttribute('rel');
+                }
             }
 
             if (!current) {
