@@ -61,9 +61,11 @@ class EventHandlersStore {
     namespaces(): string[] {
         return Object.keys(this.__store);
     }
+
     events(namespace: string): string[] {
         return this.__store[namespace] ? Object.keys(this.__store[namespace]) : [];
     }
+
     set(event: string, namespace: string, data: EventHandlerBlock, onTop: boolean = false) {
         if (this.__store[namespace] === undefined) {
             this.__store[namespace] = {};
@@ -238,6 +240,7 @@ export class EventsNative {
 
                 return;
             };
+
             if (selector) {
                 syntheticCallback = function (this: any, event: TouchEvent|MouseEvent): false | void {
                     self.prepareEvent(event);
@@ -277,9 +280,9 @@ export class EventsNative {
 
                 store.set(event, namespace, block, onTop);
 
-                if (namespace !== this.__defaultNameSpace) {
-                    store.set(event, this.__defaultNameSpace, block, onTop);
-                }
+                // if (namespace !== this.__defaultNameSpace) {
+                //     store.set(event, this.__defaultNameSpace, block, onTop);
+                // }
 
                 if (isDOMElement) {
                     (<HTMLElement>subject).addEventListener(event, <EventListener>syntheticCallback, false);
@@ -323,6 +326,7 @@ export class EventsNative {
     off(subjectOrEvents: object|string, eventsOrCallback?: string|Function, handler?: Function): EventsNative {
         const subject: object = typeof subjectOrEvents === 'string' ? this : subjectOrEvents;
         const events: string = typeof eventsOrCallback === 'string' ? eventsOrCallback : <string>subjectOrEvents;
+
         const store: EventHandlersStore = this.getStore(subject);
 
         let callback: Function = <Function>handler;
@@ -366,24 +370,26 @@ export class EventsNative {
                             }
                         }
 
-                        if (found && namespace !== this.__defaultNameSpace) {
-                            removeCallbackFromNameSpace(event, this.__defaultNameSpace);
-                        }
+                        // if (found && namespace !== this.__defaultNameSpace) {
+                        //     removeCallbackFromNameSpace(event, this.__defaultNameSpace);
+                        // }
                     }
                 } else {
-                    store.events(namespace).forEach((eventName: string) => {
-                        if (eventName !== '') {
-                            removeCallbackFromNameSpace(eventName, namespace);
-                        }
-                    });
+                    store.events(namespace)
+                        .forEach((eventName: string) => {
+                            if (eventName !== '') {
+                                removeCallbackFromNameSpace(eventName, namespace);
+                            }
+                        });
                 }
             };
 
         this.eachEvent(events, (event: string, namespace: string): void => {
             if (namespace === this.__defaultNameSpace) {
-                store.namespaces().forEach((name: string) => {
-                    removeCallbackFromNameSpace(event, name);
-                });
+                store.namespaces()
+                    .forEach((name: string) => {
+                        removeCallbackFromNameSpace(event, name);
+                    });
             } else {
                 removeCallbackFromNameSpace(event, namespace);
             }
@@ -489,8 +495,6 @@ export class EventsNative {
                 } else {
                     const blocks: EventHandlerBlock[] | void = store.get(event, namespace);
                     if (blocks) {
-
-
                         try {
                             blocks.every((block: EventHandlerBlock): boolean => {
                                 if (this.isStopped(blocks)) {
@@ -512,6 +516,17 @@ export class EventsNative {
                         }
                     }
 
+                    if (namespace === this.__defaultNameSpace && !isDOMElement) {
+                        store
+                            .namespaces()
+                            .filter(ns => ns !== namespace)
+                            .forEach((ns: string) => {
+                                const result_second: any = this.fire.apply(this, [subject, event + '.' + ns, ...argumentsList]);
+                                if (result_second !== undefined) {
+                                    result = result_second;
+                                }
+                            });
+                    }
                 }
             });
         }

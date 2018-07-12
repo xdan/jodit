@@ -903,7 +903,7 @@ export class ToolbarCollection extends ToolbarElement {
     private initEvents = () => {
         this.jodit.events
             .on(this.jodit.ownerWindow, 'mousedown touchend', this.closeAll)
-            .on( this, 'afterOpenPopup', this.afterOpen)
+            .on(this, 'afterOpenPopup', this.afterOpen)
             .on(this.listenEvents, this.checkActiveButtons)
             .on('afterSetMode focus', this.immedateCheckActiveButtons);
     };
@@ -913,7 +913,7 @@ export class ToolbarCollection extends ToolbarElement {
 
         this.jodit.events
             .off(this.jodit.ownerWindow, 'mousedown touchstart', this.closeAll)
-            .off( this, 'afterOpenPopup', this.afterOpen)
+            .off(this, 'afterOpenPopup', this.afterOpen)
             .off(this.listenEvents, this.checkActiveButtons)
             .off('afterSetMode focus', this.immedateCheckActiveButtons);
 
