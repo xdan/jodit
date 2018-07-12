@@ -7,8 +7,8 @@
 import {Jodit} from '../Jodit';
 import {css, normalizeSize} from '../modules/Helpers';
 import {Config} from "../Config";
-import {ControlType} from "../modules/ToolbarCollection";
 import {Dom} from "../modules/Dom";
+import {ControlType} from "../modules/toolbar/control.type";
 
 Config.prototype.controls.fontsize = <ControlType>{
     command: 'fontSize',

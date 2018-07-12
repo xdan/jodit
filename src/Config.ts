@@ -9,14 +9,15 @@ import {
     dom, trim, $$, isURL, convertMediaURLToVideoEmbed, val, isLicense, normalizeLicense,
     extend
 } from './modules/Helpers'
+
 import {Jodit} from "./Jodit";
-import {ControlType} from "./modules/ToolbarCollection";
 import {FileBrowserCallBackData} from "./modules/FileBrowser";
 import {Widget} from "./modules/Widget";
 import TabsWidget = Widget.TabsWidget;
 import FileSelectorWidget = Widget.FileSelectorWidget;
-import {ToolbarIcon} from "./modules/ToolbarCollection";
 import {Dom} from "./modules/Dom";
+import {ControlType} from "./modules/toolbar/control.type";
+import {ToolbarIcon} from "./modules/toolbar/icon";
 
 /**
  * Default Editor's Configuration

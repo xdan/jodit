@@ -6,7 +6,6 @@
 
 import {Jodit} from "../Jodit";
 import {Plugin} from "../modules/Plugin";
-import {ControlType, ToolbarCollection, ToolbarPopup} from "../modules/ToolbarCollection";
 import {css, debounce, offset, splitArray} from "../modules/Helpers";
 import {Table} from "../modules/Table";
 import {Config} from "../Config";
@@ -14,6 +13,9 @@ import {Widget} from "../modules/Widget";
 import ColorPickerWidget = Widget.ColorPickerWidget;
 import TabsWidget = Widget.TabsWidget;
 import {Dom} from "../modules/Dom";
+import {ControlType} from "../modules/toolbar/control.type";
+import {ToolbarCollection} from "../modules/toolbar/collection";
+import {ToolbarPopup} from "../modules/toolbar/popup";
 
 declare module "../Config" {
     interface Config {

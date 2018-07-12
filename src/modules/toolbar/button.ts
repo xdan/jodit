@@ -1,0 +1,264 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ */
+
+import {IViewBased} from "../Component";
+import * as consts from "../../constants";
+import {asArray, camelCase, css, dom} from "../Helpers";
+import {Dom} from "../Dom";
+import {ToolbarElement} from "./element";
+import {ControlTypeStrong} from "./control.type";
+import {Tooltip} from "./tooltip";
+import {ToolbarList} from "./list";
+import {ToolbarPopup} from "./popup";
+
+export  class ToolbarButton extends ToolbarElement {
+    readonly control: ControlTypeStrong;
+    readonly target: HTMLElement | undefined;
+
+    private __disabled: boolean = false;
+
+    set disable(disable: boolean) {
+        this.__disabled = disable;
+        this.container.classList.toggle('jodit_disabled', disable);
+
+        if (!disable) {
+            if (this.container.hasAttribute('disabled')) {
+                this.container.removeAttribute('disabled');
+            }
+        } else {
+            if (!this.container.hasAttribute('disabled')) {
+                this.container.setAttribute('disabled', 'disabled');
+            }
+        }
+    }
+
+    get disable() {
+        return this.__disabled;
+    }
+
+    private __actived: boolean = false;
+
+    set active(enable: boolean) {
+        this.__actived = enable;
+        this.container.classList.toggle('jodit_active', enable);
+    }
+    get active() {
+        return this.__actived;
+    }
+
+    private checkActiveStatus = (
+        cssObject: {[key: string]: string|string[]}|{[key: string]: (editor: IViewBased, value: string) => boolean},
+        node: HTMLElement
+    ): boolean => {
+        let matches: number = 0,
+            total: number = 0;
+
+        Object.keys(cssObject).forEach((cssProperty) => {
+            const cssValue = cssObject[cssProperty];
+            if (typeof cssValue === 'function') {
+                if (cssValue(this.jodit, css(node, cssProperty).toString())) {
+                    matches += 1;
+                }
+            } else {
+                if (cssValue.indexOf(css(node, cssProperty).toString()) !== -1) {
+                    matches += 1;
+                }
+            }
+            total += 1;
+        });
+
+        return total === matches
+    };
+
+    isDisable(): boolean {
+        const mode =  (this.control === undefined || this.control.mode === undefined) ? consts.MODE_WYSIWYG : this.control.mode;
+
+        let isEnable: boolean = mode === consts.MODE_SPLIT || mode === this.jodit.getRealMode();
+
+        if (typeof this.control.isDisable === 'function') {
+            isEnable = isEnable && !this.control.isDisable(this.jodit, this.control, this);
+        }
+
+        if (this.jodit.options.readonly && this.jodit.options.activeButtonsInReadOnly.indexOf(this.control.name) === -1) {
+            isEnable = false;
+        }
+
+        return !isEnable;
+    }
+    isActive(): boolean {
+        if (typeof this.control.isActive === 'function') {
+            return this.control.isActive(this.jodit, this.control, this);
+        }
+
+        const element: false | Node = this.jodit.selection ? this.jodit.selection.current() : false;
+
+        if (!element) {
+            return false;
+        }
+
+        let tags: string[],
+            elm: Node|false,
+            css: {[key: string]: string};
+
+
+
+        if (this.control.tags || (this.control.options && this.control.options.tags)) {
+            tags = this.control.tags || (this.control.options && this.control.options.tags);
+
+            elm = element;
+
+            if (Dom.up(elm, (node: Node | null): boolean | void => {
+                if (node && tags.indexOf(node.nodeName.toLowerCase()) !== -1) {
+                    return true;
+                }
+            }, this.jodit.editor)) {
+                return true;
+            }
+        }
+
+        //activate by supposed css
+        if (this.control.css || (this.control.options && this.control.options.css)) {
+            css = this.control.css || (this.control.options && this.control.options.css);
+
+            elm = element;
+            if (Dom.up(elm, (node: HTMLElement): boolean | void => {
+                if (node && node.nodeType !== Node.TEXT_NODE) {
+                    return this.checkActiveStatus(css, node);
+                }
+            }, this.jodit.editor)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    destruct() {
+        this.jodit.events.off(this.container);
+    }
+
+
+    public textBox: HTMLSpanElement;
+    public anchor: HTMLAnchorElement;
+
+
+    private tooltip: Tooltip;
+
+    onMouseDown = (originalEvent: MouseEvent): false | void => {
+        originalEvent.stopImmediatePropagation();
+        originalEvent.preventDefault();
+
+        if (this.disable) {
+            return false;
+        }
+
+        const control: ControlTypeStrong = this.control;
+
+        if (control.list) {
+            const list: ToolbarList = new ToolbarList(this.jodit, this.container, this.target);
+
+            list.parentToolbar = this.parentToolbar;
+
+            list.open(control);
+            this.jodit.events.fire('closeAllPopups', list.container);
+        } else if (control.exec !== undefined && typeof control.exec === 'function') {
+            control.exec(
+                this.jodit,
+                this.target || (this.jodit.selection ? this.jodit.selection.current() : false),
+                control,
+                originalEvent,
+                <HTMLLIElement>this.container
+            );
+
+            this.jodit.events.fire('synchro');
+
+            if (this.parentToolbar) {
+                this.parentToolbar.immedateCheckActiveButtons();
+            }
+
+            /**
+             * Fired after calling `button.exec` function
+             * @event afterExec
+             */
+            this.jodit.events.fire('closeAllPopups afterExec');
+        } else if (control.popup !== undefined && typeof control.popup === 'function') {
+            const popup: ToolbarPopup = new ToolbarPopup(this.jodit, this.container, this.target);
+
+            popup.parentToolbar = this.parentToolbar;
+
+            if (this.jodit.events.fire(camelCase('before-' + control.name + '-OpenPopup'), this.target || (this.jodit.selection ? this.jodit.selection.current() : false), control, popup) !== false) {
+                popup.open(control.popup(
+                    this.jodit,
+                    this.target || (this.jodit.selection ? this.jodit.selection.current() : false),
+                    control,
+                    popup.close,
+                    this
+                ));
+            }
+            /**
+             * Fired after popup was opened for some control button
+             * @event after{CONTROLNAME}OpenPopup
+             */
+            /**
+             * Close all opened popups
+             *
+             * @event closeAllPopups
+             */
+            this.jodit.events.fire(camelCase('after-' + control.name + '-OpenPopup')+' closeAllPopups', popup.container);
+        } else {
+            if (control.command || control.name) {
+                this.jodit.execCommand(control.command || control.name, (control.args && control.args[0]) || false, (control.args && control.args[1]) || null);
+                this.jodit.events.fire('closeAllPopups');
+            }
+        }
+
+    };
+    constructor(jodit: IViewBased, control: ControlTypeStrong, target?: HTMLElement) {
+        super(jodit);
+
+        this.control = control;
+        this.target = target;
+
+        this.anchor = this.jodit.ownerDocument.createElement('a');
+        this.container.appendChild(this.anchor);
+
+        if (jodit.options.showTooltip && control.tooltip) {
+            if (!jodit.options.useNativeTooltip) {
+                this.tooltip = new Tooltip(this);
+            } else {
+                this.anchor.setAttribute('title', this.jodit.i18n(control.tooltip) + (control.hotkeys ? '<br>' + asArray(control.hotkeys).join(' ') : ''));
+            }
+        }
+
+        this.textBox = this.jodit.ownerDocument.createElement('span');
+        this.anchor.appendChild(this.textBox);
+
+        const clearName: string = control.name.replace(/[^a-zA-Z0-9]/g, '_');
+
+        if (control.getContent && typeof control.getContent === 'function') {
+            Dom.detach(this.container);
+            this.container.appendChild(dom(control.getContent(this.jodit, control, this), this.jodit.ownerDocument));
+        } else {
+            if (control.list && this.anchor) {
+                const trigger: HTMLSpanElement = this.jodit.ownerDocument.createElement('span');
+                trigger.classList.add('jodit_with_dropdownlist-trigger');
+                this.container.classList.add('jodit_with_dropdownlist');
+                this.anchor.appendChild(trigger);
+            }
+
+            this.textBox.appendChild(this.createIcon(clearName, control));
+        }
+
+        this.container.classList.add('jodit_toolbar_btn-' + clearName);
+
+        if (control.isInput) {
+            this.container.classList.add('jodit_toolbar-input');
+        } else {
+            this.jodit.events.on(this.container, 'mousedown touchend', this.onMouseDown);
+        }
+
+    }
+}

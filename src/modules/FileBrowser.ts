@@ -12,7 +12,6 @@ import {
     $$, ctrlKey, debounce, dom, each, extend, humanSizeToBytes,
     pathNormalize, urlNormalize
 } from "./Helpers";
-import {ControlType, ToolbarCollection, ToolbarIcon} from "./ToolbarCollection";
 import {ContextMenu} from "./ContextMenu";
 import {Uploader, UploaderOptions} from "./Uploader";
 import {Ajax} from "./Ajax";
@@ -20,6 +19,9 @@ import * as consts from "../constants";
 import {ImageEditor, ActionBox} from "./ImageEditor";
 import {EventsNative} from "./EventsNative";
 import {localStorageProvider, Storage} from "./Storage";
+import {ControlType} from "./toolbar/control.type";
+import {ToolbarIcon} from "./toolbar/icon";
+import {ToolbarCollection} from "./toolbar/collection";
 
 
 /**

@@ -8,7 +8,10 @@ import {Jodit} from '../Jodit';
 import {$$, css} from '../modules/Helpers';
 import {Dom} from "../modules/Dom";
 import {Config} from "../Config";
-import {ToolbarIcon, ControlType, ToolbarButton} from "../modules/ToolbarCollection";
+import {ControlType} from "../modules/toolbar/control.type";
+import {ToolbarButton} from "../modules/toolbar/button";
+import {ToolbarIcon} from "../modules/toolbar/icon";
+
 
 Config.prototype.controls.align = <ControlType>{
     name: 'left',

@@ -17,10 +17,10 @@ import {
 } from './modules/Helpers';
 import * as helper from './modules/Helpers';
 import {Config, OptionsDefault} from "./Config";
-import {ToolbarCollection} from "./modules/ToolbarCollection";
 import {StatusBar} from "./modules/StatusBar";
 import {localStorageProvider, Storage} from "./modules/Storage";
 import {Observer} from "./modules/Observer";
+import {ToolbarCollection} from "./modules/toolbar/collection";
 
 
 declare let appVersion: string;

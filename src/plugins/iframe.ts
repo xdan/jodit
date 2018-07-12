@@ -195,7 +195,6 @@ export function iframe(editor: Jodit) {
             editor.iframe.style.display = 'block';
             editor.iframe.src = 'about:blank';
             editor.iframe.className = 'jodit_wysiwyg_iframe';
-            editor.iframe.frameBorder = '0';
             editor.iframe.setAttribute('allowtransparency', 'true');
             editor.iframe.setAttribute('tabindex', '0');
             editor.iframe.setAttribute('frameborder', '0');

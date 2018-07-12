@@ -9,7 +9,8 @@ import * as consts from '../constants';
 import {getContentWidth, $$, dom, offset, scrollIntoView} from '../modules/Helpers';
 import {Config} from '../Config'
 import {Dom, Component, Table} from "../modules/index";
-import {ControlType, ToolbarButton} from "../modules/ToolbarCollection";
+import {ControlType} from "../modules/toolbar/control.type";
+import {ToolbarButton} from "../modules/toolbar/button";
 
 
 declare module "../Config" {
@@ -222,7 +223,7 @@ Config.prototype.controls.table = <ControlType> {
                 if (cells[0]) {
                     cells[0].className = 'hovered';
                 }
-            });
+            }, '', true);
 
         return form;
     },
@@ -501,7 +502,7 @@ export class TableProcessor extends Component{
                             parentWidth = getContentWidth(<HTMLElement>this.__workTable.parentNode, this.jodit.editorWindow);
 
                         // right side
-                        if (this.__wholeTable === false) {
+                        if (!this.__wholeTable) {
                             this.__workTable.style.width = ((width + this.__resizerDelta)/parentWidth) * 100 + '%';
                         } else {
                             let margin = parseInt(this.jodit.editorWindow.getComputedStyle(this.__workTable).marginLeft || '0', 10);

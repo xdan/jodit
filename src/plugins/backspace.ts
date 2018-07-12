@@ -144,7 +144,7 @@ export function backspace(editor: Jodit) {
 
 
             if (node) {
-                node = toLeft ? node.previousSibling : node.nextSibling;;
+                node = toLeft ? node.previousSibling : node.nextSibling;
             }
 
             while (node && node.nodeType === Node.TEXT_NODE && node.nodeValue && node.nodeValue.match(/^[\n\r]+$/)) {

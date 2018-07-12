@@ -6,10 +6,10 @@
 
 import {Jodit} from "../Jodit";
 import {Config} from "../Config";
-import {ControlType} from "../modules/ToolbarCollection";
 import {Alert, Dialog} from "../modules/Dialog";
 import {dom} from "../modules/Helpers";
 import {KEY_DOWN, KEY_ENTER, KEY_LEFT, KEY_RIGHT, KEY_UP} from "../constants";
+import {ControlType} from "../modules/toolbar/control.type";
 
 declare module "../Config" {
     interface Config {

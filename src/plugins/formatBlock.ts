@@ -8,8 +8,9 @@ import {Jodit} from '../Jodit';
 import {Dom} from "../modules/Dom";
 import * as consts from '../constants';
 import {Config} from "../Config";
-import {ToolbarButton, ControlType} from "../modules/ToolbarCollection";
 import {markerInfo} from "../modules/Selection";
+import {ToolbarButton} from "../modules/toolbar/button";
+import {ControlType} from "../modules/toolbar/control.type";
 
 
 Config.prototype.controls.paragraph = <ControlType>{

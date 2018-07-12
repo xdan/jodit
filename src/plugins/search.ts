@@ -70,7 +70,7 @@ export class search extends Component {
 
     private eachMap = (node: Node, callback: (elm: Node) => boolean, next: boolean) => {
         Dom.findWithCurrent(node, (child: Node | null): boolean => {
-            return !!child && callback(child) === true;
+            return !!child && callback(child);
         }, this.jodit.editor, next ? 'nextSibling' : 'previousSibling', next ? 'firstChild' : 'lastChild')
     };
 

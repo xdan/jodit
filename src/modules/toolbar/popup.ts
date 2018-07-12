@@ -1,0 +1,177 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License https://xdsoft.net/jodit/license.html
+ * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ */
+
+import {IViewBased} from "../Component";
+import {css, dom, offset, throttle} from "../Helpers";
+import {Dom} from "../Dom";
+import {ToolbarElement} from "./element";
+
+export  class ToolbarPopup extends ToolbarElement {
+    constructor(jodit: IViewBased, readonly target: HTMLElement, readonly current?: HTMLElement,  readonly className: string = 'jodit_toolbar_popup') {
+        super(jodit, 'div', className);
+        this.container.setAttribute('data-editor_id', jodit.id);
+
+        this.jodit.events
+            .on(this.container, 'mousedown touchstart', (e: MouseEvent) => {
+                e.stopPropagation();
+            })
+            .on([this.jodit.ownerWindow, this.jodit.events], 'resize', this.calcPosition);
+
+    }
+    destruct() {
+        this.jodit.events
+            .off([this.jodit.ownerWindow, this.jodit.events], 'resize', this.calcPosition);
+        super.destruct();
+    }
+
+    isOpened: boolean = false;
+
+    protected doOpen(content: any) {
+        if (!content) {
+            return;
+        }
+
+        Dom.detach(this.container);
+
+        this.container.innerHTML = '<span class="jodit_popup_triangle"></span>';
+
+        this.container.appendChild(dom(content, this.jodit.ownerDocument));
+
+        this.container.style.display = 'block';
+        this.container.style.marginLeft = null;
+    }
+
+    /**
+     * @param {HTMLElement} content
+     * @param {boolean} [rightAlign=false] Open popup on right side
+     * @param {boolean} [noStandartActions=false] No call standarts action
+     */
+    public open(content: any, rightAlign?: boolean, noStandartActions: boolean = false) {
+        this.jodit.events.fire('beforeOpenPopup closeAllPopups', this, content);
+        noStandartActions || this.jodit.events.on('closeAllPopups', this.close);
+
+        this.container.classList.add(this.className + '-open');
+        this.doOpen(content);
+
+        this.target.appendChild(this.container);
+
+        if (rightAlign !== undefined) {
+            this.container.classList.toggle('jodit_right', rightAlign);
+        }
+
+
+        if (!noStandartActions && this.parentToolbar) {
+            this.jodit.events.fire(this.parentToolbar, 'afterOpenPopup', this.container);
+        }
+
+        this.isOpened = true;
+
+        this.calcPosition();
+    }
+
+    private calcPosition = throttle(() => {
+        if (!this.isOpened) {
+            return;
+        }
+
+        const popup: HTMLElement = this.container;
+        const offsetContainer: Bound = offset(<HTMLDivElement>this.jodit.container, this.jodit, this.jodit.ownerDocument, true);
+
+        let offsetPopup: Bound = offset(popup, this.jodit, this.jodit.ownerDocument, true);
+        // let marginLeft: number = parseInt((<string>css(popup, 'transform')).replace(/[^0-9\-]/g, ''), 10) || 0;
+        let marginLeft: number = <number>css(popup, 'marginLeft') || 0;
+        offsetPopup.left -= marginLeft;
+
+        let diffLeft: number = marginLeft;
+        let width: number | string = 'auto';
+
+        if (offsetPopup.left < offsetContainer.left) {
+            diffLeft = offsetContainer.left  - offsetPopup.left;
+        } else if (offsetPopup.left + offsetPopup.width >= offsetContainer.left + offsetContainer.width) {
+            diffLeft =  -((offsetPopup.left + offsetPopup.width) - (offsetContainer.left + offsetContainer.width));
+        } else {
+            diffLeft = 0;
+        }
+
+        if (offsetPopup.width >= offsetContainer.width) {
+            diffLeft = offsetContainer.left - offsetPopup.left;
+            width = offsetContainer.width
+        }
+
+        if (diffLeft !== marginLeft) {
+            css(popup, 'marginLeft', diffLeft);
+        }
+
+
+        const triangle: HTMLSpanElement | null = popup.querySelector('.jodit_popup_triangle');
+        if (triangle) {
+            triangle.style.marginLeft = -diffLeft + 'px';
+        }
+
+
+        css(popup, 'width', width);
+
+        // const popup: HTMLElement = this.container;
+        // const offsetConainer: Bound = offset(<HTMLDivElement>this.jodit.container, this.jodit, this.jodit.ownerDocument, true);
+        //
+        // // css(popup, 'marginLeft', 0);
+        // let offsetPopup: Bound = offset(popup, this.jodit, this.jodit.ownerDocument, true);
+        // let marginLeft: number = 0;
+        // let diffLeft: number = 0;
+        //
+        // if (offsetPopup.left + offsetPopup.width > offsetConainer.left + offsetConainer.width) {
+        //     diffLeft =  -((offsetPopup.left + offsetPopup.width) - (offsetConainer.left + offsetConainer.width));
+        //     css(popup, {
+        //         marginLeft: diffLeft + marginLeft
+        //     });
+        //     offsetPopup = offset(popup, this.jodit, this.jodit.ownerDocument, true);
+        // }
+        //
+        // if (offsetPopup.left  < offsetConainer.left) {
+        //     if (offsetPopup.left + offsetPopup.width > offsetConainer.left + offsetConainer.width) {
+        //         css(popup, {
+        //             width: offsetConainer.width
+        //         });
+        //     } else {
+        //         diffLeft = offsetConainer.left  - offsetPopup.left;
+        //         css(popup, {
+        //             marginLeft: diffLeft  + marginLeft
+        //         });
+        //     }
+        // }
+        //
+        // if (diffLeft) {
+        //     const triangle: HTMLSpanElement | null = popup.querySelector('.jodit_popup_triangle');
+        //     if (triangle) {
+        //         triangle.style.marginLeft = -diffLeft + 'px';
+        //     }
+        // }
+
+    }, this.jodit.defaultTimeout);
+
+
+    protected doClose() {}
+
+    public close = (current?: HTMLElement | ToolbarPopup) => {
+        if (!this.isOpened) {
+            return;
+        }
+
+        if (!current || !Dom.isOrContains(this.container, current instanceof ToolbarPopup ? current.target : current)) {
+            this.isOpened = false;
+            this.jodit.events.off('closeAllPopups', this.close);
+
+            this.doClose();
+
+            if (this.container.parentNode) {
+                this.container.parentNode.removeChild(this.container);
+            }
+            if (this.jodit.selection) {
+                this.jodit.selection.removeMarkers();
+            }
+        }
+    }
+}

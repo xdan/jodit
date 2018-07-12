@@ -8,9 +8,9 @@ import {Jodit} from '../Jodit';
 import {Config} from '../Config'
 import {isURL, convertMediaURLToVideoEmbed, dom, val} from '../modules/Helpers'
 import {Dom} from "../modules/Dom";
-import {ControlType} from "../modules/ToolbarCollection";
 import {markerInfo} from "../modules/Selection";
 import {Select} from "../modules/Selection";
+import {ControlType} from "../modules/toolbar/control.type";
 
 /**
 * @property {object}  link `{@link link|link}` plugin's options

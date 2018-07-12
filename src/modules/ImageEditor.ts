@@ -7,9 +7,9 @@
 import {Component, IViewBased} from './Component';
 import {Config} from '../Config'
 import {$$, css, debounce, dom, throttle, trim} from "./Helpers";
-import {ToolbarIcon} from "./ToolbarCollection";
 import {Dialog, Alert, Promt} from "./Dialog";
 import {Jodit} from "../Jodit";
+import {ToolbarIcon} from "./toolbar/icon";
 /**
  * @property {ImageEditorOptions} imageeditor module's options
  */

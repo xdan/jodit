@@ -5,7 +5,7 @@
  */
 
 import {Jodit} from '../Jodit';
-import {$$, getRange, scrollIntoView} from "../modules/Helpers"
+import {$$, scrollIntoView} from "../modules/Helpers"
 import * as consts from '../constants';
 import {Dom} from "../modules/Dom";
 

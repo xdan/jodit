@@ -6,10 +6,11 @@
 
 import {Jodit} from "../Jodit";
 import {Config} from '../Config'
-import {ControlType, ToolbarButton} from "../modules/ToolbarCollection";
-import {ToolbarCollection} from "../modules/ToolbarCollection";
 import * as consts from "../constants";
 import {splitArray} from "../modules/Helpers";
+import {ControlType} from "../modules/toolbar/control.type";
+import {ToolbarButton} from "../modules/toolbar/button";
+import {ToolbarCollection} from "../modules/toolbar/collection";
 
 declare module "../Config" {
     interface Config {

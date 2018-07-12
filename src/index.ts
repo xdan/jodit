@@ -12,7 +12,6 @@ if (typeof window !== 'undefined') {
 }
 
 import {Jodit}            from './Jodit';
-import {ToolbarIcon}          from './modules/ToolbarCollection';
 
 
 import * as consts      from './constants';
@@ -22,6 +21,7 @@ import * as Languages   from "./langs/index";
 import * as Icons       from "./styles/icons/index";
 
 import {Config, OptionsDefault} from "./Config";
+import {ToolbarIcon} from "./modules/toolbar/icon";
 
 // copy constants in Jodit
 Object.keys(consts).forEach((key: string) => {

@@ -8,9 +8,10 @@ import {Config} from "../Config";
 import {Plugin} from "../modules/Plugin";
 import {debounce, dom, getXPathByElement} from "../modules/Helpers";
 import {Dom} from "../modules/Dom";
-import {ControlType, ToolbarButton} from "../modules/ToolbarCollection";
 import {INVISIBLE_SPACE, MODE_WYSIWYG} from "../constants";
 import {ContextMenu} from "../modules/ContextMenu";
+import {ControlType} from "../modules/toolbar/control.type";
+import {ToolbarButton} from "../modules/toolbar/button";
 
 declare module "../Config" {
     interface Config {

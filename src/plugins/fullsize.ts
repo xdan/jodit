@@ -7,8 +7,10 @@
 import {Jodit} from '../Jodit';
 import {Config} from '../Config'
 import {css} from "../modules/Helpers";
-import {ControlType, ToolbarButton, ToolbarIcon} from "../modules/ToolbarCollection";
 import * as consts from '../constants'
+import {ControlType} from "../modules/toolbar/control.type";
+import {ToolbarButton} from "../modules/toolbar/button";
+import {ToolbarIcon} from "../modules/toolbar/icon";
 
 /**
  * Fullsize plugin

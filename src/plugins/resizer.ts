@@ -290,7 +290,7 @@ export function resizer(editor: Jodit) {
         .on('afterInit', () => {
             editor.events
                 .on(editor.editor, 'keydown', (e: KeyboardEvent) => {
-                    if (resizerIsVisible && e.keyCode === consts.KEY_DELETE && currentElement && currentElement.tagName.toLowerCase() !== 'table') {
+                    if (resizerIsVisible && e.which === consts.KEY_DELETE && currentElement && currentElement.tagName.toLowerCase() !== 'table') {
                         if (currentElement.tagName !== 'JODIT') {
                             editor.selection.select(currentElement);
                         } else {

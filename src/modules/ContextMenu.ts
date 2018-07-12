@@ -6,7 +6,7 @@
 
 import {Component, IViewBased} from './Component';
 import {css, dom} from "./Helpers";
-import {ToolbarIcon} from "./ToolbarCollection";
+import {ToolbarIcon} from "./toolbar/icon";
 
 type Action = {
     icon ?: string;

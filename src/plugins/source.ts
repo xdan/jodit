@@ -10,8 +10,8 @@ import * as consts from '../constants';
 import {$$, appendScript, css, debounce, dom} from '../modules/Helpers';
 import {markerInfo} from "../modules/Selection";
 import {Component} from "../modules/Component";
-import {ControlType} from "../modules/ToolbarCollection";
 import {MODE_SOURCE} from "../constants";
+import {ControlType} from "../modules/toolbar/control.type";
 
 declare module "../Config"  {
     interface Config {
@@ -130,7 +130,7 @@ export class source extends Component {
     mirror: HTMLTextAreaElement;
 
     private fromWYSIWYG = (force: boolean = false) => {
-        if (!this.__lock || force === true) {
+        if (!this.__lock || force) {
             this.__lock = true;
             const new_value = this.jodit.getEditorValue(false);
             if (new_value !== this.getMirrorValue()) {

@@ -8,9 +8,9 @@ import {Jodit} from '../Jodit'
 import {Component, IViewBased} from './Component'
 import {Config} from '../Config'
 import {dom, $$, asArray, css} from './Helpers'
-import {ToolbarIcon} from "./ToolbarCollection";
 import {KEY_ESC} from "../constants";
 import {EventsNative} from "./EventsNative";
+import {ToolbarIcon} from "./toolbar/icon";
 
 
 /**

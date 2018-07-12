@@ -8,7 +8,8 @@ import {Jodit} from '../Jodit';
 import * as consts from '../constants';
 import {Config} from "../Config";
 import {Component} from "../modules/Component";
-import {ControlType} from "../modules/ToolbarCollection";
+import {ControlType} from "../modules/toolbar/control.type";
+
 
 Config.prototype.controls.redo = <ControlType> {
     mode: consts.MODE_SPLIT,
