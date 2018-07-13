@@ -55,14 +55,7 @@ Config.prototype.controls.dialog = <{[key: string]: ControlType}> {
     },
     fullsize: {
         icon: 'fullsize',
-        getLabel: (editor: IViewBased, btn: ControlType, button: ToolbarButton) => {
-            const mode: string = editor.isFullSize() ? 'shrink' : 'fullsize';
-
-            button.textBox.innerHTML = !editor.options.textIcons ? ToolbarIcon.getIcon(mode) : `<span>${editor.i18n(mode)}</span>`;
-
-            (<HTMLElement>button.textBox.firstChild).classList.add('jodit_icon');
-        },
-        tooltip: 'Open dialog in fullsize',
+        getLabel: (<ControlType>Config.prototype.controls.fullsize).getLabel,
         exec: (dialog: IViewBased) => {
             dialog.toggleFullSize();
         }
@@ -85,7 +78,7 @@ export class Dialog extends View implements IViewBased {
         this.container.classList.remove('jodit_dialog_box-moved');
     };
 
-    public options: DialogOptions;
+    public options: DialogOptions
 
 
     /**
@@ -103,7 +96,7 @@ export class Dialog extends View implements IViewBased {
     public dialogbox_footer: HTMLDivElement;
     public dialogbox_toolbar: HTMLDivElement;
 
-    constructor(jodit ?: IViewBased, options = {}) {
+    constructor(jodit ?: IViewBased, options: any = Config.prototype.dialog) {
         super(jodit, options);
         
         if (jodit && jodit instanceof Jodit) {
@@ -119,6 +112,7 @@ export class Dialog extends View implements IViewBased {
         const self: Dialog = this;
 
         const opt = (jodit && (<View>jodit).options) ? (<Jodit>jodit).options.dialog : Config.prototype.dialog;
+
         self.options = <DialogOptions>{...opt, ...self.options};
 
         self.container = <HTMLDivElement>dom('<div style="z-index:' + self.options.zIndex + '" class="jodit jodit_dialog_box">' +
@@ -184,8 +178,6 @@ export class Dialog extends View implements IViewBased {
         }
 
         Jodit.plugins.fullsize(self);
-
-        self.events.fire('afterInit');
     }
 
 
@@ -448,7 +440,7 @@ export class Dialog extends View implements IViewBased {
          * @event afterOpen
          */
         if (this.jodit && this.jodit.events) {
-            this.jodit.events.fire(this, 'afterOpen');
+            this.jodit.events.fire('afterOpen', this);
         }
     }
 
@@ -622,7 +614,7 @@ export class Dialog extends View implements IViewBased {
          * @this {Dialog} current dialog
          */
         if (this.jodit && this.jodit.events) {
-            this.jodit.events.fire(this, 'beforeClose');
+            this.jodit.events.fire('beforeClose', this);
         }
 
 

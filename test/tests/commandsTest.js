@@ -422,6 +422,25 @@ describe('Commands Jodit Editor Tests', function() {
 
             });
         });
+        describe('Exec bold command for SPAN with font-size', function () {
+            it('Should leave both font-size and font-weight rules', function() {
+                var editor = new Jodit(appendTestArea());
+                editor.setEditorValue('<span style="font-size: 36px;">asdasd</span>');
+
+                var sel = editor.editorWindow.getSelection(),
+                    range = editor.editorDocument.createRange();
+
+                range.selectNodeContents(editor.editor.firstChild);
+
+                sel.removeAllRanges();
+                sel.addRange(range);
+
+                editor.execCommand('bold');
+
+                expect(editor.getEditorValue()).to.equal('<span style="font-size: 36px;"><strong>asdasd</strong></span>');
+
+            });
+        });
     });
 
     describe('After exec some command', function() {

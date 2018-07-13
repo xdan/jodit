@@ -373,13 +373,6 @@ export class Jodit extends View {
     }
 
     /**
-     * Editor was destructed
-     *
-     * @type {boolean}
-     */
-    isDestructed: boolean = false;
-
-    /**
      * Jodit's Destructor. Remove editor, and return source input
      */
     destruct() {

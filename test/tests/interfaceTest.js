@@ -1601,7 +1601,7 @@ describe('Test interface', function() {
 
                     expect(dialog).to.be.not.equal(null);
 
-                    expect(3).to.equal(dialog.querySelectorAll('.jodit_dialog_header .jodit_toolbar_btn').length);
+                    expect(3).to.equal(dialog.querySelectorAll('.jodit_dialog_header .jodit_dialog_header-title .jodit_toolbar_btn').length);
 
                 });
             });

@@ -91,6 +91,10 @@ export  function fullsize(editor: IViewBased) {
             }
         },
         toggle = (condition?: boolean) => {
+            if (!editor.container) {
+                return;
+            }
+
             if (condition === undefined) {
                 condition = !editor.container.classList.contains('jodit_fullsize');
             }
@@ -122,11 +126,11 @@ export  function fullsize(editor: IViewBased) {
     }
 
     editor.events
-        .on('afterInit', () => {
+        .on('afterInit afterOpen', () => {
             editor.toggleFullSize(editor.options.fullsize);
         })
         .on('toggleFullSize', toggle)
-        .on('beforeDestruct', () => {
+        .on('beforeDestruct beforeClose', () => {
             toggle(false);
         });
 }

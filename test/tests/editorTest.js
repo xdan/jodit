@@ -355,6 +355,7 @@ describe('Jodit Editor Tests', function() {
                                 options.clientX = 100;
                                 options.clientY = 100;
                             });
+
                             simulateEvent('mousemove', 0, window, function (options) {
                                 options.clientX = 200;
                                 options.clientY = 200;

@@ -51,4 +51,11 @@ export class Component {
 
         return this.__modulesInstances[moduleName];
     }
+
+    /**
+     * Editor was destructed
+     *
+     * @type {boolean}
+     */
+    isDestructed: boolean = false;
 }

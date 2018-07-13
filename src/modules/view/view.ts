@@ -86,4 +86,8 @@ export class View extends Component implements IViewBased {
 
         self.options = {...self.options, ...options};
     }
+    destruct() {
+        this.toolbar.destruct();
+        super.destruct();
+    }
 }

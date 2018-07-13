@@ -159,7 +159,7 @@ export class ToolbarCollection extends ToolbarElement {
     checkActiveButtons = debounce(this.immedateCheckActiveButtons, this.jodit.defaultTimeout);
 
     private closeAll = () => {
-        this.jodit.events.fire('closeAllPopups');
+        this.jodit && this.jodit.events && this.jodit.events.fire('closeAllPopups');
     };
 
 

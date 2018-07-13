@@ -191,6 +191,7 @@ export function iframe(editor: Jodit) {
                 return;
             }
 
+            delete editor.editor;
             editor.iframe = <HTMLIFrameElement>editor.ownerDocument.createElement("iframe");
             editor.iframe.style.display = 'block';
             editor.iframe.src = 'about:blank';
