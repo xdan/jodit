@@ -430,14 +430,15 @@ describe('Commands Jodit Editor Tests', function() {
                 var sel = editor.editorWindow.getSelection(),
                     range = editor.editorDocument.createRange();
 
-                range.selectNodeContents(editor.editor.firstChild);
+                range.setStart(editor.editor.firstChild.firstChild, 0);
+                range.setEnd(editor.editor.firstChild.firstChild, 6);
 
                 sel.removeAllRanges();
                 sel.addRange(range);
 
                 editor.execCommand('bold');
 
-                expect(editor.getEditorValue()).to.equal('<span style="font-size: 36px;"><strong>asdasd</strong></span>');
+                expect(sortAtrtibutes(editor.value)).to.equal(sortAtrtibutes('<span style="font-size: 36px;"><strong>asdasd</strong></span>'));
 
             });
         });

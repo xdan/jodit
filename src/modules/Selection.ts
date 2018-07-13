@@ -874,7 +874,18 @@ export class Select extends Component{
         if (!this.isCollapsed()) {
             const selInfo: markerInfo[] = this.save();
             normalizeNode(this.jodit.editor.firstChild); // FF fix for test "commandsTest - Exec command "bold" for some text that contains a few STRONG elements, should unwrap all of these"
+
+            // fix issue https://github.com/xdan/jodit/issues/65
+            $$('*[style*=font-size]', this.jodit.editor).forEach((elm: HTMLElement) => {
+                elm.style && elm.style.fontSize && elm.setAttribute('data-font-size', elm.style.fontSize.toString());
+            });
             this.jodit.editorDocument.execCommand('fontsize', false, 7);
+            $$('*[data-font-size]', this.jodit.editor).forEach((elm: HTMLElement) => {
+                if (elm.style && elm.getAttribute('data-font-size')) {
+                    elm.style.fontSize = elm.getAttribute('data-font-size');
+                    elm.removeAttribute('data-font-size');
+                }
+            });
 
             $$('font[size="7"]', this.jodit.editor).forEach((font: HTMLElement) => {
                 if (!Dom.next(font, findNextCondition, <HTMLElement>font.parentNode) && !Dom.prev(font, findNextCondition, <HTMLElement>font.parentNode) && isSuitElement(<HTMLElement>font.parentNode) && font.parentNode !== this.jodit.editor && (!Dom.isBlock(font.parentNode) || consts.IS_BLOCK.test(nodeName))) {
