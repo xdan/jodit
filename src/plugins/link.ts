@@ -10,7 +10,7 @@ import {isURL, convertMediaURLToVideoEmbed, dom, val} from '../modules/Helpers'
 import {Dom} from "../modules/Dom";
 import {markerInfo} from "../modules/Selection";
 import {Select} from "../modules/Selection";
-import {ControlType} from "../modules/toolbar/control.type";
+import {ControlType} from "../modules/toolbar/type";
 
 /**
 * @property {object}  link `{@link link|link}` plugin's options

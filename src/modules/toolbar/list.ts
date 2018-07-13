@@ -4,13 +4,13 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {IViewBased} from "../Component";
 import {each} from "../Helpers";
 import {Jodit} from "../../Jodit";
 import {ToolbarPopup} from "./popup";
 import {ToolbarCollection} from "./collection";
 import {ToolbarButton} from "./button";
-import {ControlType, ControlTypeStrong} from "./control.type";
+import {ControlType, ControlTypeStrong} from "./type";
+import {IViewBased} from "../view/type";
 
 export  class ToolbarList extends ToolbarPopup {
     private defaultControl  = {

@@ -11,12 +11,12 @@ import {
 } from './modules/Helpers'
 
 import {Jodit} from "./Jodit";
-import {FileBrowserCallBackData} from "./modules/FileBrowser";
+import {FileBrowserCallBackData} from "./modules/filebrowser/type";
 import {Widget} from "./modules/Widget";
 import TabsWidget = Widget.TabsWidget;
 import FileSelectorWidget = Widget.FileSelectorWidget;
 import {Dom} from "./modules/Dom";
-import {ControlType} from "./modules/toolbar/control.type";
+import {Buttons, Controls, ControlType} from "./modules/toolbar/type";
 import {ToolbarIcon} from "./modules/toolbar/icon";
 
 /**
@@ -493,7 +493,7 @@ export class Config {
      *  });
      *  ```
      */
-    buttons: Array<string|ControlType> | string = [
+    buttons: Buttons = [
         'source', '|',
         'bold',
         'strikethrough',
@@ -528,7 +528,7 @@ export class Config {
     /**
      * The list of buttons that appear in the editor's toolbar on medium places (≥ options.sizeMD).
      */
-    buttonsMD: Array<string|ControlType> | string = [
+    buttonsMD: Buttons = [
         'source', '|',
         'bold',
         'italic', '|',
@@ -553,7 +553,7 @@ export class Config {
     /**
      * The list of buttons that appear in the editor's toolbar on small places (≥ options.sizeSM).
      */
-    buttonsSM: Array<string|ControlType> | string = [
+    buttonsSM: Buttons = [
         'source', '|',
         'bold',
         'italic', '|',
@@ -576,7 +576,7 @@ export class Config {
     /**
      * The list of buttons that appear in the editor's toolbar on extra small places (< options.sizeSM).
      */
-    buttonsXS: Array<string|ControlType> | string = [
+    buttonsXS: Buttons = [
         'bold',
         'image', '|',
         'brush',
@@ -591,7 +591,7 @@ export class Config {
     /**
      * Behavior for buttons
      */
-    controls: {[key: string]: ControlType | {[key: string]: ControlType}};
+    controls: Controls;
 
     events: {[key: string]: Function} = {};
 

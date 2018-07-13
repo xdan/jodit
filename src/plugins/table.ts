@@ -9,7 +9,7 @@ import * as consts from '../constants';
 import {getContentWidth, $$, dom, offset, scrollIntoView} from '../modules/Helpers';
 import {Config} from '../Config'
 import {Dom, Component, Table} from "../modules/index";
-import {ControlType} from "../modules/toolbar/control.type";
+import {ControlType} from "../modules/toolbar/type";
 import {ToolbarButton} from "../modules/toolbar/button";
 
 

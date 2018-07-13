@@ -8,9 +8,10 @@ import {Jodit} from '../Jodit';
 import {Config} from '../Config'
 import {css} from "../modules/Helpers";
 import * as consts from '../constants'
-import {ControlType} from "../modules/toolbar/control.type";
+import {ControlType} from "../modules/toolbar/type";
 import {ToolbarButton} from "../modules/toolbar/button";
 import {ToolbarIcon} from "../modules/toolbar/icon";
+import {IViewBased} from "../modules/view/type";
 
 /**
  * Fullsize plugin
@@ -66,7 +67,7 @@ Config.prototype.controls.fullsize = <ControlType>{
  *
  * @param {Jodit} editor
  */
-export  function fullsize(editor: Jodit) {
+export  function fullsize(editor: IViewBased) {
     let shown: boolean = false,
         oldHeight: number = 0,
         oldWidth: number = 0,

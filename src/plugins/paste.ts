@@ -12,7 +12,7 @@ import {
 } from '../modules/Helpers';
 import {Config} from '../Config';
 import {INSERT_AS_HTML, INSERT_AS_TEXT, INSERT_CLEAR_HTML, INSERT_ONLY_TEXT, TEXT_HTML, TEXT_PLAIN} from "../constants";
-import {ControlType} from "../modules/toolbar/control.type";
+import {ControlType} from "../modules/toolbar/type";
 
 /**
  * @property{boolean} askBeforePasteHTML=true Ask before paste HTML in WYSIWYG mode
@@ -58,7 +58,7 @@ export function paste(editor: Jodit) {
         }
 
         const dialog: Dialog = Confirm(`<div style="word-break: normal; white-space: normal">${msg}</div>`, title, callback);
-        dialog.dialogbox.setAttribute('data-editor_id', editor.id);
+        dialog.container.setAttribute('data-editor_id', editor.id);
 
         const keep: HTMLAnchorElement  = <HTMLAnchorElement>dom(
             '<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +

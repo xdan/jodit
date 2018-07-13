@@ -5,36 +5,7 @@
  */
 
 import {Jodit} from "../Jodit";
-import {EventsNative} from "./EventsNative";
-
-
-
-
-export interface IViewBased {
-    id: string;
-
-    buffer: {[key: string]: any};
-
-    progress_bar: HTMLElement;
-
-    options: {[key: string]: any};
-
-    editorWindow: Window;
-    editorDocument: Document;
-    ownerDocument: Document;
-    ownerWindow: Window;
-
-    editor: HTMLElement;
-
-    events: EventsNative;
-
-    isLocked: () => boolean;
-    isFullSize: () => boolean;
-
-    getRealMode: () => number;
-
-    i18n: (text: string, ...params: Array<string|number>) => string;
-}
+import {IViewBased} from "./view/type";
 
 
 export class Component {
@@ -80,7 +51,4 @@ export class Component {
 
         return this.__modulesInstances[moduleName];
     }
-
-    protected __isFullSize: boolean = false;
-    isFullSize = (): boolean => this.__isFullSize;
 }

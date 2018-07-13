@@ -8,7 +8,7 @@ import {Jodit} from "../Jodit";
 import {Config} from '../Config'
 import * as consts from "../constants";
 import {splitArray} from "../modules/Helpers";
-import {ControlType} from "../modules/toolbar/control.type";
+import {ControlType} from "../modules/toolbar/type";
 import {ToolbarButton} from "../modules/toolbar/button";
 import {ToolbarCollection} from "../modules/toolbar/collection";
 

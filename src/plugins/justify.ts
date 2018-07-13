@@ -8,7 +8,7 @@ import {Jodit} from '../Jodit';
 import {$$, css} from '../modules/Helpers';
 import {Dom} from "../modules/Dom";
 import {Config} from "../Config";
-import {ControlType} from "../modules/toolbar/control.type";
+import {ControlType} from "../modules/toolbar/type";
 import {ToolbarButton} from "../modules/toolbar/button";
 import {ToolbarIcon} from "../modules/toolbar/icon";
 

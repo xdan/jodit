@@ -11,7 +11,7 @@ import {$$, appendScript, css, debounce, dom} from '../modules/Helpers';
 import {markerInfo} from "../modules/Selection";
 import {Component} from "../modules/Component";
 import {MODE_SOURCE} from "../constants";
-import {ControlType} from "../modules/toolbar/control.type";
+import {ControlType} from "../modules/toolbar/type";
 
 declare module "../Config"  {
     interface Config {

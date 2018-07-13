@@ -1,1 +1,9 @@
-<svg viewBox="0 0 1792 1792"><path d="M1490 1322q0 40-28 68l-136 136q-28 28-68 28t-68-28l-294-294-294 294q-28 28-68 28t-68-28l-136-136q-28-28-28-68t28-68l294-294-294-294q-28-28-28-68t28-68l136-136q28-28 68-28t68 28l294 294 294-294q28-28 68-28t68 28l136 136q28 28 28 68t-28 68l-294 294 294 294q28 28 28 68z"/></svg>
+<?xml version="1.0" ?>
+<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <g id="layer1" transform="translate(0,-1036.3622)">
+        <path d="m 2,1050.3622 12,-12" id="path2985"
+              style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"/>
+        <path d="m 2,1038.3622 12,12" id="path2985-1"
+              style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"/>
+    </g>
+</svg>

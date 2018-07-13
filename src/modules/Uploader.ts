@@ -5,12 +5,12 @@
  */
 
 import {Jodit} from '../Jodit';
-import {IViewBased} from './Component';
 import {Ajax} from './Ajax';
 import {Config} from '../Config'
 import {browser, dom, extend, isIE, isPlainObject} from "./Helpers";
 import {TEXT_PLAIN} from "../constants";
 import {Select} from "./Selection";
+import {IViewBased} from "./view/type";
 
 export type UploaderData = {
     messages?: string[],

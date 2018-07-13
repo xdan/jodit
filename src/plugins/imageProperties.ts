@@ -8,7 +8,7 @@ import {Jodit} from '../Jodit';
 import {Config} from '../Config'
 import {$$, css, dom, trim, val} from "../modules/Helpers";
 import {Alert, Confirm, Dialog} from "../modules/Dialog";
-import {FileBrowser,FileBrowserCallBackData} from "../modules/FileBrowser";
+import {FileBrowser} from "../modules/filebrowser/filebrowser";
 import {Dom} from "../modules/Dom";
 import {UploaderData} from "../modules/Uploader";
 import {Widget} from "../modules/Widget";
@@ -16,6 +16,7 @@ import TabsWidget = Widget.TabsWidget;
 import FileSelectorWidget = Widget.FileSelectorWidget;
 import {ToolbarPopup} from "../modules/toolbar/popup";
 import {ToolbarIcon} from "../modules/toolbar/icon";
+import {FileBrowserCallBackData} from "../modules/filebrowser/type";
 /**
  * Plug-in for image editing window
  *

@@ -11,7 +11,7 @@ export {Cookie} from './Cookie';
 export {Dialog, Alert, Confirm, Promt} from './Dialog';
 export {Dom} from './Dom';
 export {EventsNative} from './EventsNative';
-export {FileBrowser} from './FileBrowser';
+export {FileBrowser} from './filebrowser/filebrowser';
 import * as Helpers from "./Helpers";
 export {Helpers};
 export {ImageEditor} from './ImageEditor';

@@ -6,7 +6,7 @@
 
 import {Component} from './modules/Component';
 import {markerInfo, Select} from './modules/Selection';
-import {FileBrowser} from './modules/FileBrowser';
+import {FileBrowser} from './modules/filebrowser/filebrowser';
 import {Uploader} from './modules/Uploader';
 import {Dom} from './modules/Dom';
 import {EventsNative} from './modules/EventsNative';
@@ -21,6 +21,7 @@ import {StatusBar} from "./modules/StatusBar";
 import {localStorageProvider, Storage} from "./modules/Storage";
 import {Observer} from "./modules/Observer";
 import {ToolbarCollection} from "./modules/toolbar/collection";
+import {View} from "./modules/view/view";
 
 
 declare let appVersion: string;
@@ -31,7 +32,7 @@ interface JoditPlugin{
 }
 
 /** Class Jodit. Main class*/
-export class Jodit extends Component {
+export class Jodit extends View {
     version: string = appVersion; // from webpack.config.js
 
     /**
@@ -86,11 +87,6 @@ export class Jodit extends Component {
      */
     workplace: HTMLDivElement;
 
-    /**
-     * container main editor's box
-     */
-    container: HTMLDivElement;
-
     statusbar: StatusBar;
     observer: Observer;
 
@@ -134,8 +130,6 @@ export class Jodit extends Component {
     filebrowser: FileBrowser;
 
     helper: any;
-
-    toolbar: ToolbarCollection;
 
     /**
      * Create instance of Jodit
@@ -1072,23 +1066,6 @@ export class Jodit extends Component {
      */
     getReadOnly(): boolean {
         return this.options.readonly;
-    }
-
-    toggleFullSize(isFullSize?: boolean) {
-        if (isFullSize === undefined) {
-            isFullSize = !this.__isFullSize;
-        }
-
-        if (isFullSize === this.__isFullSize) {
-            return;
-        }
-
-        this.__isFullSize = isFullSize;
-
-
-        if (this.events) {
-            this.events.fire('toggleFullSize', isFullSize);
-        }
     }
 
     /**

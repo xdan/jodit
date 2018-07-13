@@ -143,11 +143,10 @@
             cursor: move;
             height: 48px;
             overflow: hidden;
+            .jodit_dialog_header-toolbar,
             .jodit_dialog_header-title {
                 flex-shrink: 3;
                 font-size: 18px;
-                padding: 0;
-                padding-left: 20px;
                 margin: 0;
                 font-weight: 400;
                 line-height: 48px;
@@ -156,20 +155,23 @@
                 @media (max-width: @screen-xs) {
                     padding-left: 0;
                 }
+                padding:0 @padding-default;
             }
+
+
             button {
                 margin-right: 10px;
             }
 
             .jodit_dialog_header-button {
                 color: #222222;
-                font-size: 24px;
-                font-weight: 700;
+                font-size: 28px;
+                //font-weight: 700;
                 //display: inline-block;
                 transition: background-color 0.2s ease 0s;
                 flex-basis: 48px;
                 height: 48px;
-                vertical-align: top;
+                //vertical-align: top;
                 line-height: 48px;
                 text-decoration: none;
                 text-align: center;
@@ -179,12 +181,29 @@
                 }
             }
 
-            .jodit_close svg {
-                width: 18px;
-                height: 18px;
-                margin: 15px 0;
-                vertical-align: top;
+            .jodit_toolbar {
+                background: transparent;
+                display: block;
+                height: 100%;
+                border: 0;
+                > li.jodit_toolbar_btn {
+                    vertical-align: middle;
+                    select,
+                    input[type=text],
+                    input[type=number],
+                    input[type=url] {
+                        margin: 0 @padding-default / 2;
+                        padding-left: @padding-default;
+                        width: auto;
+                    }
+                }
             }
+            //.jodit_close svg {
+            //    width: 18px;
+            //    height: 18px;
+            //    margin: 15px 0;
+            //    vertical-align: top;
+            //}
         }
         .jodit_dialog_content {
             height: calc(~"100% - 48px");
@@ -352,7 +371,7 @@
             }
         }
     }
-    &-fullsize .jodit_dialog {
+    &.jodit_fullsize .jodit_dialog {
         top: 0 !important;
         bottom: 0 !important;
         left: 0 !important;

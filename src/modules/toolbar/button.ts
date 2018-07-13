@@ -4,15 +4,16 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {IViewBased} from "../Component";
+
 import * as consts from "../../constants";
 import {asArray, camelCase, css, dom} from "../Helpers";
 import {Dom} from "../Dom";
 import {ToolbarElement} from "./element";
-import {ControlTypeStrong} from "./control.type";
+import {ControlTypeStrong} from "./type";
 import {Tooltip} from "./tooltip";
 import {ToolbarList} from "./list";
 import {ToolbarPopup} from "./popup";
+import {IViewBased} from "../view/type";
 
 export  class ToolbarButton extends ToolbarElement {
     readonly control: ControlTypeStrong;

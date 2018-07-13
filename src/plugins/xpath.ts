@@ -10,8 +10,8 @@ import {debounce, dom, getXPathByElement} from "../modules/Helpers";
 import {Dom} from "../modules/Dom";
 import {INVISIBLE_SPACE, MODE_WYSIWYG} from "../constants";
 import {ContextMenu} from "../modules/ContextMenu";
-import {ControlType} from "../modules/toolbar/control.type";
 import {ToolbarButton} from "../modules/toolbar/button";
+import {ControlType} from "../modules/toolbar/type";
 
 declare module "../Config" {
     interface Config {

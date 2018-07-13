@@ -8,7 +8,7 @@ import {Jodit} from '../Jodit';
 import * as consts from '../constants';
 import {Config} from "../Config";
 import {Component} from "../modules/Component";
-import {ControlType} from "../modules/toolbar/control.type";
+import {ControlType} from "../modules/toolbar/type";
 
 
 Config.prototype.controls.redo = <ControlType> {

@@ -4,359 +4,32 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Jodit} from '../Jodit';
-import {Component, IViewBased} from './Component';
-import {Dialog, Alert, Confirm, Promt} from './Dialog';
-import {Config, OptionsDefault} from '../Config';
+
+import * as consts from "../../constants";
+import {localStorageProvider, Storage} from "../Storage";
+import {ToolbarIcon} from "../toolbar/icon";
+import {$$, ctrlKey, debounce, dom, each, extend, humanSizeToBytes, pathNormalize, urlNormalize} from "../Helpers";
+import {ContextMenu} from "../ContextMenu";
+import {IViewBased} from "../view/type";
+import {Config, OptionsDefault} from "../../Config";
+import {ActionBox, ImageEditor} from "../ImageEditor";
+import {Alert, Confirm, Dialog, Promt} from "../Dialog";
+import {Jodit} from "../../Jodit";
+import {Uploader, UploaderOptions} from "../Uploader";
+import {Ajax} from "../Ajax";
+import {View} from "../view/view";
 import {
-    $$, ctrlKey, debounce, dom, each, extend, humanSizeToBytes,
-    pathNormalize, urlNormalize
-} from "./Helpers";
-import {ContextMenu} from "./ContextMenu";
-import {Uploader, UploaderOptions} from "./Uploader";
-import {Ajax} from "./Ajax";
-import * as consts from "../constants";
-import {ImageEditor, ActionBox} from "./ImageEditor";
-import {EventsNative} from "./EventsNative";
-import {localStorageProvider, Storage} from "./Storage";
-import {ControlType} from "./toolbar/control.type";
-import {ToolbarIcon} from "./toolbar/icon";
-import {ToolbarCollection} from "./toolbar/collection";
+    DEFAULT_SOURCE_NAME,
+    FileBrowserAjaxOptions,
+    FileBrowserAnswer, FileBrowserCallBackData,
+    FileBrowserOptions,
+    ISource,
+    ISourceFile, ISourcesFiles,
+    ITEM_CLASS
+} from "./type";
 
+import {ControlType} from "../toolbar/type";
 
-/**
- * The module creates a web browser dialog box . In a Web browser , you can select an image , remove , drag it . Upload new
- *
- * @module FileBrowser
- * @params {Object} parent Jodit main object
- */
-
-interface ISourceFile {
-    file: string
-    thumb: string
-    changed: string
-    size: string
-    isImage: boolean
-}
-
-interface ISource {
-    path: string
-    baseurl: string
-    files: ISourceFile[]
-    folders: string[]
-}
-
-
-interface ISourcesFiles {
-    [key:string] : ISource;
-}
-
-type FileBrowserAnswer = {
-    success: boolean,
-    time: string,
-    data: {
-        messages?: string[];
-        sources: ISourcesFiles;
-        code: number;
-        path: string;
-        name: string;
-        source: string;
-        permissions?: Permissions | null;
-    }
-};
-
-type FileBrowserAjaxOptions = {
-    url?: string;
-    async?: boolean;
-
-    data: { [key: string]: string };
-    cache?: boolean;
-    contentType?: string;
-
-    method?: string;
-    processData?: boolean;
-    dataType?: string;
-
-    headers?: { [key: string]: string };
-
-    prepareData?: (data: { [key: string]: string }) => { [key: string]: string };
-
-    process?: (resp: FileBrowserAnswer) => FileBrowserAnswer;
-}
-
-type FileBrowserOptions = {
-    buttons: Array<string | ControlType>;
-
-    filter: (item: any, search: any) => boolean;
-
-    sortBy: string;
-
-    sort: (a: any, b: any, sortBy?: string, editor?: Jodit) => number;
-
-    editImage: boolean;
-    preview: boolean;
-    showPreviewNavigation: boolean;
-    showSelectButtonInPreview: boolean;
-    contextMenu: boolean;
-
-    howLongShowMsg: number;
-
-    createNewFolder: boolean;
-    deleteFolder: boolean;
-    moveFolder: boolean;
-    moveFile: boolean;
-    showFoldersPanel: boolean;
-
-    width: number;
-    height: number;
-
-
-    view: string | null;
-
-    isSuccess: (resp: FileBrowserAnswer) => boolean;
-    getMessage: (resp: FileBrowserAnswer) => string;
-    showFileName: boolean;
-    showFileSize: boolean;
-    showFileChangeTime: boolean;
-
-    getThumbTemplate: (this: FileBrowser, item: ISourceFile, source: ISource, source_name: string) => string;
-
-    ajax: FileBrowserAjaxOptions;
-    create: FileBrowserAjaxOptions;
-    getLocalFileByUrl: FileBrowserAjaxOptions;
-    resize: FileBrowserAjaxOptions;
-    crop: FileBrowserAjaxOptions;
-    move: FileBrowserAjaxOptions;
-    fileRemove: FileBrowserAjaxOptions;
-    folderRemove: FileBrowserAjaxOptions;
-    items: FileBrowserAjaxOptions;
-    folder: FileBrowserAjaxOptions;
-    permissions: FileBrowserAjaxOptions;
-
-    uploader: null | UploaderOptions // use default Uploader's settings
-    [key: string]: any
-}
-
-export type FileBrowserCallBackData = {
-    baseurl: string,
-    files: string[]
-};
-
-declare module "../Config" {
-    interface Config {
-        /**
-         * Filebrowser module settings
-         *
-         * @property{int} filebrowser.howLongShowMsg=3000 How long toWYSIWYG show an error message in the status bar (ms)
-         * @property{boolean} filebrowser.sort=function (a, b, sortBy, parent) { return b.changed - a.changed;} Items sort functions
-         * @property{boolean} filebrowser.sortBy='changed' Sort by field
-         * @property{boolean} filebrowser.filter=function (item, searchWord) { return item.name.toLowerCase().indexOf(searchWord.toLowerCase()) !== -1} Filter items
-         * @property{boolean} filebrowser.showFileName=true Show filename in thumbs
-         * @property{boolean} filebrowser.showFileSize=true Show filesize in thumbs
-         * @property{boolean} filebrowser.showFileChangeTime=true Show the last modification time in thumbs
-
-         * @property {boolean} filebrowser.editImage=true use {@link ImageEditor|Image editor module} - crop and resize image
-         * @property {boolean} filebrowser.preview=true Show preview button in context menu
-         * @property {boolean} filebrowser.showPreviewNavigation=true Show navigation buttons in preview
-         * @property {boolean} filebrowser.showSelectButtonInPreview=true Show select button in preview
-         * @property {boolean} filebrowser.contextMenu=true use context menu
-         * @property {boolean} filebrowser.createNewFolder=true The ability toWYSIWYG create a directory of the web browser
-         * @property {boolean} filebrowser.deleteFolder=true The ability toWYSIWYG delete directories from the web browser
-         * @property {boolean} filebrowser.moveFolder=true The ability toWYSIWYG move directories from the web browser
-         * @property {boolean} filebrowser.moveFile=true The ability toWYSIWYG move file from the web browser
-         * @property {boolean} filebrowser.showFoldersPanel=true Show folders panel
-         * @property {int|string} filebrowser.width=763px The width of the web browser
-         * @property {int|string} filebrowser.height=400px The height of the file browser
-         * @property {Array<string>} filebrowser.buttons="[
-         *   'filebrowser.upload',
-         *   'filebrowser.remove',
-         *   'filebrowser.update',
-         *   'filebrowser.select',
-         *   'filebrowser.edit',
-         *   '|',
-         *   'filebrowser.tiles',
-         *   'filebrowser.list',
-         *   '|',
-         *   'filebrowser.filter',
-         *   '|',
-         *   'filebrowser.sort',
-         *]" Toolbar browser
-         * @example
-         * ```javascript
-         * var editor = new Jodit('#editor', {
-         *     filebrowser: {
-         *         buttons: ['filebrowser.upload', 'filebrowser.remove', 'filebrowser.update',
-         *         {
-         *             name: 'deleteall',
-         *             icon: 'remove',
-         *             exec: function (editor) {
-         *                 $files.find('a').each(function () {
-         *                     editor.filebrowserюremove(editor.filebrowser.currentPath, $(this).data('name'));
-         *                 });
-         *                 editor.filebrowser.loadTree();
-         *             },
-         *        }],
-         *    }
-         * })
-         * ```
-         * @property{function} filebrowser.isSuccess method toWYSIWYG check - whether the response positive
-         * @property{function} filebrowser.getMessage method for receiving a message from the response
-         * @example
-         * ```javascript
-         * new Jodit('#editor', {
-         *     filebrowser: {
-         *          isSuccess: function (resp) {
-         *              return resp.status == 1;
-         *          },
-         *          getMessage: function (resp) {
-         *              return resp.message;
-         *          },
-         *     }
-         * })
-         * ```
-         * @property{string} filebrowser.view='tiles' Filelist view - `tiles` or `list`
-         * @property{object} filebrowser.ajax The default settings for AJAX connections toWYSIWYG the server. Most of the settings like here {@link http://api.jquery.com/jQuery.ajax/|jQuery.ajax} but is not jQuery.ajax
-         * @property{function(data)} filebrowser.ajax.prepareData Method of preparation of data toWYSIWYG be sent toWYSIWYG the server
-         * @property{function(data)} filebrowser.ajax.process The method of processing the data obtained after administration of the server. Must return this PlainObject format
-         * ```json
-         *  {
-         *     files: resp.files || [], // {array} The names of files or folders, files can be ['image.jpg', 'image.jpg2', 'image3.jpg' ...] and [{file: 'image.jpg', thumb: '_thumbs/image.jpg'}, {file: 'image2.jpg', thumb: '_thumbs/image2.jpg'} ...]
-         *     path: resp.path, // {string} Real relative path
-         *     baseurl: resp.baseurl, // {string} Base url for filebrowser
-         *     error: resp.error, // {int}
-         *     msg: resp.msg // {string}
-         * };
-         * ```
-         * @property {string} filebrowser.ajax.url='' Address entry point on the server for AJAX connection
-         * @property {object} filebrowser.ajax.data={} Default data toWYSIWYG send toWYSIWYG the server
-         * @property {(json|text)} filebrowser.ajax.dataType='json' The format of the returned data
-         * @property {object} filebrowser.ajax.headers={} An object of additional header key/value pairs toWYSIWYG send along with requests using the `XMLHttpRequest` transport. The header `X-Requested-With: XMLHttpRequest` is always added, but its default `XMLHttpRequest` value can be changed here.
-         * @property {object} filebrowser.resize Settings for AJAX connections toWYSIWYG the server toWYSIWYG resize image. By default, the uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} c параметром action=create
-         * @property {object} filebrowser.crop Settings for AJAX connections toWYSIWYG the server toWYSIWYG crop image. By default, the uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} c параметром action=create
-         * @property {object} filebrowser.create Settings for AJAX connections toWYSIWYG the server toWYSIWYG create the category . By default, the uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} c параметром action=create
-         * @property {object} filebrowser.move Settings for AJAX connections toWYSIWYG the server for the moving image or category . By default uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} c параметром action=move
-         * @property {object} filebrowser.remove Settings for AJAX connections toWYSIWYG the server toWYSIWYG delete the image or category . By default uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} c параметром action=remove
-         * @property {object} filebrowser.folder Settings for AJAX connections toWYSIWYG the server toWYSIWYG download the list of categories . By default uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} c параметром action=folder
-         * @property {object} filebrowser.items Settings for AJAX connections toWYSIWYG the server toWYSIWYG download the image list in the specified category . By default uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} c параметром action=items
-         * @property {object} filebrowser.uploader=null Settings Module {@link module:Uploader|Uploader} for fast uploading images in category via Drag&Drop file in the file browser. The default settings of the module {@link module:Uploader|Uploader}
-         * @example
-         * ```javascript
-         * // default values
-         * {
-         *     isSuccess: function (resp) {
-         *         return !resp.error;
-         *     },
-         *     getMessage: function (resp) {
-         *         return resp.msg;
-         *     },
-         *     ajax: {
-         *         url: '',
-         *         async: true,
-         *         data: {},
-         *         contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
-         *         headers : {},
-         *         method : 'POST',
-         *         processData  : true,
-         *         dataType: 'json',
-         *         headers: {},
-         *         prepareData: function (data) {
-         *             return data;
-         *         },
-         *         process: function (resp) {
-         *             return {
-         *                 files: resp.files || [],
-         *                 path: resp.path,
-         *                 baseurl: resp.baseurl,
-         *                 error: resp.error,
-         *                 msg: resp.msg
-         *             };
-         *         }
-         *     },
-         *     resize: {
-         *         data: {action: 'imageResize'},
-         *     },
-         *     crop: {
-         *         data: {action: 'imageCrop'},
-         *     },
-         *     create: {
-         *         data: {action: 'folderCreate'},
-         *     },
-         *     move: {
-         *         data: {action: 'fileMove'},
-         *     },
-         *     remove: {
-         *         data: {action: 'fileRemove'},
-         *     },
-         *     items: {
-         *         data: {action: 'files'},
-         *     },
-         *     folders: {
-         *         data: {action: 'folders'},
-         *     },
-         *     uploader: null // use default Uploader's settings
-         * }
-         * ```
-         * @example
-         * ```javascript
-         * new Jodit('#editor2', {
-             *         filebrowser: {
-         *             isSuccess: function (resp) {
-         *                 return resp.length !== 0;
-         *             },
-         *             getMessage: function (resp) {
-         *                 return resp;
-         *             },
-         *             ajax: {
-         *                 url: 'ajax.php',
-         *                 method: 'GET',
-         *                 dataType: 'text',
-         *                 headers: {
-         *                     'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-         *                 },
-         *                 data: {
-         *                     someparameter: 1
-         *                 },
-         *                 prepareData: function (data) {
-         *                     data.someparameter++;
-         *                     return data;
-         *                 },
-         *                 process: function (resp) {
-         *                     return resp.split('|'); // return items list
-         *                 },
-         *             }
-         *         }
-         *     })
-         * ```
-         * @example
-         * ```javascript
-         * var editor = new Jodit('#jodit', {
-         *        uploader: {
-         *            url: 'connector/upload.php',
-         *            baseurl: 'images/'
-         *        },
-         *        filebrowser: {
-         *            create: {
-         *                url: 'connector/create.php',
-         *            },
-         *            move: {
-         *                url: 'connector/move.php',
-         *            },
-         *            remove: {
-         *                url: 'connector/remove.php',
-         *            },
-         *            items: {
-         *                url: 'connector/items.php',
-         *            },
-         *            folder: {
-         *                url: 'connector/tree.php',
-         *            }
-         *        }
-         *    });
-         * ```
-         * */
-        filebrowser: FileBrowserOptions
-    }
-}
 
 Config.prototype.filebrowser = <FileBrowserOptions>{
     filter: function (item, search) {
@@ -447,6 +120,9 @@ Config.prototype.filebrowser = <FileBrowserOptions>{
         '|',
         'filebrowser.sort',
     ],
+    removeButtons: [],
+    fullsize: false,
+    showTooltip: true,
 
     view: null,
 
@@ -556,8 +232,8 @@ Config.prototype.controls.filebrowser = <{[key: string]: ControlType}> {
         isDisable: (browser: any): boolean => !browser.canI('FileUpload'),
         getContent: (editor: IViewBased, control: ControlType): HTMLElement => {
             const btn: HTMLElement = dom('<span class="jodit_upload_button">' +
-                    ToolbarIcon.getIcon('plus') +
-                    '<input type="file" accept="' + (editor.buffer.fileBrowserOnlyImages ? 'image/*' : '*') + '" tabindex="-1" dir="auto" multiple=""/>' +
+                ToolbarIcon.getIcon('plus') +
+                '<input type="file" accept="' + (editor.buffer.fileBrowserOnlyImages ? 'image/*' : '*') + '" tabindex="-1" dir="auto" multiple=""/>' +
                 '</span>', editor.ownerDocument),
                 input: HTMLInputElement = <HTMLInputElement>btn.querySelector('input');
 
@@ -640,7 +316,7 @@ Config.prototype.controls.filebrowser = <{[key: string]: ControlType}> {
                 '<option value="changed">' + editor.i18n('Sort by changed') + '</option>' +
                 '<option value="name">' + editor.i18n('Sort by name') + '</option>' +
                 '<option value="size">' + editor.i18n('Sort by size') + '</option>' +
-            '</select>', editor.ownerDocument);
+                '</select>', editor.ownerDocument);
 
             editor.events
                 .on('sort.filebrowser', (value: string) => {
@@ -657,12 +333,7 @@ Config.prototype.controls.filebrowser = <{[key: string]: ControlType}> {
     },
 };
 
-const DEFAULT_SOURCE_NAME = 'default';
-const ITEM_CLASS = 'jodit_filebrowser_files_item';
-
-export class FileBrowser extends Component implements IViewBased {
-    public buffer: {[key: string]: any};
-
+export class FileBrowser extends View {
     options: FileBrowserOptions;
     currentPath: string = '';
     currentSource: string = DEFAULT_SOURCE_NAME;
@@ -683,8 +354,6 @@ export class FileBrowser extends Component implements IViewBased {
     private files: HTMLElement;
 
 
-    public toolbar: ToolbarCollection;
-
     uploader: Uploader;
 
     private __currentPermissions: Permissions | null = null;
@@ -693,29 +362,12 @@ export class FileBrowser extends Component implements IViewBased {
         return this.__currentPermissions !== null && (this.__currentPermissions['allow' + action] === undefined || this.__currentPermissions['allow' + action]);
     }
 
-    i18n(text: string) {
-        return this.jodit ? this.jodit.i18n(text) : Jodit.prototype.i18n(text);
-    }
-
-    editorDocument: Document = document;
-    editorWindow: Window = window;
-
-    ownerDocument: Document;
-    ownerWindow: Window;
-
-    progress_bar: HTMLElement;
-    editor: HTMLElement;
-    events: EventsNative;
-
-    getRealMode(): number {
-        return consts.MODE_WYSIWYG;
-    }
 
     private view: string = 'tiles';
     private sortBy: string = 'changed';
 
     constructor(editor?: IViewBased, options = {}) {
-        super(editor);
+        super(editor, options);
 
         const
             self: FileBrowser = this,
@@ -726,22 +378,16 @@ export class FileBrowser extends Component implements IViewBased {
             this.id = editor.id;
         }
 
-        this.ownerDocument = doc;
-        this.ownerWindow = editor ? editor.ownerWindow : window;
 
-        this.progress_bar = editor ? editor.progress_bar : document.createElement('div');
-        this.editor = editor ? editor.editor : document.createElement('div');
-
-        this.events = editor ? editor.events : new EventsNative(doc);
-        this.buffer = editor ? editor.buffer : {};
-
-        self.options = <FileBrowserOptions>(new OptionsDefault(extend(true, {}, Jodit.defaultOptions.filebrowser, options, self.jodit ? self.jodit.options.filebrowser : void(0))));
+        self.options = <FileBrowserOptions>(new OptionsDefault(extend(true,  {}, self.options, Jodit.defaultOptions.filebrowser, options, self.jodit ? self.jodit.options.filebrowser : void(0))));
 
         self.dialog = new Dialog(editor || self, {
-            fullsizeButton: true
+            fullsize: self.options.fullsize,
+            buttons: [
+                'dialog.fullsize',
+                'dialog.close',
+            ],
         });
-
-        self.toolbar  = new ToolbarCollection(self);
 
         self.loader = dom('<div class="jodit_filebrowser_loader"><i class="jodit_icon-loader"></i></div>', doc);
 
@@ -749,7 +395,7 @@ export class FileBrowser extends Component implements IViewBased {
             (self.options.showFoldersPanel ? '<div class="jodit_filebrowser_tree"></div>' : '') +
             '<div class="jodit_filebrowser_files"></div>' +
             '<div class="jodit_filebrowser_status"></div>' +
-         '</div>', doc);
+            '</div>', doc);
 
         self.status_line = <HTMLElement>self.browser.querySelector('.jodit_filebrowser_status');
 
@@ -978,7 +624,7 @@ export class FileBrowser extends Component implements IViewBased {
                 e.stopPropagation();
                 return false;
             }, 'a')
-            .on(self.dialog.dialogbox, 'drop', (e: DragEvent) => e.preventDefault());
+            .on(self.dialog.container, 'drop', (e: DragEvent) => e.preventDefault());
 
         this.dialog.setSize(this.options.width, this.options.height);
 
@@ -1120,7 +766,7 @@ export class FileBrowser extends Component implements IViewBased {
 
             if (source.files && source.files.length) {
                 if (typeof this.options.sort === 'function') {
-                    source.files.sort((a, b) => {
+                    source.files.sort((a: ISourceFile, b: ISourceFile) => {
                         return this.options.sort(a, b, this.sortBy, this.jodit);
                     });
                 }
@@ -1171,8 +817,8 @@ export class FileBrowser extends Component implements IViewBased {
         const ajax: Ajax = new Ajax(this.jodit || this, opts);
 
         return ajax.send()
-                .then(success)
-                .catch(error);
+            .then(success)
+            .catch(error);
 
     }
 

@@ -10,7 +10,7 @@ import * as consts from '../constants';
 import {Config} from "../Config";
 import {markerInfo} from "../modules/Selection";
 import {ToolbarButton} from "../modules/toolbar/button";
-import {ControlType} from "../modules/toolbar/control.type";
+import {ControlType} from "../modules/toolbar/type";
 
 
 Config.prototype.controls.paragraph = <ControlType>{

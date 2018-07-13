@@ -4,13 +4,14 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {IViewBased} from "../Component";
 import {debounce} from "../Helpers";
 import {ToolbarElement} from "./element";
 import {ToolbarButton} from "./button";
-import {ControlType, ControlTypeStrong} from "./control.type";
+import {Buttons, Controls, ControlType, ControlTypeStrong} from "./type";
 import {ToolbarBreak} from "./break";
 import {ToolbarSeparator} from "./separator";
+import {IViewBased} from "../view/type";
+import {Jodit} from "../../Jodit";
 
 export class ToolbarCollection extends ToolbarElement {
     constructor(jodit: IViewBased) {
@@ -46,21 +47,22 @@ export class ToolbarCollection extends ToolbarElement {
     }
 
     private __getControlType = (button: ControlType | string) : ControlTypeStrong => {
-        let buttonControl: ControlTypeStrong;
+        let buttonControl: ControlTypeStrong,
+            controls: Controls = this.jodit.options.controls || Jodit.defaultOptions.controls;
 
         if (typeof button !== 'string') {
             buttonControl = {name: 'empty', ...button};
-            if (this.jodit.options.controls[buttonControl.name] !== undefined) {
-                buttonControl = {...this.jodit.options.controls[buttonControl.name], ...buttonControl};
+            if (controls[buttonControl.name] !== undefined) {
+                buttonControl = {...controls[buttonControl.name], ...buttonControl};
             }
         } else {
             const list: string[] = button.split(/\./);
 
-            let store: {[key: string]: ControlType} = this.jodit.options.controls;
+            let store: {[key: string]: ControlType} = controls;
 
             if (list.length > 1) {
-                if (this.jodit.options.controls[list[0]] !== undefined) {
-                    store = <{[key: string]: ControlType}>this.jodit.options.controls[list[0]];
+                if (controls[list[0]] !== undefined) {
+                    store = <{[key: string]: ControlType}>controls[list[0]];
                     button = list[1];
                 }
             }
@@ -80,7 +82,7 @@ export class ToolbarCollection extends ToolbarElement {
     };
 
 
-    build(buttons: Array<ControlType|string> | string, container: HTMLElement, target?: HTMLElement) {
+    build(buttons: Buttons, container: HTMLElement, target?: HTMLElement) {
         let lastBtnSeparator: boolean = false;
         this.clear();
         const buttonsList: Array<ControlType | string> = typeof buttons === 'string' ? buttons.split(/[,\s]+/) : buttons;

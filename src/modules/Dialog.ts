@@ -5,12 +5,16 @@
  */
 
 import {Jodit} from '../Jodit'
-import {Component, IViewBased} from './Component'
 import {Config} from '../Config'
 import {dom, $$, asArray, css} from './Helpers'
 import {KEY_ESC} from "../constants";
 import {EventsNative} from "./EventsNative";
 import {ToolbarIcon} from "./toolbar/icon";
+import {Buttons, ControlType} from "./toolbar/type";
+import {View} from "./view/view";
+import {IViewBased, IViewOptions} from "./view/type";
+import {ToolbarButton} from "./toolbar/button";
+
 
 
 /**
@@ -19,15 +23,12 @@ import {ToolbarIcon} from "./toolbar/icon";
  * @property{boolean} dialog.resizable=true This dialog can resize by trigger
  * @property{boolean} dialog.draggable=true This dialog can move by header
  * @property{boolean} dialog.fullsize=false A dialog window will open in full screen by default
- * @property{boolean} dialog.fullsizeButton=false In header will shown expand button
+ * @property{Buttons} dialog.buttons=['close.dialog', 'fullsize.dialog']
  */
 
-type DialogOptions = {
-    zIndex?: number;
+export interface DialogOptions extends IViewOptions {
     resizable?: boolean;
     draggable?: boolean;
-    fullsize?: boolean;
-    fullsizeButton?: boolean;
 }
 
 declare module "../Config" {
@@ -37,11 +38,35 @@ declare module "../Config" {
 }
 
 Config.prototype.dialog = {
-    zIndex: 100002,
     resizable: true,
     draggable: true,
-    fullsize: false,
-    fullsizeButton: false,
+    buttons: [
+        'dialog.close'
+    ],
+    removeButtons: [],
+};
+
+Config.prototype.controls.dialog = <{[key: string]: ControlType}> {
+    close: {
+        icon: 'cancel',
+        exec: (dialog: IViewBased) => {
+            (<Dialog>dialog).close();
+        }
+    },
+    fullsize: {
+        icon: 'fullsize',
+        getLabel: (editor: IViewBased, btn: ControlType, button: ToolbarButton) => {
+            const mode: string = editor.isFullSize() ? 'shrink' : 'fullsize';
+
+            button.textBox.innerHTML = !editor.options.textIcons ? ToolbarIcon.getIcon(mode) : `<span>${editor.i18n(mode)}</span>`;
+
+            (<HTMLElement>button.textBox.firstChild).classList.add('jodit_icon');
+        },
+        tooltip: 'Open dialog in fullsize',
+        exec: (dialog: IViewBased) => {
+            dialog.toggleFullSize();
+        }
+    },
 };
 
 /**
@@ -50,22 +75,18 @@ Config.prototype.dialog = {
  * @param {Object} parent Jodit main object
  * @param {Object} [opt] Extend Options
  */
-export class Dialog extends Component {
+export class Dialog extends View implements IViewBased {
     events: EventsNative;
 
     private lockSelect = () => {
-        this.dialogbox.classList.add('jodit_dialog_box-moved');
+        this.container.classList.add('jodit_dialog_box-moved');
     };
     private unlockSelect = () => {
-        this.dialogbox.classList.remove('jodit_dialog_box-moved');
+        this.container.classList.remove('jodit_dialog_box-moved');
     };
 
-    private options: DialogOptions;
+    public options: DialogOptions;
 
-    /**
-     * @property {HTMLDivElement} dialogbox
-     */
-    dialogbox: HTMLDivElement;
 
     /**
      * @property {HTMLDivElement} dialog
@@ -80,11 +101,10 @@ export class Dialog extends Component {
     public dialogbox_header: HTMLHeadingElement;
     public dialogbox_content: HTMLDivElement;
     public dialogbox_footer: HTMLDivElement;
-    public dialogbox_close: HTMLAnchorElement;
-    public dialogbox_fullsize: HTMLAnchorElement;
+    public dialogbox_toolbar: HTMLDivElement;
 
-    constructor(jodit ?: IViewBased, options: DialogOptions = {}) {
-        super(jodit);
+    constructor(jodit ?: IViewBased, options = {}) {
+        super(jodit, options);
         
         if (jodit && jodit instanceof Jodit) {
             this.window = jodit.ownerWindow;
@@ -98,15 +118,15 @@ export class Dialog extends Component {
 
         const self: Dialog = this;
 
-        self.options = (jodit && (<Jodit>jodit).options) ? (<Jodit>jodit).options.dialog : Config.prototype.dialog;
-        self.options = {...self.options, ...options};
+        const opt = (jodit && (<View>jodit).options) ? (<Jodit>jodit).options.dialog : Config.prototype.dialog;
+        self.options = <DialogOptions>{...opt, ...self.options};
 
-        self.dialogbox = <HTMLDivElement>dom('<div style="z-index:' + self.options.zIndex + '" class="jodit jodit_dialog_box">' +
+        self.container = <HTMLDivElement>dom('<div style="z-index:' + self.options.zIndex + '" class="jodit jodit_dialog_box">' +
              '<div class="jodit_dialog_overlay"></div>' +
              '<div class="jodit_dialog">' +
                 '<div class="jodit_dialog_header non-selected">' +
                     '<div class="jodit_dialog_header-title"></div>' +
-                    '<a href="javascript:void(0)" title="Close" class="jodit_dialog_header-button jodit_close">' + (Jodit.modules.Toolbar ? Jodit.modules.ToolbarIcon.getIcon('cancel') : '&times;') + '</a>' +
+                    '<div class="jodit_dialog_header-toolbar"></div>' +
                  '</div>' +
              '<div class="jodit_dialog_content"></div>' +
              '<div class="jodit_dialog_footer"></div>' +
@@ -117,36 +137,36 @@ export class Dialog extends Component {
         '</div>', this.document);
 
         if (jodit && jodit.id) {
-            self.dialogbox.setAttribute('data-editor_id', jodit.id);
+            self.container.setAttribute('data-editor_id', jodit.id);
         }
 
-        Object.defineProperty(self.dialogbox, '__jodit_dialog',{
+        Object.defineProperty(self.container, '__jodit_dialog',{
             value: self
         });
 
-        self.dialog = <HTMLDivElement>self.dialogbox.querySelector('.jodit_dialog');
-        self.resizer = <HTMLDivElement>self.dialogbox.querySelector('.jodit_dialog_resizer');
+        self.dialog = <HTMLDivElement>self.container.querySelector('.jodit_dialog');
+        self.resizer = <HTMLDivElement>self.container.querySelector('.jodit_dialog_resizer');
 
         if (self.jodit && self.jodit.options && self.jodit.options.textIcons) {
-            self.dialogbox.classList.add('jodit_text_icons');
+            self.container.classList.add('jodit_text_icons');
         }
 
-        self.dialogbox_header = <HTMLHeadingElement>self.dialogbox.querySelector('.jodit_dialog_header>.jodit_dialog_header-title');
-        self.dialogbox_content = <HTMLDivElement>self.dialogbox.querySelector('.jodit_dialog_content');
-        self.dialogbox_footer = <HTMLDivElement>self.dialogbox.querySelector('.jodit_dialog_footer');
-        self.dialogbox_close = <HTMLAnchorElement>self.dialogbox.querySelector('.jodit_dialog_header>a.jodit_close');
-        self.dialogbox_fullsize = <HTMLAnchorElement>dom('<a href="javascript:void(0)" class="jodit_dialog_header-button jodit_dialog_header_fullsize">' + ToolbarIcon.getIcon(!options.fullsize ? 'fullsize' : 'shrink') + '</a>', this.document);
+        self.dialogbox_header = <HTMLHeadingElement>self.container.querySelector('.jodit_dialog_header>.jodit_dialog_header-title');
+        self.dialogbox_content = <HTMLDivElement>self.container.querySelector('.jodit_dialog_content');
+        self.dialogbox_footer = <HTMLDivElement>self.container.querySelector('.jodit_dialog_footer');
+        self.dialogbox_toolbar = <HTMLDivElement>self.container.querySelector('.jodit_dialog_header>.jodit_dialog_header-toolbar');
+        // self.dialogbox_fullsize = <HTMLAnchorElement>dom('<a href="javascript:void(0)" class="jodit_dialog_header-button jodit_dialog_header_fullsize">' + ToolbarIcon.getIcon(!options.fullsize ? 'fullsize' : 'shrink') + '</a>', this.document);
 
-        self.destinition.appendChild(self.dialogbox);
+        self.destinition.appendChild(self.container);
 
-        self.dialogbox.addEventListener('close_dialog', <any>self.close);
+        self.container.addEventListener('close_dialog', <any>self.close);
 
-        self.dialogbox_close.addEventListener('mousedown', self.close);
+        // self.dialogbox_fullsize.addEventListener('click', () => {
+        //     const fullSize: boolean = self.maximization();
+        //     self.dialogbox_fullsize.innerHTML = ToolbarIcon.getIcon(!fullSize ? 'fullsize' : 'shrink');
+        // });
 
-        self.dialogbox_fullsize.addEventListener('click', () => {
-            const fullSize: boolean = self.maximization();
-            self.dialogbox_fullsize.innerHTML = ToolbarIcon.getIcon(!fullSize ? 'fullsize' : 'shrink');
-        });
+        self.toolbar.build(self.options.buttons, self.dialogbox_toolbar);
 
         self.events
             .on(this.window, 'mousemove', self.onMouseMove.bind(self))
@@ -154,7 +174,7 @@ export class Dialog extends Component {
             .on(this.window, 'keydown', self.onKeyDown.bind(self))
             .on(this.window, 'resize', self.onResize.bind(self));
 
-        const headerBox: HTMLDivElement|null = self.dialogbox.querySelector('.jodit_dialog_header');
+        const headerBox: HTMLDivElement|null = self.container.querySelector('.jodit_dialog_header');
 
         headerBox && headerBox.addEventListener('mousedown', self.onHeaderMouseDown.bind(self));
 
@@ -162,6 +182,10 @@ export class Dialog extends Component {
             self.resizer
                 .addEventListener('mousedown', self.onResizerMouseDown.bind(self));
         }
+
+        Jodit.plugins.fullsize(self);
+
+        self.events.fire('afterInit');
     }
 
 
@@ -305,7 +329,7 @@ export class Dialog extends Component {
      * @return {number}
      */
     getZIndex(): number {
-        return parseInt(this.dialogbox.style.zIndex || '0', 10);
+        return parseInt(this.container.style.zIndex || '0', 10);
     }
     /**
      * Get dialog instance with maximum z-index displaying it on top of all the dialog boxes
@@ -342,7 +366,7 @@ export class Dialog extends Component {
             maxzi = Math.max(isNaN(zIndex) ? 0 : zIndex, maxzi);
         });
 
-        this.dialogbox
+        this.container
             .style.zIndex = (maxzi + 1).toString();
     }
 
@@ -356,10 +380,10 @@ export class Dialog extends Component {
      */
     maximization(condition?: boolean): boolean {
         if (typeof condition !== 'boolean') {
-            condition = !this.dialogbox.classList.contains('jodit_dialog_box-fullsize');
+            condition = !this.container.classList.contains('jodit_dialog_box-fullsize');
         }
 
-        this.dialogbox.classList
+        this.container.classList
             .toggle('jodit_dialog_box-fullsize', condition);
 
         [this.destinition, this.destinition.parentNode].forEach((box: Node | null) => {
@@ -395,9 +419,9 @@ export class Dialog extends Component {
 
         this.destroyAfterClose = (destroyAfter === true);
 
-        if (this.options.fullsizeButton && this.dialogbox_close.parentNode) {
-            this.dialogbox_close.parentNode.appendChild(this.dialogbox_fullsize)
-        }
+        // if (this.options.fullsizeButton && this.dialogbox_close.parentNode) {
+        //     this.dialogbox_close.parentNode.insertBefore(this.dialogbox_fullsize, this.dialogbox_close);
+        // }
 
         if (title !== undefined) {
             this.setTitle(title);
@@ -407,9 +431,9 @@ export class Dialog extends Component {
             this.setContent(content);
         }
 
-        this.dialogbox.classList.add('active');
+        this.container.classList.add('active');
         if (modal) {
-            this.dialogbox.classList.add('jodit_modal');
+            this.container.classList.add('jodit_modal');
         }
 
         this.setPosition(this.offsetX, this.offsetY);
@@ -434,7 +458,7 @@ export class Dialog extends Component {
      * @return {boolean} - true window open
      */
     isOpened(): boolean {
-        return !this.__isDestructed && this.dialogbox.classList.contains('active');
+        return !this.__isDestructed && this.container.classList.contains('active');
     }
 
     private resizeble: boolean = false;
@@ -548,11 +572,11 @@ export class Dialog extends Component {
             return;
         }
 
-        if (this.dialogbox && this.dialogbox.parentNode) {
-            this.dialogbox.parentNode.removeChild(this.dialogbox);
+        if (this.container && this.container.parentNode) {
+            this.container.parentNode.removeChild(this.container);
         }
 
-        delete this.dialogbox;
+        delete this.container;
 
         if (!this.jodit || !this.jodit.events) {
             this.events.destruct();
@@ -602,7 +626,7 @@ export class Dialog extends Component {
         }
 
 
-        this.dialogbox.classList && this.dialogbox.classList.remove('active');
+        this.container.classList && this.container.classList.remove('active');
 
         if (this.iSetMaximization) {
             this.maximization(false);

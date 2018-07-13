@@ -4,7 +4,8 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Component, IViewBased} from "./Component";
+import {Component} from "./Component";
+import {IViewBased} from "./view/type";
 
 export abstract class Plugin extends Component{
     constructor(jodit: IViewBased) {

@@ -7,7 +7,7 @@
 import {Jodit} from '../Jodit';
 import {Config} from "../Config";
 import {Dom} from "../modules/Dom";
-import {ControlType} from "../modules/toolbar/control.type";
+import {ControlType} from "../modules/toolbar/type";
 
 Config.prototype.controls.indent = <ControlType>{
     tooltip: "Increase Indent",

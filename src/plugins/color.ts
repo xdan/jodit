@@ -11,7 +11,7 @@ import {Widget} from "../modules/Widget";
 import TabsWidget = Widget.TabsWidget;
 import ColorPickerWidget = Widget.ColorPickerWidget;
 import {Dom} from "../modules/Dom";
-import {ControlType} from "../modules/toolbar/control.type";
+import {ControlType} from "../modules/toolbar/type";
 import {ToolbarButton} from "../modules/toolbar/button";
 
 Config.prototype.controls.brush = <ControlType>{

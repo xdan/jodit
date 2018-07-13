@@ -6,7 +6,7 @@
 
 import {Jodit} from '../Jodit';
 import {Config} from "../Config";
-import {ControlType} from "../modules/toolbar/control.type";
+import {ControlType} from "../modules/toolbar/type";
 
 Config.prototype.controls.bold = <ControlType>{
     tagRegExp: /^(strong|b)$/i,

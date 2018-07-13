@@ -56,7 +56,7 @@ describe('Clipboard text', function () {
                     var editor = new Jodit(appendTestArea(), {
                         events: {
                             afterOpenPasteDialog: function (dialog, msg, title, callback, clearButton, clear2Button) {
-                                dialog.dialogbox.style.left = '10px';
+                                dialog.container.style.left = '10px';
                             }
                         }
                     });

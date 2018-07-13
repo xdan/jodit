@@ -13,7 +13,7 @@ import {Widget} from "../modules/Widget";
 import ColorPickerWidget = Widget.ColorPickerWidget;
 import TabsWidget = Widget.TabsWidget;
 import {Dom} from "../modules/Dom";
-import {ControlType} from "../modules/toolbar/control.type";
+import {ControlType} from "../modules/toolbar/type";
 import {ToolbarCollection} from "../modules/toolbar/collection";
 import {ToolbarPopup} from "../modules/toolbar/popup";
 

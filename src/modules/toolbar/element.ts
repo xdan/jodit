@@ -4,11 +4,12 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Component, IViewBased} from "../Component";
+import {Component} from "../Component";
 import {dom} from "../Helpers";
 import {ToolbarCollection} from "./collection";
-import {ControlTypeStrong} from "./control.type";
+import {ControlTypeStrong} from "./type";
 import {ToolbarIcon} from "./icon";
+import {IViewBased} from "../view/type";
 
 export abstract class ToolbarElement extends Component {
     container: HTMLElement;

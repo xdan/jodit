@@ -4,9 +4,9 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {IViewBased} from "../Component";
 import {Jodit} from "../../Jodit";
 import {ToolbarButton} from "./button";
+import {IViewBased} from "../view/type";
 
 export type ControlType = {
     controlName?: string;
@@ -196,3 +196,6 @@ export type ControlType = {
 export interface ControlTypeStrong extends ControlType{
     name: string;
 }
+
+export type Controls = {[key: string]: ControlType | {[key: string]: ControlType}};
+export type Buttons = Array<string|ControlType> | string;
