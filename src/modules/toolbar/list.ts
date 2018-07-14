@@ -29,6 +29,7 @@ export  class ToolbarList extends ToolbarPopup {
 
     public toolbar: ToolbarCollection;
 
+    protected getContainer = () => this.toolbar.container;
     protected doOpen(control: ControlTypeStrong) {
         this.toolbar = new ToolbarCollection(this.jodit);
 

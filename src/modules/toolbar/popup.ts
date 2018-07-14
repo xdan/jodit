@@ -72,16 +72,17 @@ export  class ToolbarPopup extends ToolbarElement {
         this.calcPosition();
     }
 
+    protected getContainer = () => this.container;
     private calcPosition = throttle(() => {
         if (!this.isOpened) {
             return;
         }
 
-        const popup: HTMLElement = this.container;
+        const popup: HTMLElement = this.getContainer();
         const offsetContainer: Bound = offset(<HTMLDivElement>this.jodit.container, this.jodit, this.jodit.ownerDocument, true);
 
-        let offsetPopup: Bound = offset(popup, this.jodit, this.jodit.ownerDocument, true);
-        // let marginLeft: number = parseInt((<string>css(popup, 'transform')).replace(/[^0-9\-]/g, ''), 10) || 0;
+        const offsetPopup: Bound = offset(popup, this.jodit, this.jodit.ownerDocument, true);
+
         let marginLeft: number = <number>css(popup, 'marginLeft') || 0;
         offsetPopup.left -= marginLeft;
 
@@ -102,7 +103,11 @@ export  class ToolbarPopup extends ToolbarElement {
         }
 
         if (diffLeft !== marginLeft) {
-            css(popup, 'marginLeft', diffLeft);
+            try {
+                popup.style.setProperty('margin-left', diffLeft + 'px', 'important');
+            } catch (e) {
+                popup.style.marginLeft = diffLeft + 'px'; // fallback for ie9
+            }
         }
 
 
