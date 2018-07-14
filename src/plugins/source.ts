@@ -129,17 +129,6 @@ export class source extends Component {
     private mirrorContainer: HTMLDivElement;
     mirror: HTMLTextAreaElement;
 
-    private fromWYSIWYG = (force: boolean = false) => {
-        if (!this.__lock || force) {
-            this.__lock = true;
-            const new_value = this.jodit.getEditorValue(false);
-            if (new_value !== this.getMirrorValue()) {
-                this.setMirrorValue(new_value);
-            }
-            this.__lock = false;
-        }
-    };
-
     private insertHTML = (html: string) => {
         if (this.mirror.selectionStart || this.mirror.selectionStart === 0) {
             let startPos: number = this.mirror.selectionStart,
@@ -156,13 +145,34 @@ export class source extends Component {
     };
 
     private __lock = false;
+    private __oldMirrorValue = '';
 
-    private toWYSIWYG = () => {
-        if (!this.__lock) {
+    private fromWYSIWYG = (force: boolean | string = false) => {
+        if (!this.__lock || force === true) {
             this.__lock = true;
-            this.jodit.setEditorValue(this.getMirrorValue());
+            const new_value = this.jodit.getEditorValue(false);
+            if (new_value !== this.getMirrorValue()) {
+                this.setMirrorValue(new_value);
+            }
             this.__lock = false;
         }
+    };
+    private toWYSIWYG = () => {
+        if (this.__lock) {
+            return;
+        }
+
+        const value: string = this.getMirrorValue();
+
+        if (value === this.__oldMirrorValue) {
+            return;
+        }
+
+        this.__lock = true;
+        this.jodit.setEditorValue(value);
+        this.__lock = false;
+        this.__oldMirrorValue = value;
+
     };
 
     private autosize = debounce(() => {

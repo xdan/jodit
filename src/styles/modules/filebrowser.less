@@ -255,7 +255,8 @@
 			}
 		}
         
-        &.jodit_filebrowser_files_view-list{
+        &.jodit_filebrowser_files_view-list {
+            scroll-behavior: smooth;
             a {
                 display:block;
                 width: 100%;
@@ -321,10 +322,6 @@
           width: auto;
           display: block;
         }
-        /*@col_width: 100% / (@cols - 1);
-        a {
-            width: ~"calc(@{col_width} - 10px)";
-        }*/
 	}
 }
 .jodit_filebrowser_preview{
@@ -379,8 +376,6 @@
       right: 0;
       top: 0;
       bottom: 0;
-      bottom:0;
-      right:0;
       margin: 0 -10px 0 0;
       padding:0;
       opacity: 0;
