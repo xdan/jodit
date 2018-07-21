@@ -9,3 +9,4 @@ export { default as fr } from './fr';
 export { default as ru } from './ru';
 export { default as ar } from './ar';
 export { default as zh_cn } from './zh_cn';
+export { default as es } from './es';
