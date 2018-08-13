@@ -12,3 +12,4 @@ export {default as ar} from './ar';
 export { default as zh_cn } from './zh_cn';
 export { default as es } from './es';
 export { default as nl} from './nl';
+export { default as hu} from './hu';
