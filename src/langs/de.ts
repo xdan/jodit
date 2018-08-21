@@ -94,7 +94,7 @@ export default {
     'The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?':
         'Der Inhalt, den Sie einfügen, stammt aus einem Microsoft Word / Excel-Dokument. Möchten Sie das Format erhalten oder löschen?',
 
-    'Insert only Text'                                  : 'Als Text einfügen',
+    'Insert only Text'                                  : 'Nur Text einfügen',
 
     // File Browser module
     'File Browser'                                      : 'Dateibrowser',
