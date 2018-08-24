@@ -1076,6 +1076,15 @@ export class Jodit extends View {
     static Object(object: any): JoditObject {
         return new JoditObject(object);
     }
+
+    static fireEach(events: string, ...args: any[]) {
+        Object.keys(Jodit.instances).forEach((key: string) => {
+            const editor: Jodit = Jodit.instances[key];
+            if (!editor.isDestructed && editor.events) {
+                editor.events.fire(events, ...args);
+            }
+        });
+    }
 }
 
 

@@ -8,6 +8,7 @@ import {css, dom, offset, throttle} from "../Helpers";
 import {Dom} from "../Dom";
 import {ToolbarElement} from "./element";
 import {IViewBased} from "../view/type";
+import {Jodit} from "../../Jodit";
 
 export  class ToolbarPopup extends ToolbarElement {
     constructor(jodit: IViewBased, readonly target: HTMLElement, readonly current?: HTMLElement,  readonly className: string = 'jodit_toolbar_popup') {
@@ -50,7 +51,9 @@ export  class ToolbarPopup extends ToolbarElement {
      * @param {boolean} [noStandartActions=false] No call standarts action
      */
     public open(content: any, rightAlign?: boolean, noStandartActions: boolean = false) {
-        this.jodit.events.fire('beforeOpenPopup closeAllPopups', this, content);
+        // this.jodit.events.fire('beforeOpenPopup closeAllPopups', this, content);
+        Jodit.fireEach('beforeOpenPopup closeAllPopups', this, content); // close popups in another editors too
+
         noStandartActions || this.jodit.events.on('closeAllPopups', this.close);
 
         this.container.classList.add(this.className + '-open');
