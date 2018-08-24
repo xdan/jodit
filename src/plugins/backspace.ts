@@ -100,7 +100,7 @@ export function backspace(editor: Jodit) {
             }
         }
     };
-    const potentialRemovable: RegExp = /^(IMG|BR|IFRAME|SCRIPT|INPUT|TEXTAREA|HR)$/;
+    const potentialRemovable: RegExp = /^(IMG|BR|IFRAME|SCRIPT|INPUT|TEXTAREA|HR|JODIT)$/;
     const removePotential = (node: Node | null): false | void => {
         if (node && potentialRemovable.test(node.nodeName)) {
             node.parentNode && node.parentNode.removeChild(node);

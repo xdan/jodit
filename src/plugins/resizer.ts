@@ -185,6 +185,8 @@ export function resizer(editor: Jodit) {
         bind = (element: HTMLElement) => {
             let wrapper: HTMLElement;
             if (element.tagName === 'IFRAME') {
+                let iframe = element;
+
                 if (element.parentNode && (<HTMLElement>element.parentNode).getAttribute('data-jodit_iframe_wrapper')) {
                     element = <HTMLElement>element.parentNode;
                 } else {
@@ -200,14 +202,22 @@ export function resizer(editor: Jodit) {
 
                     wrapper.appendChild(element);
 
-                    let iframe = element;
-
-                    editor.events.on(wrapper, 'changesize', () => {
-                        iframe.setAttribute('width', wrapper.offsetWidth + 'px');
-                        iframe.setAttribute('height', wrapper.offsetHeight + 'px');
-                    });
                     element = wrapper;
                 }
+
+                editor.events
+                    .off(element, 'mousedown.select touchstart.select')
+                    .on(element, 'mousedown.select touchstart.select', () => {
+                        editor.selection.select(element);
+                    });
+
+                editor.events
+                    .off(element, 'changesize')
+                    .on(element, 'changesize', () => {
+                        iframe.setAttribute('width', element.offsetWidth + 'px');
+                        iframe.setAttribute('height', element.offsetHeight + 'px');
+                    });
+
             }
 
             let timer: number;

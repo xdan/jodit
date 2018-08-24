@@ -49,6 +49,18 @@ Config.prototype.popup = <{[key: string]: Array<ControlType|string>}>{
         'brush',
         'file',
     ],
+    jodit: [
+        {
+            name: 'bin',
+            tooltip: 'Delete',
+            exec: (editor: Jodit, image: Node) => {
+                if (image.parentNode) {
+                    image.parentNode.removeChild(image);
+                    editor.events.fire('hidePopup');
+                }
+            }
+        },
+    ],
     img: [
         {
             name: 'bin',
