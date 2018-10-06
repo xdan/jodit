@@ -293,7 +293,7 @@ export function backspace(editor: Jodit) {
                     if (fakeNode.parentNode && fakeNode.nodeValue === consts.INVISIBLE_SPACE) {
                         const parent: Node = fakeNode.parentNode;
                         parent.removeChild(fakeNode);
-                        if (!parent.firstChild && parent.parentNode) {
+                        if (!parent.firstChild && parent.parentNode && parent !== editor.editor) {
                             parent.parentNode.removeChild(parent);
                         }
                     }
