@@ -135,10 +135,6 @@ export class hotkeys extends Component{
 
         let modif: string = "";
 
-        if (event.metaKey && !event.ctrlKey) {
-            modif += "ctrl+"; // for mac OS -  CMD will be CTRL
-        }
-
         ["alt", "ctrl", "shift"].forEach( (specialKey) => {
             if ((<any>event)[specialKey + 'Key'] && special !== specialKey) {
                 modif += specialKey + '+';
