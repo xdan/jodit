@@ -69,5 +69,7 @@
     "webpack-dev-server": "^2.11.3",
     "webpack-hot-middleware": "^2.22.3"
   },
-  "dependencies": {}
+  "dependencies": {
+    "hotkeys-js": "^3.3.8"
+  }
 }

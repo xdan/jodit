@@ -539,7 +539,9 @@ export class Select extends Component{
         if (sel.rangeCount) {
             const range: Range = sel.getRangeAt(0);
             const nodes: Node[] = [],
-                start: Node = range.startContainer === this.jodit.editor ? this.jodit.editor.childNodes[range.startOffset] : range.startContainer,
+                startOffset: number = range.startOffset,
+                length: number = this.jodit.editor.childNodes.length,
+                start: Node = range.startContainer === this.jodit.editor ? this.jodit.editor.childNodes[startOffset < length ?  startOffset : length - 1] : range.startContainer,
                 end: Node = range.endContainer === this.jodit.editor ? this.jodit.editor.childNodes[range.endOffset - 1] : range.endContainer;
 
             Dom.find(start, (node: Node | null) => {

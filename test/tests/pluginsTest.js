@@ -1056,6 +1056,16 @@ describe('Test plugins', function () {
 
             });
         });
+        describe('Run indent command for inline elements', function () {
+            it('should wrap elements in block and change margin for it', function () {
+                var area = appendTestArea();
+                var editor = new Jodit(area);
+                editor.value = 'a<br>b<br>c<br>';
+                editor.selection.setCursorAfter(editor.editor.lastChild);
+                editor.execCommand('indent');
+                expect('<p style="margin-left: 10px;">a<br>b<br>c<br></p>').to.be.equal(editor.value);
+            });
+        });
     });
     describe('Symbols plugin', function () {
         it('Should create symbol button in toolbar and after click open dialog with symbols', function () {

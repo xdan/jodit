@@ -24,6 +24,7 @@ import {ToolbarIcon} from "./modules/toolbar/icon";
  **/
 
 export class Config {
+    commandToHotkeys: {[key: string]:string | string[]} = {};
     license: string = '';
     preset: string = 'custom';
     presets: {[key: string]: any} = {

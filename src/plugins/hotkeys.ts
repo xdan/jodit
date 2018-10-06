@@ -128,6 +128,7 @@ export class hotkeys extends Component{
 
     private possible: {[key: string]: boolean} = {};
 
+
     private onKeyPress = (event: KeyboardEvent): false | void => {
         const special: string | false = event.type !== "keypress" && this.specialKeys[event.which],
             character: string = String.fromCharCode(event.which).toLowerCase();
@@ -173,11 +174,7 @@ export class hotkeys extends Component{
             const hotkeys: string | string[] | void = editor.options.commandToHotkeys[commandName];
 
             if (hotkeys) {
-                editor.events
-                    .off(asArray(hotkeys).map((hotkey: string) => hotkey + '.hotkey').join(' '))
-                    .on(asArray(hotkeys).map((hotkey: string) => hotkey + '.hotkey').join(' '), () => {
-                        return editor.execCommand(commandName); // because need `beforeCommand`
-                    });
+                editor.registerHotkeyToCommand(hotkeys, commandName);
             }
         });
 

@@ -8,6 +8,7 @@ import {Jodit} from '../Jodit';
 import {Config} from "../Config";
 import {Dom} from "../modules/Dom";
 import {ControlType} from "../modules/toolbar/type";
+import {BR, PARAGRAPH} from "../constants";
 
 Config.prototype.controls.indent = <ControlType>{
     tooltip: "Increase Indent",
@@ -50,8 +51,9 @@ export  function indent(editor: Jodit) {
             const selectionInfo = editor.selection.save();
             let currentBox: HTMLElement|false = current ? <HTMLElement>Dom.up(current, Dom.isBlock, editor.editor) : false;
 
+            const enter: string = editor.options.enter;
             if (!currentBox && current) {
-                currentBox = Dom.wrapInline(current, editor.options.enter, editor);
+                currentBox = Dom.wrapInline(current, enter !== BR ? enter : PARAGRAPH, editor);
             }
 
             if (!currentBox) {

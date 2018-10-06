@@ -675,6 +675,7 @@ export class Jodit extends View {
                 } else {
                     callback = command.exec;
                 }
+
                 let resultCurrent: any = callback.call(this, commandName, second, third);
                 if (resultCurrent !== undefined) {
                     result = resultCurrent;
@@ -724,19 +725,30 @@ export class Jodit extends View {
         if (this.commands[commandName] === undefined) {
             this.commands[commandName] = [];
         }
+
         this.commands[commandName].push(command);
 
         if (typeof command !== 'function') {
             const hotkeys: string | string[] | void = this.options.commandToHotkeys[commandName] || this.options.commandToHotkeys[commandNameOriginal] || command.hotkeys;
 
             if (hotkeys) {
-                this.events
-                    .off(asArray(hotkeys).map((hotkey: string) => hotkey + '.hotkey').join(' '))
-                    .on(asArray(hotkeys).map((hotkey: string) => hotkey + '.hotkey').join(' '), () => {
-                        return this.execCommand(commandName); // because need `beforeCommand`
-                    });
+                this.registerHotkeyToCommand(hotkeys, commandName);
             }
         }
+    }
+
+    /**
+     * Register hotkey for command
+     *
+     * @param hotkeys
+     * @param commandName
+     */
+    registerHotkeyToCommand(hotkeys: string | string[], commandName: string) {
+        this.events
+            .off(asArray(hotkeys).map((hotkey: string) => hotkey + '.hotkey').join(' '))
+            .on(asArray(hotkeys).map((hotkey: string) => hotkey + '.hotkey').join(' '), () => {
+                return this.execCommand(commandName); // because need `beforeCommand`
+            });
     }
 
     /**

@@ -76,6 +76,7 @@ export class Dom {
 
         return <HTMLElement>wrapper;
     };
+
     /**
      *
      * @param {Node} current
