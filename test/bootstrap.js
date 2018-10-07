@@ -388,10 +388,11 @@ var sortAtrtibutes = function (html) {
  * @param options
  */
 var simulateEvent = function (type, keyCodeArg, element, options) {
-    var evt = (element.ownerDocument || document).createEvent('HTMLEvents')
+    var evt = (element.ownerDocument || document).createEvent('HTMLEvents');
     evt.initEvent(type, true, true);
     evt.keyCode = keyCodeArg;
     evt.which = keyCodeArg;
+
     if (options) {
         options(evt);
     }

@@ -641,10 +641,21 @@ export const fromCamelCase = (key: string): string => {
  * @param {string} html
  * @return {string}
  */
-export const htmlspecialchars = (html: string) => {
-    let tmp = document.createElement('div');
+export const htmlspecialchars = (html: string): string => {
+    const tmp: HTMLDivElement = document.createElement('div');
     tmp.innerText = html;
     return tmp.innerHTML;
+};
+
+/**
+ * Extract plain text from HTML text
+ *
+ * @param html
+ */
+export const extractText = (html: string): string => {
+    const tmp: HTMLDivElement = document.createElement('div');
+    tmp.innerHTML = html;
+    return tmp.innerText;
 };
 
 /**

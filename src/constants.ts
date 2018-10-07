@@ -4,6 +4,7 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
+
 export const INVISIBLE_SPACE = "\uFEFF";
 export const INVISIBLE_SPACE_REG_EXP = /[\uFEFF]/g;
 export const INVISIBLE_SPACE_REG_EXP_END = /[\uFEFF]+$/g;
@@ -41,18 +42,18 @@ export const KEY_F3         = 114;
 export const NEARBY = 5;
 export const ACCURACY = 10;
 
-// Jodit.keys = {
-//     CTRL:       17,
-//     TAB:        9,
-//     ENTER:      13,
-//     BACKSPACE:  8,
-//     LEFT:       37,
-//     TOP:        38,
-//     RIGHT:      39,
-//     BOTTOM:     40,
-//     Z:          90,
-//     Y:          89
-// };
+export const COMMAND_KEYS = [
+    KEY_BACKSPACE,
+    KEY_DELETE,
+    KEY_UP,
+    KEY_DOWN,
+    KEY_RIGHT,
+    KEY_LEFT,
+    KEY_ENTER,
+    KEY_ESC,
+    KEY_F3,
+    KEY_TAB,
+];
 
 export const BR = 'br';
 export const PARAGRAPH = 'P';
