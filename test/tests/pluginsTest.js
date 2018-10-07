@@ -2174,6 +2174,55 @@ describe('Test plugins', function () {
             });
         });
 
+    })
+    describe('Limit plugin', function () {
+        describe('Keydown', function () {
+            describe('On keydown when editor aleady full', function () {
+                it('should deny insert any chars', function (done) {
+                    var editor = new Jodit(appendTestArea(), {
+                        limitChars: 5,
+                        observer: {
+                            timeout: 5
+                        }
+                    });
+
+                    editor.value = '11111';
+                    editor.selection.insertHTML('a');
+                    setTimeout(() => {
+                        expect('11111').to.be.equal(editor.value);
+                        done();
+                    }, 200)
+                });
+            });
+        });
+        describe('Paste', function () {
+            describe('When editor aleady full', function () {
+                it('should deny insert any chars', function (done) {
+                    var editor = new Jodit(appendTestArea(), {
+                        limitChars: 5,
+                        observer: {
+                            timeout: 5
+                        }
+                    });
+
+                    editor.value = '11111';
+
+                    simulateEvent('paste', 0, editor.editor, function (data) {
+                        data.clipboardData = {
+                            types: ['text/html'],
+                            getData: function (type) {
+                                return 'a';
+                            }
+                        };
+                    });
+
+                    setTimeout(() => {
+                        expect('11111').to.be.equal(editor.value);
+                        done();
+                    }, 200)
+                });
+            });
+        });
     });
     afterEach(removeStuff);
 });
