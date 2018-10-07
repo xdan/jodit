@@ -262,7 +262,7 @@ export function paste(editor: Jodit) {
                      * @example
                      * ```javascript
                      * var editor = new Jodit("#redactor");
-                     * editor.events.on('beforePaste', function (event) {
+                 * editor.events.on('beforePaste', function (event) {
                          *     return false; // deny paste
                          * });
                      * ```

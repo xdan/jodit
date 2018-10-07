@@ -5,10 +5,9 @@
  */
 import {Config} from '../Config';
 import {Jodit} from "../Jodit";
-import {Plugin} from "../../types/modules/Plugin";
-import {IViewBased} from "../modules/view/type";
 import {COMMAND_KEYS, INVISIBLE_SPACE_REG_EXP, SPACE_REG_EXP} from "../constants";
-import {extractText} from "../modules/Helpers";
+import {debounce, extractText} from "../modules/Helpers";
+import {SnapshotType} from "../../types/modules/Snapshot";
 
 
 declare module "../Config" {
@@ -62,16 +61,27 @@ export function limit(jodit: Jodit) {
             return;
         };
 
+        let snapshot: SnapshotType | null  = null;
+
         jodit.events
-            .on('keydown keyup beforeEnter', (event: KeyboardEvent): false | void => {
+            .on('beforePaste', (): false | void => {
+                snapshot = jodit.observer.snapshot.make();
+            })
+            .on('keydown keyup beforeEnter beforePaste', (event: KeyboardEvent): false | void => {
                 if (callback(event) !== void(0)) {
                     return false;
                 }
             })
-            .on('change', (newValue: string, oldValue: string) => {
+            .on('change', debounce((newValue: string, oldValue: string) => {
                 if (callback(null, jodit.options.limitHTML ? newValue : extractText(newValue)) === false) {
                     jodit.value = oldValue;
                 }
-            });
+            }, jodit.defaultTimeout))
+            .on('afterPaste', (): false | void => {
+                if (callback(null) === false && snapshot) {
+                    jodit.observer.snapshot.restore(snapshot);
+                    return false;
+                }
+            })
     }
 }
