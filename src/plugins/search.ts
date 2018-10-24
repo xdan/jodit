@@ -463,7 +463,7 @@ export class search extends Component {
                     self.open();
                     return false;
                 },
-                hotkeys: 'ctrl+f'
+                hotkeys: ['ctrl+f', 'cmd+f']
             });
 
             editor.registerCommand('openReplaceDialog', {
@@ -473,7 +473,7 @@ export class search extends Component {
                     }
                     return false;
                 },
-                hotkeys: 'ctrl+h'
+                hotkeys: ['ctrl+h', 'cmd+h']
             });
         }
     }

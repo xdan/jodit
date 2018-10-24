@@ -13,7 +13,7 @@ import {EventsNative} from './modules/EventsNative';
 import * as consts from './constants';
 import {
     inArray, dom, sprintf, defaultLanguage, debounce, asArray, splitArray, JoditArray,
-    JoditObject
+    JoditObject, normalizeKeyAliases
 } from './modules/Helpers';
 import * as helper from './modules/Helpers';
 import {Config, OptionsDefault} from "./Config";
@@ -744,9 +744,12 @@ export class Jodit extends View {
      * @param commandName
      */
     registerHotkeyToCommand(hotkeys: string | string[], commandName: string) {
+        const
+            shortcuts: string[] = asArray(hotkeys).map(normalizeKeyAliases);
+
         this.events
-            .off(asArray(hotkeys).map((hotkey: string) => hotkey + '.hotkey').join(' '))
-            .on(asArray(hotkeys).map((hotkey: string) => hotkey + '.hotkey').join(' '), () => {
+            .off(shortcuts.map(hotkey => hotkey + '.hotkey').join(' '))
+            .on(shortcuts.map(hotkey => hotkey + '.hotkey').join(' '), () => {
                 return this.execCommand(commandName); // because need `beforeCommand`
             });
     }

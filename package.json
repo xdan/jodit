@@ -33,7 +33,7 @@
   "devDependencies": {
     "@types/ace": "^0.0.35",
     "@types/es6-promise": "^3.3.0",
-    "@types/node": "^7.0.69",
+    "@types/node": "^7.10.0",
     "autoprefixer": "^6.7.7",
     "awesome-typescript-loader": "^3.4.1",
     "chai": "^3.5.0",
@@ -42,8 +42,8 @@
     "compression": "^1.7.3",
     "cross-env": "^3.2.4",
     "css-loader": "^0.26.4",
-    "es6-promise": "^4.2.4",
-    "express": "^4.16.3",
+    "es6-promise": "^4.2.5",
+    "express": "^4.16.4",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^0.10.1",
     "karma": "^3.0.0",
@@ -63,10 +63,11 @@
     "style-loader": "^0.13.2",
     "svg-inline-loader": "^0.8.0",
     "typescript": "^2.9.2",
-    "url-loader": "^1.1.1",
+    "url-loader": "^1.1.2",
     "webpack": "^3.12.0",
     "webpack-dev-middleware": "^1.12.2",
     "webpack-dev-server": "^2.11.3",
-    "webpack-hot-middleware": "^2.22.3"
+    "webpack-hot-middleware": "^2.24.3",
+    "is-hotkey": "^0.1.3"
   }
 }

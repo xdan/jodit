@@ -68,15 +68,15 @@ export function bold(editor: Jodit) {
 
     editor.registerCommand('bold', {
         exec: callBack,
-        hotkeys: 'ctrl+b'
+        hotkeys: ['ctrl+b','cmd+b']
     });
     editor.registerCommand('italic', {
         exec: callBack,
-        hotkeys: 'ctrl+i'
+        hotkeys: ['ctrl+i', 'cmd+i']
     });
     editor.registerCommand('underline', {
         exec: callBack,
-        hotkeys: 'ctrl+u'
+        hotkeys: ['ctrl+u', 'cmd+u']
     });
     editor.registerCommand('strikethrough', {
         exec: callBack

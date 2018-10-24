@@ -47,7 +47,7 @@ Config.prototype.specialCharacters = [
 
 Config.prototype.controls.symbol = <ControlType> {
     icon: 'omega',
-    hotkeys: 'ctrl+shift+i',
+    hotkeys: ['ctrl+shift+i', 'cmd+shift+i'],
     tooltip: 'Insert Special Character',
     popup: (editor: Jodit, current: Node|false, control: ControlType, close: Function): any => {
         const container : HTMLElement | undefined = editor.events.fire('generateSpecialCharactersTable.symbols');

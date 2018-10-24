@@ -82,10 +82,10 @@ export  function indent(editor: Jodit) {
 
     editor.registerCommand('indent', {
         exec: callback,
-        hotkeys: 'ctrl+]'
+        hotkeys: ['ctrl+]', 'cmd+]']
     });
     editor.registerCommand('outdent', {
         exec: callback,
-        hotkeys: 'ctrl+['
+        hotkeys: ['ctrl+[', 'cmd+[']
     });
 }

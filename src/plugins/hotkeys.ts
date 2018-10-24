@@ -7,7 +7,8 @@
 import {Jodit} from "../Jodit";
 import {Config} from "../Config";
 import {Component} from "../modules/Component";
-import {asArray} from "../modules/Helpers";
+import {IS_MAC} from "../constants";
+import {normalizeKeyAliases} from "../modules/Helpers";
 
 declare module "../Config" {
     interface Config {
@@ -27,10 +28,10 @@ declare module "../Config" {
  * @type {{}}
  */
 Config.prototype.commandToHotkeys = {
-    removeFormat: 'ctrl+shift+m',
-    insertOrderedList: 'ctrl+shift+7',
-    insertUnorderedList: 'ctrl+shift+8',
-    selectall: 'ctrl+a',
+    removeFormat: ['ctrl+shift+m', 'cmd+shift+m'],
+    insertOrderedList: ['ctrl+shift+7', 'cmd+shift+7'],
+    insertUnorderedList: ['ctrl+shift+8, cmd+shift+8'],
+    selectall: ['ctrl+a', 'cmd+a'],
 };
 
 /**
@@ -61,6 +62,7 @@ export class hotkeys extends Component{
         46: "del",
         59: ";",
         61: "=",
+        91: "meta",
         96: "0",
         97: "1",
         98: "2",
@@ -104,62 +106,21 @@ export class hotkeys extends Component{
         222: "'"
     };
 
-    shiftNums: {[key: string]: string} = {
-        "`": "~",
-        "1": "!",
-        "2": "@",
-        "3": "#",
-        "4": "$",
-        "5": "%",
-        "6": "^",
-        "7": "&",
-        "8": "*",
-        "9": "(",
-        "0": ")",
-        "-": "_",
-        "=": "+",
-        ";": ": ",
-        "'": "\"",
-        ",": "<",
-        ".": ">",
-        "/": "?",
-        "\\": "|"
-    };
 
-    private possible: {[key: string]: boolean} = {};
+    private onKeyPress = (event: KeyboardEvent): string => {
+        const
+            special: string | false = this.specialKeys[event.which],
+            character: string = (event.key || String.fromCharCode(event.which)).toLowerCase();
 
+        const modif: string[] = [special || character];
 
-    private onKeyPress = (event: KeyboardEvent): false | void => {
-        const special: string | false = event.type !== "keypress" && this.specialKeys[event.which],
-            character: string = String.fromCharCode(event.which).toLowerCase();
-
-        let modif: string = "";
-
-        ["alt", "ctrl", "shift"].forEach( (specialKey) => {
+        ["alt", "ctrl", "shift", "meta"].forEach( (specialKey) => {
             if ((<any>event)[specialKey + 'Key'] && special !== specialKey) {
-                modif += specialKey + '+';
+                modif.push(specialKey);
             }
         });
 
-        if (event.metaKey && modif.indexOf("alt+ctrl+shift+") > -1) {
-            modif = modif.replace("alt+ctrl+shift+", "hyper+");
-        }
-
-        if (special) {
-            this.possible[modif + special] = true;
-        }  else {
-            this.possible[modif + character] = true;
-            if (this.shiftNums[character]) {
-                this.possible[modif + this.shiftNums[character]] = true;
-            }
-
-            // "$" can be triggered as "Shift+4" or "Shift+$" or just "$"
-            if (modif === "shift+") {
-                this.possible[this.shiftNums[character]] = true;
-            }
-        }
-
-
+        return normalizeKeyAliases(modif.join('+'));
     };
 
     constructor(editor: Jodit) {
@@ -177,29 +138,13 @@ export class hotkeys extends Component{
 
         editor.events
             .on('afterInit', () => {
-                const runPossible: Function = (event: KeyboardEvent): void | false => {
-                    let noStop: boolean = true;
-
-                    Object.keys(this.possible).forEach((hotkey: string) => {
-                        if (this.jodit.events.fire(hotkey, event.type) === false) {
-                            noStop = false;
-                        }
-                    });
-
-                    if (!noStop) {
-                        return false;
-                    }
-                };
-
                 let itIsHotkey: boolean = false;
-                const self = this;
 
                 editor.events
                     .on('keydown', (event: KeyboardEvent) : void | false => {
-                        self.possible = {};
-                        self.onKeyPress(event);
+                        const shortcut: string = this.onKeyPress(event);
 
-                        if (runPossible(event) === false) {
+                        if (this.jodit.events.fire(shortcut, event.type) === false) {
                             itIsHotkey = true;
 
                             editor.events.stopPropagation('keydown');

@@ -7,6 +7,7 @@
 import * as consts from '../constants';
 import {Jodit} from "../Jodit";
 import {Dom} from "./Dom";
+import {KEY_ALIASES} from "../constants";
 const class2type: {[key: string]: string} = {};
 const toString = class2type.toString;
 const hasOwn = class2type.hasOwnProperty;
@@ -1231,4 +1232,22 @@ export const innerWidth = (element: HTMLElement, win: Window): number => {
     elementWidth -= parseFloat(computedStyle.paddingLeft || '0') + parseFloat(computedStyle.paddingRight || '0');
 
     return elementWidth;
+};
+
+/**
+ * Normalize keys to some standart name
+ *
+ * @param keys
+ */
+export const normalizeKeyAliases = (keys: string): string => {
+    const memory: {[key: string]: boolean} = {};
+
+    return keys
+        .replace(/\+\+/g, '+add')
+        .split(/[\s]*\+[\s]*/)
+        .map(key => trim(key.toLowerCase()))
+        .map(key => KEY_ALIASES[key] || key)
+        .sort()
+        .filter(key => !memory[key] && key !== '' && (memory[key] = true))
+        .join('+');
 };

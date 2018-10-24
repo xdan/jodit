@@ -38,11 +38,11 @@ export class redoundo extends Component  {
 
         editor.registerCommand('redo', {
             exec: callback,
-            hotkeys: 'ctrl+y,ctrl+shift+z'
+            hotkeys: ['ctrl+y', 'ctrl+shift+z', 'cmd+y', 'cmd+shift+z']
         });
         editor.registerCommand('undo', {
             exec: callback,
-            hotkeys: 'ctrl+z'
+            hotkeys: ['ctrl+z', 'cmd+z'],
         });
 
     }

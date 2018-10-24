@@ -516,7 +516,7 @@ describe('Test plugins', function () {
                             });
 
 
-                            expect(Math.abs(resizer.offsetWidth / resizer.offsetHeight - oldRatio) < 0.009).to.be.equal(true);
+                            expect(Math.abs(resizer.offsetWidth / resizer.offsetHeight - oldRatio) < 0.05).to.be.equal(true);
 
                             done();
                         });
@@ -1380,7 +1380,8 @@ describe('Test plugins', function () {
                             }
                         });
 
-                    editor.setEditorValue('test test test')
+                    editor.value = 'test test test';
+
                     var range = editor.editorDocument.createRange();
                     range.setStart(editor.editor.firstChild, 4);
                     range.setEnd(editor.editor.firstChild, 8);
@@ -1392,9 +1393,10 @@ describe('Test plugins', function () {
                         data.ctrlKey = true;
                     });
 
-                    expect('test<em> tes</em>t test').to.be.equal(editor.getEditorValue());
+                    expect('test<em> tes</em>t test').to.be.equal(editor.value);
 
-                    editor.setEditorValue('test test test')
+                    editor.value = 'test test test';
+
                     var range = editor.editorDocument.createRange();
                     range.setStart(editor.editor.firstChild, 4);
                     range.setEnd(editor.editor.firstChild, 8);
@@ -1406,7 +1408,7 @@ describe('Test plugins', function () {
                         data.ctrlKey = true;
                     });
 
-                    expect('test<em> tes</em>t test').to.be.equal(editor.getEditorValue());
+                    expect('test<em> tes</em>t test').to.be.equal(editor.value);
 
                     // standart ctrl+shift+7
                     simulateEvent('keydown', 103, editor.editor, function (data) {
@@ -1414,7 +1416,7 @@ describe('Test plugins', function () {
                         data.ctrlKey = true;
                     });
 
-                    expect('<ol><li>test<em> tes</em>t test</li></ol>').to.be.equal(editor.getEditorValue().replace('<br>', ''));
+                    expect('<ol><li>test<em> tes</em>t test</li></ol>').to.be.equal(editor.value.replace('<br>', ''));
                 });
             });
         });
@@ -2223,6 +2225,50 @@ describe('Test plugins', function () {
                 });
             });
         });
+        describe('Limit words', function () {
+            describe('Paste', function () {
+                describe('When editor aleady full', function () {
+                    it('should deny insert any chars', function (done) {
+                        var editor = new Jodit(appendTestArea(), {
+                            limitWords: 3,
+                            observer: {
+                                timeout: 5
+                            }
+                        });
+
+                        editor.value = '11111';
+                        editor.selection.setCursorAfter(editor.editor.firstChild);
+
+                        const paste = () => {
+                            simulateEvent('paste', 0, editor.editor, function (data) {
+                                data.clipboardData = {
+                                    types: ['text/html'],
+                                    getData: function (type) {
+                                        return ' aaa';
+                                    }
+                                };
+                            });
+                        };
+
+                        const timeout = () => {
+                            setTimeout(() => {
+                                expect('11111 aaa aaa').to.be.equal(editor.value);
+                                done();
+                            }, 200)
+                        };
+
+                        paste();
+                        expect('11111 aaa').to.be.equal(editor.value);
+
+                        paste();
+                        expect('11111 aaa aaa').to.be.equal(editor.value);
+
+                        paste();
+                        timeout();
+                    });
+                });
+            });
+        })
     });
     afterEach(removeStuff);
 });

@@ -169,7 +169,7 @@ export class pasteStorage extends Plugin {
 
         this.jodit.registerCommand('showPasteStorage', {
             exec: this.showDialog,
-            hotkeys: 'ctrl+shift+v'
+            hotkeys: ['ctrl+shift+v', 'cmd+shift+v']
         });
     }
 }

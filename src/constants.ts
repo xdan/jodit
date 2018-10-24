@@ -92,3 +92,32 @@ export const INSERT_AS_HTML = 'insert_as_html';
 export const INSERT_CLEAR_HTML = 'insert_clear_html';
 export const INSERT_AS_TEXT = 'insert_as_text';
 export const INSERT_ONLY_TEXT = 'insert_only_text';
+
+export const IS_MAC = (
+    typeof window != 'undefined' &&
+    /Mac|iPod|iPhone|iPad/.test(window.navigator.platform)
+);
+
+export const KEY_ALIASES: {[key: string]: string} = {
+    add: '+',
+    break: 'pause',
+    cmd: 'meta',
+    command: 'meta',
+    ctl: 'control',
+    ctrl: 'control',
+    del: 'delete',
+    down: 'arrowdown',
+    esc: 'escape',
+    ins: 'insert',
+    left: 'arrowleft',
+    mod: IS_MAC ? 'meta' : 'control',
+    opt: 'alt',
+    option: 'alt',
+    return: 'enter',
+    right: 'arrowright',
+    space: ' ',
+    spacebar: ' ',
+    up: 'arrowup',
+    win: 'meta',
+    windows: 'meta',
+};
