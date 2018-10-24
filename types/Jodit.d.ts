@@ -190,6 +190,13 @@ export declare class Jodit extends View {
      */
     registerCommand(commandNameOriginal: string, command: CommandType | Function): void;
     /**
+     * Register hotkey for command
+     *
+     * @param hotkeys
+     * @param commandName
+     */
+    registerHotkeyToCommand(hotkeys: string | string[], commandName: string): void;
+    /**
      * Execute command editor
      *
      * @method execCommand

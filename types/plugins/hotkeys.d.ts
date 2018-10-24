@@ -19,10 +19,6 @@ export declare class hotkeys extends Component {
     specialKeys: {
         [key: number]: string;
     };
-    shiftNums: {
-        [key: string]: string;
-    };
-    private possible;
     private onKeyPress;
     constructor(editor: Jodit);
 }

@@ -1,6 +1,6 @@
 {
   "name": "jodit",
-  "version": "3.2.10",
+  "version": "3.2.12",
   "description": "Jodit is awesome and usefully wysiwyg editor with filebrowser",
   "main": "build/jodit.min.js",
   "types": "types/index.d.ts",
@@ -67,7 +67,6 @@
     "webpack": "^3.12.0",
     "webpack-dev-middleware": "^1.12.2",
     "webpack-dev-server": "^2.11.3",
-    "webpack-hot-middleware": "^2.24.3",
-    "is-hotkey": "^0.1.3"
+    "webpack-hot-middleware": "^2.24.3"
   }
 }

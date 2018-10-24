@@ -190,6 +190,12 @@ export declare const fromCamelCase: (key: string) => string;
  */
 export declare const htmlspecialchars: (html: string) => string;
 /**
+ * Extract plain text from HTML text
+ *
+ * @param html
+ */
+export declare const extractText: (html: string) => string;
+/**
  * Debouncing enforces that a function not be called again until a certain amount of time has passed without it being called. As in "execute this function only if 100 milliseconds have passed without it being called."
  *
  * @method debounce
@@ -267,4 +273,10 @@ export declare class JoditObject {
 }
 export declare const getRange: () => (number | Node)[];
 export declare const innerWidth: (element: HTMLElement, win: Window) => number;
+/**
+ * Normalize keys to some standart name
+ *
+ * @param keys
+ */
+export declare const normalizeKeyAliases: (keys: string) => string;
 export {};

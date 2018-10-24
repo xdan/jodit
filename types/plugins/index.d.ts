@@ -22,6 +22,7 @@ export { imageProperties } from "./imageProperties";
 export { inlinePopup } from "./inline-popup";
 export { justify } from "./justify";
 export { link } from "./link";
+export { limit } from "./limit";
 export { mobile } from "./mobile";
 export { orderedlist } from "./orderedlist";
 export { paste } from "./paste";

@@ -30,6 +30,7 @@ export declare const KEY_Z = 90;
 export declare const KEY_F3 = 114;
 export declare const NEARBY = 5;
 export declare const ACCURACY = 10;
+export declare const COMMAND_KEYS: number[];
 export declare const BR = "br";
 export declare const PARAGRAPH = "P";
 /**
@@ -57,3 +58,7 @@ export declare const INSERT_AS_HTML = "insert_as_html";
 export declare const INSERT_CLEAR_HTML = "insert_clear_html";
 export declare const INSERT_AS_TEXT = "insert_as_text";
 export declare const INSERT_ONLY_TEXT = "insert_only_text";
+export declare const IS_MAC: boolean;
+export declare const KEY_ALIASES: {
+    [key: string]: string;
+};

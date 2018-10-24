@@ -7,7 +7,7 @@ import {Config} from '../Config';
 import {Jodit} from "../Jodit";
 import {COMMAND_KEYS, INVISIBLE_SPACE_REG_EXP, SPACE_REG_EXP} from "../constants";
 import {debounce, extractText} from "../modules/Helpers";
-import {SnapshotType} from "../../types/modules/Snapshot";
+import {SnapshotType} from "../modules/Snapshot";
 
 
 declare module "../Config" {

@@ -22,7 +22,7 @@ module.exports = function(config) {
             "/test.index.html" : "/base/test/test.index.html"
         },
         reporters: ['progress'],
-        port: 9876,
+        port: 2002,
         colors: true,
         logLevel: config.LOG_INFO,
         browsers: ['ChromeHeadless', 'IE', 'IE9', 'Firefox'],
@@ -33,13 +33,13 @@ module.exports = function(config) {
             },
             ChromeHeadless: {
                 base: 'Chrome',
-               flags: [
+                flags: [
                    '--window-size=1920,1000',
                    '--disable-gpu',
                    //'--headless', //not work in chrome 60
                    '--disable-extensions',
                    '--disable-translate',
-               ]
+                ]
             }
         },
         autoWatch: true,
