@@ -392,7 +392,7 @@ describe('Test interface', function() {
                     disablePlugins: 'mobile'
                 });
 
-                editor.setEditorValue('')
+                editor.value = '';
 
 
                 simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-video'))
@@ -409,7 +409,7 @@ describe('Test interface', function() {
                 popup.querySelector('input[name=code]').value = 'https://www.youtube.com/watch?v=7CcEYRfxUOQ'
                 simulateEvent('submit', 0, popup.querySelector('.jodit_form'))
 
-                expect(sortAtrtibutes(editor.getEditorValue())).to.equal('<iframe allowfullscreen="" frameborder="0" height="345" src="//www.youtube.com/embed/7CcEYRfxUOQ" width="400"></iframe>');
+                expect(sortAtrtibutes(editor.value)).to.equal('<iframe allowfullscreen="" frameborder="0" height="345" src="https://www.youtube.com/embed/7CcEYRfxUOQ" width="400"></iframe>');
 
                 simulateEvent('mousedown', 0, editor.editor)
 

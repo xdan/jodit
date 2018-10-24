@@ -520,16 +520,19 @@ export const convertMediaURLToVideoEmbed = (url: string, width:number = 400, hei
         height = 345;
     }
 
+    const protocol: string = parser.protocol || '';
+    console.log(protocol);
+
     switch (parser.hostname) {
         case 'www.vimeo.com':
         case 'vimeo.com':
-            return pattern1.test(url) ? url.replace(pattern1, '<iframe width="' + width + '" height="' + height + '" src="//player.vimeo.com/video/$1" frameborder="0" allowfullscreen></iframe>') : url;
+            return pattern1.test(url) ? url.replace(pattern1, '<iframe width="' + width + '" height="' + height + '" src="' + protocol + '//player.vimeo.com/video/$1" frameborder="0" allowfullscreen></iframe>') : url;
         case 'youtube.com':
         case 'www.youtube.com':
         case 'youtu.be':
         case 'www.youtu.be':
             const query: any = parser.search ? parseQuery(parser.search) : {v: parser.pathname.substr(1)};
-            return query.v ? '<iframe width="' + width + '" height="' + height + '" src="//www.youtube.com/embed/' + query.v + '" frameborder="0" allowfullscreen></iframe>' : url;
+            return query.v ? '<iframe width="' + width + '" height="' + height + '" src="' + protocol + '//www.youtube.com/embed/' + query.v + '" frameborder="0" allowfullscreen></iframe>' : url;
     }
 
     return url;
