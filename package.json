@@ -1,12 +1,12 @@
 {
   "name": "jodit",
-  "version": "3.2.12",
+  "version": "3.2.13",
   "description": "Jodit is awesome and usefully wysiwyg editor with filebrowser",
   "main": "build/jodit.min.js",
   "types": "types/index.d.ts",
   "scripts": {
     "newversion": "npm test && npm version patch --no-git-tag-version && npm run build && npm run newversiongit && npm publish ./",
-    "newversiongit": "git add --all  && git commit -m \"New version %npm_package_version%. Read more https://github.com/xdan/jodit/releases/tag/%npm_package_version% \" && git tag %npm_package_version% && git push --tags origin HEAD:master",
+    "newversiongit": "git add --all  && git commit -m \"New version $npm_package_version. Read more https://github.com/xdan/jodit/releases/tag/$npm_package_version \" && git tag $npm_package_version && git push --tags origin HEAD:master",
     "start": "node server.js",
     "build": "rm -f build/* && cross-env NODE_ENV=production webpack --progress  && npm run build-no-uglify && npm run types",
     "build-no-uglify": "cross-env NODE_ENV=production-no-uflify webpack --progress",
