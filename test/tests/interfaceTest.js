@@ -1200,6 +1200,30 @@ describe('Test interface', function() {
                         });
                     });
                 });
+                describe('Select text with several properties', function () {
+                    it('Should select all buttons with conditions', function () {
+                        var editor = new Jodit(appendTestArea(), {
+                            observer: {
+                                timeout: 0
+                            }
+                        });
+
+                        editor.value = '<em><strong><u>bold</u></strong></em>';
+
+                        var range = editor.editorDocument.createRange();
+                        range.setStartBefore(editor.editor.firstChild);
+                        range.setEndAfter(editor.editor.firstChild);
+                        editor.selection.selectRange(range);
+
+                        var bold = editor.container.querySelector('.jodit_toolbar_btn-bold');
+                        var italic = editor.container.querySelector('.jodit_toolbar_italic');
+                        var underline = editor.container.querySelector('.jodit_toolbar_underline');
+
+                        expect(true).to.be.equal(bold.classList.contains('jodit_active'));
+                        expect(true).to.be.equal(italic.classList.contains('jodit_active'));
+                        expect(true).to.be.equal(underline.classList.contains('jodit_active'));
+                    });
+                });
             });
             describe('Disable button', function () {
                 describe('Cut', function () {

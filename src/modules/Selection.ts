@@ -320,18 +320,22 @@ export class Select extends Component{
     current(checkChild: boolean = true): false | Node {
         if (this.jodit.getRealMode() === consts.MODE_WYSIWYG && this.jodit.editorWindow.getSelection !== undefined) {
             const sel: Selection = this.jodit.editorWindow.getSelection();
+
             if (sel && sel.rangeCount > 0) {
                 const range: Range = sel.getRangeAt(0);
+
                 let node: Node | null = range.startContainer,
                     rightMode: boolean = false,
                     child = (node: Node): Node | null => rightMode ? node.lastChild : node.firstChild;
 
                 if (node.nodeType !== Node.TEXT_NODE) {
                     node = range.startContainer.childNodes[range.startOffset];
+
                     if (!node) {
                         node = range.startContainer.childNodes[range.startOffset - 1];
                         rightMode = true;
                     }
+
                     if (node && sel.isCollapsed && node.nodeType !== Node.TEXT_NODE) {
                         // test Current method - Cursor in the left of some SPAN
                         if (!rightMode && node.previousSibling && node.previousSibling.nodeType === Node.TEXT_NODE) {

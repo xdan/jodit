@@ -91,6 +91,7 @@ export  class ToolbarButton extends ToolbarElement {
 
         return !isEnable;
     }
+
     isActive(): boolean {
         if (typeof this.control.isActive === 'function') {
             return this.control.isActive(this.jodit, this.control, this);
@@ -105,8 +106,6 @@ export  class ToolbarButton extends ToolbarElement {
         let tags: string[],
             elm: Node|false,
             css: {[key: string]: string};
-
-
 
         if (this.control.tags || (this.control.options && this.control.options.tags)) {
             tags = this.control.tags || (this.control.options && this.control.options.tags);

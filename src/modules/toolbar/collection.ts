@@ -163,7 +163,7 @@ export class ToolbarCollection extends ToolbarElement {
     };
 
 
-    private listenEvents: string = 'changeStack mousedown mouseup keydown change afterInit readonly afterResize selectionchange changeSelection focus afterSetMode touchstart';
+    readonly listenEvents: string = 'changeStack mousedown mouseup keydown change afterInit readonly afterResize selectionchange changeSelection focus afterSetMode touchstart';
 
     private initEvents = () => {
         this.jodit.events
