@@ -1,9 +1,8 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
- * License https://xdsoft.net/jodit/license.html
+ * License GNU General Public License version 2 or later;
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
-
 
 import * as consts from "../../constants";
 import {asArray, camelCase, css, dom} from "../Helpers";
@@ -46,6 +45,7 @@ export  class ToolbarButton extends ToolbarElement {
         this.__actived = enable;
         this.container.classList.toggle('jodit_active', enable);
     }
+
     get active() {
         return this.__actived;
     }
@@ -57,8 +57,9 @@ export  class ToolbarButton extends ToolbarElement {
         let matches: number = 0,
             total: number = 0;
 
-        Object.keys(cssObject).forEach((cssProperty) => {
+        Object.keys(cssObject).forEach((cssProperty: string) => {
             const cssValue = cssObject[cssProperty];
+
             if (typeof cssValue === 'function') {
                 if (cssValue(this.jodit, css(node, cssProperty).toString())) {
                     matches += 1;
@@ -68,6 +69,7 @@ export  class ToolbarButton extends ToolbarElement {
                     matches += 1;
                 }
             }
+
             total += 1;
         });
 
@@ -75,7 +77,7 @@ export  class ToolbarButton extends ToolbarElement {
     };
 
     isDisable(): boolean {
-        const mode =  (this.control === undefined || this.control.mode === undefined) ? consts.MODE_WYSIWYG : this.control.mode;
+        const mode: number =  (this.control === undefined || this.control.mode === undefined) ? consts.MODE_WYSIWYG : this.control.mode;
 
         let isEnable: boolean = mode === consts.MODE_SPLIT || mode === this.jodit.getRealMode();
 

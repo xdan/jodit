@@ -1,6 +1,6 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
- * License https://xdsoft.net/jodit/license.html
+ * License GNU General Public License version 2 or later;
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
@@ -70,14 +70,17 @@ export function bold(editor: Jodit) {
         exec: callBack,
         hotkeys: ['ctrl+b','cmd+b']
     });
+
     editor.registerCommand('italic', {
         exec: callBack,
         hotkeys: ['ctrl+i', 'cmd+i']
     });
+
     editor.registerCommand('underline', {
         exec: callBack,
         hotkeys: ['ctrl+u', 'cmd+u']
     });
+
     editor.registerCommand('strikethrough', {
         exec: callBack
     });
