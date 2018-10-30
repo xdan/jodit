@@ -8,6 +8,14 @@ import {Jodit} from '../Jodit';
 import {Config} from "../Config";
 import {ControlType} from "../modules/toolbar/type";
 
+Config.prototype.controls.subscript = <ControlType>{
+    tags: ["sub"],
+};
+
+Config.prototype.controls.superscript = <ControlType>{
+    tags: ["sup"],
+};
+
 Config.prototype.controls.bold = <ControlType>{
     tagRegExp: /^(strong|b)$/i,
     tags: ["strong", "b"],
