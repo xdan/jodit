@@ -61,6 +61,18 @@ Config.prototype.popup = <{[key: string]: Array<ControlType|string>}>{
             }
         },
     ],
+    'jodit-media': [
+        {
+            name: 'bin',
+            tooltip: 'Delete',
+            exec: (editor: Jodit, image: Node) => {
+                if (image.parentNode) {
+                    image.parentNode.removeChild(image);
+                    editor.events.fire('hidePopup');
+                }
+            }
+        },
+    ],
     img: [
         {
             name: 'bin',
@@ -520,7 +532,7 @@ export class inlinePopup extends Plugin{
             .on(this.target,'mousedown keydown touchstart', (e: MouseEvent) => {
                 e.stopPropagation();
             })
-            .on('beforeOpenPopup hidePopup', this.hidePopup)
+            .on('beforeOpenPopup hidePopup afterSetMode', this.hidePopup)
             .on('recalcPositionPopup', this.reCalcPosition)
             .on('getDiffButtons.mobile', (_toolbar: ToolbarCollection) : void | string[] => {
                 if (this.toolbar === _toolbar) {

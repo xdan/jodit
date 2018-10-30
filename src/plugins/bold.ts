@@ -10,10 +10,12 @@ import {ControlType} from "../modules/toolbar/type";
 
 Config.prototype.controls.subscript = <ControlType>{
     tags: ["sub"],
+    tooltip: "subscript",
 };
 
 Config.prototype.controls.superscript = <ControlType>{
     tags: ["sup"],
+    tooltip: "superscript",
 };
 
 Config.prototype.controls.bold = <ControlType>{

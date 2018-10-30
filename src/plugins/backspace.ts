@@ -8,6 +8,7 @@ import {Jodit} from '../Jodit';
 import * as consts from '../constants';
 import {normalizeNode, trim} from '../modules/Helpers';
 import {Dom} from "../modules/Dom";
+import {MAY_BE_REMOVED_WITH_KEY} from "../constants";
 
 /**
  * Plug-in process entering Backspace key
@@ -100,7 +101,9 @@ export function backspace(editor: Jodit) {
             }
         }
     };
-    const potentialRemovable: RegExp = /^(IMG|BR|IFRAME|SCRIPT|INPUT|TEXTAREA|HR|JODIT)$/;
+
+    const potentialRemovable: RegExp = MAY_BE_REMOVED_WITH_KEY;
+
     const removePotential = (node: Node | null): false | void => {
         if (node && potentialRemovable.test(node.nodeName)) {
             node.parentNode && node.parentNode.removeChild(node);

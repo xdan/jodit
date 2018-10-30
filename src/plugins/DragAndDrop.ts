@@ -79,6 +79,7 @@ export class DragAndDrop extends Plugin {
 
             css(this.draggable, {
                 'z-index': 100000000000000,
+                'pointer-events': 'none',
                 position: 'fixed',
                 display: 'inlin-block',
                 left: this.startDragPoint.x,
