@@ -1216,8 +1216,8 @@ describe('Test interface', function() {
                         editor.selection.selectRange(range);
 
                         var bold = editor.container.querySelector('.jodit_toolbar_btn-bold');
-                        var italic = editor.container.querySelector('.jodit_toolbar_italic');
-                        var underline = editor.container.querySelector('.jodit_toolbar_underline');
+                        var italic = editor.container.querySelector('.jodit_toolbar_btn-italic');
+                        var underline = editor.container.querySelector('.jodit_toolbar_btn-underline');
 
                         expect(true).to.be.equal(bold.classList.contains('jodit_active'));
                         expect(true).to.be.equal(italic.classList.contains('jodit_active'));

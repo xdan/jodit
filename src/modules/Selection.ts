@@ -351,6 +351,19 @@ export class Select extends Component{
                             }
                         }
                     }
+
+                    if (node && !sel.isCollapsed && node.nodeType !== Node.TEXT_NODE) {
+                        let leftChild: Node | null = node, rightChild: Node | null = node;
+
+                        do {
+                            leftChild = leftChild.firstChild;
+                            rightChild = rightChild.lastChild;
+                        } while(leftChild && rightChild && leftChild.nodeType !== Node.TEXT_NODE);
+
+                        if (leftChild === rightChild && leftChild && leftChild.nodeType === Node.TEXT_NODE) {
+                            node = leftChild;
+                        }
+                    }
                 }
 
                 // check - cursor inside editor
