@@ -18,7 +18,7 @@ export declare class ToolbarCollection extends ToolbarElement {
     immedateCheckActiveButtons: () => void;
     checkActiveButtons: (this: any) => void;
     private closeAll;
-    private listenEvents;
+    readonly listenEvents: string;
     private initEvents;
     destruct(): void;
 }

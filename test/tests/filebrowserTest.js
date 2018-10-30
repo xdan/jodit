@@ -117,10 +117,13 @@ describe('Jodit FileBrowser Tests', function() {
                             expect(edit.classList.contains('jodit_disabled')).to.be.true;
 
                             simulateEvent('click', 0, filebrowser.browser.querySelectorAll('.jodit_filebrowser_files_item[data-is-file="0"]')[0]);
+
                             expect(edit.classList.contains('jodit_disabled')).to.be.false;
+
                             simulateEvent('click', 0, filebrowser.browser.querySelectorAll('.jodit_filebrowser_files_item[data-is-file="0"]')[1], function (data) {
                                 data[!navigator.userAgent.indexOf("Mac OS X") ? 'ctrlKey' : 'metaKey'] = true;
                             });
+
                             expect(edit.classList.contains('jodit_disabled')).to.be.true;
 
                             filebrowser.close();

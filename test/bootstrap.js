@@ -559,3 +559,7 @@ if ((typeof window.chai !== 'undefined')) {
     };
 }
 
+
+Object.defineProperty(navigator, 'userAgent', {
+    value: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 YaBrowser/18.9.0.3363 Yowser/2.5 Safari/537.36'
+});

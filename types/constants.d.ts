@@ -12,6 +12,7 @@ export declare const SPACE_REG_EXP_START: RegExp;
 export declare const SPACE_REG_EXP_END: RegExp;
 export declare const IS_BLOCK: RegExp;
 export declare const IS_INLINE: RegExp;
+export declare const MAY_BE_REMOVED_WITH_KEY: RegExp;
 export declare const KEY_BACKSPACE = 8;
 export declare const KEY_TAB = 9;
 export declare const KEY_ENTER = 13;
