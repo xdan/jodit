@@ -263,7 +263,9 @@ export  class ToolbarButton extends ToolbarElement {
         if (control.isInput) {
             this.container.classList.add('jodit_toolbar-input');
         } else {
-            this.jodit.events.on(this.container, 'mousedown touchend', this.onMouseDown);
+            this.jodit.events
+                .on(this.container, 'mousedown touchend', this.onMouseDown)
+                .on( `click-${clearName}-btn`, this.onMouseDown);
         }
 
     }
