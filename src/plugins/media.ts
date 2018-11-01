@@ -70,7 +70,7 @@ export function media(editor: Jodit) {
     if (mediaInFakeBlock) {
         editor.events
             .on('afterGetValueFromEditor', (data: {value: string}) => {
-                data.value = data.value.replace(new RegExp(`<${mediaFakeTag}[^>]+data-${keyFake}[^>]+>(.+?)</${mediaFakeTag}>`,'igs'), '$1');
+                data.value = data.value.replace(new RegExp(`<${mediaFakeTag}[^>]+data-${keyFake}[^>]+>(.+?)</${mediaFakeTag}>`,'ig'), '$1');
             })
             .on('change afterInit afterSetMode', debounce(() => {
                 if (!editor.isDestructed && editor.getMode() !== consts.MODE_SOURCE) {

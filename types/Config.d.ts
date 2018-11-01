@@ -24,6 +24,11 @@ export declare class Config {
      * @type {boolean}
      */
     readonly: boolean;
+    /**
+     * Change the disabled state of the editor
+     * @type {boolean}
+     */
+    disabled: boolean;
     activeButtonsInReadOnly: string[];
     /**
      * For example, in Joomla, the top menu bar closes Jodit toolbar when scrolling. Therefore, it is necessary to move the toolbar Jodit by this amount [more](http://xdsoft.net/jodit/doc/#2.5.57)

@@ -295,6 +295,19 @@ export declare class Jodit extends View {
      * @return {string}
      */
     getVersion: () => string;
+    private __wasReadOnly;
+    /**
+     * Switch on/off the editor into the disabled state.
+     * When in disabled, the user is not able to change the editor content
+     * This function firing the `disabled` event.
+     *
+     * @param {boolean} isDisabled
+     */
+    setDisabled(isDisabled: boolean): void;
+    /**
+     * Return true if editor in disabled mode
+     */
+    getDisabled(): boolean;
     /**
      * Switch on/off the editor into the read-only state.
      * When in readonly, the user is not able to change the editor content, but can still use some editor functions (show source code, print content, or seach).

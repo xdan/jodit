@@ -213,7 +213,7 @@ describe('Test states', function() {
 
                 var editor = new Jodit(area);
 
-                expect(editor.container.classList.contains('jodit_disabled')).to.be.false;
+                expect(editor.container.classList.contains('jodit_disabled')).to.be.true;
                 expect(editor.editor.hasAttribute('contenteditable')).to.be.false;
                 expect(editor.getReadOnly()).to.be.true;
                 expect(editor.getDisabled()).to.be.true;

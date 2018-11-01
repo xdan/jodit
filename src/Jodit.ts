@@ -293,10 +293,11 @@ export class Jodit extends View {
 
         this.setMode(mode);
 
+        if (this.options.readonly) {
+            this.setReadOnly(true);
+        }
         if (this.options.disabled) {
             this.setDisabled(true)
-        } else if (this.options.readonly) {
-            this.setReadOnly(true);
         }
 
         //if enter plugin not installed
@@ -1111,6 +1112,10 @@ export class Jodit extends View {
      * @param {boolean} isReadOnly
      */
     setReadOnly(isReadOnly: boolean) {
+        if (this.__wasReadOnly === isReadOnly) {
+            return;
+        }
+
         this.__wasReadOnly = isReadOnly;
         this.options.readonly = isReadOnly;
 
