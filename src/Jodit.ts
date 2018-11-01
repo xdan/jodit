@@ -173,6 +173,23 @@ export class Jodit extends View {
             throw new Error('Element "' + element + '" should be string or HTMLElement instance');
         }
 
+        if (this.element.attributes) {
+            Array.from(this.element.attributes).forEach((attr: Attr) => {
+                const name: string = attr.name;
+                let value: string | boolean = attr.value;
+
+               if (
+                   (<any>Jodit.defaultOptions)[name] !== undefined &&
+                   (<any>options)[name] === undefined
+               ) {
+                   if (['readonly', 'disabled'].indexOf(name) !== -1) {
+                       value = value === '' || value === 'true';
+                   }
+
+                   (<any>this.options)[name] =  value;
+               }
+            });
+        }
 
         if (this.options.events) {
             Object.keys(this.options.events).forEach((key: string) => {
@@ -272,7 +289,9 @@ export class Jodit extends View {
 
         this.setMode(mode);
 
-        if (this.options.readonly) {
+        if (this.options.disabled) {
+            this.setDisabled(true)
+        } else if (this.options.readonly) {
             this.setReadOnly(true);
         }
 
@@ -1050,6 +1069,36 @@ export class Jodit extends View {
         return this.version;
     };
 
+    private __wasReadOnly: boolean = false;
+
+    /**
+     * Switch on/off the editor into the disabled state.
+     * When in disabled, the user is not able to change the editor content
+     * This function firing the `disabled` event.
+     *
+     * @param {boolean} isDisabled
+     */
+    setDisabled(isDisabled: boolean) {
+        this.options.disabled = isDisabled;
+
+        const readOnly: boolean = this.__wasReadOnly;
+        this.setReadOnly(isDisabled || readOnly);
+        this.__wasReadOnly = readOnly;
+
+        if (this.editor) {
+            this.editor.setAttribute('aria-disabled', isDisabled.toString());
+            this.container.classList.toggle('jodit_disabled', isDisabled);
+            this.events.fire('disabled', isDisabled);
+        }
+    }
+
+    /**
+     * Return true if editor in disabled mode
+     */
+    getDisabled(): boolean {
+        return this.options.disabled;
+    }
+
     /**
      * Switch on/off the editor into the read-only state.
      * When in readonly, the user is not able to change the editor content, but can still use some editor functions (show source code, print content, or seach).
@@ -1058,6 +1107,7 @@ export class Jodit extends View {
      * @param {boolean} isReadOnly
      */
     setReadOnly(isReadOnly: boolean) {
+        this.__wasReadOnly = isReadOnly;
         this.options.readonly = isReadOnly;
 
         if (isReadOnly) {

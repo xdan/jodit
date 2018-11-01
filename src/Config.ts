@@ -69,6 +69,14 @@ export class Config {
      * @type {boolean}
      */
     readonly: boolean = false;
+
+    /**
+     * Change the disabled state of the editor
+     * @type {boolean}
+     */
+    disabled: boolean = false;
+
+
     activeButtonsInReadOnly: string[] = ['source', 'fullsize', 'print', 'about', 'dots', 'selectall'];
 
     /**

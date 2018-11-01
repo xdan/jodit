@@ -79,14 +79,18 @@ export  class ToolbarButton extends ToolbarElement {
     isDisable(): boolean {
         const mode: number =  (this.control === undefined || this.control.mode === undefined) ? consts.MODE_WYSIWYG : this.control.mode;
 
+        if (this.jodit.options.disabled) {
+            return true;
+        }
+
+        if (this.jodit.options.readonly && this.jodit.options.activeButtonsInReadOnly.indexOf(this.control.name) === -1) {
+            return true;
+        }
+
         let isEnable: boolean = mode === consts.MODE_SPLIT || mode === this.jodit.getRealMode();
 
         if (typeof this.control.isDisable === 'function') {
             isEnable = isEnable && !this.control.isDisable(this.jodit, this.control, this);
-        }
-
-        if (this.jodit.options.readonly && this.jodit.options.activeButtonsInReadOnly.indexOf(this.control.name) === -1) {
-            isEnable = false;
         }
 
         return !isEnable;
