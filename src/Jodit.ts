@@ -176,14 +176,18 @@ export class Jodit extends View {
         if (this.element.attributes) {
             Array.from(this.element.attributes).forEach((attr: Attr) => {
                 const name: string = attr.name;
-                let value: string | boolean = attr.value;
+                let value: string | boolean | number= attr.value;
 
                if (
                    (<any>Jodit.defaultOptions)[name] !== undefined &&
-                   (<any>options)[name] === undefined
+                   (!options || (<any>options)[name] === undefined)
                ) {
                    if (['readonly', 'disabled'].indexOf(name) !== -1) {
                        value = value === '' || value === 'true';
+                   }
+
+                   if ((/^[0-9]+(\.)?([0-9]+)?$/).test(value.toString())) {
+                       value = Number(value);
                    }
 
                    (<any>this.options)[name] =  value;
