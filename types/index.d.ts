@@ -4,5 +4,6 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 import "./styles/bundle.less";
+import "./types.ts";
 import { Jodit } from './Jodit';
 export = Jodit;

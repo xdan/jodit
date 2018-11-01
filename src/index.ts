@@ -5,6 +5,7 @@
  */
 
 import "./styles/bundle.less";
+import "./types.ts";
 
 // for SSR
 if (typeof window !== 'undefined') {
