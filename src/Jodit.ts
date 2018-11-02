@@ -174,7 +174,7 @@ export class Jodit extends View {
         }
 
         if (this.element.attributes) {
-            Array.from(this.element.attributes).forEach((attr: Attr) => {
+            [].slice.call(this.element.attributes).forEach((attr: Attr) => {
                 const name: string = attr.name;
                 let value: string | boolean | number= attr.value;
 
