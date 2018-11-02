@@ -9,14 +9,17 @@ import 'es6-promise/auto';
 
 (function(e: Element){
     e.matches || (e.matches = (<any>e).matchesSelector !== undefined ? (<any>e).matchesSelector : function (this: Element, selector: string) {
-            const matches: NodeList = this.ownerDocument.querySelectorAll(selector),
-                th = this;
+        if (!this.ownerDocument) {
+            return [];
+        }
 
-            return Array.prototype.some.call(matches, (e: Element) => {
-                return e === th;
-            });
+        const matches: NodeList | null = this.ownerDocument.querySelectorAll(selector),
+            th = this;
+
+        return Array.prototype.some.call(matches, (e: Element) => {
+            return e === th;
         });
-
+    });
 })(Element.prototype);
 
 

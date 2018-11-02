@@ -588,7 +588,7 @@ export const browser = (browser: string): boolean|string => {
 export const offset =  (elm: HTMLElement | Range, jodit: Jodit, doc: Document, recurse: boolean = false): Bound => {
     const rect: ClientRect = elm.getBoundingClientRect(),
         body: HTMLElement = doc.body,
-        docElem: HTMLElement = doc.documentElement,
+        docElem: IHasScroll = doc.documentElement || { clientTop: 0, clientLeft: 0, scrollTop: 0, scrollLeft: 0},
         win: Window = doc.defaultView || (<any>doc).parentWindow,
         scrollTop: number = win.pageYOffset || docElem.scrollTop || body.scrollTop,
         scrollLeft: number = win.pageXOffset || docElem.scrollLeft || body.scrollLeft,
@@ -797,7 +797,7 @@ export const css = (element: HTMLElement, key: string|{[key: string]: number | s
     }
 
     const key2: string = <string>fromCamelCase(<string>key),
-        doc: Document  = element.ownerDocument,
+        doc: Document  = element.ownerDocument || document,
         win = doc ? doc.defaultView || (<any>doc).parentWindow : false;
 
     const currentValue: string | undefined = (<any>element.style)[<string>key];
@@ -805,7 +805,7 @@ export const css = (element: HTMLElement, key: string|{[key: string]: number | s
     let result: string | number = (currentValue !== undefined && currentValue !== '') ? currentValue : ((win && !onlyStyleMode) ? win.getComputedStyle(element).getPropertyValue(key2) : '');
 
     if (numberFieldsReg.test(<string>key) && /^[\-+]?[0-9.]+px$/.test(result.toString())) {
-        result = parseInt(result, 10);
+        result = parseInt(result.toString(), 10);
     }
 
     return normilizeCSSValue(<string>key, result);
@@ -967,7 +967,7 @@ export const val = (elm: HTMLInputElement|HTMLElement, selector: string, value ?
 
 export  const defaultLanguage = (language?: string): string => (
     (language === 'auto' || language === undefined) ?
-            document.documentElement.lang ||
+            (document.documentElement && document.documentElement.lang) ||
             (navigator.language && navigator.language.substr(0, 2)) ||
             ((<any>navigator).browserLanguage ? (<any>navigator).browserLanguage.substr(0, 2) : false) ||
             'en' :
@@ -1130,7 +1130,7 @@ export  const inView = (elm: HTMLElement, root: HTMLElement, doc: Document) => {
     } while (el && el != root && el.parentNode);
 
     // Check its within the document viewport
-    return top <= doc.documentElement.clientHeight;
+    return top <= ((doc.documentElement && doc.documentElement.clientHeight) || 0);
 };
 
 export const scrollIntoView = (elm: HTMLElement, root: HTMLElement, doc: Document) => {

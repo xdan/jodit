@@ -4,18 +4,18 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Jodit} from "../Jodit";
-import {Plugin} from "../modules/Plugin";
-import {css, debounce, offset, splitArray} from "../modules/Helpers";
-import {Table} from "../modules/Table";
-import {Config} from "../Config";
-import {Widget} from "../modules/Widget";
+import { Jodit } from "../Jodit";
+import { Plugin } from "../modules/Plugin";
+import { css, debounce, offset, splitArray } from "../modules/Helpers";
+import { Table } from "../modules/Table";
+import { Config } from "../Config";
+import { Widget } from "../modules/Widget";
 import ColorPickerWidget = Widget.ColorPickerWidget;
 import TabsWidget = Widget.TabsWidget;
-import {Dom} from "../modules/Dom";
-import {ControlType} from "../modules/toolbar/type";
-import {ToolbarCollection} from "../modules/toolbar/collection";
-import {ToolbarPopup} from "../modules/toolbar/popup";
+import { Dom } from "../modules/Dom";
+import { ControlType } from "../modules/toolbar/type";
+import { ToolbarCollection } from "../modules/toolbar/collection";
+import { ToolbarPopup } from "../modules/toolbar/popup";
 
 declare module "../Config" {
     interface Config {
@@ -325,7 +325,17 @@ export class inlinePopup extends Plugin{
 
     private calcWindSizes = (): Bound => {
         const win: Window = this.jodit.ownerWindow;
-        const docElement: HTMLElement = this.jodit.ownerDocument.documentElement;
+        const docElement: HTMLElement | null = this.jodit.ownerDocument.documentElement;
+
+        if (!docElement) {
+            return {
+                left: 0,
+                top: 0,
+                width: 0,
+                height: 0
+            };
+        }
+
         const body: HTMLElement = this.jodit.ownerDocument.body;
         const scrollTop: number = win.pageYOffset || docElement.scrollTop || body.scrollTop;
         const clientTop: number = docElement.clientTop || body.clientTop || 0;

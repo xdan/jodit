@@ -898,7 +898,9 @@ export class Select extends Component{
             $$('*[style*=font-size]', this.jodit.editor).forEach((elm: HTMLElement) => {
                 elm.style && elm.style.fontSize && elm.setAttribute('data-font-size', elm.style.fontSize.toString());
             });
-            this.jodit.editorDocument.execCommand('fontsize', false, 7);
+
+            this.jodit.editorDocument.execCommand('fontsize', false, '7');
+
             $$('*[data-font-size]', this.jodit.editor).forEach((elm: HTMLElement) => {
                 if (elm.style && elm.getAttribute('data-font-size')) {
                     elm.style.fontSize = elm.getAttribute('data-font-size');

@@ -308,12 +308,12 @@ export class Jodit extends View {
 
         // fix for native resizing
         try {
-            this.editorDocument.execCommand('enableObjectResizing', false, false);
+            this.editorDocument.execCommand('enableObjectResizing', false, 'false');
         } catch (ignore) {
         }
 
         try {
-            this.editorDocument.execCommand('enableInlineTableEditing', false, false);
+            this.editorDocument.execCommand('enableInlineTableEditing', false, 'false');
         } catch (ignore) {
         }
     }
@@ -911,7 +911,17 @@ export class Jodit extends View {
      * ```
      */
     getRealMode(): number {
-        return this.getMode() !== consts.MODE_SPLIT ? this.getMode() : (Dom.isOrContains(this.editor, this.ownerDocument.activeElement) || Dom.isOrContains(this.toolbar.container, this.ownerDocument.activeElement)) ? consts.MODE_WYSIWYG : consts.MODE_SOURCE;
+        if (this.getMode() !== consts.MODE_SPLIT) {
+            return this.getMode();
+        }
+
+        const active: Element | null = this.ownerDocument.activeElement;
+
+        if (active && (Dom.isOrContains(this.editor, active) || Dom.isOrContains(this.toolbar.container, active)) ) {
+            return consts.MODE_WYSIWYG;
+        }
+
+        return consts.MODE_SOURCE;
     }
 
     /**

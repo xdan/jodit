@@ -36,3 +36,10 @@ type CommandType = {
     exec: Function,
     hotkeys?: string | string[]
 }
+
+interface  IHasScroll {
+    clientTop: number;
+    clientLeft: number;
+    scrollTop: number;
+    scrollLeft: number;
+}

@@ -609,7 +609,7 @@ export class Uploader {
                 .on('beforePaste',  onPaste)
         }
 
-        const hasFiles = (event: DragEvent) : boolean => event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files.length !== 0;
+        const hasFiles = (event: DragEvent) : boolean => Boolean(event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files.length !== 0);
 
         self.jodit.events
             .on(form,'dragend dragover dragenter dragleave drop', (e: DragEvent) => {
@@ -630,7 +630,7 @@ export class Uploader {
             })
             .on(form, "drop", (event: DragEvent): false | void => {
                 form.classList.remove('jodit_draghover');
-                if (hasFiles(event)) {
+                if (hasFiles(event) && event.dataTransfer && event.dataTransfer.files) {
                     event.preventDefault();
                     event.stopImmediatePropagation();
                     this.sendFiles(event.dataTransfer.files, handlerSuccess, handlerError);

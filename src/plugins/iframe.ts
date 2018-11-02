@@ -176,14 +176,14 @@ export function iframe(editor: Jodit) {
             if (editor.options.iframeCSSLinks) {
                 editor.options.iframeCSSLinks.forEach((href) => {
                     const link: HTMLLinkElement = <HTMLLinkElement>dom('<link rel="stylesheet" href="' + href + '">', doc);
-                    doc.head.appendChild(link);
+                    doc.head && doc.head.appendChild(link);
                 });
             }
 
             if (editor.options.iframeStyle) {
                 const style: HTMLStyleElement = doc.createElement('style');
                 style.innerHTML = editor.options.iframeStyle;
-                doc.head.appendChild(style);
+                doc.head && doc.head.appendChild(style);
             }
         })
         .on('createEditor', async () => {
@@ -213,7 +213,7 @@ export function iframe(editor: Jodit) {
 
 
             if (editor.options.height === 'auto') {
-                doc.documentElement.style.overflowY = 'hidden';
+                doc.documentElement && (doc.documentElement.style.overflowY = 'hidden');
                 const resizeIframe = throttle(() => {
                     if (editor.editor && editor.iframe && editor.options.height === 'auto') {
                         css(editor.iframe, 'height', editor.editor.offsetHeight);
@@ -231,16 +231,18 @@ export function iframe(editor: Jodit) {
             })((<any>editor.editorWindow).Element.prototype);
 
             //throw events in our word
-            editor.events
-                .on(editor.editorDocument.documentElement, 'mousedown touchend', () => {
-                    if (!editor.selection.isFocused()) {
-                        editor.selection.focus();
-                        editor.selection.setCursorIn(editor.editor);
-                    }
-                })
-                .on(editor.editorWindow, 'mousedown touchstart keydown keyup touchend click mouseup mousemove scroll', (e: Event) => {
-                    editor.events && editor.events.fire && editor.events.fire(editor.ownerWindow, e);
-                });
+            if (editor.editorDocument.documentElement) {
+                editor.events
+                    .on(editor.editorDocument.documentElement, 'mousedown touchend', () => {
+                        if (!editor.selection.isFocused()) {
+                            editor.selection.focus();
+                            editor.selection.setCursorIn(editor.editor);
+                        }
+                    })
+                    .on(editor.editorWindow, 'mousedown touchstart keydown keyup touchend click mouseup mousemove scroll', (e: Event) => {
+                        editor.events && editor.events.fire && editor.events.fire(editor.ownerWindow, e);
+                    });
+            }
 
             return false;
         });

@@ -525,7 +525,7 @@ export class Dom {
      * @param {boolean} inStart
      */
     static moveContent(from: Node, to: Node, inStart: boolean = false) {
-        const fragment: DocumentFragment = from.ownerDocument.createDocumentFragment();
+        const fragment: DocumentFragment = (from.ownerDocument || document).createDocumentFragment();
 
         [].slice.call(from.childNodes).forEach((node: Node) => {
             if (node.nodeType !== Node.TEXT_NODE || node.nodeValue !== consts.INVISIBLE_SPACE) {

@@ -139,12 +139,14 @@ export class Table {
      * @param {Boolean} [after=true] Insert a new line after line contains the selected cell
      */
     static appendRow(table: HTMLTableElement, line:false|HTMLTableRowElement = false, after = true) {
+        const doc: Document = table.ownerDocument || document;
+
         let columnsCount: number = Table.getColumnsCount(table),
-            row: HTMLTableRowElement = table.ownerDocument.createElement('tr'),
+            row: HTMLTableRowElement = doc.createElement('tr'),
             j: number;
 
         for (j = 0; j < columnsCount; j += 1) {
-            row.appendChild(table.ownerDocument.createElement('td'))
+            row.appendChild(doc.createElement('td'))
         }
 
         if (after && line && line.nextSibling) {
@@ -218,7 +220,7 @@ export class Table {
         }
 
         for (i = 0; i < box.length; i += 1) {
-            const cell: HTMLTableCellElement = table.ownerDocument.createElement('td');
+            const cell: HTMLTableCellElement = (table.ownerDocument || document).createElement('td');
             const td: HTMLTableCellElement = box[i][j];
             let added: boolean = false;
             if (after) {
@@ -515,10 +517,12 @@ export class Table {
 
         const __marked: HTMLTableCellElement[] = [];
 
+        const doc: Document = table.ownerDocument || document;
+
         Table.getAllSelectedCells(table).forEach((cell: HTMLTableCellElement) => {
-            td = table.ownerDocument.createElement('td');
-            td.appendChild(table.ownerDocument.createElement('br'));
-            tr = table.ownerDocument.createElement('tr');
+            td = doc.createElement('td');
+            td.appendChild(doc.createElement('br'));
+            tr = doc.createElement('tr');
 
             coord = Table.formalCoordinate(table, cell);
 
@@ -568,6 +572,7 @@ export class Table {
             percentage: number;
 
         const __marked: HTMLTableCellElement[] = [];
+        const doc: Document = table.ownerDocument || document;
 
         Table.getAllSelectedCells(table).forEach((cell: HTMLTableCellElement) => {
             coord = Table.formalCoordinate(table, cell);
@@ -581,8 +586,8 @@ export class Table {
                 Table.__mark(cell, 'colspan', cell.colSpan - 1, __marked);
             }
 
-            td = table.ownerDocument.createElement('td');
-            td.appendChild(table.ownerDocument.createElement('br'));
+            td = doc.createElement('td');
+            td.appendChild(doc.createElement('br'));
 
             if (cell.rowSpan > 1) {
                 Table.__mark(td, 'rowspan', cell.rowSpan, __marked);

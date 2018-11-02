@@ -182,7 +182,7 @@ export function paste(editor: Jodit) {
             return (<ClipboardEvent>event).clipboardData;
         }
 
-        return (<DragEvent>event).dataTransfer;
+        return (<DragEvent>event).dataTransfer || new DataTransfer();
     };
 
     editor.events
@@ -229,8 +229,9 @@ export function paste(editor: Jodit) {
             }
 
             if (event && getDataTransfer(event)) {
+                const types: ReadonlyArray<string> | string = getDataTransfer(event).types;
+
                 let i: number,
-                    types: string[] = getDataTransfer(event).types,
                     types_str: string = '',
                     clipboard_html: any = '';
 
@@ -239,7 +240,7 @@ export function paste(editor: Jodit) {
                         types_str += types[i] + ";";
                     }
                 } else {
-                    types_str = types;
+                    types_str = types.toString();
                 }
 
                 if (/text\/html/i.test(types_str)) {
