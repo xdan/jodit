@@ -8,7 +8,7 @@
     "newversion": "npm test && npm version patch --no-git-tag-version && npm run build && npm run newversiongit && npm publish ./",
     "newversiongit": "git add --all  && git commit -m \"New version $npm_package_version. Read more https://github.com/xdan/jodit/releases/tag/$npm_package_version \" && git tag $npm_package_version && git push --tags origin HEAD:master",
     "start": "node server.js",
-    "build": "rm -f build/* && cross-env NODE_ENV=production webpack --progress  && npm run build-no-uglify && npm run types",
+    "build": "rm -f build/* && webpack --mode production --config ./webpack.config.js --progress  && npm run build-no-uglify && npm run types",
     "build-no-uglify": "cross-env NODE_ENV=production-no-uflify webpack --progress",
     "test": "karma start --browsers Firefox karma.conf.js --single-run",
     "jodit": "cd ../jodit-angular/ && npm run newversion && cd ../jodit-joomla && npm run newversion && cd ../jodit-docs && npm run newversion",
@@ -65,6 +65,7 @@
     "typescript": "^3.1.6",
     "url-loader": "^1.1.2",
     "webpack": "^4.24.0",
+    "webpack-cli": "^3.1.2",
     "webpack-dev-middleware": "^3.4.0",
     "webpack-dev-server": "^3.1.10",
     "webpack-hot-middleware": "^2.24.3"

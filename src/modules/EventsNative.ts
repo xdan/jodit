@@ -8,13 +8,13 @@
  * The module editor's event manager
  */
 
-type EventHandlerBlock = {
+export type EventHandlerBlock = {
     event: string,
     originalCallback: Function,
     syntheticCallback: Function
 };
 
-class EventHandlersStore {
+export class EventHandlersStore {
     private __store: {
         [key: string]: {
             [key: string]: Array<EventHandlerBlock>
@@ -40,23 +40,6 @@ class EventHandlersStore {
 
         return false;
     }
-
-    // remove(event: string, namespace: string,  originalCallback: Function) {
-    //     const blocks: EventHandlerBlock[] | void = this.get(namespace, event);
-    //
-    //     if (blocks) {
-    //         return blocks.some((block: EventHandlerBlock, index: number) => {
-    //             if (block.originalCallback === originalCallback) {
-    //                 blocks.splice(index, 1);
-    //                 return true;
-    //             }
-    //
-    //             return false;
-    //         });
-    //     }
-    //
-    //     return false;
-    // }
 
     namespaces(): string[] {
         return Object.keys(this.__store);
@@ -280,10 +263,6 @@ export class EventsNative {
 
                 store.set(event, namespace, block, onTop);
 
-                // if (namespace !== this.__defaultNameSpace) {
-                //     store.set(event, this.__defaultNameSpace, block, onTop);
-                // }
-
                 if (isDOMElement) {
                     (<HTMLElement>subject).addEventListener(event, <EventListener>syntheticCallback, false);
                 }
@@ -369,10 +348,6 @@ export class EventsNative {
                                 found = true;
                             }
                         }
-
-                        // if (found && namespace !== this.__defaultNameSpace) {
-                        //     removeCallbackFromNameSpace(event, this.__defaultNameSpace);
-                        // }
                     }
                 } else {
                     store.events(namespace)

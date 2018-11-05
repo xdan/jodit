@@ -3,8 +3,8 @@
  * License GNU General Public License version 2 or later;
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
-import {ToolbarElement} from "./element";
-import {IViewBased} from "../view/type";
+import { ToolbarElement } from "./element";
+import { IViewBased } from "../view/type";
 
 export class ToolbarSeparator extends ToolbarElement {
     constructor(jodit: IViewBased) {

@@ -4,12 +4,12 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Component} from './Component';
-import {css, dom} from "./Helpers";
-import {ToolbarIcon} from "./toolbar/icon";
-import {IViewBased} from "./view/type";
+import { Component } from './Component';
+import { css, dom } from "./Helpers";
+import { ToolbarIcon } from "./toolbar/icon";
+import { IViewBased } from "./view/type";
 
-type Action = {
+export type Action = {
     icon ?: string;
     title ?: string;
     exec ?: (this: ContextMenu, e: MouseEvent) => false|void;

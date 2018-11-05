@@ -4,7 +4,7 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {IStorage} from "./Storage";
+import { IStorage } from "./Storage";
 
 export class Cookie implements IStorage{
     /**

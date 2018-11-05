@@ -4,11 +4,10 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Jodit} from '../Jodit';
-import {Config} from '../Config';
-import {debounce, dom, offset} from "../modules/Helpers";
-import {Dom} from "../modules/Dom";
-import {ToolbarIcon} from "../modules/toolbar/icon";
+import { Jodit } from '../Jodit';
+import { Config } from '../Config';
+import { debounce, dom, offset } from "../modules/Helpers";
+import { Dom, ToolbarIcon } from "../modules/";
 
 declare module "../Config" {
     interface Config {

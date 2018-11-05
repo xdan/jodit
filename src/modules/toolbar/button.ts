@@ -263,6 +263,18 @@ export  class ToolbarButton extends ToolbarElement {
         if (control.isInput) {
             this.container.classList.add('jodit_toolbar-input');
         } else {
+
+            /**
+             * You can emulate click on some button
+             *
+             * @event click-%buttonName%-btn
+             * @example
+             * ```javascript
+             * var editor = new Jodit('#editor');
+             * editor.events.fire('click-image-btn'); // will open Image popup
+             * ```
+             */
+
             this.jodit.events
                 .on(this.container, 'mousedown touchend', this.onMouseDown)
                 .on( `click-${clearName}-btn`, this.onMouseDown);

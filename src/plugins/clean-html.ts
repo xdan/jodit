@@ -4,13 +4,13 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Jodit} from '../Jodit';
-import {Config} from '../Config'
+import { Jodit } from '../Jodit';
+import { Config } from '../Config'
 import * as consts from '../constants';
-import {cleanFromWord, debounce, normalizeNode, trim} from "../modules/Helpers";
-import {Dom} from "../modules/Dom";
-import {Select} from "../modules/Selection";
-import {IS_INLINE} from "../constants";
+import { cleanFromWord, debounce, normalizeNode, trim } from "../modules/Helpers";
+import { Dom } from "../modules/Dom";
+import { Select } from "../modules/Selection";
+import { IS_INLINE } from "../constants";
 
 /**
  * @property {object} cleanHTML {@link cleanHtml|cleanHtml}'s options

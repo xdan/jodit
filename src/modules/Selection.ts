@@ -5,12 +5,11 @@
  */
 
 import * as consts from '../constants';
-import {Component} from './Component';
-import {each, dom, trim, $$, css, normilizeCSSValue, isIE, isPlainObject, normalizeNode} from './Helpers';
-import {Dom} from "./Dom";
-import {Jodit} from "../Jodit";
-import {INVISIBLE_SPACE_REG_EXP_END, INVISIBLE_SPACE_REG_EXP_START} from "../constants";
-import {INVISIBLE_SPACE} from "../constants";
+import { Component } from './Component';
+import { each, dom, trim, $$, css, normilizeCSSValue, isIE, isPlainObject, normalizeNode } from './Helpers';
+import { Dom } from "./Dom";
+import { Jodit } from "../Jodit";
+import { INVISIBLE_SPACE_REG_EXP_END, INVISIBLE_SPACE_REG_EXP_START, INVISIBLE_SPACE } from "../constants";
 
 export type markerInfo = {
     startId: string,
@@ -79,7 +78,7 @@ export class Select extends Component{
             }
 
             return true;
-        } catch (e) {
+        } catch {
         }
 
         return false;
@@ -237,8 +236,7 @@ export class Select extends Component{
 
             try {
                 sel.addRange(ranges[i].cloneRange());
-            } catch (e) {
-                //console.log(e);
+            } catch {
             }
         }
 
@@ -249,7 +247,8 @@ export class Select extends Component{
      * Set focus in editor
      */
     focus = (): boolean => {
-        const jodit: Jodit = this.jodit;
+        const
+            jodit: Jodit = this.jodit;
 
         if (!this.isFocused()) {
             if (jodit.options.iframe && isIE()) {
@@ -265,17 +264,11 @@ export class Select extends Component{
             jodit.editorWindow.focus();
             jodit.editor.focus();
 
-            const sel: Selection = jodit.editorWindow.getSelection(),
+            const
+                sel: Selection = jodit.editorWindow.getSelection(),
                 range: Range = jodit.editorDocument.createRange();
 
             if (!sel.rangeCount || !this.current()) {
-                // let child: Node|null = jodit.editor.firstChild;
-                //
-                // if (!child) {
-                //     child = jodit.editorDocument.createTextNode(consts.INVISIBLE_SPACE);
-                //     jodit.editor.appendChild(child);
-                // }
-
                 range.setStart(jodit.editor, 0);
                 range.collapse(true);
                 sel.removeAllRanges();
@@ -294,12 +287,14 @@ export class Select extends Component{
      * @return boolean true Selection does't have content
      */
     isCollapsed (): boolean {
-        let sel = this.jodit.editorWindow.getSelection(), r;
+        let sel = this.jodit.editorWindow.getSelection(), r: number;
+
         for (r = 0; r < sel.rangeCount; r += 1) {
             if (!sel.getRangeAt(r).collapsed) {
                 return false;
             }
         }
+
         return true;
     }
 

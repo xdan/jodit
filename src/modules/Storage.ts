@@ -4,7 +4,7 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {camelCase} from "./Helpers";
+import { camelCase } from "./Helpers";
 
 export interface IStorage {
     set(key: string, value: string | number): void;

@@ -4,10 +4,10 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Component} from './Component'
-import {Dom} from "./Dom";
+import { Component } from './Component'
+import { Dom } from "./Dom";
 
-type RangeType = {
+export type RangeType = {
     startContainer: number[];
     startOffset: number;
     endContainer: number[];

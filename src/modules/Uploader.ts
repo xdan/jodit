@@ -4,13 +4,13 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Jodit} from '../Jodit';
-import {Ajax} from './Ajax';
-import {Config} from '../Config'
-import {browser, dom, extend, isIE, isPlainObject} from "./Helpers";
-import {TEXT_PLAIN} from "../constants";
-import {Select} from "./Selection";
-import {IViewBased} from "./view/type";
+import { Jodit } from '../Jodit';
+import { Ajax } from './Ajax';
+import { Config } from '../Config'
+import { browser, dom, extend, isIE, isPlainObject } from "./Helpers";
+import { TEXT_PLAIN } from "../constants";
+import { Select } from "./Selection";
+import { IViewBased } from "./view/type";
 
 export type UploaderData = {
     messages?: string[],
@@ -27,9 +27,9 @@ export type UploaderAnswer = {
     data: UploaderData
 };
 
-type HandlerSuccess = (resp: UploaderData) => void;
-type HandlerError = (e: Error) => void;
-type BuildDataResult = FormData | {[key: string]: string} | Promise<FormData | {[key: string]: string}> | string;
+export type HandlerSuccess = (resp: UploaderData) => void;
+export type HandlerError = (e: Error) => void;
+export type BuildDataResult = FormData | {[key: string]: string} | Promise<FormData | {[key: string]: string}> | string;
 
 /**
  * @property {object} uploader {@link Uploader|Uploader}'s settings

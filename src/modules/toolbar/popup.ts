@@ -4,11 +4,11 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {css, dom, offset, throttle} from "../Helpers";
-import {Dom} from "../Dom";
-import {ToolbarElement} from "./element";
-import {IViewBased} from "../view/type";
-import {Jodit} from "../../Jodit";
+import { css, dom, offset, throttle } from "../Helpers";
+import { Dom } from "../Dom";
+import { ToolbarElement } from "./element";
+import { IViewBased } from "../view/type";
+import { Jodit } from "../../Jodit";
 
 export  class ToolbarPopup extends ToolbarElement {
     constructor(jodit: IViewBased, readonly target: HTMLElement, readonly current?: HTMLElement,  readonly className: string = 'jodit_toolbar_popup') {

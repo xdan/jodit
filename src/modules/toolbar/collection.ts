@@ -4,14 +4,14 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {debounce} from "../Helpers";
-import {ToolbarElement} from "./element";
-import {ToolbarButton} from "./button";
-import {Buttons, Controls, ControlType, ControlTypeStrong} from "./type";
-import {ToolbarBreak} from "./break";
-import {ToolbarSeparator} from "./separator";
-import {IViewBased} from "../view/type";
-import {Jodit} from "../../Jodit";
+import { debounce } from "../Helpers";
+import { ToolbarElement } from "./element";
+import { ToolbarButton } from "./button";
+import { Buttons, Controls, ControlType, ControlTypeStrong } from "./type";
+import { ToolbarBreak } from "./break";
+import { ToolbarSeparator } from "./separator";
+import { IViewBased } from "../view/type";
+import { Jodit } from "../../Jodit";
 
 export class ToolbarCollection extends ToolbarElement {
     constructor(jodit: IViewBased) {
@@ -20,6 +20,7 @@ export class ToolbarCollection extends ToolbarElement {
     }
 
     private __buttons: ToolbarElement[] = [];
+
     getButtonsList(): string[] {
         return this.__buttons
             .map((a: ToolbarElement) => a instanceof ToolbarButton ? a.control.name : '')
@@ -131,7 +132,6 @@ export class ToolbarCollection extends ToolbarElement {
         });
 
         this.__buttons.length = 0;
-        // this.container.parentNode && this.container.parentNode.removeChild(this.container);
     }
 
     immedateCheckActiveButtons = () => {

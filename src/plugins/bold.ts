@@ -4,9 +4,9 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Jodit} from '../Jodit';
-import {Config} from "../Config";
-import {ControlType} from "../modules/toolbar/type";
+import { Jodit } from '../Jodit';
+import { Config } from "../Config";
+import { ControlType } from "../modules/toolbar/type";
 
 Config.prototype.controls.subscript = <ControlType>{
     tags: ["sub"],

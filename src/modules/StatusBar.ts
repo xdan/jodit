@@ -4,8 +4,8 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Component} from "./Component";
-import {Jodit} from "../Jodit";
+import { Component } from "./Component";
+import { Jodit } from "../Jodit";
 
 export class StatusBar extends Component {
     public container: HTMLElement;

@@ -4,13 +4,13 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Config} from '../Config'
-import {$$, css, debounce, dom, throttle, trim} from "./Helpers";
-import {Dialog, Alert, Promt} from "./Dialog";
-import {Jodit} from "../Jodit";
-import {ToolbarIcon} from "./toolbar/icon";
-import {IViewBased} from "./view/type";
-import {Component} from "./Component";
+import { Config } from '../Config'
+import { $$, css, debounce, dom, throttle, trim } from "./Helpers";
+import { Dialog, Alert, Promt } from "./Dialog";
+import { Jodit } from "../Jodit";
+import { ToolbarIcon } from "./toolbar/icon";
+import { IViewBased } from "./view/type";
+import { Component } from "./Component";
 /**
  * @property {ImageEditorOptions} imageeditor module's options
  */
@@ -102,7 +102,6 @@ Config.prototype.imageeditor = {
  * The module allows you toWYSIWYG edit the image: resize or cut any part of it
  *
  */
-
 export class ImageEditor extends Component{
     options: ImageEditorOptions;
     private resizeUseRatio: boolean = true;

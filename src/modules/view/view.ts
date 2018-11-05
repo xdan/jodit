@@ -5,15 +5,16 @@
  */
 
 
-import {Component} from "../Component";
-import {IViewBased, IViewOptions} from "./type";
-import {EventsNative} from "../EventsNative";
-import {ToolbarCollection} from "../toolbar/collection";
-import {Jodit} from "../../Jodit";
-import {MODE_WYSIWYG} from "../../constants";
+import { Component } from "../Component";
+import { IViewBased, IViewOptions } from "./type";
+import { EventsNative } from "../EventsNative";
+import { ToolbarCollection } from "../toolbar/collection";
+import { Jodit } from "../../Jodit";
+import { MODE_WYSIWYG } from "../../constants";
 
 export class View extends Component implements IViewBased {
     public buffer: {[key: string]: any};
+
     progress_bar: HTMLElement;
     container: HTMLDivElement;
 
@@ -86,6 +87,7 @@ export class View extends Component implements IViewBased {
 
         self.options = {...self.options, ...options};
     }
+
     destruct() {
         this.toolbar.destruct();
         super.destruct();

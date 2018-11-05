@@ -4,12 +4,13 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Config} from '../Config'
-import {Component} from './Component'
-import {Snapshot, SnapshotType} from './Snapshot'
-import {Stack} from './Stack'
-import {Jodit} from "../Jodit";
-import {debounce} from "./Helpers";
+import { Config } from '../Config'
+import { Component } from './Component'
+import { Snapshot, SnapshotType } from './Snapshot'
+import { Stack } from './Stack'
+import { Jodit } from "../Jodit";
+import { debounce } from "./Helpers";
+
 /**
  * @property{object} observer module settings {@link Observer|Observer}
  * @property{int} observer.timeout=100 Delay on every change

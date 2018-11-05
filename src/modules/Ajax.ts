@@ -4,9 +4,9 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Config} from '../Config'
-import {each, extend} from "./Helpers";
-import {IViewBased} from "./view/type";
+import { Config } from '../Config'
+import { each, extend } from "./Helpers";
+import { IViewBased } from "./view/type";
 
 /**
  * @property {object} defaultAjaxOptions A set of key/value pairs that configure the Ajax request. All settings are optional
@@ -24,7 +24,7 @@ import {IViewBased} from "./view/type";
 
 declare const XDomainRequest: any;
 
-type AjaxOptions  = {
+export type AjaxOptions  = {
     dataType?: string;
     method?: string;
 

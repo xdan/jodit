@@ -4,8 +4,8 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Jodit} from "../Jodit";
-import {IViewBased} from "./view/type";
+import { Jodit } from "../Jodit";
+import { IViewBased } from "./view/type";
 
 
 export class Component {

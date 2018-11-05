@@ -100,18 +100,7 @@ module.exports = {
                     path.resolve(__dirname, "src/styles/icons"),
                     path.resolve(__dirname, "src/styles/widgets"),
                 ],
-                use: [
-                    {
-                        loader: 'raw-loader',
-                        // options: {
-                        //     removeTags: ['?xml', 'title', 'desc', 'defs', 'style'],
-                        //     removingTagAttrs: ['id', 'version', 'xmlns', 'xmlns:xlink', 'width', 'height'],
-                        //     removeSVGTagAttrs: ['id', 'version', 'xmlns', 'xmlns:xlink', 'width', 'height'],
-                        //     name: '[path][name].[ext]',
-                        //     limit: 4096
-                        // }
-                    }
-                ]
+                use: 'raw-loader'
             },
         ]
     },

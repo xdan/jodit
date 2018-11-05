@@ -13,9 +13,9 @@
  * @param {HTMLTableElement} table Table for which to create a module
  */
 
-import {$$, each, trim} from './Helpers'
+import { $$, each, trim } from './Helpers'
 import * as consts from '../constants';
-import {Dom} from "./Dom";
+import { Dom } from "./Dom";
 
 export class Table {
     static addSelected(td: HTMLTableCellElement) {

@@ -4,9 +4,9 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {EventsNative} from "../EventsNative";
-import {ToolbarCollection} from "../toolbar/collection";
-import {Buttons} from "../toolbar/type";
+import { EventsNative } from "../EventsNative";
+import { ToolbarCollection } from "../toolbar/collection";
+import { Buttons } from "../toolbar/type";
 
 
 export interface IViewOptions {

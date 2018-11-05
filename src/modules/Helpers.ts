@@ -5,15 +5,18 @@
  */
 
 import * as consts from '../constants';
-import {Jodit} from "../Jodit";
-import {Dom} from "./Dom";
-import {KEY_ALIASES} from "../constants";
+import { Jodit } from "../Jodit";
+import { Dom } from "./Dom";
+import { KEY_ALIASES } from "../constants";
 const class2type: {[key: string]: string} = {};
 const toString = class2type.toString;
 const hasOwn = class2type.hasOwnProperty;
 
+/**
+ * Check browser is Internet Explorer
+ */
 export const isIE = () => {
-    return navigator.userAgent.indexOf("MSIE") != -1 || /rv:11.0/i.test(navigator.userAgent);
+    return typeof navigator !== 'undefined' && (navigator.userAgent.indexOf("MSIE") != -1 || /rv:11.0/i.test(navigator.userAgent));
 };
 
 let $$temp:number = 1;
@@ -61,6 +64,10 @@ export const isWindow = (obj: any): boolean => {
     return obj !== null && obj === obj.window;
 };
 
+/**
+ * Get name object's type
+ * @param obj
+ */
 export const type = (obj: any): string => {
     if (obj === null) {
         return 'null';
@@ -102,6 +109,11 @@ each(['Boolean', 'Number', 'String', 'Function', 'Array', 'Date', 'RegExp', 'Obj
 
 export const inArray = (needle: string|number, haystack: Array<number|string>): boolean => (haystack.indexOf(needle) !== -1);
 
+/**
+ * Check if element is simple plaint object
+ *
+ * @param obj
+ */
 export const isPlainObject = (obj: any): boolean => {
     if (typeof obj !== "object" || obj.nodeType || isWindow(obj)) {
         return false;
@@ -203,7 +215,6 @@ export const trim = (value: string): string => {
  * console.log(colorTohex(p.style.color)); // #ffffff
  * ```
  */
-
 export const colorToHex = (color: string): string | false => {
     if (color === 'rgba(0, 0, 0, 0)' || color === '') {
         return false;
@@ -289,6 +300,11 @@ export const normalizeSize = (value: string|number): string => {
     return value.toString();
 };
 
+/**
+ *
+ * @param element
+ * @param win
+ */
 export const getContentWidth = (element: HTMLElement, win: Window) => {
     let pi = (value: string): number => (parseInt(value, 10)),
         style: CSSStyleDeclaration = win.getComputedStyle(element),
@@ -299,6 +315,17 @@ export const getContentWidth = (element: HTMLElement, win: Window) => {
     return width - paddingLeft - paddingRight;
 };
 
+export const innerWidth = (element: HTMLElement, win: Window): number => {
+    const computedStyle: CSSStyleDeclaration = win.getComputedStyle(element);
+
+    let elementWidth: number = element.clientWidth;   // width with padding
+
+    elementWidth -= parseFloat(computedStyle.paddingLeft || '0') + parseFloat(computedStyle.paddingRight || '0');
+
+    return elementWidth;
+};
+
+
 /**
  * CTRL pressed
  *
@@ -306,7 +333,7 @@ export const getContentWidth = (element: HTMLElement, win: Window) => {
  * @return {boolean} true ctrl key was pressed
  */
 export const ctrlKey = (e: MouseEvent|KeyboardEvent): boolean => {
-    if (navigator.userAgent.indexOf("Mac OS X") !== -1) {
+    if (typeof navigator !== 'undefined' && navigator.userAgent.indexOf("Mac OS X") !== -1) {
         if (e.metaKey && !e.altKey) {
             return true;
         }
@@ -320,6 +347,7 @@ const formatUrl = (url: string): string => {
     if (window.location.protocol === 'file:' && /^\/\//.test(url)) {
         url = 'https:' + url;
     }
+
     return url;
 };
 
@@ -327,7 +355,6 @@ export const appendScript = (url: string, callback: (this: HTMLElement, e: Event
     const script: HTMLScriptElement = doc.createElement('script');
     script.className = className;
     script.type = 'text/javascript';
-    script.charset = 'utf-8';
 
     if (callback !== undefined) {
         script.addEventListener ("load", callback, false);
@@ -400,20 +427,6 @@ export const clear = (value: string, removeEmptyBlocks = false): string => {
 
     return value;
 };
-
-// /**
-//  * Convert all `<,>,",'` characters to HTML entities
-//  *
-//  * @method htmlentities
-//  * @param {string} text
-//  * @return {string}
-//  */
-// export const htmlentities = (text: string): string => {
-//     return text.replace(/</gi, "&lt;")
-//         .replace(/>/gi, "&gt;")
-//         .replace(/"/gi, "&quot;")
-//         .replace(/'/gi, "&apos;");
-// };
 
 /**
  * Check if a string is a url
@@ -1209,9 +1222,11 @@ export class JoditArray {
     }
     toString() {
         const out = [];
+
         for (let i = 0; i < this.length; i += 1) {
             out[i] = (<any>this)[i];
         }
+
         return out.toString();
     }
 }
@@ -1221,21 +1236,6 @@ export class JoditObject {
         extend(true, this, data);
     }
 }
-
-export const getRange = () => {
-    var range = window.getSelection().getRangeAt(0);
-    return [range.startContainer, range.startOffset, range.endContainer, range.endOffset];
-};
-
-export const innerWidth = (element: HTMLElement, win: Window): number => {
-    const computedStyle: CSSStyleDeclaration = win.getComputedStyle(element);
-
-    let elementWidth: number = element.clientWidth;   // width with padding
-
-    elementWidth -= parseFloat(computedStyle.paddingLeft || '0') + parseFloat(computedStyle.paddingRight || '0');
-
-    return elementWidth;
-};
 
 /**
  * Normalize keys to some standart name

@@ -4,9 +4,9 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Jodit} from "../../Jodit";
-import {ToolbarButton} from "./button";
-import {IViewBased} from "../view/type";
+import { Jodit } from "../../Jodit";
+import { ToolbarButton } from "./button";
+import { IViewBased } from "../view/type";
 
 export type ControlType = {
     controlName?: string;
@@ -15,6 +15,7 @@ export type ControlType = {
     hotkeys?: string | string[];
     data?: {[key: string]: any};
     isInput?: boolean;
+
     /**
      * You can use it function for control - active/not active button
      * @param {Jodit} editor
@@ -123,6 +124,7 @@ export type ControlType = {
     tags?: string[];
     options?: any;
     css?: {[key: string]: string|string[]}|{[key: string]: (editor: IViewBased | Jodit, value: string) => boolean};
+
     /**
      * String name for existing icons.
      * @example

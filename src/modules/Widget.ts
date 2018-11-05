@@ -4,12 +4,12 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Jodit} from '../Jodit'
-import {normalizeColor, dom, isPlainObject, each, $$, hexToRgb, val} from './Helpers'
-import {Dom} from "./Dom";
-import {Uploader, UploaderData} from "./Uploader";
-import {FileBrowserCallBackData} from "./filebrowser/type";
-import {FileBrowser} from "./filebrowser/filebrowser";
+import { Jodit } from '../Jodit'
+import { normalizeColor, dom, isPlainObject, each, $$, hexToRgb, val } from './Helpers'
+import { Dom } from "./Dom";
+import { Uploader, UploaderData } from "./Uploader";
+import { FileBrowserCallBackData } from "./filebrowser/type";
+import { FileBrowser } from "./filebrowser/filebrowser";
 
 export namespace Widget {
 

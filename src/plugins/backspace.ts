@@ -4,11 +4,11 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Jodit} from '../Jodit';
+import { Jodit } from '../Jodit';
 import * as consts from '../constants';
-import {normalizeNode, trim} from '../modules/Helpers';
-import {Dom} from "../modules/Dom";
-import {MAY_BE_REMOVED_WITH_KEY} from "../constants";
+import { normalizeNode, trim } from '../modules/Helpers';
+import { Dom } from "../modules/";
+import { MAY_BE_REMOVED_WITH_KEY } from "../constants";
 
 /**
  * Plug-in process entering Backspace key

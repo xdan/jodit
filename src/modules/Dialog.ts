@@ -4,26 +4,25 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Jodit} from '../Jodit'
-import {Config} from '../Config'
-import {dom, $$, asArray, css} from './Helpers'
-import {KEY_ESC} from "../constants";
-import {EventsNative} from "./EventsNative";
-import {ToolbarIcon} from "./toolbar/icon";
-import {Buttons, ControlType} from "./toolbar/type";
-import {View} from "./view/view";
-import {IViewBased, IViewOptions} from "./view/type";
-import {ToolbarButton} from "./toolbar/button";
+import { Jodit } from '../Jodit'
+import { Config } from '../Config'
+import { dom, $$, asArray, css } from './Helpers'
+import { KEY_ESC } from "../constants";
+import { EventsNative } from "./EventsNative";
+import { ToolbarIcon } from "./toolbar/icon";
+import { Buttons, ControlType } from "./toolbar/type";
+import { View } from "./view/view";
+import { IViewBased, IViewOptions } from "./view/type";
 
 
 
 /**
- * @property{object} dialog module settings {@link Dialog|Dialog}
- * @property{int} dialog.zIndex=1000 Default Z-index for dialog window. {@link Dialog|Dialog}'s settings
- * @property{boolean} dialog.resizable=true This dialog can resize by trigger
- * @property{boolean} dialog.draggable=true This dialog can move by header
- * @property{boolean} dialog.fullsize=false A dialog window will open in full screen by default
- * @property{Buttons} dialog.buttons=['close.dialog', 'fullsize.dialog']
+ * @property {object} dialog module settings {@link Dialog|Dialog}
+ * @property {int} dialog.zIndex=1000 Default Z-index for dialog window. {@link Dialog|Dialog}'s settings
+ * @property {boolean} dialog.resizable=true This dialog can resize by trigger
+ * @property {boolean} dialog.draggable=true This dialog can move by header
+ * @property {boolean} dialog.fullsize=false A dialog window will open in full screen by default
+ * @property {Buttons} dialog.buttons=['close.dialog', 'fullsize.dialog']
  */
 
 export interface DialogOptions extends IViewOptions {
@@ -149,16 +148,10 @@ export class Dialog extends View implements IViewBased {
         self.dialogbox_content = <HTMLDivElement>self.container.querySelector('.jodit_dialog_content');
         self.dialogbox_footer = <HTMLDivElement>self.container.querySelector('.jodit_dialog_footer');
         self.dialogbox_toolbar = <HTMLDivElement>self.container.querySelector('.jodit_dialog_header>.jodit_dialog_header-toolbar');
-        // self.dialogbox_fullsize = <HTMLAnchorElement>dom('<a href="javascript:void(0)" class="jodit_dialog_header-button jodit_dialog_header_fullsize">' + ToolbarIcon.getIcon(!options.fullsize ? 'fullsize' : 'shrink') + '</a>', this.document);
 
         self.destinition.appendChild(self.container);
 
         self.container.addEventListener('close_dialog', <any>self.close);
-
-        // self.dialogbox_fullsize.addEventListener('click', () => {
-        //     const fullSize: boolean = self.maximization();
-        //     self.dialogbox_fullsize.innerHTML = ToolbarIcon.getIcon(!fullSize ? 'fullsize' : 'shrink');
-        // });
 
         self.toolbar.build(self.options.buttons, self.dialogbox_toolbar);
 
@@ -192,23 +185,6 @@ export class Dialog extends View implements IViewBased {
 
     private moved: boolean = false;
 
-    /**
-     * Get dom element (div.jodit_dialog_box > .div.jodit_dialog)
-     *
-     * @return {HTMLDivElement}
-     */
-    // getDialog() {
-    //     return this.dialog;
-    // }
-
-    /**
-     * Get dom element (div.jodit_dialog_box)
-     *
-     * @return {HTMLDivElement}
-     */
-    // getBox() {
-    //     return this.dialogbox;
-    // }
     /**
      * Specifies the size of the window
      *
@@ -261,6 +237,7 @@ export class Dialog extends View implements IViewBased {
             }
         });
     }
+
     /**
      * Specifies the dialog box title . It can take a string and an array of objects
      *
@@ -411,10 +388,6 @@ export class Dialog extends View implements IViewBased {
 
         this.destroyAfterClose = (destroyAfter === true);
 
-        // if (this.options.fullsizeButton && this.dialogbox_close.parentNode) {
-        //     this.dialogbox_close.parentNode.insertBefore(this.dialogbox_fullsize, this.dialogbox_close);
-        // }
-
         if (title !== undefined) {
             this.setTitle(title);
         }
@@ -434,6 +407,7 @@ export class Dialog extends View implements IViewBased {
         if (this.options.fullsize) {
             this.maximization(true);
         }
+
         /**
          * Called after the opening of the dialog box
          *
@@ -465,6 +439,7 @@ export class Dialog extends View implements IViewBased {
             this.resizeble = false;
             this.unlockSelect();
             if (this.jodit && this.jodit.events) {
+
                 /**
                  * Fired when dialog box is finished to resizing
                  * @event endResize
@@ -517,6 +492,7 @@ export class Dialog extends View implements IViewBased {
             e.stopImmediatePropagation();
             e.preventDefault();
         }
+
         if (this.resizeble && this.options.resizable) {
             this.setSize(this.startPoint.w + e.clientX - this.startX, this.startPoint.h + e.clientY - this.startY);
             if (this.jodit && this.jodit.events) {
@@ -545,6 +521,7 @@ export class Dialog extends View implements IViewBased {
             } else {
                 this.close();
             }
+
             e.stopImmediatePropagation();
         }
     }
@@ -556,6 +533,7 @@ export class Dialog extends View implements IViewBased {
     }
 
     private __isDestructed: boolean = false;
+
     /**
      * It destroys all objects created for the windows and also includes all the handlers for the window object
      */
@@ -638,6 +616,7 @@ export class Dialog extends View implements IViewBased {
             this.jodit.events.fire(this, 'afterClose');
         }
     };
+
     private onResizerMouseDown(e: MouseEvent) {
         this.resizeble = true;
         this.startX = e.clientX;
@@ -853,4 +832,5 @@ export const Confirm = (msg: string, title: string|((yes: boolean) => void)|unde
 
     return dialog;
 };
+
 (<any>Jodit)['Confirm'] = Confirm;

@@ -4,13 +4,13 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {each} from "../Helpers";
-import {Jodit} from "../../Jodit";
-import {ToolbarPopup} from "./popup";
-import {ToolbarCollection} from "./collection";
-import {ToolbarButton} from "./button";
-import {ControlType, ControlTypeStrong} from "./type";
-import {IViewBased} from "../view/type";
+import { each } from "../Helpers";
+import { Jodit } from "../../Jodit";
+import { ToolbarPopup } from "./popup";
+import { ToolbarCollection } from "./collection";
+import { ToolbarButton } from "./button";
+import { ControlType, ControlTypeStrong } from "./type";
+import { IViewBased } from "../view/type";
 
 export  class ToolbarList extends ToolbarPopup {
     private defaultControl  = {
@@ -30,6 +30,7 @@ export  class ToolbarList extends ToolbarPopup {
     public toolbar: ToolbarCollection;
 
     protected getContainer = () => this.toolbar.container;
+
     protected doOpen(control: ControlTypeStrong) {
         this.toolbar = new ToolbarCollection(this.jodit);
 

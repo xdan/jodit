@@ -5,8 +5,8 @@
  */
 
 import * as consts from '../constants';
-import {css, each, trim} from './Helpers'
-import {Jodit} from "../Jodit";
+import { css, each, trim } from './Helpers'
+import { Jodit } from "../Jodit";
 
 export class Dom {
     /**
@@ -248,9 +248,15 @@ export class Dom {
         return (!!node && typeof node.nodeName === 'string' && consts.IS_BLOCK.test(node.nodeName));
     }
 
+    /**
+     * Check element is inline block
+     *
+     * @param node
+     */
     static isInlineBlock(node: Node | null): boolean {
         return !!node && node.nodeType === Node.ELEMENT_NODE && ['inline', 'inline-block'].indexOf(css(<HTMLElement>node, 'display').toString()) !== -1;
     }
+
     /**
      * It's block and it can be split
      *
@@ -331,6 +337,13 @@ export class Dom {
         return false;
     }
 
+    /**
+     * Find next/previous inline element
+     *
+     * @param node
+     * @param toLeft
+     * @param root
+     */
     static findInline = (node: Node | null, toLeft: boolean, root: Node): Node | null => {
         let prevElement: Node | null = node,
             nextElement: Node | null = null;
@@ -540,6 +553,13 @@ export class Dom {
         }
     }
 
+    /**
+     * Call callback condition function for all elements of node
+     *
+     * @param node
+     * @param condition
+     * @param prev
+     */
     static all(node: Node, condition: (element: Node) => boolean|void, prev: boolean = false): Node|void {
         let nodes: Node[] = node.childNodes ? Array.prototype.slice.call(node.childNodes) : [];
 
