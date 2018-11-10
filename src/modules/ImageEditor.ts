@@ -11,11 +11,12 @@ import { Jodit } from "../Jodit";
 import { ToolbarIcon } from "./toolbar/icon";
 import { IViewBased } from "../types/view";
 import { Component } from "./Component";
+
 /**
  * @property {ImageEditorOptions} imageeditor module's options
  */
 
-type ImageEditorOptions = {
+export type ImageEditorOptions = {
     closeAfterSave: boolean;
     width: string|number;
     height: string|number;

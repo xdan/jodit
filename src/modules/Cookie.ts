@@ -6,7 +6,7 @@
 
 import { IStorage } from "./Storage";
 
-export class Cookie implements IStorage{
+export class Cookie implements IStorage {
     /**
      * Set cookie value
      *
@@ -21,6 +21,7 @@ export class Cookie implements IStorage{
      */
     set(name: string|number, value: string|number, days ?: number) {
         let expires: string, date;
+
         if (days) {
             date = new Date();
             date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
@@ -28,6 +29,7 @@ export class Cookie implements IStorage{
         } else {
             expires = '';
         }
+
         document.cookie = name + "=" + value + expires + '; path=/';
     }
 
