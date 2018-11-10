@@ -4,14 +4,13 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Jodit} from '../Jodit';
-import {$$, css} from '../modules/Helpers';
-import {Dom} from "../modules/Dom";
-import {Config} from "../Config";
-import {ControlType} from "../modules/toolbar/type";
-import {ToolbarButton} from "../modules/toolbar/button";
-import {ToolbarIcon} from "../modules/toolbar/icon";
-
+import { Jodit } from '../Jodit';
+import { $$, css } from '../modules/Helpers';
+import { Dom } from "../modules/Dom";
+import { Config } from "../Config";
+import { ControlType } from "../types/toolbar";
+import { ToolbarButton } from "../modules/toolbar/button";
+import { ToolbarIcon } from "../modules/toolbar/icon";
 
 Config.prototype.controls.align = <ControlType>{
     name: 'left',

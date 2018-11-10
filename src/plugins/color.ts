@@ -4,15 +4,15 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Jodit} from '../Jodit';
-import {css, normalizeColor} from '../modules/Helpers';
-import {Config} from "../Config";
-import {Widget} from "../modules/Widget";
+import { Jodit } from '../Jodit';
+import { css, normalizeColor } from '../modules/Helpers';
+import { Config } from "../Config";
+import { Widget } from "../modules/Widget";
 import TabsWidget = Widget.TabsWidget;
 import ColorPickerWidget = Widget.ColorPickerWidget;
-import {Dom} from "../modules/Dom";
-import {ControlType} from "../modules/toolbar/type";
-import {ToolbarButton} from "../modules/toolbar/button";
+import { Dom } from "../modules/Dom";
+import { ControlType } from "../types/toolbar";
+import { ToolbarButton } from "../modules/toolbar/button";
 
 Config.prototype.controls.brush = <ControlType>{
     isActive: (editor: Jodit, btn: ControlType, button: ToolbarButton): boolean => {

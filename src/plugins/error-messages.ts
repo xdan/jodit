@@ -4,9 +4,9 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Jodit} from '../Jodit';
-import {Config} from '../Config'
-import {css, dom} from "../modules/Helpers";
+import { Jodit } from '../Jodit';
+import { Config } from '../Config'
+import { css, dom } from "../modules/Helpers";
 
 declare module "../Config" {
     interface Config {

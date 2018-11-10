@@ -4,12 +4,11 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-
-import {Plugin} from "../modules/Plugin";
-import {css, ctrlKey, dataBind, dom, throttle} from "../modules/Helpers";
-import {TEXT_HTML, TEXT_PLAIN} from "../constants";
-import {Dom} from "../modules/Dom";
-
+import { Plugin } from "../modules/Plugin";
+import { css, ctrlKey, dataBind, dom, throttle } from "../modules/Helpers";
+import { TEXT_HTML, TEXT_PLAIN } from "../constants";
+import { Dom } from "../modules/";
+import { Point } from "../types/types";
 
 /**
  * Process drag and drop image from FileBrowser and movev image inside the editor

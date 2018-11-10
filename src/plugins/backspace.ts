@@ -7,7 +7,7 @@
 import { Jodit } from '../Jodit';
 import * as consts from '../constants';
 import { normalizeNode, trim } from '../modules/Helpers';
-import { Dom } from "../modules/";
+import { Dom } from "../modules/Dom";
 import { MAY_BE_REMOVED_WITH_KEY } from "../constants";
 
 /**

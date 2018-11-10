@@ -4,11 +4,10 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Plugin} from "../modules/Plugin";
-import {Dialog} from "../modules/Dialog";
-import {KEY_DOWN, KEY_ENTER, KEY_UP, SPACE_REG_EXP} from "../constants";
-import {dom} from "../modules/Helpers";
-
+import { Plugin } from "../modules/Plugin";
+import { Dialog } from "../modules/Dialog";
+import { KEY_DOWN, KEY_ENTER, KEY_UP, SPACE_REG_EXP } from "../constants";
+import { dom } from "../modules/Helpers";
 
 /**
  * Show dialog choose content to paste

@@ -4,9 +4,9 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Jodit} from "../Jodit";
-import {css, debounce, dom, throttle} from "../modules/Helpers";
-import {Config} from '../Config'
+import { Jodit } from "../Jodit";
+import { css, debounce, dom, throttle } from "../modules/Helpers";
+import { Config } from '../Config'
 
 declare module "../Config" {
     interface Config {

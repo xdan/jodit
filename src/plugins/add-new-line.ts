@@ -7,7 +7,9 @@
 import { Jodit } from '../Jodit';
 import { Config } from '../Config';
 import { debounce, dom, offset } from "../modules/Helpers";
-import { Dom, ToolbarIcon } from "../modules/";
+import { Dom } from "../modules/Dom";
+import { Bound } from "../types";
+import { ToolbarIcon } from "../modules/toolbar/icon";
 
 declare module "../Config" {
     interface Config {

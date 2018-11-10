@@ -4,14 +4,14 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Jodit} from '../Jodit';
-import {Config} from '../Config'
-import {css} from "../modules/Helpers";
+import { Jodit } from '../Jodit';
+import { Config } from '../Config'
+import { css } from "../modules/Helpers";
 import * as consts from '../constants'
-import {ControlType} from "../modules/toolbar/type";
-import {ToolbarButton} from "../modules/toolbar/button";
-import {ToolbarIcon} from "../modules/toolbar/icon";
-import {IViewBased} from "../modules/view/type";
+import { ControlType } from "../types/toolbar";
+import { ToolbarButton } from "../modules/toolbar/button";
+import { ToolbarIcon } from "../modules/toolbar/icon";
+import { IViewBased } from "../types/view";
 
 /**
  * Fullsize plugin

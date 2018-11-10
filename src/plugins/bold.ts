@@ -6,7 +6,7 @@
 
 import { Jodit } from '../Jodit';
 import { Config } from "../Config";
-import { ControlType } from "../modules/toolbar/type";
+import { ControlType } from "../types/toolbar";
 
 Config.prototype.controls.subscript = <ControlType>{
     tags: ["sub"],

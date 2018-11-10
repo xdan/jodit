@@ -10,11 +10,9 @@ import { dom, $$, asArray, css } from './Helpers'
 import { KEY_ESC } from "../constants";
 import { EventsNative } from "./EventsNative";
 import { ToolbarIcon } from "./toolbar/icon";
-import { Buttons, ControlType } from "./toolbar/type";
+import { Buttons, ControlType } from "../types/toolbar";
 import { View } from "./view/view";
-import { IViewBased, IViewOptions } from "./view/type";
-
-
+import { IViewBased, IViewOptions } from "../types/view";
 
 /**
  * @property {object} dialog module settings {@link Dialog|Dialog}
@@ -67,7 +65,7 @@ Config.prototype.controls.dialog = <{[key: string]: ControlType}> {
  * @param {Object} parent Jodit main object
  * @param {Object} [opt] Extend Options
  */
-export class Dialog extends View implements IViewBased {
+export class Dialog extends View {
     events: EventsNative;
 
     private lockSelect = () => {
@@ -77,7 +75,7 @@ export class Dialog extends View implements IViewBased {
         this.container.classList.remove('jodit_dialog_box-moved');
     };
 
-    public options: DialogOptions
+    public options: DialogOptions;
 
 
     /**

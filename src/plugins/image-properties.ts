@@ -4,19 +4,20 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Jodit} from '../Jodit';
-import {Config} from '../Config'
-import {$$, css, dom, trim, val} from "../modules/Helpers";
-import {Alert, Confirm, Dialog} from "../modules/Dialog";
-import {FileBrowser} from "../modules/filebrowser/filebrowser";
-import {Dom} from "../modules/Dom";
-import {UploaderData} from "../modules/Uploader";
-import {Widget} from "../modules/Widget";
+import { Jodit } from '../Jodit';
+import { Config } from '../Config'
+import { $$, css, dom, trim, val } from "../modules/Helpers";
+import { Dom } from "../modules/Dom";
+import { FileBrowser } from "../modules/filebrowser/filebrowser";
+import { ToolbarIcon } from "../modules/toolbar/icon";
+import { Alert, Confirm, Dialog } from "../modules/Dialog";
+import { Widget } from "../modules/Widget";
 import TabsWidget = Widget.TabsWidget;
 import FileSelectorWidget = Widget.FileSelectorWidget;
-import {ToolbarPopup} from "../modules/toolbar/popup";
-import {ToolbarIcon} from "../modules/toolbar/icon";
-import {FileBrowserCallBackData} from "../modules/filebrowser/type";
+import { ToolbarPopup } from "../modules/toolbar/popup";
+import { FileBrowserCallBackData, UploaderData } from "../types/";
+
+
 /**
  * Plug-in for image editing window
  *

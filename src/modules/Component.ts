@@ -5,7 +5,7 @@
  */
 
 import { Jodit } from "../Jodit";
-import { IViewBased } from "./view/type";
+import { IViewBased } from "../types/view";
 
 
 export class Component {

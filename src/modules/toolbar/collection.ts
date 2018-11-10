@@ -7,11 +7,11 @@
 import { debounce } from "../Helpers";
 import { ToolbarElement } from "./element";
 import { ToolbarButton } from "./button";
-import { Buttons, Controls, ControlType, ControlTypeStrong } from "./type";
 import { ToolbarBreak } from "./break";
 import { ToolbarSeparator } from "./separator";
-import { IViewBased } from "../view/type";
+import { IViewBased } from "../../types/view";
 import { Jodit } from "../../Jodit";
+import { Buttons, Controls, ControlType, ControlTypeStrong } from "../../types/toolbar";
 
 export class ToolbarCollection extends ToolbarElement {
     constructor(jodit: IViewBased) {

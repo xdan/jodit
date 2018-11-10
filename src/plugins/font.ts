@@ -4,11 +4,11 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Jodit} from '../Jodit';
-import {css, normalizeSize} from '../modules/Helpers';
-import {Config} from "../Config";
-import {Dom} from "../modules/Dom";
-import {ControlType} from "../modules/toolbar/type";
+import { Jodit } from '../Jodit';
+import { css, normalizeSize } from '../modules/Helpers';
+import { Config } from "../Config";
+import { Dom } from "../modules/Dom";
+import { ControlType } from "../types/toolbar";
 
 Config.prototype.controls.fontsize = <ControlType>{
     command: 'fontSize',

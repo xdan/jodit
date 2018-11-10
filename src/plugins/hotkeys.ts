@@ -4,11 +4,10 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Jodit} from "../Jodit";
-import {Config} from "../Config";
-import {Component} from "../modules/Component";
-import {IS_MAC} from "../constants";
-import {normalizeKeyAliases} from "../modules/Helpers";
+import { Jodit } from "../Jodit";
+import { Config } from "../Config";
+import { Component } from "../modules/Component";
+import { normalizeKeyAliases } from "../modules/Helpers";
 
 declare module "../Config" {
     interface Config {

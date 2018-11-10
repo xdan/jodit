@@ -4,11 +4,11 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Config} from '../Config'
-import {Jodit} from "../Jodit";
-import {Dom} from "../modules/Dom";
-import {css} from "../modules/Helpers";
-import {ControlType} from "../modules/toolbar/type";
+import { Config } from '../Config'
+import { Jodit } from "../Jodit";
+import { Dom } from "../modules/Dom";
+import { css } from "../modules/Helpers";
+import { ControlType } from "../types/toolbar";
 
 const pluginKey: string = 'copyformat';
 

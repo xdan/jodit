@@ -4,11 +4,10 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Jodit} from '../Jodit';
-import {Dom} from "../modules/Dom";
-import {Config} from "../Config";
-import {markerInfo} from "../modules/Selection";
-
+import { Jodit } from '../Jodit';
+import { Dom } from "../modules/Dom";
+import { Config } from "../Config";
+import { markerInfo } from "../modules/Selection";
 
 Config.prototype.controls.ul = {
     command: 'insertUnorderedList',

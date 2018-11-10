@@ -4,13 +4,13 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Jodit} from '../Jodit';
-import {Dom} from "../modules/Dom";
+import { Jodit } from '../Jodit';
+import { Dom } from "../modules/Dom";
 import * as consts from '../constants';
-import {Config} from "../Config";
-import {markerInfo} from "../modules/Selection";
-import {ToolbarButton} from "../modules/toolbar/button";
-import {ControlType} from "../modules/toolbar/type";
+import { Config } from "../Config";
+import { markerInfo } from "../modules/Selection";
+import { ToolbarButton } from "../modules/toolbar/button";
+import { ControlType } from "../types/toolbar";
 
 
 Config.prototype.controls.paragraph = <ControlType>{

@@ -1,6 +1,6 @@
 {
-  "sourceMap": true,
   "compilerOptions": {
+    "sourceMap": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
     "strictFunctionTypes": true,
@@ -17,7 +17,7 @@
   "module": "umd",
   "moduleResolution": "node",
   "typeRoots": [
-    "./node_modules/@types/"
+    "./node_modules/@types/",
   ],
   "allowSyntheticDefaultImports": true
 }

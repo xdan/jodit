@@ -4,10 +4,10 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Jodit}        from '../Jodit';
-import * as consts  from '../constants';
-import {Table, Dom}        from '../modules/index'
-
+import { Jodit } from '../Jodit';
+import * as consts from '../constants';
+import { Dom } from '../modules/Dom'
+import { Table } from '../modules/Table'
 
 /**
  * Process navigate keypressing in table cell

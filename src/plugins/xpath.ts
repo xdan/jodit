@@ -4,14 +4,14 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Config} from "../Config";
-import {Plugin} from "../modules/Plugin";
-import {debounce, dom, getXPathByElement} from "../modules/Helpers";
-import {Dom} from "../modules/Dom";
-import {INVISIBLE_SPACE, MODE_WYSIWYG} from "../constants";
-import {ContextMenu} from "../modules/ContextMenu";
-import {ToolbarButton} from "../modules/toolbar/button";
-import {ControlType} from "../modules/toolbar/type";
+import { Config } from "../Config";
+import { Plugin } from "../modules/Plugin";
+import { debounce, dom, getXPathByElement } from "../modules/Helpers";
+import { Dom } from "../modules/Dom";
+import { INVISIBLE_SPACE, MODE_WYSIWYG } from "../constants";
+import { ToolbarButton } from "../modules/toolbar/button";
+import { ControlType } from "../types/toolbar";
+import { ContextMenu } from "../modules/ContextMenu";
 
 declare module "../Config" {
     interface Config {

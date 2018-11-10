@@ -4,12 +4,12 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Jodit} from "../Jodit";
-import {Config} from "../Config";
-import {Alert, Dialog} from "../modules/Dialog";
-import {dom} from "../modules/Helpers";
-import {KEY_DOWN, KEY_ENTER, KEY_LEFT, KEY_RIGHT, KEY_UP} from "../constants";
-import {ControlType} from "../modules/toolbar/type";
+import { Jodit } from "../Jodit";
+import { Config } from "../Config";
+import { Alert, Dialog } from "../modules/Dialog";
+import { dom } from "../modules/Helpers";
+import { KEY_DOWN, KEY_ENTER, KEY_LEFT, KEY_RIGHT, KEY_UP } from "../constants";
+import { ControlType } from "../types/toolbar";
 
 declare module "../Config" {
     interface Config {

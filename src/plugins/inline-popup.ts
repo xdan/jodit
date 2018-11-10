@@ -13,9 +13,10 @@ import { Widget } from "../modules/Widget";
 import ColorPickerWidget = Widget.ColorPickerWidget;
 import TabsWidget = Widget.TabsWidget;
 import { Dom } from "../modules/Dom";
-import { ControlType } from "../modules/toolbar/type";
+import { ControlType } from "../types/toolbar";
 import { ToolbarCollection } from "../modules/toolbar/collection";
 import { ToolbarPopup } from "../modules/toolbar/popup";
+import { Bound } from "../types/types";
 
 declare module "../Config" {
     interface Config {

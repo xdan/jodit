@@ -4,14 +4,14 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Jodit} from '../Jodit';
-import {Config} from '../Config'
+import { Jodit } from '../Jodit';
+import { Config } from '../Config'
 import * as consts from '../constants';
-import {$$, appendScript, css, debounce, dom} from '../modules/Helpers';
-import {markerInfo} from "../modules/Selection";
-import {Component} from "../modules/Component";
-import {MODE_SOURCE} from "../constants";
-import {ControlType} from "../modules/toolbar/type";
+import { $$, appendScript, css, debounce, dom } from '../modules/Helpers';
+import { markerInfo } from "../modules/Selection";
+import { Component } from "../modules/Component";
+import { MODE_SOURCE } from "../constants";
+import { ControlType } from "../types/toolbar";
 
 declare module "../Config"  {
     interface Config {

@@ -4,8 +4,8 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Jodit} from '../Jodit';
-import {$$, debounce} from "../modules/Helpers";
+import { Jodit } from '../Jodit';
+import { $$, debounce } from "../modules/Helpers";
 
 const JODIT_IMAGE_PROCESSOR_BINDED = '__jodit_imageprocessor_binded';
 

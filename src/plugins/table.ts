@@ -4,14 +4,14 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Jodit} from '../Jodit';
+import { Jodit } from '../Jodit';
 import * as consts from '../constants';
-import {getContentWidth, $$, dom, offset, scrollIntoView} from '../modules/Helpers';
-import {Config} from '../Config'
-import {Dom, Component, Table} from "../modules/index";
-import {ControlType} from "../modules/toolbar/type";
-import {ToolbarButton} from "../modules/toolbar/button";
-
+import { getContentWidth, $$, dom, offset, scrollIntoView } from '../modules/Helpers';
+import { Config} from '../Config'
+import { Dom, Component, Table } from "../modules/";
+import { ControlType } from "../types/toolbar";
+import { ToolbarButton } from "../modules/toolbar/button";
+import { Bound } from "../types/types";
 
 declare module "../Config" {
     interface Config {

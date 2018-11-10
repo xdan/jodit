@@ -4,12 +4,11 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Jodit} from '../Jodit';
+import { Jodit } from '../Jodit';
 import * as consts from '../constants';
-import {Config} from "../Config";
-import {Component} from "../modules/Component";
-import {ControlType} from "../modules/toolbar/type";
-
+import { Config } from "../Config";
+import { Component } from "../modules/Component";
+import { ControlType } from "../types/toolbar";
 
 Config.prototype.controls.redo = <ControlType> {
     mode: consts.MODE_SPLIT,

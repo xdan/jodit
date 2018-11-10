@@ -5,14 +5,14 @@
  */
 
 import * as consts from "../../constants";
-import {asArray, camelCase, css, dom} from "../Helpers";
-import {Dom} from "../Dom";
-import {ToolbarElement} from "./element";
-import {ControlTypeStrong} from "./type";
-import {Tooltip} from "./tooltip";
-import {ToolbarList} from "./list";
-import {ToolbarPopup} from "./popup";
-import {IViewBased} from "../view/type";
+import { asArray, camelCase, css, dom } from "../Helpers";
+import { Dom } from "../Dom";
+import { ToolbarElement } from "./element";
+import { ControlTypeStrong } from "../../types/toolbar";
+import { Tooltip } from "./tooltip";
+import { ToolbarList } from "./list";
+import { ToolbarPopup } from "./popup";
+import { IViewBased } from "../../types/view";
 
 export  class ToolbarButton extends ToolbarElement {
     readonly control: ControlTypeStrong;

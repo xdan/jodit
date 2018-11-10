@@ -4,15 +4,16 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Jodit} from '../Jodit';
-import {Config} from "../Config";
-import {Dom} from "../modules/Dom";
-import {ControlType} from "../modules/toolbar/type";
-import {BR, PARAGRAPH} from "../constants";
+import { Jodit } from '../Jodit';
+import { Config } from "../Config";
+import { Dom } from "../modules/Dom";
+import { ControlType } from "../types/toolbar";
+import { BR, PARAGRAPH } from "../constants";
 
 Config.prototype.controls.indent = <ControlType>{
     tooltip: "Increase Indent",
 };
+
 Config.prototype.controls.outdent = <ControlType>{
     isDisable: (editor: Jodit): boolean => {
         const current: Node | false = editor.selection.current();

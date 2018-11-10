@@ -4,13 +4,13 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Jodit} from "../Jodit";
-import {Config} from '../Config'
+import { Jodit } from "../Jodit";
+import { Config } from '../Config'
 import * as consts from "../constants";
-import {splitArray} from "../modules/Helpers";
-import {ControlType} from "../modules/toolbar/type";
-import {ToolbarButton} from "../modules/toolbar/button";
-import {ToolbarCollection} from "../modules/toolbar/collection";
+import { splitArray } from "../modules/Helpers";
+import { ControlType } from "../types/toolbar";
+import { ToolbarButton } from "../modules/toolbar/button";
+import { ToolbarCollection } from "../modules/toolbar/collection";
 
 declare module "../Config" {
     interface Config {

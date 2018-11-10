@@ -4,7 +4,7 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 import { ToolbarElement } from "./element";
-import { IViewBased } from "../view/type";
+import { IViewBased } from "../../types/view";
 
 export class ToolbarSeparator extends ToolbarElement {
     constructor(jodit: IViewBased) {

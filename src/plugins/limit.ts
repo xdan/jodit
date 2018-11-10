@@ -3,12 +3,11 @@
  * License GNU General Public License version 2 or later;
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
-import {Config} from '../Config';
-import {Jodit} from "../Jodit";
-import {COMMAND_KEYS, INVISIBLE_SPACE_REG_EXP, SPACE_REG_EXP} from "../constants";
-import {debounce, extractText} from "../modules/Helpers";
-import {SnapshotType} from "../modules/Snapshot";
-
+import { Jodit } from "../Jodit";
+import { Config } from '../Config';
+import { COMMAND_KEYS, INVISIBLE_SPACE_REG_EXP, SPACE_REG_EXP } from "../constants";
+import { debounce, extractText } from "../modules/Helpers";
+import { SnapshotType } from "../modules/Snapshot";
 
 declare module "../Config" {
     interface Config {

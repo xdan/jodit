@@ -9,15 +9,20 @@ import {
     dom, trim, $$, isURL, convertMediaURLToVideoEmbed, val, isLicense, normalizeLicense,
     extend
 } from './modules/Helpers'
-
-import {Jodit} from "./Jodit";
-import {FileBrowserCallBackData} from "./modules/filebrowser/type";
-import {Widget} from "./modules/Widget";
+import { Jodit } from "./Jodit";
+import { FileBrowserCallBackData } from "./types/filebrowser";
+import { Widget } from "./modules/Widget";
 import TabsWidget = Widget.TabsWidget;
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * License GNU General Public License version 2 or later;
+ * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ */
+
 import FileSelectorWidget = Widget.FileSelectorWidget;
-import {Dom} from "./modules/Dom";
-import {Buttons, Controls, ControlType} from "./modules/toolbar/type";
-import {ToolbarIcon} from "./modules/toolbar/icon";
+import { Dom } from "./modules/Dom";
+import { Buttons, Controls, ControlType } from "./types/toolbar";
+import { ToolbarIcon } from "./modules/toolbar/icon";
 
 /**
  * Default Editor's Configuration

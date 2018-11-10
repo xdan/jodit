@@ -7,8 +7,8 @@
 import { Jodit } from '../Jodit'
 import { normalizeColor, dom, isPlainObject, each, $$, hexToRgb, val } from './Helpers'
 import { Dom } from "./Dom";
-import { Uploader, UploaderData } from "./Uploader";
-import { FileBrowserCallBackData } from "./filebrowser/type";
+import { Uploader } from "./Uploader";
+import { FileBrowserCallBackData, UploaderData, RGB } from "../types/";
 import { FileBrowser } from "./filebrowser/filebrowser";
 
 export namespace Widget {
@@ -87,7 +87,7 @@ export namespace Widget {
                     target.innerHTML = Jodit.modules.ToolbarIcon.getIcon('eye');
                     target.classList.add('active');
 
-                    const colorRGB: RGB|null = hexToRgb(color);
+                    const colorRGB: RGB | null = hexToRgb(color);
                     if (colorRGB) {
                         (<HTMLElement>target.firstChild).style.fill = 'rgb(' + (255 - colorRGB.r) + ',' + (255 - colorRGB.g) + ',' + (255 - colorRGB.b) + ')'
                     }

@@ -4,15 +4,15 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Jodit} from '../Jodit';
-import {Confirm, Dialog} from '../modules/Dialog';
+import { Jodit } from '../Jodit';
+import { Confirm, Dialog } from '../modules/Dialog';
 import {
     isHTML, browser, htmlspecialchars, isHTMLFromWord, applyStyles, dom,
     cleanFromWord, isIE, type, trim
 } from '../modules/Helpers';
-import {Config} from '../Config';
-import {INSERT_AS_HTML, INSERT_AS_TEXT, INSERT_CLEAR_HTML, INSERT_ONLY_TEXT, TEXT_HTML, TEXT_PLAIN} from "../constants";
-import {ControlType} from "../modules/toolbar/type";
+import { Config } from '../Config';
+import { INSERT_AS_HTML, INSERT_AS_TEXT, INSERT_CLEAR_HTML, INSERT_ONLY_TEXT, TEXT_HTML, TEXT_PLAIN } from "../constants";
+import { ControlType } from "../types/toolbar";
 
 /**
  * @property{boolean} askBeforePasteHTML=true Ask before paste HTML in WYSIWYG mode

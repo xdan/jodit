@@ -4,11 +4,12 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Jodit} from "../Jodit";
-import {css, offset} from "../modules/Helpers";
-import {Component} from "../modules/Component";
-import {Config} from "../Config";
-import {MODE_WYSIWYG} from "../constants";
+import { Jodit } from "../Jodit";
+import { css, offset } from "../modules/Helpers";
+import { Component } from "../modules/Component";
+import { Config } from "../Config";
+import { MODE_WYSIWYG } from "../constants";
+import { Bound } from "../types/types";
 
 declare module "../Config" {
     interface Config {

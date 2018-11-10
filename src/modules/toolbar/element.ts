@@ -7,9 +7,9 @@
 import { Component } from "../Component";
 import { dom } from "../Helpers";
 import { ToolbarCollection } from "./collection";
-import { ControlTypeStrong } from "./type";
+import { ControlTypeStrong } from "../../types/toolbar";
 import { ToolbarIcon } from "./icon";
-import { IViewBased } from "../view/type";
+import { IViewBased } from "../../types/view";
 
 export abstract class ToolbarElement extends Component {
     container: HTMLElement;

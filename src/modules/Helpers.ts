@@ -8,6 +8,8 @@ import * as consts from '../constants';
 import { Jodit } from "../Jodit";
 import { Dom } from "./Dom";
 import { KEY_ALIASES } from "../constants";
+import { Bound, IHasScroll, RGB } from "../types";
+
 const class2type: {[key: string]: string} = {};
 const toString = class2type.toString;
 const hasOwn = class2type.hasOwnProperty;
@@ -1132,9 +1134,10 @@ export  const inView = (elm: HTMLElement, root: HTMLElement, doc: Document) => {
         if (el && el.parentNode) {
             el = <HTMLElement>el.parentNode;
             rect = el.getBoundingClientRect();
-            if ((top <= rect.bottom) === false) {
+            if (!(top <= rect.bottom)) {
                 return false;
             }
+
             // Check if the element is out of view due to a container scrolling
             if ((top + height) <= rect.top) {
                 return false

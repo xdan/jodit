@@ -6,7 +6,7 @@
 
 
 import { Component } from "../Component";
-import { IViewBased, IViewOptions } from "./type";
+import { IViewBased, IViewOptions } from "../../types/view";
 import { EventsNative } from "../EventsNative";
 import { ToolbarCollection } from "../toolbar/collection";
 import { Jodit } from "../../Jodit";

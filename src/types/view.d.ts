@@ -4,12 +4,11 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { EventsNative } from "../EventsNative";
-import { ToolbarCollection } from "../toolbar/collection";
-import { Buttons } from "../toolbar/type";
+import { EventsNative } from "../modules/EventsNative";
+import { ToolbarCollection } from "../modules/toolbar/collection";
+import { Buttons } from "./toolbar";
 
-
-export interface IViewOptions {
+interface IViewOptions {
     removeButtons: string[];
     buttons: Buttons;
     zIndex?: number;
@@ -19,7 +18,7 @@ export interface IViewOptions {
     useNativeTooltip?: boolean,
 }
 
-export interface IViewBased {
+interface IViewBased {
     id: string;
 
     buffer: {[key: string]: any};

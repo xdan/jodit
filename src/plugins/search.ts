@@ -4,14 +4,14 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-
-import {Jodit} from "../Jodit";
-import {Config} from "../Config";
-import {debounce, dom, trim} from "../modules/Helpers";
-import {Component, Dom, ToolbarIcon} from "../modules/index";
+import { Jodit } from "../Jodit";
+import { Config } from "../Config";
+import { debounce, dom, trim } from "../modules/Helpers";
+import { Component, Dom, ToolbarIcon } from "../modules";
 import * as consts from "../constants";
-import {markerInfo} from "../modules/Selection";
-import {MODE_WYSIWYG} from "../constants";
+import { markerInfo } from "../modules/Selection";
+import { MODE_WYSIWYG } from "../constants";
+import { SelectionRange } from "../types/types";
 
 declare module "../Config" {
     interface Config {

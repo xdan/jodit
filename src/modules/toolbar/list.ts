@@ -9,8 +9,8 @@ import { Jodit } from "../../Jodit";
 import { ToolbarPopup } from "./popup";
 import { ToolbarCollection } from "./collection";
 import { ToolbarButton } from "./button";
-import { ControlType, ControlTypeStrong } from "./type";
-import { IViewBased } from "../view/type";
+import { ControlType, ControlTypeStrong } from "../../types/toolbar";
+import { IViewBased } from "../../types/view";
 
 export  class ToolbarList extends ToolbarPopup {
     private defaultControl  = {

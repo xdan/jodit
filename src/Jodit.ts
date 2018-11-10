@@ -4,25 +4,25 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Component} from './modules/Component';
-import {markerInfo, Select} from './modules/Selection';
-import {FileBrowser} from './modules/filebrowser/filebrowser';
-import {Uploader} from './modules/Uploader';
-import {Dom} from './modules/Dom';
-import {EventsNative} from './modules/EventsNative';
+import { Component } from './modules/Component';
+import { markerInfo, Select } from './modules/Selection';
+import { FileBrowser } from './modules/filebrowser/filebrowser';
+import { Uploader } from './modules/Uploader';
+import { Dom } from './modules/Dom';
+import { EventsNative } from './modules/EventsNative';
 import * as consts from './constants';
 import {
     inArray, dom, sprintf, defaultLanguage, debounce, asArray, splitArray, JoditArray,
     JoditObject, normalizeKeyAliases
 } from './modules/Helpers';
 import * as helper from './modules/Helpers';
-import {Config, OptionsDefault} from "./Config";
-import {StatusBar} from "./modules/StatusBar";
-import {localStorageProvider, Storage} from "./modules/Storage";
-import {Observer} from "./modules/Observer";
-import {ToolbarCollection} from "./modules/toolbar/collection";
-import {View} from "./modules/view/view";
-
+import { Config, OptionsDefault } from "./Config";
+import { StatusBar } from "./modules/StatusBar";
+import { localStorageProvider, Storage } from "./modules/Storage";
+import { Observer } from "./modules/Observer";
+import { ToolbarCollection } from "./modules/toolbar/collection";
+import { View } from "./modules/view/view";
+import { CommandType } from "./types/types";
 
 declare let appVersion: string;
 

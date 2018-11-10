@@ -4,10 +4,10 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Config} from "../Config";
-import {Plugin} from "../modules/Plugin";
-import {throttle} from "../modules/Helpers";
-import {INVISIBLE_SPACE_REG_EXP, SPACE_REG_EXP} from "../constants";
+import { Config } from "../Config";
+import { Plugin } from "../modules/Plugin";
+import { throttle } from "../modules/Helpers";
+import { INVISIBLE_SPACE_REG_EXP, SPACE_REG_EXP } from "../constants";
 
 declare module "../Config" {
     interface Config {

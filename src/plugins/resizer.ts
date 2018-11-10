@@ -4,10 +4,11 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Jodit} from '../Jodit';
-import {Config} from '../Config'
+import { Jodit } from '../Jodit';
+import { Config } from '../Config'
 import * as consts from '../constants'
-import {$$, css, debounce, dom, innerWidth, isIE, offset} from '../modules/Helpers'
+import { $$, css, debounce, dom, innerWidth, isIE, offset } from '../modules/Helpers'
+import { Bound } from "../types/types";
 
 /**
  * The module creates a supporting frame for resizing of the elements img and table

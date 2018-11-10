@@ -9,7 +9,7 @@ import { $$, css, debounce, dom, throttle, trim } from "./Helpers";
 import { Dialog, Alert, Promt } from "./Dialog";
 import { Jodit } from "../Jodit";
 import { ToolbarIcon } from "./toolbar/icon";
-import { IViewBased } from "./view/type";
+import { IViewBased } from "../types/view";
 import { Component } from "./Component";
 /**
  * @property {ImageEditorOptions} imageeditor module's options

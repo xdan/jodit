@@ -6,7 +6,7 @@
 
 import { Jodit } from '../Jodit';
 import { Config } from '../Config';
-import { Dom } from "../modules/";
+import { Dom } from "../modules/Dom";
 
 declare module "../Config" {
     interface Config {

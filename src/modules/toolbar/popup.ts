@@ -7,8 +7,9 @@
 import { css, dom, offset, throttle } from "../Helpers";
 import { Dom } from "../Dom";
 import { ToolbarElement } from "./element";
-import { IViewBased } from "../view/type";
+import { IViewBased } from "../../types/view";
 import { Jodit } from "../../Jodit";
+import { Bound } from "../../types/types";
 
 export  class ToolbarPopup extends ToolbarElement {
     constructor(jodit: IViewBased, readonly target: HTMLElement, readonly current?: HTMLElement,  readonly className: string = 'jodit_toolbar_popup') {

@@ -4,10 +4,10 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {Jodit} from '../Jodit';
-import {$$, scrollIntoView} from "../modules/Helpers"
+import { Jodit } from '../Jodit';
+import { $$, scrollIntoView } from "../modules/Helpers"
 import * as consts from '../constants';
-import {Dom} from "../modules/Dom";
+import { Dom } from "../modules/Dom";
 
 /**
  * Insert default paragraph
