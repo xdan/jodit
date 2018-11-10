@@ -715,7 +715,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
         })
         it('If Enter was pressed inside first empty LI and it was alone LI in UL it should be remove LI and UL and cursor must b inside new P', function () {
             var editor = new Jodit(appendTestArea())
-            editor.setEditorValue('<ul><li></li></ul>');
+            editor.value = '<ul><li> </li></ul>';
 
             var sel = editor.editorWindow.getSelection(),
                 range = editor.editorDocument.createRange();
@@ -727,11 +727,11 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
             simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-            editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
+            editor.selection.insertNode(editor.editorDocument.createTextNode(' a '));
 
-            expect(editor.getEditorValue()).to.be.equal('<p> a <br></p>');
+            expect(editor.value).to.be.equal('<p> a <br></p>');
 
-        })
+        });
         it('If Enter was pressed inside empty LI it should be removed and cursor must be after UL|OL', function () {
             var editor = new Jodit(appendTestArea())
             editor.setEditorValue('<ul><li>Some text</li><li> </li></ul>');
@@ -795,7 +795,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
         it('If Enter was pressed inside start of first empty LI it should remove this LI, and insert new P element before parent UL, cursor should move to inside it', function () {
             var editor = new Jodit(appendTestArea())
-            editor.setEditorValue('<ul><li></li><li>Some text</li></ul>');
+            editor.setEditorValue('<ul><li> </li><li>Some text</li></ul>');
 
             var sel = editor.editorWindow.getSelection(),
                 range = editor.editorDocument.createRange();
@@ -807,14 +807,14 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
             simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-            editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
+            editor.selection.insertNode(editor.editorDocument.createTextNode(' a '));
 
             expect(editor.getEditorValue()).to.be.equal('<p> a <br></p><ul><li>Some text</li></ul>');
-        })
+        });
 
         it('If Enter was pressed inside H1-6 cursor should be move in new paragraph below', function () {
-            var editor = new Jodit(appendTestArea())
-            editor.setEditorValue('<h1>Some text</h1>');
+            var editor = new Jodit(appendTestArea());
+            editor.value = '<h1>Some text</h1>';
 
             var sel = editor.editorWindow.getSelection(),
                 range = editor.editorDocument.createRange();
@@ -826,11 +826,11 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
             simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-            editor.selection.insertNode(editor.editorDocument.createTextNode(' a '))
+            editor.selection.insertNode(editor.editorDocument.createTextNode(' a '));
 
-            expect(editor.getEditorValue()).to.be.equal('<h1>Some text</h1><p> a <br></p>');
+            expect(editor.value).to.be.equal('<h1>Some text</h1><p> a <br></p>');
 
-        })
+        });
 
         describe('If Enter was pressed', function () {
             describe('Prevent plugin work', function () {

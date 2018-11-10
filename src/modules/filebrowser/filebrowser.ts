@@ -19,13 +19,11 @@ import { Ajax } from "../Ajax";
 import { View } from "../view/view";
 
 import {
-    DEFAULT_SOURCE_NAME,
     FileBrowserAjaxOptions,
     FileBrowserAnswer, FileBrowserCallBackData,
     FileBrowserOptions,
     ISource,
-    ISourceFile, ISourcesFiles,
-    ITEM_CLASS
+    ISourceFile, ISourcesFiles
 } from "../../types/filebrowser";
 
 import { IViewBased } from "../../types/view";
@@ -248,6 +246,9 @@ declare module "../../Config" {
         filebrowser: FileBrowserOptions
     }
 }
+
+const DEFAULT_SOURCE_NAME = 'default';
+const ITEM_CLASS = 'jodit_filebrowser_files_item';
 
 Config.prototype.filebrowser = <FileBrowserOptions>{
     filter: function (item, search) {
@@ -558,7 +559,7 @@ export class FileBrowser extends View {
     currentSource: string = DEFAULT_SOURCE_NAME;
     currentBaseUrl: string = '';
 
-    private dialog: Dialog;
+    dialog: Dialog;
 
     /**
      * Container for set/get value

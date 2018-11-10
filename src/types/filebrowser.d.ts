@@ -8,8 +8,6 @@ import { Jodit } from "../Jodit";
 import { Permissions } from "./types";
 import { Buttons } from "./toolbar";
 import { UploaderOptions } from "./uploader";
-import { FileBrowser } from "../modules";
-
 
 /**
  * The module creates a web browser dialog box . In a Web browser , you can select an image , remove , drag it . Upload new
@@ -109,7 +107,7 @@ export interface FileBrowserOptions  {
     showFileSize: boolean;
     showFileChangeTime: boolean;
 
-    getThumbTemplate: (this: FileBrowser, item: ISourceFile, source: ISource, source_name: string) => string;
+    getThumbTemplate: (item: ISourceFile, source: ISource, source_name: string) => string;
 
     ajax: FileBrowserAjaxOptions;
     create: FileBrowserAjaxOptions;
@@ -131,6 +129,3 @@ export type FileBrowserCallBackData = {
     baseurl: string,
     files: string[]
 };
-
-export const DEFAULT_SOURCE_NAME = 'default';
-export const ITEM_CLASS = 'jodit_filebrowser_files_item';
