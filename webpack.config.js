@@ -19,7 +19,8 @@ const banner = `
 module.exports = (env, argv) => {
 
     const debug = !argv || !argv.mode  || !argv.mode.match(/production/);
-    const production = debug ? 'none' : argv.mode;
+    const mode = debug ? 'development' : argv.mode;
+    const uglify = !debug && process.env.NODE_ENV !== 'production-no-uflify';
 
     const css_loaders = [
         debug ? 'style-loader' : MiniCssExtractPlugin.loader,
@@ -57,7 +58,7 @@ module.exports = (env, argv) => {
     const config = {
         cache: true,
         context: __dirname,
-        devtool: debug ? "inline-sourcemap" : false,
+        devtool: !uglify ? "inline-sourcemap" : false,
         entry: debug ? [
             'webpack-hot-middleware/client',
             './src/index'
@@ -68,7 +69,7 @@ module.exports = (env, argv) => {
         },
 
         optimization: {
-            minimize: !debug,
+            minimize: uglify,
             minimizer: [
                 new UglifyJsPlugin({
                     cache: true,
@@ -104,7 +105,7 @@ module.exports = (env, argv) => {
 
         output: {
             path: path.join(__dirname, 'build'),
-            filename: production  !== 'production-no-uflify' ? 'jodit.min.js' : 'jodit.js',
+            filename: (uglify || mode === 'development') ? 'jodit.min.js' : 'jodit.js',
             publicPath: '/build/',
             libraryTarget: "umd",
             library: "Jodit"
@@ -150,7 +151,7 @@ module.exports = (env, argv) => {
     };
 
     if (!debug) {
-        switch (production) {
+        switch (mode) {
             case 'production':
                 config.plugins.push(
                     new MiniCssExtractPlugin({
