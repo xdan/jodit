@@ -8,12 +8,13 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const pkg = require("./package.json");
 
-const banner = `
-   ${pkg.name} - ${pkg.description}
-   Author: ${pkg.author}
-   Version: v${pkg.version}
-   Url: ${pkg.homepage}
-   License(s): ${pkg.license}
+const banner = `/*!
+ ${pkg.name} - ${pkg.description}
+ Author: ${pkg.author}
+ Version: v${pkg.version}
+ Url: ${pkg.homepage}
+ License(s): ${pkg.license}
+*/
 `;
 
 module.exports = (env, argv) => {
@@ -27,7 +28,7 @@ module.exports = (env, argv) => {
         {
             loader: 'css-loader',
             options: {
-                sourceMap: true,
+                sourceMap: debug,
                 importLoaders: 1,
                 minimize: !debug
             }
@@ -35,7 +36,7 @@ module.exports = (env, argv) => {
         {
             loader: 'postcss-loader',
             options: {
-                sourceMap: true,
+                sourceMap: debug,
                 plugins: () => {
                     return [
                         require('precss'),
@@ -47,18 +48,17 @@ module.exports = (env, argv) => {
         {
             loader: 'less-loader',
             options: {
-                sourceMap: true,
+                sourceMap: debug,
                 noIeCompat: true
             }
         },
     ];
 
 
-    console.log(__dirname);
     const config = {
         cache: true,
         context: __dirname,
-        devtool: !uglify ? "inline-sourcemap" : false,
+        devtool: debug ? "inline-sourcemap" : false,
         entry: debug ? [
             'webpack-hot-middleware/client',
             './src/index'
@@ -74,7 +74,7 @@ module.exports = (env, argv) => {
                 new UglifyJsPlugin({
                     cache: true,
                     parallel: true,
-                    extractComments: true,
+                    extractComments: false,
                     uglifyOptions: {
                         ie8: false,
                         mangle: {
@@ -96,6 +96,7 @@ module.exports = (env, argv) => {
                         output: {
                             comments: false,
                             beautify: false,
+                            preamble: banner,
                         },
                         minimize: true
                     }
@@ -166,7 +167,11 @@ module.exports = (env, argv) => {
                 assetNameRegExp: /\.min\.css$/,
                 cssProcessorOptions: { discardComments: { removeAll: true } }
             }),
-            new webpack.BannerPlugin(banner),
+            new webpack.BannerPlugin({
+                banner,
+                raw: true,
+                entryOnly: true,
+            }),
         );
     }
 

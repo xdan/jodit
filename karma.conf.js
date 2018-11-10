@@ -15,7 +15,8 @@ module.exports = function(config) {
             'app.css',
             'src/index.ts',
             'test/bootstrap.js',
-            'test/tests/*.js'
+            'test/tests/*.js',
+            'test/tests/units/*.js',
         ],
         proxies: {
             "/tests/artio.jpg" : "/base/test/tests/artio.jpg",
@@ -23,6 +24,7 @@ module.exports = function(config) {
         },
         reporters: ['progress'],
         port: 2002,
+        hostname: '127.0.0.1',
         colors: true,
         logLevel: config.LOG_INFO,
         browsers: ['ChromeHeadless', 'IE', 'IE9', 'Firefox'],
