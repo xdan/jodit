@@ -12,3 +12,4 @@ export { default as zh_cn } from './zh_cn';
 export { default as es } from './es';
 export { default as nl} from './nl';
 export { default as hu} from './hu';
+export { default as pt_br} from './pt_br';
