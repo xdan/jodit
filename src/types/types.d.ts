@@ -4,6 +4,8 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
+export interface Dictionary<T = any> {[key: string]: T}
+
 export type Bound = {top: number, left: number,  width: number, height: number};
 
 export type Point = {x: number, y: number};

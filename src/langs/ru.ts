@@ -1,4 +1,6 @@
-export default {
+import {Dictionary} from "../types";
+
+export default <Dictionary<string>> {
     'Type something': 'Напишите что-либо',
     // About
     'About Jodit': 'О Jodit',
