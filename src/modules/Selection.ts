@@ -10,6 +10,7 @@ import { each, dom, trim, $$, css, normilizeCSSValue, isIE, isPlainObject, norma
 import { Dom } from "./Dom";
 import { Jodit } from "../Jodit";
 import { INVISIBLE_SPACE_REG_EXP_END, INVISIBLE_SPACE_REG_EXP_START, INVISIBLE_SPACE } from "../constants";
+import {Dictionary} from "../types";
 
 export type markerInfo = {
     startId: string,
@@ -493,7 +494,7 @@ export class Select extends Component{
      *
      * @fired afterInsertImage
      */
-    insertImage(url: string | HTMLImageElement, styles: {[key: string]: string} = {}) {
+    insertImage(url: string | HTMLImageElement, styles: Dictionary<string> = {}) {
 
         const image: HTMLImageElement = typeof url === 'string' ? <HTMLImageElement>dom('<img src=""/>', this.jodit.editorDocument) : <HTMLImageElement>dom(url, this.jodit.editorDocument);
 
@@ -822,7 +823,7 @@ export class Select extends Component{
      * @param {string} nodeName
      * @param {object} options
      */
-    applyCSS = (cssRules ?: {[key:string]: string | number | undefined}, nodeName:string = 'span', options?: Function | {[key: string]: string | string[]} | {[key: string]: (editor: Jodit, elm: HTMLElement) => boolean}) => {
+    applyCSS = (cssRules ?: {[key:string]: string | number | undefined}, nodeName:string = 'span', options?: Function | Dictionary<string | string[]> | Dictionary<(editor: Jodit, elm: HTMLElement) => boolean>) => {
         const WRAP: number  = 1;
         const UNWRAP: number  = 0;
 

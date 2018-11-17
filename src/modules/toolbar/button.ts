@@ -13,6 +13,7 @@ import { Tooltip } from "./tooltip";
 import { ToolbarList } from "./list";
 import { ToolbarPopup } from "./popup";
 import { IViewBased } from "../../types/view";
+import {Dictionary} from "../../types";
 
 export  class ToolbarButton extends ToolbarElement {
     readonly control: ControlTypeStrong;
@@ -51,7 +52,7 @@ export  class ToolbarButton extends ToolbarElement {
     }
 
     private checkActiveStatus = (
-        cssObject: {[key: string]: string|string[]}|{[key: string]: (editor: IViewBased, value: string) => boolean},
+        cssObject: Dictionary<string|string[]> | Dictionary<(editor: IViewBased, value: string) => boolean>,
         node: HTMLElement
     ): boolean => {
         let matches: number = 0,
@@ -108,8 +109,8 @@ export  class ToolbarButton extends ToolbarElement {
         }
 
         let tags: string[],
-            elm: Node|false,
-            css: {[key: string]: string};
+            elm: Node | false,
+            css: Dictionary<string>;
 
         if (this.control.tags || (this.control.options && this.control.options.tags)) {
             tags = this.control.tags || (this.control.options && this.control.options.tags);

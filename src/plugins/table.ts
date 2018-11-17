@@ -11,7 +11,7 @@ import { Config} from '../Config'
 import { Dom, Component, Table } from "../modules/";
 import { ControlType } from "../types/toolbar";
 import { ToolbarButton } from "../modules/toolbar/button";
-import { Bound } from "../types/types";
+import {Bound, Dictionary} from "../types/types";
 
 declare module "../Config" {
     interface Config {
@@ -53,7 +53,7 @@ Config.prototype.controls.table = <ControlType> {
 
             const out: string[] = [];
             if (control.data) {
-                const classList: {[key: string]: string} = control.data.classList;
+                const classList: Dictionary<string> = control.data.classList;
                 Object.keys(classList).forEach((classes: string) => {
                     out.push(`<label><input value="${classes}" type="checkbox"/>${classList[classes]}</label>`);
                 });

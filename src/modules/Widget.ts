@@ -8,7 +8,7 @@ import { Jodit } from '../Jodit'
 import { normalizeColor, dom, isPlainObject, each, $$, hexToRgb, val } from './Helpers'
 import { Dom } from "./Dom";
 import { Uploader } from "./Uploader";
-import { FileBrowserCallBackData, UploaderData, RGB } from "../types/";
+import {FileBrowserCallBackData, UploaderData, RGB, Dictionary} from "../types/";
 import { FileBrowser } from "./filebrowser/filebrowser";
 
 export namespace Widget {
@@ -36,7 +36,7 @@ export namespace Widget {
             form: HTMLDivElement = <HTMLDivElement>dom('<div class="jodit_colorpicker"></div>', editor.ownerDocument),
             iconEye: string = editor.options.textIcons ? '' : Jodit.modules.ToolbarIcon.getIcon('eye'),
             iconEraser: string = editor.options.textIcons ? `<span>${editor.i18n('eraser')}</span>` : Jodit.modules.ToolbarIcon.getIcon('eraser'),
-            eachColor = (colors: string[] | {[key: string]: string[]}) => {
+            eachColor = (colors: string[] | Dictionary<string[]>) => {
                 const stack: string[] = [];
                 if (isPlainObject(colors)) {
                     Object.keys(colors).forEach((key) => {
@@ -125,21 +125,21 @@ export namespace Widget {
      * });
      * ```
      */
-    export const TabsWidget = (editor: Jodit, tabs: {[key: string]: string|HTMLElement|Function}, state?: {__activeTab: string}): HTMLDivElement => {
+    export const TabsWidget = (editor: Jodit, tabs: Dictionary<string | HTMLElement | Function>, state?: {__activeTab: string}): HTMLDivElement => {
         let box: HTMLDivElement = <HTMLDivElement>dom('<div class="jodit_tabs"></div>', editor.ownerDocument),
             tabBox: HTMLDivElement = <HTMLDivElement>dom('<div class="jodit_tabs_wrapper"></div>', editor.ownerDocument),
             buttons: HTMLDivElement = <HTMLDivElement>dom('<div class="jodit_tabs_buttons"></div>', editor.ownerDocument),
-            nameToTab: {[key: string]: {
+            nameToTab: Dictionary<{
                 button: HTMLDivElement,
                 tab: HTMLDivElement
-            }} = {},
+            }> = {},
             firstTab: string = '',
             tabcount: number = 0;
 
         box.appendChild(buttons);
         box.appendChild(tabBox);
 
-        each(tabs, (name: string, tabOptions: Function|HTMLElement) => {
+        each(tabs, (name: string, tabOptions: Function | HTMLElement) => {
             const tab: HTMLDivElement = <HTMLDivElement>dom('<div class="jodit_tab"></div>', editor.ownerDocument),
                 button: HTMLDivElement = <HTMLDivElement>dom('<a href="javascript:void(0);"></a>', editor.ownerDocument);
 
@@ -260,7 +260,7 @@ export namespace Widget {
         isImage: boolean = true
     ): HTMLDivElement =>{
         let currentImage: any;
-        const tabs: { [key: string]: HTMLElement | Function } = {};
+        const tabs: Dictionary<HTMLElement | Function> = {};
 
         if (callbacks.upload && editor.options.uploader &&
             (editor.options.uploader.url || editor.options.uploader.insertImageAsBase64URI)

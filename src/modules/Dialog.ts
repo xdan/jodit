@@ -13,6 +13,7 @@ import { ToolbarIcon } from "./toolbar/icon";
 import { Buttons, ControlType } from "../types/toolbar";
 import { View } from "./view/view";
 import { IViewBased, IViewOptions } from "../types/view";
+import {Dictionary} from "../types";
 
 /**
  * @property {object} dialog module settings {@link Dialog|Dialog}
@@ -43,7 +44,7 @@ Config.prototype.dialog = {
     removeButtons: [],
 };
 
-Config.prototype.controls.dialog = <{[key: string]: ControlType}> {
+Config.prototype.controls.dialog = <Dictionary<ControlType>> {
     close: {
         icon: 'cancel',
         exec: (dialog: IViewBased) => {

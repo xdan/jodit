@@ -12,6 +12,7 @@ import { ToolbarSeparator } from "./separator";
 import { IViewBased } from "../../types/view";
 import { Jodit } from "../../Jodit";
 import { Buttons, Controls, ControlType, ControlTypeStrong } from "../../types/toolbar";
+import {Dictionary} from "../../types";
 
 export class ToolbarCollection extends ToolbarElement {
     constructor(jodit: IViewBased) {
@@ -59,11 +60,11 @@ export class ToolbarCollection extends ToolbarElement {
         } else {
             const list: string[] = button.split(/\./);
 
-            let store: {[key: string]: ControlType} = controls;
+            let store: Dictionary<ControlType> = controls;
 
             if (list.length > 1) {
                 if (controls[list[0]] !== undefined) {
-                    store = <{[key: string]: ControlType}>controls[list[0]];
+                    store = <Dictionary<ControlType>>controls[list[0]];
                     button = list[1];
                 }
             }

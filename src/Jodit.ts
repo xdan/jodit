@@ -22,7 +22,7 @@ import { localStorageProvider, Storage } from "./modules/Storage";
 import { Observer } from "./modules/Observer";
 import { ToolbarCollection } from "./modules/toolbar/collection";
 import { View } from "./modules/view/view";
-import { CommandType } from "./types/types";
+import {CommandType, Dictionary} from "./types/types";
 
 declare let appVersion: string;
 
@@ -41,12 +41,12 @@ export class Jodit extends View {
      * @type {{}}
      * @see copyformat plugin
      */
-    public buffer: {[key: string]: any};
+    public buffer: Dictionary;
 
     static defaultOptions: Config;
     static plugins: any =  {};
     static modules: any =  {};
-    static instances: {[key: string]: Jodit} = {};
+    static instances: Dictionary<Jodit> = {};
     static lang: any = {};
 
     /**
@@ -318,7 +318,7 @@ export class Jodit extends View {
         }
     }
 
-    __plugins: {[key: string]: JoditPlugin} = {};
+    __plugins: Dictionary<JoditPlugin> = {};
 
     private __initPlugines() {
         const disable: string[] = Array.isArray(this.options.disablePlugins) ? this.options.disablePlugins.map((pluginName: string) => {
@@ -684,7 +684,7 @@ export class Jodit extends View {
         this.setEditorValue(html);
     }
 
-    private commands: {[key: string]: Array<CommandType | Function>} = {};
+    private commands: Dictionary<Array<CommandType | Function>> = {};
 
     private execCustomCommands(commandName: string, second = false, third: null|any = null): false | void {
         commandName = commandName.toLowerCase();

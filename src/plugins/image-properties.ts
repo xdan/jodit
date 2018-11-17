@@ -15,7 +15,7 @@ import { Widget } from "../modules/Widget";
 import TabsWidget = Widget.TabsWidget;
 import FileSelectorWidget = Widget.FileSelectorWidget;
 import { ToolbarPopup } from "../modules/toolbar/popup";
-import { FileBrowserCallBackData, UploaderData } from "../types/";
+import {Dictionary, FileBrowserCallBackData, UploaderData} from "../types/";
 
 
 /**
@@ -319,7 +319,7 @@ export function imageProperties(editor: Jodit) {
         let timer: number,
             lockSize: boolean = true,
             lockMargin: boolean = true,
-            tabs: {[key: string]: HTMLElement} = {},
+            tabs: Dictionary<HTMLElement> = {},
             tabsbox: HTMLElement|null = prop.querySelector('.tabsbox');
 
         tabs[editor.i18n('Image')] = mainTab;

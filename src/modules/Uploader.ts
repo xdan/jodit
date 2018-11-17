@@ -11,7 +11,7 @@ import { browser, dom, extend, isIE, isPlainObject } from "./Helpers";
 import { TEXT_PLAIN } from "../constants";
 import { Select } from "./Selection";
 import {
-    BuildDataResult,
+    BuildDataResult, Dictionary,
     HandlerError,
     HandlerSuccess,
     IViewBased,
@@ -130,7 +130,7 @@ export class Uploader {
         }
     }
 
-    buildData(data: FormData | {[key: string]: string} | string): BuildDataResult {
+    buildData(data: FormData | Dictionary<string> | string): BuildDataResult {
         if (this.options.buildData && typeof this.options.buildData === 'function') {
             return this.options.buildData.call(this, data);
         }
@@ -156,9 +156,9 @@ export class Uploader {
     }
 
 
-    send(data: FormData | {[key: string]: string}, success: (resp: UploaderAnswer) => void): Promise<any> {
+    send(data: FormData | Dictionary<string>, success: (resp: UploaderAnswer) => void): Promise<any> {
         const requestData: BuildDataResult = this.buildData(data),
-            sendData = (request: FormData | {[key: string]: string} | string): Promise<any> => {
+            sendData = (request: FormData | Dictionary<string> | string): Promise<any> => {
                 const ajax: Ajax = new Ajax(this.jodit || this, {
                     xhr: () => {
                         const xhr: XMLHttpRequest = new XMLHttpRequest();

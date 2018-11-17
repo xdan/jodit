@@ -6,6 +6,7 @@
 
 import { Ajax } from "../modules/Ajax";
 import { Uploader } from "../modules/Uploader";
+import { Dictionary } from "./types";
 
 export type UploaderData = {
     messages?: string[],
@@ -24,7 +25,7 @@ export type UploaderAnswer = {
 
 export type HandlerSuccess = (resp: UploaderData) => void;
 export type HandlerError = (e: Error) => void;
-export type BuildDataResult = FormData | {[key: string]: string} | Promise<FormData | {[key: string]: string}> | string;
+export type BuildDataResult = FormData | Dictionary<string> | Promise<FormData | Dictionary<string>> | string;
 
 /**
  * @property {object} uploader {@link Uploader|Uploader}'s settings
@@ -155,13 +156,13 @@ export type UploaderOptions = {
     url: string;
     insertImageAsBase64URI: boolean;
     imagesExtensions: string[];
-    headers?: {[key: string]: string} | null,
+    headers?: Dictionary<string> | null,
     data: null|object,
     format: string;
 
     prepareData: (this: Uploader, formData: FormData) => any;
     buildData?: (this: Uploader, formData: any) => BuildDataResult;
-    queryBuild?: (this: Ajax, obj: string | {[key: string] : string | object} | FormData, prefix?: string) => string | object;
+    queryBuild?: (this: Ajax, obj: string | Dictionary<string | object> | FormData, prefix?: string) => string | object;
 
     isSuccess: (this: Uploader, resp: UploaderAnswer) => boolean;
 

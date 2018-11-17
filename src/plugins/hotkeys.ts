@@ -8,10 +8,12 @@ import { Jodit } from "../Jodit";
 import { Config } from "../Config";
 import { Component } from "../modules/Component";
 import { normalizeKeyAliases } from "../modules/Helpers";
+import { Dictionary } from "../types";
 
 declare module "../Config" {
+
     interface Config {
-        commandToHotkeys: {[key: string]:string | string[]}
+        commandToHotkeys: Dictionary<string | string[]>
     }
 }
 

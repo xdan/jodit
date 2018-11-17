@@ -6,6 +6,7 @@
 
 import { Jodit } from "../Jodit";
 import { IViewBased } from "../types/view";
+import {Dictionary} from "../types";
 
 
 export class Component {
@@ -38,7 +39,7 @@ export class Component {
 
     destruct() {}
 
-    private __modulesInstances: {[key: string]: Component} = {};
+    private __modulesInstances: Dictionary<Component> = {};
 
     getInstance(moduleName: string, options?: object): Component {
         if (Jodit.modules[moduleName] === undefined) {

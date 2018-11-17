@@ -5,7 +5,7 @@
  */
 
 import { Jodit } from "../Jodit";
-import { Permissions } from "./types";
+import {Dictionary, Permissions} from "./types";
 import { Buttons } from "./toolbar";
 import { UploaderOptions } from "./uploader";
 
@@ -53,7 +53,7 @@ export type FileBrowserAjaxOptions = {
     url?: string;
     async?: boolean;
 
-    data: { [key: string]: string };
+    data: Dictionary<string>;
     cache?: boolean;
     contentType?: string;
 
@@ -61,9 +61,9 @@ export type FileBrowserAjaxOptions = {
     processData?: boolean;
     dataType?: string;
 
-    headers?: { [key: string]: string };
+    headers?: Dictionary<string>;
 
-    prepareData?: (data: { [key: string]: string }) => { [key: string]: string };
+    prepareData?: (data: Dictionary<string>) => Dictionary<string>;
 
     process?: (resp: FileBrowserAnswer) => FileBrowserAnswer;
 }

@@ -5,6 +5,8 @@
  */
 
 
+import {Dictionary} from "./types";
+
 export const INVISIBLE_SPACE = "\uFEFF";
 export const INVISIBLE_SPACE_REG_EXP = /[\uFEFF]/g;
 export const INVISIBLE_SPACE_REG_EXP_END = /[\uFEFF]+$/g;
@@ -99,7 +101,7 @@ export const IS_MAC = (
     /Mac|iPod|iPhone|iPad/.test(window.navigator.platform)
 );
 
-export const KEY_ALIASES: {[key: string]: string} = {
+export const KEY_ALIASES: Dictionary<string> = {
     add: '+',
     break: 'pause',
     cmd: 'meta',

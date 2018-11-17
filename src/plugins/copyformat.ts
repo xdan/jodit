@@ -9,6 +9,7 @@ import { Jodit } from "../Jodit";
 import { Dom } from "../modules/Dom";
 import { css } from "../modules/Helpers";
 import { ControlType } from "../types/toolbar";
+import {Dictionary} from "../types";
 
 const pluginKey: string = 'copyformat';
 
@@ -34,7 +35,7 @@ const copyStyles: string[] = [
     'fontFamily'
 ];
 
-const getStyle = (editor: Jodit, key: string, box: HTMLElement, defaultStyles: {[key: string]: string | number}):  string | number | undefined => {
+const getStyle = (editor: Jodit, key: string, box: HTMLElement, defaultStyles: Dictionary<string | number>):  string | number | undefined => {
     let result:  string | number  | undefined = css(box, key);
 
     if (result == defaultStyles[key]) {
@@ -48,8 +49,8 @@ const getStyle = (editor: Jodit, key: string, box: HTMLElement, defaultStyles: {
     return result;
 };
 
-const getStyles = (editor: Jodit, box: HTMLElement, defaultStyles: {[key: string]: string | number}): {[key: string]: string | number | undefined} => {
-    const result: {[key: string]: string | number | undefined} = {};
+const getStyles = (editor: Jodit, box: HTMLElement, defaultStyles: Dictionary<string | number>): Dictionary<string | number | undefined> => {
+    const result: Dictionary<string | number | undefined> = {};
 
     if (box) {
 
@@ -71,7 +72,7 @@ Config.prototype.controls.copyformat = <ControlType>{
                 editor.buffer[pluginKey] = false;
                 editor.events.off(editor.editor,'mouseup.' + pluginKey);
             } else {
-                const defaultStyles: {[key: string]: string | number} = {};
+                const defaultStyles: Dictionary<string | number> = {};
                 const box: HTMLElement = <HTMLElement>Dom.up(current, (elm: Node | null) => (elm && elm.nodeType !== Node.TEXT_NODE), editor.editor) || editor.editor;
 
 
@@ -88,7 +89,7 @@ Config.prototype.controls.copyformat = <ControlType>{
                     ideal.parentNode && ideal.parentNode.removeChild(ideal);
                 }
 
-                const format: {[key: string]: string | number | undefined}  = getStyles(editor, box, defaultStyles);
+                const format: Dictionary<string | number | undefined>  = getStyles(editor, box, defaultStyles);
 
                 const onmousedown: Function = () => {
                     editor.buffer[pluginKey] = false;

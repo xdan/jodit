@@ -17,10 +17,12 @@ import { ControlType } from "../types/toolbar";
 import { ToolbarCollection } from "../modules/toolbar/collection";
 import { ToolbarPopup } from "../modules/toolbar/popup";
 import { Bound } from "../types/types";
+import { Dictionary } from "../types";
 
 declare module "../Config" {
+
     interface Config {
-        popup: {[key: string]: Array<ControlType|string>},
+        popup: Dictionary<Array<ControlType|string>>,
         toolbarInline: boolean;
         toolbarInlineDisableFor: string | string[];
     }
@@ -29,7 +31,7 @@ declare module "../Config" {
 Config.prototype.toolbarInline = true;
 Config.prototype.toolbarInlineDisableFor = [];
 
-Config.prototype.popup = <{[key: string]: Array<ControlType|string>}>{
+Config.prototype.popup = <Dictionary<Array<ControlType | string>>>{
     a: [
         <ControlType>{
             name: 'eye',

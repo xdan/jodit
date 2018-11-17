@@ -28,7 +28,7 @@ import {
 
 import { IViewBased } from "../../types/view";
 import { ControlType } from "../../types/toolbar";
-import { Permissions } from "../../types/types";
+import {Dictionary, Permissions} from "../../types/types";
 import { UploaderOptions } from "../../types/uploader";
 
 declare module "../../Config" {
@@ -443,7 +443,7 @@ Config.prototype.filebrowser = <FileBrowserOptions>{
     uploader: null // use default Uploader's settings
 };
 
-Config.prototype.controls.filebrowser = <{[key: string]: ControlType}> {
+Config.prototype.controls.filebrowser = <Dictionary<ControlType>> {
     upload: <ControlType>{
         icon: 'plus',
         isInput: true,

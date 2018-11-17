@@ -23,6 +23,7 @@ import FileSelectorWidget = Widget.FileSelectorWidget;
 import { Dom } from "./modules/Dom";
 import { Buttons, Controls, ControlType } from "./types/toolbar";
 import { ToolbarIcon } from "./modules/toolbar/icon";
+import {Dictionary} from "./types";
 
 /**
  * Default Editor's Configuration
@@ -31,7 +32,7 @@ import { ToolbarIcon } from "./modules/toolbar/icon";
 export class Config {
     license: string = '';
     preset: string = 'custom';
-    presets: {[key: string]: any} = {
+    presets: Dictionary<any> = {
         inline: {
             inline: true,
             toolbar: false,
@@ -240,7 +241,7 @@ export class Config {
      * })
      * ```
      */
-    minHeight: number|string = 200;
+    minHeight: number | string = 200;
 
     /**
      * The writing direction of the language which is used to create editor content. Allowed values are: '' (an empty string) – Indicates that content direction will be the same as either the editor UI direction or the page element direction. 'ltr' – Indicates a Left-To-Right text direction (like in English). 'rtl' – Indicates a Right-To-Left text direction (like in Arabic).
@@ -302,7 +303,7 @@ export class Config {
      * console.log(editor.i18n('Type something')) //Начните что-либо вводить
      * ```
      */
-    i18n: {[key: string] : any} | string = 'en';
+    i18n: Dictionary | string = 'en';
 
     /**
      * The tabindex global attribute is an integer indicating if the element can take input focus (is focusable), if it should participate to sequential keyboard navigation, and if so, at what position. It can take several values
@@ -369,7 +370,7 @@ export class Config {
      * })
      * ```
      */
-    colors: {[key: string]: string[]}|string[] = {
+    colors: Dictionary<string[]> | string[] = {
         greyscale:  ['#000000', '#434343', '#666666', '#999999', '#B7B7B7', '#CCCCCC', '#D9D9D9', '#EFEFEF', '#F3F3F3', '#FFFFFF'],
         palette:    ['#980000', '#FF0000', '#FF9900', '#FFFF00', '#00F0F0', '#00FFFF', '#4A86E8', '#0000FF', '#9900FF', '#FF00FF'],
         full: [
@@ -422,7 +423,7 @@ export class Config {
      * });
      * ```
      */
-    disablePlugins: string[]|string = [];
+    disablePlugins: string[] | string = [];
 
     /**
      * This buttons list will be added to option.buttons
@@ -606,7 +607,7 @@ export class Config {
      */
     controls: Controls;
 
-    events: {[key: string]: Function} = {};
+    events: Dictionary<Function> = {};
 
     /**
      * Buttons in toolbat without SVG - only texts
@@ -687,17 +688,6 @@ Config.prototype.controls = {
                         '<a href="https://xdsoft.net/jodit/doc/" target="_blank">' + editor.i18n('Jodit User\'s Guide') + '</a> ' +
                         editor.i18n('contains detailed help for using') +
                     '</div>' +
-                    // '<div>' +
-                    //     editor.i18n('For information about the license, please go to our website:') +
-                    // '</div>' +
-                    // '<div>' +
-                    //     '<a href="https://xdsoft.net/jodit/license.html" target="_blank">http://xdsoft.net/jodit/license.html</a>' +
-                    // '</div>' +
-                    // (isLicense(editor.options.license) ? '' :
-                    // '<div>' +
-                    //     '<a href="https://xdsoft.net/jodit/buy.html" target="_blank">' + editor.i18n('Buy full version') + '</a>' +
-                    // '</div>'
-                    //) +
                     '<div>' +
                         editor.i18n('Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.') +
                     '</div>' +

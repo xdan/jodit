@@ -13,6 +13,7 @@ import ColorPickerWidget = Widget.ColorPickerWidget;
 import { Dom } from "../modules/Dom";
 import { ControlType } from "../types/toolbar";
 import { ToolbarButton } from "../modules/toolbar/button";
+import {Dictionary} from "../types";
 
 Config.prototype.controls.brush = <ControlType>{
     isActive: (editor: Jodit, btn: ControlType, button: ToolbarButton): boolean => {
@@ -48,7 +49,7 @@ Config.prototype.controls.brush = <ControlType>{
     popup: (editor: Jodit, current: Node | false, self: ControlType, close: Function) => {
         let color: string = '',
             bg_color: string = '',
-            tabs: {[key: string]: HTMLElement},
+            tabs: Dictionary<HTMLElement>,
             currentElement: HTMLElement|null = null;
 
         if (current && current !== editor.editor && Dom.isNode(current, editor.editorWindow) && current.nodeType === Node.ELEMENT_NODE) {

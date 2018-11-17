@@ -8,6 +8,8 @@
  * The module editor's event manager
  */
 
+import {Dictionary} from "../types";
+
 export type EventHandlerBlock = {
     event: string,
     originalCallback: Function,
@@ -15,11 +17,7 @@ export type EventHandlerBlock = {
 };
 
 export class EventHandlersStore {
-    private __store: {
-        [key: string]: {
-            [key: string]: Array<EventHandlerBlock>
-        }
-    } = {};
+    private __store: Dictionary<Dictionary<Array<EventHandlerBlock>>> = {};
 
     get(event: string, namespace: string):  Array<EventHandlerBlock> | void{
         if (this.__store[namespace] !== undefined) {

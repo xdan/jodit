@@ -4,8 +4,10 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
+import { Dictionary } from "../../types";
+
 export class ToolbarIcon {
-    static icons: {[key: string]: string} = {};
+    static icons: Dictionary<string> = {};
 
     static exists(name: string): boolean {
         return ToolbarIcon.icons[name] !== undefined;

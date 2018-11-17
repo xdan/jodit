@@ -11,6 +11,7 @@ import { cleanFromWord, debounce, normalizeNode, trim } from "../modules/Helpers
 import { Dom } from "../modules/Dom";
 import { Select } from "../modules/Selection";
 import { IS_INLINE } from "../constants";
+import {Dictionary} from "../types";
 
 /**
  * @property {object} cleanHTML {@link cleanHtml|cleanHtml}'s options
@@ -107,14 +108,14 @@ export function cleanHtml(editor: Jodit) {
         seperator = /[\s]*,[\s]*/,
         attrReg = /^(.*)[\s]*=[\s]*(.*)$/;
 
-    const getHash = (tags: false | string | {[key:string]: string}): {[key: string]: any} | false=> {
-        const tagsHash: {[key: string]: any} = {};
+    const getHash = (tags: false | string | Dictionary<string>): Dictionary | false=> {
+        const tagsHash: Dictionary = {};
 
         if (typeof tags === 'string') {
             tags.split(seperator).map((elm: string) => {
                 elm = trim(elm);
                 let attr: RegExpExecArray | null = attributesReg.exec(elm),
-                    allowAttributes: {[key: string]: string | boolean} = {},
+                    allowAttributes: Dictionary<string | boolean> = {},
                     attributeMap = (attr: string) => {
                         attr = trim(attr);
                         const val: Array<string> | null = attrReg.exec(attr);
@@ -151,8 +152,8 @@ export function cleanHtml(editor: Jodit) {
 
     let
         current: Node | false,
-        allowTagsHash: {[key: string]: any} | false = getHash(editor.options.cleanHTML.allowTags),
-        denyTagsHash: {[key: string]: any} | false = getHash(editor.options.cleanHTML.denyTags);
+        allowTagsHash: Dictionary | false = getHash(editor.options.cleanHTML.allowTags),
+        denyTagsHash: Dictionary | false = getHash(editor.options.cleanHTML.denyTags);
 
     const hasNotEmptyTextSibling = (node: Node, next = false): boolean => {
         let prev: Node | null = next ? node.nextSibling : node.previousSibling;

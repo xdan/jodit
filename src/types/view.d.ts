@@ -7,6 +7,7 @@
 import { EventsNative } from "../modules/EventsNative";
 import { ToolbarCollection } from "../modules/toolbar/collection";
 import { Buttons } from "./toolbar";
+import { Dictionary } from "./types";
 
 interface IViewOptions {
     removeButtons: string[];
@@ -21,7 +22,7 @@ interface IViewOptions {
 interface IViewBased {
     id: string;
 
-    buffer: {[key: string]: any};
+    buffer: Dictionary;
 
     progress_bar: HTMLElement;
     container: HTMLDivElement;

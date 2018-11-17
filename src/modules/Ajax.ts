@@ -7,6 +7,7 @@
 import { Config } from '../Config'
 import { each, extend } from "./Helpers";
 import { IViewBased } from "../types/view";
+import {Dictionary} from "../types";
 
 /**
  * @property {object} defaultAjaxOptions A set of key/value pairs that configure the Ajax request. All settings are optional
@@ -30,15 +31,15 @@ export type AjaxOptions  = {
 
     url?: string;
 
-    data: {[key: string]: string} | null | FormData | string
+    data: Dictionary<string> | null | FormData | string
 
     contentType?: string | false;
 
-    headers?: {[key: string]: string}|null
+    headers?: Dictionary<string> | null
 
     withCredentials?: boolean;
 
-    queryBuild?: (this: Ajax, obj: string | {[key: string] : string | object} | FormData, prefix?: string) => string | object;
+    queryBuild?: (this: Ajax, obj: string | Dictionary<string | object> | FormData, prefix?: string) => string | object;
 
     xhr?: () => XMLHttpRequest;
 }
@@ -72,7 +73,7 @@ Config.prototype.defaultAjaxOptions = <AjaxOptions>{
 };
 
 export class Ajax {
-    private __buildParams (obj: string | {[key: string] : string | object} | FormData, prefix?: string): string | FormData {
+    private __buildParams (obj: string | Dictionary<string | object> | FormData, prefix?: string): string | FormData {
         if (this.options.queryBuild && typeof this.options.queryBuild === 'function') {
             return this.options.queryBuild.call(this, obj, prefix);
         }
@@ -88,7 +89,7 @@ export class Ajax {
         for (p in obj) {
             if (obj.hasOwnProperty(p)) {
                 k = prefix ? prefix + "[" + p + "]" : p;
-                v = (<{[key: string] : string}>obj)[p];
+                v = (<Dictionary<string>>obj)[p];
                 str.push(typeof v === "object" ? <string>this.__buildParams(v, k) : encodeURIComponent(k) + "=" + encodeURIComponent(<string>v));
             }
         }

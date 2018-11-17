@@ -8,9 +8,9 @@ import * as consts from '../constants';
 import { Jodit } from "../Jodit";
 import { Dom } from "./Dom";
 import { KEY_ALIASES } from "../constants";
-import { Bound, IHasScroll, RGB } from "../types";
+import {Bound, Dictionary, IHasScroll, RGB} from "../types";
 
-const class2type: {[key: string]: string} = {};
+const class2type: Dictionary<string> = {};
 const toString = class2type.toString;
 const hasOwn = class2type.hasOwnProperty;
 
@@ -496,8 +496,8 @@ export const humanSizeToBytes = (human: string): number => {
  * Parse query string
  *
  */
-export const parseQuery = (queryString: string): {[key: string]: string} => {
-    let query: {[key: string]: string} = {},
+export const parseQuery = (queryString: string): Dictionary<string> => {
+    let query: Dictionary<string> = {},
         a: string[] = queryString.substr(1).split('&'),
         i: number,
         keyvalue: string[];
@@ -786,7 +786,7 @@ export const normilizeCSSValue = (key: string, value: string|number): string|num
  * @param {string|int} value A value to set for the property.
  * @param {boolean} onlyStyleMode Get value from style attribute, without calculating
  */
-export const css = (element: HTMLElement, key: string|{[key: string]: number | string | null | undefined}, value?: string|number, onlyStyleMode: boolean = false): string|number => {
+export const css = (element: HTMLElement, key: string | Dictionary<number | string | null | undefined>, value?: string | number, onlyStyleMode: boolean = false): string|number => {
     const numberFieldsReg = /^left|top|bottom|right|width|min|max|height|margin|padding|font-size/i;
 
     if (isPlainObject(key) || value !== undefined) {
@@ -1246,7 +1246,7 @@ export class JoditObject {
  * @param keys
  */
 export const normalizeKeyAliases = (keys: string): string => {
-    const memory: {[key: string]: boolean} = {};
+    const memory: Dictionary<boolean> = {};
 
     return keys
         .replace(/\+\+/g, '+add')

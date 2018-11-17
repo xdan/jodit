@@ -11,9 +11,10 @@ import { EventsNative } from "../EventsNative";
 import { ToolbarCollection } from "../toolbar/collection";
 import { Jodit } from "../../Jodit";
 import { MODE_WYSIWYG } from "../../constants";
+import {Dictionary} from "../../types";
 
 export class View extends Component implements IViewBased {
-    public buffer: {[key: string]: any};
+    public buffer: Dictionary;
 
     progress_bar: HTMLElement;
     container: HTMLDivElement;

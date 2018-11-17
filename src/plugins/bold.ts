@@ -7,18 +7,19 @@
 import { Jodit } from '../Jodit';
 import { Config } from "../Config";
 import { ControlType } from "../types/toolbar";
+import { Dictionary } from "../types";
 
-Config.prototype.controls.subscript = <ControlType>{
+Config.prototype.controls.subscript = <ControlType> {
     tags: ["sub"],
     tooltip: "subscript",
 };
 
-Config.prototype.controls.superscript = <ControlType>{
+Config.prototype.controls.superscript = <ControlType> {
     tags: ["sup"],
     tooltip: "superscript",
 };
 
-Config.prototype.controls.bold = <ControlType>{
+Config.prototype.controls.bold = <ControlType> {
     tagRegExp: /^(strong|b)$/i,
     tags: ["strong", "b"],
     css: {
@@ -27,7 +28,7 @@ Config.prototype.controls.bold = <ControlType>{
     tooltip: "Bold",
 };
 
-Config.prototype.controls.italic = <ControlType>{
+Config.prototype.controls.italic = <ControlType> {
     tagRegExp: /^(em|i)$/i,
     tags: ["em", "i"],
     css: {
@@ -36,7 +37,7 @@ Config.prototype.controls.italic = <ControlType>{
     tooltip: "Italic",
 };
 
-Config.prototype.controls.underline = <ControlType>{
+Config.prototype.controls.underline = <ControlType> {
     tagRegExp: /^(u)$/i,
     tags: ['u'],
     css: {
@@ -44,7 +45,7 @@ Config.prototype.controls.underline = <ControlType>{
     },
     tooltip: "Underline",
 };
-Config.prototype.controls.strikethrough = <ControlType>{
+Config.prototype.controls.strikethrough = <ControlType> {
     tagRegExp: /^(s)$/i,
     tags: ['s'],
     css: {
@@ -59,8 +60,8 @@ Config.prototype.controls.strikethrough = <ControlType>{
 export function bold(editor: Jodit) {
     const callBack: Function = (command: string): false | void => {
         const control: ControlType = <ControlType>Jodit.defaultOptions.controls[command];
-        const cssOptions: {[key: string]: string|string[]}|{[key: string]: (editor: Jodit, value: string) => boolean} = {...control.css},
-            cssRules: {[key: string]: string} = {};
+        const cssOptions: Dictionary<string | string[]> | Dictionary<(editor: Jodit, value: string) => boolean> = {...control.css},
+            cssRules: Dictionary<string> = {};
 
         Object.keys(cssOptions).forEach((key: string) => {
             cssRules[key] = Array.isArray(cssOptions[key]) ?  (<any>cssOptions[key])[0] : cssOptions[key];

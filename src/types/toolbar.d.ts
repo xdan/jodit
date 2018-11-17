@@ -7,13 +7,14 @@
 import { IViewBased } from "./view";
 import { Jodit } from "../Jodit";
 import { ToolbarButton } from "../modules/toolbar/button";
+import {Dictionary} from "./types";
 
 export type ControlType = {
     controlName?: string;
     name?: string;
     mode?: number;
     hotkeys?: string | string[];
-    data?: {[key: string]: any};
+    data?: Dictionary;
     isInput?: boolean;
 
     /**
@@ -110,7 +111,7 @@ export type ControlType = {
      *  });
      *  ```
      */
-    list?: {[key: string]: string} | string[] | string;
+    list?: Dictionary<string> | string[] | string;
 
     /**
      * The command executes when the button is pressed. Allowed all {@link https://developer.mozilla.org/ru/docs/Web/API/Document/execCommand#commands} and several specific [[Jodit.execCommand]]
@@ -123,7 +124,7 @@ export type ControlType = {
      */
     tags?: string[];
     options?: any;
-    css?: {[key: string]: string|string[]}|{[key: string]: (editor: IViewBased | Jodit, value: string) => boolean};
+    css?: Dictionary<string|string[]> | Dictionary<(editor: IViewBased | Jodit, value: string) => boolean>;
 
     /**
      * String name for existing icons.
@@ -199,5 +200,5 @@ export interface ControlTypeStrong extends ControlType{
     name: string;
 }
 
-export type Controls = {[key: string]: ControlType | {[key: string]: ControlType}};
+export type Controls = Dictionary<ControlType | Dictionary<ControlType>>;
 export type Buttons = Array<string | ControlType> | string;
