@@ -9,7 +9,7 @@ import { Jodit } from "../Jodit";
 import { Dom } from "../modules/Dom";
 import { css } from "../modules/Helpers";
 import { ControlType } from "../types/toolbar";
-import {Dictionary} from "../types";
+import { Dictionary } from "../types";
 
 const pluginKey: string = 'copyformat';
 

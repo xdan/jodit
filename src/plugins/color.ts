@@ -13,7 +13,7 @@ import ColorPickerWidget = Widget.ColorPickerWidget;
 import { Dom } from "../modules/Dom";
 import { ControlType } from "../types/toolbar";
 import { ToolbarButton } from "../modules/toolbar/button";
-import {Dictionary} from "../types";
+import { Dictionary } from "../types";
 
 Config.prototype.controls.brush = <ControlType>{
     isActive: (editor: Jodit, btn: ControlType, button: ToolbarButton): boolean => {

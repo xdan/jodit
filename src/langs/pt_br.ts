@@ -1,4 +1,4 @@
-import {Dictionary} from "../types";
+import { Dictionary } from "../types";
 
 export default <Dictionary<string>> {
     'Type something'                                    : 'Escreva algo...',

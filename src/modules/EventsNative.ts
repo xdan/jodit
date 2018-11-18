@@ -8,7 +8,7 @@
  * The module editor's event manager
  */
 
-import {Dictionary} from "../types";
+import { Dictionary } from "../types";
 
 export type EventHandlerBlock = {
     event: string,

@@ -11,7 +11,7 @@ import { cleanFromWord, debounce, normalizeNode, trim } from "../modules/Helpers
 import { Dom } from "../modules/Dom";
 import { Select } from "../modules/Selection";
 import { IS_INLINE } from "../constants";
-import {Dictionary} from "../types";
+import { Dictionary } from "../types";
 
 /**
  * @property {object} cleanHTML {@link cleanHtml|cleanHtml}'s options

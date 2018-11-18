@@ -13,7 +13,7 @@ import { ToolbarIcon } from "./toolbar/icon";
 import { Buttons, ControlType } from "../types/toolbar";
 import { View } from "./view/view";
 import { IViewBased, IViewOptions } from "../types/view";
-import {Dictionary} from "../types";
+import { Dictionary } from "../types";
 
 /**
  * @property {object} dialog module settings {@link Dialog|Dialog}

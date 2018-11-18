@@ -6,7 +6,7 @@
 
 import { Jodit } from "../Jodit";
 import { IViewBased } from "../types/view";
-import {Dictionary} from "../types";
+import { Dictionary } from "../types";
 
 
 export class Component {

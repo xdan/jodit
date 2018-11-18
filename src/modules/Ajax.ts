@@ -7,7 +7,7 @@
 import { Config } from '../Config'
 import { each, extend } from "./Helpers";
 import { IViewBased } from "../types/view";
-import {Dictionary} from "../types";
+import { Dictionary } from "../types";
 
 /**
  * @property {object} defaultAjaxOptions A set of key/value pairs that configure the Ajax request. All settings are optional

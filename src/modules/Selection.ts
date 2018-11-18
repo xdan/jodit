@@ -10,7 +10,7 @@ import { each, dom, trim, $$, css, normilizeCSSValue, isIE, isPlainObject, norma
 import { Dom } from "./Dom";
 import { Jodit } from "../Jodit";
 import { INVISIBLE_SPACE_REG_EXP_END, INVISIBLE_SPACE_REG_EXP_START, INVISIBLE_SPACE } from "../constants";
-import {Dictionary} from "../types";
+import { Dictionary } from "../types";
 
 export type markerInfo = {
     startId: string,
