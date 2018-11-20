@@ -15,6 +15,7 @@ Config.prototype.controls.redo = <ControlType> {
     isDisable: (editor: Jodit): boolean => !editor.observer.stack.canRedo(),
     tooltip: 'Redo'
 };
+
 Config.prototype.controls.undo = <ControlType>{
     mode: consts.MODE_SPLIT,
     isDisable: (editor: Jodit): boolean => !editor.observer.stack.canUndo(),

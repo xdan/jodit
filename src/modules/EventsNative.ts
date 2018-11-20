@@ -174,7 +174,9 @@ export class EventsNative {
      * }, 'a');
      * ```
      */
-    on(subjectOrEvents: object | string, eventsOrCallback: string|Function, handlerOrSelector?: Function, selector?: string, onTop: boolean = false): EventsNative {
+    on(subjectOrEvents: string, eventsOrCallback: Function, handlerOrSelector?: void, selector?: string, onTop?: boolean): EventsNative;
+    on(subjectOrEvents: object, eventsOrCallback: string, handlerOrSelector: Function, selector?: string, onTop?: boolean): EventsNative;
+    on(subjectOrEvents: object | string, eventsOrCallback: string | Function, handlerOrSelector?: Function | void, selector?: string, onTop: boolean = false): EventsNative {
         const subject: object = typeof subjectOrEvents === 'string' ? this : subjectOrEvents;
         const events: string = typeof eventsOrCallback === 'string' ? eventsOrCallback : <string>subjectOrEvents;
 
@@ -300,7 +302,10 @@ export class EventsNative {
      * parent.events.off('someGlobalEvents');
      * ```
      */
-    off(subjectOrEvents: object|string, eventsOrCallback?: string|Function, handler?: Function): EventsNative {
+    off(subjectOrEvents: string): EventsNative;
+    off(subjectOrEvents: string, eventsOrCallback?: Function): EventsNative;
+    off(subjectOrEvents: object, eventsOrCallback?: string, handler?: Function): EventsNative;
+    off(subjectOrEvents: object | string, eventsOrCallback?: string | Function, handler?: Function): EventsNative {
         const subject: object = typeof subjectOrEvents === 'string' ? this : subjectOrEvents;
         const events: string = typeof eventsOrCallback === 'string' ? eventsOrCallback : <string>subjectOrEvents;
 
@@ -443,7 +448,9 @@ export class EventsNative {
      *  ```
      *
      */
-    fire(subjectOrEvents: object|string, eventsList?: string|any|Event, ...args: any[]): any {
+    fire(subjectOrEvents: string, eventsList?: any, ...args: any[]): any;
+    fire(subjectOrEvents: object, eventsList: string | Event, ...args: any[]): any;
+    fire(subjectOrEvents: object|string, eventsList?: string | any | Event, ...args: any[]): any {
         let result: any = void(0),
             result_value: any;
 

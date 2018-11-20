@@ -20,6 +20,7 @@ export class DragAndDrop extends Plugin {
     private startDragPoint: Point = {x: 0, y: 0};
     private draggable: HTMLElement | null = null;
 
+    private bufferRange: Range | null = null;
 
     private onDragEnd = () => {
         if (this.draggable) {
@@ -29,7 +30,7 @@ export class DragAndDrop extends Plugin {
         this.isCopyMode = false;
     };
 
-    private onDrag = throttle((event: DragEvent) => {
+    private onDrag = (event: DragEvent) => {
         if (this.draggable) {
             if (!this.draggable.parentNode) {
                 this.jodit.ownerDocument.body.appendChild(this.draggable);
@@ -41,10 +42,69 @@ export class DragAndDrop extends Plugin {
                 left: event.clientX + 20,
                 top: event.clientY + 20,
             });
-        }
-    }, 10);
 
-    private bufferRange: Range | null = null;
+            this.jodit.selection.insertCursorAtPoint(event.clientX, event.clientY);
+
+            event.preventDefault();
+            event.stopPropagation();
+        }
+    };
+
+    private onDrop = (event: DragEvent): false | void => {
+        if (!event.dataTransfer || !event.dataTransfer.files || !event.dataTransfer.files.length) {
+            if (!this.isFragmentFromEditor && !this.draggable) {
+                this.jodit.events.fire('paste', event);
+                event.preventDefault();
+                event.stopPropagation();
+                return false;
+            }
+
+            const sel: Selection = this.jodit.editorWindow.getSelection();
+            const range: Range | null = this.bufferRange || (sel.rangeCount ? sel.getRangeAt(0) : null);
+
+            let fragment: DocumentFragment | HTMLElement | null = null;
+
+            if (!this.draggable && range) {
+                fragment = this.isCopyMode ? range.cloneContents() : range.extractContents();
+            } else if (this.draggable) {
+                if (this.isCopyMode) {
+                    const [tagName , attr]: string[] = this.draggable.getAttribute('data-is-file') === "1" ?  ['a', 'href'] : ['img', 'src'];
+                    fragment = this.jodit.editorDocument.createElement(tagName);
+                    fragment.setAttribute(attr, this.draggable.getAttribute('data-src') || this.draggable.getAttribute('src') || '');
+                    if (tagName === 'a') {
+                        fragment.innerText = fragment.getAttribute(attr) || '';
+                    }
+                } else {
+                    fragment = dataBind(this.draggable, 'target');
+                }
+            } else if (this.getText(event)) {
+                fragment = dom(<string>this.getText(event), this.jodit.editorDocument);
+            }
+
+            sel.removeAllRanges();
+
+            this.jodit.selection.insertCursorAtPoint(event.clientX, event.clientY);
+
+            if (fragment) {
+                this.jodit.selection.insertNode(fragment, false, false);
+                if (range && fragment.firstChild && fragment.lastChild) {
+                    range.setStartBefore(fragment.firstChild);
+                    range.setEndAfter(fragment.lastChild);
+                    this.jodit.selection.selectRange(range);
+                    this.jodit.events.fire('synchro');
+                }
+                if (fragment.nodeName === 'IMG' && this.jodit.events) {
+                    this.jodit.events.fire('afterInsertImage', fragment);
+                }
+            }
+
+            event.preventDefault();
+            event.stopPropagation()
+        }
+
+        this.isFragmentFromEditor = false;
+    };
+
 
     private onDragStart = (event: DragEvent) => {
         let target: HTMLElement = (<HTMLElement>event.target);
@@ -98,61 +158,6 @@ export class DragAndDrop extends Plugin {
         return dt.getData(TEXT_HTML) || dt.getData(TEXT_PLAIN);
     };
 
-    private onDrop = (event: DragEvent): false | void => {
-        if (!event.dataTransfer || !event.dataTransfer.files || !event.dataTransfer.files.length) {
-            if (!this.isFragmentFromEditor && !this.draggable) {
-                this.jodit.events.fire('paste', event);
-                event.preventDefault();
-                event.stopPropagation();
-                return false;
-            }
-
-            const sel: Selection = this.jodit.editorWindow.getSelection();
-            const range: Range | null = this.bufferRange || (sel.rangeCount ? sel.getRangeAt(0) : null);
-
-
-            let fragment: DocumentFragment | HTMLElement | null = null;
-
-            if (!this.draggable && range) {
-                fragment = this.isCopyMode ? range.cloneContents() : range.extractContents();
-            } else if (this.draggable) {
-                if (this.isCopyMode) {
-                    const [tagName , attr]: string[] = this.draggable.getAttribute('data-is-file') === "1" ?  ['a', 'href'] : ['img', 'src'];
-                    fragment = this.jodit.editorDocument.createElement(tagName);
-                    fragment.setAttribute(attr, this.draggable.getAttribute('data-src') || this.draggable.getAttribute('src') || '');
-                    if (tagName === 'a') {
-                        fragment.innerText = fragment.getAttribute(attr) || '';
-                    }
-                } else {
-                    fragment = dataBind(this.draggable, 'target');
-                }
-            } else if (this.getText(event)) {
-                fragment = dom(<string>this.getText(event), this.jodit.editorDocument);
-            }
-
-            sel.removeAllRanges();
-
-            this.jodit.selection.insertCursorAtPoint(event.clientX, event.clientY);
-
-            if (fragment) {
-                this.jodit.selection.insertNode(fragment, false, false);
-                if (range && fragment.firstChild && fragment.lastChild) {
-                    range.setStartBefore(fragment.firstChild);
-                    range.setEndAfter(fragment.lastChild);
-                    this.jodit.selection.selectRange(range);
-                    this.jodit.events.fire('synchro');
-                }
-                if (fragment.nodeName === 'IMG' && this.jodit.events) {
-                    this.jodit.events.fire('afterInsertImage', fragment);
-                }
-            }
-
-            event.preventDefault();
-            event.stopPropagation()
-        }
-
-        this.isFragmentFromEditor = false;
-    };
 
     afterInit() {
         this.jodit.events
@@ -160,8 +165,8 @@ export class DragAndDrop extends Plugin {
             .on([window, this.jodit.editorDocument, this.jodit.editor], 'dragstart', this.onDragStart)
             .on('drop', this.onDrop)
             .on(window, 'dragend drop mouseup', this.onDragEnd)
-            // .on('drop', this.onDropImageURLFromFileBrowser)
     }
+
     beforeDestruct() {
         this.onDragEnd();
     }

@@ -470,11 +470,13 @@ export class Dom {
      * @param {Node} root Root element
      * @return {boolean|Node|HTMLElement|HTMLTableCellElement|HTMLTableElement} Return false if condition not be true
      */
-    static up(node: Node, condition: Function, root: Node): false|Node|HTMLElement|HTMLTableCellElement|HTMLTableElement {
+    static up(node: Node, condition: Function, root: Node): false | Node | HTMLElement | HTMLTableCellElement | HTMLTableElement {
         let start = node;
+
         if (!node) {
             return false;
         }
+
         do {
             if (condition(start)) {
                 return start;

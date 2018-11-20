@@ -20,7 +20,7 @@ export type markerInfo = {
     endMarker?: string
 }
 
-export class Select extends Component{
+export class Select extends Component {
     /**
      * Remove all selected content
      */

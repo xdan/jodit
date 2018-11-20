@@ -10,6 +10,8 @@
     "lib": [
       "ES5",
       "ES2015",
+      "ES2017",
+      "ES16",
       "DOM",
       "ScriptHost"
     ]
@@ -17,7 +19,7 @@
   "module": "umd",
   "moduleResolution": "node",
   "typeRoots": [
-    "./node_modules/@types/",
+    "./node_modules/@types/"
   ],
   "allowSyntheticDefaultImports": true
 }

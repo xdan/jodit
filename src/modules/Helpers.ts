@@ -1180,6 +1180,7 @@ export const getXPathByElement = (element: HTMLElement, root: HTMLElement): stri
 };
 
 const dataBindKey = 'JoditDataBindkey';
+
 export const dataBind = (elm: any, key: string, value?: any) => {
     let store = elm[dataBindKey];
     if (!store) {
