@@ -35,7 +35,6 @@ export class DragAndDropElement extends Plugin {
             return;
         }
 
-        this.jodit.events.fire('hidePopup');
         this.draggable =  <HTMLElement>last.cloneNode(true);
 
         dataBind(this.draggable, 'target', last);
@@ -58,6 +57,8 @@ export class DragAndDropElement extends Plugin {
         if (!this.draggable) {
             return;
         }
+
+        this.jodit.events.fire('hidePopup hideResizer');
 
         if (!this.draggable.parentNode) {
             this.jodit.ownerDocument.body.appendChild(this.draggable);
@@ -108,7 +109,7 @@ export class DragAndDropElement extends Plugin {
     afterInit() {
         this.jodit.events
             .on(this.jodit.editor, 'mousemove', this.onDrag)
-            .on(this.jodit.editor, 'dragstart', this.onDragStart)
+            .on(this.jodit.editor, 'dragstart mousedown', this.onDragStart)
             .on('drop mouseup', this.onDrop)
             .on(window, 'dragend drop mouseup', this.onDragEnd)
     }

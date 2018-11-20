@@ -388,7 +388,9 @@ export function resizer(editor: Jodit) {
         })
         .on('afterGetValueFromEditor', (data: {value: string}) => {
             data.value = data.value.replace(/<jodit[^>]+data-jodit_iframe_wrapper[^>]+>(.*?<iframe[^>]+>[\s\n\r]*<\/iframe>.*?)<\/jodit>/ig, '$1');
-        }).on('change afterInit afterSetMode', debounce(() => {
+        })
+        .on('hideResizer', hideResizer)
+        .on('change afterInit afterSetMode', debounce(() => {
             if (resizerIsVisible) {
                 if (!currentElement || !currentElement.parentNode) {
                     hideResizer();
