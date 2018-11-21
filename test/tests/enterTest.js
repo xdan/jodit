@@ -3,7 +3,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
         describe('near empty tag', function () {
             describe('BR before P', function () {
                 it('Should simple remove BR but cursor should leave inside P', function () {
-                    var editor = new Jodit(appendTestArea())
+                    var editor = new Jodit(appendTestArea());
 
                     editor.value = '<br><p>test</p>';
 
@@ -1175,6 +1175,47 @@ describe('Enter behavior Jodit Editor Tests', function() {
             });
         });
         describe('In UL tag', function () {
+            describe('enter mode = br', function () {
+                describe('Inside LI tag in the end', function () {
+                    it('Should work like usual and add new LI element', function () {
+                        var editor = new Jodit(appendTestArea(), {
+                            enter: 'BR'
+                        });
+
+                        editor.value = '<ul><li>test</li></ul>';
+
+                        editor.selection.setCursorAfter(editor.editor.querySelector('ul>li').firstChild);
+                        simulateEvent('keydown',    Jodit.KEY_ENTER, editor.editor);
+                        editor.selection.insertNode(editor.editorDocument.createTextNode('split'));
+
+
+                        expect(
+                            '<ul>' +
+                            '<li>test</li>' +
+                            '<li>split<br></li>' +
+                            '</ul>').to.be.equal(sortAtrtibutes(editor.value));
+                    });
+                });
+                describe('Inside empty LI tag', function () {
+                    it('Should work like usual and add insert new br after UL', function () {
+                        var editor = new Jodit(appendTestArea(), {
+                            enter: 'BR'
+                        });
+
+                        editor.value = '<ul><li>test</li><li> </li></ul>';
+
+                        editor.selection.setCursorAfter(editor.editor.querySelectorAll('ul>li')[1].firstChild);
+                        simulateEvent('keydown',    Jodit.KEY_ENTER, editor.editor);
+                        editor.selection.insertNode(editor.editorDocument.createTextNode('split'));
+
+
+                        expect(
+                            '<ul>' +
+                            '<li>test</li>' +
+                            '</ul>split<br>').to.be.equal(sortAtrtibutes(editor.value));
+                    });
+                });
+            });
             describe('In LI tag inside table cell', function () {
                 it('Should work like usual', function () {
                     var editor = new Jodit(appendTestArea())
@@ -1207,7 +1248,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
                         '</tbody>' +
                         '</table>').to.be.equal(sortAtrtibutes(editor.getEditorValue()));
                 });
-            })
+            });
             describe('In last LI tag', function () {
                 describe('In tag was only one Image element but cursor was before it', function () {
                     it('Should not add new P element and move image there', function () {

@@ -36,7 +36,8 @@ export const insertParagraph = (editor: Jodit, fake ?: Text | false, wrapperTag 
     editor.selection.setCursorBefore(helper_node);
 
     const range: Range = editor.editorDocument.createRange();
-    range.setStartBefore(helper_node);
+
+    range.setStartBefore(wrapperTag !== 'br' ? helper_node : p);
     range.collapse(true);
 
     editor.selection.selectRange(range);
@@ -99,10 +100,12 @@ export function enter(editor: Jodit) {
             }
 
 
-            let currentBox: HTMLElement | false = current ? <HTMLElement>Dom.up(current, Dom.isBlock, editor.editor) : false;
+            let
+                currentBox: HTMLElement | false = current ? <HTMLElement>Dom.up(current, Dom.isBlock, editor.editor) : false,
+                isLi: boolean = currentBox && currentBox.nodeName === 'LI';
 
             // if use <br> tag for break line or when was entered SHIFt key or in <td> or <th> or <blockquote>
-            if (editor.options.enter.toLowerCase() === consts.BR.toLowerCase() || event.shiftKey || Dom.closest(current, 'PRE|BLOCKQUOTE', editor.editor)) {
+            if (!isLi && (editor.options.enter.toLowerCase() === consts.BR.toLowerCase() || event.shiftKey || Dom.closest(current, 'PRE|BLOCKQUOTE', editor.editor))) {
                 const br: HTMLBRElement = editor.editorDocument.createElement('br');
                 editor.selection.insertNode(br, true);
                 scrollIntoView(br, editor.editor, editor.editorDocument);
@@ -131,8 +134,7 @@ export function enter(editor: Jodit) {
                 range = sel.rangeCount ? sel.getRangeAt(0) : editor.editorDocument.createRange();
             }
 
-            let isLi: boolean = false,
-                fake: Text | false = false,
+            let fake: Text | false = false,
                 insertNew: boolean = false;
 
             if (currentBox) {
@@ -144,7 +146,6 @@ export function enter(editor: Jodit) {
                 }
 
 
-                isLi = currentBox.nodeName === 'LI';
                 if (isLi) {
                     if (Dom.isEmpty(currentBox)) {
                         let fake: Text | false = false;
