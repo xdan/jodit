@@ -835,6 +835,11 @@ export const asArray = (a: any): Array<any> => (
     Array.isArray(a) ? a : [a]
 );
 
+/**
+ * Split separated elements
+ *
+ * @param a
+ */
 export const splitArray = (a: Array<any> | string): Array<any> => (
     typeof a === 'string' ? a.split(/[,\s]+/) : a
 );
@@ -1257,4 +1262,15 @@ export const normalizeKeyAliases = (keys: string): string => {
         .sort()
         .filter(key => !memory[key] && key !== '' && (memory[key] = true))
         .join('+');
+};
+
+
+export const setTimeout = (callback: Function, timeout: number, ...args: any[]): number => {
+    if (!timeout) {
+        callback.apply(null, args);
+    } else {
+        window.setTimeout.apply(window, [callback, timeout, ...args]);
+    }
+
+    return 0;
 };

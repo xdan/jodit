@@ -76,7 +76,7 @@ export function mobile(editor: Jodit) {
 
     editor.events
         .on('touchend', (e: TouchEvent) => {
-            if (e.changedTouches.length) {
+            if (e.changedTouches && e.changedTouches.length) {
                 now = (new Date()).getTime();
                 if (now - timeout > editor.options.mobileTapTimeout) {
                     timeout = now;
