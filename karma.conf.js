@@ -17,6 +17,7 @@ module.exports = function(config) {
             'test/bootstrap.js',
             'test/tests/*.js',
             'test/tests/units/*.js',
+            'test/tests/plugins/*.js',
         ],
         proxies: {
             "/tests/artio.jpg" : "/base/test/tests/artio.jpg",
