@@ -42,5 +42,5 @@ export { sticky } from "./sticky";
 export { stat } from "./stat";
 export { xpath } from "./xpath";
 export { DragAndDropElement } from "./drag-and-drop-element";
-// export { DragAndDrop } from "./drag-and-drop";
+export { DragAndDrop } from "./drag-and-drop";
 export { pasteStorage } from "./paste-storage";

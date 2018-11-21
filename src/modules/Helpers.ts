@@ -1269,7 +1269,7 @@ export const setTimeout = (callback: Function, timeout: number, ...args: any[]):
     if (!timeout) {
         callback.apply(null, args);
     } else {
-        window.setTimeout.apply(window, [callback, timeout, ...args]);
+        return window.setTimeout.apply(window, [callback, timeout, ...args]);
     }
 
     return 0;

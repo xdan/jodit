@@ -11,21 +11,20 @@ describe('Drag and drop element inside Editor', function () {
                     '<p>3333</p>' +
                     '<p>4444</p>';
 
-                simulateEvent(events[0], 0, editor.editor.getElementsByTagName('img')[0]);
+                    simulateEvent(events[0], 0, editor.editor.getElementsByTagName('img')[0]);
 
-                var box = Jodit.modules.Helpers.offset(editor.editor.querySelectorAll('p')[1], editor, editor.editorDocument);
+                window.scrollTo(0, 100000);
+                var box = offset(editor.editor.querySelectorAll('p')[1]);
 
+                createPoint(box.left + 20, box.top + 5);
                 simulateEvent(events[1], 0, editor.editor, function (options) {
                     options.clientX = box.left + 15;
-                    options.clientY = box.top + 5;
-                    options.pageX = 0;
-                    options.pageY = 0;
+                    options.clientY = box.top + 5 - document.documentElement.scrollTop;
                 });
+
                 simulateEvent(events[2], 0, editor.editor, function (options) {
                     options.clientX = box.left + 20;
-                    options.clientY = box.top + 5;
-                    options.pageX = 0;
-                    options.pageY = 0;
+                    options.clientY = box.top + 5 - document.documentElement.scrollTop;
                 });
 
                 expect(editor.value).to.be.equal('<p>1111</p><p>22<img style="width: 100px" src="https://xdsoft.net/jodit/build/images/artio.jpg" alt="">22</p><p>3333</p><p>4444</p>');
@@ -46,15 +45,12 @@ describe('Drag and drop element inside Editor', function () {
 
                 simulateEvent(events[1], 0, editor.editor, function (options) {
                     options.clientX = box.left + 15;
-                    options.clientY = box.top + 5;
-                    options.pageX = 0;
-                    options.pageY = 0;
+                    options.clientY = box.top + 5 - document.documentElement.scrollTop;
                 });
                 simulateEvent(events[2], 0, editor.editor, function (options) {
                     options.clientX = box.left + 20;
-                    options.clientY = box.top + 5;
-                    options.pageX = 0;
-                    options.pageY = 0;
+                    options.clientY = box.top + 5 - document.documentElement.scrollTop;
+
                 });
 
                 expect(editor.value).to.be.equal('<p>1111</p><p>22<a href="#test"><img style="width: 100px" src="https://xdsoft.net/jodit/build/images/artio.jpg" alt=""></a>22</p><p>3333</p><p>4444</p>');
@@ -80,15 +76,11 @@ describe('Drag and drop element inside Editor', function () {
 
                 simulateEvent(events[1], 0, editor.editor, function (options) {
                     options.clientX = box.left + 15;
-                    options.clientY = box.top + 5;
-                    options.pageX = 0;
-                    options.pageY = 0;
+                    options.clientY = box.top + 5 - document.documentElement.scrollTop;
                 });
                 simulateEvent(events[2], 0, editor.editor, function (options) {
                     options.clientX = box.left + 20;
-                    options.clientY = box.top + 5;
-                    options.pageX = 0;
-                    options.pageY = 0;
+                    options.clientY = box.top + 5 - document.documentElement.scrollTop;
                 });
 
                 expect(editor.value).to.be.equal(defaultValue);

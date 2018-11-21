@@ -23,8 +23,11 @@ Config.prototype.draggableTags = ['img', 'a', 'jodit-media', 'jodit'];
  * Process drag and drop image or another element inside the editor
  */
 export class DragAndDropElement extends Plugin {
+    private dragList: string[] = [];
     private isCopyMode: boolean = false;
     private draggable: HTMLElement | null = null;
+    private wasMoved: boolean = false;
+
     private timeout: number = 0;
 
     private onDragStart = (event: DragEvent) => {
@@ -32,17 +35,12 @@ export class DragAndDropElement extends Plugin {
             target: Node | null = <Node>event.target,
             last: HTMLElement | null = null;
 
-        const
-            dragList: string[] = this.jodit.options.draggableTags ? splitArray(this.jodit.options.draggableTags)
-                .filter(item => item)
-                .map((item: string) => item.toLowerCase()) : [];
-
-        if (!dragList.length) {
+        if (!this.dragList.length) {
             return;
         }
 
         do {
-            if (dragList.includes(target.nodeName.toLowerCase())) {
+            if (this.dragList.includes(target.nodeName.toLowerCase())) {
                 if (!last || (target.firstChild === last && target.lastChild === last)) {
                     last = <HTMLElement>target;
                 }
@@ -84,6 +82,7 @@ export class DragAndDropElement extends Plugin {
             return;
         }
 
+        this.wasMoved = true;
         this.jodit.events.fire('hidePopup hideResizer');
 
         if (!this.draggable.parentNode) {
@@ -105,11 +104,13 @@ export class DragAndDropElement extends Plugin {
         if (this.draggable) {
             this.draggable.parentNode && this.draggable.parentNode.removeChild(this.draggable);
             this.draggable = null;
+            this.wasMoved = false;
         }
     };
 
     private onDrop = (event: DragEvent) => {
-        if (!this.draggable) {
+        if (!this.draggable || !this.wasMoved) {
+            this.onDragEnd();
             return;
         }
 
@@ -131,6 +132,14 @@ export class DragAndDropElement extends Plugin {
     };
 
     afterInit() {
+        this.dragList = this.jodit.options.draggableTags ? splitArray(this.jodit.options.draggableTags)
+                .filter(item => item)
+                .map((item: string) => item.toLowerCase()) : [];
+
+        if (!this.dragList.length) {
+            return;
+        }
+
         this.jodit.events
             .on(this.jodit.editor, 'mousemove touchmove', this.onDrag)
             .on(this.jodit.editor, 'mousedown touchstart dragstart', this.onDragStart)
