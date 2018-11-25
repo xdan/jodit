@@ -6,21 +6,21 @@
 
 import { Jodit } from "../Jodit";
 import { ToolbarButton } from "../modules/toolbar/button";
-import {Dictionary} from "./types";
+import { IDictionary} from "./types";
 import { IViewBased } from "./view";
 
-export interface ControlType {
+export interface IControlType {
     controlName?: string;
     name?: string;
     mode?: number;
     hotkeys?: string | string[];
-    data?: Dictionary;
+    data?: IDictionary;
     isInput?: boolean;
 
     /**
      * You can use it function for control - active/not active button
      * @param {Jodit} editor
-     * @param {ControlType} btn
+     * @param {IControlType} btn
      * @return {boolean}
      * @see copyformat plugin
      * @example
@@ -43,16 +43,16 @@ export interface ControlType {
      * })
      * ```
      */
-    isActive?: (editor: IViewBased | Jodit, control: ControlType, button?: ToolbarButton) => boolean;
-    isActiveChild?: (editor: IViewBased | Jodit, control: ControlType, button?: ToolbarButton) => boolean; // for list
+    isActive?: (editor: IViewBased | Jodit, control: IControlType, button?: ToolbarButton) => boolean;
+    isActiveChild?: (editor: IViewBased | Jodit, control: IControlType, button?: ToolbarButton) => boolean; // for list
 
-    getContent?: (editor: IViewBased | Jodit, control: ControlType, button?: ToolbarButton) => string | HTMLElement;
+    getContent?: (editor: IViewBased | Jodit, control: IControlType, button?: ToolbarButton) => string | HTMLElement;
 
     /**
      * You can use it function for control - disable/enable button
      *
      * @param {Jodit} editor
-     * @param {ControlType} btn
+     * @param {IControlType} btn
      * @return {boolean}
      * @see copyformat plugin
      * @example
@@ -75,13 +75,14 @@ export interface ControlType {
      * })
      * ```
      */
-    isDisable?: (editor: IViewBased | Jodit, control: ControlType, button?: ToolbarButton) => boolean;
-    isDisableChild?: (editor: IViewBased | Jodit, control: ControlType, button?: ToolbarButton) => boolean;
+    isDisable?: (editor: IViewBased | Jodit, control: IControlType, button?: ToolbarButton) => boolean;
+    isDisableChild?: (editor: IViewBased | Jodit, control: IControlType, button?: ToolbarButton) => boolean;
 
-    getLabel?: (editor: IViewBased | Jodit, control: ControlType, button?: ToolbarButton) => boolean | void;
+    getLabel?: (editor: IViewBased | Jodit, control: IControlType, button?: ToolbarButton) => boolean | void;
 
     /**
-     * Drop-down list. A hash or array. You must specify the command which will be submitted for the hash key (or array value) (see .[[Jodit.execCommand]] or define 'exec' function. See example
+     * Drop-down list. A hash or array. You must specify the command which will be submitted for the hash key
+     * (or array value) (see .[[Jodit.execCommand]] or define 'exec' function. See example
      * @example
      * ```javascript
      * new Jodit('#editor2', {
@@ -110,10 +111,12 @@ export interface ControlType {
      *  });
      *  ```
      */
-    list?: Dictionary<string> | string[] | string;
+    list?: IDictionary<string> | string[] | string;
 
     /**
-     * The command executes when the button is pressed. Allowed all {@link https://developer.mozilla.org/ru/docs/Web/API/Document/execCommand#commands} and several specific [[Jodit.execCommand]]
+     * The command executes when the button is pressed. Allowed all
+     * {@link https://developer.mozilla.org/ru/docs/Web/API/Document/execCommand#commands}
+     * and several specific [[Jodit.execCommand]]
      */
     command?: string;
     tagRegExp?: RegExp;
@@ -123,7 +126,7 @@ export interface ControlType {
      */
     tags?: string[];
     options?: any;
-    css?: Dictionary<string|string[]> | Dictionary<(editor: IViewBased | Jodit, value: string) => boolean>;
+    css?: IDictionary<string|string[]> |  IDictionary<(editor: IViewBased | Jodit, value: string) => boolean>;
 
     /**
      * String name for existing icons.
@@ -155,7 +158,7 @@ export interface ControlType {
     /**
      * This function will be executed when the button is pressed.
      */
-    exec?: (editor: IViewBased | Jodit, current: Node|false, control: ControlType, originalEvent: Event,  btn: HTMLLIElement) => void;
+    exec?: (editor: IViewBased | Jodit, current: Node|false, control: IControlType, originalEvent: Event,  btn: HTMLLIElement) => void;
 
     args?: any[];
 
@@ -190,14 +193,20 @@ export interface ControlType {
      * });
      * ```
      */
-    popup?: (editor: IViewBased | Jodit, current: Node|false, control: ControlType, close: Function, button?: ToolbarButton) => string | HTMLElement | false;
+    popup?: (
+        editor: IViewBased | Jodit,
+        current: Node | false,
+        control: IControlType,
+        close: () => void,
+        button?: ToolbarButton,
+    ) => string | HTMLElement | false;
 
     defaultValue?: string|string[];
 }
 
-export interface ControlTypeStrong extends ControlType {
+export interface IControlTypeStrong extends IControlType {
     name: string;
 }
 
-export type Controls = Dictionary<ControlType | Dictionary<ControlType>>;
-export type Buttons = Array<string | ControlType> | string;
+export type Controls =  IDictionary<IControlType |  IDictionary<IControlType>>;
+export type Buttons = Array<string | IControlType> | string;

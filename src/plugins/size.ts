@@ -35,7 +35,11 @@ export function size(editor: Jodit) {
     // const setWidthWorkPlace = (width: number | string) => css(editor.workplace, 'width', width);
 
     if (editor.options.height !== "auto" && (editor.options.allowResizeX || editor.options.allowResizeY)) {
-        const handle: HTMLAnchorElement = dom('<div class="jodit_editor_resize" ><a href="javascript:void(0)"></a></div>', editor.ownerDocument) as HTMLAnchorElement,
+        const
+            handle: HTMLAnchorElement = dom(
+            '<div class="jodit_editor_resize" ><a href="javascript:void(0)"></a></div>',
+                editor.ownerDocument,
+            ) as HTMLAnchorElement,
             start: { x: number, y: number, w: number, h: number } = {
                 x: 0, y: 0, w: 0, h: 0,
             };
@@ -74,7 +78,11 @@ export function size(editor: Jodit) {
             });
     }
 
-    const getNotWorkHeight = (): number => (editor.options.toolbar ? editor.toolbar.container.offsetHeight : 0) + (editor.statusbar ? editor.statusbar.container.offsetHeight : 0);
+    const
+        getNotWorkHeight = (): number => (
+            editor.options.toolbar ? editor.toolbar.container.offsetHeight : 0
+        ) + (editor.statusbar ? editor.statusbar.container.offsetHeight : 0);
+
     const calcMinHeightWorkspace = () => {
         if (!editor.container || !editor.container.parentNode) {
             return;
@@ -82,7 +90,7 @@ export function size(editor: Jodit) {
 
         const minHeight: number = css(editor.container, "minHeight") as number - getNotWorkHeight();
 
-        [editor.workplace, editor.iframe, editor.editor].map((elm) => {
+        [editor.workplace, editor.iframe, editor.editor].map(elm => {
             const minHeightD: number = elm === editor.editor ? minHeight - 2 : minHeight; // borders
             elm && css(elm as HTMLElement, "minHeight", minHeightD);
             editor.events.fire("setMinHeight", minHeightD);

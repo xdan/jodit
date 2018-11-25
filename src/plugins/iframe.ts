@@ -25,7 +25,8 @@ declare module "../Config" {
  * ```javascript
  * new Jodit('#editor', {
  *    iframe = true;
- *    iframeStyle = 'html{margin: 0px;}body{padding:10px;background:transparent;color:#000;position:relative;z-index: 2;user-select:auto;margin:0px;overflow:hidden;}body:after{content:"";clear:both;display:block}';
+ *    iframeStyle = 'html{margin: 0px;}body{padding:10px;background:transparent;color:#000;position:relative;z-index:2;\
+ *    user-select:auto;margin:0px;overflow:hidden;}body:after{content:"";clear:both;display:block}';
  * });
  * ```
  */
@@ -159,30 +160,30 @@ export function iframe(editor: Jodit) {
                 editor.selection.focus();
             }
         })
-        .on("generateDocumentStructure.iframe", (__doc: Document | undefined, editor: Jodit) => {
-            const doc: Document = __doc || ((editor.iframe as HTMLIFrameElement).contentWindow as Window).document;
+        .on("generateDocumentStructure.iframe", (__doc: Document | undefined, jodit: Jodit) => {
+            const doc: Document = __doc || ((jodit.iframe as HTMLIFrameElement).contentWindow as Window).document;
 
             doc.open();
             doc.write(`<!DOCTYPE html>
-                    <html dir="${editor.options.direction}" class="jodit" lang="${defaultLanguage(editor.options.language)}">
+                    <html dir="${jodit.options.direction}" class="jodit" lang="${defaultLanguage(jodit.options.language)}">
                         <head>
-                            ${editor.options.iframeBaseUrl ? `<base href="${editor.options.iframeBaseUrl}"/>` : ""}
+                            ${jodit.options.iframeBaseUrl ? `<base href="${jodit.options.iframeBaseUrl}"/>` : ""}
                         </head>
                         <body class="jodit_wysiwyg" style="outline:none" contenteditable="true"></body>
                     </html>`);
 
             doc.close();
 
-            if (editor.options.iframeCSSLinks) {
-                editor.options.iframeCSSLinks.forEach((href) => {
+            if (jodit.options.iframeCSSLinks) {
+                jodit.options.iframeCSSLinks.forEach(href => {
                     const link: HTMLLinkElement = dom('<link rel="stylesheet" href="' + href + '">', doc) as HTMLLinkElement;
                     doc.head && doc.head.appendChild(link);
                 });
             }
 
-            if (editor.options.iframeStyle) {
+            if (jodit.options.iframeStyle) {
                 const style: HTMLStyleElement = doc.createElement("style");
-                style.innerHTML = editor.options.iframeStyle;
+                style.innerHTML = jodit.options.iframeStyle;
                 doc.head && doc.head.appendChild(style);
             }
         })
@@ -192,6 +193,7 @@ export function iframe(editor: Jodit) {
             }
 
             delete editor.editor;
+
             editor.iframe = editor.ownerDocument.createElement("iframe") as HTMLIFrameElement;
             editor.iframe.style.display = "block";
             editor.iframe.src = "about:blank";
@@ -223,7 +225,7 @@ export function iframe(editor: Jodit) {
                     .on(doc, "readystatechange DOMContentLoaded", resizeIframe);
             }
 
-            (function(e) {
+            (e => {
                 e.matches || (e.matches = Element.prototype.matches); // fix inside iframe polifill
             })((editor.editorWindow as any).Element.prototype);
 

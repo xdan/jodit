@@ -1,4 +1,4 @@
-import { Dictionary } from "../types";
+import {  IDictionary } from "../types";
 
 export default {
     "Type something": "إبدأ في الكتابة...",
@@ -204,4 +204,4 @@ export default {
     "You can only edit your own images. Download this image on the host?": "يمكنك فقط تحرير صورك الخاصة. تحميل هذه الصورة على المضيف؟",
     "The image has been successfully uploaded to the host!": "تم تحميل الصورة بنجاح على الخادم!",
 
-} as Dictionary<string>;
+} as  IDictionary<string>;

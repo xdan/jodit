@@ -10,7 +10,7 @@ import { Jodit } from "../Jodit";
 import { css } from "../modules/Helpers";
 import { ToolbarButton } from "../modules/toolbar/button";
 import { ToolbarIcon } from "../modules/toolbar/icon";
-import { ControlType } from "../types/toolbar";
+import { IControlType } from "../types/toolbar";
 import { IViewBased } from "../types/view";
 
 /**
@@ -23,7 +23,7 @@ import { IViewBased } from "../types/view";
  * @property{boolean} fullsize=false true Editor toWYSIWYG open toWYSIWYG full screen
  * @property{boolean} globalFullsize=true if true, after `fullsize` -  all editors element get jodit_fullsize_box class (z-index: 100000 !important;)
  * @example
-  * ```javascript
+ * ```javascript
  * var editor = new jodit({
  *     fullsize: true // fullsize editor
  * });
@@ -51,7 +51,7 @@ Config.prototype.controls.fullsize = {
         editor.toggleFullSize();
     },
     isActive: (editor: Jodit) => editor.isFullSize(),
-    getLabel: (editor: Jodit, btn: ControlType, button: ToolbarButton) => {
+    getLabel: (editor: Jodit, btn: IControlType, button: ToolbarButton) => {
         const mode: string = editor.isFullSize() ? "shrink" : "fullsize";
 
         button.textBox.innerHTML = !editor.options.textIcons ? ToolbarIcon.getIcon(mode) : `<span>${editor.i18n(mode)}</span>`;
@@ -60,7 +60,7 @@ Config.prototype.controls.fullsize = {
     },
     tooltip: "Open editor in fullsize",
     mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG,
-} as ControlType;
+} as IControlType;
 
 /**
  * Process `toggleFullSize` event, and behavior - set/unset fullsize mode
@@ -68,10 +68,12 @@ Config.prototype.controls.fullsize = {
  * @param {Jodit} editor
  */
 export  function fullsize(editor: IViewBased) {
-    let shown: boolean = false,
+    let
+        shown: boolean = false,
         oldHeight: number = 0,
         oldWidth: number = 0,
-        wasToggled = false,
+        wasToggled = false;
+    const
         resize  = () => {
             if (editor.events) {
                 if (shown) {

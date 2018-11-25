@@ -43,9 +43,13 @@ export function media(editor: Jodit) {
             if (element.parentNode && (element.parentNode as HTMLElement).getAttribute("data-jodit_iframe_wrapper")) {
                 element = element.parentNode as HTMLElement;
             } else {
-                let wrapper: HTMLElement;
+                let
+                    wrapper: HTMLElement;
 
-                wrapper = dom(`<${mediaFakeTag} data-jodit-temp="1" contenteditable="false" draggable="true" data-${keyFake}="1"></${mediaFakeTag}>`, editor.editorDocument);
+                wrapper = dom(
+                    `<${mediaFakeTag} data-jodit-temp="1" contenteditable="false" draggable="true" data-${keyFake}="1"></${mediaFakeTag}>`,
+                    editor.editorDocument,
+                );
 
                 wrapper.style.display = element.style.display === "inline-block" ? "inline-block" : "block";
                 wrapper.style.width = element.offsetWidth + "px";

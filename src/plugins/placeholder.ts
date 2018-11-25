@@ -66,17 +66,18 @@ export function placeholder(this: any, editor: Jodit) {
     }
 
     (this as any).destruct  = () => {
-        if (placeholder.parentNode) {
-            placeholder.parentNode.removeChild(placeholder);
+        if (placeholderElm.parentNode) {
+            placeholderElm.parentNode.removeChild(placeholderElm);
         }
     };
 
     const show =  () => {
-            if (!placeholder.parentNode || editor.options.readonly) {
+            if (!placeholderElm.parentNode || editor.options.readonly) {
                 return;
             }
 
-            let marginTop: number = 0,
+            let
+                marginTop: number = 0,
                 marginLeft: number = 0;
 
             const style: CSSStyleDeclaration = editor.editorWindow.getComputedStyle(editor.editor);
@@ -85,36 +86,40 @@ export function placeholder(this: any, editor: Jodit) {
                 const style2: CSSStyleDeclaration = editor.editorWindow.getComputedStyle(editor.editor.firstChild as Element);
                 marginTop = parseInt(style2.getPropertyValue("margin-top"), 10);
                 marginLeft = parseInt(style2.getPropertyValue("margin-left"), 10);
-                placeholder.style.fontSize = parseInt(style2.getPropertyValue("font-size"), 10) + "px";
-                placeholder.style.lineHeight = style2.getPropertyValue("line-height");
+                placeholderElm.style.fontSize = parseInt(style2.getPropertyValue("font-size"), 10) + "px";
+                placeholderElm.style.lineHeight = style2.getPropertyValue("line-height");
             } else {
-                placeholder.style.fontSize = parseInt(style.getPropertyValue("font-size"), 10) + "px";
-                placeholder.style.lineHeight = style.getPropertyValue("line-height");
+                placeholderElm.style.fontSize = parseInt(style.getPropertyValue("font-size"), 10) + "px";
+                placeholderElm.style.lineHeight = style.getPropertyValue("line-height");
             }
 
-            css(placeholder, {
+            css(placeholderElm, {
                 display: "block",
                 marginTop: Math.max(parseInt(style.getPropertyValue("margin-top"), 10), marginTop),
                 marginLeft: Math.max(parseInt(style.getPropertyValue("margin-left"), 10), marginLeft),
             });
         },
-        hide = function() {
-            if (placeholder.parentNode) {
-                placeholder.style.display = "none";
+        hide = () => {
+            if (placeholderElm.parentNode) {
+                placeholderElm.style.display = "none";
             }
         },
         toggle = debounce(() => {
-            if (placeholder.parentNode === null) {
+            if (placeholderElm.parentNode === null) {
                 return;
             }
 
             if (!editor.editor) {
                 return;
             }
+
             if (editor.getRealMode() !== consts.MODE_WYSIWYG) {
                 return hide();
             }
-            const value: string = editor.getEditorValue();
+
+            const
+                value: string = editor.getEditorValue();
+
             if (value && !/^<(p|div|h[1-6])><\/\1>$/.test(value)) {
                 hide();
             } else {
@@ -122,15 +127,21 @@ export function placeholder(this: any, editor: Jodit) {
             }
         }, editor.defaultTimeout / 10);
 
-    const placeholder: HTMLElement = dom('<span style="display: none;" class="jodit_placeholder">' + editor.i18n(editor.options.placeholder) + "</span>", editor.ownerDocument);
+    const
+        placeholderElm: HTMLElement = dom(
+            '<span style="display: none;" class="jodit_placeholder">' +
+                editor.i18n(editor.options.placeholder) +
+            "</span>",
+            editor.ownerDocument,
+        );
 
     if (editor.options.direction === "rtl") {
-        placeholder.style.right = "0px";
-        placeholder.style.direction = "rtl";
+        placeholderElm.style.right = "0px";
+        placeholderElm.style.direction = "rtl";
     }
 
     if (editor.options.useInputsPlaceholder && editor.element.hasAttribute("placeholder")) {
-        placeholder.innerHTML = editor.element.getAttribute("placeholder") || "";
+        placeholderElm.innerHTML = editor.element.getAttribute("placeholder") || "";
     }
 
     editor.events
@@ -143,11 +154,11 @@ export function placeholder(this: any, editor: Jodit) {
         })
         .on("afterInit", () => {
             editor.workplace
-                .appendChild(placeholder);
+                .appendChild(placeholderElm);
 
             toggle();
 
-            editor.events.fire("placeholder", placeholder.innerHTML);
+            editor.events.fire("placeholder", placeholderElm.innerHTML);
             editor.events
                 .on("change keyup mouseup keydown mousedown afterSetMode", toggle)
                 .on(window, "load", toggle);

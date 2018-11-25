@@ -24,12 +24,6 @@ export interface Action {
 export class ContextMenu extends Component {
     private context: HTMLElement;
 
-    constructor(editor: IViewBased) {
-        super(editor);
-        this.context = dom(`<div data-editor_id="${this.jodit.id}" class="jodit_context_menu"></div>`, editor.ownerDocument);
-        editor.ownerDocument.body.appendChild(this.context);
-    }
-
     public destruct() {
         this.context && this.context.parentNode && this.context.parentNode.removeChild(this.context);
     }
@@ -69,7 +63,7 @@ export class ContextMenu extends Component {
 
         this.context.innerHTML = "";
 
-        actions.forEach((item) => {
+        actions.forEach(item => {
             if (!item) {
                 return;
             }
@@ -96,5 +90,11 @@ export class ContextMenu extends Component {
             .addEventListener("mouseup", self.hide);
 
         this.context.classList.add("jodit_context_menu-show");
+    }
+
+    constructor(editor: IViewBased) {
+        super(editor);
+        this.context = dom(`<div data-editor_id="${this.jodit.id}" class="jodit_context_menu"></div>`, editor.ownerDocument);
+        editor.ownerDocument.body.appendChild(this.context);
     }
 }

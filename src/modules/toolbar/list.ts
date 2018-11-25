@@ -5,7 +5,7 @@
  */
 
 import { Jodit } from "../../Jodit";
-import { ControlType, ControlTypeStrong } from "../../types/toolbar";
+import { IControlType, IControlTypeStrong } from "../../types/toolbar";
 import { IViewBased } from "../../types/view";
 import { each } from "../Helpers";
 import { ToolbarButton } from "./button";
@@ -31,7 +31,7 @@ export  class ToolbarList extends ToolbarPopup {
 
     protected getContainer = () => this.toolbar.container;
 
-    protected doOpen(control: ControlTypeStrong) {
+    protected doOpen(control: IControlTypeStrong) {
         this.toolbar = new ToolbarCollection(this.jodit);
 
         const list: any = typeof control.list === "string" ? control.list.split(/[\s,]/) : control.list;
@@ -48,7 +48,7 @@ export  class ToolbarList extends ToolbarPopup {
                 button = new ToolbarButton(this.jodit, {
                     name: key.toString(),
                     ...this.jodit.options.controls[key],
-                    ...(value as ControlType),
+                    ...(value as IControlType),
                 }, this.current); // list like object {"align": {list: {"left": {exec: alert}, "right": {}}}}
             } else {
                 button = new ToolbarButton(this.jodit, {

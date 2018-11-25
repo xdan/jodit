@@ -140,7 +140,7 @@ export class Dom {
                 if (callback.call(node, node) === false || Dom.each(node, callback) === false) {
                     return false;
                 }
-                node = Dom.next(node, (node) => (!!node), elm);
+                node = Dom.next(node, node => (!!node), elm);
             }
         }
 
@@ -570,7 +570,7 @@ export class Dom {
             nodes = nodes.reverse();
         }
 
-        nodes.forEach((child) => {
+        nodes.forEach(child => {
             Dom.all(child, condition, prev);
         });
     }

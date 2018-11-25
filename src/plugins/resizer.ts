@@ -8,7 +8,7 @@ import { Config } from "../Config";
 import * as consts from "../constants";
 import { Jodit } from "../Jodit";
 import { $$, css, debounce, dom, innerWidth, isIE, offset } from "../modules/Helpers";
-import { Bound } from "../types/types";
+import { IBound } from "../types/types";
 
 /**
  * The module creates a supporting frame for resizing of the elements img and table
@@ -86,7 +86,7 @@ export function resizer(editor: Jodit) {
         resizerIsVisible: boolean = false,
         timeoutSizeViewer: number = 0;
 
-    const resizer: HTMLElement = dom('<div data-editor_id="' + editor.id + '" style="display:none" class="jodit_resizer">' +
+    const resizerElm: HTMLElement = dom('<div data-editor_id="' + editor.id + '" style="display:none" class="jodit_resizer">' +
             '<i class="jodit_resizer-topleft"></i>' +
             '<i class="jodit_resizer-topright"></i>' +
             '<i class="jodit_resizer-bottomright"></i>' +
@@ -94,13 +94,13 @@ export function resizer(editor: Jodit) {
             "<span>100x100</span>" +
         "</div>", editor.ownerDocument),
 
-        sizeViewer: HTMLSpanElement = resizer.getElementsByTagName("span")[0],
+        sizeViewer: HTMLSpanElement = resizerElm.getElementsByTagName("span")[0],
 
         hideResizer = () => {
             isResizing = false;
             resizerIsVisible = false;
             currentElement = null;
-            resizer.style.display = "none";
+            resizerElm.style.display = "none";
         },
 
         hideSizeViewer = () => {
@@ -124,13 +124,21 @@ export function resizer(editor: Jodit) {
         },
 
         updateSize = () => {
-            if (resizerIsVisible && currentElement && resizer) {
-                const workplacePosition: Bound = offset((resizer.parentNode || editor.ownerDocument.documentElement) as HTMLElement, editor, editor.ownerDocument, true),
-                    pos: Bound = offset(currentElement, editor, editor.editorDocument),
-                    left: number = parseInt(resizer.style.left || "0", 10),
-                    top: number = parseInt(resizer.style.top || "0", 10),
-                    width: number = resizer.offsetWidth,
-                    height: number = resizer.offsetHeight;
+            if (resizerIsVisible && currentElement && resizerElm) {
+                const
+                    workplacePosition: IBound = offset(
+                        (
+                            resizerElm.parentNode || editor.ownerDocument.documentElement
+                        ) as HTMLElement,
+                        editor,
+                        editor.ownerDocument,
+                        true,
+                    ),
+                    pos: IBound = offset(currentElement, editor, editor.editorDocument),
+                    left: number = parseInt(resizerElm.style.left || "0", 10),
+                    top: number = parseInt(resizerElm.style.top || "0", 10),
+                    w: number = resizerElm.offsetWidth,
+                    h: number = resizerElm.offsetHeight;
 
                 // 1 - because need move border higher and toWYSIWYG the left than the picture
                 // 2 - in box-sizing: border-box mode width is real width indifferent by border-width.
@@ -138,11 +146,11 @@ export function resizer(editor: Jodit) {
                 const newTop: number = pos.top - 1 - workplacePosition.top;
                 const newLeft: number = pos.left - 1 - workplacePosition.left;
 
-                if (top !== newTop || left !== newLeft || width !== currentElement.offsetWidth || height !== currentElement.offsetHeight) {
-                    resizer.style.top = newTop + "px";
-                    resizer.style.left = newLeft + "px";
-                    resizer.style.width = currentElement.offsetWidth + "px";
-                    resizer.style.height = currentElement.offsetHeight + "px";
+                if (top !== newTop || left !== newLeft || w !== currentElement.offsetWidth || h !== currentElement.offsetHeight) {
+                    resizerElm.style.top = newTop + "px";
+                    resizerElm.style.left = newLeft + "px";
+                    resizerElm.style.width = currentElement.offsetWidth + "px";
+                    resizerElm.style.height = currentElement.offsetHeight + "px";
 
                     if (editor.events) {
                         editor.events.fire(currentElement, "changesize");
@@ -161,15 +169,15 @@ export function resizer(editor: Jodit) {
                 return;
             }
 
-            if (!resizer.parentNode) {
-                editor.workplace.appendChild(resizer);
+            if (!resizerElm.parentNode) {
+                editor.workplace.appendChild(resizerElm);
             }
 
             resizerIsVisible = true;
-            resizer.style.display = "block";
+            resizerElm.style.display = "block";
 
             if (editor.isFullSize()) {
-                resizer.style.zIndex = css(editor.container, "zIndex").toString();
+                resizerElm.style.zIndex = css(editor.container, "zIndex").toString();
             }
 
             updateSize();
@@ -187,7 +195,15 @@ export function resizer(editor: Jodit) {
                 if (element.parentNode && (element.parentNode as HTMLElement).getAttribute("data-jodit_iframe_wrapper")) {
                     element = element.parentNode as HTMLElement;
                 } else {
-                    wrapper = dom('<jodit data-jodit-temp="1" contenteditable="false" draggable="true" data-jodit_iframe_wrapper="1"></jodit>', editor.editorDocument);
+                    wrapper = dom(
+                        "<jodit " +
+                            'data-jodit-temp="1" ' +
+                            'contenteditable="false" ' +
+                            'draggable="true" ' +
+                            'data-jodit_iframe_wrapper="1"' +
+                        "></jodit>",
+                        editor.editorDocument,
+                    );
 
                     wrapper.style.display = element.style.display === "inline-block" ? "inline-block" : "block";
                     wrapper.style.width = element.offsetWidth + "px";
@@ -254,7 +270,7 @@ export function resizer(editor: Jodit) {
 
     // resizeElement = {};
 
-    $$("i", resizer).forEach((resizeHandle: HTMLElement) => {
+    $$("i", resizerElm).forEach((resizeHandle: HTMLElement) => {
         editor.events
             .on(resizeHandle, "mousedown touchstart", (e: MouseEvent): false | void => {
                 if (!currentElement || !currentElement.parentNode) {
@@ -290,8 +306,8 @@ export function resizer(editor: Jodit) {
             }
         })
         .on("beforeDestruct", () => {
-            if (resizer.parentNode) {
-                resizer.parentNode.removeChild(resizer);
+            if (resizerElm.parentNode) {
+                resizerElm.parentNode.removeChild(resizerElm);
             }
         })
         .on("afterInit", () => {
@@ -341,7 +357,7 @@ export function resizer(editor: Jodit) {
                         }
 
                         if (new_w > editor.options.resizer.min_width) {
-                            if (new_w < (resizer.parentNode as HTMLElement).offsetWidth) {
+                            if (new_w < (resizerElm.parentNode as HTMLElement).offsetWidth) {
                                 currentElement.style.width = new_w + "px";
                             } else {
                                 currentElement.style.width = "100%";
@@ -400,7 +416,24 @@ export function resizer(editor: Jodit) {
                     if (editor.getMode() === consts.MODE_SOURCE) {
                         return;
                     }
-                    if (!(elm as any).__jodit_resizer_binded && ((elm.tagName === "IFRAME" && editor.options.useIframeResizer) || (elm.tagName === "IMG" && editor.options.useImageResizer) || (elm.tagName === "TABLE" && editor.options.useTableResizer))) {
+
+                    if (
+                        !(elm as any).__jodit_resizer_binded &&
+                        (
+                            (
+                                elm.tagName === "IFRAME" &&
+                                editor.options.useIframeResizer
+                            ) ||
+                            (
+                                elm.tagName === "IMG" &&
+                                editor.options.useImageResizer
+                            ) ||
+                            (
+                                elm.tagName === "TABLE" &&
+                                editor.options.useTableResizer
+                            )
+                        )
+                    ) {
                         (elm as any).__jodit_resizer_binded = true;
                         bind(elm);
                     }

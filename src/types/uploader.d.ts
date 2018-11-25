@@ -6,33 +6,36 @@
 
 import { Ajax } from "../modules/Ajax";
 import { Uploader } from "../modules/Uploader";
-import { Dictionary } from "./types";
+import { IDictionary } from "./types";
 
-export interface UploaderData {
-    messages?: string[],
-    files?: string[],
-    isImages?: boolean[],
-    path?: string,
-    baseurl?: string,
+export interface IUploaderData {
+    messages?: string[];
+    files?: string[];
+    isImages?: boolean[];
+    path?: string;
+    baseurl?: string;
     newfilename?: string;
 }
 
-export interface UploaderAnswer {
-    success: boolean,
-    time: string,
-    data: UploaderData
+export interface IUploaderAnswer {
+    success: boolean;
+    time: string;
+    data: IUploaderData;
 }
 
-export type HandlerSuccess = (resp: UploaderData) => void;
+export type HandlerSuccess = (resp: IUploaderData) => void;
 export type HandlerError = (e: Error) => void;
-export type BuildDataResult = FormData | Dictionary<string> | Promise<FormData | Dictionary<string>> | string;
+export type BuildDataResult = FormData |  IDictionary<string> | Promise<FormData |  IDictionary<string>> | string;
 
 /**
  * @property {object} uploader {@link Uploader|Uploader}'s settings
  * @property {string} uploader.url Point of entry for file uploader
  * @property {string} uploader.format='json' The format of the received data
- * @property {string} uploader.headers=null An object of additional header key/value pairs toWYSIWYG send along with requests using the XMLHttpRequest transport. See {@link Ajax.defaultAjaxOptions|Ajax.defaultAjaxOptions}
- * @property {function} uploader.prepareData Before send file will called this function. First argument it gets [new FormData ()](https://developer.mozilla.org/en/docs/Web/API/FormData), you can use this if you want add some POST parameter.
+ * @property {string} uploader.headers=null An object of additional header key/value pairs toWYSIWYG send along with
+ * requests using the XMLHttpRequest transport. See {@link Ajax.defaultAjaxOptions|Ajax.defaultAjaxOptions}
+ * @property {function} uploader.prepareData Before send file will called this function. First argument it gets
+ * [new FormData ()](https://developer.mozilla.org/en/docs/Web/API/FormData), you can use this if you want add some POST
+ * parameter.
  * @property {object|boolean} uploader.data=false POST parameters.
  * @example
  * ```javascript
@@ -152,23 +155,24 @@ export type BuildDataResult = FormData | Dictionary<string> | Promise<FormData |
  *      },
  *  });
  */
-export interface UploaderOptions {
+export interface IUploaderOptions {
     url: string;
     insertImageAsBase64URI: boolean;
     imagesExtensions: string[];
-    headers?: Dictionary<string> | null,
-    data: null|object,
+    headers?: IDictionary<string> | null;
+    data: null|object;
     format: string;
 
     prepareData: (this: Uploader, formData: FormData) => any;
     buildData?: (this: Uploader, formData: any) => BuildDataResult;
-    queryBuild?: (this: Ajax, obj: string | Dictionary<string | object> | FormData, prefix?: string) => string | object;
+    queryBuild?: (this: Ajax, obj: string |  IDictionary<string | object> | FormData, prefix?: string)
+        => string | object;
 
-    isSuccess: (this: Uploader, resp: UploaderAnswer) => boolean;
+    isSuccess: (this: Uploader, resp: IUploaderAnswer) => boolean;
 
-    getMessage: (this: Uploader, resp: UploaderAnswer) => string;
+    getMessage: (this: Uploader, resp: IUploaderAnswer) => string;
 
-    process: (this: Uploader, resp: UploaderAnswer) => UploaderData;
+    process: (this: Uploader, resp: IUploaderAnswer) => IUploaderData;
 
     error: (this: Uploader, e: Error) => void;
 

@@ -6,8 +6,8 @@
 
 import { Jodit } from "../Jodit";
 import { Buttons } from "./toolbar";
-import { Dictionary, Permissions } from "./types";
-import { UploaderOptions } from "./uploader";
+import {  IDictionary, IPermissions } from "./types";
+import { IUploaderOptions } from "./uploader";
 
 /**
  * The module creates a web browser dialog box . In a Web browser , you can select an image , remove , drag it . Upload new
@@ -35,7 +35,7 @@ export interface ISourcesFiles {
     [key: string]: ISource;
 }
 
-export interface FileBrowserAnswer {
+export interface IFileBrowserAnswer {
     success: boolean;
     time: string;
     data: {
@@ -45,15 +45,15 @@ export interface FileBrowserAnswer {
         path: string;
         name: string;
         source: string;
-        permissions?: Permissions | null;
+        permissions?: IPermissions | null;
     };
 }
 
-export interface FileBrowserAjaxOptions {
+export interface IFileBrowserAjaxOptions {
     url?: string;
     async?: boolean;
 
-    data: Dictionary<string>;
+    data: IDictionary<string>;
     cache?: boolean;
     contentType?: string;
 
@@ -61,14 +61,14 @@ export interface FileBrowserAjaxOptions {
     processData?: boolean;
     dataType?: string;
 
-    headers?: Dictionary<string>;
+    headers?: IDictionary<string>;
 
-    prepareData?: (data: Dictionary<string>) => Dictionary<string>;
+    prepareData?: (data: IDictionary<string>) =>  IDictionary<string>;
 
-    process?: (resp: FileBrowserAnswer) => FileBrowserAnswer;
+    process?: (resp: IFileBrowserAnswer) => IFileBrowserAnswer;
 }
 
-export interface FileBrowserOptions  {
+export interface IFileBrowserOptions  {
     removeButtons: string[];
     buttons: Buttons;
     zIndex?: number;
@@ -100,31 +100,31 @@ export interface FileBrowserOptions  {
 
     view: string | null;
 
-    isSuccess: (resp: FileBrowserAnswer) => boolean;
-    getMessage: (resp: FileBrowserAnswer) => string;
+    isSuccess: (resp: IFileBrowserAnswer) => boolean;
+    getMessage: (resp: IFileBrowserAnswer) => string;
     showFileName: boolean;
     showFileSize: boolean;
     showFileChangeTime: boolean;
 
     getThumbTemplate: (item: ISourceFile, source: ISource, source_name: string) => string;
 
-    ajax: FileBrowserAjaxOptions;
-    create: FileBrowserAjaxOptions;
-    getLocalFileByUrl: FileBrowserAjaxOptions;
-    resize: FileBrowserAjaxOptions;
-    crop: FileBrowserAjaxOptions;
-    move: FileBrowserAjaxOptions;
-    fileRemove: FileBrowserAjaxOptions;
-    folderRemove: FileBrowserAjaxOptions;
-    items: FileBrowserAjaxOptions;
-    folder: FileBrowserAjaxOptions;
-    permissions: FileBrowserAjaxOptions;
+    ajax: IFileBrowserAjaxOptions;
+    create: IFileBrowserAjaxOptions;
+    getLocalFileByUrl: IFileBrowserAjaxOptions;
+    resize: IFileBrowserAjaxOptions;
+    crop: IFileBrowserAjaxOptions;
+    move: IFileBrowserAjaxOptions;
+    fileRemove: IFileBrowserAjaxOptions;
+    folderRemove: IFileBrowserAjaxOptions;
+    items: IFileBrowserAjaxOptions;
+    folder: IFileBrowserAjaxOptions;
+    permissions: IFileBrowserAjaxOptions;
 
-    uploader: null | UploaderOptions; // use default Uploader's settings
+    uploader: null | IUploaderOptions; // use default Uploader's settings
     [key: string]: any;
 }
 
-export interface FileBrowserCallBackData {
+export interface IFileBrowserCallBackData {
     baseurl: string;
     files: string[];
 }

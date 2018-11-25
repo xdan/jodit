@@ -10,16 +10,17 @@ import { Dom } from "../modules/Dom";
 import { convertMediaURLToVideoEmbed, dom, isURL, val } from "../modules/Helpers";
 import { markerInfo } from "../modules/Selection";
 import { Select } from "../modules/Selection";
-import { ControlType } from "../types/toolbar";
+import { IControlType } from "../types/toolbar";
 
 /**
-* @property {object}  link `{@link link|link}` plugin's options
-* @property {boolean} link.followOnDblClick=true Follow lnk address after dblclick
-* @property {boolean} link.processVideoLink=true Replace inserted youtube/vimeo link toWYSIWYG `iframe`
-* @property {boolean} link.processPastedLink=true Wrap inserted link in &lt;a href="link">link&lt;/a>
-* @property {boolean} link.openLinkDialogAfterPost=true Open Link dialog after post
-* @property {boolean} link.removeLinkAfterFormat=true When the button is pressed toWYSIWYG clean format, if it was done on the link is removed like command `unlink`
-*/
+ * @property {object}  link `{@link link|link}` plugin's options
+ * @property {boolean} link.followOnDblClick=true Follow lnk address after dblclick
+ * @property {boolean} link.processVideoLink=true Replace inserted youtube/vimeo link toWYSIWYG `iframe`
+ * @property {boolean} link.processPastedLink=true Wrap inserted link in &lt;a href="link">link&lt;/a>
+ * @property {boolean} link.openLinkDialogAfterPost=true Open Link dialog after post
+ * @property {boolean} link.removeLinkAfterFormat=true When the button is pressed toWYSIWYG clean format,
+ * if it was done on the link is removed like command `unlink`
+ */
 
 declare module "../Config" {
     interface Config {
@@ -54,13 +55,13 @@ Config.prototype.controls.unlink = {
 
         editor.events.fire("hidePopup");
     },
-} as ControlType;
+} as IControlType;
 Config.prototype.controls.link = {
     isActive: (editor: Jodit): boolean => {
         const current: Node | false = editor.selection.current();
         return current && Dom.closest(current, "a", editor.editor) !== false;
     },
-    popup: (editor: Jodit, current: HTMLElement|false, self: ControlType, close: Function) => {
+    popup: (editor: Jodit, current: HTMLElement|false, self: IControlType, close: () => void) => {
         const sel: Selection = editor.editorWindow.getSelection(),
             form: HTMLFormElement = dom(
                 '<form class="jodit_form">' +
@@ -89,8 +90,9 @@ Config.prototype.controls.link = {
             current = false;
         }
 
-        const link: HTMLAnchorElement | null = form.querySelector(".jodit_link_insert_button");
-        const unlink: HTMLButtonElement | null = form.querySelector(".jodit_unlink_button");
+        const
+            lnk: HTMLAnchorElement | null = form.querySelector(".jodit_link_insert_button"),
+            unlink: HTMLButtonElement | null = form.querySelector(".jodit_unlink_button");
 
         if (current) {
             val(form, "input[name=url]", current.getAttribute("href") || "");
@@ -102,8 +104,8 @@ Config.prototype.controls.link = {
             if (editor.options.link.noFollowCheckbox) {
                 (form.querySelector("input[name=nofollow]") as HTMLInputElement).checked = (current.getAttribute("rel") === "nofollow");
             }
-            if (link) {
-                link.innerHTML = editor.i18n("Update");
+            if (lnk) {
+                lnk.innerHTML = editor.i18n("Update");
             }
         } else {
             if (unlink) {
@@ -112,8 +114,8 @@ Config.prototype.controls.link = {
 
             val(form, "input[name=text]", sel.toString());
 
-            if (link) {
-                link.innerHTML = editor.i18n("Insert");
+            if (lnk) {
+                lnk.innerHTML = editor.i18n("Insert");
             }
         }
 
@@ -173,7 +175,7 @@ Config.prototype.controls.link = {
     },
     tags: ["a"],
     tooltip: "Insert link",
-} as ControlType;
+} as IControlType;
 
 /**
  * Process link. Insert, dbclick or remove format
@@ -217,7 +219,10 @@ export function link(jodit: Jodit) {
     }
     if (jodit.options.link.removeLinkAfterFormat) {
         jodit.events.on("afterCommand", (command: string) => {
-            let sel: Select = jodit.selection,
+            const
+                sel: Select = jodit.selection;
+
+            let
                 newtag: Node,
                 node: Node|false;
 

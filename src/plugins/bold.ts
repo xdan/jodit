@@ -6,18 +6,18 @@
 
 import { Config } from "../Config";
 import { Jodit } from "../Jodit";
-import { Dictionary } from "../types";
-import { ControlType } from "../types/toolbar";
+import {  IDictionary } from "../types";
+import { IControlType } from "../types/toolbar";
 
 Config.prototype.controls.subscript = {
     tags: ["sub"],
     tooltip: "subscript",
-} as ControlType;
+} as IControlType;
 
 Config.prototype.controls.superscript = {
     tags: ["sup"],
     tooltip: "superscript",
-} as ControlType;
+} as IControlType;
 
 Config.prototype.controls.bold = {
     tagRegExp: /^(strong|b)$/i,
@@ -26,7 +26,7 @@ Config.prototype.controls.bold = {
         "font-weight": ["bold", "700"],
     },
     tooltip: "Bold",
-} as ControlType;
+} as IControlType;
 
 Config.prototype.controls.italic = {
     tagRegExp: /^(em|i)$/i,
@@ -35,7 +35,7 @@ Config.prototype.controls.italic = {
         "font-style": "italic",
     },
     tooltip: "Italic",
-} as ControlType;
+} as IControlType;
 
 Config.prototype.controls.underline = {
     tagRegExp: /^(u)$/i,
@@ -44,7 +44,7 @@ Config.prototype.controls.underline = {
         "text-decoration": "underline",
     },
     tooltip: "Underline",
-} as ControlType;
+} as IControlType;
 Config.prototype.controls.strikethrough = {
     tagRegExp: /^(s)$/i,
     tags: ["s"],
@@ -52,47 +52,50 @@ Config.prototype.controls.strikethrough = {
         "text-decoration": "line-through",
     },
     tooltip: "Strike through",
-} as ControlType;
+} as IControlType;
 
 /**
  * Bold plugin - change B to Strong, i to Em
  */
 export function bold(editor: Jodit) {
-    const callBack: Function = (command: string): false | void => {
-        const control: ControlType = Jodit.defaultOptions.controls[command] as ControlType;
-        const cssOptions: Dictionary<string | string[]> | Dictionary<(editor: Jodit, value: string) => boolean> = {...control.css},
-            cssRules: Dictionary<string> = {};
+    const
+        callBack = (command: string): false | void => {
+            const
+                control: IControlType = Jodit.defaultOptions.controls[command] as IControlType,
+                cssOptions: IDictionary<string | string[]> |  IDictionary<(editor: Jodit, value: string) => boolean> = {...control.css},
+                cssRules: IDictionary<string> = {};
 
-        Object.keys(cssOptions).forEach((key: string) => {
-            cssRules[key] = Array.isArray(cssOptions[key]) ?  (cssOptions[key] as any)[0] : cssOptions[key];
+            Object.keys(cssOptions).forEach((key: string) => {
+                cssRules[key] = Array.isArray(cssOptions[key]) ?  (cssOptions[key] as any)[0] : cssOptions[key];
+            });
+
+            editor.selection.applyCSS(
+                cssRules,
+                control.tags ? control.tags[0] : undefined,
+                control.css as any,
+            );
+
+            editor.setEditorValue();
+            return false;
+        };
+
+    editor
+        .registerCommand("bold", {
+            exec: callBack,
+            hotkeys: ["ctrl+b", "cmd+b"],
+        })
+
+        .registerCommand("italic", {
+            exec: callBack,
+            hotkeys: ["ctrl+i", "cmd+i"],
+        })
+
+        .registerCommand("underline", {
+            exec: callBack,
+            hotkeys: ["ctrl+u", "cmd+u"],
+        })
+
+        .registerCommand("strikethrough", {
+            exec: callBack,
         });
-
-        editor.selection.applyCSS(
-            cssRules,
-            control.tags ? control.tags[0] : undefined,
-            control.css as any,
-        );
-
-        editor.setEditorValue();
-        return false;
-    };
-
-    editor.registerCommand("bold", {
-        exec: callBack,
-        hotkeys: ["ctrl+b", "cmd+b"],
-    });
-
-    editor.registerCommand("italic", {
-        exec: callBack,
-        hotkeys: ["ctrl+i", "cmd+i"],
-    });
-
-    editor.registerCommand("underline", {
-        exec: callBack,
-        hotkeys: ["ctrl+u", "cmd+u"],
-    });
-
-    editor.registerCommand("strikethrough", {
-        exec: callBack,
-    });
-}
+    }

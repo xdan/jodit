@@ -17,17 +17,17 @@ declare module "../Config" {
 }
 
 /**
-* @property{boolean} showMessageErrors=true
-*/
+ * @property{boolean} showMessageErrors=true
+ */
 Config.prototype.showMessageErrors = true;
 /**
-* @property{int} showMessageErrorTime=3000 How long show messages
-*/
+ * @property{int} showMessageErrorTime=3000 How long show messages
+ */
 Config.prototype.showMessageErrorTime = 3000;
 
 /**
-* @property{int} showMessageErrorOffsetPx=3 Offset fo message
-*/
+ * @property{int} showMessageErrorOffsetPx=3 Offset fo message
+ */
 Config.prototype.showMessageErrorOffsetPx = 3;
 
 /**
@@ -37,7 +37,7 @@ export function errorMessages(editor: Jodit) {
     if (editor.options.showMessageErrors) {
         let height: number;
         const messagesBox: HTMLDivElement = dom('<div class="jodit_error_box_for_messages"></div>', editor.ownerDocument) as HTMLDivElement,
-            recalcOffsets = function() {
+            recalcOffsets = () => {
                 height = 5;
                 [].slice.call(messagesBox.childNodes).forEach((elm: HTMLElement) => {
                     css(messagesBox, "bottom", height + "px");
@@ -61,7 +61,12 @@ export function errorMessages(editor: Jodit) {
          * ```
          */
         editor.events.on("errorMessage", (message: string, className: string, timeout: number) => {
-            const newmessage: HTMLDivElement = dom('<div class="active ' + (className || "") + '">' + message + "</div>", editor.ownerDocument) as HTMLDivElement;
+            const
+                newmessage: HTMLDivElement = dom(
+                    '<div class="active ' + (className || "") + '">' + message + "</div>",
+                    editor.ownerDocument,
+                ) as HTMLDivElement;
+
             messagesBox.appendChild(newmessage);
             recalcOffsets();
             setTimeout(() => {

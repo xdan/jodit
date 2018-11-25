@@ -18,7 +18,7 @@ import {
     val,
 } from "./modules/Helpers";
 import { Widget } from "./modules/Widget";
-import { FileBrowserCallBackData } from "./types/filebrowser";
+import { IFileBrowserCallBackData } from "./types/filebrowser";
 import TabsWidget = Widget.TabsWidget;
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -29,8 +29,8 @@ import TabsWidget = Widget.TabsWidget;
 import FileSelectorWidget = Widget.FileSelectorWidget;
 import { Dom } from "./modules/Dom";
 import { ToolbarIcon } from "./modules/toolbar/icon";
-import { Dictionary } from "./types";
-import { Buttons, Controls, ControlType } from "./types/toolbar";
+import {  IDictionary } from "./types";
+import { Buttons, Controls, IControlType } from "./types/toolbar";
 
 /**
  * Default Editor's Configuration
@@ -39,7 +39,7 @@ import { Buttons, Controls, ControlType } from "./types/toolbar";
 export class Config {
     public license: string = "";
     public preset: string = "custom";
-    public presets: Dictionary<any> = {
+    public presets:  IDictionary<any> = {
         inline: {
             inline: true,
             toolbar: false,
@@ -318,7 +318,7 @@ export class Config {
      * console.log(editor.i18n('Type something')) //Начните что-либо вводить
      * ```
      */
-    public i18n: Dictionary | string = "en";
+    public i18n:  IDictionary | string = "en";
 
     /**
      * The tabindex global attribute is an integer indicating if the element can take input focus (is focusable), if it should participate to sequential keyboard navigation, and if so, at what position. It can take several values
@@ -391,7 +391,7 @@ export class Config {
      * })
      * ```
      */
-    public colors: Dictionary<string[]> | string[] = {
+    public colors:  IDictionary<string[]> | string[] = {
         greyscale: [
             "#000000",
             "#434343",
@@ -525,7 +525,7 @@ export class Config {
     /**
      * This buttons list will be added to option.buttons
      */
-    public extraButtons: Array<string | ControlType> = [];
+    public extraButtons: Array<string | IControlType> = [];
 
     /**
      * The width of the editor, accepted as the biggest. Used to the responsive version of the editor
@@ -736,7 +736,7 @@ export class Config {
      */
     public controls: Controls;
 
-    public events: Dictionary<Function> = {};
+    public events:  IDictionary<Function> = {};
 
     /**
      * Buttons in toolbat without SVG - only texts
@@ -811,7 +811,7 @@ Config.prototype.controls = {
             }
         },
         mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG,
-    } as ControlType,
+    } as IControlType,
     about: {
         exec: (editor: Jodit) => {
             const dialog: any = editor.getInstance("Dialog");
@@ -854,17 +854,17 @@ Config.prototype.controls = {
         },
         tooltip: "About Jodit",
         mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG,
-    } as ControlType,
+    } as IControlType,
     hr: {
         command: "insertHorizontalRule",
         tags: ["hr"],
         tooltip: "Insert Horizontal Line",
-    } as ControlType,
+    } as IControlType,
     image: {
         popup: (
             editor: Jodit,
             current: HTMLImageElement | false,
-            self: ControlType,
+            self: IControlType,
             close,
         ) => {
             let sourceImage: HTMLImageElement | null = null;
@@ -883,7 +883,7 @@ Config.prototype.controls = {
             return FileSelectorWidget(
                 editor,
                 {
-                    filebrowser: (data: FileBrowserCallBackData) => {
+                    filebrowser: (data: IFileBrowserCallBackData) => {
                         if (data.files && data.files.length) {
                             let i: number;
                             for (i = 0; i < data.files.length; i += 1) {
@@ -894,7 +894,7 @@ Config.prototype.controls = {
                         }
                         close();
                     },
-                    upload: (data: FileBrowserCallBackData) => {
+                    upload: (data: IFileBrowserCallBackData) => {
                         let i;
                         if (data.files && data.files.length) {
                             for (i = 0; i < data.files.length; i += 1) {
@@ -928,12 +928,12 @@ Config.prototype.controls = {
         },
         tags: ["img"],
         tooltip: "Insert Image",
-    } as ControlType,
+    } as IControlType,
     file: {
         popup: (
             editor: Jodit,
             current: Node | false,
-            self: ControlType,
+            self: IControlType,
             close,
         ) => {
             const insert = (url: string, title: string = "") => {
@@ -969,7 +969,7 @@ Config.prototype.controls = {
             return FileSelectorWidget(
                 editor,
                 {
-                    filebrowser: (data: FileBrowserCallBackData) => {
+                    filebrowser: (data: IFileBrowserCallBackData) => {
                         if (data.files && data.files.length) {
                             let i: number;
                             for (i = 0; i < data.files.length; i += 1) {
@@ -978,7 +978,7 @@ Config.prototype.controls = {
                         }
                         close();
                     },
-                    upload: (data: FileBrowserCallBackData) => {
+                    upload: (data: IFileBrowserCallBackData) => {
                         let i;
                         if (data.files && data.files.length) {
                             for (i = 0; i < data.files.length; i += 1) {
@@ -1004,7 +1004,7 @@ Config.prototype.controls = {
         },
         tags: ["a"],
         tooltip: "Insert file",
-    } as ControlType,
+    } as IControlType,
     video: {
         popup: (editor: Jodit, current, control, close) => {
             const bylink: HTMLFormElement = dom(
@@ -1084,5 +1084,5 @@ Config.prototype.controls = {
 
         tags: ["iframe"],
         tooltip: "Insert youtube/vimeo video",
-    } as ControlType,
+    } as IControlType,
 };

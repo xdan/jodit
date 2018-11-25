@@ -5,7 +5,7 @@
  */
 
 import { Jodit } from "../../Jodit";
-import { Bound } from "../../types/types";
+import { IBound } from "../../types/types";
 import { IViewBased } from "../../types/view";
 import { Dom } from "../Dom";
 import { css, dom, offset, throttle } from "../Helpers";
@@ -20,9 +20,9 @@ export  class ToolbarPopup extends ToolbarElement {
         }
 
         const popup: HTMLElement = this.getContainer();
-        const offsetContainer: Bound = offset(this.jodit.container as HTMLDivElement, this.jodit, this.jodit.ownerDocument, true);
+        const offsetContainer: IBound = offset(this.jodit.container as HTMLDivElement, this.jodit, this.jodit.ownerDocument, true);
 
-        const offsetPopup: Bound = offset(popup, this.jodit, this.jodit.ownerDocument, true);
+        const offsetPopup: IBound = offset(popup, this.jodit, this.jodit.ownerDocument, true);
 
         const marginLeft: number = css(popup, "marginLeft") as number || 0;
         offsetPopup.left -= marginLeft;
@@ -59,10 +59,10 @@ export  class ToolbarPopup extends ToolbarElement {
         css(popup, "width", width);
 
         // const popup: HTMLElement = this.container;
-        // const offsetConainer: Bound = offset(<HTMLDivElement>this.jodit.container, this.jodit, this.jodit.ownerDocument, true);
+        // const offsetConainer: IBound = offset(<HTMLDivElement>this.jodit.container, this.jodit, this.jodit.ownerDocument, true);
         //
         // // css(popup, 'marginLeft', 0);
-        // let offsetPopup: Bound = offset(popup, this.jodit, this.jodit.ownerDocument, true);
+        // let offsetPopup: IBound = offset(popup, this.jodit, this.jodit.ownerDocument, true);
         // let marginLeft: number = 0;
         // let diffLeft: number = 0;
         //

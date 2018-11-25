@@ -82,7 +82,7 @@
     },
     "lint-staged": {
         "*.{ts}": [
-            "tslint -c tslint.json ./src/**/*.ts --fix"
+            "tslint -c tslint.json ./src/**/*.ts --fix", "prettier --write", "git add"
         ]
     }
 }

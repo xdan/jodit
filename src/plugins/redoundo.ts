@@ -8,19 +8,19 @@ import { Config } from "../Config";
 import * as consts from "../constants";
 import { Jodit } from "../Jodit";
 import { Component } from "../modules/Component";
-import { ControlType } from "../types/toolbar";
+import { IControlType } from "../types/toolbar";
 
 Config.prototype.controls.redo = {
     mode: consts.MODE_SPLIT,
     isDisable: (editor: Jodit): boolean => !editor.observer.stack.canRedo(),
     tooltip: "Redo",
-} as ControlType;
+} as IControlType;
 
 Config.prototype.controls.undo = {
     mode: consts.MODE_SPLIT,
     isDisable: (editor: Jodit): boolean => !editor.observer.stack.canUndo(),
     tooltip: "Undo",
-} as ControlType;
+} as IControlType;
 
 /**
  * Custom process Redo and Undo functionality

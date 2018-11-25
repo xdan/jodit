@@ -10,7 +10,7 @@ import { Jodit } from "../Jodit";
 import { splitArray } from "../modules/Helpers";
 import { ToolbarButton } from "../modules/toolbar/button";
 import { ToolbarCollection } from "../modules/toolbar/collection";
-import { ControlType } from "../types/toolbar";
+import { IControlType } from "../types/toolbar";
 
 declare module "../Config" {
     interface Config {
@@ -33,12 +33,13 @@ Config.prototype.toolbarAdaptive = true;
 
 Config.prototype.controls.dots = {
     mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG,
-    popup: (editor: Jodit, current: false | Node, control: ControlType, close, button: ToolbarButton) => {
-        let store: {
-            container: HTMLDivElement,
-            toolbar: ToolbarCollection,
-            rebuild: Function,
-        } | undefined = control.data as any;
+    popup: (editor: Jodit, current: false | Node, control: IControlType, close, button: ToolbarButton) => {
+        let
+            store: {
+                container: HTMLDivElement,
+                toolbar: ToolbarCollection,
+                rebuild: () => void,
+            } | undefined = control.data as any;
 
         if (store === undefined) {
 
@@ -46,7 +47,11 @@ Config.prototype.controls.dots = {
                 container: editor.ownerDocument.createElement("div"),
                 toolbar: new ToolbarCollection(editor),
                 rebuild: () => {
-                    const buttons: Array<string|ControlType> | undefined = editor.events.fire("getDiffButtons.mobile", button.parentToolbar);
+                    const
+                        buttons: Array<string | IControlType> | undefined = editor.events.fire(
+                            "getDiffButtons.mobile",
+                            button.parentToolbar,
+                        );
 
                     if (buttons && store) {
                         store.toolbar.build(splitArray(buttons), store.container);
@@ -63,7 +68,7 @@ Config.prototype.controls.dots = {
 
         return store.container;
     },
-} as ControlType;
+} as IControlType;
 
 /**
  * Rebuild toolbar in depends of editor's width
@@ -71,7 +76,7 @@ Config.prototype.controls.dots = {
 export function mobile(editor: Jodit) {
     let timeout: number = 0,
         now: number,
-        store: Array<string|ControlType> = splitArray(editor.options.buttons);
+        store: Array<string | IControlType> = splitArray(editor.options.buttons);
 
     editor.events
         .on("touchend", (e: TouchEvent) => {
@@ -85,7 +90,7 @@ export function mobile(editor: Jodit) {
         })
         .on("getDiffButtons.mobile", (toolbar: ToolbarCollection): void | string[] => {
             if (toolbar === editor.toolbar) {
-                return splitArray(editor.options.buttons).filter((i: string|ControlType) => {
+                return splitArray(editor.options.buttons).filter((i: string | IControlType) => {
                     return store.indexOf(i) < 0;
                 });
             }
@@ -97,8 +102,12 @@ export function mobile(editor: Jodit) {
                 return;
             }
 
-            const width: number = editor.container.offsetWidth;
-            let newStore: Array<string|ControlType> = [];
+            const
+                width: number = editor.container.offsetWidth;
+
+            let
+                newStore: Array<string | IControlType> = [];
+
             if (width >= editor.options.sizeLG) {
                 newStore = splitArray(editor.options.buttons);
             } else if (width >= editor.options.sizeMD) {

@@ -10,14 +10,6 @@ import { Component } from "./Component";
 export class StatusBar extends Component {
     public container: HTMLElement;
 
-    constructor(jodit: Jodit, readonly target: HTMLElement) {
-        super(jodit);
-        this.container = jodit.ownerDocument.createElement("div");
-        this.container.classList.add("jodit_statusbar");
-        target.appendChild(this.container);
-        this.hide();
-    }
-
     public hide() {
         this.container && (this.container.style.display = "none");
     }
@@ -43,5 +35,13 @@ export class StatusBar extends Component {
     public destruct() {
         super.destruct();
         this.container.parentNode && this.container.parentNode.removeChild(this.container);
+    }
+
+    constructor(jodit: Jodit, readonly target: HTMLElement) {
+        super(jodit);
+        this.container = jodit.ownerDocument.createElement("div");
+        this.container.classList.add("jodit_statusbar");
+        target.appendChild(this.container);
+        this.hide();
     }
 }

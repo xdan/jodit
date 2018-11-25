@@ -7,7 +7,7 @@
 import * as consts from "../constants";
 import { INVISIBLE_SPACE, INVISIBLE_SPACE_REG_EXP_END, INVISIBLE_SPACE_REG_EXP_START } from "../constants";
 import { Jodit } from "../Jodit";
-import { Dictionary } from "../types";
+import {  IDictionary } from "../types";
 import { Component } from "./Component";
 import { Dom } from "./Dom";
 import { $$, css, dom, each, isIE, isPlainObject, normalizeNode, normilizeCSSValue, trim } from "./Helpers";
@@ -491,7 +491,7 @@ export class Select extends Component {
      *
      * @fired afterInsertImage
      */
-    public insertImage(url: string | HTMLImageElement, styles: Dictionary<string> = {}) {
+    public insertImage(url: string | HTMLImageElement, styles: IDictionary<string> = {}) {
 
         const image: HTMLImageElement = typeof url === "string" ? dom('<img src=""/>', this.jodit.editorDocument) as HTMLImageElement : dom(url, this.jodit.editorDocument) as HTMLImageElement;
 
@@ -639,7 +639,7 @@ export class Select extends Component {
 
         const container = start ? range.startContainer : range.endContainer,
             sibling = (node: Node): Node | false => {
-                return start ? Dom.prev(node, (elm) => !!elm, parentBlock) : Dom.next(node, (elm) => !!elm, parentBlock);
+                return start ? Dom.prev(node, elm => !!elm, parentBlock) : Dom.next(node, elm => !!elm, parentBlock);
             },
             checkSiblings = (next: Node | false): false | void => {
                 while (next) {
@@ -817,7 +817,7 @@ export class Select extends Component {
      * @param {string} nodeName
      * @param {object} options
      */
-    public applyCSS = (cssRules ?: {[key: string]: string | number | undefined}, nodeName: string = "span", options?: Function | Dictionary<string | string[]> | Dictionary<(editor: Jodit, elm: HTMLElement) => boolean>) => {
+    public applyCSS = (cssRules ?: {[key: string]: string | number | undefined}, nodeName: string = "span", options?: Function |  IDictionary<string | string[]> |  IDictionary<(editor: Jodit, elm: HTMLElement) => boolean>) => {
         const WRAP: number  = 1;
         const UNWRAP: number  = 0;
 

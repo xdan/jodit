@@ -23,7 +23,6 @@ export class localStorageProvider implements IStorage {
 
 export class Storage {
     public prefix: string = "Jodit_";
-    constructor(readonly provider: IStorage) {}
 
     public set(key: string, value: string | number) {
         this.provider.set(camelCase(this.prefix + key), value);
@@ -32,4 +31,5 @@ export class Storage {
     public get(key: string): string | null {
         return this.provider.get(camelCase(this.prefix + key));
     }
+    constructor(readonly provider: IStorage) {}
 }

@@ -8,8 +8,8 @@ import { Config } from "../Config";
 import { Jodit } from "../Jodit";
 import { Dom } from "../modules/Dom";
 import { css } from "../modules/Helpers";
-import { Dictionary } from "../types";
-import { ControlType } from "../types/toolbar";
+import {  IDictionary } from "../types";
+import { IControlType } from "../types/toolbar";
 
 const pluginKey: string = "copyformat";
 
@@ -35,10 +35,11 @@ const copyStyles: string[] = [
     "fontFamily",
 ];
 
-const getStyle = (editor: Jodit, key: string, box: HTMLElement, defaultStyles: Dictionary<string | number>): string | number | undefined => {
+const getStyle = (editor: Jodit, key: string, box: HTMLElement, defaultStyles: IDictionary<string | number>): string | number | undefined => {
     let result: string | number  | undefined = css(box, key);
 
-    if (result == defaultStyles[key]) {
+    // TODO need check 0 == "0" and another cases
+    if (result === defaultStyles[key]) {
         if (box.parentNode && box !== editor.editor && box.parentNode !== editor.editor) {
             result = getStyle(editor, key, box.parentNode as HTMLElement, defaultStyles);
         } else {
@@ -49,8 +50,8 @@ const getStyle = (editor: Jodit, key: string, box: HTMLElement, defaultStyles: D
     return result;
 };
 
-const getStyles = (editor: Jodit, box: HTMLElement, defaultStyles: Dictionary<string | number>): Dictionary<string | number | undefined> => {
-    const result: Dictionary<string | number | undefined> = {};
+const getStyles = (editor: Jodit, box: HTMLElement, defaultStyles: IDictionary<string | number>): IDictionary<string | number | undefined> => {
+    const result: IDictionary<string | number | undefined> = {};
 
     if (box) {
 
@@ -72,8 +73,13 @@ Config.prototype.controls.copyformat = {
                 editor.buffer[pluginKey] = false;
                 editor.events.off(editor.editor, "mouseup." + pluginKey);
             } else {
-                const defaultStyles: Dictionary<string | number> = {};
-                const box: HTMLElement = Dom.up(current, (elm: Node | null) => (elm && elm.nodeType !== Node.TEXT_NODE), editor.editor) as HTMLElement || editor.editor;
+                const
+                    defaultStyles: IDictionary<string | number> = {},
+                    box: HTMLElement = Dom.up(
+                        current,
+                        (elm: Node | null) => (elm && elm.nodeType !== Node.TEXT_NODE),
+                        editor.editor,
+                    ) as HTMLElement || editor.editor;
 
                 const ideal: HTMLElement = editor.editorDocument.createElement("span");
                 editor.editor.appendChild(ideal);
@@ -86,24 +92,27 @@ Config.prototype.controls.copyformat = {
                     ideal.parentNode && ideal.parentNode.removeChild(ideal);
                 }
 
-                const format: Dictionary<string | number | undefined>  = getStyles(editor, box, defaultStyles);
+                const
+                    format: IDictionary<string | number | undefined>  = getStyles(editor, box, defaultStyles);
 
-                const onmousedown: Function = () => {
-                    editor.buffer[pluginKey] = false;
-                    const current: Node | false = editor.selection.current();
+                const
+                    onMouseDown = () => {
+                        editor.buffer[pluginKey] = false;
+                        const
+                            currentNode: Node | false = editor.selection.current();
 
-                    if (current) {
-                        if (current.nodeName === "IMG") {
-                            css(current as HTMLElement, format);
-                        } else {
-                            editor.selection.applyCSS(format);
+                        if (currentNode) {
+                            if (currentNode.nodeName === "IMG") {
+                                css(currentNode as HTMLElement, format);
+                            } else {
+                                editor.selection.applyCSS(format);
+                            }
                         }
-                    }
 
-                    editor.events.off(editor.editor, "mouseup." + pluginKey);
-                };
+                        editor.events.off(editor.editor, "mouseup." + pluginKey);
+                    };
 
-                editor.events.on(editor.editor, "mouseup." + pluginKey, onmousedown);
+                editor.events.on(editor.editor, "mouseup." + pluginKey, onMouseDown);
 
                 editor.buffer[pluginKey] = true;
             }
@@ -115,4 +124,4 @@ Config.prototype.controls.copyformat = {
     },
 
     tooltip: "Paint format",
-} as ControlType;
+} as IControlType;

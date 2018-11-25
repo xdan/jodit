@@ -9,7 +9,7 @@ import { Jodit } from "../Jodit";
 import { Dom } from "../modules/Dom";
 import { debounce, dom, offset } from "../modules/Helpers";
 import { ToolbarIcon } from "../modules/toolbar/icon";
-import { Bound } from "../types";
+import { IBound } from "../types";
 
 declare module "../Config" {
     interface Config {
@@ -164,7 +164,7 @@ export function addNewLine(editor: Jodit) {
                         e.target === editor.editor &&
                         editor.selection.isCollapsed()
                     ) {
-                        const editorBound: Bound = offset(
+                        const editorBound: IBound = offset(
                             editor.editor,
                             editor,
                             editor.editorDocument,
@@ -250,12 +250,12 @@ export function addNewLine(editor: Jodit) {
                             }
                         }
 
-                        const editorBound: Bound = offset(
+                        const editorBound: IBound = offset(
                             editor.editor,
                             editor,
                             editor.editorDocument,
                         );
-                        const position: Bound = offset(
+                        const position: IBound = offset(
                             currentElement as HTMLElement,
                             editor,
                             editor.editorDocument,

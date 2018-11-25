@@ -12,29 +12,31 @@ import { Dom } from "../modules/Dom";
 import { css, normalizeColor } from "../modules/Helpers";
 import { ToolbarButton } from "../modules/toolbar/button";
 import { Widget } from "../modules/Widget";
-import { Dictionary } from "../types";
-import { ControlType } from "../types/toolbar";
+import {  IDictionary } from "../types";
+import { IControlType } from "../types/toolbar";
 
 Config.prototype.controls.brush = {
-    isActive: (editor: Jodit, btn: ControlType, button: ToolbarButton): boolean => {
-        const current: Node|false = editor.selection.current();
-        const icon: SVGSVGElement|null = button.container.querySelector("svg");
+    isActive: (editor: Jodit, btn: IControlType, button: ToolbarButton): boolean => {
+        const
+            current: Node | false = editor.selection.current(),
+            icon: SVGSVGElement | null = button.container.querySelector("svg");
 
         if (current) {
             const currentBpx: HTMLElement = Dom.closest(current, (elm: Node): boolean => {
                 return Dom.isBlock(elm) || (Dom.isNode(elm, editor.editorWindow) && elm.nodeType === Node.ELEMENT_NODE);
             }, editor.editor) as HTMLElement || editor.editor;
 
-            const color: string = css(currentBpx, "color").toString();
-            const bg: string = css(currentBpx, "background-color").toString();
+            const
+                colorHEX: string = css(currentBpx, "color").toString(),
+                bgHEX: string = css(currentBpx, "background-color").toString();
 
-            if (color !== css(editor.editor, "color").toString()) {
-                icon && (icon.style.fill = color);
+            if (colorHEX !== css(editor.editor, "color").toString()) {
+                icon && (icon.style.fill = colorHEX);
                 return true;
             }
 
-            if (bg !== css(editor.editor, "background-color").toString()) {
-                icon && (icon.style.fill = bg);
+            if (bgHEX !== css(editor.editor, "background-color").toString()) {
+                icon && (icon.style.fill = bgHEX);
                 return true;
             }
         }
@@ -46,14 +48,15 @@ Config.prototype.controls.brush = {
         return false;
     },
 
-    popup: (editor: Jodit, current: Node | false, self: ControlType, close: Function) => {
-        let color: string = "",
+    popup: (editor: Jodit, current: Node | false, self: IControlType, close: () => void) => {
+        let
+            colorHEX: string = "",
             bg_color: string = "",
-            tabs: Dictionary<HTMLElement>,
-            currentElement: HTMLElement|null = null;
+            tabs: IDictionary<HTMLElement>,
+            currentElement: HTMLElement | null = null;
 
         if (current && current !== editor.editor && Dom.isNode(current, editor.editorWindow) && current.nodeType === Node.ELEMENT_NODE) {
-            color = css(current as HTMLElement, "color").toString();
+            colorHEX = css(current as HTMLElement, "color").toString();
             bg_color = css(current as HTMLElement, "background-color").toString();
             currentElement = current as HTMLElement;
         }
@@ -74,7 +77,7 @@ Config.prototype.controls.brush = {
                 currentElement.style.color = value;
             }
             close();
-        }, color);
+        }, colorHEX);
 
         if (editor.options.colorPickerDefaultTab === "background") {
             tabs = {
@@ -91,33 +94,36 @@ Config.prototype.controls.brush = {
         return TabsWidget(editor, tabs, currentElement as any);
     },
     tooltip: "Fill color or set the text color",
-} as ControlType;
+} as IControlType;
 
 /**
  * Process commands `background` and `forecolor`
  * @param {Jodit} editor
  */
 export function color(editor: Jodit) {
-    const callback: Function = (command: string, second: string, third: string): false | void => {
-        const color: string|false = normalizeColor(third);
+    const
+        callback = (command: string, second: string, third: string): false | void => {
+            const
+                colorHEX: string | false = normalizeColor(third);
 
-        switch (command) {
-            case "background":
-                editor.selection.applyCSS({
-                    backgroundColor: !color ? "" : color as string,
-                });
-                break;
-            case "forecolor":
-                editor.selection.applyCSS({
-                    color: !color ? "" : color as string,
-                });
-                break;
-        }
+            switch (command) {
+                case "background":
+                    editor.selection.applyCSS({
+                        backgroundColor: !colorHEX ? "" : colorHEX as string,
+                    });
+                    break;
+                case "forecolor":
+                    editor.selection.applyCSS({
+                        color: !colorHEX ? "" : colorHEX as string,
+                    });
+                    break;
+            }
 
-        editor.setEditorValue();
-        return false;
-    };
+            editor.setEditorValue();
+            return false;
+        };
 
-    editor.registerCommand("forecolor", callback);
-    editor.registerCommand("background", callback);
+    editor
+        .registerCommand("forecolor", callback)
+        .registerCommand("background", callback);
 }

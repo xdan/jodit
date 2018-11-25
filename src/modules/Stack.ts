@@ -10,6 +10,10 @@ export class Stack {
     private commands: Command[] = [];
     private stackPosition: number = -1;
 
+    private clearRedo() {
+        this.commands.length = this.stackPosition + 1;
+    }
+
     public clear() {
         this.commands.length = 0;
         this.stackPosition = -1;
@@ -56,9 +60,5 @@ export class Stack {
 
     public canRedo(): boolean {
         return this.stackPosition < this.commands.length - 1;
-    }
-
-    private clearRedo() {
-        this.commands.length = this.stackPosition + 1;
     }
 }

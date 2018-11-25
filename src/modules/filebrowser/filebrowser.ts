@@ -18,16 +18,16 @@ import { Uploader } from "../Uploader";
 import { View } from "../view/view";
 
 import {
-    FileBrowserAjaxOptions,
-    FileBrowserAnswer, FileBrowserCallBackData,
-    FileBrowserOptions,
+    IFileBrowserAjaxOptions,
+    IFileBrowserAnswer, IFileBrowserCallBackData,
+    IFileBrowserOptions,
     ISource,
     ISourceFile, ISourcesFiles,
 } from "../../types/filebrowser";
 
-import { ControlType } from "../../types/toolbar";
-import {Dictionary, Permissions} from "../../types/types";
-import { UploaderOptions } from "../../types/uploader";
+import { IControlType } from "../../types/toolbar";
+import { IDictionary, IPermissions} from "../../types/types";
+import { IUploaderOptions } from "../../types/uploader";
 import { IViewBased } from "../../types/view";
 
 declare module "../../Config" {
@@ -242,7 +242,7 @@ declare module "../../Config" {
          *    });
          * ```
          * */
-        filebrowser: FileBrowserOptions;
+        filebrowser: IFileBrowserOptions;
     }
 }
 
@@ -344,11 +344,11 @@ Config.prototype.filebrowser = {
 
     view: null,
 
-    isSuccess(this: FileBrowser, resp: FileBrowserAnswer): boolean {
+    isSuccess(this: FileBrowser, resp: IFileBrowserAnswer): boolean {
         return resp.success;
     },
 
-    getMessage(this: FileBrowser, resp: FileBrowserAnswer) {
+    getMessage(this: FileBrowser, resp: IFileBrowserAnswer) {
         return (resp.data.messages !== undefined && Array.isArray(resp.data.messages)) ? resp.data.messages.join(" ") : "";
     },
 
@@ -402,7 +402,7 @@ Config.prototype.filebrowser = {
             return data;
         },
 
-        process(this: Uploader, resp: FileBrowserAnswer): FileBrowserAnswer {
+        process(this: Uploader, resp: IFileBrowserAnswer): IFileBrowserAnswer {
             return resp;
         },
     },
@@ -438,7 +438,7 @@ Config.prototype.filebrowser = {
     },
 
     uploader: null, // use default Uploader's settings
-} as FileBrowserOptions;
+} as IFileBrowserOptions;
 
 Config.prototype.controls.filebrowser = {
     upload: {
@@ -446,7 +446,7 @@ Config.prototype.controls.filebrowser = {
         isInput: true,
         exec: () => {},
         isDisable: (browser: any): boolean => !browser.canI("FileUpload"),
-        getContent: (editor: IViewBased, control: ControlType): HTMLElement => {
+        getContent: (editor: IViewBased, control: IControlType): HTMLElement => {
             const btn: HTMLElement = dom('<span class="jodit_upload_button">' +
                 ToolbarIcon.getIcon("plus") +
                 '<input type="file" accept="' + (editor.buffer.fileBrowserOnlyImages ? "image/*" : "*") + '" tabindex="-1" dir="auto" multiple=""/>' +
@@ -463,7 +463,7 @@ Config.prototype.controls.filebrowser = {
 
             return btn;
         },
-    } as ControlType,
+    } as IControlType,
     remove: {
         icon: "bin",
         isDisable: (browser: any): boolean => {
@@ -472,12 +472,12 @@ Config.prototype.controls.filebrowser = {
         exec: (editor: IViewBased) => {
             editor.events.fire("fileRemove.filebrowser");
         },
-    } as ControlType,
+    } as IControlType,
     update: {
         exec: (editor: IViewBased) => {
             editor.events.fire("update.filebrowser");
         },
-    } as ControlType,
+    } as IControlType,
     select: {
         icon: "check",
         isDisable: (browser: any): boolean => {
@@ -486,7 +486,7 @@ Config.prototype.controls.filebrowser = {
         exec: (editor: IViewBased) => {
             editor.events.fire("select.filebrowser");
         },
-    } as ControlType,
+    } as IControlType,
     edit: {
         icon: "pencil",
         isDisable: (browser: any): boolean => {
@@ -498,21 +498,21 @@ Config.prototype.controls.filebrowser = {
         exec: (editor: Jodit) => {
             editor.events.fire("edit.filebrowser");
         },
-    } as ControlType,
+    } as IControlType,
     tiles: {
         icon: "th",
         isActive: (editor: Jodit): boolean => editor.buffer.fileBrowserView === "tiles",
         exec: (editor: Jodit) => {
             editor.events.fire("view.filebrowser", "tiles");
         },
-    } as ControlType,
+    } as IControlType,
     list: {
         icon: "th-list",
         isActive: (editor: Jodit): boolean => editor.buffer.fileBrowserView === "list",
         exec: (editor: Jodit) => {
             editor.events.fire("view.filebrowser", "list");
         },
-    } as ControlType,
+    } as IControlType,
     filter: {
         isInput: true,
         getContent: (editor: Jodit): HTMLElement => {
@@ -524,7 +524,7 @@ Config.prototype.controls.filebrowser = {
 
             return input;
         },
-    } as ControlType,
+    } as IControlType,
     sort: {
         isInput: true,
         getContent: (editor: Jodit): HTMLElement => {
@@ -546,8 +546,8 @@ Config.prototype.controls.filebrowser = {
 
             return select;
         },
-    } as ControlType,
-} as Dictionary<ControlType>;
+    } as IControlType,
+} as  IDictionary<IControlType>;
 
 export class FileBrowser extends View {
 
@@ -559,7 +559,7 @@ export class FileBrowser extends View {
     get defaultTimeout(): number {
         return (this.jodit) ? this.jodit.defaultTimeout : Jodit.defaultOptions.observer.timeout;
     }
-    public options: FileBrowserOptions;
+    public options: IFileBrowserOptions;
 
     public currentPath: string = "";
     public currentSource: string = DEFAULT_SOURCE_NAME;
@@ -581,7 +581,7 @@ export class FileBrowser extends View {
     private tree: HTMLElement;
     private files: HTMLElement;
 
-    private __currentPermissions: Permissions | null = null;
+    private __currentPermissions: IPermissions | null = null;
 
     private view: string = "tiles";
     private sortBy: string = "changed";
@@ -606,7 +606,7 @@ export class FileBrowser extends View {
             this.id = editor.id;
         }
 
-        self.options = (new OptionsDefault(extend(true,  {}, self.options, Jodit.defaultOptions.filebrowser, options, self.jodit ? self.jodit.options.filebrowser : void(0)))) as FileBrowserOptions;
+        self.options = (new OptionsDefault(extend(true,  {}, self.options, Jodit.defaultOptions.filebrowser, options, self.jodit ? self.jodit.options.filebrowser : void(0)))) as IFileBrowserOptions;
 
         self.dialog = new Dialog(editor || self, {
             fullsize: self.options.fullsize,
@@ -884,13 +884,13 @@ export class FileBrowser extends View {
         this.currentBaseUrl = $$("base", editorDoc).length ? $$("base", editorDoc)[0].getAttribute("href") || "" : location.protocol + "//" + location.host;
 
         if (Jodit.modules.Uploader !== undefined) {
-            const uploaderOptions: UploaderOptions = extend(
+            const uploaderOptions: IUploaderOptions = extend(
                 true,
                 {},
                 Jodit.defaultOptions.uploader,
                 self.options.uploader,
-                (this.jodit && this.jodit.options && this.jodit.options.uploader !== null) ? {...this.jodit.options.uploader as UploaderOptions} : {},
-            ) as UploaderOptions;
+                (this.jodit && this.jodit.options && this.jodit.options.uploader !== null) ? {...this.jodit.options.uploader as IUploaderOptions} : {},
+            ) as IUploaderOptions;
 
             this.uploader = new Uploader(this.jodit || this, uploaderOptions);
             this.uploader.setPath(this.currentPath);
@@ -966,7 +966,7 @@ export class FileBrowser extends View {
             self: FileBrowser = this;
 
         this.options[action].data.url = url;
-        this.send(action, (resp: FileBrowserAnswer) => {
+        this.send(action, (resp: IFileBrowserAnswer) => {
             if (self.options.isSuccess(resp)) {
                 success(resp.data.path, resp.data.name, resp.data.source);
             } else {
@@ -1040,7 +1040,7 @@ export class FileBrowser extends View {
         this.options.fileRemove.data.source = source;
 
         return this
-            .send("fileRemove", (resp: FileBrowserAnswer) => {
+            .send("fileRemove", (resp: IFileBrowserAnswer) => {
                 if (this.options.remove.process) {
                     resp = this.options.remove.process.call(this, resp);
                 }
@@ -1068,7 +1068,7 @@ export class FileBrowser extends View {
         this.options.folderRemove.data.source = source;
 
         return this
-            .send("folderRemove", (resp: FileBrowserAnswer) => {
+            .send("folderRemove", (resp: IFileBrowserAnswer) => {
                 if (this.options.remove.process) {
                     resp = this.options.remove.process.call(this, resp);
                 }
@@ -1108,7 +1108,7 @@ export class FileBrowser extends View {
      * ```
      * @return Promise
      */
-    public open = (callback: (data: FileBrowserCallBackData) => void, onlyImages: boolean = false): Promise<void> => {
+    public open = (callback: (data: IFileBrowserCallBackData) => void, onlyImages: boolean = false): Promise<void> => {
         this.onlyImages = onlyImages;
         this.buffer.fileBrowserOnlyImages = onlyImages;
 
@@ -1261,8 +1261,8 @@ export class FileBrowser extends View {
      * @param {Function} error
      * @return {Promise}
      */
-    private send(name: string, success: (resp: FileBrowserAnswer) => void, error: (error: Error) => void): Promise<void> {
-        const opts: FileBrowserAjaxOptions = extend(
+    private send(name: string, success: (resp: IFileBrowserAnswer) => void, error: (error: Error) => void): Promise<void> {
+        const opts: IFileBrowserAjaxOptions = extend(
             true,
             {},
             this.options.ajax,
@@ -1291,13 +1291,13 @@ export class FileBrowser extends View {
         self.files.appendChild(self.loader.cloneNode(true));
 
         return self.send("items", (resp) => {
-            let process: ((resp: FileBrowserAnswer) => FileBrowserAnswer)|undefined = self.options.items.process;
+            let process: ((resp: IFileBrowserAnswer) => IFileBrowserAnswer)|undefined = self.options.items.process;
             if (!process) {
                 process = this.options.ajax.process;
             }
 
             if (process) {
-                const respData: FileBrowserAnswer = process.call(self, resp) as FileBrowserAnswer;
+                const respData: IFileBrowserAnswer = process.call(self, resp) as IFileBrowserAnswer;
                 self.generateItemsBox(respData.data.sources);
                 self.someSelectedWasChanged();
             }
@@ -1315,14 +1315,14 @@ export class FileBrowser extends View {
 
         if (self.options.permissions.url) {
             return self
-                .send("permissions", (resp: FileBrowserAnswer) => {
-                    let process: ((resp: FileBrowserAnswer) => FileBrowserAnswer)|undefined = self.options.permissions.process;
+                .send("permissions", (resp: IFileBrowserAnswer) => {
+                    let process: ((resp: IFileBrowserAnswer) => IFileBrowserAnswer)|undefined = self.options.permissions.process;
                     if (!process) {
                         process = this.options.ajax.process;
                     }
 
                     if (process) {
-                        const respData: FileBrowserAnswer = process.call(self, resp) as FileBrowserAnswer;
+                        const respData: IFileBrowserAnswer = process.call(self, resp) as IFileBrowserAnswer;
                         if (respData.data.permissions) {
                             this.__currentPermissions = respData.data.permissions;
                         }
@@ -1357,12 +1357,12 @@ export class FileBrowser extends View {
                         self.tree.appendChild(self.loader.cloneNode(true));
 
                         tree.push(this.send("folder", (resp) => {
-                            let process: ((resp: FileBrowserAnswer) => FileBrowserAnswer)|undefined = self.options.folder.process;
+                            let process: ((resp: IFileBrowserAnswer) => IFileBrowserAnswer)|undefined = self.options.folder.process;
                             if (!process) {
                                 process = this.options.ajax.process;
                             }
                             if (process) {
-                                const respData = process.call(self, resp) as FileBrowserAnswer;
+                                const respData = process.call(self, resp) as IFileBrowserAnswer;
                                 self.generateFolderTree(respData.data.sources);
                             }
                         }, () => {
@@ -1379,7 +1379,7 @@ export class FileBrowser extends View {
             });
     }
 
-    private onSelect(callback: (data: FileBrowserCallBackData) => void) {
+    private onSelect(callback: (data: IFileBrowserCallBackData) => void) {
         return () => {
             const actives = this.getActiveElements();
 
@@ -1396,14 +1396,14 @@ export class FileBrowser extends View {
                     callback({
                         baseurl: "",
                         files: urls,
-                    } as FileBrowserCallBackData);
+                    } as IFileBrowserCallBackData);
                 }
             }
             return false;
         };
     }
 
-    private errorHandler = (resp: Error|FileBrowserAnswer) => {
+    private errorHandler = (resp: Error|IFileBrowserAnswer) => {
         if (resp instanceof Error) {
             this.status(this.i18n(resp.message));
         } else {

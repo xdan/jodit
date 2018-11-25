@@ -8,14 +8,14 @@ import { IViewBased } from "../types/view";
 import { Component } from "./Component";
 
 export abstract class Plugin extends Component {
+
+    public abstract afterInit(jodit?: IViewBased): void;
+
+    public beforeDestruct(jodit?: IViewBased) {}
     constructor(jodit: IViewBased) {
         super(jodit);
         jodit.events
             .on("afterInit", this.afterInit.bind(this, jodit))
             .on("beforeDestruct", this.beforeDestruct.bind(this, jodit));
     }
-
-    public abstract afterInit(jodit?: IViewBased): void;
-
-    public beforeDestruct(jodit?: IViewBased) {}
 }

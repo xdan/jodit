@@ -30,7 +30,7 @@ import { localStorageProvider, Storage } from "./modules/Storage";
 import { ToolbarCollection } from "./modules/toolbar/collection";
 import { Uploader } from "./modules/Uploader";
 import { View } from "./modules/view/view";
-import { CommandType, Dictionary } from "./types/types";
+import { ICommandType,  IDictionary } from "./types/types";
 
 declare let appVersion: string;
 
@@ -63,7 +63,7 @@ export class Jodit extends View {
     public static defaultOptions: Config;
     public static plugins: any = {};
     public static modules: any = {};
-    public static instances: Dictionary<Jodit> = {};
+    public static instances:  IDictionary<Jodit> = {};
     public static lang: any = {};
 
     public static Array(array: any[]): JoditArray {
@@ -89,7 +89,7 @@ export class Jodit extends View {
      * @type {{}}
      * @see copyformat plugin
      */
-    public buffer: Dictionary;
+    public buffer:  IDictionary;
 
     /**
      * @property {HTMLDocument} editorDocument
@@ -171,14 +171,14 @@ export class Jodit extends View {
 
     public helper: any;
 
-    public __plugins: Dictionary<JoditPlugin> = {};
+    public __plugins:  IDictionary<JoditPlugin> = {};
 
     public mode: number = consts.MODE_WYSIWYG;
 
     private __defaultStyleDisplayKey = "data-jodit-default-style-display";
     private __defaultClassesKey = "data-jodit-default-classes";
 
-    private commands: Dictionary<Array<CommandType | Function>> = {};
+    private commands:  IDictionary<Array<ICommandType | Function>> = {};
 
     private __selectionLocked: markerInfo[] | null = null;
 
@@ -696,12 +696,12 @@ export class Jodit extends View {
      * ```
      *
      * @param {string} commandNameOriginal
-     * @param {CommandType | Function} command
+     * @param {ICommandType | Function} command
      */
     public registerCommand(
         commandNameOriginal: string,
-        command: CommandType | Function,
-    ) {
+        command: ICommandType | Function,
+    ): Jodit {
         const commandName: string = commandNameOriginal.toLowerCase();
 
         if (this.commands[commandName] === undefined) {
@@ -720,6 +720,8 @@ export class Jodit extends View {
                 this.registerHotkeyToCommand(hotkeys, commandName);
             }
         }
+
+        return this;
     }
 
     /**
@@ -1295,7 +1297,7 @@ export class Jodit extends View {
             let result: any = void 0;
 
             this.commands[commandName].forEach(
-                (command: CommandType | Function) => {
+                (command: ICommandType | Function) => {
                     let callback: Function;
                     if (typeof command === "function") {
                         callback = command;

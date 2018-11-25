@@ -5,10 +5,14 @@
  */
 
 import { Jodit } from "../Jodit";
-import { Dictionary } from "../types";
+import {  IDictionary } from "../types";
 import { IViewBased } from "../types/view";
 
 export class Component {
+
+    private __modulesInstances: IDictionary<Component> = {};
+
+    protected __whoLocked: string | false = "";
 
     /**
      * @property{string} ID attribute for source element, id add {id}_editor it's editor's id
@@ -23,19 +27,6 @@ export class Component {
      * @type {boolean}
      */
     public isDestructed: boolean = false;
-
-    protected __whoLocked: string | false = "";
-
-    private __modulesInstances: Dictionary<Component> = {};
-
-    constructor(jodit?: IViewBased | Jodit) {
-        if (jodit) {
-            this.jodit = jodit as Jodit;
-            if (jodit instanceof Jodit && this.jodit.components) {
-                this.jodit.components.push(this);
-            }
-        }
-    }
 
     public isLocked = (): boolean => {
         return this.__whoLocked !== "";
@@ -57,5 +48,14 @@ export class Component {
         }
 
         return this.__modulesInstances[moduleName];
+    }
+
+    constructor(jodit?: IViewBased | Jodit) {
+        if (jodit) {
+            this.jodit = jodit as Jodit;
+            if (jodit instanceof Jodit && this.jodit.components) {
+                this.jodit.components.push(this);
+            }
+        }
     }
 }

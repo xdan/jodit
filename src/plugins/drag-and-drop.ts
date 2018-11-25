@@ -8,7 +8,7 @@ import { TEXT_HTML, TEXT_PLAIN } from "../constants";
 import { Dom } from "../modules/";
 import { css, ctrlKey, dataBind, dom, throttle } from "../modules/Helpers";
 import { Plugin } from "../modules/Plugin";
-import { Point } from "../types/types";
+import { IPoint } from "../types/types";
 
 /**
  * Process drag and drop image from FileBrowser and movev image inside the editor
@@ -17,22 +17,10 @@ export class DragAndDrop extends Plugin {
     private isFragmentFromEditor: boolean = false;
     private isCopyMode: boolean = false;
 
-    private startDragPoint: Point = {x: 0, y: 0};
+    private startDragPoint: IPoint = {x: 0, y: 0};
     private draggable: HTMLElement | null = null;
 
     private bufferRange: Range | null = null;
-
-    public afterInit() {
-        this.jodit.events
-            .on(window, "dragover", this.onDrag)
-            .on([window, this.jodit.editorDocument, this.jodit.editor], "dragstart", this.onDragStart)
-            .on("drop", this.onDrop)
-            .on(window, "dragend drop mouseup", this.onDragEnd);
-    }
-
-    public beforeDestruct() {
-        this.onDragEnd();
-    }
 
     private onDragEnd = () => {
         if (this.draggable) {
@@ -167,5 +155,17 @@ export class DragAndDrop extends Plugin {
     private getText = (event: DragEvent): string | null => {
         const dt: DataTransfer  = this.getDataTransfer(event);
         return dt.getData(TEXT_HTML) || dt.getData(TEXT_PLAIN);
+    }
+
+    public afterInit() {
+        this.jodit.events
+            .on(window, "dragover", this.onDrag)
+            .on([window, this.jodit.editorDocument, this.jodit.editor], "dragstart", this.onDragStart)
+            .on("drop", this.onDrop)
+            .on(window, "dragend drop mouseup", this.onDragEnd);
+    }
+
+    public beforeDestruct() {
+        this.onDragEnd();
     }
 }

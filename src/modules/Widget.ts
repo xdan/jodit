@@ -5,7 +5,7 @@
  */
 
 import { Jodit } from "../Jodit";
-import { Dictionary, FileBrowserCallBackData, RGB, UploaderData } from "../types/";
+import {  IDictionary, IFileBrowserCallBackData, IRGB, IUploaderData } from "../types/";
 import { Dom } from "./Dom";
 import { FileBrowser } from "./filebrowser/filebrowser";
 import { $$, dom, each, hexToRgb, isPlainObject, normalizeColor, val } from "./Helpers";
@@ -36,16 +36,16 @@ export namespace Widget {
             form: HTMLDivElement = dom('<div class="jodit_colorpicker"></div>', editor.ownerDocument) as HTMLDivElement,
             iconEye: string = editor.options.textIcons ? "" : Jodit.modules.ToolbarIcon.getIcon("eye"),
             iconEraser: string = editor.options.textIcons ? `<span>${editor.i18n("eraser")}</span>` : Jodit.modules.ToolbarIcon.getIcon("eraser"),
-            eachColor = (colors: string[] | Dictionary<string[]>) => {
+            eachColor = (colors: string[] |  IDictionary<string[]>) => {
                 const stack: string[] = [];
                 if (isPlainObject(colors)) {
-                    Object.keys(colors).forEach((key) => {
+                    Object.keys(colors).forEach(key => {
                         stack.push('<div class="jodit_colorpicker_group jodit_colorpicker_group-' + key + '">');
                         stack.push(eachColor((colors as any)[key]));
                         stack.push("</div>");
                     });
                 } else if (Array.isArray(colors)) {
-                    colors.forEach((color) => {
+                    colors.forEach(color => {
                         stack.push("<a " + (valueHex === color ? ' class="active" ' : "") + ' title="' + color + '" style="background-color:' + color + '" data-color="' + color + '" href="javascript:void(0)">' +
                             (valueHex === color ? iconEye : "") +
                             "</a>");
@@ -84,7 +84,7 @@ export namespace Widget {
                     target.innerHTML = Jodit.modules.ToolbarIcon.getIcon("eye");
                     target.classList.add("active");
 
-                    const colorRGB: RGB | null = hexToRgb(color);
+                    const colorRGB: IRGB | null = hexToRgb(color);
                     if (colorRGB) {
                         (target.firstChild as HTMLElement).style.fill = "rgb(" + (255 - colorRGB.r) + "," + (255 - colorRGB.g) + "," + (255 - colorRGB.b) + ")";
                     }
@@ -119,11 +119,11 @@ export namespace Widget {
      * });
      * ```
      */
-    export const TabsWidget = (editor: Jodit, tabs: Dictionary<string | HTMLElement | Function>, state?: {__activeTab: string}): HTMLDivElement => {
+    export const TabsWidget = (editor: Jodit, tabs: IDictionary<string | HTMLElement | Function>, state?: {__activeTab: string}): HTMLDivElement => {
         let box: HTMLDivElement = dom('<div class="jodit_tabs"></div>', editor.ownerDocument) as HTMLDivElement,
             tabBox: HTMLDivElement = dom('<div class="jodit_tabs_wrapper"></div>', editor.ownerDocument) as HTMLDivElement,
             buttons: HTMLDivElement = dom('<div class="jodit_tabs_buttons"></div>', editor.ownerDocument) as HTMLDivElement,
-            nameToTab: Dictionary<{
+            nameToTab: IDictionary<{
                 button: HTMLDivElement,
                 tab: HTMLDivElement,
             }> = {},
@@ -153,10 +153,10 @@ export namespace Widget {
             tabBox.appendChild(tab);
 
             editor.events.on(button, "mousedown touchend", (e: MouseEvent) => {
-                $$("a", buttons).forEach((a) => {
+                $$("a", buttons).forEach(a => {
                     a.classList.remove("active");
                 });
-                $$(".jodit_tab", tabBox).forEach((a) => {
+                $$(".jodit_tab", tabBox).forEach(a => {
                     a.classList.remove("active");
                 });
 
@@ -186,7 +186,7 @@ export namespace Widget {
             return box;
         }
 
-        $$("a", buttons).forEach((a) => {
+        $$("a", buttons).forEach(a => {
             a.style.width = (100 / tabcount).toFixed(10) + "%";
         });
 
@@ -232,8 +232,8 @@ export namespace Widget {
 
     interface ImageSelectorCallbacks {
         url?: (this: Jodit, url: string, alt: string) => void;
-        filebrowser?: (data: FileBrowserCallBackData) => void;
-        upload?: (this: Jodit, data: FileBrowserCallBackData) => void;
+        filebrowser?: (data: IFileBrowserCallBackData) => void;
+        upload?: (this: Jodit, data: IFileBrowserCallBackData) => void;
     }
 
     /**
@@ -254,7 +254,7 @@ export namespace Widget {
         isImage: boolean = true,
     ): HTMLDivElement => {
         let currentImage: any;
-        const tabs: Dictionary<HTMLElement | Function> = {};
+        const tabs: IDictionary<HTMLElement | Function> = {};
 
         if (callbacks.upload && editor.options.uploader &&
             (editor.options.uploader.url || editor.options.uploader.insertImageAsBase64URI)
@@ -265,7 +265,7 @@ export namespace Widget {
                     '<input type="file" accept="' + (isImage ? "image/*" : "*") + 'image/*" tabindex="-1" dir="auto" multiple=""/>' +
                 "</div>", editor.ownerDocument);
 
-            new Uploader(editor).bind(dragbox, (resp: UploaderData) => {
+            new Uploader(editor).bind(dragbox, (resp: IUploaderData) => {
                 if (typeof(callbacks.upload) === "function") {
                     callbacks.upload.call(editor, {
                         baseurl: resp.baseurl,

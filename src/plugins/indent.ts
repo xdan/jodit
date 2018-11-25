@@ -8,11 +8,11 @@ import { Config } from "../Config";
 import { BR, PARAGRAPH } from "../constants";
 import { Jodit } from "../Jodit";
 import { Dom } from "../modules/Dom";
-import { ControlType } from "../types/toolbar";
+import { IControlType } from "../types/toolbar";
 
 Config.prototype.controls.indent = {
     tooltip: "Increase Indent",
-} as ControlType;
+} as IControlType;
 
 Config.prototype.controls.outdent = {
     isDisable: (editor: Jodit): boolean => {
@@ -28,7 +28,7 @@ Config.prototype.controls.outdent = {
         return true;
     },
     tooltip: "Decrease Indent",
-} as ControlType;
+} as IControlType;
 
 declare module "../Config" {
     interface Config {
@@ -47,38 +47,39 @@ Config.prototype.indentMargin = 10;
  * @param {Jodit} editor
  */
 export  function indent(editor: Jodit) {
-    const callback: Function = (command: string): void | false => {
-        editor.selection.eachSelection((current: Node): false | void => {
-            const selectionInfo = editor.selection.save();
-            let currentBox: HTMLElement|false = current ? Dom.up(current, Dom.isBlock, editor.editor) as HTMLElement : false;
+    const
+        callback = (command: string): void | false => {
+            editor.selection.eachSelection((current: Node): false | void => {
+                const selectionInfo = editor.selection.save();
+                let currentBox: HTMLElement|false = current ? Dom.up(current, Dom.isBlock, editor.editor) as HTMLElement : false;
 
-            const enter: string = editor.options.enter;
-            if (!currentBox && current) {
-                currentBox = Dom.wrapInline(current, enter !== BR ? enter : PARAGRAPH, editor);
-            }
-
-            if (!currentBox) {
-                editor.selection.restore(selectionInfo);
-                return false;
-            }
-
-            if (currentBox && currentBox.style) {
-                let marginLeft: number = currentBox.style.marginLeft ? parseInt(currentBox.style.marginLeft, 10) : 0;
-                marginLeft += editor.options.indentMargin * (command === "outdent" ? - 1 : 1);
-                currentBox.style.marginLeft = marginLeft > 0 ? marginLeft + "px" : "";
-
-                if (!currentBox.getAttribute("style")) {
-                    currentBox.removeAttribute("style");
+                const enter: string = editor.options.enter;
+                if (!currentBox && current) {
+                    currentBox = Dom.wrapInline(current, enter !== BR ? enter : PARAGRAPH, editor);
                 }
-            }
 
-            editor.selection.restore(selectionInfo);
-        });
+                if (!currentBox) {
+                    editor.selection.restore(selectionInfo);
+                    return false;
+                }
 
-        editor.setEditorValue();
+                if (currentBox && currentBox.style) {
+                    let marginLeft: number = currentBox.style.marginLeft ? parseInt(currentBox.style.marginLeft, 10) : 0;
+                    marginLeft += editor.options.indentMargin * (command === "outdent" ? - 1 : 1);
+                    currentBox.style.marginLeft = marginLeft > 0 ? marginLeft + "px" : "";
 
-        return false;
-    };
+                    if (!currentBox.getAttribute("style")) {
+                        currentBox.removeAttribute("style");
+                    }
+                }
+
+                editor.selection.restore(selectionInfo);
+            });
+
+            editor.setEditorValue();
+
+            return false;
+        };
 
     editor.registerCommand("indent", {
         exec: callback,

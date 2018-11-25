@@ -4,22 +4,22 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-export interface Dictionary<T = any> {[key: string]: T;}
+export interface  IDictionary<T = any> {[key: string]: T; }
 
-export interface Bound {top: number; left: number;  width: number; height: number;}
+export interface IBound {top: number; left: number;  width: number; height: number; }
 
-export interface Point {x: number; y: number;}
+export interface IPoint {x: number; y: number; }
 
-export interface SelectionRange {
+export interface ISelectionRange {
     startContainer: Node|null;
     startOffset: number|null;
     endContainer: Node|null;
     endOffset: number|null;
 }
 
-export interface RGB {r: number; g: number; b: number;}
+export interface IRGB {r: number; g: number; b: number; }
 
-export interface Permissions {
+export interface IPermissions {
     allowFiles: boolean;
     allowFileMove: boolean;
     allowFileUpload: boolean;
@@ -36,8 +36,8 @@ export interface Permissions {
     [key: string]: boolean;
 }
 
-export interface CommandType {
-    exec: Function;
+export interface ICommandType {
+    exec: (command: string, value: string, next: boolean) => void;
     hotkeys?: string | string[];
 }
 

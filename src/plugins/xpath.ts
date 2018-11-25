@@ -11,7 +11,7 @@ import { Dom } from "../modules/Dom";
 import { debounce, dom, getXPathByElement } from "../modules/Helpers";
 import { Plugin } from "../modules/Plugin";
 import { ToolbarButton } from "../modules/toolbar/button";
-import { ControlType } from "../types/toolbar";
+import { IControlType } from "../types/toolbar";
 
 declare module "../Config" {
     interface Config {
@@ -23,7 +23,7 @@ Config.prototype.controls.selectall = {
     icon: "select-all",
     command: "selectall",
     tooltip: "Select all",
-} as ControlType;
+} as IControlType;
 
 Config.prototype.showXPathInStatusbar = true;
 
@@ -31,30 +31,8 @@ Config.prototype.showXPathInStatusbar = true;
  * Show path to current element in status bar
  */
 export class xpath extends Plugin {
-    public container: HTMLElement;
-    public menu: ContextMenu;
 
-    private  calcPath = debounce(this.calcPathImd, this.jodit.defaultTimeout * 2);
-
-    public afterInit() {
-        if (this.jodit.options.showXPathInStatusbar) {
-            this.container = this.jodit.ownerDocument.createElement("ul");
-            this.container.classList.add("jodit_xpath");
-            this.jodit.statusbar.append(this.container);
-            this.jodit.events
-                .on("mouseup change keydown changeSelection", this.calcPath)
-                .on("afterSetMode afterInit", () => {
-                    if (this.jodit.getRealMode() === MODE_WYSIWYG) {
-                        this.calcPath();
-                    } else {
-                        this.container.innerHTML = INVISIBLE_SPACE;
-                        this.appendSelectAll();
-                    }
-                });
-            this.calcPath();
-        }
-    }
-
+    private  calcPath: () => void;
     private onContext = (bindElement: Node, event: MouseEvent) => {
         if (!this.menu) {
             this.menu = new ContextMenu(this.jodit);
@@ -101,17 +79,27 @@ export class xpath extends Plugin {
                 return false;
             }
 
-        } catch (e) {
-
+        } catch {
         }
 
         this.jodit.selection.select(bindElement);
 
         return false;
     }
-
     private tpl = (bindElement: Node, path: string, name: string, title: string): HTMLElement => {
-        const li: HTMLLIElement = dom(`<li><a role="button" data-path="${path}" href="javascript:void(0)" title="${title}" tabindex="-1">${name}</a></li>`, this.jodit.ownerDocument) as HTMLLIElement;
+        const
+            li: HTMLLIElement = dom(`<li>
+                <a
+                    role="button"
+                    data-path="${path}"
+                    href="javascript:void(0)"
+                    title="${title}"
+                    tabindex="-1"
+                >
+                    ${name}
+                </a>
+            </li>`, this.jodit.ownerDocument) as HTMLLIElement;
+
         const a: HTMLAnchorElement = li.firstChild as HTMLAnchorElement;
 
         this.jodit.events
@@ -120,6 +108,7 @@ export class xpath extends Plugin {
 
         return li;
     }
+
     private  appendSelectAll = () => {
         const li: ToolbarButton = new ToolbarButton(this.jodit, {name: "selectall", ...this.jodit.options.controls.selectall, tooltip: ""});
 
@@ -134,12 +123,17 @@ export class xpath extends Plugin {
         this.container.innerHTML = INVISIBLE_SPACE;
 
         if (current) {
+            let
+                name: string,
+                xpth: string,
+                li: HTMLElement;
+
             Dom.up(current, (elm: Node) => {
                 if (this.jodit.editor !== elm && elm.nodeType !== Node.TEXT_NODE) {
-                    const name: string = elm.nodeName.toLowerCase(),
-                        xpath: string = getXPathByElement(elm as HTMLElement, this.jodit.editor).replace(/^\//, "");
 
-                    const li: HTMLElement = this.tpl(elm, xpath, name, this.jodit.i18n("Select %s", name));
+                    name = elm.nodeName.toLowerCase();
+                    xpth = getXPathByElement(elm as HTMLElement, this.jodit.editor).replace(/^\//, "");
+                    li = this.tpl(elm, xpth, name, this.jodit.i18n("Select %s", name));
 
                     this.container.insertBefore(li, this.container.firstChild);
                 }
@@ -148,5 +142,28 @@ export class xpath extends Plugin {
         }
 
         this.appendSelectAll();
+    }
+
+    public container: HTMLElement;
+    public menu: ContextMenu;
+
+    public afterInit() {
+        if (this.jodit.options.showXPathInStatusbar) {
+            this.calcPath = debounce(this.calcPathImd, this.jodit.defaultTimeout * 2);
+            this.container = this.jodit.ownerDocument.createElement("ul");
+            this.container.classList.add("jodit_xpath");
+            this.jodit.statusbar.append(this.container);
+            this.jodit.events
+                .on("mouseup change keydown changeSelection", this.calcPath)
+                .on("afterSetMode afterInit", () => {
+                    if (this.jodit.getRealMode() === MODE_WYSIWYG) {
+                        this.calcPath();
+                    } else {
+                        this.container.innerHTML = INVISIBLE_SPACE;
+                        this.appendSelectAll();
+                    }
+                });
+            this.calcPath();
+        }
     }
 }

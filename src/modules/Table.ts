@@ -644,7 +644,7 @@ export class Table {
     }
 
     private static __unmark(__marked: HTMLTableCellElement[]) {
-        __marked.forEach((cell) => {
+        __marked.forEach(cell => {
             if ((cell as any).__marked_value) {
                 each((cell as any).__marked_value, (key, value) => {
                     switch (key) {

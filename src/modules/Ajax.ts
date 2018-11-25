@@ -5,7 +5,7 @@
  */
 
 import { Config } from "../Config";
-import { Dictionary } from "../types";
+import {  IDictionary } from "../types";
 import { IViewBased } from "../types/view";
 import { each, extend } from "./Helpers";
 
@@ -31,15 +31,15 @@ export interface AjaxOptions  {
 
     url?: string;
 
-    data: Dictionary<string> | null | FormData | string;
+    data: IDictionary<string> | null | FormData | string;
 
     contentType?: string | false;
 
-    headers?: Dictionary<string> | null;
+    headers?: IDictionary<string> | null;
 
     withCredentials?: boolean;
 
-    queryBuild?: (this: Ajax, obj: string | Dictionary<string | object> | FormData, prefix?: string) => string | object;
+    queryBuild?: (this: Ajax, obj: string |  IDictionary<string | object> | FormData, prefix?: string) => string | object;
 
     xhr?: () => XMLHttpRequest;
 }
@@ -73,27 +73,37 @@ Config.prototype.defaultAjaxOptions = {
 } as AjaxOptions;
 
 export class Ajax {
+
+    private xhr: XMLHttpRequest;
+    private success_response_codes = [200, 201, 202];
+    private __buildParams(obj: string |  IDictionary<string | object> | FormData, prefix?: string): string | FormData {
+        if (this.options.queryBuild && typeof this.options.queryBuild === "function") {
+            return this.options.queryBuild.call(this, obj, prefix);
+        }
+        if (typeof obj === "string" || ((this.jodit.ownerWindow as any).FormData && obj instanceof (this.jodit.ownerWindow as any).FormData)) {
+            return obj as string | FormData;
+        }
+
+        let str: string[] = [],
+            p: string,
+            k: string,
+            v: any;
+
+        for (p in obj) {
+            if (obj.hasOwnProperty(p)) {
+                k = prefix ? prefix + "[" + p + "]" : p;
+                v = (obj as  IDictionary<string>)[p];
+                str.push(typeof v === "object" ? this.__buildParams(v, k) as string : encodeURIComponent(k) + "=" + encodeURIComponent(v as string));
+            }
+        }
+
+        return str.join("&");
+    }
     public status: number;
     public response: string;
 
     public options: AjaxOptions;
     public jodit: IViewBased;
-
-    private xhr: XMLHttpRequest;
-    private success_response_codes = [200, 201, 202];
-
-    constructor(editor: IViewBased, options: AjaxOptions) {
-        this.jodit = editor;
-        this.options = extend(true, {}, Config.prototype.defaultAjaxOptions, options) as AjaxOptions;
-
-        if (this.options.xhr) {
-            this.xhr = this.options.xhr();
-        }
-
-        editor && editor.events && editor.events.on("beforeDestruct", () => {
-            this.abort();
-        });
-    }
 
     public abort(): Ajax {
         this.xhr.abort();
@@ -170,27 +180,17 @@ export class Ajax {
             }, 0);
         });
     }
-    private __buildParams(obj: string | Dictionary<string | object> | FormData, prefix?: string): string | FormData {
-        if (this.options.queryBuild && typeof this.options.queryBuild === "function") {
-            return this.options.queryBuild.call(this, obj, prefix);
-        }
-        if (typeof obj === "string" || ((this.jodit.ownerWindow as any).FormData && obj instanceof (this.jodit.ownerWindow as any).FormData)) {
-            return obj as string | FormData;
-        }
 
-        let str: string[] = [],
-            p: string,
-            k: string,
-            v: any;
+    constructor(editor: IViewBased, options: AjaxOptions) {
+        this.jodit = editor;
+        this.options = extend(true, {}, Config.prototype.defaultAjaxOptions, options) as AjaxOptions;
 
-        for (p in obj) {
-            if (obj.hasOwnProperty(p)) {
-                k = prefix ? prefix + "[" + p + "]" : p;
-                v = (obj as Dictionary<string>)[p];
-                str.push(typeof v === "object" ? this.__buildParams(v, k) as string : encodeURIComponent(k) + "=" + encodeURIComponent(v as string));
-            }
+        if (this.options.xhr) {
+            this.xhr = this.options.xhr();
         }
 
-        return str.join("&");
+        editor && editor.events && editor.events.on("beforeDestruct", () => {
+            this.abort();
+        });
     }
 }

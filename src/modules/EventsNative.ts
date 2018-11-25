@@ -8,7 +8,7 @@
  * The module editor's event manager
  */
 
-import { Dictionary } from "../types";
+import {  IDictionary } from "../types";
 
 export interface EventHandlerBlock {
     event: string;
@@ -17,7 +17,7 @@ export interface EventHandlerBlock {
 }
 
 export class EventHandlersStore {
-    private __store: Dictionary<Dictionary<EventHandlerBlock[]>> = {};
+    private __store: IDictionary< IDictionary<EventHandlerBlock[]>> = {};
 
     public get(event: string, namespace: string): EventHandlerBlock[] | void {
         if (this.__store[namespace] !== undefined) {
@@ -65,6 +65,97 @@ export class EventHandlersStore {
 }
 
 export class EventsNative {
+    private __defaultNameSpace: string = "JoditEventDefaultNamespace";
+    private __key: string = "__JoditEventsNativeNamespaces";
+
+    private doc: Document = document;
+
+    private __stopped: EventHandlerBlock[][] = [];
+
+    private eachEvent(events: string, callback: (event: string, namespace: string) => void) {
+        const eventParts: string[] = events.split(/[\s,]+/);
+
+        eventParts.forEach((eventNameSpace: string) => {
+            const eventAndNameSpace: string[] = eventNameSpace.split(".");
+
+            const namespace: string = eventAndNameSpace[1] || this.__defaultNameSpace;
+
+            callback.call(this, eventAndNameSpace[0], namespace);
+        });
+    }
+
+    private getStore(subject: any): EventHandlersStore {
+        if (subject[this.__key] === undefined) {
+            const store: EventHandlersStore = new EventHandlersStore();
+
+            Object.defineProperty(subject, this.__key, {
+                enumerable: false,
+                configurable: true,
+                value: store,
+            });
+        }
+
+        return subject[this.__key];
+    }
+    private clearStore(subject: any) {
+        if (subject[this.__key] !== undefined) {
+            delete subject[this.__key];
+        }
+    }
+
+    private prepareEvent = (event: TouchEvent | MouseEvent | ClipboardEvent) => {
+        if (event.cancelBubble) {
+            return;
+        }
+
+        if (event.type.match(/^touch/) && (event as TouchEvent).changedTouches && (event as TouchEvent).changedTouches.length) {
+            ["clientX", "clientY", "pageX", "pageY"].forEach((key: string) => {
+                Object.defineProperty(event, key, {value: ((event as TouchEvent).changedTouches[0] as any)[key], configurable: true, enumerable: true});
+            });
+        }
+
+        if (!(event as any).originalEvent) {
+            (event as any).originalEvent = event;
+        }
+
+        if (event.type === "paste" && (event as ClipboardEvent).clipboardData === undefined && (this.doc.defaultView as any).clipboardData) {
+            Object.defineProperty(event, "clipboardData", {
+                get: () => {
+                    return (this.doc.defaultView as any).clipboardData;
+                },
+                configurable: true,
+                enumerable: true,
+            });
+        }
+    }
+
+    private triggerNativeEvent(element: Document | Element | HTMLElement | Window, event: string | Event | MouseEvent) {
+        const evt: Event = this.doc.createEvent("HTMLEvents");
+
+        if (typeof event === "string") {
+            evt.initEvent(event, true, true);
+        } else {
+            evt.initEvent(event.type, event.bubbles, event.cancelable);
+
+            ["screenX", "screenY", "clientX", "clientY", "target", "srcElement", "currentTarget", "timeStamp", "which", "keyCode"].forEach(property => {
+                Object.defineProperty(evt, property, {value: (event as any)[property], enumerable: true});
+            });
+
+            Object.defineProperty(evt, "originalEvent", {value: event, enumerable: true});
+        }
+
+        element.dispatchEvent(evt);
+    }
+
+    private removeStop(__currentBlocks: EventHandlerBlock[]) {
+        if (__currentBlocks) {
+            const index: number = this.__stopped.indexOf(__currentBlocks);
+            index !== -1 && this.__stopped.splice(index, 1);
+        }
+    }
+    private isStopped(__currentBlocks: EventHandlerBlock[]): boolean {
+        return __currentBlocks !== undefined && this.__stopped.indexOf(__currentBlocks) !== -1;
+    }
 
     /**
      * Get current event name
@@ -81,19 +172,6 @@ export class EventsNative {
      * ```
      */
     public current: string[] = [];
-    private __defaultNameSpace: string = "JoditEventDefaultNamespace";
-    private __key: string = "__JoditEventsNativeNamespaces";
-
-    private doc: Document = document;
-
-    private __stopped: EventHandlerBlock[][] = [];
-
-    constructor(doc?: Document) {
-        if (doc) {
-            this.doc = doc;
-        }
-        this.__key += (new Date()).getTime();
-    }
 
     /**
      * Sets the handler for the specified event ( Event List ) for a given element .
@@ -414,7 +492,7 @@ export class EventsNative {
                     if (namespace === this.__defaultNameSpace && !isDOMElement) {
                         store
                             .namespaces()
-                            .filter((ns) => ns !== namespace)
+                            .filter(ns => ns !== namespace)
                             .forEach((ns: string) => {
                                 const result_second: any = this.fire.apply(this, [subject, event + "." + ns, ...argumentsList]);
                                 if (result_second !== undefined) {
@@ -433,88 +511,10 @@ export class EventsNative {
         this.off(this);
     }
 
-    private eachEvent(events: string, callback: (event: string, namespace: string) => void) {
-        const eventParts: string[] = events.split(/[\s,]+/);
-
-        eventParts.forEach((eventNameSpace: string) => {
-            const eventAndNameSpace: string[] = eventNameSpace.split(".");
-
-            const namespace: string = eventAndNameSpace[1] || this.__defaultNameSpace;
-
-            callback.call(this, eventAndNameSpace[0], namespace);
-        });
-    }
-
-    private getStore(subject: any): EventHandlersStore {
-        if (subject[this.__key] === undefined) {
-            const store: EventHandlersStore = new EventHandlersStore();
-
-            Object.defineProperty(subject, this.__key, {
-                enumerable: false,
-                configurable: true,
-                value: store,
-            });
+    constructor(doc?: Document) {
+        if (doc) {
+            this.doc = doc;
         }
-
-        return subject[this.__key];
-    }
-    private clearStore(subject: any) {
-        if (subject[this.__key] !== undefined) {
-            delete subject[this.__key];
-        }
-    }
-
-    private prepareEvent = (event: TouchEvent | MouseEvent | ClipboardEvent) => {
-        if (event.cancelBubble) {
-            return;
-        }
-
-        if (event.type.match(/^touch/) && (event as TouchEvent).changedTouches && (event as TouchEvent).changedTouches.length) {
-            ["clientX", "clientY", "pageX", "pageY"].forEach((key: string) => {
-                Object.defineProperty(event, key, {value: ((event as TouchEvent).changedTouches[0] as any)[key], configurable: true, enumerable: true});
-            });
-        }
-
-        if (!(event as any).originalEvent) {
-            (event as any).originalEvent = event;
-        }
-
-        if (event.type === "paste" && (event as ClipboardEvent).clipboardData === undefined && (this.doc.defaultView as any).clipboardData) {
-            Object.defineProperty(event, "clipboardData", {
-                get: () => {
-                    return (this.doc.defaultView as any).clipboardData;
-                },
-                configurable: true,
-                enumerable: true,
-            });
-        }
-    }
-
-    private triggerNativeEvent(element: Document | Element | HTMLElement | Window, event: string | Event | MouseEvent) {
-        const evt: Event = this.doc.createEvent("HTMLEvents");
-
-        if (typeof event === "string") {
-            evt.initEvent(event, true, true);
-        } else {
-            evt.initEvent(event.type, event.bubbles, event.cancelable);
-
-            ["screenX", "screenY", "clientX", "clientY", "target", "srcElement", "currentTarget", "timeStamp", "which", "keyCode"].forEach((property) => {
-                Object.defineProperty(evt, property, {value: (event as any)[property], enumerable: true});
-            });
-
-            Object.defineProperty(evt, "originalEvent", {value: event, enumerable: true});
-        }
-
-        element.dispatchEvent(evt);
-    }
-
-    private removeStop(__currentBlocks: EventHandlerBlock[]) {
-        if (__currentBlocks) {
-            const index: number = this.__stopped.indexOf(__currentBlocks);
-            index !== -1 && this.__stopped.splice(index, 1);
-        }
-    }
-    private isStopped(__currentBlocks: EventHandlerBlock[]): boolean {
-        return __currentBlocks !== undefined && this.__stopped.indexOf(__currentBlocks) !== -1;
+        this.__key += (new Date()).getTime();
     }
 }

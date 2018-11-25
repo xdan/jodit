@@ -86,6 +86,41 @@ export class Snapshot extends Component {
         return offset;
     }
 
+    /**
+     * Calc whole hierarchy path before some element in editor's tree
+     *
+     * @param {Node | null} elm
+     * @return {number[]}
+     * @private
+     */
+    private calcHierarchyLadder(elm: Node | null): number[] {
+        const counts: number[] = [];
+
+        if (!elm || !elm.parentNode || !Dom.isOrContains(this.jodit.editor, elm)) {
+            return [];
+        }
+
+        while (elm && elm !== this.jodit.editor) {
+            if (elm) {
+                counts.push(Snapshot.countNodesBeforeInParent(elm));
+            }
+            elm = elm.parentNode;
+        }
+
+        return counts.reverse();
+    }
+
+    private getElementByLadder(ladder: number[]): Node {
+        let n: Node = this.jodit.editor as Node,
+            i: number;
+
+        for (i = 0; n && i < ladder.length; i += 1) {
+            n = n.childNodes[ladder[i]];
+        }
+
+        return n;
+    }
+
     public isBlocked: boolean = false;
 
     /**
@@ -162,40 +197,5 @@ export class Snapshot extends Component {
         }
 
         this.isBlocked = false;
-    }
-
-    /**
-     * Calc whole hierarchy path before some element in editor's tree
-     *
-     * @param {Node | null} elm
-     * @return {number[]}
-     * @private
-     */
-    private calcHierarchyLadder(elm: Node | null): number[] {
-        const counts: number[] = [];
-
-        if (!elm || !elm.parentNode || !Dom.isOrContains(this.jodit.editor, elm)) {
-            return [];
-        }
-
-        while (elm && elm !== this.jodit.editor) {
-            if (elm) {
-                counts.push(Snapshot.countNodesBeforeInParent(elm));
-            }
-            elm = elm.parentNode;
-        }
-
-        return counts.reverse();
-    }
-
-    private getElementByLadder(ladder: number[]): Node {
-        let n: Node = this.jodit.editor as Node,
-            i: number;
-
-        for (i = 0; n && i < ladder.length; i += 1) {
-            n = n.childNodes[ladder[i]];
-        }
-
-        return n;
     }
 }

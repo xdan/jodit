@@ -29,7 +29,13 @@ export function orderedlist(editor: Jodit) {
     editor.events
         .on("afterCommand", (command: string): false | void => {
             if (/insert(un)?orderedlist/i.test(command)) {
-                const ul: Node | false = Dom.up(editor.selection.current() as Node, (tag: Node | null) => (tag && /^UL|OL$/i.test(tag.nodeName)), editor.editor);
+                const
+                    ul: Node | false = Dom.up(
+                        editor.selection.current() as Node,
+                        (tag: Node | null) => (tag && /^UL|OL$/i.test(tag.nodeName)),
+                        editor.editor,
+                    );
+
                 if (ul && ul.parentNode && ul.parentNode.nodeName === "P") {
                     const selection: markerInfo[] = editor.selection.save();
                     Dom.unwrap(ul.parentNode);

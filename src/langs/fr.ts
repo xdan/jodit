@@ -1,4 +1,4 @@
-import { Dictionary } from "../types";
+import {  IDictionary } from "../types";
 
 export default {
     "Type something": "Ecrivez ici",
@@ -12,7 +12,8 @@ export default {
     "contains detailed help for using": "Aide détaillée à l'utilisation",
     "For information about the license, please go to our website:": "Consulter la licence sur notre site web:",
     "Buy full version": "Acheter la version complète",
-    "Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.": "Copyright © XDSoft.net - Chupurnov Valeriy. Tous droits réservés.",
+    "Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.": "Copyright © XDSoft.net - Chupurnov Valeriy. " +
+        "Tous droits réservés.",
 
     // Toolbar
     "Anchor": "Ancre",
@@ -85,13 +86,16 @@ export default {
     "Ok": "OK",
 
     // plugin paste
-    "Your code is similar to HTML. Keep as HTML?": "Votre texte que vous essayez de coller est similaire au HTML. Collez-le en HTML?",
+    "Your code is similar to HTML. Keep as HTML?": "Votre texte que vous essayez de coller est similaire au HTML. " +
+        "Collez-le en HTML?",
     "Paste as HTML": "Coller en HTML?",
     "Keep": "Sauvegarder l'original",
     "Clean": "Nettoyer",
     "Insert as Text": "Coller en tant que texte",
     "Word Paste Detected": "C'est peut-être un fragment de Word ou Excel",
-    "The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?": "Le contenu que vous insérez provient d'un document Microsoft Word / Excel. Voulez-vous enregistrer le format ou l'effacer?",
+    "The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?":
+        "Le contenu que vous insérez provient d'un document Microsoft Word / Excel. " +
+        "Voulez-vous enregistrer le format ou l'effacer?",
     "Insert only Text": "Coller le texte seulement",
 
     // File Browser module
@@ -201,7 +205,8 @@ export default {
     "Sort by name": "Trier par nom",
     "Sort by size": "Classer par taille",
     "Add folder": "Ajouter le dossier",
-    "You can only edit your own images. Download this image on the host?": "Vous ne pouvez éditer que vos propres images. Téléchargez cette image sur l'hôte?",
+    "You can only edit your own images. Download this image on the host?": "Vous ne pouvez éditer que vos propres images. " +
+        "Téléchargez cette image sur l'hôte?",
     "The image has been successfully uploaded to the host!": "L'image a été téléchargée avec succès sur le serveur!null",
 
-} as Dictionary<string>;
+} as  IDictionary<string>;

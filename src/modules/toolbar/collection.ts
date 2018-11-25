@@ -5,8 +5,8 @@
  */
 
 import { Jodit } from "../../Jodit";
-import {Dictionary} from "../../types";
-import { Buttons, Controls, ControlType, ControlTypeStrong } from "../../types/toolbar";
+import { IDictionary} from "../../types";
+import { Buttons, Controls, IControlType, IControlTypeStrong } from "../../types/toolbar";
 import { IViewBased } from "../../types/view";
 import { debounce } from "../Helpers";
 import { ToolbarBreak } from "./break";
@@ -15,9 +15,6 @@ import { ToolbarElement } from "./element";
 import { ToolbarSeparator } from "./separator";
 
 export class ToolbarCollection extends ToolbarElement {
-
-    public checkActiveButtons = debounce(this.immedateCheckActiveButtons, this.jodit.defaultTimeout);
-
     public readonly listenEvents: string = "changeStack mousedown mouseup keydown change afterInit readonly afterResize selectionchange changeSelection focus afterSetMode touchstart";
 
     private __buttons: ToolbarElement[] = [];
@@ -59,7 +56,7 @@ export class ToolbarCollection extends ToolbarElement {
 
         buttonsList
             .map(this.__getControlType)
-            .forEach((buttonControl: ControlTypeStrong) => {
+            .forEach((buttonControl: IControlTypeStrong) => {
                 let button: ToolbarElement | null = null;
 
                 if (this.jodit.options.removeButtons.indexOf(buttonControl.name) !== -1) {
@@ -123,7 +120,9 @@ export class ToolbarCollection extends ToolbarElement {
 
         this.jodit.events && this.jodit.events
             .fire("updateToolbar");
-    }
+    };
+
+    public checkActiveButtons = debounce(this.immedateCheckActiveButtons, this.jodit.defaultTimeout);
 
     public destruct() {
         this.jodit.events
@@ -135,8 +134,8 @@ export class ToolbarCollection extends ToolbarElement {
         super.destruct();
     }
 
-    private __getControlType = (button: ControlType | string): ControlTypeStrong => {
-        let buttonControl: ControlTypeStrong,
+    private __getControlType = (button: IControlType | string): IControlTypeStrong => {
+        let buttonControl: IControlTypeStrong,
             controls: Controls = this.jodit.options.controls || Jodit.defaultOptions.controls;
 
         if (typeof button !== "string") {
@@ -147,11 +146,11 @@ export class ToolbarCollection extends ToolbarElement {
         } else {
             const list: string[] = button.split(/\./);
 
-            let store: Dictionary<ControlType> = controls;
+            let store:  IDictionary<ControlType> = controls;
 
             if (list.length > 1) {
                 if (controls[list[0]] !== undefined) {
-                    store = controls[list[0]] as Dictionary<ControlType>;
+                    store = controls[list[0]] as  IDictionary<ControlType>;
                     button = list[1];
                 }
             }

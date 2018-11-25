@@ -9,7 +9,7 @@ import { KEY_DOWN, KEY_ENTER, KEY_LEFT, KEY_RIGHT, KEY_UP } from "../constants";
 import { Jodit } from "../Jodit";
 import { Alert, Dialog } from "../modules/Dialog";
 import { dom } from "../modules/Helpers";
-import { ControlType } from "../types/toolbar";
+import { IControlType } from "../types/toolbar";
 
 declare module "../Config" {
     interface Config {
@@ -48,7 +48,7 @@ Config.prototype.controls.symbol = {
     icon: "omega",
     hotkeys: ["ctrl+shift+i", "cmd+shift+i"],
     tooltip: "Insert Special Character",
-    popup: (editor: Jodit, current: Node|false, control: ControlType, close: Function): any => {
+    popup: (editor: Jodit, current: Node|false, control: IControlType, close: () => void): any => {
         const container: HTMLElement | undefined = editor.events.fire("generateSpecialCharactersTable.symbols");
         if (container) {
             if (editor.options.usePopupForSpecialCharacters) {
@@ -67,7 +67,7 @@ Config.prototype.controls.symbol = {
             }
         }
     },
-} as ControlType;
+} as IControlType;
 
 /**
  * The plugin inserts characters that are not part of the standard keyboard.
@@ -91,8 +91,18 @@ export class symbols {
                 for (let i: number = 0; i < editor.options.specialCharacters.length;) {
                     const tr: HTMLTableRowElement = editor.ownerDocument.createElement("tr");
                     for (let j: number = 0; j < this.countInRow && i < editor.options.specialCharacters.length; j += 1, i += 1) {
-                        const td: HTMLTableCellElement = editor.ownerDocument.createElement("td"),
-                            a: HTMLAnchorElement = dom(`<a data-index="${i}" data-index-j="${j}" href="javascript:void(0)" role="option" tabindex="-1">${editor.options.specialCharacters[i]}</a>`, editor.ownerDocument) as HTMLAnchorElement;
+                        const
+                            td: HTMLTableCellElement = editor.ownerDocument.createElement("td"),
+                            a: HTMLAnchorElement = dom(
+                                `<a
+                                    data-index="${i}"
+                                    data-index-j="${j}"
+                                    href="javascript:void(0)"
+                                    role="option"
+                                    tabindex="-1"
+                                >${editor.options.specialCharacters[i]}</a>`,
+                                editor.ownerDocument,
+                            ) as HTMLAnchorElement;
 
                         chars.push(a);
                         td.appendChild(a);
@@ -124,16 +134,20 @@ export class symbols {
                     .on(chars, "keydown", (e: KeyboardEvent) => {
                         const target: HTMLAnchorElement = e.target as HTMLAnchorElement;
                         if (target && target.nodeName === "A") {
-                            let index: number = parseInt(target.getAttribute("data-index") || "0", 0),
-                                jIndex: number = parseInt(target.getAttribute("data-index-j") || "0", 0),
-                                newIndex: number;
+                            const
+                                index: number = parseInt(target.getAttribute("data-index") || "0", 10),
+                                jIndex: number = parseInt(target.getAttribute("data-index-j") || "0", 10);
+
+                            let newIndex: number;
 
                             switch (e.which) {
                                 case KEY_UP:
                                 case KEY_DOWN:
                                     newIndex = e.which === KEY_UP ? index - self.countInRow : index + self.countInRow;
                                     if (chars[newIndex] === undefined) {
-                                        newIndex = e.which === KEY_UP ? Math.floor(chars.length / self.countInRow) * self.countInRow + jIndex : jIndex;
+                                        newIndex = e.which === KEY_UP ?
+                                            Math.floor(chars.length / self.countInRow) * self.countInRow + jIndex : jIndex;
+
                                         if (newIndex > chars.length - 1) {
                                             newIndex -= self.countInRow;
                                         }

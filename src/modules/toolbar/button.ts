@@ -5,8 +5,8 @@
  */
 
 import * as consts from "../../constants";
-import {Dictionary} from "../../types";
-import { ControlTypeStrong } from "../../types/toolbar";
+import { IDictionary} from "../../types";
+import { IControlTypeStrong } from "../../types/toolbar";
 import { IViewBased } from "../../types/view";
 import { Dom } from "../Dom";
 import { asArray, camelCase, css, dom } from "../Helpers";
@@ -44,7 +44,7 @@ export  class ToolbarButton extends ToolbarElement {
     get active() {
         return this.__actived;
     }
-    public readonly control: ControlTypeStrong;
+    public readonly control: IControlTypeStrong;
     public readonly target: HTMLElement | undefined;
 
     public textBox: HTMLSpanElement;
@@ -55,7 +55,7 @@ export  class ToolbarButton extends ToolbarElement {
     private __actived: boolean = false;
 
     private tooltip: Tooltip;
-    constructor(jodit: IViewBased, control: ControlTypeStrong, target?: HTMLElement) {
+    constructor(jodit: IViewBased, control: IControlTypeStrong, target?: HTMLElement) {
         super(jodit);
 
         this.control = control;
@@ -148,7 +148,7 @@ export  class ToolbarButton extends ToolbarElement {
 
         let tags: string[],
             elm: Node | false,
-            css: Dictionary<string>;
+            css:  IDictionary<string>;
 
         if (this.control.tags || (this.control.options && this.control.options.tags)) {
             tags = this.control.tags || (this.control.options && this.control.options.tags);
@@ -193,7 +193,7 @@ export  class ToolbarButton extends ToolbarElement {
             return false;
         }
 
-        const control: ControlTypeStrong = this.control;
+        const control: IControlTypeStrong = this.control;
 
         if (control.list) {
             const list: ToolbarList = new ToolbarList(this.jodit, this.container, this.target);
@@ -256,7 +256,7 @@ export  class ToolbarButton extends ToolbarElement {
     }
 
     private checkActiveStatus = (
-        cssObject: Dictionary<string|string[]> | Dictionary<(editor: IViewBased, value: string) => boolean>,
+        cssObject:  IDictionary<string|string[]> |  IDictionary<(editor: IViewBased, value: string) => boolean>,
         node: HTMLElement,
     ): boolean => {
         let matches: number = 0,

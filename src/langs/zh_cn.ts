@@ -1,4 +1,4 @@
-import { Dictionary } from "../types";
+import {  IDictionary } from "../types";
 
 export default {
     "Type something": "输入一些内容",
@@ -12,7 +12,8 @@ export default {
     "contains detailed help for using": "使用帮助",
     "For information about the license, please go to our website:": "有关许可证的信息，请访问我们的网站：",
     "Buy full version": "购买完整版本",
-    "Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.": "Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.",
+    "Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.": "Copyright © XDSoft.net - Chupurnov Valeriy." +
+        " All rights reserved.",
 
     // Toolbar
     "Anchor": "Anchor",
@@ -206,6 +207,7 @@ export default {
     "Sort by name": "名称排序",
     "Sort by size": "大小排序",
     "Add folder": "新建文件夹",
-    "You can only edit your own images. Download this image on the host?": "你只能编辑你自己的图片。Download this image on the host?",
+    "You can only edit your own images. Download this image on the host?": "你只能编辑你自己的图片。" +
+        "Download this image on the host?",
     "The image has been successfully uploaded to the host!": "图片上传成功",
-} as Dictionary<string>;
+} as  IDictionary<string>;

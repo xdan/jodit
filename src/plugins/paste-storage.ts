@@ -22,23 +22,6 @@ export class pasteStorage extends Plugin {
     private previewBox: HTMLElement;
 
     private dialog: Dialog;
-    public afterInit() {
-        this.jodit.events.on("afterCopy", (html: string) => {
-            if (this.list.indexOf(html) !== -1) {
-                this.list.splice(this.list.indexOf(html), 1);
-            }
-
-            this.list.unshift(html);
-            if (this.list.length > 5) {
-                this.list.length = 5;
-            }
-        });
-
-        this.jodit.registerCommand("showPasteStorage", {
-            exec: this.showDialog,
-            hotkeys: ["ctrl+shift+v", "cmd+shift+v"],
-        });
-    }
     private paste = () => {
         this.jodit.selection.focus();
         this.jodit.selection.insertHTML(this.list[this.currentIndex]);
@@ -169,5 +152,22 @@ export class pasteStorage extends Plugin {
 
                 return false;
             }, "a");
+    }
+    public afterInit() {
+        this.jodit.events.on("afterCopy", (html: string) => {
+            if (this.list.indexOf(html) !== -1) {
+                this.list.splice(this.list.indexOf(html), 1);
+            }
+
+            this.list.unshift(html);
+            if (this.list.length > 5) {
+                this.list.length = 5;
+            }
+        });
+
+        this.jodit.registerCommand("showPasteStorage", {
+            exec: this.showDialog,
+            hotkeys: ["ctrl+shift+v", "cmd+shift+v"],
+        });
     }
 }

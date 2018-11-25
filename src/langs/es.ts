@@ -1,4 +1,4 @@
-import { Dictionary } from "../types";
+import {  IDictionary } from "../types";
 
 export default {
     "Type something"                                    : "Escriba algo...",
@@ -213,7 +213,8 @@ export default {
     "No": "No",
     "Remove": "Quitar",
     "Select": "Seleccionar",
-    "You can only edit your own images. Download this image on the host?": "Solo puedes editar tus propias imágenes. ¿Descargar esta imagen en el servidor?",
+    "You can only edit your own images. Download this image on the host?": "Solo puedes editar tus propias imágenes." +
+        " ¿Descargar esta imagen en el servidor?",
     "The image has been successfully uploaded to the host!": "¡La imagen se ha subido correctamente al servidor!",
 
-} as Dictionary<string>;
+} as  IDictionary<string>;

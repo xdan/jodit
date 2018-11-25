@@ -6,14 +6,14 @@
 
 import { MODE_WYSIWYG } from "../../constants";
 import { Jodit } from "../../Jodit";
-import {Dictionary} from "../../types";
+import { IDictionary} from "../../types";
 import { IViewBased, IViewOptions } from "../../types/view";
 import { Component } from "../Component";
 import { EventsNative } from "../EventsNative";
 import { ToolbarCollection } from "../toolbar/collection";
 
 export class View extends Component implements IViewBased {
-    public buffer: Dictionary;
+    public buffer:  IDictionary;
 
     public progress_bar: HTMLElement;
     public container: HTMLDivElement;

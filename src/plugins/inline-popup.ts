@@ -15,14 +15,14 @@ import { Table } from "../modules/Table";
 import { ToolbarCollection } from "../modules/toolbar/collection";
 import { ToolbarPopup } from "../modules/toolbar/popup";
 import { Widget } from "../modules/Widget";
-import { Dictionary } from "../types";
-import { ControlType } from "../types/toolbar";
-import { Bound } from "../types/types";
+import {  IDictionary } from "../types";
+import { IControlType } from "../types/toolbar";
+import { IBound } from "../types/types";
 
 declare module "../Config" {
 
     interface Config {
-        popup: Dictionary<Array<ControlType|string>>;
+        popup: IDictionary<Array<IControlType | string>>;
         toolbarInline: boolean;
         toolbarInlineDisableFor: string | string[];
     }
@@ -42,7 +42,7 @@ Config.prototype.popup = {
                     editor.ownerWindow.open(href);
                 }
             },
-        } as ControlType,
+        } as IControlType,
         {
             name: "link",
             tooltip: "Edit link",
@@ -105,7 +105,7 @@ Config.prototype.popup = {
                 "Bottom",
             ],
             tooltip: "Vertical align",
-            exec: (editor: Jodit, image: HTMLImageElement, control: ControlType) => {
+            exec: (editor: Jodit, image: HTMLImageElement, control: IControlType) => {
                 const tagName: string = (image as HTMLElement).tagName.toLowerCase();
                 if (tagName !== "img") {
                     return;
@@ -126,7 +126,7 @@ Config.prototype.popup = {
                 "Center",
                 "Normal",
             ],
-            exec: (editor: Jodit, image: HTMLImageElement, control: ControlType) => {
+            exec: (editor: Jodit, image: HTMLImageElement, control: IControlType) => {
                 const tagName: string = (image as HTMLElement).tagName.toLowerCase();
                 if (tagName !== "img") {
                     return;
@@ -172,11 +172,14 @@ Config.prototype.popup = {
         {
             name: "brush",
             popup: (editor: Jodit, elm: HTMLTableElement) => {
-                let $bg: HTMLElement,
+                const
+                    selected: HTMLTableCellElement[] = Table.getAllSelectedCells(elm);
+
+                let
+                    $bg: HTMLElement,
                     $cl: HTMLElement,
                     $br: HTMLElement,
                     $tab: HTMLElement,
-                    selected: HTMLTableCellElement[] = Table.getAllSelectedCells(elm),
                     color: string,
                     br_color: string,
                     bg_color: string;
@@ -230,7 +233,7 @@ Config.prototype.popup = {
                 "Middle",
                 "Bottom",
             ],
-            exec: (editor: Jodit, table: HTMLTableElement, control: ControlType) => {
+            exec: (editor: Jodit, table: HTMLTableElement, control: IControlType) => {
 
                 const command: string = (control.args && typeof control.args[1] === "string") ? control.args[1].toLowerCase() : "";
 
@@ -264,7 +267,7 @@ Config.prototype.popup = {
                 tableaddcolumnbefore: "Insert column before",
                 tableaddcolumnafter: "Insert column after",
             },
-            exec: (editor: Jodit, table: HTMLTableElement, control: ControlType) => {
+            exec: (editor: Jodit, table: HTMLTableElement, control: IControlType) => {
                 const command: string = (control.args && typeof control.args[0] === "string") ? control.args[0].toLowerCase() : "";
 
                 editor.execCommand(command, false, table);
@@ -277,7 +280,7 @@ Config.prototype.popup = {
                 tableaddrowbefore: "Insert row above",
                 tableaddrowafter: "Insert row below",
             },
-            exec: (editor: Jodit, table: HTMLTableElement, control: ControlType) => {
+            exec: (editor: Jodit, table: HTMLTableElement, control: IControlType) => {
                 const command: string = (control.args && typeof control.args[0] === "string") ? control.args[0].toLowerCase() : "";
 
                 editor.execCommand(command, false, table);
@@ -292,7 +295,7 @@ Config.prototype.popup = {
                 tablebincolumn: "Delete column",
                 tableempty: "Empty cell",
             },
-            exec: (editor: Jodit, table: HTMLTableElement, control: ControlType) => {
+            exec: (editor: Jodit, table: HTMLTableElement, control: IControlType) => {
                 const command: string = (control.args && typeof control.args[0] === "string") ? control.args[0].toLowerCase() : "";
 
                 editor.execCommand(command, false, table);
@@ -300,7 +303,7 @@ Config.prototype.popup = {
             tooltip: "Delete",
         },
     ],
-} as Dictionary<Array<ControlType | string>>;
+} as  IDictionary<Array<IControlType | string>>;
 
 /**
  * Support inline toolbar
@@ -308,9 +311,6 @@ Config.prototype.popup = {
  * @param {Jodit} editor
  */
 export class inlinePopup extends Plugin {
-
-
-    public isShown: boolean = false;
     private toolbar: ToolbarCollection;
     private popup: ToolbarPopup;
     private target: HTMLDivElement;
@@ -318,7 +318,7 @@ export class inlinePopup extends Plugin {
 
     private _hiddenClass = "jodit_toolbar_popup-inline-target-hidden";
 
-    private __getRect: () => Bound;
+    private __getRect: () => IBound;
 
     // was started selection
     private isSelectionStarted = false;
@@ -347,83 +347,7 @@ export class inlinePopup extends Plugin {
      */
     private isSelectionPopup: boolean = false;
 
-    constructor(jodit: Jodit) {
-        super(jodit);
-        this.toolbar = new ToolbarCollection(jodit);
-        this.target = jodit.ownerDocument.createElement("div");
-        this.container = jodit.ownerDocument.createElement("div");
-        this.target.classList.add("jodit_toolbar_popup-inline-target");
-        this.popup = new ToolbarPopup(jodit, this.target, void(0), "jodit_toolbar_popup-inline");
-    }
-
-    public onChangeSelection = () => {
-        if (!this.jodit.options.toolbarInline || !this.jodit.isEditorMode()) {
-            return;
-        }
-
-        if (this.hideIfCollapsed()) {
-            return;
-        }
-
-        if (this.jodit.options.popup.selection !== undefined) {
-            const sel: Selection = this.jodit.editorWindow.getSelection();
-            if (sel.rangeCount) {
-                this.isSelectionPopup = true;
-                const range: Range = sel.getRangeAt(0);
-                this.showPopup(() => offset(range, this.jodit, this.jodit.editorDocument), "selection");
-            }
-        }
-    }
-
-    public afterInit(editor: Jodit) {
-        editor.events
-            .on(this.target, "mousedown keydown touchstart", (e: MouseEvent) => {
-                e.stopPropagation();
-            })
-            .on("beforeOpenPopup hidePopup afterSetMode", this.hidePopup)
-            .on("recalcPositionPopup", this.reCalcPosition)
-            .on("getDiffButtons.mobile", (_toolbar: ToolbarCollection): void | string[] => {
-                if (this.toolbar === _toolbar) {
-                    return splitArray(editor.options.buttons)
-                        .filter((name) => name !== "|" && name !== "\n")
-                        .filter((name: string) => {
-                            return this.toolbar.getButtonsList().indexOf(name) < 0;
-                        });
-                }
-            })
-            .on("selectionchange", this.onChangeSelection)
-            .on("afterCommand afterExec", () => {
-                if (this.isShown && this.isSelectionPopup) {
-                    this.onChangeSelection();
-                }
-            })
-            .on("showPopup", (elm: HTMLElement | string, rect: () => Bound) => {
-                const elementName: string = (typeof elm === "string" ? elm : elm.nodeName).toLowerCase();
-                this.isSelectionPopup = false;
-                this.showPopup(rect, elementName, typeof elm === "string" ? void(0) : elm);
-
-            })
-
-            .on("mousedown keydown touchstart", this.onSelectionStart)
-            .on([editor.ownerWindow, editor.editor], "scroll resize", this.reCalcPosition)
-            .on([editor.ownerWindow], "mouseup keyup touchend", this.onSelectionEnd)
-            .on([editor.ownerWindow], "mousedown keydown touchstart", this.checkIsTargetEvent);
-
-    }
-    public beforeDestruct(editor: Jodit) {
-        this.popup.destruct();
-        this.toolbar.destruct();
-        this.target.parentNode && this.target.parentNode.removeChild(this.target);
-
-        editor.events
-            .off([editor.ownerWindow], "scroll resize", this.reCalcPosition)
-            .off([editor.ownerWindow], "mouseup keyup touchend", this.onSelectionEnd)
-            .off([editor.ownerWindow], "mousedown keydown touchstart", this.checkIsTargetEvent);
-
-        super.destruct();
-    }
-
-    private calcWindSizes = (): Bound => {
+    private calcWindSizes = (): IBound => {
         const win: Window = this.jodit.ownerWindow;
         const docElement: HTMLElement | null = this.jodit.ownerDocument.documentElement;
 
@@ -452,12 +376,12 @@ export class inlinePopup extends Plugin {
             height: windHeight,
         };
     }
-    private calcPosition = (rect: Bound, windowSize: Bound) => {
+    private calcPosition = (rect: IBound, windowSize: IBound) => {
         this.popup.target.classList.remove(this._hiddenClass);
 
         const selectionCenterLeft: number = rect.left + rect.width / 2;
 
-        const workplacePosition: Bound = offset(this.jodit.workplace, this.jodit, this.jodit.ownerDocument, true);
+        const workplacePosition: IBound = offset(this.jodit.workplace, this.jodit, this.jodit.ownerDocument, true);
 
         let targetTop: number = rect.top + rect.height + 10;
         const diff = 50;
@@ -496,7 +420,7 @@ export class inlinePopup extends Plugin {
 
     private isExcludedTarget(type: string): boolean {
         return splitArray(this.jodit.options.toolbarInlineDisableFor)
-            .map((a) => a.toLowerCase())
+            .map(a => a.toLowerCase())
             .indexOf(type.toLowerCase()) !== -1;
     }
     private reCalcPosition = () => {
@@ -505,7 +429,7 @@ export class inlinePopup extends Plugin {
         }
     }
 
-    private showPopup = (rect: () => Bound, type: string, elm?: HTMLElement): boolean => {
+    private showPopup = (rect: () => IBound, type: string, elm?: HTMLElement): boolean => {
         if (
             !this.jodit.options.toolbarInline ||
             !this.jodit.options.popup[type.toLowerCase()]
@@ -520,7 +444,7 @@ export class inlinePopup extends Plugin {
         this.isShown = true;
         this.isTargetAction = true;
 
-        const windSize: Bound = this.calcWindSizes();
+        const windSize: IBound = this.calcWindSizes();
 
         this.target.parentNode || this.jodit.ownerDocument.body.appendChild(this.target);
 
@@ -556,8 +480,10 @@ export class inlinePopup extends Plugin {
         this.isSelectionPopup = false;
 
         if (!this.isSelectionStarted) {
-            const elements: string = Object.keys(this.jodit.options.popup).join("|");
-            const target: HTMLElement | false = (event.target as Node).nodeName === "IMG" ? event.target as HTMLImageElement :  Dom.closest(event.target as Node, elements, this.jodit.editor) as HTMLTableElement;
+            const
+                elements: string = Object.keys(this.jodit.options.popup).join("|"),
+                target: HTMLElement | false = (event.target as Node).nodeName === "IMG" ?
+                    event.target as HTMLImageElement :  Dom.closest(event.target as Node, elements, this.jodit.editor) as HTMLTableElement;
 
             if (!target || !this.showPopup(() => offset(target, this.jodit, this.jodit.editorDocument), target.nodeName, target)) {
                 this.isSelectionStarted = true;
@@ -579,5 +505,83 @@ export class inlinePopup extends Plugin {
         } else {
             this.isTargetAction = false;
         }
+    }
+
+    public isShown: boolean = false;
+
+    public onChangeSelection = () => {
+        if (!this.jodit.options.toolbarInline || !this.jodit.isEditorMode()) {
+            return;
+        }
+
+        if (this.hideIfCollapsed()) {
+            return;
+        }
+
+        if (this.jodit.options.popup.selection !== undefined) {
+            const sel: Selection = this.jodit.editorWindow.getSelection();
+            if (sel.rangeCount) {
+                this.isSelectionPopup = true;
+                const range: Range = sel.getRangeAt(0);
+                this.showPopup(() => offset(range, this.jodit, this.jodit.editorDocument), "selection");
+            }
+        }
+    }
+
+    public afterInit(editor: Jodit) {
+        editor.events
+            .on(this.target, "mousedown keydown touchstart", (e: MouseEvent) => {
+                e.stopPropagation();
+            })
+            .on("beforeOpenPopup hidePopup afterSetMode", this.hidePopup)
+            .on("recalcPositionPopup", this.reCalcPosition)
+            .on("getDiffButtons.mobile", (_toolbar: ToolbarCollection): void | string[] => {
+                if (this.toolbar === _toolbar) {
+                    return splitArray(editor.options.buttons)
+                        .filter(name => name !== "|" && name !== "\n")
+                        .filter((name: string) => {
+                            return this.toolbar.getButtonsList().indexOf(name) < 0;
+                        });
+                }
+            })
+            .on("selectionchange", this.onChangeSelection)
+            .on("afterCommand afterExec", () => {
+                if (this.isShown && this.isSelectionPopup) {
+                    this.onChangeSelection();
+                }
+            })
+            .on("showPopup", (elm: HTMLElement | string, rect: () => IBound) => {
+                const elementName: string = (typeof elm === "string" ? elm : elm.nodeName).toLowerCase();
+                this.isSelectionPopup = false;
+                this.showPopup(rect, elementName, typeof elm === "string" ? void(0) : elm);
+
+            })
+
+            .on("mousedown keydown touchstart", this.onSelectionStart)
+            .on([editor.ownerWindow, editor.editor], "scroll resize", this.reCalcPosition)
+            .on([editor.ownerWindow], "mouseup keyup touchend", this.onSelectionEnd)
+            .on([editor.ownerWindow], "mousedown keydown touchstart", this.checkIsTargetEvent);
+
+    }
+    public beforeDestruct(editor: Jodit) {
+        this.popup.destruct();
+        this.toolbar.destruct();
+        this.target.parentNode && this.target.parentNode.removeChild(this.target);
+
+        editor.events
+            .off([editor.ownerWindow], "scroll resize", this.reCalcPosition)
+            .off([editor.ownerWindow], "mouseup keyup touchend", this.onSelectionEnd)
+            .off([editor.ownerWindow], "mousedown keydown touchstart", this.checkIsTargetEvent);
+
+        super.destruct();
+    }
+
+    constructor(jodit: Jodit) {
+        super(jodit);
+        this.toolbar = new ToolbarCollection(jodit);
+        this.target = jodit.ownerDocument.createElement("div");
+        this.container = jodit.ownerDocument.createElement("div");
+        this.target.classList.add("jodit_toolbar_popup-inline-target");
+        this.popup = new ToolbarPopup(jodit, this.target, void(0), "jodit_toolbar_popup-inline");
     }
 }

@@ -51,26 +51,6 @@ export class DragAndDropElement extends Plugin {
 
     }, this.jodit.defaultTimeout);
 
-    public afterInit() {
-        this.dragList = this.jodit.options.draggableTags ? splitArray(this.jodit.options.draggableTags)
-                .filter((item) => item)
-                .map((item: string) => item.toLowerCase()) : [];
-
-        if (!this.dragList.length) {
-            return;
-        }
-
-        this.jodit.events
-            .on(this.jodit.editor, "mousemove touchmove", this.onDrag)
-            .on(this.jodit.editor, "mousedown touchstart dragstart", this.onDragStart)
-            .on("mouseup touchend", this.onDrop)
-            .on(window, "mouseup touchend", this.onDragEnd);
-    }
-
-    public beforeDestruct() {
-        this.onDragEnd();
-    }
-
     private onDragStart = (event: DragEvent) => {
         let
             target: Node | null = event.target as Node,
@@ -97,10 +77,10 @@ export class DragAndDropElement extends Plugin {
         this.isCopyMode = ctrlKey(event); // we can move only element from editor
         this.onDragEnd();
 
-        this.timeout = setTimeout((last: HTMLElement) => {
-            this.draggable =  last.cloneNode(true) as HTMLElement;
+        this.timeout = setTimeout((lastNode: HTMLElement) => {
+            this.draggable =  lastNode.cloneNode(true) as HTMLElement;
 
-            dataBind(this.draggable, "target", last);
+            dataBind(this.draggable, "target", lastNode);
 
             css(this.draggable, {
                 "z-index": 100000000000000,
@@ -109,8 +89,8 @@ export class DragAndDropElement extends Plugin {
                 "display": "inlin-block",
                 "left": event.clientX,
                 "top": event.clientY,
-                "width": last.offsetWidth,
-                "height": last.offsetHeight,
+                "width": lastNode.offsetWidth,
+                "height": lastNode.offsetHeight,
             });
 
         }, this.jodit.defaultTimeout, last);
@@ -149,5 +129,25 @@ export class DragAndDropElement extends Plugin {
         }
 
         this.jodit.events.fire("synchro");
+    }
+
+    public afterInit() {
+        this.dragList = this.jodit.options.draggableTags ? splitArray(this.jodit.options.draggableTags)
+                .filter(item => item)
+                .map((item: string) => item.toLowerCase()) : [];
+
+        if (!this.dragList.length) {
+            return;
+        }
+
+        this.jodit.events
+            .on(this.jodit.editor, "mousemove touchmove", this.onDrag)
+            .on(this.jodit.editor, "mousedown touchstart dragstart", this.onDragStart)
+            .on("mouseup touchend", this.onDrop)
+            .on(window, "mouseup touchend", this.onDragEnd);
+    }
+
+    public beforeDestruct() {
+        this.onDragEnd();
     }
 }

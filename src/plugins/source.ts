@@ -11,7 +11,7 @@ import { Jodit } from "../Jodit";
 import { Component } from "../modules/Component";
 import { $$, appendScript, css, debounce, dom } from "../modules/Helpers";
 import { markerInfo } from "../modules/Selection";
-import { ControlType } from "../types/toolbar";
+import { IControlType } from "../types/toolbar";
 
 declare module "../Config"  {
     interface Config {
@@ -97,7 +97,7 @@ Config.prototype.controls.source = {
     },
 
     tooltip: "Change mode",
-} as ControlType;
+} as IControlType;
 
 /**
  * Plug-in change simple textarea on CodeMirror editor in Source code mode
@@ -105,9 +105,6 @@ Config.prototype.controls.source = {
  * @module source
  */
 export class source extends Component {
-    public mirror: HTMLTextAreaElement;
-
-    public aceEditor: AceAjax.Editor;
     private className = "jodit_ace_editor";
 
     private mirrorContainer: HTMLDivElement;
@@ -126,80 +123,6 @@ export class source extends Component {
     private tempMarkerEndReg = /{end-jodit-selection}/g;
 
     private selInfo: markerInfo[] = [];
-
-    constructor(editor: Jodit) {
-        super(editor);
-
-        this.mirrorContainer = dom('<div class="jodit_source"/>', this.jodit.ownerDocument) as HTMLDivElement;
-        this.mirror = dom('<textarea class="jodit_source_mirror"/>', this.jodit.ownerDocument) as HTMLTextAreaElement;
-
-        editor.events
-            .on(this.mirror, "mousedown keydown touchstart input", debounce(this.toWYSIWYG, editor.defaultTimeout))
-            .on(this.mirror, "change keydown mousedown touchstart input", this.autosize)
-            .on("afterSetMode", this.autosize)
-            .on(this.mirror, "mousedown focus", (e: Event) => {
-                editor.events.fire(e.type, e);
-            });
-
-        editor.events
-            .on("setMinHeight", (minHeightD: number) => {
-                this.mirror && css(this.mirror, "minHeight", minHeightD);
-            })
-            .on("insertHTML", (html: string): void | false => {
-                if (!editor.options.readonly && !this.jodit.isEditorMode()) {
-                    this.insertHTML(html);
-                    return false;
-                }
-            })
-            .on("aceInited", () => {
-                if (editor.options.readonly) {
-                    if (this.aceEditor) {
-                        this.aceEditor.setReadOnly(true);
-                    }
-                }
-            }, void(0), void(0), true)
-            .on("readonly", (isReadOnly: boolean) => {
-                if (isReadOnly) {
-                    this.mirror.setAttribute("readonly", "true");
-                } else {
-                    this.mirror.removeAttribute("readonly");
-                }
-
-                if (this.aceEditor) {
-                    this.aceEditor.setReadOnly(isReadOnly);
-                }
-            })
-            .on("placeholder", (text: string) => {
-                this.mirror.setAttribute("placeholder", text);
-            })
-            .on("afterInit aceInited", () => {
-                // save restore selection
-                editor.events
-                    .on("beforeSetMode", this.saveSelection)
-                    .on("afterSetMode", this.restoreSelection);
-            })
-            .on("afterInit", () => {
-                this.mirrorContainer.appendChild(this.mirror);
-                editor.workplace.appendChild(this.mirrorContainer);
-                this.autosize();
-
-                const className = "beutyfy_html_jodit_helper";
-
-                if (editor.options.beautifyHTML && (editor.ownerWindow as any).html_beautify === undefined && !$$("script." + className, editor.ownerDocument.body).length) {
-                    this.loadNext(0, editor.options.beautifyHTMLCDNUrlsJS, false, className);
-                }
-
-                if (editor.options.useAceEditor) {
-                    this.replaceMirrorToACE();
-                }
-
-            })
-            .on("beforeCommand", this.onSelectAll)
-            .on("change afterInit", this.fromWYSIWYG);
-    }
-    public setMirrorSelectionRange: (start: number, end: number) => void = (start: number, end: number) => {
-        this.mirror.setSelectionRange(start, end);
-    }
 
     private loadNext = (i: number, urls: string[], eventOnFinalize: false | string = "aceReady", className: string = this.className) => {
         if (eventOnFinalize && urls[i] === undefined && this.jodit && this.jodit.events) {
@@ -407,7 +330,9 @@ export class source extends Component {
     }
 
     private replaceMirrorToACE() {
-        let editor: Jodit = this.jodit,
+        const
+            editor: Jodit = this.jodit;
+        let
             aceEditor: AceAjax.Editor,
             undoManager: AceAjax.UndoManager;
 
@@ -579,5 +504,86 @@ export class source extends Component {
         if ((this.jodit.ownerWindow as any).ace === undefined && !$$("script." + this.className, this.jodit.ownerDocument.body).length) {
             this.loadNext(0, editor.options.sourceEditorCDNUrlsJS, "aceReady", this.className);
         }
+    }
+    public mirror: HTMLTextAreaElement;
+
+    public aceEditor: AceAjax.Editor;
+    public setMirrorSelectionRange: (start: number, end: number) => void = (start: number, end: number) => {
+        this.mirror.setSelectionRange(start, end);
+    }
+
+    constructor(editor: Jodit) {
+        super(editor);
+
+        this.mirrorContainer = dom('<div class="jodit_source"/>', this.jodit.ownerDocument) as HTMLDivElement;
+        this.mirror = dom('<textarea class="jodit_source_mirror"/>', this.jodit.ownerDocument) as HTMLTextAreaElement;
+
+        editor.events
+            .on(this.mirror, "mousedown keydown touchstart input", debounce(this.toWYSIWYG, editor.defaultTimeout))
+            .on(this.mirror, "change keydown mousedown touchstart input", this.autosize)
+            .on("afterSetMode", this.autosize)
+            .on(this.mirror, "mousedown focus", (e: Event) => {
+                editor.events.fire(e.type, e);
+            });
+
+        editor.events
+            .on("setMinHeight", (minHeightD: number) => {
+                this.mirror && css(this.mirror, "minHeight", minHeightD);
+            })
+            .on("insertHTML", (html: string): void | false => {
+                if (!editor.options.readonly && !this.jodit.isEditorMode()) {
+                    this.insertHTML(html);
+                    return false;
+                }
+            })
+            .on("aceInited", () => {
+                if (editor.options.readonly) {
+                    if (this.aceEditor) {
+                        this.aceEditor.setReadOnly(true);
+                    }
+                }
+            }, void(0), void(0), true)
+            .on("readonly", (isReadOnly: boolean) => {
+                if (isReadOnly) {
+                    this.mirror.setAttribute("readonly", "true");
+                } else {
+                    this.mirror.removeAttribute("readonly");
+                }
+
+                if (this.aceEditor) {
+                    this.aceEditor.setReadOnly(isReadOnly);
+                }
+            })
+            .on("placeholder", (text: string) => {
+                this.mirror.setAttribute("placeholder", text);
+            })
+            .on("afterInit aceInited", () => {
+                // save restore selection
+                editor.events
+                    .on("beforeSetMode", this.saveSelection)
+                    .on("afterSetMode", this.restoreSelection);
+            })
+            .on("afterInit", () => {
+                this.mirrorContainer.appendChild(this.mirror);
+                editor.workplace.appendChild(this.mirrorContainer);
+                this.autosize();
+
+                const className = "beutyfy_html_jodit_helper";
+
+                if (
+                    editor.options.beautifyHTML &&
+                    (editor.ownerWindow as any).html_beautify === undefined &&
+                    !$$("script." + className, editor.ownerDocument.body).length
+                ) {
+                    this.loadNext(0, editor.options.beautifyHTMLCDNUrlsJS, false, className);
+                }
+
+                if (editor.options.useAceEditor) {
+                    this.replaceMirrorToACE();
+                }
+
+            })
+            .on("beforeCommand", this.onSelectAll)
+            .on("change afterInit", this.fromWYSIWYG);
     }
 }

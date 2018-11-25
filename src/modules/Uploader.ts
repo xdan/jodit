@@ -8,13 +8,13 @@ import { Config } from "../Config";
 import { TEXT_PLAIN } from "../constants";
 import { Jodit } from "../Jodit";
 import {
-    BuildDataResult, Dictionary,
-    HandlerError,
+    BuildDataResult,  HandlerError,
     HandlerSuccess,
+    IDictionary,
+    IUploaderAnswer,
+    IUploaderData,
+    IUploaderOptions,
     IViewBased,
-    UploaderAnswer,
-    UploaderData,
-    UploaderOptions,
 } from "../types/";
 import { Ajax } from "./Ajax";
 import { browser, dom, extend, isIE, isPlainObject } from "./Helpers";
@@ -24,7 +24,7 @@ declare module "../Config" {
 
     interface Config {
         enableDragAndDropFileToEditor: boolean;
-        uploader: UploaderOptions;
+        uploader: IUploaderOptions;
     }
 }
 
@@ -53,15 +53,15 @@ Config.prototype.uploader = {
         return formData;
     },
 
-    isSuccess(this: Uploader, resp: UploaderAnswer): boolean {
+    isSuccess(this: Uploader, resp: IUploaderAnswer): boolean {
         return resp.success;
     },
 
-    getMessage(this: Uploader, resp: UploaderAnswer) {
+    getMessage(this: Uploader, resp: IUploaderAnswer) {
         return (resp.data.messages !== undefined && Array.isArray(resp.data.messages)) ? resp.data.messages.join(" ") : "";
     },
 
-    process(this: Uploader, resp: UploaderAnswer): UploaderData {
+    process(this: Uploader, resp: IUploaderAnswer): IUploaderData {
         return resp.data;
     },
 
@@ -69,7 +69,7 @@ Config.prototype.uploader = {
         this.jodit.events.fire("errorMessage", e.message, "error", 4000);
     },
 
-    defaultHandlerSuccess(this: Uploader, resp: UploaderData) {
+    defaultHandlerSuccess(this: Uploader, resp: IUploaderData) {
         if (resp.files && resp.files.length) {
             resp.files.forEach((filename, index: number) => {
                 const [tagName , attr]: string[] = (resp.isImages && resp.isImages[index]) ?   ["img", "src"] : ["a", "href"];
@@ -97,7 +97,7 @@ Config.prototype.uploader = {
     contentType(this: Uploader, requestData: any) {
         return ((this.jodit.ownerWindow as any).FormData !== undefined && typeof requestData !== "string") ? false : "application/x-www-form-urlencoded; charset=UTF-8";
     },
-} as UploaderOptions;
+} as IUploaderOptions;
 
 export class Uploader {
 
@@ -126,35 +126,14 @@ export class Uploader {
 
         return new Blob([ia], {type: mimeString});
     }
-    public jodit: IViewBased;
-    public selection: Select;
     private path: string = "";
     private source: string = "default";
 
-    private options: UploaderOptions;
+    private options: IUploaderOptions;
+    public jodit: IViewBased;
+    public selection: Select;
 
-    constructor(editor: IViewBased, options?: UploaderOptions) {
-        this.jodit = editor;
-        this.selection = editor instanceof Jodit ? editor.selection : new Select(editor);
-
-        this.options = extend(
-            true,
-            {},
-            Config.prototype.uploader,
-            editor instanceof Jodit ? editor.options.uploader : null,
-            options,
-        ) as UploaderOptions;
-
-        if (editor instanceof Jodit && editor.options.enableDragAndDropFileToEditor && editor.options.uploader && (
-            editor.options.uploader.url || editor.options.uploader.insertImageAsBase64URI
-        )) {
-            editor.events.on("afterInit", () => {
-                this.bind(editor.editor);
-            });
-        }
-    }
-
-    public buildData(data: FormData | Dictionary<string> | string): BuildDataResult {
+    public buildData(data: FormData |  IDictionary<string> | string): BuildDataResult {
         if (this.options.buildData && typeof this.options.buildData === "function") {
             return this.options.buildData.call(this, data);
         }
@@ -169,7 +148,7 @@ export class Uploader {
 
             const newdata: FormData = new FormData();
 
-            Object.keys(data).forEach((key) => {
+            Object.keys(data).forEach(key => {
                 newdata.append(key, data[key]);
             });
 
@@ -179,15 +158,15 @@ export class Uploader {
         return data;
     }
 
-    public send(data: FormData | Dictionary<string>, success: (resp: UploaderAnswer) => void): Promise<any> {
+    public send(data: FormData |  IDictionary<string>, success: (resp: IUploaderAnswer) => void): Promise<any> {
         const requestData: BuildDataResult = this.buildData(data),
-            sendData = (request: FormData | Dictionary<string> | string): Promise<any> => {
+            sendData = (request: FormData |  IDictionary<string> | string): Promise<any> => {
                 const ajax: Ajax = new Ajax(this.jodit || this, {
                     xhr: () => {
                         const xhr: XMLHttpRequest = new XMLHttpRequest();
 
                         if ((this.jodit.ownerWindow as any).FormData !== undefined && xhr.upload) {
-                            xhr.upload.addEventListener("progress", (evt) => {
+                            xhr.upload.addEventListener("progress", evt => {
                                 if (evt.lengthComputable) {
                                     let percentComplete = evt.loaded / evt.total;
                                     percentComplete = percentComplete * 100;
@@ -217,7 +196,7 @@ export class Uploader {
 
                 return ajax.send()
                     .then(success)
-                    .catch((error) => {
+                    .catch(error => {
                         this.options.error.call(this, error);
                     });
             };
@@ -225,7 +204,7 @@ export class Uploader {
         if (requestData instanceof Promise) {
             return requestData
                 .then(sendData)
-                .catch((error) => {
+                .catch(error => {
                     this.options.error.call(this, error);
                 });
         } else {
@@ -260,11 +239,11 @@ export class Uploader {
                         promises.push(new Promise<any>((resolve, reject) => {
                             reader.onerror = reject;
                             reader.onloadend = function() {
-                                const resp: UploaderData = {
+                                const resp: IUploaderData = {
                                     baseurl: "",
                                     files: [reader.result],
                                     isImages: [true],
-                                } as UploaderData;
+                                } as IUploaderData;
 
                                 if (typeof (handlerSuccess || uploader.options.defaultHandlerSuccess) === "function") {
                                     ((handlerSuccess || uploader.options.defaultHandlerSuccess) as HandlerSuccess).call(uploader, resp);
@@ -280,7 +259,7 @@ export class Uploader {
             }
         }
 
-        fileList = fileList.filter((a) => a);
+        fileList = fileList.filter(a => a);
 
         if (fileList.length) {
             const form: FormData = new FormData();
@@ -311,10 +290,10 @@ export class Uploader {
             uploader.options.prepareData.call(this, form);
 
             promises.push(uploader
-                .send(form, (resp: UploaderAnswer) => {
+                .send(form, (resp: IUploaderAnswer) => {
                     if (this.options.isSuccess.call(uploader, resp)) {
                         if (typeof (handlerSuccess || uploader.options.defaultHandlerSuccess) === "function") {
-                            ((handlerSuccess || uploader.options.defaultHandlerSuccess) as HandlerSuccess).call(uploader, uploader.options.process.call(uploader, resp) as UploaderData);
+                            ((handlerSuccess || uploader.options.defaultHandlerSuccess) as HandlerSuccess).call(uploader, uploader.options.process.call(uploader, resp) as IUploaderData);
                         }
                     } else {
                         if (typeof (handlerError || uploader.options.defaultHandlerError)) {
@@ -497,7 +476,7 @@ export class Uploader {
         uploader.send({
             action: "fileUploadRemote",
             url,
-        }, (resp: UploaderAnswer) => {
+        }, (resp: IUploaderAnswer) => {
             if (uploader.options.isSuccess.call(uploader, resp)) {
                 if (typeof handlerSuccess === "function") {
                     handlerSuccess.call(uploader, this.options.process.call(this, resp));
@@ -511,5 +490,26 @@ export class Uploader {
                 }
             }
         });
+    }
+
+    constructor(editor: IViewBased, options?: IUploaderOptions) {
+        this.jodit = editor;
+        this.selection = editor instanceof Jodit ? editor.selection : new Select(editor);
+
+        this.options = extend(
+            true,
+            {},
+            Config.prototype.uploader,
+            editor instanceof Jodit ? editor.options.uploader : null,
+            options,
+        ) as IUploaderOptions;
+
+        if (editor instanceof Jodit && editor.options.enableDragAndDropFileToEditor && editor.options.uploader && (
+            editor.options.uploader.url || editor.options.uploader.insertImageAsBase64URI
+        )) {
+            editor.events.on("afterInit", () => {
+                this.bind(editor.editor);
+            });
+        }
     }
 }

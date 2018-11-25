@@ -1,4 +1,4 @@
-import { Dictionary } from "../types";
+import {  IDictionary } from "../types";
 
 export default {
     "Type something": "Напишите что-либо",
@@ -10,9 +10,11 @@ export default {
 
     "Jodit User's Guide": "Jodit Руководство пользователя",
     "contains detailed help for using": "содержит детальную информацию по использованию",
-    "For information about the license, please go to our website:": "Для получения сведений о лицензии , пожалуйста, перейдите на наш сайт:",
+    "For information about the license, please go to our website:": "Для получения сведений о лицензии , пожалуйста, " +
+        "перейдите на наш сайт:",
     "Buy full version": "Купить полную версию",
-    "Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.": "Авторские права © XDSoft.net - Чупурнов Валерий. Все права защищены.",
+    "Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.": "Авторские права © XDSoft.net - Чупурнов Валерий. " +
+        "Все права защищены.",
 
     // Toolbar
     "Anchor": "Анкор",
@@ -84,14 +86,17 @@ export default {
     "Ok": "Ок",
 
     // plugin paste
-    "Your code is similar to HTML. Keep as HTML?": "Ваш текст, который вы пытаетесь вставить похож на HTML. Вставить его как HTML?",
+    "Your code is similar to HTML. Keep as HTML?": "Ваш текст, который вы пытаетесь вставить похож на HTML. " +
+        "Вставить его как HTML?",
     "Paste as HTML": "Вставить как HTML?",
     "Keep": "Сохранить оригинал",
     "Clean": "Почистить",
     "Insert as Text": "Вставить как текст",
     "Insert only Text": "Вставить только текст",
     "Word Paste Detected": "Возможно это фрагмент Word или Excel",
-    "The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?": "Контент который вы вставляете поступает из документа Microsoft Word / Excel. Вы хотите сохранить формат или очистить его?",
+    "The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?":
+        "Контент который вы вставляете поступает из документа Microsoft Word / Excel. Вы хотите сохранить " +
+        "формат или очистить его?",
 
     // File Browser module
     "File Browser": "Браузер файлов",
@@ -211,6 +216,7 @@ export default {
     "Replace": "Заменить",
     "Paste": "Вставить",
     "Choose Content to Paste": "Выбрать контент для вставки",
-    "You can only edit your own images. Download this image on the host?": "Вы можете редактировать только свои собственные изображения. Загрузить это изображение на ваш сервер?",
+    "You can only edit your own images. Download this image on the host?": "Вы можете редактировать только свои " +
+        "собственные изображения. Загрузить это изображение на ваш сервер?",
     "The image has been successfully uploaded to the host!": "Изображение успешно загружено на сервер!",
-} as Dictionary<string>;
+} as  IDictionary<string>;

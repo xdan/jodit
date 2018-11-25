@@ -8,12 +8,12 @@ import { Config } from "../Config";
 import { Jodit } from "../Jodit";
 import { Component } from "../modules/Component";
 import { normalizeKeyAliases } from "../modules/Helpers";
-import { Dictionary } from "../types";
+import {  IDictionary } from "../types";
 
 declare module "../Config" {
 
     interface Config {
-        commandToHotkeys: Dictionary<string | string[]>;
+        commandToHotkeys: IDictionary<string | string[]>;
     }
 }
 
@@ -39,6 +39,23 @@ Config.prototype.commandToHotkeys = {
  * Allow set hotkey for command or button
  */
 export class hotkeys extends Component {
+
+    private onKeyPress = (event: KeyboardEvent): string => {
+        const
+            special: string | false = this.specialKeys[event.which],
+            character: string = (event.key || String.fromCharCode(event.which)).toLowerCase();
+
+        const
+            modif: string[] = [special || character];
+
+        ["alt", "ctrl", "shift", "meta"].forEach(specialKey => {
+            if ((event as any)[specialKey + "Key"] && special !== specialKey) {
+                modif.push(specialKey);
+            }
+        });
+
+        return normalizeKeyAliases(modif.join("+"));
+    }
     public specialKeys: {[key: number]: string} = {
         8: "backspace",
         9: "tab",
@@ -110,12 +127,14 @@ export class hotkeys extends Component {
     constructor(editor: Jodit) {
         super(editor);
 
-        const commands: string[] = Object.keys(editor.options.commandToHotkeys);
-        commands.forEach((commandName: string) => {
-            const hotkeys: string | string[] | void = editor.options.commandToHotkeys[commandName];
+        const
+            commands: string[] = Object.keys(editor.options.commandToHotkeys);
 
-            if (hotkeys) {
-                editor.registerHotkeyToCommand(hotkeys, commandName);
+        commands.forEach((commandName: string) => {
+            const shortcuts: string | string[] | void = editor.options.commandToHotkeys[commandName];
+
+            if (shortcuts) {
+                editor.registerHotkeyToCommand(shortcuts, commandName);
             }
         });
 
@@ -144,21 +163,5 @@ export class hotkeys extends Component {
                         }
                     }, void(0), void(0), true);
             });
-    }
-
-    private onKeyPress = (event: KeyboardEvent): string => {
-        const
-            special: string | false = this.specialKeys[event.which],
-            character: string = (event.key || String.fromCharCode(event.which)).toLowerCase();
-
-        const modif: string[] = [special || character];
-
-        ["alt", "ctrl", "shift", "meta"].forEach( (specialKey) => {
-            if ((event as any)[specialKey + "Key"] && special !== specialKey) {
-                modif.push(specialKey);
-            }
-        });
-
-        return normalizeKeyAliases(modif.join("+"));
     }
 }

@@ -59,7 +59,8 @@ export const insertParagraph = (
 };
 
 /**
- * One of most important core plugins. It is responsible for all the browsers to have the same effect when the Enter button is pressed. By default, it should insert the <p>
+ * One of most important core plugins. It is responsible for all the browsers to have the same effect when the Enter
+ * button is pressed. By default, it should insert the <p>
  */
 export function enter(editor: Jodit) {
     // use 'enter' option if no set
@@ -75,7 +76,8 @@ export function enter(editor: Jodit) {
         (event: KeyboardEvent): false | void => {
             if (event.which === consts.KEY_ENTER) {
                 /**
-                 * Fired on processing `Enter` key. If return some value, plugin `enter` will do nothing. if return false - prevent default Enter behavior
+                 * Fired on processing `Enter` key. If return some value, plugin `enter` will do nothing.
+                 * if return false - prevent default Enter behavior
                  *
                  * @event beforeEnter
                  */
@@ -89,7 +91,7 @@ export function enter(editor: Jodit) {
                     editor.execCommand("Delete");
                 }
 
-                editor.selection.focus()
+                editor.selection.focus();
 
                 let current: Node = editor.selection.current(false) as Node;
 
@@ -118,11 +120,13 @@ export function enter(editor: Jodit) {
                     sel.addRange(range);
                 }
 
-                let currentBox: HTMLElement | false = current
+                let
+                    currentBox: HTMLElement | false = current
                         ? (
                               Dom.up(current, Dom.isBlock, editor.editor)
                           ) as HTMLElement
-                        : false,
+                        : false;
+                const
                     isLi: boolean = currentBox && currentBox.nodeName === "LI";
 
                 // if use <br> tag for break line or when was entered SHIFt key or in <td> or <th> or <blockquote>
@@ -204,10 +208,14 @@ export function enter(editor: Jodit) {
 
                     if (isLi) {
                         if (Dom.isEmpty(currentBox)) {
-                            let fake: Text | false = false;
-                            const ul: HTMLUListElement = (
-                                Dom.closest(currentBox, "ol|ul", editor.editor)
-                            ) as HTMLUListElement;
+                            let
+                                fakeTextNode: Text | false = false;
+
+                            const
+                                ul: HTMLUListElement = (
+                                    Dom.closest(currentBox, "ol|ul", editor.editor)
+                                ) as HTMLUListElement;
+
                             // If there is no LI element before
                             if (
                                 !Dom.prev(
@@ -217,7 +225,7 @@ export function enter(editor: Jodit) {
                                     ul,
                                 )
                             ) {
-                                fake = editor.selection.setCursorBefore(ul);
+                                fakeTextNode = editor.selection.setCursorBefore(ul);
                                 // If there is no LI element after
                             } else if (
                                 !Dom.next(
@@ -227,7 +235,7 @@ export function enter(editor: Jodit) {
                                     ul,
                                 )
                             ) {
-                                fake = editor.selection.setCursorAfter(ul);
+                                fakeTextNode = editor.selection.setCursorAfter(ul);
                             } else {
                                 const leftRange = editor.editorDocument.createRange();
                                 leftRange.setStartBefore(ul);
@@ -236,14 +244,14 @@ export function enter(editor: Jodit) {
                                 if (ul.parentNode) {
                                     ul.parentNode.insertBefore(fragment, ul);
                                 }
-                                fake = editor.selection.setCursorBefore(ul);
+                                fakeTextNode = editor.selection.setCursorBefore(ul);
                             }
 
                             if (currentBox.parentNode) {
                                 currentBox.parentNode.removeChild(currentBox);
                             }
 
-                            insertParagraph(editor, fake);
+                            insertParagraph(editor, fakeTextNode);
 
                             if (!$$("li", ul).length && ul.parentNode) {
                                 ul.parentNode.removeChild(ul);

@@ -10,12 +10,12 @@ import { Dom } from "../modules/Dom";
 import { $$, css } from "../modules/Helpers";
 import { ToolbarButton } from "../modules/toolbar/button";
 import { ToolbarIcon } from "../modules/toolbar/icon";
-import { ControlType } from "../types/toolbar";
+import { IControlType } from "../types/toolbar";
 
 Config.prototype.controls.align = {
     name: "left",
     tooltip: "Align",
-    getLabel: (editor: Jodit, btn: ControlType, button: ToolbarButton): boolean => {
+    getLabel: (editor: Jodit, btn: IControlType, button: ToolbarButton): boolean => {
         const current: Node|false = editor.selection.current();
 
         if (current) {
@@ -35,7 +35,7 @@ Config.prototype.controls.align = {
 
         return false;
     },
-    isActive: (editor: Jodit, btn: ControlType): boolean => {
+    isActive: (editor: Jodit, btn: IControlType): boolean => {
         const current: Node|false = editor.selection.current();
 
         if (current && btn.defaultValue) {
@@ -55,7 +55,7 @@ Config.prototype.controls.align = {
         "right",
         "justify",
     ],
-} as ControlType;
+} as IControlType;
 
 Config.prototype.controls.center = {
     command: "justifyCenter",
@@ -93,50 +93,53 @@ Config.prototype.controls.right = {
  * @param {Jodit} editor
  */
 export function justify(editor: Jodit) {
-    const callback: Function = (command: string): false | void => {
-        const justify = (box: HTMLElement) => {
-            if (box instanceof (editor.editorWindow as any).HTMLElement) {
-                switch (command.toLowerCase()) {
-                    case "justifyfull":
-                        box.style.textAlign = "justify";
-                        break;
-                    case "justifyright":
-                        box.style.textAlign = "right";
-                        break;
-                    case "justifyleft":
-                        box.style.textAlign = "left";
-                        break;
-                    case "justifycenter":
-                        box.style.textAlign = "center";
-                        break;
+    const
+        callback = (command: string): false | void => {
+            const
+                justifyElm = (box: HTMLElement) => {
+                    if (box instanceof (editor.editorWindow as any).HTMLElement) {
+                        switch (command.toLowerCase()) {
+                            case "justifyfull":
+                                box.style.textAlign = "justify";
+                                break;
+                            case "justifyright":
+                                box.style.textAlign = "right";
+                                break;
+                            case "justifyleft":
+                                box.style.textAlign = "left";
+                                break;
+                            case "justifycenter":
+                                box.style.textAlign = "center";
+                                break;
+                        }
+
+                    }
+                };
+
+            editor.selection.focus();
+            editor.selection.eachSelection((current: Node): false | void => {
+                if (!current) {
+                    if (editor.editor.querySelector(".jodit_selected_cell")) {
+                        $$(".jodit_selected_cell", editor.editor).forEach(justifyElm);
+                        return false;
+                    }
                 }
 
-            }
+                if (!(current instanceof (editor.editorWindow as any).Node)) {
+                    return;
+                }
+
+                let
+                    currentBox: HTMLElement |false | null = current ? Dom.up(current, Dom.isBlock, editor.editor) as HTMLElement : false;
+
+                if (!currentBox && current) {
+                    currentBox = Dom.wrapInline(current, editor.options.enter, editor);
+                }
+
+                justifyElm(currentBox as HTMLElement);
+            });
+            return false;
         };
-
-        editor.selection.focus();
-        editor.selection.eachSelection((current: Node): false | void => {
-            if (!current) {
-                if (editor.editor.querySelector(".jodit_selected_cell")) {
-                    $$(".jodit_selected_cell", editor.editor).forEach(justify);
-                    return false;
-                }
-            }
-
-            if (!(current instanceof (editor.editorWindow as any).Node)) {
-                return;
-            }
-
-            let currentBox: HTMLElement |false | null = current ? Dom.up(current, Dom.isBlock, editor.editor) as HTMLElement : false;
-
-            if (!currentBox && current) {
-                currentBox = Dom.wrapInline(current, editor.options.enter, editor);
-            }
-
-            justify(currentBox as HTMLElement);
-        });
-        return false;
-    };
     editor.registerCommand("justifyfull", callback);
     editor.registerCommand("justifyright", callback);
     editor.registerCommand("justifyleft", callback);

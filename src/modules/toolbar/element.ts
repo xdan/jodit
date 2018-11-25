@@ -4,7 +4,7 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { ControlTypeStrong } from "../../types/toolbar";
+import { IControlTypeStrong } from "../../types/toolbar";
 import { IViewBased } from "../../types/view";
 import { Component } from "../Component";
 import { dom } from "../Helpers";
@@ -22,7 +22,7 @@ export abstract class ToolbarElement extends Component {
         this.container.classList.add(containerClass);
     }
 
-    public createIcon(clearName: string, control ?: ControlTypeStrong): HTMLElement {
+    public createIcon(clearName: string, control ?: IControlTypeStrong): HTMLElement {
         const icon: string = control ? control.icon || control.name : clearName;
 
         if (!this.jodit.options.textIcons) {

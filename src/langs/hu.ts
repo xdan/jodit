@@ -1,4 +1,4 @@
-import { Dictionary } from "../types";
+import {  IDictionary } from "../types";
 
 export default {
     "Type something"                                    : "Írjon be valamit",
@@ -11,7 +11,8 @@ export default {
     "GNU General Public License, version 2 or later"    : "GNU General Public License, Verzió 2 vagy későbbi",
     "Jodit User's Guide"                               : "Jodit útmutató",
     "contains detailed help for using"                  : "további segítséget tartalmaz",
-    "For information about the license, please go to our website:": "További licence információkért látogassa meg a weboldalunkat:",
+    "For information about the license, please go to our website:": "További licence információkért látogassa meg a " +
+        "weboldalunkat:",
     "Buy full version"                                  : "Teljes verzió megvásárlása",
     "Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.":
         "Copyright © XDSoft.net - Chupurnov Valeriy. Minden jog fenntartva.",
@@ -59,7 +60,7 @@ export default {
 
     "Paint format"                                      : "Kép formázása",
     "Change mode"                                       : "Nézet váltása",
-	"Print"												: "Nyomtatás",
+    "Print"                                             : "Nyomtatás",
 
     // plugin Image
     "Margins"                                           : "Szegélyek",
@@ -159,7 +160,7 @@ export default {
     "Cut selection"                                     : "Kivágás",
     "Paste"                                             : "Beillesztés",
     "Choose Content to Paste"                           : "Válasszon tartalmat a beillesztéshez",
-	"Split"												: "Felosztás",
+    "Split"                                             : "Felosztás",
 
     // stat
     "Chars: %d": "Karakterek száma: %d",
@@ -215,7 +216,8 @@ export default {
     "No": "Nem",
     "Remove": "Eltávolít",
     "Select": "Kijelöl",
-    "You can only edit your own images. Download this image on the host?": "Csak a saját képeit tudja szerkeszteni. Letölti ezt a képet?",
+    "You can only edit your own images. Download this image on the host?": "Csak a saját képeit tudja szerkeszteni. " +
+        "Letölti ezt a képet?",
     "The image has been successfully uploaded to the host!": "Kép sikeresen feltöltve!",
 
-} as Dictionary<string>;
+} as  IDictionary<string>;

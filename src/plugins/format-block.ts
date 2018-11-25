@@ -10,11 +10,11 @@ import { Jodit } from "../Jodit";
 import { Dom } from "../modules/Dom";
 import { markerInfo } from "../modules/Selection";
 import { ToolbarButton } from "../modules/toolbar/button";
-import { ControlType } from "../types/toolbar";
+import { IControlType } from "../types/toolbar";
 
 Config.prototype.controls.paragraph = {
     command: "formatBlock",
-    getLabel: (editor: Jodit, btn: ControlType, button: ToolbarButton): boolean => {
+    getLabel: (editor: Jodit, btn: IControlType, button: ToolbarButton): boolean => {
         const current: Node|false = editor.selection.current();
 
         if (current && editor.options.textIcons) {
@@ -30,7 +30,7 @@ Config.prototype.controls.paragraph = {
 
         return false;
     },
-    exec: (editor: Jodit, event, control: ControlType) => {
+    exec: (editor: Jodit, event, control: IControlType) => {
         editor.execCommand(control.command as string, false, control.args ? control.args[0] : undefined);
     },
     data: {
@@ -44,7 +44,7 @@ Config.prototype.controls.paragraph = {
         h4 : "Heading 4",
         blockquote : "Quote",
     },
-    isActiveChild: (editor: Jodit, control: ControlType): boolean => {
+    isActiveChild: (editor: Jodit, control: IControlType): boolean => {
         const current: Node|false = editor.selection.current();
 
         if (current) {
@@ -58,7 +58,7 @@ Config.prototype.controls.paragraph = {
 
         return false;
     },
-    isActive: (editor: Jodit, control: ControlType): boolean => {
+    isActive: (editor: Jodit, control: IControlType): boolean => {
         const current: Node|false = editor.selection.current();
 
         if (current) {
@@ -77,7 +77,7 @@ Config.prototype.controls.paragraph = {
         return "<" + key + ' class="jodit_list_element"><span>' + editor.i18n(value) + "</span></" + key + "></li>";
     },
     tooltip: "Insert format block",
-} as ControlType;
+} as IControlType;
 
 /**
  * Process command - `formatblock`

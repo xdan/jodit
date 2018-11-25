@@ -7,10 +7,10 @@
 import * as consts from "../constants";
 import { KEY_ALIASES } from "../constants";
 import { Jodit } from "../Jodit";
-import {Bound, Dictionary, IHasScroll, RGB} from "../types";
+import {Bound,  IDictionary, IHasScroll, IRGB} from "../types";
 import { Dom } from "./Dom";
 
-const class2type: Dictionary<string> = {};
+const class2type: IDictionary<string> = {};
 const toString = class2type.toString;
 const hasOwn = class2type.hasOwnProperty;
 
@@ -392,7 +392,7 @@ export const dom = (html: string | HTMLElement, doc: Document): HTMLElement => {
  * @param {string} hex
  * @method hexToRgb
  */
-export const hexToRgb = (hex: string): RGB | null => {
+export const hexToRgb = (hex: string): IRGB | null => {
     const shorthandRegex: RegExp = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
     hex = hex.replace(shorthandRegex, (m, r, g, b) => {
         return r + r + g + g + b + b;
@@ -493,8 +493,8 @@ export const humanSizeToBytes = (human: string): number => {
  * Parse query string
  *
  */
-export const parseQuery = (queryString: string): Dictionary<string> => {
-    let query: Dictionary<string> = {},
+export const parseQuery = (queryString: string): IDictionary<string> => {
+    let query: IDictionary<string> = {},
         a: string[] = queryString.substr(1).split("&"),
         i: number,
         keyvalue: string[];
@@ -595,7 +595,7 @@ export const browser = (browser: string): boolean|string => {
  * @param {boolean} recurse
  * @return {{top: number, left: number}} returns an object containing the properties top and left.
  */
-export const offset =  (elm: HTMLElement | Range, jodit: Jodit, doc: Document, recurse: boolean = false): Bound => {
+export const offset =  (elm: HTMLElement | Range, jodit: Jodit, doc: Document, recurse: boolean = false): IBound => {
     const rect: ClientRect = elm.getBoundingClientRect(),
         body: HTMLElement = doc.body,
         docElem: IHasScroll = doc.documentElement || { clientTop: 0, clientLeft: 0, scrollTop: 0, scrollLeft: 0},
@@ -779,7 +779,7 @@ export const normilizeCSSValue = (key: string, value: string|number): string|num
  * @param {string|int} value A value to set for the property.
  * @param {boolean} onlyStyleMode Get value from style attribute, without calculating
  */
-export const css = (element: HTMLElement, key: string | Dictionary<number | string | null | undefined>, value?: string | number, onlyStyleMode: boolean = false): string|number => {
+export const css = (element: HTMLElement, key: string |  IDictionary<number | string | null | undefined>, value?: string | number, onlyStyleMode: boolean = false): string|number => {
     const numberFieldsReg = /^left|top|bottom|right|width|min|max|height|margin|padding|font-size/i;
 
     if (isPlainObject(key) || value !== undefined) {
@@ -1207,14 +1207,6 @@ export const normalizeLicense = (license: string, count: number = 8): string => 
 
 export class JoditArray {
     public length: number = 0;
-    constructor(data: any[]) {
-        extend(true, this, data);
-        this.length = data.length;
-        const proto: any = (Array.prototype as any);
-        ["map", "forEach", "reduce", "push", "pop", "shift", "unshift", "slice", "splice"].forEach((method: string) => {
-            (this as any)[method] = proto[method];
-        });
-    }
     public toString() {
         const out = [];
 
@@ -1223,6 +1215,14 @@ export class JoditArray {
         }
 
         return out.toString();
+    }
+    constructor(data: any[]) {
+        extend(true, this, data);
+        this.length = data.length;
+        const proto: any = (Array.prototype as any);
+        ["map", "forEach", "reduce", "push", "pop", "shift", "unshift", "slice", "splice"].forEach((method: string) => {
+            (this as any)[method] = proto[method];
+        });
     }
 }
 
@@ -1238,15 +1238,15 @@ export class JoditObject {
  * @param keys
  */
 export const normalizeKeyAliases = (keys: string): string => {
-    const memory: Dictionary<boolean> = {};
+    const memory: IDictionary<boolean> = {};
 
     return keys
         .replace(/\+\+/g, "+add")
         .split(/[\s]*\+[\s]*/)
-        .map((key) => trim(key.toLowerCase()))
-        .map((key) => KEY_ALIASES[key] || key)
+        .map(key => trim(key.toLowerCase()))
+        .map(key => KEY_ALIASES[key] || key)
         .sort()
-        .filter((key) => !memory[key] && key !== "" && (memory[key] = true))
+        .filter(key => !memory[key] && key !== "" && (memory[key] = true))
         .join("+");
 };
 

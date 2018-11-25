@@ -1,4 +1,4 @@
-import { Dictionary } from "../types";
+import {  IDictionary } from "../types";
 
 export default {
     "Type something"                                    : "Type iets...",
@@ -11,7 +11,8 @@ export default {
     "GNU General Public License, version 2 or later"    : "GNU General Public License, versie 2 of hoger",
     "Jodit User's Guide"                               : "Jodit gebruikershandleiding",
     "contains detailed help for using"                  : "bevat gedetailleerde informatie voor gebruik.",
-    "For information about the license, please go to our website:": "Voor informatie over de licentie, ga naar onze website:",
+    "For information about the license, please go to our website:": "Voor informatie over de licentie, " +
+        "ga naar onze website:",
     "Buy full version"                                  : "Volledige versie kopen",
     "Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.":
         "Copyright © XDSoft.net - Chupurnov Valeriy. Alle rechten voorbehouden.",
@@ -213,7 +214,8 @@ export default {
     "No": "Nee",
     "Remove": "Verwijderen",
     "Select": "Selecteren",
-    "You can only edit your own images. Download this image on the host?": "Je kunt alleen je eigen afbeeldingen aanpassen. Deze afbeelding downloaden?",
+    "You can only edit your own images. Download this image on the host?": "Je kunt alleen je eigen afbeeldingen " +
+        "aanpassen. Deze afbeelding downloaden?",
     "The image has been successfully uploaded to the host!": "De afbeelding is succesvol geüploadet!",
 
-} as Dictionary<string>;
+} as  IDictionary<string>;

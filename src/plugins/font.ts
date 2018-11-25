@@ -8,14 +8,14 @@ import { Config } from "../Config";
 import { Jodit } from "../Jodit";
 import { Dom } from "../modules/Dom";
 import { css, normalizeSize } from "../modules/Helpers";
-import { ControlType } from "../types/toolbar";
+import { IControlType } from "../types/toolbar";
 
 Config.prototype.controls.fontsize = {
     command: "fontSize",
     list : ["8", "9", "10", "11", "12", "14", "16", "18", "24", "30", "36", "48", "60", "72", "96"],
     template : (editor: Jodit, key: string, value: string) => value,
     tooltip: "Font size",
-    isActiveChild: (editor: Jodit, control: ControlType): boolean => {
+    isActiveChild: (editor: Jodit, control: IControlType): boolean => {
         const current: Node|false = editor.selection.current();
 
         if (current) {
@@ -42,11 +42,11 @@ Config.prototype.controls.fontsize = {
 
         return false;
     },
-} as ControlType;
+} as IControlType;
 Config.prototype.controls.font = {
     command: "fontname",
 
-    exec: (editor: Jodit, event, control: ControlType) => {
+    exec: (editor: Jodit, event, control: IControlType) => {
         editor.execCommand(control.command as string, false, control.args ? control.args[0] : undefined);
     },
 
@@ -64,20 +64,25 @@ Config.prototype.controls.font = {
         return `<span style="font-family: ${key}">${value}</span>`;
     },
 
-    isActiveChild: (editor: Jodit, control: ControlType): boolean => {
-        const current: Node|false = editor.selection.current();
-        const normFonts = (font: string): string => {
-            return font.toLowerCase()
-                .replace(/['"]+/g, "")
-                .replace(/[^a-z0-9]+/g, ",");
-        };
-        if (current) {
-            const currentBpx: HTMLElement = Dom.closest(current, (elm: Node): boolean => {
-                return Dom.isBlock(elm) || (Dom.isNode(elm, editor.editorWindow) && elm.nodeType === Node.ELEMENT_NODE);
-            }, editor.editor) as HTMLElement || editor.editor;
+    isActiveChild: (editor: Jodit, control: IControlType): boolean => {
+        const
+            current: Node | false = editor.selection.current(),
+            normFonts = (fontValue: string): string => {
+                return fontValue.toLowerCase()
+                    .replace(/['"]+/g, "")
+                    .replace(/[^a-z0-9]+/g, ",");
+            };
 
-            const font: string = css(currentBpx, "font-family").toString();
-            return !!(font && control.args && normFonts(control.args[0].toString()) === normFonts(font));
+        if (current) {
+            const
+                currentBpx: HTMLElement = Dom.closest(current, (elm: Node): boolean => {
+                    return Dom.isBlock(elm) || (Dom.isNode(elm, editor.editorWindow) && elm.nodeType === Node.ELEMENT_NODE);
+                }, editor.editor) as HTMLElement || editor.editor;
+
+            const
+                fontFamily: string = css(currentBpx, "font-family").toString();
+
+            return !!(fontFamily && control.args && normFonts(control.args[0].toString()) === normFonts(fontFamily));
         }
 
         return false;
@@ -98,30 +103,34 @@ Config.prototype.controls.font = {
     },
 
     tooltip: "Font family",
-} as ControlType;
+} as IControlType;
 
 /**
  * Process commands `fontsize` and `fontname`
  * @param {Jodit} editor
  */
 export function font(editor: Jodit) {
-    const callback: Function = (command: string, second: string, third: string): false | void => {
-        switch (command) {
-            case "fontsize":
-                editor.selection.applyCSS({
-                    fontSize: normalizeSize(third),
-                });
-                break;
-            case "fontname":
-                editor.selection.applyCSS({
-                    fontFamily: third,
-                });
-                break;
-        }
+    const
+        callback = (command: string, second: string, third: string): false | void => {
+            switch (command) {
+                case "fontsize":
+                    editor.selection.applyCSS({
+                        fontSize: normalizeSize(third),
+                    });
+                    break;
+                case "fontname":
+                    editor.selection.applyCSS({
+                        fontFamily: third,
+                    });
+                    break;
+            }
 
-        editor.setEditorValue();
-        return false;
-    };
-    editor.registerCommand("fontsize", callback);
-    editor.registerCommand("fontname", callback);
+            editor.setEditorValue();
+
+            return false;
+        };
+
+    editor
+        .registerCommand("fontsize", callback)
+        .registerCommand("fontname", callback);
 }
