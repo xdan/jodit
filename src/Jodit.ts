@@ -4,36 +4,44 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Component } from './modules/Component';
-import { markerInfo, Select } from './modules/Selection';
-import { FileBrowser } from './modules/filebrowser/filebrowser';
-import { Uploader } from './modules/Uploader';
-import { Dom } from './modules/Dom';
-import { EventsNative } from './modules/EventsNative';
-import * as consts from './constants';
+import { Component } from './modules/Component'
+import { markerInfo, Select } from './modules/Selection'
+import { FileBrowser } from './modules/filebrowser/filebrowser'
+import { Uploader } from './modules/Uploader'
+import { Dom } from './modules/Dom'
+import { EventsNative } from './modules/EventsNative'
+import * as consts from './constants'
 import {
-    inArray, dom, sprintf, defaultLanguage, debounce, asArray, splitArray, JoditArray,
-    JoditObject, normalizeKeyAliases
-} from './modules/Helpers';
-import * as helper from './modules/Helpers';
-import { Config, OptionsDefault } from "./Config";
-import { StatusBar } from "./modules/StatusBar";
-import { localStorageProvider, Storage } from "./modules/Storage";
-import { Observer } from "./modules/Observer";
-import { ToolbarCollection } from "./modules/toolbar/collection";
-import { View } from "./modules/view/view";
-import { CommandType, Dictionary } from "./types/types";
+    inArray,
+    dom,
+    sprintf,
+    defaultLanguage,
+    debounce,
+    asArray,
+    splitArray,
+    JoditArray,
+    JoditObject,
+    normalizeKeyAliases,
+} from './modules/Helpers'
+import * as helper from './modules/Helpers'
+import { Config, OptionsDefault } from './Config'
+import { StatusBar } from './modules/StatusBar'
+import { localStorageProvider, Storage } from './modules/Storage'
+import { Observer } from './modules/Observer'
+import { ToolbarCollection } from './modules/toolbar/collection'
+import { View } from './modules/view/view'
+import { CommandType, Dictionary } from './types/types'
 
-declare let appVersion: string;
+declare let appVersion: string
 
-interface JoditPlugin{
-    destruct?: Function;
-    open?: Function;
+interface JoditPlugin {
+    destruct?: Function
+    open?: Function
 }
 
 /** Class Jodit. Main class*/
 export class Jodit extends View {
-    version: string = appVersion; // from webpack.config.js
+    version: string = appVersion // from webpack.config.js
 
     /**
      * Some extra data inside editor
@@ -41,95 +49,93 @@ export class Jodit extends View {
      * @type {{}}
      * @see copyformat plugin
      */
-    public buffer: Dictionary;
+    public buffer: Dictionary
 
-    static defaultOptions: Config;
-    static plugins: any =  {};
-    static modules: any =  {};
-    static instances: Dictionary<Jodit> = {};
-    static lang: any = {};
+    static defaultOptions: Config
+    static plugins: any = {}
+    static modules: any = {}
+    static instances: Dictionary<Jodit> = {}
+    static lang: any = {}
 
     /**
      * @property {HTMLDocument} editorDocument
      */
-    editorDocument: HTMLDocument;
+    editorDocument: HTMLDocument
 
     /**
      * @property {Window} editorWindow
      */
-    editorWindow: Window;
+    editorWindow: Window
 
-    components: any = [];
+    components: any = []
 
     /**
      * @property {HTMLDocument} ownerDocument
      */
-    ownerDocument: HTMLDocument;
+    ownerDocument: HTMLDocument
 
     /**
      * ownerWindow
      */
-    ownerWindow: Window;
+    ownerWindow: Window
 
     /**
      * Container for set/get value
      * @type {Storage}
      */
-    storage: Storage = new Storage(new localStorageProvider());
+    storage: Storage = new Storage(new localStorageProvider())
 
     /**
      * progress_bar Progress bar
      */
-    progress_bar: HTMLDivElement;
+    progress_bar: HTMLDivElement
 
     /**
      * workplace It contains source and wysiwyg editors
      */
-    workplace: HTMLDivElement;
+    workplace: HTMLDivElement
 
-    statusbar: StatusBar;
-    observer: Observer;
+    statusbar: StatusBar
+    observer: Observer
 
-    events: EventsNative;
+    events: EventsNative
 
     /**
      * element It contains source element
      */
-    element: HTMLElement;
+    element: HTMLElement
 
     /**
      * editor It contains the root element editor
      */
-    editor: HTMLDivElement|HTMLBodyElement;
-
+    editor: HTMLDivElement | HTMLBodyElement
 
     /**
      * iframe Iframe for iframe mode
      */
-    iframe: HTMLIFrameElement | null = null;
-
+    iframe: HTMLIFrameElement | null = null
 
     /**
      * options All Jodit settings default + second arguments of constructor
      */
-    options: Config;
+    options: Config
 
     /**
      * @property {Select} selection
      */
-    selection: Select;
+    selection: Select
 
     /**
      * @property {Uploader} uploader
      */
-    uploader: Uploader;
+    uploader: Uploader
 
     /**
      * @property {FileBrowser} filebrowser
      */
-    filebrowser: FileBrowser;
+    filebrowser: FileBrowser
 
-    helper: any;
+    helper: any
 
     /**
      * Create instance of Jodit
@@ -138,163 +144,208 @@ export class Jodit extends View {
      * @param {HTMLInputElement | string} element Selector or HTMLElement
      * @param {object} options Editor's options
      */
-    constructor(element: HTMLInputElement|string, options?: object) {
-        super();
+    constructor(element: HTMLInputElement | string, options?: object) {
+        super()
 
-        this.buffer = {}; // empty new object for every Jodit instance
+        this.buffer = {} // empty new object for every Jodit instance
 
-        this.options = <Config>(new OptionsDefault(options));
+        this.options = <Config>new OptionsDefault(options)
 
         // in iframe it can be changed
-        this.editorDocument = this.options.ownerDocument;
-        this.editorWindow = this.options.ownerWindow;
-        this.ownerDocument = this.options.ownerDocument;
-        this.ownerWindow = this.options.ownerWindow;
+        this.editorDocument = this.options.ownerDocument
+        this.editorWindow = this.options.ownerWindow
+        this.ownerDocument = this.options.ownerDocument
+        this.ownerWindow = this.options.ownerWindow
 
-        this.events = new EventsNative(this.ownerDocument);
+        this.events = new EventsNative(this.ownerDocument)
 
         if (typeof element === 'string') {
             try {
-                this.element = <HTMLInputElement>this.ownerDocument.querySelector(element);
+                this.element = <HTMLInputElement>(
+                    this.ownerDocument.querySelector(element)
+                )
             } catch (e) {
-                throw new Error('String "' + element + '" should be valid HTML selector');
+                throw new Error(
+                    'String "' + element + '" should be valid HTML selector'
+                )
             }
         } else {
-            this.element = element;
+            this.element = element
         }
 
         // Duck checking
         if (
             !this.element ||
-            typeof this.element !== "object" ||
+            typeof this.element !== 'object' ||
             this.element.nodeType !== Node.ELEMENT_NODE ||
             !this.element.cloneNode
         ) {
-            throw new Error('Element "' + element + '" should be string or HTMLElement instance');
+            throw new Error(
+                'Element "' +
+                    element +
+                    '" should be string or HTMLElement instance'
+            )
         }
 
         if (this.element.attributes) {
-            [].slice.call(this.element.attributes).forEach((attr: Attr) => {
-                const name: string = attr.name;
-                let value: string | boolean | number= attr.value;
+            ;[].slice.call(this.element.attributes).forEach((attr: Attr) => {
+                const name: string = attr.name
+                let value: string | boolean | number = attr.value
 
-               if (
-                   (<any>Jodit.defaultOptions)[name] !== undefined &&
-                   (!options || (<any>options)[name] === undefined)
-               ) {
-                   if (['readonly', 'disabled'].indexOf(name) !== -1) {
-                       value = value === '' || value === 'true';
-                   }
+                if (
+                    (<any>Jodit.defaultOptions)[name] !== undefined &&
+                    (!options || (<any>options)[name] === undefined)
+                ) {
+                    if (['readonly', 'disabled'].indexOf(name) !== -1) {
+                        value = value === '' || value === 'true'
+                    }
 
-                   if ((/^[0-9]+(\.)?([0-9]+)?$/).test(value.toString())) {
-                       value = Number(value);
-                   }
+                    if (/^[0-9]+(\.)?([0-9]+)?$/.test(value.toString())) {
+                        value = Number(value)
+                    }
 
-                   (<any>this.options)[name] =  value;
-               }
-            });
+                    ;(<any>this.options)[name] = value
+                }
+            })
         }
 
         if (this.options.events) {
             Object.keys(this.options.events).forEach((key: string) => {
-                this.events.on(key, this.options.events[key]);
-            });
+                this.events.on(key, this.options.events[key])
+            })
         }
 
-        this.selection = new Select(this);
-        this.uploader = new Uploader(this);
-        this.observer = new Observer(this);
+        this.selection = new Select(this)
+        this.uploader = new Uploader(this)
+        this.observer = new Observer(this)
 
-        this.container = <HTMLDivElement>dom('<div contenteditable="false" class="jodit_container" />', this.ownerDocument);
+        this.container = <HTMLDivElement>(
+            dom(
+                '<div contenteditable="false" class="jodit_container" />',
+                this.ownerDocument
+            )
+        )
 
-        let buffer: null | string = null;
+        let buffer: null | string = null
 
         if (this.options.inline) {
             if (['TEXTAREA', 'INPUT'].indexOf(this.element.nodeName) === -1) {
-                this.container = <HTMLDivElement>this.element;
-                this.element.setAttribute(this.__defaultClassesKey, this.element.className.toString());
-                buffer = this.container.innerHTML;
-                this.container.innerHTML = '';
+                this.container = <HTMLDivElement>this.element
+                this.element.setAttribute(
+                    this.__defaultClassesKey,
+                    this.element.className.toString()
+                )
+                buffer = this.container.innerHTML
+                this.container.innerHTML = ''
             }
 
-            this.container.classList.add('jodit_inline');
-            this.container.classList.add('jodit_container');
+            this.container.classList.add('jodit_inline')
+            this.container.classList.add('jodit_container')
         }
 
-        this.container.classList.add('jodit_' + (this.options.theme || 'default') + '_theme');
+        this.container.classList.add(
+            'jodit_' + (this.options.theme || 'default') + '_theme'
+        )
 
         if (this.options.zIndex) {
-            this.container.style.zIndex = parseInt(this.options.zIndex.toString(), 10).toString();
+            this.container.style.zIndex = parseInt(
+                this.options.zIndex.toString(),
+                10
+            ).toString()
         }
 
-        this.workplace = <HTMLDivElement>dom('<div contenteditable="false" class="jodit_workplace" />', this.ownerDocument);
-        this.progress_bar = <HTMLDivElement>dom('<div class="jodit_progress_bar"><div></div></div>', this.ownerDocument);
+        this.workplace = <HTMLDivElement>(
+            dom(
+                '<div contenteditable="false" class="jodit_workplace" />',
+                this.ownerDocument
+            )
+        )
+        this.progress_bar = <HTMLDivElement>(
+            dom(
+                '<div class="jodit_progress_bar"><div></div></div>',
+                this.ownerDocument
+            )
+        )
 
-        this.toolbar = new ToolbarCollection(this);
+        this.toolbar = new ToolbarCollection(this)
 
         if (this.options.toolbar) {
-            this.toolbar.build(splitArray(this.options.buttons).concat(this.options.extraButtons), this.container);
+            this.toolbar.build(
+                splitArray(this.options.buttons).concat(
+                    this.options.extraButtons
+                ),
+                this.container
+            )
         }
 
-        this.container.classList.add('jodit_toolbar_size-' + (['middle', 'large', 'small'].indexOf(this.options.toolbarButtonSize.toLowerCase()) !== -1 ? this.options.toolbarButtonSize.toLowerCase() : 'middle'));
+        this.container.classList.add(
+            'jodit_toolbar_size-' +
+                (['middle', 'large', 'small'].indexOf(
+                    this.options.toolbarButtonSize.toLowerCase()
+                ) !== -1
+                    ? this.options.toolbarButtonSize.toLowerCase()
+                    : 'middle')
+        )
 
         if (this.options.textIcons) {
-            this.container.classList.add('jodit_text_icons');
+            this.container.classList.add('jodit_text_icons')
         }
 
         this.events.on(this.ownerWindow, 'resize', () => {
             if (this.events) {
-                this.events.fire('resize');
+                this.events.fire('resize')
             }
-        });
+        })
 
-        this.container.appendChild(this.workplace);
-        this.statusbar = new StatusBar(this, this.container);
+        this.container.appendChild(this.workplace)
+        this.statusbar = new StatusBar(this, this.container)
 
-        this.workplace.appendChild(this.progress_bar);
+        this.workplace.appendChild(this.progress_bar)
 
         if (this.element.parentNode && this.element !== this.container) {
-            this.element.parentNode.insertBefore(this.container, this.element);
+            this.element.parentNode.insertBefore(this.container, this.element)
         }
 
-        this.helper = helper;
+        this.helper = helper
 
-        this.id = this.element.getAttribute('id') || (new Date()).getTime().toString();
+        this.id =
+            this.element.getAttribute('id') || new Date().getTime().toString()
 
-        this.__initPlugines();
-        this.__initEditor(buffer)
-            .then(async () => {
-                await this.events.fire('afterInit', this);
-                this.events.fire('afterConstructor', this);
-            });
+        this.__initPlugines()
+
+        this.__initEditor(buffer).then(async () => {
+            await this.events.fire('afterInit', this)
+            this.events.fire('afterConstructor', this)
+        })
     }
 
     private async __initEditor(buffer: null | string) {
-        await this.__createEditor();
+        await this.__createEditor()
 
         // syncro
         if (this.element !== this.container) {
-            this.setElementValue();
+            this.setElementValue()
         } else {
-            buffer !== null && this.setEditorValue(buffer); // inline mode
+            buffer !== null && this.setEditorValue(buffer) // inline mode
         }
 
+        Jodit.instances[this.id] = this
 
-        Jodit.instances[this.id] = this;
-
-        let mode: number = this.options.defaultMode;
+        let mode: number = this.options.defaultMode
 
         if (this.options.saveModeInStorage) {
-            let localMode: string | null = this.storage.get('jodit_default_mode');
+            let localMode: string | null = this.storage.get(
+                'jodit_default_mode'
+            )
             if (localMode !== null) {
-                mode = parseInt(localMode, 10);
+                mode = parseInt(localMode, 10)
             }
         }
 
-        this.setMode(mode);
+        this.setMode(mode)
 
         if (this.options.readonly) {
-            this.setReadOnly(true);
+            this.setReadOnly(true)
         }
         if (this.options.disabled) {
             this.setDisabled(true)
@@ -302,39 +353,49 @@ export class Jodit extends View {
 
         //if enter plugin not installed
         try {
-            this.editorDocument.execCommand("defaultParagraphSeparator", false, this.options.enter.toLowerCase());
-        } catch (ignore) {
-        }
+            this.editorDocument.execCommand(
+                'defaultParagraphSeparator',
+                false,
+                this.options.enter.toLowerCase()
+            )
+        } catch (ignore) {}
 
         // fix for native resizing
         try {
-            this.editorDocument.execCommand('enableObjectResizing', false, 'false');
-        } catch (ignore) {
-        }
+            this.editorDocument.execCommand(
+                'enableObjectResizing',
+                false,
+                'false'
+            )
+        } catch (ignore) {}
 
         try {
-            this.editorDocument.execCommand('enableInlineTableEditing', false, 'false');
-        } catch (ignore) {
-        }
+            this.editorDocument.execCommand(
+                'enableInlineTableEditing',
+                false,
+                'false'
+            )
+        } catch (ignore) {}
     }
 
-    __plugins: Dictionary<JoditPlugin> = {};
+    __plugins: Dictionary<JoditPlugin> = {}
 
     private __initPlugines() {
-        const disable: string[] = Array.isArray(this.options.disablePlugins) ? this.options.disablePlugins.map((pluginName: string) => {
-            return pluginName.toLowerCase();
-        }) : this.options.disablePlugins.toLowerCase().split(/[\s,]+/);
+        const disable: string[] = Array.isArray(this.options.disablePlugins)
+            ? this.options.disablePlugins.map((pluginName: string) => {
+                  return pluginName.toLowerCase()
+              })
+            : this.options.disablePlugins.toLowerCase().split(/[\s,]+/)
 
         Object.keys(Jodit.plugins).forEach((key: string) => {
             if (disable.indexOf(key.toLowerCase()) === -1) {
-                this.__plugins[key] = new Jodit.plugins[key](this);
+                this.__plugins[key] = new Jodit.plugins[key](this)
             }
         })
     }
 
-
-    private __defaultStyleDisplayKey = 'data-jodit-default-style-display';
-    private __defaultClassesKey = 'data-jodit-default-classes';
+    private __defaultStyleDisplayKey = 'data-jodit-default-style-display'
+    private __defaultClassesKey = 'data-jodit-default-classes'
 
     /**
      * Create main DIV element and replace source textarea
@@ -342,57 +403,78 @@ export class Jodit extends View {
      * @private
      */
     private async __createEditor() {
-        const createDefault: boolean | undefined = await this.events.fire('createEditor', this);
+        const createDefault: boolean | undefined = await this.events.fire(
+            'createEditor',
+            this
+        )
         if (createDefault !== false) {
-            this.editor = <HTMLDivElement>dom(`<div class="jodit_wysiwyg" contenteditable aria-disabled="false" tabindex="${this.options.tabIndex}"></div>`, this.ownerDocument);
-            this.workplace.appendChild(this.editor);
+            this.editor = <HTMLDivElement>(
+                dom(
+                    `<div class="jodit_wysiwyg" contenteditable aria-disabled="false" tabindex="${
+                        this.options.tabIndex
+                    }"></div>`,
+                    this.ownerDocument
+                )
+            )
+            this.workplace.appendChild(this.editor)
         }
 
         if (this.options.editorCssClass) {
-            this.editor.classList.add(this.options.editorCssClass);
+            this.editor.classList.add(this.options.editorCssClass)
         }
 
         // proxy events
         this.events
             .on('synchro', () => {
-                this.setEditorValue();
+                this.setEditorValue()
             })
-            .on(this.editor, 'selectionchange selectionstart keydown keyup keypress mousedown mouseup mousepress click copy cut dragstart drop dragover paste resize touchstart touchend focus blur', (event: Event): false | void => {
-                if (this.options.readonly) {
-                    return;
-                }
-                if (this.events && this.events.fire) {
-                    if (this.events.fire(event.type, event) === false) {
-                        return false;
+            .on(
+                this.editor,
+                'selectionchange selectionstart keydown keyup keypress mousedown mouseup mousepress click copy cut dragstart drop dragover paste resize touchstart touchend focus blur',
+                (event: Event): false | void => {
+                    if (this.options.readonly) {
+                        return
                     }
+                    if (this.events && this.events.fire) {
+                        if (this.events.fire(event.type, event) === false) {
+                            return false
+                        }
 
-                    this.setEditorValue();
+                        this.setEditorValue()
+                    }
                 }
-            });
+            )
 
         if (this.options.spellcheck) {
-            this.editor.setAttribute('spellcheck', "true");
+            this.editor.setAttribute('spellcheck', 'true')
         }
 
         // direction
         if (this.options.direction) {
-            this.editor.style.direction = this.options.direction.toLowerCase() === 'rtl' ? 'rtl' : 'ltr';
+            this.editor.style.direction =
+                this.options.direction.toLowerCase() === 'rtl' ? 'rtl' : 'ltr'
         }
 
         // actual for inline mode
         if (this.element !== this.container) {
             // hide source element
             if (this.element.style.display) {
-                this.element.setAttribute(this.__defaultStyleDisplayKey, this.element.style.display)
+                this.element.setAttribute(
+                    this.__defaultStyleDisplayKey,
+                    this.element.style.display
+                )
             }
 
-            this.element.style.display = 'none';
+            this.element.style.display = 'none'
         }
 
         if (this.options.triggerChangeEvent) {
-            this.events.on('change', debounce(() => {
-                this.events && this.events.fire(this.element, 'change');
-            }, this.defaultTimeout))
+            this.events.on(
+                'change',
+                debounce(() => {
+                    this.events && this.events.fire(this.element, 'change')
+                }, this.defaultTimeout)
+            )
         }
     }
 
@@ -401,10 +483,10 @@ export class Jodit extends View {
      */
     destruct() {
         if (this.isDestructed) {
-            return;
+            return
         }
 
-        this.isDestructed = true;
+        this.isDestructed = true
 
         /**
          * Triggered before {@link events:beforeDestruct|beforeDestruct} executed. If returned false method stopped
@@ -419,96 +501,107 @@ export class Jodit extends View {
          * ```
          */
         if (this.events.fire('beforeDestruct') === false) {
-            return;
+            return
         }
-
 
         if (!this.editor) {
-            return;
+            return
         }
 
-        let buffer: string = this.getEditorValue();
+        let buffer: string = this.getEditorValue()
 
         if (this.element !== this.container) {
             if (this.element.hasAttribute(this.__defaultStyleDisplayKey)) {
-                this.element.style.display = this.element.getAttribute(this.__defaultStyleDisplayKey);
-                this.element.removeAttribute(this.__defaultStyleDisplayKey);
+                this.element.style.display = this.element.getAttribute(
+                    this.__defaultStyleDisplayKey
+                )
+                this.element.removeAttribute(this.__defaultStyleDisplayKey)
             } else {
-                this.element.style.display = '';
+                this.element.style.display = ''
             }
         } else {
             if (this.element.hasAttribute(this.__defaultClassesKey)) {
-                this.element.className = this.element.getAttribute(this.__defaultClassesKey) || '';
-                this.element.removeAttribute(this.__defaultClassesKey);
+                this.element.className =
+                    this.element.getAttribute(this.__defaultClassesKey) || ''
+                this.element.removeAttribute(this.__defaultClassesKey)
             }
         }
 
-        if (this.element.hasAttribute('style') && !this.element.getAttribute('style')) {
-            this.element.removeAttribute('style');
+        if (
+            this.element.hasAttribute('style') &&
+            !this.element.getAttribute('style')
+        ) {
+            this.element.removeAttribute('style')
         }
 
         Object.keys(this.__plugins).forEach((pluginName: string) => {
-            if (this.__plugins !== undefined && this.__plugins[pluginName] !== undefined && this.__plugins[pluginName].destruct !== undefined && typeof this.__plugins[pluginName].destruct === 'function') {
+            if (
+                this.__plugins !== undefined &&
+                this.__plugins[pluginName] !== undefined &&
+                this.__plugins[pluginName].destruct !== undefined &&
+                typeof this.__plugins[pluginName].destruct === 'function'
+            ) {
                 // @ts-ignore: Object is possibly 'undefined'
-                this.__plugins[pluginName].destruct();
+                this.__plugins[pluginName].destruct()
             }
-            delete this.__plugins[pluginName];
-        });
+            delete this.__plugins[pluginName]
+        })
 
         this.components.forEach((component: Component) => {
-            if (component.destruct !== undefined && typeof component.destruct === 'function') {
-                component.destruct();
+            if (
+                component.destruct !== undefined &&
+                typeof component.destruct === 'function'
+            ) {
+                component.destruct()
             }
-        });
+        })
 
-        delete this['selection'];
+        delete this['selection']
 
-        this.events.off(this.ownerWindow);
-        this.events.off(this.ownerDocument);
-        this.events.off(this.ownerDocument.body);
-        this.events.off(this.element);
-        this.events.off(this.editor);
-        this.events.destruct();
+        this.events.off(this.ownerWindow)
+        this.events.off(this.ownerDocument)
+        this.events.off(this.ownerDocument.body)
+        this.events.off(this.element)
+        this.events.off(this.editor)
+        this.events.destruct()
 
-        delete this['events'];
-
+        delete this['events']
 
         if (this.workplace.parentNode) {
-            this.workplace.parentNode.removeChild(this.workplace);
+            this.workplace.parentNode.removeChild(this.workplace)
         }
 
         if (this.editor.parentNode) {
-            this.editor.parentNode.removeChild(this.editor);
+            this.editor.parentNode.removeChild(this.editor)
         }
 
         if (this.iframe && this.iframe.parentNode) {
-            this.iframe.parentNode.removeChild(this.iframe);
+            this.iframe.parentNode.removeChild(this.iframe)
         }
 
         if (this.container.parentNode && this.container !== this.element) {
-            this.container.parentNode.removeChild(this.container);
+            this.container.parentNode.removeChild(this.container)
         }
 
-
-        delete this['editor'];
-        delete this['workplace'];
-
-
+        delete this['editor']
+        delete this['workplace']
 
         // inline mode
         if (this.container === this.element) {
-            this.element.innerHTML = buffer;
+            this.element.innerHTML = buffer
         }
 
-        delete Jodit.instances[this.id];
-        delete this['container'];
+        delete Jodit.instances[this.id]
+        delete this['container']
     }
 
     /**
      * Return source element value
      */
     getElementValue() {
-        return (<HTMLInputElement>this.element).value !== undefined ? (<HTMLInputElement>this.element).value : this.element.innerHTML;
+        return (<HTMLInputElement>this.element).value !== undefined
+            ? (<HTMLInputElement>this.element).value
+            : this.element.innerHTML
     }
 
     /**
@@ -518,10 +611,10 @@ export class Jodit extends View {
      */
     getNativeEditorValue(): string {
         if (this.editor) {
-            return this.editor.innerHTML;
+            return this.editor.innerHTML
         }
 
-        return this.getElementValue();
+        return this.getElementValue()
     }
 
     /**
@@ -540,24 +633,28 @@ export class Jodit extends View {
          * });
          * ```
          */
-        let value: string;
+        let value: string
 
-        value = this.events.fire('beforeGetValueFromEditor');
+        value = this.events.fire('beforeGetValueFromEditor')
 
         if (value !== undefined) {
-            return value;
+            return value
         }
 
-        value = this.getNativeEditorValue()
-            .replace(consts.INVISIBLE_SPACE_REG_EXP, '');
+        value = this.getNativeEditorValue().replace(
+            consts.INVISIBLE_SPACE_REG_EXP,
+            ''
+        )
 
         if (removeSelectionMarkers) {
-            value = value
-                .replace(/<span[^>]+id="jodit_selection_marker_[^>]+><\/span>/g, '');
+            value = value.replace(
+                /<span[^>]+id="jodit_selection_marker_[^>]+><\/span>/g,
+                ''
+            )
         }
 
         if (value === '<br>') {
-            value = '';
+            value = ''
         }
 
         /**
@@ -573,22 +670,22 @@ export class Jodit extends View {
          * });
          * ```
          */
-        const new_value: {value: string} = {value};
+        const new_value: { value: string } = { value }
 
-        this.events.fire('afterGetValueFromEditor', new_value);
+        this.events.fire('afterGetValueFromEditor', new_value)
 
-        return new_value.value;
+        return new_value.value
     }
 
     getEditorText(): string {
         if (this.editor) {
-            return this.editor.innerText;
+            return this.editor.innerText
         }
 
-        const div: HTMLDivElement = this.ownerDocument.createElement('div');
-        div.innerHTML = this.getElementValue();
+        const div: HTMLDivElement = this.ownerDocument.createElement('div')
+        div.innerHTML = this.getElementValue()
 
-        return div.innerText;
+        return div.innerText
     }
 
     /**
@@ -599,23 +696,23 @@ export class Jodit extends View {
      */
     setElementValue(value?: string) {
         if (typeof value !== 'string' && value !== undefined) {
-            throw new Error('value must be string');
+            throw new Error('value must be string')
         }
 
         if (value !== undefined) {
             if (this.element !== this.container) {
                 if ((<HTMLInputElement>this.element).value !== undefined) {
-                    (<HTMLInputElement>this.element).value = value;
+                    ;(<HTMLInputElement>this.element).value = value
                 } else {
-                    this.element.innerHTML = value;
+                    this.element.innerHTML = value
                 }
             }
         } else {
-            value = this.getElementValue();
+            value = this.getElementValue()
         }
 
         if (value !== this.getEditorValue()) {
-            this.setEditorValue(value);
+            this.setEditorValue(value)
         }
     }
 
@@ -625,7 +722,7 @@ export class Jodit extends View {
      * @event beforeSetValueToEditor
      * @param {string} [value]
      */
-    setEditorValue(value ?: string) {
+    setEditorValue(value?: string) {
         /**
          * Triggered before  {@link Jodit~getEditorValue|setEditorValue} set value to wysiwyg.
          *
@@ -643,70 +740,84 @@ export class Jodit extends View {
          * });
          * ```
          */
-        const newValue: string | undefined | false = this.events.fire('beforeSetValueToEditor', value);
+        const newValue: string | undefined | false = this.events.fire(
+            'beforeSetValueToEditor',
+            value
+        )
 
         if (newValue === false) {
-            return;
+            return
         }
 
         if (typeof newValue === 'string') {
-            value = newValue;
+            value = newValue
         }
 
         if (!this.editor) {
             if (value !== undefined) {
-                this.setElementValue(value);
+                this.setElementValue(value)
             }
-            return; // try change value before init or after destruct
+            return // try change value before init or after destruct
         }
 
         if (typeof value !== 'string' && value !== undefined) {
-            throw new Error('value must be string');
+            throw new Error('value must be string')
         }
 
         if (value !== undefined && this.editor.innerHTML !== value) {
-            this.editor.innerHTML = value;
+            this.editor.innerHTML = value
         }
 
         const old_value: string = this.getElementValue(),
-            new_value: string = this.getEditorValue(); // value may be not equal new_value becouse of afterGetValueFromEditor events
+            new_value: string = this.getEditorValue() // value may be not equal new_value becouse of afterGetValueFromEditor events
 
         if (old_value !== new_value) {
-            this.setElementValue(new_value);
-            this.events.fire('change', new_value, old_value);
+            this.setElementValue(new_value)
+            this.events.fire('change', new_value, old_value)
         }
     }
 
     get value(): string {
-        return this.getEditorValue();
+        return this.getEditorValue()
     }
     set value(html: string) {
-        this.setEditorValue(html);
+        this.setEditorValue(html)
     }
 
-    private commands: Dictionary<Array<CommandType | Function>> = {};
+    private commands: Dictionary<Array<CommandType | Function>> = {}
 
-    private execCustomCommands(commandName: string, second = false, third: null|any = null): false | void {
-        commandName = commandName.toLowerCase();
+    private execCustomCommands(
+        commandName: string,
+        second = false,
+        third: null | any = null
+    ): false | void {
+        commandName = commandName.toLowerCase()
 
         if (this.commands[commandName] !== undefined) {
-            let result: any = void(0);
+            let result: any = void 0
 
-            this.commands[commandName].forEach((command: CommandType | Function) => {
-                let callback: Function;
-                if (typeof command === 'function') {
-                    callback = command;
-                } else {
-                    callback = command.exec;
+            this.commands[commandName].forEach(
+                (command: CommandType | Function) => {
+                    let callback: Function
+                    if (typeof command === 'function') {
+                        callback = command
+                    } else {
+                        callback = command.exec
+                    }
+
+                    let resultCurrent: any = callback.call(
+                        this,
+                        commandName,
+                        second,
+                        third
+                    )
+                    if (resultCurrent !== undefined) {
+                        result = resultCurrent
+                    }
                 }
+            )
 
-                let resultCurrent: any = callback.call(this, commandName, second, third);
-                if (resultCurrent !== undefined) {
-                    result = resultCurrent;
-                }
-            });
-
-            return result;
+            return result
         }
     }
 
@@ -743,20 +854,26 @@ export class Jodit extends View {
      * @param {string} commandNameOriginal
      * @param {CommandType | Function} command
      */
-    registerCommand(commandNameOriginal: string, command: CommandType | Function) {
-        const commandName: string = commandNameOriginal.toLowerCase();
+    registerCommand(
+        commandNameOriginal: string,
+        command: CommandType | Function
+    ) {
+        const commandName: string = commandNameOriginal.toLowerCase()
 
         if (this.commands[commandName] === undefined) {
-            this.commands[commandName] = [];
+            this.commands[commandName] = []
         }
 
-        this.commands[commandName].push(command);
+        this.commands[commandName].push(command)
 
         if (typeof command !== 'function') {
-            const hotkeys: string | string[] | void = this.options.commandToHotkeys[commandName] || this.options.commandToHotkeys[commandNameOriginal] || command.hotkeys;
+            const hotkeys: string | string[] | void =
+                this.options.commandToHotkeys[commandName] ||
+                this.options.commandToHotkeys[commandNameOriginal] ||
+                command.hotkeys
 
             if (hotkeys) {
-                this.registerHotkeyToCommand(hotkeys, commandName);
+                this.registerHotkeyToCommand(hotkeys, commandName)
             }
         }
     }
@@ -768,14 +885,13 @@ export class Jodit extends View {
      * @param commandName
      */
     registerHotkeyToCommand(hotkeys: string | string[], commandName: string) {
-        const
-            shortcuts: string[] = asArray(hotkeys).map(normalizeKeyAliases);
+        const shortcuts: string[] = asArray(hotkeys).map(normalizeKeyAliases)
 
         this.events
             .off(shortcuts.map(hotkey => hotkey + '.hotkey').join(' '))
             .on(shortcuts.map(hotkey => hotkey + '.hotkey').join(' '), () => {
-                return this.execCommand(commandName); // because need `beforeCommand`
-            });
+                return this.execCommand(commandName) // because need `beforeCommand`
+            })
     }
 
     /**
@@ -795,13 +911,17 @@ export class Jodit extends View {
      * this.execCommand('formatBlock', 'p'); // will be inserted paragraph
      * ```
      */
-    execCommand(command: string, second: any = false, third: null|any = null) {
+    execCommand(
+        command: string,
+        second: any = false,
+        third: null | any = null
+    ) {
         if (this.options.readonly && command !== 'selectall') {
-            return;
+            return
         }
 
-        let result: any;
-        command = command.toLowerCase();
+        let result: any
+        command = command.toLowerCase()
 
         /**
          * Called before any command
@@ -822,24 +942,26 @@ export class Jodit extends View {
          * })
          * ```
          */
-        result = this.events.fire('beforeCommand', command, second, third);
+        result = this.events.fire('beforeCommand', command, second, third)
 
         if (result !== false) {
-            result = this.execCustomCommands(command, second, third);
+            result = this.execCustomCommands(command, second, third)
         }
 
         if (result !== false) {
-            this.selection.focus();
+            this.selection.focus()
             switch (command) {
                 case 'selectall':
-                    this.selection.select(this.editor, true);
-                    break;
+                    this.selection.select(this.editor, true)
+                    break
                 default:
                     try {
-                        result = this.editorDocument.execCommand(command, second, third);
-                    } catch (e) {
-
-                    }
+                        result = this.editorDocument.execCommand(
+                            command,
+                            second,
+                            third
+                        )
+                    } catch (e) {}
             }
         }
 
@@ -850,24 +972,23 @@ export class Jodit extends View {
          * @param {*} second The second parameter for the command
          * @param {*} third The third option is for the team
          */
-        this.events.fire('afterCommand', command, second, third);
+        this.events.fire('afterCommand', command, second, third)
 
-        this.setEditorValue();// synchrony
+        this.setEditorValue() // synchrony
 
-        return result;
+        return result
     }
 
-
-    private __selectionLocked: markerInfo[] | null = null;
+    private __selectionLocked: markerInfo[] | null = null
 
     /**
      * Disable selecting
      */
     lock(name: string = 'any') {
         if (!this.isLocked()) {
-            this.__whoLocked = name;
-            this.__selectionLocked = this.selection.save();
-            this.editor.classList.add('jodit_disabled');
+            this.__whoLocked = name
+            this.__selectionLocked = this.selection.save()
+            this.editor.classList.add('jodit_disabled')
         }
     }
 
@@ -876,8 +997,8 @@ export class Jodit extends View {
      */
     unlock() {
         if (this.isLocked()) {
-            this.__whoLocked = '';
-            this.editor.classList.remove('jodit_disabled');
+            this.__whoLocked = ''
+            this.editor.classList.remove('jodit_disabled')
             if (this.__selectionLocked) {
                 this.selection.restore(this.__selectionLocked)
             }
@@ -885,20 +1006,20 @@ export class Jodit extends View {
     }
 
     isLockedNotBy = (name: string): boolean => {
-        return this.isLocked() && this.__whoLocked !== name;
-    };
+        return this.isLocked() && this.__whoLocked !== name
+    }
 
-    mode: number = consts.MODE_WYSIWYG;
+    mode: number = consts.MODE_WYSIWYG
 
     /**
      * Return current editor mode: Jodit.MODE_WYSIWYG, Jodit.MODE_SOURCE or Jodit.MODE_SPLIT
      * @return {number}
      */
     getMode(): number {
-        return this.mode;
+        return this.mode
     }
     isEditorMode(): boolean {
-        return this.getRealMode() === consts.MODE_WYSIWYG;
+        return this.getRealMode() === consts.MODE_WYSIWYG
     }
 
     /**
@@ -912,16 +1033,20 @@ export class Jodit extends View {
      */
     getRealMode(): number {
         if (this.getMode() !== consts.MODE_SPLIT) {
-            return this.getMode();
+            return this.getMode()
         }
 
-        const active: Element | null = this.ownerDocument.activeElement;
+        const active: Element | null = this.ownerDocument.activeElement
 
-        if (active && (Dom.isOrContains(this.editor, active) || Dom.isOrContains(this.toolbar.container, active)) ) {
-            return consts.MODE_WYSIWYG;
+        if (
+            active &&
+            (Dom.isOrContains(this.editor, active) ||
+                Dom.isOrContains(this.toolbar.container, active))
+        ) {
+            return consts.MODE_WYSIWYG
         }
 
-        return consts.MODE_SOURCE;
+        return consts.MODE_SOURCE
     }
 
     /**
@@ -931,11 +1056,15 @@ export class Jodit extends View {
      * @fired afterSetMode
      */
     setMode(mode: number | string) {
-        const oldmode: number = this.getMode();
+        const oldmode: number = this.getMode()
         const data = {
-                mode: parseInt(mode.toString(), 10)
+                mode: parseInt(mode.toString(), 10),
             },
-            modeClasses = ['jodit_wysiwyg_mode', 'jodit_source_mode', 'jodit_split_mode'];
+            modeClasses = [
+                'jodit_wysiwyg_mode',
+                'jodit_source_mode',
+                'jodit_split_mode',
+            ]
 
         /**
          * Triggered before {@link Jodit~setMode|setMode} executed. If returned false method stopped
@@ -950,19 +1079,25 @@ export class Jodit extends View {
          * ```
          */
         if (this.events.fire('beforeSetMode', data) === false) {
-            return;
+            return
         }
 
-        this.mode = inArray(data.mode, [consts.MODE_SOURCE, consts.MODE_WYSIWYG, consts.MODE_SPLIT]) ? data.mode : consts.MODE_WYSIWYG;
+        this.mode = inArray(data.mode, [
+            consts.MODE_SOURCE,
+            consts.MODE_WYSIWYG,
+            consts.MODE_SPLIT,
+        ])
+            ? data.mode
+            : consts.MODE_WYSIWYG
 
         if (this.options.saveModeInStorage) {
-            this.storage.set('jodit_default_mode', this.mode);
+            this.storage.set('jodit_default_mode', this.mode)
         }
 
-        modeClasses.forEach((className) => {
-            this.container.classList.remove(className);
-        });
-        this.container.classList.add(modeClasses[this.mode - 1]);
+        modeClasses.forEach(className => {
+            this.container.classList.remove(className)
+        })
+        this.container.classList.add(modeClasses[this.mode - 1])
 
         /**
          * Triggered after {@link Jodit~setMode|setMode} executed
@@ -976,7 +1111,7 @@ export class Jodit extends View {
          * ```
          */
         if (oldmode !== this.getMode()) {
-            this.events.fire('afterSetMode');
+            this.events.fire('afterSetMode')
         }
     }
 
@@ -989,15 +1124,21 @@ export class Jodit extends View {
      * editor.toggleMode();
      * ```
      */
-    toggleMode () {
-        let mode: number = this.getMode();
-        if (inArray(mode + 1, [consts.MODE_SOURCE, consts.MODE_WYSIWYG, this.options.useSplitMode ? consts.MODE_SPLIT : 9])) {
-            mode += 1;
+    toggleMode() {
+        let mode: number = this.getMode()
+        if (
+            inArray(mode + 1, [
+                consts.MODE_SOURCE,
+                consts.MODE_WYSIWYG,
+                this.options.useSplitMode ? consts.MODE_SPLIT : 9,
+            ])
+        ) {
+            mode += 1
         } else {
-            mode = consts.MODE_WYSIWYG;
+            mode = consts.MODE_WYSIWYG
         }
 
-        this.setMode(mode);
+        this.setMode(mode)
     }
 
     /**
@@ -1029,24 +1170,30 @@ export class Jodit extends View {
      * console.log(Jodit.prototype.i18n('Hello world', 'mr.Perkins', 'day')) //Hello mr.Perkins Good day
      * ```
      */
-    i18n (key: string, ...params: Array<string|number>): string {
-        const debug: boolean = this.options !== undefined && this.options.debugLanguage;
+    i18n(key: string, ...params: Array<string | number>): string {
+        const debug: boolean =
+            this.options !== undefined && this.options.debugLanguage
 
         let store,
-            parse = (value: string): string => params.length ? sprintf.apply(this, [value].concat(<string[]>params)) : value,
-            default_language: string = Jodit.defaultOptions.language === 'auto' ? defaultLanguage(Jodit.defaultOptions.language) : Jodit.defaultOptions.language,
-            language: string = defaultLanguage(this.options ? this.options.language : default_language);
+            parse = (value: string): string =>
+                params.length
+                    ? sprintf.apply(this, [value].concat(<string[]>params))
+                    : value,
+            default_language: string =
+                Jodit.defaultOptions.language === 'auto'
+                    ? defaultLanguage(Jodit.defaultOptions.language)
+                    : Jodit.defaultOptions.language,
+            language: string = defaultLanguage(
+                this.options ? this.options.language : default_language
+            )
 
-        if (
-            this.options !== undefined &&
-            Jodit.lang[language] !== undefined
-        ) {
-            store = Jodit.lang[language];
+        if (this.options !== undefined && Jodit.lang[language] !== undefined) {
+            store = Jodit.lang[language]
         } else {
             if (Jodit.lang[default_language] !== undefined) {
-                store = Jodit.lang[default_language];
+                store = Jodit.lang[default_language]
             } else {
-                store = Jodit.lang.en;
+                store = Jodit.lang.en
             }
         }
 
@@ -1055,23 +1202,23 @@ export class Jodit extends View {
             (<any>this.options.i18n)[language] !== undefined &&
             (<any>this.options.i18n)[language][key]
         ) {
-            return parse((<any>this.options.i18n)[language][key]);
+            return parse((<any>this.options.i18n)[language][key])
         }
 
         if (typeof store[key] === 'string' && store[key]) {
-            return parse(store[key]);
+            return parse(store[key])
         }
 
         if (debug) {
-            console.warn(`In ${language} not exists "${key}"`);
-            return '{' + key + '}';
+            console.warn(`In ${language} not exists "${key}"`)
+            return '{' + key + '}'
         }
 
         if (typeof Jodit.lang.en[key] === 'string' && Jodit.lang.en[key]) {
-            return parse(Jodit.lang.en[key]);
+            return parse(Jodit.lang.en[key])
         }
 
-        return parse(key);
+        return parse(key)
     }
 
     /**
@@ -1081,10 +1228,10 @@ export class Jodit extends View {
      * @return {string}
      */
     getVersion = () => {
-        return this.version;
-    };
+        return this.version
+    }
 
-    private __wasReadOnly: boolean = false;
+    private __wasReadOnly: boolean = false
 
     /**
      * Switch on/off the editor into the disabled state.
@@ -1094,16 +1241,16 @@ export class Jodit extends View {
      * @param {boolean} isDisabled
      */
     setDisabled(isDisabled: boolean) {
-        this.options.disabled = isDisabled;
+        this.options.disabled = isDisabled
 
-        const readOnly: boolean = this.__wasReadOnly;
-        this.setReadOnly(isDisabled || readOnly);
-        this.__wasReadOnly = readOnly;
+        const readOnly: boolean = this.__wasReadOnly
+        this.setReadOnly(isDisabled || readOnly)
+        this.__wasReadOnly = readOnly
 
         if (this.editor) {
-            this.editor.setAttribute('aria-disabled', isDisabled.toString());
-            this.container.classList.toggle('jodit_disabled', isDisabled);
-            this.events.fire('disabled', isDisabled);
+            this.editor.setAttribute('aria-disabled', isDisabled.toString())
+            this.container.classList.toggle('jodit_disabled', isDisabled)
+            this.events.fire('disabled', isDisabled)
         }
     }
 
@@ -1111,7 +1258,7 @@ export class Jodit extends View {
      * Return true if editor in disabled mode
      */
     getDisabled(): boolean {
-        return this.options.disabled;
+        return this.options.disabled
     }
 
     /**
@@ -1123,26 +1270,26 @@ export class Jodit extends View {
      */
     setReadOnly(isReadOnly: boolean) {
         if (this.__wasReadOnly === isReadOnly) {
-            return;
+            return
         }
 
-        this.__wasReadOnly = isReadOnly;
-        this.options.readonly = isReadOnly;
+        this.__wasReadOnly = isReadOnly
+        this.options.readonly = isReadOnly
 
         if (isReadOnly) {
-            this.editor && this.editor.removeAttribute('contenteditable');
+            this.editor && this.editor.removeAttribute('contenteditable')
         } else {
-            this.editor && this.editor.setAttribute('contenteditable', 'true');
+            this.editor && this.editor.setAttribute('contenteditable', 'true')
         }
 
-        this.events && this.events.fire('readonly', isReadOnly);
+        this.events && this.events.fire('readonly', isReadOnly)
     }
 
     /**
      * Return true if editor in read-only mode
      */
     getReadOnly(): boolean {
-        return this.options.readonly;
+        return this.options.readonly
     }
 
     /**
@@ -1151,25 +1298,24 @@ export class Jodit extends View {
      * @return {number}
      */
     get defaultTimeout(): number {
-        return (this.options && this.options.observer) ? this.options.observer.timeout : Jodit.defaultOptions.observer.timeout;
+        return this.options && this.options.observer
+            ? this.options.observer.timeout
+            : Jodit.defaultOptions.observer.timeout
     }
 
     static Array(array: Array<any>): JoditArray {
-        return new JoditArray(array);
+        return new JoditArray(array)
     }
     static Object(object: any): JoditObject {
-        return new JoditObject(object);
+        return new JoditObject(object)
     }
 
     static fireEach(events: string, ...args: any[]) {
         Object.keys(Jodit.instances).forEach((key: string) => {
-            const editor: Jodit = Jodit.instances[key];
+            const editor: Jodit = Jodit.instances[key]
             if (!editor.isDestructed && editor.events) {
-                editor.events.fire(events, ...args);
+                editor.events.fire(events, ...args)
             }
-        });
+        })
     }
 }
-
-
-

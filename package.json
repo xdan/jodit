@@ -1,5 +1,6 @@
 {
   "name": "jodit",
+
   "version": "3.2.24",
   "description": "Jodit is awesome and usefully wysiwyg editor with filebrowser",
   "main": "build/jodit.min.js",
@@ -45,6 +46,7 @@
     "es6-promise": "^4.2.5",
     "express": "^4.16.4",
     "file-loader": "^2.0.0",
+    "husky": "^1.2.0",
     "karma": "^3.0.0",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^2.2.0",
@@ -55,11 +57,13 @@
     "karma-webpack": "^3.0.5",
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
+    "lint-staged": "^8.1.0",
     "mini-css-extract-plugin": "^0.4.4",
     "mocha": "^5.2.0",
     "optimize-css-assets-webpack-plugin": "^3.2.0",
     "postcss-loader": "^2.1.6",
     "precss": "^2.0.0",
+    "prettier": "1.15.2",
     "raw-loader": "^0.5.1",
     "style-loader": "^0.13.2",
     "typescript": "^3.1.6",
@@ -70,5 +74,16 @@
     "webpack-dev-middleware": "^3.4.0",
     "webpack-dev-server": "^3.1.10",
     "webpack-hot-middleware": "^2.24.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,json,less,md}": [
+      "prettier --write ",
+      "git add"
+    ]
   }
 }
