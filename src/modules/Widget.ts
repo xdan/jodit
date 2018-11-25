@@ -8,7 +8,7 @@ import { Jodit } from '../Jodit'
 import { normalizeColor, dom, isPlainObject, each, $$, hexToRgb, val } from './Helpers'
 import { Dom } from "./Dom";
 import { Uploader } from "./Uploader";
-import {FileBrowserCallBackData, UploaderData, RGB, Dictionary} from "../types/";
+import { FileBrowserCallBackData, UploaderData, RGB, Dictionary } from "../types/";
 import { FileBrowser } from "./filebrowser/filebrowser";
 
 export namespace Widget {

@@ -10,7 +10,7 @@ import { Config } from "../Config";
 import { Dom } from "../modules/Dom";
 import { ControlType } from "../types/toolbar";
 
-Config.prototype.controls.fontsize = <ControlType>{
+Config.prototype.controls.fontsize = <ControlType> {
     command: 'fontSize',
     list : ["8", "9", "10", "11", "12", "14", "16", "18", "24", "30", "36", "48", "60", "72", "96"],
     template : (editor: Jodit, key: string, value: string) => value,

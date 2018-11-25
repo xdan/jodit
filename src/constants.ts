@@ -5,7 +5,7 @@
  */
 
 
-import {Dictionary} from "./types";
+import { Dictionary } from "./types";
 
 export const INVISIBLE_SPACE = "\uFEFF";
 export const INVISIBLE_SPACE_REG_EXP = /[\uFEFF]/g;

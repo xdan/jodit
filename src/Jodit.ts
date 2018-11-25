@@ -22,7 +22,7 @@ import { localStorageProvider, Storage } from "./modules/Storage";
 import { Observer } from "./modules/Observer";
 import { ToolbarCollection } from "./modules/toolbar/collection";
 import { View } from "./modules/view/view";
-import {CommandType, Dictionary} from "./types/types";
+import { CommandType, Dictionary } from "./types/types";
 
 declare let appVersion: string;
 

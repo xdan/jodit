@@ -5,7 +5,7 @@
  */
 
 import { Jodit } from "../Jodit";
-import {Dictionary, Permissions} from "./types";
+import { Dictionary, Permissions } from "./types";
 import { Buttons } from "./toolbar";
 import { UploaderOptions } from "./uploader";
 

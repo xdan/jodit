@@ -15,7 +15,7 @@ import { Widget } from "../modules/Widget";
 import TabsWidget = Widget.TabsWidget;
 import FileSelectorWidget = Widget.FileSelectorWidget;
 import { ToolbarPopup } from "../modules/toolbar/popup";
-import {Dictionary, FileBrowserCallBackData, UploaderData} from "../types/";
+import { Dictionary, FileBrowserCallBackData, UploaderData } from "../types/";
 
 
 /**

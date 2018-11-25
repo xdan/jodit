@@ -11,7 +11,7 @@ import { Config} from '../Config'
 import { Dom, Component, Table } from "../modules/";
 import { ControlType } from "../types/toolbar";
 import { ToolbarButton } from "../modules/toolbar/button";
-import {Bound, Dictionary} from "../types/types";
+import { Bound, Dictionary } from "../types/types";
 
 declare module "../Config" {
     interface Config {

@@ -6,7 +6,7 @@
 
 import { Plugin } from "../modules/Plugin";
 import { Config } from '../Config'
-import {css, ctrlKey, dataBind, throttle, setTimeout, splitArray} from "../modules/Helpers";
+import { css, ctrlKey, dataBind, throttle, setTimeout, splitArray } from "../modules/Helpers";
 
 declare module "../Config" {
     interface Config {
