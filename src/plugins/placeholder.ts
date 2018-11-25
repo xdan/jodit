@@ -4,10 +4,10 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Jodit } from '../Jodit';
-import { Config } from '../Config'
-import * as consts from '../constants';
-import { css, debounce, dom } from '../modules/Helpers'
+import { Config } from "../Config";
+import * as consts from "../constants";
+import { Jodit } from "../Jodit";
+import { css, debounce, dom } from "../modules/Helpers";
 
 /**
  * Show placeholder
@@ -53,8 +53,7 @@ Config.prototype.useInputsPlaceholder = true;
  * });
  * ```
  */
-Config.prototype.placeholder = 'Type something';
-
+Config.prototype.placeholder = "Type something";
 
 /**
  * Show placeholder inside empty editor
@@ -66,7 +65,7 @@ export function placeholder(this: any, editor: Jodit) {
         return;
     }
 
-    (<any>this).destruct  = () => {
+    (this as any).destruct  = () => {
         if (placeholder.parentNode) {
             placeholder.parentNode.removeChild(placeholder);
         }
@@ -83,25 +82,25 @@ export function placeholder(this: any, editor: Jodit) {
             const style: CSSStyleDeclaration = editor.editorWindow.getComputedStyle(editor.editor);
 
             if (editor.editor.firstChild && editor.editor.firstChild.nodeType === Node.ELEMENT_NODE) {
-                const style2:CSSStyleDeclaration = editor.editorWindow.getComputedStyle(<Element>editor.editor.firstChild);
-                marginTop = parseInt(style2.getPropertyValue('margin-top'), 10);
-                marginLeft = parseInt(style2.getPropertyValue('margin-left'), 10);
-                placeholder.style.fontSize = parseInt(style2.getPropertyValue('font-size'), 10) + 'px';
-                placeholder.style.lineHeight = style2.getPropertyValue('line-height');
+                const style2: CSSStyleDeclaration = editor.editorWindow.getComputedStyle(editor.editor.firstChild as Element);
+                marginTop = parseInt(style2.getPropertyValue("margin-top"), 10);
+                marginLeft = parseInt(style2.getPropertyValue("margin-left"), 10);
+                placeholder.style.fontSize = parseInt(style2.getPropertyValue("font-size"), 10) + "px";
+                placeholder.style.lineHeight = style2.getPropertyValue("line-height");
             } else {
-                placeholder.style.fontSize = parseInt(style.getPropertyValue('font-size'), 10) + 'px';
-                placeholder.style.lineHeight = style.getPropertyValue('line-height');
+                placeholder.style.fontSize = parseInt(style.getPropertyValue("font-size"), 10) + "px";
+                placeholder.style.lineHeight = style.getPropertyValue("line-height");
             }
 
             css(placeholder, {
-                display: 'block',
-                marginTop: Math.max(parseInt(style.getPropertyValue('margin-top'), 10), marginTop),
-                marginLeft: Math.max(parseInt(style.getPropertyValue('margin-left'), 10), marginLeft)
-            })
+                display: "block",
+                marginTop: Math.max(parseInt(style.getPropertyValue("margin-top"), 10), marginTop),
+                marginLeft: Math.max(parseInt(style.getPropertyValue("margin-left"), 10), marginLeft),
+            });
         },
-        hide = function () {
+        hide = function() {
             if (placeholder.parentNode) {
-                placeholder.style.display = 'none';
+                placeholder.style.display = "none";
             }
         },
         toggle = debounce(() => {
@@ -115,7 +114,7 @@ export function placeholder(this: any, editor: Jodit) {
             if (editor.getRealMode() !== consts.MODE_WYSIWYG) {
                 return hide();
             }
-            let value: string = editor.getEditorValue();
+            const value: string = editor.getEditorValue();
             if (value && !/^<(p|div|h[1-6])><\/\1>$/.test(value)) {
                 hide();
             } else {
@@ -123,37 +122,35 @@ export function placeholder(this: any, editor: Jodit) {
             }
         }, editor.defaultTimeout / 10);
 
+    const placeholder: HTMLElement = dom('<span style="display: none;" class="jodit_placeholder">' + editor.i18n(editor.options.placeholder) + "</span>", editor.ownerDocument);
 
-
-    const placeholder: HTMLElement = dom('<span style="display: none;" class="jodit_placeholder">' + editor.i18n(editor.options.placeholder) + '</span>', editor.ownerDocument);
-
-    if (editor.options.direction === 'rtl') {
-        placeholder.style.right = '0px';
-        placeholder.style.direction = 'rtl';
+    if (editor.options.direction === "rtl") {
+        placeholder.style.right = "0px";
+        placeholder.style.direction = "rtl";
     }
 
-    if (editor.options.useInputsPlaceholder && editor.element.hasAttribute('placeholder')) {
-        placeholder.innerHTML = editor.element.getAttribute('placeholder') || '';
+    if (editor.options.useInputsPlaceholder && editor.element.hasAttribute("placeholder")) {
+        placeholder.innerHTML = editor.element.getAttribute("placeholder") || "";
     }
 
     editor.events
-        .on('readonly', (isReadOnly: boolean) => {
+        .on("readonly", (isReadOnly: boolean) => {
             if (isReadOnly) {
                 hide();
             } else {
                 toggle();
             }
         })
-        .on('afterInit', () => {
+        .on("afterInit", () => {
             editor.workplace
                 .appendChild(placeholder);
 
             toggle();
 
-            editor.events.fire('placeholder', placeholder.innerHTML);
+            editor.events.fire("placeholder", placeholder.innerHTML);
             editor.events
-                .on('change keyup mouseup keydown mousedown afterSetMode', toggle)
-                .on(window, 'load', toggle);
-        })
+                .on("change keyup mouseup keydown mousedown afterSetMode", toggle)
+                .on(window, "load", toggle);
+        });
 
 }

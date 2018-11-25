@@ -4,9 +4,9 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
+import { Config } from "../Config";
+import { css, ctrlKey, dataBind, setTimeout, splitArray, throttle } from "../modules/Helpers";
 import { Plugin } from "../modules/Plugin";
-import { Config } from '../Config'
-import { css, ctrlKey, dataBind, throttle, setTimeout, splitArray } from "../modules/Helpers";
 
 declare module "../Config" {
     interface Config {
@@ -17,7 +17,7 @@ declare module "../Config" {
 /**
  * Draggable elements
  */
-Config.prototype.draggableTags = ['img', 'a', 'jodit-media', 'jodit'];
+Config.prototype.draggableTags = ["img", "a", "jodit-media", "jodit"];
 
 /**
  * Process drag and drop image or another element inside the editor
@@ -30,60 +30,13 @@ export class DragAndDropElement extends Plugin {
 
     private timeout: number = 0;
 
-    private onDragStart = (event: DragEvent) => {
-        let
-            target: Node | null = <Node>event.target,
-            last: HTMLElement | null = null;
-
-        if (!this.dragList.length) {
-            return;
-        }
-
-        do {
-            if (this.dragList.includes(target.nodeName.toLowerCase())) {
-                if (!last || (target.firstChild === last && target.lastChild === last)) {
-                    last = <HTMLElement>target;
-                }
-            }
-
-            target = target.parentNode;
-        } while (target && target !== this.jodit.editor);
-
-        if (!last) {
-            return;
-        }
-
-        this.isCopyMode = ctrlKey(event); // we can move only element from editor
-        this.onDragEnd();
-
-        this.timeout = setTimeout((last: HTMLElement) => {
-            this.draggable =  <HTMLElement>last.cloneNode(true);
-
-            dataBind(this.draggable, 'target', last);
-
-            css(this.draggable, {
-                'z-index': 100000000000000,
-                'pointer-events': 'none',
-                position: 'fixed',
-                display: 'inlin-block',
-                left: event.clientX,
-                top: event.clientY,
-                width: last.offsetWidth,
-                height: last.offsetHeight,
-            });
-
-        }, this.jodit.defaultTimeout, last);
-
-        event.preventDefault();
-    };
-
     private onDrag = throttle((event: DragEvent) => {
         if (!this.draggable) {
             return;
         }
 
         this.wasMoved = true;
-        this.jodit.events.fire('hidePopup hideResizer');
+        this.jodit.events.fire("hidePopup hideResizer");
 
         if (!this.draggable.parentNode) {
             this.jodit.ownerDocument.body.appendChild(this.draggable);
@@ -98,6 +51,73 @@ export class DragAndDropElement extends Plugin {
 
     }, this.jodit.defaultTimeout);
 
+    public afterInit() {
+        this.dragList = this.jodit.options.draggableTags ? splitArray(this.jodit.options.draggableTags)
+                .filter((item) => item)
+                .map((item: string) => item.toLowerCase()) : [];
+
+        if (!this.dragList.length) {
+            return;
+        }
+
+        this.jodit.events
+            .on(this.jodit.editor, "mousemove touchmove", this.onDrag)
+            .on(this.jodit.editor, "mousedown touchstart dragstart", this.onDragStart)
+            .on("mouseup touchend", this.onDrop)
+            .on(window, "mouseup touchend", this.onDragEnd);
+    }
+
+    public beforeDestruct() {
+        this.onDragEnd();
+    }
+
+    private onDragStart = (event: DragEvent) => {
+        let
+            target: Node | null = event.target as Node,
+            last: HTMLElement | null = null;
+
+        if (!this.dragList.length) {
+            return;
+        }
+
+        do {
+            if (this.dragList.includes(target.nodeName.toLowerCase())) {
+                if (!last || (target.firstChild === last && target.lastChild === last)) {
+                    last = target as HTMLElement;
+                }
+            }
+
+            target = target.parentNode;
+        } while (target && target !== this.jodit.editor);
+
+        if (!last) {
+            return;
+        }
+
+        this.isCopyMode = ctrlKey(event); // we can move only element from editor
+        this.onDragEnd();
+
+        this.timeout = setTimeout((last: HTMLElement) => {
+            this.draggable =  last.cloneNode(true) as HTMLElement;
+
+            dataBind(this.draggable, "target", last);
+
+            css(this.draggable, {
+                "z-index": 100000000000000,
+                "pointer-events": "none",
+                "position": "fixed",
+                "display": "inlin-block",
+                "left": event.clientX,
+                "top": event.clientY,
+                "width": last.offsetWidth,
+                "height": last.offsetHeight,
+            });
+
+        }, this.jodit.defaultTimeout, last);
+
+        event.preventDefault();
+    }
+
     private onDragEnd = (event?: DragEvent) => {
         window.clearTimeout(this.timeout);
 
@@ -106,7 +126,7 @@ export class DragAndDropElement extends Plugin {
             this.draggable = null;
             this.wasMoved = false;
         }
-    };
+    }
 
     private onDrop = (event: DragEvent) => {
         if (!this.draggable || !this.wasMoved) {
@@ -114,40 +134,20 @@ export class DragAndDropElement extends Plugin {
             return;
         }
 
-        let fragment: HTMLElement = dataBind(this.draggable, 'target');
+        let fragment: HTMLElement = dataBind(this.draggable, "target");
 
         this.onDragEnd();
 
         if (this.isCopyMode) {
-            fragment = <HTMLElement>fragment.cloneNode(true);
+            fragment = fragment.cloneNode(true) as HTMLElement;
         }
 
         this.jodit.selection.insertNode(fragment, true, false);
 
-        if (fragment.nodeName === 'IMG' && this.jodit.events) {
-            this.jodit.events.fire('afterInsertImage', fragment);
+        if (fragment.nodeName === "IMG" && this.jodit.events) {
+            this.jodit.events.fire("afterInsertImage", fragment);
         }
 
-        this.jodit.events.fire('synchro');
-    };
-
-    afterInit() {
-        this.dragList = this.jodit.options.draggableTags ? splitArray(this.jodit.options.draggableTags)
-                .filter(item => item)
-                .map((item: string) => item.toLowerCase()) : [];
-
-        if (!this.dragList.length) {
-            return;
-        }
-
-        this.jodit.events
-            .on(this.jodit.editor, 'mousemove touchmove', this.onDrag)
-            .on(this.jodit.editor, 'mousedown touchstart dragstart', this.onDragStart)
-            .on('mouseup touchend', this.onDrop)
-            .on(window, 'mouseup touchend', this.onDragEnd)
-    }
-
-    beforeDestruct() {
-        this.onDragEnd();
+        this.jodit.events.fire("synchro");
     }
 }

@@ -4,13 +4,13 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Jodit } from "../Jodit";
-import { Config } from '../Config'
+import { Config } from "../Config";
 import * as consts from "../constants";
+import { Jodit } from "../Jodit";
 import { splitArray } from "../modules/Helpers";
-import { ControlType } from "../types/toolbar";
 import { ToolbarButton } from "../modules/toolbar/button";
 import { ToolbarCollection } from "../modules/toolbar/collection";
+import { ControlType } from "../types/toolbar";
 
 declare module "../Config" {
     interface Config {
@@ -22,7 +22,6 @@ declare module "../Config" {
     }
 }
 
-
 Config.prototype.mobileTapTimeout = 300;
 
 /**
@@ -32,30 +31,30 @@ Config.prototype.mobileTapTimeout = 300;
  */
 Config.prototype.toolbarAdaptive = true;
 
-Config.prototype.controls.dots = <ControlType> {
+Config.prototype.controls.dots = {
     mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG,
     popup: (editor: Jodit, current: false | Node, control: ControlType, close, button: ToolbarButton) => {
         let store: {
             container: HTMLDivElement,
             toolbar: ToolbarCollection,
-            rebuild: Function
-        } | undefined = <any>control.data;
+            rebuild: Function,
+        } | undefined = control.data as any;
 
         if (store === undefined) {
 
             store = {
-                container: editor.ownerDocument.createElement('div'),
+                container: editor.ownerDocument.createElement("div"),
                 toolbar: new ToolbarCollection(editor),
                 rebuild: () => {
-                    const buttons: Array<string|ControlType> | undefined = editor.events.fire('getDiffButtons.mobile', button.parentToolbar);
+                    const buttons: Array<string|ControlType> | undefined = editor.events.fire("getDiffButtons.mobile", button.parentToolbar);
 
                     if (buttons && store) {
                         store.toolbar.build(splitArray(buttons), store.container);
                     }
-                }
+                },
             };
 
-            store.container.style.width = '100px';
+            store.container.style.width = "100px";
 
             control.data = store;
         }
@@ -63,8 +62,8 @@ Config.prototype.controls.dots = <ControlType> {
         store.rebuild();
 
         return store.container;
-    }
-};
+    },
+} as ControlType;
 
 /**
  * Rebuild toolbar in depends of editor's width
@@ -75,7 +74,7 @@ export function mobile(editor: Jodit) {
         store: Array<string|ControlType> = splitArray(editor.options.buttons);
 
     editor.events
-        .on('touchend', (e: TouchEvent) => {
+        .on("touchend", (e: TouchEvent) => {
             if (e.changedTouches && e.changedTouches.length) {
                 now = (new Date()).getTime();
                 if (now - timeout > editor.options.mobileTapTimeout) {
@@ -84,7 +83,7 @@ export function mobile(editor: Jodit) {
                 }
             }
         })
-        .on('getDiffButtons.mobile', (toolbar: ToolbarCollection) : void | string[] => {
+        .on("getDiffButtons.mobile", (toolbar: ToolbarCollection): void | string[] => {
             if (toolbar === editor.toolbar) {
                 return splitArray(editor.options.buttons).filter((i: string|ControlType) => {
                     return store.indexOf(i) < 0;
@@ -93,12 +92,12 @@ export function mobile(editor: Jodit) {
         });
 
     if (editor.options.toolbarAdaptive) {
-        editor.events.on('resize afterInit', () => {
+        editor.events.on("resize afterInit", () => {
             if (!editor.options.toolbar) {
                 return;
             }
 
-            let width: number = editor.container.offsetWidth;
+            const width: number = editor.container.offsetWidth;
             let newStore: Array<string|ControlType> = [];
             if (width >= editor.options.sizeLG) {
                 newStore = splitArray(editor.options.buttons);

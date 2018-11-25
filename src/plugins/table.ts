@@ -4,13 +4,13 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Jodit } from '../Jodit';
-import * as consts from '../constants';
-import { getContentWidth, $$, dom, offset, scrollIntoView } from '../modules/Helpers';
-import { Config} from '../Config'
-import { Dom, Component, Table } from "../modules/";
-import { ControlType } from "../types/toolbar";
+import { Config} from "../Config";
+import * as consts from "../constants";
+import { Jodit } from "../Jodit";
+import { Component, Dom, Table } from "../modules/";
+import { $$, dom, getContentWidth, offset, scrollIntoView } from "../modules/Helpers";
 import { ToolbarButton } from "../modules/toolbar/button";
+import { ControlType } from "../types/toolbar";
 import { Bound, Dictionary } from "../types/types";
 
 declare module "../Config" {
@@ -26,15 +26,15 @@ declare module "../Config" {
 Config.prototype.useTableProcessor = true;
 Config.prototype.useExtraClassesOptions = true;
 
-Config.prototype.controls.table = <ControlType> {
+Config.prototype.controls.table = {
     data: {
         cols: 10,
         rows: 10,
         classList: {
-            'table table-bordered': 'Bootstrap Bordered',
-            'table table-striped': 'Bootstrap Striped',
-            'table table-dark': 'Bootstrap Dark',
-        }
+            "table table-bordered": "Bootstrap Bordered",
+            "table table-striped": "Bootstrap Striped",
+            "table table-dark": "Bootstrap Dark",
+        },
     },
     popup: (editor: Jodit, current,  control: ControlType, close: Function, button: ToolbarButton) => {
         let i: number,
@@ -48,7 +48,7 @@ Config.prototype.controls.table = <ControlType> {
 
         const generateExtraClasses = (): string => {
             if (!editor.options.useExtraClassesOptions) {
-                return '';
+                return "";
             }
 
             const out: string[] = [];
@@ -58,29 +58,26 @@ Config.prototype.controls.table = <ControlType> {
                     out.push(`<label><input value="${classes}" type="checkbox"/>${classList[classes]}</label>`);
                 });
             }
-            return out.join('');
+            return out.join("");
         };
 
-        const form: HTMLFormElement = <HTMLFormElement>dom(
+        const form: HTMLFormElement = dom(
             '<form class="jodit_form jodit_form_inserter">' +
-                '<label>' +
-                    '<span>1</span> &times; <span>1</span>' +
-                '</label>' +
+                "<label>" +
+                    "<span>1</span> &times; <span>1</span>" +
+                "</label>" +
                 '<div class="jodit_form-table-creator-box">' +
                     '<div class="jodit_form-container"></div>' +
-                    '<div class="jodit_form-options">' + generateExtraClasses() + '</div>' +
-                '</div>' +
-            '</form>', editor.ownerDocument),
+                    '<div class="jodit_form-options">' + generateExtraClasses() + "</div>" +
+                "</div>" +
+            "</form>", editor.ownerDocument) as HTMLFormElement,
 
-
-            rows: HTMLSpanElement = form.querySelectorAll('span')[0],
-            cols: HTMLSpanElement = form.querySelectorAll('span')[1],
-            blocksContainer: HTMLDivElement = <HTMLDivElement>form.querySelector('.jodit_form-container'),
-            mainBox: HTMLDivElement = <HTMLDivElement>form.querySelector('.jodit_form-table-creator-box'),
-            options: HTMLDivElement = <HTMLDivElement>form.querySelector('.jodit_form-options'),
+            rows: HTMLSpanElement = form.querySelectorAll("span")[0],
+            cols: HTMLSpanElement = form.querySelectorAll("span")[1],
+            blocksContainer: HTMLDivElement = form.querySelector(".jodit_form-container") as HTMLDivElement,
+            mainBox: HTMLDivElement = form.querySelector(".jodit_form-table-creator-box") as HTMLDivElement,
+            options: HTMLDivElement = form.querySelector(".jodit_form-options") as HTMLDivElement,
             cells: HTMLDivElement[] = [];
-
-
 
         const generateRows = (need_rows: number) => {
             const cnt: number = need_rows * default_cols_count;
@@ -95,8 +92,8 @@ Config.prototype.controls.table = <ControlType> {
 
             for (i = 0; i < cnt; i += 1) {
                 if (!cells[i]) {
-                    div = editor.ownerDocument.createElement('div');
-                    div.setAttribute('data-index', i.toString());
+                    div = editor.ownerDocument.createElement("div");
+                    div.setAttribute("data-index", i.toString());
                     cells.push(div);
                 }
             }
@@ -106,18 +103,17 @@ Config.prototype.controls.table = <ControlType> {
             });
 
             const width: number = (cells[0].offsetWidth || 18) * default_cols_count;
-            blocksContainer.style.width = width + 'px';
-            mainBox.style.width = (width + options.offsetWidth + 1) + 'px';
+            blocksContainer.style.width = width + "px";
+            mainBox.style.width = (width + options.offsetWidth + 1) + "px";
         };
 
-
         const mouseenter = (e: MouseEvent, index?: number): void => {
-            const div: HTMLDivElement = <HTMLDivElement>e.target;
-            if (!div || div.tagName !== 'DIV') {
+            const div: HTMLDivElement = e.target as HTMLDivElement;
+            if (!div || div.tagName !== "DIV") {
                 return;
             }
 
-            k = (index === undefined || isNaN(index)) ? parseInt(div.getAttribute('data-index') || '0', 10) : index || 0;
+            k = (index === undefined || isNaN(index)) ? parseInt(div.getAttribute("data-index") || "0", 10) : index || 0;
 
             rows_count = Math.ceil((k + 1) / default_cols_count);
             cols_count = k % default_cols_count + 1;
@@ -131,9 +127,9 @@ Config.prototype.controls.table = <ControlType> {
 
             for (i = 0; i < cells.length; i += 1) {
                 if (cols_count >= i % default_cols_count + 1 &&  rows_count >= Math.ceil((i + 1) / default_cols_count)) {
-                    cells[i].className = 'hovered';
+                    cells[i].className = "hovered";
                 } else {
-                    cells[i].className = '';
+                    cells[i].className = "";
                 }
             }
 
@@ -141,27 +137,27 @@ Config.prototype.controls.table = <ControlType> {
             rows.innerText = rows_count.toString();
         };
 
-        blocksContainer.addEventListener('mousemove', mouseenter);
+        blocksContainer.addEventListener("mousemove", mouseenter);
 
         editor.events
-            .on(blocksContainer, 'touchstart mousedown', (e: MouseEvent) => {
-                const div: HTMLDivElement = <HTMLDivElement>e.target,
+            .on(blocksContainer, "touchstart mousedown", (e: MouseEvent) => {
+                const div: HTMLDivElement = e.target as HTMLDivElement,
                     doc: Document = editor.editorDocument;
 
                 e.preventDefault();
                 e.stopImmediatePropagation();
 
-                if (div.tagName !== 'DIV') {
+                if (div.tagName !== "DIV") {
                     return;
                 }
 
-                k =  parseInt(div.getAttribute('data-index') || '0', 10);
+                k =  parseInt(div.getAttribute("data-index") || "0", 10);
                 rows_count = Math.ceil((k + 1) / default_cols_count);
                 cols_count = k % default_cols_count + 1;
 
-                const table: HTMLTableElement = doc.createElement('table');
+                const table: HTMLTableElement = doc.createElement("table");
 
-                table.style.width = '100%';
+                table.style.width = "100%";
 
                 let first_td: HTMLTableCellElement | null = null,
                     tr: HTMLTableRowElement,
@@ -170,10 +166,10 @@ Config.prototype.controls.table = <ControlType> {
                     // w: string = (100 / cols_count).toFixed(7);
 
                 for (i = 1; i <= rows_count; i += 1) {
-                    tr = doc.createElement('tr');
+                    tr = doc.createElement("tr");
 
                     for (j = 1; j <= cols_count; j += 1) {
-                        td = doc.createElement('td');
+                        td = doc.createElement("td");
 
                         // td.style.width = w + '%';
 
@@ -181,7 +177,7 @@ Config.prototype.controls.table = <ControlType> {
                             first_td = td;
                         }
 
-                        br = doc.createElement('br');
+                        br = doc.createElement("br");
                         td.appendChild(br);
                         tr.appendChild(doc.createTextNode("\n"));
                         tr.appendChild(doc.createTextNode("\t"));
@@ -195,14 +191,14 @@ Config.prototype.controls.table = <ControlType> {
                 const current: Node | false = editor.selection.current();
 
                 if (current && editor.selection.isCollapsed()) {
-                    const block: HTMLElement | false = <HTMLElement | false>Dom.closest(current, Dom.isBlock, editor.editor);
+                    const block: HTMLElement | false = Dom.closest(current, Dom.isBlock, editor.editor) as HTMLElement | false;
                     if (block && block !== editor.editor && !block.nodeName.match(/^TD|TH|TBODY|TABLE|THEADER|TFOOTER$/)) {
                         editor.selection.setCursorAfter(block);
                     }
                 }
 
-                $$('input[type=checkbox]:checked', options).forEach((input: HTMLElement) => {
-                    (<HTMLInputElement>input).value.split(/[\s]+/).forEach((className: string) => {
+                $$("input[type=checkbox]:checked", options).forEach((input: HTMLElement) => {
+                    (input as HTMLInputElement).value.split(/[\s]+/).forEach((className: string) => {
                         table.classList.add(className);
                     });
                 });
@@ -217,42 +213,29 @@ Config.prototype.controls.table = <ControlType> {
 
                 close();
             })
-            .off(<object>button.parentToolbar, 'afterOpenPopup.tableGenerator')
-            .on(<object>button.parentToolbar,'afterOpenPopup.tableGenerator', () => {
+            .off(button.parentToolbar as object, "afterOpenPopup.tableGenerator")
+            .on(button.parentToolbar as object, "afterOpenPopup.tableGenerator", () => {
                 generateRows(default_rows_count);
                 if (cells[0]) {
-                    cells[0].className = 'hovered';
+                    cells[0].className = "hovered";
                 }
-            }, '', true);
+            }, "", true);
 
         return form;
     },
-    tooltip: "Insert table"
-};
+    tooltip: "Insert table",
+} as ControlType;
 
 /**
  * Process tables in editor
  */
-export class TableProcessor extends Component{
-    private __key: string = 'table_processor_observer';
-    private __selectMode: boolean = false;
+export class TableProcessor extends Component {
 
-    /**
-     *
-     * @param {HTMLTableElement} [table]
-     * @param {HTMLTableCellElement} [current_cell]
-     * @private
-     */
-    private __deSelectAll(table?: HTMLTableElement, current_cell ?: HTMLTableCellElement | false) {
-        let cells: HTMLTableCellElement[] = table ? Table.getAllSelectedCells(table) : Table.getAllSelectedCells(this.jodit.editor);
-        if (cells.length) {
-            cells.forEach((cell: HTMLTableCellElement) => {
-                if (!current_cell || current_cell !== cell) {
-                    Table.restoreSelection(cell);
-                }
-            })
-        }
+    public static isCell(tag: Node | null): boolean {
+        return !!tag && /^TD|TH$/i.test(tag.nodeName);
     }
+    private __key: string = "table_processor_observer";
+    private __selectMode: boolean = false;
 
     private __resizerDelta: number = 0;
     private __resizerHandler: HTMLElement;
@@ -262,8 +245,202 @@ export class TableProcessor extends Component{
     private __workCell: HTMLTableCellElement;
     private __workTable: HTMLTableElement;
 
-    static isCell(tag: Node | null): boolean {
-        return !!tag && /^TD|TH$/i.test(tag.nodeName)
+    private __minX: number;
+    private __maxX: number;
+
+    /**
+     *
+     * @param {Jodit} editor
+     */
+    constructor(editor: Jodit) {
+        super(editor);
+
+        if (!editor.options.useTableProcessor) {
+            return;
+        }
+
+        editor.events
+            .on(this.jodit.ownerWindow, "mouseup touchend", () => {
+                if (this.__selectMode || this.__drag) {
+                    this.__selectMode = false;
+                    this.jodit.unlock();
+                }
+                if (this.__resizerHandler && this.__drag) {
+                    this.__drag = false;
+                    this.__resizerHandler.classList.remove("jodit_table_resizer-moved");
+
+                    // resize column
+                    if (this.__wholeTable === null) {
+                        const __marked: HTMLTableCellElement[] = [];
+                        Table.setColumnWidthByDelta(this.__workTable, Table.formalCoordinate(this.__workTable, this.__workCell, true)[1], this.__resizerDelta, true, __marked);
+                        const nextTD = Dom.next(this.__workCell, TableProcessor.isCell, this.__workCell.parentNode as HTMLElement) as HTMLTableCellElement;
+                        Table.setColumnWidthByDelta(this.__workTable, Table.formalCoordinate(this.__workTable, nextTD)[1], -this.__resizerDelta, false, __marked);
+                    } else {
+                        const width = this.__workTable.offsetWidth,
+                            parentWidth = getContentWidth(this.__workTable.parentNode as HTMLElement, this.jodit.editorWindow);
+
+                        // right side
+                        if (!this.__wholeTable) {
+                            this.__workTable.style.width = ((width + this.__resizerDelta) / parentWidth) * 100 + "%";
+                        } else {
+                            const margin = parseInt(this.jodit.editorWindow.getComputedStyle(this.__workTable).marginLeft || "0", 10);
+                            this.__workTable.style.width = ((width - this.__resizerDelta) / parentWidth) * 100 + "%";
+                            this.__workTable.style.marginLeft = ((margin + this.__resizerDelta) / parentWidth) * 100 + "%";
+                        }
+
+                    }
+                    editor.setEditorValue();
+                    editor.selection.focus();
+                }
+            })
+            .on(this.jodit.ownerWindow, "scroll", () => {
+                if (this.__drag) {
+                    const parent = Dom.up(this.__workCell, (elm: Node | null) => (elm && elm.nodeName === "TABLE"), editor.editor) as HTMLElement;
+                    if (parent) {
+                        const parentBox = parent.getBoundingClientRect();
+                        this.__resizerHandler.style.top = parentBox.top  + "px";
+                    }
+                }
+            })
+            .on(this.jodit.ownerWindow, "mousedown touchend", (event: MouseEvent) => {
+                // need use event['originalEvent'] because of IE can not set target from another window to current window
+                const current_cell: HTMLTableCellElement = Dom.closest((event as any).originalEvent.target as HTMLElement, "TD|TH", this.jodit.editor) as HTMLTableCellElement;
+                let table: HTMLTableElement|null = null;
+
+                if (current_cell instanceof (this.jodit.editorWindow as any).HTMLTableCellElement) {
+                    table = Dom.closest(current_cell, "table", this.jodit.editor) as HTMLTableElement;
+                }
+
+                if (table) {
+                    this.__deSelectAll(table, current_cell instanceof (this.jodit.editorWindow as any).HTMLTableCellElement ? current_cell : false);
+                } else {
+                    this.__deSelectAll();
+                }
+            })
+            .on("afterGetValueFromEditor", (data: {value: string}) => {
+                data.value = data.value.replace(new RegExp(`([\s]*)${consts.JODIT_SELECTED_CELL_MARKER}="1"`, "g"), "");
+            })
+            .on("change afterCommand afterSetMode", () => {
+                ($$("table", editor.editor) as HTMLTableElement[]).forEach((table: HTMLTableElement) => {
+                    if (!(table as any)[this.__key]) {
+                        this.observe(table);
+                    }
+                });
+            })
+            .on("beforeSetMode", () => {
+                Table.getAllSelectedCells(editor.editor).forEach((td) => {
+                    Table.restoreSelection(td);
+                    Table.normalizeTable(Dom.closest(td, "table", editor.editor) as HTMLTableElement);
+                });
+            })
+            .on("keydown", (event: KeyboardEvent) => {
+                if (event.which === consts.KEY_TAB) {
+                    ($$("table", editor.editor) as HTMLTableElement[]).forEach((table: HTMLTableElement) => {
+                        this.__deSelectAll(table);
+                    });
+                }
+            })
+            .on("beforeCommand", this.onExecCommand.bind(this));
+
+    }
+
+    public observe(table: HTMLTableElement) {
+        (table as any)[this.__key] = true;
+        let start: HTMLTableCellElement;
+
+        this.jodit.events
+            .on(table, "mousedown touchstart", (event: MouseEvent) => {
+                if (this.jodit.options.readonly) {
+                    return;
+                }
+
+                const cell: HTMLTableCellElement = Dom.up(event.target as HTMLElement, TableProcessor.isCell, table) as HTMLTableCellElement;
+                if (cell && cell instanceof (this.jodit.editorWindow as any).HTMLElement) {
+                    if (!cell.firstChild) {
+                        cell.appendChild(this.jodit.editorDocument.createElement("br"));
+                    }
+
+                    start = cell;
+                    Table.addSelected(cell);
+                    this.__selectMode = true;
+                }
+            })
+            .on(table, "mouseleave", (e: MouseEvent) => {
+                if (this.__resizerHandler && this.__resizerHandler !== e.relatedTarget) {
+                    this.__resizerHandler.style.display = "none";
+                }
+            })
+            .on(table, "mousemove touchmove", (event: MouseEvent) => {
+                if (this.jodit.options.readonly) {
+                    return;
+                }
+
+                if (this.__drag || this.jodit.isLockedNotBy(this.__key)) {
+                    return;
+                }
+
+                const cell = Dom.up(event.target as HTMLElement, TableProcessor.isCell, table) as HTMLTableCellElement;
+
+                if (cell) {
+                    if (this.__selectMode) {
+                        if (cell !== start) {
+                            this.jodit.lock(this.__key);
+                            this.jodit.editorWindow.getSelection().removeAllRanges();
+                            if (event.preventDefault) {
+                                event.preventDefault();
+                            }
+                        }
+                        this.__deSelectAll(table);
+                        const bound = Table.getSelectedBound(table, [cell, start]),
+                            box = Table.formalMatrix(table);
+
+                        for (let i = bound[0][0]; i <= bound[1][0]; i += 1) {
+                            for (let j = bound[0][1]; j <= bound[1][1]; j += 1) {
+                                Table.addSelected(box[i][j]);
+                            }
+                        }
+
+                        const   max = box[bound[1][0]][bound[1][1]],
+                                min = box[bound[0][0]][bound[0][1]];
+
+                        this.jodit.events
+                            .fire("showPopup", table, (): Bound => {
+                                const minOffset: Bound = offset(min, this.jodit, this.jodit.editorDocument);
+                                const maxOffset: Bound = offset(max, this.jodit, this.jodit.editorDocument);
+
+                                return  {
+                                    left: minOffset.left,
+                                    top: minOffset.top,
+                                    width: maxOffset.left - minOffset.left + maxOffset.width,
+                                    height: maxOffset.top - minOffset.top + maxOffset.height,
+                                };
+                            });
+
+                        event.stopPropagation();
+                    } else {
+                        this.__calcResizerPosition(table, cell, event.offsetX);
+                    }
+                }
+            });
+
+        this.__addResizer();
+    }
+
+    /**
+     *
+     * @param {HTMLTableElement} [table]
+     * @param {HTMLTableCellElement} [current_cell]
+     * @private
+     */
+    private __deSelectAll(table?: HTMLTableElement, current_cell ?: HTMLTableCellElement | false) {
+        const cells: HTMLTableCellElement[] = table ? Table.getAllSelectedCells(table) : Table.getAllSelectedCells(this.jodit.editor);
+        if (cells.length) {
+            cells.forEach((cell: HTMLTableCellElement) => {
+                if (!current_cell || current_cell !== cell) {
+                    Table.restoreSelection(cell);
+                }
+            });
+        }
     }
 
     /**
@@ -275,27 +452,24 @@ export class TableProcessor extends Component{
     private __setWorkCell(cell: HTMLTableCellElement, wholeTable: boolean|null = null) {
         this.__wholeTable = wholeTable;
         this.__workCell = cell;
-        this.__workTable = <HTMLTableElement>Dom.up(cell, (elm: Node | null) => (elm && elm.nodeName === 'TABLE'), this.jodit.editor);
+        this.__workTable = Dom.up(cell, (elm: Node | null) => (elm && elm.nodeName === "TABLE"), this.jodit.editor) as HTMLTableElement;
     }
-
-    private __minX: number;
-    private __maxX: number;
 
     private __addResizer = () => {
         if (!this.__resizerHandler) {
-            this.__resizerHandler = <HTMLElement>this.jodit.container.querySelector('.jodit_table_resizer');
+            this.__resizerHandler = this.jodit.container.querySelector(".jodit_table_resizer") as HTMLElement;
             if (!this.__resizerHandler) {
                 this.__resizerHandler = dom('<div class="jodit_table_resizer"></div>', this.jodit.ownerDocument);
-                let startX: number = 0;//, startLeft = 0;
+                let startX: number = 0; // , startLeft = 0;
                 this.jodit.events
-                    .on(this.__resizerHandler,'mousedown touchstart', (event: MouseEvent) => {
+                    .on(this.__resizerHandler, "mousedown touchstart", (event: MouseEvent) => {
 
                         this.__drag = true;
 
                         startX = event.clientX;
 
                         this.jodit.lock(this.__key);
-                        this.__resizerHandler.classList.add('jodit_table_resizer-moved');
+                        this.__resizerHandler.classList.add("jodit_table_resizer-moved");
 
                         let box: ClientRect,
                             tableBox: ClientRect = this.__workTable.getBoundingClientRect();
@@ -304,7 +478,7 @@ export class TableProcessor extends Component{
                         this.__maxX = 1000000;
 
                         if (this.__wholeTable !== null) {
-                            tableBox = (<HTMLElement>this.__workTable.parentNode).getBoundingClientRect();
+                            tableBox = (this.__workTable.parentNode as HTMLElement).getBoundingClientRect();
                             this.__minX = tableBox.left;
                             this.__maxX = tableBox.left + tableBox.width;
                         } else {
@@ -325,7 +499,7 @@ export class TableProcessor extends Component{
 
                         return false;
                     })
-                    .on(this.jodit.ownerWindow, 'mousemove touchmoove', (event: MouseEvent) => {
+                    .on(this.jodit.ownerWindow, "mousemove touchmoove", (event: MouseEvent) => {
                         if (this.__drag) {
                             let x = event.clientX;
 
@@ -337,10 +511,10 @@ export class TableProcessor extends Component{
                             }
 
                             this.__resizerDelta = x - startX;
-                            this.__resizerHandler.style.left =  x + 'px';
+                            this.__resizerHandler.style.left =  x + "px";
 
                             this.jodit.editorWindow.getSelection().removeAllRanges();
-                            if(event.preventDefault) {
+                            if (event.preventDefault) {
                                 event.preventDefault();
                             }
                         }
@@ -349,7 +523,7 @@ export class TableProcessor extends Component{
                 this.jodit.container.appendChild(this.__resizerHandler);
             }
         }
-    };
+    }
 
     /**
      * Calc helper resizer position
@@ -366,204 +540,26 @@ export class TableProcessor extends Component{
         if (offsetX <= consts.NEARBY || box.width - offsetX <= consts.NEARBY) {
             const parentBox: Bound = offset(table, this.jodit, this.jodit.editorDocument);
 
-            this.__resizerHandler.style.left = (offsetX <= consts.NEARBY ? box.left : box.left + box.width) + delta + 'px';
-            this.__resizerHandler.style.height = parentBox.height  + 'px';
-            this.__resizerHandler.style.top = parentBox.top  + 'px';
-            this.__resizerHandler.style.display = 'block';
+            this.__resizerHandler.style.left = (offsetX <= consts.NEARBY ? box.left : box.left + box.width) + delta + "px";
+            this.__resizerHandler.style.height = parentBox.height  + "px";
+            this.__resizerHandler.style.top = parentBox.top  + "px";
+            this.__resizerHandler.style.display = "block";
 
             if (offsetX <= consts.NEARBY) {
-                const prevTD = <HTMLTableCellElement>Dom.prev(cell, TableProcessor.isCell, <HTMLElement>cell.parentNode);
+                const prevTD = Dom.prev(cell, TableProcessor.isCell, cell.parentNode as HTMLElement) as HTMLTableCellElement;
                 if (prevTD) {
                     this.__setWorkCell(prevTD);
                 } else {
                     this.__setWorkCell(cell, true);
                 }
             } else {
-                const nextTD = Dom.next(cell, TableProcessor.isCell, <HTMLElement>cell.parentNode);
+                const nextTD = Dom.next(cell, TableProcessor.isCell, cell.parentNode as HTMLElement);
                 this.__setWorkCell(cell, !nextTD ? false : null);
             }
 
         } else {
-            this.__resizerHandler.style.display = 'none';
+            this.__resizerHandler.style.display = "none";
         }
-    }
-
-    observe(table: HTMLTableElement) {
-        (<any>table)[this.__key] = true;
-        let start: HTMLTableCellElement;
-
-        this.jodit.events
-            .on(table, 'mousedown touchstart', (event: MouseEvent) => {
-                if (this.jodit.options.readonly) {
-                    return;
-                }
-
-                const cell: HTMLTableCellElement = <HTMLTableCellElement>Dom.up(<HTMLElement>event.target, TableProcessor.isCell, table);
-                if (cell && cell instanceof (<any>this.jodit.editorWindow).HTMLElement) {
-                    if (!cell.firstChild) {
-                        cell.appendChild(this.jodit.editorDocument.createElement('br'))
-                    }
-
-                    start = cell;
-                    Table.addSelected(cell);
-                    this.__selectMode = true;
-                }
-            })
-            .on(table,'mouseleave', (e: MouseEvent) => {
-                if (this.__resizerHandler && this.__resizerHandler !== e.relatedTarget) {
-                    this.__resizerHandler.style.display = 'none';
-                }
-            })
-            .on(table,'mousemove touchmove', (event: MouseEvent) => {
-                if (this.jodit.options.readonly) {
-                    return;
-                }
-
-                if (this.__drag || this.jodit.isLockedNotBy(this.__key)) {
-                    return;
-                }
-
-                const cell = <HTMLTableCellElement>Dom.up(<HTMLElement>event.target, TableProcessor.isCell, table);
-
-                if (cell) {
-                    if (this.__selectMode) {
-                        if (cell !== start) {
-                            this.jodit.lock(this.__key);
-                            this.jodit.editorWindow.getSelection().removeAllRanges();
-                            if(event.preventDefault) {
-                                event.preventDefault();
-                            }
-                        }
-                        this.__deSelectAll(table);
-                        const bound = Table.getSelectedBound(table, [cell, start]),
-                            box = Table.formalMatrix(table);
-
-                        for (let i = bound[0][0]; i <= bound[1][0]; i += 1) {
-                            for (let j = bound[0][1]; j <= bound[1][1]; j += 1) {
-                                Table.addSelected(box[i][j])
-                            }
-                        }
-
-                        const   max = box[bound[1][0]][bound[1][1]],
-                                min = box[bound[0][0]][bound[0][1]];
-
-                        this.jodit.events
-                            .fire('showPopup', table, (): Bound => {
-                                const minOffset: Bound = offset(min, this.jodit, this.jodit.editorDocument);
-                                const maxOffset: Bound = offset(max, this.jodit, this.jodit.editorDocument);
-
-                                return  {
-                                    left: minOffset.left,
-                                    top: minOffset.top,
-                                    width: maxOffset.left - minOffset.left + maxOffset.width,
-                                    height: maxOffset.top - minOffset.top + maxOffset.height
-                                };
-                            });
-
-                        event.stopPropagation();
-                    } else {
-                        this.__calcResizerPosition(table, cell, event.offsetX);
-                    }
-                }
-            });
-
-        this.__addResizer();
-    }
-
-    /**
-     *
-     * @param {Jodit} editor
-     */
-    constructor(editor: Jodit) {
-        super(editor);
-
-        if (!editor.options.useTableProcessor) {
-            return;
-        }
-
-        editor.events
-            .on(this.jodit.ownerWindow, 'mouseup touchend', () => {
-                if (this.__selectMode || this.__drag) {
-                    this.__selectMode = false;
-                    this.jodit.unlock();
-                }
-                if (this.__resizerHandler && this.__drag) {
-                    this.__drag = false;
-                    this.__resizerHandler.classList.remove('jodit_table_resizer-moved');
-
-                    // resize column
-                    if (this.__wholeTable === null) {
-                        let __marked: HTMLTableCellElement[] = [];
-                        Table.setColumnWidthByDelta(this.__workTable, Table.formalCoordinate(this.__workTable, this.__workCell, true)[1], this.__resizerDelta, true, __marked);
-                        const nextTD = <HTMLTableCellElement>Dom.next(this.__workCell, TableProcessor.isCell, <HTMLElement>this.__workCell.parentNode);
-                        Table.setColumnWidthByDelta(this.__workTable, Table.formalCoordinate(this.__workTable, nextTD)[1], -this.__resizerDelta, false, __marked);
-                    } else {
-                        const width = this.__workTable.offsetWidth,
-                            parentWidth = getContentWidth(<HTMLElement>this.__workTable.parentNode, this.jodit.editorWindow);
-
-                        // right side
-                        if (!this.__wholeTable) {
-                            this.__workTable.style.width = ((width + this.__resizerDelta)/parentWidth) * 100 + '%';
-                        } else {
-                            let margin = parseInt(this.jodit.editorWindow.getComputedStyle(this.__workTable).marginLeft || '0', 10);
-                            this.__workTable.style.width = ((width - this.__resizerDelta)/parentWidth) * 100 + '%';
-                            this.__workTable.style.marginLeft = ((margin + this.__resizerDelta)/parentWidth) * 100 + '%';
-                        }
-
-                    }
-                    editor.setEditorValue();
-                    editor.selection.focus();
-                }
-            })
-            .on(this.jodit.ownerWindow, 'scroll', () => {
-                if (this.__drag) {
-                    let parent = <HTMLElement>Dom.up(this.__workCell, (elm: Node | null) => (elm && elm.nodeName === 'TABLE'), editor.editor);
-                    if (parent) {
-                        let parentBox = parent.getBoundingClientRect();
-                        this.__resizerHandler.style.top = parentBox.top  + 'px';
-                    }
-                }
-            })
-            .on(this.jodit.ownerWindow, 'mousedown touchend', (event: MouseEvent) => {
-                // need use event['originalEvent'] because of IE can not set target from another window to current window
-                const current_cell: HTMLTableCellElement = <HTMLTableCellElement>Dom.closest(<HTMLElement>(<any>event)['originalEvent'].target, 'TD|TH', this.jodit.editor);
-                let table: HTMLTableElement|null = null;
-
-                if (current_cell instanceof (<any>this.jodit.editorWindow).HTMLTableCellElement) {
-                    table = <HTMLTableElement>Dom.closest(current_cell, 'table', this.jodit.editor)
-                }
-
-                if (table) {
-                    this.__deSelectAll(table, current_cell instanceof (<any>this.jodit.editorWindow).HTMLTableCellElement ? current_cell : false);
-                } else {
-                    this.__deSelectAll();
-                }
-            })
-            .on('afterGetValueFromEditor', (data: {value: string}) => {
-                data.value = data.value.replace(new RegExp(`([\s]*)${consts.JODIT_SELECTED_CELL_MARKER}="1"`, 'g'), '');
-            })
-            .on('change afterCommand afterSetMode', () => {
-                (<HTMLTableElement[]>$$('table', editor.editor)).forEach((table: HTMLTableElement) => {
-                    if (!(<any>table)[this.__key]) {
-                        this.observe(table);
-                    }
-                })
-            })
-            .on('beforeSetMode', () => {
-                Table.getAllSelectedCells(editor.editor).forEach((td) => {
-                    Table.restoreSelection(td);
-                    Table.normalizeTable(<HTMLTableElement>Dom.closest(td, 'table', editor.editor))
-                })
-            })
-            .on('keydown', (event: KeyboardEvent) => {
-                if (event.which === consts.KEY_TAB) {
-                    (<HTMLTableElement[]>$$('table', editor.editor)).forEach((table: HTMLTableElement) => {
-                        this.__deSelectAll(table);
-                    })
-                }
-            })
-            .on('beforeCommand', this.onExecCommand.bind(this));
-
     }
 
     /**
@@ -572,52 +568,52 @@ export class TableProcessor extends Component{
      */
     private onExecCommand = (command: string): false | void => {
         if (/table(splitv|splitg|merge|empty|bin|binrow|bincolumn|addcolumn|addrow)/.test(command)) {
-            command = command.replace('table', '');
+            command = command.replace("table", "");
             const cells = Table.getAllSelectedCells(this.jodit.editor);
             if (cells.length) {
-                let cell: HTMLTableCellElement|undefined = cells.shift();
+                const cell: HTMLTableCellElement|undefined = cells.shift();
 
                 if (!cell) {
                     return;
                 }
 
-                const  table = <HTMLTableElement>Dom.closest(cell, 'table', this.jodit.editor);
+                const  table = Dom.closest(cell, "table", this.jodit.editor) as HTMLTableElement;
 
                 switch (command) {
-                    case 'splitv':
+                    case "splitv":
                         Table.splitVertical(table);
                         break;
-                    case 'splitg':
+                    case "splitg":
                         Table.splitHorizontal(table);
                         break;
-                    case 'merge':
+                    case "merge":
                         Table.mergeSelected(table);
                         break;
-                    case 'empty':
-                        Table.getAllSelectedCells(this.jodit.editor).forEach(cell => cell.innerHTML = '');
+                    case "empty":
+                        Table.getAllSelectedCells(this.jodit.editor).forEach((cell) => cell.innerHTML = "");
                         break;
-                    case 'bin':
+                    case "bin":
                         if (table.parentNode) {
                             table.parentNode.removeChild(table);
                         }
                         break;
-                    case 'binrow':
-                        Table.removeRow(table, (<HTMLTableRowElement>cell.parentNode).rowIndex);
+                    case "binrow":
+                        Table.removeRow(table, (cell.parentNode as HTMLTableRowElement).rowIndex);
                         break;
-                    case 'bincolumn':
+                    case "bincolumn":
                         Table.removeColumn(table, cell.cellIndex);
                         break;
-                    case 'addcolumnafter':
-                    case 'addcolumnbefore':
-                        Table.appendColumn(table, cell.cellIndex, command === 'addcolumnafter');
+                    case "addcolumnafter":
+                    case "addcolumnbefore":
+                        Table.appendColumn(table, cell.cellIndex, command === "addcolumnafter");
                         break;
-                    case 'addrowafter':
-                    case 'addrowbefore':
-                        Table.appendRow(table, <HTMLTableRowElement>cell.parentNode, command === 'addrowafter');
+                    case "addrowafter":
+                    case "addrowbefore":
+                        Table.appendRow(table, cell.parentNode as HTMLTableRowElement, command === "addrowafter");
                         break;
                 }
             }
             return false;
         }
-    };
+    }
 }

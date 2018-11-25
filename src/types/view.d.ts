@@ -13,10 +13,10 @@ interface IViewOptions {
     removeButtons: string[];
     buttons: Buttons;
     zIndex?: number;
-    fullsize?: boolean,
-    globalFullsize?: boolean,
-    showTooltip?: boolean,
-    useNativeTooltip?: boolean,
+    fullsize?: boolean;
+    globalFullsize?: boolean;
+    showTooltip?: boolean;
+    useNativeTooltip?: boolean;
 }
 
 interface IViewBased {

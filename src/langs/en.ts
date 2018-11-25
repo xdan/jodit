@@ -1,5 +1,5 @@
 import { Dictionary } from "../types";
 
-export default <Dictionary<string>> {
-    'Type something': 'Start writing...',
-};
+export default {
+    "Type something": "Start writing...",
+} as Dictionary<string>;

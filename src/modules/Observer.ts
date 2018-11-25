@@ -4,12 +4,12 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Config } from '../Config'
-import { Component } from './Component'
-import { Snapshot, SnapshotType } from './Snapshot'
-import { Stack } from './Stack'
+import { Config } from "../Config";
 import { Jodit } from "../Jodit";
+import { Component } from "./Component";
 import { debounce } from "./Helpers";
+import { Snapshot, SnapshotType } from "./Snapshot";
+import { Stack } from "./Stack";
 
 /**
  * @property{object} observer module settings {@link Observer|Observer}
@@ -19,12 +19,12 @@ declare module "../Config" {
     interface Config {
         observer: {
             timeout: number;
-        }
+        };
     }
 }
 
 Config.prototype.observer = {
-    timeout: 100
+    timeout: 100,
 };
 
 export class Command {
@@ -39,10 +39,10 @@ export class Command {
         this.newValue = newValue;
     }
 
-    undo () {
+    public undo() {
         this.observer.snapshot.restore(this.oldValue);
     }
-    redo () {
+    public redo() {
         this.observer.snapshot.restore(this.newValue);
     }
 }
@@ -59,27 +59,17 @@ export class Observer extends Component {
     /**
      * @property {Stack} stack
      */
-    stack: Stack;
+    public stack: Stack;
 
     /**
      * @property{Snapshot} snapshot
      */
-    snapshot: Snapshot;
+    public snapshot: Snapshot;
 
     private  __startValue: SnapshotType;
     private __newValue: SnapshotType;
 
-
-    private onChangeStack = () => {
-        this.__newValue = this.snapshot.make();
-        if (!Snapshot.equal(this.__newValue, this.__startValue)) {
-            this.stack.push(new Command(this.__startValue, this.__newValue, this));
-            this.__startValue = this.__newValue;
-            this.changeStack();
-        }
-    };
-
-    constructor (editor: Jodit) {
+    constructor(editor: Jodit) {
         super(editor);
 
         this.stack = new Stack();
@@ -89,16 +79,16 @@ export class Observer extends Component {
         const onChangeStack: Function = debounce(this.onChangeStack, editor.defaultTimeout);
 
         editor.events
-            .on('afterInit', () => {
+            .on("afterInit", () => {
                 this.__startValue = this.snapshot.make();
                 editor.events
                     // save selection
-                    .on('changeSelection selectionstart selectionchange mousedown mouseup keydown keyup', () => {
+                    .on("changeSelection selectionstart selectionchange mousedown mouseup keydown keyup", () => {
                         if (this.__startValue.html === this.jodit.getNativeEditorValue()) {
                             this.__startValue = this.snapshot.make();
                         }
                     })
-                    .on('change', () => {
+                    .on("change", () => {
                         if (!this.snapshot.isBlocked) {
                             onChangeStack();
                         }
@@ -109,7 +99,7 @@ export class Observer extends Component {
     /**
      * Return state of the WYSIWYG editor to step back
      */
-    redo () {
+    public redo() {
         if (this.stack.redo()) {
             this.__startValue = this.snapshot.make();
             this.changeStack();
@@ -119,20 +109,29 @@ export class Observer extends Component {
     /**
      * Return the state of the WYSIWYG editor to step forward
      */
-    undo () {
+    public undo() {
         if (this.stack.undo()) {
             this.__startValue = this.snapshot.make();
             this.changeStack();
         }
     }
 
-    clear() {
+    public clear() {
         this.__startValue = this.snapshot.make();
         this.stack.clear();
         this.changeStack();
     }
 
-    changeStack() {
-        this.jodit && this.jodit.events && this.jodit.events.fire('changeStack');
+    public changeStack() {
+        this.jodit && this.jodit.events && this.jodit.events.fire("changeStack");
+    }
+
+    private onChangeStack = () => {
+        this.__newValue = this.snapshot.make();
+        if (!Snapshot.equal(this.__newValue, this.__startValue)) {
+            this.stack.push(new Command(this.__startValue, this.__newValue, this));
+            this.__startValue = this.__newValue;
+            this.changeStack();
+        }
     }
 }

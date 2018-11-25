@@ -4,8 +4,8 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Jodit } from "../Jodit";
 import { Config } from "../Config";
+import { Jodit } from "../Jodit";
 import { Component } from "../modules/Component";
 import { normalizeKeyAliases } from "../modules/Helpers";
 import { Dictionary } from "../types";
@@ -13,7 +13,7 @@ import { Dictionary } from "../types";
 declare module "../Config" {
 
     interface Config {
-        commandToHotkeys: Dictionary<string | string[]>
+        commandToHotkeys: Dictionary<string | string[]>;
     }
 }
 
@@ -29,17 +29,17 @@ declare module "../Config" {
  * @type {{}}
  */
 Config.prototype.commandToHotkeys = {
-    removeFormat: ['ctrl+shift+m', 'cmd+shift+m'],
-    insertOrderedList: ['ctrl+shift+7', 'cmd+shift+7'],
-    insertUnorderedList: ['ctrl+shift+8, cmd+shift+8'],
-    selectall: ['ctrl+a', 'cmd+a'],
+    removeFormat: ["ctrl+shift+m", "cmd+shift+m"],
+    insertOrderedList: ["ctrl+shift+7", "cmd+shift+7"],
+    insertUnorderedList: ["ctrl+shift+8, cmd+shift+8"],
+    selectall: ["ctrl+a", "cmd+a"],
 };
 
 /**
  * Allow set hotkey for command or button
  */
-export class hotkeys extends Component{
-    specialKeys: {[key: number]: string} = {
+export class hotkeys extends Component {
+    public specialKeys: {[key: number]: string} = {
         8: "backspace",
         9: "tab",
         10: "return",
@@ -104,24 +104,7 @@ export class hotkeys extends Component{
         219: "[",
         220: "\\",
         221: "]",
-        222: "'"
-    };
-
-
-    private onKeyPress = (event: KeyboardEvent): string => {
-        const
-            special: string | false = this.specialKeys[event.which],
-            character: string = (event.key || String.fromCharCode(event.which)).toLowerCase();
-
-        const modif: string[] = [special || character];
-
-        ["alt", "ctrl", "shift", "meta"].forEach( (specialKey) => {
-            if ((<any>event)[specialKey + 'Key'] && special !== specialKey) {
-                modif.push(specialKey);
-            }
-        });
-
-        return normalizeKeyAliases(modif.join('+'));
+        222: "'",
     };
 
     constructor(editor: Jodit) {
@@ -136,31 +119,46 @@ export class hotkeys extends Component{
             }
         });
 
-
         editor.events
-            .on('afterInit', () => {
+            .on("afterInit", () => {
                 let itIsHotkey: boolean = false;
 
                 editor.events
-                    .on('keydown', (event: KeyboardEvent) : void | false => {
+                    .on("keydown", (event: KeyboardEvent): void | false => {
                         const shortcut: string = this.onKeyPress(event);
 
                         if (this.jodit.events.fire(shortcut, event.type) === false) {
                             itIsHotkey = true;
 
-                            editor.events.stopPropagation('keydown');
+                            editor.events.stopPropagation("keydown");
 
                             return false;
                         }
 
                     }, void(0), void(0), true)
-                    .on('keyup', () : void | false => {
+                    .on("keyup", (): void | false => {
                         if (itIsHotkey) {
                             itIsHotkey = false;
-                            editor.events.stopPropagation('keyup');
+                            editor.events.stopPropagation("keyup");
                             return false;
                         }
                     }, void(0), void(0), true);
             });
+    }
+
+    private onKeyPress = (event: KeyboardEvent): string => {
+        const
+            special: string | false = this.specialKeys[event.which],
+            character: string = (event.key || String.fromCharCode(event.which)).toLowerCase();
+
+        const modif: string[] = [special || character];
+
+        ["alt", "ctrl", "shift", "meta"].forEach( (specialKey) => {
+            if ((event as any)[specialKey + "Key"] && special !== specialKey) {
+                modif.push(specialKey);
+            }
+        });
+
+        return normalizeKeyAliases(modif.join("+"));
     }
 }

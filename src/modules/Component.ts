@@ -5,45 +5,51 @@
  */
 
 import { Jodit } from "../Jodit";
-import { IViewBased } from "../types/view";
 import { Dictionary } from "../types";
-
+import { IViewBased } from "../types/view";
 
 export class Component {
 
     /**
      * @property{string} ID attribute for source element, id add {id}_editor it's editor's id
      */
-    id: string;
+    public id: string;
 
-    jodit: Jodit;
+    public jodit: Jodit;
+
+    /**
+     * Editor was destructed
+     *
+     * @type {boolean}
+     */
+    public isDestructed: boolean = false;
+
+    protected __whoLocked: string | false = "";
+
+    private __modulesInstances: Dictionary<Component> = {};
 
     constructor(jodit?: IViewBased | Jodit) {
         if (jodit) {
-            this.jodit = <Jodit>jodit;
+            this.jodit = jodit as Jodit;
             if (jodit instanceof Jodit && this.jodit.components) {
                 this.jodit.components.push(this);
             }
         }
     }
 
-    protected __whoLocked: string | false = '';
+    public isLocked = (): boolean => {
+        return this.__whoLocked !== "";
+    }
 
-    isLocked = (): boolean => {
-        return this.__whoLocked !== '';
-    };
-
-    isLockedNotBy = (name: string): boolean => {
+    public isLockedNotBy = (name: string): boolean => {
         return this.isLocked() && this.__whoLocked !== name;
-    };
+    }
 
-    destruct() {}
+    public destruct() {}
 
-    private __modulesInstances: Dictionary<Component> = {};
-
-    getInstance(moduleName: string, options?: object): Component {
+    public getInstance(moduleName: string, options?: object): Component {
         if (Jodit.modules[moduleName] === undefined) {
-            throw new Error('Need real module name')
+            throw new Error("Need real module name");
         }
 
         if (this.__modulesInstances[moduleName] === undefined) {
@@ -52,11 +58,4 @@ export class Component {
 
         return this.__modulesInstances[moduleName];
     }
-
-    /**
-     * Editor was destructed
-     *
-     * @type {boolean}
-     */
-    isDestructed: boolean = false;
 }

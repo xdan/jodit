@@ -10,22 +10,22 @@
 
 import { Dictionary } from "../types";
 
-export type EventHandlerBlock = {
-    event: string,
-    originalCallback: Function,
-    syntheticCallback: Function
-};
+export interface EventHandlerBlock {
+    event: string;
+    originalCallback: Function;
+    syntheticCallback: Function;
+}
 
 export class EventHandlersStore {
-    private __store: Dictionary<Dictionary<Array<EventHandlerBlock>>> = {};
+    private __store: Dictionary<Dictionary<EventHandlerBlock[]>> = {};
 
-    get(event: string, namespace: string):  Array<EventHandlerBlock> | void{
+    public get(event: string, namespace: string): EventHandlerBlock[] | void {
         if (this.__store[namespace] !== undefined) {
             return this.__store[namespace][event];
         }
     }
 
-    indexOf(event: string, namespace: string,  originalCallback: Function): false|number {
+    public indexOf(event: string, namespace: string,  originalCallback: Function): false|number {
         const blocks: EventHandlerBlock[] | void = this.get(event, namespace);
 
         if (blocks) {
@@ -39,15 +39,15 @@ export class EventHandlersStore {
         return false;
     }
 
-    namespaces(): string[] {
+    public namespaces(): string[] {
         return Object.keys(this.__store);
     }
 
-    events(namespace: string): string[] {
+    public events(namespace: string): string[] {
         return this.__store[namespace] ? Object.keys(this.__store[namespace]) : [];
     }
 
-    set(event: string, namespace: string, data: EventHandlerBlock, onTop: boolean = false) {
+    public set(event: string, namespace: string, data: EventHandlerBlock, onTop: boolean = false) {
         if (this.__store[namespace] === undefined) {
             this.__store[namespace] = {};
         }
@@ -65,8 +65,6 @@ export class EventHandlersStore {
 }
 
 export class EventsNative {
-    private __defaultNameSpace: string = 'JoditEventDefaultNamespace';
-    private __key: string = '__JoditEventsNativeNamespaces';
 
     /**
      * Get current event name
@@ -82,73 +80,20 @@ export class EventsNative {
      * });
      * ```
      */
-    current: string[] = [];
+    public current: string[] = [];
+    private __defaultNameSpace: string = "JoditEventDefaultNamespace";
+    private __key: string = "__JoditEventsNativeNamespaces";
 
     private doc: Document = document;
 
-    constructor(doc?: Document){
+    private __stopped: EventHandlerBlock[][] = [];
+
+    constructor(doc?: Document) {
         if (doc) {
             this.doc = doc;
         }
         this.__key += (new Date()).getTime();
     }
-
-    private eachEvent(events: string, callback: (event: string, namespace: string) => void) {
-        const eventParts: string[] = events.split(/[\s,]+/);
-
-        eventParts.forEach((eventNameSpace: string) => {
-            const eventAndNameSpace: string[] = eventNameSpace.split('.');
-
-            const namespace: string = eventAndNameSpace[1] || this.__defaultNameSpace;
-
-            callback.call(this, eventAndNameSpace[0], namespace);
-        });
-    }
-
-    private getStore(subject: any): EventHandlersStore {
-        if (subject[this.__key] === undefined) {
-            const store: EventHandlersStore = new EventHandlersStore();
-
-            Object.defineProperty(subject, this.__key, {
-                enumerable: false,
-                configurable: true,
-                value: store
-            });
-        }
-
-        return subject[this.__key];
-    }
-    private clearStore(subject: any) {
-        if (subject[this.__key] !== undefined) {
-            delete subject[this.__key];
-        }
-    }
-
-    private prepareEvent = (event: TouchEvent | MouseEvent | ClipboardEvent) => {
-        if (event.cancelBubble) {
-            return;
-        }
-
-        if (event.type.match(/^touch/) && (<TouchEvent>event).changedTouches && (<TouchEvent>event).changedTouches.length) {
-            ['clientX', 'clientY', 'pageX', 'pageY'].forEach((key: string) => {
-                Object.defineProperty(event, key, {value: (<any>(<TouchEvent>event).changedTouches[0])[key], configurable: true, enumerable: true});
-            })
-        }
-
-        if (!(<any>event)['originalEvent']) {
-            (<any>event)['originalEvent'] = event;
-        }
-
-        if (event.type === 'paste' && (<ClipboardEvent>event).clipboardData === undefined && (<any>this.doc.defaultView).clipboardData) {
-            Object.defineProperty(event, 'clipboardData', {
-                get: () => {
-                    return (<any>this.doc.defaultView).clipboardData;
-                },
-                configurable: true,
-                enumerable: true
-            });
-        }
-    };
 
     /**
      * Sets the handler for the specified event ( Event List ) for a given element .
@@ -174,26 +119,26 @@ export class EventsNative {
      * }, 'a');
      * ```
      */
-    on(subjectOrEvents: string, eventsOrCallback: Function, handlerOrSelector?: void, selector?: string, onTop?: boolean): EventsNative;
-    on(subjectOrEvents: object, eventsOrCallback: string, handlerOrSelector: Function, selector?: string, onTop?: boolean): EventsNative;
-    on(subjectOrEvents: object | string, eventsOrCallback: string | Function, handlerOrSelector?: Function | void, selector?: string, onTop: boolean = false): EventsNative {
-        const subject: object = typeof subjectOrEvents === 'string' ? this : subjectOrEvents;
-        const events: string = typeof eventsOrCallback === 'string' ? eventsOrCallback : <string>subjectOrEvents;
+    public on(subjectOrEvents: string, eventsOrCallback: Function, handlerOrSelector?: void, selector?: string, onTop?: boolean): EventsNative;
+    public on(subjectOrEvents: object, eventsOrCallback: string, handlerOrSelector: Function, selector?: string, onTop?: boolean): EventsNative;
+    public on(subjectOrEvents: object | string, eventsOrCallback: string | Function, handlerOrSelector?: Function | void, selector?: string, onTop: boolean = false): EventsNative {
+        const subject: object = typeof subjectOrEvents === "string" ? this : subjectOrEvents;
+        const events: string = typeof eventsOrCallback === "string" ? eventsOrCallback : subjectOrEvents as string;
 
-        let callback: Function = <Function>handlerOrSelector;
+        let callback: Function = handlerOrSelector as Function;
 
-        if (callback === undefined && typeof eventsOrCallback === 'function') {
-            callback = <Function>eventsOrCallback;
+        if (callback === undefined && typeof eventsOrCallback === "function") {
+            callback = eventsOrCallback as Function;
         }
 
         const store: EventHandlersStore = this.getStore(subject);
 
-        if (typeof events !== 'string' || events === '') {
-            throw new Error('Need events names');
+        if (typeof events !== "string" || events === "") {
+            throw new Error("Need events names");
         }
 
-        if (typeof callback !== 'function') {
-            throw new Error('Need event handler');
+        if (typeof callback !== "function") {
+            throw new Error("Need event handler");
         }
 
         if (Array.isArray(subject)) {
@@ -204,16 +149,16 @@ export class EventsNative {
             return this;
         }
 
-        const isDOMElement: boolean = typeof (<any>subject)['addEventListener'] === 'function';
+        const isDOMElement: boolean = typeof (subject as any).addEventListener === "function";
 
         let self: EventsNative = this,
-            syntheticCallback: Function = function (this: any) {
+            syntheticCallback: Function = function(this: any) {
                 return callback && callback.apply(this, arguments);
             };
 
         if (isDOMElement) {
-            syntheticCallback = function (this: any, event: MouseEvent | TouchEvent) {
-                self.prepareEvent(<TouchEvent>event);
+            syntheticCallback = function(this: any, event: MouseEvent | TouchEvent) {
+                self.prepareEvent(event as TouchEvent);
 
                 if (callback && callback.call(this, event) === false) {
                     event.preventDefault();
@@ -225,15 +170,15 @@ export class EventsNative {
             };
 
             if (selector) {
-                syntheticCallback = function (this: any, event: TouchEvent|MouseEvent): false | void {
+                syntheticCallback = function(this: any, event: TouchEvent|MouseEvent): false | void {
                     self.prepareEvent(event);
-                    let node: Element|null = <any>event.target;
+                    let node: Element|null = event.target as any;
                     while (node && node !== this) {
-                        if (node.matches(<string>selector)) {
-                            Object.defineProperty(event, 'target', {
+                        if (node.matches(selector as string)) {
+                            Object.defineProperty(event, "target", {
                                 value: node,
                                 configurable: true,
-                                enumerable: true
+                                enumerable: true,
                             });
 
                             if (callback && callback.call(node, event) === false) {
@@ -243,28 +188,28 @@ export class EventsNative {
 
                             return;
                         }
-                        node = <Element|null>node.parentNode;
+                        node = node.parentNode as Element|null;
                     }
-                }
+                };
             }
         }
 
         this.eachEvent(events, (event: string, namespace: string): void => {
-            if (event === '') {
-                throw new Error('Need event name');
+            if (event === "") {
+                throw new Error("Need event name");
             }
 
             if (store.indexOf(event, namespace, callback) === false) {
                 const block: EventHandlerBlock = {
                     event,
                     originalCallback: callback,
-                    syntheticCallback
+                    syntheticCallback,
                 };
 
                 store.set(event, namespace, block, onTop);
 
                 if (isDOMElement) {
-                    (<HTMLElement>subject).addEventListener(event, <EventListener>syntheticCallback, false);
+                    (subject as HTMLElement).addEventListener(event, syntheticCallback as EventListener, false);
                 }
             }
         });
@@ -302,20 +247,20 @@ export class EventsNative {
      * parent.events.off('someGlobalEvents');
      * ```
      */
-    off(subjectOrEvents: string): EventsNative;
-    off(subjectOrEvents: string, eventsOrCallback?: Function): EventsNative;
-    off(subjectOrEvents: object, eventsOrCallback?: string, handler?: Function): EventsNative;
-    off(subjectOrEvents: object | string, eventsOrCallback?: string | Function, handler?: Function): EventsNative {
-        const subject: object = typeof subjectOrEvents === 'string' ? this : subjectOrEvents;
-        const events: string = typeof eventsOrCallback === 'string' ? eventsOrCallback : <string>subjectOrEvents;
+    public off(subjectOrEvents: string): EventsNative;
+    public off(subjectOrEvents: string, eventsOrCallback?: Function): EventsNative;
+    public off(subjectOrEvents: object, eventsOrCallback?: string, handler?: Function): EventsNative;
+    public off(subjectOrEvents: object | string, eventsOrCallback?: string | Function, handler?: Function): EventsNative {
+        const subject: object = typeof subjectOrEvents === "string" ? this : subjectOrEvents;
+        const events: string = typeof eventsOrCallback === "string" ? eventsOrCallback : subjectOrEvents as string;
 
         const store: EventHandlersStore = this.getStore(subject);
 
-        let callback: Function = <Function>handler;
+        let callback: Function = handler as Function;
 
-        if (typeof events !== 'string' || !events) {
+        if (typeof events !== "string" || !events) {
             store.namespaces().forEach((namespace: string) => {
-                this.off(subject, '.' + namespace);
+                this.off(subject, "." + namespace);
             });
 
             this.clearStore(subject);
@@ -323,23 +268,23 @@ export class EventsNative {
             return this;
         }
 
-        if (callback === undefined && typeof eventsOrCallback === 'function') {
-            callback = <Function>eventsOrCallback;
+        if (callback === undefined && typeof eventsOrCallback === "function") {
+            callback = eventsOrCallback as Function;
         }
 
-        const isDOMElement: boolean = typeof (<any>subject)['removeEventListener'] === 'function',
+        const isDOMElement: boolean = typeof (subject as any).removeEventListener === "function",
             removeEventListener = (block: EventHandlerBlock) => {
                 if (isDOMElement) {
-                    (<HTMLElement>subject).removeEventListener(block.event, <EventListener>block.syntheticCallback, false);
+                    (subject as HTMLElement).removeEventListener(block.event, block.syntheticCallback as EventListener, false);
                 }
             },
             removeCallbackFromNameSpace = (event: string, namespace: string) => {
-                if (event !== '') {
+                if (event !== "") {
                     const blocks: EventHandlerBlock[] | void = store.get(event, namespace);
                     if (blocks && blocks.length) {
                         let found: boolean = false;
 
-                        if (typeof callback !== 'function') {
+                        if (typeof callback !== "function") {
                             blocks.forEach(removeEventListener);
                             blocks.length = 0;
                             found = true;
@@ -355,7 +300,7 @@ export class EventsNative {
                 } else {
                     store.events(namespace)
                         .forEach((eventName: string) => {
-                            if (eventName !== '') {
+                            if (eventName !== "") {
                                 removeCallbackFromNameSpace(eventName, namespace);
                             }
                         });
@@ -376,32 +321,12 @@ export class EventsNative {
         return this;
     }
 
-    private triggerNativeEvent(element: Document | Element | HTMLElement | Window, event: string | Event | MouseEvent) {
-        const evt: Event = this.doc.createEvent('HTMLEvents');
+    public stopPropagation(subjectOrEvents: object|string, eventsList?: string) {
+        const subject: object = typeof subjectOrEvents === "string" ? this : subjectOrEvents;
+        const events: string = typeof subjectOrEvents === "string" ? subjectOrEvents : eventsList as string;
 
-        if (typeof event === 'string') {
-            evt.initEvent(event, true, true);
-        } else {
-            evt.initEvent(event.type, event.bubbles, event.cancelable);
-
-            ['screenX', 'screenY', 'clientX', 'clientY', 'target', 'srcElement', 'currentTarget', 'timeStamp', 'which', 'keyCode'].forEach((property) => {
-                Object.defineProperty(evt, property, {value: (<any>event)[property], enumerable: true});
-            });
-
-            Object.defineProperty(evt, 'originalEvent', {value: event, enumerable: true});
-        }
-
-        element.dispatchEvent(evt);
-    }
-
-    private __stopped: Array<EventHandlerBlock[]> = [];
-
-    stopPropagation(subjectOrEvents: object|string, eventsList?: string) {
-        const subject: object = typeof subjectOrEvents === 'string' ? this : subjectOrEvents;
-        const events: string = typeof subjectOrEvents === 'string' ? subjectOrEvents : <string>eventsList;
-
-        if (typeof events !== 'string') {
-            throw new Error('Need event names');
+        if (typeof events !== "string") {
+            throw new Error("Need event names");
         }
         const store: EventHandlersStore = this.getStore(subject);
 
@@ -411,16 +336,6 @@ export class EventsNative {
                 this.__stopped.push(blocks);
             }
         });
-    }
-
-    private removeStop(__currentBlocks: EventHandlerBlock[]) {
-        if (__currentBlocks) {
-            const index: number = this.__stopped.indexOf(__currentBlocks);
-            index !== -1 && this.__stopped.splice(index, 1);
-        }
-    }
-    private isStopped(__currentBlocks: EventHandlerBlock[]): boolean {
-        return __currentBlocks !== undefined && this.__stopped.indexOf(__currentBlocks) !== -1;
     }
 
     /**
@@ -448,30 +363,30 @@ export class EventsNative {
      *  ```
      *
      */
-    fire(subjectOrEvents: string, eventsList?: any, ...args: any[]): any;
-    fire(subjectOrEvents: object, eventsList: string | Event, ...args: any[]): any;
-    fire(subjectOrEvents: object|string, eventsList?: string | any | Event, ...args: any[]): any {
+    public fire(subjectOrEvents: string, eventsList?: any, ...args: any[]): any;
+    public fire(subjectOrEvents: object, eventsList: string | Event, ...args: any[]): any;
+    public fire(subjectOrEvents: object|string, eventsList?: string | any | Event, ...args: any[]): any {
         let result: any = void(0),
             result_value: any;
 
-        const subject: object = typeof subjectOrEvents === 'string' ? this : subjectOrEvents;
-        const events: string = typeof subjectOrEvents === 'string' ? subjectOrEvents : <string>eventsList;
-        const argumentsList: Array<any> = typeof subjectOrEvents === 'string' ? [eventsList, ...args] : args;
+        const subject: object = typeof subjectOrEvents === "string" ? this : subjectOrEvents;
+        const events: string = typeof subjectOrEvents === "string" ? subjectOrEvents : eventsList as string;
+        const argumentsList: any[] = typeof subjectOrEvents === "string" ? [eventsList, ...args] : args;
 
-        const isDOMElement: boolean = typeof (<any>subject)['dispatchEvent'] === 'function';
+        const isDOMElement: boolean = typeof (subject as any).dispatchEvent === "function";
 
-        if (!isDOMElement && typeof events !== 'string') {
-            throw new Error('Need events names');
+        if (!isDOMElement && typeof events !== "string") {
+            throw new Error("Need events names");
         }
 
         const store: EventHandlersStore = this.getStore(subject);
 
-        if (typeof events !== 'string' && isDOMElement) {
-            this.triggerNativeEvent(<HTMLElement>subject, eventsList);
+        if (typeof events !== "string" && isDOMElement) {
+            this.triggerNativeEvent(subject as HTMLElement, eventsList);
         } else {
             this.eachEvent(events, (event: string, namespace: string): void => {
                 if (isDOMElement) {
-                    this.triggerNativeEvent(<HTMLElement>subject, event);
+                    this.triggerNativeEvent(subject as HTMLElement, event);
                 } else {
                     const blocks: EventHandlerBlock[] | void = store.get(event, namespace);
                     if (blocks) {
@@ -499,9 +414,9 @@ export class EventsNative {
                     if (namespace === this.__defaultNameSpace && !isDOMElement) {
                         store
                             .namespaces()
-                            .filter(ns => ns !== namespace)
+                            .filter((ns) => ns !== namespace)
                             .forEach((ns: string) => {
-                                const result_second: any = this.fire.apply(this, [subject, event + '.' + ns, ...argumentsList]);
+                                const result_second: any = this.fire.apply(this, [subject, event + "." + ns, ...argumentsList]);
                                 if (result_second !== undefined) {
                                     result = result_second;
                                 }
@@ -514,7 +429,92 @@ export class EventsNative {
         return result;
     }
 
-    destruct() {
+    public destruct() {
         this.off(this);
+    }
+
+    private eachEvent(events: string, callback: (event: string, namespace: string) => void) {
+        const eventParts: string[] = events.split(/[\s,]+/);
+
+        eventParts.forEach((eventNameSpace: string) => {
+            const eventAndNameSpace: string[] = eventNameSpace.split(".");
+
+            const namespace: string = eventAndNameSpace[1] || this.__defaultNameSpace;
+
+            callback.call(this, eventAndNameSpace[0], namespace);
+        });
+    }
+
+    private getStore(subject: any): EventHandlersStore {
+        if (subject[this.__key] === undefined) {
+            const store: EventHandlersStore = new EventHandlersStore();
+
+            Object.defineProperty(subject, this.__key, {
+                enumerable: false,
+                configurable: true,
+                value: store,
+            });
+        }
+
+        return subject[this.__key];
+    }
+    private clearStore(subject: any) {
+        if (subject[this.__key] !== undefined) {
+            delete subject[this.__key];
+        }
+    }
+
+    private prepareEvent = (event: TouchEvent | MouseEvent | ClipboardEvent) => {
+        if (event.cancelBubble) {
+            return;
+        }
+
+        if (event.type.match(/^touch/) && (event as TouchEvent).changedTouches && (event as TouchEvent).changedTouches.length) {
+            ["clientX", "clientY", "pageX", "pageY"].forEach((key: string) => {
+                Object.defineProperty(event, key, {value: ((event as TouchEvent).changedTouches[0] as any)[key], configurable: true, enumerable: true});
+            });
+        }
+
+        if (!(event as any).originalEvent) {
+            (event as any).originalEvent = event;
+        }
+
+        if (event.type === "paste" && (event as ClipboardEvent).clipboardData === undefined && (this.doc.defaultView as any).clipboardData) {
+            Object.defineProperty(event, "clipboardData", {
+                get: () => {
+                    return (this.doc.defaultView as any).clipboardData;
+                },
+                configurable: true,
+                enumerable: true,
+            });
+        }
+    }
+
+    private triggerNativeEvent(element: Document | Element | HTMLElement | Window, event: string | Event | MouseEvent) {
+        const evt: Event = this.doc.createEvent("HTMLEvents");
+
+        if (typeof event === "string") {
+            evt.initEvent(event, true, true);
+        } else {
+            evt.initEvent(event.type, event.bubbles, event.cancelable);
+
+            ["screenX", "screenY", "clientX", "clientY", "target", "srcElement", "currentTarget", "timeStamp", "which", "keyCode"].forEach((property) => {
+                Object.defineProperty(evt, property, {value: (event as any)[property], enumerable: true});
+            });
+
+            Object.defineProperty(evt, "originalEvent", {value: event, enumerable: true});
+        }
+
+        element.dispatchEvent(evt);
+    }
+
+    private removeStop(__currentBlocks: EventHandlerBlock[]) {
+        if (__currentBlocks) {
+            const index: number = this.__stopped.indexOf(__currentBlocks);
+            index !== -1 && this.__stopped.splice(index, 1);
+        }
+    }
+    private isStopped(__currentBlocks: EventHandlerBlock[]): boolean {
+        return __currentBlocks !== undefined && this.__stopped.indexOf(__currentBlocks) !== -1;
     }
 }

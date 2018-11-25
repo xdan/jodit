@@ -8,20 +8,20 @@ import { Ajax } from "../modules/Ajax";
 import { Uploader } from "../modules/Uploader";
 import { Dictionary } from "./types";
 
-export type UploaderData = {
+export interface UploaderData {
     messages?: string[],
     files?: string[],
     isImages?: boolean[],
     path?: string,
     baseurl?: string,
     newfilename?: string;
-};
+}
 
-export type UploaderAnswer = {
+export interface UploaderAnswer {
     success: boolean,
     time: string,
     data: UploaderData
-};
+}
 
 export type HandlerSuccess = (resp: UploaderData) => void;
 export type HandlerError = (e: Error) => void;
@@ -152,7 +152,7 @@ export type BuildDataResult = FormData | Dictionary<string> | Promise<FormData |
  *      },
  *  });
  */
-export type UploaderOptions = {
+export interface UploaderOptions {
     url: string;
     insertImageAsBase64URI: boolean;
     imagesExtensions: string[];
@@ -172,8 +172,8 @@ export type UploaderOptions = {
 
     error: (this: Uploader, e: Error) => void;
 
-    defaultHandlerSuccess:  HandlerSuccess;
+    defaultHandlerSuccess: HandlerSuccess;
     defaultHandlerError: HandlerError;
 
     contentType: (this: Uploader, requestData: any) => string | false;
-};
+}

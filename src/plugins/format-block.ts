@@ -4,27 +4,26 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Jodit } from '../Jodit';
-import { Dom } from "../modules/Dom";
-import * as consts from '../constants';
 import { Config } from "../Config";
+import * as consts from "../constants";
+import { Jodit } from "../Jodit";
+import { Dom } from "../modules/Dom";
 import { markerInfo } from "../modules/Selection";
 import { ToolbarButton } from "../modules/toolbar/button";
 import { ControlType } from "../types/toolbar";
 
-
-Config.prototype.controls.paragraph = <ControlType>{
-    command: 'formatBlock',
+Config.prototype.controls.paragraph = {
+    command: "formatBlock",
     getLabel: (editor: Jodit, btn: ControlType, button: ToolbarButton): boolean => {
         const current: Node|false = editor.selection.current();
 
         if (current && editor.options.textIcons) {
-            const currentBox: HTMLElement = <HTMLElement>Dom.closest(current, Dom.isBlock, editor.editor) || editor.editor,
+            const currentBox: HTMLElement = Dom.closest(current, Dom.isBlock, editor.editor) as HTMLElement || editor.editor,
                 currentValue: string = currentBox.nodeName.toLowerCase();
 
-            if (btn.data && btn.data.currentValue !== currentValue && btn.list && (<any>btn.list)[currentValue]) {
-                button.textBox.innerHTML = `<span>${(<any>btn.list)[currentValue]}</span>`;
-                (<HTMLElement>button.textBox.firstChild).classList.add('jodit_icon');
+            if (btn.data && btn.data.currentValue !== currentValue && btn.list && (btn.list as any)[currentValue]) {
+                button.textBox.innerHTML = `<span>${(btn.list as any)[currentValue]}</span>`;
+                (button.textBox.firstChild as HTMLElement).classList.add("jodit_icon");
                 btn.data.currentValue = currentValue;
             }
         }
@@ -32,10 +31,10 @@ Config.prototype.controls.paragraph = <ControlType>{
         return false;
     },
     exec: (editor: Jodit, event, control: ControlType) => {
-        editor.execCommand(<string>control.command, false, control.args ? control.args[0] : undefined);
+        editor.execCommand(control.command as string, false, control.args ? control.args[0] : undefined);
     },
     data: {
-        currentValue: 'left'
+        currentValue: "left",
     },
     list: {
         p : "Normal",
@@ -49,7 +48,7 @@ Config.prototype.controls.paragraph = <ControlType>{
         const current: Node|false = editor.selection.current();
 
         if (current) {
-            const currentBox: HTMLElement = <HTMLElement>Dom.closest(current, Dom.isBlock, editor.editor);
+            const currentBox: HTMLElement = Dom.closest(current, Dom.isBlock, editor.editor) as HTMLElement;
 
             return currentBox &&
                 currentBox !== editor.editor &&
@@ -63,22 +62,22 @@ Config.prototype.controls.paragraph = <ControlType>{
         const current: Node|false = editor.selection.current();
 
         if (current) {
-            const currentBpx: HTMLElement = <HTMLElement>Dom.closest(current, Dom.isBlock, editor.editor);
+            const currentBpx: HTMLElement = Dom.closest(current, Dom.isBlock, editor.editor) as HTMLElement;
 
             return currentBpx &&
                 currentBpx !== editor.editor &&
                 control.list !== undefined &&
-                currentBpx.nodeName.toLowerCase() !== 'p' &&
-                (<any>(<any>control.list)[currentBpx.nodeName.toLowerCase()]) !== undefined;
+                currentBpx.nodeName.toLowerCase() !== "p" &&
+                ((control.list as any)[currentBpx.nodeName.toLowerCase()] as any) !== undefined;
         }
 
         return false;
     },
     template : (editor: Jodit, key: string, value: string) => {
-        return '<' + key + ' class="jodit_list_element"><span>' + editor.i18n(value) + '</span></' + key + '></li>';
+        return "<" + key + ' class="jodit_list_element"><span>' + editor.i18n(value) + "</span></" + key + "></li>";
     },
-    tooltip: "Insert format block"
-};
+    tooltip: "Insert format block",
+} as ControlType;
 
 /**
  * Process command - `formatblock`
@@ -86,15 +85,15 @@ Config.prototype.controls.paragraph = <ControlType>{
  * @param {Jodit} editor
  */
 export function formatBlock(editor: Jodit) {
-    editor.registerCommand('formatblock', (command: string, second: string, third: string): false | void => {
+    editor.registerCommand("formatblock", (command: string, second: string, third: string): false | void => {
         editor.selection.focus();
         let work: boolean = false;
 
         editor.selection.eachSelection((current: Node): false | void => {
             const selectionInfo: markerInfo[] = editor.selection.save();
-            let currentBox: HTMLElement | false = current ? <HTMLElement>Dom.up(current, Dom.isBlock, editor.editor) : false;
+            let currentBox: HTMLElement | false = current ? Dom.up(current, Dom.isBlock, editor.editor) as HTMLElement : false;
 
-            if ((!currentBox || currentBox.nodeName === 'LI') && current) {
+            if ((!currentBox || currentBox.nodeName === "LI") && current) {
                 currentBox = Dom.wrapInline(current, editor.options.enter, editor);
             }
 
@@ -107,7 +106,7 @@ export function formatBlock(editor: Jodit) {
                 if (
                     third === editor.options.enter.toLowerCase() &&
                     currentBox.parentNode &&
-                    currentBox.parentNode.nodeName === 'LI'
+                    currentBox.parentNode.nodeName === "LI"
                 ) {
                     Dom.unwrap(currentBox);
                 } else {
@@ -115,7 +114,7 @@ export function formatBlock(editor: Jodit) {
                 }
             } else {
                 if (!editor.selection.isCollapsed()) {
-                    editor.selection.applyCSS({}, third)
+                    editor.selection.applyCSS({}, third);
                 } else {
                     Dom.wrapInline(current, third, editor);
                 }
@@ -126,7 +125,7 @@ export function formatBlock(editor: Jodit) {
         });
 
         if (!work) {
-            let currentBox: HTMLElement = editor.editorDocument.createElement(third);
+            const currentBox: HTMLElement = editor.editorDocument.createElement(third);
             currentBox.innerHTML = consts.INVISIBLE_SPACE;
             editor.selection.insertNode(currentBox, false);
             editor.selection.setCursorIn(currentBox);

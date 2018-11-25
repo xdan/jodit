@@ -4,12 +4,12 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { IViewBased } from "./view";
 import { Jodit } from "../Jodit";
 import { ToolbarButton } from "../modules/toolbar/button";
 import {Dictionary} from "./types";
+import { IViewBased } from "./view";
 
-export type ControlType = {
+export interface ControlType {
     controlName?: string;
     name?: string;
     mode?: number;
@@ -43,11 +43,10 @@ export type ControlType = {
      * })
      * ```
      */
-    isActive?: (editor: IViewBased | Jodit, control: ControlType, button?: ToolbarButton) => boolean,
-    isActiveChild?: (editor: IViewBased | Jodit, control: ControlType, button?: ToolbarButton) => boolean, // for list
+    isActive?: (editor: IViewBased | Jodit, control: ControlType, button?: ToolbarButton) => boolean;
+    isActiveChild?: (editor: IViewBased | Jodit, control: ControlType, button?: ToolbarButton) => boolean; // for list
 
-    getContent?: (editor: IViewBased | Jodit, control: ControlType, button?: ToolbarButton) => string | HTMLElement,
-
+    getContent?: (editor: IViewBased | Jodit, control: ControlType, button?: ToolbarButton) => string | HTMLElement;
 
     /**
      * You can use it function for control - disable/enable button
@@ -76,10 +75,10 @@ export type ControlType = {
      * })
      * ```
      */
-    isDisable?: (editor: IViewBased | Jodit, control: ControlType, button?: ToolbarButton) => boolean,
-    isDisableChild?: (editor: IViewBased | Jodit, control: ControlType, button?: ToolbarButton) => boolean,
+    isDisable?: (editor: IViewBased | Jodit, control: ControlType, button?: ToolbarButton) => boolean;
+    isDisableChild?: (editor: IViewBased | Jodit, control: ControlType, button?: ToolbarButton) => boolean;
 
-    getLabel?: (editor: IViewBased | Jodit, control: ControlType, button?: ToolbarButton) => boolean | void,
+    getLabel?: (editor: IViewBased | Jodit, control: ControlType, button?: ToolbarButton) => boolean | void;
 
     /**
      * Drop-down list. A hash or array. You must specify the command which will be submitted for the hash key (or array value) (see .[[Jodit.execCommand]] or define 'exec' function. See example
@@ -191,12 +190,12 @@ export type ControlType = {
      * });
      * ```
      */
-    popup?:(editor: IViewBased | Jodit, current: Node|false, control: ControlType, close: Function, button?: ToolbarButton) => string | HTMLElement | false;
+    popup?: (editor: IViewBased | Jodit, current: Node|false, control: ControlType, close: Function, button?: ToolbarButton) => string | HTMLElement | false;
 
     defaultValue?: string|string[];
 }
 
-export interface ControlTypeStrong extends ControlType{
+export interface ControlTypeStrong extends ControlType {
     name: string;
 }
 

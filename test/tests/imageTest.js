@@ -803,7 +803,7 @@ describe('Test image', function() {
                 var positionResizer = offset(resizer);
                 //
                 simulateEvent('mousedown', 0, resizer.getElementsByTagName('i')[0]);
-                simulateEvent('mousemove', 0, editor.ownerWindow, function (data) {
+                    simulateEvent('mousemove', 0, editor.ownerWindow, function (data) {
                     data.clientX = positionResizer.left - 10;
                     data.clientY = positionResizer.top - 10;
                 });

@@ -4,22 +4,22 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Jodit } from '../Jodit';
 import { Config } from "../Config";
+import { BR, PARAGRAPH } from "../constants";
+import { Jodit } from "../Jodit";
 import { Dom } from "../modules/Dom";
 import { ControlType } from "../types/toolbar";
-import { BR, PARAGRAPH } from "../constants";
 
-Config.prototype.controls.indent = <ControlType>{
+Config.prototype.controls.indent = {
     tooltip: "Increase Indent",
-};
+} as ControlType;
 
-Config.prototype.controls.outdent = <ControlType>{
+Config.prototype.controls.outdent = {
     isDisable: (editor: Jodit): boolean => {
         const current: Node | false = editor.selection.current();
 
         if (current) {
-            const currentBox: HTMLElement | false = <HTMLElement | false>Dom.closest(current, Dom.isBlock, editor.editor);
+            const currentBox: HTMLElement | false = Dom.closest(current, Dom.isBlock, editor.editor) as HTMLElement | false;
             if (currentBox && currentBox.style && currentBox.style.marginLeft) {
                 return parseInt(currentBox.style.marginLeft, 10) <= 0;
             }
@@ -28,7 +28,7 @@ Config.prototype.controls.outdent = <ControlType>{
         return true;
     },
     tooltip: "Decrease Indent",
-};
+} as ControlType;
 
 declare module "../Config" {
     interface Config {
@@ -50,7 +50,7 @@ export  function indent(editor: Jodit) {
     const callback: Function = (command: string): void | false => {
         editor.selection.eachSelection((current: Node): false | void => {
             const selectionInfo = editor.selection.save();
-            let currentBox: HTMLElement|false = current ? <HTMLElement>Dom.up(current, Dom.isBlock, editor.editor) : false;
+            let currentBox: HTMLElement|false = current ? Dom.up(current, Dom.isBlock, editor.editor) as HTMLElement : false;
 
             const enter: string = editor.options.enter;
             if (!currentBox && current) {
@@ -64,29 +64,28 @@ export  function indent(editor: Jodit) {
 
             if (currentBox && currentBox.style) {
                 let marginLeft: number = currentBox.style.marginLeft ? parseInt(currentBox.style.marginLeft, 10) : 0;
-                marginLeft += editor.options.indentMargin * (command === 'outdent' ? - 1 : 1);
-                currentBox.style.marginLeft = marginLeft > 0 ? marginLeft + 'px' : '';
+                marginLeft += editor.options.indentMargin * (command === "outdent" ? - 1 : 1);
+                currentBox.style.marginLeft = marginLeft > 0 ? marginLeft + "px" : "";
 
-                if (!currentBox.getAttribute('style')) {
-                    currentBox.removeAttribute('style');
+                if (!currentBox.getAttribute("style")) {
+                    currentBox.removeAttribute("style");
                 }
             }
 
             editor.selection.restore(selectionInfo);
         });
 
-
         editor.setEditorValue();
 
         return false;
     };
 
-    editor.registerCommand('indent', {
+    editor.registerCommand("indent", {
         exec: callback,
-        hotkeys: ['ctrl+]', 'cmd+]']
+        hotkeys: ["ctrl+]", "cmd+]"],
     });
-    editor.registerCommand('outdent', {
+    editor.registerCommand("outdent", {
         exec: callback,
-        hotkeys: ['ctrl+[', 'cmd+[']
+        hotkeys: ["ctrl+[", "cmd+["],
     });
 }

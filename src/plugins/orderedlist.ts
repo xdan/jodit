@@ -4,22 +4,22 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Jodit } from '../Jodit';
-import { Dom } from "../modules/Dom";
 import { Config } from "../Config";
+import { Jodit } from "../Jodit";
+import { Dom } from "../modules/Dom";
 import { markerInfo } from "../modules/Selection";
 
 Config.prototype.controls.ul = {
-    command: 'insertUnorderedList',
-    controlName : 'ul',
+    command: "insertUnorderedList",
+    controlName : "ul",
     tags: ["ul"],
-    tooltip: "Insert Unordered List"
+    tooltip: "Insert Unordered List",
 };
 Config.prototype.controls.ol = {
-    command: 'insertOrderedList',
-    controlName : 'ol',
+    command: "insertOrderedList",
+    controlName : "ol",
     tags: ["ol"],
-    tooltip: "Insert Ordered List"
+    tooltip: "Insert Ordered List",
 };
 
 /**
@@ -27,15 +27,15 @@ Config.prototype.controls.ol = {
  */
 export function orderedlist(editor: Jodit) {
     editor.events
-        .on('afterCommand', (command: string): false | void => {
+        .on("afterCommand", (command: string): false | void => {
             if (/insert(un)?orderedlist/i.test(command)) {
-                const ul: Node | false = Dom.up(<Node>editor.selection.current(), (tag: Node | null) => (tag && /^UL|OL$/i.test(tag.nodeName)), editor.editor);
-                if (ul && ul.parentNode && ul.parentNode.nodeName === 'P') {
+                const ul: Node | false = Dom.up(editor.selection.current() as Node, (tag: Node | null) => (tag && /^UL|OL$/i.test(tag.nodeName)), editor.editor);
+                if (ul && ul.parentNode && ul.parentNode.nodeName === "P") {
                     const selection: markerInfo[] = editor.selection.save();
                     Dom.unwrap(ul.parentNode);
                     [].slice.call(ul.childNodes).forEach((li: Node) => {
-                        if (li.lastChild && li.lastChild.nodeType === Node.ELEMENT_NODE && li.lastChild.nodeName === 'BR') {
-                            li.removeChild(li.lastChild)
+                        if (li.lastChild && li.lastChild.nodeType === Node.ELEMENT_NODE && li.lastChild.nodeName === "BR") {
+                            li.removeChild(li.lastChild);
                         }
                     });
                     editor.selection.restore(selection);

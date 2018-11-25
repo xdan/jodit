@@ -19,18 +19,18 @@ export class Cookie implements IStorage {
      * Jodit.modules.Cookie.set('somename', somevalue, 5);
      * ```
      */
-    set(name: string|number, value: string|number, days ?: number) {
+    public set(name: string|number, value: string|number, days ?: number) {
         let expires: string, date;
 
         if (days) {
             date = new Date();
             date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-            expires = '; expires=' + date.toUTCString();
+            expires = "; expires=" + date.toUTCString();
         } else {
-            expires = '';
+            expires = "";
         }
 
-        document.cookie = name + "=" + value + expires + '; path=/';
+        document.cookie = name + "=" + value + expires + "; path=/";
     }
 
     /**
@@ -44,15 +44,15 @@ export class Cookie implements IStorage {
      * console.log(Jodit.modules.Cookie.get('somename'));
      * ```
      */
-    get(name: string): string | null {
-        let nameEQ: string = name + '=',
+    public get(name: string): string | null {
+        let nameEQ: string = name + "=",
             i: number,
             c: string,
-            ca = document.cookie.split(';');
+            ca = document.cookie.split(";");
 
         for (i = 0; i < ca.length; i += 1) {
             c = ca[i];
-            while (c.charAt(0) === ' ') {
+            while (c.charAt(0) === " ") {
                 c = c.substring(1, c.length);
             }
             if (c.indexOf(nameEQ) === 0) {
@@ -73,7 +73,7 @@ export class Cookie implements IStorage {
      * Jodit.modules.Cookie.remove('somename');
      * ```
      */
-    remove(name: string) {
-        this.set(name, '', -1);
+    public remove(name: string) {
+        this.set(name, "", -1);
     }
 }

@@ -10,22 +10,18 @@ export class Stack {
     private commands: Command[] = [];
     private stackPosition: number = -1;
 
-    private clearRedo() {
-        this.commands.length = this.stackPosition + 1;
-    }
-
-    clear() {
+    public clear() {
         this.commands.length = 0;
         this.stackPosition = -1;
     }
 
-    push(command: Command) {
+    public push(command: Command) {
         this.clearRedo();
         this.commands.push(command);
         this.stackPosition += 1;
     }
 
-    undo() : boolean {
+    public undo(): boolean {
         if (this.canUndo()) {
 
             if (this.commands[this.stackPosition]) {
@@ -40,7 +36,7 @@ export class Stack {
         return false;
     }
 
-    redo () : boolean {
+    public redo(): boolean {
         if (this.canRedo()) {
             this.stackPosition += 1;
 
@@ -54,11 +50,15 @@ export class Stack {
         return false;
     }
 
-    canUndo (): boolean {
+    public canUndo(): boolean {
         return this.stackPosition >= 0;
     }
 
-    canRedo (): boolean {
+    public canRedo(): boolean {
         return this.stackPosition < this.commands.length - 1;
+    }
+
+    private clearRedo() {
+        this.commands.length = this.stackPosition + 1;
     }
 }

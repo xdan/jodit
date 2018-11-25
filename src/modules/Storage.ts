@@ -12,24 +12,24 @@ export interface IStorage {
 }
 
 export class localStorageProvider implements IStorage {
-    set(key: string, value: string | number) {
+    public set(key: string, value: string | number) {
         localStorage.setItem(key, value.toString());
     }
 
-    get(key: string): string | null {
+    public get(key: string): string | null {
         return localStorage.getItem(key);
     }
 }
 
 export class Storage {
+    public prefix: string = "Jodit_";
     constructor(readonly provider: IStorage) {}
-    prefix: string = 'Jodit_';
 
-    set(key: string, value: string | number) {
+    public set(key: string, value: string | number) {
         this.provider.set(camelCase(this.prefix + key), value);
     }
 
-    get(key: string): string | null {
+    public get(key: string): string | null {
         return this.provider.get(camelCase(this.prefix + key));
     }
 }

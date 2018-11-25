@@ -4,9 +4,9 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import * as consts from '../constants';
-import { css, each, trim } from './Helpers'
+import * as consts from "../constants";
 import { Jodit } from "../Jodit";
+import { css, each, trim } from "./Helpers";
 
 export class Dom {
     /**
@@ -14,7 +14,7 @@ export class Dom {
      *
      * @param {Node} node
      */
-    static detach(node: Node) {
+    public static detach(node: Node) {
         while (node.firstChild) {
             node.removeChild(node.firstChild);
         }
@@ -27,7 +27,7 @@ export class Dom {
      *
      * @return {HTMLElement}
      */
-    static wrapInline = (current: Node, tag: Node|string, editor: Jodit): HTMLElement => {
+    public static wrapInline = (current: Node, tag: Node|string, editor: Jodit): HTMLElement => {
         let tmp: null | Node,
             first: Node = current,
             last: Node = current;
@@ -42,7 +42,7 @@ export class Dom {
                 needFindNext = true;
                 first = tmp;
             }
-        } while(needFindNext);
+        } while (needFindNext);
 
         do {
             needFindNext = false;
@@ -51,10 +51,9 @@ export class Dom {
                 needFindNext = true;
                 last = tmp;
             }
-        } while(needFindNext);
+        } while (needFindNext);
 
-
-        const wrapper = typeof tag === 'string' ? editor.editorDocument.createElement(tag) : tag;
+        const wrapper = typeof tag === "string" ? editor.editorDocument.createElement(tag) : tag;
 
         if (first.parentNode) {
             first.parentNode.insertBefore(wrapper, first);
@@ -71,11 +70,10 @@ export class Dom {
             first = next;
         }
 
-
         editor.selection.restore(selInfo);
 
-        return <HTMLElement>wrapper;
-    };
+        return wrapper as HTMLElement;
+    }
 
     /**
      *
@@ -85,11 +83,11 @@ export class Dom {
      *
      * @return {HTMLElement}
      */
-    static wrap = (current: Node, tag: Node | string, editor: Jodit): HTMLElement | null => {
+    public static wrap = (current: Node, tag: Node | string, editor: Jodit): HTMLElement | null => {
 
         const selInfo = editor.selection.save();
 
-        const wrapper = typeof tag === 'string' ? editor.editorDocument.createElement(tag) : tag;
+        const wrapper = typeof tag === "string" ? editor.editorDocument.createElement(tag) : tag;
 
         if (!current.parentNode) {
             return null;
@@ -101,15 +99,15 @@ export class Dom {
 
         editor.selection.restore(selInfo);
 
-        return <HTMLElement>wrapper;
-    };
+        return wrapper as HTMLElement;
+    }
 
     /**
      *
      * @param node
      */
-    static unwrap(node: Node) {
-        let parent: Node | null = node.parentNode,
+    public static unwrap(node: Node) {
+        const parent: Node | null = node.parentNode,
             el = node;
 
         if (parent) {
@@ -134,7 +132,7 @@ export class Dom {
      * });
      * ```
      */
-    static each (elm: Node|HTMLElement, callback: (this: Node, node: Node) => void|false): boolean {
+    public static each(elm: Node|HTMLElement, callback: (this: Node, node: Node) => void|false): boolean {
         let node: Node | null | false = elm.firstChild;
 
         if (node) {
@@ -164,12 +162,12 @@ export class Dom {
      * ```
      * @deprecated
      */
-    static create(nodeName: string, content: string|undefined, doc: Document) : HTMLElement | Text {
+    public static create(nodeName: string, content: string|undefined, doc: Document): HTMLElement | Text {
         let newnode: HTMLElement|Text;
         nodeName = nodeName.toLowerCase();
 
-        if (nodeName === 'text') {
-            newnode = doc.createTextNode(typeof content === 'string' ? content : '');
+        if (nodeName === "text") {
+            newnode = doc.createTextNode(typeof content === "string" ? content : "");
         } else {
             newnode = doc.createElement(nodeName);
             if (content !== undefined) {
@@ -194,8 +192,8 @@ export class Dom {
      * Jodit.modules.Dom.replace(parent.editor.getElementsByTagName('span')[0], 'p'); // Replace the first <span> element to the < p >
      * ```
      */
-    static replace (elm: HTMLElement, newTagName: string | HTMLElement, withAttributes = false, notMoveContent = false, doc: Document): HTMLElement {
-        const tag: HTMLElement = typeof newTagName === 'string' ? doc.createElement(newTagName) : newTagName;
+    public static replace(elm: HTMLElement, newTagName: string | HTMLElement, withAttributes = false, notMoveContent = false, doc: Document): HTMLElement {
+        const tag: HTMLElement = typeof newTagName === "string" ? doc.createElement(newTagName) : newTagName;
 
         if (!notMoveContent) {
             while (elm.firstChild) {
@@ -223,8 +221,8 @@ export class Dom {
      * @param {Window} win
      * @return {boolean}
      */
-    static isCell(elm: Node, win: Window): boolean {
-        return Dom.isNode(elm, win) && /^(td|th)$/i.test(elm.nodeName)
+    public static isCell(elm: Node, win: Window): boolean {
+        return Dom.isNode(elm, win) && /^(td|th)$/i.test(elm.nodeName);
     }
 
     /**
@@ -234,8 +232,8 @@ export class Dom {
      * @param {Window} win
      * @return {boolean}
      */
-    static isImage(elm: Node, win: Window): boolean {
-        return Dom.isNode(elm, win) && /^(img|svg|picture|canvas)$/i.test(elm.nodeName)
+    public static isImage(elm: Node, win: Window): boolean {
+        return Dom.isNode(elm, win) && /^(img|svg|picture|canvas)$/i.test(elm.nodeName);
     }
 
     /**
@@ -244,8 +242,8 @@ export class Dom {
      * @param node
      * @return {boolean}
      */
-    static isBlock(node: Node | null): boolean {
-        return (!!node && typeof node.nodeName === 'string' && consts.IS_BLOCK.test(node.nodeName));
+    public static isBlock(node: Node | null): boolean {
+        return (!!node && typeof node.nodeName === "string" && consts.IS_BLOCK.test(node.nodeName));
     }
 
     /**
@@ -253,16 +251,16 @@ export class Dom {
      *
      * @param node
      */
-    static isInlineBlock(node: Node | null): boolean {
-        return !!node && node.nodeType === Node.ELEMENT_NODE && ['inline', 'inline-block'].indexOf(css(<HTMLElement>node, 'display').toString()) !== -1;
+    public static isInlineBlock(node: Node | null): boolean {
+        return !!node && node.nodeType === Node.ELEMENT_NODE && ["inline", "inline-block"].indexOf(css(node as HTMLElement, "display").toString()) !== -1;
     }
 
     /**
      * It's block and it can be split
      *
      */
-    static canSplitBlock (node: any, win: Window): boolean {
-        return node && node instanceof (<any>win).HTMLElement &&
+    public static canSplitBlock(node: any, win: Window): boolean {
+        return node && node instanceof (win as any).HTMLElement &&
             this.isBlock(node) &&
             !/^(TD|TH|CAPTION|FORM)$/.test(node.nodeName) &&
             node.style !== void(0) && !/^(fixed|absolute)/i.test(node.style.position);
@@ -278,8 +276,8 @@ export class Dom {
      *
      * @return {boolean|Node|HTMLElement|HTMLTableCellElement} false if not found
      */
-    static prev(node: Node, condition: (element: Node | null) => boolean | null, root: HTMLElement, withChild: Boolean = true): false|Node|HTMLElement|HTMLTableCellElement{
-        return Dom.find(node, condition, root, false, 'previousSibling', withChild ? 'lastChild' : false);
+    public static prev(node: Node, condition: (element: Node | null) => boolean | null, root: HTMLElement, withChild: Boolean = true): false|Node|HTMLElement|HTMLTableCellElement {
+        return Dom.find(node, condition, root, false, "previousSibling", withChild ? "lastChild" : false);
     }
 
     /**
@@ -291,10 +289,9 @@ export class Dom {
      * @param {boolean} [withChild=true]
      * @return {boolean|Node|HTMLElement|HTMLTableCellElement}
      */
-    static next(node: Node, condition: (element: Node | null) => boolean | null, root: Node|HTMLElement, withChild: Boolean = true): false|Node|HTMLElement|HTMLTableCellElement {
-        return Dom.find(node, condition, root, undefined, undefined, withChild ? 'firstChild' : '');
+    public static next(node: Node, condition: (element: Node | null) => boolean | null, root: Node|HTMLElement, withChild: Boolean = true): false|Node|HTMLElement|HTMLTableCellElement {
+        return Dom.find(node, condition, root, undefined, undefined, withChild ? "firstChild" : "");
     }
-
 
     /**
      * Find next/prev node what `condition(next) === true`
@@ -307,7 +304,7 @@ export class Dom {
      * @param {string|boolean} [child=firstChild] firstChild or lastChild
      * @return {Node|Boolean}
      */
-    static find(node: Node, condition: (element: Node|null) => boolean | null, root: HTMLElement | Node, recurse = false, sibling = 'nextSibling', child: string|false = 'firstChild') : false|Node {
+    public static find(node: Node, condition: (element: Node|null) => boolean | null, root: HTMLElement | Node, recurse = false, sibling = "nextSibling", child: string|false = "firstChild"): false|Node {
         if (recurse && condition(node)) {
             return node;
         }
@@ -315,13 +312,13 @@ export class Dom {
         let start: Node|null = node, next: Node|null;
 
         do {
-            next = (<any>start)[sibling];
+            next = (start as any)[sibling];
             if (condition(next)) {
                 return next ? next : false;
             }
 
-            if (child && next && (<any>next)[child]) {
-                const nextOne: Node|false = Dom.find((<any>next)[child], condition, next, true, sibling, child);
+            if (child && next && (next as any)[child]) {
+                const nextOne: Node|false = Dom.find((next as any)[child], condition, next, true, sibling, child);
                 if (nextOne) {
                     return nextOne;
                 }
@@ -344,7 +341,7 @@ export class Dom {
      * @param toLeft
      * @param root
      */
-    static findInline = (node: Node | null, toLeft: boolean, root: Node): Node | null => {
+    public static findInline = (node: Node | null, toLeft: boolean, root: Node): Node | null => {
         let prevElement: Node | null = node,
             nextElement: Node | null = null;
 
@@ -359,14 +356,14 @@ export class Dom {
             } else {
                 break;
             }
-        } while(!nextElement);
+        } while (!nextElement);
 
         while (nextElement && Dom.isInlineBlock(nextElement) && (!toLeft ? nextElement.firstChild : nextElement.lastChild)) {
             nextElement = !toLeft ? nextElement.firstChild : nextElement.lastChild;
         }
 
-        return nextElement;//(nextElement !== root && Dom.isInlineBlock(nextElement)) ? nextElement : null;
-    };
+        return nextElement; // (nextElement !== root && Dom.isInlineBlock(nextElement)) ? nextElement : null;
+    }
 
     /**
      * Find next/prev node what `condition(next) === true`
@@ -378,7 +375,7 @@ export class Dom {
      * @param {string|boolean} [child=firstChild] firstChild or lastChild
      * @return {Node|Boolean}
      */
-    static findWithCurrent(node: Node, condition: (element: Node|null) => boolean, root: HTMLElement|Node, sibling: 'nextSibling'|'previousSibling' = 'nextSibling', child: 'firstChild' | 'lastChild' = 'firstChild') : false|Node {
+    public static findWithCurrent(node: Node, condition: (element: Node|null) => boolean, root: HTMLElement|Node, sibling: "nextSibling"|"previousSibling" = "nextSibling", child: "firstChild" | "lastChild" = "firstChild"): false|Node {
         let next: Node|null = node;
 
         do {
@@ -387,7 +384,7 @@ export class Dom {
             }
 
             if (child && next && next[child]) {
-                const nextOne: Node|false = Dom.findWithCurrent(<Node>next[child], condition, next, sibling, child);
+                const nextOne: Node|false = Dom.findWithCurrent(next[child] as Node, condition, next, sibling, child);
                 if (nextOne) {
                     return nextOne;
                 }
@@ -411,8 +408,8 @@ export class Dom {
      * @param  {Node} node The element of wood to be checked
      * @return {Boolean} true element is empty
      */
-    static isEmptyTextNode(node: Node): boolean {
-        return node && node.nodeType === Node.TEXT_NODE && (!node.nodeValue || node.nodeValue.replace(consts.INVISIBLE_SPACE_REG_EXP, '').length === 0);
+    public static isEmptyTextNode(node: Node): boolean {
+        return node && node.nodeType === Node.TEXT_NODE && (!node.nodeValue || node.nodeValue.replace(consts.INVISIBLE_SPACE_REG_EXP, "").length === 0);
     }
 
     /**
@@ -422,7 +419,7 @@ export class Dom {
      * @param {RegExp} condNoEmptyElement
      * @return {boolean}
      */
-    static isEmpty(node: Node, condNoEmptyElement: RegExp = /^(img|svg|canvas|input|textarea|form)$/): boolean {
+    public static isEmpty(node: Node, condNoEmptyElement: RegExp = /^(img|svg|canvas|input|textarea|form)$/): boolean {
 
         if (!node) {
             return true;
@@ -432,7 +429,7 @@ export class Dom {
             return node.nodeValue === null || trim(node.nodeValue).length === 0;
         }
 
-        return !node.nodeName.toLowerCase().match(condNoEmptyElement) && Dom.each(<HTMLElement>node, (elm: Node | null): false | void => {
+        return !node.nodeName.toLowerCase().match(condNoEmptyElement) && Dom.each(node as HTMLElement, (elm: Node | null): false | void => {
             if (
                 (
                     elm && elm.nodeType === Node.TEXT_NODE &&
@@ -454,9 +451,9 @@ export class Dom {
     /**
      * Returns true if it is a DOM node
      */
-    static isNode(object: any, win: Window): boolean {
-        if (typeof (<any>win) === "object") {
-            return object instanceof (<any>win).Node;
+    public static isNode(object: any, win: Window): boolean {
+        if (typeof (win as any) === "object") {
+            return object instanceof (win as any).Node;
         }
 
         return typeof object === "object" && typeof object.nodeType === "number" && typeof object.nodeName === "string";
@@ -470,7 +467,7 @@ export class Dom {
      * @param {Node} root Root element
      * @return {boolean|Node|HTMLElement|HTMLTableCellElement|HTMLTableElement} Return false if condition not be true
      */
-    static up(node: Node, condition: Function, root: Node): false | Node | HTMLElement | HTMLTableCellElement | HTMLTableElement {
+    public static up(node: Node, condition: Function, root: Node): false | Node | HTMLElement | HTMLTableCellElement | HTMLTableElement {
         let start = node;
 
         if (!node) {
@@ -498,15 +495,15 @@ export class Dom {
      * @param {HTMLElement} root
      * @return {Boolean|Node}
      */
-    static closest(node: Node, tags: string|Function|RegExp, root: HTMLElement): Node | HTMLTableElement | HTMLElement | false | HTMLTableCellElement {
+    public static closest(node: Node, tags: string|Function|RegExp, root: HTMLElement): Node | HTMLTableElement | HTMLElement | false | HTMLTableCellElement {
         let condition: Function;
 
-        if (typeof tags  === 'function') {
-            condition = tags
+        if (typeof tags  === "function") {
+            condition = tags;
         } else if (tags instanceof RegExp) {
-            condition = (tag: Node) => tags.test(tag.nodeName)
+            condition = (tag: Node) => tags.test(tag.nodeName);
         } else {
-            condition = (tag: Node) => (new RegExp('^(' + tags + ')$', 'i')).test(tag.nodeName)
+            condition = (tag: Node) => (new RegExp("^(" + tags + ")$", "i")).test(tag.nodeName);
         }
 
         return Dom.up(node, condition, root);
@@ -518,7 +515,7 @@ export class Dom {
      * @param elm
      * @param newElement
      */
-    static after(elm: HTMLElement, newElement: HTMLElement | DocumentFragment) {
+    public static after(elm: HTMLElement, newElement: HTMLElement | DocumentFragment) {
         const parentNode: Node | null = elm.parentNode;
 
         if (!parentNode) {
@@ -539,7 +536,7 @@ export class Dom {
      * @param {Node} to
      * @param {boolean} inStart
      */
-    static moveContent(from: Node, to: Node, inStart: boolean = false) {
+    public static moveContent(from: Node, to: Node, inStart: boolean = false) {
         const fragment: DocumentFragment = (from.ownerDocument || document).createDocumentFragment();
 
         [].slice.call(from.childNodes).forEach((node: Node) => {
@@ -562,7 +559,7 @@ export class Dom {
      * @param condition
      * @param prev
      */
-    static all(node: Node, condition: (element: Node) => boolean|void, prev: boolean = false): Node|void {
+    public static all(node: Node, condition: (element: Node) => boolean|void, prev: boolean = false): Node|void {
         let nodes: Node[] = node.childNodes ? Array.prototype.slice.call(node.childNodes) : [];
 
         if (condition(node)) {
@@ -575,7 +572,7 @@ export class Dom {
 
         nodes.forEach((child) => {
             Dom.all(child, condition, prev);
-        })
+        });
     }
 
     /**
@@ -585,7 +582,7 @@ export class Dom {
      * @param child
      * @return {boolean}
      */
-    static contains = (root: Node, child: Node): boolean => {
+    public static contains = (root: Node, child: Node): boolean => {
         while (child.parentNode) {
             if (child.parentNode === root) {
                 return true;
@@ -594,7 +591,7 @@ export class Dom {
         }
 
         return false;
-    };
+    }
 
     /**
      * Check root contains child or equal child
@@ -604,7 +601,7 @@ export class Dom {
      * @param {boolean} onlyContains
      * @return {boolean}
      */
-    static isOrContains = (root: Node, child: Node, onlyContains: boolean = false): boolean => {
+    public static isOrContains = (root: Node, child: Node, onlyContains: boolean = false): boolean => {
         return child && root && ((root === child && !onlyContains) || Dom.contains(root, child));
-    };
+    }
 }

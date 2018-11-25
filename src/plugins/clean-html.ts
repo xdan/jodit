@@ -4,13 +4,13 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Jodit } from '../Jodit';
-import { Config } from '../Config'
-import * as consts from '../constants';
-import { cleanFromWord, debounce, normalizeNode, trim } from "../modules/Helpers";
-import { Dom } from "../modules/Dom";
-import { Select } from "../modules/Selection";
+import { Config } from "../Config";
+import * as consts from "../constants";
 import { IS_INLINE } from "../constants";
+import { Jodit } from "../Jodit";
+import { Dom } from "../modules/Dom";
+import { cleanFromWord, debounce, normalizeNode, trim } from "../modules/Helpers";
+import { Select } from "../modules/Selection";
 import { Dictionary } from "../types";
 
 /**
@@ -65,10 +65,10 @@ declare module "../Config" {
             cleanOnPaste: boolean,
             fillEmptyParagraph: boolean,
             removeEmptyElements: boolean,
-            replaceOldTags: {[key:string]: string} | false,
-            allowTags: false | string | {[key:string]: string},
-            denyTags: false | string | {[key:string]: string}
-        }
+            replaceOldTags: {[key: string]: string} | false,
+            allowTags: false | string | {[key: string]: string},
+            denyTags: false | string | {[key: string]: string}
+        };
     }
 }
 
@@ -79,18 +79,17 @@ Config.prototype.cleanHTML = {
     replaceNBSP: true,
     cleanOnPaste: true,
     replaceOldTags: {
-        i: 'em',
-        b: 'strong',
+        i: "em",
+        b: "strong",
     },
     allowTags: false,
     denyTags: false,
 };
 
 Config.prototype.controls.eraser = {
-    command: 'removeFormat',
-    tooltip: 'Clear Formatting'
+    command: "removeFormat",
+    tooltip: "Clear Formatting",
 };
-
 
 /**
  * Clean HTML after removeFormat and insertHorizontalRule command
@@ -98,7 +97,7 @@ Config.prototype.controls.eraser = {
 export function cleanHtml(editor: Jodit) {
     // TODO compare this functionality and plugin paste.ts
     if (editor.options.cleanHTML.cleanOnPaste) {
-        editor.events.on('processPaste', (event: Event, html: string) => {
+        editor.events.on("processPaste", (event: Event, html: string) => {
             return cleanFromWord(html);
         });
     }
@@ -108,17 +107,17 @@ export function cleanHtml(editor: Jodit) {
         seperator = /[\s]*,[\s]*/,
         attrReg = /^(.*)[\s]*=[\s]*(.*)$/;
 
-    const getHash = (tags: false | string | Dictionary<string>): Dictionary | false=> {
+    const getHash = (tags: false | string | Dictionary<string>): Dictionary | false => {
         const tagsHash: Dictionary = {};
 
-        if (typeof tags === 'string') {
+        if (typeof tags === "string") {
             tags.split(seperator).map((elm: string) => {
                 elm = trim(elm);
-                let attr: RegExpExecArray | null = attributesReg.exec(elm),
+                const attr: RegExpExecArray | null = attributesReg.exec(elm),
                     allowAttributes: Dictionary<string | boolean> = {},
                     attributeMap = (attr: string) => {
                         attr = trim(attr);
-                        const val: Array<string> | null = attrReg.exec(attr);
+                        const val: string[] | null = attrReg.exec(attr);
                         if (val) {
                             allowAttributes[val[1]] = val[2];
                         } else {
@@ -184,7 +183,7 @@ export function cleanHtml(editor: Jodit) {
         // remove extra br
         if (
             current &&
-            node.nodeName === 'BR' &&
+            node.nodeName === "BR" &&
             hasNotEmptyTextSibling(node) &&
             !hasNotEmptyTextSibling(node, true) &&
             Dom.up(node, Dom.isBlock, editor.editor) !== Dom.up(current, Dom.isBlock, editor.editor)
@@ -198,14 +197,13 @@ export function cleanHtml(editor: Jodit) {
             node.nodeType === Node.ELEMENT_NODE &&
             node.nodeName.match(IS_INLINE) !== null &&
             !editor.selection.isMarker(node) &&
-            trim((<Element>node).innerHTML).length === 0 &&
+            trim((node as Element).innerHTML).length === 0 &&
             !Dom.isOrContains(node, current)
         );
     };
 
-
     editor.events
-        .on('change afterSetMode afterInit mousedown keydown', debounce(() => {
+        .on("change afterSetMode afterInit mousedown keydown", debounce(() => {
             if (!editor.isDestructed && editor.isEditorMode()) {
                 current = editor.selection.current();
 
@@ -213,17 +211,16 @@ export function cleanHtml(editor: Jodit) {
                     remove: Node[] = [],
                     work: boolean = false,
                     i: number =   0,
-                    replaceOldTags: {[key:string]: string} | false = editor.options.cleanHTML.replaceOldTags;
-
+                    replaceOldTags: {[key: string]: string} | false = editor.options.cleanHTML.replaceOldTags;
 
                 if (replaceOldTags && current) {
-                    const tags: string = Object.keys(replaceOldTags).join('|');
+                    const tags: string = Object.keys(replaceOldTags).join("|");
                     if (editor.selection.isCollapsed()) {
                         const oldParent: Node | false = Dom.closest(current, tags, editor.editor);
                         if (oldParent) {
                             const selInfo = editor.selection.save();
                             const tagName: string = replaceOldTags[oldParent.nodeName.toLowerCase()] || replaceOldTags[oldParent.nodeName];
-                            Dom.replace(<HTMLElement>oldParent, tagName, true, false, editor.editorDocument);
+                            Dom.replace(oldParent as HTMLElement, tagName, true, false, editor.editorDocument);
                             editor.selection.restore(selInfo);
                         }
                     }
@@ -237,21 +234,21 @@ export function cleanHtml(editor: Jodit) {
                         }
 
                         if (editor.options.cleanHTML.fillEmptyParagraph && Dom.isBlock(node) && Dom.isEmpty(node, /^(img|svg|canvas|input|textarea|form|br)$/)) {
-                            const br: HTMLBRElement = editor.editorDocument.createElement('br');
+                            const br: HTMLBRElement = editor.editorDocument.createElement("br");
                             node.appendChild(br);
                         }
 
                         if (allowTagsHash && allowTagsHash[node.nodeName] !== true) {
-                            if ((<Element>node).attributes && (<Element>node).attributes.length) {
+                            if ((node as Element).attributes && (node as Element).attributes.length) {
                                 const removeAttrs: string[] = [];
-                                for (i = 0; i < (<Element>node).attributes.length; i += 1) {
-                                    if (!allowTagsHash[node.nodeName][(<Element>node).attributes[i].name] ||
+                                for (i = 0; i < (node as Element).attributes.length; i += 1) {
+                                    if (!allowTagsHash[node.nodeName][(node as Element).attributes[i].name] ||
                                         (
-                                            allowTagsHash[node.nodeName][(<Element>node).attributes[i].name] !== true &&
-                                            allowTagsHash[node.nodeName][(<Element>node).attributes[i].name] !== (<Element>node).attributes[i].value
+                                            allowTagsHash[node.nodeName][(node as Element).attributes[i].name] !== true &&
+                                            allowTagsHash[node.nodeName][(node as Element).attributes[i].name] !== (node as Element).attributes[i].value
                                         )
                                     ) {
-                                        removeAttrs.push((<Element>node).attributes[i].name);
+                                        removeAttrs.push((node as Element).attributes[i].name);
                                     }
                                 }
 
@@ -260,7 +257,7 @@ export function cleanHtml(editor: Jodit) {
                                 }
 
                                 removeAttrs.forEach((attr: string) => {
-                                    (<Element>node).removeAttribute(attr);
+                                    (node as Element).removeAttribute(attr);
                                 });
                             }
                         }
@@ -271,22 +268,20 @@ export function cleanHtml(editor: Jodit) {
                 };
 
                 if (editor.editor.firstChild) {
-                    node = <Element>editor.editor.firstChild;
+                    node = editor.editor.firstChild as Element;
                 }
 
-
                 checkNode(node);
-
 
                 remove.forEach((node: Node) => node.parentNode && node.parentNode.removeChild(node));
 
                 if (remove.length || work) {
-                    editor.events && editor.events.fire('syncho');
+                    editor.events && editor.events.fire("syncho");
                 }
             }
         }, editor.options.cleanHTML.timeout))
         // remove invisible chars if node has another chars
-        .on('keyup', () => {
+        .on("keyup", () => {
             if (editor.options.readonly) {
                 return;
             }
@@ -298,8 +293,8 @@ export function cleanHtml(editor: Jodit) {
                 if (currentParagraph) {
                     Dom.all(currentParagraph, (node: Node) => {
                         if (node.nodeType === Node.TEXT_NODE) {
-                            if (node.nodeValue !== null && consts.INVISIBLE_SPACE_REG_EXP.test(node.nodeValue) && node.nodeValue.replace(consts.INVISIBLE_SPACE_REG_EXP, '').length !== 0) {
-                                node.nodeValue = node.nodeValue.replace(consts.INVISIBLE_SPACE_REG_EXP, '');
+                            if (node.nodeValue !== null && consts.INVISIBLE_SPACE_REG_EXP.test(node.nodeValue) && node.nodeValue.replace(consts.INVISIBLE_SPACE_REG_EXP, "").length !== 0) {
+                                node.nodeValue = node.nodeValue.replace(consts.INVISIBLE_SPACE_REG_EXP, "");
                                 if (node === current && editor.selection.isCollapsed()) {
                                     editor.selection.setCursorAfter(node);
                                 }
@@ -326,38 +321,38 @@ export function cleanHtml(editor: Jodit) {
         //         }
         //     }
         // })
-        .on('afterCommand',  (command: string) => {
+        .on("afterCommand",  (command: string) => {
             let sel: Select = editor.selection,
                 hr: HTMLHRElement | null,
                 node: Node | null;
 
             switch (command.toLowerCase()) {
-                case 'inserthorizontalrule':
-                hr = editor.editor.querySelector('hr[id=null]');
+                case "inserthorizontalrule":
+                hr = editor.editor.querySelector("hr[id=null]");
                 if (hr) {
-                    node = <Node | null>Dom.next(hr, Dom.isBlock, editor.editor, false);
+                    node = Dom.next(hr, Dom.isBlock, editor.editor, false) as Node | null;
                     if (!node) {
                         node = editor.editorDocument.createElement(editor.options.enter);
                         if (node) {
-                            Dom.after(hr, <HTMLElement>node)
+                            Dom.after(hr, node as HTMLElement);
                         }
                     }
                     sel.setCursorIn(node);
                 }
                 break;
-                case 'removeformat':
-                    node = <Node>sel.current();
+                case "removeformat":
+                    node = sel.current() as Node;
                     const clean: (elm: Node) => false | void = (elm: Node) => {
                         switch (elm.nodeType) {
                             case Node.ELEMENT_NODE:
                                 Dom.each(elm, clean);
-                                if (elm.nodeName === 'FONT') {
+                                if (elm.nodeName === "FONT") {
                                     Dom.unwrap(elm);
                                 } else {
                                     // clean some "style" attributes in selected range
-                                    [].slice.call((<Element>elm).attributes).forEach((attr: Attr) => {
-                                        if (['src', 'href', 'rel', 'content'].indexOf(attr.name.toLowerCase()) === -1) {
-                                            (<Element>elm).removeAttribute(attr.name);
+                                    [].slice.call((elm as Element).attributes).forEach((attr: Attr) => {
+                                        if (["src", "href", "rel", "content"].indexOf(attr.name.toLowerCase()) === -1) {
+                                            (elm as Element).removeAttribute(attr.name);
                                         }
                                     });
                                     normalizeNode(elm);
@@ -365,7 +360,7 @@ export function cleanHtml(editor: Jodit) {
                                 break;
                             case Node.TEXT_NODE:
                                 if (editor.options.cleanHTML.replaceNBSP && elm.nodeType === Node.TEXT_NODE && elm.nodeValue !== null && elm.nodeValue.match(consts.SPACE_REG_EXP)) {
-                                    elm.nodeValue = elm.nodeValue.replace(consts.SPACE_REG_EXP, ' ');
+                                    elm.nodeValue = elm.nodeValue.replace(consts.SPACE_REG_EXP, " ");
                                 }
                                 break;
                             default:
@@ -386,7 +381,7 @@ export function cleanHtml(editor: Jodit) {
                         }
                     }
 
-                break;
+                    break;
             }
         });
 }

@@ -4,16 +4,41 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Plugin } from "../modules/Plugin";
-import { Dialog } from "../modules/Dialog";
 import { KEY_DOWN, KEY_ENTER, KEY_UP, SPACE_REG_EXP } from "../constants";
+import { Dialog } from "../modules/Dialog";
 import { dom } from "../modules/Helpers";
+import { Plugin } from "../modules/Plugin";
 
 /**
  * Show dialog choose content to paste
  */
 export class pasteStorage extends Plugin {
     private currentIndex: number = 0;
+
+    private list: string[] = [];
+
+    private container: HTMLElement;
+    private listBox: HTMLElement;
+    private previewBox: HTMLElement;
+
+    private dialog: Dialog;
+    public afterInit() {
+        this.jodit.events.on("afterCopy", (html: string) => {
+            if (this.list.indexOf(html) !== -1) {
+                this.list.splice(this.list.indexOf(html), 1);
+            }
+
+            this.list.unshift(html);
+            if (this.list.length > 5) {
+                this.list.length = 5;
+            }
+        });
+
+        this.jodit.registerCommand("showPasteStorage", {
+            exec: this.showDialog,
+            hotkeys: ["ctrl+shift+v", "cmd+shift+v"],
+        });
+    }
     private paste = () => {
         this.jodit.selection.focus();
         this.jodit.selection.insertHTML(this.list[this.currentIndex]);
@@ -24,7 +49,7 @@ export class pasteStorage extends Plugin {
         }
         this.dialog.close();
         this.jodit.setEditorValue();
-    };
+    }
 
     private onKeyDown = (e: KeyboardEvent) => {
         let index: number = this.currentIndex;
@@ -58,19 +83,19 @@ export class pasteStorage extends Plugin {
 
         e.stopImmediatePropagation();
         e.preventDefault();
-    };
+    }
 
     private selectIndex = (index: number) => {
         [].slice.call(this.listBox.childNodes).forEach((a: HTMLAnchorElement, i: number) => {
-            a.classList.remove('jodit_active');
+            a.classList.remove("jodit_active");
             if (index === i) {
-                a.classList.add('jodit_active');
+                a.classList.add("jodit_active");
                 this.previewBox.innerHTML = this.list[index];
                 a.focus();
             }
         });
         this.currentIndex = index;
-    };
+    }
     private showDialog = () => {
         if (this.list.length < 2) {
             return;
@@ -78,97 +103,71 @@ export class pasteStorage extends Plugin {
 
         this.dialog || this.createDialog();
 
-        this.listBox.innerHTML = '';
-        this.previewBox.innerHTML = '';
+        this.listBox.innerHTML = "";
+        this.previewBox.innerHTML = "";
 
         this.list.forEach((html: string, index: number) => {
-            const a: HTMLElement = this.jodit.ownerDocument.createElement('a');
-            a.innerText = (index + 1) + '. ' + html.replace(SPACE_REG_EXP, '');
+            const a: HTMLElement = this.jodit.ownerDocument.createElement("a");
+            a.innerText = (index + 1) + ". " + html.replace(SPACE_REG_EXP, "");
 
-            a.addEventListener('keydown', this.onKeyDown);
+            a.addEventListener("keydown", this.onKeyDown);
 
-            a.setAttribute('href', 'javascript:void(0)');
-            a.setAttribute('data-index', index.toString());
-            a.setAttribute('tab-index', '-1');
+            a.setAttribute("href", "javascript:void(0)");
+            a.setAttribute("data-index", index.toString());
+            a.setAttribute("tab-index", "-1");
 
             this.listBox.appendChild(a);
         });
-
 
         this.dialog.open();
         setTimeout(() => {
             this.selectIndex(0);
         }, 100);
-    };
-
-    private list: string[] = [];
-
-    private container: HTMLElement;
-    private listBox: HTMLElement;
-    private previewBox: HTMLElement;
-
-    private dialog: Dialog;
+    }
     private createDialog() {
         this.dialog = new Dialog(this.jodit);
 
-        const pasteButton: HTMLAnchorElement = <HTMLAnchorElement>dom(
+        const pasteButton: HTMLAnchorElement = dom(
             '<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
-            '<span>' + this.jodit.i18n('Paste') + '</span>' +
-            '</a>',
-            this.jodit.ownerDocument
-        );
+            "<span>" + this.jodit.i18n("Paste") + "</span>" +
+            "</a>",
+            this.jodit.ownerDocument,
+        ) as HTMLAnchorElement;
 
-        pasteButton.addEventListener('click', this.paste);
+        pasteButton.addEventListener("click", this.paste);
 
-        const cancelButton: HTMLAnchorElement = <HTMLAnchorElement>dom(
+        const cancelButton: HTMLAnchorElement = dom(
             '<a href="javascript:void(0)" style="float:right; margin-right: 10px;" class="jodit_button">' +
-            '<span>' + this.jodit.i18n('Cancel') + '</span>' +
-            '</a>',
-            this.jodit.ownerDocument
-        );
-        cancelButton.addEventListener('click', this.dialog.close);
+            "<span>" + this.jodit.i18n("Cancel") + "</span>" +
+            "</a>",
+            this.jodit.ownerDocument,
+        ) as HTMLAnchorElement;
+        cancelButton.addEventListener("click", this.dialog.close);
 
-        this.container = this.jodit.ownerDocument.createElement('div');
-        this.container.classList.add('jodit_paste_storage');
-        this.listBox = this.jodit.ownerDocument.createElement('div');
-        this.previewBox = this.jodit.ownerDocument.createElement('div');
+        this.container = this.jodit.ownerDocument.createElement("div");
+        this.container.classList.add("jodit_paste_storage");
+        this.listBox = this.jodit.ownerDocument.createElement("div");
+        this.previewBox = this.jodit.ownerDocument.createElement("div");
 
         this.container.appendChild(this.listBox);
         this.container.appendChild(this.previewBox);
 
-        this.dialog.setTitle(this.jodit.i18n('Choose Content to Paste'));
+        this.dialog.setTitle(this.jodit.i18n("Choose Content to Paste"));
         this.dialog.setContent(this.container);
         this.dialog.setFooter([pasteButton, cancelButton]);
 
         this.jodit.events
-            .on(this.listBox, 'click dblclick', (e: MouseEvent) => {
-                const a: HTMLAnchorElement | null = <HTMLAnchorElement>e.target;
-                if (a && a.nodeName === 'A' && a.hasAttribute('data-index')) {
-                    this.selectIndex(parseInt(a.getAttribute('data-index') || '0', 10));
+            .on(this.listBox, "click dblclick", (e: MouseEvent) => {
+                const a: HTMLAnchorElement | null = e.target as HTMLAnchorElement;
+                if (a && a.nodeName === "A" && a.hasAttribute("data-index")) {
+                    this.selectIndex(parseInt(a.getAttribute("data-index") || "0", 10));
                 }
 
-                if (e.type === 'dblclick') {
+                if (e.type === "dblclick") {
                     this.paste();
                 }
 
                 return false;
-            }, 'a');
-    }
-    afterInit() {
-        this.jodit.events.on('afterCopy', (html: string) => {
-            if (this.list.indexOf(html) !== -1) {
-                this.list.splice(this.list.indexOf(html), 1);
-            }
-
-            this.list.unshift(html);
-            if (this.list.length > 5) {
-                this.list.length = 5;
-            }
-        });
-
-        this.jodit.registerCommand('showPasteStorage', {
-            exec: this.showDialog,
-            hotkeys: ['ctrl+shift+v', 'cmd+shift+v']
-        });
+            }, "a");
     }
 }

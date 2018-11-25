@@ -5,8 +5,8 @@
  */
 
 import { Jodit } from "../Jodit";
-import { Dictionary, Permissions } from "./types";
 import { Buttons } from "./toolbar";
+import { Dictionary, Permissions } from "./types";
 import { UploaderOptions } from "./uploader";
 
 /**
@@ -17,27 +17,27 @@ import { UploaderOptions } from "./uploader";
  */
 
 export interface ISourceFile {
-    file: string
-    thumb: string
-    changed: string
-    size: string
-    isImage: boolean
+    file: string;
+    thumb: string;
+    changed: string;
+    size: string;
+    isImage: boolean;
 }
 
 export interface ISource {
-    path: string
-    baseurl: string
-    files: ISourceFile[]
-    folders: string[]
+    path: string;
+    baseurl: string;
+    files: ISourceFile[];
+    folders: string[];
 }
 
 export interface ISourcesFiles {
     [key: string]: ISource;
 }
 
-export type FileBrowserAnswer = {
-    success: boolean,
-    time: string,
+export interface FileBrowserAnswer {
+    success: boolean;
+    time: string;
     data: {
         messages?: string[];
         sources: ISourcesFiles;
@@ -46,10 +46,10 @@ export type FileBrowserAnswer = {
         name: string;
         source: string;
         permissions?: Permissions | null;
-    }
-};
+    };
+}
 
-export type FileBrowserAjaxOptions = {
+export interface FileBrowserAjaxOptions {
     url?: string;
     async?: boolean;
 
@@ -72,9 +72,9 @@ export interface FileBrowserOptions  {
     removeButtons: string[];
     buttons: Buttons;
     zIndex?: number;
-    fullsize?: boolean,
-    showTooltip?: boolean,
-    useNativeTooltip?: boolean,
+    fullsize?: boolean;
+    showTooltip?: boolean;
+    useNativeTooltip?: boolean;
     filter: (item: any, search: any) => boolean;
 
     sortBy: string;
@@ -98,7 +98,6 @@ export interface FileBrowserOptions  {
     width: number;
     height: number;
 
-
     view: string | null;
 
     isSuccess: (resp: FileBrowserAnswer) => boolean;
@@ -121,11 +120,11 @@ export interface FileBrowserOptions  {
     folder: FileBrowserAjaxOptions;
     permissions: FileBrowserAjaxOptions;
 
-    uploader: null | UploaderOptions // use default Uploader's settings
-    [key: string]: any
+    uploader: null | UploaderOptions; // use default Uploader's settings
+    [key: string]: any;
 }
 
-export type FileBrowserCallBackData = {
-    baseurl: string,
-    files: string[]
-};
+export interface FileBrowserCallBackData {
+    baseurl: string;
+    files: string[];
+}

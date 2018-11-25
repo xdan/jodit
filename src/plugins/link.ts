@@ -4,10 +4,10 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Jodit } from '../Jodit';
-import { Config } from '../Config'
-import { isURL, convertMediaURLToVideoEmbed, dom, val } from '../modules/Helpers'
+import { Config } from "../Config";
+import { Jodit } from "../Jodit";
 import { Dom } from "../modules/Dom";
+import { convertMediaURLToVideoEmbed, dom, isURL, val } from "../modules/Helpers";
 import { markerInfo } from "../modules/Selection";
 import { Select } from "../modules/Selection";
 import { ControlType } from "../types/toolbar";
@@ -31,7 +31,7 @@ declare module "../Config" {
             removeLinkAfterFormat: boolean;
             noFollowCheckbox: boolean;
             openInNewTabCheckbox: boolean;
-        }
+        };
     }
 }
 Config.prototype.link = {
@@ -44,84 +44,83 @@ Config.prototype.link = {
     openInNewTabCheckbox: true,
 };
 
-
-Config.prototype.controls.unlink = <ControlType>{
+Config.prototype.controls.unlink = {
     exec: (editor: Jodit, current: Node) => {
-        const anchor: HTMLAnchorElement|false = <HTMLAnchorElement>Dom.closest(current, 'A', editor.editor);
+        const anchor: HTMLAnchorElement|false = Dom.closest(current, "A", editor.editor) as HTMLAnchorElement;
 
         if (anchor) {
             Dom.unwrap(anchor);
         }
 
-        editor.events.fire('hidePopup');
-    }
-};
-Config.prototype.controls.link = <ControlType> {
+        editor.events.fire("hidePopup");
+    },
+} as ControlType;
+Config.prototype.controls.link = {
     isActive: (editor: Jodit): boolean => {
         const current: Node | false = editor.selection.current();
-        return current && Dom.closest(current, 'a', editor.editor) !== false;
+        return current && Dom.closest(current, "a", editor.editor) !== false;
     },
     popup: (editor: Jodit, current: HTMLElement|false, self: ControlType, close: Function) => {
         const sel: Selection = editor.editorWindow.getSelection(),
-            form: HTMLFormElement = <HTMLFormElement>dom(
+            form: HTMLFormElement = dom(
                 '<form class="jodit_form">' +
                     '<input required type="text" name="url" placeholder="http://" type="text"/>' +
-                    '<input name="text" placeholder="' + editor.i18n('Text') + '" type="text"/>' +
+                    '<input name="text" placeholder="' + editor.i18n("Text") + '" type="text"/>' +
                     (editor.options.link.openInNewTabCheckbox ?
-                    '<label>' +
-                        '<input name="target" type="checkbox"/> ' + editor.i18n('Open in new tab') +
-                    '</label>' : '') +
+                    "<label>" +
+                        '<input name="target" type="checkbox"/> ' + editor.i18n("Open in new tab") +
+                    "</label>" : "") +
                     (editor.options.link.noFollowCheckbox ?
-                    '<label>' +
-                        '<input name="nofollow" type="checkbox"/> ' + editor.i18n('No follow') +
-                    '</label>' :
-                    '') +
+                    "<label>" +
+                        '<input name="nofollow" type="checkbox"/> ' + editor.i18n("No follow") +
+                    "</label>" :
+                    "") +
                     '<div style="text-align: right">' +
-                        '<button class="jodit_unlink_button" type="button">' + editor.i18n('Unlink') + '</button> &nbsp;&nbsp;' +
+                        '<button class="jodit_unlink_button" type="button">' + editor.i18n("Unlink") + "</button> &nbsp;&nbsp;" +
                         '<button class="jodit_link_insert_button" type="submit"></button>' +
-                    '</div>' +
-                '<form/>',
-                editor.ownerDocument
-            );
+                    "</div>" +
+                "<form/>",
+                editor.ownerDocument,
+            ) as HTMLFormElement;
 
-        if (current && Dom.closest(current, 'A', editor.editor)) {
-            current = <HTMLElement>Dom.closest(current, 'A', editor.editor)
+        if (current && Dom.closest(current, "A", editor.editor)) {
+            current = Dom.closest(current, "A", editor.editor) as HTMLElement;
         } else {
             current = false;
         }
 
-        const link: HTMLAnchorElement | null = form.querySelector('.jodit_link_insert_button');
-        const unlink: HTMLButtonElement | null = form.querySelector('.jodit_unlink_button');
+        const link: HTMLAnchorElement | null = form.querySelector(".jodit_link_insert_button");
+        const unlink: HTMLButtonElement | null = form.querySelector(".jodit_unlink_button");
 
         if (current) {
-            val(form, 'input[name=url]', current.getAttribute('href') || '');
-            val(form, 'input[name=text]', current.innerText);
+            val(form, "input[name=url]", current.getAttribute("href") || "");
+            val(form, "input[name=text]", current.innerText);
 
             if (editor.options.link.openInNewTabCheckbox) {
-                (<HTMLInputElement>form.querySelector('input[name=target]')).checked = (current.getAttribute('target') === '_blank');
+                (form.querySelector("input[name=target]") as HTMLInputElement).checked = (current.getAttribute("target") === "_blank");
             }
             if (editor.options.link.noFollowCheckbox) {
-                (<HTMLInputElement>form.querySelector('input[name=nofollow]')).checked = (current.getAttribute('rel') === 'nofollow');
+                (form.querySelector("input[name=nofollow]") as HTMLInputElement).checked = (current.getAttribute("rel") === "nofollow");
             }
             if (link) {
-                link.innerHTML = editor.i18n('Update');
+                link.innerHTML = editor.i18n("Update");
             }
         } else {
             if (unlink) {
-                unlink.style.display = 'none';
+                unlink.style.display = "none";
             }
 
-            val(form, 'input[name=text]', sel.toString());
+            val(form, "input[name=text]", sel.toString());
 
             if (link) {
-                link.innerHTML = editor.i18n('Insert');
+                link.innerHTML = editor.i18n("Insert");
             }
         }
 
         const selInfo: markerInfo[] = editor.selection.save();
 
         if (unlink) {
-            unlink.addEventListener('mousedown', (e: MouseEvent) => {
+            unlink.addEventListener("mousedown", (e: MouseEvent) => {
                 if (current) {
                     Dom.unwrap(current);
                 }
@@ -131,35 +130,34 @@ Config.prototype.controls.link = <ControlType> {
             });
         }
 
-        form.addEventListener('submit', (event: Event) => {
+        form.addEventListener("submit", (event: Event) => {
             event.preventDefault();
             editor.selection.restore(selInfo);
 
-            let a: HTMLAnchorElement = <HTMLAnchorElement>current || editor.editorDocument.createElement('a');
+            const a: HTMLAnchorElement = current as HTMLAnchorElement || editor.editorDocument.createElement("a");
 
-            if (!val(form, 'input[name=url]')) {
-                (<HTMLInputElement>form.querySelector('input[name=url]')).focus();
-                (<HTMLInputElement>form.querySelector('input[name=url]')).classList.add('jodit_error');
+            if (!val(form, "input[name=url]")) {
+                (form.querySelector("input[name=url]") as HTMLInputElement).focus();
+                (form.querySelector("input[name=url]") as HTMLInputElement).classList.add("jodit_error");
                 return false;
             }
 
-
-            a.setAttribute('href', val(form, 'input[name=url]'));
-            a.innerText = val(form, 'input[name=text]');
+            a.setAttribute("href", val(form, "input[name=url]"));
+            a.innerText = val(form, "input[name=text]");
 
             if (editor.options.link.openInNewTabCheckbox) {
-                if ((<HTMLInputElement>form.querySelector('input[name=target]')).checked) {
-                    a.setAttribute('target', '_blank');
+                if ((form.querySelector("input[name=target]") as HTMLInputElement).checked) {
+                    a.setAttribute("target", "_blank");
                 } else {
-                    a.removeAttribute('target');
+                    a.removeAttribute("target");
                 }
             }
 
             if (editor.options.link.noFollowCheckbox) {
-                if ((<HTMLInputElement>form.querySelector('input[name=nofollow]')).checked) {
-                    a.setAttribute('rel', 'nofollow');
+                if ((form.querySelector("input[name=nofollow]") as HTMLInputElement).checked) {
+                    a.setAttribute("rel", "nofollow");
                 } else {
-                    a.removeAttribute('rel');
+                    a.removeAttribute("rel");
                 }
             }
 
@@ -174,8 +172,8 @@ Config.prototype.controls.link = <ControlType> {
         return form;
     },
     tags: ["a"],
-    tooltip: "Insert link"
-};
+    tooltip: "Insert link",
+} as ControlType;
 
 /**
  * Process link. Insert, dbclick or remove format
@@ -184,32 +182,32 @@ Config.prototype.controls.link = <ControlType> {
  */
 export function link(jodit: Jodit) {
     if (jodit.options.link.followOnDblClick) {
-        jodit.events.on('afterInit', () => {
-            jodit.events.on(jodit.editor, 'dblclick', function (this: HTMLAnchorElement, e: MouseEvent) {
-                const href: string|null = this.getAttribute('href');
+        jodit.events.on("afterInit", () => {
+            jodit.events.on(jodit.editor, "dblclick", function(this: HTMLAnchorElement, e: MouseEvent) {
+                const href: string|null = this.getAttribute("href");
                 if (href) {
                     location.href = href;
                     e.preventDefault();
                 }
-            }, 'a');
+            }, "a");
         });
     }
     if (jodit.options.link.processPastedLink) {
-        jodit.events.on('processPaste',  (event: ClipboardEvent, html: string): HTMLAnchorElement|void => {
+        jodit.events.on("processPaste",  (event: ClipboardEvent, html: string): HTMLAnchorElement|void => {
             if (isURL(html)) {
                 const embed: string = convertMediaURLToVideoEmbed(html);
 
                 if (embed !== html) {
-                    return <HTMLAnchorElement>dom(embed, jodit.editorDocument);
+                    return dom(embed, jodit.editorDocument) as HTMLAnchorElement;
                 }
 
-                const a: HTMLAnchorElement = jodit.editorDocument.createElement('a');
-                a.setAttribute('href', html);
+                const a: HTMLAnchorElement = jodit.editorDocument.createElement("a");
+                a.setAttribute("href", html);
                 a.innerText = html;
                 if (jodit.options.link.openLinkDialogAfterPost) {
                     setTimeout(() => {
-                        //parent.selection.setCursorIn(a, true);
-                        //editor.selection.selectNodes(Array.prototype.slice.call(a.childNodes));
+                        // parent.selection.setCursorIn(a, true);
+                        // editor.selection.selectNodes(Array.prototype.slice.call(a.childNodes));
                     }, 100);
                 }
 
@@ -218,22 +216,22 @@ export function link(jodit: Jodit) {
         });
     }
     if (jodit.options.link.removeLinkAfterFormat) {
-        jodit.events.on('afterCommand', (command: string) => {
+        jodit.events.on("afterCommand", (command: string) => {
             let sel: Select = jodit.selection,
                 newtag: Node,
                 node: Node|false;
 
-            if (command === 'removeFormat') {
+            if (command === "removeFormat") {
                 node = sel.current();
-                if (node && node.nodeName !== 'A') {
-                    node = Dom.closest(node, 'A', jodit.editor);
+                if (node && node.nodeName !== "A") {
+                    node = Dom.closest(node, "A", jodit.editor);
                 }
-                if (node && node.nodeName === 'A') {
-                    if ((<HTMLElement>node).innerHTML === (<HTMLElement>node).innerText) {
-                        newtag = jodit.editorDocument.createTextNode((<HTMLElement>node).innerHTML);
+                if (node && node.nodeName === "A") {
+                    if ((node as HTMLElement).innerHTML === (node as HTMLElement).innerText) {
+                        newtag = jodit.editorDocument.createTextNode((node as HTMLElement).innerHTML);
                     } else {
-                        newtag = jodit.editorDocument.createElement('span');
-                        (<HTMLElement>newtag).innerHTML = (<HTMLElement>node).innerHTML;
+                        newtag = jodit.editorDocument.createElement("span");
+                        (newtag as HTMLElement).innerHTML = (node as HTMLElement).innerHTML;
                     }
 
                     if (node.parentNode) {

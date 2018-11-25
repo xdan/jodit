@@ -3,9 +3,9 @@
  * License GNU General Public License version 2 or later;
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
-import { Jodit } from "../Jodit";
-import { Config } from '../Config';
+import { Config } from "../Config";
 import { COMMAND_KEYS, INVISIBLE_SPACE_REG_EXP, SPACE_REG_EXP } from "../constants";
+import { Jodit } from "../Jodit";
 import { debounce, extractText } from "../modules/Helpers";
 import { SnapshotType } from "../modules/Snapshot";
 
@@ -23,7 +23,6 @@ declare module "../Config" {
 
 Config.prototype.limitWords = false;
 
-
 /**
  * @property {boolean | number} limitChars=false limit chars count
  */
@@ -34,14 +33,13 @@ Config.prototype.limitChars = false;
  */
 Config.prototype.limitHTML = false;
 
-
 export function limit(jodit: Jodit) {
     if (jodit && (jodit.options.limitWords || jodit.options.limitChars)) {
-        const callback = (event: KeyboardEvent | null, inputText: string = ''): void | boolean => {
+        const callback = (event: KeyboardEvent | null, inputText: string = ""): void | boolean => {
             const text: string = inputText || (jodit.options.limitHTML ? jodit.value : jodit.getEditorText());
 
             const words: string[] = text
-                                        .replace(INVISIBLE_SPACE_REG_EXP, '')
+                                        .replace(INVISIBLE_SPACE_REG_EXP, "")
                                         .split(SPACE_REG_EXP)
                                         .filter((e: string) => e.length);
 
@@ -53,8 +51,8 @@ export function limit(jodit: Jodit) {
                 return jodit.options.limitWords === words.length;
             }
 
-            if (jodit.options.limitChars && jodit.options.limitChars <= words.join('').length) {
-                return jodit.options.limitChars === words.join('').length;
+            if (jodit.options.limitChars && jodit.options.limitChars <= words.join("").length) {
+                return jodit.options.limitChars === words.join("").length;
             }
 
             return;
@@ -63,24 +61,24 @@ export function limit(jodit: Jodit) {
         let snapshot: SnapshotType | null  = null;
 
         jodit.events
-            .on('beforePaste', (): false | void => {
+            .on("beforePaste", (): false | void => {
                 snapshot = jodit.observer.snapshot.make();
             })
-            .on('keydown keyup beforeEnter beforePaste', (event: KeyboardEvent): false | void => {
+            .on("keydown keyup beforeEnter beforePaste", (event: KeyboardEvent): false | void => {
                 if (callback(event) !== void(0)) {
                     return false;
                 }
             })
-            .on('change', debounce((newValue: string, oldValue: string) => {
+            .on("change", debounce((newValue: string, oldValue: string) => {
                 if (callback(null, jodit.options.limitHTML ? newValue : extractText(newValue)) === false) {
                     jodit.value = oldValue;
                 }
             }, jodit.defaultTimeout))
-            .on('afterPaste', (): false | void => {
+            .on("afterPaste", (): false | void => {
                 if (callback(null) === false && snapshot) {
                     jodit.observer.snapshot.restore(snapshot);
                     return false;
                 }
-            })
+            });
     }
 }

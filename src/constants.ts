@@ -4,7 +4,6 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-
 import { Dictionary } from "./types";
 
 export const INVISIBLE_SPACE = "\uFEFF";
@@ -58,9 +57,8 @@ export const COMMAND_KEYS = [
     KEY_TAB,
 ];
 
-export const BR = 'br';
-export const PARAGRAPH = 'P';
-
+export const BR = "br";
+export const PARAGRAPH = "P";
 
 /**
  * @property {int} MODE_WYSIWYG=1 WYSIWYG editor mode
@@ -80,47 +78,46 @@ export const  MODE_SPLIT = 3;
 /**
  * @property {string} TEXT_PLAIN='text/plain'  For IE11 it will be 'text'. Need for dataTransfer.setData
  */
-export const URL_LIST = (typeof navigator !== 'undefined' && (navigator.userAgent.indexOf("MSIE") != -1 || /rv:11.0/i.test(navigator.userAgent))) ? 'url' : 'text/uri-list';
-export const TEXT_PLAIN = (typeof navigator !== 'undefined' && (navigator.userAgent.indexOf("MSIE") != -1 || /rv:11.0/i.test(navigator.userAgent))) ? 'text' : 'text/plain';
-export const TEXT_HTML = (typeof navigator !== 'undefined' && (navigator.userAgent.indexOf("MSIE") != -1 || /rv:11.0/i.test(navigator.userAgent))) ? 'text' : 'text/html';
+export const URL_LIST = (typeof navigator !== "undefined" && (navigator.userAgent.indexOf("MSIE") != -1 || /rv:11.0/i.test(navigator.userAgent))) ? "url" : "text/uri-list";
+export const TEXT_PLAIN = (typeof navigator !== "undefined" && (navigator.userAgent.indexOf("MSIE") != -1 || /rv:11.0/i.test(navigator.userAgent))) ? "text" : "text/plain";
+export const TEXT_HTML = (typeof navigator !== "undefined" && (navigator.userAgent.indexOf("MSIE") != -1 || /rv:11.0/i.test(navigator.userAgent))) ? "text" : "text/html";
 
-
-export const MARKER_CLASS = 'jodit_selection_marker';
+export const MARKER_CLASS = "jodit_selection_marker";
 
 export const EMULATE_DBLCLICK_TIMEOUT = 300;
 
-export const JODIT_SELECTED_CELL_MARKER = 'data-jodit-selected-cell';
+export const JODIT_SELECTED_CELL_MARKER = "data-jodit-selected-cell";
 
-export const INSERT_AS_HTML = 'insert_as_html';
-export const INSERT_CLEAR_HTML = 'insert_clear_html';
-export const INSERT_AS_TEXT = 'insert_as_text';
-export const INSERT_ONLY_TEXT = 'insert_only_text';
+export const INSERT_AS_HTML = "insert_as_html";
+export const INSERT_CLEAR_HTML = "insert_clear_html";
+export const INSERT_AS_TEXT = "insert_as_text";
+export const INSERT_ONLY_TEXT = "insert_only_text";
 
 export const IS_MAC = (
-    typeof window != 'undefined' &&
+    typeof window != "undefined" &&
     /Mac|iPod|iPhone|iPad/.test(window.navigator.platform)
 );
 
 export const KEY_ALIASES: Dictionary<string> = {
-    add: '+',
-    break: 'pause',
-    cmd: 'meta',
-    command: 'meta',
-    ctl: 'control',
-    ctrl: 'control',
-    del: 'delete',
-    down: 'arrowdown',
-    esc: 'escape',
-    ins: 'insert',
-    left: 'arrowleft',
-    mod: IS_MAC ? 'meta' : 'control',
-    opt: 'alt',
-    option: 'alt',
-    return: 'enter',
-    right: 'arrowright',
-    space: ' ',
-    spacebar: ' ',
-    up: 'arrowup',
-    win: 'meta',
-    windows: 'meta',
+    add: "+",
+    break: "pause",
+    cmd: "meta",
+    command: "meta",
+    ctl: "control",
+    ctrl: "control",
+    del: "delete",
+    down: "arrowdown",
+    esc: "escape",
+    ins: "insert",
+    left: "arrowleft",
+    mod: IS_MAC ? "meta" : "control",
+    opt: "alt",
+    option: "alt",
+    return: "enter",
+    right: "arrowright",
+    space: " ",
+    spacebar: " ",
+    up: "arrowup",
+    win: "meta",
+    windows: "meta",
 };

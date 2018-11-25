@@ -4,10 +4,10 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Config } from '../Config'
-import { each, extend } from "./Helpers";
-import { IViewBased } from "../types/view";
+import { Config } from "../Config";
 import { Dictionary } from "../types";
+import { IViewBased } from "../types/view";
+import { each, extend } from "./Helpers";
 
 /**
  * @property {object} defaultAjaxOptions A set of key/value pairs that configure the Ajax request. All settings are optional
@@ -25,17 +25,17 @@ import { Dictionary } from "../types";
 
 declare const XDomainRequest: any;
 
-export type AjaxOptions  = {
+export interface AjaxOptions  {
     dataType?: string;
     method?: string;
 
     url?: string;
 
-    data: Dictionary<string> | null | FormData | string
+    data: Dictionary<string> | null | FormData | string;
 
     contentType?: string | false;
 
-    headers?: Dictionary<string> | null
+    headers?: Dictionary<string> | null;
 
     withCredentials?: boolean;
 
@@ -50,84 +50,61 @@ declare module "../Config" {
     }
 }
 
-Config.prototype.defaultAjaxOptions = <AjaxOptions>{
-    dataType: 'json',
-    method: 'GET',
+Config.prototype.defaultAjaxOptions = {
+    dataType: "json",
+    method: "GET",
 
-    url: '',
+    url: "",
 
     data: null,
 
-    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 
     headers: {
-        'X-REQUESTED-WITH': 'XMLHttpRequest' // compatible with jQuery
+        "X-REQUESTED-WITH": "XMLHttpRequest", // compatible with jQuery
     },
 
     withCredentials: true,
 
     xhr(): XMLHttpRequest {
-        const XHR = typeof XDomainRequest === 'undefined' ? XMLHttpRequest : XDomainRequest;
+        const XHR = typeof XDomainRequest === "undefined" ? XMLHttpRequest : XDomainRequest;
         return new XHR();
-    }
-};
+    },
+} as AjaxOptions;
 
 export class Ajax {
-    private __buildParams (obj: string | Dictionary<string | object> | FormData, prefix?: string): string | FormData {
-        if (this.options.queryBuild && typeof this.options.queryBuild === 'function') {
-            return this.options.queryBuild.call(this, obj, prefix);
-        }
-        if (typeof obj === 'string' || ((<any>this.jodit.ownerWindow)['FormData'] && obj instanceof (<any>this.jodit.ownerWindow)['FormData'])) {
-            return <string | FormData>obj;
-        }
+    public status: number;
+    public response: string;
 
-        let str: string[] = [],
-            p: string,
-            k: string,
-            v: any;
-
-        for (p in obj) {
-            if (obj.hasOwnProperty(p)) {
-                k = prefix ? prefix + "[" + p + "]" : p;
-                v = (<Dictionary<string>>obj)[p];
-                str.push(typeof v === "object" ? <string>this.__buildParams(v, k) : encodeURIComponent(k) + "=" + encodeURIComponent(<string>v));
-            }
-        }
-
-        return str.join("&");
-    }
+    public options: AjaxOptions;
+    public jodit: IViewBased;
 
     private xhr: XMLHttpRequest;
     private success_response_codes = [200, 201, 202];
-    status: number;
-    response: string;
-
-    abort (): Ajax {
-        this.xhr.abort();
-        return this;
-    }
-
-    options: AjaxOptions;
-    jodit: IViewBased;
 
     constructor(editor: IViewBased, options: AjaxOptions) {
         this.jodit = editor;
-        this.options = <AjaxOptions>extend(true, {}, Config.prototype.defaultAjaxOptions, options);
+        this.options = extend(true, {}, Config.prototype.defaultAjaxOptions, options) as AjaxOptions;
 
         if (this.options.xhr) {
             this.xhr = this.options.xhr();
         }
 
-        editor && editor.events && editor.events.on('beforeDestruct', () => {
+        editor && editor.events && editor.events.on("beforeDestruct", () => {
             this.abort();
         });
     }
 
-    send(): Promise<any> {
+    public abort(): Ajax {
+        this.xhr.abort();
+        return this;
+    }
+
+    public send(): Promise<any> {
         return new Promise((resolve: (this: XMLHttpRequest, resp: object) => any, reject: (error: Error) => any) => {
             const __parse = (resp: string) => {
                 switch (this.options.dataType) {
-                    case 'json':
+                    case "json":
                         try {
                             resp = JSON.parse(resp);
                         } catch (e) {
@@ -156,7 +133,7 @@ export class Ajax {
 
             this.xhr.onreadystatechange = () => {
                 if (this.xhr.readyState === XMLHttpRequest.DONE) {
-                    let resp = this.xhr.responseText;
+                    const resp = this.xhr.responseText;
 
                     this.response = resp;
                     this.status = this.xhr.status;
@@ -164,7 +141,7 @@ export class Ajax {
                     if (this.success_response_codes.indexOf(this.xhr.status) > -1) {
                         resolve.call(this.xhr, __parse(resp));
                     } else {
-                        reject.call(this.xhr, new Error(this.xhr.statusText || this.jodit.i18n('Connection error!')));
+                        reject.call(this.xhr, new Error(this.xhr.statusText || this.jodit.i18n("Connection error!")));
                     }
                 }
             };
@@ -172,9 +149,9 @@ export class Ajax {
             this.xhr.withCredentials = this.options.withCredentials || false;
 
             if (this.options.url) {
-                this.xhr.open(this.options.method || 'get', this.options.url, true);
+                this.xhr.open(this.options.method || "get", this.options.url, true);
             } else {
-                throw new Error('Need URL for AJAX request');
+                throw new Error("Need URL for AJAX request");
             }
 
             if (this.options.contentType && this.xhr.setRequestHeader) {
@@ -187,11 +164,33 @@ export class Ajax {
                 });
             }
 
-            //IE
+            // IE
             setTimeout(() => {
                 this.xhr.send(this.options.data ? this.__buildParams(this.options.data) : undefined);
             }, 0);
         });
     }
-}
+    private __buildParams(obj: string | Dictionary<string | object> | FormData, prefix?: string): string | FormData {
+        if (this.options.queryBuild && typeof this.options.queryBuild === "function") {
+            return this.options.queryBuild.call(this, obj, prefix);
+        }
+        if (typeof obj === "string" || ((this.jodit.ownerWindow as any).FormData && obj instanceof (this.jodit.ownerWindow as any).FormData)) {
+            return obj as string | FormData;
+        }
 
+        let str: string[] = [],
+            p: string,
+            k: string,
+            v: any;
+
+        for (p in obj) {
+            if (obj.hasOwnProperty(p)) {
+                k = prefix ? prefix + "[" + p + "]" : p;
+                v = (obj as Dictionary<string>)[p];
+                str.push(typeof v === "object" ? this.__buildParams(v, k) as string : encodeURIComponent(k) + "=" + encodeURIComponent(v as string));
+            }
+        }
+
+        return str.join("&");
+    }
+}

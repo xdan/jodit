@@ -4,16 +4,16 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Component } from './Component';
+import { IViewBased } from "../types/view";
+import { Component } from "./Component";
 import { css, dom } from "./Helpers";
 import { ToolbarIcon } from "./toolbar/icon";
-import { IViewBased } from "../types/view";
 
-export type Action = {
+export interface Action {
     icon ?: string;
     title ?: string;
     exec ?: (this: ContextMenu, e: MouseEvent) => false|void;
-};
+}
 
 /**
  * Module to generate context menu
@@ -30,7 +30,7 @@ export class ContextMenu extends Component {
         editor.ownerDocument.body.appendChild(this.context);
     }
 
-    destruct() {
+    public destruct() {
         this.context && this.context.parentNode && this.context.parentNode.removeChild(this.context);
     }
 
@@ -39,11 +39,11 @@ export class ContextMenu extends Component {
      *
      * @method hide
      */
-    hide = () => {
-        this.context.classList.remove('jodit_context_menu-show');
+    public hide = () => {
+        this.context.classList.remove("jodit_context_menu-show");
         this.jodit.ownerWindow
-            .removeEventListener('mouseup', this.hide);
-    };
+            .removeEventListener("mouseup", this.hide);
+    }
 
     /**
      * Generate and show context menu
@@ -57,7 +57,7 @@ export class ContextMenu extends Component {
      * parent.show(e.clientX, e.clientY, [{icon: 'bin', title: 'Delete', exec: function () { alert(1) }]);
      * ```
      */
-    show(x: number, y: number, actions: Array<false|Action>, zIndex?: number) {
+    public show(x: number, y: number, actions: Array<false|Action>, zIndex?: number) {
         const self = this;
         if (!Array.isArray(actions)) {
             return;
@@ -67,35 +67,34 @@ export class ContextMenu extends Component {
             this.context.style.zIndex = zIndex.toString();
         }
 
-        this.context.innerHTML = '';
+        this.context.innerHTML = "";
 
         actions.forEach((item) => {
             if (!item) {
                 return;
             }
 
-            const action: HTMLAnchorElement = <HTMLAnchorElement>dom('<a href="javascript:void(0)">' + (item.icon ? ToolbarIcon.getIcon(item.icon) : '') + '<span></span></a>', this.jodit.ownerDocument);
-            const span: HTMLSpanElement = <HTMLSpanElement>action.querySelector('span');
+            const action: HTMLAnchorElement = dom('<a href="javascript:void(0)">' + (item.icon ? ToolbarIcon.getIcon(item.icon) : "") + "<span></span></a>", this.jodit.ownerDocument) as HTMLAnchorElement;
+            const span: HTMLSpanElement = action.querySelector("span") as HTMLSpanElement;
 
-            action.addEventListener('click', (e: MouseEvent) => {
+            action.addEventListener("click", (e: MouseEvent) => {
                 item.exec && item.exec.call(self, e);
                 self.hide();
                 return false;
             });
 
-            span.innerText = self.jodit.i18n(item.title || '');
+            span.innerText = self.jodit.i18n(item.title || "");
             self.context.appendChild(action);
         });
 
-
         css(self.context, {
             left: x,
-            top: y
+            top: y,
         });
 
         this.jodit.ownerWindow
-            .addEventListener('mouseup', self.hide);
+            .addEventListener("mouseup", self.hide);
 
-        this.context.classList.add('jodit_context_menu-show');
+        this.context.classList.add("jodit_context_menu-show");
     }
 }

@@ -4,14 +4,14 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Jodit } from '../Jodit';
-import { Confirm, Dialog } from '../modules/Dialog';
-import {
-    isHTML, browser, htmlspecialchars, isHTMLFromWord, applyStyles, dom,
-    cleanFromWord, isIE, type, trim
-} from '../modules/Helpers';
-import { Config } from '../Config';
+import { Config } from "../Config";
 import { INSERT_AS_HTML, INSERT_AS_TEXT, INSERT_CLEAR_HTML, INSERT_ONLY_TEXT, TEXT_HTML, TEXT_PLAIN } from "../constants";
+import { Jodit } from "../Jodit";
+import { Confirm, Dialog } from "../modules/Dialog";
+import {
+    applyStyles, browser, cleanFromWord, dom, htmlspecialchars, isHTML,
+    isHTMLFromWord, isIE, trim, type,
+} from "../modules/Helpers";
 import { ControlType } from "../types/toolbar";
 
 /**
@@ -29,14 +29,14 @@ Config.prototype.askBeforePasteHTML = true;
 Config.prototype.askBeforePasteFromWord = true;
 Config.prototype.defaultActionOnPaste =  INSERT_AS_HTML;
 
-Config.prototype.controls.cut = <ControlType>{
-    command: 'cut',
+Config.prototype.controls.cut = {
+    command: "cut",
     isDisable: (editor: Jodit) => {
         const sel: Selection = editor.editorWindow.getSelection();
         return !sel || sel.isCollapsed;
     },
-    tooltip: 'Cut selection'
-};
+    tooltip: "Cut selection",
+} as ControlType;
 
 /**
  * Ask before paste HTML source
@@ -44,76 +44,76 @@ Config.prototype.controls.cut = <ControlType>{
  * @module insertHTML
  */
 export function paste(editor: Jodit) {
-    let buffer: string = '';
+    let buffer: string = "";
 
     const strip_tags: Function = (html: string): string => {
-        const div: HTMLDivElement = document.createElement('div');
+        const div: HTMLDivElement = document.createElement("div");
         div.innerHTML = html;
         return div.innerText;
     };
 
-    const ClearOrKeep: Function = (msg: string, title: string, callback: (yes: boolean | number) => void, clearButton: string = 'Clean', clear2Button: string = 'Insert only Text'): Dialog | void => {
-        if (editor.events && editor.events.fire('beforeOpenPasteDialog', msg, title, callback, clearButton, clear2Button) === false) {
+    const ClearOrKeep: Function = (msg: string, title: string, callback: (yes: boolean | number) => void, clearButton: string = "Clean", clear2Button: string = "Insert only Text"): Dialog | void => {
+        if (editor.events && editor.events.fire("beforeOpenPasteDialog", msg, title, callback, clearButton, clear2Button) === false) {
             return;
         }
 
         const dialog: Dialog = Confirm(`<div style="word-break: normal; white-space: normal">${msg}</div>`, title, callback);
-        dialog.container.setAttribute('data-editor_id', editor.id);
+        dialog.container.setAttribute("data-editor_id", editor.id);
 
-        const keep: HTMLAnchorElement  = <HTMLAnchorElement>dom(
+        const keep: HTMLAnchorElement  = dom(
             '<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
-            '<span>' + editor.i18n('Keep') + '</span>' +
-            '</a>',
-            dialog.document
-        );
+            "<span>" + editor.i18n("Keep") + "</span>" +
+            "</a>",
+            dialog.document,
+        ) as HTMLAnchorElement;
 
-        const clear: HTMLAnchorElement  = <HTMLAnchorElement>dom(
+        const clear: HTMLAnchorElement  = dom(
             '<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
-            '<span>' + editor.i18n(clearButton) + '</span>' +
-            '</a>',
-            dialog.document
-        );
+            "<span>" + editor.i18n(clearButton) + "</span>" +
+            "</a>",
+            dialog.document,
+        ) as HTMLAnchorElement;
 
-        const clear2: HTMLAnchorElement  = <HTMLAnchorElement>dom(
+        const clear2: HTMLAnchorElement  = dom(
             '<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
-            '<span>' + editor.i18n(clear2Button) + '</span>' +
-            '</a>',
-            dialog.document
-        );
+            "<span>" + editor.i18n(clear2Button) + "</span>" +
+            "</a>",
+            dialog.document,
+        ) as HTMLAnchorElement;
 
-        const cancel: HTMLAnchorElement  = <HTMLAnchorElement>dom(
+        const cancel: HTMLAnchorElement  = dom(
             '<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
-            '<span>' + editor.i18n('Cancel') + '</span>' +
-            '</a>',
-            dialog.document
-        );
+            "<span>" + editor.i18n("Cancel") + "</span>" +
+            "</a>",
+            dialog.document,
+        ) as HTMLAnchorElement;
 
-        editor.events.on(keep, 'click', () => {
+        editor.events.on(keep, "click", () => {
             dialog.close();
             callback && callback(true);
         });
 
-        editor.events.on(clear, 'click', () => {
+        editor.events.on(clear, "click", () => {
             dialog.close();
             callback && callback(false);
         });
-        editor.events.on(clear2, 'click', () => {
+        editor.events.on(clear2, "click", () => {
             dialog.close();
             callback && callback(0);
         });
 
-        editor.events.on(cancel, 'click', () => {
+        editor.events.on(cancel, "click", () => {
             dialog.close();
         });
 
         dialog.setFooter([
             keep,
             clear,
-            clear2Button ? clear2 : '',
+            clear2Button ? clear2 : "",
             cancel,
         ]);
 
-        editor.events && editor.events.fire('afterOpenPasteDialog', dialog, msg, title, callback, clearButton, clear2Button);
+        editor.events && editor.events.fire("afterOpenPasteDialog", dialog, msg, title, callback, clearButton, clear2Button);
 
         return dialog;
     };
@@ -135,13 +135,13 @@ export function paste(editor: Jodit) {
         editor.selection.insertHTML(html);
     };
 
-    const insertHTML: Function = (html: string, event: DragEvent | ClipboardEvent) : void | false => {
+    const insertHTML: Function = (html: string, event: DragEvent | ClipboardEvent): void | false => {
         if (isHTML(html) && buffer !== trimFragment(html)) {
 
-            editor.events.stopPropagation('beforePaste');
+            editor.events.stopPropagation("beforePaste");
 
             html = trimFragment(html);
-            ClearOrKeep(editor.i18n('Your code is similar to HTML. Keep as HTML?'), editor.i18n('Paste as HTML'), (agree: boolean | number) => {
+            ClearOrKeep(editor.i18n("Your code is similar to HTML. Keep as HTML?"), editor.i18n("Paste as HTML"), (agree: boolean | number) => {
                 let insertType: string = INSERT_AS_HTML;
                 if (agree === false) {
                     insertType = INSERT_AS_TEXT;
@@ -151,14 +151,14 @@ export function paste(editor: Jodit) {
                     insertType = INSERT_ONLY_TEXT;
                 }
 
-                if (event.type === 'drop') {
-                    editor.selection.insertCursorAtPoint((<DragEvent>event).clientX, (<DragEvent>event).clientY);
+                if (event.type === "drop") {
+                    editor.selection.insertCursorAtPoint((event as DragEvent).clientX, (event as DragEvent).clientY);
                 }
 
                 insertByType(html, insertType);
 
                 editor.setEditorValue();
-            }, 'Insert as Text');
+            }, "Insert as Text");
             return false;
         }
     };
@@ -177,36 +177,35 @@ export function paste(editor: Jodit) {
         return html;
     };
 
-    const getDataTransfer = (event: ClipboardEvent | DragEvent) : DataTransfer => {
-        if ((<ClipboardEvent>event).clipboardData) {
-            return (<ClipboardEvent>event).clipboardData;
+    const getDataTransfer = (event: ClipboardEvent | DragEvent): DataTransfer => {
+        if ((event as ClipboardEvent).clipboardData) {
+            return (event as ClipboardEvent).clipboardData;
         }
 
-        return (<DragEvent>event).dataTransfer || new DataTransfer();
+        return (event as DragEvent).dataTransfer || new DataTransfer();
     };
 
     editor.events
-        .on('copy cut', (event: ClipboardEvent): false | void => {
+        .on("copy cut", (event: ClipboardEvent): false | void => {
             const selectedText: string = editor.selection.getHTML();
 
-            const clipboardData: DataTransfer = getDataTransfer(event) || getDataTransfer(<any>editor.editorWindow) || getDataTransfer((<any>event).originalEvent);
-
+            const clipboardData: DataTransfer = getDataTransfer(event) || getDataTransfer(editor.editorWindow as any) || getDataTransfer((event as any).originalEvent);
 
             clipboardData.setData(TEXT_PLAIN, strip_tags(selectedText));
             clipboardData.setData(TEXT_HTML, selectedText);
 
             buffer = selectedText;
 
-            if (event.type === 'cut') {
+            if (event.type === "cut") {
                 editor.selection.remove();
                 editor.selection.focus();
             }
 
             event.preventDefault();
 
-            editor.events.fire('afterCopy', selectedText);
+            editor.events.fire("afterCopy", selectedText);
         })
-        .on('paste', (event: ClipboardEvent | DragEvent): false | void => {
+        .on("paste", (event: ClipboardEvent | DragEvent): false | void => {
 
             /**
              * Triggered before pasting something into the Jodit Editor
@@ -223,7 +222,7 @@ export function paste(editor: Jodit) {
              * ```
              */
 
-            if (editor.events.fire('beforePaste', event) === false) {
+            if (editor.events.fire("beforePaste", event) === false) {
                 event.preventDefault();
                 return false;
             }
@@ -232,10 +231,10 @@ export function paste(editor: Jodit) {
                 const types: ReadonlyArray<string> | string = getDataTransfer(event).types;
 
                 let i: number,
-                    types_str: string = '',
-                    clipboard_html: any = '';
+                    types_str: string = "",
+                    clipboard_html: any = "";
 
-                if (Array.isArray(types) || type(types) === 'domstringlist') {
+                if (Array.isArray(types) || type(types) === "domstringlist") {
                     for (i = 0; i < types.length; i += 1) {
                         types_str += types[i] + ";";
                     }
@@ -245,15 +244,15 @@ export function paste(editor: Jodit) {
 
                 if (/text\/html/i.test(types_str)) {
                     clipboard_html = getDataTransfer(event).getData("text/html");
-                } else if (/text\/rtf/i.test(types_str) && browser('safari')) {
+                } else if (/text\/rtf/i.test(types_str) && browser("safari")) {
                     clipboard_html = getDataTransfer(event).getData("text/rtf");
-                } else if (/text\/plain/i.test(types_str) && !browser('mozilla')) {
+                } else if (/text\/plain/i.test(types_str) && !browser("mozilla")) {
                     clipboard_html = getDataTransfer(event).getData(TEXT_PLAIN);
                 } else if (/text/i.test(types_str) && isIE) {
                     clipboard_html = getDataTransfer(event).getData(TEXT_PLAIN);
                 }
 
-                if (clipboard_html instanceof (<any>editor.editorWindow).Node || trim(clipboard_html) !== '') {
+                if (clipboard_html instanceof (editor.editorWindow as any).Node || trim(clipboard_html) !== "") {
                     /**
                      * Triggered after the content is pasted from the clipboard into the Jodit. If a string is returned the new string will be used as the pasted content.
                      *
@@ -272,12 +271,12 @@ export function paste(editor: Jodit) {
                     clipboard_html = trimFragment(clipboard_html);
 
                     if (buffer !== clipboard_html) {
-                        clipboard_html = editor.events.fire('processPaste', event, clipboard_html);
+                        clipboard_html = editor.events.fire("processPaste", event, clipboard_html);
                     }
 
-                    if (typeof clipboard_html === 'string' || clipboard_html instanceof (<any>editor.editorWindow).Node) {
-                        if (event.type === 'drop') {
-                            editor.selection.insertCursorAtPoint((<DragEvent>event).clientX, (<DragEvent>event).clientY);
+                    if (typeof clipboard_html === "string" || clipboard_html instanceof (editor.editorWindow as any).Node) {
+                        if (event.type === "drop") {
+                            editor.selection.insertCursorAtPoint((event as DragEvent).clientX, (event as DragEvent).clientY);
                         }
 
                         insertByType(clipboard_html, editor.options.defaultActionOnPaste);
@@ -302,16 +301,16 @@ export function paste(editor: Jodit) {
                  * });
              * ```
              */
-            if (editor.events.fire('afterPaste', event) === false) {
+            if (editor.events.fire("afterPaste", event) === false) {
                 return false;
             }
         });
 
     if (editor.options.askBeforePasteHTML) {
         editor.events
-            .on('beforePaste', (event: ClipboardEvent | DragEvent): false | void => {
+            .on("beforePaste", (event: ClipboardEvent | DragEvent): false | void => {
                 if (event && getDataTransfer(event).getData(TEXT_PLAIN)) {
-                    let html: string = getDataTransfer(event).getData(TEXT_PLAIN);
+                    const html: string = getDataTransfer(event).getData(TEXT_PLAIN);
                     return insertHTML(html, event);
                 }
             });
@@ -319,17 +318,17 @@ export function paste(editor: Jodit) {
 
     if (editor.options.askBeforePasteFromWord) {
         editor.events
-            .on('beforePaste', (event: ClipboardEvent): false | void => {
+            .on("beforePaste", (event: ClipboardEvent): false | void => {
                 if (event && getDataTransfer(event).getData && getDataTransfer(event).getData(TEXT_HTML)) {
                     const processHTMLData: Function = (html: string): void | false => {
                         if (isHTML(html) && buffer !== trimFragment(html)) {
                             if (isHTMLFromWord(html)) {
-                                ClearOrKeep(editor.i18n('The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?'), editor.i18n('Word Paste Detected'), (agree: boolean | number) => {
+                                ClearOrKeep(editor.i18n("The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?"), editor.i18n("Word Paste Detected"), (agree: boolean | number) => {
                                     if (agree === true) {
                                         html = applyStyles(html);
 
-                                        if (editor.options.beautifyHTML && (<any>editor.ownerWindow)['html_beautify']) {
-                                            html = (<any>editor.ownerWindow)['html_beautify'](html);
+                                        if (editor.options.beautifyHTML && (editor.ownerWindow as any).html_beautify) {
+                                            html = (editor.ownerWindow as any).html_beautify(html);
                                         }
                                     }
 
@@ -354,8 +353,8 @@ export function paste(editor: Jodit) {
                     if (getDataTransfer(event).types && [].slice.call(getDataTransfer(event).types).indexOf("text/html") !== -1) {
                         const html: string = getDataTransfer(event).getData(TEXT_HTML);
                         return processHTMLData(html);
-                    } else if (event.type !== 'drop') {
-                        const div: HTMLDivElement = <HTMLDivElement>dom('<div tabindex="-1" style="left: -9999px; top: 0; width: 0; height: 100%; line-height: 140%; overflow: hidden; position: fixed; z-index: 2147483647; word-break: break-all;" contenteditable="true"></div>', editor.ownerDocument);
+                    } else if (event.type !== "drop") {
+                        const div: HTMLDivElement = dom('<div tabindex="-1" style="left: -9999px; top: 0; width: 0; height: 100%; line-height: 140%; overflow: hidden; position: fixed; z-index: 2147483647; word-break: break-all;" contenteditable="true"></div>', editor.ownerDocument) as HTMLDivElement;
                         editor.container.appendChild(div);
                         const selData = editor.selection.save();
                         div.focus();
@@ -377,8 +376,8 @@ export function paste(editor: Jodit) {
                                 }
                             } else {
                                 if (tick < 5) {
-                                    setTimeout(function () {
-                                        waitData()
+                                    setTimeout(function() {
+                                        waitData();
                                     }, 20);
                                 } else {
                                     removeFakeFocus();
