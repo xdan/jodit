@@ -82,7 +82,7 @@
     },
     "lint-staged": {
         "*.{ts}": [
-            "tslint --fix ./src/**/*.ts"
+            "tslint -c tslint.json ./src/**/*.ts --fix"
         ]
     }
 }
