@@ -4,11 +4,11 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Config } from "../Config";
-import { Jodit } from "../Jodit";
-import { Dom } from "../modules/Dom";
+import { Config } from '../Config';
+import { Jodit } from '../Jodit';
+import { Dom } from '../modules/Dom';
 
-declare module "../Config" {
+declare module '../Config' {
     interface Config {
         autofocus: boolean;
     }
@@ -27,7 +27,7 @@ Config.prototype.autofocus = false;
 export function autofocus(editor: Jodit) {
     let timeout: number;
     editor.events
-        .on("afterInit", () => {
+        .on('afterInit', () => {
             if (editor.options.autofocus) {
                 if (editor.defaultTimeout) {
                     timeout = window.setTimeout(editor.selection.focus, 300);
@@ -36,8 +36,13 @@ export function autofocus(editor: Jodit) {
                 }
             }
         })
-        .on("mousedown", (e: MouseEvent) => {
-            if (editor.isEditorMode() && e.target && Dom.isBlock(e.target as Node) && !(e.target as HTMLElement).childNodes.length) {
+        .on('mousedown', (e: MouseEvent) => {
+            if (
+                editor.isEditorMode() &&
+                e.target &&
+                Dom.isBlock(e.target as Node) &&
+                !(e.target as HTMLElement).childNodes.length
+            ) {
                 if (editor.editor === e.target) {
                     editor.selection.focus();
                 } else {
@@ -45,7 +50,7 @@ export function autofocus(editor: Jodit) {
                 }
             }
         })
-        .on("beforeDestruct", () => {
+        .on('beforeDestruct', () => {
             clearTimeout(timeout);
         });
 }

@@ -4,11 +4,18 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Config } from "../Config";
-import { css, ctrlKey, dataBind, setTimeout, splitArray, throttle } from "../modules/Helpers";
-import { Plugin } from "../modules/Plugin";
+import { Config } from '../Config';
+import {
+    css,
+    ctrlKey,
+    dataBind,
+    setTimeout,
+    splitArray,
+    throttle,
+} from '../modules/Helpers';
+import { Plugin } from '../modules/Plugin';
 
-declare module "../Config" {
+declare module '../Config' {
     interface Config {
         draggableTags: string | string[];
     }
@@ -17,7 +24,7 @@ declare module "../Config" {
 /**
  * Draggable elements
  */
-Config.prototype.draggableTags = ["img", "a", "jodit-media", "jodit"];
+Config.prototype.draggableTags = ['img', 'a', 'jodit-media', 'jodit'];
 
 /**
  * Process drag and drop image or another element inside the editor
@@ -36,7 +43,7 @@ export class DragAndDropElement extends Plugin {
         }
 
         this.wasMoved = true;
-        this.jodit.events.fire("hidePopup hideResizer");
+        this.jodit.events.fire('hidePopup hideResizer');
 
         if (!this.draggable.parentNode) {
             this.jodit.ownerDocument.body.appendChild(this.draggable);
@@ -48,12 +55,10 @@ export class DragAndDropElement extends Plugin {
         });
 
         this.jodit.selection.insertCursorAtPoint(event.clientX, event.clientY);
-
     }, this.jodit.defaultTimeout);
 
     private onDragStart = (event: DragEvent) => {
-        let
-            target: Node | null = event.target as Node,
+        let target: Node | null = event.target as Node,
             last: HTMLElement | null = null;
 
         if (!this.dragList.length) {
@@ -62,7 +67,10 @@ export class DragAndDropElement extends Plugin {
 
         do {
             if (this.dragList.includes(target.nodeName.toLowerCase())) {
-                if (!last || (target.firstChild === last && target.lastChild === last)) {
+                if (
+                    !last ||
+                    (target.firstChild === last && target.lastChild === last)
+                ) {
                     last = target as HTMLElement;
                 }
             }
@@ -77,36 +85,40 @@ export class DragAndDropElement extends Plugin {
         this.isCopyMode = ctrlKey(event); // we can move only element from editor
         this.onDragEnd();
 
-        this.timeout = setTimeout((lastNode: HTMLElement) => {
-            this.draggable =  lastNode.cloneNode(true) as HTMLElement;
+        this.timeout = setTimeout(
+            (lastNode: HTMLElement) => {
+                this.draggable = lastNode.cloneNode(true) as HTMLElement;
 
-            dataBind(this.draggable, "target", lastNode);
+                dataBind(this.draggable, 'target', lastNode);
 
-            css(this.draggable, {
-                "z-index": 100000000000000,
-                "pointer-events": "none",
-                "position": "fixed",
-                "display": "inlin-block",
-                "left": event.clientX,
-                "top": event.clientY,
-                "width": lastNode.offsetWidth,
-                "height": lastNode.offsetHeight,
-            });
-
-        }, this.jodit.defaultTimeout, last);
+                css(this.draggable, {
+                    'z-index': 100000000000000,
+                    'pointer-events': 'none',
+                    position: 'fixed',
+                    display: 'inlin-block',
+                    left: event.clientX,
+                    top: event.clientY,
+                    width: lastNode.offsetWidth,
+                    height: lastNode.offsetHeight,
+                });
+            },
+            this.jodit.defaultTimeout,
+            last
+        );
 
         event.preventDefault();
-    }
+    };
 
     private onDragEnd = (event?: DragEvent) => {
         window.clearTimeout(this.timeout);
 
         if (this.draggable) {
-            this.draggable.parentNode && this.draggable.parentNode.removeChild(this.draggable);
+            this.draggable.parentNode &&
+                this.draggable.parentNode.removeChild(this.draggable);
             this.draggable = null;
             this.wasMoved = false;
         }
-    }
+    };
 
     private onDrop = (event: DragEvent) => {
         if (!this.draggable || !this.wasMoved) {
@@ -114,7 +126,7 @@ export class DragAndDropElement extends Plugin {
             return;
         }
 
-        let fragment: HTMLElement = dataBind(this.draggable, "target");
+        let fragment: HTMLElement = dataBind(this.draggable, 'target');
 
         this.onDragEnd();
 
@@ -124,27 +136,33 @@ export class DragAndDropElement extends Plugin {
 
         this.jodit.selection.insertNode(fragment, true, false);
 
-        if (fragment.nodeName === "IMG" && this.jodit.events) {
-            this.jodit.events.fire("afterInsertImage", fragment);
+        if (fragment.nodeName === 'IMG' && this.jodit.events) {
+            this.jodit.events.fire('afterInsertImage', fragment);
         }
 
-        this.jodit.events.fire("synchro");
-    }
+        this.jodit.events.fire('synchro');
+    };
 
     public afterInit() {
-        this.dragList = this.jodit.options.draggableTags ? splitArray(this.jodit.options.draggableTags)
-                .filter(item => item)
-                .map((item: string) => item.toLowerCase()) : [];
+        this.dragList = this.jodit.options.draggableTags
+            ? splitArray(this.jodit.options.draggableTags)
+                  .filter(item => item)
+                  .map((item: string) => item.toLowerCase())
+            : [];
 
         if (!this.dragList.length) {
             return;
         }
 
         this.jodit.events
-            .on(this.jodit.editor, "mousemove touchmove", this.onDrag)
-            .on(this.jodit.editor, "mousedown touchstart dragstart", this.onDragStart)
-            .on("mouseup touchend", this.onDrop)
-            .on(window, "mouseup touchend", this.onDragEnd);
+            .on(this.jodit.editor, 'mousemove touchmove', this.onDrag)
+            .on(
+                this.jodit.editor,
+                'mousedown touchstart dragstart',
+                this.onDragStart
+            )
+            .on('mouseup touchend', this.onDrop)
+            .on(window, 'mouseup touchend', this.onDragEnd);
     }
 
     public beforeDestruct() {

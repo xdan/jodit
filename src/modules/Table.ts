@@ -5,7 +5,8 @@
  */
 
 /**
- * Module for working with tables . Delete, insert , merger, division of cells , rows and columns. When creating elements such as <table> for each of them
+ * Module for working with tables . Delete, insert , merger, division of cells , rows and columns.
+ * When creating elements such as <table> for each of them
  * creates a new instance Jodit.modules.TableProcessor and it can be accessed via $('table').data('table-processor')
  *
  * @module Table
@@ -13,13 +14,13 @@
  * @param {HTMLTableElement} table Table for which to create a module
  */
 
-import * as consts from "../constants";
-import { Dom } from "./Dom";
-import { $$, each, trim } from "./Helpers";
+import * as consts from '../constants';
+import { Dom } from './Dom';
+import { $$, each, trim } from './Helpers';
 
 export class Table {
     public static addSelected(td: HTMLTableCellElement) {
-        td.setAttribute(consts.JODIT_SELECTED_CELL_MARKER, "1");
+        td.setAttribute(consts.JODIT_SELECTED_CELL_MARKER, '1');
     }
     public static restoreSelection(td: HTMLTableCellElement) {
         td.removeAttribute(consts.JODIT_SELECTED_CELL_MARKER);
@@ -30,8 +31,17 @@ export class Table {
      * @param {HTMLTableElement} table
      * @return {HTMLTableCellElement[]}
      */
-    public static getAllSelectedCells(table: HTMLElement | HTMLTableElement): HTMLTableCellElement[] {
-        return table ? $$(`td[${consts.JODIT_SELECTED_CELL_MARKER}],th[${consts.JODIT_SELECTED_CELL_MARKER}]`, table) as HTMLTableCellElement[] : [];
+    public static getAllSelectedCells(
+        table: HTMLElement | HTMLTableElement
+    ): HTMLTableCellElement[] {
+        return table
+            ? ($$(
+                  `td[${consts.JODIT_SELECTED_CELL_MARKER}],th[${
+                      consts.JODIT_SELECTED_CELL_MARKER
+                  }]`,
+                  table
+              ) as HTMLTableCellElement[])
+            : [];
     }
 
     /**
@@ -59,18 +69,30 @@ export class Table {
      * @param {function(HTMLTableCellElement, int, int, int, int):boolean} [callback] if return false cycle break
      * @return {Array}
      */
-    public static formalMatrix(table: HTMLTableElement, callback ?: (cell: HTMLTableCellElement, row: number, col: number, colSpan: number, rowSpan: number) => false|void): HTMLTableCellElement[][] {
+    public static formalMatrix(
+        table: HTMLTableElement,
+        callback?: (
+            cell: HTMLTableCellElement,
+            row: number,
+            col: number,
+            colSpan: number,
+            rowSpan: number
+        ) => false | void
+    ): HTMLTableCellElement[][] {
         const matrix: HTMLTableCellElement[][] = [[]];
-        const rows  = Array.prototype.slice.call(table.rows);
+        const rows = Array.prototype.slice.call(table.rows);
 
-        const setCell = (cell: HTMLTableCellElement, i: number): false | HTMLTableCellElement[][] | void => {
+        const setCell = (
+            cell: HTMLTableCellElement,
+            i: number
+        ): false | HTMLTableCellElement[][] | void => {
             if (matrix[i] === undefined) {
                 matrix[i] = [];
             }
 
-            let colSpan: number = cell.colSpan,
-                column: number,
-                rowSpan = cell.rowSpan,
+            const colSpan: number = cell.colSpan,
+                rowSpan = cell.rowSpan;
+            let column: number,
                 row: number,
                 currentColumn: number = 0;
 
@@ -83,7 +105,16 @@ export class Table {
                     if (matrix[i + row] === undefined) {
                         matrix[i + row] = [];
                     }
-                    if (callback && callback(cell, i + row, currentColumn + column, colSpan, rowSpan) === false) {
+                    if (
+                        callback &&
+                        callback(
+                            cell,
+                            i + row,
+                            currentColumn + column,
+                            colSpan,
+                            rowSpan
+                        ) === false
+                    ) {
                         return false;
                     }
                     matrix[i + row][currentColumn + column] = cell;
@@ -106,25 +137,38 @@ export class Table {
     /**
      * Get cell coordinate in formal table (without colspan and rowspan)
      */
-    public static formalCoordinate(table: HTMLTableElement, cell: HTMLTableCellElement, max = false): number[] {
+    public static formalCoordinate(
+        table: HTMLTableElement,
+        cell: HTMLTableCellElement,
+        max = false
+    ): number[] {
         let i: number = 0,
             j: number = 0,
             width: number = 1,
             height: number = 1;
 
-        Table.formalMatrix(table, (td: HTMLTableCellElement, ii: number, jj: number, colSpan: number | void, rowSpan: number| void): false | void => {
-            if (cell === td) {
-                i = ii;
-                j = jj;
-                width = colSpan || 1;
-                height = rowSpan || 1;
-                if (max) {
-                    j += (colSpan || 1) - 1;
-                    i += (rowSpan || 1) - 1;
+        Table.formalMatrix(
+            table,
+            (
+                td: HTMLTableCellElement,
+                ii: number,
+                jj: number,
+                colSpan: number | void,
+                rowSpan: number | void
+            ): false | void => {
+                if (cell === td) {
+                    i = ii;
+                    j = jj;
+                    width = colSpan || 1;
+                    height = rowSpan || 1;
+                    if (max) {
+                        j += (colSpan || 1) - 1;
+                        i += (rowSpan || 1) - 1;
+                    }
+                    return false;
                 }
-                return false;
             }
-        });
+        );
 
         return [i, j, width, height];
     }
@@ -133,26 +177,30 @@ export class Table {
      * Inserts a new line after row what contains the selected cell
      *
      * @param {HTMLTableElement} table
-     * @param {Boolean|HTMLTableRowElement} [line=false] Insert a new line after/before this line contains the selected cell
+     * @param {Boolean|HTMLTableRowElement} [line=false] Insert a new line after/before this
+     * line contains the selected cell
      * @param {Boolean} [after=true] Insert a new line after line contains the selected cell
      */
-    public static appendRow(table: HTMLTableElement, line: false|HTMLTableRowElement = false, after = true) {
-        const doc: Document = table.ownerDocument || document;
+    public static appendRow(
+        table: HTMLTableElement,
+        line: false | HTMLTableRowElement = false,
+        after = true
+    ) {
+        const doc: Document = table.ownerDocument || document,
+            columnsCount: number = Table.getColumnsCount(table),
+            row: HTMLTableRowElement = doc.createElement('tr');
 
-        let columnsCount: number = Table.getColumnsCount(table),
-            row: HTMLTableRowElement = doc.createElement("tr"),
-            j: number;
-
-        for (j = 0; j < columnsCount; j += 1) {
-            row.appendChild(doc.createElement("td"));
+        for (let j: number = 0; j < columnsCount; j += 1) {
+            row.appendChild(doc.createElement('td'));
         }
 
         if (after && line && line.nextSibling) {
-            line.parentNode && line.parentNode.insertBefore(row, line.nextSibling);
+            line.parentNode &&
+                line.parentNode.insertBefore(row, line.nextSibling);
         } else if (!after && line) {
             line.parentNode && line.parentNode.insertBefore(row, line);
         } else {
-            ($$(":scope>tbody", table)[0]  || table).appendChild(row);
+            ($$(':scope>tbody', table)[0] || table).appendChild(row);
         }
     }
 
@@ -179,7 +227,14 @@ export class Table {
                         nextCell += 1;
                     }
 
-                    const nextRow: HTMLTableRowElement  = Dom.next(cell.parentNode, (elm: Node | null) => elm && elm.nodeType === Node.ELEMENT_NODE && elm.nodeName === "TR", table) as HTMLTableRowElement;
+                    const nextRow: HTMLTableRowElement = Dom.next(
+                        cell.parentNode,
+                        (elm: Node | null) =>
+                            elm &&
+                            elm.nodeType === Node.ELEMENT_NODE &&
+                            elm.nodeName === 'TR',
+                        table
+                    ) as HTMLTableRowElement;
 
                     if (box[rowIndex + 1][nextCell]) {
                         nextRow.insertBefore(cell, box[rowIndex + 1][nextCell]);
@@ -190,12 +245,15 @@ export class Table {
             } else {
                 cell.parentNode && cell.parentNode.removeChild(cell);
             }
-            if (dec && (cell.parentNode === row || cell !== box[rowIndex][j - 1])) {
+            if (
+                dec &&
+                (cell.parentNode === row || cell !== box[rowIndex][j - 1])
+            ) {
                 const rowSpan: number = cell.rowSpan;
                 if (rowSpan - 1 > 1) {
-                    cell.setAttribute("rowspan", (rowSpan - 1).toString());
+                    cell.setAttribute('rowspan', (rowSpan - 1).toString());
                 } else {
-                    cell.removeAttribute("rowspan");
+                    cell.removeAttribute('rowspan');
                 }
             }
         });
@@ -209,7 +267,11 @@ export class Table {
      * Insert column before / after all the columns containing the selected cells
      *
      */
-    public static appendColumn(table: HTMLTableElement, j: number, after = true) {
+    public static appendColumn(
+        table: HTMLTableElement,
+        j: number,
+        after = true
+    ) {
         const box: HTMLTableCellElement[][] = Table.formalMatrix(table);
         let i: number;
 
@@ -218,26 +280,42 @@ export class Table {
         }
 
         for (i = 0; i < box.length; i += 1) {
-            const cell: HTMLTableCellElement = (table.ownerDocument || document).createElement("td");
+            const cell: HTMLTableCellElement = (
+                table.ownerDocument || document
+            ).createElement('td');
             const td: HTMLTableCellElement = box[i][j];
             let added: boolean = false;
             if (after) {
-                if (box[i] && td && j + 1 >= box[i].length || td !== box[i][j + 1]) {
+                if (
+                    (box[i] && td && j + 1 >= box[i].length) ||
+                    td !== box[i][j + 1]
+                ) {
                     if (td.nextSibling) {
-                        td.parentNode && td.parentNode.insertBefore(cell, td.nextSibling);
+                        td.parentNode &&
+                            td.parentNode.insertBefore(cell, td.nextSibling);
                     } else {
                         td.parentNode && td.parentNode.appendChild(cell);
                     }
                     added = true;
                 }
             } else {
-                if (j - 1 < 0 || box[i][j] !== box[i][j - 1] && box[i][j].parentNode) {
-                    td.parentNode && td.parentNode.insertBefore(cell, box[i][j]);
+                if (
+                    j - 1 < 0 ||
+                    (box[i][j] !== box[i][j - 1] && box[i][j].parentNode)
+                ) {
+                    td.parentNode &&
+                        td.parentNode.insertBefore(cell, box[i][j]);
                     added = true;
                 }
             }
             if (!added) {
-                box[i][j].setAttribute("colspan", (parseInt(box[i][j].getAttribute("colspan") || "1", 10) + 1).toString());
+                box[i][j].setAttribute(
+                    'colspan',
+                    (
+                        parseInt(box[i][j].getAttribute('colspan') || '1', 10) +
+                        1
+                    ).toString()
+                );
             }
         }
     }
@@ -265,9 +343,9 @@ export class Table {
             if (dec && (i - 1 < 0 || td !== box[i - 1][j])) {
                 const colSpan: number = td.colSpan;
                 if (colSpan - 1 > 1) {
-                    td.setAttribute("colspan", (colSpan - 1).toString());
+                    td.setAttribute('colspan', (colSpan - 1).toString());
                 } else {
-                    td.removeAttribute("colspan");
+                    td.removeAttribute('colspan');
                 }
             }
         });
@@ -280,7 +358,10 @@ export class Table {
      * @param {Array.<HTMLTableCellElement>} selectedCells
      * @return {number[][]}
      */
-    public static getSelectedBound(table: HTMLTableElement, selectedCells: HTMLTableCellElement[]): number[][] {
+    public static getSelectedBound(
+        table: HTMLTableElement,
+        selectedCells: HTMLTableCellElement[]
+    ): number[][] {
         const bound = [[Infinity, Infinity], [0, 0]];
         const box = Table.formalMatrix(table);
         let i: number, j: number, k: number;
@@ -331,13 +412,10 @@ export class Table {
      * @param {HTMLTableElement} table
      */
     public static normalizeTable(table: HTMLTableElement) {
-        let i: number,
-            j: number,
-            min: number,
-            not: boolean;
+        let i: number, j: number, min: number, not: boolean;
 
         const __marked: HTMLTableCellElement[] = [],
-              box: HTMLTableCellElement[][] = Table.formalMatrix(table);
+            box: HTMLTableCellElement[][] = Table.formalMatrix(table);
 
         // remove extra colspans
         for (j = 0; j < box[0].length; j += 1) {
@@ -358,7 +436,12 @@ export class Table {
                     if (box[i][j] === undefined) {
                         continue; // broken table
                     }
-                    Table.__mark(box[i][j], "colspan", box[i][j].colSpan - min + 1, __marked);
+                    Table.__mark(
+                        box[i][j],
+                        'colspan',
+                        box[i][j].colSpan - min + 1,
+                        __marked
+                    );
                 }
             }
         }
@@ -382,7 +465,12 @@ export class Table {
                     if (box[i][j] === undefined) {
                         continue; // broken table
                     }
-                    Table.__mark(box[i][j], "rowspan", box[i][j].rowSpan - min + 1, __marked);
+                    Table.__mark(
+                        box[i][j],
+                        'rowspan',
+                        box[i][j].rowSpan - min + 1,
+                        __marked
+                    );
                 }
             }
         }
@@ -393,14 +481,23 @@ export class Table {
                 if (box[i][j] === undefined) {
                     continue; // broken table
                 }
-                if (box[i][j].hasAttribute("rowspan") && box[i][j].rowSpan === 1) {
-                    box[i][j].removeAttribute("rowspan");
+                if (
+                    box[i][j].hasAttribute('rowspan') &&
+                    box[i][j].rowSpan === 1
+                ) {
+                    box[i][j].removeAttribute('rowspan');
                 }
-                if (box[i][j].hasAttribute("colspan") && box[i][j].colSpan === 1) {
-                    box[i][j].removeAttribute("colspan");
+                if (
+                    box[i][j].hasAttribute('colspan') &&
+                    box[i][j].colSpan === 1
+                ) {
+                    box[i][j].removeAttribute('colspan');
                 }
-                if (box[i][j].hasAttribute("class") && !box[i][j].getAttribute("class")) {
-                    box[i][j].removeAttribute("class");
+                if (
+                    box[i][j].hasAttribute('class') &&
+                    !box[i][j].getAttribute('class')
+                ) {
+                    box[i][j].removeAttribute('class');
                 }
             }
         }
@@ -415,73 +512,102 @@ export class Table {
      *
      */
     public static mergeSelected(table: HTMLTableElement) {
-        let bound: number[][] = Table.getSelectedBound(table, Table.getAllSelectedCells(table)),
-            w: number = 0,
-            first: HTMLTableCellElement|null = null,
+        const html: string[] = [],
+            bound: number[][] = Table.getSelectedBound(
+                table,
+                Table.getAllSelectedCells(table)
+            );
+        let w: number = 0,
+            first: HTMLTableCellElement | null = null,
             first_j: number = 0,
             td: HTMLTableCellElement,
-            html: string[] = [],
             cols: number = 0,
             rows: number = 0;
 
         const __marked: HTMLTableCellElement[] = [];
 
         if (bound && (bound[0][0] - bound[1][0] || bound[0][1] - bound[1][1])) {
-            Table.formalMatrix(table, (cell: HTMLTableCellElement, i: number, j: number, cs: number, rs: number) => {
-                if (i >= bound[0][0] && i <= bound[1][0]) {
-                    if (j >= bound[0][1] && j <= bound[1][1]) {
-                        td = cell;
+            Table.formalMatrix(
+                table,
+                (
+                    cell: HTMLTableCellElement,
+                    i: number,
+                    j: number,
+                    cs: number,
+                    rs: number
+                ) => {
+                    if (i >= bound[0][0] && i <= bound[1][0]) {
+                        if (j >= bound[0][1] && j <= bound[1][1]) {
+                            td = cell;
 
-                        if ((td as any).__i_am_already_was) {
-                            return;
-                        }
+                            if ((td as any).__i_am_already_was) {
+                                return;
+                            }
 
-                        (td as any).__i_am_already_was = true;
+                            (td as any).__i_am_already_was = true;
 
-                        if (i === bound[0][0] && td.style.width) {
-                            w += td.offsetWidth;
-                        }
+                            if (i === bound[0][0] && td.style.width) {
+                                w += td.offsetWidth;
+                            }
 
-                        if (trim(cell.innerHTML.replace(/<br(\/)?>/g, "")) !== "") {
-                            html.push(cell.innerHTML);
-                        }
+                            if (
+                                trim(
+                                    cell.innerHTML.replace(/<br(\/)?>/g, '')
+                                ) !== ''
+                            ) {
+                                html.push(cell.innerHTML);
+                            }
 
-                        if (cs > 1) {
-                            cols += cs - 1;
-                        }
-                        if (rs > 1) {
-                            rows += rs - 1;
-                        }
+                            if (cs > 1) {
+                                cols += cs - 1;
+                            }
+                            if (rs > 1) {
+                                rows += rs - 1;
+                            }
 
-                        if (!first) {
-                            first = cell as HTMLTableCellElement;
-                            first_j = j;
-                        } else {
-                            Table.__mark(td, "remove", 1, __marked);
+                            if (!first) {
+                                first = cell as HTMLTableCellElement;
+                                first_j = j;
+                            } else {
+                                Table.__mark(td, 'remove', 1, __marked);
+                            }
                         }
                     }
                 }
-            });
+            );
 
             cols = bound[1][1] - bound[0][1] + 1;
             rows = bound[1][0] - bound[0][0] + 1;
 
             if (first) {
                 if (cols > 1) {
-                    Table.__mark(first, "colspan", cols, __marked);
+                    Table.__mark(first, 'colspan', cols, __marked);
                 }
                 if (rows > 1) {
-                    Table.__mark(first, "rowspan", rows, __marked);
+                    Table.__mark(first, 'rowspan', rows, __marked);
                 }
 
                 if (w) {
-                    Table.__mark(first, "width", ((w / table.offsetWidth) * 100).toFixed(consts.ACCURACY) + "%", __marked);
+                    Table.__mark(
+                        first,
+                        'width',
+                        ((w / table.offsetWidth) * 100).toFixed(
+                            consts.ACCURACY
+                        ) + '%',
+                        __marked
+                    );
                     if (first_j) {
-                        Table.setColumnWidthByDelta(table, first_j, 0, true, __marked);
+                        Table.setColumnWidthByDelta(
+                            table,
+                            first_j,
+                            0,
+                            true,
+                            __marked
+                        );
                     }
                 }
 
-                (first as HTMLTableCellElement).innerHTML = html.join("<br/>");
+                (first as HTMLTableCellElement).innerHTML = html.join('<br/>');
 
                 delete (first as any).__i_am_already_was;
 
@@ -512,45 +638,68 @@ export class Table {
 
         const doc: Document = table.ownerDocument || document;
 
-        Table.getAllSelectedCells(table).forEach((cell: HTMLTableCellElement) => {
-            td = doc.createElement("td");
-            td.appendChild(doc.createElement("br"));
-            tr = doc.createElement("tr");
+        Table.getAllSelectedCells(table).forEach(
+            (cell: HTMLTableCellElement) => {
+                td = doc.createElement('td');
+                td.appendChild(doc.createElement('br'));
+                tr = doc.createElement('tr');
 
-            coord = Table.formalCoordinate(table, cell);
+                coord = Table.formalCoordinate(table, cell);
 
-            if (cell.rowSpan < 2) {
-                Table.formalMatrix(table, (td, i, j) => {
-                    if (coord[0] === i && coord[1] !== j && td !== cell) {
-                        Table.__mark(td, "rowspan", td.rowSpan + 1, __marked);
-                    }
-                });
-                Dom.after(Dom.closest(cell, "tr", table) as HTMLTableRowElement, tr);
-                tr.appendChild(td);
-            } else {
-                Table.__mark(cell, "rowspan", cell.rowSpan - 1, __marked);
-                Table.formalMatrix(table, (td: HTMLTableCellElement, i: number, j: number) => {
-                    if (i > coord[0] && i < coord[0] + cell.rowSpan && coord[1] >  j && (td.parentNode as HTMLTableRowElement).rowIndex === i) {
-                        after = td;
-                    }
-                    if (coord[0] < i && td === cell) {
-                        parent = table.rows[i];
-                    }
-                });
-                if (after) {
-                    Dom.after(after, td);
+                if (cell.rowSpan < 2) {
+                    Table.formalMatrix(table, (tdElm, i, j) => {
+                        if (
+                            coord[0] === i &&
+                            coord[1] !== j &&
+                            tdElm !== cell
+                        ) {
+                            Table.__mark(
+                                tdElm,
+                                'rowspan',
+                                tdElm.rowSpan + 1,
+                                __marked
+                            );
+                        }
+                    });
+                    Dom.after(
+                        Dom.closest(cell, 'tr', table) as HTMLTableRowElement,
+                        tr
+                    );
+                    tr.appendChild(td);
                 } else {
-                    parent.insertBefore(td, parent.firstChild);
+                    Table.__mark(cell, 'rowspan', cell.rowSpan - 1, __marked);
+                    Table.formalMatrix(
+                        table,
+                        (tdElm: HTMLTableCellElement, i: number, j: number) => {
+                            if (
+                                i > coord[0] &&
+                                i < coord[0] + cell.rowSpan &&
+                                coord[1] > j &&
+                                (tdElm.parentNode as HTMLTableRowElement)
+                                    .rowIndex === i
+                            ) {
+                                after = tdElm;
+                            }
+                            if (coord[0] < i && tdElm === cell) {
+                                parent = table.rows[i];
+                            }
+                        }
+                    );
+                    if (after) {
+                        Dom.after(after, td);
+                    } else {
+                        parent.insertBefore(td, parent.firstChild);
+                    }
                 }
-            }
 
-            if (cell.colSpan > 1) {
-                Table.__mark(td, "colspan", cell.colSpan, __marked);
-            }
+                if (cell.colSpan > 1) {
+                    Table.__mark(td, 'colspan', cell.colSpan, __marked);
+                }
 
-            Table.__unmark(__marked);
-            Table.restoreSelection(cell);
-        });
+                Table.__unmark(__marked);
+                Table.restoreSelection(cell);
+            }
+        );
         this.normalizeTable(table);
     }
 
@@ -560,44 +709,63 @@ export class Table {
      * @param {HTMLTableElement} table
      */
     public static splitVertical(table: HTMLTableElement) {
-        let coord: number[],
-            td: HTMLTableCellElement,
-            percentage: number;
+        let coord: number[], td: HTMLTableCellElement, percentage: number;
 
         const __marked: HTMLTableCellElement[] = [];
         const doc: Document = table.ownerDocument || document;
 
-        Table.getAllSelectedCells(table).forEach((cell: HTMLTableCellElement) => {
-            coord = Table.formalCoordinate(table, cell);
-            if (cell.colSpan < 2) {
-                Table.formalMatrix(table, (td, i, j) => {
-                    if (coord[1] === j && coord[0] !== i && td !== cell) {
-                        Table.__mark(td, "colspan", td.colSpan + 1, __marked);
-                    }
-                });
-            } else {
-                Table.__mark(cell, "colspan", cell.colSpan - 1, __marked);
+        Table.getAllSelectedCells(table).forEach(
+            (cell: HTMLTableCellElement) => {
+                coord = Table.formalCoordinate(table, cell);
+                if (cell.colSpan < 2) {
+                    Table.formalMatrix(table, (tdElm, i, j) => {
+                        if (
+                            coord[1] === j &&
+                            coord[0] !== i &&
+                            tdElm !== cell
+                        ) {
+                            Table.__mark(
+                                tdElm,
+                                'colspan',
+                                tdElm.colSpan + 1,
+                                __marked
+                            );
+                        }
+                    });
+                } else {
+                    Table.__mark(cell, 'colspan', cell.colSpan - 1, __marked);
+                }
+
+                td = doc.createElement('td');
+                td.appendChild(doc.createElement('br'));
+
+                if (cell.rowSpan > 1) {
+                    Table.__mark(td, 'rowspan', cell.rowSpan, __marked);
+                }
+
+                const oldWidth = cell.offsetWidth; // get old width
+
+                Dom.after(cell, td);
+
+                percentage = oldWidth / table.offsetWidth / 2;
+
+                Table.__mark(
+                    cell,
+                    'width',
+                    (percentage * 100).toFixed(consts.ACCURACY) + '%',
+                    __marked
+                );
+                Table.__mark(
+                    td,
+                    'width',
+                    (percentage * 100).toFixed(consts.ACCURACY) + '%',
+                    __marked
+                );
+                Table.__unmark(__marked);
+
+                Table.restoreSelection(cell);
             }
-
-            td = doc.createElement("td");
-            td.appendChild(doc.createElement("br"));
-
-            if (cell.rowSpan > 1) {
-                Table.__mark(td, "rowspan", cell.rowSpan, __marked);
-            }
-
-            const oldWidth = cell.offsetWidth; // get old width
-
-            Dom.after(cell, td);
-
-            percentage = (oldWidth / table.offsetWidth) / 2;
-
-            Table.__mark(cell, "width", (percentage * 100).toFixed(consts.ACCURACY) + "%", __marked);
-            Table.__mark(td, "width", (percentage * 100).toFixed(consts.ACCURACY) + "%", __marked);
-            Table.__unmark(__marked);
-
-            Table.restoreSelection(cell);
-        });
+        );
         Table.normalizeTable(table);
     }
 
@@ -610,16 +778,25 @@ export class Table {
      * @param {boolean} noUnmark
      * @param {HTMLTableCellElement[]} __marked
      */
-    public static setColumnWidthByDelta(table: HTMLTableElement, j: number, delta: number, noUnmark: boolean, __marked: HTMLTableCellElement[]) {
-        let i: number,
-            box = Table.formalMatrix(table),
-            w: number,
-            percent: number;
+    public static setColumnWidthByDelta(
+        table: HTMLTableElement,
+        j: number,
+        delta: number,
+        noUnmark: boolean,
+        __marked: HTMLTableCellElement[]
+    ) {
+        const box = Table.formalMatrix(table);
+        let i: number, w: number, percent: number;
 
         for (i = 0; i < box.length; i += 1) {
             w = box[i][j].offsetWidth;
             percent = ((w + delta) / table.offsetWidth) * 100;
-            Table.__mark(box[i][j], "width", percent.toFixed(consts.ACCURACY) + "%", __marked);
+            Table.__mark(
+                box[i][j],
+                'width',
+                percent.toFixed(consts.ACCURACY) + '%',
+                __marked
+            );
         }
 
         if (!noUnmark) {
@@ -635,7 +812,12 @@ export class Table {
      * @param {HTMLTableCellElement[]} __marked
      * @private
      */
-    private static __mark(cell: HTMLTableCellElement, key: string, value: string|number, __marked: HTMLTableCellElement[]) {
+    private static __mark(
+        cell: HTMLTableCellElement,
+        key: string,
+        value: string | number,
+        __marked: HTMLTableCellElement[]
+    ) {
         __marked.push(cell);
         if (!(cell as any).__marked_value) {
             (cell as any).__marked_value = {};
@@ -648,24 +830,25 @@ export class Table {
             if ((cell as any).__marked_value) {
                 each((cell as any).__marked_value, (key, value) => {
                     switch (key) {
-                        case "remove":
-                            cell.parentNode && cell.parentNode.removeChild(cell);
+                        case 'remove':
+                            cell.parentNode &&
+                                cell.parentNode.removeChild(cell);
                             break;
-                        case "rowspan":
+                        case 'rowspan':
                             if (value > 1) {
-                                cell.setAttribute("rowspan", value);
+                                cell.setAttribute('rowspan', value);
                             } else {
-                                cell.removeAttribute("rowspan");
+                                cell.removeAttribute('rowspan');
                             }
                             break;
-                        case "colspan":
+                        case 'colspan':
                             if (value > 1) {
-                                cell.setAttribute("colspan", value);
+                                cell.setAttribute('colspan', value);
                             } else {
-                                cell.removeAttribute("colspan");
+                                cell.removeAttribute('colspan');
                             }
                             break;
-                        case "width":
+                        case 'width':
                             cell.style.width = value;
                             break;
                     }

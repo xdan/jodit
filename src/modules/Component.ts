@@ -4,15 +4,14 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Jodit } from "../Jodit";
-import {  IDictionary } from "../types";
-import { IViewBased } from "../types/view";
+import { Jodit } from '../Jodit';
+import { IDictionary } from '../types';
+import { IViewBased } from '../types/view';
 
 export class Component {
-
     private __modulesInstances: IDictionary<Component> = {};
 
-    protected __whoLocked: string | false = "";
+    protected __whoLocked: string | false = '';
 
     /**
      * @property{string} ID attribute for source element, id add {id}_editor it's editor's id
@@ -29,22 +28,27 @@ export class Component {
     public isDestructed: boolean = false;
 
     public isLocked = (): boolean => {
-        return this.__whoLocked !== "";
-    }
+        return this.__whoLocked !== '';
+    };
 
     public isLockedNotBy = (name: string): boolean => {
         return this.isLocked() && this.__whoLocked !== name;
-    }
+    };
 
-    public destruct() {}
+    public destruct() {
+        // ignore
+    }
 
     public getInstance(moduleName: string, options?: object): Component {
         if (Jodit.modules[moduleName] === undefined) {
-            throw new Error("Need real module name");
+            throw new Error('Need real module name');
         }
 
         if (this.__modulesInstances[moduleName] === undefined) {
-            this.__modulesInstances[moduleName] = new Jodit.modules[moduleName](this, options);
+            this.__modulesInstances[moduleName] = new Jodit.modules[moduleName](
+                this,
+                options
+            );
         }
 
         return this.__modulesInstances[moduleName];

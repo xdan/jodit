@@ -4,10 +4,10 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { EventsNative } from "../modules/EventsNative";
-import { ToolbarCollection } from "../modules/toolbar/collection";
-import { Buttons } from "./toolbar";
-import {  IDictionary } from "./types";
+import { EventsNative } from '../modules/EventsNative';
+import { ToolbarCollection } from '../modules/toolbar/collection';
+import { Buttons } from './toolbar';
+import { IDictionary } from './types';
 
 interface IViewOptions {
     removeButtons: string[];
@@ -45,6 +45,6 @@ interface IViewBased {
 
     toolbar: ToolbarCollection;
 
-    i18n: (text: string, ...params: Array<string|number>) => string;
+    i18n: (text: string, ...params: Array<string | number>) => string;
     toggleFullSize(isFullSize?: boolean): void;
 }

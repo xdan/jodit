@@ -4,13 +4,13 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Jodit } from "../Jodit";
-import { Buttons } from "./toolbar";
-import {  IDictionary, IPermissions } from "./types";
-import { IUploaderOptions } from "./uploader";
+import { Jodit } from '../Jodit';
+import { Buttons } from './toolbar';
+import { IDictionary, IPermissions } from './types';
+import { IUploaderOptions } from './uploader';
 
 /**
- * The module creates a web browser dialog box . In a Web browser , you can select an image , remove , drag it . Upload new
+ * The module creates a web browser dialog box. In a Web browser ,you can select an image, remove, drag it. Upload new
  *
  * @module FileBrowser
  * @params {Object} parent Jodit main object
@@ -63,12 +63,12 @@ export interface IFileBrowserAjaxOptions {
 
     headers?: IDictionary<string>;
 
-    prepareData?: (data: IDictionary<string>) =>  IDictionary<string>;
+    prepareData?: (data: IDictionary<string>) => IDictionary<string>;
 
     process?: (resp: IFileBrowserAnswer) => IFileBrowserAnswer;
 }
 
-export interface IFileBrowserOptions  {
+export interface IFileBrowserOptions {
     removeButtons: string[];
     buttons: Buttons;
     zIndex?: number;
@@ -106,7 +106,11 @@ export interface IFileBrowserOptions  {
     showFileSize: boolean;
     showFileChangeTime: boolean;
 
-    getThumbTemplate: (item: ISourceFile, source: ISource, source_name: string) => string;
+    getThumbTemplate: (
+        item: ISourceFile,
+        source: ISource,
+        source_name: string
+    ) => string;
 
     ajax: IFileBrowserAjaxOptions;
     create: IFileBrowserAjaxOptions;

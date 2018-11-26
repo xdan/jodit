@@ -4,19 +4,20 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Config } from "../Config";
-import * as consts from "../constants";
-import { MODE_WYSIWYG } from "../constants";
-import { Jodit } from "../Jodit";
-import { Component, Dom, ToolbarIcon } from "../modules";
-import { debounce, dom, trim } from "../modules/Helpers";
-import { markerInfo } from "../modules/Selection";
-import { ISelectionRange } from "../types/types";
+import { Config } from '../Config';
+import * as consts from '../constants';
+import { MODE_WYSIWYG } from '../constants';
+import { Jodit } from '../Jodit';
+import { Component, Dom, ToolbarIcon } from '../modules';
+import { debounce, dom, trim } from '../modules/Helpers';
+import { markerInfo } from '../modules/Selection';
+import { ISelectionRange } from '../types/types';
 
-declare module "../Config" {
+declare module '../Config' {
     interface Config {
         /**
-         * Enable custom search plugin ![search](https://user-images.githubusercontent.com/794318/34545433-cd0a9220-f10e-11e7-8d26-7e22f66e266d.gif)
+         * Enable custom search plugin
+         * ![search](https://user-images.githubusercontent.com/794318/34545433-cd0a9220-f10e-11e7-8d26-7e22f66e266d.gif)
          */
         useSearch: boolean;
         // searchByInput: boolean,
@@ -41,28 +42,40 @@ Config.prototype.useSearch = true;
  * ```
  */
 export class search extends Component {
-
-    public static getSomePartOfStringIndex(needle: string, haystack: string, start: boolean = true): number|false {
-        return this.findSomePartOfString(needle, haystack, start, true) as number|false;
+    public static getSomePartOfStringIndex(
+        needle: string,
+        haystack: string,
+        start: boolean = true
+    ): number | false {
+        return this.findSomePartOfString(needle, haystack, start, true) as
+            | number
+            | false;
     }
 
-    public static findSomePartOfString(needle: string, haystack: string, start: boolean = true, getIndex: boolean = false): boolean|string|number {
-        needle = trim(needle.toLowerCase().replace(consts.SPACE_REG_EXP, " "));
+    public static findSomePartOfString(
+        needle: string,
+        haystack: string,
+        start: boolean = true,
+        getIndex: boolean = false
+    ): boolean | string | number {
+        needle = trim(needle.toLowerCase().replace(consts.SPACE_REG_EXP, ' '));
         haystack = haystack.toLowerCase();
 
-        let
-            i: number = start ? 0 : haystack.length - 1,
+        let i: number = start ? 0 : haystack.length - 1,
             needleStart: number = start ? 0 : needle.length - 1,
             tmpEqualLength: number = 0,
             startAtIndex: number | null = null;
 
-        const
-            inc: number = start ? 1 : -1,
+        const inc: number = start ? 1 : -1,
             tmp: string[] = [];
 
         for (; haystack[i] !== undefined; i += inc) {
             const some: boolean = needle[needleStart] === haystack[i];
-            if (some || (startAtIndex !== null && consts.SPACE_REG_EXP.test(haystack[i]))) {
+            if (
+                some ||
+                (startAtIndex !== null &&
+                    consts.SPACE_REG_EXP.test(haystack[i]))
+            ) {
                 if (startAtIndex === null || !start) {
                     startAtIndex = i;
                 }
@@ -81,80 +94,126 @@ export class search extends Component {
             }
 
             if (tmpEqualLength === needle.length) {
-                return getIndex ? startAtIndex as number : true;
+                return getIndex ? (startAtIndex as number) : true;
             }
         }
 
-        return getIndex ? (startAtIndex !== null ? startAtIndex : false) : (tmp.length ? (start ? tmp.join("") : tmp.reverse().join("")) : false);
+        return getIndex
+            ? startAtIndex !== null
+                ? startAtIndex
+                : false
+            : tmp.length
+            ? start
+                ? tmp.join('')
+                : tmp.reverse().join('')
+            : false;
     }
-    private template: string = '<div class="jodit_search">' +
+    private template: string =
+        '<div class="jodit_search">' +
         '<div class="jodit_search_box">' +
-            '<div class="jodit_search_inputs">' +
-                '<input tabindex="0" class="jodit_search-query" placeholder="' + this.jodit.i18n("Search for")  + '" type="text"/>' +
-                '<input tabindex="0" class="jodit_search-replace" placeholder="' + this.jodit.i18n("Replace with")  + '" type="text"/>' +
-            "</div>" +
-            '<div class="jodit_search_counts">' +
-                "<span>0/0</span>" +
-            "</div>" +
-            '<div class="jodit_search_buttons">' +
-                '<button tabindex="0" type="button" class="jodit_search_buttons-next">' + ToolbarIcon.getIcon("angle-down") + "</button>" +
-                '<button tabindex="0" type="button" class="jodit_search_buttons-prev">' + ToolbarIcon.getIcon("angle-up") + "</button>" +
-                '<button tabindex="0" type="button" class="jodit_search_buttons-cancel">' + ToolbarIcon.getIcon("cancel") + "</button>" +
-                '<button tabindex="0" type="button" class="jodit_search_buttons-replace">' + this.jodit.i18n("Replace")  + "</button>" +
-            "</div>" +
-        "</div>" +
-    "</div>";
+        '<div class="jodit_search_inputs">' +
+        '<input tabindex="0" class="jodit_search-query" placeholder="' +
+        this.jodit.i18n('Search for') +
+        '" type="text"/>' +
+        '<input tabindex="0" class="jodit_search-replace" placeholder="' +
+        this.jodit.i18n('Replace with') +
+        '" type="text"/>' +
+        '</div>' +
+        '<div class="jodit_search_counts">' +
+        '<span>0/0</span>' +
+        '</div>' +
+        '<div class="jodit_search_buttons">' +
+        '<button tabindex="0" type="button" class="jodit_search_buttons-next">' +
+        ToolbarIcon.getIcon('angle-down') +
+        '</button>' +
+        '<button tabindex="0" type="button" class="jodit_search_buttons-prev">' +
+        ToolbarIcon.getIcon('angle-up') +
+        '</button>' +
+        '<button tabindex="0" type="button" class="jodit_search_buttons-cancel">' +
+        ToolbarIcon.getIcon('cancel') +
+        '</button>' +
+        '<button tabindex="0" type="button" class="jodit_search_buttons-replace">' +
+        this.jodit.i18n('Replace') +
+        '</button>' +
+        '</div>' +
+        '</div>' +
+        '</div>';
 
     private isOpened: boolean = false;
 
-    private selInfo: markerInfo[]|null = null;
-    private current: Node|false = false;
+    private selInfo: markerInfo[] | null = null;
+    private current: Node | false = false;
 
-    private eachMap = (node: Node, callback: (elm: Node) => boolean, next: boolean) => {
-        Dom.findWithCurrent(node, (child: Node | null): boolean => {
-            return !!child && callback(child);
-        }, this.jodit.editor, next ? "nextSibling" : "previousSibling", next ? "firstChild" : "lastChild");
-    }
+    private eachMap = (
+        node: Node,
+        callback: (elm: Node) => boolean,
+        next: boolean
+    ) => {
+        Dom.findWithCurrent(
+            node,
+            (child: Node | null): boolean => {
+                return !!child && callback(child);
+            },
+            this.jodit.editor,
+            next ? 'nextSibling' : 'previousSibling',
+            next ? 'firstChild' : 'lastChild'
+        );
+    };
 
     private updateCounters = () => {
         if (!this.isOpened) {
             return;
         }
 
-        this.counterBox.style.display = this.queryInput.value.length ? "inline-block" : "none";
+        this.counterBox.style.display = this.queryInput.value.length
+            ? 'inline-block'
+            : 'none';
 
         const sel: Selection = this.jodit.editorWindow.getSelection(),
-            range: Range = sel.rangeCount ? sel.getRangeAt(0) : this.jodit.editorDocument.createRange(),
-            counts: [number, number] = this.calcCounts(this.queryInput.value, range);
+            range: Range = sel.rangeCount
+                ? sel.getRangeAt(0)
+                : this.jodit.editorDocument.createRange(),
+            counts: [number, number] = this.calcCounts(
+                this.queryInput.value,
+                range
+            );
 
-        this.counterBox.innerText = counts.join("/");
-    }
+        this.counterBox.innerText = counts.join('/');
+    };
 
-    private boundAlreadyWas(current: ISelectionRange, bounds: ISelectionRange[]): boolean {
+    private boundAlreadyWas(
+        current: ISelectionRange,
+        bounds: ISelectionRange[]
+    ): boolean {
         return bounds.some((bound: ISelectionRange) => {
-            return bound.startContainer === current.startContainer && bound.endContainer === current.endContainer &&
-                bound.startOffset === current.startOffset && bound.endOffset === current.endOffset;
+            return (
+                bound.startContainer === current.startContainer &&
+                bound.endContainer === current.endContainer &&
+                bound.startOffset === current.startOffset &&
+                bound.endOffset === current.endOffset
+            );
         }, false);
     }
 
     private tryScrollToElement(startContainer: Node) {
         // find scrollable element
-        let
-            parentBox: HTMLElement | false = Dom.closest(
-                startContainer,
-                (elm: Node) => elm && elm.nodeType === Node.ELEMENT_NODE,
-                this.jodit.editor,
-            ) as HTMLElement|false;
+        let parentBox: HTMLElement | false = Dom.closest(
+            startContainer,
+            (elm: Node) => elm && elm.nodeType === Node.ELEMENT_NODE,
+            this.jodit.editor
+        ) as HTMLElement | false;
 
         if (!parentBox) {
             parentBox = Dom.prev(
                 startContainer,
                 (elm: Node | null) => elm && elm.nodeType === Node.ELEMENT_NODE,
-                this.jodit.editor,
-            ) as HTMLElement|false;
+                this.jodit.editor
+            ) as HTMLElement | false;
         }
 
-        parentBox && parentBox !== this.jodit.editor && parentBox.scrollIntoView();
+        parentBox &&
+            parentBox !== this.jodit.editor &&
+            parentBox.scrollIntoView();
     }
 
     public searchBox: HTMLDivElement;
@@ -166,18 +225,25 @@ export class search extends Component {
     public replaceButton: HTMLButtonElement;
     public counterBox: HTMLSpanElement;
 
-    public calcCounts = (query: string, current: ISelectionRange|false = false): [number, number] => {
-        const
-            bounds: ISelectionRange[] = [];
+    public calcCounts = (
+        query: string,
+        current: ISelectionRange | false = false
+    ): [number, number] => {
+        const bounds: ISelectionRange[] = [];
 
-        let
-            currentIndex: number = 0,
+        let currentIndex: number = 0,
             count: number = 0,
             bound: ISelectionRange | false = false,
             start: Node | null = this.jodit.editor.firstChild;
 
         while (start && query.length) {
-            bound = this.find(start, query, true, 0, bound as Range || this.jodit.editorDocument.createRange());
+            bound = this.find(
+                start,
+                query,
+                true,
+                0,
+                (bound as Range) || this.jodit.editorDocument.createRange()
+            );
             if (bound) {
                 if (this.boundAlreadyWas(bound, bounds)) {
                     break;
@@ -194,36 +260,45 @@ export class search extends Component {
         }
 
         return [currentIndex, count];
-    }
-    public findAndReplace = (start: Node|null, query: string): boolean => {
-        const
-            sel: Selection = this.jodit.editorWindow.getSelection(),
-            range: Range = sel.rangeCount ? sel.getRangeAt(0) : this.jodit.editorDocument.createRange(),
-            bound: ISelectionRange|false = this.find(start, query, true, 0, range);
+    };
+    public findAndReplace = (start: Node | null, query: string): boolean => {
+        const sel: Selection = this.jodit.editorWindow.getSelection(),
+            range: Range = sel.rangeCount
+                ? sel.getRangeAt(0)
+                : this.jodit.editorDocument.createRange(),
+            bound: ISelectionRange | false = this.find(
+                start,
+                query,
+                true,
+                0,
+                range
+            );
 
         if (bound && bound.startContainer && bound.endContainer) {
-            const
-                rng: Range = this.jodit.editorDocument.createRange();
+            const rng: Range = this.jodit.editorDocument.createRange();
 
             try {
                 if (bound && bound.startContainer && bound.endContainer) {
-                    rng.setStart(bound.startContainer, bound.startOffset as number);
+                    rng.setStart(
+                        bound.startContainer,
+                        bound.startOffset as number
+                    );
                     rng.setEnd(bound.endContainer, bound.endOffset as number);
                     rng.deleteContents();
-                    const textNode: Node = this.jodit.editorDocument.createTextNode(this.replaceInput.value);
+                    const textNode: Node = this.jodit.editorDocument.createTextNode(
+                        this.replaceInput.value
+                    );
                     rng.insertNode(textNode);
                     this.jodit.selection.select(textNode);
                     this.tryScrollToElement(textNode);
                 }
-            } catch (e) {
-
-            }
+            } catch (e) {}
 
             return true;
         }
 
         return false;
-    }
+    };
 
     /**
      *
@@ -231,22 +306,31 @@ export class search extends Component {
      * @param query
      * @param next
      */
-    public findAndSelect = (start: Node | null, query: string, next: boolean): boolean => {
-        const
-            sel: Selection = this.jodit.editorWindow.getSelection(),
-            range: Range = sel.rangeCount ? sel.getRangeAt(0) : this.jodit.editorDocument.createRange(),
-            bound: ISelectionRange | false = this.find(start, query, next, 0, range);
+    public findAndSelect = (
+        start: Node | null,
+        query: string,
+        next: boolean
+    ): boolean => {
+        const sel: Selection = this.jodit.editorWindow.getSelection(),
+            range: Range = sel.rangeCount
+                ? sel.getRangeAt(0)
+                : this.jodit.editorDocument.createRange(),
+            bound: ISelectionRange | false = this.find(
+                start,
+                query,
+                next,
+                0,
+                range
+            );
 
         if (bound && bound.startContainer && bound.endContainer) {
-            const
-                rng: Range = this.jodit.editorDocument.createRange();
+            const rng: Range = this.jodit.editorDocument.createRange();
 
             try {
                 rng.setStart(bound.startContainer, bound.startOffset as number);
                 rng.setEnd(bound.endContainer, bound.endOffset as number);
                 this.jodit.selection.selectRange(rng);
-            } catch (e) {
-            }
+            } catch (e) {}
 
             this.tryScrollToElement(bound.startContainer);
 
@@ -257,11 +341,17 @@ export class search extends Component {
         }
 
         return false;
-    }
+    };
 
-    public find = (start: Node|null, query: string, next: boolean, deep: number, range: Range): false | ISelectionRange => {
+    public find = (
+        start: Node | null,
+        query: string,
+        next: boolean,
+        deep: number,
+        range: Range
+    ): false | ISelectionRange => {
         if (start && query.length) {
-            let sentence: string = "",
+            let sentence: string = '',
                 bound: ISelectionRange = {
                     startContainer: null,
                     startOffset: null,
@@ -269,90 +359,132 @@ export class search extends Component {
                     endOffset: null,
                 };
 
-            this.eachMap(start, (elm: Node): boolean => {
-                if (elm.nodeType === Node.TEXT_NODE && elm.nodeValue !== null && elm.nodeValue.length) {
-                    let value: string = elm.nodeValue;
+            this.eachMap(
+                start,
+                (elm: Node): boolean => {
+                    if (
+                        elm.nodeType === Node.TEXT_NODE &&
+                        elm.nodeValue !== null &&
+                        elm.nodeValue.length
+                    ) {
+                        let value: string = elm.nodeValue;
 
-                    if (!next && elm === range.startContainer) {
-                        value = !deep ? value.substr(0, range.startOffset) : value.substr(range.endOffset);
-                    } else if (next && elm === range.endContainer) {
-                        value = !deep ? value.substr(range.endOffset) : value.substr(0, range.startOffset);
-                    }
+                        if (!next && elm === range.startContainer) {
+                            value = !deep
+                                ? value.substr(0, range.startOffset)
+                                : value.substr(range.endOffset);
+                        } else if (next && elm === range.endContainer) {
+                            value = !deep
+                                ? value.substr(range.endOffset)
+                                : value.substr(0, range.startOffset);
+                        }
 
-                    const tmpSentence: string = next ? sentence + value : value + sentence;
+                        const tmpSentence: string = next
+                            ? sentence + value
+                            : value + sentence;
 
-                    const part: boolean|string = search.findSomePartOfString(query, tmpSentence, next) as boolean|string;
+                        const part:
+                            | boolean
+                            | string = search.findSomePartOfString(
+                            query,
+                            tmpSentence,
+                            next
+                        ) as boolean | string;
 
-                    if (part !== false) {
-                        let currentPart: string|boolean = search.findSomePartOfString(query, value, next) as string|boolean;
+                        if (part !== false) {
+                            let currentPart:
+                                | string
+                                | boolean = search.findSomePartOfString(
+                                query,
+                                value,
+                                next
+                            ) as string | boolean;
 
-                        if (currentPart === true) {
-                            currentPart = trim(query);
-                        } else if (currentPart === false) {
-                            currentPart = search.findSomePartOfString(value, query, next) as string|true;
                             if (currentPart === true) {
-                                currentPart = trim(value);
+                                currentPart = trim(query);
+                            } else if (currentPart === false) {
+                                currentPart = search.findSomePartOfString(
+                                    value,
+                                    query,
+                                    next
+                                ) as string | true;
+                                if (currentPart === true) {
+                                    currentPart = trim(value);
+                                }
                             }
-                        }
 
-                        let currentPartIndex: number = search.getSomePartOfStringIndex(query, value, next) || 0;
+                            let currentPartIndex: number =
+                                search.getSomePartOfStringIndex(
+                                    query,
+                                    value,
+                                    next
+                                ) || 0;
 
-                        if (((next && !deep) || (!next && deep)) && elm.nodeValue.length - value.length > 0) {
-                            currentPartIndex += elm.nodeValue.length - value.length;
-                        }
+                            if (
+                                ((next && !deep) || (!next && deep)) &&
+                                elm.nodeValue.length - value.length > 0
+                            ) {
+                                currentPartIndex +=
+                                    elm.nodeValue.length - value.length;
+                            }
 
-                        if (bound.startContainer === null) {
-                            bound.startContainer = elm;
-                            bound.startOffset = currentPartIndex;
-                        }
-                        if (part !== true) {
-                            sentence = tmpSentence;
+                            if (bound.startContainer === null) {
+                                bound.startContainer = elm;
+                                bound.startOffset = currentPartIndex;
+                            }
+                            if (part !== true) {
+                                sentence = tmpSentence;
+                            } else {
+                                bound.endContainer = elm;
+                                bound.endOffset = currentPartIndex;
+                                bound.endOffset += (currentPart as string).length;
+
+                                return true;
+                            }
                         } else {
-                            bound.endContainer = elm;
-                            bound.endOffset = currentPartIndex;
-                            bound.endOffset += (currentPart as string).length;
-
-                            return true;
-                         }
-                    } else {
-                        sentence = "";
-                        bound = {
-                            startContainer: null,
-                            startOffset: null,
-                            endContainer: null,
-                            endOffset: null,
-                        };
+                            sentence = '';
+                            bound = {
+                                startContainer: null,
+                                startOffset: null,
+                                endContainer: null,
+                                endOffset: null,
+                            };
+                        }
+                    } else if (Dom.isBlock(elm) && sentence !== '') {
+                        sentence = next ? sentence + ' ' : ' ' + sentence;
                     }
 
-                } else if (Dom.isBlock(elm) && sentence !== "") {
-                    sentence = next ? sentence + " " : " " + sentence;
-                }
-
-                return false;
-            }, next);
+                    return false;
+                },
+                next
+            );
 
             if (bound.startContainer && bound.endContainer) {
                 return bound;
             }
 
             if (!deep) {
-                this.current = next ? this.jodit.editor.firstChild as Node : this.jodit.editor.lastChild as Node;
+                this.current = next
+                    ? (this.jodit.editor.firstChild as Node)
+                    : (this.jodit.editor.lastChild as Node);
                 return this.find(this.current, query, next, deep + 1, range);
             }
-
         }
 
         return false;
-    }
+    };
 
     public open = (searchAndReplace: boolean = false) => {
         if (!this.isOpened) {
-            this.searchBox.classList.add("jodit_search-active");
+            this.searchBox.classList.add('jodit_search-active');
             this.isOpened = true;
         }
 
-        this.jodit.events.fire("hidePopup");
-        this.searchBox.classList.toggle("jodit_search-and-replace", searchAndReplace);
+        this.jodit.events.fire('hidePopup');
+        this.searchBox.classList.toggle(
+            'jodit_search-and-replace',
+            searchAndReplace
+        );
 
         this.current = this.jodit.selection.current();
         this.selInfo = this.jodit.selection.save();
@@ -370,7 +502,7 @@ export class search extends Component {
         } else {
             this.queryInput.focus();
         }
-    }
+    };
 
     public close = () => {
         if (!this.isOpened) {
@@ -382,84 +514,118 @@ export class search extends Component {
             this.selInfo = null;
         }
 
-        this.searchBox.classList.remove("jodit_search-active");
+        this.searchBox.classList.remove('jodit_search-active');
         this.isOpened = false;
-    }
+    };
 
     constructor(editor: Jodit) {
         super(editor);
         if (editor.options.useSearch) {
             const self: search = this;
 
-            self.searchBox = dom(self.template, editor.ownerDocument) as HTMLDivElement;
-            self.queryInput = self.searchBox.querySelector("input.jodit_search-query") as HTMLInputElement;
-            self.replaceInput = self.searchBox.querySelector("input.jodit_search-replace") as HTMLInputElement;
-            self.closeButton = self.searchBox.querySelector(".jodit_search_buttons-cancel") as HTMLButtonElement;
-            self.nextButton = self.searchBox.querySelector(".jodit_search_buttons-next") as HTMLButtonElement;
-            self.prevButton = self.searchBox.querySelector(".jodit_search_buttons-prev") as HTMLButtonElement;
-            self.replaceButton = self.searchBox.querySelector(".jodit_search_buttons-replace") as HTMLButtonElement;
-            self.counterBox = self.searchBox.querySelector(".jodit_search_counts span") as HTMLButtonElement;
+            self.searchBox = dom(
+                self.template,
+                editor.ownerDocument
+            ) as HTMLDivElement;
+            self.queryInput = self.searchBox.querySelector(
+                'input.jodit_search-query'
+            ) as HTMLInputElement;
+            self.replaceInput = self.searchBox.querySelector(
+                'input.jodit_search-replace'
+            ) as HTMLInputElement;
+            self.closeButton = self.searchBox.querySelector(
+                '.jodit_search_buttons-cancel'
+            ) as HTMLButtonElement;
+            self.nextButton = self.searchBox.querySelector(
+                '.jodit_search_buttons-next'
+            ) as HTMLButtonElement;
+            self.prevButton = self.searchBox.querySelector(
+                '.jodit_search_buttons-prev'
+            ) as HTMLButtonElement;
+            self.replaceButton = self.searchBox.querySelector(
+                '.jodit_search_buttons-replace'
+            ) as HTMLButtonElement;
+            self.counterBox = self.searchBox.querySelector(
+                '.jodit_search_counts span'
+            ) as HTMLButtonElement;
 
             editor.events
-                .on(self.closeButton, "click", this.close)
-                .on(self.queryInput, "mousedown", () => {
+                .on(self.closeButton, 'click', this.close)
+                .on(self.queryInput, 'mousedown', () => {
                     if (editor.selection.isFocused()) {
                         editor.selection.removeMarkers();
                         self.selInfo = editor.selection.save();
                     }
                 })
-                .on(self.replaceButton, "click", (e: MouseEvent) => {
-
-                    self.findAndReplace(editor.selection.current() || editor.editor.firstChild, self.queryInput.value);
+                .on(self.replaceButton, 'click', (e: MouseEvent) => {
+                    self.findAndReplace(
+                        editor.selection.current() || editor.editor.firstChild,
+                        self.queryInput.value
+                    );
 
                     this.updateCounters();
 
                     e.preventDefault();
                     e.stopImmediatePropagation();
                 })
-                .on([self.nextButton, self.prevButton], "click", function(this: HTMLButtonElement, e: MouseEvent) {
-                    editor.events.fire(self.nextButton === this ? "searchNext" : "searchPrevious");
+                .on([self.nextButton, self.prevButton], 'click', function(
+                    this: HTMLButtonElement,
+                    e: MouseEvent
+                ) {
+                    editor.events.fire(
+                        self.nextButton === this
+                            ? 'searchNext'
+                            : 'searchPrevious'
+                    );
                     e.preventDefault();
                     e.stopImmediatePropagation();
                 })
-                .on(this.queryInput, "keydown", debounce((e: KeyboardEvent) => {
-                    switch (e.which) {
-                        case  consts.KEY_ENTER:
-                            e.preventDefault();
-                            e.stopImmediatePropagation();
-                            if (editor.events.fire("searchNext")) {
-                                this.close();
-                            }
-                            break;
-                        default:
-                            this.updateCounters();
-                            break;
-                    }
-                }, this.jodit.defaultTimeout))
-                .on(this.jodit.container, "keydown", (e: KeyboardEvent) => {
+                .on(
+                    this.queryInput,
+                    'keydown',
+                    debounce((e: KeyboardEvent) => {
+                        switch (e.which) {
+                            case consts.KEY_ENTER:
+                                e.preventDefault();
+                                e.stopImmediatePropagation();
+                                if (editor.events.fire('searchNext')) {
+                                    this.close();
+                                }
+                                break;
+                            default:
+                                this.updateCounters();
+                                break;
+                        }
+                    }, this.jodit.defaultTimeout)
+                )
+                .on(this.jodit.container, 'keydown', (e: KeyboardEvent) => {
                     if (editor.getRealMode() !== MODE_WYSIWYG) {
                         return;
                     }
 
                     switch (e.which) {
-                        case  consts.KEY_ESC:
+                        case consts.KEY_ESC:
                             this.close();
                             break;
-                        case  consts.KEY_F3:
+                        case consts.KEY_F3:
                             if (self.queryInput.value) {
-                                editor.events.fire(!e.shiftKey ? "searchNext" : "searchPrevious");
+                                editor.events.fire(
+                                    !e.shiftKey
+                                        ? 'searchNext'
+                                        : 'searchPrevious'
+                                );
                                 e.preventDefault();
                             }
                             break;
                     }
                 })
-                .on("beforeSetMode", () => {
-                   this.close();
+                .on('beforeSetMode', () => {
+                    this.close();
                 })
-                .on("afterInit", () => {
+                .on('afterInit', () => {
                     editor.workplace.appendChild(this.searchBox);
                 })
-                .on("keydown mousedown", () => {
+                .on('keydown mousedown', () => {
                     if (this.selInfo) {
                         editor.selection.removeMarkers();
                         this.selInfo = null;
@@ -469,39 +635,49 @@ export class search extends Component {
                         this.updateCounters();
                     }
                 })
-                .on("searchNext searchPrevious", () => {
+                .on('searchNext searchPrevious', () => {
                     return self.findAndSelect(
                         editor.selection.current() || editor.editor.firstChild,
                         self.queryInput.value,
-                        editor.events.current[editor.events.current.length - 1] === "searchNext",
+                        editor.events.current[
+                            editor.events.current.length - 1
+                        ] === 'searchNext'
                     );
                 })
-                .on("search", (value: string, next: boolean = true) => {
-                    editor.execCommand("search", value, next);
+                .on('search', (value: string, next: boolean = true) => {
+                    editor.execCommand('search', value, next);
                 });
 
-            editor.registerCommand("search", {
-                exec: (command: string, value: string, next: boolean = true) => {
-                    self.findAndSelect(editor.selection.current() || editor.editor.firstChild, value, next);
+            editor.registerCommand('search', {
+                exec: (
+                    command: string,
+                    value: string,
+                    next: boolean = true
+                ) => {
+                    self.findAndSelect(
+                        editor.selection.current() || editor.editor.firstChild,
+                        value,
+                        next
+                    );
                     return false;
                 },
             });
-            editor.registerCommand("openSearchDialog", {
+            editor.registerCommand('openSearchDialog', {
                 exec: () => {
                     self.open();
                     return false;
                 },
-                hotkeys: ["ctrl+f", "cmd+f"],
+                hotkeys: ['ctrl+f', 'cmd+f'],
             });
 
-            editor.registerCommand("openReplaceDialog", {
+            editor.registerCommand('openReplaceDialog', {
                 exec: () => {
                     if (!editor.options.readonly) {
                         self.open(true);
                     }
                     return false;
                 },
-                hotkeys: ["ctrl+h", "cmd+h"],
+                hotkeys: ['ctrl+h', 'cmd+h'],
             });
         }
     }

@@ -1,13 +1,17 @@
 {
     "defaultSeverity": "error",
     "extends": [
-        "tslint:recommended"
+        "tslint:recommended",
+        "tslint-config-prettier",
+        "tslint-plugin-prettier"
     ],
     "jsRules": {},
     "rules": {
-        "semicolon": "always",
-        "max-line-length": [true, 150],
-        "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore", "allow-snake-case"],
+        "no-namespace": false,
+        "prettier": true,
+        "semicolon": [true, "always", "ignore-interfaces", "ignore-bound-class-methods"],
+        "max-line-length": [true, 120],
+        "variable-name": [false, "ban-keywords", "check-format", "allow-leading-underscore", "allow-snake-case"],
         "one-variable-per-declaration": false,
         "no-unused-expression": [true, "allow-fast-null-checks"],
         "class-name": false,

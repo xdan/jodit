@@ -11,8 +11,6 @@ import { Ajax } from "../Ajax";
 import { ContextMenu } from "../ContextMenu";
 import { Alert, Confirm, Dialog, Promt } from "../Dialog";
 import { $$, ctrlKey, debounce, dom, each, extend, humanSizeToBytes, pathNormalize, urlNormalize } from "../Helpers";
-import { ActionBox, ImageEditor } from "../ImageEditor";
-import { localStorageProvider, Storage } from "../Storage";
 import { ToolbarIcon } from "../toolbar/icon";
 import { Uploader } from "../Uploader";
 import { View } from "../view/view";
@@ -26,9 +24,12 @@ import {
 } from "../../types/filebrowser";
 
 import { IControlType } from "../../types/toolbar";
-import { IDictionary, IPermissions} from "../../types/types";
+import { ActionBox, IDictionary, IPermissions } from '../../types/types';
 import { IUploaderOptions } from "../../types/uploader";
 import { IViewBased } from "../../types/view";
+import { localStorageProvider } from '../storage/localStorageProvider';
+import { Storage } from '../storage/Storage';
+import { ImageEditor } from '../ImageEditor';
 
 declare module "../../Config" {
     interface Config {

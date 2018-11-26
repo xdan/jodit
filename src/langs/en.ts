@@ -1,5 +1,5 @@
-import {  IDictionary } from "../types";
+import { IDictionary } from '../types';
 
 export default {
-    "Type something": "Start writing...",
-} as  IDictionary<string>;
+    'Type something': 'Start writing...',
+} as IDictionary<string>;

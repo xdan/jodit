@@ -4,10 +4,10 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import * as consts from "../constants";
-import { Jodit } from "../Jodit";
-import { Dom } from "../modules/Dom";
-import { $$, scrollIntoView } from "../modules/Helpers";
+import * as consts from '../constants';
+import { Jodit } from '../Jodit';
+import { Dom } from '../modules/Dom';
+import { $$, scrollIntoView } from '../modules/Helpers';
 
 /**
  * Insert default paragraph
@@ -22,19 +22,19 @@ export const insertParagraph = (
     editor: Jodit,
     fake?: Text | false,
     wrapperTag?: string,
-    style?: CSSStyleDeclaration,
+    style?: CSSStyleDeclaration
 ): HTMLElement => {
     if (!wrapperTag) {
         wrapperTag = editor.options.enter.toLowerCase();
     }
 
     const p: HTMLElement = editor.editorDocument.createElement(wrapperTag),
-        helper_node: HTMLBRElement = editor.editorDocument.createElement("br");
+        helper_node: HTMLBRElement = editor.editorDocument.createElement('br');
 
     p.appendChild(helper_node);
 
     if (style && style.cssText) {
-        p.setAttribute("style", style.cssText);
+        p.setAttribute('style', style.cssText);
     }
 
     editor.selection.insertNode(p, false, false);
@@ -42,7 +42,7 @@ export const insertParagraph = (
 
     const range: Range = editor.editorDocument.createRange();
 
-    range.setStartBefore(wrapperTag !== "br" ? helper_node : p);
+    range.setStartBefore(wrapperTag !== 'br' ? helper_node : p);
     range.collapse(true);
 
     editor.selection.selectRange(range);
@@ -53,7 +53,7 @@ export const insertParagraph = (
 
     scrollIntoView(p, editor.editor, editor.editorDocument);
 
-    editor.events && editor.events.fire("synchro"); // fire change
+    editor.events && editor.events.fire('synchro'); // fire change
 
     return p;
 };
@@ -66,13 +66,13 @@ export function enter(editor: Jodit) {
     // use 'enter' option if no set
     if (!editor.options.enterBlock) {
         editor.options.enterBlock =
-            editor.options.enter.toLowerCase() === "br"
+            editor.options.enter.toLowerCase() === 'br'
                 ? consts.PARAGRAPH
-                : editor.options.enter as "P" | "DIV" | "p" | "div";
+                : (editor.options.enter as 'P' | 'DIV' | 'p' | 'div');
     }
 
     editor.events.on(
-        "keydown",
+        'keydown',
         (event: KeyboardEvent): false | void => {
             if (event.which === consts.KEY_ENTER) {
                 /**
@@ -81,14 +81,14 @@ export function enter(editor: Jodit) {
                  *
                  * @event beforeEnter
                  */
-                const beforeEnter = editor.events.fire("beforeEnter", event);
+                const beforeEnter = editor.events.fire('beforeEnter', event);
 
                 if (beforeEnter !== undefined) {
                     return beforeEnter;
                 }
 
                 if (!editor.selection.isCollapsed()) {
-                    editor.execCommand("Delete");
+                    editor.execCommand('Delete');
                 }
 
                 editor.selection.focus();
@@ -105,7 +105,7 @@ export function enter(editor: Jodit) {
                     editor.selection.current();
 
                     current = editor.editorDocument.createTextNode(
-                        consts.INVISIBLE_SPACE,
+                        consts.INVISIBLE_SPACE
                     );
 
                     if (sel.rangeCount) {
@@ -120,14 +120,15 @@ export function enter(editor: Jodit) {
                     sel.addRange(range);
                 }
 
-                let
-                    currentBox: HTMLElement | false = current
-                        ? (
-                              Dom.up(current, Dom.isBlock, editor.editor)
-                          ) as HTMLElement
-                        : false;
-                const
-                    isLi: boolean = currentBox && currentBox.nodeName === "LI";
+                let currentBox: HTMLElement | false = current
+                    ? (Dom.up(
+                          current,
+                          Dom.isBlock,
+                          editor.editor
+                      ) as HTMLElement)
+                    : false;
+                const isLi: boolean =
+                    currentBox && currentBox.nodeName === 'LI';
 
                 // if use <br> tag for break line or when was entered SHIFt key or in <td> or <th> or <blockquote>
                 if (
@@ -135,10 +136,10 @@ export function enter(editor: Jodit) {
                     (editor.options.enter.toLowerCase() ===
                         consts.BR.toLowerCase() ||
                         event.shiftKey ||
-                        Dom.closest(current, "PRE|BLOCKQUOTE", editor.editor))
+                        Dom.closest(current, 'PRE|BLOCKQUOTE', editor.editor))
                 ) {
                     const br: HTMLBRElement = editor.editorDocument.createElement(
-                        "br",
+                        'br'
                     );
                     editor.selection.insertNode(br, true);
                     scrollIntoView(br, editor.editor, editor.editorDocument);
@@ -154,7 +155,7 @@ export function enter(editor: Jodit) {
                         (elm: Node | null) =>
                             Dom.isBlock(elm) ||
                             (!!elm && Dom.isImage(elm, editor.ownerWindow)),
-                        editor.editor,
+                        editor.editor
                     )
                 ) {
                     let needWrap: Node = current;
@@ -170,18 +171,18 @@ export function enter(editor: Jodit) {
                                 needWrap = node;
                             }
                         },
-                        editor.editor,
+                        editor.editor
                     );
 
                     currentBox = Dom.wrapInline(
                         needWrap,
                         editor.options.enter,
-                        editor,
+                        editor
                     );
 
                     if (Dom.isEmpty(currentBox)) {
                         const helper_node: HTMLBRElement = editor.editorDocument.createElement(
-                            "br",
+                            'br'
                         );
 
                         currentBox.appendChild(helper_node);
@@ -199,7 +200,7 @@ export function enter(editor: Jodit) {
                 if (currentBox) {
                     if (!Dom.canSplitBlock(currentBox, editor.editorWindow)) {
                         const br: HTMLBRElement = editor.editorDocument.createElement(
-                            "br",
+                            'br'
                         );
                         editor.selection.insertNode(br, false);
                         editor.selection.setCursorAfter(br);
@@ -208,34 +209,38 @@ export function enter(editor: Jodit) {
 
                     if (isLi) {
                         if (Dom.isEmpty(currentBox)) {
-                            let
-                                fakeTextNode: Text | false = false;
+                            let fakeTextNode: Text | false = false;
 
-                            const
-                                ul: HTMLUListElement = (
-                                    Dom.closest(currentBox, "ol|ul", editor.editor)
-                                ) as HTMLUListElement;
+                            const ul: HTMLUListElement = Dom.closest(
+                                currentBox,
+                                'ol|ul',
+                                editor.editor
+                            ) as HTMLUListElement;
 
                             // If there is no LI element before
                             if (
                                 !Dom.prev(
                                     currentBox,
                                     (elm: Node | null) =>
-                                        elm && elm.nodeName === "LI",
-                                    ul,
+                                        elm && elm.nodeName === 'LI',
+                                    ul
                                 )
                             ) {
-                                fakeTextNode = editor.selection.setCursorBefore(ul);
+                                fakeTextNode = editor.selection.setCursorBefore(
+                                    ul
+                                );
                                 // If there is no LI element after
                             } else if (
                                 !Dom.next(
                                     currentBox,
                                     (elm: Node | null) =>
-                                        elm && elm.nodeName === "LI",
-                                    ul,
+                                        elm && elm.nodeName === 'LI',
+                                    ul
                                 )
                             ) {
-                                fakeTextNode = editor.selection.setCursorAfter(ul);
+                                fakeTextNode = editor.selection.setCursorAfter(
+                                    ul
+                                );
                             } else {
                                 const leftRange = editor.editorDocument.createRange();
                                 leftRange.setStartBefore(ul);
@@ -244,7 +249,9 @@ export function enter(editor: Jodit) {
                                 if (ul.parentNode) {
                                     ul.parentNode.insertBefore(fragment, ul);
                                 }
-                                fakeTextNode = editor.selection.setCursorBefore(ul);
+                                fakeTextNode = editor.selection.setCursorBefore(
+                                    ul
+                                );
                             }
 
                             if (currentBox.parentNode) {
@@ -253,7 +260,7 @@ export function enter(editor: Jodit) {
 
                             insertParagraph(editor, fakeTextNode);
 
-                            if (!$$("li", ul).length && ul.parentNode) {
+                            if (!$$('li', ul).length && ul.parentNode) {
                                 ul.parentNode.removeChild(ul);
                             }
                             return false;
@@ -266,8 +273,8 @@ export function enter(editor: Jodit) {
                         insertParagraph(
                             editor,
                             fake,
-                            isLi ? "li" : editor.options.enter,
-                            currentBox.style,
+                            isLi ? 'li' : editor.options.enter,
+                            currentBox.style
                         );
                         editor.selection.setCursorIn(currentBox, true);
                         return false;
@@ -284,7 +291,7 @@ export function enter(editor: Jodit) {
                         leftRange.setStartBefore(currentBox);
                         leftRange.setEnd(
                             range.startContainer,
-                            range.startOffset,
+                            range.startOffset
                         );
 
                         const fragment: DocumentFragment = leftRange.extractContents();
@@ -292,7 +299,7 @@ export function enter(editor: Jodit) {
                         if (currentBox.parentNode) {
                             currentBox.parentNode.insertBefore(
                                 fragment,
-                                currentBox,
+                                currentBox
                             );
                         }
 
@@ -308,13 +315,13 @@ export function enter(editor: Jodit) {
                     insertParagraph(
                         editor,
                         fake,
-                        isLi ? "li" : editor.options.enter,
-                        currentBox ? currentBox.style : void 0,
+                        isLi ? 'li' : editor.options.enter,
+                        currentBox ? currentBox.style : void 0
                     );
                 }
 
                 return false;
             }
-        },
+        }
     );
 }

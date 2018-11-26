@@ -4,14 +4,14 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Config } from "../Config";
-import { Jodit } from "../Jodit";
-import { Dom } from "../modules/Dom";
-import { debounce, dom, offset } from "../modules/Helpers";
-import { ToolbarIcon } from "../modules/toolbar/icon";
-import { IBound } from "../types";
+import { Config } from '../Config';
+import { Jodit } from '../Jodit';
+import { Dom } from '../modules/Dom';
+import { debounce, dom, offset } from '../modules/Helpers';
+import { ToolbarIcon } from '../modules/toolbar/icon';
+import { IBound } from '../types';
 
-declare module "../Config" {
+declare module '../Config' {
     interface Config {
         addNewLine: boolean;
         addNewLineTagsTriggers: string[];
@@ -36,11 +36,11 @@ Config.prototype.addNewLineOnDBLClick = true;
  * @type {string[]}
  */
 Config.prototype.addNewLineTagsTriggers = [
-    "table",
-    "iframe",
-    "img",
-    "hr",
-    "jodit",
+    'table',
+    'iframe',
+    'img',
+    'hr',
+    'jodit',
 ];
 
 /**
@@ -54,20 +54,18 @@ export function addNewLine(editor: Jodit) {
         return;
     }
 
-    const line: HTMLDivElement = (
-        dom(
-            '<div role="button" tabIndex="-1" title="' +
-                editor.i18n("Break") +
-                '" class="jodit-add-new-line"><span>' +
-                ToolbarIcon.getIcon("enter") +
-                "</span></div>",
-            editor.ownerDocument,
-        )
+    const line: HTMLDivElement = dom(
+        '<div role="button" tabIndex="-1" title="' +
+            editor.i18n('Break') +
+            '" class="jodit-add-new-line"><span>' +
+            ToolbarIcon.getIcon('enter') +
+            '</span></div>',
+        editor.ownerDocument
     ) as HTMLDivElement;
     const delta = 10;
     const isMatchedTag = new RegExp(
-        "^(" + editor.options.addNewLineTagsTriggers.join("|") + ")$",
-        "i",
+        '^(' + editor.options.addNewLineTagsTriggers.join('|') + ')$',
+        'i'
     );
 
     let timeout: number;
@@ -82,21 +80,21 @@ export function addNewLine(editor: Jodit) {
             return;
         }
 
-        if (editor.container.classList.contains("jodit_popup_active")) {
+        if (editor.container.classList.contains('jodit_popup_active')) {
             return;
         }
 
         clearTimeout(timeout);
-        line.classList.toggle("jodit-add-new-line_after", !preview);
-        line.style.display = "block";
-        line.style.width = editor.editor.clientWidth + "px";
+        line.classList.toggle('jodit-add-new-line_after', !preview);
+        line.style.display = 'block';
+        line.style.width = editor.editor.clientWidth + 'px';
         hidden = false;
     };
 
     const hideForce = () => {
         clearTimeout(timeout);
         lineInFocus = false;
-        line.style.display = "none";
+        line.style.display = 'none';
         hidden = true;
     };
 
@@ -117,18 +115,18 @@ export function addNewLine(editor: Jodit) {
     };
 
     editor.events
-        .on("beforeDestruct", () => {
+        .on('beforeDestruct', () => {
             line.parentNode && line.parentNode.removeChild(line);
         })
-        .on("afterInit", () => {
+        .on('afterInit', () => {
             editor.container.appendChild(line);
             editor.events
-                .on(line, "mousemove", (e: MouseEvent) => {
+                .on(line, 'mousemove', (e: MouseEvent) => {
                     e.stopPropagation();
                 })
-                .on(line, "mousedown touchstart", (e: MouseEvent) => {
+                .on(line, 'mousedown touchstart', (e: MouseEvent) => {
                     const p: HTMLElement = editor.editorDocument.createElement(
-                        editor.options.enter,
+                        editor.options.enter
                     );
 
                     if (preview && current && current.parentNode) {
@@ -144,20 +142,20 @@ export function addNewLine(editor: Jodit) {
                     e.preventDefault();
                 });
         })
-        .on("afterInit", () => {
+        .on('afterInit', () => {
             editor.events
-                .on(editor.editor, "scroll", () => {
+                .on(editor.editor, 'scroll', () => {
                     hideForce();
                 })
-                .on(editor.container, "mouseleave", hide)
-                .on(line, "mouseenter", () => {
+                .on(editor.container, 'mouseleave', hide)
+                .on(line, 'mouseenter', () => {
                     clearTimeout(timeout);
                     lineInFocus = true;
                 })
-                .on(line, "mouseleave", () => {
+                .on(line, 'mouseleave', () => {
                     lineInFocus = false;
                 })
-                .on(editor.editor, "dblclick", (e: MouseEvent) => {
+                .on(editor.editor, 'dblclick', (e: MouseEvent) => {
                     if (
                         !editor.options.readonly &&
                         editor.options.addNewLineOnDBLClick &&
@@ -167,24 +165,24 @@ export function addNewLine(editor: Jodit) {
                         const editorBound: IBound = offset(
                             editor.editor,
                             editor,
-                            editor.editorDocument,
+                            editor.editorDocument
                         );
                         const top: number =
                             e.pageY - editor.editorWindow.pageYOffset;
                         const p: HTMLElement = editor.editorDocument.createElement(
-                            editor.options.enter,
+                            editor.options.enter
                         );
 
                         if (
                             Math.abs(top - editorBound.top) <
                                 Math.abs(
-                                    top - (editorBound.height + editorBound.top),
+                                    top - (editorBound.height + editorBound.top)
                                 ) &&
                             editor.editor.firstChild
                         ) {
                             editor.editor.insertBefore(
                                 p,
-                                editor.editor.firstChild,
+                                editor.editor.firstChild
                             );
                         } else {
                             editor.editor.appendChild(p);
@@ -198,13 +196,11 @@ export function addNewLine(editor: Jodit) {
                 })
                 .on(
                     editor.editor,
-                    "mousemove",
+                    'mousemove',
                     debounce((e: MouseEvent) => {
-                        let currentElement: HTMLElement = (
-                            editor.editorDocument.elementFromPoint(
-                                e.pageX - editor.editorWindow.pageXOffset,
-                                e.pageY - editor.editorWindow.pageYOffset,
-                            )
+                        let currentElement: HTMLElement = editor.editorDocument.elementFromPoint(
+                            e.pageX - editor.editorWindow.pageXOffset,
+                            e.pageY - editor.editorWindow.pageYOffset
                         ) as HTMLElement;
 
                         if (
@@ -226,12 +222,10 @@ export function addNewLine(editor: Jodit) {
                             !currentElement.nodeName.match(isMatchedTag) ||
                             !Dom.isOrContains(editor.editor, currentElement)
                         ) {
-                            currentElement = (
-                                Dom.closest(
-                                    currentElement,
-                                    isMatchedTag,
-                                    editor.editor,
-                                )
+                            currentElement = Dom.closest(
+                                currentElement,
+                                isMatchedTag,
+                                editor.editor
                             ) as HTMLElement;
                             if (!currentElement) {
                                 hide();
@@ -243,7 +237,7 @@ export function addNewLine(editor: Jodit) {
                             const parentBox: Node | false = Dom.up(
                                 currentElement,
                                 Dom.isBlock,
-                                editor.editor,
+                                editor.editor
                             );
                             if (parentBox && parentBox !== editor.editor) {
                                 currentElement = parentBox as HTMLElement;
@@ -253,12 +247,12 @@ export function addNewLine(editor: Jodit) {
                         const editorBound: IBound = offset(
                             editor.editor,
                             editor,
-                            editor.editorDocument,
+                            editor.editorDocument
                         );
                         const position: IBound = offset(
                             currentElement as HTMLElement,
                             editor,
-                            editor.editorDocument,
+                            editor.editorDocument
                         );
 
                         let top: false | number = false;
@@ -272,7 +266,7 @@ export function addNewLine(editor: Jodit) {
                         }
                         if (
                             Math.abs(
-                                e.pageY - (position.top + position.height),
+                                e.pageY - (position.top + position.height)
                             ) < delta
                         ) {
                             top = position.top + position.height;
@@ -291,23 +285,23 @@ export function addNewLine(editor: Jodit) {
                                 !Dom.prev(
                                     currentElement,
                                     canGetFocus,
-                                    editor.editor,
+                                    editor.editor
                                 )) ||
                                 (!preview &&
                                     !Dom.next(
                                         currentElement,
                                         canGetFocus,
-                                        editor.editor,
+                                        editor.editor
                                     )))
                         ) {
-                            line.style.top = top + "px";
+                            line.style.top = top + 'px';
                             current = currentElement;
                             show();
                         } else {
                             current = false;
                             hide();
                         }
-                    }, editor.defaultTimeout),
+                    }, editor.defaultTimeout)
                 );
         });
 }

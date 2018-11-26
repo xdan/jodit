@@ -4,9 +4,9 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Ajax } from "../modules/Ajax";
-import { Uploader } from "../modules/Uploader";
-import { IDictionary } from "./types";
+import { Ajax } from '../modules/Ajax';
+import { Uploader } from '../modules/Uploader';
+import { IDictionary } from './types';
 
 export interface IUploaderData {
     messages?: string[];
@@ -25,7 +25,11 @@ export interface IUploaderAnswer {
 
 export type HandlerSuccess = (resp: IUploaderData) => void;
 export type HandlerError = (e: Error) => void;
-export type BuildDataResult = FormData |  IDictionary<string> | Promise<FormData |  IDictionary<string>> | string;
+export type BuildDataResult =
+    | FormData
+    | IDictionary<string>
+    | Promise<FormData | IDictionary<string>>
+    | string;
 
 /**
  * @property {object} uploader {@link Uploader|Uploader}'s settings
@@ -50,7 +54,8 @@ export type BuildDataResult = FormData |  IDictionary<string> | Promise<FormData
  * ```
  * @property {function} uploader.isSuccess Check if received data was positive
  * @property {function} uploader.getMessage If you need display a message use this
- * @property {function(data)} uploader.process The method of processing data received from the server. Must return this PlainObject format `{
+ * @property {function(data)} uploader.process The method of processing data received from the server. Must return this
+ * PlainObject format
  * {
  *     files: resp.files || [], // {array} The names of uploaded files.
  *     path: resp.path, // {string} Real relative path
@@ -58,8 +63,10 @@ export type BuildDataResult = FormData |  IDictionary<string> | Promise<FormData
  *     error: resp.error, // {int}
  *     msg: resp.msg // {string}
  * };`
- * @property {function} uploader.error Process negative situation. For example file wasn't uploaded because of file permoission
- * @property {function} uploader.defaultHandlerSuccess Default success result processor. In first param it get `uploader.process` result
+ * @property {function} uploader.error Process negative situation. For example file wasn't uploaded because of
+ * file permoission
+ * @property {function} uploader.defaultHandlerSuccess Default success result processor. In first param it get
+ * `uploader.process` result
  * @property {function} uploader.defaultHandlerError Default error result processor
  *
  * @example
@@ -160,13 +167,16 @@ export interface IUploaderOptions {
     insertImageAsBase64URI: boolean;
     imagesExtensions: string[];
     headers?: IDictionary<string> | null;
-    data: null|object;
+    data: null | object;
     format: string;
 
     prepareData: (this: Uploader, formData: FormData) => any;
     buildData?: (this: Uploader, formData: any) => BuildDataResult;
-    queryBuild?: (this: Ajax, obj: string |  IDictionary<string | object> | FormData, prefix?: string)
-        => string | object;
+    queryBuild?: (
+        this: Ajax,
+        obj: string | IDictionary<string | object> | FormData,
+        prefix?: string
+    ) => string | object;
 
     isSuccess: (this: Uploader, resp: IUploaderAnswer) => boolean;
 

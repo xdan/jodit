@@ -4,11 +4,11 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Config } from "../Config";
-import { Jodit } from "../Jodit";
-import { css, dom } from "../modules/Helpers";
+import { Config } from '../Config';
+import { Jodit } from '../Jodit';
+import { css, dom } from '../modules/Helpers';
 
-declare module "../Config" {
+declare module '../Config' {
     interface Config {
         showMessageErrors: boolean;
         showMessageErrorTime: number;
@@ -36,13 +36,20 @@ Config.prototype.showMessageErrorOffsetPx = 3;
 export function errorMessages(editor: Jodit) {
     if (editor.options.showMessageErrors) {
         let height: number;
-        const messagesBox: HTMLDivElement = dom('<div class="jodit_error_box_for_messages"></div>', editor.ownerDocument) as HTMLDivElement,
+        const messagesBox: HTMLDivElement = dom(
+                '<div class="jodit_error_box_for_messages"></div>',
+                editor.ownerDocument
+            ) as HTMLDivElement,
             recalcOffsets = () => {
                 height = 5;
-                [].slice.call(messagesBox.childNodes).forEach((elm: HTMLElement) => {
-                    css(messagesBox, "bottom", height + "px");
-                    height += elm.offsetWidth + editor.options.showMessageErrorOffsetPx;
-                });
+                [].slice
+                    .call(messagesBox.childNodes)
+                    .forEach((elm: HTMLElement) => {
+                        css(messagesBox, 'bottom', height + 'px');
+                        height +=
+                            elm.offsetWidth +
+                            editor.options.showMessageErrorOffsetPx;
+                    });
             };
         editor.workplace.appendChild(messagesBox);
 
@@ -52,7 +59,8 @@ export function errorMessages(editor: Jodit) {
          * @event errorMessage
          * @param {string} message  Сообщение
          * @param {string} className Дополнительный класс собобщения. Допускаются info, error, success
-         * @param {string} timeout Сколько миллисекунд показывать. По умолчанию используется options.showMessageErrorTime = 2000
+         * @param {string} timeout Сколько миллисекунд показывать. По умолчанию используется
+         * options.showMessageErrorTime = 2000
          * @example
          * ```javascript
          * parent.events.fire('errorMessage', 'Error 123. File has not been upload');
@@ -60,22 +68,28 @@ export function errorMessages(editor: Jodit) {
          * parent.events.fire('errorMessage', 'File was uploaded', 'success', 4000);
          * ```
          */
-        editor.events.on("errorMessage", (message: string, className: string, timeout: number) => {
-            const
-                newmessage: HTMLDivElement = dom(
-                    '<div class="active ' + (className || "") + '">' + message + "</div>",
-                    editor.ownerDocument,
+        editor.events.on(
+            'errorMessage',
+            (message: string, className: string, timeout: number) => {
+                const newmessage: HTMLDivElement = dom(
+                    '<div class="active ' +
+                        (className || '') +
+                        '">' +
+                        message +
+                        '</div>',
+                    editor.ownerDocument
                 ) as HTMLDivElement;
 
-            messagesBox.appendChild(newmessage);
-            recalcOffsets();
-            setTimeout(() => {
-                newmessage.classList.remove("active");
+                messagesBox.appendChild(newmessage);
+                recalcOffsets();
                 setTimeout(() => {
-                    messagesBox.removeChild(newmessage);
-                    recalcOffsets();
-                }, 300);
-            }, timeout || editor.options.showMessageErrorTime);
-        });
+                    newmessage.classList.remove('active');
+                    setTimeout(() => {
+                        messagesBox.removeChild(newmessage);
+                        recalcOffsets();
+                    }, 300);
+                }, timeout || editor.options.showMessageErrorTime);
+            }
+        );
     }
 }

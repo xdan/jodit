@@ -4,20 +4,36 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-export interface  IDictionary<T = any> {[key: string]: T; }
+import { IViewBased } from './view';
 
-export interface IBound {top: number; left: number;  width: number; height: number; }
-
-export interface IPoint {x: number; y: number; }
-
-export interface ISelectionRange {
-    startContainer: Node|null;
-    startOffset: number|null;
-    endContainer: Node|null;
-    endOffset: number|null;
+export interface IDictionary<T = any> {
+    [key: string]: T;
 }
 
-export interface IRGB {r: number; g: number; b: number; }
+export interface IBound {
+    top: number;
+    left: number;
+    width: number;
+    height: number;
+}
+
+export interface IPoint {
+    x: number;
+    y: number;
+}
+
+export interface ISelectionRange {
+    startContainer: Node | null;
+    startOffset: number | null;
+    endContainer: Node | null;
+    endOffset: number | null;
+}
+
+export interface IRGB {
+    r: number;
+    g: number;
+    b: number;
+}
 
 export interface IPermissions {
     allowFiles: boolean;
@@ -41,9 +57,67 @@ export interface ICommandType {
     hotkeys?: string | string[];
 }
 
-export interface  IHasScroll {
+export interface IHasScroll {
     clientTop: number;
     clientLeft: number;
     scrollTop: number;
     scrollLeft: number;
+}
+
+export interface IStorage {
+    set(key: string, value: string | number): void;
+    get(key: string): string | null;
+}
+
+export interface RangeType {
+    startContainer: number[];
+    startOffset: number;
+    endContainer: number[];
+    endOffset: number;
+}
+
+export interface SnapshotType {
+    html: string;
+    range: RangeType;
+}
+
+export interface markerInfo {
+    startId: string;
+    endId?: string;
+    collapsed: boolean;
+    startMarker: string;
+    endMarker?: string;
+}
+
+export interface IPlugin {
+    afterInit(jodit?: IViewBased): void;
+    beforeDestruct(jodit?: IViewBased): void;
+}
+
+/**
+ * @property {ImageEditorOptions} imageeditor module's options
+ */
+
+export interface ImageEditorOptions {
+    closeAfterSave: boolean;
+    width: string | number;
+    height: string | number;
+    crop: boolean;
+    resize: boolean;
+    resizeUseRatio: boolean;
+    resizeMinWidth: number;
+    resizeMinHeight: number;
+    cropUseRatio: boolean;
+    cropDefaultWidth: string | number;
+    cropDefaultHeight: string | number;
+}
+
+export interface ActionBox {
+    action: string;
+    box: {
+        w: number;
+        h: number;
+        x?: number;
+        y?: number;
+    };
 }

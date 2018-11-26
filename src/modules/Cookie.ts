@@ -4,7 +4,7 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { IStorage } from "./Storage";
+import { IStorage } from '../types';
 
 export class Cookie implements IStorage {
     /**
@@ -19,18 +19,18 @@ export class Cookie implements IStorage {
      * Jodit.modules.Cookie.set('somename', somevalue, 5);
      * ```
      */
-    public set(name: string|number, value: string|number, days ?: number) {
+    public set(name: string | number, value: string | number, days?: number) {
         let expires: string, date;
 
         if (days) {
             date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-            expires = "; expires=" + date.toUTCString();
+            date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+            expires = '; expires=' + date.toUTCString();
         } else {
-            expires = "";
+            expires = '';
         }
 
-        document.cookie = name + "=" + value + expires + "; path=/";
+        document.cookie = name + '=' + value + expires + '; path=/';
     }
 
     /**
@@ -45,14 +45,13 @@ export class Cookie implements IStorage {
      * ```
      */
     public get(name: string): string | null {
-        let nameEQ: string = name + "=",
-            i: number,
-            c: string,
-            ca = document.cookie.split(";");
+        const nameEQ: string = name + '=',
+            ca = document.cookie.split(';');
+        let i: number, c: string;
 
         for (i = 0; i < ca.length; i += 1) {
             c = ca[i];
-            while (c.charAt(0) === " ") {
+            while (c.charAt(0) === ' ') {
                 c = c.substring(1, c.length);
             }
             if (c.indexOf(nameEQ) === 0) {
@@ -74,6 +73,6 @@ export class Cookie implements IStorage {
      * ```
      */
     public remove(name: string) {
-        this.set(name, "", -1);
+        this.set(name, '', -1);
     }
 }

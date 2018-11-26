@@ -4,23 +4,22 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Config } from "../Config";
-import { Jodit } from "../Jodit";
+import { Config } from '../Config';
+import { Jodit } from '../Jodit';
 import ColorPickerWidget = Widget.ColorPickerWidget;
 import TabsWidget = Widget.TabsWidget;
-import { Dom } from "../modules/Dom";
-import { css, debounce, offset, splitArray } from "../modules/Helpers";
-import { Plugin } from "../modules/Plugin";
-import { Table } from "../modules/Table";
-import { ToolbarCollection } from "../modules/toolbar/collection";
-import { ToolbarPopup } from "../modules/toolbar/popup";
-import { Widget } from "../modules/Widget";
-import {  IDictionary } from "../types";
-import { IControlType } from "../types/toolbar";
-import { IBound } from "../types/types";
+import { Dom } from '../modules/Dom';
+import { css, debounce, offset, splitArray } from '../modules/Helpers';
+import { Plugin } from '../modules/Plugin';
+import { Table } from '../modules/Table';
+import { ToolbarCollection } from '../modules/toolbar/collection';
+import { ToolbarPopup } from '../modules/toolbar/popup';
+import { Widget } from '../modules/Widget';
+import { IDictionary } from '../types';
+import { IControlType } from '../types/toolbar';
+import { IBound } from '../types/types';
 
-declare module "../Config" {
-
+declare module '../Config' {
     interface Config {
         popup: IDictionary<Array<IControlType | string>>;
         toolbarInline: boolean;
@@ -32,151 +31,166 @@ Config.prototype.toolbarInline = true;
 Config.prototype.toolbarInlineDisableFor = [];
 
 Config.prototype.popup = {
-    "a": [
+    a: [
         {
-            name: "eye",
-            tooltip: "Open link",
+            name: 'eye',
+            tooltip: 'Open link',
             exec: (editor: Jodit, current: Node) => {
-                const href: string|null = (current as HTMLElement).getAttribute("href");
+                const href:
+                    | string
+                    | null = (current as HTMLElement).getAttribute('href');
                 if (current && href) {
                     editor.ownerWindow.open(href);
                 }
             },
         } as IControlType,
         {
-            name: "link",
-            tooltip: "Edit link",
-            icon: "pencil",
+            name: 'link',
+            tooltip: 'Edit link',
+            icon: 'pencil',
         },
-        "unlink",
-        "brush",
-        "file",
+        'unlink',
+        'brush',
+        'file',
     ],
-    "jodit": [
+    jodit: [
         {
-            name: "bin",
-            tooltip: "Delete",
+            name: 'bin',
+            tooltip: 'Delete',
             exec: (editor: Jodit, image: Node) => {
                 if (image.parentNode) {
                     image.parentNode.removeChild(image);
-                    editor.events.fire("hidePopup");
+                    editor.events.fire('hidePopup');
                 }
             },
         },
     ],
-    "jodit-media": [
+    'jodit-media': [
         {
-            name: "bin",
-            tooltip: "Delete",
+            name: 'bin',
+            tooltip: 'Delete',
             exec: (editor: Jodit, image: Node) => {
                 if (image.parentNode) {
                     image.parentNode.removeChild(image);
-                    editor.events.fire("hidePopup");
+                    editor.events.fire('hidePopup');
                 }
             },
         },
     ],
-    "img": [
+    img: [
         {
-            name: "bin",
-            tooltip: "Delete",
+            name: 'bin',
+            tooltip: 'Delete',
             exec: (editor: Jodit, image: Node) => {
                 if (image.parentNode) {
                     image.parentNode.removeChild(image);
-                    editor.events.fire("hidePopup");
+                    editor.events.fire('hidePopup');
                 }
             },
         },
         {
-            name: "pencil",
+            name: 'pencil',
             exec(editor: Jodit, current: Node) {
                 const tagName: string = (current as HTMLElement).tagName.toLowerCase();
-                if (tagName === "img") {
-                    editor.events.fire("openImageProperties", current);
+                if (tagName === 'img') {
+                    editor.events.fire('openImageProperties', current);
                 }
             },
-            tooltip: "Edit",
+            tooltip: 'Edit',
         },
         {
-            name: "valign",
-            list: [
-                "Top",
-                "Middle",
-                "Bottom",
-            ],
-            tooltip: "Vertical align",
-            exec: (editor: Jodit, image: HTMLImageElement, control: IControlType) => {
+            name: 'valign',
+            list: ['Top', 'Middle', 'Bottom'],
+            tooltip: 'Vertical align',
+            exec: (
+                editor: Jodit,
+                image: HTMLImageElement,
+                control: IControlType
+            ) => {
                 const tagName: string = (image as HTMLElement).tagName.toLowerCase();
-                if (tagName !== "img") {
+                if (tagName !== 'img') {
                     return;
                 }
 
-                const command: string = (control.args && typeof control.args[1] === "string") ? control.args[1].toLowerCase() : "";
+                const command: string =
+                    control.args && typeof control.args[1] === 'string'
+                        ? control.args[1].toLowerCase()
+                        : '';
 
-                css(image, "vertical-align", command);
+                css(image, 'vertical-align', command);
 
-                editor.events.fire("recalcPositionPopup");
+                editor.events.fire('recalcPositionPopup');
             },
         },
         {
-            name: "left",
-            list: [
-                "Left",
-                "Right",
-                "Center",
-                "Normal",
-            ],
-            exec: (editor: Jodit, image: HTMLImageElement, control: IControlType) => {
+            name: 'left',
+            list: ['Left', 'Right', 'Center', 'Normal'],
+            exec: (
+                editor: Jodit,
+                image: HTMLImageElement,
+                control: IControlType
+            ) => {
                 const tagName: string = (image as HTMLElement).tagName.toLowerCase();
-                if (tagName !== "img") {
+                if (tagName !== 'img') {
                     return;
                 }
 
                 const clearCenterAlign = () => {
-                    if (css(image, "display") === "block") {
-                        css(image, "display", "");
+                    if (css(image, 'display') === 'block') {
+                        css(image, 'display', '');
                     }
-                    if (image.style.marginLeft === "auto" && image.style.marginRight === "auto") {
-                        image.style.marginLeft =  "";
-                        image.style.marginRight =  "";
+                    if (
+                        image.style.marginLeft === 'auto' &&
+                        image.style.marginRight === 'auto'
+                    ) {
+                        image.style.marginLeft = '';
+                        image.style.marginRight = '';
                     }
                 };
 
-                const command: string = (control.args && typeof control.args[1] === "string") ? control.args[1].toLowerCase() : "";
+                const command: string =
+                    control.args && typeof control.args[1] === 'string'
+                        ? control.args[1].toLowerCase()
+                        : '';
 
-                if (command !== "normal") {
-                    if (["right", "left"].indexOf(command) !== -1) {
-                        css(image, "float", command);
+                if (command !== 'normal') {
+                    if (['right', 'left'].indexOf(command) !== -1) {
+                        css(image, 'float', command);
                         clearCenterAlign();
                     } else {
-                        css(image, "float", "");
+                        css(image, 'float', '');
                         css(image, {
-                            "display": "block",
-                            "margin-left": "auto",
-                            "margin-right": "auto",
+                            display: 'block',
+                            'margin-left': 'auto',
+                            'margin-right': 'auto',
                         });
                     }
                 } else {
-                    if (css(image, "float") && ["right", "left"].indexOf((css(image, "float") as string).toLowerCase()) !== -1) {
-                        css(image, "float", "");
+                    if (
+                        css(image, 'float') &&
+                        ['right', 'left'].indexOf(
+                            (css(image, 'float') as string).toLowerCase()
+                        ) !== -1
+                    ) {
+                        css(image, 'float', '');
                     }
                     clearCenterAlign();
                 }
 
-                editor.events.fire("recalcPositionPopup");
+                editor.events.fire('recalcPositionPopup');
             },
-            tooltip: "Horizontal align",
+            tooltip: 'Horizontal align',
         },
     ],
-    "table": [
+    table: [
         {
-            name: "brush",
+            name: 'brush',
             popup: (editor: Jodit, elm: HTMLTableElement) => {
-                const
-                    selected: HTMLTableCellElement[] = Table.getAllSelectedCells(elm);
+                const selected: HTMLTableCellElement[] = Table.getAllSelectedCells(
+                    elm
+                );
 
-                let
-                    $bg: HTMLElement,
+                let $bg: HTMLElement,
                     $cl: HTMLElement,
                     $br: HTMLElement,
                     $tab: HTMLElement,
@@ -188,122 +202,159 @@ Config.prototype.popup = {
                     return false;
                 }
 
-                color = css(selected[0], "color") as string;
-                bg_color = css(selected[0], "background-color") as string;
-                br_color = css(selected[0], "border-color") as string;
+                color = css(selected[0], 'color') as string;
+                bg_color = css(selected[0], 'background-color') as string;
+                br_color = css(selected[0], 'border-color') as string;
 
-                $bg = ColorPickerWidget(editor, (value: string) => {
-                    selected.forEach((cell: HTMLTableCellElement) => {
-                        css(cell, "background-color", value);
-                    });
-                    editor.setEditorValue();
-                    // close();
-                }, bg_color);
+                $bg = ColorPickerWidget(
+                    editor,
+                    (value: string) => {
+                        selected.forEach((cell: HTMLTableCellElement) => {
+                            css(cell, 'background-color', value);
+                        });
+                        editor.setEditorValue();
+                        // close();
+                    },
+                    bg_color
+                );
 
-                $cl = ColorPickerWidget(editor, (value: string) => {
-                    selected.forEach((cell: HTMLTableCellElement) => {
-                        css(cell, "color", value);
-                    });
-                    editor.setEditorValue();
-                    // close();
-                }, color);
+                $cl = ColorPickerWidget(
+                    editor,
+                    (value: string) => {
+                        selected.forEach((cell: HTMLTableCellElement) => {
+                            css(cell, 'color', value);
+                        });
+                        editor.setEditorValue();
+                        // close();
+                    },
+                    color
+                );
 
-                $br = ColorPickerWidget(editor, (value: string) => {
-                    selected.forEach((cell: HTMLTableCellElement) => {
-                        css(cell, "border-color", value);
-                    });
-                    editor.setEditorValue();
-                    // close();
-                }, br_color);
+                $br = ColorPickerWidget(
+                    editor,
+                    (value: string) => {
+                        selected.forEach((cell: HTMLTableCellElement) => {
+                            css(cell, 'border-color', value);
+                        });
+                        editor.setEditorValue();
+                        // close();
+                    },
+                    br_color
+                );
 
                 $tab = TabsWidget(editor, {
-                    Background : $bg,
-                    Text : $cl,
-                    Border : $br,
+                    Background: $bg,
+                    Text: $cl,
+                    Border: $br,
                 });
 
                 return $tab;
             },
-            tooltip: "Background",
+            tooltip: 'Background',
         },
         {
-            name: "valign",
-            list: [
-                "Top",
-                "Middle",
-                "Bottom",
-            ],
-            exec: (editor: Jodit, table: HTMLTableElement, control: IControlType) => {
+            name: 'valign',
+            list: ['Top', 'Middle', 'Bottom'],
+            exec: (
+                editor: Jodit,
+                table: HTMLTableElement,
+                control: IControlType
+            ) => {
+                const command: string =
+                    control.args && typeof control.args[1] === 'string'
+                        ? control.args[1].toLowerCase()
+                        : '';
 
-                const command: string = (control.args && typeof control.args[1] === "string") ? control.args[1].toLowerCase() : "";
-
-                Table.getAllSelectedCells(table).forEach((cell: HTMLTableCellElement) => {
-                    css(cell, "vertical-align", command);
-                });
+                Table.getAllSelectedCells(table).forEach(
+                    (cell: HTMLTableCellElement) => {
+                        css(cell, 'vertical-align', command);
+                    }
+                );
             },
-            tooltip: "Vertical align",
+            tooltip: 'Vertical align',
         },
         {
-            name: "splitv",
+            name: 'splitv',
             list: {
-                tablesplitv: "Split vertical",
-                tablesplitg: "Split horizontal",
+                tablesplitv: 'Split vertical',
+                tablesplitg: 'Split horizontal',
             },
-            tooltip: "Split",
+            tooltip: 'Split',
         },
         {
-            name: "align",
-            icon: "left",
+            name: 'align',
+            icon: 'left',
         },
-        "\n",
+        '\n',
         {
-            name: "merge",
-            command: "tablemerge",
-            tooltip: "Merge",
+            name: 'merge',
+            command: 'tablemerge',
+            tooltip: 'Merge',
         },
         {
-            name: "addcolumn",
+            name: 'addcolumn',
             list: {
-                tableaddcolumnbefore: "Insert column before",
-                tableaddcolumnafter: "Insert column after",
+                tableaddcolumnbefore: 'Insert column before',
+                tableaddcolumnafter: 'Insert column after',
             },
-            exec: (editor: Jodit, table: HTMLTableElement, control: IControlType) => {
-                const command: string = (control.args && typeof control.args[0] === "string") ? control.args[0].toLowerCase() : "";
+            exec: (
+                editor: Jodit,
+                table: HTMLTableElement,
+                control: IControlType
+            ) => {
+                const command: string =
+                    control.args && typeof control.args[0] === 'string'
+                        ? control.args[0].toLowerCase()
+                        : '';
 
                 editor.execCommand(command, false, table);
             },
-            tooltip: "Add column",
+            tooltip: 'Add column',
         },
         {
-            name: "addrow",
+            name: 'addrow',
             list: {
-                tableaddrowbefore: "Insert row above",
-                tableaddrowafter: "Insert row below",
+                tableaddrowbefore: 'Insert row above',
+                tableaddrowafter: 'Insert row below',
             },
-            exec: (editor: Jodit, table: HTMLTableElement, control: IControlType) => {
-                const command: string = (control.args && typeof control.args[0] === "string") ? control.args[0].toLowerCase() : "";
+            exec: (
+                editor: Jodit,
+                table: HTMLTableElement,
+                control: IControlType
+            ) => {
+                const command: string =
+                    control.args && typeof control.args[0] === 'string'
+                        ? control.args[0].toLowerCase()
+                        : '';
 
                 editor.execCommand(command, false, table);
             },
-            tooltip: "Add row",
+            tooltip: 'Add row',
         },
         {
-            name: "bin",
+            name: 'bin',
             list: {
-                tablebin: "Delete table",
-                tablebinrow: "Delete row",
-                tablebincolumn: "Delete column",
-                tableempty: "Empty cell",
+                tablebin: 'Delete table',
+                tablebinrow: 'Delete row',
+                tablebincolumn: 'Delete column',
+                tableempty: 'Empty cell',
             },
-            exec: (editor: Jodit, table: HTMLTableElement, control: IControlType) => {
-                const command: string = (control.args && typeof control.args[0] === "string") ? control.args[0].toLowerCase() : "";
+            exec: (
+                editor: Jodit,
+                table: HTMLTableElement,
+                control: IControlType
+            ) => {
+                const command: string =
+                    control.args && typeof control.args[0] === 'string'
+                        ? control.args[0].toLowerCase()
+                        : '';
 
                 editor.execCommand(command, false, table);
             },
-            tooltip: "Delete",
+            tooltip: 'Delete',
         },
     ],
-} as  IDictionary<Array<IControlType | string>>;
+} as IDictionary<Array<IControlType | string>>;
 
 /**
  * Support inline toolbar
@@ -316,7 +367,7 @@ export class inlinePopup extends Plugin {
     private target: HTMLDivElement;
     private container: HTMLDivElement;
 
-    private _hiddenClass = "jodit_toolbar_popup-inline-target-hidden";
+    private _hiddenClass = 'jodit_toolbar_popup-inline-target-hidden';
 
     private __getRect: () => IBound;
 
@@ -336,7 +387,6 @@ export class inlinePopup extends Plugin {
 
         this.isSelectionStarted = false;
         this.isTargetAction = false;
-
     }, this.jodit.defaultTimeout);
 
     private isTargetAction: boolean = false;
@@ -349,7 +399,8 @@ export class inlinePopup extends Plugin {
 
     private calcWindSizes = (): IBound => {
         const win: Window = this.jodit.ownerWindow;
-        const docElement: HTMLElement | null = this.jodit.ownerDocument.documentElement;
+        const docElement: HTMLElement | null = this.jodit.ownerDocument
+            .documentElement;
 
         if (!docElement) {
             return {
@@ -361,46 +412,61 @@ export class inlinePopup extends Plugin {
         }
 
         const body: HTMLElement = this.jodit.ownerDocument.body;
-        const scrollTop: number = win.pageYOffset || docElement.scrollTop || body.scrollTop;
+        const scrollTop: number =
+            win.pageYOffset || docElement.scrollTop || body.scrollTop;
         const clientTop: number = docElement.clientTop || body.clientTop || 0;
-        const scrollLeft: number = win.pageXOffset || docElement.scrollLeft || body.scrollLeft;
-        const clientLeft: number = docElement.clientLeft || body.clientLeft || 0;
+        const scrollLeft: number =
+            win.pageXOffset || docElement.scrollLeft || body.scrollLeft;
+        const clientLeft: number =
+            docElement.clientLeft || body.clientLeft || 0;
 
-        const windWidth: number = docElement.clientWidth + scrollLeft - clientLeft;
-        const windHeight: number = docElement.clientHeight + scrollTop - clientTop;
+        const windWidth: number =
+            docElement.clientWidth + scrollLeft - clientLeft;
+        const windHeight: number =
+            docElement.clientHeight + scrollTop - clientTop;
 
-        return  {
+        return {
             left: clientLeft,
             top: clientTop,
             width: windWidth,
             height: windHeight,
         };
-    }
+    };
     private calcPosition = (rect: IBound, windowSize: IBound) => {
         this.popup.target.classList.remove(this._hiddenClass);
 
         const selectionCenterLeft: number = rect.left + rect.width / 2;
 
-        const workplacePosition: IBound = offset(this.jodit.workplace, this.jodit, this.jodit.ownerDocument, true);
+        const workplacePosition: IBound = offset(
+            this.jodit.workplace,
+            this.jodit,
+            this.jodit.ownerDocument,
+            true
+        );
 
         let targetTop: number = rect.top + rect.height + 10;
         const diff = 50;
 
-        this.target.style.left = selectionCenterLeft + "px";
-        this.target.style.top = targetTop + "px";
+        this.target.style.left = selectionCenterLeft + 'px';
+        this.target.style.top = targetTop + 'px';
 
         if (this.jodit.isFullSize()) {
-            this.target.style.zIndex = css(this.jodit.container, "zIndex").toString();
+            this.target.style.zIndex = css(
+                this.jodit.container,
+                'zIndex'
+            ).toString();
         }
 
         const halfWidthPopup: number = this.container.offsetWidth / 2;
         let marginLeft: number = -halfWidthPopup;
-        this.popup.container.classList.remove("jodit_toolbar_popup-inline-top");
+        this.popup.container.classList.remove('jodit_toolbar_popup-inline-top');
 
         if (targetTop + this.container.offsetHeight > windowSize.height) {
             targetTop = rect.top - this.container.offsetHeight - 10;
-            this.target.style.top = targetTop + "px";
-            this.popup.container.classList.add("jodit_toolbar_popup-inline-top");
+            this.target.style.top = targetTop + 'px';
+            this.popup.container.classList.add(
+                'jodit_toolbar_popup-inline-top'
+            );
         }
 
         if (selectionCenterLeft - halfWidthPopup < 0) {
@@ -408,28 +474,41 @@ export class inlinePopup extends Plugin {
         }
 
         if (selectionCenterLeft + halfWidthPopup > windowSize.width) {
-            marginLeft = -(this.container.offsetWidth - (windowSize.width - selectionCenterLeft));
+            marginLeft = -(
+                this.container.offsetWidth -
+                (windowSize.width - selectionCenterLeft)
+            );
         }
 
-        this.container.style.marginLeft = marginLeft + "px";
+        this.container.style.marginLeft = marginLeft + 'px';
 
-        if (workplacePosition.top - targetTop > diff || targetTop - (workplacePosition.top + workplacePosition.height)  > diff) {
+        if (
+            workplacePosition.top - targetTop > diff ||
+            targetTop - (workplacePosition.top + workplacePosition.height) >
+                diff
+        ) {
             this.popup.target.classList.add(this._hiddenClass);
         }
-    }
+    };
 
     private isExcludedTarget(type: string): boolean {
-        return splitArray(this.jodit.options.toolbarInlineDisableFor)
-            .map(a => a.toLowerCase())
-            .indexOf(type.toLowerCase()) !== -1;
+        return (
+            splitArray(this.jodit.options.toolbarInlineDisableFor)
+                .map(a => a.toLowerCase())
+                .indexOf(type.toLowerCase()) !== -1
+        );
     }
     private reCalcPosition = () => {
         if (this.__getRect) {
             this.calcPosition(this.__getRect(), this.calcWindSizes());
         }
-    }
+    };
 
-    private showPopup = (rect: () => IBound, type: string, elm?: HTMLElement): boolean => {
+    private showPopup = (
+        rect: () => IBound,
+        type: string,
+        elm?: HTMLElement
+    ): boolean => {
         if (
             !this.jodit.options.toolbarInline ||
             !this.jodit.options.popup[type.toLowerCase()]
@@ -446,9 +525,14 @@ export class inlinePopup extends Plugin {
 
         const windSize: IBound = this.calcWindSizes();
 
-        this.target.parentNode || this.jodit.ownerDocument.body.appendChild(this.target);
+        this.target.parentNode ||
+            this.jodit.ownerDocument.body.appendChild(this.target);
 
-        this.toolbar.build(this.jodit.options.popup[type.toLowerCase()], this.container, elm);
+        this.toolbar.build(
+            this.jodit.options.popup[type.toLowerCase()],
+            this.container,
+            elm
+        );
 
         this.popup.open(this.container, false, true);
 
@@ -456,20 +540,27 @@ export class inlinePopup extends Plugin {
         this.calcPosition(rect(), windSize);
 
         return true;
-    }
+    };
 
     private hidePopup = (root?: HTMLElement | ToolbarPopup) => {
-        if (root && (
-            root instanceof (this.jodit.editorWindow as any).Node || root instanceof ToolbarPopup
-        ) && Dom.isOrContains(this.target, root instanceof ToolbarPopup ? root.target : root)) {
+        if (
+            root &&
+            (root instanceof (this.jodit.editorWindow as any).Node ||
+                root instanceof ToolbarPopup) &&
+            Dom.isOrContains(
+                this.target,
+                root instanceof ToolbarPopup ? root.target : root
+            )
+        ) {
             return;
         }
 
         this.isTargetAction = false;
         this.isShown = false;
         this.popup.close();
-        this.target.parentNode && this.target.parentNode.removeChild(this.target);
-    }
+        this.target.parentNode &&
+            this.target.parentNode.removeChild(this.target);
+    };
 
     private onSelectionStart = (event: MouseEvent) => {
         if (!this.jodit.isEditorMode()) {
@@ -480,16 +571,30 @@ export class inlinePopup extends Plugin {
         this.isSelectionPopup = false;
 
         if (!this.isSelectionStarted) {
-            const
-                elements: string = Object.keys(this.jodit.options.popup).join("|"),
-                target: HTMLElement | false = (event.target as Node).nodeName === "IMG" ?
-                    event.target as HTMLImageElement :  Dom.closest(event.target as Node, elements, this.jodit.editor) as HTMLTableElement;
+            const elements: string = Object.keys(this.jodit.options.popup).join(
+                    '|'
+                ),
+                target: HTMLElement | false =
+                    (event.target as Node).nodeName === 'IMG'
+                        ? (event.target as HTMLImageElement)
+                        : (Dom.closest(
+                              event.target as Node,
+                              elements,
+                              this.jodit.editor
+                          ) as HTMLTableElement);
 
-            if (!target || !this.showPopup(() => offset(target, this.jodit, this.jodit.editorDocument), target.nodeName, target)) {
+            if (
+                !target ||
+                !this.showPopup(
+                    () => offset(target, this.jodit, this.jodit.editorDocument),
+                    target.nodeName,
+                    target
+                )
+            ) {
                 this.isSelectionStarted = true;
             }
         }
-    }
+    };
 
     private hideIfCollapsed(): boolean {
         if (this.jodit.selection.isCollapsed()) {
@@ -505,7 +610,7 @@ export class inlinePopup extends Plugin {
         } else {
             this.isTargetAction = false;
         }
-    }
+    };
 
     public isShown: boolean = false;
 
@@ -523,55 +628,98 @@ export class inlinePopup extends Plugin {
             if (sel.rangeCount) {
                 this.isSelectionPopup = true;
                 const range: Range = sel.getRangeAt(0);
-                this.showPopup(() => offset(range, this.jodit, this.jodit.editorDocument), "selection");
+                this.showPopup(
+                    () => offset(range, this.jodit, this.jodit.editorDocument),
+                    'selection'
+                );
             }
         }
-    }
+    };
 
     public afterInit(editor: Jodit) {
         editor.events
-            .on(this.target, "mousedown keydown touchstart", (e: MouseEvent) => {
-                e.stopPropagation();
-            })
-            .on("beforeOpenPopup hidePopup afterSetMode", this.hidePopup)
-            .on("recalcPositionPopup", this.reCalcPosition)
-            .on("getDiffButtons.mobile", (_toolbar: ToolbarCollection): void | string[] => {
-                if (this.toolbar === _toolbar) {
-                    return splitArray(editor.options.buttons)
-                        .filter(name => name !== "|" && name !== "\n")
-                        .filter((name: string) => {
-                            return this.toolbar.getButtonsList().indexOf(name) < 0;
-                        });
+            .on(
+                this.target,
+                'mousedown keydown touchstart',
+                (e: MouseEvent) => {
+                    e.stopPropagation();
                 }
-            })
-            .on("selectionchange", this.onChangeSelection)
-            .on("afterCommand afterExec", () => {
+            )
+            .on('beforeOpenPopup hidePopup afterSetMode', this.hidePopup)
+            .on('recalcPositionPopup', this.reCalcPosition)
+            .on(
+                'getDiffButtons.mobile',
+                (_toolbar: ToolbarCollection): void | string[] => {
+                    if (this.toolbar === _toolbar) {
+                        return splitArray(editor.options.buttons)
+                            .filter(name => name !== '|' && name !== '\n')
+                            .filter((name: string) => {
+                                return (
+                                    this.toolbar
+                                        .getButtonsList()
+                                        .indexOf(name) < 0
+                                );
+                            });
+                    }
+                }
+            )
+            .on('selectionchange', this.onChangeSelection)
+            .on('afterCommand afterExec', () => {
                 if (this.isShown && this.isSelectionPopup) {
                     this.onChangeSelection();
                 }
             })
-            .on("showPopup", (elm: HTMLElement | string, rect: () => IBound) => {
-                const elementName: string = (typeof elm === "string" ? elm : elm.nodeName).toLowerCase();
-                this.isSelectionPopup = false;
-                this.showPopup(rect, elementName, typeof elm === "string" ? void(0) : elm);
+            .on(
+                'showPopup',
+                (elm: HTMLElement | string, rect: () => IBound) => {
+                    const elementName: string = (typeof elm === 'string'
+                        ? elm
+                        : elm.nodeName
+                    ).toLowerCase();
+                    this.isSelectionPopup = false;
+                    this.showPopup(
+                        rect,
+                        elementName,
+                        typeof elm === 'string' ? void 0 : elm
+                    );
+                }
+            )
 
-            })
-
-            .on("mousedown keydown touchstart", this.onSelectionStart)
-            .on([editor.ownerWindow, editor.editor], "scroll resize", this.reCalcPosition)
-            .on([editor.ownerWindow], "mouseup keyup touchend", this.onSelectionEnd)
-            .on([editor.ownerWindow], "mousedown keydown touchstart", this.checkIsTargetEvent);
-
+            .on('mousedown keydown touchstart', this.onSelectionStart)
+            .on(
+                [editor.ownerWindow, editor.editor],
+                'scroll resize',
+                this.reCalcPosition
+            )
+            .on(
+                [editor.ownerWindow],
+                'mouseup keyup touchend',
+                this.onSelectionEnd
+            )
+            .on(
+                [editor.ownerWindow],
+                'mousedown keydown touchstart',
+                this.checkIsTargetEvent
+            );
     }
     public beforeDestruct(editor: Jodit) {
         this.popup.destruct();
         this.toolbar.destruct();
-        this.target.parentNode && this.target.parentNode.removeChild(this.target);
+        this.target.parentNode &&
+            this.target.parentNode.removeChild(this.target);
 
         editor.events
-            .off([editor.ownerWindow], "scroll resize", this.reCalcPosition)
-            .off([editor.ownerWindow], "mouseup keyup touchend", this.onSelectionEnd)
-            .off([editor.ownerWindow], "mousedown keydown touchstart", this.checkIsTargetEvent);
+            .off([editor.ownerWindow], 'scroll resize', this.reCalcPosition)
+            .off(
+                [editor.ownerWindow],
+                'mouseup keyup touchend',
+                this.onSelectionEnd
+            )
+            .off(
+                [editor.ownerWindow],
+                'mousedown keydown touchstart',
+                this.checkIsTargetEvent
+            );
 
         super.destruct();
     }
@@ -579,9 +727,14 @@ export class inlinePopup extends Plugin {
     constructor(jodit: Jodit) {
         super(jodit);
         this.toolbar = new ToolbarCollection(jodit);
-        this.target = jodit.ownerDocument.createElement("div");
-        this.container = jodit.ownerDocument.createElement("div");
-        this.target.classList.add("jodit_toolbar_popup-inline-target");
-        this.popup = new ToolbarPopup(jodit, this.target, void(0), "jodit_toolbar_popup-inline");
+        this.target = jodit.ownerDocument.createElement('div');
+        this.container = jodit.ownerDocument.createElement('div');
+        this.target.classList.add('jodit_toolbar_popup-inline-target');
+        this.popup = new ToolbarPopup(
+            jodit,
+            this.target,
+            void 0,
+            'jodit_toolbar_popup-inline'
+        );
     }
 }

@@ -4,26 +4,14 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Component } from "./Component";
-import { Dom } from "./Dom";
-
-export interface RangeType {
-    startContainer: number[];
-    startOffset: number;
-    endContainer: number[];
-    endOffset: number;
-}
-
-export interface SnapshotType {
-    html: string;
-    range: RangeType;
-}
+import { SnapshotType } from '../types';
+import { Component } from './Component';
+import { Dom } from './Dom';
 
 /**
  * Module for creating snapshot of editor which includes html content and the current selection
  */
 export class Snapshot extends Component {
-
     /**
      * Compare two snapshotes, if and htmls and selections match, then return true
      *
@@ -32,7 +20,10 @@ export class Snapshot extends Component {
      * @return {boolean}
      */
     public static equal(first: SnapshotType, second: SnapshotType): boolean {
-        return first.html === second.html && JSON.stringify(first.range) === JSON.stringify(second.range);
+        return (
+            first.html === second.html &&
+            JSON.stringify(first.range) === JSON.stringify(second.range)
+        );
     }
     /**
      * Calc count element before some node in parentNode. All text nodes are joined
@@ -45,16 +36,23 @@ export class Snapshot extends Component {
             return 0;
         }
 
-        let elms: NodeList = elm.parentNode.childNodes,
-            count: number = 0,
+        const elms: NodeList = elm.parentNode.childNodes;
+        let count: number = 0,
             last: Node | null = null,
             j: number;
 
         for (j = 0; j < elms.length; j += 1) {
-            if (last && (
-                    !(elms[j].nodeType === Node.TEXT_NODE && elms[j].textContent === "") &&
-                    !(last.nodeType === Node.TEXT_NODE && elms[j].nodeType === Node.TEXT_NODE)
-                )) {
+            if (
+                last &&
+                (!(
+                    elms[j].nodeType === Node.TEXT_NODE &&
+                    elms[j].textContent === ''
+                ) &&
+                    !(
+                        last.nodeType === Node.TEXT_NODE &&
+                        elms[j].nodeType === Node.TEXT_NODE
+                    ))
+            ) {
                 count += 1;
             }
 
@@ -78,7 +76,11 @@ export class Snapshot extends Component {
     private static strokeOffset(elm: Node | null, offset: number): number {
         while (elm && elm.nodeType === Node.TEXT_NODE) {
             elm = elm.previousSibling;
-            if (elm && elm.nodeType === Node.TEXT_NODE && elm.textContent !== null) {
+            if (
+                elm &&
+                elm.nodeType === Node.TEXT_NODE &&
+                elm.textContent !== null
+            ) {
                 offset += elm.textContent.length;
             }
         }
@@ -96,7 +98,11 @@ export class Snapshot extends Component {
     private calcHierarchyLadder(elm: Node | null): number[] {
         const counts: number[] = [];
 
-        if (!elm || !elm.parentNode || !Dom.isOrContains(this.jodit.editor, elm)) {
+        if (
+            !elm ||
+            !elm.parentNode ||
+            !Dom.isOrContains(this.jodit.editor, elm)
+        ) {
             return [];
         }
 
@@ -124,13 +130,16 @@ export class Snapshot extends Component {
     public isBlocked: boolean = false;
 
     /**
-     * Creates object a snapshot of editor: html and the current selection. Current selection calculate by offset by start document
+     * Creates object a snapshot of editor: html and the current selection. Current selection calculate by
+     * offset by start document
      *
-     * @return {object} {html: string, range: {startContainer: int, startOffset: int, endContainer: int, endOffset: int}} или {html: string} при отсутствии выделения
+     * @return {object}
+     * {html: string, range: {startContainer: int, startOffset: int, endContainer: int, endOffset: int}} or
+     * {html: string} without selection
      */
     public make(): SnapshotType {
         const snapshot: SnapshotType = {
-            html: "",
+            html: '',
             range: {
                 startContainer: [],
                 startOffset: 0,
@@ -144,19 +153,30 @@ export class Snapshot extends Component {
         const sel: Selection = this.jodit.editorWindow.getSelection();
 
         if (sel && sel.rangeCount) {
-            const range: Range = sel.getRangeAt(0);
+            const range: Range = sel.getRangeAt(0),
+                startContainer = this.calcHierarchyLadder(range.startContainer),
+                endContainer = this.calcHierarchyLadder(range.endContainer);
 
-            let
-                startContainer  = this.calcHierarchyLadder(range.startContainer),
-                startOffset     = Snapshot.strokeOffset(range.startContainer, range.startOffset),
-                endContainer    = this.calcHierarchyLadder(range.endContainer),
-                endOffset       = Snapshot.strokeOffset(range.endContainer, range.endOffset);
+            let startOffset = Snapshot.strokeOffset(
+                    range.startContainer,
+                    range.startOffset
+                ),
+                endOffset = Snapshot.strokeOffset(
+                    range.endContainer,
+                    range.endOffset
+                );
 
-            if (!startContainer.length && range.startContainer !== this.jodit.editor) {
+            if (
+                !startContainer.length &&
+                range.startContainer !== this.jodit.editor
+            ) {
                 startOffset = 0;
             }
 
-            if (!endContainer.length && range.endContainer !== this.jodit.editor) {
+            if (
+                !endContainer.length &&
+                range.endContainer !== this.jodit.editor
+            ) {
                 endOffset = 0;
             }
 
@@ -185,13 +205,19 @@ export class Snapshot extends Component {
             if (snapshot.range) {
                 const range: Range = this.jodit.editorDocument.createRange();
 
-                range.setStart(this.getElementByLadder(snapshot.range.startContainer), snapshot.range.startOffset);
-                range.setEnd(this.getElementByLadder(snapshot.range.endContainer), snapshot.range.endOffset);
+                range.setStart(
+                    this.getElementByLadder(snapshot.range.startContainer),
+                    snapshot.range.startOffset
+                );
+                range.setEnd(
+                    this.getElementByLadder(snapshot.range.endContainer),
+                    snapshot.range.endOffset
+                );
 
                 this.jodit.selection.selectRange(range);
             }
         } catch (__ignore) {
-            if (process.env.NODE_ENV !== "production") {
+            if (process.env.NODE_ENV !== 'production') {
                 throw __ignore;
             }
         }

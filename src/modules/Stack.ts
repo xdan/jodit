@@ -4,7 +4,7 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Command } from "./Observer";
+import { Command } from './Observer';
 
 export class Stack {
     private commands: Command[] = [];
@@ -27,7 +27,6 @@ export class Stack {
 
     public undo(): boolean {
         if (this.canUndo()) {
-
             if (this.commands[this.stackPosition]) {
                 this.commands[this.stackPosition].undo();
             }

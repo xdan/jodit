@@ -4,24 +4,24 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Config } from "../Config";
-import { TEXT_PLAIN } from "../constants";
-import { Jodit } from "../Jodit";
+import { Config } from '../Config';
+import { TEXT_PLAIN } from '../constants';
+import { Jodit } from '../Jodit';
 import {
-    BuildDataResult,  HandlerError,
+    BuildDataResult,
+    HandlerError,
     HandlerSuccess,
     IDictionary,
     IUploaderAnswer,
     IUploaderData,
     IUploaderOptions,
     IViewBased,
-} from "../types/";
-import { Ajax } from "./Ajax";
-import { browser, dom, extend, isIE, isPlainObject } from "./Helpers";
-import { Select } from "./Selection";
+} from '../types/';
+import { Ajax } from './Ajax';
+import { browser, dom, extend, isIE, isPlainObject } from './Helpers';
+import { Select } from './Selection';
 
-declare module "../Config" {
-
+declare module '../Config' {
     interface Config {
         enableDragAndDropFileToEditor: boolean;
         uploader: IUploaderOptions;
@@ -31,7 +31,8 @@ declare module "../Config" {
 /**
  * Module for processing download documents and images by Drag and Drop
  *
- * @tutorial {@link http://xdsoft.net/jodit/doc/tutorial-uploader-settings.html|Uploader options and Drag and Drop files}
+ * @tutorial {@link http://xdsoft.net/jodit/doc/tutorial-uploader-settings.html|Uploader options and
+ * Drag and Drop files}
  * @module Uploader
  * @params {Object} parent Jodit main object
  */
@@ -41,13 +42,13 @@ declare module "../Config" {
 Config.prototype.enableDragAndDropFileToEditor = true;
 
 Config.prototype.uploader = {
-    url: "",
+    url: '',
     insertImageAsBase64URI: false,
-    imagesExtensions: ["jpg", "png", "jpeg", "gif"],
+    imagesExtensions: ['jpg', 'png', 'jpeg', 'gif'],
     headers: null,
     data: null,
 
-    format: "json",
+    format: 'json',
 
     prepareData(this: Uploader, formData: FormData) {
         return formData;
@@ -58,7 +59,10 @@ Config.prototype.uploader = {
     },
 
     getMessage(this: Uploader, resp: IUploaderAnswer) {
-        return (resp.data.messages !== undefined && Array.isArray(resp.data.messages)) ? resp.data.messages.join(" ") : "";
+        return resp.data.messages !== undefined &&
+            Array.isArray(resp.data.messages)
+            ? resp.data.messages.join(' ')
+            : '';
     },
 
     process(this: Uploader, resp: IUploaderAnswer): IUploaderData {
@@ -66,22 +70,27 @@ Config.prototype.uploader = {
     },
 
     error(this: Uploader, e: Error) {
-        this.jodit.events.fire("errorMessage", e.message, "error", 4000);
+        this.jodit.events.fire('errorMessage', e.message, 'error', 4000);
     },
 
     defaultHandlerSuccess(this: Uploader, resp: IUploaderData) {
         if (resp.files && resp.files.length) {
             resp.files.forEach((filename, index: number) => {
-                const [tagName , attr]: string[] = (resp.isImages && resp.isImages[index]) ?   ["img", "src"] : ["a", "href"];
-                const elm: HTMLElement = this.jodit.editorDocument.createElement(tagName);
+                const [tagName, attr]: string[] =
+                    resp.isImages && resp.isImages[index]
+                        ? ['img', 'src']
+                        : ['a', 'href'];
+                const elm: HTMLElement = this.jodit.editorDocument.createElement(
+                    tagName
+                );
 
                 elm.setAttribute(attr, resp.baseurl + filename);
 
-                if (tagName === "a") {
+                if (tagName === 'a') {
                     elm.innerText = resp.baseurl + filename;
                 }
 
-                if (tagName === "img") {
+                if (tagName === 'img') {
                     this.selection.insertImage(elm as HTMLImageElement);
                 } else {
                     this.selection.insertNode(elm);
@@ -91,16 +100,18 @@ Config.prototype.uploader = {
     },
 
     defaultHandlerError(this: Uploader, e: Error) {
-        this.jodit.events.fire("errorMessage", e.message);
+        this.jodit.events.fire('errorMessage', e.message);
     },
 
     contentType(this: Uploader, requestData: any) {
-        return ((this.jodit.ownerWindow as any).FormData !== undefined && typeof requestData !== "string") ? false : "application/x-www-form-urlencoded; charset=UTF-8";
+        return (this.jodit.ownerWindow as any).FormData !== undefined &&
+            typeof requestData !== 'string'
+            ? false
+            : 'application/x-www-form-urlencoded; charset=UTF-8';
     },
 } as IUploaderOptions;
 
 export class Uploader {
-
     /**
      * Convert dataURI to Blob
      *
@@ -110,31 +121,39 @@ export class Uploader {
     public static dataURItoBlob(dataURI: string): Blob {
         // convert base64 toWYSIWYG raw binary data held in a string
         // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
-        let byteString: string = atob(dataURI.split(",")[1]),
+
+        const byteString: string = atob(dataURI.split(',')[1]),
             // separate out the mime component
-            mimeString: string = dataURI.split(",")[0].split(":")[1].split(";")[0],
+            mimeString: string = dataURI
+                .split(',')[0]
+                .split(':')[1]
+                .split(';')[0],
             // write the bytes of the string toWYSIWYG an ArrayBuffer
             ab: ArrayBuffer = new ArrayBuffer(byteString.length),
-            i: number,
             ia: Uint8Array = new Uint8Array(ab);
 
-        for (i = 0; i < byteString.length; i += 1) {
+        for (let i: number = 0; i < byteString.length; i += 1) {
             ia[i] = byteString.charCodeAt(i);
         }
 
         // write the ArrayBuffer toWYSIWYG a blob, and you're done
 
-        return new Blob([ia], {type: mimeString});
+        return new Blob([ia], { type: mimeString });
     }
-    private path: string = "";
-    private source: string = "default";
+    private path: string = '';
+    private source: string = 'default';
 
     private options: IUploaderOptions;
     public jodit: IViewBased;
     public selection: Select;
 
-    public buildData(data: FormData |  IDictionary<string> | string): BuildDataResult {
-        if (this.options.buildData && typeof this.options.buildData === "function") {
+    public buildData(
+        data: FormData | IDictionary<string> | string
+    ): BuildDataResult {
+        if (
+            this.options.buildData &&
+            typeof this.options.buildData === 'function'
+        ) {
             return this.options.buildData.call(this, data);
         }
 
@@ -142,7 +161,7 @@ export class Uploader {
             if (data instanceof FormData) {
                 return data;
             }
-            if (typeof data === "string") {
+            if (typeof data === 'string') {
                 return data;
             }
 
@@ -158,43 +177,61 @@ export class Uploader {
         return data;
     }
 
-    public send(data: FormData |  IDictionary<string>, success: (resp: IUploaderAnswer) => void): Promise<any> {
+    public send(
+        data: FormData | IDictionary<string>,
+        success: (resp: IUploaderAnswer) => void
+    ): Promise<any> {
         const requestData: BuildDataResult = this.buildData(data),
-            sendData = (request: FormData |  IDictionary<string> | string): Promise<any> => {
+            sendData = (
+                request: FormData | IDictionary<string> | string
+            ): Promise<any> => {
                 const ajax: Ajax = new Ajax(this.jodit || this, {
                     xhr: () => {
                         const xhr: XMLHttpRequest = new XMLHttpRequest();
 
-                        if ((this.jodit.ownerWindow as any).FormData !== undefined && xhr.upload) {
-                            xhr.upload.addEventListener("progress", evt => {
-                                if (evt.lengthComputable) {
-                                    let percentComplete = evt.loaded / evt.total;
-                                    percentComplete = percentComplete * 100;
+                        if (
+                            (this.jodit.ownerWindow as any).FormData !==
+                                undefined &&
+                            xhr.upload
+                        ) {
+                            xhr.upload.addEventListener(
+                                'progress',
+                                evt => {
+                                    if (evt.lengthComputable) {
+                                        let percentComplete =
+                                            evt.loaded / evt.total;
+                                        percentComplete = percentComplete * 100;
 
-                                    this.jodit.progress_bar.style.display = "block";
-                                    this.jodit.progress_bar.style.width = percentComplete + "%";
+                                        this.jodit.progress_bar.style.display =
+                                            'block';
+                                        this.jodit.progress_bar.style.width =
+                                            percentComplete + '%';
 
-                                    if (percentComplete === 100) {
-                                        this.jodit.progress_bar.style.display = "none";
+                                        if (percentComplete === 100) {
+                                            this.jodit.progress_bar.style.display =
+                                                'none';
+                                        }
                                     }
-                                }
-                            }, false);
+                                },
+                                false
+                            );
                         } else {
-                            this.jodit.progress_bar.style.display = "none";
+                            this.jodit.progress_bar.style.display = 'none';
                         }
 
                         return xhr;
                     },
-                    method: "POST",
+                    method: 'POST',
                     data: request,
                     url: this.options.url,
                     headers: this.options.headers,
                     queryBuild: this.options.queryBuild,
                     contentType: this.options.contentType.call(this, request),
-                    dataType: this.options.format  || "json",
+                    dataType: this.options.format || 'json',
                 });
 
-                return ajax.send()
+                return ajax
+                    .send()
                     .then(success)
                     .catch(error => {
                         this.options.error.call(this, error);
@@ -202,19 +239,22 @@ export class Uploader {
             };
 
         if (requestData instanceof Promise) {
-            return requestData
-                .then(sendData)
-                .catch(error => {
-                    this.options.error.call(this, error);
-                });
+            return requestData.then(sendData).catch(error => {
+                this.options.error.call(this, error);
+            });
         } else {
             return sendData(requestData);
         }
     }
 
-    public sendFiles(files: FileList | File[] | null, handlerSuccess?: HandlerSuccess, handlerError?: HandlerError, process?: Function): Promise<any> {
+    public sendFiles(
+        files: FileList | File[] | null,
+        handlerSuccess?: HandlerSuccess,
+        handlerError?: HandlerError,
+        process?: (form: FormData) => void
+    ): Promise<any> {
         if (!files) {
-            return Promise.reject(new Error("Need files"));
+            return Promise.reject(new Error('Need files'));
         }
 
         const uploader: Uploader = this;
@@ -222,7 +262,7 @@ export class Uploader {
         let fileList: File[] = [].slice.call(files);
 
         if (!fileList.length) {
-            return Promise.reject(new Error("Need files"));
+            return Promise.reject(new Error('Need files'));
         }
 
         const promises: Array<Promise<any>> = [];
@@ -232,27 +272,46 @@ export class Uploader {
             for (i = 0; i < fileList.length; i += 1) {
                 file = fileList[i];
                 if (file && file.type) {
-                    const mime: string[] = file.type.match(/\/([a-z0-9]+)/i) as string[];
-                    const extension: string = mime[1] ? mime[1].toLowerCase() : "";
-                    if (this.options.imagesExtensions.indexOf(extension) !== - 1) {
-                        const reader: FileReader  = new FileReader();
-                        promises.push(new Promise<any>((resolve, reject) => {
-                            reader.onerror = reject;
-                            reader.onloadend = function() {
-                                const resp: IUploaderData = {
-                                    baseurl: "",
-                                    files: [reader.result],
-                                    isImages: [true],
-                                } as IUploaderData;
+                    const mime: string[] = file.type.match(
+                        /\/([a-z0-9]+)/i
+                    ) as string[];
+                    const extension: string = mime[1]
+                        ? mime[1].toLowerCase()
+                        : '';
+                    if (
+                        this.options.imagesExtensions.indexOf(extension) !== -1
+                    ) {
+                        const reader: FileReader = new FileReader();
+                        promises.push(
+                            new Promise<any>((resolve, reject) => {
+                                reader.onerror = reject;
+                                reader.onloadend = () => {
+                                    const resp: IUploaderData = {
+                                        baseurl: '',
+                                        files: [reader.result],
+                                        isImages: [true],
+                                    } as IUploaderData;
 
-                                if (typeof (handlerSuccess || uploader.options.defaultHandlerSuccess) === "function") {
-                                    ((handlerSuccess || uploader.options.defaultHandlerSuccess) as HandlerSuccess).call(uploader, resp);
-                                }
+                                    if (
+                                        typeof (
+                                            handlerSuccess ||
+                                            uploader.options
+                                                .defaultHandlerSuccess
+                                        ) === 'function'
+                                    ) {
+                                        ((handlerSuccess ||
+                                            uploader.options
+                                                .defaultHandlerSuccess) as HandlerSuccess).call(
+                                            uploader,
+                                            resp
+                                        );
+                                    }
 
-                                resolve(resp);
-                            };
-                            reader.readAsDataURL(file);
-                        }));
+                                    resolve(resp);
+                                };
+                                reader.readAsDataURL(file);
+                            })
+                        );
                         (fileList[i] as any) = null;
                     }
                 }
@@ -264,16 +323,29 @@ export class Uploader {
         if (fileList.length) {
             const form: FormData = new FormData();
 
-            form.append("path", uploader.path);
-            form.append("source", uploader.source);
+            form.append('path', uploader.path);
+            form.append('source', uploader.source);
 
             let file: File;
             for (let i = 0; i < fileList.length; i += 1) {
                 file = fileList[i];
                 if (file && file.type) {
-                    const mime: string[] = file.type.match(/\/([a-z0-9]+)/i) as string[];
-                    const extension: string = mime[1] ? mime[1].toLowerCase() : "";
-                    form.append("files[" + i + "]", fileList[i], fileList[i].name || Math.random().toString().replace(".", "") + "." + extension);
+                    const mime: string[] = file.type.match(
+                        /\/([a-z0-9]+)/i
+                    ) as string[];
+                    const extension: string = mime[1]
+                        ? mime[1].toLowerCase()
+                        : '';
+                    form.append(
+                        'files[' + i + ']',
+                        fileList[i],
+                        fileList[i].name ||
+                            Math.random()
+                                .toString()
+                                .replace('.', '') +
+                                '.' +
+                                extension
+                    );
                 }
             }
 
@@ -289,22 +361,52 @@ export class Uploader {
 
             uploader.options.prepareData.call(this, form);
 
-            promises.push(uploader
-                .send(form, (resp: IUploaderAnswer) => {
-                    if (this.options.isSuccess.call(uploader, resp)) {
-                        if (typeof (handlerSuccess || uploader.options.defaultHandlerSuccess) === "function") {
-                            ((handlerSuccess || uploader.options.defaultHandlerSuccess) as HandlerSuccess).call(uploader, uploader.options.process.call(uploader, resp) as IUploaderData);
+            promises.push(
+                uploader
+                    .send(form, (resp: IUploaderAnswer) => {
+                        if (this.options.isSuccess.call(uploader, resp)) {
+                            if (
+                                typeof (
+                                    handlerSuccess ||
+                                    uploader.options.defaultHandlerSuccess
+                                ) === 'function'
+                            ) {
+                                ((handlerSuccess ||
+                                    uploader.options
+                                        .defaultHandlerSuccess) as HandlerSuccess).call(
+                                    uploader,
+                                    uploader.options.process.call(
+                                        uploader,
+                                        resp
+                                    ) as IUploaderData
+                                );
+                            }
+                        } else {
+                            if (
+                                typeof (
+                                    handlerError ||
+                                    uploader.options.defaultHandlerError
+                                )
+                            ) {
+                                ((handlerError ||
+                                    uploader.options
+                                        .defaultHandlerError) as HandlerError).call(
+                                    uploader,
+                                    new Error(
+                                        uploader.options.getMessage.call(
+                                            uploader,
+                                            resp
+                                        )
+                                    )
+                                );
+                                return;
+                            }
                         }
-                    } else {
-                        if (typeof (handlerError || uploader.options.defaultHandlerError)) {
-                            ((handlerError || uploader.options.defaultHandlerError) as HandlerError).call(uploader, new Error(uploader.options.getMessage.call(uploader, resp)));
-                            return;
-                        }
-                    }
-                })
-                .then(() => {
-                    this.jodit.events && this.jodit.events.fire("filesWereUploaded");
-                }),
+                    })
+                    .then(() => {
+                        this.jodit.events &&
+                            this.jodit.events.fire('filesWereUploaded');
+                    })
             );
         }
 
@@ -333,9 +435,12 @@ export class Uploader {
      * Set the handlers Drag and Drop toWYSIWYG `$form`
      *
      * @method bind
-     * @param {HTMLElement} form Form or any Node on which you can drag and drop the file. In addition will be processed <code>&lt;input type="file" &gt;</code>
-     * @param {function} [handlerSuccess] The function toWYSIWYG be called when a successful uploading files toWYSIWYG the server
-     * @param {function} [handlerError] The function that will be called during a failed download files toWYSIWYG a server
+     * @param {HTMLElement} form Form or any Node on which you can drag and drop the file. In addition will be processed
+     * <code>&lt;input type="file" &gt;</code>
+     * @param {function} [handlerSuccess] The function toWYSIWYG be called when a successful uploading files
+     * toWYSIWYG the server
+     * @param {function} [handlerError] The function that will be called during a failed download files
+     * toWYSIWYG a server
      * @example
      * ```javascript
      * var $form = jQuery('<form><input type="text" typpe="file"></form>');
@@ -349,60 +454,112 @@ export class Uploader {
      * ```
      */
 
-    public bind(form: HTMLElement, handlerSuccess?: HandlerSuccess, handlerError?: HandlerError) {
+    public bind(
+        form: HTMLElement,
+        handlerSuccess?: HandlerSuccess,
+        handlerError?: HandlerError
+    ) {
         const self: Uploader = this,
             onPaste = (e: ClipboardEvent): false | void => {
-                let i: number,
-                    file: File | null,
-                    extension: string,
-                    process = (formdata: FormData) => {
-                        if (file) {
-                            formdata.append("extension", extension);
-                            formdata.append("mimetype", file.type);
-                        }
-                    };
+                let i: number, file: File | null, extension: string;
+
+                const process = (formdata: FormData) => {
+                    if (file) {
+                        formdata.append('extension', extension);
+                        formdata.append('mimetype', file.type);
+                    }
+                };
 
                 // send data on server
-                if (e.clipboardData && e.clipboardData.files && e.clipboardData.files.length) {
-                    this.sendFiles(e.clipboardData.files, handlerSuccess, handlerError);
+                if (
+                    e.clipboardData &&
+                    e.clipboardData.files &&
+                    e.clipboardData.files.length
+                ) {
+                    this.sendFiles(
+                        e.clipboardData.files,
+                        handlerSuccess,
+                        handlerError
+                    );
                     return false;
                 }
 
-                if (browser("ff") || isIE()) {
-                    if (e.clipboardData && (!e.clipboardData.types.length && e.clipboardData.types[0] !== TEXT_PLAIN)) {
-                        const div: HTMLDivElement = dom('<div tabindex="-1" style="left: -9999px; top: 0; width: 0; height: 100%; line-height: 140%; overflow: hidden; position: fixed; z-index: 2147483647; word-break: break-all;" contenteditable="true"></div>', this.jodit.ownerDocument) as HTMLDivElement;
+                if (browser('ff') || isIE()) {
+                    if (
+                        e.clipboardData &&
+                        (!e.clipboardData.types.length &&
+                            e.clipboardData.types[0] !== TEXT_PLAIN)
+                    ) {
+                        const div: HTMLDivElement = dom(
+                            '<div ' +
+                                'tabindex="-1" ' +
+                                'style="' +
+                                'left: -9999px; top: 0; width: 0; height: 100%; ' +
+                                'line-height: 140%; overflow: hidden; position: fixed; ' +
+                                'z-index: 2147483647; word-break: break-all;' +
+                                '" ' +
+                                'contenteditable="true">' +
+                                '</div>',
+                            this.jodit.ownerDocument
+                        ) as HTMLDivElement;
                         this.jodit.ownerDocument.body.appendChild(div);
 
-                        const selection = (this.jodit && this.jodit instanceof Jodit) ? this.jodit.selection.save() : null,
-                            restore = () => selection && (this.jodit && this.jodit instanceof Jodit) && this.jodit.selection.restore(selection);
+                        const selection =
+                                this.jodit && this.jodit instanceof Jodit
+                                    ? this.jodit.selection.save()
+                                    : null,
+                            restore = () =>
+                                selection &&
+                                (this.jodit && this.jodit instanceof Jodit) &&
+                                this.jodit.selection.restore(selection);
 
                         div.focus();
 
                         setTimeout(() => {
-                            const child: HTMLDivElement|null = div.firstChild as HTMLDivElement;
+                            const child: HTMLDivElement | null = div.firstChild as HTMLDivElement;
                             if (div.parentNode) {
                                 div.parentNode.removeChild(div);
                             }
 
-                            if (child && child.hasAttribute("src")) {
-                                const src: string = child.getAttribute("src") || "";
+                            if (child && child.hasAttribute('src')) {
+                                const src: string =
+                                    child.getAttribute('src') || '';
                                 restore();
-                                self
-                                    .sendFiles([Uploader.dataURItoBlob(src) as File], handlerSuccess, handlerError);
+                                self.sendFiles(
+                                    [Uploader.dataURItoBlob(src) as File],
+                                    handlerSuccess,
+                                    handlerError
+                                );
                             }
                         }, 200);
                     }
                     return;
                 }
 
-                if (e.clipboardData && e.clipboardData.items && e.clipboardData.items.length) {
+                if (
+                    e.clipboardData &&
+                    e.clipboardData.items &&
+                    e.clipboardData.items.length
+                ) {
                     for (i = 0; i < e.clipboardData.items.length; i += 1) {
-                        if (e.clipboardData.items[i].kind === "file" && e.clipboardData.items[i].type === "image/png") {
+                        if (
+                            e.clipboardData.items[i].kind === 'file' &&
+                            e.clipboardData.items[i].type === 'image/png'
+                        ) {
                             file = e.clipboardData.items[i].getAsFile();
                             if (file) {
-                                const mime: string[] = file.type.match(/\/([a-z0-9]+)/i) as string[];
-                                extension = mime[1] ? mime[1].toLowerCase() : "";
-                                this.sendFiles([file], handlerSuccess, handlerError, process);
+                                const mime: string[] = file.type.match(
+                                    /\/([a-z0-9]+)/i
+                                ) as string[];
+                                extension = mime[1]
+                                    ? mime[1].toLowerCase()
+                                    : '';
+                                this.sendFiles(
+                                    [file],
+                                    handlerSuccess,
+                                    handlerError,
+                                    process
+                                );
                             }
                             e.preventDefault();
                             break;
@@ -412,56 +569,81 @@ export class Uploader {
             };
 
         if (this.jodit && this.jodit.editor !== form) {
-            self.jodit.events
-                .on(form, "paste",  onPaste);
+            self.jodit.events.on(form, 'paste', onPaste);
         } else {
-            self.jodit.events
-                .on("beforePaste",  onPaste);
+            self.jodit.events.on('beforePaste', onPaste);
         }
 
-        const hasFiles = (event: DragEvent): boolean => Boolean(event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files.length !== 0);
+        const hasFiles = (event: DragEvent): boolean =>
+            Boolean(
+                event.dataTransfer &&
+                    event.dataTransfer.files &&
+                    event.dataTransfer.files.length !== 0
+            );
 
         self.jodit.events
-            .on(form, "dragend dragover dragenter dragleave drop", (e: DragEvent) => {
-                e.preventDefault();
-            })
-            .on(form, "dragover", (event: DragEvent) => {
+            .on(
+                form,
+                'dragend dragover dragenter dragleave drop',
+                (e: DragEvent) => {
+                    e.preventDefault();
+                }
+            )
+            .on(form, 'dragover', (event: DragEvent) => {
                 if (hasFiles(event)) {
-                    form.classList.contains("jodit_draghover") ||
-                    form.classList.add("jodit_draghover");
+                    form.classList.contains('jodit_draghover') ||
+                        form.classList.add('jodit_draghover');
                     event.preventDefault();
                 }
             })
-            .on(form, "dragend", (event: DragEvent) => {
+            .on(form, 'dragend', (event: DragEvent) => {
                 if (hasFiles(event)) {
-                    form.classList.contains("jodit_draghover") && form.classList.remove("jodit_draghover");
+                    form.classList.contains('jodit_draghover') &&
+                        form.classList.remove('jodit_draghover');
                     event.preventDefault();
                 }
             })
-            .on(form, "drop", (event: DragEvent): false | void => {
-                form.classList.remove("jodit_draghover");
-                if (hasFiles(event) && event.dataTransfer && event.dataTransfer.files) {
-                    event.preventDefault();
-                    event.stopImmediatePropagation();
-                    this.sendFiles(event.dataTransfer.files, handlerSuccess, handlerError);
+            .on(
+                form,
+                'drop',
+                (event: DragEvent): false | void => {
+                    form.classList.remove('jodit_draghover');
+                    if (
+                        hasFiles(event) &&
+                        event.dataTransfer &&
+                        event.dataTransfer.files
+                    ) {
+                        event.preventDefault();
+                        event.stopImmediatePropagation();
+                        this.sendFiles(
+                            event.dataTransfer.files,
+                            handlerSuccess,
+                            handlerError
+                        );
+                    }
                 }
-            });
+            );
 
-        const inputFile: HTMLInputElement | null = form.querySelector("input[type=file]");
+        const inputFile: HTMLInputElement | null = form.querySelector(
+            'input[type=file]'
+        );
 
         if (inputFile) {
-            self.jodit.events.on(inputFile, "change", function(this: HTMLInputElement) {
-                self.sendFiles(this.files, handlerSuccess, handlerError).then(() => {
-                    inputFile.value = "";
+            self.jodit.events.on(inputFile, 'change', function(
+                this: HTMLInputElement
+            ) {
+                self.sendFiles(this.files, handlerSuccess, handlerError).then(
+                    () => {
+                        inputFile.value = '';
 
-                    if (!/safari/i.test(navigator.userAgent)) {
-                        inputFile.type = "";
-                        inputFile.type = "file";
+                        if (!/safari/i.test(navigator.userAgent)) {
+                            inputFile.type = '';
+                            inputFile.type = 'file';
+                        }
                     }
-                });
+                );
             });
         }
-
     }
 
     /**
@@ -471,43 +653,70 @@ export class Uploader {
      * @param {HandlerSuccess} [handlerSuccess]
      * @param {HandlerError} [handlerError]
      */
-    public uploadRemoteImage(url: string, handlerSuccess?: HandlerSuccess, handlerError?: HandlerError) {
+    public uploadRemoteImage(
+        url: string,
+        handlerSuccess?: HandlerSuccess,
+        handlerError?: HandlerError
+    ) {
         const uploader = this;
-        uploader.send({
-            action: "fileUploadRemote",
-            url,
-        }, (resp: IUploaderAnswer) => {
-            if (uploader.options.isSuccess.call(uploader, resp)) {
-                if (typeof handlerSuccess === "function") {
-                    handlerSuccess.call(uploader, this.options.process.call(this, resp));
+        uploader.send(
+            {
+                action: 'fileUploadRemote',
+                url,
+            },
+            (resp: IUploaderAnswer) => {
+                if (uploader.options.isSuccess.call(uploader, resp)) {
+                    if (typeof handlerSuccess === 'function') {
+                        handlerSuccess.call(
+                            uploader,
+                            this.options.process.call(this, resp)
+                        );
+                    } else {
+                        this.options.defaultHandlerSuccess.call(
+                            uploader,
+                            this.options.process.call(this, resp)
+                        );
+                    }
                 } else {
-                    this.options.defaultHandlerSuccess.call(uploader, this.options.process.call(this, resp));
-                }
-            } else {
-                if (typeof (handlerError || uploader.options.defaultHandlerError) === "function") {
-                    (handlerError || this.options.defaultHandlerError).call(uploader, new Error(uploader.options.getMessage.call(this, resp)));
-                    return;
+                    if (
+                        typeof (
+                            handlerError || uploader.options.defaultHandlerError
+                        ) === 'function'
+                    ) {
+                        (handlerError || this.options.defaultHandlerError).call(
+                            uploader,
+                            new Error(
+                                uploader.options.getMessage.call(this, resp)
+                            )
+                        );
+                        return;
+                    }
                 }
             }
-        });
+        );
     }
 
     constructor(editor: IViewBased, options?: IUploaderOptions) {
         this.jodit = editor;
-        this.selection = editor instanceof Jodit ? editor.selection : new Select(editor);
+        this.selection =
+            editor instanceof Jodit ? editor.selection : new Select(editor);
 
         this.options = extend(
             true,
             {},
             Config.prototype.uploader,
             editor instanceof Jodit ? editor.options.uploader : null,
-            options,
+            options
         ) as IUploaderOptions;
 
-        if (editor instanceof Jodit && editor.options.enableDragAndDropFileToEditor && editor.options.uploader && (
-            editor.options.uploader.url || editor.options.uploader.insertImageAsBase64URI
-        )) {
-            editor.events.on("afterInit", () => {
+        if (
+            editor instanceof Jodit &&
+            editor.options.enableDragAndDropFileToEditor &&
+            editor.options.uploader &&
+            (editor.options.uploader.url ||
+                editor.options.uploader.insertImageAsBase64URI)
+        ) {
+            editor.events.on('afterInit', () => {
                 this.bind(editor.editor);
             });
         }

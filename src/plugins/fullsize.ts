@@ -4,14 +4,14 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Config } from "../Config";
-import * as consts from "../constants";
-import { Jodit } from "../Jodit";
-import { css } from "../modules/Helpers";
-import { ToolbarButton } from "../modules/toolbar/button";
-import { ToolbarIcon } from "../modules/toolbar/icon";
-import { IControlType } from "../types/toolbar";
-import { IViewBased } from "../types/view";
+import { Config } from '../Config';
+import * as consts from '../constants';
+import { Jodit } from '../Jodit';
+import { css } from '../modules/Helpers';
+import { ToolbarButton } from '../modules/toolbar/button';
+import { ToolbarIcon } from '../modules/toolbar/icon';
+import { IControlType } from '../types/toolbar';
+import { IViewBased } from '../types/view';
 
 /**
  * Fullsize plugin
@@ -21,7 +21,8 @@ import { IViewBased } from "../types/view";
 
 /**
  * @property{boolean} fullsize=false true Editor toWYSIWYG open toWYSIWYG full screen
- * @property{boolean} globalFullsize=true if true, after `fullsize` -  all editors element get jodit_fullsize_box class (z-index: 100000 !important;)
+ * @property{boolean} globalFullsize=true if true, after `fullsize` -  all editors element
+ * get jodit_fullsize_box class (z-index: 100000 !important;)
  * @example
  * ```javascript
  * var editor = new jodit({
@@ -37,7 +38,7 @@ import { IViewBased } from "../types/view";
  * ```
  */
 
-declare module "../Config" {
+declare module '../Config' {
     interface Config {
         fullsize: boolean;
         globalFullsize: boolean;
@@ -52,13 +53,15 @@ Config.prototype.controls.fullsize = {
     },
     isActive: (editor: Jodit) => editor.isFullSize(),
     getLabel: (editor: Jodit, btn: IControlType, button: ToolbarButton) => {
-        const mode: string = editor.isFullSize() ? "shrink" : "fullsize";
+        const mode: string = editor.isFullSize() ? 'shrink' : 'fullsize';
 
-        button.textBox.innerHTML = !editor.options.textIcons ? ToolbarIcon.getIcon(mode) : `<span>${editor.i18n(mode)}</span>`;
+        button.textBox.innerHTML = !editor.options.textIcons
+            ? ToolbarIcon.getIcon(mode)
+            : `<span>${editor.i18n(mode)}</span>`;
 
-        (button.textBox.firstChild as HTMLElement).classList.add("jodit_icon");
+        (button.textBox.firstChild as HTMLElement).classList.add('jodit_icon');
     },
-    tooltip: "Open editor in fullsize",
+    tooltip: 'Open editor in fullsize',
     mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG,
 } as IControlType;
 
@@ -67,18 +70,16 @@ Config.prototype.controls.fullsize = {
  *
  * @param {Jodit} editor
  */
-export  function fullsize(editor: IViewBased) {
-    let
-        shown: boolean = false,
+export function fullsize(editor: IViewBased) {
+    let shown: boolean = false,
         oldHeight: number = 0,
         oldWidth: number = 0,
         wasToggled = false;
-    const
-        resize  = () => {
+    const resize = () => {
             if (editor.events) {
                 if (shown) {
-                    oldHeight = css(editor.container, "height") as number;
-                    oldWidth = css(editor.container, "width") as number;
+                    oldHeight = css(editor.container, 'height') as number;
+                    oldWidth = css(editor.container, 'width') as number;
                     css(editor.container, {
                         height: editor.ownerWindow.innerHeight,
                         width: editor.ownerWindow.innerWidth,
@@ -86,8 +87,8 @@ export  function fullsize(editor: IViewBased) {
                     wasToggled = true;
                 } else if (wasToggled) {
                     css(editor.container, {
-                        height: oldHeight || "auto",
-                        width: oldWidth || "auto",
+                        height: oldHeight || 'auto',
+                        width: oldWidth || 'auto',
                     });
                 }
             }
@@ -98,41 +99,43 @@ export  function fullsize(editor: IViewBased) {
             }
 
             if (condition === undefined) {
-                condition = !editor.container.classList.contains("jodit_fullsize");
+                condition = !editor.container.classList.contains(
+                    'jodit_fullsize'
+                );
             }
 
             editor.options.fullsize = !!condition;
 
             shown = condition;
 
-            editor.container.classList.toggle("jodit_fullsize", condition);
+            editor.container.classList.toggle('jodit_fullsize', condition);
 
             if (editor.toolbar) {
-                css(editor.toolbar.container, "width", "auto");
+                css(editor.toolbar.container, 'width', 'auto');
             }
 
             if (editor.options.globalFullsize) {
                 let node = editor.container.parentNode as HTMLElement;
                 while (node && !(node instanceof Document)) {
-                    node.classList.toggle("jodit_fullsize_box", condition);
+                    node.classList.toggle('jodit_fullsize_box', condition);
                     node = node.parentNode as HTMLElement;
                 }
                 resize();
             }
 
-            editor.events.fire("afterResize");
+            editor.events.fire('afterResize');
         };
 
     if (editor.options.globalFullsize) {
-        editor.events.on(editor.ownerWindow, "resize", resize);
+        editor.events.on(editor.ownerWindow, 'resize', resize);
     }
 
     editor.events
-        .on("afterInit afterOpen", () => {
+        .on('afterInit afterOpen', () => {
             editor.toggleFullSize(editor.options.fullsize);
         })
-        .on("toggleFullSize", toggle)
-        .on("beforeDestruct beforeClose", () => {
+        .on('toggleFullSize', toggle)
+        .on('beforeDestruct beforeClose', () => {
             toggle(false);
         });
 }

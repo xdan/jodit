@@ -4,16 +4,16 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Config } from "../Config";
-import * as consts from "../constants";
-import { MODE_SOURCE } from "../constants";
-import { Jodit } from "../Jodit";
-import { Component } from "../modules/Component";
-import { $$, appendScript, css, debounce, dom } from "../modules/Helpers";
-import { markerInfo } from "../modules/Selection";
-import { IControlType } from "../types/toolbar";
+import { Config } from '../Config';
+import * as consts from '../constants';
+import { MODE_SOURCE } from '../constants';
+import { Jodit } from '../Jodit';
+import { Component } from '../modules/Component';
+import { $$, appendScript, css, debounce, dom } from '../modules/Helpers';
+import { markerInfo } from '../modules/Selection';
+import { IControlType } from '../types/toolbar';
 
-declare module "../Config"  {
+declare module '../Config' {
     interface Config {
         /**
          * Use ACE editor instead of usual textarea
@@ -27,7 +27,7 @@ declare module "../Config"  {
             showGutter: boolean;
             theme: string;
             mode: string;
-            wrap: string|boolean|number,
+            wrap: string | boolean | number;
             highlightActiveLine: boolean;
         };
         /**
@@ -58,12 +58,12 @@ Config.prototype.sourceEditorNativeOptions = {
     /**
      * Default theme
      */
-    theme: "ace/theme/idle_fingers",
+    theme: 'ace/theme/idle_fingers',
 
     /**
      * Default mode
      */
-    mode: "ace/mode/html",
+    mode: 'ace/mode/html',
 
     /**
      * Wrap lines. Possible values - "off", 80-100..., true, "free"
@@ -77,12 +77,12 @@ Config.prototype.sourceEditorNativeOptions = {
 };
 
 Config.prototype.sourceEditorCDNUrlsJS = [
-    "https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.3/ace.js",
+    'https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.3/ace.js',
 ];
 
 Config.prototype.beautifyHTMLCDNUrlsJS = [
-    "https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.7.5/beautify.min.js",
-    "https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.7.5/beautify-html.min.js",
+    'https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.7.5/beautify.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.7.5/beautify-html.min.js',
 ];
 
 Config.prototype.controls.source = {
@@ -96,7 +96,7 @@ Config.prototype.controls.source = {
         return editor.getRealMode() === consts.MODE_SOURCE;
     },
 
-    tooltip: "Change mode",
+    tooltip: 'Change mode',
 } as IControlType;
 
 /**
@@ -105,52 +105,69 @@ Config.prototype.controls.source = {
  * @module source
  */
 export class source extends Component {
-    private className = "jodit_ace_editor";
+    private className = 'jodit_ace_editor';
 
     private mirrorContainer: HTMLDivElement;
 
     private __lock = false;
-    private __oldMirrorValue = "";
+    private __oldMirrorValue = '';
 
     private autosize = debounce(() => {
-        this.mirror.style.height = "auto";
-        this.mirror.style.height = this.mirror.scrollHeight + "px";
+        this.mirror.style.height = 'auto';
+        this.mirror.style.height = this.mirror.scrollHeight + 'px';
     }, this.jodit.defaultTimeout);
 
-    private tempMarkerStart = "{start-jodit-selection}";
+    private tempMarkerStart = '{start-jodit-selection}';
     private tempMarkerStartReg = /{start-jodit-selection}/g;
-    private tempMarkerEnd = "{end-jodit-selection}";
+    private tempMarkerEnd = '{end-jodit-selection}';
     private tempMarkerEndReg = /{end-jodit-selection}/g;
 
     private selInfo: markerInfo[] = [];
 
-    private loadNext = (i: number, urls: string[], eventOnFinalize: false | string = "aceReady", className: string = this.className) => {
-        if (eventOnFinalize && urls[i] === undefined && this.jodit && this.jodit.events) {
+    private loadNext = (
+        i: number,
+        urls: string[],
+        eventOnFinalize: false | string = 'aceReady',
+        className: string = this.className
+    ) => {
+        if (
+            eventOnFinalize &&
+            urls[i] === undefined &&
+            this.jodit &&
+            this.jodit.events
+        ) {
             this.jodit.events && this.jodit.events.fire(eventOnFinalize);
-            this.jodit.events && this.jodit.events.fire(this.jodit.ownerWindow, eventOnFinalize);
+            this.jodit.events &&
+                this.jodit.events.fire(this.jodit.ownerWindow, eventOnFinalize);
             return;
         }
         if (urls[i] !== undefined) {
-            appendScript(urls[i], () => {
-                this.loadNext(i + 1, urls, eventOnFinalize, className);
-            }, className, this.jodit.ownerDocument);
+            appendScript(
+                urls[i],
+                () => {
+                    this.loadNext(i + 1, urls, eventOnFinalize, className);
+                },
+                className,
+                this.jodit.ownerDocument
+            );
         }
-    }
+    };
 
     private insertHTML = (html: string) => {
         if (this.mirror.selectionStart || this.mirror.selectionStart === 0) {
             const startPos: number = this.mirror.selectionStart,
                 endPos: number = this.mirror.selectionEnd;
 
-            this.mirror.value = this.mirror.value.substring(0, startPos)
-                + html
-                + this.mirror.value.substring(endPos, this.mirror.value.length);
+            this.mirror.value =
+                this.mirror.value.substring(0, startPos) +
+                html +
+                this.mirror.value.substring(endPos, this.mirror.value.length);
         } else {
             this.mirror.value += this.mirror;
         }
 
         this.toWYSIWYG();
-    }
+    };
 
     private fromWYSIWYG = (force: boolean | string = false) => {
         if (!this.__lock || force === true) {
@@ -161,7 +178,7 @@ export class source extends Component {
             }
             this.__lock = false;
         }
-    }
+    };
     private toWYSIWYG = () => {
         if (this.__lock) {
             return;
@@ -177,8 +194,7 @@ export class source extends Component {
         this.jodit.setEditorValue(value);
         this.__lock = false;
         this.__oldMirrorValue = value;
-
-    }
+    };
 
     private getNormalPosition = (pos: number, str: string): number => {
         let start: number = pos;
@@ -186,36 +202,43 @@ export class source extends Component {
         while (start > 0) {
             start--;
 
-            if (str[start] === "<" && str[start + 1] !== undefined && str[start + 1].match(/[\w\/]+/i)) {
+            if (
+                str[start] === '<' &&
+                str[start + 1] !== undefined &&
+                str[start + 1].match(/[\w\/]+/i)
+            ) {
                 return start;
             }
-            if (str[start] === ">") {
+            if (str[start] === '>') {
                 return pos;
             }
-
         }
 
         return pos;
-    }
+    };
 
-    private __clear = (str: string): string => str.replace(consts.INVISIBLE_SPACE_REG_EXP, "");
+    private __clear = (str: string): string =>
+        str.replace(consts.INVISIBLE_SPACE_REG_EXP, '');
     private selectAll = () => {
         this.mirror.select();
-    }
+    };
     private onSelectAll = (command: string): void | false => {
-        if (command.toLowerCase() === "selectall" && this.jodit.getRealMode() === MODE_SOURCE) {
-           this.selectAll();
-           return false;
+        if (
+            command.toLowerCase() === 'selectall' &&
+            this.jodit.getRealMode() === MODE_SOURCE
+        ) {
+            this.selectAll();
+            return false;
         }
-    }
+    };
 
     // override it for ace editors
     private getSelectionStart: () => number = (): number => {
         return this.mirror.selectionStart;
-    }
+    };
     private getSelectionEnd: () => number = (): number => {
         return this.mirror.selectionEnd;
-    }
+    };
     private getMirrorValue(): string {
         return this.mirror.value;
     }
@@ -235,17 +258,30 @@ export class source extends Component {
             this.selInfo.length = 0;
             const value: string = this.getMirrorValue();
             if (this.getSelectionStart() === this.getSelectionEnd()) {
-                const marker: HTMLSpanElement = this.jodit.selection.marker(true);
+                const marker: HTMLSpanElement = this.jodit.selection.marker(
+                    true
+                );
                 this.selInfo[0] = {
                     startId: marker.id,
                     collapsed: true,
                     startMarker: marker.outerHTML,
                 };
-                const selectionStart = this.getNormalPosition(this.getSelectionStart(), this.getMirrorValue());
-                this.setMirrorValue(value.substr(0, selectionStart) + this.__clear(this.selInfo[0].startMarker) + value.substr(selectionStart));
+                const selectionStart = this.getNormalPosition(
+                    this.getSelectionStart(),
+                    this.getMirrorValue()
+                );
+                this.setMirrorValue(
+                    value.substr(0, selectionStart) +
+                        this.__clear(this.selInfo[0].startMarker) +
+                        value.substr(selectionStart)
+                );
             } else {
-                const markerStart: HTMLSpanElement = this.jodit.selection.marker(true);
-                const markerEnd: HTMLSpanElement = this.jodit.selection.marker(false);
+                const markerStart: HTMLSpanElement = this.jodit.selection.marker(
+                    true
+                );
+                const markerEnd: HTMLSpanElement = this.jodit.selection.marker(
+                    false
+                );
 
                 this.selInfo[0] = {
                     startId: markerStart.id,
@@ -255,20 +291,29 @@ export class source extends Component {
                     endMarker: this.__clear(markerEnd.outerHTML),
                 };
 
-                const selectionStart = this.getNormalPosition(this.getSelectionStart(), value);
-                const selectionEnd = this.getNormalPosition(this.getSelectionEnd(), value);
+                const selectionStart = this.getNormalPosition(
+                    this.getSelectionStart(),
+                    value
+                );
+                const selectionEnd = this.getNormalPosition(
+                    this.getSelectionEnd(),
+                    value
+                );
 
                 this.setMirrorValue(
                     value.substr(0, selectionStart) +
-                    this.selInfo[0].startMarker +
-                    value.substr(selectionStart, selectionEnd - selectionStart) +
-                    this.selInfo[0].endMarker +
-                    value.substr(selectionEnd),
+                        this.selInfo[0].startMarker +
+                        value.substr(
+                            selectionStart,
+                            selectionEnd - selectionStart
+                        ) +
+                        this.selInfo[0].endMarker +
+                        value.substr(selectionEnd)
                 );
             }
             this.toWYSIWYG();
         }
-    }
+    };
     private restoreSelection = () => {
         if (!this.selInfo.length) {
             return;
@@ -282,26 +327,34 @@ export class source extends Component {
         }
 
         let value: string = this.getMirrorValue();
-        let  selectionStart: number = 0,
-            selectionEnd: number  = 0;
+        let selectionStart: number = 0,
+            selectionEnd: number = 0;
         try {
-
             if (this.selInfo[0].startMarker) {
-                value = value.replace(/<span[^>]+data-jodit_selection_marker="start"[^>]*>[<>]*?<\/span>/gmi, this.tempMarkerStart);
+                value = value.replace(
+                    /<span[^>]+data-jodit_selection_marker="start"[^>]*>[<>]*?<\/span>/gim,
+                    this.tempMarkerStart
+                );
             }
 
             if (this.selInfo[0].endMarker) {
-                value = value.replace(/<span[^>]+data-jodit_selection_marker="end"[^>]*>[<>]*?<\/span>/gmi, this.tempMarkerEnd);
+                value = value.replace(
+                    /<span[^>]+data-jodit_selection_marker="end"[^>]*>[<>]*?<\/span>/gim,
+                    this.tempMarkerEnd
+                );
             }
 
-            if ((this.jodit.ownerWindow as any).html_beautify && this.jodit.options.beautifyHTML) {
+            if (
+                (this.jodit.ownerWindow as any).html_beautify &&
+                this.jodit.options.beautifyHTML
+            ) {
                 value = (this.jodit.ownerWindow as any).html_beautify(value);
             }
 
             selectionStart = value.indexOf(this.tempMarkerStart);
-            selectionEnd  = selectionStart;
+            selectionEnd = selectionStart;
 
-            value = value.replace(this.tempMarkerStartReg, "");
+            value = value.replace(this.tempMarkerStartReg, '');
 
             if (!this.selInfo[0].collapsed || selectionStart === -1) {
                 selectionEnd = value.indexOf(this.tempMarkerEnd);
@@ -310,36 +363,33 @@ export class source extends Component {
                 }
             }
 
-            value = value.replace(this.tempMarkerEndReg, "");
+            value = value.replace(this.tempMarkerEndReg, '');
         } finally {
             value = value
-                .replace(this.tempMarkerEndReg, "")
-                .replace(this.tempMarkerStartReg, "");
+                .replace(this.tempMarkerEndReg, '')
+                .replace(this.tempMarkerStartReg, '');
         }
 
         this.setMirrorValue(value);
 
-        this.setMirrorSelectionRange(
-            selectionStart,
-            selectionEnd,
-        );
+        this.setMirrorSelectionRange(selectionStart, selectionEnd);
 
         this.toWYSIWYG();
 
         this.setFocusToMirror(); // need for setting focus after change mode
-    }
+    };
 
     private replaceMirrorToACE() {
-        const
-            editor: Jodit = this.jodit;
-        let
-            aceEditor: AceAjax.Editor,
-            undoManager: AceAjax.UndoManager;
+        const editor: Jodit = this.jodit;
+        let aceEditor: AceAjax.Editor, undoManager: AceAjax.UndoManager;
 
         const updateButtons = () => {
-                if (undoManager && editor.getRealMode() === consts.MODE_SOURCE) {
-                    editor.events.fire("canRedo", undoManager.hasRedo());
-                    editor.events.fire("canUndo", undoManager.hasUndo());
+                if (
+                    undoManager &&
+                    editor.getRealMode() === consts.MODE_SOURCE
+                ) {
+                    editor.events.fire('canRedo', undoManager.hasRedo());
+                    editor.events.fire('canUndo', undoManager.hasUndo());
                 }
             },
             getLastColumnIndex = (row: number): number => {
@@ -358,10 +408,12 @@ export class source extends Component {
                 }
                 return lastColumnIndices;
             },
-            getRowColumnIndices = (characterIndex: number): {row: number, column: number} => {
+            getRowColumnIndices = (
+                characterIndex: number
+            ): { row: number; column: number } => {
                 const lastColumnIndices: number[] = getLastColumnIndices();
                 if (characterIndex <= lastColumnIndices[0]) {
-                    return {row: 0, column: characterIndex};
+                    return { row: 0, column: characterIndex };
                 }
                 let row: number = 1;
                 for (let i = 1; i < lastColumnIndices.length; i++) {
@@ -369,8 +421,9 @@ export class source extends Component {
                         row = i + 1;
                     }
                 }
-                const column: number = characterIndex - lastColumnIndices[row - 1] - 1;
-                return {row, column};
+                const column: number =
+                    characterIndex - lastColumnIndices[row - 1] - 1;
+                return { row, column };
             },
             setSelectionRangeIndices = (start: number, end: number) => {
                 const startRowColumn = getRowColumnIndices(start);
@@ -382,22 +435,48 @@ export class source extends Component {
             },
             getIndexByRowColumn = (row: number, column: number): number => {
                 const lastColumnIndices: number[] = getLastColumnIndices();
-                return lastColumnIndices[row] - getLastColumnIndex(row) + column;
+                return (
+                    lastColumnIndices[row] - getLastColumnIndex(row) + column
+                );
             },
             tryInitAceEditor = () => {
-                if (aceEditor === undefined && (this.jodit.ownerWindow as any).ace !== undefined) {
-                    const fakeMirror = dom('<div class="jodit_source_mirror-fake"/>', this.jodit.ownerDocument);
-                    this.mirrorContainer.insertBefore(fakeMirror, this.mirrorContainer.firstChild);
+                if (
+                    aceEditor === undefined &&
+                    (this.jodit.ownerWindow as any).ace !== undefined
+                ) {
+                    const fakeMirror = dom(
+                        '<div class="jodit_source_mirror-fake"/>',
+                        this.jodit.ownerDocument
+                    );
+                    this.mirrorContainer.insertBefore(
+                        fakeMirror,
+                        this.mirrorContainer.firstChild
+                    );
 
-                    this.aceEditor = aceEditor = ((this.jodit.ownerWindow as any).ace as AceAjax.Ace).edit(fakeMirror);
+                    this.aceEditor = aceEditor = ((this.jodit
+                        .ownerWindow as any).ace as AceAjax.Ace).edit(
+                        fakeMirror
+                    );
 
-                    aceEditor.setTheme(editor.options.sourceEditorNativeOptions.theme);
-                    aceEditor.renderer.setShowGutter(editor.options.sourceEditorNativeOptions.showGutter);
-                    aceEditor.getSession().setMode(editor.options.sourceEditorNativeOptions.mode);
-                    aceEditor.setHighlightActiveLine(editor.options.sourceEditorNativeOptions.highlightActiveLine);
+                    aceEditor.setTheme(
+                        editor.options.sourceEditorNativeOptions.theme
+                    );
+                    aceEditor.renderer.setShowGutter(
+                        editor.options.sourceEditorNativeOptions.showGutter
+                    );
+                    aceEditor
+                        .getSession()
+                        .setMode(editor.options.sourceEditorNativeOptions.mode);
+                    aceEditor.setHighlightActiveLine(
+                        editor.options.sourceEditorNativeOptions
+                            .highlightActiveLine
+                    );
                     aceEditor.getSession().setUseWrapMode(true);
-                    aceEditor.setOption("indentedSoftWrap", false);
-                    aceEditor.setOption("wrap", editor.options.sourceEditorNativeOptions.wrap);
+                    aceEditor.setOption('indentedSoftWrap', false);
+                    aceEditor.setOption(
+                        'wrap',
+                        editor.options.sourceEditorNativeOptions.wrap
+                    );
                     aceEditor.getSession().setUseWorker(false);
                     aceEditor.$blockScrolling = Infinity;
 
@@ -408,21 +487,26 @@ export class source extends Component {
                         maxLines: Infinity,
                     });
 
-                    aceEditor.on("change", this.toWYSIWYG);
-                    aceEditor.on("focus", (e: MouseEvent) => {
-                        editor.events.fire("focus", e);
+                    aceEditor.on('change', this.toWYSIWYG);
+                    aceEditor.on('focus', (e: MouseEvent) => {
+                        editor.events.fire('focus', e);
                     });
-                    aceEditor.on("mousedown", (e: MouseEvent) => {
-                        editor.events.fire("mousedown", e);
+                    aceEditor.on('mousedown', (e: MouseEvent) => {
+                        editor.events.fire('mousedown', e);
                     });
 
-                    this.mirror.style.display = "none";
+                    this.mirror.style.display = 'none';
 
                     undoManager = aceEditor.getSession().getUndoManager();
 
                     this.setMirrorValue = (value: string) => {
-                        if (editor.options.beautifyHTML && (editor.ownerWindow as any).html_beautify) {
-                            aceEditor.setValue((editor.ownerWindow as any).html_beautify(value));
+                        if (
+                            editor.options.beautifyHTML &&
+                            (editor.ownerWindow as any).html_beautify
+                        ) {
+                            aceEditor.setValue(
+                                (editor.ownerWindow as any).html_beautify(value)
+                            );
                         } else {
                             aceEditor.setValue(value);
                         }
@@ -445,12 +529,18 @@ export class source extends Component {
 
                     this.getSelectionStart = (): number => {
                         const range: AceAjax.Range = aceEditor.selection.getRange();
-                        return getIndexByRowColumn(range.start.row, range.start.column);
+                        return getIndexByRowColumn(
+                            range.start.row,
+                            range.start.column
+                        );
                     };
 
                     this.getSelectionEnd = (): number => {
                         const range: AceAjax.Range = aceEditor.selection.getRange();
-                        return getIndexByRowColumn(range.end.row, range.end.column);
+                        return getIndexByRowColumn(
+                            range.end.row,
+                            range.end.column
+                        );
                     };
 
                     this.selectAll = () => {
@@ -458,132 +548,200 @@ export class source extends Component {
                     };
                     this.insertHTML = (html: string) => {
                         const start: AceAjax.Position = aceEditor.selection.getCursor(),
-                            end: AceAjax.Position = aceEditor.session.insert(start, html);
+                            end: AceAjax.Position = aceEditor.session.insert(
+                                start,
+                                html
+                            );
 
-                        aceEditor.selection.setRange({
-                            start, end,
-                        } as AceAjax.Range, false);
+                        aceEditor.selection.setRange(
+                            {
+                                start,
+                                end,
+                            } as AceAjax.Range,
+                            false
+                        );
                     };
 
-                    this.setMirrorSelectionRange = (start: number, end: number) => {
+                    this.setMirrorSelectionRange = (
+                        start: number,
+                        end: number
+                    ) => {
                         setSelectionRangeIndices(start, end);
                     };
 
                     editor.events
-                        .on("afterResize", () => {
+                        .on('afterResize', () => {
                             aceEditor.resize();
                         })
-                        .fire("aceInited", editor);
+                        .fire('aceInited', editor);
                 }
             };
 
         editor.events
-            .on(this.jodit.ownerWindow, "aceReady", tryInitAceEditor) // work in global scope
-            .on("aceReady", tryInitAceEditor) // work in local scope
-            .on("afterSetMode", () => {
-                if (editor.getRealMode() !== consts.MODE_SOURCE && editor.getMode() !== consts.MODE_SPLIT) {
+            .on(this.jodit.ownerWindow, 'aceReady', tryInitAceEditor) // work in global scope
+            .on('aceReady', tryInitAceEditor) // work in local scope
+            .on('afterSetMode', () => {
+                if (
+                    editor.getRealMode() !== consts.MODE_SOURCE &&
+                    editor.getMode() !== consts.MODE_SPLIT
+                ) {
                     return;
                 }
 
                 this.fromWYSIWYG();
                 tryInitAceEditor();
             })
-            .on("beforeCommand", (command: string): false | void => {
-                if (editor.getRealMode() !== consts.MODE_WYSIWYG && (command === "redo" || command === "undo") && undoManager) {
-                    if ((undoManager as any)["has" + command.substr(0, 1).toUpperCase() + command.substr(1)]) {
-                        aceEditor[command]();
+            .on(
+                'beforeCommand',
+                (command: string): false | void => {
+                    if (
+                        editor.getRealMode() !== consts.MODE_WYSIWYG &&
+                        (command === 'redo' || command === 'undo') &&
+                        undoManager
+                    ) {
+                        if (
+                            (undoManager as any)[
+                                'has' +
+                                    command.substr(0, 1).toUpperCase() +
+                                    command.substr(1)
+                            ]
+                        ) {
+                            aceEditor[command]();
+                        }
+                        updateButtons();
+                        return false;
                     }
-                    updateButtons();
-                    return false;
                 }
-            });
+            );
 
         tryInitAceEditor();
 
         // global add ace editor in browser
-        if ((this.jodit.ownerWindow as any).ace === undefined && !$$("script." + this.className, this.jodit.ownerDocument.body).length) {
-            this.loadNext(0, editor.options.sourceEditorCDNUrlsJS, "aceReady", this.className);
+        if (
+            (this.jodit.ownerWindow as any).ace === undefined &&
+            !$$('script.' + this.className, this.jodit.ownerDocument.body)
+                .length
+        ) {
+            this.loadNext(
+                0,
+                editor.options.sourceEditorCDNUrlsJS,
+                'aceReady',
+                this.className
+            );
         }
     }
     public mirror: HTMLTextAreaElement;
 
     public aceEditor: AceAjax.Editor;
-    public setMirrorSelectionRange: (start: number, end: number) => void = (start: number, end: number) => {
+    public setMirrorSelectionRange: (start: number, end: number) => void = (
+        start: number,
+        end: number
+    ) => {
         this.mirror.setSelectionRange(start, end);
-    }
+    };
 
     constructor(editor: Jodit) {
         super(editor);
 
-        this.mirrorContainer = dom('<div class="jodit_source"/>', this.jodit.ownerDocument) as HTMLDivElement;
-        this.mirror = dom('<textarea class="jodit_source_mirror"/>', this.jodit.ownerDocument) as HTMLTextAreaElement;
+        this.mirrorContainer = dom(
+            '<div class="jodit_source"/>',
+            this.jodit.ownerDocument
+        ) as HTMLDivElement;
+        this.mirror = dom(
+            '<textarea class="jodit_source_mirror"/>',
+            this.jodit.ownerDocument
+        ) as HTMLTextAreaElement;
 
         editor.events
-            .on(this.mirror, "mousedown keydown touchstart input", debounce(this.toWYSIWYG, editor.defaultTimeout))
-            .on(this.mirror, "change keydown mousedown touchstart input", this.autosize)
-            .on("afterSetMode", this.autosize)
-            .on(this.mirror, "mousedown focus", (e: Event) => {
+            .on(
+                this.mirror,
+                'mousedown keydown touchstart input',
+                debounce(this.toWYSIWYG, editor.defaultTimeout)
+            )
+            .on(
+                this.mirror,
+                'change keydown mousedown touchstart input',
+                this.autosize
+            )
+            .on('afterSetMode', this.autosize)
+            .on(this.mirror, 'mousedown focus', (e: Event) => {
                 editor.events.fire(e.type, e);
             });
 
         editor.events
-            .on("setMinHeight", (minHeightD: number) => {
-                this.mirror && css(this.mirror, "minHeight", minHeightD);
+            .on('setMinHeight', (minHeightD: number) => {
+                this.mirror && css(this.mirror, 'minHeight', minHeightD);
             })
-            .on("insertHTML", (html: string): void | false => {
-                if (!editor.options.readonly && !this.jodit.isEditorMode()) {
-                    this.insertHTML(html);
-                    return false;
-                }
-            })
-            .on("aceInited", () => {
-                if (editor.options.readonly) {
-                    if (this.aceEditor) {
-                        this.aceEditor.setReadOnly(true);
+            .on(
+                'insertHTML',
+                (html: string): void | false => {
+                    if (
+                        !editor.options.readonly &&
+                        !this.jodit.isEditorMode()
+                    ) {
+                        this.insertHTML(html);
+                        return false;
                     }
                 }
-            }, void(0), void(0), true)
-            .on("readonly", (isReadOnly: boolean) => {
+            )
+            .on(
+                'aceInited',
+                () => {
+                    if (editor.options.readonly) {
+                        if (this.aceEditor) {
+                            this.aceEditor.setReadOnly(true);
+                        }
+                    }
+                },
+                void 0,
+                void 0,
+                true
+            )
+            .on('readonly', (isReadOnly: boolean) => {
                 if (isReadOnly) {
-                    this.mirror.setAttribute("readonly", "true");
+                    this.mirror.setAttribute('readonly', 'true');
                 } else {
-                    this.mirror.removeAttribute("readonly");
+                    this.mirror.removeAttribute('readonly');
                 }
 
                 if (this.aceEditor) {
                     this.aceEditor.setReadOnly(isReadOnly);
                 }
             })
-            .on("placeholder", (text: string) => {
-                this.mirror.setAttribute("placeholder", text);
+            .on('placeholder', (text: string) => {
+                this.mirror.setAttribute('placeholder', text);
             })
-            .on("afterInit aceInited", () => {
+            .on('afterInit aceInited', () => {
                 // save restore selection
                 editor.events
-                    .on("beforeSetMode", this.saveSelection)
-                    .on("afterSetMode", this.restoreSelection);
+                    .on('beforeSetMode', this.saveSelection)
+                    .on('afterSetMode', this.restoreSelection);
             })
-            .on("afterInit", () => {
+            .on('afterInit', () => {
                 this.mirrorContainer.appendChild(this.mirror);
                 editor.workplace.appendChild(this.mirrorContainer);
                 this.autosize();
 
-                const className = "beutyfy_html_jodit_helper";
+                const className = 'beutyfy_html_jodit_helper';
 
                 if (
                     editor.options.beautifyHTML &&
                     (editor.ownerWindow as any).html_beautify === undefined &&
-                    !$$("script." + className, editor.ownerDocument.body).length
+                    !$$('script.' + className, editor.ownerDocument.body).length
                 ) {
-                    this.loadNext(0, editor.options.beautifyHTMLCDNUrlsJS, false, className);
+                    this.loadNext(
+                        0,
+                        editor.options.beautifyHTMLCDNUrlsJS,
+                        false,
+                        className
+                    );
                 }
 
                 if (editor.options.useAceEditor) {
                     this.replaceMirrorToACE();
                 }
-
             })
-            .on("beforeCommand", this.onSelectAll)
-            .on("change afterInit", this.fromWYSIWYG);
+            .on('beforeCommand', this.onSelectAll)
+            .on('change afterInit', this.fromWYSIWYG);
     }
 }

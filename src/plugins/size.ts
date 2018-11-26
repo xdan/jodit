@@ -4,11 +4,11 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Config } from "../Config";
-import { Jodit } from "../Jodit";
-import { css, debounce, dom, throttle } from "../modules/Helpers";
+import { Config } from '../Config';
+import { Jodit } from '../Jodit';
+import { css, debounce, dom, throttle } from '../modules/Helpers';
 
-declare module "../Config" {
+declare module '../Config' {
     interface Config {
         allowResizeX: boolean;
         allowResizeY: boolean;
@@ -24,30 +24,37 @@ Config.prototype.allowResizeY = true;
  */
 export function size(editor: Jodit) {
     const setHeight = (height: number | string) => {
-        css(editor.container, "height", height);
+        css(editor.container, 'height', height);
         if (editor.options.saveHeightInStorage) {
-            editor.storage.set("height", height);
+            editor.storage.set('height', height);
         }
     };
 
-    const setWidth = (width: number | string) => css(editor.container, "width", width);
-    const setHeightWorkPlace = (height: number | string) => css(editor.workplace, "height", height);
+    const setWidth = (width: number | string) =>
+        css(editor.container, 'width', width);
+    const setHeightWorkPlace = (height: number | string) =>
+        css(editor.workplace, 'height', height);
     // const setWidthWorkPlace = (width: number | string) => css(editor.workplace, 'width', width);
 
-    if (editor.options.height !== "auto" && (editor.options.allowResizeX || editor.options.allowResizeY)) {
-        const
-            handle: HTMLAnchorElement = dom(
-            '<div class="jodit_editor_resize" ><a href="javascript:void(0)"></a></div>',
-                editor.ownerDocument,
+    if (
+        editor.options.height !== 'auto' &&
+        (editor.options.allowResizeX || editor.options.allowResizeY)
+    ) {
+        const handle: HTMLAnchorElement = dom(
+                '<div class="jodit_editor_resize" ><a href="javascript:void(0)"></a></div>',
+                editor.ownerDocument
             ) as HTMLAnchorElement,
-            start: { x: number, y: number, w: number, h: number } = {
-                x: 0, y: 0, w: 0, h: 0,
+            start: { x: number; y: number; w: number; h: number } = {
+                x: 0,
+                y: 0,
+                w: 0,
+                h: 0,
             };
 
         let isResized: boolean = false;
 
         editor.events
-            .on(handle, "mousedown touchstart", (e: MouseEvent) => {
+            .on(handle, 'mousedown touchstart', (e: MouseEvent) => {
                 isResized = true;
                 start.x = e.clientX;
                 start.y = e.clientY;
@@ -56,44 +63,57 @@ export function size(editor: Jodit) {
                 editor.lock();
                 e.preventDefault();
             })
-            .on(editor.ownerWindow, "mousemove touchmove", throttle((e: MouseEvent) => {
-                if (isResized) {
-                    setHeight(editor.options.allowResizeY ? start.h + e.clientY - start.y : start.h);
-                    setWidth(editor.options.allowResizeX ? start.w + e.clientX - start.x : start.w);
-                    resizeWorkspaceImd();
-                    editor.events.fire("resize");
-                }
-            }, editor.defaultTimeout / 10))
-            .on(editor.ownerWindow, "mouseup touchsend", () => {
+            .on(
+                editor.ownerWindow,
+                'mousemove touchmove',
+                throttle((e: MouseEvent) => {
+                    if (isResized) {
+                        setHeight(
+                            editor.options.allowResizeY
+                                ? start.h + e.clientY - start.y
+                                : start.h
+                        );
+                        setWidth(
+                            editor.options.allowResizeX
+                                ? start.w + e.clientX - start.x
+                                : start.w
+                        );
+                        resizeWorkspaceImd();
+                        editor.events.fire('resize');
+                    }
+                }, editor.defaultTimeout / 10)
+            )
+            .on(editor.ownerWindow, 'mouseup touchsend', () => {
                 if (isResized) {
                     isResized = false;
                     editor.unlock();
                 }
             })
-            .on("afterInit", () => {
+            .on('afterInit', () => {
                 editor.container.appendChild(handle);
             })
-            .on("toggleFullSize", (fullsize: boolean) => {
-                handle.style.display = fullsize ? "none" : "block";
+            .on('toggleFullSize', (fullsize: boolean) => {
+                handle.style.display = fullsize ? 'none' : 'block';
             });
     }
 
-    const
-        getNotWorkHeight = (): number => (
-            editor.options.toolbar ? editor.toolbar.container.offsetHeight : 0
-        ) + (editor.statusbar ? editor.statusbar.container.offsetHeight : 0);
+    const getNotWorkHeight = (): number =>
+        (editor.options.toolbar ? editor.toolbar.container.offsetHeight : 0) +
+        (editor.statusbar ? editor.statusbar.container.offsetHeight : 0);
 
     const calcMinHeightWorkspace = () => {
         if (!editor.container || !editor.container.parentNode) {
             return;
         }
 
-        const minHeight: number = css(editor.container, "minHeight") as number - getNotWorkHeight();
+        const minHeight: number =
+            (css(editor.container, 'minHeight') as number) - getNotWorkHeight();
 
         [editor.workplace, editor.iframe, editor.editor].map(elm => {
-            const minHeightD: number = elm === editor.editor ? minHeight - 2 : minHeight; // borders
-            elm && css(elm as HTMLElement, "minHeight", minHeightD);
-            editor.events.fire("setMinHeight", minHeightD);
+            const minHeightD: number =
+                elm === editor.editor ? minHeight - 2 : minHeight; // borders
+            elm && css(elm as HTMLElement, 'minHeight', minHeightD);
+            editor.events.fire('setMinHeight', minHeightD);
         });
     };
 
@@ -104,50 +124,65 @@ export function size(editor: Jodit) {
 
         calcMinHeightWorkspace();
 
-        if (editor.container && (editor.options.height !== "auto" || editor.isFullSize())) {
-            setHeightWorkPlace(editor.container.offsetHeight - getNotWorkHeight());
+        if (
+            editor.container &&
+            (editor.options.height !== 'auto' || editor.isFullSize())
+        ) {
+            setHeightWorkPlace(
+                editor.container.offsetHeight - getNotWorkHeight()
+            );
         }
     };
 
     const resizeWorkspace = debounce(resizeWorkspaceImd, editor.defaultTimeout);
 
     editor.events
-        .on("toggleFullSize", (fullsize: boolean) => {
-            if (!fullsize && editor.options.height === "auto") {
-                setHeightWorkPlace("auto");
+        .on('toggleFullSize', (fullsize: boolean) => {
+            if (!fullsize && editor.options.height === 'auto') {
+                setHeightWorkPlace('auto');
                 calcMinHeightWorkspace();
             }
         })
-        .on("afterInit", () => {
-            if (!editor.options.inline) {
-                css(editor.editor, {
-                    minHeight: "100%",
-                });
+        .on(
+            'afterInit',
+            () => {
+                if (!editor.options.inline) {
+                    css(editor.editor, {
+                        minHeight: '100%',
+                    });
 
-                css(editor.container, {
-                    minHeight: editor.options.minHeight,
-                    minWidth: editor.options.minWidth,
-                    maxWidth: editor.options.maxWidth,
-                });
-            }
-
-            let height: string | number = editor.options.height;
-
-            if (editor.options.saveHeightInStorage && height !== "auto") {
-                const localHeight: string | null = editor.storage.get("height");
-                if (localHeight) {
-                    height = localHeight;
+                    css(editor.container, {
+                        minHeight: editor.options.minHeight,
+                        minWidth: editor.options.minWidth,
+                        maxWidth: editor.options.maxWidth,
+                    });
                 }
-            }
 
-            if (!editor.options.inline) {
-                setHeight(height);
-                setWidth(editor.options.width);
-            }
+                let height: string | number = editor.options.height;
 
-            resizeWorkspaceImd();
-        }, undefined, undefined, true)
-        .on(window, "load", resizeWorkspace)
-        .on("afterInit resize updateToolbar scroll afterResize", resizeWorkspace);
+                if (editor.options.saveHeightInStorage && height !== 'auto') {
+                    const localHeight: string | null = editor.storage.get(
+                        'height'
+                    );
+                    if (localHeight) {
+                        height = localHeight;
+                    }
+                }
 
+                if (!editor.options.inline) {
+                    setHeight(height);
+                    setWidth(editor.options.width);
+                }
+
+                resizeWorkspaceImd();
+            },
+            undefined,
+            undefined,
+            true
+        )
+        .on(window, 'load', resizeWorkspace)
+        .on(
+            'afterInit resize updateToolbar scroll afterResize',
+            resizeWorkspace
+        );
 }
