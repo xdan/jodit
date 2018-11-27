@@ -9,7 +9,7 @@ import { Jodit } from '../Jodit';
 import ColorPickerWidget = Widget.ColorPickerWidget;
 import TabsWidget = Widget.TabsWidget;
 import { Dom } from '../modules/Dom';
-import { css, debounce, offset, splitArray } from '../modules/Helpers';
+import { css, debounce, offset, splitArray } from '../modules/helpers/Helpers';
 import { Plugin } from '../modules/Plugin';
 import { Table } from '../modules/Table';
 import { ToolbarCollection } from '../modules/toolbar/collection';

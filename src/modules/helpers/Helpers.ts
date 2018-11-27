@@ -4,11 +4,13 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import * as consts from '../constants';
-import { KEY_ALIASES } from '../constants';
-import { Jodit } from '../Jodit';
-import { Bound, IBound, IDictionary, IHasScroll, IRGB } from '../types';
-import { Dom } from './Dom';
+import * as consts from '../../constants';
+import { KEY_ALIASES } from '../../constants';
+import { Jodit } from '../../Jodit';
+import { IBound, IDictionary, IHasScroll, IRGB } from '../../types';
+import { Dom } from '../Dom';
+import { JoditObject } from './JoditObject';
+import { JoditArray } from './JoditArray';
 
 const class2type: IDictionary<string> = {};
 const toString = class2type.toString;
@@ -1565,42 +1567,8 @@ export const normalizeLicense = (
     return parts.join('-');
 };
 
-export class JoditArray {
-    public length: number = 0;
-    public toString() {
-        const out = [];
 
-        for (let i = 0; i < this.length; i += 1) {
-            out[i] = (this as any)[i];
-        }
 
-        return out.toString();
-    }
-    constructor(data: any[]) {
-        extend(true, this, data);
-        this.length = data.length;
-        const proto: any = Array.prototype as any;
-        [
-            'map',
-            'forEach',
-            'reduce',
-            'push',
-            'pop',
-            'shift',
-            'unshift',
-            'slice',
-            'splice',
-        ].forEach((method: string) => {
-            (this as any)[method] = proto[method];
-        });
-    }
-}
-
-export class JoditObject {
-    constructor(data: any) {
-        extend(true, this, data);
-    }
-}
 
 /**
  * Normalize keys to some standart name

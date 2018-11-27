@@ -23,7 +23,7 @@ import {
     isPlainObject,
     normalizeColor,
     val,
-} from './Helpers';
+} from './helpers/Helpers';
 import { Uploader } from './Uploader';
 
 export namespace Widget {

@@ -7,7 +7,7 @@
 import { Config } from '../Config';
 import * as consts from '../constants';
 import { Jodit } from '../Jodit';
-import { $$, debounce, dom } from '../modules/Helpers';
+import { $$, debounce, dom } from '../modules/helpers/Helpers';
 
 declare module '../Config' {
     interface Config {

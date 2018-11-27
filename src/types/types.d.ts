@@ -121,3 +121,9 @@ export interface ActionBox {
         y?: number;
     };
 }
+
+export interface EventHandlerBlock {
+    event: string;
+    originalCallback: () => void;
+    syntheticCallback: () => void;
+}

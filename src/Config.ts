@@ -16,7 +16,7 @@ import {
     normalizeLicense,
     trim,
     val,
-} from "./modules/Helpers";
+} from "./modules/helpers/Helpers";
 import { Widget } from "./modules/Widget";
 import { IFileBrowserCallBackData } from "./types/filebrowser";
 import TabsWidget = Widget.TabsWidget;

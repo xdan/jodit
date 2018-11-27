@@ -6,7 +6,7 @@
 
 import { IViewBased } from '../types/view';
 import { Component } from './Component';
-import { css, dom } from './Helpers';
+import { css, dom } from './helpers/Helpers';
 import { ToolbarIcon } from './toolbar/icon';
 
 export interface Action {

@@ -16,7 +16,7 @@
 
 import * as consts from '../constants';
 import { Dom } from './Dom';
-import { $$, each, trim } from './Helpers';
+import { $$, each, trim } from './helpers/Helpers';
 
 export class Table {
     public static addSelected(td: HTMLTableCellElement) {

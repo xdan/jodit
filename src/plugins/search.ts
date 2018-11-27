@@ -9,7 +9,7 @@ import * as consts from '../constants';
 import { MODE_WYSIWYG } from '../constants';
 import { Jodit } from '../Jodit';
 import { Component, Dom, ToolbarIcon } from '../modules';
-import { debounce, dom, trim } from '../modules/Helpers';
+import { debounce, dom, trim } from '../modules/helpers/Helpers';
 import { markerInfo } from '../modules/Selection';
 import { ISelectionRange } from '../types/types';
 

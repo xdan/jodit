@@ -10,8 +10,8 @@ import { Jodit } from '../Jodit';
 import { IDictionary } from '../types';
 import { Buttons, IControlType } from '../types/toolbar';
 import { IViewBased, IViewOptions } from '../types/view';
-import { EventsNative } from './EventsNative';
-import { $$, asArray, css, dom } from './Helpers';
+import { EventsNative } from './events/EventsNative';
+import { $$, asArray, css, dom } from './helpers/Helpers';
 import { ToolbarIcon } from './toolbar/icon';
 import { View } from './view/view';
 

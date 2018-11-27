@@ -8,7 +8,7 @@ import { Jodit } from "../../Jodit";
 import { IBound } from "../../types/types";
 import { IViewBased } from "../../types/view";
 import { Dom } from "../Dom";
-import { css, dom, offset, throttle } from "../Helpers";
+import { css, dom, offset, throttle } from "../helpers/Helpers";
 import { ToolbarElement } from "./element";
 
 export  class ToolbarPopup extends ToolbarElement {

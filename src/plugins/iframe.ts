@@ -6,7 +6,12 @@
 
 import { Config } from '../Config';
 import { Jodit } from '../Jodit';
-import { css, defaultLanguage, dom, throttle } from '../modules/Helpers';
+import {
+    css,
+    defaultLanguage,
+    dom,
+    throttle,
+} from '../modules/helpers/Helpers';
 
 declare module '../Config' {
     interface Config {

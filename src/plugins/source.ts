@@ -9,7 +9,13 @@ import * as consts from '../constants';
 import { MODE_SOURCE } from '../constants';
 import { Jodit } from '../Jodit';
 import { Component } from '../modules/Component';
-import { $$, appendScript, css, debounce, dom } from '../modules/Helpers';
+import {
+    $$,
+    appendScript,
+    css,
+    debounce,
+    dom,
+} from '../modules/helpers/Helpers';
 import { markerInfo } from '../modules/Selection';
 import { IControlType } from '../types/toolbar';
 

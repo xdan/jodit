@@ -8,9 +8,9 @@ import { Config, OptionsDefault } from "./Config";
 import * as consts from "./constants";
 import { Component } from "./modules/Component";
 import { Dom } from "./modules/Dom";
-import { EventsNative } from "./modules/EventsNative";
+import { EventsNative } from "./modules/events/EventsNative";
 import { FileBrowser } from "./modules/filebrowser/filebrowser";
-import * as helper from "./modules/Helpers";
+import * as helper from "./modules/helpers/Helpers";
 import {
     asArray,
     debounce,
@@ -22,7 +22,7 @@ import {
     normalizeKeyAliases,
     splitArray,
     sprintf,
-} from "./modules/Helpers";
+} from "./modules/helpers/Helpers";
 import { Observer } from "./modules/Observer";
 import { markerInfo, Select } from "./modules/Selection";
 import { StatusBar } from "./modules/StatusBar";

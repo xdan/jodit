@@ -7,7 +7,7 @@
 import { Config } from '../../Config';
 import { Jodit } from '../../Jodit';
 import { Component } from '../Component';
-import { debounce } from '../Helpers';
+import { debounce } from '../helpers/Helpers';
 import { Snapshot } from '../Snapshot';
 import { Stack } from '../Stack';
 import { SnapshotType } from '../../types';

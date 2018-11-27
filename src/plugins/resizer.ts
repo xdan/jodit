@@ -15,7 +15,7 @@ import {
     innerWidth,
     isIE,
     offset,
-} from '../modules/Helpers';
+} from '../modules/helpers/Helpers';
 import { IBound } from '../types/types';
 
 /**

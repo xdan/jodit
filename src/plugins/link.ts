@@ -12,7 +12,7 @@ import {
     dom,
     isURL,
     val,
-} from '../modules/Helpers';
+} from '../modules/helpers/Helpers';
 import { markerInfo } from '../modules/Selection';
 import { Select } from '../modules/Selection';
 import { IControlType } from '../types/toolbar';

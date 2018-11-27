@@ -7,7 +7,7 @@
 import * as consts from '../constants';
 import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
-import { $$, scrollIntoView } from '../modules/Helpers';
+import { $$, scrollIntoView } from '../modules/helpers/Helpers';
 
 /**
  * Insert default paragraph

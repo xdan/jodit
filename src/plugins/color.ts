@@ -9,7 +9,7 @@ import { Jodit } from '../Jodit';
 import TabsWidget = Widget.TabsWidget;
 import ColorPickerWidget = Widget.ColorPickerWidget;
 import { Dom } from '../modules/Dom';
-import { css, normalizeColor } from '../modules/Helpers';
+import { css, normalizeColor } from '../modules/helpers/Helpers';
 import { ToolbarButton } from '../modules/toolbar/button';
 import { Widget } from '../modules/Widget';
 import { IDictionary } from '../types';

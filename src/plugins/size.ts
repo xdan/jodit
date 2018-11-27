@@ -6,7 +6,7 @@
 
 import { Config } from '../Config';
 import { Jodit } from '../Jodit';
-import { css, debounce, dom, throttle } from '../modules/Helpers';
+import { css, debounce, dom, throttle } from '../modules/helpers/Helpers';
 
 declare module '../Config' {
     interface Config {

@@ -7,7 +7,7 @@
 import { Jodit } from "../../Jodit";
 import { IControlType, IControlTypeStrong } from "../../types/toolbar";
 import { IViewBased } from "../../types/view";
-import { each } from "../Helpers";
+import { each } from "../helpers/Helpers";
 import { ToolbarButton } from "./button";
 import { ToolbarCollection } from "./collection";
 import { ToolbarPopup } from "./popup";

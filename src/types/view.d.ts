@@ -4,7 +4,7 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { EventsNative } from '../modules/EventsNative';
+import { EventsNative } from '../modules/events/EventsNative';
 import { ToolbarCollection } from '../modules/toolbar/collection';
 import { Buttons } from './toolbar';
 import { IDictionary } from './types';

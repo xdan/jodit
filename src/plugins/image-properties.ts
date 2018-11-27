@@ -9,7 +9,7 @@ import { Jodit } from '../Jodit';
 import { Alert, Confirm, Dialog } from '../modules/Dialog';
 import { Dom } from '../modules/Dom';
 import { FileBrowser } from '../modules/filebrowser/filebrowser';
-import { $$, css, dom, trim, val } from '../modules/Helpers';
+import { $$, css, dom, trim, val } from '../modules/helpers/Helpers';
 import { ToolbarIcon } from '../modules/toolbar/icon';
 import TabsWidget = Widget.TabsWidget;
 import FileSelectorWidget = Widget.FileSelectorWidget;

@@ -10,7 +10,7 @@ import {
     SPACE_REG_EXP,
 } from '../constants';
 import { Jodit } from '../Jodit';
-import { debounce, extractText } from '../modules/Helpers';
+import { debounce, extractText } from '../modules/helpers/Helpers';
 import { SnapshotType } from '../modules/Snapshot';
 
 declare module '../Config' {

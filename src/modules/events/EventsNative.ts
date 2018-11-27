@@ -8,72 +8,8 @@
  * The module editor's event manager
  */
 
-import { IDictionary } from '../types';
-
-export interface EventHandlerBlock {
-    event: string;
-    originalCallback: Function;
-    syntheticCallback: Function;
-}
-
-export class EventHandlersStore {
-    private __store: IDictionary<IDictionary<EventHandlerBlock[]>> = {};
-
-    public get(event: string, namespace: string): EventHandlerBlock[] | void {
-        if (this.__store[namespace] !== undefined) {
-            return this.__store[namespace][event];
-        }
-    }
-
-    public indexOf(
-        event: string,
-        namespace: string,
-        originalCallback: Function
-    ): false | number {
-        const blocks: EventHandlerBlock[] | void = this.get(event, namespace);
-
-        if (blocks) {
-            for (let i = 0; i < blocks.length; i += 1) {
-                if (blocks[i].originalCallback === originalCallback) {
-                    return i;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    public namespaces(): string[] {
-        return Object.keys(this.__store);
-    }
-
-    public events(namespace: string): string[] {
-        return this.__store[namespace]
-            ? Object.keys(this.__store[namespace])
-            : [];
-    }
-
-    public set(
-        event: string,
-        namespace: string,
-        data: EventHandlerBlock,
-        onTop: boolean = false
-    ) {
-        if (this.__store[namespace] === undefined) {
-            this.__store[namespace] = {};
-        }
-
-        if (this.__store[namespace][event] === undefined) {
-            this.__store[namespace][event] = [];
-        }
-
-        if (!onTop) {
-            this.__store[namespace][event].push(data);
-        } else {
-            this.__store[namespace][event].unshift(data);
-        }
-    }
-}
+import { EventHandlerBlock } from '../../types';
+import { EventHandlersStore } from './Store';
 
 export class EventsNative {
     private __defaultNameSpace: string = 'JoditEventDefaultNamespace';
@@ -99,7 +35,8 @@ export class EventsNative {
         });
     }
 
-    private getStore(subject: any): EventHandlersStore {
+    private getStore(subject: any): EventHandlersStore
+    {
         if (subject[this.__key] === undefined) {
             const store: EventHandlersStore = new EventHandlersStore();
 
@@ -253,7 +190,7 @@ export class EventsNative {
      */
     public on(
         subjectOrEvents: string,
-        eventsOrCallback: Function,
+        eventsOrCallback: () => void,
         handlerOrSelector?: void,
         selector?: string,
         onTop?: boolean
@@ -261,14 +198,14 @@ export class EventsNative {
     public on(
         subjectOrEvents: object,
         eventsOrCallback: string,
-        handlerOrSelector: Function,
+        handlerOrSelector: () => void,
         selector?: string,
         onTop?: boolean
     ): EventsNative;
     public on(
         subjectOrEvents: object | string,
-        eventsOrCallback: string | Function,
-        handlerOrSelector?: Function | void,
+        eventsOrCallback: string | (() => void),
+        handlerOrSelector?: (() => void) | void,
         selector?: string,
         onTop: boolean = false
     ): EventsNative {
@@ -279,10 +216,10 @@ export class EventsNative {
                 ? eventsOrCallback
                 : (subjectOrEvents as string);
 
-        let callback: Function = handlerOrSelector as Function;
+        let callback = handlerOrSelector as () => void;
 
         if (callback === undefined && typeof eventsOrCallback === 'function') {
-            callback = eventsOrCallback as Function;
+            callback = eventsOrCallback as () => void;
         }
 
         const store: EventHandlersStore = this.getStore(subject);
@@ -304,10 +241,9 @@ export class EventsNative {
         }
 
         const isDOMElement: boolean =
-            typeof (subject as any).addEventListener === 'function';
-
-        let self: EventsNative = this,
-            syntheticCallback: Function = function(this: any) {
+                typeof (subject as any).addEventListener === 'function',
+            self: EventsNative = this,
+            syntheticCallback = function(this: any) {
                 return callback && callback.apply(this, arguments);
             };
 
@@ -392,7 +328,8 @@ export class EventsNative {
      * Disable all handlers specified event ( Event List ) for a given element. Either a specific event handler.
      *
      * @param {object} subjectOrEvents - The object which is disabled handlers
-     * @param {string|Function} [eventsOrCallback] - List of events, separated by a space or comma , which is necessary toWYSIWYG disable the handlers for a given object
+     * @param {string|Function} [eventsOrCallback] - List of events, separated by a space or comma , which is necessary
+     * toWYSIWYG disable the handlers for a given object
      * @param {function} [handler] - Specific event handler toWYSIWYG be removed
      *
      * @example
@@ -418,20 +355,19 @@ export class EventsNative {
      * parent.events.off('someGlobalEvents');
      * ```
      */
-    public off(subjectOrEvents: string): EventsNative;
     public off(
         subjectOrEvents: string,
-        eventsOrCallback?: Function
+        eventsOrCallback?: () => void
     ): EventsNative;
     public off(
         subjectOrEvents: object,
         eventsOrCallback?: string,
-        handler?: Function
+        handler?: () => void
     ): EventsNative;
     public off(
         subjectOrEvents: object | string,
-        eventsOrCallback?: string | Function,
-        handler?: Function
+        eventsOrCallback?: string | (() => void),
+        handler?: () => void
     ): EventsNative {
         const subject: object =
             typeof subjectOrEvents === 'string' ? this : subjectOrEvents;
@@ -442,7 +378,7 @@ export class EventsNative {
 
         const store: EventHandlersStore = this.getStore(subject);
 
-        let callback: Function = handler as Function;
+        let callback: () => void = handler as () => void;
 
         if (typeof events !== 'string' || !events) {
             store.namespaces().forEach((namespace: string) => {
@@ -455,7 +391,7 @@ export class EventsNative {
         }
 
         if (callback === undefined && typeof eventsOrCallback === 'function') {
-            callback = eventsOrCallback as Function;
+            callback = eventsOrCallback as () => void;
         }
 
         const isDOMElement: boolean =

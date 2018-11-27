@@ -6,7 +6,7 @@
 
 import { KEY_DOWN, KEY_ENTER, KEY_UP, SPACE_REG_EXP } from '../constants';
 import { Dialog } from '../modules/Dialog';
-import { dom } from '../modules/Helpers';
+import { dom } from '../modules/helpers/Helpers';
 import { Plugin } from '../modules/Plugin';
 
 /**

@@ -7,7 +7,7 @@
 import { Config } from '../Config';
 import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
-import { debounce, dom, offset } from '../modules/Helpers';
+import { debounce, dom, offset } from '../modules/helpers/Helpers';
 import { ToolbarIcon } from '../modules/toolbar/icon';
 import { IBound } from '../types';
 

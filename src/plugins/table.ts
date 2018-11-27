@@ -14,7 +14,7 @@ import {
     getContentWidth,
     offset,
     scrollIntoView,
-} from '../modules/Helpers';
+} from '../modules/helpers/Helpers';
 import { ToolbarButton } from '../modules/toolbar/button';
 import { IControlType } from '../types/toolbar';
 import { IBound, IDictionary } from '../types/types';

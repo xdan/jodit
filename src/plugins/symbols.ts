@@ -8,7 +8,7 @@ import { Config } from '../Config';
 import { KEY_DOWN, KEY_ENTER, KEY_LEFT, KEY_RIGHT, KEY_UP } from '../constants';
 import { Jodit } from '../Jodit';
 import { Alert, Dialog } from '../modules/Dialog';
-import { dom } from '../modules/Helpers';
+import { dom } from '../modules/helpers/Helpers';
 import { IControlType } from '../types/toolbar';
 
 declare module '../Config' {

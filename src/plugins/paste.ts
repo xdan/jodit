@@ -26,7 +26,7 @@ import {
     isIE,
     trim,
     type,
-} from '../modules/Helpers';
+} from '../modules/helpers/Helpers';
 import { IControlType } from '../types/toolbar';
 
 /**

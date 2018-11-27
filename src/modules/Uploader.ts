@@ -18,7 +18,7 @@ import {
     IViewBased,
 } from '../types/';
 import { Ajax } from './Ajax';
-import { browser, dom, extend, isIE, isPlainObject } from './Helpers';
+import { browser, dom, extend, isIE, isPlainObject } from './helpers/Helpers';
 import { Select } from './Selection';
 
 declare module '../Config' {

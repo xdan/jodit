@@ -7,7 +7,7 @@
 import { Config } from '../Config';
 import * as consts from '../constants';
 import { Jodit } from '../Jodit';
-import { splitArray } from '../modules/Helpers';
+import { splitArray } from '../modules/helpers/Helpers';
 import { ToolbarButton } from '../modules/toolbar/button';
 import { ToolbarCollection } from '../modules/toolbar/collection';
 import { IControlType } from '../types/toolbar';

@@ -4,7 +4,7 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { asArray } from "../Helpers";
+import { asArray } from "../helpers/Helpers";
 import { ToolbarButton } from "./button";
 
 /**

@@ -14,7 +14,7 @@ import {
     debounce,
     normalizeNode,
     trim,
-} from '../modules/Helpers';
+} from '../modules/helpers/Helpers';
 import { Select } from '../modules/Selection';
 import { IDictionary } from '../types';
 

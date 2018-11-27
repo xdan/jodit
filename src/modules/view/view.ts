@@ -9,7 +9,7 @@ import { Jodit } from "../../Jodit";
 import { IDictionary} from "../../types";
 import { IViewBased, IViewOptions } from "../../types/view";
 import { Component } from "../Component";
-import { EventsNative } from "../EventsNative";
+import { EventsNative } from "../events/EventsNative";
 import { ToolbarCollection } from "../toolbar/collection";
 
 export class View extends Component implements IViewBased {

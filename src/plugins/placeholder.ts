@@ -7,7 +7,7 @@
 import { Config } from '../Config';
 import * as consts from '../constants';
 import { Jodit } from '../Jodit';
-import { css, debounce, dom } from '../modules/Helpers';
+import { css, debounce, dom } from '../modules/helpers/Helpers';
 
 /**
  * Show placeholder

@@ -6,7 +6,13 @@
 
 import { TEXT_HTML, TEXT_PLAIN } from '../constants';
 import { Dom } from '../modules/';
-import { css, ctrlKey, dataBind, dom, throttle } from '../modules/Helpers';
+import {
+    css,
+    ctrlKey,
+    dataBind,
+    dom,
+    throttle,
+} from '../modules/helpers/Helpers';
 import { Plugin } from '../modules/Plugin';
 import { IPoint } from '../types/types';
 

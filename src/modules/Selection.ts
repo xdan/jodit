@@ -24,7 +24,7 @@ import {
     normalizeNode,
     normilizeCSSValue,
     trim,
-} from './Helpers';
+} from './helpers/Helpers';
 
 export class Select extends Component {
     /**

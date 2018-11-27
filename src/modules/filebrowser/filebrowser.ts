@@ -10,7 +10,7 @@ import { Jodit } from "../../Jodit";
 import { Ajax } from "../Ajax";
 import { ContextMenu } from "../ContextMenu";
 import { Alert, Confirm, Dialog, Promt } from "../Dialog";
-import { $$, ctrlKey, debounce, dom, each, extend, humanSizeToBytes, pathNormalize, urlNormalize } from "../Helpers";
+import { $$, ctrlKey, debounce, dom, each, extend, humanSizeToBytes, pathNormalize, urlNormalize } from "../helpers/Helpers";
 import { ToolbarIcon } from "../toolbar/icon";
 import { Uploader } from "../Uploader";
 import { View } from "../view/view";

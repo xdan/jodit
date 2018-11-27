@@ -6,7 +6,7 @@
 
 import { Config } from '../Config';
 import { INVISIBLE_SPACE_REG_EXP, SPACE_REG_EXP } from '../constants';
-import { throttle } from '../modules/Helpers';
+import { throttle } from '../modules/helpers/Helpers';
 import { Plugin } from '../modules/Plugin';
 
 declare module '../Config' {

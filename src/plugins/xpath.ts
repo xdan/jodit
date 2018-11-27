@@ -8,7 +8,7 @@ import { Config } from '../Config';
 import { INVISIBLE_SPACE, MODE_WYSIWYG } from '../constants';
 import { ContextMenu } from '../modules/ContextMenu';
 import { Dom } from '../modules/Dom';
-import { debounce, dom, getXPathByElement } from '../modules/Helpers';
+import { debounce, dom, getXPathByElement } from '../modules/helpers/Helpers';
 import { Plugin } from '../modules/Plugin';
 import { ToolbarButton } from '../modules/toolbar/button';
 import { IControlType } from '../types/toolbar';

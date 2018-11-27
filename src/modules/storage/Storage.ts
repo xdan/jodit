@@ -4,7 +4,7 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { camelCase } from '../Helpers';
+import { camelCase } from '../helpers/Helpers';
 import { IStorage } from '../../types';
 
 export class Storage {

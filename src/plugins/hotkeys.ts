@@ -7,7 +7,7 @@
 import { Config } from '../Config';
 import { Jodit } from '../Jodit';
 import { Component } from '../modules/Component';
-import { normalizeKeyAliases } from '../modules/Helpers';
+import { normalizeKeyAliases } from '../modules/helpers/Helpers';
 import { IDictionary } from '../types';
 
 declare module '../Config' {

@@ -6,7 +6,7 @@
 
 import * as consts from '../constants';
 import { Jodit } from '../Jodit';
-import { css, each, trim } from './Helpers';
+import { css, each, trim } from './helpers/Helpers';
 
 export class Dom {
     /**
@@ -215,7 +215,8 @@ export class Dom {
      * @return {Node} Returns a new tag
      * @example
      * ```javascript
-     * Jodit.modules.Dom.replace(parent.editor.getElementsByTagName('span')[0], 'p'); // Replace the first <span> element to the < p >
+     * Jodit.modules.Dom.replace(parent.editor.getElementsByTagName('span')[0], 'p');
+     * // Replace the first <span> element to the < p >
      * ```
      */
     public static replace(
@@ -332,7 +333,7 @@ export class Dom {
         node: Node,
         condition: (element: Node | null) => boolean | null,
         root: HTMLElement,
-        withChild: Boolean = true
+        withChild: boolean = true
     ): false | Node | HTMLElement | HTMLTableCellElement {
         return Dom.find(
             node,
@@ -357,7 +358,7 @@ export class Dom {
         node: Node,
         condition: (element: Node | null) => boolean | null,
         root: Node | HTMLElement,
-        withChild: Boolean = true
+        withChild: boolean = true
     ): false | Node | HTMLElement | HTMLTableCellElement {
         return Dom.find(
             node,
@@ -523,7 +524,8 @@ export class Dom {
     }
 
     /**
-     * Checks whether the Node text and blank (in this case it may contain invisible auxiliary characters , it is also empty )
+     * Checks whether the Node text and blank (in this case it may contain invisible auxiliary characters ,
+     * it is also empty )
      *
      * @param  {Node} node The element of wood to be checked
      * @return {Boolean} true element is empty
@@ -605,7 +607,7 @@ export class Dom {
      */
     public static up(
         node: Node,
-        condition: Function,
+        condition: (tag: Node) => boolean,
         root: Node
     ): false | Node | HTMLElement | HTMLTableCellElement | HTMLTableElement {
         let start = node;
@@ -637,10 +639,10 @@ export class Dom {
      */
     public static closest(
         node: Node,
-        tags: string | Function | RegExp,
+        tags: string | ((tag: Node) => boolean) | RegExp,
         root: HTMLElement
     ): Node | HTMLTableElement | HTMLElement | false | HTMLTableCellElement {
-        let condition: Function;
+        let condition: (tag: Node) => boolean;
 
         if (typeof tags === 'function') {
             condition = tags;

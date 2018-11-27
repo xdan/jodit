@@ -12,7 +12,7 @@ import {
     setTimeout,
     splitArray,
     throttle,
-} from '../modules/Helpers';
+} from '../modules/helpers/Helpers';
 import { Plugin } from '../modules/Plugin';
 
 declare module '../Config' {

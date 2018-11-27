@@ -8,7 +8,7 @@ import { Config } from '../Config';
 import { MODE_WYSIWYG } from '../constants';
 import { Jodit } from '../Jodit';
 import { Component } from '../modules/Component';
-import { css, offset } from '../modules/Helpers';
+import { css, offset } from '../modules/helpers/Helpers';
 import { IBound } from '../types/types';
 
 declare module '../Config' {
