@@ -4,9 +4,8 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-
-import { Observer } from './Observer';
 import { SnapshotType } from '../../types';
+import { Observer } from './Observer';
 
 export class Command {
     private observer: Observer;

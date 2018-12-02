@@ -615,9 +615,9 @@ export class Table {
 
                 Table.normalizeTable(table);
 
-                each([].slice.call(table.rows), (index, tr) => {
+                each([].slice.call(table.rows), (index: number, tr: HTMLTableRowElement) => {
                     if (!tr.cells.length) {
-                        tr.parentNode.removeChild(tr);
+                        tr.parentNode && tr.parentNode.removeChild(tr);
                     }
                 });
             }
@@ -828,7 +828,7 @@ export class Table {
     private static __unmark(__marked: HTMLTableCellElement[]) {
         __marked.forEach(cell => {
             if ((cell as any).__marked_value) {
-                each((cell as any).__marked_value, (key, value) => {
+                each((cell as any).__marked_value, (key: string, value: number) => {
                     switch (key) {
                         case 'remove':
                             cell.parentNode &&
@@ -836,20 +836,20 @@ export class Table {
                             break;
                         case 'rowspan':
                             if (value > 1) {
-                                cell.setAttribute('rowspan', value);
+                                cell.setAttribute('rowspan', value.toString());
                             } else {
                                 cell.removeAttribute('rowspan');
                             }
                             break;
                         case 'colspan':
                             if (value > 1) {
-                                cell.setAttribute('colspan', value);
+                                cell.setAttribute('colspan', value.toString());
                             } else {
                                 cell.removeAttribute('colspan');
                             }
                             break;
                         case 'width':
-                            cell.style.width = value;
+                            cell.style.width = value.toString();
                             break;
                     }
                     delete (cell as any).__marked_value[key];

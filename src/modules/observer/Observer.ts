@@ -6,11 +6,11 @@
 
 import { Config } from '../../Config';
 import { Jodit } from '../../Jodit';
+import { SnapshotType } from '../../types';
 import { Component } from '../Component';
 import { debounce } from '../helpers/Helpers';
 import { Snapshot } from '../Snapshot';
 import { Stack } from '../Stack';
-import { SnapshotType } from '../../types';
 import { Command } from './Command';
 
 /**
@@ -90,8 +90,8 @@ export class Observer extends Component {
 
     public changeStack() {
         this.jodit &&
-        this.jodit.events &&
-        this.jodit.events.fire('changeStack');
+            this.jodit.events &&
+            this.jodit.events.fire('changeStack');
     }
 
     constructor(editor: Jodit) {
@@ -109,7 +109,7 @@ export class Observer extends Component {
         editor.events.on('afterInit', () => {
             this.__startValue = this.snapshot.make();
             editor.events
-            // save selection
+                // save selection
                 .on(
                     'changeSelection selectionstart selectionchange mousedown mouseup keydown keyup',
                     () => {

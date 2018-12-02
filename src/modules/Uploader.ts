@@ -5,7 +5,7 @@
  */
 
 import { Config } from '../Config';
-import { TEXT_PLAIN } from '../constants';
+import { IS_IE, TEXT_PLAIN } from '../constants';
 import { Jodit } from '../Jodit';
 import {
     BuildDataResult,
@@ -18,7 +18,7 @@ import {
     IViewBased,
 } from '../types/';
 import { Ajax } from './Ajax';
-import { browser, dom, extend, isIE, isPlainObject } from './helpers/Helpers';
+import { browser, dom, extend, isPlainObject } from './helpers/Helpers';
 import { Select } from './Selection';
 
 declare module '../Config' {
@@ -484,7 +484,7 @@ export class Uploader {
                     return false;
                 }
 
-                if (browser('ff') || isIE()) {
+                if (browser('ff') || IS_IE) {
                     if (
                         e.clipboardData &&
                         (!e.clipboardData.types.length &&

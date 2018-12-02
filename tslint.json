@@ -7,10 +7,14 @@
     ],
     "jsRules": {},
     "rules": {
+        "no-bitwise": false,
+        "prefer-for-of": false,
+        "no-shadowed-variable": false,
+        "no-var-requires": false,
         "no-namespace": false,
         "prettier": true,
         "semicolon": [true, "always", "ignore-interfaces", "ignore-bound-class-methods"],
-        "max-line-length": [true, 120],
+        "max-line-length": [true, 150],
         "variable-name": [false, "ban-keywords", "check-format", "allow-leading-underscore", "allow-snake-case"],
         "one-variable-per-declaration": false,
         "no-unused-expression": [true, "allow-fast-null-checks"],
@@ -20,7 +24,7 @@
         "arrow-parens": [true, "ban-single-arg-parens"],
         "object-literal-sort-keys": false,
         "member-ordering": [
-            true,
+            false,
             {
                 "order": [
                     "private-static-field",

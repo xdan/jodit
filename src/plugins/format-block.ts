@@ -8,9 +8,9 @@ import { Config } from '../Config';
 import * as consts from '../constants';
 import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
-import { markerInfo } from '../modules/Selection';
 import { ToolbarButton } from '../modules/toolbar/button';
 import { IControlType } from '../types/toolbar';
+import { markerInfo } from '../types';
 
 Config.prototype.controls.paragraph = {
     command: 'formatBlock',
@@ -164,7 +164,7 @@ export function formatBlock(editor: Jodit) {
 
                     if (!currentBox.tagName.match(/TD|TH|TBODY|TABLE|THEAD/i)) {
                         if (
-                            third === editor.options.enter.toLowerCase() &&
+                            third === editor.options.enterBlock.toLowerCase() &&
                             currentBox.parentNode &&
                             currentBox.parentNode.nodeName === 'LI'
                         ) {

@@ -7,7 +7,7 @@
 import { Config } from '../Config';
 import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
-import { markerInfo } from '../modules/Selection';
+import { markerInfo } from '../types';
 
 Config.prototype.controls.ul = {
     command: 'insertUnorderedList',

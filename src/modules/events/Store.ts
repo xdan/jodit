@@ -18,7 +18,7 @@ export class EventHandlersStore {
     public indexOf(
         event: string,
         namespace: string,
-        originalCallback: Function
+        originalCallback: (...args: any[]) => any
     ): false | number {
         const blocks: EventHandlerBlock[] | void = this.get(event, namespace);
 

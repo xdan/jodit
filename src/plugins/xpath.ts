@@ -144,8 +144,9 @@ export class xpath extends Plugin {
 
             Dom.up(
                 current,
-                (elm: Node) => {
+                (elm: Node | null) => {
                     if (
+                        elm &&
                         this.jodit.editor !== elm &&
                         elm.nodeType !== Node.TEXT_NODE
                     ) {

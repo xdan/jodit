@@ -6,6 +6,7 @@
 
 import * as consts from '../constants';
 import { Jodit } from '../Jodit';
+import { NodeCondition } from '../types';
 import { css, each, trim } from './helpers/Helpers';
 
 export class Dom {
@@ -238,8 +239,8 @@ export class Dom {
         }
 
         if (withAttributes) {
-            each(elm.attributes, (i, attr) => {
-                tag.setAttribute(attr.name, attr.nodeValue);
+            each(elm.attributes, (i: number, attr: Attr) => {
+                tag.setAttribute(attr.name, attr.value);
             });
         }
 
@@ -331,7 +332,7 @@ export class Dom {
      */
     public static prev(
         node: Node,
-        condition: (element: Node | null) => boolean | null,
+        condition: NodeCondition,
         root: HTMLElement,
         withChild: boolean = true
     ): false | Node | HTMLElement | HTMLTableCellElement {
@@ -356,7 +357,7 @@ export class Dom {
      */
     public static next(
         node: Node,
-        condition: (element: Node | null) => boolean | null,
+        condition: NodeCondition,
         root: Node | HTMLElement,
         withChild: boolean = true
     ): false | Node | HTMLElement | HTMLTableCellElement {
@@ -383,7 +384,7 @@ export class Dom {
      */
     public static find(
         node: Node,
-        condition: (element: Node | null) => boolean | null,
+        condition: NodeCondition,
         root: HTMLElement | Node,
         recurse = false,
         sibling = 'nextSibling',
@@ -486,7 +487,7 @@ export class Dom {
      */
     public static findWithCurrent(
         node: Node,
-        condition: (element: Node | null) => boolean,
+        condition: NodeCondition,
         root: HTMLElement | Node,
         sibling: 'nextSibling' | 'previousSibling' = 'nextSibling',
         child: 'firstChild' | 'lastChild' = 'firstChild'
@@ -607,7 +608,7 @@ export class Dom {
      */
     public static up(
         node: Node,
-        condition: (tag: Node) => boolean,
+        condition: NodeCondition,
         root: Node
     ): false | Node | HTMLElement | HTMLTableCellElement | HTMLTableElement {
         let start = node;
@@ -639,18 +640,18 @@ export class Dom {
      */
     public static closest(
         node: Node,
-        tags: string | ((tag: Node) => boolean) | RegExp,
+        tags: string | NodeCondition | RegExp,
         root: HTMLElement
     ): Node | HTMLTableElement | HTMLElement | false | HTMLTableCellElement {
-        let condition: (tag: Node) => boolean;
+        let condition: NodeCondition;
 
         if (typeof tags === 'function') {
             condition = tags;
         } else if (tags instanceof RegExp) {
-            condition = (tag: Node) => tags.test(tag.nodeName);
+            condition = (tag: Node | null) => tag && tags.test(tag.nodeName);
         } else {
-            condition = (tag: Node) =>
-                new RegExp('^(' + tags + ')$', 'i').test(tag.nodeName);
+            condition = (tag: Node | null) =>
+                tag && new RegExp('^(' + tags + ')$', 'i').test(tag.nodeName);
         }
 
         return Dom.up(node, condition, root);
@@ -716,7 +717,7 @@ export class Dom {
      */
     public static all(
         node: Node,
-        condition: (element: Node) => boolean | void,
+        condition: NodeCondition,
         prev: boolean = false
     ): Node | void {
         let nodes: Node[] = node.childNodes

@@ -35,8 +35,7 @@ export class EventsNative {
         });
     }
 
-    private getStore(subject: any): EventHandlersStore
-    {
+    private getStore(subject: any): EventHandlersStore {
         if (subject[this.__key] === undefined) {
             const store: EventHandlersStore = new EventHandlersStore();
 
@@ -190,7 +189,7 @@ export class EventsNative {
      */
     public on(
         subjectOrEvents: string,
-        eventsOrCallback: () => void,
+        eventsOrCallback: (...args: any[]) => boolean | any,
         handlerOrSelector?: void,
         selector?: string,
         onTop?: boolean
@@ -198,14 +197,14 @@ export class EventsNative {
     public on(
         subjectOrEvents: object,
         eventsOrCallback: string,
-        handlerOrSelector: () => void,
+        handlerOrSelector: (...args: any[]) => boolean | any,
         selector?: string,
         onTop?: boolean
     ): EventsNative;
     public on(
         subjectOrEvents: object | string,
-        eventsOrCallback: string | (() => void),
-        handlerOrSelector?: (() => void) | void,
+        eventsOrCallback: string | ((...args: any[]) => void),
+        handlerOrSelector?: ((...args: any[]) => boolean | any) | void,
         selector?: string,
         onTop: boolean = false
     ): EventsNative {
@@ -216,10 +215,10 @@ export class EventsNative {
                 ? eventsOrCallback
                 : (subjectOrEvents as string);
 
-        let callback = handlerOrSelector as () => void;
+        let callback = handlerOrSelector as () => boolean;
 
         if (callback === undefined && typeof eventsOrCallback === 'function') {
-            callback = eventsOrCallback as () => void;
+            callback = eventsOrCallback as () => boolean;
         }
 
         const store: EventHandlersStore = this.getStore(subject);
@@ -242,10 +241,13 @@ export class EventsNative {
 
         const isDOMElement: boolean =
                 typeof (subject as any).addEventListener === 'function',
-            self: EventsNative = this,
-            syntheticCallback = function(this: any) {
-                return callback && callback.apply(this, arguments);
-            };
+            self: EventsNative = this;
+        let syntheticCallback = function(
+            this: any,
+            event: MouseEvent | TouchEvent
+        ) {
+            return callback && callback.apply(this, arguments);
+        };
 
         if (isDOMElement) {
             syntheticCallback = function(

@@ -10,8 +10,7 @@ import { MODE_WYSIWYG } from '../constants';
 import { Jodit } from '../Jodit';
 import { Component, Dom, ToolbarIcon } from '../modules';
 import { debounce, dom, trim } from '../modules/helpers/Helpers';
-import { markerInfo } from '../modules/Selection';
-import { ISelectionRange } from '../types/types';
+import { ISelectionRange, markerInfo } from '../types/types';
 
 declare module '../Config' {
     interface Config {
@@ -199,7 +198,7 @@ export class search extends Component {
         // find scrollable element
         let parentBox: HTMLElement | false = Dom.closest(
             startContainer,
-            (elm: Node) => elm && elm.nodeType === Node.ELEMENT_NODE,
+            elm => elm && elm.nodeType === Node.ELEMENT_NODE,
             this.jodit.editor
         ) as HTMLElement | false;
 
@@ -651,12 +650,12 @@ export class search extends Component {
             editor.registerCommand('search', {
                 exec: (
                     command: string,
-                    value: string,
+                    value?: string,
                     next: boolean = true
                 ) => {
                     self.findAndSelect(
                         editor.selection.current() || editor.editor.firstChild,
-                        value,
+                        value || '',
                         next
                     );
                     return false;

@@ -4,7 +4,7 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Command } from './Observer';
+import { Command } from './observer/Command';
 
 export class Stack {
     private commands: Command[] = [];

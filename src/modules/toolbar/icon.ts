@@ -4,10 +4,10 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import {  IDictionary } from "../../types";
+import { IDictionary } from '../../types';
 
 export class ToolbarIcon {
-    public static icons:  IDictionary<string> = {};
+    public static icons: IDictionary<string> = {};
 
     public static exists(name: string): boolean {
         return ToolbarIcon.icons[name] !== undefined;
@@ -20,7 +20,12 @@ export class ToolbarIcon {
      * @param {string} [defaultValue='<span></span>']
      * @return {string}
      */
-    public static getIcon(name: string, defaultValue: string = "<span></span>"): string {
-        return ToolbarIcon.icons[name] !== undefined ? ToolbarIcon.icons[name] : defaultValue;
+    public static getIcon(
+        name: string,
+        defaultValue: string = '<span></span>'
+    ): string {
+        return ToolbarIcon.icons[name] !== undefined
+            ? ToolbarIcon.icons[name]
+            : defaultValue;
     }
 }

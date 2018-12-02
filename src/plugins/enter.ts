@@ -25,7 +25,7 @@ export const insertParagraph = (
     style?: CSSStyleDeclaration
 ): HTMLElement => {
     if (!wrapperTag) {
-        wrapperTag = editor.options.enter.toLowerCase();
+        wrapperTag = editor.options.enterBlock.toLowerCase();
     }
 
     const p: HTMLElement = editor.editorDocument.createElement(wrapperTag),
@@ -162,7 +162,7 @@ export function enter(editor: Jodit) {
 
                     Dom.up(
                         needWrap,
-                        (node: Node) => {
+                        (node) => {
                             if (
                                 node &&
                                 node.hasChildNodes() &&

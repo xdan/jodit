@@ -14,6 +14,12 @@ export abstract class Plugin extends Component implements IPlugin {
     public beforeDestruct(jodit?: IViewBased) {
         // ignore
     }
+
+    public destruct() {
+        this.beforeDestruct();
+        super.destruct();
+    }
+
     constructor(jodit: IViewBased) {
         super(jodit);
         jodit.events

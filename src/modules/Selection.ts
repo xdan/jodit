@@ -9,6 +9,7 @@ import {
     INVISIBLE_SPACE,
     INVISIBLE_SPACE_REG_EXP_END,
     INVISIBLE_SPACE_REG_EXP_START,
+    IS_IE,
 } from '../constants';
 import { Jodit } from '../Jodit';
 import { IDictionary, markerInfo } from '../types';
@@ -19,7 +20,6 @@ import {
     css,
     dom,
     each,
-    isIE,
     isPlainObject,
     normalizeNode,
     normilizeCSSValue,
@@ -293,7 +293,7 @@ export class Select extends Component {
         const jodit: Jodit = this.jodit;
 
         if (!this.isFocused()) {
-            if (jodit.options.iframe && isIE()) {
+            if (jodit.options.iframe && IS_IE) {
                 let start: number = 0;
                 while (
                     start < 100000 &&
@@ -1081,10 +1081,15 @@ export class Select extends Component {
             );
         };
 
-        const isSuitElement = (elm: HTMLElement): boolean => {
+        const isSuitElement = (elm: Node | null): boolean | null => {
+            if (!elm) {
+                return false;
+            }
+
             const reg: RegExp = new RegExp('^' + elm.nodeName + '$', 'i');
+
             return (
-                (reg.test(nodeName) || !!(options && checkCssRulesFor(elm))) &&
+                (reg.test(nodeName) || !!(options && checkCssRulesFor(<HTMLElement>elm))) &&
                 findNextCondition(elm)
             );
         };

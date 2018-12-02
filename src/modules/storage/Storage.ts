@@ -4,8 +4,8 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { camelCase } from '../helpers/Helpers';
 import { IStorage } from '../../types';
+import { camelCase } from '../helpers/Helpers';
 
 export class Storage {
     public prefix: string = 'Jodit_';

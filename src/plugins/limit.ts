@@ -11,7 +11,7 @@ import {
 } from '../constants';
 import { Jodit } from '../Jodit';
 import { debounce, extractText } from '../modules/helpers/Helpers';
-import { SnapshotType } from '../modules/Snapshot';
+import { SnapshotType } from '../types';
 
 declare module '../Config' {
     interface Config {

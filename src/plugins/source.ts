@@ -16,8 +16,8 @@ import {
     debounce,
     dom,
 } from '../modules/helpers/Helpers';
-import { markerInfo } from '../modules/Selection';
 import { IControlType } from '../types/toolbar';
+import { markerInfo } from '../types';
 
 declare module '../Config' {
     interface Config {

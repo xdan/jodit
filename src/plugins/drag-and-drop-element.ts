@@ -66,7 +66,7 @@ export class DragAndDropElement extends Plugin {
         }
 
         do {
-            if (this.dragList.includes(target.nodeName.toLowerCase())) {
+            if (this.dragList.indexOf(target.nodeName.toLowerCase()) !== -1) {
                 if (
                     !last ||
                     (target.firstChild === last && target.lastChild === last)

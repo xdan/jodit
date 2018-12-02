@@ -10,6 +10,7 @@ import {
     INSERT_AS_TEXT,
     INSERT_CLEAR_HTML,
     INSERT_ONLY_TEXT,
+    IS_IE,
     TEXT_HTML,
     TEXT_PLAIN,
 } from '../constants';
@@ -23,7 +24,6 @@ import {
     htmlspecialchars,
     isHTML,
     isHTMLFromWord,
-    isIE,
     trim,
     type,
 } from '../modules/helpers/Helpers';
@@ -331,7 +331,7 @@ export function paste(editor: Jodit) {
                         clipboard_html = getDataTransfer(event).getData(
                             TEXT_PLAIN
                         );
-                    } else if (/text/i.test(types_str) && isIE) {
+                    } else if (/text/i.test(types_str) && IS_IE) {
                         clipboard_html = getDataTransfer(event).getData(
                             TEXT_PLAIN
                         );

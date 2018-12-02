@@ -31,7 +31,7 @@ export function tableKeyboardNavigation(editor: Jodit) {
 
                 block = Dom.up(
                     current,
-                    (elm: Node | false) =>
+                    (elm: Node | null) =>
                         elm && elm.nodeName && /^td|th$/i.test(elm.nodeName),
                     editor.editor
                 ) as HTMLTableCellElement;

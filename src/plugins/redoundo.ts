@@ -29,9 +29,9 @@ export class redoundo extends Component {
     constructor(editor: Jodit) {
         super(editor);
 
-        const callback = (command: 'undo' | 'redo'): void | false => {
+        const callback = (command: string): void | false => {
             if (editor.getRealMode() === consts.MODE_WYSIWYG) {
-                this.jodit.observer[command]();
+                this.jodit.observer[<'redo'|'undo'>command]();
             }
             return false;
         };

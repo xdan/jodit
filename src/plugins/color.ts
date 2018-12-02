@@ -28,10 +28,12 @@ Config.prototype.controls.brush = {
             const currentBpx: HTMLElement =
                 (Dom.closest(
                     current,
-                    (elm: Node): boolean => {
+                    (elm) => {
                         return (
                             Dom.isBlock(elm) ||
-                            (Dom.isNode(elm, editor.editorWindow) &&
+                            (
+                                elm &&
+                                Dom.isNode(elm, editor.editorWindow) &&
                                 elm.nodeType === Node.ELEMENT_NODE)
                         );
                     },

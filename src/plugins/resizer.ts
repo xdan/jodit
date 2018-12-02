@@ -6,6 +6,7 @@
 
 import { Config } from '../Config';
 import * as consts from '../constants';
+import { IS_IE } from '../constants';
 import { Jodit } from '../Jodit';
 import {
     $$,
@@ -13,7 +14,6 @@ import {
     debounce,
     dom,
     innerWidth,
-    isIE,
     offset,
 } from '../modules/helpers/Helpers';
 import { IBound } from '../types/types';
@@ -272,7 +272,7 @@ export function resizer(editor: Jodit) {
                 .on(element, 'dragstart', hideResizer)
                 .on(element, 'mousedown', (event: MouseEvent) => {
                     // for IE don't show native resizer
-                    if (isIE() && element.nodeName === 'IMG') {
+                    if (IS_IE && element.nodeName === 'IMG') {
                         event.preventDefault();
                     }
                 })

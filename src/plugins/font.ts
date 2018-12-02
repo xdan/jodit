@@ -38,10 +38,11 @@ Config.prototype.controls.fontsize = {
             const currentBpx: HTMLElement =
                 (Dom.closest(
                     current,
-                    (elm: Node): boolean => {
+                    (elm) => {
                         return (
                             Dom.isBlock(elm) ||
-                            (Dom.isNode(elm, editor.editorWindow) &&
+                            (   elm &&
+                                Dom.isNode(elm, editor.editorWindow) &&
                                 elm.nodeType === Node.ELEMENT_NODE)
                         );
                     },
@@ -65,10 +66,12 @@ Config.prototype.controls.fontsize = {
             const currentBpx: HTMLElement =
                 (Dom.closest(
                     current,
-                    (elm: Node): boolean => {
+                    (elm) => {
                         return (
                             Dom.isBlock(elm) ||
-                            (Dom.isNode(elm, editor.editorWindow) &&
+                            (
+                                elm &&
+                                Dom.isNode(elm, editor.editorWindow) &&
                                 elm.nodeType === Node.ELEMENT_NODE)
                         );
                     },
@@ -122,10 +125,12 @@ Config.prototype.controls.font = {
             const currentBpx: HTMLElement =
                 (Dom.closest(
                     current,
-                    (elm: Node): boolean => {
+                    (elm) => {
                         return (
                             Dom.isBlock(elm) ||
-                            (Dom.isNode(elm, editor.editorWindow) &&
+                            (
+                                elm &&
+                                Dom.isNode(elm, editor.editorWindow) &&
                                 elm.nodeType === Node.ELEMENT_NODE)
                         );
                     },
@@ -154,10 +159,12 @@ Config.prototype.controls.font = {
             const currentBpx: HTMLElement =
                 (Dom.closest(
                     current,
-                    (elm: Node): boolean => {
+                    (elm: Node | null) => {
                         return (
                             Dom.isBlock(elm) ||
-                            (Dom.isNode(elm, editor.editorWindow) &&
+                            (
+                                Dom.isNode(elm, editor.editorWindow) &&
+                                elm &&
                                 elm.nodeType === Node.ELEMENT_NODE)
                         );
                     },

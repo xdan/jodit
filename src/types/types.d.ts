@@ -10,6 +10,8 @@ export interface IDictionary<T = any> {
     [key: string]: T;
 }
 
+export type NodeCondition = (node: Node | null) => boolean | null | void | "";
+
 export interface IBound {
     top: number;
     left: number;
@@ -52,10 +54,26 @@ export interface IPermissions {
     [key: string]: boolean;
 }
 
+export type ExecCommandCallback = (
+    (
+        command: string,
+        value?: string,
+        next?: boolean
+    ) => void | boolean
+) | (
+    (
+        command: string,
+        value: string,
+        next: string
+    ) => void | boolean
+);
+
 export interface ICommandType {
-    exec: (command: string, value: string, next: boolean) => void;
+    exec: ExecCommandCallback;
     hotkeys?: string | string[];
 }
+
+export type CustomCommand = ICommandType | ExecCommandCallback;
 
 export interface IHasScroll {
     clientTop: number;
@@ -90,6 +108,7 @@ export interface markerInfo {
 }
 
 export interface IPlugin {
+    destruct(): void;
     afterInit(jodit?: IViewBased): void;
     beforeDestruct(jodit?: IViewBased): void;
 }
@@ -125,5 +144,5 @@ export interface ActionBox {
 export interface EventHandlerBlock {
     event: string;
     originalCallback: () => void;
-    syntheticCallback: () => void;
+    syntheticCallback: (event: MouseEvent | TouchEvent) => void;
 }

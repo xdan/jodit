@@ -4,16 +4,17 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { MODE_WYSIWYG } from "../../constants";
-import { Jodit } from "../../Jodit";
-import { IDictionary} from "../../types";
-import { IViewBased, IViewOptions } from "../../types/view";
-import { Component } from "../Component";
-import { EventsNative } from "../events/EventsNative";
-import { ToolbarCollection } from "../toolbar/collection";
+import { MODE_WYSIWYG } from '../../constants';
+import { Jodit } from '../../Jodit';
+import { IDictionary } from '../../types';
+import { IViewBased, IViewOptions } from '../../types/view';
+import { Component } from '../Component';
+import { EventsNative } from '../events/EventsNative';
+import { ToolbarCollection } from '../toolbar/collection';
 
 export class View extends Component implements IViewBased {
-    public buffer:  IDictionary;
+    protected __isFullSize: boolean = false;
+    public buffer: IDictionary;
 
     public progress_bar: HTMLElement;
     public container: HTMLDivElement;
@@ -39,28 +40,6 @@ export class View extends Component implements IViewBased {
     public editor: HTMLElement;
     public toolbar: ToolbarCollection;
 
-    protected __isFullSize: boolean = false;
-
-    constructor(editor?: IViewBased, options = {}) {
-        super(editor);
-
-        const self: View = this,
-            doc: HTMLDocument = editor ? editor.ownerDocument : document;
-
-        self.ownerDocument = doc;
-        self.ownerWindow = editor ? editor.ownerWindow : window;
-
-        self.progress_bar = editor ? editor.progress_bar : document.createElement("div");
-        self.editor = editor ? editor.editor : document.createElement("div");
-
-        self.events = editor ? editor.events : new EventsNative(doc);
-        self.buffer = editor ? editor.buffer : {};
-
-        self.toolbar  = new ToolbarCollection(self);
-
-        self.options = {...self.options, ...options};
-    }
-
     public getRealMode(): number {
         return MODE_WYSIWYG;
     }
@@ -83,12 +62,34 @@ export class View extends Component implements IViewBased {
         this.__isFullSize = isFullSize;
 
         if (this.events) {
-            this.events.fire("toggleFullSize", isFullSize);
+            this.events.fire('toggleFullSize', isFullSize);
         }
     }
 
     public destruct() {
         this.toolbar.destruct();
         super.destruct();
+    }
+
+    constructor(editor?: IViewBased, options = {}) {
+        super(editor);
+
+        const self: View = this,
+            doc: HTMLDocument = editor ? editor.ownerDocument : document;
+
+        self.ownerDocument = doc;
+        self.ownerWindow = editor ? editor.ownerWindow : window;
+
+        self.progress_bar = editor
+            ? editor.progress_bar
+            : document.createElement('div');
+        self.editor = editor ? editor.editor : document.createElement('div');
+
+        self.events = editor ? editor.events : new EventsNative(doc);
+        self.buffer = editor ? editor.buffer : {};
+
+        self.toolbar = new ToolbarCollection(self);
+
+        self.options = { ...self.options, ...options };
     }
 }

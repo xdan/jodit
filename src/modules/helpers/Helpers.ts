@@ -5,27 +5,16 @@
  */
 
 import * as consts from '../../constants';
-import { KEY_ALIASES } from '../../constants';
+import { IS_IE, KEY_ALIASES } from '../../constants';
 import { Jodit } from '../../Jodit';
 import { IBound, IDictionary, IHasScroll, IRGB } from '../../types';
 import { Dom } from '../Dom';
-import { JoditObject } from './JoditObject';
 import { JoditArray } from './JoditArray';
+import { JoditObject } from './JoditObject';
 
 const class2type: IDictionary<string> = {};
 const toString = class2type.toString;
 const hasOwn = class2type.hasOwnProperty;
-
-/**
- * Check browser is Internet Explorer
- */
-export const isIE = () => {
-    return (
-        typeof navigator !== 'undefined' &&
-        (navigator.userAgent.indexOf('MSIE') != -1 ||
-            /rv:11.0/i.test(navigator.userAgent))
-    );
-};
 
 let $$temp: number = 1;
 
@@ -53,7 +42,7 @@ export const $$ = (
 
     if (
         /:scope/.test(selector) &&
-        isIE() &&
+        IS_IE &&
         !(typeof HTMLDocument !== 'undefined' && root instanceof HTMLDocument)
     ) {
         const id: string = (root as HTMLElement).id,
@@ -95,11 +84,22 @@ export const type = (obj: any): string => {
 };
 
 type eachCallback = (
-    key: number | string,
-    value: any | any[]
-) => boolean | void;
+        (
+            key: number,
+            value: any | any[]
+        ) => boolean | void
+    ) |
+    (
+        (
+            key: string,
+            value: any | any[]
+        ) => boolean | void
+    );
 
-export const each = (obj: any[] | any, callback: eachCallback | Function) => {
+export const each = (
+    obj: any[] | any,
+    callback: eachCallback
+) => {
     let length: number, keys: string[], i: number;
 
     if (Array.isArray(obj)) {
@@ -120,30 +120,28 @@ export const each = (obj: any[] | any, callback: eachCallback | Function) => {
     return obj;
 };
 
-each(
-    [
-        'Boolean',
-        'Number',
-        'String',
-        'Function',
-        'Array',
-        'Date',
-        'RegExp',
-        'Object',
-        'Error',
-        'Symbol',
-        'HTMLDocument',
-        'Window',
-        'HTMLElement',
-        'HTMLBodyElement',
-        'Text',
-        'DocumentFragment',
-        'DOMStringList',
-    ],
-    (i, name) => {
-        class2type['[object ' + name + ']'] = name.toLowerCase();
-    }
-);
+[
+    'Boolean',
+    'Number',
+    'String',
+    'Function',
+    'Array',
+    'Date',
+    'RegExp',
+    'Object',
+    'Error',
+    'Symbol',
+    'HTMLDocument',
+    'Window',
+    'HTMLElement',
+    'HTMLBodyElement',
+    'Text',
+    'DocumentFragment',
+    'DOMStringList',
+]
+.forEach((name) => {
+    class2type['[object ' + name + ']'] = name.toLowerCase();
+});
 
 export const inArray = (
     needle: string | number,
@@ -167,6 +165,7 @@ export const isPlainObject = (obj: any): boolean => {
 };
 
 export const extend = function(this: any, ...args: any[]) {
+    const length = args.length;
     let options,
         name,
         src,
@@ -176,7 +175,6 @@ export const extend = function(this: any, ...args: any[]) {
         target = args[0] || {},
         i = 1,
         j,
-        length = args.length,
         keys,
         deep = false;
 
@@ -271,14 +269,10 @@ export const colorToHex = (color: string): string | false => {
         return color;
     }
 
-    let digits =
-            /([\s\n\t\r]*?)rgb\((\d+), (\d+), (\d+)\)/.exec(color) ||
-            /([\s\n\t\r]*?)rgba\((\d+), (\d+), (\d+), ([\d.]+)\)/.exec(color),
-        hex,
-        red,
-        green,
-        blue,
-        rgb;
+    const digits =
+        /([\s\n\t\r]*?)rgb\((\d+), (\d+), (\d+)\)/.exec(color) ||
+        /([\s\n\t\r]*?)rgba\((\d+), (\d+), (\d+), ([\d.]+)\)/.exec(color);
+    let hex, red, green, blue, rgb;
 
     if (!digits) {
         return '#000000';
@@ -306,8 +300,7 @@ export const colorToHex = (color: string): string | false => {
  * @return {string|boolean} HEX color, false - for transparent color
  */
 export const normalizeColor = (colorInput: string): string | false => {
-    let newcolor = ['#'],
-        i;
+    const newcolor = ['#'];
 
     let color: string = colorToHex(colorInput) as string;
 
@@ -319,7 +312,7 @@ export const normalizeColor = (colorInput: string): string | false => {
     color = color.substr(1);
 
     if (color.length === 3) {
-        for (i = 0; i < 3; i += 1) {
+        for (let i = 0; i < 3; i += 1) {
             newcolor.push(color[i]);
             newcolor.push(color[i]);
         }
@@ -500,7 +493,7 @@ export const clear = (value: string, removeEmptyBlocks = false): string => {
  * @param {string} str
  * @return {boolean}
  */
-export const isURL = function(str: string) {
+export const isURL = (str: string) => {
     const pattern = new RegExp(
         '^(https?:\\/\\/)' + // protocol
         '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' + // domain name
@@ -570,12 +563,11 @@ export const humanSizeToBytes = (human: string): number => {
  *
  */
 export const parseQuery = (queryString: string): IDictionary<string> => {
-    let query: IDictionary<string> = {},
-        a: string[] = queryString.substr(1).split('&'),
-        i: number,
-        keyvalue: string[];
+    const query: IDictionary<string> = {},
+        a: string[] = queryString.substr(1).split('&');
+    let keyvalue: string[];
 
-    for (i = 0; i < a.length; i += 1) {
+    for (let i = 0; i < a.length; i += 1) {
         keyvalue = a[i].split('=');
         query[decodeURIComponent(keyvalue[0])] = decodeURIComponent(
             keyvalue[1] || ''
@@ -615,7 +607,6 @@ export const convertMediaURLToVideoEmbed = (
     }
 
     const protocol: string = parser.protocol || '';
-    console.log(protocol);
 
     switch (parser.hostname) {
         case 'www.vimeo.com':
@@ -775,7 +766,7 @@ export const camelCase = (key: string): string => {
  * @return {string}
  */
 export const fromCamelCase = (key: string): string => {
-    return key.replace(/([A-Z]+)/g, function(m, letter) {
+    return key.replace(/([A-Z]+)/g, (m, letter) => {
         return '-' + letter.toLowerCase();
     });
 };
@@ -805,7 +796,8 @@ export const extractText = (html: string): string => {
 };
 
 /**
- * Debouncing enforces that a function not be called again until a certain amount of time has passed without it being called. As in "execute this function only if 100 milliseconds have passed without it being called."
+ * Debouncing enforces that a function not be called again until a certain amount of time has passed without
+ * it being called. As in "execute this function only if 100 milliseconds have passed without it being called."
  *
  * @method debounce
  * @param {function} fn
@@ -823,7 +815,7 @@ export const extractText = (html: string): string => {
  */
 export const debounce = function(
     this: any,
-    fn: Function,
+    fn: (...args: any[]) => any,
     timeout?: number,
     invokeAsap?: boolean,
     ctx?: any
@@ -855,7 +847,8 @@ export const debounce = function(
     };
 };
 /**
- * Throttling enforces a maximum number of times a function can be called over time. As in "execute this function at most once every 100 milliseconds."
+ * Throttling enforces a maximum number of times a function can be called over time.
+ * As in "execute this function at most once every 100 milliseconds."
  *
  * @method throttle
  * @param {function} fn
@@ -870,7 +863,7 @@ export const debounce = function(
  * }, 100));
  * ```
  */
-export const throttle = function(fn: Function, timeout: number, ctx?: any) {
+export const throttle = (fn: (...args: any[]) => any, timeout: number, ctx?: any) => {
     let timer: number | null = null,
         args: IArguments,
         needInvoke: boolean,
@@ -951,9 +944,8 @@ export const css = (
         };
 
         if (isPlainObject(key)) {
-            let keys: string[] = Object.keys(key),
-                j;
-            for (j = 0; j < keys.length; j += 1) {
+            const keys: string[] = Object.keys(key);
+            for (let j = 0; j < keys.length; j += 1) {
                 setValue(element, camelCase(keys[j]), (key as any)[keys[j]]);
             }
         } else {
@@ -1004,17 +996,18 @@ export const splitArray = (a: any[] | string): any[] =>
     typeof a === 'string' ? a.split(/[,\s]+/) : a;
 
 export const sprintf = (...args: Array<string | number>): string => {
-    const regex: RegExp = /%%|%(\d+\$)?([-+#0 ]*)(\*\d+\$|\*|\d+)?(\.(\*\d+\$|\*|\d+))?([scboxXuidfegEG])/g;
-    let a: Array<string | number> = args,
-        i: number = 0,
+    let i: number = 0;
+
+    const regex: RegExp = /%%|%(\d+\$)?([-+#0 ]*)(\*\d+\$|\*|\d+)?(\.(\*\d+\$|\*|\d+))?([scboxXuidfegEG])/g,
+        a: Array<string | number> = args,
         format: string = a[i++] as string;
 
-    const pad = function(
+    const pad = (
         str: string,
         len: number,
         chr: string,
         leftJustify: boolean
-    ): string {
+    ): string => {
         const padding =
             str.length >= len
                 ? ''
@@ -1023,13 +1016,13 @@ export const sprintf = (...args: Array<string | number>): string => {
     };
 
     // justify()
-    const justify = function(
+    const justify = (
         value: string,
         prefix: string,
         leftJustify: boolean,
         minWidth: number,
         zeroPad: boolean
-    ): string {
+    ): string => {
         const diff: number = minWidth - value.length;
 
         if (diff > 0) {
@@ -1046,7 +1039,7 @@ export const sprintf = (...args: Array<string | number>): string => {
         return value;
     };
 
-    const formatBaseX = function(
+    const formatBaseX = (
         value: any,
         base: any,
         prefix: any,
@@ -1054,7 +1047,7 @@ export const sprintf = (...args: Array<string | number>): string => {
         minWidth: number,
         precision: number,
         zeroPad: boolean
-    ) {
+    ) => {
         const number = value >>> 0;
         prefix =
             (prefix &&
@@ -1063,23 +1056,24 @@ export const sprintf = (...args: Array<string | number>): string => {
             '';
         const newValue: string =
             prefix + pad(number.toString(base), precision || 0, '0', false);
+
         return justify(newValue, prefix, leftJustify, minWidth, zeroPad);
     };
 
-    const formatString = function(
+    const formatString = (
         value: string,
         leftJustify: boolean,
         minWidth: number,
         precision: number,
         zeroPad: any
-    ) {
+    ) => {
         if (precision != null) {
             value = value.slice(0, precision);
         }
         return justify(value, '', leftJustify, minWidth, zeroPad);
     };
 
-    const doFormat = function(
+    const doFormat = (
         substring: string,
         valueIndex: number,
         flags: string,
@@ -1087,8 +1081,8 @@ export const sprintf = (...args: Array<string | number>): string => {
         _: any,
         precision: any | undefined | string | string[],
         type: string
-    ) {
-        if (substring == '%%') {
+    ) => {
+        if (substring === '%%') {
             return '%';
         }
 
@@ -1139,7 +1133,7 @@ export const sprintf = (...args: Array<string | number>): string => {
 
         if (!precision) {
             precision =
-                'fFeE'.indexOf(type) > -1 ? 6 : type == 'd' ? 0 : void 0;
+                'fFeE'.indexOf(type) > -1 ? 6 : type === 'd' ? 0 : void 0;
         } else if (precision === '*') {
             precision = +a[i++];
         } else if ((precision as any)[0] === '*') {
@@ -1340,7 +1334,10 @@ export const cleanFromWord = (html: string): string => {
         const marks: Node[] = [];
 
         if (div.firstChild) {
-            Dom.all(div, (node: Node) => {
+            Dom.all(div, node => {
+                if (!node) {
+                    return;
+                }
                 switch (node.nodeType) {
                     case Node.ELEMENT_NODE:
                         if (node.nodeName === 'FONT') {
@@ -1455,9 +1452,9 @@ export const applyStyles = (html: string): string => {
 
 export const inView = (elm: HTMLElement, root: HTMLElement, doc: Document) => {
     let rect: ClientRect = elm.getBoundingClientRect(),
-        top: number = rect.top,
-        height: number = rect.height,
         el: HTMLElement | null = elm as HTMLElement | null;
+    const top: number = rect.top,
+        height: number = rect.height;
 
     do {
         if (el && el.parentNode) {
@@ -1472,7 +1469,7 @@ export const inView = (elm: HTMLElement, root: HTMLElement, doc: Document) => {
                 return false;
             }
         }
-    } while (el && el != root && el.parentNode);
+    } while (el && el !== root && el.parentNode);
 
     // Check its within the document viewport
     return (
@@ -1499,7 +1496,7 @@ export const getXPathByElement = (
     element: HTMLElement,
     root: HTMLElement
 ): string => {
-    if (!element || element.nodeType != 1) {
+    if (!element || element.nodeType !== 1) {
         return '';
     }
 
@@ -1567,9 +1564,6 @@ export const normalizeLicense = (
     return parts.join('-');
 };
 
-
-
-
 /**
  * Normalize keys to some standart name
  *
@@ -1589,7 +1583,7 @@ export const normalizeKeyAliases = (keys: string): string => {
 };
 
 export const setTimeout = (
-    callback: () => any,
+    callback: (...args: any[]) => any,
     timeout: number,
     ...args: any[]
 ): number => {
