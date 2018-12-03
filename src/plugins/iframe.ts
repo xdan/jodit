@@ -176,23 +176,20 @@ export function iframe(editor: Jodit) {
                         .contentWindow as Window).document;
 
                 doc.open();
-                doc.write(`<!DOCTYPE html>
-                    <html dir="${
-                        jodit.options.direction
-                    }" class="jodit" lang="${defaultLanguage(
-                    jodit.options.language
-                )}">
-                        <head>
-                            ${
+                doc.write('<!DOCTYPE html>' +
+                    '<html ' +
+                        'dir="' + jodit.options.direction + '" ' +
+                        'class="jodit" ' +
+                        'lang="' + defaultLanguage(jodit.options.language) + '">' +
+                        '<head>' +
+                            (
                                 jodit.options.iframeBaseUrl
-                                    ? `<base href="${
-                                          jodit.options.iframeBaseUrl
-                                      }"/>`
+                                    ? '<base href="' + jodit.options.iframeBaseUrl + '"/>'
                                     : ''
-                            }
-                        </head>
-                        <body class="jodit_wysiwyg" style="outline:none" contenteditable="true"></body>
-                    </html>`);
+                            ) +
+                        '</head>' +
+                        '<body class="jodit_wysiwyg" style="outline:none" contenteditable="true"></body>' +
+                    '</html>');
 
                 doc.close();
 

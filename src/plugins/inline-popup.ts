@@ -414,14 +414,18 @@ export class inlinePopup extends Plugin {
         const body: HTMLElement = this.jodit.ownerDocument.body;
         const scrollTop: number =
             win.pageYOffset || docElement.scrollTop || body.scrollTop;
+
         const clientTop: number = docElement.clientTop || body.clientTop || 0;
+
         const scrollLeft: number =
             win.pageXOffset || docElement.scrollLeft || body.scrollLeft;
+
         const clientLeft: number =
             docElement.clientLeft || body.clientLeft || 0;
 
         const windWidth: number =
             docElement.clientWidth + scrollLeft - clientLeft;
+
         const windHeight: number =
             docElement.clientHeight + scrollTop - clientTop;
 
@@ -545,11 +549,13 @@ export class inlinePopup extends Plugin {
     private hidePopup = (root?: HTMLElement | ToolbarPopup) => {
         if (
             root &&
-            (root instanceof (this.jodit.editorWindow as any).Node ||
-                root instanceof ToolbarPopup) &&
+            (
+                Dom.isNode(root, this.jodit.editorWindow || window) ||
+                root instanceof ToolbarPopup
+            ) &&
             Dom.isOrContains(
                 this.target,
-                root instanceof ToolbarPopup ? root.target : root
+                (root instanceof ToolbarPopup) ? root.target : root
             )
         ) {
             return;
