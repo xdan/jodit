@@ -1072,7 +1072,7 @@ export class FileBrowser extends View {
 
     public canI(action: string): boolean {
         return (
-            this.__currentPermissions !== null &&
+            this.__currentPermissions === null ||
             (this.__currentPermissions['allow' + action] === undefined ||
                 this.__currentPermissions['allow' + action])
         );
