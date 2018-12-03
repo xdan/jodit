@@ -215,48 +215,57 @@ export class Table {
         let dec: boolean;
         const row = table.rows[rowIndex];
 
-        each(box[rowIndex], (j: number, cell: HTMLTableCellElement) => {
-            dec = false;
-            if (rowIndex - 1 >= 0 && box[rowIndex - 1][j] === cell) {
-                dec = true;
-            } else if (box[rowIndex + 1] && box[rowIndex + 1][j] === cell) {
-                if (cell.parentNode === row && cell.parentNode.nextSibling) {
+        each<HTMLTableCellElement>(
+            box[rowIndex],
+            (j: number, cell: HTMLTableCellElement) => {
+                dec = false;
+                if (rowIndex - 1 >= 0 && box[rowIndex - 1][j] === cell) {
                     dec = true;
-                    let nextCell = j + 1;
-                    while (box[rowIndex + 1][nextCell] === cell) {
-                        nextCell += 1;
-                    }
+                } else if (box[rowIndex + 1] && box[rowIndex + 1][j] === cell) {
+                    if (
+                        cell.parentNode === row &&
+                        cell.parentNode.nextSibling
+                    ) {
+                        dec = true;
+                        let nextCell = j + 1;
+                        while (box[rowIndex + 1][nextCell] === cell) {
+                            nextCell += 1;
+                        }
 
-                    const nextRow: HTMLTableRowElement = Dom.next(
-                        cell.parentNode,
-                        (elm: Node | null) =>
-                            elm &&
-                            elm.nodeType === Node.ELEMENT_NODE &&
-                            elm.nodeName === 'TR',
-                        table
-                    ) as HTMLTableRowElement;
+                        const nextRow: HTMLTableRowElement = Dom.next(
+                            cell.parentNode,
+                            (elm: Node | null) =>
+                                elm &&
+                                elm.nodeType === Node.ELEMENT_NODE &&
+                                elm.nodeName === 'TR',
+                            table
+                        ) as HTMLTableRowElement;
 
-                    if (box[rowIndex + 1][nextCell]) {
-                        nextRow.insertBefore(cell, box[rowIndex + 1][nextCell]);
-                    } else {
-                        nextRow.appendChild(cell);
+                        if (box[rowIndex + 1][nextCell]) {
+                            nextRow.insertBefore(
+                                cell,
+                                box[rowIndex + 1][nextCell]
+                            );
+                        } else {
+                            nextRow.appendChild(cell);
+                        }
                     }
-                }
-            } else {
-                cell.parentNode && cell.parentNode.removeChild(cell);
-            }
-            if (
-                dec &&
-                (cell.parentNode === row || cell !== box[rowIndex][j - 1])
-            ) {
-                const rowSpan: number = cell.rowSpan;
-                if (rowSpan - 1 > 1) {
-                    cell.setAttribute('rowspan', (rowSpan - 1).toString());
                 } else {
-                    cell.removeAttribute('rowspan');
+                    cell.parentNode && cell.parentNode.removeChild(cell);
+                }
+                if (
+                    dec &&
+                    (cell.parentNode === row || cell !== box[rowIndex][j - 1])
+                ) {
+                    const rowSpan: number = cell.rowSpan;
+                    if (rowSpan - 1 > 1) {
+                        cell.setAttribute('rowspan', (rowSpan - 1).toString());
+                    } else {
+                        cell.removeAttribute('rowspan');
+                    }
                 }
             }
-        });
+        );
 
         if (row && row.parentNode) {
             row.parentNode.removeChild(row);

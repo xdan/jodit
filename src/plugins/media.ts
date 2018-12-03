@@ -49,12 +49,17 @@ export function media(editor: Jodit) {
             let wrapper: HTMLElement;
 
             wrapper = dom(
-                `<${mediaFakeTag} 
-                        data-jodit-temp="1" 
-                        contenteditable="false" 
-                        draggable="true" 
-                        data-${keyFake}="1">
-                       </${mediaFakeTag}>`,
+                '<' +
+                    mediaFakeTag +
+                    ' data-jodit-temp="1" ' +
+                    'contenteditable="false" ' +
+                    'draggable="true" ' +
+                    'data-' +
+                    keyFake +
+                    '="1">' +
+                    '</' +
+                    mediaFakeTag +
+                    '>',
                 editor.editorDocument
             );
 

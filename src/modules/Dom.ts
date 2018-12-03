@@ -239,7 +239,7 @@ export class Dom {
         }
 
         if (withAttributes) {
-            each(elm.attributes, (i: number, attr: Attr) => {
+            each<Attr>(Array.from(elm.attributes), (i, attr) => {
                 tag.setAttribute(attr.name, attr.value);
             });
         }

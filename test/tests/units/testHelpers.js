@@ -18,4 +18,48 @@ describe('Test helpers', function () {
             });
         });
     });
+    describe('isInt', function () {
+        it('Should check value is int or not', function () {
+            var values = [
+                'cmd+ alt+s', false,
+                '+1', true,
+                '-1', true,
+                '-1dddd', false,
+                '10', true,
+                '10.1', false,
+                '10e10', true,
+                '10e10', true,
+                10, true,
+                11.33, false,
+            ];
+
+            for (var i = 0; i < values.length; i += 2) {
+                expect(values[i + 1]).to.be.equal(Jodit.modules.Helpers.isInt(values[i]));
+            }
+        });
+    });
+    describe('isNumeric', function () {
+        it('Should check value is int or not', function () {
+            var values = [
+                'cmd+ alt+s', false,
+                '+1', true,
+                '-1', true,
+                '-1000.333', true,
+                '-1dddd', false,
+                's1999999', false,
+                ' -1 ', false,
+                '10', true,
+                '10.1', true,
+                '12312310.1243234', true,
+                '10e10', true,
+                '10e10', true,
+                10, true,
+                11.33, true,
+            ];
+
+            for (var i = 0; i < values.length; i += 2) {
+                expect(values[i + 1]).to.be.equal(Jodit.modules.Helpers.isNumeric(values[i]));
+            }
+        });
+    });
 });

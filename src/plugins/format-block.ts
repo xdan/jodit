@@ -39,6 +39,7 @@ Config.prototype.controls.paragraph = {
                 button.textBox.innerHTML = `<span>${
                     (btn.list as any)[currentValue]
                 }</span>`;
+
                 (button.textBox.firstChild as HTMLElement).classList.add(
                     'jodit_icon'
                 );

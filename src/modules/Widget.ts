@@ -9,7 +9,8 @@ import { Jodit } from '../Jodit';
 import {
     IDictionary,
     IFileBrowserCallBackData,
-    IRGB, IUploader,
+    IRGB,
+    IUploader,
     IUploaderData,
 } from '../types/';
 
@@ -187,7 +188,7 @@ export namespace Widget {
      */
     export const TabsWidget = (
         editor: Jodit,
-        tabs: IDictionary<string | HTMLElement> | IDictionary<() => void>,
+        tabs: IDictionary<(() => void) | HTMLElement>,
         state?: { __activeTab: string }
     ): HTMLDivElement => {
         const box: HTMLDivElement = dom(
@@ -213,7 +214,7 @@ export namespace Widget {
         box.appendChild(buttons);
         box.appendChild(tabBox);
 
-        each(tabs, (name: string, tabOptions: (() => void) | HTMLElement) => {
+        each<(() => void) | HTMLElement>(tabs, (name, tabOptions) => {
             const tab: HTMLDivElement = dom(
                     '<div class="jodit_tab"></div>',
                     editor.ownerDocument
@@ -224,10 +225,10 @@ export namespace Widget {
                 ) as HTMLDivElement;
 
             if (!firstTab) {
-                firstTab = name;
+                firstTab = name.toString();
             }
 
-            button.innerHTML = editor.i18n(name);
+            button.innerHTML = editor.i18n(name.toString());
             buttons.appendChild(button);
 
             if (typeof tabOptions !== 'function') {
@@ -253,13 +254,15 @@ export namespace Widget {
 
                 button.classList.add('active');
                 tab.classList.add('active');
+
                 if (typeof tabOptions === 'function') {
                     tabOptions.call(editor);
                 }
+
                 e.stopPropagation();
 
                 if (state) {
-                    state.__activeTab = name;
+                    state.__activeTab = name.toString();
                 }
 
                 return false;
@@ -380,7 +383,7 @@ export namespace Widget {
                         callbacks.upload.call(editor, {
                             baseurl: resp.baseurl,
                             files: resp.files,
-                        });
+                        } as IFileBrowserCallBackData);
                     }
                 },
                 (error: Error) => {

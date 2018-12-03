@@ -14,8 +14,11 @@ import {
     TEXT_HTML,
     TEXT_PLAIN,
 } from '../constants';
+
 import { Jodit } from '../Jodit';
+
 import { Confirm, Dialog } from '../modules/dialog/';
+
 import {
     applyStyles,
     browser,
@@ -27,6 +30,7 @@ import {
     trim,
     type,
 } from '../modules/helpers/Helpers';
+
 import { IControlType } from '../types/toolbar';
 
 /**
@@ -481,9 +485,9 @@ export function paste(editor: Jodit) {
 
                     if (
                         getDataTransfer(event).types &&
-                        [].slice
-                            .call(getDataTransfer(event).types)
-                            .indexOf('text/html') !== -1
+                        Array.from(getDataTransfer(event).types).indexOf(
+                            'text/html'
+                        ) !== -1
                     ) {
                         const html: string = getDataTransfer(event).getData(
                             TEXT_HTML

@@ -20,14 +20,10 @@ import { $$, scrollIntoView } from '../modules/helpers/Helpers';
  */
 export const insertParagraph = (
     editor: Jodit,
-    fake?: Text | false,
-    wrapperTag?: string,
+    fake: Text | false,
+    wrapperTag: string,
     style?: CSSStyleDeclaration
 ): HTMLElement => {
-    if (!wrapperTag) {
-        wrapperTag = editor.options.enterBlock.toLowerCase();
-    }
-
     const p: HTMLElement = editor.editorDocument.createElement(wrapperTag),
         helper_node: HTMLBRElement = editor.editorDocument.createElement('br');
 
@@ -42,7 +38,7 @@ export const insertParagraph = (
 
     const range: Range = editor.editorDocument.createRange();
 
-    range.setStartBefore(wrapperTag !== 'br' ? helper_node : p);
+    range.setStartBefore(wrapperTag.toLowerCase() !== 'br' ? helper_node : p);
     range.collapse(true);
 
     editor.selection.selectRange(range);
@@ -258,11 +254,16 @@ export function enter(editor: Jodit) {
                                 currentBox.parentNode.removeChild(currentBox);
                             }
 
-                            insertParagraph(editor, fakeTextNode);
+                            insertParagraph(
+                                editor,
+                                fakeTextNode,
+                                editor.options.enter
+                            );
 
                             if (!$$('li', ul).length && ul.parentNode) {
                                 ul.parentNode.removeChild(ul);
                             }
+
                             return false;
                         }
                     }
@@ -270,12 +271,14 @@ export function enter(editor: Jodit) {
                     if (editor.selection.cursorInTheEdge(true, currentBox)) {
                         // if we are in the left edge of paragraph
                         fake = editor.selection.setCursorBefore(currentBox);
+
                         insertParagraph(
                             editor,
                             fake,
                             isLi ? 'li' : editor.options.enter,
                             currentBox.style
                         );
+
                         editor.selection.setCursorIn(currentBox, true);
                         return false;
                     }

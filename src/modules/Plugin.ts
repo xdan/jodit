@@ -11,19 +11,23 @@ import { Component } from './Component';
 export abstract class Plugin extends Component implements IPlugin {
     public abstract afterInit(jodit?: IViewBased): void;
 
-    public beforeDestruct(jodit?: IViewBased) {
-        // ignore
-    }
+    public abstract beforeDestruct(jodit?: IViewBased): void;
 
-    public destruct() {
-        this.beforeDestruct();
-        super.destruct();
-    }
+    private __destructed: boolean = false;
+
+    public destruct = () => {
+        if (!this.__destructed) {
+            this.jodit.events &&
+                this.jodit.events.off('beforeDestruct', this.destruct);
+            this.beforeDestruct(this.jodit);
+            this.__destructed = true;
+        }
+    };
 
     constructor(jodit: IViewBased) {
         super(jodit);
         jodit.events
             .on('afterInit', this.afterInit.bind(this, jodit))
-            .on('beforeDestruct', this.beforeDestruct.bind(this, jodit));
+            .on('beforeDestruct', this.destruct);
     }
 }

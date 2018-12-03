@@ -7,7 +7,13 @@
 import * as consts from '../../constants';
 import { IS_IE, KEY_ALIASES } from '../../constants';
 import { Jodit } from '../../Jodit';
-import { IBound, IDictionary, IHasScroll, IRGB } from '../../types';
+import {
+    CallbackFunction,
+    IBound,
+    IDictionary,
+    IHasScroll,
+    IRGB,
+} from '../../types';
 import { Dom } from '../Dom';
 import { JoditArray } from './JoditArray';
 import { JoditObject } from './JoditObject';
@@ -78,16 +84,23 @@ export const type = (obj: any): string => {
     if (obj === null) {
         return 'null';
     }
+
     return typeof obj === 'object' || typeof obj === 'function'
         ? class2type[toString.call(obj)] || 'object'
         : typeof obj;
 };
 
-type eachCallback =
-    | ((key: number, value: any | any[]) => boolean | void)
-    | ((key: string, value: any | any[]) => boolean | void);
+type eachCallback<T, N> = ((this: T, key: N, value: T) => boolean | void);
 
-export const each = (obj: any[] | any, callback: eachCallback) => {
+export function each<T>(obj: T[], callback: eachCallback<T, number>): boolean;
+export function each<T>(
+    obj: IDictionary<T>,
+    callback: eachCallback<T, string>
+): boolean;
+export function each<T>(
+    obj: T[] | IDictionary<T>,
+    callback: eachCallback<T, any>
+): boolean {
     let length: number, keys: string[], i: number;
 
     if (Array.isArray(obj)) {
@@ -105,8 +118,9 @@ export const each = (obj: any[] | any, callback: eachCallback) => {
             }
         }
     }
-    return obj;
-};
+
+    return true;
+}
 
 [
     'Boolean',
@@ -800,12 +814,12 @@ export const extractText = (html: string): string => {
  * }, 100));
  * ```
  */
-export const debounce = function(
-    this: any,
-    fn: (...args: any[]) => any,
+export const debounce = function<T>(
+    this: T,
+    fn: CallbackFunction,
     timeout?: number,
     invokeAsap?: boolean,
-    ctx?: any
+    ctx?: T
 ) {
     if (arguments.length === 3 && typeof invokeAsap !== 'boolean') {
         ctx = invokeAsap;
@@ -814,19 +828,19 @@ export const debounce = function(
 
     let timer: number = 0;
 
-    return function(this: any) {
+    return function(this: T) {
         const args = arguments;
         ctx = ctx || this;
 
         if ((invokeAsap && !timer) || !timeout) {
-            fn.apply(ctx, args);
+            fn.apply(ctx, args as any);
         }
 
         if (timeout) {
             clearTimeout(timer);
             timer = window.setTimeout(() => {
                 if (!invokeAsap) {
-                    fn.apply(ctx, args);
+                    fn.apply(ctx, args as any);
                 }
                 timer = 0;
             }, timeout);
@@ -850,10 +864,10 @@ export const debounce = function(
  * }, 100));
  * ```
  */
-export const throttle = (
-    fn: (...args: any[]) => any,
+export const throttle = <T>(
+    fn: CallbackFunction<T>,
     timeout: number,
-    ctx?: any
+    ctx?: T
 ) => {
     let timer: number | null = null,
         args: IArguments,
@@ -866,14 +880,14 @@ export const throttle = (
         ctx = ctx || this;
 
         if (!timeout) {
-            fn.apply(ctx, args);
+            fn.apply(ctx as T, args as any);
             return;
         }
 
         if (!timer) {
             callee = () => {
                 if (needInvoke) {
-                    fn.apply(ctx, args);
+                    fn.apply(ctx as T, args as any);
                     needInvoke = false;
                     timer = setTimeout(callee, timeout);
                 } else {
@@ -885,14 +899,53 @@ export const throttle = (
     };
 };
 
+/**
+ * Check value has numeric format
+ *
+ * @param value
+ */
+export const isNumeric = (value: number | string): boolean => {
+    if (typeof value === 'string') {
+        if (!value.match(/^([\+\-])?[0-9]+(\.?)([0-9]+)?(e[0-9]+)?$/)) {
+            return false;
+        }
+
+        value = parseFloat(value);
+    }
+
+    return !isNaN(value) && isFinite(value);
+};
+
+/**
+ * Check value is Int
+ * @param value
+ */
+export const isInt = (value: number | string): boolean => {
+    if (typeof value === 'string' && isNumeric(value)) {
+        value = parseFloat(value);
+    }
+
+    return typeof value === 'number' && Number.isFinite(value) && !(value % 1);
+};
+
 export const normilizeCSSValue = (
     key: string,
     value: string | number
 ): string | number => {
-    switch (key) {
+    switch (key.toLowerCase()) {
         case 'font-weight':
-            return value === 'bold' ? 700 : value;
+            switch (value.toString().toLowerCase()) {
+                case 'bold':
+                    return 700;
+                case 'normal':
+                    return 400;
+                case 'heavy':
+                    return 900;
+            }
+
+            return isNumeric(value) ? +value : value;
     }
+
     return value;
 };
 
@@ -922,10 +975,11 @@ export const css = (
                 _value !== undefined &&
                 _value !== null &&
                 numberFieldsReg.test(_key) &&
-                /^[\-+]?[0-9.]+$/.test(_value.toString())
+                isNumeric(_value.toString())
             ) {
                 _value = parseInt(_value.toString(), 10) + 'px';
             }
+
             if (
                 _value !== undefined &&
                 css(elm, _key, void 0, true) !== normilizeCSSValue(_key, _value)
@@ -1509,7 +1563,7 @@ export const getXPathByElement = (
         '/' +
         element.nodeName.toLowerCase() +
         (sames.length > 1
-            ? '[' + ([].indexOf.call(sames, element) + 1) + ']'
+            ? '[' + (Array.from(sames).indexOf(element) + 1) + ']'
             : '')
     );
 };
@@ -1538,6 +1592,7 @@ export const isLicense = (license: any): boolean =>
     typeof license === 'string' &&
     license.length === 32 &&
     /^[a-z0-9]+$/.test(license);
+
 export const normalizeLicense = (
     license: string,
     count: number = 8
@@ -1573,6 +1628,13 @@ export const normalizeKeyAliases = (keys: string): string => {
         .join('+');
 };
 
+/**
+ * Create async callback if set timeout value - else call function immediately
+ *
+ * @param callback
+ * @param timeout
+ * @param args
+ */
 export const setTimeout = (
     callback: (...args: any[]) => any,
     timeout: number,

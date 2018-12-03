@@ -54,16 +54,28 @@ export interface IPermissions {
     [key: string]: boolean;
 }
 
-export type ExecCommandCallback =
-    | ((command: string, value?: string, next?: boolean) => void | boolean)
-    | ((command: string, value: string, next: string) => void | boolean);
+export type CallbackFunction<T = any> = (this: T, ...args: any[]) => any | void;
 
-export interface ICommandType {
-    exec: ExecCommandCallback;
+export type ExecCommandCallback<T> =
+    | ((
+          this: T,
+          command: string,
+          value?: string,
+          next?: boolean
+      ) => void | boolean)
+    | ((
+          this: T,
+          command: string,
+          value: string,
+          next: string
+      ) => void | boolean);
+
+export interface ICommandType<T> {
+    exec: ExecCommandCallback<T>;
     hotkeys?: string | string[];
 }
 
-export type CustomCommand = ICommandType | ExecCommandCallback;
+export type CustomCommand<T> = ICommandType<T> | ExecCommandCallback<T>;
 
 export interface IHasScroll {
     clientTop: number;
@@ -133,6 +145,6 @@ export interface ActionBox {
 
 export interface EventHandlerBlock {
     event: string;
-    originalCallback: () => void;
-    syntheticCallback: (event: MouseEvent | TouchEvent) => void;
+    originalCallback: CallbackFunction;
+    syntheticCallback: CallbackFunction;
 }

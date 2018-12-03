@@ -1031,7 +1031,7 @@ export class Select extends Component {
      * @param {object} options
      */
     public applyCSS = (
-        cssRules?: { [key: string]: string | number | undefined },
+        cssRules: IDictionary<string | number | undefined>,
         nodeName: string = 'span',
         options?:
             | ((jodit: Jodit, elm: HTMLElement) => boolean)
@@ -1056,8 +1056,8 @@ export class Select extends Component {
                 elm.nodeName !== FONT &&
                 elm.nodeType === Node.ELEMENT_NODE &&
                 ((isPlainObject(options) &&
-                    each(
-                        options as object,
+                    each<string[]>(
+                        options as IDictionary<string[]>,
                         (
                             cssPropertyKey: string,
                             cssPropertyValues: string[]
@@ -1068,6 +1068,7 @@ export class Select extends Component {
                                 void 0,
                                 true
                             );
+
                             return (
                                 value !== null &&
                                 value !== '' &&
@@ -1125,8 +1126,10 @@ export class Select extends Component {
                     !Dom.isBlock(elm) &&
                     (!elm.getAttribute('style') || elm.nodeName !== defaultTag)
                 ) {
-                    Dom.unwrap(elm); // toggle `<strong>test</strong>` toWYSIWYG `test`, and
+                    // toggle `<strong>test</strong>` toWYSIWYG `test`, and
                     // `<span style="">test</span>` toWYSIWYG `test`
+                    Dom.unwrap(elm);
+
                     if (mode === undefined) {
                         mode = UNWRAP;
                     }

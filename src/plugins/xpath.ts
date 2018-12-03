@@ -100,17 +100,21 @@ export class xpath extends Plugin {
         title: string
     ): HTMLElement => {
         const li: HTMLLIElement = dom(
-            `<li>
-                <a
-                    role="button"
-                    data-path="${path}"
-                    href="javascript:void(0)"
-                    title="${title}"
-                    tabindex="-1"
-                >
-                    ${name}
-                </a>
-            </li>`,
+            '<li>' +
+                '<a ' +
+                'role="button" ' +
+                'data-path="' +
+                path +
+                '" ' +
+                'href="javascript:void(0)" ' +
+                'title="' +
+                title +
+                '" ' +
+                'tabindex="-1"' +
+                '>' +
+                name +
+                '</a>' +
+                '</li>',
             this.jodit.ownerDocument
         ) as HTMLLIElement;
 
@@ -130,14 +134,20 @@ export class xpath extends Plugin {
             tooltip: '',
         });
 
-        this.container.insertBefore(li.container, this.container.firstChild);
+        this.container &&
+            this.container.insertBefore(
+                li.container,
+                this.container.firstChild
+            );
     };
     private calcPathImd = () => {
         const current: Node | false = this.jodit.selection.current();
 
         let index: number = 0;
 
-        this.container.innerHTML = INVISIBLE_SPACE;
+        if (this.container) {
+            this.container.innerHTML = INVISIBLE_SPACE;
+        }
 
         if (current) {
             let name: string, xpth: string, li: HTMLElement;
@@ -162,10 +172,11 @@ export class xpath extends Plugin {
                             this.jodit.i18n('Select %s', name)
                         );
 
-                        this.container.insertBefore(
-                            li,
-                            this.container.firstChild
-                        );
+                        this.container &&
+                            this.container.insertBefore(
+                                li,
+                                this.container.firstChild
+                            );
                     }
                     index += 1;
                 },
@@ -176,8 +187,8 @@ export class xpath extends Plugin {
         this.appendSelectAll();
     };
 
-    public container: HTMLElement;
-    public menu: ContextMenu;
+    public container: HTMLElement | null = null;
+    public menu: ContextMenu | null = null;
 
     public afterInit() {
         if (this.jodit.options.showXPathInStatusbar) {
@@ -185,20 +196,41 @@ export class xpath extends Plugin {
                 this.calcPathImd,
                 this.jodit.defaultTimeout * 2
             );
+
             this.container = this.jodit.ownerDocument.createElement('ul');
             this.container.classList.add('jodit_xpath');
             this.jodit.statusbar.append(this.container);
+
             this.jodit.events
-                .on('mouseup change keydown changeSelection', this.calcPath)
-                .on('afterSetMode afterInit', () => {
+                .on(
+                    'mouseup.xpath change.xpath keydown.xpath changeSelection.xpath',
+                    this.calcPath
+                )
+                .on('afterSetMode.xpath afterInit.xpath', () => {
                     if (this.jodit.getRealMode() === MODE_WYSIWYG) {
                         this.calcPath();
                     } else {
-                        this.container.innerHTML = INVISIBLE_SPACE;
+                        if (this.container) {
+                            this.container.innerHTML = INVISIBLE_SPACE;
+                        }
                         this.appendSelectAll();
                     }
                 });
+
             this.calcPath();
         }
+    }
+    public beforeDestruct(): void {
+        if (this.jodit && this.jodit.events) {
+            this.jodit.events.off('.xpath');
+        }
+
+        this.menu && this.menu.destruct();
+        this.container &&
+            this.container.parentNode &&
+            this.container.parentNode.removeChild(this.container);
+
+        this.menu = null;
+        this.container = null;
     }
 }

@@ -46,10 +46,10 @@ export const Alert = (
         ) as HTMLDivElement,
         $ok: HTMLAnchorElement = dom(
             '<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
-            ToolbarIcon.getIcon('cancel') +
-            '<span>' +
-            Jodit.prototype.i18n('Ok') +
-            '</span></a>',
+                ToolbarIcon.getIcon('cancel') +
+                '<span>' +
+                Jodit.prototype.i18n('Ok') +
+                '</span></a>',
             dialog.document
         ) as HTMLAnchorElement;
 

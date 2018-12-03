@@ -17,20 +17,22 @@ export class pasteStorage extends Plugin {
 
     private list: string[] = [];
 
-    private container: HTMLElement;
-    private listBox: HTMLElement;
-    private previewBox: HTMLElement;
+    private container: HTMLElement | null = null;
+    private listBox: HTMLElement | null = null;
+    private previewBox: HTMLElement | null = null;
 
-    private dialog: Dialog;
+    private dialog: Dialog | null = null;
     private paste = () => {
         this.jodit.selection.focus();
         this.jodit.selection.insertHTML(this.list[this.currentIndex]);
+
         if (this.currentIndex !== 0) {
             const buffer: string = this.list[0];
             this.list[0] = this.list[this.currentIndex];
             this.list[this.currentIndex] = buffer;
         }
-        this.dialog.close();
+
+        this.dialog && this.dialog.close();
         this.jodit.setEditorValue();
     };
 
@@ -69,16 +71,19 @@ export class pasteStorage extends Plugin {
     };
 
     private selectIndex = (index: number) => {
-        [].slice
-            .call(this.listBox.childNodes)
-            .forEach((a: HTMLAnchorElement, i: number) => {
-                a.classList.remove('jodit_active');
-                if (index === i) {
-                    a.classList.add('jodit_active');
-                    this.previewBox.innerHTML = this.list[index];
-                    a.focus();
-                }
-            });
+        if (this.listBox) {
+            [].slice
+                .call(this.listBox.childNodes)
+                .forEach((a: HTMLAnchorElement, i: number) => {
+                    a.classList.remove('jodit_active');
+                    if (index === i && this.previewBox) {
+                        a.classList.add('jodit_active');
+                        this.previewBox.innerHTML = this.list[index];
+                        a.focus();
+                    }
+                });
+        }
+
         this.currentIndex = index;
     };
     private showDialog = () => {
@@ -88,8 +93,13 @@ export class pasteStorage extends Plugin {
 
         this.dialog || this.createDialog();
 
-        this.listBox.innerHTML = '';
-        this.previewBox.innerHTML = '';
+        if (this.listBox) {
+            this.listBox.innerHTML = '';
+        }
+
+        if (this.previewBox) {
+            this.previewBox.innerHTML = '';
+        }
 
         this.list.forEach((html: string, index: number) => {
             const a: HTMLElement = this.jodit.ownerDocument.createElement('a');
@@ -101,10 +111,10 @@ export class pasteStorage extends Plugin {
             a.setAttribute('data-index', index.toString());
             a.setAttribute('tab-index', '-1');
 
-            this.listBox.appendChild(a);
+            this.listBox && this.listBox.appendChild(a);
         });
 
-        this.dialog.open();
+        this.dialog && this.dialog.open();
         setTimeout(() => {
             this.selectIndex(0);
         }, 100);
@@ -131,6 +141,7 @@ export class pasteStorage extends Plugin {
                 '</a>',
             this.jodit.ownerDocument
         ) as HTMLAnchorElement;
+
         cancelButton.addEventListener('click', this.dialog.close);
 
         this.container = this.jodit.ownerDocument.createElement('div');
@@ -165,6 +176,7 @@ export class pasteStorage extends Plugin {
             'a'
         );
     }
+
     public afterInit() {
         this.jodit.events.on('afterCopy', (html: string) => {
             if (this.list.indexOf(html) !== -1) {
@@ -181,5 +193,24 @@ export class pasteStorage extends Plugin {
             exec: this.showDialog,
             hotkeys: ['ctrl+shift+v', 'cmd+shift+v'],
         });
+    }
+    public beforeDestruct(): void {
+        this.dialog && this.dialog.destruct();
+        this.previewBox &&
+            this.previewBox.parentNode &&
+            this.previewBox.parentNode.removeChild(this.previewBox);
+        this.listBox &&
+            this.listBox.parentNode &&
+            this.listBox.parentNode.removeChild(this.listBox);
+        this.container &&
+            this.container.parentNode &&
+            this.container.parentNode.removeChild(this.container);
+
+        this.container = null;
+        this.listBox = null;
+        this.previewBox = null;
+        this.dialog = null;
+
+        this.list = [];
     }
 }

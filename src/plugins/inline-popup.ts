@@ -246,7 +246,7 @@ Config.prototype.popup = {
                     Background: $bg,
                     Text: $cl,
                     Border: $br,
-                });
+                } as IDictionary<HTMLElement>);
 
                 return $tab;
             },
@@ -720,8 +720,6 @@ export class inlinePopup extends Plugin {
                 'mousedown keydown touchstart',
                 this.checkIsTargetEvent
             );
-
-        super.destruct();
     }
 
     constructor(jodit: Jodit) {

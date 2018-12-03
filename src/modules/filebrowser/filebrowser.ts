@@ -421,50 +421,83 @@ Config.prototype.filebrowser = {
             thumb = item.thumb;
         }
 
-        info = `<div class="${ITEM_CLASS}-info">
-            ${
-                this.options.showFileName
-                    ? `<span class="${ITEM_CLASS}-info-filename">${name}</span>`
-                    : ''
-            }
-            ${
-                this.options.showFileSize && item.size
-                    ? `<span class="${ITEM_CLASS}-info-filesize">${
-                          item.size
-                      }</span>`
-                    : ''
-            }
-            ${
-                this.options.showFileChangeTime && item.changed
-                    ? `<span class="${ITEM_CLASS}-info-filechanged">${
-                          item.changed
-                      }</span>`
-                    : ''
-            }
-        </div>`;
+        info =
+            '<div class="' +
+            ITEM_CLASS +
+            '-info">' +
+            (this.options.showFileName
+                ? `<span class="${ITEM_CLASS}-info-filename">${name}</span>`
+                : '') +
+            (this.options.showFileSize && item.size
+                ? '<span class="' +
+                  ITEM_CLASS +
+                  '-info-filesize">' +
+                  item.size +
+                  '</span>'
+                : '') +
+            (this.options.showFileChangeTime && item.changed
+                ? '<span class="' +
+                  ITEM_CLASS +
+                  '-info-filechanged">' +
+                  item.changed +
+                  '</span>'
+                : '') +
+            '</div>';
 
         const imageURL: string = urlNormalize(
             source.baseurl + source.path + name
         );
 
-        return `<a data-is-file="${
-            item.isImage ? 0 : 1
-        }" draggable="true" class="${ITEM_CLASS}" href="${imageURL}" data-source="${source_name}" data-path="${pathNormalize(
-            source.path ? source.path + '/' : '/'
-        )}" data-name="${name}" title="${name}" data-url="${imageURL}">
-            <img data-is-file="${
-                item.isImage ? 0 : 1
-            }" data-src="${imageURL}" src="${urlNormalize(
-            source.baseurl + source.path + thumb
-        )}?_tmst=${timestamp}" alt="${name}"/>
-            ${
-                this.options.showFileName ||
-                (this.options.showFileSize && item.size) ||
-                (this.options.showFileChangeTime && item.changed)
-                    ? info
-                    : ''
-            }
-        </a>`;
+        return (
+            '<a ' +
+            'data-is-file="' +
+            (item.isImage ? 0 : 1) +
+            '" ' +
+            'draggable="true" ' +
+            'class="' +
+            ITEM_CLASS +
+            '" ' +
+            'href="' +
+            imageURL +
+            '" ' +
+            'data-source="' +
+            source_name +
+            '" ' +
+            'data-path="' +
+            pathNormalize(source.path ? source.path + '/' : '/') +
+            '" ' +
+            'data-name="' +
+            name +
+            '" ' +
+            'title="' +
+            name +
+            '" ' +
+            'data-url="' +
+            imageURL +
+            '">' +
+            '<img ' +
+            'data-is-file="' +
+            (item.isImage ? 0 : 1) +
+            '" ' +
+            'data-src="' +
+            imageURL +
+            '" ' +
+            'src="' +
+            urlNormalize(source.baseurl + source.path + thumb) +
+            '?_tmst=' +
+            timestamp +
+            '" ' +
+            'alt="' +
+            name +
+            '"' +
+            '/>' +
+            (this.options.showFileName ||
+            (this.options.showFileSize && item.size) ||
+            (this.options.showFileChangeTime && item.changed)
+                ? info
+                : '') +
+            '</a>'
+        );
     },
 
     ajax: {
@@ -710,7 +743,7 @@ export class FileBrowser extends View {
     private generateFolderTree(sources: ISourcesFiles) {
         const folders: string[] = [];
 
-        each(sources, (source_name: string, source: ISource) => {
+        each<ISource>(sources, (source_name, source) => {
             if (source_name && source_name !== DEFAULT_SOURCE_NAME) {
                 folders.push(
                     '<div class="jodit_filebrowser_source_title">' +
@@ -721,9 +754,13 @@ export class FileBrowser extends View {
 
             source.folders.forEach((name: string) => {
                 let folder: string =
-                    '<a draggable="draggable" class="jodit_filebrowser_tree_item" href="javascript:void(0)" data-path="' +
+                    '<a draggable="draggable" ' +
+                    'class="jodit_filebrowser_tree_item" ' +
+                    'href="javascript:void(0)" ' +
+                    'data-path="' +
                     pathNormalize(source.path + name) +
-                    '/" data-source="' +
+                    '/" ' +
+                    'data-source="' +
                     source_name +
                     '">' +
                     '<span>' +
@@ -767,7 +804,7 @@ export class FileBrowser extends View {
     private generateItemsBox(sources: ISourcesFiles) {
         const files: string[] = [];
 
-        each(sources, (source_name: string, source: ISource) => {
+        each<ISource>(sources, (source_name, source) => {
             if (source_name && source_name !== DEFAULT_SOURCE_NAME) {
                 files.push(
                     `<div class="jodit_filebrowser_source_title">${source_name +
@@ -797,7 +834,7 @@ export class FileBrowser extends View {
                                     this,
                                     item,
                                     source,
-                                    source_name
+                                    source_name.toString()
                                 )
                             );
                         }
@@ -1054,7 +1091,8 @@ export class FileBrowser extends View {
      *
      * @method status
      * @param {string} message Message
-     * @param {boolean} [success] true It will be shown a message light . If no option is specified , an error will be shown the red
+     * @param {boolean} [success] true It will be shown a message light . If no option is specified ,
+     * ßan error will be shown the red
      * @example
      * ```javascript
      * parent.filebrowser.status('There was an error uploading file', false);
@@ -1691,7 +1729,9 @@ export class FileBrowser extends View {
                                                       self
                                                   ),
                                                   temp_content: HTMLElement = dom(
-                                                      '<div class="jodit_filebrowser_preview"><i class="jodit_icon-loader"></i></div>',
+                                                      '<div class="jodit_filebrowser_preview">' +
+                                                          '<i class="jodit_icon-loader"></i>' +
+                                                          '</div>',
                                                       doc
                                                   ),
                                                   image: HTMLImageElement = doc.createElement(
@@ -1975,7 +2015,11 @@ export class FileBrowser extends View {
                 this.jodit &&
                     this.jodit.options &&
                     this.jodit.options.uploader !== null
-                    ? { ...(this.jodit.options.uploader as IUploaderOptions<Uploader>) }
+                    ? {
+                          ...(this.jodit.options.uploader as IUploaderOptions<
+                              Uploader
+                          >),
+                      }
                     : {}
             ) as IUploaderOptions<Uploader>;
 

@@ -54,7 +54,7 @@ export interface AjaxOptions {
         this: Ajax,
         obj: string | IDictionary<string | object> | FormData,
         prefix?: string
-    ) => string | object;
+    ) => string | FormData;
 
     xhr?: () => XMLHttpRequest;
 }
@@ -103,6 +103,7 @@ export class Ajax {
         ) {
             return this.options.queryBuild.call(this, obj, prefix);
         }
+
         if (
             typeof obj === 'string' ||
             ((this.jodit.ownerWindow as any).FormData &&
@@ -147,18 +148,20 @@ export class Ajax {
                 resolve: (this: XMLHttpRequest, resp: object) => any,
                 reject: (error: Error) => any
             ) => {
-                const __parse = (resp: string) => {
+                const __parse = (resp: string): object => {
+                    let result: object | null = null;
+
                     switch (this.options.dataType) {
                         case 'json':
-                            try {
-                                resp = JSON.parse(resp);
-                            } catch (e) {
-                                reject.call(this.xhr, e);
-                                return;
-                            }
+                            result = JSON.parse(resp);
                             break;
                     }
-                    return resp;
+
+                    if (!result) {
+                        throw new Error('No JSON format');
+                    }
+
+                    return result;
                 };
 
                 this.xhr.onabort = () => {
@@ -173,7 +176,7 @@ export class Ajax {
                 this.xhr.onload = () => {
                     this.response = this.xhr.responseText;
                     this.status = this.xhr.status;
-                    resolve.call(this.xhr, __parse(this.response));
+                    resolve.call(this.xhr, __parse(this.response) || {});
                 };
 
                 this.xhr.onreadystatechange = () => {

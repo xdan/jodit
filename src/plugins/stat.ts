@@ -23,18 +23,18 @@ Config.prototype.showWordsCounter = true;
  * Show stat data - words and chars count
  */
 export class stat extends Plugin {
-    private charCounter: HTMLElement;
-    private wordCounter: HTMLElement;
+    private charCounter: HTMLElement | null;
+    private wordCounter: HTMLElement | null;
 
     private calc = throttle(() => {
         const text: string = this.jodit.getEditorText();
-        if (this.jodit.options.showCharsCounter) {
+        if (this.jodit.options.showCharsCounter && this.charCounter) {
             this.charCounter.innerText = this.jodit.i18n(
                 'Chars: %d',
                 text.replace(SPACE_REG_EXP, '').length
             );
         }
-        if (this.jodit.options.showWordsCounter) {
+        if (this.jodit.options.showWordsCounter && this.wordCounter) {
             this.wordCounter.innerText = this.jodit.i18n(
                 'Words: %d',
                 text
@@ -57,5 +57,15 @@ export class stat extends Plugin {
 
         this.jodit.events.on('change', this.calc);
         this.calc();
+    }
+    public beforeDestruct(): void {
+        this.charCounter &&
+            this.charCounter.parentNode &&
+            this.charCounter.parentNode.removeChild(this.charCounter);
+        this.wordCounter &&
+            this.wordCounter.parentNode &&
+            this.wordCounter.parentNode.removeChild(this.wordCounter);
+        this.charCounter = null;
+        this.wordCounter = null;
     }
 }

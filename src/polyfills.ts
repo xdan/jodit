@@ -30,3 +30,10 @@ import 'es6-promise/auto';
                       );
                   });
 })(Element.prototype);
+
+if (!Array.from) {
+    Array.from = <T>(object: T[]): T[] => {
+        'use strict';
+        return [].slice.call(object);
+    };
+}

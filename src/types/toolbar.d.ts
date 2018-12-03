@@ -199,11 +199,7 @@ export interface IControlType<Button = ToolbarButton, T = Jodit> {
     /**
      * The method which will be called for each element of button.list
      */
-    template?: (
-        editor: IViewBased | T,
-        key: string,
-        value: string
-    ) => string;
+    template?: (editor: IViewBased | T, key: string, value: string) => string;
 
     /**
      * After click on the button it will show popup element which consist value that this function returned

@@ -31,10 +31,10 @@ export class ToolbarList extends ToolbarPopup {
 
         const list: any =
             typeof control.list === 'string'
-                ? control.list.split(/[\s,]/)
+                ? control.list.split(/[\s,]+/)
                 : control.list;
 
-        each(list, (key: string, value: string) => {
+        each<string>(list, (key, value) => {
             let button: ToolbarButton;
 
             if (this.jodit.options.controls[value] !== undefined) {
@@ -80,7 +80,11 @@ export class ToolbarList extends ToolbarPopup {
                 const template =
                     control.template || this.defaultControl.template;
 
-                button.textBox.innerHTML = template(this.jodit, key, value);
+                button.textBox.innerHTML = template(
+                    this.jodit,
+                    key.toString(),
+                    value
+                );
             }
 
             this.toolbar.appendChild(button);

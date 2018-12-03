@@ -1031,7 +1031,7 @@ Config.prototype.controls = {
                         </form>`,
                     editor.ownerDocument
                 ) as HTMLFormElement,
-                tab: { [key: string]: HTMLFormElement } = {},
+                tab: IDictionary<HTMLFormElement> = {},
                 selinfo = editor.selection.save(),
                 insertCode = (code: string) => {
                     editor.selection.restore(selinfo);

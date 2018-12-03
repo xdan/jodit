@@ -4,7 +4,7 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { EventHandlerBlock, IDictionary } from '../../types';
+import { CallbackFunction, EventHandlerBlock, IDictionary } from '../../types';
 
 export class EventHandlersStore {
     private __store: IDictionary<IDictionary<EventHandlerBlock[]>> = {};
@@ -18,7 +18,7 @@ export class EventHandlersStore {
     public indexOf(
         event: string,
         namespace: string,
-        originalCallback: (...args: any[]) => any
+        originalCallback: CallbackFunction
     ): false | number {
         const blocks: EventHandlerBlock[] | void = this.get(event, namespace);
 

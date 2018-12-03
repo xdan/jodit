@@ -48,9 +48,18 @@ Config.prototype.controls.dialog = {
     },
     fullsize: {
         icon: 'fullsize',
-        getLabel: (editor, btn, button) => {
-            if (editor.options.controls.fullsize && editor.options.controls.fullsize.getLabel) {
-                return editor.options.controls.fullsize.getLabel(editor, btn, button);
+        getLabel: (editor: Jodit, btn: IControlType, button: ToolbarButton) => {
+            if (
+                Config.prototype.controls.fullsize &&
+                Config.prototype.controls.fullsize.getLabel &&
+                typeof Config.prototype.controls.fullsize.getLabel ===
+                    'function'
+            ) {
+                return Config.prototype.controls.fullsize.getLabel(
+                    editor,
+                    btn,
+                    button
+                );
             }
         },
         exec: (dialog: IViewBased) => {

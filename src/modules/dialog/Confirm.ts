@@ -50,11 +50,11 @@ export const Confirm = (
 
     const $cancel: HTMLAnchorElement = dom(
         '<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
-        ToolbarIcon.getIcon('cancel') +
-        '<span>' +
-        Jodit.prototype.i18n('Cancel') +
-        '</span>' +
-        '</a>',
+            ToolbarIcon.getIcon('cancel') +
+            '<span>' +
+            Jodit.prototype.i18n('Cancel') +
+            '</span>' +
+            '</a>',
         dialog.document
     ) as HTMLAnchorElement;
 
@@ -74,11 +74,11 @@ export const Confirm = (
 
     const $ok: HTMLAnchorElement = dom(
         '<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
-        ToolbarIcon.getIcon('check') +
-        '<span>' +
-        Jodit.prototype.i18n('Yes') +
-        '</span>' +
-        '</a>',
+            ToolbarIcon.getIcon('check') +
+            '<span>' +
+            Jodit.prototype.i18n('Yes') +
+            '</span>' +
+            '</a>',
         dialog.document
     ) as HTMLAnchorElement;
 

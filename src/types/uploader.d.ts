@@ -174,7 +174,7 @@ export interface IUploaderOptions<T> {
     queryBuild?: (
         obj: string | IDictionary<string | object> | FormData,
         prefix?: string
-    ) => string | object;
+    ) => string | FormData;
 
     isSuccess: (this: T, resp: IUploaderAnswer) => boolean;
 
@@ -191,22 +191,26 @@ export interface IUploaderOptions<T> {
 }
 
 export interface IUploader {
-    buildData(
-        data: FormData | IDictionary<string> | string
-    ): BuildDataResult;
+    buildData(data: FormData | IDictionary<string> | string): BuildDataResult;
+
     send(
         data: FormData | IDictionary<string>,
         success: (resp: IUploaderAnswer) => void
-    ): Promise<any>
+    ): Promise<any>;
+
     sendFiles(
         files: FileList | File[] | null,
         handlerSuccess?: HandlerSuccess,
         handlerError?: HandlerError,
         process?: (form: FormData) => void
-    ): Promise<any>
-    bind( form: HTMLElement,
-          handlerSuccess?: HandlerSuccess,
-          handlerError?: HandlerError): void;
+    ): Promise<any>;
+
+    bind(
+        form: HTMLElement,
+        handlerSuccess?: HandlerSuccess,
+        handlerError?: HandlerError
+    ): void;
+
     uploadRemoteImage(
         url: string,
         handlerSuccess?: HandlerSuccess,

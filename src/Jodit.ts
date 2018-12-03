@@ -90,7 +90,7 @@ export class Jodit extends View {
     private __defaultStyleDisplayKey = 'data-jodit-default-style-display';
     private __defaultClassesKey = 'data-jodit-default-classes';
 
-    private commands: IDictionary<CustomCommand[]> = {};
+    private commands: IDictionary<Array<CustomCommand<Jodit>>> = {};
 
     private __selectionLocked: markerInfo[] | null = null;
 
@@ -251,7 +251,7 @@ export class Jodit extends View {
 
     private execCustomCommands(
         commandName: string,
-        second = false,
+        second: any = false,
         third: null | any = null
     ): false | void {
         commandName = commandName.toLowerCase();
@@ -260,19 +260,21 @@ export class Jodit extends View {
             let result: any = void 0;
 
             this.commands[commandName].forEach(command => {
-                let callback: ExecCommandCallback;
+                let callback: ExecCommandCallback<Jodit>;
+
                 if (typeof command === 'function') {
                     callback = command;
                 } else {
                     callback = command.exec;
                 }
 
-                const resultCurrent: any = callback.call(
+                const resultCurrent: any = (callback as any).call(
                     this,
                     commandName,
                     second,
                     third
                 );
+
                 if (resultCurrent !== undefined) {
                     result = resultCurrent;
                 }
@@ -711,7 +713,7 @@ export class Jodit extends View {
      */
     public registerCommand(
         commandNameOriginal: string,
-        command: CustomCommand
+        command: CustomCommand<Jodit>
     ): Jodit {
         const commandName: string = commandNameOriginal.toLowerCase();
 
@@ -762,8 +764,8 @@ export class Jodit extends View {
      * {@link https://developer.mozilla.org/ru/docs/Web/API/Document/execCommand#commands} and a number of its own
      * for example applyCSSProperty. Comand fontSize receives the second parameter px,
      * formatBlock and can take several options
-     * @param  {boolean|string|int} second
-     * @param  {boolean|string|int} third
+     * @param  {boolean|string|int} showUI
+     * @param  {boolean|string|int} value
      * @fires beforeCommand
      * @fires afterCommand
      * @example
@@ -775,8 +777,8 @@ export class Jodit extends View {
      */
     public execCommand(
         command: string,
-        second: any = false,
-        third: null | any = null
+        showUI: any = false,
+        value: null | any = null
     ) {
         if (this.options.readonly && command !== 'selectall') {
             return;
@@ -804,10 +806,10 @@ export class Jodit extends View {
          * })
          * ```
          */
-        result = this.events.fire('beforeCommand', command, second, third);
+        result = this.events.fire('beforeCommand', command, showUI, value);
 
         if (result !== false) {
-            result = this.execCustomCommands(command, second, third);
+            result = this.execCustomCommands(command, showUI, value);
         }
 
         if (result !== false) {
@@ -820,8 +822,8 @@ export class Jodit extends View {
                     try {
                         result = this.editorDocument.execCommand(
                             command,
-                            second,
-                            third
+                            showUI,
+                            value
                         );
                     } catch (e) {}
             }
@@ -834,7 +836,7 @@ export class Jodit extends View {
          * @param {*} second The second parameter for the command
          * @param {*} third The third option is for the team
          */
-        this.events.fire('afterCommand', command, second, third);
+        this.events.fire('afterCommand', command, showUI, value);
 
         this.setEditorValue(); // synchrony
 

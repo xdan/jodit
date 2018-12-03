@@ -51,7 +51,7 @@ export class Component {
             );
         }
 
-        return <any>this.__modulesInstances[moduleName];
+        return this.__modulesInstances[moduleName] as any;
     }
 
     constructor(jodit?: IViewBased | Jodit) {
