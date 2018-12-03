@@ -4,102 +4,102 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-@import (reference) "../variables";
+@import (reference) '../variables';
 .jodit_form {
-  color: @color-default;
-  textarea,
-  input[type=url],
-  input[type=text] {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    display: block;
-    outline: none;
-    border: 1px solid @color-border-active;
-    height: 28px;
-    line-height: 28px;
-    padding: 0 5px;
-    min-width: @width-input-min;
-    margin-top: 10px;
-    &.jodit_error {
-      border-color: @color-error;
-      box-shadow: inset 0px 0px 3px 0px rgba(189, 189, 189, 0.3);
+    color: @color-default;
+    textarea,
+    input[type='url'],
+    input[type='text'] {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        display: block;
+        outline: none;
+        border: 1px solid @color-border-active;
+        height: 28px;
+        line-height: 28px;
+        padding: 0 5px;
+        min-width: @width-input-min;
+        margin-top: 10px;
+        &.jodit_error {
+            border-color: @color-error;
+            box-shadow: inset 0px 0px 3px 0px rgba(189, 189, 189, 0.3);
+        }
+        @media (max-width: @screen-sm) {
+            min-width: 150px;
+        }
     }
-    @media (max-width: @screen-sm) {
-      min-width: 150px;
+    textarea {
+        height: 128px;
     }
-  }
-  textarea {
-    height: 128px;
-  }
-  button {
-    height: 36px;
-    line-height: 1;
-    color: @color-button;
-    padding: 10px;
-    cursor: pointer;
-    text-decoration: none;
-    border: none;
-    background: #d6d6d6;
-    font-size: 16px;
-    outline: none;
-    transition: background 0.2s ease 0s;
-    //float: right;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    &:hover {
-      background-color: @color-background-button-hover;
-      color: @color-button;
+    button {
+        height: 36px;
+        line-height: 1;
+        color: @color-button;
+        padding: 10px;
+        cursor: pointer;
+        text-decoration: none;
+        border: none;
+        background: #d6d6d6;
+        font-size: 16px;
+        outline: none;
+        transition: background 0.2s ease 0s;
+        //float: right;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        &:hover {
+            background-color: @color-background-button-hover;
+            color: @color-button;
+        }
+        &:active {
+            background: @color-background-button-hover;
+            color: @color-button;
+        }
     }
-    &:active {
-      background: @color-background-button-hover;
-      color: @color-button;
-    }
-  }
 
-  input[type=checkbox] {
-    display: inline-block;
-    z-index: 2;
-    border: 0 none;
-    cursor: pointer;
-    height: 16px;
-    margin: 0;
-    padding: 0;
-    width: 16px;
-    position: relative;
-    outline: none;
-    top: 3px;
-    &:after {
-      content: '';
-      background: #fff;
-      border: solid 1px @color-background-gray;
-      border-radius: 2px;
-      background-clip: padding-box;
-      width: 16px;
-      height: 16px;
-      display: inline-block;
-      position: relative;
-      z-index: 1;
-      box-sizing: border-box;
-      transition: background 0.2s ease 0s, border-color 0.2s ease 0s;
+    input[type='checkbox'] {
+        display: inline-block;
+        z-index: 2;
+        border: 0 none;
+        cursor: pointer;
+        height: 16px;
+        margin: 0;
+        padding: 0;
+        width: 16px;
+        position: relative;
+        outline: none;
+        top: 3px;
+        &:after {
+            content: '';
+            background: #fff;
+            border: solid 1px @color-background-gray;
+            border-radius: 2px;
+            background-clip: padding-box;
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+            position: relative;
+            z-index: 1;
+            box-sizing: border-box;
+            transition: background 0.2s ease 0s, border-color 0.2s ease 0s;
+        }
+        &:checked:after {
+            background: data-uri('../widgets/ok.svg') no-repeat center center;
+            background-color: @color-border-active;
+            border-color: @color-border-active;
+        }
     }
-    &:checked:after {
-      background: data-uri("../widgets/ok.svg") no-repeat center center;
-      background-color: @color-border-active;
-      border-color: @color-border-active;
-    }
-  }
 
-  label {
-    margin-top: 10px;
-    display: block;
-    text-align: left;
-  }
-
-  form {
-    &:after {
-      content: "";
-      display: table;
-      clear: both;
+    label {
+        margin-top: 10px;
+        display: block;
+        text-align: left;
     }
-  }
+
+    form {
+        &:after {
+            content: '';
+            display: table;
+            clear: both;
+        }
+    }
 }

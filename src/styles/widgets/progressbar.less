@@ -4,55 +4,56 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-@import (reference) "../variables";
+@import (reference) '../variables';
 @keyframes pulse {
     30% {
-        opacity: .6
+        opacity: 0.6;
     }
 
     60% {
-        opacity: 0
+        opacity: 0;
     }
 
     to {
-        opacity: .6
+        opacity: 0.6;
     }
 }
 
-.jodit_progress_bar{
+.jodit_progress_bar {
     position: absolute;
-    top:0px;
-    left:0px;
+    top: 0px;
+    left: 0px;
     height: 2px;
     z-index: 2147483647;
     border-radius: 1px;
-    display:none;
-    div{
-        position:relative;
+    display: none;
+    div {
+        position: relative;
         background: @color-background-progress;
         height: 2px;
-        transition: width 500ms ease-out,opacity 500ms linear;
-        will-change:width, opacity;
-        &:before, &:after {
+        transition: width 500ms ease-out, opacity 500ms linear;
+        will-change: width, opacity;
+        &:before,
+        &:after {
             animation: pulse 2s ease-out 0s infinite;
             content: '';
-            display:inline-block;
+            display: inline-block;
             position: absolute;
             top: 0;
             height: 2px;
             box-shadow: @color-background-progress 1px 0 6px 1px;
             border-radius: 100%;
-            opacity: .6;
+            opacity: 0.6;
         }
-        &:before{
+        &:before {
             width: 180px;
             right: -80px;
-            clip: rect(-6px,90px,14px,-6px);
+            clip: rect(-6px, 90px, 14px, -6px);
         }
-        &:after{
+        &:after {
             width: 20px;
             right: 0;
-            clip: rect(-6px,22px,14px,10px);
+            clip: rect(-6px, 22px, 14px, 10px);
         }
     }
 }

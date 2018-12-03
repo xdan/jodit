@@ -5,120 +5,126 @@
  */
 
 .jodit_dark_theme {
-  &.jodit_container {
-    background-color: @dark_background_color;
-  }
-
-  &.jodit_container.jodit_disabled {
-    background-color: @dark_background_color;
-  }
-
-
-  .jodit_workplace {
-    border-color: fade(@dark_background_color, 80%);
-  }
-  .jodit_statusbar {
-    background-color: fade(@dark_toolbar_color, 80);
-    border-color: fade(@dark_background_color, 80%);
-    &, .jodit_statusbar_item span {
-      color: @dark_text_color;
+    &.jodit_container {
+        background-color: @dark_background_color;
     }
-  }
-  .jodit_toolbar_popup-inline,
-  .jodit_toolbar_popup {
-      background: @dark_background_color;
-      &:before{
-        background: @dark_background_color;
-      }
-  }
-  .jodit_toolbar {
-      background: @dark_toolbar_color;
-      border-color: fade(@dark_background_color, 80%);
-      li.jodit_toolbar_btn {
-          > a {
+
+    &.jodit_container.jodit_disabled {
+        background-color: @dark_background_color;
+    }
+
+    .jodit_workplace {
+        border-color: fade(@dark_background_color, 80%);
+    }
+    .jodit_statusbar {
+        background-color: fade(@dark_toolbar_color, 80);
+        border-color: fade(@dark_background_color, 80%);
+        &,
+        .jodit_statusbar_item span {
             color: @dark_text_color;
-            &:hover {
-              background-color: @dark_background_color;
+        }
+    }
+    .jodit_toolbar_popup-inline,
+    .jodit_toolbar_popup {
+        background: @dark_background_color;
+        &:before {
+            background: @dark_background_color;
+        }
+    }
+    .jodit_toolbar {
+        background: @dark_toolbar_color;
+        border-color: fade(@dark_background_color, 80%);
+        li.jodit_toolbar_btn {
+            > a {
+                color: @dark_text_color;
+                &:hover {
+                    background-color: @dark_background_color;
+                }
             }
-          }
-          &.jodit_toolbar_btn-break{
-              border-top-color: @dark_toolbar_seperator_color2;
-          }
-          &.jodit_toolbar_btn-separator{
-              border-right-color: @dark_toolbar_seperator_color2;
-          }
-          &.active, &:active, &:hover,&.jodit_active {
-              background-color: @dark_background_color
-          }
-          &.jodit_with_dropdownlist {
-            .jodit_with_dropdownlist-trigger {
-              border-top-color: @dark_icon_color;
+            &.jodit_toolbar_btn-break {
+                border-top-color: @dark_toolbar_seperator_color2;
             }
-          }
-      }
-  }
-  .jodit_icon {
-      fill: @dark_icon_color;
-  }
-  .jodit_wysiwyg_iframe,
-  .jodit_wysiwyg{
-      background-color: @dark_background_color;
-      color: @dark_text_color;
-      [data-jodit-selected-cell] {
-        border-color: @dark_color-border-selected;
-      }
-  }
-  .jodit_dropdownlist {
-      background: @dark_toolbar_color;
-  }
-  .jodit_tabs .jodit_tabs_buttons > a {
-    background-color: @dark_toolbar_seperator_color2;
-    color: @dark_text_color;
-    &:hover {
-      background-color: fade(@dark_toolbar_seperator_color2, 80%);
-      color: @dark_text_color;
-      border-color: fade(@dark_toolbar_seperator_color2, 90%);
+            &.jodit_toolbar_btn-separator {
+                border-right-color: @dark_toolbar_seperator_color2;
+            }
+            &.active,
+            &:active,
+            &:hover,
+            &.jodit_active {
+                background-color: @dark_background_color;
+            }
+            &.jodit_with_dropdownlist {
+                .jodit_with_dropdownlist-trigger {
+                    border-top-color: @dark_icon_color;
+                }
+            }
+        }
     }
-    &.active {
-      background: @dark_toolbar_seperator_color1;
-      border-color: @dark_toolbar_seperator_color2;
+    .jodit_icon {
+        fill: @dark_icon_color;
     }
-    svg {
-      fill: @dark_icon_color;
+    .jodit_wysiwyg_iframe,
+    .jodit_wysiwyg {
+        background-color: @dark_background_color;
+        color: @dark_text_color;
+        [data-jodit-selected-cell] {
+            border-color: @dark_color-border-selected;
+        }
     }
-  }
-  .jodit_form textarea, .jodit_form input[type=url], .jodit_form input[type=text] {
-    background-color: @dark_toolbar_seperator_color1;
-    border-color: @dark_toolbar_seperator_color2;
-    color: @dark_text_color;
-  }
-  .jodit_form button {
-    background-color: @dark_toolbar_seperator_color3;
-    color: @dark_text_color;
-  }
-  .jodit_placeholder {
-    color: fade(@dark_text_color, 80%);
-  }
-  .jodit_draganddrop_file_box, .jodit_uploadfile_button {
-    color: @dark_text_color;
-    &:hover {
-      background-color: @dark_toolbar_seperator_color3;
+    .jodit_dropdownlist {
+        background: @dark_toolbar_color;
     }
-  }
-  .jodit-add-new-line {
-    &:before{
-      border-top-color: @dark_toolbar_seperator_color2;
+    .jodit_tabs .jodit_tabs_buttons > a {
+        background-color: @dark_toolbar_seperator_color2;
+        color: @dark_text_color;
+        &:hover {
+            background-color: fade(@dark_toolbar_seperator_color2, 80%);
+            color: @dark_text_color;
+            border-color: fade(@dark_toolbar_seperator_color2, 90%);
+        }
+        &.active {
+            background: @dark_toolbar_seperator_color1;
+            border-color: @dark_toolbar_seperator_color2;
+        }
+        svg {
+            fill: @dark_icon_color;
+        }
     }
-    span {
-      background: @dark_toolbar_seperator_color3;
-      border-color: @dark_toolbar_seperator_color2;
-      svg {
-        fill: @dark_text_color;
-      }
+    .jodit_form textarea,
+    .jodit_form input[type='url'],
+    .jodit_form input[type='text'] {
+        background-color: @dark_toolbar_seperator_color1;
+        border-color: @dark_toolbar_seperator_color2;
+        color: @dark_text_color;
     }
-  }
-  .jodit_resizer > i {
-    background: @dark_toolbar_seperator_color3;
-    border-color: @dark_icon_color;
-  }
+    .jodit_form button {
+        background-color: @dark_toolbar_seperator_color3;
+        color: @dark_text_color;
+    }
+    .jodit_placeholder {
+        color: fade(@dark_text_color, 80%);
+    }
+    .jodit_draganddrop_file_box,
+    .jodit_uploadfile_button {
+        color: @dark_text_color;
+        &:hover {
+            background-color: @dark_toolbar_seperator_color3;
+        }
+    }
+    .jodit-add-new-line {
+        &:before {
+            border-top-color: @dark_toolbar_seperator_color2;
+        }
+        span {
+            background: @dark_toolbar_seperator_color3;
+            border-color: @dark_toolbar_seperator_color2;
+            svg {
+                fill: @dark_text_color;
+            }
+        }
+    }
+    .jodit_resizer > i {
+        background: @dark_toolbar_seperator_color3;
+        border-color: @dark_icon_color;
+    }
 }

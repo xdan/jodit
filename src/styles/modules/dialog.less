@@ -3,7 +3,7 @@
  * License GNU General Public License version 2 or later;
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
-@import (reference) "../variables";
+@import (reference) '../variables';
 
 .jodit_dialog_box {
     &.jodit_dialog_box-moved {
@@ -14,7 +14,8 @@
         box-sizing: border-box;
     }
     .jodit_elfinder {
-        &, & * {
+        &,
+        & * {
             box-sizing: initial;
         }
     }
@@ -53,7 +54,8 @@
         left: 0px;
         top: 0px;
         background-color: #fff;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19),
+            0 6px 6px rgba(0, 0, 0, 0.23);
         min-width: 200px;
         min-height: 100px;
         @media (max-width: @screen-xs) {
@@ -72,7 +74,7 @@
                 margin-bottom: 5px;
                 display: block;
             }
-            input[type=text] {
+            input[type='text'] {
                 display: block;
                 border: 1px solid #ccc;
                 background: #fff;
@@ -106,7 +108,7 @@
                 background-color: @color-background-button-hover;
             }
             &.disabled {
-                opacity: .7;
+                opacity: 0.7;
             }
         }
         .jodit_input {
@@ -139,7 +141,8 @@
             justify-content: space-between;
             text-align: left;
             color: #222222;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.16), 0 1px 2px rgba(0, 0, 0, 0.23);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.16),
+                0 1px 2px rgba(0, 0, 0, 0.23);
             cursor: move;
             height: 48px;
             overflow: hidden;
@@ -155,9 +158,8 @@
                 @media (max-width: @screen-xs) {
                     padding-left: 0;
                 }
-                padding:0 @padding-default;
+                padding: 0 @padding-default;
             }
-
 
             button {
                 margin-right: 10px;
@@ -189,9 +191,9 @@
                 > li.jodit_toolbar_btn {
                     vertical-align: middle;
                     select,
-                    input[type=text],
-                    input[type=number],
-                    input[type=url] {
+                    input[type='text'],
+                    input[type='number'],
+                    input[type='url'] {
                         margin: 0 @padding-default / 2;
                         padding-left: @padding-default;
                         width: auto;
@@ -206,7 +208,7 @@
             //}
         }
         .jodit_dialog_content {
-            height: calc(~"100% - 48px");
+            height: calc(~'100% - 48px');
             overflow: auto;
             .jodit_form_group {
                 margin-bottom: 10px;
@@ -223,9 +225,9 @@
                 select,
                 input {
                     &.select,
-                    &[type=text],
-                    &[type=number],
-                    &[type=url] {
+                    &[type='text'],
+                    &[type='number'],
+                    &[type='url'] {
                         display: block;
                         height: 34px;
                         padding: 6px 4px;
@@ -236,18 +238,20 @@
                         background-image: none;
                         border: 1px solid #ccc;
                         border-radius: 0px;
-                        box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
-                        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+                        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+                        transition: border-color ease-in-out 0.15s,
+                            box-shadow ease-in-out 0.15s;
                         &:focus {
                             border-color: #66afe9;
                             outline: 0;
-                            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+                            box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+                                0 0 8px rgba(102, 175, 233, 0.6);
                         }
                         &[disabled] {
                             background-color: #f0f0f0;
                             color: #ccc;
                         }
-                        &:not([class*=col-]) {
+                        &:not([class*='col-']) {
                             width: 100%;
                         }
                     }
@@ -264,7 +268,7 @@
                     > input {
                         float: left;
                         margin: 0 !important;
-                        &:not([class*=col-]) {
+                        &:not([class*='col-']) {
                             width: 100%;
                         }
                     }
@@ -330,7 +334,7 @@
             }
         }
         &.with_footer .jodit_dialog_content {
-            height: calc(~"100% - 96px");
+            height: calc(~'100% - 96px');
         }
         &.with_footer .jodit_dialog_footer {
             display: block;
@@ -349,7 +353,7 @@
             //border: 8px solid rgba(0, 0, 0, .2);
             //border-left-color: rgba(0, 0, 0, 0) !important;
             //border-top-color: rgba(0, 0, 0, 0) !important;
-            background-image: data-uri("../modules/resizer.png");
+            background-image: data-uri('../modules/resizer.png');
             /*&:after {
                 content: "";
                 display: inline-block;
@@ -362,7 +366,7 @@
                 border-left: 3px solid rgba(0,0,0,0);
             }*/
             &:hover {
-                border-color: rgba(0, 0, 0, .6);
+                border-color: rgba(0, 0, 0, 0.6);
             }
         }
         @media (max-width: @screen-xs) {

@@ -13,9 +13,9 @@
 }
 
 .jodit_toolbar_popup-inline {
-    display: inline-block!important;
+    display: inline-block !important;
 
-    position: relative!important;
+    position: relative !important;
     > div {
         color: @color-background-gray;
         background: @popap-bg-color;
@@ -27,7 +27,7 @@
         z-index: @z-index-popap !important;
         text-align: left;
         border: 1px solid @color-background-gray;
-        display: inline-block ;
+        display: inline-block;
         vertical-align: top;
     }
     //min-width: @toolbar_middle_size * 2  * 4 + 2px; // 4 buttons and borders
@@ -49,11 +49,11 @@
         width: @popap-triangle-size;
         height: @popap-triangle-size;
         position: absolute;
-        top: -@popap-triangle-size/2;
-        margin-left: -@popap-triangle-size/2;
+        top: -@popap-triangle-size / 2;
+        margin-left: -@popap-triangle-size / 2;
         display: inline-block;
         transform: rotate(45deg);
-        background:  @popap-bg-color;
+        background: @popap-bg-color;
         border: 1px solid @color-background-gray;
         border-width: 1px 0 0 1px;
         z-index: 6;
@@ -61,13 +61,13 @@
     &.jodit_toolbar_popup-inline-top {
         > .jodit_popup_triangle {
             top: auto;
-            bottom: -@popap-triangle-size/2;
+            bottom: -@popap-triangle-size / 2;
             border-width: 0 1px 1px 0;
         }
     }
 
     .buttons {
-        box-shadow: 0 1px 3px rgba(0,0,0,0.12),0 1px 2px rgba(0,0,0,0.24);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
         padding: 0 2px;
         white-space: nowrap;
         line-height: 0;

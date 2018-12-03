@@ -4,25 +4,25 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-@import (reference) "../variables";
-@import (reference) "../mixins";
+@import (reference) '../variables';
+@import (reference) '../mixins';
 
 .jodit_grid {
-  width: 100%;
-  [class*=jodit_col-] {
-    display: block;
-    float: left;
-  }
-  .jodit_col-lg {
-    .loop(@counter: 5, @max: 5) when (@counter > 0) {
-      &-@{counter}-@{max} {
-        width: (100%/@max) * @counter;
-      }
-      .loop((@counter - 1), @max)
+    width: 100%;
+    [class*='jodit_col-'] {
+        display: block;
+        float: left;
     }
-    .loop(5, 5);
-    .loop(4, 4);
-  }
+    .jodit_col-lg {
+        .loop(@counter: 5, @max: 5) when (@counter > 0) {
+            &-@{counter}-@{max} {
+                width: (100% / @max) * @counter;
+            }
+            .loop((@counter - 1), @max);
+        }
+        .loop(5, 5);
+        .loop(4, 4);
+    }
 
-  .clearfix();
+    .clearfix();
 }

@@ -4,43 +4,45 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-.jodit,.jodit_container {
-  &, * {
-    box-sizing: border-box;
-  }
-  .jodit_workplace {
-    position: relative;
-    overflow: auto;
-
-    .jodit_wysiwyg,
-    .jodit_wysiwyg_iframe {
-      height: 100%;
-      width: 100%;
+.jodit,
+.jodit_container {
+    &,
+    * {
+        box-sizing: border-box;
     }
-  }
+    .jodit_workplace {
+        position: relative;
+        overflow: auto;
+
+        .jodit_wysiwyg,
+        .jodit_wysiwyg_iframe {
+            height: 100%;
+            width: 100%;
+        }
+    }
 }
 
 .jodit_container:not(.jodit_inline) {
     background: @color-background-default;
 
     &.jodit_disabled {
-      background: @color-background-gray;
-      .jodit_workplace {
-        opacity: .4;
-      }
+        background: @color-background-gray;
+        .jodit_workplace {
+            opacity: 0.4;
+        }
     }
 
     font-size: @font-size-default;
     font-family: @font-default;
 
     .jodit_workplace {
-      border: 1px solid @color-border;
+        border: 1px solid @color-border;
     }
 }
 
 .jodit_disabled {
-  user-select: none !important;
+    user-select: none !important;
 }
 .jodit_hidden {
-  display: none !important;
+    display: none !important;
 }

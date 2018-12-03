@@ -13,7 +13,8 @@
         "test": "karma start --browsers Firefox karma.conf.js --single-run",
         "jodit": "cd ../jodit-angular/ && npm run newversion && cd ../jodit-joomla && npm run newversion && cd ../jodit-docs && npm run newversion",
         "types": "rm -rf types/* && tsc --project . --declaration --outDir types --emitDeclarationOnly",
-        "fix": "tslint -c tslint.json ./src/**/*.ts ./src/**/**/*.ts ./src/*.ts --fix && prettier --write './src/*'"
+        "pretty": "prettier --write ./src/*.{ts,less} ./src/**/*.{ts,less} ./src/**/**/*.{ts,less}",
+        "fix": "tslint -c tslint.json ./src/**/*.ts ./src/**/**/*.ts ./src/*.ts --fix && npm run pretty"
     },
     "repository": {
         "type": "git",
@@ -86,7 +87,6 @@
     "lint-staged": {
         "*.{ts}": [
             "npm run fix",
-            "prettier --write",
             "git add"
         ]
     }

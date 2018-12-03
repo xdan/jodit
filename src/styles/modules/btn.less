@@ -15,7 +15,7 @@
     color: #333333;
 
     background-repeat: repeat-x;
-    outline:0;
+    outline: 0;
     display: inline-block;
     padding: 6px 12px;
     margin-bottom: 0;
@@ -33,12 +33,18 @@
         background-position: 0 -15px;
         text-decoration: none;
     }
-    .jodit_button_variant (@name, @background_color, @background_gradient_from_color, @background_gradient_to_color, @background_hover_color, @color: #ffffff) {
+    .jodit_button_variant
+        (@name, @background_color, @background_gradient_from_color, @background_gradient_to_color, @background_hover_color, @color: #ffffff) {
         &.jodit_btn_@{name} {
             text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
             background-color: @background_color;
-            background-image: linear-gradient(to bottom, @background_gradient_from_color, @background_gradient_to_color);
-            border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+            background-image: linear-gradient(
+                to bottom,
+                @background_gradient_from_color,
+                @background_gradient_to_color
+            );
+            border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1)
+                rgba(0, 0, 0, 0.25);
             color: @color;
             svg {
                 fill: @color;
@@ -52,9 +58,11 @@
     .jodit_button_variant(success, #5bb75b, #62c462, #51a351, #51a351);
     .jodit_button_variant(danger, #da4f49, #ee5f5b, #bd362f, #bd362f);
     .jodit_button_variant(inverse, #363636, #444444, #222222, #222222);
-    
-    &:active, &.active {
+
+    &:active,
+    &.active {
         background-image: none;
-        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15),
+            0 1px 2px rgba(0, 0, 0, 0.05);
     }
 }
