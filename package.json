@@ -85,8 +85,13 @@
         }
     },
     "lint-staged": {
-        "*.{ts,less}": [
-            "npm run fix",
+        "*.{less}": [
+            "prettier --write",
+            "git add"
+        ],
+        "*.{ts}": [
+            "tslint -c tslint.json",
+            "prettier --write",
             "git add"
         ]
     }
