@@ -59,11 +59,7 @@ module.exports = (env, argv) => {
         cache: true,
         context: __dirname,
         devtool: debug ? "inline-sourcemap" : false,
-        entry: debug ? [
-            'webpack-hot-middleware/client',
-            './src/index'
-        ] : './src/index',
-
+        entry: './src/index',
         resolve: {
             extensions: [".ts", ".d.ts", ".js", ".json", ".less", '.svg']
         },

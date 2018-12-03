@@ -9,7 +9,7 @@ import { Jodit } from '../Jodit';
 import { ActionBox, ImageEditorOptions } from '../types';
 import { IViewBased } from '../types/view';
 import { Component } from './Component';
-import { Alert, Dialog, Promt } from './Dialog';
+import { Alert, Dialog, Promt } from './dialog/';
 import { $$, css, debounce, dom, throttle, trim } from './helpers/Helpers';
 import { ToolbarIcon } from './toolbar/icon';
 

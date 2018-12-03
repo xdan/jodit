@@ -3,7 +3,6 @@
  * License GNU General Public License version 2 or later;
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
-
 import { Config } from '../Config';
 import { IS_IE, TEXT_PLAIN } from '../constants';
 import { Jodit } from '../Jodit';
@@ -11,7 +10,7 @@ import {
     BuildDataResult,
     HandlerError,
     HandlerSuccess,
-    IDictionary,
+    IDictionary, IUploader,
     IUploaderAnswer,
     IUploaderData,
     IUploaderOptions,
@@ -24,7 +23,7 @@ import { Select } from './Selection';
 declare module '../Config' {
     interface Config {
         enableDragAndDropFileToEditor: boolean;
-        uploader: IUploaderOptions;
+        uploader: IUploaderOptions<Uploader>;
     }
 }
 
@@ -109,9 +108,9 @@ Config.prototype.uploader = {
             ? false
             : 'application/x-www-form-urlencoded; charset=UTF-8';
     },
-} as IUploaderOptions;
+} as IUploaderOptions<Uploader>;
 
-export class Uploader {
+export class Uploader implements IUploader {
     /**
      * Convert dataURI to Blob
      *
@@ -143,7 +142,7 @@ export class Uploader {
     private path: string = '';
     private source: string = 'default';
 
-    private options: IUploaderOptions;
+    private options: IUploaderOptions<Uploader>;
     public jodit: IViewBased;
     public selection: Select;
 
@@ -696,7 +695,7 @@ export class Uploader {
         );
     }
 
-    constructor(editor: IViewBased, options?: IUploaderOptions) {
+    constructor(editor: IViewBased, options?: IUploaderOptions<Uploader>) {
         this.jodit = editor;
         this.selection =
             editor instanceof Jodit ? editor.selection : new Select(editor);
@@ -707,7 +706,7 @@ export class Uploader {
             Config.prototype.uploader,
             editor instanceof Jodit ? editor.options.uploader : null,
             options
-        ) as IUploaderOptions;
+        ) as IUploaderOptions<Uploader>;
 
         if (
             editor instanceof Jodit &&

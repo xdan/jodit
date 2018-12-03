@@ -15,7 +15,7 @@ import {
     TEXT_PLAIN,
 } from '../constants';
 import { Jodit } from '../Jodit';
-import { Confirm, Dialog } from '../modules/Dialog';
+import { Confirm, Dialog } from '../modules/dialog/';
 import {
     applyStyles,
     browser,

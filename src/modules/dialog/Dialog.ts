@@ -4,16 +4,18 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Config } from '../Config';
-import { KEY_ESC } from '../constants';
-import { Jodit } from '../Jodit';
-import { IDictionary } from '../types';
-import { Buttons, IControlType } from '../types/toolbar';
-import { IViewBased, IViewOptions } from '../types/view';
-import { EventsNative } from './events/EventsNative';
-import { $$, asArray, css, dom } from './helpers/Helpers';
-import { ToolbarIcon } from './toolbar/icon';
-import { View } from './view/view';
+import { Config } from '../../Config';
+import { IDialogOptions } from '../../types/dialog';
+import { KEY_ESC } from '../../constants';
+import { Jodit } from '../../Jodit';
+import { IDictionary } from '../../types';
+import { Buttons, IControlType } from '../../types/toolbar';
+import { IViewBased, IViewOptions } from '../../types/view';
+import { EventsNative } from '../events/EventsNative';
+import { $$, asArray, css, dom } from '../helpers/Helpers';
+import { ToolbarIcon } from '../toolbar/icon';
+import { View } from '../view/view';
+import { ToolbarButton } from '..';
 
 /**
  * @property {object} dialog module settings {@link Dialog|Dialog}
@@ -24,14 +26,9 @@ import { View } from './view/view';
  * @property {Buttons} dialog.buttons=['close.dialog', 'fullsize.dialog']
  */
 
-export interface DialogOptions extends IViewOptions {
-    resizable?: boolean;
-    draggable?: boolean;
-}
-
-declare module '../Config' {
+declare module '../../Config' {
     interface Config {
-        dialog: DialogOptions;
+        dialog: IDialogOptions;
     }
 }
 
@@ -51,7 +48,11 @@ Config.prototype.controls.dialog = {
     },
     fullsize: {
         icon: 'fullsize',
-        getLabel: (Config.prototype.controls.fullsize as IControlType).getLabel,
+        getLabel: (editor, btn, button) => {
+            if (editor.options.controls.fullsize && editor.options.controls.fullsize.getLabel) {
+                return editor.options.controls.fullsize.getLabel(editor, btn, button);
+            }
+        },
         exec: (dialog: IViewBased) => {
             dialog.toggleFullSize();
         },
@@ -256,7 +257,7 @@ export class Dialog extends View {
     }
     public events: EventsNative;
 
-    public options: DialogOptions;
+    public options: IDialogOptions;
 
     /**
      * @property {HTMLDivElement} dialog
@@ -620,7 +621,7 @@ export class Dialog extends View {
                 ? (jodit as Jodit).options.dialog
                 : Config.prototype.dialog;
 
-        self.options = { ...opt, ...self.options } as DialogOptions;
+        self.options = { ...opt, ...self.options } as IDialogOptions;
 
         self.container = dom(
             '<div style="z-index:' +
@@ -706,257 +707,3 @@ export class Dialog extends View {
         Jodit.plugins.fullsize(self);
     }
 }
-
-/**
- * Show `alert` dialog. Work without Jodit object
- *
- * @method Alert
- * @param {string} msg Message
- * @param {string|function} [title] Title or callback
- * @param {function} [callback] callback
- * @param {string} [className]
- * @example
- * ```javascript
- * Jodit.Alert("File was uploaded");
- * Jodit.Alert("File was uploaded", "Message");
- * Jodit.Alert("File was uploaded", function() {
- *    $('form').hide();
- * });
- * Jodit.Alert("File wasn't uploaded", "Error", function() {
- *    $('form').hide();
- * });
- * ```
- */
-export const Alert = (
-    msg: string | HTMLElement,
-    title?: string | (() => void | false),
-    callback?: string | ((dialog: Dialog) => void | false),
-    className: string = 'jodit_alert'
-): Dialog => {
-    if (typeof title === 'function') {
-        callback = title;
-        title = undefined;
-    }
-
-    const dialog: Dialog = new Dialog(),
-        $div: HTMLDivElement = dom(
-            '<div class="' + className + '"></div>',
-            dialog.document
-        ) as HTMLDivElement,
-        $ok: HTMLAnchorElement = dom(
-            '<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
-                ToolbarIcon.getIcon('cancel') +
-                '<span>' +
-                Jodit.prototype.i18n('Ok') +
-                '</span></a>',
-            dialog.document
-        ) as HTMLAnchorElement;
-
-    $div.appendChild(dom(msg, dialog.document));
-
-    $ok.addEventListener('click', () => {
-        if (
-            !callback ||
-            typeof callback !== 'function' ||
-            callback(dialog) !== false
-        ) {
-            dialog.close();
-        }
-    });
-
-    dialog.setFooter([$ok]);
-
-    dialog.open($div, (title as string) || '&nbsp;', true, true);
-    $ok.focus();
-
-    return dialog;
-};
-
-(Jodit as any).Alert = Alert;
-
-/**
- * Show `promt` dialog. Work without Jodit object
- *
- * @method Promt
- * @param {string} msg Message
- * @param {string|function} [title] Title or callback
- * @param {function} [callback] callback. The first argument is the value entered
- * @param {string} [placeholder] Placeholder for input
- * @example
- * ```javascript
- * Jodit.Promt("Enter your name", "Promt Dialog", function (name) {
- *     if (name.length < 3) {
- *         Jodit.Alert("The name must be at least 3 letters");
- *         return false;
- *     }
- *     // do something
- * });
- * ```
- */
-export const Promt = (
-    msg: string,
-    title: string | (() => false | void) | undefined,
-    callback: (value: string) => false | void,
-    placeholder?: string
-): Dialog => {
-    const dialog: Dialog = new Dialog(),
-        $cancel: HTMLAnchorElement = dom(
-            '<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
-                ToolbarIcon.getIcon('cancel') +
-                '<span>' +
-                Jodit.prototype.i18n('Cancel') +
-                '</span></a>',
-            dialog.document
-        ) as HTMLAnchorElement,
-        $ok: HTMLAnchorElement = dom(
-            '<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
-                ToolbarIcon.getIcon('check') +
-                '<span>' +
-                Jodit.prototype.i18n('Ok') +
-                '</span></a>',
-            dialog.document
-        ) as HTMLAnchorElement,
-        $div: HTMLDivElement = dom(
-            '<form class="jodit_promt"></form>',
-            dialog.document
-        ) as HTMLDivElement,
-        $input: HTMLInputElement = dom(
-            '<input autofocus/>',
-            dialog.document
-        ) as HTMLInputElement,
-        $label: HTMLLabelElement = dom(
-            '<label></label>',
-            dialog.document
-        ) as HTMLLabelElement;
-
-    if (typeof title === 'function') {
-        callback = title;
-        title = undefined;
-    }
-
-    if (placeholder) {
-        $input.setAttribute('placeholder', placeholder);
-    }
-
-    $label.appendChild(dom(msg, dialog.document));
-    $div.appendChild($label);
-    $div.appendChild($input);
-
-    $cancel.addEventListener('click', dialog.close, false);
-
-    const onclick = () => {
-        if (
-            !callback ||
-            typeof callback !== 'function' ||
-            callback($input.value) !== false
-        ) {
-            dialog.close();
-        }
-    };
-
-    $ok.addEventListener('click', onclick);
-
-    $div.addEventListener('submit', () => {
-        onclick();
-        return false;
-    });
-
-    dialog.setFooter([$ok, $cancel]);
-
-    dialog.open($div, (title as string) || '&nbsp;', true, true);
-    $input.focus();
-
-    return dialog;
-};
-
-(Jodit as any).Promt = Promt;
-
-/**
- * Show `confirm` dialog. Work without Jodit object
- *
- * @method Confirm
- * @param {string} msg Message
- * @param {string|function} [title] Title or callback
- * @param {function} [callback] callback. The first argument is the value entered
- * @example
- * ```javascript
- * Jodit.Confirm("Are you shure?", "Confirm Dialog", function (yes) {
- *     if (yes) {
- *         // do something
- *     }
- * });
- * ```
- */
-export const Confirm = (
-    msg: string,
-    title: string | ((yes: boolean) => void) | undefined,
-    callback?: (yes: boolean) => void
-): Dialog => {
-    const dialog = new Dialog(),
-        $div: HTMLDivElement = dom(
-            '<form class="jodit_promt"></form>',
-            dialog.document
-        ) as HTMLDivElement,
-        $label: HTMLLabelElement = dom(
-            '<label></label>',
-            dialog.document
-        ) as HTMLLabelElement;
-
-    if (typeof title === 'function') {
-        callback = title;
-        title = undefined;
-    }
-
-    $label.appendChild(dom(msg, dialog.document));
-    $div.appendChild($label);
-
-    const $cancel: HTMLAnchorElement = dom(
-        '<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
-            ToolbarIcon.getIcon('cancel') +
-            '<span>' +
-            Jodit.prototype.i18n('Cancel') +
-            '</span>' +
-            '</a>',
-        dialog.document
-    ) as HTMLAnchorElement;
-
-    $cancel.addEventListener('click', () => {
-        if (callback) {
-            callback(false);
-        }
-        dialog.close();
-    });
-
-    const onok = () => {
-        if (callback) {
-            callback(true);
-        }
-        dialog.close();
-    };
-
-    const $ok: HTMLAnchorElement = dom(
-        '<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
-            ToolbarIcon.getIcon('check') +
-            '<span>' +
-            Jodit.prototype.i18n('Yes') +
-            '</span>' +
-            '</a>',
-        dialog.document
-    ) as HTMLAnchorElement;
-
-    $ok.addEventListener('click', onok);
-
-    $div.addEventListener('submit', () => {
-        onok();
-        return false;
-    });
-
-    dialog.setFooter([$ok, $cancel]);
-
-    dialog.open($div, (title as string) || '&nbsp;', true, true);
-    $ok.focus();
-
-    return dialog;
-};
-
-(Jodit as any).Confirm = Confirm;

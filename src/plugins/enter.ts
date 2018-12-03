@@ -162,7 +162,7 @@ export function enter(editor: Jodit) {
 
                     Dom.up(
                         needWrap,
-                        (node) => {
+                        node => {
                             if (
                                 node &&
                                 node.hasChildNodes() &&

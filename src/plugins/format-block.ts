@@ -9,8 +9,8 @@ import * as consts from '../constants';
 import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
 import { ToolbarButton } from '../modules/toolbar/button';
-import { IControlType } from '../types/toolbar';
 import { markerInfo } from '../types';
+import { IControlType } from '../types/toolbar';
 
 Config.prototype.controls.paragraph = {
     command: 'formatBlock',

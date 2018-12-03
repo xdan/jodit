@@ -4,9 +4,8 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Ajax } from '../modules/Ajax';
-import { Uploader } from '../modules/Uploader';
 import { IDictionary } from './types';
+import { IViewBased } from './view';
 
 export interface IUploaderData {
     messages?: string[];
@@ -162,7 +161,7 @@ export type BuildDataResult =
  *      },
  *  });
  */
-export interface IUploaderOptions {
+export interface IUploaderOptions<T> {
     url: string;
     insertImageAsBase64URI: boolean;
     imagesExtensions: string[];
@@ -170,24 +169,47 @@ export interface IUploaderOptions {
     data: null | object;
     format: string;
 
-    prepareData: (this: Uploader, formData: FormData) => any;
-    buildData?: (this: Uploader, formData: any) => BuildDataResult;
+    prepareData: (this: T, formData: FormData) => any;
+    buildData?: (this: T, formData: any) => BuildDataResult;
     queryBuild?: (
-        this: Ajax,
         obj: string | IDictionary<string | object> | FormData,
         prefix?: string
     ) => string | object;
 
-    isSuccess: (this: Uploader, resp: IUploaderAnswer) => boolean;
+    isSuccess: (this: T, resp: IUploaderAnswer) => boolean;
 
-    getMessage: (this: Uploader, resp: IUploaderAnswer) => string;
+    getMessage: (this: T, resp: IUploaderAnswer) => string;
 
-    process: (this: Uploader, resp: IUploaderAnswer) => IUploaderData;
+    process: (this: T, resp: IUploaderAnswer) => IUploaderData;
 
-    error: (this: Uploader, e: Error) => void;
+    error: (this: T, e: Error) => void;
 
     defaultHandlerSuccess: HandlerSuccess;
     defaultHandlerError: HandlerError;
 
-    contentType: (this: Uploader, requestData: any) => string | false;
+    contentType: (this: T, requestData: any) => string | false;
+}
+
+export interface IUploader {
+    buildData(
+        data: FormData | IDictionary<string> | string
+    ): BuildDataResult;
+    send(
+        data: FormData | IDictionary<string>,
+        success: (resp: IUploaderAnswer) => void
+    ): Promise<any>
+    sendFiles(
+        files: FileList | File[] | null,
+        handlerSuccess?: HandlerSuccess,
+        handlerError?: HandlerError,
+        process?: (form: FormData) => void
+    ): Promise<any>
+    bind( form: HTMLElement,
+          handlerSuccess?: HandlerSuccess,
+          handlerError?: HandlerError): void;
+    uploadRemoteImage(
+        url: string,
+        handlerSuccess?: HandlerSuccess,
+        handlerError?: HandlerError
+    ): void;
 }

@@ -14,8 +14,8 @@ import {
     val,
 } from '../modules/helpers/Helpers';
 import { Select } from '../modules/Selection';
-import { IControlType } from '../types/toolbar';
 import { markerInfo } from '../types';
+import { IControlType } from '../types/toolbar';
 
 /**
  * @property {object}  link `{@link link|link}` plugin's options

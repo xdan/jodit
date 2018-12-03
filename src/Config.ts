@@ -6,6 +6,7 @@
 
 import * as consts from './constants';
 import { Jodit } from './Jodit';
+import { Widget } from './modules/Widget';
 import TabsWidget = Widget.TabsWidget;
 import FileSelectorWidget = Widget.FileSelectorWidget;
 import { Dom } from './modules/Dom';
@@ -21,7 +22,6 @@ import {
     val,
 } from './modules/helpers/Helpers';
 import { ToolbarIcon } from './modules/toolbar/icon';
-import { Widget } from './modules/Widget';
 import { IDictionary } from './types';
 import { IFileBrowserCallBackData } from './types/filebrowser';
 import { Buttons, Controls, IControlType } from './types/toolbar';

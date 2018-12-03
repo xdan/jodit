@@ -361,7 +361,7 @@ export function cleanHtml(editor: Jodit) {
                     editor.editor
                 );
                 if (currentParagraph) {
-                    Dom.all(currentParagraph, (node) => {
+                    Dom.all(currentParagraph, node => {
                         if (node && node.nodeType === Node.TEXT_NODE) {
                             if (
                                 node.nodeValue !== null &&

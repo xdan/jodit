@@ -10,7 +10,7 @@ export interface IDictionary<T = any> {
     [key: string]: T;
 }
 
-export type NodeCondition = (node: Node | null) => boolean | null | void | "";
+export type NodeCondition = (node: Node | null) => boolean | null | void | '';
 
 export interface IBound {
     top: number;
@@ -54,19 +54,9 @@ export interface IPermissions {
     [key: string]: boolean;
 }
 
-export type ExecCommandCallback = (
-    (
-        command: string,
-        value?: string,
-        next?: boolean
-    ) => void | boolean
-) | (
-    (
-        command: string,
-        value: string,
-        next: string
-    ) => void | boolean
-);
+export type ExecCommandCallback =
+    | ((command: string, value?: string, next?: boolean) => void | boolean)
+    | ((command: string, value: string, next: string) => void | boolean);
 
 export interface ICommandType {
     exec: ExecCommandCallback;

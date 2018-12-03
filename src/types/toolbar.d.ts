@@ -4,12 +4,12 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Jodit } from '../Jodit';
-import { ToolbarButton } from '../modules/toolbar/button';
 import { IDictionary } from './types';
 import { IViewBased } from './view';
+import { ToolbarButton } from '../modules';
+import { Jodit } from '../Jodit';
 
-export interface IControlType {
+export interface IControlType<Button = ToolbarButton, T = Jodit> {
     controlName?: string;
     name?: string;
     mode?: number;
@@ -44,20 +44,20 @@ export interface IControlType {
      * ```
      */
     isActive?: (
-        editor: IViewBased | Jodit,
-        control: IControlType,
-        button?: ToolbarButton
+        editor: IViewBased | T,
+        control: IControlType<Button, T>,
+        button?: Button
     ) => boolean;
     isActiveChild?: (
-        editor: IViewBased | Jodit,
-        control: IControlType,
-        button?: ToolbarButton
+        editor: IViewBased | T,
+        control: IControlType<Button, T>,
+        button?: Button
     ) => boolean; // for list
 
     getContent?: (
-        editor: IViewBased | Jodit,
-        control: IControlType,
-        button?: ToolbarButton
+        editor: IViewBased | T,
+        control: IControlType<Button, T>,
+        button?: Button
     ) => string | HTMLElement;
 
     /**
@@ -88,20 +88,21 @@ export interface IControlType {
      * ```
      */
     isDisable?: (
-        editor: IViewBased | Jodit,
-        control: IControlType,
-        button?: ToolbarButton
+        editor: IViewBased | T,
+        control: IControlType<Button, T>,
+        button?: Button
     ) => boolean;
+
     isDisableChild?: (
-        editor: IViewBased | Jodit,
-        control: IControlType,
-        button?: ToolbarButton
+        editor: IViewBased | T,
+        control: IControlType<Button, T>,
+        button?: Button
     ) => boolean;
 
     getLabel?: (
-        editor: IViewBased | Jodit,
-        control: IControlType,
-        button?: ToolbarButton
+        editor: IViewBased | T,
+        control: IControlType<Button, T>,
+        button?: Button
     ) => boolean | void;
 
     /**
@@ -152,7 +153,7 @@ export interface IControlType {
     options?: any;
     css?:
         | IDictionary<string | string[]>
-        | IDictionary<(editor: IViewBased | Jodit, value: string) => boolean>;
+        | IDictionary<(editor: IViewBased | T, value: string) => boolean>;
 
     /**
      * String name for existing icons.
@@ -186,9 +187,9 @@ export interface IControlType {
      * This function will be executed when the button is pressed.
      */
     exec?: (
-        editor: IViewBased | Jodit,
+        editor: IViewBased | T,
         current: Node | false,
-        control: IControlType,
+        control: IControlType<Button, T>,
         originalEvent: Event,
         btn: HTMLLIElement
     ) => void;
@@ -199,7 +200,7 @@ export interface IControlType {
      * The method which will be called for each element of button.list
      */
     template?: (
-        editor: IViewBased | Jodit,
+        editor: IViewBased | T,
         key: string,
         value: string
     ) => string;
@@ -231,11 +232,11 @@ export interface IControlType {
      * ```
      */
     popup?: (
-        editor: IViewBased | Jodit,
+        editor: IViewBased | T,
         current: Node | false,
-        control: IControlType,
+        control: IControlType<Button, T>,
         close: () => void,
-        button?: ToolbarButton
+        button?: Button
     ) => string | HTMLElement | false;
 
     defaultValue?: string | string[];

@@ -4,11 +4,11 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-export { Component } from './Component';
 export { Ajax } from './Ajax';
+export { Component } from './Component';
 export { ContextMenu } from './ContextMenu';
 export { Cookie } from './Cookie';
-export { Dialog, Alert, Confirm, Promt } from './Dialog';
+export { Dialog, Alert, Confirm, Promt } from './dialog/';
 export { Dom } from './Dom';
 export { EventsNative } from './events/EventsNative';
 export { FileBrowser } from './filebrowser/filebrowser';
@@ -24,4 +24,5 @@ export { ToolbarIcon } from './toolbar/icon';
 export { ToolbarCollection } from './toolbar/collection';
 export { ToolbarButton } from './toolbar/button';
 export { Stack } from './Stack';
+export { Widget } from './Widget';
 export { Uploader } from './Uploader';

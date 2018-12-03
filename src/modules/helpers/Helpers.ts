@@ -83,23 +83,11 @@ export const type = (obj: any): string => {
         : typeof obj;
 };
 
-type eachCallback = (
-        (
-            key: number,
-            value: any | any[]
-        ) => boolean | void
-    ) |
-    (
-        (
-            key: string,
-            value: any | any[]
-        ) => boolean | void
-    );
+type eachCallback =
+    | ((key: number, value: any | any[]) => boolean | void)
+    | ((key: string, value: any | any[]) => boolean | void);
 
-export const each = (
-    obj: any[] | any,
-    callback: eachCallback
-) => {
+export const each = (obj: any[] | any, callback: eachCallback) => {
     let length: number, keys: string[], i: number;
 
     if (Array.isArray(obj)) {
@@ -138,8 +126,7 @@ export const each = (
     'Text',
     'DocumentFragment',
     'DOMStringList',
-]
-.forEach((name) => {
+].forEach(name => {
     class2type['[object ' + name + ']'] = name.toLowerCase();
 });
 
@@ -863,7 +850,11 @@ export const debounce = function(
  * }, 100));
  * ```
  */
-export const throttle = (fn: (...args: any[]) => any, timeout: number, ctx?: any) => {
+export const throttle = (
+    fn: (...args: any[]) => any,
+    timeout: number,
+    ctx?: any
+) => {
     let timer: number | null = null,
         args: IArguments,
         needInvoke: boolean,

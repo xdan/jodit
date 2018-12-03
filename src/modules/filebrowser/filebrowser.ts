@@ -9,7 +9,7 @@ import * as consts from '../../constants';
 import { Jodit } from '../../Jodit';
 import { Ajax } from '../Ajax';
 import { ContextMenu } from '../ContextMenu';
-import { Alert, Confirm, Dialog, Promt } from '../Dialog';
+import { Alert, Confirm, Dialog, Promt } from '../dialog/';
 import {
     $$,
     ctrlKey,
@@ -286,7 +286,7 @@ declare module '../../Config' {
          * ```
          *
          */
-        filebrowser: IFileBrowserOptions;
+        filebrowser: IFileBrowserOptions<Jodit>;
     }
 }
 
@@ -521,7 +521,7 @@ Config.prototype.filebrowser = {
     },
 
     uploader: null, // use default Uploader's settings
-} as IFileBrowserOptions;
+} as IFileBrowserOptions<Jodit>;
 
 Config.prototype.controls.filebrowser = {
     upload: {
@@ -1017,7 +1017,7 @@ export class FileBrowser extends View {
     private uploadHandler = () => {
         this.loadItems(this.currentPath, this.currentSource);
     };
-    public options: IFileBrowserOptions;
+    public options: IFileBrowserOptions<Jodit>;
 
     public currentPath: string = '';
     public currentSource: string = DEFAULT_SOURCE_NAME;
@@ -1414,7 +1414,7 @@ export class FileBrowser extends View {
                 options,
                 self.jodit ? self.jodit.options.filebrowser : void 0
             )
-        ) as IFileBrowserOptions;
+        ) as IFileBrowserOptions<Jodit>;
 
         self.dialog = new Dialog(editor || self, {
             fullsize: self.options.fullsize,
@@ -1967,7 +1967,7 @@ export class FileBrowser extends View {
             : location.protocol + '//' + location.host;
 
         if (Jodit.modules.Uploader !== undefined) {
-            const uploaderOptions: IUploaderOptions = extend(
+            const uploaderOptions: IUploaderOptions<Uploader> = extend(
                 true,
                 {},
                 Jodit.defaultOptions.uploader,
@@ -1975,9 +1975,9 @@ export class FileBrowser extends View {
                 this.jodit &&
                     this.jodit.options &&
                     this.jodit.options.uploader !== null
-                    ? { ...(this.jodit.options.uploader as IUploaderOptions) }
+                    ? { ...(this.jodit.options.uploader as IUploaderOptions<Uploader>) }
                     : {}
-            ) as IUploaderOptions;
+            ) as IUploaderOptions<Uploader>;
 
             this.uploader = new Uploader(this.jodit || this, uploaderOptions);
             this.uploader.setPath(this.currentPath);

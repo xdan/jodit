@@ -9,7 +9,7 @@ import { Jodit } from '../Jodit';
 import {
     IDictionary,
     IFileBrowserCallBackData,
-    IRGB,
+    IRGB, IUploader,
     IUploaderData,
 } from '../types/';
 
@@ -24,7 +24,6 @@ import {
     normalizeColor,
     val,
 } from './helpers/Helpers';
-import { Uploader } from './Uploader';
 
 export namespace Widget {
     /**
@@ -374,7 +373,7 @@ export namespace Widget {
                 editor.ownerDocument
             );
 
-            new Uploader(editor).bind(
+            editor.getInstance<IUploader>('Uploader').bind(
                 dragbox,
                 (resp: IUploaderData) => {
                     if (typeof callbacks.upload === 'function') {

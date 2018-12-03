@@ -5,6 +5,7 @@
     "strictNullChecks": true,
     "strictFunctionTypes": true,
     "noImplicitReturns": true,
+    "strictBindCallApply": true,
     "noImplicitThis": true,
     "target": "es5",
     "lib": [

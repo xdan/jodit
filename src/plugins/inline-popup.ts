@@ -6,6 +6,7 @@
 
 import { Config } from '../Config';
 import { Jodit } from '../Jodit';
+import { Widget } from '../modules/Widget';
 import ColorPickerWidget = Widget.ColorPickerWidget;
 import TabsWidget = Widget.TabsWidget;
 import { Dom } from '../modules/Dom';
@@ -14,7 +15,6 @@ import { Plugin } from '../modules/Plugin';
 import { Table } from '../modules/Table';
 import { ToolbarCollection } from '../modules/toolbar/collection';
 import { ToolbarPopup } from '../modules/toolbar/popup';
-import { Widget } from '../modules/Widget';
 import { IDictionary } from '../types';
 import { IControlType } from '../types/toolbar';
 import { IBound } from '../types/types';

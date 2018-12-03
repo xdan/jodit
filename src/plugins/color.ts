@@ -6,12 +6,12 @@
 
 import { Config } from '../Config';
 import { Jodit } from '../Jodit';
+import { Widget } from '../modules/Widget';
 import TabsWidget = Widget.TabsWidget;
 import ColorPickerWidget = Widget.ColorPickerWidget;
 import { Dom } from '../modules/Dom';
 import { css, normalizeColor } from '../modules/helpers/Helpers';
 import { ToolbarButton } from '../modules/toolbar/button';
-import { Widget } from '../modules/Widget';
 import { IDictionary } from '../types';
 import { IControlType } from '../types/toolbar';
 
@@ -28,11 +28,10 @@ Config.prototype.controls.brush = {
             const currentBpx: HTMLElement =
                 (Dom.closest(
                     current,
-                    (elm) => {
+                    elm => {
                         return (
                             Dom.isBlock(elm) ||
-                            (
-                                elm &&
+                            (elm &&
                                 Dom.isNode(elm, editor.editorWindow) &&
                                 elm.nodeType === Node.ELEMENT_NODE)
                         );

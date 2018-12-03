@@ -1089,7 +1089,8 @@ export class Select extends Component {
             const reg: RegExp = new RegExp('^' + elm.nodeName + '$', 'i');
 
             return (
-                (reg.test(nodeName) || !!(options && checkCssRulesFor(<HTMLElement>elm))) &&
+                (reg.test(nodeName) ||
+                    !!(options && checkCssRulesFor(elm as HTMLElement))) &&
                 findNextCondition(elm)
             );
         };

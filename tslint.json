@@ -7,6 +7,7 @@
     ],
     "jsRules": {},
     "rules": {
+        "ordered-imports": false,
         "no-bitwise": false,
         "prefer-for-of": false,
         "no-shadowed-variable": false,

@@ -6,15 +6,15 @@
 
 import { Config } from '../Config';
 import { Jodit } from '../Jodit';
-import { Alert, Confirm, Dialog } from '../modules/Dialog';
+import { Alert, Confirm, Dialog } from '../modules/dialog/';
 import { Dom } from '../modules/Dom';
 import { FileBrowser } from '../modules/filebrowser/filebrowser';
 import { $$, css, dom, trim, val } from '../modules/helpers/Helpers';
 import { ToolbarIcon } from '../modules/toolbar/icon';
+import { Widget } from '../modules/Widget';
 import TabsWidget = Widget.TabsWidget;
 import FileSelectorWidget = Widget.FileSelectorWidget;
 import { ToolbarPopup } from '../modules/toolbar/popup';
-import { Widget } from '../modules/Widget';
 import {
     IDictionary,
     IFileBrowserCallBackData,

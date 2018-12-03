@@ -39,7 +39,7 @@ export class Component {
         // ignore
     }
 
-    public getInstance(moduleName: string, options?: object): Component {
+    public getInstance<T = Component>(moduleName: string, options?: object): T {
         if (Jodit.modules[moduleName] === undefined) {
             throw new Error('Need real module name');
         }
@@ -51,7 +51,7 @@ export class Component {
             );
         }
 
-        return this.__modulesInstances[moduleName];
+        return <any>this.__modulesInstances[moduleName];
     }
 
     constructor(jodit?: IViewBased | Jodit) {

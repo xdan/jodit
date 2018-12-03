@@ -4,10 +4,10 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Jodit } from '../Jodit';
 import { Buttons } from './toolbar';
 import { IDictionary, IPermissions } from './types';
 import { IUploaderOptions } from './uploader';
+import { Uploader } from '../modules';
 
 /**
  * The module creates a web browser dialog box. In a Web browser ,you can select an image, remove, drag it. Upload new
@@ -68,7 +68,7 @@ export interface IFileBrowserAjaxOptions {
     process?: (resp: IFileBrowserAnswer) => IFileBrowserAnswer;
 }
 
-export interface IFileBrowserOptions {
+export interface IFileBrowserOptions<T> {
     removeButtons: string[];
     buttons: Buttons;
     zIndex?: number;
@@ -79,7 +79,7 @@ export interface IFileBrowserOptions {
 
     sortBy: string;
 
-    sort: (a: any, b: any, sortBy?: string, editor?: Jodit) => number;
+    sort: (a: any, b: any, sortBy?: string, editor?: T) => number;
 
     editImage: boolean;
     preview: boolean;
@@ -124,7 +124,7 @@ export interface IFileBrowserOptions {
     folder: IFileBrowserAjaxOptions;
     permissions: IFileBrowserAjaxOptions;
 
-    uploader: null | IUploaderOptions; // use default Uploader's settings
+    uploader: null | IUploaderOptions<Uploader>; // use default Uploader's settings
     [key: string]: any;
 }
 
