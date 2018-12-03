@@ -587,7 +587,7 @@ export class Dom {
      * Returns true if it is a DOM node
      */
     public static isNode(object: any, win: Window): boolean {
-        if (typeof (win as any) === 'object') {
+        if (typeof (win as any) === 'object' && win) {
             return object instanceof (win as any).Node;
         }
 
