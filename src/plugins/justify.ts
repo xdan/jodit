@@ -166,7 +166,7 @@ export function justify(editor: Jodit) {
                 if (!currentBox && current) {
                     currentBox = Dom.wrapInline(
                         current,
-                        editor.options.enter,
+                        editor.options.enterBlock,
                         editor
                     );
                 }
