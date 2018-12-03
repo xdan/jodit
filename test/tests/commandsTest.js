@@ -946,7 +946,7 @@ describe('Commands Jodit Editor Tests', function() {
                 editor.execCommand('justifyleft');
 
                 expect(editor.getEditorValue()).to.equal(
-                    '<p style="text-align: left;">test some text <span>test</span><br></p><p>data</p>'
+                    '<p style="text-align: left;">test</p>'
                 );
             });
         });
