@@ -29,6 +29,7 @@ Config.prototype.controls.align = {
                     Dom.isBlock,
                     editor.editor
                 ) as HTMLElement) || editor.editor;
+
             let currentValue: string = css(currentBox, 'text-align').toString();
 
             if (
