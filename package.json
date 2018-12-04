@@ -85,8 +85,12 @@
         }
     },
     "lint-staged": {
-        "*.{js,json,less}": [
-            "prettier --write",
+        "./test/**/*.{js}": [
+            "prettier --write --ignore-path ./build/*",
+            "git add"
+        ],
+        "*.{json,less}": [
+            "prettier --write --ignore-path ./build/*",
             "git add"
         ],
         "*.{ts}": [
