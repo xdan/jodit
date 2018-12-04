@@ -549,13 +549,11 @@ export class inlinePopup extends Plugin {
     private hidePopup = (root?: HTMLElement | ToolbarPopup) => {
         if (
             root &&
-            (
-                Dom.isNode(root, this.jodit.editorWindow || window) ||
-                root instanceof ToolbarPopup
-            ) &&
+            (Dom.isNode(root, this.jodit.editorWindow || window) ||
+                root instanceof ToolbarPopup) &&
             Dom.isOrContains(
                 this.target,
-                (root instanceof ToolbarPopup) ? root.target : root
+                root instanceof ToolbarPopup ? root.target : root
             )
         ) {
             return;

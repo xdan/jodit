@@ -113,16 +113,16 @@ export interface IFileBrowserOptions<T> {
     ) => string;
 
     ajax: IFileBrowserAjaxOptions;
-    create: IFileBrowserAjaxOptions;
-    getLocalFileByUrl: IFileBrowserAjaxOptions;
-    resize: IFileBrowserAjaxOptions;
-    crop: IFileBrowserAjaxOptions;
-    move: IFileBrowserAjaxOptions;
-    fileRemove: IFileBrowserAjaxOptions;
-    folderRemove: IFileBrowserAjaxOptions;
+    create: IFileBrowserAjaxOptions | null;
+    getLocalFileByUrl: IFileBrowserAjaxOptions | null;
+    resize: IFileBrowserAjaxOptions | null;
+    crop: IFileBrowserAjaxOptions | null;
+    move: IFileBrowserAjaxOptions | null;
+    fileRemove: IFileBrowserAjaxOptions | null;
+    folderRemove: IFileBrowserAjaxOptions | null;
     items: IFileBrowserAjaxOptions;
-    folder: IFileBrowserAjaxOptions;
-    permissions: IFileBrowserAjaxOptions;
+    folder: IFileBrowserAjaxOptions | null;
+    permissions: IFileBrowserAjaxOptions | null;
 
     uploader: null | IUploaderOptions<Uploader>; // use default Uploader's settings
     [key: string]: any;

@@ -888,6 +888,10 @@ export class FileBrowser extends View {
     private loadItems = (path: string, source: string): Promise<void> => {
         const self: FileBrowser = this;
 
+        if (!self.options.items) {
+            return Promise.reject('Set Items api options');
+        }
+
         self.options.items.data.path = path;
         self.options.items.data.source = source;
 
@@ -899,7 +903,7 @@ export class FileBrowser extends View {
             resp => {
                 let process:
                     | ((resp: IFileBrowserAnswer) => IFileBrowserAnswer)
-                    | undefined = self.options.items.process;
+                    | undefined = (self.options.items as any).process;
                 if (!process) {
                     process = this.options.ajax.process;
                 }
@@ -923,6 +927,10 @@ export class FileBrowser extends View {
     private loadPermissions(path: string, source: string): Promise<void> {
         const self: FileBrowser = this;
 
+        if (!self.options.permissions) {
+            return Promise.resolve();
+        }
+
         self.options.permissions.data.path = path;
         self.options.permissions.data.source = source;
 
@@ -932,7 +940,7 @@ export class FileBrowser extends View {
                 (resp: IFileBrowserAnswer) => {
                     let process:
                         | ((resp: IFileBrowserAnswer) => IFileBrowserAnswer)
-                        | undefined = self.options.permissions.process;
+                        | undefined = (<any>self.options.permissions).process;
                     if (!process) {
                         process = this.options.ajax.process;
                     }
@@ -961,6 +969,10 @@ export class FileBrowser extends View {
         return this.loadPermissions(path, source).then(() => {
             const self: FileBrowser = this;
 
+            if (!self.options.folder) {
+                return Promise.reject('Set Folder Api options');
+            }
+
             self.options.folder.data.path = path;
             self.options.folder.data.source = source;
 
@@ -985,7 +997,7 @@ export class FileBrowser extends View {
                                     | ((
                                           resp: IFileBrowserAnswer
                                       ) => IFileBrowserAnswer)
-                                    | undefined = self.options.folder.process;
+                                    | undefined = (<any>self.options.folder).process;
                                 if (!process) {
                                     process = this.options.ajax.process;
                                 }
@@ -1167,6 +1179,10 @@ export class FileBrowser extends View {
         path: string,
         source: string
     ): Promise<void> => {
+        if (!this.options.create) {
+            return Promise.reject('Set Create api options');
+        }
+
         this.options.create.data.source = source;
         this.options.create.data.path = path;
         this.options.create.data.name = name;
@@ -1201,6 +1217,10 @@ export class FileBrowser extends View {
         path: string,
         source: string
     ): Promise<void> => {
+        if (!this.options.move) {
+            return Promise.reject('Set Move api options');
+        }
+
         this.options.move.data.from = filepath;
         this.options.move.data.path = path;
         this.options.move.data.source = source;
@@ -1232,6 +1252,10 @@ export class FileBrowser extends View {
         file: string,
         source: string
     ): Promise<void> {
+        if (!this.options.fileRemove) {
+            return Promise.reject('Set fileRemove api options');
+        }
+
         this.options.fileRemove.data.path = path;
         this.options.fileRemove.data.name = file;
         this.options.fileRemove.data.source = source;
@@ -1267,6 +1291,10 @@ export class FileBrowser extends View {
         file: string,
         source: string
     ): Promise<void> {
+        if (!this.options.folderRemove) {
+            return Promise.reject('Set folderRemove api options');
+        }
+
         this.options.folderRemove.data.path = path;
         this.options.folderRemove.data.name = file;
         this.options.folderRemove.data.source = source;
@@ -1322,48 +1350,44 @@ export class FileBrowser extends View {
         this.onlyImages = onlyImages;
         this.buffer.fileBrowserOnlyImages = onlyImages;
 
-        return new Promise(resolve => {
-            if (this.options.items.url) {
-                let localTimeout: number = 0;
-                this.events
-                    .off(this.files, 'dblclick')
-                    .on(this.files, 'dblclick', this.onSelect(callback), 'a')
-                    .on(
-                        this.files,
-                        'touchstart',
-                        () => {
-                            const now: number = new Date().getTime();
-                            if (
-                                now - localTimeout <
-                                consts.EMULATE_DBLCLICK_TIMEOUT
-                            ) {
-                                this.onSelect(callback)();
-                            }
-                            localTimeout = now;
-                        },
-                        'a'
-                    )
-                    .off('select.filebrowser')
-                    .on('select.filebrowser', this.onSelect(callback));
-
-                const header: HTMLElement = this.ownerDocument.createElement(
-                    'div'
-                );
-                this.toolbar.build(this.options.buttons, header);
-
-                this.dialog.dialogbox_header.classList.add(
-                    'jodit_filebrowser_title_box'
-                );
-                this.dialog.open(this.browser, header);
-
-                this.events.fire('sort.filebrowser', this.sortBy);
-
-                this.loadTree(this.currentPath, this.currentSource).then(
-                    resolve
-                );
-            } else {
+        return new Promise((resolve, reject) => {
+            if (!this.options.items || !this.options.items.url) {
                 throw new Error('Need set options.filebrowser.ajax.url');
             }
+
+            let localTimeout: number = 0;
+            this.events
+                .off(this.files, 'dblclick')
+                .on(this.files, 'dblclick', this.onSelect(callback), 'a')
+                .on(
+                    this.files,
+                    'touchstart',
+                    () => {
+                        const now: number = new Date().getTime();
+                        if (
+                            now - localTimeout <
+                            consts.EMULATE_DBLCLICK_TIMEOUT
+                        ) {
+                            this.onSelect(callback)();
+                        }
+                        localTimeout = now;
+                    },
+                    'a'
+                )
+                .off('select.filebrowser')
+                .on('select.filebrowser', this.onSelect(callback));
+
+            const header: HTMLElement = this.ownerDocument.createElement('div');
+            this.toolbar.build(this.options.buttons, header);
+
+            this.dialog.dialogbox_header.classList.add(
+                'jodit_filebrowser_title_box'
+            );
+            this.dialog.open(this.browser, header);
+
+            this.events.fire('sort.filebrowser', this.sortBy);
+
+            this.loadTree(this.currentPath, this.currentSource).then(resolve);
         });
     };
 
@@ -1912,66 +1936,27 @@ export class FileBrowser extends View {
 
         this.dialog.setSize(this.options.width, this.options.height);
 
-        this.options.getLocalFileByUrl = extend(
-            true,
-            {},
-            this.options.ajax,
-            this.options.getLocalFileByUrl
-        );
-        this.options.crop = extend(
-            true,
-            {},
-            this.options.ajax,
-            this.options.crop
-        );
-        this.options.resize = extend(
-            true,
-            {},
-            this.options.ajax,
-            this.options.resize
-        );
-        this.options.create = extend(
-            true,
-            {},
-            this.options.ajax,
-            this.options.create
-        );
-        this.options.move = extend(
-            true,
-            {},
-            this.options.ajax,
-            this.options.move
-        );
-        this.options.fileRemove = extend(
-            true,
-            {},
-            this.options.ajax,
-            this.options.fileRemove
-        );
-        this.options.folderRemove = extend(
-            true,
-            {},
-            this.options.ajax,
-            this.options.folderRemove
-        );
-        this.options.folder = extend(
-            true,
-            {},
-            this.options.ajax,
-            this.options.folder
-        );
-        this.options.items = extend(
-            true,
-            {},
-            this.options.ajax,
-            this.options.items
-        );
-        this.options.permissions = extend(
-            true,
-            {},
-            this.options.ajax,
-            this.options.permissions
-        );
+        [
+            'getLocalFileByUrl',
+            'crop',
+            'resize',
+            'create',
+            'move',
+            'fileRemove',
+            'folderRemove',
+            'folder',
+            'items',
+            'permissions',
+        ].forEach((key) => {
+            if (this.options[key] !== null) {
+                this.options[key] = extend(
+                    true,
+                    {},
+                    this.options.ajax,
+                    this.options[key]
+                );
+            }
+        });
 
         if (
             this.storage.get('jodit_filebrowser_view') &&
