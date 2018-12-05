@@ -112,7 +112,7 @@ Config.prototype.controls.table = {
 
             if (cells.length > cnt) {
                 for (i = cnt; i < cells.length; i += 1) {
-                    blocksContainer.removeChild(cells[i]);
+                    Dom.safeRemove(cells[i]);
                     delete cells[i];
                 }
                 cells.length = cnt;
@@ -543,9 +543,7 @@ export class TableProcessor extends Component {
                         );
                         break;
                     case 'bin':
-                        if (table.parentNode) {
-                            table.parentNode.removeChild(table);
-                        }
+                        Dom.safeRemove(table);
                         break;
                     case 'binrow':
                         Table.removeRow(

@@ -6,6 +6,7 @@
 
 import { Jodit } from '../Jodit';
 import { Component } from './Component';
+import { Dom } from './Dom';
 
 export class StatusBar extends Component {
     public container: HTMLElement;
@@ -36,8 +37,7 @@ export class StatusBar extends Component {
 
     public destruct() {
         super.destruct();
-        this.container.parentNode &&
-            this.container.parentNode.removeChild(this.container);
+        Dom.safeRemove(this.container);
     }
 
     constructor(jodit: Jodit, readonly target: HTMLElement) {

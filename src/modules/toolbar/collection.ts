@@ -18,6 +18,7 @@ import { ToolbarBreak } from './break';
 import { ToolbarButton } from './button';
 import { ToolbarElement } from './element';
 import { ToolbarSeparator } from './separator';
+import { Dom } from '../Dom';
 
 export class ToolbarCollection extends ToolbarElement {
     private __buttons: ToolbarElement[] = [];
@@ -100,7 +101,7 @@ export class ToolbarCollection extends ToolbarElement {
         if (index !== -1) {
             this.__buttons.splice(index, 1);
             if (button.container.parentNode === this.container) {
-                this.container.removeChild(button.container);
+                Dom.safeRemove(button.container);
             }
         }
 

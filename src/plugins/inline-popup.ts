@@ -59,7 +59,7 @@ Config.prototype.popup = {
             tooltip: 'Delete',
             exec: (editor: Jodit, image: Node) => {
                 if (image.parentNode) {
-                    image.parentNode.removeChild(image);
+                    Dom.safeRemove(image);
                     editor.events.fire('hidePopup');
                 }
             },
@@ -71,7 +71,7 @@ Config.prototype.popup = {
             tooltip: 'Delete',
             exec: (editor: Jodit, image: Node) => {
                 if (image.parentNode) {
-                    image.parentNode.removeChild(image);
+                    Dom.safeRemove(image);
                     editor.events.fire('hidePopup');
                 }
             },
@@ -83,7 +83,7 @@ Config.prototype.popup = {
             tooltip: 'Delete',
             exec: (editor: Jodit, image: Node) => {
                 if (image.parentNode) {
-                    image.parentNode.removeChild(image);
+                    Dom.safeRemove(image);
                     editor.events.fire('hidePopup');
                 }
             },
@@ -364,6 +364,7 @@ Config.prototype.popup = {
 export class inlinePopup extends Plugin {
     private toolbar: ToolbarCollection;
     private popup: ToolbarPopup;
+
     private target: HTMLDivElement;
     private container: HTMLDivElement;
 
@@ -375,7 +376,7 @@ export class inlinePopup extends Plugin {
     private isSelectionStarted = false;
 
     private onSelectionEnd = debounce(() => {
-        if (!this.jodit.isEditorMode()) {
+        if (!this.jodit.isEditorMode() || this.isDestructed) {
             return;
         }
 
@@ -437,6 +438,10 @@ export class inlinePopup extends Plugin {
         };
     };
     private calcPosition = (rect: IBound, windowSize: IBound) => {
+        if (this.isDestructed) {
+            return;
+        }
+
         this.popup.target.classList.remove(this._hiddenClass);
 
         const selectionCenterLeft: number = rect.left + rect.width / 2;
@@ -547,6 +552,10 @@ export class inlinePopup extends Plugin {
     };
 
     private hidePopup = (root?: HTMLElement | ToolbarPopup) => {
+        if (this.isDestructed) {
+            return;
+        }
+
         if (
             root &&
             (Dom.isNode(root, this.jodit.editorWindow || window) ||
@@ -562,8 +571,8 @@ export class inlinePopup extends Plugin {
         this.isTargetAction = false;
         this.isShown = false;
         this.popup.close();
-        this.target.parentNode &&
-            this.target.parentNode.removeChild(this.target);
+
+        Dom.safeRemove(this.target);
     };
 
     private onSelectionStart = (event: MouseEvent) => {
@@ -709,11 +718,15 @@ export class inlinePopup extends Plugin {
     public beforeDestruct(editor: Jodit) {
         this.popup.destruct();
         this.toolbar.destruct();
-        this.target.parentNode &&
-            this.target.parentNode.removeChild(this.target);
+
+        Dom.safeRemove(this.target);
+        Dom.safeRemove(this.container);
 
         editor.events
-            .off([editor.ownerWindow], 'scroll resize', this.reCalcPosition)
+            .off([editor.ownerWindow],
+                'scroll resize',
+                this.reCalcPosition
+            )
             .off(
                 [editor.ownerWindow],
                 'mouseup keyup touchend',
@@ -729,9 +742,11 @@ export class inlinePopup extends Plugin {
     constructor(jodit: Jodit) {
         super(jodit);
         this.toolbar = new ToolbarCollection(jodit);
+
         this.target = jodit.ownerDocument.createElement('div');
-        this.container = jodit.ownerDocument.createElement('div');
         this.target.classList.add('jodit_toolbar_popup-inline-target');
+        this.container = jodit.ownerDocument.createElement('div');
+
         this.popup = new ToolbarPopup(
             jodit,
             this.target,

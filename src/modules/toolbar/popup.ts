@@ -165,9 +165,8 @@ export class ToolbarPopup extends ToolbarElement {
 
             this.doClose();
 
-            if (this.container.parentNode) {
-                this.container.parentNode.removeChild(this.container);
-            }
+            Dom.safeRemove(this.container);
+
             if (this.jodit.selection) {
                 this.jodit.selection.removeMarkers();
             }

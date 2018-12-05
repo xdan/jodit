@@ -12,6 +12,7 @@ import { Component } from './Component';
 import { Alert, Dialog, Promt } from './dialog/';
 import { $$, css, debounce, dom, throttle, trim } from './helpers/Helpers';
 import { ToolbarIcon } from './toolbar/icon';
+import { Dom } from './Dom';
 
 declare module '../Config' {
     interface Config {
@@ -698,14 +699,9 @@ export class ImageEditor extends Component {
             const timestamp = new Date().getTime();
 
             this.image = this.jodit.ownerDocument.createElement('img');
-            $$('img,.jodit_icon-loader', this.resize_box).forEach(
-                (elm: Node) => {
-                    elm.parentNode && elm.parentNode.removeChild(elm);
-                }
-            );
-            $$('img,.jodit_icon-loader', this.crop_box).forEach((elm: Node) => {
-                elm.parentNode && elm.parentNode.removeChild(elm);
-            });
+
+            $$('img,.jodit_icon-loader', this.resize_box).forEach(Dom.safeRemove);
+            $$('img,.jodit_icon-loader', this.crop_box).forEach(Dom.safeRemove);
 
             css(this.cropHandler, 'background', 'transparent');
 
@@ -749,9 +745,7 @@ export class ImageEditor extends Component {
 
                 this.crop_box.appendChild(this.cropImage);
 
-                $$('.jodit_icon-loader', this.editor).forEach((elm: Node) => {
-                    elm.parentNode && elm.parentNode.removeChild(elm);
-                });
+                $$('.jodit_icon-loader', this.editor).forEach(Dom.safeRemove);
 
                 if (this.activeTab === 'crop') {
                     this.showCrop();

@@ -8,6 +8,7 @@ import { Config } from '../Config';
 import { INVISIBLE_SPACE_REG_EXP, SPACE_REG_EXP } from '../constants';
 import { throttle } from '../modules/helpers/Helpers';
 import { Plugin } from '../modules/Plugin';
+import { Dom } from '../modules';
 
 declare module '../Config' {
     interface Config {
@@ -59,12 +60,9 @@ export class stat extends Plugin {
         this.calc();
     }
     public beforeDestruct(): void {
-        this.charCounter &&
-            this.charCounter.parentNode &&
-            this.charCounter.parentNode.removeChild(this.charCounter);
-        this.wordCounter &&
-            this.wordCounter.parentNode &&
-            this.wordCounter.parentNode.removeChild(this.wordCounter);
+        Dom.safeRemove(this.charCounter);
+        Dom.safeRemove(this.wordCounter);
+
         this.charCounter = null;
         this.wordCounter = null;
     }

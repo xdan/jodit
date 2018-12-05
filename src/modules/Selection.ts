@@ -106,9 +106,7 @@ export class Select extends Component {
     public removeMarkers() {
         $$('span[data-' + consts.MARKER_CLASS + ']', this.jodit.editor).forEach(
             (marker: HTMLElement) => {
-                if (marker.parentNode) {
-                    marker.parentNode.removeChild(marker);
-                }
+                Dom.safeRemove(marker);
             }
         );
     }
@@ -195,20 +193,15 @@ export class Select extends Component {
                         range.setStartBefore(start);
                     }
 
-                    if (start.parentNode) {
-                        start.parentNode.removeChild(start);
-                    }
+                    Dom.safeRemove(start);
 
                     range.collapse(true);
                 } else {
                     range.setStartAfter(start);
-                    if (start.parentNode) {
-                        start.parentNode.removeChild(start);
-                    }
+                    Dom.safeRemove(start);
+
                     range.setEndBefore(end);
-                    if (end.parentNode) {
-                        end.parentNode.removeChild(end);
-                    }
+                    Dom.safeRemove(end);
                 }
 
                 sel.addRange(range);
@@ -231,6 +224,7 @@ export class Select extends Component {
         const info: markerInfo[] = [],
             length: number = sel.rangeCount,
             ranges: Range[] = [];
+
         let i: number, start: HTMLSpanElement, end: HTMLSpanElement;
 
         for (i = 0; i < length; i += 1) {

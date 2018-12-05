@@ -499,11 +499,10 @@ export function imageProperties(editor: Jodit) {
         });
 
         buttons.remove.addEventListener('click', () => {
-            if (image.parentNode) {
-                image.parentNode.removeChild(image);
-            }
+            Dom.safeRemove(image);
             dialog.close();
         });
+
         if (editor.options.image.useImageEditor) {
             ($$(
                 '.jodit_use_image_editor',
@@ -744,9 +743,7 @@ export function imageProperties(editor: Jodit) {
             if (val(prop, '.imageSrc')) {
                 image.setAttribute('src', val(prop, '.imageSrc'));
             } else {
-                if (image.parentNode) {
-                    image.parentNode.removeChild(image);
-                }
+                Dom.safeRemove(image);
                 dialog.close();
                 return;
             }

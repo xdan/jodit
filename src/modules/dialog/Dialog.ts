@@ -16,6 +16,7 @@ import { $$, asArray, css, dom } from '../helpers/Helpers';
 import { ToolbarIcon } from '../toolbar/icon';
 import { View } from '../view/view';
 import { ToolbarButton } from '..';
+import { Dom } from '../Dom';
 
 /**
  * @property {object} dialog module settings {@link Dialog|Dialog}
@@ -110,6 +111,7 @@ export class Dialog extends View {
         elements: string | Element | Array<string | Element>
     ) {
         const elements_list: HTMLElement[] = [];
+
         asArray(elements).forEach(elm => {
             const element: HTMLElement = dom(elm, this.document);
             elements_list.push(element);
@@ -117,8 +119,9 @@ export class Dialog extends View {
                 root.appendChild(element);
             }
         });
-        [].slice.call(root.childNodes).forEach((elm: HTMLElement) => {
-            if (elements_list.indexOf(elm) === -1) {
+
+        Array.from(root.childNodes).forEach((elm: ChildNode) => {
+            if (elements_list.indexOf(<HTMLElement>elm) === -1) {
                 root.removeChild(elm);
             }
         });
@@ -534,8 +537,8 @@ export class Dialog extends View {
             return;
         }
 
-        if (this.container && this.container.parentNode) {
-            this.container.parentNode.removeChild(this.container);
+        if (this.container) {
+            Dom.safeRemove(this.container);
         }
 
         delete this.container;

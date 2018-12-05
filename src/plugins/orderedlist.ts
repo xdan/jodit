@@ -39,13 +39,13 @@ export function orderedlist(editor: Jodit) {
                 if (ul && ul.parentNode && ul.parentNode.nodeName === 'P') {
                     const selection: markerInfo[] = editor.selection.save();
                     Dom.unwrap(ul.parentNode);
-                    [].slice.call(ul.childNodes).forEach((li: Node) => {
+                    Array.from(ul.childNodes).forEach((li: Node) => {
                         if (
                             li.lastChild &&
                             li.lastChild.nodeType === Node.ELEMENT_NODE &&
                             li.lastChild.nodeName === 'BR'
                         ) {
-                            li.removeChild(li.lastChild);
+                            Dom.safeRemove(li.lastChild);
                         }
                     });
                     editor.selection.restore(selection);

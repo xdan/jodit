@@ -8,6 +8,7 @@ import { Config } from '../Config';
 import * as consts from '../constants';
 import { Jodit } from '../Jodit';
 import { css, debounce, dom } from '../modules/helpers/Helpers';
+import { Dom } from '../modules';
 
 /**
  * Show placeholder
@@ -66,9 +67,7 @@ export function placeholder(this: any, editor: Jodit) {
     }
 
     (this as any).destruct = () => {
-        if (placeholderElm.parentNode) {
-            placeholderElm.parentNode.removeChild(placeholderElm);
-        }
+        Dom.safeRemove(placeholderElm);
     };
 
     const show = () => {

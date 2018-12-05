@@ -20,6 +20,7 @@ export class Dom {
             node.removeChild(node.firstChild);
         }
     }
+
     /**
      *
      * @param {Node} current
@@ -125,10 +126,12 @@ export class Dom {
             el = node;
 
         if (parent) {
+
             while (el.firstChild) {
                 parent.insertBefore(el.firstChild, el);
             }
-            parent.removeChild(el);
+
+            Dom.safeRemove(el);
         }
     }
 
@@ -587,7 +590,7 @@ export class Dom {
      * Returns true if it is a DOM node
      */
     public static isNode(object: any, win: Window): boolean {
-        if (typeof (win as any) === 'object' && win) {
+        if (typeof (win as any) === 'object' && win && typeof (win as any).Node === 'function') {
             return object instanceof (win as any).Node;
         }
 
@@ -774,4 +777,13 @@ export class Dom {
             ((root === child && !onlyContains) || Dom.contains(root, child))
         );
     };
+
+    /**
+     * Safe remove element from DOM
+     *
+     * @param node
+     */
+    public static safeRemove(node: Node | false | null) {
+        node && node.parentNode && node.parentNode.removeChild(node);
+    }
 }

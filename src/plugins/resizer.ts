@@ -17,6 +17,7 @@ import {
     offset,
 } from '../modules/helpers/Helpers';
 import { IBound } from '../types/types';
+import { Dom } from '../modules';
 
 /**
  * The module creates a supporting frame for resizing of the elements img and table
@@ -350,9 +351,7 @@ export function resizer(editor: Jodit) {
             }
         })
         .on('beforeDestruct', () => {
-            if (resizerElm.parentNode) {
-                resizerElm.parentNode.removeChild(resizerElm);
-            }
+            Dom.safeRemove(resizerElm);
         })
         .on('afterInit', () => {
             editor.events
@@ -366,13 +365,10 @@ export function resizer(editor: Jodit) {
                         if (currentElement.tagName !== 'JODIT') {
                             editor.selection.select(currentElement);
                         } else {
-                            if (currentElement.parentNode) {
-                                currentElement.parentNode.removeChild(
-                                    currentElement
-                                );
-                            }
+                            Dom.safeRemove(currentElement);
 
                             hideResizer();
+
                             e.preventDefault();
                         }
                     }

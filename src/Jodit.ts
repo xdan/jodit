@@ -466,20 +466,12 @@ export class Jodit extends View {
 
         delete this.events;
 
-        if (this.workplace.parentNode) {
-            this.workplace.parentNode.removeChild(this.workplace);
-        }
+        Dom.safeRemove(this.workplace);
+        Dom.safeRemove(this.editor);
+        Dom.safeRemove(this.iframe);
 
-        if (this.editor.parentNode) {
-            this.editor.parentNode.removeChild(this.editor);
-        }
-
-        if (this.iframe && this.iframe.parentNode) {
-            this.iframe.parentNode.removeChild(this.iframe);
-        }
-
-        if (this.container.parentNode && this.container !== this.element) {
-            this.container.parentNode.removeChild(this.container);
+        if (this.container !== this.element) {
+            Dom.safeRemove(this.container);
         }
 
         delete this.editor;

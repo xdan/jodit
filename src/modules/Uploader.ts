@@ -20,6 +20,7 @@ import {
 import { Ajax } from './Ajax';
 import { browser, dom, extend, isPlainObject } from './helpers/Helpers';
 import { Select } from './Selection';
+import { Dom } from './Dom';
 
 declare module '../Config' {
     interface Config {
@@ -517,9 +518,8 @@ export class Uploader implements IUploader {
 
                         setTimeout(() => {
                             const child: HTMLDivElement | null = div.firstChild as HTMLDivElement;
-                            if (div.parentNode) {
-                                div.parentNode.removeChild(div);
-                            }
+
+                            Dom.safeRemove(div);
 
                             if (child && child.hasAttribute('src')) {
                                 const src: string =

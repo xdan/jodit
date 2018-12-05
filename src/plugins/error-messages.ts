@@ -7,6 +7,8 @@
 import { Config } from '../Config';
 import { Jodit } from '../Jodit';
 import { css, dom } from '../modules/helpers/Helpers';
+import { Dom } from '../modules';
+import {setTimeout} from '../modules/helpers/Helpers';
 
 declare module '../Config' {
     interface Config {
@@ -36,6 +38,7 @@ Config.prototype.showMessageErrorOffsetPx = 3;
 export function errorMessages(editor: Jodit) {
     if (editor.options.showMessageErrors) {
         let height: number;
+
         const messagesBox: HTMLDivElement = dom(
                 '<div class="jodit_error_box_for_messages"></div>',
                 editor.ownerDocument
@@ -51,6 +54,7 @@ export function errorMessages(editor: Jodit) {
                             editor.options.showMessageErrorOffsetPx;
                     });
             };
+
         editor.workplace.appendChild(messagesBox);
 
         /**
@@ -68,28 +72,33 @@ export function errorMessages(editor: Jodit) {
          * parent.events.fire('errorMessage', 'File was uploaded', 'success', 4000);
          * ```
          */
-        editor.events.on(
-            'errorMessage',
-            (message: string, className: string, timeout: number) => {
-                const newmessage: HTMLDivElement = dom(
-                    '<div class="active ' +
-                        (className || '') +
-                        '">' +
-                        message +
-                        '</div>',
-                    editor.ownerDocument
-                ) as HTMLDivElement;
+        editor.events
+            .on('beforeDestruct', () => {
+                Dom.safeRemove(messagesBox);
+            })
+            .on(
+                'errorMessage',
+                (message: string, className: string, timeout: number) => {
+                    const newmessage: HTMLDivElement = dom(
+                        '<div class="active ' +
+                            (className || '') +
+                            '">' +
+                            message +
+                            '</div>',
+                        editor.ownerDocument
+                    ) as HTMLDivElement;
 
-                messagesBox.appendChild(newmessage);
-                recalcOffsets();
-                setTimeout(() => {
-                    newmessage.classList.remove('active');
+                    messagesBox.appendChild(newmessage);
+
+                    recalcOffsets();
                     setTimeout(() => {
-                        messagesBox.removeChild(newmessage);
-                        recalcOffsets();
-                    }, 300);
-                }, timeout || editor.options.showMessageErrorTime);
-            }
-        );
+                        newmessage.classList.remove('active');
+                        setTimeout(() => {
+                            Dom.safeRemove(newmessage);
+                            recalcOffsets();
+                        }, 300);
+                    }, timeout || editor.options.showMessageErrorTime);
+                }
+            );
     }
 }

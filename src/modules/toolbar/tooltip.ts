@@ -6,6 +6,7 @@
 
 import { asArray } from '../helpers/Helpers';
 import { ToolbarButton } from './button';
+import { Dom } from '../Dom';
 
 /**
  * Class create tooltip for buttons in toolbar
@@ -34,9 +35,9 @@ export class Tooltip {
 
     private hide = () => {
         window.clearTimeout(this.timeout);
-        this.container.parentNode &&
-            this.container.parentNode.removeChild(this.container);
+        Dom.safeRemove(this.container);
     };
+
     public container: HTMLElement;
 
     constructor(readonly button: ToolbarButton) {

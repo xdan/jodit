@@ -14,6 +14,7 @@ import {
     throttle,
 } from '../modules/helpers/Helpers';
 import { Plugin } from '../modules/Plugin';
+import { Dom } from '../modules';
 
 declare module '../Config' {
     interface Config {
@@ -113,8 +114,7 @@ export class DragAndDropElement extends Plugin {
         window.clearTimeout(this.timeout);
 
         if (this.draggable) {
-            this.draggable.parentNode &&
-                this.draggable.parentNode.removeChild(this.draggable);
+            Dom.safeRemove(this.draggable);
             this.draggable = null;
             this.wasMoved = false;
         }

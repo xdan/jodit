@@ -8,6 +8,7 @@ import { KEY_DOWN, KEY_ENTER, KEY_UP, SPACE_REG_EXP } from '../constants';
 import { Dialog } from '../modules/dialog/Dialog';
 import { dom } from '../modules/helpers/Helpers';
 import { Plugin } from '../modules/Plugin';
+import { Dom } from '../modules';
 
 /**
  * Show dialog choose content to paste
@@ -196,15 +197,10 @@ export class pasteStorage extends Plugin {
     }
     public beforeDestruct(): void {
         this.dialog && this.dialog.destruct();
-        this.previewBox &&
-            this.previewBox.parentNode &&
-            this.previewBox.parentNode.removeChild(this.previewBox);
-        this.listBox &&
-            this.listBox.parentNode &&
-            this.listBox.parentNode.removeChild(this.listBox);
-        this.container &&
-            this.container.parentNode &&
-            this.container.parentNode.removeChild(this.container);
+
+        Dom.safeRemove(this.previewBox);
+        Dom.safeRemove(this.listBox);
+        Dom.safeRemove(this.container);
 
         this.container = null;
         this.listBox = null;

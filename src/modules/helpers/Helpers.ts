@@ -93,10 +93,12 @@ export const type = (obj: any): string => {
 type eachCallback<T, N> = ((this: T, key: N, value: T) => boolean | void);
 
 export function each<T>(obj: T[], callback: eachCallback<T, number>): boolean;
+
 export function each<T>(
     obj: IDictionary<T>,
     callback: eachCallback<T, string>
 ): boolean;
+
 export function each<T>(
     obj: T[] | IDictionary<T>,
     callback: eachCallback<T, any>
@@ -140,6 +142,7 @@ export function each<T>(
     'Text',
     'DocumentFragment',
     'DOMStringList',
+    'HTMLCollection',
 ].forEach(name => {
     class2type['[object ' + name + ']'] = name.toLowerCase();
 });
@@ -424,7 +427,7 @@ export const appendScript = (
  *
  * @return HTMLElement
  */
-export const dom = (html: string | HTMLElement, doc: Document): HTMLElement => {
+export const dom = (html: string | HTMLElement | Element, doc: Document): HTMLElement => {
     if (html instanceof (doc.defaultView as any).HTMLElement) {
         return html as HTMLElement;
     }
@@ -438,7 +441,7 @@ export const dom = (html: string | HTMLElement, doc: Document): HTMLElement => {
             ? div
             : (div.firstChild as HTMLElement);
 
-    child.parentNode && child.parentNode.removeChild(child);
+    Dom.safeRemove(child);
 
     return child;
 };
@@ -1027,10 +1030,11 @@ export const css = (
 
 /**
  * Always return Array
+ *
  * @param a
  * @return {Array<any>}
  */
-export const asArray = (a: any): any[] => (Array.isArray(a) ? a : [a]);
+export const asArray = <T>(a: T[] | T): T[] => Array.isArray(a) ? a : [a];
 
 /**
  * Split separated elements
@@ -1348,7 +1352,7 @@ export const normalizeNode = (node: Node | null) => {
                 consts.INVISIBLE_SPACE_REG_EXP,
                 ''
             );
-            node.parentNode.removeChild(node.nextSibling);
+            Dom.safeRemove(node.nextSibling);
         }
     } else {
         normalizeNode(node.firstChild);
@@ -1415,9 +1419,7 @@ export const cleanFromWord = (html: string): string => {
             });
         }
 
-        marks.forEach(
-            (node: Node) => node.parentNode && node.parentNode.removeChild(node)
-        );
+        marks.forEach(Dom.safeRemove);
 
         convertedString = div.innerHTML;
     } catch (e) {}
@@ -1481,9 +1483,9 @@ export const applyStyles = (html: string): string => {
                 ? iframeDoc.body.innerHTML
                 : '';
         }
-    } catch (e) {
+    } catch {
     } finally {
-        iframe.parentNode && iframe.parentNode.removeChild(iframe);
+        Dom.safeRemove(iframe);
     }
 
     if (convertedString) {

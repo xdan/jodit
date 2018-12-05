@@ -116,7 +116,7 @@ export function addNewLine(editor: Jodit) {
 
     editor.events
         .on('beforeDestruct', () => {
-            line.parentNode && line.parentNode.removeChild(line);
+            Dom.safeRemove(line);
         })
         .on('afterInit', () => {
             editor.container.appendChild(line);

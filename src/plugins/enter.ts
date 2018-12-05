@@ -43,9 +43,7 @@ export const insertParagraph = (
 
     editor.selection.selectRange(range);
 
-    if (fake && fake.parentNode) {
-        fake.parentNode.removeChild(fake);
-    }
+    Dom.safeRemove(fake);
 
     scrollIntoView(p, editor.editor, editor.editorDocument);
 
@@ -250,9 +248,7 @@ export function enter(editor: Jodit) {
                                 );
                             }
 
-                            if (currentBox.parentNode) {
-                                currentBox.parentNode.removeChild(currentBox);
-                            }
+                            Dom.safeRemove(currentBox);
 
                             insertParagraph(
                                 editor,
@@ -260,8 +256,8 @@ export function enter(editor: Jodit) {
                                 editor.options.enter
                             );
 
-                            if (!$$('li', ul).length && ul.parentNode) {
-                                ul.parentNode.removeChild(ul);
+                            if (!$$('li', ul).length) {
+                                Dom.safeRemove(ul);
                             }
 
                             return false;

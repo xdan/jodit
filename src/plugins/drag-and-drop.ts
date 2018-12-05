@@ -30,8 +30,7 @@ export class DragAndDrop extends Plugin {
 
     private onDragEnd = () => {
         if (this.draggable) {
-            this.draggable.parentNode &&
-                this.draggable.parentNode.removeChild(this.draggable);
+            Dom.safeRemove(this.draggable);
             this.draggable = null;
         }
         this.isCopyMode = false;

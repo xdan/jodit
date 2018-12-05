@@ -13,14 +13,12 @@ export abstract class Plugin extends Component implements IPlugin {
 
     public abstract beforeDestruct(jodit?: IViewBased): void;
 
-    private __destructed: boolean = false;
-
     public destruct = () => {
-        if (!this.__destructed) {
+        if (!this.isDestructed) {
             this.jodit.events &&
                 this.jodit.events.off('beforeDestruct', this.destruct);
             this.beforeDestruct(this.jodit);
-            this.__destructed = true;
+            this.isDestructed = true;
         }
     };
 

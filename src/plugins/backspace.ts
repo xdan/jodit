@@ -35,7 +35,7 @@ export function backspace(editor: Jodit) {
                 container !== editor.editor
             ) {
                 parent = box.parentNode;
-                box.parentNode.removeChild(box);
+                Dom.safeRemove(box);
             } else {
                 break;
             }
@@ -114,9 +114,7 @@ export function backspace(editor: Jodit) {
                 range.collapse(true);
                 editor.selection.selectRange(range);
 
-                box.node &&
-                    box.node.parentNode &&
-                    box.node.parentNode.removeChild(box.node);
+                Dom.safeRemove(box.node);
 
                 box.node = nextElement;
             }
@@ -140,7 +138,7 @@ export function backspace(editor: Jodit) {
 
     const removePotential = (node: Node | null): false | void => {
         if (node && potentialRemovable.test(node.nodeName)) {
-            node.parentNode && node.parentNode.removeChild(node);
+            Dom.safeRemove(node);
             return false;
         }
     };
@@ -208,7 +206,7 @@ export function backspace(editor: Jodit) {
         }
 
         return node.childNodes.length
-            ? [].slice.call(node.childNodes).every(isEmpty)
+            ? Array.from(node.childNodes).every(isEmpty)
             : true;
     };
 
@@ -222,7 +220,7 @@ export function backspace(editor: Jodit) {
                     current.firstChild &&
                     current.firstChild.nodeName === 'BR'
                 ) {
-                    current.removeChild(current.firstChild);
+                    Dom.safeRemove(current.firstChild);
                 }
 
                 if (
@@ -231,10 +229,12 @@ export function backspace(editor: Jodit) {
                     (!current || !Dom.closest(current, 'table', editor.editor))
                 ) {
                     editor.editor.innerHTML = '';
+
                     const node: Node = editor.selection.setCursorIn(
                         editor.editor
                     );
-                    node.parentNode && node.parentNode.removeChild(node);
+
+                    Dom.safeRemove(node);
                 }
             }
         })
@@ -352,8 +352,7 @@ export function backspace(editor: Jodit) {
                                 );
                         } else {
                             if (prevBox && isEmpty(prevBox)) {
-                                prevBox.parentNode &&
-                                    prevBox.parentNode.removeChild(prevBox);
+                                Dom.safeRemove(prevBox);
                                 return false;
                             }
                         }
@@ -368,8 +367,7 @@ export function backspace(editor: Jodit) {
                                 tmpNode.nodeType === Node.TEXT_NODE &&
                                 tmpNode.nodeValue === consts.INVISIBLE_SPACE
                             ) {
-                                tmpNode.parentNode &&
-                                    tmpNode.parentNode.removeChild(tmpNode);
+                                Dom.safeRemove(tmpNode);
                             }
                         }
 
@@ -409,10 +407,7 @@ export function backspace(editor: Jodit) {
                                         UL !== nextBox
                                     ) {
                                         Dom.moveContent(nextBox, UL, !toLeft);
-                                        nextBox.parentNode &&
-                                            nextBox.parentNode.removeChild(
-                                                nextBox
-                                            );
+                                        Dom.safeRemove(nextBox);
                                     }
                                 }
                             }
@@ -427,13 +422,15 @@ export function backspace(editor: Jodit) {
                             fakeNode.nodeValue === consts.INVISIBLE_SPACE
                         ) {
                             const parent: Node = fakeNode.parentNode;
-                            parent.removeChild(fakeNode);
+
+                            Dom.safeRemove(fakeNode);
+
                             if (
                                 !parent.firstChild &&
                                 parent.parentNode &&
                                 parent !== editor.editor
                             ) {
-                                parent.parentNode.removeChild(parent);
+                                Dom.safeRemove(parent);
                             }
                         }
 
@@ -446,8 +443,9 @@ export function backspace(editor: Jodit) {
                                 | false = editor.selection.setCursorBefore(
                                 marker
                             );
-                            marker.parentNode &&
-                                marker.parentNode.removeChild(marker);
+
+                            Dom.safeRemove(marker);
+
                             if (
                                 tmpNode &&
                                 tmpNode.parentNode &&
@@ -462,7 +460,7 @@ export function backspace(editor: Jodit) {
                                         tmpNode.parentNode
                                     ))
                             ) {
-                                tmpNode.parentNode.removeChild(tmpNode);
+                                Dom.safeRemove(tmpNode);
                             }
                         }
 

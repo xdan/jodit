@@ -251,7 +251,7 @@ export class Table {
                         }
                     }
                 } else {
-                    cell.parentNode && cell.parentNode.removeChild(cell);
+                    Dom.safeRemove(cell);
                 }
                 if (
                     dec &&
@@ -267,9 +267,7 @@ export class Table {
             }
         );
 
-        if (row && row.parentNode) {
-            row.parentNode.removeChild(row);
-        }
+        Dom.safeRemove(row);
     }
 
     /**
@@ -347,7 +345,7 @@ export class Table {
             } else if (j + 1 < cells.length && box[i][j + 1] === td) {
                 dec = true;
             } else {
-                td.parentNode && td.parentNode.removeChild(td);
+                Dom.safeRemove(td);
             }
             if (dec && (i - 1 < 0 || td !== box[i - 1][j])) {
                 const colSpan: number = td.colSpan;
@@ -625,10 +623,10 @@ export class Table {
                 Table.normalizeTable(table);
 
                 each(
-                    [].slice.call(table.rows),
-                    (index: number, tr: HTMLTableRowElement) => {
+                    Array.from(table.rows),
+                    (index, tr) => {
                         if (!tr.cells.length) {
-                            tr.parentNode && tr.parentNode.removeChild(tr);
+                            Dom.safeRemove(tr);
                         }
                     }
                 );
@@ -845,8 +843,7 @@ export class Table {
                     (key: string, value: number) => {
                         switch (key) {
                             case 'remove':
-                                cell.parentNode &&
-                                    cell.parentNode.removeChild(cell);
+                                Dom.safeRemove(cell);
                                 break;
                             case 'rowspan':
                                 if (value > 1) {

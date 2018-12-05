@@ -109,7 +109,7 @@ Config.prototype.controls.copyformat = {
                 });
 
                 if (ideal !== editor.editor) {
-                    ideal.parentNode && ideal.parentNode.removeChild(ideal);
+                    Dom.safeRemove(ideal);
                 }
 
                 const format: IDictionary<

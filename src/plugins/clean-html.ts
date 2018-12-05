@@ -334,11 +334,7 @@ export function cleanHtml(editor: Jodit) {
 
                     checkNode(node);
 
-                    remove.forEach(
-                        (nodeElm: Node) =>
-                            nodeElm.parentNode &&
-                            nodeElm.parentNode.removeChild(nodeElm)
-                    );
+                    remove.forEach(Dom.safeRemove);
 
                     if (remove.length || work) {
                         editor.events && editor.events.fire('syncho');
@@ -389,24 +385,6 @@ export function cleanHtml(editor: Jodit) {
                 }
             }
         })
-        // remove invisible spaces then they already not need
-        // TODO refactor this and code above
-        // .on('keyup',  () => {
-        //     if (editor.selection.isCollapsed()) {
-        //         let node: Node | null = <Node | null> editor.selection.current();
-        //         if (node && node.nodeType === Node.TEXT_NODE && node.nodeValue !== consts.INVISIBLE_SPACE) {
-        //             console.log(node);
-        //             while (node = Dom.findInline(node, true, editor.editor)) {
-        //                 console.log(node);
-        //                 debugger
-        //                 if (node && node.nodeType === Node.TEXT_NODE && node.nodeValue &&
-        //                 node.nodeValue.match(consts.INVISIBLE_SPACE_REG_EXP)) {
-        //                     node.nodeValue = node.nodeValue.replace(consts.INVISIBLE_SPACE_REG_EXP, '');
-        //                 }
-        //             }
-        //         }
-        //     }
-        // })
         .on('afterCommand', (command: string) => {
             const sel: Select = editor.selection;
 
@@ -478,8 +456,7 @@ export function cleanHtml(editor: Jodit) {
                                 }
                                 break;
                             default:
-                                elm.parentNode &&
-                                    elm.parentNode.removeChild(elm);
+                                Dom.safeRemove(elm);
                         }
                     };
 

@@ -12,6 +12,9 @@ export interface IDictionary<T = any> {
 
 export type NodeCondition = (node: Node | null) => boolean | null | void | '';
 
+/**
+ * Bound interface
+ */
 export interface IBound {
     top: number;
     left: number;

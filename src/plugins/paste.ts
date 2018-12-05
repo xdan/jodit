@@ -32,6 +32,7 @@ import {
 } from '../modules/helpers/Helpers';
 
 import { IControlType } from '../types/toolbar';
+import { Dom } from '../modules';
 
 /**
  * @property{boolean} askBeforePasteHTML=true Ask before paste HTML in WYSIWYG mode
@@ -517,7 +518,7 @@ export function paste(editor: Jodit) {
                         let tick: number = 0;
 
                         const removeFakeFocus = () => {
-                            div.parentNode && div.parentNode.removeChild(div);
+                            Dom.safeRemove(div);
                             editor.selection.restore(selData);
                         };
 

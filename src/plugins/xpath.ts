@@ -43,8 +43,7 @@ export class xpath extends Plugin {
                 title: bindElement === this.jodit.editor ? 'Clear' : 'Remove',
                 exec: () => {
                     if (bindElement !== this.jodit.editor) {
-                        bindElement.parentNode &&
-                            bindElement.parentNode.removeChild(bindElement);
+                        Dom.safeRemove(bindElement);
                     } else {
                         this.jodit.value = '';
                     }
@@ -226,9 +225,7 @@ export class xpath extends Plugin {
         }
 
         this.menu && this.menu.destruct();
-        this.container &&
-            this.container.parentNode &&
-            this.container.parentNode.removeChild(this.container);
+        Dom.safeRemove(this.container);
 
         this.menu = null;
         this.container = null;

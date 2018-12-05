@@ -8,6 +8,7 @@ import { IViewBased } from '../types/view';
 import { Component } from './Component';
 import { css, dom } from './helpers/Helpers';
 import { ToolbarIcon } from './toolbar/icon';
+import { Dom } from './Dom';
 
 export interface Action {
     icon?: string;
@@ -25,9 +26,7 @@ export class ContextMenu extends Component {
     private context: HTMLElement;
 
     public destruct() {
-        this.context &&
-            this.context.parentNode &&
-            this.context.parentNode.removeChild(this.context);
+        Dom.safeRemove(this.context);
     }
 
     /**
