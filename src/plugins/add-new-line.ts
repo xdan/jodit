@@ -137,7 +137,7 @@ export function addNewLine(editor: Jodit) {
 
                     editor.selection.setCursorIn(p);
 
-                    editor.setEditorValue();
+                    editor.events.fire('synchro');
                     hideForce();
                     e.preventDefault();
                 });
