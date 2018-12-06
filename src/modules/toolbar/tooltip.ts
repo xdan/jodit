@@ -7,6 +7,7 @@
 import { asArray } from '../helpers/Helpers';
 import { ToolbarButton } from './button';
 import { Dom } from '../Dom';
+import {setTimeout} from '../helpers/Helpers';
 
 /**
  * Class create tooltip for buttons in toolbar
@@ -26,11 +27,7 @@ export class Tooltip {
 
         this.button.jodit.events.fire('hideTooltip');
 
-        if (delay) {
-            this.timeout = window.setTimeout(showElement, delay);
-        } else {
-            showElement();
-        }
+        this.timeout = setTimeout(showElement, delay);
     };
 
     private hide = () => {

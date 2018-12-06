@@ -7,7 +7,7 @@
 import { Config } from '../Config';
 import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
-import { debounce, dom, offset } from '../modules/helpers/Helpers';
+import { debounce, dom, offset, setTimeout } from '../modules/helpers/Helpers';
 import { ToolbarIcon } from '../modules/toolbar/icon';
 import { IBound } from '../types';
 
@@ -111,7 +111,7 @@ export function addNewLine(editor: Jodit) {
             return;
         }
         clearTimeout(timeout);
-        timeout = window.setTimeout(hideForce, 500);
+        timeout = setTimeout(hideForce, 500);
     };
 
     editor.events

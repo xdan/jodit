@@ -7,6 +7,7 @@
 import { Config } from '../Config';
 import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
+import {setTimeout} from '../modules/helpers/Helpers';
 
 declare module '../Config' {
     interface Config {
@@ -30,7 +31,7 @@ export function autofocus(editor: Jodit) {
         .on('afterInit', () => {
             if (editor.options.autofocus) {
                 if (editor.defaultTimeout) {
-                    timeout = window.setTimeout(editor.selection.focus, 300);
+                    timeout = setTimeout(editor.selection.focus, 300);
                 } else {
                     editor.selection.focus();
                 }

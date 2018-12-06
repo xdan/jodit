@@ -841,7 +841,7 @@ export const debounce = function<T>(
 
         if (timeout) {
             clearTimeout(timer);
-            timer = window.setTimeout(() => {
+            timer = setTimeout(() => {
                 if (!invokeAsap) {
                     fn.apply(ctx, args as any);
                 }
@@ -1635,17 +1635,19 @@ export const normalizeKeyAliases = (keys: string): string => {
  *
  * @param callback
  * @param timeout
- * @param args
+ * @param a1
+ * @param a2
+ * @param a3
  */
-export const setTimeout = (
-    callback: (...args: any[]) => any,
+export const setTimeout = <T1, T2, T3>(
+    callback: (a1?: T1, a2?: T2, a3?: T3) => any,
     timeout: number,
-    ...args: any[]
+    a1?: T1, a2?: T2, a3?: T3
 ): number => {
     if (!timeout) {
-        callback.apply(null, args);
+        callback.call(null, a1, a2, a3);
     } else {
-        return window.setTimeout.apply(window, [callback, timeout, ...args]);
+        return window.setTimeout.call(window, callback, timeout, a1, a2, a3);
     }
 
     return 0;

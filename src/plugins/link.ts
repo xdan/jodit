@@ -260,14 +260,9 @@ export function link(jodit: Jodit) {
                     const a: HTMLAnchorElement = jodit.editorDocument.createElement(
                         'a'
                     );
+
                     a.setAttribute('href', html);
                     a.innerText = html;
-                    if (jodit.options.link.openLinkDialogAfterPost) {
-                        setTimeout(() => {
-                            // parent.selection.setCursorIn(a, true);
-                            // editor.selection.selectNodes(Array.prototype.slice.call(a.childNodes));
-                        }, 100);
-                    }
 
                     return a;
                 }

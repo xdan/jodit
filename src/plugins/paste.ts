@@ -29,6 +29,7 @@ import {
     isHTMLFromWord,
     trim,
     type,
+    setTimeout
 } from '../modules/helpers/Helpers';
 
 import { IControlType } from '../types/toolbar';

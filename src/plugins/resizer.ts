@@ -15,6 +15,7 @@ import {
     dom,
     innerWidth,
     offset,
+    setTimeout
 } from '../modules/helpers/Helpers';
 import { IBound } from '../types/types';
 import { Dom } from '../modules';
@@ -128,8 +129,8 @@ export function resizer(editor: Jodit) {
             sizeViewer.style.opacity = '1';
             sizeViewer.innerHTML = `${w} x ${h}`;
 
-            window.clearTimeout(timeoutSizeViewer);
-            timeoutSizeViewer = window.setTimeout(
+            clearTimeout(timeoutSizeViewer);
+            timeoutSizeViewer = setTimeout(
                 hideSizeViewer,
                 editor.options.resizer.hideSizeTimeout
             );
@@ -304,7 +305,7 @@ export function resizer(editor: Jodit) {
                         clearTimeout(timer);
                     }
 
-                    timer = window.setTimeout(() => {
+                    timer = setTimeout(() => {
                         resizeElementClicked = false;
                     }, 400);
                 });

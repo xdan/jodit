@@ -20,6 +20,7 @@ import {
     humanSizeToBytes,
     pathNormalize,
     urlNormalize,
+    setTimeout
 } from '../helpers/Helpers';
 import { ToolbarIcon } from '../toolbar/icon';
 import { Uploader } from '../Uploader';
@@ -1122,7 +1123,7 @@ export class FileBrowser extends View {
             this.status_line.classList.add('success');
         }
 
-        this.statustimer = window.setTimeout(() => {
+        this.statustimer = setTimeout(() => {
             this.status_line.classList.remove('active');
         }, this.options.howLongShowMsg);
     }
