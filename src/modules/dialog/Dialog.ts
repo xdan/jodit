@@ -121,7 +121,7 @@ export class Dialog extends View {
         });
 
         Array.from(root.childNodes).forEach((elm: ChildNode) => {
-            if (elements_list.indexOf(<HTMLElement>elm) === -1) {
+            if (elements_list.indexOf(elm as HTMLElement) === -1) {
                 root.removeChild(elm);
             }
         });

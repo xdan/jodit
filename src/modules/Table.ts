@@ -622,14 +622,11 @@ export class Table {
 
                 Table.normalizeTable(table);
 
-                each(
-                    Array.from(table.rows),
-                    (index, tr) => {
-                        if (!tr.cells.length) {
-                            Dom.safeRemove(tr);
-                        }
+                each(Array.from(table.rows), (index, tr) => {
+                    if (!tr.cells.length) {
+                        Dom.safeRemove(tr);
                     }
-                );
+                });
             }
         }
     }

@@ -700,7 +700,9 @@ export class ImageEditor extends Component {
 
             this.image = this.jodit.ownerDocument.createElement('img');
 
-            $$('img,.jodit_icon-loader', this.resize_box).forEach(Dom.safeRemove);
+            $$('img,.jodit_icon-loader', this.resize_box).forEach(
+                Dom.safeRemove
+            );
             $$('img,.jodit_icon-loader', this.crop_box).forEach(Dom.safeRemove);
 
             css(this.cropHandler, 'background', 'transparent');

@@ -9,7 +9,7 @@ import { Dialog } from '../modules/dialog/Dialog';
 import { dom } from '../modules/helpers/Helpers';
 import { Plugin } from '../modules/Plugin';
 import { Dom } from '../modules';
-import {setTimeout} from '../modules/helpers/Helpers';
+import { setTimeout } from '../modules/helpers/Helpers';
 
 /**
  * Show dialog choose content to paste

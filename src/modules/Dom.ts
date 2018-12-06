@@ -126,7 +126,6 @@ export class Dom {
             el = node;
 
         if (parent) {
-
             while (el.firstChild) {
                 parent.insertBefore(el.firstChild, el);
             }
@@ -590,7 +589,11 @@ export class Dom {
      * Returns true if it is a DOM node
      */
     public static isNode(object: any, win: Window): boolean {
-        if (typeof (win as any) === 'object' && win && typeof (win as any).Node === 'function') {
+        if (
+            typeof (win as any) === 'object' &&
+            win &&
+            typeof (win as any).Node === 'function'
+        ) {
             return object instanceof (win as any).Node;
         }
 

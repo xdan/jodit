@@ -8,7 +8,7 @@ import { Config } from '../Config';
 import { Jodit } from '../Jodit';
 import { css, dom } from '../modules/helpers/Helpers';
 import { Dom } from '../modules';
-import {setTimeout} from '../modules/helpers/Helpers';
+import { setTimeout } from '../modules/helpers/Helpers';
 
 declare module '../Config' {
     interface Config {

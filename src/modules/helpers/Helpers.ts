@@ -427,7 +427,10 @@ export const appendScript = (
  *
  * @return HTMLElement
  */
-export const dom = (html: string | HTMLElement | Element, doc: Document): HTMLElement => {
+export const dom = (
+    html: string | HTMLElement | Element,
+    doc: Document
+): HTMLElement => {
     if (html instanceof (doc.defaultView as any).HTMLElement) {
         return html as HTMLElement;
     }
@@ -1034,7 +1037,7 @@ export const css = (
  * @param a
  * @return {Array<any>}
  */
-export const asArray = <T>(a: T[] | T): T[] => Array.isArray(a) ? a : [a];
+export const asArray = <T>(a: T[] | T): T[] => (Array.isArray(a) ? a : [a]);
 
 /**
  * Split separated elements
@@ -1642,7 +1645,9 @@ export const normalizeKeyAliases = (keys: string): string => {
 export const setTimeout = <T1, T2, T3>(
     callback: (a1?: T1, a2?: T2, a3?: T3) => any,
     timeout: number,
-    a1?: T1, a2?: T2, a3?: T3
+    a1?: T1,
+    a2?: T2,
+    a3?: T3
 ): number => {
     if (!timeout) {
         callback.call(null, a1, a2, a3);

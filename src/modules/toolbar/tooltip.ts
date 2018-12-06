@@ -7,7 +7,7 @@
 import { asArray } from '../helpers/Helpers';
 import { ToolbarButton } from './button';
 import { Dom } from '../Dom';
-import {setTimeout} from '../helpers/Helpers';
+import { setTimeout } from '../helpers/Helpers';
 
 /**
  * Class create tooltip for buttons in toolbar

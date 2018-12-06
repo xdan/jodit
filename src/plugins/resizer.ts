@@ -15,7 +15,7 @@ import {
     dom,
     innerWidth,
     offset,
-    setTimeout
+    setTimeout,
 } from '../modules/helpers/Helpers';
 import { IBound } from '../types/types';
 import { Dom } from '../modules';

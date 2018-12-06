@@ -20,7 +20,7 @@ import {
     humanSizeToBytes,
     pathNormalize,
     urlNormalize,
-    setTimeout
+    setTimeout,
 } from '../helpers/Helpers';
 import { ToolbarIcon } from '../toolbar/icon';
 import { Uploader } from '../Uploader';
@@ -941,7 +941,7 @@ export class FileBrowser extends View {
                 (resp: IFileBrowserAnswer) => {
                     let process:
                         | ((resp: IFileBrowserAnswer) => IFileBrowserAnswer)
-                        | undefined = (<any>self.options.permissions).process;
+                        | undefined = (self.options.permissions as any).process;
                     if (!process) {
                         process = this.options.ajax.process;
                     }
@@ -998,7 +998,8 @@ export class FileBrowser extends View {
                                     | ((
                                           resp: IFileBrowserAnswer
                                       ) => IFileBrowserAnswer)
-                                    | undefined = (<any>self.options.folder).process;
+                                    | undefined = (self.options.folder as any)
+                                    .process;
                                 if (!process) {
                                     process = this.options.ajax.process;
                                 }
@@ -1948,7 +1949,7 @@ export class FileBrowser extends View {
             'folder',
             'items',
             'permissions',
-        ].forEach((key) => {
+        ].forEach(key => {
             if (this.options[key] !== null) {
                 this.options[key] = extend(
                     true,
