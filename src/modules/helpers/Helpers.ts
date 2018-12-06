@@ -168,7 +168,46 @@ export const isPlainObject = (obj: any): boolean => {
     );
 };
 
-export const extend = function(this: any, ...args: any[]) {
+/**
+ * Copy the values of all of the enumerable own properties from one or more source objects to a
+ * target object. Returns the target object.
+ * @param target The target object to copy to.
+ * @param source The source object from which to copy properties.
+ */
+export function extend<T, U>(target: T, source: U): T & U;
+export function extend<U, V>(deep: true, source1: U, source2: V): U & V;
+
+/**
+ * Copy the values of all of the enumerable own properties from one or more source objects to a
+ * target object. Returns the target object.
+ * @param target The target object to copy to.
+ * @param source1 The first source object from which to copy properties.
+ * @param source2 The second source object from which to copy properties.
+ */
+export function extend<T, U, V>(target: T, source1: U, source2: V): T & U & V;
+export function extend<T, U, V>(deep: true, target: T, source1: U, source2: V): T & U & V;
+
+/**
+ * Copy the values of all of the enumerable own properties from one or more source objects to a
+ * target object. Returns the target object.
+ * @param target The target object to copy to.
+ * @param source1 The first source object from which to copy properties.
+ * @param source2 The second source object from which to copy properties.
+ * @param source3 The third source object from which to copy properties.
+ */
+export function extend<T, U, V, W>(target: T, source1: U, source2: V, source3: W): T & U & V & W;
+export function extend<T, U, V, W>(deep: true, target: T, source1: U, source2: V, source3: W): T & U & V & W;
+
+/**
+ * Copy the values of all of the enumerable own properties from one or more source objects to a
+ * target object. Returns the target object.
+ * @param target The target object to copy to.
+ * @param sources One or more source objects from which to copy properties
+ */
+export function extend(target: object, ...sources: any[]): any;
+export function extend(deep: true, target: object, ...sources: any[]): any;
+
+export function extend(this: any, ...args: any[]): any {
     const length = args.length;
     let options,
         name,
@@ -176,7 +215,7 @@ export const extend = function(this: any, ...args: any[]) {
         copy,
         copyIsArray,
         clone,
-        target = args[0] || {},
+        target: boolean | any = args[0] || {},
         i = 1,
         j,
         keys,
@@ -233,7 +272,7 @@ export const extend = function(this: any, ...args: any[]) {
     }
 
     return target;
-};
+}
 
 /**
  * It clears the line of all auxiliary invisible characters , from the spaces and line breaks , tabs
@@ -304,7 +343,7 @@ export const colorToHex = (color: string): string | false => {
  * @return {string|boolean} HEX color, false - for transparent color
  */
 export const normalizeColor = (colorInput: string): string | false => {
-    const newcolor = ['#'];
+    const newcolor: string[] = ['#'];
 
     let color: string = colorToHex(colorInput) as string;
 
@@ -912,7 +951,7 @@ export const throttle = <T>(
  */
 export const isNumeric = (value: number | string): boolean => {
     if (typeof value === 'string') {
-        if (!value.match(/^([\+\-])?[0-9]+(\.?)([0-9]+)?(e[0-9]+)?$/)) {
+        if (!value.match(/^([+\-])?[0-9]+(\.?)([0-9]+)?(e[0-9]+)?$/)) {
             return false;
         }
 
@@ -1035,7 +1074,7 @@ export const css = (
  * Always return Array
  *
  * @param a
- * @return {Array<any>}
+ * @return {Array}
  */
 export const asArray = <T>(a: T[] | T): T[] => (Array.isArray(a) ? a : [a]);
 

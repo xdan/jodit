@@ -87,7 +87,11 @@ export class DragAndDropElement extends Plugin {
         this.onDragEnd();
 
         this.timeout = setTimeout(
-            (lastNode: HTMLElement) => {
+            (lastNode?: HTMLElement) => {
+                if (!lastNode) {
+                    return;
+                }
+
                 this.draggable = lastNode.cloneNode(true) as HTMLElement;
 
                 dataBind(this.draggable, 'target', lastNode);

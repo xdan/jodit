@@ -74,9 +74,8 @@ export class pasteStorage extends Plugin {
 
     private selectIndex = (index: number) => {
         if (this.listBox) {
-            [].slice
-                .call(this.listBox.childNodes)
-                .forEach((a: HTMLAnchorElement, i: number) => {
+            Array.from(<NodeListOf<HTMLAnchorElement>>this.listBox.childNodes)
+                .forEach((a, i) => {
                     a.classList.remove('jodit_active');
                     if (index === i && this.previewBox) {
                         a.classList.add('jodit_active');
