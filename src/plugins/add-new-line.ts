@@ -7,7 +7,8 @@
 import { Config } from '../Config';
 import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
-import { debounce, dom, offset, setTimeout } from '../modules/helpers/Helpers';
+import { debounce, setTimeout } from '../modules/helpers/async';
+import { offset } from '../modules/helpers/size';
 import { ToolbarIcon } from '../modules/toolbar/icon';
 import { IBound } from '../types';
 
@@ -62,6 +63,7 @@ export function addNewLine(editor: Jodit) {
             '</span></div>',
         editor.ownerDocument
     ) as HTMLDivElement;
+
     const delta = 10;
     const isMatchedTag = new RegExp(
         '^(' + editor.options.addNewLineTagsTriggers.join('|') + ')$',

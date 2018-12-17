@@ -7,14 +7,13 @@
 import { Config } from '../Config';
 import * as consts from '../constants';
 import { Jodit } from '../Jodit';
-import { Component, Dom, Table } from '../modules/';
+import { Plugin, Dom, Table } from '../modules/';
 import {
     $$,
-    dom,
     getContentWidth,
     offset,
     scrollIntoView,
-} from '../modules/helpers/Helpers';
+} from '../modules/helpers/';
 import { ToolbarButton } from '../modules/toolbar/button';
 import { IControlType } from '../types/toolbar';
 import { IBound, IDictionary } from '../types/types';
@@ -80,7 +79,7 @@ Config.prototype.controls.table = {
             return out.join('');
         };
 
-        const form: HTMLFormElement = dom(
+        const form: HTMLFormElement = editor.create.fromHTML(
                 '<form class="jodit_form jodit_form_inserter">' +
                     '<label>' +
                     '<span>1</span> &times; <span>1</span>' +
@@ -91,14 +90,16 @@ Config.prototype.controls.table = {
                     generateExtraClasses() +
                     '</div>' +
                     '</div>' +
-                    '</form>',
-                editor.ownerDocument
+                    '</form>'
             ) as HTMLFormElement,
+
             rows: HTMLSpanElement = form.querySelectorAll('span')[0],
             cols: HTMLSpanElement = form.querySelectorAll('span')[1],
+
             blocksContainer: HTMLDivElement = form.querySelector(
                 '.jodit_form-container'
             ) as HTMLDivElement,
+
             mainBox: HTMLDivElement = form.querySelector(
                 '.jodit_form-table-creator-box'
             ) as HTMLDivElement,
@@ -284,7 +285,7 @@ Config.prototype.controls.table = {
 /**
  * Process tables in editor
  */
-export class TableProcessor extends Component {
+export class TableProcessor extends Plugin {
     public static isCell(tag: Node | null): boolean {
         return !!tag && /^TD|TH$/i.test(tag.nodeName);
     }
@@ -349,11 +350,10 @@ export class TableProcessor extends Component {
             this.__resizerHandler = this.jodit.container.querySelector(
                 '.jodit_table_resizer'
             ) as HTMLElement;
+
             if (!this.__resizerHandler) {
-                this.__resizerHandler = dom(
-                    '<div class="jodit_table_resizer"></div>',
-                    this.jodit.ownerDocument
-                );
+                this.__resizerHandler = this.jodit.create.div("jodit_table_resizer");
+
                 let startX: number = 0; // , startLeft = 0;
                 this.jodit.events
                     .on(
@@ -704,15 +704,13 @@ export class TableProcessor extends Component {
      *
      * @param {Jodit} editor
      */
-    constructor(editor: Jodit) {
-        super(editor);
-
+    afterInit(editor: Jodit): void {
         if (!editor.options.useTableProcessor) {
             return;
         }
 
         editor.events
-            .on(this.jodit.ownerWindow, 'mouseup touchend', () => {
+            .on(this.jodit.ownerWindow, 'mouseup.table touchend.table', () => {
                 if (this.__selectMode || this.__drag) {
                     this.__selectMode = false;
                     this.jodit.unlock();
@@ -785,7 +783,7 @@ export class TableProcessor extends Component {
                     editor.selection.focus();
                 }
             })
-            .on(this.jodit.ownerWindow, 'scroll', () => {
+            .on(this.jodit.ownerWindow, 'scroll.table', () => {
                 if (this.__drag) {
                     const parent = Dom.up(
                         this.__workCell,
@@ -800,7 +798,7 @@ export class TableProcessor extends Component {
             })
             .on(
                 this.jodit.ownerWindow,
-                'mousedown touchend',
+                'mousedown.table touchend.table',
                 (event: MouseEvent) => {
                     // need use event['originalEvent'] because of IE can not set target from
                     // another window to current window
@@ -836,7 +834,7 @@ export class TableProcessor extends Component {
                     }
                 }
             )
-            .on('afterGetValueFromEditor', (data: { value: string }) => {
+            .on('afterGetValueFromEditor.table', (data: { value: string }) => {
                 data.value = data.value.replace(
                     new RegExp(
                         `([\s]*)${consts.JODIT_SELECTED_CELL_MARKER}="1"`,
@@ -845,7 +843,7 @@ export class TableProcessor extends Component {
                     ''
                 );
             })
-            .on('change afterCommand afterSetMode', () => {
+            .on('change.table afterCommand.table afterSetMode.table', () => {
                 ($$('table', editor.editor) as HTMLTableElement[]).forEach(
                     (table: HTMLTableElement) => {
                         if (!(table as any)[this.__key]) {
@@ -854,7 +852,7 @@ export class TableProcessor extends Component {
                     }
                 );
             })
-            .on('beforeSetMode', () => {
+            .on('beforeSetMode.table', () => {
                 Table.getAllSelectedCells(editor.editor).forEach(td => {
                     Table.restoreSelection(td);
                     Table.normalizeTable(Dom.closest(
@@ -864,7 +862,7 @@ export class TableProcessor extends Component {
                     ) as HTMLTableElement);
                 });
             })
-            .on('keydown', (event: KeyboardEvent) => {
+            .on('keydown.table', (event: KeyboardEvent) => {
                 if (event.which === consts.KEY_TAB) {
                     ($$('table', editor.editor) as HTMLTableElement[]).forEach(
                         (table: HTMLTableElement) => {
@@ -873,6 +871,13 @@ export class TableProcessor extends Component {
                     );
                 }
             })
-            .on('beforeCommand', this.onExecCommand.bind(this));
+            .on('beforeCommand.table', this.onExecCommand.bind(this));
+    }
+
+    beforeDestruct(jodit: Jodit): void {
+        if (jodit.events) {
+            jodit.events.off(this.jodit.ownerWindow, '.table');
+            jodit.events.off('.table');
+        }
     }
 }

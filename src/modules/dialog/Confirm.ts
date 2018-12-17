@@ -6,7 +6,6 @@
 
 import { Dialog } from './Dialog';
 import { Jodit } from '../../Jodit';
-import { dom } from '../helpers/Helpers';
 import { ToolbarIcon } from '..';
 
 /**

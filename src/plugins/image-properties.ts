@@ -517,9 +517,7 @@ export function imageProperties(editor: Jodit) {
             ) as HTMLAnchorElement[]).forEach((btn: HTMLAnchorElement) => {
                 editor.events.on(btn, 'mousedown touchstart', () => {
                     const url: string = image.getAttribute('src') || '',
-                        a: HTMLAnchorElement = editor.ownerDocument.createElement(
-                            'a'
-                        ),
+                        a = editor.create.element('a'),
                         loadExternal = () => {
                             if (a.host !== location.host) {
                                 Confirm(

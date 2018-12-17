@@ -10,18 +10,6 @@ import { Jodit } from '../../Jodit';
 import { Ajax } from '../Ajax';
 import { ContextMenu } from '../ContextMenu';
 import { Alert, Confirm, Dialog, Promt } from '../dialog/';
-import {
-    $$,
-    ctrlKey,
-    debounce,
-    dom,
-    each,
-    extend,
-    humanSizeToBytes,
-    pathNormalize,
-    urlNormalize,
-    setTimeout,
-} from '../helpers/Helpers';
 import { ToolbarIcon } from '../toolbar/icon';
 import { Uploader } from '../Uploader';
 import { View } from '../view/view';
@@ -43,6 +31,16 @@ import { IViewBased } from '../../types/view';
 import { ImageEditor } from '../ImageEditor';
 import { localStorageProvider } from '../storage/localStorageProvider';
 import { Storage } from '../storage/Storage';
+import { humanSizeToBytes } from '../helpers/humanSizeToBytes';
+import { dom } from '../helpers/html/dom';
+import { each } from '../helpers/each';
+import { normalizePath } from '../helpers/normalize/normalizePath';
+import { $$ } from '../helpers/selector';
+import { normalizeURL } from '../helpers/normalize/normalizeURL';
+import { ctrlKey } from '../helpers/ctrlKey';
+import { extend } from '../helpers/extend';
+import { debounce } from '../helpers/async/debounce';
+import { setTimeout } from '../helpers/async/setTimeout';
 
 declare module '../../Config' {
     interface Config {
@@ -445,7 +443,7 @@ Config.prototype.filebrowser = {
                 : '') +
             '</div>';
 
-        const imageURL: string = urlNormalize(
+        const imageURL: string = normalizeURL(
             source.baseurl + source.path + name
         );
 
@@ -465,7 +463,7 @@ Config.prototype.filebrowser = {
             source_name +
             '" ' +
             'data-path="' +
-            pathNormalize(source.path ? source.path + '/' : '/') +
+            normalizePath(source.path ? source.path + '/' : '/') +
             '" ' +
             'data-name="' +
             name +
@@ -484,7 +482,7 @@ Config.prototype.filebrowser = {
             imageURL +
             '" ' +
             'src="' +
-            urlNormalize(source.baseurl + source.path + thumb) +
+            normalizeURL(source.baseurl + source.path + thumb) +
             '?_tmst=' +
             timestamp +
             '" ' +
@@ -759,7 +757,7 @@ export class FileBrowser extends View {
                     'class="jodit_filebrowser_tree_item" ' +
                     'href="javascript:void(0)" ' +
                     'data-path="' +
-                    pathNormalize(source.path + name) +
+                    normalizePath(source.path + name) +
                     '/" ' +
                     'data-source="' +
                     source_name +
@@ -775,7 +773,7 @@ export class FileBrowser extends View {
                 ) {
                     folder +=
                         '<i class="remove" data-path="' +
-                        pathNormalize(source.path + name + '/') +
+                        normalizePath(source.path + name + '/') +
                         '">&times;</i>';
                 }
 
@@ -787,7 +785,7 @@ export class FileBrowser extends View {
             if (this.options.createNewFolder && this.canI('FolderCreate')) {
                 folders.push(
                     '<a class="jodit_button addfolder" href="javascript:void(0)" data-path="' +
-                        pathNormalize(source.path + name) +
+                        normalizePath(source.path + name) +
                         '/" data-source="' +
                         source_name +
                         '">' +

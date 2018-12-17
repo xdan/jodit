@@ -58,7 +58,7 @@ export const COMMAND_KEYS = [
 ];
 
 export const BR = 'br';
-export const PARAGRAPH = 'P';
+export const PARAGRAPH = 'p';
 
 /**
  * @property {int} MODE_WYSIWYG=1 WYSIWYG editor mode
@@ -76,6 +76,9 @@ export const MODE_SOURCE = 2;
  */
 export const MODE_SPLIT = 3;
 
+/**
+ * @property {boolean} Is Internet Explorer
+ */
 export const IS_IE =
     typeof navigator !== 'undefined' &&
     (navigator.userAgent.indexOf('MSIE') !== -1 ||

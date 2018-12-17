@@ -8,16 +8,14 @@ import { Config } from '../Config';
 import * as consts from '../constants';
 import { MODE_SOURCE } from '../constants';
 import { Jodit } from '../Jodit';
-import { Component } from '../modules/Component';
-import {
-    $$,
-    appendScript,
-    css,
-    debounce,
-    dom,
-} from '../modules/helpers/Helpers';
+import { Plugin } from '../modules/Plugin';
 import { markerInfo } from '../types';
 import { IControlType } from '../types/toolbar';
+import { appendScript } from '../modules/helpers/appendScript';
+import { debounce } from '../modules/helpers/async';
+import { $$ } from '../modules/helpers/selector';
+import { css } from '../modules/helpers/css';
+import { Dom } from '../modules';
 
 declare module '../Config' {
     interface Config {
@@ -110,7 +108,7 @@ Config.prototype.controls.source = {
  *
  * @module source
  */
-export class source extends Component {
+export class source extends Plugin {
     private className = 'jodit_ace_editor';
 
     private mirrorContainer: HTMLDivElement;
@@ -225,6 +223,7 @@ export class source extends Component {
 
     private __clear = (str: string): string =>
         str.replace(consts.INVISIBLE_SPACE_REG_EXP, '');
+
     private selectAll = () => {
         this.mirror.select();
     };
@@ -450,10 +449,8 @@ export class source extends Component {
                     aceEditor === undefined &&
                     (this.jodit.ownerWindow as any).ace !== undefined
                 ) {
-                    const fakeMirror = dom(
-                        '<div class="jodit_source_mirror-fake"/>',
-                        this.jodit.ownerDocument
-                    );
+                    const fakeMirror = this.jodit.create.div('jodit_source_mirror-fake');
+
                     this.mirrorContainer.insertBefore(
                         fakeMirror,
                         this.mirrorContainer.firstChild
@@ -473,6 +470,7 @@ export class source extends Component {
                     aceEditor
                         .getSession()
                         .setMode(editor.options.sourceEditorNativeOptions.mode);
+
                     aceEditor.setHighlightActiveLine(
                         editor.options.sourceEditorNativeOptions
                             .highlightActiveLine
@@ -636,6 +634,7 @@ export class source extends Component {
             );
         }
     }
+
     public mirror: HTMLTextAreaElement;
 
     public aceEditor: AceAjax.Editor;
@@ -646,16 +645,12 @@ export class source extends Component {
         this.mirror.setSelectionRange(start, end);
     };
 
-    constructor(editor: Jodit) {
-        super(editor);
+    afterInit(editor: Jodit): void {
 
-        this.mirrorContainer = dom(
-            '<div class="jodit_source"/>',
-            this.jodit.ownerDocument
-        ) as HTMLDivElement;
-        this.mirror = dom(
+        this.mirrorContainer = editor.create.div("jodit_source");
+
+        this.mirror = editor.create.fromHTML(
             '<textarea class="jodit_source_mirror"/>',
-            this.jodit.ownerDocument
         ) as HTMLTextAreaElement;
 
         editor.events
@@ -669,17 +664,17 @@ export class source extends Component {
                 'change keydown mousedown touchstart input',
                 this.autosize
             )
-            .on('afterSetMode', this.autosize)
+            .on('afterSetMode.source', this.autosize)
             .on(this.mirror, 'mousedown focus', (e: Event) => {
                 editor.events.fire(e.type, e);
             });
 
         editor.events
-            .on('setMinHeight', (minHeightD: number) => {
+            .on('setMinHeight.source', (minHeightD: number) => {
                 this.mirror && css(this.mirror, 'minHeight', minHeightD);
             })
             .on(
-                'insertHTML',
+                'insertHTML.source',
                 (html: string): void | false => {
                     if (
                         !editor.options.readonly &&
@@ -691,7 +686,7 @@ export class source extends Component {
                 }
             )
             .on(
-                'aceInited',
+                'aceInited.source',
                 () => {
                     if (editor.options.readonly) {
                         if (this.aceEditor) {
@@ -703,7 +698,7 @@ export class source extends Component {
                 void 0,
                 true
             )
-            .on('readonly', (isReadOnly: boolean) => {
+            .on('readonly.source', (isReadOnly: boolean) => {
                 if (isReadOnly) {
                     this.mirror.setAttribute('readonly', 'true');
                 } else {
@@ -714,16 +709,17 @@ export class source extends Component {
                     this.aceEditor.setReadOnly(isReadOnly);
                 }
             })
-            .on('placeholder', (text: string) => {
+            .on('placeholder.source', (text: string) => {
                 this.mirror.setAttribute('placeholder', text);
             })
-            .on('afterInit aceInited', () => {
+            .on('aceInited.source', () => {
                 // save restore selection
                 editor.events
-                    .on('beforeSetMode', this.saveSelection)
-                    .on('afterSetMode', this.restoreSelection);
+                    .off('beforeSetMode.source afterSetMode.source')
+                    .on('beforeSetMode.source', this.saveSelection)
+                    .on('afterSetMode.source', this.restoreSelection);
             })
-            .on('afterInit', () => {
+            .on('afterInit.source', () => {
                 this.mirrorContainer.appendChild(this.mirror);
                 editor.workplace.appendChild(this.mirrorContainer);
                 this.autosize();
@@ -747,7 +743,17 @@ export class source extends Component {
                     this.replaceMirrorToACE();
                 }
             })
-            .on('beforeCommand', this.onSelectAll)
-            .on('change afterInit', this.fromWYSIWYG);
+            .on('beforeCommand.source', this.onSelectAll)
+            .on('change.source', this.fromWYSIWYG);
+
+        this.fromWYSIWYG();
+    }
+    beforeDestruct(jodit: Jodit): void {
+        Dom.safeRemove(this.mirrorContainer);
+        Dom.safeRemove(this.mirror);
+
+        if (jodit && jodit.events) {
+            jodit.events.off('.source');
+        }
     }
 }

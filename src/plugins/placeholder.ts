@@ -7,7 +7,8 @@
 import { Config } from '../Config';
 import * as consts from '../constants';
 import { Jodit } from '../Jodit';
-import { css, debounce, dom } from '../modules/helpers/Helpers';
+import { css } from '../modules/helpers/css';
+import { debounce } from '../modules/helpers/async';
 import { Dom } from '../modules';
 
 /**
@@ -146,12 +147,10 @@ export function placeholder(this: any, editor: Jodit) {
             }
         }, editor.defaultTimeout / 10);
 
-    const placeholderElm: HTMLElement = dom(
+    const placeholderElm: HTMLElement = editor.create.fromHTML(
         '<span style="display: none;" class="jodit_placeholder">' +
             editor.i18n(editor.options.placeholder) +
-            '</span>',
-        editor.ownerDocument
-    );
+            '</span>');
 
     if (editor.options.direction === 'rtl') {
         placeholderElm.style.right = '0px';

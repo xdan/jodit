@@ -10,8 +10,9 @@ import {
     SPACE_REG_EXP,
 } from '../constants';
 import { Jodit } from '../Jodit';
-import { debounce, extractText } from '../modules/helpers/Helpers';
+import { debounce } from '../modules/helpers/async';
 import { SnapshotType } from '../types';
+import { stripTags } from '../modules/helpers/html';
 
 declare module '../Config' {
     interface Config {
@@ -98,7 +99,7 @@ export function limit(jodit: Jodit) {
                             null,
                             jodit.options.limitHTML
                                 ? newValue
-                                : extractText(newValue)
+                                : stripTags(newValue)
                         ) === false
                     ) {
                         jodit.value = oldValue;

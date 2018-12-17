@@ -10,10 +10,9 @@ import { KEY_ESC } from '../../constants';
 import { Jodit } from '../../Jodit';
 import { IDictionary } from '../../types';
 import { Buttons, IControlType } from '../../types/toolbar';
-import { IViewBased, IViewOptions } from '../../types/view';
+import { IViewBased } from '../../types/view';
 import { EventsNative } from '../events/EventsNative';
-import { $$, asArray, css, dom } from '../helpers/Helpers';
-import { ToolbarIcon } from '../toolbar/icon';
+import { $$, asArray, css } from '../helpers/';
 import { View } from '../view/view';
 import { ToolbarButton } from '..';
 import { Dom } from '../Dom';
@@ -280,6 +279,7 @@ export class Dialog extends View {
     public dialogbox_content: HTMLDivElement;
     public dialogbox_footer: HTMLDivElement;
     public dialogbox_toolbar: HTMLDivElement;
+
     public document: Document = document;
     public window: Window = window;
 
@@ -619,6 +619,7 @@ export class Dialog extends View {
         if (jodit && jodit instanceof Jodit) {
             this.window = jodit.ownerWindow;
             this.document = jodit.ownerDocument;
+
             jodit.events.on('beforeDestruct', () => {
                 this.destruct();
             });

@@ -6,36 +6,18 @@
 
 import { Config } from '../Config';
 import { Jodit } from '../Jodit';
-import {
-    css,
-    defaultLanguage,
-    dom,
-    throttle,
-} from '../modules/helpers/Helpers';
+import { defaultLanguage } from '../modules/helpers/defaultLanguage';
+import { throttle } from '../modules/helpers/async';
+import { css } from '../modules/helpers/css';
 
 declare module '../Config' {
     interface Config {
-        iframe: boolean;
         iframeDefaultSrc: string;
         iframeBaseUrl: string;
         iframeStyle: string;
         iframeCSSLinks: string[];
     }
 }
-
-/**
- * When this option is enabled, the editor's content will be placed in an iframe and isolated from the rest of the page.
- *
- * @example
- * ```javascript
- * new Jodit('#editor', {
- *    iframe = true;
- *    iframeStyle = 'html{margin: 0px;}body{padding:10px;background:transparent;color:#000;position:relative;z-index:2;\
- *    user-select:auto;margin:0px;overflow:hidden;}body:after{content:"";clear:both;display:block}';
- * });
- * ```
- */
-Config.prototype.iframe = false;
 
 /**
  * Base URL where the root directory for {@link Jodit.defaultOptions.iframe|iframe} mode
@@ -178,15 +160,10 @@ export function iframe(editor: Jodit) {
                 doc.open();
                 doc.write(
                     '<!DOCTYPE html>' +
-                        '<html ' +
-                        'dir="' +
-                        jodit.options.direction +
-                        '" ' +
-                        'class="jodit" ' +
-                        'lang="' +
-                        defaultLanguage(jodit.options.language) +
-                        '">' +
+                        '<html dir="' + jodit.options.direction + '" class="jodit" ' +
+                        'lang="' + defaultLanguage(jodit.options.language) + '">' +
                         '<head>' +
+                        '<title>Jodit Editor</title>' +
                         (jodit.options.iframeBaseUrl
                             ? '<base href="' +
                               jodit.options.iframeBaseUrl +
@@ -201,10 +178,10 @@ export function iframe(editor: Jodit) {
 
                 if (jodit.options.iframeCSSLinks) {
                     jodit.options.iframeCSSLinks.forEach(href => {
-                        const link: HTMLLinkElement = dom(
-                            '<link rel="stylesheet" href="' + href + '">',
-                            doc
-                        ) as HTMLLinkElement;
+                        const link: HTMLLinkElement = doc.createElement('link');
+                        link.setAttribute('rel', 'stylesheet');
+                        link.setAttribute('href', href);
+
                         doc.head && doc.head.appendChild(link);
                     });
                 }

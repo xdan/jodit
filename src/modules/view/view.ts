@@ -4,20 +4,29 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { MODE_WYSIWYG } from '../../constants';
 import { Jodit } from '../../Jodit';
 import { IDictionary } from '../../types';
 import { IViewBased, IViewOptions } from '../../types/view';
 import { Component } from '../Component';
 import { EventsNative } from '../events/EventsNative';
 import { ToolbarCollection } from '../toolbar/collection';
+import { Panel } from './panel';
 
-export class View extends Component implements IViewBased {
-    protected __isFullSize: boolean = false;
+export class View extends Panel implements IViewBased {
+    private __modulesInstances: IDictionary<Component> = {};
+
+    /**
+     * Some extra data inside editor
+     *
+     * @type {{}}
+     * @see copyformat plugin
+     */
     public buffer: IDictionary;
 
-    public progress_bar: HTMLElement;
-    public container: HTMLDivElement;
+    /**
+     * progress_bar Progress bar
+     */
+    public progress_bar: HTMLDivElement = this.create.div('jodit_progress_bar', this.create.div());
 
     public options: IViewOptions = {
         removeButtons: [],
@@ -31,65 +40,58 @@ export class View extends Component implements IViewBased {
 
     public events: EventsNative;
 
-    public editorDocument: Document = document;
-    public editorWindow: Window = window;
-
-    public ownerDocument: Document;
-    public ownerWindow: Window;
-
-    public editor: HTMLElement;
     public toolbar: ToolbarCollection;
-
-    public getRealMode(): number {
-        return MODE_WYSIWYG;
-    }
 
     public i18n(text: string) {
         return this.jodit ? this.jodit.i18n(text) : Jodit.prototype.i18n(text);
     }
 
-    public isFullSize = (): boolean => this.__isFullSize;
-
-    public toggleFullSize(isFullSize?: boolean) {
-        if (isFullSize === undefined) {
-            isFullSize = !this.__isFullSize;
-        }
-
-        if (isFullSize === this.__isFullSize) {
-            return;
-        }
-
-        this.__isFullSize = isFullSize;
+    /**
+     * @override
+     * @param isFullSize
+     */
+    toggleFullSize(isFullSize: boolean) {
+        super.toggleFullSize(isFullSize);
 
         if (this.events) {
             this.events.fire('toggleFullSize', isFullSize);
         }
     }
 
+    public getInstance<T = Component>(moduleName: string, options?: object): T {
+        if (Jodit.modules[moduleName] === undefined) {
+            throw new Error('Need real module name');
+        }
+
+        if (this.__modulesInstances[moduleName] === undefined) {
+            this.__modulesInstances[moduleName] = new Jodit.modules[moduleName](
+                this,
+                options
+            );
+        }
+
+        return this.__modulesInstances[moduleName] as any;
+    }
+
     public destruct() {
         this.toolbar.destruct();
+        this.events.destruct();
+
+        delete this.options;
+
         super.destruct();
     }
 
-    constructor(editor?: IViewBased, options = {}) {
-        super(editor);
+    constructor(jodit?: IViewBased, options = {}) {
+        super(jodit);
 
-        const self: View = this,
-            doc: HTMLDocument = editor ? editor.ownerDocument : document;
+        this.jodit = jodit || this;
 
-        self.ownerDocument = doc;
-        self.ownerWindow = editor ? editor.ownerWindow : window;
+        this.events = (jodit && jodit.events) ? jodit.events : new EventsNative(this.ownerDocument);
+        this.buffer = (jodit && jodit.buffer) ? jodit.buffer : {};
 
-        self.progress_bar = editor
-            ? editor.progress_bar
-            : document.createElement('div');
-        self.editor = editor ? editor.editor : document.createElement('div');
+        this.toolbar = new ToolbarCollection(this);
 
-        self.events = editor ? editor.events : new EventsNative(doc);
-        self.buffer = editor ? editor.buffer : {};
-
-        self.toolbar = new ToolbarCollection(self);
-
-        self.options = { ...self.options, ...options };
+        this.options = { ...this.options, ...options };
     }
 }

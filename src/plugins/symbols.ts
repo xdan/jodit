@@ -8,7 +8,6 @@ import { Config } from '../Config';
 import { KEY_DOWN, KEY_ENTER, KEY_LEFT, KEY_RIGHT, KEY_UP } from '../constants';
 import { Jodit } from '../Jodit';
 import { Alert, Dialog } from '../modules/dialog/';
-import { dom } from '../modules/helpers/Helpers';
 import { IControlType } from '../types/toolbar';
 
 declare module '../Config' {
@@ -282,19 +281,21 @@ export class symbols {
 
     constructor(editor: Jodit) {
         editor.events.on('generateSpecialCharactersTable.symbols', () => {
-            const container: HTMLDivElement = dom(
+            const container: HTMLDivElement = editor.create.fromHTML(
                     '<div class="jodit_symbols-container">' +
                         '<div class="jodit_symbols-container_table"><table><tbody></tbody></table></div>' +
                         '<div class="jodit_symbols-container_preview"><div class="jodit_symbols-preview"></div></div>' +
-                        '</div>',
-                    editor.ownerDocument
+                        '</div>'
                 ) as HTMLDivElement,
+
                 preview: HTMLDivElement = container.querySelector(
                     '.jodit_symbols-preview'
                 ) as HTMLDivElement,
+
                 table: HTMLTableElement = container.querySelector(
                     'table'
                 ) as HTMLTableElement,
+
                 body: HTMLTableSectionElement = table.tBodies[0],
                 chars: HTMLAnchorElement[] = [];
 
@@ -303,27 +304,23 @@ export class symbols {
                 i < editor.options.specialCharacters.length;
 
             ) {
-                const tr: HTMLTableRowElement = editor.ownerDocument.createElement(
-                    'tr'
-                );
+                const tr: HTMLTableRowElement = editor.create.element('tr');
+
                 for (
                     let j: number = 0;
                     j < this.countInRow &&
                     i < editor.options.specialCharacters.length;
                     j += 1, i += 1
                 ) {
-                    const td: HTMLTableCellElement = editor.ownerDocument.createElement(
-                            'td'
-                        ),
-                        a: HTMLAnchorElement = dom(
+                    const td: HTMLTableCellElement = editor.create.element('td'),
+                        a: HTMLAnchorElement = editor.create.fromHTML(
                             `<a
                                     data-index="${i}"
                                     data-index-j="${j}"
                                     href="javascript:void(0)"
                                     role="option"
                                     tabindex="-1"
-                                >${editor.options.specialCharacters[i]}</a>`,
-                            editor.ownerDocument
+                                >${editor.options.specialCharacters[i]}</a>`
                         ) as HTMLAnchorElement;
 
                     chars.push(a);

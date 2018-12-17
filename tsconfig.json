@@ -1,26 +1,22 @@
 {
-  "compilerOptions": {
-    "sourceMap": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "noImplicitReturns": true,
-    "strictBindCallApply": true,
-    "noImplicitThis": true,
-    "target": "es5",
-    "lib": [
-      "ES5",
-      "ES2015",
-      "ES2017",
-      "ES16",
-      "DOM",
-      "ScriptHost"
-    ]
-  },
-  "module": "umd",
-  "moduleResolution": "node",
-  "typeRoots": [
-    "./node_modules/@types/"
-  ],
-  "allowSyntheticDefaultImports": true
+    "compilerOptions": {
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "experimentalDecorators": true,
+        "strictPropertyInitialization": false,
+        "sourceMap": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "strictFunctionTypes": true,
+        "noImplicitReturns": true,
+        "strictBindCallApply": true,
+        "noUnusedLocals": true,
+        "noImplicitThis": true,
+        "target": "es5",
+        "lib": ["ES5", "ES2015", "ES2017", "ES16", "DOM", "ScriptHost"]
+    },
+    "module": "umd",
+    "moduleResolution": "node",
+    "typeRoots": ["./node_modules/@types/"],
+    "allowSyntheticDefaultImports": true
 }

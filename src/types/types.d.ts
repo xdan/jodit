@@ -113,6 +113,7 @@ export interface markerInfo {
 }
 
 export interface IPlugin {
+    jodit: IViewBased;
     destruct(): void;
     afterInit(jodit?: IViewBased): void;
     beforeDestruct(jodit?: IViewBased): void;

@@ -1,3 +1,4 @@
+const privateTransformer = require("ts-private-uglifier/index").privateTransformer;
 const path = require('path');
 
 const webpack = require('webpack');
@@ -119,6 +120,9 @@ module.exports = (env, argv) => {
                     test: /\.(ts)$/,
                     loader: 'awesome-typescript-loader',
                     exclude: /(node_modules|bower_components)/,
+                    options: uglify ? {
+                        getCustomTransformers: privateTransformer
+                    } : {}
                 },
                 {
                     test: /\.svg$/i,

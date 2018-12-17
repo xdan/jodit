@@ -30,6 +30,20 @@ import { Buttons, Controls, IControlType } from './types/toolbar';
  * Default Editor's Configuration
  */
 export class Config {
+    /**
+     * When this option is enabled, the editor's content will be placed in an iframe and isolated from the rest of the page.
+     *
+     * @example
+     * ```javascript
+     * new Jodit('#editor', {
+     *    iframe = true;
+     *    iframeStyle = 'html{margin: 0px;}body{padding:10px;background:transparent;color:#000;position:relative;z-index:2;\
+     *    user-select:auto;margin:0px;overflow:hidden;}body:after{content:"";clear:both;display:block}';
+     * });
+     * ```
+     */
+    public iframe: boolean = false;
+    public commandToHotkeys: IDictionary<string | string[]>;
     public license: string = '';
     public preset: string = 'custom';
     public presets: IDictionary<any> = {
@@ -356,13 +370,13 @@ export class Config {
     /**
      * Element that will be created when you press Enter
      */
-    public enter: 'P' | 'DIV' | 'BR' | 'p' | 'div' | 'br' = consts.PARAGRAPH;
+    public enter: 'p' | 'div' | 'br' = consts.PARAGRAPH;
 
     /**
      * Use when you need insert new block element
      * use enter option if not set
      */
-    public enterBlock: 'P' | 'DIV' | 'p' | 'div' = consts.PARAGRAPH;
+    public enterBlock: 'p' | 'div' = consts.PARAGRAPH;
 
     /**
      * Jodit.MODE_WYSIWYG The HTML editor allows you to write like MSWord,
@@ -761,6 +775,7 @@ export const OptionsDefault: any = function(this: any, options: any) {
                 ) {
                     const preset =
                         Jodit.defaultOptions.presets[(opt as any).preset];
+
                     Object.keys(preset).forEach(extendKey.bind(this, preset));
                 }
             }

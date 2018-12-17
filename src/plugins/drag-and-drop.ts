@@ -10,9 +10,7 @@ import {
     css,
     ctrlKey,
     dataBind,
-    dom,
-    throttle,
-} from '../modules/helpers/Helpers';
+} from '../modules/helpers';
 import { Plugin } from '../modules/Plugin';
 import { IPoint } from '../types/types';
 
@@ -102,9 +100,8 @@ export class DragAndDrop extends Plugin {
                     fragment = dataBind(this.draggable, 'target');
                 }
             } else if (this.getText(event)) {
-                fragment = dom(
+                fragment = this.jodit.create.inside.fromHTML(
                     this.getText(event) as string,
-                    this.jodit.editorDocument
                 );
             }
 

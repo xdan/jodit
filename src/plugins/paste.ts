@@ -23,14 +23,13 @@ import {
     applyStyles,
     browser,
     cleanFromWord,
-    dom,
     htmlspecialchars,
     isHTML,
     isHTMLFromWord,
     trim,
     type,
-    setTimeout,
-} from '../modules/helpers/Helpers';
+    setTimeout, stripTags,
+} from '../modules/helpers/';
 
 import { IControlType } from '../types/toolbar';
 import { Dom } from '../modules';
@@ -67,12 +66,6 @@ Config.prototype.controls.cut = {
 export function paste(editor: Jodit) {
     let buffer: string = '';
 
-    const strip_tags = (html: string): string => {
-        const div: HTMLDivElement = document.createElement('div');
-        div.innerHTML = html;
-        return div.innerText;
-    };
-
     const clearOrKeep = (
         msg: string,
         title: string,
@@ -99,6 +92,7 @@ export function paste(editor: Jodit) {
             title,
             callback
         );
+
         dialog.container.setAttribute('data-editor_id', editor.id);
 
         const keep: HTMLAnchorElement = dom(
@@ -177,7 +171,7 @@ export function paste(editor: Jodit) {
                 html = cleanFromWord(html);
                 break;
             case INSERT_ONLY_TEXT:
-                html = strip_tags(html);
+                html = stripTags(html);
                 break;
             case INSERT_AS_TEXT:
                 html = htmlspecialchars(html);

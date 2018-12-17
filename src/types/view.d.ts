@@ -8,6 +8,7 @@ import { EventsNative } from '../modules/events/EventsNative';
 import { ToolbarCollection } from '../modules/toolbar/collection';
 import { Buttons } from './toolbar';
 import { IDictionary } from './types';
+import { Create } from '../modules';
 
 interface IViewOptions {
     removeButtons: string[];
@@ -19,32 +20,34 @@ interface IViewOptions {
     useNativeTooltip?: boolean;
 }
 
-interface IViewBased {
-    id: string;
-
+interface IViewBased extends IPanel{
     buffer: IDictionary;
 
     progress_bar: HTMLElement;
-    container: HTMLDivElement;
 
-    options: any;
-
-    editorWindow: Window;
-    editorDocument: Document;
-    ownerDocument: Document;
-    ownerWindow: Window;
-
-    editor: HTMLElement;
+    options: IDictionary;
 
     events: EventsNative;
-
-    isLocked: () => boolean;
-    isFullSize: () => boolean;
-
-    getRealMode: () => number;
+    create: Create;
 
     toolbar: ToolbarCollection;
 
     i18n: (text: string, ...params: Array<string | number>) => string;
+}
+
+export interface IPanel {
+    container: HTMLDivElement;
+    create: Create;
+
+    ownerDocument: Document;
+    ownerWindow: Window;
+
+    isLockedNotBy(name: string): boolean;
+    isLocked(): boolean;
+
+    lock(name: string): boolean;
+    unlock(): boolean;
+
+    isFullSize: () => boolean;
     toggleFullSize(isFullSize?: boolean): void;
 }

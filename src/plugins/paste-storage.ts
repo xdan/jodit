@@ -6,10 +6,9 @@
 
 import { KEY_DOWN, KEY_ENTER, KEY_UP, SPACE_REG_EXP } from '../constants';
 import { Dialog } from '../modules/dialog/Dialog';
-import { dom } from '../modules/helpers/Helpers';
 import { Plugin } from '../modules/Plugin';
 import { Dom } from '../modules';
-import { setTimeout } from '../modules/helpers/Helpers';
+import { setTimeout } from '../modules/helpers/async/setTimeout';
 
 /**
  * Show dialog choose content to paste
@@ -124,24 +123,22 @@ export class pasteStorage extends Plugin {
     private createDialog() {
         this.dialog = new Dialog(this.jodit);
 
-        const pasteButton: HTMLAnchorElement = dom(
+        const pasteButton: HTMLAnchorElement = this.jodit.create.fromHTML(
             '<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
                 '<span>' +
                 this.jodit.i18n('Paste') +
                 '</span>' +
-                '</a>',
-            this.jodit.ownerDocument
+                '</a>'
         ) as HTMLAnchorElement;
 
         pasteButton.addEventListener('click', this.paste);
 
-        const cancelButton: HTMLAnchorElement = dom(
+        const cancelButton: HTMLAnchorElement = this.jodit.create.fromHTML(
             '<a href="javascript:void(0)" style="float:right; margin-right: 10px;" class="jodit_button">' +
                 '<span>' +
                 this.jodit.i18n('Cancel') +
                 '</span>' +
-                '</a>',
-            this.jodit.ownerDocument
+                '</a>'
         ) as HTMLAnchorElement;
 
         cancelButton.addEventListener('click', this.dialog.close);

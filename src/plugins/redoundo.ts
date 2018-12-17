@@ -7,7 +7,7 @@
 import { Config } from '../Config';
 import * as consts from '../constants';
 import { Jodit } from '../Jodit';
-import { Component } from '../modules/Component';
+import { Plugin } from '../modules/Plugin';
 import { IControlType } from '../types/toolbar';
 
 Config.prototype.controls.redo = {
@@ -25,14 +25,16 @@ Config.prototype.controls.undo = {
 /**
  * Custom process Redo and Undo functionality
  */
-export class redoundo extends Component {
-    constructor(editor: Jodit) {
-        super(editor);
-
+export class redoundo extends Plugin {
+    beforeDestruct() {
+        // do nothing
+    }
+    afterInit(editor: Jodit) {
         const callback = (command: string): void | false => {
             if (editor.getRealMode() === consts.MODE_WYSIWYG) {
-                this.jodit.observer[command as 'redo' | 'undo']();
+                editor.observer[command as 'redo' | 'undo']();
             }
+
             return false;
         };
 
@@ -40,6 +42,7 @@ export class redoundo extends Component {
             exec: callback,
             hotkeys: ['ctrl+y', 'ctrl+shift+z', 'cmd+y', 'cmd+shift+z'],
         });
+
         editor.registerCommand('undo', {
             exec: callback,
             hotkeys: ['ctrl+z', 'cmd+z'],

@@ -6,7 +6,8 @@
 
 import { Config } from '../Config';
 import { Jodit } from '../Jodit';
-import { css, debounce, dom, throttle } from '../modules/helpers/Helpers';
+import { debounce, throttle } from '../modules/helpers/async';
+import { css } from '../modules/helpers/css';
 
 declare module '../Config' {
     interface Config {
@@ -40,10 +41,7 @@ export function size(editor: Jodit) {
         editor.options.height !== 'auto' &&
         (editor.options.allowResizeX || editor.options.allowResizeY)
     ) {
-        const handle: HTMLAnchorElement = dom(
-                '<div class="jodit_editor_resize" ><a href="javascript:void(0)"></a></div>',
-                editor.ownerDocument
-            ) as HTMLAnchorElement,
+        const handle: HTMLDivElement = editor.create.div("jodit_editor_resize", '<a href="javascript:void(0)"></a>'),
             start: { x: number; y: number; w: number; h: number } = {
                 x: 0,
                 y: 0,

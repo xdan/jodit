@@ -12,7 +12,7 @@ import {
     setTimeout,
     splitArray,
     throttle,
-} from '../modules/helpers/Helpers';
+} from '../modules/helpers/';
 import { Plugin } from '../modules/Plugin';
 import { Dom } from '../modules';
 
@@ -114,7 +114,7 @@ export class DragAndDropElement extends Plugin {
         event.preventDefault();
     };
 
-    private onDragEnd = (event?: DragEvent) => {
+    private onDragEnd = () => {
         window.clearTimeout(this.timeout);
 
         if (this.draggable) {
@@ -124,7 +124,7 @@ export class DragAndDropElement extends Plugin {
         }
     };
 
-    private onDrop = (event: DragEvent) => {
+    private onDrop = () => {
         if (!this.draggable || !this.wasMoved) {
             this.onDragEnd();
             return;

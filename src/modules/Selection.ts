@@ -11,22 +11,22 @@ import {
     INVISIBLE_SPACE_REG_EXP_START,
     IS_IE,
 } from '../constants';
+
 import { Jodit } from '../Jodit';
-import { IDictionary, markerInfo } from '../types';
+import { IDictionary, IViewBased, markerInfo } from '../types';
 import { Component } from './Component';
 import { Dom } from './Dom';
-import {
-    $$,
-    css,
-    dom,
-    each,
-    isPlainObject,
-    normalizeNode,
-    normilizeCSSValue,
-    trim,
-} from './helpers/Helpers';
+import { css } from './helpers/css';
+import { normilizeCSSValue } from './helpers/normalize';
+import { $$ } from './helpers/selector';
+import { isPlainObject } from './helpers/checker';
+import { each } from './helpers/each';
 
 export class Select extends Component {
+    destruct(): any {
+        // nothing
+    }
+
     /**
      * Remove all selected content
      */
@@ -284,7 +284,7 @@ export class Select extends Component {
      * Set focus in editor
      */
     public focus = (): boolean => {
-        const jodit: Jodit = this.jodit;
+        const jodit: IViewBased = this.jodit;
 
         if (!this.isFocused()) {
             if (jodit.options.iframe && IS_IE) {
@@ -296,7 +296,7 @@ export class Select extends Component {
                     start++;
                 }
             }
-            if (jodit.iframe) {
+            if (jodit instanceof Jodit && jodit.iframe) {
                 jodit.iframe.focus();
             }
 
@@ -465,7 +465,7 @@ export class Select extends Component {
         if (this.jodit.editorWindow.getSelection) {
             const sel: Selection = this.jodit.editorWindow.getSelection();
 
-            if (!this.isCollapsed()) {
+            if (!this.isCollapsed() && this.jodit instanceof Jodit) {
                 this.jodit.execCommand('Delete');
             }
 
@@ -523,7 +523,7 @@ export class Select extends Component {
 
         let lastChild: Node | null, lastEditorElement: Node | null;
 
-        if (!this.isFocused() && this.jodit.isEditorMode()) {
+        if (!this.isFocused() && this.jodit instanceof Jodit && this.jodit.isEditorMode()) {
             this.focus();
         }
 
@@ -534,6 +534,7 @@ export class Select extends Component {
         }
 
         if (
+            this.jodit instanceof Jodit &&
             !this.jodit.isEditorMode() &&
             this.jodit.events.fire('insertHTML', node.innerHTML) === false
         ) {

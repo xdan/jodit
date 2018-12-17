@@ -740,9 +740,8 @@ export class inlinePopup extends Plugin {
         super(jodit);
         this.toolbar = new ToolbarCollection(jodit);
 
-        this.target = jodit.ownerDocument.createElement('div');
-        this.target.classList.add('jodit_toolbar_popup-inline-target');
-        this.container = jodit.ownerDocument.createElement('div');
+        this.target = jodit.create.div('jodit_toolbar_popup-inline-target');
+        this.container = jodit.create.div();
 
         this.popup = new ToolbarPopup(
             jodit,

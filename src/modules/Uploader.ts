@@ -81,9 +81,8 @@ Config.prototype.uploader = {
                     resp.isImages && resp.isImages[index]
                         ? ['img', 'src']
                         : ['a', 'href'];
-                const elm: HTMLElement = this.jodit.editorDocument.createElement(
-                    tagName
-                );
+
+                const elm: HTMLElement = this.jodit.create.inside.element(<'img' | 'a'>tagName);
 
                 elm.setAttribute(attr, resp.baseurl + filename);
 

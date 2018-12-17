@@ -8,7 +8,8 @@ import { Config } from '../Config';
 import { INVISIBLE_SPACE, MODE_WYSIWYG } from '../constants';
 import { ContextMenu } from '../modules/ContextMenu';
 import { Dom } from '../modules/Dom';
-import { debounce, dom, getXPathByElement } from '../modules/helpers/Helpers';
+import { debounce } from '../modules/helpers/async';
+import { getXPathByElement } from '../modules/helpers/selector';
 import { Plugin } from '../modules/Plugin';
 import { ToolbarButton } from '../modules/toolbar/button';
 import { IControlType } from '../types/toolbar';
@@ -31,7 +32,6 @@ Config.prototype.showXPathInStatusbar = true;
  * Show path to current element in status bar
  */
 export class xpath extends Plugin {
-    private calcPath: () => void;
     private onContext = (bindElement: Node, event: MouseEvent) => {
         if (!this.menu) {
             this.menu = new ContextMenu(this.jodit);
@@ -60,6 +60,7 @@ export class xpath extends Plugin {
         ]);
         return false;
     };
+
     private onSelectPath = (bindElement: Node, event: MouseEvent) => {
         this.jodit.selection.focus();
 
@@ -92,13 +93,14 @@ export class xpath extends Plugin {
 
         return false;
     };
+
     private tpl = (
         bindElement: Node,
         path: string,
         name: string,
         title: string
     ): HTMLElement => {
-        const li: HTMLLIElement = dom(
+        const li: HTMLLIElement = this.jodit.create.fromHTML(
             '<li>' +
                 '<a ' +
                 'role="button" ' +
@@ -113,8 +115,7 @@ export class xpath extends Plugin {
                 '>' +
                 name +
                 '</a>' +
-                '</li>',
-            this.jodit.ownerDocument
+                '</li>'
         ) as HTMLLIElement;
 
         const a: HTMLAnchorElement = li.firstChild as HTMLAnchorElement;
@@ -139,10 +140,9 @@ export class xpath extends Plugin {
                 this.container.firstChild
             );
     };
+
     private calcPathImd = () => {
         const current: Node | false = this.jodit.selection.current();
-
-        let index: number = 0;
 
         if (this.container) {
             this.container.innerHTML = INVISIBLE_SPACE;
@@ -177,7 +177,6 @@ export class xpath extends Plugin {
                                 this.container.firstChild
                             );
                     }
-                    index += 1;
                 },
                 this.jodit.editor
             );
@@ -186,16 +185,16 @@ export class xpath extends Plugin {
         this.appendSelectAll();
     };
 
+    private calcPath: () => void = debounce(
+        this.calcPathImd,
+        this.jodit.defaultTimeout * 2
+    );
+
     public container: HTMLElement | null = null;
     public menu: ContextMenu | null = null;
 
     public afterInit() {
         if (this.jodit.options.showXPathInStatusbar) {
-            this.calcPath = debounce(
-                this.calcPathImd,
-                this.jodit.defaultTimeout * 2
-            );
-
             this.container = this.jodit.ownerDocument.createElement('ul');
             this.container.classList.add('jodit_xpath');
             this.jodit.statusbar.append(this.container);
@@ -219,6 +218,7 @@ export class xpath extends Plugin {
             this.calcPath();
         }
     }
+
     public beforeDestruct(): void {
         if (this.jodit && this.jodit.events) {
             this.jodit.events.off('.xpath');

@@ -8,19 +8,16 @@ import { Config, OptionsDefault } from './Config';
 import * as consts from './constants';
 import { Component } from './modules/Component';
 import { Dom } from './modules/Dom';
-import { EventsNative } from './modules/events/EventsNative';
 import { FileBrowser } from './modules/filebrowser/filebrowser';
-import * as helper from './modules/helpers/Helpers';
 import {
     asArray,
     debounce,
     defaultLanguage,
-    dom,
     inArray,
     normalizeKeyAliases,
     splitArray,
     sprintf,
-} from './modules/helpers/Helpers';
+} from './modules/helpers/';
 import { JoditArray } from './modules/helpers/JoditArray';
 import { JoditObject } from './modules/helpers/JoditObject';
 import { Observer } from './modules/observer/Observer';
@@ -28,17 +25,16 @@ import { Select } from './modules/Selection';
 import { StatusBar } from './modules/StatusBar';
 import { localStorageProvider } from './modules/storage/localStorageProvider';
 import { Storage } from './modules/storage/Storage';
-import { ToolbarCollection } from './modules/toolbar/collection';
 import { Uploader } from './modules/Uploader';
 import { View } from './modules/view/view';
 import {
     CustomCommand,
     ExecCommandCallback,
-    ICommandType,
     IDictionary,
     IPlugin,
     markerInfo,
 } from './types/types';
+import { cache } from './modules/helpers/decorator';
 
 declare let appVersion: string;
 
@@ -46,6 +42,11 @@ declare let appVersion: string;
  * Class Jodit. Main class
  */
 export class Jodit extends View {
+    /**
+     * @property{string} ID attribute for source element, id add {id}_editor it's editor's id
+     */
+    public id: string;
+
     get value(): string {
         return this.getEditorValue();
     }
@@ -68,6 +69,7 @@ export class Jodit extends View {
     public static Array(array: any[]): JoditArray {
         return new JoditArray(array);
     }
+
     public static Object(object: any): JoditObject {
         return new JoditObject(object);
     }
@@ -179,13 +181,14 @@ export class Jodit extends View {
             'createEditor',
             this
         );
+
         if (createDefault !== false) {
-            this.editor = dom(
-                `<div class="jodit_wysiwyg" contenteditable aria-disabled="false" tabindex="${
-                    this.options.tabIndex
-                }"></div>`,
-                this.ownerDocument
-            ) as HTMLDivElement;
+            this.editor = this.create.div('jodit_wysiwyg', {
+                'contenteditable': true,
+                'aria-disabled': false,
+                'tabindex': this.options.tabIndex,
+            });
+
             this.workplace.appendChild(this.editor);
         }
 
@@ -283,15 +286,8 @@ export class Jodit extends View {
             return result;
         }
     }
-    public version: string = appVersion; // from webpack.config.js
 
-    /**
-     * Some extra data inside editor
-     *
-     * @type {{}}
-     * @see copyformat plugin
-     */
-    public buffer: IDictionary;
+    public version: string = appVersion; // from webpack.config.js
 
     /**
      * @property {HTMLDocument} editorDocument
@@ -322,19 +318,12 @@ export class Jodit extends View {
     public storage: Storage = new Storage(new localStorageProvider());
 
     /**
-     * progress_bar Progress bar
-     */
-    public progress_bar: HTMLDivElement;
-
-    /**
      * workplace It contains source and wysiwyg editors
      */
     public workplace: HTMLDivElement;
 
     public statusbar: StatusBar;
     public observer: Observer;
-
-    public events: EventsNative;
 
     /**
      * element It contains source element
@@ -344,7 +333,7 @@ export class Jodit extends View {
     /**
      * editor It contains the root element editor
      */
-    public editor: HTMLDivElement | HTMLBodyElement;
+    public editor: HTMLDivElement | HTMLBodyElement = this.create.div();
 
     /**
      * iframe Iframe for iframe mode
@@ -364,12 +353,18 @@ export class Jodit extends View {
     /**
      * @property {Uploader} uploader
      */
-    public uploader: Uploader;
+    @cache()
+    public get uploader(): Uploader {
+        return new Uploader(this);
+    };
 
     /**
      * @property {FileBrowser} filebrowser
      */
-    public filebrowser: FileBrowser;
+    @cache()
+    public get filebrowser(): FileBrowser {
+        return new FileBrowser(this);
+    };
 
     public helper: any;
 
@@ -575,7 +570,7 @@ export class Jodit extends View {
             return this.editor.innerText;
         }
 
-        const div: HTMLDivElement = this.ownerDocument.createElement('div');
+        const div: HTMLDivElement = this.create.inside.div();
         div.innerHTML = this.getElementValue();
 
         return div.innerText;
@@ -839,29 +834,31 @@ export class Jodit extends View {
      * Disable selecting
      */
     public lock(name: string = 'any') {
-        if (!this.isLocked()) {
-            this.__whoLocked = name;
+        if (super.lock(name)) {
             this.__selectionLocked = this.selection.save();
             this.editor.classList.add('jodit_disabled');
+            return true;
         }
+
+        return false;
     }
 
     /**
      * Enable selecting
      */
     public unlock() {
-        if (this.isLocked()) {
-            this.__whoLocked = '';
+        if (super.unlock()) {
             this.editor.classList.remove('jodit_disabled');
+
             if (this.__selectionLocked) {
                 this.selection.restore(this.__selectionLocked);
             }
-        }
-    }
 
-    public isLockedNotBy = (name: string): boolean => {
-        return this.isLocked() && this.__whoLocked !== name;
-    };
+            return true;
+        }
+
+        return false;
+    }
 
     /**
      * Return current editor mode: Jodit.MODE_WYSIWYG, Jodit.MODE_SOURCE or Jodit.MODE_SPLIT
@@ -951,6 +948,7 @@ export class Jodit extends View {
         modeClasses.forEach(className => {
             this.container.classList.remove(className);
         });
+
         this.container.classList.add(modeClasses[this.mode - 1]);
 
         /**
@@ -1155,8 +1153,6 @@ export class Jodit extends View {
     constructor(element: HTMLInputElement | string, options?: object) {
         super();
 
-        this.buffer = {}; // empty new object for every Jodit instance
-
         this.options = new OptionsDefault(options) as Config;
 
         // in iframe it can be changed
@@ -1164,8 +1160,6 @@ export class Jodit extends View {
         this.editorWindow = this.options.ownerWindow;
         this.ownerDocument = this.options.ownerDocument;
         this.ownerWindow = this.options.ownerWindow;
-
-        this.events = new EventsNative(this.ownerDocument);
 
         if (typeof element === 'string') {
             try {
@@ -1196,7 +1190,7 @@ export class Jodit extends View {
         }
 
         if (this.element.attributes) {
-            [].slice.call(this.element.attributes).forEach((attr: Attr) => {
+            Array.from(this.element.attributes).forEach((attr: Attr) => {
                 const name: string = attr.name;
                 let value: string | boolean | number = attr.value;
 
@@ -1223,14 +1217,11 @@ export class Jodit extends View {
             });
         }
 
-        this.selection = new Select(this);
-        this.uploader = new Uploader(this);
-        this.observer = new Observer(this);
+        this.container.classList.add('jodit_container');
+        this.container.setAttribute('contenteditable', 'false');
 
-        this.container = dom(
-            '<div contenteditable="false" class="jodit_container" />',
-            this.ownerDocument
-        ) as HTMLDivElement;
+        this.selection = new Select(this);
+        this.observer = new Observer(this);
 
         let buffer: null | string = null;
 
@@ -1260,16 +1251,7 @@ export class Jodit extends View {
             ).toString();
         }
 
-        this.workplace = dom(
-            '<div contenteditable="false" class="jodit_workplace" />',
-            this.ownerDocument
-        ) as HTMLDivElement;
-        this.progress_bar = dom(
-            '<div class="jodit_progress_bar"><div></div></div>',
-            this.ownerDocument
-        ) as HTMLDivElement;
-
-        this.toolbar = new ToolbarCollection(this);
+        this.workplace = this.create.div('jodit_workplace', {contenteditable: false});
 
         if (this.options.toolbar) {
             this.toolbar.build(
@@ -1307,8 +1289,6 @@ export class Jodit extends View {
         if (this.element.parentNode && this.element !== this.container) {
             this.element.parentNode.insertBefore(this.container, this.element);
         }
-
-        this.helper = helper;
 
         this.id =
             this.element.getAttribute('id') || new Date().getTime().toString();

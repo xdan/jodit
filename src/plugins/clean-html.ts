@@ -278,7 +278,7 @@ export function cleanHtml(editor: Jodit) {
                                     /^(img|svg|canvas|input|textarea|form|br)$/
                                 )
                             ) {
-                                const br: HTMLBRElement = editor.editorDocument.createElement(
+                                const br: HTMLBRElement = editor.create.inside.element(
                                     'br'
                                 );
                                 nodeElm.appendChild(br);
@@ -401,9 +401,7 @@ export function cleanHtml(editor: Jodit) {
                             false
                         ) as Node | null;
                         if (!node) {
-                            node = editor.editorDocument.createElement(
-                                editor.options.enter
-                            );
+                            node = editor.create.inside.element(editor.options.enter);
                             if (node) {
                                 Dom.after(hr, node as HTMLElement);
                             }

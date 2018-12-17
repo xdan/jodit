@@ -7,7 +7,6 @@
 import { IControlTypeStrong } from '../../types/toolbar';
 import { IViewBased } from '../../types/view';
 import { Component } from '../Component';
-import { dom } from '../helpers/Helpers';
 import { ToolbarCollection } from './collection';
 import { ToolbarIcon } from './icon';
 

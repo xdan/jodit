@@ -6,7 +6,7 @@
 
 import { Config } from '../Config';
 import { INVISIBLE_SPACE_REG_EXP, SPACE_REG_EXP } from '../constants';
-import { throttle } from '../modules/helpers/Helpers';
+import { throttle } from '../modules/helpers/async';
 import { Plugin } from '../modules/Plugin';
 import { Dom } from '../modules';
 
@@ -48,9 +48,10 @@ export class stat extends Plugin {
 
     public afterInit() {
         if (this.jodit.options.showCharsCounter) {
-            this.charCounter = this.jodit.ownerDocument.createElement('span');
+            this.charCounter = this.jodit.create.element('span');
             this.jodit.statusbar.append(this.charCounter, true);
         }
+
         if (this.jodit.options.showWordsCounter) {
             this.wordCounter = this.jodit.ownerDocument.createElement('span');
             this.jodit.statusbar.append(this.wordCounter, true);
@@ -59,6 +60,7 @@ export class stat extends Plugin {
         this.jodit.events.on('change', this.calc);
         this.calc();
     }
+
     public beforeDestruct(): void {
         Dom.safeRemove(this.charCounter);
         Dom.safeRemove(this.wordCounter);
