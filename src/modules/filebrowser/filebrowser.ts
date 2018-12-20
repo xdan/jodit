@@ -18,6 +18,7 @@ import {
     each,
     extend,
     humanSizeToBytes,
+    relativePathNormalize,
     pathNormalize,
     urlNormalize,
     setTimeout,
@@ -967,6 +968,7 @@ export class FileBrowser extends View {
         }
     }
     private loadTree(path: string, source: string): Promise<any> {
+        path = relativePathNormalize(path);
         return this.loadPermissions(path, source).then(() => {
             const self: FileBrowser = this;
 
