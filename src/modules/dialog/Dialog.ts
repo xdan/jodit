@@ -9,7 +9,7 @@ import { IDialogOptions } from '../../types/dialog';
 import { KEY_ESC } from '../../constants';
 import { Jodit } from '../../Jodit';
 import { IDictionary } from '../../types';
-import { Buttons, IControlType } from '../../types/toolbar';
+import { IControlType } from '../../types/toolbar';
 import { IViewBased } from '../../types/view';
 import { EventsNative } from '../events/EventsNative';
 import { $$, asArray, css } from '../helpers/';
@@ -68,6 +68,8 @@ Config.prototype.controls.dialog = {
     },
 } as IDictionary<IControlType>;
 
+type Content = string | HTMLElement | Array<string | HTMLElement>;
+
 /**
  * Module to generate dialog windows
  *
@@ -107,13 +109,15 @@ export class Dialog extends View {
 
     private setElements(
         root: HTMLDivElement | HTMLHeadingElement,
-        elements: string | Element | Array<string | Element>
+        elements: Content
     ) {
         const elements_list: HTMLElement[] = [];
 
         asArray(elements).forEach(elm => {
-            const element: HTMLElement = dom(elm, this.document);
+            const element: HTMLElement = typeof elm === 'string' ? this.create.fromHTML(elm) : elm;
+
             elements_list.push(element);
+
             if (element.parentNode !== root) {
                 root.appendChild(element);
             }
@@ -334,7 +338,7 @@ export class Dialog extends View {
      * dialog.open();
      * ```
      */
-    public setTitle(content: string | Element | Array<string | Element>) {
+    public setTitle(content: Content) {
         this.setElements(this.dialogbox_header, content);
     }
 
@@ -351,7 +355,7 @@ export class Dialog extends View {
      * dialog.open();
      * ```
      */
-    public setContent(content: string | Element | Array<string | Element>) {
+    public setContent(content: Content) {
         this.setElements(this.dialogbox_content, content);
     }
 
@@ -374,7 +378,7 @@ export class Dialog extends View {
      * dialog.open();
      * ```
      */
-    public setFooter(content: string | Element | Array<string | Element>) {
+    public setFooter(content: Content) {
         this.setElements(this.dialogbox_footer, content);
         this.dialog.classList.toggle('with_footer', !!content);
     }
@@ -470,8 +474,8 @@ export class Dialog extends View {
      * @fires {@link event:afterOpen}
      */
     public open(
-        content?: string | Element | Array<string | Element>,
-        title?: string | Element | Array<string | Element>,
+        content?: Content,
+        title?: Content,
         destroyAfter?: boolean,
         modal?: boolean
     ) {
@@ -636,7 +640,7 @@ export class Dialog extends View {
 
         self.options = { ...opt, ...self.options } as IDialogOptions;
 
-        self.container = dom(
+        self.container = this.create.fromHTML(
             '<div style="z-index:' +
                 self.options.zIndex +
                 '" class="jodit jodit_dialog_box">' +
@@ -652,12 +656,11 @@ export class Dialog extends View {
                     ? '<div class="jodit_dialog_resizer"></div>'
                     : '') +
                 '</div>' +
-                '</div>',
-            this.document
+                '</div>'
         ) as HTMLDivElement;
 
-        if (jodit && jodit.id) {
-            self.container.setAttribute('data-editor_id', jodit.id);
+        if (jodit && (<Jodit>jodit).id) {
+            self.container.setAttribute('data-editor_id', (<Jodit>jodit).id);
         }
 
         Object.defineProperty(self.container, '__jodit_dialog', {

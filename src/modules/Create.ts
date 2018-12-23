@@ -9,8 +9,9 @@ import { isPlainObject } from './helpers/checker/isPlainObject';
 import { each } from './helpers/each';
 import { asArray } from './helpers/array/asArray';
 import { Dom } from './Dom';
+import { css } from './helpers';
 
-type Attributes = IDictionary<string | number | boolean>;
+type Attributes = IDictionary<string | number | boolean | IDictionary<string | number | boolean>>;
 type Children = string | Array<string | Node> | Node;
 
 export class Create {
@@ -31,7 +32,13 @@ export class Create {
 
         if (childrenOrAttributes) {
             if (isPlainObject(childrenOrAttributes)) {
-                each(<Attributes>childrenOrAttributes, (key: string, value) => elm.setAttribute(key, value.toString()));
+                each(<Attributes>childrenOrAttributes, (key: string, value) => {
+                    if (isPlainObject(value) && key === 'style') {
+                        css(elm, <IDictionary<string>>value);
+                    } else {
+                        elm.setAttribute(key, value.toString())
+                    }
+                });
             } else {
                 children = <Children>childrenOrAttributes;
             }

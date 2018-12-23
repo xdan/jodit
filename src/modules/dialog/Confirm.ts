@@ -30,31 +30,26 @@ export const Confirm = (
     callback?: (yes: boolean) => void
 ): Dialog => {
     const dialog = new Dialog(),
-        $div: HTMLDivElement = dom(
-            '<form class="jodit_promt"></form>',
-            dialog.document
+        $div: HTMLDivElement = dialog.create.fromHTML(
+            '<form class="jodit_promt"></form>'
         ) as HTMLDivElement,
-        $label: HTMLLabelElement = dom(
-            '<label></label>',
-            dialog.document
-        ) as HTMLLabelElement;
+        $label: HTMLLabelElement = dialog.create.element('label');
 
     if (typeof title === 'function') {
         callback = title;
         title = undefined;
     }
 
-    $label.appendChild(dom(msg, dialog.document));
+    $label.appendChild(dialog.create.fromHTML(msg));
     $div.appendChild($label);
 
-    const $cancel: HTMLAnchorElement = dom(
+    const $cancel: HTMLAnchorElement = dialog.create.fromHTML(
         '<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
             ToolbarIcon.getIcon('cancel') +
             '<span>' +
             Jodit.prototype.i18n('Cancel') +
             '</span>' +
-            '</a>',
-        dialog.document
+            '</a>'
     ) as HTMLAnchorElement;
 
     $cancel.addEventListener('click', () => {
@@ -71,14 +66,13 @@ export const Confirm = (
         dialog.close();
     };
 
-    const $ok: HTMLAnchorElement = dom(
+    const $ok: HTMLAnchorElement = dialog.create.fromHTML(
         '<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
             ToolbarIcon.getIcon('check') +
             '<span>' +
             Jodit.prototype.i18n('Yes') +
             '</span>' +
-            '</a>',
-        dialog.document
+            '</a>'
     ) as HTMLAnchorElement;
 
     $ok.addEventListener('click', onok);
