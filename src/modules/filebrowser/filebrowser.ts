@@ -2013,14 +2013,6 @@ export class FileBrowser extends View {
                     : {}
             ) as IUploaderOptions<Uploader>;
 
-            console.log("will create uploader", { 
-                'this.jodit': this.jodit, 
-                'this.jodit.options.uploader': this.jodit.options.uploader,
-                'self.options.uploader': self.options.uploader,
-                'self': self, 
-                'this': this,
-                'uploaderOptions': uploaderOptions
-            });
             this.uploader = new Uploader(this.jodit || this, uploaderOptions);
             this.uploader.setPath(this.currentPath);
             this.uploader.setSource(this.currentSource);
