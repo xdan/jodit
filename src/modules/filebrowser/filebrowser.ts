@@ -412,7 +412,8 @@ Config.prototype.filebrowser = {
     ): string {
         let name: string = '',
             thumb: string = '',
-            info: string;
+            info: string,
+            thumbIsAbsolute: boolean = !!item.thumbIsAbsolute;
         const timestamp: string = new Date().getTime().toString();
 
         if (item.file !== undefined) {
@@ -485,9 +486,9 @@ Config.prototype.filebrowser = {
             imageURL +
             '" ' +
             'src="' +
-            urlNormalize(source.baseurl + source.path + thumb) +
-            '?_tmst=' +
-            timestamp +
+            (thumbIsAbsolute 
+                ? thumb 
+                : (urlNormalize(source.baseurl + source.path + thumb) + '?_tmst=' + timestamp)) +
             '" ' +
             'alt="' +
             name +
@@ -2012,6 +2013,14 @@ export class FileBrowser extends View {
                     : {}
             ) as IUploaderOptions<Uploader>;
 
+            console.log("will create uploader", { 
+                'this.jodit': this.jodit, 
+                'this.jodit.options.uploader': this.jodit.options.uploader,
+                'self.options.uploader': self.options.uploader,
+                'self': self, 
+                'this': this,
+                'uploaderOptions': uploaderOptions
+            });
             this.uploader = new Uploader(this.jodit || this, uploaderOptions);
             this.uploader.setPath(this.currentPath);
             this.uploader.setSource(this.currentSource);
