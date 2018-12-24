@@ -1307,7 +1307,7 @@ export class FileBrowser extends View {
         return this.send(
             'folderRemove',
             (resp: IFileBrowserAnswer) => {
-                if (this.options.remove.process) {
+                if (this.options.remove && this.options.remove.process) {
                     resp = this.options.remove.process.call(this, resp);
                 }
                 if (!this.options.isSuccess(resp)) {
