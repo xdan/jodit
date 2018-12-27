@@ -85,7 +85,6 @@ Config.prototype.controls.align = {
 
 Config.prototype.controls.center = {
     command: 'justifyCenter',
-    tags: ['center'],
     css: {
         'text-align': 'center',
     },

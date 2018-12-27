@@ -30,7 +30,7 @@ Config.prototype.controls.brush = {
                     current,
                     elm => {
                         return (
-                            Dom.isBlock(elm) ||
+                            Dom.isBlock(elm, editor.editorWindow) ||
                             (elm &&
                                 Dom.isNode(elm, editor.editorWindow) &&
                                 elm.nodeType === Node.ELEMENT_NODE)
@@ -133,21 +133,21 @@ Config.prototype.controls.brush = {
  * @param {Jodit} editor
  */
 export function color(editor: Jodit) {
-    const callback = (
+    const callback = async (
         command: string,
         second: string,
         third: string
-    ): false | void => {
+    ): Promise<false | void> => {
         const colorHEX: string | false = normalizeColor(third);
 
         switch (command) {
             case 'background':
-                editor.selection.applyCSS({
+                await editor.selection.applyCSS({
                     backgroundColor: !colorHEX ? '' : (colorHEX as string),
                 });
                 break;
             case 'forecolor':
-                editor.selection.applyCSS({
+                await editor.selection.applyCSS({
                     color: !colorHEX ? '' : (colorHEX as string),
                 });
                 break;

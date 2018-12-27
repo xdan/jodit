@@ -191,6 +191,7 @@ export class ToolbarButton extends ToolbarElement {
     }
 
     public destruct() {
+        super.destruct();
         this.jodit.events.off(this.container);
     }
 

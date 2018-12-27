@@ -18,8 +18,7 @@ import {
     IViewBased,
 } from '../types/';
 import { Ajax } from './Ajax';
-import { browser, dom, extend, isPlainObject } from './helpers/Helpers';
-import { Select } from './Selection';
+import { browser, extend, isPlainObject } from './helpers/';
 import { Dom } from './Dom';
 
 declare module '../Config' {
@@ -44,6 +43,7 @@ Config.prototype.enableDragAndDropFileToEditor = true;
 
 Config.prototype.uploader = {
     url: '',
+
     insertImageAsBase64URI: false,
     imagesExtensions: ['jpg', 'png', 'jpeg', 'gif'],
     headers: null,
@@ -90,10 +90,12 @@ Config.prototype.uploader = {
                     elm.innerText = resp.baseurl + filename;
                 }
 
-                if (tagName === 'img') {
-                    this.selection.insertImage(elm as HTMLImageElement);
-                } else {
-                    this.selection.insertNode(elm);
+                if (this.jodit instanceof Jodit) {
+                    if (tagName === 'img') {
+                        this.jodit.selection.insertImage(elm as HTMLImageElement, null, this.jodit.options.imageDefaultWidth);
+                    } else {
+                        this.jodit.selection.insertNode(elm);
+                    }
                 }
             });
         }
@@ -140,12 +142,13 @@ export class Uploader implements IUploader {
 
         return new Blob([ia], { type: mimeString });
     }
+
     private path: string = '';
     private source: string = 'default';
 
     private options: IUploaderOptions<Uploader>;
+
     public jodit: IViewBased;
-    public selection: Select;
 
     public buildData(
         data: FormData | IDictionary<string> | string
@@ -481,6 +484,7 @@ export class Uploader implements IUploader {
                         handlerSuccess,
                         handlerError
                     );
+
                     return false;
                 }
 
@@ -490,7 +494,7 @@ export class Uploader implements IUploader {
                         (!e.clipboardData.types.length &&
                             e.clipboardData.types[0] !== TEXT_PLAIN)
                     ) {
-                        const div: HTMLDivElement = dom(
+                        const div: HTMLDivElement = this.jodit.create.fromHTML(
                             '<div ' +
                                 'tabindex="-1" ' +
                                 'style="' +
@@ -499,9 +503,9 @@ export class Uploader implements IUploader {
                                 'z-index: 2147483647; word-break: break-all;' +
                                 '" ' +
                                 'contenteditable="true">' +
-                                '</div>',
-                            this.jodit.ownerDocument
+                                '</div>'
                         ) as HTMLDivElement;
+
                         this.jodit.ownerDocument.body.appendChild(div);
 
                         const selection =
@@ -567,7 +571,7 @@ export class Uploader implements IUploader {
                 }
             };
 
-        if (this.jodit && this.jodit.editor !== form) {
+        if (this.jodit && (<Jodit>this.jodit).editor !== form) {
             self.jodit.events.on(form, 'paste', onPaste);
         } else {
             self.jodit.events.on('beforePaste', onPaste);
@@ -697,8 +701,6 @@ export class Uploader implements IUploader {
 
     constructor(editor: IViewBased, options?: IUploaderOptions<Uploader>) {
         this.jodit = editor;
-        this.selection =
-            editor instanceof Jodit ? editor.selection : new Select(editor);
 
         this.options = extend(
             true,

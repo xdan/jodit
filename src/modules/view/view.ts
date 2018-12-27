@@ -13,6 +13,11 @@ import { ToolbarCollection } from '../toolbar/collection';
 import { Panel } from './panel';
 
 export class View extends Panel implements IViewBased {
+    /**
+     * @property{string} ID attribute for source element, id add {id}_editor it's editor's id
+     */
+    public id: string;
+
     private __modulesInstances: IDictionary<Component> = {};
 
     /**

@@ -592,27 +592,30 @@ export class Select {
      * @fired afterInsertImage
      */
     async insertImage(
-        url: string,
-        styles: IDictionary<string> = {},
-        defaultWidth: number | string | false = false
+        url: string | HTMLImageElement,
+        styles: IDictionary<string> | null,
+        defaultWidth: number | string | null
     ) {
         const
-            image: HTMLImageElement = this.jodit.create.inside.element('img');
+            image: HTMLImageElement = typeof url === 'string' ? this.jodit.create.inside.element('img') : url;
 
-        image.setAttribute('src', url);
-
-        let dw: string = defaultWidth.toString();
-
-        if (
-            dw &&
-            'auto' !== dw &&
-            String(dw).indexOf('px') < 0 &&
-            String(dw).indexOf('%') < 0
-        ) {
-            dw += 'px';
+        if (typeof url === 'string') {
+            image.setAttribute('src', url);
         }
 
-        styles.width = dw;
+        if (defaultWidth !== null) {
+            let dw: string = defaultWidth.toString();
+            if (
+                dw &&
+                'auto' !== dw &&
+                String(dw).indexOf('px') < 0 &&
+                String(dw).indexOf('%') < 0
+            ) {
+                dw += 'px';
+            }
+
+            css(image, 'width', dw);
+        }
 
         if (styles && typeof styles === 'object') {
             css(image, styles);

@@ -4,7 +4,6 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 import { Dialog } from './Dialog';
-import { dom } from '../helpers/Helpers';
 import { ToolbarIcon } from '..';
 import { Jodit } from '../../Jodit';
 
@@ -40,20 +39,16 @@ export const Alert = (
     }
 
     const dialog: Dialog = new Dialog(),
-        $div: HTMLDivElement = dom(
-            '<div class="' + className + '"></div>',
-            dialog.document
-        ) as HTMLDivElement,
-        $ok: HTMLAnchorElement = dom(
+        $div: HTMLDivElement = dialog.create.div(className),
+        $ok: HTMLAnchorElement = dialog.create.fromHTML(
             '<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
                 ToolbarIcon.getIcon('cancel') +
                 '<span>' +
                 Jodit.prototype.i18n('Ok') +
                 '</span></a>',
-            dialog.document
         ) as HTMLAnchorElement;
 
-    $div.appendChild(dom(msg, dialog.document));
+    $div.appendChild(typeof msg === 'string' ? dialog.create.text(msg) : msg);
 
     $ok.addEventListener('click', () => {
         if (

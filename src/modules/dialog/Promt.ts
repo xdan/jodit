@@ -4,7 +4,6 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 import { Dialog } from './Dialog';
-import { dom } from '../helpers/Helpers';
 import { ToolbarIcon } from '..';
 import { Jodit } from '../../Jodit';
 
@@ -34,34 +33,27 @@ export const Promt = (
     placeholder?: string
 ): Dialog => {
     const dialog: Dialog = new Dialog(),
-        $cancel: HTMLAnchorElement = dom(
+        $cancel: HTMLAnchorElement = dialog.create.fromHTML(
             '<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
                 ToolbarIcon.getIcon('cancel') +
                 '<span>' +
                 Jodit.prototype.i18n('Cancel') +
-                '</span></a>',
-            dialog.document
+                '</span></a>'
         ) as HTMLAnchorElement,
-        $ok: HTMLAnchorElement = dom(
+        $ok: HTMLAnchorElement = dialog.create.fromHTML(
             '<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
                 ToolbarIcon.getIcon('check') +
                 '<span>' +
                 Jodit.prototype.i18n('Ok') +
-                '</span></a>',
-            dialog.document
+                '</span></a>'
         ) as HTMLAnchorElement,
-        $div: HTMLDivElement = dom(
-            '<form class="jodit_promt"></form>',
-            dialog.document
-        ) as HTMLDivElement,
-        $input: HTMLInputElement = dom(
-            '<input autofocus/>',
-            dialog.document
-        ) as HTMLInputElement,
-        $label: HTMLLabelElement = dom(
-            '<label></label>',
-            dialog.document
-        ) as HTMLLabelElement;
+
+        $div: HTMLFormElement = dialog.create.element('form', {
+            'class': 'jodit_promt'
+        }),
+
+        $input: HTMLInputElement = dialog.create.element('input', {autofocus : true}),
+        $label: HTMLLabelElement = dialog.create.element('label') as HTMLLabelElement;
 
     if (typeof title === 'function') {
         callback = title;
@@ -72,7 +64,8 @@ export const Promt = (
         $input.setAttribute('placeholder', placeholder);
     }
 
-    $label.appendChild(dom(msg, dialog.document));
+    $label.appendChild(dialog.create.text(msg));
+
     $div.appendChild($label);
     $div.appendChild($input);
 

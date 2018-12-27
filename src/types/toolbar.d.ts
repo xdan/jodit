@@ -4,7 +4,7 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { IDictionary } from './types';
+import { HTMLTagNames, IDictionary } from './types';
 import { IViewBased } from './view';
 import { ToolbarButton } from '../modules';
 import { Jodit } from '../Jodit';
@@ -149,7 +149,7 @@ export interface IControlType<Button = ToolbarButton, T = Jodit> {
     /**
      * Tag list:  when cursor inward tag from this list, button will be highlighted
      */
-    tags?: string[];
+    tags?: HTMLTagNames[];
     options?: any;
     css?:
         | IDictionary<string | string[]>

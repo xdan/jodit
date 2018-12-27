@@ -18,6 +18,7 @@ import { Uploader } from '../modules';
 
 export interface ISourceFile {
     file: string;
+    name?: string;
     thumb: string;
     changed: string;
     size: string;
@@ -68,7 +69,7 @@ export interface IFileBrowserAjaxOptions {
     process?: (resp: IFileBrowserAnswer) => IFileBrowserAnswer;
 }
 
-export interface IFileBrowserOptions<T> {
+export interface IFileBrowserOptions {
     removeButtons: string[];
     buttons: Buttons;
     zIndex?: number;
@@ -79,7 +80,7 @@ export interface IFileBrowserOptions<T> {
 
     sortBy: string;
 
-    sort: (a: any, b: any, sortBy?: string, editor?: T) => number;
+    sort: (a: any, b: any, sortBy?: string) => number;
 
     editImage: boolean;
     preview: boolean;

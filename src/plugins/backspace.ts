@@ -269,6 +269,7 @@ export function backspace(editor: Jodit) {
                     const fakeNode: Node = editor.ownerDocument.createTextNode(
                         consts.INVISIBLE_SPACE
                     );
+
                     const marker: HTMLElement = editor.editorDocument.createElement(
                         'span'
                     );
@@ -282,9 +283,10 @@ export function backspace(editor: Jodit) {
 
                         let container: HTMLElement | null = Dom.up(
                             fakeNode,
-                            Dom.isBlock,
+                            node => Dom.isBlock(node, editor.editorWindow),
                             editor.editor
                         ) as HTMLElement | null;
+
                         const workElement: Node | null = Dom.findInline(
                             fakeNode,
                             toLeft,
@@ -322,17 +324,17 @@ export function backspace(editor: Jodit) {
                         let prevBox: Node | false | null = toLeft
                             ? Dom.prev(
                                   box.node || fakeNode,
-                                  Dom.isBlock,
+                                  node => Dom.isBlock(node, editor.editorWindow),
                                   editor.editor
                               )
                             : Dom.next(
                                   box.node || fakeNode,
-                                  Dom.isBlock,
-                                  editor.editor
+                                node => Dom.isBlock(node, editor.editorWindow),
+                                editor.editor
                               );
 
                         if (!prevBox && container && container.parentNode) {
-                            prevBox = editor.editorDocument.createElement(
+                            prevBox = editor.create.inside.element(
                                 editor.options.enter
                             );
                             let boxNode: Node = container;
@@ -362,7 +364,9 @@ export function backspace(editor: Jodit) {
                                 prevBox,
                                 !toLeft
                             );
+
                             editor.selection.insertNode(marker, false, false);
+
                             if (
                                 tmpNode.nodeType === Node.TEXT_NODE &&
                                 tmpNode.nodeValue === consts.INVISIBLE_SPACE

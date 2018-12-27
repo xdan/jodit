@@ -347,7 +347,7 @@ export class Config {
     /**
      * Show tooltip after mouse enter on the button
      */
-    public §showTooltip: boolean = true;
+    public showTooltip: boolean = true;
 
     /**
      * Delay before show tooltip
@@ -904,29 +904,32 @@ Config.prototype.controls = {
             return FileSelectorWidget(
                 editor,
                 {
-                    filebrowser: (data: IFileBrowserCallBackData) => {
+                    filebrowser: async (data: IFileBrowserCallBackData) => {
                         if (data.files && data.files.length) {
-                            let i: number;
-                            for (i = 0; i < data.files.length; i += 1) {
-                                editor.selection.insertImage(
-                                    data.baseurl + data.files[i]
+                            for (let i = 0; i < data.files.length; i += 1) {
+                                await editor.selection.insertImage(
+                                    data.baseurl + data.files[i],
+                                    null,
+                                    editor.options.imageDefaultWidth
                                 );
                             }
                         }
                         close();
                     },
-                    upload: (data: IFileBrowserCallBackData) => {
-                        let i;
+                    upload: async (data: IFileBrowserCallBackData) => {
                         if (data.files && data.files.length) {
-                            for (i = 0; i < data.files.length; i += 1) {
-                                editor.selection.insertImage(
-                                    data.baseurl + data.files[i]
+                            for (let i = 0; i < data.files.length; i += 1) {
+                                await editor.selection.insertImage(
+                                    data.baseurl + data.files[i],
+                                    null,
+                                    editor.options.imageDefaultWidth
                                 );
                             }
                         }
+
                         close();
                     },
-                    url: (url: string, text: string) => {
+                    url: async (url: string, text: string) => {
                         const image: HTMLImageElement =
                             sourceImage || editor.create.inside.element('img');
 
@@ -934,7 +937,7 @@ Config.prototype.controls = {
                         image.setAttribute('alt', text);
 
                         if (!sourceImage) {
-                            editor.selection.insertImage(image);
+                           await editor.selection.insertImage(image,null, editor.options.imageDefaultWidth);
                         }
 
                         close();

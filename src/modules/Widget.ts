@@ -18,13 +18,12 @@ import { Dom } from './Dom';
 import { FileBrowser } from './filebrowser/filebrowser';
 import {
     $$,
-    dom,
     each,
     hexToRgb,
     isPlainObject,
     normalizeColor,
     val,
-} from './helpers/Helpers';
+} from './helpers/';
 
 export namespace Widget {
     /**
@@ -51,10 +50,7 @@ export namespace Widget {
         coldColor: string
     ): HTMLDivElement => {
         const valueHex = normalizeColor(coldColor),
-            form: HTMLDivElement = dom(
-                '<div class="jodit_colorpicker"></div>',
-                editor.ownerDocument
-            ) as HTMLDivElement,
+            form: HTMLDivElement = editor.create.div('jodit_colorpicker'),
             iconEye: string = editor.options.textIcons
                 ? ''
                 : Jodit.modules.ToolbarIcon.getIcon('eye'),
@@ -94,27 +90,26 @@ export namespace Widget {
             };
 
         form.appendChild(
-            dom(
-                '<div>' + eachColor(editor.options.colors) + '</div>',
-                editor.ownerDocument
+            editor.create.fromHTML(
+                '<div>' + eachColor(editor.options.colors) + '</div>'
             )
         );
 
         form.appendChild(
-            dom(
+            editor.create.fromHTML(
                 '<a ' +
                     (editor.options.textIcons
                         ? 'class="jodit_text_icon"'
                         : '') +
                     ' data-color="" href="javascript:void(0)">' +
                     iconEraser +
-                    '</a>',
-                editor.ownerDocument
+                    '</a>'
             )
         );
 
         editor.events.on(form, 'mousedown touchend', (e: MouseEvent) => {
             e.stopPropagation();
+
             let target: HTMLElement = e.target as HTMLElement;
 
             if (
@@ -191,21 +186,12 @@ export namespace Widget {
         tabs: IDictionary<(() => void) | HTMLElement>,
         state?: { __activeTab: string }
     ): HTMLDivElement => {
-        const box: HTMLDivElement = dom(
-                '<div class="jodit_tabs"></div>',
-                editor.ownerDocument
-            ) as HTMLDivElement,
-            tabBox: HTMLDivElement = dom(
-                '<div class="jodit_tabs_wrapper"></div>',
-                editor.ownerDocument
-            ) as HTMLDivElement,
-            buttons: HTMLDivElement = dom(
-                '<div class="jodit_tabs_buttons"></div>',
-                editor.ownerDocument
-            ) as HTMLDivElement,
+        const box: HTMLDivElement = editor.create.div('jodit_tabs'),
+            tabBox: HTMLDivElement = editor.create.div("jodit_tabs_wrapper"),
+            buttons: HTMLDivElement = editor.create.div("jodit_tabs_buttons"),
             nameToTab: IDictionary<{
-                button: HTMLDivElement;
-                tab: HTMLDivElement;
+                button: HTMLElement;
+                tab: HTMLElement;
             }> = {};
 
         let firstTab: string = '',
@@ -214,15 +200,11 @@ export namespace Widget {
         box.appendChild(buttons);
         box.appendChild(tabBox);
 
-        each<(() => void) | HTMLElement>(tabs, (name, tabOptions) => {
-            const tab: HTMLDivElement = dom(
-                    '<div class="jodit_tab"></div>',
-                    editor.ownerDocument
-                ) as HTMLDivElement,
-                button: HTMLDivElement = dom(
-                    '<a href="javascript:void(0);"></a>',
-                    editor.ownerDocument
-                ) as HTMLDivElement;
+        each<(() => void) | HTMLElement>(tabs, (name: string, tabOptions) => {
+            const tab: HTMLDivElement = editor.create.div("jodit_tab"),
+                button: HTMLAnchorElement = editor.create.element('a', {
+                    href: 'javascript:void(0);'
+                });
 
             if (!firstTab) {
                 firstTab = name.toString();
@@ -232,13 +214,10 @@ export namespace Widget {
             buttons.appendChild(button);
 
             if (typeof tabOptions !== 'function') {
-                tab.appendChild(dom(tabOptions, editor.ownerDocument));
+                tab.appendChild(tabOptions);
             } else {
                 tab.appendChild(
-                    dom(
-                        '<div class="jodit_tab_empty"></div>',
-                        editor.ownerDocument
-                    )
+                    editor.create.div("jodit_tab_empty")
                 );
             }
 
@@ -361,7 +340,7 @@ export namespace Widget {
             (editor.options.uploader.url ||
                 editor.options.uploader.insertImageAsBase64URI)
         ) {
-            const dragbox: HTMLElement = dom(
+            const dragbox: HTMLElement = editor.create.fromHTML(
                 '<div class="jodit_draganddrop_file_box">' +
                     '<strong>' +
                     editor.i18n(isImage ? 'Drop image' : 'Drop file') +
@@ -372,8 +351,7 @@ export namespace Widget {
                     '<input type="file" accept="' +
                     (isImage ? 'image/*' : '*') +
                     'image/*" tabindex="-1" dir="auto" multiple=""/>' +
-                    '</div>',
-                editor.ownerDocument
+                    '</div>'
             );
 
             editor.getInstance<IUploader>('Uploader').bind(
@@ -417,7 +395,7 @@ export namespace Widget {
         }
 
         if (callbacks.url) {
-            const form: HTMLFormElement = dom(
+            const form: HTMLFormElement = editor.create.fromHTML(
                     '<form onsubmit="return false;" class="jodit_form">' +
                         '<input type="text" required name="url" placeholder="http://"/>' +
                         '<input type="text" name="text" placeholder="' +
@@ -429,7 +407,6 @@ export namespace Widget {
                         '</button>' +
                         '</div>' +
                         '</form>',
-                    editor.ownerDocument
                 ) as HTMLFormElement,
                 button: HTMLButtonElement = form.querySelector(
                     'button'

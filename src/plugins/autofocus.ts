@@ -41,7 +41,7 @@ export function autofocus(editor: Jodit) {
             if (
                 editor.isEditorMode() &&
                 e.target &&
-                Dom.isBlock(e.target as Node) &&
+                Dom.isBlock(e.target as Node, editor.editorWindow) &&
                 !(e.target as HTMLElement).childNodes.length
             ) {
                 if (editor.editor === e.target) {

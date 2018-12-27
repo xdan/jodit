@@ -19,10 +19,7 @@ export class StatusBar extends Component {
     }
 
     public append(child: HTMLElement, inTheRight: boolean = false) {
-        const wrapper: HTMLElement = this.jodit.ownerDocument.createElement(
-            'div'
-        );
-        wrapper.classList.add('jodit_statusbar_item');
+        const wrapper: HTMLElement = this.jodit.create.div('jodit_statusbar_item');
 
         if (inTheRight) {
             wrapper.classList.add('jodit_statusbar_item-right');
@@ -36,14 +33,12 @@ export class StatusBar extends Component {
     }
 
     public destruct() {
-        super.destruct();
         Dom.safeRemove(this.container);
     }
 
     constructor(jodit: Jodit, readonly target: HTMLElement) {
         super(jodit);
-        this.container = jodit.ownerDocument.createElement('div');
-        this.container.classList.add('jodit_statusbar');
+        this.container = jodit.create.div('jodit_statusbar');
         target.appendChild(this.container);
         this.hide();
     }

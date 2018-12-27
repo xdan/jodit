@@ -200,8 +200,8 @@ export function cleanHtml(editor: Jodit) {
             node.nodeName === 'BR' &&
             hasNotEmptyTextSibling(node) &&
             !hasNotEmptyTextSibling(node, true) &&
-            Dom.up(node, Dom.isBlock, editor.editor) !==
-                Dom.up(current, Dom.isBlock, editor.editor)
+            Dom.up(node, node => Dom.isBlock(node, editor.editorWindow), editor.editor) !==
+                Dom.up(current, node => Dom.isBlock(node, editor.editorWindow), editor.editor)
         ) {
             return true;
         }
@@ -272,7 +272,7 @@ export function cleanHtml(editor: Jodit) {
 
                             if (
                                 editor.options.cleanHTML.fillEmptyParagraph &&
-                                Dom.isBlock(nodeElm) &&
+                                Dom.isBlock(nodeElm, editor.editorWindow) &&
                                 Dom.isEmpty(
                                     nodeElm,
                                     /^(img|svg|canvas|input|textarea|form|br)$/
@@ -353,7 +353,7 @@ export function cleanHtml(editor: Jodit) {
             if (currentNode) {
                 const currentParagraph: Node | false = Dom.up(
                     currentNode,
-                    Dom.isBlock,
+                    node => Dom.isBlock(node, editor.editorWindow),
                     editor.editor
                 );
                 if (currentParagraph) {
@@ -396,7 +396,7 @@ export function cleanHtml(editor: Jodit) {
                     if (hr) {
                         node = Dom.next(
                             hr,
-                            Dom.isBlock,
+                            node => Dom.isBlock(node, editor.editorWindow),
                             editor.editor,
                             false
                         ) as Node | null;

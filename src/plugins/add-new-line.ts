@@ -102,7 +102,7 @@ export function addNewLine(editor: Jodit) {
     const canGetFocus = (elm: Node | null): boolean => {
         return (
             elm !== null &&
-            Dom.isBlock(elm) &&
+            Dom.isBlock(elm, editor.editorWindow) &&
             !/^(img|table|iframe|hr)$/i.test(elm.nodeName)
         );
     };
@@ -234,10 +234,10 @@ export function addNewLine(editor: Jodit) {
                             }
                         }
 
-                        if (currentElement.nodeName.match(isMatchedTag)) {
+                        if (isMatchedTag.test(currentElement.nodeName)) {
                             const parentBox: Node | false = Dom.up(
                                 currentElement,
-                                Dom.isBlock,
+                                node => Dom.isBlock(node, editor.editorWindow),
                                 editor.editor
                             );
                             if (parentBox && parentBox !== editor.editor) {

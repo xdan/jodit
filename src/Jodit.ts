@@ -42,11 +42,6 @@ declare let appVersion: string;
  * Class Jodit. Main class
  */
 export class Jodit extends View {
-    /**
-     * @property{string} ID attribute for source element, id add {id}_editor it's editor's id
-     */
-    public id: string;
-
     get value(): string {
         return this.getEditorValue();
     }

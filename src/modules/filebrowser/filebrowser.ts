@@ -31,8 +31,6 @@ import { IViewBased } from '../../types/view';
 import { ImageEditor } from '../ImageEditor';
 import { localStorageProvider } from '../storage/localStorageProvider';
 import { Storage } from '../storage/Storage';
-import { humanSizeToBytes } from '../helpers/humanSizeToBytes';
-import { dom } from '../helpers/html/dom';
 import { each } from '../helpers/each';
 import { normalizePath } from '../helpers/normalize/normalizePath';
 import { $$ } from '../helpers/selector';
@@ -41,6 +39,7 @@ import { ctrlKey } from '../helpers/ctrlKey';
 import { extend } from '../helpers/extend';
 import { debounce } from '../helpers/async/debounce';
 import { setTimeout } from '../helpers/async/setTimeout';
+import { humanSizeToBytes } from '../helpers';
 
 declare module '../../Config' {
     interface Config {
@@ -285,7 +284,7 @@ declare module '../../Config' {
          * ```
          *
          */
-        filebrowser: IFileBrowserOptions<Jodit>;
+        filebrowser: IFileBrowserOptions;
     }
 }
 
@@ -293,7 +292,7 @@ const DEFAULT_SOURCE_NAME = 'default';
 const ITEM_CLASS = 'jodit_filebrowser_files_item';
 
 Config.prototype.filebrowser = {
-    filter(item, search) {
+    filter(item: string | ISourceFile, search: string) {
         search = search.toLowerCase();
         if (typeof item === 'string') {
             return item.toLowerCase().indexOf(search) !== -1;
@@ -553,7 +552,7 @@ Config.prototype.filebrowser = {
     },
 
     uploader: null, // use default Uploader's settings
-} as IFileBrowserOptions<Jodit>;
+} as IFileBrowserOptions;
 
 Config.prototype.controls.filebrowser = {
     upload: {
@@ -564,28 +563,27 @@ Config.prototype.controls.filebrowser = {
         },
         isDisable: (browser: any): boolean => !browser.canI('FileUpload'),
         getContent: (
-            editor: IViewBased,
+            filebrowser: IViewBased,
             control: IControlType
         ): HTMLElement => {
-            const btn: HTMLElement = dom(
+            const btn: HTMLElement = filebrowser.create.fromHTML(
                     '<span class="jodit_upload_button">' +
                         ToolbarIcon.getIcon('plus') +
                         '<input type="file" accept="' +
-                        (editor.buffer.fileBrowserOnlyImages
+                        (filebrowser.buffer.fileBrowserOnlyImages
                             ? 'image/*'
                             : '*') +
                         '" tabindex="-1" dir="auto" multiple=""/>' +
-                        '</span>',
-                    editor.ownerDocument
+                        '</span>'
                 ),
                 input: HTMLInputElement = btn.querySelector(
                     'input'
                 ) as HTMLInputElement;
 
-            editor.events
+            filebrowser.events
                 .on('updateToolbar', () => {
                     if (control && control.isDisable) {
-                        control.isDisable(editor, control)
+                        control.isDisable(filebrowser, control)
                             ? input.setAttribute('disabled', 'disabled')
                             : input.removeAttribute('disabled');
                     }
@@ -656,20 +654,18 @@ Config.prototype.controls.filebrowser = {
     } as IControlType,
     filter: {
         isInput: true,
-        getContent: (editor: Jodit): HTMLElement => {
-            const input: HTMLInputElement = dom(
-                '<input class="jodit_input" placeholder="' +
-                    editor.i18n('Filter') +
-                    '"/>',
-                editor.ownerDocument
-            ) as HTMLInputElement;
+        getContent: (filebrowser: Jodit): HTMLElement => {
+            const input: HTMLInputElement = filebrowser.create.element('input', {
+                'class': 'jodit_input',
+                'placeholder': filebrowser.i18n('Filter'),
+            });
 
-            editor.events.on(
+            filebrowser.events.on(
                 input,
                 'keydown mousedown',
                 debounce(() => {
-                    editor.events.fire('filter.filebrowser', input.value);
-                }, editor.defaultTimeout)
+                    filebrowser.events.fire('filter.filebrowser', input.value);
+                }, filebrowser.defaultTimeout)
             );
 
             return input;
@@ -677,30 +673,29 @@ Config.prototype.controls.filebrowser = {
     } as IControlType,
     sort: {
         isInput: true,
-        getContent: (editor: Jodit): HTMLElement => {
-            const select: HTMLSelectElement = dom(
+        getContent: (filebrowser: Jodit): HTMLElement => {
+            const select: HTMLSelectElement = filebrowser.create.fromHTML(
                 '<select class="jodit_input">' +
                     '<option value="changed">' +
-                    editor.i18n('Sort by changed') +
+                    filebrowser.i18n('Sort by changed') +
                     '</option>' +
                     '<option value="name">' +
-                    editor.i18n('Sort by name') +
+                    filebrowser.i18n('Sort by name') +
                     '</option>' +
                     '<option value="size">' +
-                    editor.i18n('Sort by size') +
+                    filebrowser.i18n('Sort by size') +
                     '</option>' +
-                    '</select>',
-                editor.ownerDocument
+                    '</select>'
             ) as HTMLSelectElement;
 
-            editor.events
+            filebrowser.events
                 .on('sort.filebrowser', (value: string) => {
                     if (select.value !== value) {
                         select.value = value;
                     }
                 })
                 .on(select, 'change', () => {
-                    editor.events.fire('sort.filebrowser', select.value);
+                    filebrowser.events.fire('sort.filebrowser', select.value);
                 });
 
             return select;
@@ -723,6 +718,7 @@ export class FileBrowser extends View {
     private loader: HTMLElement;
     private browser: HTMLElement;
     private status_line: HTMLElement;
+
     private tree: HTMLElement;
     private files: HTMLElement;
 
@@ -814,7 +810,7 @@ export class FileBrowser extends View {
             if (source.files && source.files.length) {
                 if (typeof this.options.sort === 'function') {
                     source.files.sort((a: ISourceFile, b: ISourceFile) => {
-                        return this.options.sort(a, b, this.sortBy, this.jodit);
+                        return this.options.sort(a, b, this.sortBy);
                     });
                 }
 
@@ -1066,7 +1062,7 @@ export class FileBrowser extends View {
     private uploadHandler = () => {
         this.loadItems(this.currentPath, this.currentSource);
     };
-    public options: IFileBrowserOptions<Jodit>;
+    public options: IFileBrowserOptions;
 
     public currentPath: string = '';
     public currentSource: string = DEFAULT_SOURCE_NAME;
@@ -1174,7 +1170,7 @@ export class FileBrowser extends View {
      * @param {string} path Relative toWYSIWYG the directory in which you want toWYSIWYG create a folder
      * @param {string} source Server source key
      */
-    public create = (
+    public createFolder = (
         name: string,
         path: string,
         source: string
@@ -1350,12 +1346,13 @@ export class FileBrowser extends View {
         this.onlyImages = onlyImages;
         this.buffer.fileBrowserOnlyImages = onlyImages;
 
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             if (!this.options.items || !this.options.items.url) {
                 throw new Error('Need set options.filebrowser.ajax.url');
             }
 
             let localTimeout: number = 0;
+
             this.events
                 .off(this.files, 'dblclick')
                 .on(this.files, 'dblclick', this.onSelect(callback), 'a')
@@ -1377,7 +1374,8 @@ export class FileBrowser extends View {
                 .off('select.filebrowser')
                 .on('select.filebrowser', this.onSelect(callback));
 
-            const header: HTMLElement = this.ownerDocument.createElement('div');
+            const header = this.create.div();
+
             this.toolbar.build(this.options.buttons, header);
 
             this.dialog.dialogbox_header.classList.add(
@@ -1431,13 +1429,16 @@ export class FileBrowser extends View {
                     box.action,
                     resp => {
                         if (this.options.isSuccess(resp)) {
-                            this.loadTree(this.currentPath, this.currentSource);
-                            success();
-                            if (onSuccess) {
-                                onSuccess();
-                            }
+                            this.loadTree(this.currentPath, this.currentSource).then(() => {
+                                success();
+
+                                if (onSuccess) {
+                                    onSuccess();
+                                }
+                            })
                         } else {
                             failed(new Error(this.options.getMessage(resp)));
+
                             if (onFailed) {
                                 onFailed(
                                     new Error(this.options.getMessage(resp))
@@ -1447,6 +1448,7 @@ export class FileBrowser extends View {
                     },
                     (error: Error) => {
                         failed(error);
+
                         if (onFailed) {
                             onFailed(error);
                         }
@@ -1456,7 +1458,7 @@ export class FileBrowser extends View {
         );
     };
 
-    constructor(editor?: IViewBased, options = {}) {
+    constructor(editor?: Jodit, options = {}) {
         super(editor, options);
 
         const self: FileBrowser = this,
@@ -1476,19 +1478,16 @@ export class FileBrowser extends View {
                 options,
                 self.jodit ? self.jodit.options.filebrowser : void 0
             )
-        ) as IFileBrowserOptions<Jodit>;
+        ) as IFileBrowserOptions;
 
         self.dialog = new Dialog(editor || self, {
             fullsize: self.options.fullsize,
             buttons: ['dialog.fullsize', 'dialog.close'],
         });
 
-        self.loader = dom(
-            '<div class="jodit_filebrowser_loader"><i class="jodit_icon-loader"></i></div>',
-            doc
-        );
+        self.loader = self.create.div('jodit_filebrowser_loader', '<i class="jodit_icon-loader"></i>');
 
-        self.browser = dom(
+        self.browser = self.create.fromHTML(
             '<div class="jodit_filebrowser non-selected">' +
                 (self.options.showFoldersPanel
                     ? '<div class="jodit_filebrowser_tree"></div>'
@@ -1496,7 +1495,6 @@ export class FileBrowser extends View {
                 '<div class="jodit_filebrowser_files"></div>' +
                 '<div class="jodit_filebrowser_status"></div>' +
                 '</div>',
-            doc
         );
 
         self.status_line = self.browser.querySelector(
@@ -1546,6 +1544,7 @@ export class FileBrowser extends View {
                     Confirm(self.i18n('Are you sure?'), '', (yes: boolean) => {
                         if (yes) {
                             const promises: Array<Promise<any>> = [];
+
                             self.getActiveElements().forEach(
                                 (a: HTMLElement) => {
                                     promises.push(
@@ -1620,7 +1619,7 @@ export class FileBrowser extends View {
                             self.i18n('Enter Directory name'),
                             self.i18n('Create directory'),
                             (name: string) => {
-                                self.create(
+                                self.createFolder(
                                     name,
                                     this.getAttribute('data-path') || '',
                                     this.getAttribute('data-source') || ''
@@ -1752,12 +1751,10 @@ export class FileBrowser extends View {
                                               const preview: Dialog = new Dialog(
                                                       self
                                                   ),
-                                                  temp_content: HTMLElement = dom(
+                                                  temp_content: HTMLElement = self.create.fromHTML(
                                                       '<div class="jodit_filebrowser_preview">' +
                                                           '<i class="jodit_icon-loader"></i>' +
-                                                          '</div>',
-                                                      doc
-                                                  ),
+                                                          '</div>',),
                                                   image: HTMLImageElement = doc.createElement(
                                                       'img'
                                                   ),
@@ -1773,7 +1770,7 @@ export class FileBrowser extends View {
                                                               self.options
                                                                   .showPreviewNavigation
                                                           ) {
-                                                              const next = dom(
+                                                              const next = self.create.fromHTML(
                                                                       '<a ' +
                                                                           'href="javascript:void(0)" ' +
                                                                           'class="' +
@@ -1783,10 +1780,9 @@ export class FileBrowser extends View {
                                                                           ToolbarIcon.getIcon(
                                                                               'angle-right'
                                                                           ) +
-                                                                          '</a>',
-                                                                      doc
+                                                                          '</a>'
                                                                   ),
-                                                                  prev = dom(
+                                                                  prev = self.create.fromHTML(
                                                                       '<a ' +
                                                                           'href="javascript:void(0)" ' +
                                                                           'class="' +
@@ -1796,8 +1792,7 @@ export class FileBrowser extends View {
                                                                           ToolbarIcon.getIcon(
                                                                               'angle-left'
                                                                           ) +
-                                                                          '</a>',
-                                                                      doc
+                                                                          '</a>'
                                                                   );
 
                                                               if (
