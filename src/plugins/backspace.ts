@@ -8,7 +8,7 @@ import * as consts from '../constants';
 import { MAY_BE_REMOVED_WITH_KEY } from '../constants';
 import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
-import { normalizeNode, trim } from '../modules/helpers/Helpers';
+import { normalizeNode, trim } from '../modules/helpers/';
 
 /**
  * Plug-in process entering Backspace key

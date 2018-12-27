@@ -9,7 +9,7 @@ import { IDictionary } from '../../types';
 import { IControlTypeStrong } from '../../types/toolbar';
 import { IViewBased } from '../../types/view';
 import { Dom } from '../Dom';
-import { asArray, camelCase, css, dom } from '../helpers/Helpers';
+import { asArray, camelCase, css } from '../helpers/';
 import { ToolbarElement } from './element';
 import { ToolbarList } from './list';
 import { ToolbarPopup } from './popup';

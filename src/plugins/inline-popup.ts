@@ -10,7 +10,7 @@ import { Widget } from '../modules/Widget';
 import ColorPickerWidget = Widget.ColorPickerWidget;
 import TabsWidget = Widget.TabsWidget;
 import { Dom } from '../modules/Dom';
-import { css, debounce, offset, splitArray } from '../modules/helpers/Helpers';
+import { css, debounce, offset, splitArray } from '../modules/helpers/';
 import { Plugin } from '../modules/Plugin';
 import { Table } from '../modules/Table';
 import { ToolbarCollection } from '../modules/toolbar/collection';

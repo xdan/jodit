@@ -7,7 +7,7 @@
 import { Config } from '../Config';
 import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
-import { setTimeout } from '../modules/helpers/Helpers';
+import { setTimeout } from '../modules/helpers/async';
 
 declare module '../Config' {
     interface Config {

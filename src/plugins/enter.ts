@@ -7,7 +7,7 @@
 import * as consts from '../constants';
 import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
-import { $$, scrollIntoView } from '../modules/helpers/Helpers';
+import { $$, scrollIntoView } from '../modules/helpers/';
 
 /**
  * Insert default paragraph
@@ -62,7 +62,7 @@ export function enter(editor: Jodit) {
         editor.options.enterBlock =
             editor.options.enter.toLowerCase() === 'br'
                 ? consts.PARAGRAPH
-                : (editor.options.enter as 'P' | 'DIV' | 'p' | 'div');
+                : (editor.options.enter.toLowerCase() as 'p' | 'div');
     }
 
     editor.events.on(

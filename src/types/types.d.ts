@@ -152,3 +152,5 @@ export interface EventHandlerBlock {
     originalCallback: CallbackFunction;
     syntheticCallback: CallbackFunction;
 }
+
+export type HTMLTagNames = keyof HTMLElementTagNameMap;

@@ -65,6 +65,33 @@ export class Create {
         return div;
     }
 
+    span(className?: string, childrenOrAttributes?: Children): HTMLSpanElement;
+    span(className?: string, childrenOrAttributes?: Attributes, children?: Children): HTMLSpanElement;
+    span(className?: string, childrenOrAttributes?: Attributes | Children, children?: Children): HTMLSpanElement {
+        const span = this.element('span', <any>childrenOrAttributes, children);
+
+        if (className) {
+            span.className = className;
+        }
+
+        return span;
+    }
+
+    /**
+     * Create text node
+     *
+     * @param value
+     */
+    text(value: string): Text {
+        return this.doc.createTextNode(value);
+    }
+
+    /**
+     * Create HTML Document fragment element
+     */
+    fragment(): DocumentFragment {
+        return this.doc.createDocumentFragment();
+    }
 
     /**
      * Create DOM element from HTML text

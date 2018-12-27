@@ -55,13 +55,12 @@ export function addNewLine(editor: Jodit) {
         return;
     }
 
-    const line: HTMLDivElement = dom(
+    const line: HTMLDivElement = editor.create.fromHTML(
         '<div role="button" tabIndex="-1" title="' +
             editor.i18n('Break') +
             '" class="jodit-add-new-line"><span>' +
             ToolbarIcon.getIcon('enter') +
-            '</span></div>',
-        editor.ownerDocument
+            '</span></div>'
     ) as HTMLDivElement;
 
     const delta = 10;

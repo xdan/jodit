@@ -5,7 +5,7 @@
  */
 
 import { Jodit } from '../Jodit';
-import { $$, debounce } from '../modules/helpers/Helpers';
+import { $$, debounce } from '../modules/helpers/';
 
 const JODIT_IMAGE_PROCESSOR_BINDED = '__jodit_imageprocessor_binded';
 

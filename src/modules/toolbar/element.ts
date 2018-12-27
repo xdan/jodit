@@ -9,6 +9,9 @@ import { IViewBased } from '../../types/view';
 import { Component } from '../Component';
 import { ToolbarCollection } from './collection';
 import { ToolbarIcon } from './icon';
+import { Dom } from '../Dom';
+
+type TagNames = keyof HTMLElementTagNameMap;
 
 export abstract class ToolbarElement extends Component {
     public container: HTMLElement;
@@ -17,12 +20,17 @@ export abstract class ToolbarElement extends Component {
 
     protected constructor(
         jodit: IViewBased,
-        containerTag: string = 'li',
+        containerTag: TagNames = 'li',
         containerClass: string = 'jodit_toolbar_btn'
     ) {
         super(jodit);
-        this.container = this.jodit.ownerDocument.createElement(containerTag);
+
+        this.container = this.jodit.create.element(containerTag);
         this.container.classList.add(containerClass);
+    }
+
+    destruct(): any {
+        Dom.safeRemove(this.container);
     }
 
     public createIcon(
@@ -34,19 +42,19 @@ export abstract class ToolbarElement extends Component {
         if (!this.jodit.options.textIcons) {
             let iconSVG:
                 | string
-                | undefined
+                | void
                 | HTMLElement = this.jodit.events.fire(
                 'getIcon',
                 icon,
                 control,
                 clearName
             );
+
             let iconElement: HTMLElement;
 
             if (control && control.iconURL && iconSVG === undefined) {
-                iconElement = dom('<i></i>', this.jodit.ownerDocument);
-                iconElement.style.backgroundImage =
-                    'url(' + control.iconURL + ')';
+                iconElement = this.jodit.create.element('i');
+                iconElement.style.backgroundImage = 'url(' + control.iconURL + ')';
             } else {
                 if (iconSVG === undefined) {
                     if (ToolbarIcon.exists(icon)) {
@@ -56,7 +64,7 @@ export abstract class ToolbarElement extends Component {
                     }
                 }
 
-                iconElement = dom(iconSVG, this.jodit.ownerDocument);
+                iconElement = typeof iconSVG === 'string' ? this.jodit.create.fromHTML(iconSVG) : iconSVG;
             }
 
             iconElement.classList.add('jodit_icon', 'jodit_icon_' + clearName);
@@ -64,11 +72,10 @@ export abstract class ToolbarElement extends Component {
             return iconElement;
         }
 
-        return dom(
+        return this.jodit.create.fromHTML(
             `<span class="jodit_icon">${this.jodit.i18n(
                 control ? control.name : clearName
-            )}</span>`,
-            this.jodit.ownerDocument
+            )}</span>`
         );
     }
 }

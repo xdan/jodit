@@ -7,7 +7,7 @@
 import { Config } from '../Config';
 import * as consts from '../constants';
 import { Jodit } from '../Jodit';
-import { css } from '../modules/helpers/Helpers';
+import { css } from '../modules/helpers/';
 import { ToolbarButton } from '../modules/toolbar/button';
 import { ToolbarIcon } from '../modules/toolbar/icon';
 import { IControlType } from '../types/toolbar';

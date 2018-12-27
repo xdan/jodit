@@ -10,7 +10,7 @@ import { Widget } from '../modules/Widget';
 import TabsWidget = Widget.TabsWidget;
 import ColorPickerWidget = Widget.ColorPickerWidget;
 import { Dom } from '../modules/Dom';
-import { css, normalizeColor } from '../modules/helpers/Helpers';
+import { css, normalizeColor } from '../modules/helpers/';
 import { ToolbarButton } from '../modules/toolbar/button';
 import { IDictionary } from '../types';
 import { IControlType } from '../types/toolbar';

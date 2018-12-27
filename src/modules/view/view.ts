@@ -16,6 +16,16 @@ export class View extends Panel implements IViewBased {
     private __modulesInstances: IDictionary<Component> = {};
 
     /**
+     * Return default timeout period in milliseconds for some debounce or throttle functions.
+     * By default return {observer.timeout} options
+     *
+     * @return {number}
+     */
+    get defaultTimeout(): number {
+        return 100;
+    }
+
+    /**
      * Some extra data inside editor
      *
      * @type {{}}
@@ -50,7 +60,7 @@ export class View extends Panel implements IViewBased {
      * @override
      * @param isFullSize
      */
-    toggleFullSize(isFullSize: boolean) {
+    toggleFullSize(isFullSize?: boolean) {
         super.toggleFullSize(isFullSize);
 
         if (this.events) {

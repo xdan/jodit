@@ -11,3 +11,4 @@ export * from './normalizePath';
 export * from './normalizeSize';
 export * from './normalizeURL';
 export * from './normilizeCSSValue';
+export * from './normalizeColor';

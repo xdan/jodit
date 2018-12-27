@@ -9,10 +9,9 @@ import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
 import {
     convertMediaURLToVideoEmbed,
-    dom,
     isURL,
     val,
-} from '../modules/helpers/Helpers';
+} from '../modules/helpers/';
 import { Select } from '../modules/Selection';
 import { markerInfo } from '../types';
 import { IControlType } from '../types/toolbar';
@@ -77,7 +76,7 @@ Config.prototype.controls.link = {
         close: () => void
     ) => {
         const sel: Selection = editor.editorWindow.getSelection(),
-            form: HTMLFormElement = dom(
+            form: HTMLFormElement = editor.create.fromHTML(
                 '<form class="jodit_form">' +
                     '<input required type="text" name="url" placeholder="http://" type="text"/>' +
                     '<input name="text" placeholder="' +
@@ -101,8 +100,7 @@ Config.prototype.controls.link = {
                     '</button> &nbsp;&nbsp;' +
                     '<button class="jodit_link_insert_button" type="submit"></button>' +
                     '</div>' +
-                    '<form/>',
-                editor.ownerDocument
+                    '<form/>'
             ) as HTMLFormElement;
 
         if (current && Dom.closest(current, 'A', editor.editor)) {
@@ -251,13 +249,12 @@ export function link(jodit: Jodit) {
                     const embed: string = convertMediaURLToVideoEmbed(html);
 
                     if (embed !== html) {
-                        return dom(
+                        return jodit.create.inside.fromHTML(
                             embed,
-                            jodit.editorDocument
                         ) as HTMLAnchorElement;
                     }
 
-                    const a: HTMLAnchorElement = jodit.editorDocument.createElement(
+                    const a: HTMLAnchorElement = jodit.create.inside.element(
                         'a'
                     );
 

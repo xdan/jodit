@@ -33,6 +33,8 @@ interface IViewBased extends IPanel{
     toolbar: ToolbarCollection;
 
     i18n: (text: string, ...params: Array<string | number>) => string;
+
+    defaultTimeout: number
 }
 
 export interface IPanel {

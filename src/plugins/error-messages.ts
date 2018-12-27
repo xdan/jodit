@@ -6,9 +6,9 @@
 
 import { Config } from '../Config';
 import { Jodit } from '../Jodit';
-import { css, dom } from '../modules/helpers/Helpers';
 import { Dom } from '../modules';
-import { setTimeout } from '../modules/helpers/Helpers';
+import { setTimeout } from '../modules/helpers/async';
+import { css } from '../modules/helpers';
 
 declare module '../Config' {
     interface Config {
@@ -39,16 +39,13 @@ export function errorMessages(editor: Jodit) {
     if (editor.options.showMessageErrors) {
         let height: number;
 
-        const messagesBox: HTMLDivElement = dom(
-                '<div class="jodit_error_box_for_messages"></div>',
-                editor.ownerDocument
-            ) as HTMLDivElement,
+        const messagesBox: HTMLDivElement = editor.create.div('jodit_error_box_for_messages'),
             recalcOffsets = () => {
                 height = 5;
-                [].slice
-                    .call(messagesBox.childNodes)
+                Array.from(<NodeListOf<HTMLElement>>messagesBox.childNodes)
                     .forEach((elm: HTMLElement) => {
                         css(messagesBox, 'bottom', height + 'px');
+
                         height +=
                             elm.offsetWidth +
                             editor.options.showMessageErrorOffsetPx;
@@ -79,24 +76,22 @@ export function errorMessages(editor: Jodit) {
             .on(
                 'errorMessage',
                 (message: string, className: string, timeout: number) => {
-                    const newmessage: HTMLDivElement = dom(
-                        '<div class="active ' +
-                            (className || '') +
-                            '">' +
-                            message +
-                            '</div>',
-                        editor.ownerDocument
-                    ) as HTMLDivElement;
+                    const newmessage = editor.create.div(
+                        'active ' + (className || ''),
+                        message
+                    );
 
                     messagesBox.appendChild(newmessage);
 
                     recalcOffsets();
                     setTimeout(() => {
                         newmessage.classList.remove('active');
+
                         setTimeout(() => {
                             Dom.safeRemove(newmessage);
                             recalcOffsets();
                         }, 300);
+
                     }, timeout || editor.options.showMessageErrorTime);
                 }
             );

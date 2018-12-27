@@ -12,19 +12,18 @@ import FileSelectorWidget = Widget.FileSelectorWidget;
 import { Dom } from './modules/Dom';
 import {
     $$,
-    convertMediaURLToVideoEmbed,
-    dom,
-    extend,
+    convertMediaURLToVideoEmbed, defaultLanguage,
     isLicense,
     isURL,
     normalizeLicense,
     trim,
     val,
-} from './modules/helpers/Helpers';
+} from './modules/helpers/';
 import { ToolbarIcon } from './modules/toolbar/icon';
 import { IDictionary } from './types';
 import { IFileBrowserCallBackData } from './types/filebrowser';
 import { Buttons, Controls, IControlType } from './types/toolbar';
+import { extend } from './modules/helpers/extend';
 
 /**
  * Default Editor's Configuration
@@ -348,7 +347,7 @@ export class Config {
     /**
      * Show tooltip after mouse enter on the button
      */
-    public showTooltip: boolean = true;
+    public §showTooltip: boolean = true;
 
     /**
      * Delay before show tooltip
@@ -818,7 +817,7 @@ Config.prototype.controls = {
                     mywindow.document.body.innerHTML = editor.value;
                 } else {
                     mywindow.document.write(
-                        '<!doctype html><html><head><title></title></head>' +
+                        '<!doctype html><html lang="' + defaultLanguage(editor.options.language) + '"><head><title></title></head>' +
                             '<body>' +
                             editor.value +
                             '</body></html>'
@@ -835,7 +834,9 @@ Config.prototype.controls = {
     about: {
         exec: (editor: Jodit) => {
             const dialog: any = editor.getInstance('Dialog');
+
             dialog.setTitle(editor.i18n('About Jodit'));
+
             dialog.setContent(
                 '<div class="jodit_about">\
                     <div>' +
@@ -927,11 +928,7 @@ Config.prototype.controls = {
                     },
                     url: (url: string, text: string) => {
                         const image: HTMLImageElement =
-                            sourceImage ||
-                            (dom(
-                                '<img src=""/>',
-                                editor.editorDocument
-                            ) as HTMLImageElement);
+                            sourceImage || editor.create.inside.element('img');
 
                         image.setAttribute('src', url);
                         image.setAttribute('alt', text);
@@ -959,15 +956,14 @@ Config.prototype.controls = {
         ) => {
             const insert = (url: string, title: string = '') => {
                 editor.selection.insertNode(
-                    dom(
+                    editor.create.inside.fromHTML(
                         '<a href="' +
                             url +
                             '" title="' +
                             title +
                             '">' +
                             (title || url) +
-                            '</a>',
-                        editor.editorDocument
+                            '</a>'
                     )
                 );
             };
@@ -1030,24 +1026,26 @@ Config.prototype.controls = {
     } as IControlType,
     video: {
         popup: (editor: Jodit, current, control, close) => {
-            const bylink: HTMLFormElement = dom(
+            const bylink: HTMLFormElement = editor.create.fromHTML(
                     `<form class="jodit_form">
                         <input required name="code" placeholder="http://" type="url"/>
                         <button type="submit">${editor.i18n('Insert')}</button>
-                        </form>`,
-                    editor.ownerDocument
+                        </form>`
                 ) as HTMLFormElement,
-                bycode: HTMLFormElement = dom(
+
+                bycode: HTMLFormElement = editor.create.fromHTML(
                     `<form class="jodit_form">
                         <textarea required name="code" placeholder="${editor.i18n(
                             'Embed code'
                         )}"></textarea>
                         <button type="submit">${editor.i18n('Insert')}</button>
-                        </form>`,
-                    editor.ownerDocument
+                        </form>`
                 ) as HTMLFormElement,
+
                 tab: IDictionary<HTMLFormElement> = {},
+
                 selinfo = editor.selection.save(),
+
                 insertCode = (code: string) => {
                     editor.selection.restore(selinfo);
                     editor.selection.insertHTML(code);

@@ -13,7 +13,7 @@ import {
     IControlTypeStrong,
 } from '../../types/toolbar';
 import { IViewBased } from '../../types/view';
-import { debounce } from '../helpers/Helpers';
+import { debounce } from '../helpers/async';
 import { ToolbarBreak } from './break';
 import { ToolbarButton } from './button';
 import { ToolbarElement } from './element';

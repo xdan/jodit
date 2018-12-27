@@ -7,7 +7,7 @@
 import { Config } from '../Config';
 import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
-import { css } from '../modules/helpers/Helpers';
+import { css } from '../modules/helpers/';
 import { IDictionary } from '../types';
 import { IControlType } from '../types/toolbar';
 

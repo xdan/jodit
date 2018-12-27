@@ -4,7 +4,7 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { colorToHex } from './colorToHex';
+import { colorToHex } from '../color/colorToHex';
 import { trim } from '../string/trim';
 
 /**

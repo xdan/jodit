@@ -7,7 +7,7 @@
 import { Config } from '../Config';
 import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
-import { css, normalizeSize } from '../modules/helpers/Helpers';
+import { css, normalizeSize } from '../modules/helpers/';
 import { IControlType } from '../types/toolbar';
 
 Config.prototype.controls.fontsize = {
@@ -50,7 +50,7 @@ Config.prototype.controls.fontsize = {
                 ) as HTMLElement) || editor.editor;
 
             const fontSize: number = css(currentBpx, 'font-size') as number;
-            return !!(
+            return Boolean(
                 fontSize &&
                 control.args &&
                 control.args[1].toString() === fontSize.toString()
@@ -140,7 +140,7 @@ Config.prototype.controls.font = {
                 'font-family'
             ).toString();
 
-            return !!(
+            return Boolean(
                 fontFamily &&
                 control.args &&
                 normFonts(control.args[0].toString()) === normFonts(fontFamily)

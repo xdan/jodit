@@ -6,6 +6,7 @@
 
 export * from './array';
 export * from './async';
+export * from './extend';
 export * from './checker';
 export * from './color';
 export * from './html';

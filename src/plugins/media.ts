@@ -7,7 +7,8 @@
 import { Config } from '../Config';
 import * as consts from '../constants';
 import { Jodit } from '../Jodit';
-import { $$, debounce, dom } from '../modules/helpers/Helpers';
+import { debounce } from '../modules/helpers/async';
+import { $$ } from '../modules/helpers/selector';
 
 declare module '../Config' {
     interface Config {
@@ -48,7 +49,7 @@ export function media(editor: Jodit) {
         } else {
             let wrapper: HTMLElement;
 
-            wrapper = dom(
+            wrapper = editor.create.inside.fromHTML(
                 '<' +
                     mediaFakeTag +
                     ' data-jodit-temp="1" ' +
@@ -59,8 +60,7 @@ export function media(editor: Jodit) {
                     '="1">' +
                     '</' +
                     mediaFakeTag +
-                    '>',
-                editor.editorDocument
+                    '>'
             );
 
             wrapper.style.display =

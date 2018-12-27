@@ -12,11 +12,10 @@ import { FileBrowser } from '../modules/filebrowser/filebrowser';
 import {
     $$,
     css,
-    dom,
     trim,
     val,
     setTimeout,
-} from '../modules/helpers/Helpers';
+} from '../modules/helpers/';
 import { ToolbarIcon } from '../modules/toolbar/icon';
 import { Widget } from '../modules/Widget';
 import TabsWidget = Widget.TabsWidget;
@@ -126,23 +125,23 @@ export function imageProperties(editor: Jodit) {
 
         e && e.stopImmediatePropagation();
 
-        const image = this as HTMLImageElement,
+        const
+            dom = editor.create.fromHTML.bind(editor.create),
+            image = this as HTMLImageElement,
             dialog: Dialog = new Dialog(editor),
             cancel: HTMLElement = dom(
                 '<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
                     ToolbarIcon.getIcon('cancel') +
                     '<span>' +
                     editor.i18n('Cancel') +
-                    '</span></a>',
-                editor.ownerDocument
+                    '</span></a>'
             ),
             check: HTMLElement = dom(
                 '<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
                     ToolbarIcon.getIcon('check') +
                     '<span>' +
                     editor.i18n('Ok') +
-                    '</span></a>',
-                editor.ownerDocument
+                    '</span></a>'
             ),
             buttons = {
                 remove: dom(
@@ -150,8 +149,7 @@ export function imageProperties(editor: Jodit) {
                         ToolbarIcon.getIcon('bin') +
                         ' ' +
                         editor.i18n('Delete') +
-                        '</a>',
-                    editor.ownerDocument
+                        '</a>'
                 ),
             },
             prop: HTMLDivElement = dom(
@@ -181,8 +179,7 @@ export function imageProperties(editor: Jodit) {
                     '</div>' +
                     '<div class="jodit_col-lg-3-5 tabsbox"></div>' +
                     '</div>' +
-                    '</form>',
-                editor.ownerDocument
+                    '</form>'
             ) as HTMLDivElement,
             positionTab: HTMLDivElement = dom(
                 '<div ' +
@@ -265,8 +262,7 @@ export function imageProperties(editor: Jodit) {
                     '</option>' +
                     '</optgroup>' +
                     '</select>' +
-                    '</div>',
-                editor.ownerDocument
+                    '</div>'
             ) as HTMLDivElement,
             mainTab: HTMLDivElement = dom(
                 '<div style="' +
@@ -326,8 +322,7 @@ export function imageProperties(editor: Jodit) {
                     '" class="jodit_form_group">' +
                     '<input type="checkbox" class="imageLinkOpenInNewTab"/> ' +
                     editor.i18n('Open link in new tab') +
-                    '</div>',
-                editor.ownerDocument
+                    '</div>'
             ) as HTMLDivElement,
             ratio: number = image.naturalWidth / image.naturalHeight || 1,
             $w: HTMLInputElement = prop.querySelector(

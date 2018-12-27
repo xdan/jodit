@@ -4,4 +4,5 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-export * from './';
+export * from './hexToRgb';
+export * from './colorToHex';
