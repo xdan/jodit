@@ -451,7 +451,7 @@ export class search extends Plugin {
                                 endOffset: null,
                             };
                         }
-                    } else if (Dom.isBlock(elm) && sentence !== '') {
+                    } else if (Dom.isBlock(elm, this.jodit.editorWindow) && sentence !== '') {
                         sentence = next ? sentence + ' ' : ' ' + sentence;
                     }
 

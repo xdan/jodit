@@ -9,6 +9,7 @@ import { BR, PARAGRAPH } from '../constants';
 import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
 import { IControlType } from '../types/toolbar';
+import { HTMLTagNames } from '../types';
 
 Config.prototype.controls.indent = {
     tooltip: 'Increase Indent',
@@ -21,7 +22,7 @@ Config.prototype.controls.outdent = {
         if (current) {
             const currentBox: HTMLElement | false = Dom.closest(
                 current,
-                Dom.isBlock,
+                node => Dom.isBlock(node, editor.editorWindow),
                 editor.editor
             ) as HTMLElement | false;
             if (currentBox && currentBox.style && currentBox.style.marginLeft) {
@@ -58,7 +59,7 @@ export function indent(editor: Jodit) {
                 let currentBox: HTMLElement | false = current
                     ? (Dom.up(
                           current,
-                          Dom.isBlock,
+                          node => Dom.isBlock(node, editor.editorWindow),
                           editor.editor
                       ) as HTMLElement)
                     : false;
@@ -67,7 +68,7 @@ export function indent(editor: Jodit) {
                 if (!currentBox && current) {
                     currentBox = Dom.wrapInline(
                         current,
-                        enter !== BR ? enter : PARAGRAPH,
+                        enter !== BR ? <HTMLTagNames>enter : PARAGRAPH,
                         editor
                     );
                 }

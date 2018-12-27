@@ -26,7 +26,7 @@ Config.prototype.controls.align = {
             const currentBox: HTMLElement =
                 (Dom.closest(
                     current,
-                    Dom.isBlock,
+                    node => Dom.isBlock(node, editor.editorWindow),
                     editor.editor
                 ) as HTMLElement) || editor.editor;
 
@@ -64,7 +64,7 @@ Config.prototype.controls.align = {
             const currentBox: HTMLElement =
                 (Dom.closest(
                     current,
-                    Dom.isBlock,
+                    node => Dom.isBlock(node, editor.editorWindow),
                     editor.editor
                 ) as HTMLElement) || editor.editor;
             return (
@@ -119,7 +119,7 @@ Config.prototype.controls.right = {
  * @param {Jodit} editor
  */
 export function justify(editor: Jodit) {
-    const callback = (command: string): false | void => {
+    const callback = async (command: string): Promise<false | void> => {
         const justifyElm = (box: HTMLElement) => {
             if (box instanceof (editor.editorWindow as any).HTMLElement) {
                 switch (command.toLowerCase()) {
@@ -139,7 +139,8 @@ export function justify(editor: Jodit) {
             }
         };
 
-        editor.selection.focus();
+        await editor.selection.focus();
+
         editor.selection.eachSelection(
             (current: Node): false | void => {
                 if (!current) {
@@ -158,7 +159,7 @@ export function justify(editor: Jodit) {
                 let currentBox: HTMLElement | false | null = current
                     ? (Dom.up(
                           current,
-                          Dom.isBlock,
+                          node => Dom.isBlock(node, editor.editorWindow),
                           editor.editor
                       ) as HTMLElement)
                     : false;
@@ -174,8 +175,10 @@ export function justify(editor: Jodit) {
                 justifyElm(currentBox as HTMLElement);
             }
         );
+
         return false;
     };
+
     editor.registerCommand('justifyfull', callback);
     editor.registerCommand('justifyright', callback);
     editor.registerCommand('justifyleft', callback);

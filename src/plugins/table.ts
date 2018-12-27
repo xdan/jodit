@@ -222,7 +222,7 @@ Config.prototype.controls.table = {
                 if (crnt && editor.selection.isCollapsed()) {
                     const block: HTMLElement | false = Dom.closest(
                         crnt,
-                        Dom.isBlock,
+                        node => Dom.isBlock(node, editor.editorWindow),
                         editor.editor
                     ) as HTMLElement | false;
                     if (

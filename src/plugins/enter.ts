@@ -8,6 +8,7 @@ import * as consts from '../constants';
 import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
 import { $$, scrollIntoView } from '../modules/helpers/';
+import { HTMLTagNames } from '../types';
 
 /**
  * Insert default paragraph
@@ -18,14 +19,14 @@ import { $$, scrollIntoView } from '../modules/helpers/';
  * @param {CSSStyleSheet} [style]
  * @return {HTMLElement}
  */
-export const insertParagraph = (
+export const insertParagraph = async (
     editor: Jodit,
     fake: Text | false,
-    wrapperTag: string,
+    wrapperTag: HTMLTagNames,
     style?: CSSStyleDeclaration
-): HTMLElement => {
-    const p: HTMLElement = editor.editorDocument.createElement(wrapperTag),
-        helper_node: HTMLBRElement = editor.editorDocument.createElement('br');
+): Promise<HTMLElement> => {
+    const p: HTMLElement = editor.create.inside.element(wrapperTag),
+        helper_node: HTMLBRElement = editor.create.inside.element('br');
 
     p.appendChild(helper_node);
 
@@ -33,7 +34,7 @@ export const insertParagraph = (
         p.setAttribute('style', style.cssText);
     }
 
-    editor.selection.insertNode(p, false, false);
+    await editor.selection.insertNode(p, false, false);
     editor.selection.setCursorBefore(helper_node);
 
     const range: Range = editor.editorDocument.createRange();
@@ -98,7 +99,7 @@ export function enter(editor: Jodit) {
                 if (!current || current === editor.editor) {
                     editor.selection.current();
 
-                    current = editor.editorDocument.createTextNode(
+                    current = editor.create.inside.text(
                         consts.INVISIBLE_SPACE
                     );
 
@@ -117,7 +118,7 @@ export function enter(editor: Jodit) {
                 let currentBox: HTMLElement | false = current
                     ? (Dom.up(
                           current,
-                          Dom.isBlock,
+                          node => Dom.isBlock(node, editor.editorWindow),
                           editor.editor
                       ) as HTMLElement)
                     : false;
@@ -132,11 +133,14 @@ export function enter(editor: Jodit) {
                         event.shiftKey ||
                         Dom.closest(current, 'PRE|BLOCKQUOTE', editor.editor))
                 ) {
-                    const br: HTMLBRElement = editor.editorDocument.createElement(
+                    const br: HTMLBRElement = editor.create.inside.element(
                         'br'
                     );
-                    editor.selection.insertNode(br, true);
-                    scrollIntoView(br, editor.editor, editor.editorDocument);
+
+                    editor.selection.insertNode(br, true).then(() => {
+                        scrollIntoView(br, editor.editor, editor.editorDocument);
+                    });
+
                     return false;
                 }
 
@@ -147,8 +151,8 @@ export function enter(editor: Jodit) {
                     !Dom.prev(
                         current,
                         (elm: Node | null) =>
-                            Dom.isBlock(elm) ||
-                            (!!elm && Dom.isImage(elm, editor.ownerWindow)),
+                            Dom.isBlock(elm, editor.editorWindow) ||
+                            (!!elm && Dom.isImage(elm, editor.editorWindow)),
                         editor.editor
                     )
                 ) {
@@ -193,11 +197,12 @@ export function enter(editor: Jodit) {
 
                 if (currentBox) {
                     if (!Dom.canSplitBlock(currentBox, editor.editorWindow)) {
-                        const br: HTMLBRElement = editor.editorDocument.createElement(
-                            'br'
-                        );
-                        editor.selection.insertNode(br, false);
-                        editor.selection.setCursorAfter(br);
+                        const br = editor.create.inside.element('br');
+
+                        editor.selection.insertNode(br, false).then(() => {
+                            editor.selection.setCursorAfter(br);
+                        });
+
                         return false;
                     }
 
@@ -254,11 +259,11 @@ export function enter(editor: Jodit) {
                                 editor,
                                 fakeTextNode,
                                 editor.options.enter
-                            );
-
-                            if (!$$('li', ul).length) {
-                                Dom.safeRemove(ul);
-                            }
+                            ).then(() => {
+                                if (!$$('li', ul).length) {
+                                    Dom.safeRemove(ul);
+                                }
+                            });
 
                             return false;
                         }
@@ -273,9 +278,10 @@ export function enter(editor: Jodit) {
                             fake,
                             isLi ? 'li' : editor.options.enter,
                             currentBox.style
-                        );
+                        ).then(() => {
+                            currentBox && editor.selection.setCursorIn(currentBox, true);
+                        });
 
-                        editor.selection.setCursorIn(currentBox, true);
                         return false;
                     }
 

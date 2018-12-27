@@ -40,7 +40,7 @@ Config.prototype.controls.fontsize = {
                     current,
                     elm => {
                         return (
-                            Dom.isBlock(elm) ||
+                            Dom.isBlock(elm, editor.editorWindow) ||
                             (elm &&
                                 Dom.isNode(elm, editor.editorWindow) &&
                                 elm.nodeType === Node.ELEMENT_NODE)
@@ -68,7 +68,7 @@ Config.prototype.controls.fontsize = {
                     current,
                     elm => {
                         return (
-                            Dom.isBlock(elm) ||
+                            Dom.isBlock(elm, editor.editorWindow) ||
                             (elm &&
                                 Dom.isNode(elm, editor.editorWindow) &&
                                 elm.nodeType === Node.ELEMENT_NODE)
@@ -126,7 +126,7 @@ Config.prototype.controls.font = {
                     current,
                     elm => {
                         return (
-                            Dom.isBlock(elm) ||
+                            Dom.isBlock(elm, editor.editorWindow) ||
                             (elm &&
                                 Dom.isNode(elm, editor.editorWindow) &&
                                 elm.nodeType === Node.ELEMENT_NODE)
@@ -159,7 +159,7 @@ Config.prototype.controls.font = {
                     current,
                     (elm: Node | null) => {
                         return (
-                            Dom.isBlock(elm) ||
+                            Dom.isBlock(elm, editor.editorWindow) ||
                             (Dom.isNode(elm, editor.editorWindow) &&
                                 elm &&
                                 elm.nodeType === Node.ELEMENT_NODE)
@@ -185,19 +185,19 @@ Config.prototype.controls.font = {
  * @param {Jodit} editor
  */
 export function font(editor: Jodit) {
-    const callback = (
+    const callback = async (
         command: string,
         second: string,
         third: string
-    ): false | void => {
+    ): Promise<false | void> => {
         switch (command) {
             case 'fontsize':
-                editor.selection.applyCSS({
+                await editor.selection.applyCSS({
                     fontSize: normalizeSize(third),
                 });
                 break;
             case 'fontname':
-                editor.selection.applyCSS({
+                await editor.selection.applyCSS({
                     fontFamily: third,
                 });
                 break;
