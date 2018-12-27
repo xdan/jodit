@@ -330,22 +330,21 @@ export class Uploader implements IUploader {
             let file: File;
             for (let i = 0; i < fileList.length; i += 1) {
                 file = fileList[i];
-                if (file && file.type) {
+                if (file) {
                     const mime: string[] = file.type.match(
                         /\/([a-z0-9]+)/i
                     ) as string[];
-                    const extension: string = mime[1]
+                    const extension: string = mime && mime[1]
                         ? mime[1].toLowerCase()
                         : '';
                     form.append(
                         'files[' + i + ']',
                         fileList[i],
-                        fileList[i].name ||
+                        (fileList[i].name ||
                             Math.random()
                                 .toString()
-                                .replace('.', '') +
-                                '.' +
-                                extension
+                                .replace('.', '')) +
+                        (extension ? '.' + extension : '')
                     );
                 }
             }

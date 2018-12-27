@@ -19,6 +19,7 @@ import { Uploader } from '../modules';
 export interface ISourceFile {
     file: string;
     thumb: string;
+    thumbIsAbsolute?: boolean;
     changed: string;
     size: string;
     isImage: boolean;

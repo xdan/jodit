@@ -18,6 +18,7 @@ import {
     each,
     extend,
     humanSizeToBytes,
+    relativePathNormalize,
     pathNormalize,
     urlNormalize,
     setTimeout,
@@ -411,7 +412,8 @@ Config.prototype.filebrowser = {
     ): string {
         let name: string = '',
             thumb: string = '',
-            info: string;
+            info: string,
+            thumbIsAbsolute: boolean = !!item.thumbIsAbsolute;
         const timestamp: string = new Date().getTime().toString();
 
         if (item.file !== undefined) {
@@ -484,9 +486,9 @@ Config.prototype.filebrowser = {
             imageURL +
             '" ' +
             'src="' +
-            urlNormalize(source.baseurl + source.path + thumb) +
-            '?_tmst=' +
-            timestamp +
+            (thumbIsAbsolute 
+                ? thumb 
+                : (urlNormalize(source.baseurl + source.path + thumb) + '?_tmst=' + timestamp)) +
             '" ' +
             'alt="' +
             name +
@@ -967,6 +969,7 @@ export class FileBrowser extends View {
         }
     }
     private loadTree(path: string, source: string): Promise<any> {
+        path = relativePathNormalize(path);
         return this.loadPermissions(path, source).then(() => {
             const self: FileBrowser = this;
 
@@ -1265,7 +1268,7 @@ export class FileBrowser extends View {
         return this.send(
             'fileRemove',
             (resp: IFileBrowserAnswer) => {
-                if (this.options.remove.process) {
+                if (this.options.remove && this.options.remove.process) {
                     resp = this.options.remove.process.call(this, resp);
                 }
                 if (!this.options.isSuccess(resp)) {
@@ -1304,7 +1307,7 @@ export class FileBrowser extends View {
         return this.send(
             'folderRemove',
             (resp: IFileBrowserAnswer) => {
-                if (this.options.remove.process) {
+                if (this.options.remove && this.options.remove.process) {
                     resp = this.options.remove.process.call(this, resp);
                 }
                 if (!this.options.isSuccess(resp)) {

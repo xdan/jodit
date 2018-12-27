@@ -559,6 +559,30 @@ export const pathNormalize = (path: string) =>
 export const urlNormalize = (url: string) =>
     url.replace(/([^:])[\\\/]+/g, '$1/');
 
+export const relativePathNormalize = (path: string) => {
+    const sections = path.split("/");
+    const builder = sections.reduce((builder, section) => {
+        switch (section) {
+            case "": {
+                break;
+            }
+            case ".": {
+                break;
+            }
+            case "..": {
+                builder.pop();
+                break;
+            }
+            default: {
+                builder.push(section);
+                break;
+            }
+        }
+        return builder;
+    }, [] as string[]);
+    return builder.join("/") + (path.endsWith("/") ? "/" : "");
+};
+
 /**
  * Check if a string is html or not
  *
