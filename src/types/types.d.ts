@@ -65,13 +65,13 @@ export type ExecCommandCallback<T> =
           command: string,
           value?: string,
           next?: boolean
-      ) => void | boolean)
+      ) => void | boolean | Promise<void | boolean>)
     | ((
           this: T,
           command: string,
           value: string,
           next: string
-      ) => void | boolean);
+      ) => void | boolean | Promise<void | boolean>);
 
 export interface ICommandType<T> {
     exec: ExecCommandCallback<T>;

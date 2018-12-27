@@ -9,7 +9,7 @@ import * as consts from '../constants';
 import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
 import { ToolbarButton } from '../modules/toolbar/button';
-import { markerInfo } from '../types';
+import { HTMLTagNames, markerInfo } from '../types';
 import { IControlType } from '../types/toolbar';
 
 Config.prototype.controls.paragraph = {
@@ -25,7 +25,7 @@ Config.prototype.controls.paragraph = {
             const currentBox: HTMLElement =
                     (Dom.closest(
                         current,
-                        Dom.isBlock,
+                        (node) => Dom.isBlock(node, editor.editorWindow),
                         editor.editor
                     ) as HTMLElement) || editor.editor,
                 currentValue: string = currentBox.nodeName.toLowerCase();
@@ -73,7 +73,7 @@ Config.prototype.controls.paragraph = {
         if (current) {
             const currentBox: HTMLElement = Dom.closest(
                 current,
-                Dom.isBlock,
+                (node) => Dom.isBlock(node, editor.editorWindow),
                 editor.editor
             ) as HTMLElement;
 
@@ -93,7 +93,7 @@ Config.prototype.controls.paragraph = {
         if (current) {
             const currentBpx: HTMLElement = Dom.closest(
                 current,
-                Dom.isBlock,
+                node => Dom.isBlock(node, editor.editorWindow),
                 editor.editor
             ) as HTMLElement;
 
@@ -132,17 +132,17 @@ Config.prototype.controls.paragraph = {
 export function formatBlock(editor: Jodit) {
     editor.registerCommand(
         'formatblock',
-        (command: string, second: string, third: string): false | void => {
-            editor.selection.focus();
+        async (command: string, second: string, third: string): Promise<false | void> => {
+            await editor.selection.focus();
             let work: boolean = false;
 
             editor.selection.eachSelection(
-                (current: Node): false | void => {
+                async (current: Node) => {
                     const selectionInfo: markerInfo[] = editor.selection.save();
                     let currentBox: HTMLElement | false = current
                         ? (Dom.up(
                               current,
-                              Dom.isBlock,
+                              node => Dom.isBlock(node, editor.editorWindow),
                               editor.editor
                           ) as HTMLElement)
                         : false;
@@ -160,7 +160,7 @@ export function formatBlock(editor: Jodit) {
 
                     if (!currentBox) {
                         editor.selection.restore(selectionInfo);
-                        return false;
+                        return;
                     }
 
                     if (!currentBox.tagName.match(/TD|TH|TBODY|TABLE|THEAD/i)) {
@@ -181,9 +181,9 @@ export function formatBlock(editor: Jodit) {
                         }
                     } else {
                         if (!editor.selection.isCollapsed()) {
-                            editor.selection.applyCSS({}, third);
+                            await editor.selection.applyCSS({}, <HTMLTagNames>third);
                         } else {
-                            Dom.wrapInline(current, third, editor);
+                            Dom.wrapInline(current, <HTMLTagNames>third, editor);
                         }
                     }
 
@@ -197,7 +197,7 @@ export function formatBlock(editor: Jodit) {
                     third
                 );
                 currentBox.innerHTML = consts.INVISIBLE_SPACE;
-                editor.selection.insertNode(currentBox, false);
+                await editor.selection.insertNode(currentBox, false);
                 editor.selection.setCursorIn(currentBox);
             }
 

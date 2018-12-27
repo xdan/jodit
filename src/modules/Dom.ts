@@ -6,8 +6,9 @@
 
 import * as consts from '../constants';
 import { Jodit } from '../Jodit';
-import { NodeCondition } from '../types';
-import { css, each, trim } from './helpers/Helpers';
+import { HTMLTagNames, NodeCondition } from '../types';
+import { css } from './helpers/';
+import { trim } from './helpers/string';
 
 export class Dom {
     /**
@@ -15,7 +16,7 @@ export class Dom {
      *
      * @param {Node} node
      */
-    public static detach(node: Node) {
+    static detach(node: Node) {
         while (node.firstChild) {
             node.removeChild(node.firstChild);
         }
@@ -29,9 +30,9 @@ export class Dom {
      *
      * @return {HTMLElement}
      */
-    public static wrapInline = (
+    static wrapInline = (
         current: Node,
-        tag: Node | string,
+        tag: Node | HTMLTagNames,
         editor: Jodit
     ): HTMLElement => {
         let tmp: null | Node,
@@ -41,10 +42,11 @@ export class Dom {
         const selInfo = editor.selection.save();
 
         let needFindNext: boolean = false;
+
         do {
             needFindNext = false;
             tmp = first.previousSibling;
-            if (tmp && !Dom.isBlock(tmp)) {
+            if (tmp && !Dom.isBlock(tmp, editor.editorWindow)) {
                 needFindNext = true;
                 first = tmp;
             }
@@ -53,7 +55,7 @@ export class Dom {
         do {
             needFindNext = false;
             tmp = last.nextSibling;
-            if (tmp && !Dom.isBlock(tmp)) {
+            if (tmp && !Dom.isBlock(tmp, editor.editorWindow)) {
                 needFindNext = true;
                 last = tmp;
             }
@@ -92,7 +94,7 @@ export class Dom {
      *
      * @return {HTMLElement}
      */
-    public static wrap = (
+    static wrap = (
         current: Node,
         tag: Node | string,
         editor: Jodit
@@ -121,7 +123,7 @@ export class Dom {
      *
      * @param node
      */
-    public static unwrap(node: Node) {
+    static unwrap(node: Node) {
         const parent: Node | null = node.parentNode,
             el = node;
 
@@ -149,7 +151,7 @@ export class Dom {
      * });
      * ```
      */
-    public static each(
+    static each(
         elm: Node | HTMLElement,
         callback: (this: Node, node: Node) => void | false
     ): boolean {
@@ -159,7 +161,7 @@ export class Dom {
             while (node) {
                 if (
                     callback.call(node, node) === false ||
-                    Dom.each(node, callback) === false
+                    !Dom.each(node, callback)
                 ) {
                     return false;
                 }
@@ -168,43 +170,6 @@ export class Dom {
         }
 
         return true;
-    }
-
-    /**
-     * Create new element
-     *
-     * @method create
-     * @param  {string} nodeName Can be `div`, `span` or `text`
-     * @param  {string} content Content for new element
-     * @param  {Document} doc
-     * @return {HTMLElement|Text}
-     * @example
-     * ```javascript
-     * var textnode = parent.node.create('text', 'Hello world');
-     * var div = parent.node.create('div', '<img src="test.jpg">');
-     * ```
-     * @deprecated
-     */
-    public static create(
-        nodeName: string,
-        content: string | undefined,
-        doc: Document
-    ): HTMLElement | Text {
-        let newnode: HTMLElement | Text;
-        nodeName = nodeName.toLowerCase();
-
-        if (nodeName === 'text') {
-            newnode = doc.createTextNode(
-                typeof content === 'string' ? content : ''
-            );
-        } else {
-            newnode = doc.createElement(nodeName);
-            if (content !== undefined) {
-                newnode.innerHTML = content;
-            }
-        }
-
-        return newnode;
     }
 
     /**
@@ -222,7 +187,7 @@ export class Dom {
      * // Replace the first <span> element to the < p >
      * ```
      */
-    public static replace(
+    static replace(
         elm: HTMLElement,
         newTagName: string | HTMLElement,
         withAttributes = false,
@@ -241,7 +206,7 @@ export class Dom {
         }
 
         if (withAttributes) {
-            each<Attr>(Array.from(elm.attributes), (i, attr) => {
+            Array.from(elm.attributes).forEach( (attr) => {
                 tag.setAttribute(attr.name, attr.value);
             });
         }
@@ -253,6 +218,80 @@ export class Dom {
         return tag;
     }
 
+
+    /**
+     * Checks whether the Node text and blank (in this case it may contain invisible auxiliary characters ,
+     * it is also empty )
+     *
+     * @param  {Node} node The element of wood to be checked
+     * @return {Boolean} true element is empty
+     */
+    static isEmptyTextNode(node: Node): boolean {
+        return (
+            node &&
+            node.nodeType === Node.TEXT_NODE &&
+            (!node.nodeValue ||
+                node.nodeValue.replace(consts.INVISIBLE_SPACE_REG_EXP, '')
+                    .length === 0)
+        );
+    }
+
+    /**
+     * Check if element is not empty
+     *
+     * @param {Node} node
+     * @param {RegExp} condNoEmptyElement
+     * @return {boolean}
+     */
+    static isEmpty(
+        node: Node,
+        condNoEmptyElement: RegExp = /^(img|svg|canvas|input|textarea|form)$/
+    ): boolean {
+        if (!node) {
+            return true;
+        }
+
+        if (node.nodeType === Node.TEXT_NODE) {
+            return node.nodeValue === null || trim(node.nodeValue).length === 0;
+        }
+
+        return (
+            !node.nodeName.toLowerCase().match(condNoEmptyElement) &&
+            Dom.each(
+                node as HTMLElement,
+                (elm: Node | null): false | void => {
+                    if (
+                        (elm &&
+                            elm.nodeType === Node.TEXT_NODE &&
+                            (elm.nodeValue !== null &&
+                                trim(elm.nodeValue).length !== 0)) ||
+                        (elm &&
+                            elm.nodeType === Node.ELEMENT_NODE &&
+                            condNoEmptyElement.test(elm.nodeName.toLowerCase())
+                    )) {
+                        return false;
+                    }
+                }
+            )
+        );
+    }
+
+    /**
+     * Returns true if it is a DOM node
+     */
+    static isNode(object: unknown, win?: Window): object is Node {
+        if (
+            typeof win === 'object' &&
+            win &&
+            typeof (win as any).Node === 'function'
+        ) {
+            return object instanceof (win as any).Node; // for Iframe Node !== iframe.contentWindow.Node
+        }
+
+        return false;
+    }
+
+
     /**
      *  Check if element is table cell
      *
@@ -260,7 +299,7 @@ export class Dom {
      * @param {Window} win
      * @return {boolean}
      */
-    public static isCell(elm: Node, win: Window): boolean {
+    static isCell(elm: unknown, win: Window): elm is HTMLTableCellElement {
         return Dom.isNode(elm, win) && /^(td|th)$/i.test(elm.nodeName);
     }
 
@@ -271,7 +310,7 @@ export class Dom {
      * @param {Window} win
      * @return {boolean}
      */
-    public static isImage(elm: Node, win: Window): boolean {
+    static isImage(elm: unknown, win: Window): elm is HTMLImageElement {
         return (
             Dom.isNode(elm, win) &&
             /^(img|svg|picture|canvas)$/i.test(elm.nodeName)
@@ -282,13 +321,15 @@ export class Dom {
      * Check the `node` is a block element
      *
      * @param node
+     * @param win
+     *
      * @return {boolean}
      */
-    public static isBlock(node: Node | null): boolean {
+    static isBlock(node: unknown, win: Window): boolean {
         return (
-            !!node &&
-            typeof node.nodeName === 'string' &&
-            consts.IS_BLOCK.test(node.nodeName)
+            node && typeof node === 'object' &&
+            Dom.isNode(node, win) &&
+            consts.IS_BLOCK.test((<Node>node).nodeName)
         );
     }
 
@@ -297,10 +338,10 @@ export class Dom {
      *
      * @param node
      */
-    public static isInlineBlock(node: Node | null): boolean {
+    static isInlineBlock(node: unknown): boolean {
         return (
             !!node &&
-            node.nodeType === Node.ELEMENT_NODE &&
+            (<Node>node).nodeType === Node.ELEMENT_NODE &&
             ['inline', 'inline-block'].indexOf(
                 css(node as HTMLElement, 'display').toString()
             ) !== -1
@@ -311,11 +352,11 @@ export class Dom {
      * It's block and it can be split
      *
      */
-    public static canSplitBlock(node: any, win: Window): boolean {
+    static canSplitBlock(node: any, win: Window): boolean {
         return (
             node &&
             node instanceof (win as any).HTMLElement &&
-            this.isBlock(node) &&
+            this.isBlock(node, win) &&
             !/^(TD|TH|CAPTION|FORM)$/.test(node.nodeName) &&
             node.style !== void 0 &&
             !/^(fixed|absolute)/i.test(node.style.position)
@@ -332,7 +373,7 @@ export class Dom {
      *
      * @return {boolean|Node|HTMLElement|HTMLTableCellElement} false if not found
      */
-    public static prev(
+    static prev(
         node: Node,
         condition: NodeCondition,
         root: HTMLElement,
@@ -357,7 +398,7 @@ export class Dom {
      * @param {boolean} [withChild=true]
      * @return {boolean|Node|HTMLElement|HTMLTableCellElement}
      */
-    public static next(
+    static next(
         node: Node,
         condition: NodeCondition,
         root: Node | HTMLElement,
@@ -384,7 +425,7 @@ export class Dom {
      * @param {string|boolean} [child=firstChild] firstChild or lastChild
      * @return {Node|Boolean}
      */
-    public static find(
+    static find(
         node: Node,
         condition: NodeCondition,
         root: HTMLElement | Node,
@@ -436,7 +477,7 @@ export class Dom {
      * @param toLeft
      * @param root
      */
-    public static findInline = (
+    static findInline = (
         node: Node | null,
         toLeft: boolean,
         root: Node
@@ -487,7 +528,7 @@ export class Dom {
      * @param {string|boolean} [child=firstChild] firstChild or lastChild
      * @return {Node|Boolean}
      */
-    public static findWithCurrent(
+    static findWithCurrent(
         node: Node,
         condition: NodeCondition,
         root: HTMLElement | Node,
@@ -527,84 +568,6 @@ export class Dom {
     }
 
     /**
-     * Checks whether the Node text and blank (in this case it may contain invisible auxiliary characters ,
-     * it is also empty )
-     *
-     * @param  {Node} node The element of wood to be checked
-     * @return {Boolean} true element is empty
-     */
-    public static isEmptyTextNode(node: Node): boolean {
-        return (
-            node &&
-            node.nodeType === Node.TEXT_NODE &&
-            (!node.nodeValue ||
-                node.nodeValue.replace(consts.INVISIBLE_SPACE_REG_EXP, '')
-                    .length === 0)
-        );
-    }
-
-    /**
-     * Check if element is not empty
-     *
-     * @param {Node} node
-     * @param {RegExp} condNoEmptyElement
-     * @return {boolean}
-     */
-    public static isEmpty(
-        node: Node,
-        condNoEmptyElement: RegExp = /^(img|svg|canvas|input|textarea|form)$/
-    ): boolean {
-        if (!node) {
-            return true;
-        }
-
-        if (node.nodeType === Node.TEXT_NODE) {
-            return node.nodeValue === null || trim(node.nodeValue).length === 0;
-        }
-
-        return (
-            !node.nodeName.toLowerCase().match(condNoEmptyElement) &&
-            Dom.each(
-                node as HTMLElement,
-                (elm: Node | null): false | void => {
-                    if (
-                        (elm &&
-                            elm.nodeType === Node.TEXT_NODE &&
-                            (elm.nodeValue !== null &&
-                                trim(elm.nodeValue).length !== 0)) ||
-                        (elm &&
-                            elm.nodeType === Node.ELEMENT_NODE &&
-                            elm.nodeName
-                                .toLowerCase()
-                                .match(condNoEmptyElement))
-                    ) {
-                        return false;
-                    }
-                }
-            )
-        );
-    }
-
-    /**
-     * Returns true if it is a DOM node
-     */
-    public static isNode(object: any, win: Window): boolean {
-        if (
-            typeof (win as any) === 'object' &&
-            win &&
-            typeof (win as any).Node === 'function'
-        ) {
-            return object instanceof (win as any).Node;
-        }
-
-        return (
-            typeof object === 'object' &&
-            typeof object.nodeType === 'number' &&
-            typeof object.nodeName === 'string'
-        );
-    }
-
-    /**
      * It goes through all the elements in ascending order, and checks to see if they meet the predetermined condition
      *
      * @param {callback} node
@@ -612,7 +575,7 @@ export class Dom {
      * @param {Node} root Root element
      * @return {boolean|Node|HTMLElement|HTMLTableCellElement|HTMLTableElement} Return false if condition not be true
      */
-    public static up(
+    static up(
         node: Node,
         condition: NodeCondition,
         root: Node
@@ -644,7 +607,7 @@ export class Dom {
      * @param {HTMLElement} root
      * @return {Boolean|Node}
      */
-    public static closest(
+    static closest(
         node: Node,
         tags: string | NodeCondition | RegExp,
         root: HTMLElement
@@ -669,7 +632,7 @@ export class Dom {
      * @param elm
      * @param newElement
      */
-    public static after(
+    static after(
         elm: HTMLElement,
         newElement: HTMLElement | DocumentFragment
     ) {
@@ -693,7 +656,7 @@ export class Dom {
      * @param {Node} to
      * @param {boolean} inStart
      */
-    public static moveContent(from: Node, to: Node, inStart: boolean = false) {
+    static moveContent(from: Node, to: Node, inStart: boolean = false) {
         const fragment: DocumentFragment = (
             from.ownerDocument || document
         ).createDocumentFragment();
@@ -721,7 +684,7 @@ export class Dom {
      * @param condition
      * @param prev
      */
-    public static all(
+    static all(
         node: Node,
         condition: NodeCondition,
         prev: boolean = false
@@ -750,7 +713,7 @@ export class Dom {
      * @param child
      * @return {boolean}
      */
-    public static contains = (root: Node, child: Node): boolean => {
+    static contains = (root: Node, child: Node): boolean => {
         while (child.parentNode) {
             if (child.parentNode === root) {
                 return true;
@@ -769,7 +732,7 @@ export class Dom {
      * @param {boolean} onlyContains
      * @return {boolean}
      */
-    public static isOrContains = (
+    static isOrContains = (
         root: Node,
         child: Node,
         onlyContains: boolean = false
@@ -786,7 +749,7 @@ export class Dom {
      *
      * @param node
      */
-    public static safeRemove(node: Node | false | null) {
+    static safeRemove(node: Node | false | null) {
         node && node.parentNode && node.parentNode.removeChild(node);
     }
 }
