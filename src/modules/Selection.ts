@@ -702,7 +702,7 @@ export class Select {
                     if (current.firstChild) {
                         current = current.firstChild;
                     } else {
-                        const currentB: Node = this.doc.createTextNode(
+                        const currentB = this.jodit.create.inside.text(
                             INVISIBLE_SPACE
                         );
                         current.appendChild(currentB);
@@ -1114,7 +1114,7 @@ export class Select {
                 }
 
                 if (
-                    !Dom.isBlock(elm) &&
+                    !Dom.isBlock(elm, this.win) &&
                     (!elm.getAttribute('style') || elm.nodeName !== defaultTag)
                 ) {
                     // toggle `<strong>test</strong>` toWYSIWYG `test`, and
@@ -1171,7 +1171,7 @@ export class Select {
                         ) &&
                         isSuitElement(font.parentNode as HTMLElement) &&
                         font.parentNode !== this.area &&
-                        (!Dom.isBlock(font.parentNode) ||
+                        (!Dom.isBlock(font.parentNode, this.win) ||
                             consts.IS_BLOCK.test(nodeName))
                     ) {
                         toggleStyles(font.parentNode as HTMLElement);
