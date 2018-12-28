@@ -8,7 +8,7 @@ import { Config } from '../Config';
 import { Jodit } from '../Jodit';
 import { Alert, Confirm, Dialog } from '../modules/dialog/';
 import { Dom } from '../modules/Dom';
-import { FileBrowser } from '../modules/filebrowser/filebrowser';
+import { Filebrowser } from '../modules/filebrowser/filebrowser';
 import {
     $$,
     css,
@@ -20,7 +20,7 @@ import { ToolbarIcon } from '../modules/toolbar/icon';
 import { Widget } from '../modules/Widget';
 import TabsWidget = Widget.TabsWidget;
 import FileSelectorWidget = Widget.FileSelectorWidget;
-import { ToolbarPopup } from '../modules/toolbar/popup';
+import { Popup } from '../modules/popup/popup';
 import {
     IDictionary,
     IFileBrowserCallBackData,
@@ -563,12 +563,12 @@ export function imageProperties(editor: Jodit) {
 
                     (editor.getInstance(
                         'FileBrowser'
-                    ) as FileBrowser).getPathByUrl(
+                    ) as Filebrowser).getPathByUrl(
                         a.href.toString(),
                         (path: string, name: string, source: string) => {
                             (editor.getInstance(
                                 'FileBrowser'
-                            ) as FileBrowser).openImageEditor(
+                            ) as Filebrowser).openImageEditor(
                                 a.href,
                                 name,
                                 path,
@@ -604,7 +604,7 @@ export function imageProperties(editor: Jodit) {
                 imagebtn.addEventListener('mousedown', (event: MouseEvent) => {
                     imagebtn.classList.toggle('active');
 
-                    const popup: ToolbarPopup = new ToolbarPopup(
+                    const popup = new Popup(
                         editor,
                         imagebtn
                     );

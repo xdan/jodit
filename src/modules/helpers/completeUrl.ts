@@ -4,7 +4,7 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-export const formatUrl = (url: string): string => {
+export const completeUrl = (url: string): string => {
     if (window.location.protocol === 'file:' && /^\/\//.test(url)) {
         url = 'https:' + url;
     }

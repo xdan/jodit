@@ -124,6 +124,8 @@ export interface IPlugin {
  */
 
 export interface ImageEditorOptions {
+    min_width: number;
+    min_height: number;
     closeAfterSave: boolean;
     width: string | number;
     height: string | number;

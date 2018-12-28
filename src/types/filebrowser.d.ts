@@ -8,6 +8,7 @@ import { Buttons } from './toolbar';
 import { IDictionary, IPermissions } from './types';
 import { IUploaderOptions } from './uploader';
 import { Uploader } from '../modules';
+import { IViewOptions } from './view';
 
 /**
  * The module creates a web browser dialog box. In a Web browser ,you can select an image, remove, drag it. Upload new
@@ -69,7 +70,7 @@ export interface IFileBrowserAjaxOptions {
     process?: (resp: IFileBrowserAnswer) => IFileBrowserAnswer;
 }
 
-export interface IFileBrowserOptions {
+export interface IFileBrowserOptions extends IViewOptions{
     removeButtons: string[];
     buttons: Buttons;
     zIndex?: number;

@@ -15,7 +15,7 @@ import {
 } from '../types/';
 
 import { Dom } from './Dom';
-import { FileBrowser } from './filebrowser/filebrowser';
+import { Filebrowser } from './filebrowser/filebrowser';
 import {
     $$,
     each,
@@ -385,7 +385,7 @@ export namespace Widget {
                 tabs[icon + editor.i18n('Browse')] = () => {
                     close && close();
                     if (callbacks.filebrowser) {
-                        (editor.getInstance('FileBrowser') as FileBrowser).open(
+                        (editor.getInstance('FileBrowser') as Filebrowser).open(
                             callbacks.filebrowser,
                             isImage
                         );

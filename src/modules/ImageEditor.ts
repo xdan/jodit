@@ -10,7 +10,7 @@ import { ActionBox, ImageEditorOptions } from '../types';
 import { IViewBased } from '../types/view';
 import { Component } from './Component';
 import { Alert, Dialog, Promt } from './dialog/';
-import { $$, css, debounce, dom, throttle, trim } from './helpers/Helpers';
+import { $$, css, debounce, throttle, trim } from './helpers/';
 import { ToolbarIcon } from './toolbar/icon';
 import { Dom } from './Dom';
 
@@ -20,6 +20,8 @@ declare module '../Config' {
     }
 }
 Config.prototype.imageeditor = {
+    min_width: 20,
+    min_height: 20,
     /**
      * @property{boolean} imageeditor.closeAfterSave=false Close editor after save image
      */
@@ -242,7 +244,7 @@ export class ImageEditor extends Component {
                     self.editor.querySelector('.jodit_bottomright'),
                     self.cropHandler,
                 ] as HTMLElement[],
-                'mousedown',
+                'mousedown.jodit_image_editor',
                 (e: MouseEvent) => {
                     self.target =
                         (e.target as HTMLElement) ||
@@ -426,7 +428,7 @@ export class ImageEditor extends Component {
         self.jodit.events
             .on(
                 this.editor,
-                'click',
+                'click.jodit_image_editor',
                 function(this: HTMLElement) {
                     $$(
                         '.jodit_image_editor_slider,.jodit_image_editor_area',
@@ -452,16 +454,16 @@ export class ImageEditor extends Component {
             )
             .on(
                 self.widthInput,
-                'change mousedown keydown',
+                'change.jodit_image_editor mousedown.jodit_image_editor keydown.jodit_image_editor',
                 debounce(() => {
                     const value: number = parseInt(self.widthInput.value, 10);
                     let another: number;
-                    if (value > self.jodit.options.resizer.min_width) {
+                    if (value > self.options.min_width) {
                         css(self.image, 'width', value + 'px');
                         if (self.resizeUseRatio) {
                             another = Math.round(value / self.ratio);
                             if (
-                                another > self.jodit.options.resizer.min_height
+                                another > self.options.min_height
                             ) {
                                 css(self.image, 'height', another + 'px');
                                 self.heightInput.value = another.toString();
@@ -473,16 +475,20 @@ export class ImageEditor extends Component {
             )
             .on(
                 self.heightInput,
-                'change mousedown keydown',
+                'change.jodit_image_editor mousedown.jodit_image_editor keydown.jodit_image_editor',
                 debounce(() => {
+                    if (this.isDestructed) {
+                        return;
+                    }
+
                     const value: number = parseInt(self.heightInput.value, 10);
                     let another: number;
-                    if (value > self.jodit.options.resizer.min_height) {
+                    if (value > self.options.min_height) {
                         css(self.image, 'height', value + 'px');
                         if (self.resizeUseRatio) {
                             another = Math.round(value * self.ratio);
                             if (
-                                another > self.jodit.options.resizer.min_width
+                                another > self.options.min_width
                             ) {
                                 css(self.image, 'width', another + 'px');
                                 self.widthInput.value = another.toString();
@@ -634,6 +640,7 @@ export class ImageEditor extends Component {
             });
         });
     };
+
     public options: ImageEditorOptions;
 
     public onSave: (
@@ -698,11 +705,12 @@ export class ImageEditor extends Component {
         return new Promise(resolve => {
             const timestamp = new Date().getTime();
 
-            this.image = this.jodit.ownerDocument.createElement('img');
+            this.image = this.jodit.create.element('img');
 
             $$('img,.jodit_icon-loader', this.resize_box).forEach(
                 Dom.safeRemove
             );
+
             $$('img,.jodit_icon-loader', this.crop_box).forEach(Dom.safeRemove);
 
             css(this.cropHandler, 'background', 'transparent');
@@ -710,16 +718,10 @@ export class ImageEditor extends Component {
             this.onSave = save;
 
             this.resize_box.appendChild(
-                dom(
-                    '<i class="jodit_icon-loader"></i>',
-                    this.jodit.ownerDocument
-                )
+                this.jodit.create.element('i', {'class': 'jodit_icon-loader'})
             );
             this.crop_box.appendChild(
-                dom(
-                    '<i class="jodit_icon-loader"></i>',
-                    this.jodit.ownerDocument
-                )
+                this.jodit.create.element('i', {'class': 'jodit_icon-loader'})
             );
 
             if (/\?/.test(url)) {
@@ -731,7 +733,12 @@ export class ImageEditor extends Component {
             this.image.setAttribute('src', url);
 
             this.dialog.open();
+
             const onload = () => {
+                if (this.isDestructed) {
+                    return;
+                }
+
                 this.image.removeEventListener('load', onload);
                 this.naturalWidth = this.image.naturalWidth;
                 this.naturalHeight = this.image.naturalHeight;
@@ -761,7 +768,9 @@ export class ImageEditor extends Component {
 
                 resolve(this.dialog);
             };
+
             this.image.addEventListener('load', onload);
+
             if (this.image.complete) {
                 onload();
             }
@@ -775,36 +784,35 @@ export class ImageEditor extends Component {
             editor && (editor as Jodit).options
                 ? (editor as Jodit).options.imageeditor
                 : Jodit.defaultOptions.imageeditor;
+
         this.resizeUseRatio = this.options.resizeUseRatio;
         this.cropUseRatio = this.options.cropUseRatio;
         this.buttons = [
-            dom(
+            this.jodit.create.fromHTML(
                 '<button data-action="reset" type="button" class="jodit_btn">' +
                     ToolbarIcon.getIcon('update') +
                     ' ' +
                     editor.i18n('Reset') +
-                    '</button>',
-                editor.ownerDocument
+                    '</button>'
             ),
-            dom(
+            this.jodit.create.fromHTML(
                 '<button data-action="save" type="button" class="jodit_btn jodit_btn_success">' +
                     ToolbarIcon.getIcon('save') +
                     ' ' +
                     editor.i18n('Save') +
-                    '</button>',
-                editor.ownerDocument
+                    '</button>'
             ),
-            dom(
+            this.jodit.create.fromHTML(
                 '<button data-action="saveas" type="button" class="jodit_btn jodit_btn_success">' +
                     ToolbarIcon.getIcon('save') +
                     ' ' +
                     editor.i18n('Save as ...') +
-                    '</button>',
-                editor.ownerDocument
+                    '</button>'
             ),
         ];
         this.activeTab = this.options.resize ? 'resize' : 'crop';
-        this.editor = dom(
+
+        this.editor = this.jodit.create.fromHTML(
             '<form class="jodit_image_editor jodit_properties">' +
                 '<div class="jodit_grid">' +
                 '<div class="jodit_col-lg-3-4">' +
@@ -908,9 +916,9 @@ export class ImageEditor extends Component {
                     : '') +
                 '</div>' +
                 '</div>' +
-                '</form>',
-            editor.ownerDocument
+                '</form>'
         );
+
         this.widthInput = this.editor.querySelector(
             '.jodit_image_editor_width'
         ) as HTMLInputElement;
@@ -942,5 +950,16 @@ export class ImageEditor extends Component {
         this.dialog.setTitle(this.buttons);
 
         this.setHandlers();
+    }
+    destruct(): any {
+        if (this.dialog) {
+            this.dialog.destruct();
+        }
+
+        Dom.safeRemove(this.editor);
+
+        if (this.jodit.events) {
+            this.jodit.events.off('.jodit_image_editor');
+        }
     }
 }

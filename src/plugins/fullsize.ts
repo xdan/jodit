@@ -11,7 +11,7 @@ import { css } from '../modules/helpers/';
 import { ToolbarButton } from '../modules/toolbar/button';
 import { ToolbarIcon } from '../modules/toolbar/icon';
 import { IControlType } from '../types/toolbar';
-import { IViewBased } from '../types/view';
+import { ViewWithToolbar } from '../modules/view/viewWithToolbar';
 
 /**
  * Fullsize plugin
@@ -70,7 +70,7 @@ Config.prototype.controls.fullsize = {
  *
  * @param {Jodit} editor
  */
-export function fullsize(editor: IViewBased) {
+export function fullsize(editor: ViewWithToolbar) {
     let shown: boolean = false,
         oldHeight: number = 0,
         oldWidth: number = 0,

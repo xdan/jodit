@@ -8,16 +8,16 @@ import { Jodit } from '../../Jodit';
 import { IBound } from '../../types/types';
 import { IViewBased } from '../../types/view';
 import { Dom } from '../Dom';
-import { css, dom, offset, throttle } from '../helpers/Helpers';
-import { ToolbarElement } from './element';
+import { css, offset, throttle } from '../helpers/';
+import { Component } from '../Component';
 
-export class ToolbarPopup extends ToolbarElement {
+export class Popup extends Component {
     private calcPosition = throttle(() => {
-        if (!this.isOpened) {
+        if (!this.isOpened || this.isDestructed) {
             return;
         }
 
-        const popup: HTMLElement = this.getContainer();
+        const popup: HTMLElement = this.container;
         const offsetContainer: IBound = offset(
             this.jodit.container as HTMLDivElement,
             this.jodit,
@@ -89,39 +89,29 @@ export class ToolbarPopup extends ToolbarElement {
 
         this.container.innerHTML = '<span class="jodit_popup_triangle"></span>';
 
-        this.container.appendChild(dom(content, this.jodit.ownerDocument));
+        this.container.appendChild(this.jodit.create.fromHTML(content));
 
         this.container.style.display = 'block';
         this.container.style.marginLeft = null;
     }
 
-    protected getContainer = () => this.container;
-
     protected doClose() {
         // do nothing
     }
 
-    public isOpened: boolean = false;
-    public destruct() {
-        this.jodit.events.off(
-            [this.jodit.ownerWindow, this.jodit.events],
-            'resize',
-            this.calcPosition
-        );
-        super.destruct();
-    }
+    isOpened: boolean = false;
+
 
     /**
      * @param {HTMLElement} content
      * @param {boolean} [rightAlign=false] Open popup on right side
      * @param {boolean} [noStandartActions=false] No call standarts action
      */
-    public open(
+    open(
         content: any,
         rightAlign?: boolean,
         noStandartActions: boolean = false
     ) {
-        // this.jodit.events.fire('beforeOpenPopup closeAllPopups', this, content);
         Jodit.fireEach('beforeOpenPopup closeAllPopups', this, content); // close popups in another editors too
 
         noStandartActions || this.jodit.events.on('closeAllPopups', this.close);
@@ -135,9 +125,9 @@ export class ToolbarPopup extends ToolbarElement {
             this.container.classList.toggle('jodit_right', rightAlign);
         }
 
-        if (!noStandartActions && this.parentToolbar) {
+        if (!noStandartActions && this.container.parentNode) {
             this.jodit.events.fire(
-                this.parentToolbar,
+                this.container.parentNode,
                 'afterOpenPopup',
                 this.container
             );
@@ -148,8 +138,8 @@ export class ToolbarPopup extends ToolbarElement {
         this.calcPosition();
     }
 
-    public close = (current?: HTMLElement | ToolbarPopup) => {
-        if (!this.isOpened) {
+    close = (current?: HTMLElement | Popup) => {
+        if (!this.isOpened && !this.isDestructed) {
             return;
         }
 
@@ -157,7 +147,7 @@ export class ToolbarPopup extends ToolbarElement {
             !current ||
             !Dom.isOrContains(
                 this.container,
-                current instanceof ToolbarPopup ? current.target : current
+                current instanceof Popup ? current.target : current
             )
         ) {
             this.isOpened = false;
@@ -167,19 +157,22 @@ export class ToolbarPopup extends ToolbarElement {
 
             Dom.safeRemove(this.container);
 
-            if (this.jodit.selection) {
-                this.jodit.selection.removeMarkers();
-            }
+            this.jodit.events.fire('removeMarkers');
         }
     };
+
+    public container: HTMLElement;
+
     constructor(
         jodit: IViewBased,
         readonly target: HTMLElement,
         readonly current?: HTMLElement,
         readonly className: string = 'jodit_toolbar_popup'
     ) {
-        super(jodit, 'div', className);
-        this.container.setAttribute('data-editor_id', jodit.id);
+        super(jodit);
+        this.container = this.jodit.create.div(className, {
+            'data-editor_id': jodit.id
+        });
 
         this.jodit.events
             .on(
@@ -194,5 +187,13 @@ export class ToolbarPopup extends ToolbarElement {
                 'resize',
                 this.calcPosition
             );
+    }
+    public destruct() {
+        this.jodit.events.off(
+            [this.jodit.ownerWindow, this.jodit.events],
+            'resize',
+            this.calcPosition
+        );
+        Dom.safeRemove(this.container);
     }
 }

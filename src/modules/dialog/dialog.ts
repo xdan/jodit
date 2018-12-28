@@ -11,7 +11,7 @@ import { Jodit } from '../../Jodit';
 import { IDictionary } from '../../types';
 import { IControlType } from '../../types/toolbar';
 import { IViewBased } from '../../types/view';
-import { EventsNative } from '../events/EventsNative';
+import { EventsNative } from '../events/eventsNative';
 import { $$, asArray, css } from '../helpers/';
 import { View } from '../view/view';
 import { ToolbarButton } from '..';
@@ -694,8 +694,6 @@ export class Dialog extends View {
         self.destinition.appendChild(self.container);
 
         self.container.addEventListener('close_dialog', self.close as any);
-
-        self.toolbar.build(self.options.buttons, self.dialogbox_toolbar);
 
         self.events
             .on(this.window, 'mousemove', self.onMouseMove.bind(self))

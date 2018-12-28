@@ -5,25 +5,29 @@
  */
 
 import { IControlTypeStrong } from '../../types/toolbar';
-import { IViewBased } from '../../types/view';
 import { Component } from '../Component';
 import { ToolbarCollection } from './collection';
 import { ToolbarIcon } from './icon';
 import { Dom } from '../Dom';
+import { IViewBased } from '../../types';
 
 type TagNames = keyof HTMLElementTagNameMap;
 
 export abstract class ToolbarElement extends Component {
-    public container: HTMLElement;
-
-    public parentToolbar: ToolbarCollection | null = null;
+    container: HTMLElement;
+    parentToolbar?: ToolbarCollection;
 
     protected constructor(
-        jodit: IViewBased,
+        parentToolbarOrView: ToolbarCollection | IViewBased,
         containerTag: TagNames = 'li',
         containerClass: string = 'jodit_toolbar_btn'
     ) {
-        super(jodit);
+        if (parentToolbarOrView instanceof ToolbarCollection) {
+            super(parentToolbarOrView.jodit);
+            this.parentToolbar = parentToolbarOrView;
+        } else {
+            super(parentToolbarOrView);
+        }
 
         this.container = this.jodit.create.element(containerTag);
         this.container.classList.add(containerClass);
@@ -33,7 +37,7 @@ export abstract class ToolbarElement extends Component {
         Dom.safeRemove(this.container);
     }
 
-    public createIcon(
+    createIcon(
         clearName: string,
         control?: IControlTypeStrong
     ): HTMLElement {

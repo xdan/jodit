@@ -4,6 +4,8 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
+import { completeUrl } from './completeUrl';
+
 export const appendScript = (
     url: string,
     callback: (this: HTMLElement, e: Event) => any,
@@ -18,7 +20,7 @@ export const appendScript = (
         script.addEventListener('load', callback, false);
     }
 
-    script.src = formatUrl(url);
+    script.src = completeUrl(url);
 
     doc.body.appendChild(script);
 };

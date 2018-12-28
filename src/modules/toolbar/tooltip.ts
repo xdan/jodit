@@ -4,26 +4,28 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { asArray } from '../helpers/Helpers';
+import { asArray } from '../helpers/array';
 import { ToolbarButton } from './button';
 import { Dom } from '../Dom';
-import { setTimeout } from '../helpers/Helpers';
+import { setTimeout } from '../helpers/async';
+import { ToolbarElement } from './element';
 
 /**
  * Class create tooltip for buttons in toolbar
  */
-export class Tooltip {
+export class ToolbarTooltip extends ToolbarElement{
     private timeout: number = 0;
 
     private show = () => {
         const showElement = () => {
                 this.button.container.appendChild(this.container);
+
                 const diff: number =
                     this.container.offsetWidth -
                     this.button.container.offsetWidth;
                 this.container.style.marginLeft = -diff / 2 + 'px';
             },
-            delay: number = this.button.jodit.options.showTooltipDelay;
+            delay: number = this.button.jodit.options.showTooltipDelay || 1000;
 
         this.button.jodit.events.fire('hideTooltip');
 
@@ -35,14 +37,11 @@ export class Tooltip {
         Dom.safeRemove(this.container);
     };
 
-    public container: HTMLElement;
-
     constructor(readonly button: ToolbarButton) {
+        super(button.parentToolbar || button.jodit, 'div', 'jodit_tooltip');
+
         if (button.control.tooltip) {
-            this.container = button.jodit.ownerDocument.createElement('div');
-            this.container.classList.add('jodit_tooltip');
-            this.container.innerHTML =
-                button.jodit.i18n(button.control.tooltip) +
+            this.container.innerHTML = button.jodit.i18n(button.control.tooltip) +
                 (button.control.hotkeys
                     ? '<br>' + asArray(button.control.hotkeys).join(' ')
                     : '');
@@ -55,5 +54,14 @@ export class Tooltip {
                     this.hide
                 );
         }
+    }
+
+    destruct(): any {
+        this.hide();
+        if (this.jodit.events) {
+            this.jodit.events
+                .off( 'change updateToolbar scroll hidePopup closeAllPopups hideTooltip', this.hide);
+        }
+        return super.destruct();
     }
 }

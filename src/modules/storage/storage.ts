@@ -5,7 +5,7 @@
  */
 
 import { IStorage } from '../../types';
-import { camelCase } from '../helpers/Helpers';
+import { camelCase } from '../helpers/string';
 
 export class Storage {
     public prefix: string = 'Jodit_';

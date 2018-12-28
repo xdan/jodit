@@ -13,11 +13,12 @@ import { Dom } from '../modules/Dom';
 import { css, debounce, offset, splitArray } from '../modules/helpers/';
 import { Plugin } from '../modules/Plugin';
 import { Table } from '../modules/Table';
-import { ToolbarCollection } from '../modules/toolbar/collection';
-import { ToolbarPopup } from '../modules/toolbar/popup';
+import { JoditToolbarCollection } from '../modules/toolbar/joditCollection';
+import { Popup } from '../modules/popup/popup';
 import { IDictionary } from '../types';
 import { IControlType } from '../types/toolbar';
 import { IBound } from '../types/types';
+import { ToolbarCollection } from '../modules';
 
 declare module '../Config' {
     interface Config {
@@ -363,7 +364,7 @@ Config.prototype.popup = {
  */
 export class inlinePopup extends Plugin {
     private toolbar: ToolbarCollection;
-    private popup: ToolbarPopup;
+    private popup: Popup;
 
     private target: HTMLDivElement;
     private container: HTMLDivElement;
@@ -551,7 +552,7 @@ export class inlinePopup extends Plugin {
         return true;
     };
 
-    private hidePopup = (root?: HTMLElement | ToolbarPopup) => {
+    private hidePopup = (root?: HTMLElement | Popup) => {
         if (this.isDestructed) {
             return;
         }
@@ -559,10 +560,10 @@ export class inlinePopup extends Plugin {
         if (
             root &&
             (Dom.isNode(root, this.jodit.editorWindow || window) ||
-                root instanceof ToolbarPopup) &&
+                root instanceof Popup) &&
             Dom.isOrContains(
                 this.target,
-                root instanceof ToolbarPopup ? root.target : root
+                root instanceof Popup ? root.target : root
             )
         ) {
             return;
@@ -738,12 +739,12 @@ export class inlinePopup extends Plugin {
 
     constructor(jodit: Jodit) {
         super(jodit);
-        this.toolbar = new ToolbarCollection(jodit);
+        this.toolbar = new JoditToolbarCollection(jodit);
 
         this.target = jodit.create.div('jodit_toolbar_popup-inline-target');
         this.container = jodit.create.div();
 
-        this.popup = new ToolbarPopup(
+        this.popup = new Popup(
             jodit,
             this.target,
             void 0,

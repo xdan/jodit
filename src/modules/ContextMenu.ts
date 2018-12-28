@@ -6,7 +6,7 @@
 
 import { IViewBased } from '../types/view';
 import { Component } from './Component';
-import { css, dom } from './helpers/Helpers';
+import { css } from './helpers/css';
 import { ToolbarIcon } from './toolbar/icon';
 import { Dom } from './Dom';
 
@@ -23,11 +23,7 @@ export interface Action {
  * @param {Object} parent Jodit main object
  */
 export class ContextMenu extends Component {
-    private context: HTMLElement;
-
-    public destruct() {
-        Dom.safeRemove(this.context);
-    }
+    private readonly context: HTMLElement;
 
     /**
      * Hide context menu
@@ -46,6 +42,7 @@ export class ContextMenu extends Component {
      * @param {number} x Global coordinate by X
      * @param {number} y Global coordinate by Y
      * @param {Action[]} actions Array with plainobjects {icon: 'bin', title: 'Delete', exec: function () { do smth}}
+     * @param {number} zIndex
      * @example
      * ```javascript
      * parent.show(e.clientX, e.clientY, [{icon: 'bin', title: 'Delete', exec: function () { alert(1) }]);
@@ -73,12 +70,12 @@ export class ContextMenu extends Component {
                 return;
             }
 
-            const action: HTMLAnchorElement = dom(
+            const action: HTMLAnchorElement = this.jodit.create.fromHTML(
                 '<a href="javascript:void(0)">' +
                     (item.icon ? ToolbarIcon.getIcon(item.icon) : '') +
-                    '<span></span></a>',
-                this.jodit.ownerDocument
+                    '<span></span></a>'
             ) as HTMLAnchorElement;
+
             const span: HTMLSpanElement = action.querySelector(
                 'span'
             ) as HTMLSpanElement;
@@ -105,12 +102,14 @@ export class ContextMenu extends Component {
 
     constructor(editor: IViewBased) {
         super(editor);
-        this.context = dom(
-            `<div data-editor_id="${
-                this.jodit.id
-            }" class="jodit_context_menu"></div>`,
-            editor.ownerDocument
-        );
+        this.context = editor.create.div('jodit_context_menu', {
+            'data-editor_id': this.jodit.id
+        });
+
         editor.ownerDocument.body.appendChild(this.context);
+    }
+
+    public destruct() {
+        Dom.safeRemove(this.context);
     }
 }

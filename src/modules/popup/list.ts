@@ -4,17 +4,18 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Jodit } from '../../Jodit';
-import { IControlType, IControlTypeStrong } from '../../types/toolbar';
+import { Controls, IControlType, IControlTypeStrong } from '../../types/toolbar';
 import { IViewBased } from '../../types/view';
-import { each } from '../helpers/Helpers';
-import { ToolbarButton } from './button';
-import { ToolbarCollection } from './collection';
-import { ToolbarPopup } from './popup';
+import { each } from '../helpers/';
+import { ToolbarButton } from '../toolbar/button';
+import { ToolbarCollection } from '../toolbar/collection';
+import { Popup } from './popup';
+import { Jodit } from '../../Jodit';
+import { JoditToolbarCollection } from '../toolbar/joditCollection';
 
-export class ToolbarList extends ToolbarPopup {
+export class PopupList extends Popup {
     private defaultControl = {
-        template: (editor: Jodit, key: string, value: string) =>
+        template: (editor: IViewBased, key: string, value: string) =>
             this.jodit.i18n(value),
     };
 
@@ -24,44 +25,45 @@ export class ToolbarList extends ToolbarPopup {
         }
     }
 
-    protected getContainer = () => this.toolbar.container;
-
     protected doOpen(control: IControlTypeStrong) {
-        this.toolbar = new ToolbarCollection(this.jodit);
+        this.toolbar = this.jodit instanceof Jodit ? new JoditToolbarCollection(this.jodit) : new ToolbarCollection(this.jodit);
 
         const list: any =
             typeof control.list === 'string'
                 ? control.list.split(/[\s,]+/)
                 : control.list;
 
-        each<string>(list, (key, value) => {
-            let button: ToolbarButton;
+        each(list, (key: number | string, value: string | IControlType) => {
+            let button: ToolbarButton,
+                controls: Controls | void = this.jodit.options.controls,
+                getControl = (key: string): IControlType | void => controls && controls[key];
 
-            if (this.jodit.options.controls[value] !== undefined) {
+            if (typeof value === 'string' && getControl(value)) {
                 button = new ToolbarButton(
-                    this.jodit,
+                    this.toolbar,
                     {
                         name: value.toString(),
-                        ...this.jodit.options.controls[value],
+                        ...getControl(value),
                     },
                     this.current
                 ); // list like array {"align": {list: ["left", "right"]}}
             } else if (
-                this.jodit.options.controls[key] !== undefined &&
+                typeof key === 'string' &&
+                getControl(key) &&
                 typeof value === 'object'
             ) {
                 button = new ToolbarButton(
-                    this.jodit,
+                    this.toolbar,
                     {
                         name: key.toString(),
-                        ...this.jodit.options.controls[key],
-                        ...(value as IControlType),
+                        ...getControl(key),
+                        ...value,
                     },
                     this.current
                 ); // list like object {"align": {list: {"left": {exec: alert}, "right": {}}}}
             } else {
                 button = new ToolbarButton(
-                    this.jodit,
+                    this.toolbar,
                     {
                         name: key.toString(),
                         exec: control.exec,
@@ -83,7 +85,7 @@ export class ToolbarList extends ToolbarPopup {
                 button.textBox.innerHTML = template(
                     this.jodit,
                     key.toString(),
-                    value
+                    value.toString()
                 );
             }
 

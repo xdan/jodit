@@ -421,12 +421,9 @@ export class EventsNative {
                         namespace
                     );
                     if (blocks && blocks.length) {
-                        let found: boolean = false;
-
                         if (typeof callback !== 'function') {
                             blocks.forEach(removeEventListener);
                             blocks.length = 0;
-                            found = true;
                         } else {
                             const index: number | false = store.indexOf(
                                 event,
@@ -436,7 +433,6 @@ export class EventsNative {
                             if (index !== false) {
                                 removeEventListener(blocks[index]);
                                 blocks.splice(index, 1);
-                                found = true;
                             }
                         }
                     }

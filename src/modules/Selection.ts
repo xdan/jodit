@@ -642,7 +642,7 @@ export class Select {
 
         /**
          * Triggered after image was inserted {@link Selection~insertImage|insertImage}. This method can executed from
-         * {@link FileBrowser|FileBrowser} or {@link Uploader|Uploader}
+         * {@link Filebrowser|Filebrowser} or {@link Uploader|Uploader}
          * @event afterInsertImage
          * @param {HTMLImageElement} image
          * @example

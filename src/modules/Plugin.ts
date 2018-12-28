@@ -8,9 +8,7 @@ import { IPlugin } from '../types';
 import { Component } from './Component';
 import { Jodit } from '../Jodit';
 
-export abstract class Plugin extends Component implements IPlugin {
-    public jodit: Jodit;
-
+export abstract class Plugin extends Component<Jodit> implements IPlugin {
     public abstract afterInit(jodit: Jodit): void;
 
     public abstract beforeDestruct(jodit: Jodit): void;

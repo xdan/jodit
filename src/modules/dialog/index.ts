@@ -4,7 +4,7 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-export { Dialog } from './Dialog';
-export { Alert } from './Alert';
-export { Promt } from './Promt';
-export { Confirm } from './Confirm';
+export { Dialog } from './dialog';
+export { Alert } from './alert';
+export { Promt } from './promt';
+export { Confirm } from './confirm';

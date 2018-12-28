@@ -5,6 +5,7 @@
  */
 
 export { Ajax } from './Ajax';
+export { EventsNative } from './events/eventsNative';
 export { Component } from './Component';
 export { ContextMenu } from './ContextMenu';
 export { Cookie } from './Cookie';
@@ -12,14 +13,13 @@ export { Dialog, Alert, Confirm, Promt } from './dialog/';
 export { Dom } from './Dom';
 export { Plugin } from './Plugin';
 export { Create } from './Create';
-export { EventsNative } from './events/EventsNative';
-export { FileBrowser } from './filebrowser/filebrowser';
+export { Filebrowser } from './filebrowser/filebrowser';
 import * as Helpers from './helpers/';
 export { Helpers };
 export { ImageEditor } from './ImageEditor';
-export { Observer } from './observer/Observer';
+export { Observer } from './observer/observer';
 export { Select } from './Selection';
-export { Storage } from './storage/Storage';
+export { Storage } from './storage/storage';
 export { Snapshot } from './Snapshot';
 export { Table } from './Table';
 export { ToolbarIcon } from './toolbar/icon';

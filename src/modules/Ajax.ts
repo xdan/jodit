@@ -7,13 +7,13 @@
 import { Config } from '../Config';
 import { IDictionary } from '../types';
 import { IViewBased } from '../types/view';
-import { each, extend } from './helpers/Helpers';
+import { each, extend } from './helpers/';
 
 /**
  * @property {object} defaultAjaxOptions A set of key/value pairs that configure the Ajax request. All settings
  * are optional
  * @property {object} defaultAjaxOptions.headers An object of additional header key/value pairs toWYSIWYG send along
- * with requests using the XMLHttpRequest transport. Uses in {@link module:FileBrowser|FileBrowser}
+ * with requests using the XMLHttpRequest transport. Uses in {@link module:FileBrowser|Filebrowser}
  * and {@link module:Uploader|Uploader}
  * @property {string} defaultAjaxOptions.dataType='json' json or text The type of data that you're expecting back
  * from the server. if `json` the return value passes through the `JSON.parse`
@@ -91,7 +91,8 @@ Config.prototype.defaultAjaxOptions = {
 } as AjaxOptions;
 
 export class Ajax {
-    private xhr: XMLHttpRequest;
+    private readonly xhr: XMLHttpRequest;
+
     private success_response_codes = [200, 201, 202];
     private __buildParams(
         obj: string | IDictionary<string | object> | FormData,

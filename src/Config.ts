@@ -20,7 +20,7 @@ import {
     val,
 } from './modules/helpers/';
 import { ToolbarIcon } from './modules/toolbar/icon';
-import { IDictionary } from './types';
+import { IDictionary, IViewOptions } from './types';
 import { IFileBrowserCallBackData } from './types/filebrowser';
 import { Buttons, Controls, IControlType } from './types/toolbar';
 import { extend } from './modules/helpers/extend';
@@ -28,7 +28,7 @@ import { extend } from './modules/helpers/extend';
 /**
  * Default Editor's Configuration
  */
-export class Config {
+export class Config implements IViewOptions {
     /**
      * When this option is enabled, the editor's content will be placed in an iframe and isolated from the rest of the page.
      *

@@ -4,7 +4,7 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { extend } from './Helpers';
+import { extend } from './extend';
 
 export class JoditObject {
     constructor(data: any) {

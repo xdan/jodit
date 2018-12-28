@@ -8,12 +8,12 @@
  * @param {boolean} recurse
  * @return {{top: number, left: number}} returns an object containing the properties top and left.
  */
-import { Jodit } from '../../../Jodit';
-import { IBound, IHasScroll } from '../../../types';
+
+import { IBound, IHasScroll, IViewBased } from '../../../types';
 
 export const offset = (
     elm: HTMLElement | Range,
-    jodit: Jodit,
+    jodit: IViewBased,
     doc: Document,
     recurse: boolean = false
 ): IBound => {

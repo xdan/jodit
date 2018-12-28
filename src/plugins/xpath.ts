@@ -131,7 +131,6 @@ export class xpath extends Plugin {
         const li: ToolbarButton = new ToolbarButton(this.jodit, {
             name: 'selectall',
             ...this.jodit.options.controls.selectall,
-            tooltip: '',
         });
 
         this.container &&

@@ -7,9 +7,9 @@
 import { IDictionary } from '../../types';
 
 export class ToolbarIcon {
-    public static icons: IDictionary<string> = {};
+    static icons: IDictionary<string> = {};
 
-    public static exists(name: string): boolean {
+    static exists(name: string): boolean {
         return ToolbarIcon.icons[name] !== undefined;
     }
 
@@ -20,7 +20,7 @@ export class ToolbarIcon {
      * @param {string} [defaultValue='<span></span>']
      * @return {string}
      */
-    public static getIcon(
+    static getIcon(
         name: string,
         defaultValue: string = '<span></span>'
     ): string {

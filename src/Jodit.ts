@@ -8,7 +8,7 @@ import { Config, OptionsDefault } from './Config';
 import * as consts from './constants';
 import { Component } from './modules/Component';
 import { Dom } from './modules/Dom';
-import { FileBrowser } from './modules/filebrowser/filebrowser';
+import { Filebrowser } from './modules/filebrowser/filebrowser';
 import {
     asArray,
     debounce,
@@ -23,10 +23,9 @@ import { JoditObject } from './modules/helpers/JoditObject';
 import { Observer } from './modules/observer/Observer';
 import { Select } from './modules/Selection';
 import { StatusBar } from './modules/StatusBar';
-import { localStorageProvider } from './modules/storage/localStorageProvider';
+import { LocalStorageProvider } from './modules/storage/localStorageProvider';
 import { Storage } from './modules/storage/Storage';
 import { Uploader } from './modules/Uploader';
-import { View } from './modules/view/view';
 import {
     CustomCommand,
     ExecCommandCallback,
@@ -35,13 +34,15 @@ import {
     markerInfo,
 } from './types/types';
 import { cache } from './modules/helpers/decorator';
+import { ViewWithToolbar } from './modules/view/viewWithToolbar';
+import { JoditToolbarCollection } from './modules/toolbar/joditCollection';
 
 declare let appVersion: string;
 
 /**
  * Class Jodit. Main class
  */
-export class Jodit extends View {
+export class Jodit extends ViewWithToolbar {
     get value(): string {
         return this.getEditorValue();
     }
@@ -296,21 +297,13 @@ export class Jodit extends View {
 
     public components: any = [];
 
-    /**
-     * @property {HTMLDocument} ownerDocument
-     */
-    public ownerDocument: HTMLDocument;
-
-    /**
-     * ownerWindow
-     */
-    public ownerWindow: Window;
+    toolbar: JoditToolbarCollection = new JoditToolbarCollection(this.jodit);
 
     /**
      * Container for set/get value
      * @type {Storage}
      */
-    public storage: Storage = new Storage(new localStorageProvider());
+    public storage: Storage = new Storage(new LocalStorageProvider());
 
     /**
      * workplace It contains source and wysiwyg editors
@@ -354,11 +347,11 @@ export class Jodit extends View {
     };
 
     /**
-     * @property {FileBrowser} filebrowser
+     * @property {Filebrowser} filebrowser
      */
     @cache()
-    public get filebrowser(): FileBrowser {
-        return new FileBrowser(this);
+    public get filebrowser(): Filebrowser {
+        return new Filebrowser(this);
     };
 
     public helper: any;
@@ -366,115 +359,6 @@ export class Jodit extends View {
     public __plugins: IDictionary<IPlugin> = {};
 
     public mode: number = consts.MODE_WYSIWYG;
-
-    /**
-     * Jodit's Destructor. Remove editor, and return source input
-     */
-    public destruct() {
-        if (this.isDestructed) {
-            return;
-        }
-
-        this.isDestructed = true;
-
-        /**
-         * Triggered before {@link events:beforeDestruct|beforeDestruct} executed. If returned false method stopped
-         *
-         * @event beforeDestruct
-         * @example
-         * ```javascript
-         * var editor = new Jodit("#redactor");
-         * editor.events.on('beforeDestruct', function (data) {
-         *     return false;
-         * });
-         * ```
-         */
-        if (this.events.fire('beforeDestruct') === false) {
-            return;
-        }
-
-        if (!this.editor) {
-            return;
-        }
-
-        const buffer: string = this.getEditorValue();
-
-        if (this.element !== this.container) {
-            if (this.element.hasAttribute(this.__defaultStyleDisplayKey)) {
-                this.element.style.display = this.element.getAttribute(
-                    this.__defaultStyleDisplayKey
-                );
-                this.element.removeAttribute(this.__defaultStyleDisplayKey);
-            } else {
-                this.element.style.display = '';
-            }
-        } else {
-            if (this.element.hasAttribute(this.__defaultClassesKey)) {
-                this.element.className =
-                    this.element.getAttribute(this.__defaultClassesKey) || '';
-                this.element.removeAttribute(this.__defaultClassesKey);
-            }
-        }
-
-        if (
-            this.element.hasAttribute('style') &&
-            !this.element.getAttribute('style')
-        ) {
-            this.element.removeAttribute('style');
-        }
-
-        Object.keys(this.__plugins).forEach((pluginName: string) => {
-            if (
-                this.__plugins !== undefined &&
-                this.__plugins[pluginName] !== undefined &&
-                this.__plugins[pluginName].destruct !== undefined &&
-                typeof this.__plugins[pluginName].destruct === 'function'
-            ) {
-                // @ts-ignore: Object is possibly 'undefined'
-                this.__plugins[pluginName].destruct();
-            }
-            delete this.__plugins[pluginName];
-        });
-
-        this.components.forEach((component: Component) => {
-            if (
-                component.destruct !== undefined &&
-                typeof component.destruct === 'function'
-            ) {
-                component.destruct();
-            }
-        });
-
-        delete this.selection;
-
-        this.events.off(this.ownerWindow);
-        this.events.off(this.ownerDocument);
-        this.events.off(this.ownerDocument.body);
-        this.events.off(this.element);
-        this.events.off(this.editor);
-        this.events.destruct();
-
-        delete this.events;
-
-        Dom.safeRemove(this.workplace);
-        Dom.safeRemove(this.editor);
-        Dom.safeRemove(this.iframe);
-
-        if (this.container !== this.element) {
-            Dom.safeRemove(this.container);
-        }
-
-        delete this.editor;
-        delete this.workplace;
-
-        // inline mode
-        if (this.container === this.element) {
-            this.element.innerHTML = buffer;
-        }
-
-        delete Jodit.instances[this.id];
-        delete this.container;
-    }
 
     /**
      * Return source element value
@@ -1216,6 +1100,12 @@ export class Jodit extends View {
         this.container.setAttribute('contenteditable', 'false');
 
         this.selection = new Select(this);
+        this.events.on('removeMarkers', () => {
+            if (this.selection) {
+                this.selection.removeMarkers();
+            }
+        });
+
         this.observer = new Observer(this);
 
         let buffer: null | string = null;
@@ -1294,5 +1184,113 @@ export class Jodit extends View {
             await this.events.fire('afterInit', this);
             this.events.fire('afterConstructor', this);
         });
+    }
+    /**
+     * Jodit's Destructor. Remove editor, and return source input
+     */
+    public destruct() {
+        if (this.isDestructed) {
+            return;
+        }
+
+        this.isDestructed = true;
+
+        /**
+         * Triggered before {@link events:beforeDestruct|beforeDestruct} executed. If returned false method stopped
+         *
+         * @event beforeDestruct
+         * @example
+         * ```javascript
+         * var editor = new Jodit("#redactor");
+         * editor.events.on('beforeDestruct', function (data) {
+         *     return false;
+         * });
+         * ```
+         */
+        if (this.events.fire('beforeDestruct') === false) {
+            return;
+        }
+
+        if (!this.editor) {
+            return;
+        }
+
+        const buffer: string = this.getEditorValue();
+
+        if (this.element !== this.container) {
+            if (this.element.hasAttribute(this.__defaultStyleDisplayKey)) {
+                this.element.style.display = this.element.getAttribute(
+                    this.__defaultStyleDisplayKey
+                );
+                this.element.removeAttribute(this.__defaultStyleDisplayKey);
+            } else {
+                this.element.style.display = '';
+            }
+        } else {
+            if (this.element.hasAttribute(this.__defaultClassesKey)) {
+                this.element.className =
+                    this.element.getAttribute(this.__defaultClassesKey) || '';
+                this.element.removeAttribute(this.__defaultClassesKey);
+            }
+        }
+
+        if (
+            this.element.hasAttribute('style') &&
+            !this.element.getAttribute('style')
+        ) {
+            this.element.removeAttribute('style');
+        }
+
+        Object.keys(this.__plugins).forEach((pluginName: string) => {
+            if (
+                this.__plugins !== undefined &&
+                this.__plugins[pluginName] !== undefined &&
+                this.__plugins[pluginName].destruct !== undefined &&
+                typeof this.__plugins[pluginName].destruct === 'function'
+            ) {
+                // @ts-ignore: Object is possibly 'undefined'
+                this.__plugins[pluginName].destruct();
+            }
+            delete this.__plugins[pluginName];
+        });
+
+        this.components.forEach((component: Component) => {
+            if (
+                component.destruct !== undefined &&
+                typeof component.destruct === 'function'
+            ) {
+                component.destruct();
+            }
+        });
+
+        delete this.selection;
+
+        this.events.off(this.ownerWindow);
+        this.events.off(this.ownerDocument);
+        this.events.off(this.ownerDocument.body);
+        this.events.off(this.element);
+        this.events.off(this.editor);
+        this.events.destruct();
+
+        delete this.events;
+
+        Dom.safeRemove(this.workplace);
+        Dom.safeRemove(this.editor);
+        Dom.safeRemove(this.iframe);
+
+        if (this.container !== this.element) {
+            Dom.safeRemove(this.container);
+        }
+
+        delete this.editor;
+        delete this.workplace;
+
+        // inline mode
+        if (this.container === this.element) {
+            this.element.innerHTML = buffer;
+        }
+
+        delete Jodit.instances[this.id];
+        delete this.container;
     }
 }

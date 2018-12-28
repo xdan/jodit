@@ -8,8 +8,7 @@ import { Jodit } from '../../Jodit';
 import { IDictionary } from '../../types';
 import { IViewBased, IViewOptions } from '../../types/view';
 import { Component } from '../Component';
-import { EventsNative } from '../events/EventsNative';
-import { ToolbarCollection } from '../toolbar/collection';
+import { EventsNative } from '../events/eventsNative';
 import { Panel } from './panel';
 
 export class View extends Panel implements IViewBased {
@@ -55,7 +54,7 @@ export class View extends Panel implements IViewBased {
 
     public events: EventsNative;
 
-    public toolbar: ToolbarCollection;
+    // public toolbar: ToolbarCollection;
 
     public i18n(text: string) {
         return this.jodit ? this.jodit.i18n(text) : Jodit.prototype.i18n(text);
@@ -89,7 +88,6 @@ export class View extends Panel implements IViewBased {
     }
 
     public destruct() {
-        this.toolbar.destruct();
         this.events.destruct();
 
         delete this.options;
@@ -97,15 +95,17 @@ export class View extends Panel implements IViewBased {
         super.destruct();
     }
 
-    constructor(jodit?: IViewBased, options = {}) {
+    constructor(jodit?: IViewBased, options?: IViewOptions) {
         super(jodit);
+
+        this.id = (jodit && jodit.id) ? jodit.id : new Date().getTime().toString();
 
         this.jodit = jodit || this;
 
         this.events = (jodit && jodit.events) ? jodit.events : new EventsNative(this.ownerDocument);
         this.buffer = (jodit && jodit.buffer) ? jodit.buffer : {};
 
-        this.toolbar = new ToolbarCollection(this);
+        // this.toolbar = new ToolbarCollection(this);
 
         this.options = { ...this.options, ...options };
     }

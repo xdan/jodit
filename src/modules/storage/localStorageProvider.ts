@@ -6,7 +6,7 @@
 
 import { IStorage } from '../../types';
 
-export class localStorageProvider implements IStorage {
+export class LocalStorageProvider implements IStorage {
     public set(key: string, value: string | number) {
         localStorage.setItem(key, value.toString());
     }

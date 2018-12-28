@@ -8,7 +8,7 @@ import { Config } from '../../Config';
 import { Jodit } from '../../Jodit';
 import { SnapshotType } from '../../types';
 import { Component } from '../Component';
-import { debounce } from '../helpers/Helpers';
+import { debounce } from '../helpers/async';
 import { Snapshot } from '../Snapshot';
 import { Stack } from '../Stack';
 import { Command } from './Command';
@@ -37,7 +37,7 @@ Config.prototype.observer = {
  * @see {@link Snapshot|Snapshot}
  * @params {Jodit} parent Jodit main object
  */
-export class Observer extends Component {
+export class Observer extends Component<Jodit> {
     private __startValue: SnapshotType;
     private __newValue: SnapshotType;
 
@@ -89,7 +89,7 @@ export class Observer extends Component {
     }
 
     public changeStack() {
-        this.jodit &&
+        this.jodit && !this.jodit.isDestructed &&
             this.jodit.events &&
             this.jodit.events.fire('changeStack');
     }
@@ -106,12 +106,12 @@ export class Observer extends Component {
             editor.defaultTimeout
         );
 
-        editor.events.on('afterInit', () => {
+        editor.events.on('afterInit.observer', () => {
             this.__startValue = this.snapshot.make();
             editor.events
                 // save selection
                 .on(
-                    'changeSelection selectionstart selectionchange mousedown mouseup keydown keyup',
+                    'changeSelection.observer selectionstart.observer selectionchange.observer mousedown.observer mouseup.observer keydown.observer keyup.observer',
                     () => {
                         if (
                             this.__startValue.html ===
@@ -121,11 +121,16 @@ export class Observer extends Component {
                         }
                     }
                 )
-                .on('change', () => {
+                .on('change.observer', () => {
                     if (!this.snapshot.isBlocked) {
                         onChangeStack();
                     }
                 });
         });
+    }
+    destruct(): any {
+        if (this.jodit.events) {
+            this.jodit.events.off('.observer');
+        }
     }
 }

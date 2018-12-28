@@ -22,7 +22,7 @@ export * from './ctrlKey';
 export * from './dataBind';
 export * from './defaultLanguage';
 export * from './each';
-export * from './formatUrl';
+export * from './completeUrl';
 export * from './humanSizeToBytes';
 
 export * from './JoditArray';
