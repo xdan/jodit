@@ -5,9 +5,9 @@
  */
 
 import { KEY_DOWN, KEY_ENTER, KEY_UP, SPACE_REG_EXP } from '../constants';
-import { Dialog } from '../modules/dialog/Dialog';
+import { Dialog } from '../modules/dialog/dialog';
 import { Plugin } from '../modules/Plugin';
-import { Dom } from '../modules';
+import { Dom } from '../modules/Dom';
 import { setTimeout } from '../modules/helpers/async/setTimeout';
 
 /**

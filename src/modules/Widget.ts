@@ -4,7 +4,7 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Jodit } from '../Jodit';
+import { IJodit } from '../types/jodit'
 
 import {
     IDictionary,
@@ -15,7 +15,7 @@ import {
 } from '../types/';
 
 import { Dom } from './Dom';
-import { Filebrowser } from './filebrowser/filebrowser';
+import { FileBrowser } from './filebrowser/fileBrowser';
 import {
     $$,
     each,
@@ -24,6 +24,7 @@ import {
     normalizeColor,
     val,
 } from './helpers/';
+import { ToolbarIcon } from './toolbar/icon';
 
 export namespace Widget {
     /**
@@ -45,7 +46,7 @@ export namespace Widget {
      * ```
      */
     export const ColorPickerWidget = (
-        editor: Jodit,
+        editor: IJodit,
         callback: (newColor: string) => void,
         coldColor: string
     ): HTMLDivElement => {
@@ -53,10 +54,10 @@ export namespace Widget {
             form: HTMLDivElement = editor.create.div('jodit_colorpicker'),
             iconEye: string = editor.options.textIcons
                 ? ''
-                : Jodit.modules.ToolbarIcon.getIcon('eye'),
+                : ToolbarIcon.getIcon('eye'),
             iconEraser: string = editor.options.textIcons
                 ? `<span>${editor.i18n('eraser')}</span>`
-                : Jodit.modules.ToolbarIcon.getIcon('eraser'),
+                : ToolbarIcon.getIcon('eraser'),
             eachColor = (colors: string[] | IDictionary<string[]>) => {
                 const stack: string[] = [];
                 if (isPlainObject(colors)) {
@@ -136,7 +137,7 @@ export namespace Widget {
             const color: string = target.getAttribute('data-color') || '';
 
             if (color) {
-                target.innerHTML = Jodit.modules.ToolbarIcon.getIcon('eye');
+                target.innerHTML = ToolbarIcon.getIcon('eye');
                 target.classList.add('active');
 
                 const colorRGB: IRGB | null = hexToRgb(color);
@@ -182,7 +183,7 @@ export namespace Widget {
      * ```
      */
     export const TabsWidget = (
-        editor: Jodit,
+        editor: IJodit,
         tabs: IDictionary<(() => void) | HTMLElement>,
         state?: { __activeTab: string }
     ): HTMLDivElement => {
@@ -308,9 +309,9 @@ export namespace Widget {
      */
 
     interface ImageSelectorCallbacks {
-        url?: (this: Jodit, url: string, alt: string) => void;
+        url?: (this: IJodit, url: string, alt: string) => void;
         filebrowser?: (data: IFileBrowserCallBackData) => void;
-        upload?: (this: Jodit, data: IFileBrowserCallBackData) => void;
+        upload?: (this: IJodit, data: IFileBrowserCallBackData) => void;
     }
 
     /**
@@ -324,7 +325,7 @@ export namespace Widget {
      * @constructor
      */
     export const FileSelectorWidget = (
-        editor: Jodit,
+        editor: IJodit,
         callbacks: ImageSelectorCallbacks,
         elm: HTMLElement | null,
         close: () => void,
@@ -370,7 +371,7 @@ export namespace Widget {
             );
             const icon = editor.options.textIcons
                 ? ''
-                : Jodit.modules.ToolbarIcon.getIcon('upload');
+                : ToolbarIcon.getIcon('upload');
             tabs[icon + editor.i18n('Upload')] = dragbox;
         }
 
@@ -381,11 +382,11 @@ export namespace Widget {
             ) {
                 const icon = editor.options.textIcons
                     ? ''
-                    : Jodit.modules.ToolbarIcon.getIcon('folder');
+                    : ToolbarIcon.getIcon('folder');
                 tabs[icon + editor.i18n('Browse')] = () => {
                     close && close();
                     if (callbacks.filebrowser) {
-                        (editor.getInstance('FileBrowser') as Filebrowser).open(
+                        (editor.getInstance('FileBrowser') as FileBrowser).open(
                             callbacks.filebrowser,
                             isImage
                         );
@@ -465,7 +466,7 @@ export namespace Widget {
 
             const icon = editor.options.textIcons
                 ? ''
-                : Jodit.modules.ToolbarIcon.getIcon('link');
+                : ToolbarIcon.getIcon('link');
 
             tabs[icon + ' URL'] = form;
         }

@@ -21,7 +21,7 @@ import {
     ISource,
     ISourceFile,
     ISourcesFiles,
-} from '../../types/filebrowser';
+} from '../../types/fileBrowser';
 
 import { IControlType } from '../../types/toolbar';
 import { ActionBox, IDictionary, IPermissions } from '../../types/types';
@@ -29,7 +29,7 @@ import { IUploaderOptions } from '../../types/uploader';
 import { IViewBased } from '../../types/view';
 import { ImageEditor } from '../ImageEditor';
 import { LocalStorageProvider } from '../storage/localStorageProvider';
-import { Storage } from '../storage/Storage';
+import { Storage } from '../storage/storage';
 import { each } from '../helpers/each';
 import { normalizePath } from '../helpers/normalize/normalizePath';
 import { $$ } from '../helpers/selector';
@@ -308,7 +308,7 @@ Config.prototype.filebrowser = {
 
     sortBy: 'changed',
 
-    sort(this: Filebrowser, a: any, b: any, sortBy: string): number {
+    sort(this: FileBrowser, a: any, b: any, sortBy: string): number {
         const compareStr = (f: string, s: string): number => {
             if (f < s) {
                 return -1;
@@ -385,11 +385,11 @@ Config.prototype.filebrowser = {
 
     view: null,
 
-    isSuccess(this: Filebrowser, resp: IFileBrowserAnswer): boolean {
+    isSuccess(this: FileBrowser, resp: IFileBrowserAnswer): boolean {
         return resp.success;
     },
 
-    getMessage(this: Filebrowser, resp: IFileBrowserAnswer) {
+    getMessage(this: FileBrowser, resp: IFileBrowserAnswer) {
         return resp.data.messages !== undefined &&
             Array.isArray(resp.data.messages)
             ? resp.data.messages.join(' ')
@@ -401,7 +401,7 @@ Config.prototype.filebrowser = {
     showFileChangeTime: true,
 
     getThumbTemplate(
-        this: Filebrowser,
+        this: FileBrowser,
         item: ISourceFile,
         source: ISource,
         source_name: string
@@ -597,8 +597,8 @@ Config.prototype.controls.filebrowser = {
         icon: 'bin',
         isDisable: (browser: any): boolean => {
             return (
-                (browser as Filebrowser).getActiveElements().length === 0 ||
-                !(browser as Filebrowser).canI('FileRemove')
+                (browser as FileBrowser).getActiveElements().length === 0 ||
+                !(browser as FileBrowser).canI('FileRemove')
             );
         },
         exec: (editor: IViewBased) => {
@@ -613,7 +613,7 @@ Config.prototype.controls.filebrowser = {
     select: {
         icon: 'check',
         isDisable: (browser: any): boolean => {
-            return (browser as Filebrowser).getActiveElements().length === 0;
+            return (browser as FileBrowser).getActiveElements().length === 0;
         },
         exec: (editor: IViewBased) => {
             editor.events.fire('select.filebrowser');
@@ -621,40 +621,40 @@ Config.prototype.controls.filebrowser = {
     } as IControlType,
     edit: {
         icon: 'pencil',
-        isDisable: (browser: any): boolean => {
-            const selected: HTMLElement[] = (browser as Filebrowser).getActiveElements();
+        isDisable: (browser): boolean => {
+            const selected: HTMLElement[] = (browser as FileBrowser).getActiveElements();
             return (
                 selected.length !== 1 ||
                 selected[0].getAttribute('data-is-file') === '1' ||
                 !(
-                    (browser as Filebrowser).canI('ImageCrop') ||
-                    (browser as Filebrowser).canI('ImageResize')
+                    (browser as FileBrowser).canI('ImageCrop') ||
+                    (browser as FileBrowser).canI('ImageResize')
                 )
             );
         },
-        exec: (editor: Jodit) => {
+        exec: (editor) => {
             editor.events.fire('edit.filebrowser');
         },
     } as IControlType,
     tiles: {
         icon: 'th',
-        isActive: (editor: Jodit): boolean =>
+        isActive: (editor): boolean =>
             editor.buffer.fileBrowserView === 'tiles',
-        exec: (editor: Jodit) => {
+        exec: (editor) => {
             editor.events.fire('view.filebrowser', 'tiles');
         },
     } as IControlType,
     list: {
         icon: 'th-list',
-        isActive: (editor: Jodit): boolean =>
+        isActive: (editor): boolean =>
             editor.buffer.fileBrowserView === 'list',
-        exec: (editor: Jodit) => {
+        exec: (editor) => {
             editor.events.fire('view.filebrowser', 'list');
         },
     } as IControlType,
     filter: {
         isInput: true,
-        getContent: (filebrowser: Jodit): HTMLElement => {
+        getContent: (filebrowser): HTMLElement => {
             const input: HTMLInputElement = filebrowser.create.element('input', {
                 'class': 'jodit_input',
                 'placeholder': filebrowser.i18n('Filter'),
@@ -673,7 +673,7 @@ Config.prototype.controls.filebrowser = {
     } as IControlType,
     sort: {
         isInput: true,
-        getContent: (filebrowser: Jodit): HTMLElement => {
+        getContent: (filebrowser): HTMLElement => {
             const select: HTMLSelectElement = filebrowser.create.fromHTML(
                 '<select class="jodit_input">' +
                     '<option value="changed">' +
@@ -703,7 +703,7 @@ Config.prototype.controls.filebrowser = {
     } as IControlType,
 } as IDictionary<IControlType>;
 
-export class Filebrowser extends ViewWithToolbar {
+export class FileBrowser extends ViewWithToolbar {
     /**
      * Return default timeout period in milliseconds for some debounce or throttle functions. By default return {observer.timeout} options
      *
@@ -881,7 +881,7 @@ export class Filebrowser extends ViewWithToolbar {
     }
 
     private loadItems = (path: string, source: string): Promise<void> => {
-        const self: Filebrowser = this;
+        const self: FileBrowser = this;
 
         if (!self.options.items) {
             return Promise.reject('Set Items api options');
@@ -920,7 +920,7 @@ export class Filebrowser extends ViewWithToolbar {
     };
 
     private loadPermissions(path: string, source: string): Promise<void> {
-        const self: Filebrowser = this;
+        const self: FileBrowser = this;
 
         if (!self.options.permissions) {
             return Promise.resolve();
@@ -962,7 +962,7 @@ export class Filebrowser extends ViewWithToolbar {
     }
     private loadTree(path: string, source: string): Promise<any> {
         return this.loadPermissions(path, source).then(() => {
-            const self: Filebrowser = this;
+            const self: FileBrowser = this;
 
             if (!self.options.folder) {
                 return Promise.reject('Set Folder Api options');
@@ -1144,7 +1144,7 @@ export class Filebrowser extends ViewWithToolbar {
         onFailed: (error: Error) => void
     ) => {
         const action: string = 'getLocalFileByUrl',
-            self: Filebrowser = this;
+            self: FileBrowser = this;
 
         this.options[action].data.url = url;
         this.send(
@@ -1461,7 +1461,7 @@ export class Filebrowser extends ViewWithToolbar {
     constructor(editor?: Jodit, options?: IFileBrowserOptions) {
         super(editor, options);
 
-        const self: Filebrowser = this,
+        const self: FileBrowser = this,
             doc: HTMLDocument = editor ? editor.ownerDocument : document,
             editorDoc: HTMLDocument = editor ? editor.editorDocument : doc;
 

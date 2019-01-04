@@ -8,7 +8,7 @@ import { Config } from '../Config';
 import { Jodit } from '../Jodit';
 import { Alert, Confirm, Dialog } from '../modules/dialog/';
 import { Dom } from '../modules/Dom';
-import { Filebrowser } from '../modules/filebrowser/filebrowser';
+import { FileBrowser } from '../modules/filebrowser/fileBrowser';
 import {
     $$,
     css,
@@ -563,12 +563,12 @@ export function imageProperties(editor: Jodit) {
 
                     (editor.getInstance(
                         'FileBrowser'
-                    ) as Filebrowser).getPathByUrl(
+                    ) as FileBrowser).getPathByUrl(
                         a.href.toString(),
                         (path: string, name: string, source: string) => {
                             (editor.getInstance(
                                 'FileBrowser'
-                            ) as Filebrowser).openImageEditor(
+                            ) as FileBrowser).openImageEditor(
                                 a.href,
                                 name,
                                 path,

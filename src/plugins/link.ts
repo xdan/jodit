@@ -13,7 +13,7 @@ import {
     val,
 } from '../modules/helpers/';
 import { Select } from '../modules/Selection';
-import { markerInfo } from '../types';
+import { IJodit, markerInfo } from '../types';
 import { IControlType } from '../types/toolbar';
 
 /**
@@ -50,7 +50,7 @@ Config.prototype.link = {
 };
 
 Config.prototype.controls.unlink = {
-    exec: (editor: Jodit, current: Node) => {
+    exec: (editor: IJodit, current: Node) => {
         const anchor: HTMLAnchorElement | false = Dom.closest(
             current,
             'A',
@@ -65,12 +65,12 @@ Config.prototype.controls.unlink = {
     },
 } as IControlType;
 Config.prototype.controls.link = {
-    isActive: (editor: Jodit): boolean => {
+    isActive: (editor: IJodit): boolean => {
         const current: Node | false = editor.selection.current();
         return current && Dom.closest(current, 'a', editor.editor) !== false;
     },
     popup: (
-        editor: Jodit,
+        editor: IJodit,
         current: HTMLElement | false,
         self: IControlType,
         close: () => void

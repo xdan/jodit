@@ -6,8 +6,9 @@
 
 import { Jodit } from '../Jodit';
 import { IViewBased } from '../types/view';
+import { IComponent } from '../types';
 
-export abstract class Component<T = IViewBased> {
+export abstract class Component<T extends IViewBased = IViewBased> implements IComponent {
     public jodit: T;
 
     /**

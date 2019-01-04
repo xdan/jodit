@@ -11,7 +11,8 @@ import { Plugin } from '../modules/Plugin';
 import { css } from '../modules/helpers/css';
 import { offset } from '../modules/helpers/size';
 import { IBound } from '../types/types';
-import { Dom } from '../modules';
+import { Dom } from '../modules/Dom';
+import { IJodit } from '../types';
 
 declare module '../Config' {
     interface Config {
@@ -138,7 +139,7 @@ export class sticky extends Plugin {
         );
     }
 
-    beforeDestruct(jodit?: Jodit): void {
+    beforeDestruct(jodit?: IJodit): void {
         Dom.safeRemove(this.dummyBox);
     }
 }

@@ -4,9 +4,9 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Dialog } from './Dialog';
+import { Dialog } from './dialog';
 import { Jodit } from '../../Jodit';
-import { ToolbarIcon } from '..';
+import { ToolbarIcon } from '../toolbar/icon';
 
 /**
  * Show `confirm` dialog. Work without Jodit object
@@ -89,5 +89,3 @@ export const Confirm = (
 
     return dialog;
 };
-
-(Jodit as any).Confirm = Confirm;

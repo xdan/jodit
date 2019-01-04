@@ -9,13 +9,13 @@ import * as consts from '../constants';
 import { MODE_SOURCE } from '../constants';
 import { Jodit } from '../Jodit';
 import { Plugin } from '../modules/Plugin';
-import { markerInfo } from '../types';
+import { IJodit, markerInfo } from '../types';
 import { IControlType } from '../types/toolbar';
 import { appendScript } from '../modules/helpers/appendScript';
 import { debounce } from '../modules/helpers/async';
 import { $$ } from '../modules/helpers/selector';
 import { css } from '../modules/helpers/css';
-import { Dom } from '../modules';
+import { Dom } from '../modules/Dom';
 
 declare module '../Config' {
     interface Config {
@@ -92,11 +92,11 @@ Config.prototype.beautifyHTMLCDNUrlsJS = [
 Config.prototype.controls.source = {
     mode: consts.MODE_SPLIT,
 
-    exec: (editor: Jodit) => {
+    exec: (editor: IJodit) => {
         editor.toggleMode();
     },
 
-    isActive: (editor: Jodit) => {
+    isActive: (editor: IJodit) => {
         return editor.getRealMode() === consts.MODE_SOURCE;
     },
 
@@ -385,7 +385,7 @@ export class source extends Plugin {
     };
 
     private replaceMirrorToACE() {
-        const editor: Jodit = this.jodit;
+        const editor: IJodit = this.jodit;
         let aceEditor: AceAjax.Editor, undoManager: AceAjax.UndoManager;
 
         const updateButtons = () => {
@@ -653,6 +653,16 @@ export class source extends Plugin {
             '<textarea class="jodit_source_mirror"/>',
         ) as HTMLTextAreaElement;
 
+        const addListeners = () => {
+            // save restore selection
+            editor.events
+                .off('beforeSetMode.source afterSetMode.source')
+                .on('beforeSetMode.source', this.saveSelection)
+                .on('afterSetMode.source', this.restoreSelection);
+        };
+
+        addListeners();
+
         editor.events
             .on(
                 this.mirror,
@@ -712,39 +722,32 @@ export class source extends Plugin {
             .on('placeholder.source', (text: string) => {
                 this.mirror.setAttribute('placeholder', text);
             })
-            .on('aceInited.source', () => {
-                // save restore selection
-                editor.events
-                    .off('beforeSetMode.source afterSetMode.source')
-                    .on('beforeSetMode.source', this.saveSelection)
-                    .on('afterSetMode.source', this.restoreSelection);
-            })
-            .on('afterInit.source', () => {
-                this.mirrorContainer.appendChild(this.mirror);
-                editor.workplace.appendChild(this.mirrorContainer);
-                this.autosize();
-
-                const className = 'beutyfy_html_jodit_helper';
-
-                if (
-                    editor.options.beautifyHTML &&
-                    (editor.ownerWindow as any).html_beautify === undefined &&
-                    !$$('script.' + className, editor.ownerDocument.body).length
-                ) {
-                    this.loadNext(
-                        0,
-                        editor.options.beautifyHTMLCDNUrlsJS,
-                        false,
-                        className
-                    );
-                }
-
-                if (editor.options.useAceEditor) {
-                    this.replaceMirrorToACE();
-                }
-            })
+            .on('aceInited.source', addListeners)
             .on('beforeCommand.source', this.onSelectAll)
             .on('change.source', this.fromWYSIWYG);
+
+        this.mirrorContainer.appendChild(this.mirror);
+        editor.workplace.appendChild(this.mirrorContainer);
+        this.autosize();
+
+        const className = 'beutyfy_html_jodit_helper';
+
+        if (
+            editor.options.beautifyHTML &&
+            (editor.ownerWindow as any).html_beautify === undefined &&
+            !$$('script.' + className, editor.ownerDocument.body).length
+        ) {
+            this.loadNext(
+                0,
+                editor.options.beautifyHTMLCDNUrlsJS,
+                false,
+                className
+            );
+        }
+
+        if (editor.options.useAceEditor) {
+            this.replaceMirrorToACE();
+        }
 
         this.fromWYSIWYG();
     }

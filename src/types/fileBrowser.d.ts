@@ -7,7 +7,7 @@
 import { Buttons } from './toolbar';
 import { IDictionary, IPermissions } from './types';
 import { IUploaderOptions } from './uploader';
-import { Uploader } from '../modules';
+import { Uploader } from '../modules/Uploader';
 import { IViewOptions } from './view';
 
 /**

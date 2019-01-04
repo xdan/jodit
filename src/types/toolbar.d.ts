@@ -4,15 +4,15 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { HTMLTagNames, IDictionary } from './types';
+import { HTMLTagNames, IDictionary, Modes } from './types';
 import { IViewBased } from './view';
-import { ToolbarButton } from '../modules';
-import { Jodit } from '../Jodit';
+import { ToolbarButton } from '../modules/toolbar/button';
+import { IJodit } from './jodit';
 
-export interface IControlType<Button = ToolbarButton, T = Jodit> {
+export interface IControlType<T = IJodit | IViewBased, Button = ToolbarButton> {
     controlName?: string;
     name?: string;
-    mode?: number;
+    mode?: Modes;
     hotkeys?: string | string[];
     data?: IDictionary;
     isInput?: boolean;
@@ -44,19 +44,20 @@ export interface IControlType<Button = ToolbarButton, T = Jodit> {
      * ```
      */
     isActive?: (
-        editor: IViewBased | T,
-        control: IControlType<Button, T>,
+        editor: T,
+        control: IControlType<T, Button>,
         button?: Button
     ) => boolean;
+
     isActiveChild?: (
-        editor: IViewBased | T,
-        control: IControlType<Button, T>,
+        editor: T,
+        control: IControlType<T, Button>,
         button?: Button
     ) => boolean; // for list
 
     getContent?: (
-        editor: IViewBased | T,
-        control: IControlType<Button, T>,
+        editor: T,
+        control: IControlType<T, Button>,
         button?: Button
     ) => string | HTMLElement;
 
@@ -88,20 +89,20 @@ export interface IControlType<Button = ToolbarButton, T = Jodit> {
      * ```
      */
     isDisable?: (
-        editor: IViewBased | T,
-        control: IControlType<Button, T>,
+        editor: T,
+        control: IControlType<T, Button>,
         button?: Button
     ) => boolean;
 
     isDisableChild?: (
-        editor: IViewBased | T,
-        control: IControlType<Button, T>,
+        editor: T,
+        control: IControlType<T, Button>,
         button?: Button
     ) => boolean;
 
     getLabel?: (
-        editor: IViewBased | T,
-        control: IControlType<Button, T>,
+        editor: T,
+        control: IControlType<T, Button>,
         button?: Button
     ) => boolean | void;
 
@@ -127,7 +128,7 @@ export interface IControlType<Button = ToolbarButton, T = Jodit> {
      *                 this.setEditorValue('');
      *                 return;
      *             }
-     *             this.selection.insertNode(Jodit.modules.Dom.create(key, ''));
+     *             this.selection.insertNode(this.create.element(key, ''));
      *             this.events.fire('errorMessage', 'Was inserted ' + value);
      *        },
      *        template: function (key, value) {
@@ -153,7 +154,7 @@ export interface IControlType<Button = ToolbarButton, T = Jodit> {
     options?: any;
     css?:
         | IDictionary<string | string[]>
-        | IDictionary<(editor: IViewBased | T, value: string) => boolean>;
+        | IDictionary<(editor: T, value: string) => boolean>;
 
     /**
      * String name for existing icons.
@@ -187,9 +188,9 @@ export interface IControlType<Button = ToolbarButton, T = Jodit> {
      * This function will be executed when the button is pressed.
      */
     exec?: (
-        editor: IViewBased | T,
+        editor: T,
         current: Node | false,
-        control: IControlType<Button, T>,
+        control: IControlType<T, Button>,
         originalEvent: Event,
         btn: HTMLLIElement
     ) => void;
@@ -199,7 +200,7 @@ export interface IControlType<Button = ToolbarButton, T = Jodit> {
     /**
      * The method which will be called for each element of button.list
      */
-    template?: (editor: IViewBased | T, key: string, value: string) => string;
+    template?: (editor: T, key: string, value: string) => string;
 
     /**
      * After click on the button it will show popup element which consist value that this function returned
@@ -228,9 +229,9 @@ export interface IControlType<Button = ToolbarButton, T = Jodit> {
      * ```
      */
     popup?: (
-        editor: IViewBased | T,
+        editor: T,
         current: Node | false,
-        control: IControlType<Button, T>,
+        control: IControlType<T, Button>,
         close: () => void,
         button?: Button
     ) => string | HTMLElement | false;
@@ -242,5 +243,5 @@ export interface IControlTypeStrong extends IControlType {
     name: string;
 }
 
-export type Controls = IDictionary<IControlType | IDictionary<IControlType>>;
+export type Controls = IDictionary<IControlType>;
 export type Buttons = Array<string | IControlType> | string;

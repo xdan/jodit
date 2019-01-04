@@ -5,12 +5,12 @@
  */
 
 import { Config } from '../Config';
-import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
 import { css, normalizeSize } from '../modules/helpers/';
 import { IControlType } from '../types/toolbar';
+import { IJodit } from '../types';
 
-Config.prototype.controls.fontsize = {
+Config.prototype.controls.fontsize = <IControlType<IJodit>>{
     command: 'fontSize',
     list: [
         '8',
@@ -29,9 +29,9 @@ Config.prototype.controls.fontsize = {
         '72',
         '96',
     ],
-    template: (editor: Jodit, key: string, value: string) => value,
+    template: (editor, key: string, value: string) => value,
     tooltip: 'Font size',
-    isActiveChild: (editor: Jodit, control: IControlType): boolean => {
+    isActiveChild: (editor, control: IControlType): boolean => {
         const current: Node | false = editor.selection.current();
 
         if (current) {
@@ -59,7 +59,7 @@ Config.prototype.controls.fontsize = {
 
         return false;
     },
-    isActive: (editor: Jodit): boolean => {
+    isActive: (editor): boolean => {
         const current: Node | false = editor.selection.current();
 
         if (current) {
@@ -86,10 +86,11 @@ Config.prototype.controls.fontsize = {
         return false;
     },
 } as IControlType;
-Config.prototype.controls.font = {
+
+Config.prototype.controls.font = <IControlType<IJodit>>{
     command: 'fontname',
 
-    exec: (editor: Jodit, event, control: IControlType) => {
+    exec: (editor, event, control) => {
         editor.execCommand(
             control.command as string,
             false,
@@ -107,11 +108,11 @@ Config.prototype.controls.font = {
         'Verdana,Geneva,sans-serif': 'Verdana',
     },
 
-    template: (editor: Jodit, key: string, value: string) => {
+    template: (editor, key: string, value: string) => {
         return `<span style="font-family: ${key}">${value}</span>`;
     },
 
-    isActiveChild: (editor: Jodit, control: IControlType): boolean => {
+    isActiveChild: (editor, control: IControlType): boolean => {
         const current: Node | false = editor.selection.current(),
             normFonts = (fontValue: string): string => {
                 return fontValue
@@ -150,7 +151,7 @@ Config.prototype.controls.font = {
         return false;
     },
 
-    isActive: (editor: Jodit): boolean => {
+    isActive: (editor: IJodit): boolean => {
         const current: Node | false = editor.selection.current();
 
         if (current) {
@@ -184,7 +185,7 @@ Config.prototype.controls.font = {
  * Process commands `fontsize` and `fontname`
  * @param {Jodit} editor
  */
-export function font(editor: Jodit) {
+export function font(editor: IJodit) {
     const callback = async (
         command: string,
         second: string,

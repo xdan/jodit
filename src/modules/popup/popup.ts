@@ -10,6 +10,7 @@ import { IViewBased } from '../../types/view';
 import { Dom } from '../Dom';
 import { css, offset, throttle } from '../helpers/';
 import { Component } from '../Component';
+import { IControlTypeStrong } from '../../types';
 
 export class Popup extends Component {
     private calcPosition = throttle(() => {
@@ -80,7 +81,7 @@ export class Popup extends Component {
         css(popup, 'width', width);
     }, this.jodit.defaultTimeout);
 
-    protected doOpen(content: any) {
+    protected doOpen(content: string | HTMLElement | IControlTypeStrong) {
         if (!content) {
             return;
         }
@@ -89,7 +90,7 @@ export class Popup extends Component {
 
         this.container.innerHTML = '<span class="jodit_popup_triangle"></span>';
 
-        this.container.appendChild(this.jodit.create.fromHTML(content));
+        this.container.appendChild(Dom.isNode(content, this.jodit.ownerWindow) ? content : this.jodit.create.fromHTML(content.toString()));
 
         this.container.style.display = 'block';
         this.container.style.marginLeft = null;
@@ -100,7 +101,6 @@ export class Popup extends Component {
     }
 
     isOpened: boolean = false;
-
 
     /**
      * @param {HTMLElement} content
@@ -188,7 +188,8 @@ export class Popup extends Component {
                 this.calcPosition
             );
     }
-    public destruct() {
+
+    destruct() {
         this.jodit.events.off(
             [this.jodit.ownerWindow, this.jodit.events],
             'resize',

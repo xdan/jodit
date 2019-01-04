@@ -32,7 +32,8 @@ import {
 } from '../modules/helpers/';
 
 import { IControlType } from '../types/toolbar';
-import { Dom } from '../modules';
+import { Dom } from '../modules/Dom';
+import { IJodit } from '../types';
 
 /**
  * @property{boolean} askBeforePasteHTML=true Ask before paste HTML in WYSIWYG mode
@@ -51,8 +52,8 @@ Config.prototype.defaultActionOnPaste = INSERT_AS_HTML;
 
 Config.prototype.controls.cut = {
     command: 'cut',
-    isDisable: (editor: Jodit) => {
-        const sel: Selection = editor.editorWindow.getSelection();
+    isDisable: (editor: IJodit) => {
+        const sel: Selection = editor.selection.sel;
         return !sel || sel.isCollapsed;
     },
     tooltip: 'Cut selection',

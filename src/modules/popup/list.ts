@@ -10,8 +10,6 @@ import { each } from '../helpers/';
 import { ToolbarButton } from '../toolbar/button';
 import { ToolbarCollection } from '../toolbar/collection';
 import { Popup } from './popup';
-import { Jodit } from '../../Jodit';
-import { JoditToolbarCollection } from '../toolbar/joditCollection';
 
 export class PopupList extends Popup {
     private defaultControl = {
@@ -25,8 +23,8 @@ export class PopupList extends Popup {
         }
     }
 
-    protected doOpen(control: IControlTypeStrong) {
-        this.toolbar = this.jodit instanceof Jodit ? new JoditToolbarCollection(this.jodit) : new ToolbarCollection(this.jodit);
+    doOpen(control: IControlTypeStrong) {
+        this.toolbar = ToolbarCollection.makeCollection(this.jodit);
 
         const list: any =
             typeof control.list === 'string'
@@ -107,5 +105,9 @@ export class PopupList extends Popup {
         readonly className: string = 'jodit_toolbar_list'
     ) {
         super(jodit, target, current, className);
+    }
+    destruct() {
+        this.toolbar.destruct();
+        super.destruct();
     }
 }

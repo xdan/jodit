@@ -5,8 +5,7 @@
  */
 
 import { Config } from '../Config';
-import { Jodit } from '../Jodit';
-import { IDictionary } from '../types';
+import { IDictionary, IJodit } from '../types';
 import { IControlType } from '../types/toolbar';
 
 Config.prototype.controls.subscript = {
@@ -57,14 +56,14 @@ Config.prototype.controls.strikethrough = {
 /**
  * Bold plugin - change B to Strong, i to Em
  */
-export function bold(editor: Jodit) {
+export function bold(editor: IJodit) {
     const callBack = (command: string): false | void => {
-        const control: IControlType = Jodit.defaultOptions.controls[
+        const control: IControlType = Config.defaultOptions.controls[
                 command
             ] as IControlType,
             cssOptions:
                 | IDictionary<string | string[]>
-                | IDictionary<(editor: Jodit, value: string) => boolean> = {
+                | IDictionary<(editor: IJodit, value: string) => boolean> = {
                 ...control.css,
             },
             cssRules: IDictionary<string> = {};

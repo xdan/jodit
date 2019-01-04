@@ -5,10 +5,11 @@
  */
 
 import { EventsNative } from '../modules/events/eventsNative';
-import { ToolbarCollection } from '../modules/toolbar/collection';
 import { Buttons, Controls } from './toolbar';
-import { IDictionary } from './types';
-import { Create } from '../modules';
+import { IComponent, IDictionary } from './types';
+import { Component } from '../modules/Component';
+import { Create } from '../modules/Create';
+import { ToolbarCollection } from '../modules/toolbar/collection';
 
 interface IViewOptions {
     disabled?: boolean;
@@ -29,7 +30,24 @@ interface IViewOptions {
     controls?: Controls;
 }
 
-interface IViewBased extends IPanel{
+interface IPanel extends IComponent {
+    container: HTMLDivElement;
+    create: Create;
+
+    ownerDocument: Document;
+    ownerWindow: Window;
+
+    isLockedNotBy(name: string): boolean;
+    isLocked(): boolean;
+
+    lock(name: string): boolean;
+    unlock(): boolean;
+
+    isFullSize: () => boolean;
+    toggleFullSize(isFullSize?: boolean): void;
+}
+
+interface IViewBased extends IPanel {
     /**
      * @property {string} ID attribute for source element, id add {id}_editor it's editor's id
      */
@@ -49,21 +67,13 @@ interface IViewBased extends IPanel{
     defaultTimeout: number
 
     iframe?: HTMLIFrameElement | null;
+
+    getInstance<T = Component>(moduleName: string, options?: object): T;
+
+    getVersion: () => string;
 }
 
-export interface IPanel {
-    container: HTMLDivElement;
-    create: Create;
-
-    ownerDocument: Document;
-    ownerWindow: Window;
-
-    isLockedNotBy(name: string): boolean;
-    isLocked(): boolean;
-
-    lock(name: string): boolean;
-    unlock(): boolean;
-
-    isFullSize: () => boolean;
-    toggleFullSize(isFullSize?: boolean): void;
+interface IViewWithToolbar extends IViewBased {
+    toolbar: ToolbarCollection;
 }
+

@@ -9,7 +9,7 @@ import * as consts from '../constants';
 import { IS_IE } from '../constants';
 import { Jodit } from '../Jodit';
 import { IBound } from '../types/types';
-import { Dom } from '../modules';
+import { Dom } from '../modules/Dom';
 import { $$ } from '../modules/helpers/selector';
 import { debounce, setTimeout } from '../modules/helpers/async';
 import { offset, innerWidth } from '../modules/helpers/size';

@@ -34,7 +34,7 @@ Config.prototype.toolbarAdaptive = true;
 Config.prototype.controls.dots = {
     mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG,
     popup: (
-        editor: Jodit,
+        editor,
         current: false | Node,
         control: IControlType,
         close,
@@ -50,8 +50,8 @@ Config.prototype.controls.dots = {
 
         if (store === undefined) {
             store = {
-                container: editor.ownerDocument.createElement('div'),
-                toolbar: new ToolbarCollection(editor),
+                container: editor.create.div(),
+                toolbar: ToolbarCollection.makeCollection(editor),
                 rebuild: () => {
                     const buttons:
                         | Array<string | IControlType>

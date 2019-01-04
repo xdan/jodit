@@ -5,12 +5,11 @@
  */
 
 import { Config } from '../Config';
-import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
 import { debounce, setTimeout } from '../modules/helpers/async';
 import { offset } from '../modules/helpers/size';
 import { ToolbarIcon } from '../modules/toolbar/icon';
-import { IBound } from '../types';
+import { IBound, IJodit } from '../types';
 
 declare module '../Config' {
     interface Config {
@@ -50,7 +49,7 @@ Config.prototype.addNewLineTagsTriggers = [
  * @param {Jodit} editor
  */
 
-export function addNewLine(editor: Jodit) {
+export function addNewLine(editor: IJodit) {
     if (!editor.options.addNewLine) {
         return;
     }

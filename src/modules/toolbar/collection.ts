@@ -4,7 +4,6 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Jodit } from '../../Jodit';
 import { IDictionary } from '../../types';
 import {
     Buttons,
@@ -12,6 +11,7 @@ import {
     IControlType,
     IControlTypeStrong,
 } from '../../types/toolbar';
+
 import { IViewBased } from '../../types/view';
 import { debounce } from '../helpers/async';
 import { ToolbarBreak } from './break';
@@ -20,8 +20,11 @@ import { ToolbarElement } from './element';
 import { ToolbarSeparator } from './separator';
 import { Dom } from '../Dom';
 import { Component } from '../Component';
+import { Config } from '../../Config';
+import { Jodit } from '../../Jodit';
+import { JoditToolbarCollection } from './joditToolbarCollection';
 
-export class ToolbarCollection extends Component {
+export class ToolbarCollection<T extends IViewBased = IViewBased> extends Component<T> {
     private __buttons: ToolbarElement[] = [];
 
     private __getControlType = (
@@ -29,12 +32,12 @@ export class ToolbarCollection extends Component {
     ): IControlTypeStrong => {
         let buttonControl: IControlTypeStrong;
         const controls: Controls =
-            this.jodit.options.controls || Jodit.defaultOptions.controls;
+            this.jodit.options.controls || Config.defaultOptions.controls;
 
         if (typeof button !== 'string') {
             buttonControl = { name: 'empty', ...button };
             if (controls[buttonControl.name] !== undefined) {
-                buttonControl = {
+                buttonControl = <IControlTypeStrong>{
                     ...controls[buttonControl.name],
                     ...buttonControl,
                 };
@@ -106,7 +109,7 @@ export class ToolbarCollection extends Component {
         }
     }
 
-    public build(
+    build(
         buttons: Buttons,
         container: HTMLElement,
         target?: HTMLElement
@@ -160,7 +163,7 @@ export class ToolbarCollection extends Component {
         this.immedateCheckActiveButtons();
     }
 
-    public clear() {
+    clear() {
         // in removeChild __buttons is changed
         [...this.__buttons].forEach((button: ToolbarElement) => {
             this.removeChild(button);
@@ -170,7 +173,7 @@ export class ToolbarCollection extends Component {
         this.__buttons.length = 0;
     }
 
-    public immedateCheckActiveButtons = () => {
+    immedateCheckActiveButtons = () => {
         if (this.jodit.isLocked()) {
             return;
         }
@@ -191,13 +194,13 @@ export class ToolbarCollection extends Component {
         this.jodit.events && this.jodit.events.fire('updateToolbar');
     };
 
-    public buttonIsActive(button: ToolbarButton): boolean | void {
+    buttonIsActive(button: ToolbarButton): boolean | void {
         if (typeof button.control.isActive === 'function') {
             return button.control.isActive(this.jodit, button.control, button);
         }
     };
 
-    public buttonIsDisabled(button: ToolbarButton): boolean | void {
+    buttonIsDisabled(button: ToolbarButton): boolean | void {
         if (this.jodit.options.disabled) {
             return true;
         }
@@ -212,13 +215,13 @@ export class ToolbarCollection extends Component {
             return true;
         }
 
-        let isEnable: boolean | void;
+        let isDisabled: boolean | void;
 
         if (typeof button.control.isDisable === 'function') {
-            isEnable = !button.control.isDisable(this.jodit, button.control, button);
+            isDisabled = button.control.isDisable(this.jodit, button.control, button);
         }
 
-        return !isEnable;
+        return isDisabled;
     };
 
     /**
@@ -235,10 +238,14 @@ export class ToolbarCollection extends Component {
         this.jodit.defaultTimeout
     );
 
-    public container: HTMLElement;
+    container: HTMLElement;
+
+    static makeCollection(jodit: IViewBased): ToolbarCollection {
+        return jodit instanceof Jodit ? new JoditToolbarCollection(jodit) : new ToolbarCollection(jodit);
+    }
 
     constructor(jodit: IViewBased) {
-        super(jodit);
+        super(<T>jodit);
         this.container = this.jodit.create.element('ul');
         this.container.classList.add('jodit_toolbar');
         this.initEvents();

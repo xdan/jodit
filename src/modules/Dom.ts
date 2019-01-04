@@ -5,8 +5,7 @@
  */
 
 import * as consts from '../constants';
-import { Jodit } from '../Jodit';
-import { HTMLTagNames, NodeCondition } from '../types';
+import { HTMLTagNames, IJodit, NodeCondition } from '../types';
 import { css } from './helpers/';
 import { trim } from './helpers/string';
 
@@ -33,7 +32,7 @@ export class Dom {
     static wrapInline = (
         current: Node,
         tag: Node | HTMLTagNames,
-        editor: Jodit
+        editor: IJodit
     ): HTMLElement => {
         let tmp: null | Node,
             first: Node = current,
@@ -63,7 +62,7 @@ export class Dom {
 
         const wrapper =
             typeof tag === 'string'
-                ? editor.editorDocument.createElement(tag)
+                ? editor.create.inside.element(tag)
                 : tag;
 
         if (first.parentNode) {
@@ -97,7 +96,7 @@ export class Dom {
     static wrap = (
         current: Node,
         tag: Node | string,
-        editor: Jodit
+        editor: IJodit
     ): HTMLElement | null => {
         const selInfo = editor.selection.save();
 

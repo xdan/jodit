@@ -4,9 +4,9 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Jodit } from '../Jodit';
 import { Component } from './Component';
 import { Dom } from './Dom';
+import { IJodit } from '../types';
 
 export class StatusBar extends Component {
     public container: HTMLElement;
@@ -36,7 +36,7 @@ export class StatusBar extends Component {
         Dom.safeRemove(this.container);
     }
 
-    constructor(jodit: Jodit, readonly target: HTMLElement) {
+    constructor(jodit: IJodit, readonly target: HTMLElement) {
         super(jodit);
         this.container = jodit.create.div('jodit_statusbar');
         target.appendChild(this.container);

@@ -5,9 +5,9 @@
  */
 
 import { Config } from '../Config';
-import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
 import { setTimeout } from '../modules/helpers/async';
+import { IJodit } from '../types';
 
 declare module '../Config' {
     interface Config {
@@ -25,7 +25,7 @@ Config.prototype.autofocus = false;
  *
  * @param {Jodit} editor
  */
-export function autofocus(editor: Jodit) {
+export function autofocus(editor: IJodit) {
     let timeout: number;
     editor.events
         .on('afterInit', () => {

@@ -8,7 +8,7 @@ import { Config, OptionsDefault } from './Config';
 import * as consts from './constants';
 import { Component } from './modules/Component';
 import { Dom } from './modules/Dom';
-import { Filebrowser } from './modules/filebrowser/filebrowser';
+import { FileBrowser } from './modules/filebrowser/fileBrowser';
 import {
     asArray,
     debounce,
@@ -20,29 +20,27 @@ import {
 } from './modules/helpers/';
 import { JoditArray } from './modules/helpers/JoditArray';
 import { JoditObject } from './modules/helpers/JoditObject';
-import { Observer } from './modules/observer/Observer';
+import { Observer } from './modules/observer/observer';
 import { Select } from './modules/Selection';
 import { StatusBar } from './modules/StatusBar';
 import { LocalStorageProvider } from './modules/storage/localStorageProvider';
-import { Storage } from './modules/storage/Storage';
+import { Storage } from './modules/storage/storage';
 import { Uploader } from './modules/Uploader';
 import {
     CustomCommand,
     ExecCommandCallback,
     IDictionary,
     IPlugin,
-    markerInfo,
+    markerInfo, Modes,
 } from './types/types';
 import { cache } from './modules/helpers/decorator';
 import { ViewWithToolbar } from './modules/view/viewWithToolbar';
-import { JoditToolbarCollection } from './modules/toolbar/joditCollection';
-
-declare let appVersion: string;
+import { IJodit } from './types/jodit';
 
 /**
  * Class Jodit. Main class
  */
-export class Jodit extends ViewWithToolbar {
+export class Jodit extends ViewWithToolbar implements IJodit {
     get value(): string {
         return this.getEditorValue();
     }
@@ -283,8 +281,6 @@ export class Jodit extends ViewWithToolbar {
         }
     }
 
-    public version: string = appVersion; // from webpack.config.js
-
     /**
      * @property {HTMLDocument} editorDocument
      */
@@ -297,7 +293,7 @@ export class Jodit extends ViewWithToolbar {
 
     public components: any = [];
 
-    toolbar: JoditToolbarCollection = new JoditToolbarCollection(this.jodit);
+    // toolbar: JoditToolbarCollection = new JoditToolbarCollection(this.jodit);
 
     /**
      * Container for set/get value
@@ -347,18 +343,18 @@ export class Jodit extends ViewWithToolbar {
     };
 
     /**
-     * @property {Filebrowser} filebrowser
+     * @property {FileBrowser} filebrowser
      */
     @cache()
-    public get filebrowser(): Filebrowser {
-        return new Filebrowser(this);
+    public get filebrowser(): FileBrowser {
+        return new FileBrowser(this);
     };
 
     public helper: any;
 
     public __plugins: IDictionary<IPlugin> = {};
 
-    public mode: number = consts.MODE_WYSIWYG;
+    public mode: Modes = consts.MODE_WYSIWYG;
 
     /**
      * Return source element value
@@ -743,7 +739,7 @@ export class Jodit extends ViewWithToolbar {
      * Return current editor mode: Jodit.MODE_WYSIWYG, Jodit.MODE_SOURCE or Jodit.MODE_SPLIT
      * @return {number}
      */
-    public getMode(): number {
+    public getMode(): Modes {
         return this.mode;
     }
     public isEditorMode(): boolean {
@@ -761,7 +757,7 @@ export class Jodit extends ViewWithToolbar {
      * console.log(editor.getRealMode());
      * ```
      */
-    public getRealMode(): number {
+    public getRealMode(): Modes {
         if (this.getMode() !== consts.MODE_SPLIT) {
             return this.getMode();
         }
@@ -786,9 +782,9 @@ export class Jodit extends ViewWithToolbar {
      * @fired afterSetMode
      */
     public setMode(mode: number | string) {
-        const oldmode: number = this.getMode();
+        const oldmode: Modes = this.getMode();
         const data = {
-                mode: parseInt(mode.toString(), 10),
+                mode: <Modes>parseInt(mode.toString(), 10),
             },
             modeClasses = [
                 'jodit_wysiwyg_mode',
@@ -951,16 +947,6 @@ export class Jodit extends ViewWithToolbar {
 
         return parse(key);
     }
-
-    /**
-     * Return current version
-     *
-     * @method getVersion
-     * @return {string}
-     */
-    public getVersion = () => {
-        return this.version;
-    };
 
     /**
      * Switch on/off the editor into the disabled state.

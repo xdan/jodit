@@ -9,16 +9,17 @@ import * as consts from '../constants';
 import { Jodit } from '../Jodit';
 import { Plugin } from '../modules/Plugin';
 import { IControlType } from '../types/toolbar';
+import { IJodit } from '../types';
 
 Config.prototype.controls.redo = {
     mode: consts.MODE_SPLIT,
-    isDisable: (editor: Jodit): boolean => !editor.observer.stack.canRedo(),
+    isDisable: (editor: IJodit): boolean => !editor.observer.stack.canRedo(),
     tooltip: 'Redo',
 } as IControlType;
 
 Config.prototype.controls.undo = {
     mode: consts.MODE_SPLIT,
-    isDisable: (editor: Jodit): boolean => !editor.observer.stack.canUndo(),
+    isDisable: (editor: IJodit): boolean => !editor.observer.stack.canUndo(),
     tooltip: 'Undo',
 } as IControlType;
 

@@ -74,8 +74,8 @@
         "typescript": "^3.2.2",
         "uglifyjs-webpack-plugin": "^2.1.1",
         "url-loader": "^1.1.2",
-        "webpack": "^4.28.2",
-        "webpack-cli": "^3.1.2",
+        "webpack": "^4.28.3",
+        "webpack-cli": "^3.2.0",
         "webpack-dev-middleware": "^3.4.0",
         "webpack-dev-server": "^3.1.14",
         "webpack-hot-middleware": "^2.24.3"

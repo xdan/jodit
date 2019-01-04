@@ -308,9 +308,9 @@ describe('Test interface', function() {
                            return fontname.querySelector('.jodit_toolbar_list.jodit_toolbar_list-open > ul')
                         }
 
-                        expect(openFontnameList()).to.be.not.equal(null);
+                        expect(openFontnameList()).to.be.not.null;
 
-                        [].slice.call(openFontnameList().childNodes).forEach(function (font, index) {
+                        Array.from(openFontnameList().childNodes).forEach(function (font, index) {
                             font = openFontnameList().childNodes[index];
                             simulateEvent('mousedown', 0, font);
                             var fontFamily = font.querySelector('span[style]').getAttribute('style').replace(/"/g, "'");
@@ -462,8 +462,7 @@ describe('Test interface', function() {
                             }
                         });
 
-                        editor.setEditorValue('test test <a href="#">test</a>')
-
+                        editor.setEditorValue('test test <a href="#">test</a>');
 
                         simulateEvent('mousedown', 0, editor.editor.querySelector('a'))
                         var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
@@ -1395,8 +1394,7 @@ describe('Test interface', function() {
 
                             simulateEvent('mousedown', 0, popupColor.querySelector('.jodit_colorpicker_group>a'));
 
-
-                            expect(editor.helper.normalizeColor(td.style.backgroundColor)).to.equal('#000000');
+                            expect(Jodit.modules.Helpers.normalizeColor(td.style.backgroundColor)).to.equal('#000000');
 
                         });
                     });
@@ -1405,14 +1403,13 @@ describe('Test interface', function() {
             it('Select table cell and change it vertical align', function () {
                 var editor = new Jodit(appendTestArea());
 
-                editor.setEditorValue('<table>' +
+                editor.value = '<table>' +
                     '<tr><td style="vertical-align: middle">3</td></tr>' +
-                    '</table>');
+                    '</table>';
 
                 var td = editor.editor.querySelector('td');
 
                 simulateEvent('mousedown', 0, td)
-
 
                 var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
 

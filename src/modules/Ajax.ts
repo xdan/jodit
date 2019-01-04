@@ -13,7 +13,7 @@ import { each, extend } from './helpers/';
  * @property {object} defaultAjaxOptions A set of key/value pairs that configure the Ajax request. All settings
  * are optional
  * @property {object} defaultAjaxOptions.headers An object of additional header key/value pairs toWYSIWYG send along
- * with requests using the XMLHttpRequest transport. Uses in {@link module:FileBrowser|Filebrowser}
+ * with requests using the XMLHttpRequest transport. Uses in {@link module:FileBrowser|FileBrowser}
  * and {@link module:Uploader|Uploader}
  * @property {string} defaultAjaxOptions.dataType='json' json or text The type of data that you're expecting back
  * from the server. if `json` the return value passes through the `JSON.parse`

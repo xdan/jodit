@@ -9,14 +9,14 @@ import { BR, PARAGRAPH } from '../constants';
 import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
 import { IControlType } from '../types/toolbar';
-import { HTMLTagNames } from '../types';
+import { HTMLTagNames, IJodit } from '../types';
 
 Config.prototype.controls.indent = {
     tooltip: 'Increase Indent',
 } as IControlType;
 
 Config.prototype.controls.outdent = {
-    isDisable: (editor: Jodit): boolean => {
+    isDisable: (editor: IJodit): boolean => {
         const current: Node | false = editor.selection.current();
 
         if (current) {

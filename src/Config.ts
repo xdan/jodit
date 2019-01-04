@@ -20,10 +20,11 @@ import {
     val,
 } from './modules/helpers/';
 import { ToolbarIcon } from './modules/toolbar/icon';
-import { IDictionary, IViewOptions } from './types';
-import { IFileBrowserCallBackData } from './types/filebrowser';
+import { IDictionary, IJodit, IViewOptions } from './types';
+import { IFileBrowserCallBackData } from './types/fileBrowser';
 import { Buttons, Controls, IControlType } from './types/toolbar';
 import { extend } from './modules/helpers/extend';
+import { cache } from './modules/helpers/decorator';
 
 /**
  * Default Editor's Configuration
@@ -611,7 +612,7 @@ export class Config implements IViewOptions {
      *                 this.val('');
      *                 return;
      *             }
-     *             this.selection.insertNode(Jodit.modules.Dom.create(key, ''));
+     *             this.selection.insertNode(this.create.element(key, ''));
      *             this.events.fire('errorMessage', 'Was inserted ' + value);
      *        },
      *        template: function (key, value) {
@@ -759,6 +760,11 @@ export class Config implements IViewOptions {
      * @type {boolean}
      */
     public textIcons: boolean = false;
+
+    @cache()
+    static get defaultOptions(): Config {
+        return new Config();
+    }
 }
 
 export const OptionsDefault: any = function(this: any, options: any) {
@@ -799,7 +805,7 @@ export const OptionsDefault: any = function(this: any, options: any) {
 
 Config.prototype.controls = {
     print: {
-        exec: (editor: Jodit) => {
+        exec: (editor: IJodit) => {
             const mywindow: Window | null = window.open('', 'PRINT');
 
             if (mywindow) {
@@ -814,6 +820,7 @@ Config.prototype.controls = {
                         mywindow.document,
                         editor
                     );
+
                     mywindow.document.body.innerHTML = editor.value;
                 } else {
                     mywindow.document.write(
@@ -831,8 +838,9 @@ Config.prototype.controls = {
         },
         mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG,
     } as IControlType,
+
     about: {
-        exec: (editor: Jodit) => {
+        exec: (editor: IJodit) => {
             const dialog: any = editor.getInstance('Dialog');
 
             dialog.setTitle(editor.i18n('About Jodit'));
@@ -876,14 +884,16 @@ Config.prototype.controls = {
         tooltip: 'About Jodit',
         mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG,
     } as IControlType,
+
     hr: {
         command: 'insertHorizontalRule',
         tags: ['hr'],
         tooltip: 'Insert Horizontal Line',
     } as IControlType,
+
     image: {
         popup: (
-            editor: Jodit,
+            editor: IJodit,
             current: HTMLImageElement | false,
             self: IControlType,
             close
@@ -950,9 +960,10 @@ Config.prototype.controls = {
         tags: ['img'],
         tooltip: 'Insert Image',
     } as IControlType,
+
     file: {
         popup: (
-            editor: Jodit,
+            editor: IJodit,
             current: Node | false,
             self: IControlType,
             close
@@ -1028,7 +1039,7 @@ Config.prototype.controls = {
         tooltip: 'Insert file',
     } as IControlType,
     video: {
-        popup: (editor: Jodit, current, control, close) => {
+        popup: (editor: IJodit, current, control, close) => {
             const bylink: HTMLFormElement = editor.create.fromHTML(
                     `<form class="jodit_form">
                         <input required name="code" placeholder="http://" type="url"/>

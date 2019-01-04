@@ -5,10 +5,11 @@
  */
 
 import { View } from './view';
-import { ToolbarCollection } from '..';
+import { ToolbarCollection } from '../toolbar/collection';
+import { IViewWithToolbar } from '../../types/view';
 
-export class ViewWithToolbar extends View {
-    toolbar: ToolbarCollection = new ToolbarCollection(this.jodit);
+export class ViewWithToolbar extends View implements  IViewWithToolbar {
+    toolbar: ToolbarCollection = ToolbarCollection.makeCollection(this.jodit);
 
     destruct() {
         this.toolbar.destruct();

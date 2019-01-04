@@ -6,16 +6,16 @@
 
 import * as consts from '../constants';
 import { MAY_BE_REMOVED_WITH_KEY } from '../constants';
-import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
 import { normalizeNode, trim } from '../modules/helpers/';
+import { IJodit } from '../types';
 
 /**
  * Plug-in process entering Backspace key
  *
  * @module backspace
  */
-export function backspace(editor: Jodit) {
+export function backspace(editor: IJodit) {
     const removeEmptyBlocks = (container: HTMLElement) => {
         let box: HTMLElement | null = container,
             parent: Node | null;

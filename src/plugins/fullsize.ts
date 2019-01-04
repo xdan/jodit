@@ -6,12 +6,12 @@
 
 import { Config } from '../Config';
 import * as consts from '../constants';
-import { Jodit } from '../Jodit';
 import { css } from '../modules/helpers/';
 import { ToolbarButton } from '../modules/toolbar/button';
 import { ToolbarIcon } from '../modules/toolbar/icon';
 import { IControlType } from '../types/toolbar';
 import { ViewWithToolbar } from '../modules/view/viewWithToolbar';
+import { IJodit } from '../types';
 
 /**
  * Fullsize plugin
@@ -48,11 +48,11 @@ declare module '../Config' {
 Config.prototype.fullsize = false;
 Config.prototype.globalFullsize = true;
 Config.prototype.controls.fullsize = {
-    exec: (editor: Jodit) => {
+    exec: (editor: IJodit) => {
         editor.toggleFullSize();
     },
-    isActive: (editor: Jodit) => editor.isFullSize(),
-    getLabel: (editor: Jodit, btn: IControlType, button: ToolbarButton) => {
+    isActive: (editor: IJodit) => editor.isFullSize(),
+    getLabel: (editor: IJodit, btn: IControlType, button: ToolbarButton) => {
         const mode: string = editor.isFullSize() ? 'shrink' : 'fullsize';
 
         button.textBox.innerHTML = !editor.options.textIcons

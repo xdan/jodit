@@ -9,13 +9,13 @@ import * as consts from '../constants';
 import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
 import { ToolbarButton } from '../modules/toolbar/button';
-import { HTMLTagNames, markerInfo } from '../types';
+import { HTMLTagNames, IJodit, markerInfo } from '../types';
 import { IControlType } from '../types/toolbar';
 
 Config.prototype.controls.paragraph = {
     command: 'formatBlock',
     getLabel: (
-        editor: Jodit,
+        editor: IJodit,
         btn: IControlType,
         button: ToolbarButton
     ): boolean => {
@@ -49,7 +49,7 @@ Config.prototype.controls.paragraph = {
 
         return false;
     },
-    exec: (editor: Jodit, event, control: IControlType) => {
+    exec: (editor: IJodit, event, control: IControlType) => {
         editor.execCommand(
             control.command as string,
             false,
@@ -67,7 +67,7 @@ Config.prototype.controls.paragraph = {
         h4: 'Heading 4',
         blockquote: 'Quote',
     },
-    isActiveChild: (editor: Jodit, control: IControlType): boolean => {
+    isActiveChild: (editor: IJodit, control: IControlType): boolean => {
         const current: Node | false = editor.selection.current();
 
         if (current) {
@@ -87,7 +87,7 @@ Config.prototype.controls.paragraph = {
 
         return false;
     },
-    isActive: (editor: Jodit, control: IControlType): boolean => {
+    isActive: (editor: IJodit, control: IControlType): boolean => {
         const current: Node | false = editor.selection.current();
 
         if (current) {
@@ -110,7 +110,7 @@ Config.prototype.controls.paragraph = {
 
         return false;
     },
-    template: (editor: Jodit, key: string, value: string) => {
+    template: (editor: IJodit, key: string, value: string) => {
         return (
             '<' +
             key +

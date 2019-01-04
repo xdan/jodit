@@ -5,8 +5,7 @@
  */
 
 import { Config } from '../../Config';
-import { Jodit } from '../../Jodit';
-import { SnapshotType } from '../../types';
+import { IJodit, SnapshotType } from '../../types';
 import { Component } from '../Component';
 import { debounce } from '../helpers/async';
 import { Snapshot } from '../Snapshot';
@@ -37,7 +36,7 @@ Config.prototype.observer = {
  * @see {@link Snapshot|Snapshot}
  * @params {Jodit} parent Jodit main object
  */
-export class Observer extends Component<Jodit> {
+export class Observer extends Component<IJodit> {
     private __startValue: SnapshotType;
     private __newValue: SnapshotType;
 
@@ -94,7 +93,7 @@ export class Observer extends Component<Jodit> {
             this.jodit.events.fire('changeStack');
     }
 
-    constructor(editor: Jodit) {
+    constructor(editor: IJodit) {
         super(editor);
 
         this.stack = new Stack();

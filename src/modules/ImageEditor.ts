@@ -5,8 +5,7 @@
  */
 
 import { Config } from '../Config';
-import { Jodit } from '../Jodit';
-import { ActionBox, ImageEditorOptions } from '../types';
+import { ActionBox, IJodit, ImageEditorOptions } from '../types';
 import { IViewBased } from '../types/view';
 import { Component } from './Component';
 import { Alert, Dialog, Promt } from './dialog/';
@@ -19,6 +18,7 @@ declare module '../Config' {
         imageeditor: ImageEditorOptions;
     }
 }
+
 Config.prototype.imageeditor = {
     min_width: 20,
     min_height: 20,
@@ -781,9 +781,9 @@ export class ImageEditor extends Component {
         super(editor);
 
         this.options =
-            editor && (editor as Jodit).options
-                ? (editor as Jodit).options.imageeditor
-                : Jodit.defaultOptions.imageeditor;
+            editor && (editor as IJodit).options
+                ? (editor as IJodit).options.imageeditor
+                : Config.defaultOptions.imageeditor;
 
         this.resizeUseRatio = this.options.resizeUseRatio;
         this.cropUseRatio = this.options.cropUseRatio;

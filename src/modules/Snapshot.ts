@@ -4,15 +4,14 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { SnapshotType } from '../types';
+import { IJodit, SnapshotType } from '../types';
 import { Component } from './Component';
 import { Dom } from './Dom';
-import { Jodit } from '../Jodit';
 
 /**
  * Module for creating snapshot of editor which includes html content and the current selection
  */
-export class Snapshot extends Component<Jodit> {
+export class Snapshot extends Component<IJodit> {
     /**
      * Compare two snapshotes, if and htmls and selections match, then return true
      *

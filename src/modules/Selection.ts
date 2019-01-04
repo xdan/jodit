@@ -25,27 +25,33 @@ import { setTimeout } from './helpers/async/setTimeout';
 export class Select {
     private readonly doc: Document;
     private readonly win: Window;
-    private readonly area: HTMLElement;
     private readonly iframe: HTMLIFrameElement | null;
 
     constructor(readonly jodit: Jodit) {
         this.doc = jodit.editorDocument;
         this.win = jodit.editorWindow;
-        this.area = jodit.editor;
         this.iframe = jodit.iframe;
     }
 
     /**
+     * Return current work place - for Jodit is Editor
+     */
+    get area(): HTMLElement {
+        return this.jodit.editor;
+    }
+
+
+    /**
      * Return current selection object
      */
-    private get sel(): Selection {
+    get sel(): Selection {
         return this.win.getSelection();
     }
 
     /**
      * Return current selection object
      */
-    private createRange(): Range {
+    createRange(): Range {
         return this.doc.createRange();
     }
 
@@ -368,7 +374,9 @@ export class Select {
      * @return false|Node The element under the cursor or false if undefined or not in editor
      */
     current(checkChild: boolean = true): false | Node {
-        if (this.isFocused()) {
+        if (
+            this.jodit.getRealMode() === consts.MODE_WYSIWYG
+        ) {
             const sel: Selection = this.sel;
 
             if (sel && sel.rangeCount > 0) {
@@ -475,7 +483,7 @@ export class Select {
         const sel: Selection = this.sel;
 
         if (!this.isCollapsed()) {
-            this.doc.execCommand('Delete');
+            this.jodit.execCommand('Delete');
         }
 
         if (sel.rangeCount) {
@@ -642,7 +650,7 @@ export class Select {
 
         /**
          * Triggered after image was inserted {@link Selection~insertImage|insertImage}. This method can executed from
-         * {@link Filebrowser|Filebrowser} or {@link Uploader|Uploader}
+         * {@link FileBrowser|FileBrowser} or {@link Uploader|Uploader}
          * @event afterInsertImage
          * @param {HTMLImageElement} image
          * @example
@@ -1039,8 +1047,8 @@ export class Select {
 
         let mode: number;
 
-        const defaultTag: string = 'SPAN';
-        const FONT: string = 'FONT';
+        const defaultTag = 'SPAN',
+            FONT = 'FONT';
 
         const findNextCondition = (elm: Node | null): boolean =>
             elm !== null &&
@@ -1318,16 +1326,17 @@ export class Select {
             }
 
             if (nodeName.toUpperCase() === defaultTag || !clearStyle) {
-                const node: Node = this.jodit.create.element(
+                const node: Node = this.jodit.create.inside.element(
                     nodeName
                 );
                 node.appendChild(
-                    this.jodit.create.text(
+                    this.jodit.create.inside.text(
                         consts.INVISIBLE_SPACE
                     )
                 );
 
                 await this.insertNode(node, false, false);
+
                 if (nodeName.toUpperCase() === defaultTag && cssRules) {
                     css(node as HTMLElement, cssRules);
                 }

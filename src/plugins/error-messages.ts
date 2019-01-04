@@ -5,10 +5,10 @@
  */
 
 import { Config } from '../Config';
-import { Jodit } from '../Jodit';
-import { Dom } from '../modules';
+import { Dom } from '../modules/Dom';
 import { setTimeout } from '../modules/helpers/async';
 import { css } from '../modules/helpers';
+import { IJodit } from '../types';
 
 declare module '../Config' {
     interface Config {
@@ -35,7 +35,7 @@ Config.prototype.showMessageErrorOffsetPx = 3;
 /**
  * Plugin toWYSIWYG display pop-up messages in the lower right corner of the editor
  */
-export function errorMessages(editor: Jodit) {
+export function errorMessages(editor: IJodit) {
     if (editor.options.showMessageErrors) {
         let height: number;
 

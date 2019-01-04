@@ -5,7 +5,7 @@
  */
 
 import { SnapshotType } from '../../types';
-import { Observer } from './Observer';
+import { Observer } from './observer';
 
 export class Command {
     private observer: Observer;

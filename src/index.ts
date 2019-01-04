@@ -45,6 +45,10 @@ Object.keys(Modules)
         Jodit.modules[key] = (Modules as any)[key];
     });
 
+['Confirm', 'Alert', 'Promt'].forEach((key: string) => {
+    (Jodit as any)[key] = (Modules as any)[key];
+});
+
 // Plugins
 Object.keys(Plugins)
     .filter(esFilter)
@@ -59,7 +63,7 @@ Object.keys(Languages)
         Jodit.lang[key] = (Languages as any)[key];
     });
 
-Jodit.defaultOptions = new Config();
+Jodit.defaultOptions = Config.defaultOptions;
 OptionsDefault.prototype = Jodit.defaultOptions;
 
 export = Jodit;

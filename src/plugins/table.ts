@@ -7,7 +7,9 @@
 import { Config } from '../Config';
 import * as consts from '../constants';
 import { Jodit } from '../Jodit';
-import { Plugin, Dom, Table } from '../modules/';
+import { Plugin } from '../modules/Plugin';
+import { Dom } from '../modules/Dom';
+import { Table } from '../modules/Table';
 import {
     $$,
     getContentWidth,
@@ -17,6 +19,7 @@ import {
 import { ToolbarButton } from '../modules/toolbar/button';
 import { IControlType } from '../types/toolbar';
 import { IBound, IDictionary } from '../types/types';
+import { IJodit } from '../types';
 
 declare module '../Config' {
     interface Config {
@@ -42,7 +45,7 @@ Config.prototype.controls.table = {
         },
     },
     popup: (
-        editor: Jodit,
+        editor: IJodit,
         current,
         control: IControlType,
         close: () => void,

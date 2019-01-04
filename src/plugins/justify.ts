@@ -8,17 +8,17 @@ import { Config } from '../Config';
 import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
 import { $$, css } from '../modules/helpers/';
-import { ToolbarButton } from '../modules/toolbar/button';
 import { ToolbarIcon } from '../modules/toolbar/icon';
 import { IControlType } from '../types/toolbar';
+import { IJodit } from '../types';
 
 Config.prototype.controls.align = {
     name: 'left',
     tooltip: 'Align',
     getLabel: (
-        editor: Jodit,
-        btn: IControlType,
-        button: ToolbarButton
+        editor: IJodit,
+        btn,
+        button
     ): boolean => {
         const current: Node | false = editor.selection.current();
 
@@ -40,6 +40,7 @@ Config.prototype.controls.align = {
             }
 
             if (
+                button &&
                 btn.data &&
                 btn.data.currentValue !== currentValue &&
                 btn.list &&
@@ -57,7 +58,7 @@ Config.prototype.controls.align = {
 
         return false;
     },
-    isActive: (editor: Jodit, btn: IControlType): boolean => {
+    isActive: (editor: IJodit, btn): boolean => {
         const current: Node | false = editor.selection.current();
 
         if (current && btn.defaultValue) {

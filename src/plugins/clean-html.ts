@@ -7,7 +7,6 @@
 import { Config } from '../Config';
 import * as consts from '../constants';
 import { IS_INLINE } from '../constants';
-import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
 import {
     cleanFromWord,
@@ -16,7 +15,7 @@ import {
     trim,
 } from '../modules/helpers/';
 import { Select } from '../modules/Selection';
-import { IDictionary } from '../types';
+import { IDictionary, IJodit } from '../types';
 
 /**
  * @property {object} cleanHTML {@link cleanHtml|cleanHtml}'s options
@@ -102,7 +101,7 @@ Config.prototype.controls.eraser = {
 /**
  * Clean HTML after removeFormat and insertHorizontalRule command
  */
-export function cleanHtml(editor: Jodit) {
+export function cleanHtml(editor: IJodit) {
     // TODO compare this functionality and plugin paste.ts
     if (editor.options.cleanHTML.cleanOnPaste) {
         editor.events.on('processPaste', (event: Event, html: string) => {
@@ -400,12 +399,14 @@ export function cleanHtml(editor: Jodit) {
                             editor.editor,
                             false
                         ) as Node | null;
+
                         if (!node) {
                             node = editor.create.inside.element(editor.options.enter);
                             if (node) {
                                 Dom.after(hr, node as HTMLElement);
                             }
                         }
+
                         sel.setCursorIn(node);
                     }
                     break;

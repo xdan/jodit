@@ -5,7 +5,7 @@
  */
 
 import { TEXT_HTML, TEXT_PLAIN } from '../constants';
-import { Dom } from '../modules/';
+import { Dom } from '../modules/Dom';
 import {
     css,
     ctrlKey,

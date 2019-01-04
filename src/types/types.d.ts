@@ -10,6 +10,11 @@ export interface IDictionary<T = any> {
     [key: string]: T;
 }
 
+interface IComponent {
+    isDestructed: boolean;
+    destruct(): any;
+}
+
 export type NodeCondition = (node: Node | null) => boolean | null | void | '';
 
 /**
@@ -156,3 +161,5 @@ export interface EventHandlerBlock {
 }
 
 export type HTMLTagNames = keyof HTMLElementTagNameMap;
+
+export type Modes = 1 | 2 | 3;

@@ -12,7 +12,7 @@ import { debounce } from '../modules/helpers/async';
 import { getXPathByElement } from '../modules/helpers/selector';
 import { Plugin } from '../modules/Plugin';
 import { ToolbarButton } from '../modules/toolbar/button';
-import { IControlType } from '../types/toolbar';
+import { IControlType, IControlTypeStrong } from '../types/toolbar';
 
 declare module '../Config' {
     interface Config {
@@ -128,7 +128,7 @@ export class xpath extends Plugin {
     };
 
     private appendSelectAll = () => {
-        const li: ToolbarButton = new ToolbarButton(this.jodit, {
+        const li: ToolbarButton = new ToolbarButton(this.jodit, <IControlTypeStrong>{
             name: 'selectall',
             ...this.jodit.options.controls.selectall,
         });
@@ -194,7 +194,7 @@ export class xpath extends Plugin {
 
     public afterInit() {
         if (this.jodit.options.showXPathInStatusbar) {
-            this.container = this.jodit.ownerDocument.createElement('ul');
+            this.container = this.jodit.create.element('ul');
             this.container.classList.add('jodit_xpath');
             this.jodit.statusbar.append(this.container);
 

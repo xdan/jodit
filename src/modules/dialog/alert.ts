@@ -3,8 +3,8 @@
  * License GNU General Public License version 2 or later;
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
-import { Dialog } from './Dialog';
-import { ToolbarIcon } from '..';
+import { Dialog } from './dialog';
+import { ToolbarIcon } from '../toolbar/icon';
 import { Jodit } from '../../Jodit';
 
 /**
@@ -67,5 +67,3 @@ export const Alert = (
 
     return dialog;
 };
-
-(Jodit as any).Alert = Alert;

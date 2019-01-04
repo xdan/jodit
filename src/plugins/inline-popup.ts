@@ -13,12 +13,11 @@ import { Dom } from '../modules/Dom';
 import { css, debounce, offset, splitArray } from '../modules/helpers/';
 import { Plugin } from '../modules/Plugin';
 import { Table } from '../modules/Table';
-import { JoditToolbarCollection } from '../modules/toolbar/joditCollection';
 import { Popup } from '../modules/popup/popup';
-import { IDictionary } from '../types';
+import { IDictionary, IJodit } from '../types';
 import { IControlType } from '../types/toolbar';
 import { IBound } from '../types/types';
-import { ToolbarCollection } from '../modules';
+import { ToolbarCollection } from '../modules/toolbar/collection';
 
 declare module '../Config' {
     interface Config {
@@ -36,10 +35,11 @@ Config.prototype.popup = {
         {
             name: 'eye',
             tooltip: 'Open link',
-            exec: (editor: Jodit, current: Node) => {
+            exec: (editor: IJodit, current: Node) => {
                 const href:
                     | string
                     | null = (current as HTMLElement).getAttribute('href');
+
                 if (current && href) {
                     editor.ownerWindow.open(href);
                 }
@@ -58,7 +58,7 @@ Config.prototype.popup = {
         {
             name: 'bin',
             tooltip: 'Delete',
-            exec: (editor: Jodit, image: Node) => {
+            exec: (editor: IJodit, image: Node) => {
                 if (image.parentNode) {
                     Dom.safeRemove(image);
                     editor.events.fire('hidePopup');
@@ -70,7 +70,7 @@ Config.prototype.popup = {
         {
             name: 'bin',
             tooltip: 'Delete',
-            exec: (editor: Jodit, image: Node) => {
+            exec: (editor: IJodit, image: Node) => {
                 if (image.parentNode) {
                     Dom.safeRemove(image);
                     editor.events.fire('hidePopup');
@@ -82,7 +82,7 @@ Config.prototype.popup = {
         {
             name: 'bin',
             tooltip: 'Delete',
-            exec: (editor: Jodit, image: Node) => {
+            exec: (editor: IJodit, image: Node) => {
                 if (image.parentNode) {
                     Dom.safeRemove(image);
                     editor.events.fire('hidePopup');
@@ -91,7 +91,7 @@ Config.prototype.popup = {
         },
         {
             name: 'pencil',
-            exec(editor: Jodit, current: Node) {
+            exec(editor: IJodit, current: Node) {
                 const tagName: string = (current as HTMLElement).tagName.toLowerCase();
                 if (tagName === 'img') {
                     editor.events.fire('openImageProperties', current);
@@ -104,7 +104,7 @@ Config.prototype.popup = {
             list: ['Top', 'Middle', 'Bottom'],
             tooltip: 'Vertical align',
             exec: (
-                editor: Jodit,
+                editor: IJodit,
                 image: HTMLImageElement,
                 control: IControlType
             ) => {
@@ -186,7 +186,7 @@ Config.prototype.popup = {
     table: [
         {
             name: 'brush',
-            popup: (editor: Jodit, elm: HTMLTableElement) => {
+            popup: (editor: IJodit, elm: HTMLTableElement) => {
                 const selected: HTMLTableCellElement[] = Table.getAllSelectedCells(
                     elm
                 );
@@ -257,7 +257,7 @@ Config.prototype.popup = {
             name: 'valign',
             list: ['Top', 'Middle', 'Bottom'],
             exec: (
-                editor: Jodit,
+                editor: IJodit,
                 table: HTMLTableElement,
                 control: IControlType
             ) => {
@@ -341,7 +341,7 @@ Config.prototype.popup = {
                 tableempty: 'Empty cell',
             },
             exec: (
-                editor: Jodit,
+                editor: IJodit,
                 table: HTMLTableElement,
                 control: IControlType
             ) => {
@@ -651,6 +651,18 @@ export class inlinePopup extends Plugin {
     };
 
     public afterInit(editor: Jodit) {
+        this.toolbar = ToolbarCollection.makeCollection(editor);
+
+        this.target = editor.create.div('jodit_toolbar_popup-inline-target');
+        this.container = editor.create.div();
+
+        this.popup = new Popup(
+            editor,
+            this.target,
+            void 0,
+            'jodit_toolbar_popup-inline'
+        );
+
         editor.events
             .on(
                 this.target,
@@ -690,7 +702,9 @@ export class inlinePopup extends Plugin {
                         ? elm
                         : elm.nodeName
                     ).toLowerCase();
+
                     this.isSelectionPopup = false;
+
                     this.showPopup(
                         rect,
                         elementName,
@@ -735,20 +749,5 @@ export class inlinePopup extends Plugin {
                 'mousedown keydown touchstart',
                 this.checkIsTargetEvent
             );
-    }
-
-    constructor(jodit: Jodit) {
-        super(jodit);
-        this.toolbar = new JoditToolbarCollection(jodit);
-
-        this.target = jodit.create.div('jodit_toolbar_popup-inline-target');
-        this.container = jodit.create.div();
-
-        this.popup = new Popup(
-            jodit,
-            this.target,
-            void 0,
-            'jodit_toolbar_popup-inline'
-        );
     }
 }

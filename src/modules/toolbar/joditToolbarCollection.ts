@@ -6,15 +6,12 @@
 
 import { ToolbarCollection } from './collection';
 import { ToolbarButton } from './button';
-import { IDictionary, IViewBased } from '../../types';
+import { IDictionary, IJodit, IViewBased } from '../../types';
 import { Dom } from '../Dom';
-import { Jodit } from '../../Jodit';
 import { css } from '../helpers';
 import * as consts from '../../constants';
 
-export class JoditToolbarCollection extends ToolbarCollection {
-    public jodit: Jodit;
-
+export class JoditToolbarCollection extends ToolbarCollection<IJodit> {
     checkActiveStatus = (
         cssObject:
             | IDictionary<string | string[]>
@@ -139,7 +136,7 @@ export class JoditToolbarCollection extends ToolbarCollection {
                 ? consts.MODE_WYSIWYG
                 : button.control.mode;
 
-        return mode === consts.MODE_SPLIT || mode === this.jodit.getRealMode();
+        return !(mode === consts.MODE_SPLIT || mode === this.jodit.getRealMode());
     }
 
     /**

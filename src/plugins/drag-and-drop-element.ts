@@ -14,7 +14,7 @@ import {
     throttle,
 } from '../modules/helpers/';
 import { Plugin } from '../modules/Plugin';
-import { Dom } from '../modules';
+import { Dom } from '../modules/Dom';
 
 declare module '../Config' {
     interface Config {

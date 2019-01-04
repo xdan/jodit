@@ -9,7 +9,7 @@ import * as consts from '../constants';
 import { Jodit } from '../Jodit';
 import { css } from '../modules/helpers/css';
 import { debounce } from '../modules/helpers/async';
-import { Dom } from '../modules';
+import { Dom } from '../modules/Dom';
 
 /**
  * Show placeholder

@@ -11,11 +11,14 @@ import { Component } from '../Component';
 import { EventsNative } from '../events/eventsNative';
 import { Panel } from './panel';
 
+declare let appVersion: string;
+
 export class View extends Panel implements IViewBased {
     /**
      * @property{string} ID attribute for source element, id add {id}_editor it's editor's id
      */
     public id: string;
+    public version: string = appVersion; // from webpack.config.js
 
     private __modulesInstances: IDictionary<Component> = {};
 
@@ -86,6 +89,16 @@ export class View extends Panel implements IViewBased {
 
         return this.__modulesInstances[moduleName] as any;
     }
+
+    /**
+     * Return current version
+     *
+     * @method getVersion
+     * @return {string}
+     */
+    public getVersion = (): string => {
+        return this.version;
+    };
 
     public destruct() {
         this.events.destruct();

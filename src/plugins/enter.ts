@@ -5,10 +5,9 @@
  */
 
 import * as consts from '../constants';
-import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
 import { $$, scrollIntoView } from '../modules/helpers/';
-import { HTMLTagNames } from '../types';
+import { HTMLTagNames, IJodit } from '../types';
 
 /**
  * Insert default paragraph
@@ -20,7 +19,7 @@ import { HTMLTagNames } from '../types';
  * @return {HTMLElement}
  */
 export const insertParagraph = async (
-    editor: Jodit,
+    editor: IJodit,
     fake: Text | false,
     wrapperTag: HTMLTagNames,
     style?: CSSStyleDeclaration
@@ -57,7 +56,7 @@ export const insertParagraph = async (
  * One of most important core plugins. It is responsible for all the browsers to have the same effect when the Enter
  * button is pressed. By default, it should insert the <p>
  */
-export function enter(editor: Jodit) {
+export function enter(editor: IJodit) {
     // use 'enter' option if no set
     if (!editor.options.enterBlock) {
         editor.options.enterBlock =

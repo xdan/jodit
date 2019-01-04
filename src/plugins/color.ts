@@ -5,19 +5,18 @@
  */
 
 import { Config } from '../Config';
-import { Jodit } from '../Jodit';
 import { Widget } from '../modules/Widget';
 import TabsWidget = Widget.TabsWidget;
 import ColorPickerWidget = Widget.ColorPickerWidget;
 import { Dom } from '../modules/Dom';
 import { css, normalizeColor } from '../modules/helpers/';
 import { ToolbarButton } from '../modules/toolbar/button';
-import { IDictionary } from '../types';
+import { IDictionary, IJodit } from '../types';
 import { IControlType } from '../types/toolbar';
 
 Config.prototype.controls.brush = {
     isActive: (
-        editor: Jodit,
+        editor: IJodit,
         btn: IControlType,
         button: ToolbarButton
     ): boolean => {
@@ -61,7 +60,7 @@ Config.prototype.controls.brush = {
     },
 
     popup: (
-        editor: Jodit,
+        editor: IJodit,
         current: Node | false,
         self: IControlType,
         close: () => void
@@ -132,7 +131,7 @@ Config.prototype.controls.brush = {
  * Process commands `background` and `forecolor`
  * @param {Jodit} editor
  */
-export function color(editor: Jodit) {
+export function color(editor: IJodit) {
     const callback = async (
         command: string,
         second: string,

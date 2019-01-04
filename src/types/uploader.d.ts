@@ -7,7 +7,7 @@
 import { IDictionary } from './types';
 import { IViewBased } from './view';
 
-export interface IUploaderData {
+interface IUploaderData {
     messages?: string[];
     files?: string[];
     isImages?: boolean[];
@@ -16,7 +16,7 @@ export interface IUploaderData {
     newfilename?: string;
 }
 
-export interface IUploaderAnswer {
+interface IUploaderAnswer {
     success: boolean;
     time: string;
     data: IUploaderData;

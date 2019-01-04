@@ -14,7 +14,7 @@ import { IViewBased } from '../../types/view';
 import { EventsNative } from '../events/eventsNative';
 import { $$, asArray, css } from '../helpers/';
 import { View } from '../view/view';
-import { ToolbarButton } from '..';
+import { ToolbarButton } from '../toolbar/button';
 import { Dom } from '../Dom';
 
 /**
@@ -42,13 +42,13 @@ Config.prototype.dialog = {
 Config.prototype.controls.dialog = {
     close: {
         icon: 'cancel',
-        exec: (dialog: IViewBased) => {
+        exec: (dialog) => {
             (dialog as Dialog).close();
         },
     },
     fullsize: {
         icon: 'fullsize',
-        getLabel: (editor: Jodit, btn: IControlType, button: ToolbarButton) => {
+        getLabel: (editor, btn: IControlType, button: ToolbarButton) => {
             if (
                 Config.prototype.controls.fullsize &&
                 Config.prototype.controls.fullsize.getLabel &&
@@ -62,7 +62,7 @@ Config.prototype.controls.dialog = {
                 );
             }
         },
-        exec: (dialog: IViewBased) => {
+        exec: (dialog) => {
             dialog.toggleFullSize();
         },
     },
