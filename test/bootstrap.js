@@ -3,61 +3,10 @@ typeof window.chai !== 'undefined' && (chai.config.includeStack = true);
 var oldI18n = Jodit.prototype.i18n;
 var oldAjaxSender = Jodit.modules.Ajax.prototype.send;
 
-function SyncPromise(workfunction) {
-    var self = this,
-        args,
-        resolve = false;
-
-    workfunction(
-        function() {
-            args = arguments;
-            resolve = true;
-        },
-        function() {
-            args = arguments;
-        }
-    );
-
-    this.then = function(callback) {
-        if (resolve) {
-            callback.apply(self, args);
-        }
-        return self;
-    };
-
-    this.catch = function(callback) {
-        if (!resolve) {
-            callback.apply(self, args);
-        }
-        return self;
-    };
-}
-
-SyncPromise.resolve = function(resp) {
-    return new SyncPromise(resolve => {
-        resolve();
-    });
-};
-SyncPromise.reject = function(message) {
-    throw new Error(message);
-};
-SyncPromise.all = function(promises) {
-    return new SyncPromise(function(resolve, reject) {
-        var resolved = 0;
-
-        promises.forEach(function(promise) {
-            promise.then(function() {
-                resolved++;
-            });
-        });
-
-        resolved === promises.length ? resolve() : reject();
-    });
-};
 var naturalPromise = window.Promise;
 
 function mocPromise() {
-    window.Promise = SyncPromise;
+    window.Promise = SynchronousPromise;
 }
 function unmocPromise() {
     window.Promise = naturalPromise;
