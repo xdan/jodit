@@ -62,6 +62,7 @@ function mocPromise() {
 function unmocPromise() {
     window.Promise = naturalPromise;
 }
+
 var defaultPermissions = {
     permissions: {
         allowFiles: true,
@@ -313,16 +314,20 @@ var removeStuff = function() {
     Object.keys(Jodit.instances).forEach(function(key) {
         Jodit.instances[key].destruct();
     });
+
     stuff.forEach(function(elm) {
         elm && elm.parentNode && elm.parentNode.removeChild(elm);
         delete elm;
     });
+
     stuff.length = 0;
-    [].slice
-        .call(document.querySelectorAll('.jodit.jodit_dialog_box.active'))
+
+    Array
+        .from(document.querySelectorAll('.jodit.jodit_dialog_box.active'))
         .forEach(function(dialog) {
             simulateEvent('close_dialog', 0, dialog);
         });
+
     mocPromise();
 };
 var box = document.createElement('div');

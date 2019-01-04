@@ -135,21 +135,21 @@ Config.prototype.controls.brush = {
  * @param {Jodit} editor
  */
 export function color(editor: IJodit) {
-    const callback = async (
+    const callback = (
         command: string,
         second: string,
         third: string
-    ): Promise<false | void> => {
+    ): false | void => {
         const colorHEX: string | false = normalizeColor(third);
 
         switch (command) {
             case 'background':
-                await editor.selection.applyCSS({
+                editor.selection.applyCSS({
                     backgroundColor: !colorHEX ? '' : (colorHEX as string),
                 });
                 break;
             case 'forecolor':
-                await editor.selection.applyCSS({
+                editor.selection.applyCSS({
                     color: !colorHEX ? '' : (colorHEX as string),
                 });
                 break;

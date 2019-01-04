@@ -186,19 +186,19 @@ Config.prototype.controls.font = <IControlType<IJodit>>{
  * @param {Jodit} editor
  */
 export function font(editor: IJodit) {
-    const callback = async (
+    const callback = (
         command: string,
         second: string,
         third: string
-    ): Promise<false | void> => {
+    ): false | void => {
         switch (command) {
             case 'fontsize':
-                await editor.selection.applyCSS({
+                editor.selection.applyCSS({
                     fontSize: normalizeSize(third),
                 });
                 break;
             case 'fontname':
-                await editor.selection.applyCSS({
+                editor.selection.applyCSS({
                     fontFamily: third,
                 });
                 break;

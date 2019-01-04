@@ -118,7 +118,7 @@ Config.prototype.controls.right = {
  * @param {Jodit} editor
  */
 export function justify(editor: IJodit) {
-    const callback = async (command: string): Promise<false | void> => {
+    const callback = (command: string): false | void => {
         const justifyElm = (box: HTMLElement) => {
             if (box instanceof (editor.editorWindow as any).HTMLElement) {
                 switch (command.toLowerCase()) {
@@ -138,7 +138,7 @@ export function justify(editor: IJodit) {
             }
         };
 
-        await editor.selection.focus();
+        editor.selection.focus();
 
         editor.selection.eachSelection(
             (current: Node): false | void => {

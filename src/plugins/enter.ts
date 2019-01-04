@@ -18,12 +18,12 @@ import { HTMLTagNames, IJodit } from '../types';
  * @param {CSSStyleSheet} [style]
  * @return {HTMLElement}
  */
-export const insertParagraph = async (
+export const insertParagraph = (
     editor: IJodit,
     fake: Text | false,
     wrapperTag: HTMLTagNames,
     style?: CSSStyleDeclaration
-): Promise<HTMLElement> => {
+): HTMLElement => {
     const p: HTMLElement = editor.create.inside.element(wrapperTag),
         helper_node: HTMLBRElement = editor.create.inside.element('br');
 
@@ -33,7 +33,7 @@ export const insertParagraph = async (
         p.setAttribute('style', style.cssText);
     }
 
-    await editor.selection.insertNode(p, false, false);
+    editor.selection.insertNode(p, false, false);
     editor.selection.setCursorBefore(helper_node);
 
     const range: Range = editor.editorDocument.createRange();
@@ -136,9 +136,8 @@ export function enter(editor: IJodit) {
                         'br'
                     );
 
-                    editor.selection.insertNode(br, true).then(() => {
-                        scrollIntoView(br, editor.editor, editor.editorDocument);
-                    });
+                    editor.selection.insertNode(br, true);
+                    scrollIntoView(br, editor.editor, editor.editorDocument);
 
                     return false;
                 }
@@ -198,9 +197,8 @@ export function enter(editor: IJodit) {
                     if (!Dom.canSplitBlock(currentBox, editor.editorWindow)) {
                         const br = editor.create.inside.element('br');
 
-                        editor.selection.insertNode(br, false).then(() => {
-                            editor.selection.setCursorAfter(br);
-                        });
+                        editor.selection.insertNode(br, false);
+                        editor.selection.setCursorAfter(br);
 
                         return false;
                     }
@@ -258,11 +256,11 @@ export function enter(editor: IJodit) {
                                 editor,
                                 fakeTextNode,
                                 editor.options.enter
-                            ).then(() => {
-                                if (!$$('li', ul).length) {
-                                    Dom.safeRemove(ul);
-                                }
-                            });
+                            );
+
+                            if (!$$('li', ul).length) {
+                                Dom.safeRemove(ul);
+                            }
 
                             return false;
                         }
@@ -277,9 +275,9 @@ export function enter(editor: IJodit) {
                             fake,
                             isLi ? 'li' : editor.options.enter,
                             currentBox.style
-                        ).then(() => {
-                            currentBox && editor.selection.setCursorIn(currentBox, true);
-                        });
+                        );
+
+                        currentBox && editor.selection.setCursorIn(currentBox, true);
 
                         return false;
                     }

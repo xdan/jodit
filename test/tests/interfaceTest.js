@@ -352,7 +352,7 @@ describe('Test interface', function() {
 
                             var font = list.childNodes[list.childNodes.length - 1];
                             simulateEvent('mousedown', 0, font);
-
+debugger
                             expect(sortAtrtibutes(editor.value)).to.be.equal(sortAtrtibutes('<p><span style="font-family:-apple-system,BlinkMacSystemFont,\'Segoe WPC\',\'Segoe UI\',HelveticaNeue-Light,Ubuntu,\'Droid Sans\',sans-serif">test</span></p>'));
 
                         });

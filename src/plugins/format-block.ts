@@ -131,12 +131,12 @@ Config.prototype.controls.paragraph = {
 export function formatBlock(editor: IJodit) {
     editor.registerCommand(
         'formatblock',
-        async (command: string, second: string, third: string): Promise<false | void> => {
-            await editor.selection.focus();
+        (command: string, second: string, third: string): false | void => {
+            editor.selection.focus();
             let work: boolean = false;
 
             editor.selection.eachSelection(
-                async (current: Node) => {
+                (current: Node) => {
                     const selectionInfo: markerInfo[] = editor.selection.save();
                     let currentBox: HTMLElement | false = current
                         ? (Dom.up(
@@ -180,7 +180,7 @@ export function formatBlock(editor: IJodit) {
                         }
                     } else {
                         if (!editor.selection.isCollapsed()) {
-                            await editor.selection.applyCSS({}, <HTMLTagNames>third);
+                            editor.selection.applyCSS({}, <HTMLTagNames>third);
                         } else {
                             Dom.wrapInline(current, <HTMLTagNames>third, editor);
                         }
@@ -196,7 +196,7 @@ export function formatBlock(editor: IJodit) {
                     third
                 );
                 currentBox.innerHTML = consts.INVISIBLE_SPACE;
-                await editor.selection.insertNode(currentBox, false);
+                editor.selection.insertNode(currentBox, false);
                 editor.selection.setCursorIn(currentBox);
             }
 

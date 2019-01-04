@@ -19,7 +19,6 @@ import { $$ } from './helpers/selector';
 import { isPlainObject } from './helpers/checker';
 import { each } from './helpers/each';
 import { trim } from './helpers/string';
-import { setTimeout } from './helpers/async/setTimeout';
 
 export class Select {
     private readonly doc: Document;
@@ -299,24 +298,13 @@ export class Select {
     /**
      * Set focus in editor
      */
-    focus = async (): Promise<boolean> => {
+    focus = (): boolean => {
         if (!this.isFocused()) {
-
-            await new Promise((resolve) => {
-                if (this.iframe) {
-                    if (this.doc.readyState == 'complete') {
-                        this.iframe.focus();
-                        resolve()
-                    } else {
-                        this.iframe.onload = () => {
-                            this.iframe && this.iframe.focus();
-                            resolve();
-                        };
-                        setTimeout(resolve, 100);
-                    }
-
+            if (this.iframe) {
+                if (this.doc.readyState == 'complete') {
+                    this.iframe.focus();
                 }
-            });
+            }
 
             this.win.focus();
             this.area.focus();
@@ -468,7 +456,7 @@ export class Select {
      * @param {Boolean} [insertCursorAfter=true] After insert, cursor will move after element
      * @param {Boolean} [fireChange=true] After insert, editor fire change event. You can prevent this behavior
      */
-    async insertNode(
+    insertNode(
         node: Node,
         insertCursorAfter = true,
         fireChange: boolean = true
@@ -477,7 +465,7 @@ export class Select {
             throw new Error('Parameter node most be instance of Node');
         }
 
-        await this.focus();
+        this.focus();
 
         const sel: Selection = this.sel;
 
@@ -524,7 +512,7 @@ export class Select {
      * parent.selection.insertHTML('<img src="image.png"/>');
      * ```
      */
-    async insertHTML(html: number | string | Node) {
+    insertHTML(html: number | string | Node) {
         if (html === '') {
             return;
         }
@@ -535,7 +523,7 @@ export class Select {
         let lastChild: Node | null, lastEditorElement: Node | null;
 
         if (!this.isFocused() && this.jodit.isEditorMode()) {
-            await this.focus();
+            this.focus();
         }
 
         if (!(html instanceof (this.win as any).Node)) {
@@ -555,7 +543,7 @@ export class Select {
             fragment.appendChild(node.firstChild);
         }
 
-        await this.insertNode(fragment, false);
+        this.insertNode(fragment, false);
 
         if (lastChild) {
             this.setCursorAfter(lastChild);
@@ -598,7 +586,7 @@ export class Select {
      *
      * @fired afterInsertImage
      */
-    async insertImage(
+    insertImage(
         url: string | HTMLImageElement,
         styles: IDictionary<string> | null,
         defaultWidth: number | string | null
@@ -987,9 +975,10 @@ export class Select {
         node: Node | HTMLElement | HTMLTableElement | HTMLTableCellElement,
         inward = false
     ) {
-        if (!(node instanceof (this.win as any).Node)) {
+        if (!Dom.isNode(node, this.win)) {
             throw new Error('Parameter node most be instance of Node');
         }
+
         if (
             !Dom.up(
                 node,
@@ -1033,7 +1022,7 @@ export class Select {
      * @param {string} nodeName
      * @param {object} options
      */
-    async applyCSS(
+    applyCSS(
         cssRules: IDictionary<string | number | undefined>,
         nodeName: HTMLTagNames = 'span',
         options?:
@@ -1334,7 +1323,7 @@ export class Select {
                     )
                 );
 
-                await this.insertNode(node, false, false);
+                this.insertNode(node, false, false);
 
                 if (nodeName.toUpperCase() === defaultTag && cssRules) {
                     css(node as HTMLElement, cssRules);
