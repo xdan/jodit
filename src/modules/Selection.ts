@@ -1041,13 +1041,13 @@ export class Select {
             | IDictionary<string | string[]>
             | IDictionary<(editor: IJodit, elm: HTMLElement) => boolean>
     ) {
-        const WRAP: number = 1;
-        const UNWRAP: number = 0;
+        const
+            WRAP = 1,
+            UNWRAP = 0,
+            defaultTag = 'SPAN',
+            FONT = 'FONT';
 
         let mode: number;
-
-        const defaultTag = 'SPAN',
-            FONT = 'FONT';
 
         const findNextCondition = (elm: Node | null): boolean =>
             elm !== null &&

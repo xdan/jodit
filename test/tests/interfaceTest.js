@@ -381,7 +381,7 @@ describe('Test interface', function() {
                 editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-image input[name=url]').value = 'http://xdsoft.net/jodit/images/artio.jpg'
                 simulateEvent('submit', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-image .jodit_form'))
 
-                expect(sortAtrtibutes(editor.getEditorValue())).to.equal('<img alt="123" src="http://xdsoft.net/jodit/images/artio.jpg">');
+                expect(sortAtrtibutes(editor.value)).to.equal('<img alt="123" src="http://xdsoft.net/jodit/images/artio.jpg" style="width:300px">');
 
                 simulateEvent('mousedown', 0, editor.editor)
 

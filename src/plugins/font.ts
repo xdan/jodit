@@ -204,7 +204,7 @@ export function font(editor: IJodit) {
                 break;
         }
 
-        editor.setEditorValue();
+        editor.events.fire('synchro');
 
         return false;
     };

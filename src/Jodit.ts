@@ -245,17 +245,17 @@ export class Jodit extends ViewWithToolbar implements IJodit {
         }
     }
 
-    private execCustomCommands(
+    private async execCustomCommands(
         commandName: string,
         second: any = false,
         third: null | any = null
-    ): false | void {
+    ): Promise<false | void> {
         commandName = commandName.toLowerCase();
 
         if (this.commands[commandName] !== undefined) {
             let result: any = void 0;
 
-            this.commands[commandName].forEach(command => {
+            const exec = (command: CustomCommand<Jodit>) => {
                 let callback: ExecCommandCallback<Jodit>;
 
                 if (typeof command === 'function') {
@@ -274,7 +274,11 @@ export class Jodit extends ViewWithToolbar implements IJodit {
                 if (resultCurrent !== undefined) {
                     result = resultCurrent;
                 }
-            });
+            };
+
+            for (let i = 0; i < this.commands[commandName].length; i += 1) {
+                await exec(this.commands[commandName][i]);
+            }
 
             return result;
         }
@@ -634,7 +638,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
      * this.execCommand('formatBlock', 'p'); // will be inserted paragraph
      * ```
      */
-    public execCommand(
+    public async execCommand(
         command: string,
         showUI: any = false,
         value: null | any = null
@@ -665,10 +669,10 @@ export class Jodit extends ViewWithToolbar implements IJodit {
          * })
          * ```
          */
-        result = this.events.fire('beforeCommand', command, showUI, value);
+        result = await this.events.fire('beforeCommand', command, showUI, value);
 
         if (result !== false) {
-            result = this.execCustomCommands(command, showUI, value);
+            result = await this.execCustomCommands(command, showUI, value);
         }
 
         if (result !== false) {

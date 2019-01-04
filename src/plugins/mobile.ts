@@ -9,7 +9,7 @@ import * as consts from '../constants';
 import { IControlType, IToolbarCollection } from '../types/toolbar';
 import { splitArray } from '../modules/helpers/array';
 import { JoditToolbarCollection } from '../modules/toolbar/joditToolbarCollection';
-import { IJodit} from '../types';
+import { IJodit } from '../types';
 
 declare module '../Config' {
     interface Config {
