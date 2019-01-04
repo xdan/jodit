@@ -291,7 +291,7 @@ describe('Test interface', function() {
             });
             describe('FontName', function () {
                 describe('Open fontname list and select some element', function () {
-                    it('Should apply this font to current selection elements', function() {
+                    it('Should apply this font to current selection elements',  function() {
                         var editor = new Jodit(appendTestArea(), {
                             toolbarAdaptive: false
                         });
@@ -310,9 +310,14 @@ describe('Test interface', function() {
 
                         expect(openFontnameList()).to.be.not.null;
 
-                        Array.from(openFontnameList().childNodes).forEach(function (font, index) {
+                        Array.from(openFontnameList().childNodes).forEach(async function (font, index) {
                             font = openFontnameList().childNodes[index];
                             simulateEvent('mousedown', 0, font);
+
+                            await new Promise((resolve) => {
+                                setTimeout(resolve, 1000);
+                            });
+
                             var fontFamily = font.querySelector('span[style]').getAttribute('style').replace(/"/g, "'");
 
                             expect(sortAtrtibutes(editor.value)).to.be.equal(sortAtrtibutes('<p><span style="' + fontFamily + '">test</span></p>'));
