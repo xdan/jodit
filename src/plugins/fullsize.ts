@@ -9,8 +9,7 @@ import * as consts from '../constants';
 import { css } from '../modules/helpers/';
 import { ToolbarIcon } from '../modules/toolbar/icon';
 import { IControlType } from '../types/toolbar';
-import { ViewWithToolbar } from '../modules/view/viewWithToolbar';
-import { IJodit } from '../types';
+import { IJodit, IViewWithToolbar } from '../types';
 
 /**
  * Fullsize plugin
@@ -70,7 +69,7 @@ Config.prototype.controls.fullsize = {
  *
  * @param {Jodit} editor
  */
-export function fullsize(editor: ViewWithToolbar) {
+export function fullsize(editor: IViewWithToolbar) {
     let shown: boolean = false,
         oldHeight: number = 0,
         oldWidth: number = 0,

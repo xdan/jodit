@@ -27,7 +27,10 @@
 <div id="mocha"></div>
 
 <script>
-    mocha.ui('bdd');
+    mocha.setup({
+        ui: 'bdd',
+        bail: true
+    });
     mocha.reporter('html');
 </script>
 

@@ -266,13 +266,13 @@ describe('Commands Jodit Editor Tests', function() {
             editor.execCommand('bold');
 
             editor.selection.insertNode(
-                editor.inside.create.text('abc')
+                editor.create.inside.text('abc')
             );
 
             editor.execCommand('bold');
 
             editor.selection.insertNode(
-                editor.inside.create.text('def')
+                editor.create.inside.text('def')
             );
 
             expect(editor.getEditorValue()).to.equal(

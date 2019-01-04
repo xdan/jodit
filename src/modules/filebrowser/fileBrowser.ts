@@ -564,7 +564,7 @@ Config.prototype.controls.filebrowser = {
         exec: () => {
             // do nothing
         },
-        isDisable: (browser: any): boolean => !browser.canI('FileUpload'),
+        isDisable: (browser: IFileBrowser): boolean => !browser.canI('FileUpload'),
         getContent: (
             filebrowser: IViewBased,
             control: IControlType
@@ -598,10 +598,10 @@ Config.prototype.controls.filebrowser = {
     } as IControlType,
     remove: {
         icon: 'bin',
-        isDisable: (browser: any): boolean => {
+        isDisable: (browser: IFileBrowser): boolean => {
             return (
-                (browser as FileBrowser).getActiveElements().length === 0 ||
-                !(browser as FileBrowser).canI('FileRemove')
+                browser.getActiveElements().length === 0 ||
+                !browser.canI('FileRemove')
             );
         },
         exec: (editor: IViewBased) => {
@@ -615,17 +615,15 @@ Config.prototype.controls.filebrowser = {
     } as IControlType,
     select: {
         icon: 'check',
-        isDisable: (browser: any): boolean => {
-            return (browser as FileBrowser).getActiveElements().length === 0;
-        },
+        isDisable: (browser: IFileBrowser): boolean => browser.getActiveElements().length === 0,
         exec: (editor: IViewBased) => {
             editor.events.fire('select.filebrowser');
         },
     } as IControlType,
     edit: {
         icon: 'pencil',
-        isDisable: (browser): boolean => {
-            const selected: HTMLElement[] = (browser as FileBrowser).getActiveElements();
+        isDisable: (browser: IFileBrowser): boolean => {
+            const selected: HTMLElement[] = browser.getActiveElements();
             return (
                 selected.length !== 1 ||
                 selected[0].getAttribute('data-is-file') === '1' ||
@@ -641,23 +639,23 @@ Config.prototype.controls.filebrowser = {
     } as IControlType,
     tiles: {
         icon: 'th',
-        isActive: (editor): boolean =>
-            editor.buffer.fileBrowserView === 'tiles',
-        exec: (editor) => {
-            editor.events.fire('view.filebrowser', 'tiles');
+        isActive: (filebrowser: IFileBrowser): boolean =>
+            filebrowser.buffer.fileBrowserView === 'tiles',
+        exec: (filebrowser: IFileBrowser) => {
+            filebrowser.events.fire('view.filebrowser', 'tiles');
         },
     } as IControlType,
     list: {
         icon: 'th-list',
-        isActive: (editor): boolean =>
-            editor.buffer.fileBrowserView === 'list',
-        exec: (editor) => {
-            editor.events.fire('view.filebrowser', 'list');
+        isActive: (filebrowser: IFileBrowser): boolean =>
+            filebrowser.buffer.fileBrowserView === 'list',
+        exec: (filebrowser: IFileBrowser) => {
+            filebrowser.events.fire('view.filebrowser', 'list');
         },
     } as IControlType,
     filter: {
         isInput: true,
-        getContent: (filebrowser): HTMLElement => {
+        getContent: (filebrowser: IFileBrowser): HTMLElement => {
             const input: HTMLInputElement = filebrowser.create.element('input', {
                 'class': 'jodit_input',
                 'placeholder': filebrowser.i18n('Filter'),
@@ -676,7 +674,7 @@ Config.prototype.controls.filebrowser = {
     } as IControlType,
     sort: {
         isInput: true,
-        getContent: (filebrowser): HTMLElement => {
+        getContent: (filebrowser: IFileBrowser): HTMLElement => {
             const select: HTMLSelectElement = filebrowser.create.fromHTML(
                 '<select class="jodit_input">' +
                     '<option value="changed">' +
@@ -713,7 +711,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
      * @return {number}
      */
     get defaultTimeout(): number {
-        return this.jodit
+        return (this.jodit && this.jodit !== this)
             ? this.jodit.defaultTimeout
             : Config.defaultOptions.observer.timeout;
     }
@@ -1050,6 +1048,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
                     } as IFileBrowserCallBackData);
                 }
             }
+
             return false;
         };
     }
@@ -1173,7 +1172,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
      * @param {string} path Relative toWYSIWYG the directory in which you want toWYSIWYG create a folder
      * @param {string} source Server source key
      */
-    public createFolder = (
+    createFolder = (
         name: string,
         path: string,
         source: string
@@ -1211,7 +1210,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
      * @param {string} path Relative toWYSIWYG the directory where you want toWYSIWYG move the file / folder
      * @param {string} source Source
      */
-    public move = (
+    move = (
         filepath: string,
         path: string,
         source: string
@@ -1246,7 +1245,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
      * @param file The filename
      * @param source Source
      */
-    public fileRemove(
+    fileRemove(
         path: string,
         file: string,
         source: string
@@ -1285,7 +1284,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
      * @param file The filename
      * @param source Source
      */
-    public folderRemove(
+    folderRemove(
         path: string,
         file: string,
         source: string
@@ -1321,7 +1320,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
      * Close dialog
      * @method close
      */
-    public close = () => {
+    close = () => {
         this.dialog.close();
     };
 
@@ -1342,7 +1341,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
      * ```
      * @return Promise
      */
-    public open = (
+    open = (
         callback: (data: IFileBrowserCallBackData) => void,
         onlyImages: boolean = false
     ): Promise<void> => {
@@ -1397,7 +1396,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
      *
      * @method openImageEditor
      */
-    public openImageEditor = (
+    openImageEditor = (
         href: string,
         name: string,
         path: string,

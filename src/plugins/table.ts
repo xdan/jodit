@@ -86,7 +86,7 @@ Config.prototype.controls.table = {
                     '<span>1</span> &times; <span>1</span>' +
                     '</label>' +
                     '<div class="jodit_form-table-creator-box">' +
-                    '<div class="jodit_form-container"></div>' +
+                        '<div class="jodit_form-container"></div>' +
                     '<div class="jodit_form-options">' +
                     generateExtraClasses() +
                     '</div>' +
@@ -265,11 +265,11 @@ Config.prototype.controls.table = {
         if (button && button.parentToolbar) {
             editor.events
                 .off(
-                    button.parentToolbar as object,
+                    button.parentToolbar.container as object,
                     'afterOpenPopup.tableGenerator'
                 )
                 .on(
-                    button.parentToolbar as object,
+                    button.parentToolbar.container as object,
                     'afterOpenPopup.tableGenerator',
                     () => {
                         generateRows(default_rows_count);

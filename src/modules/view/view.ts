@@ -60,8 +60,8 @@ export class View extends Panel implements IViewBased {
 
     // public toolbar: ToolbarCollection;
 
-    public i18n(text: string) {
-        return this.jodit ? this.jodit.i18n(text) : Jodit.prototype.i18n(text);
+    i18n(text: string): string {
+        return (this.jodit && this.jodit !== this) ? this.jodit.i18n(text) : Jodit.prototype.i18n(text);
     }
 
     /**

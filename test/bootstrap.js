@@ -57,7 +57,7 @@ if (typeof window.chai !== 'undefined') {
             action = actioExec[1];
         }
 
-        return new SyncPromise(function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
             switch (action) {
                 case 'fileUpload':
                     var file = ajax.options.data.get('files[0]');

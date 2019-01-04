@@ -7,7 +7,8 @@
 import { HTMLTagNames, IComponent, IDictionary, Modes } from './types';
 import { IViewBased } from './view';
 import { IJodit } from './jodit';
-interface IControlType<T = IJodit | IViewBased, Button = IToolbarButton> {
+import { IFileBrowser } from './fileBrowser';
+interface IControlType<T = IJodit | IViewBased | IFileBrowser, Button = IToolbarButton> {
     controlName?: string;
     name?: string;
     mode?: Modes;

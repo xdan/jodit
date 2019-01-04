@@ -7,11 +7,15 @@ describe('Jodit FileBrowser Tests', function() {
                         url: 'https://xdsoft.net/jodit/connector/index.php',
                     },
                 });
+
                 filebrowser.open(function() {});
+
                 expect(
                     document.querySelectorAll('.jodit_dialog_box.active').length
                 ).to.be.equal(1);
+
                 filebrowser.close();
+
                 expect(
                     document.querySelectorAll('.jodit_dialog_box.active').length
                 ).to.be.equal(0);

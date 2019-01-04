@@ -516,7 +516,7 @@ describe('Jodit Editor Tests', function() {
                 });
             });
         });
-        it('Show placeholder', function (done) {
+        it('Show placeholder', function () {
             var area = appendTestArea();
             var editor = new Jodit(area);
 
@@ -526,10 +526,8 @@ describe('Jodit Editor Tests', function() {
             expect(editor.container.querySelectorAll('.jodit_placeholder').length && editor.container.querySelector('.jodit_placeholder').style.display === 'block').to.be.equal(true);
 
             editor.selection.insertNode(editor.editorDocument.createTextNode('test'))
-                .then(() => {
-                    expect(editor.container.querySelectorAll('.jodit_placeholder').length && editor.container.querySelector('.jodit_placeholder').style.display === 'none').to.be.equal(true);
-                    done();
-                });
+
+            expect(editor.container.querySelectorAll('.jodit_placeholder').length && editor.container.querySelector('.jodit_placeholder').style.display === 'none').to.be.equal(true);
         });
         it("Placeholder's fontsize", function () {
             var area = appendTestArea();
