@@ -163,3 +163,5 @@ export interface EventHandlerBlock {
 export type HTMLTagNames = keyof HTMLElementTagNameMap;
 
 export type Modes = 1 | 2 | 3;
+
+export type TagNames = keyof HTMLElementTagNameMap;

@@ -5,7 +5,6 @@
  */
 
 import { IDictionary } from './types';
-import { IViewBased } from './view';
 
 interface IUploaderData {
     messages?: string[];
@@ -216,4 +215,18 @@ export interface IUploader {
         handlerSuccess?: HandlerSuccess,
         handlerError?: HandlerError
     ): void;
+
+    /**
+     * It sets the path for uploading files
+     * @method setPath
+     * @param {string} path
+     */
+    setPath(path: string): void;
+    /**
+ * It sets the source for connector
+ *
+ * @method setSource
+ * @param {string} source
+ */
+    setSource(source: string): void;
 }

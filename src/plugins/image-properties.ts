@@ -5,10 +5,8 @@
  */
 
 import { Config } from '../Config';
-import { Jodit } from '../Jodit';
 import { Alert, Confirm, Dialog } from '../modules/dialog/';
 import { Dom } from '../modules/Dom';
-import { FileBrowser } from '../modules/filebrowser/fileBrowser';
 import {
     $$,
     css,
@@ -22,8 +20,8 @@ import TabsWidget = Widget.TabsWidget;
 import FileSelectorWidget = Widget.FileSelectorWidget;
 import { Popup } from '../modules/popup/popup';
 import {
-    IDictionary,
-    IFileBrowserCallBackData,
+    IDictionary, IFileBrowser,
+    IFileBrowserCallBackData, IJodit,
     IUploaderData,
 } from '../types/';
 
@@ -103,7 +101,7 @@ Config.prototype.image = {
  *
  * @param {Jodit} editor
  */
-export function imageProperties(editor: Jodit) {
+export function imageProperties(editor: IJodit) {
     /**
      * Open dialog editing image properties
      *
@@ -283,7 +281,6 @@ export function imageProperties(editor: Jodit) {
                                 '</a>'
                               : '') +
                           (editor.options.image.useImageEditor &&
-                          Jodit.modules.ImageEditor !== undefined &&
                           editor.options.filebrowser.ajax.url
                               ? '<a class="jodit_button jodit_use_image_editor" href="javascript:void(0)">' +
                                 ToolbarIcon.getIcon('crop') +
@@ -563,12 +560,12 @@ export function imageProperties(editor: Jodit) {
 
                     (editor.getInstance(
                         'FileBrowser'
-                    ) as FileBrowser).getPathByUrl(
+                    ) as IFileBrowser).getPathByUrl(
                         a.href.toString(),
                         (path: string, name: string, source: string) => {
                             (editor.getInstance(
                                 'FileBrowser'
-                            ) as FileBrowser).openImageEditor(
+                            ) as IFileBrowser).openImageEditor(
                                 a.href,
                                 name,
                                 path,

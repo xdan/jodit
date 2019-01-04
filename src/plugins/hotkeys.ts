@@ -5,10 +5,9 @@
  */
 
 import { Config } from '../Config';
-import { Jodit } from '../Jodit';
 import { Plugin } from '../modules/Plugin';
 import { normalizeKeyAliases } from '../modules/helpers/normalize';
-import { IDictionary } from '../types';
+import { IDictionary, IJodit } from '../types';
 
 declare module '../Config' {
     interface Config {
@@ -123,7 +122,7 @@ export class hotkeys extends Plugin {
         222: "'",
     };
 
-    afterInit(editor: Jodit): void {
+    afterInit(editor: IJodit): void {
         const commands: string[] = Object.keys(editor.options.commandToHotkeys);
 
         commands.forEach((commandName: string) => {
@@ -172,7 +171,7 @@ export class hotkeys extends Plugin {
                 true
             );
     }
-    beforeDestruct(jodit: Jodit): void {
+    beforeDestruct(jodit: IJodit): void {
         if (jodit.events) {
             jodit.events.off('keyup.hotkeys keydown.hotkeys');
         }

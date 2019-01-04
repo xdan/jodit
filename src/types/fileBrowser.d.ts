@@ -6,9 +6,11 @@
 
 import { Buttons } from './toolbar';
 import { IDictionary, IPermissions } from './types';
-import { IUploaderOptions } from './uploader';
-import { Uploader } from '../modules/Uploader';
-import { IViewOptions } from './view';
+import { IUploader, IUploaderOptions } from './uploader';
+import { IViewOptions, IViewWithToolbar } from './view';
+import { Dialog } from '../modules/dialog';
+import { Storage } from '../modules';
+import { IJodit } from './jodit';
 
 /**
  * The module creates a web browser dialog box. In a Web browser ,you can select an image, remove, drag it. Upload new
@@ -70,7 +72,7 @@ export interface IFileBrowserAjaxOptions {
     process?: (resp: IFileBrowserAnswer) => IFileBrowserAnswer;
 }
 
-export interface IFileBrowserOptions extends IViewOptions{
+export interface IFileBrowserOptions extends IViewOptions {
     removeButtons: string[];
     buttons: Buttons;
     zIndex?: number;
@@ -126,11 +128,71 @@ export interface IFileBrowserOptions extends IViewOptions{
     folder: IFileBrowserAjaxOptions | null;
     permissions: IFileBrowserAjaxOptions | null;
 
-    uploader: null | IUploaderOptions<Uploader>; // use default Uploader's settings
+    uploader: null | IUploaderOptions<IUploader>; // use default Uploader's settings
     [key: string]: any;
 }
 
 export interface IFileBrowserCallBackData {
     baseurl: string;
     files: string[];
+}
+
+interface IFileBrowser extends IViewWithToolbar {
+    uploader: IUploader;
+    storage: Storage;
+    dialog: Dialog;
+    currentPath: string;
+    currentSource: string;
+    currentBaseUrl: string;
+
+    isOpened(): boolean;
+
+    getPathByUrl(
+        url: string,
+        success: (path: string, name: string, source: string) => void,
+        onFailed: (error: Error) => void
+    ): Promise<any>;
+
+    createFolder(
+        name: string,
+        path: string,
+        source: string
+    ): Promise<void>;
+
+    move(
+        filepath: string,
+        path: string,
+        source: string
+    ): Promise<void>
+
+    fileRemove(
+        path: string,
+        file: string,
+        source: string
+    ): Promise<void>;
+
+    folderRemove(
+        path: string,
+        file: string,
+        source: string
+    ): Promise<void>;
+
+    close: () => void;
+
+    openImageEditor(
+        href: string,
+        name: string,
+        path: string,
+        source: string,
+        onSuccess?: () => void,
+        onFailed?: (error: Error) => void
+    ): Promise<Dialog>;
+
+    getActiveElements(): HTMLElement[];
+    canI(action: string): boolean;
+
+    open(
+        callback: (data: IFileBrowserCallBackData) => void,
+        onlyImages: boolean
+    ): Promise<void>
 }

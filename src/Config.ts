@@ -5,7 +5,6 @@
  */
 
 import * as consts from './constants';
-import { Jodit } from './Jodit';
 import { Widget } from './modules/Widget';
 import TabsWidget = Widget.TabsWidget;
 import FileSelectorWidget = Widget.FileSelectorWidget;
@@ -775,23 +774,23 @@ export const OptionsDefault: any = function(this: any, options: any) {
         const extendKey = (opt: object, key: string) => {
             if (key === 'preset') {
                 if (
-                    Jodit.defaultOptions.presets[(opt as any).preset] !==
+                    Config.defaultOptions.presets[(opt as any).preset] !==
                     undefined
                 ) {
                     const preset =
-                        Jodit.defaultOptions.presets[(opt as any).preset];
+                        Config.defaultOptions.presets[(opt as any).preset];
 
                     Object.keys(preset).forEach(extendKey.bind(this, preset));
                 }
             }
             if (
-                typeof (Jodit.defaultOptions as any)[key] === 'object' &&
-                !Array.isArray((Jodit.defaultOptions as any)[key])
+                typeof (Config.defaultOptions as any)[key] === 'object' &&
+                !Array.isArray((Config.defaultOptions as any)[key])
             ) {
                 self[key] = extend(
                     true,
                     {},
-                    (Jodit.defaultOptions as any)[key],
+                    (Config.defaultOptions as any)[key],
                     (opt as any)[key]
                 );
             } else {

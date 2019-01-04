@@ -7,13 +7,13 @@
 import { Config } from '../Config';
 import * as consts from '../constants';
 import { IS_IE } from '../constants';
-import { Jodit } from '../Jodit';
 import { IBound } from '../types/types';
 import { Dom } from '../modules/Dom';
 import { $$ } from '../modules/helpers/selector';
 import { debounce, setTimeout } from '../modules/helpers/async';
 import { offset, innerWidth } from '../modules/helpers/size';
 import { css } from '../modules/helpers';
+import { IJodit } from '../types';
 
 /**
  * The module creates a supporting frame for resizing of the elements img and table
@@ -65,7 +65,7 @@ Config.prototype.resizer = {
  * Resize table and img
  * @param {Jodit} editor
  */
-export function resizer(editor: Jodit) {
+export function resizer(editor: IJodit) {
     // let clicked = false,
     //     resized = false,
     const LOCK_KEY = 'resizer';

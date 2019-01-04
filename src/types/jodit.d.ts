@@ -8,16 +8,19 @@ import { IViewWithToolbar } from './view';
 import { Config } from '../Config';
 import { Observer } from '../modules/observer/observer';
 import { Select } from '../modules/Selection';
-import { CustomCommand, Modes } from './types';
+import { CustomCommand, IComponent, IStorage, Modes } from './types';
 import { StatusBar } from '../modules/StatusBar';
+import { IUploader } from './uploader';
+import { IFileBrowser } from './fileBrowser';
 
 interface IJodit extends IViewWithToolbar {
     options: Config;
     observer: Observer;
     editor: HTMLElement;
+    element: HTMLElement;
 
     getNativeEditorValue(): string;
-    getEditorValue(removeSelectionMarkers: boolean): string;
+    getEditorValue(removeSelectionMarkers?: boolean): string;
     setEditorValue(value?: string): void;
     value: string;
 
@@ -62,6 +65,10 @@ interface IJodit extends IViewWithToolbar {
         commandNameOriginal: string,
         command: CustomCommand<IJodit>
     ): IJodit;
+    registerHotkeyToCommand(
+        hotkeys: string | string[],
+        commandName: string
+    ): void;
 
     getEditorText(): string;
 
@@ -71,4 +78,8 @@ interface IJodit extends IViewWithToolbar {
     workplace: HTMLDivElement;
 
     statusbar: StatusBar;
+
+    uploader: IUploader;
+    filebrowser: IFileBrowser;
+    storage: IStorage;
 }

@@ -4,7 +4,7 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { IDictionary } from '../../types';
+import { IDictionary, IToolbarCollection } from '../../types';
 import {
     Buttons,
     Controls,
@@ -21,10 +21,8 @@ import { ToolbarSeparator } from './separator';
 import { Dom } from '../Dom';
 import { Component } from '../Component';
 import { Config } from '../../Config';
-import { Jodit } from '../../Jodit';
-import { JoditToolbarCollection } from './joditToolbarCollection';
 
-export class ToolbarCollection<T extends IViewBased = IViewBased> extends Component<T> {
+export class ToolbarCollection<T extends IViewBased = IViewBased> extends Component<T> implements IToolbarCollection {
     private __buttons: ToolbarElement[] = [];
 
     private __getControlType = (
@@ -239,10 +237,6 @@ export class ToolbarCollection<T extends IViewBased = IViewBased> extends Compon
     );
 
     container: HTMLElement;
-
-    static makeCollection(jodit: IViewBased): ToolbarCollection {
-        return jodit instanceof Jodit ? new JoditToolbarCollection(jodit) : new ToolbarCollection(jodit);
-    }
 
     constructor(jodit: IViewBased) {
         super(<T>jodit);

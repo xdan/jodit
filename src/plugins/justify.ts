@@ -5,7 +5,6 @@
  */
 
 import { Config } from '../Config';
-import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
 import { $$, css } from '../modules/helpers/';
 import { ToolbarIcon } from '../modules/toolbar/icon';
@@ -118,7 +117,7 @@ Config.prototype.controls.right = {
  *
  * @param {Jodit} editor
  */
-export function justify(editor: Jodit) {
+export function justify(editor: IJodit) {
     const callback = async (command: string): Promise<false | void> => {
         const justifyElm = (box: HTMLElement) => {
             if (box instanceof (editor.editorWindow as any).HTMLElement) {

@@ -4,29 +4,27 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { IControlTypeStrong } from '../../types/toolbar';
+import { IControlTypeStrong, IToolbarCollection, IToolbarElement } from '../../types/toolbar';
 import { Component } from '../Component';
 import { ToolbarCollection } from './collection';
 import { ToolbarIcon } from './icon';
 import { Dom } from '../Dom';
-import { IViewBased } from '../../types';
+import { IViewBased, TagNames } from '../../types';
 
-type TagNames = keyof HTMLElementTagNameMap;
-
-export abstract class ToolbarElement extends Component {
+export abstract class ToolbarElement extends Component implements IToolbarElement {
     container: HTMLElement;
-    parentToolbar?: ToolbarCollection;
+    parentToolbar?: IToolbarCollection;
 
     protected constructor(
-        parentToolbarOrView: ToolbarCollection | IViewBased,
+        parentToolbarOrView: IToolbarCollection | IViewBased,
         containerTag: TagNames = 'li',
         containerClass: string = 'jodit_toolbar_btn'
     ) {
         if (parentToolbarOrView instanceof ToolbarCollection) {
             super(parentToolbarOrView.jodit);
-            this.parentToolbar = parentToolbarOrView;
+            this.parentToolbar = <IToolbarCollection>parentToolbarOrView;
         } else {
-            super(parentToolbarOrView);
+            super(<IViewBased>parentToolbarOrView);
         }
 
         this.container = this.jodit.create.element(containerTag);

@@ -5,7 +5,6 @@
  */
 
 import { Config } from '../Config';
-import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
 import {
     convertMediaURLToVideoEmbed,
@@ -224,7 +223,7 @@ Config.prototype.controls.link = {
  *
  * @module plugins/link
  */
-export function link(jodit: Jodit) {
+export function link(jodit: IJodit) {
     if (jodit.options.link.followOnDblClick) {
         jodit.events.on('afterInit', () => {
             jodit.events.on(

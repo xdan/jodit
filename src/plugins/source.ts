@@ -7,7 +7,6 @@
 import { Config } from '../Config';
 import * as consts from '../constants';
 import { MODE_SOURCE } from '../constants';
-import { Jodit } from '../Jodit';
 import { Plugin } from '../modules/Plugin';
 import { IJodit, markerInfo } from '../types';
 import { IControlType } from '../types/toolbar';
@@ -645,7 +644,7 @@ export class source extends Plugin {
         this.mirror.setSelectionRange(start, end);
     };
 
-    afterInit(editor: Jodit): void {
+    afterInit(editor: IJodit): void {
 
         this.mirrorContainer = editor.create.div("jodit_source");
 
@@ -751,7 +750,7 @@ export class source extends Plugin {
 
         this.fromWYSIWYG();
     }
-    beforeDestruct(jodit: Jodit): void {
+    beforeDestruct(jodit: IJodit): void {
         Dom.safeRemove(this.mirrorContainer);
         Dom.safeRemove(this.mirror);
 

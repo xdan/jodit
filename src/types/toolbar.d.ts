@@ -4,12 +4,10 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { HTMLTagNames, IDictionary, Modes } from './types';
+import { HTMLTagNames, IComponent, IDictionary, Modes } from './types';
 import { IViewBased } from './view';
-import { ToolbarButton } from '../modules/toolbar/button';
 import { IJodit } from './jodit';
-
-export interface IControlType<T = IJodit | IViewBased, Button = ToolbarButton> {
+interface IControlType<T = IJodit | IViewBased, Button = IToolbarButton> {
     controlName?: string;
     name?: string;
     mode?: Modes;
@@ -233,15 +231,73 @@ export interface IControlType<T = IJodit | IViewBased, Button = ToolbarButton> {
         current: Node | false,
         control: IControlType<T, Button>,
         close: () => void,
-        button?: Button
+        button: Button
     ) => string | HTMLElement | false;
 
     defaultValue?: string | string[];
 }
 
-export interface IControlTypeStrong extends IControlType {
+interface IControlTypeStrong extends IControlType {
     name: string;
 }
 
 export type Controls = IDictionary<IControlType>;
 export type Buttons = Array<string | IControlType> | string;
+
+interface IToolbarElement extends IComponent {
+    container: HTMLElement;
+    parentToolbar?: IToolbarCollection;
+
+    createIcon(
+        clearName: string,
+        control?: IControlTypeStrong
+    ): HTMLElement;
+}
+
+interface IToolbarButton extends IToolbarElement {
+    disable: boolean;
+    active: boolean;
+    control: IControlTypeStrong;
+    target: HTMLElement | undefined;
+    textBox: HTMLSpanElement;
+    anchor: HTMLAnchorElement;
+
+    isDisable(): boolean;
+    isActive(): boolean;
+}
+
+interface IToolbarCollection {
+    readonly listenEvents: string;
+
+    getButtonsList(): string[];
+
+    appendChild(button: IToolbarElement): void;
+
+    removeChild(button: IToolbarElement): void;
+
+    build(
+        buttons: Buttons,
+        container: HTMLElement,
+        target?: HTMLElement
+    ): void;
+
+    clear(): void;
+
+    immedateCheckActiveButtons: Function;
+
+    buttonIsActive(button: IToolbarButton): boolean | void;
+
+    buttonIsDisabled(button: IToolbarButton): boolean | void;
+    /**
+     * Target for button element
+     *
+     * @param button
+     */
+    getTarget(button: IToolbarButton): Node | void;
+
+    checkActiveButtons: Function;
+
+    container: HTMLElement;
+
+    destruct(): void;
+}

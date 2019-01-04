@@ -6,9 +6,9 @@
 
 import { Config } from '../Config';
 import { KEY_DOWN, KEY_ENTER, KEY_LEFT, KEY_RIGHT, KEY_UP } from '../constants';
-import { Jodit } from '../Jodit';
 import { Alert, Dialog } from '../modules/dialog/';
 import { IControlType } from '../types/toolbar';
+import { IJodit } from '../types';
 
 declare module '../Config' {
     interface Config {
@@ -237,10 +237,10 @@ Config.prototype.controls.symbol = {
     hotkeys: ['ctrl+shift+i', 'cmd+shift+i'],
     tooltip: 'Insert Special Character',
     popup: (
-        editor: Jodit,
-        current: Node | false,
-        control: IControlType,
-        close: () => void
+        editor: IJodit,
+        current,
+        control,
+        close
     ): any => {
         const container: HTMLElement | undefined = editor.events.fire(
             'generateSpecialCharactersTable.symbols'
@@ -279,7 +279,7 @@ Config.prototype.controls.symbol = {
 export class symbols {
     private countInRow: number = 17;
 
-    constructor(editor: Jodit) {
+    constructor(editor: IJodit) {
         editor.events.on('generateSpecialCharactersTable.symbols', () => {
             const container: HTMLDivElement = editor.create.fromHTML(
                     '<div class="jodit_symbols-container">' +

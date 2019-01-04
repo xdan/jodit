@@ -4,7 +4,6 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Jodit } from '../../Jodit';
 import { IBound } from '../../types/types';
 import { IViewBased } from '../../types/view';
 import { Dom } from '../Dom';
@@ -198,3 +197,5 @@ export class Popup extends Component {
         Dom.safeRemove(this.container);
     }
 }
+
+import { Jodit } from '../../Jodit';

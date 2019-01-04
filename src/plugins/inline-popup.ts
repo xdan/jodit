@@ -5,7 +5,6 @@
  */
 
 import { Config } from '../Config';
-import { Jodit } from '../Jodit';
 import { Widget } from '../modules/Widget';
 import ColorPickerWidget = Widget.ColorPickerWidget;
 import TabsWidget = Widget.TabsWidget;
@@ -14,10 +13,11 @@ import { css, debounce, offset, splitArray } from '../modules/helpers/';
 import { Plugin } from '../modules/Plugin';
 import { Table } from '../modules/Table';
 import { Popup } from '../modules/popup/popup';
-import { IDictionary, IJodit } from '../types';
+import { IDictionary, IJodit, IToolbarCollection } from '../types';
 import { IControlType } from '../types/toolbar';
 import { IBound } from '../types/types';
-import { ToolbarCollection } from '../modules/toolbar/collection';
+import { JoditToolbarCollection } from '../modules/toolbar/joditToolbarCollection';
+import { ToolbarCollection } from '../modules';
 
 declare module '../Config' {
     interface Config {
@@ -127,7 +127,7 @@ Config.prototype.popup = {
             name: 'left',
             list: ['Left', 'Right', 'Center', 'Normal'],
             exec: (
-                editor: Jodit,
+                editor: IJodit,
                 image: HTMLImageElement,
                 control: IControlType
             ) => {
@@ -299,7 +299,7 @@ Config.prototype.popup = {
                 tableaddcolumnafter: 'Insert column after',
             },
             exec: (
-                editor: Jodit,
+                editor: IJodit,
                 table: HTMLTableElement,
                 control: IControlType
             ) => {
@@ -319,7 +319,7 @@ Config.prototype.popup = {
                 tableaddrowafter: 'Insert row below',
             },
             exec: (
-                editor: Jodit,
+                editor: IJodit,
                 table: HTMLTableElement,
                 control: IControlType
             ) => {
@@ -363,7 +363,7 @@ Config.prototype.popup = {
  * @param {Jodit} editor
  */
 export class inlinePopup extends Plugin {
-    private toolbar: ToolbarCollection;
+    private toolbar: IToolbarCollection;
     private popup: Popup;
 
     private target: HTMLDivElement;
@@ -650,8 +650,8 @@ export class inlinePopup extends Plugin {
         }
     };
 
-    public afterInit(editor: Jodit) {
-        this.toolbar = ToolbarCollection.makeCollection(editor);
+    public afterInit(editor: IJodit) {
+        this.toolbar = JoditToolbarCollection.makeCollection(editor);
 
         this.target = editor.create.div('jodit_toolbar_popup-inline-target');
         this.container = editor.create.div();
@@ -730,7 +730,7 @@ export class inlinePopup extends Plugin {
                 this.checkIsTargetEvent
             );
     }
-    public beforeDestruct(editor: Jodit) {
+    public beforeDestruct(editor: IJodit) {
         this.popup.destruct();
         this.toolbar.destruct();
 

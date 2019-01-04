@@ -6,7 +6,6 @@
 
 import { Config } from '../Config';
 import * as consts from '../constants';
-import { Jodit } from '../Jodit';
 import { Plugin } from '../modules/Plugin';
 import { IControlType } from '../types/toolbar';
 import { IJodit } from '../types';
@@ -30,7 +29,7 @@ export class redoundo extends Plugin {
     beforeDestruct() {
         // do nothing
     }
-    afterInit(editor: Jodit) {
+    afterInit(editor: IJodit) {
         const callback = (command: string): void | false => {
             if (editor.getRealMode() === consts.MODE_WYSIWYG) {
                 editor.observer[command as 'redo' | 'undo']();

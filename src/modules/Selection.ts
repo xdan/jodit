@@ -11,8 +11,7 @@ import {
     INVISIBLE_SPACE_REG_EXP_START,
 } from '../constants';
 
-import { Jodit } from '../Jodit';
-import { HTMLTagNames, IDictionary, markerInfo } from '../types';
+import { HTMLTagNames, IDictionary, IJodit, markerInfo } from '../types';
 import { Dom } from './Dom';
 import { css } from './helpers/css';
 import { normalizeNode, normilizeCSSValue } from './helpers/normalize';
@@ -25,9 +24,9 @@ import { setTimeout } from './helpers/async/setTimeout';
 export class Select {
     private readonly doc: Document;
     private readonly win: Window;
-    private readonly iframe: HTMLIFrameElement | null;
+    private readonly iframe: HTMLIFrameElement | null | void;
 
-    constructor(readonly jodit: Jodit) {
+    constructor(readonly jodit: IJodit) {
         this.doc = jodit.editorDocument;
         this.win = jodit.editorWindow;
         this.iframe = jodit.iframe;
@@ -1038,9 +1037,9 @@ export class Select {
         cssRules: IDictionary<string | number | undefined>,
         nodeName: HTMLTagNames = 'span',
         options?:
-            | ((jodit: Jodit, elm: HTMLElement) => boolean)
+            | ((jodit: IJodit, elm: HTMLElement) => boolean)
             | IDictionary<string | string[]>
-            | IDictionary<(editor: Jodit, elm: HTMLElement) => boolean>
+            | IDictionary<(editor: IJodit, elm: HTMLElement) => boolean>
     ) {
         const WRAP: number = 1;
         const UNWRAP: number = 0;

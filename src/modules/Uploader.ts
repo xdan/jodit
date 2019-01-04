@@ -5,12 +5,11 @@
  */
 import { Config } from '../Config';
 import { IS_IE, TEXT_PLAIN } from '../constants';
-import { Jodit } from '../Jodit';
 import {
     BuildDataResult,
     HandlerError,
     HandlerSuccess,
-    IDictionary,
+    IDictionary, IJodit,
     IUploader,
     IUploaderAnswer,
     IUploaderData,
@@ -20,6 +19,7 @@ import {
 import { Ajax } from './Ajax';
 import { browser, extend, isPlainObject } from './helpers/';
 import { Dom } from './Dom';
+import { isJoditObject } from './helpers/checker/isJoditObject';
 
 declare module '../Config' {
     interface Config {
@@ -90,7 +90,7 @@ Config.prototype.uploader = {
                     elm.innerText = resp.baseurl + filename;
                 }
 
-                if (this.jodit instanceof Jodit) {
+                if (isJoditObject(this.jodit)) {
                     if (tagName === 'img') {
                         this.jodit.selection.insertImage(elm as HTMLImageElement, null, this.jodit.options.imageDefaultWidth);
                     } else {
@@ -509,12 +509,12 @@ export class Uploader implements IUploader {
                         this.jodit.ownerDocument.body.appendChild(div);
 
                         const selection =
-                                this.jodit && this.jodit instanceof Jodit
+                                this.jodit && isJoditObject(this.jodit)
                                     ? this.jodit.selection.save()
                                     : null,
                             restore = () =>
                                 selection &&
-                                (this.jodit && this.jodit instanceof Jodit) &&
+                                this.jodit && isJoditObject(this.jodit) &&
                                 this.jodit.selection.restore(selection);
 
                         div.focus();
@@ -571,7 +571,7 @@ export class Uploader implements IUploader {
                 }
             };
 
-        if (this.jodit && (<Jodit>this.jodit).editor !== form) {
+        if (this.jodit && (<IJodit>this.jodit).editor !== form) {
             self.jodit.events.on(form, 'paste', onPaste);
         } else {
             self.jodit.events.on('beforePaste', onPaste);
@@ -706,12 +706,12 @@ export class Uploader implements IUploader {
             true,
             {},
             Config.prototype.uploader,
-            editor instanceof Jodit ? editor.options.uploader : null,
+            isJoditObject(editor) ? editor.options.uploader : null,
             options
         ) as IUploaderOptions<Uploader>;
 
         if (
-            editor instanceof Jodit &&
+            isJoditObject(editor) &&
             editor.options.enableDragAndDropFileToEditor &&
             editor.options.uploader &&
             (editor.options.uploader.url ||

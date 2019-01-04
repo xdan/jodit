@@ -5,16 +5,16 @@
  */
 
 import * as consts from '../constants';
-import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
 import { Table } from '../modules/Table';
+import { IJodit } from '../types';
 
 /**
  * Process navigate keypressing in table cell
  *
  * @param {Jodit} editor
  */
-export function tableKeyboardNavigation(editor: Jodit) {
+export function tableKeyboardNavigation(editor: IJodit) {
     editor.events.on(
         'keydown',
         (event: KeyboardEvent): false | void => {

@@ -4,18 +4,17 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { IControlTypeStrong } from '../../types/toolbar';
+import { IControlTypeStrong, IToolbarButton, IToolbarCollection } from '../../types/toolbar';
 import { Dom } from '../Dom';
 import { asArray, camelCase } from '../helpers/';
 import { ToolbarElement } from './element';
 import { PopupList } from '../popup/list';
 import { Popup } from '../popup/popup';
 import { ToolbarTooltip } from './tooltip';
-import { ToolbarCollection } from './collection';
-import { Jodit } from '../../Jodit';
 import { IViewBased } from '../../types';
+import { isJoditObject } from '../helpers/checker/isJoditObject';
 
-export class ToolbarButton extends ToolbarElement {
+export class ToolbarButton extends ToolbarElement implements IToolbarButton {
     set disable(disable: boolean) {
         this.__disabled = disable;
         this.container.classList.toggle('jodit_disabled', disable);
@@ -31,7 +30,7 @@ export class ToolbarButton extends ToolbarElement {
         }
     }
 
-    get disable() {
+    get disable(): boolean {
         return this.__disabled;
     }
 
@@ -40,7 +39,7 @@ export class ToolbarButton extends ToolbarElement {
         this.container.classList.toggle('jodit_active', enable);
     }
 
-    get active() {
+    get active(): boolean {
         return this.__actived;
     }
 
@@ -151,7 +150,7 @@ export class ToolbarButton extends ToolbarElement {
             );
         } else {
             if (control.command || control.name) {
-                if (this.jodit instanceof Jodit) {
+                if (isJoditObject(this.jodit)) {
                     this.jodit.execCommand(
                         control.command || control.name,
                         (control.args && control.args[0]) || false,
@@ -171,7 +170,7 @@ export class ToolbarButton extends ToolbarElement {
     };
 
     constructor(
-        parentToolbarOrView: ToolbarCollection | IViewBased,
+        parentToolbarOrView: IToolbarCollection | IViewBased,
         control: IControlTypeStrong,
         target?: HTMLElement
     ) {

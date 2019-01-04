@@ -9,9 +9,8 @@ import {
     INVISIBLE_SPACE_REG_EXP,
     SPACE_REG_EXP,
 } from '../constants';
-import { Jodit } from '../Jodit';
 import { debounce } from '../modules/helpers/async';
-import { SnapshotType } from '../types';
+import { IJodit, SnapshotType } from '../types';
 import { stripTags } from '../modules/helpers/html';
 
 declare module '../Config' {
@@ -38,7 +37,7 @@ Config.prototype.limitChars = false;
  */
 Config.prototype.limitHTML = false;
 
-export function limit(jodit: Jodit) {
+export function limit(jodit: IJodit) {
     if (jodit && (jodit.options.limitWords || jodit.options.limitChars)) {
         const callback = (
             event: KeyboardEvent | null,

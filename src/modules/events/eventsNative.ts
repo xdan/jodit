@@ -1,6 +1,6 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
- * License GNU General Public License version 2 or later;
+ * License GNU General License version 2 or later;
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
@@ -10,8 +10,9 @@
 
 import { CallbackFunction, EventHandlerBlock } from '../../types';
 import { EventHandlersStore } from './Store';
+import { IEventsNative } from '../../types/events';
 
-export class EventsNative {
+export class EventsNative implements IEventsNative {
     private __defaultNameSpace: string = 'JoditEventDefaultNamespace';
     private __key: string = '__JoditEventsNativeNamespaces';
 
@@ -161,7 +162,7 @@ export class EventsNative {
      * });
      * ```
      */
-    public current: string[] = [];
+    current: string[] = [];
 
     /**
      * Sets the handler for the specified event ( Event List ) for a given element .
@@ -187,7 +188,7 @@ export class EventsNative {
      * }, 'a');
      * ```
      */
-    public on(
+    on(
         subjectOrEvents: string,
         eventsOrCallback: CallbackFunction,
         handlerOrSelector?: void,
@@ -195,7 +196,7 @@ export class EventsNative {
         onTop?: boolean
     ): EventsNative;
 
-    public on(
+    on(
         subjectOrEvents: object,
         eventsOrCallback: string,
         handlerOrSelector: CallbackFunction,
@@ -203,7 +204,7 @@ export class EventsNative {
         onTop?: boolean
     ): EventsNative;
 
-    public on(
+    on(
         subjectOrEvents: object | string,
         eventsOrCallback: string | CallbackFunction,
         handlerOrSelector?: CallbackFunction | void,
@@ -361,16 +362,16 @@ export class EventsNative {
      * parent.events.off('someGlobalEvents');
      * ```
      */
-    public off(
+    off(
         subjectOrEvents: string,
         eventsOrCallback?: () => void
     ): EventsNative;
-    public off(
+    off(
         subjectOrEvents: object,
         eventsOrCallback?: string,
         handler?: () => void
     ): EventsNative;
-    public off(
+    off(
         subjectOrEvents: object | string,
         eventsOrCallback?: string | (() => void),
         handler?: () => void
@@ -461,7 +462,7 @@ export class EventsNative {
         return this;
     }
 
-    public stopPropagation(
+    stopPropagation(
         subjectOrEvents: object | string,
         eventsList?: string
     ) {
@@ -516,13 +517,13 @@ export class EventsNative {
      *  ```
      *
      */
-    public fire(subjectOrEvents: string, eventsList?: any, ...args: any[]): any;
-    public fire(
+    fire(subjectOrEvents: string, eventsList?: any, ...args: any[]): any;
+    fire(
         subjectOrEvents: object,
         eventsList: string | Event,
         ...args: any[]
     ): any;
-    public fire(
+    fire(
         subjectOrEvents: object | string,
         eventsList?: string | any | Event,
         ...args: any[]
@@ -621,7 +622,7 @@ export class EventsNative {
         return result;
     }
 
-    public destruct() {
+    destruct() {
         this.off(this);
     }
 

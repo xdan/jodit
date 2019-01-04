@@ -5,10 +5,10 @@
  */
 
 import { Config } from '../Config';
-import { Jodit } from '../Jodit';
 import { defaultLanguage } from '../modules/helpers/defaultLanguage';
 import { throttle } from '../modules/helpers/async';
 import { css } from '../modules/helpers/css';
+import { IJodit } from '../types';
 
 declare module '../Config' {
     interface Config {
@@ -142,7 +142,7 @@ Config.prototype.iframeCSSLinks = [];
  * Iframe plugin - use `iframe` instead of DIV in editor. It can be need when you want attach custom styles in editor
  * in backend of you system
  */
-export function iframe(editor: Jodit) {
+export function iframe(editor: IJodit) {
     editor.events
         .on('afterSetMode', () => {
             if (editor.isEditorMode()) {
@@ -151,7 +151,7 @@ export function iframe(editor: Jodit) {
         })
         .on(
             'generateDocumentStructure.iframe',
-            (__doc: Document | undefined, jodit: Jodit) => {
+            (__doc: Document | undefined, jodit: IJodit) => {
                 const doc: Document =
                     __doc ||
                     ((jodit.iframe as HTMLIFrameElement)

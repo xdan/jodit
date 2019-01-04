@@ -6,7 +6,6 @@
 
 import { Config } from '../Config';
 import * as consts from '../constants';
-import { Jodit } from '../Jodit';
 import { Plugin } from '../modules/Plugin';
 import { Dom } from '../modules/Dom';
 import { Table } from '../modules/Table';
@@ -16,7 +15,6 @@ import {
     offset,
     scrollIntoView,
 } from '../modules/helpers/';
-import { ToolbarButton } from '../modules/toolbar/button';
 import { IControlType } from '../types/toolbar';
 import { IBound, IDictionary } from '../types/types';
 import { IJodit } from '../types';
@@ -47,9 +45,9 @@ Config.prototype.controls.table = {
     popup: (
         editor: IJodit,
         current,
-        control: IControlType,
-        close: () => void,
-        button: ToolbarButton
+        control,
+        close,
+        button
     ) => {
         let i: number,
             j: number,
@@ -262,23 +260,27 @@ Config.prototype.controls.table = {
                 }
 
                 close();
-            })
-            .off(
-                button.parentToolbar as object,
-                'afterOpenPopup.tableGenerator'
-            )
-            .on(
-                button.parentToolbar as object,
-                'afterOpenPopup.tableGenerator',
-                () => {
-                    generateRows(default_rows_count);
-                    if (cells[0]) {
-                        cells[0].className = 'hovered';
-                    }
-                },
-                '',
-                true
-            );
+            });
+
+        if (button && button.parentToolbar) {
+            editor.events
+                .off(
+                    button.parentToolbar as object,
+                    'afterOpenPopup.tableGenerator'
+                )
+                .on(
+                    button.parentToolbar as object,
+                    'afterOpenPopup.tableGenerator',
+                    () => {
+                        generateRows(default_rows_count);
+                        if (cells[0]) {
+                            cells[0].className = 'hovered';
+                        }
+                    },
+                    '',
+                    true
+                );
+        }
 
         return form;
     },
@@ -707,7 +709,7 @@ export class TableProcessor extends Plugin {
      *
      * @param {Jodit} editor
      */
-    afterInit(editor: Jodit): void {
+    afterInit(editor: IJodit): void {
         if (!editor.options.useTableProcessor) {
             return;
         }
@@ -877,7 +879,7 @@ export class TableProcessor extends Plugin {
             .on('beforeCommand.table', this.onExecCommand.bind(this));
     }
 
-    beforeDestruct(jodit: Jodit): void {
+    beforeDestruct(jodit: IJodit): void {
         if (jodit.events) {
             jodit.events.off(this.jodit.ownerWindow, '.table');
             jodit.events.off('.table');

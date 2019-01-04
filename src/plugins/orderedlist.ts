@@ -5,9 +5,8 @@
  */
 
 import { Config } from '../Config';
-import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
-import { markerInfo } from '../types';
+import { IJodit, markerInfo } from '../types';
 
 Config.prototype.controls.ul = {
     command: 'insertUnorderedList',
@@ -25,7 +24,7 @@ Config.prototype.controls.ol = {
 /**
  * Process commands insertOrderedList and insertUnOrderedList
  */
-export function orderedlist(editor: Jodit) {
+export function orderedlist(editor: IJodit) {
     editor.events.on(
         'afterCommand',
         (command: string): false | void => {

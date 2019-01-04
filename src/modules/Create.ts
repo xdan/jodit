@@ -10,11 +10,9 @@ import { each } from './helpers/each';
 import { asArray } from './helpers/array/asArray';
 import { Dom } from './Dom';
 import { css } from './helpers';
+import { Attributes, Children, ICreate } from '../types/create';
 
-type Attributes = IDictionary<string | number | boolean | IDictionary<string | number | boolean>>;
-type Children = string | Array<string | Node> | Node;
-
-export class Create {
+export class Create implements ICreate {
     private doc: Document;
     public inside: Create;
 

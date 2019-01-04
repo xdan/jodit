@@ -7,13 +7,13 @@
 import { Config } from '../Config';
 import * as consts from '../constants';
 import { MODE_WYSIWYG } from '../constants';
-import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
 import { ToolbarIcon } from '../modules/toolbar/icon';
 import { Plugin } from '../modules/Plugin';
 import { debounce } from '../modules/helpers/async';
 import { trim } from '../modules/helpers/string';
 import { ISelectionRange, markerInfo } from '../types/types';
+import { IJodit } from '../types';
 
 declare module '../Config' {
     interface Config {
@@ -521,7 +521,7 @@ export class search extends Plugin {
         this.isOpened = false;
     };
 
-    afterInit(editor: Jodit) {
+    afterInit(editor: IJodit) {
         if (editor.options.useSearch) {
             const self: search = this;
 
@@ -687,7 +687,7 @@ export class search extends Plugin {
         }
     }
 
-    beforeDestruct(jodit: Jodit): void {
+    beforeDestruct(jodit: IJodit): void {
         Dom.safeRemove(this.searchBox);
         jodit.events && jodit.events.off('.search');
         jodit.events && jodit.events.off(jodit.container, '.search');

@@ -4,12 +4,10 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { EventsNative } from '../modules/events/eventsNative';
-import { Buttons, Controls } from './toolbar';
+import { Buttons, Controls, IToolbarCollection } from './toolbar';
 import { IComponent, IDictionary } from './types';
-import { Component } from '../modules/Component';
-import { Create } from '../modules/Create';
-import { ToolbarCollection } from '../modules/toolbar/collection';
+import { ICreate } from './create';
+import { IEventsNative } from './events';
 
 interface IViewOptions {
     disabled?: boolean;
@@ -32,7 +30,7 @@ interface IViewOptions {
 
 interface IPanel extends IComponent {
     container: HTMLDivElement;
-    create: Create;
+    create: ICreate;
 
     ownerDocument: Document;
     ownerWindow: Window;
@@ -40,7 +38,7 @@ interface IPanel extends IComponent {
     isLockedNotBy(name: string): boolean;
     isLocked(): boolean;
 
-    lock(name: string): boolean;
+    lock(name?: string): boolean;
     unlock(): boolean;
 
     isFullSize: () => boolean;
@@ -59,8 +57,8 @@ interface IViewBased extends IPanel {
 
     options: IViewOptions;
 
-    events: EventsNative;
-    create: Create;
+    events: IEventsNative;
+    create: ICreate;
 
     i18n: (text: string, ...params: Array<string | number>) => string;
 
@@ -68,12 +66,14 @@ interface IViewBased extends IPanel {
 
     iframe?: HTMLIFrameElement | null;
 
-    getInstance<T = Component>(moduleName: string, options?: object): T;
+    getInstance<T = IComponent>(moduleName: string, options?: object): T;
 
     getVersion: () => string;
+
+    components: IComponent[];
 }
 
 interface IViewWithToolbar extends IViewBased {
-    toolbar: ToolbarCollection;
+    toolbar: IToolbarCollection;
 }
 

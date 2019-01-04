@@ -4,12 +4,12 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Controls, IControlType, IControlTypeStrong } from '../../types/toolbar';
+import { Controls, IControlType, IControlTypeStrong, IToolbarCollection } from '../../types/toolbar';
 import { IViewBased } from '../../types/view';
 import { each } from '../helpers/';
 import { ToolbarButton } from '../toolbar/button';
-import { ToolbarCollection } from '../toolbar/collection';
 import { Popup } from './popup';
+import { JoditToolbarCollection } from '../toolbar/joditToolbarCollection';
 
 export class PopupList extends Popup {
     private defaultControl = {
@@ -24,7 +24,7 @@ export class PopupList extends Popup {
     }
 
     doOpen(control: IControlTypeStrong) {
-        this.toolbar = ToolbarCollection.makeCollection(this.jodit);
+        this.toolbar = JoditToolbarCollection.makeCollection(this.jodit);
 
         const list: any =
             typeof control.list === 'string'
@@ -96,7 +96,7 @@ export class PopupList extends Popup {
         this.toolbar.checkActiveButtons();
     }
 
-    public toolbar: ToolbarCollection;
+    public toolbar: IToolbarCollection;
 
     constructor(
         jodit: IViewBased,

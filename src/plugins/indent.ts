@@ -6,7 +6,6 @@
 
 import { Config } from '../Config';
 import { BR, PARAGRAPH } from '../constants';
-import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
 import { IControlType } from '../types/toolbar';
 import { HTMLTagNames, IJodit } from '../types';
@@ -51,7 +50,7 @@ Config.prototype.indentMargin = 10;
  * Indents the line containing the selection or insertion point.
  * @param {Jodit} editor
  */
-export function indent(editor: Jodit) {
+export function indent(editor: IJodit) {
     const callback = (command: string): void | false => {
         editor.selection.eachSelection(
             (current: Node): false | void => {

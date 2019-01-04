@@ -6,7 +6,6 @@
 
 import { Config } from '../Config';
 import { MODE_WYSIWYG } from '../constants';
-import { Jodit } from '../Jodit';
 import { Plugin } from '../modules/Plugin';
 import { css } from '../modules/helpers/css';
 import { offset } from '../modules/helpers/size';
@@ -98,7 +97,7 @@ export class sticky extends Plugin {
         }
     };
 
-    afterInit(jodit: Jodit) {
+    afterInit(jodit: IJodit) {
         jodit.events.on(
             jodit.ownerWindow,
             'scroll wheel mousewheel resize',

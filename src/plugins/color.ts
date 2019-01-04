@@ -10,7 +10,6 @@ import TabsWidget = Widget.TabsWidget;
 import ColorPickerWidget = Widget.ColorPickerWidget;
 import { Dom } from '../modules/Dom';
 import { css, normalizeColor } from '../modules/helpers/';
-import { ToolbarButton } from '../modules/toolbar/button';
 import { IDictionary, IJodit } from '../types';
 import { IControlType } from '../types/toolbar';
 
@@ -18,8 +17,12 @@ Config.prototype.controls.brush = {
     isActive: (
         editor: IJodit,
         btn: IControlType,
-        button: ToolbarButton
+        button
     ): boolean => {
+        if (!button) {
+            return true;
+        }
+
         const current: Node | false = editor.selection.current(),
             icon: SVGSVGElement | null = button.container.querySelector('svg');
 

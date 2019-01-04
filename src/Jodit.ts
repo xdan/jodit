@@ -8,7 +8,6 @@ import { Config, OptionsDefault } from './Config';
 import * as consts from './constants';
 import { Component } from './modules/Component';
 import { Dom } from './modules/Dom';
-import { FileBrowser } from './modules/filebrowser/fileBrowser';
 import {
     asArray,
     debounce,
@@ -25,7 +24,6 @@ import { Select } from './modules/Selection';
 import { StatusBar } from './modules/StatusBar';
 import { LocalStorageProvider } from './modules/storage/localStorageProvider';
 import { Storage } from './modules/storage/storage';
-import { Uploader } from './modules/Uploader';
 import {
     CustomCommand,
     ExecCommandCallback,
@@ -36,6 +34,7 @@ import {
 import { cache } from './modules/helpers/decorator';
 import { ViewWithToolbar } from './modules/view/viewWithToolbar';
 import { IJodit } from './types/jodit';
+import { IFileBrowser, IUploader } from './types';
 
 /**
  * Class Jodit. Main class
@@ -291,8 +290,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
      */
     public editorWindow: Window;
 
-    public components: any = [];
-
     // toolbar: JoditToolbarCollection = new JoditToolbarCollection(this.jodit);
 
     /**
@@ -338,16 +335,16 @@ export class Jodit extends ViewWithToolbar implements IJodit {
      * @property {Uploader} uploader
      */
     @cache()
-    public get uploader(): Uploader {
-        return new Uploader(this);
+    public get uploader(): IUploader {
+        return this.getInstance('Uploader');
     };
 
     /**
      * @property {FileBrowser} filebrowser
      */
     @cache()
-    public get filebrowser(): FileBrowser {
-        return new FileBrowser(this);
+    public get filebrowser(): IFileBrowser {
+        return this.getInstance('FileBrowser');
     };
 
     public helper: any;
@@ -908,9 +905,9 @@ export class Jodit extends ViewWithToolbar implements IJodit {
                     ? sprintf.apply(this, [value].concat(params as string[]))
                     : value,
             default_language: string =
-                Jodit.defaultOptions.language === 'auto'
-                    ? defaultLanguage(Jodit.defaultOptions.language)
-                    : Jodit.defaultOptions.language,
+                Config.defaultOptions.language === 'auto'
+                    ? defaultLanguage(Config.defaultOptions.language)
+                    : Config.defaultOptions.language,
             language: string = defaultLanguage(
                 this.options ? this.options.language : default_language
             );

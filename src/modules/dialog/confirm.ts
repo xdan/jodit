@@ -5,7 +5,6 @@
  */
 
 import { Dialog } from './dialog';
-import { Jodit } from '../../Jodit';
 import { ToolbarIcon } from '../toolbar/icon';
 
 /**
@@ -89,3 +88,5 @@ export const Confirm = (
 
     return dialog;
 };
+
+import { Jodit } from '../../Jodit';

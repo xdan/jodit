@@ -7,7 +7,6 @@
 import { Config } from '../Config';
 import * as consts from '../constants';
 import { css } from '../modules/helpers/';
-import { ToolbarButton } from '../modules/toolbar/button';
 import { ToolbarIcon } from '../modules/toolbar/icon';
 import { IControlType } from '../types/toolbar';
 import { ViewWithToolbar } from '../modules/view/viewWithToolbar';
@@ -52,14 +51,15 @@ Config.prototype.controls.fullsize = {
         editor.toggleFullSize();
     },
     isActive: (editor: IJodit) => editor.isFullSize(),
-    getLabel: (editor: IJodit, btn: IControlType, button: ToolbarButton) => {
+    getLabel: (editor: IJodit, btn, button) => {
         const mode: string = editor.isFullSize() ? 'shrink' : 'fullsize';
 
-        button.textBox.innerHTML = !editor.options.textIcons
-            ? ToolbarIcon.getIcon(mode)
-            : `<span>${editor.i18n(mode)}</span>`;
-
-        (button.textBox.firstChild as HTMLElement).classList.add('jodit_icon');
+        if (button) {
+            button.textBox.innerHTML = !editor.options.textIcons
+                ? ToolbarIcon.getIcon(mode)
+                : `<span>${editor.i18n(mode)}</span>`;
+            (button.textBox.firstChild as HTMLElement).classList.add('jodit_icon');
+        }
     },
     tooltip: 'Open editor in fullsize',
     mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG,

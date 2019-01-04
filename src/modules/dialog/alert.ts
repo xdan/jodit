@@ -5,7 +5,6 @@
  */
 import { Dialog } from './dialog';
 import { ToolbarIcon } from '../toolbar/icon';
-import { Jodit } from '../../Jodit';
 
 /**
  * Show `alert` dialog. Work without Jodit object
@@ -67,3 +66,5 @@ export const Alert = (
 
     return dialog;
 };
+
+import { Jodit } from '../../Jodit';

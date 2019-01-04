@@ -4,15 +4,16 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { View } from './view';
-import { ToolbarCollection } from '../toolbar/collection';
 import { IViewWithToolbar } from '../../types/view';
+import { IToolbarCollection } from '../../types/toolbar';
+import { View } from './view';
 
 export class ViewWithToolbar extends View implements  IViewWithToolbar {
-    toolbar: ToolbarCollection = ToolbarCollection.makeCollection(this.jodit);
+    toolbar: IToolbarCollection = JoditToolbarCollection.makeCollection(this.jodit);
 
     destruct() {
         this.toolbar.destruct();
         super.destruct();
     }
 }
+import { JoditToolbarCollection } from '../toolbar/joditToolbarCollection';

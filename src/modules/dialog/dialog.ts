@@ -7,15 +7,13 @@
 import { Config } from '../../Config';
 import { IDialogOptions } from '../../types/dialog';
 import { KEY_ESC } from '../../constants';
-import { Jodit } from '../../Jodit';
-import { IDictionary } from '../../types';
+import { IDictionary, IJodit } from '../../types';
 import { IControlType } from '../../types/toolbar';
 import { IViewBased } from '../../types/view';
-import { EventsNative } from '../events/eventsNative';
 import { $$, asArray, css } from '../helpers/';
 import { View } from '../view/view';
-import { ToolbarButton } from '../toolbar/button';
 import { Dom } from '../Dom';
+import { isJoditObject } from '../helpers/checker/isJoditObject';
 
 /**
  * @property {object} dialog module settings {@link Dialog|Dialog}
@@ -48,7 +46,7 @@ Config.prototype.controls.dialog = {
     },
     fullsize: {
         icon: 'fullsize',
-        getLabel: (editor, btn: IControlType, button: ToolbarButton) => {
+        getLabel: (editor, btn: IControlType, button) => {
             if (
                 Config.prototype.controls.fullsize &&
                 Config.prototype.controls.fullsize.getLabel &&
@@ -270,7 +268,6 @@ export class Dialog extends View {
             this.jodit.events.fire(this, 'startResize');
         }
     }
-    public events: EventsNative;
 
     public options: IDialogOptions;
 
@@ -620,7 +617,7 @@ export class Dialog extends View {
     constructor(jodit?: IViewBased, options: any = Config.prototype.dialog) {
         super(jodit, options);
 
-        if (jodit && jodit instanceof Jodit) {
+        if (isJoditObject(jodit)) {
             this.window = jodit.ownerWindow;
             this.document = jodit.ownerDocument;
 
@@ -629,13 +626,11 @@ export class Dialog extends View {
             });
         }
 
-        this.events = jodit && jodit.events ? jodit.events : new EventsNative();
-
         const self: Dialog = this;
 
         const opt =
             jodit && (jodit as View).options
-                ? (jodit as Jodit).options.dialog
+                ? (jodit as IJodit).options.dialog
                 : Config.prototype.dialog;
 
         self.options = { ...opt, ...self.options } as IDialogOptions;
@@ -659,8 +654,8 @@ export class Dialog extends View {
                 '</div>'
         ) as HTMLDivElement;
 
-        if (jodit && (<Jodit>jodit).id) {
-            self.container.setAttribute('data-editor_id', (<Jodit>jodit).id);
+        if (jodit && (<IViewBased>jodit).id) {
+            self.container.setAttribute('data-editor_id', (<IViewBased>jodit).id);
         }
 
         Object.defineProperty(self.container, '__jodit_dialog', {
@@ -721,3 +716,5 @@ export class Dialog extends View {
         Jodit.plugins.fullsize(self);
     }
 }
+
+import { Jodit } from '../../Jodit';

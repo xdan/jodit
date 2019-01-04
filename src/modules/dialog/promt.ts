@@ -5,7 +5,6 @@
  */
 import { Dialog } from './dialog';
 import { ToolbarIcon } from '../toolbar/icon';
-import { Jodit } from '../../Jodit';
 
 /**
  * Show `promt` dialog. Work without Jodit object
@@ -95,3 +94,5 @@ export const Promt = (
 
     return dialog;
 };
+
+import { Jodit } from '../../Jodit';

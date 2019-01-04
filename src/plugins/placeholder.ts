@@ -6,10 +6,10 @@
 
 import { Config } from '../Config';
 import * as consts from '../constants';
-import { Jodit } from '../Jodit';
 import { css } from '../modules/helpers/css';
 import { debounce } from '../modules/helpers/async';
 import { Dom } from '../modules/Dom';
+import { IJodit } from '../types';
 
 /**
  * Show placeholder
@@ -62,7 +62,7 @@ Config.prototype.placeholder = 'Type something';
  *
  * @param {Jodit} editor
  */
-export function placeholder(this: any, editor: Jodit) {
+export function placeholder(this: any, editor: IJodit) {
     if (!editor.options.showPlaceholder) {
         return;
     }

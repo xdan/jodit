@@ -8,7 +8,7 @@ import { Component } from '../Component';
 import { IPanel, IViewBased } from '../../types/view';
 import { Dom } from '../Dom';
 import { Create } from '../Create';
-import { Jodit } from '../../Jodit';
+import { isJoditObject } from '../helpers/checker/isJoditObject';
 
 export class Panel extends Component implements IPanel {
     protected __whoLocked: string | false = '';
@@ -32,7 +32,7 @@ export class Panel extends Component implements IPanel {
             this.ownerWindow = jodit.ownerWindow;
         }
 
-        this.create = new Create(this.ownerDocument, jodit instanceof Jodit ? jodit.editorDocument : void(0));
+        this.create = new Create(this.ownerDocument, isJoditObject(jodit) ? jodit.editorDocument : void(0));
 
         this.container = this.create.div();
     }

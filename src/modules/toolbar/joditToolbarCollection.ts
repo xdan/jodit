@@ -6,10 +6,13 @@
 
 import { ToolbarCollection } from './collection';
 import { ToolbarButton } from './button';
-import { IDictionary, IJodit, IViewBased } from '../../types';
+import { IDictionary } from '../../types/types';
+import { IJodit } from '../../types/jodit';
+import { IViewBased } from '../../types/view';
 import { Dom } from '../Dom';
-import { css } from '../helpers';
+import { css } from '../helpers/css';
 import * as consts from '../../constants';
+import { isJoditObject } from '../helpers/checker/isJoditObject';
 
 export class JoditToolbarCollection extends ToolbarCollection<IJodit> {
     checkActiveStatus = (
@@ -144,5 +147,9 @@ export class JoditToolbarCollection extends ToolbarCollection<IJodit> {
      */
     getTarget(button: ToolbarButton): Node | void {
         return button.target || this.jodit.selection.current() || undefined;
+    }
+
+    static makeCollection(jodit: IViewBased): ToolbarCollection<IViewBased> {
+        return isJoditObject(jodit) ? new JoditToolbarCollection(jodit) : new ToolbarCollection(jodit);
     }
 }

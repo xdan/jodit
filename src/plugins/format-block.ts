@@ -6,9 +6,7 @@
 
 import { Config } from '../Config';
 import * as consts from '../constants';
-import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
-import { ToolbarButton } from '../modules/toolbar/button';
 import { HTMLTagNames, IJodit, markerInfo } from '../types';
 import { IControlType } from '../types/toolbar';
 
@@ -16,8 +14,8 @@ Config.prototype.controls.paragraph = {
     command: 'formatBlock',
     getLabel: (
         editor: IJodit,
-        btn: IControlType,
-        button: ToolbarButton
+        btn,
+        button
     ): boolean => {
         const current: Node | false = editor.selection.current();
 
@@ -31,6 +29,7 @@ Config.prototype.controls.paragraph = {
                 currentValue: string = currentBox.nodeName.toLowerCase();
 
             if (
+                button &&
                 btn.data &&
                 btn.data.currentValue !== currentValue &&
                 btn.list &&
@@ -129,7 +128,7 @@ Config.prototype.controls.paragraph = {
  *
  * @param {Jodit} editor
  */
-export function formatBlock(editor: Jodit) {
+export function formatBlock(editor: IJodit) {
     editor.registerCommand(
         'formatblock',
         async (command: string, second: string, third: string): Promise<false | void> => {

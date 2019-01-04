@@ -4,8 +4,7 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Jodit } from '../../Jodit';
-import { IDictionary } from '../../types';
+import { IDictionary, IEventsNative } from '../../types';
 import { IViewBased, IViewOptions } from '../../types/view';
 import { Component } from '../Component';
 import { EventsNative } from '../events/eventsNative';
@@ -55,7 +54,9 @@ export class View extends Panel implements IViewBased {
         globalFullsize: true,
     };
 
-    public events: EventsNative;
+    public events: IEventsNative;
+
+    public components: any = [];
 
     // public toolbar: ToolbarCollection;
 
@@ -76,13 +77,13 @@ export class View extends Panel implements IViewBased {
     }
 
     public getInstance<T = Component>(moduleName: string, options?: object): T {
-        if (Jodit.modules[moduleName] === undefined) {
+        if (typeof Jodit.modules[moduleName] !== 'function') {
             throw new Error('Need real module name');
         }
 
         if (this.__modulesInstances[moduleName] === undefined) {
             this.__modulesInstances[moduleName] = new Jodit.modules[moduleName](
-                this,
+                this.jodit || this,
                 options
             );
         }
@@ -123,3 +124,5 @@ export class View extends Panel implements IViewBased {
         this.options = { ...this.options, ...options };
     }
 }
+
+import { Jodit } from '../../Jodit';

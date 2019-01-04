@@ -6,14 +6,16 @@
 
 import { Config, OptionsDefault } from '../../Config';
 import * as consts from '../../constants';
-import { Jodit } from '../../Jodit';
 import { Ajax } from '../Ajax';
 import { ContextMenu } from '../ContextMenu';
-import { Alert, Confirm, Dialog, Promt } from '../dialog/';
+import { Dialog } from '../dialog/dialog';
+import { Alert } from '../dialog/alert';
+import { Confirm } from '../dialog/confirm';
+import { Promt } from '../dialog/promt';
 import { ToolbarIcon } from '../toolbar/icon';
-import { Uploader } from '../Uploader';
 
 import {
+    IFileBrowser,
     IFileBrowserAjaxOptions,
     IFileBrowserAnswer,
     IFileBrowserCallBackData,
@@ -25,7 +27,7 @@ import {
 
 import { IControlType } from '../../types/toolbar';
 import { ActionBox, IDictionary, IPermissions } from '../../types/types';
-import { IUploaderOptions } from '../../types/uploader';
+import { IUploader, IUploaderOptions } from '../../types/uploader';
 import { IViewBased } from '../../types/view';
 import { ImageEditor } from '../ImageEditor';
 import { LocalStorageProvider } from '../storage/localStorageProvider';
@@ -40,6 +42,7 @@ import { debounce } from '../helpers/async/debounce';
 import { setTimeout } from '../helpers/async/setTimeout';
 import { humanSizeToBytes } from '../helpers';
 import { ViewWithToolbar } from '../view/viewWithToolbar';
+import { IJodit } from '../../types';
 
 declare module '../../Config' {
     interface Config {
@@ -512,11 +515,11 @@ Config.prototype.filebrowser = {
 
         headers: {},
 
-        prepareData(this: Uploader, data: any) {
+        prepareData(this: IUploader, data: any) {
             return data;
         },
 
-        process(this: Uploader, resp: IFileBrowserAnswer): IFileBrowserAnswer {
+        process(this: IUploader, resp: IFileBrowserAnswer): IFileBrowserAnswer {
             return resp;
         },
     },
@@ -703,7 +706,7 @@ Config.prototype.controls.filebrowser = {
     } as IControlType,
 } as IDictionary<IControlType>;
 
-export class FileBrowser extends ViewWithToolbar {
+export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
     /**
      * Return default timeout period in milliseconds for some debounce or throttle functions. By default return {observer.timeout} options
      *
@@ -712,7 +715,7 @@ export class FileBrowser extends ViewWithToolbar {
     get defaultTimeout(): number {
         return this.jodit
             ? this.jodit.defaultTimeout
-            : Jodit.defaultOptions.observer.timeout;
+            : Config.defaultOptions.observer.timeout;
     }
 
     private loader: HTMLElement;
@@ -1076,7 +1079,7 @@ export class FileBrowser extends ViewWithToolbar {
      */
     public storage: Storage = new Storage(new LocalStorageProvider());
 
-    public uploader: Uploader;
+    public uploader: IUploader;
 
     public canI(action: string): boolean {
         return (
@@ -1142,12 +1145,12 @@ export class FileBrowser extends ViewWithToolbar {
         url: string,
         success: (path: string, name: string, source: string) => void,
         onFailed: (error: Error) => void
-    ) => {
+    ): Promise<any> => {
         const action: string = 'getLocalFileByUrl',
             self: FileBrowser = this;
 
         this.options[action].data.url = url;
-        this.send(
+        return this.send(
             action,
             (resp: IFileBrowserAnswer) => {
                 if (self.options.isSuccess(resp)) {
@@ -1458,7 +1461,7 @@ export class FileBrowser extends ViewWithToolbar {
         );
     };
 
-    constructor(editor?: Jodit, options?: IFileBrowserOptions) {
+    constructor(editor?: IJodit, options?: IFileBrowserOptions) {
         super(editor, options);
 
         const self: FileBrowser = this,
@@ -1474,7 +1477,7 @@ export class FileBrowser extends ViewWithToolbar {
                 true,
                 {},
                 self.options,
-                Jodit.defaultOptions.filebrowser,
+                Config.defaultOptions.filebrowser,
                 options,
                 editor ? editor.options.filebrowser : void 0
             )
@@ -1986,41 +1989,39 @@ export class FileBrowser extends ViewWithToolbar {
             ? $$('base', editorDoc)[0].getAttribute('href') || ''
             : location.protocol + '//' + location.host;
 
-        if (Jodit.modules.Uploader !== undefined) {
-            const uploaderOptions: IUploaderOptions<Uploader> = extend(
-                true,
-                {},
-                Jodit.defaultOptions.uploader,
-                self.options.uploader,
-                editor &&
-                    editor.options &&
-                    editor.options.uploader !== null
-                    ? {
-                          ...(editor.options.uploader as IUploaderOptions<
-                              Uploader
-                          >),
-                      }
-                    : {}
-            ) as IUploaderOptions<Uploader>;
+        const uploaderOptions: IUploaderOptions<IUploader> = extend(
+            true,
+            {},
+            Config.defaultOptions.uploader,
+            self.options.uploader,
+            editor &&
+                editor.options &&
+                editor.options.uploader !== null
+                ? {
+                      ...(editor.options.uploader as IUploaderOptions<
+                          IUploader
+                      >),
+                  }
+                : {}
+        ) as IUploaderOptions<IUploader>;
 
-            this.uploader = new Uploader(this.jodit || this, uploaderOptions);
-            this.uploader.setPath(this.currentPath);
-            this.uploader.setSource(this.currentSource);
-            this.uploader.bind(
-                this.browser,
-                this.uploadHandler,
-                this.errorHandler
-            );
-            this.events.on(
-                'bindUploader.filebrowser',
-                (button: HTMLElement) => {
-                    this.uploader.bind(
-                        button,
-                        this.uploadHandler,
-                        this.errorHandler
-                    );
-                }
-            );
-        }
+        this.uploader = this.getInstance('Uploader', uploaderOptions);
+        this.uploader.setPath(this.currentPath);
+        this.uploader.setSource(this.currentSource);
+        this.uploader.bind(
+            this.browser,
+            this.uploadHandler,
+            this.errorHandler
+        );
+        this.events.on(
+            'bindUploader.filebrowser',
+            (button: HTMLElement) => {
+                this.uploader.bind(
+                    button,
+                    this.uploadHandler,
+                    this.errorHandler
+                );
+            }
+        );
     }
 }

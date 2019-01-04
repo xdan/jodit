@@ -5,9 +5,9 @@
  */
 
 import { Config } from '../Config';
-import { Jodit } from '../Jodit';
 import { debounce, throttle } from '../modules/helpers/async';
 import { css } from '../modules/helpers/css';
+import { IJodit } from '../types';
 
 declare module '../Config' {
     interface Config {
@@ -23,7 +23,7 @@ Config.prototype.allowResizeY = true;
  * Resize editor
  * @param {Jodit} editor
  */
-export function size(editor: Jodit) {
+export function size(editor: IJodit) {
     const setHeight = (height: number | string) => {
         css(editor.container, 'height', height);
         if (editor.options.saveHeightInStorage) {

@@ -15,8 +15,6 @@ import {
     TEXT_PLAIN,
 } from '../constants';
 
-import { Jodit } from '../Jodit';
-
 import { Confirm, Dialog } from '../modules/dialog/';
 
 import {
@@ -64,7 +62,7 @@ Config.prototype.controls.cut = {
  *
  * @module insertHTML
  */
-export function paste(editor: Jodit) {
+export function paste(editor: IJodit) {
     let buffer: string = '';
 
     const clearOrKeep = (

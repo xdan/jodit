@@ -6,9 +6,9 @@
 
 import { Config } from '../Config';
 import * as consts from '../constants';
-import { Jodit } from '../Jodit';
 import { debounce } from '../modules/helpers/async';
 import { $$ } from '../modules/helpers/selector';
+import { IJodit } from '../types';
 
 declare module '../Config' {
     interface Config {
@@ -33,7 +33,7 @@ Config.prototype.mediaInFakeBlock = true;
  */
 Config.prototype.mediaBlocks = ['video', 'audio'];
 
-export function media(editor: Jodit) {
+export function media(editor: IJodit) {
     const keyFake: string = 'jodit_fake_wrapper';
 
     const { mediaFakeTag, mediaBlocks, mediaInFakeBlock } = editor.options;

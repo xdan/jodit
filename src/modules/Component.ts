@@ -4,9 +4,9 @@
  * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Jodit } from '../Jodit';
 import { IViewBased } from '../types/view';
-import { IComponent } from '../types';
+import { IComponent } from '../types/types';
+import { isJoditObject } from './helpers/checker/isJoditObject';
 
 export abstract class Component<T extends IViewBased = IViewBased> implements IComponent {
     public jodit: T;
@@ -21,10 +21,9 @@ export abstract class Component<T extends IViewBased = IViewBased> implements IC
     abstract destruct(): any;
 
     constructor(jodit?: T) {
-        if (jodit) {
+        if (jodit && jodit instanceof Component) {
             this.jodit = jodit;
-
-            if (jodit instanceof Jodit && jodit.components) {
+            if (isJoditObject(jodit)) {
                 jodit.components.push(this);
             }
         }

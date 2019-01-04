@@ -5,3 +5,5 @@ export * from './view';
 export * from './dialog';
 export * from './types';
 export * from './jodit';
+export * from './create';
+export * from './events';
