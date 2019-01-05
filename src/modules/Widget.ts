@@ -174,7 +174,7 @@ export namespace Widget {
      * ```javascript
      * let tabs = widget.create('Tabs', {
      *    'Images': '<div>Images</div>',
-     *    'Title 2': editor.helper.dom('<div>Some content</div>'),
+     *    'Title 2': Jodit.modules.Helpers.dom('<div>Some content</div>'),
      *    'Color Picker': ColorPickerWidget(editor, function (color) {
      *         box.style.color = color;
      *     }, box.style.color),

@@ -80,6 +80,7 @@ export class DragAndDrop extends Plugin {
                 fragment = this.isCopyMode
                     ? range.cloneContents()
                     : range.extractContents();
+
             } else if (this.draggable) {
                 if (this.isCopyMode) {
                     const [tagName, attr]: string[] =

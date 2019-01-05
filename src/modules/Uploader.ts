@@ -262,7 +262,7 @@ export class Uploader implements IUploader {
 
         const uploader: Uploader = this;
 
-        let fileList: File[] = [].slice.call(files);
+        let fileList: File[] = Array.from(files);
 
         if (!fileList.length) {
             return Promise.reject(new Error('Need files'));
@@ -611,6 +611,7 @@ export class Uploader implements IUploader {
                 'drop',
                 (event: DragEvent): false | void => {
                     form.classList.remove('jodit_draghover');
+
                     if (
                         hasFiles(event) &&
                         event.dataTransfer &&
@@ -705,21 +706,9 @@ export class Uploader implements IUploader {
         this.options = extend(
             true,
             {},
-            Config.prototype.uploader,
+            Config.defaultOptions.uploader,
             isJoditObject(editor) ? editor.options.uploader : null,
             options
         ) as IUploaderOptions<Uploader>;
-
-        if (
-            isJoditObject(editor) &&
-            editor.options.enableDragAndDropFileToEditor &&
-            editor.options.uploader &&
-            (editor.options.uploader.url ||
-                editor.options.uploader.insertImageAsBase64URI)
-        ) {
-            editor.events.on('afterInit', () => {
-                this.bind(editor.editor);
-            });
-        }
     }
 }

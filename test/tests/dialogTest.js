@@ -29,11 +29,11 @@ describe('Dialog system tests', function() {
         });
         it('Should get string or HTMLElement or array of string or array of HTMLElement in arguments', function () {
             var dialog = Jodit.Alert(['<div id="hello1">Hello</div>']);
-            expect(document.getElementById('hello1')).not.to.equal(null);
+            expect(document.getElementById('hello1')).to.be.not.null;
             dialog.close();
 
             var dialog2 = Jodit.Alert(document.createTextNode('Test'));
-            expect(dialog2 instanceof Jodit.modules.Dialog).to.equal(true);
+            expect(dialog2 instanceof Jodit.modules.Dialog).to.be.true;
             dialog2.close()
 
             var div = document.createElement('div');

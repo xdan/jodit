@@ -731,12 +731,13 @@ export class inlinePopup extends Plugin {
             );
     }
     public beforeDestruct(editor: IJodit) {
-        this.popup.destruct();
-        this.toolbar.destruct();
+        this.popup && this.popup.destruct();
+        this.toolbar && this.toolbar.destruct();
 
         Dom.safeRemove(this.target);
         Dom.safeRemove(this.container);
 
+        editor.events &&
         editor.events
             .off([editor.ownerWindow], 'scroll resize', this.reCalcPosition)
             .off(

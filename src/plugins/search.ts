@@ -314,10 +314,11 @@ export class search extends Plugin {
         query: string,
         next: boolean
     ): boolean => {
-        const sel: Selection = this.jodit.editorWindow.getSelection(),
+        const sel: Selection = this.jodit.selection.sel,
             range: Range = sel.rangeCount
                 ? sel.getRangeAt(0)
-                : this.jodit.editorDocument.createRange(),
+                : this.jodit.selection.createRange(),
+
             bound: ISelectionRange | false = this.find(
                 start,
                 query,
@@ -492,7 +493,7 @@ export class search extends Plugin {
         this.current = this.jodit.selection.current();
         this.selInfo = this.jodit.selection.save();
 
-        const sel: string = this.jodit.ownerWindow.getSelection().toString();
+        const sel: string = this.jodit.selection.sel.toString();
 
         if (sel) {
             this.queryInput.value = sel;

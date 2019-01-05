@@ -85,7 +85,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
     private __defaultStyleDisplayKey = 'data-jodit-default-style-display';
     private __defaultClassesKey = 'data-jodit-default-classes';
 
-    private commands: IDictionary<Array<CustomCommand<Jodit>>> = {};
+    private commands: IDictionary<Array<CustomCommand<IJodit>>> = {};
 
     private __selectionLocked: markerInfo[] | null = null;
 
@@ -381,8 +381,8 @@ export class Jodit extends ViewWithToolbar implements IJodit {
      */
     public registerCommand(
         commandNameOriginal: string,
-        command: CustomCommand<Jodit>
-    ): Jodit {
+        command: CustomCommand<IJodit>
+    ): IJodit {
         const commandName: string = commandNameOriginal.toLowerCase();
 
         if (this.commands[commandName] === undefined) {
@@ -1032,11 +1032,23 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
         this.__initPlugines();
 
+        if (
+            this.options.enableDragAndDropFileToEditor &&
+            this.options.uploader &&
+            (this.options.uploader.url ||
+                this.options.uploader.insertImageAsBase64URI)
+        ) {
+            this.uploader.bind(this.editor);
+        }
+
         this.__initEditor(buffer).then(async () => {
+            this.isInited = true;
             await this.events.fire('afterInit', this);
             this.events.fire('afterConstructor', this);
         });
     }
+
+    isInited: boolean = false;
 
     private __initPlugines() {
         const disable: string[] = Array.isArray(this.options.disablePlugins)
@@ -1108,7 +1120,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
                 false,
                 'false'
             );
-        } catch (ignore) {}
+        } catch {}
     }
 
     /**

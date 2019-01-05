@@ -47,7 +47,9 @@ export const Alert = (
                 '</span></a>',
         ) as HTMLAnchorElement;
 
-    $div.appendChild(typeof msg === 'string' ? dialog.create.text(msg) : msg);
+    asArray(msg).forEach(oneMessage => {
+        $div.appendChild(typeof oneMessage === 'string' ? dialog.create.fromHTML(oneMessage) : oneMessage);
+    });
 
     $ok.addEventListener('click', () => {
         if (
@@ -68,3 +70,4 @@ export const Alert = (
 };
 
 import { Jodit } from '../../Jodit';
+import { asArray } from '../helpers/array';

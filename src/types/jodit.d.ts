@@ -55,6 +55,8 @@ interface IJodit extends IViewWithToolbar {
     isEditorMode(): boolean;
     toggleMode(): void;
 
+    isInited: boolean;
+
     execCommand(
         command: string,
         showUI?: any,
@@ -65,6 +67,7 @@ interface IJodit extends IViewWithToolbar {
         commandNameOriginal: string,
         command: CustomCommand<IJodit>
     ): IJodit;
+
     registerHotkeyToCommand(
         hotkeys: string | string[],
         commandName: string

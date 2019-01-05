@@ -9,11 +9,11 @@
  * @params {Object} parent main Jodit object
  * @example
  * ```javascript
- * console.log(editor.helper.browser('mse'));
- * console.log(editor.helper.browser('chrome'));
- * console.log($editor.helper.browser('opera'));
- * console.log(editor.helper.browser('firefox'));
- * console.log(editor.helper.browser('mse') && editor.helper.browser('version') > 10);
+ * console.log(Jodit.modules.Helpers.browser('mse'));
+ * console.log(Jodit.modules.Helpers.browser('chrome'));
+ * console.log($Jodit.modules.Helpers.browser('opera'));
+ * console.log(Jodit.modules.Helpers.browser('firefox'));
+ * console.log(Jodit.modules.Helpers.browser('mse') && Jodit.modules.Helpers.browser('version') > 10);
  * ```
  */
 export const browser = (browser: string): boolean | string => {
