@@ -9,11 +9,10 @@
  */
 
 import { CallbackFunction, EventHandlerBlock } from '../../types';
-import { EventHandlersStore } from './Store';
+import { defaultNameSpace, EventHandlersStore } from './Store';
 import { IEventsNative } from '../../types/events';
 
 export class EventsNative implements IEventsNative {
-    private __defaultNameSpace: string = 'JoditEventDefaultNamespace';
     private __key: string = '__JoditEventsNativeNamespaces';
 
     private doc: Document = document;
@@ -30,7 +29,7 @@ export class EventsNative implements IEventsNative {
             const eventAndNameSpace: string[] = eventNameSpace.split('.');
 
             const namespace: string =
-                eventAndNameSpace[1] || this.__defaultNameSpace;
+                eventAndNameSpace[1] || defaultNameSpace;
 
             callback.call(this, eventAndNameSpace[0], namespace);
         });
@@ -449,7 +448,7 @@ export class EventsNative implements IEventsNative {
         this.eachEvent(
             events,
             (event: string, namespace: string): void => {
-                if (namespace === this.__defaultNameSpace) {
+                if (namespace === defaultNameSpace) {
                     store.namespaces().forEach((name: string) => {
                         removeCallbackFromNameSpace(event, name);
                     });
@@ -462,12 +461,26 @@ export class EventsNative implements IEventsNative {
         return this;
     }
 
+    /**
+     * Stop execute all another listeners for this event
+     *
+     * @param subjectOrEvents
+     * @param eventsList
+     */
+    stopPropagation(
+        subjectOrEvents: string
+    ): void;
+    stopPropagation(
+        subjectOrEvents: object,
+        eventsList: string
+    ): void;
     stopPropagation(
         subjectOrEvents: object | string,
         eventsList?: string
     ) {
         const subject: object =
             typeof subjectOrEvents === 'string' ? this : subjectOrEvents;
+
         const events: string =
             typeof subjectOrEvents === 'string'
                 ? subjectOrEvents
@@ -476,6 +489,7 @@ export class EventsNative implements IEventsNative {
         if (typeof events !== 'string') {
             throw new Error('Need event names');
         }
+
         const store: EventHandlersStore = this.getStore(subject);
 
         this.eachEvent(
@@ -485,8 +499,17 @@ export class EventsNative implements IEventsNative {
                     event,
                     namespace
                 );
+
                 if (blocks) {
                     this.__stopped.push(blocks);
+                }
+
+                if (namespace === defaultNameSpace) {
+                    store
+                        .namespaces(true)
+                        .forEach(
+                            ns => this.stopPropagation(subject,event + '.' + ns)
+                        );
                 }
             }
         );
@@ -594,7 +617,7 @@ export class EventsNative implements IEventsNative {
                         }
 
                         if (
-                            namespace === this.__defaultNameSpace &&
+                            namespace === defaultNameSpace &&
                             !isDOMElement
                         ) {
                             store

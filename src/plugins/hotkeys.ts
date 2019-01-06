@@ -142,10 +142,9 @@ export class hotkeys extends Plugin {
                 (event: KeyboardEvent): void | false => {
                     const shortcut: string = this.onKeyPress(event);
 
-                    if (
-                        this.jodit.events.fire(shortcut, event.type) ===
-                        false
-                    ) {
+                    const resultOfFire = this.jodit.events.fire(shortcut + '.hotkey', event.type);
+
+                    if (resultOfFire === false) {
                         itIsHotkey = true;
 
                         editor.events.stopPropagation('keydown');
@@ -173,7 +172,7 @@ export class hotkeys extends Plugin {
     }
     beforeDestruct(jodit: IJodit): void {
         if (jodit.events) {
-            jodit.events.off('keyup.hotkeys keydown.hotkeys');
+            jodit.events.off('.hotkeys');
         }
     }
 }

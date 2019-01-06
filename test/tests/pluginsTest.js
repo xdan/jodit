@@ -844,7 +844,6 @@ describe('Test plugins', function () {
                 expect(true).to.equal(search.classList.contains('jodit_search-active'));
                 expect(true).to.equal(editor.ownerDocument.activeElement === search.querySelector('.jodit_search-query'));
                 simulateEvent('keydown', Jodit.KEY_ESC, search.querySelector('.jodit_search-query'));
-                debugger
 
                 expect(false).to.equal(search.classList.contains('jodit_search-active'));
                 expect('ex').to.equal(sel.toString());

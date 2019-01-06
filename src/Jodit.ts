@@ -415,11 +415,13 @@ export class Jodit extends ViewWithToolbar implements IJodit {
         hotkeys: string | string[],
         commandName: string
     ) {
-        const shortcuts: string[] = asArray(hotkeys).map(normalizeKeyAliases);
+        const shortcuts: string = asArray(hotkeys)
+            .map(normalizeKeyAliases)
+            .map(hotkey => hotkey + '.hotkey').join(' ');
 
         this.events
-            .off(shortcuts.map(hotkey => hotkey + '.hotkey').join(' '))
-            .on(shortcuts.map(hotkey => hotkey + '.hotkey').join(' '), () => {
+            .off(shortcuts)
+            .on(shortcuts, () => {
                 return this.execCommand(commandName); // because need `beforeCommand`
             });
     }
@@ -443,7 +445,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
      * this.execCommand('formatBlock', 'p'); // will be inserted paragraph
      * ```
      */
-    public async execCommand(
+    public execCommand(
         command: string,
         showUI: any = false,
         value: null | any = null
@@ -474,10 +476,10 @@ export class Jodit extends ViewWithToolbar implements IJodit {
          * })
          * ```
          */
-        result = await this.events.fire('beforeCommand', command, showUI, value);
+        result = this.events.fire('beforeCommand', command, showUI, value);
 
         if (result !== false) {
-            result = await this.execCustomCommands(command, showUI, value);
+            result = this.execCustomCommands(command, showUI, value);
         }
 
         if (result !== false) {
@@ -511,11 +513,11 @@ export class Jodit extends ViewWithToolbar implements IJodit {
         return result;
     }
 
-    private async execCustomCommands(
+    private execCustomCommands(
         commandName: string,
         second: any = false,
         third: null | any = null
-    ): Promise<false | void> {
+    ): false | void {
         commandName = commandName.toLowerCase();
 
         if (this.commands[commandName] !== undefined) {
@@ -543,7 +545,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
             };
 
             for (let i = 0; i < this.commands[commandName].length; i += 1) {
-                await exec(this.commands[commandName][i]);
+                exec(this.commands[commandName][i]);
             }
 
             return result;

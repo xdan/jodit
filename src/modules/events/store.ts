@@ -6,16 +6,18 @@
 
 import { CallbackFunction, EventHandlerBlock, IDictionary } from '../../types';
 
+export const defaultNameSpace = 'JoditEventDefaultNamespace';
+
 export class EventHandlersStore {
     private __store: IDictionary<IDictionary<EventHandlerBlock[]>> = {};
 
-    public get(event: string, namespace: string): EventHandlerBlock[] | void {
+    get(event: string, namespace: string): EventHandlerBlock[] | void {
         if (this.__store[namespace] !== undefined) {
             return this.__store[namespace][event];
         }
     }
 
-    public indexOf(
+    indexOf(
         event: string,
         namespace: string,
         originalCallback: CallbackFunction
@@ -33,11 +35,12 @@ export class EventHandlersStore {
         return false;
     }
 
-    public namespaces(): string[] {
-        return Object.keys(this.__store);
+    namespaces(withoutDefault: boolean = false): string[] {
+        const nss = Object.keys(this.__store);
+        return withoutDefault ? nss.filter(ns => ns !== defaultNameSpace) : nss;
     }
 
-    public events(namespace: string): string[] {
+    events(namespace: string): string[] {
         return this.__store[namespace]
             ? Object.keys(this.__store[namespace])
             : [];
