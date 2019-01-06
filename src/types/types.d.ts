@@ -10,7 +10,8 @@ export interface IDictionary<T = any> {
     [key: string]: T;
 }
 
-interface IComponent {
+interface IComponent<T extends IViewBased = IViewBased> {
+    jodit: T;
     isDestructed: boolean;
     destruct(): any;
 }

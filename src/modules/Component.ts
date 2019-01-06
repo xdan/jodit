@@ -8,7 +8,7 @@ import { IViewBased } from '../types/view';
 import { IComponent } from '../types/types';
 import { isJoditObject } from './helpers/checker/isJoditObject';
 
-export abstract class Component<T extends IViewBased = IViewBased> implements IComponent {
+export abstract class Component<T extends IViewBased = IViewBased> implements IComponent<T> {
     public jodit: T;
 
     /**

@@ -49,21 +49,21 @@ export class ToolbarButton extends ToolbarElement implements IToolbarButton {
 
     private tooltip: ToolbarTooltip;
 
-    public readonly control: IControlTypeStrong;
-    public readonly target: HTMLElement | undefined;
+    readonly control: IControlTypeStrong;
+    readonly target: HTMLElement | undefined;
 
-    public textBox: HTMLSpanElement;
-    public anchor: HTMLAnchorElement;
+    textBox: HTMLSpanElement;
+    anchor: HTMLAnchorElement;
 
-    public isDisable(): boolean {
+    isDisable(): boolean {
         return Boolean(this.parentToolbar && this.parentToolbar.buttonIsDisabled(this));
     }
 
-    public isActive(): boolean {
+    isActive(): boolean {
         return Boolean(this.parentToolbar && this.parentToolbar.buttonIsActive(this));
     }
 
-    public onMouseDown = (originalEvent: MouseEvent): false | void => {
+    private onMouseDown = (originalEvent: MouseEvent): false | void => {
         originalEvent.stopImmediatePropagation();
         originalEvent.preventDefault();
 

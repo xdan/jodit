@@ -944,13 +944,16 @@ describe('Test plugins', function () {
             describe('Native tooltip', function () {
                 it('Should have different tooltip for each language', function () {
                     var area = appendTestArea();
+
                     var editor = new Jodit(area, {
                         toolbarAdaptive: false,
                         useNativeTooltip: true,
                         buttons: 'indent,outdent',
                         language: 'en'
                     });
+
                     expect(null).to.be.not.equal(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-outdent [title]'));
+
                     var title = editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-outdent [title]').getAttribute('title');
                     editor.destruct();
 
@@ -983,6 +986,9 @@ describe('Test plugins', function () {
                     simulateEvent('mouseenter', 0, button.querySelector('a'));
 
                     var tooltip = button.querySelector('.jodit_tooltip');
+
+                    debugger;
+
                     expect(null).to.be.not.equal(tooltip);
                     var title = tooltip.innerText;
                     editor.destruct();

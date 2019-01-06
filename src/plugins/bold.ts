@@ -57,7 +57,7 @@ Config.prototype.controls.strikethrough = {
  * Bold plugin - change B to Strong, i to Em
  */
 export function bold(editor: IJodit) {
-    const callBack = (command: string): false | void => {
+    const callBack = (command: string): false => {
         const control: IControlType = Config.defaultOptions.controls[
                 command
             ] as IControlType,
@@ -80,7 +80,8 @@ export function bold(editor: IJodit) {
             control.css as any
         );
 
-        editor.setEditorValue();
+        editor.events.fire('synchro');
+
         return false;
     };
 

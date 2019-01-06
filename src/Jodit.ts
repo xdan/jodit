@@ -819,7 +819,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
     /**
      * Return true if editor in disabled mode
      */
-    public getDisabled(): boolean {
+    getDisabled(): boolean {
         return this.options.disabled;
     }
 
@@ -831,7 +831,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
      *
      * @param {boolean} isReadOnly
      */
-    public setReadOnly(isReadOnly: boolean) {
+    setReadOnly(isReadOnly: boolean) {
         if (this.__wasReadOnly === isReadOnly) {
             return;
         }

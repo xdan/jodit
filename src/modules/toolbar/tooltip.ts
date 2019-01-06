@@ -5,10 +5,10 @@
  */
 
 import { asArray } from '../helpers/array';
-import { ToolbarButton } from './button';
 import { Dom } from '../Dom';
 import { setTimeout } from '../helpers/async';
 import { ToolbarElement } from './element';
+import { IToolbarButton } from '../../types';
 
 /**
  * Class create tooltip for buttons in toolbar
@@ -25,7 +25,7 @@ export class ToolbarTooltip extends ToolbarElement{
                     this.button.container.offsetWidth;
                 this.container.style.marginLeft = -diff / 2 + 'px';
             },
-            delay: number = this.button.jodit.options.showTooltipDelay || 1000;
+            delay: number = this.button.jodit.options.showTooltipDelay || this.button.jodit.defaultTimeout * 10;
 
         this.button.jodit.events.fire('hideTooltip');
 
@@ -37,7 +37,7 @@ export class ToolbarTooltip extends ToolbarElement{
         Dom.safeRemove(this.container);
     };
 
-    constructor(readonly button: ToolbarButton) {
+    constructor(readonly button: IToolbarButton) {
         super(button.parentToolbar || button.jodit, 'div', 'jodit_tooltip');
 
         if (button.control.tooltip) {

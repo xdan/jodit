@@ -281,9 +281,11 @@ var removeStuff = function() {
 };
 var box = document.createElement('div');
 document.body.appendChild(box);
+
 var getBox = function() {
     return box;
 };
+
 var appendTestArea = function(id, noput) {
     var textarea = document.createElement('textarea');
     textarea.setAttribute('id', id || 'editor_' + new Date().getTime());
@@ -503,6 +505,7 @@ var createPoint = function createPoint(x, y, color) {
     );
     div.style.left = parseInt(x, 10) + 'px';
     div.style.top = parseInt(y, 10) + 'px';
+
     document.body.appendChild(div);
 };
 

@@ -21,15 +21,7 @@ import { each } from './helpers/each';
 import { trim } from './helpers/string';
 
 export class Select {
-    private readonly doc: Document;
-    private readonly win: Window;
-    private readonly iframe: HTMLIFrameElement | null | void;
-
-    constructor(readonly jodit: IJodit) {
-        this.doc = jodit.editorDocument;
-        this.win = jodit.editorWindow;
-        this.iframe = jodit.iframe;
-    }
+    constructor(readonly jodit: IJodit) {}
 
     /**
      * Return current work place - for Jodit is Editor
@@ -38,7 +30,19 @@ export class Select {
         return this.jodit.editor;
     }
 
+    /**
+     * Editor Window - it can be different for iframe mode
+     */
+    get win(): Window {
+        return this.jodit.editorWindow;
+    }
 
+    /**
+     * Current jodit editor doc
+     */
+    get doc(): Document {
+        return this.jodit.editorDocument;
+    }
     /**
      * Return current selection object
      */
@@ -80,11 +84,14 @@ export class Select {
         this.removeMarkers();
 
         try {
-            let rng: Range = this.createRange();
+            let rng: Range = this.createRange()
 
-            const caret = this.doc.caretPositionFromPoint(x, y);
-            if (caret) {
+            if ((this.doc as any).caretPositionFromPoint) {
+                const caret: CaretPosition = (this.doc as any).caretPositionFromPoint(x, y);
                 rng.setStart(caret.offsetNode, caret.offset);
+            } else if (this.doc.caretRangeFromPoint) {
+                const caret: Range = this.doc.caretRangeFromPoint(x, y);
+                rng.setStart(caret.startContainer, caret.startOffset);
             }
 
             if (rng) {
@@ -92,10 +99,21 @@ export class Select {
                 const sel: Selection = this.sel;
                 sel.removeAllRanges();
                 sel.addRange(rng);
+            } else if (
+                typeof (this.doc as any).body.createTextRange !== 'undefined'
+            ) {
+                const range: any = (this.doc as any).body.createTextRange();
+                range.moveToPoint(x, y);
+                const endRange: any = range.duplicate();
+                endRange.moveToPoint(x, y);
+                range.setEndPoint('EndToEnd', endRange);
+                range.select();
             }
 
             return true;
-        } catch {}
+        } catch (e) {
+            debugger
+        }
 
         return false;
     }
@@ -300,9 +318,9 @@ export class Select {
      */
     focus = (): boolean => {
         if (!this.isFocused()) {
-            if (this.iframe) {
+            if (this.jodit.iframe) {
                 if (this.doc.readyState == 'complete') {
-                    this.iframe.focus();
+                    this.jodit.iframe.focus();
                 }
             }
 

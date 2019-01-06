@@ -644,8 +644,21 @@ export class source extends Plugin {
         this.mirror.setSelectionRange(start, end);
     };
 
-    afterInit(editor: IJodit): void {
+    private onReadonlyReact = () => {
+        const isReadOnly: boolean = this.jodit.options.readonly;
 
+        if (isReadOnly) {
+            this.mirror.setAttribute('readonly', 'true');
+        } else {
+            this.mirror.removeAttribute('readonly');
+        }
+
+        if (this.aceEditor) {
+            this.aceEditor.setReadOnly(isReadOnly);
+        }
+    };
+
+    afterInit(editor: IJodit): void {
         this.mirrorContainer = editor.create.div("jodit_source");
 
         this.mirror = editor.create.fromHTML(
@@ -661,6 +674,7 @@ export class source extends Plugin {
         };
 
         addListeners();
+        this.onReadonlyReact();
 
         editor.events
             .on(
@@ -695,33 +709,19 @@ export class source extends Plugin {
                 }
             )
             .on(
-                'aceInited.source',
+                'aceInited',
                 () => {
-                    if (editor.options.readonly) {
-                        if (this.aceEditor) {
-                            this.aceEditor.setReadOnly(true);
-                        }
-                    }
+                    this.onReadonlyReact();
+                    addListeners();
                 },
-                void 0,
-                void 0,
+                        void 0,
+                        void 0,
                 true
             )
-            .on('readonly.source', (isReadOnly: boolean) => {
-                if (isReadOnly) {
-                    this.mirror.setAttribute('readonly', 'true');
-                } else {
-                    this.mirror.removeAttribute('readonly');
-                }
-
-                if (this.aceEditor) {
-                    this.aceEditor.setReadOnly(isReadOnly);
-                }
-            })
+            .on('readonly.source', this.onReadonlyReact)
             .on('placeholder.source', (text: string) => {
                 this.mirror.setAttribute('placeholder', text);
             })
-            .on('aceInited.source', addListeners)
             .on('beforeCommand.source', this.onSelectAll)
             .on('change.source', this.fromWYSIWYG);
 
@@ -755,7 +755,7 @@ export class source extends Plugin {
         Dom.safeRemove(this.mirror);
 
         if (jodit && jodit.events) {
-            jodit.events.off('.source');
+            jodit.events.off('aceInited .source');
         }
     }
 }
