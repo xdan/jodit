@@ -6,11 +6,7 @@
 
 import { TEXT_HTML, TEXT_PLAIN } from '../constants';
 import { Dom } from '../modules/Dom';
-import {
-    css,
-    ctrlKey,
-    dataBind,
-} from '../modules/helpers';
+import { css, ctrlKey, dataBind } from '../modules/helpers';
 import { Plugin } from '../modules/Plugin';
 import { IPoint } from '../types/types';
 
@@ -80,7 +76,6 @@ export class DragAndDrop extends Plugin {
                 fragment = this.isCopyMode
                     ? range.cloneContents()
                     : range.extractContents();
-
             } else if (this.draggable) {
                 if (this.isCopyMode) {
                     const [tagName, attr]: string[] =
@@ -101,9 +96,9 @@ export class DragAndDrop extends Plugin {
                     fragment = dataBind(this.draggable, 'target');
                 }
             } else if (this.getText(event)) {
-                fragment = this.jodit.create.inside.fromHTML(
-                    this.getText(event) as string,
-                );
+                fragment = this.jodit.create.inside.fromHTML(this.getText(
+                    event
+                ) as string);
             }
 
             sel.removeAllRanges();

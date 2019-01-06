@@ -11,7 +11,8 @@ import FileSelectorWidget = Widget.FileSelectorWidget;
 import { Dom } from './modules/Dom';
 import {
     $$,
-    convertMediaURLToVideoEmbed, defaultLanguage,
+    convertMediaURLToVideoEmbed,
+    defaultLanguage,
     isLicense,
     isURL,
     normalizeLicense,
@@ -823,7 +824,9 @@ Config.prototype.controls = {
                     mywindow.document.body.innerHTML = editor.value;
                 } else {
                     mywindow.document.write(
-                        '<!doctype html><html lang="' + defaultLanguage(editor.options.language) + '"><head><title></title></head>' +
+                        '<!doctype html><html lang="' +
+                            defaultLanguage(editor.options.language) +
+                            '"><head><title></title></head>' +
                             '<body>' +
                             editor.value +
                             '</body></html>'
@@ -946,7 +949,11 @@ Config.prototype.controls = {
                         image.setAttribute('alt', text);
 
                         if (!sourceImage) {
-                           await editor.selection.insertImage(image,null, editor.options.imageDefaultWidth);
+                            await editor.selection.insertImage(
+                                image,
+                                null,
+                                editor.options.imageDefaultWidth
+                            );
                         }
 
                         close();
@@ -1045,7 +1052,6 @@ Config.prototype.controls = {
                         <button type="submit">${editor.i18n('Insert')}</button>
                         </form>`
                 ) as HTMLFormElement,
-
                 bycode: HTMLFormElement = editor.create.fromHTML(
                     `<form class="jodit_form">
                         <textarea required name="code" placeholder="${editor.i18n(
@@ -1054,11 +1060,8 @@ Config.prototype.controls = {
                         <button type="submit">${editor.i18n('Insert')}</button>
                         </form>`
                 ) as HTMLFormElement,
-
                 tab: IDictionary<HTMLFormElement> = {},
-
                 selinfo = editor.selection.save(),
-
                 insertCode = (code: string) => {
                     editor.selection.restore(selinfo);
                     editor.selection.insertHTML(code);

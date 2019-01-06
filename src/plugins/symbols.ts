@@ -236,12 +236,7 @@ Config.prototype.controls.symbol = {
     icon: 'omega',
     hotkeys: ['ctrl+shift+i', 'cmd+shift+i'],
     tooltip: 'Insert Special Character',
-    popup: (
-        editor: IJodit,
-        current,
-        control,
-        close
-    ): any => {
+    popup: (editor: IJodit, current, control, close): any => {
         const container: HTMLElement | undefined = editor.events.fire(
             'generateSpecialCharactersTable.symbols'
         );
@@ -287,15 +282,12 @@ export class symbols {
                         '<div class="jodit_symbols-container_preview"><div class="jodit_symbols-preview"></div></div>' +
                         '</div>'
                 ) as HTMLDivElement,
-
                 preview: HTMLDivElement = container.querySelector(
                     '.jodit_symbols-preview'
                 ) as HTMLDivElement,
-
                 table: HTMLTableElement = container.querySelector(
                     'table'
                 ) as HTMLTableElement,
-
                 body: HTMLTableSectionElement = table.tBodies[0],
                 chars: HTMLAnchorElement[] = [];
 
@@ -312,7 +304,9 @@ export class symbols {
                     i < editor.options.specialCharacters.length;
                     j += 1, i += 1
                 ) {
-                    const td: HTMLTableCellElement = editor.create.element('td'),
+                    const td: HTMLTableCellElement = editor.create.element(
+                            'td'
+                        ),
                         a: HTMLAnchorElement = editor.create.fromHTML(
                             `<a
                                     data-index="${i}"

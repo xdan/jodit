@@ -21,11 +21,20 @@ export class Create implements ICreate {
         this.inside = editorDocument ? new Create(editorDocument) : this;
     }
 
-    element<K extends keyof HTMLElementTagNameMap>(tagName: K,
-                                                   childrenOrAttributes?: Children): HTMLElementTagNameMap[K];
-    element<K extends keyof HTMLElementTagNameMap>(tagName: K,
-                                                   childrenOrAttributes?: Attributes, children?: Children): HTMLElementTagNameMap[K];
-    element(tagName: string, childrenOrAttributes?: Attributes | Children, children?: Children): HTMLElement {
+    element<K extends keyof HTMLElementTagNameMap>(
+        tagName: K,
+        childrenOrAttributes?: Children
+    ): HTMLElementTagNameMap[K];
+    element<K extends keyof HTMLElementTagNameMap>(
+        tagName: K,
+        childrenOrAttributes?: Attributes,
+        children?: Children
+    ): HTMLElementTagNameMap[K];
+    element(
+        tagName: string,
+        childrenOrAttributes?: Attributes | Children,
+        children?: Children
+    ): HTMLElement {
         const elm: HTMLElement = this.doc.createElement(tagName.toLowerCase());
 
         if (childrenOrAttributes) {
@@ -34,7 +43,7 @@ export class Create implements ICreate {
                     if (isPlainObject(value) && key === 'style') {
                         css(elm, <IDictionary<string>>value);
                     } else {
-                        elm.setAttribute(key, value.toString())
+                        elm.setAttribute(key, value.toString());
                     }
                 });
             } else {
@@ -44,16 +53,26 @@ export class Create implements ICreate {
 
         if (children) {
             asArray(children).forEach((child: string | Node) =>
-                elm.appendChild(typeof child === 'string' ? this.fromHTML(child) : child)
-            )
+                elm.appendChild(
+                    typeof child === 'string' ? this.fromHTML(child) : child
+                )
+            );
         }
 
         return elm;
     }
 
     div(className?: string, childrenOrAttributes?: Children): HTMLDivElement;
-    div(className?: string, childrenOrAttributes?: Attributes, children?: Children): HTMLDivElement;
-    div(className?: string, childrenOrAttributes?: Attributes | Children, children?: Children): HTMLDivElement {
+    div(
+        className?: string,
+        childrenOrAttributes?: Attributes,
+        children?: Children
+    ): HTMLDivElement;
+    div(
+        className?: string,
+        childrenOrAttributes?: Attributes | Children,
+        children?: Children
+    ): HTMLDivElement {
         const div = this.element('div', <any>childrenOrAttributes, children);
 
         if (className) {
@@ -64,8 +83,16 @@ export class Create implements ICreate {
     }
 
     span(className?: string, childrenOrAttributes?: Children): HTMLSpanElement;
-    span(className?: string, childrenOrAttributes?: Attributes, children?: Children): HTMLSpanElement;
-    span(className?: string, childrenOrAttributes?: Attributes | Children, children?: Children): HTMLSpanElement {
+    span(
+        className?: string,
+        childrenOrAttributes?: Attributes,
+        children?: Children
+    ): HTMLSpanElement;
+    span(
+        className?: string,
+        childrenOrAttributes?: Attributes | Children,
+        children?: Children
+    ): HTMLSpanElement {
         const span = this.element('span', <any>childrenOrAttributes, children);
 
         if (className) {

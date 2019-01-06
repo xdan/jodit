@@ -10,7 +10,7 @@ import { css, normalizeSize } from '../modules/helpers/';
 import { IControlType } from '../types/toolbar';
 import { IJodit } from '../types';
 
-Config.prototype.controls.fontsize = <IControlType<IJodit>>{
+Config.prototype.controls.fontsize = (<IControlType<IJodit>>{
     command: 'fontSize',
     list: [
         '8',
@@ -52,8 +52,8 @@ Config.prototype.controls.fontsize = <IControlType<IJodit>>{
             const fontSize: number = css(currentBpx, 'font-size') as number;
             return Boolean(
                 fontSize &&
-                control.args &&
-                control.args[1].toString() === fontSize.toString()
+                    control.args &&
+                    control.args[1].toString() === fontSize.toString()
             );
         }
 
@@ -85,9 +85,9 @@ Config.prototype.controls.fontsize = <IControlType<IJodit>>{
 
         return false;
     },
-} as IControlType;
+}) as IControlType;
 
-Config.prototype.controls.font = <IControlType<IJodit>>{
+Config.prototype.controls.font = (<IControlType<IJodit>>{
     command: 'fontname',
 
     exec: (editor, event, control) => {
@@ -143,8 +143,9 @@ Config.prototype.controls.font = <IControlType<IJodit>>{
 
             return Boolean(
                 fontFamily &&
-                control.args &&
-                normFonts(control.args[0].toString()) === normFonts(fontFamily)
+                    control.args &&
+                    normFonts(control.args[0].toString()) ===
+                        normFonts(fontFamily)
             );
         }
 
@@ -179,7 +180,7 @@ Config.prototype.controls.font = <IControlType<IJodit>>{
     },
 
     tooltip: 'Font family',
-} as IControlType;
+}) as IControlType;
 
 /**
  * Process commands `fontsize` and `fontname`

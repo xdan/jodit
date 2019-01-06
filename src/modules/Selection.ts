@@ -84,10 +84,11 @@ export class Select {
         this.removeMarkers();
 
         try {
-            let rng: Range = this.createRange()
+            let rng: Range = this.createRange();
 
             if ((this.doc as any).caretPositionFromPoint) {
-                const caret: CaretPosition = (this.doc as any).caretPositionFromPoint(x, y);
+                const caret: CaretPosition = (this
+                    .doc as any).caretPositionFromPoint(x, y);
                 rng.setStart(caret.offsetNode, caret.offset);
             } else if (this.doc.caretRangeFromPoint) {
                 const caret: Range = this.doc.caretRangeFromPoint(x, y);
@@ -112,7 +113,7 @@ export class Select {
 
             return true;
         } catch (e) {
-            debugger
+            debugger;
         }
 
         return false;
@@ -132,7 +133,9 @@ export class Select {
      * Remove all markers
      */
     removeMarkers() {
-        $$('span[data-' + consts.MARKER_CLASS + ']', this.area).forEach(Dom.safeRemove);
+        $$('span[data-' + consts.MARKER_CLASS + ']', this.area).forEach(
+            Dom.safeRemove
+        );
     }
 
     /**
@@ -154,7 +157,7 @@ export class Select {
         marker.id =
             consts.MARKER_CLASS +
             '_' +
-            + new Date() +
+            +new Date() +
             '_' +
             ('' + Math.random()).slice(2);
 
@@ -182,7 +185,7 @@ export class Select {
         }
 
         return marker;
-    };
+    }
 
     /**
      * Restores user selections using marker invisible elements in the DOM.
@@ -379,9 +382,7 @@ export class Select {
      * @return false|Node The element under the cursor or false if undefined or not in editor
      */
     current(checkChild: boolean = true): false | Node {
-        if (
-            this.jodit.getRealMode() === consts.MODE_WYSIWYG
-        ) {
+        if (this.jodit.getRealMode() === consts.MODE_WYSIWYG) {
             const sel: Selection = this.sel;
 
             if (sel && sel.rangeCount > 0) {
@@ -493,12 +494,7 @@ export class Select {
 
         if (sel.rangeCount) {
             const range: Range = sel.getRangeAt(0);
-            if (
-                Dom.isOrContains(
-                    this.area,
-                    range.commonAncestorContainer
-                )
-            ) {
+            if (Dom.isOrContains(this.area, range.commonAncestorContainer)) {
                 range.deleteContents();
                 range.insertNode(node);
             } else {
@@ -550,7 +546,10 @@ export class Select {
             node.appendChild(html as Node);
         }
 
-        if (!this.jodit.isEditorMode() && this.jodit.events.fire('insertHTML', node.innerHTML) === false) {
+        if (
+            !this.jodit.isEditorMode() &&
+            this.jodit.events.fire('insertHTML', node.innerHTML) === false
+        ) {
             return;
         }
 
@@ -587,9 +586,7 @@ export class Select {
                 lastChild === lastEditorElement &&
                 lastChild.nodeType === Node.ELEMENT_NODE
             ) {
-                this.area.appendChild(
-                    this.jodit.create.inside.element('br')
-                );
+                this.area.appendChild(this.jodit.create.inside.element('br'));
             }
             this.setCursorAfter(lastChild);
         }
@@ -609,8 +606,10 @@ export class Select {
         styles: IDictionary<string> | null,
         defaultWidth: number | string | null
     ) {
-        const
-            image: HTMLImageElement = typeof url === 'string' ? this.jodit.create.inside.element('img') : url;
+        const image: HTMLImageElement =
+            typeof url === 'string'
+                ? this.jodit.create.inside.element('img')
+                : url;
 
         if (typeof url === 'string') {
             image.setAttribute('src', url);
@@ -754,8 +753,7 @@ export class Select {
             !Dom.up(
                 node,
                 (elm: Node | null) =>
-                    elm === this.area ||
-                    (elm && elm.parentNode === this.area),
+                    elm === this.area || (elm && elm.parentNode === this.area),
                 this.area
             )
         ) {
@@ -766,9 +764,7 @@ export class Select {
         let fakeNode: Text | false = false;
 
         if (node.nodeType !== Node.TEXT_NODE) {
-            fakeNode = this.doc.createTextNode(
-                consts.INVISIBLE_SPACE
-            );
+            fakeNode = this.doc.createTextNode(consts.INVISIBLE_SPACE);
             range.setStartAfter(node);
             range.insertNode(fakeNode);
             range.selectNode(fakeNode);
@@ -878,8 +874,7 @@ export class Select {
             !Dom.up(
                 node,
                 (elm: Node | null) =>
-                    elm === this.area ||
-                    (elm && elm.parentNode === this.area),
+                    elm === this.area || (elm && elm.parentNode === this.area),
                 this.area
             )
         ) {
@@ -890,9 +885,7 @@ export class Select {
         let fakeNode: Text | false = false;
 
         if (node.nodeType !== Node.TEXT_NODE) {
-            fakeNode = this.doc.createTextNode(
-                consts.INVISIBLE_SPACE
-            );
+            fakeNode = this.doc.createTextNode(consts.INVISIBLE_SPACE);
             range.setStartBefore(node);
             range.collapse(true);
             range.insertNode(fakeNode);
@@ -924,8 +917,7 @@ export class Select {
             !Dom.up(
                 node,
                 (elm: Node | null) =>
-                    elm === this.area ||
-                    (elm && elm.parentNode === this.area),
+                    elm === this.area || (elm && elm.parentNode === this.area),
                 this.area
             )
         ) {
@@ -1001,8 +993,7 @@ export class Select {
             !Dom.up(
                 node,
                 (elm: Node | null) =>
-                    elm === this.area ||
-                    (elm && elm.parentNode === this.area),
+                    elm === this.area || (elm && elm.parentNode === this.area),
                 this.area
             )
         ) {
@@ -1048,8 +1039,7 @@ export class Select {
             | IDictionary<string | string[]>
             | IDictionary<(editor: IJodit, elm: HTMLElement) => boolean>
     ) {
-        const
-            WRAP = 1,
+        const WRAP = 1,
             UNWRAP = 0,
             defaultTag = 'SPAN',
             FONT = 'FONT';
@@ -1068,10 +1058,7 @@ export class Select {
                 ((isPlainObject(options) &&
                     each(
                         options as IDictionary<string[]>,
-                        (
-                            cssPropertyKey,
-                            cssPropertyValues
-                        ) => {
+                        (cssPropertyKey, cssPropertyValues) => {
                             const value = css(
                                 elm,
                                 cssPropertyKey,
@@ -1079,11 +1066,13 @@ export class Select {
                                 true
                             );
 
-                            return value !== null &&
+                            return (
+                                value !== null &&
                                 value !== '' &&
                                 cssPropertyValues.indexOf(
                                     value.toString().toLowerCase()
-                                ) !== -1;
+                                ) !== -1
+                            );
                         }
                     )) ||
                     (typeof options === 'function' && options(this.jodit, elm)))
@@ -1151,166 +1140,152 @@ export class Select {
             // for some text that contains a few STRONG elements, should unwrap all of these"
 
             // fix issue https://github.com/xdan/jodit/issues/65
-            $$('*[style*=font-size]', this.area).forEach(
-                (elm: HTMLElement) => {
-                    elm.style &&
-                        elm.style.fontSize &&
-                        elm.setAttribute(
-                            'data-font-size',
-                            elm.style.fontSize.toString()
-                        );
-                }
-            );
+            $$('*[style*=font-size]', this.area).forEach((elm: HTMLElement) => {
+                elm.style &&
+                    elm.style.fontSize &&
+                    elm.setAttribute(
+                        'data-font-size',
+                        elm.style.fontSize.toString()
+                    );
+            });
 
             this.doc.execCommand('fontsize', false, '7');
 
-            $$('*[data-font-size]', this.area).forEach(
-                (elm: HTMLElement) => {
-                    if (elm.style && elm.getAttribute('data-font-size')) {
-                        elm.style.fontSize = elm.getAttribute('data-font-size');
-                        elm.removeAttribute('data-font-size');
-                    }
+            $$('*[data-font-size]', this.area).forEach((elm: HTMLElement) => {
+                if (elm.style && elm.getAttribute('data-font-size')) {
+                    elm.style.fontSize = elm.getAttribute('data-font-size');
+                    elm.removeAttribute('data-font-size');
                 }
-            );
+            });
 
-            $$('font[size="7"]', this.area).forEach(
-                (font: HTMLElement) => {
+            $$('font[size="7"]', this.area).forEach((font: HTMLElement) => {
+                if (
+                    !Dom.next(
+                        font,
+                        findNextCondition,
+                        font.parentNode as HTMLElement
+                    ) &&
+                    !Dom.prev(
+                        font,
+                        findNextCondition,
+                        font.parentNode as HTMLElement
+                    ) &&
+                    isSuitElement(font.parentNode as HTMLElement) &&
+                    font.parentNode !== this.area &&
+                    (!Dom.isBlock(font.parentNode, this.win) ||
+                        consts.IS_BLOCK.test(nodeName))
+                ) {
+                    toggleStyles(font.parentNode as HTMLElement);
+                } else if (
+                    font.firstChild &&
+                    !Dom.next(
+                        font.firstChild,
+                        findNextCondition,
+                        font as HTMLElement
+                    ) &&
+                    !Dom.prev(
+                        font.firstChild,
+                        findNextCondition,
+                        font as HTMLElement
+                    ) &&
+                    isSuitElement(font.firstChild as HTMLElement)
+                ) {
+                    toggleStyles(font.firstChild as HTMLElement);
+                } else if (Dom.closest(font, isSuitElement, this.area)) {
+                    const leftRange: Range = this.createRange(),
+                        wrapper: HTMLElement = Dom.closest(
+                            font,
+                            isSuitElement,
+                            this.area
+                        ) as HTMLElement;
+
+                    leftRange.setStartBefore(wrapper);
+                    leftRange.setEndBefore(font);
+
+                    const leftFragment: DocumentFragment = leftRange.extractContents();
+
                     if (
-                        !Dom.next(
-                            font,
-                            findNextCondition,
-                            font.parentNode as HTMLElement
-                        ) &&
-                        !Dom.prev(
-                            font,
-                            findNextCondition,
-                            font.parentNode as HTMLElement
-                        ) &&
-                        isSuitElement(font.parentNode as HTMLElement) &&
-                        font.parentNode !== this.area &&
-                        (!Dom.isBlock(font.parentNode, this.win) ||
-                            consts.IS_BLOCK.test(nodeName))
+                        (!leftFragment.textContent ||
+                            !trim(leftFragment.textContent).length) &&
+                        leftFragment.firstChild
                     ) {
-                        toggleStyles(font.parentNode as HTMLElement);
-                    } else if (
-                        font.firstChild &&
-                        !Dom.next(
-                            font.firstChild,
-                            findNextCondition,
-                            font as HTMLElement
-                        ) &&
-                        !Dom.prev(
-                            font.firstChild,
-                            findNextCondition,
-                            font as HTMLElement
-                        ) &&
-                        isSuitElement(font.firstChild as HTMLElement)
-                    ) {
-                        toggleStyles(font.firstChild as HTMLElement);
-                    } else if (
-                        Dom.closest(font, isSuitElement, this.area)
-                    ) {
-                        const leftRange: Range = this.createRange(),
-                            wrapper: HTMLElement = Dom.closest(
-                                font,
-                                isSuitElement,
-                                this.area
-                            ) as HTMLElement;
-
-                        leftRange.setStartBefore(wrapper);
-                        leftRange.setEndBefore(font);
-
-                        const leftFragment: DocumentFragment = leftRange.extractContents();
-
-                        if (
-                            (!leftFragment.textContent ||
-                                !trim(leftFragment.textContent).length) &&
-                            leftFragment.firstChild
-                        ) {
-                            Dom.unwrap(leftFragment.firstChild);
-                        }
-
-                        if (wrapper.parentNode) {
-                            wrapper.parentNode.insertBefore(
-                                leftFragment,
-                                wrapper
-                            );
-                        }
-
-                        leftRange.setStartAfter(font);
-                        leftRange.setEndAfter(wrapper);
-                        const rightFragment = leftRange.extractContents();
-
-                        // case then marker can be inside fragnment
-                        if (
-                            (!rightFragment.textContent ||
-                                !trim(rightFragment.textContent).length) &&
-                            rightFragment.firstChild
-                        ) {
-                            Dom.unwrap(rightFragment.firstChild);
-                        }
-
-                        Dom.after(wrapper, rightFragment);
-
-                        toggleStyles(wrapper);
-                    } else {
-                        // unwrap all suit elements inside
-                        const needUnwrap: Node[] = [];
-                        let firstElementSuit: boolean | undefined;
-
-                        if (font.firstChild) {
-                            Dom.find(
-                                font.firstChild,
-                                (elm: Node | null) => {
-                                    if (
-                                        elm &&
-                                        isSuitElement(elm as HTMLElement)
-                                    ) {
-                                        if (firstElementSuit === undefined) {
-                                            firstElementSuit = true;
-                                        }
-                                        needUnwrap.push(elm);
-                                    } else {
-                                        if (firstElementSuit === undefined) {
-                                            firstElementSuit = false;
-                                        }
-                                    }
-                                    return false;
-                                },
-                                font,
-                                true
-                            );
-                        }
-
-                        needUnwrap.forEach(Dom.unwrap);
-
-                        if (!firstElementSuit) {
-                            if (mode === undefined) {
-                                mode = WRAP;
-                            }
-                            if (mode === WRAP) {
-                                css(
-                                    Dom.replace(
-                                        font,
-                                        nodeName,
-                                        false,
-                                        false,
-                                        this.doc
-                                    ),
-                                    cssRules &&
-                                        nodeName.toUpperCase() === defaultTag
-                                        ? cssRules
-                                        : {}
-                                );
-                            }
-                        }
+                        Dom.unwrap(leftFragment.firstChild);
                     }
 
-                    if (font.parentNode) {
-                        Dom.unwrap(font);
+                    if (wrapper.parentNode) {
+                        wrapper.parentNode.insertBefore(leftFragment, wrapper);
+                    }
+
+                    leftRange.setStartAfter(font);
+                    leftRange.setEndAfter(wrapper);
+                    const rightFragment = leftRange.extractContents();
+
+                    // case then marker can be inside fragnment
+                    if (
+                        (!rightFragment.textContent ||
+                            !trim(rightFragment.textContent).length) &&
+                        rightFragment.firstChild
+                    ) {
+                        Dom.unwrap(rightFragment.firstChild);
+                    }
+
+                    Dom.after(wrapper, rightFragment);
+
+                    toggleStyles(wrapper);
+                } else {
+                    // unwrap all suit elements inside
+                    const needUnwrap: Node[] = [];
+                    let firstElementSuit: boolean | undefined;
+
+                    if (font.firstChild) {
+                        Dom.find(
+                            font.firstChild,
+                            (elm: Node | null) => {
+                                if (elm && isSuitElement(elm as HTMLElement)) {
+                                    if (firstElementSuit === undefined) {
+                                        firstElementSuit = true;
+                                    }
+                                    needUnwrap.push(elm);
+                                } else {
+                                    if (firstElementSuit === undefined) {
+                                        firstElementSuit = false;
+                                    }
+                                }
+                                return false;
+                            },
+                            font,
+                            true
+                        );
+                    }
+
+                    needUnwrap.forEach(Dom.unwrap);
+
+                    if (!firstElementSuit) {
+                        if (mode === undefined) {
+                            mode = WRAP;
+                        }
+                        if (mode === WRAP) {
+                            css(
+                                Dom.replace(
+                                    font,
+                                    nodeName,
+                                    false,
+                                    false,
+                                    this.doc
+                                ),
+                                cssRules &&
+                                    nodeName.toUpperCase() === defaultTag
+                                    ? cssRules
+                                    : {}
+                            );
+                        }
                     }
                 }
-            );
+
+                if (font.parentNode) {
+                    Dom.unwrap(font);
+                }
+            });
 
             this.restore(selInfo);
         } else {
@@ -1332,13 +1307,9 @@ export class Select {
             }
 
             if (nodeName.toUpperCase() === defaultTag || !clearStyle) {
-                const node: Node = this.jodit.create.inside.element(
-                    nodeName
-                );
+                const node: Node = this.jodit.create.inside.element(nodeName);
                 node.appendChild(
-                    this.jodit.create.inside.text(
-                        consts.INVISIBLE_SPACE
-                    )
+                    this.jodit.create.inside.text(consts.INVISIBLE_SPACE)
                 );
 
                 this.insertNode(node, false, false);
@@ -1350,5 +1321,5 @@ export class Select {
                 this.setCursorIn(node);
             }
         }
-    };
+    }
 }

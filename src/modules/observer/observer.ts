@@ -88,7 +88,8 @@ export class Observer extends Component<IJodit> {
     }
 
     public changeStack() {
-        this.jodit && !this.jodit.isDestructed &&
+        this.jodit &&
+            !this.jodit.isDestructed &&
             this.jodit.events &&
             this.jodit.events.fire('changeStack');
     }

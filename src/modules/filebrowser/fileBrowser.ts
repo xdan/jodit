@@ -564,7 +564,8 @@ Config.prototype.controls.filebrowser = {
         exec: () => {
             // do nothing
         },
-        isDisable: (browser: IFileBrowser): boolean => !browser.canI('FileUpload'),
+        isDisable: (browser: IFileBrowser): boolean =>
+            !browser.canI('FileUpload'),
         getContent: (
             filebrowser: IViewBased,
             control: IControlType
@@ -615,7 +616,8 @@ Config.prototype.controls.filebrowser = {
     } as IControlType,
     select: {
         icon: 'check',
-        isDisable: (browser: IFileBrowser): boolean => browser.getActiveElements().length === 0,
+        isDisable: (browser: IFileBrowser): boolean =>
+            browser.getActiveElements().length === 0,
         exec: (editor: IViewBased) => {
             editor.events.fire('select.filebrowser');
         },
@@ -633,7 +635,7 @@ Config.prototype.controls.filebrowser = {
                 )
             );
         },
-        exec: (editor) => {
+        exec: editor => {
             editor.events.fire('edit.filebrowser');
         },
     } as IControlType,
@@ -656,10 +658,13 @@ Config.prototype.controls.filebrowser = {
     filter: {
         isInput: true,
         getContent: (filebrowser: IFileBrowser): HTMLElement => {
-            const input: HTMLInputElement = filebrowser.create.element('input', {
-                'class': 'jodit_input',
-                'placeholder': filebrowser.i18n('Filter'),
-            });
+            const input: HTMLInputElement = filebrowser.create.element(
+                'input',
+                {
+                    class: 'jodit_input',
+                    placeholder: filebrowser.i18n('Filter'),
+                }
+            );
 
             filebrowser.events.on(
                 input,
@@ -711,7 +716,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
      * @return {number}
      */
     get defaultTimeout(): number {
-        return (this.jodit && this.jodit !== this)
+        return this.jodit && this.jodit !== this
             ? this.jodit.defaultTimeout
             : Config.defaultOptions.observer.timeout;
     }
@@ -1210,11 +1215,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
      * @param {string} path Relative toWYSIWYG the directory where you want toWYSIWYG move the file / folder
      * @param {string} source Source
      */
-    move = (
-        filepath: string,
-        path: string,
-        source: string
-    ): Promise<void> => {
+    move = (filepath: string, path: string, source: string): Promise<void> => {
         if (!this.options.move) {
             return Promise.reject('Set Move api options');
         }
@@ -1245,11 +1246,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
      * @param file The filename
      * @param source Source
      */
-    fileRemove(
-        path: string,
-        file: string,
-        source: string
-    ): Promise<void> {
+    fileRemove(path: string, file: string, source: string): Promise<void> {
         if (!this.options.fileRemove) {
             return Promise.reject('Set fileRemove api options');
         }
@@ -1284,11 +1281,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
      * @param file The filename
      * @param source Source
      */
-    folderRemove(
-        path: string,
-        file: string,
-        source: string
-    ): Promise<void> {
+    folderRemove(path: string, file: string, source: string): Promise<void> {
         if (!this.options.folderRemove) {
             return Promise.reject('Set folderRemove api options');
         }
@@ -1348,7 +1341,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
         this.onlyImages = onlyImages;
         this.buffer.fileBrowserOnlyImages = onlyImages;
 
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             if (!this.options.items || !this.options.items.url) {
                 throw new Error('Need set options.filebrowser.ajax.url');
             }
@@ -1431,13 +1424,16 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
                     box.action,
                     resp => {
                         if (this.options.isSuccess(resp)) {
-                            this.loadTree(this.currentPath, this.currentSource).then(() => {
+                            this.loadTree(
+                                this.currentPath,
+                                this.currentSource
+                            ).then(() => {
                                 success();
 
                                 if (onSuccess) {
                                     onSuccess();
                                 }
-                            })
+                            });
                         } else {
                             failed(new Error(this.options.getMessage(resp)));
 
@@ -1487,7 +1483,10 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
             buttons: ['dialog.fullsize', 'dialog.close'],
         });
 
-        self.loader = self.create.div('jodit_filebrowser_loader', '<i class="jodit_icon-loader"></i>');
+        self.loader = self.create.div(
+            'jodit_filebrowser_loader',
+            '<i class="jodit_icon-loader"></i>'
+        );
 
         self.browser = self.create.fromHTML(
             '<div class="jodit_filebrowser non-selected">' +
@@ -1496,7 +1495,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
                     : '') +
                 '<div class="jodit_filebrowser_files"></div>' +
                 '<div class="jodit_filebrowser_status"></div>' +
-                '</div>',
+                '</div>'
         );
 
         self.status_line = self.browser.querySelector(
@@ -1756,7 +1755,8 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
                                                   temp_content: HTMLElement = self.create.fromHTML(
                                                       '<div class="jodit_filebrowser_preview">' +
                                                           '<i class="jodit_icon-loader"></i>' +
-                                                          '</div>',),
+                                                          '</div>'
+                                                  ),
                                                   image: HTMLImageElement = doc.createElement(
                                                       'img'
                                                   ),
@@ -1993,9 +1993,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
             {},
             Config.defaultOptions.uploader,
             self.options.uploader,
-            editor &&
-                editor.options &&
-                editor.options.uploader !== null
+            editor && editor.options && editor.options.uploader !== null
                 ? {
                       ...(editor.options.uploader as IUploaderOptions<
                           IUploader
@@ -2007,20 +2005,9 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
         this.uploader = this.getInstance('Uploader', uploaderOptions);
         this.uploader.setPath(this.currentPath);
         this.uploader.setSource(this.currentSource);
-        this.uploader.bind(
-            this.browser,
-            this.uploadHandler,
-            this.errorHandler
-        );
-        this.events.on(
-            'bindUploader.filebrowser',
-            (button: HTMLElement) => {
-                this.uploader.bind(
-                    button,
-                    this.uploadHandler,
-                    this.errorHandler
-                );
-            }
-        );
+        this.uploader.bind(this.browser, this.uploadHandler, this.errorHandler);
+        this.events.on('bindUploader.filebrowser', (button: HTMLElement) => {
+            this.uploader.bind(button, this.uploadHandler, this.errorHandler);
+        });
     }
 }

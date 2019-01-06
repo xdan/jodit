@@ -9,7 +9,8 @@ import {
     BuildDataResult,
     HandlerError,
     HandlerSuccess,
-    IDictionary, IJodit,
+    IDictionary,
+    IJodit,
     IUploader,
     IUploaderAnswer,
     IUploaderData,
@@ -82,7 +83,9 @@ Config.prototype.uploader = {
                         ? ['img', 'src']
                         : ['a', 'href'];
 
-                const elm: HTMLElement = this.jodit.create.inside.element(<'img' | 'a'>tagName);
+                const elm: HTMLElement = this.jodit.create.inside.element(<
+                    'img' | 'a'
+                >tagName);
 
                 elm.setAttribute(attr, resp.baseurl + filename);
 
@@ -92,7 +95,11 @@ Config.prototype.uploader = {
 
                 if (isJoditObject(this.jodit)) {
                     if (tagName === 'img') {
-                        this.jodit.selection.insertImage(elm as HTMLImageElement, null, this.jodit.options.imageDefaultWidth);
+                        this.jodit.selection.insertImage(
+                            elm as HTMLImageElement,
+                            null,
+                            this.jodit.options.imageDefaultWidth
+                        );
                     } else {
                         this.jodit.selection.insertNode(elm);
                     }
@@ -514,7 +521,8 @@ export class Uploader implements IUploader {
                                     : null,
                             restore = () =>
                                 selection &&
-                                this.jodit && isJoditObject(this.jodit) &&
+                                this.jodit &&
+                                isJoditObject(this.jodit) &&
                                 this.jodit.selection.restore(selection);
 
                         div.focus();

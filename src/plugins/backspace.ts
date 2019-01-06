@@ -324,13 +324,15 @@ export function backspace(editor: IJodit) {
                         let prevBox: Node | false | null = toLeft
                             ? Dom.prev(
                                   box.node || fakeNode,
-                                  node => Dom.isBlock(node, editor.editorWindow),
+                                  node =>
+                                      Dom.isBlock(node, editor.editorWindow),
                                   editor.editor
                               )
                             : Dom.next(
                                   box.node || fakeNode,
-                                node => Dom.isBlock(node, editor.editorWindow),
-                                editor.editor
+                                  node =>
+                                      Dom.isBlock(node, editor.editorWindow),
+                                  editor.editor
                               );
 
                         if (!prevBox && container && container.parentNode) {

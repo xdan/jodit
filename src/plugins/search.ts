@@ -318,7 +318,6 @@ export class search extends Plugin {
             range: Range = sel.rangeCount
                 ? sel.getRangeAt(0)
                 : this.jodit.selection.createRange(),
-
             bound: ISelectionRange | false = this.find(
                 start,
                 query,
@@ -454,7 +453,10 @@ export class search extends Plugin {
                                 endOffset: null,
                             };
                         }
-                    } else if (Dom.isBlock(elm, this.jodit.editorWindow) && sentence !== '') {
+                    } else if (
+                        Dom.isBlock(elm, this.jodit.editorWindow) &&
+                        sentence !== ''
+                    ) {
                         sentence = next ? sentence + ' ' : ' ' + sentence;
                     }
 
@@ -526,7 +528,9 @@ export class search extends Plugin {
         if (editor.options.useSearch) {
             const self: search = this;
 
-            self.searchBox = editor.create.fromHTML(self.template) as HTMLDivElement;
+            self.searchBox = editor.create.fromHTML(
+                self.template
+            ) as HTMLDivElement;
 
             self.queryInput = self.searchBox.querySelector(
                 'input.jodit_search-query'
@@ -607,27 +611,31 @@ export class search extends Plugin {
                         }
                     }, this.jodit.defaultTimeout)
                 )
-                .on(this.jodit.container, 'keydown.search', (e: KeyboardEvent) => {
-                    if (editor.getRealMode() !== MODE_WYSIWYG) {
-                        return;
-                    }
+                .on(
+                    this.jodit.container,
+                    'keydown.search',
+                    (e: KeyboardEvent) => {
+                        if (editor.getRealMode() !== MODE_WYSIWYG) {
+                            return;
+                        }
 
-                    switch (e.which) {
-                        case consts.KEY_ESC:
-                            this.close();
-                            break;
-                        case consts.KEY_F3:
-                            if (self.queryInput.value) {
-                                editor.events.fire(
-                                    !e.shiftKey
-                                        ? 'searchNext'
-                                        : 'searchPrevious'
-                                );
-                                e.preventDefault();
-                            }
-                            break;
+                        switch (e.which) {
+                            case consts.KEY_ESC:
+                                this.close();
+                                break;
+                            case consts.KEY_F3:
+                                if (self.queryInput.value) {
+                                    editor.events.fire(
+                                        !e.shiftKey
+                                            ? 'searchNext'
+                                            : 'searchPrevious'
+                                    );
+                                    e.preventDefault();
+                                }
+                                break;
+                        }
                     }
-                })
+                )
                 .on('beforeSetMode.search', () => {
                     this.close();
                 })

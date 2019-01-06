@@ -57,7 +57,9 @@ Config.prototype.controls.fullsize = {
             button.textBox.innerHTML = !editor.options.textIcons
                 ? ToolbarIcon.getIcon(mode)
                 : `<span>${editor.i18n(mode)}</span>`;
-            (button.textBox.firstChild as HTMLElement).classList.add('jodit_icon');
+            (button.textBox.firstChild as HTMLElement).classList.add(
+                'jodit_icon'
+            );
         }
     },
     tooltip: 'Open editor in fullsize',

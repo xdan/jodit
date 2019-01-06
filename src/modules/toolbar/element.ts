@@ -4,14 +4,19 @@
  * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { IControlTypeStrong, IToolbarCollection, IToolbarElement } from '../../types/toolbar';
+import {
+    IControlTypeStrong,
+    IToolbarCollection,
+    IToolbarElement,
+} from '../../types/toolbar';
 import { Component } from '../Component';
 import { ToolbarCollection } from './collection';
 import { ToolbarIcon } from './icon';
 import { Dom } from '../Dom';
 import { IViewBased, TagNames } from '../../types';
 
-export abstract class ToolbarElement extends Component implements IToolbarElement {
+export abstract class ToolbarElement extends Component
+    implements IToolbarElement {
     container: HTMLElement;
     parentToolbar?: IToolbarCollection;
 
@@ -35,17 +40,11 @@ export abstract class ToolbarElement extends Component implements IToolbarElemen
         Dom.safeRemove(this.container);
     }
 
-    createIcon(
-        clearName: string,
-        control?: IControlTypeStrong
-    ): HTMLElement {
+    createIcon(clearName: string, control?: IControlTypeStrong): HTMLElement {
         const icon: string = control ? control.icon || control.name : clearName;
 
         if (!this.jodit.options.textIcons) {
-            let iconSVG:
-                | string
-                | void
-                | HTMLElement = this.jodit.events.fire(
+            let iconSVG: string | void | HTMLElement = this.jodit.events.fire(
                 'getIcon',
                 icon,
                 control,
@@ -56,7 +55,8 @@ export abstract class ToolbarElement extends Component implements IToolbarElemen
 
             if (control && control.iconURL && iconSVG === undefined) {
                 iconElement = this.jodit.create.element('i');
-                iconElement.style.backgroundImage = 'url(' + control.iconURL + ')';
+                iconElement.style.backgroundImage =
+                    'url(' + control.iconURL + ')';
             } else {
                 if (iconSVG === undefined) {
                     if (ToolbarIcon.exists(icon)) {
@@ -66,7 +66,10 @@ export abstract class ToolbarElement extends Component implements IToolbarElemen
                     }
                 }
 
-                iconElement = typeof iconSVG === 'string' ? this.jodit.create.fromHTML(iconSVG) : iconSVG;
+                iconElement =
+                    typeof iconSVG === 'string'
+                        ? this.jodit.create.fromHTML(iconSVG)
+                        : iconSVG;
             }
 
             iconElement.classList.add('jodit_icon', 'jodit_icon_' + clearName);

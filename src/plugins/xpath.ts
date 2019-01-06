@@ -128,7 +128,9 @@ export class xpath extends Plugin {
     };
 
     private appendSelectAll = () => {
-        const li: ToolbarButton = new ToolbarButton(this.jodit, <IControlTypeStrong>{
+        const li: ToolbarButton = new ToolbarButton(this.jodit, <
+            IControlTypeStrong
+        >{
             name: 'selectall',
             ...this.jodit.options.controls.selectall,
         });

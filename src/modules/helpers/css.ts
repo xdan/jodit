@@ -68,7 +68,7 @@ export const css = (
 
     const currentValue: string | undefined = (element.style as any)[
         key as string
-        ];
+    ];
 
     let result: string | number =
         currentValue !== undefined && currentValue !== ''

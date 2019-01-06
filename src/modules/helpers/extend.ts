@@ -4,7 +4,6 @@
  * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
-
 import { JoditObject } from './JoditObject';
 import { JoditArray } from './JoditArray';
 import { type } from './type';
@@ -27,7 +26,12 @@ export function extend<U, V>(deep: true, source1: U, source2: V): U & V;
  * @param source2 The second source object from which to copy properties.
  */
 export function extend<T, U, V>(target: T, source1: U, source2: V): T & U & V;
-export function extend<T, U, V>(deep: true, target: T, source1: U, source2: V): T & U & V;
+export function extend<T, U, V>(
+    deep: true,
+    target: T,
+    source1: U,
+    source2: V
+): T & U & V;
 
 /**
  * Copy the values of all of the enumerable own properties from one or more source objects to a
@@ -37,8 +41,19 @@ export function extend<T, U, V>(deep: true, target: T, source1: U, source2: V): 
  * @param source2 The second source object from which to copy properties.
  * @param source3 The third source object from which to copy properties.
  */
-export function extend<T, U, V, W>(target: T, source1: U, source2: V, source3: W): T & U & V & W;
-export function extend<T, U, V, W>(deep: true, target: T, source1: U, source2: V, source3: W): T & U & V & W;
+export function extend<T, U, V, W>(
+    target: T,
+    source1: U,
+    source2: V,
+    source3: W
+): T & U & V & W;
+export function extend<T, U, V, W>(
+    deep: true,
+    target: T,
+    source1: U,
+    source2: V,
+    source3: W
+): T & U & V & W;
 
 /**
  * Copy the values of all of the enumerable own properties from one or more source objects to a

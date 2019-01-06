@@ -7,9 +7,9 @@
 export const defaultLanguage = (language?: string): string =>
     language === 'auto' || language === undefined
         ? (document.documentElement && document.documentElement.lang) ||
-        (navigator.language && navigator.language.substr(0, 2)) ||
-        ((navigator as any).browserLanguage
-            ? (navigator as any).browserLanguage.substr(0, 2)
-            : false) ||
-        'en'
+          (navigator.language && navigator.language.substr(0, 2)) ||
+          ((navigator as any).browserLanguage
+              ? (navigator as any).browserLanguage.substr(0, 2)
+              : false) ||
+          'en'
         : language;

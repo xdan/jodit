@@ -105,8 +105,7 @@ export class sticky extends Plugin {
                 const scrollWindowTop: number =
                         jodit.ownerWindow.pageYOffset ||
                         (jodit.ownerDocument.documentElement &&
-                            jodit.ownerDocument.documentElement
-                                .scrollTop) ||
+                            jodit.ownerDocument.documentElement.scrollTop) ||
                         0,
                     offsetEditor: IBound = offset(
                         jodit.container,
@@ -116,8 +115,7 @@ export class sticky extends Plugin {
                     ),
                     doSticky: boolean =
                         jodit.getMode() === MODE_WYSIWYG &&
-                        (scrollWindowTop +
-                            jodit.options.toolbarStickyOffset >
+                        (scrollWindowTop + jodit.options.toolbarStickyOffset >
                             offsetEditor.top &&
                             scrollWindowTop +
                                 jodit.options.toolbarStickyOffset <

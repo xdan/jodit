@@ -102,10 +102,7 @@ interface IEventsNative {
      * parent.events.off('someGlobalEvents');
      * ```
      */
-    off(
-        subjectOrEvents: string,
-        eventsOrCallback?: () => void
-    ): IEventsNative;
+    off(subjectOrEvents: string, eventsOrCallback?: () => void): IEventsNative;
     off(
         subjectOrEvents: object,
         eventsOrCallback?: string,

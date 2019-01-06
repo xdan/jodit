@@ -14,11 +14,7 @@ import { IDictionary, IJodit } from '../types';
 import { IControlType } from '../types/toolbar';
 
 Config.prototype.controls.brush = {
-    isActive: (
-        editor: IJodit,
-        btn: IControlType,
-        button
-    ): boolean => {
+    isActive: (editor: IJodit, btn: IControlType, button): boolean => {
         if (!button) {
             return true;
         }

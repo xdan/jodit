@@ -62,7 +62,7 @@ interface IViewBased extends IPanel {
 
     i18n: (text: string, ...params: Array<string | number>) => string;
 
-    defaultTimeout: number
+    defaultTimeout: number;
 
     iframe?: HTMLIFrameElement | null;
 
@@ -76,4 +76,3 @@ interface IViewBased extends IPanel {
 interface IViewWithToolbar extends IViewBased {
     toolbar: IToolbarCollection;
 }
-

@@ -4,10 +4,11 @@
  * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { IJodit } from '../types/jodit'
+import { IJodit } from '../types/jodit';
 
 import {
-    IDictionary, IFileBrowser,
+    IDictionary,
+    IFileBrowser,
     IFileBrowserCallBackData,
     IRGB,
     IUploader,
@@ -187,8 +188,8 @@ export namespace Widget {
         state?: { __activeTab: string }
     ): HTMLDivElement => {
         const box: HTMLDivElement = editor.create.div('jodit_tabs'),
-            tabBox: HTMLDivElement = editor.create.div("jodit_tabs_wrapper"),
-            buttons: HTMLDivElement = editor.create.div("jodit_tabs_buttons"),
+            tabBox: HTMLDivElement = editor.create.div('jodit_tabs_wrapper'),
+            buttons: HTMLDivElement = editor.create.div('jodit_tabs_buttons'),
             nameToTab: IDictionary<{
                 button: HTMLElement;
                 tab: HTMLElement;
@@ -201,9 +202,9 @@ export namespace Widget {
         box.appendChild(tabBox);
 
         each<(() => void) | HTMLElement>(tabs, (name: string, tabOptions) => {
-            const tab: HTMLDivElement = editor.create.div("jodit_tab"),
+            const tab: HTMLDivElement = editor.create.div('jodit_tab'),
                 button: HTMLAnchorElement = editor.create.element('a', {
-                    href: 'javascript:void(0);'
+                    href: 'javascript:void(0);',
                 });
 
             if (!firstTab) {
@@ -216,9 +217,7 @@ export namespace Widget {
             if (typeof tabOptions !== 'function') {
                 tab.appendChild(tabOptions);
             } else {
-                tab.appendChild(
-                    editor.create.div("jodit_tab_empty")
-                );
+                tab.appendChild(editor.create.div('jodit_tab_empty'));
             }
 
             tabBox.appendChild(tab);
@@ -385,10 +384,9 @@ export namespace Widget {
                 tabs[icon + editor.i18n('Browse')] = () => {
                     close && close();
                     if (callbacks.filebrowser) {
-                        (editor.getInstance('FileBrowser') as IFileBrowser).open(
-                            callbacks.filebrowser,
-                            isImage
-                        );
+                        (editor.getInstance(
+                            'FileBrowser'
+                        ) as IFileBrowser).open(callbacks.filebrowser, isImage);
                     }
                 };
             }
@@ -406,7 +404,7 @@ export namespace Widget {
                         editor.i18n('Insert') +
                         '</button>' +
                         '</div>' +
-                        '</form>',
+                        '</form>'
                 ) as HTMLFormElement,
                 button: HTMLButtonElement = form.querySelector(
                     'button'

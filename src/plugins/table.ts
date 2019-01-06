@@ -42,13 +42,7 @@ Config.prototype.controls.table = {
             'table table-dark': 'Bootstrap Dark',
         },
     },
-    popup: (
-        editor: IJodit,
-        current,
-        control,
-        close,
-        button
-    ) => {
+    popup: (editor: IJodit, current, control, close, button) => {
         let i: number,
             j: number,
             k: number,
@@ -86,21 +80,18 @@ Config.prototype.controls.table = {
                     '<span>1</span> &times; <span>1</span>' +
                     '</label>' +
                     '<div class="jodit_form-table-creator-box">' +
-                        '<div class="jodit_form-container"></div>' +
+                    '<div class="jodit_form-container"></div>' +
                     '<div class="jodit_form-options">' +
                     generateExtraClasses() +
                     '</div>' +
                     '</div>' +
                     '</form>'
             ) as HTMLFormElement,
-
             rows: HTMLSpanElement = form.querySelectorAll('span')[0],
             cols: HTMLSpanElement = form.querySelectorAll('span')[1],
-
             blocksContainer: HTMLDivElement = form.querySelector(
                 '.jodit_form-container'
             ) as HTMLDivElement,
-
             mainBox: HTMLDivElement = form.querySelector(
                 '.jodit_form-table-creator-box'
             ) as HTMLDivElement,
@@ -169,8 +160,10 @@ Config.prototype.controls.table = {
 
         blocksContainer.addEventListener('mousemove', mouseenter);
 
-        editor.events
-            .on(blocksContainer, 'touchstart mousedown', (e: MouseEvent) => {
+        editor.events.on(
+            blocksContainer,
+            'touchstart mousedown',
+            (e: MouseEvent) => {
                 const dv: HTMLDivElement = e.target as HTMLDivElement,
                     doc: Document = editor.editorDocument;
 
@@ -260,7 +253,8 @@ Config.prototype.controls.table = {
                 }
 
                 close();
-            });
+            }
+        );
 
         if (button && button.parentToolbar) {
             editor.events
@@ -357,7 +351,9 @@ export class TableProcessor extends Plugin {
             ) as HTMLElement;
 
             if (!this.__resizerHandler) {
-                this.__resizerHandler = this.jodit.create.div("jodit_table_resizer");
+                this.__resizerHandler = this.jodit.create.div(
+                    'jodit_table_resizer'
+                );
 
                 let startX: number = 0; // , startLeft = 0;
                 this.jodit.events

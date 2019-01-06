@@ -42,7 +42,10 @@ export class View extends Panel implements IViewBased {
     /**
      * progress_bar Progress bar
      */
-    public progress_bar: HTMLDivElement = this.create.div('jodit_progress_bar', this.create.div());
+    public progress_bar: HTMLDivElement = this.create.div(
+        'jodit_progress_bar',
+        this.create.div()
+    );
 
     public options: IViewOptions = {
         removeButtons: [],
@@ -61,7 +64,9 @@ export class View extends Panel implements IViewBased {
     // public toolbar: ToolbarCollection;
 
     i18n(text: string): string {
-        return (this.jodit && this.jodit !== this) ? this.jodit.i18n(text) : Jodit.prototype.i18n(text);
+        return this.jodit && this.jodit !== this
+            ? this.jodit.i18n(text)
+            : Jodit.prototype.i18n(text);
     }
 
     /**
@@ -112,12 +117,16 @@ export class View extends Panel implements IViewBased {
     constructor(jodit?: IViewBased, options?: IViewOptions) {
         super(jodit);
 
-        this.id = (jodit && jodit.id) ? jodit.id : new Date().getTime().toString();
+        this.id =
+            jodit && jodit.id ? jodit.id : new Date().getTime().toString();
 
         this.jodit = jodit || this;
 
-        this.events = (jodit && jodit.events) ? jodit.events : new EventsNative(this.ownerDocument);
-        this.buffer = (jodit && jodit.buffer) ? jodit.buffer : {};
+        this.events =
+            jodit && jodit.events
+                ? jodit.events
+                : new EventsNative(this.ownerDocument);
+        this.buffer = jodit && jodit.buffer ? jodit.buffer : {};
 
         // this.toolbar = new ToolbarCollection(this);
 

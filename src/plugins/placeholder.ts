@@ -150,7 +150,8 @@ export function placeholder(this: any, editor: IJodit) {
     const placeholderElm: HTMLElement = editor.create.fromHTML(
         '<span style="display: none;" class="jodit_placeholder">' +
             editor.i18n(editor.options.placeholder) +
-            '</span>');
+            '</span>'
+    );
 
     if (editor.options.direction === 'rtl') {
         placeholderElm.style.right = '0px';

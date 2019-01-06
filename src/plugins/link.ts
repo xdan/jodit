@@ -6,11 +6,7 @@
 
 import { Config } from '../Config';
 import { Dom } from '../modules/Dom';
-import {
-    convertMediaURLToVideoEmbed,
-    isURL,
-    val,
-} from '../modules/helpers/';
+import { convertMediaURLToVideoEmbed, isURL, val } from '../modules/helpers/';
 import { Select } from '../modules/Selection';
 import { IJodit, markerInfo } from '../types';
 import { IControlType } from '../types/toolbar';
@@ -249,7 +245,7 @@ export function link(jodit: IJodit) {
 
                     if (embed !== html) {
                         return jodit.create.inside.fromHTML(
-                            embed,
+                            embed
                         ) as HTMLAnchorElement;
                     }
 

@@ -223,10 +223,10 @@ export interface IUploader {
      */
     setPath(path: string): void;
     /**
- * It sets the source for connector
- *
- * @method setSource
- * @param {string} source
- */
+     * It sets the source for connector
+     *
+     * @method setSource
+     * @param {string} source
+     */
     setSource(source: string): void;
 }

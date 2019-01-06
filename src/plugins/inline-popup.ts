@@ -738,17 +738,17 @@ export class inlinePopup extends Plugin {
         Dom.safeRemove(this.container);
 
         editor.events &&
-        editor.events
-            .off([editor.ownerWindow], 'scroll resize', this.reCalcPosition)
-            .off(
-                [editor.ownerWindow],
-                'mouseup keyup touchend',
-                this.onSelectionEnd
-            )
-            .off(
-                [editor.ownerWindow],
-                'mousedown keydown touchstart',
-                this.checkIsTargetEvent
-            );
+            editor.events
+                .off([editor.ownerWindow], 'scroll resize', this.reCalcPosition)
+                .off(
+                    [editor.ownerWindow],
+                    'mouseup keyup touchend',
+                    this.onSelectionEnd
+                )
+                .off(
+                    [editor.ownerWindow],
+                    'mousedown keydown touchstart',
+                    this.checkIsTargetEvent
+                );
     }
 }

@@ -43,15 +43,15 @@ export const convertMediaURLToVideoEmbed = (
         case 'vimeo.com':
             return pattern1.test(url)
                 ? url.replace(
-                    pattern1,
-                    '<iframe width="' +
-                    width +
-                    '" height="' +
-                    height +
-                    '" src="' +
-                    protocol +
-                    '//player.vimeo.com/video/$1" frameborder="0" allowfullscreen></iframe>'
-                )
+                      pattern1,
+                      '<iframe width="' +
+                          width +
+                          '" height="' +
+                          height +
+                          '" src="' +
+                          protocol +
+                          '//player.vimeo.com/video/$1" frameborder="0" allowfullscreen></iframe>'
+                  )
                 : url;
         case 'youtube.com':
         case 'www.youtube.com':
@@ -62,14 +62,14 @@ export const convertMediaURLToVideoEmbed = (
                 : { v: parser.pathname.substr(1) };
             return query.v
                 ? '<iframe width="' +
-                width +
-                '" height="' +
-                height +
-                '" src="' +
-                protocol +
-                '//www.youtube.com/embed/' +
-                query.v +
-                '" frameborder="0" allowfullscreen></iframe>'
+                      width +
+                      '" height="' +
+                      height +
+                      '" src="' +
+                      protocol +
+                      '//www.youtube.com/embed/' +
+                      query.v +
+                      '" frameborder="0" allowfullscreen></iframe>'
                 : url;
     }
 

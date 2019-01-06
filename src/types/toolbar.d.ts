@@ -8,7 +8,10 @@ import { HTMLTagNames, IComponent, IDictionary, Modes } from './types';
 import { IViewBased } from './view';
 import { IJodit } from './jodit';
 import { IFileBrowser } from './fileBrowser';
-interface IControlType<T = IJodit | IViewBased | IFileBrowser, Button = IToolbarButton> {
+interface IControlType<
+    T = IJodit | IViewBased | IFileBrowser,
+    Button = IToolbarButton
+> {
     controlName?: string;
     name?: string;
     mode?: Modes;
@@ -249,10 +252,7 @@ interface IToolbarElement extends IComponent {
     container: HTMLElement;
     parentToolbar?: IToolbarCollection;
 
-    createIcon(
-        clearName: string,
-        control?: IControlTypeStrong
-    ): HTMLElement;
+    createIcon(clearName: string, control?: IControlTypeStrong): HTMLElement;
 }
 
 interface IToolbarButton extends IToolbarElement {
@@ -276,11 +276,7 @@ interface IToolbarCollection {
 
     removeChild(button: IToolbarElement): void;
 
-    build(
-        buttons: Buttons,
-        container: HTMLElement,
-        target?: HTMLElement
-    ): void;
+    build(buttons: Buttons, container: HTMLElement, target?: HTMLElement): void;
 
     clear(): void;
 

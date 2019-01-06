@@ -28,8 +28,7 @@ export class EventsNative implements IEventsNative {
         eventParts.forEach((eventNameSpace: string) => {
             const eventAndNameSpace: string[] = eventNameSpace.split('.');
 
-            const namespace: string =
-                eventAndNameSpace[1] || defaultNameSpace;
+            const namespace: string = eventAndNameSpace[1] || defaultNameSpace;
 
             callback.call(this, eventAndNameSpace[0], namespace);
         });
@@ -361,10 +360,7 @@ export class EventsNative implements IEventsNative {
      * parent.events.off('someGlobalEvents');
      * ```
      */
-    off(
-        subjectOrEvents: string,
-        eventsOrCallback?: () => void
-    ): EventsNative;
+    off(subjectOrEvents: string, eventsOrCallback?: () => void): EventsNative;
     off(
         subjectOrEvents: object,
         eventsOrCallback?: string,
@@ -467,17 +463,9 @@ export class EventsNative implements IEventsNative {
      * @param subjectOrEvents
      * @param eventsList
      */
-    stopPropagation(
-        subjectOrEvents: string
-    ): void;
-    stopPropagation(
-        subjectOrEvents: object,
-        eventsList: string
-    ): void;
-    stopPropagation(
-        subjectOrEvents: object | string,
-        eventsList?: string
-    ) {
+    stopPropagation(subjectOrEvents: string): void;
+    stopPropagation(subjectOrEvents: object, eventsList: string): void;
+    stopPropagation(subjectOrEvents: object | string, eventsList?: string) {
         const subject: object =
             typeof subjectOrEvents === 'string' ? this : subjectOrEvents;
 
@@ -507,8 +495,8 @@ export class EventsNative implements IEventsNative {
                 if (namespace === defaultNameSpace) {
                     store
                         .namespaces(true)
-                        .forEach(
-                            ns => this.stopPropagation(subject,event + '.' + ns)
+                        .forEach(ns =>
+                            this.stopPropagation(subject, event + '.' + ns)
                         );
                 }
             }
@@ -616,10 +604,7 @@ export class EventsNative implements IEventsNative {
                             }
                         }
 
-                        if (
-                            namespace === defaultNameSpace &&
-                            !isDOMElement
-                        ) {
+                        if (namespace === defaultNameSpace && !isDOMElement) {
                             store
                                 .namespaces()
                                 .filter(ns => ns !== namespace)

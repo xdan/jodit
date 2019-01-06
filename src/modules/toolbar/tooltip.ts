@@ -13,7 +13,7 @@ import { IToolbarButton } from '../../types';
 /**
  * Class create tooltip for buttons in toolbar
  */
-export class ToolbarTooltip extends ToolbarElement{
+export class ToolbarTooltip extends ToolbarElement {
     private timeout: number = 0;
 
     private show = () => {
@@ -25,7 +25,9 @@ export class ToolbarTooltip extends ToolbarElement{
                     this.button.container.offsetWidth;
                 this.container.style.marginLeft = -diff / 2 + 'px';
             },
-            delay: number = this.button.jodit.options.showTooltipDelay || this.button.jodit.defaultTimeout * 10;
+            delay: number =
+                this.button.jodit.options.showTooltipDelay ||
+                this.button.jodit.defaultTimeout * 10;
 
         this.button.jodit.events.fire('hideTooltip');
 
@@ -41,7 +43,8 @@ export class ToolbarTooltip extends ToolbarElement{
         super(button.parentToolbar || button.jodit, 'div', 'jodit_tooltip');
 
         if (button.control.tooltip) {
-            this.container.innerHTML = button.jodit.i18n(button.control.tooltip) +
+            this.container.innerHTML =
+                button.jodit.i18n(button.control.tooltip) +
                 (button.control.hotkeys
                     ? '<br>' + asArray(button.control.hotkeys).join(' ')
                     : '');
@@ -59,8 +62,10 @@ export class ToolbarTooltip extends ToolbarElement{
     destruct(): any {
         this.hide();
         if (this.jodit.events) {
-            this.jodit.events
-                .off( 'change updateToolbar scroll hidePopup closeAllPopups hideTooltip', this.hide);
+            this.jodit.events.off(
+                'change updateToolbar scroll hidePopup closeAllPopups hideTooltip',
+                this.hide
+            );
         }
         return super.destruct();
     }

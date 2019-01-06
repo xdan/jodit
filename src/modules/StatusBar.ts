@@ -19,7 +19,9 @@ export class StatusBar extends Component {
     }
 
     public append(child: HTMLElement, inTheRight: boolean = false) {
-        const wrapper: HTMLElement = this.jodit.create.div('jodit_statusbar_item');
+        const wrapper: HTMLElement = this.jodit.create.div(
+            'jodit_statusbar_item'
+        );
 
         if (inTheRight) {
             wrapper.classList.add('jodit_statusbar_item-right');

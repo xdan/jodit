@@ -26,7 +26,8 @@ import {
     isHTMLFromWord,
     trim,
     type,
-    setTimeout, stripTags,
+    setTimeout,
+    stripTags,
 } from '../modules/helpers/';
 
 import { IControlType } from '../types/toolbar';
@@ -485,20 +486,20 @@ export function paste(editor: IJodit) {
                         );
                         return processHTMLData(html);
                     } else if (event.type !== 'drop') {
-                        const div: HTMLDivElement = editor.create.div(void(0), {
+                        const div: HTMLDivElement = editor.create.div(void 0, {
                             tabindex: -1,
                             contenteditable: true,
                             style: {
                                 left: -9999,
                                 top: 0,
                                 width: 0,
-                                height:'100%',
+                                height: '100%',
                                 lineHeight: '140%',
                                 overflow: 'hidden',
                                 position: 'fixed',
                                 zIndex: 2147483647,
-                                wordBreak: 'break-all'
-                            }
+                                wordBreak: 'break-all',
+                            },
                         });
 
                         editor.container.appendChild(div);

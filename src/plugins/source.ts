@@ -448,7 +448,9 @@ export class source extends Plugin {
                     aceEditor === undefined &&
                     (this.jodit.ownerWindow as any).ace !== undefined
                 ) {
-                    const fakeMirror = this.jodit.create.div('jodit_source_mirror-fake');
+                    const fakeMirror = this.jodit.create.div(
+                        'jodit_source_mirror-fake'
+                    );
 
                     this.mirrorContainer.insertBefore(
                         fakeMirror,
@@ -659,10 +661,10 @@ export class source extends Plugin {
     };
 
     afterInit(editor: IJodit): void {
-        this.mirrorContainer = editor.create.div("jodit_source");
+        this.mirrorContainer = editor.create.div('jodit_source');
 
         this.mirror = editor.create.fromHTML(
-            '<textarea class="jodit_source_mirror"/>',
+            '<textarea class="jodit_source_mirror"/>'
         ) as HTMLTextAreaElement;
 
         const addListeners = () => {
@@ -714,8 +716,8 @@ export class source extends Plugin {
                     this.onReadonlyReact();
                     addListeners();
                 },
-                        void 0,
-                        void 0,
+                void 0,
+                void 0,
                 true
             )
             .on('readonly.source', this.onReadonlyReact)

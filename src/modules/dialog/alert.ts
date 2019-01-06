@@ -44,11 +44,15 @@ export const Alert = (
                 ToolbarIcon.getIcon('cancel') +
                 '<span>' +
                 Jodit.prototype.i18n('Ok') +
-                '</span></a>',
+                '</span></a>'
         ) as HTMLAnchorElement;
 
     asArray(msg).forEach(oneMessage => {
-        $div.appendChild(typeof oneMessage === 'string' ? dialog.create.fromHTML(oneMessage) : oneMessage);
+        $div.appendChild(
+            typeof oneMessage === 'string'
+                ? dialog.create.fromHTML(oneMessage)
+                : oneMessage
+        );
     });
 
     $ok.addEventListener('click', () => {

@@ -41,7 +41,10 @@ export function size(editor: IJodit) {
         editor.options.height !== 'auto' &&
         (editor.options.allowResizeX || editor.options.allowResizeY)
     ) {
-        const handle: HTMLDivElement = editor.create.div("jodit_editor_resize", '<a href="javascript:void(0)"></a>'),
+        const handle: HTMLDivElement = editor.create.div(
+                'jodit_editor_resize',
+                '<a href="javascript:void(0)"></a>'
+            ),
             start: { x: number; y: number; w: number; h: number } = {
                 x: 0,
                 y: 0,

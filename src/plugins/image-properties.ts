@@ -7,21 +7,17 @@
 import { Config } from '../Config';
 import { Alert, Confirm, Dialog } from '../modules/dialog/';
 import { Dom } from '../modules/Dom';
-import {
-    $$,
-    css,
-    trim,
-    val,
-    setTimeout,
-} from '../modules/helpers/';
+import { $$, css, trim, val, setTimeout } from '../modules/helpers/';
 import { ToolbarIcon } from '../modules/toolbar/icon';
 import { Widget } from '../modules/Widget';
 import TabsWidget = Widget.TabsWidget;
 import FileSelectorWidget = Widget.FileSelectorWidget;
 import { Popup } from '../modules/popup/popup';
 import {
-    IDictionary, IFileBrowser,
-    IFileBrowserCallBackData, IJodit,
+    IDictionary,
+    IFileBrowser,
+    IFileBrowserCallBackData,
+    IJodit,
     IUploaderData,
 } from '../types/';
 
@@ -123,8 +119,7 @@ export function imageProperties(editor: IJodit) {
 
         e && e.stopImmediatePropagation();
 
-        const
-            dom = editor.create.fromHTML.bind(editor.create),
+        const dom = editor.create.fromHTML.bind(editor.create),
             image = this as HTMLImageElement,
             dialog: Dialog = new Dialog(editor),
             cancel: HTMLElement = dom(
@@ -601,10 +596,7 @@ export function imageProperties(editor: IJodit) {
                 imagebtn.addEventListener('mousedown', (event: MouseEvent) => {
                     imagebtn.classList.toggle('active');
 
-                    const popup = new Popup(
-                        editor,
-                        imagebtn
-                    );
+                    const popup = new Popup(editor, imagebtn);
 
                     popup.open(
                         FileSelectorWidget(

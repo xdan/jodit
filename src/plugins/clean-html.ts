@@ -199,8 +199,16 @@ export function cleanHtml(editor: IJodit) {
             node.nodeName === 'BR' &&
             hasNotEmptyTextSibling(node) &&
             !hasNotEmptyTextSibling(node, true) &&
-            Dom.up(node, node => Dom.isBlock(node, editor.editorWindow), editor.editor) !==
-                Dom.up(current, node => Dom.isBlock(node, editor.editorWindow), editor.editor)
+            Dom.up(
+                node,
+                node => Dom.isBlock(node, editor.editorWindow),
+                editor.editor
+            ) !==
+                Dom.up(
+                    current,
+                    node => Dom.isBlock(node, editor.editorWindow),
+                    editor.editor
+                )
         ) {
             return true;
         }
@@ -401,7 +409,9 @@ export function cleanHtml(editor: IJodit) {
                         ) as Node | null;
 
                         if (!node) {
-                            node = editor.create.inside.element(editor.options.enter);
+                            node = editor.create.inside.element(
+                                editor.options.enter
+                            );
                             if (node) {
                                 Dom.after(hr, node as HTMLElement);
                             }

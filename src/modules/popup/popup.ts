@@ -89,7 +89,11 @@ export class Popup extends Component {
 
         this.container.innerHTML = '<span class="jodit_popup_triangle"></span>';
 
-        this.container.appendChild(Dom.isNode(content, this.jodit.ownerWindow) ? content : this.jodit.create.fromHTML(content.toString()));
+        this.container.appendChild(
+            Dom.isNode(content, this.jodit.ownerWindow)
+                ? content
+                : this.jodit.create.fromHTML(content.toString())
+        );
 
         this.container.style.display = 'block';
         this.container.style.marginLeft = null;
@@ -170,7 +174,7 @@ export class Popup extends Component {
     ) {
         super(jodit);
         this.container = this.jodit.create.div(className, {
-            'data-editor_id': jodit.id
+            'data-editor_id': jodit.id,
         });
 
         this.jodit.events

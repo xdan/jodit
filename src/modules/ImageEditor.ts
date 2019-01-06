@@ -462,9 +462,7 @@ export class ImageEditor extends Component {
                         css(self.image, 'width', value + 'px');
                         if (self.resizeUseRatio) {
                             another = Math.round(value / self.ratio);
-                            if (
-                                another > self.options.min_height
-                            ) {
+                            if (another > self.options.min_height) {
                                 css(self.image, 'height', another + 'px');
                                 self.heightInput.value = another.toString();
                             }
@@ -487,9 +485,7 @@ export class ImageEditor extends Component {
                         css(self.image, 'height', value + 'px');
                         if (self.resizeUseRatio) {
                             another = Math.round(value * self.ratio);
-                            if (
-                                another > self.options.min_width
-                            ) {
+                            if (another > self.options.min_width) {
                                 css(self.image, 'width', another + 'px');
                                 self.widthInput.value = another.toString();
                             }
@@ -718,10 +714,10 @@ export class ImageEditor extends Component {
             this.onSave = save;
 
             this.resize_box.appendChild(
-                this.jodit.create.element('i', {'class': 'jodit_icon-loader'})
+                this.jodit.create.element('i', { class: 'jodit_icon-loader' })
             );
             this.crop_box.appendChild(
-                this.jodit.create.element('i', {'class': 'jodit_icon-loader'})
+                this.jodit.create.element('i', { class: 'jodit_icon-loader' })
             );
 
             if (/\?/.test(url)) {

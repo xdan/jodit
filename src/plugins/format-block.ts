@@ -12,18 +12,14 @@ import { IControlType } from '../types/toolbar';
 
 Config.prototype.controls.paragraph = {
     command: 'formatBlock',
-    getLabel: (
-        editor: IJodit,
-        btn,
-        button
-    ): boolean => {
+    getLabel: (editor: IJodit, btn, button): boolean => {
         const current: Node | false = editor.selection.current();
 
         if (current && editor.options.textIcons) {
             const currentBox: HTMLElement =
                     (Dom.closest(
                         current,
-                        (node) => Dom.isBlock(node, editor.editorWindow),
+                        node => Dom.isBlock(node, editor.editorWindow),
                         editor.editor
                     ) as HTMLElement) || editor.editor,
                 currentValue: string = currentBox.nodeName.toLowerCase();
@@ -72,7 +68,7 @@ Config.prototype.controls.paragraph = {
         if (current) {
             const currentBox: HTMLElement = Dom.closest(
                 current,
-                (node) => Dom.isBlock(node, editor.editorWindow),
+                node => Dom.isBlock(node, editor.editorWindow),
                 editor.editor
             ) as HTMLElement;
 
@@ -135,61 +131,56 @@ export function formatBlock(editor: IJodit) {
             editor.selection.focus();
             let work: boolean = false;
 
-            editor.selection.eachSelection(
-                (current: Node) => {
-                    const selectionInfo: markerInfo[] = editor.selection.save();
-                    let currentBox: HTMLElement | false = current
-                        ? (Dom.up(
-                              current,
-                              node => Dom.isBlock(node, editor.editorWindow),
-                              editor.editor
-                          ) as HTMLElement)
-                        : false;
+            editor.selection.eachSelection((current: Node) => {
+                const selectionInfo: markerInfo[] = editor.selection.save();
+                let currentBox: HTMLElement | false = current
+                    ? (Dom.up(
+                          current,
+                          node => Dom.isBlock(node, editor.editorWindow),
+                          editor.editor
+                      ) as HTMLElement)
+                    : false;
 
+                if ((!currentBox || currentBox.nodeName === 'LI') && current) {
+                    currentBox = Dom.wrapInline(
+                        current,
+                        editor.options.enter,
+                        editor
+                    );
+                }
+
+                if (!currentBox) {
+                    editor.selection.restore(selectionInfo);
+                    return;
+                }
+
+                if (!currentBox.tagName.match(/TD|TH|TBODY|TABLE|THEAD/i)) {
                     if (
-                        (!currentBox || currentBox.nodeName === 'LI') &&
-                        current
+                        third === editor.options.enterBlock.toLowerCase() &&
+                        currentBox.parentNode &&
+                        currentBox.parentNode.nodeName === 'LI'
                     ) {
-                        currentBox = Dom.wrapInline(
-                            current,
-                            editor.options.enter,
-                            editor
+                        Dom.unwrap(currentBox);
+                    } else {
+                        Dom.replace(
+                            currentBox,
+                            third,
+                            true,
+                            false,
+                            editor.editorDocument
                         );
                     }
-
-                    if (!currentBox) {
-                        editor.selection.restore(selectionInfo);
-                        return;
-                    }
-
-                    if (!currentBox.tagName.match(/TD|TH|TBODY|TABLE|THEAD/i)) {
-                        if (
-                            third === editor.options.enterBlock.toLowerCase() &&
-                            currentBox.parentNode &&
-                            currentBox.parentNode.nodeName === 'LI'
-                        ) {
-                            Dom.unwrap(currentBox);
-                        } else {
-                            Dom.replace(
-                                currentBox,
-                                third,
-                                true,
-                                false,
-                                editor.editorDocument
-                            );
-                        }
+                } else {
+                    if (!editor.selection.isCollapsed()) {
+                        editor.selection.applyCSS({}, <HTMLTagNames>third);
                     } else {
-                        if (!editor.selection.isCollapsed()) {
-                            editor.selection.applyCSS({}, <HTMLTagNames>third);
-                        } else {
-                            Dom.wrapInline(current, <HTMLTagNames>third, editor);
-                        }
+                        Dom.wrapInline(current, <HTMLTagNames>third, editor);
                     }
-
-                    work = true;
-                    editor.selection.restore(selectionInfo);
                 }
-            );
+
+                work = true;
+                editor.selection.restore(selectionInfo);
+            });
 
             if (!work) {
                 const currentBox: HTMLElement = editor.editorDocument.createElement(

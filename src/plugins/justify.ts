@@ -14,11 +14,7 @@ import { IJodit } from '../types';
 Config.prototype.controls.align = {
     name: 'left',
     tooltip: 'Align',
-    getLabel: (
-        editor: IJodit,
-        btn,
-        button
-    ): boolean => {
+    getLabel: (editor: IJodit, btn, button): boolean => {
         const current: Node | false = editor.selection.current();
 
         if (current) {

@@ -22,7 +22,9 @@ import { Dom } from '../Dom';
 import { Component } from '../Component';
 import { Config } from '../../Config';
 
-export class ToolbarCollection<T extends IViewBased = IViewBased> extends Component<T> implements IToolbarCollection {
+export class ToolbarCollection<T extends IViewBased = IViewBased>
+    extends Component<T>
+    implements IToolbarCollection {
     private __buttons: ToolbarElement[] = [];
 
     private __getControlType = (
@@ -107,11 +109,7 @@ export class ToolbarCollection<T extends IViewBased = IViewBased> extends Compon
         }
     }
 
-    build(
-        buttons: Buttons,
-        container: HTMLElement,
-        target?: HTMLElement
-    ) {
+    build(buttons: Buttons, container: HTMLElement, target?: HTMLElement) {
         let lastBtnSeparator: boolean = false;
         this.clear();
         const buttonsList: Array<IControlType | string> =
@@ -142,11 +140,7 @@ export class ToolbarCollection<T extends IViewBased = IViewBased> extends Compon
                         break;
                     default:
                         lastBtnSeparator = false;
-                        button = new ToolbarButton(
-                            this,
-                            buttonControl,
-                            target
-                        );
+                        button = new ToolbarButton(this, buttonControl, target);
                 }
 
                 if (button) {
@@ -196,7 +190,7 @@ export class ToolbarCollection<T extends IViewBased = IViewBased> extends Compon
         if (typeof button.control.isActive === 'function') {
             return button.control.isActive(this.jodit, button.control, button);
         }
-    };
+    }
 
     buttonIsDisabled(button: ToolbarButton): boolean | void {
         if (this.jodit.options.disabled) {
@@ -206,9 +200,9 @@ export class ToolbarCollection<T extends IViewBased = IViewBased> extends Compon
         if (
             this.jodit.options.readonly &&
             (!this.jodit.options.activeButtonsInReadOnly ||
-            this.jodit.options.activeButtonsInReadOnly.indexOf(
-                button.control.name
-            ) === -1)
+                this.jodit.options.activeButtonsInReadOnly.indexOf(
+                    button.control.name
+                ) === -1)
         ) {
             return true;
         }
@@ -216,11 +210,15 @@ export class ToolbarCollection<T extends IViewBased = IViewBased> extends Compon
         let isDisabled: boolean | void;
 
         if (typeof button.control.isDisable === 'function') {
-            isDisabled = button.control.isDisable(this.jodit, button.control, button);
+            isDisabled = button.control.isDisable(
+                this.jodit,
+                button.control,
+                button
+            );
         }
 
         return isDisabled;
-    };
+    }
 
     /**
      * Target for button element

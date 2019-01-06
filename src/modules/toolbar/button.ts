@@ -4,7 +4,11 @@
  * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { IControlTypeStrong, IToolbarButton, IToolbarCollection } from '../../types/toolbar';
+import {
+    IControlTypeStrong,
+    IToolbarButton,
+    IToolbarCollection,
+} from '../../types/toolbar';
 import { Dom } from '../Dom';
 import { asArray, camelCase } from '../helpers/';
 import { ToolbarElement } from './element';
@@ -56,11 +60,15 @@ export class ToolbarButton extends ToolbarElement implements IToolbarButton {
     anchor: HTMLAnchorElement;
 
     isDisable(): boolean {
-        return Boolean(this.parentToolbar && this.parentToolbar.buttonIsDisabled(this));
+        return Boolean(
+            this.parentToolbar && this.parentToolbar.buttonIsDisabled(this)
+        );
     }
 
     isActive(): boolean {
-        return Boolean(this.parentToolbar && this.parentToolbar.buttonIsActive(this));
+        return Boolean(
+            this.parentToolbar && this.parentToolbar.buttonIsActive(this)
+        );
     }
 
     private onMouseDown = (originalEvent: MouseEvent): false | void => {
@@ -72,7 +80,10 @@ export class ToolbarButton extends ToolbarElement implements IToolbarButton {
         }
 
         const control: IControlTypeStrong = this.control,
-            getTarget = (): Node | false => (this.parentToolbar && this.parentToolbar.getTarget(this)) || this.target || false;
+            getTarget = (): Node | false =>
+                (this.parentToolbar && this.parentToolbar.getTarget(this)) ||
+                this.target ||
+                false;
 
         if (control.list) {
             const list: PopupList = new PopupList(
@@ -87,13 +98,8 @@ export class ToolbarButton extends ToolbarElement implements IToolbarButton {
             control.exec !== undefined &&
             typeof control.exec === 'function'
         ) {
-            control.exec(
-                this.jodit,
-                getTarget(),
-                control,
-                originalEvent,
-                this.container as HTMLLIElement
-            );
+            control.exec(this.jodit, getTarget(), control, originalEvent, this
+                .container as HTMLLIElement);
 
             this.jodit.events.fire('synchro');
 
@@ -205,7 +211,9 @@ export class ToolbarButton extends ToolbarElement implements IToolbarButton {
             Dom.detach(this.container);
             const content = control.getContent(this.jodit, control, this);
             this.container.appendChild(
-                typeof content === 'string' ? this.jodit.create.fromHTML(content) : content
+                typeof content === 'string'
+                    ? this.jodit.create.fromHTML(content)
+                    : content
             );
         } else {
             if (control.list && this.anchor) {

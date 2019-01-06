@@ -98,9 +98,7 @@ export function enter(editor: IJodit) {
                 if (!current || current === editor.editor) {
                     editor.selection.current();
 
-                    current = editor.create.inside.text(
-                        consts.INVISIBLE_SPACE
-                    );
+                    current = editor.create.inside.text(consts.INVISIBLE_SPACE);
 
                     if (sel.rangeCount) {
                         range.insertNode(current);
@@ -277,7 +275,8 @@ export function enter(editor: IJodit) {
                             currentBox.style
                         );
 
-                        currentBox && editor.selection.setCursorIn(currentBox, true);
+                        currentBox &&
+                            editor.selection.setCursorIn(currentBox, true);
 
                         return false;
                     }

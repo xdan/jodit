@@ -4,7 +4,12 @@
  * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Controls, IControlType, IControlTypeStrong, IToolbarCollection } from '../../types/toolbar';
+import {
+    Controls,
+    IControlType,
+    IControlTypeStrong,
+    IToolbarCollection,
+} from '../../types/toolbar';
 import { IViewBased } from '../../types/view';
 import { each } from '../helpers/';
 import { ToolbarButton } from '../toolbar/button';
@@ -34,7 +39,8 @@ export class PopupList extends Popup {
         each(list, (key: number | string, value: string | IControlType) => {
             let button: ToolbarButton,
                 controls: Controls | void = this.jodit.options.controls,
-                getControl = (key: string): IControlType | void => controls && controls[key];
+                getControl = (key: string): IControlType | void =>
+                    controls && controls[key];
 
             if (typeof value === 'string' && getControl(value)) {
                 button = new ToolbarButton(

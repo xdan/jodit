@@ -57,11 +57,7 @@ interface IJodit extends IViewWithToolbar {
 
     isInited: boolean;
 
-    execCommand(
-        command: string,
-        showUI?: any,
-        value?: null | any
-    ): any;
+    execCommand(command: string, showUI?: any, value?: null | any): any;
 
     registerCommand(
         commandNameOriginal: string,

@@ -160,8 +160,12 @@ export function iframe(editor: IJodit) {
                 doc.open();
                 doc.write(
                     '<!DOCTYPE html>' +
-                        '<html dir="' + jodit.options.direction + '" class="jodit" ' +
-                        'lang="' + defaultLanguage(jodit.options.language) + '">' +
+                        '<html dir="' +
+                        jodit.options.direction +
+                        '" class="jodit" ' +
+                        'lang="' +
+                        defaultLanguage(jodit.options.language) +
+                        '">' +
                         '<head>' +
                         '<title>Jodit Editor</title>' +
                         (jodit.options.iframeBaseUrl

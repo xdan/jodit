@@ -39,18 +39,19 @@ if (!Array.from) {
     };
 }
 
-typeof Symbol === 'function' ||  (() => {
-    const map: IDictionary = {};
+typeof Symbol === 'function' ||
+    (() => {
+        const map: IDictionary = {};
 
-    function Symbol(sym: string) {
-        return `@@${sym}`;
-    }
-
-    (<any>Symbol)['for'] = (sym: string) => {
-        if (map[sym]) {
-            return map[sym];
+        function Symbol(sym: string) {
+            return `@@${sym}`;
         }
 
-        return map[sym] = Symbol(sym);
-    }
-})();
+        (<any>Symbol)['for'] = (sym: string) => {
+            if (map[sym]) {
+                return map[sym];
+            }
+
+            return (map[sym] = Symbol(sym));
+        };
+    })();

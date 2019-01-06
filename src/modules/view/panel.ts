@@ -32,11 +32,13 @@ export class Panel extends Component implements IPanel {
             this.ownerWindow = jodit.ownerWindow;
         }
 
-        this.create = new Create(this.ownerDocument, isJoditObject(jodit) ? jodit.editorDocument : void(0));
+        this.create = new Create(
+            this.ownerDocument,
+            isJoditObject(jodit) ? jodit.editorDocument : void 0
+        );
 
         this.container = this.create.div();
     }
-
 
     destruct(): any {
         Dom.safeRemove(this.container);

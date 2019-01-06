@@ -153,29 +153,13 @@ interface IFileBrowser extends IViewWithToolbar {
         onFailed: (error: Error) => void
     ): Promise<any>;
 
-    createFolder(
-        name: string,
-        path: string,
-        source: string
-    ): Promise<void>;
+    createFolder(name: string, path: string, source: string): Promise<void>;
 
-    move(
-        filepath: string,
-        path: string,
-        source: string
-    ): Promise<void>
+    move(filepath: string, path: string, source: string): Promise<void>;
 
-    fileRemove(
-        path: string,
-        file: string,
-        source: string
-    ): Promise<void>;
+    fileRemove(path: string, file: string, source: string): Promise<void>;
 
-    folderRemove(
-        path: string,
-        file: string,
-        source: string
-    ): Promise<void>;
+    folderRemove(path: string, file: string, source: string): Promise<void>;
 
     close: () => void;
 
@@ -194,5 +178,5 @@ interface IFileBrowser extends IViewWithToolbar {
     open(
         callback: (data: IFileBrowserCallBackData) => void,
         onlyImages: boolean
-    ): Promise<void>
+    ): Promise<void>;
 }

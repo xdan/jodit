@@ -46,13 +46,15 @@ export const Promt = (
                 Jodit.prototype.i18n('Ok') +
                 '</span></a>'
         ) as HTMLAnchorElement,
-
         $div: HTMLFormElement = dialog.create.element('form', {
-            'class': 'jodit_promt'
+            class: 'jodit_promt',
         }),
-
-        $input: HTMLInputElement = dialog.create.element('input', {autofocus : true}),
-        $label: HTMLLabelElement = dialog.create.element('label') as HTMLLabelElement;
+        $input: HTMLInputElement = dialog.create.element('input', {
+            autofocus: true,
+        }),
+        $label: HTMLLabelElement = dialog.create.element(
+            'label'
+        ) as HTMLLabelElement;
 
     if (typeof title === 'function') {
         callback = title;

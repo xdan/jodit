@@ -39,17 +39,20 @@ export function errorMessages(editor: IJodit) {
     if (editor.options.showMessageErrors) {
         let height: number;
 
-        const messagesBox: HTMLDivElement = editor.create.div('jodit_error_box_for_messages'),
+        const messagesBox: HTMLDivElement = editor.create.div(
+                'jodit_error_box_for_messages'
+            ),
             recalcOffsets = () => {
                 height = 5;
-                Array.from(<NodeListOf<HTMLElement>>messagesBox.childNodes)
-                    .forEach((elm: HTMLElement) => {
-                        css(messagesBox, 'bottom', height + 'px');
+                Array.from(<NodeListOf<HTMLElement>>(
+                    messagesBox.childNodes
+                )).forEach((elm: HTMLElement) => {
+                    css(messagesBox, 'bottom', height + 'px');
 
-                        height +=
-                            elm.offsetWidth +
-                            editor.options.showMessageErrorOffsetPx;
-                    });
+                    height +=
+                        elm.offsetWidth +
+                        editor.options.showMessageErrorOffsetPx;
+                });
             };
 
         editor.workplace.appendChild(messagesBox);
@@ -91,7 +94,6 @@ export function errorMessages(editor: IJodit) {
                             Dom.safeRemove(newmessage);
                             recalcOffsets();
                         }, 300);
-
                     }, timeout || editor.options.showMessageErrorTime);
                 }
             );

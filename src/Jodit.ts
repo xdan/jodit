@@ -29,7 +29,8 @@ import {
     ExecCommandCallback,
     IDictionary,
     IPlugin,
-    markerInfo, Modes,
+    markerInfo,
+    Modes,
 } from './types/types';
 import { cache } from './modules/helpers/decorator';
 import { ViewWithToolbar } from './modules/view/viewWithToolbar';
@@ -146,7 +147,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
     @cache()
     public get uploader(): IUploader {
         return this.getInstance('Uploader');
-    };
+    }
 
     /**
      * @property {FileBrowser} filebrowser
@@ -154,7 +155,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
     @cache()
     public get filebrowser(): IFileBrowser {
         return this.getInstance('FileBrowser');
-    };
+    }
 
     public helper: any;
 
@@ -417,13 +418,12 @@ export class Jodit extends ViewWithToolbar implements IJodit {
     ) {
         const shortcuts: string = asArray(hotkeys)
             .map(normalizeKeyAliases)
-            .map(hotkey => hotkey + '.hotkey').join(' ');
+            .map(hotkey => hotkey + '.hotkey')
+            .join(' ');
 
-        this.events
-            .off(shortcuts)
-            .on(shortcuts, () => {
-                return this.execCommand(commandName); // because need `beforeCommand`
-            });
+        this.events.off(shortcuts).on(shortcuts, () => {
+            return this.execCommand(commandName); // because need `beforeCommand`
+        });
     }
 
     /**
@@ -982,7 +982,9 @@ export class Jodit extends ViewWithToolbar implements IJodit {
             ).toString();
         }
 
-        this.workplace = this.create.div('jodit_workplace', {contenteditable: false});
+        this.workplace = this.create.div('jodit_workplace', {
+            contenteditable: false,
+        });
 
         if (this.options.toolbar) {
             this.toolbar.build(
@@ -1025,9 +1027,9 @@ export class Jodit extends ViewWithToolbar implements IJodit {
             this.element.getAttribute('id') || new Date().getTime().toString();
 
         this.editor = this.create.div('jodit_wysiwyg', {
-            'contenteditable': true,
+            contenteditable: true,
             'aria-disabled': false,
-            'tabindex': this.options.tabIndex,
+            tabindex: this.options.tabIndex,
         });
 
         this.workplace.appendChild(this.editor);
@@ -1055,8 +1057,8 @@ export class Jodit extends ViewWithToolbar implements IJodit {
     private __initPlugines() {
         const disable: string[] = Array.isArray(this.options.disablePlugins)
             ? this.options.disablePlugins.map((pluginName: string) => {
-                return pluginName.toLowerCase();
-            })
+                  return pluginName.toLowerCase();
+              })
             : this.options.disablePlugins.toLowerCase().split(/[\s,]+/);
 
         Object.keys(Jodit.plugins).forEach((key: string) => {
@@ -1154,7 +1156,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
             .on(
                 this.editor,
                 'selectionchange selectionstart keydown keyup keypress mousedown mouseup mousepress ' +
-                'click copy cut dragstart drop dragover paste resize touchstart touchend focus blur',
+                    'click copy cut dragstart drop dragover paste resize touchstart touchend focus blur',
                 (event: Event): false | void => {
                     if (this.options.readonly) {
                         return;

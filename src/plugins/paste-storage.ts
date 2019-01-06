@@ -73,15 +73,16 @@ export class pasteStorage extends Plugin {
 
     private selectIndex = (index: number) => {
         if (this.listBox) {
-            Array.from(<NodeListOf<HTMLAnchorElement>>this.listBox.childNodes)
-                .forEach((a, i) => {
-                    a.classList.remove('jodit_active');
-                    if (index === i && this.previewBox) {
-                        a.classList.add('jodit_active');
-                        this.previewBox.innerHTML = this.list[index];
-                        a.focus();
-                    }
-                });
+            Array.from(<NodeListOf<HTMLAnchorElement>>(
+                this.listBox.childNodes
+            )).forEach((a, i) => {
+                a.classList.remove('jodit_active');
+                if (index === i && this.previewBox) {
+                    a.classList.add('jodit_active');
+                    this.previewBox.innerHTML = this.list[index];
+                    a.focus();
+                }
+            });
         }
 
         this.currentIndex = index;

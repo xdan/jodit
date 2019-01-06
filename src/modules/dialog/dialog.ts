@@ -40,7 +40,7 @@ Config.prototype.dialog = {
 Config.prototype.controls.dialog = {
     close: {
         icon: 'cancel',
-        exec: (dialog) => {
+        exec: dialog => {
             (dialog as Dialog).close();
         },
     },
@@ -60,7 +60,7 @@ Config.prototype.controls.dialog = {
                 );
             }
         },
-        exec: (dialog) => {
+        exec: dialog => {
             dialog.toggleFullSize();
         },
     },
@@ -112,7 +112,8 @@ export class Dialog extends View {
         const elements_list: HTMLElement[] = [];
 
         asArray(elements).forEach(elm => {
-            const element: HTMLElement = typeof elm === 'string' ? this.create.fromHTML(elm) : elm;
+            const element: HTMLElement =
+                typeof elm === 'string' ? this.create.fromHTML(elm) : elm;
 
             elements_list.push(element);
 
@@ -655,7 +656,10 @@ export class Dialog extends View {
         ) as HTMLDivElement;
 
         if (jodit && (<IViewBased>jodit).id) {
-            self.container.setAttribute('data-editor_id', (<IViewBased>jodit).id);
+            self.container.setAttribute(
+                'data-editor_id',
+                (<IViewBased>jodit).id
+            );
         }
 
         Object.defineProperty(self.container, '__jodit_dialog', {

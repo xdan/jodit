@@ -142,7 +142,10 @@ export class hotkeys extends Plugin {
                 (event: KeyboardEvent): void | false => {
                     const shortcut: string = this.onKeyPress(event);
 
-                    const resultOfFire = this.jodit.events.fire(shortcut + '.hotkey', event.type);
+                    const resultOfFire = this.jodit.events.fire(
+                        shortcut + '.hotkey',
+                        event.type
+                    );
 
                     if (resultOfFire === false) {
                         itIsHotkey = true;

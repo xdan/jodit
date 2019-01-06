@@ -61,9 +61,7 @@ export class Dom {
         } while (needFindNext);
 
         const wrapper =
-            typeof tag === 'string'
-                ? editor.create.inside.element(tag)
-                : tag;
+            typeof tag === 'string' ? editor.create.inside.element(tag) : tag;
 
         if (first.parentNode) {
             first.parentNode.insertBefore(wrapper, first);
@@ -205,7 +203,7 @@ export class Dom {
         }
 
         if (withAttributes) {
-            Array.from(elm.attributes).forEach( (attr) => {
+            Array.from(elm.attributes).forEach(attr => {
                 tag.setAttribute(attr.name, attr.value);
             });
         }
@@ -216,7 +214,6 @@ export class Dom {
 
         return tag;
     }
-
 
     /**
      * Checks whether the Node text and blank (in this case it may contain invisible auxiliary characters ,
@@ -266,8 +263,8 @@ export class Dom {
                                 trim(elm.nodeValue).length !== 0)) ||
                         (elm &&
                             elm.nodeType === Node.ELEMENT_NODE &&
-                            condNoEmptyElement.test(elm.nodeName.toLowerCase())
-                    )) {
+                            condNoEmptyElement.test(elm.nodeName.toLowerCase()))
+                    ) {
                         return false;
                     }
                 }
@@ -289,7 +286,6 @@ export class Dom {
 
         return false;
     }
-
 
     /**
      *  Check if element is table cell
@@ -326,7 +322,8 @@ export class Dom {
      */
     static isBlock(node: unknown, win: Window): boolean {
         return (
-            node && typeof node === 'object' &&
+            node &&
+            typeof node === 'object' &&
             Dom.isNode(node, win) &&
             consts.IS_BLOCK.test((<Node>node).nodeName)
         );
@@ -631,10 +628,7 @@ export class Dom {
      * @param elm
      * @param newElement
      */
-    static after(
-        elm: HTMLElement,
-        newElement: HTMLElement | DocumentFragment
-    ) {
+    static after(elm: HTMLElement, newElement: HTMLElement | DocumentFragment) {
         const parentNode: Node | null = elm.parentNode;
 
         if (!parentNode) {

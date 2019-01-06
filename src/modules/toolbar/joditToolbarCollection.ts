@@ -122,7 +122,7 @@ export class JoditToolbarCollection extends ToolbarCollection<IJodit> {
         }
 
         return false;
-    };
+    }
 
     /**
      * @override
@@ -139,7 +139,9 @@ export class JoditToolbarCollection extends ToolbarCollection<IJodit> {
                 ? consts.MODE_WYSIWYG
                 : button.control.mode;
 
-        return !(mode === consts.MODE_SPLIT || mode === this.jodit.getRealMode());
+        return !(
+            mode === consts.MODE_SPLIT || mode === this.jodit.getRealMode()
+        );
     }
 
     /**
@@ -150,6 +152,8 @@ export class JoditToolbarCollection extends ToolbarCollection<IJodit> {
     }
 
     static makeCollection(jodit: IViewBased): ToolbarCollection<IViewBased> {
-        return isJoditObject(jodit) ? new JoditToolbarCollection(jodit) : new ToolbarCollection(jodit);
+        return isJoditObject(jodit)
+            ? new JoditToolbarCollection(jodit)
+            : new ToolbarCollection(jodit);
     }
 }
