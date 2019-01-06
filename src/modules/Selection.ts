@@ -112,9 +112,7 @@ export class Select {
             }
 
             return true;
-        } catch (e) {
-            debugger;
-        }
+        } catch {}
 
         return false;
     }

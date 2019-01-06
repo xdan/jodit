@@ -987,8 +987,6 @@ describe('Test plugins', function () {
 
                     var tooltip = button.querySelector('.jodit_tooltip');
 
-                    debugger;
-
                     expect(null).to.be.not.equal(tooltip);
                     var title = tooltip.innerText;
                     editor.destruct();
