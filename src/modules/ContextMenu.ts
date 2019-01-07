@@ -30,7 +30,7 @@ export class ContextMenu extends Component {
      *
      * @method hide
      */
-    public hide = () => {
+    hide = () => {
         this.context.classList.remove('jodit_context_menu-show');
         this.jodit.ownerWindow.removeEventListener('mouseup', this.hide);
     };
@@ -48,7 +48,7 @@ export class ContextMenu extends Component {
      * parent.show(e.clientX, e.clientY, [{icon: 'bin', title: 'Delete', exec: function () { alert(1) }]);
      * ```
      */
-    public show(
+    show(
         x: number,
         y: number,
         actions: Array<false | Action>,
@@ -95,7 +95,7 @@ export class ContextMenu extends Component {
             top: y,
         });
 
-        this.jodit.ownerWindow.addEventListener('mouseup', self.hide);
+        this.jodit.events.on(this.jodit.ownerWindow,'mouseup', self.hide);
 
         this.context.classList.add('jodit_context_menu-show');
     }
@@ -109,7 +109,8 @@ export class ContextMenu extends Component {
         editor.ownerDocument.body.appendChild(this.context);
     }
 
-    public destruct() {
+    destruct() {
         Dom.safeRemove(this.context);
+        this.jodit.events.off(this.jodit.ownerWindow,'mouseup', this.hide);
     }
 }

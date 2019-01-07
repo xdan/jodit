@@ -1697,207 +1697,209 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
                     if (self.options.contextMenu) {
                         let item: HTMLElement = this;
 
-                        contextmenu.show(
-                            e.pageX,
-                            e.pageY,
-                            [
-                                item.getAttribute('data-is-file') !== '1' &&
-                                self.options.editImage &&
-                                (self.canI('ImageResize') ||
-                                    self.canI('ImageCrop'))
-                                    ? {
-                                          icon: 'pencil',
-                                          title: 'Edit',
-                                          exec: () => {
-                                              self.openImageEditor(
-                                                  item.getAttribute('href') ||
-                                                      '',
-                                                  item.getAttribute(
-                                                      'data-name'
-                                                  ) || '',
-                                                  item.getAttribute(
-                                                      'data-path'
-                                                  ) || '',
-                                                  item.getAttribute(
-                                                      'data-source'
-                                                  ) || ''
-                                              );
-                                          },
-                                      }
-                                    : false,
-                                self.canI('FileRemove')
-                                    ? {
-                                          icon: 'bin',
-                                          title: 'Delete',
-                                          exec: () => {
-                                              self.fileRemove(
-                                                  self.currentPath,
-                                                  item.getAttribute(
-                                                      'data-name'
-                                                  ) || '',
-                                                  item.getAttribute(
-                                                      'data-source'
-                                                  ) || ''
-                                              );
-                                              self.someSelectedWasChanged();
-                                              self.loadTree(
-                                                  self.currentPath,
-                                                  self.currentSource
-                                              );
-                                          },
-                                      }
-                                    : false,
-                                self.options.preview
-                                    ? {
-                                          icon: 'eye',
-                                          title: 'Preview',
-                                          exec: () => {
-                                              let src: string =
-                                                  item.getAttribute('href') ||
-                                                  '';
-                                              const preview: Dialog = new Dialog(
-                                                      self
-                                                  ),
-                                                  temp_content: HTMLElement = self.create.fromHTML(
-                                                      '<div class="jodit_filebrowser_preview">' +
-                                                          '<i class="jodit_icon-loader"></i>' +
-                                                          '</div>'
-                                                  ),
-                                                  image: HTMLImageElement = doc.createElement(
-                                                      'img'
-                                                  ),
-                                                  addLoadHandler = () => {
-                                                      const onload = () => {
-                                                          this.removeEventListener(
-                                                              'load',
-                                                              onload as EventListenerOrEventListenerObject
-                                                          );
-                                                          temp_content.innerHTML =
-                                                              '';
-                                                          if (
-                                                              self.options
-                                                                  .showPreviewNavigation
-                                                          ) {
-                                                              const next = self.create.fromHTML(
-                                                                      '<a ' +
-                                                                          'href="javascript:void(0)" ' +
-                                                                          'class="' +
-                                                                          'jodit_filebrowser_preview_navigation ' +
-                                                                          'jodit_filebrowser_preview_navigation-next' +
-                                                                          '">' +
-                                                                          ToolbarIcon.getIcon(
-                                                                              'angle-right'
-                                                                          ) +
-                                                                          '</a>'
-                                                                  ),
-                                                                  prev = self.create.fromHTML(
-                                                                      '<a ' +
-                                                                          'href="javascript:void(0)" ' +
-                                                                          'class="' +
-                                                                          'jodit_filebrowser_preview_navigation ' +
-                                                                          'jodit_filebrowser_preview_navigation-prev' +
-                                                                          '">' +
-                                                                          ToolbarIcon.getIcon(
-                                                                              'angle-left'
-                                                                          ) +
-                                                                          '</a>'
-                                                                  );
-
-                                                              if (
-                                                                  item.previousSibling &&
-                                                                  (item.previousSibling as HTMLElement)
-                                                                      .classList &&
-                                                                  (item.previousSibling as HTMLElement).classList.contains(
-                                                                      ITEM_CLASS
-                                                                  )
-                                                              ) {
-                                                                  temp_content.appendChild(
-                                                                      prev
-                                                                  );
-                                                              }
-                                                              if (
-                                                                  item.nextSibling &&
-                                                                  (item.nextSibling as HTMLElement)
-                                                                      .classList &&
-                                                                  (item.nextSibling as HTMLElement).classList.contains(
-                                                                      ITEM_CLASS
-                                                                  )
-                                                              ) {
-                                                                  temp_content.appendChild(
-                                                                      next
-                                                                  );
-                                                              }
-
-                                                              self.events.on(
-                                                                  [next, prev],
-                                                                  'click',
-                                                                  function(
-                                                                      this: HTMLElement
-                                                                  ) {
-                                                                      if (
-                                                                          this.classList.contains(
-                                                                              'jodit_filebrowser_preview_navigation-next'
-                                                                          )
-                                                                      ) {
-                                                                          item = item.nextSibling as HTMLElement;
-                                                                      } else {
-                                                                          item = item.previousSibling as HTMLElement;
-                                                                      }
-                                                                      temp_content.innerHTML =
-                                                                          '<i class="jodit_icon-loader"></i>';
-                                                                      src =
-                                                                          item.getAttribute(
-                                                                              'href'
-                                                                          ) ||
-                                                                          '';
-                                                                      image.setAttribute(
-                                                                          'src',
-                                                                          src
-                                                                      );
-                                                                      addLoadHandler();
-                                                                  }
-                                                              );
-                                                          }
-
-                                                          temp_content.appendChild(
-                                                              image
-                                                          );
-                                                          preview.setPosition();
-                                                      };
-
-                                                      image.addEventListener(
-                                                          'load',
-                                                          onload
-                                                      );
-                                                      if (image.complete) {
-                                                          onload();
-                                                      }
-                                                  };
-
-                                              addLoadHandler();
-                                              image.setAttribute('src', src);
-                                              preview.setContent(temp_content);
-
-                                              preview.open();
-                                          },
-                                      }
-                                    : false,
-                                {
-                                    icon: 'upload',
-                                    title: 'Download',
-                                    exec: () => {
-                                        const url:
-                                            | string
-                                            | null = item.getAttribute('href');
-
-                                        if (url) {
-                                            self.ownerWindow.open(url);
+                        setTimeout(() => {
+                            contextmenu.show(
+                                e.pageX,
+                                e.pageY,
+                                [
+                                    item.getAttribute('data-is-file') !== '1' &&
+                                    self.options.editImage &&
+                                    (self.canI('ImageResize') ||
+                                        self.canI('ImageCrop'))
+                                        ? {
+                                            icon: 'pencil',
+                                            title: 'Edit',
+                                            exec: () => {
+                                                self.openImageEditor(
+                                                    item.getAttribute('href') ||
+                                                    '',
+                                                    item.getAttribute(
+                                                        'data-name'
+                                                    ) || '',
+                                                    item.getAttribute(
+                                                        'data-path'
+                                                    ) || '',
+                                                    item.getAttribute(
+                                                        'data-source'
+                                                    ) || ''
+                                                );
+                                            },
                                         }
+                                        : false,
+                                    self.canI('FileRemove')
+                                        ? {
+                                            icon: 'bin',
+                                            title: 'Delete',
+                                            exec: () => {
+                                                self.fileRemove(
+                                                    self.currentPath,
+                                                    item.getAttribute(
+                                                        'data-name'
+                                                    ) || '',
+                                                    item.getAttribute(
+                                                        'data-source'
+                                                    ) || ''
+                                                );
+                                                self.someSelectedWasChanged();
+                                                self.loadTree(
+                                                    self.currentPath,
+                                                    self.currentSource
+                                                );
+                                            },
+                                        }
+                                        : false,
+                                    self.options.preview
+                                        ? {
+                                            icon: 'eye',
+                                            title: 'Preview',
+                                            exec: () => {
+                                                let src: string =
+                                                    item.getAttribute('href') ||
+                                                    '';
+                                                const preview: Dialog = new Dialog(
+                                                    self
+                                                    ),
+                                                    temp_content: HTMLElement = self.create.fromHTML(
+                                                        '<div class="jodit_filebrowser_preview">' +
+                                                        '<i class="jodit_icon-loader"></i>' +
+                                                        '</div>'
+                                                    ),
+                                                    image: HTMLImageElement = doc.createElement(
+                                                        'img'
+                                                    ),
+                                                    addLoadHandler = () => {
+                                                        const onload = () => {
+                                                            this.removeEventListener(
+                                                                'load',
+                                                                onload as EventListenerOrEventListenerObject
+                                                            );
+                                                            temp_content.innerHTML =
+                                                                '';
+                                                            if (
+                                                                self.options
+                                                                    .showPreviewNavigation
+                                                            ) {
+                                                                const next = self.create.fromHTML(
+                                                                    '<a ' +
+                                                                    'href="javascript:void(0)" ' +
+                                                                    'class="' +
+                                                                    'jodit_filebrowser_preview_navigation ' +
+                                                                    'jodit_filebrowser_preview_navigation-next' +
+                                                                    '">' +
+                                                                    ToolbarIcon.getIcon(
+                                                                        'angle-right'
+                                                                    ) +
+                                                                    '</a>'
+                                                                    ),
+                                                                    prev = self.create.fromHTML(
+                                                                        '<a ' +
+                                                                        'href="javascript:void(0)" ' +
+                                                                        'class="' +
+                                                                        'jodit_filebrowser_preview_navigation ' +
+                                                                        'jodit_filebrowser_preview_navigation-prev' +
+                                                                        '">' +
+                                                                        ToolbarIcon.getIcon(
+                                                                            'angle-left'
+                                                                        ) +
+                                                                        '</a>'
+                                                                    );
+
+                                                                if (
+                                                                    item.previousSibling &&
+                                                                    (item.previousSibling as HTMLElement)
+                                                                        .classList &&
+                                                                    (item.previousSibling as HTMLElement).classList.contains(
+                                                                        ITEM_CLASS
+                                                                    )
+                                                                ) {
+                                                                    temp_content.appendChild(
+                                                                        prev
+                                                                    );
+                                                                }
+                                                                if (
+                                                                    item.nextSibling &&
+                                                                    (item.nextSibling as HTMLElement)
+                                                                        .classList &&
+                                                                    (item.nextSibling as HTMLElement).classList.contains(
+                                                                        ITEM_CLASS
+                                                                    )
+                                                                ) {
+                                                                    temp_content.appendChild(
+                                                                        next
+                                                                    );
+                                                                }
+
+                                                                self.events.on(
+                                                                    [next, prev],
+                                                                    'click',
+                                                                    function(
+                                                                        this: HTMLElement
+                                                                    ) {
+                                                                        if (
+                                                                            this.classList.contains(
+                                                                                'jodit_filebrowser_preview_navigation-next'
+                                                                            )
+                                                                        ) {
+                                                                            item = item.nextSibling as HTMLElement;
+                                                                        } else {
+                                                                            item = item.previousSibling as HTMLElement;
+                                                                        }
+                                                                        temp_content.innerHTML =
+                                                                            '<i class="jodit_icon-loader"></i>';
+                                                                        src =
+                                                                            item.getAttribute(
+                                                                                'href'
+                                                                            ) ||
+                                                                            '';
+                                                                        image.setAttribute(
+                                                                            'src',
+                                                                            src
+                                                                        );
+                                                                        addLoadHandler();
+                                                                    }
+                                                                );
+                                                            }
+
+                                                            temp_content.appendChild(
+                                                                image
+                                                            );
+                                                            preview.setPosition();
+                                                        };
+
+                                                        image.addEventListener(
+                                                            'load',
+                                                            onload
+                                                        );
+                                                        if (image.complete) {
+                                                            onload();
+                                                        }
+                                                    };
+
+                                                addLoadHandler();
+                                                image.setAttribute('src', src);
+                                                preview.setContent(temp_content);
+
+                                                preview.open();
+                                            },
+                                        }
+                                        : false,
+                                    {
+                                        icon: 'upload',
+                                        title: 'Download',
+                                        exec: () => {
+                                            const url:
+                                                | string
+                                                | null = item.getAttribute('href');
+
+                                            if (url) {
+                                                self.ownerWindow.open(url);
+                                            }
+                                        },
                                     },
-                                },
-                            ],
-                            self.dialog.getZIndex() + 1
-                        );
+                                ],
+                                self.dialog.getZIndex() + 1
+                            );
+                        }, self.defaultTimeout)
 
                         e.stopPropagation();
                         e.preventDefault();
