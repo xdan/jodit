@@ -53,8 +53,8 @@ editor.value = '<p>start</p>';
 
 With jQuery
 ```javascript
-$('textarea').each(function (elm) {
-    var editor = new Jodit(elm);
+$('textarea').each(function () {
+    var editor = new Jodit(this);
     editor.value = '<p>start</p>';
 });
 ```
