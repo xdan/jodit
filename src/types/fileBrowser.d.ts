@@ -23,6 +23,7 @@ export interface ISourceFile {
     file: string;
     name?: string;
     thumb: string;
+    thumbIsAbsolute?: boolean;
     changed: string;
     size: string;
     isImage: boolean;

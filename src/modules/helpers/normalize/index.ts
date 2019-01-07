@@ -8,6 +8,7 @@ export * from './normalizeKeyAliases';
 export * from './normalizeLicense';
 export * from './normalizeNode';
 export * from './normalizePath';
+export * from './normalizeRelativePath';
 export * from './normalizeSize';
 export * from './normalizeURL';
 export * from './normilizeCSSValue';

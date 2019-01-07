@@ -33,7 +33,7 @@ import { ImageEditor } from '../ImageEditor';
 import { LocalStorageProvider } from '../storage/localStorageProvider';
 import { Storage } from '../storage/storage';
 import { each } from '../helpers/each';
-import { normalizePath } from '../helpers/normalize/normalizePath';
+import { normalizePath, normalizeRelativePath } from '../helpers/normalize/';
 import { $$ } from '../helpers/selector';
 import { normalizeURL } from '../helpers/normalize/normalizeURL';
 import { ctrlKey } from '../helpers/ctrlKey';
@@ -323,6 +323,7 @@ Config.prototype.filebrowser = {
 
             return 0;
         };
+
         let first: Date, second: Date;
 
         if (typeof a === 'string') {
@@ -411,7 +412,8 @@ Config.prototype.filebrowser = {
     ): string {
         let name: string = '',
             thumb: string = '',
-            info: string;
+            info: string,
+            thumbIsAbsolute: boolean = !!item.thumbIsAbsolute;
         const timestamp: string = new Date().getTime().toString();
 
         if (item.file !== undefined) {
@@ -484,9 +486,12 @@ Config.prototype.filebrowser = {
             imageURL +
             '" ' +
             'src="' +
-            normalizeURL(source.baseurl + source.path + thumb) +
+            (thumbIsAbsolute
+                    ? thumb
+                    :
+                (normalizeURL(source.baseurl + source.path + thumb) +
             '?_tmst=' +
-            timestamp +
+            timestamp)) +
             '" ' +
             'alt="' +
             name +
@@ -967,6 +972,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
         }
     }
     private loadTree(path: string, source: string): Promise<any> {
+        path = normalizeRelativePath(path);
         return this.loadPermissions(path, source).then(() => {
             const self: FileBrowser = this;
 
@@ -1258,7 +1264,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
         return this.send(
             'fileRemove',
             (resp: IFileBrowserAnswer) => {
-                if (this.options.remove.process) {
+                if (this.options.remove && this.options.remove.process) {
                     resp = this.options.remove.process.call(this, resp);
                 }
                 if (!this.options.isSuccess(resp)) {
@@ -1293,7 +1299,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
         return this.send(
             'folderRemove',
             (resp: IFileBrowserAnswer) => {
-                if (this.options.remove.process) {
+                if (this.options.remove && this.options.remove.process) {
                     resp = this.options.remove.process.call(this, resp);
                 }
                 if (!this.options.isSuccess(resp)) {
