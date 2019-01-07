@@ -61,13 +61,7 @@ module.exports = function(config) {
             'karma-webpack',
             'karma-sourcemap-loader'
         ],
-        webpack: {
-            devtool: 'inline-sourcemap',
-            module: webpackConfig.module,
-            plugins: webpackConfig.plugins,
-            resolve: webpackConfig.resolve,
-            output: webpackConfig.output
-        },
+        webpack: webpackConfig,
         client: {
             captureConsole: true
         },
