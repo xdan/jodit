@@ -6,7 +6,6 @@
 
 import 'classlist-polyfill';
 import 'es6-promise/auto';
-import { IDictionary } from './types';
 
 ((e: Element) => {
     e.matches ||
@@ -38,20 +37,3 @@ if (!Array.from) {
         return [].slice.call(object);
     };
 }
-
-typeof Symbol === 'function' ||
-    (() => {
-        const map: IDictionary = {};
-
-        function Symbol(sym: string) {
-            return `@@${sym}`;
-        }
-
-        (<any>Symbol)['for'] = (sym: string) => {
-            if (map[sym]) {
-                return map[sym];
-            }
-
-            return (map[sym] = Symbol(sym));
-        };
-    })();

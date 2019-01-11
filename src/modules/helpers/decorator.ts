@@ -11,7 +11,7 @@ class Cache {
     compare = (a: any[], b: any[]) =>
         a.length === b.length && a.every((v, i) => v === b[i]);
 
-    public set(val: any, args: any[], context: any, key: symbol): any {
+    public set(val: any, args: any[], context: any, key: string): any {
         if (context[key]) {
             const result = context[key].filter(([value, cachedArgs]: any[]) =>
                 this.compare(cachedArgs, args)
@@ -27,7 +27,7 @@ class Cache {
         return val;
     }
 
-    public get(context: any, key: symbol, args: any[]): any {
+    public get(context: any, key: string, args: any[]): any {
         const caches = context[key] || [];
         return caches.filter(([value, cachedArgs]: any[]) =>
             this.compare(cachedArgs, args)
@@ -46,11 +46,7 @@ export function cache<T>() {
         propertyKey: string,
         propertyDescriptor: PropertyDescriptor
     ) => {
-        const symbolKey = Symbol(
-            `__cache_key__${
-                typeof target === 'function' ? '__static:' : ''
-            }${propertyKey}`
-        );
+        const symbolKey = `__cache_key__${propertyKey}`;
 
         if (propertyDescriptor.set) {
             throw new Error("Setter function can't be memozied.");

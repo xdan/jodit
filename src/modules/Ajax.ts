@@ -143,7 +143,7 @@ export class Ajax {
         return this;
     }
 
-    public send(): Promise<any> {
+    send(): Promise<any> {
         return new Promise(
             (
                 resolve: (this: XMLHttpRequest, resp: object) => any,

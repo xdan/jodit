@@ -4,7 +4,7 @@
  * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { IDictionary } from './types';
+import { IComponent, IDictionary } from './types';
 
 interface IUploaderData {
     messages?: string[];
@@ -189,7 +189,7 @@ export interface IUploaderOptions<T> {
     contentType: (this: T, requestData: any) => string | false;
 }
 
-export interface IUploader {
+export interface IUploader extends IComponent {
     buildData(data: FormData | IDictionary<string> | string): BuildDataResult;
 
     send(

@@ -640,6 +640,74 @@ describe('Jodit Editor Tests', function() {
             });
         });
 
+        describe('Check Cache descorator', function () {
+            describe('Get filebrowser and uploader property from editor', function () {
+                describe('FileBrowser', function () {
+                    it('should create instance of Filebrowser  only one time and in lazy mode', function () {
+                        var editor = new Jodit(appendTestArea());
+                        editor.components.forEach(function (cmp) {
+                            expect(cmp instanceof Jodit.modules.FileBrowser).to.be.false;
+                        });
+
+                        var filebrowser = editor.filebrowser;
+                        expect(filebrowser instanceof Jodit.modules.FileBrowser).to.be.true;
+
+                        var instanceCount = 0;
+                        editor.components.forEach(function (cmp) {
+                            if (cmp instanceof Jodit.modules.FileBrowser) {
+                                instanceCount += 1;
+                                expect(filebrowser === cmp).to.be.true;
+                            }
+                        });
+
+                        expect(instanceCount).to.be.equal(1);
+
+                        var filebrowser2 = editor.filebrowser;
+                        editor.components.forEach(function (cmp) {
+                            if (cmp instanceof Jodit.modules.FileBrowser) {
+                                instanceCount += 1;
+                                expect(filebrowser === cmp).to.be.true;
+                            }
+                        });
+
+                        expect(instanceCount).to.be.equal(2);
+                        expect(filebrowser2 === filebrowser).to.be.true;
+                    });
+                });
+                describe('Uploader', function () {
+                    it('should create instance of Uploader  only one time and in lazy mode', function () {
+                        var editor = new Jodit(appendTestArea());
+                        editor.components.forEach(function (cmp) {
+                            expect(cmp instanceof Jodit.modules.Uploader).to.be.false;
+                        });
+
+                        var uploader = editor.uploader;
+                        expect(uploader instanceof Jodit.modules.Uploader).to.be.true;
+
+                        var instanceCount = 0;
+                        editor.components.forEach(function (cmp) {
+                            if (cmp instanceof Jodit.modules.Uploader) {
+                                instanceCount += 1;
+                                expect(uploader === cmp).to.be.true;
+                            }
+                        });
+
+                        expect(instanceCount).to.be.equal(1);
+
+                        var uploader2 = editor.uploaderuploader;
+                        editor.components.forEach(function (cmp) {
+                            if (cmp instanceof Jodit.modules.Uploader) {
+                                instanceCount += 1;
+                                expect(uploader === cmp).to.be.true;
+                            }
+                        });
+
+                        expect(instanceCount).to.be.equal(2);
+                        expect(filebrowser2 === uploader).to.be.true;
+                    });
+                });
+            });
+        });
     });
     describe('Selection module', function () {
         it('Current selection element should be inside editor', function () {

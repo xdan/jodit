@@ -21,6 +21,7 @@ import { Ajax } from './Ajax';
 import { browser, extend, isPlainObject } from './helpers/';
 import { Dom } from './Dom';
 import { isJoditObject } from './helpers/checker/isJoditObject';
+import { Component } from './Component';
 
 declare module '../Config' {
     interface Config {
@@ -120,7 +121,7 @@ Config.prototype.uploader = {
     },
 } as IUploaderOptions<Uploader>;
 
-export class Uploader implements IUploader {
+export class Uploader extends Component implements IUploader {
     /**
      * Convert dataURI to Blob
      *
@@ -155,9 +156,9 @@ export class Uploader implements IUploader {
 
     private options: IUploaderOptions<Uploader>;
 
-    public jodit: IViewBased;
+    jodit: IViewBased;
 
-    public buildData(
+    buildData(
         data: FormData | IDictionary<string> | string
     ): BuildDataResult {
         if (
@@ -187,7 +188,9 @@ export class Uploader implements IUploader {
         return data;
     }
 
-    public send(
+    private ajaxInstances: Ajax[] = [];
+
+    send(
         data: FormData | IDictionary<string>,
         success: (resp: IUploaderAnswer) => void
     ): Promise<any> {
@@ -240,10 +243,23 @@ export class Uploader implements IUploader {
                     dataType: this.options.format || 'json',
                 });
 
+                this.ajaxInstances.push(ajax);
+
+                const removeAjaxInstanceFromList = () => {
+                    const index = this.ajaxInstances.indexOf(ajax);
+                    if (index !== -1) {
+                        this.ajaxInstances.splice(index, 1);
+                    }
+                };
+
                 return ajax
                     .send()
-                    .then(success)
+                    .then(resp => {
+                        removeAjaxInstanceFromList();
+                        success.call(this, resp);
+                    })
                     .catch(error => {
+                        removeAjaxInstanceFromList();
                         this.options.error.call(this, error);
                     });
             };
@@ -257,7 +273,7 @@ export class Uploader implements IUploader {
         }
     }
 
-    public sendFiles(
+    sendFiles(
         files: FileList | File[] | null,
         handlerSuccess?: HandlerSuccess,
         handlerError?: HandlerError,
@@ -421,12 +437,13 @@ export class Uploader implements IUploader {
 
         return Promise.all(promises);
     }
+
     /**
      * It sets the path for uploading files
      * @method setPath
      * @param {string} path
      */
-    public setPath(path: string) {
+    setPath(path: string) {
         this.path = path;
     }
 
@@ -436,7 +453,7 @@ export class Uploader implements IUploader {
      * @method setSource
      * @param {string} source
      */
-    public setSource(source: string) {
+    setSource(source: string) {
         this.source = source;
     }
 
@@ -463,7 +480,7 @@ export class Uploader implements IUploader {
      * ```
      */
 
-    public bind(
+    bind(
         form: HTMLElement,
         handlerSuccess?: HandlerSuccess,
         handlerError?: HandlerError
@@ -664,7 +681,7 @@ export class Uploader implements IUploader {
      * @param {HandlerSuccess} [handlerSuccess]
      * @param {HandlerError} [handlerError]
      */
-    public uploadRemoteImage(
+    uploadRemoteImage(
         url: string,
         handlerSuccess?: HandlerSuccess,
         handlerError?: HandlerError
@@ -708,7 +725,7 @@ export class Uploader implements IUploader {
     }
 
     constructor(editor: IViewBased, options?: IUploaderOptions<Uploader>) {
-        this.jodit = editor;
+        super(editor);
 
         this.options = extend(
             true,
@@ -717,5 +734,14 @@ export class Uploader implements IUploader {
             isJoditObject(editor) ? editor.options.uploader : null,
             options
         ) as IUploaderOptions<Uploader>;
+    }
+
+    destruct(): any {
+        this.ajaxInstances
+            .forEach(ajax => {
+                try {
+                    ajax.abort()
+                } catch {}
+            });
     }
 }
