@@ -98,9 +98,7 @@ Config.prototype.controls.copyformat = {
                             editor.editor
                         ) as HTMLElement) || editor.editor;
 
-                const ideal: HTMLElement = editor.editorDocument.createElement(
-                    'span'
-                );
+                const ideal: HTMLElement = editor.create.inside.span();
                 editor.editor.appendChild(ideal);
 
                 copyStyles.forEach((key: string) => {
