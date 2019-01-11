@@ -9,8 +9,7 @@ import { isPlainObject } from './helpers/checker/isPlainObject';
 import { each } from './helpers/each';
 import { asArray } from './helpers/array/asArray';
 import { Dom } from './Dom';
-import { css } from './helpers/css';
-import { trim } from './helpers/string/trim';
+import { css } from './helpers';
 import { Attributes, Children, ICreate } from '../types/create';
 
 export class Create implements ICreate {
@@ -129,7 +128,7 @@ export class Create implements ICreate {
     fromHTML(html: string): HTMLElement {
         const div: HTMLDivElement = this.div();
 
-        div.innerHTML = trim(html);
+        div.innerHTML = html;
 
         const child: HTMLElement =
             div.firstChild !== div.lastChild || !div.firstChild

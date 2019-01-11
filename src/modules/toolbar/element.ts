@@ -14,6 +14,7 @@ import { ToolbarCollection } from './collection';
 import { ToolbarIcon } from './icon';
 import { Dom } from '../Dom';
 import { IViewBased, TagNames } from '../../types';
+import { trim } from '../helpers/string';
 
 export abstract class ToolbarElement extends Component
     implements IToolbarElement {
@@ -68,7 +69,7 @@ export abstract class ToolbarElement extends Component
 
                 iconElement =
                     typeof iconSVG === 'string'
-                        ? this.jodit.create.fromHTML(iconSVG)
+                        ? this.jodit.create.fromHTML(trim(iconSVG))
                         : iconSVG;
             }
 
