@@ -1015,20 +1015,41 @@ describe('Test interface', function() {
                 });
             });
             describe('Button Bold', function () {
-                it('Should reactivate Bold button after second click and move cursor out of Strong element', function () {
-                    var editor = new Jodit(appendTestArea(), {
-                        buttons: ['bold']
+                describe('In collapsed selection', function () {
+                    it('Should reactivate Bold button after second click and move cursor out of Strong element', function () {
+                        var editor = new Jodit(appendTestArea(), {
+                            buttons: ['bold']
+                        });
+
+                        editor.value = '<p>test</p>';
+                        editor.selection.setCursorAfter(editor.editor.firstChild.firstChild);
+
+                        simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-bold'));
+                        editor.selection.insertHTML('text');
+                        simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-bold'));
+                        editor.selection.insertHTML('text');
+
+                        expect(editor.getEditorValue()).to.equal('<p>test<strong>text</strong>text</p>');
                     });
+                });
+                describe('Not collapsed selection', function () {
+                    it('Should reactivate Bold button after second click and move cursor out of Strong element', function () {
+                        var editor = new Jodit(appendTestArea(), {
+                            buttons: ['bold']
+                        });
 
-                    editor.setEditorValue('<p>test</p>')
-                    editor.selection.setCursorAfter(editor.editor.firstChild.firstChild);
+                        editor.value = 'test test test';
 
-                    simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-bold'));
-                    editor.selection.insertHTML('text');
-                    simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-bold'));
-                    editor.selection.insertHTML('text');
+                        var range = editor.selection.createRange();
+                        range.setStart(editor.editor.firstChild, 0);
+                        range.setEnd(editor.editor.firstChild, 4);
 
-                    expect(editor.getEditorValue()).to.equal('<p>test<strong>text</strong>text</p>');
+                        editor.selection.selectRange(range);
+
+                        simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-bold'));
+
+                        expect(editor.getEditorValue()).to.equal('<strong>test</strong> test test');
+                    });
                 });
             });
             describe('Active button', function () {

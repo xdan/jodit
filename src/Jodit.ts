@@ -523,7 +523,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
         if (this.commands[commandName] !== undefined) {
             let result: any = void 0;
 
-            const exec = async (command: CustomCommand<Jodit>) => {
+            const exec = (command: CustomCommand<Jodit>) => {
                 let callback: ExecCommandCallback<Jodit>;
 
                 if (typeof command === 'function') {
@@ -532,7 +532,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
                     callback = command.exec;
                 }
 
-                const resultCurrent: any = await (callback as any).call(
+                const resultCurrent: any = (callback as any).call(
                     this,
                     commandName,
                     second,
