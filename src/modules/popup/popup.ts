@@ -18,6 +18,7 @@ export class Popup extends Component {
         }
 
         const popup: HTMLElement = this.container;
+
         const offsetContainer: IBound = offset(
             this.jodit.container as HTMLDivElement,
             this.jodit,
@@ -141,7 +142,7 @@ export class Popup extends Component {
 
         this.isOpened = true;
 
-        this.calcPosition();
+        !noStandartActions && this.calcPosition();
     }
 
     close = (current?: HTMLElement | Popup) => {

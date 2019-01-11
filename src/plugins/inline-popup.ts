@@ -548,6 +548,7 @@ export class inlinePopup extends Plugin {
         this.popup.open(this.container, false, true);
 
         this.__getRect = rect;
+
         this.calcPosition(rect(), windSize);
 
         return true;
