@@ -80,6 +80,7 @@ export class Popup extends Component {
 
         css(popup, 'width', width);
     }
+
     private throttleCalcPosition = throttle(this.calcPosition, this.jodit.defaultTimeout);
 
     protected doOpen(content: string | HTMLElement | IControlTypeStrong) {
