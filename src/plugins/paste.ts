@@ -34,13 +34,16 @@ import { IControlType } from '../types/toolbar';
 import { Dom } from '../modules/Dom';
 import { IJodit } from '../types';
 
-/**
- * @property{boolean} askBeforePasteHTML=true Ask before paste HTML in WYSIWYG mode
- */
 declare module '../Config' {
     interface Config {
+        /**
+         * @property askBeforePasteHTML=true Ask before paste HTML in WYSIWYG mode
+         */
         askBeforePasteHTML: boolean;
         askBeforePasteFromWord: boolean;
+        /**
+         * Default insert method
+         */
         defaultActionOnPaste: string;
     }
 }
