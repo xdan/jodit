@@ -438,6 +438,7 @@ export class inlinePopup extends Plugin {
             height: windHeight,
         };
     };
+
     private calcPosition = (rect: IBound, windowSize: IBound) => {
         if (this.isDestructed) {
             return;
@@ -618,6 +619,7 @@ export class inlinePopup extends Plugin {
 
         return false;
     }
+
     private checkIsTargetEvent = () => {
         if (!this.isTargetAction) {
             this.hidePopup();
@@ -638,7 +640,7 @@ export class inlinePopup extends Plugin {
         }
 
         if (this.jodit.options.popup.selection !== undefined) {
-            const sel: Selection = this.jodit.editorWindow.getSelection();
+            const sel: Selection = this.jodit.selection.sel;
             if (sel.rangeCount) {
                 this.isSelectionPopup = true;
                 const range: Range = sel.getRangeAt(0);

@@ -12,7 +12,7 @@ import { Component } from '../Component';
 import { IControlTypeStrong } from '../../types';
 
 export class Popup extends Component {
-    private calcPosition = throttle(() => {
+    private calcPosition() {
         if (!this.isOpened || this.isDestructed) {
             return;
         }
@@ -73,12 +73,14 @@ export class Popup extends Component {
         const triangle: HTMLSpanElement | null = popup.querySelector(
             '.jodit_popup_triangle'
         );
+
         if (triangle) {
             triangle.style.marginLeft = -diffLeft + 'px';
         }
 
         css(popup, 'width', width);
-    }, this.jodit.defaultTimeout);
+    }
+    private throttleCalcPosition = throttle(this.calcPosition, this.jodit.defaultTimeout);
 
     protected doOpen(content: string | HTMLElement | IControlTypeStrong) {
         if (!content) {
@@ -188,7 +190,7 @@ export class Popup extends Component {
             .on(
                 [this.jodit.ownerWindow, this.jodit.events],
                 'resize',
-                this.calcPosition
+                this.throttleCalcPosition
             );
     }
 
@@ -196,7 +198,7 @@ export class Popup extends Component {
         this.jodit.events.off(
             [this.jodit.ownerWindow, this.jodit.events],
             'resize',
-            this.calcPosition
+            this.throttleCalcPosition
         );
         Dom.safeRemove(this.container);
     }
