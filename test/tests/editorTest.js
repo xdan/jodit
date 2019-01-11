@@ -640,7 +640,7 @@ describe('Jodit Editor Tests', function() {
             });
         });
 
-        describe('Check Cache descorator', function () {
+        describe('Check Cache decorator', function () {
             describe('Get filebrowser and uploader property from editor', function () {
                 describe('FileBrowser', function () {
                     it('should create instance of Filebrowser  only one time and in lazy mode', function () {
@@ -694,7 +694,7 @@ describe('Jodit Editor Tests', function() {
 
                         expect(instanceCount).to.be.equal(1);
 
-                        var uploader2 = editor.uploaderuploader;
+                        var uploader2 = editor.uploader;
                         editor.components.forEach(function (cmp) {
                             if (cmp instanceof Jodit.modules.Uploader) {
                                 instanceCount += 1;
@@ -703,7 +703,7 @@ describe('Jodit Editor Tests', function() {
                         });
 
                         expect(instanceCount).to.be.equal(2);
-                        expect(filebrowser2 === uploader).to.be.true;
+                        expect(uploader2 === uploader).to.be.true;
                     });
                 });
             });
