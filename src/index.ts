@@ -13,7 +13,7 @@ if (typeof window !== 'undefined') {
     require('./polyfills');
 }
 
-import { Jodit } from './Jodit';
+import { Jodit as DefaultJodit } from './Jodit';
 
 import * as consts from './constants';
 import * as Languages from './langs/index';
@@ -26,7 +26,7 @@ import { ToolbarIcon } from './modules/toolbar/icon';
 
 // copy constants in Jodit
 Object.keys(consts).forEach((key: string) => {
-    (Jodit as any)[key] = (consts as any)[key];
+    (DefaultJodit as any)[key] = (consts as any)[key];
 });
 
 const esFilter = (key: string): boolean => key !== '__esModule';
@@ -42,28 +42,28 @@ Object.keys(Icons)
 Object.keys(Modules)
     .filter(esFilter)
     .forEach((key: string) => {
-        Jodit.modules[key] = (Modules as any)[key];
+        DefaultJodit.modules[key] = (Modules as any)[key];
     });
 
 ['Confirm', 'Alert', 'Promt'].forEach((key: string) => {
-    (Jodit as any)[key] = (Modules as any)[key];
+    (DefaultJodit as any)[key] = (Modules as any)[key];
 });
 
 // Plugins
 Object.keys(Plugins)
     .filter(esFilter)
     .forEach((key: string) => {
-        Jodit.plugins[key] = (Plugins as any)[key];
+        DefaultJodit.plugins[key] = (Plugins as any)[key];
     });
 
 // Languages
 Object.keys(Languages)
     .filter(esFilter)
     .forEach((key: string) => {
-        Jodit.lang[key] = (Languages as any)[key];
+        DefaultJodit.lang[key] = (Languages as any)[key];
     });
 
-Jodit.defaultOptions = Config.defaultOptions;
-OptionsDefault.prototype = Jodit.defaultOptions;
+DefaultJodit.defaultOptions = Config.defaultOptions;
+OptionsDefault.prototype = DefaultJodit.defaultOptions;
 
-export = Jodit;
+export const Jodit = DefaultJodit;

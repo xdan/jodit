@@ -1,4 +1,4 @@
-const privateTransformer = require("ts-private-uglifier/index").privateTransformer;
+// const privateTransformer = require("ts-private-uglifier/index").privateTransformer;
 const path = require('path');
 
 const webpack = require('webpack');
@@ -107,8 +107,7 @@ module.exports = (env, argv) => {
             path: path.join(__dirname, 'build'),
             filename: (uglify || mode === 'development') ? 'jodit.min.js' : 'jodit.js',
             publicPath: '/build/',
-            libraryTarget: "umd",
-            library: "Jodit"
+            libraryTarget: "umd"
         },
 
 
