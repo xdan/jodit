@@ -24,6 +24,7 @@ import { Select } from './modules/Selection';
 import { StatusBar } from './modules/StatusBar';
 import { LocalStorageProvider } from './modules/storage/localStorageProvider';
 import { Storage } from './modules/storage/storage';
+
 import {
     CustomCommand,
     ExecCommandCallback,
@@ -32,7 +33,7 @@ import {
     markerInfo,
     Modes,
 } from './types/types';
-import { cache } from './modules/helpers/decorator';
+
 import { ViewWithToolbar } from './modules/view/viewWithToolbar';
 import { IJodit } from './types/jodit';
 import { IFileBrowser, IUploader } from './types';
@@ -144,7 +145,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
     /**
      * @property {Uploader} uploader
      */
-    @cache()
     public get uploader(): IUploader {
         return this.getInstance('Uploader');
     }
@@ -152,7 +152,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
     /**
      * @property {FileBrowser} filebrowser
      */
-    @cache()
     public get filebrowser(): IFileBrowser {
         return this.getInstance('FileBrowser');
     }

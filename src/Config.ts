@@ -24,7 +24,6 @@ import { IDictionary, IJodit, IViewOptions } from './types';
 import { IFileBrowserCallBackData } from './types/fileBrowser';
 import { Buttons, Controls, IControlType } from './types/toolbar';
 import { extend } from './modules/helpers/extend';
-import { cache } from './modules/helpers/decorator';
 
 /**
  * Default Editor's Configuration
@@ -761,9 +760,13 @@ export class Config implements IViewOptions {
      */
     public textIcons: boolean = false;
 
-    @cache()
+    private static __defaultOptions: Config;
     static get defaultOptions(): Config {
-        return new Config();
+        if (!Config.__defaultOptions) {
+            Config.__defaultOptions = new Config();
+        }
+
+        return Config.__defaultOptions;
     }
 }
 
