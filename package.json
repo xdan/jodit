@@ -1,6 +1,6 @@
 {
     "name": "jodit",
-    "version": "3.2.33",
+    "version": "3.2.34",
     "description": "Jodit is awesome and usefully wysiwyg editor with filebrowser",
     "main": "build/jodit.min.js",
     "types": "src/types/index.d.ts",
@@ -11,7 +11,7 @@
         "build": "rm -f build/* && webpack --mode production --config ./webpack.config.js --progress  && npm run build-no-uglify",
         "build-no-uglify": "cross-env NODE_ENV=production-no-uflify webpack --progress --mode production",
         "test": "karma start --browsers Firefox karma.conf.js --single-run",
-        "jodit": "cd ../jodit-angular/ && npm run newversion && cd ../jodit-joomla && npm run newversion && cd ../jodit-docs && npm run newversion",
+        "jodit": "cd ../jodit-react/ && npm update && npm run newversion && cd ../jodit-angular/ && npm run newversion && cd ../jodit-joomla && npm run newversion && cd ../jodit-docs && npm run newversion",
         "types": "rm -rf types/* && tsc --project . --declaration --outDir types --emitDeclarationOnly",
         "pretty": "prettier --write ./src/*.{ts,less} ./src/**/*.{ts,less} ./src/**/**/*.{ts,less}",
         "fix": "tslint -c tslint.json ./src/**/*.ts ./src/**/**/*.ts ./src/*.ts --fix && npm run pretty"
