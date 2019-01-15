@@ -9,7 +9,7 @@
  */
 
 import { CallbackFunction, EventHandlerBlock } from '../../types';
-import { defaultNameSpace, EventHandlersStore } from './Store';
+import { defaultNameSpace, EventHandlersStore } from './store';
 import { IEventsNative } from '../../types/events';
 
 export class EventsNative implements IEventsNative {
