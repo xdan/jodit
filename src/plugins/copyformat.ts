@@ -1,14 +1,13 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
 import { Config } from '../Config';
-import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
-import { css } from '../modules/helpers/Helpers';
-import { IDictionary } from '../types';
+import { css } from '../modules/helpers/';
+import { IDictionary, IJodit } from '../types';
 import { IControlType } from '../types/toolbar';
 
 const pluginKey: string = 'copyformat';
@@ -36,7 +35,7 @@ const copyStyles: string[] = [
 ];
 
 const getStyle = (
-    editor: Jodit,
+    editor: IJodit,
     key: string,
     box: HTMLElement,
     defaultStyles: IDictionary<string | number>
@@ -65,7 +64,7 @@ const getStyle = (
 };
 
 const getStyles = (
-    editor: Jodit,
+    editor: IJodit,
     box: HTMLElement,
     defaultStyles: IDictionary<string | number>
 ): IDictionary<string | number | undefined> => {
@@ -84,7 +83,7 @@ const getStyles = (
 };
 
 Config.prototype.controls.copyformat = {
-    exec: (editor: Jodit, current: Node | false) => {
+    exec: (editor: IJodit, current: Node | false) => {
         if (current) {
             if (editor.buffer[pluginKey]) {
                 editor.buffer[pluginKey] = false;
@@ -99,9 +98,7 @@ Config.prototype.controls.copyformat = {
                             editor.editor
                         ) as HTMLElement) || editor.editor;
 
-                const ideal: HTMLElement = editor.editorDocument.createElement(
-                    'span'
-                );
+                const ideal: HTMLElement = editor.create.inside.span();
                 editor.editor.appendChild(ideal);
 
                 copyStyles.forEach((key: string) => {
@@ -144,7 +141,7 @@ Config.prototype.controls.copyformat = {
         }
     },
 
-    isActive: (editor: Jodit): boolean => {
+    isActive: (editor: IJodit): boolean => {
         return !!editor.buffer[pluginKey];
     },
 

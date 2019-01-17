@@ -7,11 +7,15 @@ describe('Jodit FileBrowser Tests', function() {
                         url: 'https://xdsoft.net/jodit/connector/index.php',
                     },
                 });
+
                 filebrowser.open(function() {});
+
                 expect(
                     document.querySelectorAll('.jodit_dialog_box.active').length
                 ).to.be.equal(1);
+
                 filebrowser.close();
+
                 expect(
                     document.querySelectorAll('.jodit_dialog_box.active').length
                 ).to.be.equal(0);
@@ -747,13 +751,14 @@ describe('Jodit FileBrowser Tests', function() {
                     editor.value = '';
 
                     editor.events.on('filesWereUploaded', function() {
-                        expect(editor.value).to.be.equal(
-                            '<img src="https://xdsoft.net/jodit/files/test.png">'
+                        expect(sortAtrtibutes(editor.value)).to.be.equal(
+                            '<img src="https://xdsoft.net/jodit/files/test.png" style="width:300px">'
                         );
                         done();
                     });
 
                     simulateEvent('drop', 0, editor.editor, function(data) {
+                        debugger
                         Object.defineProperty(data, 'dataTransfer', {
                             value: {
                                 files: [

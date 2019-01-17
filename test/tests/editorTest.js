@@ -522,9 +522,11 @@ describe('Jodit Editor Tests', function() {
 
             editor.setEditorValue('');
 
+
             expect(editor.container.querySelectorAll('.jodit_placeholder').length && editor.container.querySelector('.jodit_placeholder').style.display === 'block').to.be.equal(true);
 
-            editor.selection.insertNode(Jodit.modules.Dom.create('text', 'test', editor.editorDocument));
+            editor.selection.insertNode(editor.editorDocument.createTextNode('test'))
+
             expect(editor.container.querySelectorAll('.jodit_placeholder').length && editor.container.querySelector('.jodit_placeholder').style.display === 'none').to.be.equal(true);
         });
         it("Placeholder's fontsize", function () {
@@ -638,6 +640,74 @@ describe('Jodit Editor Tests', function() {
             });
         });
 
+        describe('Check Cache decorator', function () {
+            describe('Get filebrowser and uploader property from editor', function () {
+                describe('FileBrowser', function () {
+                    it('should create instance of Filebrowser  only one time and in lazy mode', function () {
+                        var editor = new Jodit(appendTestArea());
+                        editor.components.forEach(function (cmp) {
+                            expect(cmp instanceof Jodit.modules.FileBrowser).to.be.false;
+                        });
+
+                        var filebrowser = editor.filebrowser;
+                        expect(filebrowser instanceof Jodit.modules.FileBrowser).to.be.true;
+
+                        var instanceCount = 0;
+                        editor.components.forEach(function (cmp) {
+                            if (cmp instanceof Jodit.modules.FileBrowser) {
+                                instanceCount += 1;
+                                expect(filebrowser === cmp).to.be.true;
+                            }
+                        });
+
+                        expect(instanceCount).to.be.equal(1);
+
+                        var filebrowser2 = editor.filebrowser;
+                        editor.components.forEach(function (cmp) {
+                            if (cmp instanceof Jodit.modules.FileBrowser) {
+                                instanceCount += 1;
+                                expect(filebrowser === cmp).to.be.true;
+                            }
+                        });
+
+                        expect(instanceCount).to.be.equal(2);
+                        expect(filebrowser2 === filebrowser).to.be.true;
+                    });
+                });
+                describe('Uploader', function () {
+                    it('should create instance of Uploader  only one time and in lazy mode', function () {
+                        var editor = new Jodit(appendTestArea());
+                        editor.components.forEach(function (cmp) {
+                            expect(cmp instanceof Jodit.modules.Uploader).to.be.false;
+                        });
+
+                        var uploader = editor.uploader;
+                        expect(uploader instanceof Jodit.modules.Uploader).to.be.true;
+
+                        var instanceCount = 0;
+                        editor.components.forEach(function (cmp) {
+                            if (cmp instanceof Jodit.modules.Uploader) {
+                                instanceCount += 1;
+                                expect(uploader === cmp).to.be.true;
+                            }
+                        });
+
+                        expect(instanceCount).to.be.equal(1);
+
+                        var uploader2 = editor.uploader;
+                        editor.components.forEach(function (cmp) {
+                            if (cmp instanceof Jodit.modules.Uploader) {
+                                instanceCount += 1;
+                                expect(uploader === cmp).to.be.true;
+                            }
+                        });
+
+                        expect(instanceCount).to.be.equal(2);
+                        expect(uploader2 === uploader).to.be.true;
+                    });
+                });
+            });
+        });
     });
     describe('Selection module', function () {
         it('Current selection element should be inside editor', function () {

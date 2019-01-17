@@ -1,14 +1,13 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
 import { Config } from '../Config';
-import { Jodit } from '../Jodit';
-import { Component } from '../modules/Component';
-import { normalizeKeyAliases } from '../modules/helpers/Helpers';
-import { IDictionary } from '../types';
+import { Plugin } from '../modules/Plugin';
+import { normalizeKeyAliases } from '../modules/helpers/normalize';
+import { IDictionary, IJodit } from '../types';
 
 declare module '../Config' {
     interface Config {
@@ -37,7 +36,7 @@ Config.prototype.commandToHotkeys = {
 /**
  * Allow set hotkey for command or button
  */
-export class hotkeys extends Component {
+export class hotkeys extends Plugin {
     private onKeyPress = (event: KeyboardEvent): string => {
         const special: string | false = this.specialKeys[event.which],
             character: string = (
@@ -54,6 +53,7 @@ export class hotkeys extends Component {
 
         return normalizeKeyAliases(modif.join('+'));
     };
+
     public specialKeys: { [key: number]: string } = {
         8: 'backspace',
         9: 'tab',
@@ -122,9 +122,7 @@ export class hotkeys extends Component {
         222: "'",
     };
 
-    constructor(editor: Jodit) {
-        super(editor);
-
+    afterInit(editor: IJodit): void {
         const commands: string[] = Object.keys(editor.options.commandToHotkeys);
 
         commands.forEach((commandName: string) => {
@@ -136,43 +134,48 @@ export class hotkeys extends Component {
             }
         });
 
-        editor.events.on('afterInit', () => {
-            let itIsHotkey: boolean = false;
+        let itIsHotkey: boolean = false;
 
-            editor.events
-                .on(
-                    'keydown',
-                    (event: KeyboardEvent): void | false => {
-                        const shortcut: string = this.onKeyPress(event);
+        editor.events
+            .on(
+                'keydown.hotkeys',
+                (event: KeyboardEvent): void | false => {
+                    const shortcut: string = this.onKeyPress(event);
 
-                        if (
-                            this.jodit.events.fire(shortcut, event.type) ===
-                            false
-                        ) {
-                            itIsHotkey = true;
+                    const resultOfFire = this.jodit.events.fire(
+                        shortcut + '.hotkey',
+                        event.type
+                    );
 
-                            editor.events.stopPropagation('keydown');
+                    if (resultOfFire === false) {
+                        itIsHotkey = true;
 
-                            return false;
-                        }
-                    },
-                    void 0,
-                    void 0,
-                    true
-                )
-                .on(
-                    'keyup',
-                    (): void | false => {
-                        if (itIsHotkey) {
-                            itIsHotkey = false;
-                            editor.events.stopPropagation('keyup');
-                            return false;
-                        }
-                    },
-                    void 0,
-                    void 0,
-                    true
-                );
-        });
+                        editor.events.stopPropagation('keydown');
+
+                        return false;
+                    }
+                },
+                void 0,
+                void 0,
+                true
+            )
+            .on(
+                'keyup.hotkeys',
+                (): void | false => {
+                    if (itIsHotkey) {
+                        itIsHotkey = false;
+                        editor.events.stopPropagation('keyup');
+                        return false;
+                    }
+                },
+                void 0,
+                void 0,
+                true
+            );
+    }
+    beforeDestruct(jodit: IJodit): void {
+        if (jodit.events) {
+            jodit.events.off('.hotkeys');
+        }
     }
 }

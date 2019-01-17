@@ -1,16 +1,16 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 import { Config } from '../Config';
 import { IS_IE, TEXT_PLAIN } from '../constants';
-import { Jodit } from '../Jodit';
 import {
     BuildDataResult,
     HandlerError,
     HandlerSuccess,
     IDictionary,
+    IJodit,
     IUploader,
     IUploaderAnswer,
     IUploaderData,
@@ -18,9 +18,10 @@ import {
     IViewBased,
 } from '../types/';
 import { Ajax } from './Ajax';
-import { browser, dom, extend, isPlainObject } from './helpers/Helpers';
-import { Select } from './Selection';
+import { browser, extend, isPlainObject } from './helpers/';
 import { Dom } from './Dom';
+import { isJoditObject } from './helpers/checker/isJoditObject';
+import { Component } from './Component';
 
 declare module '../Config' {
     interface Config {
@@ -44,6 +45,7 @@ Config.prototype.enableDragAndDropFileToEditor = true;
 
 Config.prototype.uploader = {
     url: '',
+
     insertImageAsBase64URI: false,
     imagesExtensions: ['jpg', 'png', 'jpeg', 'gif'],
     headers: null,
@@ -81,9 +83,10 @@ Config.prototype.uploader = {
                     resp.isImages && resp.isImages[index]
                         ? ['img', 'src']
                         : ['a', 'href'];
-                const elm: HTMLElement = this.jodit.editorDocument.createElement(
-                    tagName
-                );
+
+                const elm: HTMLElement = this.jodit.create.inside.element(<
+                    'img' | 'a'
+                >tagName);
 
                 elm.setAttribute(attr, resp.baseurl + filename);
 
@@ -91,10 +94,16 @@ Config.prototype.uploader = {
                     elm.innerText = resp.baseurl + filename;
                 }
 
-                if (tagName === 'img') {
-                    this.selection.insertImage(elm as HTMLImageElement);
-                } else {
-                    this.selection.insertNode(elm);
+                if (isJoditObject(this.jodit)) {
+                    if (tagName === 'img') {
+                        this.jodit.selection.insertImage(
+                            elm as HTMLImageElement,
+                            null,
+                            this.jodit.options.imageDefaultWidth
+                        );
+                    } else {
+                        this.jodit.selection.insertNode(elm);
+                    }
                 }
             });
         }
@@ -112,7 +121,7 @@ Config.prototype.uploader = {
     },
 } as IUploaderOptions<Uploader>;
 
-export class Uploader implements IUploader {
+export class Uploader extends Component implements IUploader {
     /**
      * Convert dataURI to Blob
      *
@@ -141,14 +150,15 @@ export class Uploader implements IUploader {
 
         return new Blob([ia], { type: mimeString });
     }
+
     private path: string = '';
     private source: string = 'default';
 
     private options: IUploaderOptions<Uploader>;
-    public jodit: IViewBased;
-    public selection: Select;
 
-    public buildData(
+    jodit: IViewBased;
+
+    buildData(
         data: FormData | IDictionary<string> | string
     ): BuildDataResult {
         if (
@@ -178,7 +188,9 @@ export class Uploader implements IUploader {
         return data;
     }
 
-    public send(
+    private ajaxInstances: Ajax[] = [];
+
+    send(
         data: FormData | IDictionary<string>,
         success: (resp: IUploaderAnswer) => void
     ): Promise<any> {
@@ -231,10 +243,23 @@ export class Uploader implements IUploader {
                     dataType: this.options.format || 'json',
                 });
 
+                this.ajaxInstances.push(ajax);
+
+                const removeAjaxInstanceFromList = () => {
+                    const index = this.ajaxInstances.indexOf(ajax);
+                    if (index !== -1) {
+                        this.ajaxInstances.splice(index, 1);
+                    }
+                };
+
                 return ajax
                     .send()
-                    .then(success)
+                    .then(resp => {
+                        removeAjaxInstanceFromList();
+                        success.call(this, resp);
+                    })
                     .catch(error => {
+                        removeAjaxInstanceFromList();
                         this.options.error.call(this, error);
                     });
             };
@@ -248,7 +273,7 @@ export class Uploader implements IUploader {
         }
     }
 
-    public sendFiles(
+    sendFiles(
         files: FileList | File[] | null,
         handlerSuccess?: HandlerSuccess,
         handlerError?: HandlerError,
@@ -260,7 +285,7 @@ export class Uploader implements IUploader {
 
         const uploader: Uploader = this;
 
-        let fileList: File[] = [].slice.call(files);
+        let fileList: File[] = Array.from(files);
 
         if (!fileList.length) {
             return Promise.reject(new Error('Need files'));
@@ -330,22 +355,21 @@ export class Uploader implements IUploader {
             let file: File;
             for (let i = 0; i < fileList.length; i += 1) {
                 file = fileList[i];
-                if (file && file.type) {
+                if (file) {
                     const mime: string[] = file.type.match(
                         /\/([a-z0-9]+)/i
                     ) as string[];
-                    const extension: string = mime[1]
+                    const extension: string = mime && mime[1]
                         ? mime[1].toLowerCase()
                         : '';
                     form.append(
                         'files[' + i + ']',
                         fileList[i],
-                        fileList[i].name ||
+                        (fileList[i].name ||
                             Math.random()
                                 .toString()
-                                .replace('.', '') +
-                                '.' +
-                                extension
+                                .replace('.', '')) +
+                        (extension ? '.' + extension : '')
                     );
                 }
             }
@@ -413,12 +437,13 @@ export class Uploader implements IUploader {
 
         return Promise.all(promises);
     }
+
     /**
      * It sets the path for uploading files
      * @method setPath
      * @param {string} path
      */
-    public setPath(path: string) {
+    setPath(path: string) {
         this.path = path;
     }
 
@@ -428,7 +453,7 @@ export class Uploader implements IUploader {
      * @method setSource
      * @param {string} source
      */
-    public setSource(source: string) {
+    setSource(source: string) {
         this.source = source;
     }
 
@@ -455,7 +480,7 @@ export class Uploader implements IUploader {
      * ```
      */
 
-    public bind(
+    bind(
         form: HTMLElement,
         handlerSuccess?: HandlerSuccess,
         handlerError?: HandlerError
@@ -482,6 +507,7 @@ export class Uploader implements IUploader {
                         handlerSuccess,
                         handlerError
                     );
+
                     return false;
                 }
 
@@ -491,7 +517,7 @@ export class Uploader implements IUploader {
                         (!e.clipboardData.types.length &&
                             e.clipboardData.types[0] !== TEXT_PLAIN)
                     ) {
-                        const div: HTMLDivElement = dom(
+                        const div: HTMLDivElement = this.jodit.create.fromHTML(
                             '<div ' +
                                 'tabindex="-1" ' +
                                 'style="' +
@@ -500,18 +526,19 @@ export class Uploader implements IUploader {
                                 'z-index: 2147483647; word-break: break-all;' +
                                 '" ' +
                                 'contenteditable="true">' +
-                                '</div>',
-                            this.jodit.ownerDocument
+                                '</div>'
                         ) as HTMLDivElement;
+
                         this.jodit.ownerDocument.body.appendChild(div);
 
                         const selection =
-                                this.jodit && this.jodit instanceof Jodit
+                                this.jodit && isJoditObject(this.jodit)
                                     ? this.jodit.selection.save()
                                     : null,
                             restore = () =>
                                 selection &&
-                                (this.jodit && this.jodit instanceof Jodit) &&
+                                this.jodit &&
+                                isJoditObject(this.jodit) &&
                                 this.jodit.selection.restore(selection);
 
                         div.focus();
@@ -568,7 +595,7 @@ export class Uploader implements IUploader {
                 }
             };
 
-        if (this.jodit && this.jodit.editor !== form) {
+        if (this.jodit && (<IJodit>this.jodit).editor !== form) {
             self.jodit.events.on(form, 'paste', onPaste);
         } else {
             self.jodit.events.on('beforePaste', onPaste);
@@ -608,6 +635,7 @@ export class Uploader implements IUploader {
                 'drop',
                 (event: DragEvent): false | void => {
                     form.classList.remove('jodit_draghover');
+
                     if (
                         hasFiles(event) &&
                         event.dataTransfer &&
@@ -653,7 +681,7 @@ export class Uploader implements IUploader {
      * @param {HandlerSuccess} [handlerSuccess]
      * @param {HandlerError} [handlerError]
      */
-    public uploadRemoteImage(
+    uploadRemoteImage(
         url: string,
         handlerSuccess?: HandlerSuccess,
         handlerError?: HandlerError
@@ -697,28 +725,23 @@ export class Uploader implements IUploader {
     }
 
     constructor(editor: IViewBased, options?: IUploaderOptions<Uploader>) {
-        this.jodit = editor;
-        this.selection =
-            editor instanceof Jodit ? editor.selection : new Select(editor);
+        super(editor);
 
         this.options = extend(
             true,
             {},
-            Config.prototype.uploader,
-            editor instanceof Jodit ? editor.options.uploader : null,
+            Config.defaultOptions.uploader,
+            isJoditObject(editor) ? editor.options.uploader : null,
             options
         ) as IUploaderOptions<Uploader>;
+    }
 
-        if (
-            editor instanceof Jodit &&
-            editor.options.enableDragAndDropFileToEditor &&
-            editor.options.uploader &&
-            (editor.options.uploader.url ||
-                editor.options.uploader.insertImageAsBase64URI)
-        ) {
-            editor.events.on('afterInit', () => {
-                this.bind(editor.editor);
+    destruct(): any {
+        this.ajaxInstances
+            .forEach(ajax => {
+                try {
+                    ajax.abort()
+                } catch {}
             });
-        }
     }
 }

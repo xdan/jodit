@@ -1,16 +1,19 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
 import { Config } from '../Config';
 import * as consts from '../constants';
 import { MODE_WYSIWYG } from '../constants';
-import { Jodit } from '../Jodit';
-import { Component, Dom, ToolbarIcon } from '../modules';
-import { debounce, dom, trim } from '../modules/helpers/Helpers';
+import { Dom } from '../modules/Dom';
+import { ToolbarIcon } from '../modules/toolbar/icon';
+import { Plugin } from '../modules/Plugin';
+import { debounce } from '../modules/helpers/async';
+import { trim } from '../modules/helpers/string';
 import { ISelectionRange, markerInfo } from '../types/types';
+import { IJodit } from '../types';
 
 declare module '../Config' {
     interface Config {
@@ -40,7 +43,7 @@ Config.prototype.useSearch = true;
  * });
  * ```
  */
-export class search extends Component {
+export class search extends Plugin {
     public static getSomePartOfStringIndex(
         needle: string,
         haystack: string,
@@ -107,6 +110,7 @@ export class search extends Component {
                 : tmp.reverse().join('')
             : false;
     }
+
     private template: string =
         '<div class="jodit_search">' +
         '<div class="jodit_search_box">' +
@@ -310,10 +314,10 @@ export class search extends Component {
         query: string,
         next: boolean
     ): boolean => {
-        const sel: Selection = this.jodit.editorWindow.getSelection(),
+        const sel: Selection = this.jodit.selection.sel,
             range: Range = sel.rangeCount
                 ? sel.getRangeAt(0)
-                : this.jodit.editorDocument.createRange(),
+                : this.jodit.selection.createRange(),
             bound: ISelectionRange | false = this.find(
                 start,
                 query,
@@ -449,7 +453,10 @@ export class search extends Component {
                                 endOffset: null,
                             };
                         }
-                    } else if (Dom.isBlock(elm) && sentence !== '') {
+                    } else if (
+                        Dom.isBlock(elm, this.jodit.editorWindow) &&
+                        sentence !== ''
+                    ) {
                         sentence = next ? sentence + ' ' : ' ' + sentence;
                     }
 
@@ -488,7 +495,7 @@ export class search extends Component {
         this.current = this.jodit.selection.current();
         this.selInfo = this.jodit.selection.save();
 
-        const sel: string = this.jodit.ownerWindow.getSelection().toString();
+        const sel: string = this.jodit.selection.sel.toString();
 
         if (sel) {
             this.queryInput.value = sel;
@@ -517,36 +524,43 @@ export class search extends Component {
         this.isOpened = false;
     };
 
-    constructor(editor: Jodit) {
-        super(editor);
+    afterInit(editor: IJodit) {
         if (editor.options.useSearch) {
             const self: search = this;
 
-            self.searchBox = dom(
-                self.template,
-                editor.ownerDocument
+            self.searchBox = editor.create.fromHTML(
+                self.template
             ) as HTMLDivElement;
+
             self.queryInput = self.searchBox.querySelector(
                 'input.jodit_search-query'
             ) as HTMLInputElement;
+
             self.replaceInput = self.searchBox.querySelector(
                 'input.jodit_search-replace'
             ) as HTMLInputElement;
+
             self.closeButton = self.searchBox.querySelector(
                 '.jodit_search_buttons-cancel'
             ) as HTMLButtonElement;
+
             self.nextButton = self.searchBox.querySelector(
                 '.jodit_search_buttons-next'
             ) as HTMLButtonElement;
+
             self.prevButton = self.searchBox.querySelector(
                 '.jodit_search_buttons-prev'
             ) as HTMLButtonElement;
+
             self.replaceButton = self.searchBox.querySelector(
                 '.jodit_search_buttons-replace'
             ) as HTMLButtonElement;
+
             self.counterBox = self.searchBox.querySelector(
                 '.jodit_search_counts span'
             ) as HTMLButtonElement;
+
+            editor.workplace.appendChild(this.searchBox);
 
             editor.events
                 .on(self.closeButton, 'click', this.close)
@@ -597,34 +611,35 @@ export class search extends Component {
                         }
                     }, this.jodit.defaultTimeout)
                 )
-                .on(this.jodit.container, 'keydown', (e: KeyboardEvent) => {
-                    if (editor.getRealMode() !== MODE_WYSIWYG) {
-                        return;
-                    }
+                .on(
+                    this.jodit.container,
+                    'keydown.search',
+                    (e: KeyboardEvent) => {
+                        if (editor.getRealMode() !== MODE_WYSIWYG) {
+                            return;
+                        }
 
-                    switch (e.which) {
-                        case consts.KEY_ESC:
-                            this.close();
-                            break;
-                        case consts.KEY_F3:
-                            if (self.queryInput.value) {
-                                editor.events.fire(
-                                    !e.shiftKey
-                                        ? 'searchNext'
-                                        : 'searchPrevious'
-                                );
-                                e.preventDefault();
-                            }
-                            break;
+                        switch (e.which) {
+                            case consts.KEY_ESC:
+                                this.close();
+                                break;
+                            case consts.KEY_F3:
+                                if (self.queryInput.value) {
+                                    editor.events.fire(
+                                        !e.shiftKey
+                                            ? 'searchNext'
+                                            : 'searchPrevious'
+                                    );
+                                    e.preventDefault();
+                                }
+                                break;
+                        }
                     }
-                })
-                .on('beforeSetMode', () => {
+                )
+                .on('beforeSetMode.search', () => {
                     this.close();
                 })
-                .on('afterInit', () => {
-                    editor.workplace.appendChild(this.searchBox);
-                })
-                .on('keydown mousedown', () => {
+                .on('keydown.search mousedown.search', () => {
                     if (this.selInfo) {
                         editor.selection.removeMarkers();
                         this.selInfo = null;
@@ -634,7 +649,7 @@ export class search extends Component {
                         this.updateCounters();
                     }
                 })
-                .on('searchNext searchPrevious', () => {
+                .on('searchNext.search searchPrevious.search', () => {
                     return self.findAndSelect(
                         editor.selection.current() || editor.editor.firstChild,
                         self.queryInput.value,
@@ -643,7 +658,7 @@ export class search extends Component {
                         ] === 'searchNext'
                     );
                 })
-                .on('search', (value: string, next: boolean = true) => {
+                .on('search.search', (value: string, next: boolean = true) => {
                     editor.execCommand('search', value, next);
                 });
 
@@ -679,5 +694,11 @@ export class search extends Component {
                 hotkeys: ['ctrl+h', 'cmd+h'],
             });
         }
+    }
+
+    beforeDestruct(jodit: IJodit): void {
+        Dom.safeRemove(this.searchBox);
+        jodit.events && jodit.events.off('.search');
+        jodit.events && jodit.events.off(jodit.container, '.search');
     }
 }

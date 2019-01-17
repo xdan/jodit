@@ -1,27 +1,27 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
 import { Config } from '../Config';
 import { BR, PARAGRAPH } from '../constants';
-import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
 import { IControlType } from '../types/toolbar';
+import { HTMLTagNames, IJodit } from '../types';
 
 Config.prototype.controls.indent = {
     tooltip: 'Increase Indent',
 } as IControlType;
 
 Config.prototype.controls.outdent = {
-    isDisable: (editor: Jodit): boolean => {
+    isDisable: (editor: IJodit): boolean => {
         const current: Node | false = editor.selection.current();
 
         if (current) {
             const currentBox: HTMLElement | false = Dom.closest(
                 current,
-                Dom.isBlock,
+                node => Dom.isBlock(node, editor.editorWindow),
                 editor.editor
             ) as HTMLElement | false;
             if (currentBox && currentBox.style && currentBox.style.marginLeft) {
@@ -50,7 +50,7 @@ Config.prototype.indentMargin = 10;
  * Indents the line containing the selection or insertion point.
  * @param {Jodit} editor
  */
-export function indent(editor: Jodit) {
+export function indent(editor: IJodit) {
     const callback = (command: string): void | false => {
         editor.selection.eachSelection(
             (current: Node): false | void => {
@@ -58,7 +58,7 @@ export function indent(editor: Jodit) {
                 let currentBox: HTMLElement | false = current
                     ? (Dom.up(
                           current,
-                          Dom.isBlock,
+                          node => Dom.isBlock(node, editor.editorWindow),
                           editor.editor
                       ) as HTMLElement)
                     : false;
@@ -67,7 +67,7 @@ export function indent(editor: Jodit) {
                 if (!currentBox && current) {
                     currentBox = Dom.wrapInline(
                         current,
-                        enter !== BR ? enter : PARAGRAPH,
+                        enter !== BR ? <HTMLTagNames>enter : PARAGRAPH,
                         editor
                     );
                 }

@@ -1,3 +1,4 @@
+// const privateTransformer = require("ts-private-uglifier/index").privateTransformer;
 const path = require('path');
 
 const webpack = require('webpack');
@@ -54,18 +55,20 @@ module.exports = (env, argv) => {
         },
     ];
 
-
     const config = {
         cache: true,
         context: __dirname,
         devtool: debug ? "inline-sourcemap" : false,
-        entry: './src/index',
+        entry: debug ? [
+            'webpack-hot-middleware/client',
+            './src/index'
+        ] : './src/index',
         resolve: {
             extensions: [".ts", ".d.ts", ".js", ".json", ".less", '.svg']
         },
 
         optimization: {
-            minimize: uglify,
+            minimize: !debug && uglify,
             minimizer: [
                 new UglifyJsPlugin({
                     cache: true,
@@ -104,8 +107,7 @@ module.exports = (env, argv) => {
             path: path.join(__dirname, 'build'),
             filename: (uglify || mode === 'development') ? 'jodit.min.js' : 'jodit.js',
             publicPath: '/build/',
-            libraryTarget: "umd",
-            library: "Jodit"
+            libraryTarget: "umd"
         },
 
 
@@ -119,6 +121,9 @@ module.exports = (env, argv) => {
                     test: /\.(ts)$/,
                     loader: 'awesome-typescript-loader',
                     exclude: /(node_modules|bower_components)/,
+                    // options: uglify ? {
+                    //     getCustomTransformers: privateTransformer
+                    // } : {}
                 },
                 {
                     test: /\.svg$/i,

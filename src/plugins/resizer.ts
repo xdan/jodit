@@ -1,24 +1,19 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
 import { Config } from '../Config';
 import * as consts from '../constants';
 import { IS_IE } from '../constants';
-import { Jodit } from '../Jodit';
-import {
-    $$,
-    css,
-    debounce,
-    dom,
-    innerWidth,
-    offset,
-    setTimeout,
-} from '../modules/helpers/Helpers';
 import { IBound } from '../types/types';
-import { Dom } from '../modules';
+import { Dom } from '../modules/Dom';
+import { $$ } from '../modules/helpers/selector';
+import { debounce, setTimeout } from '../modules/helpers/async';
+import { offset, innerWidth } from '../modules/helpers/size';
+import { css } from '../modules/helpers';
+import { IJodit } from '../types';
 
 /**
  * The module creates a supporting frame for resizing of the elements img and table
@@ -70,7 +65,7 @@ Config.prototype.resizer = {
  * Resize table and img
  * @param {Jodit} editor
  */
-export function resizer(editor: Jodit) {
+export function resizer(editor: IJodit) {
     // let clicked = false,
     //     resized = false,
     const LOCK_KEY = 'resizer';
@@ -92,7 +87,7 @@ export function resizer(editor: Jodit) {
         resizerIsVisible: boolean = false,
         timeoutSizeViewer: number = 0;
 
-    const resizerElm: HTMLElement = dom(
+    const resizerElm: HTMLElement = editor.create.fromHTML(
             '<div data-editor_id="' +
                 editor.id +
                 '" style="display:none" class="jodit_resizer">' +
@@ -101,8 +96,7 @@ export function resizer(editor: Jodit) {
                 '<i class="jodit_resizer-bottomright"></i>' +
                 '<i class="jodit_resizer-bottomleft"></i>' +
                 '<span>100x100</span>' +
-                '</div>',
-            editor.ownerDocument
+                '</div>'
         ),
         sizeViewer: HTMLSpanElement = resizerElm.getElementsByTagName(
             'span'
@@ -222,14 +216,13 @@ export function resizer(editor: Jodit) {
                 ) {
                     element = element.parentNode as HTMLElement;
                 } else {
-                    wrapper = dom(
+                    wrapper = editor.create.inside.fromHTML(
                         '<jodit ' +
                             'data-jodit-temp="1" ' +
                             'contenteditable="false" ' +
                             'draggable="true" ' +
                             'data-jodit_iframe_wrapper="1"' +
-                            '></jodit>',
-                        editor.editorDocument
+                            '></jodit>'
                     );
 
                     wrapper.style.display =

@@ -1,15 +1,14 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
 import { KEY_DOWN, KEY_ENTER, KEY_UP, SPACE_REG_EXP } from '../constants';
-import { Dialog } from '../modules/dialog/Dialog';
-import { dom } from '../modules/helpers/Helpers';
+import { Dialog } from '../modules/dialog/dialog';
 import { Plugin } from '../modules/Plugin';
-import { Dom } from '../modules';
-import { setTimeout } from '../modules/helpers/Helpers';
+import { Dom } from '../modules/Dom';
+import { setTimeout } from '../modules/helpers/async/setTimeout';
 
 /**
  * Show dialog choose content to paste
@@ -74,15 +73,16 @@ export class pasteStorage extends Plugin {
 
     private selectIndex = (index: number) => {
         if (this.listBox) {
-            Array.from(<NodeListOf<HTMLAnchorElement>>this.listBox.childNodes)
-                .forEach((a, i) => {
-                    a.classList.remove('jodit_active');
-                    if (index === i && this.previewBox) {
-                        a.classList.add('jodit_active');
-                        this.previewBox.innerHTML = this.list[index];
-                        a.focus();
-                    }
-                });
+            Array.from(<NodeListOf<HTMLAnchorElement>>(
+                this.listBox.childNodes
+            )).forEach((a, i) => {
+                a.classList.remove('jodit_active');
+                if (index === i && this.previewBox) {
+                    a.classList.add('jodit_active');
+                    this.previewBox.innerHTML = this.list[index];
+                    a.focus();
+                }
+            });
         }
 
         this.currentIndex = index;
@@ -124,24 +124,22 @@ export class pasteStorage extends Plugin {
     private createDialog() {
         this.dialog = new Dialog(this.jodit);
 
-        const pasteButton: HTMLAnchorElement = dom(
+        const pasteButton: HTMLAnchorElement = this.jodit.create.fromHTML(
             '<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
                 '<span>' +
                 this.jodit.i18n('Paste') +
                 '</span>' +
-                '</a>',
-            this.jodit.ownerDocument
+                '</a>'
         ) as HTMLAnchorElement;
 
         pasteButton.addEventListener('click', this.paste);
 
-        const cancelButton: HTMLAnchorElement = dom(
+        const cancelButton: HTMLAnchorElement = this.jodit.create.fromHTML(
             '<a href="javascript:void(0)" style="float:right; margin-right: 10px;" class="jodit_button">' +
                 '<span>' +
                 this.jodit.i18n('Cancel') +
                 '</span>' +
-                '</a>',
-            this.jodit.ownerDocument
+                '</a>'
         ) as HTMLAnchorElement;
 
         cancelButton.addEventListener('click', this.dialog.close);

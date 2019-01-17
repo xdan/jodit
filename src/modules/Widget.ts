@@ -1,13 +1,14 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Jodit } from '../Jodit';
+import { IJodit } from '../types/jodit';
 
 import {
     IDictionary,
+    IFileBrowser,
     IFileBrowserCallBackData,
     IRGB,
     IUploader,
@@ -15,16 +16,15 @@ import {
 } from '../types/';
 
 import { Dom } from './Dom';
-import { FileBrowser } from './filebrowser/filebrowser';
 import {
     $$,
-    dom,
     each,
     hexToRgb,
     isPlainObject,
     normalizeColor,
     val,
-} from './helpers/Helpers';
+} from './helpers/';
+import { ToolbarIcon } from './toolbar/icon';
 
 export namespace Widget {
     /**
@@ -46,21 +46,18 @@ export namespace Widget {
      * ```
      */
     export const ColorPickerWidget = (
-        editor: Jodit,
+        editor: IJodit,
         callback: (newColor: string) => void,
         coldColor: string
     ): HTMLDivElement => {
         const valueHex = normalizeColor(coldColor),
-            form: HTMLDivElement = dom(
-                '<div class="jodit_colorpicker"></div>',
-                editor.ownerDocument
-            ) as HTMLDivElement,
+            form: HTMLDivElement = editor.create.div('jodit_colorpicker'),
             iconEye: string = editor.options.textIcons
                 ? ''
-                : Jodit.modules.ToolbarIcon.getIcon('eye'),
+                : ToolbarIcon.getIcon('eye'),
             iconEraser: string = editor.options.textIcons
                 ? `<span>${editor.i18n('eraser')}</span>`
-                : Jodit.modules.ToolbarIcon.getIcon('eraser'),
+                : ToolbarIcon.getIcon('eraser'),
             eachColor = (colors: string[] | IDictionary<string[]>) => {
                 const stack: string[] = [];
                 if (isPlainObject(colors)) {
@@ -94,27 +91,26 @@ export namespace Widget {
             };
 
         form.appendChild(
-            dom(
-                '<div>' + eachColor(editor.options.colors) + '</div>',
-                editor.ownerDocument
+            editor.create.fromHTML(
+                '<div>' + eachColor(editor.options.colors) + '</div>'
             )
         );
 
         form.appendChild(
-            dom(
+            editor.create.fromHTML(
                 '<a ' +
                     (editor.options.textIcons
                         ? 'class="jodit_text_icon"'
                         : '') +
                     ' data-color="" href="javascript:void(0)">' +
                     iconEraser +
-                    '</a>',
-                editor.ownerDocument
+                    '</a>'
             )
         );
 
         editor.events.on(form, 'mousedown touchend', (e: MouseEvent) => {
             e.stopPropagation();
+
             let target: HTMLElement = e.target as HTMLElement;
 
             if (
@@ -141,7 +137,7 @@ export namespace Widget {
             const color: string = target.getAttribute('data-color') || '';
 
             if (color) {
-                target.innerHTML = Jodit.modules.ToolbarIcon.getIcon('eye');
+                target.innerHTML = ToolbarIcon.getIcon('eye');
                 target.classList.add('active');
 
                 const colorRGB: IRGB | null = hexToRgb(color);
@@ -179,7 +175,7 @@ export namespace Widget {
      * ```javascript
      * let tabs = widget.create('Tabs', {
      *    'Images': '<div>Images</div>',
-     *    'Title 2': editor.helper.dom('<div>Some content</div>'),
+     *    'Title 2': Jodit.modules.Helpers.dom('<div>Some content</div>'),
      *    'Color Picker': ColorPickerWidget(editor, function (color) {
      *         box.style.color = color;
      *     }, box.style.color),
@@ -187,25 +183,16 @@ export namespace Widget {
      * ```
      */
     export const TabsWidget = (
-        editor: Jodit,
+        editor: IJodit,
         tabs: IDictionary<(() => void) | HTMLElement>,
         state?: { __activeTab: string }
     ): HTMLDivElement => {
-        const box: HTMLDivElement = dom(
-                '<div class="jodit_tabs"></div>',
-                editor.ownerDocument
-            ) as HTMLDivElement,
-            tabBox: HTMLDivElement = dom(
-                '<div class="jodit_tabs_wrapper"></div>',
-                editor.ownerDocument
-            ) as HTMLDivElement,
-            buttons: HTMLDivElement = dom(
-                '<div class="jodit_tabs_buttons"></div>',
-                editor.ownerDocument
-            ) as HTMLDivElement,
+        const box: HTMLDivElement = editor.create.div('jodit_tabs'),
+            tabBox: HTMLDivElement = editor.create.div('jodit_tabs_wrapper'),
+            buttons: HTMLDivElement = editor.create.div('jodit_tabs_buttons'),
             nameToTab: IDictionary<{
-                button: HTMLDivElement;
-                tab: HTMLDivElement;
+                button: HTMLElement;
+                tab: HTMLElement;
             }> = {};
 
         let firstTab: string = '',
@@ -214,15 +201,11 @@ export namespace Widget {
         box.appendChild(buttons);
         box.appendChild(tabBox);
 
-        each<(() => void) | HTMLElement>(tabs, (name, tabOptions) => {
-            const tab: HTMLDivElement = dom(
-                    '<div class="jodit_tab"></div>',
-                    editor.ownerDocument
-                ) as HTMLDivElement,
-                button: HTMLDivElement = dom(
-                    '<a href="javascript:void(0);"></a>',
-                    editor.ownerDocument
-                ) as HTMLDivElement;
+        each<(() => void) | HTMLElement>(tabs, (name: string, tabOptions) => {
+            const tab: HTMLDivElement = editor.create.div('jodit_tab'),
+                button: HTMLAnchorElement = editor.create.element('a', {
+                    href: 'javascript:void(0);',
+                });
 
             if (!firstTab) {
                 firstTab = name.toString();
@@ -232,14 +215,9 @@ export namespace Widget {
             buttons.appendChild(button);
 
             if (typeof tabOptions !== 'function') {
-                tab.appendChild(dom(tabOptions, editor.ownerDocument));
+                tab.appendChild(tabOptions);
             } else {
-                tab.appendChild(
-                    dom(
-                        '<div class="jodit_tab_empty"></div>',
-                        editor.ownerDocument
-                    )
-                );
+                tab.appendChild(editor.create.div('jodit_tab_empty'));
             }
 
             tabBox.appendChild(tab);
@@ -329,9 +307,9 @@ export namespace Widget {
      */
 
     interface ImageSelectorCallbacks {
-        url?: (this: Jodit, url: string, alt: string) => void;
+        url?: (this: IJodit, url: string, alt: string) => void;
         filebrowser?: (data: IFileBrowserCallBackData) => void;
-        upload?: (this: Jodit, data: IFileBrowserCallBackData) => void;
+        upload?: (this: IJodit, data: IFileBrowserCallBackData) => void;
     }
 
     /**
@@ -345,7 +323,7 @@ export namespace Widget {
      * @constructor
      */
     export const FileSelectorWidget = (
-        editor: Jodit,
+        editor: IJodit,
         callbacks: ImageSelectorCallbacks,
         elm: HTMLElement | null,
         close: () => void,
@@ -361,7 +339,7 @@ export namespace Widget {
             (editor.options.uploader.url ||
                 editor.options.uploader.insertImageAsBase64URI)
         ) {
-            const dragbox: HTMLElement = dom(
+            const dragbox: HTMLElement = editor.create.fromHTML(
                 '<div class="jodit_draganddrop_file_box">' +
                     '<strong>' +
                     editor.i18n(isImage ? 'Drop image' : 'Drop file') +
@@ -372,8 +350,7 @@ export namespace Widget {
                     '<input type="file" accept="' +
                     (isImage ? 'image/*' : '*') +
                     'image/*" tabindex="-1" dir="auto" multiple=""/>' +
-                    '</div>',
-                editor.ownerDocument
+                    '</div>'
             );
 
             editor.getInstance<IUploader>('Uploader').bind(
@@ -392,7 +369,7 @@ export namespace Widget {
             );
             const icon = editor.options.textIcons
                 ? ''
-                : Jodit.modules.ToolbarIcon.getIcon('upload');
+                : ToolbarIcon.getIcon('upload');
             tabs[icon + editor.i18n('Upload')] = dragbox;
         }
 
@@ -403,21 +380,20 @@ export namespace Widget {
             ) {
                 const icon = editor.options.textIcons
                     ? ''
-                    : Jodit.modules.ToolbarIcon.getIcon('folder');
+                    : ToolbarIcon.getIcon('folder');
                 tabs[icon + editor.i18n('Browse')] = () => {
                     close && close();
                     if (callbacks.filebrowser) {
-                        (editor.getInstance('FileBrowser') as FileBrowser).open(
-                            callbacks.filebrowser,
-                            isImage
-                        );
+                        (editor.getInstance(
+                            'FileBrowser'
+                        ) as IFileBrowser).open(callbacks.filebrowser, isImage);
                     }
                 };
             }
         }
 
         if (callbacks.url) {
-            const form: HTMLFormElement = dom(
+            const form: HTMLFormElement = editor.create.fromHTML(
                     '<form onsubmit="return false;" class="jodit_form">' +
                         '<input type="text" required name="url" placeholder="http://"/>' +
                         '<input type="text" name="text" placeholder="' +
@@ -428,8 +404,7 @@ export namespace Widget {
                         editor.i18n('Insert') +
                         '</button>' +
                         '</div>' +
-                        '</form>',
-                    editor.ownerDocument
+                        '</form>'
                 ) as HTMLFormElement,
                 button: HTMLButtonElement = form.querySelector(
                     'button'
@@ -488,7 +463,7 @@ export namespace Widget {
 
             const icon = editor.options.textIcons
                 ? ''
-                : Jodit.modules.ToolbarIcon.getIcon('link');
+                : ToolbarIcon.getIcon('link');
 
             tabs[icon + ' URL'] = form;
         }

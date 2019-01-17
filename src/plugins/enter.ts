@@ -1,13 +1,13 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
 import * as consts from '../constants';
-import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
-import { $$, scrollIntoView } from '../modules/helpers/Helpers';
+import { $$, scrollIntoView } from '../modules/helpers/';
+import { HTMLTagNames, IJodit } from '../types';
 
 /**
  * Insert default paragraph
@@ -19,13 +19,13 @@ import { $$, scrollIntoView } from '../modules/helpers/Helpers';
  * @return {HTMLElement}
  */
 export const insertParagraph = (
-    editor: Jodit,
+    editor: IJodit,
     fake: Text | false,
-    wrapperTag: string,
+    wrapperTag: HTMLTagNames,
     style?: CSSStyleDeclaration
 ): HTMLElement => {
-    const p: HTMLElement = editor.editorDocument.createElement(wrapperTag),
-        helper_node: HTMLBRElement = editor.editorDocument.createElement('br');
+    const p: HTMLElement = editor.create.inside.element(wrapperTag),
+        helper_node: HTMLBRElement = editor.create.inside.element('br');
 
     p.appendChild(helper_node);
 
@@ -56,13 +56,13 @@ export const insertParagraph = (
  * One of most important core plugins. It is responsible for all the browsers to have the same effect when the Enter
  * button is pressed. By default, it should insert the <p>
  */
-export function enter(editor: Jodit) {
+export function enter(editor: IJodit) {
     // use 'enter' option if no set
     if (!editor.options.enterBlock) {
         editor.options.enterBlock =
             editor.options.enter.toLowerCase() === 'br'
                 ? consts.PARAGRAPH
-                : (editor.options.enter as 'P' | 'DIV' | 'p' | 'div');
+                : (editor.options.enter.toLowerCase() as 'p' | 'div');
     }
 
     editor.events.on(
@@ -98,9 +98,7 @@ export function enter(editor: Jodit) {
                 if (!current || current === editor.editor) {
                     editor.selection.current();
 
-                    current = editor.editorDocument.createTextNode(
-                        consts.INVISIBLE_SPACE
-                    );
+                    current = editor.create.inside.text(consts.INVISIBLE_SPACE);
 
                     if (sel.rangeCount) {
                         range.insertNode(current);
@@ -117,7 +115,7 @@ export function enter(editor: Jodit) {
                 let currentBox: HTMLElement | false = current
                     ? (Dom.up(
                           current,
-                          Dom.isBlock,
+                          node => Dom.isBlock(node, editor.editorWindow),
                           editor.editor
                       ) as HTMLElement)
                     : false;
@@ -132,11 +130,13 @@ export function enter(editor: Jodit) {
                         event.shiftKey ||
                         Dom.closest(current, 'PRE|BLOCKQUOTE', editor.editor))
                 ) {
-                    const br: HTMLBRElement = editor.editorDocument.createElement(
+                    const br: HTMLBRElement = editor.create.inside.element(
                         'br'
                     );
+
                     editor.selection.insertNode(br, true);
                     scrollIntoView(br, editor.editor, editor.editorDocument);
+
                     return false;
                 }
 
@@ -147,8 +147,8 @@ export function enter(editor: Jodit) {
                     !Dom.prev(
                         current,
                         (elm: Node | null) =>
-                            Dom.isBlock(elm) ||
-                            (!!elm && Dom.isImage(elm, editor.ownerWindow)),
+                            Dom.isBlock(elm, editor.editorWindow) ||
+                            (!!elm && Dom.isImage(elm, editor.editorWindow)),
                         editor.editor
                     )
                 ) {
@@ -193,11 +193,11 @@ export function enter(editor: Jodit) {
 
                 if (currentBox) {
                     if (!Dom.canSplitBlock(currentBox, editor.editorWindow)) {
-                        const br: HTMLBRElement = editor.editorDocument.createElement(
-                            'br'
-                        );
+                        const br = editor.create.inside.element('br');
+
                         editor.selection.insertNode(br, false);
                         editor.selection.setCursorAfter(br);
+
                         return false;
                     }
 
@@ -275,7 +275,9 @@ export function enter(editor: Jodit) {
                             currentBox.style
                         );
 
-                        editor.selection.setCursorIn(currentBox, true);
+                        currentBox &&
+                            editor.selection.setCursorIn(currentBox, true);
+
                         return false;
                     }
 

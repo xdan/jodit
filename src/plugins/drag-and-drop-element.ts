@@ -1,7 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
 import { Config } from '../Config';
@@ -12,9 +12,9 @@ import {
     setTimeout,
     splitArray,
     throttle,
-} from '../modules/helpers/Helpers';
+} from '../modules/helpers/';
 import { Plugin } from '../modules/Plugin';
-import { Dom } from '../modules';
+import { Dom } from '../modules/Dom';
 
 declare module '../Config' {
     interface Config {
@@ -114,7 +114,7 @@ export class DragAndDropElement extends Plugin {
         event.preventDefault();
     };
 
-    private onDragEnd = (event?: DragEvent) => {
+    private onDragEnd = () => {
         window.clearTimeout(this.timeout);
 
         if (this.draggable) {
@@ -124,7 +124,7 @@ export class DragAndDropElement extends Plugin {
         }
     };
 
-    private onDrop = (event: DragEvent) => {
+    private onDrop = () => {
         if (!this.draggable || !this.wasMoved) {
             this.onDragEnd();
             return;

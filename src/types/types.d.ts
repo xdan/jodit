@@ -1,13 +1,19 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
 import { IViewBased } from './view';
 
 export interface IDictionary<T = any> {
     [key: string]: T;
+}
+
+interface IComponent<T extends IViewBased = IViewBased> {
+    jodit: T;
+    isDestructed: boolean;
+    destruct(): any;
 }
 
 export type NodeCondition = (node: Node | null) => boolean | null | void | '';
@@ -65,13 +71,13 @@ export type ExecCommandCallback<T> =
           command: string,
           value?: string,
           next?: boolean
-      ) => void | boolean)
+      ) => void | boolean | Promise<void | boolean>)
     | ((
           this: T,
           command: string,
           value: string,
           next: string
-      ) => void | boolean);
+      ) => void | boolean | Promise<void | boolean>);
 
 export interface ICommandType<T> {
     exec: ExecCommandCallback<T>;
@@ -113,6 +119,7 @@ export interface markerInfo {
 }
 
 export interface IPlugin {
+    jodit: IViewBased;
     destruct(): void;
     afterInit(jodit?: IViewBased): void;
     beforeDestruct(jodit?: IViewBased): void;
@@ -123,6 +130,8 @@ export interface IPlugin {
  */
 
 export interface ImageEditorOptions {
+    min_width: number;
+    min_height: number;
     closeAfterSave: boolean;
     width: string | number;
     height: string | number;
@@ -151,3 +160,9 @@ export interface EventHandlerBlock {
     originalCallback: CallbackFunction;
     syntheticCallback: CallbackFunction;
 }
+
+export type HTMLTagNames = keyof HTMLElementTagNameMap;
+
+export type Modes = 1 | 2 | 3;
+
+export type TagNames = keyof HTMLElementTagNameMap;

@@ -1,50 +1,78 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { EventsNative } from '../modules/events/EventsNative';
-import { ToolbarCollection } from '../modules/toolbar/collection';
-import { Buttons } from './toolbar';
-import { IDictionary } from './types';
+import { Buttons, Controls, IToolbarCollection } from './toolbar';
+import { IComponent, IDictionary } from './types';
+import { ICreate } from './create';
+import { IEventsNative } from './events';
 
 interface IViewOptions {
+    disabled?: boolean;
+    readonly?: boolean;
+    iframe?: boolean;
+
+    activeButtonsInReadOnly?: string[];
+
     removeButtons: string[];
     buttons: Buttons;
     zIndex?: number;
     fullsize?: boolean;
     globalFullsize?: boolean;
     showTooltip?: boolean;
+    showTooltipDelay?: number;
     useNativeTooltip?: boolean;
+    textIcons?: boolean;
+    controls?: Controls;
 }
 
-interface IViewBased {
+interface IPanel extends IComponent {
+    container: HTMLDivElement;
+    create: ICreate;
+
+    ownerDocument: Document;
+    ownerWindow: Window;
+
+    isLockedNotBy(name: string): boolean;
+    isLocked(): boolean;
+
+    lock(name?: string): boolean;
+    unlock(): boolean;
+
+    isFullSize: () => boolean;
+    toggleFullSize(isFullSize?: boolean): void;
+}
+
+interface IViewBased extends IPanel {
+    /**
+     * @property {string} ID attribute for source element, id add {id}_editor it's editor's id
+     */
     id: string;
 
     buffer: IDictionary;
 
     progress_bar: HTMLElement;
-    container: HTMLDivElement;
 
-    options: any;
+    options: IViewOptions;
 
-    editorWindow: Window;
-    editorDocument: Document;
-    ownerDocument: Document;
-    ownerWindow: Window;
-
-    editor: HTMLElement;
-
-    events: EventsNative;
-
-    isLocked: () => boolean;
-    isFullSize: () => boolean;
-
-    getRealMode: () => number;
-
-    toolbar: ToolbarCollection;
+    events: IEventsNative;
+    create: ICreate;
 
     i18n: (text: string, ...params: Array<string | number>) => string;
-    toggleFullSize(isFullSize?: boolean): void;
+
+    defaultTimeout: number;
+
+    iframe?: HTMLIFrameElement | null;
+
+    getInstance<T = IComponent>(moduleName: string, options?: object): T;
+
+    getVersion: () => string;
+
+    components: IComponent[];
+}
+
+interface IViewWithToolbar extends IViewBased {
+    toolbar: IToolbarCollection;
 }

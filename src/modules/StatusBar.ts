@@ -1,12 +1,12 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Jodit } from '../Jodit';
 import { Component } from './Component';
 import { Dom } from './Dom';
+import { IJodit } from '../types';
 
 export class StatusBar extends Component {
     public container: HTMLElement;
@@ -19,10 +19,9 @@ export class StatusBar extends Component {
     }
 
     public append(child: HTMLElement, inTheRight: boolean = false) {
-        const wrapper: HTMLElement = this.jodit.ownerDocument.createElement(
-            'div'
+        const wrapper: HTMLElement = this.jodit.create.div(
+            'jodit_statusbar_item'
         );
-        wrapper.classList.add('jodit_statusbar_item');
 
         if (inTheRight) {
             wrapper.classList.add('jodit_statusbar_item-right');
@@ -36,14 +35,12 @@ export class StatusBar extends Component {
     }
 
     public destruct() {
-        super.destruct();
         Dom.safeRemove(this.container);
     }
 
-    constructor(jodit: Jodit, readonly target: HTMLElement) {
+    constructor(jodit: IJodit, readonly target: HTMLElement) {
         super(jodit);
-        this.container = jodit.ownerDocument.createElement('div');
-        this.container.classList.add('jodit_statusbar');
+        this.container = jodit.create.div('jodit_statusbar');
         target.appendChild(this.container);
         this.hide();
     }

@@ -1,23 +1,20 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
 import { Config } from '../Config';
 import * as consts from '../constants';
 import { MODE_SOURCE } from '../constants';
-import { Jodit } from '../Jodit';
-import { Component } from '../modules/Component';
-import {
-    $$,
-    appendScript,
-    css,
-    debounce,
-    dom,
-} from '../modules/helpers/Helpers';
-import { markerInfo } from '../types';
+import { Plugin } from '../modules/Plugin';
+import { IJodit, markerInfo } from '../types';
 import { IControlType } from '../types/toolbar';
+import { appendScript } from '../modules/helpers/appendScript';
+import { debounce } from '../modules/helpers/async';
+import { $$ } from '../modules/helpers/selector';
+import { css } from '../modules/helpers/css';
+import { Dom } from '../modules/Dom';
 
 declare module '../Config' {
     interface Config {
@@ -94,11 +91,11 @@ Config.prototype.beautifyHTMLCDNUrlsJS = [
 Config.prototype.controls.source = {
     mode: consts.MODE_SPLIT,
 
-    exec: (editor: Jodit) => {
+    exec: (editor: IJodit) => {
         editor.toggleMode();
     },
 
-    isActive: (editor: Jodit) => {
+    isActive: (editor: IJodit) => {
         return editor.getRealMode() === consts.MODE_SOURCE;
     },
 
@@ -110,7 +107,7 @@ Config.prototype.controls.source = {
  *
  * @module source
  */
-export class source extends Component {
+export class source extends Plugin {
     private className = 'jodit_ace_editor';
 
     private mirrorContainer: HTMLDivElement;
@@ -225,6 +222,7 @@ export class source extends Component {
 
     private __clear = (str: string): string =>
         str.replace(consts.INVISIBLE_SPACE_REG_EXP, '');
+
     private selectAll = () => {
         this.mirror.select();
     };
@@ -386,7 +384,7 @@ export class source extends Component {
     };
 
     private replaceMirrorToACE() {
-        const editor: Jodit = this.jodit;
+        const editor: IJodit = this.jodit;
         let aceEditor: AceAjax.Editor, undoManager: AceAjax.UndoManager;
 
         const updateButtons = () => {
@@ -450,10 +448,10 @@ export class source extends Component {
                     aceEditor === undefined &&
                     (this.jodit.ownerWindow as any).ace !== undefined
                 ) {
-                    const fakeMirror = dom(
-                        '<div class="jodit_source_mirror-fake"/>',
-                        this.jodit.ownerDocument
+                    const fakeMirror = this.jodit.create.div(
+                        'jodit_source_mirror-fake'
                     );
+
                     this.mirrorContainer.insertBefore(
                         fakeMirror,
                         this.mirrorContainer.firstChild
@@ -473,6 +471,7 @@ export class source extends Component {
                     aceEditor
                         .getSession()
                         .setMode(editor.options.sourceEditorNativeOptions.mode);
+
                     aceEditor.setHighlightActiveLine(
                         editor.options.sourceEditorNativeOptions
                             .highlightActiveLine
@@ -636,6 +635,7 @@ export class source extends Component {
             );
         }
     }
+
     public mirror: HTMLTextAreaElement;
 
     public aceEditor: AceAjax.Editor;
@@ -646,17 +646,37 @@ export class source extends Component {
         this.mirror.setSelectionRange(start, end);
     };
 
-    constructor(editor: Jodit) {
-        super(editor);
+    private onReadonlyReact = () => {
+        const isReadOnly: boolean = this.jodit.options.readonly;
 
-        this.mirrorContainer = dom(
-            '<div class="jodit_source"/>',
-            this.jodit.ownerDocument
-        ) as HTMLDivElement;
-        this.mirror = dom(
-            '<textarea class="jodit_source_mirror"/>',
-            this.jodit.ownerDocument
+        if (isReadOnly) {
+            this.mirror.setAttribute('readonly', 'true');
+        } else {
+            this.mirror.removeAttribute('readonly');
+        }
+
+        if (this.aceEditor) {
+            this.aceEditor.setReadOnly(isReadOnly);
+        }
+    };
+
+    afterInit(editor: IJodit): void {
+        this.mirrorContainer = editor.create.div('jodit_source');
+
+        this.mirror = editor.create.fromHTML(
+            '<textarea class="jodit_source_mirror"/>'
         ) as HTMLTextAreaElement;
+
+        const addListeners = () => {
+            // save restore selection
+            editor.events
+                .off('beforeSetMode.source afterSetMode.source')
+                .on('beforeSetMode.source', this.saveSelection)
+                .on('afterSetMode.source', this.restoreSelection);
+        };
+
+        addListeners();
+        this.onReadonlyReact();
 
         editor.events
             .on(
@@ -669,17 +689,17 @@ export class source extends Component {
                 'change keydown mousedown touchstart input',
                 this.autosize
             )
-            .on('afterSetMode', this.autosize)
+            .on('afterSetMode.source', this.autosize)
             .on(this.mirror, 'mousedown focus', (e: Event) => {
                 editor.events.fire(e.type, e);
             });
 
         editor.events
-            .on('setMinHeight', (minHeightD: number) => {
+            .on('setMinHeight.source', (minHeightD: number) => {
                 this.mirror && css(this.mirror, 'minHeight', minHeightD);
             })
             .on(
-                'insertHTML',
+                'insertHTML.source',
                 (html: string): void | false => {
                     if (
                         !editor.options.readonly &&
@@ -693,61 +713,51 @@ export class source extends Component {
             .on(
                 'aceInited',
                 () => {
-                    if (editor.options.readonly) {
-                        if (this.aceEditor) {
-                            this.aceEditor.setReadOnly(true);
-                        }
-                    }
+                    this.onReadonlyReact();
+                    addListeners();
                 },
                 void 0,
                 void 0,
                 true
             )
-            .on('readonly', (isReadOnly: boolean) => {
-                if (isReadOnly) {
-                    this.mirror.setAttribute('readonly', 'true');
-                } else {
-                    this.mirror.removeAttribute('readonly');
-                }
-
-                if (this.aceEditor) {
-                    this.aceEditor.setReadOnly(isReadOnly);
-                }
-            })
-            .on('placeholder', (text: string) => {
+            .on('readonly.source', this.onReadonlyReact)
+            .on('placeholder.source', (text: string) => {
                 this.mirror.setAttribute('placeholder', text);
             })
-            .on('afterInit aceInited', () => {
-                // save restore selection
-                editor.events
-                    .on('beforeSetMode', this.saveSelection)
-                    .on('afterSetMode', this.restoreSelection);
-            })
-            .on('afterInit', () => {
-                this.mirrorContainer.appendChild(this.mirror);
-                editor.workplace.appendChild(this.mirrorContainer);
-                this.autosize();
+            .on('beforeCommand.source', this.onSelectAll)
+            .on('change.source', this.fromWYSIWYG);
 
-                const className = 'beutyfy_html_jodit_helper';
+        this.mirrorContainer.appendChild(this.mirror);
+        editor.workplace.appendChild(this.mirrorContainer);
+        this.autosize();
 
-                if (
-                    editor.options.beautifyHTML &&
-                    (editor.ownerWindow as any).html_beautify === undefined &&
-                    !$$('script.' + className, editor.ownerDocument.body).length
-                ) {
-                    this.loadNext(
-                        0,
-                        editor.options.beautifyHTMLCDNUrlsJS,
-                        false,
-                        className
-                    );
-                }
+        const className = 'beutyfy_html_jodit_helper';
 
-                if (editor.options.useAceEditor) {
-                    this.replaceMirrorToACE();
-                }
-            })
-            .on('beforeCommand', this.onSelectAll)
-            .on('change afterInit', this.fromWYSIWYG);
+        if (
+            editor.options.beautifyHTML &&
+            (editor.ownerWindow as any).html_beautify === undefined &&
+            !$$('script.' + className, editor.ownerDocument.body).length
+        ) {
+            this.loadNext(
+                0,
+                editor.options.beautifyHTMLCDNUrlsJS,
+                false,
+                className
+            );
+        }
+
+        if (editor.options.useAceEditor) {
+            this.replaceMirrorToACE();
+        }
+
+        this.fromWYSIWYG();
+    }
+    beforeDestruct(jodit: IJodit): void {
+        Dom.safeRemove(this.mirrorContainer);
+        Dom.safeRemove(this.mirror);
+
+        if (jodit && jodit.events) {
+            jodit.events.off('aceInited .source');
+        }
     }
 }

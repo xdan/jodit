@@ -1,23 +1,51 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { MODE_WYSIWYG } from '../../constants';
-import { Jodit } from '../../Jodit';
-import { IDictionary } from '../../types';
+import { IDictionary, IEventsNative } from '../../types';
 import { IViewBased, IViewOptions } from '../../types/view';
 import { Component } from '../Component';
-import { EventsNative } from '../events/EventsNative';
-import { ToolbarCollection } from '../toolbar/collection';
+import { EventsNative } from '../events/eventsNative';
+import { Panel } from './panel';
 
-export class View extends Component implements IViewBased {
-    protected __isFullSize: boolean = false;
+declare let appVersion: string;
+
+export class View extends Panel implements IViewBased {
+    /**
+     * @property{string} ID attribute for source element, id add {id}_editor it's editor's id
+     */
+    public id: string;
+    public version: string = appVersion; // from webpack.config.js
+
+    private __modulesInstances: IDictionary<Component> = {};
+
+    /**
+     * Return default timeout period in milliseconds for some debounce or throttle functions.
+     * By default return {observer.timeout} options
+     *
+     * @return {number}
+     */
+    get defaultTimeout(): number {
+        return 100;
+    }
+
+    /**
+     * Some extra data inside editor
+     *
+     * @type {{}}
+     * @see copyformat plugin
+     */
     public buffer: IDictionary;
 
-    public progress_bar: HTMLElement;
-    public container: HTMLDivElement;
+    /**
+     * progress_bar Progress bar
+     */
+    public progress_bar: HTMLDivElement = this.create.div(
+        'jodit_progress_bar',
+        this.create.div()
+    );
 
     public options: IViewOptions = {
         removeButtons: [],
@@ -29,67 +57,81 @@ export class View extends Component implements IViewBased {
         globalFullsize: true,
     };
 
-    public events: EventsNative;
+    public events: IEventsNative;
 
-    public editorDocument: Document = document;
-    public editorWindow: Window = window;
+    public components: any = [];
 
-    public ownerDocument: Document;
-    public ownerWindow: Window;
+    // public toolbar: ToolbarCollection;
 
-    public editor: HTMLElement;
-    public toolbar: ToolbarCollection;
-
-    public getRealMode(): number {
-        return MODE_WYSIWYG;
+    i18n(text: string): string {
+        return this.jodit && this.jodit !== this
+            ? this.jodit.i18n(text)
+            : Jodit.prototype.i18n(text);
     }
 
-    public i18n(text: string) {
-        return this.jodit ? this.jodit.i18n(text) : Jodit.prototype.i18n(text);
-    }
-
-    public isFullSize = (): boolean => this.__isFullSize;
-
-    public toggleFullSize(isFullSize?: boolean) {
-        if (isFullSize === undefined) {
-            isFullSize = !this.__isFullSize;
-        }
-
-        if (isFullSize === this.__isFullSize) {
-            return;
-        }
-
-        this.__isFullSize = isFullSize;
+    /**
+     * @override
+     * @param isFullSize
+     */
+    toggleFullSize(isFullSize?: boolean) {
+        super.toggleFullSize(isFullSize);
 
         if (this.events) {
             this.events.fire('toggleFullSize', isFullSize);
         }
     }
 
+    public getInstance<T = Component>(moduleName: string, options?: object): T {
+        if (typeof Jodit.modules[moduleName] !== 'function') {
+            throw new Error('Need real module name');
+        }
+
+        if (this.__modulesInstances[moduleName] === undefined) {
+            this.__modulesInstances[moduleName] = new Jodit.modules[moduleName](
+                this.jodit || this,
+                options
+            );
+        }
+
+        return this.__modulesInstances[moduleName] as any;
+    }
+
+    /**
+     * Return current version
+     *
+     * @method getVersion
+     * @return {string}
+     */
+    public getVersion = (): string => {
+        return this.version;
+    };
+
     public destruct() {
-        this.toolbar.destruct();
+        this.events.destruct();
+
+        delete this.options;
+
         super.destruct();
     }
 
-    constructor(editor?: IViewBased, options = {}) {
-        super(editor);
+    constructor(jodit?: IViewBased, options?: IViewOptions) {
+        super(jodit);
 
-        const self: View = this,
-            doc: HTMLDocument = editor ? editor.ownerDocument : document;
+        this.id =
+            jodit && jodit.id ? jodit.id : new Date().getTime().toString();
 
-        self.ownerDocument = doc;
-        self.ownerWindow = editor ? editor.ownerWindow : window;
+        this.jodit = jodit || this;
 
-        self.progress_bar = editor
-            ? editor.progress_bar
-            : document.createElement('div');
-        self.editor = editor ? editor.editor : document.createElement('div');
+        this.events =
+            jodit && jodit.events
+                ? jodit.events
+                : new EventsNative(this.ownerDocument);
+        this.buffer = jodit && jodit.buffer ? jodit.buffer : {};
 
-        self.events = editor ? editor.events : new EventsNative(doc);
-        self.buffer = editor ? editor.buffer : {};
+        // this.toolbar = new ToolbarCollection(this);
 
-        self.toolbar = new ToolbarCollection(self);
-
-        self.options = { ...self.options, ...options };
+        this.options = { ...this.options, ...options };
     }
 }
+
+import { Jodit } from '../../Jodit';

@@ -1,18 +1,12 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
 import { TEXT_HTML, TEXT_PLAIN } from '../constants';
-import { Dom } from '../modules/';
-import {
-    css,
-    ctrlKey,
-    dataBind,
-    dom,
-    throttle,
-} from '../modules/helpers/Helpers';
+import { Dom } from '../modules/Dom';
+import { css, ctrlKey, dataBind } from '../modules/helpers';
 import { Plugin } from '../modules/Plugin';
 import { IPoint } from '../types/types';
 
@@ -102,10 +96,9 @@ export class DragAndDrop extends Plugin {
                     fragment = dataBind(this.draggable, 'target');
                 }
             } else if (this.getText(event)) {
-                fragment = dom(
-                    this.getText(event) as string,
-                    this.jodit.editorDocument
-                );
+                fragment = this.jodit.create.inside.fromHTML(this.getText(
+                    event
+                ) as string);
             }
 
             sel.removeAllRanges();

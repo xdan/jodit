@@ -1,26 +1,24 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
 import { Config } from '../Config';
-import { Jodit } from '../Jodit';
 import { Widget } from '../modules/Widget';
 import TabsWidget = Widget.TabsWidget;
 import ColorPickerWidget = Widget.ColorPickerWidget;
 import { Dom } from '../modules/Dom';
-import { css, normalizeColor } from '../modules/helpers/Helpers';
-import { ToolbarButton } from '../modules/toolbar/button';
-import { IDictionary } from '../types';
+import { css, normalizeColor } from '../modules/helpers/';
+import { IDictionary, IJodit } from '../types';
 import { IControlType } from '../types/toolbar';
 
 Config.prototype.controls.brush = {
-    isActive: (
-        editor: Jodit,
-        btn: IControlType,
-        button: ToolbarButton
-    ): boolean => {
+    isActive: (editor: IJodit, btn: IControlType, button): boolean => {
+        if (!button) {
+            return true;
+        }
+
         const current: Node | false = editor.selection.current(),
             icon: SVGSVGElement | null = button.container.querySelector('svg');
 
@@ -30,7 +28,7 @@ Config.prototype.controls.brush = {
                     current,
                     elm => {
                         return (
-                            Dom.isBlock(elm) ||
+                            Dom.isBlock(elm, editor.editorWindow) ||
                             (elm &&
                                 Dom.isNode(elm, editor.editorWindow) &&
                                 elm.nodeType === Node.ELEMENT_NODE)
@@ -61,7 +59,7 @@ Config.prototype.controls.brush = {
     },
 
     popup: (
-        editor: Jodit,
+        editor: IJodit,
         current: Node | false,
         self: IControlType,
         close: () => void
@@ -132,7 +130,7 @@ Config.prototype.controls.brush = {
  * Process commands `background` and `forecolor`
  * @param {Jodit} editor
  */
-export function color(editor: Jodit) {
+export function color(editor: IJodit) {
     const callback = (
         command: string,
         second: string,

@@ -18,13 +18,13 @@ describe('Check Dom module', function() {
     });
     describe('Method isBlock', function () {
         it('Should return true then it gets BLOCK element', function () {
-            expect(true).to.equal(Jodit.modules.Dom.isBlock(document.documentElement));
-            expect(true).to.equal(Jodit.modules.Dom.isBlock(document.createElement('div')));
-            expect(true).to.equal(Jodit.modules.Dom.isBlock(document.createElement('table')));
+            expect(true).to.equal(Jodit.modules.Dom.isBlock(document.documentElement, window));
+            expect(true).to.equal(Jodit.modules.Dom.isBlock(document.createElement('div'), window));
+            expect(true).to.equal(Jodit.modules.Dom.isBlock(document.createElement('table'), window));
         });
         it('Should return false then it gets not BLOCK element', function () {
-            expect(false).to.equal(Jodit.modules.Dom.isBlock(document.createTextNode('test')));
-            expect(false).to.equal(Jodit.modules.Dom.isBlock(document.createElement('span')));
+            expect(false).to.equal(Jodit.modules.Dom.isBlock(document.createTextNode('test'), window));
+            expect(false).to.equal(Jodit.modules.Dom.isBlock(document.createElement('span'), window));
         });
     });
 

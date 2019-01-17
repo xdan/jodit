@@ -1,32 +1,27 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
 import { Config } from '../Config';
-import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
-import { $$, css } from '../modules/helpers/Helpers';
-import { ToolbarButton } from '../modules/toolbar/button';
+import { $$, css } from '../modules/helpers/';
 import { ToolbarIcon } from '../modules/toolbar/icon';
 import { IControlType } from '../types/toolbar';
+import { IJodit } from '../types';
 
 Config.prototype.controls.align = {
     name: 'left',
     tooltip: 'Align',
-    getLabel: (
-        editor: Jodit,
-        btn: IControlType,
-        button: ToolbarButton
-    ): boolean => {
+    getLabel: (editor: IJodit, btn, button): boolean => {
         const current: Node | false = editor.selection.current();
 
         if (current) {
             const currentBox: HTMLElement =
                 (Dom.closest(
                     current,
-                    Dom.isBlock,
+                    node => Dom.isBlock(node, editor.editorWindow),
                     editor.editor
                 ) as HTMLElement) || editor.editor;
 
@@ -40,6 +35,7 @@ Config.prototype.controls.align = {
             }
 
             if (
+                button &&
                 btn.data &&
                 btn.data.currentValue !== currentValue &&
                 btn.list &&
@@ -57,14 +53,14 @@ Config.prototype.controls.align = {
 
         return false;
     },
-    isActive: (editor: Jodit, btn: IControlType): boolean => {
+    isActive: (editor: IJodit, btn): boolean => {
         const current: Node | false = editor.selection.current();
 
         if (current && btn.defaultValue) {
             const currentBox: HTMLElement =
                 (Dom.closest(
                     current,
-                    Dom.isBlock,
+                    node => Dom.isBlock(node, editor.editorWindow),
                     editor.editor
                 ) as HTMLElement) || editor.editor;
             return (
@@ -85,7 +81,6 @@ Config.prototype.controls.align = {
 
 Config.prototype.controls.center = {
     command: 'justifyCenter',
-    tags: ['center'],
     css: {
         'text-align': 'center',
     },
@@ -118,7 +113,7 @@ Config.prototype.controls.right = {
  *
  * @param {Jodit} editor
  */
-export function justify(editor: Jodit) {
+export function justify(editor: IJodit) {
     const callback = (command: string): false | void => {
         const justifyElm = (box: HTMLElement) => {
             if (box instanceof (editor.editorWindow as any).HTMLElement) {
@@ -140,6 +135,7 @@ export function justify(editor: Jodit) {
         };
 
         editor.selection.focus();
+
         editor.selection.eachSelection(
             (current: Node): false | void => {
                 if (!current) {
@@ -158,7 +154,7 @@ export function justify(editor: Jodit) {
                 let currentBox: HTMLElement | false | null = current
                     ? (Dom.up(
                           current,
-                          Dom.isBlock,
+                          node => Dom.isBlock(node, editor.editorWindow),
                           editor.editor
                       ) as HTMLElement)
                     : false;
@@ -174,8 +170,10 @@ export function justify(editor: Jodit) {
                 justifyElm(currentBox as HTMLElement);
             }
         );
+
         return false;
     };
+
     editor.registerCommand('justifyfull', callback);
     editor.registerCommand('justifyright', callback);
     editor.registerCommand('justifyleft', callback);

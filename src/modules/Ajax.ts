@@ -1,13 +1,13 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
 import { Config } from '../Config';
 import { IDictionary } from '../types';
 import { IViewBased } from '../types/view';
-import { each, extend } from './helpers/Helpers';
+import { each, extend } from './helpers/';
 
 /**
  * @property {object} defaultAjaxOptions A set of key/value pairs that configure the Ajax request. All settings
@@ -91,7 +91,8 @@ Config.prototype.defaultAjaxOptions = {
 } as AjaxOptions;
 
 export class Ajax {
-    private xhr: XMLHttpRequest;
+    private readonly xhr: XMLHttpRequest;
+
     private success_response_codes = [200, 201, 202];
     private __buildParams(
         obj: string | IDictionary<string | object> | FormData,
@@ -142,7 +143,7 @@ export class Ajax {
         return this;
     }
 
-    public send(): Promise<any> {
+    send(): Promise<any> {
         return new Promise(
             (
                 resolve: (this: XMLHttpRequest, resp: object) => any,

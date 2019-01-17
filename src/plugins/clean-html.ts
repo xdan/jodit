@@ -1,22 +1,21 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
 import { Config } from '../Config';
 import * as consts from '../constants';
 import { IS_INLINE } from '../constants';
-import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
 import {
     cleanFromWord,
     debounce,
     normalizeNode,
     trim,
-} from '../modules/helpers/Helpers';
+} from '../modules/helpers/';
 import { Select } from '../modules/Selection';
-import { IDictionary } from '../types';
+import { IDictionary, IJodit } from '../types';
 
 /**
  * @property {object} cleanHTML {@link cleanHtml|cleanHtml}'s options
@@ -102,7 +101,7 @@ Config.prototype.controls.eraser = {
 /**
  * Clean HTML after removeFormat and insertHorizontalRule command
  */
-export function cleanHtml(editor: Jodit) {
+export function cleanHtml(editor: IJodit) {
     // TODO compare this functionality and plugin paste.ts
     if (editor.options.cleanHTML.cleanOnPaste) {
         editor.events.on('processPaste', (event: Event, html: string) => {
@@ -200,8 +199,16 @@ export function cleanHtml(editor: Jodit) {
             node.nodeName === 'BR' &&
             hasNotEmptyTextSibling(node) &&
             !hasNotEmptyTextSibling(node, true) &&
-            Dom.up(node, Dom.isBlock, editor.editor) !==
-                Dom.up(current, Dom.isBlock, editor.editor)
+            Dom.up(
+                node,
+                node => Dom.isBlock(node, editor.editorWindow),
+                editor.editor
+            ) !==
+                Dom.up(
+                    current,
+                    node => Dom.isBlock(node, editor.editorWindow),
+                    editor.editor
+                )
         ) {
             return true;
         }
@@ -272,13 +279,13 @@ export function cleanHtml(editor: Jodit) {
 
                             if (
                                 editor.options.cleanHTML.fillEmptyParagraph &&
-                                Dom.isBlock(nodeElm) &&
+                                Dom.isBlock(nodeElm, editor.editorWindow) &&
                                 Dom.isEmpty(
                                     nodeElm,
                                     /^(img|svg|canvas|input|textarea|form|br)$/
                                 )
                             ) {
-                                const br: HTMLBRElement = editor.editorDocument.createElement(
+                                const br: HTMLBRElement = editor.create.inside.element(
                                     'br'
                                 );
                                 nodeElm.appendChild(br);
@@ -353,7 +360,7 @@ export function cleanHtml(editor: Jodit) {
             if (currentNode) {
                 const currentParagraph: Node | false = Dom.up(
                     currentNode,
-                    Dom.isBlock,
+                    node => Dom.isBlock(node, editor.editorWindow),
                     editor.editor
                 );
                 if (currentParagraph) {
@@ -396,18 +403,20 @@ export function cleanHtml(editor: Jodit) {
                     if (hr) {
                         node = Dom.next(
                             hr,
-                            Dom.isBlock,
+                            node => Dom.isBlock(node, editor.editorWindow),
                             editor.editor,
                             false
                         ) as Node | null;
+
                         if (!node) {
-                            node = editor.editorDocument.createElement(
+                            node = editor.create.inside.element(
                                 editor.options.enter
                             );
                             if (node) {
                                 Dom.after(hr, node as HTMLElement);
                             }
                         }
+
                         sel.setCursorIn(node);
                     }
                     break;

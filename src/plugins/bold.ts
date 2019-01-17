@@ -1,12 +1,11 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
 import { Config } from '../Config';
-import { Jodit } from '../Jodit';
-import { IDictionary } from '../types';
+import { IDictionary, IJodit } from '../types';
 import { IControlType } from '../types/toolbar';
 
 Config.prototype.controls.subscript = {
@@ -57,14 +56,14 @@ Config.prototype.controls.strikethrough = {
 /**
  * Bold plugin - change B to Strong, i to Em
  */
-export function bold(editor: Jodit) {
-    const callBack = (command: string): false | void => {
-        const control: IControlType = Jodit.defaultOptions.controls[
+export function bold(editor: IJodit) {
+    const callBack = (command: string): false => {
+        const control: IControlType = Config.defaultOptions.controls[
                 command
             ] as IControlType,
             cssOptions:
                 | IDictionary<string | string[]>
-                | IDictionary<(editor: Jodit, value: string) => boolean> = {
+                | IDictionary<(editor: IJodit, value: string) => boolean> = {
                 ...control.css,
             },
             cssRules: IDictionary<string> = {};
@@ -81,7 +80,8 @@ export function bold(editor: Jodit) {
             control.css as any
         );
 
-        editor.setEditorValue();
+        editor.events.fire('synchro');
+
         return false;
     };
 

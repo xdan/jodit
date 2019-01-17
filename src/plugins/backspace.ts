@@ -1,21 +1,21 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
 import * as consts from '../constants';
 import { MAY_BE_REMOVED_WITH_KEY } from '../constants';
-import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
-import { normalizeNode, trim } from '../modules/helpers/Helpers';
+import { normalizeNode, trim } from '../modules/helpers/';
+import { IJodit } from '../types';
 
 /**
  * Plug-in process entering Backspace key
  *
  * @module backspace
  */
-export function backspace(editor: Jodit) {
+export function backspace(editor: IJodit) {
     const removeEmptyBlocks = (container: HTMLElement) => {
         let box: HTMLElement | null = container,
             parent: Node | null;
@@ -269,6 +269,7 @@ export function backspace(editor: Jodit) {
                     const fakeNode: Node = editor.ownerDocument.createTextNode(
                         consts.INVISIBLE_SPACE
                     );
+
                     const marker: HTMLElement = editor.editorDocument.createElement(
                         'span'
                     );
@@ -282,9 +283,10 @@ export function backspace(editor: Jodit) {
 
                         let container: HTMLElement | null = Dom.up(
                             fakeNode,
-                            Dom.isBlock,
+                            node => Dom.isBlock(node, editor.editorWindow),
                             editor.editor
                         ) as HTMLElement | null;
+
                         const workElement: Node | null = Dom.findInline(
                             fakeNode,
                             toLeft,
@@ -322,17 +324,19 @@ export function backspace(editor: Jodit) {
                         let prevBox: Node | false | null = toLeft
                             ? Dom.prev(
                                   box.node || fakeNode,
-                                  Dom.isBlock,
+                                  node =>
+                                      Dom.isBlock(node, editor.editorWindow),
                                   editor.editor
                               )
                             : Dom.next(
                                   box.node || fakeNode,
-                                  Dom.isBlock,
+                                  node =>
+                                      Dom.isBlock(node, editor.editorWindow),
                                   editor.editor
                               );
 
                         if (!prevBox && container && container.parentNode) {
-                            prevBox = editor.editorDocument.createElement(
+                            prevBox = editor.create.inside.element(
                                 editor.options.enter
                             );
                             let boxNode: Node = container;
@@ -362,7 +366,9 @@ export function backspace(editor: Jodit) {
                                 prevBox,
                                 !toLeft
                             );
+
                             editor.selection.insertNode(marker, false, false);
+
                             if (
                                 tmpNode.nodeType === Node.TEXT_NODE &&
                                 tmpNode.nodeValue === consts.INVISIBLE_SPACE

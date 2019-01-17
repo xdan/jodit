@@ -1,51 +1,61 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { IControlTypeStrong } from '../../types/toolbar';
-import { IViewBased } from '../../types/view';
+import {
+    IControlTypeStrong,
+    IToolbarCollection,
+    IToolbarElement,
+} from '../../types/toolbar';
 import { Component } from '../Component';
-import { dom } from '../helpers/Helpers';
 import { ToolbarCollection } from './collection';
 import { ToolbarIcon } from './icon';
+import { Dom } from '../Dom';
+import { IViewBased, TagNames } from '../../types';
+import { trim } from '../helpers/string';
 
-export abstract class ToolbarElement extends Component {
-    public container: HTMLElement;
-
-    public parentToolbar: ToolbarCollection | null = null;
+export abstract class ToolbarElement extends Component
+    implements IToolbarElement {
+    container: HTMLElement;
+    parentToolbar?: IToolbarCollection;
 
     protected constructor(
-        jodit: IViewBased,
-        containerTag: string = 'li',
+        parentToolbarOrView: IToolbarCollection | IViewBased,
+        containerTag: TagNames = 'li',
         containerClass: string = 'jodit_toolbar_btn'
     ) {
-        super(jodit);
-        this.container = this.jodit.ownerDocument.createElement(containerTag);
+        if (parentToolbarOrView instanceof ToolbarCollection) {
+            super(parentToolbarOrView.jodit);
+            this.parentToolbar = <IToolbarCollection>parentToolbarOrView;
+        } else {
+            super(<IViewBased>parentToolbarOrView);
+        }
+
+        this.container = this.jodit.create.element(containerTag);
         this.container.classList.add(containerClass);
     }
 
-    public createIcon(
-        clearName: string,
-        control?: IControlTypeStrong
-    ): HTMLElement {
+    destruct(): any {
+        Dom.safeRemove(this.container);
+    }
+
+    createIcon(clearName: string, control?: IControlTypeStrong): HTMLElement {
         const icon: string = control ? control.icon || control.name : clearName;
 
         if (!this.jodit.options.textIcons) {
-            let iconSVG:
-                | string
-                | undefined
-                | HTMLElement = this.jodit.events.fire(
+            let iconSVG: string | void | HTMLElement = this.jodit.events.fire(
                 'getIcon',
                 icon,
                 control,
                 clearName
             );
+
             let iconElement: HTMLElement;
 
             if (control && control.iconURL && iconSVG === undefined) {
-                iconElement = dom('<i></i>', this.jodit.ownerDocument);
+                iconElement = this.jodit.create.element('i');
                 iconElement.style.backgroundImage =
                     'url(' + control.iconURL + ')';
             } else {
@@ -57,7 +67,10 @@ export abstract class ToolbarElement extends Component {
                     }
                 }
 
-                iconElement = dom(iconSVG, this.jodit.ownerDocument);
+                iconElement =
+                    typeof iconSVG === 'string'
+                        ? this.jodit.create.fromHTML(trim(iconSVG))
+                        : iconSVG;
             }
 
             iconElement.classList.add('jodit_icon', 'jodit_icon_' + clearName);
@@ -65,11 +78,10 @@ export abstract class ToolbarElement extends Component {
             return iconElement;
         }
 
-        return dom(
+        return this.jodit.create.fromHTML(
             `<span class="jodit_icon">${this.jodit.i18n(
                 control ? control.name : clearName
-            )}</span>`,
-            this.jodit.ownerDocument
+            )}</span>`
         );
     }
 }

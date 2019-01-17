@@ -384,10 +384,10 @@ describe('Selection Module Tests', function() {
             var editor = new Jodit(appendTestArea(), {
                 useAceEditor: false
             });
-            editor.setEditorValue('<p>test</p>');
+            editor.value = '<p>test</p>';
 
-            var sel = editor.editorWindow.getSelection(),
-                range = editor.editorDocument.createRange();
+            var sel = editor.selection.sel,
+                range = editor.selection.createRange();
 
             range.setStart(editor.editor.firstChild.firstChild, 2);
             range.collapse(true);
@@ -503,9 +503,10 @@ describe('Selection Module Tests', function() {
                 mirror.setSelectionRange(2, 8);
 
                 editor.setMode(Jodit.MODE_WYSIWYG);
+
                 expect(editor.selection.isCollapsed()).to.equal(false);
 
-                editor.selection.insertNode(editor.editorDocument.createTextNode(' a '));
+                editor.selection.insertNode(editor.create.inside.text(' a '));
                 expect(editor.getEditorValue()).to.equal(' a ');
             });
         });

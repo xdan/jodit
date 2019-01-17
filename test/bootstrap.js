@@ -3,65 +3,15 @@ typeof window.chai !== 'undefined' && (chai.config.includeStack = true);
 var oldI18n = Jodit.prototype.i18n;
 var oldAjaxSender = Jodit.modules.Ajax.prototype.send;
 
-function SyncPromise(workfunction) {
-    var self = this,
-        args,
-        resolve = false;
-
-    workfunction(
-        function() {
-            args = arguments;
-            resolve = true;
-        },
-        function() {
-            args = arguments;
-        }
-    );
-
-    this.then = function(callback) {
-        if (resolve) {
-            callback.apply(self, args);
-        }
-        return self;
-    };
-
-    this.catch = function(callback) {
-        if (!resolve) {
-            callback.apply(self, args);
-        }
-        return self;
-    };
-}
-
-SyncPromise.resolve = function(resp) {
-    return new SyncPromise(resolve => {
-        resolve();
-    });
-};
-SyncPromise.reject = function(message) {
-    throw new Error(message);
-};
-SyncPromise.all = function(promises) {
-    return new SyncPromise(function(resolve, reject) {
-        var resolved = 0;
-
-        promises.forEach(function(promise) {
-            promise.then(function() {
-                resolved++;
-            });
-        });
-
-        resolved === promises.length ? resolve() : reject();
-    });
-};
 var naturalPromise = window.Promise;
 
 function mocPromise() {
-    window.Promise = SyncPromise;
+    window.Promise = SynchronousPromise;
 }
 function unmocPromise() {
     window.Promise = naturalPromise;
 }
+
 var defaultPermissions = {
     permissions: {
         allowFiles: true,
@@ -107,7 +57,7 @@ if (typeof window.chai !== 'undefined') {
             action = actioExec[1];
         }
 
-        return new SyncPromise(function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
             switch (action) {
                 case 'fileUpload':
                     var file = ajax.options.data.get('files[0]');
@@ -313,23 +263,29 @@ var removeStuff = function() {
     Object.keys(Jodit.instances).forEach(function(key) {
         Jodit.instances[key].destruct();
     });
+
     stuff.forEach(function(elm) {
         elm && elm.parentNode && elm.parentNode.removeChild(elm);
         delete elm;
     });
+
     stuff.length = 0;
-    [].slice
-        .call(document.querySelectorAll('.jodit.jodit_dialog_box.active'))
+
+    Array
+        .from(document.querySelectorAll('.jodit.jodit_dialog_box.active'))
         .forEach(function(dialog) {
             simulateEvent('close_dialog', 0, dialog);
         });
+
     mocPromise();
 };
 var box = document.createElement('div');
 document.body.appendChild(box);
+
 var getBox = function() {
     return box;
 };
+
 var appendTestArea = function(id, noput) {
     var textarea = document.createElement('textarea');
     textarea.setAttribute('id', id || 'editor_' + new Date().getTime());
@@ -549,6 +505,7 @@ var createPoint = function createPoint(x, y, color) {
     );
     div.style.left = parseInt(x, 10) + 'px';
     div.style.top = parseInt(y, 10) + 'px';
+
     document.body.appendChild(div);
 };
 

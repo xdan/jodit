@@ -1,13 +1,14 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
 import { Config } from '../Config';
 import * as consts from '../constants';
-import { Jodit } from '../Jodit';
-import { $$, debounce, dom } from '../modules/helpers/Helpers';
+import { debounce } from '../modules/helpers/async';
+import { $$ } from '../modules/helpers/selector';
+import { IJodit } from '../types';
 
 declare module '../Config' {
     interface Config {
@@ -32,7 +33,7 @@ Config.prototype.mediaInFakeBlock = true;
  */
 Config.prototype.mediaBlocks = ['video', 'audio'];
 
-export function media(editor: Jodit) {
+export function media(editor: IJodit) {
     const keyFake: string = 'jodit_fake_wrapper';
 
     const { mediaFakeTag, mediaBlocks, mediaInFakeBlock } = editor.options;
@@ -48,7 +49,7 @@ export function media(editor: Jodit) {
         } else {
             let wrapper: HTMLElement;
 
-            wrapper = dom(
+            wrapper = editor.create.inside.fromHTML(
                 '<' +
                     mediaFakeTag +
                     ' data-jodit-temp="1" ' +
@@ -59,8 +60,7 @@ export function media(editor: Jodit) {
                     '="1">' +
                     '</' +
                     mediaFakeTag +
-                    '>',
-                editor.editorDocument
+                    '>'
             );
 
             wrapper.style.display =

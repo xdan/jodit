@@ -1,26 +1,30 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { Jodit } from '../../Jodit';
-import { IDictionary } from '../../types';
+import { IDictionary, IToolbarCollection } from '../../types';
 import {
     Buttons,
     Controls,
     IControlType,
     IControlTypeStrong,
 } from '../../types/toolbar';
+
 import { IViewBased } from '../../types/view';
-import { debounce } from '../helpers/Helpers';
+import { debounce } from '../helpers/async';
 import { ToolbarBreak } from './break';
 import { ToolbarButton } from './button';
 import { ToolbarElement } from './element';
 import { ToolbarSeparator } from './separator';
 import { Dom } from '../Dom';
+import { Component } from '../Component';
+import { Config } from '../../Config';
 
-export class ToolbarCollection extends ToolbarElement {
+export class ToolbarCollection<T extends IViewBased = IViewBased>
+    extends Component<T>
+    implements IToolbarCollection {
     private __buttons: ToolbarElement[] = [];
 
     private __getControlType = (
@@ -28,12 +32,12 @@ export class ToolbarCollection extends ToolbarElement {
     ): IControlTypeStrong => {
         let buttonControl: IControlTypeStrong;
         const controls: Controls =
-            this.jodit.options.controls || Jodit.defaultOptions.controls;
+            this.jodit.options.controls || Config.defaultOptions.controls;
 
         if (typeof button !== 'string') {
             buttonControl = { name: 'empty', ...button };
             if (controls[buttonControl.name] !== undefined) {
-                buttonControl = {
+                buttonControl = <IControlTypeStrong>{
                     ...controls[buttonControl.name],
                     ...buttonControl,
                 };
@@ -89,13 +93,12 @@ export class ToolbarCollection extends ToolbarElement {
             .filter(a => a !== '');
     }
 
-    public appendChild(button: ToolbarElement) {
+    appendChild(button: ToolbarElement) {
         this.__buttons.push(button);
-        button.parentToolbar = this;
         this.container.appendChild(button.container);
     }
 
-    public removeChild(button: ToolbarElement) {
+    removeChild(button: ToolbarElement) {
         const index: number = this.__buttons.indexOf(button);
 
         if (index !== -1) {
@@ -104,15 +107,9 @@ export class ToolbarCollection extends ToolbarElement {
                 Dom.safeRemove(button.container);
             }
         }
-
-        button.parentToolbar = null;
     }
 
-    public build(
-        buttons: Buttons,
-        container: HTMLElement,
-        target?: HTMLElement
-    ) {
+    build(buttons: Buttons, container: HTMLElement, target?: HTMLElement) {
         let lastBtnSeparator: boolean = false;
         this.clear();
         const buttonsList: Array<IControlType | string> =
@@ -143,11 +140,7 @@ export class ToolbarCollection extends ToolbarElement {
                         break;
                     default:
                         lastBtnSeparator = false;
-                        button = new ToolbarButton(
-                            this.jodit,
-                            buttonControl,
-                            target
-                        );
+                        button = new ToolbarButton(this, buttonControl, target);
                 }
 
                 if (button) {
@@ -162,7 +155,7 @@ export class ToolbarCollection extends ToolbarElement {
         this.immedateCheckActiveButtons();
     }
 
-    public clear() {
+    clear() {
         // in removeChild __buttons is changed
         [...this.__buttons].forEach((button: ToolbarElement) => {
             this.removeChild(button);
@@ -172,7 +165,7 @@ export class ToolbarCollection extends ToolbarElement {
         this.__buttons.length = 0;
     }
 
-    public immedateCheckActiveButtons = () => {
+    immedateCheckActiveButtons = () => {
         if (this.jodit.isLocked()) {
             return;
         }
@@ -193,23 +186,71 @@ export class ToolbarCollection extends ToolbarElement {
         this.jodit.events && this.jodit.events.fire('updateToolbar');
     };
 
-    public destruct() {
+    buttonIsActive(button: ToolbarButton): boolean | void {
+        if (typeof button.control.isActive === 'function') {
+            return button.control.isActive(this.jodit, button.control, button);
+        }
+    }
+
+    buttonIsDisabled(button: ToolbarButton): boolean | void {
+        if (this.jodit.options.disabled) {
+            return true;
+        }
+
+        if (
+            this.jodit.options.readonly &&
+            (!this.jodit.options.activeButtonsInReadOnly ||
+                this.jodit.options.activeButtonsInReadOnly.indexOf(
+                    button.control.name
+                ) === -1)
+        ) {
+            return true;
+        }
+
+        let isDisabled: boolean | void;
+
+        if (typeof button.control.isDisable === 'function') {
+            isDisabled = button.control.isDisable(
+                this.jodit,
+                button.control,
+                button
+            );
+        }
+
+        return isDisabled;
+    }
+
+    /**
+     * Target for button element
+     *
+     * @param button
+     */
+    getTarget(button: ToolbarButton): Node | void {
+        return button.target;
+    }
+
+    checkActiveButtons = debounce(
+        this.immedateCheckActiveButtons,
+        this.jodit.defaultTimeout
+    );
+
+    container: HTMLElement;
+
+    constructor(jodit: IViewBased) {
+        super(<T>jodit);
+        this.container = this.jodit.create.element('ul');
+        this.container.classList.add('jodit_toolbar');
+        this.initEvents();
+    }
+
+    destruct() {
         this.jodit.events
             .off(this.jodit.ownerWindow, 'mousedown touchstart', this.closeAll)
             .off(this.listenEvents, this.checkActiveButtons)
             .off('afterSetMode focus', this.immedateCheckActiveButtons);
 
         this.clear();
-        super.destruct();
-    }
 
-    public checkActiveButtons = debounce(
-        this.immedateCheckActiveButtons,
-        this.jodit.defaultTimeout
-    );
-
-    constructor(jodit: IViewBased) {
-        super(jodit, 'ul', 'jodit_toolbar');
-        this.initEvents();
+        Dom.safeRemove(this.container);
     }
 }

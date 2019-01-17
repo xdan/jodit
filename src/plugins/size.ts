@@ -1,12 +1,13 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
 import { Config } from '../Config';
-import { Jodit } from '../Jodit';
-import { css, debounce, dom, throttle } from '../modules/helpers/Helpers';
+import { debounce, throttle } from '../modules/helpers/async';
+import { css } from '../modules/helpers/css';
+import { IJodit } from '../types';
 
 declare module '../Config' {
     interface Config {
@@ -22,7 +23,7 @@ Config.prototype.allowResizeY = true;
  * Resize editor
  * @param {Jodit} editor
  */
-export function size(editor: Jodit) {
+export function size(editor: IJodit) {
     const setHeight = (height: number | string) => {
         css(editor.container, 'height', height);
         if (editor.options.saveHeightInStorage) {
@@ -40,10 +41,10 @@ export function size(editor: Jodit) {
         editor.options.height !== 'auto' &&
         (editor.options.allowResizeX || editor.options.allowResizeY)
     ) {
-        const handle: HTMLAnchorElement = dom(
-                '<div class="jodit_editor_resize" ><a href="javascript:void(0)"></a></div>',
-                editor.ownerDocument
-            ) as HTMLAnchorElement,
+        const handle: HTMLDivElement = editor.create.div(
+                'jodit_editor_resize',
+                '<a href="javascript:void(0)"></a>'
+            ),
             start: { x: number; y: number; w: number; h: number } = {
                 x: 0,
                 y: 0,

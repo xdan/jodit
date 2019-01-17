@@ -2,7 +2,16 @@ describe('Test states', function() {
 
     describe('ReadOnly', function () {
         describe('Set readonly mode in options', function () {
-
+            describe('Readonly', function () {
+                it('Should deny edit content in simple source editor', function () {
+                    var editor = new Jodit(appendTestArea(), {
+                        readonly: true,
+                        useAceEditor: false
+                    });
+                    editor.setMode(Jodit.MODE_SOURCE);
+                    expect(true).to.be.equal(editor.__plugins.source.mirror.hasAttribute('readonly'));
+                });
+            });
             describe('For iframe', function () {
                 it('Should deny edit content in iframe\'s body', function (done) {
                     unmocPromise();
@@ -58,30 +67,24 @@ describe('Test states', function() {
                     }
                 });
             });
-            it('Should deny edit content in simple source editor', function () {
-                var editor = new Jodit(appendTestArea(), {
-                    readonly: true,
-                    useAceEditor: false
-                });
-                editor.setMode(Jodit.MODE_SOURCE);
-                expect(true).to.equal(editor.__plugins.source.mirror.hasAttribute('readonly'));
-            });
-            it('Should deny edit content in ace source editor', function (done) {
-                var editor = new Jodit(appendTestArea(), {
-                    readonly: true,
-                    useAceEditor: true,
-                    events: {
-                        'aceInited': function (editor) {
-                            expect(null).to.be.not.equal(editor.__plugins.source.aceEditor);
-                            expect(true).to.be.equal(editor.__plugins.source.aceEditor.getReadOnly());
-                            done();
+            describe('Readonly for ACE', function (done) {
+                it('Should deny edit content in ace source editor', function(done) {
+                    var editor = new Jodit(appendTestArea(), {
+                        readonly: true,
+                        useAceEditor: true,
+                        events: {
+                            'aceInited': function(editor) {
+                                expect(null).to.be.not.equal(editor.__plugins.source.aceEditor);
+                                expect(true).to.be.equal(editor.__plugins.source.aceEditor.getReadOnly());
+                                done();
+                            }
                         }
-                    }
-                });
-                editor.setMode(Jodit.MODE_SOURCE);
-                expect(true).to.be.equal(editor.__plugins.source.mirror.hasAttribute('readonly'));
+                    });
+                    editor.setMode(Jodit.MODE_SOURCE);
+                    expect(true).to.be.equal(editor.__plugins.source.mirror.hasAttribute('readonly'));
 
-            }).timeout(6000);
+                }).timeout(6000);
+            });
             it('Should hide placeholder', function () {
                 var table_editor_interface = appendTestArea();
                 table_editor_interface.value = '';

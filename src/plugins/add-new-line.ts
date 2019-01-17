@@ -1,15 +1,15 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
 import { Config } from '../Config';
-import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
-import { debounce, dom, offset, setTimeout } from '../modules/helpers/Helpers';
+import { debounce, setTimeout } from '../modules/helpers/async';
+import { offset } from '../modules/helpers/size';
 import { ToolbarIcon } from '../modules/toolbar/icon';
-import { IBound } from '../types';
+import { IBound, IJodit } from '../types';
 
 declare module '../Config' {
     interface Config {
@@ -49,19 +49,19 @@ Config.prototype.addNewLineTagsTriggers = [
  * @param {Jodit} editor
  */
 
-export function addNewLine(editor: Jodit) {
+export function addNewLine(editor: IJodit) {
     if (!editor.options.addNewLine) {
         return;
     }
 
-    const line: HTMLDivElement = dom(
+    const line: HTMLDivElement = editor.create.fromHTML(
         '<div role="button" tabIndex="-1" title="' +
             editor.i18n('Break') +
             '" class="jodit-add-new-line"><span>' +
             ToolbarIcon.getIcon('enter') +
-            '</span></div>',
-        editor.ownerDocument
+            '</span></div>'
     ) as HTMLDivElement;
+
     const delta = 10;
     const isMatchedTag = new RegExp(
         '^(' + editor.options.addNewLineTagsTriggers.join('|') + ')$',
@@ -101,7 +101,7 @@ export function addNewLine(editor: Jodit) {
     const canGetFocus = (elm: Node | null): boolean => {
         return (
             elm !== null &&
-            Dom.isBlock(elm) &&
+            Dom.isBlock(elm, editor.editorWindow) &&
             !/^(img|table|iframe|hr)$/i.test(elm.nodeName)
         );
     };
@@ -233,10 +233,10 @@ export function addNewLine(editor: Jodit) {
                             }
                         }
 
-                        if (currentElement.nodeName.match(isMatchedTag)) {
+                        if (isMatchedTag.test(currentElement.nodeName)) {
                             const parentBox: Node | false = Dom.up(
                                 currentElement,
-                                Dom.isBlock,
+                                node => Dom.isBlock(node, editor.editorWindow),
                                 editor.editor
                             );
                             if (parentBox && parentBox !== editor.editor) {

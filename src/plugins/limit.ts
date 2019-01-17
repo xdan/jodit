@@ -1,7 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 import { Config } from '../Config';
 import {
@@ -9,9 +9,9 @@ import {
     INVISIBLE_SPACE_REG_EXP,
     SPACE_REG_EXP,
 } from '../constants';
-import { Jodit } from '../Jodit';
-import { debounce, extractText } from '../modules/helpers/Helpers';
-import { SnapshotType } from '../types';
+import { debounce } from '../modules/helpers/async';
+import { IJodit, SnapshotType } from '../types';
+import { stripTags } from '../modules/helpers/html';
 
 declare module '../Config' {
     interface Config {
@@ -37,7 +37,7 @@ Config.prototype.limitChars = false;
  */
 Config.prototype.limitHTML = false;
 
-export function limit(jodit: Jodit) {
+export function limit(jodit: IJodit) {
     if (jodit && (jodit.options.limitWords || jodit.options.limitChars)) {
         const callback = (
             event: KeyboardEvent | null,
@@ -98,7 +98,7 @@ export function limit(jodit: Jodit) {
                             null,
                             jodit.options.limitHTML
                                 ? newValue
-                                : extractText(newValue)
+                                : stripTags(newValue)
                         ) === false
                     ) {
                         jodit.value = oldValue;

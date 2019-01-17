@@ -7,6 +7,7 @@
     ],
     "jsRules": {},
     "rules": {
+        "file-name-casing": false,
         "ordered-imports": false,
         "no-bitwise": false,
         "prefer-for-of": false,
@@ -14,9 +15,20 @@
         "no-var-requires": false,
         "no-namespace": false,
         "prettier": true,
-        "semicolon": [true, "always", "ignore-interfaces", "ignore-bound-class-methods"],
+        "semicolon": [
+            true,
+            "always",
+            "ignore-interfaces",
+            "ignore-bound-class-methods"
+        ],
         "max-line-length": [true, 150],
-        "variable-name": [false, "ban-keywords", "check-format", "allow-leading-underscore", "allow-snake-case"],
+        "variable-name": [
+            false,
+            "ban-keywords",
+            "check-format",
+            "allow-leading-underscore",
+            "allow-snake-case"
+        ],
         "one-variable-per-declaration": false,
         "no-unused-expression": [true, "allow-fast-null-checks"],
         "class-name": false,

@@ -1,36 +1,31 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
 import { Config } from '../Config';
 import * as consts from '../constants';
-import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
-import { ToolbarButton } from '../modules/toolbar/button';
-import { markerInfo } from '../types';
+import { HTMLTagNames, IJodit, markerInfo } from '../types';
 import { IControlType } from '../types/toolbar';
 
 Config.prototype.controls.paragraph = {
     command: 'formatBlock',
-    getLabel: (
-        editor: Jodit,
-        btn: IControlType,
-        button: ToolbarButton
-    ): boolean => {
+    getLabel: (editor: IJodit, btn, button): boolean => {
         const current: Node | false = editor.selection.current();
 
         if (current && editor.options.textIcons) {
             const currentBox: HTMLElement =
                     (Dom.closest(
                         current,
-                        Dom.isBlock,
+                        node => Dom.isBlock(node, editor.editorWindow),
                         editor.editor
                     ) as HTMLElement) || editor.editor,
                 currentValue: string = currentBox.nodeName.toLowerCase();
 
             if (
+                button &&
                 btn.data &&
                 btn.data.currentValue !== currentValue &&
                 btn.list &&
@@ -49,7 +44,7 @@ Config.prototype.controls.paragraph = {
 
         return false;
     },
-    exec: (editor: Jodit, event, control: IControlType) => {
+    exec: (editor: IJodit, event, control: IControlType) => {
         editor.execCommand(
             control.command as string,
             false,
@@ -67,13 +62,13 @@ Config.prototype.controls.paragraph = {
         h4: 'Heading 4',
         blockquote: 'Quote',
     },
-    isActiveChild: (editor: Jodit, control: IControlType): boolean => {
+    isActiveChild: (editor: IJodit, control: IControlType): boolean => {
         const current: Node | false = editor.selection.current();
 
         if (current) {
             const currentBox: HTMLElement = Dom.closest(
                 current,
-                Dom.isBlock,
+                node => Dom.isBlock(node, editor.editorWindow),
                 editor.editor
             ) as HTMLElement;
 
@@ -87,13 +82,13 @@ Config.prototype.controls.paragraph = {
 
         return false;
     },
-    isActive: (editor: Jodit, control: IControlType): boolean => {
+    isActive: (editor: IJodit, control: IControlType): boolean => {
         const current: Node | false = editor.selection.current();
 
         if (current) {
             const currentBpx: HTMLElement = Dom.closest(
                 current,
-                Dom.isBlock,
+                node => Dom.isBlock(node, editor.editorWindow),
                 editor.editor
             ) as HTMLElement;
 
@@ -110,7 +105,7 @@ Config.prototype.controls.paragraph = {
 
         return false;
     },
-    template: (editor: Jodit, key: string, value: string) => {
+    template: (editor: IJodit, key: string, value: string) => {
         return (
             '<' +
             key +
@@ -129,68 +124,63 @@ Config.prototype.controls.paragraph = {
  *
  * @param {Jodit} editor
  */
-export function formatBlock(editor: Jodit) {
+export function formatBlock(editor: IJodit) {
     editor.registerCommand(
         'formatblock',
         (command: string, second: string, third: string): false | void => {
             editor.selection.focus();
             let work: boolean = false;
 
-            editor.selection.eachSelection(
-                (current: Node): false | void => {
-                    const selectionInfo: markerInfo[] = editor.selection.save();
-                    let currentBox: HTMLElement | false = current
-                        ? (Dom.up(
-                              current,
-                              Dom.isBlock,
-                              editor.editor
-                          ) as HTMLElement)
-                        : false;
+            editor.selection.eachSelection((current: Node) => {
+                const selectionInfo: markerInfo[] = editor.selection.save();
+                let currentBox: HTMLElement | false = current
+                    ? (Dom.up(
+                          current,
+                          node => Dom.isBlock(node, editor.editorWindow),
+                          editor.editor
+                      ) as HTMLElement)
+                    : false;
 
+                if ((!currentBox || currentBox.nodeName === 'LI') && current) {
+                    currentBox = Dom.wrapInline(
+                        current,
+                        editor.options.enter,
+                        editor
+                    );
+                }
+
+                if (!currentBox) {
+                    editor.selection.restore(selectionInfo);
+                    return;
+                }
+
+                if (!currentBox.tagName.match(/TD|TH|TBODY|TABLE|THEAD/i)) {
                     if (
-                        (!currentBox || currentBox.nodeName === 'LI') &&
-                        current
+                        third === editor.options.enterBlock.toLowerCase() &&
+                        currentBox.parentNode &&
+                        currentBox.parentNode.nodeName === 'LI'
                     ) {
-                        currentBox = Dom.wrapInline(
-                            current,
-                            editor.options.enter,
-                            editor
+                        Dom.unwrap(currentBox);
+                    } else {
+                        Dom.replace(
+                            currentBox,
+                            third,
+                            true,
+                            false,
+                            editor.editorDocument
                         );
                     }
-
-                    if (!currentBox) {
-                        editor.selection.restore(selectionInfo);
-                        return false;
-                    }
-
-                    if (!currentBox.tagName.match(/TD|TH|TBODY|TABLE|THEAD/i)) {
-                        if (
-                            third === editor.options.enterBlock.toLowerCase() &&
-                            currentBox.parentNode &&
-                            currentBox.parentNode.nodeName === 'LI'
-                        ) {
-                            Dom.unwrap(currentBox);
-                        } else {
-                            Dom.replace(
-                                currentBox,
-                                third,
-                                true,
-                                false,
-                                editor.editorDocument
-                            );
-                        }
+                } else {
+                    if (!editor.selection.isCollapsed()) {
+                        editor.selection.applyCSS({}, <HTMLTagNames>third);
                     } else {
-                        if (!editor.selection.isCollapsed()) {
-                            editor.selection.applyCSS({}, third);
-                        } else {
-                            Dom.wrapInline(current, third, editor);
-                        }
+                        Dom.wrapInline(current, <HTMLTagNames>third, editor);
                     }
-
-                    work = true;
-                    editor.selection.restore(selectionInfo);
                 }
-            );
+
+                work = true;
+                editor.selection.restore(selectionInfo);
+            });
 
             if (!work) {
                 const currentBox: HTMLElement = editor.editorDocument.createElement(

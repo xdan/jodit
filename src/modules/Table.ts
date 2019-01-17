@@ -1,7 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
 /**
@@ -16,7 +16,7 @@
 
 import * as consts from '../constants';
 import { Dom } from './Dom';
-import { $$, each, trim } from './helpers/Helpers';
+import { $$, each, trim } from './helpers/';
 
 export class Table {
     public static addSelected(td: HTMLTableCellElement) {

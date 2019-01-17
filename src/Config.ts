@@ -1,11 +1,10 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
 import * as consts from './constants';
-import { Jodit } from './Jodit';
 import { Widget } from './modules/Widget';
 import TabsWidget = Widget.TabsWidget;
 import FileSelectorWidget = Widget.FileSelectorWidget;
@@ -13,23 +12,37 @@ import { Dom } from './modules/Dom';
 import {
     $$,
     convertMediaURLToVideoEmbed,
-    dom,
-    extend,
+    defaultLanguage,
     isLicense,
     isURL,
     normalizeLicense,
     trim,
     val,
-} from './modules/helpers/Helpers';
+} from './modules/helpers/';
 import { ToolbarIcon } from './modules/toolbar/icon';
-import { IDictionary } from './types';
-import { IFileBrowserCallBackData } from './types/filebrowser';
+import { IDictionary, IJodit, IViewOptions } from './types';
+import { IFileBrowserCallBackData } from './types/fileBrowser';
 import { Buttons, Controls, IControlType } from './types/toolbar';
+import { extend } from './modules/helpers/extend';
 
 /**
  * Default Editor's Configuration
  */
-export class Config {
+export class Config implements IViewOptions {
+    /**
+     * When this option is enabled, the editor's content will be placed in an iframe and isolated from the rest of the page.
+     *
+     * @example
+     * ```javascript
+     * new Jodit('#editor', {
+     *    iframe = true;
+     *    iframeStyle = 'html{margin: 0px;}body{padding:10px;background:transparent;color:#000;position:relative;z-index:2;\
+     *    user-select:auto;margin:0px;overflow:hidden;}body:after{content:"";clear:both;display:block}';
+     * });
+     * ```
+     */
+    public iframe: boolean = false;
+    public commandToHotkeys: IDictionary<string | string[]>;
     public license: string = '';
     public preset: string = 'custom';
     public presets: IDictionary<any> = {
@@ -356,13 +369,13 @@ export class Config {
     /**
      * Element that will be created when you press Enter
      */
-    public enter: 'P' | 'DIV' | 'BR' | 'p' | 'div' | 'br' = consts.PARAGRAPH;
+    public enter: 'p' | 'div' | 'br' = consts.PARAGRAPH;
 
     /**
      * Use when you need insert new block element
      * use enter option if not set
      */
-    public enterBlock: 'P' | 'DIV' | 'p' | 'div' = consts.PARAGRAPH;
+    public enterBlock: 'p' | 'div' = consts.PARAGRAPH;
 
     /**
      * Jodit.MODE_WYSIWYG The HTML editor allows you to write like MSWord,
@@ -598,7 +611,7 @@ export class Config {
      *                 this.val('');
      *                 return;
      *             }
-     *             this.selection.insertNode(Jodit.modules.Dom.create(key, ''));
+     *             this.selection.insertNode(this.create.element(key, ''));
      *             this.events.fire('errorMessage', 'Was inserted ' + value);
      *        },
      *        template: function (key, value) {
@@ -746,6 +759,15 @@ export class Config {
      * @type {boolean}
      */
     public textIcons: boolean = false;
+
+    private static __defaultOptions: Config;
+    static get defaultOptions(): Config {
+        if (!Config.__defaultOptions) {
+            Config.__defaultOptions = new Config();
+        }
+
+        return Config.__defaultOptions;
+    }
 }
 
 export const OptionsDefault: any = function(this: any, options: any) {
@@ -756,22 +778,23 @@ export const OptionsDefault: any = function(this: any, options: any) {
         const extendKey = (opt: object, key: string) => {
             if (key === 'preset') {
                 if (
-                    Jodit.defaultOptions.presets[(opt as any).preset] !==
+                    Config.defaultOptions.presets[(opt as any).preset] !==
                     undefined
                 ) {
                     const preset =
-                        Jodit.defaultOptions.presets[(opt as any).preset];
+                        Config.defaultOptions.presets[(opt as any).preset];
+
                     Object.keys(preset).forEach(extendKey.bind(this, preset));
                 }
             }
             if (
-                typeof (Jodit.defaultOptions as any)[key] === 'object' &&
-                !Array.isArray((Jodit.defaultOptions as any)[key])
+                typeof (Config.defaultOptions as any)[key] === 'object' &&
+                !Array.isArray((Config.defaultOptions as any)[key])
             ) {
                 self[key] = extend(
                     true,
                     {},
-                    (Jodit.defaultOptions as any)[key],
+                    (Config.defaultOptions as any)[key],
                     (opt as any)[key]
                 );
             } else {
@@ -785,7 +808,7 @@ export const OptionsDefault: any = function(this: any, options: any) {
 
 Config.prototype.controls = {
     print: {
-        exec: (editor: Jodit) => {
+        exec: (editor: IJodit) => {
             const mywindow: Window | null = window.open('', 'PRINT');
 
             if (mywindow) {
@@ -800,10 +823,13 @@ Config.prototype.controls = {
                         mywindow.document,
                         editor
                     );
+
                     mywindow.document.body.innerHTML = editor.value;
                 } else {
                     mywindow.document.write(
-                        '<!doctype html><html><head><title></title></head>' +
+                        '<!doctype html><html lang="' +
+                            defaultLanguage(editor.options.language) +
+                            '"><head><title></title></head>' +
                             '<body>' +
                             editor.value +
                             '</body></html>'
@@ -817,10 +843,13 @@ Config.prototype.controls = {
         },
         mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG,
     } as IControlType,
+
     about: {
-        exec: (editor: Jodit) => {
+        exec: (editor: IJodit) => {
             const dialog: any = editor.getInstance('Dialog');
+
             dialog.setTitle(editor.i18n('About Jodit'));
+
             dialog.setContent(
                 '<div class="jodit_about">\
                     <div>' +
@@ -860,14 +889,16 @@ Config.prototype.controls = {
         tooltip: 'About Jodit',
         mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG,
     } as IControlType,
+
     hr: {
         command: 'insertHorizontalRule',
         tags: ['hr'],
         tooltip: 'Insert Horizontal Line',
     } as IControlType,
+
     image: {
         popup: (
-            editor: Jodit,
+            editor: IJodit,
             current: HTMLImageElement | false,
             self: IControlType,
             close
@@ -888,41 +919,44 @@ Config.prototype.controls = {
             return FileSelectorWidget(
                 editor,
                 {
-                    filebrowser: (data: IFileBrowserCallBackData) => {
+                    filebrowser: async (data: IFileBrowserCallBackData) => {
                         if (data.files && data.files.length) {
-                            let i: number;
-                            for (i = 0; i < data.files.length; i += 1) {
-                                editor.selection.insertImage(
-                                    data.baseurl + data.files[i]
+                            for (let i = 0; i < data.files.length; i += 1) {
+                                await editor.selection.insertImage(
+                                    data.baseurl + data.files[i],
+                                    null,
+                                    editor.options.imageDefaultWidth
                                 );
                             }
                         }
                         close();
                     },
-                    upload: (data: IFileBrowserCallBackData) => {
-                        let i;
+                    upload: async (data: IFileBrowserCallBackData) => {
                         if (data.files && data.files.length) {
-                            for (i = 0; i < data.files.length; i += 1) {
-                                editor.selection.insertImage(
-                                    data.baseurl + data.files[i]
+                            for (let i = 0; i < data.files.length; i += 1) {
+                                await editor.selection.insertImage(
+                                    data.baseurl + data.files[i],
+                                    null,
+                                    editor.options.imageDefaultWidth
                                 );
                             }
                         }
+
                         close();
                     },
-                    url: (url: string, text: string) => {
+                    url: async (url: string, text: string) => {
                         const image: HTMLImageElement =
-                            sourceImage ||
-                            (dom(
-                                '<img src=""/>',
-                                editor.editorDocument
-                            ) as HTMLImageElement);
+                            sourceImage || editor.create.inside.element('img');
 
                         image.setAttribute('src', url);
                         image.setAttribute('alt', text);
 
                         if (!sourceImage) {
-                            editor.selection.insertImage(image);
+                            await editor.selection.insertImage(
+                                image,
+                                null,
+                                editor.options.imageDefaultWidth
+                            );
                         }
 
                         close();
@@ -935,24 +969,24 @@ Config.prototype.controls = {
         tags: ['img'],
         tooltip: 'Insert Image',
     } as IControlType,
+
     file: {
         popup: (
-            editor: Jodit,
+            editor: IJodit,
             current: Node | false,
             self: IControlType,
             close
         ) => {
             const insert = (url: string, title: string = '') => {
                 editor.selection.insertNode(
-                    dom(
+                    editor.create.inside.fromHTML(
                         '<a href="' +
                             url +
                             '" title="' +
                             title +
                             '">' +
                             (title || url) +
-                            '</a>',
-                        editor.editorDocument
+                            '</a>'
                     )
                 );
             };
@@ -1014,22 +1048,20 @@ Config.prototype.controls = {
         tooltip: 'Insert file',
     } as IControlType,
     video: {
-        popup: (editor: Jodit, current, control, close) => {
-            const bylink: HTMLFormElement = dom(
+        popup: (editor: IJodit, current, control, close) => {
+            const bylink: HTMLFormElement = editor.create.fromHTML(
                     `<form class="jodit_form">
                         <input required name="code" placeholder="http://" type="url"/>
                         <button type="submit">${editor.i18n('Insert')}</button>
-                        </form>`,
-                    editor.ownerDocument
+                        </form>`
                 ) as HTMLFormElement,
-                bycode: HTMLFormElement = dom(
+                bycode: HTMLFormElement = editor.create.fromHTML(
                     `<form class="jodit_form">
                         <textarea required name="code" placeholder="${editor.i18n(
                             'Embed code'
                         )}"></textarea>
                         <button type="submit">${editor.i18n('Insert')}</button>
-                        </form>`,
-                    editor.ownerDocument
+                        </form>`
                 ) as HTMLFormElement,
                 tab: IDictionary<HTMLFormElement> = {},
                 selinfo = editor.selection.save(),

@@ -30,14 +30,15 @@ describe('Iframe mode', function() {
                     iframe: true,
                     events: {
                         afterConstructor: function (editor) {
-                            editor.setEditorValue('test test stop')
+                            mocPromise();
+                            editor.value = 'test test stop';
                             expect('test test stop').to.be.equal(editor.editorDocument.body.innerHTML);
 
-                            var range = editor.editorDocument.createRange();
+                            var range = editor.selection.createRange();
                             range.selectNodeContents(editor.editorDocument.body)
                             editor.selection.selectRange(range);
 
-                            editor.execCommand('bold')
+                            editor.execCommand('bold');
 
                             expect('<strong>test test stop</strong>').to.be.equal(editor.editorDocument.body.innerHTML);
                             done();

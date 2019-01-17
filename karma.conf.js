@@ -14,6 +14,7 @@ module.exports = function(config) {
             {pattern: './test/test.index.html', watched: false, included: false, served: true},
             'app.css',
             'src/index.ts',
+            'node_modules/synchronous-promise/dist/synchronous-promise.js',
             'test/bootstrap.js',
             'test/tests/*.js',
             'test/tests/units/*.js',
@@ -60,13 +61,7 @@ module.exports = function(config) {
             'karma-webpack',
             'karma-sourcemap-loader'
         ],
-        webpack: {
-            devtool: 'inline-sourcemap',
-            module: webpackConfig.module,
-            plugins: webpackConfig.plugins,
-            resolve: webpackConfig.resolve,
-            output: webpackConfig.output
-        },
+        webpack: webpackConfig,
         client: {
             captureConsole: true
         },

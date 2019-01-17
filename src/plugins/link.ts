@@ -1,20 +1,14 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
 import { Config } from '../Config';
-import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
-import {
-    convertMediaURLToVideoEmbed,
-    dom,
-    isURL,
-    val,
-} from '../modules/helpers/Helpers';
+import { convertMediaURLToVideoEmbed, isURL, val } from '../modules/helpers/';
 import { Select } from '../modules/Selection';
-import { markerInfo } from '../types';
+import { IJodit, markerInfo } from '../types';
 import { IControlType } from '../types/toolbar';
 
 /**
@@ -51,7 +45,7 @@ Config.prototype.link = {
 };
 
 Config.prototype.controls.unlink = {
-    exec: (editor: Jodit, current: Node) => {
+    exec: (editor: IJodit, current: Node) => {
         const anchor: HTMLAnchorElement | false = Dom.closest(
             current,
             'A',
@@ -66,18 +60,18 @@ Config.prototype.controls.unlink = {
     },
 } as IControlType;
 Config.prototype.controls.link = {
-    isActive: (editor: Jodit): boolean => {
+    isActive: (editor: IJodit): boolean => {
         const current: Node | false = editor.selection.current();
         return current && Dom.closest(current, 'a', editor.editor) !== false;
     },
     popup: (
-        editor: Jodit,
+        editor: IJodit,
         current: HTMLElement | false,
         self: IControlType,
         close: () => void
     ) => {
         const sel: Selection = editor.editorWindow.getSelection(),
-            form: HTMLFormElement = dom(
+            form: HTMLFormElement = editor.create.fromHTML(
                 '<form class="jodit_form">' +
                     '<input required type="text" name="url" placeholder="http://" type="text"/>' +
                     '<input name="text" placeholder="' +
@@ -101,8 +95,7 @@ Config.prototype.controls.link = {
                     '</button> &nbsp;&nbsp;' +
                     '<button class="jodit_link_insert_button" type="submit"></button>' +
                     '</div>' +
-                    '<form/>',
-                editor.ownerDocument
+                    '<form/>'
             ) as HTMLFormElement;
 
         if (current && Dom.closest(current, 'A', editor.editor)) {
@@ -226,7 +219,7 @@ Config.prototype.controls.link = {
  *
  * @module plugins/link
  */
-export function link(jodit: Jodit) {
+export function link(jodit: IJodit) {
     if (jodit.options.link.followOnDblClick) {
         jodit.events.on('afterInit', () => {
             jodit.events.on(
@@ -251,13 +244,12 @@ export function link(jodit: Jodit) {
                     const embed: string = convertMediaURLToVideoEmbed(html);
 
                     if (embed !== html) {
-                        return dom(
-                            embed,
-                            jodit.editorDocument
+                        return jodit.create.inside.fromHTML(
+                            embed
                         ) as HTMLAnchorElement;
                     }
 
-                    const a: HTMLAnchorElement = jodit.editorDocument.createElement(
+                    const a: HTMLAnchorElement = jodit.create.inside.element(
                         'a'
                     );
 

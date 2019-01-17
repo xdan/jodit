@@ -1,13 +1,12 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
 import { Config } from '../Config';
-import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
-import { markerInfo } from '../types';
+import { IJodit, markerInfo } from '../types';
 
 Config.prototype.controls.ul = {
     command: 'insertUnorderedList',
@@ -25,7 +24,7 @@ Config.prototype.controls.ol = {
 /**
  * Process commands insertOrderedList and insertUnOrderedList
  */
-export function orderedlist(editor: Jodit) {
+export function orderedlist(editor: IJodit) {
     editor.events.on(
         'afterCommand',
         (command: string): false | void => {

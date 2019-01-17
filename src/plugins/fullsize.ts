@@ -1,17 +1,15 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
 import { Config } from '../Config';
 import * as consts from '../constants';
-import { Jodit } from '../Jodit';
-import { css } from '../modules/helpers/Helpers';
-import { ToolbarButton } from '../modules/toolbar/button';
+import { css } from '../modules/helpers/';
 import { ToolbarIcon } from '../modules/toolbar/icon';
 import { IControlType } from '../types/toolbar';
-import { IViewBased } from '../types/view';
+import { IJodit, IViewWithToolbar } from '../types';
 
 /**
  * Fullsize plugin
@@ -48,18 +46,21 @@ declare module '../Config' {
 Config.prototype.fullsize = false;
 Config.prototype.globalFullsize = true;
 Config.prototype.controls.fullsize = {
-    exec: (editor: Jodit) => {
+    exec: (editor: IJodit) => {
         editor.toggleFullSize();
     },
-    isActive: (editor: Jodit) => editor.isFullSize(),
-    getLabel: (editor: Jodit, btn: IControlType, button: ToolbarButton) => {
+    isActive: (editor: IJodit) => editor.isFullSize(),
+    getLabel: (editor: IJodit, btn, button) => {
         const mode: string = editor.isFullSize() ? 'shrink' : 'fullsize';
 
-        button.textBox.innerHTML = !editor.options.textIcons
-            ? ToolbarIcon.getIcon(mode)
-            : `<span>${editor.i18n(mode)}</span>`;
-
-        (button.textBox.firstChild as HTMLElement).classList.add('jodit_icon');
+        if (button) {
+            button.textBox.innerHTML = !editor.options.textIcons
+                ? ToolbarIcon.getIcon(mode)
+                : `<span>${editor.i18n(mode)}</span>`;
+            (button.textBox.firstChild as HTMLElement).classList.add(
+                'jodit_icon'
+            );
+        }
     },
     tooltip: 'Open editor in fullsize',
     mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG,
@@ -70,7 +71,7 @@ Config.prototype.controls.fullsize = {
  *
  * @param {Jodit} editor
  */
-export function fullsize(editor: IViewBased) {
+export function fullsize(editor: IViewWithToolbar) {
     let shown: boolean = false,
         oldHeight: number = 0,
         oldWidth: number = 0,

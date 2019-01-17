@@ -1,20 +1,20 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
 import * as consts from '../constants';
-import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
 import { Table } from '../modules/Table';
+import { IJodit } from '../types';
 
 /**
  * Process navigate keypressing in table cell
  *
  * @param {Jodit} editor
  */
-export function tableKeyboardNavigation(editor: Jodit) {
+export function tableKeyboardNavigation(editor: IJodit) {
     editor.events.on(
         'keydown',
         (event: KeyboardEvent): false | void => {

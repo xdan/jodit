@@ -291,7 +291,7 @@ describe('Test interface', function() {
             });
             describe('FontName', function () {
                 describe('Open fontname list and select some element', function () {
-                    it('Should apply this font to current selection elements', function() {
+                    it('Should apply this font to current selection elements',  function() {
                         var editor = new Jodit(appendTestArea(), {
                             toolbarAdaptive: false
                         });
@@ -308,11 +308,16 @@ describe('Test interface', function() {
                            return fontname.querySelector('.jodit_toolbar_list.jodit_toolbar_list-open > ul')
                         }
 
-                        expect(openFontnameList()).to.be.not.equal(null);
+                        expect(openFontnameList()).to.be.not.null;
 
-                        [].slice.call(openFontnameList().childNodes).forEach(function (font, index) {
+                        Array.from(openFontnameList().childNodes).forEach(async function (font, index) {
                             font = openFontnameList().childNodes[index];
                             simulateEvent('mousedown', 0, font);
+
+                            await new Promise((resolve) => {
+                                setTimeout(resolve, 1000);
+                            });
+
                             var fontFamily = font.querySelector('span[style]').getAttribute('style').replace(/"/g, "'");
 
                             expect(sortAtrtibutes(editor.value)).to.be.equal(sortAtrtibutes('<p><span style="' + fontFamily + '">test</span></p>'));
@@ -381,7 +386,7 @@ describe('Test interface', function() {
                 editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-image input[name=url]').value = 'http://xdsoft.net/jodit/images/artio.jpg'
                 simulateEvent('submit', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-image .jodit_form'))
 
-                expect(sortAtrtibutes(editor.getEditorValue())).to.equal('<img alt="123" src="http://xdsoft.net/jodit/images/artio.jpg">');
+                expect(sortAtrtibutes(editor.value)).to.equal('<img alt="123" src="http://xdsoft.net/jodit/images/artio.jpg" style="width:300px">');
 
                 simulateEvent('mousedown', 0, editor.editor)
 
@@ -462,8 +467,7 @@ describe('Test interface', function() {
                             }
                         });
 
-                        editor.setEditorValue('test test <a href="#">test</a>')
-
+                        editor.setEditorValue('test test <a href="#">test</a>');
 
                         simulateEvent('mousedown', 0, editor.editor.querySelector('a'))
                         var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=' + editor.id + ']');
@@ -616,11 +620,7 @@ describe('Test interface', function() {
             describe('Create table', function () {
                 describe('Mouse move', function () {
                     it('Should highlight cells in table-creator', function() {
-                        var editor = new Jodit(appendTestArea(), {
-                            observer: {
-                                timeout: 0
-                            }
-                        });
+                        var editor = new Jodit(appendTestArea());
                         simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-table'))
 
                         var list = editor.container.querySelector('.jodit_toolbar_popup');
@@ -1015,20 +1015,41 @@ describe('Test interface', function() {
                 });
             });
             describe('Button Bold', function () {
-                it('Should reactivate Bold button after second click and move cursor out of Strong element', function () {
-                    var editor = new Jodit(appendTestArea(), {
-                        buttons: ['bold']
+                describe('In collapsed selection', function () {
+                    it('Should reactivate Bold button after second click and move cursor out of Strong element', function () {
+                        var editor = new Jodit(appendTestArea(), {
+                            buttons: ['bold']
+                        });
+
+                        editor.value = '<p>test</p>';
+                        editor.selection.setCursorAfter(editor.editor.firstChild.firstChild);
+
+                        simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-bold'));
+                        editor.selection.insertHTML('text');
+                        simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-bold'));
+                        editor.selection.insertHTML('text');
+
+                        expect(editor.getEditorValue()).to.equal('<p>test<strong>text</strong>text</p>');
                     });
+                });
+                describe('Not collapsed selection', function () {
+                    it('Should reactivate Bold button after second click and move cursor out of Strong element', function () {
+                        var editor = new Jodit(appendTestArea(), {
+                            buttons: ['bold']
+                        });
 
-                    editor.setEditorValue('<p>test</p>')
-                    editor.selection.setCursorAfter(editor.editor.firstChild.firstChild);
+                        editor.value = 'test test test';
 
-                    simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-bold'));
-                    editor.selection.insertHTML('text');
-                    simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-bold'));
-                    editor.selection.insertHTML('text');
+                        var range = editor.selection.createRange();
+                        range.setStart(editor.editor.firstChild, 0);
+                        range.setEnd(editor.editor.firstChild, 4);
 
-                    expect(editor.getEditorValue()).to.equal('<p>test<strong>text</strong>text</p>');
+                        editor.selection.selectRange(range);
+
+                        simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-bold'));
+
+                        expect(editor.getEditorValue()).to.equal('<strong>test</strong> test test');
+                    });
                 });
             });
             describe('Active button', function () {
@@ -1395,8 +1416,7 @@ describe('Test interface', function() {
 
                             simulateEvent('mousedown', 0, popupColor.querySelector('.jodit_colorpicker_group>a'));
 
-
-                            expect(editor.helper.normalizeColor(td.style.backgroundColor)).to.equal('#000000');
+                            expect(Jodit.modules.Helpers.normalizeColor(td.style.backgroundColor)).to.equal('#000000');
 
                         });
                     });
@@ -1405,14 +1425,13 @@ describe('Test interface', function() {
             it('Select table cell and change it vertical align', function () {
                 var editor = new Jodit(appendTestArea());
 
-                editor.setEditorValue('<table>' +
+                editor.value = '<table>' +
                     '<tr><td style="vertical-align: middle">3</td></tr>' +
-                    '</table>');
+                    '</table>';
 
                 var td = editor.editor.querySelector('td');
 
                 simulateEvent('mousedown', 0, td)
-
 
                 var popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline');
 

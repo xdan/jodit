@@ -1,7 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
 import { Config } from '../Config';
@@ -15,33 +15,35 @@ import {
     TEXT_PLAIN,
 } from '../constants';
 
-import { Jodit } from '../Jodit';
-
 import { Confirm, Dialog } from '../modules/dialog/';
 
 import {
     applyStyles,
     browser,
     cleanFromWord,
-    dom,
     htmlspecialchars,
     isHTML,
     isHTMLFromWord,
     trim,
     type,
     setTimeout,
-} from '../modules/helpers/Helpers';
+    stripTags,
+} from '../modules/helpers/';
 
 import { IControlType } from '../types/toolbar';
-import { Dom } from '../modules';
+import { Dom } from '../modules/Dom';
+import { IJodit } from '../types';
 
-/**
- * @property{boolean} askBeforePasteHTML=true Ask before paste HTML in WYSIWYG mode
- */
 declare module '../Config' {
     interface Config {
+        /**
+         * @property askBeforePasteHTML=true Ask before paste HTML in WYSIWYG mode
+         */
         askBeforePasteHTML: boolean;
         askBeforePasteFromWord: boolean;
+        /**
+         * Default insert method
+         */
         defaultActionOnPaste: string;
     }
 }
@@ -52,8 +54,8 @@ Config.prototype.defaultActionOnPaste = INSERT_AS_HTML;
 
 Config.prototype.controls.cut = {
     command: 'cut',
-    isDisable: (editor: Jodit) => {
-        const sel: Selection = editor.editorWindow.getSelection();
+    isDisable: (editor: IJodit) => {
+        const sel: Selection = editor.selection.sel;
         return !sel || sel.isCollapsed;
     },
     tooltip: 'Cut selection',
@@ -64,14 +66,8 @@ Config.prototype.controls.cut = {
  *
  * @module insertHTML
  */
-export function paste(editor: Jodit) {
+export function paste(editor: IJodit) {
     let buffer: string = '';
-
-    const strip_tags = (html: string): string => {
-        const div: HTMLDivElement = document.createElement('div');
-        div.innerHTML = html;
-        return div.innerText;
-    };
 
     const clearOrKeep = (
         msg: string,
@@ -99,42 +95,39 @@ export function paste(editor: Jodit) {
             title,
             callback
         );
+
         dialog.container.setAttribute('data-editor_id', editor.id);
 
-        const keep: HTMLAnchorElement = dom(
+        const keep: HTMLAnchorElement = dialog.create.fromHTML(
             '<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
                 '<span>' +
                 editor.i18n('Keep') +
                 '</span>' +
-                '</a>',
-            dialog.document
+                '</a>'
         ) as HTMLAnchorElement;
 
-        const clear: HTMLAnchorElement = dom(
+        const clear: HTMLAnchorElement = dialog.create.fromHTML(
             '<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
                 '<span>' +
                 editor.i18n(clearButton) +
                 '</span>' +
-                '</a>',
-            dialog.document
+                '</a>'
         ) as HTMLAnchorElement;
 
-        const clear2: HTMLAnchorElement = dom(
+        const clear2: HTMLAnchorElement = dialog.create.fromHTML(
             '<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
                 '<span>' +
                 editor.i18n(clear2Button) +
                 '</span>' +
-                '</a>',
-            dialog.document
+                '</a>'
         ) as HTMLAnchorElement;
 
-        const cancel: HTMLAnchorElement = dom(
+        const cancel: HTMLAnchorElement = dialog.create.fromHTML(
             '<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
                 '<span>' +
                 editor.i18n('Cancel') +
                 '</span>' +
-                '</a>',
-            dialog.document
+                '</a>'
         ) as HTMLAnchorElement;
 
         editor.events.on(keep, 'click', () => {
@@ -177,7 +170,7 @@ export function paste(editor: Jodit) {
                 html = cleanFromWord(html);
                 break;
             case INSERT_ONLY_TEXT:
-                html = strip_tags(html);
+                html = stripTags(html);
                 break;
             case INSERT_AS_TEXT:
                 html = htmlspecialchars(html);
@@ -261,7 +254,7 @@ export function paste(editor: Jodit) {
                     getDataTransfer(editor.editorWindow as any) ||
                     getDataTransfer((event as any).originalEvent);
 
-                clipboardData.setData(TEXT_PLAIN, strip_tags(selectedText));
+                clipboardData.setData(TEXT_PLAIN, stripTags(selectedText));
                 clipboardData.setData(TEXT_HTML, selectedText);
 
                 buffer = selectedText;
@@ -469,7 +462,7 @@ export function paste(editor: Jodit) {
                                         }
 
                                         if (agree === 0) {
-                                            html = strip_tags(
+                                            html = stripTags(
                                                 cleanFromWord(html)
                                             );
                                         }
@@ -496,25 +489,26 @@ export function paste(editor: Jodit) {
                         );
                         return processHTMLData(html);
                     } else if (event.type !== 'drop') {
-                        const div: HTMLDivElement = dom(
-                            '<div ' +
-                                'tabindex="-1" ' +
-                                'style="' +
-                                'left: -9999px; ' +
-                                'top: 0; ' +
-                                'width: 0; ' +
-                                'height: 100%; ' +
-                                'line-height: 140%; ' +
-                                'overflow: hidden; ' +
-                                'position: fixed; ' +
-                                'z-index: 2147483647; ' +
-                                'word-break: break-all;' +
-                                '" ' +
-                                'contenteditable="true"></div>',
-                            editor.ownerDocument
-                        ) as HTMLDivElement;
+                        const div: HTMLDivElement = editor.create.div(void 0, {
+                            tabindex: -1,
+                            contenteditable: true,
+                            style: {
+                                left: -9999,
+                                top: 0,
+                                width: 0,
+                                height: '100%',
+                                lineHeight: '140%',
+                                overflow: 'hidden',
+                                position: 'fixed',
+                                zIndex: 2147483647,
+                                wordBreak: 'break-all',
+                            },
+                        });
+
                         editor.container.appendChild(div);
+
                         const selData = editor.selection.save();
+
                         div.focus();
                         let tick: number = 0;
 

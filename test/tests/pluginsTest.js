@@ -170,17 +170,17 @@ describe('Test plugins', function () {
         });
         it('Should show .jodit-add-new-line after user move mouse under Table,Ifrmae or IMG ', function () {
             var editor = new Jodit(appendTestArea());
-            editor.setEditorValue('<table>' +
+            editor.value = '<table>' +
                 '<tr><td>1</td></tr>' +
                 '<tr><td>2</td></tr>' +
                 '<tr><td>3</td></tr>' +
                 '<tr><td>4</td></tr>' +
-                '</table>');
+                '</table>';
 
-            window.scrollTo(0, editor.helper.offset(editor.editor, editor, editor.ownerDocument).top); // elementFromPoint works only with visible part of view
+            window.scrollTo(0, Jodit.modules.Helpers.offset(editor.editor, editor, editor.ownerDocument).top); // elementFromPoint works only with visible part of view
 
             simulateEvent('mousemove', 0, editor.editor, function (e) {
-                var pos = editor.helper.offset(editor.editor.firstChild, editor, editor.editorDocument);
+                var pos = Jodit.modules.Helpers.offset(editor.editor.firstChild, editor, editor.editorDocument);
                 e.pageX = pos.left + 5;
                 e.pageY = pos.top + 5;
                 // createPoint(e.pageX, e.pageY)
@@ -200,10 +200,10 @@ describe('Test plugins', function () {
                 '<tr><td>4</td></tr>' +
                 '</tbody></table>');
 
-            window.scrollTo(0, editor.helper.offset(editor.editor, editor, editor.ownerDocument).top) // elementFromPoint works only with visible part of view
+            window.scrollTo(0, Jodit.modules.Helpers.offset(editor.editor, editor, editor.ownerDocument).top) // elementFromPoint works only with visible part of view
 
             simulateEvent('mousemove', 0, editor.editor, function (data) {
-                var pos = editor.helper.offset(editor.editor.firstChild, editor, editor.editorDocument);
+                var pos = Jodit.modules.Helpers.offset(editor.editor.firstChild, editor, editor.editorDocument);
                 data.pageX = pos.left + 5;
                 data.pageY = pos.top + 5;
             });
@@ -230,10 +230,10 @@ describe('Test plugins', function () {
                 '</tbody></table>');
 
 
-            window.scrollTo(0, editor.helper.offset(editor.editor, editor, editor.ownerDocument).top); // elementFromPoint works only with visible part of view
+            window.scrollTo(0, Jodit.modules.Helpers.offset(editor.editor, editor, editor.ownerDocument).top); // elementFromPoint works only with visible part of view
 
             simulateEvent('mousemove', 0, editor.editor, function (data) {
-                var pos = editor.helper.offset(editor.editor.firstChild, editor, editor.editorDocument);
+                var pos = Jodit.modules.Helpers.offset(editor.editor.firstChild, editor, editor.editorDocument);
                 data.pageX = pos.left + 5;
                 data.pageY = pos.top + (pos.height - 5);
             });
@@ -260,10 +260,10 @@ describe('Test plugins', function () {
                 '</tbody></table>');
 
 
-            window.scrollTo(0, editor.helper.offset(editor.editor, editor, editor.ownerDocument).top); // elementFromPoint works only with visible part of view
+            window.scrollTo(0, Jodit.modules.Helpers.offset(editor.editor, editor, editor.ownerDocument).top); // elementFromPoint works only with visible part of view
 
             simulateEvent('mousemove', 0, editor.editor, function (data) {
-                var pos = editor.helper.offset(editor.editor.firstChild, editor, editor.editorDocument);
+                var pos = Jodit.modules.Helpers.offset(editor.editor.firstChild, editor, editor.editorDocument);
                 data.pageX = pos.left + 5;
                 data.pageY = pos.top + (pos.height - 5);
             });
@@ -285,13 +285,13 @@ describe('Test plugins', function () {
                 var editor = new Jodit(appendTestArea());
                 editor.setEditorValue('<p><img src="tests/artio.jpg" style="width: 100px; height: 100px;" alt=""></p>');
 
-                window.scrollTo(0, editor.helper.offset(editor.editor, editor, editor.ownerDocument).top) // elementFromPoint works only with visible part of view
+                window.scrollTo(0, Jodit.modules.Helpers.offset(editor.editor, editor, editor.ownerDocument).top) // elementFromPoint works only with visible part of view
 
                 var img = editor.editor.querySelector('img');
                 expect(null).to.be.not.equal(img);
 
                 simulateEvent('mousemove', 0, editor.editor, function (e) {
-                    var pos = editor.helper.offset(img, editor, editor.editorDocument);
+                    var pos = Jodit.modules.Helpers.offset(img, editor, editor.editorDocument);
                     e.pageX = pos.left + 5;
                     e.pageY = pos.top + 5;
                 });
@@ -355,19 +355,19 @@ describe('Test plugins', function () {
 
                             var oldRatio = cropper.offsetWidth / cropper.offsetHeight;
                             simulateEvent('mousedown', 0, cropper.querySelector('.jodit_bottomright'), function (e) {
-                                var pos = editor.helper.offset(cropper, editor, editor.ownerDocument);
+                                var pos = Jodit.modules.Helpers.offset(cropper, editor, editor.ownerDocument);
                                 e.clientX = pos.left + pos.width;
                                 e.clientY = pos.top + pos.height;
                             });
 
                             simulateEvent('mousemove', 0, editor.ownerWindow, function (e) {
-                                var pos = editor.helper.offset(cropper, editor, editor.ownerDocument);
+                                var pos = Jodit.modules.Helpers.offset(cropper, editor, editor.ownerDocument);
                                 e.clientX = pos.left + pos.width - 50;
                                 e.clientY = pos.top + pos.height - 150;
                             });
 
                             simulateEvent('mouseup', 0, editor.ownerWindow, function (e) {
-                                var pos = editor.helper.offset(cropper, editor, editor.ownerDocument);
+                                var pos = Jodit.modules.Helpers.offset(cropper, editor, editor.ownerDocument);
                                 e.clientX = pos.left + pos.width - 50;
                                 e.clientY = pos.top + pos.height - 150;
                             });
@@ -429,18 +429,18 @@ describe('Test plugins', function () {
                             simulateEvent('click', 0, disableRatioBtn);
 
                             simulateEvent('mousedown', 0, cropper.querySelector('.jodit_bottomright'), function (e) {
-                                var pos = editor.helper.offset(cropper, editor, editor.ownerDocument);
+                                var pos = Jodit.modules.Helpers.offset(cropper, editor, editor.ownerDocument);
                                 e.clientX = pos.left + pos.width;
                                 e.clientY = pos.top + pos.height;
                             });
                             simulateEvent('mousemove', 0, editor.ownerWindow, function (e) {
-                                var pos = editor.helper.offset(cropper, editor, editor.ownerDocument);
+                                var pos = Jodit.modules.Helpers.offset(cropper, editor, editor.ownerDocument);
                                 e.clientX = pos.left + pos.width - 50;
                                 e.clientY = pos.top + pos.height - 150;
                             });
 
                             simulateEvent('mouseup', 0, editor.ownerWindow, function (e) {
-                                var pos = editor.helper.offset(cropper, editor, editor.ownerDocument);
+                                var pos = Jodit.modules.Helpers.offset(cropper, editor, editor.ownerDocument);
                                 e.clientX = pos.left + pos.width - 50;
                                 e.clientY = pos.top + pos.height - 150;
                             });
@@ -498,19 +498,19 @@ describe('Test plugins', function () {
                             var oldRatio = resizer.offsetWidth / resizer.offsetHeight;
 
                             simulateEvent('mousedown', 0, resizer.querySelector('.jodit_bottomright'), function (e) {
-                                var pos = editor.helper.offset(resizer, editor, editor.ownerDocument);
+                                var pos = Jodit.modules.Helpers.offset(resizer, editor, editor.ownerDocument);
                                 e.clientX = pos.left + pos.width;
                                 e.clientY = pos.top + pos.height;
                             });
 
                             simulateEvent('mousemove', 0, editor.ownerWindow, function (e) {
-                                var pos = editor.helper.offset(resizer, editor, editor.ownerDocument);
+                                var pos = Jodit.modules.Helpers.offset(resizer, editor, editor.ownerDocument);
                                 e.clientX = pos.left + pos.width - 250;
                                 e.clientY = pos.top + pos.height - 150;
                             });
 
                             simulateEvent('mouseup', 0, editor.ownerWindow, function (e) {
-                                var pos = editor.helper.offset(resizer, editor, editor.ownerDocument);
+                                var pos = Jodit.modules.Helpers.offset(resizer, editor, editor.ownerDocument);
                                 e.clientX = pos.left + pos.width - 250;
                                 e.clientY = pos.top + pos.height - 150;
                             });
@@ -574,19 +574,19 @@ describe('Test plugins', function () {
                             var oldRatio = resizer.offsetWidth / resizer.offsetHeight;
 
                             simulateEvent('mousedown', 0, resizer.querySelector('.jodit_bottomright'), function (e) {
-                                var pos = editor.helper.offset(resizer, editor, editor.ownerDocument);
+                                var pos = Jodit.modules.Helpers.offset(resizer, editor, editor.ownerDocument);
                                 e.clientX = pos.left + pos.width;
                                 e.clientY = pos.top + pos.height;
                             });
 
                             simulateEvent('mousemove', 0, editor.ownerWindow, function (e) {
-                                var pos = editor.helper.offset(resizer, editor, editor.ownerDocument);
+                                var pos = Jodit.modules.Helpers.offset(resizer, editor, editor.ownerDocument);
                                 e.clientX = pos.left + pos.width - 50;
                                 e.clientY = pos.top + pos.height - 150;
                             });
 
                             simulateEvent('mouseup', 0, editor.ownerWindow, function (e) {
-                                var pos = editor.helper.offset(resizer, editor, editor.ownerDocument);
+                                var pos = Jodit.modules.Helpers.offset(resizer, editor, editor.ownerDocument);
                                 e.clientX = pos.left + pos.width - 50;
                                 e.clientY = pos.top + pos.height - 150;
                             });
@@ -825,12 +825,9 @@ describe('Test plugins', function () {
         });
         describe('Esc in query field', function () {
             it('Should hide search form and restore selection', function () {
-                var editor = new Jodit(appendTestArea(), {
-                    observer: {
-                        timeout: 0
-                    }
-                });
+                var editor = new Jodit(appendTestArea());
                 editor.setEditorValue('<p>text</p>');
+
                 var range = editor.editorDocument.createRange();
                 range.setStart(editor.editor.firstChild.firstChild, 1)
                 range.setEnd(editor.editor.firstChild.firstChild, 3);
@@ -843,9 +840,11 @@ describe('Test plugins', function () {
                 simulateEvent('keydown', Jodit.KEY_F, editor.editor, function (options) {
                     options.ctrlKey = true
                 });
+
                 expect(true).to.equal(search.classList.contains('jodit_search-active'));
                 expect(true).to.equal(editor.ownerDocument.activeElement === search.querySelector('.jodit_search-query'));
-                simulateEvent('keydown', 27, search.querySelector('.jodit_search-query'));
+                simulateEvent('keydown', Jodit.KEY_ESC, search.querySelector('.jodit_search-query'));
+
                 expect(false).to.equal(search.classList.contains('jodit_search-active'));
                 expect('ex').to.equal(sel.toString());
             });
@@ -945,13 +944,16 @@ describe('Test plugins', function () {
             describe('Native tooltip', function () {
                 it('Should have different tooltip for each language', function () {
                     var area = appendTestArea();
+
                     var editor = new Jodit(area, {
                         toolbarAdaptive: false,
                         useNativeTooltip: true,
                         buttons: 'indent,outdent',
                         language: 'en'
                     });
+
                     expect(null).to.be.not.equal(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-outdent [title]'));
+
                     var title = editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-outdent [title]').getAttribute('title');
                     editor.destruct();
 
@@ -984,6 +986,7 @@ describe('Test plugins', function () {
                     simulateEvent('mouseenter', 0, button.querySelector('a'));
 
                     var tooltip = button.querySelector('.jodit_tooltip');
+
                     expect(null).to.be.not.equal(tooltip);
                     var title = tooltip.innerText;
                     editor.destruct();
@@ -1956,12 +1959,12 @@ describe('Test plugins', function () {
 
                         simulateEvent('click', 0, statusbar.childNodes[2].firstChild); // click on A
 
-                        expect(editor.helper.trim(editor.editorWindow.getSelection().toString())).to.be.equal('sss');
+                        expect(Jodit.modules.Helpers.trim(editor.editorWindow.getSelection().toString())).to.be.equal('sss');
                         expect(statusbar.childNodes[2].innerText).to.be.equal('a');
 
                         simulateEvent('click', 0, statusbar.childNodes[1].firstChild);// click on P
 
-                        expect(editor.helper.trim(editor.editorWindow.getSelection().toString())).to.be.equal('Simple text ssss');
+                        expect(Jodit.modules.Helpers.trim(editor.editorWindow.getSelection().toString())).to.be.equal('Simple text ssss');
                         expect(statusbar.childNodes.length).to.be.equal(3);
                     });
                 });

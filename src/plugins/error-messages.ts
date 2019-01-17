@@ -1,14 +1,14 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
 import { Config } from '../Config';
-import { Jodit } from '../Jodit';
-import { css, dom } from '../modules/helpers/Helpers';
-import { Dom } from '../modules';
-import { setTimeout } from '../modules/helpers/Helpers';
+import { Dom } from '../modules/Dom';
+import { setTimeout } from '../modules/helpers/async';
+import { css } from '../modules/helpers';
+import { IJodit } from '../types';
 
 declare module '../Config' {
     interface Config {
@@ -35,24 +35,24 @@ Config.prototype.showMessageErrorOffsetPx = 3;
 /**
  * Plugin toWYSIWYG display pop-up messages in the lower right corner of the editor
  */
-export function errorMessages(editor: Jodit) {
+export function errorMessages(editor: IJodit) {
     if (editor.options.showMessageErrors) {
         let height: number;
 
-        const messagesBox: HTMLDivElement = dom(
-                '<div class="jodit_error_box_for_messages"></div>',
-                editor.ownerDocument
-            ) as HTMLDivElement,
+        const messagesBox: HTMLDivElement = editor.create.div(
+                'jodit_error_box_for_messages'
+            ),
             recalcOffsets = () => {
                 height = 5;
-                [].slice
-                    .call(messagesBox.childNodes)
-                    .forEach((elm: HTMLElement) => {
-                        css(messagesBox, 'bottom', height + 'px');
-                        height +=
-                            elm.offsetWidth +
-                            editor.options.showMessageErrorOffsetPx;
-                    });
+                Array.from(<NodeListOf<HTMLElement>>(
+                    messagesBox.childNodes
+                )).forEach((elm: HTMLElement) => {
+                    css(messagesBox, 'bottom', height + 'px');
+
+                    height +=
+                        elm.offsetWidth +
+                        editor.options.showMessageErrorOffsetPx;
+                });
             };
 
         editor.workplace.appendChild(messagesBox);
@@ -79,20 +79,17 @@ export function errorMessages(editor: Jodit) {
             .on(
                 'errorMessage',
                 (message: string, className: string, timeout: number) => {
-                    const newmessage: HTMLDivElement = dom(
-                        '<div class="active ' +
-                            (className || '') +
-                            '">' +
-                            message +
-                            '</div>',
-                        editor.ownerDocument
-                    ) as HTMLDivElement;
+                    const newmessage = editor.create.div(
+                        'active ' + (className || ''),
+                        message
+                    );
 
                     messagesBox.appendChild(newmessage);
 
                     recalcOffsets();
                     setTimeout(() => {
                         newmessage.classList.remove('active');
+
                         setTimeout(() => {
                             Dom.safeRemove(newmessage);
                             recalcOffsets();

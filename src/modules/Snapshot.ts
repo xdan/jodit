@@ -1,17 +1,17 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { SnapshotType } from '../types';
+import { IJodit, SnapshotType } from '../types';
 import { Component } from './Component';
 import { Dom } from './Dom';
 
 /**
  * Module for creating snapshot of editor which includes html content and the current selection
  */
-export class Snapshot extends Component {
+export class Snapshot extends Component<IJodit> {
     /**
      * Compare two snapshotes, if and htmls and selections match, then return true
      *
@@ -127,7 +127,7 @@ export class Snapshot extends Component {
         return n;
     }
 
-    public isBlocked: boolean = false;
+    isBlocked: boolean = false;
 
     /**
      * Creates object a snapshot of editor: html and the current selection. Current selection calculate by
@@ -137,7 +137,7 @@ export class Snapshot extends Component {
      * {html: string, range: {startContainer: int, startOffset: int, endContainer: int, endOffset: int}} or
      * {html: string} without selection
      */
-    public make(): SnapshotType {
+    make(): SnapshotType {
         const snapshot: SnapshotType = {
             html: '',
             range: {
@@ -197,7 +197,7 @@ export class Snapshot extends Component {
      * @param {object} snapshot - snapshot of editor resulting from the `{@link Snapshot~make|make}`
      * @see make
      */
-    public restore(snapshot: SnapshotType) {
+    restore(snapshot: SnapshotType) {
         this.isBlocked = true;
         this.jodit.setEditorValue(snapshot.html);
 
@@ -222,6 +222,10 @@ export class Snapshot extends Component {
             }
         }
 
+        this.isBlocked = false;
+    }
+
+    destruct(): any {
         this.isBlocked = false;
     }
 }

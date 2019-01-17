@@ -1,13 +1,12 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { IDictionary } from './types';
-import { IViewBased } from './view';
+import { IComponent, IDictionary } from './types';
 
-export interface IUploaderData {
+interface IUploaderData {
     messages?: string[];
     files?: string[];
     isImages?: boolean[];
@@ -16,7 +15,7 @@ export interface IUploaderData {
     newfilename?: string;
 }
 
-export interface IUploaderAnswer {
+interface IUploaderAnswer {
     success: boolean;
     time: string;
     data: IUploaderData;
@@ -190,7 +189,7 @@ export interface IUploaderOptions<T> {
     contentType: (this: T, requestData: any) => string | false;
 }
 
-export interface IUploader {
+export interface IUploader extends IComponent {
     buildData(data: FormData | IDictionary<string> | string): BuildDataResult;
 
     send(
@@ -216,4 +215,18 @@ export interface IUploader {
         handlerSuccess?: HandlerSuccess,
         handlerError?: HandlerError
     ): void;
+
+    /**
+     * It sets the path for uploading files
+     * @method setPath
+     * @param {string} path
+     */
+    setPath(path: string): void;
+    /**
+     * It sets the source for connector
+     *
+     * @method setSource
+     * @param {string} source
+     */
+    setSource(source: string): void;
 }

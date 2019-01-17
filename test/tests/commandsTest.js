@@ -81,27 +81,18 @@ describe('Commands Jodit Editor Tests', function() {
             editor.setEditorValue('');
 
             editor.selection.insertNode(
-                Jodit.modules.Dom.create('text', 'test', editor.editorDocument)
+                editor.create.inside.text( 'test')
             );
             editor.selection.insertNode(
-                Jodit.modules.Dom.create(
-                    'text',
-                    ' test2',
-                    editor.editorDocument
-                )
+                editor.create.inside.text(' test2')
             );
             editor.selection.insertNode(
-                Jodit.modules.Dom.create(
-                    'text',
-                    ' test3',
-                    editor.editorDocument
-                )
+                editor.create.inside.text(' test3')
             );
             editor.selection.insertNode(
-                Jodit.modules.Dom.create(
+                editor.create.inside.element(
                     'span',
-                    ' test4',
-                    editor.editorDocument
+                    ' test4'
                 )
             );
 
@@ -275,13 +266,13 @@ describe('Commands Jodit Editor Tests', function() {
             editor.execCommand('bold');
 
             editor.selection.insertNode(
-                Jodit.modules.Dom.create('text', 'abc', editor.editorDocument)
+                editor.create.inside.text('abc')
             );
 
             editor.execCommand('bold');
 
             editor.selection.insertNode(
-                Jodit.modules.Dom.create('text', 'def', editor.editorDocument)
+                editor.create.inside.text('def')
             );
 
             expect(editor.getEditorValue()).to.equal(

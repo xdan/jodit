@@ -1,14 +1,15 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
 import { Config } from '../Config';
 import * as consts from '../constants';
-import { Jodit } from '../Jodit';
-import { css, debounce, dom } from '../modules/helpers/Helpers';
-import { Dom } from '../modules';
+import { css } from '../modules/helpers/css';
+import { debounce } from '../modules/helpers/async';
+import { Dom } from '../modules/Dom';
+import { IJodit } from '../types';
 
 /**
  * Show placeholder
@@ -61,7 +62,7 @@ Config.prototype.placeholder = 'Type something';
  *
  * @param {Jodit} editor
  */
-export function placeholder(this: any, editor: Jodit) {
+export function placeholder(this: any, editor: IJodit) {
     if (!editor.options.showPlaceholder) {
         return;
     }
@@ -146,11 +147,10 @@ export function placeholder(this: any, editor: Jodit) {
             }
         }, editor.defaultTimeout / 10);
 
-    const placeholderElm: HTMLElement = dom(
+    const placeholderElm: HTMLElement = editor.create.fromHTML(
         '<span style="display: none;" class="jodit_placeholder">' +
             editor.i18n(editor.options.placeholder) +
-            '</span>',
-        editor.ownerDocument
+            '</span>'
     );
 
     if (editor.options.direction === 'rtl') {

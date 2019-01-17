@@ -1,16 +1,16 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
 import { Config } from '../Config';
-import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
-import { css, normalizeSize } from '../modules/helpers/Helpers';
+import { css, normalizeSize } from '../modules/helpers/';
 import { IControlType } from '../types/toolbar';
+import { IJodit } from '../types';
 
-Config.prototype.controls.fontsize = {
+Config.prototype.controls.fontsize = (<IControlType<IJodit>>{
     command: 'fontSize',
     list: [
         '8',
@@ -29,9 +29,9 @@ Config.prototype.controls.fontsize = {
         '72',
         '96',
     ],
-    template: (editor: Jodit, key: string, value: string) => value,
+    template: (editor, key: string, value: string) => value,
     tooltip: 'Font size',
-    isActiveChild: (editor: Jodit, control: IControlType): boolean => {
+    isActiveChild: (editor, control: IControlType): boolean => {
         const current: Node | false = editor.selection.current();
 
         if (current) {
@@ -40,7 +40,7 @@ Config.prototype.controls.fontsize = {
                     current,
                     elm => {
                         return (
-                            Dom.isBlock(elm) ||
+                            Dom.isBlock(elm, editor.editorWindow) ||
                             (elm &&
                                 Dom.isNode(elm, editor.editorWindow) &&
                                 elm.nodeType === Node.ELEMENT_NODE)
@@ -50,16 +50,16 @@ Config.prototype.controls.fontsize = {
                 ) as HTMLElement) || editor.editor;
 
             const fontSize: number = css(currentBpx, 'font-size') as number;
-            return !!(
+            return Boolean(
                 fontSize &&
-                control.args &&
-                control.args[1].toString() === fontSize.toString()
+                    control.args &&
+                    control.args[1].toString() === fontSize.toString()
             );
         }
 
         return false;
     },
-    isActive: (editor: Jodit): boolean => {
+    isActive: (editor): boolean => {
         const current: Node | false = editor.selection.current();
 
         if (current) {
@@ -68,7 +68,7 @@ Config.prototype.controls.fontsize = {
                     current,
                     elm => {
                         return (
-                            Dom.isBlock(elm) ||
+                            Dom.isBlock(elm, editor.editorWindow) ||
                             (elm &&
                                 Dom.isNode(elm, editor.editorWindow) &&
                                 elm.nodeType === Node.ELEMENT_NODE)
@@ -85,11 +85,12 @@ Config.prototype.controls.fontsize = {
 
         return false;
     },
-} as IControlType;
-Config.prototype.controls.font = {
+}) as IControlType;
+
+Config.prototype.controls.font = (<IControlType<IJodit>>{
     command: 'fontname',
 
-    exec: (editor: Jodit, event, control: IControlType) => {
+    exec: (editor, event, control) => {
         editor.execCommand(
             control.command as string,
             false,
@@ -107,11 +108,11 @@ Config.prototype.controls.font = {
         'Verdana,Geneva,sans-serif': 'Verdana',
     },
 
-    template: (editor: Jodit, key: string, value: string) => {
+    template: (editor, key: string, value: string) => {
         return `<span style="font-family: ${key}">${value}</span>`;
     },
 
-    isActiveChild: (editor: Jodit, control: IControlType): boolean => {
+    isActiveChild: (editor, control: IControlType): boolean => {
         const current: Node | false = editor.selection.current(),
             normFonts = (fontValue: string): string => {
                 return fontValue
@@ -126,7 +127,7 @@ Config.prototype.controls.font = {
                     current,
                     elm => {
                         return (
-                            Dom.isBlock(elm) ||
+                            Dom.isBlock(elm, editor.editorWindow) ||
                             (elm &&
                                 Dom.isNode(elm, editor.editorWindow) &&
                                 elm.nodeType === Node.ELEMENT_NODE)
@@ -140,17 +141,18 @@ Config.prototype.controls.font = {
                 'font-family'
             ).toString();
 
-            return !!(
+            return Boolean(
                 fontFamily &&
-                control.args &&
-                normFonts(control.args[0].toString()) === normFonts(fontFamily)
+                    control.args &&
+                    normFonts(control.args[0].toString()) ===
+                        normFonts(fontFamily)
             );
         }
 
         return false;
     },
 
-    isActive: (editor: Jodit): boolean => {
+    isActive: (editor: IJodit): boolean => {
         const current: Node | false = editor.selection.current();
 
         if (current) {
@@ -159,7 +161,7 @@ Config.prototype.controls.font = {
                     current,
                     (elm: Node | null) => {
                         return (
-                            Dom.isBlock(elm) ||
+                            Dom.isBlock(elm, editor.editorWindow) ||
                             (Dom.isNode(elm, editor.editorWindow) &&
                                 elm &&
                                 elm.nodeType === Node.ELEMENT_NODE)
@@ -178,13 +180,13 @@ Config.prototype.controls.font = {
     },
 
     tooltip: 'Font family',
-} as IControlType;
+}) as IControlType;
 
 /**
  * Process commands `fontsize` and `fontname`
  * @param {Jodit} editor
  */
-export function font(editor: Jodit) {
+export function font(editor: IJodit) {
     const callback = (
         command: string,
         second: string,
@@ -203,7 +205,7 @@ export function font(editor: Jodit) {
                 break;
         }
 
-        editor.setEditorValue();
+        editor.events.fire('synchro');
 
         return false;
     };

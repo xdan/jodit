@@ -1,13 +1,13 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * License GNU General Public License version 2 or later;
- * Copyright 2013-2018 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
 import { Config } from '../Config';
-import { Jodit } from '../Jodit';
 import { Dom } from '../modules/Dom';
-import { setTimeout } from '../modules/helpers/Helpers';
+import { setTimeout } from '../modules/helpers/async';
+import { IJodit } from '../types';
 
 declare module '../Config' {
     interface Config {
@@ -25,7 +25,7 @@ Config.prototype.autofocus = false;
  *
  * @param {Jodit} editor
  */
-export function autofocus(editor: Jodit) {
+export function autofocus(editor: IJodit) {
     let timeout: number;
     editor.events
         .on('afterInit', () => {
@@ -41,7 +41,7 @@ export function autofocus(editor: Jodit) {
             if (
                 editor.isEditorMode() &&
                 e.target &&
-                Dom.isBlock(e.target as Node) &&
+                Dom.isBlock(e.target as Node, editor.editorWindow) &&
                 !(e.target as HTMLElement).childNodes.length
             ) {
                 if (editor.editor === e.target) {
