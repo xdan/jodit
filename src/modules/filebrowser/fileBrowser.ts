@@ -413,7 +413,8 @@ Config.prototype.filebrowser = {
         let name: string = '',
             thumb: string = '',
             info: string,
-            thumbIsAbsolute: boolean = !!item.thumbIsAbsolute;
+            thumbIsAbsolute: boolean = !!item.thumbIsAbsolute,
+            fileIsAbsolute: boolean = !!item.fileIsAbsolute;
         const timestamp: string = new Date().getTime().toString();
 
         if (item.file !== undefined) {
@@ -447,9 +448,9 @@ Config.prototype.filebrowser = {
                 : '') +
             '</div>';
 
-        const imageURL: string = normalizeURL(
-            source.baseurl + source.path + name
-        );
+        const imageURL: string = fileIsAbsolute 
+            ? name 
+            : normalizeURL(source.baseurl + source.path + name);
 
         return (
             '<a ' +

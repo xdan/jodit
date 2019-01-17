@@ -21,6 +21,7 @@ import { IJodit } from './jodit';
 
 export interface ISourceFile {
     file: string;
+    fileIsAbsolute?: boolean;
     name?: string;
     thumb: string;
     thumbIsAbsolute?: boolean;
