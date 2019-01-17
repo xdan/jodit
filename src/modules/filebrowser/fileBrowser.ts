@@ -443,7 +443,7 @@ Config.prototype.filebrowser = {
                 ? '<span class="' +
                   ITEM_CLASS +
                   '-info-filechanged">' +
-                  item.changed +
+                  (typeof item.changed === 'number' ? new Date(item.changed).toLocaleString() : item.changed) +
                   '</span>'
                 : '') +
             '</div>';

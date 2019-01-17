@@ -25,7 +25,7 @@ export interface ISourceFile {
     name?: string;
     thumb: string;
     thumbIsAbsolute?: boolean;
-    changed: string;
+    changed: string | number;
     size: string;
     isImage: boolean;
 }
