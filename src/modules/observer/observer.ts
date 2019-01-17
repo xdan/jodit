@@ -10,7 +10,7 @@ import { Component } from '../Component';
 import { debounce } from '../helpers/async';
 import { Snapshot } from '../Snapshot';
 import { Stack } from '../Stack';
-import { Command } from './Command';
+import { Command } from './command';
 
 /**
  * @property{object} observer module settings {@link Observer|Observer}
