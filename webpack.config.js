@@ -131,6 +131,9 @@ module.exports = (env, argv) => {
                 {
                     test: /\.(ts)$/,
                     loader: 'awesome-typescript-loader',
+                    options: uglify ? {
+                        getCustomTransformers: () => privateTransformer
+                    } : {},
                     exclude: [
                         /(node_modules|bower_components)/,
                         /langs\/[a-z]{2}\.ts/,
