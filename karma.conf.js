@@ -1,4 +1,4 @@
-const webpackConfig = require('./webpack.config')();
+const webpackConfig = require('./webpack.config')([], {});
 
 module.exports = function(config) {
     config.set({

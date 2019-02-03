@@ -57,6 +57,7 @@ module.exports = (env, argv) => {
 
     const config = {
         cache: true,
+        mode,
         context: __dirname,
         devtool: debug ? "inline-sourcemap" : false,
         entry: debug ? [
@@ -131,8 +132,8 @@ module.exports = (env, argv) => {
                 {
                     test: /\.(ts)$/,
                     loader: 'awesome-typescript-loader',
-                    options: uglify ? {
-                        getCustomTransformers: () => privateTransformer
+                    options: !uglify ? {
+                        //getCustomTransformers: () => privateTransformer
                     } : {},
                     exclude: [
                         /(node_modules|bower_components)/,
@@ -151,7 +152,7 @@ module.exports = (env, argv) => {
             new webpack.DefinePlugin({
                 'appVersion': JSON.stringify(pkg.version),
                 'process.env': {
-                    'NODE_ENV': '"developer"'
+                    'NODE_ENV': JSON.stringify(mode)
                 }
             }),
             new webpack.NamedModulesPlugin(),
@@ -161,7 +162,7 @@ module.exports = (env, argv) => {
             new webpack.DefinePlugin({
                 appVersion: JSON.stringify(pkg.version),
                 'process.env': {
-                    'NODE_ENV': '"production"'
+                    'NODE_ENV': JSON.stringify(mode)
                 }
             })
         ]
