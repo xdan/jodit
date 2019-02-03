@@ -3,14 +3,36 @@
  * License GNU General Public License version 2 or later;
  * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
+import { default as de } from './de';
+import { default as en } from './en';
+import { default as fr } from './fr';
+import { default as ru } from './ru';
+import { default as ar } from './ar';
+import { default as zh_cn } from './zh_cn';
+import { default as es } from './es';
+import { default as nl } from './nl';
+import { default as hu } from './hu';
+import { default as pt_br } from './pt_br';
 
-export { default as de } from './de';
-export { default as en } from './en';
-export { default as fr } from './fr';
-export { default as ru } from './ru';
-export { default as ar } from './ar';
-export { default as zh_cn } from './zh_cn';
-export { default as es } from './es';
-export { default as nl } from './nl';
-export { default as hu } from './hu';
-export { default as pt_br } from './pt_br';
+const exp: any = {de, fr, ru, ar, zh_cn, es, nl, hu, pt_br, en};
+
+/* Unpack array to hash */
+
+const hashLang: any = {};
+
+(<any>en).forEach((key: string, index: number) => {
+    hashLang[index] = key;
+});
+
+Object.keys(exp).forEach((lang: string) => {
+    const list: unknown = exp[lang];
+
+    if (Array.isArray(list)) {
+        exp[lang] = {};
+        list.forEach((value: string, index: number) => {
+            exp[lang][hashLang[index]] = value;
+        });
+    }
+});
+
+export = exp;
