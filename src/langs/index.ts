@@ -12,9 +12,10 @@ import { default as zh_cn } from './zh_cn';
 import { default as es } from './es';
 import { default as nl } from './nl';
 import { default as hu } from './hu';
+import { default as tr } from './tr';
 import { default as pt_br } from './pt_br';
 
-const exp: any = {de, fr, ru, ar, zh_cn, es, nl, hu, pt_br, en};
+const exp: any = {de, fr, ru, tr, ar, zh_cn, es, nl, hu, pt_br, en};
 
 /* Unpack array to hash */
 
