@@ -758,7 +758,6 @@ describe('Jodit FileBrowser Tests', function() {
                     });
 
                     simulateEvent('drop', 0, editor.editor, function(data) {
-                        debugger
                         Object.defineProperty(data, 'dataTransfer', {
                             value: {
                                 files: [

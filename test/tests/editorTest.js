@@ -529,14 +529,19 @@ describe('Jodit Editor Tests', function() {
 
             expect(editor.container.querySelectorAll('.jodit_placeholder').length && editor.container.querySelector('.jodit_placeholder').style.display === 'none').to.be.equal(true);
         });
-        it("Placeholder's fontsize", function () {
-            var area = appendTestArea();
-            var editor = new Jodit(area);
 
-            editor.editor.style.fontSize = '12px';
-            simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
-            expect(editor.container.querySelectorAll('.jodit_placeholder').length && editor.container.querySelector('.jodit_placeholder').style.fontSize === '12px').to.be.equal(true);
+
+        describe('For element with fontsize 12px', function () {
+            it("Should set Placeholder's fontsize", function () {
+                var area = appendTestArea();
+                var editor = new Jodit(area);
+
+                editor.editor.style.fontSize = '12px';
+                simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+                expect(editor.container.querySelectorAll('.jodit_placeholder').length && editor.container.querySelector('.jodit_placeholder').style.fontSize === '12px').to.be.equal(true);
+            });
         });
+
         describe('Synchronization', function () {
             it('Check synchronization between element and editor', function () {
                 var area = appendTestArea();

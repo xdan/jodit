@@ -128,7 +128,6 @@ export class View extends Panel implements IViewBased {
                 : new EventsNative(this.ownerDocument);
         this.buffer = jodit && jodit.buffer ? jodit.buffer : {};
 
-        // this.toolbar = new ToolbarCollection(this);
 
         this.options = { ...this.options, ...options };
     }

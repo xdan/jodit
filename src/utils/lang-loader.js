@@ -8,7 +8,6 @@ let keys = [];
 
 module.exports = function(content, fileData) {
     this.cacheable && this.cacheable();
-    this.value = content;
 
     const
         start = content.indexOf('exports.default = ') + 18,

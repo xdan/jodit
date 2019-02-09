@@ -310,13 +310,9 @@ describe('Test interface', function() {
 
                         expect(openFontnameList()).to.be.not.null;
 
-                        Array.from(openFontnameList().childNodes).forEach(async function (font, index) {
+                        Array.from(openFontnameList().childNodes).map(function (font, index) {
                             font = openFontnameList().childNodes[index];
                             simulateEvent('mousedown', 0, font);
-
-                            await new Promise((resolve) => {
-                                setTimeout(resolve, 1000);
-                            });
 
                             var fontFamily = font.querySelector('span[style]').getAttribute('style').replace(/"/g, "'");
 

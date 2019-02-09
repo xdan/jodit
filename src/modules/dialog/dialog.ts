@@ -79,6 +79,7 @@ export class Dialog extends View {
      * @property {HTMLDivElement} resizer
      */
     private resizer: HTMLDivElement;
+    public toolbar: ToolbarCollection;
 
     private offsetX: number;
     private offsetY: number;
@@ -539,15 +540,19 @@ export class Dialog extends View {
             return;
         }
 
+        if (this.toolbar) {
+            this.toolbar.destruct();
+        }
+
+        if (!this.jodit || !this.jodit.events) {
+            this.events.destruct();
+        }
+
         if (this.container) {
             Dom.safeRemove(this.container);
         }
 
         delete this.container;
-
-        if (!this.jodit || !this.jodit.events) {
-            this.events.destruct();
-        }
 
         this.__isDestructed = true;
     }
@@ -694,6 +699,9 @@ export class Dialog extends View {
 
         self.container.addEventListener('close_dialog', self.close as any);
 
+        self.toolbar = JoditToolbarCollection.makeCollection(self);
+        self.toolbar.build(self.options.buttons, self.dialogbox_toolbar);
+
         self.events
             .on(this.window, 'mousemove', self.onMouseMove.bind(self))
             .on(this.window, 'mouseup', self.onMouseUp.bind(self))
@@ -722,3 +730,4 @@ export class Dialog extends View {
 }
 
 import { Jodit } from '../../Jodit';
+import { JoditToolbarCollection, ToolbarCollection } from '..';

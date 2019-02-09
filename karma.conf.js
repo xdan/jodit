@@ -1,4 +1,6 @@
-const webpackConfig = require('./webpack.config')([], {});
+const webpackConfig = require('./webpack.config')([], {
+    uglify: true
+});
 
 module.exports = function(config) {
     config.set({

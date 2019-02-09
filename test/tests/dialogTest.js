@@ -16,6 +16,33 @@ describe('Dialog system tests', function() {
 
             expect(dialog.innerHTML.indexOf('xdsoft.net') !== -1).to.be.equal(true);
         });
+        describe('Close About dialog', function() {
+            it('Should show Close button in right top corner and close dialog after click', function () {
+                getBox().style.width = '100%';
+                var editor = new Jodit(appendTestArea(), {
+                    disablePlugins: 'mobile'
+                });
+
+                var about = editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-about');
+                expect(about).to.be.not.null;
+
+                simulateEvent('mousedown', 0, about);
+
+                var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active');
+                expect(dialog).to.be.not.null;
+
+                expect(dialog.innerHTML.indexOf('xdsoft.net') !== -1).to.be.true;
+
+                var close = dialog.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-close');
+                expect(close).to.be.not.null;
+
+                simulateEvent('mousedown', 0, close);
+
+                expect(editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active')).to.be.null;
+
+                expect(Jodit.modules.Helpers.css(dialog, 'display')).to.be.equal('none');
+            });
+        });
     });
     describe('Short Jodit.Alert etc static methods', function() {
         it('Should work without Jodit instance', function () {
@@ -26,6 +53,13 @@ describe('Dialog system tests', function() {
             var dialog = Jodit.Alert('Hello');
             expect(dialog instanceof Jodit.modules.Dialog).to.equal(true);
             dialog.close();
+        });
+        describe('Show not string', function () {
+            it('Should show dialog with toString value', function () {
+                var dialog = Jodit.Alert(111);
+                expect(dialog.dialog.querySelector('.jodit_dialog_content').textContent).to.be.equal('111');
+                dialog.close();
+            });
         });
         it('Should get string or HTMLElement or array of string or array of HTMLElement in arguments', function () {
             var dialog = Jodit.Alert(['<div id="hello1">Hello</div>']);

@@ -49,9 +49,7 @@ export const Alert = (
 
     asArray(msg).forEach(oneMessage => {
         $div.appendChild(
-            typeof oneMessage === 'string'
-                ? dialog.create.fromHTML(oneMessage)
-                : oneMessage
+            Dom.isNode(oneMessage, dialog.window) ? oneMessage : dialog.create.fromHTML(oneMessage)
         );
     });
 
@@ -75,3 +73,4 @@ export const Alert = (
 
 import { Jodit } from '../../Jodit';
 import { asArray } from '../helpers/array';
+import { Dom } from '../Dom';

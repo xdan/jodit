@@ -22,7 +22,7 @@ module.exports = (env, argv) => {
 
     const debug = !argv || !argv.mode  || !argv.mode.match(/production/);
     const mode = debug ? 'development' : argv.mode;
-    const uglify = !debug && process.env.NODE_ENV !== 'production-no-uflify';
+    const uglify = (!debug && process.env.NODE_ENV !== 'production-no-uflify');
 
     const css_loaders = [
         debug ? 'style-loader' : MiniCssExtractPlugin.loader,
@@ -132,7 +132,7 @@ module.exports = (env, argv) => {
                 {
                     test: /\.(ts)$/,
                     loader: 'awesome-typescript-loader',
-                    options: !uglify ? {
+                    options: uglify ? {
                         //getCustomTransformers: () => privateTransformer
                     } : {},
                     exclude: [

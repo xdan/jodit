@@ -204,7 +204,7 @@ export default {
     'Edit link': 'Bağlantıyı düzenle',
     'No follow': 'Nofollow özelliği',
     'Unlink': 'Bağlantıyı kaldır',
-    'URL': 'URL',
+    ' URL': 'URL',
     'Reset': 'Sıfırla',
     'Save': 'Kaydet',
     'Save as ...': 'Farklı kaydet',

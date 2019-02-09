@@ -125,10 +125,10 @@ export class Create implements ICreate {
      *
      * @return HTMLElement
      */
-    fromHTML(html: string): HTMLElement {
+    fromHTML(html: string | number): HTMLElement {
         const div: HTMLDivElement = this.div();
 
-        div.innerHTML = html;
+        div.innerHTML = html.toString();
 
         const child: HTMLElement =
             div.firstChild !== div.lastChild || !div.firstChild
