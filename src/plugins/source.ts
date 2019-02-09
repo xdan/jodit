@@ -137,12 +137,10 @@ export class source extends Plugin {
         if (
             eventOnFinalize &&
             urls[i] === undefined &&
-            this.jodit &&
-            this.jodit.events &&
             !this.isDestructed
         ) {
-            this.jodit.events.fire(eventOnFinalize);
-            this.jodit.events.fire(this.jodit.ownerWindow, eventOnFinalize);
+            this.jodit && this.jodit.events && this.jodit.events.fire(eventOnFinalize);
+            this.jodit && this.jodit.events && this.jodit.events.fire(this.jodit.ownerWindow, eventOnFinalize);
 
             return;
         }
