@@ -102,16 +102,16 @@ interface IEventsNative {
      * parent.events.off('someGlobalEvents');
      * ```
      */
-    off(subjectOrEvents: string, eventsOrCallback?: () => void): IEventsNative;
+    off(subjectOrEvents: string, eventsOrCallback?: CallbackFunction): IEventsNative;
     off(
         subjectOrEvents: object,
         eventsOrCallback?: string,
-        handler?: () => void
+        handler?: CallbackFunction
     ): IEventsNative;
     off(
         subjectOrEvents: object | string,
         eventsOrCallback?: string | (() => void),
-        handler?: () => void
+        handler?: CallbackFunction
     ): IEventsNative;
 
     stopPropagation(

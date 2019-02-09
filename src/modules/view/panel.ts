@@ -41,7 +41,13 @@ export class Panel extends Component implements IPanel {
     }
 
     destruct(): any {
+        if (!this.isDestructed) {
+            return;
+        }
+
         Dom.safeRemove(this.container);
+        delete this.container;
+        super.destruct();
     }
 
     public isLocked = (): boolean => {

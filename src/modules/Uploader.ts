@@ -743,5 +743,9 @@ export class Uploader extends Component implements IUploader {
                     ajax.abort()
                 } catch {}
             });
+
+        delete this.options;
+
+        super.destruct();
     }
 }

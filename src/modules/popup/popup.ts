@@ -197,12 +197,19 @@ export class Popup extends Component {
     }
 
     destruct() {
+        if (this.isDestructed) {
+            return;
+        }
+
         this.jodit.events.off(
             [this.jodit.ownerWindow, this.jodit.events],
             'resize',
             this.throttleCalcPosition
         );
         Dom.safeRemove(this.container);
+        delete this.container;
+
+        super.destruct();
     }
 }
 

@@ -97,8 +97,6 @@ export class Dialog extends View {
     private startY: number = 0;
     private startPoint = { x: 0, y: 0, w: 0, h: 0 };
 
-    private __isDestructed: boolean = false;
-
     private lockSelect = () => {
         this.container.classList.add('jodit_dialog_box-moved');
     };
@@ -130,7 +128,7 @@ export class Dialog extends View {
         });
     }
 
-    private onMouseUp() {
+    private onMouseUp = () => {
         if (this.draggable || this.resizeble) {
             this.draggable = false;
             this.resizeble = false;
@@ -143,13 +141,13 @@ export class Dialog extends View {
                 this.jodit.events.fire(this, 'endResize endMove');
             }
         }
-    }
+    };
 
     /**
      *
      * @param {MouseEvent} e
      */
-    private onHeaderMouseDown(e: MouseEvent) {
+    private onHeaderMouseDown = (e: MouseEvent) => {
         const target: HTMLElement = e.target as HTMLElement;
         if (
             !this.options.draggable ||
@@ -175,8 +173,8 @@ export class Dialog extends View {
              */
             this.jodit.events.fire(this, 'startMove');
         }
-    }
-    private onMouseMove(e: MouseEvent) {
+    };
+    private onMouseMove = (e: MouseEvent) => {
         if (this.draggable && this.options.draggable) {
             this.setPosition(
                 this.startPoint.x + e.clientX - this.startX,
@@ -222,12 +220,12 @@ export class Dialog extends View {
             e.stopImmediatePropagation();
             e.preventDefault();
         }
-    }
+    };
     /**
      *
      * @param {MouseEvent} e
      */
-    private onKeyDown(e: KeyboardEvent) {
+    private onKeyDown = (e: KeyboardEvent) => {
         if (this.isOpened() && e.which === KEY_ESC) {
             const me = this.getMaxZIndexDialog();
 
@@ -239,10 +237,11 @@ export class Dialog extends View {
 
             e.stopImmediatePropagation();
         }
-    }
+    };
 
-    private onResize() {
+    private onResize = () => {
         if (
+            this.options &&
             this.options.resizable &&
             !this.moved &&
             this.isOpened() &&
@@ -251,7 +250,7 @@ export class Dialog extends View {
         ) {
             this.setPosition();
         }
-    }
+    };
 
     private onResizerMouseDown(e: MouseEvent) {
         this.resizeble = true;
@@ -528,33 +527,8 @@ export class Dialog extends View {
      */
     public isOpened(): boolean {
         return (
-            !this.__isDestructed && this.container.classList.contains('active')
+            !this.isDestructed && this.container && this.container.classList.contains('active')
         );
-    }
-
-    /**
-     * It destroys all objects created for the windows and also includes all the handlers for the window object
-     */
-    public destruct() {
-        if (this.__isDestructed) {
-            return;
-        }
-
-        if (this.toolbar) {
-            this.toolbar.destruct();
-        }
-
-        if (!this.jodit || !this.jodit.events) {
-            this.events.destruct();
-        }
-
-        if (this.container) {
-            Dom.safeRemove(this.container);
-        }
-
-        delete this.container;
-
-        this.__isDestructed = true;
     }
 
     /**
@@ -581,9 +555,10 @@ export class Dialog extends View {
      * ```
      */
     public close = (e?: MouseEvent) => {
-        if (this.__isDestructed) {
+        if (this.isDestructed) {
             return;
         }
+
         if (e) {
             e.stopImmediatePropagation();
             e.preventDefault();
@@ -599,7 +574,7 @@ export class Dialog extends View {
             this.jodit.events.fire('beforeClose', this);
         }
 
-        this.container.classList && this.container.classList.remove('active');
+        this.container && this.container.classList && this.container.classList.remove('active');
 
         if (this.iSetMaximization) {
             this.maximization(false);
@@ -703,10 +678,10 @@ export class Dialog extends View {
         self.toolbar.build(self.options.buttons, self.dialogbox_toolbar);
 
         self.events
-            .on(this.window, 'mousemove', self.onMouseMove.bind(self))
-            .on(this.window, 'mouseup', self.onMouseUp.bind(self))
-            .on(this.window, 'keydown', self.onKeyDown.bind(self))
-            .on(this.window, 'resize', self.onResize.bind(self));
+            .on(this.window, 'mousemove', self.onMouseMove)
+            .on(this.window, 'mouseup', self.onMouseUp)
+            .on(this.window, 'keydown', self.onKeyDown)
+            .on(this.window, 'resize', self.onResize);
 
         const headerBox: HTMLDivElement | null = self.container.querySelector(
             '.jodit_dialog_header'
@@ -726,6 +701,40 @@ export class Dialog extends View {
         }
 
         Jodit.plugins.fullsize(self);
+    }
+
+    /**
+     * It destroys all objects created for the windows and also includes all the handlers for the window object
+     */
+    destruct() {
+        if (this.isDestructed) {
+            return;
+        }
+
+        if (this.toolbar) {
+            this.toolbar.destruct();
+            delete this.toolbar;
+        }
+
+        if (this.events) {
+            this.events
+                .off(this.window, 'mousemove', this.onMouseMove)
+                .off(this.window, 'mouseup', this.onMouseUp)
+                .off(this.window, 'keydown', this.onKeyDown)
+                .off(this.window, 'resize', this.onResize);
+        }
+
+        if (!this.jodit && this.events) {
+            this.events.destruct();
+            delete this.events;
+        }
+
+        if (this.container) {
+            Dom.safeRemove(this.container);
+            delete this.container;
+        }
+
+        super.destruct();
     }
 }
 

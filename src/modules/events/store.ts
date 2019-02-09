@@ -46,7 +46,7 @@ export class EventHandlersStore {
             : [];
     }
 
-    public set(
+    set(
         event: string,
         namespace: string,
         data: EventHandlerBlock,
@@ -65,5 +65,10 @@ export class EventHandlersStore {
         } else {
             this.__store[namespace][event].unshift(data);
         }
+    }
+
+    clear() {
+        delete this.__store;
+        this.__store = {};
     }
 }

@@ -130,12 +130,12 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 
                 switch (buttonControl.name) {
                     case '\n':
-                        button = new ToolbarBreak(this.jodit);
+                        button = new ToolbarBreak(this);
                         break;
                     case '|':
                         if (!lastBtnSeparator) {
                             lastBtnSeparator = true;
-                            button = new ToolbarSeparator(this.jodit);
+                            button = new ToolbarSeparator(this);
                         }
                         break;
                     default:
@@ -166,9 +166,10 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
     }
 
     immedateCheckActiveButtons = () => {
-        if (this.jodit.isLocked()) {
+        if (this.isDestructed || this.jodit.isLocked()) {
             return;
         }
+
         (this.__buttons.filter(
             (button: ToolbarElement) => button instanceof ToolbarButton
         ) as ToolbarButton[]).forEach((button: ToolbarButton) => {
@@ -244,6 +245,10 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
     }
 
     destruct() {
+        if (this.isDestructed) {
+            return;
+        }
+
         this.jodit.events
             .off(this.jodit.ownerWindow, 'mousedown touchstart', this.closeAll)
             .off(this.listenEvents, this.checkActiveButtons)
@@ -252,5 +257,7 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
         this.clear();
 
         Dom.safeRemove(this.container);
+        delete this.container;
+        super.destruct();
     }
 }

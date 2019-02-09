@@ -38,7 +38,13 @@ export abstract class ToolbarElement extends Component
     }
 
     destruct(): any {
+        if (this.isDestructed) {
+            return;
+        }
+
         Dom.safeRemove(this.container);
+        this.parentToolbar = undefined;
+        super.destruct();
     }
 
     createIcon(clearName: string, control?: IControlTypeStrong): HTMLElement {

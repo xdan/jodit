@@ -76,6 +76,7 @@ export function fullsize(editor: IViewWithToolbar) {
         oldHeight: number = 0,
         oldWidth: number = 0,
         wasToggled = false;
+
     const resize = () => {
             if (editor.events) {
                 if (shown) {
@@ -138,5 +139,8 @@ export function fullsize(editor: IViewWithToolbar) {
         .on('toggleFullSize', toggle)
         .on('beforeDestruct beforeClose', () => {
             toggle(false);
+        })
+        .on('beforeDestruct', () => {
+            editor.events && editor.events.off(editor.ownerWindow, 'resize', resize);
         });
 }

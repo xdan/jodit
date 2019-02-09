@@ -6,9 +6,10 @@
 
 import { IViewBased } from '../../types/view';
 import { ToolbarElement } from './element';
+import { IToolbarCollection } from '../../types';
 
 export class ToolbarBreak extends ToolbarElement {
-    constructor(jodit: IViewBased) {
+    constructor(jodit: IToolbarCollection | IViewBased) {
         super(jodit);
         this.container.classList.add('jodit_toolbar_btn-break');
     }

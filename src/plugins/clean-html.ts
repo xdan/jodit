@@ -228,7 +228,7 @@ export function cleanHtml(editor: IJodit) {
         .on(
             'change afterSetMode afterInit mousedown keydown',
             debounce(() => {
-                if (!editor.isDestructed && editor.isEditorMode()) {
+                if (!editor.isDestructed && editor.isEditorMode() && editor.selection) {
                     current = editor.selection.current();
 
                     let node: Node | null = null,

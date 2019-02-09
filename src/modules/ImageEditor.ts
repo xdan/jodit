@@ -948,14 +948,29 @@ export class ImageEditor extends Component {
         this.setHandlers();
     }
     destruct(): any {
+        if (this.isDestructed) {
+            return;
+        }
+
         if (this.dialog) {
             this.dialog.destruct();
+            delete this.dialog;
         }
 
         Dom.safeRemove(this.editor);
+        delete this.widthInput;
+        delete this.heightInput;
+        delete this.resize_box;
+        delete this.crop_box;
+        delete this.sizes;
+        delete this.resizeHandler;
+        delete this.cropHandler;
+        delete this.editor;
 
         if (this.jodit.events) {
             this.jodit.events.off('.jodit_image_editor');
         }
+
+        super.destruct();
     }
 }

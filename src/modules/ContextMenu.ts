@@ -23,7 +23,7 @@ export interface Action {
  * @param {Object} parent Jodit main object
  */
 export class ContextMenu extends Component {
-    private readonly context: HTMLElement;
+    private context: HTMLElement;
 
     /**
      * Hide context menu
@@ -111,6 +111,8 @@ export class ContextMenu extends Component {
 
     destruct() {
         Dom.safeRemove(this.context);
+        delete this.context;
         this.jodit.events.off(this.jodit.ownerWindow,'mouseup', this.hide);
+        super.destruct();
     }
 }

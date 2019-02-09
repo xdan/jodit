@@ -107,6 +107,10 @@ export class Observer extends Component<IJodit> {
         );
 
         editor.events.on('afterInit.observer', () => {
+            if (this.isDestructed) {
+                return;
+            }
+
             this.__startValue = this.snapshot.make();
             editor.events
                 // save selection
@@ -132,5 +136,12 @@ export class Observer extends Component<IJodit> {
         if (this.jodit.events) {
             this.jodit.events.off('.observer');
         }
+
+        this.snapshot.destruct();
+        delete this.snapshot;
+
+        delete this.stack;
+
+        super.destruct();
     }
 }

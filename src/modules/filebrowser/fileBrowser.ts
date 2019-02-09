@@ -448,8 +448,8 @@ Config.prototype.filebrowser = {
                 : '') +
             '</div>';
 
-        const imageURL: string = fileIsAbsolute 
-            ? name 
+        const imageURL: string = fileIsAbsolute
+            ? name
             : normalizeURL(source.baseurl + source.path + name);
 
         return (
@@ -2018,5 +2018,13 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
         this.events.on('bindUploader.filebrowser', (button: HTMLElement) => {
             this.uploader.bind(button, this.uploadHandler, this.errorHandler);
         });
+    }
+    destruct() {
+        this.dialog.destruct();
+        delete this.dialog;
+        this.events && this.events.off('.filebrowser');
+        this.uploader && this.uploader.destruct();
+        delete this.uploader;
+        super.destruct();
     }
 }

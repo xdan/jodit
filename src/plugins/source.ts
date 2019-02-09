@@ -10,7 +10,7 @@ import { MODE_SOURCE } from '../constants';
 import { Plugin } from '../modules/Plugin';
 import { IJodit, markerInfo } from '../types';
 import { IControlType } from '../types/toolbar';
-import { appendScript } from '../modules/helpers/appendScript';
+import { appendScript, CallbackAndElement } from '../modules/helpers/appendScript';
 import { debounce } from '../modules/helpers/async';
 import { $$ } from '../modules/helpers/selector';
 import { css } from '../modules/helpers/css';
@@ -127,6 +127,7 @@ export class source extends Plugin {
 
     private selInfo: markerInfo[] = [];
 
+    private lastTuple: null | CallbackAndElement = null;
     private loadNext = (
         i: number,
         urls: string[],
@@ -137,18 +138,26 @@ export class source extends Plugin {
             eventOnFinalize &&
             urls[i] === undefined &&
             this.jodit &&
-            this.jodit.events
-        ) {
-            this.jodit.events && this.jodit.events.fire(eventOnFinalize);
             this.jodit.events &&
-                this.jodit.events.fire(this.jodit.ownerWindow, eventOnFinalize);
+            !this.isDestructed
+        ) {
+            this.jodit.events.fire(eventOnFinalize);
+            this.jodit.events.fire(this.jodit.ownerWindow, eventOnFinalize);
+
             return;
         }
+
         if (urls[i] !== undefined) {
-            appendScript(
+            if (this.lastTuple) {
+                this.lastTuple.element.removeEventListener('load', this.lastTuple.callback);
+            }
+
+            this.lastTuple = appendScript(
                 urls[i],
                 () => {
-                    this.loadNext(i + 1, urls, eventOnFinalize, className);
+                    if (!this.isDestructed) {
+                        this.loadNext(i + 1, urls, eventOnFinalize, className);
+                    }
                 },
                 className,
                 this.jodit.ownerDocument
@@ -383,6 +392,18 @@ export class source extends Plugin {
         this.setFocusToMirror(); // need for setting focus after change mode
     };
 
+    /**
+     * Proxy Method
+     * @param e
+     * @private
+     */
+    private __proxyOnFocus = (e: MouseEvent) => {
+        this.jodit.events.fire('focus', e);
+    };
+    private __proxyOnMouseDown = (e: MouseEvent) => {
+        this.jodit.events.fire('mousedown', e);
+    };
+
     private replaceMirrorToACE() {
         const editor: IJodit = this.jodit;
         let aceEditor: AceAjax.Editor, undoManager: AceAjax.UndoManager;
@@ -448,6 +469,9 @@ export class source extends Plugin {
                     aceEditor === undefined &&
                     (this.jodit.ownerWindow as any).ace !== undefined
                 ) {
+                    this.jodit.events
+                        .off(this.jodit.ownerWindow, 'aceReady', tryInitAceEditor);
+
                     const fakeMirror = this.jodit.create.div(
                         'jodit_source_mirror-fake'
                     );
@@ -493,12 +517,8 @@ export class source extends Plugin {
                     });
 
                     aceEditor.on('change', this.toWYSIWYG);
-                    aceEditor.on('focus', (e: MouseEvent) => {
-                        editor.events.fire('focus', e);
-                    });
-                    aceEditor.on('mousedown', (e: MouseEvent) => {
-                        editor.events.fire('mousedown', e);
-                    });
+                    aceEditor.on('focus', this.__proxyOnFocus);
+                    aceEditor.on('mousedown', this.__proxyOnMouseDown);
 
                     this.mirror.style.display = 'none';
 
@@ -757,7 +777,20 @@ export class source extends Plugin {
         Dom.safeRemove(this.mirror);
 
         if (jodit && jodit.events) {
-            jodit.events.off('aceInited .source');
+            jodit.events.off('aceInited.source');
+        }
+
+        if (this.aceEditor) {
+            this.setFocusToMirror = () => {};
+            this.aceEditor.off('change', this.toWYSIWYG);
+            this.aceEditor.off('focus', this.__proxyOnFocus);
+            this.aceEditor.off('mousedown', this.__proxyOnMouseDown);
+            this.aceEditor.destroy();
+            delete this.aceEditor;
+        }
+
+        if (this.lastTuple) {
+            this.lastTuple.element.removeEventListener('load', this.lastTuple.callback);
         }
     }
 }

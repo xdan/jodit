@@ -377,7 +377,7 @@ export class inlinePopup extends Plugin {
     private isSelectionStarted = false;
 
     private onSelectionEnd = debounce(() => {
-        if (!this.jodit.isEditorMode() || this.isDestructed) {
+        if (this.isDestructed || !this.jodit.isEditorMode()) {
             return;
         }
 
@@ -579,7 +579,7 @@ export class inlinePopup extends Plugin {
     };
 
     private onSelectionStart = (event: MouseEvent) => {
-        if (!this.jodit.isEditorMode()) {
+        if (this.isDestructed || !this.jodit.isEditorMode()) {
             return;
         }
 
@@ -653,7 +653,7 @@ export class inlinePopup extends Plugin {
         }
     };
 
-    public afterInit(editor: IJodit) {
+    afterInit(editor: IJodit) {
         this.toolbar = JoditToolbarCollection.makeCollection(editor);
 
         this.target = editor.create.div('jodit_toolbar_popup-inline-target');
@@ -733,9 +733,12 @@ export class inlinePopup extends Plugin {
                 this.checkIsTargetEvent
             );
     }
-    public beforeDestruct(editor: IJodit) {
+
+    beforeDestruct(editor: IJodit) {
         this.popup && this.popup.destruct();
+        delete this.popup;
         this.toolbar && this.toolbar.destruct();
+        delete this.toolbar;
 
         Dom.safeRemove(this.target);
         Dom.safeRemove(this.container);

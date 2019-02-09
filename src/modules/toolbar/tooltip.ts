@@ -61,12 +61,14 @@ export class ToolbarTooltip extends ToolbarElement {
 
     destruct(): any {
         this.hide();
-        if (this.jodit.events) {
+
+        if (this.jodit && this.jodit.events) {
             this.jodit.events.off(
                 'change updateToolbar scroll hidePopup closeAllPopups hideTooltip',
                 this.hide
             );
         }
+
         return super.destruct();
     }
 }

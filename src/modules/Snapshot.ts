@@ -227,5 +227,6 @@ export class Snapshot extends Component<IJodit> {
 
     destruct(): any {
         this.isBlocked = false;
+        super.destruct();
     }
 }

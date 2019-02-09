@@ -33,6 +33,7 @@ export function size(editor: IJodit) {
 
     const setWidth = (width: number | string) =>
         css(editor.container, 'width', width);
+
     const setHeightWorkPlace = (height: number | string) =>
         css(editor.workplace, 'height', height);
     // const setWidthWorkPlace = (width: number | string) => css(editor.workplace, 'width', width);
@@ -119,7 +120,7 @@ export function size(editor: IJodit) {
     };
 
     const resizeWorkspaceImd = () => {
-        if (editor.options.inline) {
+        if (!editor || editor.isDestructed || !editor.options || editor.options.inline) {
             return;
         }
 

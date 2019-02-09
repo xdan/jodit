@@ -13,6 +13,7 @@ export class ViewWithToolbar extends View implements IViewWithToolbar {
 
     destruct() {
         this.toolbar.destruct();
+        delete this.toolbar;
         super.destruct();
     }
 }

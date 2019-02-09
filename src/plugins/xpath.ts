@@ -127,8 +127,16 @@ export class xpath extends Plugin {
         return li;
     };
 
+    private selectAllButton: ToolbarButton;
+    private removeSelectAll = () => {
+        if (this.selectAllButton) {
+            this.selectAllButton.destruct();
+            delete this.selectAllButton;
+        }
+    }
     private appendSelectAll = () => {
-        const li: ToolbarButton = new ToolbarButton(this.jodit, <
+        this.removeSelectAll();
+        this.selectAllButton = new ToolbarButton(this.jodit, <
             IControlTypeStrong
         >{
             name: 'selectall',
@@ -137,12 +145,16 @@ export class xpath extends Plugin {
 
         this.container &&
             this.container.insertBefore(
-                li.container,
+                this.selectAllButton.container,
                 this.container.firstChild
             );
     };
 
     private calcPathImd = () => {
+        if (this.isDestructed) {
+            return;
+        }
+
         const current: Node | false = this.jodit.selection.current();
 
         if (this.container) {
@@ -194,7 +206,7 @@ export class xpath extends Plugin {
     public container: HTMLElement | null = null;
     public menu: ContextMenu | null = null;
 
-    public afterInit() {
+    afterInit() {
         if (this.jodit.options.showXPathInStatusbar) {
             this.container = this.jodit.create.element('ul');
             this.container.classList.add('jodit_xpath');
@@ -220,10 +232,12 @@ export class xpath extends Plugin {
         }
     }
 
-    public beforeDestruct(): void {
+    beforeDestruct(): void {
         if (this.jodit && this.jodit.events) {
             this.jodit.events.off('.xpath');
         }
+
+        this.removeSelectAll();
 
         this.menu && this.menu.destruct();
         Dom.safeRemove(this.container);

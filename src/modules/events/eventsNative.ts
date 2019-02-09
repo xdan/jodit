@@ -630,14 +630,25 @@ export class EventsNative implements IEventsNative {
         return result;
     }
 
-    destruct() {
-        this.off(this);
-    }
+    private isDestructed: boolean = false;
 
     constructor(doc?: Document) {
         if (doc) {
             this.doc = doc;
         }
         this.__key += new Date().getTime();
+    }
+
+    destruct() {
+        if (!this.isDestructed) {
+            return;
+        }
+
+        this.isDestructed = true;
+
+        this.off(this);
+
+        this.getStore(this).clear();
+        delete (<any>this)[this.__key];
     }
 }

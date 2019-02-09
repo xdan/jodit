@@ -61,8 +61,6 @@ export class View extends Panel implements IViewBased {
 
     public components: any = [];
 
-    // public toolbar: ToolbarCollection;
-
     i18n(text: string): string {
         return this.jodit && this.jodit !== this
             ? this.jodit.i18n(text)
@@ -106,14 +104,6 @@ export class View extends Panel implements IViewBased {
         return this.version;
     };
 
-    public destruct() {
-        this.events.destruct();
-
-        delete this.options;
-
-        super.destruct();
-    }
-
     constructor(jodit?: IViewBased, options?: IViewOptions) {
         super(jodit);
 
@@ -130,6 +120,21 @@ export class View extends Panel implements IViewBased {
 
 
         this.options = { ...this.options, ...options };
+    }
+
+    destruct() {
+        if (this.isDestructed) {
+            return;
+        }
+
+        if (this.events) {
+            this.events.destruct();
+            delete this.events;
+        }
+
+        delete this.options;
+
+        super.destruct();
     }
 }
 

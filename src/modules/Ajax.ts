@@ -139,7 +139,10 @@ export class Ajax {
     public jodit: IViewBased;
 
     public abort(): Ajax {
-        this.xhr.abort();
+        try {
+            this.xhr.abort();
+        } catch {}
+
         return this;
     }
 

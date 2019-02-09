@@ -251,12 +251,17 @@ export class ToolbarButton extends ToolbarElement implements IToolbarButton {
     }
 
     destruct() {
+        if (this.isDestructed) {
+            return;
+        }
+
+        this.jodit && this.jodit.events && this.jodit.events.off(this.container);
+
         super.destruct();
 
         if (this.tooltip) {
             this.tooltip.destruct();
+            delete this.tooltip;
         }
-
-        this.jodit.events.off(this.container);
     }
 }

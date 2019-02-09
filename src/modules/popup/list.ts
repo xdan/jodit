@@ -25,6 +25,7 @@ export class PopupList extends Popup {
     protected doClose() {
         if (this.toolbar) {
             this.toolbar.destruct();
+            delete this.toolbar;
         }
     }
 
@@ -113,7 +114,12 @@ export class PopupList extends Popup {
         super(jodit, target, current, className);
     }
     destruct() {
-        this.toolbar.destruct();
+        if (this.isDestructed) {
+            return;
+        }
+
+        this.doClose();
+
         super.destruct();
     }
 }

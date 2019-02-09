@@ -12,14 +12,22 @@ export abstract class Component<T extends IViewBased = IViewBased>
     implements IComponent<T> {
     public jodit: T;
 
+    private __isDestructed = false;
     /**
      * Editor was destructed
      *
      * @type {boolean}
      */
-    public isDestructed: boolean = false;
+    get isDestructed(): boolean {
+        return this.__isDestructed;
+    }
 
-    abstract destruct(): any;
+    destruct(): any {
+        if (this.jodit) {
+            (<any>this.jodit) = undefined;
+        }
+        this.__isDestructed = true;
+    };
 
     constructor(jodit?: T) {
         if (jodit && jodit instanceof Component) {

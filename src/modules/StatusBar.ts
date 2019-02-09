@@ -34,14 +34,16 @@ export class StatusBar extends Component {
         this.jodit.events.fire('resize');
     }
 
-    public destruct() {
-        Dom.safeRemove(this.container);
-    }
-
     constructor(jodit: IJodit, readonly target: HTMLElement) {
         super(jodit);
         this.container = jodit.create.div('jodit_statusbar');
         target.appendChild(this.container);
         this.hide();
+    }
+
+    destruct() {
+        Dom.safeRemove(this.container);
+        delete this.container;
+        super.destruct();
     }
 }
