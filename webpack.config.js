@@ -1,4 +1,3 @@
-const privateTransformer = require("ts-private-uglifier/index").privateTransformer;
 const path = require('path');
 
 const webpack = require('webpack');
