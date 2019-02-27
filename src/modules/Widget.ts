@@ -23,6 +23,7 @@ import {
     isPlainObject,
     normalizeColor,
     val,
+    hasBrowserColorPicker
 } from './helpers/';
 import { ToolbarIcon } from './toolbar/icon';
 
@@ -58,6 +59,25 @@ export namespace Widget {
             iconEraser: string = editor.options.textIcons
                 ? `<span>${editor.i18n('eraser')}</span>`
                 : ToolbarIcon.getIcon('eraser'),
+            iconPalette: string = editor.options.textIcons
+                ? `<span>${editor.i18n('palette')}</span>`
+                : ToolbarIcon.getIcon('palette'),
+            setColor = (target: HTMLElement, color: string) => {
+                target.innerHTML = ToolbarIcon.getIcon('eye');
+                target.classList.add('active');
+
+                const colorRGB: IRGB | null = hexToRgb(color);
+                if (colorRGB) {
+                    (target.firstChild as HTMLElement).style.fill =
+                        'rgb(' +
+                        (255 - colorRGB.r) +
+                        ',' +
+                        (255 - colorRGB.g) +
+                        ',' +
+                        (255 - colorRGB.b) +
+                        ')';
+                }
+            },
             eachColor = (colors: string[] | IDictionary<string[]>) => {
                 const stack: string[] = [];
                 if (isPlainObject(colors)) {
@@ -108,11 +128,48 @@ export namespace Widget {
             )
         );
 
+        if (hasBrowserColorPicker()) {
+            form.appendChild(
+                editor.create.fromHTML(
+                    '<span style="float: right;">' +
+                        '<em style="width: 16px; height: 16px; display: inline-block; margin-right: 4px"' +
+                        (editor.options.textIcons
+                            ? 'class="jodit_text_icon"'
+                            : '') +
+                        '>' +
+                        iconPalette + '</em>' +
+                        '<input type="color" style="width: 18px; height: 18px; padding: 0; border: 0;"/>' +
+                    '</span>'
+                )
+            );
+        }
+
+        editor.events.on(form, 'change', (e: MouseEvent) => {
+            e.stopPropagation();
+
+            let target: HTMLInputElement = e.target as HTMLInputElement;
+
+            if (target.tagName.toUpperCase() !== 'INPUT') {
+                return;
+            }
+
+            const color: string = target.value || '';
+            if (color) {
+                setColor(target, color);
+            }
+
+            if (callback && typeof callback === 'function') {
+                callback(color);
+            }
+
+            e.preventDefault();
+        });
+
         editor.events.on(form, 'mousedown touchend', (e: MouseEvent) => {
             e.stopPropagation();
 
             let target: HTMLElement = e.target as HTMLElement;
-
+            
             if (
                 (target.tagName.toUpperCase() === 'SVG' ||
                     target.tagName.toUpperCase() === 'PATH') &&
@@ -137,20 +194,7 @@ export namespace Widget {
             const color: string = target.getAttribute('data-color') || '';
 
             if (color) {
-                target.innerHTML = ToolbarIcon.getIcon('eye');
-                target.classList.add('active');
-
-                const colorRGB: IRGB | null = hexToRgb(color);
-                if (colorRGB) {
-                    (target.firstChild as HTMLElement).style.fill =
-                        'rgb(' +
-                        (255 - colorRGB.r) +
-                        ',' +
-                        (255 - colorRGB.g) +
-                        ',' +
-                        (255 - colorRGB.b) +
-                        ')';
-                }
+                setColor(target, color);
             }
 
             if (callback && typeof callback === 'function') {
