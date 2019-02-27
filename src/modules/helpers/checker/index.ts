@@ -12,3 +12,4 @@ export * from './isNumeric';
 export * from './isPlainObject';
 export * from './isURL';
 export * from './isWindow';
+export * from './hasBrowserColorPicker';
