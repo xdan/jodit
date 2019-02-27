@@ -78,6 +78,7 @@ import * as update from './update.svg';
 import * as upload from './upload.svg';
 import * as valign from './valign.svg';
 import * as video from './video.svg';
+import * as palette from './palette.svg';
 
 export {
     about,
@@ -154,4 +155,5 @@ export {
     upload,
     valign,
     video,
+    palette
 };
