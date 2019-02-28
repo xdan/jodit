@@ -24,11 +24,6 @@
         text-decoration: none;
         vertical-align: middle;
         text-align: center;
-        &.jodit_text_icon {
-            width: auto;
-            text-decoration: none;
-            color: @color-default;
-        }
         &:before {
             content: '';
             display: inline-block;
@@ -49,6 +44,33 @@
         &:active {
             background: #d6d6d6;
             color: @color-border-active;
+        }
+    }
+    .jodit_text_icon {
+        width: auto;
+        text-decoration: none;
+        color: @color-default;
+    }
+    span {
+        float: right;
+        em {
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+            margin-right: 4px;
+        }
+        input {
+            width: 18px;
+            height: 18px;
+            padding: 0;
+            border: none;
+            -webkit-appearance: none;
+            &[type='color']::-webkit-color-swatch-wrapper {
+                padding: 0;
+            }
+            input[type='color']::-webkit-color-swatch {
+                border: none;
+            }
         }
     }
 }
