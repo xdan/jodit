@@ -148,7 +148,9 @@ export namespace Widget {
     
                 let target: HTMLInputElement = e.target as HTMLInputElement;
     
-                if (target.tagName.toUpperCase() !== 'INPUT') {
+                if (!target || 
+                    !target.tagName || 
+                    target.tagName.toUpperCase() !== 'INPUT') {
                     return;
                 }
     
@@ -171,7 +173,9 @@ export namespace Widget {
             let target: HTMLElement = e.target as HTMLElement;
             
             if (
-                (target.tagName.toUpperCase() === 'SVG' ||
+                (!target || 
+                    !target.tagName ||
+                    target.tagName.toUpperCase() === 'SVG' ||
                     target.tagName.toUpperCase() === 'PATH') &&
                 target.parentNode
             ) {
