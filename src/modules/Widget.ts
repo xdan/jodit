@@ -128,42 +128,42 @@ export namespace Widget {
             )
         );
 
-        if (hasBrowserColorPicker()) {
+        if (editor.options.showBrowserCorlorPicker && hasBrowserColorPicker()) {
             form.appendChild(
                 editor.create.fromHTML(
-                    '<span style="float: right;">' +
-                        '<em style="width: 16px; height: 16px; display: inline-block; margin-right: 4px"' +
+                    '<span>' +
+                        '<em ' +
                         (editor.options.textIcons
                             ? 'class="jodit_text_icon"'
                             : '') +
                         '>' +
                         iconPalette + '</em>' +
-                        '<input type="color" style="width: 18px; height: 18px; padding: 0; border: 0;"/>' +
+                        '<input type="color" name="browser-color-picker" value=""/>' +
                     '</span>'
                 )
             );
+
+            editor.events.on(form, 'change', (e: MouseEvent) => {
+                e.stopPropagation();
+    
+                let target: HTMLInputElement = e.target as HTMLInputElement;
+    
+                if (target.tagName.toUpperCase() !== 'INPUT') {
+                    return;
+                }
+    
+                const color: string = target.value || '';
+                if (color) {
+                    setColor(target, color);
+                }
+    
+                if (callback && typeof callback === 'function') {
+                    callback(color);
+                }
+    
+                e.preventDefault();
+            });
         }
-
-        editor.events.on(form, 'change', (e: MouseEvent) => {
-            e.stopPropagation();
-
-            let target: HTMLInputElement = e.target as HTMLInputElement;
-
-            if (target.tagName.toUpperCase() !== 'INPUT') {
-                return;
-            }
-
-            const color: string = target.value || '';
-            if (color) {
-                setColor(target, color);
-            }
-
-            if (callback && typeof callback === 'function') {
-                callback(color);
-            }
-
-            e.preventDefault();
-        });
 
         editor.events.on(form, 'mousedown touchend', (e: MouseEvent) => {
             e.stopPropagation();
