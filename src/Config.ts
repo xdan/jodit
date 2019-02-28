@@ -760,6 +760,12 @@ export class Config implements IViewOptions {
      */
     public textIcons: boolean = false;
 
+    /**
+     * shows a INPUT[type=color] to open the browser color picker, on the right bottom of widget color picker
+     * @type {boolean}
+     */
+    public showBrowserCorlorPicker: boolean = false;
+
     private static __defaultOptions: Config;
     static get defaultOptions(): Config {
         if (!Config.__defaultOptions) {
