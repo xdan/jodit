@@ -260,7 +260,7 @@ describe('Test interface', function() {
                 expect(editor.getEditorValue()).to.equal('text2text');
             });
 
-            describe();
+            // describe('');
 
             it('Open format list set H1 for current cursor position. Restore selection after that', function() {
                 var editor = new Jodit(appendTestArea());
