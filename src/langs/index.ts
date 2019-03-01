@@ -14,8 +14,9 @@ import { default as hu } from './hu';
 import { default as tr } from './tr';
 import { default as pt_br } from './pt_br';
 import { default as en } from './en';
+import { default as it } from './it';
 
-const exp: any = {de, fr, ru, tr, ar, zh_cn, es, nl, hu, pt_br, en};
+const exp: any = {de, fr, ru, tr, ar, zh_cn, es, nl, hu, pt_br, en, it};
 
 /* Unpack array to hash */
 
