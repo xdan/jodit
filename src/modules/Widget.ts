@@ -128,7 +128,7 @@ export namespace Widget {
             )
         );
 
-        if (editor.options.showBrowserCorlorPicker && hasBrowserColorPicker()) {
+        if (editor.options.showBrowserColorPicker && hasBrowserColorPicker()) {
             form.appendChild(
                 editor.create.fromHTML(
                     '<span>' +
@@ -145,24 +145,24 @@ export namespace Widget {
 
             editor.events.on(form, 'change', (e: MouseEvent) => {
                 e.stopPropagation();
-    
+
                 let target: HTMLInputElement = e.target as HTMLInputElement;
-    
-                if (!target || 
-                    !target.tagName || 
+
+                if (!target ||
+                    !target.tagName ||
                     target.tagName.toUpperCase() !== 'INPUT') {
                     return;
                 }
-    
+
                 const color: string = target.value || '';
                 if (color) {
                     setColor(target, color);
                 }
-    
+
                 if (callback && typeof callback === 'function') {
                     callback(color);
                 }
-    
+
                 e.preventDefault();
             });
         }
@@ -171,9 +171,9 @@ export namespace Widget {
             e.stopPropagation();
 
             let target: HTMLElement = e.target as HTMLElement;
-            
+
             if (
-                (!target || 
+                (!target ||
                     !target.tagName ||
                     target.tagName.toUpperCase() === 'SVG' ||
                     target.tagName.toUpperCase() === 'PATH') &&

@@ -259,6 +259,9 @@ describe('Test interface', function() {
                 simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-brush .jodit_colorpicker > a > svg'))
                 expect(editor.getEditorValue()).to.equal('text2text');
             });
+
+            describe();
+
             it('Open format list set H1 for current cursor position. Restore selection after that', function() {
                 var editor = new Jodit(appendTestArea());
 

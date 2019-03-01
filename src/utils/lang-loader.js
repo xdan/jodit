@@ -40,7 +40,7 @@ module.exports = function(content, fileData) {
         if (fileData.file.indexOf('/en.ts') !== -1) {
             result = keys; // for English file return keys
         }
-    } catch {
+    } catch(e) {
     }
 
     return "module.exports.default = " + JSON.stringify(result);
