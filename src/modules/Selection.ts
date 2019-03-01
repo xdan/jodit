@@ -479,7 +479,7 @@ export class Select {
         fireChange: boolean = true
     ) {
         if (!Dom.isNode(node, this.win)) {
-            throw new Error('Parameter node most be instance of Node');
+            throw new Error('Parameter node must be instance of Node');
         }
 
         this.focus();

@@ -37,6 +37,7 @@ import {
 import { ViewWithToolbar } from './modules/view/viewWithToolbar';
 import { IJodit } from './types/jodit';
 import { IFileBrowser, IUploader } from './types';
+import { Create } from './modules';
 
 /**
  * Class Jodit. Main class
@@ -871,6 +872,11 @@ export class Jodit extends ViewWithToolbar implements IJodit {
         this.editorWindow = this.options.ownerWindow;
         this.ownerDocument = this.options.ownerDocument;
         this.ownerWindow = this.options.ownerWindow;
+
+        this.create = new Create(
+            this.ownerDocument,
+            this.editorDocument
+        );
 
         if (typeof element === 'string') {
             try {

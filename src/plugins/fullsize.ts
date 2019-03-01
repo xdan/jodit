@@ -118,7 +118,7 @@ export function fullsize(editor: IViewWithToolbar) {
 
             if (editor.options.globalFullsize) {
                 let node = editor.container.parentNode as HTMLElement;
-                while (node && !(node instanceof Document)) {
+                while (node && node.nodeType === Node.DOCUMENT_NODE) {
                     node.classList.toggle('jodit_fullsize_box', condition);
                     node = node.parentNode as HTMLElement;
                 }

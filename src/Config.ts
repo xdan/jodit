@@ -795,7 +795,8 @@ export const OptionsDefault: any = function(this: any, options: any) {
             }
             if (
                 typeof (Config.defaultOptions as any)[key] === 'object' &&
-                !Array.isArray((Config.defaultOptions as any)[key])
+                !Array.isArray((Config.defaultOptions as any)[key]) &&
+                key !== 'ownerWindow' && key !== 'ownerDocument'
             ) {
                 self[key] = extend(
                     true,
