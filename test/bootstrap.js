@@ -1,9 +1,12 @@
+/* eslint-disable */
+/* tslint:disable:no-var */
+
 typeof window.chai !== 'undefined' && (chai.config.includeStack = true);
 
-var oldI18n = Jodit.prototype.i18n;
-var oldAjaxSender = Jodit.modules.Ajax.prototype.send;
-
-var naturalPromise = window.Promise;
+var
+    oldI18n = Jodit.prototype.i18n,
+    oldAjaxSender = Jodit.modules.Ajax.prototype.send,
+    naturalPromise = window.Promise;
 
 function mocPromise() {
     window.Promise = SynchronousPromise;
@@ -29,6 +32,7 @@ var defaultPermissions = {
         allowImageCrop: true,
     },
 };
+
 if (typeof window.chai !== 'undefined') {
     mocPromise();
     window.FormData = function() {
@@ -204,6 +208,7 @@ if (typeof window.chai !== 'undefined') {
 }
 
 var i18nkeys = [];
+
 Jodit.prototype.i18n = function(key) {
     i18nkeys.indexOf(key) === -1 &&
         key.indexOf('<svg') === -1 &&
@@ -216,9 +221,9 @@ if (Jodit.defaultOptions.cleanHTML) {
     Jodit.defaultOptions.cleanHTML.timeout = 0;
     Jodit.defaultOptions.cleanHTML.fillEmptyParagraph = false;
 }
+
 Jodit.defaultOptions.useAceEditor = false;
 Jodit.defaultOptions.language = 'en';
-// Jodit.defaultOptions.iframe = true; // try uncomment sometime
 Jodit.defaultOptions.iframeCSSLinks.push('/app.css');
 Jodit.defaultOptions.iframeStyle +=
     '* {\
@@ -257,9 +262,20 @@ if (String.prototype.repeat === undefined) {
                   });
 })(Element.prototype);
 
-var expect = typeof chai !== 'undefined' ? chai.expect : function() {};
-var stuff = [];
-var removeStuff = function() {
+var
+    expect = typeof chai !== 'undefined' ? chai.expect : function() {},
+    stuff = [];
+
+var
+    box = document.createElement('div');
+
+document.body.appendChild(box);
+
+function getBox() {
+    return box;
+}
+
+function removeStuff() {
     Object.keys(Jodit.instances).forEach(function(key) {
         Jodit.instances[key].destruct();
     });
@@ -278,32 +294,25 @@ var removeStuff = function() {
         });
 
     mocPromise();
-};
-var box = document.createElement('div');
-document.body.appendChild(box);
-
-var getBox = function() {
-    return box;
-};
-
-var appendTestArea = function(id, noput) {
+}
+function appendTestArea(id, noput) {
     var textarea = document.createElement('textarea');
     textarea.setAttribute('id', id || 'editor_' + new Date().getTime());
     box.appendChild(textarea);
     !noput && stuff.push(textarea);
     return textarea;
-};
-var appendTestDiv = function(id, noput) {
+}
+function appendTestDiv(id, noput) {
     var textarea = document.createElement('div');
     textarea.setAttribute('id', id || 'editor_' + new Date().getTime());
     box.appendChild(textarea);
     !noput && stuff.push(textarea);
     return textarea;
-};
+}
 
-var trim = function(value) {
+function trim(value) {
     return value.replace(/^[\s\r\t\n]+/g, '').replace(/[\s\r\t\n]+$/g, '');
-};
+}
 
 function toFixedWithoutRounding(value, precision) {
     var factorError = Math.pow(10, 14);
@@ -314,7 +323,7 @@ function toFixedWithoutRounding(value, precision) {
         factorDecimal
     );
 }
-var sortStyles = function(matches) {
+function sortStyles(matches) {
     var styles = matches
         .replace(/&quot;/g, "'")
         .replace(/"/g, "'")
@@ -390,8 +399,9 @@ var sortStyles = function(matches) {
         });
 
     return styles.join(';');
-};
-var sortAtrtibutes = function(html) {
+}
+
+function sortAttributes(html) {
     var tag = /<([^>]+)>/g;
     var reg = /([a-z_\-]+)[\s]*=[\s]*"([^"]*)"/i,
         matches,
@@ -449,7 +459,7 @@ var sortAtrtibutes = function(html) {
     });
 
     return html.replace(/&nbsp;/g, ' ');
-};
+}
 
 /**
  *
@@ -458,7 +468,7 @@ var sortAtrtibutes = function(html) {
  * @param element
  * @param options
  */
-var simulateEvent = function(type, keyCodeArg, element, options) {
+function simulateEvent(type, keyCodeArg, element, options) {
     var evt = (element.ownerDocument || document).createEvent('HTMLEvents');
     evt.initEvent(type, true, true);
     evt.keyCode = keyCodeArg;
@@ -485,17 +495,17 @@ var simulateEvent = function(type, keyCodeArg, element, options) {
     }
 
     element.dispatchEvent(evt);
-};
+}
 
-var setCursor = function(elm, inEnd) {
+function setCursor(elm, inEnd) {
     var range = document.createRange();
     range.selectNodeContents(elm);
     range.collapse(!inEnd);
     window.getSelection().removeAllRanges();
     window.getSelection().addRange(range);
-};
+}
 
-var createPoint = function createPoint(x, y, color) {
+function createPoint(x, y, color) {
     var div = document.createElement('div');
     div.setAttribute(
         'style',
@@ -507,7 +517,7 @@ var createPoint = function createPoint(x, y, color) {
     div.style.top = parseInt(y, 10) + 'px';
 
     document.body.appendChild(div);
-};
+}
 
 function offset(el) {
     var rect = el.getBoundingClientRect(),
@@ -632,21 +642,23 @@ function offset(el) {
 })();
 
 // Files
-var FileImage = function() {
+function FileImage() {
     return {
         name: 'logo.gif',
         dataURI:
             'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==',
         type: 'image/gif',
     };
-};
+}
+
 // Files
-var FileXLS = function() {
+function FileXLS() {
     return {
         name: 'file.xls',
         type: 'application/xls',
     };
-};
+}
+
 if (typeof window.chai !== 'undefined') {
     window.FileReader = function() {
         var self = this;
