@@ -71,17 +71,16 @@ export function size(editor: IJodit) {
                 'mousemove touchmove',
                 throttle((e: MouseEvent) => {
                     if (isResized) {
-                        setHeight(
-                            editor.options.allowResizeY
-                                ? start.h + e.clientY - start.y
-                                : start.h
-                        );
-                        setWidth(
-                            editor.options.allowResizeX
-                                ? start.w + e.clientX - start.x
-                                : start.w
-                        );
+                        if (editor.options.allowResizeY) {
+                            setHeight(start.h + e.clientY - start.y);
+                        }
+
+                        if (editor.options.allowResizeX) {
+                            setWidth(start.w + e.clientX - start.x);
+                        }
+
                         resizeWorkspaceImd();
+
                         editor.events.fire('resize');
                     }
                 }, editor.defaultTimeout / 10)
