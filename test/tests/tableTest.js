@@ -174,7 +174,7 @@ describe('Tables Jodit Editor Tests', function() {
                 // var table = new Jodit.modules.Table(editor);
                 Jodit.modules.Table.mergeSelected(editor.editor.firstChild);
 
-                expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal(
+                expect(sortAttributes(editor.editor.innerHTML)).to.equal(
                     '<table>' +
                     '<tbody>' +
                     '<tr>' +
@@ -202,7 +202,7 @@ describe('Tables Jodit Editor Tests', function() {
                 // var table = new Jodit.modules.Table(editor);
                 Jodit.modules.Table.mergeSelected(editor.editor.firstChild);
 
-                expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal(
+                expect(sortAttributes(editor.editor.innerHTML)).to.equal(
                     '<table>' +
                         '<tbody>' +
                             '<tr>' +
@@ -233,7 +233,7 @@ describe('Tables Jodit Editor Tests', function() {
                 // var table = new Jodit.modules.Table(editor);
                 Jodit.modules.Table.mergeSelected(editor.editor.firstChild);
 
-                expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal(
+                expect(sortAttributes(editor.editor.innerHTML)).to.equal(
                     '<table style="width:100%">' +
                         '<tbody>' +
                             '<tr>' +
@@ -289,7 +289,7 @@ describe('Tables Jodit Editor Tests', function() {
                 // var table = new Jodit.modules.Table(editor);
                 Jodit.modules.Table.mergeSelected(editor.editor.firstChild);
 
-                expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal(
+                expect(sortAttributes(editor.editor.innerHTML)).to.equal(
                     '<table style="width:100%">' +
                         '<tbody>' +
                             '<tr>' +
@@ -325,7 +325,7 @@ describe('Tables Jodit Editor Tests', function() {
                 // var table = new Jodit.modules.Table(editor);
                 Jodit.modules.Table.mergeSelected(editor.editor.firstChild);
 
-                expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal(
+                expect(sortAttributes(editor.editor.innerHTML)).to.equal(
                     '<table>' +
                         '<tbody>' +
                             '<tr>' +
@@ -352,7 +352,7 @@ describe('Tables Jodit Editor Tests', function() {
                 // var table = new Jodit.modules.Table(editor);
                 Jodit.modules.Table.splitHorizontal(editor.editor.firstChild);
 
-                expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal(
+                expect(sortAttributes(editor.editor.innerHTML)).to.equal(
                     '<table>' +
                         '<tbody>' +
                             '<tr><td>0,0</td></tr>' +
@@ -383,7 +383,7 @@ describe('Tables Jodit Editor Tests', function() {
                 // var table = new Jodit.modules.Table(editor);
                 Jodit.modules.Table.splitHorizontal(editor.editor.firstChild);
 
-                expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal(
+                expect(sortAttributes(editor.editor.innerHTML)).to.equal(
                     '<table>' +
                         '<tbody>' +
                             '<tr><td>0,0</td><td>0,1</td><td>0,2</td></tr>' +
@@ -419,7 +419,7 @@ describe('Tables Jodit Editor Tests', function() {
                 // var table = new Jodit.modules.Table(editor);
                 Jodit.modules.Table.splitHorizontal(editor.editor.firstChild);
 
-                expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal(
+                expect(sortAttributes(editor.editor.innerHTML)).to.equal(
                     '<table>' +
                     '<tbody>' +
                     '<tr><td>0,0</td><td>0,1</td><td>0,2</td></tr>' +
@@ -449,7 +449,7 @@ describe('Tables Jodit Editor Tests', function() {
                 // var table = new Jodit.modules.Table(editor);
                 Jodit.modules.Table.splitVertical(editor.editor.firstChild);
 
-                expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal(
+                expect(sortAttributes(editor.editor.innerHTML)).to.equal(
                     '<table style="width:300px">' +
                         '<tbody>' +
                             '<tr><td style="width:16.66%">0,0</td><td style="width:16.66%"><br></td><td>0,1</td></tr>' +
@@ -881,7 +881,7 @@ describe('Tables Jodit Editor Tests', function() {
                 simulateEvent('mousemove', 1, editor.editor.querySelectorAll('td')[3]);
                 simulateEvent('mouseup', 1, editor.editor.querySelectorAll('td')[3]);
 
-                expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal(
+                expect(sortAttributes(editor.editor.innerHTML)).to.equal(
                     '<table>' +
                     '<tbody>' +
                     '<tr>' +
@@ -925,7 +925,7 @@ describe('Tables Jodit Editor Tests', function() {
                  simulateEvent('mousemove', 1, editor.editor.querySelector('.test').querySelectorAll('td')[3]);
                  simulateEvent('mouseup', 1, editor.editor.querySelector('.test').querySelectorAll('td')[3]);
 
-                 expect(sortAtrtibutes(editor.editor.innerHTML)).to.equal('<table><tbody><tr><td>1</td><td>2</td></tr><tr><td>3</td><td class="test"><table><tbody><tr><td data-jodit-selected-cell="1">1</td><td data-jodit-selected-cell="1">2</td></tr><tr><td data-jodit-selected-cell="1">3</td><td data-jodit-selected-cell="1">4</td></tr><tr><td>5</td><td>6</td></tr></tbody></table></td></tr><tr><td>5</td><td>6</td></tr></tbody></table>');
+                 expect(sortAttributes(editor.editor.innerHTML)).to.equal('<table><tbody><tr><td>1</td><td>2</td></tr><tr><td>3</td><td class="test"><table><tbody><tr><td data-jodit-selected-cell="1">1</td><td data-jodit-selected-cell="1">2</td></tr><tr><td data-jodit-selected-cell="1">3</td><td data-jodit-selected-cell="1">4</td></tr><tr><td>5</td><td>6</td></tr></tbody></table></td></tr><tr><td>5</td><td>6</td></tr></tbody></table>');
              });
             it('When we press mouse button over cell and move mouse to another cell, it should select all cells in bound even if between be colspan and rowspan', function () {
                 var editor = new Jodit(appendTestArea());
@@ -949,7 +949,7 @@ describe('Tables Jodit Editor Tests', function() {
                 simulateEvent('mouseup', 1, editor.editor.querySelectorAll('td')[7]);
 
                 expect(
-                    sortAtrtibutes(editor.editor.innerHTML) // ie change position between colspan and class
+                    sortAttributes(editor.editor.innerHTML) // ie change position between colspan and class
                 ).to.equal(
                     '<table style="width:100%"><tbody><tr><td colspan="3" data-jodit-selected-cell="1">0,0<br>0,1<br>0,2<br></td><td>0,3</td></tr><tr><td data-jodit-selected-cell="1" rowspan="3">1,0<br>2,0<br>3,0<br></td><td data-jodit-selected-cell="1">1,1</td><td data-jodit-selected-cell="1">1,2</td><td>1,3</td></tr><tr><td data-jodit-selected-cell="1">2,1</td><td data-jodit-selected-cell="1">2,2</td><td>2,3</td></tr><tr><td data-jodit-selected-cell="1">3,1</td><td data-jodit-selected-cell="1">3,2</td><td>3,3</td></tr></tbody></table>'
                 );
@@ -1127,7 +1127,7 @@ describe('Tables Jodit Editor Tests', function() {
 
                             editor.selection.insertHTML('stop');
 
-                            expect(sortAtrtibutes(editor.value)).to.equal(
+                            expect(sortAttributes(editor.value)).to.equal(
                                 '<p>teststop</p>' +
                                 '<table cellspacing="0" style="border-collapse:separate;width:100px">' +
                                     '<tbody>' +
@@ -1172,7 +1172,7 @@ describe('Tables Jodit Editor Tests', function() {
                     options.clientX = box.left + box.width + 50;
                 });
 
-                expect(sortAtrtibutes(editor.editor.innerHTML.toLowerCase())).to.equal(
+                expect(sortAttributes(editor.editor.innerHTML.toLowerCase())).to.equal(
                     '<table cellspacing="0" style="border-collapse:separate;width:83.33%"><tbody>' +
                     '<tr>' +
                     '<td>1</td>' +
@@ -1209,8 +1209,8 @@ describe('Tables Jodit Editor Tests', function() {
                     options.clientX = box.left + 50;
                 });
 
-                
-                expect(sortAtrtibutes(editor.editor.innerHTML.toLowerCase())).to.equal('<table style="margin-left:27.77%;width:27.77%">' +
+
+                expect(sortAttributes(editor.editor.innerHTML.toLowerCase())).to.equal('<table style="margin-left:27.77%;width:27.77%">' +
                     '<tbody>' +
                     '<tr>' +
                     '<td>1</td>' +

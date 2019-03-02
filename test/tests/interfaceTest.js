@@ -351,7 +351,7 @@ describe('Test interface', function() {
 
                             var fontFamily = font.querySelector('span[style]').getAttribute('style').replace(/"/g, "'");
 
-                            expect(sortAtrtibutes(editor.value)).to.be.equal(sortAtrtibutes('<p><span style="' + fontFamily + '">test</span></p>'));
+                            expect(sortAttributes(editor.value)).to.be.equal(sortAttributes('<p><span style="' + fontFamily + '">test</span></p>'));
                         });
                     });
                     describe('Extends standart font list', function () {
@@ -384,7 +384,7 @@ describe('Test interface', function() {
                             var font = list.childNodes[list.childNodes.length - 1];
                             simulateEvent('mousedown', 0, font);
 
-                            expect(sortAtrtibutes(editor.value)).to.be.equal(sortAtrtibutes('<p><span style="font-family:-apple-system,BlinkMacSystemFont,\'Segoe WPC\',\'Segoe UI\',HelveticaNeue-Light,Ubuntu,\'Droid Sans\',sans-serif">test</span></p>'));
+                            expect(sortAttributes(editor.value)).to.be.equal(sortAttributes('<p><span style="font-family:-apple-system,BlinkMacSystemFont,\'Segoe WPC\',\'Segoe UI\',HelveticaNeue-Light,Ubuntu,\'Droid Sans\',sans-serif">test</span></p>'));
 
                         });
                     });
@@ -417,7 +417,7 @@ describe('Test interface', function() {
                 editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-image input[name=url]').value = 'http://xdsoft.net/jodit/images/artio.jpg'
                 simulateEvent('submit', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-image .jodit_form'))
 
-                expect(sortAtrtibutes(editor.value)).to.equal('<img alt="123" src="http://xdsoft.net/jodit/images/artio.jpg" style="width:300px">');
+                expect(sortAttributes(editor.value)).to.equal('<img alt="123" src="http://xdsoft.net/jodit/images/artio.jpg" style="width:300px">');
 
                 simulateEvent('mousedown', 0, editor.editor)
 
@@ -445,7 +445,7 @@ describe('Test interface', function() {
                 popup.querySelector('input[name=code]').value = 'https://www.youtube.com/watch?v=7CcEYRfxUOQ'
                 simulateEvent('submit', 0, popup.querySelector('.jodit_form'))
 
-                expect(sortAtrtibutes(editor.value)).to.equal('<iframe allowfullscreen="" frameborder="0" height="345" src="https://www.youtube.com/embed/7CcEYRfxUOQ" width="400"></iframe>');
+                expect(sortAttributes(editor.value)).to.equal('<iframe allowfullscreen="" frameborder="0" height="345" src="https://www.youtube.com/embed/7CcEYRfxUOQ" width="400"></iframe>');
 
                 simulateEvent('mousedown', 0, editor.editor)
 
@@ -466,7 +466,7 @@ describe('Test interface', function() {
                 simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-left .jodit_toolbar_btn.jodit_toolbar_btn-right'))
 
 
-                expect(sortAtrtibutes(editor.getEditorValue())).to.equal('<p style="text-align:right">Test</p>');
+                expect(sortAttributes(editor.getEditorValue())).to.equal('<p style="text-align:right">Test</p>');
 
                 simulateEvent('mousedown', 0, editor.editor)
 
@@ -571,7 +571,7 @@ describe('Test interface', function() {
                     url.value = 'tests/artio.jpg'
                     simulateEvent('submit', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_form'))
 
-                    expect(sortAtrtibutes(editor.value)).to.equal('<a href="tests/artio.jpg">123</a>');
+                    expect(sortAttributes(editor.value)).to.equal('<a href="tests/artio.jpg">123</a>');
 
                     simulateEvent('mousedown', 0, editor.editor);
 
@@ -610,7 +610,7 @@ describe('Test interface', function() {
                         url.value = 'tests/artio.jpg'
                         simulateEvent('submit', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_form'))
 
-                        expect(sortAtrtibutes(editor.value)).to.equal('test <a href="tests/artio.jpg">select</a> stop');
+                        expect(sortAttributes(editor.value)).to.equal('test <a href="tests/artio.jpg">select</a> stop');
 
                         simulateEvent('mousedown', 0, editor.editor);
 
@@ -645,7 +645,7 @@ describe('Test interface', function() {
 
                     simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_unlink_button'))
 
-                    expect(sortAtrtibutes(editor.getEditorValue())).to.equal('test')
+                    expect(sortAttributes(editor.getEditorValue())).to.equal('test')
                 });
             });
             describe('Create table', function () {
@@ -1498,7 +1498,7 @@ describe('Test interface', function() {
                 expect(list).to.be.not.equal(null);
                 simulateEvent('mousedown', 0, list.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-tablesplitv a'))
 
-                expect(sortAtrtibutes(editor.getEditorValue())).to.equal('<table style="width:300px"><tbody><tr><td style="width:49.83%">3</td><td style="width:49.83%"><br></td></tr></tbody></table>');
+                expect(sortAttributes(editor.getEditorValue())).to.equal('<table style="width:300px"><tbody><tr><td style="width:49.83%">3</td><td style="width:49.83%"><br></td></tr></tbody></table>');
 
             });
             it('Select table cell and split it by horizontal', function () {
@@ -1519,7 +1519,7 @@ describe('Test interface', function() {
                 expect(list).to.be.not.equal(null);
                 simulateEvent('mousedown', 0, list.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-tablesplitg a'))
 
-                expect(sortAtrtibutes(editor.getEditorValue())).to.equal('<table style="width:300px"><tbody><tr><td>5</td></tr><tr><td><br></td></tr></tbody></table>');
+                expect(sortAttributes(editor.getEditorValue())).to.equal('<table style="width:300px"><tbody><tr><td>5</td></tr><tr><td><br></td></tr></tbody></table>');
 
             });
             it('Select two table cells and merge then in one', function () {

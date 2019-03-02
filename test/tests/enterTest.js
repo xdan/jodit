@@ -981,7 +981,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
                     editor.selection.insertNode(editor.editorDocument.createTextNode('a '));
 
-                    expect(sortAtrtibutes(editor.getEditorValue())).to.be.equal('<p style="color:#FF0000;text-align:right">Split </p><p style="color:#FF0000;text-align:right">a paragraph</p>');
+                    expect(sortAttributes(editor.getEditorValue())).to.be.equal('<p style="color:#FF0000;text-align:right">Split </p><p style="color:#FF0000;text-align:right">a paragraph</p>');
                 });
             });
             describe('Enter pressed inside P element in the edge', function () {
@@ -1069,7 +1069,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
                         editor.selection.insertNode(editor.editorDocument.createTextNode('a '));
 
 
-                        expect(sortAtrtibutes(editor.getEditorValue())).to.be
+                        expect(sortAttributes(editor.getEditorValue())).to.be
                             .equal('<p style="color:#FF0000;text-align:right">Split paragraph</p><p style="color:#FF0000;text-align:right">a <br></p><p>Test</p>');
                     })
                 });
@@ -1171,7 +1171,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
                 editor.selection.insertNode(editor.editorDocument.createTextNode('split'));
 
 
-                expect('<pre>test<br>split</pre>').to.be.equal(sortAtrtibutes(editor.getEditorValue()));
+                expect('<pre>test<br>split</pre>').to.be.equal(sortAttributes(editor.getEditorValue()));
             });
         });
         describe('In UL tag', function () {
@@ -1193,7 +1193,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
                             '<ul>' +
                             '<li>test</li>' +
                             '<li>split<br></li>' +
-                            '</ul>').to.be.equal(sortAtrtibutes(editor.value));
+                            '</ul>').to.be.equal(sortAttributes(editor.value));
                     });
                 });
                 describe('Inside empty LI tag', function () {
@@ -1212,7 +1212,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
                         expect(
                             '<ul>' +
                             '<li>test</li>' +
-                            '</ul>split<br>').to.be.equal(sortAtrtibutes(editor.value));
+                            '</ul>split<br>').to.be.equal(sortAttributes(editor.value));
                     });
                 });
             });
@@ -1246,7 +1246,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
                         '</td>' +
                         '</tr>' +
                         '</tbody>' +
-                        '</table>').to.be.equal(sortAtrtibutes(editor.getEditorValue()));
+                        '</table>').to.be.equal(sortAttributes(editor.getEditorValue()));
                 });
             });
             describe('In last LI tag', function () {
@@ -1270,7 +1270,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
                             '<li>2</li>' +
                             '<li><br></li>' +
                             '<li>split <img src="tests/artio.jpg" style="width:30px"></li>' +
-                            '</ul>').to.be.equal(sortAtrtibutes(editor.getEditorValue()));
+                            '</ul>').to.be.equal(sortAttributes(editor.getEditorValue()));
                     });
                 });
 
@@ -1313,7 +1313,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
                 editor.selection.insertNode(editor.editorDocument.createTextNode('test'));
 
-                expect('<p><span style="color:red">test</span></p><p>test<br></p>').to.be.equal(sortAtrtibutes(editor.getEditorValue()));
+                expect('<p><span style="color:red">test</span></p><p>test<br></p>').to.be.equal(sortAttributes(editor.getEditorValue()));
             });
         });
     });

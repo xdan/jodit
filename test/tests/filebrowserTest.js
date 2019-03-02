@@ -751,7 +751,7 @@ describe('Jodit FileBrowser Tests', function() {
                     editor.value = '';
 
                     editor.events.on('filesWereUploaded', function() {
-                        expect(sortAtrtibutes(editor.value)).to.be.equal(
+                        expect(sortAttributes(editor.value)).to.be.equal(
                             '<img src="https://xdsoft.net/jodit/files/test.png" style="width:300px">'
                         );
                         done();

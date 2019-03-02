@@ -490,8 +490,8 @@ describe('Commands Jodit Editor Tests', function() {
 
                 editor.execCommand('bold');
 
-                expect(sortAtrtibutes(editor.value)).to.equal(
-                    sortAtrtibutes(
+                expect(sortAttributes(editor.value)).to.equal(
+                    sortAttributes(
                         '<span style="font-size: 36px;"><strong>asdasd</strong></span>'
                     )
                 );

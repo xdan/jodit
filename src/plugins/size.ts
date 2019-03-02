@@ -26,6 +26,7 @@ Config.prototype.allowResizeY = true;
 export function size(editor: IJodit) {
     const setHeight = (height: number | string) => {
         css(editor.container, 'height', height);
+
         if (editor.options.saveHeightInStorage) {
             editor.storage.set('height', height);
         }

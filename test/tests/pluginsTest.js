@@ -71,7 +71,7 @@ describe('Test plugins', function () {
 
                 simulateEvent('mouseup', 0, editor.editor);
 
-                expect(sortAtrtibutes(editor.getEditorValue())).to.equal('text <span style="color:#FF0000;font-size:11px">test</span><span style="color:#FF0000;font-size:11px"> post</span>');
+                expect(sortAttributes(editor.getEditorValue())).to.equal('text <span style="color:#FF0000;font-size:11px">test</span><span style="color:#FF0000;font-size:11px"> post</span>');
             });
         });
         it('Should toggle active state after double click', function () {
@@ -99,7 +99,7 @@ describe('Test plugins', function () {
 
             simulateEvent('mouseup', 0, editor.editor);
 
-            expect(sortAtrtibutes(editor.getEditorValue())).to.equal('text <span style="color:#FF0000;font-size:11px">test</span> post');
+            expect(sortAttributes(editor.getEditorValue())).to.equal('text <span style="color:#FF0000;font-size:11px">test</span> post');
         });
         describe('For image', function () {
             it('Should copy format from one image to another', function () {
@@ -110,7 +110,7 @@ describe('Test plugins', function () {
                         '<img style="height: 100px;width: 100px;" src="tests/artio.jpg">';
 
                 editor.value = html;
-                expect(sortAtrtibutes(editor.value)).to.be.equal(sortAtrtibutes(html));
+                expect(sortAttributes(editor.value)).to.be.equal(sortAttributes(html));
 
                 simulateEvent('mousedown', 0, editor.editor.querySelector('img'));
 
@@ -119,7 +119,7 @@ describe('Test plugins', function () {
                 simulateEvent('mousedown', 0, editor.editor.querySelectorAll('img')[1]);
                 simulateEvent('mouseup', 0, editor.editor.querySelectorAll('img')[1]);
 
-                expect(sortAtrtibutes(editor.value)).to.be.equal(sortAtrtibutes(
+                expect(sortAttributes(editor.value)).to.be.equal(sortAttributes(
                     '<img src="tests/artio.jpg" ' +
                         'style="border-image:none;border-radius:50%;border:1px solid #CCCCCC;height:100px;margin:20px;width:100px"> test ' +
                     '<img src="tests/artio.jpg" ' +
@@ -154,7 +154,7 @@ describe('Test plugins', function () {
                 simulateEvent('mouseup', 0, editor.editor);
 
                 expect(
-                    sortAtrtibutes(
+                    sortAttributes(
                         editor.getEditorValue()
                            .replace(/700/g, 'bold')
                            .replace(/rgb\(255, 0, 0\)/g, '#ff0000')
@@ -304,7 +304,7 @@ describe('Test plugins', function () {
 
                 editor.selection.insertHTML('stop');
 
-                expect('<p>stop</p><p><img alt="" src="tests/artio.jpg" style="height:100px;width:100px"></p>').to.be.equal(sortAtrtibutes(editor.getEditorValue()));
+                expect('<p>stop</p><p><img alt="" src="tests/artio.jpg" style="height:100px;width:100px"></p>').to.be.equal(sortAttributes(editor.getEditorValue()));
             });
         });
     });

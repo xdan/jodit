@@ -48,6 +48,7 @@ Config.prototype.useTableResizer = true;
  * @property{boolean} useImageResizer=true Use true image editing frame size
  */
 Config.prototype.useImageResizer = true;
+
 /**
  * @property {object} resizer
  * @property {int} resizer.min_width=10 The minimum width for the editable element
@@ -66,10 +67,11 @@ Config.prototype.resizer = {
  * @param {Jodit} editor
  */
 export function resizer(editor: IJodit) {
-    // let clicked = false,
-    //     resized = false,
-    const LOCK_KEY = 'resizer';
-    let handle: HTMLElement,
+    const
+        LOCK_KEY = 'resizer';
+
+    let
+        handle: HTMLElement,
         currentElement: null | HTMLElement,
         resizeElementClicked: boolean = false,
         isResizing: boolean = false,
@@ -82,12 +84,11 @@ export function resizer(editor: IJodit) {
         new_w: number,
         diff_x: number,
         diff_y: number,
-        // timeouts = [],
-
         resizerIsVisible: boolean = false,
         timeoutSizeViewer: number = 0;
 
-    const resizerElm: HTMLElement = editor.create.fromHTML(
+    const
+        resizerElm: HTMLElement = editor.create.fromHTML(
             '<div data-editor_id="' +
                 editor.id +
                 '" style="display:none" class="jodit_resizer">' +
@@ -98,18 +99,22 @@ export function resizer(editor: IJodit) {
                 '<span>100x100</span>' +
                 '</div>'
         ),
+
         sizeViewer: HTMLSpanElement = resizerElm.getElementsByTagName(
             'span'
         )[0],
+
         hideResizer = () => {
             isResizing = false;
             resizerIsVisible = false;
             currentElement = null;
             resizerElm.style.display = 'none';
         },
+
         hideSizeViewer = () => {
             sizeViewer.style.opacity = '0';
         },
+
         showSizeViewer = (w: number, h: number) => {
             if (!editor.options.resizer.showSize) {
                 return;
@@ -129,9 +134,11 @@ export function resizer(editor: IJodit) {
                 editor.options.resizer.hideSizeTimeout
             );
         },
+
         updateSize = () => {
             if (resizerIsVisible && currentElement && resizerElm) {
-                const workplacePosition: IBound = offset(
+                const
+                    workplacePosition: IBound = offset(
                         (resizerElm.parentNode ||
                             editor.ownerDocument
                                 .documentElement) as HTMLElement,
@@ -152,8 +159,9 @@ export function resizer(editor: IJodit) {
                 // 1 - because need move border higher and toWYSIWYG the left than the picture
                 // 2 - in box-sizing: border-box mode width is real width indifferent by border-width.
 
-                const newTop: number = pos.top - 1 - workplacePosition.top;
-                const newLeft: number = pos.left - 1 - workplacePosition.left;
+                const
+                    newTop: number = pos.top - 1 - workplacePosition.top,
+                    newLeft: number = pos.left - 1 - workplacePosition.left;
 
                 if (
                     top !== newTop ||
@@ -178,6 +186,7 @@ export function resizer(editor: IJodit) {
                 }
             }
         },
+
         showResizer = () => {
             if (editor.options.readonly) {
                 return;
@@ -199,6 +208,7 @@ export function resizer(editor: IJodit) {
 
             updateSize();
         },
+
         /**
          * Bind an edit element toWYSIWYG element
          * @param {HTMLElement} element The element that you want toWYSIWYG add a function toWYSIWYG resize

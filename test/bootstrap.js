@@ -1,6 +1,3 @@
-/* eslint-disable */
-/* tslint:disable:no-var */
-
 typeof window.chai !== 'undefined' && (chai.config.includeStack = true);
 
 var

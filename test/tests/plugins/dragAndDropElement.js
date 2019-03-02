@@ -27,7 +27,7 @@ describe('Drag and drop element inside Editor', function () {
                     options.clientY = box.top + 5 - document.documentElement.scrollTop;
                 });
 
-                expect(sortAtrtibutes(editor.value)).to.be.equal(
+                expect(sortAttributes(editor.value)).to.be.equal(
                     '<p>1111</p>' +
                     '<p>22<img alt="" src="https://xdsoft.net/jodit/build/images/artio.jpg" style="width:100px">22</p>' +
                     '<p>3333</p>' +

@@ -48,7 +48,7 @@ describe('Test image', function() {
                 tab.querySelector('.border_radius').value = 100;
                 simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
 
-                expect(sortAtrtibutes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="border-radius:100px;height:100px;width:100px">');
+                expect(sortAttributes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="border-radius:100px;height:100px;width:100px">');
 
             });
         });
@@ -73,7 +73,7 @@ describe('Test image', function() {
                 tab.querySelector('.classes').value = 'tavble ';
                 simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
 
-                expect(sortAtrtibutes(editor.value)).to.be.equal('<img class="tavble " src="tests/artio.jpg" style="height:100px;width:100px">');
+                expect(sortAttributes(editor.value)).to.be.equal('<img class="tavble " src="tests/artio.jpg" style="height:100px;width:100px">');
 
             });
         });
@@ -98,7 +98,7 @@ describe('Test image', function() {
                 tab.querySelector('.style').value = 'padding:20px;background-color: #ff0000;';
                 simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
 
-                expect(sortAtrtibutes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="background-color:#FF0000;height:100px;padding:20px;width:100px">');
+                expect(sortAttributes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="background-color:#FF0000;height:100px;padding:20px;width:100px">');
 
             });
         });
@@ -123,7 +123,7 @@ describe('Test image', function() {
                 tab.querySelector('.id').value = 'fast12';
                 simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
 
-                expect(sortAtrtibutes(editor.value)).to.be.equal('<img id="fast12" src="tests/artio.jpg" style="height:100px;width:100px">');
+                expect(sortAttributes(editor.value)).to.be.equal('<img id="fast12" src="tests/artio.jpg" style="height:100px;width:100px">');
 
             });
         });
@@ -147,7 +147,7 @@ describe('Test image', function() {
                     tab.querySelector('.align').value = 'left';
                     simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
 
-                    expect(sortAtrtibutes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="float:left;height:100px;width:100px">');
+                    expect(sortAttributes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="float:left;height:100px;width:100px">');
 
                 });
             });
@@ -170,7 +170,7 @@ describe('Test image', function() {
                     tab.querySelector('.align').value = 'right';
                     simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
 
-                    expect(sortAtrtibutes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="float:right;height:100px;width:100px">');
+                    expect(sortAttributes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="float:right;height:100px;width:100px">');
 
                 });
             });
@@ -193,7 +193,7 @@ describe('Test image', function() {
                     tab.querySelector('.align').value = 'center';
                     simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
 
-                    expect(sortAtrtibutes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="display:block;height:100px;margin-left:auto;margin-right:auto;width:100px">');
+                    expect(sortAttributes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="display:block;height:100px;margin-left:auto;margin-right:auto;width:100px">');
 
                 });
             });
@@ -216,7 +216,7 @@ describe('Test image', function() {
                     tab.querySelector('.align').value = '';
                     simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
 
-                    expect(sortAtrtibutes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="height:100px;width:100px">');
+                    expect(sortAttributes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="height:100px;width:100px">');
 
                 });
             });
@@ -243,7 +243,7 @@ describe('Test image', function() {
                     tab.querySelector('.marginTop').value = 100;
                     simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
 
-                    expect(sortAtrtibutes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="height:100px;margin:100px;width:100px">');
+                    expect(sortAttributes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="height:100px;margin:100px;width:100px">');
 
                 });
             });
@@ -277,7 +277,7 @@ describe('Test image', function() {
                     tab.querySelector('.marginLeft').value = 220;
                     simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
 
-                    expect(sortAtrtibutes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="height:100px;margin:100px 20px 10px 220px;width:100px">');
+                    expect(sortAttributes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="height:100px;margin:100px 20px 10px 220px;width:100px">');
 
                 });
             });
@@ -299,7 +299,7 @@ describe('Test image', function() {
                 dialog.querySelector('.imageTitle').value = 'Stop';
                 simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
 
-                expect(sortAtrtibutes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="height:100px;width:100px" title="Stop">');
+                expect(sortAttributes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="height:100px;width:100px" title="Stop">');
 
             });
         });
@@ -321,7 +321,7 @@ describe('Test image', function() {
                     dialog.querySelector('.imageAlt').value = 'Stop';
                     simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
 
-                    expect(sortAtrtibutes(editor.value)).to.be.equal('<img alt="Stop" src="tests/artio.jpg" style="height:100px;width:100px">');
+                    expect(sortAttributes(editor.value)).to.be.equal('<img alt="Stop" src="tests/artio.jpg" style="height:100px;width:100px">');
                     done();
                 };
 
@@ -351,7 +351,7 @@ describe('Test image', function() {
                 dialog.querySelector('.imageLink').value = 'https://xdsoft.net/';
                 simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
 
-                expect(sortAtrtibutes(editor.value)).to.be.equal('<a href="https://xdsoft.net/"><img src="tests/artio.jpg" style="height:100px;width:100px"></a>');
+                expect(sortAttributes(editor.value)).to.be.equal('<a href="https://xdsoft.net/"><img src="tests/artio.jpg" style="height:100px;width:100px"></a>');
 
             });
             describe('open link in new tab', function () {
@@ -373,7 +373,7 @@ describe('Test image', function() {
 
                     simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
 
-                    expect(sortAtrtibutes(editor.value)).to.be.equal('<a href="https://xdsoft.net/" target="_blank"><img src="tests/artio.jpg" style="height:100px;width:100px"></a>');
+                    expect(sortAttributes(editor.value)).to.be.equal('<a href="https://xdsoft.net/" target="_blank"><img src="tests/artio.jpg" style="height:100px;width:100px"></a>');
 
                 });
             });
@@ -397,7 +397,7 @@ describe('Test image', function() {
 
                     simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
 
-                    expect(sortAtrtibutes(editor.value)).to.be.equal('<a href="https://xdsoft.net/"><img src="tests/artio.jpg" style="height:100px;width:100px"></a>');
+                    expect(sortAttributes(editor.value)).to.be.equal('<a href="https://xdsoft.net/"><img src="tests/artio.jpg" style="height:100px;width:100px"></a>');
 
                 });
             });
@@ -421,7 +421,7 @@ describe('Test image', function() {
 
                     simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
 
-                    expect(sortAtrtibutes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="height:100px;width:100px">');
+                    expect(sortAttributes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="height:100px;width:100px">');
 
                 });
             });
@@ -457,7 +457,7 @@ describe('Test image', function() {
 
                     simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
 
-                    expect(sortAtrtibutes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="height:200px;width:356px">');
+                    expect(sortAttributes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="height:200px;width:356px">');
 
                     done();
                 }
@@ -503,7 +503,7 @@ describe('Test image', function() {
 
                         simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
 
-                        expect(sortAtrtibutes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="height:200px;width:100px">');
+                        expect(sortAttributes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="height:200px;width:100px">');
 
                         done();
                     }
@@ -546,7 +546,7 @@ describe('Test image', function() {
 
                             simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
 
-                            expect(sortAtrtibutes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="height:200px;width:356px">');
+                            expect(sortAttributes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="height:200px;width:356px">');
 
                             done();
                         }
