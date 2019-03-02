@@ -221,4 +221,5 @@ export default {
         ' ¿Descargar esta imagen en el servidor?',
     'The image has been successfully uploaded to the host!':
         '¡La imagen se ha subido correctamente al servidor!',
+    'palette': 'paleta',
 } as IDictionary<string>;

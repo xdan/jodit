@@ -222,4 +222,5 @@ export default {
         'aanpassen. Deze afbeelding downloaden?',
     'The image has been successfully uploaded to the host!':
         'De afbeelding is succesvol geüploadet!',
+    'palette': 'Palette',
 } as IDictionary<string>;

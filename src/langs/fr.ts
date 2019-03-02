@@ -215,4 +215,5 @@ export default {
         "Téléchargez cette image sur l'hôte?",
     'The image has been successfully uploaded to the host!':
         "L'image a été téléchargée avec succès sur le serveur!null",
+    'palette': 'Palette',
 } as IDictionary<string>;

@@ -222,4 +222,6 @@ export default {
         'Csak a saját képeit tudja szerkeszteni. ' + 'Letölti ezt a képet?',
     'The image has been successfully uploaded to the host!':
         'Kép sikeresen feltöltve!',
+
+    'palette': 'Palette',
 } as IDictionary<string>;

@@ -220,5 +220,6 @@ export default {
     'You can only edit your own images. Download this image on the host?':
         'Můžete upravovat pouze své obrázky. Načíst obrázek?',
     'The image has been successfully uploaded to the host!':
-        'Obrázek byl úspěšně nahrán!'
+        'Obrázek byl úspěšně nahrán!',
+    'palette': 'paleta',
 } as IDictionary<string>;

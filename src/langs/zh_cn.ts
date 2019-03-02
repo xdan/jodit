@@ -213,4 +213,5 @@ export default {
     'You can only edit your own images. Download this image on the host?':
         '你只能编辑你自己的图片。' + 'Download this image on the host?',
     'The image has been successfully uploaded to the host!': '图片上传成功',
+    'palette': 'Palette',
 } as IDictionary<string>;

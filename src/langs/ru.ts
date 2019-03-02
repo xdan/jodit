@@ -226,4 +226,5 @@ export default {
         'собственные изображения. Загрузить это изображение на ваш сервер?',
     'The image has been successfully uploaded to the host!':
         'Изображение успешно загружено на сервер!',
+    'palette': 'палитра',
 } as IDictionary<string>;

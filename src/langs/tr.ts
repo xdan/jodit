@@ -222,4 +222,5 @@ export default {
         ' Bu görseli kendi hostunuza indirmek ister misiniz?',
     'The image has been successfully uploaded to the host!':
         'Görsel başarıyla hostunuza yüklendi',
+    'palette': 'Palette',
 } as IDictionary<string>;

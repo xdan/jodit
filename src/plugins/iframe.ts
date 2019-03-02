@@ -207,6 +207,7 @@ export function iframe(editor: IJodit) {
             editor.iframe = editor.ownerDocument.createElement(
                 'iframe'
             ) as HTMLIFrameElement;
+
             editor.iframe.style.display = 'block';
             editor.iframe.src = 'about:blank';
             editor.iframe.className = 'jodit_wysiwyg_iframe';
@@ -226,6 +227,8 @@ export function iframe(editor: IJodit) {
                 .document;
             editor.editorDocument = doc;
             editor.editorWindow = editor.iframe.contentWindow as Window;
+
+            editor.create.inside.setDocument(doc);
 
             editor.editor = doc.body as HTMLBodyElement;
 
@@ -263,7 +266,7 @@ export function iframe(editor: IJodit) {
                 e.matches || (e.matches = Element.prototype.matches); // fix inside iframe polifill
             })((editor.editorWindow as any).Element.prototype);
 
-            // throw events in our word
+            // throw events in our world
             if (editor.editorDocument.documentElement) {
                 editor.events
                     .on(

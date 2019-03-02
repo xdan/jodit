@@ -58,7 +58,41 @@ describe('Test uploader module', function () {
                 });
 
             });
-        })
+            describe('For iframe mode', function () {
+                it('Should upload file and insert image with SRC from server', function (done) {
+                    var file = new FileImage(),
+                        editor = new Jodit(appendTestArea(), {
+                            iframe: true,
+                            observer: {
+                                timeout: 0
+                            },
+                            uploader: {
+                                url: 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'
+                            },
+                            events: {
+                                afterInsertImage: function (img) {
+                                    expect(img.src).to.be.equal('https://xdsoft.net/jodit/files/logo.gif');
+                                    expect(sortAttributes(editor.value)).to.be.equal('<img src="https://xdsoft.net/jodit/files/logo.gif" style="width:300px">');
+                                    done();
+                                }
+                            }
+                        });
+
+                    setTimeout(function () {
+                        simulateEvent('drop', 0, editor.editor, function (data) {
+                            Object.defineProperty(data, 'dataTransfer',{
+                                value: {
+                                    files: [
+                                        file
+                                    ],
+                                }
+                            })
+                        });
+                    }, 300);
+
+                });
+            })
+        });
         describe('Drop File and upload on server', function () {
             it('Should upload file and insert A element with HREF to file on server', function (done) {
                 var file = new FileXLS(),

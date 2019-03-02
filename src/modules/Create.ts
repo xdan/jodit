@@ -21,6 +21,14 @@ export class Create implements ICreate {
         this.inside = editorDocument ? new Create(editorDocument) : this;
     }
 
+    /**
+     * Set document creator
+     * @param doc
+     */
+    setDocument(doc: Document): void {
+        this.doc = doc;
+    }
+
     element<K extends keyof HTMLElementTagNameMap>(
         tagName: K,
         childrenOrAttributes?: Children
