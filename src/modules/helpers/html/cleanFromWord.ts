@@ -5,6 +5,7 @@
  */
 
 import { Dom } from '../../Dom';
+import { trim } from '../string';
 
 /**
  * The method automatically cleans up content from Microsoft Word and other HTML sources to ensure clean, compliant
@@ -34,26 +35,36 @@ export const cleanFromWord = (html: string): string => {
                 }
                 switch (node.nodeType) {
                     case Node.ELEMENT_NODE:
-                        if (node.nodeName === 'FONT') {
-                            Dom.unwrap(node);
-                        } else {
-                            [].slice
-                                .call((node as Element).attributes)
-                                .forEach((attr: Attr) => {
-                                    if (
-                                        [
-                                            'src',
-                                            'href',
-                                            'rel',
-                                            'content',
-                                        ].indexOf(attr.name.toLowerCase()) ===
-                                        -1
-                                    ) {
-                                        (node as Element).removeAttribute(
-                                            attr.name
-                                        );
-                                    }
-                                });
+                        switch (node.nodeName) {
+                            case 'STYLE':
+                            case 'LINK':
+                            case 'META':
+                                marks.push(node);
+                                break;
+
+                            case 'W:SDT':
+                            case 'W:SDTPR':
+                            case 'FONT':
+                                Dom.unwrap(node);
+                                break;
+
+                            default:
+                                Array.from((node as Element).attributes)
+                                    .forEach((attr: Attr) => {
+                                        if (
+                                            [
+                                                'src',
+                                                'href',
+                                                'rel',
+                                                'content',
+                                            ].indexOf(attr.name.toLowerCase()) ===
+                                            -1
+                                        ) {
+                                            (node as Element).removeAttribute(
+                                                attr.name
+                                            );
+                                        }
+                                    });
                         }
                         break;
                     case Node.TEXT_NODE:
@@ -72,6 +83,8 @@ export const cleanFromWord = (html: string): string => {
     if (convertedString) {
         html = convertedString;
     }
+
+    html = html.split(/(\n)/).filter(trim).join('\n');
 
     return html
         .replace(/<(\/)?(html|colgroup|col|o:p)[^>]*>/g, '')
