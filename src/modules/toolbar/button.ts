@@ -130,15 +130,17 @@ export class ToolbarButton extends ToolbarElement implements IToolbarButton {
                     popup
                 ) !== false
             ) {
-                popup.open(
-                    control.popup(
-                        this.jodit,
-                        getTarget(),
-                        control,
-                        popup.close,
-                        this
-                    )
+                const popupElm = control.popup(
+                    this.jodit,
+                    getTarget(),
+                    control,
+                    popup.close,
+                    this
                 );
+
+                if (popupElm) {
+                    popup.open(popupElm);
+                }
             }
             /**
              * Fired after popup was opened for some control button

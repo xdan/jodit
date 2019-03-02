@@ -279,7 +279,7 @@ export class Dom {
         if (
             typeof win === 'object' &&
             win &&
-            typeof (win as any).Node === 'function'
+            (typeof (win as any).Node === 'function' || typeof (win as any).Node === 'object')
         ) {
             return object instanceof (win as any).Node; // for Iframe Node !== iframe.contentWindow.Node
         }

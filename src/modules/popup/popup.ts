@@ -115,7 +115,7 @@ export class Popup extends Component {
      * @param {boolean} [noStandartActions=false] No call standarts action
      */
     open(
-        content: any,
+        content: string | HTMLElement | IControlTypeStrong,
         rightAlign?: boolean,
         noStandartActions: boolean = false
     ) {
