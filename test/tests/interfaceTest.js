@@ -260,12 +260,44 @@ describe('Test interface', function() {
                 expect(editor.getEditorValue()).to.equal('text2text');
             });
 
-            // describe('');
+            describe('Show native color picker', function () {
+                describe('Enable', function () {
+                    it('should open color picker with button - native color picker', function() {
+                        var editor = new Jodit(appendTestArea(), {
+                            showBrowserColorPicker: true
+                        });
+
+                        editor.value = 'text2text';
+
+                        simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-brush'))
+
+                        var list = editor.container.querySelector('.jodit_toolbar_popup');
+
+                        // In two tabs text-color and background-color
+                        expect(list.querySelectorAll('input[type="color"]').length).to.be.equal(2);
+                    });
+                });
+                describe('Disable', function () {
+                    it('should open color picker without button - native color picker', function() {
+                        var editor = new Jodit(appendTestArea(), {
+                            showBrowserColorPicker: false
+                        });
+
+                        editor.value = 'text2text';
+
+                        simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-brush'))
+
+                        var list = editor.container.querySelector('.jodit_toolbar_popup');
+
+                        expect(list.querySelectorAll('input[type="color"]').length).to.be.equal(0);
+                    });
+                });
+            });
 
             it('Open format list set H1 for current cursor position. Restore selection after that', function() {
                 var editor = new Jodit(appendTestArea());
 
-                editor.setEditorValue('text2text')
+                editor.value = 'text2text';
 
                 var sel = editor.editorWindow.getSelection(), range = editor.editorDocument.createRange();
 

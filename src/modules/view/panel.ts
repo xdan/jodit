@@ -20,7 +20,7 @@ export class Panel extends Component implements IPanel {
     public container: HTMLDivElement;
 
     /**
-     * @property {Create} Creator
+     * @property {Create} Native DOM element creator
      */
     public create: Create;
 

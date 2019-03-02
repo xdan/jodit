@@ -12,12 +12,16 @@
  */
 export const hasBrowserColorPicker = (): boolean => {
     let supportsColor = true;
+
     try {
-        var a = document.createElement("input");
+        const
+            a = document.createElement("input");
+
         a.type = "color";
         supportsColor = a.type === "color" && typeof a.selectionStart !== "number";
     } catch (e) {
         supportsColor = false;
     }
+
     return supportsColor;
-}
+};

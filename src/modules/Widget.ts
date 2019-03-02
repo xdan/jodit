@@ -138,7 +138,7 @@ export namespace Widget {
                             : '') +
                         '>' +
                         iconPalette + '</em>' +
-                        '<input type="color" name="browser-color-picker" value=""/>' +
+                        '<input type="color" value=""/>' +
                     '</span>'
                 )
             );
@@ -155,6 +155,7 @@ export namespace Widget {
                 }
 
                 const color: string = target.value || '';
+
                 if (color) {
                     setColor(target, color);
                 }
