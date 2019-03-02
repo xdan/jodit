@@ -13,16 +13,6 @@ describe('Iframe mode', function() {
                 }
             });
         });
-        it('Should have same direction and language', function() {
-            var editor = new Jodit(appendTestArea(), {
-                iframe: true,
-                direction: 'rtl',
-                language: 'de',
-            });
-
-            expect('rtl').to.be.equal(editor.editorDocument.documentElement.getAttribute('dir'));
-            expect('de').to.be.equal(editor.editorDocument.documentElement.getAttribute('lang'));
-        });
         describe('And exec command', function () {
             it('Should use body like editor area', function(done) {
                 unmocPromise();

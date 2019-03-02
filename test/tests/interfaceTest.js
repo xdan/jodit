@@ -1751,5 +1751,32 @@ describe('Test interface', function() {
             });
         });
     });
+
+    describe('Direction', function () {
+        describe('Set RTL direction', function () {
+            it('Should have RTL direction', function() {
+                var editor = new Jodit(appendTestArea(), {
+                    direction: 'rtl',
+                });
+
+                expect('rtl').to.be.equal(editor.editor.getAttribute('dir'));
+                expect('rtl').to.be.equal(editor.container.getAttribute('dir'));
+                expect('rtl').to.be.equal(editor.toolbar.container.getAttribute('dir'));
+            });
+        });
+        describe('For iframe mode', function () {
+            it('Should have same direction and language', function() {
+                var editor = new Jodit(appendTestArea(), {
+                    iframe: true,
+                    direction: 'rtl',
+                    language: 'de',
+                });
+
+                expect('rtl').to.be.equal(editor.editorDocument.documentElement.getAttribute('dir'));
+                expect('de').to.be.equal(editor.editorDocument.documentElement.getAttribute('lang'));
+            });
+        });
+    });
+
     afterEach(removeStuff);
 });

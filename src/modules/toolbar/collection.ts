@@ -237,10 +237,20 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 
     container: HTMLElement;
 
+    /**
+     * Set direction
+     * @param direction
+     */
+    setDirection(direction: 'rtl' | 'ltr'): void {
+        this.container.style.direction = direction;
+        this.container.setAttribute('dir', direction);
+    }
+
     constructor(jodit: IViewBased) {
         super(<T>jodit);
         this.container = this.jodit.create.element('ul');
         this.container.classList.add('jodit_toolbar');
+
         this.initEvents();
     }
 

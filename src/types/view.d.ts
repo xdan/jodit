@@ -25,11 +25,12 @@ interface IViewOptions {
     showTooltipDelay?: number;
     useNativeTooltip?: boolean;
     textIcons?: boolean;
+    direction?: string;
     controls?: Controls;
 }
 
 interface IPanel extends IComponent {
-    container: HTMLDivElement;
+    container: HTMLElement;
     create: ICreate;
 
     ownerDocument: Document;

@@ -112,12 +112,15 @@
                 visibility: hidden !important;
             }
         }
+
         &.jodit_disabled .jodit_tooltip {
             display: none !important;
         }
+
         > a {
             line-height: 100%;
         }
+
         .jodit_popap_open,
         &.jodit_dropdown_open .jodit_tooltip,
         &.jodit_popup_open .jodit_tooltip {
@@ -257,6 +260,12 @@
     vertical-align: middle;
     font-smoothing: antialiased;
 }
+
 .jodit_container > .jodit_toolbar > li:first-child {
     margin-left: 2px !important;
+}
+
+.jodit_container[dir='rtl'] > .jodit_toolbar > li:first-child {
+    margin-left: 0 !important;
+    margin-right: 2px !important;
 }

@@ -232,6 +232,13 @@ export class ToolbarButton extends ToolbarElement implements IToolbarButton {
 
         this.container.classList.add('jodit_toolbar_btn-' + clearName);
 
+        if (this.jodit.options.direction) {
+            const
+                direction = this.jodit.options.direction.toLowerCase() === 'rtl' ? 'rtl' : 'ltr';
+
+            this.container.style.direction = direction;
+        }
+
         if (control.isInput) {
             this.container.classList.add('jodit_toolbar-input');
         } else {

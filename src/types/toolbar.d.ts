@@ -267,7 +267,7 @@ interface IToolbarButton extends IToolbarElement {
     isActive(): boolean;
 }
 
-interface IToolbarCollection {
+interface IToolbarCollection extends IComponent {
     readonly listenEvents: string;
 
     getButtonsList(): string[];
@@ -295,6 +295,8 @@ interface IToolbarCollection {
     checkActiveButtons: Function;
 
     container: HTMLElement;
+
+    setDirection(direction: 'rtl' | 'ltr'): void;
 
     destruct(): void;
 }

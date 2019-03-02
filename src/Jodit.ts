@@ -1188,8 +1188,15 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
         // direction
         if (this.options.direction) {
-            this.editor.style.direction =
-                this.options.direction.toLowerCase() === 'rtl' ? 'rtl' : 'ltr';
+            const
+                direction = this.options.direction.toLowerCase() === 'rtl' ? 'rtl' : 'ltr';
+
+            this.editor.style.direction = direction;
+            this.container.style.direction = direction;
+            this.editor.setAttribute('dir', direction);
+            this.container.setAttribute('dir', direction);
+
+            this.toolbar.setDirection(direction);
         }
 
         if (this.options.triggerChangeEvent) {

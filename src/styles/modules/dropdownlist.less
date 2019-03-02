@@ -8,10 +8,12 @@
     & > .jodit_toolbar {
         max-height: 400px;
         overflow: auto;
+
         &,
         .jodit_toolbar {
             background: @color-toolbar;
         }
+
         box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
         padding: 0;
         margin: auto;
@@ -95,6 +97,15 @@
                     display: none;
                 }
             }
+        }
+    }
+}
+
+.jodit_toolbar[dir='rtl'] .jodit_toolbar_list {
+    & > .jodit_toolbar {
+        &,
+        li.jodit_toolbar_btn {
+            text-align: right;
         }
     }
 }
