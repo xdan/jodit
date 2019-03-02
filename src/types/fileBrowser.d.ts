@@ -10,7 +10,6 @@ import { IUploader, IUploaderOptions } from './uploader';
 import { IViewOptions, IViewWithToolbar } from './view';
 import { Dialog } from '../modules/dialog';
 import { Storage } from '../modules';
-import { IJodit } from './jodit';
 
 /**
  * The module creates a web browser dialog box. In a Web browser ,you can select an image, remove, drag it. Upload new
@@ -20,7 +19,7 @@ import { IJodit } from './jodit';
  */
 
 export interface ISourceFile {
-    file: string;
+    file?: string;
     fileIsAbsolute?: boolean;
     name?: string;
     thumb: string;
@@ -123,7 +122,8 @@ export interface IFileBrowserOptions extends IViewOptions {
     getLocalFileByUrl: IFileBrowserAjaxOptions | null;
     resize: IFileBrowserAjaxOptions | null;
     crop: IFileBrowserAjaxOptions | null;
-    move: IFileBrowserAjaxOptions | null;
+    fileMove: IFileBrowserAjaxOptions | null;
+    folderMove: IFileBrowserAjaxOptions | null;
     fileRemove: IFileBrowserAjaxOptions | null;
     folderRemove: IFileBrowserAjaxOptions | null;
     items: IFileBrowserAjaxOptions;
@@ -139,7 +139,7 @@ export interface IFileBrowserCallBackData {
     files: string[];
 }
 
-interface IFileBrowser extends IViewWithToolbar {
+interface IFileBrowser extends IViewWithToolbar<IFileBrowserOptions> {
     uploader: IUploader;
     storage: Storage;
     dialog: Dialog;
@@ -157,7 +157,7 @@ interface IFileBrowser extends IViewWithToolbar {
 
     createFolder(name: string, path: string, source: string): Promise<void>;
 
-    move(filepath: string, path: string, source: string): Promise<void>;
+    move(filepath: string, path: string, source: string, isFile: boolean): Promise<void>;
 
     fileRemove(path: string, file: string, source: string): Promise<void>;
 

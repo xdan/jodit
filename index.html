@@ -60,8 +60,14 @@ cena quidem posse videamur?
     <script src="./build/jodit.min.js"></script>
     <script>
         var editor = new Jodit("#editor", {
-            "toolbarButtonSize": "small",
-            direction: 'rtl',
+            uploader: {
+                url: 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'
+            },
+            filebrowser: {
+                ajax: {
+                    url: 'https://xdsoft.net/jodit/connector/index.php'
+                }
+            }
         });
     </script>
 </body>

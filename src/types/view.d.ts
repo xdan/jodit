@@ -46,7 +46,7 @@ interface IPanel extends IComponent {
     toggleFullSize(isFullSize?: boolean): void;
 }
 
-interface IViewBased extends IPanel {
+interface IViewBased<T = IViewOptions> extends IPanel {
     /**
      * @property {string} ID attribute for source element, id add {id}_editor it's editor's id
      */
@@ -56,7 +56,7 @@ interface IViewBased extends IPanel {
 
     progress_bar: HTMLElement;
 
-    options: IViewOptions;
+    options: T;
 
     events: IEventsNative;
     create: ICreate;
@@ -74,6 +74,6 @@ interface IViewBased extends IPanel {
     components: IComponent[];
 }
 
-interface IViewWithToolbar extends IViewBased {
+interface IViewWithToolbar<T = IViewOptions> extends IViewBased<T> {
     toolbar: IToolbarCollection;
 }
