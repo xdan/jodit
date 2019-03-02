@@ -1,11 +1,42 @@
 describe('Test interface', function() {
     describe('Toolbar', function () {
+        describe('Custom buttons', function () {
+            it('should create normal button in toolbar', function () {
+                var editor = new Jodit(appendTestArea(), {
+                    toolbarAdaptive: false,
+                    buttons: [
+                        'image',
+                        {
+                            name: 'alert_some',
+                            iconURL: 'https://xdsoft.net/jodit/build/images/icons/045-copy.png',
+                            exec: function () {
+                                alert('test');
+                            }
+                        }
+                    ],
+                });
+
+                var btns = Array.from(editor.container.querySelectorAll('.jodit_toolbar .jodit_toolbar_btn'));
+
+                expect(btns.length).to.be.equal(2);
+
+                btns.forEach(function (btn) {
+                    var icon = btn.querySelector('.jodit_icon');
+
+                    expect(icon).to.be.not.null;
+                    expect(icon.clientWidth).to.be.above(5);
+                    expect(icon.clientHeight).to.be.above(5);
+                })
+
+            });
+        });
         describe('Set toolbar options to false', function () {
             it('Should hide toolbar', function () {
                 var editor = new Jodit(appendTestArea(), {
                     toolbar: false
                 });
-                expect(null).to.be.equal(editor.container.querySelector('jodit_toolbar'));
+
+                expect(null).to.be.equal(editor.container.querySelector('.jodit_toolbar'));
             });
         });
         describe('Popups', function () {

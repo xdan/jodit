@@ -59,10 +59,38 @@ cena quidem posse videamur?
     </div>
     <script src="./build/jodit.min.js"></script>
     <script>
+        Jodit.defaultOptions.controls.info = {
+            iconURL: "https://xdsoft.net/jodit/build/images/icons/269-info.png",
+            popup: function (editor) {
+                var text = editor.helper.trim(editor.editor.innerText);
+                var wordCount = text.split(/[\s\n\r\t]+/).filter(function (value) {
+                    return value;
+                }).length;
+                var charCount = text.replace(/[\s\n\r\t]+/, '').length;
+
+                return '<div style="padding: 10px;">' +
+                    'Words: ' + wordCount + '<br>' +
+                    'Chars: ' + charCount + '<br>' +
+                    '</div>';
+            }
+        };
         var editor = new Jodit("#editor", {
-            height: 150,
-            width: 300,
-            allowResizeX: true,
+            "toolbarButtonSize": "small",
+            toolbarAdaptive: false,
+            buttons: [
+                'image',
+                {
+                    iconURL: 'https://xdsoft.net/jodit/build/images/icons/045-copy.png',
+                    exec: function (editor) {
+                        if (editor.selection.isCollapsed()) {
+                            editor.execCommand('selectall');
+                        }
+                        editor.execCommand('copy');
+                        Jodit.Alert('Text in your clipboard');
+                    }
+                }
+            ],
+            extraButtons: ["info"]
         });
     </script>
 </body>

@@ -26,18 +26,25 @@
 .jodit_icon {
     font-style: normal;
     display: inline-block;
-    //.size(@icon_middle_size);
     width: @icon_middle_size;
+    height: @icon_middle_size;
     font-size: 8px;
-    //overflow:hidden;
     vertical-align: middle;
     fill: @color-icon;
-    transform-origin: 0px 0px !important;
+    transform-origin: 0 0 !important;
     overflow: visible;
+    background: center no-repeat;
+    background-size: contain;
 }
+
+svg.jodit_icon {
+    height: auto;
+}
+
 .jodit_text_icon {
     font-size: 14px;
 }
+
 .jodit_toolbar_size {
     &-small .jodit_icon {
         .size(@icon_small_size);
