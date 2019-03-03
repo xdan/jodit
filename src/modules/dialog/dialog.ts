@@ -84,7 +84,7 @@ export class Dialog extends View {
     private offsetX: number;
     private offsetY: number;
 
-    private destinition: HTMLElement = document.body;
+    private destination: HTMLElement = document.body;
     private destroyAfterClose: boolean = false;
 
     private moved: boolean = false;
@@ -399,7 +399,7 @@ export class Dialog extends View {
             zIndex: number,
             res: Dialog = this;
 
-        $$('.jodit_dialog_box', this.destinition).forEach(
+        $$('.jodit_dialog_box', this.destination).forEach(
             (dialog: HTMLElement) => {
                 dlg = (dialog as any).__jodit_dialog as Dialog;
                 zIndex = parseInt(css(dialog, 'zIndex') as string, 10);
@@ -420,7 +420,7 @@ export class Dialog extends View {
         let maxzi: number = 0,
             zIndex: number = 0;
 
-        $$('.jodit_dialog_box', this.destinition).forEach(dialog => {
+        $$('.jodit_dialog_box', this.destination).forEach(dialog => {
             zIndex = parseInt(css(dialog, 'zIndex') as string, 10);
             maxzi = Math.max(isNaN(zIndex) ? 0 : zIndex, maxzi);
         });
@@ -443,7 +443,7 @@ export class Dialog extends View {
 
         this.container.classList.toggle('jodit_dialog_box-fullsize', condition);
 
-        [this.destinition, this.destinition.parentNode].forEach(
+        [this.destination, this.destination.parentNode].forEach(
             (box: Node | null) => {
                 box &&
                     (box as HTMLElement).classList &&
@@ -670,7 +670,7 @@ export class Dialog extends View {
             '.jodit_dialog_header>.jodit_dialog_header-toolbar'
         ) as HTMLDivElement;
 
-        self.destinition.appendChild(self.container);
+        self.destination.appendChild(self.container);
 
         self.container.addEventListener('close_dialog', self.close as any);
 
