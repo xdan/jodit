@@ -24,8 +24,14 @@ describe('Test interface', function() {
                     var icon = btn.querySelector('.jodit_icon');
 
                     expect(icon).to.be.not.null;
-                    expect(icon.clientWidth).to.be.above(5);
-                    expect(icon.clientHeight).to.be.above(5);
+
+                    var
+                        style = window.getComputedStyle(icon),
+                        height = parseInt(style.height),
+                        width = parseInt(style.width);
+
+                    expect(width).to.be.above(5);
+                    expect(height).to.be.above(5);
                 })
 
             });
