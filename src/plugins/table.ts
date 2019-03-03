@@ -87,8 +87,10 @@ Config.prototype.controls.table = {
                     '</div>' +
                     '</form>'
             ) as HTMLFormElement,
+
             rows: HTMLSpanElement = form.querySelectorAll('span')[0],
             cols: HTMLSpanElement = form.querySelectorAll('span')[1],
+
             blocksContainer: HTMLDivElement = form.querySelector(
                 '.jodit_form-container'
             ) as HTMLDivElement,
@@ -285,14 +287,21 @@ Config.prototype.controls.table = {
  * Process tables in editor
  */
 export class TableProcessor extends Plugin {
-    public static isCell(tag: Node | null): boolean {
+    static isCell(tag: Node | null): boolean {
         return !!tag && /^TD|TH$/i.test(tag.nodeName);
     }
+
     private __key: string = 'table_processor_observer';
+
     private __selectMode: boolean = false;
 
     private __resizerDelta: number = 0;
     private __resizerHandler: HTMLElement;
+
+    hideResizer() {
+        this.__resizerHandler.style.display = 'none';
+    }
+
     private __drag: boolean = false;
 
     private __wholeTable: boolean | null;
@@ -355,7 +364,8 @@ export class TableProcessor extends Plugin {
                     'jodit_table_resizer'
                 );
 
-                let startX: number = 0; // , startLeft = 0;
+                let startX: number = 0;
+
                 this.jodit.events
                     .on(
                         this.__resizerHandler,
@@ -417,10 +427,19 @@ export class TableProcessor extends Plugin {
                     )
                     .on(
                         this.jodit.ownerWindow,
-                        'mousemove touchmoove',
+                        'mousemove touchmove',
                         (event: MouseEvent) => {
                             if (this.__drag) {
                                 let x = event.clientX;
+
+                                const workplacePosition: IBound = offset(
+                                    (this.__resizerHandler.parentNode ||
+                                        this.jodit.ownerDocument
+                                            .documentElement) as HTMLElement,
+                                    this.jodit,
+                                    this.jodit.ownerDocument,
+                                    true
+                                )
 
                                 if (x < this.__minX) {
                                     x = this.__minX;
@@ -430,11 +449,12 @@ export class TableProcessor extends Plugin {
                                 }
 
                                 this.__resizerDelta = x - startX;
-                                this.__resizerHandler.style.left = x + 'px';
+                                this.__resizerHandler.style.left = (x - workplacePosition.left) + 'px';
 
                                 this.jodit.editorWindow
                                     .getSelection()
                                     .removeAllRanges();
+
                                 if (event.preventDefault) {
                                     event.preventDefault();
                                 }
@@ -442,7 +462,7 @@ export class TableProcessor extends Plugin {
                         }
                     );
 
-                this.jodit.container.appendChild(this.__resizerHandler);
+                this.jodit.workplace.appendChild(this.__resizerHandler);
             }
         }
     };
@@ -463,20 +483,32 @@ export class TableProcessor extends Plugin {
         offsetX: number = 0,
         delta: number = 0
     ) {
-        const box = offset(cell, this.jodit, this.jodit.editorDocument);
+        const
+            box = offset(cell, this.jodit, this.jodit.editorDocument);
+
         if (offsetX <= consts.NEARBY || box.width - offsetX <= consts.NEARBY) {
-            const parentBox: IBound = offset(
-                table,
-                this.jodit,
-                this.jodit.editorDocument
-            );
+            const
+                workplacePosition: IBound = offset(
+                    (this.__resizerHandler.parentNode ||
+                        this.jodit.ownerDocument
+                            .documentElement) as HTMLElement,
+                    this.jodit,
+                    this.jodit.ownerDocument,
+                    true
+                ),
+                parentBox: IBound = offset(
+                    table,
+                    this.jodit,
+                    this.jodit.editorDocument
+                );
 
             this.__resizerHandler.style.left =
-                (offsetX <= consts.NEARBY ? box.left : box.left + box.width) +
+                (offsetX <= consts.NEARBY ? box.left : box.left + box.width) - workplacePosition.left +
                 delta +
                 'px';
+
             this.__resizerHandler.style.height = parentBox.height + 'px';
-            this.__resizerHandler.style.top = parentBox.top + 'px';
+            this.__resizerHandler.style.top = (parentBox.top - workplacePosition.top) + 'px';
             this.__resizerHandler.style.display = 'block';
 
             if (offsetX <= consts.NEARBY) {
@@ -499,7 +531,7 @@ export class TableProcessor extends Plugin {
                 this.__setWorkCell(cell, !nextTD ? false : null);
             }
         } else {
-            this.__resizerHandler.style.display = 'none';
+            this.hideResizer();
         }
     }
 
@@ -577,8 +609,9 @@ export class TableProcessor extends Plugin {
         }
     };
 
-    public observe(table: HTMLTableElement) {
+    observe(table: HTMLTableElement) {
         (table as any)[this.__key] = true;
+
         let start: HTMLTableCellElement;
 
         this.jodit.events
@@ -612,7 +645,7 @@ export class TableProcessor extends Plugin {
                     this.__resizerHandler &&
                     this.__resizerHandler !== e.relatedTarget
                 ) {
-                    this.__resizerHandler.style.display = 'none';
+                    this.hideResizer();
                 }
             })
             .on(table, 'mousemove touchmove', (event: MouseEvent) => {

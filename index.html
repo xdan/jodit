@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="./build/jodit.min.css">
 </head>
 <body>
-    <div>
+    <div id="box">
         <div id="editor">
             <p>
                 <img style="float:right; margin: 10px;" src="https://xdsoft.net/jodit/files/download.jpg" alt="Itaque nostrum est-quod nostrum dico, artis est-ad ea principia, quae accepimus."></p>
@@ -60,6 +60,7 @@ cena quidem posse videamur?
     <script src="./build/jodit.min.js"></script>
     <script>
         var editor = new Jodit("#editor", {
+            iframe: true,
             uploader: {
                 url: 'http://localhost:8181/index-test.php?action=fileUpload'
             },
@@ -70,5 +71,12 @@ cena quidem posse videamur?
             }
         });
     </script>
+    <style>
+        #box {
+            padding: 100px;
+            margin: 20px;
+            position: relative;
+        }
+    </style>
 </body>
 </html>

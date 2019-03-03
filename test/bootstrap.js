@@ -292,6 +292,11 @@ function removeStuff() {
 
     mocPromise();
 }
+
+if (typeof afterEach === 'function') {
+    afterEach(removeStuff);
+}
+
 function appendTestArea(id, noput) {
     var textarea = document.createElement('textarea');
     textarea.setAttribute('id', id || 'editor_' + new Date().getTime());

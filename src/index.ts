@@ -67,3 +67,4 @@ DefaultJodit.defaultOptions = Config.defaultOptions;
 OptionsDefault.prototype = DefaultJodit.defaultOptions;
 
 export const Jodit = DefaultJodit;
+export default DefaultJodit;

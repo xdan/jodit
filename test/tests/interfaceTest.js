@@ -698,6 +698,27 @@ describe('Test interface', function() {
                         simulateEvent('mousemove', 0, list.querySelectorAll('.jodit_form-container div')[14])
                         expect(list.querySelectorAll('.jodit_form-container div.hovered').length).to.equal(10);
                     });
+                    describe('In iframe mode', function () {
+                        it('Should works same way', function() {
+                            var editor = new Jodit(appendTestArea(), {
+                                iframe: true
+                            });
+
+                            simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-table'))
+
+                            var list = editor.container.querySelector('.jodit_toolbar_popup');
+
+                            expect(window.getComputedStyle(list).display).to.equal('block');
+
+                            var divs = list.querySelectorAll('.jodit_form-container div');
+
+                            expect(divs.length).to.be.above(10);
+
+                            simulateEvent('mousemove', 0, divs[14])
+
+                            expect(list.querySelectorAll('.jodit_form-container div.hovered').length).to.equal(10);
+                        });
+                    });
                 });
             });
         });

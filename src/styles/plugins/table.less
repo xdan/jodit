@@ -11,14 +11,16 @@
     padding-left: 5px;
     padding-right: 5px;
     margin-left: -5px;
+
     &:after {
         content: '';
         display: block;
         height: 100%;
         width: 0;
-        border: 1px solid transparent;
+        border: 1px solid S;
         border-width: 0 1px 0 0;
     }
+
     &-moved {
         z-index: 2;
         &:after {
@@ -41,7 +43,6 @@
             th,
             td {
                 border: 1px solid #ddd;
-                //padding: 2px 5px;
                 text-align: left;
                 vertical-align: middle;
                 user-select: text;

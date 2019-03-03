@@ -219,5 +219,5 @@ export default {
     "Puoi modificare solo le tue immagini. Scarica questa immagine sul server?",
     "The image has been successfully uploaded to the host!":
     "L'immagine è stata caricata con successo sul server!",
-    "palete": "Palete",
+    "palette": "tavolozza",
 } as IDictionary<string>;

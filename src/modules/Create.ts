@@ -16,9 +16,12 @@ export class Create implements ICreate {
     private doc: Document;
     public inside: Create;
 
-    constructor(ownerDocument: Document, editorDocument?: Document) {
+    constructor(ownerDocument: Document, editorDocument?: Document | null) {
         this.doc = ownerDocument;
-        this.inside = editorDocument ? new Create(editorDocument) : this;
+
+        if (editorDocument !== null) {
+            this.inside = editorDocument ? new Create(editorDocument) : new Create(ownerDocument, null);
+        }
     }
 
     /**
