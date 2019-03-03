@@ -485,9 +485,11 @@ function simulateEvent(type, keyCodeArg, element, options) {
 
     if (type.match(/^touch/) && !evt.changedTouches) {
         var changedTouches = {};
+
         ['pageX', 'pageY', 'clientX', 'clientY'].forEach(function(key) {
             changedTouches[key] = evt[key];
         });
+
         evt.changedTouches = changedTouches;
     }
 

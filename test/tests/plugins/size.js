@@ -10,16 +10,19 @@ describe('Test editor size plugin', function () {
     describe('Disable auto-height', function () {
         describe('Resize handle', function () {
             it('Should resize editor', function () {
+                var box = getBox();
+                box.style.width = 'auto';
+                box.style.height = 'auto';
+
                 var editor = new Jodit(appendTestArea(), {
                     height: 300,
                     width: 400,
                     allowResizeX: true,
                     allowResizeY: true,
                 });
+                expect(editor.container.offsetHeight).to.be.equal(300);
 
                 var handle = editor.container.querySelector('.jodit_editor_resize');
-
-                expect(editor.container.offsetHeight).to.be.equal(300);
 
                 simulateEvent('mousedown', 0, handle, function (options) {
                     options.clientX = 100;
@@ -36,6 +39,9 @@ describe('Test editor size plugin', function () {
             });
             describe('Disable X resizing', function () {
                 it('Should resize editor only by vertical', function () {
+                    box.style.width = 'auto';
+                    box.style.height = 'auto';
+
                     var editor = new Jodit(appendTestArea(), {
                         height: 300,
                         width: 400,
@@ -46,6 +52,8 @@ describe('Test editor size plugin', function () {
                     var handle = editor.container.querySelector('.jodit_editor_resize');
 
                     expect(editor.container.offsetHeight).to.be.equal(300);
+                    expect(editor.container.offsetWidth).to.be.equal(400);
+
 
                     simulateEvent('mousedown', 0, handle, function (options) {
                         options.clientX = 100;
