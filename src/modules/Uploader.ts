@@ -171,16 +171,17 @@ export class Uploader extends Component implements IUploader {
         }
 
         if ((this.jodit.ownerWindow as any).FormData !== undefined) {
-            if (data instanceof FormData) {
+            if (data instanceof (this.jodit.ownerWindow as any).FormData) {
                 return data;
             }
             if (typeof data === 'string') {
                 return data;
             }
 
-            const newdata: FormData = new FormData();
+            const newdata: FormData = new (this.jodit.ownerWindow as any).FormData();
 
             Object.keys(data).forEach(key => {
+                // @ts-ignore
                 newdata.append(key, data[key]);
             });
 
@@ -349,7 +350,7 @@ export class Uploader extends Component implements IUploader {
         fileList = fileList.filter(a => a);
 
         if (fileList.length) {
-            const form: FormData = new FormData();
+            const form: FormData = new (this.jodit.ownerWindow as any).FormData();
 
             form.append('path', uploader.path);
             form.append('source', uploader.source);
