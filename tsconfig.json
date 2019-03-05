@@ -18,5 +18,6 @@
     "module": "umd",
     "moduleResolution": "node",
     "typeRoots": ["./node_modules/@types/"],
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "exclude": ["node_modules", "dist"]
 }
