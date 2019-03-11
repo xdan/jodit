@@ -43,6 +43,9 @@ import { Create } from './modules';
  * Class Jodit. Main class
  */
 export class Jodit extends ViewWithToolbar implements IJodit {
+
+    isJodit = true;
+
     get value(): string {
         return this.getEditorValue();
     }
@@ -147,7 +150,8 @@ export class Jodit extends ViewWithToolbar implements IJodit {
      * @property {Uploader} uploader
      */
     get uploader(): IUploader {
-        return this.getInstance('Uploader');
+        console.info("in here");
+        return this.getInstance('Uploader', this.options);
     }
 
     /**
