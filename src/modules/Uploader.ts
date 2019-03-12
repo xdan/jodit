@@ -52,6 +52,8 @@ Config.prototype.uploader = {
     data: null,
 
     format: 'json',
+    
+    method: 'POST',
 
     prepareData(this: Uploader, formData: FormData) {
         return formData;
@@ -234,7 +236,7 @@ export class Uploader extends Component implements IUploader {
 
                         return xhr;
                     },
-                    method: 'POST',
+                    method: this.options.method || 'POST',
                     data: request,
                     url: this.options.url,
                     headers: this.options.headers,
