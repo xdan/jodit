@@ -167,6 +167,7 @@ export interface IUploaderOptions<T> {
     headers?: IDictionary<string> | null;
     data: null | object;
     format: string;
+    method: string;
 
     prepareData: (this: T, formData: FormData) => any;
     buildData?: (this: T, formData: any) => BuildDataResult;
