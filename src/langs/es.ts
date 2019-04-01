@@ -164,7 +164,7 @@ export default {
 
     // stat
     'Chars: %d': 'Caracteres: %d',
-    'Words: %d': 'Palabaras: %d',
+    'Words: %d': 'Palabras: %d',
 
     'All': 'Todo',
     'Select %s': 'Seleccionar: %s',
