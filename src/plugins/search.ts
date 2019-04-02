@@ -172,7 +172,7 @@ export class search extends Plugin {
             ? 'inline-block'
             : 'none';
 
-        const sel: Selection = this.jodit.editorWindow.getSelection(),
+        const sel: Selection = this.jodit.editorWindow.getSelection()!,
             range: Range = sel.rangeCount
                 ? sel.getRangeAt(0)
                 : this.jodit.editorDocument.createRange(),
@@ -265,7 +265,7 @@ export class search extends Plugin {
         return [currentIndex, count];
     };
     public findAndReplace = (start: Node | null, query: string): boolean => {
-        const sel: Selection = this.jodit.editorWindow.getSelection(),
+        const sel: Selection = this.jodit.editorWindow.getSelection()!,
             range: Range = sel.rangeCount
                 ? sel.getRangeAt(0)
                 : this.jodit.editorDocument.createRange(),

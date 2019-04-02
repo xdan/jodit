@@ -1,8 +1,8 @@
 {
     "name": "jodit",
-    "version": "3.2.44",
+    "version": "4.2.40-emso",
     "description": "Jodit is awesome and usefully wysiwyg editor with filebrowser",
-    "main": "build/jodit.min.js",
+    "main": "build/jodit.js",
     "types": "src/types/index.d.ts",
     "scripts": {
         "newversion": "npm test && npm version patch --no-git-tag-version && npm run build && npm run newversiongit && npm publish ./",
@@ -72,7 +72,7 @@
         "tslint": "^5.12.1",
         "tslint-config-prettier": "^1.18.0",
         "tslint-plugin-prettier": "^2.0.1",
-        "typescript": "^3.3.3",
+        "typescript": "^3.4.1",
         "uglifyjs-webpack-plugin": "^2.1.1",
         "url-loader": "^1.1.2",
         "webpack": "^4.29.3",

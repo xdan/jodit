@@ -89,7 +89,7 @@ export function enter(editor: IJodit) {
 
                 let current: Node = editor.selection.current(false) as Node;
 
-                const sel: Selection = editor.editorWindow.getSelection();
+                const sel: Selection = editor.editorWindow.getSelection()!;
 
                 let range: Range = sel.rangeCount
                     ? sel.getRangeAt(0)

@@ -470,7 +470,7 @@ export class TableProcessor extends Plugin {
                                 this.__resizerHandler.style.left = (x - (this.jodit.options.iframe ? 0 : workplacePosition.left)) + 'px';
 
                                 this.jodit.editorWindow
-                                    .getSelection()
+                                    .getSelection()!
                                     .removeAllRanges();
 
                                 if (event.preventDefault) {
@@ -685,7 +685,7 @@ export class TableProcessor extends Plugin {
                         if (cell !== start) {
                             this.jodit.lock(this.__key);
                             this.jodit.editorWindow
-                                .getSelection()
+                                .getSelection()!
                                 .removeAllRanges();
                             if (event.preventDefault) {
                                 event.preventDefault();

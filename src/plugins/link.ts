@@ -70,7 +70,7 @@ Config.prototype.controls.link = {
         self: IControlType,
         close: () => void
     ) => {
-        const sel: Selection = editor.editorWindow.getSelection(),
+        const sel: Selection = editor.editorWindow.getSelection()!,
             form: HTMLFormElement = editor.create.fromHTML(
                 '<form class="jodit_form">' +
                     '<input required type="text" name="url" placeholder="http://" type="text"/>' +

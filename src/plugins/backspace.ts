@@ -257,7 +257,7 @@ export function backspace(editor: IJodit) {
                         return false;
                     }
 
-                    const sel: Selection = editor.editorWindow.getSelection(),
+                    const sel: Selection = editor.editorWindow.getSelection()!,
                         range: Range | false = sel.rangeCount
                             ? sel.getRangeAt(0)
                             : false;

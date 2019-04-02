@@ -47,7 +47,7 @@ export class Select {
      * Return current selection object
      */
     get sel(): Selection {
-        return this.win.getSelection();
+        return this.win.getSelection()!;
     }
 
     /**

@@ -237,7 +237,7 @@ export function paste(editor: IJodit) {
         event: ClipboardEvent | DragEvent
     ): DataTransfer => {
         if ((event as ClipboardEvent).clipboardData) {
-            return (event as ClipboardEvent).clipboardData;
+            return (event as ClipboardEvent).clipboardData!;
         }
 
         return (event as DragEvent).dataTransfer || new DataTransfer();
