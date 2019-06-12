@@ -168,6 +168,7 @@ export interface IUploaderOptions<T> {
     data: null | object;
     format: string;
     method: string;
+    withCredentials: boolean;
 
     prepareData: (this: T, formData: FormData) => any;
     buildData?: (this: T, formData: any) => BuildDataResult;

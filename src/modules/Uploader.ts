@@ -243,6 +243,7 @@ export class Uploader extends Component implements IUploader {
                     queryBuild: this.options.queryBuild,
                     contentType: this.options.contentType.call(this, request),
                     dataType: this.options.format || 'json',
+                    withCredentials: this.options.withCredentials || false,
                 });
 
                 this.ajaxInstances.push(ajax);

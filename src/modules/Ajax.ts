@@ -27,6 +27,8 @@ import { each, extend } from './helpers/';
  * @property {string} defaultAjaxOptions.contentType='application/x-www-form-urlencoded; charset=UTF-8'
  * When sending data toWYSIWYG the server, use this content type. Default is "application/x-www-form-urlencoded;
  * charset=UTF-8", which is fine for most cases
+ * @property {boolean} defaultAjaxOptions.withCredentials=false
+ * Enable or disable Access-Control-Allow-Credentials client side. Useful for cross domain requests
  * @property {function} defaultAjaxOptions.error=function () {} A function toWYSIWYG be called if the request fails
  * @property {function} defaultAjaxOptions.success=function (resp) {} A function toWYSIWYG be called if the
  * request succeeds
@@ -79,7 +81,7 @@ Config.prototype.defaultAjaxOptions = {
         'X-REQUESTED-WITH': 'XMLHttpRequest', // compatible with jQuery
     },
 
-    withCredentials: true,
+    withCredentials: false,
 
     xhr(): XMLHttpRequest {
         const XHR =
