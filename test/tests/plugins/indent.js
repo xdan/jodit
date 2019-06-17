@@ -14,10 +14,10 @@ describe('Test editor indent plugin', function () {
     </pre>
     `;
     
-    const chilren = editor.container.querySelector('.jodit_wysiwyg').children;
-    const el1 = chilren[0];
-    const el2 = chilren[1];
-    const el3 = chilren[2];
+    const children = editor.container.querySelector('.jodit_wysiwyg').children;
+    const el1 = children[0];
+    const el2 = children[1];
+    const el3 = children[2];
 
     var sel = editor.editorWindow.getSelection(),
         range = editor.editorDocument.createRange();
@@ -51,14 +51,14 @@ describe('Test editor indent plugin', function () {
     </dl>
     `;
     
-    const chilren = editor.container.querySelectorAll('.jodit_wysiwyg dt,.jodit_wysiwyg dd');
+    const children = editor.container.querySelectorAll('.jodit_wysiwyg dt,.jodit_wysiwyg dd');
     
-    const el1 = chilren[0];
-    const el2 = chilren[1];
-    const el3 = chilren[2];
-    const el4 = chilren[3];
-    const el5 = chilren[4];
-    const el6 = chilren[5];
+    const el1 = children[0];
+    const el2 = children[1];
+    const el3 = children[2];
+    const el4 = children[3];
+    const el5 = children[4];
+    const el6 = children[5];
 
     var sel = editor.editorWindow.getSelection(),
         range = editor.editorDocument.createRange();
