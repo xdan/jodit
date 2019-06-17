@@ -683,7 +683,7 @@ export class Select {
         return result;
     }
 
-    public eachSelection = (callback: (current: Node) => void) => {
+    eachSelection = (callback: (current: Node) => void) => {
         const sel: WindowSelection = this.sel;
 
         if (sel && sel.rangeCount) {
@@ -757,7 +757,7 @@ export class Select {
      * @param {Node} node
      * @return {Node} fake invisible textnode. After insert it can be removed
      */
-    public setCursorAfter(
+    setCursorAfter(
         node: Node | HTMLElement | HTMLTableElement | HTMLTableCellElement
     ): Text | false {
         if (!(node instanceof (this.win as any).Node)) {
@@ -805,7 +805,7 @@ export class Select {
      *
      * @return {boolean | null} true - the cursor is at the end(start) block, null - cursor somewhere outside
      */
-    public cursorInTheEdge(
+    cursorInTheEdge(
         start: boolean,
         parentBlock: HTMLElement
     ): boolean | null {
@@ -879,7 +879,7 @@ export class Select {
      * @param {Node} node
      * @return {Text} fake invisible textnode. After insert it can be removed
      */
-    public setCursorBefore(
+    setCursorBefore(
         node: Node | HTMLElement | HTMLTableElement | HTMLTableCellElement
     ): Text | false {
         if (!(node instanceof (this.win as any).Node)) {
@@ -925,7 +925,7 @@ export class Select {
      * @param {Node} node
      * @param {boolean} [inStart=false] set cursor in start of element
      */
-    public setCursorIn(node: Node, inStart: boolean = false) {
+    setCursorIn(node: Node, inStart: boolean = false) {
         if (!(node instanceof (this.win as any).Node)) {
             throw new Error('Parameter node most be instance of Node');
         }
@@ -980,7 +980,7 @@ export class Select {
      *
      * @fires changeSelection
      */
-    public selectRange(range: Range) {
+    selectRange(range: Range) {
         const sel: WindowSelection = this.sel;
 
         if (sel) {
@@ -1002,7 +1002,7 @@ export class Select {
      * @param {Node} node
      * @param {boolean} [inward=false] select all inside
      */
-    public select(
+    select(
         node: Node | HTMLElement | HTMLTableElement | HTMLTableCellElement,
         inward = false
     ) {
