@@ -38,6 +38,8 @@ import { ViewWithToolbar } from './modules/view/viewWithToolbar';
 import { IJodit } from './types/jodit';
 import { IFileBrowser, IUploader } from './types';
 
+const SAFE_COUNT_CHANGE_CALL = 10;
+
 /**
  * Class Jodit. Main class
  */
@@ -285,6 +287,9 @@ export class Jodit extends ViewWithToolbar implements IJodit {
         }
     }
 
+
+    private __callChangeCount = 0;
+
     /**
      * Set editor html value and if set sync fill source element value
      * When method was called without arguments - it is simple way to synchronize editor to element
@@ -337,12 +342,19 @@ export class Jodit extends ViewWithToolbar implements IJodit {
             this.editor.innerHTML = value;
         }
 
-        const old_value: string = this.getElementValue(),
+        const
+            old_value: string = this.getElementValue(),
             new_value: string = this.getEditorValue();
 
-        if (old_value !== new_value) {
+        if (old_value !== new_value && this.__callChangeCount < SAFE_COUNT_CHANGE_CALL) {
             this.setElementValue(new_value);
-            this.events.fire('change', new_value, old_value);
+            this.__callChangeCount += 1;
+
+            try {
+                this.events.fire('change', new_value, old_value);
+            } finally {
+                this.__callChangeCount = 0;
+            }
         }
     }
 
