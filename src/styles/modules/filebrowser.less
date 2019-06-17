@@ -13,7 +13,8 @@
     font-family: @font-default;
     font-size: 0;
     height: 100%;
-    .jodit_filebrowser_loader {
+
+    &_loader {
         height: 100%;
         width: 100%;
         position: absolute;
@@ -25,9 +26,11 @@
             left: 50%;
             margin-top: -64px;
             margin-left: -64px;
+            font-style: normal;
         }
     }
-    .jodit_filebrowser_status {
+
+    &_status {
         position: absolute;
         font-size: 10px;
         padding: 2px 3px;
@@ -49,8 +52,9 @@
             opacity: 1;
         }
     }
-    .jodit_filebrowser_tree,
-    .jodit_filebrowser_files {
+
+    &_tree,
+    &_files {
         display: none;
         vertical-align: top;
         height: 100%;
@@ -71,7 +75,7 @@
             outline: 1px solid slategrey;
         }
     }
-    .jodit_filebrowser_tree.active {
+    &_tree.active {
         width: @first_column;
         @media (max-width: @screen-xs) {
             display: none;
@@ -97,10 +101,7 @@
             user-select: none;
             display: block;
             padding: 10px;
-            //text-decoration:none;
             color: #969696;
-            //font-weight:600;
-            //transition: background-color 0.2s ease 0s;
             border-bottom: 1px solid #484848;
             line-height: 17px;
             min-height: 38px;
@@ -109,6 +110,7 @@
             background: #5a5a5a;
             font-size: 16px;
         }
+
         a {
             display: block;
             padding: 10px 20px;
@@ -140,6 +142,7 @@
                     background: #696969;
                 }
             }
+
             &:hover {
                 color: #222;
                 background-color: @color-background-button-hover;
@@ -168,11 +171,14 @@
             }
         }
     }
+
     @col_size: 150px;
-    .jodit_filebrowser_files.active {
+
+    &_files.active {
         width: 100%;
         overflow-y: auto;
         padding: 10px;
+
         .jodit_filebrowser_source_title {
             user-select: none;
             margin: -10px -10px 0 -10px;
@@ -212,6 +218,7 @@
             &:hover {
                 border-color: #433b5c;
             }
+
             &.active {
                 border-color: @color-border-selected;
                 background-color: @color-border-active;
@@ -246,6 +253,7 @@
                     }
                 }
             }
+
             &.active {
                 .jodit_filebrowser_files_item-info {
                     background-color: @color-border-active;
@@ -253,7 +261,8 @@
                     text-shadow: none;
                 }
             }
-            &:hover {
+
+            &:hover:not(.active) {
                 .jodit_filebrowser_files_item-info {
                     bottom: -100px;
                 }
@@ -321,7 +330,7 @@
         }
     }
 
-    .jodit_filebrowser_tree.active + .jodit_filebrowser_files.active {
+    &_tree.active + &_files.active {
         width: 100% - @first_column;
         @media (max-width: @screen-xs) {
             width: auto;
@@ -329,23 +338,39 @@
         }
     }
 }
+
 .jodit_filebrowser_preview {
     text-align: center;
-    min-width: 300px;
-    max-width: 900px;
-    max-height: 700px;
+    min-width: 600px;
+    max-width: 100%;
     min-height: 700px;
+    max-height: 100%;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    .jodit_filebrowser_preview_navigation {
+    .jodit_icon-loader {
+    }
+
+    &_box {
+        flex-grow: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &_navigation {
         position: absolute;
         top: 0;
         height: 100%;
         left: 0;
+
         &-next {
             left: auto;
             right: 0;
         }
+
         svg {
             width: 45px;
             height: 45px;
@@ -355,18 +380,22 @@
             transition: fill 0.3s linear;
             fill: #9e9ba7;
         }
+
         &:hover svg {
             fill: #000;
         }
     }
+
     img {
         max-width: 100%;
         max-height: 100%;
     }
 }
+
 .jodit_draghover {
     background-color: @color-background-button-hover;
 }
+
 .jodit_dialog_box
     .jodit_dialog
     .jodit_dialog_header
@@ -392,6 +421,7 @@
             font-size: 400px;
         }
     }
+
     &.jodit_filebrowser_title_box {
         padding-left: @padding-default;
     }

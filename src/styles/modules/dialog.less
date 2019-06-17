@@ -13,22 +13,25 @@
     * {
         box-sizing: border-box;
     }
+
     .jodit_elfinder {
         &,
         & * {
             box-sizing: initial;
         }
     }
+
     display: none;
     width: 0;
     height: 0;
     border: 0;
     position: absolute;
     will-change: left, top, width, height;
+
     .jodit_dialog_overlay {
         position: fixed;
-        top: 0px;
-        left: 0px;
+        top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
         z-index: @z-index-dialog-overlay;
@@ -38,12 +41,15 @@
         display: none;
         background-color: rgba(0, 0, 0, 0.5);
     }
+
     &.jodit_modal .jodit_dialog_overlay {
         display: block;
     }
+
     &.active {
         display: block;
     }
+
     .jodit_dialog {
         z-index: @z-index-dialog;
         display: inline-block;
@@ -51,8 +57,8 @@
         white-space: normal;
         text-align: left;
         position: fixed;
-        left: 0px;
-        top: 0px;
+        left: 0;
+        top: 0;
         background-color: #fff;
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19),
             0 6px 6px rgba(0, 0, 0, 0.23);
@@ -188,6 +194,8 @@
                 display: block;
                 height: 100%;
                 border: 0;
+                box-shadow: none;
+
                 > li.jodit_toolbar_btn {
                     vertical-align: middle;
                     select,
@@ -237,7 +245,7 @@
                         background-color: #fff;
                         background-image: none;
                         border: 1px solid #ccc;
-                        border-radius: 0px;
+                        border-radius: 0;
                         box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
                         transition: border-color ease-in-out 0.15s,
                             box-shadow ease-in-out 0.15s;
@@ -291,8 +299,7 @@
             }
         }
         .jodit_dialog_footer {
-            padding: 0 10px;
-            padding-top: 10px;
+            padding: 10px 10px 0;
             text-align: center;
             height: 48px;
             display: none;
@@ -301,7 +308,7 @@
                 margin-bottom: 10px;
                 height: 32px;
                 line-height: 100%;
-                padding: 0px 15px;
+                padding: 0 15px;
                 background-color: #ccc;
                 border: 1px solid #ccc;
                 color: #000;
@@ -341,8 +348,8 @@
         }
         .jodit_dialog_resizer {
             position: absolute;
-            bottom: 0px;
-            right: 0px;
+            bottom: 0;
+            right: 0;
 
             cursor: se-resize;
 
