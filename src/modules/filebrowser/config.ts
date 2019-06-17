@@ -149,9 +149,9 @@ declare module '../../Config' {
          * @property {object} filebrowser.items Settings for AJAX connections toWYSIWYG the server toWYSIWYG download
          * the image list in the specified category . By default uses
          * {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} c параметром action=items
-         * @property {object} filebrowser.uploader=null Settings Module {@link module:Uploader|Uploader}
+         * @property {object} filebrowser.uploader=null Settings Module {@link Uploader|Uploader}
          * for fast uploading images in category via Drag&Drop file in the file browser. The default settings of
-         * the module {@link module:Uploader|Uploader}
+         * the module {@link Uploader|Uploader}
          * @example
          * ```javascript
          * // default values
@@ -388,100 +388,56 @@ Config.prototype.filebrowser = {
         source: ISource,
         source_name: string
     ): string {
-        let name: string = '',
+        const
+            opt = this.options,
+            timestamp: string = new Date().getTime().toString(),
+            showSize = opt.showFileSize && item.size,
+            showTime = opt.showFileChangeTime && item.changed &&
+                (typeof item.changed === 'number' ? new Date(item.changed).toLocaleString() : item.changed);
+
+        let
+            name: string = '',
             thumb: string = '',
             info: string,
             thumbIsAbsolute: boolean = !!item.thumbIsAbsolute,
             fileIsAbsolute: boolean = !!item.fileIsAbsolute;
 
-        const timestamp: string = new Date().getTime().toString();
-
         if (item.file !== undefined) {
             name = item.file;
             thumb = item.file;
         }
+
         if (item.thumb) {
             thumb = item.thumb;
         }
 
         info =
-            '<div class="' +
-            ITEM_CLASS +
-            '-info">' +
-            (this.options.showFileName
-                ? `<span class="${ITEM_CLASS}-info-filename">${name}</span>`
-                : '') +
-            (this.options.showFileSize && item.size
-                ? '<span class="' +
-                ITEM_CLASS +
-                '-info-filesize">' +
-                item.size +
-                '</span>'
-                : '') +
-            (this.options.showFileChangeTime && item.changed
-                ? '<span class="' +
-                ITEM_CLASS +
-                '-info-filechanged">' +
-                (typeof item.changed === 'number' ? new Date(item.changed).toLocaleString() : item.changed) +
-                '</span>'
-                : '') +
+            '<div class="' + ITEM_CLASS + '-info">' +
+                (opt.showFileName ? `<span class="${ITEM_CLASS}-info-filename">${name}</span>` : '') +
+                (showSize ? `<span class="${ITEM_CLASS}-info-filesize">${item.size}</span>` : '') +
+                (showTime ? `<span class="${ITEM_CLASS}-info-filechanged">${showTime}</span>` : '') +
             '</div>';
 
-        const imageURL: string = fileIsAbsolute
-            ? name
-            : normalizeURL(source.baseurl + source.path + name);
+        const
+            imageURL: string = fileIsAbsolute ? name : normalizeURL(source.baseurl + source.path + name);
 
         return (
             '<a ' +
-            'data-is-file="' +
-            (item.isImage ? 0 : 1) +
-            '" ' +
-            'draggable="true" ' +
-            'class="' +
-            ITEM_CLASS +
-            '" ' +
-            'href="' +
-            imageURL +
-            '" ' +
-            'data-source="' +
-            source_name +
-            '" ' +
-            'data-path="' +
-            normalizePath(source.path ? source.path + '/' : '/') +
-            '" ' +
-            'data-name="' +
-            name +
-            '" ' +
-            'title="' +
-            name +
-            '" ' +
-            'data-url="' +
-            imageURL +
-            '">' +
-            '<img ' +
-            'data-is-file="' +
-            (item.isImage ? 0 : 1) +
-            '" ' +
-            'data-src="' +
-            imageURL +
-            '" ' +
-            'src="' +
-            (thumbIsAbsolute
-                ? thumb
-                :
-                (normalizeURL(source.baseurl + source.path + thumb) +
-                    '?_tmst=' +
-                    timestamp)) +
-            '" ' +
-            'alt="' +
-            name +
-            '"' +
-            '/>' +
-            (this.options.showFileName ||
-            (this.options.showFileSize && item.size) ||
-            (this.options.showFileChangeTime && item.changed)
-                ? info
-                : '') +
+                `data-is-file="${(item.isImage ? 0 : 1)}" ` +
+                'draggable="true" ' +
+                `class="${ITEM_CLASS}"` +
+                `href="${imageURL}" ` +
+                `data-source="${source_name}" ` +
+                `data-path="${normalizePath(source.path ? source.path + '/' : '/')}" ` +
+                `data-name="${name}" ` +
+                `title="${name}" ` +
+                `data-url="${imageURL}"` +
+            '>' +
+                `<img data-is-file="${item.isImage ? 0 : 1}" data-src="${imageURL}" ` +
+                    `src="${thumbIsAbsolute ? thumb : (normalizeURL(source.baseurl + source.path + thumb) + '?_tmst=' + timestamp)}" ` +
+                    `alt="${name}"` +
+                '/>' +
+                ((opt.showFileName || showSize || showTime) ? info : '') +
             '</a>'
         );
     },
