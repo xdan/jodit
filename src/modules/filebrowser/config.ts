@@ -391,6 +391,7 @@ Config.prototype.filebrowser = {
         const
             opt = this.options,
             timestamp: string = new Date().getTime().toString(),
+            showName = opt.showFileName,
             showSize = opt.showFileSize && item.size,
             showTime = opt.showFileChangeTime && item.changed &&
                 (typeof item.changed === 'number' ? new Date(item.changed).toLocaleString() : item.changed);
@@ -413,7 +414,7 @@ Config.prototype.filebrowser = {
 
         info =
             '<div class="' + ITEM_CLASS + '-info">' +
-                (opt.showFileName ? `<span class="${ITEM_CLASS}-info-filename">${name}</span>` : '') +
+                (showName ? `<span class="${ITEM_CLASS}-info-filename">${name}</span>` : '') +
                 (showSize ? `<span class="${ITEM_CLASS}-info-filesize">${item.size}</span>` : '') +
                 (showTime ? `<span class="${ITEM_CLASS}-info-filechanged">${showTime}</span>` : '') +
             '</div>';
@@ -437,7 +438,7 @@ Config.prototype.filebrowser = {
                     `src="${thumbIsAbsolute ? thumb : (normalizeURL(source.baseurl + source.path + thumb) + '?_tmst=' + timestamp)}" ` +
                     `alt="${name}"` +
                 '/>' +
-                ((opt.showFileName || showSize || showTime) ? info : '') +
+                ((showName || showSize || showTime) ? info : '') +
             '</a>'
         );
     },

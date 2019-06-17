@@ -12,6 +12,7 @@
         "strictBindCallApply": true,
         "noUnusedLocals": true,
         "noImplicitThis": true,
+        "importHelpers": true,
         "target": "es5",
         "lib": ["ES5", "ES2015", "ES2017", "ES16", "DOM", "ScriptHost"]
     },

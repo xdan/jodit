@@ -89,13 +89,14 @@ export function media(editor: IJodit) {
     if (mediaInFakeBlock) {
         editor.events
             .on('afterGetValueFromEditor', (data: { value: string }) => {
-                data.value = data.value.replace(
-                    new RegExp(
-                        `<${mediaFakeTag}[^>]+data-${keyFake}[^>]+>(.+?)</${mediaFakeTag}>`,
-                        'ig'
-                    ),
-                    '$1'
+                const rxp = new RegExp(
+                    `<${mediaFakeTag}[^>]+data-${keyFake}[^>]+>(.+?)</${mediaFakeTag}>`,
+                    'ig'
                 );
+
+                if (rxp.test(data.value)) {
+                    data.value = data.value.replace(rxp, '$1');
+                }
             })
             .on(
                 'change afterInit afterSetMode',

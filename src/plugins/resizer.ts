@@ -483,10 +483,12 @@ export function resizer(editor: IJodit) {
                 });
         })
         .on('afterGetValueFromEditor', (data: { value: string }) => {
-            data.value = data.value.replace(
-                /<jodit[^>]+data-jodit_iframe_wrapper[^>]+>(.*?<iframe[^>]+>[\s\n\r]*<\/iframe>.*?)<\/jodit>/gi,
-                '$1'
-            );
+            const
+                rgx = /<jodit[^>]+data-jodit_iframe_wrapper[^>]+>(.*?<iframe[^>]+>[\s\n\r]*<\/iframe>.*?)<\/jodit>/gi;
+
+            if (rgx.test(data.value)) {
+                data.value = data.value.replace(rgx, '$1');
+            }
         })
         .on('hideResizer', hideResizer)
         .on(

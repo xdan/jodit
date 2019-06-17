@@ -44,31 +44,25 @@ Config.prototype.controls.table = {
         },
     },
     popup: (editor: IJodit, current, control, close, button) => {
-        let i: number,
-            j: number,
-            k: number,
-            div: HTMLDivElement,
-            rows_count: number = 1,
-            cols_count: number = 1;
-
-        const default_rows_count: number =
-                control.data && control.data.rows ? control.data.rows : 10,
-            default_cols_count: number =
-                control.data && control.data.cols ? control.data.cols : 10;
+        const
+            default_rows_count: number = control.data && control.data.rows ? control.data.rows : 10,
+            default_cols_count: number = control.data && control.data.cols ? control.data.cols : 10;
 
         const generateExtraClasses = (): string => {
             if (!editor.options.useExtraClassesOptions) {
                 return '';
             }
 
-            const out: string[] = [];
+            const
+                out: string[] = [];
+
             if (control.data) {
-                const classList: IDictionary<string> = control.data.classList;
+                const
+                    classList: IDictionary<string> = control.data.classList;
+
                 Object.keys(classList).forEach((classes: string) => {
                     out.push(
-                        `<label><input value="${classes}" type="checkbox"/>${
-                            classList[classes]
-                        }</label>`
+                        `<label><input value="${classes}" type="checkbox"/>${classList[classes]}</label>`
                     );
                 });
             }
@@ -107,16 +101,18 @@ Config.prototype.controls.table = {
             const cnt: number = need_rows * default_cols_count;
 
             if (cells.length > cnt) {
-                for (i = cnt; i < cells.length; i += 1) {
+                for (let i = cnt; i < cells.length; i += 1) {
                     Dom.safeRemove(cells[i]);
                     delete cells[i];
                 }
                 cells.length = cnt;
             }
 
-            for (i = 0; i < cnt; i += 1) {
+            for (let i = 0; i < cnt; i += 1) {
                 if (!cells[i]) {
-                    div = editor.ownerDocument.createElement('div');
+                    const
+                        div = editor.create.div();
+
                     div.setAttribute('data-index', i.toString());
                     cells.push(div);
                 }
@@ -126,27 +122,31 @@ Config.prototype.controls.table = {
                 blocksContainer.appendChild(cell);
             });
 
-            const width: number =
-                (cells[0].offsetWidth || 18) * default_cols_count;
+            const
+                width = (cells[0].offsetWidth || 18) * default_cols_count;
+
             blocksContainer.style.width = width + 'px';
             mainBox.style.width = width + options.offsetWidth + 1 + 'px';
         };
 
         const mouseenter = (e: MouseEvent, index?: number): void => {
-            const dv: HTMLDivElement = e.target as HTMLDivElement;
+            const
+                dv: HTMLDivElement = e.target as HTMLDivElement;
+
             if (!dv || dv.tagName !== 'DIV') {
                 return;
             }
 
-            k =
+            let k =
                 index === undefined || isNaN(index)
                     ? parseInt(dv.getAttribute('data-index') || '0', 10)
                     : index || 0;
 
-            rows_count = Math.ceil((k + 1) / default_cols_count);
-            cols_count = (k % default_cols_count) + 1;
+            const
+                rows_count = Math.ceil((k + 1) / default_cols_count),
+                cols_count = (k % default_cols_count) + 1;
 
-            for (i = 0; i < cells.length; i += 1) {
+            for (let i = 0; i < cells.length; i += 1) {
                 if (
                     cols_count >= (i % default_cols_count) + 1 &&
                     rows_count >= Math.ceil((i + 1) / default_cols_count)
@@ -167,8 +167,8 @@ Config.prototype.controls.table = {
             blocksContainer,
             'touchstart mousedown',
             (e: MouseEvent) => {
-                const dv: HTMLDivElement = e.target as HTMLDivElement,
-                    doc: Document = editor.editorDocument;
+                const
+                    dv: HTMLDivElement = e.target as HTMLDivElement;
 
                 e.preventDefault();
                 e.stopImmediatePropagation();
@@ -177,51 +177,58 @@ Config.prototype.controls.table = {
                     return;
                 }
 
-                k = parseInt(dv.getAttribute('data-index') || '0', 10);
-                rows_count = Math.ceil((k + 1) / default_cols_count);
-                cols_count = (k % default_cols_count) + 1;
+                let
+                    k = parseInt(dv.getAttribute('data-index') || '0', 10);
 
-                const table: HTMLTableElement = doc.createElement('table');
+                const
+                    rows_count = Math.ceil((k + 1) / default_cols_count),
+                    cols_count = (k % default_cols_count) + 1;
+
+                const
+                    crt = editor.create.inside,
+                    tbody: HTMLTableSectionElement = crt.element('tbody'),
+                    table: HTMLTableElement = crt.element('table');
+
+                table.appendChild(tbody);
 
                 table.style.width = '100%';
 
-                let first_td: HTMLTableCellElement | null = null,
+                let
+                    first_td: HTMLTableCellElement | null = null,
                     tr: HTMLTableRowElement,
-                    td: HTMLTableCellElement,
-                    br: HTMLBRElement;
-                // w: string = (100 / cols_count).toFixed(7);
+                    td: HTMLTableCellElement;
 
-                for (i = 1; i <= rows_count; i += 1) {
-                    tr = doc.createElement('tr');
+                for (let i = 1; i <= rows_count; i += 1) {
+                    tr = crt.element('tr');
 
-                    for (j = 1; j <= cols_count; j += 1) {
-                        td = doc.createElement('td');
-
-                        // td.style.width = w + '%';
+                    for (let j = 1; j <= cols_count; j += 1) {
+                        td = crt.element('td');
 
                         if (!first_td) {
                             first_td = td;
                         }
 
-                        br = doc.createElement('br');
-                        td.appendChild(br);
-                        tr.appendChild(doc.createTextNode('\n'));
-                        tr.appendChild(doc.createTextNode('\t'));
+                        td.appendChild(crt.element('br'));
+                        tr.appendChild(crt.text('\n'));
+                        tr.appendChild(crt.text('\t'));
                         tr.appendChild(td);
                     }
 
-                    table.appendChild(doc.createTextNode('\n'));
-                    table.appendChild(tr);
+                    tbody.appendChild(crt.text('\n'));
+                    tbody.appendChild(tr);
                 }
 
-                const crnt: Node | false = editor.selection.current();
+                const
+                    crnt = editor.selection.current();
 
                 if (crnt && editor.selection.isCollapsed()) {
-                    const block: HTMLElement | false = Dom.closest(
-                        crnt,
-                        node => Dom.isBlock(node, editor.editorWindow),
-                        editor.editor
-                    ) as HTMLElement | false;
+                    const
+                        block: HTMLElement | false = Dom.closest(
+                            crnt,
+                            node => Dom.isBlock(node, editor.editorWindow),
+                            editor.editor
+                        ) as HTMLElement | false;
+
                     if (
                         block &&
                         block !== editor.editor &&
@@ -243,7 +250,7 @@ Config.prototype.controls.table = {
                     }
                 );
 
-                editor.selection.insertNode(doc.createTextNode('\n'));
+                editor.selection.insertNode(crt.text('\n'));
                 editor.selection.insertNode(table, false);
 
                 if (first_td) {
@@ -889,13 +896,15 @@ export class TableProcessor extends Plugin {
                 }
             )
             .on('afterGetValueFromEditor.table', (data: { value: string }) => {
-                data.value = data.value.replace(
-                    new RegExp(
+                const
+                    rxp = new RegExp(
                         `([\s]*)${consts.JODIT_SELECTED_CELL_MARKER}="1"`,
                         'g'
-                    ),
-                    ''
-                );
+                    );
+
+                if (rxp.test(data.value)) {
+                    data.value = data.value.replace(rxp, '');
+                }
             })
             .on('change.table afterCommand.table afterSetMode.table', () => {
                 ($$('table', editor.editor) as HTMLTableElement[]).forEach(

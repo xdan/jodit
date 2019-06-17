@@ -142,16 +142,15 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
         each<ISource>(sources, (source_name, source) => {
             if (source_name && source_name !== DEFAULT_SOURCE_NAME) {
                 files.push(
-                    `<div class="jodit_filebrowser_source_title">${source_name +
-                        (source.path ? ' - ' + source.path : '')}</div>`
+                    `<div class="jodit_filebrowser_source_title">${
+                        source_name + (source.path ? ' - ' + source.path : '')
+                    }</div>`
                 );
             }
 
             if (source.files && source.files.length) {
                 if (typeof this.options.sort === 'function') {
-                    source.files.sort((a: ISourceFile, b: ISourceFile) => {
-                        return this.options.sort(a, b, this.sortBy);
-                    });
+                    source.files.sort((a, b) => this.options.sort(a, b, this.sortBy));
                 }
 
                 source.files.forEach((item: ISourceFile) => {
@@ -194,7 +193,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
      * @param {Function} error
      * @return {Promise}
      */
-    private send(
+    private get(
         name: string,
         success: (resp: IFileBrowserAnswer) => void,
         error: (error: Error) => void
@@ -233,9 +232,9 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
         self.files.classList.add('active');
         self.files.appendChild(self.loader.cloneNode(true));
 
-        return self.send(
+        return self.get(
             'items',
-            resp => {
+            (resp) => {
                 let process:
                     | ((resp: IFileBrowserAnswer) => IFileBrowserAnswer)
                     | undefined = (self.options.items as any).process;
@@ -248,7 +247,9 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
                         self,
                         resp
                     ) as IFileBrowserAnswer;
+
                     self.generateItemsBox(respData.data.sources);
+
                     self.someSelectedWasChanged();
                 }
             },
@@ -270,7 +271,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
         self.options.permissions.data.source = source;
 
         if (self.options.permissions.url) {
-            return self.send(
+            return self.get(
                 'permissions',
                 (resp: IFileBrowserAnswer) => {
                     let process:
@@ -326,7 +327,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
                     self.tree.appendChild(self.loader.cloneNode(true));
 
                     tree.push(
-                        this.send(
+                        this.get(
                             'folder',
                             resp => {
                                 let process:
@@ -404,23 +405,24 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
     private uploadHandler = () => {
         this.loadItems(this.currentPath, this.currentSource);
     };
-    public options: IFileBrowserOptions;
 
-    public currentPath: string = '';
-    public currentSource: string = DEFAULT_SOURCE_NAME;
-    public currentBaseUrl: string = '';
+    options: IFileBrowserOptions;
 
-    public dialog: Dialog;
+    currentPath: string = '';
+    currentSource: string = DEFAULT_SOURCE_NAME;
+    currentBaseUrl: string = '';
+
+    dialog: Dialog;
 
     /**
      * Container for set/get value
      * @type {Storage}
      */
-    public storage: Storage = new Storage(new LocalStorageProvider());
+    storage: Storage = new Storage(new LocalStorageProvider());
 
-    public uploader: IUploader;
+    uploader: IUploader;
 
-    public canI(action: string): boolean {
+    canI(action: string): boolean {
         return (
             this.__currentPermissions === null ||
             (this.__currentPermissions['allow' + action] === undefined ||
@@ -432,7 +434,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
      *
      * @return {boolean}
      */
-    public isOpened(): boolean {
+    isOpened(): boolean {
         return this.dialog.isOpened() && this.browser.style.display !== 'none';
     }
 
@@ -448,7 +450,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
      * parent.filebrowser.status('There was an error uploading file', false);
      * ```
      */
-    public status(message: string, success?: boolean) {
+    status(message: string, success?: boolean) {
         clearTimeout(this.statustimer);
         this.status_line.classList.remove('success');
 
@@ -465,7 +467,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
         }, this.options.howLongShowMsg);
     }
 
-    public getActiveElements(): HTMLElement[] {
+    getActiveElements(): HTMLElement[] {
         return $$(':scope>a.active', this.files);
     }
 
@@ -480,16 +482,17 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
      * @param {function} onFailed filename
      * @param {string} onFailed.message
      */
-    public getPathByUrl = (
+    getPathByUrl = (
         url: string,
         success: (path: string, name: string, source: string) => void,
         onFailed: (error: Error) => void
     ): Promise<any> => {
-        const action: string = 'getLocalFileByUrl',
+        const
+            action: string = 'getLocalFileByUrl',
             self: FileBrowser = this;
 
         this.options[action].data.url = url;
-        return this.send(
+        return this.get(
             action,
             (resp: IFileBrowserAnswer) => {
                 if (self.options.isSuccess(resp)) {
@@ -525,7 +528,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
         this.options.create.data.path = path;
         this.options.create.data.name = name;
 
-        return this.send(
+        return this.get(
             'create',
             resp => {
                 if (this.options.isSuccess(resp)) {
@@ -562,7 +565,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
         option.data.path = path;
         option.data.source = source;
 
-        return this.send(
+        return this.get(
             isFile ? 'fileMove' : 'folderMove',
             resp => {
                 if (this.options.isSuccess(resp)) {
@@ -593,7 +596,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
         this.options.fileRemove.data.name = file;
         this.options.fileRemove.data.source = source;
 
-        return this.send(
+        return this.get(
             'fileRemove',
             (resp: IFileBrowserAnswer) => {
                 if (this.options.remove && this.options.remove.process) {
@@ -628,7 +631,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
         this.options.folderRemove.data.name = file;
         this.options.folderRemove.data.source = source;
 
-        return this.send(
+        return this.get(
             'folderRemove',
             (resp: IFileBrowserAnswer) => {
                 if (this.options.remove && this.options.remove.process) {
@@ -758,7 +761,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
                 this.options[box.action].data.name = name;
                 this.options[box.action].data.source = source;
 
-                this.send(
+                this.get(
                     box.action,
                     resp => {
                         if (this.options.isSuccess(resp)) {
@@ -797,7 +800,8 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
     constructor(editor?: IJodit, options?: IFileBrowserOptions) {
         super(editor, options);
 
-        const self: FileBrowser = this,
+        const
+            self: FileBrowser = this,
             doc: HTMLDocument = editor ? editor.ownerDocument : document,
             editorDoc: HTMLDocument = editor ? editor.editorDocument : doc;
 
@@ -1026,7 +1030,8 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
                 'a'
             );
 
-        const contextmenu: ContextMenu = new ContextMenu(this.jodit || this);
+        const
+            contextmenu: ContextMenu = new ContextMenu(this.jodit || this);
 
         self.events
             .on(

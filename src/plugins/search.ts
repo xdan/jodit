@@ -68,7 +68,8 @@ export class search extends Plugin {
             tmpEqualLength: number = 0,
             startAtIndex: number | null = null;
 
-        const inc: number = start ? 1 : -1,
+        const
+            inc: number = start ? 1 : -1,
             tmp: string[] = [];
 
         for (; haystack[i] !== undefined; i += inc) {
@@ -526,31 +527,33 @@ export class search extends Plugin {
                 self.template
             ) as HTMLDivElement;
 
-            self.queryInput = self.searchBox.querySelector(
+            const qs = self.searchBox.querySelector.bind(self.searchBox);
+
+            self.queryInput = qs(
                 'input.jodit_search-query'
             ) as HTMLInputElement;
 
-            self.replaceInput = self.searchBox.querySelector(
+            self.replaceInput = qs(
                 'input.jodit_search-replace'
             ) as HTMLInputElement;
 
-            self.closeButton = self.searchBox.querySelector(
+            self.closeButton = qs(
                 '.jodit_search_buttons-cancel'
             ) as HTMLButtonElement;
 
-            self.nextButton = self.searchBox.querySelector(
+            self.nextButton = qs(
                 '.jodit_search_buttons-next'
             ) as HTMLButtonElement;
 
-            self.prevButton = self.searchBox.querySelector(
+            self.prevButton = qs(
                 '.jodit_search_buttons-prev'
             ) as HTMLButtonElement;
 
-            self.replaceButton = self.searchBox.querySelector(
+            self.replaceButton = qs(
                 '.jodit_search_buttons-replace'
             ) as HTMLButtonElement;
 
-            self.counterBox = self.searchBox.querySelector(
+            self.counterBox = qs(
                 '.jodit_search_counts span'
             ) as HTMLButtonElement;
 
