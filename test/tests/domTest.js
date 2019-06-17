@@ -21,6 +21,8 @@ describe('Check Dom module', function() {
             expect(true).to.equal(Jodit.modules.Dom.isBlock(document.documentElement, window));
             expect(true).to.equal(Jodit.modules.Dom.isBlock(document.createElement('div'), window));
             expect(true).to.equal(Jodit.modules.Dom.isBlock(document.createElement('table'), window));
+            expect(true).to.equal(Jodit.modules.Dom.isBlock(document.createElement('dt'), window));
+            expect(true).to.equal(Jodit.modules.Dom.isBlock(document.createElement('dd'), window));
         });
         it('Should return false then it gets not BLOCK element', function () {
             expect(false).to.equal(Jodit.modules.Dom.isBlock(document.createTextNode('test'), window));
