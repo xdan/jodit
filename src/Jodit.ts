@@ -440,7 +440,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
     /**
      * Execute command editor
      *
-     * @method execCommand
      * @param  {string} command command. It supports all the
      * {@link https://developer.mozilla.org/ru/docs/Web/API/Document/execCommand#commands} and a number of its own
      * for example applyCSSProperty. Comand fontSize receives the second parameter px,
@@ -495,18 +494,17 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
         if (result !== false) {
             this.selection.focus();
-            switch (command) {
-                case 'selectall':
-                    this.selection.select(this.editor, true);
-                    break;
-                default:
-                    try {
-                        result = this.editorDocument.execCommand(
-                            command,
-                            showUI,
-                            value
-                        );
-                    } catch (e) {}
+
+            if (command === 'selectall') {
+                this.selection.select(this.editor, true);
+            } else {
+                try {
+                    result = this.editorDocument.execCommand(
+                        command,
+                        showUI,
+                        value
+                    );
+                } catch {}
             }
         }
 
