@@ -20,6 +20,8 @@ import { isPlainObject } from './helpers/checker';
 import { each } from './helpers/each';
 import { trim } from './helpers/string';
 
+type WindowSelection = Selection | null;
+
 export class Select {
     constructor(readonly jodit: IJodit) {}
 
@@ -43,11 +45,21 @@ export class Select {
     get doc(): Document {
         return this.jodit.editorDocument;
     }
+
     /**
      * Return current selection object
      */
-    get sel(): Selection {
+    get sel(): WindowSelection {
         return this.win.getSelection();
+    }
+
+    /**
+     * Return first selected range or create new
+     */
+    get range(): Range {
+        const sel = this.sel;
+
+        return (sel && sel.rangeCount) ? sel.getRangeAt(0) : this.createRange();
     }
 
     /**
@@ -61,10 +73,10 @@ export class Select {
      * Remove all selected content
      */
     remove() {
-        const sel: Selection = this.sel,
+        const sel: WindowSelection = this.sel,
             current: false | Node = this.current();
 
-        if (current) {
+        if (sel && current) {
             for (let i = 0; i < sel.rangeCount; i += 1) {
                 sel.getRangeAt(i).deleteContents();
                 sel.getRangeAt(i).collapse(true);
@@ -97,9 +109,12 @@ export class Select {
 
             if (rng) {
                 rng.collapse(true);
-                const sel: Selection = this.sel;
-                sel.removeAllRanges();
-                sel.addRange(rng);
+                const sel: WindowSelection = this.sel;
+
+                if (sel) {
+                    sel.removeAllRanges();
+                    sel.addRange(rng);
+                }
             } else if (
                 typeof (this.doc as any).body.createTextRange !== 'undefined'
             ) {
@@ -192,8 +207,8 @@ export class Select {
      */
     restore(selectionInfo: markerInfo[] | null = []) {
         if (Array.isArray(selectionInfo)) {
-            const sel: Selection = this.sel;
-            sel.removeAllRanges();
+            const sel: WindowSelection = this.sel;
+            sel && sel.removeAllRanges();
 
             selectionInfo.forEach((selection: markerInfo) => {
                 const range: Range = this.createRange(),
@@ -236,7 +251,7 @@ export class Select {
                     Dom.safeRemove(end);
                 }
 
-                sel.addRange(range);
+                sel && sel.addRange(range);
             });
         }
     }
@@ -247,9 +262,9 @@ export class Select {
      * @return markerInfo[]
      */
     save(): markerInfo[] {
-        const sel: Selection = this.sel;
+        const sel: WindowSelection = this.sel;
 
-        if (!sel.rangeCount) {
+        if (!sel || !sel.rangeCount) {
             return [];
         }
 
@@ -328,10 +343,10 @@ export class Select {
             this.win.focus();
             this.area.focus();
 
-            const sel: Selection = this.sel,
+            const sel: WindowSelection = this.sel,
                 range: Range = this.createRange();
 
-            if (!sel.rangeCount || !this.current()) {
+            if (sel && (!sel.rangeCount || !this.current())) {
                 range.setStart(this.area, 0);
                 range.collapse(true);
                 sel.removeAllRanges();
@@ -352,7 +367,7 @@ export class Select {
     isCollapsed(): boolean {
         const sel = this.sel;
 
-        for (let r: number = 0; r < sel.rangeCount; r += 1) {
+        for (let r: number = 0; sel && r < sel.rangeCount; r += 1) {
             if (!sel.getRangeAt(r).collapsed) {
                 return false;
             }
@@ -381,7 +396,7 @@ export class Select {
      */
     current(checkChild: boolean = true): false | Node {
         if (this.jodit.getRealMode() === consts.MODE_WYSIWYG) {
-            const sel: Selection = this.sel;
+            const sel: WindowSelection = this.sel;
 
             if (sel && sel.rangeCount > 0) {
                 const range: Range = sel.getRangeAt(0);
@@ -484,13 +499,13 @@ export class Select {
 
         this.focus();
 
-        const sel: Selection = this.sel;
+        const sel: WindowSelection = this.sel;
 
         if (!this.isCollapsed()) {
             this.jodit.execCommand('Delete');
         }
 
-        if (sel.rangeCount) {
+        if (sel && sel.rangeCount) {
             const range: Range = sel.getRangeAt(0);
             if (Dom.isOrContains(this.area, range.commonAncestorContainer)) {
                 range.deleteContents();
@@ -595,7 +610,7 @@ export class Select {
      *
      * @param  {string|HTMLImageElement} url URL for image, or HTMLImageElement
      * @param  {string} [styles] If specified, it will be applied <code>$(image).css(styles)</code>
-     * @param { number | string | false } defaultWidth
+     * @param { number | string | null } defaultWidth
      *
      * @fired afterInsertImage
      */
@@ -669,8 +684,9 @@ export class Select {
     }
 
     public eachSelection = (callback: (current: Node) => void) => {
-        const sel: Selection = this.sel;
-        if (sel.rangeCount) {
+        const sel: WindowSelection = this.sel;
+
+        if (sel && sel.rangeCount) {
             const range: Range = sel.getRangeAt(0);
             const nodes: Node[] = [],
                 startOffset: number = range.startOffset,
@@ -793,8 +809,9 @@ export class Select {
         start: boolean,
         parentBlock: HTMLElement
     ): boolean | null {
-        const sel: Selection = this.sel;
-        const range: Range | null = sel.rangeCount ? sel.getRangeAt(0) : null;
+        const
+            sel: WindowSelection = this.sel,
+            range: Range | null = (sel && sel.rangeCount) ? sel.getRangeAt(0) : null;
 
         if (!range) {
             return null;
@@ -960,12 +977,17 @@ export class Select {
      * Set range selection
      *
      * @param range
+     *
      * @fires changeSelection
      */
     public selectRange(range: Range) {
-        const sel: Selection = this.sel;
-        sel.removeAllRanges();
-        sel.addRange(range);
+        const sel: WindowSelection = this.sel;
+
+        if (sel) {
+            sel.removeAllRanges();
+            sel.addRange(range);
+        }
+
         /**
          * Fired after change selection
          *
@@ -1010,13 +1032,14 @@ export class Select {
      * Return current selected HTML
      */
     getHTML(): string {
-        const selection: Selection = this.sel;
+        const sel: WindowSelection = this.sel;
 
-        if (selection.rangeCount > 0) {
-            const range: Range = selection.getRangeAt(0);
+        if (sel && sel.rangeCount > 0) {
+            const range: Range = sel.getRangeAt(0);
             const clonedSelection: DocumentFragment = range.cloneContents();
             const div: HTMLElement = this.jodit.create.inside.div();
             div.appendChild(clonedSelection);
+
             return div.innerHTML;
         }
 

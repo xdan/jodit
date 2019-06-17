@@ -66,9 +66,9 @@ export class DragAndDrop extends Plugin {
                 return false;
             }
 
-            const sel: Selection = this.jodit.editorWindow.getSelection();
+            const sel = this.jodit.selection.sel;
             const range: Range | null =
-                this.bufferRange || (sel.rangeCount ? sel.getRangeAt(0) : null);
+                this.bufferRange || ((sel && sel.rangeCount) ? sel.getRangeAt(0) : null);
 
             let fragment: DocumentFragment | HTMLElement | null = null;
 
@@ -101,7 +101,7 @@ export class DragAndDrop extends Plugin {
                 ) as string);
             }
 
-            sel.removeAllRanges();
+            sel && sel.removeAllRanges();
 
             this.jodit.selection.insertCursorAtPoint(
                 event.clientX,
@@ -140,8 +140,8 @@ export class DragAndDrop extends Plugin {
         this.isCopyMode = this.isFragmentFromEditor ? ctrlKey(event) : true; // we can move only element from editor
 
         if (this.isFragmentFromEditor) {
-            const sel: Selection = this.jodit.editorWindow.getSelection();
-            const range: Range | null = sel.rangeCount
+            const sel = this.jodit.selection.sel;
+            const range: Range | null = (sel && sel.rangeCount)
                 ? sel.getRangeAt(0)
                 : null;
             if (range) {

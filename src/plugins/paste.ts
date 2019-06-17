@@ -55,7 +55,7 @@ Config.prototype.defaultActionOnPaste = INSERT_AS_HTML;
 Config.prototype.controls.cut = {
     command: 'cut',
     isDisable: (editor: IJodit) => {
-        const sel: Selection = editor.selection.sel;
+        const sel = editor.selection.sel;
         return !sel || sel.isCollapsed;
     },
     tooltip: 'Cut selection',
@@ -235,7 +235,7 @@ export function paste(editor: IJodit) {
 
     const getDataTransfer = (
         event: ClipboardEvent | DragEvent
-    ): DataTransfer => {
+    ): DataTransfer | null => {
         if ((event as ClipboardEvent).clipboardData) {
             return (event as ClipboardEvent).clipboardData;
         }
@@ -249,13 +249,15 @@ export function paste(editor: IJodit) {
             (event: ClipboardEvent): false | void => {
                 const selectedText: string = editor.selection.getHTML();
 
-                const clipboardData: DataTransfer =
+                const clipboardData =
                     getDataTransfer(event) ||
                     getDataTransfer(editor.editorWindow as any) ||
                     getDataTransfer((event as any).originalEvent);
 
-                clipboardData.setData(TEXT_PLAIN, stripTags(selectedText));
-                clipboardData.setData(TEXT_HTML, selectedText);
+                if (clipboardData) {
+                    clipboardData.setData(TEXT_PLAIN, stripTags(selectedText));
+                    clipboardData.setData(TEXT_HTML, selectedText);
+                }
 
                 buffer = selectedText;
 
@@ -292,10 +294,12 @@ export function paste(editor: IJodit) {
                     return false;
                 }
 
-                if (event && getDataTransfer(event)) {
+                const dt = getDataTransfer(event);
+
+                if (event && dt) {
                     const types:
                         | ReadonlyArray<string>
-                        | string = getDataTransfer(event).types;
+                        | string = dt.types;
 
                     let i: number,
                         types_str: string = '',
@@ -313,25 +317,25 @@ export function paste(editor: IJodit) {
                     }
 
                     if (/text\/html/i.test(types_str)) {
-                        clipboard_html = getDataTransfer(event).getData(
+                        clipboard_html = dt.getData(
                             'text/html'
                         );
                     } else if (
                         /text\/rtf/i.test(types_str) &&
                         browser('safari')
                     ) {
-                        clipboard_html = getDataTransfer(event).getData(
+                        clipboard_html = dt.getData(
                             'text/rtf'
                         );
                     } else if (
                         /text\/plain/i.test(types_str) &&
                         !browser('mozilla')
                     ) {
-                        clipboard_html = getDataTransfer(event).getData(
+                        clipboard_html = dt.getData(
                             TEXT_PLAIN
                         );
                     } else if (/text/i.test(types_str) && IS_IE) {
-                        clipboard_html = getDataTransfer(event).getData(
+                        clipboard_html = dt.getData(
                             TEXT_PLAIN
                         );
                     }
@@ -414,8 +418,9 @@ export function paste(editor: IJodit) {
         editor.events.on(
             'beforePaste',
             (event: ClipboardEvent | DragEvent): false | void => {
-                if (event && getDataTransfer(event).getData(TEXT_PLAIN)) {
-                    const html: string = getDataTransfer(event).getData(
+                const dt = getDataTransfer(event);
+                if (event && dt && dt.getData(TEXT_PLAIN)) {
+                    const html: string = dt.getData(
                         TEXT_PLAIN
                     );
                     return insertHTML(html, event);
@@ -428,10 +433,14 @@ export function paste(editor: IJodit) {
         editor.events.on(
             'beforePaste',
             (event: ClipboardEvent): false | void => {
+                const
+                    dt = getDataTransfer(event);
+
                 if (
                     event &&
-                    getDataTransfer(event).getData &&
-                    getDataTransfer(event).getData(TEXT_HTML)
+                    dt &&
+                    dt.getData &&
+                    dt.getData(TEXT_HTML)
                 ) {
                     const processHTMLData = (html: string): void | false => {
                         if (isHTML(html) && buffer !== trimFragment(html)) {
@@ -441,6 +450,7 @@ export function paste(editor: IJodit) {
                                         'The pasted content is coming from a Microsoft Word/Excel document. ' +
                                             'Do you want to keep the format or clean it up?'
                                     ),
+
                                     editor.i18n('Word Paste Detected'),
                                     (agree: boolean | number) => {
                                         if (agree === true) {
@@ -478,13 +488,14 @@ export function paste(editor: IJodit) {
                         }
                     };
 
+
                     if (
-                        getDataTransfer(event).types &&
-                        Array.from(getDataTransfer(event).types).indexOf(
+                        dt.types &&
+                        Array.from(dt.types).indexOf(
                             'text/html'
                         ) !== -1
                     ) {
-                        const html: string = getDataTransfer(event).getData(
+                        const html: string = dt.getData(
                             TEXT_HTML
                         );
                         return processHTMLData(html);

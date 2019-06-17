@@ -89,9 +89,9 @@ export function enter(editor: IJodit) {
 
                 let current: Node = editor.selection.current(false) as Node;
 
-                const sel: Selection = editor.editorWindow.getSelection();
+                const sel = editor.selection.sel;
 
-                let range: Range = sel.rangeCount
+                let range: Range = (sel && sel.rangeCount)
                     ? sel.getRangeAt(0)
                     : editor.editorDocument.createRange();
 
@@ -100,7 +100,7 @@ export function enter(editor: IJodit) {
 
                     current = editor.create.inside.text(consts.INVISIBLE_SPACE);
 
-                    if (sel.rangeCount) {
+                    if (sel && sel.rangeCount) {
                         range.insertNode(current);
                     } else {
                         editor.editor.appendChild(current);
@@ -108,8 +108,11 @@ export function enter(editor: IJodit) {
 
                     range.selectNode(current);
                     range.collapse(false);
-                    sel.removeAllRanges();
-                    sel.addRange(range);
+
+                    if (sel) {
+                        sel.removeAllRanges();
+                        sel.addRange(range);
+                    }
                 }
 
                 let currentBox: HTMLElement | false = current
@@ -183,7 +186,7 @@ export function enter(editor: IJodit) {
                         editor.selection.setCursorBefore(helper_node);
                     }
 
-                    range = sel.rangeCount
+                    range = (sel && sel.rangeCount)
                         ? sel.getRangeAt(0)
                         : editor.editorDocument.createRange();
                 }

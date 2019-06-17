@@ -70,7 +70,7 @@ Config.prototype.controls.link = {
         self: IControlType,
         close: () => void
     ) => {
-        const sel: Selection = editor.editorWindow.getSelection(),
+        const sel = editor.selection.sel,
             form: HTMLFormElement = editor.create.fromHTML(
                 '<form class="jodit_form">' +
                     '<input required type="text" name="url" placeholder="http://" type="text"/>' +
@@ -135,7 +135,7 @@ Config.prototype.controls.link = {
                 unlink.style.display = 'none';
             }
 
-            val(form, 'input[name=text]', sel.toString());
+            val(form, 'input[name=text]', sel ? sel.toString() : '');
 
             if (lnk) {
                 lnk.innerHTML = editor.i18n('Insert');

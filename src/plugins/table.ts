@@ -469,9 +469,9 @@ export class TableProcessor extends Plugin {
                                 this.__resizerDelta = x - startX + (!this.jodit.options.iframe ? 0 : workplacePosition.left);
                                 this.__resizerHandler.style.left = (x - (this.jodit.options.iframe ? 0 : workplacePosition.left)) + 'px';
 
-                                this.jodit.editorWindow
-                                    .getSelection()
-                                    .removeAllRanges();
+                                const sel = this.jodit.selection.sel;
+
+                                sel && sel.removeAllRanges();
 
                                 if (event.preventDefault) {
                                     event.preventDefault();
@@ -684,9 +684,10 @@ export class TableProcessor extends Plugin {
                     if (this.__selectMode) {
                         if (cell !== start) {
                             this.jodit.lock(this.__key);
-                            this.jodit.editorWindow
-                                .getSelection()
-                                .removeAllRanges();
+
+                            const sel = this.jodit.selection.sel;
+                            sel && sel.removeAllRanges();
+
                             if (event.preventDefault) {
                                 event.preventDefault();
                             }

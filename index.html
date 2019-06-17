@@ -59,17 +59,25 @@ cena quidem posse videamur?
     </div>
     <script src="./build/jodit.min.js"></script>
     <script>
-        var editor = new Jodit("#editor", {
-            iframe: true,
-            uploader: {
-                url: 'http://localhost:8181/index-test.php?action=fileUpload'
-            },
-            filebrowser: {
-                ajax: {
-                    url: 'http://localhost:8181/index-test.php?'
-                }
+        var editor = new Jodit("#editor");
+        editor.events.on('beforeSetValueToEditor', function (old_value) {
+            if (old_value) {
+                return old_value.replace('user&nbsp;', '<span style="color:blue;">test</span>');
             }
         });
+
+        editor.value = 'test user&nbsp;';
+        console.log(editor.value); // test <span style="color:blue;">test</span>
+
+        editor.events.on('change', Jodit.modules.Helpers.throttle(function () {
+            var
+                sel = editor.selection.save(),
+                value = editor.getNativeEditorValue();
+
+            editor.value = value.replace(/user/, '<span style="color:blue;">test</span>');
+            console.log(value);
+            editor.selection.restore(sel);
+        }, 300));
     </script>
     <style>
         #box {

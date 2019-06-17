@@ -641,8 +641,10 @@ export class inlinePopup extends Plugin {
         }
 
         if (this.jodit.options.popup.selection !== undefined) {
-            const sel: Selection = this.jodit.selection.sel;
-            if (sel.rangeCount) {
+            const
+                sel = this.jodit.selection.sel;
+
+            if (sel && sel.rangeCount) {
                 this.isSelectionPopup = true;
                 const range: Range = sel.getRangeAt(0);
                 this.showPopup(

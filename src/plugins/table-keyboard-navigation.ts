@@ -40,10 +40,7 @@ export function tableKeyboardNavigation(editor: IJodit) {
                     return;
                 }
 
-                const sel: Selection = editor.editorWindow.getSelection(),
-                    range: Range = sel.rangeCount
-                        ? sel.getRangeAt(0)
-                        : editor.editorDocument.createRange();
+                const range = editor.selection.range;
 
                 if (event.which !== consts.KEY_TAB && current !== block) {
                     if (

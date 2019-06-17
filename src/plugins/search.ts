@@ -172,10 +172,8 @@ export class search extends Plugin {
             ? 'inline-block'
             : 'none';
 
-        const sel: Selection = this.jodit.editorWindow.getSelection(),
-            range: Range = sel.rangeCount
-                ? sel.getRangeAt(0)
-                : this.jodit.editorDocument.createRange(),
+        const
+            range = this.jodit.selection.range,
             counts: [number, number] = this.calcCounts(
                 this.queryInput.value,
                 range
@@ -265,10 +263,8 @@ export class search extends Plugin {
         return [currentIndex, count];
     };
     public findAndReplace = (start: Node | null, query: string): boolean => {
-        const sel: Selection = this.jodit.editorWindow.getSelection(),
-            range: Range = sel.rangeCount
-                ? sel.getRangeAt(0)
-                : this.jodit.editorDocument.createRange(),
+        const
+            range = this.jodit.selection.range,
             bound: ISelectionRange | false = this.find(
                 start,
                 query,
@@ -314,10 +310,8 @@ export class search extends Plugin {
         query: string,
         next: boolean
     ): boolean => {
-        const sel: Selection = this.jodit.selection.sel,
-            range: Range = sel.rangeCount
-                ? sel.getRangeAt(0)
-                : this.jodit.selection.createRange(),
+        const
+            range = this.jodit.selection.range,
             bound: ISelectionRange | false = this.find(
                 start,
                 query,
@@ -495,15 +489,15 @@ export class search extends Plugin {
         this.current = this.jodit.selection.current();
         this.selInfo = this.jodit.selection.save();
 
-        const sel: string = this.jodit.selection.sel.toString();
+        const selStr: string = (this.jodit.selection.sel || '').toString();
 
-        if (sel) {
-            this.queryInput.value = sel;
+        if (selStr) {
+            this.queryInput.value = selStr;
         }
 
         this.updateCounters();
 
-        if (sel) {
+        if (selStr) {
             this.queryInput.select();
         } else {
             this.queryInput.focus();

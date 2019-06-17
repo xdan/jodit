@@ -150,7 +150,7 @@ export class Snapshot extends Component<IJodit> {
 
         snapshot.html = this.jodit.getNativeEditorValue();
 
-        const sel: Selection = this.jodit.editorWindow.getSelection();
+        const sel: Selection | null = this.jodit.editorWindow.getSelection();
 
         if (sel && sel.rangeCount) {
             const range: Range = sel.getRangeAt(0),
