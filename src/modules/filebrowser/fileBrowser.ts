@@ -40,8 +40,20 @@ import { ViewWithToolbar } from '../view/viewWithToolbar';
 import { IJodit } from '../../types';
 import './config';
 
-export const ITEM_CLASS = 'jodit_filebrowser_files_item';
-const DEFAULT_SOURCE_NAME = 'default';
+const
+    CLASS = 'jodit_filebrowser_';
+
+export const ITEM_CLASS = CLASS + 'files_item';
+
+const
+    DEFAULT_SOURCE_NAME = 'default',
+    CLASS_PREVIEW = CLASS + 'preview_',
+    preview_tpl_next = (next = 'next', right = 'right') =>
+        `<a href="javascript:void(0)" class="${CLASS_PREVIEW}navigation ${CLASS_PREVIEW}navigation-${next}">` +
+            ToolbarIcon.getIcon('angle-' + right) +
+        '</a>',
+    ICON_LOADER = '<i class="jodit_icon-loader"></i>';
+
 
 export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
     /**
@@ -81,7 +93,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
         each<ISource>(sources, (source_name, source) => {
             if (source_name && source_name !== DEFAULT_SOURCE_NAME) {
                 folders.push(
-                    '<div class="jodit_filebrowser_source_title">' +
+                    '<div class="' + CLASS + 'source_title">' +
                         source_name +
                         '</div>'
                 );
@@ -90,7 +102,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
             source.folders.forEach((name: string) => {
                 let folder: string =
                     '<a draggable="draggable" ' +
-                    'class="jodit_filebrowser_tree_item" ' +
+                    'class="' + CLASS + 'tree_item" ' +
                     'href="javascript:void(0)" ' +
                     'data-path="' +
                     normalizePath(source.path + name) +
@@ -142,7 +154,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
         each<ISource>(sources, (source_name, source) => {
             if (source_name && source_name !== DEFAULT_SOURCE_NAME) {
                 files.push(
-                    `<div class="jodit_filebrowser_source_title">${
+                    `<div class="${CLASS}source_title">${
                         source_name + (source.path ? ' - ' + source.path : '')
                     }</div>`
                 );
@@ -552,6 +564,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
      * @param {string} filepath The relative path toWYSIWYG the file / folder source
      * @param {string} path Relative toWYSIWYG the directory where you want toWYSIWYG move the file / folder
      * @param {string} source Source
+     * @param {boolean} isFile
      */
     move = (filepath: string, path: string, source: string, isFile: boolean): Promise<void> => {
         const mode: 'fileMove' | 'folderMove' = isFile ? 'fileMove' : 'folderMove';
@@ -715,7 +728,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
             this.toolbar.build(this.options.buttons, header);
 
             this.dialog.dialogbox_header.classList.add(
-                'jodit_filebrowser_title_box'
+                CLASS + 'title_box'
             );
             this.dialog.open(this.browser, header);
 
@@ -826,29 +839,29 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
         });
 
         self.loader = self.create.div(
-            'jodit_filebrowser_loader',
-            '<i class="jodit_icon-loader"></i>'
+            CLASS + 'loader',
+            ICON_LOADER
         );
 
         self.browser = self.create.fromHTML(
             '<div class="jodit_filebrowser non-selected">' +
                 (self.options.showFoldersPanel
-                    ? '<div class="jodit_filebrowser_tree"></div>'
+                    ? '<div class="' + CLASS + 'tree"></div>'
                     : '') +
-                '<div class="jodit_filebrowser_files"></div>' +
-                '<div class="jodit_filebrowser_status"></div>' +
+                '<div class="' + CLASS + 'files"></div>' +
+                '<div class="' + CLASS + 'status"></div>' +
                 '</div>'
         );
 
         self.status_line = self.browser.querySelector(
-            '.jodit_filebrowser_status'
+            '.' + CLASS + 'status'
         ) as HTMLElement;
 
         self.tree = self.browser.querySelector(
-            '.jodit_filebrowser_tree'
+            '.' + CLASS + 'tree'
         ) as HTMLElement;
         self.files = self.browser.querySelector(
-            '.jodit_filebrowser_files'
+            '.' + CLASS + 'files'
         ) as HTMLElement;
 
         self.events
@@ -857,22 +870,22 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
                     self.view = view;
                     self.buffer.fileBrowserView = view;
                     self.files.classList.remove(
-                        'jodit_filebrowser_files_view-tiles'
+                        CLASS + 'files_view-tiles'
                     );
                     self.files.classList.remove(
-                        'jodit_filebrowser_files_view-list'
+                        CLASS + 'files_view-list'
                     );
                     self.files.classList.add(
-                        'jodit_filebrowser_files_view-' + self.view
+                        CLASS + 'files_view-' + self.view
                     );
 
-                    self.storage.set('jodit_filebrowser_view', self.view);
+                    self.storage.set(CLASS + 'view', self.view);
                 }
             })
             .on('sort.filebrowser', (value: string) => {
                 if (value !== self.sortBy) {
                     self.sortBy = value;
-                    this.storage.set('jodit_filebrowser_sortby', self.sortBy);
+                    this.storage.set(CLASS + 'sortby', self.sortBy);
                     self.loadItems(self.currentPath, self.currentSource);
                 }
             })
@@ -1003,7 +1016,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
                         if (
                             !self.options.moveFolder &&
                             self.dragger.classList.contains(
-                                'jodit_filebrowser_tree_item'
+                                CLASS + 'tree_item'
                             )
                         ) {
                             return false;
@@ -1031,226 +1044,199 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
             );
 
         const
-            contextmenu: ContextMenu = new ContextMenu(this.jodit || this);
+            contextmenu: ContextMenu = new ContextMenu(this.jodit || this),
+            onContext = function(this: HTMLElement, e: DragEvent): boolean | void {
+                if (!self.options.contextMenu) {
+                    return;
+                }
+
+                let
+                    item: HTMLElement = this,
+                    opt = self.options,
+                    ga = (attr: string) => item.getAttribute(attr) || '';
+
+                setTimeout(() => {
+                    contextmenu.show(
+                        e.pageX,
+                        e.pageY,
+                        [
+                            ga('data-is-file') !== '1' &&
+                            opt.editImage &&
+                            (self.canI('ImageResize') ||
+                                self.canI('ImageCrop'))
+                                ? {
+                                    icon: 'pencil',
+                                    title: 'Edit',
+                                    exec: () => {
+                                        self.openImageEditor(
+                                            ga('href'),
+                                            ga('data-name'),
+                                            ga('data-path'),
+                                            ga('data-source')
+                                        );
+                                    },
+                                }
+                                : false,
+
+                            self.canI('FileRemove')
+                                ? {
+                                    icon: 'bin',
+                                    title: 'Delete',
+                                    exec: () => {
+                                        self.fileRemove(
+                                            self.currentPath,
+                                            ga('data-name'),
+                                            ga('data-source')
+                                        );
+                                        self.someSelectedWasChanged();
+                                        self.loadTree(
+                                            self.currentPath,
+                                            self.currentSource
+                                        );
+                                    },
+                                }
+                                : false,
+
+                            opt.preview
+                                ? {
+                                    icon: 'eye',
+                                    title: 'Preview',
+                                    exec: () => {
+                                        let
+                                            src = ga('href');
+
+                                        const
+                                            preview: Dialog = new Dialog(self),
+                                            temp_content: HTMLElement = self.create.div(
+                                                CLASS + 'preview',
+                                                ICON_LOADER
+                                            ),
+
+                                            preview_box: HTMLElement = self.create.div(CLASS + 'preview_box'),
+
+                                            image: HTMLImageElement = self.create.element('img'),
+
+                                            addLoadHandler = () => {
+                                                const onload = () => {
+                                                    this.removeEventListener(
+                                                        'load',
+                                                        onload as EventListenerOrEventListenerObject
+                                                    );
+
+                                                    temp_content.innerHTML = '';
+
+                                                    if (
+                                                        opt.showPreviewNavigation) {
+                                                        const
+                                                            next = self.create.fromHTML(preview_tpl_next()),
+                                                            prev = self.create.fromHTML(preview_tpl_next('prev', 'left'));
+
+                                                        if (
+                                                            item.previousSibling &&
+                                                            (item.previousSibling as HTMLElement)
+                                                                .classList &&
+                                                            (item.previousSibling as HTMLElement).classList.contains(
+                                                                ITEM_CLASS
+                                                            )
+                                                        ) {
+                                                            temp_content.appendChild(
+                                                                prev
+                                                            );
+                                                        }
+
+                                                        if (
+                                                            item.nextSibling &&
+                                                            (item.nextSibling as HTMLElement)
+                                                                .classList &&
+                                                            (item.nextSibling as HTMLElement).classList.contains(
+                                                                ITEM_CLASS
+                                                            )
+                                                        ) {
+                                                            temp_content.appendChild(
+                                                                next
+                                                            );
+                                                        }
+
+                                                        self.events.on(
+                                                            [next, prev],
+                                                            'click',
+                                                            function(
+                                                                this: HTMLElement
+                                                            ) {
+                                                                if (
+                                                                    this.classList.contains(CLASS_PREVIEW + 'navigation-next')
+                                                                ) {
+                                                                    item = item.nextSibling as HTMLElement;
+                                                                } else {
+                                                                    item = item.previousSibling as HTMLElement;
+                                                                }
+
+                                                                temp_content.innerHTML = ICON_LOADER;
+
+                                                                src = ga('href') || '';
+
+                                                                image.setAttribute(
+                                                                    'src',
+                                                                    src
+                                                                );
+                                                                addLoadHandler();
+                                                            }
+                                                        );
+                                                    }
+
+                                                    temp_content.appendChild(preview_box);
+                                                    preview_box.appendChild(
+                                                        image
+                                                    );
+
+                                                    preview.setPosition();
+                                                };
+
+                                                image.addEventListener(
+                                                    'load',
+                                                    onload
+                                                );
+                                                if (image.complete) {
+                                                    onload();
+                                                }
+                                            };
+
+                                        addLoadHandler();
+
+                                        image.setAttribute('src', src);
+                                        preview.setContent(temp_content);
+
+                                        preview.open();
+                                    },
+                                }
+                                : false,
+                            {
+                                icon: 'upload',
+                                title: 'Download',
+                                exec: () => {
+                                    const url = ga('href');
+
+                                    if (url) {
+                                        self.ownerWindow.open(url);
+                                    }
+                                },
+                            },
+                        ],
+                        self.dialog.getZIndex() + 1
+                    );
+                }, self.defaultTimeout);
+
+                e.stopPropagation();
+                e.preventDefault();
+
+                return false;
+            };
 
         self.events
             .on(
                 self.files,
                 'contextmenu',
-                function(this: HTMLElement, e: DragEvent): boolean | void {
-                    if (self.options.contextMenu) {
-                        let item: HTMLElement = this;
-
-                        setTimeout(() => {
-                            contextmenu.show(
-                                e.pageX,
-                                e.pageY,
-                                [
-                                    item.getAttribute('data-is-file') !== '1' &&
-                                    self.options.editImage &&
-                                    (self.canI('ImageResize') ||
-                                        self.canI('ImageCrop'))
-                                        ? {
-                                            icon: 'pencil',
-                                            title: 'Edit',
-                                            exec: () => {
-                                                self.openImageEditor(
-                                                    item.getAttribute('href') ||
-                                                    '',
-                                                    item.getAttribute(
-                                                        'data-name'
-                                                    ) || '',
-                                                    item.getAttribute(
-                                                        'data-path'
-                                                    ) || '',
-                                                    item.getAttribute(
-                                                        'data-source'
-                                                    ) || ''
-                                                );
-                                            },
-                                        }
-                                        : false,
-                                    self.canI('FileRemove')
-                                        ? {
-                                            icon: 'bin',
-                                            title: 'Delete',
-                                            exec: () => {
-                                                self.fileRemove(
-                                                    self.currentPath,
-                                                    item.getAttribute(
-                                                        'data-name'
-                                                    ) || '',
-                                                    item.getAttribute(
-                                                        'data-source'
-                                                    ) || ''
-                                                );
-                                                self.someSelectedWasChanged();
-                                                self.loadTree(
-                                                    self.currentPath,
-                                                    self.currentSource
-                                                );
-                                            },
-                                        }
-                                        : false,
-                                    self.options.preview
-                                        ? {
-                                            icon: 'eye',
-                                            title: 'Preview',
-                                            exec: () => {
-                                                let src: string =
-                                                    item.getAttribute('href') ||
-                                                    '';
-                                                const preview: Dialog = new Dialog(
-                                                    self
-                                                    ),
-                                                    temp_content: HTMLElement = self.create.fromHTML(
-                                                        '<div class="jodit_filebrowser_preview">' +
-                                                        '<i class="jodit_icon-loader"></i>' +
-                                                        '</div>'
-                                                    ),
-                                                    image: HTMLImageElement = doc.createElement(
-                                                        'img'
-                                                    ),
-                                                    addLoadHandler = () => {
-                                                        const onload = () => {
-                                                            this.removeEventListener(
-                                                                'load',
-                                                                onload as EventListenerOrEventListenerObject
-                                                            );
-                                                            temp_content.innerHTML =
-                                                                '';
-                                                            if (
-                                                                self.options
-                                                                    .showPreviewNavigation
-                                                            ) {
-                                                                const next = self.create.fromHTML(
-                                                                    '<a ' +
-                                                                    'href="javascript:void(0)" ' +
-                                                                    'class="' +
-                                                                    'jodit_filebrowser_preview_navigation ' +
-                                                                    'jodit_filebrowser_preview_navigation-next' +
-                                                                    '">' +
-                                                                    ToolbarIcon.getIcon(
-                                                                        'angle-right'
-                                                                    ) +
-                                                                    '</a>'
-                                                                    ),
-                                                                    prev = self.create.fromHTML(
-                                                                        '<a ' +
-                                                                        'href="javascript:void(0)" ' +
-                                                                        'class="' +
-                                                                        'jodit_filebrowser_preview_navigation ' +
-                                                                        'jodit_filebrowser_preview_navigation-prev' +
-                                                                        '">' +
-                                                                        ToolbarIcon.getIcon(
-                                                                            'angle-left'
-                                                                        ) +
-                                                                        '</a>'
-                                                                    );
-
-                                                                if (
-                                                                    item.previousSibling &&
-                                                                    (item.previousSibling as HTMLElement)
-                                                                        .classList &&
-                                                                    (item.previousSibling as HTMLElement).classList.contains(
-                                                                        ITEM_CLASS
-                                                                    )
-                                                                ) {
-                                                                    temp_content.appendChild(
-                                                                        prev
-                                                                    );
-                                                                }
-                                                                if (
-                                                                    item.nextSibling &&
-                                                                    (item.nextSibling as HTMLElement)
-                                                                        .classList &&
-                                                                    (item.nextSibling as HTMLElement).classList.contains(
-                                                                        ITEM_CLASS
-                                                                    )
-                                                                ) {
-                                                                    temp_content.appendChild(
-                                                                        next
-                                                                    );
-                                                                }
-
-                                                                self.events.on(
-                                                                    [next, prev],
-                                                                    'click',
-                                                                    function(
-                                                                        this: HTMLElement
-                                                                    ) {
-                                                                        if (
-                                                                            this.classList.contains(
-                                                                                'jodit_filebrowser_preview_navigation-next'
-                                                                            )
-                                                                        ) {
-                                                                            item = item.nextSibling as HTMLElement;
-                                                                        } else {
-                                                                            item = item.previousSibling as HTMLElement;
-                                                                        }
-                                                                        temp_content.innerHTML =
-                                                                            '<i class="jodit_icon-loader"></i>';
-                                                                        src =
-                                                                            item.getAttribute(
-                                                                                'href'
-                                                                            ) ||
-                                                                            '';
-                                                                        image.setAttribute(
-                                                                            'src',
-                                                                            src
-                                                                        );
-                                                                        addLoadHandler();
-                                                                    }
-                                                                );
-                                                            }
-
-                                                            temp_content.appendChild(
-                                                                image
-                                                            );
-                                                            preview.setPosition();
-                                                        };
-
-                                                        image.addEventListener(
-                                                            'load',
-                                                            onload
-                                                        );
-                                                        if (image.complete) {
-                                                            onload();
-                                                        }
-                                                    };
-
-                                                addLoadHandler();
-                                                image.setAttribute('src', src);
-                                                preview.setContent(temp_content);
-
-                                                preview.open();
-                                            },
-                                        }
-                                        : false,
-                                    {
-                                        icon: 'upload',
-                                        title: 'Download',
-                                        exec: () => {
-                                            const url:
-                                                | string
-                                                | null = item.getAttribute('href');
-
-                                            if (url) {
-                                                self.ownerWindow.open(url);
-                                            }
-                                        },
-                                    },
-                                ],
-                                self.dialog.getZIndex() + 1
-                            );
-                        }, self.defaultTimeout)
-
-                        e.stopPropagation();
-                        e.preventDefault();
-
-                        return false;
-                    }
-                },
+                onContext,
                 'a'
             )
             .on(self.files, 'click', (e: MouseEvent) => {
@@ -1316,18 +1302,18 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
         });
 
         if (
-            this.storage.get('jodit_filebrowser_view') &&
+            this.storage.get(CLASS + 'view') &&
             this.options.view === null
         ) {
             this.view =
-                this.storage.get('jodit_filebrowser_view') === 'list'
+                this.storage.get(CLASS + 'view') === 'list'
                     ? 'list'
                     : 'tiles';
         } else {
             this.view = this.options.view === 'list' ? 'list' : 'tiles';
         }
 
-        this.files.classList.add('jodit_filebrowser_files_view-' + this.view);
+        this.files.classList.add(CLASS + 'files_view-' + this.view);
         self.buffer.fileBrowserView = this.view;
 
         this.sortBy =
@@ -1335,12 +1321,12 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
                 ? this.options.sortBy
                 : 'changed';
 
-        if (this.storage.get('jodit_filebrowser_sortby')) {
+        if (this.storage.get(CLASS + 'sortby')) {
             this.sortBy =
                 ['changed', 'name', 'size'].indexOf(
-                    this.storage.get('jodit_filebrowser_sortby') || ''
+                    this.storage.get(CLASS + 'sortby') || ''
                 ) !== -1
-                    ? this.storage.get('jodit_filebrowser_sortby') || ''
+                    ? this.storage.get(CLASS + 'sortby') || ''
                     : 'changed';
         }
 
