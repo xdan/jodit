@@ -1407,7 +1407,7 @@ describe('Test interface', function() {
 
                 var sel = editor.editorWindow.getSelection(), range = editor.editorDocument.createRange();
 
-                range.setStart(editor.editor.firstChild.firstChild, 5)
+                range.setStart(editor.editor.firstChild.firstChild, 0)
                 range.collapse(true)
                 sel.removeAllRanges();
                 sel.addRange(range)
@@ -1416,7 +1416,7 @@ describe('Test interface', function() {
 
                 editor.selection.insertHTML('test ');
 
-                expect(editor.getEditorValue()).to.equal('<ul><li>Text test to text</li></ul>');
+                expect(editor.getEditorValue()).to.equal('<ul><li>test Text to text</li></ul>');
             });
         });
         describe('Inline', function () {
