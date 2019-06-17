@@ -85,7 +85,6 @@ module.exports = (env, argv) => {
                             booleans: true,
                             properties: true,
                             dead_code: true,
-                            warnings: false, // Suppress uglification warnings
                             pure_getters: true,
                             unsafe: true,
                             unsafe_comps: true,
