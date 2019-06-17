@@ -699,7 +699,7 @@ export class Select {
                     }
 
                     // checks parentElement as well because partial selections are not equal to entire element
-                    return node === end || (end && end.parentElement === node);
+                    return node === end || (node && node.contains(end));
                 },
                 this.area,
                 true,

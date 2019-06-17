@@ -4,7 +4,7 @@ describe('Test editor indent plugin', function () {
     var editor = new Jodit(appendTestArea());
     editor.value = `
     <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. <i>Quonam, inquit, modo?</i>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. <i>Quonam, inquit, modo?</i> <span>prima quaeque bene</span>
     </p>
     <blockquote cite="http://loripsum.net">
       Nec enim absolvi beata vita sapientis neque ad exitum perduci poterit, si prima quaeque bene ab eo consulta atque facta ipsius oblivione obruentur.
@@ -16,13 +16,14 @@ describe('Test editor indent plugin', function () {
     
     const children = editor.container.querySelector('.jodit_wysiwyg').children;
     const el1 = children[0];
+    const el1Child = el1.querySelector('i');
     const el2 = children[1];
     const el3 = children[2];
 
     var sel = editor.editorWindow.getSelection(),
         range = editor.editorDocument.createRange();
 
-    range.setStart(el1, 0);
+    range.setStart(el1Child, 0);
     range.setEnd(el2, 1);
 
     sel.removeAllRanges();

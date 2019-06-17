@@ -52,6 +52,7 @@ Config.prototype.indentMargin = 10;
  */
 export function indent(editor: IJodit) {
     const callback = (command: string): void | false => {
+        const indentedBoxes: HTMLElement[] = [];
         editor.selection.eachSelection(
             (current: Node): false | void => {
                 const selectionInfo = editor.selection.save();
@@ -77,7 +78,10 @@ export function indent(editor: IJodit) {
                     return false;
                 }
 
-                if (currentBox && currentBox.style) {
+                const alreadyIndented: boolean = indentedBoxes.indexOf(currentBox) !== -1;
+                if (currentBox && currentBox.style && !alreadyIndented) {
+                    indentedBoxes.push(currentBox);
+
                     let marginLeft: number = currentBox.style.marginLeft
                         ? parseInt(currentBox.style.marginLeft, 10)
                         : 0;
