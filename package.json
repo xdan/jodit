@@ -11,6 +11,8 @@
         "build": "rm -f build/* && webpack --mode production --config ./webpack.config.js --progress  && npm run build-no-uglify",
         "build-no-uglify": "cross-env NODE_ENV=production-no-uflify webpack --progress --mode production",
         "test": "karma start --browsers Firefox karma.conf.js --single-run",
+        "test-ff-watch": "karma start --browsers Firefox karma.conf.js",
+        "test-chrome-watch": "karma start --browsers Chrome karma.conf.js",
         "jodit": "cd ../jodit-react/ && npm update && npm run newversion && cd ../jodit-angular/ && npm run newversion && cd ../jodit-joomla && npm run newversion && cd ../jodit-docs && npm run newversion",
         "types": "rm -rf types/* && tsc --project . --declaration --outDir types --emitDeclarationOnly",
         "pretty": "prettier --write ./src/*.{ts,less} ./src/**/*.{ts,less} ./src/**/**/*.{ts,less}",
