@@ -3,16 +3,21 @@
  * License GNU General Public License version 2 or later;
  * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
-
 @import (reference) '../variables';
+
 @first_column: 31%;
 @cols: 4;
 @info-background: rgb(233, 233, 233);
 
 .jodit_filebrowser {
     font-family: @font-default;
-    font-size: 0;
     height: 100%;
+    display: flex;
+
+    @media (max-width: @screen-xs) {
+        flex-direction: column;
+        flex-flow: column-reverse;
+    }
 
     &_loader {
         height: 100%;
@@ -20,6 +25,7 @@
         position: absolute;
         top: 0;
         left: 0;
+
         i {
             position: absolute;
             top: 50%;
@@ -44,9 +50,11 @@
         transition: opacity 0.3s linear;
         color: #b38888;
         word-break: break-all;
+
         &.success {
             color: #c5c5c5;
         }
+
         &.active {
             visibility: visible;
             opacity: 1;
@@ -59,9 +67,11 @@
         vertical-align: top;
         height: 100%;
         position: relative;
+
         &.active {
-            display: inline-block;
+            display: flex;
         }
+
         &::-webkit-scrollbar {
             width: 5px;
         }
@@ -75,10 +85,17 @@
             outline: 1px solid slategrey;
         }
     }
+
     &_tree.active {
+        flex-direction: column;
         width: @first_column;
+        min-width: 200px;
+        max-width: 290px;
+
         @media (max-width: @screen-xs) {
-            display: none;
+            max-width: 100%;
+            width: auto;
+            height: 100px;
         }
 
         background-color: @color-background-filebrowser-folders;
@@ -111,9 +128,12 @@
             font-size: 16px;
         }
 
-        a {
-            display: block;
-            padding: 10px 20px;
+        .jodit_filebrowser_tree_item {
+            display: flex;
+            justify-items: center;
+            align-items: center;
+
+            padding: 5px 20px;
             text-decoration: none;
             color: #b1b1b1;
             font-weight: 600;
@@ -146,28 +166,36 @@
             &:hover {
                 color: #222;
                 background-color: @color-background-button-hover;
+
                 i.remove {
                     opacity: 0.6;
                 }
             }
+        }
 
-            &.jodit_button {
-                cursor: pointer;
-                background: #696969;
-                text-align: center;
-                width: auto;
-                height: 38px;
-                color: #333;
-                svg {
-                    vertical-align: top;
-                }
-                &:not(.disabled):hover {
-                    background-color: @color-background-button-hover;
-                }
-                &.disabled,
-                &:hover i {
-                    opacity: 0.7;
-                }
+        .jodit_button {
+            cursor: pointer;
+            background: #696969;
+            text-align: center;
+            width: auto;
+            height: 38px;
+            color: #969696;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+
+            svg {
+                margin: 0 5px;
+            }
+
+            &:not(.disabled):hover {
+                background-color: @color-background-button-hover;
+            }
+
+            &.disabled,
+            &:hover i {
+                opacity: 0.7;
             }
         }
     }
@@ -177,7 +205,9 @@
     &_files.active {
         width: 100%;
         overflow-y: auto;
-        padding: 10px;
+        padding: 5px;
+        flex-wrap: wrap;
+        align-content: flex-start;
 
         .jodit_filebrowser_source_title {
             user-select: none;
@@ -192,22 +222,26 @@
             font-size: 16px;
             color: #969696;
         }
+
         a + .jodit_filebrowser_source_title {
             margin-top: 10px;
         }
-        a {
-            vertical-align: top;
-            display: inline-block;
+
+        .jodit_filebrowser_files_item {
             width: @col_size;
             height: @col_size;
+
+            @media (max-width: @screen-xs) {
+                width: calc(50% - 10px);
+            }
+
             line-height: @col_size;
             text-align: center;
             border: 1px solid #ccc;
-            margin: 5px 5px 10px 5px;
+            margin: 5px;
             font-size: 0;
             overflow: hidden;
             transition: border 0.1s linear, bottom 0.1s linear;
-            box-sizing: content-box;
             position: relative;
 
             img {
@@ -219,12 +253,12 @@
                 border-color: #433b5c;
             }
 
-            &.active {
+            &-active-true {
                 border-color: @color-border-selected;
                 background-color: @color-border-active;
             }
 
-            .jodit_filebrowser_files_item-info {
+            &-info {
                 position: absolute;
                 right: 0;
                 left: 0;
@@ -247,6 +281,7 @@
                     white-space: nowrap;
                     overflow: hidden;
                     font-size: 0.75em;
+
                     &.jodit_filebrowser_files_item-info-filename {
                         font-weight: bold;
                         font-size: 0.9em;
@@ -254,7 +289,7 @@
                 }
             }
 
-            &.active {
+            &-active-true {
                 .jodit_filebrowser_files_item-info {
                     background-color: @color-border-active;
                     color: white;
@@ -262,7 +297,7 @@
                 }
             }
 
-            &:hover:not(.active) {
+            &:hover:not(.jodit_filebrowser_files_item-active-true) {
                 .jodit_filebrowser_files_item-info {
                     bottom: -100px;
                 }
@@ -271,6 +306,7 @@
 
         &.jodit_filebrowser_files_view-list {
             scroll-behavior: smooth;
+
             a {
                 display: block;
                 width: 100%;
@@ -280,6 +316,7 @@
                 border-width: 0 0 1px 0;
                 text-align: left;
                 white-space: nowrap;
+
                 img {
                     min-width: 16px;
                     max-width: 16px;
@@ -287,6 +324,7 @@
                     display: inline-block;
                     margin-left: 4px;
                 }
+
                 .jodit_filebrowser_files_item-info {
                     padding: 0;
                     position: static;
@@ -298,28 +336,35 @@
                     line-height: inherit;
                     vertical-align: middle;
                     font-size: 0;
+
                     > span {
                         display: inline-block;
                         height: 100%;
                         font-size: 12px;
+
                         &.jodit_filebrowser_files_item-info-filename {
                             width: 50%;
                         }
+
                         &.jodit_filebrowser_files_item-info-filesize {
                             width: 25%;
                         }
+
                         &.jodit_filebrowser_files_item-info-filechanged {
                             width: 25%;
                         }
                     }
                 }
+
                 &:hover {
                     background-color: #433b5c;
+
                     .jodit_filebrowser_files_item-info {
                         color: #fff;
                         text-shadow: none;
                     }
                 }
+
                 &:before {
                     height: 100%;
                     content: '';
@@ -327,14 +372,6 @@
                     display: inline-block;
                 }
             }
-        }
-    }
-
-    &_tree.active + &_files.active {
-        width: 100% - @first_column;
-        @media (max-width: @screen-xs) {
-            width: auto;
-            display: block;
         }
     }
 }
@@ -349,9 +386,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
-    .jodit_icon-loader {
-    }
 
     &_box {
         flex-grow: 1;

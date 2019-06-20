@@ -13,6 +13,7 @@ export abstract class Component<T extends IViewBased = IViewBased>
     public jodit: T;
 
     private __isDestructed = false;
+
     /**
      * Editor was destructed
      *

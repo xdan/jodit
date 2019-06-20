@@ -23,7 +23,7 @@ import { normalizePath } from '../helpers/normalize/';
 import { normalizeURL } from '../helpers/normalize/normalizeURL';
 import { debounce } from '../helpers/async/debounce';
 import { humanSizeToBytes } from '../helpers';
-import { ITEM_CLASS } from './fileBrowser';
+import { ITEM_CLASS as IC } from './fileBrowser';
 
 declare module '../../Config' {
     interface Config {
@@ -413,10 +413,10 @@ Config.prototype.filebrowser = {
         }
 
         info =
-            '<div class="' + ITEM_CLASS + '-info">' +
-                (showName ? `<span class="${ITEM_CLASS}-info-filename">${name}</span>` : '') +
-                (showSize ? `<span class="${ITEM_CLASS}-info-filesize">${item.size}</span>` : '') +
-                (showTime ? `<span class="${ITEM_CLASS}-info-filechanged">${showTime}</span>` : '') +
+            '<div class="' + IC + '-info">' +
+                (showName ? `<span class="${IC}-info-filename">${name}</span>` : '') +
+                (showSize ? `<span class="${IC}-info-filesize">${item.size}</span>` : '') +
+                (showTime ? `<span class="${IC}-info-filechanged">${showTime}</span>` : '') +
             '</div>';
 
         const
@@ -426,7 +426,7 @@ Config.prototype.filebrowser = {
             '<a ' +
                 `data-is-file="${(item.isImage ? 0 : 1)}" ` +
                 'draggable="true" ' +
-                `class="${ITEM_CLASS}"` +
+                `class="${IC}"` +
                 `href="${imageURL}" ` +
                 `data-source="${source_name}" ` +
                 `data-path="${normalizePath(source.path ? source.path + '/' : '/')}" ` +
