@@ -16,7 +16,7 @@ interface IComponent<T extends IViewBased = IViewBased> {
     destruct(): any;
 }
 
-export type NodeCondition = (node: Node | null) => boolean | null | void | '';
+export type NodeCondition = (node: Node | null) => boolean | null | false | void | '';
 
 /**
  * Bound interface
