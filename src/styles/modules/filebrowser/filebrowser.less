@@ -3,7 +3,7 @@
  * License GNU General Public License version 2 or later;
  * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
-@import (reference) '../variables';
+@import (reference) '../../variables';
 
 @first_column: 31%;
 @cols: 4;
@@ -50,8 +50,8 @@
 		right: 0;
 		bottom: 0;
 		background-color: #4a4a4a;
-		//visibility: hidden;
-		//opacity: 0;
+		visibility: hidden;
+		opacity: 0;
 		transition: opacity 0.3s linear;
 		color: #b38888;
 		word-break: break-all;
@@ -382,64 +382,11 @@
 	}
 }
 
-.jodit_filebrowser_preview {
-	text-align: center;
-	min-width: 600px;
-	max-width: 100%;
-	min-height: 700px;
-	max-height: 100%;
-	position: relative;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-
-	&_box {
-		flex-grow: 1;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-
-	&_navigation {
-		position: absolute;
-		top: 0;
-		height: 100%;
-		left: 0;
-
-		&-next {
-			left: auto;
-			right: 0;
-		}
-
-		svg {
-			width: 45px;
-			height: 45px;
-			position: relative;
-			top: 50%;
-			margin-top: -22px;
-			transition: fill 0.3s linear;
-			fill: #9e9ba7;
-		}
-
-		&:hover svg {
-			fill: #000;
-		}
-	}
-
-	img {
-		max-width: 100%;
-		max-height: 100%;
-	}
-}
-
 .jodit_draghover {
 	background-color: @color-background-button-hover;
 }
 
-.jodit_dialog_box
-	.jodit_dialog
-	.jodit_dialog_header
-	.jodit_dialog_header-title {
+.jodit_dialog_box .jodit_dialog_header-title {
 	.jodit_upload_button {
 		position: relative;
 		width: 220px;

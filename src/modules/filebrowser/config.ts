@@ -345,7 +345,7 @@ Config.prototype.filebrowser = {
 		moveFile: true,
 		showFoldersPanel: true,
 
-		width: 763,
+		width: 859,
 		height: 400,
 		buttons: [
 				'filebrowser.upload',

@@ -15,14 +15,14 @@ import { Promt } from '../dialog/promt';
 import { ToolbarIcon } from '../toolbar/icon';
 
 import {
-		IFileBrowser,
-		IFileBrowserAjaxOptions,
-		IFileBrowserAnswer,
-		IFileBrowserCallBackData,
-		IFileBrowserOptions,
-		ISource,
-		ISourceFile,
-		ISourcesFiles,
+	IFileBrowser,
+	IFileBrowserAjaxOptions,
+	IFileBrowserAnswer,
+	IFileBrowserCallBackData,
+	IFileBrowserOptions,
+	ISource,
+	ISourceFile,
+	ISourcesFiles,
 } from '../../types/fileBrowser';
 
 import { ActionBox, IPermissions } from '../../types/types';
@@ -40,6 +40,7 @@ import { ViewWithToolbar } from '../view/viewWithToolbar';
 import { IJodit } from '../../types';
 import './config';
 import { Collection } from '../helpers/array/collection';
+import { Dom } from '../Dom';
 
 const
 		F_CLASS = 'jodit_filebrowser_';
@@ -1108,9 +1109,6 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 																		icon: 'eye',
 																		title: 'Preview',
 																		exec: () => {
-																				let
-																						src = ga('href');
-
 																				const
 																						preview: Dialog = new Dialog(self),
 																						temp_content: HTMLElement = self.create.div(
@@ -1120,10 +1118,12 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 
 																						preview_box: HTMLElement = self.create.div(F_CLASS + 'preview_box'),
 
-																						image: HTMLImageElement = self.create.element('img'),
+																						addLoadHandler = (src: string) => {
+																							const image: HTMLImageElement = self.create.element('img');
 
-																						addLoadHandler = () => {
-																								const onload = () => {
+																							image.setAttribute('src', src);
+
+																							const onload = () => {
 																										this.removeEventListener(
 																												'load',
 																												onload as EventListenerOrEventListenerObject,
@@ -1177,20 +1177,18 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 																																		item = item.previousSibling as HTMLElement;
 																																}
 
+																																Dom.detach(temp_content);
+																																Dom.detach(preview_box);
+
 																																temp_content.innerHTML = ICON_LOADER;
 
-																																src = ga('href') || '';
-
-																																image.setAttribute(
-																																		'src',
-																																		src,
-																																);
-																																addLoadHandler();
+																																addLoadHandler(ga('href'));
 																														},
 																												);
 																										}
 
 																										temp_content.appendChild(preview_box);
+
 																										preview_box.appendChild(
 																												image,
 																										);
@@ -1207,11 +1205,10 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 																								}
 																						};
 
-																				addLoadHandler();
+																				addLoadHandler(ga('href'));
 
-																				image.setAttribute('src', src);
 																				preview.setContent(temp_content);
-
+																				preview.setPosition();
 																				preview.open();
 																		},
 																}
