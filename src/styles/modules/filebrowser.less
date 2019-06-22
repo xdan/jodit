@@ -10,453 +10,459 @@
 @info-background: rgb(233, 233, 233);
 
 .jodit_filebrowser {
-    font-family: @font-default;
-    height: 100%;
-    display: flex;
+	font-family: @font-default;
+	height: 100%;
+	display: flex;
 
-    @media (max-width: @screen-xs) {
-        flex-direction: column;
-        flex-flow: column-reverse;
-    }
+	&_no_files {
+		padding: 10px;
+	}
 
-    &_loader {
-        height: 100%;
-        width: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
+	@media (max-width: @screen-xs) {
+		flex-direction: column;
+		flex-flow: column-reverse;
+	}
 
-        i {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            margin-top: -64px;
-            margin-left: -64px;
-            font-style: normal;
-        }
-    }
+	&_loader {
+		height: 100%;
+		width: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
 
-    &_status {
-        position: absolute;
-        font-size: 10px;
-        padding: 2px 3px;
-        border-top: 1px solid rgba(127, 127, 127, 0.4);
-        left: @first_column;
-        right: 0;
-        bottom: 0;
-        background-color: #4a4a4a;
-        visibility: hidden;
-        opacity: 0;
-        transition: opacity 0.3s linear;
-        color: #b38888;
-        word-break: break-all;
+		i {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-top: -64px;
+			margin-left: -64px;
+			font-style: normal;
+		}
+	}
 
-        &.success {
-            color: #c5c5c5;
-        }
+	&_status {
+		position: absolute;
+		font-size: 12px;
+		padding: 6px;
+		text-align: right;
+		border-top: 1px solid rgba(127, 127, 127, 0.4);
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: #4a4a4a;
+		//visibility: hidden;
+		//opacity: 0;
+		transition: opacity 0.3s linear;
+		color: #b38888;
+		word-break: break-all;
 
-        &.active {
-            visibility: visible;
-            opacity: 1;
-        }
-    }
+		&.success {
+			color: #c5c5c5;
+		}
 
-    &_tree,
-    &_files {
-        display: none;
-        vertical-align: top;
-        height: 100%;
-        position: relative;
+		&.active {
+			visibility: visible;
+			opacity: 1;
+		}
+	}
 
-        &.active {
-            display: flex;
-        }
+	&_tree,
+	&_files {
+		display: none;
+		vertical-align: top;
+		height: 100%;
+		position: relative;
 
-        &::-webkit-scrollbar {
-            width: 5px;
-        }
+		&.active {
+			display: flex;
+		}
 
-        &::-webkit-scrollbar-track {
-            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-        }
+		&::-webkit-scrollbar {
+			width: 5px;
+		}
 
-        &::-webkit-scrollbar-thumb {
-            background-color: darkgrey;
-            outline: 1px solid slategrey;
-        }
-    }
+		&::-webkit-scrollbar-track {
+			-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+		}
 
-    &_tree.active {
-        flex-direction: column;
-        width: @first_column;
-        min-width: 200px;
-        max-width: 290px;
+		&::-webkit-scrollbar-thumb {
+			background-color: darkgrey;
+			outline: 1px solid slategrey;
+		}
+	}
 
-        @media (max-width: @screen-xs) {
-            max-width: 100%;
-            width: auto;
-            height: 100px;
-        }
+	&_tree.active {
+		flex-direction: column;
+		width: @first_column;
+		min-width: 200px;
+		max-width: 290px;
+		z-index: 2;
 
-        background-color: @color-background-filebrowser-folders;
-        overflow-y: auto;
+		@media (max-width: @screen-xs) {
+			max-width: 100%;
+			width: auto;
+			height: 100px;
+		}
 
-        &::-webkit-scrollbar {
-            width: 5px;
-        }
+		background-color: @color-background-filebrowser-folders;
+		overflow-y: auto;
 
-        &::-webkit-scrollbar-track {
-            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-        }
+		&::-webkit-scrollbar {
+			width: 5px;
+		}
 
-        &::-webkit-scrollbar-thumb {
-            background-color: rgba(127, 127, 127, 0.5);
-            outline: 1px solid slategrey;
-        }
+		&::-webkit-scrollbar-track {
+			-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+		}
 
-        .jodit_filebrowser_source_title {
-            user-select: none;
-            display: block;
-            padding: 10px;
-            color: #969696;
-            border-bottom: 1px solid #484848;
-            line-height: 17px;
-            min-height: 38px;
-            position: relative;
-            word-break: break-all;
-            background: #5a5a5a;
-            font-size: 16px;
-        }
+		&::-webkit-scrollbar-thumb {
+			background-color: rgba(127, 127, 127, 0.5);
+			outline: 1px solid slategrey;
+		}
 
-        .jodit_filebrowser_tree_item {
-            display: flex;
-            justify-items: center;
-            align-items: center;
+		.jodit_filebrowser_source_title {
+			user-select: none;
+			display: block;
+			padding: 10px;
+			color: #969696;
+			border-bottom: 1px solid #484848;
+			line-height: 17px;
+			min-height: 38px;
+			position: relative;
+			word-break: break-all;
+			background: #5a5a5a;
+			font-size: 16px;
+		}
 
-            padding: 5px 20px;
-            text-decoration: none;
-            color: #b1b1b1;
-            font-weight: 600;
-            transition: background-color 0.2s ease 0s;
-            border-bottom: 1px solid #474747;
-            line-height: 17px;
-            min-height: 38px;
-            position: relative;
-            word-break: break-all;
-            font-size: 16px;
+		.jodit_filebrowser_tree_item {
+			display: flex;
+			justify-items: center;
+			align-items: center;
 
-            i.remove {
-                height: 16px;
-                width: 16px;
-                line-height: 17px;
-                font-size: 16px;
-                position: absolute;
-                right: 5px;
-                top: 11px;
-                opacity: 0;
-                padding-left: 3px;
-                display: inline-block;
-                font-style: normal;
+			padding: 5px 20px;
+			text-decoration: none;
+			color: #b1b1b1;
+			font-weight: 600;
+			transition: background-color 0.2s ease 0s;
+			border-bottom: 1px solid #474747;
+			line-height: 17px;
+			min-height: 38px;
+			position: relative;
+			word-break: break-all;
+			font-size: 16px;
 
-                &:hover {
-                    background: #696969;
-                }
-            }
+			i.remove {
+				height: 16px;
+				width: 16px;
+				line-height: 17px;
+				font-size: 16px;
+				position: absolute;
+				right: 5px;
+				top: 11px;
+				opacity: 0;
+				padding-left: 3px;
+				display: inline-block;
+				font-style: normal;
 
-            &:hover {
-                color: #222;
-                background-color: @color-background-button-hover;
+				&:hover {
+					background: #696969;
+				}
+			}
 
-                i.remove {
-                    opacity: 0.6;
-                }
-            }
-        }
+			&:hover {
+				color: #222;
+				background-color: @color-background-button-hover;
 
-        .jodit_button {
-            cursor: pointer;
-            background: #696969;
-            text-align: center;
-            width: auto;
-            height: 38px;
-            color: #969696;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
+				i.remove {
+					opacity: 0.6;
+				}
+			}
+		}
 
-            svg {
-                margin: 0 5px;
-            }
+		.jodit_button {
+			cursor: pointer;
+			background: #696969;
+			text-align: center;
+			width: auto;
+			height: 38px;
+			color: #969696;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 14px;
 
-            &:not(.disabled):hover {
-                background-color: @color-background-button-hover;
-            }
+			svg {
+				margin: 0 5px;
+			}
 
-            &.disabled,
-            &:hover i {
-                opacity: 0.7;
-            }
-        }
-    }
+			&:not(.disabled):hover {
+				background-color: @color-background-button-hover;
+			}
 
-    @col_size: 150px;
+			&.disabled,
+			&:hover i {
+				opacity: 0.7;
+			}
+		}
+	}
 
-    &_files.active {
-        width: 100%;
-        overflow-y: auto;
-        padding: 5px;
-        flex-wrap: wrap;
-        align-content: flex-start;
+	@col_size: 150px;
 
-        .jodit_filebrowser_source_title {
-            user-select: none;
-            margin: -10px -10px 0 -10px;
-            display: block;
-            padding: 10px;
-            line-height: 17px;
-            min-height: 38px;
-            position: relative;
-            word-break: break-all;
-            background: #5a5a5a;
-            font-size: 16px;
-            color: #969696;
-        }
+	&_files.active {
+		width: 100%;
+		overflow-y: auto;
+		padding: 5px;
+		flex-wrap: wrap;
+		align-content: flex-start;
 
-        a + .jodit_filebrowser_source_title {
-            margin-top: 10px;
-        }
+		.jodit_filebrowser_source_title {
+			user-select: none;
+			margin: -10px -10px 0 -10px;
+			display: block;
+			padding: 10px;
+			line-height: 17px;
+			min-height: 38px;
+			position: relative;
+			word-break: break-all;
+			background: #5a5a5a;
+			font-size: 16px;
+			color: #969696;
+		}
 
-        .jodit_filebrowser_files_item {
-            width: @col_size;
-            height: @col_size;
+		a + .jodit_filebrowser_source_title {
+			margin-top: 10px;
+		}
 
-            @media (max-width: @screen-xs) {
-                width: calc(50% - 10px);
-            }
+		.jodit_filebrowser_files_item {
+			width: @col_size;
+			height: @col_size;
 
-            line-height: @col_size;
-            text-align: center;
-            border: 1px solid #ccc;
-            margin: 5px;
-            font-size: 0;
-            overflow: hidden;
-            transition: border 0.1s linear, bottom 0.1s linear;
-            position: relative;
+			@media (max-width: @screen-xs) {
+				width: calc(50% - 10px);
+			}
 
-            img {
-                max-width: 100%;
-                vertical-align: middle;
-            }
+			line-height: @col_size;
+			text-align: center;
+			border: 1px solid #ccc;
+			margin: 5px;
+			font-size: 0;
+			overflow: hidden;
+			transition: border 0.1s linear, bottom 0.1s linear;
+			position: relative;
 
-            &:hover {
-                border-color: #433b5c;
-            }
+			img {
+				max-width: 100%;
+				vertical-align: middle;
+			}
 
-            &-active-true {
-                border-color: @color-border-selected;
-                background-color: @color-border-active;
-            }
+			&:hover {
+				border-color: #433b5c;
+			}
 
-            &-info {
-                position: absolute;
-                right: 0;
-                left: 0;
-                bottom: 0;
-                white-space: normal;
-                opacity: 0.85;
-                overflow: visible;
-                padding: 0.3em 0.6em;
-                transition: opacity 400ms ease;
-                background-color: @info-background;
-                color: rgb(51, 51, 51);
-                text-shadow: rgb(238, 238, 238) 0 1px 0;
-                font-size: 14px;
-                line-height: 16px;
-                text-align: left;
+			&-active-true {
+				border-color: @color-border-selected;
+				background-color: @color-border-active;
+			}
 
-                > span {
-                    display: block;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    font-size: 0.75em;
+			&-info {
+				position: absolute;
+				right: 0;
+				left: 0;
+				bottom: 0;
+				white-space: normal;
+				opacity: 0.85;
+				overflow: visible;
+				padding: 0.3em 0.6em;
+				transition: opacity 400ms ease;
+				background-color: @info-background;
+				color: rgb(51, 51, 51);
+				text-shadow: rgb(238, 238, 238) 0 1px 0;
+				font-size: 14px;
+				line-height: 16px;
+				text-align: left;
 
-                    &.jodit_filebrowser_files_item-info-filename {
-                        font-weight: bold;
-                        font-size: 0.9em;
-                    }
-                }
-            }
+				> span {
+					display: block;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+					overflow: hidden;
+					font-size: 0.75em;
 
-            &-active-true {
-                .jodit_filebrowser_files_item-info {
-                    background-color: @color-border-active;
-                    color: white;
-                    text-shadow: none;
-                }
-            }
+					&.jodit_filebrowser_files_item-info-filename {
+						font-weight: bold;
+						font-size: 0.9em;
+					}
+				}
+			}
 
-            &:hover:not(.jodit_filebrowser_files_item-active-true) {
-                .jodit_filebrowser_files_item-info {
-                    bottom: -100px;
-                }
-            }
-        }
+			&-active-true {
+				.jodit_filebrowser_files_item-info {
+					background-color: @color-border-active;
+					color: white;
+					text-shadow: none;
+				}
+			}
 
-        &.jodit_filebrowser_files_view-list {
-            scroll-behavior: smooth;
+			&:hover:not(.jodit_filebrowser_files_item-active-true) {
+				.jodit_filebrowser_files_item-info {
+					bottom: -100px;
+				}
+			}
+		}
 
-            a {
-                display: block;
-                width: 100%;
-                height: 26px;
-                line-height: 26px;
-                margin: 0;
-                border-width: 0 0 1px 0;
-                text-align: left;
-                white-space: nowrap;
+		&.jodit_filebrowser_files_view-list {
+			scroll-behavior: smooth;
 
-                img {
-                    min-width: 16px;
-                    max-width: 16px;
-                    vertical-align: middle;
-                    display: inline-block;
-                    margin-left: 4px;
-                }
+			a {
+				display: block;
+				width: 100%;
+				height: 26px;
+				line-height: 26px;
+				margin: 0;
+				border-width: 0 0 1px 0;
+				text-align: left;
+				white-space: nowrap;
 
-                .jodit_filebrowser_files_item-info {
-                    padding: 0;
-                    position: static;
-                    display: inline-block;
-                    width: ~'calc(100% - 20px)';
-                    margin-left: 4px;
-                    background-color: transparent;
-                    height: 100%;
-                    line-height: inherit;
-                    vertical-align: middle;
-                    font-size: 0;
+				img {
+					min-width: 16px;
+					max-width: 16px;
+					vertical-align: middle;
+					display: inline-block;
+					margin-left: 4px;
+				}
 
-                    > span {
-                        display: inline-block;
-                        height: 100%;
-                        font-size: 12px;
+				.jodit_filebrowser_files_item-info {
+					padding: 0;
+					position: static;
+					display: inline-block;
+					width: ~'calc(100% - 20px)';
+					margin-left: 4px;
+					background-color: transparent;
+					height: 100%;
+					line-height: inherit;
+					vertical-align: middle;
+					font-size: 0;
 
-                        &.jodit_filebrowser_files_item-info-filename {
-                            width: 50%;
-                        }
+					> span {
+						display: inline-block;
+						height: 100%;
+						font-size: 12px;
 
-                        &.jodit_filebrowser_files_item-info-filesize {
-                            width: 25%;
-                        }
+						&.jodit_filebrowser_files_item-info-filename {
+							width: 50%;
+						}
 
-                        &.jodit_filebrowser_files_item-info-filechanged {
-                            width: 25%;
-                        }
-                    }
-                }
+						&.jodit_filebrowser_files_item-info-filesize {
+							width: 25%;
+						}
 
-                &:hover {
-                    background-color: #433b5c;
+						&.jodit_filebrowser_files_item-info-filechanged {
+							width: 25%;
+						}
+					}
+				}
 
-                    .jodit_filebrowser_files_item-info {
-                        color: #fff;
-                        text-shadow: none;
-                    }
-                }
+				&:hover {
+					background-color: #433b5c;
 
-                &:before {
-                    height: 100%;
-                    content: '';
-                    vertical-align: middle;
-                    display: inline-block;
-                }
-            }
-        }
-    }
+					.jodit_filebrowser_files_item-info {
+						color: #fff;
+						text-shadow: none;
+					}
+				}
+
+				&:before {
+					height: 100%;
+					content: '';
+					vertical-align: middle;
+					display: inline-block;
+				}
+			}
+		}
+	}
 }
 
 .jodit_filebrowser_preview {
-    text-align: center;
-    min-width: 600px;
-    max-width: 100%;
-    min-height: 700px;
-    max-height: 100%;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+	text-align: center;
+	min-width: 600px;
+	max-width: 100%;
+	min-height: 700px;
+	max-height: 100%;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 
-    &_box {
-        flex-grow: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+	&_box {
+		flex-grow: 1;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
 
-    &_navigation {
-        position: absolute;
-        top: 0;
-        height: 100%;
-        left: 0;
+	&_navigation {
+		position: absolute;
+		top: 0;
+		height: 100%;
+		left: 0;
 
-        &-next {
-            left: auto;
-            right: 0;
-        }
+		&-next {
+			left: auto;
+			right: 0;
+		}
 
-        svg {
-            width: 45px;
-            height: 45px;
-            position: relative;
-            top: 50%;
-            margin-top: -22px;
-            transition: fill 0.3s linear;
-            fill: #9e9ba7;
-        }
+		svg {
+			width: 45px;
+			height: 45px;
+			position: relative;
+			top: 50%;
+			margin-top: -22px;
+			transition: fill 0.3s linear;
+			fill: #9e9ba7;
+		}
 
-        &:hover svg {
-            fill: #000;
-        }
-    }
+		&:hover svg {
+			fill: #000;
+		}
+	}
 
-    img {
-        max-width: 100%;
-        max-height: 100%;
-    }
+	img {
+		max-width: 100%;
+		max-height: 100%;
+	}
 }
 
 .jodit_draghover {
-    background-color: @color-background-button-hover;
+	background-color: @color-background-button-hover;
 }
 
 .jodit_dialog_box
-    .jodit_dialog
-    .jodit_dialog_header
-    .jodit_dialog_header-title {
-    .jodit_upload_button {
-        position: relative;
-        width: 220px;
+	.jodit_dialog
+	.jodit_dialog_header
+	.jodit_dialog_header-title {
+	.jodit_upload_button {
+		position: relative;
+		width: 220px;
 
-        border: 0;
-        padding: 25px 0;
-        margin: 10px 0;
-        overflow: hidden;
+		border: 0;
+		padding: 25px 0;
+		margin: 10px 0;
+		overflow: hidden;
 
-        input {
-            cursor: pointer;
-            position: absolute;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            margin: 0 -10px 0 0;
-            padding: 0;
-            opacity: 0;
-            font-size: 400px;
-        }
-    }
+		input {
+			cursor: pointer;
+			position: absolute;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			margin: 0 -10px 0 0;
+			padding: 0;
+			opacity: 0;
+			font-size: 400px;
+		}
+	}
 
-    &.jodit_filebrowser_title_box {
-        padding-left: @padding-default;
-    }
+	&.jodit_filebrowser_title_box {
+		padding-left: @padding-default;
+	}
 }

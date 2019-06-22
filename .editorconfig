@@ -1,0 +1,15 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_size = 2
+indent_style = tab
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[{LICENSE,.gitattributes,.gitignore,.npmignore,.eslintignore}]
+indent_style = space
+
+[*.{json,yml,md,yaspellerrc,bowerrc,babelrc,snakeskinrc,eslintrc,tsconfig,pzlrrc}]
+indent_style = space

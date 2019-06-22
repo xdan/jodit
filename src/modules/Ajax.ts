@@ -39,232 +39,232 @@ import { each, extend } from './helpers/';
 declare const XDomainRequest: any;
 
 export interface AjaxOptions {
-    dataType?: string;
-    method?: string;
+		dataType?: string;
+		method?: string;
 
-    url?: string;
+		url?: string;
 
-    data: IDictionary<string> | null | FormData | string;
+		data: IDictionary<string> | null | FormData | string;
 
-    contentType?: string | false;
+		contentType?: string | false;
 
-    headers?: IDictionary<string> | null;
+		headers?: IDictionary<string> | null;
 
-    withCredentials?: boolean;
+		withCredentials?: boolean;
 
-    queryBuild?: (
-        this: Ajax,
-        obj: string | IDictionary<string | object> | FormData,
-        prefix?: string
-    ) => string | FormData;
+		queryBuild?: (
+				this: Ajax,
+				obj: string | IDictionary<string | object> | FormData,
+				prefix?: string
+		) => string | FormData;
 
-    xhr?: () => XMLHttpRequest;
+		xhr?: () => XMLHttpRequest;
 }
 
 declare module '../Config' {
-    interface Config {
-        defaultAjaxOptions: AjaxOptions;
-    }
+		interface Config {
+				defaultAjaxOptions: AjaxOptions;
+		}
 }
 
 Config.prototype.defaultAjaxOptions = {
-    dataType: 'json',
-    method: 'GET',
+		dataType: 'json',
+		method: 'GET',
 
-    url: '',
+		url: '',
 
-    data: null,
+		data: null,
 
-    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+		contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 
-    headers: {
-        'X-REQUESTED-WITH': 'XMLHttpRequest', // compatible with jQuery
-    },
+		headers: {
+				'X-REQUESTED-WITH': 'XMLHttpRequest', // compatible with jQuery
+		},
 
-    withCredentials: false,
+		withCredentials: false,
 
-    xhr(): XMLHttpRequest {
-        const XHR =
-            typeof XDomainRequest === 'undefined'
-                ? XMLHttpRequest
-                : XDomainRequest;
-        return new XHR();
-    },
+		xhr(): XMLHttpRequest {
+				const XHR =
+						typeof XDomainRequest === 'undefined'
+								? XMLHttpRequest
+								: XDomainRequest;
+				return new XHR();
+		},
 } as AjaxOptions;
 
 export class Ajax {
-    private readonly xhr: XMLHttpRequest;
+		private readonly xhr: XMLHttpRequest;
 
-    private success_response_codes = [200, 201, 202];
-    private __buildParams(
-        obj: string | IDictionary<string | object> | FormData,
-        prefix?: string
-    ): string | FormData {
-        if (
-            this.options.queryBuild &&
-            typeof this.options.queryBuild === 'function'
-        ) {
-            return this.options.queryBuild.call(this, obj, prefix);
-        }
+		private success_response_codes = [200, 201, 202];
+		private __buildParams(
+				obj: string | IDictionary<string | object> | FormData,
+				prefix?: string
+		): string | FormData {
+				if (
+						this.options.queryBuild &&
+						typeof this.options.queryBuild === 'function'
+				) {
+						return this.options.queryBuild.call(this, obj, prefix);
+				}
 
-        if (
-            typeof obj === 'string' ||
-            ((this.jodit.ownerWindow as any).FormData &&
-                obj instanceof (this.jodit.ownerWindow as any).FormData)
-        ) {
-            return obj as string | FormData;
-        }
+				if (
+						typeof obj === 'string' ||
+						((this.jodit.ownerWindow as any).FormData &&
+								obj instanceof (this.jodit.ownerWindow as any).FormData)
+				) {
+						return obj as string | FormData;
+				}
 
-        const str: string[] = [];
-        let p: string, k: string, v: any;
+				const str: string[] = [];
+				let p: string, k: string, v: any;
 
-        for (p in obj) {
-            if (obj.hasOwnProperty(p)) {
-                k = prefix ? prefix + '[' + p + ']' : p;
-                v = (obj as IDictionary<string>)[p];
-                str.push(
-                    typeof v === 'object'
-                        ? (this.__buildParams(v, k) as string)
-                        : encodeURIComponent(k) +
-                              '=' +
-                              encodeURIComponent(v as string)
-                );
-            }
-        }
+				for (p in obj) {
+						if (obj.hasOwnProperty(p)) {
+								k = prefix ? prefix + '[' + p + ']' : p;
+								v = (obj as IDictionary<string>)[p];
+								str.push(
+										typeof v === 'object'
+												? (this.__buildParams(v, k) as string)
+												: encodeURIComponent(k) +
+															'=' +
+															encodeURIComponent(v as string)
+								);
+						}
+				}
 
-        return str.join('&');
-    }
-    public status: number;
-    public response: string;
+				return str.join('&');
+		}
+		public status: number;
+		public response: string;
 
-    public options: AjaxOptions;
-    public jodit: IViewBased;
+		public options: AjaxOptions;
+		public jodit: IViewBased;
 
-    public abort(): Ajax {
-        try {
-            this.xhr.abort();
-        } catch {}
+		public abort(): Ajax {
+				try {
+						this.xhr.abort();
+				} catch {}
 
-        return this;
-    }
+				return this;
+		}
 
-    send(): Promise<any> {
-        return new Promise(
-            (
-                resolve: (this: XMLHttpRequest, resp: object) => any,
-                reject: (error: Error) => any
-            ) => {
-                const __parse = (resp: string): object => {
-                    let result: object | null = null;
+		send(): Promise<any> {
+				return new Promise(
+						(
+								resolve: (this: XMLHttpRequest, resp: object) => any,
+								reject: (error: Error) => any
+						) => {
+								const __parse = (resp: string): object => {
+										let result: object | null = null;
 
-                    switch (this.options.dataType) {
-                        case 'json':
-                            result = JSON.parse(resp);
-                            break;
-                    }
+										switch (this.options.dataType) {
+												case 'json':
+														result = JSON.parse(resp);
+														break;
+										}
 
-                    if (!result) {
-                        throw new Error('No JSON format');
-                    }
+										if (!result) {
+												throw new Error('No JSON format');
+										}
 
-                    return result;
-                };
+										return result;
+								};
 
-                this.xhr.onabort = () => {
-                    reject(new Error(this.xhr.statusText));
-                };
-                this.xhr.onerror = () => {
-                    reject(new Error(this.xhr.statusText));
-                };
-                this.xhr.ontimeout = () => {
-                    reject(new Error(this.xhr.statusText));
-                };
-                this.xhr.onload = () => {
-                    this.response = this.xhr.responseText;
-                    this.status = this.xhr.status;
-                    resolve.call(this.xhr, __parse(this.response) || {});
-                };
+								this.xhr.onabort = () => {
+										reject(new Error(this.xhr.statusText));
+								};
+								this.xhr.onerror = () => {
+										reject(new Error(this.xhr.statusText));
+								};
+								this.xhr.ontimeout = () => {
+										reject(new Error(this.xhr.statusText));
+								};
+								this.xhr.onload = () => {
+										this.response = this.xhr.responseText;
+										this.status = this.xhr.status;
+										resolve.call(this.xhr, __parse(this.response) || {});
+								};
 
-                this.xhr.onreadystatechange = () => {
-                    if (this.xhr.readyState === XMLHttpRequest.DONE) {
-                        const resp = this.xhr.responseText;
+								this.xhr.onreadystatechange = () => {
+										if (this.xhr.readyState === XMLHttpRequest.DONE) {
+												const resp = this.xhr.responseText;
 
-                        this.response = resp;
-                        this.status = this.xhr.status;
+												this.response = resp;
+												this.status = this.xhr.status;
 
-                        if (
-                            this.success_response_codes.indexOf(
-                                this.xhr.status
-                            ) > -1
-                        ) {
-                            resolve.call(this.xhr, __parse(resp));
-                        } else {
-                            reject.call(
-                                this.xhr,
-                                new Error(
-                                    this.xhr.statusText ||
-                                        this.jodit.i18n('Connection error!')
-                                )
-                            );
-                        }
-                    }
-                };
+												if (
+														this.success_response_codes.indexOf(
+																this.xhr.status
+														) > -1
+												) {
+														resolve.call(this.xhr, __parse(resp));
+												} else {
+														reject.call(
+																this.xhr,
+																new Error(
+																		this.xhr.statusText ||
+																				this.jodit.i18n('Connection error!')
+																)
+														);
+												}
+										}
+								};
 
-                this.xhr.withCredentials =
-                    this.options.withCredentials || false;
+								this.xhr.withCredentials =
+										this.options.withCredentials || false;
 
-                if (this.options.url) {
-                    this.xhr.open(
-                        this.options.method || 'get',
-                        this.options.url,
-                        true
-                    );
-                } else {
-                    throw new Error('Need URL for AJAX request');
-                }
+								if (this.options.url) {
+										this.xhr.open(
+												this.options.method || 'get',
+												this.options.url,
+												true
+										);
+								} else {
+										throw new Error('Need URL for AJAX request');
+								}
 
-                if (this.options.contentType && this.xhr.setRequestHeader) {
-                    this.xhr.setRequestHeader(
-                        'Content-type',
-                        this.options.contentType
-                    );
-                }
+								if (this.options.contentType && this.xhr.setRequestHeader) {
+										this.xhr.setRequestHeader(
+												'Content-type',
+												this.options.contentType
+										);
+								}
 
-                if (this.options.headers && this.xhr.setRequestHeader) {
-                    each(this.options.headers, (key: string, value: string) => {
-                        this.xhr.setRequestHeader(key, value);
-                    });
-                }
+								if (this.options.headers && this.xhr.setRequestHeader) {
+										each(this.options.headers, (key: string, value: string) => {
+												this.xhr.setRequestHeader(key, value);
+										});
+								}
 
-                // IE
-                setTimeout(() => {
-                    this.xhr.send(
-                        this.options.data
-                            ? this.__buildParams(this.options.data)
-                            : undefined
-                    );
-                }, 0);
-            }
-        );
-    }
+								// IE
+								setTimeout(() => {
+										this.xhr.send(
+												this.options.data
+														? this.__buildParams(this.options.data)
+														: undefined
+										);
+								}, 0);
+						}
+				);
+		}
 
-    constructor(editor: IViewBased, options: AjaxOptions) {
-        this.jodit = editor;
-        this.options = extend(
-            true,
-            {},
-            Config.prototype.defaultAjaxOptions,
-            options
-        ) as AjaxOptions;
+		constructor(editor: IViewBased, options: AjaxOptions) {
+				this.jodit = editor;
+				this.options = extend(
+						true,
+						{},
+						Config.prototype.defaultAjaxOptions,
+						options
+				) as AjaxOptions;
 
-        if (this.options.xhr) {
-            this.xhr = this.options.xhr();
-        }
+				if (this.options.xhr) {
+						this.xhr = this.options.xhr();
+				}
 
-        editor &&
-            editor.events &&
-            editor.events.on('beforeDestruct', () => {
-                this.abort();
-            });
-    }
+				editor &&
+						editor.events &&
+						editor.events.on('beforeDestruct', () => {
+								this.abort();
+						});
+		}
 }

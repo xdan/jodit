@@ -11,11 +11,11 @@ import { $$ } from '../modules/helpers/selector';
 import { IJodit } from '../types';
 
 declare module '../Config' {
-    interface Config {
-        mediaInFakeBlock: boolean;
-        mediaFakeTag: string;
-        mediaBlocks: string[];
-    }
+		interface Config {
+				mediaInFakeBlock: boolean;
+				mediaFakeTag: string;
+				mediaBlocks: string[];
+		}
 }
 
 /**
@@ -34,87 +34,87 @@ Config.prototype.mediaInFakeBlock = true;
 Config.prototype.mediaBlocks = ['video', 'audio'];
 
 export function media(editor: IJodit) {
-    const keyFake: string = 'jodit_fake_wrapper';
+		const keyFake: string = 'jodit_fake_wrapper';
 
-    const { mediaFakeTag, mediaBlocks, mediaInFakeBlock } = editor.options;
+		const { mediaFakeTag, mediaBlocks, mediaInFakeBlock } = editor.options;
 
-    const wrap = (element: HTMLElement) => {
-        if (
-            element.parentNode &&
-            (element.parentNode as HTMLElement).getAttribute(
-                'data-jodit_iframe_wrapper'
-            )
-        ) {
-            element = element.parentNode as HTMLElement;
-        } else {
-            let wrapper: HTMLElement;
+		const wrap = (element: HTMLElement) => {
+				if (
+						element.parentNode &&
+						(element.parentNode as HTMLElement).getAttribute(
+								'data-jodit_iframe_wrapper'
+						)
+				) {
+						element = element.parentNode as HTMLElement;
+				} else {
+						let wrapper: HTMLElement;
 
-            wrapper = editor.create.inside.fromHTML(
-                '<' +
-                    mediaFakeTag +
-                    ' data-jodit-temp="1" ' +
-                    'contenteditable="false" ' +
-                    'draggable="true" ' +
-                    'data-' +
-                    keyFake +
-                    '="1">' +
-                    '</' +
-                    mediaFakeTag +
-                    '>'
-            );
+						wrapper = editor.create.inside.fromHTML(
+								'<' +
+										mediaFakeTag +
+										' data-jodit-temp="1" ' +
+										'contenteditable="false" ' +
+										'draggable="true" ' +
+										'data-' +
+										keyFake +
+										'="1">' +
+										'</' +
+										mediaFakeTag +
+										'>'
+						);
 
-            wrapper.style.display =
-                element.style.display === 'inline-block'
-                    ? 'inline-block'
-                    : 'block';
-            wrapper.style.width = element.offsetWidth + 'px';
-            wrapper.style.height = element.offsetHeight + 'px';
+						wrapper.style.display =
+								element.style.display === 'inline-block'
+										? 'inline-block'
+										: 'block';
+						wrapper.style.width = element.offsetWidth + 'px';
+						wrapper.style.height = element.offsetHeight + 'px';
 
-            if (element.parentNode) {
-                element.parentNode.insertBefore(wrapper, element);
-            }
+						if (element.parentNode) {
+								element.parentNode.insertBefore(wrapper, element);
+						}
 
-            wrapper.appendChild(element);
+						wrapper.appendChild(element);
 
-            element = wrapper;
-        }
+						element = wrapper;
+				}
 
-        editor.events
-            .off(element, 'mousedown.select touchstart.select')
-            .on(element, 'mousedown.select touchstart.select', () => {
-                editor.selection.setCursorAfter(element);
-            });
-    };
+				editor.events
+						.off(element, 'mousedown.select touchstart.select')
+						.on(element, 'mousedown.select touchstart.select', () => {
+								editor.selection.setCursorAfter(element);
+						});
+		};
 
-    if (mediaInFakeBlock) {
-        editor.events
-            .on('afterGetValueFromEditor', (data: { value: string }) => {
-                const rxp = new RegExp(
-                    `<${mediaFakeTag}[^>]+data-${keyFake}[^>]+>(.+?)</${mediaFakeTag}>`,
-                    'ig'
-                );
+		if (mediaInFakeBlock) {
+				editor.events
+						.on('afterGetValueFromEditor', (data: { value: string }) => {
+								const rxp = new RegExp(
+										`<${mediaFakeTag}[^>]+data-${keyFake}[^>]+>(.+?)</${mediaFakeTag}>`,
+										'ig'
+								);
 
-                if (rxp.test(data.value)) {
-                    data.value = data.value.replace(rxp, '$1');
-                }
-            })
-            .on(
-                'change afterInit afterSetMode',
-                debounce(() => {
-                    if (
-                        !editor.isDestructed &&
-                        editor.getMode() !== consts.MODE_SOURCE
-                    ) {
-                        $$(mediaBlocks.join(','), editor.editor).forEach(
-                            (elm: HTMLElement) => {
-                                if (!(elm as any)['__' + keyFake]) {
-                                    (elm as any)['__' + keyFake] = true;
-                                    wrap(elm);
-                                }
-                            }
-                        );
-                    }
-                }, editor.defaultTimeout)
-            );
-    }
+								if (rxp.test(data.value)) {
+										data.value = data.value.replace(rxp, '$1');
+								}
+						})
+						.on(
+								'change afterInit afterSetMode',
+								debounce(() => {
+										if (
+												!editor.isDestructed &&
+												editor.getMode() !== consts.MODE_SOURCE
+										) {
+												$$(mediaBlocks.join(','), editor.editor).forEach(
+														(elm: HTMLElement) => {
+																if (!(elm as any)['__' + keyFake]) {
+																		(elm as any)['__' + keyFake] = true;
+																		wrap(elm);
+																}
+														}
+												);
+										}
+								}, editor.defaultTimeout)
+						);
+		}
 }
