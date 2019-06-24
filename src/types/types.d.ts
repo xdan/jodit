@@ -145,14 +145,17 @@ export interface ImageEditorOptions {
     cropDefaultHeight: string | number;
 }
 
-export interface ActionBox {
-    action: string;
-    box: {
-        w: number;
-        h: number;
-        x?: number;
-        y?: number;
-    };
+export type ImageAction = 'resize' | 'crop';
+export type ImageBox = {
+	w: number;
+	h: number;
+	x?: number;
+	y?: number;
+};
+
+export interface ImageEditorActionBox {
+    action: ImageAction;
+    box: ImageBox;
 }
 
 export interface EventHandlerBlock {

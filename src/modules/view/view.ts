@@ -61,10 +61,10 @@ export class View extends Panel implements IViewBased {
 
     public components: any = [];
 
-    i18n(text: string): string {
+    i18n(text: string, ...params: Array<string | number>): string {
         return this.jodit && this.jodit !== this
-            ? this.jodit.i18n(text)
-            : Jodit.prototype.i18n(text);
+            ? this.jodit.i18n(text, ...params)
+            : Jodit.prototype.i18n(text, ...params);
     }
 
     /**

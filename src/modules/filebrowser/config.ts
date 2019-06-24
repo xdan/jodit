@@ -512,7 +512,7 @@ Config.prototype.controls.filebrowser = {
 						// do nothing
 				},
 				isDisable: (browser: IFileBrowser): boolean =>
-						!browser.canI('FileUpload'),
+						!browser.dataProvider.canI('FileUpload'),
 				getContent: (
 						filebrowser: IViewBased,
 						control: IControlType,
@@ -549,7 +549,7 @@ Config.prototype.controls.filebrowser = {
 				isDisable: (browser: IFileBrowser): boolean => {
 						return (
 								browser.getActiveElements().length === 0 ||
-								!browser.canI('FileRemove')
+								!browser.dataProvider.canI('FileRemove')
 						);
 				},
 				exec: (editor: IViewBased) => {
@@ -577,8 +577,8 @@ Config.prototype.controls.filebrowser = {
 								selected.length !== 1 ||
 								selected[0].getAttribute('data-is-file') === '1' ||
 								!(
-										(browser as IFileBrowser).canI('ImageCrop') ||
-										(browser as IFileBrowser).canI('ImageResize')
+										(browser as IFileBrowser).dataProvider.canI('ImageCrop') ||
+										(browser as IFileBrowser).dataProvider.canI('ImageResize')
 								)
 						);
 				},

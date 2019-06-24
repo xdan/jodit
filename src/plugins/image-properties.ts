@@ -555,7 +555,7 @@ export function imageProperties(editor: IJodit) {
 
                     (editor.getInstance(
                         'FileBrowser'
-                    ) as IFileBrowser).getPathByUrl(
+                    ) as IFileBrowser).dataProvider.getPathByUrl(
                         a.href.toString(),
                         (path: string, name: string, source: string) => {
                             (editor.getInstance(

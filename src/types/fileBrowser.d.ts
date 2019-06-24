@@ -5,7 +5,7 @@
  */
 
 import { Buttons } from './toolbar';
-import { IDictionary, IPermissions } from './types';
+import { IDictionary, ImageBox, IPermissions } from './types';
 import { IUploader, IUploaderOptions } from './uploader';
 import { IViewOptions, IViewWithToolbar } from './view';
 import { Dialog } from '../modules/dialog';
@@ -58,7 +58,7 @@ export interface IFileBrowserAjaxOptions {
     url?: string;
     async?: boolean;
 
-    data: IDictionary<string>;
+    data: IDictionary<string | IDictionary>;
     cache?: boolean;
     contentType?: string;
 
@@ -120,8 +120,10 @@ export interface IFileBrowserOptions extends IViewOptions {
     ajax: IFileBrowserAjaxOptions;
     create: IFileBrowserAjaxOptions | null;
     getLocalFileByUrl: IFileBrowserAjaxOptions | null;
+
     resize: IFileBrowserAjaxOptions | null;
     crop: IFileBrowserAjaxOptions | null;
+
     fileMove: IFileBrowserAjaxOptions | null;
     folderMove: IFileBrowserAjaxOptions | null;
     fileRemove: IFileBrowserAjaxOptions | null;
@@ -139,29 +141,43 @@ export interface IFileBrowserCallBackData {
     files: string[];
 }
 
+interface IFileBrowserDataProvider {
+	currentPath: string;
+	currentSource: string;
+	currentBaseUrl: string;
+
+	getPathByUrl(
+		url: string,
+		success: (path: string, name: string, source: string) => void,
+		onFailed: (error: Error) => void
+	): Promise<IFileBrowserAnswer>;
+
+	tree(path: string, source: string): Promise<IFileBrowserAnswer>;
+	items(path: string, source: string): Promise<IFileBrowserAnswer>;
+	permissions(path: string, source: string): Promise<any>;
+
+	createFolder(name: string, path: string, source: string): Promise<IFileBrowserAnswer>;
+
+	move(filepath: string, path: string, source: string, isFile: boolean): Promise<IFileBrowserAnswer>;
+
+	fileRemove(path: string, file: string, source: string): Promise<IFileBrowserAnswer>;
+
+	folderRemove(path: string, file: string, source: string): Promise<IFileBrowserAnswer>;
+
+	resize(path: string, source: string, name: string, newname: string | void, box: ImageBox | void): Promise<IFileBrowserAnswer>;
+	crop(path: string, source: string, name: string, newname: string | void, box: ImageBox | void): Promise<IFileBrowserAnswer>;
+
+	canI(action: string): boolean;
+}
+
 interface IFileBrowser extends IViewWithToolbar<IFileBrowserOptions> {
     uploader: IUploader;
+    dataProvider: IFileBrowserDataProvider;
+
     storage: Storage;
     dialog: Dialog;
-    currentPath: string;
-    currentSource: string;
-    currentBaseUrl: string;
 
     isOpened(): boolean;
-
-    getPathByUrl(
-        url: string,
-        success: (path: string, name: string, source: string) => void,
-        onFailed: (error: Error) => void
-    ): Promise<any>;
-
-    createFolder(name: string, path: string, source: string): Promise<void>;
-
-    move(filepath: string, path: string, source: string, isFile: boolean): Promise<void>;
-
-    fileRemove(path: string, file: string, source: string): Promise<void>;
-
-    folderRemove(path: string, file: string, source: string): Promise<void>;
 
     close: () => void;
 
@@ -175,7 +191,6 @@ interface IFileBrowser extends IViewWithToolbar<IFileBrowserOptions> {
     ): Promise<Dialog>;
 
     getActiveElements(): HTMLElement[];
-    canI(action: string): boolean;
 
     open(
         callback: (data: IFileBrowserCallBackData) => void,

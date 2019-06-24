@@ -13,8 +13,8 @@ import { each, extend } from './helpers/';
  * @property {object} defaultAjaxOptions A set of key/value pairs that configure the Ajax request. All settings
  * are optional
  * @property {object} defaultAjaxOptions.headers An object of additional header key/value pairs toWYSIWYG send along
- * with requests using the XMLHttpRequest transport. Uses in {@link module:FileBrowser|FileBrowser}
- * and {@link module:Uploader|Uploader}
+ * with requests using the XMLHttpRequest transport. Uses in {@link FileBrowser|FileBrowser}
+ * and {@link Uploader|Uploader}
  * @property {string} defaultAjaxOptions.dataType='json' json or text The type of data that you're expecting back
  * from the server. if `json` the return value passes through the `JSON.parse`
  * @property {string} defaultAjaxOptions.method='GET' The HTTP method toWYSIWYG use for the request
@@ -44,7 +44,7 @@ export interface AjaxOptions {
 
 		url?: string;
 
-		data: IDictionary<string> | null | FormData | string;
+		data: IDictionary<string> | null | FormData | string | IDictionary<string | IDictionary<any>>;
 
 		contentType?: string | false;
 
@@ -157,10 +157,8 @@ export class Ajax {
 								const __parse = (resp: string): object => {
 										let result: object | null = null;
 
-										switch (this.options.dataType) {
-												case 'json':
-														result = JSON.parse(resp);
-														break;
+										if (this.options.dataType === 'json') {
+											result = JSON.parse(resp);
 										}
 
 										if (!result) {

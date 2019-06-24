@@ -5,7 +5,7 @@
  */
 
 import { Config } from '../Config';
-import { ActionBox, IJodit, ImageEditorOptions } from '../types';
+import { ImageEditorActionBox, IJodit, ImageEditorOptions, ImageAction } from '../types';
 import { IViewBased } from '../types/view';
 import { Component } from './Component';
 import { Alert, Dialog, Promt } from './dialog/';
@@ -98,7 +98,7 @@ export class ImageEditor extends Component {
     private width: number;
     private height: number;
 
-    private activeTab: string = 'resize';
+    private activeTab: ImageAction = 'resize';
 
     private naturalWidth: number;
     private naturalHeight: number;
@@ -436,7 +436,7 @@ export class ImageEditor extends Component {
                     ).forEach(elm => elm.classList.remove('active'));
                     const slide: HTMLElement = this.parentNode as HTMLElement;
                     slide.classList.add('active');
-                    self.activeTab = slide.getAttribute('data-area') || '';
+                    self.activeTab = <ImageAction>slide.getAttribute('data-area') || 'resize';
 
                     const tab: HTMLDivElement | null = self.editor.querySelector(
                         '.jodit_image_editor_area.jodit_image_editor_area_' +
@@ -584,7 +584,7 @@ export class ImageEditor extends Component {
                         self.activeTab === 'resize'
                             ? self.resizeBox
                             : self.cropBox,
-                } as ActionBox;
+                } as ImageEditorActionBox;
 
                 switch (button.getAttribute('data-action')) {
                     case 'saveas':
@@ -641,7 +641,7 @@ export class ImageEditor extends Component {
 
     public onSave: (
         name: void | string,
-        data: ActionBox,
+        data: ImageEditorActionBox,
         hide: () => void,
         failed: (e: Error) => void
     ) => void;
@@ -693,7 +693,7 @@ export class ImageEditor extends Component {
         url: string,
         save: (
             newname: string | void,
-            box: ActionBox,
+            box: ImageEditorActionBox,
             success: () => void,
             failed: (error: Error) => void
         ) => void
