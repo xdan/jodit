@@ -11,11 +11,11 @@ import { css } from '../modules/helpers';
 import { IJodit } from '../types';
 
 declare module '../Config' {
-    interface Config {
-        showMessageErrors: boolean;
-        showMessageErrorTime: number;
-        showMessageErrorOffsetPx: number;
-    }
+	interface Config {
+		showMessageErrors: boolean;
+		showMessageErrorTime: number;
+		showMessageErrorOffsetPx: number;
+	}
 }
 
 /**
@@ -36,66 +36,66 @@ Config.prototype.showMessageErrorOffsetPx = 3;
  * Plugin toWYSIWYG display pop-up messages in the lower right corner of the editor
  */
 export function errorMessages(editor: IJodit) {
-    if (editor.options.showMessageErrors) {
-        let height: number;
+	if (editor.options.showMessageErrors) {
+		let height: number;
 
-        const messagesBox: HTMLDivElement = editor.create.div(
-                'jodit_error_box_for_messages'
-            ),
-            recalcOffsets = () => {
-                height = 5;
-                Array.from(<NodeListOf<HTMLElement>>(
-                    messagesBox.childNodes
-                )).forEach((elm: HTMLElement) => {
-                    css(messagesBox, 'bottom', height + 'px');
+		const messagesBox: HTMLDivElement = editor.create.div(
+				'jodit_error_box_for_messages'
+			),
+			recalcOffsets = () => {
+				height = 5;
+				Array.from(<NodeListOf<HTMLElement>>(
+					messagesBox.childNodes
+				)).forEach((elm: HTMLElement) => {
+					css(messagesBox, 'bottom', height + 'px');
 
-                    height +=
-                        elm.offsetWidth +
-                        editor.options.showMessageErrorOffsetPx;
-                });
-            };
+					height +=
+						elm.offsetWidth +
+						editor.options.showMessageErrorOffsetPx;
+				});
+			};
 
-        editor.workplace.appendChild(messagesBox);
+		editor.workplace.appendChild(messagesBox);
 
-        /**
-         * Вывести всплывающее сообщение внизу редактора
-         *
-         * @event errorMessage
-         * @param {string} message  Сообщение
-         * @param {string} className Дополнительный класс собобщения. Допускаются info, error, success
-         * @param {string} timeout Сколько миллисекунд показывать. По умолчанию используется
-         * options.showMessageErrorTime = 2000
-         * @example
-         * ```javascript
-         * parent.events.fire('errorMessage', 'Error 123. File has not been upload');
-         * parent.events.fire('errorMessage', 'You can upload file', 'info', 4000);
-         * parent.events.fire('errorMessage', 'File was uploaded', 'success', 4000);
-         * ```
-         */
-        editor.events
-            .on('beforeDestruct', () => {
-                Dom.safeRemove(messagesBox);
-            })
-            .on(
-                'errorMessage',
-                (message: string, className: string, timeout: number) => {
-                    const newmessage = editor.create.div(
-                        'active ' + (className || ''),
-                        message
-                    );
+		/**
+		 * Вывести всплывающее сообщение внизу редактора
+		 *
+		 * @event errorMessage
+		 * @param {string} message  Сообщение
+		 * @param {string} className Дополнительный класс собобщения. Допускаются info, error, success
+		 * @param {string} timeout Сколько миллисекунд показывать. По умолчанию используется
+		 * options.showMessageErrorTime = 2000
+		 * @example
+		 * ```javascript
+		 * parent.events.fire('errorMessage', 'Error 123. File has not been upload');
+		 * parent.events.fire('errorMessage', 'You can upload file', 'info', 4000);
+		 * parent.events.fire('errorMessage', 'File was uploaded', 'success', 4000);
+		 * ```
+		 */
+		editor.events
+			.on('beforeDestruct', () => {
+				Dom.safeRemove(messagesBox);
+			})
+			.on(
+				'errorMessage',
+				(message: string, className: string, timeout: number) => {
+					const newmessage = editor.create.div(
+						'active ' + (className || ''),
+						message
+					);
 
-                    messagesBox.appendChild(newmessage);
+					messagesBox.appendChild(newmessage);
 
-                    recalcOffsets();
-                    setTimeout(() => {
-                        newmessage.classList.remove('active');
+					recalcOffsets();
+					setTimeout(() => {
+						newmessage.classList.remove('active');
 
-                        setTimeout(() => {
-                            Dom.safeRemove(newmessage);
-                            recalcOffsets();
-                        }, 300);
-                    }, timeout || editor.options.showMessageErrorTime);
-                }
-            );
-    }
+						setTimeout(() => {
+							Dom.safeRemove(newmessage);
+							recalcOffsets();
+						}, 300);
+					}, timeout || editor.options.showMessageErrorTime);
+				}
+			);
+	}
 }

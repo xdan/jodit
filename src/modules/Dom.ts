@@ -32,7 +32,7 @@ export class Dom {
 	static wrapInline = (
 		current: Node,
 		tag: Node | HTMLTagNames,
-		editor: IJodit,
+		editor: IJodit
 	): HTMLElement => {
 		let tmp: null | Node,
 			first: Node = current,
@@ -94,7 +94,7 @@ export class Dom {
 	static wrap = (
 		current: Node,
 		tag: Node | string,
-		editor: IJodit,
+		editor: IJodit
 	): HTMLElement | null => {
 		const selInfo = editor.selection.save();
 
@@ -150,7 +150,7 @@ export class Dom {
 	 */
 	static each(
 		elm: Node | HTMLElement,
-		callback: (this: Node, node: Node) => void | false,
+		callback: (this: Node, node: Node) => void | false
 	): boolean {
 		let node: Node | null | false = elm.firstChild;
 
@@ -189,7 +189,7 @@ export class Dom {
 		newTagName: string | HTMLElement,
 		withAttributes = false,
 		notMoveContent = false,
-		doc: Document,
+		doc: Document
 	): HTMLElement {
 		const tag: HTMLElement =
 			typeof newTagName === 'string'
@@ -241,7 +241,7 @@ export class Dom {
 	 */
 	static isEmpty(
 		node: Node,
-		condNoEmptyElement: RegExp = /^(img|svg|canvas|input|textarea|form)$/,
+		condNoEmptyElement: RegExp = /^(img|svg|canvas|input|textarea|form)$/
 	): boolean {
 		if (!node) {
 			return true;
@@ -267,7 +267,7 @@ export class Dom {
 					) {
 						return false;
 					}
-				},
+				}
 			)
 		);
 	}
@@ -279,7 +279,8 @@ export class Dom {
 		if (
 			typeof win === 'object' &&
 			win &&
-			(typeof (win as any).Node === 'function' || typeof (win as any).Node === 'object')
+			(typeof (win as any).Node === 'function' ||
+				typeof (win as any).Node === 'object')
 		) {
 			return object instanceof (win as any).Node; // for Iframe Node !== iframe.contentWindow.Node
 		}
@@ -339,7 +340,7 @@ export class Dom {
 			!!node &&
 			(<Node>node).nodeType === Node.ELEMENT_NODE &&
 			['inline', 'inline-block'].indexOf(
-				css(node as HTMLElement, 'display').toString(),
+				css(node as HTMLElement, 'display').toString()
 			) !== -1
 		);
 	}
@@ -373,7 +374,7 @@ export class Dom {
 		node: Node,
 		condition: NodeCondition,
 		root: HTMLElement,
-		withChild: boolean = true,
+		withChild: boolean = true
 	): false | Node | HTMLElement | HTMLTableCellElement {
 		return Dom.find(
 			node,
@@ -381,7 +382,7 @@ export class Dom {
 			root,
 			false,
 			'previousSibling',
-			withChild ? 'lastChild' : false,
+			withChild ? 'lastChild' : false
 		);
 	}
 
@@ -398,7 +399,7 @@ export class Dom {
 		node: Node,
 		condition: NodeCondition,
 		root: Node | HTMLElement,
-		withChild: boolean = true,
+		withChild: boolean = true
 	): false | Node | HTMLElement | HTMLTableCellElement {
 		return Dom.find(
 			node,
@@ -406,20 +407,42 @@ export class Dom {
 			root,
 			undefined,
 			undefined,
-			withChild ? 'firstChild' : '',
+			withChild ? 'firstChild' : ''
 		);
 	}
 
-	static prevWithClass(node: HTMLElement, className: string): HTMLElement | false {
-		return <HTMLElement | false>this.prev(node, (node) => {
-			return node && node.nodeType === Node.ELEMENT_NODE && (<HTMLElement>node).classList.contains(className);
-		}, <HTMLElement>node.parentNode);
+	static prevWithClass(
+		node: HTMLElement,
+		className: string
+	): HTMLElement | false {
+		return <HTMLElement | false>this.prev(
+			node,
+			node => {
+				return (
+					node &&
+					node.nodeType === Node.ELEMENT_NODE &&
+					(<HTMLElement>node).classList.contains(className)
+				);
+			},
+			<HTMLElement>node.parentNode
+		);
 	}
 
-	static nextWithClass(node: HTMLElement, className: string): HTMLElement | false {
-		return <HTMLElement | false>this.next(node, (node) => {
-			return node && node.nodeType === Node.ELEMENT_NODE && (<HTMLElement>node).classList.contains(className);
-		}, <HTMLElement>node.parentNode);
+	static nextWithClass(
+		node: HTMLElement,
+		className: string
+	): HTMLElement | false {
+		return <HTMLElement | false>this.next(
+			node,
+			node => {
+				return (
+					node &&
+					node.nodeType === Node.ELEMENT_NODE &&
+					(<HTMLElement>node).classList.contains(className)
+				);
+			},
+			<HTMLElement>node.parentNode
+		);
 	}
 
 	/**
@@ -439,7 +462,7 @@ export class Dom {
 		root: HTMLElement | Node,
 		recurse = false,
 		sibling = 'nextSibling',
-		child: string | false = 'firstChild',
+		child: string | false = 'firstChild'
 	): false | Node {
 		if (recurse && condition(node)) {
 			return node;
@@ -461,7 +484,7 @@ export class Dom {
 					next,
 					true,
 					sibling,
-					child,
+					child
 				);
 				if (nextOne) {
 					return nextOne;
@@ -488,7 +511,7 @@ export class Dom {
 	static findInline = (
 		node: Node | null,
 		toLeft: boolean,
-		root: Node,
+		root: Node
 	): Node | null => {
 		let prevElement: Node | null = node,
 			nextElement: Node | null = null;
@@ -517,7 +540,7 @@ export class Dom {
 			nextElement &&
 			Dom.isInlineBlock(nextElement) &&
 			(!toLeft ? nextElement.firstChild : nextElement.lastChild)
-			) {
+		) {
 			nextElement = !toLeft
 				? nextElement.firstChild
 				: nextElement.lastChild;
@@ -541,7 +564,7 @@ export class Dom {
 		condition: NodeCondition,
 		root: HTMLElement | Node,
 		sibling: 'nextSibling' | 'previousSibling' = 'nextSibling',
-		child: 'firstChild' | 'lastChild' = 'firstChild',
+		child: 'firstChild' | 'lastChild' = 'firstChild'
 	): false | Node {
 		let next: Node | null = node;
 
@@ -556,7 +579,7 @@ export class Dom {
 					condition,
 					next,
 					sibling,
-					child,
+					child
 				);
 				if (nextOne) {
 					return nextOne;
@@ -586,7 +609,7 @@ export class Dom {
 	static up(
 		node: Node,
 		condition: NodeCondition,
-		root: Node,
+		root: Node
 	): false | Node | HTMLElement | HTMLTableCellElement | HTMLTableElement {
 		let start = node;
 
@@ -618,7 +641,7 @@ export class Dom {
 	static closest(
 		node: Node,
 		tags: string | NodeCondition | RegExp,
-		root: HTMLElement,
+		root: HTMLElement
 	): Node | HTMLTableElement | HTMLElement | false | HTMLTableCellElement {
 		let condition: NodeCondition;
 
@@ -692,7 +715,7 @@ export class Dom {
 	static all(
 		node: Node,
 		condition: NodeCondition,
-		prev: boolean = false,
+		prev: boolean = false
 	): Node | void {
 		let nodes: Node[] = node.childNodes
 			? Array.prototype.slice.call(node.childNodes)
@@ -740,7 +763,7 @@ export class Dom {
 	static isOrContains = (
 		root: Node,
 		child: Node,
-		onlyContains: boolean = false,
+		onlyContains: boolean = false
 	): boolean => {
 		return (
 			child &&

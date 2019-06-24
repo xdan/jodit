@@ -10,7 +10,7 @@ declare function require(moduleName: string): any;
 
 // for SSR
 if (typeof window !== 'undefined') {
-		require('./polyfills');
+	require('./polyfills');
 }
 
 import { Jodit as DefaultJodit } from './Jodit';
@@ -26,42 +26,42 @@ import { ToolbarIcon } from './modules/toolbar/icon';
 
 // copy constants in Jodit
 Object.keys(consts).forEach((key: string) => {
-		(DefaultJodit as any)[key] = (consts as any)[key];
+	(DefaultJodit as any)[key] = (consts as any)[key];
 });
 
 const esFilter = (key: string): boolean => key !== '__esModule';
 
 // Icons
 Object.keys(Icons)
-		.filter(esFilter)
-		.forEach((key: string) => {
-				ToolbarIcon.icons[key.replace('_', '-')] = (Icons as any)[key];
-		});
+	.filter(esFilter)
+	.forEach((key: string) => {
+		ToolbarIcon.icons[key.replace('_', '-')] = (Icons as any)[key];
+	});
 
 // Modules
 Object.keys(Modules)
-		.filter(esFilter)
-		.forEach((key: string) => {
-				DefaultJodit.modules[key] = (Modules as any)[key];
-		});
+	.filter(esFilter)
+	.forEach((key: string) => {
+		DefaultJodit.modules[key] = (Modules as any)[key];
+	});
 
 ['Confirm', 'Alert', 'Promt'].forEach((key: string) => {
-		(DefaultJodit as any)[key] = (Modules as any)[key];
+	(DefaultJodit as any)[key] = (Modules as any)[key];
 });
 
 // Plugins
 Object.keys(Plugins)
-		.filter(esFilter)
-		.forEach((key: string) => {
-				DefaultJodit.plugins[key] = (Plugins as any)[key];
-		});
+	.filter(esFilter)
+	.forEach((key: string) => {
+		DefaultJodit.plugins[key] = (Plugins as any)[key];
+	});
 
 // Languages
 Object.keys(Languages)
-		.filter(esFilter)
-		.forEach((key: string) => {
-				DefaultJodit.lang[key] = (Languages as any)[key];
-		});
+	.filter(esFilter)
+	.forEach((key: string) => {
+		DefaultJodit.lang[key] = (Languages as any)[key];
+	});
 
 DefaultJodit.defaultOptions = Config.defaultOptions;
 OptionsDefault.prototype = DefaultJodit.defaultOptions;

@@ -7,27 +7,27 @@
 import { IComponent, IDictionary } from './types';
 
 interface IUploaderData {
-    messages?: string[];
-    files?: string[];
-    isImages?: boolean[];
-    path?: string;
-    baseurl?: string;
-    newfilename?: string;
+	messages?: string[];
+	files?: string[];
+	isImages?: boolean[];
+	path?: string;
+	baseurl?: string;
+	newfilename?: string;
 }
 
 interface IUploaderAnswer {
-    success: boolean;
-    time: string;
-    data: IUploaderData;
+	success: boolean;
+	time: string;
+	data: IUploaderData;
 }
 
 export type HandlerSuccess = (resp: IUploaderData) => void;
 export type HandlerError = (e: Error) => void;
 export type BuildDataResult =
-    | FormData
-    | IDictionary<string>
-    | Promise<FormData | IDictionary<string>>
-    | string;
+	| FormData
+	| IDictionary<string>
+	| Promise<FormData | IDictionary<string>>
+	| string;
 
 /**
  * @property {object} uploader {@link Uploader|Uploader}'s settings
@@ -161,74 +161,74 @@ export type BuildDataResult =
  *  });
  */
 export interface IUploaderOptions<T> {
-    url: string;
-    insertImageAsBase64URI: boolean;
-    imagesExtensions: string[];
-    headers?: IDictionary<string> | null;
-    data: null | object;
-    format: string;
-    method: string;
-    withCredentials: boolean;
+	url: string;
+	insertImageAsBase64URI: boolean;
+	imagesExtensions: string[];
+	headers?: IDictionary<string> | null;
+	data: null | object;
+	format: string;
+	method: string;
+	withCredentials: boolean;
 
-    prepareData: (this: T, formData: FormData) => any;
-    buildData?: (this: T, formData: any) => BuildDataResult;
-    queryBuild?: (
-        obj: string | IDictionary<string | object> | FormData,
-        prefix?: string
-    ) => string | FormData;
+	prepareData: (this: T, formData: FormData) => any;
+	buildData?: (this: T, formData: any) => BuildDataResult;
+	queryBuild?: (
+		obj: string | IDictionary<string | object> | FormData,
+		prefix?: string
+	) => string | FormData;
 
-    isSuccess: (this: T, resp: IUploaderAnswer) => boolean;
+	isSuccess: (this: T, resp: IUploaderAnswer) => boolean;
 
-    getMessage: (this: T, resp: IUploaderAnswer) => string;
+	getMessage: (this: T, resp: IUploaderAnswer) => string;
 
-    process: (this: T, resp: IUploaderAnswer) => IUploaderData;
+	process: (this: T, resp: IUploaderAnswer) => IUploaderData;
 
-    error: (this: T, e: Error) => void;
+	error: (this: T, e: Error) => void;
 
-    defaultHandlerSuccess: HandlerSuccess;
-    defaultHandlerError: HandlerError;
+	defaultHandlerSuccess: HandlerSuccess;
+	defaultHandlerError: HandlerError;
 
-    contentType: (this: T, requestData: any) => string | false;
+	contentType: (this: T, requestData: any) => string | false;
 }
 
 export interface IUploader extends IComponent {
-    buildData(data: FormData | IDictionary<string> | string): BuildDataResult;
+	buildData(data: FormData | IDictionary<string> | string): BuildDataResult;
 
-    send(
-        data: FormData | IDictionary<string>,
-        success: (resp: IUploaderAnswer) => void
-    ): Promise<any>;
+	send(
+		data: FormData | IDictionary<string>,
+		success: (resp: IUploaderAnswer) => void
+	): Promise<any>;
 
-    sendFiles(
-        files: FileList | File[] | null,
-        handlerSuccess?: HandlerSuccess,
-        handlerError?: HandlerError,
-        process?: (form: FormData) => void
-    ): Promise<any>;
+	sendFiles(
+		files: FileList | File[] | null,
+		handlerSuccess?: HandlerSuccess,
+		handlerError?: HandlerError,
+		process?: (form: FormData) => void
+	): Promise<any>;
 
-    bind(
-        form: HTMLElement,
-        handlerSuccess?: HandlerSuccess,
-        handlerError?: HandlerError
-    ): void;
+	bind(
+		form: HTMLElement,
+		handlerSuccess?: HandlerSuccess,
+		handlerError?: HandlerError
+	): void;
 
-    uploadRemoteImage(
-        url: string,
-        handlerSuccess?: HandlerSuccess,
-        handlerError?: HandlerError
-    ): void;
+	uploadRemoteImage(
+		url: string,
+		handlerSuccess?: HandlerSuccess,
+		handlerError?: HandlerError
+	): void;
 
-    /**
-     * It sets the path for uploading files
-     * @method setPath
-     * @param {string} path
-     */
-    setPath(path: string): void;
-    /**
-     * It sets the source for connector
-     *
-     * @method setSource
-     * @param {string} source
-     */
-    setSource(source: string): void;
+	/**
+	 * It sets the path for uploading files
+	 * @method setPath
+	 * @param {string} path
+	 */
+	setPath(path: string): void;
+	/**
+	 * It sets the source for connector
+	 *
+	 * @method setSource
+	 * @param {string} source
+	 */
+	setSource(source: string): void;
 }

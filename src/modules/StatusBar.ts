@@ -9,41 +9,41 @@ import { Dom } from './Dom';
 import { IJodit } from '../types';
 
 export class StatusBar extends Component {
-    public container: HTMLElement;
+	public container: HTMLElement;
 
-    public hide() {
-        this.container && (this.container.style.display = 'none');
-    }
-    public show() {
-        this.container && (this.container.style.display = 'block');
-    }
+	public hide() {
+		this.container && (this.container.style.display = 'none');
+	}
+	public show() {
+		this.container && (this.container.style.display = 'block');
+	}
 
-    public append(child: HTMLElement, inTheRight: boolean = false) {
-        const wrapper: HTMLElement = this.jodit.create.div(
-            'jodit_statusbar_item'
-        );
+	public append(child: HTMLElement, inTheRight: boolean = false) {
+		const wrapper: HTMLElement = this.jodit.create.div(
+			'jodit_statusbar_item'
+		);
 
-        if (inTheRight) {
-            wrapper.classList.add('jodit_statusbar_item-right');
-        }
+		if (inTheRight) {
+			wrapper.classList.add('jodit_statusbar_item-right');
+		}
 
-        wrapper.appendChild(child);
+		wrapper.appendChild(child);
 
-        this.container.appendChild(wrapper);
-        this.show();
-        this.jodit.events.fire('resize');
-    }
+		this.container.appendChild(wrapper);
+		this.show();
+		this.jodit.events.fire('resize');
+	}
 
-    constructor(jodit: IJodit, readonly target: HTMLElement) {
-        super(jodit);
-        this.container = jodit.create.div('jodit_statusbar');
-        target.appendChild(this.container);
-        this.hide();
-    }
+	constructor(jodit: IJodit, readonly target: HTMLElement) {
+		super(jodit);
+		this.container = jodit.create.div('jodit_statusbar');
+		target.appendChild(this.container);
+		this.hide();
+	}
 
-    destruct() {
-        Dom.safeRemove(this.container);
-        delete this.container;
-        super.destruct();
-    }
+	destruct() {
+		Dom.safeRemove(this.container);
+		delete this.container;
+		super.destruct();
+	}
 }

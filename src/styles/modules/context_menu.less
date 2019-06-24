@@ -7,48 +7,48 @@
 @import (reference) '../variables';
 
 .jodit_context_menu {
-    font-family: @font-default;
-    display: none;
-    background: @context_menu_bg;
-    position: absolute;
-    min-width: 150px;
-    box-shadow: 0px 0px 5px 0px @context_menu_shadow;
-    z-index: @z-index-context-menu;
-    a {
-        display: block;
-        border-bottom: 1px solid @context_menu_border_color;
-        text-decoration: none !important;
-        color: @context_menu_item_color;
-        svg {
-            float: left;
-            display: block;
-            width: @context_menu_icon_size;
-            height: @context_menu_icon_size + @context_menu_item_padding * 2;
-            margin: 0 @context_menu_icon_size / 4;
-            fill: @context_menu_icon_color;
-        }
+	font-family: @font-default;
+	display: none;
+	background: @context_menu_bg;
+	position: absolute;
+	min-width: 150px;
+	box-shadow: 0px 0px 5px 0px @context_menu_shadow;
+	z-index: @z-index-context-menu;
+	a {
+		display: block;
+		border-bottom: 1px solid @context_menu_border_color;
+		text-decoration: none !important;
+		color: @context_menu_item_color;
+		svg {
+			float: left;
+			display: block;
+			width: @context_menu_icon_size;
+			height: @context_menu_icon_size + @context_menu_item_padding * 2;
+			margin: 0 @context_menu_icon_size / 4;
+			fill: @context_menu_icon_color;
+		}
 
-        span {
-            margin-left: @context_menu_icon_size + (@context_menu_icon_size / 4) *
-                2;
-            display: block;
-            padding: @context_menu_item_padding;
-            border-left: 1px solid @context_menu_border_color;
-            line-height: @context_menu_icon_size;
-        }
+		span {
+			margin-left: @context_menu_icon_size + (@context_menu_icon_size / 4) *
+				2;
+			display: block;
+			padding: @context_menu_item_padding;
+			border-left: 1px solid @context_menu_border_color;
+			line-height: @context_menu_icon_size;
+		}
 
-        &:hover {
-            background-color: @context_menu_item_bg_hover_color;
-            color: @context_menu_item_hover_color;
-            .jodit_icon {
-                fill: @context_menu_icon_hover_color;
-            }
-        }
-        &:last-child {
-            border: 0;
-        }
-    }
-    &-show {
-        display: block;
-    }
+		&:hover {
+			background-color: @context_menu_item_bg_hover_color;
+			color: @context_menu_item_hover_color;
+			.jodit_icon {
+				fill: @context_menu_icon_hover_color;
+			}
+		}
+		&:last-child {
+			border: 0;
+		}
+	}
+	&-show {
+		display: block;
+	}
 }

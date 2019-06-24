@@ -10,70 +10,70 @@ import { ICreate } from './create';
 import { IEventsNative } from './events';
 
 interface IViewOptions {
-    disabled?: boolean;
-    readonly?: boolean;
-    iframe?: boolean;
+	disabled?: boolean;
+	readonly?: boolean;
+	iframe?: boolean;
 
-    activeButtonsInReadOnly?: string[];
+	activeButtonsInReadOnly?: string[];
 
-    removeButtons: string[];
-    buttons: Buttons;
-    zIndex?: number;
-    fullsize?: boolean;
-    globalFullsize?: boolean;
-    showTooltip?: boolean;
-    showTooltipDelay?: number;
-    useNativeTooltip?: boolean;
-    textIcons?: boolean;
-    direction?: string;
-    controls?: Controls;
+	removeButtons: string[];
+	buttons: Buttons;
+	zIndex?: number;
+	fullsize?: boolean;
+	globalFullsize?: boolean;
+	showTooltip?: boolean;
+	showTooltipDelay?: number;
+	useNativeTooltip?: boolean;
+	textIcons?: boolean;
+	direction?: string;
+	controls?: Controls;
 }
 
 interface IPanel extends IComponent {
-    container: HTMLElement;
-    create: ICreate;
+	container: HTMLElement;
+	create: ICreate;
 
-    ownerDocument: Document;
-    ownerWindow: Window;
+	ownerDocument: Document;
+	ownerWindow: Window;
 
-    isLockedNotBy(name: string): boolean;
-    isLocked(): boolean;
+	isLockedNotBy(name: string): boolean;
+	isLocked(): boolean;
 
-    lock(name?: string): boolean;
-    unlock(): boolean;
+	lock(name?: string): boolean;
+	unlock(): boolean;
 
-    isFullSize: () => boolean;
-    toggleFullSize(isFullSize?: boolean): void;
+	isFullSize: () => boolean;
+	toggleFullSize(isFullSize?: boolean): void;
 }
 
 interface IViewBased<T = IViewOptions> extends IPanel {
-    /**
-     * @property {string} ID attribute for source element, id add {id}_editor it's editor's id
-     */
-    id: string;
+	/**
+	 * @property {string} ID attribute for source element, id add {id}_editor it's editor's id
+	 */
+	id: string;
 
-    buffer: IDictionary;
+	buffer: IDictionary;
 
-    progress_bar: HTMLElement;
+	progress_bar: HTMLElement;
 
-    options: T;
+	options: T;
 
-    events: IEventsNative;
-    create: ICreate;
+	events: IEventsNative;
+	create: ICreate;
 
-    i18n: (text: string, ...params: Array<string | number>) => string;
+	i18n: (text: string, ...params: Array<string | number>) => string;
 
-    defaultTimeout: number;
+	defaultTimeout: number;
 
-    iframe?: HTMLIFrameElement | null;
+	iframe?: HTMLIFrameElement | null;
 
-    getInstance<T = IComponent>(moduleName: string, options?: object): T;
+	getInstance<T = IComponent>(moduleName: string, options?: object): T;
 
-    getVersion: () => string;
+	getVersion: () => string;
 
-    components: IComponent[];
+	components: IComponent[];
 }
 
 interface IViewWithToolbar<T = IViewOptions> extends IViewBased<T> {
-    toolbar: IToolbarCollection;
+	toolbar: IToolbarCollection;
 }

@@ -8,26 +8,26 @@ import { IJodit, IPlugin } from '../types';
 import { Component } from './Component';
 
 export abstract class Plugin extends Component<IJodit> implements IPlugin {
-    public abstract afterInit(jodit: IJodit): void;
+	public abstract afterInit(jodit: IJodit): void;
 
-    public abstract beforeDestruct(jodit: IJodit): void;
+	public abstract beforeDestruct(jodit: IJodit): void;
 
-    constructor(jodit: IJodit) {
-        super(jodit);
+	constructor(jodit: IJodit) {
+		super(jodit);
 
-        jodit.events
-            .on('afterInit', this.afterInit.bind(this, jodit))
-            .on('beforeDestruct', this.destruct);
-    }
+		jodit.events
+			.on('afterInit', this.afterInit.bind(this, jodit))
+			.on('beforeDestruct', this.destruct);
+	}
 
-    destruct = () => {
-        if (!this.isDestructed) {
-            this.jodit.events &&
-            this.jodit.events.off('beforeDestruct', this.destruct);
+	destruct = () => {
+		if (!this.isDestructed) {
+			this.jodit.events &&
+				this.jodit.events.off('beforeDestruct', this.destruct);
 
-            this.beforeDestruct(this.jodit);
+			this.beforeDestruct(this.jodit);
 
-            super.destruct();
-        }
-    }
+			super.destruct();
+		}
+	};
 }

@@ -5,33 +5,33 @@
  */
 
 .size (@size) {
-    min-width: @size;
-    height: @size;
-    line-height: @size;
+	min-width: @size;
+	height: @size;
+	line-height: @size;
 }
 .toolbar_size (@size) {
-    min-height: @size !important;
-    > li {
-        .size(@size * 2);
-        &.jodit_toolbar_btn-separator {
-            height: @size * 2 - 4px;
-            width: 0;
-            min-width: 0;
-        }
-    }
+	min-height: @size !important;
+	> li {
+		.size(@size * 2);
+		&.jodit_toolbar_btn-separator {
+			height: @size * 2 - 4px;
+			width: 0;
+			min-width: 0;
+		}
+	}
 }
 
 .clearfix() {
-    &:before,
-    &:after {
-        content: ' '; // 1
-        display: table; // 2
-    }
+	&:before,
+	&:after {
+		content: ' '; // 1
+		display: table; // 2
+	}
 
-    &:after {
-        clear: both;
-    }
+	&:after {
+		clear: both;
+	}
 }
 .jodit_clearfix {
-    .clearfix();
+	.clearfix();
 }

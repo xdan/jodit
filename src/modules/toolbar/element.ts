@@ -5,9 +5,9 @@
  */
 
 import {
-    IControlTypeStrong,
-    IToolbarCollection,
-    IToolbarElement,
+	IControlTypeStrong,
+	IToolbarCollection,
+	IToolbarElement
 } from '../../types/toolbar';
 import { Component } from '../Component';
 import { ToolbarCollection } from './collection';
@@ -17,77 +17,77 @@ import { IViewBased, TagNames } from '../../types';
 import { trim } from '../helpers/string';
 
 export abstract class ToolbarElement extends Component
-    implements IToolbarElement {
-    container: HTMLElement;
-    parentToolbar?: IToolbarCollection;
+	implements IToolbarElement {
+	container: HTMLElement;
+	parentToolbar?: IToolbarCollection;
 
-    protected constructor(
-        parentToolbarOrView: IToolbarCollection | IViewBased,
-        containerTag: TagNames = 'li',
-        containerClass: string = 'jodit_toolbar_btn'
-    ) {
-        if (parentToolbarOrView instanceof ToolbarCollection) {
-            super(parentToolbarOrView.jodit);
-            this.parentToolbar = <IToolbarCollection>parentToolbarOrView;
-        } else {
-            super(<IViewBased>parentToolbarOrView);
-        }
+	protected constructor(
+		parentToolbarOrView: IToolbarCollection | IViewBased,
+		containerTag: TagNames = 'li',
+		containerClass: string = 'jodit_toolbar_btn'
+	) {
+		if (parentToolbarOrView instanceof ToolbarCollection) {
+			super(parentToolbarOrView.jodit);
+			this.parentToolbar = <IToolbarCollection>parentToolbarOrView;
+		} else {
+			super(<IViewBased>parentToolbarOrView);
+		}
 
-        this.container = this.jodit.create.element(containerTag);
-        this.container.classList.add(containerClass);
-    }
+		this.container = this.jodit.create.element(containerTag);
+		this.container.classList.add(containerClass);
+	}
 
-    destruct(): any {
-        if (this.isDestructed) {
-            return;
-        }
+	destruct(): any {
+		if (this.isDestructed) {
+			return;
+		}
 
-        Dom.safeRemove(this.container);
-        this.parentToolbar = undefined;
-        super.destruct();
-    }
+		Dom.safeRemove(this.container);
+		this.parentToolbar = undefined;
+		super.destruct();
+	}
 
-    createIcon(clearName: string, control?: IControlTypeStrong): HTMLElement {
-        const icon: string = control ? control.icon || control.name : clearName;
+	createIcon(clearName: string, control?: IControlTypeStrong): HTMLElement {
+		const icon: string = control ? control.icon || control.name : clearName;
 
-        if (!this.jodit.options.textIcons) {
-            let iconSVG: string | void | HTMLElement = this.jodit.events.fire(
-                'getIcon',
-                icon,
-                control,
-                clearName
-            );
+		if (!this.jodit.options.textIcons) {
+			let iconSVG: string | void | HTMLElement = this.jodit.events.fire(
+				'getIcon',
+				icon,
+				control,
+				clearName
+			);
 
-            let iconElement: HTMLElement;
+			let iconElement: HTMLElement;
 
-            if (control && control.iconURL && iconSVG === undefined) {
-                iconElement = this.jodit.create.element('i');
-                iconElement.style.backgroundImage =
-                    'url(' + control.iconURL + ')';
-            } else {
-                if (iconSVG === undefined) {
-                    if (ToolbarIcon.exists(icon)) {
-                        iconSVG = ToolbarIcon.getIcon(icon);
-                    } else {
-                        iconSVG = ToolbarIcon.getIcon('empty');
-                    }
-                }
+			if (control && control.iconURL && iconSVG === undefined) {
+				iconElement = this.jodit.create.element('i');
+				iconElement.style.backgroundImage =
+					'url(' + control.iconURL + ')';
+			} else {
+				if (iconSVG === undefined) {
+					if (ToolbarIcon.exists(icon)) {
+						iconSVG = ToolbarIcon.getIcon(icon);
+					} else {
+						iconSVG = ToolbarIcon.getIcon('empty');
+					}
+				}
 
-                iconElement =
-                    typeof iconSVG === 'string'
-                        ? this.jodit.create.fromHTML(trim(iconSVG))
-                        : iconSVG;
-            }
+				iconElement =
+					typeof iconSVG === 'string'
+						? this.jodit.create.fromHTML(trim(iconSVG))
+						: iconSVG;
+			}
 
-            iconElement.classList.add('jodit_icon', 'jodit_icon_' + clearName);
+			iconElement.classList.add('jodit_icon', 'jodit_icon_' + clearName);
 
-            return iconElement;
-        }
+			return iconElement;
+		}
 
-        return this.jodit.create.fromHTML(
-            `<span class="jodit_icon">${this.jodit.i18n(
-                control ? control.name : clearName
-            )}</span>`
-        );
-    }
+		return this.jodit.create.fromHTML(
+			`<span class="jodit_icon">${this.jodit.i18n(
+				control ? control.name : clearName
+			)}</span>`
+		);
+	}
 }

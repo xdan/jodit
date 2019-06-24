@@ -7,7 +7,7 @@
 import { extend } from './extend';
 
 export class JoditObject {
-    constructor(data: any) {
-        extend(true, this, data);
-    }
+	constructor(data: any) {
+		extend(true, this, data);
+	}
 }

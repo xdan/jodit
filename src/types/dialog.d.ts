@@ -7,6 +7,6 @@
 import { IViewOptions } from './view';
 
 export interface IDialogOptions extends IViewOptions {
-    resizable?: boolean;
-    draggable?: boolean;
+	resizable?: boolean;
+	draggable?: boolean;
 }

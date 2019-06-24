@@ -11,88 +11,88 @@ import { Create } from '../Create';
 import { isJoditObject } from '../helpers/checker/isJoditObject';
 
 export class Panel extends Component implements IPanel {
-    protected __whoLocked: string | false = '';
-    protected __isFullSize: boolean = false;
+	protected __whoLocked: string | false = '';
+	protected __isFullSize: boolean = false;
 
-    public ownerDocument: Document = document;
-    public ownerWindow: Window = window;
+	public ownerDocument: Document = document;
+	public ownerWindow: Window = window;
 
-    public container: HTMLDivElement;
+	public container: HTMLDivElement;
 
-    /**
-     * @property {Create} Native DOM element creator
-     */
-    public create: Create;
+	/**
+	 * @property {Create} Native DOM element creator
+	 */
+	public create: Create;
 
-    constructor(jodit?: IViewBased) {
-        super(jodit);
+	constructor(jodit?: IViewBased) {
+		super(jodit);
 
-        if (jodit && jodit.ownerDocument) {
-            this.ownerDocument = jodit.ownerDocument;
-            this.ownerWindow = jodit.ownerWindow;
-        }
+		if (jodit && jodit.ownerDocument) {
+			this.ownerDocument = jodit.ownerDocument;
+			this.ownerWindow = jodit.ownerWindow;
+		}
 
-        this.create = new Create(
-            this.ownerDocument,
-            isJoditObject(jodit) ? jodit.editorDocument : void 0
-        );
+		this.create = new Create(
+			this.ownerDocument,
+			isJoditObject(jodit) ? jodit.editorDocument : void 0
+		);
 
-        this.container = this.create.div();
-    }
+		this.container = this.create.div();
+	}
 
-    destruct(): any {
-        if (!this.isDestructed) {
-            return;
-        }
+	destruct(): any {
+		if (!this.isDestructed) {
+			return;
+		}
 
-        Dom.safeRemove(this.container);
-        delete this.container;
-        super.destruct();
-    }
+		Dom.safeRemove(this.container);
+		delete this.container;
+		super.destruct();
+	}
 
-    public isLocked = (): boolean => {
-        return this.__whoLocked !== '';
-    };
+	public isLocked = (): boolean => {
+		return this.__whoLocked !== '';
+	};
 
-    public isLockedNotBy = (name: string): boolean => {
-        return this.isLocked() && this.__whoLocked !== name;
-    };
+	public isLockedNotBy = (name: string): boolean => {
+		return this.isLocked() && this.__whoLocked !== name;
+	};
 
-    /**
-     * Disable selecting
-     */
-    public lock(name: string = 'any') {
-        if (!this.isLocked()) {
-            this.__whoLocked = name;
-            return true;
-        }
+	/**
+	 * Disable selecting
+	 */
+	public lock(name: string = 'any') {
+		if (!this.isLocked()) {
+			this.__whoLocked = name;
+			return true;
+		}
 
-        return false;
-    }
+		return false;
+	}
 
-    /**
-     * Enable selecting
-     */
-    public unlock() {
-        if (this.isLocked()) {
-            this.__whoLocked = '';
-            return true;
-        }
+	/**
+	 * Enable selecting
+	 */
+	public unlock() {
+		if (this.isLocked()) {
+			this.__whoLocked = '';
+			return true;
+		}
 
-        return false;
-    }
+		return false;
+	}
 
-    public isFullSize = (): boolean => this.__isFullSize;
+	public isFullSize = (): boolean => this.__isFullSize;
 
-    public toggleFullSize(isFullSize?: boolean) {
-        if (isFullSize === undefined) {
-            isFullSize = !this.__isFullSize;
-        }
+	public toggleFullSize(isFullSize?: boolean) {
+		if (isFullSize === undefined) {
+			isFullSize = !this.__isFullSize;
+		}
 
-        if (isFullSize === this.__isFullSize) {
-            return;
-        }
+		if (isFullSize === this.__isFullSize) {
+			return;
+		}
 
-        this.__isFullSize = isFullSize;
-    }
+		this.__isFullSize = isFullSize;
+	}
 }

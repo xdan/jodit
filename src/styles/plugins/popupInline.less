@@ -4,72 +4,72 @@
  * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 .jodit_toolbar_popup-inline-target {
-    position: absolute;
-    width: 0;
-    height: 0;
-    &.jodit_toolbar_popup-inline-target-hidden {
-        display: none;
-    }
+	position: absolute;
+	width: 0;
+	height: 0;
+	&.jodit_toolbar_popup-inline-target-hidden {
+		display: none;
+	}
 }
 
 .jodit_toolbar_popup-inline {
-    display: inline-block !important;
+	display: inline-block !important;
 
-    position: relative !important;
-    > div {
-        color: @color-background-gray;
-        background: @popap-bg-color;
-        box-shadow: none;
-        background-clip: padding-box;
-        font-family: @font-default;
-        box-sizing: border-box;
-        user-select: none;
-        z-index: @z-index-popap !important;
-        text-align: left;
-        border: 1px solid @color-background-gray;
-        display: inline-block;
-        vertical-align: top;
-    }
+	position: relative !important;
+	> div {
+		color: @color-background-gray;
+		background: @popap-bg-color;
+		box-shadow: none;
+		background-clip: padding-box;
+		font-family: @font-default;
+		box-sizing: border-box;
+		user-select: none;
+		z-index: @z-index-popap !important;
+		text-align: left;
+		border: 1px solid @color-background-gray;
+		display: inline-block;
+		vertical-align: top;
+	}
 
-    .jodit_toolbar {
-        z-index: 7;
-        border: 0;
-        white-space: normal;
-    }
+	.jodit_toolbar {
+		z-index: 7;
+		border: 0;
+		white-space: normal;
+	}
 
-    > div > .jodit_toolbar {
-        white-space: nowrap;
-        box-shadow: none;
-        vertical-align: top;
-    }
-    > .jodit_popup_triangle {
-        padding: 0;
-        margin: 0;
-        width: @popap-triangle-size;
-        height: @popap-triangle-size;
-        position: absolute;
-        top: -@popap-triangle-size / 2;
-        margin-left: -@popap-triangle-size / 2;
-        display: inline-block;
-        transform: rotate(45deg);
-        background: @popap-bg-color;
-        border: 1px solid @color-background-gray;
-        border-width: 1px 0 0 1px;
-        z-index: 6;
-    }
-    &.jodit_toolbar_popup-inline-top {
-        > .jodit_popup_triangle {
-            top: auto;
-            bottom: -@popap-triangle-size / 2;
-            border-width: 0 1px 1px 0;
-        }
-    }
+	> div > .jodit_toolbar {
+		white-space: nowrap;
+		box-shadow: none;
+		vertical-align: top;
+	}
+	> .jodit_popup_triangle {
+		padding: 0;
+		margin: 0;
+		width: @popap-triangle-size;
+		height: @popap-triangle-size;
+		position: absolute;
+		top: -@popap-triangle-size / 2;
+		margin-left: -@popap-triangle-size / 2;
+		display: inline-block;
+		transform: rotate(45deg);
+		background: @popap-bg-color;
+		border: 1px solid @color-background-gray;
+		border-width: 1px 0 0 1px;
+		z-index: 6;
+	}
+	&.jodit_toolbar_popup-inline-top {
+		> .jodit_popup_triangle {
+			top: auto;
+			bottom: -@popap-triangle-size / 2;
+			border-width: 0 1px 1px 0;
+		}
+	}
 
-    .buttons {
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-        padding: 0 2px;
-        white-space: nowrap;
-        line-height: 0;
-        border-bottom: 0px;
-    }
+	.buttons {
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+		padding: 0 2px;
+		white-space: nowrap;
+		line-height: 0;
+		border-bottom: 0px;
+	}
 }

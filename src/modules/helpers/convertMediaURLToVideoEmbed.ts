@@ -16,62 +16,62 @@ import { parseQuery } from './parseQuery';
  * return {string} embed code
  */
 export const convertMediaURLToVideoEmbed = (
-    url: string,
-    width: number = 400,
-    height: number = 345
+	url: string,
+	width: number = 400,
+	height: number = 345
 ): string => {
-    if (!isURL(url)) {
-        return url;
-    }
+	if (!isURL(url)) {
+		return url;
+	}
 
-    const parser: HTMLAnchorElement = document.createElement('a'),
-        pattern1: RegExp = /(?:http?s?:\/\/)?(?:www\.)?(?:vimeo\.com)\/?(.+)/g;
+	const parser: HTMLAnchorElement = document.createElement('a'),
+		pattern1: RegExp = /(?:http?s?:\/\/)?(?:www\.)?(?:vimeo\.com)\/?(.+)/g;
 
-    parser.href = url;
+	parser.href = url;
 
-    if (!width) {
-        width = 400;
-    }
-    if (!height) {
-        height = 345;
-    }
+	if (!width) {
+		width = 400;
+	}
+	if (!height) {
+		height = 345;
+	}
 
-    const protocol: string = parser.protocol || '';
+	const protocol: string = parser.protocol || '';
 
-    switch (parser.hostname) {
-        case 'www.vimeo.com':
-        case 'vimeo.com':
-            return pattern1.test(url)
-                ? url.replace(
-                      pattern1,
-                      '<iframe width="' +
-                          width +
-                          '" height="' +
-                          height +
-                          '" src="' +
-                          protocol +
-                          '//player.vimeo.com/video/$1" frameborder="0" allowfullscreen></iframe>'
-                  )
-                : url;
-        case 'youtube.com':
-        case 'www.youtube.com':
-        case 'youtu.be':
-        case 'www.youtu.be':
-            const query: any = parser.search
-                ? parseQuery(parser.search)
-                : { v: parser.pathname.substr(1) };
-            return query.v
-                ? '<iframe width="' +
-                      width +
-                      '" height="' +
-                      height +
-                      '" src="' +
-                      protocol +
-                      '//www.youtube.com/embed/' +
-                      query.v +
-                      '" frameborder="0" allowfullscreen></iframe>'
-                : url;
-    }
+	switch (parser.hostname) {
+		case 'www.vimeo.com':
+		case 'vimeo.com':
+			return pattern1.test(url)
+				? url.replace(
+						pattern1,
+						'<iframe width="' +
+							width +
+							'" height="' +
+							height +
+							'" src="' +
+							protocol +
+							'//player.vimeo.com/video/$1" frameborder="0" allowfullscreen></iframe>'
+				  )
+				: url;
+		case 'youtube.com':
+		case 'www.youtube.com':
+		case 'youtu.be':
+		case 'www.youtu.be':
+			const query: any = parser.search
+				? parseQuery(parser.search)
+				: { v: parser.pathname.substr(1) };
+			return query.v
+				? '<iframe width="' +
+						width +
+						'" height="' +
+						height +
+						'" src="' +
+						protocol +
+						'//www.youtube.com/embed/' +
+						query.v +
+						'" frameborder="0" allowfullscreen></iframe>'
+				: url;
+	}
 
-    return url;
+	return url;
 };

@@ -27,48 +27,50 @@ import { ToolbarIcon } from '../toolbar/icon';
  * ```
  */
 export const Alert = (
-    msg: string | HTMLElement,
-    title?: string | (() => void | false),
-    callback?: string | ((dialog: Dialog) => void | false),
-    className: string = 'jodit_alert'
+	msg: string | HTMLElement,
+	title?: string | (() => void | false),
+	callback?: string | ((dialog: Dialog) => void | false),
+	className: string = 'jodit_alert'
 ): Dialog => {
-    if (typeof title === 'function') {
-        callback = title;
-        title = undefined;
-    }
+	if (typeof title === 'function') {
+		callback = title;
+		title = undefined;
+	}
 
-    const dialog: Dialog = new Dialog(),
-        $div: HTMLDivElement = dialog.create.div(className),
-        $ok: HTMLAnchorElement = dialog.create.fromHTML(
-            '<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
-                ToolbarIcon.getIcon('cancel') +
-                '<span>' +
-                Jodit.prototype.i18n('Ok') +
-                '</span></a>'
-        ) as HTMLAnchorElement;
+	const dialog: Dialog = new Dialog(),
+		$div: HTMLDivElement = dialog.create.div(className),
+		$ok: HTMLAnchorElement = dialog.create.fromHTML(
+			'<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
+				ToolbarIcon.getIcon('cancel') +
+				'<span>' +
+				Jodit.prototype.i18n('Ok') +
+				'</span></a>'
+		) as HTMLAnchorElement;
 
-    asArray(msg).forEach(oneMessage => {
-        $div.appendChild(
-            Dom.isNode(oneMessage, dialog.window) ? oneMessage : dialog.create.fromHTML(oneMessage)
-        );
-    });
+	asArray(msg).forEach(oneMessage => {
+		$div.appendChild(
+			Dom.isNode(oneMessage, dialog.window)
+				? oneMessage
+				: dialog.create.fromHTML(oneMessage)
+		);
+	});
 
-    $ok.addEventListener('click', () => {
-        if (
-            !callback ||
-            typeof callback !== 'function' ||
-            callback(dialog) !== false
-        ) {
-            dialog.close();
-        }
-    });
+	$ok.addEventListener('click', () => {
+		if (
+			!callback ||
+			typeof callback !== 'function' ||
+			callback(dialog) !== false
+		) {
+			dialog.close();
+		}
+	});
 
-    dialog.setFooter([$ok]);
+	dialog.setFooter([$ok]);
 
-    dialog.open($div, (title as string) || '&nbsp;', true, true);
-    $ok.focus();
+	dialog.open($div, (title as string) || '&nbsp;', true, true);
+	$ok.focus();
 
-    return dialog;
+	return dialog;
 };
 
 import { Jodit } from '../../Jodit';

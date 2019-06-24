@@ -5,19 +5,19 @@
  */
 
 export const val = (
-    elm: HTMLInputElement | HTMLElement,
-    selector: string,
-    value?: string
+	elm: HTMLInputElement | HTMLElement,
+	selector: string,
+	value?: string
 ): string => {
-    const child = elm.querySelector(selector) as HTMLInputElement;
+	const child = elm.querySelector(selector) as HTMLInputElement;
 
-    if (!child) {
-        return '';
-    }
+	if (!child) {
+		return '';
+	}
 
-    if (value) {
-        child.value = value;
-    }
+	if (value) {
+		child.value = value;
+	}
 
-    return child.value;
+	return child.value;
 };

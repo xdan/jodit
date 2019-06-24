@@ -7,20 +7,20 @@
 const dataBindKey = 'JoditDataBindKey';
 
 export const dataBind = (elm: any, key: string, value?: any) => {
-    let store = elm[dataBindKey];
+	let store = elm[dataBindKey];
 
-    if (!store) {
-        store = {};
-        Object.defineProperty(elm, dataBindKey, {
-            enumerable: false,
-            configurable: true,
-            value: store,
-        });
-    }
+	if (!store) {
+		store = {};
+		Object.defineProperty(elm, dataBindKey, {
+			enumerable: false,
+			configurable: true,
+			value: store
+		});
+	}
 
-    if (value === undefined) {
-        return store[key];
-    }
+	if (value === undefined) {
+		return store[key];
+	}
 
-    store[key] = value;
+	store[key] = value;
 };

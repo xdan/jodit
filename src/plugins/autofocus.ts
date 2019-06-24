@@ -10,9 +10,9 @@ import { setTimeout } from '../modules/helpers/async';
 import { IJodit } from '../types';
 
 declare module '../Config' {
-    interface Config {
-        autofocus: boolean;
-    }
+	interface Config {
+		autofocus: boolean;
+	}
 }
 
 /**
@@ -26,32 +26,32 @@ Config.prototype.autofocus = false;
  * @param {Jodit} editor
  */
 export function autofocus(editor: IJodit) {
-    let timeout: number;
-    editor.events
-        .on('afterInit', () => {
-            if (editor.options.autofocus) {
-                if (editor.defaultTimeout) {
-                    timeout = setTimeout(editor.selection.focus, 300);
-                } else {
-                    editor.selection.focus();
-                }
-            }
-        })
-        .on('mousedown', (e: MouseEvent) => {
-            if (
-                editor.isEditorMode() &&
-                e.target &&
-                Dom.isBlock(e.target as Node, editor.editorWindow) &&
-                !(e.target as HTMLElement).childNodes.length
-            ) {
-                if (editor.editor === e.target) {
-                    editor.selection.focus();
-                } else {
-                    editor.selection.setCursorIn(e.target as HTMLElement);
-                }
-            }
-        })
-        .on('beforeDestruct', () => {
-            clearTimeout(timeout);
-        });
+	let timeout: number;
+	editor.events
+		.on('afterInit', () => {
+			if (editor.options.autofocus) {
+				if (editor.defaultTimeout) {
+					timeout = setTimeout(editor.selection.focus, 300);
+				} else {
+					editor.selection.focus();
+				}
+			}
+		})
+		.on('mousedown', (e: MouseEvent) => {
+			if (
+				editor.isEditorMode() &&
+				e.target &&
+				Dom.isBlock(e.target as Node, editor.editorWindow) &&
+				!(e.target as HTMLElement).childNodes.length
+			) {
+				if (editor.editor === e.target) {
+					editor.selection.focus();
+				} else {
+					editor.selection.setCursorIn(e.target as HTMLElement);
+				}
+			}
+		})
+		.on('beforeDestruct', () => {
+			clearTimeout(timeout);
+		});
 }

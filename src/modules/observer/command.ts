@@ -8,25 +8,25 @@ import { SnapshotType } from '../../types';
 import { Observer } from './observer';
 
 export class Command {
-    private observer: Observer;
+	private observer: Observer;
 
-    private oldValue: SnapshotType;
-    private newValue: SnapshotType;
+	private oldValue: SnapshotType;
+	private newValue: SnapshotType;
 
-    public undo() {
-        this.observer.snapshot.restore(this.oldValue);
-    }
-    public redo() {
-        this.observer.snapshot.restore(this.newValue);
-    }
+	public undo() {
+		this.observer.snapshot.restore(this.oldValue);
+	}
+	public redo() {
+		this.observer.snapshot.restore(this.newValue);
+	}
 
-    constructor(
-        oldValue: SnapshotType,
-        newValue: SnapshotType,
-        observer: Observer
-    ) {
-        this.observer = observer;
-        this.oldValue = oldValue;
-        this.newValue = newValue;
-    }
+	constructor(
+		oldValue: SnapshotType,
+		newValue: SnapshotType,
+		observer: Observer
+	) {
+		this.observer = observer;
+		this.oldValue = oldValue;
+		this.newValue = newValue;
+	}
 }

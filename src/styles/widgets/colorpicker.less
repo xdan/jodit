@@ -8,69 +8,69 @@
 @color-cell-size: 18px;
 @color-cell-icon-size: 12px;
 .jodit_colorpicker {
-    min-width: 180px;
-    text-align: left;
-    margin: 0;
-    user-select: none;
-    .jodit_colorpicker_group {
-        margin-bottom: 5px;
-        white-space: normal;
-    }
-    a {
-        width: @color-cell-size;
-        height: @color-cell-size;
-        line-height: @color-cell-size - 2;
-        display: inline-block;
-        text-decoration: none;
-        vertical-align: middle;
-        text-align: center;
-        &:before {
-            content: '';
-            display: inline-block;
-            height: 100%;
-            vertical-align: middle;
-            width: 0;
-        }
-        svg {
-            display: inline-block;
-            vertical-align: middle;
-            font-smoothing: antialiased;
-            max-width: @color-cell-size - 4;
-        }
+	min-width: 180px;
+	text-align: left;
+	margin: 0;
+	user-select: none;
+	.jodit_colorpicker_group {
+		margin-bottom: 5px;
+		white-space: normal;
+	}
+	a {
+		width: @color-cell-size;
+		height: @color-cell-size;
+		line-height: @color-cell-size - 2;
+		display: inline-block;
+		text-decoration: none;
+		vertical-align: middle;
+		text-align: center;
+		&:before {
+			content: '';
+			display: inline-block;
+			height: 100%;
+			vertical-align: middle;
+			width: 0;
+		}
+		svg {
+			display: inline-block;
+			vertical-align: middle;
+			font-smoothing: antialiased;
+			max-width: @color-cell-size - 4;
+		}
 
-        &:hover {
-            border-color: #000;
-        }
-        &:active {
-            background: #d6d6d6;
-            color: @color-border-active;
-        }
-    }
-    .jodit_text_icon {
-        width: auto;
-        text-decoration: none;
-        color: @color-default;
-    }
-    span {
-        float: right;
-        em {
-            width: 16px;
-            height: 16px;
-            display: inline-block;
-            margin-right: 4px;
-        }
-        input {
-            width: 18px;
-            height: 18px;
-            padding: 0;
-            border: none;
-            -webkit-appearance: none;
-            &[type='color']::-webkit-color-swatch-wrapper {
-                padding: 0;
-            }
-            input[type='color']::-webkit-color-swatch {
-                border: none;
-            }
-        }
-    }
+		&:hover {
+			border-color: #000;
+		}
+		&:active {
+			background: #d6d6d6;
+			color: @color-border-active;
+		}
+	}
+	.jodit_text_icon {
+		width: auto;
+		text-decoration: none;
+		color: @color-default;
+	}
+	span {
+		float: right;
+		em {
+			width: 16px;
+			height: 16px;
+			display: inline-block;
+			margin-right: 4px;
+		}
+		input {
+			width: 18px;
+			height: 18px;
+			padding: 0;
+			border: none;
+			-webkit-appearance: none;
+			&[type='color']::-webkit-color-swatch-wrapper {
+				padding: 0;
+			}
+			input[type='color']::-webkit-color-swatch {
+				border: none;
+			}
+		}
+	}
 }

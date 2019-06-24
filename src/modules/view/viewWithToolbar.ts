@@ -9,12 +9,12 @@ import { IToolbarCollection } from '../../types/toolbar';
 import { View } from './view';
 
 export class ViewWithToolbar extends View implements IViewWithToolbar {
-    toolbar: IToolbarCollection = JoditToolbarCollection.makeCollection(this);
+	toolbar: IToolbarCollection = JoditToolbarCollection.makeCollection(this);
 
-    destruct() {
-        this.toolbar.destruct();
-        delete this.toolbar;
-        super.destruct();
-    }
+	destruct() {
+		this.toolbar.destruct();
+		delete this.toolbar;
+		super.destruct();
+	}
 }
 import { JoditToolbarCollection } from '../toolbar/joditToolbarCollection';

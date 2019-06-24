@@ -11,26 +11,26 @@ const toString = class2type.toString;
 export const hasOwn = class2type.hasOwnProperty;
 
 [
-    'Boolean',
-    'Number',
-    'String',
-    'Function',
-    'Array',
-    'Date',
-    'RegExp',
-    'Object',
-    'Error',
-    'Symbol',
-    'HTMLDocument',
-    'Window',
-    'HTMLElement',
-    'HTMLBodyElement',
-    'Text',
-    'DocumentFragment',
-    'DOMStringList',
-    'HTMLCollection',
+	'Boolean',
+	'Number',
+	'String',
+	'Function',
+	'Array',
+	'Date',
+	'RegExp',
+	'Object',
+	'Error',
+	'Symbol',
+	'HTMLDocument',
+	'Window',
+	'HTMLElement',
+	'HTMLBodyElement',
+	'Text',
+	'DocumentFragment',
+	'DOMStringList',
+	'HTMLCollection'
 ].forEach(name => {
-    class2type['[object ' + name + ']'] = name.toLowerCase();
+	class2type['[object ' + name + ']'] = name.toLowerCase();
 });
 
 /**
@@ -38,11 +38,11 @@ export const hasOwn = class2type.hasOwnProperty;
  * @param obj
  */
 export const type = (obj: any): string => {
-    if (obj === null) {
-        return 'null';
-    }
+	if (obj === null) {
+		return 'null';
+	}
 
-    return typeof obj === 'object' || typeof obj === 'function'
-        ? class2type[toString.call(obj)] || 'object'
-        : typeof obj;
+	return typeof obj === 'object' || typeof obj === 'function'
+		? class2type[toString.call(obj)] || 'object'
+		: typeof obj;
 };

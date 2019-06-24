@@ -20,69 +20,69 @@ import { fromCamelCase } from './string/fromCamelCase';
  * @param {boolean} onlyStyleMode Get value from style attribute, without calculating
  */
 export const css = (
-    element: HTMLElement,
-    key: string | IDictionary<number | string | null | undefined>,
-    value?: string | number,
-    onlyStyleMode: boolean = false
+	element: HTMLElement,
+	key: string | IDictionary<number | string | null | undefined>,
+	value?: string | number,
+	onlyStyleMode: boolean = false
 ): string | number => {
-    const numberFieldsReg = /^left|top|bottom|right|width|min|max|height|margin|padding|font-size/i;
+	const numberFieldsReg = /^left|top|bottom|right|width|min|max|height|margin|padding|font-size/i;
 
-    if (isPlainObject(key) || value !== undefined) {
-        const setValue = (
-            elm: HTMLElement,
-            _key: string,
-            _value: string | number | undefined
-        ) => {
-            if (
-                _value !== undefined &&
-                _value !== null &&
-                numberFieldsReg.test(_key) &&
-                isNumeric(_value.toString())
-            ) {
-                _value = parseInt(_value.toString(), 10) + 'px';
-            }
+	if (isPlainObject(key) || value !== undefined) {
+		const setValue = (
+			elm: HTMLElement,
+			_key: string,
+			_value: string | number | undefined
+		) => {
+			if (
+				_value !== undefined &&
+				_value !== null &&
+				numberFieldsReg.test(_key) &&
+				isNumeric(_value.toString())
+			) {
+				_value = parseInt(_value.toString(), 10) + 'px';
+			}
 
-            if (
-                _value !== undefined &&
-                css(elm, _key, void 0, true) !== normilizeCSSValue(_key, _value)
-            ) {
-                (elm.style as any)[_key] = _value;
-            }
-        };
+			if (
+				_value !== undefined &&
+				css(elm, _key, void 0, true) !== normilizeCSSValue(_key, _value)
+			) {
+				(elm.style as any)[_key] = _value;
+			}
+		};
 
-        if (isPlainObject(key)) {
-            const keys: string[] = Object.keys(key);
-            for (let j = 0; j < keys.length; j += 1) {
-                setValue(element, camelCase(keys[j]), (key as any)[keys[j]]);
-            }
-        } else {
-            setValue(element, camelCase(key as string), value);
-        }
+		if (isPlainObject(key)) {
+			const keys: string[] = Object.keys(key);
+			for (let j = 0; j < keys.length; j += 1) {
+				setValue(element, camelCase(keys[j]), (key as any)[keys[j]]);
+			}
+		} else {
+			setValue(element, camelCase(key as string), value);
+		}
 
-        return '';
-    }
+		return '';
+	}
 
-    const key2: string = fromCamelCase(key as string) as string,
-        doc: Document = element.ownerDocument || document,
-        win = doc ? doc.defaultView || (doc as any).parentWindow : false;
+	const key2: string = fromCamelCase(key as string) as string,
+		doc: Document = element.ownerDocument || document,
+		win = doc ? doc.defaultView || (doc as any).parentWindow : false;
 
-    const currentValue: string | undefined = (element.style as any)[
-        key as string
-    ];
+	const currentValue: string | undefined = (element.style as any)[
+		key as string
+	];
 
-    let result: string | number =
-        currentValue !== undefined && currentValue !== ''
-            ? currentValue
-            : win && !onlyStyleMode
-            ? win.getComputedStyle(element).getPropertyValue(key2)
-            : '';
+	let result: string | number =
+		currentValue !== undefined && currentValue !== ''
+			? currentValue
+			: win && !onlyStyleMode
+			? win.getComputedStyle(element).getPropertyValue(key2)
+			: '';
 
-    if (
-        numberFieldsReg.test(key as string) &&
-        /^[\-+]?[0-9.]+px$/.test(result.toString())
-    ) {
-        result = parseInt(result.toString(), 10);
-    }
+	if (
+		numberFieldsReg.test(key as string) &&
+		/^[\-+]?[0-9.]+px$/.test(result.toString())
+	) {
+		result = parseInt(result.toString(), 10);
+	}
 
-    return normilizeCSSValue(key as string, result);
+	return normilizeCSSValue(key as string, result);
 };

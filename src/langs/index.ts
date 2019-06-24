@@ -17,25 +17,39 @@ import { default as pt_br } from './pt_br';
 import { default as en } from './en';
 import { default as it } from './it';
 
-const exp: any = {de, fr, ru, tr, ar, zh_tw, zh_cn, es, nl, hu, pt_br, en, it};
+const exp: any = {
+	de,
+	fr,
+	ru,
+	tr,
+	ar,
+	zh_tw,
+	zh_cn,
+	es,
+	nl,
+	hu,
+	pt_br,
+	en,
+	it
+};
 
 /* Unpack array to hash */
 
 const hashLang: any = {};
 
 (<any>en).forEach((key: string, index: number) => {
-    hashLang[index] = key;
+	hashLang[index] = key;
 });
 
 Object.keys(exp).forEach((lang: string) => {
-    const list: unknown = exp[lang];
+	const list: unknown = exp[lang];
 
-    if (Array.isArray(list)) {
-        exp[lang] = {};
-        list.forEach((value: string, index: number) => {
-            exp[lang][hashLang[index]] = value;
-        });
-    }
+	if (Array.isArray(list)) {
+		exp[lang] = {};
+		list.forEach((value: string, index: number) => {
+			exp[lang][hashLang[index]] = value;
+		});
+	}
 });
 
 export = exp;

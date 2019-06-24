@@ -19,126 +19,126 @@ import { Storage } from '../modules';
  */
 
 export interface ISourceFile {
-    file?: string;
-    fileIsAbsolute?: boolean;
-    name?: string;
-    thumb: string;
-    thumbIsAbsolute?: boolean;
-    changed: string | number;
-    size: string;
-    isImage: boolean;
+	file?: string;
+	fileIsAbsolute?: boolean;
+	name?: string;
+	thumb: string;
+	thumbIsAbsolute?: boolean;
+	changed: string | number;
+	size: string;
+	isImage: boolean;
 }
 
 export interface ISource {
-    path: string;
-    baseurl: string;
-    files: ISourceFile[];
-    folders: string[];
+	path: string;
+	baseurl: string;
+	files: ISourceFile[];
+	folders: string[];
 }
 
 export interface ISourcesFiles {
-    [key: string]: ISource;
+	[key: string]: ISource;
 }
 
 export interface IFileBrowserAnswer {
-    success: boolean;
-    time: string;
-    data: {
-        messages?: string[];
-        sources: ISourcesFiles;
-        code: number;
-        path: string;
-        name: string;
-        source: string;
-        permissions?: IPermissions | null;
-    };
+	success: boolean;
+	time: string;
+	data: {
+		messages?: string[];
+		sources: ISourcesFiles;
+		code: number;
+		path: string;
+		name: string;
+		source: string;
+		permissions?: IPermissions | null;
+	};
 }
 
 export interface IFileBrowserAjaxOptions {
-    url?: string;
-    async?: boolean;
+	url?: string;
+	async?: boolean;
 
-    data: IDictionary<string | IDictionary>;
-    cache?: boolean;
-    contentType?: string;
+	data: IDictionary<string | IDictionary>;
+	cache?: boolean;
+	contentType?: string;
 
-    method?: string;
-    processData?: boolean;
-    dataType?: string;
+	method?: string;
+	processData?: boolean;
+	dataType?: string;
 
-    headers?: IDictionary<string>;
+	headers?: IDictionary<string>;
 
-    prepareData?: (data: IDictionary<string>) => IDictionary<string>;
+	prepareData?: (data: IDictionary<string>) => IDictionary<string>;
 
-    process?: (resp: IFileBrowserAnswer) => IFileBrowserAnswer;
+	process?: (resp: IFileBrowserAnswer) => IFileBrowserAnswer;
 }
 
 export interface IFileBrowserOptions extends IViewOptions {
-    removeButtons: string[];
-    buttons: Buttons;
-    zIndex?: number;
-    fullsize?: boolean;
-    showTooltip?: boolean;
-    useNativeTooltip?: boolean;
-    filter: (item: any, search: any) => boolean;
+	removeButtons: string[];
+	buttons: Buttons;
+	zIndex?: number;
+	fullsize?: boolean;
+	showTooltip?: boolean;
+	useNativeTooltip?: boolean;
+	filter: (item: any, search: any) => boolean;
 
-    sortBy: string;
+	sortBy: string;
 
-    sort: (a: any, b: any, sortBy?: string) => number;
+	sort: (a: any, b: any, sortBy?: string) => number;
 
-    editImage: boolean;
-    preview: boolean;
-    showPreviewNavigation: boolean;
-    showSelectButtonInPreview: boolean;
-    contextMenu: boolean;
+	editImage: boolean;
+	preview: boolean;
+	showPreviewNavigation: boolean;
+	showSelectButtonInPreview: boolean;
+	contextMenu: boolean;
 
-    howLongShowMsg: number;
+	howLongShowMsg: number;
 
-    createNewFolder: boolean;
-    deleteFolder: boolean;
-    moveFolder: boolean;
-    moveFile: boolean;
-    showFoldersPanel: boolean;
+	createNewFolder: boolean;
+	deleteFolder: boolean;
+	moveFolder: boolean;
+	moveFile: boolean;
+	showFoldersPanel: boolean;
 
-    width: number;
-    height: number;
+	width: number;
+	height: number;
 
-    view: string | null;
+	view: string | null;
 
-    isSuccess: (resp: IFileBrowserAnswer) => boolean;
-    getMessage: (resp: IFileBrowserAnswer) => string;
-    showFileName: boolean;
-    showFileSize: boolean;
-    showFileChangeTime: boolean;
+	isSuccess: (resp: IFileBrowserAnswer) => boolean;
+	getMessage: (resp: IFileBrowserAnswer) => string;
+	showFileName: boolean;
+	showFileSize: boolean;
+	showFileChangeTime: boolean;
 
-    getThumbTemplate: (
-        item: ISourceFile,
-        source: ISource,
-        source_name: string
-    ) => string;
+	getThumbTemplate: (
+		item: ISourceFile,
+		source: ISource,
+		source_name: string
+	) => string;
 
-    ajax: IFileBrowserAjaxOptions;
-    create: IFileBrowserAjaxOptions | null;
-    getLocalFileByUrl: IFileBrowserAjaxOptions | null;
+	ajax: IFileBrowserAjaxOptions;
+	create: IFileBrowserAjaxOptions | null;
+	getLocalFileByUrl: IFileBrowserAjaxOptions | null;
 
-    resize: IFileBrowserAjaxOptions | null;
-    crop: IFileBrowserAjaxOptions | null;
+	resize: IFileBrowserAjaxOptions | null;
+	crop: IFileBrowserAjaxOptions | null;
 
-    fileMove: IFileBrowserAjaxOptions | null;
-    folderMove: IFileBrowserAjaxOptions | null;
-    fileRemove: IFileBrowserAjaxOptions | null;
-    folderRemove: IFileBrowserAjaxOptions | null;
-    items: IFileBrowserAjaxOptions;
-    folder: IFileBrowserAjaxOptions | null;
-    permissions: IFileBrowserAjaxOptions | null;
+	fileMove: IFileBrowserAjaxOptions | null;
+	folderMove: IFileBrowserAjaxOptions | null;
+	fileRemove: IFileBrowserAjaxOptions | null;
+	folderRemove: IFileBrowserAjaxOptions | null;
+	items: IFileBrowserAjaxOptions;
+	folder: IFileBrowserAjaxOptions | null;
+	permissions: IFileBrowserAjaxOptions | null;
 
-    uploader: null | IUploaderOptions<IUploader>; // use default Uploader's settings
-    [key: string]: any;
+	uploader: null | IUploaderOptions<IUploader>; // use default Uploader's settings
+	[key: string]: any;
 }
 
 export interface IFileBrowserCallBackData {
-    baseurl: string;
-    files: string[];
+	baseurl: string;
+	files: string[];
 }
 
 interface IFileBrowserDataProvider {
@@ -156,44 +156,73 @@ interface IFileBrowserDataProvider {
 	items(path: string, source: string): Promise<IFileBrowserAnswer>;
 	permissions(path: string, source: string): Promise<any>;
 
-	createFolder(name: string, path: string, source: string): Promise<IFileBrowserAnswer>;
+	createFolder(
+		name: string,
+		path: string,
+		source: string
+	): Promise<IFileBrowserAnswer>;
 
-	move(filepath: string, path: string, source: string, isFile: boolean): Promise<IFileBrowserAnswer>;
+	move(
+		filepath: string,
+		path: string,
+		source: string,
+		isFile: boolean
+	): Promise<IFileBrowserAnswer>;
 
-	fileRemove(path: string, file: string, source: string): Promise<IFileBrowserAnswer>;
+	fileRemove(
+		path: string,
+		file: string,
+		source: string
+	): Promise<IFileBrowserAnswer>;
 
-	folderRemove(path: string, file: string, source: string): Promise<IFileBrowserAnswer>;
+	folderRemove(
+		path: string,
+		file: string,
+		source: string
+	): Promise<IFileBrowserAnswer>;
 
-	resize(path: string, source: string, name: string, newname: string | void, box: ImageBox | void): Promise<IFileBrowserAnswer>;
-	crop(path: string, source: string, name: string, newname: string | void, box: ImageBox | void): Promise<IFileBrowserAnswer>;
+	resize(
+		path: string,
+		source: string,
+		name: string,
+		newname: string | void,
+		box: ImageBox | void
+	): Promise<IFileBrowserAnswer>;
+	crop(
+		path: string,
+		source: string,
+		name: string,
+		newname: string | void,
+		box: ImageBox | void
+	): Promise<IFileBrowserAnswer>;
 
 	canI(action: string): boolean;
 }
 
 interface IFileBrowser extends IViewWithToolbar<IFileBrowserOptions> {
-    uploader: IUploader;
-    dataProvider: IFileBrowserDataProvider;
+	uploader: IUploader;
+	dataProvider: IFileBrowserDataProvider;
 
-    storage: Storage;
-    dialog: Dialog;
+	storage: Storage;
+	dialog: Dialog;
 
-    isOpened(): boolean;
+	isOpened(): boolean;
 
-    close: () => void;
+	close: () => void;
 
-    openImageEditor(
-        href: string,
-        name: string,
-        path: string,
-        source: string,
-        onSuccess?: () => void,
-        onFailed?: (error: Error) => void
-    ): Promise<Dialog>;
+	openImageEditor(
+		href: string,
+		name: string,
+		path: string,
+		source: string,
+		onSuccess?: () => void,
+		onFailed?: (error: Error) => void
+	): Promise<Dialog>;
 
-    getActiveElements(): HTMLElement[];
+	getActiveElements(): HTMLElement[];
 
-    open(
-        callback: (data: IFileBrowserCallBackData) => void,
-        onlyImages: boolean
-    ): Promise<void>;
+	open(
+		callback: (data: IFileBrowserCallBackData) => void,
+		onlyImages: boolean
+	): Promise<void>;
 }

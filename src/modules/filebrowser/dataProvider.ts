@@ -3,7 +3,10 @@ import {
 	IFileBrowserAnswer,
 	IFileBrowserOptions,
 	IViewBased,
-	IPermissions, IFileBrowserDataProvider, ImageBox, IDictionary,
+	IPermissions,
+	IFileBrowserDataProvider,
+	ImageBox,
+	IDictionary
 } from '../../types';
 
 import { extend, normalizeRelativePath } from '../helpers';
@@ -26,7 +29,10 @@ export default class dataProvider implements IFileBrowserDataProvider {
 	currentSource: string = DEFAULT_SOURCE_NAME;
 	currentBaseUrl: string = '';
 
-	constructor(readonly options: IFileBrowserOptions, readonly parent: IViewBased) {}
+	constructor(
+		readonly options: IFileBrowserOptions,
+		readonly parent: IViewBased
+	) {}
 
 	/**
 	 *
@@ -38,7 +44,7 @@ export default class dataProvider implements IFileBrowserDataProvider {
 	private get(
 		name: string,
 		success?: (resp: IFileBrowserAnswer) => void,
-		error?: (error: Error) => void,
+		error?: (error: Error) => void
 	): Promise<IFileBrowserAnswer> {
 		const opts: IFileBrowserAjaxOptions = extend(
 			true,
@@ -46,7 +52,7 @@ export default class dataProvider implements IFileBrowserDataProvider {
 			this.options.ajax,
 			this.options[name] !== undefined
 				? this.options[name]
-				: this.options.ajax,
+				: this.options.ajax
 		);
 
 		if (opts.prepareData) {
@@ -58,11 +64,11 @@ export default class dataProvider implements IFileBrowserDataProvider {
 		const promise = ajax.send();
 
 		if (success) {
-			promise.then(success)
+			promise.then(success);
 		}
 
 		if (error) {
-			promise.catch(error)
+			promise.catch(error);
 		}
 
 		return promise;
@@ -74,7 +80,10 @@ export default class dataProvider implements IFileBrowserDataProvider {
 	 * @param path
 	 * @param source
 	 */
-	async permissions(path: string = this.currentPath, source: string = this.currentSource): Promise<void> {
+	async permissions(
+		path: string = this.currentPath,
+		source: string = this.currentSource
+	): Promise<void> {
 		if (!this.options.permissions) {
 			return Promise.resolve();
 		}
@@ -83,28 +92,26 @@ export default class dataProvider implements IFileBrowserDataProvider {
 		this.options.permissions.data.source = source;
 
 		if (this.options.permissions.url) {
-			return this.get('permissions')
-					.then((resp) => {
-						let process:
-							| ((resp: IFileBrowserAnswer) => IFileBrowserAnswer)
-							| undefined = (this.options.permissions as any).process;
+			return this.get('permissions').then(resp => {
+				let process:
+					| ((resp: IFileBrowserAnswer) => IFileBrowserAnswer)
+					| undefined = (this.options.permissions as any).process;
 
-						if (!process) {
-							process = this.options.ajax.process;
-						}
+				if (!process) {
+					process = this.options.ajax.process;
+				}
 
-						if (process) {
-							const respData: IFileBrowserAnswer = process.call(
-								self,
-								resp,
-							) as IFileBrowserAnswer;
+				if (process) {
+					const respData: IFileBrowserAnswer = process.call(
+						self,
+						resp
+					) as IFileBrowserAnswer;
 
-							if (respData.data.permissions) {
-								this.__currentPermissions =
-									respData.data.permissions;
-							}
-						}
-					});
+					if (respData.data.permissions) {
+						this.__currentPermissions = respData.data.permissions;
+					}
+				}
+			});
 		}
 
 		return Promise.resolve();
@@ -116,9 +123,11 @@ export default class dataProvider implements IFileBrowserDataProvider {
 	 * @param path
 	 * @param source
 	 */
-	async items(path: string = this.currentPath, source: string = this.currentSource): Promise<IFileBrowserAnswer> {
-		const
-			opt = this.options;
+	async items(
+		path: string = this.currentPath,
+		source: string = this.currentSource
+	): Promise<IFileBrowserAnswer> {
+		const opt = this.options;
 
 		if (!opt.items) {
 			return Promise.reject('Set Items api options');
@@ -128,9 +137,12 @@ export default class dataProvider implements IFileBrowserDataProvider {
 		opt.items.data.source = source;
 
 		return this.get('items');
-	};
+	}
 
-	async tree(path: string = this.currentPath, source: string = this.currentSource): Promise<IFileBrowserAnswer> {
+	async tree(
+		path: string = this.currentPath,
+		source: string = this.currentSource
+	): Promise<IFileBrowserAnswer> {
 		path = normalizeRelativePath(path);
 
 		await this.permissions(path, source);
@@ -159,10 +171,9 @@ export default class dataProvider implements IFileBrowserDataProvider {
 	getPathByUrl = (
 		url: string,
 		success: (path: string, name: string, source: string) => void,
-		onFailed: (error: Error) => void,
+		onFailed: (error: Error) => void
 	): Promise<any> => {
-		const
-			action: string = 'getLocalFileByUrl';
+		const action: string = 'getLocalFileByUrl';
 
 		this.options[action].data.url = url;
 
@@ -175,7 +186,7 @@ export default class dataProvider implements IFileBrowserDataProvider {
 					onFailed(new Error(this.options.getMessage(resp)));
 				}
 			},
-			onFailed,
+			onFailed
 		);
 	};
 
@@ -187,7 +198,11 @@ export default class dataProvider implements IFileBrowserDataProvider {
 	 * @param {string} path Relative toWYSIWYG the directory in which you want toWYSIWYG create a folder
 	 * @param {string} source Server source key
 	 */
-	createFolder(name: string, path: string, source: string): Promise<IFileBrowserAnswer> {
+	createFolder(
+		name: string,
+		path: string,
+		source: string
+	): Promise<IFileBrowserAnswer> {
 		if (!this.options.create) {
 			return Promise.reject('Set Create api options');
 		}
@@ -196,7 +211,7 @@ export default class dataProvider implements IFileBrowserDataProvider {
 		this.options.create.data.path = path;
 		this.options.create.data.name = name;
 
-		return this.get('create').then((resp) => {
+		return this.get('create').then(resp => {
 			this.currentPath = path;
 			this.currentSource = source;
 			return resp;
@@ -212,8 +227,15 @@ export default class dataProvider implements IFileBrowserDataProvider {
 	 * @param {string} source Source
 	 * @param {boolean} isFile
 	 */
-	move(filepath: string, path: string, source: string, isFile: boolean): Promise<IFileBrowserAnswer> {
-		const mode: 'fileMove' | 'folderMove' = isFile ? 'fileMove' : 'folderMove';
+	move(
+		filepath: string,
+		path: string,
+		source: string,
+		isFile: boolean
+	): Promise<IFileBrowserAnswer> {
+		const mode: 'fileMove' | 'folderMove' = isFile
+			? 'fileMove'
+			: 'folderMove';
 
 		const option = this.options[mode];
 
@@ -226,7 +248,7 @@ export default class dataProvider implements IFileBrowserDataProvider {
 		option.data.source = source;
 
 		return this.get(mode);
-	};
+	}
 
 	/**
 	 * Deleting a file
@@ -235,7 +257,11 @@ export default class dataProvider implements IFileBrowserDataProvider {
 	 * @param file The filename
 	 * @param source Source
 	 */
-	fileRemove(path: string, file: string, source: string): Promise<IFileBrowserAnswer> {
+	fileRemove(
+		path: string,
+		file: string,
+		source: string
+	): Promise<IFileBrowserAnswer> {
 		if (!this.options.fileRemove) {
 			return Promise.reject('Set fileRemove api options');
 		}
@@ -254,7 +280,11 @@ export default class dataProvider implements IFileBrowserDataProvider {
 	 * @param file The filename
 	 * @param source Source
 	 */
-	folderRemove(path: string, file: string, source: string): Promise<IFileBrowserAnswer> {
+	folderRemove(
+		path: string,
+		file: string,
+		source: string
+	): Promise<IFileBrowserAnswer> {
 		if (!this.options.folderRemove) {
 			return Promise.reject('Set folderRemove api options');
 		}
@@ -274,7 +304,13 @@ export default class dataProvider implements IFileBrowserDataProvider {
 	 * @param newname
 	 * @param box
 	 */
-	crop(path: string, source: string, name: string, newname: string | void, box: ImageBox | void): Promise<IFileBrowserAnswer> {
+	crop(
+		path: string,
+		source: string,
+		name: string,
+		newname: string | void,
+		box: ImageBox | void
+	): Promise<IFileBrowserAnswer> {
 		if (!this.options.crop) {
 			this.options.crop = {
 				data: {}
@@ -308,7 +344,13 @@ export default class dataProvider implements IFileBrowserDataProvider {
 	 * @param newname
 	 * @param box
 	 */
-	resize(path: string, source: string, name: string, newname: string | void, box: ImageBox | void): Promise<IFileBrowserAnswer> {
+	resize(
+		path: string,
+		source: string,
+		name: string,
+		newname: string | void,
+		box: ImageBox | void
+	): Promise<IFileBrowserAnswer> {
 		if (!this.options.resize) {
 			this.options.resize = {
 				data: {}

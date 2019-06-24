@@ -11,175 +11,175 @@ import { IControlType } from '../types/toolbar';
 import { IJodit } from '../types';
 
 Config.prototype.controls.fontsize = (<IControlType<IJodit>>{
-    command: 'fontSize',
-    list: [
-        '8',
-        '9',
-        '10',
-        '11',
-        '12',
-        '14',
-        '16',
-        '18',
-        '24',
-        '30',
-        '36',
-        '48',
-        '60',
-        '72',
-        '96',
-    ],
-    template: (editor, key: string, value: string) => value,
-    tooltip: 'Font size',
-    isActiveChild: (editor, control: IControlType): boolean => {
-        const current: Node | false = editor.selection.current();
+	command: 'fontSize',
+	list: [
+		'8',
+		'9',
+		'10',
+		'11',
+		'12',
+		'14',
+		'16',
+		'18',
+		'24',
+		'30',
+		'36',
+		'48',
+		'60',
+		'72',
+		'96'
+	],
+	template: (editor, key: string, value: string) => value,
+	tooltip: 'Font size',
+	isActiveChild: (editor, control: IControlType): boolean => {
+		const current: Node | false = editor.selection.current();
 
-        if (current) {
-            const currentBpx: HTMLElement =
-                (Dom.closest(
-                    current,
-                    elm => {
-                        return (
-                            Dom.isBlock(elm, editor.editorWindow) ||
-                            (elm &&
-                                Dom.isNode(elm, editor.editorWindow) &&
-                                elm.nodeType === Node.ELEMENT_NODE)
-                        );
-                    },
-                    editor.editor
-                ) as HTMLElement) || editor.editor;
+		if (current) {
+			const currentBpx: HTMLElement =
+				(Dom.closest(
+					current,
+					elm => {
+						return (
+							Dom.isBlock(elm, editor.editorWindow) ||
+							(elm &&
+								Dom.isNode(elm, editor.editorWindow) &&
+								elm.nodeType === Node.ELEMENT_NODE)
+						);
+					},
+					editor.editor
+				) as HTMLElement) || editor.editor;
 
-            const fontSize: number = css(currentBpx, 'font-size') as number;
-            return Boolean(
-                fontSize &&
-                    control.args &&
-                    control.args[1].toString() === fontSize.toString()
-            );
-        }
+			const fontSize: number = css(currentBpx, 'font-size') as number;
+			return Boolean(
+				fontSize &&
+					control.args &&
+					control.args[1].toString() === fontSize.toString()
+			);
+		}
 
-        return false;
-    },
-    isActive: (editor): boolean => {
-        const current: Node | false = editor.selection.current();
+		return false;
+	},
+	isActive: (editor): boolean => {
+		const current: Node | false = editor.selection.current();
 
-        if (current) {
-            const currentBpx: HTMLElement =
-                (Dom.closest(
-                    current,
-                    elm => {
-                        return (
-                            Dom.isBlock(elm, editor.editorWindow) ||
-                            (elm &&
-                                Dom.isNode(elm, editor.editorWindow) &&
-                                elm.nodeType === Node.ELEMENT_NODE)
-                        );
-                    },
-                    editor.editor
-                ) as HTMLElement) || editor.editor;
+		if (current) {
+			const currentBpx: HTMLElement =
+				(Dom.closest(
+					current,
+					elm => {
+						return (
+							Dom.isBlock(elm, editor.editorWindow) ||
+							(elm &&
+								Dom.isNode(elm, editor.editorWindow) &&
+								elm.nodeType === Node.ELEMENT_NODE)
+						);
+					},
+					editor.editor
+				) as HTMLElement) || editor.editor;
 
-            return (
-                css(currentBpx, 'font-size').toString() !==
-                css(editor.editor, 'font-size').toString()
-            );
-        }
+			return (
+				css(currentBpx, 'font-size').toString() !==
+				css(editor.editor, 'font-size').toString()
+			);
+		}
 
-        return false;
-    },
+		return false;
+	}
 }) as IControlType;
 
 Config.prototype.controls.font = (<IControlType<IJodit>>{
-    command: 'fontname',
+	command: 'fontname',
 
-    exec: (editor, event, control) => {
-        editor.execCommand(
-            control.command as string,
-            false,
-            control.args ? control.args[0] : undefined
-        );
-    },
+	exec: (editor, event, control) => {
+		editor.execCommand(
+			control.command as string,
+			false,
+			control.args ? control.args[0] : undefined
+		);
+	},
 
-    list: {
-        'Helvetica,sans-serif': 'Helvetica',
-        'Arial,Helvetica,sans-serif': 'Arial',
-        'Georgia,serif': 'Georgia',
-        'Impact,Charcoal,sans-serif': 'Impact',
-        'Tahoma,Geneva,sans-serif': 'Tahoma',
-        "'Times New Roman',Times,serif": 'Times New Roman',
-        'Verdana,Geneva,sans-serif': 'Verdana',
-    },
+	list: {
+		'Helvetica,sans-serif': 'Helvetica',
+		'Arial,Helvetica,sans-serif': 'Arial',
+		'Georgia,serif': 'Georgia',
+		'Impact,Charcoal,sans-serif': 'Impact',
+		'Tahoma,Geneva,sans-serif': 'Tahoma',
+		"'Times New Roman',Times,serif": 'Times New Roman',
+		'Verdana,Geneva,sans-serif': 'Verdana'
+	},
 
-    template: (editor, key: string, value: string) => {
-        return `<span style="font-family: ${key}">${value}</span>`;
-    },
+	template: (editor, key: string, value: string) => {
+		return `<span style="font-family: ${key}">${value}</span>`;
+	},
 
-    isActiveChild: (editor, control: IControlType): boolean => {
-        const current: Node | false = editor.selection.current(),
-            normFonts = (fontValue: string): string => {
-                return fontValue
-                    .toLowerCase()
-                    .replace(/['"]+/g, '')
-                    .replace(/[^a-z0-9]+/g, ',');
-            };
+	isActiveChild: (editor, control: IControlType): boolean => {
+		const current: Node | false = editor.selection.current(),
+			normFonts = (fontValue: string): string => {
+				return fontValue
+					.toLowerCase()
+					.replace(/['"]+/g, '')
+					.replace(/[^a-z0-9]+/g, ',');
+			};
 
-        if (current) {
-            const currentBpx: HTMLElement =
-                (Dom.closest(
-                    current,
-                    elm => {
-                        return (
-                            Dom.isBlock(elm, editor.editorWindow) ||
-                            (elm &&
-                                Dom.isNode(elm, editor.editorWindow) &&
-                                elm.nodeType === Node.ELEMENT_NODE)
-                        );
-                    },
-                    editor.editor
-                ) as HTMLElement) || editor.editor;
+		if (current) {
+			const currentBpx: HTMLElement =
+				(Dom.closest(
+					current,
+					elm => {
+						return (
+							Dom.isBlock(elm, editor.editorWindow) ||
+							(elm &&
+								Dom.isNode(elm, editor.editorWindow) &&
+								elm.nodeType === Node.ELEMENT_NODE)
+						);
+					},
+					editor.editor
+				) as HTMLElement) || editor.editor;
 
-            const fontFamily: string = css(
-                currentBpx,
-                'font-family'
-            ).toString();
+			const fontFamily: string = css(
+				currentBpx,
+				'font-family'
+			).toString();
 
-            return Boolean(
-                fontFamily &&
-                    control.args &&
-                    normFonts(control.args[0].toString()) ===
-                        normFonts(fontFamily)
-            );
-        }
+			return Boolean(
+				fontFamily &&
+					control.args &&
+					normFonts(control.args[0].toString()) ===
+						normFonts(fontFamily)
+			);
+		}
 
-        return false;
-    },
+		return false;
+	},
 
-    isActive: (editor: IJodit): boolean => {
-        const current: Node | false = editor.selection.current();
+	isActive: (editor: IJodit): boolean => {
+		const current: Node | false = editor.selection.current();
 
-        if (current) {
-            const currentBpx: HTMLElement =
-                (Dom.closest(
-                    current,
-                    (elm: Node | null) => {
-                        return (
-                            Dom.isBlock(elm, editor.editorWindow) ||
-                            (Dom.isNode(elm, editor.editorWindow) &&
-                                elm &&
-                                elm.nodeType === Node.ELEMENT_NODE)
-                        );
-                    },
-                    editor.editor
-                ) as HTMLElement) || editor.editor;
+		if (current) {
+			const currentBpx: HTMLElement =
+				(Dom.closest(
+					current,
+					(elm: Node | null) => {
+						return (
+							Dom.isBlock(elm, editor.editorWindow) ||
+							(Dom.isNode(elm, editor.editorWindow) &&
+								elm &&
+								elm.nodeType === Node.ELEMENT_NODE)
+						);
+					},
+					editor.editor
+				) as HTMLElement) || editor.editor;
 
-            return (
-                css(currentBpx, 'font-family').toString() !==
-                css(editor.editor, 'font-family').toString()
-            );
-        }
+			return (
+				css(currentBpx, 'font-family').toString() !==
+				css(editor.editor, 'font-family').toString()
+			);
+		}
 
-        return false;
-    },
+		return false;
+	},
 
-    tooltip: 'Font family',
+	tooltip: 'Font family'
 }) as IControlType;
 
 /**
@@ -187,30 +187,30 @@ Config.prototype.controls.font = (<IControlType<IJodit>>{
  * @param {Jodit} editor
  */
 export function font(editor: IJodit) {
-    const callback = (
-        command: string,
-        second: string,
-        third: string
-    ): false | void => {
-        switch (command) {
-            case 'fontsize':
-                editor.selection.applyCSS({
-                    fontSize: normalizeSize(third),
-                });
-                break;
-            case 'fontname':
-                editor.selection.applyCSS({
-                    fontFamily: third,
-                });
-                break;
-        }
+	const callback = (
+		command: string,
+		second: string,
+		third: string
+	): false | void => {
+		switch (command) {
+			case 'fontsize':
+				editor.selection.applyCSS({
+					fontSize: normalizeSize(third)
+				});
+				break;
+			case 'fontname':
+				editor.selection.applyCSS({
+					fontFamily: third
+				});
+				break;
+		}
 
-        editor.events.fire('synchro');
+		editor.events.fire('synchro');
 
-        return false;
-    };
+		return false;
+	};
 
-    editor
-        .registerCommand('fontsize', callback)
-        .registerCommand('fontname', callback);
+	editor
+		.registerCommand('fontsize', callback)
+		.registerCommand('fontname', callback);
 }

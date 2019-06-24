@@ -7,11 +7,11 @@
 import { IStorage } from '../../types';
 
 export class LocalStorageProvider implements IStorage {
-    public set(key: string, value: string | number) {
-        localStorage.setItem(key, value.toString());
-    }
+	public set(key: string, value: string | number) {
+		localStorage.setItem(key, value.toString());
+	}
 
-    public get(key: string): string | null {
-        return localStorage.getItem(key);
-    }
+	public get(key: string): string | null {
+		return localStorage.getItem(key);
+	}
 }

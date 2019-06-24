@@ -45,16 +45,16 @@ export const NEARBY = 5;
 export const ACCURACY = 10;
 
 export const COMMAND_KEYS = [
-		KEY_BACKSPACE,
-		KEY_DELETE,
-		KEY_UP,
-		KEY_DOWN,
-		KEY_RIGHT,
-		KEY_LEFT,
-		KEY_ENTER,
-		KEY_ESC,
-		KEY_F3,
-		KEY_TAB,
+	KEY_BACKSPACE,
+	KEY_DELETE,
+	KEY_UP,
+	KEY_DOWN,
+	KEY_RIGHT,
+	KEY_LEFT,
+	KEY_ENTER,
+	KEY_ESC,
+	KEY_F3,
+	KEY_TAB
 ];
 
 export const BR = 'br';
@@ -80,9 +80,9 @@ export const MODE_SPLIT = 3;
  * @property {boolean} Is Internet Explorer
  */
 export const IS_IE =
-		typeof navigator !== 'undefined' &&
-		(navigator.userAgent.indexOf('MSIE') !== -1 ||
-				/rv:11.0/i.test(navigator.userAgent));
+	typeof navigator !== 'undefined' &&
+	(navigator.userAgent.indexOf('MSIE') !== -1 ||
+		/rv:11.0/i.test(navigator.userAgent));
 /**
  * @property {string} TEXT_PLAIN='text/plain'  For IE11 it will be 'text'. Need for dataTransfer.setData
  */
@@ -102,29 +102,29 @@ export const INSERT_AS_TEXT = 'insert_as_text';
 export const INSERT_ONLY_TEXT = 'insert_only_text';
 
 export const IS_MAC =
-		typeof window !== 'undefined' &&
-		/Mac|iPod|iPhone|iPad/.test(window.navigator.platform);
+	typeof window !== 'undefined' &&
+	/Mac|iPod|iPhone|iPad/.test(window.navigator.platform);
 
 export const KEY_ALIASES: IDictionary<string> = {
-		add: '+',
-		break: 'pause',
-		cmd: 'meta',
-		command: 'meta',
-		ctl: 'control',
-		ctrl: 'control',
-		del: 'delete',
-		down: 'arrowdown',
-		esc: 'escape',
-		ins: 'insert',
-		left: 'arrowleft',
-		mod: IS_MAC ? 'meta' : 'control',
-		opt: 'alt',
-		option: 'alt',
-		return: 'enter',
-		right: 'arrowright',
-		space: ' ',
-		spacebar: ' ',
-		up: 'arrowup',
-		win: 'meta',
-		windows: 'meta',
+	add: '+',
+	break: 'pause',
+	cmd: 'meta',
+	command: 'meta',
+	ctl: 'control',
+	ctrl: 'control',
+	del: 'delete',
+	down: 'arrowdown',
+	esc: 'escape',
+	ins: 'insert',
+	left: 'arrowleft',
+	mod: IS_MAC ? 'meta' : 'control',
+	opt: 'alt',
+	option: 'alt',
+	return: 'enter',
+	right: 'arrowright',
+	space: ' ',
+	spacebar: ' ',
+	up: 'arrowup',
+	win: 'meta',
+	windows: 'meta'
 };

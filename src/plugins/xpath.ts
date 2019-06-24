@@ -15,15 +15,15 @@ import { ToolbarButton } from '../modules/toolbar/button';
 import { IControlType, IControlTypeStrong } from '../types/toolbar';
 
 declare module '../Config' {
-    interface Config {
-        showXPathInStatusbar: boolean;
-    }
+	interface Config {
+		showXPathInStatusbar: boolean;
+	}
 }
 
 Config.prototype.controls.selectall = {
-    icon: 'select-all',
-    command: 'selectall',
-    tooltip: 'Select all',
+	icon: 'select-all',
+	command: 'selectall',
+	tooltip: 'Select all'
 } as IControlType;
 
 Config.prototype.showXPathInStatusbar = true;
@@ -32,217 +32,217 @@ Config.prototype.showXPathInStatusbar = true;
  * Show path to current element in status bar
  */
 export class xpath extends Plugin {
-    private onContext = (bindElement: Node, event: MouseEvent) => {
-        if (!this.menu) {
-            this.menu = new ContextMenu(this.jodit);
-        }
+	private onContext = (bindElement: Node, event: MouseEvent) => {
+		if (!this.menu) {
+			this.menu = new ContextMenu(this.jodit);
+		}
 
-        this.menu.show(event.clientX, event.clientY, [
-            {
-                icon: 'bin',
-                title: bindElement === this.jodit.editor ? 'Clear' : 'Remove',
-                exec: () => {
-                    if (bindElement !== this.jodit.editor) {
-                        Dom.safeRemove(bindElement);
-                    } else {
-                        this.jodit.value = '';
-                    }
-                    this.jodit.setEditorValue();
-                },
-            },
-            {
-                icon: 'select-all',
-                title: 'Select',
-                exec: () => {
-                    this.jodit.selection.select(bindElement);
-                },
-            },
-        ]);
-        return false;
-    };
+		this.menu.show(event.clientX, event.clientY, [
+			{
+				icon: 'bin',
+				title: bindElement === this.jodit.editor ? 'Clear' : 'Remove',
+				exec: () => {
+					if (bindElement !== this.jodit.editor) {
+						Dom.safeRemove(bindElement);
+					} else {
+						this.jodit.value = '';
+					}
+					this.jodit.setEditorValue();
+				}
+			},
+			{
+				icon: 'select-all',
+				title: 'Select',
+				exec: () => {
+					this.jodit.selection.select(bindElement);
+				}
+			}
+		]);
+		return false;
+	};
 
-    private onSelectPath = (bindElement: Node, event: MouseEvent) => {
-        this.jodit.selection.focus();
+	private onSelectPath = (bindElement: Node, event: MouseEvent) => {
+		this.jodit.selection.focus();
 
-        const path: string =
-            (event.target as HTMLElement).getAttribute('data-path') || '/';
+		const path: string =
+			(event.target as HTMLElement).getAttribute('data-path') || '/';
 
-        if (path === '/') {
-            this.jodit.execCommand('selectall');
-            return false;
-        }
+		if (path === '/') {
+			this.jodit.execCommand('selectall');
+			return false;
+		}
 
-        try {
-            const elm: Node | null = this.jodit.editorDocument
-                .evaluate(
-                    path,
-                    this.jodit.editor,
-                    null,
-                    XPathResult.ANY_TYPE,
-                    null
-                )
-                .iterateNext();
+		try {
+			const elm: Node | null = this.jodit.editorDocument
+				.evaluate(
+					path,
+					this.jodit.editor,
+					null,
+					XPathResult.ANY_TYPE,
+					null
+				)
+				.iterateNext();
 
-            if (elm) {
-                this.jodit.selection.select(elm);
-                return false;
-            }
-        } catch {}
+			if (elm) {
+				this.jodit.selection.select(elm);
+				return false;
+			}
+		} catch {}
 
-        this.jodit.selection.select(bindElement);
+		this.jodit.selection.select(bindElement);
 
-        return false;
-    };
+		return false;
+	};
 
-    private tpl = (
-        bindElement: Node,
-        path: string,
-        name: string,
-        title: string
-    ): HTMLElement => {
-        const li: HTMLLIElement = this.jodit.create.fromHTML(
-            '<li>' +
-                '<a ' +
-                'role="button" ' +
-                'data-path="' +
-                path +
-                '" ' +
-                'href="javascript:void(0)" ' +
-                'title="' +
-                title +
-                '" ' +
-                'tabindex="-1"' +
-                '>' +
-                name +
-                '</a>' +
-                '</li>'
-        ) as HTMLLIElement;
+	private tpl = (
+		bindElement: Node,
+		path: string,
+		name: string,
+		title: string
+	): HTMLElement => {
+		const li: HTMLLIElement = this.jodit.create.fromHTML(
+			'<li>' +
+				'<a ' +
+				'role="button" ' +
+				'data-path="' +
+				path +
+				'" ' +
+				'href="javascript:void(0)" ' +
+				'title="' +
+				title +
+				'" ' +
+				'tabindex="-1"' +
+				'>' +
+				name +
+				'</a>' +
+				'</li>'
+		) as HTMLLIElement;
 
-        const a: HTMLAnchorElement = li.firstChild as HTMLAnchorElement;
+		const a: HTMLAnchorElement = li.firstChild as HTMLAnchorElement;
 
-        this.jodit.events
-            .on(a, 'click', this.onSelectPath.bind(this, bindElement))
-            .on(a, 'contextmenu', this.onContext.bind(this, bindElement));
+		this.jodit.events
+			.on(a, 'click', this.onSelectPath.bind(this, bindElement))
+			.on(a, 'contextmenu', this.onContext.bind(this, bindElement));
 
-        return li;
-    };
+		return li;
+	};
 
-    private selectAllButton: ToolbarButton;
-    private removeSelectAll = () => {
-        if (this.selectAllButton) {
-            this.selectAllButton.destruct();
-            delete this.selectAllButton;
-        }
-    }
-    private appendSelectAll = () => {
-        this.removeSelectAll();
-        this.selectAllButton = new ToolbarButton(this.jodit, <
-            IControlTypeStrong
-        >{
-            name: 'selectall',
-            ...this.jodit.options.controls.selectall,
-        });
+	private selectAllButton: ToolbarButton;
+	private removeSelectAll = () => {
+		if (this.selectAllButton) {
+			this.selectAllButton.destruct();
+			delete this.selectAllButton;
+		}
+	};
+	private appendSelectAll = () => {
+		this.removeSelectAll();
+		this.selectAllButton = new ToolbarButton(this.jodit, <
+			IControlTypeStrong
+		>{
+			name: 'selectall',
+			...this.jodit.options.controls.selectall
+		});
 
-        this.container &&
-            this.container.insertBefore(
-                this.selectAllButton.container,
-                this.container.firstChild
-            );
-    };
+		this.container &&
+			this.container.insertBefore(
+				this.selectAllButton.container,
+				this.container.firstChild
+			);
+	};
 
-    private calcPathImd = () => {
-        if (this.isDestructed) {
-            return;
-        }
+	private calcPathImd = () => {
+		if (this.isDestructed) {
+			return;
+		}
 
-        const current: Node | false = this.jodit.selection.current();
+		const current: Node | false = this.jodit.selection.current();
 
-        if (this.container) {
-            this.container.innerHTML = INVISIBLE_SPACE;
-        }
+		if (this.container) {
+			this.container.innerHTML = INVISIBLE_SPACE;
+		}
 
-        if (current) {
-            let name: string, xpth: string, li: HTMLElement;
+		if (current) {
+			let name: string, xpth: string, li: HTMLElement;
 
-            Dom.up(
-                current,
-                (elm: Node | null) => {
-                    if (
-                        elm &&
-                        this.jodit.editor !== elm &&
-                        elm.nodeType !== Node.TEXT_NODE
-                    ) {
-                        name = elm.nodeName.toLowerCase();
-                        xpth = getXPathByElement(
-                            elm as HTMLElement,
-                            this.jodit.editor
-                        ).replace(/^\//, '');
-                        li = this.tpl(
-                            elm,
-                            xpth,
-                            name,
-                            this.jodit.i18n('Select %s', name)
-                        );
+			Dom.up(
+				current,
+				(elm: Node | null) => {
+					if (
+						elm &&
+						this.jodit.editor !== elm &&
+						elm.nodeType !== Node.TEXT_NODE
+					) {
+						name = elm.nodeName.toLowerCase();
+						xpth = getXPathByElement(
+							elm as HTMLElement,
+							this.jodit.editor
+						).replace(/^\//, '');
+						li = this.tpl(
+							elm,
+							xpth,
+							name,
+							this.jodit.i18n('Select %s', name)
+						);
 
-                        this.container &&
-                            this.container.insertBefore(
-                                li,
-                                this.container.firstChild
-                            );
-                    }
-                },
-                this.jodit.editor
-            );
-        }
+						this.container &&
+							this.container.insertBefore(
+								li,
+								this.container.firstChild
+							);
+					}
+				},
+				this.jodit.editor
+			);
+		}
 
-        this.appendSelectAll();
-    };
+		this.appendSelectAll();
+	};
 
-    private calcPath: () => void = debounce(
-        this.calcPathImd,
-        this.jodit.defaultTimeout * 2
-    );
+	private calcPath: () => void = debounce(
+		this.calcPathImd,
+		this.jodit.defaultTimeout * 2
+	);
 
-    public container: HTMLElement | null = null;
-    public menu: ContextMenu | null = null;
+	public container: HTMLElement | null = null;
+	public menu: ContextMenu | null = null;
 
-    afterInit() {
-        if (this.jodit.options.showXPathInStatusbar) {
-            this.container = this.jodit.create.element('ul');
-            this.container.classList.add('jodit_xpath');
-            this.jodit.statusbar.append(this.container);
+	afterInit() {
+		if (this.jodit.options.showXPathInStatusbar) {
+			this.container = this.jodit.create.element('ul');
+			this.container.classList.add('jodit_xpath');
+			this.jodit.statusbar.append(this.container);
 
-            this.jodit.events
-                .on(
-                    'mouseup.xpath change.xpath keydown.xpath changeSelection.xpath',
-                    this.calcPath
-                )
-                .on('afterSetMode.xpath afterInit.xpath', () => {
-                    if (this.jodit.getRealMode() === MODE_WYSIWYG) {
-                        this.calcPath();
-                    } else {
-                        if (this.container) {
-                            this.container.innerHTML = INVISIBLE_SPACE;
-                        }
-                        this.appendSelectAll();
-                    }
-                });
+			this.jodit.events
+				.on(
+					'mouseup.xpath change.xpath keydown.xpath changeSelection.xpath',
+					this.calcPath
+				)
+				.on('afterSetMode.xpath afterInit.xpath', () => {
+					if (this.jodit.getRealMode() === MODE_WYSIWYG) {
+						this.calcPath();
+					} else {
+						if (this.container) {
+							this.container.innerHTML = INVISIBLE_SPACE;
+						}
+						this.appendSelectAll();
+					}
+				});
 
-            this.calcPath();
-        }
-    }
+			this.calcPath();
+		}
+	}
 
-    beforeDestruct(): void {
-        if (this.jodit && this.jodit.events) {
-            this.jodit.events.off('.xpath');
-        }
+	beforeDestruct(): void {
+		if (this.jodit && this.jodit.events) {
+			this.jodit.events.off('.xpath');
+		}
 
-        this.removeSelectAll();
+		this.removeSelectAll();
 
-        this.menu && this.menu.destruct();
-        Dom.safeRemove(this.container);
+		this.menu && this.menu.destruct();
+		Dom.safeRemove(this.container);
 
-        this.menu = null;
-        this.container = null;
-    }
+		this.menu = null;
+		this.container = null;
+	}
 }

@@ -12,15 +12,15 @@
  * @return {int}
  */
 export const humanSizeToBytes = (human: string): number => {
-    if (/^[0-9.]+$/.test(human.toString())) {
-        return parseFloat(human);
-    }
+	if (/^[0-9.]+$/.test(human.toString())) {
+		return parseFloat(human);
+	}
 
-    const format: string = human.substr(-2, 2).toUpperCase(),
-        formats: string[] = ['KB', 'MB', 'GB', 'TB'],
-        number: number = parseFloat(human.substr(0, human.length - 2));
+	const format: string = human.substr(-2, 2).toUpperCase(),
+		formats: string[] = ['KB', 'MB', 'GB', 'TB'],
+		number: number = parseFloat(human.substr(0, human.length - 2));
 
-    return formats.indexOf(format) !== -1
-        ? number * Math.pow(1024, formats.indexOf(format) + 1)
-        : parseInt(human, 10);
+	return formats.indexOf(format) !== -1
+		? number * Math.pow(1024, formats.indexOf(format) + 1)
+		: parseInt(human, 10);
 };

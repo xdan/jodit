@@ -8,14 +8,14 @@ import { IStorage } from '../../types';
 import { camelCase } from '../helpers/string';
 
 export class Storage {
-    public prefix: string = 'Jodit_';
+	public prefix: string = 'Jodit_';
 
-    public set(key: string, value: string | number) {
-        this.provider.set(camelCase(this.prefix + key), value);
-    }
+	public set(key: string, value: string | number) {
+		this.provider.set(camelCase(this.prefix + key), value);
+	}
 
-    public get(key: string): string | null {
-        return this.provider.get(camelCase(this.prefix + key));
-    }
-    constructor(readonly provider: IStorage) {}
+	public get(key: string): string | null {
+		return this.provider.get(camelCase(this.prefix + key));
+	}
+	constructor(readonly provider: IStorage) {}
 }

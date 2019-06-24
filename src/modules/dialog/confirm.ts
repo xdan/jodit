@@ -24,69 +24,69 @@ import { ToolbarIcon } from '../toolbar/icon';
  * ```
  */
 export const Confirm = (
-    msg: string,
-    title: string | ((yes: boolean) => void) | undefined,
-    callback?: (yes: boolean) => void
+	msg: string,
+	title: string | ((yes: boolean) => void) | undefined,
+	callback?: (yes: boolean) => void
 ): Dialog => {
-    const dialog = new Dialog(),
-        $div: HTMLDivElement = dialog.create.fromHTML(
-            '<form class="jodit_promt"></form>'
-        ) as HTMLDivElement,
-        $label: HTMLLabelElement = dialog.create.element('label');
+	const dialog = new Dialog(),
+		$div: HTMLDivElement = dialog.create.fromHTML(
+			'<form class="jodit_promt"></form>'
+		) as HTMLDivElement,
+		$label: HTMLLabelElement = dialog.create.element('label');
 
-    if (typeof title === 'function') {
-        callback = title;
-        title = undefined;
-    }
+	if (typeof title === 'function') {
+		callback = title;
+		title = undefined;
+	}
 
-    $label.appendChild(dialog.create.fromHTML(msg));
-    $div.appendChild($label);
+	$label.appendChild(dialog.create.fromHTML(msg));
+	$div.appendChild($label);
 
-    const $cancel: HTMLAnchorElement = dialog.create.fromHTML(
-        '<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
-            ToolbarIcon.getIcon('cancel') +
-            '<span>' +
-            Jodit.prototype.i18n('Cancel') +
-            '</span>' +
-            '</a>'
-    ) as HTMLAnchorElement;
+	const $cancel: HTMLAnchorElement = dialog.create.fromHTML(
+		'<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
+			ToolbarIcon.getIcon('cancel') +
+			'<span>' +
+			Jodit.prototype.i18n('Cancel') +
+			'</span>' +
+			'</a>'
+	) as HTMLAnchorElement;
 
-    $cancel.addEventListener('click', () => {
-        if (callback) {
-            callback(false);
-        }
-        dialog.close();
-    });
+	$cancel.addEventListener('click', () => {
+		if (callback) {
+			callback(false);
+		}
+		dialog.close();
+	});
 
-    const onok = () => {
-        if (callback) {
-            callback(true);
-        }
-        dialog.close();
-    };
+	const onok = () => {
+		if (callback) {
+			callback(true);
+		}
+		dialog.close();
+	};
 
-    const $ok: HTMLAnchorElement = dialog.create.fromHTML(
-        '<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
-            ToolbarIcon.getIcon('check') +
-            '<span>' +
-            Jodit.prototype.i18n('Yes') +
-            '</span>' +
-            '</a>'
-    ) as HTMLAnchorElement;
+	const $ok: HTMLAnchorElement = dialog.create.fromHTML(
+		'<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
+			ToolbarIcon.getIcon('check') +
+			'<span>' +
+			Jodit.prototype.i18n('Yes') +
+			'</span>' +
+			'</a>'
+	) as HTMLAnchorElement;
 
-    $ok.addEventListener('click', onok);
+	$ok.addEventListener('click', onok);
 
-    $div.addEventListener('submit', () => {
-        onok();
-        return false;
-    });
+	$div.addEventListener('submit', () => {
+		onok();
+		return false;
+	});
 
-    dialog.setFooter([$ok, $cancel]);
+	dialog.setFooter([$ok, $cancel]);
 
-    dialog.open($div, (title as string) || '&nbsp;', true, true);
-    $ok.focus();
+	dialog.open($div, (title as string) || '&nbsp;', true, true);
+	$ok.focus();
 
-    return dialog;
+	return dialog;
 };
 
 import { Jodit } from '../../Jodit';

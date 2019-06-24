@@ -17,15 +17,15 @@ import { Command } from './command';
  * @property{int} observer.timeout=100 Delay on every change
  */
 declare module '../../Config' {
-    interface Config {
-        observer: {
-            timeout: number;
-        };
-    }
+	interface Config {
+		observer: {
+			timeout: number;
+		};
+	}
 }
 
 Config.prototype.observer = {
-    timeout: 100,
+	timeout: 100
 };
 
 /**
@@ -37,111 +37,111 @@ Config.prototype.observer = {
  * @params {Jodit} parent Jodit main object
  */
 export class Observer extends Component<IJodit> {
-    private __startValue: SnapshotType;
-    private __newValue: SnapshotType;
+	private __startValue: SnapshotType;
+	private __newValue: SnapshotType;
 
-    private onChangeStack = () => {
-        this.__newValue = this.snapshot.make();
-        if (!Snapshot.equal(this.__newValue, this.__startValue)) {
-            this.stack.push(
-                new Command(this.__startValue, this.__newValue, this)
-            );
-            this.__startValue = this.__newValue;
-            this.changeStack();
-        }
-    };
+	private onChangeStack = () => {
+		this.__newValue = this.snapshot.make();
+		if (!Snapshot.equal(this.__newValue, this.__startValue)) {
+			this.stack.push(
+				new Command(this.__startValue, this.__newValue, this)
+			);
+			this.__startValue = this.__newValue;
+			this.changeStack();
+		}
+	};
 
-    /**
-     * @property {Stack} stack
-     */
-    public stack: Stack;
+	/**
+	 * @property {Stack} stack
+	 */
+	public stack: Stack;
 
-    /**
-     * @property{Snapshot} snapshot
-     */
-    public snapshot: Snapshot;
+	/**
+	 * @property{Snapshot} snapshot
+	 */
+	public snapshot: Snapshot;
 
-    /**
-     * Return state of the WYSIWYG editor to step back
-     */
-    public redo() {
-        if (this.stack.redo()) {
-            this.__startValue = this.snapshot.make();
-            this.changeStack();
-        }
-    }
+	/**
+	 * Return state of the WYSIWYG editor to step back
+	 */
+	public redo() {
+		if (this.stack.redo()) {
+			this.__startValue = this.snapshot.make();
+			this.changeStack();
+		}
+	}
 
-    /**
-     * Return the state of the WYSIWYG editor to step forward
-     */
-    public undo() {
-        if (this.stack.undo()) {
-            this.__startValue = this.snapshot.make();
-            this.changeStack();
-        }
-    }
+	/**
+	 * Return the state of the WYSIWYG editor to step forward
+	 */
+	public undo() {
+		if (this.stack.undo()) {
+			this.__startValue = this.snapshot.make();
+			this.changeStack();
+		}
+	}
 
-    public clear() {
-        this.__startValue = this.snapshot.make();
-        this.stack.clear();
-        this.changeStack();
-    }
+	public clear() {
+		this.__startValue = this.snapshot.make();
+		this.stack.clear();
+		this.changeStack();
+	}
 
-    public changeStack() {
-        this.jodit &&
-            !this.jodit.isDestructed &&
-            this.jodit.events &&
-            this.jodit.events.fire('changeStack');
-    }
+	public changeStack() {
+		this.jodit &&
+			!this.jodit.isDestructed &&
+			this.jodit.events &&
+			this.jodit.events.fire('changeStack');
+	}
 
-    constructor(editor: IJodit) {
-        super(editor);
+	constructor(editor: IJodit) {
+		super(editor);
 
-        this.stack = new Stack();
+		this.stack = new Stack();
 
-        this.snapshot = new Snapshot(editor);
+		this.snapshot = new Snapshot(editor);
 
-        const onChangeStack = debounce(
-            this.onChangeStack,
-            editor.defaultTimeout
-        );
+		const onChangeStack = debounce(
+			this.onChangeStack,
+			editor.defaultTimeout
+		);
 
-        editor.events.on('afterInit.observer', () => {
-            if (this.isDestructed) {
-                return;
-            }
+		editor.events.on('afterInit.observer', () => {
+			if (this.isDestructed) {
+				return;
+			}
 
-            this.__startValue = this.snapshot.make();
-            editor.events
-                // save selection
-                .on(
-                    'changeSelection.observer selectionstart.observer selectionchange.observer mousedown.observer mouseup.observer keydown.observer keyup.observer',
-                    () => {
-                        if (
-                            this.__startValue.html ===
-                            this.jodit.getNativeEditorValue()
-                        ) {
-                            this.__startValue = this.snapshot.make();
-                        }
-                    }
-                )
-                .on('change.observer', () => {
-                    if (!this.snapshot.isBlocked) {
-                        onChangeStack();
-                    }
-                });
-        });
-    }
-    destruct(): any {
-        if (this.jodit.events) {
-            this.jodit.events.off('.observer');
-        }
+			this.__startValue = this.snapshot.make();
+			editor.events
+				// save selection
+				.on(
+					'changeSelection.observer selectionstart.observer selectionchange.observer mousedown.observer mouseup.observer keydown.observer keyup.observer',
+					() => {
+						if (
+							this.__startValue.html ===
+							this.jodit.getNativeEditorValue()
+						) {
+							this.__startValue = this.snapshot.make();
+						}
+					}
+				)
+				.on('change.observer', () => {
+					if (!this.snapshot.isBlocked) {
+						onChangeStack();
+					}
+				});
+		});
+	}
+	destruct(): any {
+		if (this.jodit.events) {
+			this.jodit.events.off('.observer');
+		}
 
-        this.snapshot.destruct();
-        delete this.snapshot;
+		this.snapshot.destruct();
+		delete this.snapshot;
 
-        delete this.stack;
+		delete this.stack;
 
-        super.destruct();
-    }
+		super.destruct();
+	}
 }
