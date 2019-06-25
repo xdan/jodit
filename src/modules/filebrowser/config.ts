@@ -609,7 +609,7 @@ Config.prototype.controls.filebrowser = {
 	tiles: {
 		icon: 'th',
 		isActive: (filebrowser: IFileBrowser): boolean =>
-			filebrowser.buffer.fileBrowserView === 'tiles',
+			filebrowser.state.view === 'tiles',
 		exec: (filebrowser: IFileBrowser) => {
 			filebrowser.events.fire('view.filebrowser', 'tiles');
 		}
@@ -617,7 +617,7 @@ Config.prototype.controls.filebrowser = {
 	list: {
 		icon: 'th-list',
 		isActive: (filebrowser: IFileBrowser): boolean =>
-			filebrowser.buffer.fileBrowserView === 'list',
+			filebrowser.state.view === 'list',
 		exec: (filebrowser: IFileBrowser) => {
 			filebrowser.events.fire('view.filebrowser', 'list');
 		}

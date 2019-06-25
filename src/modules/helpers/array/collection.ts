@@ -56,9 +56,16 @@ export class Collection<T> {
         return this;
     }
 
+    private __lockEvent: IDictionary<boolean> = {};
+
     private fire(event: string, ...attr: any[]) {
-        if (this.__onEvents[event]) {
-            this.__onEvents[event].forEach(clb => clb.call(this, ...attr));
-        }
-    }
+			try {
+				if (!this.__lockEvent[event] && this.__onEvents[event]) {
+					this.__lockEvent[event] = true;
+					this.__onEvents[event].forEach(clb => clb.call(this, ...attr));
+				}
+			} catch {} finally {
+				this.__lockEvent[event] = false;
+			}
+		}
 }

@@ -31,8 +31,8 @@
 
 	&.jodit_fly {
 		position: absolute;
-		left: 0px;
-		right: 0px;
+		left: 0;
+		right: 0;
 		z-index: @z-index-fly-toolbar;
 		background: #fff;
 	}
@@ -43,6 +43,7 @@
 		z-index: 3;
 		top: 0;
 		left: auto;
+
 		& + .jodit_toolbar_dummy {
 			display: block;
 		}
@@ -72,6 +73,7 @@
 			background-color: transparent !important;
 			opacity: 0.3;
 			cursor: default;
+
 			a {
 				cursor: default;
 			}
@@ -141,6 +143,7 @@
 		&.jodit-btn-hidden {
 			display: none !important;
 		}
+
 		&.jodit_with_dropdownlist {
 			.jodit_with_dropdownlist-trigger {
 				width: 0;
@@ -153,6 +156,7 @@
 				margin-left: 3px;
 			}
 		}
+
 		&.jodit_toolbar-input {
 			input,
 			select {
@@ -162,6 +166,7 @@
 				outline: none;
 				line-height: 100%;
 			}
+
 			select {
 				padding-right: @padding-default * 2;
 				background: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNC45NSIgaGVpZ2h0PSIxMCIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxLjQxIDQuNjcgMi40OCAzLjE4IDMuNTQgNC42NyAxLjQxIDQuNjciLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMy41NCA1LjMzIDIuNDggNi44MiAxLjQxIDUuMzMgMy41NCA1LjMzIi8+PC9zdmc+)
@@ -193,6 +198,7 @@
 	&-small .jodit_toolbar {
 		.toolbar_size(@toolbar_small_size);
 	}
+
 	&-large .jodit_toolbar {
 		.toolbar_size(@toolbar_large_size);
 	}
@@ -217,6 +223,7 @@
 		box-shadow: none;
 		border-width: 0;
 		background-color: transparent;
+
 		.jodit_toolbar {
 			background-color: @color-toolbar;
 			box-shadow: @box-shadow-default;
@@ -231,16 +238,16 @@
 	.jodit_popup_triangle {
 		padding: 0;
 		margin: 0;
-		width: @popap-triangle-size;
-		height: @popap-triangle-size;
+		width: @popup-triangle-size;
+		height: @popup-triangle-size;
 		position: absolute;
-		top: -@popap-triangle-size / 2 - 1px;
+		top: -@popup-triangle-size / 2 - 1px;
 		left: 9px;
 
 		display: inline-block;
 		transform: rotate(45deg);
-		background: @popap-bg-color;
-		border: 1px solid @jodit_toolbar_popup_border;
+		background: @popup-bg-color;
+		border: solid @jodit_toolbar_popup_border;
 		border-width: 1px 0 0 1px;
 		z-index: 6;
 	}
@@ -248,6 +255,7 @@
 	&.jodit_right {
 		left: auto;
 		right: 0;
+
 		&:before {
 			left: auto;
 			right: 14px;

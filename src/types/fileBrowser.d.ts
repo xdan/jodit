@@ -22,11 +22,11 @@ export interface ISourceFile {
 	file?: string;
 	fileIsAbsolute?: boolean;
 	name?: string;
-	thumb: string;
+	thumb?: string;
 	thumbIsAbsolute?: boolean;
-	changed: string | number;
-	size: string;
-	isImage: boolean;
+	changed?: string | number;
+	size?: string;
+	isImage?: boolean;
 }
 
 export interface ISource {
@@ -141,7 +141,7 @@ export interface IFileBrowserCallBackData {
 	files: string[];
 }
 
-interface IFileBrowserDataProvider {
+export interface IFileBrowserDataProvider {
 	currentPath: string;
 	currentSource: string;
 	currentBaseUrl: string;
@@ -153,7 +153,9 @@ interface IFileBrowserDataProvider {
 	): Promise<IFileBrowserAnswer>;
 
 	tree(path: string, source: string): Promise<IFileBrowserAnswer>;
+
 	items(path: string, source: string): Promise<IFileBrowserAnswer>;
+
 	permissions(path: string, source: string): Promise<any>;
 
 	createFolder(
@@ -188,6 +190,7 @@ interface IFileBrowserDataProvider {
 		newname: string | void,
 		box: ImageBox | void
 	): Promise<IFileBrowserAnswer>;
+
 	crop(
 		path: string,
 		source: string,
@@ -199,9 +202,11 @@ interface IFileBrowserDataProvider {
 	canI(action: string): boolean;
 }
 
-interface IFileBrowser extends IViewWithToolbar<IFileBrowserOptions> {
+export interface IFileBrowser extends IViewWithToolbar<IFileBrowserOptions> {
 	uploader: IUploader;
 	dataProvider: IFileBrowserDataProvider;
+
+	state: IFileBrowserState;
 
 	storage: Storage;
 	dialog: Dialog;
@@ -225,4 +230,16 @@ interface IFileBrowser extends IViewWithToolbar<IFileBrowserOptions> {
 		callback: (data: IFileBrowserCallBackData) => void,
 		onlyImages: boolean
 	): Promise<void>;
+}
+
+export interface IFileBrowserState {
+	view: 'tiles' | 'list',
+	sortBy: string,
+	filterWord: string,
+	onlyImages: boolean
+}
+
+export interface IFileBrowserItemElement extends ISourceFile {
+	source: ISource;
+	sourceName: string;
 }
