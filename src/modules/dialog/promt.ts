@@ -32,27 +32,32 @@ export const Promt = (
 	placeholder?: string
 ): Dialog => {
 	const dialog: Dialog = new Dialog(),
-		$cancel: HTMLAnchorElement = dialog.create.fromHTML(
+		cancelButton: HTMLAnchorElement = dialog.create.fromHTML(
 			'<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
 				ToolbarIcon.getIcon('cancel') +
 				'<span>' +
 				Jodit.prototype.i18n('Cancel') +
 				'</span></a>'
 		) as HTMLAnchorElement,
-		$ok: HTMLAnchorElement = dialog.create.fromHTML(
+
+		okButton: HTMLAnchorElement = dialog.create.fromHTML(
 			'<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
 				ToolbarIcon.getIcon('check') +
 				'<span>' +
 				Jodit.prototype.i18n('Ok') +
 				'</span></a>'
 		) as HTMLAnchorElement,
-		$div: HTMLFormElement = dialog.create.element('form', {
+
+		form: HTMLFormElement = dialog.create.element('form', {
 			class: 'jodit_promt'
 		}),
-		$input: HTMLInputElement = dialog.create.element('input', {
-			autofocus: true
+
+		inputElement: HTMLInputElement = dialog.create.element('input', {
+			autofocus: true,
+			class: 'jodit_input'
 		}),
-		$label: HTMLLabelElement = dialog.create.element(
+
+		labelElement: HTMLLabelElement = dialog.create.element(
 			'label'
 		) as HTMLLabelElement;
 
@@ -62,37 +67,37 @@ export const Promt = (
 	}
 
 	if (placeholder) {
-		$input.setAttribute('placeholder', placeholder);
+		inputElement.setAttribute('placeholder', placeholder);
 	}
 
-	$label.appendChild(dialog.create.text(msg));
+	labelElement.appendChild(dialog.create.text(msg));
 
-	$div.appendChild($label);
-	$div.appendChild($input);
+	form.appendChild(labelElement);
+	form.appendChild(inputElement);
 
-	$cancel.addEventListener('click', dialog.close, false);
+	cancelButton.addEventListener('click', dialog.close, false);
 
 	const onclick = () => {
 		if (
 			!callback ||
 			typeof callback !== 'function' ||
-			callback($input.value) !== false
+			callback(inputElement.value) !== false
 		) {
 			dialog.close();
 		}
 	};
 
-	$ok.addEventListener('click', onclick);
+	okButton.addEventListener('click', onclick);
 
-	$div.addEventListener('submit', () => {
+	form.addEventListener('submit', () => {
 		onclick();
 		return false;
 	});
 
-	dialog.setFooter([$ok, $cancel]);
+	dialog.setFooter([okButton, cancelButton]);
 
-	dialog.open($div, (title as string) || '&nbsp;', true, true);
-	$input.focus();
+	dialog.open(form, (title as string) || '&nbsp;', true, true);
+	inputElement.focus();
 
 	return dialog;
 };

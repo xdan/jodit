@@ -79,7 +79,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	private view: string = 'tiles';
 	private sortBy: string = 'changed';
 
-	private dragger: false | HTMLElement = false;
+	private dragElement: false | HTMLElement = false;
 
 	private statusTimer: number;
 
@@ -123,7 +123,8 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	}
 
 	private async loadTree(): Promise<any> {
-		const path: string = this.dataProvider.currentPath,
+		const
+			path: string = this.dataProvider.currentPath,
 			source: string = this.dataProvider.currentSource;
 
 		if (this.uploader) {
@@ -748,7 +749,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 				'dragstart',
 				function(this: HTMLAnchorElement) {
 					if (self.options.moveFolder) {
-						self.dragger = this;
+						self.dragElement = this;
 					}
 				},
 				'a'
@@ -759,15 +760,15 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 				function(this: HTMLAnchorElement): boolean | void {
 					if (
 						(self.options.moveFile || self.options.moveFolder) &&
-						self.dragger
+						self.dragElement
 					) {
 						let path: string =
-							self.dragger.getAttribute('data-path') || '';
+							self.dragElement.getAttribute('data-path') || '';
 
 						// move folder
 						if (
 							!self.options.moveFolder &&
-							self.dragger.classList.contains(
+							self.dragElement.classList.contains(
 								F_CLASS + 'tree_item'
 							)
 						) {
@@ -775,8 +776,8 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 						}
 
 						// move file
-						if (self.dragger.classList.contains(ITEM_CLASS)) {
-							path += self.dragger.getAttribute('data-name');
+						if (self.dragElement.classList.contains(ITEM_CLASS)) {
+							path += self.dragElement.getAttribute('data-name');
 							if (!self.options.moveFile) {
 								return false;
 							}
@@ -787,7 +788,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 								path,
 								this.getAttribute('data-path') || '',
 								this.getAttribute('data-source') || '',
-								self.dragger.classList.contains(ITEM_CLASS)
+								self.dragElement.classList.contains(ITEM_CLASS)
 							)
 							.then(resp => {
 								if (self.options.isSuccess(resp)) {
@@ -797,7 +798,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 								}
 							}, self.status);
 
-						self.dragger = false;
+						self.dragElement = false;
 					}
 				},
 				'a'
@@ -1042,7 +1043,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 				'dragstart',
 				function() {
 					if (self.options.moveFile) {
-						self.dragger = this;
+						self.dragElement = this;
 					}
 				},
 				'a'
