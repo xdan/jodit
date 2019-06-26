@@ -95,13 +95,14 @@ export class ContextMenu extends Component {
 			top: y
 		});
 
-		this.jodit.events.on(this.jodit.ownerWindow, 'mouseup', self.hide);
+		this.jodit.events.on(this.jodit.ownerWindow, 'mouseup jodit_close_dialog', self.hide);
 
 		this.context.classList.add('jodit_context_menu-show');
 	}
 
 	constructor(editor: IViewBased) {
 		super(editor);
+
 		this.context = editor.create.div('jodit_context_menu', {
 			'data-editor_id': this.jodit.id
 		});
