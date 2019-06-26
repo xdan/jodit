@@ -62,7 +62,7 @@ export default (self: FileBrowser) => {
 									ga('data-name'),
 									ga('data-source')
 								);
-								self.activeElements.remove(item);
+								self.state.activeElements = [];
 								self.loadTree();
 							}
 						}

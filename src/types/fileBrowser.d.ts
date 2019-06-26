@@ -10,6 +10,7 @@ import { IUploader, IUploaderOptions } from './uploader';
 import { IViewOptions, IViewWithToolbar } from './view';
 import { Dialog } from '../modules/dialog';
 import { Storage } from '../modules';
+import { Collection } from '../modules/helpers/array/collection';
 
 /**
  * The module creates a web browser dialog box. In a Web browser ,you can select an image, remove, drag it. Upload new
@@ -112,7 +113,7 @@ export interface IFileBrowserOptions extends IViewOptions {
 	showFileChangeTime: boolean;
 
 	getThumbTemplate: (
-		item: ISourceFile,
+		item: IFileBrowserItem,
 		source: ISource,
 		source_name: string
 	) => string;
@@ -224,8 +225,6 @@ export interface IFileBrowser extends IViewWithToolbar<IFileBrowserOptions> {
 		onFailed?: (error: Error) => void
 	): Promise<Dialog>;
 
-	getActiveElements(): HTMLElement[];
-
 	open(
 		callback: (data: IFileBrowserCallBackData) => void,
 		onlyImages: boolean
@@ -236,10 +235,22 @@ export interface IFileBrowserState {
 	view: 'tiles' | 'list',
 	sortBy: string,
 	filterWord: string,
-	onlyImages: boolean
+	onlyImages: boolean,
+
+	elements: IFileBrowserItem[],
+	activeElements: IFileBrowserItem[]
 }
 
 export interface IFileBrowserItemElement extends ISourceFile {
 	source: ISource;
 	sourceName: string;
 }
+
+export interface IFileBrowserItemWrapper {
+	path: string;
+	fileURL: string;
+	imageURL: string;
+	time: string;
+}
+
+export type IFileBrowserItem = IFileBrowserItemWrapper & IFileBrowserItemElement;

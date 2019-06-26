@@ -4,5 +4,10 @@
  * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
-export const normalizeURL = (url: string) =>
-    url.replace(/([^:])[\\\/]+/g, '$1/');
+export const normalizeURL = (...urls: string[]) => {
+	return urls
+		.filter(url => url.length)
+		.map(url => url.replace(/\/$/, ''))
+		.join('/')
+		.replace(/([^:])[\\\/]+/g, '$1/');
+};

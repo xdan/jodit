@@ -9,7 +9,7 @@ import { ToolbarIcon } from '../toolbar/icon';
 
 import {
 	IFileBrowser,
-	IFileBrowserAnswer,
+	IFileBrowserAnswer, IFileBrowserItem,
 	IFileBrowserOptions,
 	ISource,
 	ISourceFile
@@ -19,8 +19,6 @@ import { IControlType } from '../../types/toolbar';
 import { IDictionary } from '../../types/types';
 import { IUploader } from '../../types/uploader';
 import { IViewBased } from '../../types/view';
-import { normalizePath } from '../helpers/normalize/';
-import { normalizeURL } from '../helpers/normalize/normalizeURL';
 import { debounce } from '../helpers/async/debounce';
 import { humanSizeToBytes } from '../helpers';
 import { ITEM_CLASS as IC } from './fileBrowser';
@@ -384,40 +382,26 @@ Config.prototype.filebrowser = {
 
 	getThumbTemplate(
 		this: IFileBrowser,
-		item: ISourceFile,
+		item: IFileBrowserItem,
 		source: ISource,
 		source_name: string
 	): string {
-		const opt = this.options,
-			timestamp: string = new Date().getTime().toString(),
+		const
+			opt = this.options,
 			showName = opt.showFileName,
 			showSize = opt.showFileSize && item.size,
-			showTime =
-				opt.showFileChangeTime &&
-				item.changed &&
-				(typeof item.changed === 'number'
-					? new Date(item.changed).toLocaleString()
-					: item.changed);
+			showTime = opt.showFileChangeTime && item.time;
 
-		let name: string = '',
-			thumb: string = '',
-			info: string,
-			thumbIsAbsolute: boolean = !!item.thumbIsAbsolute,
-			fileIsAbsolute: boolean = !!item.fileIsAbsolute;
+		let
+			name: string = '',
+			info: string;
 
 		if (item.file !== undefined) {
 			name = item.file;
-			thumb = item.file;
-		}
-
-		if (item.thumb) {
-			thumb = item.thumb;
 		}
 
 		info =
-			'<div class="' +
-			IC +
-			'-info">' +
+			`<div class="${IC}-info">` +
 			(showName
 				? `<span class="${IC}-info-filename">${name}</span>`
 				: '') +
@@ -429,34 +413,22 @@ Config.prototype.filebrowser = {
 				: '') +
 			'</div>';
 
-		const imageURL: string = fileIsAbsolute
-			? name
-			: normalizeURL(source.baseurl + source.path + name);
-
 		return (
 			'<a ' +
 			`data-is-file="${item.isImage ? 0 : 1}" ` +
 			'draggable="true" ' +
 			`class="${IC}" ` +
-			`href="${imageURL}" ` +
+			`href="${item.fileURL}" ` +
 			`data-source="${source_name}" ` +
-			`data-path="${normalizePath(
-				source.path ? source.path + '/' : '/'
-			)}" ` +
+			`data-path="${item.path}" ` +
 			`data-name="${name}" ` +
 			`title="${name}" ` +
-			`data-url="${imageURL}"` +
+			`data-url="${item.fileURL}"` +
 			'>' +
 			`<img ` +
 			`data-is-file="${item.isImage ? 0 : 1}" ` +
-			`data-src="${imageURL}" ` +
-			`src="${
-				thumbIsAbsolute
-					? thumb
-					: normalizeURL(source.baseurl + source.path + thumb) +
-					  '?_tmst=' +
-					  timestamp
-			}" ` +
+			`data-src="${item.fileURL}" ` +
+			`src="${item.imageURL}" ` +
 			`alt="${name}" ` +
 			'loading="lazy" ' +
 			'/>' +
@@ -534,16 +506,14 @@ Config.prototype.controls.filebrowser = {
 		isDisable: (browser: IFileBrowser): boolean =>
 			!browser.dataProvider.canI('FileUpload'),
 		getContent: (
-			filebrowser: IViewBased,
+			filebrowser: IFileBrowser,
 			control: IControlType
 		): HTMLElement => {
 			const btn: HTMLElement = filebrowser.create.fromHTML(
 					'<span class="jodit_upload_button">' +
 						ToolbarIcon.getIcon('plus') +
 						'<input type="file" accept="' +
-						(filebrowser.buffer.fileBrowserOnlyImages
-							? 'image/*'
-							: '*') +
+						(filebrowser.state.onlyImages ? 'image/*' : '*') +
 						'" tabindex="-1" dir="auto" multiple=""/>' +
 						'</span>'
 				),
@@ -564,11 +534,12 @@ Config.prototype.controls.filebrowser = {
 			return btn;
 		}
 	} as IControlType,
+
 	remove: {
 		icon: 'bin',
 		isDisable: (browser: IFileBrowser): boolean => {
 			return (
-				browser.getActiveElements().length === 0 ||
+				!browser.state.activeElements.length ||
 				!browser.dataProvider.canI('FileRemove')
 			);
 		},
@@ -576,15 +547,16 @@ Config.prototype.controls.filebrowser = {
 			editor.events.fire('fileRemove.filebrowser');
 		}
 	} as IControlType,
+
 	update: {
 		exec: (editor: IViewBased) => {
 			editor.events.fire('update.filebrowser');
 		}
 	} as IControlType,
+
 	select: {
 		icon: 'check',
-		isDisable: (browser: IFileBrowser): boolean =>
-			browser.getActiveElements().length === 0,
+		isDisable: (browser: IFileBrowser): boolean => !browser.state.activeElements.length,
 		exec: (editor: IViewBased) => {
 			editor.events.fire('select.filebrowser');
 		}
@@ -592,10 +564,11 @@ Config.prototype.controls.filebrowser = {
 	edit: {
 		icon: 'pencil',
 		isDisable: (browser: IFileBrowser): boolean => {
-			const selected: HTMLElement[] = browser.getActiveElements();
+			const selected = browser.state.activeElements;
+
 			return (
 				selected.length !== 1 ||
-				selected[0].getAttribute('data-is-file') === '1' ||
+				!selected[0].isImage ||
 				!(
 					(browser as IFileBrowser).dataProvider.canI('ImageCrop') ||
 					(browser as IFileBrowser).dataProvider.canI('ImageResize')
