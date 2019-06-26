@@ -19,7 +19,7 @@ export class FileBrowserItem implements IFileBrowserItemWrapper {
 		const
 			timestamp: string = new Date().getTime().toString(),
 			{ thumbIsAbsolute, source, thumb, file } = this.data,
-			path = file || thumb;
+			path = thumb || file;
 
 		return (thumbIsAbsolute && path) ?
 			path :
@@ -27,9 +27,12 @@ export class FileBrowserItem implements IFileBrowserItemWrapper {
 	}
 
 	get fileURL(): string {
-		return this.data.fileIsAbsolute ?
-			name :
-			normalizeURL(this.data.source.baseurl + this.data.source.path + name);
+		let { name, file, fileIsAbsolute, source } = this.data;
+		if (file !== undefined) {
+			name = file;
+		}
+
+		return (fileIsAbsolute && name) ? name : normalizeURL(source.baseurl, source.path, name || '');
 	}
 
 	get time(): string {

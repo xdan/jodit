@@ -794,21 +794,21 @@ export class ImageEditor extends Component {
 			this.jodit.create.fromHTML(
 				'<button data-action="reset" type="button" class="jodit_btn">' +
 					ToolbarIcon.getIcon('update') +
-					' ' +
+					'&nbsp;' +
 					editor.i18n('Reset') +
 					'</button>'
 			),
 			this.jodit.create.fromHTML(
 				'<button data-action="save" type="button" class="jodit_btn jodit_btn_success">' +
 					ToolbarIcon.getIcon('save') +
-					' ' +
+					'&nbsp;' +
 					editor.i18n('Save') +
 					'</button>'
 			),
 			this.jodit.create.fromHTML(
 				'<button data-action="saveas" type="button" class="jodit_btn jodit_btn_success">' +
 					ToolbarIcon.getIcon('save') +
-					' ' +
+					'&nbsp;' +
 					editor.i18n('Save as ...') +
 					'</button>'
 			)

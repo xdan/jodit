@@ -426,11 +426,11 @@ Config.prototype.filebrowser = {
 			`data-url="${item.fileURL}"` +
 			'>' +
 			`<img ` +
-			`data-is-file="${item.isImage ? 0 : 1}" ` +
-			`data-src="${item.fileURL}" ` +
-			`src="${item.imageURL}" ` +
-			`alt="${name}" ` +
-			'loading="lazy" ' +
+				`data-is-file="${item.isImage ? 0 : 1}" ` +
+				`data-src="${item.fileURL}" ` +
+				`src="${item.imageURL}" ` +
+				`alt="${name}" ` +
+				'loading="lazy" ' +
 			'/>' +
 			(showName || showSize || showTime ? info : '') +
 			'</a>'

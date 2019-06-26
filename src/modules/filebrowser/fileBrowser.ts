@@ -546,7 +546,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 			hashKey = (item: IFileBrowserItem): string => {
 				let key = [item.sourceName, item.name, item.file, item.time, item.thumb].join('_');
 
-				key = key.toLowerCase().replace(/[^0-9a-z\-]/, '-');
+				key = key.toLowerCase().replace(/[^0-9a-z\-\.]/g, '-');
 
 				return key;
 			};
@@ -677,7 +677,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 					self.openImageEditor(
 						file.file || '',
 						file.name || '',
-						normalizePath(file.source.path ? file.source.path + '/' : '/'),
+						file.path,
 						file.sourceName
 					);
 				}
@@ -852,8 +852,9 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 				self.files,
 				'click',
 				function(this: HTMLElement, e: MouseEvent) {
-					debugger;
-					const item = self.elementToItem(this);
+					const
+						item = self.elementToItem(this);
+
 					if (!item) {
 						return;
 					}

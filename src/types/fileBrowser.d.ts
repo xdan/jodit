@@ -10,7 +10,6 @@ import { IUploader, IUploaderOptions } from './uploader';
 import { IViewOptions, IViewWithToolbar } from './view';
 import { Dialog } from '../modules/dialog';
 import { Storage } from '../modules';
-import { Collection } from '../modules/helpers/array/collection';
 
 /**
  * The module creates a web browser dialog box. In a Web browser ,you can select an image, remove, drag it. Upload new
