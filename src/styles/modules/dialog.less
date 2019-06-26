@@ -64,6 +64,7 @@
 			0 6px 6px rgba(0, 0, 0, 0.23);
 		min-width: 200px;
 		min-height: 100px;
+
 		@media (max-width: @screen-xs) {
 			max-width: 100%;
 			width: 100% !important;
@@ -71,15 +72,18 @@
 			top: 0 !important;
 			left: 0 !important;
 		}
+
 		.jodit_promt {
 			max-width: 300px;
 			min-width: 200px;
 			padding: 10px;
 			word-break: break-all;
+
 			label {
 				margin-bottom: 5px;
 				display: block;
 			}
+
 			input[type='text'] {
 				display: block;
 				border: 1px solid #ccc;
@@ -91,12 +95,14 @@
 				outline: none;
 			}
 		}
+
 		.jodit_alert {
 			max-width: 300px;
 			min-width: 200px;
 			padding: 10px;
 			word-break: break-all;
 		}
+
 		.jodit_button {
 			padding: 0;
 			margin: 0;
@@ -113,6 +119,7 @@
 			&:not(.disabled):hover {
 				background-color: @color-background-button-hover;
 			}
+
 			&.disabled {
 				opacity: 0.7;
 			}
