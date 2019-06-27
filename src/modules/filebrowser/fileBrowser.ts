@@ -655,11 +655,11 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 						if (yes) {
 							const promises: Array<Promise<any>> = [];
 
-							self.state.activeElements.forEach((a) => {
+							self.state.activeElements.forEach((item) => {
 								promises.push(
 									self.deleteFile(
-										a.name || '',
-										a.sourceName || ''
+										item.file || item.name || '',
+										item.sourceName
 									)
 								);
 							});
