@@ -95,7 +95,7 @@ export default {
 	Keep: 'Original speichern',
 	Clean: 'Säubern',
 	'Insert as Text': 'Als Text einfügen',
-	'Word Paste Detected': 'InWord formatierter Text erkannt',
+	'Word Paste Detected': 'In Word formatierter Text erkannt',
 
 	'The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?':
 		'Der Inhalt, den Sie einfügen, stammt aus einem Microsoft Word / Excel-Dokument. Möchten Sie das Format ' +
