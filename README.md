@@ -162,6 +162,6 @@ https://github.com/xdan/jodit
 
 ## License
 
-Licensed under GNU General Public License v2.0 or later
+Licensed under GNU General Public License v2.0 or later or MIT or [Commercial](https://xdsoft.net/jodit/commercial/)
 
 
