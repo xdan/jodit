@@ -299,7 +299,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 				const urls: string[] = [];
 
 				this.state.activeElements.forEach((elm) => {
-					const url = elm.file;
+					const url = elm.fileURL;
 					url && urls.push(url);
 				});
 
@@ -678,8 +678,8 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 					const [file] = this.state.activeElements;
 
 					self.openImageEditor(
+						file.fileURL,
 						file.file || '',
-						file.name || '',
 						file.path,
 						file.sourceName
 					);
