@@ -13,8 +13,12 @@
 		line-height: 18px;
 		margin-bottom: 5px;
 		margin-top: 4px;
+		display: flex;
+
 		> a {
-			display: inline-block;
+			display: flex;
+			align-items: center;
+			justify-content: center;
 			text-decoration: none;
 
 			font-size: 11px;
@@ -64,6 +68,7 @@
 				box-shadow: none;
 				background-color: @color-background-gray-hover;
 				outline: none;
+
 				i,
 				svg {
 					fill: @color-tab_hover;
@@ -76,6 +81,7 @@
 				background: @color-background-tab_active;
 				border: 1px solid @color-border-tab_active;
 				color: @color-tab_active;
+
 				i,
 				svg {
 					fill: @color-tab_active;
@@ -86,9 +92,11 @@
 	.jodit_tabs_wrapper {
 		.jodit_tab {
 			display: none;
+
 			&.active {
 				display: block;
 			}
+
 			.jodit_tab_empty {
 				min-width: 220px;
 				min-height: 100px;
