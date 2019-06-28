@@ -28,6 +28,7 @@ export class FileBrowserItem implements IFileBrowserItemWrapper {
 
 	get fileURL(): string {
 		let { name, file, fileIsAbsolute, source } = this.data;
+
 		if (file !== undefined) {
 			name = file;
 		}
@@ -37,11 +38,11 @@ export class FileBrowserItem implements IFileBrowserItemWrapper {
 
 	get time(): string {
 		const { changed } = this.data;
+
 		return (
-				changed &&
-				(typeof changed === 'number' ? new Date(changed).toLocaleString() : changed)
-			) ||
-			'';
+			changed &&
+			(typeof changed === 'number' ? new Date(changed).toLocaleString() : changed)
+		) || '';
 	}
 
 	get uniqueHashKey(): string {
