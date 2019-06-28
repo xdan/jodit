@@ -43,4 +43,14 @@ export class FileBrowserItem implements IFileBrowserItemWrapper {
 			) ||
 			'';
 	}
+
+	get uniqueHashKey(): string {
+		const data = this.data;
+
+		let key = [data.sourceName, data.name, data.file, this.time, data.thumb].join('_');
+
+		key = key.toLowerCase().replace(/[^0-9a-z\-.]/g, '-');
+
+		return key;
+	}
 }

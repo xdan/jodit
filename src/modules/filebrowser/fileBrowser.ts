@@ -382,11 +382,6 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 		}, this.options.howLongShowMsg);
 	};
 
-	getActiveElements(): HTMLElement[] {
-		return [];
-		//return this.state.activeElements;
-	}
-
 	/**
 	 * Close dialog
 	 * @method close
@@ -545,17 +540,8 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	}
 
 	private initElementsEventsConstructor() {
-		const
-			hashKey = (item: IFileBrowserItem): string => {
-				let key = [item.sourceName, item.name, item.file, item.time, item.thumb].join('_');
-
-				key = key.toLowerCase().replace(/[^0-9a-z\-\.]/g, '-');
-
-				return key;
-			};
-
 		const getDomElement = (item: IFileBrowserItem): HTMLElement => {
-			const key = hashKey(item);
+			const key = item.uniqueHashKey;
 
 			if (this.elementsMap[key]) {
 				return this.elementsMap[key].elm;
@@ -584,7 +570,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 			.on('beforeChange.activeElements', () => {
 				this.state.activeElements.forEach(item => {
 					const
-						key = hashKey(item),
+						key = item.uniqueHashKey,
 						{ elm } = this.elementsMap[key];
 
 					elm && elm.classList.remove(ITEM_ACTIVE_CLASS);
@@ -595,7 +581,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 
 				this.state.activeElements.forEach(item => {
 					const
-						key = hashKey(item),
+						key = item.uniqueHashKey,
 						{ elm } = this.elementsMap[key];
 
 					elm && elm.classList.add(ITEM_ACTIVE_CLASS);

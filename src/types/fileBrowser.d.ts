@@ -253,6 +253,7 @@ export interface IFileBrowserItemWrapper {
 	fileURL: string;
 	imageURL: string;
 	time: string;
+	uniqueHashKey: string;
 }
 
 export type IFileBrowserItem = IFileBrowserItemWrapper & IFileBrowserItemElement;
