@@ -577,7 +577,7 @@ describe('Jodit FileBrowser Tests', function() {
 						expect(data.files !== undefined).to.be.true;
 						expect(data.files.length).to.be.equal(1);
 						expect(data.files[0]).to.be.equal(
-							'https://xdsoft.net/jodit/files/images.jpg'
+							'https://xdsoft.net/jodit/files/test.txt'
 						);
 
 						filebrowser.close();
@@ -632,8 +632,7 @@ describe('Jodit FileBrowser Tests', function() {
 				var filebrowser = editor.getInstance('FileBrowser');
 
 				filebrowser
-					.open(function() {
-					})
+					.open(function() {})
 					.then(function() {
 						var files = filebrowser.browser.querySelector(
 							'.jodit_filebrowser_files'
@@ -645,7 +644,7 @@ describe('Jodit FileBrowser Tests', function() {
 							'dragstart',
 							0,
 							files.querySelector(
-								'.jodit_filebrowser_files_item img'
+								'.jodit_filebrowser_files_item img[data-src="https://xdsoft.net/jodit/files/images.jpg"]'
 							)
 						);
 
@@ -657,6 +656,7 @@ describe('Jodit FileBrowser Tests', function() {
 						var image = editor.ownerDocument.querySelector(
 							'img[data-src="https://xdsoft.net/jodit/files/images.jpg"][alt="images.jpg"][style*="fixed"]'
 						);
+
 						expect(image).to.be.not.null;
 						expect(image.style.position).to.be.equal('fixed');
 
@@ -671,6 +671,7 @@ describe('Jodit FileBrowser Tests', function() {
 						expect(editor.value).to.be.equal(
 							'<img src="https://xdsoft.net/jodit/files/images.jpg">'
 						);
+
 						expect(image.parentNode).to.be.not.null;
 						simulateEvent('drop', 0, window);
 						expect(image.parentNode).to.be.null;

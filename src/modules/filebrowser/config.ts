@@ -313,9 +313,11 @@ Config.prototype.filebrowser = {
 			if (typeof a.name === 'string') {
 				return compareStr(a.name.toLowerCase(), b.name.toLowerCase());
 			}
+
 			if (typeof a.file === 'string') {
 				return compareStr(a.file.toLowerCase(), b.file.toLowerCase());
 			}
+
 			return 0;
 		}
 
@@ -324,7 +326,7 @@ Config.prototype.filebrowser = {
 				first = new Date(a.changed);
 				second = new Date(b.changed);
 
-				return second.getTime() - first.getTime();
+				return second.getTime() - first.getTime(); // New is upper
 			case 'size':
 				return humanSizeToBytes(a.size) - humanSizeToBytes(b.size);
 		}
