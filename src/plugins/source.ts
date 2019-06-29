@@ -198,6 +198,7 @@ export class source extends Plugin {
 			this.__lock = false;
 		}
 	};
+
 	private toWYSIWYG = () => {
 		if (this.__lock) {
 			return;

@@ -218,6 +218,8 @@ Jodit.prototype.i18n = function(key) {
 
 Jodit.defaultOptions.filebrowser.saveStateInStorage = false;
 
+// Jodit.defaultOptions.disablePlugins = ['source'];
+
 Jodit.defaultOptions.observer.timeout = 0;
 if (Jodit.defaultOptions.cleanHTML) {
 	Jodit.defaultOptions.cleanHTML.timeout = 0;
@@ -254,7 +256,7 @@ if (String.prototype.repeat === undefined) {
 		e['matchesSelector'] !== undefined
 			? e['matchesSelector']
 			: function(selector) {
-				var matches = this.ownerDocument.querySelectorAll(
+				const matches = this.ownerDocument.querySelectorAll(
 					selector
 					),
 					th = this;

@@ -30,6 +30,7 @@ export abstract class Component<T extends IViewBased = IViewBased>
 		if (this.jodit) {
 			(<any>this.jodit) = undefined;
 		}
+
 		this.__isDestructed = true;
 	}
 

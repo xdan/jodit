@@ -99,6 +99,10 @@ cena quidem posse videamur?
 		console.log(value);
 		editor.selection.restore(sel);
 	}, 300));
+
+	setTimeout(() => {
+		destruct.addEventListener('click', () => editor.destruct())
+	}, 100)
 </script>
 <style>
 	#box {
@@ -107,5 +111,6 @@ cena quidem posse videamur?
 		position: relative;
 	}
 </style>
+	<button id="destruct" type="button">destruct</button>
 </body>
 </html>
