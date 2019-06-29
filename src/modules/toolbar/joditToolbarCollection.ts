@@ -155,8 +155,14 @@ export class JoditToolbarCollection extends ToolbarCollection<IJodit> {
 	}
 
 	static makeCollection(jodit: IViewBased): ToolbarCollection<IViewBased> {
-		return isJoditObject(jodit)
+		const collection = isJoditObject(jodit)
 			? new JoditToolbarCollection(jodit)
 			: new ToolbarCollection(jodit);
+
+		if (jodit.options.textIcons) {
+			collection.container.classList.add('jodit_text_icons');
+		}
+
+		return collection;
 	}
 }
