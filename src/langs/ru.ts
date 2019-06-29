@@ -9,7 +9,7 @@ export default {
 	'GNU General Public License, version 2 or later':
 		'Стандартная общественная лицензия GNU (GPL), версия 2 или выше',
 
-	"Jodit User's Guide": 'Jodit Руководство пользователя',
+	'Jodit User\'s Guide': 'Jodit Руководство пользователя',
 	'contains detailed help for using':
 		'содержит детальную информацию по использованию',
 	'For information about the license, please go to our website:':
