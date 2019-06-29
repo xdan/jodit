@@ -7,14 +7,24 @@
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IStorage } from '../../types';
+import { IDictionary, IStorage } from '../../types';
 
 export class LocalStorageProvider implements IStorage {
+	data: IDictionary<string> = {};
+
 	public set(key: string, value: string | number) {
-		localStorage.setItem(key, value.toString());
+		try {
+			localStorage.setItem(key, value.toString());
+		} catch {
+			this.data[key] = value.toString();
+		}
 	}
 
 	public get(key: string): string | null {
-		return localStorage.getItem(key);
+		try {
+			return localStorage.getItem(key);
+		} catch {}
+
+		return this.data[key] || null;
 	}
 }
