@@ -599,9 +599,8 @@ export class Dialog extends View {
 		 */
 		if (this.jodit && this.jodit.events) {
 			this.jodit.events.fire(this, 'afterClose');
+			this.jodit.events.fire(this.ownerWindow, 'jodit_close_dialog')
 		}
-
-		this.jodit.events.fire(this.ownerWindow, 'jodit_close_dialog')
 	};
 
 	constructor(jodit?: IViewBased, options: any = Config.prototype.dialog) {

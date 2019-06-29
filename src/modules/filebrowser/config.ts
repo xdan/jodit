@@ -279,10 +279,10 @@ Config.prototype.filebrowser = {
 		if (typeof item === 'string') {
 			return item.toLowerCase().indexOf(search) !== -1;
 		}
-		if (typeof item.name === 'string') {
+		if ('string' === typeof item.name) {
 			return item.name.toLowerCase().indexOf(search) !== -1;
 		}
-		if (typeof item.file === 'string') {
+		if ('string' === typeof item.file) {
 			return item.file.toLowerCase().indexOf(search) !== -1;
 		}
 		return true;

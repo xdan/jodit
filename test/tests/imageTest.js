@@ -620,6 +620,7 @@ describe('Test image', function() {
 
 							editor.value = '<img src="https://xdsoft.net/jodit/build/images/artio.jpg"/>';
 							simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
+
 							var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
 							expect(dialog).to.be.not.null;
 
