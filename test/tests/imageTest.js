@@ -616,32 +616,34 @@ describe('Test image', function() {
 				describe('Click on edit button', function() {
 					describe('When photo it is not my', function() {
 						it('should open image editor', function(done) {
-							var editor = new Jodit(appendTestArea(), settings);
+							const editor = new Jodit(appendTestArea(), settings);
 
 							editor.value = '<img src="https://xdsoft.net/jodit/build/images/artio.jpg"/>';
 							simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
 
-							var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
+							const dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
 							expect(dialog).to.be.not.null;
 
-							var edi = dialog.querySelector('.jodit_button.jodit_use_image_editor');
+							const edi = dialog.querySelector('.jodit_button.jodit_use_image_editor');
 							expect(edi).to.be.not.null;
 
 							simulateEvent('mousedown', 0, edi);
 
-							var dialog2 = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active.jodit_modal');
+							const dialog2 = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active.jodit_modal');
 							expect(dialog2).to.be.not.equal(null);
 							expect(dialog2).to.be.not.equal(dialog);
 
 							simulateEvent('click', 0, dialog2.querySelector('a.jodit_button'));
 
-							var dialog3 = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active.jodit_modal');
+							const dialog3 = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active.jodit_modal');
+
 							expect(dialog3).to.be.not.equal(null);
 							expect(dialog3).to.be.not.equal(dialog2);
 
 							simulateEvent('click', 0, dialog3.querySelector('a.jodit_button'));
 
-							var dialog4 = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active.jodit_modal');
+							const dialog4 = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active.jodit_modal');
+
 							expect(dialog4).to.be.not.equal(null);
 							expect(dialog4).to.be.not.equal(dialog3);
 							simulateEvent('click', 0, dialog4.querySelector('a.jodit_button'));

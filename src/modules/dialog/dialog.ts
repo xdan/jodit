@@ -177,6 +177,7 @@ export class Dialog extends View {
 			this.jodit.events.fire(this, 'startMove');
 		}
 	};
+
 	private onMouseMove = (e: MouseEvent) => {
 		if (this.draggable && this.options.draggable) {
 			this.setPosition(

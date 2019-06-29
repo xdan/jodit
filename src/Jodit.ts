@@ -353,7 +353,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			this.__callChangeCount < SAFE_COUNT_CHANGE_CALL
 		) {
 			this.setElementValue(new_value);
-			console.log(new_value, old_value);
 			this.__callChangeCount += 1;
 
 			try {
@@ -507,8 +506,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 						showUI,
 						value
 					);
-				} catch {
-				}
+				} catch {}
 			}
 		}
 
@@ -534,7 +532,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		commandName = commandName.toLowerCase();
 
 		if (this.commands[commandName] !== undefined) {
-			let result: any = void 0;
+			let result: any;
 
 			const exec = (command: CustomCommand<Jodit>) => {
 				let callback: ExecCommandCallback<Jodit>;
@@ -820,6 +818,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		this.options.disabled = isDisabled;
 
 		const readOnly: boolean = this.__wasReadOnly;
+
 		this.setReadOnly(isDisabled || readOnly);
 		this.__wasReadOnly = readOnly;
 
@@ -892,7 +891,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 				this.element = this.ownerDocument.querySelector(
 					element
 				) as HTMLInputElement;
-			} catch (e) {
+			} catch {
 				throw new Error(
 					'String "' + element + '" should be valid HTML selector'
 				);
@@ -1009,10 +1008,9 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			);
 		}
 
+		const bs = this.options.toolbarButtonSize.toLowerCase();
 		this.container.classList.add(
-			'jodit_toolbar_size-' + (['middle', 'large', 'small'].indexOf(this.options.toolbarButtonSize.toLowerCase()) !== -1
-			? this.options.toolbarButtonSize.toLowerCase()
-			: 'middle')
+			'jodit_toolbar_size-' + (['middle', 'large', 'small'].indexOf(bs) !== -1 ? bs : 'middle')
 		);
 
 		if (this.options.textIcons) {
@@ -1126,7 +1124,8 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 				false,
 				this.options.enter.toLowerCase()
 			);
-		} catch {}
+		} catch {
+		}
 
 		// fix for native resizing
 		try {
@@ -1143,8 +1142,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 				false,
 				'false'
 			);
-		} catch {
-		}
+		} catch {}
 	}
 
 	/**

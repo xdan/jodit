@@ -21,6 +21,7 @@ describe('Test i18n functionality', function() {
 			'Image',
 			'Border'
 		];
+
 		Object.keys(Jodit.lang).filter(function(language) {
 			return language !== 'en';
 		}).forEach(function(language) {
@@ -29,6 +30,7 @@ describe('Test i18n functionality', function() {
 					language: language,
 					debugLanguage: true
 				});
+
 				i18nkeys.filter(function(key) {
 					return filter.indexOf(key) === -1;
 				}).forEach(function(key) {

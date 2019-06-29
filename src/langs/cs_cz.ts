@@ -2,6 +2,7 @@ import { IDictionary } from '../types';
 
 export default {
 	// About
+	'Type something': 'Napiš něco',
 	'About Jodit': 'O Jodit',
 	'Jodit Editor': 'Editor Jodit',
 	'Free Non-commercial Version': 'Verze pro nekomerční použití',
