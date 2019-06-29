@@ -40,6 +40,7 @@ describe('CodeMirror editor source code', function() {
 				expect(editor.isEditorMode()).to.be.false;
 			});
 		});
+
 		it('Should not fire Change event', function() {
 			var editor = new Jodit(appendTestArea(), {
 				useAceEditor: false // because onChange can be fired after aceInited
@@ -66,6 +67,7 @@ describe('CodeMirror editor source code', function() {
 
 			expect(1).to.be.equal(count);
 		});
+
 		describe('After change mode to source mode and use insertHTML method', function() {
 			it('Should insert text on caret position', function(done) {
 				var editor = new Jodit(appendTestArea(), {
@@ -111,5 +113,6 @@ describe('CodeMirror editor source code', function() {
 			});
 		});
 	});
+
 	afterEach(removeStuff);
 });

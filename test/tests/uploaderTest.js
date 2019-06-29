@@ -2,7 +2,8 @@ describe('Test uploader module', function() {
 	describe('Drop file', function() {
 		describe('Drop Image like base64', function() {
 			it('Should insert image with SRC in base64', function(done) {
-				var file = new FileImage(),
+				const
+					file = new FileImage(),
 					editor = new Jodit(appendTestArea(), {
 						uploader: {
 							insertImageAsBase64URI: true
@@ -28,6 +29,7 @@ describe('Test uploader module', function() {
 
 			});
 		});
+
 		describe('Drop Image and upload on server', function() {
 			it('Should upload file and insert image with SRC from server', function(done) {
 				var file = new FileImage(),
@@ -93,6 +95,7 @@ describe('Test uploader module', function() {
 				});
 			});
 		});
+
 		describe('Drop File and upload on server', function() {
 			it('Should upload file and insert A element with HREF to file on server', function(done) {
 				var file = new FileXLS(),
@@ -121,8 +124,8 @@ describe('Test uploader module', function() {
 						}
 					});
 				});
-
 			});
+
 			describe('Drop with insertImageAsBase64URI=true', function() {
 				it('Should upload file and insert A element with HREF to file on server', function(done) {
 					var file = new FileXLS(),
@@ -157,5 +160,6 @@ describe('Test uploader module', function() {
 			});
 		});
 	});
+
 	afterEach(removeStuff);
 });

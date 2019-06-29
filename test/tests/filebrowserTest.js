@@ -579,6 +579,7 @@ describe('Jodit FileBrowser Tests', function() {
 						expect(data.files[0]).to.be.equal(
 							'https://xdsoft.net/jodit/files/images.jpg'
 						);
+
 						filebrowser.close();
 						done();
 					})

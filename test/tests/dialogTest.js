@@ -2,20 +2,22 @@ describe('Dialog system tests', function() {
 	describe('About dialog', function() {
 		it('Should be opened when use clicks on the About button', function() {
 			getBox().style.width = '100%';
-			var editor = new Jodit(appendTestArea(), {
+
+			const editor = new Jodit(appendTestArea(), {
 				disablePlugins: 'mobile'
 			});
 
-			var about = editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-about');
+			const about = editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-about');
 			expect(about).to.be.not.equal(null);
 
 			simulateEvent('mousedown', 0, about);
 
-			var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active');
+			const dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active');
 			expect(dialog).to.be.not.equal(null);
 
 			expect(dialog.innerHTML.indexOf('xdsoft.net') !== -1).to.be.equal(true);
 		});
+
 		describe('Close About dialog', function() {
 			it('Should show Close button in right top corner and close dialog after click', function() {
 				getBox().style.width = '100%';

@@ -148,7 +148,7 @@ var editor = new Jodit('.someselector', {
 
 ## Browser Support
 ______________________
-* Internet Explorer 9
+* Internet Explorer 11
 * Latest Chrome
 * Latest Firefox
 * Latest Safari
