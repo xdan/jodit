@@ -86,12 +86,12 @@ Config.prototype.sourceEditorNativeOptions = {
 };
 
 Config.prototype.sourceEditorCDNUrlsJS = [
-	'https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.3/ace.js'
+	'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.5/ace.js'
 ];
 
 Config.prototype.beautifyHTMLCDNUrlsJS = [
-	'https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.7.5/beautify.min.js',
-	'https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.7.5/beautify-html.min.js'
+	'https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.10.0/beautify.min.js',
+	'https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.10.0/beautify-html.min.js'
 ];
 
 Config.prototype.controls.source = {
