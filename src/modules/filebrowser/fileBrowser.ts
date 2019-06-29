@@ -47,6 +47,7 @@ import DataProvider from './dataProvider';
 import contextMenu from './builders/contextMenu';
 import { ObserveObject } from '../events/observeObject';
 import { FileBrowserItem } from './builders/item';
+import { MemoryStorageProvider } from '../storage/memoryStorageProvider';
 
 export const F_CLASS = 'jodit_filebrowser_';
 
@@ -333,7 +334,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	 * Container for set/get value
 	 * @type {Storage}
 	 */
-	storage: Storage = new Storage(new LocalStorageProvider());
+	storage: Storage;
 
 	uploader: IUploader;
 
@@ -927,6 +928,10 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 				editor ? editor.options.filebrowser : void 0
 			)
 		) as IFileBrowserOptions;
+
+		self.storage = new Storage(
+			this.options.filebrowser.saveStateInStorage ? new LocalStorageProvider() : new MemoryStorageProvider()
+		);
 
 		self.dataProvider = new DataProvider(self.options, self.jodit || self);
 		self.dialog = new Dialog(editor || self, {

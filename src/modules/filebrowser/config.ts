@@ -384,6 +384,7 @@ Config.prototype.filebrowser = {
 	showFileName: true,
 	showFileSize: true,
 	showFileChangeTime: true,
+	saveStateInStorage: true,
 
 	getThumbTemplate(
 		this: IFileBrowser,

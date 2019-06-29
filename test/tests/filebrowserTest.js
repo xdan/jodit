@@ -566,6 +566,9 @@ describe('Jodit FileBrowser Tests', function() {
 		describe('Select button', function() {
 			it('Should fire first callback in open method', function(done) {
 				var filebrowser = new Jodit.modules.FileBrowser(null, {
+					filebrowser: {
+						saveStateInStorage: false
+					},
 					ajax: {
 						url: 'https://xdsoft.net/jodit/connector/index.php'
 					}

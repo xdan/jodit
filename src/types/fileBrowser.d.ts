@@ -93,6 +93,8 @@ export interface IFileBrowserOptions extends IViewOptions {
 	preview: boolean;
 	showPreviewNavigation: boolean;
 	showSelectButtonInPreview: boolean;
+	saveStateInStorage: boolean,
+
 	contextMenu: boolean;
 
 	howLongShowMsg: number;

@@ -216,6 +216,8 @@ Jodit.prototype.i18n = function(key) {
 	return oldI18n.apply(this, arguments);
 };
 
+Jodit.defaultOptions.filebrowser.saveStateInStorage = false;
+
 Jodit.defaultOptions.observer.timeout = 0;
 if (Jodit.defaultOptions.cleanHTML) {
 	Jodit.defaultOptions.cleanHTML.timeout = 0;
