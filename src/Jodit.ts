@@ -50,6 +50,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	get value(): string {
 		return this.getEditorValue();
 	}
+
 	set value(html: string) {
 		this.setEditorValue(html);
 	}
@@ -352,6 +353,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			this.__callChangeCount < SAFE_COUNT_CHANGE_CALL
 		) {
 			this.setElementValue(new_value);
+			console.log(new_value, old_value);
 			this.__callChangeCount += 1;
 
 			try {
@@ -505,7 +507,8 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 						showUI,
 						value
 					);
-				} catch {}
+				} catch {
+				}
 			}
 		}
 
@@ -599,6 +602,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	getMode(): Modes {
 		return this.mode;
 	}
+
 	isEditorMode(): boolean {
 		return this.getRealMode() === consts.MODE_WYSIWYG;
 	}
@@ -906,8 +910,8 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		) {
 			throw new Error(
 				'Element "' +
-					element +
-					'" should be string or HTMLElement instance'
+				element +
+				'" should be string or HTMLElement instance'
 			);
 		}
 
@@ -1006,12 +1010,9 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		}
 
 		this.container.classList.add(
-			'jodit_toolbar_size-' +
-				(['middle', 'large', 'small'].indexOf(
-					this.options.toolbarButtonSize.toLowerCase()
-				) !== -1
-					? this.options.toolbarButtonSize.toLowerCase()
-					: 'middle')
+			'jodit_toolbar_size-' + (['middle', 'large', 'small'].indexOf(this.options.toolbarButtonSize.toLowerCase()) !== -1
+			? this.options.toolbarButtonSize.toLowerCase()
+			: 'middle')
 		);
 
 		if (this.options.textIcons) {
@@ -1071,8 +1072,8 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	private __initPlugines() {
 		const disable: string[] = Array.isArray(this.options.disablePlugins)
 			? this.options.disablePlugins.map((pluginName: string) => {
-					return pluginName.toLowerCase();
-			  })
+				return pluginName.toLowerCase();
+			})
 			: this.options.disablePlugins.toLowerCase().split(/[\s,]+/);
 
 		Object.keys(Jodit.plugins).forEach((key: string) => {
@@ -1125,7 +1126,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 				false,
 				this.options.enter.toLowerCase()
 			);
-		} catch (ignore) {}
+		} catch {}
 
 		// fix for native resizing
 		try {
@@ -1134,7 +1135,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 				false,
 				'false'
 			);
-		} catch (ignore) {}
+		} catch {}
 
 		try {
 			this.editorDocument.execCommand(
@@ -1142,7 +1143,8 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 				false,
 				'false'
 			);
-		} catch {}
+		} catch {
+		}
 	}
 
 	/**
@@ -1178,7 +1180,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			.on(
 				this.editor,
 				'selectionchange selectionstart keydown keyup keypress mousedown mouseup mousepress ' +
-					'click copy cut dragstart drop dragover paste resize touchstart touchend focus blur',
+				'click copy cut dragstart drop dragover paste resize touchstart touchend focus blur',
 				(event: Event): false | void => {
 					if (this.options.readonly) {
 						return;
@@ -1275,14 +1277,13 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		}
 
 		Object.keys(this.__plugins).forEach((pluginName: string) => {
+			const plugin = this.__plugins[pluginName];
 			if (
-				this.__plugins !== undefined &&
-				this.__plugins[pluginName] !== undefined &&
-				this.__plugins[pluginName].destruct !== undefined &&
-				typeof this.__plugins[pluginName].destruct === 'function'
+				plugin !== undefined &&
+				plugin.destruct !== undefined &&
+				typeof plugin.destruct === 'function'
 			) {
-				// @ts-ignore: Object is possibly 'undefined'
-				this.__plugins[pluginName].destruct();
+				plugin.destruct();
 			}
 
 			delete this.__plugins[pluginName];
