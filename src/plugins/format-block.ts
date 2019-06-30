@@ -25,22 +25,24 @@ Config.prototype.controls.paragraph = {
 						node => Dom.isBlock(node, editor.editorWindow),
 						editor.editor
 					) as HTMLElement) || editor.editor,
-				currentValue: string = currentBox.nodeName.toLowerCase();
+				currentValue: string = currentBox.nodeName.toLowerCase(),
+				list = (btn.list as any);
 
 			if (
 				button &&
 				btn.data &&
 				btn.data.currentValue !== currentValue &&
 				btn.list &&
-				(btn.list as any)[currentValue]
+				list[currentValue]
 			) {
 				button.textBox.innerHTML = `<span>${
-					(btn.list as any)[currentValue]
+					editor.i18n(list[currentValue])
 				}</span>`;
 
 				(button.textBox.firstChild as HTMLElement).classList.add(
 					'jodit_icon'
 				);
+
 				btn.data.currentValue = currentValue;
 			}
 		}

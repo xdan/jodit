@@ -204,6 +204,8 @@ export default {
 	'Edit link': 'Link bearbeiten',
 	'No follow': 'Nofollow-Attribut',
 	Unlink: 'Link entfernen',
+	Eye: 'Ansehen',
+	pencil: 'Bearbeiten',
 	' URL': 'URL',
 	Reset: 'Wiederherstellen',
 	Save: 'Speichern',

@@ -205,6 +205,8 @@ export default {
 	'Edit link': 'Link szerkesztése',
 	'No follow': 'Nincs követés',
 	Unlink: 'Link leválasztása',
+	Eye: 'felülvizsgálat',
+	pencil: 'Szerkesztés',
 	' URL': 'URL',
 	Reset: 'Visszaállít',
 	Save: 'Mentés',

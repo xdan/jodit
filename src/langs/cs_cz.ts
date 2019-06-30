@@ -165,6 +165,8 @@ export default {
 	'Edit link': 'Upravit odkaz',
 	'No follow': 'Atribut no-follow',
 	Unlink: 'Odstranit odkaz',
+	Eye: 'Zobrazit',
+	pencil: 'Chcete-li upravit',
 	Update: 'Aktualizovat',
 	' URL': 'URL',
 	Edit: 'Editovat',

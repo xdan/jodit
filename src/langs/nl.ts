@@ -204,6 +204,8 @@ export default {
 	'Edit link': 'link aanpassen',
 	'No follow': 'niet volgen',
 	Unlink: 'link verwijderen',
+	Eye: 'Recensie',
+	pencil: 'Om te bewerken',
 	' URL': ' URL',
 	Reset: 'Herstellen',
 	Save: 'Opslaan',

@@ -183,6 +183,7 @@ export default {
 	'Edit link': '編輯鏈接',
 	'No follow': 'No follow',
 	Unlink: 'Unlink',
+	Eye: '回顧',
 	' URL': 'URL',
 	Reset: '重置',
 	Save: '保存',
@@ -213,5 +214,6 @@ export default {
 	'You can only edit your own images. Download this image on the host?':
 		'你只能編輯你自己的圖片。' + 'Download this image on the host?',
 	'The image has been successfully uploaded to the host!': '圖片上傳成功',
-	palette: 'Palette'
+	palette: 'Palette',
+	pencil: '要編輯',
 } as IDictionary<string>;

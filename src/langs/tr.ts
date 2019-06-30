@@ -203,6 +203,8 @@ export default {
 	'Edit link': 'Bağlantıyı düzenle',
 	'No follow': 'Nofollow özelliği',
 	Unlink: 'Bağlantıyı kaldır',
+	Eye: 'Yorumu',
+	pencil: 'Düzenlemek için',
 	' URL': 'URL',
 	Reset: 'Sıfırla',
 	Save: 'Kaydet',

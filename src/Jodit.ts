@@ -40,6 +40,7 @@ import {
 import { ViewWithToolbar } from './modules/view/viewWithToolbar';
 import { IJodit } from './types/jodit';
 import { IFileBrowser, IUploader } from './types';
+import { ucfirst } from './modules/helpers/string/ucfirst';
 
 const SAFE_COUNT_CHANGE_CALL = 10;
 
@@ -794,6 +795,16 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		if (typeof store[key] === 'string' && store[key]) {
 			return parse(store[key]);
+		}
+
+		const lckey = key.toLowerCase();
+		if (typeof store[lckey] === 'string' && store[lckey]) {
+			return parse(store[lckey]);
+		}
+
+		const ucfkey = ucfirst(key);
+		if (typeof store[ucfkey] === 'string' && store[ucfkey]) {
+			return parse(store[ucfkey]);
 		}
 
 		if (debug) {

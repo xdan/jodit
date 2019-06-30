@@ -168,6 +168,8 @@ export default {
 	'No follow': 'سمة Nofollow',
 	Unlink: 'إزالة الرابط',
 	Update: 'تحديث',
+	pencil: 'لتحرير',
+	Eye: 'مراجعة',
 	' URL': 'URL',
 	Edit: 'تحرير',
 	'Horizontal align': 'محاذاة أفقية',

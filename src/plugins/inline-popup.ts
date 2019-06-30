@@ -53,7 +53,7 @@ Config.prototype.popup = {
 			tooltip: 'Edit link',
 			icon: 'pencil'
 		},
-		'unlink',
+		'Unlink',
 		'brush',
 		'file'
 	],
@@ -83,7 +83,8 @@ Config.prototype.popup = {
 	],
 	img: [
 		{
-			name: 'bin',
+			name: 'delete',
+			icon: 'bin',
 			tooltip: 'Delete',
 			exec: (editor: IJodit, image: Node) => {
 				if (image.parentNode) {
@@ -336,7 +337,8 @@ Config.prototype.popup = {
 			tooltip: 'Add row'
 		},
 		{
-			name: 'bin',
+			name: 'delete',
+			icon: 'bin',
 			list: {
 				tablebin: 'Delete table',
 				tablebinrow: 'Delete row',
@@ -354,6 +356,7 @@ Config.prototype.popup = {
 						: '';
 
 				editor.execCommand(command, false, table);
+				editor.events.fire('hidePopup');
 			},
 			tooltip: 'Delete'
 		}

@@ -203,6 +203,8 @@ export default {
 	'Edit link': 'Editar link',
 	'No follow': 'Não siga',
 	Unlink: 'Remover link',
+	Eye: 'Visualizar',
+	pencil: 'Editar',
 	' URL': 'URL',
 	Reset: 'Resetar',
 	Save: 'Salvar',

@@ -203,6 +203,8 @@ export default {
 	'Edit link': 'ערוך קישור',
 	'No follow': 'ללא מעקב',
 	Unlink: 'בטל קישור',
+	Eye: 'הצג',
+	pencil: 'כדי לערוך',
 	' URL': 'כתובת',
 	Reset: 'אפס',
 	Save: 'שמור',

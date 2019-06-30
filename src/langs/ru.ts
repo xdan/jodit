@@ -170,6 +170,8 @@ export default {
 	'Edit link': 'Редактировать ссылку',
 	'No follow': 'Атрибут nofollow',
 	Unlink: 'Убрать ссылку',
+	Eye: 'Просмотр',
+	pencil: 'Редактировать',
 	Update: 'Обновить',
 	' URL': 'URL',
 	Edit: 'Редактировать',

@@ -66,7 +66,7 @@ export class Popup extends Component {
 					diffLeft + 'px',
 					'important'
 				);
-			} catch (e) {
+			} catch {
 				popup.style.marginLeft = diffLeft + 'px'; // fallback for ie9
 			}
 		}
