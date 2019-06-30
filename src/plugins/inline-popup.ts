@@ -669,7 +669,7 @@ export class inlinePopup extends Plugin {
 		this.popup = new Popup(
 			editor,
 			this.target,
-			void 0,
+			undefined,
 			'jodit_toolbar_popup-inline'
 		);
 
@@ -718,7 +718,7 @@ export class inlinePopup extends Plugin {
 					this.showPopup(
 						rect,
 						elementName,
-						typeof elm === 'string' ? void 0 : elm
+						typeof elm === 'string' ? undefined : elm
 					);
 				}
 			)

@@ -1669,7 +1669,7 @@ describe('Test interface', function() {
 
 				expect(popup && popup.parentNode.parentNode !== null).to.equal(true);
 
-				simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-bin>a'));
+				simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-delete>a'));
 
 				var popupColor = popup.querySelector('.jodit_toolbar_list');
 				expect(popupColor && window.getComputedStyle(popupColor).display).to.equal('block');
@@ -1677,7 +1677,7 @@ describe('Test interface', function() {
 				simulateEvent('mousedown', 0, popupColor.querySelectorAll('li>a')[1]);
 
 
-				expect(editor.getEditorValue()).to.equal('<table><tbody><tr><td>1</td></tr><tr><td>3</td></tr></tbody></table>');
+				expect(editor.value).to.equal('<table><tbody><tr><td>1</td></tr><tr><td>3</td></tr></tbody></table>');
 
 			});
 			it('Select table cell and remove whole table should hide inline popup', function() {
@@ -1697,7 +1697,7 @@ describe('Test interface', function() {
 
 				expect(popup && popup.parentNode.parentNode !== null).to.equal(true);
 
-				simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-bin>a'));
+				simulateEvent('mousedown', 0, popup.querySelector('.jodit_toolbar_btn-delete>a'));
 
 				var popupColor = popup.querySelector('.jodit_toolbar_list');
 				expect(popupColor && window.getComputedStyle(popupColor).display).to.equal('block');
@@ -1705,9 +1705,9 @@ describe('Test interface', function() {
 				simulateEvent('mousedown', 0, popupColor.querySelectorAll('li>a')[0]);
 
 
-				expect(editor.getEditorValue()).to.equal('');
+				expect(editor.value).to.equal('');
 
-				expect(popup && popup.parentNode.parentNode !== null).to.equal(true);
+				expect(popup && popup.parentNode).to.be.equal(null);
 
 			});
 		});
