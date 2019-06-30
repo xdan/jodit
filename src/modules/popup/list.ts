@@ -108,6 +108,10 @@ export class PopupList extends Popup {
 
 	public toolbar: IToolbarCollection;
 
+	firstInFocus() {
+		this.toolbar.firstButton.focus();
+	}
+
 	constructor(
 		jodit: IViewBased,
 		readonly target: HTMLElement,

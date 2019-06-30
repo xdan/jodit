@@ -7,7 +7,6 @@
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { asArray } from '../helpers/array';
 import { Dom } from '../Dom';
 import { setTimeout } from '../helpers/async';
 import { ToolbarElement } from './element';
@@ -46,11 +45,7 @@ export class ToolbarTooltip extends ToolbarElement {
 		super(button.parentToolbar || button.jodit, 'div', 'jodit_tooltip');
 
 		if (button.control.tooltip) {
-			this.container.innerHTML =
-				button.jodit.i18n(button.control.tooltip) +
-				(button.control.hotkeys
-					? '<br>' + asArray(button.control.hotkeys).join(' ')
-					: '');
+			this.container.innerHTML = button.tooltipText;
 
 			button.jodit.events
 				.on(button.anchor, 'mouseenter', this.show)

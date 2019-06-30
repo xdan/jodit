@@ -19,8 +19,7 @@ import { Dom } from '../Dom';
 import { IViewBased, TagNames } from '../../types';
 import { trim } from '../helpers/string';
 
-export abstract class ToolbarElement extends Component
-	implements IToolbarElement {
+export abstract class ToolbarElement extends Component implements IToolbarElement {
 	container: HTMLElement;
 	parentToolbar?: IToolbarCollection;
 
@@ -38,6 +37,10 @@ export abstract class ToolbarElement extends Component
 
 		this.container = this.jodit.create.element(containerTag);
 		this.container.classList.add(containerClass);
+	}
+
+	focus() {
+		this.container.focus();
 	}
 
 	destruct(): any {

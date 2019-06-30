@@ -256,6 +256,8 @@ interface IToolbarElement extends IComponent {
 	parentToolbar?: IToolbarCollection;
 
 	createIcon(clearName: string, control?: IControlTypeStrong): HTMLElement;
+
+	focus(): void;
 }
 
 interface IToolbarButton extends IToolbarElement {
@@ -266,6 +268,8 @@ interface IToolbarButton extends IToolbarElement {
 	textBox: HTMLSpanElement;
 	anchor: HTMLAnchorElement;
 
+	tooltipText: string;
+
 	isDisable(): boolean;
 	isActive(): boolean;
 }
@@ -274,6 +278,7 @@ interface IToolbarCollection extends IComponent {
 	readonly listenEvents: string;
 
 	getButtonsList(): string[];
+	firstButton: IToolbarElement;
 
 	appendChild(button: IToolbarElement): void;
 

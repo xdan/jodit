@@ -22,7 +22,7 @@
 			"ignore-interfaces",
 			"ignore-bound-class-methods"
 		],
-		"max-line-length": [true, 150],
+		"max-line-length": [true, 180],
 		"variable-name": [
 			false,
 			"ban-keywords",

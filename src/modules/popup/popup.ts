@@ -131,6 +131,8 @@ export class Popup extends Component {
 
 		this.target.appendChild(this.container);
 
+		this.firstInFocus();
+
 		if (rightAlign !== undefined) {
 			this.container.classList.toggle('jodit_right', rightAlign);
 		}
@@ -168,6 +170,7 @@ export class Popup extends Component {
 			Dom.safeRemove(this.container);
 
 			this.jodit.events.fire('removeMarkers');
+			this.jodit.events.fire(this, 'afterClose');
 		}
 	};
 
@@ -198,6 +201,8 @@ export class Popup extends Component {
 				this.throttleCalcPosition
 			);
 	}
+
+	firstInFocus() {}
 
 	destruct() {
 		if (this.isDestructed) {

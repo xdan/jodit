@@ -101,6 +101,10 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 		this.container.appendChild(button.container);
 	}
 
+	get firstButton(): ToolbarElement {
+		return this.__buttons[0];
+	}
+
 	removeChild(button: ToolbarElement) {
 		const index: number = this.__buttons.indexOf(button);
 

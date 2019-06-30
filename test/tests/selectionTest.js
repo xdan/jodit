@@ -382,6 +382,7 @@ describe('Selection Module Tests', function() {
 
 	describe('Change mode', function() {
 		it('Should restore collapsed selection when user change mode - from WYSIWYG to TEXTAREA', function() {
+			debugger
 			var editor = new Jodit(appendTestArea(), {
 				useAceEditor: false
 			});
@@ -405,6 +406,7 @@ describe('Selection Module Tests', function() {
 		});
 
 		it('Should restore collapsed selection when user change mode - from WYSIWYG to TEXTAREA for long string', function(done) {
+			debugger
 			var timeout,
 				__done = function() {
 					clearTimeout(timeout);
@@ -454,6 +456,7 @@ describe('Selection Module Tests', function() {
 		}).timeout(6000);
 
 		it('Should restore collapsed selection when user change mode - from TEXTAREA to WYSIWYG', function() {
+			debugger
 			var editor = new Jodit(appendTestArea(), {
 				useAceEditor: false,
 				defaultMode: Jodit.MODE_SOURCE
@@ -470,6 +473,7 @@ describe('Selection Module Tests', function() {
 		});
 
 		it('Should restore non collapsed selection when user change mode - from WYSIWYG to TEXTAREA', function() {
+			debugger
 			var editor = new Jodit(appendTestArea(), {
 				useAceEditor: false
 			});
@@ -494,6 +498,7 @@ describe('Selection Module Tests', function() {
 
 		describe('Problem', function() {
 			it('Should restore non collapsed selection when user change mode - from TEXTAREA to WYSIWYG', function() {
+				debugger
 				var editor = new Jodit(appendTestArea(), {
 					useAceEditor: false,
 					defaultMode: Jodit.MODE_SOURCE

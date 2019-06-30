@@ -27,7 +27,6 @@ declare module '../Config' {
 /**
  * @property {boolean | number} limitWords=false limit words count
  */
-
 Config.prototype.limitWords = false;
 
 /**
@@ -40,6 +39,10 @@ Config.prototype.limitChars = false;
  */
 Config.prototype.limitHTML = false;
 
+/**
+ * Plugin control for chars or words count
+ * @param jodit
+ */
 export function limit(jodit: IJodit) {
 	if (jodit && (jodit.options.limitWords || jodit.options.limitChars)) {
 		const callback = (
@@ -81,14 +84,14 @@ export function limit(jodit: IJodit) {
 		jodit.events
 			.on(
 				'beforePaste',
-				(): false | void => {
+				() => {
 					snapshot = jodit.observer.snapshot.make();
 				}
 			)
 			.on(
 				'keydown keyup beforeEnter beforePaste',
 				(event: KeyboardEvent): false | void => {
-					if (callback(event) !== void 0) {
+					if (callback(event) !== undefined) {
 						return false;
 					}
 				}

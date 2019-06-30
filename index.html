@@ -70,7 +70,8 @@ cena quidem posse videamur?
 <script src="./build/jodit.min.js"></script>
 <script>
 	const editor = new Jodit('#editor', {
-		language: 'ar',
+		language: 'ru',
+		textIcons: true,
 		uploader: {
 			url: 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'
 		},
@@ -81,28 +82,28 @@ cena quidem posse videamur?
 		}
 	});
 
-	editor.events.on('beforeSetValueToEditor', function(old_value) {
-		if (old_value) {
-			return old_value.replace('user&nbsp;', '<span style="color:blue;">test</span>');
-		}
-	});
+	// editor.events.on('beforeSetValueToEditor', function(old_value) {
+	// 	if (old_value) {
+	// 		return old_value.replace('user&nbsp;', '<span style="color:blue;">test</span>');
+	// 	}
+	// });
+	//
+	// editor.value = 'test user&nbsp;';
+	// console.log(editor.value); // test <span style="color:blue;">test</span>
+	//
+	// editor.events.on('change', Jodit.modules.Helpers.throttle(function() {
+	// 	var
+	// 		sel = editor.selection.save(),
+	// 		value = editor.getNativeEditorValue();
+	//
+	// 	editor.value = value.replace(/user/, '<span style="color:blue;">test</span>');
+	// 	console.log(value);
+	// 	editor.selection.restore(sel);
+	// }, 300));
 
-	editor.value = 'test user&nbsp;';
-	console.log(editor.value); // test <span style="color:blue;">test</span>
-
-	editor.events.on('change', Jodit.modules.Helpers.throttle(function() {
-		var
-			sel = editor.selection.save(),
-			value = editor.getNativeEditorValue();
-
-		editor.value = value.replace(/user/, '<span style="color:blue;">test</span>');
-		console.log(value);
-		editor.selection.restore(sel);
-	}, 300));
-
-	setTimeout(() => {
-		destruct.addEventListener('click', () => editor.destruct())
-	}, 100)
+	// setTimeout(() => {
+	// 	destruct.addEventListener('click', () => editor.destruct())
+	// }, 100)
 </script>
 <style>
 	#box {
