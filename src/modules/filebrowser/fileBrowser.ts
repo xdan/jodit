@@ -197,57 +197,15 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 
 		each<ISource>(sources, (source_name, source) => {
 			source.folders.forEach((name: string) => {
-				// let folder: string =
-				// 	'<a draggable="draggable" ' +
-				// 	'class="' +
-				// 	F_CLASS +
-				// 	'tree_item" ' +
-				// 	'href="javascript:void(0)" ' +
-				// 	'data-path="' + normalizePath(source.path + name) + '/" ' +
-				// 	'data-source="' + source_name + '">' +
-				// 	'<span>' +
-				// 	name +
-				// 	'</span>';
-
-				// if (
-				// 	this.options.deleteFolder &&
-				// 	name !== '..' &&
-				// 	name !== '.'
-				// ) {
-				// 	folder +=
-				// 		'<i class="remove" data-path="' +
-				// 		normalizePath(source.path + name + '/') +
-				// 		'">&times;</i>';
-				// }
-
-				// folder += '</a>';
-
 				folders.push({
 					name,
 					source,
 					sourceName: source_name
 				});
 			});
-
-			// if (
-			// 	this.options.createNewFolder &&
-			// 	this.dataProvider.canI('FolderCreate')
-			// ) {
-			// 	folders.push(
-			// 		'<a class="jodit_button addfolder" href="javascript:void(0)" data-path="' +
-			// 		normalizePath(source.path + name) +
-			// 		'/" data-source="' +
-			// 		source_name +
-			// 		'">' +
-			// 		ToolbarIcon.getIcon('plus') +
-			// 		' ' +
-			// 		this.i18n('Add folder') +
-			// 		'</a>'
-			// 	);
-			// }
 		});
+
 		this.state.folders = folders;
-		// this.tree.innerHTML = folders.join('');
 	}
 
 	private generateItemsList(sources: ISourcesFiles) {
@@ -607,12 +565,12 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 						lastSource2: ISource | null = null;
 
 				const
-					appendCreateButton = (source: ISource | null, sourceName: string) => {
+					appendCreateButton = (source: ISource | null, sourceName: string, force: boolean = false) => {
 
 						if (
 							source &&
 							lastSource2 &&
-							source !== lastSource2 &&
+							(source !== lastSource2 || force) &&
 							this.options.createNewFolder &&
 							this.dataProvider.canI('FolderCreate')
 						) {
@@ -659,7 +617,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 						this.tree.appendChild(folderElm);
 					});
 
-					appendCreateButton(lastSource2, lastSource);
+					appendCreateButton(lastSource2, lastSource, true);
 				}, this.defaultTimeout)
 			);
 	}

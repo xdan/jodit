@@ -54,7 +54,7 @@ Config.prototype.controls.dialog = {
 				Config.prototype.controls.fullsize &&
 				Config.prototype.controls.fullsize.getLabel &&
 				typeof Config.prototype.controls.fullsize.getLabel ===
-					'function'
+				'function'
 			) {
 				return Config.prototype.controls.fullsize.getLabel(
 					editor,
@@ -94,7 +94,7 @@ export class Dialog extends View {
 
 	private iSetMaximization: boolean = false;
 
-	private resizeble: boolean = false;
+	private resizable: boolean = false;
 	private draggable: boolean = false;
 	private startX: number = 0;
 	private startY: number = 0;
@@ -132,9 +132,9 @@ export class Dialog extends View {
 	}
 
 	private onMouseUp = () => {
-		if (this.draggable || this.resizeble) {
+		if (this.draggable || this.resizable) {
 			this.draggable = false;
-			this.resizeble = false;
+			this.resizable = false;
 			this.unlockSelect();
 			if (this.jodit && this.jodit.events) {
 				/**
@@ -184,6 +184,7 @@ export class Dialog extends View {
 				this.startPoint.x + e.clientX - this.startX,
 				this.startPoint.y + e.clientY - this.startY
 			);
+
 			if (this.jodit && this.jodit.events) {
 				/**
 				 * Fired when dialog box is moved
@@ -198,11 +199,12 @@ export class Dialog extends View {
 					e.clientY - this.startY
 				);
 			}
+
 			e.stopImmediatePropagation();
 			e.preventDefault();
 		}
 
-		if (this.resizeble && this.options.resizable) {
+		if (this.resizable && this.options.resizable) {
 			this.setSize(
 				this.startPoint.w + e.clientX - this.startX,
 				this.startPoint.h + e.clientY - this.startY
@@ -257,7 +259,7 @@ export class Dialog extends View {
 	};
 
 	private onResizerMouseDown(e: MouseEvent) {
-		this.resizeble = true;
+		this.resizable = true;
 		this.startX = e.clientX;
 		this.startY = e.clientY;
 		this.startPoint.w = this.dialog.offsetWidth;
@@ -312,10 +314,21 @@ export class Dialog extends View {
 	 * @param {Number} [y] - Position px Vertical
 	 */
 	public setPosition(x?: number, y?: number) {
-		const w: number = this.window.innerWidth,
-			h: number = this.window.innerHeight,
+		const
+			w: number = this.window.innerWidth,
+			h: number = this.window.innerHeight;
+
+		let
 			left: number = w / 2 - this.dialog.offsetWidth / 2,
 			top: number = h / 2 - this.dialog.offsetHeight / 2;
+
+		if (left < 0) {
+			left = 0;
+		}
+
+		if (top < 0) {
+			top = 0;
+		}
 
 		if (x !== undefined && y !== undefined) {
 			this.offsetX = x;
@@ -392,6 +405,7 @@ export class Dialog extends View {
 	public getZIndex(): number {
 		return parseInt(this.container.style.zIndex || '0', 10);
 	}
+
 	/**
 	 * Get dialog instance with maximum z-index displaying it on top of all the dialog boxes
 	 *
@@ -450,11 +464,11 @@ export class Dialog extends View {
 		[this.destination, this.destination.parentNode].forEach(
 			(box: Node | null) => {
 				box &&
-					(box as HTMLElement).classList &&
-					(box as HTMLElement).classList.toggle(
-						'jodit_fullsize_box',
-						condition
-					);
+				(box as HTMLElement).classList &&
+				(box as HTMLElement).classList.toggle(
+					'jodit_fullsize_box',
+					condition
+				);
 			}
 		);
 
@@ -581,8 +595,8 @@ export class Dialog extends View {
 		}
 
 		this.container &&
-			this.container.classList &&
-			this.container.classList.remove('active');
+		this.container.classList &&
+		this.container.classList.remove('active');
 
 		if (this.iSetMaximization) {
 			this.maximization(false);
@@ -600,7 +614,7 @@ export class Dialog extends View {
 		 */
 		if (this.jodit && this.jodit.events) {
 			this.jodit.events.fire(this, 'afterClose');
-			this.jodit.events.fire(this.ownerWindow, 'jodit_close_dialog')
+			this.jodit.events.fire(this.ownerWindow, 'jodit_close_dialog');
 		}
 	};
 
@@ -627,21 +641,21 @@ export class Dialog extends View {
 
 		self.container = this.create.fromHTML(
 			'<div style="z-index:' +
-				self.options.zIndex +
-				'" class="jodit jodit_dialog_box">' +
-				'<div class="jodit_dialog_overlay"></div>' +
-				'<div class="jodit_dialog">' +
-				'<div class="jodit_dialog_header non-selected">' +
-				'<div class="jodit_dialog_header-title"></div>' +
-				'<div class="jodit_dialog_header-toolbar"></div>' +
-				'</div>' +
-				'<div class="jodit_dialog_content"></div>' +
-				'<div class="jodit_dialog_footer"></div>' +
-				(self.options.resizable
-					? '<div class="jodit_dialog_resizer"></div>'
-					: '') +
-				'</div>' +
-				'</div>'
+			self.options.zIndex +
+			'" class="jodit jodit_dialog_box">' +
+			'<div class="jodit_dialog_overlay"></div>' +
+			'<div class="jodit_dialog">' +
+			'<div class="jodit_dialog_header non-selected">' +
+			'<div class="jodit_dialog_header-title"></div>' +
+			'<div class="jodit_dialog_header-toolbar"></div>' +
+			'</div>' +
+			'<div class="jodit_dialog_content"></div>' +
+			'<div class="jodit_dialog_footer"></div>' +
+			(self.options.resizable
+				? '<div class="jodit_dialog_resizer"></div>'
+				: '') +
+			'</div>' +
+			'</div>'
 		) as HTMLDivElement;
 
 		if (jodit && (<IViewBased>jodit).id) {
@@ -697,10 +711,10 @@ export class Dialog extends View {
 		);
 
 		headerBox &&
-			headerBox.addEventListener(
-				'mousedown',
-				self.onHeaderMouseDown.bind(self)
-			);
+		headerBox.addEventListener(
+			'mousedown',
+			self.onHeaderMouseDown.bind(self)
+		);
 
 		if (self.options.resizable) {
 			self.resizer.addEventListener(
