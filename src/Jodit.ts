@@ -381,7 +381,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 *
 	 * jodit.execCommand('replaceString', 'test', 'stop');
 	 *
-	 * console.log(jodit.getEditorValue()); // stop test test
+	 * console.log(jodit.value); // stop test test
 	 *
 	 * // and you can add hotkeys for command
 	 * jodit.registerCommand('replaceString', {

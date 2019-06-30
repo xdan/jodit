@@ -118,6 +118,25 @@ export class Create implements ICreate {
 		return span;
 	}
 
+	a(
+		className?: string,
+		childrenOrAttributes?: Attributes,
+		children?: Children
+	): HTMLSpanElement;
+	a(
+		className?: string,
+		childrenOrAttributes?: Attributes | Children,
+		children?: Children
+	): HTMLSpanElement {
+		const a = this.element('a', <any>childrenOrAttributes, children);
+
+		if (className) {
+			a.className = className;
+		}
+
+		return a;
+	}
+
 	/**
 	 * Create text node
 	 *

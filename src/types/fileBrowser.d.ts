@@ -243,6 +243,13 @@ export interface IFileBrowserState {
 
 	elements: IFileBrowserItem[],
 	activeElements: IFileBrowserItem[]
+	folders: IFileBrowserFolder[]
+}
+
+export interface IFileBrowserFolder {
+	name: string;
+	source: ISource;
+	sourceName: string;
 }
 
 export interface IFileBrowserItemElement extends ISourceFile {

@@ -196,7 +196,6 @@ export class ToolbarButton extends ToolbarElement implements IToolbarButton {
 	}
 
 	focus() {
-		console.log(this.anchor);
 		this.anchor.focus();
 	}
 

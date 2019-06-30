@@ -23,7 +23,7 @@ import {
 	ISourceFile,
 	ISourcesFiles,
 	IFileBrowserState,
-	IFileBrowserItem
+	IFileBrowserItem, IFileBrowserFolder
 } from '../../types/fileBrowser';
 
 import { IDictionary, ImageEditorActionBox } from '../../types/types';
@@ -79,6 +79,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	state = ObserveObject.create<IFileBrowserState>({
 		activeElements: [],
 		elements: [],
+		folders: [],
 		view: 'tiles',
 		sortBy: 'changed',
 		filterWord: '',
@@ -192,67 +193,61 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	}
 
 	private generateFolderTree(sources: ISourcesFiles) {
-		const folders: string[] = [];
+		const folders: IFileBrowserFolder[] = [];
 
 		each<ISource>(sources, (source_name, source) => {
-			if (source_name && source_name !== DEFAULT_SOURCE_NAME) {
-				folders.push(
-					'<div class="' +
-					F_CLASS +
-					'source_title">' +
-					source_name +
-					'</div>'
-				);
-			}
-
 			source.folders.forEach((name: string) => {
-				let folder: string =
-					'<a draggable="draggable" ' +
-					'class="' +
-					F_CLASS +
-					'tree_item" ' +
-					'href="javascript:void(0)" ' +
-					'data-path="' + normalizePath(source.path + name) + '/" ' +
-					'data-source="' + source_name + '">' +
-					'<span>' +
-					name +
-					'</span>';
+				// let folder: string =
+				// 	'<a draggable="draggable" ' +
+				// 	'class="' +
+				// 	F_CLASS +
+				// 	'tree_item" ' +
+				// 	'href="javascript:void(0)" ' +
+				// 	'data-path="' + normalizePath(source.path + name) + '/" ' +
+				// 	'data-source="' + source_name + '">' +
+				// 	'<span>' +
+				// 	name +
+				// 	'</span>';
 
-				if (
-					this.options.deleteFolder &&
-					name !== '..' &&
-					name !== '.'
-				) {
-					folder +=
-						'<i class="remove" data-path="' +
-						normalizePath(source.path + name + '/') +
-						'">&times;</i>';
-				}
+				// if (
+				// 	this.options.deleteFolder &&
+				// 	name !== '..' &&
+				// 	name !== '.'
+				// ) {
+				// 	folder +=
+				// 		'<i class="remove" data-path="' +
+				// 		normalizePath(source.path + name + '/') +
+				// 		'">&times;</i>';
+				// }
 
-				folder += '</a>';
+				// folder += '</a>';
 
-				folders.push(folder);
+				folders.push({
+					name,
+					source,
+					sourceName: source_name
+				});
 			});
 
-			if (
-				this.options.createNewFolder &&
-				this.dataProvider.canI('FolderCreate')
-			) {
-				folders.push(
-					'<a class="jodit_button addfolder" href="javascript:void(0)" data-path="' +
-					normalizePath(source.path + name) +
-					'/" data-source="' +
-					source_name +
-					'">' +
-					ToolbarIcon.getIcon('plus') +
-					' ' +
-					this.i18n('Add folder') +
-					'</a>'
-				);
-			}
+			// if (
+			// 	this.options.createNewFolder &&
+			// 	this.dataProvider.canI('FolderCreate')
+			// ) {
+			// 	folders.push(
+			// 		'<a class="jodit_button addfolder" href="javascript:void(0)" data-path="' +
+			// 		normalizePath(source.path + name) +
+			// 		'/" data-source="' +
+			// 		source_name +
+			// 		'">' +
+			// 		ToolbarIcon.getIcon('plus') +
+			// 		' ' +
+			// 		this.i18n('Add folder') +
+			// 		'</a>'
+			// 	);
+			// }
 		});
-
-		this.tree.innerHTML = folders.join('');
+		this.state.folders = folders;
+		// this.tree.innerHTML = folders.join('');
 	}
 
 	private generateItemsList(sources: ISourcesFiles) {
@@ -589,7 +584,8 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 				});
 			});
 
-		this.state.on('change.elements', debounce(() => {
+		this.state
+			.on('change.elements', debounce(() => {
 				Dom.detach(this.files);
 
 				if (this.state.elements.length) {
@@ -601,8 +597,71 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 						this.create.div(F_CLASS + 'no_files', this.i18n('There are no files'))
 					);
 				}
-			}, this.defaultTimeout)
-		);
+			}, this.defaultTimeout))
+
+			.on('change.folders', debounce(() => {
+					Dom.detach(this.tree);
+
+					let
+						lastSource = DEFAULT_SOURCE_NAME,
+						lastSource2: ISource | null = null;
+
+				const
+					appendCreateButton = (source: ISource | null, sourceName: string) => {
+
+						if (
+							source &&
+							lastSource2 &&
+							source !== lastSource2 &&
+							this.options.createNewFolder &&
+							this.dataProvider.canI('FolderCreate')
+						) {
+							this.tree.appendChild(this.create.a('jodit_button addfolder', {
+								'href': "javascript:void(0)",
+								'data-path': normalizePath(source.path + '/'),
+								'data-source': sourceName
+							}, ToolbarIcon.getIcon('plus') + ' ' + this.i18n('Add folder')));
+
+							lastSource2 = source;
+						}
+					};
+
+					this.state.folders.forEach((folder) => {
+						const { name, source, sourceName } = folder;
+
+						if (sourceName && sourceName !== lastSource) {
+							this.tree.appendChild(this.create.div(F_CLASS + 'source_title', sourceName));
+							lastSource = sourceName;
+						}
+
+						const folderElm = this.create.a(F_CLASS + 'tree_item', {
+							'draggable': 'draggable',
+							'href': 'javascript:void(0)',
+							'data-path': normalizePath(source.path + name) + '/',
+							'data-source': sourceName
+						}, this.create.span('', name));
+
+						if (
+							this.options.deleteFolder &&
+							this.dataProvider.canI('DeleteFolder') &&
+							name !== '..' &&
+							name !== '.'
+						) {
+							folderElm.appendChild(this.create.element('i', {
+								'class': 'remove',
+								'data-path': normalizePath(source.path + name + '/')
+							}, '&times;'));
+						}
+
+						appendCreateButton(source, sourceName);
+						lastSource2 = source;
+
+						this.tree.appendChild(folderElm);
+					});
+
+					appendCreateButton(lastSource2, lastSource);
+				}, this.defaultTimeout)
+			);
 	}
 
 	private initEventsListeners() {

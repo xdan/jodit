@@ -131,7 +131,9 @@ export class Popup extends Component {
 
 		this.target.appendChild(this.container);
 
-		this.firstInFocus();
+		if (this.jodit.options.textIcons) {
+			this.firstInFocus();
+		}
 
 		if (rightAlign !== undefined) {
 			this.container.classList.toggle('jodit_right', rightAlign);
