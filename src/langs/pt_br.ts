@@ -223,5 +223,6 @@ export default {
 		'Baixar essa imagem pro servidor?',
 	'The image has been successfully uploaded to the host!':
 		'A imagem foi enviada com sucesso para o servidor!',
-	palette: 'Palette'
+	palette: 'Palette',
+	'There are no files': 'Não há arquivos nesse diretório.',
 } as IDictionary<string>;

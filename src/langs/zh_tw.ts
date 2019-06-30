@@ -216,4 +216,5 @@ export default {
 	'The image has been successfully uploaded to the host!': '圖片上傳成功',
 	palette: 'Palette',
 	pencil: '要編輯',
+	'There are no files': '此目錄中沒有文件。',
 } as IDictionary<string>;

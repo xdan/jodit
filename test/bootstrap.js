@@ -108,7 +108,7 @@ if (typeof window.chai !== 'undefined') {
 											thumb:
 												'_thumbs/ibanez-s520-443140.jpg',
 											changed: '04/15/2018 12:40 PM',
-											size: '18.72kB',
+											size: '18.73kB',
 											isImage: true
 										},
 										{

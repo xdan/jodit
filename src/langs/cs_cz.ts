@@ -222,5 +222,6 @@ export default {
 		'Můžete upravovat pouze své obrázky. Načíst obrázek?',
 	'The image has been successfully uploaded to the host!':
 		'Obrázek byl úspěšně nahrán!',
-	palette: 'paleta'
+	palette: 'paleta',
+	'There are no files': 'V tomto adresáři nejsou žádné soubory.',
 } as IDictionary<string>;

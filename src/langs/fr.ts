@@ -217,5 +217,7 @@ export default {
 		"Téléchargez cette image sur l'hôte?",
 	'The image has been successfully uploaded to the host!':
 		"L'image a été téléchargée avec succès sur le serveur!null",
-	palette: 'Palette'
+	palette: 'Palette',
+	'There are no files': 'Il n\'y a aucun fichier dans ce répertoire.',
+
 } as IDictionary<string>;

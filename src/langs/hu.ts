@@ -225,5 +225,6 @@ export default {
 	'The image has been successfully uploaded to the host!':
 		'Kép sikeresen feltöltve!',
 
-	palette: 'Palette'
+	palette: 'Palette',
+	'There are no files': 'Er zijn geen bestanden in deze map.',
 } as IDictionary<string>;

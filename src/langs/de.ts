@@ -224,5 +224,6 @@ export default {
 		' Laden Sie dieses Bild auf dem Host herunter?',
 	'The image has been successfully uploaded to the host!':
 		'Das Bild wurde erfolgreich auf den Server hochgeladen!null',
-	palette: 'Palette'
+	palette: 'Palette',
+	'There are no files': 'In diesem Verzeichnis befinden sich keine Dateien.',
 } as IDictionary<string>;

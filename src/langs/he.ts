@@ -222,5 +222,6 @@ export default {
 		'רק קבצים המשוייכים שלך ניתנים לעריכה. האם להוריד את הקובץ?',
 	'The image has been successfully uploaded to the host!':
 		'התמונה עלתה בהצלחה!',
-	palette: 'לוח'
+	palette: 'לוח',
+	'There are no files': 'אין קבצים בספריה זו.',
 } as IDictionary<string>;

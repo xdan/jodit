@@ -35,7 +35,7 @@ declare module '../../Config' {
 		 * in the status bar (ms)
 		 * @property{boolean} filebrowser.sort=function (a, b, sortBy, parent) { return b.changed - a.changed;}
 		 * Items sort functions
-		 * @property{boolean} filebrowser.sortBy='changed' Sort by field
+		 * @property{boolean} filebrowser.sortBy='changed-desc' Sort by field
 		 * @property{boolean} filebrowser.filter=function (item, searchWord)
 		 * { return item.name.toLowerCase().indexOf(searchWord.toLowerCase()) !== -1} Filter items
 		 * @property{boolean} filebrowser.showFileName=true Show filename in thumbs
@@ -279,37 +279,42 @@ Config.prototype.filebrowser = {
 		if (typeof item === 'string') {
 			return item.toLowerCase().indexOf(search) !== -1;
 		}
+
 		if ('string' === typeof item.name) {
 			return item.name.toLowerCase().indexOf(search) !== -1;
 		}
+
 		if ('string' === typeof item.file) {
 			return item.file.toLowerCase().indexOf(search) !== -1;
 		}
+
 		return true;
 	},
 
-	sortBy: 'changed',
+	sortBy: 'changed-desc',
 
 	sort(this: IFileBrowser, a: any, b: any, sortBy: string): number {
+		const
+			[sortAttr, arrow] = sortBy.toLowerCase().split('-'),
+			asc = arrow === 'asc';
+
 		const compareStr = (f: string, s: string): number => {
 			if (f < s) {
-				return -1;
+				return asc ? -1 : 1;
 			}
 
 			if (f > s) {
-				return 1;
+				return asc ? 1 : -1;
 			}
 
 			return 0;
 		};
 
-		let first: Date, second: Date;
-
 		if (typeof a === 'string') {
 			return compareStr(a.toLowerCase(), b.toLowerCase());
 		}
 
-		if (a[sortBy] === undefined || sortBy === 'name') {
+		if (a[sortAttr] === undefined || sortAttr === 'name') {
 			if (typeof a.name === 'string') {
 				return compareStr(a.name.toLowerCase(), b.name.toLowerCase());
 			}
@@ -321,14 +326,22 @@ Config.prototype.filebrowser = {
 			return 0;
 		}
 
-		switch (sortBy) {
-			case 'changed':
-				first = new Date(a.changed);
-				second = new Date(b.changed);
+		switch (sortAttr) {
+			case 'changed': {
+				const
+					f = (new Date(a.changed)).getTime(),
+					s = (new Date(b.changed)).getTime();
 
-				return second.getTime() - first.getTime(); // New is upper
-			case 'size':
-				return humanSizeToBytes(a.size) - humanSizeToBytes(b.size);
+				return asc ? f - s : s - f;
+			}
+
+			case 'size': {
+				const
+					f = humanSizeToBytes(a.size),
+					s = humanSizeToBytes(b.size);
+
+				return asc ? f - s : s - f;
+			}
 		}
 
 		return 0;
@@ -376,7 +389,7 @@ Config.prototype.filebrowser = {
 
 	getMessage(this: IFileBrowser, resp: IFileBrowserAnswer) {
 		return resp.data.messages !== undefined &&
-			Array.isArray(resp.data.messages)
+		Array.isArray(resp.data.messages)
 			? resp.data.messages.join(' ')
 			: '';
 	},
@@ -432,11 +445,11 @@ Config.prototype.filebrowser = {
 			`data-url="${item.fileURL}"` +
 			'>' +
 			`<img ` +
-				`data-is-file="${item.isImage ? 0 : 1}" ` +
-				`data-src="${item.fileURL}" ` +
-				`src="${item.imageURL}" ` +
-				`alt="${name}" ` +
-				'loading="lazy" ' +
+			`data-is-file="${item.isImage ? 0 : 1}" ` +
+			`data-src="${item.fileURL}" ` +
+			`src="${item.imageURL}" ` +
+			`alt="${name}" ` +
+			'loading="lazy" ' +
 			'/>' +
 			(showName || showSize || showTime ? info : '') +
 			'</a>'
@@ -516,12 +529,12 @@ Config.prototype.controls.filebrowser = {
 			control: IControlType
 		): HTMLElement => {
 			const btn: HTMLElement = filebrowser.create.fromHTML(
-					'<span class="jodit_upload_button">' +
-						ToolbarIcon.getIcon('plus') +
-						'<input type="file" accept="' +
-						(filebrowser.state.onlyImages ? 'image/*' : '*') +
-						'" tabindex="-1" dir="auto" multiple=""/>' +
-						'</span>'
+				'<span class="jodit_upload_button">' +
+				ToolbarIcon.getIcon('plus') +
+				'<input type="file" accept="' +
+				(filebrowser.state.onlyImages ? 'image/*' : '*') +
+				'" tabindex="-1" dir="auto" multiple=""/>' +
+				'</span>'
 				),
 				input: HTMLInputElement = btn.querySelector(
 					'input'
@@ -567,6 +580,7 @@ Config.prototype.controls.filebrowser = {
 			editor.events.fire('select.filebrowser');
 		}
 	} as IControlType,
+
 	edit: {
 		icon: 'pencil',
 		isDisable: (browser: IFileBrowser): boolean => {
@@ -585,6 +599,7 @@ Config.prototype.controls.filebrowser = {
 			editor.events.fire('edit.filebrowser');
 		}
 	} as IControlType,
+
 	tiles: {
 		icon: 'th',
 		isActive: (filebrowser: IFileBrowser): boolean =>
@@ -593,6 +608,7 @@ Config.prototype.controls.filebrowser = {
 			filebrowser.events.fire('view.filebrowser', 'tiles');
 		}
 	} as IControlType,
+
 	list: {
 		icon: 'th-list',
 		isActive: (filebrowser: IFileBrowser): boolean =>
@@ -601,6 +617,7 @@ Config.prototype.controls.filebrowser = {
 			filebrowser.events.fire('view.filebrowser', 'list');
 		}
 	} as IControlType,
+
 	filter: {
 		isInput: true,
 		getContent: (filebrowser: IFileBrowser): HTMLElement => {
@@ -623,34 +640,33 @@ Config.prototype.controls.filebrowser = {
 			return input;
 		}
 	} as IControlType,
+
 	sort: {
 		isInput: true,
-		getContent: (filebrowser: IFileBrowser): HTMLElement => {
-			const select: HTMLSelectElement = filebrowser.create.fromHTML(
+		getContent: (fb: IFileBrowser): HTMLElement => {
+			const select: HTMLSelectElement = fb.create.fromHTML(
 				'<select class="jodit_input">' +
-					'<option value="changed">' +
-					filebrowser.i18n('Sort by changed') +
-					'</option>' +
-					'<option value="name">' +
-					filebrowser.i18n('Sort by name') +
-					'</option>' +
-					'<option value="size">' +
-					filebrowser.i18n('Sort by size') +
-					'</option>' +
-					'</select>'
+				`<option value="changed-asc">${fb.i18n('Sort by changed')} (⇧)</option>` +
+				`<option value="changed-desc">${fb.i18n('Sort by changed')} (⇩)</option>` +
+				`<option value="name-asc">${fb.i18n('Sort by name')} (⇧)</option>` +
+				`<option value="name-desc">${fb.i18n('Sort by name')} (⇩)</option>` +
+				`<option value="size-asc">${fb.i18n('Sort by size')} (⇧)</option>` +
+				`<option value="size-desc">${fb.i18n('Sort by size')} (⇩)</option>` +
+				'</select>'
 			) as HTMLSelectElement;
 
-			filebrowser.events
+			fb.events
 				.on('sort.filebrowser', (value: string) => {
 					if (select.value !== value) {
 						select.value = value;
 					}
 				})
 				.on(select, 'change', () => {
-					filebrowser.events.fire('sort.filebrowser', select.value);
+					fb.events.fire('sort.filebrowser', select.value);
 				});
 
 			return select;
 		}
+
 	} as IControlType
 } as IDictionary<IControlType>;

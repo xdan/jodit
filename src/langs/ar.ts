@@ -211,5 +211,6 @@ export default {
 		'يمكنك فقط تحرير صورك الخاصة. تحميل هذه الصورة على المضيف؟',
 	'The image has been successfully uploaded to the host!':
 		'تم تحميل الصورة بنجاح على الخادم!',
-	palette: 'لوحة'
+	palette: 'لوحة',
+	'There are no files': 'لا توجد ملفات في هذا الدليل.'
 } as IDictionary<string>;

@@ -215,5 +215,6 @@ export default {
 		'你只能编辑你自己的图片。' + 'Download this image on the host?',
 	'The image has been successfully uploaded to the host!': '图片上传成功',
 	palette: 'Palette',
-	pencil: '要編輯'
+	pencil: '要編輯',
+	'There are no files': '此目錄中沒有文件。',
 } as IDictionary<string>;

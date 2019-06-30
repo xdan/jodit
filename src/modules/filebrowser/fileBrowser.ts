@@ -81,7 +81,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 		elements: [],
 		folders: [],
 		view: 'tiles',
-		sortBy: 'changed',
+		sortBy: 'changed-desc',
 		filterWord: '',
 		onlyImages: false
 	});
@@ -998,11 +998,12 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 		}
 
 		self.files.classList.add(F_CLASS + 'files_view-' + self.state.view);
-		self.state.sortBy = self.options.sortBy || 'changed';
+		self.state.sortBy = self.options.sortBy || 'changed-desc';
 
 		const sortBy = self.storage.get(F_CLASS + 'sortby');
 		if (sortBy) {
-			self.state.sortBy = ['changed', 'name', 'size'].includes(sortBy) ? sortBy : 'changed';
+			const parts = sortBy.split('-');
+			self.state.sortBy = ['changed', 'name', 'size'].includes(parts[0]) ? sortBy : 'changed-desc';
 		}
 
 		self.dataProvider.currentBaseUrl = $$('base', editorDoc).length

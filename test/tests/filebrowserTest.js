@@ -8,7 +8,8 @@ describe('Jodit FileBrowser Tests', function() {
 					}
 				});
 
-				filebrowser.open(function() {});
+				filebrowser.open(function() {
+				});
 
 				expect(
 					document.querySelectorAll('.jodit_dialog_box.active').length
@@ -497,63 +498,67 @@ describe('Jodit FileBrowser Tests', function() {
 						expect(sort).to.be.not.null;
 						expect(select).to.be.not.null;
 
-						var count = files.querySelectorAll(
-							'.jodit_filebrowser_files_item'
-						).length;
-						select.value = 'changed';
-						simulateEvent('change', 0, select);
+						const
+							pars = {
+								'changed-asc': [
+									'images.jpg',
+									'1966051_524428741092238_1051008806888563137_o.jpg',
+									'ibanez-s520-443140.jpg',
+									'test.txt'
+								],
+								'changed-desc': [
+									'test.txt',
+									'ibanez-s520-443140.jpg',
+									'1966051_524428741092238_1051008806888563137_o.jpg',
+									'images.jpg'
+								],
+								'name-asc': [
+									'1966051_524428741092238_1051008806888563137_o.jpg',
+									'ibanez-s520-443140.jpg',
+									'images.jpg',
+									'test.txt'
+								],
+								'name-desc': [
+									'test.txt',
+									'images.jpg',
+									'ibanez-s520-443140.jpg',
+									'1966051_524428741092238_1051008806888563137_o.jpg'
+								],
+								'size-asc': [
+									'images.jpg',
+									'test.txt',
+									'ibanez-s520-443140.jpg',
+									'1966051_524428741092238_1051008806888563137_o.jpg'
+								],
+								'size-desc': [
+									'1966051_524428741092238_1051008806888563137_o.jpg',
+									'ibanez-s520-443140.jpg',
+									'test.txt',
+									'images.jpg'
+								]
+							};
 
-						var items = files.querySelectorAll(
-							'.jodit_filebrowser_files_item'
-						);
+						for (const key in pars) {
+							select.value = key;
 
-						expect(
-							[].map
-								.call(items, function(item) {
+							simulateEvent('change', 0, select);
+
+							var items = files.querySelectorAll(
+								'.jodit_filebrowser_files_item'
+							);
+
+							console.log(key);
+							expect(
+								Array.from(items).map(function(item) {
 									return item.querySelector(
 										'.jodit_filebrowser_files_item-info-filename'
 									).innerText;
 								})
-								.join(',')
-						).to.be.equal(
-							'test.txt,ibanez-s520-443140.jpg,1966051_524428741092238_1051008806888563137_o.jpg,images.jpg'
-						);
-
-						select.value = 'name';
-
-						simulateEvent('change', 0, select);
-
-						items = files.querySelectorAll(
-							'.jodit_filebrowser_files_item'
-						);
-						expect(
-							[].map
-								.call(items, function(item) {
-									return item.querySelector(
-										'.jodit_filebrowser_files_item-info-filename'
-									).innerText;
-								})
-								.join(',')
-						).to.be.equal(
-							'1966051_524428741092238_1051008806888563137_o.jpg,ibanez-s520-443140.jpg,images.jpg,test.txt'
-						);
-
-						select.value = 'size';
-						simulateEvent('change', 0, select);
-						items = files.querySelectorAll(
-							'.jodit_filebrowser_files_item'
-						);
-						expect(
-							[].map
-								.call(items, function(item) {
-									return item.querySelector(
-										'.jodit_filebrowser_files_item-info-filename'
-									).innerText;
-								})
-								.join(',')
-						).to.be.equal(
-							'images.jpg,ibanez-s520-443140.jpg,test.txt,1966051_524428741092238_1051008806888563137_o.jpg'
-						);
+									.join(',')
+							).to.be.equal(
+								pars[key].join(',')
+							);
+						}
 
 						filebrowser.close();
 						done();
@@ -635,7 +640,8 @@ describe('Jodit FileBrowser Tests', function() {
 				var filebrowser = editor.getInstance('FileBrowser');
 
 				filebrowser
-					.open(function() {})
+					.open(function() {
+					})
 					.then(function() {
 						var files = filebrowser.browser.querySelector(
 							'.jodit_filebrowser_files'
