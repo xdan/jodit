@@ -214,4 +214,5 @@ export default {
 	palette: 'لوحة',
 	'There are no files': 'لا توجد ملفات في هذا الدليل.',
 	rename: 'إعادة تسمية',
+	'Enter new name': 'أدخل اسم جديد',
 } as IDictionary<string>;

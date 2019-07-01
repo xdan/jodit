@@ -227,4 +227,5 @@ export default {
 	palette: 'Palette',
 	'There are no files': 'Er zijn geen bestanden in deze map.',
 	rename: 'Hongaars',
+	'Enter new name': 'Voer een nieuwe naam in',
 } as IDictionary<string>;

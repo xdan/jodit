@@ -225,4 +225,5 @@ export default {
 	palette: 'לוח',
 	'There are no files': 'אין קבצים בספריה זו.',
 	rename: 'הונגרית',
+	'Enter new name': 'הזן שם חדש',
 } as IDictionary<string>;

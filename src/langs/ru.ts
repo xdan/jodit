@@ -231,4 +231,5 @@ export default {
 	palette: 'палитра',
 	'There are no files': 'В данном каталоге нет файлов',
 	rename: 'Переименовать',
+	'Enter new name': 'Введите новое имя',
 } as IDictionary<string>;

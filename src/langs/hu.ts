@@ -228,4 +228,5 @@ export default {
 	palette: 'Palette',
 	'There are no files': 'Er zijn geen bestanden in deze map.',
 	rename: 'átnevezés',
+	'Enter new name': 'Adja meg az új nevet',
 } as IDictionary<string>;

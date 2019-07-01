@@ -226,4 +226,5 @@ export default {
 	palette: 'paleta',
 	'There are no files': 'No hay archivos en este directorio.',
 	rename: 'renombrar',
+	'Enter new name': 'Ingresa un nuevo nombre',
 } as IDictionary<string>;

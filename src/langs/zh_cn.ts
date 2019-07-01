@@ -218,4 +218,5 @@ export default {
 	pencil: '要編輯',
 	'There are no files': '此目錄中沒有文件。',
 	rename: '匈牙利',
+	'Enter new name': '输入新名称',
 } as IDictionary<string>;

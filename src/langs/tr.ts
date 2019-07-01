@@ -226,4 +226,5 @@ export default {
 	palette: 'Palette',
 	'There are no files': 'Bu dizinde dosya yok.',
 	rename: 'Macarca',
+	'Enter new name': 'Yeni isim girin',
 } as IDictionary<string>;
