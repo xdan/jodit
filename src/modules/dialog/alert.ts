@@ -40,25 +40,26 @@ export const Alert = (
 		title = undefined;
 	}
 
-	const dialog: Dialog = new Dialog(),
-		$div: HTMLDivElement = dialog.create.div(className),
-		$ok: HTMLAnchorElement = dialog.create.fromHTML(
+	const
+		dialog: Dialog = new Dialog(),
+		container: HTMLDivElement = dialog.create.div(className),
+		okButton: HTMLAnchorElement = dialog.create.fromHTML(
 			'<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
-				ToolbarIcon.getIcon('cancel') +
-				'<span>' +
-				Jodit.prototype.i18n('Ok') +
-				'</span></a>'
+			ToolbarIcon.getIcon('cancel') +
+			'<span>' +
+			Jodit.prototype.i18n('Ok') +
+			'</span></a>'
 		) as HTMLAnchorElement;
 
 	asArray(msg).forEach(oneMessage => {
-		$div.appendChild(
+		container.appendChild(
 			Dom.isNode(oneMessage, dialog.window)
 				? oneMessage
 				: dialog.create.fromHTML(oneMessage)
 		);
 	});
 
-	$ok.addEventListener('click', () => {
+	okButton.addEventListener('click', () => {
 		if (
 			!callback ||
 			typeof callback !== 'function' ||
@@ -68,10 +69,10 @@ export const Alert = (
 		}
 	});
 
-	dialog.setFooter([$ok]);
+	dialog.setFooter([okButton]);
 
-	dialog.open($div, (title as string) || '&nbsp;', true, true);
-	$ok.focus();
+	dialog.open(container, (title as string) || '&nbsp;', true, true);
+	okButton.focus();
 
 	return dialog;
 };
