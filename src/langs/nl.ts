@@ -226,4 +226,5 @@ export default {
 		'De afbeelding is succesvol geüploadet!',
 	palette: 'Palette',
 	'There are no files': 'Er zijn geen bestanden in deze map.',
+	rename: 'Hongaars',
 } as IDictionary<string>;

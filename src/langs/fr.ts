@@ -219,5 +219,5 @@ export default {
 		"L'image a été téléchargée avec succès sur le serveur!null",
 	palette: 'Palette',
 	'There are no files': 'Il n\'y a aucun fichier dans ce répertoire.',
-
+	rename: 'renommer',
 } as IDictionary<string>;

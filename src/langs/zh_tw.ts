@@ -217,4 +217,5 @@ export default {
 	palette: 'Palette',
 	pencil: '要編輯',
 	'There are no files': '此目錄中沒有文件。',
+	rename: '匈牙利',
 } as IDictionary<string>;

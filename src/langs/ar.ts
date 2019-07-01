@@ -212,5 +212,6 @@ export default {
 	'The image has been successfully uploaded to the host!':
 		'تم تحميل الصورة بنجاح على الخادم!',
 	palette: 'لوحة',
-	'There are no files': 'لا توجد ملفات في هذا الدليل.'
+	'There are no files': 'لا توجد ملفات في هذا الدليل.',
+	rename: 'إعادة تسمية',
 } as IDictionary<string>;

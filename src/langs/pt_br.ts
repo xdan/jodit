@@ -225,4 +225,5 @@ export default {
 		'A imagem foi enviada com sucesso para o servidor!',
 	palette: 'Palette',
 	'There are no files': 'Não há arquivos nesse diretório.',
+	rename: 'Húngara',
 } as IDictionary<string>;

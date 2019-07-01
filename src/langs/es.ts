@@ -225,4 +225,5 @@ export default {
 		'¡La imagen se ha subido correctamente al servidor!',
 	palette: 'paleta',
 	'There are no files': 'No hay archivos en este directorio.',
+	rename: 'renombrar',
 } as IDictionary<string>;

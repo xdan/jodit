@@ -229,5 +229,6 @@ export default {
 	'The image has been successfully uploaded to the host!':
 		'Изображение успешно загружено на сервер!',
 	palette: 'палитра',
-	'There are no files': 'В данном каталоге нет файлов'
+	'There are no files': 'В данном каталоге нет файлов',
+	rename: 'Переименовать',
 } as IDictionary<string>;

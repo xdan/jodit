@@ -225,4 +225,5 @@ export default {
 		'Görsel başarıyla hostunuza yüklendi',
 	palette: 'Palette',
 	'There are no files': 'Bu dizinde dosya yok.',
+	rename: 'Macarca',
 } as IDictionary<string>;

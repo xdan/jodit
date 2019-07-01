@@ -226,4 +226,5 @@ export default {
 		'Das Bild wurde erfolgreich auf den Server hochgeladen!null',
 	palette: 'Palette',
 	'There are no files': 'In diesem Verzeichnis befinden sich keine Dateien.',
+	rename: 'umbenennen',
 } as IDictionary<string>;

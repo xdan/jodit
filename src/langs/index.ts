@@ -10,7 +10,6 @@
 import { default as ar } from './ar';
 import { default as cs_cz } from './cs_cz';
 import { default as de } from './de';
-import { default as en } from './en';
 import { default as es } from './es';
 import { default as fr } from './fr';
 import { default as he } from './he';
@@ -22,6 +21,9 @@ import { default as ru } from './ru';
 import { default as tr } from './tr';
 import { default as zh_cn } from './zh_cn';
 import { default as zh_tw } from './zh_tw';
+
+import { default as en } from './en';
+
 
 const exp: any = {
 	ar,

@@ -224,4 +224,5 @@ export default {
 		'Obrázek byl úspěšně nahrán!',
 	palette: 'paleta',
 	'There are no files': 'V tomto adresáři nejsou žádné soubory.',
+	rename: 'přejmenovat',
 } as IDictionary<string>;

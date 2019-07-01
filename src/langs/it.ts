@@ -224,4 +224,5 @@ export default {
 		"L'immagine è stata caricata con successo sul server!",
 	palette: 'tavolozza',
 	'There are no files': 'Non ci sono file in questa directory.',
+	rename: 'ungherese',
 } as IDictionary<string>;
