@@ -233,4 +233,5 @@ export default {
 	rename: 'Переименовать',
 	'Enter new name': 'Введите новое имя',
 	preview: 'Предпросмотр',
+	download: 'Скачать',
 } as IDictionary<string>;

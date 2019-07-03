@@ -220,4 +220,5 @@ export default {
 	rename: '匈牙利',
 	'Enter new name': '输入新名称',
 	preview: '預習',
+	download: '下載',
 } as IDictionary<string>;

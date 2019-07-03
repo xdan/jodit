@@ -228,4 +228,5 @@ export default {
 	rename: 'Húngara',
 	'Enter new name': 'Digite um novo nome',
 	preview: 'preview',
+	download: 'Baixar',
 } as IDictionary<string>;

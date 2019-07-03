@@ -230,4 +230,5 @@ export default {
 	rename: 'átnevezés',
 	'Enter new name': 'Adja meg az új nevet',
 	preview: 'előnézet',
+	download: 'Letöltés',
 } as IDictionary<string>;

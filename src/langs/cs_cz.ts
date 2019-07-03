@@ -227,4 +227,6 @@ export default {
 	rename: 'přejmenovat',
 	'Enter new name': 'Zadejte nový název',
 	preview: 'náhled',
+	download: 'Stažení',
+
 } as IDictionary<string>;

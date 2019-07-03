@@ -222,4 +222,5 @@ export default {
 	rename: 'renommer',
 	'Enter new name': 'Entrez un nouveau nom',
 	preview: 'Aperçu',
+	download: 'Télécharger',
 } as IDictionary<string>;

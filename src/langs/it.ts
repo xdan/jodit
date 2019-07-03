@@ -227,4 +227,5 @@ export default {
 	rename: 'ungherese',
 	'Enter new name': 'Inserisci un nuovo nome',
 	preview: 'anteprima',
+	download: 'Scaricare',
 } as IDictionary<string>;

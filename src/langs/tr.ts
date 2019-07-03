@@ -228,4 +228,5 @@ export default {
 	rename: 'Macarca',
 	'Enter new name': 'Yeni isim girin',
 	preview: 'Ön izleme',
+	download: 'İndir',
 } as IDictionary<string>;

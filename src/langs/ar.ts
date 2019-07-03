@@ -216,4 +216,5 @@ export default {
 	rename: 'إعادة تسمية',
 	'Enter new name': 'أدخل اسم جديد',
 	preview: 'معاينة',
+	download: 'تحميل',
 } as IDictionary<string>;
