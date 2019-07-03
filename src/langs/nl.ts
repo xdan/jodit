@@ -228,4 +228,5 @@ export default {
 	'There are no files': 'Er zijn geen bestanden in deze map.',
 	rename: 'Hongaars',
 	'Enter new name': 'Voer een nieuwe naam in',
+	preview: 'voorvertoning',
 } as IDictionary<string>;

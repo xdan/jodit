@@ -229,4 +229,5 @@ export default {
 	'There are no files': 'Er zijn geen bestanden in deze map.',
 	rename: 'átnevezés',
 	'Enter new name': 'Adja meg az új nevet',
+	preview: 'előnézet',
 } as IDictionary<string>;

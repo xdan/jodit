@@ -232,4 +232,5 @@ export default {
 	'There are no files': 'В данном каталоге нет файлов',
 	rename: 'Переименовать',
 	'Enter new name': 'Введите новое имя',
+	preview: 'Предпросмотр',
 } as IDictionary<string>;

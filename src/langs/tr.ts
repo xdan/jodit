@@ -227,4 +227,5 @@ export default {
 	'There are no files': 'Bu dizinde dosya yok.',
 	rename: 'Macarca',
 	'Enter new name': 'Yeni isim girin',
+	preview: 'Ön izleme',
 } as IDictionary<string>;

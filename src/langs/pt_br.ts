@@ -227,4 +227,5 @@ export default {
 	'There are no files': 'Não há arquivos nesse diretório.',
 	rename: 'Húngara',
 	'Enter new name': 'Digite um novo nome',
+	preview: 'preview',
 } as IDictionary<string>;

@@ -228,4 +228,5 @@ export default {
 	'There are no files': 'In diesem Verzeichnis befinden sich keine Dateien.',
 	rename: 'umbenennen',
 	'Enter new name': 'Geben Sie einen neuen Namen ein',
+	preview: 'Vorschau',
 } as IDictionary<string>;

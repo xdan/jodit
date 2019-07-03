@@ -226,4 +226,5 @@ export default {
 	'There are no files': 'אין קבצים בספריה זו.',
 	rename: 'הונגרית',
 	'Enter new name': 'הזן שם חדש',
+	preview: 'תצוגה מקדימה',
 } as IDictionary<string>;

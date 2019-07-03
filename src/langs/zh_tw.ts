@@ -219,4 +219,5 @@ export default {
 	'There are no files': '此目錄中沒有文件。',
 	rename: '匈牙利',
 	'Enter new name': '输入新名称',
+	preview: '預習',
 } as IDictionary<string>;

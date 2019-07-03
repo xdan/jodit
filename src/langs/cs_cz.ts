@@ -226,4 +226,5 @@ export default {
 	'There are no files': 'V tomto adresáři nejsou žádné soubory.',
 	rename: 'přejmenovat',
 	'Enter new name': 'Zadejte nový název',
+	preview: 'náhled',
 } as IDictionary<string>;
