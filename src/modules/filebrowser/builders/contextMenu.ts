@@ -53,6 +53,21 @@ export default (self: FileBrowser) => {
 						}
 						: false,
 
+					self.dataProvider.canI('FileRename')
+						? {
+							icon: 'italic',
+							title: 'Rename',
+							exec: async () => {
+								self.events.fire(
+									'fileRename.filebrowser',
+									ga('data-name'),
+									ga('data-path'),
+									ga('data-source'),
+								);
+							}
+						}
+						: false,
+
 					self.dataProvider.canI('FileRemove')
 						? {
 							icon: 'bin',

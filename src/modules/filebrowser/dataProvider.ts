@@ -14,14 +14,38 @@ import { Ajax } from '../Ajax';
 
 export const DEFAULT_SOURCE_NAME = 'default';
 
+const possableRules = [
+	"allowFiles",
+	"allowFileMove",
+	"allowFileUpload",
+	"allowFileUploadRemote",
+	"allowFileRemove",
+	"allowFileRename",
+	"allowFolders",
+	"allowFolderMove",
+	"allowFolderCreate",
+	"allowFolderRemove",
+	"allowFolderRename",
+	"allowImageResize",
+	"allowImageCrop"
+];
+
 export default class dataProvider implements IFileBrowserDataProvider {
 	private __currentPermissions: IPermissions | null = null;
 
 	canI(action: string): boolean {
+		const rule = 'allow' + action;
+
+		if (process.env.NODE_ENV !== 'production') {
+			if (!possableRules.includes(rule)) {
+				throw new Error('Wrong action ' + action);
+			}
+		}
+
 		return (
 			this.__currentPermissions === null ||
-			(this.__currentPermissions['allow' + action] === undefined ||
-				this.__currentPermissions['allow' + action])
+			(this.__currentPermissions[rule] === undefined ||
+				this.__currentPermissions[rule])
 		);
 	}
 
@@ -294,6 +318,58 @@ export default class dataProvider implements IFileBrowserDataProvider {
 		this.options.folderRemove.data.source = source;
 
 		return this.get('folderRemove');
+	}
+
+	/**
+	 * Rename folder
+	 *
+	 * @param path Relative path
+	 * @param name Old filename
+	 * @param newname New filename
+	 * @param source Source
+	 */
+	folderRename(
+		path: string,
+		name: string,
+		newname: string,
+		source: string
+	): Promise<IFileBrowserAnswer> {
+		if (!this.options.folderRename) {
+			return Promise.reject('Set folderRename api options');
+		}
+
+		this.options.folderRename.data.path = path;
+		this.options.folderRename.data.name = name;
+		this.options.folderRename.data.newname = newname;
+		this.options.folderRename.data.source = source;
+
+		return this.get('folderRename');
+	}
+
+	/**
+	 * Rename file
+	 *
+	 * @param path Relative path
+	 * @param name Old filename
+	 * @param newname New filename
+	 * @param source Source
+	 */
+	fileRename(
+		path: string,
+		name: string,
+		newname: string,
+		source: string
+	): Promise<IFileBrowserAnswer> {
+		if (!this.options.fileRename) {
+			return Promise.reject('Set fileRename api options');
+		}
+
+		this.options.fileRename.data.path = path;
+		this.options.fileRename.data.name = name;
+		this.options.fileRename.data.newname = newname;
+		this.options.fileRename.data.source = source;
+
+		return this.get('fileRename');
 	}
 
 	/**

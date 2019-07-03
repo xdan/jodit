@@ -32,7 +32,8 @@ export const Promt = (
 	msg: string,
 	title: string | (() => false | void) | undefined,
 	callback: (value: string) => false | void,
-	placeholder?: string
+	placeholder?: string,
+	defaultValue?: string
 ): Dialog => {
 	const dialog: Dialog = new Dialog(),
 		cancelButton: HTMLAnchorElement = dialog.create.fromHTML(
@@ -101,6 +102,11 @@ export const Promt = (
 
 	dialog.open(form, (title as string) || '&nbsp;', true, true);
 	inputElement.focus();
+
+	if (defaultValue !== undefined && defaultValue.length) {
+		inputElement.value = defaultValue;
+		inputElement.select();
+	}
 
 	return dialog;
 };

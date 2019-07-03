@@ -815,6 +815,10 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			return parse(Jodit.lang.en[key]);
 		}
 
+		if (process.env.NODE_ENV !== 'production' && language !== 'en') {
+				throw new Error(`i18n need "${key}" in "${language}"`);
+		}
+
 		return parse(key);
 	}
 

@@ -266,7 +266,7 @@ export namespace Widget {
 				firstTab = name.toString();
 			}
 
-			button.innerHTML = editor.i18n(name.toString());
+			button.innerHTML = /<svg/.test(name.toString()) ? name : editor.i18n(name.toString());
 			buttons.appendChild(button);
 
 			if (typeof tabOptions !== 'function') {

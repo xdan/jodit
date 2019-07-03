@@ -131,10 +131,16 @@ export interface IFileBrowserOptions extends IViewOptions {
 
 	fileMove: IFileBrowserAjaxOptions | null;
 	folderMove: IFileBrowserAjaxOptions | null;
+
 	fileRemove: IFileBrowserAjaxOptions | null;
 	folderRemove: IFileBrowserAjaxOptions | null;
+
+	fileRename: IFileBrowserAjaxOptions | null;
+	folderRename: IFileBrowserAjaxOptions | null;
+
 	items: IFileBrowserAjaxOptions;
 	folder: IFileBrowserAjaxOptions | null;
+
 	permissions: IFileBrowserAjaxOptions | null;
 
 	uploader: null | IUploaderOptions<IUploader>; // use default Uploader's settings
@@ -185,6 +191,20 @@ export interface IFileBrowserDataProvider {
 	folderRemove(
 		path: string,
 		file: string,
+		source: string
+	): Promise<IFileBrowserAnswer>;
+
+	folderRename(
+		path: string,
+		name: string,
+		newname: string,
+		source: string
+	): Promise<IFileBrowserAnswer>;
+
+	fileRename(
+		path: string,
+		name: string,
+		newname: string,
 		source: string
 	): Promise<IFileBrowserAnswer>;
 

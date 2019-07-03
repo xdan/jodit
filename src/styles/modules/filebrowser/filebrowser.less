@@ -138,35 +138,43 @@
 			font-size: 16px;
 		}
 
+		@text-color: #b1b1b1;
+
 		.jodit_filebrowser_tree_item {
 			display: flex;
-			justify-items: center;
+			justify-content: space-between;
 			align-items: center;
+			min-height: 38px;
+			padding: 5px 10px;
 
-			padding: 5px 20px;
 			text-decoration: none;
-			color: #b1b1b1;
-			font-weight: 600;
+			color: @text-color;
 			transition: background-color 0.2s ease 0s;
 			border-bottom: 1px solid #474747;
-			line-height: 17px;
-			min-height: 38px;
 			position: relative;
 			word-break: break-all;
-			font-size: 16px;
 
-			i.remove {
-				height: 16px;
-				width: 16px;
-				line-height: 17px;
-				font-size: 16px;
-				position: absolute;
-				right: 5px;
-				top: 11px;
-				opacity: 0;
-				padding-left: 3px;
-				display: inline-block;
-				font-style: normal;
+			&_title {
+				flex: 1;
+			}
+
+			@icon-size: 12px;
+
+			.jodit_icon_folder {
+				margin-left: 5px;
+				width: @icon-size + 4px;
+				height: @icon-size + 4px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				opacity: 0.3;
+
+				& svg {
+					width: @icon-size;
+					height: @icon-size;
+					stroke: @text-color !important;
+					fill: @text-color !important;
+				}
 
 				&:hover {
 					background: #696969;
@@ -177,7 +185,7 @@
 				color: #222;
 				background-color: @color-background-button-hover;
 
-				i.remove {
+				i.jodit_icon_folder {
 					opacity: 0.6;
 				}
 			}
@@ -197,6 +205,7 @@
 
 			svg {
 				margin: 0 5px;
+				fill: #969696;
 			}
 
 			&:not(.disabled):hover {

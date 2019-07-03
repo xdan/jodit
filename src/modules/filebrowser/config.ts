@@ -496,6 +496,12 @@ Config.prototype.filebrowser = {
 	folderMove: {
 		data: { action: 'folderMove' }
 	},
+	fileRename: {
+		data: { action: 'fileRename' }
+	},
+	folderRename: {
+		data: { action: 'folderRename' }
+	},
 	fileRemove: {
 		data: { action: 'fileRemove' }
 	},
@@ -524,6 +530,7 @@ Config.prototype.controls.filebrowser = {
 		},
 		isDisable: (browser: IFileBrowser): boolean =>
 			!browser.dataProvider.canI('FileUpload'),
+
 		getContent: (
 			filebrowser: IFileBrowser,
 			control: IControlType
