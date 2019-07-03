@@ -828,5 +828,46 @@ describe('Jodit FileBrowser Tests', function() {
 			});
 		});
 	});
+
+	describe('Rename', function() {
+		describe('Folder', function() {
+			it('Should create button inside every folder of list', function(done) {
+				var editor = new Jodit(appendTestArea(), {
+					filebrowser: {
+						ajax: {
+							url: 'https://xdsoft.net/jodit/connector/index.php'
+						}
+					}
+				});
+
+				var filebrowser = editor.getInstance('FileBrowser');
+
+				filebrowser
+					.open(function() {
+					})
+					.then(function() {
+						var tree = filebrowser.browser.querySelector(
+							'.jodit_filebrowser_tree'
+						);
+
+						expect(tree).to.be.not.null;
+
+						const item = tree.querySelector('.jodit_filebrowser_tree_item');
+
+						expect(item).to.be.not.null;
+
+						const trigger = tree.querySelector('.jodit_icon_folder_rename');
+
+						expect(trigger).to.be.not.null;
+
+						done();
+					})
+					.catch(function(e) {
+						throw e;
+					});
+			});
+		});
+	});
+
 	afterEach(removeStuff);
 });

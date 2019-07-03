@@ -27,13 +27,6 @@ export class ToolbarIcon {
 		name: string,
 		defaultValue: string = '<span></span>'
 	): string {
-
-		if (process.env.NODE_ENV !== 'production') {
-			if (ToolbarIcon.icons[name] === undefined) {
-				throw new Error('Wrong icon ' + name);
-			}
-		}
-
 		return ToolbarIcon.icons[name] !== undefined
 			? ToolbarIcon.icons[name]
 			: defaultValue;
