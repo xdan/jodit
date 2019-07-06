@@ -46,6 +46,7 @@ export function backspace(editor: IJodit) {
 			box = parent as HTMLElement | null;
 		} while (box && box !== editor.editor);
 	};
+
 	const removeChar = (
 		box: { node: Node | null },
 		toLeft: boolean,
@@ -145,6 +146,7 @@ export function backspace(editor: IJodit) {
 			return false;
 		}
 	};
+
 	const removeInline = (
 		box: { node: Node | null },
 		toLeft: boolean,
@@ -260,9 +262,9 @@ export function backspace(editor: IJodit) {
 						return false;
 					}
 
-					const sel = editor.selection.sel,
-						range: Range | false =
-							sel && sel.rangeCount ? sel.getRangeAt(0) : false;
+					const
+						sel = editor.selection.sel,
+						range = sel && sel.rangeCount ? sel.getRangeAt(0) : false;
 
 					if (!range) {
 						return false;
@@ -315,8 +317,8 @@ export function backspace(editor: IJodit) {
 							);
 						}
 
-						if (tryRemoveInline !== void 0) {
-							return tryRemoveInline ? void 0 : false;
+						if (tryRemoveInline !== undefined) {
+							return tryRemoveInline ? undefined : false;
 						}
 
 						if (container && container.nodeName.match(/^(TD)$/)) {
