@@ -323,19 +323,20 @@ export class TableProcessor extends Plugin {
 	/**
 	 *
 	 * @param {HTMLTableElement} [table]
-	 * @param {HTMLTableCellElement} [current_cell]
+	 * @param {HTMLTableCellElement} [currentCell]
 	 * @private
 	 */
 	private __deSelectAll(
 		table?: HTMLTableElement,
-		current_cell?: HTMLTableCellElement | false
+		currentCell?: HTMLTableCellElement | false
 	) {
 		const cells: HTMLTableCellElement[] = table
 			? Table.getAllSelectedCells(table)
 			: Table.getAllSelectedCells(this.jodit.editor);
+
 		if (cells.length) {
 			cells.forEach((cell: HTMLTableCellElement) => {
-				if (!current_cell || current_cell !== cell) {
+				if (!currentCell || currentCell !== cell) {
 					Table.restoreSelection(cell);
 				}
 			});
