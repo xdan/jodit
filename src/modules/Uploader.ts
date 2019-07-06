@@ -171,15 +171,18 @@ export class Uploader extends Component implements IUploader {
 			return this.options.buildData.call(this, data);
 		}
 
-		if ((this.jodit.ownerWindow as any).FormData !== undefined) {
-			if (data instanceof FormData) {
+		const FD: typeof FormData = (this.jodit.ownerWindow as any).FormData;
+
+		if (FD !== undefined) {
+			if (data instanceof FD) {
 				return data;
 			}
+
 			if (typeof data === 'string') {
 				return data;
 			}
 
-			const newdata: FormData = new FormData();
+			const newdata: FormData = new FD();
 
 			Object.keys(data).forEach(key => {
 				newdata.append(key, data[key]);
