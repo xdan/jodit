@@ -265,7 +265,8 @@ export class search extends Plugin {
 		return [currentIndex, count];
 	};
 	public findAndReplace = (start: Node | null, query: string): boolean => {
-		const range = this.jodit.selection.range,
+		const
+			range = this.jodit.selection.range,
 			bound: ISelectionRange | false = this.find(
 				start,
 				query,
@@ -275,7 +276,7 @@ export class search extends Plugin {
 			);
 
 		if (bound && bound.startContainer && bound.endContainer) {
-			const rng: Range = this.jodit.editorDocument.createRange();
+			const rng = this.jodit.editorDocument.createRange();
 
 			try {
 				if (bound && bound.startContainer && bound.endContainer) {
@@ -283,16 +284,19 @@ export class search extends Plugin {
 						bound.startContainer,
 						bound.startOffset as number
 					);
+
 					rng.setEnd(bound.endContainer, bound.endOffset as number);
 					rng.deleteContents();
+
 					const textNode: Node = this.jodit.editorDocument.createTextNode(
 						this.replaceInput.value
 					);
+
 					rng.insertNode(textNode);
 					this.jodit.selection.select(textNode);
 					this.tryScrollToElement(textNode);
 				}
-			} catch (e) {}
+			} catch {}
 
 			return true;
 		}
