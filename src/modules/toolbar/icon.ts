@@ -27,8 +27,9 @@ export class ToolbarIcon {
 		name: string,
 		defaultValue: string = '<span></span>'
 	): string {
-		return ToolbarIcon.icons[name] !== undefined
-			? ToolbarIcon.icons[name]
-			: defaultValue;
+
+		const icon = ToolbarIcon.icons[name] || ToolbarIcon.icons[name.toLowerCase()];
+
+		return icon || defaultValue;
 	}
 }
