@@ -711,15 +711,15 @@ describe('Jodit Editor Tests', function() {
 
 			expect(function() {
 				editor.selection.insertNode();
-			}).to.throw(/node most be/);
+			}).to.throw(/node must be/);
 
 			expect(function() {
 				editor.selection.insertNode('Text');
-			}).to.throw(/node most be/);
+			}).to.throw(/node must be/);
 
 			expect(function() {
 				editor.selection.insertNode(null);
-			}).to.throw(/node most be/);
+			}).to.throw(/node must be/);
 
 			editor.destruct();
 		});

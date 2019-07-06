@@ -1056,7 +1056,7 @@ describe('Test interface', function() {
 				});
 			});
 			it('Full size button', function() {
-				var editor = new Jodit(appendTestArea(), {
+				const editor = new Jodit(appendTestArea(), {
 					observer: {
 						timeout: 0 // disable delay
 					}
@@ -1064,11 +1064,13 @@ describe('Test interface', function() {
 
 				simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-fullsize'));
 
-				var node = editor.container.parentNode;
-				while (node && !(node instanceof Document)) {
+				let node = editor.container.parentNode;
+
+				while (node && node.nodeType !== Node.DOCUMENT_NODE) {
 					expect(node.classList.contains('jodit_fullsize_box')).to.equal(true);
 					node = node.parentNode;
 				}
+
 			});
 			it('Should add extra buttons', function() {
 				var editor = new Jodit(appendTestArea(), {
