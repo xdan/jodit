@@ -36,7 +36,7 @@ export const $$ = (
 	if (
 		/:scope/.test(selector) &&
 		IS_IE &&
-		!(typeof HTMLDocument !== 'undefined' && root instanceof HTMLDocument)
+		!(root && root.nodeType === Node.DOCUMENT_NODE)
 	) {
 		const id: string = (root as HTMLElement).id,
 			temp_id: string =
