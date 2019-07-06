@@ -153,14 +153,16 @@ export class Snapshot extends Component<IJodit> {
 
 		snapshot.html = this.jodit.getNativeEditorValue();
 
-		const sel: Selection | null = this.jodit.editorWindow.getSelection();
+		const sel = this.jodit.selection.sel;
 
 		if (sel && sel.rangeCount) {
-			const range: Range = sel.getRangeAt(0),
+			const
+				range = sel.getRangeAt(0),
 				startContainer = this.calcHierarchyLadder(range.startContainer),
 				endContainer = this.calcHierarchyLadder(range.endContainer);
 
-			let startOffset = Snapshot.strokeOffset(
+			let
+				startOffset = Snapshot.strokeOffset(
 					range.startContainer,
 					range.startOffset
 				),
