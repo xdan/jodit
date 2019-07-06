@@ -219,7 +219,8 @@ export class Uploader extends Component implements IUploader {
 									if (evt.lengthComputable) {
 										let percentComplete =
 											evt.loaded / evt.total;
-										percentComplete = percentComplete * 100;
+
+										percentComplete *= 100;
 
 										this.jodit.progress_bar.style.display =
 											'block';
@@ -280,6 +281,14 @@ export class Uploader extends Component implements IUploader {
 		}
 	}
 
+	/**
+	 * Send files to server
+	 *
+	 * @param files
+	 * @param handlerSuccess
+	 * @param handlerError
+	 * @param process
+	 */
 	sendFiles(
 		files: FileList | File[] | null,
 		handlerSuccess?: HandlerSuccess,
@@ -302,6 +311,7 @@ export class Uploader extends Component implements IUploader {
 
 		if (this.options.insertImageAsBase64URI) {
 			let file: File, i: number;
+
 			for (i = 0; i < fileList.length; i += 1) {
 				file = fileList[i];
 				if (file && file.type) {
@@ -311,10 +321,10 @@ export class Uploader extends Component implements IUploader {
 					const extension: string = mime[1]
 						? mime[1].toLowerCase()
 						: '';
-					if (
-						this.options.imagesExtensions.indexOf(extension) !== -1
-					) {
-						const reader: FileReader = new FileReader();
+					if (this.options.imagesExtensions.includes(extension)) {
+						const
+							reader: FileReader = new FileReader();
+
 						promises.push(
 							new Promise<any>((resolve, reject) => {
 								reader.onerror = reject;
@@ -537,24 +547,17 @@ export class Uploader extends Component implements IUploader {
 						(!e.clipboardData.types.length &&
 							e.clipboardData.types[0] !== TEXT_PLAIN)
 					) {
-						const div: HTMLDivElement = this.jodit.create.fromHTML(
-							'<div ' +
-								'tabindex="-1" ' +
-								'style="' +
-								'left: -9999px; top: 0; width: 0; height: 100%; ' +
-								'line-height: 140%; overflow: hidden; position: fixed; ' +
-								'z-index: 2147483647; word-break: break-all;' +
-								'" ' +
-								'contenteditable="true">' +
-								'</div>'
-						) as HTMLDivElement;
+						const div: HTMLDivElement = this.jodit.create.div('', {
+							'tabindex': -1,
+							'style': 'left: -9999px; top: 0; width: 0; height: 100%;line-height: 140%; ' +
+								'overflow: hidden; position: fixed; z-index: 2147483647; word-break: break-all;',
+							'contenteditable': true
+						});
 
 						this.jodit.ownerDocument.body.appendChild(div);
 
-						const selection =
-								this.jodit && isJoditObject(this.jodit)
-									? this.jodit.selection.save()
-									: null,
+						const
+							selection = this.jodit && isJoditObject(this.jodit) ? this.jodit.selection.save() : null,
 							restore = () =>
 								selection &&
 								this.jodit &&
@@ -588,12 +591,15 @@ export class Uploader extends Component implements IUploader {
 					e.clipboardData.items &&
 					e.clipboardData.items.length
 				) {
-					for (i = 0; i < e.clipboardData.items.length; i += 1) {
+					const items = e.clipboardData.items;
+
+					for (i = 0; i < items.length; i += 1) {
 						if (
-							e.clipboardData.items[i].kind === 'file' &&
-							e.clipboardData.items[i].type === 'image/png'
+							items[i].kind === 'file' &&
+							items[i].type === 'image/png'
 						) {
-							file = e.clipboardData.items[i].getAsFile();
+							file = items[i].getAsFile();
+
 							if (file) {
 								const mime: string[] = file.type.match(
 									/\/([a-z0-9]+)/i
@@ -601,6 +607,7 @@ export class Uploader extends Component implements IUploader {
 								extension = mime[1]
 									? mime[1].toLowerCase()
 									: '';
+
 								this.sendFiles(
 									[file],
 									handlerSuccess,
