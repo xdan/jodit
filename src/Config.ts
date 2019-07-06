@@ -780,32 +780,38 @@ export class Config implements IViewOptions {
 }
 
 export const OptionsDefault: any = function(this: any, options: any) {
-	const self: any = this;
+	const
+		def = Config.defaultOptions,
+		self: any = this;
+
 	self.plainOptions = options;
 
 	if (options !== undefined && typeof options === 'object') {
 		const extendKey = (opt: object, key: string) => {
 			if (key === 'preset') {
-				if (
-					Config.defaultOptions.presets[(opt as any).preset] !==
-					undefined
-				) {
-					const preset =
-						Config.defaultOptions.presets[(opt as any).preset];
+				if (def.presets[(opt as any).preset] !== undefined) {
+					const preset = def.presets[(opt as any).preset];
 
 					Object.keys(preset).forEach(extendKey.bind(this, preset));
 				}
 			}
+
+			const
+				defValue = (def as any)[key],
+				isObject = typeof defValue === 'object' && defValue !== null;
+
 			if (
-				typeof (Config.defaultOptions as any)[key] === 'object' &&
-				!Array.isArray((Config.defaultOptions as any)[key])
+				isObject &&
+				!['ownerWindow', 'ownerDocument'].includes(key) &&
+				!Array.isArray(defValue)
 			) {
 				self[key] = extend(
 					true,
 					{},
-					(Config.defaultOptions as any)[key],
+					defValue,
 					(opt as any)[key]
 				);
+
 			} else {
 				self[key] = (opt as any)[key];
 			}
