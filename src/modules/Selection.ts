@@ -26,7 +26,18 @@ import { trim } from './helpers/string';
 type WindowSelection = Selection | null;
 
 export class Select {
-	constructor(readonly jodit: IJodit) {}
+	constructor(readonly jodit: IJodit) {
+	}
+
+	/**
+	 * Throw Error exception if parameter is not Node
+	 * @param node
+	 */
+	private errorNode(node: unknown) {
+		if (!Dom.isNode(node, this.win)) {
+			throw new Error('Parameter node must be instance of Node');
+		}
+	}
 
 	/**
 	 * Return current work place - for Jodit is Editor
@@ -130,7 +141,8 @@ export class Select {
 			}
 
 			return true;
-		} catch {}
+		} catch {
+		}
 
 		return false;
 	}
@@ -326,7 +338,8 @@ export class Select {
 
 			try {
 				sel.addRange(ranges[i].cloneRange());
-			} catch {}
+			} catch {
+			}
 		}
 
 		return info;
@@ -415,8 +428,8 @@ export class Select {
 					if (!node) {
 						node =
 							range.startContainer.childNodes[
-								range.startOffset - 1
-							];
+							range.startOffset - 1
+								];
 						rightMode = true;
 					}
 
@@ -462,7 +475,7 @@ export class Select {
 							leftChild &&
 							rightChild &&
 							leftChild.nodeType !== Node.TEXT_NODE
-						);
+							);
 
 						if (
 							leftChild === rightChild &&
@@ -496,9 +509,7 @@ export class Select {
 		insertCursorAfter = true,
 		fireChange: boolean = true
 	) {
-		if (!Dom.isNode(node, this.win)) {
-			throw new Error('Parameter node most be instance of Node');
-		}
+		this.errorNode(node);
 
 		this.focus();
 
@@ -592,7 +603,7 @@ export class Select {
 			lastEditorElement.previousSibling &&
 			lastEditorElement.nodeValue &&
 			/^\s*$/.test(lastEditorElement.nodeValue)
-		) {
+			) {
 			lastEditorElement = lastEditorElement.previousSibling;
 		}
 
@@ -697,8 +708,8 @@ export class Select {
 				start: Node =
 					range.startContainer === this.area
 						? this.area.childNodes[
-								startOffset < length ? startOffset : length - 1
-						  ]
+							startOffset < length ? startOffset : length - 1
+							]
 						: range.startContainer,
 				end: Node =
 					range.endContainer === this.area
@@ -763,9 +774,7 @@ export class Select {
 	setCursorAfter(
 		node: Node | HTMLElement | HTMLTableElement | HTMLTableCellElement
 	): Text | false {
-		if (!(node instanceof (this.win as any).Node)) {
-			throw new Error('Parameter node most be instance of Node');
-		}
+		this.errorNode(node);
 
 		if (
 			!Dom.up(
@@ -841,15 +850,15 @@ export class Select {
 			if (
 				start &&
 				range.startOffset >
-					value.length -
-						value.replace(INVISIBLE_SPACE_REG_EXP_START, '').length
+				value.length -
+				value.replace(INVISIBLE_SPACE_REG_EXP_START, '').length
 			) {
 				return false;
 			}
 			if (
 				!start &&
 				range.startOffset <
-					value.replace(INVISIBLE_SPACE_REG_EXP_END, '').length
+				value.replace(INVISIBLE_SPACE_REG_EXP_END, '').length
 			) {
 				return false;
 			}
@@ -882,9 +891,7 @@ export class Select {
 	setCursorBefore(
 		node: Node | HTMLElement | HTMLTableElement | HTMLTableCellElement
 	): Text | false {
-		if (!(node instanceof (this.win as any).Node)) {
-			throw new Error('Parameter node most be instance of Node');
-		}
+		this.errorNode(node);
 
 		if (
 			!Dom.up(
@@ -926,9 +933,8 @@ export class Select {
 	 * @param {boolean} [inStart=false] set cursor in start of element
 	 */
 	setCursorIn(node: Node, inStart: boolean = false) {
-		if (!(node instanceof (this.win as any).Node)) {
-			throw new Error('Parameter node most be instance of Node');
-		}
+		this.errorNode(node);
+
 		if (
 			!Dom.up(
 				node,
@@ -1006,9 +1012,7 @@ export class Select {
 		node: Node | HTMLElement | HTMLTableElement | HTMLTableCellElement,
 		inward = false
 	) {
-		if (!Dom.isNode(node, this.win)) {
-			throw new Error('Parameter node most be instance of Node');
-		}
+		this.errorNode(node);
 
 		if (
 			!Dom.up(
@@ -1124,8 +1128,8 @@ export class Select {
 						if (
 							mode === UNWRAP ||
 							css(elm, rule) ===
-								normilizeCSSValue(rule, cssRules[
-									rule
+							normilizeCSSValue(rule, cssRules[
+								rule
 								] as string)
 						) {
 							css(elm, rule, '');
@@ -1164,11 +1168,11 @@ export class Select {
 			// fix issue https://github.com/xdan/jodit/issues/65
 			$$('*[style*=font-size]', this.area).forEach((elm: HTMLElement) => {
 				elm.style &&
-					elm.style.fontSize &&
-					elm.setAttribute(
-						'data-font-size',
-						elm.style.fontSize.toString()
-					);
+				elm.style.fontSize &&
+				elm.setAttribute(
+					'data-font-size',
+					elm.style.fontSize.toString()
+				);
 			});
 
 			this.doc.execCommand('fontsize', false, '7');
@@ -1296,7 +1300,7 @@ export class Select {
 									this.doc
 								),
 								cssRules &&
-									nodeName.toUpperCase() === defaultTag
+								nodeName.toUpperCase() === defaultTag
 									? cssRules
 									: {}
 							);
