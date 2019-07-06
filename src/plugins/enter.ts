@@ -94,10 +94,7 @@ export function enter(editor: IJodit) {
 
 				const sel = editor.selection.sel;
 
-				let range: Range =
-					sel && sel.rangeCount
-						? sel.getRangeAt(0)
-						: editor.editorDocument.createRange();
+				let range = editor.selection.range;
 
 				if (!current || current === editor.editor) {
 					editor.selection.current();
