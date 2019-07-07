@@ -14,7 +14,15 @@
 		"noImplicitThis": true,
 		"importHelpers": true,
 		"target": "es5",
-		"lib": ["es5", "es2015", "es2017", "es2016", "dom", "scripthost"]
+		"lib": [
+			"es5",
+			"es2018",
+			"es2015",
+			"es2017",
+			"es2016",
+			"dom",
+			"scripthost"
+		]
 	},
 	"module": "umd",
 	"moduleResolution": "node",

@@ -10,8 +10,6 @@
 let keys = [];
 
 module.exports = function(content, fileData) {
-
-
 	this.cacheable && this.cacheable();
 
 	let result = [];
