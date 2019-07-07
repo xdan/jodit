@@ -34,8 +34,8 @@ Include just two files
 ```
 ### CDN
 ```xml
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jodit/3.1.92/jodit.min.css">
-<script src="//cdnjs.cloudflare.com/ajax/libs/jodit/3.1.92/jodit.min.js"></script>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jodit/3.2.46/jodit.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/jodit/3.2.46/jodit.min.js"></script>
 ```
 ### USAGE
 
