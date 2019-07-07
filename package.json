@@ -35,9 +35,9 @@
 	},
 	"homepage": "https://xdsoft.net/jodit/",
 	"devDependencies": {
-		"@types/ace": "^0.0.35",
+		"@types/ace": "0.0.42",
 		"@types/es6-promise": "^3.3.0",
-		"@types/node": "^7.10.6",
+		"@types/node": "^12.0.12",
 		"autoprefixer": "^6.7.7",
 		"awesome-typescript-loader": "^5.2.1",
 		"chai": "^4.2.0",
