@@ -8,8 +8,13 @@
  */
 
 @import (reference) '../variables';
+@import (reference) '../mixins';
+
 .jodit_form {
+	.font();
+
 	color: @color-default;
+
 	textarea,
 	input[type='url'],
 	input[type='text'] {
@@ -31,9 +36,11 @@
 			min-width: 150px;
 		}
 	}
+
 	textarea {
 		height: 128px;
 	}
+
 	button {
 		height: 36px;
 		line-height: 1;
@@ -46,13 +53,14 @@
 		font-size: 16px;
 		outline: none;
 		transition: background 0.2s ease 0s;
-		//float: right;
 		margin-top: 10px;
 		margin-bottom: 10px;
+
 		&:hover {
 			background-color: @color-background-button-hover;
 			color: @color-button;
 		}
+
 		&:active {
 			background: @color-background-button-hover;
 			color: @color-button;
@@ -71,6 +79,7 @@
 		position: relative;
 		outline: none;
 		top: 3px;
+
 		&:after {
 			content: '';
 			background: #fff;
@@ -85,6 +94,7 @@
 			box-sizing: border-box;
 			transition: background 0.2s ease 0s, border-color 0.2s ease 0s;
 		}
+
 		&:checked:after {
 			background: data-uri('../widgets/ok.svg') no-repeat center center;
 			background-color: @color-border-active;

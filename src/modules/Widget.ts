@@ -250,15 +250,17 @@ export namespace Widget {
 				tab: HTMLElement;
 			}> = {};
 
-		let firstTab: string = '',
+		let
+			firstTab: string = '',
 			tabcount: number = 0;
 
 		box.appendChild(buttons);
 		box.appendChild(tabBox);
 
 		each<(() => void) | HTMLElement>(tabs, (name: string, tabOptions) => {
-			const tab: HTMLDivElement = editor.create.div('jodit_tab'),
-				button: HTMLAnchorElement = editor.create.element('a', {
+			const
+				tab = editor.create.div('jodit_tab'),
+				button = editor.create.element('a', {
 					href: 'javascript:void(0);'
 				});
 

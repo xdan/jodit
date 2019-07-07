@@ -6,6 +6,8 @@
  * For commercial licenses see https://xdsoft.net/jodit/commercial/
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+@import (reference) '../mixins';
+
 @box-shadow-default: 0px 4px 4px -2px rgba(0, 0, 0, 0.14);
 
 .jodit_toolbar,
@@ -14,6 +16,8 @@
 }
 
 .jodit_toolbar {
+	.font();
+
 	position: relative;
 	left: 0;
 	top: 0;

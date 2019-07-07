@@ -55,7 +55,7 @@ cena quidem posse videamur?
 		</ol>
 
 
-		<dl>
+		<dl id="section1">
 			<dt><dfn>Falli igitur possumus.</dfn></dt>
 			<dd>Quid enim ab antiquis ex eo genere, quod ad disserendum valet, praetermissum est?</dd>
 			<dt><dfn>Scrupulum, inquam, abeunti;</dfn></dt>
@@ -67,9 +67,12 @@ cena quidem posse videamur?
 		</dl>
 	</div>
 </div>
+<a href="#section1">Click Me</a>
 <script src="./build/jodit.min.js"></script>
 <script>
 	const editor = new Jodit('#editor', {
+		// iframe: true,
+		height: 100,
 		language: 'ru',
 		// textIcons: true,
 		uploader: {

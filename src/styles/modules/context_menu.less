@@ -7,9 +7,11 @@
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 @import (reference) '../variables';
+@import (reference) '../mixins';
 
 .jodit_context_menu {
-	font-family: @font-default;
+	.font();
+
 	display: none;
 	background: @context_menu_bg;
 	position: absolute;

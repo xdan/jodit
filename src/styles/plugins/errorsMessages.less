@@ -6,8 +6,11 @@
  * For commercial licenses see https://xdsoft.net/jodit/commercial/
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+@import (reference) '../mixins';
 
 .jodit_error_box_for_messages {
+	.font();
+
 	position: absolute;
 	right: 0;
 	bottom: 0;
@@ -15,6 +18,7 @@
 	height: 0;
 	overflow: visible;
 	z-index: 3;
+
 	> * {
 		position: absolute;
 		right: 5px;

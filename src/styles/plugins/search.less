@@ -6,14 +6,19 @@
  * For commercial licenses see https://xdsoft.net/jodit/commercial/
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+@import (reference) '../mixins';
+
 @height-search: 30px;
 @width-search: 320px;
 @width-search-input-box: 60%;
 @width-search-count-box: 15%;
 @transform-button-active: 0.95;
 @timeout-button-active: 0.1s;
+
 .jodit_search {
+	.font();
 	visibility: hidden;
+
 	&.jodit_search-active {
 		visibility: visible;
 	}
@@ -29,9 +34,10 @@
 		position: absolute;
 		right: 0;
 		background-color: @color-toolbar;
-		border: 1px solid @color-border;
+		border: solid @color-border;
 		border-width: 0 0 1px 1px;
 		padding: @padding-default / 2;
+
 		input {
 			margin: 0;
 			width: 100%;
@@ -40,10 +46,12 @@
 			background-color: transparent;
 			outline: none;
 			padding: 0 @padding-default;
+
 			&.jodit_search-replace {
 				display: none;
 			}
 		}
+
 		.jodit_search_buttons,
 		.jodit_search_counts,
 		.jodit_search_inputs {
@@ -51,27 +59,32 @@
 			display: inline-block;
 			vertical-align: top;
 		}
+
 		.jodit_search_inputs {
 			width: @width-search-input-box;
 			padding-right: @padding-default / 2;
 		}
+
 		.jodit_search_counts {
 			width: @width-search-count-box;
 			line-height: 100%;
 			text-align: center;
 			color: @color-border;
 			border-left: 1px solid @color-border;
+
 			&:before {
 				content: '';
 				display: inline-block;
 				vertical-align: middle;
 				height: 100%;
 			}
+
 			span {
 				display: inline-block;
 				vertical-align: middle;
 			}
 		}
+
 		.jodit_search_buttons {
 			padding-left: 0;
 			width: 100% - @width-search-input-box - @width-search-count-box;
@@ -82,21 +95,26 @@
 				padding: 1px @padding-default / 2;
 				margin-right: 1%;
 				transition: transform @timeout-button-active linear;
+
 				&.jodit_search_buttons-replace {
 					width: 100%;
 					border: 1px solid @color-border;
 					margin-top: 2px;
 					display: none;
 				}
+
 				height: 100%;
 				border: 1px solid transparent;
 				background-color: transparent;
+
 				&:hover {
 					background-color: @color-background-button-hover;
 				}
+
 				&:focus {
 					border: 1px solid fade(@color-background-selection, 50);
 				}
+
 				&:active {
 					border: 1px solid @color-background-selection;
 					transform: scale(
@@ -120,11 +138,13 @@
 				}
 			}
 		}
+
 		.jodit_search_buttons button.jodit_search_buttons-replace,
 		.jodit_search_inputs input.jodit_search-replace {
 			display: block;
 		}
 	}
+
 	@media (max-width: @width-search) {
 		width: 100%;
 		.jodit_search_box {

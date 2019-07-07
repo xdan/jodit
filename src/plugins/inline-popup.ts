@@ -53,7 +53,7 @@ Config.prototype.popup = {
 			tooltip: 'Edit link',
 			icon: 'pencil'
 		},
-		'Unlink',
+		'unlink',
 		'brush',
 		'file'
 	],

@@ -476,8 +476,8 @@ export function imageProperties(editor: IJodit) {
 		const tabs: IDictionary<HTMLElement> = {},
 			tabsbox: HTMLElement | null = prop.querySelector('.tabsbox');
 
-		tabs[editor.i18n('Image')] = mainTab;
-		tabs[editor.i18n('Advanced')] = positionTab;
+		tabs['Image'] = mainTab;
+		tabs['Advanced'] = positionTab;
 
 		if (tabsbox) {
 			tabsbox.appendChild(TabsWidget(editor, tabs));

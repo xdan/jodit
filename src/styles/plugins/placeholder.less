@@ -6,11 +6,14 @@
  * For commercial licenses see https://xdsoft.net/jodit/commercial/
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+@import (reference) '../mixins';
 
 .jodit_placeholder {
+	.font();
+
 	user-select: none !important;
-	top: 0px;
-	left: 0px;
+	top: 0;
+	left: 0;
 	display: block;
 	position: absolute;
 	padding: @padding-default;
