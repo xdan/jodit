@@ -171,6 +171,9 @@ export interface IUploaderOptions<T> {
 	data: null | object;
 	format: string;
 	method: string;
+
+	filesVariableName: string;
+	pathVariableName: string;
 	withCredentials: boolean;
 
 	prepareData: (this: T, formData: FormData) => any;
