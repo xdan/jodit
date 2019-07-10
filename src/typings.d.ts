@@ -8,6 +8,6 @@
  */
 
 declare module '*.svg' {
-	let content: string;
+	var content: string;
 	export default content;
 }
