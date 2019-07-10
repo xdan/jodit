@@ -151,12 +151,13 @@ export interface ImageEditorOptions {
 }
 
 export type ImageAction = 'resize' | 'crop';
-export type ImageBox = {
+
+export interface ImageBox {
 	w: number;
 	h: number;
 	x?: number;
 	y?: number;
-};
+}
 
 export interface ImageEditorActionBox {
 	action: ImageAction;

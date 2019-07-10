@@ -15,7 +15,13 @@
 		"no-shadowed-variable": false,
 		"no-var-requires": false,
 		"no-namespace": false,
-		"prettier": true,
+		"no-unnecessary-class": [
+			true,
+			"allow-empty-class",
+			"allow-constructor-only",
+			"allow-static-only"
+		],
+		"prettier": [true, ".prettierrc.json"],
 		"semicolon": [
 			true,
 			"always",
@@ -37,7 +43,19 @@
 		"no-empty": [true, "allow-empty-catch"],
 		"arrow-parens": [true, "ban-single-arg-parens"],
 		"object-literal-sort-keys": false,
-		"member-ordering": false
+		"member-ordering": false,
+		"whitespace": [
+			true,
+			"check-branch",
+			"check-decl",
+			"check-operator",
+			"check-module",
+			"check-separator",
+			"check-rest-spread",
+			"check-type",
+			"check-type-operator",
+			"check-preblock"
+		]
 	},
 	"rulesDirectory": []
 }

@@ -93,7 +93,7 @@ export interface IFileBrowserOptions extends IViewOptions {
 	preview: boolean;
 	showPreviewNavigation: boolean;
 	showSelectButtonInPreview: boolean;
-	saveStateInStorage: boolean,
+	saveStateInStorage: boolean;
 
 	contextMenu: boolean;
 
@@ -256,14 +256,14 @@ export interface IFileBrowser extends IViewWithToolbar<IFileBrowserOptions> {
 }
 
 export interface IFileBrowserState {
-	view: 'tiles' | 'list',
-	sortBy: string,
-	filterWord: string,
-	onlyImages: boolean,
+	view: 'tiles' | 'list';
+	sortBy: string;
+	filterWord: string;
+	onlyImages: boolean;
 
-	elements: IFileBrowserItem[],
-	activeElements: IFileBrowserItem[]
-	folders: IFileBrowserFolder[]
+	elements: IFileBrowserItem[];
+	activeElements: IFileBrowserItem[];
+	folders: IFileBrowserFolder[];
 }
 
 export interface IFileBrowserFolder {

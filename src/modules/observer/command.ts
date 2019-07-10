@@ -13,8 +13,8 @@ import { Observer } from './observer';
 export class Command {
 	private observer: Observer;
 
-	private oldValue: SnapshotType;
-	private newValue: SnapshotType;
+	readonly oldValue: SnapshotType;
+	readonly newValue: SnapshotType;
 
 	public undo() {
 		this.observer.snapshot.restore(this.oldValue);

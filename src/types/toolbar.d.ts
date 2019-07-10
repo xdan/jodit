@@ -288,7 +288,7 @@ interface IToolbarCollection extends IComponent {
 
 	clear(): void;
 
-	immedateCheckActiveButtons: Function;
+	immedateCheckActiveButtons: () => void;
 
 	buttonIsActive(button: IToolbarButton): boolean | void;
 
@@ -300,7 +300,7 @@ interface IToolbarCollection extends IComponent {
 	 */
 	getTarget(button: IToolbarButton): Node | void;
 
-	checkActiveButtons: Function;
+	checkActiveButtons: () => void;
 
 	container: HTMLElement;
 

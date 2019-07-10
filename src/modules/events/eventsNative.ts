@@ -47,6 +47,7 @@ export class EventsNative implements IEventsNative {
 
 		return subject[this.__key];
 	}
+
 	private clearStore(subject: any) {
 		if (subject[this.__key] !== undefined) {
 			delete subject[this.__key];
@@ -69,7 +70,7 @@ export class EventsNative implements IEventsNative {
 				Object.defineProperty(event, key, {
 					value: ((event as TouchEvent).changedTouches[0] as any)[
 						key
-					],
+						],
 					configurable: true,
 					enumerable: true
 				});
@@ -133,16 +134,17 @@ export class EventsNative implements IEventsNative {
 		element.dispatchEvent(evt);
 	}
 
-	private removeStop(__currentBlocks: EventHandlerBlock[]) {
-		if (__currentBlocks) {
-			const index: number = this.__stopped.indexOf(__currentBlocks);
+	private removeStop(currentBlocks: EventHandlerBlock[]) {
+		if (currentBlocks) {
+			const index: number = this.__stopped.indexOf(currentBlocks);
 			index !== -1 && this.__stopped.splice(index, 1);
 		}
 	}
-	private isStopped(__currentBlocks: EventHandlerBlock[]): boolean {
+
+	private isStopped(currentBlocks: EventHandlerBlock[]): boolean {
 		return (
-			__currentBlocks !== undefined &&
-			this.__stopped.indexOf(__currentBlocks) !== -1
+			currentBlocks !== undefined &&
+			this.__stopped.indexOf(currentBlocks) !== -1
 		);
 	}
 
@@ -242,7 +244,7 @@ export class EventsNative implements IEventsNative {
 		}
 
 		const isDOMElement: boolean =
-				typeof (subject as any).addEventListener === 'function',
+			typeof (subject as any).addEventListener === 'function',
 			self: EventsNative = this;
 
 		let syntheticCallback = function(
@@ -256,7 +258,7 @@ export class EventsNative implements IEventsNative {
 			syntheticCallback = function(
 				this: any,
 				event: MouseEvent | TouchEvent
-			) {
+			): void | false {
 				self.prepareEvent(event as TouchEvent);
 
 				if (callback && callback.call(this, event) === false) {
@@ -397,7 +399,7 @@ export class EventsNative implements IEventsNative {
 		}
 
 		const isDOMElement: boolean =
-				typeof (subject as any).removeEventListener === 'function',
+			typeof (subject as any).removeEventListener === 'function',
 			removeEventListener = (block: EventHandlerBlock) => {
 				if (isDOMElement) {
 					(subject as HTMLElement).removeEventListener(
@@ -539,7 +541,8 @@ export class EventsNative implements IEventsNative {
 		eventsList?: string | any | Event,
 		...args: any[]
 	): any {
-		let result: any = void 0,
+		let
+			result: any = undefined,
 			result_value: any;
 
 		const subject: object =
