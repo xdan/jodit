@@ -135,8 +135,8 @@ module.exports = (env, argv) => {
                     } : {},
                     exclude: [
                         /(node_modules|bower_components)/,
-                        /langs\/[a-z]{2}\.ts/,
-                        /langs\/[a-z]{2}_[a-z]{2}\.ts/,
+                        /langs[\/\\][a-z]{2}\.ts/,
+                        /langs[\/\\][a-z]{2}_[a-z]{2}\.ts/,
                     ]
                 },
                 {
