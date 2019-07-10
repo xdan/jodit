@@ -202,8 +202,10 @@
 	padding: 4px 5px;
 	font-family: Arial, sans-serif;
 	z-index: @z-index-dropdownlist + 1;
-	width: 90px;
+	min-width: 90px;
+	width: auto;
 	transition: opacity 0.3s linear;
+
 	@media (max-width: @screen-sm) {
 		display: none;
 	}

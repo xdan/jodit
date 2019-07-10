@@ -25,7 +25,7 @@ module.exports = function(content, fileData) {
 			result[index] = lang[key];
 		});
 
-		if (fileData.file.indexOf('/en.ts') !== -1) {
+		if (fileData.file.indexOf('en.ts') !== -1) {
 			result = keys; // for English file return keys
 		}
 	} catch (e) {
