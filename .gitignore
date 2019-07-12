@@ -9,3 +9,4 @@ yarn-error.log
 /fake.html
 
 .DS_Store
+.vs
