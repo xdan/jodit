@@ -21,12 +21,21 @@
 .toolbar_size (@size) {
 	min-height: @size !important;
 
-	> li {
+	.jodit_toolbar_btn {
 		.size(@size * 2);
+
 		&.jodit_toolbar_btn-separator {
 			height: @size * 2 - 4px;
 			width: 0;
 			min-width: 0;
+		}
+
+		&.jodit_with_dropdownlist {
+			.jodit_with_dropdownlist-trigger {
+				width: @size / 2;
+				height: @size / 2;
+				margin-left: @size / 4;
+			}
 		}
 	}
 }

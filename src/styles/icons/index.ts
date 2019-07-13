@@ -23,13 +23,14 @@ import * as brush from './brush.svg';
 import * as cancel from './cancel.svg';
 import * as center from './center.svg';
 import * as chain_broken from './chain-broken.svg';
-import * as check_square from './check-square.svg';
 import * as check from './check.svg';
+import * as check_square from './check-square.svg';
 import * as copyformat from './copyformat.svg';
 import * as crop from './crop.svg';
 import * as cut from './cut.svg';
 import * as dedent from './dedent.svg';
 import * as dots from './dots.svg';
+import * as dropdown_arrow from './dropdown-arrow.svg';
 import * as enter from './enter.svg';
 import * as eraser from './eraser.svg';
 import * as eye from './eye.svg';
@@ -52,6 +53,7 @@ import * as merge from './merge.svg';
 import * as ol from './ol.svg';
 import * as omega from './omega.svg';
 import * as outdent from './outdent.svg';
+import * as palette from './palette.svg';
 import * as paragraph from './paragraph.svg';
 import * as pencil from './pencil.svg';
 import * as plus from './plus.svg';
@@ -70,8 +72,8 @@ import * as strikethrough from './strikethrough.svg';
 import * as subscript from './subscript.svg';
 import * as superscript from './superscript.svg';
 import * as table from './table.svg';
-import * as th_list from './th-list.svg';
 import * as th from './th.svg';
+import * as th_list from './th-list.svg';
 import * as ul from './ul.svg';
 import * as underline from './underline.svg';
 import * as undo from './undo.svg';
@@ -81,15 +83,14 @@ import * as update from './update.svg';
 import * as upload from './upload.svg';
 import * as valign from './valign.svg';
 import * as video from './video.svg';
-import * as palette from './palette.svg';
 
 export {
 	about,
 	addcolumn,
 	addrow,
+	angle_down,
 	angle_left,
 	angle_right,
-	angle_down,
 	angle_up,
 	arrows_alt,
 	arrows_h,
@@ -100,13 +101,14 @@ export {
 	cancel,
 	center,
 	chain_broken,
-	check_square,
 	check,
+	check_square,
 	copyformat,
 	crop,
 	cut,
 	dedent,
 	dots,
+	dropdown_arrow,
 	enter,
 	eraser,
 	eye,
@@ -117,8 +119,8 @@ export {
 	fullsize,
 	hr,
 	image,
-	info_circle,
 	indent,
+	info_circle,
 	italic,
 	justify,
 	left,
@@ -129,6 +131,7 @@ export {
 	ol,
 	omega,
 	outdent,
+	palette,
 	paragraph,
 	pencil,
 	plus,
@@ -147,8 +150,8 @@ export {
 	subscript,
 	superscript,
 	table,
-	th_list,
 	th,
+	th_list,
 	ul,
 	underline,
 	undo,
@@ -157,6 +160,5 @@ export {
 	update,
 	upload,
 	valign,
-	video,
-	palette
+	video
 };

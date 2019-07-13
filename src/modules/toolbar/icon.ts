@@ -19,16 +19,18 @@ export class ToolbarIcon {
 	/**
 	 * Return SVG icon
 	 *
-	 * @param {string} name icon
-	 * @param {string} [defaultValue='<span></span>']
-	 * @return {string}
+	 * @param name icon
+	 * @param [defaultValue='<span></span>']
 	 */
 	static getIcon(
 		name: string,
 		defaultValue: string = '<span></span>'
 	): string {
 
-		const icon = ToolbarIcon.icons[name] || ToolbarIcon.icons[name.toLowerCase()];
+		const icon =
+			ToolbarIcon.icons[name] ||
+			ToolbarIcon.icons[name.replace(/-/g, '_')] ||
+			ToolbarIcon.icons[name.toLowerCase()];
 
 		return icon || defaultValue;
 	}

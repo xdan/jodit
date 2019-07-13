@@ -21,6 +21,7 @@ import { ToolbarTooltip } from './tooltip';
 import { IViewBased } from '../../types';
 import { isJoditObject } from '../helpers/checker/isJoditObject';
 import { KEY_ENTER } from '../../constants';
+import { ToolbarIcon } from './icon';
 
 export class ToolbarButton extends ToolbarElement implements IToolbarButton {
 	set disable(disable: boolean) {
@@ -248,10 +249,9 @@ export class ToolbarButton extends ToolbarElement implements IToolbarButton {
 			);
 		} else {
 			if (control.list && this.anchor) {
-				const trigger: HTMLSpanElement = this.jodit.ownerDocument.createElement(
-					'span'
-				);
+				const trigger = this.jodit.create.fromHTML(ToolbarIcon.getIcon('dropdown-arrow'));
 				trigger.classList.add('jodit_with_dropdownlist-trigger');
+
 				this.container.classList.add('jodit_with_dropdownlist');
 				this.anchor.appendChild(trigger);
 			}
