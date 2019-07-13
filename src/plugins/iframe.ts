@@ -155,10 +155,8 @@ export function iframe(editor: IJodit) {
 		.on(
 			'generateDocumentStructure.iframe',
 			(__doc: Document | undefined, jodit: IJodit) => {
-				const doc: Document =
-					__doc ||
-					((jodit.iframe as HTMLIFrameElement)
-						.contentWindow as Window).document;
+				const
+					doc = __doc || ((jodit.iframe as HTMLIFrameElement).contentWindow as Window).document;
 
 				doc.open();
 				doc.write(
@@ -185,7 +183,8 @@ export function iframe(editor: IJodit) {
 
 				if (jodit.options.iframeCSSLinks) {
 					jodit.options.iframeCSSLinks.forEach(href => {
-						const link: HTMLLinkElement = doc.createElement('link');
+						const link = doc.createElement('link');
+
 						link.setAttribute('rel', 'stylesheet');
 						link.setAttribute('href', href);
 
@@ -194,31 +193,32 @@ export function iframe(editor: IJodit) {
 				}
 
 				if (jodit.options.iframeStyle) {
-					const style: HTMLStyleElement = doc.createElement('style');
+					const style = doc.createElement('style');
+
 					style.innerHTML = jodit.options.iframeStyle;
+
 					doc.head && doc.head.appendChild(style);
 				}
 			}
 		)
-		.on('createEditor', async () => {
+		.on('createEditor', async (): Promise<void | false> => {
 			if (!editor.options.iframe) {
 				return;
 			}
 
 			delete editor.editor;
 
-			editor.iframe = editor.ownerDocument.createElement(
-				'iframe'
-			) as HTMLIFrameElement;
+			const iframe = editor.create.element('iframe');
 
-			editor.iframe.style.display = 'block';
-			editor.iframe.src = 'about:blank';
-			editor.iframe.className = 'jodit_wysiwyg_iframe';
-			editor.iframe.setAttribute('allowtransparency', 'true');
-			editor.iframe.setAttribute('tabindex', '0');
-			editor.iframe.setAttribute('frameborder', '0');
+			iframe.style.display = 'block';
+			iframe.src = 'about:blank';
+			iframe.className = 'jodit_wysiwyg_iframe';
+			iframe.setAttribute('allowtransparency', 'true');
+			iframe.setAttribute('tabindex', editor.options.tabIndex.toString());
+			iframe.setAttribute('frameborder', '0');
 
-			editor.workplace.appendChild(editor.iframe);
+			editor.workplace.appendChild(iframe);
+			editor.iframe = iframe;
 
 			await editor.events.fire(
 				'generateDocumentStructure.iframe',
@@ -226,8 +226,7 @@ export function iframe(editor: IJodit) {
 				editor
 			);
 
-			const doc: Document = (editor.iframe.contentWindow as Window)
-				.document;
+			const doc = (editor.iframe.contentWindow as Window).document;
 			editor.editorDocument = doc;
 			editor.editorWindow = editor.iframe.contentWindow as Window;
 
@@ -238,6 +237,7 @@ export function iframe(editor: IJodit) {
 			if (editor.options.height === 'auto') {
 				doc.documentElement &&
 					(doc.documentElement.style.overflowY = 'hidden');
+
 				const resizeIframe = throttle(() => {
 					if (
 						editor.editor &&

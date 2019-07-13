@@ -72,7 +72,8 @@ Config.prototype.resizer = {
 export function resizer(editor: IJodit) {
 	const LOCK_KEY = 'resizer';
 
-	let handle: HTMLElement,
+	let
+		handle: HTMLElement,
 		currentElement: null | HTMLElement,
 		resizeElementClicked: boolean = false,
 		isResizing: boolean = false,
@@ -88,7 +89,8 @@ export function resizer(editor: IJodit) {
 		resizerIsVisible: boolean = false,
 		timeoutSizeViewer: number = 0;
 
-	const resizerElm: HTMLElement = editor.create.fromHTML(
+	const
+		resizerElm: HTMLElement = editor.create.fromHTML(
 			'<div data-editor_id="' +
 				editor.id +
 				'" style="display:none" class="jodit_resizer">' +
@@ -99,18 +101,22 @@ export function resizer(editor: IJodit) {
 				'<span>100x100</span>' +
 				'</div>'
 		),
+
 		sizeViewer: HTMLSpanElement = resizerElm.getElementsByTagName(
 			'span'
 		)[0],
+
 		hideResizer = () => {
 			isResizing = false;
 			resizerIsVisible = false;
 			currentElement = null;
 			resizerElm.style.display = 'none';
 		},
+
 		hideSizeViewer = () => {
 			sizeViewer.style.opacity = '0';
 		},
+
 		showSizeViewer = (w: number, h: number) => {
 			if (!editor.options.resizer.showSize) {
 				return;
@@ -130,9 +136,11 @@ export function resizer(editor: IJodit) {
 				editor.options.resizer.hideSizeTimeout
 			);
 		},
+
 		updateSize = () => {
 			if (resizerIsVisible && currentElement && resizerElm) {
-				const workplacePosition: IBound = offset(
+				const
+					workplacePosition: IBound = offset(
 						(resizerElm.parentNode ||
 							editor.ownerDocument
 								.documentElement) as HTMLElement,
@@ -179,6 +187,7 @@ export function resizer(editor: IJodit) {
 				}
 			}
 		},
+
 		showResizer = () => {
 			if (editor.options.readonly) {
 				return;
@@ -200,6 +209,7 @@ export function resizer(editor: IJodit) {
 
 			updateSize();
 		},
+
 		/**
 		 * Bind an edit element toWYSIWYG element
 		 * @param {HTMLElement} element The element that you want toWYSIWYG add a function toWYSIWYG resize

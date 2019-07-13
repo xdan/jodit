@@ -10,7 +10,7 @@
 import { Config } from '../Config';
 import { debounce, throttle } from '../modules/helpers/async';
 import { css } from '../modules/helpers/css';
-import { IJodit } from '../types';
+import { IJodit, IPointBound } from '../types';
 
 declare module '../Config' {
 	interface Config {
@@ -46,11 +46,12 @@ export function size(editor: IJodit) {
 		editor.options.height !== 'auto' &&
 		(editor.options.allowResizeX || editor.options.allowResizeY)
 	) {
-		const handle: HTMLDivElement = editor.create.div(
+		const
+			handle = editor.create.div(
 				'jodit_editor_resize',
-				'<a href="javascript:void(0)"></a>'
+				'<a tabindex="-1" href="javascript:void(0)"></a>'
 			),
-			start: { x: number; y: number; w: number; h: number } = {
+			start: IPointBound = {
 				x: 0,
 				y: 0,
 				w: 0,

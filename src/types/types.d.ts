@@ -38,6 +38,11 @@ export interface IPoint {
 	y: number;
 }
 
+export interface IPointBound extends IPoint{
+	w: number;
+	h: number;
+}
+
 export interface ISelectionRange {
 	startContainer: Node | null;
 	startOffset: number | null;

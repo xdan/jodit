@@ -554,7 +554,7 @@ export class Uploader extends Component implements IUploader {
 						(!e.clipboardData.types.length &&
 							e.clipboardData.types[0] !== TEXT_PLAIN)
 					) {
-						const div: HTMLDivElement = this.jodit.create.div('', {
+						const div = this.jodit.create.div('', {
 							'tabindex': -1,
 							'style': 'left: -9999px; top: 0; width: 0; height: 100%;line-height: 140%; ' +
 								'overflow: hidden; position: fixed; z-index: 2147483647; word-break: break-all;',

@@ -117,13 +117,6 @@ export class Config implements IViewOptions {
 	];
 
 	/**
-	 * For example, in Joomla, the top menu bar closes Jodit toolbar when scrolling.
-	 * Therefore, it is necessary to move the toolbar Jodit by this amount [more](http://xdsoft.net/jodit/doc/#2.5.57)
-	 */
-
-	// offsetTopForAssix: number = 0;
-
-	/**
 	 * Size of icons in the toolbar (can be "small", "middle", "large")
 	 *
 	 * @example
@@ -134,6 +127,11 @@ export class Config implements IViewOptions {
 	 * ```
 	 */
 	toolbarButtonSize: 'small' | 'middle' | 'large' = 'middle';
+
+	/**
+	 * Allow navigation in the toolbar of the editor by Tab key
+	 */
+	allowTabNavigation: boolean = false;
 
 	/**
 	 * Inline editing mode

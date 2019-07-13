@@ -19,6 +19,8 @@ interface IViewOptions {
 
 	activeButtonsInReadOnly?: string[];
 
+	allowTabNavigation?: boolean;
+
 	removeButtons: string[];
 	buttons: Buttons;
 	zIndex?: number;

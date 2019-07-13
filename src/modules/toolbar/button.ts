@@ -214,6 +214,13 @@ export class ToolbarButton extends ToolbarElement implements IToolbarButton {
 			"href": "javascript:void(0)"
 		});
 
+		let tabIndex = '-1';
+		if (this.jodit.options.allowTabNavigation) {
+			tabIndex = '0';
+		}
+
+		this.anchor.setAttribute('tabindex', tabIndex);
+
 		this.container.appendChild(this.anchor);
 
 		if (this.jodit.options.showTooltip && control.tooltip) {
