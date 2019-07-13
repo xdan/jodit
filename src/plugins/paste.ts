@@ -36,14 +36,21 @@ import {
 import { IControlType } from '../types/toolbar';
 import { Dom } from '../modules/Dom';
 import { IJodit } from '../types';
+import { nl2br } from '../modules/helpers/html/nl2br';
 
 declare module '../Config' {
 	interface Config {
 		/**
-		 * @property askBeforePasteHTML=true Ask before paste HTML in WYSIWYG mode
+		 * Ask before paste HTML in WYSIWYG mode
 		 */
 		askBeforePasteHTML: boolean;
 		askBeforePasteFromWord: boolean;
+
+		/**
+		 * Inserts HTML line breaks before all newlines in a string
+		 */
+		nl2brInPlainText: boolean;
+
 		/**
 		 * Default insert method
 		 */
@@ -53,6 +60,7 @@ declare module '../Config' {
 
 Config.prototype.askBeforePasteHTML = true;
 Config.prototype.askBeforePasteFromWord = true;
+Config.prototype.nl2brInPlainText = true;
 Config.prototype.defaultActionOnPaste = INSERT_AS_HTML;
 
 Config.prototype.controls.cut = {
@@ -66,8 +74,6 @@ Config.prototype.controls.cut = {
 
 /**
  * Ask before paste HTML source
- *
- * @module insertHTML
  */
 export function paste(editor: IJodit) {
 	let buffer: string = '';
@@ -101,7 +107,7 @@ export function paste(editor: IJodit) {
 
 		dialog.container.setAttribute('data-editor_id', editor.id);
 
-		const keep: HTMLAnchorElement = dialog.create.fromHTML(
+		const keep = dialog.create.fromHTML(
 			'<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
 				'<span>' +
 				editor.i18n('Keep') +
@@ -109,7 +115,7 @@ export function paste(editor: IJodit) {
 				'</a>'
 		) as HTMLAnchorElement;
 
-		const clear: HTMLAnchorElement = dialog.create.fromHTML(
+		const clear = dialog.create.fromHTML(
 			'<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
 				'<span>' +
 				editor.i18n(clearButton) +
@@ -117,7 +123,7 @@ export function paste(editor: IJodit) {
 				'</a>'
 		) as HTMLAnchorElement;
 
-		const clear2: HTMLAnchorElement = dialog.create.fromHTML(
+		const clear2 = dialog.create.fromHTML(
 			'<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
 				'<span>' +
 				editor.i18n(clear2Button) +
@@ -125,7 +131,7 @@ export function paste(editor: IJodit) {
 				'</a>'
 		) as HTMLAnchorElement;
 
-		const cancel: HTMLAnchorElement = dialog.create.fromHTML(
+		const cancel = dialog.create.fromHTML(
 			'<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
 				'<span>' +
 				editor.i18n('Cancel') +
@@ -167,18 +173,20 @@ export function paste(editor: IJodit) {
 		return dialog;
 	};
 
-	const insertByType = (html: string, subtype: string) => {
-		switch (subtype) {
-			case INSERT_CLEAR_HTML:
-				html = cleanFromWord(html);
-				break;
-			case INSERT_ONLY_TEXT:
-				html = stripTags(html);
-				break;
-			case INSERT_AS_TEXT:
-				html = htmlspecialchars(html);
-				break;
-			default:
+	const insertByType = (html: string | Node, subtype: string) => {
+		if (typeof html === 'string') {
+			switch (subtype) {
+				case INSERT_CLEAR_HTML:
+					html = cleanFromWord(html);
+					break;
+				case INSERT_ONLY_TEXT:
+					html = stripTags(html);
+					break;
+				case INSERT_AS_TEXT:
+					html = htmlspecialchars(html);
+					break;
+				default:
+			}
 		}
 
 		editor.selection.insertHTML(html);
@@ -302,7 +310,7 @@ export function paste(editor: IJodit) {
 				if (event && dt) {
 					const types: ReadonlyArray<string> | string = dt.types;
 
-					let i: number,
+					let
 						types_str: string = '',
 						clipboard_html: any = '';
 
@@ -310,23 +318,21 @@ export function paste(editor: IJodit) {
 						Array.isArray(types) ||
 						type(types) === 'domstringlist'
 					) {
-						for (i = 0; i < types.length; i += 1) {
+						for (let i = 0; i < types.length; i += 1) {
 							types_str += types[i] + ';';
 						}
 					} else {
-						types_str = types.toString();
+						types_str = types.toString() + ';';
 					}
 
 					if (/text\/html/i.test(types_str)) {
 						clipboard_html = dt.getData('text/html');
 					} else if (
-						/text\/rtf/i.test(types_str) &&
-						browser('safari')
+						/text\/rtf/i.test(types_str) && browser('safari')
 					) {
 						clipboard_html = dt.getData('text/rtf');
 					} else if (
-						/text\/plain/i.test(types_str) &&
-						!browser('mozilla')
+						/text\/plain/i.test(types_str) && !browser('mozilla')
 					) {
 						clipboard_html = dt.getData(TEXT_PLAIN);
 					} else if (/text/i.test(types_str) && IS_IE) {
@@ -358,16 +364,13 @@ export function paste(editor: IJodit) {
 
 						if (buffer !== clipboard_html) {
 							clipboard_html = editor.events.fire(
-								'processPaste',
-								event,
-								clipboard_html
+								'processPaste', event, clipboard_html, types_str
 							);
 						}
 
 						if (
 							typeof clipboard_html === 'string' ||
-							clipboard_html instanceof
-								(editor.editorWindow as any).Node
+							Dom.isNode(clipboard_html, editor.editorWindow)
 						) {
 							if (event.type === 'drop') {
 								editor.selection.insertCursorAtPoint(
@@ -480,7 +483,7 @@ export function paste(editor: IJodit) {
 						const html: string = dt.getData(TEXT_HTML);
 						return processHTMLData(html);
 					} else if (event.type !== 'drop') {
-						const div: HTMLDivElement = editor.create.div(void 0, {
+						const div = editor.create.div('', {
 							tabindex: -1,
 							contenteditable: true,
 							style: {
@@ -505,7 +508,7 @@ export function paste(editor: IJodit) {
 
 						const removeFakeFocus = () => {
 							Dom.safeRemove(div);
-							editor.selection.restore(selData);
+							editor.selection && editor.selection.restore(selData);
 						};
 
 						const waitData = () => {
@@ -533,5 +536,15 @@ export function paste(editor: IJodit) {
 				}
 			}
 		);
+	}
+
+	if (editor.options.nl2brInPlainText) {
+		editor.events.on(
+			'processPaste',
+			(event: ClipboardEvent, text: string, type: string): string | void => {
+				if (type === TEXT_PLAIN + ';' && !isHTML(text)) {
+					return nl2br(text);
+				}
+			})
 	}
 }

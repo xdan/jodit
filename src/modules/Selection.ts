@@ -87,7 +87,8 @@ export class Select {
 	 * Remove all selected content
 	 */
 	remove() {
-		const sel: WindowSelection = this.sel,
+		const
+			sel = this.sel,
 			current: false | Node = this.current();
 
 		if (sel && current) {
@@ -123,7 +124,7 @@ export class Select {
 
 			if (rng) {
 				rng.collapse(true);
-				const sel: WindowSelection = this.sel;
+				const sel = this.sel;
 
 				if (sel) {
 					sel.removeAllRanges();
@@ -222,15 +223,16 @@ export class Select {
 	 */
 	restore(selectionInfo: markerInfo[] | null = []) {
 		if (Array.isArray(selectionInfo)) {
-			const sel: WindowSelection = this.sel;
+			const sel = this.sel;
 			sel && sel.removeAllRanges();
 
 			selectionInfo.forEach((selection: markerInfo) => {
-				const range: Range = this.createRange(),
-					end: HTMLElement = this.area.querySelector(
+				const
+					range = this.createRange(),
+					end = this.area.querySelector(
 						'#' + selection.endId
 					) as HTMLElement,
-					start: HTMLElement = this.area.querySelector(
+					start = this.area.querySelector(
 						'#' + selection.startId
 					) as HTMLElement;
 
@@ -277,7 +279,7 @@ export class Select {
 	 * @return markerInfo[]
 	 */
 	save(): markerInfo[] {
-		const sel: WindowSelection = this.sel;
+		const sel = this.sel;
 
 		if (!sel || !sel.rangeCount) {
 			return [];
@@ -359,8 +361,9 @@ export class Select {
 			this.win.focus();
 			this.area.focus();
 
-			const sel: WindowSelection = this.sel,
-				range: Range = this.createRange();
+			const
+				sel = this.sel,
+				range = this.createRange();
 
 			if (sel && (!sel.rangeCount || !this.current())) {
 				range.setStart(this.area, 0);
@@ -412,13 +415,15 @@ export class Select {
 	 */
 	current(checkChild: boolean = true): false | Node {
 		if (this.jodit.getRealMode() === consts.MODE_WYSIWYG) {
-			const sel: WindowSelection = this.sel;
+			const sel = this.sel;
 
 			if (sel && sel.rangeCount > 0) {
-				const range: Range = sel.getRangeAt(0);
+				const range = sel.getRangeAt(0);
 
-				let node: Node | null = range.startContainer,
+				let
+					node: Node | null = range.startContainer,
 					rightMode: boolean = false;
+
 				const child = (nd: Node): Node | null =>
 					rightMode ? nd.lastChild : nd.firstChild;
 
@@ -513,20 +518,22 @@ export class Select {
 
 		this.focus();
 
-		const sel: WindowSelection = this.sel;
+		const sel = this.sel;
 
 		if (!this.isCollapsed()) {
 			this.jodit.execCommand('Delete');
 		}
 
 		if (sel && sel.rangeCount) {
-			const range: Range = sel.getRangeAt(0);
+			const range = sel.getRangeAt(0);
+
 			if (Dom.isOrContains(this.area, range.commonAncestorContainer)) {
 				range.deleteContents();
 				range.insertNode(node);
 			} else {
 				this.area.appendChild(node);
 			}
+
 		} else {
 			this.area.appendChild(node);
 		}
@@ -558,8 +565,9 @@ export class Select {
 			return;
 		}
 
-		const node: HTMLDivElement = this.jodit.create.inside.div(),
-			fragment: DocumentFragment = this.jodit.create.inside.fragment();
+		const
+			node = this.jodit.create.inside.div(),
+			fragment = this.jodit.create.inside.fragment();
 
 		let lastChild: Node | null, lastEditorElement: Node | null;
 
@@ -567,10 +575,10 @@ export class Select {
 			this.focus();
 		}
 
-		if (!(html instanceof (this.win as any).Node)) {
+		if (!Dom.isNode(html, this.win)) {
 			node.innerHTML = html.toString();
-		} else if (Dom.isNode(html, this.win)) {
-			node.appendChild(html as Node);
+		} else {
+			node.appendChild(html);
 		}
 
 		if (
@@ -581,6 +589,10 @@ export class Select {
 		}
 
 		lastChild = node.lastChild;
+
+		if (!lastChild) {
+			return;
+		}
 
 		while (node.firstChild) {
 			lastChild = node.firstChild;
@@ -698,11 +710,13 @@ export class Select {
 	}
 
 	eachSelection = (callback: (current: Node) => void) => {
-		const sel: WindowSelection = this.sel;
+		const sel = this.sel;
 
 		if (sel && sel.rangeCount) {
-			const range: Range = sel.getRangeAt(0);
-			const nodes: Node[] = [],
+			const range = sel.getRangeAt(0);
+
+			const
+				nodes: Node[] = [],
 				startOffset: number = range.startOffset,
 				length: number = this.area.childNodes.length,
 				start: Node =
@@ -737,9 +751,9 @@ export class Select {
 				false
 			);
 
-			const forEvery = (current: Node) => {
+			const forEvery = (current: Node): void => {
 				if (current.nodeName.match(/^(UL|OL)$/)) {
-					return [].slice.call(current.childNodes).forEach(forEvery);
+					return Array.from(current.childNodes).forEach(forEvery);
 				}
 
 				if (current.nodeName === 'LI') {
@@ -787,7 +801,7 @@ export class Select {
 			throw new Error('Node element must be in editor');
 		}
 
-		const range: Range = this.createRange();
+		const range = this.createRange();
 		let fakeNode: Text | false = false;
 
 		if (node.nodeType !== Node.TEXT_NODE) {
@@ -818,7 +832,8 @@ export class Select {
 	 * @return {boolean | null} true - the cursor is at the end(start) block, null - cursor somewhere outside
 	 */
 	cursorInTheEdge(start: boolean, parentBlock: HTMLElement): boolean | null {
-		const sel: WindowSelection = this.sel,
+		const
+			sel = this.sel,
 			range: Range | null =
 				sel && sel.rangeCount ? sel.getRangeAt(0) : null;
 
@@ -904,7 +919,7 @@ export class Select {
 			throw new Error('Node element must be in editor');
 		}
 
-		const range: Range = this.createRange();
+		const range = this.createRange();
 		let fakeNode: Text | false = false;
 
 		if (node.nodeType !== Node.TEXT_NODE) {
@@ -946,7 +961,7 @@ export class Select {
 			throw new Error('Node element must be in editor');
 		}
 
-		const range: Range = this.createRange();
+		const range = this.createRange();
 
 		let start: Node | null = node,
 			last: Node = node;
@@ -987,7 +1002,7 @@ export class Select {
 	 * @fires changeSelection
 	 */
 	selectRange(range: Range) {
-		const sel: WindowSelection = this.sel;
+		const sel = this.sel;
 
 		if (sel) {
 			sel.removeAllRanges();
@@ -1025,7 +1040,7 @@ export class Select {
 			throw new Error('Node element must be in editor');
 		}
 
-		const range: Range = this.createRange();
+		const range = this.createRange();
 
 		range[inward ? 'selectNodeContents' : 'selectNode'](node);
 
@@ -1036,12 +1051,13 @@ export class Select {
 	 * Return current selected HTML
 	 */
 	getHTML(): string {
-		const sel: WindowSelection = this.sel;
+		const sel = this.sel;
 
 		if (sel && sel.rangeCount > 0) {
-			const range: Range = sel.getRangeAt(0);
-			const clonedSelection: DocumentFragment = range.cloneContents();
-			const div: HTMLElement = this.jodit.create.inside.div();
+			const range = sel.getRangeAt(0);
+			const clonedSelection = range.cloneContents();
+			const div = this.jodit.create.inside.div();
+
 			div.appendChild(clonedSelection);
 
 			return div.innerHTML;
@@ -1065,7 +1081,8 @@ export class Select {
 			| IDictionary<string | string[]>
 			| IDictionary<(editor: IJodit, elm: HTMLElement) => boolean>
 	) {
-		const WRAP = 1,
+		const
+			WRAP = 1,
 			UNWRAP = 0,
 			defaultTag = 'SPAN',
 			FONT = 'FONT';
@@ -1088,7 +1105,7 @@ export class Select {
 							const value = css(
 								elm,
 								cssPropertyKey,
-								void 0,
+								undefined,
 								true
 							);
 
@@ -1218,8 +1235,9 @@ export class Select {
 				) {
 					toggleStyles(font.firstChild as HTMLElement);
 				} else if (Dom.closest(font, isSuitElement, this.area)) {
-					const leftRange: Range = this.createRange(),
-						wrapper: HTMLElement = Dom.closest(
+					const
+						leftRange = this.createRange(),
+						wrapper = Dom.closest(
 							font,
 							isSuitElement,
 							this.area

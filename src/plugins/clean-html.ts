@@ -112,7 +112,8 @@ export function cleanHtml(editor: IJodit) {
 		});
 	}
 
-	const attributesReg = /([^\[]*)\[([^\]]+)]/,
+	const
+		attributesReg = /([^\[]*)\[([^\]]+)]/,
 		seperator = /[\s]*,[\s]*/,
 		attrReg = /^(.*)[\s]*=[\s]*(.*)$/;
 
@@ -164,7 +165,8 @@ export function cleanHtml(editor: IJodit) {
 
 	let current: Node | false;
 
-	const allowTagsHash: IDictionary | false = getHash(
+	const
+		allowTagsHash: IDictionary | false = getHash(
 			editor.options.cleanHTML.allowTags
 		),
 		denyTagsHash: IDictionary | false = getHash(
