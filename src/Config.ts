@@ -44,11 +44,11 @@ export class Config implements IViewOptions {
 	 * });
 	 * ```
 	 */
-	public iframe: boolean = false;
-	public commandToHotkeys: IDictionary<string | string[]>;
-	public license: string = '';
-	public preset: string = 'custom';
-	public presets: IDictionary<any> = {
+	iframe: boolean = false;
+	commandToHotkeys: IDictionary<string | string[]>;
+	license: string = '';
+	preset: string = 'custom';
+	presets: IDictionary<any> = {
 		inline: {
 			inline: true,
 			toolbar: false,
@@ -79,31 +79,31 @@ export class Config implements IViewOptions {
 		}
 	};
 
-	public ownerDocument: Document = (typeof document !== 'undefined'
+	ownerDocument: Document = (typeof document !== 'undefined'
 		? document
 		: null) as Document;
-	public ownerWindow: Window = (typeof window !== 'undefined'
+	ownerWindow: Window = (typeof window !== 'undefined'
 		? window
 		: null) as Window;
 
 	/**
 	 * z-index For editor
 	 */
-	public zIndex: number = 0;
+	zIndex: number = 0;
 
 	/**
 	 * Change the read-only state of the editor
 	 * @type {boolean}
 	 */
-	public readonly: boolean = false;
+	readonly: boolean = false;
 
 	/**
 	 * Change the disabled state of the editor
 	 * @type {boolean}
 	 */
-	public disabled: boolean = false;
+	disabled: boolean = false;
 
-	public activeButtonsInReadOnly: string[] = [
+	activeButtonsInReadOnly: string[] = [
 		'source',
 		'fullsize',
 		'print',
@@ -129,14 +129,14 @@ export class Config implements IViewOptions {
 	 * });
 	 * ```
 	 */
-	public toolbarButtonSize: 'small' | 'middle' | 'large' = 'middle';
+	toolbarButtonSize: 'small' | 'middle' | 'large' = 'middle';
 
 	/**
 	 * Inline editing mode
 	 *
 	 * @type {boolean}
 	 */
-	public inline: boolean = false;
+	inline: boolean = false;
 
 	/**
 	 * Theme (can be "dark")
@@ -147,23 +147,23 @@ export class Config implements IViewOptions {
 	 * });
 	 * ```
 	 */
-	public theme: string = 'default';
+	theme: string = 'default';
 
 	/**
 	 * if set true then the current mode is saved in a cookie , and is restored after a reload of the page
 	 */
-	public saveModeInStorage: boolean = false;
+	saveModeInStorage: boolean = false;
 
 	/**
 	 * if set true and height !== auto then after reload editor will be have latest height
 	 */
-	public saveHeightInStorage: boolean = false;
+	saveHeightInStorage: boolean = false;
 
 	/**
 	 * Options specifies whether the editor is to have its spelling and grammar checked or not
 	 * @see {@link http://www.w3schools.com/tags/att_global_spellcheck.asp}
 	 */
-	public spellcheck: boolean = true;
+	spellcheck: boolean = true;
 
 	/**
 	 * Class name that can be appended to the editor
@@ -185,7 +185,7 @@ export class Config implements IViewOptions {
 	 * </style>
 	 * ```
 	 */
-	public editorCssClass: false | string = false;
+	editorCssClass: false | string = false;
 
 	/**
 	 * After all changes in editors for textarea will call change trigger
@@ -198,7 +198,7 @@ export class Config implements IViewOptions {
 	 * })
 	 * ```
 	 */
-	public triggerChangeEvent: boolean = true;
+	triggerChangeEvent: boolean = true;
 
 	/**
 	 * Editor's width
@@ -223,9 +223,9 @@ export class Config implements IViewOptions {
 	 * ```
 	 */
 
-	public width: number | string = 'auto';
-	public minWidth: number | string = '200px';
-	public maxWidth: number | string = '100%';
+	width: number | string = 'auto';
+	minWidth: number | string = '200px';
+	maxWidth: number | string = '100%';
 
 	/**
 	 * Editor's height
@@ -249,7 +249,7 @@ export class Config implements IViewOptions {
 	 * })
 	 * ```
 	 */
-	public height: string | number = 'auto';
+	height: string | number = 'auto';
 
 	/**
 	 * Editor's min-height
@@ -267,7 +267,7 @@ export class Config implements IViewOptions {
 	 * })
 	 * ```
 	 */
-	public minHeight: number | string = 200;
+	minHeight: number | string = 200;
 
 	/**
 	 * The writing direction of the language which is used to create editor content. Allowed values are: ''
@@ -281,7 +281,7 @@ export class Config implements IViewOptions {
 	 * })
 	 * ```
 	 */
-	public direction: string = '';
+	direction: string = '';
 
 	/**
 	 * Language by default. if `auto` language set by document.documentElement.lang ||
@@ -299,7 +299,7 @@ export class Config implements IViewOptions {
 	 * </script>
 	 * ```
 	 */
-	public language: string = 'auto';
+	language: string = 'auto';
 
 	/**
 	 * if true all Lang.i18n(key) return `{key}`
@@ -315,7 +315,7 @@ export class Config implements IViewOptions {
 	 * </script>
 	 * ```
 	 */
-	public debugLanguage: boolean = false;
+	debugLanguage: boolean = false;
 
 	/**
 	 * Collection of language pack data {en: {'Type something': 'Type something', ...}}
@@ -333,35 +333,35 @@ export class Config implements IViewOptions {
 	 * console.log(editor.i18n('Type something')) //Начните что-либо вводить
 	 * ```
 	 */
-	public i18n: IDictionary | string = 'en';
+	i18n: IDictionary | string = 'en';
 
 	/**
 	 * The tabindex global attribute is an integer indicating if the element can take
 	 * input focus (is focusable), if it should participate to sequential keyboard navigation,
 	 * and if so, at what position. It can take several values
 	 */
-	public tabIndex: number = -1;
+	tabIndex: number = -1;
 
 	/**
 	 * Show toolbar
 	 */
-	public toolbar: boolean = true;
+	toolbar: boolean = true;
 
 	/**
 	 * Show tooltip after mouse enter on the button
 	 */
-	public showTooltip: boolean = true;
+	showTooltip: boolean = true;
 
 	/**
 	 * Delay before show tooltip
 	 */
-	public showTooltipDelay: number = 500;
+	showTooltipDelay: number = 500;
 
 	/**
 	 * Instead of create custop tooltip - use native title tooltips
 	 * @type {boolean}
 	 */
-	public useNativeTooltip: boolean = false;
+	useNativeTooltip: boolean = false;
 
 	// TODO
 	// autosave: false, // false or url
@@ -372,13 +372,13 @@ export class Config implements IViewOptions {
 	/**
 	 * Element that will be created when you press Enter
 	 */
-	public enter: 'p' | 'div' | 'br' = consts.PARAGRAPH;
+	enter: 'p' | 'div' | 'br' = consts.PARAGRAPH;
 
 	/**
 	 * Use when you need insert new block element
 	 * use enter option if not set
 	 */
-	public enterBlock: 'p' | 'div' = consts.PARAGRAPH;
+	enterBlock: 'p' | 'div' = consts.PARAGRAPH;
 
 	/**
 	 * Jodit.MODE_WYSIWYG The HTML editor allows you to write like MSWord,
@@ -391,14 +391,14 @@ export class Config implements IViewOptions {
 	 * console.log(editor.getRealMode())
 	 * ```
 	 */
-	public defaultMode: number = consts.MODE_WYSIWYG;
+	defaultMode: number = consts.MODE_WYSIWYG;
 
 	/**
 	 * Use split mode
 	 *
 	 * @type {boolean}
 	 */
-	public useSplitMode: boolean = false;
+	useSplitMode: boolean = false;
 
 	/**
 	 * The colors in HEX representation to select a color for the background and for the text in colorpicker
@@ -409,7 +409,7 @@ export class Config implements IViewOptions {
 	 * })
 	 * ```
 	 */
-	public colors: IDictionary<string[]> | string[] = {
+	colors: IDictionary<string[]> | string[] = {
 		greyscale: [
 			'#000000',
 			'#434343',
@@ -507,12 +507,12 @@ export class Config implements IViewOptions {
 	 * })
 	 * ```
 	 */
-	public colorPickerDefaultTab: 'background' | 'color' = 'background';
+	colorPickerDefaultTab: 'background' | 'color' = 'background';
 
 	/**
 	 * Image size defaults to a larger image
 	 */
-	public imageDefaultWidth: number = 300;
+	imageDefaultWidth: number = 300;
 
 	/**
 	 * Do not display these buttons that are on the list
@@ -523,7 +523,7 @@ export class Config implements IViewOptions {
 	 * });
 	 * ```
 	 */
-	public removeButtons: string[] = [];
+	removeButtons: string[] = [];
 
 	/**
 	 * Do not init these plugins
@@ -538,27 +538,27 @@ export class Config implements IViewOptions {
 	 * });
 	 * ```
 	 */
-	public disablePlugins: string[] | string = [];
+	disablePlugins: string[] | string = [];
 
 	/**
 	 * This buttons list will be added to option.buttons
 	 */
-	public extraButtons: Array<string | IControlType> = [];
+	extraButtons: Array<string | IControlType> = [];
 
 	/**
 	 * The width of the editor, accepted as the biggest. Used to the responsive version of the editor
 	 */
-	public sizeLG: number = 900;
+	sizeLG: number = 900;
 
 	/**
 	 * The width of the editor, accepted as the medium. Used to the responsive version of the editor
 	 */
-	public sizeMD: number = 700;
+	sizeMD: number = 700;
 
 	/**
 	 * The width of the editor, accepted as the small. Used to the responsive version of the editor
 	 */
-	public sizeSM: number = 400;
+	sizeSM: number = 400;
 
 	/**
 	 * The list of buttons that appear in the editor's toolbar on large places (≥ options.sizeLG).
@@ -623,7 +623,7 @@ export class Config implements IViewOptions {
 	 *  });
 	 *  ```
 	 */
-	public buttons: Buttons = [
+	buttons: Buttons = [
 		'source',
 		'|',
 		'bold',
@@ -670,7 +670,7 @@ export class Config implements IViewOptions {
 	/**
 	 * The list of buttons that appear in the editor's toolbar on medium places (≥ options.sizeMD).
 	 */
-	public buttonsMD: Buttons = [
+	buttonsMD: Buttons = [
 		'source',
 		'|',
 		'bold',
@@ -703,7 +703,7 @@ export class Config implements IViewOptions {
 	/**
 	 * The list of buttons that appear in the editor's toolbar on small places (≥ options.sizeSM).
 	 */
-	public buttonsSM: Buttons = [
+	buttonsSM: Buttons = [
 		'source',
 		'|',
 		'bold',
@@ -734,7 +734,7 @@ export class Config implements IViewOptions {
 	/**
 	 * The list of buttons that appear in the editor's toolbar on extra small places (< options.sizeSM).
 	 */
-	public buttonsXS: Buttons = [
+	buttonsXS: Buttons = [
 		'bold',
 		'image',
 		'|',
@@ -753,21 +753,21 @@ export class Config implements IViewOptions {
 	/**
 	 * Behavior for buttons
 	 */
-	public controls: Controls;
+	controls: Controls;
 
-	public events: IDictionary<(...args: any[]) => any> = {};
+	events: IDictionary<(...args: any[]) => any> = {};
 
 	/**
 	 * Buttons in toolbat without SVG - only texts
 	 * @type {boolean}
 	 */
-	public textIcons: boolean = false;
+	textIcons: boolean = false;
 
 	/**
 	 * shows a INPUT[type=color] to open the browser color picker, on the right bottom of widget color picker
 	 * @type {boolean}
 	 */
-	public showBrowserColorPicker: boolean = false;
+	showBrowserColorPicker: boolean = false;
 
 	private static __defaultOptions: Config;
 	static get defaultOptions(): Config {
