@@ -45,9 +45,13 @@ export class Config implements IViewOptions {
 	 * ```
 	 */
 	iframe: boolean = false;
+
 	commandToHotkeys: IDictionary<string | string[]>;
+
 	license: string = '';
+
 	preset: string = 'custom';
+
 	presets: IDictionary<any> = {
 		inline: {
 			inline: true,
@@ -186,6 +190,20 @@ export class Config implements IViewOptions {
 	 * ```
 	 */
 	editorCssClass: false | string = false;
+
+	/**
+	 * The font of editor
+	 *
+	 * @example
+	 * ```javascript
+	 * new Jodit('#editor', {
+	 * 		style: {
+	 * 		 font: '12px Arial'
+	 * 		}
+	 * });
+	 * ```
+	 */
+	style: false | IDictionary = false;
 
 	/**
 	 * After all changes in editors for textarea will call change trigger

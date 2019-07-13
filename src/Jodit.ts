@@ -13,6 +13,7 @@ import { Component } from './modules/Component';
 import { Dom } from './modules/Dom';
 import {
 	asArray,
+	css,
 	debounce,
 	defaultLanguage,
 	inArray,
@@ -1128,6 +1129,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		if (this.options.readonly) {
 			this.setReadOnly(true);
 		}
+
 		if (this.options.disabled) {
 			this.setDisabled(true);
 		}
@@ -1183,6 +1185,10 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		if (this.options.editorCssClass) {
 			this.editor.classList.add(this.options.editorCssClass);
+		}
+
+		if (this.options.style) {
+			css(this.editor, this.options.style);
 		}
 
 		// proxy events
