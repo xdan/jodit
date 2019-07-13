@@ -53,7 +53,10 @@ Config.prototype.uploader = {
 	imagesExtensions: ['jpg', 'png', 'jpeg', 'gif'],
 	headers: null,
 	data: null,
-	filesVariableName: 'files',
+  filesVariableName(i:number):string {
+		return `files[${i}]`;
+  },
+  withCredentials: false,
 	pathVariableName: 'path',
 
 	format: 'json',
@@ -402,7 +405,7 @@ export class Uploader extends Component implements IUploader {
 						}
 					}
 
-					form.append(this.options.filesVariableName + '[' + i + ']', fileList[i], newName);
+					form.append(this.options.filesVariableName(i), fileList[i], newName);
 				}
 			}
 
