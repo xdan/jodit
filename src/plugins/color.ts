@@ -17,15 +17,20 @@ import { IDictionary, IJodit } from '../types';
 import { IControlType } from '../types/toolbar';
 
 Config.prototype.controls.brush = {
-	isActive: (editor: IJodit, btn: IControlType, button): boolean => {
+	isActive: (editor: IJodit, control: IControlType, button): boolean => {
 		if (!button) {
 			return true;
 		}
 
-		const current: Node | false = editor.selection.current(),
+		const
+			current: Node | false = editor.selection.current(),
 			icon: SVGSVGElement | null = button.container.querySelector('svg');
 
-		if (current) {
+		if (icon && icon.style.fill) {
+			icon.style.fill = null;
+		}
+
+		if (current && !button.isDisable()) {
 			const currentBpx: HTMLElement =
 				(Dom.closest(
 					current,
@@ -40,7 +45,8 @@ Config.prototype.controls.brush = {
 					editor.editor
 				) as HTMLElement) || editor.editor;
 
-			const colorHEX: string = css(currentBpx, 'color').toString(),
+			const
+				colorHEX: string = css(currentBpx, 'color').toString(),
 				bgHEX: string = css(currentBpx, 'background-color').toString();
 
 			if (colorHEX !== css(editor.editor, 'color').toString()) {
@@ -52,10 +58,6 @@ Config.prototype.controls.brush = {
 				icon && (icon.style.fill = bgHEX);
 				return true;
 			}
-		}
-
-		if (icon && icon.style.fill) {
-			icon.style.fill = null;
 		}
 
 		return false;

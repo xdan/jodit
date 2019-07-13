@@ -14,6 +14,7 @@
 		"noImplicitThis": true,
 		"importHelpers": true,
 		"target": "es5",
+
 		"lib": [
 			"es5",
 			"es2018",
@@ -24,6 +25,7 @@
 			"scripthost"
 		]
 	},
+
 	"module": "umd",
 	"moduleResolution": "node",
 	"typeRoots": ["./node_modules/@types/"],

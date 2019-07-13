@@ -36,6 +36,7 @@ describe('Test interface', function() {
 
 			});
 		});
+
 		describe('Set toolbar options to false', function() {
 			it('Should hide toolbar', function() {
 				var editor = new Jodit(appendTestArea(), {
@@ -45,6 +46,7 @@ describe('Test interface', function() {
 				expect(null).to.be.equal(editor.container.querySelector('.jodit_toolbar'));
 			});
 		});
+
 		describe('Popups', function() {
 			describe('Click on dots buttons in mobile size', function() {
 				it('Should open popup with several buttons', function() {
@@ -721,6 +723,7 @@ describe('Test interface', function() {
 				});
 			});
 		});
+
 		describe('Buttons', function() {
 			describe('Text mode', function() {
 				it('Should work i18n', function() {
@@ -740,6 +743,7 @@ describe('Test interface', function() {
 
 					expect(label1).to.be.not.equal(label2);
 				});
+
 				it('Should create buttons with text', function() {
 					var editor = new Jodit(appendTestArea(), {
 						textIcons: true
@@ -747,18 +751,21 @@ describe('Test interface', function() {
 					expect(editor.container.querySelectorAll('.jodit_toolbar_btn-source').length).to.be.equal(1);
 					expect(editor.container.querySelectorAll('.jodit_toolbar_btn-source svg').length).to.be.equal(0);
 				});
+
 				it('Should add jodit_text_icons class to editor\'s container', function() {
 					var editor = new Jodit(appendTestArea(), {
 						textIcons: true
 					});
 					expect(editor.container.classList.contains('jodit_text_icons')).to.be.true;
 				});
+
 				it('Should set font-size more them 0', function() {
 					var editor = new Jodit(appendTestArea(), {
 						textIcons: true
 					});
 					expect(parseInt(editor.ownerWindow.getComputedStyle(editor.container.querySelector('.jodit_toolbar_btn-source .jodit_icon')).fontSize, 10)).to.be.above(10);
 				});
+
 				describe('In tabs', function() {
 					it('Should be also only text', function() {
 						var editor = new Jodit(appendTestArea(), {
@@ -776,6 +783,7 @@ describe('Test interface', function() {
 						expect(popup.querySelectorAll('svg, img').length).to.be.equal(0);
 					});
 				});
+
 				describe('In brush popup', function() {
 					it('Should be also only text', function() {
 						var editor = new Jodit(appendTestArea(), {
@@ -793,6 +801,7 @@ describe('Test interface', function() {
 						expect(popup.querySelectorAll('svg, img').length).to.be.equal(0);
 					});
 				});
+
 				describe('In video popup', function() {
 					it('Should be also only text', function() {
 						var editor = new Jodit(appendTestArea(), {
@@ -812,6 +821,7 @@ describe('Test interface', function() {
 					});
 				});
 			});
+
 			it('Remove default buttons functionality', function() {
 				var editor = new Jodit(appendTestArea());
 				expect(editor.container.querySelectorAll('.jodit_toolbar_btn-source').length).to.equal(1);
@@ -821,6 +831,7 @@ describe('Test interface', function() {
 				});
 				expect(editor.container.querySelectorAll('.jodit_toolbar_btn-source').length).to.equal(0);
 			});
+
 			it('Add own button', function() {
 				var editor = new Jodit(appendTestArea(), {
 					disablePlugins: ['mobile'],
@@ -834,6 +845,7 @@ describe('Test interface', function() {
 						}
 					])
 				});
+
 				expect(editor.container.querySelectorAll('.jodit_toolbar_btn-insertDate').length).to.equal(1);
 
 				editor.setEditorValue('');
@@ -841,6 +853,7 @@ describe('Test interface', function() {
 				simulateEvent('mousedown', 0, editor.container.querySelector('.jodit_toolbar_btn-insertDate'));
 				expect(editor.getEditorValue()).to.equal('Wed Mar 16 2016');
 			});
+
 			it('When cursor inside STRONG tag, Bold button should be selected', function() {
 				var editor = new Jodit(appendTestArea(), {
 					observer: {
@@ -915,6 +928,7 @@ describe('Test interface', function() {
 					expect(editor.container.querySelectorAll('.jodit_toolbar_btn-source.jodit_disabled').length).to.equal(0);
 
 				});
+
 				describe('For list', function() {
 					describe('enable', function() {
 						it('Should enable buttons which can be used in that mode', function() {
@@ -963,6 +977,7 @@ describe('Test interface', function() {
 							expect(list.querySelectorAll('.jodit_disabled').length).to.be.equal(0);
 						});
 					});
+
 					describe('disable', function() {
 						it('Should disable buttons which can not be used in that mode', function() {
 							var editor = new Jodit(appendTestArea(), {
@@ -1031,6 +1046,7 @@ describe('Test interface', function() {
 
 				expect(editor.container.querySelectorAll('.jodit_toolbar_btn-bold.jodit_active').length).to.equal(1);
 			});
+
 			describe('Check Redo Undo functionality', function() {
 				it('Should change disable in icon then then can not be executed', function() {
 					var area = appendTestArea();
@@ -1055,6 +1071,7 @@ describe('Test interface', function() {
 					expect(editor.value).to.equal('top');
 				});
 			});
+
 			it('Full size button', function() {
 				const editor = new Jodit(appendTestArea(), {
 					observer: {
@@ -1072,6 +1089,7 @@ describe('Test interface', function() {
 				}
 
 			});
+
 			it('Should add extra buttons', function() {
 				var editor = new Jodit(appendTestArea(), {
 					extraButtons: [
@@ -1093,6 +1111,7 @@ describe('Test interface', function() {
 
 				expect(editor.getEditorValue()).to.equal('111');
 			});
+
 			describe('Add button', function() {
 				it('Should create buttons in toolbar', function() {
 					var editor = new Jodit(appendTestArea(), {
@@ -1107,6 +1126,7 @@ describe('Test interface', function() {
 					expect(null).to.be.equal(editor.container.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-source'));
 				});
 			});
+
 			describe('Button Bold', function() {
 				describe('In collapsed selection', function() {
 					it('Should reactivate Bold button after second click and move cursor out of Strong element', function() {
@@ -1125,6 +1145,7 @@ describe('Test interface', function() {
 						expect(editor.getEditorValue()).to.equal('<p>test<strong>text</strong>text</p>');
 					});
 				});
+
 				describe('Not collapsed selection', function() {
 					it('Should reactivate Bold button after second click and move cursor out of Strong element', function() {
 						var editor = new Jodit(appendTestArea(), {
@@ -1145,6 +1166,7 @@ describe('Test interface', function() {
 					});
 				});
 			});
+
 			describe('Active button', function() {
 				it('Should not be activated then element has default style', function() {
 					var editor = new Jodit(appendTestArea(), {
@@ -1175,6 +1197,7 @@ describe('Test interface', function() {
 					expect(true).to.equal(align.classList.contains('jodit_active'));
 					expect(true).to.equal(bold.classList.contains('jodit_active'));
 				});
+
 				describe('Fontsize button', function() {
 					it('Should be activated then element has no default font-size', function() {
 						var editor = new Jodit(appendTestArea(), {
@@ -1196,6 +1219,7 @@ describe('Test interface', function() {
 						expect(true).to.equal(fontsize.classList.contains('jodit_active'));
 					});
 				});
+
 				describe('Color button', function() {
 					it('Should be activated then element has some color', function() {
 						var editor = new Jodit(appendTestArea(), {
@@ -1220,6 +1244,7 @@ describe('Test interface', function() {
 						expect('rgb(204, 204, 204)').to.equal(brushIcon.style.fill);
 					});
 				});
+
 				describe('In list', function() {
 					describe('Fontsize button', function() {
 						it('Should be activated then element has some style value', function() {
@@ -1250,6 +1275,7 @@ describe('Test interface', function() {
 							expect(true).to.equal(font16.classList.contains('jodit_active'));
 						});
 					});
+
 					describe('Font family button', function() {
 						it('Should be activated then element has some style value', function() {
 							var editor = new Jodit(appendTestArea(), {
@@ -1282,6 +1308,7 @@ describe('Test interface', function() {
 							expect(true).to.equal(fontGeorgia.classList.contains('jodit_active'));
 						});
 					});
+
 					describe('Format block button', function() {
 						it('Should be activated then element has some tagname', function() {
 							var editor = new Jodit(appendTestArea(), {
@@ -1314,6 +1341,7 @@ describe('Test interface', function() {
 						});
 					});
 				});
+
 				describe('Select text with several properties', function() {
 					it('Should select all buttons with conditions', function() {
 						var editor = new Jodit(appendTestArea(), {
@@ -1339,6 +1367,7 @@ describe('Test interface', function() {
 					});
 				});
 			});
+
 			describe('Disable button', function() {
 				describe('Cut', function() {
 					it('Should be activated editor has some selected text', function() {
@@ -1362,8 +1391,44 @@ describe('Test interface', function() {
 
 					});
 				});
+
+				describe('Color button', function() {
+					it('Should be disabled and icon should have default color', function() {
+						const
+							color = Jodit.defaultOptions.controls.brush,
+							defaultIsDisabled = color.isDisable;
+
+						color.isDisable = () => true; // Always disabled
+
+						const editor = new Jodit(appendTestArea(), {
+							observer: {
+								timeout: 0
+							}
+						});
+
+						editor.value = '<p>test<span style="color: #ccc">bold</span></p>';
+
+						const
+							p = editor.editor.firstChild,
+							brush = editor.container.querySelector('.jodit_toolbar_btn-brush'),
+							brushIcon = editor.container.querySelector('.jodit_toolbar_btn-brush svg');
+
+						editor.selection.setCursorAfter(p.firstChild);
+						simulateEvent('mousedown', 0, p);
+						expect(false).to.equal(brush.classList.contains('jodit_active'));
+						expect('').to.equal(brushIcon.style.fill);
+
+						editor.selection.setCursorIn(p.lastChild);
+						simulateEvent('mousedown', 0, p);
+						expect(false).to.equal(brush.classList.contains('jodit_active'));
+						expect('').to.equal(brushIcon.style.fill);
+
+						color.isDisable = defaultIsDisabled;
+					});
+				});
 			});
 		});
+
 		describe('Commands', function() {
 			it('Click on Source button should change current mode', function() {
 				var editor = new Jodit(appendTestArea());
@@ -1372,6 +1437,7 @@ describe('Test interface', function() {
 
 				expect(editor.getMode()).to.equal(Jodit.MODE_SOURCE);
 			});
+
 			it('Click on Bold button should wrap current selection in <strong>', function() {
 				var editor = new Jodit(appendTestArea());
 
@@ -1387,6 +1453,7 @@ describe('Test interface', function() {
 
 				expect(editor.getEditorValue()).to.equal('Tex<strong>t to te</strong>xt');
 			});
+
 			it('Click on Italic button when selection is collapsed should create new <em> element and set cursor into it', function() {
 				var editor = new Jodit(appendTestArea());
 
@@ -1404,6 +1471,7 @@ describe('Test interface', function() {
 
 				expect(editor.getEditorValue()).to.equal('<em>test</em>Text to text');
 			});
+
 			it('Click on unordered list button when selection is collapsed should wrap current box in  new <ul><li> element', function() {
 				var editor = new Jodit(appendTestArea());
 
@@ -1423,6 +1491,7 @@ describe('Test interface', function() {
 				expect(editor.getEditorValue()).to.equal('<ul><li>test Text to text</li></ul>');
 			});
 		});
+
 		describe('Inline', function() {
 			describe('Сlick on the image', function() {
 				it('Should Open inline popup', function() {
@@ -1436,6 +1505,7 @@ describe('Test interface', function() {
 
 					expect(popup && popup.parentNode.parentNode !== null).to.equal(true);
 				});
+
 				describe('and click in opened popup on pencil button', function() {
 					it('Should Open edit image dialog', function() {
 						var editor = new Jodit(appendTestArea());
@@ -1456,6 +1526,7 @@ describe('Test interface', function() {
 					});
 				});
 			});
+
 			it('Open inline popup after click inside the cell', function() {
 				var editor = new Jodit(appendTestArea());
 
@@ -1469,6 +1540,7 @@ describe('Test interface', function() {
 
 				expect(popup && popup.parentNode.parentNode !== null).to.equal(true);
 			});
+
 			describe('Table button', function() {
 				describe('Select table cell', function() {
 					it('Should Select table cell', function() {
@@ -1515,6 +1587,7 @@ describe('Test interface', function() {
 					});
 				});
 			});
+
 			it('Select table cell and change it vertical align', function() {
 				var editor = new Jodit(appendTestArea());
 
@@ -1541,6 +1614,7 @@ describe('Test interface', function() {
 				expect(td.style.verticalAlign).to.equal('top');
 
 			});
+
 			it('Select table cell and split it by vertical', function() {
 				var editor = new Jodit(appendTestArea());
 
@@ -1563,6 +1637,7 @@ describe('Test interface', function() {
 				expect(sortAttributes(editor.getEditorValue())).to.equal('<table style="width:300px"><tbody><tr><td style="width:49.83%">3</td><td style="width:49.83%"><br></td></tr></tbody></table>');
 
 			});
+
 			it('Select table cell and split it by horizontal', function() {
 				var editor = new Jodit(appendTestArea());
 
@@ -1584,6 +1659,7 @@ describe('Test interface', function() {
 				expect(sortAttributes(editor.getEditorValue())).to.equal('<table style="width:300px"><tbody><tr><td>5</td></tr><tr><td><br></td></tr></tbody></table>');
 
 			});
+
 			it('Select two table cells and merge then in one', function() {
 				var editor = new Jodit(appendTestArea());
 
@@ -1602,6 +1678,7 @@ describe('Test interface', function() {
 
 				expect(editor.getEditorValue()).to.equal('<table style="width: 300px;"><tbody><tr><td >5<br>6</td></tr></tbody></table>');
 			});
+
 			it('Select table cell add column before this', function() {
 				var editor = new Jodit(appendTestArea());
 
@@ -1628,6 +1705,7 @@ describe('Test interface', function() {
 				expect(editor.getEditorValue()).to.equal('<table><tbody><tr><td></td><td >3</td></tr></tbody></table>');
 
 			});
+
 			it('Select table cell and add row above this', function() {
 				var editor = new Jodit(appendTestArea());
 
@@ -1654,6 +1732,7 @@ describe('Test interface', function() {
 				expect(editor.getEditorValue()).to.equal('<table><tbody><tr><td></td></tr><tr><td >3</td></tr></tbody></table>');
 
 			});
+
 			it('Select table cell and remove it row', function() {
 				var editor = new Jodit(appendTestArea());
 
@@ -1682,6 +1761,7 @@ describe('Test interface', function() {
 				expect(editor.value).to.equal('<table><tbody><tr><td>1</td></tr><tr><td>3</td></tr></tbody></table>');
 
 			});
+
 			it('Select table cell and remove whole table should hide inline popup', function() {
 				var editor = new Jodit(appendTestArea());
 
@@ -1713,6 +1793,7 @@ describe('Test interface', function() {
 
 			});
 		});
+
 		describe('In fileBrowser', function() {
 			describe('Hide buttons ', function() {
 				it('should hide toolbar buttons', function() {
@@ -1761,6 +1842,7 @@ describe('Test interface', function() {
 
 			expect(dialog.innerText.match(/License:.*(GPL|GNU)/)).to.be.not.equal(null);
 		});
+
 		describe('Set license', function() {
 			it('Should show License in about dialog', function() {
 				var area = appendTestArea(),
@@ -1795,6 +1877,7 @@ describe('Test interface', function() {
 				expect('rtl').to.be.equal(editor.toolbar.container.getAttribute('dir'));
 			});
 		});
+
 		describe('For iframe mode', function() {
 			it('Should have same direction and language', function() {
 				var editor = new Jodit(appendTestArea(), {
