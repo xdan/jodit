@@ -53,10 +53,12 @@ Config.prototype.uploader = {
 	imagesExtensions: ['jpg', 'png', 'jpeg', 'gif'],
 	headers: null,
 	data: null,
-  filesVariableName(i:number):string {
+
+	filesVariableName(i: number): string {
 		return `files[${i}]`;
-  },
-  withCredentials: false,
+	},
+
+	withCredentials: false,
 	pathVariableName: 'path',
 
 	format: 'json',
