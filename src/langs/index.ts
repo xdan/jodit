@@ -46,9 +46,11 @@ const exp: any = {
 /* Unpack array to hash */
 const hashLang: any = {};
 
-(<any>en).forEach((key: string, index: number) => {
-	hashLang[index] = key;
-});
+if (Array.isArray(en)) {
+	en.forEach((key: string, index: number) => {
+		hashLang[index] = key;
+	});
+}
 
 Object.keys(exp).forEach((lang: string) => {
 	const list: unknown = exp[lang];
