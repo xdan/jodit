@@ -40,22 +40,23 @@ describe('Iframe mode', function() {
 		describe('Set value right after construct', function(done) {
 			it('Should set/get value without some trouble', function(done) {
 				unmocPromise();
-				var area = appendTestArea();
+				const area = appendTestArea();
+
 				area.value = 'stop';
 
-				var editor = new Jodit(area, {
+				const editor = new Jodit(area, {
 					iframe: true,
 					events: {
 						afterConstructor: function(editor) {
-							expect(editor.value).to.be.equal('test');
+							expect(editor.value).to.equal('test');
 							done();
 						}
 					}
 				});
 
-				expect(editor.value).to.be.equal('stop');
+				expect(editor.value).to.equal('stop');
 				editor.value = 'test';
-				expect(editor.value).to.be.equal('test');
+				expect(editor.value).to.equal('test');
 			});
 		});
 	});

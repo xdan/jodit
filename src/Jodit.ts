@@ -133,7 +133,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	/**
 	 * editor It contains the root element editor
 	 */
-	editor: HTMLDivElement | HTMLBodyElement = this.create.div();
+	editor: HTMLDivElement | HTMLBodyElement;
 
 	/**
 	 * iframe Iframe for iframe mode
@@ -190,6 +190,16 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		}
 
 		return this.getElementValue();
+	}
+
+	/**
+	 * Set value to native editor
+	 * @param value
+	 */
+	setNativeEditorValue(value: string) {
+		if (this.editor) {
+			this.editor.innerHTML = value;
+		}
 	}
 
 	/**
@@ -344,11 +354,12 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		}
 
 		if (value !== undefined && this.editor.innerHTML !== value) {
-			this.editor.innerHTML = value;
+			this.setNativeEditorValue(value);
 		}
 
-		const old_value: string = this.getElementValue(),
-			new_value: string = this.getEditorValue();
+		const
+			old_value = this.getElementValue(),
+			new_value = this.getEditorValue();
 
 		if (
 			old_value !== new_value &&
@@ -979,7 +990,9 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 					this.__defaultClassesKey,
 					this.element.className.toString()
 				);
+
 				buffer = this.container.innerHTML;
+
 				this.container.innerHTML = '';
 			}
 
@@ -1059,43 +1072,42 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		this.workplace.appendChild(this.editor);
 
-		this.__initPlugines();
+		this.setNativeEditorValue(this.getElementValue()); // Init value
 
-		this.__initEditor(buffer)
-			.then(async () => {
-				if (this.isDestructed) {
-					return;
-				}
+		(async () => {
+			await this.events.fire('beforeInit', this);
 
-				if (
-					this.options.enableDragAndDropFileToEditor &&
-					this.options.uploader &&
-					(this.options.uploader.url ||
-						this.options.uploader.insertImageAsBase64URI)
-				) {
-					this.uploader.bind(this.editor);
-				}
+			this.__initPlugines();
 
-				this.isInited = true;
-				await this.events.fire('afterInit', this);
-				this.events.fire('afterConstructor', this);
-			});
+			await this.__initEditor(buffer);
+
+			if (this.isDestructed) {
+				return;
+			}
+
+			if (
+				this.options.enableDragAndDropFileToEditor &&
+				this.options.uploader &&
+				(this.options.uploader.url ||
+					this.options.uploader.insertImageAsBase64URI)
+			) {
+				this.uploader.bind(this.editor);
+			}
+
+			this.isInited = true;
+			await this.events.fire('afterInit', this);
+
+			this.events.fire('afterConstructor', this);
+		})();
 	}
 
 	isInited: boolean = false;
 
-	/**
-	 * @emits beforeInitPlugins()
-	 * @private
-	 */
-	private async __initPlugines() {
-		await this.events.fire('beforeInitPlugins');
-
-		const disable: string[] = Array.isArray(this.options.disablePlugins)
-			? this.options.disablePlugins.map((pluginName: string) => {
-				return pluginName.toLowerCase();
-			})
-			: this.options.disablePlugins.toLowerCase().split(/[\s,]+/);
+	private __initPlugines() {
+		const dp = this.options.disablePlugins;
+		const disable = Array.isArray(dp)
+			? dp.map((name) => name.toLowerCase())
+			: dp.toLowerCase().split(/[\s,]+/);
 
 		Object.keys(Jodit.plugins).forEach((key: string) => {
 			if (disable.indexOf(key.toLowerCase()) === -1) {
@@ -1104,14 +1116,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		});
 	}
 
-	/**
-	 * @emits beforeInitEditor()
-	 * @param buffer
-	 * @private
-	 */
 	private async __initEditor(buffer: null | string) {
-		await this.events.fire('beforeInitEditor');
-
 		await this.__createEditor();
 
 		if (this.isDestructed) {
