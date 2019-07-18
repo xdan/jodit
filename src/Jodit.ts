@@ -896,6 +896,20 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	}
 
 	/**
+	 * Hook before init
+	 */
+	beforeInitHook(): any {
+		// do nothing
+	}
+
+	/**
+	 * Hook after init
+	 */
+	afterInitHook(): any {
+		// do nothing
+	}
+
+	/**
 	 * Create instance of Jodit
 	 * @constructor
 	 *
@@ -910,6 +924,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		// in iframe it can be changed
 		this.editorDocument = this.options.ownerDocument;
 		this.editorWindow = this.options.ownerWindow;
+
 		this.ownerDocument = this.options.ownerDocument;
 		this.ownerWindow = this.options.ownerWindow;
 
@@ -1075,9 +1090,15 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		this.setNativeEditorValue(this.getElementValue()); // Init value
 
 		(async () => {
+			await this.beforeInitHook();
+
 			await this.events.fire('beforeInit', this);
 
-			this.__initPlugines();
+			try {
+				this.__initPlugines();
+			} catch (e) {
+				console.error(e);
+			}
 
 			await this.__initEditor(buffer);
 
@@ -1085,19 +1106,24 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 				return;
 			}
 
+			const opt = this.options;
+
 			if (
-				this.options.enableDragAndDropFileToEditor &&
-				this.options.uploader &&
-				(this.options.uploader.url ||
-					this.options.uploader.insertImageAsBase64URI)
+				opt.enableDragAndDropFileToEditor &&
+				opt.uploader &&
+				(opt.uploader.url || opt.uploader.insertImageAsBase64URI)
 			) {
 				this.uploader.bind(this.editor);
 			}
 
 			this.isInited = true;
-			await this.events.fire('afterInit', this);
 
-			this.events.fire('afterConstructor', this);
+			if (this.events) {
+				await this.events.fire('afterInit', this);
+				this.events.fire('afterConstructor', this);
+			}
+
+			await this.afterInitHook();
 		})();
 	}
 
