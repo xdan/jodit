@@ -161,22 +161,22 @@ export function iframe(editor: IJodit) {
 				doc.open();
 				doc.write(
 					'<!DOCTYPE html>' +
-						'<html dir="' +
-						jodit.options.direction +
-						'" class="jodit" ' +
-						'lang="' +
-						defaultLanguage(jodit.options.language) +
-						'">' +
-						'<head>' +
-						'<title>Jodit Editor</title>' +
-						(jodit.options.iframeBaseUrl
-							? '<base href="' +
-							  jodit.options.iframeBaseUrl +
-							  '"/>'
-							: '') +
-						'</head>' +
-						'<body class="jodit_wysiwyg" style="outline:none" contenteditable="true"></body>' +
-						'</html>'
+					'<html dir="' +
+					jodit.options.direction +
+					'" class="jodit" ' +
+					'lang="' +
+					defaultLanguage(jodit.options.language) +
+					'">' +
+					'<head>' +
+					'<title>Jodit Editor</title>' +
+					(jodit.options.iframeBaseUrl
+						? '<base href="' +
+						jodit.options.iframeBaseUrl +
+						'"/>'
+						: '') +
+					'</head>' +
+					'<body class="jodit_wysiwyg" style="outline:none" contenteditable="true"></body>' +
+					'</html>'
 				);
 
 				doc.close();
@@ -236,7 +236,7 @@ export function iframe(editor: IJodit) {
 
 			if (editor.options.height === 'auto') {
 				doc.documentElement &&
-					(doc.documentElement.style.overflowY = 'hidden');
+				(doc.documentElement.style.overflowY = 'hidden');
 
 				const resizeIframe = throttle(() => {
 					if (
@@ -287,8 +287,8 @@ export function iframe(editor: IJodit) {
 						'mousedown touchstart keydown keyup touchend click mouseup mousemove scroll',
 						(e: Event) => {
 							editor.events &&
-								editor.events.fire &&
-								editor.events.fire(editor.ownerWindow, e);
+							editor.events.fire &&
+							editor.events.fire(editor.ownerWindow, e);
 						}
 					);
 			}
