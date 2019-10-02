@@ -14,6 +14,7 @@ import { default as es } from './es';
 import { default as fr } from './fr';
 import { default as he } from './he';
 import { default as hu } from './hu';
+import { default as id } from './id';
 import { default as it } from './it';
 import { default as nl } from './nl';
 import { default as pt_br } from './pt_br';
@@ -34,6 +35,7 @@ const exp: any = {
 	fr,
 	he,
 	hu,
+	id,
 	it,
 	nl,
 	pt_br,
