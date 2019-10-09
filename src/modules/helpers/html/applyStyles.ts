@@ -50,9 +50,9 @@ export const applyStyles = (html: string): string => {
                 collection = $$(rules[idx].selectorText, iframeDoc.body);
 
                 collection.forEach((elm: HTMLElement) => {
-                    elm.style.cssText += rules[idx].style.cssText
+                    elm.style.cssText = rules[idx].style.cssText
                         .replace(/mso-[a-z\-]+:[\s]*[^;]+;/g, '')
-                        .replace(/border[a-z\-]*:[\s]*[^;]+;/g, '');
+                        .replace(/border[a-z\-]*:[\s]*[^;]+;/g, '') + elm.style.cssText;
                 });
             }
 
