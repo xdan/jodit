@@ -94,7 +94,7 @@ export class DragAndDrop extends Plugin {
 							''
 					);
 					if (tagName === 'a') {
-						fragment.innerText = fragment.getAttribute(attr) || '';
+						fragment.textContent = fragment.getAttribute(attr) || '';
 					}
 				} else {
 					fragment = dataBind(this.draggable, 'target');

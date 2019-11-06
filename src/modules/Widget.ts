@@ -478,7 +478,7 @@ export namespace Widget {
 				currentImage = elm.tagName === 'IMG' ? elm : $$('img', elm)[0];
 				val(form, 'input[name=url]', currentImage.getAttribute('src'));
 				val(form, 'input[name=text]', currentImage.getAttribute('alt'));
-				button.innerText = editor.i18n('Update');
+				button.textContent = editor.i18n('Update');
 			}
 
 			if (
@@ -488,7 +488,7 @@ export namespace Widget {
 			) {
 				val(form, 'input[name=url]', elm.getAttribute('href') || '');
 				val(form, 'input[name=text]', elm.getAttribute('title') || '');
-				button.innerText = editor.i18n('Update');
+				button.textContent = editor.i18n('Update');
 			}
 
 			form.addEventListener(

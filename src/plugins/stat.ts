@@ -33,13 +33,13 @@ export class stat extends Plugin {
 	private calc = throttle(() => {
 		const text: string = this.jodit.getEditorText();
 		if (this.jodit.options.showCharsCounter && this.charCounter) {
-			this.charCounter.innerText = this.jodit.i18n(
+			this.charCounter.textContent = this.jodit.i18n(
 				'Chars: %d',
 				text.replace(SPACE_REG_EXP, '').length
 			);
 		}
 		if (this.jodit.options.showWordsCounter && this.wordCounter) {
-			this.wordCounter.innerText = this.jodit.i18n(
+			this.wordCounter.textContent = this.jodit.i18n(
 				'Words: %d',
 				text
 					.replace(INVISIBLE_SPACE_REG_EXP, '')

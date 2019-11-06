@@ -24,7 +24,7 @@ import { IUploader } from '../../types/uploader';
 import { IViewBased } from '../../types/view';
 import { debounce } from '../helpers/async/debounce';
 import { humanSizeToBytes } from '../helpers';
-import { ITEM_CLASS as IC } from './fileBrowser';
+import { ITEM_CLASS as IC } from './consts';
 
 declare module '../../Config' {
 	interface Config {

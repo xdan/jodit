@@ -127,12 +127,12 @@ describe('Jodit Events system Tests', function() {
 			editor.editorDocument.body.appendChild(div1);
 			editor.editorDocument.body.appendChild(div2);
 
-			div1.innerText = 'test1';
-			div2.innerText = 'test2';
+			div1.textContent = 'test1';
+			div2.textContent = 'test2';
 
 			editor.events
 				.on([div1, div2], 'click', function() {
-					work += this.innerText;
+					work += this.textContent;
 				})
 
 				.fire(div1, 'click');
@@ -167,7 +167,7 @@ describe('Jodit Events system Tests', function() {
 					a = document.createElement('a'),
 					div = document.createElement('button');
 
-				a.innerText = 'test';
+				a.textContent = 'test';
 				div.appendChild(a);
 				document.body.appendChild(div);
 
@@ -898,11 +898,11 @@ describe('Jodit Events system Tests', function() {
 				editor.editorDocument.body.appendChild(div1);
 				editor.editorDocument.body.appendChild(div2);
 
-				div1.innerText = 'test1';
-				div2.innerText = 'test2';
+				div1.textContent = 'test1';
+				div2.textContent = 'test2';
 
 				eventer.on([div1, div2], 'click', function() {
-					work += this.innerText;
+					work += this.textContent;
 				});
 
 				eventer.fire(div1, 'click');
@@ -966,7 +966,7 @@ describe('Jodit Events system Tests', function() {
 						a = document.createElement('a'),
 						div = document.createElement('button');
 
-					a.innerText = 'test';
+					a.textContent = 'test';
 					div.appendChild(a);
 
 					document.body.appendChild(div);

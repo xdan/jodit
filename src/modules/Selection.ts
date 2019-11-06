@@ -1296,6 +1296,7 @@ export class Select {
 						if (mode === undefined) {
 							mode = WRAP;
 						}
+
 						if (mode === WRAP) {
 							css(
 								Dom.replace(

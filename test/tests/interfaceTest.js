@@ -225,7 +225,7 @@ describe('Test interface', function() {
 
 						expect(list && window.getComputedStyle(list).display === 'block' && list.parentNode !== null).to.equal(true);
 
-						expect(list.innerText.match('Custom')).to.be.not.equal(null);
+						expect(list.textContent.match('Custom')).to.be.not.equal(null);
 
 					});
 					it('Should change default FONT size list in toolbar', function() {
@@ -1840,7 +1840,7 @@ describe('Test interface', function() {
 			var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + area.id + ']');
 			expect(dialog).to.be.not.equal(null);
 
-			expect(dialog.innerText.match(/License:.*(GPL|GNU)/)).to.be.not.equal(null);
+			expect(dialog.textContent.match(/License:.*(GPL|GNU)/)).to.be.not.equal(null);
 		});
 
 		describe('Set license', function() {
@@ -1858,9 +1858,9 @@ describe('Test interface', function() {
 				var dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + area.id + ']');
 				expect(dialog).to.be.not.equal(null);
 
-				expect(dialog.innerText.match(/License:.*(GPL|GNU)/)).to.be.equal(null);
+				expect(dialog.textContent.match(/License:.*(GPL|GNU)/)).to.be.equal(null);
 
-				expect(dialog.innerText.match(/License: 12345678-\*\*\*\*\*\*\*\*-\*\*\*\*\*\*\*\*-56789022/)).to.be.not.equal(null);
+				expect(dialog.textContent.match(/License: 12345678-\*\*\*\*\*\*\*\*-\*\*\*\*\*\*\*\*-56789022/)).to.be.not.equal(null);
 			});
 		});
 	});

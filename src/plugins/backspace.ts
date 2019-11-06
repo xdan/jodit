@@ -229,7 +229,7 @@ export function backspace(editor: IJodit) {
 				}
 
 				if (
-					!trim(editor.editor.innerText) &&
+					!trim(editor.editor.textContent || '') &&
 					!editor.editor.querySelector('img') &&
 					(!current || !Dom.closest(current, 'table', editor.editor))
 				) {

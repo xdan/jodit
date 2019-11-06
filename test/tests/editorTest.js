@@ -287,13 +287,13 @@ describe('Jodit Editor Tests', function() {
 							expect(button).to.be.not.equal(null);
 							expect(button.querySelector('svg')).to.be.equal(null);
 
-							var old_icon = button.innerText;
+							var old_icon = button.textContent;
 
 							editor.toggleFullSize(true);
-							expect(button.innerText).to.be.not.equal(old_icon);
+							expect(button.textContent).to.be.not.equal(old_icon);
 
 							editor.toggleFullSize(false);
-							expect(button.innerText).to.be.equal(old_icon);
+							expect(button.textContent).to.be.equal(old_icon);
 						});
 					});
 				});

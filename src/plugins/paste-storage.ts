@@ -107,7 +107,7 @@ export class pasteStorage extends Plugin {
 
 		this.list.forEach((html: string, index: number) => {
 			const a: HTMLElement = this.jodit.ownerDocument.createElement('a');
-			a.innerText = index + 1 + '. ' + html.replace(SPACE_REG_EXP, '');
+			a.textContent = index + 1 + '. ' + html.replace(SPACE_REG_EXP, '');
 
 			a.addEventListener('keydown', this.onKeyDown);
 

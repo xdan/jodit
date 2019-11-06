@@ -71,7 +71,7 @@ export class search extends Plugin {
 			tmpEqualLength: number = 0,
 			startAtIndex: number | null = null;
 
-		const inc: number = start ? 1 : -1,
+		const inc = start ? 1 : -1,
 			tmp: string[] = [];
 
 		for (; haystack[i] !== undefined; i += inc) {
@@ -103,18 +103,18 @@ export class search extends Plugin {
 			}
 		}
 
-		return getIndex
-			? startAtIndex !== null
-				? startAtIndex
-				: false
-			: tmp.length
-			? start
-				? tmp.join('')
-				: tmp.reverse().join('')
-			: false;
+		if (getIndex) {
+			return startAtIndex ?? false;
+		}
+
+		if (tmp.length) {
+			return start ? tmp.join('') : tmp.reverse().join('');
+		}
+
+		return false;
 	}
 
-	private template: string =
+	private template =
 		'<div class="jodit_search">' +
 		'<div class="jodit_search_box">' +
 		'<div class="jodit_search_inputs">' +
@@ -181,7 +181,7 @@ export class search extends Plugin {
 				range
 			);
 
-		this.counterBox.innerText = counts.join('/');
+		this.counterBox.textContent = counts.join('/');
 	};
 
 	private boundAlreadyWas(

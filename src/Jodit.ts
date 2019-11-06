@@ -266,13 +266,13 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 	getEditorText(): string {
 		if (this.editor) {
-			return this.editor.innerText;
+			return this.editor.textContent || '';
 		}
 
 		const div: HTMLDivElement = this.create.inside.div();
 		div.innerHTML = this.getElementValue();
 
-		return div.innerText;
+		return div.textContent || '';
 	}
 
 	/**

@@ -2,11 +2,11 @@ import { ContextMenu } from '../../ContextMenu';
 import { setTimeout } from '../../helpers/async';
 import { Dialog } from '../../dialog';
 import { Dom } from '../../Dom';
-import { F_CLASS, FileBrowser, ICON_LOADER, ITEM_CLASS } from '../fileBrowser';
 import { ToolbarIcon } from '../..';
+import { F_CLASS, ICON_LOADER, ITEM_CLASS } from '../consts';
 
 const
-	CLASS_PREVIEW = F_CLASS + 'preview_',
+	CLASS_PREVIEW = F_CLASS + '_preview_',
 	preview_tpl_next = (next = 'next', right = 'right') =>
 		`<a href="javascript:void(0)" class="${CLASS_PREVIEW}navigation ${CLASS_PREVIEW}navigation-${next}">` +
 		'' +
@@ -88,15 +88,13 @@ export default (self: FileBrowser) => {
 							icon: 'eye',
 							title: 'Preview',
 							exec: () => {
-								const preview: Dialog = new Dialog(
-									self
-									),
+								const preview = new Dialog(self),
 									temp_content: HTMLElement = self.create.div(
-										F_CLASS + 'preview',
+										F_CLASS + '_preview',
 										ICON_LOADER
 									),
 									preview_box: HTMLElement = self.create.div(
-										F_CLASS + 'preview_box'
+										F_CLASS + '_preview_box'
 									),
 									next = self.create.fromHTML(
 										preview_tpl_next()
@@ -110,9 +108,7 @@ export default (self: FileBrowser) => {
 									addLoadHandler = (
 										src: string
 									) => {
-										const image: HTMLImageElement = self.create.element(
-											'img'
-										);
+										const image = self.create.element('img');
 
 										image.setAttribute(
 											'src',
@@ -131,12 +127,7 @@ export default (self: FileBrowser) => {
 											if (
 												opt.showPreviewNavigation
 											) {
-												if (
-													Dom.prevWithClass(
-														item,
-														ITEM_CLASS
-													)
-												) {
+												if (Dom.prevWithClass(item, ITEM_CLASS)) {
 													temp_content.appendChild(
 														prev
 													);
@@ -163,6 +154,8 @@ export default (self: FileBrowser) => {
 											);
 
 											preview.setPosition();
+
+											self?.events?.fire('previewOpenedAndLoaded');
 										};
 
 										image.addEventListener(
@@ -219,6 +212,8 @@ export default (self: FileBrowser) => {
 								preview.setContent(temp_content);
 								preview.setPosition();
 								preview.open();
+
+								self?.events?.fire('previewOpened');
 							}
 						}
 						: false,
@@ -244,3 +239,5 @@ export default (self: FileBrowser) => {
 		return false;
 	};
 }
+
+import { FileBrowser } from '../fileBrowser';

@@ -155,8 +155,8 @@ Config.prototype.controls.table = {
 				}
 			}
 
-			cols.innerText = cols_count.toString();
-			rows.innerText = rows_count.toString();
+			cols.textContent = cols_count.toString();
+			rows.textContent = rows_count.toString();
 		};
 
 		blocksContainer.addEventListener('mousemove', mouseenter);

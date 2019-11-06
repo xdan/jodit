@@ -116,7 +116,7 @@ Config.prototype.controls.link = {
 
 		if (current) {
 			val(form, 'input[name=url]', current.getAttribute('href') || '');
-			val(form, 'input[name=text]', current.innerText);
+			val(form, 'input[name=text]', current.textContent || '');
 
 			if (editor.options.link.openInNewTabCheckbox) {
 				(form.querySelector(
@@ -177,7 +177,7 @@ Config.prototype.controls.link = {
 			}
 
 			a.setAttribute('href', val(form, 'input[name=url]'));
-			a.innerText = val(form, 'input[name=text]');
+			a.textContent = val(form, 'input[name=text]');
 
 			if (editor.options.link.openInNewTabCheckbox) {
 				if (
@@ -257,7 +257,7 @@ export function link(jodit: IJodit) {
 					);
 
 					a.setAttribute('href', html);
-					a.innerText = html;
+					a.textContent = html;
 
 					return a;
 				}
@@ -278,7 +278,7 @@ export function link(jodit: IJodit) {
 				if (node && node.nodeName === 'A') {
 					if (
 						(node as HTMLElement).innerHTML ===
-						(node as HTMLElement).innerText
+						(node as HTMLElement).textContent
 					) {
 						newtag = jodit.editorDocument.createTextNode(
 							(node as HTMLElement).innerHTML

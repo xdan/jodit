@@ -16,6 +16,6 @@
  */
 export const htmlspecialchars = (html: string): string => {
     const tmp: HTMLDivElement = document.createElement('div');
-    tmp.innerText = html;
+    tmp.textContent = html;
     return tmp.innerHTML;
 };

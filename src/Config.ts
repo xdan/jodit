@@ -597,7 +597,7 @@ export class Config implements IViewOptions {
 	 *             var dialog = new Jodit.modules.Dialog(this),
 	 *                 div = document.createElement('div'),
 	 *                 text = document.createElement('textarea');
-	 *             div.innerText = this.val();
+	 *             div.textContent = this.val();
 	 *             dialog.setTitle('Source code');
 	 *             dialog.setContent(text);
 	 *             dialog.setSize(400, 300);

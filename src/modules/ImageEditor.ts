@@ -235,7 +235,7 @@ export class ImageEditor extends Component {
 		this.cropBox.w = this.cropHandler.offsetWidth / ratioX;
 		this.cropBox.h = this.cropHandler.offsetHeight / ratioY;
 
-		this.sizes.innerText =
+		this.sizes.textContent =
 			this.cropBox.w.toFixed(0) + 'x' + this.cropBox.h.toFixed(0);
 	};
 

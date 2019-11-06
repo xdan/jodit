@@ -987,7 +987,7 @@ describe('Test plugins', function() {
 					var tooltip = button.querySelector('.jodit_tooltip');
 
 					expect(null).to.be.not.equal(tooltip);
-					var title = tooltip.innerText;
+					var title = tooltip.textContent;
 					editor.destruct();
 
 
@@ -1009,7 +1009,7 @@ describe('Test plugins', function() {
 					simulateEvent('mouseleave', 0, button.querySelector('a'));
 					expect(null).to.be.equal(tooltip.parentNode);
 
-					expect(title).to.be.not.equal(tooltip.innerText);
+					expect(title).to.be.not.equal(tooltip.textContent);
 				});
 			});
 		});
@@ -1799,8 +1799,8 @@ describe('Test plugins', function() {
 
 				expect(statusbar).to.be.not.equal(null);
 
-				expect(statusbar.innerText.match(/Chars: 10/)).to.be.not.equal(null);
-				expect(statusbar.innerText.match(/Words: 2/)).to.be.not.equal(null);
+				expect(statusbar.textContent.match(/Chars: 10/)).to.be.not.equal(null);
+				expect(statusbar.textContent.match(/Words: 2/)).to.be.not.equal(null);
 
 			});
 			describe('Hide chars count', function() {
@@ -1819,8 +1819,8 @@ describe('Test plugins', function() {
 
 					expect(statusbar).to.be.not.equal(null);
 
-					expect(statusbar.innerText.match(/Chars: 10/)).to.be.equal(null);
-					expect(statusbar.innerText.match(/Words: 2/)).to.be.not.equal(null);
+					expect(statusbar.textContent.match(/Chars: 10/)).to.be.equal(null);
+					expect(statusbar.textContent.match(/Words: 2/)).to.be.not.equal(null);
 
 				});
 			});
@@ -1840,8 +1840,8 @@ describe('Test plugins', function() {
 
 					expect(statusbar).to.be.not.equal(null);
 
-					expect(statusbar.innerText.match(/Chars: 10/)).to.be.not.equal(null);
-					expect(statusbar.innerText.match(/Words: 2/)).to.be.equal(null);
+					expect(statusbar.textContent.match(/Chars: 10/)).to.be.not.equal(null);
+					expect(statusbar.textContent.match(/Words: 2/)).to.be.equal(null);
 
 				});
 			});
@@ -1862,8 +1862,8 @@ describe('Test plugins', function() {
 
 					expect(statusbar).to.be.not.equal(null);
 
-					expect(statusbar.innerText.match(/Chars: 10/)).to.be.equal(null);
-					expect(statusbar.innerText.match(/Words: 2/)).to.be.equal(null);
+					expect(statusbar.textContent.match(/Chars: 10/)).to.be.equal(null);
+					expect(statusbar.textContent.match(/Words: 2/)).to.be.equal(null);
 					expect(statusbar.offsetHeight).to.be.equal(0);
 
 				});
@@ -1904,9 +1904,9 @@ describe('Test plugins', function() {
 
 					var statusbar = editor.container.querySelector('.jodit_statusbar ul');
 					expect(statusbar).to.be.not.equal(null);
-					expect(statusbar.firstChild.innerText).to.be.equal('');
-					expect(statusbar.childNodes[1].innerText).to.be.equal('p');
-					expect(statusbar.childNodes[2].innerText).to.be.equal('a');
+					expect(statusbar.firstChild.textContent).to.be.equal('');
+					expect(statusbar.childNodes[1].textContent).to.be.equal('p');
+					expect(statusbar.childNodes[2].textContent).to.be.equal('a');
 
 				});
 				describe('After change selection', function() {
@@ -1925,15 +1925,15 @@ describe('Test plugins', function() {
 						var statusbar = editor.container.querySelector('.jodit_statusbar ul');
 
 						expect(statusbar).to.be.not.equal(null);
-						expect(statusbar.firstChild.innerText).to.be.equal('');
-						expect(statusbar.childNodes[1].innerText).to.be.equal('p');
-						expect(statusbar.childNodes[2].innerText).to.be.equal('a');
+						expect(statusbar.firstChild.textContent).to.be.equal('');
+						expect(statusbar.childNodes[1].textContent).to.be.equal('p');
+						expect(statusbar.childNodes[2].textContent).to.be.equal('a');
 
 						editor.selection.setCursorIn(editor.editor.querySelector('span'));
 
-						expect(statusbar.firstChild.innerText).to.be.equal('');
-						expect(statusbar.childNodes[1].innerText).to.be.equal('p');
-						expect(statusbar.childNodes[2].innerText).to.be.equal('span');
+						expect(statusbar.firstChild.textContent).to.be.equal('');
+						expect(statusbar.childNodes[1].textContent).to.be.equal('p');
+						expect(statusbar.childNodes[2].textContent).to.be.equal('span');
 					});
 				});
 				describe('After click on element of path', function() {
@@ -1952,14 +1952,14 @@ describe('Test plugins', function() {
 						var statusbar = editor.container.querySelector('.jodit_statusbar ul');
 
 						expect(statusbar).to.be.not.equal(null);
-						expect(statusbar.firstChild.innerText).to.be.equal('');
-						expect(statusbar.childNodes[1].innerText).to.be.equal('p');
-						expect(statusbar.childNodes[2].innerText).to.be.equal('a');
+						expect(statusbar.firstChild.textContent).to.be.equal('');
+						expect(statusbar.childNodes[1].textContent).to.be.equal('p');
+						expect(statusbar.childNodes[2].textContent).to.be.equal('a');
 
 						simulateEvent('click', 0, statusbar.childNodes[2].firstChild); // click on A
 
 						expect(Jodit.modules.Helpers.trim(editor.editorWindow.getSelection().toString())).to.be.equal('sss');
-						expect(statusbar.childNodes[2].innerText).to.be.equal('a');
+						expect(statusbar.childNodes[2].textContent).to.be.equal('a');
 
 						simulateEvent('click', 0, statusbar.childNodes[1].firstChild);// click on P
 
@@ -1983,9 +1983,9 @@ describe('Test plugins', function() {
 						var statusbar = editor.container.querySelector('.jodit_statusbar ul');
 
 						expect(statusbar).to.be.not.equal(null);
-						expect(statusbar.firstChild.innerText).to.be.equal('');
-						expect(statusbar.childNodes[1].innerText).to.be.equal('p');
-						expect(statusbar.childNodes[2].innerText).to.be.equal('a');
+						expect(statusbar.firstChild.textContent).to.be.equal('');
+						expect(statusbar.childNodes[1].textContent).to.be.equal('p');
+						expect(statusbar.childNodes[2].textContent).to.be.equal('a');
 
 						simulateEvent('contextmenu', 0, statusbar.childNodes[2].firstChild);
 

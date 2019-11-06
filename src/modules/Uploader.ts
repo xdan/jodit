@@ -103,7 +103,7 @@ Config.prototype.uploader = {
 				elm.setAttribute(attr, resp.baseurl + filename);
 
 				if (tagName === 'a') {
-					elm.innerText = resp.baseurl + filename;
+					elm.textContent = resp.baseurl + filename;
 				}
 
 				if (isJoditObject(this.jodit)) {

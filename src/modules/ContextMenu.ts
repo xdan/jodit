@@ -73,8 +73,10 @@ export class ContextMenu extends Component {
 				return;
 			}
 
-			const action: HTMLAnchorElement = this.jodit.create.fromHTML(
-				'<a href="javascript:void(0)">' +
+			const title = self.jodit.i18n(item.title || '');
+
+			const action = this.jodit.create.fromHTML(
+				`<a title="${title}" data-icon="${item.icon}"  href="javascript:void(0)">` +
 					(item.icon ? ToolbarIcon.getIcon(item.icon) : '') +
 					'<span></span></a>'
 			) as HTMLAnchorElement;
@@ -89,7 +91,7 @@ export class ContextMenu extends Component {
 				return false;
 			});
 
-			span.innerText = self.jodit.i18n(item.title || '');
+			span.textContent = title;
 			self.context.appendChild(action);
 		});
 
@@ -98,7 +100,11 @@ export class ContextMenu extends Component {
 			top: y
 		});
 
-		this.jodit.events.on(this.jodit.ownerWindow, 'mouseup jodit_close_dialog', self.hide);
+		this.jodit.events.on(
+			this.jodit.ownerWindow,
+			'mouseup jodit_close_dialog',
+			self.hide
+		);
 
 		this.context.classList.add('jodit_context_menu-show');
 	}
