@@ -103,7 +103,7 @@ export class Popup extends Component {
 		);
 
 		this.container.style.display = 'block';
-		this.container.style.marginLeft = null;
+		this.container.style.removeProperty('marginLeft');
 	}
 
 	protected doClose() {

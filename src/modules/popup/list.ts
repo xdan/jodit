@@ -101,7 +101,7 @@ export class PopupList extends Popup {
 		});
 
 		this.container.appendChild(this.toolbar.container);
-		this.container.style.marginLeft = null;
+		this.container.style.removeProperty('marginLeft');
 
 		this.toolbar.checkActiveButtons();
 	}

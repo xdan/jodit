@@ -250,16 +250,14 @@ export namespace Widget {
 				tab: HTMLElement;
 			}> = {};
 
-		let
-			firstTab: string = '',
+		let firstTab: string = '',
 			tabcount: number = 0;
 
 		box.appendChild(buttons);
 		box.appendChild(tabBox);
 
 		each<(() => void) | HTMLElement>(tabs, (name: string, tabOptions) => {
-			const
-				tab = editor.create.div('jodit_tab'),
+			const tab = editor.create.div('jodit_tab'),
 				button = editor.create.element('a', {
 					href: 'javascript:void(0);'
 				});
@@ -268,7 +266,9 @@ export namespace Widget {
 				firstTab = name.toString();
 			}
 
-			button.innerHTML = /<svg/.test(name.toString()) ? name : editor.i18n(name.toString());
+			button.innerHTML = /<svg/.test(name.toString())
+				? name
+				: editor.i18n(name.toString());
 			buttons.appendChild(button);
 
 			if (typeof tabOptions !== 'function') {
@@ -398,15 +398,13 @@ export namespace Widget {
 		) {
 			const dragbox: HTMLElement = editor.create.fromHTML(
 				'<div class="jodit_draganddrop_file_box">' +
-					'<strong>' +
-					editor.i18n(isImage ? 'Drop image' : 'Drop file') +
-					'</strong>' +
-					'<span><br> ' +
-					editor.i18n('or click') +
-					'</span>' +
-					'<input type="file" accept="' +
-					(isImage ? 'image/*' : '*') +
-					'image/*" tabindex="-1" dir="auto" multiple=""/>' +
+					`<strong>${editor.i18n(
+						isImage ? 'Drop image' : 'Drop file'
+					)}</strong>` +
+					`<span><br>${editor.i18n('or click')}</span>` +
+					`<input type="file" accept="${
+						isImage ? 'image/*' : '*'
+					}" tabindex="-1" dir="auto" multiple=""/>` +
 					'</div>'
 			);
 

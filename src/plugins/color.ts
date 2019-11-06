@@ -27,7 +27,7 @@ Config.prototype.controls.brush = {
 			icon: SVGSVGElement | null = button.container.querySelector('svg');
 
 		if (icon && icon.style.fill) {
-			icon.style.fill = null;
+			icon.style.removeProperty('fill');
 		}
 
 		if (current && !button.isDisable()) {

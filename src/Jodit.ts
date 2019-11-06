@@ -357,8 +357,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			this.setNativeEditorValue(value);
 		}
 
-		const
-			old_value = this.getElementValue(),
+		const old_value = this.getElementValue(),
 			new_value = this.getEditorValue();
 
 		if (
@@ -828,7 +827,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		}
 
 		if (process.env.NODE_ENV !== 'production' && language !== 'en') {
-				throw new Error(`i18n need "${key}" in "${language}"`);
+			throw new Error(`i18n need "${key}" in "${language}"`);
 		}
 
 		return parse(key);
@@ -951,8 +950,8 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		) {
 			throw new Error(
 				'Element "' +
-				element +
-				'" should be string or HTMLElement instance'
+					element +
+					'" should be string or HTMLElement instance'
 			);
 		}
 
@@ -1054,7 +1053,10 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		const bs = this.options.toolbarButtonSize.toLowerCase();
 		this.container.classList.add(
-			'jodit_toolbar_size-' + (['middle', 'large', 'small'].indexOf(bs) !== -1 ? bs : 'middle')
+			'jodit_toolbar_size-' +
+				(['middle', 'large', 'small'].indexOf(bs) !== -1
+					? bs
+					: 'middle')
 		);
 
 		if (this.options.textIcons) {
@@ -1132,7 +1134,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	private __initPlugines() {
 		const dp = this.options.disablePlugins;
 		const disable = Array.isArray(dp)
-			? dp.map((name) => name.toLowerCase())
+			? dp.map(name => name.toLowerCase())
 			: dp.toLowerCase().split(/[\s,]+/);
 
 		Object.keys(Jodit.plugins).forEach((key: string) => {
@@ -1186,8 +1188,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 				false,
 				this.options.enter.toLowerCase()
 			);
-		} catch {
-		}
+		} catch {}
 
 		// fix for native resizing
 		try {
@@ -1244,7 +1245,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			.on(
 				this.editor,
 				'selectionchange selectionstart keydown keyup keypress mousedown mouseup mousepress ' +
-				'click copy cut dragstart drop dragover paste resize touchstart touchend focus blur',
+					'click copy cut dragstart drop dragover paste resize touchstart touchend focus blur',
 				(event: Event): false | void => {
 					if (this.options.readonly) {
 						return;
@@ -1318,10 +1319,15 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		if (this.element !== this.container) {
 			if (this.element.hasAttribute(this.__defaultStyleDisplayKey)) {
-				this.element.style.display = this.element.getAttribute(
+				const attr = this.element.getAttribute(
 					this.__defaultStyleDisplayKey
 				);
-				this.element.removeAttribute(this.__defaultStyleDisplayKey);
+
+				if (attr) {
+					this.element.style.display = attr;
+					this.element.removeAttribute(this.__defaultStyleDisplayKey);
+				}
+
 			} else {
 				this.element.style.display = '';
 			}

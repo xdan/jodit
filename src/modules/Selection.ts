@@ -26,8 +26,7 @@ import { trim } from './helpers/string';
 type WindowSelection = Selection | null;
 
 export class Select {
-	constructor(readonly jodit: IJodit) {
-	}
+	constructor(readonly jodit: IJodit) {}
 
 	/**
 	 * Throw Error exception if parameter is not Node
@@ -87,8 +86,7 @@ export class Select {
 	 * Remove all selected content
 	 */
 	remove() {
-		const
-			sel = this.sel,
+		const sel = this.sel,
 			current: false | Node = this.current();
 
 		if (sel && current) {
@@ -142,8 +140,7 @@ export class Select {
 			}
 
 			return true;
-		} catch {
-		}
+		} catch {}
 
 		return false;
 	}
@@ -227,8 +224,7 @@ export class Select {
 			sel && sel.removeAllRanges();
 
 			selectionInfo.forEach((selection: markerInfo) => {
-				const
-					range = this.createRange(),
+				const range = this.createRange(),
 					end = this.area.querySelector(
 						'#' + selection.endId
 					) as HTMLElement,
@@ -340,8 +336,7 @@ export class Select {
 
 			try {
 				sel.addRange(ranges[i].cloneRange());
-			} catch {
-			}
+			} catch {}
 		}
 
 		return info;
@@ -361,8 +356,7 @@ export class Select {
 			this.win.focus();
 			this.area.focus();
 
-			const
-				sel = this.sel,
+			const sel = this.sel,
 				range = this.createRange();
 
 			if (sel && (!sel.rangeCount || !this.current())) {
@@ -420,8 +414,7 @@ export class Select {
 			if (sel && sel.rangeCount > 0) {
 				const range = sel.getRangeAt(0);
 
-				let
-					node: Node | null = range.startContainer,
+				let node: Node | null = range.startContainer,
 					rightMode: boolean = false;
 
 				const child = (nd: Node): Node | null =>
@@ -433,8 +426,8 @@ export class Select {
 					if (!node) {
 						node =
 							range.startContainer.childNodes[
-							range.startOffset - 1
-								];
+								range.startOffset - 1
+							];
 						rightMode = true;
 					}
 
@@ -480,7 +473,7 @@ export class Select {
 							leftChild &&
 							rightChild &&
 							leftChild.nodeType !== Node.TEXT_NODE
-							);
+						);
 
 						if (
 							leftChild === rightChild &&
@@ -533,7 +526,6 @@ export class Select {
 			} else {
 				this.area.appendChild(node);
 			}
-
 		} else {
 			this.area.appendChild(node);
 		}
@@ -565,8 +557,7 @@ export class Select {
 			return;
 		}
 
-		const
-			node = this.jodit.create.inside.div(),
+		const node = this.jodit.create.inside.div(),
 			fragment = this.jodit.create.inside.fragment();
 
 		let lastChild: Node | null, lastEditorElement: Node | null;
@@ -615,7 +606,7 @@ export class Select {
 			lastEditorElement.previousSibling &&
 			lastEditorElement.nodeValue &&
 			/^\s*$/.test(lastEditorElement.nodeValue)
-			) {
+		) {
 			lastEditorElement = lastEditorElement.previousSibling;
 		}
 
@@ -715,15 +706,13 @@ export class Select {
 		if (sel && sel.rangeCount) {
 			const range = sel.getRangeAt(0);
 
-			const
-				nodes: Node[] = [],
-				startOffset: number = range.startOffset,
-				length: number = this.area.childNodes.length,
+			const nodes: Node[] = [],
+				startOffset = range.startOffset,
+				length = this.area.childNodes.length,
+				elementOffset = startOffset < length ? startOffset : length - 1,
 				start: Node =
 					range.startContainer === this.area
-						? this.area.childNodes[
-							startOffset < length ? startOffset : length - 1
-							]
+						? this.area.childNodes[elementOffset]
 						: range.startContainer,
 				end: Node =
 					range.endContainer === this.area
@@ -832,8 +821,7 @@ export class Select {
 	 * @return {boolean | null} true - the cursor is at the end(start) block, null - cursor somewhere outside
 	 */
 	cursorInTheEdge(start: boolean, parentBlock: HTMLElement): boolean | null {
-		const
-			sel = this.sel,
+		const sel = this.sel,
 			range: Range | null =
 				sel && sel.rangeCount ? sel.getRangeAt(0) : null;
 
@@ -865,15 +853,15 @@ export class Select {
 			if (
 				start &&
 				range.startOffset >
-				value.length -
-				value.replace(INVISIBLE_SPACE_REG_EXP_START, '').length
+					value.length -
+						value.replace(INVISIBLE_SPACE_REG_EXP_START, '').length
 			) {
 				return false;
 			}
 			if (
 				!start &&
 				range.startOffset <
-				value.replace(INVISIBLE_SPACE_REG_EXP_END, '').length
+					value.replace(INVISIBLE_SPACE_REG_EXP_END, '').length
 			) {
 				return false;
 			}
@@ -1081,8 +1069,7 @@ export class Select {
 			| IDictionary<string | string[]>
 			| IDictionary<(editor: IJodit, elm: HTMLElement) => boolean>
 	) {
-		const
-			WRAP = 1,
+		const WRAP = 1,
 			UNWRAP = 0,
 			defaultTag = 'SPAN',
 			FONT = 'FONT';
@@ -1145,8 +1132,8 @@ export class Select {
 						if (
 							mode === UNWRAP ||
 							css(elm, rule) ===
-							normilizeCSSValue(rule, cssRules[
-								rule
+								normilizeCSSValue(rule, cssRules[
+									rule
 								] as string)
 						) {
 							css(elm, rule, '');
@@ -1185,18 +1172,20 @@ export class Select {
 			// fix issue https://github.com/xdan/jodit/issues/65
 			$$('*[style*=font-size]', this.area).forEach((elm: HTMLElement) => {
 				elm.style &&
-				elm.style.fontSize &&
-				elm.setAttribute(
-					'data-font-size',
-					elm.style.fontSize.toString()
-				);
+					elm.style.fontSize &&
+					elm.setAttribute(
+						'data-font-size',
+						elm.style.fontSize.toString()
+					);
 			});
 
 			this.doc.execCommand('fontsize', false, '7');
 
 			$$('*[data-font-size]', this.area).forEach((elm: HTMLElement) => {
-				if (elm.style && elm.getAttribute('data-font-size')) {
-					elm.style.fontSize = elm.getAttribute('data-font-size');
+				const fontSize = elm.getAttribute('data-font-size');
+
+				if (elm.style && fontSize) {
+					elm.style.fontSize = fontSize;
 					elm.removeAttribute('data-font-size');
 				}
 			});
@@ -1235,8 +1224,7 @@ export class Select {
 				) {
 					toggleStyles(font.firstChild as HTMLElement);
 				} else if (Dom.closest(font, isSuitElement, this.area)) {
-					const
-						leftRange = this.createRange(),
+					const leftRange = this.createRange(),
 						wrapper = Dom.closest(
 							font,
 							isSuitElement,
@@ -1318,7 +1306,7 @@ export class Select {
 									this.doc
 								),
 								cssRules &&
-								nodeName.toUpperCase() === defaultTag
+									nodeName.toUpperCase() === defaultTag
 									? cssRules
 									: {}
 							);

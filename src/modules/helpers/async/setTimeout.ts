@@ -17,17 +17,18 @@
  * @param a3
  */
 export const setTimeout = <T1, T2, T3>(
-    callback: (a1?: T1, a2?: T2, a3?: T3) => any,
-    timeout: number,
-    a1?: T1,
-    a2?: T2,
-    a3?: T3
+	callback: (a1?: T1, a2?: T2, a3?: T3) => any,
+	timeout: number,
+	a1?: T1,
+	a2?: T2,
+	a3?: T3
 ): number => {
-    if (!timeout) {
-        callback.call(null, a1, a2, a3);
-    } else {
-        return window.setTimeout.call(window, callback, timeout, a1, a2, a3);
-    }
+	if (!timeout) {
+		callback.call(null, a1, a2, a3);
+	} else {
+		// @ts-ignore
+		return window.setTimeout.call(window, callback, timeout, a1, a2, a3);
+	}
 
-    return 0;
+	return 0;
 };
