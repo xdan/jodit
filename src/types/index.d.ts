@@ -7,3 +7,4 @@ export * from './types';
 export * from './jodit';
 export * from './create';
 export * from './events';
+export * from './ajax';

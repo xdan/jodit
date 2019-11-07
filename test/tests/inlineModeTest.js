@@ -416,7 +416,7 @@ describe('Test Inline mode', function() {
 		describe('Inline popups', function() {
 			describe('Click on Image', function() {
 				it('Should show inline popup', function(done) {
-					unmocPromise();
+					unmockPromise();
 					var editor = new Jodit(appendTestDiv(), {
 						iframe: true,
 						events: {
@@ -435,7 +435,7 @@ describe('Test Inline mode', function() {
 				});
 				describe('Disable toolbarInline = false', function() {
 					it('Should show inline popup', function(done) {
-						unmocPromise();
+						unmockPromise();
 						var editor = new Jodit(appendTestDiv(), {
 							toolbarInline: false,
 							iframe: true,
@@ -456,7 +456,7 @@ describe('Test Inline mode', function() {
 			describe('Click on Image', function() {
 				describe('On mobile', function() {
 					it('Should show inline popup', function(done) {
-						unmocPromise();
+						unmockPromise();
 						var editor = new Jodit(appendTestDiv(), {
 							iframe: true,
 							events: {
@@ -475,7 +475,7 @@ describe('Test Inline mode', function() {
 			});
 			describe('Click on link', function() {
 				it('Should show inline popup', function(done) {
-					unmocPromise();
+					unmockPromise();
 					var editor = new Jodit(appendTestDiv(), {
 						iframe: true,
 						events: {
@@ -494,7 +494,7 @@ describe('Test Inline mode', function() {
 				describe('Disable with toolbarInlineDisableFor', function() {
 					describe('Option like string', function() {
 						it('Should now show inline popup for link', function(done) {
-							unmocPromise();
+							unmockPromise();
 							var editor = new Jodit(appendTestDiv(), {
 								iframe: true,
 								toolbarInline: true,
@@ -526,7 +526,7 @@ describe('Test Inline mode', function() {
 					});
 					describe('Option like srray', function() {
 						it('Should now show inline popup for link', function(done) {
-							unmocPromise();
+							unmockPromise();
 							var editor = new Jodit(appendTestDiv(), {
 								iframe: true,
 								toolbarInline: true,
@@ -561,7 +561,7 @@ describe('Test Inline mode', function() {
 			});
 			describe('Click on table cell', function() {
 				it('Should show inline popup', function(done) {
-					unmocPromise();
+					unmockPromise();
 					var editor = new Jodit(appendTestDiv(), {
 						iframe: true,
 						events: {
@@ -579,7 +579,7 @@ describe('Test Inline mode', function() {
 			});
 			describe('Selection some text inside the editor', function() {
 				it('Should show inline popup', function(done) {
-					unmocPromise();
+					unmockPromise();
 					var editor = new Jodit(appendTestDiv(), {
 						preset: 'inline',
 						iframe: true,

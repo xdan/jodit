@@ -30,7 +30,9 @@ describe('Jodit FileBrowser Tests', function() {
 					}
 				}
 			});
+
 			new Jodit.modules.FileBrowser(editor).open(function() {});
+
 			expect(
 				editor.ownerDocument.querySelectorAll(
 					'.jodit_dialog_box.active[data-editor_id=' + editor.id + ']'
@@ -90,6 +92,57 @@ describe('Jodit FileBrowser Tests', function() {
 			).to.equal('Upload');
 		});
 	});
+
+	describe('Change Ajax options', function() {
+		describe('Use GET method instead POST', function() {
+			it('Should add params into url instead body', function(done) {
+				const filebrowser = new Jodit.modules.FileBrowser(null, {
+					ajax: {
+						url: 'https://xdsoft.net/jodit/connector/index.php',
+						method: 'GET'
+					}
+				});
+
+				filebrowser
+					.open(function() {})
+					.then(function () {
+							Jodit.modules.Ajax.log.forEach(function (req) {
+								expect(req.url).to.be.match(/\?action/);
+							});
+
+						done();
+					})
+					.catch(function(e) {
+					throw e;
+				});
+			});
+		});
+
+		describe('Use POST method', function() {
+			it('Should add params only into body', function(done) {
+				const filebrowser = new Jodit.modules.FileBrowser(null, {
+					ajax: {
+						url: 'https://xdsoft.net/jodit/connector/index.php',
+						method: 'POST'
+					}
+				});
+
+				filebrowser
+					.open(function() {})
+					.then(function () {
+						Jodit.modules.Ajax.log.forEach(function (req) {
+							expect(req.url).to.be.equal('https://xdsoft.net/jodit/connector/index.php');
+						});
+
+						done();
+					})
+					.catch(function(e) {
+						throw e;
+					});
+			});
+		});
+	});
+
 	describe('Toolbar', function() {
 		describe('Without Jodit', function() {
 			it('Should create filebrowser and show standart toolbar', function(done) {

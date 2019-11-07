@@ -1,7 +1,7 @@
 describe('Iframe mode', function() {
 	describe('Create editor with iframe node', function() {
 		it('Should create editable area in another document', function(done) {
-			unmocPromise();
+			unmockPromise();
 			var editor = new Jodit(appendTestArea(), {
 				iframe: true,
 				events: {
@@ -15,12 +15,12 @@ describe('Iframe mode', function() {
 		});
 		describe('And exec command', function() {
 			it('Should use body like editor area', function(done) {
-				unmocPromise();
+				unmockPromise();
 				var editor = new Jodit(appendTestArea(), {
 					iframe: true,
 					events: {
 						afterConstructor: function(editor) {
-							mocPromise();
+							mockPromise();
 							editor.value = 'test test stop';
 							expect('test test stop').to.be.equal(editor.editorDocument.body.innerHTML);
 
@@ -39,7 +39,7 @@ describe('Iframe mode', function() {
 		});
 		describe('Set value right after construct', function(done) {
 			it('Should set/get value without some trouble', function(done) {
-				unmocPromise();
+				unmockPromise();
 				const area = appendTestArea();
 
 				area.value = 'stop';
@@ -62,7 +62,7 @@ describe('Iframe mode', function() {
 	});
 	describe('Define document for iframe from some site', function() {
 		it('Should work perfect', function(done) {
-			unmocPromise();
+			unmockPromise();
 			var area = appendTestArea();
 
 			area.value = 'start value';

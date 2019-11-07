@@ -81,8 +81,10 @@ export namespace Widget {
 						')';
 				}
 			},
+
 			eachColor = (colors: string[] | IDictionary<string[]>) => {
 				const stack: string[] = [];
+
 				if (isPlainObject(colors)) {
 					Object.keys(colors).forEach(key => {
 						stack.push(
@@ -93,6 +95,7 @@ export namespace Widget {
 						stack.push(eachColor((colors as any)[key]));
 						stack.push('</div>');
 					});
+
 				} else if (Array.isArray(colors)) {
 					colors.forEach(color => {
 						stack.push(

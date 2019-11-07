@@ -125,7 +125,10 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	async loadTree(): Promise<any> {
 		const
 			path: string = this.dataProvider.currentPath,
-			source: string = this.dataProvider.currentSource;
+			source: string = this.dataProvider.currentSource,
+			error = (e: string | Error) => {
+				throw (e instanceof Error ? e : new Error(e));
+			};
 
 		if (this.uploader) {
 			this.uploader.setPath(path);
@@ -154,15 +157,18 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 						this.generateFolderTree(respData.data.sources);
 					}
 				})
-				.catch(() => {
+				.catch((e) => {
 					this.errorHandler(
 						new Error(this.jodit.i18n('Error on load folders'))
 					);
+
+					error(e);
 				});
 
 			const items = this.loadItems(path, source);
 
-			return Promise.all([tree, items]);
+			return Promise.all([tree, items]).catch(error);
+
 		} else {
 			this.tree.classList.remove('active');
 		}
@@ -364,7 +370,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	): Promise<void> => {
 		this.state.onlyImages = onlyImages;
 
-		return new Promise(resolve => {
+		return new Promise((resolve, reject) => {
 			if (!this.options.items || !this.options.items.url) {
 				throw new Error('Need set options.filebrowser.ajax.url');
 			}
@@ -403,7 +409,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 
 			this.events.fire('sort.filebrowser', this.state.sortBy);
 
-			this.loadTree().then(resolve);
+			this.loadTree().then(resolve, reject);
 		});
 	};
 

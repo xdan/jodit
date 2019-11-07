@@ -8,21 +8,26 @@
  */
 
 import { IDictionary } from '../../types';
+import { isPlainObject } from './checker';
 
 /**
- * Parse query string
+ * Build query string
  */
-export const parseQuery = (queryString: string): IDictionary<string> => {
-	const query: IDictionary<string> = {},
-		a = queryString.substr(1).split('&');
+export const buildQuery = (data: IDictionary, prefix?: string): string => {
+	const str: string[] = [];
 
+	const enc = encodeURIComponent;
 
-	for (let i = 0; i < a.length; i += 1) {
-		const keyValue = a[i].split('=');
-		query[decodeURIComponent(keyValue[0])] = decodeURIComponent(
-			keyValue[1] || ''
-		);
+	for (const dataKey in data) {
+		if (data.hasOwnProperty(dataKey)) {
+			const k = prefix ? prefix + '[' + dataKey + ']' : dataKey;
+			const v = data[dataKey];
+
+			str.push(
+				isPlainObject(v) ? buildQuery(v, k) : enc(k) + '=' + enc(v)
+			);
+		}
 	}
 
-	return query;
+	return str.join('&');
 };

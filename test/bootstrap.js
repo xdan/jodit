@@ -5,11 +5,11 @@ var
 	oldAjaxSender = Jodit.modules.Ajax.prototype.send,
 	naturalPromise = window.Promise;
 
-function mocPromise() {
+function mockPromise() {
 	window.Promise = SynchronousPromise;
 }
 
-function unmocPromise() {
+function unmockPromise() {
 	window.Promise = naturalPromise;
 }
 
@@ -31,9 +31,182 @@ var defaultPermissions = {
 	}
 };
 
-if (typeof window.chai !== 'undefined') {
-	mocPromise();
+function mockAjax() {
+	if (typeof window.chai !== 'undefined') {
+		Jodit.modules.Ajax.prototype.send = function() {
+			var ajax = this;
 
+			var request = this.prepareRequest();
+
+			var	action = request.data.action;
+
+			if (!action && request.data.get) {
+				action = request.data.get('action');
+			}
+
+			if (
+				action === undefined &&
+				request.url &&
+				request.url.match(/action=/)
+			) {
+				var actioExec = /action=([\w]+)/.exec(request.url);
+				action = actioExec[1];
+			}
+
+			return new Promise(function(resolve, reject) {
+				switch (action) {
+					case 'fileUpload':
+						var file = ajax.options.data.get('files[0]');
+						resolve({
+							success: true,
+							time: '2018-03-31 23:38:54',
+							data: {
+								baseurl: 'https://xdsoft.net/jodit/files/',
+								messages: [],
+								files: [file.name],
+								isImages: [/\.(png|jpg|gif)$/.test(file.name)],
+								code: 220
+							}
+						});
+						break;
+					case 'files':
+						resolve({
+							success: true,
+							time: '2018-03-15 12:49:49',
+							data: {
+								sources: {
+									default: {
+										baseurl: 'https://xdsoft.net/jodit/files/',
+										path: '',
+										files: [
+											{
+												file:
+													'1966051_524428741092238_1051008806888563137_o.jpg',
+												thumb:
+													'_thumbs/1966051_524428741092238_1051008806888563137_o.jpg',
+												changed: '03/15/2018 12:40 PM',
+												size: '126.59kB',
+												isImage: true
+											},
+											{
+												file: 'images.jpg',
+												thumb: '_thumbs/images.jpg',
+												changed: '01/15/2018 12:40 PM',
+												size: '6.84kB',
+												isImage: true
+											},
+											{
+												file: 'ibanez-s520-443140.jpg',
+												thumb:
+													'_thumbs/ibanez-s520-443140.jpg',
+												changed: '04/15/2018 12:40 PM',
+												size: '18.73kB',
+												isImage: true
+											},
+											{
+												file: 'test.txt',
+												thumb: '_thumbs/test.txt.png',
+												changed: '05/15/2018 12:40 PM',
+												size: '18.72kB',
+												isImage: false
+											}
+										]
+									}
+								},
+								code: 220
+							}
+						});
+						break;
+					case 'folders':
+						resolve({
+							success: true,
+							time: '2018-03-15 12:49:49',
+							data: {
+								sources: {
+									default: {
+										baseurl: 'https://xdsoft.net/jodit/files/',
+										path: '',
+										folders: ['.', 'ceicom', 'test']
+									}
+								},
+								code: 220
+							}
+						});
+						break;
+					case 'permissions':
+						resolve({
+							success: true,
+							time: '2018-03-15 12:49:49',
+							data: defaultPermissions,
+							code: 220
+						});
+						break;
+					case 'fileUploadRemote':
+						resolve({
+							success: true,
+							time: '2018-03-15 12:45:03',
+							data: {
+								newfilename: 'artio.jpg',
+								baseurl: 'https://xdsoft.net/jodit/files/',
+								code: 220
+							}
+						});
+						break;
+					case 'getLocalFileByUrl':
+						switch (ajax.options.data.url) {
+							case location.protocol +
+							'//' +
+							location.host +
+							'/tests/artio.jpg':
+							case location.protocol +
+							'//' +
+							location.host +
+							'/test/tests/artio.jpg':
+							case location.protocol +
+							'//' +
+							location.host +
+							'/jodit/test/tests/artio.jpg':
+							case 'https://xdsoft.net/jodit/files/th.jpg':
+								resolve({
+									success: true,
+									time: '2018-03-15 12:55:00',
+									data: {
+										path: '',
+										name: 'th.jpg',
+										source: 'default',
+										code: 220
+									}
+								});
+								break;
+							default:
+								resolve({
+									success: false,
+									time: '2018-03-15 12:08:54',
+									data: {
+										messages: [
+											'File does not exist or is above the root of the connector'
+										],
+										code: 424
+									}
+								});
+								break;
+						}
+						break;
+					default:
+						break;
+				}
+			});
+		};
+	}
+}
+
+function unmockAjax() {
+	Jodit.modules.Ajax.prototype.send = oldAjaxSender;
+}
+
+if (typeof window.chai !== 'undefined') {
+	mockPromise();
+	mockAjax();
 	window.FormData = function() {
 		this.data = {};
 		this.append = function(key, value) {
@@ -42,168 +215,6 @@ if (typeof window.chai !== 'undefined') {
 		this.get = function(key) {
 			return this.data[key];
 		};
-	};
-
-	Jodit.modules.Ajax.prototype.send = function(data) {
-		var ajax = this,
-			action = ajax.options.data.action;
-
-		if (!action && ajax.options.data.get) {
-			action = ajax.options.data.get('action');
-		}
-
-		if (
-			action === undefined &&
-			this.options.url &&
-			this.options.url.match(/action=/)
-		) {
-			var actioExec = /action=([\w]+)/.exec(this.options.url);
-			action = actioExec[1];
-		}
-
-		return new Promise(function(resolve, reject) {
-			switch (action) {
-				case 'fileUpload':
-					var file = ajax.options.data.get('files[0]');
-					resolve({
-						success: true,
-						time: '2018-03-31 23:38:54',
-						data: {
-							baseurl: 'https://xdsoft.net/jodit/files/',
-							messages: [],
-							files: [file.name],
-							isImages: [/\.(png|jpg|gif)$/.test(file.name)],
-							code: 220
-						}
-					});
-					break;
-				case 'files':
-					resolve({
-						success: true,
-						time: '2018-03-15 12:49:49',
-						data: {
-							sources: {
-								default: {
-									baseurl: 'https://xdsoft.net/jodit/files/',
-									path: '',
-									files: [
-										{
-											file:
-												'1966051_524428741092238_1051008806888563137_o.jpg',
-											thumb:
-												'_thumbs/1966051_524428741092238_1051008806888563137_o.jpg',
-											changed: '03/15/2018 12:40 PM',
-											size: '126.59kB',
-											isImage: true
-										},
-										{
-											file: 'images.jpg',
-											thumb: '_thumbs/images.jpg',
-											changed: '01/15/2018 12:40 PM',
-											size: '6.84kB',
-											isImage: true
-										},
-										{
-											file: 'ibanez-s520-443140.jpg',
-											thumb:
-												'_thumbs/ibanez-s520-443140.jpg',
-											changed: '04/15/2018 12:40 PM',
-											size: '18.73kB',
-											isImage: true
-										},
-										{
-											file: 'test.txt',
-											thumb: '_thumbs/test.txt.png',
-											changed: '05/15/2018 12:40 PM',
-											size: '18.72kB',
-											isImage: false
-										}
-									]
-								}
-							},
-							code: 220
-						}
-					});
-					break;
-				case 'folders':
-					resolve({
-						success: true,
-						time: '2018-03-15 12:49:49',
-						data: {
-							sources: {
-								default: {
-									baseurl: 'https://xdsoft.net/jodit/files/',
-									path: '',
-									folders: ['.', 'ceicom', 'test']
-								}
-							},
-							code: 220
-						}
-					});
-					break;
-				case 'permissions':
-					resolve({
-						success: true,
-						time: '2018-03-15 12:49:49',
-						data: defaultPermissions,
-						code: 220
-					});
-					break;
-				case 'fileUploadRemote':
-					resolve({
-						success: true,
-						time: '2018-03-15 12:45:03',
-						data: {
-							newfilename: 'artio.jpg',
-							baseurl: 'https://xdsoft.net/jodit/files/',
-							code: 220
-						}
-					});
-					break;
-				case 'getLocalFileByUrl':
-					switch (ajax.options.data.url) {
-						case location.protocol +
-						'//' +
-						location.host +
-						'/tests/artio.jpg':
-						case location.protocol +
-						'//' +
-						location.host +
-						'/test/tests/artio.jpg':
-						case location.protocol +
-						'//' +
-						location.host +
-						'/jodit/test/tests/artio.jpg':
-						case 'https://xdsoft.net/jodit/files/th.jpg':
-							resolve({
-								success: true,
-								time: '2018-03-15 12:55:00',
-								data: {
-									path: '',
-									name: 'th.jpg',
-									source: 'default',
-									code: 220
-								}
-							});
-							break;
-						default:
-							resolve({
-								success: false,
-								time: '2018-03-15 12:08:54',
-								data: {
-									messages: [
-										'File does not exist or is above the root of the connector'
-									],
-									code: 424
-								}
-							});
-							break;
-					}
-					break;
-				default:
-					break;
-			}
-		});
 	};
 }
 
@@ -298,7 +309,9 @@ function removeStuff() {
 			simulateEvent('close_dialog', 0, dialog);
 		});
 
-	mocPromise();
+	Jodit.modules.Ajax.log.length = 0;
+
+	mockPromise();
 }
 
 if (typeof afterEach === 'function') {

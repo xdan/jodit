@@ -32,6 +32,8 @@ export * from './JoditArray';
 export * from './JoditObject';
 
 export * from './parseQuery';
+export * from './buildQuery';
+
 export * from './scrollIntoView';
 export * from './selector';
 export * from './type';

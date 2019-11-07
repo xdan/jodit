@@ -83,7 +83,7 @@ export default class dataProvider implements IFileBrowserDataProvider {
 			opts.data = opts.prepareData.call(this, <IDictionary>opts.data);
 		}
 
-		const ajax: Ajax = new Ajax(this.parent, opts);
+		const ajax = new Ajax(this.parent, opts);
 
 		const promise = ajax.send();
 

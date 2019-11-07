@@ -14,7 +14,7 @@ describe('Test states', function() {
 			});
 			describe('For iframe', function() {
 				it('Should deny edit content in iframe\'s body', function(done) {
-					unmocPromise();
+					unmockPromise();
 
 					var editor = new Jodit(appendTestArea(), {
 						readonly: true,
