@@ -1890,6 +1890,7 @@ describe('Test plugins', function() {
 					expect(editor.ownerWindow.getComputedStyle(statusbar).display).to.be.equal('block');
 
 				});
+
 				it('Should show path to selection element', function() {
 					var editor = new Jodit(appendTestArea(), {
 						language: 'en',
@@ -1904,11 +1905,12 @@ describe('Test plugins', function() {
 
 					var statusbar = editor.container.querySelector('.jodit_statusbar ul');
 					expect(statusbar).to.be.not.equal(null);
-					expect(statusbar.firstChild.textContent).to.be.equal('');
-					expect(statusbar.childNodes[1].textContent).to.be.equal('p');
-					expect(statusbar.childNodes[2].textContent).to.be.equal('a');
+					expect(statusbar.firstChild.innerText).to.be.equal('');
+					expect(statusbar.childNodes[1].innerText).to.be.equal('p');
+					expect(statusbar.childNodes[2].innerText).to.be.equal('a');
 
 				});
+
 				describe('After change selection', function() {
 					it('Should change path to selection element', function() {
 						var editor = new Jodit(appendTestArea(), {
@@ -1925,13 +1927,13 @@ describe('Test plugins', function() {
 						var statusbar = editor.container.querySelector('.jodit_statusbar ul');
 
 						expect(statusbar).to.be.not.equal(null);
-						expect(statusbar.firstChild.textContent).to.be.equal('');
+						expect(statusbar.firstChild.innerText).to.be.equal('');
 						expect(statusbar.childNodes[1].textContent).to.be.equal('p');
 						expect(statusbar.childNodes[2].textContent).to.be.equal('a');
 
 						editor.selection.setCursorIn(editor.editor.querySelector('span'));
 
-						expect(statusbar.firstChild.textContent).to.be.equal('');
+						expect(statusbar.firstChild.innerText).to.be.equal('');
 						expect(statusbar.childNodes[1].textContent).to.be.equal('p');
 						expect(statusbar.childNodes[2].textContent).to.be.equal('span');
 					});
@@ -1952,7 +1954,7 @@ describe('Test plugins', function() {
 						var statusbar = editor.container.querySelector('.jodit_statusbar ul');
 
 						expect(statusbar).to.be.not.equal(null);
-						expect(statusbar.firstChild.textContent).to.be.equal('');
+						expect(statusbar.firstChild.innerText).to.be.equal('');
 						expect(statusbar.childNodes[1].textContent).to.be.equal('p');
 						expect(statusbar.childNodes[2].textContent).to.be.equal('a');
 
@@ -1983,7 +1985,7 @@ describe('Test plugins', function() {
 						var statusbar = editor.container.querySelector('.jodit_statusbar ul');
 
 						expect(statusbar).to.be.not.equal(null);
-						expect(statusbar.firstChild.textContent).to.be.equal('');
+						expect(statusbar.firstChild.innerText).to.be.equal('');
 						expect(statusbar.childNodes[1].textContent).to.be.equal('p');
 						expect(statusbar.childNodes[2].textContent).to.be.equal('a');
 

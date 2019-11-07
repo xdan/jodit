@@ -16,6 +16,7 @@ import { getXPathByElement } from '../modules/helpers/selector';
 import { Plugin } from '../modules/Plugin';
 import { ToolbarButton } from '../modules/toolbar/button';
 import { IControlType, IControlTypeStrong } from '../types/toolbar';
+import { trim } from '../modules/helpers/string';
 
 declare module '../Config' {
 	interface Config {
@@ -61,6 +62,7 @@ export class xpath extends Plugin {
 				}
 			}
 		]);
+
 		return false;
 	};
 
@@ -116,12 +118,12 @@ export class xpath extends Plugin {
 				'" ' +
 				'tabindex="-1"' +
 				'>' +
-				name +
+			trim(name) +
 				'</a>' +
 				'</li>'
 		) as HTMLLIElement;
 
-		const a: HTMLAnchorElement = li.firstChild as HTMLAnchorElement;
+		const a = li.firstChild as HTMLAnchorElement;
 
 		this.jodit.events
 			.on(a, 'click', this.onSelectPath.bind(this, bindElement))

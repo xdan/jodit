@@ -1,7 +1,7 @@
 /*!
  jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- Version: v3.2.57
+ Version: v3.2.58
  Url: https://xdsoft.net/jodit/
  License(s): GPL-2.0-or-later OR MIT OR Commercial
 */
@@ -101,7 +101,7 @@
  * For MIT see LICENSE-MIT.txt in the project root for license information.
  * For commercial licenses see https://xdsoft.net/jodit/commercial/
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */.jodit_filebrowser_preview{text-align:center;min-width:600px;max-width:1000px;min-height:700px;max-height:100%;position:relative}.jodit_filebrowser_preview,.jodit_filebrowser_preview_box{display:-ms-flexbox;display:flex;-ms-flex-pack:center;justify-content:center;-ms-flex-align:center;align-items:center}.jodit_filebrowser_preview_box{-ms-flex-positive:1;flex-grow:1}.jodit_filebrowser_preview_navigation{position:absolute;top:0;height:100%;left:0}.jodit_filebrowser_preview_navigation-next{left:auto;right:0}.jodit_filebrowser_preview_navigation svg{width:45px;height:45px;position:relative;top:50%;margin-top:-22px;transition:fill .3s linear;fill:#9e9ba7}.jodit_filebrowser_preview_navigation:hover svg{fill:#000}.jodit_filebrowser_preview img{max-width:100%;max-height:100%}
+ */.jodit_filebrowser_preview{text-align:center;min-width:600px;max-width:1000px;min-height:700px;max-height:100%;position:relative;display:-ms-flexbox;display:flex;-ms-flex-pack:center;justify-content:center;-ms-flex-align:center;align-items:center}@media (max-width:768px){.jodit_filebrowser_preview{max-width:100%;max-height:100%;min-width:auto;min-height:auto;height:100%}}.jodit_filebrowser_preview_box{-ms-flex-positive:1;flex-grow:1;display:-ms-flexbox;display:flex;-ms-flex-pack:center;justify-content:center;-ms-flex-align:center;align-items:center}.jodit_filebrowser_preview_navigation{position:absolute;top:0;height:100%;left:0}.jodit_filebrowser_preview_navigation-next{left:auto;right:0}.jodit_filebrowser_preview_navigation svg{width:45px;height:45px;position:relative;top:50%;margin-top:-22px;transition:fill .3s linear;fill:#9e9ba7}.jodit_filebrowser_preview_navigation:hover svg{fill:#000}.jodit_filebrowser_preview img{max-width:100%;max-height:100%}
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
