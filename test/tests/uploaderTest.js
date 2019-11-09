@@ -2,8 +2,7 @@ describe('Test uploader module', function() {
 	describe('Drop file', function() {
 		describe('Drop Image like base64', function() {
 			it('Should insert image with SRC in base64', function(done) {
-				const
-					file = new FileImage(),
+				const file = new FileImage(),
 					editor = new Jodit(appendTestArea(), {
 						uploader: {
 							insertImageAsBase64URI: true
@@ -11,7 +10,13 @@ describe('Test uploader module', function() {
 						events: {
 							afterInsertImage: function(img) {
 								expect(img.src).to.be.equal(file.dataURI);
-								expect(sortAttributes(editor.value)).to.be.equal('<img src="' + file.dataURI + '" style="width:300px">');
+								expect(
+									sortAttributes(editor.value)
+								).to.be.equal(
+									'<img src="' +
+										file.dataURI +
+										'" style="width:300px">'
+								);
 								done();
 							}
 						}
@@ -20,30 +25,34 @@ describe('Test uploader module', function() {
 				simulateEvent('drop', 0, editor.editor, function(data) {
 					Object.defineProperty(data, 'dataTransfer', {
 						value: {
-							files: [
-								file
-							]
+							files: [file]
 						}
 					});
 				});
-
 			});
 		});
 
 		describe('Drop Image and upload on server', function() {
 			it('Should upload file and insert image with SRC from server', function(done) {
-				var file = new FileImage(),
+				const file = new FileImage(),
 					editor = new Jodit(appendTestArea(), {
 						observer: {
 							timeout: 0
 						},
 						uploader: {
-							url: 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'
+							url:
+								'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'
 						},
 						events: {
 							afterInsertImage: function(img) {
-								expect(img.src).to.be.equal('https://xdsoft.net/jodit/files/logo.gif');
-								expect(sortAttributes(editor.value)).to.be.equal('<img src="https://xdsoft.net/jodit/files/logo.gif" style="width:300px">');
+								expect(img.src).to.be.equal(
+									'https://xdsoft.net/jodit/files/logo.gif'
+								);
+								expect(
+									sortAttributes(editor.value)
+								).to.be.equal(
+									'<img src="https://xdsoft.net/jodit/files/logo.gif" style="width:300px">'
+								);
 								done();
 							}
 						}
@@ -52,29 +61,34 @@ describe('Test uploader module', function() {
 				simulateEvent('drop', 0, editor.editor, function(data) {
 					Object.defineProperty(data, 'dataTransfer', {
 						value: {
-							files: [
-								file
-							]
+							files: [file]
 						}
 					});
 				});
-
 			});
+
 			describe('For iframe mode', function() {
 				it('Should upload file and insert image with SRC from server', function(done) {
-					var file = new FileImage(),
+					const file = new FileImage(),
 						editor = new Jodit(appendTestArea(), {
 							iframe: true,
 							observer: {
 								timeout: 0
 							},
 							uploader: {
-								url: 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'
+								url:
+									'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'
 							},
 							events: {
 								afterInsertImage: function(img) {
-									expect(img.src).to.be.equal('https://xdsoft.net/jodit/files/logo.gif');
-									expect(sortAttributes(editor.value)).to.be.equal('<img src="https://xdsoft.net/jodit/files/logo.gif" style="width:300px">');
+									expect(img.src).to.be.equal(
+										'https://xdsoft.net/jodit/files/logo.gif'
+									);
+									expect(
+										sortAttributes(editor.value)
+									).to.be.equal(
+										'<img src="https://xdsoft.net/jodit/files/logo.gif" style="width:300px">'
+									);
 									done();
 								}
 							}
@@ -84,32 +98,34 @@ describe('Test uploader module', function() {
 						simulateEvent('drop', 0, editor.editor, function(data) {
 							Object.defineProperty(data, 'dataTransfer', {
 								value: {
-									files: [
-										file
-									]
+									files: [file]
 								}
 							});
 						});
 					}, 300);
-
 				});
 			});
 		});
 
 		describe('Drop File and upload on server', function() {
 			it('Should upload file and insert A element with HREF to file on server', function(done) {
-				var file = new FileXLS(),
+				const file = new FileXLS(),
 					editor = new Jodit(appendTestArea(), {
 						observer: {
 							timeout: 0
 						},
 						uploader: {
-							url: 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'
+							url:
+								'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'
 						},
 						events: {
 							afterInsertNode: function(node) {
-								expect(node.href).to.be.equal('https://xdsoft.net/jodit/files/file.xls');
-								expect(editor.value).to.be.equal('<a href="https://xdsoft.net/jodit/files/file.xls">https://xdsoft.net/jodit/files/file.xls</a>');
+								expect(node.href).to.be.equal(
+									'https://xdsoft.net/jodit/files/file.xls'
+								);
+								expect(editor.value).to.be.equal(
+									'<a href="https://xdsoft.net/jodit/files/file.xls">https://xdsoft.net/jodit/files/file.xls</a>'
+								);
 								done();
 							}
 						}
@@ -118,9 +134,7 @@ describe('Test uploader module', function() {
 				simulateEvent('drop', 0, editor.editor, function(data) {
 					Object.defineProperty(data, 'dataTransfer', {
 						value: {
-							files: [
-								file
-							]
+							files: [file]
 						}
 					});
 				});
@@ -128,19 +142,24 @@ describe('Test uploader module', function() {
 
 			describe('Drop with insertImageAsBase64URI=true', function() {
 				it('Should upload file and insert A element with HREF to file on server', function(done) {
-					var file = new FileXLS(),
+					const file = new FileXLS(),
 						editor = new Jodit(appendTestArea(), {
 							observer: {
 								timeout: 0
 							},
 							uploader: {
-								url: 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload',
+								url:
+									'https://xdsoft.net/jodit/connector/index.php?action=fileUpload',
 								insertImageAsBase64URI: true
 							},
 							events: {
 								afterInsertNode: function(node) {
-									expect(node.href).to.be.equal('https://xdsoft.net/jodit/files/file.xls');
-									expect(editor.value).to.be.equal('<a href="https://xdsoft.net/jodit/files/file.xls">https://xdsoft.net/jodit/files/file.xls</a>');
+									expect(node.href).to.be.equal(
+										'https://xdsoft.net/jodit/files/file.xls'
+									);
+									expect(editor.value).to.be.equal(
+										'<a href="https://xdsoft.net/jodit/files/file.xls">https://xdsoft.net/jodit/files/file.xls</a>'
+									);
 									done();
 								}
 							}
@@ -149,13 +168,10 @@ describe('Test uploader module', function() {
 					simulateEvent('drop', 0, editor.editor, function(data) {
 						Object.defineProperty(data, 'dataTransfer', {
 							value: {
-								files: [
-									file
-								]
+								files: [file]
 							}
 						});
 					});
-
 				});
 			});
 		});

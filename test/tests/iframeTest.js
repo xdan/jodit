@@ -2,7 +2,7 @@ describe('Iframe mode', function() {
 	describe('Create editor with iframe node', function() {
 		it('Should create editable area in another document', function(done) {
 			unmockPromise();
-			var editor = new Jodit(appendTestArea(), {
+			const editor = new Jodit(appendTestArea(), {
 				iframe: true,
 				events: {
 					afterConstructor: function(editor) {
@@ -16,7 +16,7 @@ describe('Iframe mode', function() {
 		describe('And exec command', function() {
 			it('Should use body like editor area', function(done) {
 				unmockPromise();
-				var editor = new Jodit(appendTestArea(), {
+				const editor = new Jodit(appendTestArea(), {
 					iframe: true,
 					events: {
 						afterConstructor: function(editor) {
@@ -24,7 +24,7 @@ describe('Iframe mode', function() {
 							editor.value = 'test test stop';
 							expect('test test stop').to.be.equal(editor.editorDocument.body.innerHTML);
 
-							var range = editor.selection.createRange();
+							const range = editor.selection.createRange();
 							range.selectNodeContents(editor.editorDocument.body);
 							editor.selection.selectRange(range);
 
@@ -63,11 +63,11 @@ describe('Iframe mode', function() {
 	describe('Define document for iframe from some site', function() {
 		it('Should work perfect', function(done) {
 			unmockPromise();
-			var area = appendTestArea();
+			const area = appendTestArea();
 
 			area.value = 'start value';
 
-			var editor = new Jodit(area, {
+			const editor = new Jodit(area, {
 				iframe: true,
 				// preset: "inline",
 				// fullsize: true,

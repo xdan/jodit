@@ -4,7 +4,7 @@ describe('Drag and drop element inside Editor', function () {
     }).forEach(function (events) {
         describe(events[0] + ' and move image inside the editor', function () {
             it('Should ' + events[1] + ' dom element', function () {
-                var editor = new Jodit(appendTestArea());
+                const editor = new Jodit(appendTestArea());
                 editor.value = '<p>1111</p>' +
                     '<p>2222</p>' +
                     '<img style="width: 100px" src="https://xdsoft.net/jodit/build/images/artio.jpg" alt="">' +
@@ -14,7 +14,7 @@ describe('Drag and drop element inside Editor', function () {
                     simulateEvent(events[0], 0, editor.editor.getElementsByTagName('img')[0]);
 
                 window.scrollTo(0, 100000);
-                var box = offset(editor.editor.querySelectorAll('p')[1]);
+                const box = offset(editor.editor.querySelectorAll('p')[1]);
                 // createPoint(box.left + 15, box.top + 5);
 
                 simulateEvent(events[1], 0, editor.editor, function (options) {
@@ -37,7 +37,7 @@ describe('Drag and drop element inside Editor', function () {
         });
         describe(events[1] + ' image inside anchor', function () {
             it('Should ' + events[1] + ' anchor with image', function () {
-                var editor = new Jodit(appendTestArea());
+                const editor = new Jodit(appendTestArea());
                 editor.value = '<p>1111</p>' +
                     '<p>2222</p>' +
                     '<a href="#test"><img style="width: 100px" src="https://xdsoft.net/jodit/build/images/artio.jpg" alt=""></a>' +
@@ -46,7 +46,7 @@ describe('Drag and drop element inside Editor', function () {
 
                 simulateEvent(events[0], 0, editor.editor.getElementsByTagName('img')[0]);
 
-                var box = Jodit.modules.Helpers.offset(editor.editor.querySelectorAll('p')[1], editor, editor.editorDocument);
+                const box = Jodit.modules.Helpers.offset(editor.editor.querySelectorAll('p')[1], editor, editor.editorDocument);
 
                 simulateEvent(events[1], 0, editor.editor, function (options) {
                     options.clientX = box.left + 15;
@@ -63,11 +63,11 @@ describe('Drag and drop element inside Editor', function () {
         });
         describe('Disable dragging', function () {
             it('Should not move image', function () {
-                var editor = new Jodit(appendTestArea(), {
+                const editor = new Jodit(appendTestArea(), {
                     draggableTags: [],
                 });
 
-                var defaultValue = '<p>1111</p>' +
+                const defaultValue = '<p>1111</p>' +
                     '<p>2222</p>' +
                     '<a href="#test"><img style="width: 100px" src="https://xdsoft.net/jodit/build/images/artio.jpg" alt=""></a>' +
                     '<p>3333</p>' +
@@ -77,7 +77,7 @@ describe('Drag and drop element inside Editor', function () {
 
                 simulateEvent(events[0], 0, editor.editor.getElementsByTagName('img')[0]);
 
-                var box = Jodit.modules.Helpers.offset(editor.editor.querySelectorAll('p')[1], editor, editor.editorDocument);
+                const box = Jodit.modules.Helpers.offset(editor.editor.querySelectorAll('p')[1], editor, editor.editorDocument);
 
                 simulateEvent(events[1], 0, editor.editor, function (options) {
                     options.clientX = box.left + 15;

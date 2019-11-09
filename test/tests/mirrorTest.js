@@ -1,7 +1,8 @@
 describe('CodeMirror editor source code', function() {
 	describe('Init', function() {
 		it('After init container must has codeeditor container', function(done) {
-			var timeout,
+			let timeout;
+			const
 				area = appendTestArea(false, true),
 				__done = function() {
 					clearTimeout(timeout);
@@ -34,7 +35,7 @@ describe('CodeMirror editor source code', function() {
 	describe('Change mode', function() {
 		describe('In WYSIWYG mode isEditorMode', function() {
 			it('Should return true', function() {
-				var editor = new Jodit(appendTestArea());
+				const editor = new Jodit(appendTestArea());
 				expect(editor.isEditorMode()).to.be.true;
 				editor.toggleMode();
 				expect(editor.isEditorMode()).to.be.false;
@@ -42,12 +43,12 @@ describe('CodeMirror editor source code', function() {
 		});
 
 		it('Should not fire Change event', function() {
-			var editor = new Jodit(appendTestArea(), {
+			const editor = new Jodit(appendTestArea(), {
 				useAceEditor: false // because onChange can be fired after aceInited
 			});
 
-			var defaultValue = 'test';
-			var count = 0;
+			const defaultValue = 'test';
+			let count = 0;
 
 			editor.value = defaultValue;
 
@@ -70,13 +71,13 @@ describe('CodeMirror editor source code', function() {
 
 		describe('After change mode to source mode and use insertHTML method', function() {
 			it('Should insert text on caret position', function(done) {
-				var editor = new Jodit(appendTestArea(), {
+				const editor = new Jodit(appendTestArea(), {
 					useAceEditor: true,
 					beautifyHTML: false,
 					events: {
 						aceInited: function(jodit) {
 							jodit.value = '<p>test <span>test</span> test</p>';
-							var range = jodit.editorDocument.createRange();
+							const range = jodit.editorDocument.createRange();
 							range.selectNodeContents(jodit.editor.querySelector('span'));
 							range.collapse(false);
 							jodit.selection.selectRange(range);
@@ -93,11 +94,11 @@ describe('CodeMirror editor source code', function() {
 
 			describe('Without ace', function() {
 				it('Should insert text on caret position', function() {
-					var editor = new Jodit(appendTestArea(), {
+					const editor = new Jodit(appendTestArea(), {
 						useAceEditor: false
 					});
 					editor.value = '<p>one <span>two</span> three</p>';
-					var range = editor.editorDocument.createRange();
+					const range = editor.editorDocument.createRange();
 					range.selectNodeContents(editor.editor.querySelector('span'));
 					range.collapse(false);
 					editor.selection.selectRange(range);

@@ -1,7 +1,6 @@
 typeof window.chai !== 'undefined' && (chai.config.includeStack = true);
 
-var
-	oldI18n = Jodit.prototype.i18n,
+const oldI18n = Jodit.prototype.i18n,
 	oldAjaxSender = Jodit.modules.Ajax.prototype.send,
 	naturalPromise = window.Promise;
 
@@ -13,7 +12,7 @@ function unmockPromise() {
 	window.Promise = naturalPromise;
 }
 
-var defaultPermissions = {
+const defaultPermissions = {
 	permissions: {
 		allowFiles: true,
 		allowFileMove: true,
@@ -34,11 +33,11 @@ var defaultPermissions = {
 function mockAjax() {
 	if (typeof window.chai !== 'undefined') {
 		Jodit.modules.Ajax.prototype.send = function() {
-			var ajax = this;
+			const ajax = this;
 
-			var request = this.prepareRequest();
+			const request = this.prepareRequest();
 
-			var	action = request.data.action;
+			let action = request.data.action;
 
 			if (!action && request.data.get) {
 				action = request.data.get('action');
@@ -49,14 +48,14 @@ function mockAjax() {
 				request.url &&
 				request.url.match(/action=/)
 			) {
-				var actioExec = /action=([\w]+)/.exec(request.url);
+				const actioExec = /action=([\w]+)/.exec(request.url);
 				action = actioExec[1];
 			}
 
-			return new Promise(function(resolve, reject) {
+			return new Promise(function(resolve) {
 				switch (action) {
 					case 'fileUpload':
-						var file = ajax.options.data.get('files[0]');
+						const file = ajax.options.data.get('files[0]');
 						resolve({
 							success: true,
 							time: '2018-03-31 23:38:54',
@@ -76,7 +75,8 @@ function mockAjax() {
 							data: {
 								sources: {
 									default: {
-										baseurl: 'https://xdsoft.net/jodit/files/',
+										baseurl:
+											'https://xdsoft.net/jodit/files/',
 										path: '',
 										files: [
 											{
@@ -124,7 +124,8 @@ function mockAjax() {
 							data: {
 								sources: {
 									default: {
-										baseurl: 'https://xdsoft.net/jodit/files/',
+										baseurl:
+											'https://xdsoft.net/jodit/files/',
 										path: '',
 										folders: ['.', 'ceicom', 'test']
 									}
@@ -155,17 +156,17 @@ function mockAjax() {
 					case 'getLocalFileByUrl':
 						switch (ajax.options.data.url) {
 							case location.protocol +
-							'//' +
-							location.host +
-							'/tests/artio.jpg':
+								'//' +
+								location.host +
+								'/tests/artio.jpg':
 							case location.protocol +
-							'//' +
-							location.host +
-							'/test/tests/artio.jpg':
+								'//' +
+								location.host +
+								'/test/tests/artio.jpg':
 							case location.protocol +
-							'//' +
-							location.host +
-							'/jodit/test/tests/artio.jpg':
+								'//' +
+								location.host +
+								'/jodit/test/tests/artio.jpg':
 							case 'https://xdsoft.net/jodit/files/th.jpg':
 								resolve({
 									success: true,
@@ -218,12 +219,12 @@ if (typeof window.chai !== 'undefined') {
 	};
 }
 
-var i18nkeys = [];
+const i18nkeys = [];
 
 Jodit.prototype.i18n = function(key) {
 	i18nkeys.indexOf(key) === -1 &&
-	key.indexOf('<svg') === -1 &&
-	i18nkeys.push(key);
+		key.indexOf('<svg') === -1 &&
+		i18nkeys.push(key);
 	return oldI18n.apply(this, arguments);
 };
 
@@ -253,37 +254,36 @@ td,th {\
 
 if (String.prototype.repeat === undefined) {
 	String.prototype.repeat = function(count) {
-		var result = [];
-		for (var i = 0; i < count; i++) {
+		const result = [];
+
+		for (let i = 0; i < count; i++) {
 			result.push(this);
 		}
+
 		return result.join('');
 	};
 }
 
 (function(e) {
 	e.matches ||
-	(e.matches =
-		e['matchesSelector'] !== undefined
-			? e['matchesSelector']
-			: function(selector) {
-				const matches = this.ownerDocument.querySelectorAll(
-					selector
-					),
-					th = this;
-				return Array.prototype.some.call(matches, function(e) {
-					return e === th;
-				});
-			});
+		(e.matches =
+			e['matchesSelector'] !== undefined
+				? e['matchesSelector']
+				: function(selector) {
+						const matches = this.ownerDocument.querySelectorAll(
+								selector
+							),
+							th = this;
+						return Array.prototype.some.call(matches, function(e) {
+							return e === th;
+						});
+				  });
 })(Element.prototype);
 
-var
-	expect = typeof chai !== 'undefined' ? chai.expect : function() {
-	},
+const expect = typeof chai !== 'undefined' ? chai.expect : function() {},
 	stuff = [];
 
-var
-	box = document.createElement('div');
+const box = document.createElement('div');
 
 document.body.appendChild(box);
 
@@ -298,16 +298,17 @@ function removeStuff() {
 
 	stuff.forEach(function(elm) {
 		elm && elm.parentNode && elm.parentNode.removeChild(elm);
+
 		delete elm;
 	});
 
 	stuff.length = 0;
 
-	Array
-		.from(document.querySelectorAll('.jodit.jodit_dialog_box.active'))
-		.forEach(function(dialog) {
-			simulateEvent('close_dialog', 0, dialog);
-		});
+	Array.from(
+		document.querySelectorAll('.jodit.jodit_dialog_box.active')
+	).forEach(function(dialog) {
+		simulateEvent('close_dialog', 0, dialog);
+	});
 
 	Jodit.modules.Ajax.log.length = 0;
 
@@ -319,7 +320,7 @@ if (typeof afterEach === 'function') {
 }
 
 function appendTestArea(id, noput) {
-	var textarea = document.createElement('textarea');
+	const textarea = document.createElement('textarea');
 	textarea.setAttribute('id', id || 'editor_' + new Date().getTime());
 	box.appendChild(textarea);
 	!noput && stuff.push(textarea);
@@ -327,7 +328,7 @@ function appendTestArea(id, noput) {
 }
 
 function appendTestDiv(id, noput) {
-	var textarea = document.createElement('div');
+	const textarea = document.createElement('div');
 	textarea.setAttribute('id', id || 'editor_' + new Date().getTime());
 	box.appendChild(textarea);
 	!noput && stuff.push(textarea);
@@ -339,9 +340,9 @@ function trim(value) {
 }
 
 function toFixedWithoutRounding(value, precision) {
-	var factorError = Math.pow(10, 14);
-	var factorTruncate = Math.pow(10, 14 - precision);
-	var factorDecimal = Math.pow(10, precision);
+	const factorError = Math.pow(10, 14);
+	const factorTruncate = Math.pow(10, 14 - precision);
+	const factorDecimal = Math.pow(10, precision);
 	return (
 		Math.floor(Math.floor(value * factorError + 1) / factorTruncate) /
 		factorDecimal
@@ -349,63 +350,64 @@ function toFixedWithoutRounding(value, precision) {
 }
 
 function sortStyles(matches) {
-	var styles = matches
-		.replace(/&quot;/g, '\'')
-		.replace(/"/g, '\'')
+	let styles = matches
+		.replace(/&quot;/g, "'")
+		.replace(/"/g, "'")
 		.split(';');
 
 	styles = styles.map(trim).filter(function(elm) {
 		return elm.length;
 	});
 
-	var border = null;
+	let border = null;
+
 	styles = styles
 		.map(function(elm) {
-			var keyvalue = elm.split(':').map(trim);
+			const keyValue = elm.split(':').map(trim);
 
-			if (keyvalue[0] === 'border-image') {
+			if (keyValue[0] === 'border-image') {
 				return null;
 			}
 
-			if (/rgb\(/.test(keyvalue[1])) {
-				keyvalue[1] = keyvalue[1].replace(/rgb\([^\)]+\)/, function(
+			if (/rgb\(/.test(keyValue[1])) {
+				keyValue[1] = keyValue[1].replace(/rgb\([^\)]+\)/, function(
 					match
 				) {
 					return Jodit.modules.Helpers.normalizeColor(match);
 				});
 			}
 
-			if (keyvalue[0].match(/^border$/)) {
-				keyvalue[1] = keyvalue[1].split(/[\s]+/);
+			if (keyValue[0].match(/^border$/)) {
+				keyValue[1] = keyValue[1].split(/[\s]+/);
 			}
 
-			if (keyvalue[0].match(/^border-(style|width|color)/)) {
+			if (keyValue[0].match(/^border-(style|width|color)/)) {
 				if (border === null) {
-					border = keyvalue;
-					keyvalue[0] = 'border';
-					keyvalue[1] = [keyvalue[1]];
+					border = keyValue;
+					keyValue[0] = 'border';
+					keyValue[1] = [keyValue[1]];
 				} else {
-					border[1].push(keyvalue[1]);
+					border[1].push(keyValue[1]);
 					return null;
 				}
 			}
 
-			if (/font-family/i.test(keyvalue[0])) {
-				keyvalue[1] = keyvalue[1]
+			if (/font-family/i.test(keyValue[0])) {
+				keyValue[1] = keyValue[1]
 					.split(',')
 					.map(Jodit.modules.Helpers.trim)
 					.join(',');
 			}
 
-			if (/%$/.test(keyvalue[1])) {
-				var fl = parseFloat(keyvalue[1]),
-					nt = parseInt(keyvalue[1], 10);
+			if (/%$/.test(keyValue[1])) {
+				const fl = parseFloat(keyValue[1]),
+					nt = parseInt(keyValue[1], 10);
 				if (fl - nt > 0) {
-					keyvalue[1] = toFixedWithoutRounding(fl, 2) + '%';
+					keyValue[1] = toFixedWithoutRounding(fl, 2) + '%';
 				}
 			}
 
-			return keyvalue;
+			return keyValue;
 		})
 		.filter(function(a) {
 			return a !== null;
@@ -427,18 +429,20 @@ function sortStyles(matches) {
 }
 
 function sortAttributes(html) {
-	var tag = /<([^>]+)>/g;
-	var reg = /([a-z_\-]+)[\s]*=[\s]*"([^"]*)"/i,
-		matches,
+	const tag = /<([^>]+)>/g;
+	const reg = /([a-z_\-]+)[\s]*=[\s]*"([^"]*)"/i,
 		tags = [];
 
-	while ((tagmatch = tag.exec(html))) {
-		attrs = [];
+	let matches, tagMatch;
 
-		var newtag = tagmatch[0];
+	while ((tagMatch = tag.exec(html))) {
+		const attrs = [];
+
+		let newTag = tagMatch[0];
 
 		do {
-			matches = reg.exec(newtag);
+			matches = reg.exec(newTag);
+
 			if (!matches) {
 				break;
 			}
@@ -453,12 +457,12 @@ function sortAttributes(html) {
 					value: matches[2]
 				});
 
-				newtag = newtag.replace(
+				newTag = newTag.replace(
 					matches[0],
 					'attribute:' + attrs.length
 				);
 			} else {
-				newtag = newtag.replace(' ' + matches[0], '');
+				newTag = newTag.replace(' ' + matches[0], '');
 			}
 		} while (matches);
 
@@ -467,15 +471,15 @@ function sortAttributes(html) {
 		});
 
 		attrs.forEach(function(elm, i) {
-			newtag = newtag.replace(
+			newTag = newTag.replace(
 				'attribute:' + (i + 1),
 				elm.name + '="' + elm.value + '"'
 			);
 		});
 
 		tags.push({
-			name: tagmatch[0],
-			value: newtag
+			name: tagMatch[0],
+			value: newTag
 		});
 	}
 
@@ -494,7 +498,7 @@ function sortAttributes(html) {
  * @param options
  */
 function simulateEvent(type, keyCodeArg, element, options) {
-	var evt = (element.ownerDocument || document).createEvent('HTMLEvents');
+	const evt = (element.ownerDocument || document).createEvent('HTMLEvents');
 	evt.initEvent(type, true, true);
 	evt.keyCode = keyCodeArg;
 	evt.which = keyCodeArg;
@@ -512,7 +516,7 @@ function simulateEvent(type, keyCodeArg, element, options) {
 	}
 
 	if (type.match(/^touch/) && !evt.changedTouches) {
-		var changedTouches = {};
+		const changedTouches = {};
 
 		['pageX', 'pageY', 'clientX', 'clientY'].forEach(function(key) {
 			changedTouches[key] = evt[key];
@@ -525,7 +529,7 @@ function simulateEvent(type, keyCodeArg, element, options) {
 }
 
 function setCursor(elm, inEnd) {
-	var range = document.createRange();
+	const range = document.createRange();
 	range.selectNodeContents(elm);
 	range.collapse(!inEnd);
 	window.getSelection().removeAllRanges();
@@ -533,12 +537,12 @@ function setCursor(elm, inEnd) {
 }
 
 function createPoint(x, y, color) {
-	var div = document.createElement('div');
+	const div = document.createElement('div');
 	div.setAttribute(
 		'style',
 		'position: absolute; z-index: 1000000000;width: 5px; height: 5px; background: ' +
-		(color || 'red') +
-		';'
+			(color || 'red') +
+			';'
 	);
 	div.style.left = parseInt(x, 10) + 'px';
 	div.style.top = parseInt(y, 10) + 'px';
@@ -547,7 +551,7 @@ function createPoint(x, y, color) {
 }
 
 function offset(el) {
-	var rect = el.getBoundingClientRect(),
+	const rect = el.getBoundingClientRect(),
 		scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
 		scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 	return {
@@ -572,57 +576,61 @@ function offset(el) {
  */
 
 (function() {
-	var serializeXML = function(node, output) {
-		var nodeType = node.nodeType;
-		if (nodeType == 3) {
-			// TEXT nodes.
-			// Replace special XML characters with their entities.
+	const serializeXML = function(node, output) {
+		const nodeType = node.nodeType;
+
+		if (nodeType === 3) {
 			output.push(
 				node.textContent
 					.replace(/&/, '&amp;')
 					.replace(/</, '&lt;')
 					.replace('>', '&gt;')
 			);
-		} else if (nodeType == 1) {
-			// ELEMENT nodes.
-			// Serialize Element nodes.
+		} else if (nodeType === 1) {
 			output.push('<', node.tagName);
+
 			if (node.hasAttributes()) {
-				var attrMap = node.attributes;
-				for (var i = 0, len = attrMap.length; i < len; ++i) {
-					var attrNode = attrMap.item(i);
-					output.push(' ', attrNode.name, '=\'', attrNode.value, '\'');
+				const attrMap = node.attributes;
+
+				for (let i = 0, len = attrMap.length; i < len; ++i) {
+					const attrNode = attrMap.item(i);
+					output.push(' ', attrNode.name, "='", attrNode.value, "'");
 				}
 			}
+
 			if (node.hasChildNodes()) {
 				output.push('>');
-				var childNodes = node.childNodes;
-				for (var i = 0, len = childNodes.length; i < len; ++i) {
+				const childNodes = node.childNodes;
+
+				for (let i = 0, len = childNodes.length; i < len; i += 1) {
 					serializeXML(childNodes.item(i), output);
 				}
+
 				output.push('</', node.tagName, '>');
+
 			} else {
 				output.push('/>');
 			}
-		} else if (nodeType == 8) {
-			// TODO(codedread): Replace special characters with XML entities?
+
+		} else if (nodeType === 8) {
 			output.push('<!--', node.nodeValue, '-->');
+
 		} else {
-			// TODO: Handle CDATA nodes.
-			// TODO: Handle ENTITY nodes.
-			// TODO: Handle DOCUMENT nodes.
 			throw 'Error serializing XML. Unhandled node of type: ' + nodeType;
 		}
 	};
+
 	// The innerHTML DOM property for SVGElement.
 	Object.defineProperty(SVGElement.prototype, 'innerHTML', {
 		get: function() {
-			var output = [];
-			var childNode = this.firstChild;
+			const output = [];
+			let  childNode = this.firstChild;
+
 			while (childNode) {
 				serializeXML(childNode, output);
 				childNode = childNode.nextSibling;
 			}
+
 			return output.join('');
 		},
 		set: function(markupText) {
@@ -633,22 +641,25 @@ function offset(el) {
 
 			try {
 				// Parse the markup into valid nodes.
-				var dXML = new DOMParser();
+				const dXML = new DOMParser();
+
 				dXML.async = false;
 				// Wrap the markup into a SVG node to ensure parsing works.
 				sXML =
-					'<svg xmlns=\'http://www.w3.org/2000/svg\'>' +
-					markupText +
+					"<svg xmlns='http://www.w3.org/2000/svg'>" +
+						markupText +
 					'</svg>';
-				var svgDocElement = dXML.parseFromString(sXML, 'text/xml')
+				const svgDocElement = dXML.parseFromString(sXML, 'text/xml')
 					.documentElement;
 
 				// Now take each node, import it and append to this element.
-				var childNode = svgDocElement.firstChild;
+				let childNode = svgDocElement.firstChild;
+
 				while (childNode) {
 					this.appendChild(
 						this.ownerDocument.importNode(childNode, true)
 					);
+
 					childNode = childNode.nextSibling;
 				}
 			} catch (e) {
@@ -688,7 +699,7 @@ function FileXLS() {
 
 if (typeof window.chai !== 'undefined') {
 	window.FileReader = function() {
-		var self = this;
+		const self = this;
 		self.result = null;
 		/**
 		 *

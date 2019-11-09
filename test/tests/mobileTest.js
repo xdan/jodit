@@ -4,7 +4,7 @@ describe('Test mobile mode', function() {
 	describe('Toolbar', function() {
 		it('Should have different count buttons for different container sizes', function() {
 			getBox().style.width = '1000px';
-			var editor = new Jodit(appendTestArea(), {
+			const editor = new Jodit(appendTestArea(), {
 				buttons: [
 					'source',
 					'|',
@@ -16,7 +16,8 @@ describe('Test mobile mode', function() {
 					'ul',
 					'ol',
 					'|',
-					'outdent', 'indent',
+					'outdent',
+					'indent',
 					'|',
 					'font',
 					'fontsize',
@@ -28,7 +29,9 @@ describe('Test mobile mode', function() {
 					'table',
 					'link',
 					'|',
-					'align', 'undo', 'redo',
+					'align',
+					'undo',
+					'redo',
 					'|',
 					'hr',
 					'eraser',
@@ -41,57 +44,76 @@ describe('Test mobile mode', function() {
 				]
 			});
 
-			expect(27).to.be.below(editor.container.querySelectorAll('.jodit_toolbar > li').length);
+			expect(27).to.be.below(
+				editor.container.querySelectorAll('.jodit_toolbar > li').length
+			);
 
 			getBox().style.width = '790px';
 			simulateEvent('resize', 0, window);
 
-			expect(28).to.be.above(editor.container.querySelectorAll('.jodit_toolbar > li').length);
+			expect(28).to.be.above(
+				editor.container.querySelectorAll('.jodit_toolbar > li').length
+			);
 
 			getBox().style.width = '690px';
 			simulateEvent('resize', 0, window);
 
-			expect(26).to.be.above(editor.container.querySelectorAll('.jodit_toolbar > li').length);
+			expect(26).to.be.above(
+				editor.container.querySelectorAll('.jodit_toolbar > li').length
+			);
 
 			getBox().style.width = '390px';
 			simulateEvent('resize', 0, window);
 
-			expect(15).to.be.above(editor.container.querySelectorAll('.jodit_toolbar > li').length);
+			expect(15).to.be.above(
+				editor.container.querySelectorAll('.jodit_toolbar > li').length
+			);
 		});
 		describe('If buttons were set like string', function() {
 			it('Should have different count buttons for different container sizes', function() {
 				getBox().style.width = '1000px';
-				var editor = new Jodit(appendTestArea(), {
+				const editor = new Jodit(appendTestArea(), {
 					buttons: 'source,about,print,bold',
 					buttonsMD: 'source,about,print',
 					buttonsSM: 'source,about',
 					buttonsXS: 'source'
 				});
 
-
-				expect(4).to.be.equal(editor.container.querySelectorAll('.jodit_toolbar > li').length);
+				expect(4).to.be.equal(
+					editor.container.querySelectorAll('.jodit_toolbar > li')
+						.length
+				);
 
 				getBox().style.width = '790px';
 				simulateEvent('resize', 0, window);
 
-				expect(3).to.be.equal(editor.container.querySelectorAll('.jodit_toolbar > li').length);
+				expect(3).to.be.equal(
+					editor.container.querySelectorAll('.jodit_toolbar > li')
+						.length
+				);
 
 				getBox().style.width = '690px';
 				simulateEvent('resize', 0, window);
 
-				expect(2).to.be.equal(editor.container.querySelectorAll('.jodit_toolbar > li').length);
+				expect(2).to.be.equal(
+					editor.container.querySelectorAll('.jodit_toolbar > li')
+						.length
+				);
 
 				getBox().style.width = '390px';
 				simulateEvent('resize', 0, window);
 
-				expect(1).to.be.equal(editor.container.querySelectorAll('.jodit_toolbar > li').length);
+				expect(1).to.be.equal(
+					editor.container.querySelectorAll('.jodit_toolbar > li')
+						.length
+				);
 			});
 		});
 		describe('Custom media points', function() {
 			it('Should works like as usual', function() {
 				getBox().style.width = '500px';
 
-				var editor = new Jodit(appendTestArea(), {
+				const editor = new Jodit(appendTestArea(), {
 					buttons: 'source,about,print,bold',
 					buttonsMD: 'source,about,print',
 					buttonsSM: 'source,about',
@@ -102,30 +124,41 @@ describe('Test mobile mode', function() {
 					sizeSM: 200
 				});
 
-
-				expect(4).to.be.equal(editor.container.querySelectorAll('.jodit_toolbar > li').length);
+				expect(4).to.be.equal(
+					editor.container.querySelectorAll('.jodit_toolbar > li')
+						.length
+				);
 
 				getBox().style.width = '390px';
 				simulateEvent('resize', 0, window);
 
-				expect(3).to.be.equal(editor.container.querySelectorAll('.jodit_toolbar > li').length);
+				expect(3).to.be.equal(
+					editor.container.querySelectorAll('.jodit_toolbar > li')
+						.length
+				);
 
 				getBox().style.width = '290px';
 				simulateEvent('resize', 0, window);
 
-				expect(2).to.be.equal(editor.container.querySelectorAll('.jodit_toolbar > li').length);
+				expect(2).to.be.equal(
+					editor.container.querySelectorAll('.jodit_toolbar > li')
+						.length
+				);
 
 				getBox().style.width = '190px';
 				simulateEvent('resize', 0, window);
 
-				expect(1).to.be.equal(editor.container.querySelectorAll('.jodit_toolbar > li').length);
+				expect(1).to.be.equal(
+					editor.container.querySelectorAll('.jodit_toolbar > li')
+						.length
+				);
 			});
 		});
 		describe('With toolbarAdaptive false', function() {
 			it('Should not change toolbar', function() {
 				getBox().style.width = '500px';
 
-				var editor = new Jodit(appendTestArea(), {
+				const editor = new Jodit(appendTestArea(), {
 					buttons: 'source,about,print,bold',
 					buttonsMD: 'source,about,print',
 					buttonsSM: 'source,about',
@@ -136,27 +169,37 @@ describe('Test mobile mode', function() {
 					toolbarAdaptive: false
 				});
 
-
-				expect(4).to.be.equal(editor.container.querySelectorAll('.jodit_toolbar > li').length);
+				expect(4).to.be.equal(
+					editor.container.querySelectorAll('.jodit_toolbar > li')
+						.length
+				);
 
 				getBox().style.width = '390px';
 				simulateEvent('resize', 0, window);
 
-				expect(4).to.be.equal(editor.container.querySelectorAll('.jodit_toolbar > li').length);
+				expect(4).to.be.equal(
+					editor.container.querySelectorAll('.jodit_toolbar > li')
+						.length
+				);
 
 				getBox().style.width = '290px';
 				simulateEvent('resize', 0, window);
 
-				expect(4).to.be.equal(editor.container.querySelectorAll('.jodit_toolbar > li').length);
+				expect(4).to.be.equal(
+					editor.container.querySelectorAll('.jodit_toolbar > li')
+						.length
+				);
 
 				getBox().style.width = '190px';
 				simulateEvent('resize', 0, window);
 
-				expect(4).to.be.equal(editor.container.querySelectorAll('.jodit_toolbar > li').length);
+				expect(4).to.be.equal(
+					editor.container.querySelectorAll('.jodit_toolbar > li')
+						.length
+				);
 			});
 		});
 	});
-
 
 	afterEach(removeStuff);
 });

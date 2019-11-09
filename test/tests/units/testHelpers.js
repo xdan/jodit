@@ -2,7 +2,7 @@ describe('Test helpers', function() {
 	describe('Normalizers', function() {
 		describe('normalizeKeyAliases', function() {
 			it('Should convert some hotkeys to normal', function() {
-				var hotkeys = {
+				const hotkeys = {
 					'cmd+ alt+s': 'alt+meta+s',
 					'cmd++': '++meta',
 					'ctrl+ alt+s': 'alt+control+s',
@@ -21,7 +21,7 @@ describe('Test helpers', function() {
 		});
 		describe('normalizePath', function() {
 			it('Should normalize slashes and join some parts', function() {
-				var variants = {
+				const variants = {
 					'/data/test/': ['/data/test/'],
 					'data/test/': ['data/test/'],
 					'data/test': ['data', 'test', ''],
@@ -40,7 +40,7 @@ describe('Test helpers', function() {
 	describe('Checkers', function() {
 		describe('isInt', function() {
 			it('Should check value is int or not', function() {
-				var values = [
+				const values = [
 					'cmd+ alt+s', false,
 					'+1', true,
 					'-1', true,
@@ -53,7 +53,7 @@ describe('Test helpers', function() {
 					11.33, false
 				];
 
-				for (var i = 0; i < values.length; i += 2) {
+				for (let i = 0; i < values.length; i += 2) {
 					expect(values[i + 1]).to.be.equal(Jodit.modules.Helpers.isInt(values[i]));
 				}
 			});
@@ -61,7 +61,7 @@ describe('Test helpers', function() {
 
 		describe('isNumeric', function() {
 			it('Should check value is int or not', function() {
-				var values = [
+				const values = [
 					'cmd+ alt+s', false,
 					'+1', true,
 					'-1', true,
@@ -78,7 +78,7 @@ describe('Test helpers', function() {
 					11.33, true
 				];
 
-				for (var i = 0; i < values.length; i += 2) {
+				for (let i = 0; i < values.length; i += 2) {
 					expect(values[i + 1]).to.be.equal(Jodit.modules.Helpers.isNumeric(values[i]));
 				}
 			});

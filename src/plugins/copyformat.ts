@@ -58,8 +58,9 @@ const getStyle = (
 				box.parentNode as HTMLElement,
 				defaultStyles
 			);
+
 		} else {
-			result = void 0;
+			result = undefined;
 		}
 	}
 
@@ -77,7 +78,7 @@ const getStyles = (
 		copyStyles.forEach((key: string) => {
 			result[key] = getStyle(editor, key, box, defaultStyles);
 			if (key.match(/border(Style|Color)/) && !result.borderWidth) {
-				result[key] = void 0;
+				result[key] = undefined;
 			}
 		});
 	}

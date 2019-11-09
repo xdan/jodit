@@ -1,7 +1,7 @@
 describe('Check Dom module', function() {
 	describe('Method each', function() {
 		it('Should pass through all child nodes', function() {
-			var node = document.createElement('div');
+			const node = document.createElement('div');
 
 			node.innerHTML = '<ul>' +
 				'<li>1</li>' +
@@ -9,7 +9,7 @@ describe('Check Dom module', function() {
 				'<li><img> text</li>' +
 				'</ul>';
 
-			var names = [];
+			const names = [];
 			Jodit.modules.Dom.each(node, function(elm) {
 				names.push(elm.nodeName);
 			});
@@ -32,7 +32,7 @@ describe('Check Dom module', function() {
 
 	describe('Method isInlineBlock', function() {
 		it('Should return true then it gets inline or inline-block element', function() {
-			var box = document.createElement('div');
+			const box = document.createElement('div');
 			box.innerHTML = '<p>' +
 				'<span>test</span>' +
 				'<strong>test</strong>' +
@@ -56,7 +56,7 @@ describe('Check Dom module', function() {
 			expect(true).to.equal(Jodit.modules.Dom.isEmpty(document.createTextNode('\uFEFF')));
 			expect(true).to.equal(Jodit.modules.Dom.isEmpty(document.createTextNode(' ')));
 
-			var node = document.createElement('div');
+			const node = document.createElement('div');
 			node.innerHTML = '<ul>' +
 				'<li></li>' +
 				'<li></li>' +
@@ -69,7 +69,7 @@ describe('Check Dom module', function() {
 			expect(false).to.equal(Jodit.modules.Dom.isEmpty(document.documentElement));
 			expect(false).to.equal(Jodit.modules.Dom.isEmpty(document.createTextNode('test')));
 
-			var node = document.createElement('div');
+			const node = document.createElement('div');
 			node.innerHTML = '<ul>' +
 				'<li>1</li>' +
 				'<li>2</li>' +

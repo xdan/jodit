@@ -1,6 +1,6 @@
 describe('Test i18n functionality', function() {
 	describe('Test has keys in all functionality', function() {
-		var filter = [
+		const filter = [
 			'customxxx',
 			'Ok',
 			'Link',
@@ -22,26 +22,37 @@ describe('Test i18n functionality', function() {
 			'Border'
 		];
 
-		Object.keys(Jodit.lang).filter(function(language) {
-			return language !== 'en';
-		}).forEach(function(language) {
-			it('Should have value for all key in ' + language + ' language', function() {
-				var editor = new Jodit(appendTestArea(), {
-					language: language,
-					debugLanguage: true
-				});
+		Object.keys(Jodit.lang)
+			.filter(function(language) {
+				return language !== 'en';
+			})
+			.forEach(function(language) {
+				it(
+					'Should have value for all key in ' +
+						language +
+						' language',
+					function() {
+						const editor = new Jodit(appendTestArea(), {
+							language: language,
+							debugLanguage: true
+						});
 
-				i18nkeys.filter(function(key) {
-					return filter.indexOf(key) === -1;
-				}).forEach(function(key) {
-					expect('{' + key + '}').to.be.not.equal(editor.i18n(key));
-				});
+						i18nkeys
+							.filter(function(key) {
+								return filter.indexOf(key) === -1;
+							})
+							.forEach(function(key) {
+								expect('{' + key + '}').to.be.not.equal(
+									editor.i18n(key)
+								);
+							});
+					}
+				);
 			});
-		});
 	});
 	describe('Test i18n function', function() {
 		it('Should show value in current language', function() {
-			var editor = new Jodit(appendTestArea(), {
+			const editor = new Jodit(appendTestArea(), {
 				language: 'ru',
 				i18n: {
 					ru: {
@@ -51,9 +62,13 @@ describe('Test i18n functionality', function() {
 					}
 				}
 			});
-			expect(editor.i18n('Type something')).to.be.equal('Напишите что-либо');
+			expect(editor.i18n('Type something')).to.be.equal(
+				'Напишите что-либо'
+			);
 			expect(editor.i18n('Test %s', 'строка')).to.be.equal('Тест строка');
-			expect(editor.i18n('Test %s %d', 'строка', 1)).to.be.equal('Тест строка 1');
+			expect(editor.i18n('Test %s %d', 'строка', 1)).to.be.equal(
+				'Тест строка 1'
+			);
 		});
 	});
 	afterEach(removeStuff);

@@ -476,6 +476,7 @@ describe('Jodit FileBrowser Tests', function() {
 				});
 			});
 		});
+
 		describe('Filter', function() {
 			it('Should show only filterd items', function(done) {
 				const filebrowser = new Jodit.modules.FileBrowser(null, {
@@ -527,6 +528,7 @@ describe('Jodit FileBrowser Tests', function() {
 					});
 			});
 		});
+
 		describe('Sort', function() {
 			it('Should sort elements by filter select', function(done) {
 				const filebrowser = new Jodit.modules.FileBrowser(null, {
@@ -618,6 +620,7 @@ describe('Jodit FileBrowser Tests', function() {
 					});
 			});
 		});
+
 		describe('Select button', function() {
 			it('Should fire first callback in open method', function(done) {
 				const filebrowser = new Jodit.modules.FileBrowser(null, {

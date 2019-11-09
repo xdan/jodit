@@ -4,7 +4,7 @@ describe('Test states', function() {
 		describe('Set readonly mode in options', function() {
 			describe('Readonly', function() {
 				it('Should deny edit content in simple source editor', function() {
-					var editor = new Jodit(appendTestArea(), {
+					const editor = new Jodit(appendTestArea(), {
 						readonly: true,
 						useAceEditor: false
 					});
@@ -12,11 +12,12 @@ describe('Test states', function() {
 					expect(true).to.be.equal(editor.__plugins.source.mirror.hasAttribute('readonly'));
 				});
 			});
+
 			describe('For iframe', function() {
 				it('Should deny edit content in iframe\'s body', function(done) {
 					unmockPromise();
 
-					var editor = new Jodit(appendTestArea(), {
+					const editor = new Jodit(appendTestArea(), {
 						readonly: true,
 						iframe: true,
 						events: {
@@ -30,14 +31,16 @@ describe('Test states', function() {
 
 				});
 			});
+
 			it('Should deny edit content in wysiwyg', function() {
-				var editor = new Jodit(appendTestArea(), {
+				const editor = new Jodit(appendTestArea(), {
 					readonly: true
 				});
 				expect(false).to.equal(editor.editor.hasAttribute('contenteditable'));
 			});
+
 			it('Should deny exec any commands', function() {
-				var editor = new Jodit(appendTestArea(), {
+				const editor = new Jodit(appendTestArea(), {
 					readonly: true
 				});
 
@@ -50,7 +53,7 @@ describe('Test states', function() {
 				expect('test').to.equal(editor.getEditorValue());
 			});
 			it('Should disable all toolbar buttons besides source, print, about, fullsize', function() {
-				var editor = new Jodit(appendTestArea(), {
+				const editor = new Jodit(appendTestArea(), {
 					readonly: true,
 					toolbarAdaptive: false,
 					observer: {
@@ -59,7 +62,7 @@ describe('Test states', function() {
 				});
 
 				editor.setEditorValue('test');
-				var buttons = [].slice.call(editor.container.querySelectorAll('.jodit_toolbar_btn'));
+				const buttons = [].slice.call(editor.container.querySelectorAll('.jodit_toolbar_btn'));
 				buttons.forEach(function(btn) {
 					if (!/(source|print|about|fullsize|separator|selectall|break)/.test(btn.className)) {
 						expect(true).to.be.equal(btn.classList.contains('jodit_disabled'));
@@ -69,7 +72,7 @@ describe('Test states', function() {
 			});
 			describe('Readonly for ACE', function(done) {
 				it('Should deny edit content in ace source editor', function(done) {
-					var editor = new Jodit(appendTestArea(), {
+					const editor = new Jodit(appendTestArea(), {
 						readonly: true,
 						useAceEditor: true,
 						events: {
@@ -86,9 +89,9 @@ describe('Test states', function() {
 				}).timeout(6000);
 			});
 			it('Should hide placeholder', function() {
-				var table_editor_interface = appendTestArea();
+				const table_editor_interface = appendTestArea();
 				table_editor_interface.value = '';
-				var editor = new Jodit(table_editor_interface, {
+				const editor = new Jodit(table_editor_interface, {
 					readonly: true
 				});
 				expect(editor.container.querySelectorAll('.jodit_placeholder').length && editor.container.querySelector('.jodit_placeholder').style.display === 'none').to.be.equal(true);
@@ -99,14 +102,14 @@ describe('Test states', function() {
 				describe('CTRL + H', function() {
 					describe('In readonly editor', function() {
 						it('Should be deny', function() {
-							var editor = new Jodit(appendTestArea(), {
+							const editor = new Jodit(appendTestArea(), {
 								readonly: true,
 								observer: {
 									timeout: 0
 								}
 							});
 
-							var search = editor.container.querySelector('.jodit_search');
+							const search = editor.container.querySelector('.jodit_search');
 							expect(false).to.equal(search.classList.contains('jodit_search-active'));
 							simulateEvent('keydown', Jodit.KEY_H, editor.editor, function(options) {
 								options.ctrlKey = true;
@@ -118,29 +121,31 @@ describe('Test states', function() {
 					});
 				});
 			});
+
 			describe('Method get read only', function() {
 				it('Should return enable/disable readonly', function() {
-					var editor = new Jodit(appendTestArea(), {
+					const editor = new Jodit(appendTestArea(), {
 						readonly: true
 					});
+
 					expect(true).to.equal(editor.getReadOnly());
 					editor.setReadOnly(false);
 					expect(false).to.equal(editor.getReadOnly());
 					editor.destruct();
 
-					var editor = new Jodit(appendTestArea());
-					expect(false).to.equal(editor.getReadOnly());
+					const editor2 = new Jodit(appendTestArea());
+					expect(false).to.equal(editor2.getReadOnly());
 				});
 			});
 		});
 
 		describe('Set readonly mode by source element attribute', function() {
 			it('Should work like by options', function() {
-				var area = appendTestArea();
+				const area = appendTestArea();
 
 				area.setAttribute('readonly', 'true');
 
-				var editor = new Jodit(area);
+				const editor = new Jodit(area);
 
 				expect(editor.editor.hasAttribute('contenteditable')).to.be.false;
 				expect(editor.getReadOnly()).to.be.true;
@@ -148,11 +153,11 @@ describe('Test states', function() {
 
 			describe('In short form', function() {
 				it('Should work like by options', function() {
-					var area = appendTestArea();
+					const area = appendTestArea();
 
 					area.setAttribute('readonly', '');
 
-					var editor = new Jodit(area);
+					const editor = new Jodit(area);
 
 					expect(editor.editor.hasAttribute('contenteditable')).to.be.false;
 					expect(editor.getReadOnly()).to.be.true;
@@ -163,7 +168,7 @@ describe('Test states', function() {
 
 		describe('Disable readonly mode', function() {
 			it('Should allow edit content in wysiwyg', function() {
-				var editor = new Jodit(appendTestArea(), {
+				const editor = new Jodit(appendTestArea(), {
 					readonly: true
 				});
 				expect(false).to.equal(editor.editor.hasAttribute('contenteditable'));
@@ -171,7 +176,7 @@ describe('Test states', function() {
 				expect(true).to.equal(editor.editor.hasAttribute('contenteditable'));
 			});
 			it('Should allow edit content in simple source editor', function() {
-				var editor = new Jodit(appendTestArea(), {
+				const editor = new Jodit(appendTestArea(), {
 					readonly: true,
 					useAceEditor: false
 				});
@@ -183,7 +188,7 @@ describe('Test states', function() {
 				expect(false).to.equal(editor.__plugins.source.mirror.hasAttribute('readonly'));
 			});
 			it('Should allow edit content in ace source editor', function(done) {
-				var editor = new Jodit(appendTestArea(), {
+				const editor = new Jodit(appendTestArea(), {
 					readonly: true,
 					useAceEditor: true,
 					defaultMode: Jodit.MODE_SOURCE,
@@ -210,11 +215,11 @@ describe('Test states', function() {
 	describe('Disabled', function() {
 		describe('Set disabled mode in options', function() {
 			it('Should enable readonly mode too and editor\'s container should have jodit_disabled class', function() {
-				var area = appendTestArea();
+				const area = appendTestArea();
 
 				area.setAttribute('disabled', 'true');
 
-				var editor = new Jodit(area);
+				const editor = new Jodit(area);
 
 				expect(editor.container.classList.contains('jodit_disabled')).to.be.true;
 				expect(editor.editor.hasAttribute('contenteditable')).to.be.false;
@@ -224,12 +229,12 @@ describe('Test states', function() {
 		});
 		describe('Switch disabled mode', function() {
 			it('Should enable readonly if true but set default readonly mode in false', function() {
-				var area = appendTestArea();
+				const area = appendTestArea();
 
 				area.setAttribute('disabled', 'true');
 				area.setAttribute('readonly', 'true');
 
-				var editor = new Jodit(area);
+				const editor = new Jodit(area);
 
 				expect(editor.getReadOnly()).to.be.true;
 				expect(editor.getDisabled()).to.be.true;
