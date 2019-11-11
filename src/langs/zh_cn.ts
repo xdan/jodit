@@ -118,7 +118,7 @@ export default {
 	Browse: '浏览',
 	Upload: '上传',
 	Background: '背景色',
-	Text: '字体颜色',
+	Text: '文字',
 
 	// popap module
 	Top: '顶部',
