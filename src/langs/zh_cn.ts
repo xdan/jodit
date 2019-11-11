@@ -118,7 +118,7 @@ export default {
 	Browse: '浏览',
 	Upload: '上传',
 	Background: '背景色',
-	Text: '字体颜色',
+	Text: '文字',
 
 	// popap module
 	Top: '顶部',
@@ -150,6 +150,7 @@ export default {
 	Paste: '粘贴',
 	'Choose Content to Paste': '选择内容并粘贴',
 
+	All: '全部',
 	source: '源码',
 	bold: '粗体',
 	italic: '斜体',
@@ -203,6 +204,8 @@ export default {
 	Merge: '合并',
 	'Add column': '添加列',
 	'Add row': '添加行',
+	Border: '边框',
+	'Embed code': '嵌入代码',
 	Delete: '删除',
 	'Horizontal align': '水平对齐',
 
@@ -211,14 +214,16 @@ export default {
 	'Sort by name': '名称排序',
 	'Sort by size': '大小排序',
 	'Add folder': '新建文件夹',
+	'Split vertical': '垂直拆分',
+	'Split horizontal': '水平拆分',
 	'You can only edit your own images. Download this image on the host?':
 		'你只能编辑你自己的图片。' + 'Download this image on the host?',
 	'The image has been successfully uploaded to the host!': '图片上传成功',
-	palette: 'Palette',
-	pencil: '要編輯',
-	'There are no files': '此目錄中沒有文件。',
-	rename: '匈牙利',
+	palette: '调色板',
+	pencil: '铅笔',
+	'There are no files': '此目录中沒有文件。',
+	rename: '重命名',
 	'Enter new name': '输入新名称',
-	preview: '預習',
-	download: '下載',
+	preview: '预览',
+	download: '下载',
 } as IDictionary<string>;
