@@ -414,8 +414,9 @@ export namespace Widget {
 			editor.getInstance<IUploader>('Uploader').bind(
 				dragbox,
 				(resp: IUploaderData) => {
-					if (typeof callbacks.upload === 'function') {
-						callbacks.upload.call(editor, {
+					let handler = editor.options.uploader.defaultHandlerSuccess || callbacks.upload
+					if (typeof handler === 'function') {
+						handler.call(editor, {
 							baseurl: resp.baseurl,
 							files: resp.files
 						} as IFileBrowserCallBackData);
