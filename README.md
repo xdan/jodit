@@ -15,6 +15,11 @@ An excellent WYSIWYG editor written in pure TypeScript without the use of additi
  
 > For old version, please follow here [https://github.com/xdan/jodit2](https://github.com/xdan/jodit2)
 
+## Support the author
+This library is free software and you can use it freely in accordance with the MIT license.
+If you want to support the author - this can be done on the [Patreon website](https://www.patreon.com/jodit). I will grateful to you.
+
+
 ## Get Started
 ## How use
 Download latest [release](https://github.com/xdan/jodit/releases/latest) or
