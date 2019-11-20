@@ -132,16 +132,20 @@ export function mobile(editor: IJodit) {
 
 			if (width >= editor.options.sizeLG) {
 				newStore = splitArray(editor.options.buttons);
+
 			} else if (width >= editor.options.sizeMD) {
 				newStore = splitArray(editor.options.buttonsMD);
+
 			} else if (width >= editor.options.sizeSM) {
 				newStore = splitArray(editor.options.buttonsSM);
+
 			} else {
 				newStore = splitArray(editor.options.buttonsXS);
 			}
 
 			if (newStore.toString() !== store.toString()) {
 				store = newStore;
+
 				editor.toolbar.build(
 					store.concat(editor.options.extraButtons),
 					editor.container

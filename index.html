@@ -73,10 +73,16 @@ cena quidem posse videamur?
 	const editor = new Jodit('#editor', {
 		// iframe: true,
 		// theme: 'dark',
+	  "buttons": "bold,image,|,brush,paragraph,|,align,,undo,redo,|,eraser,test,dots",
+	  "extraButtons": [{
+	  		name: 'test',
+				icon: 'bold',
+				exec: () => alert(111)
+		}],
 		toolbarButtonSize: 'large',
 		height: 100,
 		tabIndex: 0,
-		language: 'ru',
+		// language: 'ru',
 		// textIcons: true,
 		uploader: {
 			url: 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'

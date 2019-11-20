@@ -220,11 +220,14 @@ if (typeof window.chai !== 'undefined') {
 }
 
 const i18nkeys = [];
+const excludeI18nKeys = ['adddate'];
 
 Jodit.prototype.i18n = function(key) {
+	excludeI18nKeys.indexOf(key) === -1 &&
 	i18nkeys.indexOf(key) === -1 &&
 		key.indexOf('<svg') === -1 &&
 		i18nkeys.push(key);
+
 	return oldI18n.apply(this, arguments);
 };
 
