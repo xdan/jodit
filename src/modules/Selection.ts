@@ -1037,6 +1037,12 @@ export class Select {
 
 	/**
 	 * Return current selected HTML
+	 * @example
+	 * ```javascript
+	 * const editor = new jodit();
+	 * console.log(editor.selection.getHTML()); // html
+	 * console.log(Jodit.modules.Helpers.stripTags(editor.selection.getHTML())); // plain text
+	 * ```
 	 */
 	getHTML(): string {
 		const sel = this.sel;
