@@ -11,13 +11,18 @@ import { IJodit } from '../../../types';
 
 /**
  * Check if element is instance of Jodit
- *
- *
  */
-export const isJoditObject = (jodit: unknown): jodit is IJodit  => {
-    if (jodit && jodit instanceof Object && typeof jodit.constructor === 'function' && jodit.constructor.name === 'Jodit') {
-        return true;
-    }
+export const isJoditObject = (jodit: unknown): jodit is IJodit => {
+	if (
+		jodit &&
+		jodit instanceof Object &&
+		typeof jodit.constructor === 'function' &&
+		(jodit instanceof Jodit || (jodit as IJodit).isJodit)
+	) {
+		return true;
+	}
 
-    return false;
+	return false;
 };
+
+import { Jodit } from '../../../Jodit';

@@ -174,6 +174,7 @@ export class ToolbarButton extends ToolbarElement implements IToolbarButton {
 						(control.args && control.args[0]) || false,
 						(control.args && control.args[1]) || null
 					);
+
 				} else {
 					this.jodit.ownerDocument.execCommand(
 						control.command || control.name,

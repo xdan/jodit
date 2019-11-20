@@ -17,6 +17,8 @@ import { IUploader } from './uploader';
 import { IFileBrowser } from './fileBrowser';
 
 interface IJodit extends IViewWithToolbar {
+	isJodit: true;
+
 	options: Config;
 	observer: Observer;
 	editor: HTMLElement;

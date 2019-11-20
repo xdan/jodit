@@ -49,6 +49,13 @@ const SAFE_COUNT_CHANGE_CALL = 10;
  * Class Jodit. Main class
  */
 export class Jodit extends ViewWithToolbar implements IJodit {
+	/**
+	 * Define if object is Jodit
+	 */
+	get isJodit(): true {
+		return true;
+	}
+
 	get value(): string {
 		return this.getEditorValue();
 	}
