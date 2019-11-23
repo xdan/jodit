@@ -20,7 +20,7 @@ Config.prototype.controls.cut = {
 	tooltip: 'Cut selection'
 } as IControlType;
 
-Config.prototype.controls.cut = {
+Config.prototype.controls.copy = {
 	command: 'copy',
 	isDisable: (editor: IJodit) => editor.selection.isCollapsed(),
 	tooltip: 'Copy selection'

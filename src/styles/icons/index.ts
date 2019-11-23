@@ -27,6 +27,7 @@ import * as check from './check.svg';
 import * as check_square from './check-square.svg';
 import * as copyformat from './copyformat.svg';
 import * as crop from './crop.svg';
+import * as copy from './copy.svg';
 import * as cut from './cut.svg';
 import * as dedent from './dedent.svg';
 import * as dots from './dots.svg';
@@ -104,6 +105,7 @@ export {
 	check,
 	check_square,
 	copyformat,
+	copy,
 	crop,
 	cut,
 	dedent,

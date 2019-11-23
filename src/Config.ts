@@ -671,14 +671,15 @@ export class Config implements IViewOptions {
 		'undo',
 		'redo',
 		'\n',
+		'selectall',
 		'cut',
-		'hr',
+		'copy',
 		'eraser',
 		'copyformat',
 		'|',
+		'hr',
 		'symbol',
 		'fullsize',
-		'selectall',
 		'print',
 		'about'
 	];
