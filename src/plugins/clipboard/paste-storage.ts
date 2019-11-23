@@ -7,11 +7,11 @@
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { KEY_DOWN, KEY_ENTER, KEY_UP, SPACE_REG_EXP } from '../constants';
-import { Dialog } from '../modules/dialog/dialog';
-import { Plugin } from '../modules/Plugin';
-import { Dom } from '../modules/Dom';
-import { setTimeout } from '../modules/helpers/async/setTimeout';
+import { KEY_DOWN, KEY_ENTER, KEY_UP, SPACE_REG_EXP } from '../../constants';
+import { Dialog } from '../../modules/dialog/dialog';
+import { Plugin } from '../../modules/Plugin';
+import { Dom } from '../../modules/Dom';
+import { setTimeout } from '../../modules/helpers/async/setTimeout';
 
 /**
  * Show dialog choose content to paste

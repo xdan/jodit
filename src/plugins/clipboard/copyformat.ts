@@ -7,11 +7,10 @@
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config } from '../Config';
-import { Dom } from '../modules/Dom';
-import { css } from '../modules/helpers/';
-import { IDictionary, IJodit } from '../types';
-import { IControlType } from '../types/toolbar';
+import { Config } from '../..//Config';
+import { Dom } from '../../modules/Dom';
+import { css } from '../../modules/helpers/';
+import { IDictionary, IJodit, IControlType } from '../../types';
 
 const pluginKey: string = 'copyformat';
 

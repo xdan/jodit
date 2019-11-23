@@ -16,8 +16,8 @@ export class MemoryStorageProvider<T = StorageValueType> implements IStorage<T> 
 		this.data.set(key, value);
 	}
 
-	get(key: string): T | void {
-		return this.data.get(key);
+	get<R = T>(key: string): R | void {
+		return <R | void>this.data.get(key);
 	}
 
 	exists(key: string): boolean {

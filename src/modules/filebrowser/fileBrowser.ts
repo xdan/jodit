@@ -29,7 +29,6 @@ import {
 import { IDictionary, ImageEditorActionBox } from '../../types/types';
 import { IUploader, IUploaderOptions } from '../../types/uploader';
 import { ImageEditor } from '../ImageEditor';
-import { LocalStorageProvider } from '../storage/localStorageProvider';
 import { Storage } from '../storage/storage';
 import { each } from '../helpers/each';
 import { normalizePath } from '../helpers/normalize/';
@@ -38,7 +37,7 @@ import { ctrlKey } from '../helpers/ctrlKey';
 import { extend } from '../helpers/extend';
 import { setTimeout } from '../helpers/async/setTimeout';
 import { ViewWithToolbar } from '../view/viewWithToolbar';
-import { IJodit } from '../../types';
+import { IJodit, IStorage } from '../../types';
 import './config';
 import { Dom } from '../Dom';
 import { debounce } from '../helpers/async';
@@ -47,7 +46,6 @@ import DataProvider from './dataProvider';
 import contextMenu from './builders/contextMenu';
 import { ObserveObject } from '../events/observeObject';
 import { FileBrowserItem } from './builders/item';
-import { MemoryStorageProvider } from '../storage/memoryStorageProvider';
 import { isValidName } from '../helpers/checker/isValidName';
 import { F_CLASS, ICON_LOADER, ITEM_CLASS } from './consts';
 
@@ -288,9 +286,8 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 
 	/**
 	 * Container for set/get value
-	 * @type {Storage}
 	 */
-	storage: Storage;
+	storage: IStorage;
 
 	uploader: IUploader;
 
@@ -1078,9 +1075,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 			)
 		) as IFileBrowserOptions;
 
-		self.storage = new Storage(
-			this.options.filebrowser.saveStateInStorage ? new LocalStorageProvider() : new MemoryStorageProvider()
-		);
+		self.storage = Storage.makeStorage(this.options.filebrowser.saveStateInStorage);
 
 		self.dataProvider = new DataProvider(self.options, self.jodit || self);
 		self.dialog = new Dialog(editor || self, {
@@ -1135,11 +1130,12 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 		}
 
 
-		const sortBy = self.storage.get(F_CLASS + '_sortby');
+		const sortBy = self.storage.get<string>(F_CLASS + '_sortby');
 
 		if (sortBy) {
 			const parts = sortBy.split('-');
 			self.state.sortBy = ['changed', 'name', 'size'].includes(parts[0]) ? sortBy : 'changed-desc';
+
 		} else {
 			self.state.sortBy = self.options.sortBy || 'changed-desc';
 		}

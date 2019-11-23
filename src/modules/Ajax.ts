@@ -8,8 +8,7 @@
  */
 
 import { Config } from '../Config';
-import { IDictionary, IRequest } from '../types';
-import { IViewBased } from '../types/view';
+import { IDictionary, IRequest, IViewBased } from '../types';
 import { each, extend, isPlainObject, parseQuery } from './helpers/';
 
 /**
@@ -38,7 +37,8 @@ import { each, extend, isPlainObject, parseQuery } from './helpers/';
  * @property {function} defaultAjaxOptions.xhr=function () { return new XMLHttpRequest(); } Callback for creating
  * the XMLHttpRequest object.
  */
-import { AjaxOptions, XDomainRequest, IAjax } from '../types';
+
+import { AjaxOptions, IAjax } from '../types';
 import { buildQuery } from './helpers/buildQuery';
 
 declare module '../Config' {
@@ -64,12 +64,7 @@ Config.prototype.defaultAjaxOptions = {
 	withCredentials: false,
 
 	xhr(): XMLHttpRequest {
-		const XHR =
-			typeof XDomainRequest === 'undefined'
-				? XMLHttpRequest
-				: XDomainRequest;
-
-		return new XHR();
+		return new XMLHttpRequest();
 	}
 } as AjaxOptions;
 
@@ -102,15 +97,15 @@ export class Ajax implements IAjax {
 		return buildQuery(obj);
 	}
 
-	public status: number;
+	status: number;
 
-	public response: string;
+	response: string;
 
-	public options: AjaxOptions;
+	options: AjaxOptions;
 
-	public jodit: IViewBased;
+	jodit: IViewBased;
 
-	public abort(): Ajax {
+	abort(): Ajax {
 		try {
 			this.xhr.abort();
 		} catch {}
@@ -251,6 +246,7 @@ export class Ajax implements IAjax {
 
 	constructor(editor: IViewBased, options: AjaxOptions) {
 		this.jodit = editor;
+
 		this.options = extend(
 			true,
 			{},

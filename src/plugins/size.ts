@@ -172,9 +172,8 @@ export function size(editor: IJodit) {
 				let height: string | number = editor.options.height;
 
 				if (editor.options.saveHeightInStorage && height !== 'auto') {
-					const localHeight: string | null = editor.storage.get(
-						'height'
-					);
+					const localHeight = editor.storage.get<string>('height');
+
 					if (localHeight) {
 						height = localHeight;
 					}

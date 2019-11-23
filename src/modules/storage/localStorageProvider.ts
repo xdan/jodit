@@ -54,7 +54,7 @@ export class LocalStorageProvider<T = StorageValueType> implements IStorage<T> {
 		} catch {}
 	}
 
-	get(key: string): T | void {
+	get<R = T>(key: string): R | void {
 		try {
 			const buffer = localStorage.getItem(this.rootKey);
 

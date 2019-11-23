@@ -21,8 +21,8 @@ export class Storage<T = StorageValueType> implements IStorage<T> {
 		this.provider.set(camelCase(this.prefix + key), value);
 	}
 
-	get(key: string): T | void {
-		return this.provider.get(camelCase(this.prefix + key));
+	get<R = T>(key: string): R | void {
+		return this.provider.get<R>(camelCase(this.prefix + key));
 	}
 
 	exists(key: string): boolean {
