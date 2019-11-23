@@ -1,8 +1,6 @@
 import { IDictionary } from './types';
 import { IViewBased } from './view';
 
-export declare const XDomainRequest: any;
-
 export type DataVariant = | IDictionary<string>
 	| null
 	| FormData
