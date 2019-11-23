@@ -37,6 +37,7 @@ export abstract class Component<T extends IViewBased = IViewBased>
 	constructor(jodit?: T) {
 		if (jodit && jodit instanceof Component) {
 			this.jodit = jodit;
+
 			if (isJoditObject(jodit)) {
 				jodit.components.push(this);
 			}

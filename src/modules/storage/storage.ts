@@ -7,18 +7,49 @@
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IStorage } from '../../types';
+import { IStorage, StorageValueType } from '../../types';
 import { camelCase } from '../helpers/string';
+import { canUsePersistentStorage, LocalStorageProvider } from './localStorageProvider';
+import { MemoryStorageProvider } from './memoryStorageProvider';
 
-export class Storage {
-	public prefix: string = 'Jodit_';
+export const StorageKey: string = 'Jodit_';
 
-	public set(key: string, value: string | number) {
+export class Storage<T = StorageValueType> implements IStorage<T> {
+	readonly prefix = StorageKey;
+
+	set(key: string, value: T) {
 		this.provider.set(camelCase(this.prefix + key), value);
 	}
 
-	public get(key: string): string | null {
+	get(key: string): T | void {
 		return this.provider.get(camelCase(this.prefix + key));
 	}
-	constructor(readonly provider: IStorage) {}
+
+	exists(key: string): boolean {
+		return this.provider.exists(camelCase(this.prefix + key));
+	}
+
+	clear(): void {
+		return this.provider.clear();
+	}
+
+	protected constructor(readonly provider: IStorage<T>, suffix ?: string) {
+		if (suffix) {
+			this.prefix += suffix;
+		}
+	}
+
+	static makeStorage(persistent: boolean = false, suffix?: string): IStorage {
+		let provider;
+
+		if (persistent && canUsePersistentStorage()) {
+			provider = new LocalStorageProvider(StorageKey + suffix);
+		}
+
+		if (!provider) {
+			provider = new MemoryStorageProvider();
+		}
+
+		return new Storage(provider, suffix);
+	}
 }

@@ -26,12 +26,14 @@ export class pasteStorage extends Plugin {
 	private previewBox: HTMLElement | null = null;
 
 	private dialog: Dialog | null = null;
+
 	private paste = () => {
 		this.jodit.selection.focus();
 		this.jodit.selection.insertHTML(this.list[this.currentIndex]);
 
 		if (this.currentIndex !== 0) {
-			const buffer: string = this.list[0];
+			const buffer = this.list[0];
+
 			this.list[0] = this.list[this.currentIndex];
 			this.list[this.currentIndex] = buffer;
 		}
@@ -90,6 +92,7 @@ export class pasteStorage extends Plugin {
 
 		this.currentIndex = index;
 	};
+
 	private showDialog = () => {
 		if (this.list.length < 2) {
 			return;
@@ -124,6 +127,7 @@ export class pasteStorage extends Plugin {
 			this.selectIndex(0);
 		}, 100);
 	};
+
 	private createDialog() {
 		this.dialog = new Dialog(this.jodit);
 

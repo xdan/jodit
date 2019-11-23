@@ -8,9 +8,10 @@
  */
 
 import { Buttons, Controls, IToolbarCollection } from './toolbar';
-import { IComponent, IDictionary } from './types';
+import { IComponent } from './types';
 import { ICreate } from './create';
 import { IEventsNative } from './events';
+import { IStorage } from './storage';
 
 interface IViewOptions {
 	disabled?: boolean;
@@ -57,7 +58,7 @@ interface IViewBased<T = IViewOptions> extends IPanel {
 	 */
 	id: string;
 
-	buffer: IDictionary;
+	buffer: IStorage;
 
 	progress_bar: HTMLElement;
 

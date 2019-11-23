@@ -89,8 +89,8 @@ const getStyles = (
 Config.prototype.controls.copyformat = {
 	exec: (editor: IJodit, current: Node | false) => {
 		if (current) {
-			if (editor.buffer[pluginKey]) {
-				editor.buffer[pluginKey] = false;
+			if (editor.buffer.exists(pluginKey)) {
+				editor.buffer.set(pluginKey, false);
 				editor.events.off(editor.editor, 'mouseup.' + pluginKey);
 			} else {
 				const defaultStyles: IDictionary<string | number> = {},
@@ -102,7 +102,8 @@ Config.prototype.controls.copyformat = {
 							editor.editor
 						) as HTMLElement) || editor.editor;
 
-				const ideal: HTMLElement = editor.create.inside.span();
+				const ideal = editor.create.inside.span();
+
 				editor.editor.appendChild(ideal);
 
 				copyStyles.forEach((key: string) => {
@@ -118,7 +119,8 @@ Config.prototype.controls.copyformat = {
 				> = getStyles(editor, box, defaultStyles);
 
 				const onMouseDown = () => {
-					editor.buffer[pluginKey] = false;
+					editor.buffer.set(pluginKey, false);
+
 					const currentNode:
 						| Node
 						| false = editor.selection.current();
@@ -140,14 +142,12 @@ Config.prototype.controls.copyformat = {
 					onMouseDown
 				);
 
-				editor.buffer[pluginKey] = true;
+				editor.buffer.set(pluginKey, true);
 			}
 		}
 	},
 
-	isActive: (editor: IJodit): boolean => {
-		return !!editor.buffer[pluginKey];
-	},
+	isActive: (editor: IJodit) => !!editor.buffer.get(pluginKey),
 
 	tooltip: 'Paint format'
 } as IControlType;

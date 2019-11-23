@@ -74,6 +74,7 @@ export interface IPermissions {
 }
 
 export type CallbackFunction<T = any> = (this: T, ...args: any[]) => any | void;
+export type BooleanFunction<T = any> = (this: T, ...args: any[]) => boolean;
 
 export type ExecCommandCallback<T> =
 	| ((
@@ -101,11 +102,6 @@ export interface IHasScroll {
 	clientLeft: number;
 	scrollTop: number;
 	scrollLeft: number;
-}
-
-export interface IStorage {
-	set(key: string, value: string | number): void;
-	get(key: string): string | null;
 }
 
 export interface RangeType {

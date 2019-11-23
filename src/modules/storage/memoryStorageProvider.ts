@@ -7,16 +7,24 @@
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IDictionary, IStorage } from '../../types';
+import { IStorage, StorageValueType } from '../../types';
 
-export class MemoryStorageProvider implements IStorage {
-	data: IDictionary<string> = {};
+export class MemoryStorageProvider<T = StorageValueType> implements IStorage<T> {
+	private data: Map<string, T> = new Map();
 
-	public set(key: string, value: string | number) {
-		this.data[key] = value.toString();
+	set(key: string, value: T) {
+		this.data.set(key, value);
 	}
 
-	public get(key: string): string | null {
-		return this.data[key] || null;
+	get(key: string): T | void {
+		return this.data.get(key);
+	}
+
+	exists(key: string): boolean {
+		return this.data.has(key);
+	}
+
+	clear() {
+		this.data.clear();
 	}
 }

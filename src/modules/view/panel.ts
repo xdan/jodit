@@ -17,10 +17,10 @@ export class Panel extends Component implements IPanel {
 	protected __whoLocked: string | false = '';
 	protected __isFullSize: boolean = false;
 
-	public ownerDocument: Document = document;
-	public ownerWindow: Window = window;
+	ownerDocument: Document = document;
+	ownerWindow: Window = window;
 
-	public container: HTMLDivElement;
+	container: HTMLDivElement;
 
 	/**
 	 * @property {Create} Native DOM element creator
@@ -50,21 +50,19 @@ export class Panel extends Component implements IPanel {
 
 		Dom.safeRemove(this.container);
 		delete this.container;
+
 		super.destruct();
 	}
 
-	public isLocked = (): boolean => {
-		return this.__whoLocked !== '';
-	};
+	isLocked = (): boolean => this.__whoLocked !== '';
 
-	public isLockedNotBy = (name: string): boolean => {
-		return this.isLocked() && this.__whoLocked !== name;
-	};
+	isLockedNotBy = (name: string): boolean =>
+		this.isLocked() && this.__whoLocked !== name;
 
 	/**
 	 * Disable selecting
 	 */
-	public lock(name: string = 'any') {
+	lock(name = 'any') {
 		if (!this.isLocked()) {
 			this.__whoLocked = name;
 			return true;
@@ -76,7 +74,7 @@ export class Panel extends Component implements IPanel {
 	/**
 	 * Enable selecting
 	 */
-	public unlock() {
+	unlock() {
 		if (this.isLocked()) {
 			this.__whoLocked = '';
 			return true;
@@ -85,9 +83,9 @@ export class Panel extends Component implements IPanel {
 		return false;
 	}
 
-	public isFullSize = (): boolean => this.__isFullSize;
+	isFullSize = (): boolean => this.__isFullSize;
 
-	public toggleFullSize(isFullSize?: boolean) {
+	toggleFullSize(isFullSize?: boolean) {
 		if (isFullSize === undefined) {
 			isFullSize = !this.__isFullSize;
 		}

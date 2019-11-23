@@ -47,6 +47,7 @@ Config.prototype.controls.underline = {
 	},
 	tooltip: 'Underline'
 } as IControlType;
+
 Config.prototype.controls.strikethrough = {
 	tagRegExp: /^(s)$/i,
 	tags: ['s'],

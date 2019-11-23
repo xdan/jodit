@@ -12,6 +12,7 @@ import { IViewBased, IViewOptions } from '../../types/view';
 import { Component } from '../Component';
 import { EventsNative } from '../events/eventsNative';
 import { Panel } from './panel';
+import { Storage } from '../storage';
 
 declare let appVersion: string;
 
@@ -19,8 +20,9 @@ export class View extends Panel implements IViewBased {
 	/**
 	 * @property{string} ID attribute for source element, id add {id}_editor it's editor's id
 	 */
-	public id: string;
-	public version: string = appVersion; // from webpack.config.js
+	id: string;
+
+	version: string = appVersion; // from webpack.config.js
 
 	private __modulesInstances: IDictionary<Component> = {};
 
@@ -40,7 +42,7 @@ export class View extends Panel implements IViewBased {
 	 * @type {{}}
 	 * @see copyformat plugin
 	 */
-	public buffer: IDictionary;
+	buffer = Storage.makeStorage();
 
 	/**
 	 * progress_bar Progress bar
@@ -103,7 +105,7 @@ export class View extends Panel implements IViewBased {
 	 * @method getVersion
 	 * @return {string}
 	 */
-	public getVersion = (): string => {
+	getVersion = (): string => {
 		return this.version;
 	};
 
@@ -119,7 +121,8 @@ export class View extends Panel implements IViewBased {
 			jodit && jodit.events
 				? jodit.events
 				: new EventsNative(this.ownerDocument);
-		this.buffer = jodit && jodit.buffer ? jodit.buffer : {};
+
+		this.buffer = jodit && jodit.buffer ? jodit.buffer : Storage.makeStorage();
 
 		this.options = { ...this.options, ...options };
 	}

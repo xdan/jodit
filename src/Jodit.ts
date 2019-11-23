@@ -26,7 +26,6 @@ import { JoditObject } from './modules/helpers/JoditObject';
 import { Observer } from './modules/observer/observer';
 import { Select } from './modules/Selection';
 import { StatusBar } from './modules/StatusBar';
-import { LocalStorageProvider } from './modules/storage/localStorageProvider';
 import { Storage } from './modules/storage/storage';
 
 import {
@@ -36,7 +35,7 @@ import {
 	IPlugin,
 	markerInfo,
 	Modes
-} from './types/types';
+} from './types';
 
 import { ViewWithToolbar } from './modules/view/viewWithToolbar';
 import { IJodit } from './types/jodit';
@@ -122,7 +121,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 * Container for set/get value
 	 * @type {Storage}
 	 */
-	storage: Storage = new Storage(new LocalStorageProvider());
+	storage = Storage.makeStorage(true, this.id);
 
 	/**
 	 * workplace It contains source and wysiwyg editors
@@ -1170,10 +1169,11 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		let mode: number = this.options.defaultMode;
 
 		if (this.options.saveModeInStorage) {
-			const localMode: string | null = this.storage.get(
+			const localMode = this.storage.get(
 				'jodit_default_mode'
 			);
-			if (localMode !== null) {
+
+			if (typeof localMode === 'string') {
 				mode = parseInt(localMode, 10);
 			}
 		}
@@ -1371,7 +1371,11 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		delete this.observer;
 		delete this.statusbar;
+
 		delete this.storage;
+
+		this.buffer.clear();
+		delete this.buffer;
 
 		this.components.forEach((component: Component) => {
 			if (

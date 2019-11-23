@@ -11,7 +11,7 @@ import { IViewWithToolbar } from './view';
 import { Config } from '../Config';
 import { Observer } from '../modules/observer/observer';
 import { Select } from '../modules/Selection';
-import { CustomCommand, IComponent, IStorage, Modes } from './types';
+import { CustomCommand, IStorage, Modes } from './';
 import { StatusBar } from '../modules/StatusBar';
 import { IUploader } from './uploader';
 import { IFileBrowser } from './fileBrowser';
