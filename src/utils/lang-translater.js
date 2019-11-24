@@ -16,8 +16,8 @@ const translate = async (text, lang) => {
 						if (json.code !== 200) {
 							return reject(lang + ':' +json.message);
 						}
-						console.log(lang, json);
-						resolve(json.text[0]);
+
+						return resolve(json.text[0]);
 					});
 				}
 			)
