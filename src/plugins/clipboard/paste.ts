@@ -18,7 +18,7 @@ import {
 	TEXT_PLAIN
 } from '../../constants';
 
-import { Confirm, Dialog } from '../../modules/dialog/';
+import { Confirm, Dialog, Alert } from '../../modules/dialog/';
 
 import {
 	applyStyles,
@@ -34,7 +34,7 @@ import {
 } from '../../modules/helpers/';
 
 import { Dom } from '../../modules/Dom';
-import { IJodit } from '../../types';
+import { IControlType, IJodit } from '../../types';
 import { nl2br } from '../../modules/helpers/html/nl2br';
 import { pluginKey as clipboardPluginKey } from './cut';
 
@@ -72,6 +72,41 @@ export const getDataTransfer = (
 
 	return (event as DragEvent).dataTransfer || new DataTransfer();
 };
+
+Config.prototype.controls.paste = {
+	tooltip: 'Paste from clipboard',
+	async exec(editor: IJodit) {
+		editor.selection.focus();
+
+		if (navigator.clipboard) {
+			let text = '', error = false;
+
+			try {
+				text = await navigator.clipboard.readText();
+			} catch (e) {
+				error = true;
+
+				try {
+					text = await (navigator.clipboard as any).read();
+
+				} catch (e2) {
+					editor.editorDocument.execCommand('paste');
+				}
+			}
+
+			if (text) {
+				editor.selection.insertHTML(text);
+			} else {
+				if (error) {
+					Alert('Your browser doesn\'t support direct access to the clipboard. Please use the ⌘+V keyboard shortcuts instead.', () => {
+						editor.selection.focus();
+					});
+				}
+			}
+		}
+
+	}
+} as IControlType;
 
 /**
  * Ask before paste HTML source
@@ -147,6 +182,7 @@ export function paste(editor: IJodit) {
 			dialog.close();
 			callback && callback(false);
 		});
+
 		editor.events.on(clear2, 'click', () => {
 			dialog.close();
 			callback && callback(0);
@@ -233,11 +269,13 @@ export function paste(editor: IJodit) {
 
 	const trimFragment = (html: string): string => {
 		const start: number = html.search(/<!--StartFragment-->/i);
+
 		if (start !== -1) {
 			html = html.substr(start + 20);
 		}
 
 		const end: number = html.search(/<!--EndFragment-->/i);
+
 		if (end !== -1) {
 			html = html.substr(0, end);
 		}

@@ -674,6 +674,7 @@ export class Config implements IViewOptions {
 		'selectall',
 		'cut',
 		'copy',
+		'paste',
 		'eraser',
 		'copyformat',
 		'|',

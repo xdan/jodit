@@ -56,6 +56,7 @@ import * as omega from './omega.svg';
 import * as outdent from './outdent.svg';
 import * as palette from './palette.svg';
 import * as paragraph from './paragraph.svg';
+import * as paste from './paste.svg';
 import * as pencil from './pencil.svg';
 import * as plus from './plus.svg';
 import * as print from './print.svg';
@@ -135,6 +136,7 @@ export {
 	outdent,
 	palette,
 	paragraph,
+	paste,
 	pencil,
 	plus,
 	print,
