@@ -75,36 +75,56 @@ export const getDataTransfer = (
 
 Config.prototype.controls.paste = {
 	tooltip: 'Paste from clipboard',
+
 	async exec(editor: IJodit) {
 		editor.selection.focus();
 
-		if (navigator.clipboard) {
-			let text = '', error = false;
+		let text = '',
+			error = true;
 
+		if (error) {
+			text = editor.buffer.get<string>(clipboardPluginKey) || '';
+			error = text.length === 0;
+		}
+
+		if (error && navigator.clipboard) {
 			try {
-				text = await navigator.clipboard.readText();
-			} catch (e) {
-				error = true;
+				const items = await (navigator.clipboard as any).read();
 
+				if (items && items.length) {
+					const textBlob = await items[0].getType("text/plain");
+					text = await (new Response(textBlob)).text();
+				}
+			} catch {}
+
+			if (error) {
 				try {
-					text = await (navigator.clipboard as any).read();
-
-				} catch (e2) {
-					editor.editorDocument.execCommand('paste');
-				}
-			}
-
-			if (text) {
-				editor.selection.insertHTML(text);
-			} else {
-				if (error) {
-					Alert('Your browser doesn\'t support direct access to the clipboard. Please use the ⌘+V keyboard shortcuts instead.', () => {
-						editor.selection.focus();
-					});
-				}
+					text = await navigator.clipboard.readText();
+					error = false;
+				} catch {}
 			}
 		}
 
+		if (error) {
+			const value = editor.value;
+			editor.editorDocument.execCommand('paste');
+			error = value !== editor.value;
+		}
+
+		if (text) {
+			editor.selection.insertHTML(text);
+		} else {
+			if (error) {
+				Alert(
+					editor.i18n(
+						"Your browser doesn't support direct access to the clipboard."
+					),
+					() => {
+						editor.selection.focus();
+					}
+				);
+			}
+		}
 	}
 } as IControlType;
 
@@ -222,6 +242,10 @@ export function paste(editor: IJodit) {
 					break;
 				default:
 			}
+		}
+
+		if (typeof html === 'string') {
+			editor.buffer.set(clipboardPluginKey, html);
 		}
 
 		editor.selection.insertHTML(html);
