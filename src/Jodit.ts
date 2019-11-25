@@ -1257,6 +1257,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 					if (this.options.readonly) {
 						return;
 					}
+
 					if (this.events && this.events.fire) {
 						if (this.events.fire(event.type, event) === false) {
 							return false;

@@ -267,7 +267,7 @@ describe('Clipboard text', function() {
 		describe('After cut or copy commands', function() {
 			['copy', 'cut'].forEach(function (command) {
 				describe('For ' + command + ' command. In Jodit.buffer', function() {
-					it('should be selected text or html', () => {
+					it('should be selected text', () => {
 						const editor = new Jodit(appendTestArea(), {
 							toolbarAdaptive: false,
 							observer: {
@@ -279,15 +279,18 @@ describe('Clipboard text', function() {
 
 						editor.value = html;
 
+						editor.selection.focus();
 						editor.execCommand('selectall');
-						editor.execCommand(command);
+						simulateEvent(command, 0, editor.editor, function (p){});
 
 						expect(editor.buffer.get('clipboard')).to.equal(html);
 
 						editor.value = html;
+						editor.selection.focus();
 
 						editor.selection.select(editor.editor.querySelector('strong'))
-						editor.execCommand(command);
+						simulateEvent(command, 0, editor.editor, function (p){});
+
 						expect(editor.buffer.get('clipboard')).to.equal('<strong>bold</strong>');
 
 						if (command === 'cut') {
