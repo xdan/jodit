@@ -230,4 +230,5 @@ export default {
 	preview: 'Ön izleme',
 	download: 'İndir',
 	'Paste from clipboard': 'Panodan yapıştır ',
+	'Your browser doesn\'t support direct access to the clipboard.': 'Tarayıcınız pano doğrudan erişim desteklemiyor.',
 } as IDictionary<string>;

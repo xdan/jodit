@@ -224,4 +224,5 @@ export default {
 	preview: 'Aperçu',
 	download: 'Télécharger',
 	'Paste from clipboard': 'Coller à partir du presse-papiers',
+	'Your browser doesn\'t support direct access to the clipboard.': 'Votre navigateur ne prend pas en charge l'accès direct à la presse-papiers.',
 } as IDictionary<string>;

@@ -229,4 +229,5 @@ export default {
 	preview: 'תצוגה מקדימה',
 	download: 'הורד',
 	'Paste from clipboard': 'להדביק מהלוח',
+	'Your browser doesn\'t support direct access to the clipboard.': 'הדפדפן שלך לא תומך גישה ישירה ללוח.',
 } as IDictionary<string>;

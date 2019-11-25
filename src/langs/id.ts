@@ -230,4 +230,5 @@ export default {
   download: 'Unduh',
 
 	'Paste from clipboard': 'Paste dari clipboard',
+	'Your browser doesn\'t support direct access to the clipboard.': 'Browser anda tidak mendukung akses langsung ke clipboard.',
 } as IDictionary<string>;

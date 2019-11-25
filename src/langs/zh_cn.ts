@@ -227,4 +227,5 @@ export default {
 	preview: '预览',
 	download: '下载',
 	'Paste from clipboard': '粘贴从剪贴板',
+	'Your browser doesn\'t support direct access to the clipboard.': '你浏览器不支持直接访问的剪贴板。',
 } as IDictionary<string>;

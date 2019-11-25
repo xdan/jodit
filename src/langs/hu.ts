@@ -232,4 +232,5 @@ export default {
 	preview: 'előnézet',
 	download: 'Letöltés',
 	'Paste from clipboard': 'Illessze be a vágólap',
+	'Your browser doesn\'t support direct access to the clipboard.': 'A böngésző nem támogatja a közvetlen hozzáférést biztosít a vágólapra.',
 } as IDictionary<string>;
