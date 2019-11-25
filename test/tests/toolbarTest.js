@@ -2187,9 +2187,11 @@ describe('Toolbar', function() {
 					const bold = editor.container.querySelector(
 						'.jodit_toolbar_btn-bold'
 					);
+
 					const italic = editor.container.querySelector(
 						'.jodit_toolbar_btn-italic'
 					);
+
 					const underline = editor.container.querySelector(
 						'.jodit_toolbar_btn-underline'
 					);
@@ -2197,9 +2199,11 @@ describe('Toolbar', function() {
 					expect(true).to.be.equal(
 						bold.classList.contains('jodit_active')
 					);
+
 					expect(true).to.be.equal(
 						italic.classList.contains('jodit_active')
 					);
+
 					expect(true).to.be.equal(
 						underline.classList.contains('jodit_active')
 					);
@@ -2208,33 +2212,66 @@ describe('Toolbar', function() {
 		});
 
 		describe('Disable button', function() {
-			describe('Cut', function() {
-				it('Should be activated editor has some selected text', function() {
-					const editor = new Jodit(appendTestArea(), {
-						toolbarAdaptive: false,
-						observer: {
-							timeout: 0
-						}
+			describe('Cut and Copy', function() {
+				describe('Cut', function() {
+					it('Should be activated editor has some selected text', function() {
+						const editor = new Jodit(appendTestArea(), {
+							toolbarAdaptive: false,
+							observer: {
+								timeout: 0
+							}
+						});
+
+						const cut = editor.container.querySelector(
+							'.jodit_toolbar_btn-cut'
+						);
+
+						editor.value = (
+							'<p>test<strong>bold</strong></p>'
+						);
+						expect(true).to.equal(
+							cut.classList.contains('jodit_disabled')
+						);
+
+						const p = editor.editor.firstChild;
+
+						editor.selection.select(p.firstChild);
+
+						expect(false).to.equal(
+							cut.classList.contains('jodit_disabled')
+						);
 					});
+				});
 
-					const cut = editor.container.querySelector(
-						'.jodit_toolbar_btn-cut'
-					);
+				describe('Copy', function() {
+					it('Should be activated editor has some selected text', function() {
+						const editor = new Jodit(appendTestArea(), {
+							toolbarAdaptive: false,
+							observer: {
+								timeout: 0
+							}
+						});
 
-					editor.setEditorValue(
-						'<p>test<strong>bold</strong></p>'
-					);
-					expect(true).to.equal(
-						cut.classList.contains('jodit_disabled')
-					);
+						const copy = editor.container.querySelector(
+							'.jodit_toolbar_btn-copy'
+						);
 
-					const p = editor.editor.firstChild;
+						editor.value = (
+							'<p>test<strong>bold</strong></p>'
+						);
 
-					editor.selection.select(p.firstChild);
+						expect(true).to.equal(
+							copy.classList.contains('jodit_disabled')
+						);
 
-					expect(false).to.equal(
-						cut.classList.contains('jodit_disabled')
-					);
+						const p = editor.editor.firstChild;
+
+						editor.selection.select(p.firstChild);
+
+						expect(false).to.equal(
+							copy.classList.contains('jodit_disabled')
+						);
+					});
 				});
 			});
 

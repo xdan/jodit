@@ -263,5 +263,42 @@ describe('Clipboard text', function() {
 		});
 	});
 
+	describe('Cut and Copy', function() {
+		describe('After cut or copy commands', function() {
+			['copy', 'cut'].forEach(function (command) {
+				describe('For ' + command + ' command. In Jodit.buffer', function() {
+					it('should be selected text or html', () => {
+						const editor = new Jodit(appendTestArea(), {
+							toolbarAdaptive: false,
+							observer: {
+								timeout: 0
+							}
+						});
+
+						const html = '<p>test<strong>bold</strong></p>';
+
+						editor.value = html;
+
+						editor.execCommand('selectall');
+						editor.execCommand(command);
+
+						expect(editor.buffer.get('clipboard')).to.equal(html);
+
+						editor.value = html;
+
+						editor.selection.select(editor.editor.querySelector('strong'))
+						editor.execCommand(command);
+						expect(editor.buffer.get('clipboard')).to.equal('<strong>bold</strong>');
+
+						if (command === 'cut') {
+							expect(editor.value).to.equal('<p>test</p>');
+						}
+
+					});
+				});
+			});
+		});
+	});
+
 	afterEach(removeStuff);
 });
