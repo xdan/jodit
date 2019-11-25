@@ -235,4 +235,5 @@ export default {
 	download: 'Скачать',
 	'Paste from clipboard': 'Вставить из буфера обмена',
 	'Your browser doesn\'t support direct access to the clipboard.': 'Ваш браузер не поддерживает прямой доступ к буферу обмена.',
+	'Copy selection': 'Выбор копия ',
 } as IDictionary<string>;

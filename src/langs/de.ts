@@ -232,4 +232,5 @@ export default {
 	download: 'Herunterladen',
 	'Paste from clipboard': 'Aus der Zwischenablage einfügen',
 	'Your browser doesn\'t support direct access to the clipboard.': 'Ihr browser unterstützt kein direkter Zugriff auf die Zwischenablage.',
+	'Copy selection': 'Auswahl kopieren',
 } as IDictionary<string>;

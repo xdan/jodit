@@ -34,8 +34,6 @@ const translate = async (text, lang) => {
 	});
 };
 
-// translate('Hi guys', 'ru').then(a => console.log(a), b => console.log(b));
-
 const fs = require('fs');
 const path = require('path');
 
@@ -75,5 +73,5 @@ const translateAll = (text) => {
 	});
 };
 
-translateAll('Your browser doesn\'t support direct access to the clipboard.');
+translateAll('Copy selection');
 

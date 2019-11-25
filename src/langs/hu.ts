@@ -233,4 +233,5 @@ export default {
 	download: 'Letöltés',
 	'Paste from clipboard': 'Illessze be a vágólap',
 	'Your browser doesn\'t support direct access to the clipboard.': 'A böngésző nem támogatja a közvetlen hozzáférést biztosít a vágólapra.',
+	'Copy selection': 'Másolás kiválasztása',
 } as IDictionary<string>;

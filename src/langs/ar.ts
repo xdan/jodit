@@ -219,4 +219,5 @@ export default {
 	download: 'تحميل',
 	'Paste from clipboard': 'لصق من الحافظة',
 	'Your browser doesn\'t support direct access to the clipboard.': 'متصفحك لا يدعم إمكانية الوصول المباشر إلى الحافظة.',
+	'Copy selection': 'نسخ التحديد',
 } as IDictionary<string>;

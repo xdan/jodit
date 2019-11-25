@@ -231,4 +231,5 @@ export default {
 
 	'Paste from clipboard': 'Paste dari clipboard',
 	'Your browser doesn\'t support direct access to the clipboard.': 'Browser anda tidak mendukung akses langsung ke clipboard.',
+	'Copy selection': 'Copy seleksi',
 } as IDictionary<string>;

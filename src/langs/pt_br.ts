@@ -231,4 +231,5 @@ export default {
 	download: 'Baixar',
 	'Paste from clipboard': 'Colar da área de transferência',
 	'Your browser doesn\'t support direct access to the clipboard.': 'O seu navegador não oferece suporte a acesso direto para a área de transferência.',
+	'Copy selection': 'Selecção de cópia',
 } as IDictionary<string>;
