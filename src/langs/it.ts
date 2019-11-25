@@ -230,5 +230,6 @@ export default {
 	download: 'Scaricare',
 	'Paste from clipboard': 'Incolla dagli appunti',
 	'Your browser doesn\'t support direct access to the clipboard.': 'Il tuo browser non supporta l\'accesso diretto agli appunti.',
-	'Copy selection': 'Selezione di copia'
+	'Copy selection': 'Selezione di copia',
+	'copy': 'copia',
 } as IDictionary<string>;

@@ -76,5 +76,5 @@ const translateAll = (text) => {
 	});
 };
 
-translateAll('Copy selection');
+translateAll('copy');
 
