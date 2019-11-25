@@ -75,5 +75,5 @@ const translateAll = (text) => {
 	});
 };
 
-translateAll('Paste from clipboard');
+translateAll('Your browser doesn\'t support direct access to the clipboard.');
 
