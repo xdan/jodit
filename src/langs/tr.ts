@@ -229,4 +229,5 @@ export default {
 	'Enter new name': 'Yeni isim girin',
 	preview: 'Ön izleme',
 	download: 'İndir',
+	'Paste from clipboard': 'Panodan yapıştır ',
 } as IDictionary<string>;

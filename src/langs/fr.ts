@@ -223,4 +223,5 @@ export default {
 	'Enter new name': 'Entrez un nouveau nom',
 	preview: 'Aperçu',
 	download: 'Télécharger',
+	'Paste from clipboard': 'Coller à partir du presse-papiers',
 } as IDictionary<string>;

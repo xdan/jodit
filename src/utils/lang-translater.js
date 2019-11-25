@@ -68,12 +68,12 @@ const translateAll = (text) => {
 
 		if (end !== -1) {
 			const translated = await translate(text, lang);
-			const newHash = data.substring(0, end - 1) + "\n\t'" + text + "': '" + translated + "',\n" + data.substring(end);
+			const newHash = data.substring(0, end - 1) + "\n\t'" + text.replace(/'/g, "\\'") + "': '" + translated + "',\n" + data.substring(end);
 
 			fs.writeFileSync(filename, newHash);
 		}
 	});
 };
 
-translateAll('Hi');
+translateAll('Paste from clipboard');
 

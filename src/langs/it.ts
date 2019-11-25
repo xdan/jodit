@@ -228,4 +228,5 @@ export default {
 	'Enter new name': 'Inserisci un nuovo nome',
 	preview: 'anteprima',
 	download: 'Scaricare',
+	'Paste from clipboard': 'Incolla dagli appunti',
 } as IDictionary<string>;

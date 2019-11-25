@@ -229,4 +229,5 @@ export default {
   preview: 'pratinjau',
   download: 'Unduh',
 
+	'Paste from clipboard': 'Paste dari clipboard',
 } as IDictionary<string>;

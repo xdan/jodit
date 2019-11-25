@@ -226,4 +226,5 @@ export default {
 	'Enter new name': '輸入新名稱',
 	preview: '預覽',
 	download: '下載',
+	'Paste from clipboard': 'วางจากคลิปบอร์ด',
 } as IDictionary<string>;

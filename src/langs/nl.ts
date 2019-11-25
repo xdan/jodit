@@ -230,4 +230,5 @@ export default {
 	'Enter new name': 'Voer een nieuwe naam in',
 	preview: 'voorvertoning',
 	download: 'Download',
+	'Paste from clipboard': 'Plakken van klembord',
 } as IDictionary<string>;

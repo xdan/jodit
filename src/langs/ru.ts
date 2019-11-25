@@ -233,4 +233,5 @@ export default {
 	'Enter new name': 'Введите новое имя',
 	preview: 'Предпросмотр',
 	download: 'Скачать',
+	'Paste from clipboard': 'Вставить из буфера обмена',
 } as IDictionary<string>;

@@ -217,4 +217,5 @@ export default {
 	'Enter new name': 'أدخل اسم جديد',
 	preview: 'معاينة',
 	download: 'تحميل',
+	'Paste from clipboard': 'لصق من الحافظة',
 } as IDictionary<string>;

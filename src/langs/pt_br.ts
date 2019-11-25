@@ -229,4 +229,5 @@ export default {
 	'Enter new name': 'Digite um novo nome',
 	preview: 'preview',
 	download: 'Baixar',
+	'Paste from clipboard': 'Colar da área de transferência',
 } as IDictionary<string>;

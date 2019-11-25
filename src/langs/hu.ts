@@ -231,4 +231,5 @@ export default {
 	'Enter new name': 'Adja meg az új nevet',
 	preview: 'előnézet',
 	download: 'Letöltés',
+	'Paste from clipboard': 'Illessze be a vágólap',
 } as IDictionary<string>;

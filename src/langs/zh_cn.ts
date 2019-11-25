@@ -226,4 +226,5 @@ export default {
 	'Enter new name': '输入新名称',
 	preview: '预览',
 	download: '下载',
+	'Paste from clipboard': '粘贴从剪贴板',
 } as IDictionary<string>;

@@ -228,4 +228,5 @@ export default {
 	'Enter new name': 'הזן שם חדש',
 	preview: 'תצוגה מקדימה',
 	download: 'הורד',
+	'Paste from clipboard': 'להדביק מהלוח',
 } as IDictionary<string>;

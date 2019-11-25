@@ -229,4 +229,5 @@ export default {
 	preview: 'náhled',
 	download: 'Stažení',
 
+	'Paste from clipboard': 'Vložit ze schránky',
 } as IDictionary<string>;

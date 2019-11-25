@@ -230,4 +230,5 @@ export default {
 	'Enter new name': 'Geben Sie einen neuen Namen ein',
 	preview: 'Vorschau',
 	download: 'Herunterladen',
+	'Paste from clipboard': 'Aus der Zwischenablage einfügen',
 } as IDictionary<string>;
