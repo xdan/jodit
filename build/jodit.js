@@ -1,7 +1,7 @@
 /*!
  jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- Version: v3.2.64
+ Version: v3.2.65
  Url: https://xdsoft.net/jodit/
  License(s): GPL-2.0-or-later OR MIT OR Commercial
 */
@@ -8835,7 +8835,7 @@ var View = /** @class */ (function (_super) {
     tslib_1.__extends(View, _super);
     function View(jodit, options) {
         var _this = _super.call(this, jodit) || this;
-        _this.version = "3.2.64"; // from webpack.config.js
+        _this.version = "3.2.65"; // from webpack.config.js
         _this.__modulesInstances = {};
         /**
          * Some extra data inside editor
