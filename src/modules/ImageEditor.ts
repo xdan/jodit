@@ -85,6 +85,7 @@ Config.prototype.imageeditor = {
 };
 
 const jie = 'jodit_image_editor';
+const gi = ToolbarIcon.getIcon;
 
 /**
  * The module allows you toWYSIWYG edit the image: resize or cut any part of it
@@ -486,8 +487,10 @@ export class ImageEditor extends Component {
 					let another: number;
 					if (value > self.options.min_height) {
 						css(self.image, 'height', value + 'px');
+
 						if (self.resizeUseRatio) {
 							another = Math.round(value * self.ratio);
+
 							if (another > self.options.min_width) {
 								css(self.image, 'width', another + 'px');
 								self.widthInput.value = another.toString();
@@ -506,10 +509,12 @@ export class ImageEditor extends Component {
 				self.resizeUseRatio = rationResizeButton.checked;
 			});
 		}
+
 		// use ratio
 		const rationCropButton: HTMLInputElement | null = self.editor.querySelector(
 			`.${jie}_keep_spect_ratio_crop`
 		);
+
 		if (rationCropButton) {
 			rationCropButton.addEventListener('change', () => {
 				self.cropUseRatio = rationCropButton.checked;
@@ -541,12 +546,14 @@ export class ImageEditor extends Component {
 				if (new_x < 0) {
 					new_x = 0;
 				}
+
 				if (new_y < 0) {
 					new_y = 0;
 				}
 
 				if (new_x + new_width > self.cropImage.offsetWidth) {
 					new_width = self.cropImage.offsetWidth - new_x;
+
 					if (self.cropUseRatio) {
 						new_height = new_width / self.ratio;
 					}
@@ -554,6 +561,7 @@ export class ImageEditor extends Component {
 
 				if (new_y + new_height > self.cropImage.offsetHeight) {
 					new_height = self.cropImage.offsetHeight - new_y;
+
 					if (self.cropUseRatio) {
 						new_width = new_height * self.ratio;
 					}
@@ -640,9 +648,9 @@ export class ImageEditor extends Component {
 		});
 	};
 
-	public options: ImageEditorOptions;
+	options: ImageEditorOptions;
 
-	public onSave: (
+	onSave: (
 		name: void | string,
 		data: ImageEditorActionBox,
 		hide: () => void,
@@ -654,7 +662,7 @@ export class ImageEditor extends Component {
 	 *
 	 * @method hide
 	 */
-	public hide = () => {
+	hide = () => {
 		this.dialog.close();
 	};
 
@@ -692,7 +700,7 @@ export class ImageEditor extends Component {
 	 * });
 	 * ```
 	 */
-	public open = (
+	open = (
 		url: string,
 		save: (
 			newname: string | void,
@@ -796,7 +804,7 @@ export class ImageEditor extends Component {
 		this.buttons = [
 			this.jodit.create.fromHTML(
 				'<button data-action="reset" type="button" class="jodit_btn">' +
-					ToolbarIcon.getIcon('update') +
+					gi('update') +
 					'&nbsp;' +
 					i('Reset') +
 					'</button>'
@@ -804,7 +812,7 @@ export class ImageEditor extends Component {
 
 			this.jodit.create.fromHTML(
 				'<button data-action="save" type="button" class="jodit_btn jodit_btn_success">' +
-					ToolbarIcon.getIcon('save') +
+					gi('save') +
 					'&nbsp;' +
 					i('Save') +
 					'</button>'
@@ -812,7 +820,7 @@ export class ImageEditor extends Component {
 
 			this.jodit.create.fromHTML(
 				'<button data-action="saveas" type="button" class="jodit_btn jodit_btn_success">' +
-					ToolbarIcon.getIcon('save') +
+					gi('save') +
 					'&nbsp;' +
 					i('Save as ...') +
 					'</button>'
@@ -829,110 +837,109 @@ export class ImageEditor extends Component {
 			el ? className : '';
 
 		this.editor = this.jodit.create.fromHTML(
-			`<form class="${jie} jodit_properties">` +
-				'<div class="jodit_grid">' +
-				'<div class="jodit_col-lg-3-4">' +
-				(o.resize
-					? `<div class="${jie}_area ${jie}_area_resize active">` +
-					  `<div class="${jie}_box"></div>` +
-					  `<div class="${jie}_resizer">` +
-					  '<i class="jodit_bottomright"></i>' +
-					  '</div>' +
-					  '</div>'
-					: '') +
-				(o.crop
-					? `<div class="${jie}_area ${jie}_area_crop ${act(
-							!o.resize
-					  )}'">` +
-					  `<div class="${jie}_box">` +
-					  `<div class="${jie}_croper">` +
-					  '<i class="jodit_bottomright"></i>' +
-					  '<i class="jodit_sizes"></i>' +
-					  '</div>' +
-					  '</div>' +
-					  '</div>'
-					: '') +
-				'</div>' +
-				'<div class="jodit_col-lg-1-4">' +
-				(o.resize
-					? `<div data-area="resize" class="${jie}_slider active">` +
-					  `<div class="${jie}_slider-title">` +
-					  ToolbarIcon.getIcon('resize') +
-					  i('Resize') +
-					  '</div>' +
-					  `<div class="${jie}_slider-content">` +
-					  '<div class="jodit_form_group">' +
-					  `<label for="${jie}_width">` +
-					  i('Width') +
-					  '</label>' +
-					  '<input type="number" class="${jie}_width"/>' +
-					  '</div>' +
-					  '<div class="jodit_form_group">' +
-					  `<label for="${jie}_height">` +
-					  i('Height') +
-					  '</label>' +
-					  `<input type="number" class="${jie}_height"/>` +
-					  '</div>' +
-					  '<div class="jodit_form_group">' +
-					  '<label>' +
-					  i('Keep Aspect Ratio') +
-					  '</label>' +
-					  '<div class="jodit_btn_group jodit_btn_radio_group">' +
-					  `<input ${act(
-							r,
-							'checked'
-					  )} type="checkbox" class="${jie}_keep_spect_ratio"/>` +
-					  `<button type="button"	data-yes="1" ${act(
-							r
-					  )} class="jodit_col6 jodit_btn jodit_btn_success">` +
-					  i('Yes') +
-					  '</button>' +
-					  '<button type="button" class="jodit_col6 jodit_btn' +
-					  act(!r) +
-					  '">' +
-					  i('No') +
-					  '</button>' +
-					  '</div>' +
-					  '</div>' +
-					  '</div>' +
-					  '</div>'
-					: '') +
-				(o.crop
-					? `<div data-area="crop" class="${jie}_slider ${act(
-							!o.resize
-					  )}'">` +
-					  `<div class="${jie}_slider-title">` +
-					  ToolbarIcon.getIcon('crop') +
-					  i('Crop') +
-					  '</div>' +
-					  `<div class="${jie}_slider-content">` +
-					  '<div class="jodit_form_group">' +
-					  '<label>' +
-					  i('Keep Aspect Ratio') +
-					  '</label>' +
-					  '<div class="jodit_btn_group jodit_btn_radio_group">' +
-					  `<input ${act(
-							c,
-							'checked'
-					  )} type="checkbox" class="${jie}_keep_spect_ratio_crop"/>` +
-					  '<button type="button" data-yes="1" class="jodit_col6 jodit_btn jodit_btn_success ' +
-					  act(c) +
-					  '">' +
-					  i('Yes') +
-					  '</button>' +
-					  '<button type="button" class="jodit_col6 jodit_btn ' +
-					  act(!c) +
-					  '">' +
-					  i('No') +
-					  '</button>' +
-					  '</div>' +
-					  '</div>' +
-					  '</div>' +
-					  '</div>'
-					: '') +
-				'</div>' +
-				'</div>' +
-				'</form>'
+			`<form class="${jie} jodit_properties">
+							<div class="jodit_grid">
+								<div class="jodit_col-lg-3-4">
+								${
+									o.resize
+										? `<div class="${jie}_area ${jie}_area_resize active">
+												<div class="${jie}_box"></div>
+												<div class="${jie}_resizer">
+													<i class="jodit_bottomright"></i>
+												</div>
+											</div>`
+										: ''
+								}
+								${
+									o.crop
+										? `<div class="${jie}_area ${jie}_area_crop ${act(
+												!o.resize
+										  )}'">
+												<div class="${jie}_box">
+													<div class="${jie}_croper">
+														<i class="jodit_bottomright"></i>
+														<i class="jodit_sizes"></i>
+													</div>
+												</div>
+											</div>`
+										: ''
+								}
+								</div>
+								<div class="jodit_col-lg-1-4">
+								${
+									o.resize
+										? `<div data-area="resize" class="${jie}_slider active">
+												<div class="${jie}_slider-title">
+													${gi('resize')}
+													${i('Resize')}
+												</div>
+												<div class="${jie}_slider-content">
+													<div class="jodit_form_group">
+														<label for="${jie}_width">
+															${i('Width')}
+														</label>
+														<input type="number" class="${jie}_width"/>
+													</div>
+													<div class="jodit_form_group">
+														<label for="${jie}_height">
+															${i('Height')}
+														</label>
+														<input type="number" class="${jie}_height"/>
+													</div>
+													<div class="jodit_form_group">
+														<label>
+															${i('Keep Aspect Ratio')}
+														</label>
+														<div class="jodit_btn_group jodit_btn_radio_group">
+															<input ${act(r, 'checked')} type="checkbox" class="${jie}_keep_spect_ratio"/>
+															<button type="button"	data-yes="1" ${act(
+																r
+															)} class="jodit_col6 jodit_btn jodit_btn_success">
+																${i('Yes')}
+															</button>
+															<button type="button" class="jodit_col6 jodit_btn ${act(!r)}">
+																${i('No')}
+															</button>
+														</div>
+													</div>
+												</div>
+											</div>`
+										: ''
+								}
+								${
+									o.crop
+										? `<div data-area="crop" class="${jie}_slider ${act(
+												!o.resize
+										  )}'">
+												<div class="${jie}_slider-title">
+													${gi('crop')}
+													$i('Crop')}
+												</div>
+												<div class="${jie}_slider-content">
+													<div class="jodit_form_group">
+														<label>${i('Keep Aspect Ratio')}</label>
+														<div class="jodit_btn_group jodit_btn_radio_group">
+															<input ${act(
+																c,
+																'checked'
+															)} type="checkbox" class="${jie}_keep_spect_ratio_crop"/>
+															<button type="button" data-yes="1" class="jodit_col6 jodit_btn jodit_btn_success ${act(
+																c
+															)}">
+																${i('Yes')}
+															</button>
+															<button type="button" class="jodit_col6 jodit_btn ${act(!c)}">
+																${i('No')}
+															</button>
+														</div>
+													</div>
+												</div>
+											</div>`
+										: ''
+								}
+								</div>
+							</div>
+						</form>`
 		);
 
 		this.heightInput = this.editor.querySelector(
