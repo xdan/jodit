@@ -9,5 +9,4 @@
 
 export * from './camelCase';
 export * from './fromCamelCase';
-export * from './sprintf';
 export * from './trim';

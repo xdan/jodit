@@ -13,7 +13,7 @@ import { defaultNameSpace, EventHandlersStore } from './store';
 import { IEventsNative } from '../../types/events';
 
 export class EventsNative implements IEventsNative {
-	private __key: string = '__JoditEventsNativeNamespaces';
+	readonly __key: string = '__JoditEventsNativeNamespaces';
 
 	private doc: Document = document;
 

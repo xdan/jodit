@@ -18,8 +18,7 @@ import {
 	defaultLanguage,
 	inArray,
 	normalizeKeyAliases,
-	splitArray,
-	sprintf
+	splitArray
 } from './modules/helpers/';
 import { JoditArray } from './modules/helpers/JoditArray';
 import { JoditObject } from './modules/helpers/JoditObject';
@@ -774,16 +773,33 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 * console.log(Jodit.prototype.i18n('Hello world', 'mr.Perkins', 'day')) //Hello mr.Perkins Good day
 	 * ```
 	 */
-	i18n(key: string, ...params: Array<string | number>): string {
+	i18n = (key: string, ...params: Array<string | number>): string => {
 		const debug: boolean =
 			this.options !== undefined && this.options.debugLanguage;
 
 		let store: IDictionary;
 
+		const sprintf = (str: string, args?: Array<string | number>): string => {
+			if (!args || !args.length) {
+				return str;
+			}
+
+			const reg = /%([sd])/g;
+
+			let fnd = reg.exec(str);
+			let res = str, i = 0;
+
+			while (fnd && args[i] !== undefined) {
+				res = res.replace(fnd[0], args[i].toString());
+				i += 1;
+				fnd = reg.exec(str)
+			}
+
+			return res;
+		};
+
 		const parse = (value: string): string =>
-				params.length
-					? sprintf.apply(this, [value].concat(params as string[]))
-					: value,
+				params.length ? sprintf(value, params) : value,
 			default_language: string =
 				Config.defaultOptions.language === 'auto'
 					? defaultLanguage(Config.defaultOptions.language)
@@ -810,17 +826,19 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			return parse((this.options.i18n as any)[language][key]);
 		}
 
-		if (typeof store[key] === 'string' && store[key]) {
+		if (store && typeof store[key] === 'string' && store[key]) {
 			return parse(store[key]);
 		}
 
 		const lckey = key.toLowerCase();
-		if (typeof store[lckey] === 'string' && store[lckey]) {
+
+		if (store && typeof store[lckey] === 'string' && store[lckey]) {
 			return parse(store[lckey]);
 		}
 
 		const ucfkey = ucfirst(key);
-		if (typeof store[ucfkey] === 'string' && store[ucfkey]) {
+
+		if (store && typeof store[ucfkey] === 'string' && store[ucfkey]) {
 			return parse(store[ucfkey]);
 		}
 
@@ -837,7 +855,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		}
 
 		return parse(key);
-	}
+	};
 
 	/**
 	 * Switch on/off the editor into the disabled state.

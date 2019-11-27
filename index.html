@@ -67,54 +67,23 @@ cena quidem posse videamur?
 		</dl>
 	</div>
 </div>
-<script src="./build/jodit.min.js"></script>
+<script src="./build/jodit.es2018.js"></script>
 <script>
 	const editor = new Jodit('#editor', {
-		// iframe: true,
-		// theme: 'dark',
-	  // "buttons": "bold,image,|,brush,paragraph,|,align,,undo,redo,|,eraser,test,dots",
-	  // "extraButtons": [{
-	  // 		name: 'test',
-		// 		icon: 'bold',
-		// 		exec: () => alert(111)
-		// }],
 		toolbarButtonSize: 'large',
 		height: 100,
 		tabIndex: 0,
-		// language: 'ru',
-		// textIcons: true,
+
 		uploader: {
 			url: 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'
 		},
+
 		filebrowser: {
 			ajax: {
 				url: 'https://xdsoft.net/jodit/connector/index.php'
 			}
 		}
-	});
-
-	// editor.events.on('beforeSetValueToEditor', function(old_value) {
-	// 	if (old_value) {
-	// 		return old_value.replace('user&nbsp;', '<span style="color:blue;">test</span>');
-	// 	}
-	// });
-	//
-	// editor.value = 'test user&nbsp;';
-	// console.log(editor.value); // test <span style="color:blue;">test</span>
-	//
-	// editor.events.on('change', Jodit.modules.Helpers.throttle(function() {
-	// 	var
-	// 		sel = editor.selection.save(),
-	// 		value = editor.getNativeEditorValue();
-	//
-	// 	editor.value = value.replace(/user/, '<span style="color:blue;">test</span>');
-	// 	console.log(value);
-	// 	editor.selection.restore(sel);
-	// }, 300));
-
-	// setTimeout(() => {
-	// 	destruct.addEventListener('click', () => editor.destruct())
-	// }, 100)
+	})
 </script>
 <style>
 	#box {

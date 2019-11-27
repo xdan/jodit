@@ -43,10 +43,10 @@ describe('Test editor indent plugin', function () {
     <dl>
       <dt><dfn>Falli igitur possumus.</dfn></dt>
       <dd>Quid enim ab antiquis ex eo genere, quod ad disserendum valet, praetermissum est?</dd>
-      
+
       <dt><dfn>Scrupulum, inquam, abeunti;</dfn></dt>
       <dd>Scio enim esse quosdam, qui quavis lingua philosophari possint;</dd>
-      
+
       <dt><dfn>Poterat autem inpune;</dfn></dt>
       <dd>Tum ille: Tu autem cum ipse tantum librorum habeas, quos hic tandem requiris?</dd>
     </dl>
@@ -86,4 +86,4 @@ describe('Test editor indent plugin', function () {
     removeStuff();
   });
 
-})
+});

@@ -57,7 +57,7 @@ describe('Toolbar', function() {
 					]
 				});
 
-				expect(editor.toolbar.getButtonsList().toString()).to.equal('image,alert_some')
+				expect(editor.toolbar.getButtonsList().toString()).to.equal('image,alert_some');
 
 				simulateEvent(
 					'mousedown',

@@ -288,7 +288,7 @@ describe('Clipboard text', function() {
 						editor.value = html;
 						editor.selection.focus();
 
-						editor.selection.select(editor.editor.querySelector('strong'))
+						editor.selection.select(editor.editor.querySelector('strong'));
 						simulateEvent(command, 0, editor.editor, function (p){});
 
 						expect(editor.buffer.get('clipboard')).to.equal('<strong>bold</strong>');

@@ -9,12 +9,14 @@
 
 let keys = [];
 
-module.exports = function(content, fileData) {
+module.exports = function loader (content) {
 	this.cacheable && this.cacheable();
 
 	let result = [];
 
 	try {
+		content = content.replace('export default', 'module.exports = ');
+
 		let lang = eval(content);
 
 		if (!keys.length) {
@@ -25,7 +27,7 @@ module.exports = function(content, fileData) {
 			result[index] = lang[key];
 		});
 
-		if (fileData.file.indexOf('en.ts') !== -1) {
+		if (this.resourcePath.indexOf('en.ts') !== -1) {
 			result = keys; // for English file return keys
 		}
 	} catch (e) {

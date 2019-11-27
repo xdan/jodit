@@ -11,15 +11,15 @@ import './styles/bundle.less';
 
 declare function require(moduleName: string): any;
 
-// for SSR
-if (typeof window !== 'undefined') {
+if (process.env.TARGET_ES !== 'es2018' && typeof window !== 'undefined') {
 	require('./polyfills');
 }
 
 import { Jodit as DefaultJodit } from './Jodit';
 
+import Languages from './langs/index';
+
 import * as consts from './constants';
-import * as Languages from './langs/index';
 import * as Modules from './modules/index';
 import * as Plugins from './plugins/index';
 import * as Icons from './styles/icons/index';
