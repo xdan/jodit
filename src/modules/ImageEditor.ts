@@ -256,9 +256,7 @@ export class ImageEditor extends Component {
 				] as HTMLElement[],
 				`mousedown.${jie}`,
 				(e: MouseEvent) => {
-					self.target =
-						(e.target as HTMLElement) ||
-						(e.srcElement as HTMLElement);
+					self.target = e.target as HTMLElement;
 
 					e.preventDefault();
 					e.stopImmediatePropagation();
@@ -827,6 +825,9 @@ export class ImageEditor extends Component {
 			`.${jie}_width`
 		) as HTMLInputElement;
 
+		const act = (el: boolean, className = 'active') =>
+			el ? className : '';
+
 		this.editor = this.jodit.create.fromHTML(
 			`<form class="${jie} jodit_properties">` +
 				'<div class="jodit_grid">' +
@@ -840,9 +841,9 @@ export class ImageEditor extends Component {
 					  '</div>'
 					: '') +
 				(o.crop
-					? `<div class="${jie}_area ${jie}_area_crop ${
-							!o.resize ? ' active' : ''
-					  }'">` +
+					? `<div class="${jie}_area ${jie}_area_crop ${act(
+							!o.resize
+					  )}'">` +
 					  `<div class="${jie}_box">` +
 					  `<div class="${jie}_croper">` +
 					  '<i class="jodit_bottomright"></i>' +
@@ -877,16 +878,17 @@ export class ImageEditor extends Component {
 					  i('Keep Aspect Ratio') +
 					  '</label>' +
 					  '<div class="jodit_btn_group jodit_btn_radio_group">' +
-					  `<input ${
-							r ? 'checked' : ''
-					  } type="checkbox" class="${jie}_keep_spect_ratio"/>` +
-					  `<button type="button"	data-yes="1" ${
-							r ? 'active' : ''
-					  } class="jodit_col6 jodit_btn jodit_btn_success">` +
+					  `<input ${act(
+							r,
+							'checked'
+					  )} type="checkbox" class="${jie}_keep_spect_ratio"/>` +
+					  `<button type="button"	data-yes="1" ${act(
+							r
+					  )} class="jodit_col6 jodit_btn jodit_btn_success">` +
 					  i('Yes') +
 					  '</button>' +
 					  '<button type="button" class="jodit_col6 jodit_btn' +
-					  (!r ? 'active' : '') +
+					  act(!r) +
 					  '">' +
 					  i('No') +
 					  '</button>' +
@@ -896,9 +898,9 @@ export class ImageEditor extends Component {
 					  '</div>'
 					: '') +
 				(o.crop
-					? `<div data-area="crop" class="${jie}_slider ${
-							!o.resize ? ' active' : ''
-					  }'">` +
+					? `<div data-area="crop" class="${jie}_slider ${act(
+							!o.resize
+					  )}'">` +
 					  `<div class="${jie}_slider-title">` +
 					  ToolbarIcon.getIcon('crop') +
 					  i('Crop') +
@@ -909,16 +911,17 @@ export class ImageEditor extends Component {
 					  i('Keep Aspect Ratio') +
 					  '</label>' +
 					  '<div class="jodit_btn_group jodit_btn_radio_group">' +
-					  `<input ${
-							c ? 'checked' : ''
-					  } type="checkbox" class="${jie}_keep_spect_ratio_crop"/>` +
+					  `<input ${act(
+							c,
+							'checked'
+					  )} type="checkbox" class="${jie}_keep_spect_ratio_crop"/>` +
 					  '<button type="button" data-yes="1" class="jodit_col6 jodit_btn jodit_btn_success ' +
-					  (c ? 'active' : '') +
+					  act(c) +
 					  '">' +
 					  i('Yes') +
 					  '</button>' +
 					  '<button type="button" class="jodit_col6 jodit_btn ' +
-					  (!c ? 'active' : '') +
+					  act(!c) +
 					  '">' +
 					  i('No') +
 					  '</button>' +
