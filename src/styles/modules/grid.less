@@ -11,11 +11,13 @@
 @import (reference) '../mixins';
 
 .jodit_grid {
+	display: flex;
 	width: 100%;
+
 	[class*='jodit_col-'] {
-		display: block;
-		float: left;
+		flex: 1 1 auto;
 	}
+
 	.jodit_col-lg {
 		.loop(@counter: 5, @max: 5) when (@counter > 0) {
 			&-@{counter}-@{max} {
@@ -26,6 +28,4 @@
 		.loop(5, 5);
 		.loop(4, 4);
 	}
-
-	.clearfix();
 }

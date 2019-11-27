@@ -9,12 +9,17 @@
 
 .jodit_btn_group {
 	font-size: 0;
-	vertical-align: middle;
+	display: flex;
+
 	input {
 		display: none;
 	}
+
 	button {
-		float: left;
+		flex: 1;
+		justify-content: center;
+		text-align: center;
+
 		& + button {
 			margin-left: -1px;
 		}
@@ -26,6 +31,7 @@
 		border-top-right-radius: 0px;
 		border-bottom-right-radius: 0px;
 	}
+
 	input:last-child + button,
 	button:last-child {
 		border-left: 0;
@@ -38,5 +44,15 @@
 		clear: both;
 		float: none;
 		display: table;
+	}
+
+	input[type='checkbox'] {
+		&:not(:checked) + button + button {
+			.active();
+		}
+
+		&:checked + button {
+			.active();
+		}
 	}
 }

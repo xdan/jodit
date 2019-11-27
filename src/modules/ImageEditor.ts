@@ -225,6 +225,7 @@ export class ImageEditor extends Component {
 
 		this.jodit.events.fire(this.cropHandler, 'updatesize');
 	};
+
 	private updateCropBox = () => {
 		if (!this.cropImage) {
 			return;
@@ -416,12 +417,7 @@ export class ImageEditor extends Component {
 				group,
 				'click change',
 				function(this: HTMLButtonElement) {
-					const button: HTMLButtonElement = this as HTMLButtonElement;
-					$$('button', group).forEach((buttonElm: HTMLElement) =>
-						buttonElm.classList.remove('active')
-					);
-					button.classList.add('active');
-					input.checked = !!button.getAttribute('data-yes');
+					input.checked = !input.checked;
 					self.jodit.events.fire(input, 'change');
 				},
 				'button'
@@ -829,12 +825,27 @@ export class ImageEditor extends Component {
 
 		this.activeTab = o.resize ? 'resize' : 'crop';
 
-		this.widthInput = this.editor.querySelector(
-			`.${jie}_width`
-		) as HTMLInputElement;
-
 		const act = (el: boolean, className = 'active') =>
 			el ? className : '';
+
+		const switcher = (
+			label: string,
+			className: string,
+			active: boolean = true
+		) => `<div class="jodit_form_group">
+			<label>${i(label)}</label>
+			<div class="jodit_btn_group jodit_btn_radio_group">
+				<input ${act(active, 'checked')} type="checkbox" class="${jie}_${className}"/>
+
+				<button type="button" data-yes="1" class="jodit_btn jodit_btn_success">${
+					i('Yes')
+				}</button>
+
+				<button type="button" class="jodit_btn">${
+					i('No')
+				}</button>
+			</div>
+		</div>`;
 
 		this.editor = this.jodit.create.fromHTML(
 			`<form class="${jie} jodit_properties">
@@ -854,7 +865,7 @@ export class ImageEditor extends Component {
 									o.crop
 										? `<div class="${jie}_area ${jie}_area_crop ${act(
 												!o.resize
-										  )}'">
+										  )}">
 												<div class="${jie}_box">
 													<div class="${jie}_croper">
 														<i class="jodit_bottomright"></i>
@@ -886,22 +897,7 @@ export class ImageEditor extends Component {
 														</label>
 														<input type="number" class="${jie}_height"/>
 													</div>
-													<div class="jodit_form_group">
-														<label>
-															${i('Keep Aspect Ratio')}
-														</label>
-														<div class="jodit_btn_group jodit_btn_radio_group">
-															<input ${act(r, 'checked')} type="checkbox" class="${jie}_keep_spect_ratio"/>
-															<button type="button"	data-yes="1" ${act(
-																r
-															)} class="jodit_col6 jodit_btn jodit_btn_success">
-																${i('Yes')}
-															</button>
-															<button type="button" class="jodit_col6 jodit_btn ${act(!r)}">
-																${i('No')}
-															</button>
-														</div>
-													</div>
+													${switcher('Keep Aspect Ratio', 'keep_spect_ratio', r)}
 												</div>
 											</div>`
 										: ''
@@ -913,26 +909,10 @@ export class ImageEditor extends Component {
 										  )}'">
 												<div class="${jie}_slider-title">
 													${gi('crop')}
-													$i('Crop')}
+													${i('Crop')}
 												</div>
 												<div class="${jie}_slider-content">
-													<div class="jodit_form_group">
-														<label>${i('Keep Aspect Ratio')}</label>
-														<div class="jodit_btn_group jodit_btn_radio_group">
-															<input ${act(
-																c,
-																'checked'
-															)} type="checkbox" class="${jie}_keep_spect_ratio_crop"/>
-															<button type="button" data-yes="1" class="jodit_col6 jodit_btn jodit_btn_success ${act(
-																c
-															)}">
-																${i('Yes')}
-															</button>
-															<button type="button" class="jodit_col6 jodit_btn ${act(!c)}">
-																${i('No')}
-															</button>
-														</div>
-													</div>
+													${switcher('Keep Aspect Ratio', 'keep_spect_ratio_crop', c)}
 												</div>
 											</div>`
 										: ''
@@ -941,6 +921,10 @@ export class ImageEditor extends Component {
 							</div>
 						</form>`
 		);
+
+		this.widthInput = this.editor.querySelector(
+			`.${jie}_width`
+		) as HTMLInputElement;
 
 		this.heightInput = this.editor.querySelector(
 			`.${jie}_height`
@@ -961,6 +945,7 @@ export class ImageEditor extends Component {
 		this.resizeHandler = this.editor.querySelector(
 			`.${jie}_resizer`
 		) as HTMLElement;
+
 		this.cropHandler = this.editor.querySelector(
 			`.${jie}_croper`
 		) as HTMLElement;
