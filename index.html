@@ -6,7 +6,7 @@
 				content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Jodit Test Document</title>
-	<link rel="stylesheet" href="./build/jodit.min.css">
+	<link rel="stylesheet" href="./build/jodit.css">
 </head>
 <body>
 <div id="box">
@@ -67,12 +67,13 @@ cena quidem posse videamur?
 		</dl>
 	</div>
 </div>
-<script src="./build/jodit.es2018.js"></script>
+<script src="./build/jodit.js"></script>
 <script>
 	const editor = new Jodit('#editor', {
 		toolbarButtonSize: 'large',
 		height: 100,
 		tabIndex: 0,
+		language: 'ru',
 
 		uploader: {
 			url: 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'

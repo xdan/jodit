@@ -6,18 +6,31 @@
  * For commercial licenses see https://xdsoft.net/jodit/commercial/
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+const ts = require("typescript");
+const vm = require("vm");
 
 let keys = [];
 
-module.exports = function loader (content) {
-	this.cacheable && this.cacheable();
+module.exports = function (source) {
+	this.cacheable && this.cacheable(true);
 
 	let result = [];
 
 	try {
-		content = content.replace('export default', 'module.exports = ');
+		const transpile = ts.transpileModule(source, { compilerOptions: {
+				module: ts.ModuleKind.ES2015
+		}});
 
-		let lang = eval(content);
+		const es5export = 'result = ';
+		const content = transpile.outputText
+			.replace('export default', es5export)
+			.replace('exports.default =', es5export);
+
+		const box = {};
+
+		vm.runInNewContext(content, box);
+
+		const lang = box.result;
 
 		if (!keys.length) {
 			keys = Object.keys(lang);
@@ -30,11 +43,13 @@ module.exports = function loader (content) {
 		if (this.resourcePath.indexOf('en.ts') !== -1) {
 			result = keys; // for English file return keys
 		}
+
 	} catch (e) {
-		throw e;
+		throw new Error('Error in lang-loader: ' + e.message);
 	}
 
 	return 'module.exports.default = ' + JSON.stringify(result);
 };
 
 module.exports.seperable = true;
+

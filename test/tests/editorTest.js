@@ -205,9 +205,12 @@ describe('Jodit Editor Tests', function() {
 					const editor = new Jodit(area, {
 						height: 300
 					});
-					editor.setEditorValue('<p>test</p>'.repeat(100));
+
+					editor.value = '<p>test</p>'.repeat(100);
+
 					expect(editor.container.offsetHeight).to.be.below(1000);
 				});
+
 				it('Should set editor height by option for iframe', function() {
 					const editor = new Jodit(appendTestArea(), {
 						height: 300,
@@ -216,6 +219,7 @@ describe('Jodit Editor Tests', function() {
 					editor.setEditorValue('<p>test</p>'.repeat(100));
 					expect(editor.container.offsetHeight).to.be.below(1000);
 				});
+
 				it('Should not change size by content after window was resized', function() {
 					const editor = new Jodit(appendTestArea(), {
 						height: 300

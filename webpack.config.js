@@ -19,6 +19,8 @@ const banner = `/*!
 
 module.exports = (env, argv) => {
 	const debug = !argv || !argv.mode || !argv.mode.match(/production/);
+	const isTest = argv && Boolean(argv.isTest);
+
 	const mode = debug ? 'development' : argv.mode;
 	const isProd = mode === 'production';
 	const uglify = !debug && (argv && Boolean(argv.uglify));
@@ -27,10 +29,12 @@ module.exports = (env, argv) => {
 	const ES = (argv && ['es5', 'es2018'].includes(argv.es)) ? argv.es: 'es2018';
 	const ESNext = ES === 'es2018';
 
-	const filename = 'jodit' + (ES === 'es5' ? '' : '.' + ES) + (uglify ? '.min' : '');
+	console.warn('ES mode: ' + ES);
+
+	const filename = 'jodit' + ((ES === 'es5' || isTest) ? '' : '.' + ES) + (uglify ? '.min' : '');
 
 	const css_loaders = [
-		debug ? 'style-loader' : MiniCssExtractPlugin.loader,
+		(debug || isTest) ? 'style-loader' : MiniCssExtractPlugin.loader,
 		{
 			loader: 'css-loader',
 			options: {
@@ -76,7 +80,6 @@ module.exports = (env, argv) => {
 			minimize: !debug && uglify,
 			minimizer: [
 				new MinimizeJSPlugin({
-					cache: !isProd,
 					parallel: true,
 					sourceMap: false,
 					extractComments: false,
@@ -93,7 +96,10 @@ module.exports = (env, argv) => {
 							unsafe_arrows: ESNext,
 							unsafe_methods: ESNext,
 							unsafe: ESNext,
-							drop_console: true,
+
+							drop_console: !isTest,
+							drop_debugger: !isTest,
+
 							pure_getters: true,
 							unsafe_comps: true,
 							passes: 3
@@ -127,12 +133,6 @@ module.exports = (env, argv) => {
 					use: [
 						{
 							loader: path.resolve('src/utils/lang-loader.js')
-						},
-						{
-							loader: 'ts-loader',
-							options: {
-								transpileOnly: uglify
-							}
 						}
 					],
 					include: path.resolve('src/langs'),
@@ -140,29 +140,17 @@ module.exports = (env, argv) => {
 				},
 				{
 					test: /\.ts$/,
-					use: [
-						{
-							loader: 'ts-loader',
-							options: {
-								transpileOnly: uglify
-							}
-						}
-					],
-					include: path.resolve('src/langs/index.ts')
-				},
-				{
-					test: /\.ts$/,
 					loader: 'ts-loader',
 					options: {
 						transpileOnly: uglify,
 						compilerOptions: {
-							sourceMap: false,
 							target: ES
 						}
 					},
 					exclude: [
 						/(node_modules|bower_components)/,
-						/langs\/.*\.ts/,
+						/langs\/[a-z]{2}\.ts/,
+						/langs\/[a-z]{2}_[a-z]{2}\.ts/,
 					]
 				},
 				{
@@ -196,7 +184,7 @@ module.exports = (env, argv) => {
 			  ]
 	};
 
-	if (!debug) {
+	if (!debug && !isTest) {
 		switch (mode) {
 			case 'production':
 				config.plugins.push(

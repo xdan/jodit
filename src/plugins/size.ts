@@ -63,10 +63,12 @@ export function size(editor: IJodit) {
 		editor.events
 			.on(handle, 'mousedown touchstart', (e: MouseEvent) => {
 				isResized = true;
+
 				start.x = e.clientX;
 				start.y = e.clientY;
 				start.w = editor.container.offsetWidth;
 				start.h = editor.container.offsetHeight;
+
 				editor.lock();
 				e.preventDefault();
 			})

@@ -1,7 +1,12 @@
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
-const config = require('./webpack.config')();
+
+const config = require('./webpack.config')([], {
+	es: 'es2018',
+	isTest: true
+});
+
 const compression = require('compression');
 const app = new (require('express'))();
 
