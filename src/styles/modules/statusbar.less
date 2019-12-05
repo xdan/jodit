@@ -11,7 +11,8 @@
 
 .jodit_statusbar {
 	.font();
-
+	display: flex;
+	justify-content: space-between;
 	border: 1px solid @color-border;
 	border-top: 0;
 	font-size: 0;
@@ -25,9 +26,12 @@
 		margin: 0 @padding-default 0 0;
 		padding: 0;
 		vertical-align: middle;
+		flex: 1;
 
 		&.jodit_statusbar_item-right {
 			margin: 0 0 0 @padding-default;
+			order: 1;
+			flex: 0;
 		}
 
 		.jodit_icon {

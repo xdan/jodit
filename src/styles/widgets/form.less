@@ -69,32 +69,15 @@
 	}
 
 	input[type='checkbox'] {
-		display: inline-block;
 		z-index: 2;
 		border: 0 none;
 		cursor: pointer;
 		height: 16px;
-		margin: 0;
 		padding: 0;
+		margin: 0 4px 0;
 		width: 16px;
 		position: relative;
 		outline: none;
-		top: 3px;
-
-		&:after {
-			content: '';
-			background: #fff;
-			border: solid 1px @color-background-gray;
-			border-radius: 2px;
-			background-clip: padding-box;
-			width: 16px;
-			height: 16px;
-			display: inline-block;
-			position: relative;
-			z-index: 1;
-			box-sizing: border-box;
-			transition: background 0.2s ease 0s, border-color 0.2s ease 0s;
-		}
 
 		&:checked:after {
 			background: data-uri('../widgets/ok.svg') no-repeat center center
@@ -105,7 +88,13 @@
 
 	label {
 		margin-top: 10px;
-		display: block;
 		text-align: left;
+		white-space: nowrap;
+		display: flex;
+		align-items: center;
+	}
+
+	.jodit_form_center {
+		justify-content: center;
 	}
 }
