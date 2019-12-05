@@ -13,6 +13,7 @@ import { Component } from '../Component';
 import { EventsNative } from '../events/eventsNative';
 import { Panel } from './panel';
 import { Storage } from '../storage';
+import { i18n } from '../../modules/helpers';
 
 declare let appVersion: string;
 
@@ -47,12 +48,12 @@ export class View extends Panel implements IViewBased {
 	/**
 	 * progress_bar Progress bar
 	 */
-	public progress_bar: HTMLDivElement = this.create.div(
+	progress_bar: HTMLDivElement = this.create.div(
 		'jodit_progress_bar',
 		this.create.div()
 	);
 
-	public options: IViewOptions = {
+	options: IViewOptions = {
 		removeButtons: [],
 		zIndex: 100002,
 		fullsize: false,
@@ -62,14 +63,18 @@ export class View extends Panel implements IViewBased {
 		globalFullsize: true
 	};
 
-	public events: IEventsNative;
+	events: IEventsNative;
 
-	public components: any = [];
+	components: any = [];
 
+	/**
+	 * Internationalization method. Uses Jodit.lang object
+	 *
+	 * @param text
+	 * @param params
+	 */
 	i18n(text: string, ...params: Array<string | number>): string {
-		return this.jodit && this.jodit !== this
-			? this.jodit.i18n(text, ...params)
-			: Jodit.prototype.i18n(text, ...params);
+		return i18n(text, params, this?.jodit?.options || this?.options);
 	}
 
 	/**

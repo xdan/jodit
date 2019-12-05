@@ -15,7 +15,6 @@ import {
 	asArray,
 	css,
 	debounce,
-	defaultLanguage,
 	inArray,
 	normalizeKeyAliases,
 	splitArray
@@ -37,9 +36,7 @@ import {
 } from './types';
 
 import { ViewWithToolbar } from './modules/view/viewWithToolbar';
-import { IJodit } from './types/jodit';
-import { IFileBrowser, IUploader } from './types';
-import { ucfirst } from './modules/helpers/string/ucfirst';
+import { IJodit, IFileBrowser, IUploader } from './types/';
 
 const SAFE_COUNT_CHANGE_CALL = 10;
 
@@ -743,119 +740,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		this.setMode(mode);
 	}
-
-	/**
-	 * Internationalization method. Uses Jodit.lang object
-	 *
-	 * @param {string} key Some text
-	 * @param {string[]} params Some text
-	 * @return {string}
-	 * @example
-	 * ```javascript
-	 * var editor = new Jodit("#redactor", {
-	 *      langusage: 'ru'
-	 * });
-	 * console.log(editor.i18n('Cancel')) //Отмена;
-	 *
-	 * Jodit.defaultOptions.language = 'ru';
-	 * console.log(Jodit.prototype.i18n('Cancel')) //Отмена
-	 *
-	 * Jodit.lang.cs = {
-	 *    Cancel: 'Zrušit'
-	 * };
-	 * Jodit.defaultOptions.language = 'cs';
-	 * console.log(Jodit.prototype.i18n('Cancel')) //Zrušit
-	 *
-	 * Jodit.lang.cs = {
-	 *    'Hello world': 'Hello \s Good \s'
-	 * };
-	 * Jodit.defaultOptions.language = 'cs';
-	 * console.log(Jodit.prototype.i18n('Hello world', 'mr.Perkins', 'day')) //Hello mr.Perkins Good day
-	 * ```
-	 */
-	i18n = (key: string, ...params: Array<string | number>): string => {
-		const debug: boolean =
-			this.options !== undefined && this.options.debugLanguage;
-
-		let store: IDictionary;
-
-		const sprintf = (str: string, args?: Array<string | number>): string => {
-			if (!args || !args.length) {
-				return str;
-			}
-
-			const reg = /%([sd])/g;
-
-			let fnd = reg.exec(str);
-			let res = str, i = 0;
-
-			while (fnd && args[i] !== undefined) {
-				res = res.replace(fnd[0], args[i].toString());
-				i += 1;
-				fnd = reg.exec(str)
-			}
-
-			return res;
-		};
-
-		const parse = (value: string): string =>
-				params.length ? sprintf(value, params) : value,
-			default_language: string =
-				Config.defaultOptions.language === 'auto'
-					? defaultLanguage(Config.defaultOptions.language)
-					: Config.defaultOptions.language,
-			language: string = defaultLanguage(
-				this.options ? this.options.language : default_language
-			);
-
-		if (this.options !== undefined && Jodit.lang[language] !== undefined) {
-			store = Jodit.lang[language];
-		} else {
-			if (Jodit.lang[default_language] !== undefined) {
-				store = Jodit.lang[default_language];
-			} else {
-				store = Jodit.lang.en;
-			}
-		}
-
-		if (
-			this.options !== undefined &&
-			(this.options.i18n as any)[language] !== undefined &&
-			(this.options.i18n as any)[language][key]
-		) {
-			return parse((this.options.i18n as any)[language][key]);
-		}
-
-		if (store && typeof store[key] === 'string' && store[key]) {
-			return parse(store[key]);
-		}
-
-		const lckey = key.toLowerCase();
-
-		if (store && typeof store[lckey] === 'string' && store[lckey]) {
-			return parse(store[lckey]);
-		}
-
-		const ucfkey = ucfirst(key);
-
-		if (store && typeof store[ucfkey] === 'string' && store[ucfkey]) {
-			return parse(store[ucfkey]);
-		}
-
-		if (debug) {
-			return '{' + key + '}';
-		}
-
-		if (typeof Jodit.lang.en[key] === 'string' && Jodit.lang.en[key]) {
-			return parse(Jodit.lang.en[key]);
-		}
-
-		if (process.env.NODE_ENV !== 'production' && language !== 'en') {
-			throw new Error(`i18n need "${key}" in "${language}"`);
-		}
-
-		return parse(key);
-	};
 
 	/**
 	 * Switch on/off the editor into the disabled state.

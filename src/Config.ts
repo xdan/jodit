@@ -349,7 +349,7 @@ export class Config implements IViewOptions {
 	 * console.log(editor.i18n('Type something')) //Начните что-либо вводить
 	 * ```
 	 */
-	i18n: IDictionary | string = 'en';
+	i18n: false = false;
 
 	/**
 	 * The tabindex global attribute is an integer indicating if the element can take

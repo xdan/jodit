@@ -8,23 +8,10 @@
  */
 
 /**
- * Try define user language
+ * Check value is String
  *
- * @param language
- * @param defaultLanguage
+ * @param value
  */
-export const defaultLanguage = (language?: string, defaultLanguage: string = 'en'): string => {
-	if (language !== 'auto' && typeof language === 'string') {
-		return language;
-	}
-
-	if (document.documentElement && document.documentElement.lang) {
-		return document.documentElement.lang;
-	}
-
-	if (navigator.language) {
-		return navigator.language.substr(0, 2)
-	}
-
-	return defaultLanguage;
+export const isString = (value: unknown): value is string => {
+	return  typeof value === 'string';
 };

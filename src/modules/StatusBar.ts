@@ -15,10 +15,10 @@ export class StatusBar extends Component {
 	public container: HTMLElement;
 
 	public hide() {
-		this.container && (this.container.style.display = 'none');
+		this.container && this.container.classList.add('jodit_hidden');
 	}
 	public show() {
-		this.container && (this.container.style.display = 'block');
+		this.container && this.container.classList.remove('jodit_hidden');
 	}
 
 	public append(child: HTMLElement, inTheRight: boolean = false) {

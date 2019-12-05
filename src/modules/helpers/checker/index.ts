@@ -12,6 +12,7 @@ export * from './isHTMLFromWord';
 export * from './isInt';
 export * from './isLicense';
 export * from './isNumeric';
+export * from './isString';
 export * from './isPlainObject';
 export * from './isURL';
 export * from './isWindow';

@@ -10,3 +10,5 @@
 export * from './camelCase';
 export * from './fromCamelCase';
 export * from './trim';
+export * from './ucfirst';
+export * from './i18n';

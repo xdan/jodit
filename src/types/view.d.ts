@@ -8,12 +8,18 @@
  */
 
 import { Buttons, Controls, IToolbarCollection } from './toolbar';
-import { IComponent } from './types';
+import { IComponent, IDictionary } from './types';
 import { ICreate } from './create';
 import { IEventsNative } from './events';
 import { IStorage } from './storage';
 
-interface IViewOptions {
+interface ILanguageOptions {
+	language?: string;
+	debugLanguage?: boolean;
+	i18n?: IDictionary<IDictionary<string>> | false;
+}
+
+interface IViewOptions extends ILanguageOptions {
 	disabled?: boolean;
 	readonly?: boolean;
 	iframe?: boolean;
