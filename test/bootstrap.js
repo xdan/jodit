@@ -224,6 +224,7 @@ const excludeI18nKeys = ['adddate'];
 
 Jodit.prototype.i18n = function(key) {
 	excludeI18nKeys.indexOf(key) === -1 &&
+
 	i18nkeys.indexOf(key) === -1 &&
 		key.indexOf('<svg') === -1 &&
 		i18nkeys.push(key);
@@ -232,8 +233,6 @@ Jodit.prototype.i18n = function(key) {
 };
 
 Jodit.defaultOptions.filebrowser.saveStateInStorage = false;
-
-// Jodit.defaultOptions.disablePlugins = ['source'];
 
 Jodit.defaultOptions.observer.timeout = 0;
 if (Jodit.defaultOptions.cleanHTML) {
@@ -541,12 +540,14 @@ function setCursor(elm, inEnd) {
 
 function createPoint(x, y, color) {
 	const div = document.createElement('div');
+
 	div.setAttribute(
 		'style',
 		'position: absolute; z-index: 1000000000;width: 5px; height: 5px; background: ' +
 			(color || 'red') +
 			';'
 	);
+
 	div.style.left = parseInt(x, 10) + 'px';
 	div.style.top = parseInt(y, 10) + 'px';
 
@@ -557,6 +558,7 @@ function offset(el) {
 	const rect = el.getBoundingClientRect(),
 		scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
 		scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
 	return {
 		top: rect.top + scrollTop,
 		left: rect.left + scrollLeft,

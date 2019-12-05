@@ -1,8 +1,9 @@
-const webpackConfig = require('./webpack.config')([], {
+const webpack = require('./webpack.config');
+const webpackConfig = (es = 'es5') => webpack([], {
 	mode: 'production',
 	isTest: true,
 	uglify: true,
-	es: 'es5'
+	es
 });
 
 module.exports = function(config) {
@@ -29,6 +30,7 @@ module.exports = function(config) {
 				included: false,
 				served: true
 			},
+
 			'app.css',
 			'src/index.ts',
 			'node_modules/synchronous-promise/dist/synchronous-promise.js',
@@ -64,12 +66,15 @@ module.exports = function(config) {
 				]
 			}
 		},
+
 		autoWatch: true,
 		singleRun: true, // Karma captures browsers, runs the tests and exits
 		concurrency: Infinity,
+
 		preprocessors: {
 			'src/index.ts': ['webpack']
 		},
+
 		plugins: [
 			'karma-ie-launcher',
 			'karma-chrome-launcher',
@@ -80,7 +85,7 @@ module.exports = function(config) {
 			'karma-sourcemap-loader'
 		],
 
-		webpack: webpackConfig,
+		webpack: webpackConfig(),
 
 		client: {
 			captureConsole: true

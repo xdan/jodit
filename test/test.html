@@ -32,6 +32,7 @@
 		ui: 'bdd',
 		bail: true
 	});
+
 	mocha.reporter('html');
 </script>
 
@@ -40,38 +41,36 @@
 <script src="../build/jodit.js"></script>
 
 <script src="bootstrap.js"></script>
-<script src="tests/editorTest.js"></script>
-<script src="tests/units/testHelpers.js"></script>
-<script src="tests/domTest.js"></script>
-<script src="tests/selectionTest.js"></script>
-<script src="tests/eventsTest.js"></script>
-<script src="tests/toolbarTest.js"></script>
-<script src="tests/interfaceTest.js"></script>
-<script src="tests/enterTest.js"></script>
-<script src="tests/commandsTest.js"></script>
-<script src="tests/tableTest.js"></script>
-<script src="tests/undoredoTest.js"></script>
-<script src="tests/mirrorTest.js"></script>
-<script src="tests/filebrowserTest.js"></script>
-<script src="tests/uploaderTest.js"></script>
-<script src="tests/imageTest.js"></script>
-<script src="tests/dialogTest.js"></script>
-<script src="tests/pluginsTest.js"></script>
-<script src="tests/plugins/dragAndDropElement.js"></script>
-<script src="tests/plugins/size.js"></script>
-<script src="tests/mobileTest.js"></script>
-<script src="tests/iframeTest.js"></script>
-<script src="tests/clipboardTest.js"></script>
-<script src="tests/inlineModeTest.js"></script>
-<script src="tests/i18nTest.js"></script>
-<script src="tests/statesTest.js"></script>
+
+<script src="tests/units/helpersTest.js"></script>
+
+<script src="tests/acceptance/editorTest.js"></script>
+<script src="tests/acceptance/domTest.js"></script>
+<script src="tests/acceptance/selectionTest.js"></script>
+<script src="tests/acceptance/eventsTest.js"></script>
+<script src="tests/acceptance/toolbarTest.js"></script>
+<script src="tests/acceptance/interfaceTest.js"></script>
+<script src="tests/acceptance/enterTest.js"></script>
+<script src="tests/acceptance/commandsTest.js"></script>
+<script src="tests/acceptance/tableTest.js"></script>
+<script src="tests/acceptance/undoredoTest.js"></script>
+<script src="tests/acceptance/mirrorTest.js"></script>
+<script src="tests/acceptance/filebrowserTest.js"></script>
+<script src="tests/acceptance/uploaderTest.js"></script>
+<script src="tests/acceptance/imageTest.js"></script>
+<script src="tests/acceptance/dialogTest.js"></script>
+<script src="tests/acceptance/pluginsTest.js"></script>
+<script src="tests/acceptance/plugins/dragAndDropElement.js"></script>
+<script src="tests/acceptance/plugins/size.js"></script>
+<script src="tests/acceptance/mobileTest.js"></script>
+<script src="tests/acceptance/iframeTest.js"></script>
+<script src="tests/acceptance/clipboardTest.js"></script>
+<script src="tests/acceptance/inlineModeTest.js"></script>
+<script src="tests/acceptance/i18nTest.js"></script>
+<script src="tests/acceptance/statesTest.js"></script>
 <script>
 	window.onload = function() {
-		if (window.mochaPhantomJS) {
-			mochaPhantomJS.run();
-		} else {
 			mocha.run();
-		}
 	};
 </script>
 </body>

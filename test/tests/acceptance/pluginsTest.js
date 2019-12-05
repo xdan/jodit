@@ -43,6 +43,7 @@ describe('Test plugins', function() {
 				'text <strong>test</strong><span style="font-weight: bold;"> post</span>'
 			);
 		});
+
 		it('Should copy fontSize from element and paste it in new selection', function() {
 			getBox().style.width = 'auto';
 			const editor = new Jodit(appendTestArea());
@@ -137,6 +138,7 @@ describe('Test plugins', function() {
 				);
 			});
 		});
+
 		it('Should toggle active state after double click', function() {
 			getBox().style.width = 'auto';
 			const editor = new Jodit(appendTestArea());
@@ -192,6 +194,7 @@ describe('Test plugins', function() {
 				'text <span style="color:#FF0000;font-size:11px">test</span> post'
 			);
 		});
+
 		describe('For image', function() {
 			it('Should copy format from one image to another', function() {
 				getBox().style.width = 'auto';
@@ -300,6 +303,7 @@ describe('Test plugins', function() {
 			});
 		});
 	});
+
 	describe('Add new Line plugin', function() {
 		it('Should add new line element in container', function() {
 			const editor = new Jodit(appendTestArea());
@@ -307,6 +311,7 @@ describe('Test plugins', function() {
 				editor.container.querySelectorAll('.jodit-add-new-line').length
 			).to.equal(1);
 		});
+
 		it('Should show .jodit-add-new-line after user move mouse under Table,Ifrmae or IMG ', function() {
 			const editor = new Jodit(appendTestArea());
 			editor.value =
@@ -346,6 +351,7 @@ describe('Test plugins', function() {
 				editor.ownerWindow.getComputedStyle(newline).display
 			).to.equal('block');
 		});
+
 		it('Should add new paragraph after user clicked on newline ', function() {
 			const editor = new Jodit(appendTestArea());
 			editor.setEditorValue(
@@ -395,6 +401,7 @@ describe('Test plugins', function() {
 					'</tbody></table>'
 			);
 		});
+
 		it('Should add new paragraph after user clicked on newline below table', function() {
 			const editor = new Jodit(appendTestArea());
 			editor.setEditorValue(
@@ -440,6 +447,7 @@ describe('Test plugins', function() {
 					'</tbody></table><p></p>'
 			);
 		});
+
 		it('Should add new paragraph after user clicked on newline below table in IFRAME mode', function() {
 			const editor = new Jodit(appendTestArea(), {
 				ifarme: true
@@ -487,6 +495,7 @@ describe('Test plugins', function() {
 					'</tbody></table><p></p>'
 			);
 		});
+
 		describe('Insert line on top of IMG element that was inside P element', function() {
 			it('Should insert new P before parent P element', function() {
 				const editor = new Jodit(appendTestArea());
@@ -677,6 +686,7 @@ describe('Test plugins', function() {
 						);
 					}).timeout(7000);
 				});
+
 				describe('Disable ratio', function() {
 					it('Should allow crop image without ratio', function(done) {
 						const area = appendTestArea();
@@ -828,6 +838,7 @@ describe('Test plugins', function() {
 					}).timeout(7000);
 				});
 			});
+
 			describe('Resize mode', function() {
 				describe('Enable ratio', function() {
 					it('Should deny resize image without ratio', function(done) {
@@ -847,7 +858,8 @@ describe('Test plugins', function() {
 								}
 							}
 						});
-						editor.setEditorValue('<img src="tests/artio.jpg">');
+
+						editor.value = '<img src="tests/artio.jpg">';
 
 						simulateEvent(
 							'dblclick',
@@ -971,6 +983,7 @@ describe('Test plugins', function() {
 						);
 					}).timeout(7000);
 				});
+
 				describe('Disable ratio', function() {
 					it('Should allow resize image without ratio', function(done) {
 						const area = appendTestArea();
@@ -1125,6 +1138,7 @@ describe('Test plugins', function() {
 			});
 		});
 	});
+
 	describe('Search plugin', function() {
 		describe('CTRL + F', function() {
 			it('Should show search form and query field must have focus', function() {
@@ -1151,6 +1165,7 @@ describe('Test plugins', function() {
 				);
 			});
 		});
+
 		describe('CTRL + H', function() {
 			it('Should show search and replace form and query field must have focus', function() {
 				const editor = new Jodit(appendTestArea(), {
@@ -1179,6 +1194,7 @@ describe('Test plugins', function() {
 						search.querySelector('.jodit_search-query')
 				);
 			});
+
 			describe('Press Replace button', function() {
 				it('Should replace value form query field to value from replace field in editor', function() {
 					const editor = new Jodit(appendTestArea(), {
@@ -1203,12 +1219,15 @@ describe('Test plugins', function() {
 							options.ctrlKey = true;
 						}
 					);
+
 					expect(true).to.be.equal(
 						search.classList.contains('jodit_search-active')
 					);
+
 					expect(true).to.be.equal(
 						search.classList.contains('jodit_search-and-replace')
 					);
+
 					expect(true).to.be.equal(
 						editor.ownerDocument.activeElement ===
 							search.querySelector('.jodit_search-query')
@@ -1236,6 +1255,7 @@ describe('Test plugins', function() {
 				});
 			});
 		});
+
 		describe('F3 after search', function() {
 			it('Should find a next match', function() {
 				const editor = new Jodit(appendTestArea(), {
@@ -1360,6 +1380,7 @@ describe('Test plugins', function() {
 					expect(pars[1]).to.equal(range.endOffset);
 				});
 			});
+
 			describe('with SHIFT key', function() {
 				it('Should find a previous match', function() {
 					const editor = new Jodit(appendTestArea(), {
@@ -1434,6 +1455,7 @@ describe('Test plugins', function() {
 				});
 			});
 		});
+
 		describe('Esc in query field', function() {
 			it('Should hide search form and restore selection', function() {
 				const editor = new Jodit(appendTestArea());
@@ -1475,6 +1497,7 @@ describe('Test plugins', function() {
 				expect('ex').to.equal(sel.toString());
 			});
 		});
+
 		describe('Unit test compare string', function() {
 			describe('Get index of found string', function() {
 				it('Should find needle in haystack', function() {
@@ -1498,6 +1521,7 @@ describe('Test plugins', function() {
 						)
 					);
 				});
+
 				it('Should find needle in haystack steb by step', function() {
 					const str = 'Mr John Smith washed window';
 					expect(false).to.be.equal(
@@ -1545,6 +1569,7 @@ describe('Test plugins', function() {
 						)
 					);
 				});
+
 				it('Should find needle in haystack steb by step in back direction', function() {
 					const str = 'Mr John Smith washed window';
 					expect(false).to.be.equal(
@@ -1577,6 +1602,7 @@ describe('Test plugins', function() {
 					);
 				});
 			});
+
 			describe('Compare strings and return boolean', function() {
 				it('Should find needle in haystack', function() {
 					const str = 'Mr John Smith washed window';
@@ -1703,6 +1729,7 @@ describe('Test plugins', function() {
 					);
 				});
 			});
+
 			describe('Haystack less needle', function() {
 				it('Should return false', function() {
 					expect(false).to.be.equal(
@@ -1722,6 +1749,7 @@ describe('Test plugins', function() {
 				});
 			});
 		});
+
 		describe('Fire search event', function() {
 			it('Should select some elements which consists query string', function() {
 				const editor = new Jodit(appendTestArea(), {
@@ -1751,6 +1779,7 @@ describe('Test plugins', function() {
 			});
 		});
 	});
+
 	describe('Indent plugin', function() {
 		describe('Check i18n tooltip', function() {
 			describe('Native tooltip', function() {
@@ -1775,6 +1804,7 @@ describe('Test plugins', function() {
 							'.jodit_toolbar_btn.jodit_toolbar_btn-outdent [title]'
 						)
 						.getAttribute('title');
+
 					editor.destruct();
 
 					const editor2 = new Jodit(area, {
@@ -1799,6 +1829,7 @@ describe('Test plugins', function() {
 					);
 				});
 			});
+
 			describe('Jodits tooltip', function() {
 				it('Should have different tooltip for each language', function() {
 					const area = appendTestArea();
@@ -1849,13 +1880,15 @@ describe('Test plugins', function() {
 				});
 			});
 		});
+
 		it('Should set active outdent button if current container has marginLeft', function() {
 			const area = appendTestArea();
 			const editor = new Jodit(area, {
 				toolbarAdaptive: false,
 				buttons: 'indent,outdent'
 			});
-			editor.setEditorValue('<p>text</p>');
+
+			editor.value = '<p>text</p>';
 			editor.selection.setCursorIn(editor.editor.firstChild.firstChild);
 
 			simulateEvent('mousedown', 0, editor.editor.firstChild);
@@ -1874,6 +1907,7 @@ describe('Test plugins', function() {
 				)
 			);
 		});
+
 		describe('Press Indent button', function() {
 			it('Should increase indent for current blocks', function() {
 				const area = appendTestArea();
@@ -1882,11 +1916,15 @@ describe('Test plugins', function() {
 					buttons: 'indent,outdent',
 					indentMargin: 5
 				});
-				editor.setEditorValue('<h1>test</h1><p>text</p><p>text</p>');
+
+				editor.value = '<h1>test</h1><p>text</p><p>text</p>';
+
 				const range = editor.editorDocument.createRange();
+
 				range.setStartBefore(editor.editor.firstChild);
 				range.setEndAfter(editor.editor.firstChild.nextSibling);
 				editor.selection.selectRange(range);
+
 				simulateEvent(
 					'mousedown',
 					0,
@@ -1894,6 +1932,7 @@ describe('Test plugins', function() {
 						'.jodit_toolbar_btn.jodit_toolbar_btn-indent'
 					)
 				);
+
 				simulateEvent(
 					'mousedown',
 					0,
@@ -1901,6 +1940,7 @@ describe('Test plugins', function() {
 						'.jodit_toolbar_btn.jodit_toolbar_btn-indent'
 					)
 				);
+
 				simulateEvent(
 					'mousedown',
 					0,
@@ -1920,13 +1960,7 @@ describe('Test plugins', function() {
 						'.jodit_toolbar_btn.jodit_toolbar_btn-outdent'
 					)
 				);
-				simulateEvent(
-					'mousedown',
-					0,
-					editor.container.querySelector(
-						'.jodit_toolbar_btn.jodit_toolbar_btn-outdent'
-					)
-				);
+
 				simulateEvent(
 					'mousedown',
 					0,
@@ -1935,11 +1969,20 @@ describe('Test plugins', function() {
 					)
 				);
 
-				expect('<h1>test</h1><p>text</p><p>text</p>').to.be.equal(
-					editor.getEditorValue()
+				simulateEvent(
+					'mousedown',
+					0,
+					editor.container.querySelector(
+						'.jodit_toolbar_btn.jodit_toolbar_btn-outdent'
+					)
+				);
+
+				expect('<h1>test</h1><p>text</p><p>text</p>').to.equal(
+					editor.value
 				);
 			});
 		});
+
 		describe('Run indent command for inline elements', function() {
 			it('should wrap elements in block and change margin for it', function() {
 				const area = appendTestArea();
@@ -1953,6 +1996,7 @@ describe('Test plugins', function() {
 			});
 		});
 	});
+
 	describe('Symbols plugin', function() {
 		it('Should create symbol button in toolbar and after click open dialog with symbols', function() {
 			const area = appendTestArea();
@@ -1973,6 +2017,7 @@ describe('Test plugins', function() {
 			);
 			expect(null).to.be.not.equal(dialog);
 		});
+
 		describe('Symbols dialog', function() {
 			it('Should have focus on first element after open', function() {
 				const area = appendTestArea();
@@ -1997,6 +2042,7 @@ describe('Test plugins', function() {
 					editor.ownerDocument.activeElement
 				);
 			});
+
 			describe('Press key left', function() {
 				it('Should select previous element', function() {
 					const area = appendTestArea();
