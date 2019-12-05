@@ -13,9 +13,11 @@
 
 .jodit-add-new-line {
 	box-sizing: border-box;
+
 	* {
 		box-sizing: border-box;
 	}
+
 	z-index: 1;
 	position: absolute;
 	height: @height-icon;
@@ -25,15 +27,14 @@
 	top: 0;
 	outline: none;
 	margin-top: -@padding-default;
-	//text-align: right;
-	//padding: 5px;
-	//vertical-align: middle;
+
 	&:before {
 		height: 100%;
 		display: inline-block;
 		vertical-align: middle;
 		content: '';
 	}
+
 	&:after {
 		box-sizing: border-box;
 		vertical-align: middle;
@@ -44,6 +45,7 @@
 		display: inline-block;
 		width: ~'calc(100% - @{width-icon})';
 	}
+
 	span {
 		right: 0;
 		position: absolute;

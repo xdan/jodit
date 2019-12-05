@@ -18,8 +18,7 @@
 	textarea,
 	input[type='url'],
 	input[type='text'] {
-		-webkit-appearance: none;
-		-moz-appearance: none;
+		appearance: none;
 		display: block;
 		outline: none;
 		border: 1px solid @color-border-active;
@@ -28,10 +27,12 @@
 		padding: 0 5px;
 		min-width: @width-input-min;
 		margin-top: 10px;
+
 		&.jodit_error {
 			border-color: @color-error;
-			box-shadow: inset 0px 0px 3px 0px rgba(189, 189, 189, 0.3);
+			box-shadow: inset 0 0 3px 0 rgba(189, 189, 189, 0.3);
 		}
+
 		@media (max-width: @screen-sm) {
 			min-width: 150px;
 		}
@@ -96,8 +97,8 @@
 		}
 
 		&:checked:after {
-			background: data-uri('../widgets/ok.svg') no-repeat center center;
-			background-color: @color-border-active;
+			background: data-uri('../widgets/ok.svg') no-repeat center center
+				@color-border-active;
 			border-color: @color-border-active;
 		}
 	}
@@ -106,13 +107,5 @@
 		margin-top: 10px;
 		display: block;
 		text-align: left;
-	}
-
-	form {
-		&:after {
-			content: '';
-			display: table;
-			clear: both;
-		}
 	}
 }

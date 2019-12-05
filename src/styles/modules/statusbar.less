@@ -20,14 +20,13 @@
 
 	.jodit_statusbar_item {
 		font-size: @font-size-small;
-		float: left;
+
 		line-height: 1.57142857em;
 		margin: 0 @padding-default 0 0;
 		padding: 0;
 		vertical-align: middle;
 
 		&.jodit_statusbar_item-right {
-			float: right;
 			margin: 0 0 0 @padding-default;
 		}
 
@@ -38,12 +37,13 @@
 
 		ul,
 		li {
+			position: relative;
 			margin: 0;
 			padding: 0;
 			list-style: none;
 			display: inline-block;
 			vertical-align: top;
-			position: relative;
+
 			li {
 				margin-right: @padding-default / 2;
 			}
@@ -61,6 +61,7 @@
 			outline: 0;
 			border: 0;
 			color: @color-text;
+
 			span {
 				padding: 0;
 			}
@@ -71,10 +72,12 @@
 			display: inline-block;
 			vertical-align: top;
 		}
+
 		a {
 			text-decoration: none;
 			cursor: default;
 			border-radius: 3px;
+
 			&:hover {
 				background-color: @color-background-gray;
 				text-decoration: none;
@@ -89,8 +92,6 @@
 		visibility: hidden;
 		font-size: 0;
 		height: 0;
-		float: none;
-		clear: both;
 	}
 }
 .jodit_disabled .jodit_statusbar {
