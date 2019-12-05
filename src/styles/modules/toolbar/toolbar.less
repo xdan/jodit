@@ -41,6 +41,7 @@
 		left: 0;
 		right: 0;
 		z-index: @z-index-fly-toolbar;
+
 		background: #fff;
 	}
 
@@ -188,15 +189,21 @@
 }
 
 .jodit_tooltip {
-	position: absolute;
+	position: fixed;
+
 	background: #727171;
 	color: #fff;
+
+	.font();
 	font-size: 12px;
 	line-height: 15px;
+
 	padding: 4px 5px;
-	font-family: Arial, sans-serif;
 	z-index: @z-index-dropdownlist + 1;
+
 	min-width: 90px;
+	max-width: 120px;
+
 	width: auto;
 	transition: opacity 0.3s linear;
 
@@ -221,11 +228,14 @@
 	position: absolute;
 	z-index: 10;
 	top: 100%;
+	left: 0;
+
 	margin-top: 10px;
 	padding-top: 0;
-	left: 0;
+
 	font-size: 14px;
 	line-height: 14px !important;
+
 	background: #fff;
 	box-shadow: 0 2px 4px @jodit_toolbar_popup_border;
 	border: 1px solid @jodit_toolbar_popup_border;
@@ -247,20 +257,21 @@
 	}
 
 	.jodit_popup_triangle {
+		position: absolute;
+		top: -@popup-triangle-size / 2 - 1px;
+		left: 9px;
+		z-index: 6;
+
 		padding: 0;
 		margin: 0;
 		width: @popup-triangle-size;
 		height: @popup-triangle-size;
-		position: absolute;
-		top: -@popup-triangle-size / 2 - 1px;
-		left: 9px;
 
 		display: inline-block;
 		transform: rotate(45deg);
 		background: @popup-bg-color;
 		border: solid @jodit_toolbar_popup_border;
 		border-width: 1px 0 0 1px;
-		z-index: 6;
 	}
 
 	&.jodit_right {
@@ -277,7 +288,6 @@
 .jodit_toolbar .jodit_toolbar_btn > svg {
 	max-width: 50%;
 	vertical-align: middle;
-	font-smoothing: antialiased;
 }
 
 .jodit_container > .jodit_toolbar > li:first-child {

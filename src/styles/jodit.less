@@ -26,17 +26,17 @@
 }
 
 .jodit_container:not(.jodit_inline) {
+	.font();
+
 	background: @color-background-default;
 
 	&.jodit_disabled {
 		background: @color-background-gray;
+
 		.jodit_workplace {
 			opacity: 0.4;
 		}
 	}
-
-	font-size: @font-size-default;
-	font-family: @font-default;
 
 	.jodit_workplace {
 		border: 1px solid @color-border;

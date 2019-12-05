@@ -10,13 +10,7 @@ describe('Test uploader module', function() {
 						events: {
 							afterInsertImage: function(img) {
 								expect(img.src).to.be.equal(file.dataURI);
-								expect(
-									sortAttributes(editor.value)
-								).to.be.equal(
-									'<img src="' +
-										file.dataURI +
-										'" style="width:300px">'
-								);
+								expect(sortAttributes(editor.value)).to.equal('<img src="' + file.dataURI + '" style="width:300px">');
 								done();
 							}
 						}
@@ -45,14 +39,11 @@ describe('Test uploader module', function() {
 						},
 						events: {
 							afterInsertImage: function(img) {
-								expect(img.src).to.be.equal(
-									'https://xdsoft.net/jodit/files/logo.gif'
-								);
-								expect(
-									sortAttributes(editor.value)
-								).to.be.equal(
-									'<img src="https://xdsoft.net/jodit/files/logo.gif" style="width:300px">'
-								);
+								expect(img.src).to.equal('https://xdsoft.net/jodit/files/logo.gif');
+
+								expect(sortAttributes(editor.value))
+									.to.equal('<img src="https://xdsoft.net/jodit/files/logo.gif" style="width:300px">');
+
 								done();
 							}
 						}
@@ -81,7 +72,7 @@ describe('Test uploader module', function() {
 							},
 							events: {
 								afterInsertImage: function(img) {
-									expect(img.src).to.be.equal(
+									expect(img.src).to.equal(
 										'https://xdsoft.net/jodit/files/logo.gif'
 									);
 									expect(
