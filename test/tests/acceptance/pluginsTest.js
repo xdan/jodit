@@ -3026,13 +3026,14 @@ describe('Test plugins', function() {
 					});
 
 					editor.value = '<p>Simple text</p>';
+
 					const statusbar = editor.container.querySelector(
 						'.jodit_statusbar'
 					);
 
 					expect(
 						editor.ownerWindow.getComputedStyle(statusbar).display
-					).to.be.equal('block');
+					).to.be.equal('flex');
 				});
 
 				it('Should show path to selection element', function() {
@@ -3052,10 +3053,11 @@ describe('Test plugins', function() {
 					const statusbar = editor.container.querySelector(
 						'.jodit_statusbar ul'
 					);
-					expect(statusbar).to.be.not.equal(null);
-					expect(statusbar.firstChild.innerText).to.be.equal('');
-					expect(statusbar.childNodes[1].innerText).to.be.equal('p');
-					expect(statusbar.childNodes[2].innerText).to.be.equal('a');
+
+					expect(statusbar).to.not.equal(null);
+					expect(statusbar.firstChild.textContent.trim()).to.equal('');
+					expect(statusbar.childNodes[1].textContent).to.equal('p');
+					expect(statusbar.childNodes[2].textContent).to.equal('a');
 				});
 
 				describe('After change selection', function() {

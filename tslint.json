@@ -1,11 +1,14 @@
 {
 	"defaultSeverity": "error",
+
 	"extends": [
 		"tslint:recommended",
 		"tslint-config-prettier",
 		"tslint-plugin-prettier"
 	],
+
 	"jsRules": {},
+
 	"rules": {
 		"member-access": false,
 		"file-name-casing": false,
@@ -15,19 +18,23 @@
 		"no-shadowed-variable": false,
 		"no-var-requires": false,
 		"no-namespace": false,
+
 		"no-unnecessary-class": [
 			true,
 			"allow-empty-class",
 			"allow-constructor-only",
 			"allow-static-only"
 		],
+
 		"prettier": [true, ".prettierrc.json"],
+
 		"semicolon": [
 			true,
 			"always",
 			"ignore-interfaces",
 			"ignore-bound-class-methods"
 		],
+
 		"max-line-length": [true, 180],
 		"variable-name": [
 			false,

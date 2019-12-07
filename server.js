@@ -3,7 +3,7 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 
 const config = require('./webpack.config')([], {
-	es: 'es2018',
+	es: 'es5',
 	isTest: true
 });
 
