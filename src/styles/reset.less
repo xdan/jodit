@@ -1,11 +1,13 @@
 .jodit_wysiwyg {
 	outline: 0;
+
 	&::selection,
 	*::selection {
 		background: @color-background-selection;
 		color: @color-selection;
 	}
 }
+
 .jodit_container:not(.jodit_inline) .jodit_wysiwyg {
 	margin: 0;
 	padding: @padding-default;
@@ -39,6 +41,7 @@
 		color: @color-text;
 	}
 
+	// It is custom tag
 	jodit-media {
 		position: relative;
 

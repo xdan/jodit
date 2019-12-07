@@ -11,8 +11,7 @@ import { IViewWithToolbar } from './view';
 import { Config } from '../Config';
 import { Observer } from '../modules/observer/observer';
 import { Select } from '../modules/Selection';
-import { CustomCommand, IStorage, Modes } from './';
-import { StatusBar } from '../modules/StatusBar';
+import { CustomCommand, IStatusBar, IStorage, Modes } from './';
 import { IUploader } from './uploader';
 import { IFileBrowser } from './fileBrowser';
 
@@ -81,7 +80,7 @@ interface IJodit extends IViewWithToolbar {
 	 */
 	workplace: HTMLDivElement;
 
-	statusbar: StatusBar;
+	statusbar: IStatusBar;
 
 	uploader: IUploader;
 	filebrowser: IFileBrowser;

@@ -256,7 +256,7 @@
 
 			line-height: @col_size;
 			text-align: center;
-			border: 1px solid #ccc;
+			border: 1px solid @color-border;
 			margin: 5px;
 			font-size: 0;
 			overflow: hidden;
@@ -423,6 +423,8 @@
 	}
 
 	&.jodit_filebrowser_title_box {
+		display: flex;
+		align-items: center;
 		padding-left: @padding-default;
 	}
 }

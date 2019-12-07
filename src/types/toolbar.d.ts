@@ -308,3 +308,10 @@ interface IToolbarCollection extends IComponent {
 
 	destruct(): void;
 }
+
+export interface IStatusBar {
+	show(): void;
+	hide(): void;
+	getHeight(): number;
+	append(el: HTMLElement, inTheRight?: boolean): void;
+}

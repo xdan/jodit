@@ -64,7 +64,7 @@ Config.prototype.controls.table = {
 
 				Object.keys(classList).forEach((classes: string) => {
 					out.push(
-						`<label><input value="${classes}" type="checkbox"/>${
+						`<label class="jodit_vertical_middle"><input class="jodit_checkbox" value="${classes}" type="checkbox"/>${
 							classList[classes]
 						}</label>`
 					);
@@ -75,13 +75,13 @@ Config.prototype.controls.table = {
 
 		const form: HTMLFormElement = editor.create.fromHTML(
 				'<form class="jodit_form jodit_form_inserter">' +
-					'<label>' +
+					'<label class="jodit_form_center">' +
 					'<span>1</span> &times; <span>1</span>' +
 					'</label>' +
 					'<div class="jodit_form-table-creator-box">' +
 					'<div class="jodit_form-container"></div>' +
 					'<div class="jodit_form-options">' +
-					generateExtraClasses() +
+						generateExtraClasses() +
 					'</div>' +
 					'</div>' +
 					'</form>'

@@ -8,7 +8,8 @@
  */
 
 // Border
-@color-border: #ccc;
+@color-gray: #ccc;
+@color-border: @color-gray;
 @color-border-selected: #1e88e5;
 @color-border-moved: #1e88e5;
 @color-border-tab: rgba(0, 0, 0, 0.1);
@@ -16,7 +17,7 @@
 @color-border-tab_active: #ccc;
 @color-border-resize: rgba(3, 14, 82, 0.92);
 @color-border-active: #b5b5b5;
-@color-border-drag: #ccc;
+@color-border-drag: @color-border;
 
 @color-default: #000000;
 @color-selection: #000000;
@@ -102,7 +103,7 @@
 @context_menu_item_padding: 10px;
 @context_menu_item_height: 38px;
 
-@width-input-min: 220px;
+@width-input-min: 180px;
 @height-input: @width-input-min;
 
 // screen

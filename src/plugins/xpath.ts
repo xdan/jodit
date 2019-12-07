@@ -105,21 +105,11 @@ export class xpath extends Plugin {
 		name: string,
 		title: string
 	): HTMLElement => {
-		const li: HTMLLIElement = this.jodit.create.fromHTML(
+		const li = this.jodit.create.fromHTML(
 			'<li>' +
-				'<a ' +
-				'role="button" ' +
-				'data-path="' +
-				path +
-				'" ' +
-				'href="javascript:void(0)" ' +
-				'title="' +
-				title +
-				'" ' +
-				'tabindex="-1"' +
-				'>' +
-			trim(name) +
-				'</a>' +
+				`<a role="button" data-path="${path}" href="javascript:void(0)" title="${title}" tabindex="-1"'>${trim(
+					name
+				)}</a>` +
 				'</li>'
 		) as HTMLLIElement;
 

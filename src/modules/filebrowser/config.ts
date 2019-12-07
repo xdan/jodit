@@ -652,7 +652,7 @@ Config.prototype.controls.filebrowser = {
 		isInput: true,
 		getContent: (fb: IFileBrowser): HTMLElement => {
 			const select: HTMLSelectElement = fb.create.fromHTML(
-				'<select class="jodit_input">' +
+				'<select class="jodit_input jodit_select">' +
 				`<option value="changed-asc">${fb.i18n('Sort by changed')} (⬆)</option>` +
 				`<option value="changed-desc">${fb.i18n('Sort by changed')} (⬇)</option>` +
 				`<option value="name-asc">${fb.i18n('Sort by name')} (⬆)</option>` +

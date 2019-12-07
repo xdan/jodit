@@ -115,7 +115,7 @@ export function imageProperties(editor: IJodit) {
 	 * editor.plugins.image.open.call(img); // `this` must be HTMLImageElement
 	 * ```
 	 */
-	const open = function(this: HTMLImageElement, e?: MouseEvent) {
+	const open = function(this: HTMLImageElement, e?: MouseEvent): void | false {
 		if (editor.options.readonly) {
 			return;
 		}
@@ -165,11 +165,11 @@ export function imageProperties(editor: IJodit) {
 					'" ' +
 					'class="jodit_form_group jodit_properties_image_sizes"' +
 					'>' +
-					'<input type="number" class="imageWidth"/>' +
+					'<input type="number" class="imageWidth jodit_input"/>' +
 					'<a class="jodit_lock_helper jodit_lock_size" href="javascript:void(0)">' +
 					ToolbarIcon.getIcon('lock') +
 					'</a>' +
-					'<input type="number" class="imageHeight"/>' +
+					'<input type="number" class="imageHeight jodit_input"/>' +
 					'</div>' +
 					'</div>' +
 					'</div>' +
@@ -185,23 +185,23 @@ export function imageProperties(editor: IJodit) {
 					'<label>' +
 					editor.i18n('Margins') +
 					'</label>' +
-					'<div class="jodit_grid">' +
-					'<input class="jodit_col-lg-1-5 margins marginTop" data-id="marginTop" type="text" placeholder="' +
+					'<div class="jodit_grid jodit_vertical_middle">' +
+					'<input class="jodit_col-lg-1-5 margins marginTop jodit_input" data-id="marginTop" type="text" placeholder="' +
 					editor.i18n('top') +
 					'"/>' +
 					'<a style="text-align: center;" class="jodit_lock_helper jodit_lock_margin jodit_col-lg-1-5" ' +
 					'href="javascript:void(0)">' +
 					ToolbarIcon.getIcon('lock') +
 					'</a>' +
-					'<input disabled="true" class="jodit_col-lg-1-5 margins marginRight" data-id="marginRight" ' +
+					'<input disabled="true" class="jodit_col-lg-1-5 margins marginRight jodit_input" data-id="marginRight" ' +
 					'type="text" placeholder="' +
 					editor.i18n('right') +
 					'"/>' +
-					'<input disabled="true" class="jodit_col-lg-1-5 margins marginBottom" data-id="marginBottom" ' +
+					'<input disabled="true" class="jodit_col-lg-1-5 margins marginBottom jodit_input" data-id="marginBottom" ' +
 					'type="text" placeholder="' +
 					editor.i18n('bottom') +
 					'"/>' +
-					'<input disabled="true" class="jodit_col-lg-1-5 margins marginLeft" data-id="marginLeft" ' +
+					'<input disabled="true" class="jodit_col-lg-1-5 margins marginLeft jodit_input" data-id="marginLeft" ' +
 					'type="text" placeholder="' +
 					editor.i18n('left') +
 					'"/>' +
@@ -213,7 +213,7 @@ export function imageProperties(editor: IJodit) {
 					'<label>' +
 					editor.i18n('Styles') +
 					'</label>' +
-					'<input type="text" class="style"/>' +
+					'<input type="text" class="style jodit_input"/>' +
 					'</div>' +
 					'<div style="' +
 					(!editor.options.image.editClass ? 'display:none' : '') +
@@ -221,13 +221,13 @@ export function imageProperties(editor: IJodit) {
 					'<label for="classes">' +
 					editor.i18n('Classes') +
 					'</label>' +
-					'<input type="text" class="classes"/>' +
+					'<input type="text" class="classes jodit_input"/>' +
 					'</div>' +
 					'<div style="' +
 					(!editor.options.image.editId ? 'display:none' : '') +
 					'" class="jodit_form_group">' +
 					'<label for="id">Id</label>' +
-					'<input type="text" class="id"/>' +
+					'<input type="text" class="id jodit_input"/>' +
 					'</div>' +
 					'<div style="' +
 					(!editor.options.image.editBorderRadius
@@ -235,7 +235,7 @@ export function imageProperties(editor: IJodit) {
 						: '') +
 					'" class="jodit_form_group">' +
 					'<label for="border_radius">Border radius</label>' +
-					'<input type="number" class="border_radius"/>' +
+					'<input type="number" class="border_radius jodit_input"/>' +
 					'</div>' +
 					'<div style="' +
 					(!editor.options.image.editAlign ? 'display:none' : '') +
@@ -243,7 +243,7 @@ export function imageProperties(editor: IJodit) {
 					'<label for="align">' +
 					editor.i18n('Align') +
 					'</label>' +
-					'<select class="select align">' +
+					'<select class="select align jodit_select">' +
 					'<option value="">' +
 					editor.i18n('--Not Set--') +
 					'</option>' +
@@ -268,7 +268,7 @@ export function imageProperties(editor: IJodit) {
 					editor.i18n('Src') +
 					'</label>' +
 					'<div class="jodit_input_group">' +
-					'<input type="text" class="imageSrc"/>' +
+					'<input class="jodit_input" type="text" class="imageSrc"/>' +
 					(editor.options.filebrowser.ajax.url ||
 					editor.options.uploader.url
 						? '<div class="jodit_input_group-buttons">' +
@@ -294,7 +294,7 @@ export function imageProperties(editor: IJodit) {
 					'<label for="imageTitle">' +
 					editor.i18n('Title') +
 					'</label>' +
-					'<input type="text" class="imageTitle"/>' +
+					'<input type="text" class="imageTitle jodit_input"/>' +
 					'</div>' +
 					'<div style="' +
 					(!editor.options.image.editAlt ? 'display:none' : '') +
@@ -302,7 +302,7 @@ export function imageProperties(editor: IJodit) {
 					'<label for="imageAlt">' +
 					editor.i18n('Alternative') +
 					'</label>' +
-					'<input type="text" class="imageAlt"/>' +
+					'<input type="text" class="imageAlt jodit_input"/>' +
 					'</div>' +
 					'<div style="' +
 					(!editor.options.image.editLink ? 'display:none' : '') +
@@ -310,13 +310,15 @@ export function imageProperties(editor: IJodit) {
 					'<label for="imageLink">' +
 					editor.i18n('Link') +
 					'</label>' +
-					'<input type="text" class="imageLink"/>' +
+					'<input type="text" class="imageLink jodit_input"/>' +
 					'</div>' +
 					'<div style="' +
 					(!editor.options.image.editLink ? 'display:none' : '') +
 					'" class="jodit_form_group">' +
-					'<input type="checkbox" class="imageLinkOpenInNewTab"/> ' +
-					editor.i18n('Open link in new tab') +
+					'<div class="jodit_vertical_middle">' +
+						'<input type="checkbox" class="imageLinkOpenInNewTab jodit_checkbox"/>' +
+						editor.i18n('Open link in new tab') +
+					'</div>' +
 					'</div>'
 			) as HTMLDivElement,
 			ratio: number = image.naturalWidth / image.naturalHeight || 1,
@@ -897,9 +899,11 @@ export function imageProperties(editor: IJodit) {
 
 		dialog.setSize(500);
 		dialog.open();
+
 		if (e) {
 			e.preventDefault();
 		}
+
 		return false;
 	};
 

@@ -107,7 +107,7 @@ export function size(editor: IJodit) {
 
 	const getNotWorkHeight = (): number =>
 		(editor.options.toolbar ? editor.toolbar.container.offsetHeight : 0) +
-		(editor.statusbar ? editor.statusbar.container.offsetHeight : 0);
+		(editor.statusbar ? editor.statusbar.getHeight() : 0);
 
 	const calcMinHeightWorkspace = () => {
 		if (!editor.container || !editor.container.parentNode) {

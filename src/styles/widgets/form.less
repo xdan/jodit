@@ -15,31 +15,13 @@
 
 	color: @color-default;
 
-	textarea,
-	input[type='url'],
-	input[type='text'] {
-		appearance: none;
-		display: block;
-		outline: none;
-		border: 1px solid @color-border-active;
-		height: 28px;
-		line-height: 28px;
-		padding: 0 5px;
-		min-width: @width-input-min;
-		margin-top: 10px;
-
-		&.jodit_error {
-			border-color: @color-error;
-			box-shadow: inset 0 0 3px 0 rgba(189, 189, 189, 0.3);
-		}
-
-		@media (max-width: @screen-sm) {
-			min-width: 150px;
-		}
+	&.jodit_error {
+		border-color: @color-error;
+		box-shadow: inset 0 0 3px 0 rgba(189, 189, 189, 0.3);
 	}
 
-	textarea {
-		height: 128px;
+	@media (max-width: @screen-sm) {
+		min-width: 150px;
 	}
 
 	button {
@@ -68,24 +50,6 @@
 		}
 	}
 
-	input[type='checkbox'] {
-		z-index: 2;
-		border: 0 none;
-		cursor: pointer;
-		height: 16px;
-		padding: 0;
-		margin: 0 4px 0;
-		width: 16px;
-		position: relative;
-		outline: none;
-
-		&:checked:after {
-			background: data-uri('../widgets/ok.svg') no-repeat center center
-				@color-border-active;
-			border-color: @color-border-active;
-		}
-	}
-
 	label {
 		margin-top: 10px;
 		text-align: left;
@@ -97,4 +61,66 @@
 	.jodit_form_center {
 		justify-content: center;
 	}
+}
+
+.jodit_textarea,
+.jodit_select,
+.jodit_input {
+	.font();
+	width: 100%;
+	appearance: none;
+	height: 32px;
+	border-radius: 0;
+	outline: none;
+	line-height: 100%;
+	border: 1px solid @color-border;
+	padding: @padding-default / 2 @padding-default;
+	background-color: @color-white;
+
+	&[disabled] {
+		background-color: #f0f0f0;
+		color: @color-border;
+	}
+}
+
+.jodit_input:focus {
+	border-color: #66afe9;
+	outline: 0;
+}
+
+.jodit_checkbox {
+	z-index: 2;
+	border: 0 none;
+	cursor: pointer;
+	height: 16px;
+	padding: 0;
+	margin: 0 4px 0;
+	width: 16px;
+	position: relative;
+	outline: none;
+
+	&:checked:after {
+		background: data-uri('../widgets/ok.svg') no-repeat center center
+			@color-border-active;
+		border-color: @color-border-active;
+	}
+}
+
+.jodit_select {
+	padding-right: @padding-default * 2;
+	background-image: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNC45NSIgaGVpZ2h0PSIxMCIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxLjQxIDQuNjcgMi40OCAzLjE4IDMuNTQgNC42NyAxLjQxIDQuNjciLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMy41NCA1LjMzIDIuNDggNi44MiAxLjQxIDUuMzMgMy41NCA1LjMzIi8+PC9zdmc+);
+	background-repeat: no-repeat;
+	background-position: 98% 50%;
+}
+
+.jodit_textarea {
+	height: auto;
+	min-width: @width-input-min;
+}
+
+.jodit_form_group {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: @padding-default;
+	min-width: @width-input-min;
 }

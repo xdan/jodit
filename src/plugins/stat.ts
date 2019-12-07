@@ -30,26 +30,7 @@ export class stat extends Plugin {
 	private charCounter: HTMLElement | null;
 	private wordCounter: HTMLElement | null;
 
-	private calc = throttle(() => {
-		const text: string = this.jodit.getEditorText();
-		if (this.jodit.options.showCharsCounter && this.charCounter) {
-			this.charCounter.textContent = this.jodit.i18n(
-				'Chars: %d',
-				text.replace(SPACE_REG_EXP, '').length
-			);
-		}
-		if (this.jodit.options.showWordsCounter && this.wordCounter) {
-			this.wordCounter.textContent = this.jodit.i18n(
-				'Words: %d',
-				text
-					.replace(INVISIBLE_SPACE_REG_EXP, '')
-					.split(SPACE_REG_EXP)
-					.filter((e: string) => e.length).length
-			);
-		}
-	}, this.jodit.defaultTimeout);
-
-	public afterInit() {
+	afterInit() {
 		if (this.jodit.options.showCharsCounter) {
 			this.charCounter = this.jodit.create.span();
 			this.jodit.statusbar.append(this.charCounter, true);
@@ -64,7 +45,28 @@ export class stat extends Plugin {
 		this.calc();
 	}
 
-	public beforeDestruct(): void {
+	private calc = throttle(() => {
+		const text = this.jodit.getEditorText();
+
+		if (this.jodit.options.showCharsCounter && this.charCounter) {
+			this.charCounter.textContent = this.jodit.i18n(
+				'Chars: %d',
+				text.replace(SPACE_REG_EXP, '').length
+			);
+		}
+
+		if (this.jodit.options.showWordsCounter && this.wordCounter) {
+			this.wordCounter.textContent = this.jodit.i18n(
+				'Words: %d',
+				text
+					.replace(INVISIBLE_SPACE_REG_EXP, '')
+					.split(SPACE_REG_EXP)
+					.filter((e: string) => e.length).length
+			);
+		}
+	}, this.jodit.defaultTimeout);
+
+	beforeDestruct(): void {
 		Dom.safeRemove(this.charCounter);
 		Dom.safeRemove(this.wordCounter);
 

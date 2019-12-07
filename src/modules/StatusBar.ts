@@ -9,19 +9,39 @@
 
 import { Component } from './Component';
 import { Dom } from './Dom';
-import { IJodit } from '../types';
+import { IJodit, IStatusBar } from '../types';
 
-export class StatusBar extends Component {
-	public container: HTMLElement;
+export class StatusBar extends Component implements IStatusBar {
+	container: HTMLElement;
 
-	public hide() {
+	/**
+	 * Hide statusbar
+	 */
+	hide() {
 		this.container && this.container.classList.add('jodit_hidden');
 	}
-	public show() {
+
+	/**
+	 * Show statusbar
+	 */
+	show() {
 		this.container && this.container.classList.remove('jodit_hidden');
 	}
 
-	public append(child: HTMLElement, inTheRight: boolean = false) {
+	/**
+	 * Height of statusbar
+	 */
+	getHeight(): number {
+		return this.container.offsetHeight;
+	}
+
+	/**
+	 * Add element in statusbar
+	 *
+	 * @param child
+	 * @param inTheRight
+	 */
+	append(child: HTMLElement, inTheRight: boolean = false) {
 		const wrapper = this.jodit.create.div('jodit_statusbar_item');
 
 		if (inTheRight) {

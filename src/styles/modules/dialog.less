@@ -90,17 +90,6 @@
 				margin-bottom: 5px;
 				display: block;
 			}
-
-			input[type='text'] {
-				display: block;
-				border: 1px solid #ccc;
-				background: #fff;
-				width: 100%;
-				height: 28px;
-				line-height: 16px;
-				padding: 3px 6px;
-				outline: none;
-			}
 		}
 
 		.jodit_alert {
@@ -134,20 +123,6 @@
 			}
 		}
 
-		.jodit_input {
-			border: 1px solid #ccc;
-			padding: 5px 10px;
-			background-color: #fff;
-			outline: 0;
-			font: 13px Arial;
-			height: 28px;
-			vertical-align: middle;
-		}
-
-		select.jodit_input {
-			width: 75px;
-		}
-
 		.jodit_button .jodit_icon,
 		.jodit_dialog_header .jodit_icon,
 		.jodit_button svg,
@@ -171,6 +146,8 @@
 
 			.jodit_dialog_header-toolbar,
 			.jodit_dialog_header-title {
+				display: flex;
+				align-items: center;
 				flex-shrink: 3;
 				font-size: 18px;
 				margin: 0;
@@ -208,17 +185,11 @@
 
 			.jodit_toolbar {
 				background: transparent;
-				display: block;
-				height: 100%;
 				border: 0;
 				box-shadow: none;
 
 				> li.jodit_toolbar_btn {
-					vertical-align: middle;
-					select,
-					input[type='text'],
-					input[type='number'],
-					input[type='url'] {
+					.jodit_input {
 						padding-left: @padding-default;
 						width: auto;
 					}
@@ -244,46 +215,6 @@
 					font-weight: 700;
 				}
 
-				select,
-				input {
-					&.select,
-					&[type='text'],
-					&[type='number'],
-					&[type='url'] {
-						display: block;
-						height: 34px;
-						padding: 6px 4px;
-
-						font-size: 14px;
-						line-height: 1.42857143;
-
-						color: #555;
-						background-color: #fff;
-						background-image: none;
-						box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-						border: 1px solid #ccc;
-						border-radius: 0;
-
-						transition: border-color ease-in-out 0.15s,
-							box-shadow ease-in-out 0.15s;
-
-						&:focus {
-							border-color: #66afe9;
-							outline: 0;
-							box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
-								0 0 8px rgba(102, 175, 233, 0.6);
-						}
-
-						&[disabled] {
-							background-color: #f0f0f0;
-							color: #ccc;
-						}
-
-						&:not([class*='col-']) {
-							width: 100%;
-						}
-					}
-				}
 				.jodit_input_group {
 					display: table;
 					border-collapse: separate;
@@ -312,7 +243,7 @@
 						> a {
 							text-align: center;
 							display: inline-block;
-							border: 1px solid #ccc;
+							border: 1px solid @color-border;
 							margin-left: -1px;
 							position: relative;
 							height: 34px;
@@ -334,8 +265,8 @@
 				height: 32px;
 				line-height: 100%;
 				padding: 0 15px;
-				background-color: #ccc;
-				border: 1px solid #ccc;
+				background-color: @color-border;
+				border: 1px solid @color-border;
 				color: #000;
 				font-size: 0;
 

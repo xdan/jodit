@@ -76,27 +76,29 @@ Config.prototype.controls.link = {
 		const sel = editor.selection.sel,
 			form: HTMLFormElement = editor.create.fromHTML(
 				'<form class="jodit_form">' +
-					'<input required type="text" name="url" placeholder="http://" type="text"/>' +
-					'<input name="text" placeholder="' +
-					editor.i18n('Text') +
-					'" type="text"/>' +
+					'<div class="jodit_form_group">' +
+						'<input class="jodit_input" required type="text" name="url" placeholder="http://" type="text"/>' +
+					'</div>' +
+					'<div class="jodit_form_group">' +
+						'<input class="jodit_input" name="text" placeholder="' + editor.i18n('Text') + '" type="text"/>' +
+					'</div>' +
 					(editor.options.link.openInNewTabCheckbox
 						? '<label>' +
-						  '<input name="target" type="checkbox"/> ' +
+						  '<input class="jodit_checkbox" name="target" type="checkbox"/> ' +
 						  editor.i18n('Open in new tab') +
 						  '</label>'
 						: '') +
 					(editor.options.link.noFollowCheckbox
 						? '<label>' +
-						  '<input name="nofollow" type="checkbox"/> ' +
+						  '<input class="jodit_checkbox" name="nofollow" type="checkbox"/> ' +
 						  editor.i18n('No follow') +
 						  '</label>'
 						: '') +
 					'<div style="text-align: right">' +
-					'<button class="jodit_unlink_button" type="button">' +
+					'<button class="jodit_button jodit_unlink_button" type="button">' +
 					editor.i18n('Unlink') +
 					'</button> &nbsp;&nbsp;' +
-					'<button class="jodit_link_insert_button" type="submit"></button>' +
+					'<button class="jodit_button jodit_link_insert_button" type="submit"></button>' +
 					'</div>' +
 					'<form/>'
 			) as HTMLFormElement;
