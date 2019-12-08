@@ -452,23 +452,21 @@ export namespace Widget {
 		}
 
 		if (callbacks.url) {
-			const form: HTMLFormElement = editor.create.fromHTML(
-					'<form onsubmit="return false;" class="jodit_form">' +
-						'<input type="text" required name="url" placeholder="http://"/>' +
-						'<input type="text" name="text" placeholder="' +
-						editor.i18n('Alternative text') +
-						'"/>' +
-						'<div style="text-align: right">' +
-						'<button>' +
-						editor.i18n('Insert') +
-						'</button>' +
-						'</div>' +
-						'</form>'
+			const form = editor.create.fromHTML(
+		`<form onsubmit="return false;" class="jodit_form">
+						<div class="jodit_form_group">
+							<input class="jodit_input" type="text" required name="url" placeholder="http://"/>
+						</div>
+						<div class="jodit_form_group">
+							<input class="jodit_input" type="text" name="text" placeholder="${editor.i18n('Alternative text')}"/>
+						</div>
+						<div style="text-align: right"><button>${editor.i18n('Insert')}</button></div>
+					</form>`
 				) as HTMLFormElement,
-				button: HTMLButtonElement = form.querySelector(
+				button = form.querySelector(
 					'button'
 				) as HTMLButtonElement,
-				url: HTMLInputElement = form.querySelector(
+				url = form.querySelector(
 					'input[name=url]'
 				) as HTMLInputElement;
 
