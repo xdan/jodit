@@ -7,6 +7,8 @@
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+@import (reference) '../variables';
+
 .jodit_table_resizer {
 	cursor: col-resize;
 	position: absolute;
@@ -24,6 +26,7 @@
 	}
 
 	&-moved {
+		background-color: @color-background-selection;
 		z-index: 2;
 
 		&:after {
