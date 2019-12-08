@@ -7,6 +7,8 @@
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+@import (reference) './mixins';
+
 .jodit,
 .jodit_container {
 	&,
@@ -55,3 +57,7 @@
 	display: flex;
 	align-items: center;
 }
+
+.jodit_status(success, #5bb75b, #7bbb7b, #8cb38c, #51a351);
+.jodit_status(danger, #da4f49, #ee5f5b, #db5450, #bd362f);
+.jodit_status(inverse, #363636, #444444, #222222, #222222);

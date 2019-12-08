@@ -7,8 +7,8 @@
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-@import (reference) '../variables';
-@import (reference) '../mixins';
+@import (reference) './variables';
+@import (reference) './mixins';
 
 .jodit_form {
 	.font();
@@ -100,7 +100,7 @@
 	outline: none;
 
 	&:checked:after {
-		background: data-uri('../widgets/ok.svg') no-repeat center center
+		background: data-uri('./widgets/ok.svg') no-repeat center center
 			@color-border-active;
 		border-color: @color-border-active;
 	}
