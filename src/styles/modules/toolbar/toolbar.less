@@ -23,6 +23,8 @@
 	top: 0;
 
 	display: flex;
+	flex: 0 0 auto;
+	flex-shrink: 0;
 	flex-wrap: wrap;
 	margin: 0 !important;
 	padding: 0 !important;
@@ -81,21 +83,6 @@
 			}
 		}
 
-		&.jodit_toolbar_btn-separator {
-			border-left: 0;
-			border-right: 1px solid @color-separator;
-			padding: 0;
-			margin: 2px 5px 0 !important;
-			cursor: default;
-		}
-
-		&.jodit_toolbar_btn-break {
-			flex-basis: 100%;
-			width: 0;
-			border-top: 1px solid @color-separator;
-			height: 0 !important;
-		}
-
 		> a,
 		.jodit_toolbar_btn > a {
 			width: 100%;
@@ -147,6 +134,21 @@
 				vertical-align: middle;
 			}
 		}
+	}
+
+	.jodit_toolbar_btn-separator {
+		border-left: 0;
+		border-right: 1px solid @color-separator;
+		padding: 0;
+		margin: 2px 5px 0 !important;
+		cursor: default;
+	}
+
+	.jodit_toolbar_btn-break {
+		flex-basis: 100%;
+		width: 0;
+		border-top: 1px solid @color-separator;
+		height: 0 !important;
 	}
 
 	.toolbar_size(@toolbar_middle_size);
