@@ -8,6 +8,7 @@
  */
 
 @import (reference) '../variables';
+@import (reference) '../mixins';
 
 .jodit_dialog_box {
 	.font();
@@ -28,11 +29,11 @@
 		}
 	}
 
+	position: absolute;
 	display: none;
 	width: 0;
 	height: 0;
 	border: 0;
-	position: absolute;
 	will-change: left, top, width, height;
 
 	.jodit_dialog_overlay {
@@ -99,45 +100,12 @@
 			word-break: break-all;
 		}
 
-		.jodit_button {
-			display: inline-block;
-			padding: 0;
-			margin: 0;
-			vertical-align: top;
-			width: 32px;
-			height: 48px;
-
-			line-height: 48px;
-			text-align: center;
-
-			cursor: pointer;
-			border: 0;
-			text-decoration: none;
-
-			&:not(.disabled):hover {
-				background-color: @color-background-button-hover;
-			}
-
-			&.disabled {
-				opacity: 0.7;
-			}
-		}
-
-		.jodit_button .jodit_icon,
-		.jodit_dialog_header .jodit_icon,
-		.jodit_button svg,
-		.jodit_dialog_header svg {
-			width: 16px;
-			height: 16px;
-			display: inline-block;
-			vertical-align: middle;
-		}
-
 		.jodit_dialog_header {
 			display: flex;
 			justify-content: space-between;
 			text-align: left;
 			color: #222222;
+
 			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.16),
 				0 1px 2px rgba(0, 0, 0, 0.23);
 			cursor: move;
@@ -204,6 +172,7 @@
 			.jodit_form_group {
 				margin-bottom: 10px;
 				padding: 0 10px;
+
 				&:first-child {
 					margin-top: 10px;
 				}
@@ -254,52 +223,8 @@
 			}
 		}
 		.jodit_dialog_footer {
-			padding: 10px 10px 0;
-			text-align: center;
-			height: 48px;
+			padding: @padding-default;
 			display: none;
-
-			.jodit_button {
-				width: auto;
-				margin-bottom: 10px;
-				height: 32px;
-				line-height: 100%;
-				padding: 0 15px;
-				background-color: @color-border;
-				border: 1px solid @color-border;
-				color: #000;
-				font-size: 0;
-
-				&:before {
-					content: '';
-					display: inline-block;
-					vertical-align: middle;
-					height: 100%;
-				}
-
-				svg {
-					display: inline-block;
-					width: 24px;
-					height: 24px;
-					vertical-align: middle;
-				}
-
-				span {
-					display: inline-block;
-					vertical-align: middle;
-					font-size: 14px;
-					margin-left: 5px;
-				}
-
-				&:focus {
-					border: 1px solid #8bade4;
-					outline: 1px solid #82b2e8;
-				}
-			}
-
-			.jodit_button:nth-child(n + 2) {
-				margin-left: 10px;
-			}
 		}
 
 		&.with_footer .jodit_dialog_content {
@@ -307,7 +232,8 @@
 		}
 
 		&.with_footer .jodit_dialog_footer {
-			display: block;
+			display: flex;
+			justify-content: space-between;
 		}
 
 		.jodit_dialog_resizer {
