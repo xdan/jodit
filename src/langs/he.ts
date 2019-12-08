@@ -148,6 +148,7 @@ export default {
 	'Sort by name': 'מיין לפי שם',
 	'Sort by size': 'מיין לפי גודל',
 	'Add folder': 'הוסף תקייה',
+	Split: 'פיצול',
 	'Split vertical': 'פיצול אנכי',
 	'Split horizontal': 'פיצול אופקי',
 	Merge: 'מזג',

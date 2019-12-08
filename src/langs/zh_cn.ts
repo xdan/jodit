@@ -214,6 +214,7 @@ export default {
 	'Sort by name': '名称排序',
 	'Sort by size': '大小排序',
 	'Add folder': '新建文件夹',
+	Split: '拆分',
 	'Split vertical': '垂直拆分',
 	'Split horizontal': '水平拆分',
 	'You can only edit your own images. Download this image on the host?':

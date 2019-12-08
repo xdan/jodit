@@ -139,6 +139,10 @@ export default {
 	'Chars: %d': 'Symboles: %d',
 	'Words: %d': 'Mots: %d',
 
+	Split: 'Split',
+	'Split vertical': 'Split vertical',
+	'Split horizontal': 'Split horizontal',
+
 	'Strike through': 'Frapper à travers',
 	Underline: 'Souligner',
 	superscript: 'exposant',

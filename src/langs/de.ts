@@ -152,6 +152,7 @@ export default {
 	'Add folder': 'Ordner hinzufügen',
 	'Split vertical': 'Split vertikal',
 	'Split horizontal': 'Split horizontally',
+	Split: 'Split',
 	Merge: 'Verschmelzen',
 	'Add column': 'Spalte hinzufügen',
 	'Add row': 'Zeile hinzufügen',

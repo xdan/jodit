@@ -149,6 +149,7 @@ export default {
 	'Sort by name': 'İsme göre sırala',
 	'Sort by size': 'Boyuta göre sırala',
 	'Add folder': 'Klasör ekle',
+	Split: 'Ayır',
 	'Split vertical': 'Dikey ayır',
 	'Split horizontal': 'Yatay ayır',
 	Merge: 'Birleştir',

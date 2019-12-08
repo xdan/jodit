@@ -148,6 +148,7 @@ export default {
 	'Sort by name': 'Ordina per nome',
 	'Sort by size': 'Ordina per dimensione',
 	'Add folder': 'Aggiungi cartella',
+	Split: 'Dividere',
 	'Split vertical': 'Dividere verticalmente',
 	'Split horizontal': 'Diviso orizzontale',
 	Merge: 'Fondi',

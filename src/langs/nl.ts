@@ -149,6 +149,7 @@ export default {
 	'Sort by name': 'Sorteren op naam',
 	'Sort by size': 'Sorteren op grootte',
 	'Add folder': 'Map toevoegen',
+	Split: 'Splitsen',
 	'Split vertical': 'Verticaal splitsen',
 	'Split horizontal': 'Horizontaal splitsen',
 	Merge: 'Samenvoegen',
