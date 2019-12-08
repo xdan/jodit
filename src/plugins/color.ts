@@ -24,7 +24,7 @@ Config.prototype.controls.brush = {
 
 		const
 			current: Node | false = editor.selection.current(),
-			icon: SVGSVGElement | null = button.container.querySelector('svg');
+			icon = button.container.querySelector('svg');
 
 		if (icon && icon.style.fill) {
 			icon.style.removeProperty('fill');
@@ -46,8 +46,8 @@ Config.prototype.controls.brush = {
 				) as HTMLElement) || editor.editor;
 
 			const
-				colorHEX: string = css(currentBpx, 'color').toString(),
-				bgHEX: string = css(currentBpx, 'background-color').toString();
+				colorHEX = css(currentBpx, 'color').toString(),
+				bgHEX = css(currentBpx, 'background-color').toString();
 
 			if (colorHEX !== css(editor.editor, 'color').toString()) {
 				icon && (icon.style.fill = colorHEX);
