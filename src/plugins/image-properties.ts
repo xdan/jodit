@@ -249,7 +249,7 @@ export function imageProperties(editor: IJodit) {
 				}" class="jodit_form_group">
 								<label>${i18n('Src')}</label>
 								<div class="jodit_input_group">
-									<input class="jodit_input" type="text" class="imageSrc"/>
+									<input class="jodit_input imageSrc" type="text"/>
 									<div
 										class="jodit_input_group-buttons"
 										style="${hasFbUrl ? '' : 'display: none'}"
