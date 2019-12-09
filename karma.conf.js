@@ -35,7 +35,6 @@ module.exports = function(config) {
 			'src/index.ts',
 			'node_modules/synchronous-promise/dist/synchronous-promise.js',
 			'test/bootstrap.js',
-			'test/tests/*.js',
 			'test/tests/units/*.js',
 			'test/tests/acceptance/*.js',
 			'test/tests/acceptance/plugins/*.js'
