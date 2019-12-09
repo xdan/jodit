@@ -88,7 +88,7 @@ describe('Toolbar', function() {
 			});
 
 			expect(null).to.be.not.equal(
-				editor.container.querySelector('.jodit_toolbar')
+				document.querySelector('.jodit_toolbar')
 			);
 		});
 	});
