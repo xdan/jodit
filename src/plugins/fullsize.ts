@@ -116,6 +116,12 @@ export function fullsize(editor: IViewWithToolbar) {
 			editor.container.classList.toggle('jodit_fullsize', condition);
 
 			if (editor.toolbar) {
+				if (!condition) {
+					const parent = editor.toolbar.getContainer()!;
+					parent.appendChild(editor.toolbar.container);
+				} else {
+					document.querySelector('.jodit_container')!.insertAdjacentElement('afterbegin', editor.toolbar.container);
+				}
 				css(editor.toolbar.container, 'width', 'auto');
 			}
 

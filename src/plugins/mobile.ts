@@ -155,10 +155,22 @@ export function mobile(editor: IJodit) {
 
 			if (newStore.toString() !== store.toString()) {
 				store = newStore;
+				let toolbarContainer: HTMLElement = editor.container;
+
+				if (editor.options.toolbar instanceof HTMLElement) {
+					toolbarContainer = editor.options.toolbar;
+				} else if (typeof editor.options.toolbar === 'string') {
+					const selectedEl = document.querySelector(editor.options.toolbar);
+					if (!(selectedEl instanceof HTMLElement)) {
+						throw new Error(
+							'Selector for toolbar did not return a valid element in the document'
+						);
+					}
+				}
 
 				editor.toolbar.build(
 					store.concat(editor.options.extraButtons),
-					editor.container
+					toolbarContainer
 				);
 			}
 		});
