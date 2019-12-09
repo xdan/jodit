@@ -1144,7 +1144,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	}
 
 	private __applyOptionsToContainer(element: HTMLElement) {
-		this.container.classList.add(
+		element.classList.add(
 			'jodit_' + (this.options.theme || 'default') + '_theme'
 		);
 
