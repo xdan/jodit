@@ -92,8 +92,8 @@ Config.prototype.controls.paste = {
 				const items = await (navigator.clipboard as any).read();
 
 				if (items && items.length) {
-					const textBlob = await items[0].getType("text/plain");
-					text = await (new Response(textBlob)).text();
+					const textBlob = await items[0].getType('text/plain');
+					text = await new Response(textBlob).text();
 				}
 			} catch {}
 
@@ -162,7 +162,7 @@ export function paste(editor: IJodit) {
 		dialog.container.setAttribute('data-editor_id', editor.id);
 
 		const keep = dialog.create.fromHTML(
-			'<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
+			'<a href="javascript:void(0)" class="jodit_button jodit_button_primary">' +
 				'<span>' +
 				editor.i18n('Keep') +
 				'</span>' +
@@ -170,7 +170,7 @@ export function paste(editor: IJodit) {
 		) as HTMLAnchorElement;
 
 		const clear = dialog.create.fromHTML(
-			'<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
+			'<a href="javascript:void(0)" class="jodit_button">' +
 				'<span>' +
 				editor.i18n(clearButton) +
 				'</span>' +
@@ -178,7 +178,7 @@ export function paste(editor: IJodit) {
 		) as HTMLAnchorElement;
 
 		const clear2 = dialog.create.fromHTML(
-			'<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
+			'<a href="javascript:void(0)" class="jodit_button">' +
 				'<span>' +
 				editor.i18n(clear2Button) +
 				'</span>' +
@@ -186,7 +186,7 @@ export function paste(editor: IJodit) {
 		) as HTMLAnchorElement;
 
 		const cancel = dialog.create.fromHTML(
-			'<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
+			'<a href="javascript:void(0)" class="jodit_button">' +
 				'<span>' +
 				editor.i18n('Cancel') +
 				'</span>' +

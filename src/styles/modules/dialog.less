@@ -241,6 +241,15 @@
 		&.with_footer .jodit_dialog_footer {
 			display: flex;
 			justify-content: space-between;
+			flex-wrap: nowrap;
+
+			.jodit_button {
+				margin-right: @padding-default;
+
+				&:last-child {
+					margin-right: 0;
+				}
+			}
 		}
 
 		.jodit_dialog_resizer {

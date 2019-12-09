@@ -50,24 +50,15 @@
 }
 
 .jodit_status(
-	@name,
-	@background_color,
-	@background_gradient_from_color,
-	@background_gradient_to_color,
-	@background_hover_color,
-	@color: #ffffff
+	@background,
+	@color,
+	@background_hover,
+	@color_hover,
+	@background_active,
+	@color_active
 ) {
-	&.jodit_status_@{name} {
-		text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-		background-color: @background_color;
-		border-color: @background_color;
-
-		background-image: linear-gradient(
-			to bottom,
-			@background_gradient_from_color,
-			@background_gradient_to_color
-		);
-
+	& {
+		background-color: @background;
 		color: @color;
 
 		svg {
@@ -75,13 +66,24 @@
 			stroke: @color;
 		}
 
+		&:hover {
+			background-color: @background_hover;
+			color: @color_hover;
+
+			svg {
+				fill: @color_hover;
+				stroke: @color_hover;
+			}
+		}
+
 		&:active {
-			background-color: @background_hover_color;
-			background-image: linear-gradient(
-				to top,
-				@background_gradient_from_color,
-				@background_gradient_to_color
-			);
+			background-color: @background_active;
+			color: @color_active;
+
+			svg {
+				fill: @color_active;
+				stroke: @color_active;
+			}
 		}
 	}
 }

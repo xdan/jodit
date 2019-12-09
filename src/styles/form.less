@@ -141,6 +141,7 @@
 	color: @color-default;
 	cursor: pointer;
 	border: 0;
+	border-radius: 0.25rem;
 	text-decoration: none;
 
 	svg {
@@ -149,7 +150,7 @@
 		height: 24px;
 	}
 
-	span {
+	svg + span {
 		margin-left: 5px;
 	}
 
@@ -159,10 +160,6 @@
 
 	&:focus {
 		outline: 0;
-	}
-
-	&:not(.disabled):hover {
-		background-color: @color-background-button-hover;
 	}
 
 	&.disabled {

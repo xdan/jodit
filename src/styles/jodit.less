@@ -58,6 +58,19 @@
 	align-items: center;
 }
 
-.jodit_status(success, #5bb75b, #7bbb7b, #8cb38c, #51a351);
-.jodit_status(danger, #da4f49, #ee5f5b, #db5450, #bd362f);
-.jodit_status(inverse, #363636, #444444, #222222, #222222);
+.jodit_status_default,
+.jodit_button {
+	.jodit_status(#d8d8d8, #212529, #c9cdd1, #212529, #dae0e5, #212529);
+}
+
+.jodit_status_primary,
+.jodit_button_primary {
+	.jodit_status(#007bff, #fff, #0069d9, #fff, #0062cc, #fff);
+}
+
+.jodit_status_success,
+.jodit_button_success {
+	.jodit_status(#28a745, #fff, #218838, #fff, #1e7e34, #fff);
+}
+
+//.jodit_status('.jodit_status_success, jodit_button_success', #007bff, #fff, #0069d9, #fff, #0062cc, #fff);

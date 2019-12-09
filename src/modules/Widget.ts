@@ -460,7 +460,7 @@ export namespace Widget {
 						<div class="jodit_form_group">
 							<input class="jodit_input" type="text" name="text" placeholder="${editor.i18n('Alternative text')}"/>
 						</div>
-						<div style="text-align: right"><button>${editor.i18n('Insert')}</button></div>
+						<div style="text-align: right"><button class="jodit_button">${editor.i18n('Insert')}</button></div>
 					</form>`
 				) as HTMLFormElement,
 				button = form.querySelector(
