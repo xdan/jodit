@@ -71,17 +71,36 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			: Jodit.defaultOptions.observer.timeout;
 	}
 
+	/**
+	 * Method wrap usual Array in Object helper for prevent deep array merging in options
+	 *
+	 * @param array
+	 * @constructor
+	 */
 	static Array(array: any[]): JoditArray {
 		return new JoditArray(array);
 	}
 
+	/**
+	 * Method wrap usual Has Object in Object helper for prevent deep object merging in options*
+	 *
+	 * @param object
+	 * @constructor
+	 */
 	static Object(object: any): JoditObject {
 		return new JoditObject(object);
 	}
 
+	/**
+	 * Emits events in all instances
+	 *
+	 * @param events
+	 * @param args
+	 */
 	static fireEach(events: string, ...args: any[]) {
-		Object.keys(Jodit.instances).forEach((key: string) => {
+		Object.keys(Jodit.instances).forEach((key) => {
 			const editor: Jodit = Jodit.instances[key];
+
 			if (!editor.isDestructed && editor.events) {
 				editor.events.fire(events, ...args);
 			}
@@ -118,6 +137,11 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 * @type {Storage}
 	 */
 	storage = Storage.makeStorage(true, this.id);
+
+	/**
+	 * Editor has focus in this time
+	 */
+	editorIsActive: boolean = false;
 
 	/**
 	 * workplace It contains source and wysiwyg editors
@@ -1151,6 +1175,8 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			.on('synchro', () => {
 				this.setEditorValue();
 			})
+			.on('focus', () => this.editorIsActive = true)
+			.on('blur', () => this.editorIsActive = false)
 			.on(
 				this.editor,
 				'selectionchange selectionstart keydown keyup keypress mousedown mouseup mousepress ' +

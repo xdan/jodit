@@ -366,6 +366,10 @@ export class Select {
 				sel.addRange(range);
 			}
 
+			if (!this.jodit.editorIsActive) {
+				this.jodit?.events?.fire('focus');
+			}
+
 			return true;
 		}
 

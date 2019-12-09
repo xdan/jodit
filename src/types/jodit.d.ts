@@ -61,6 +61,8 @@ interface IJodit extends IViewWithToolbar {
 
 	isInited: boolean;
 
+	editorIsActive: boolean;
+
 	execCommand(command: string, showUI?: any, value?: null | any): any;
 
 	registerCommand(

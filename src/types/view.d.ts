@@ -19,7 +19,21 @@ interface ILanguageOptions {
 	i18n?: IDictionary<IDictionary<string>> | false;
 }
 
-interface IViewOptions extends ILanguageOptions {
+interface IToolbarOptions {
+	toolbarButtonSize?: 'small' | 'middle' | 'large'
+	textIcons?: boolean;
+
+	removeButtons: string[];
+	buttons: Buttons;
+
+	showTooltip?: boolean;
+	showTooltipDelay?: number;
+	useNativeTooltip?: boolean;
+
+	direction?: string;
+}
+
+interface IViewOptions extends ILanguageOptions, IToolbarOptions {
 	disabled?: boolean;
 	readonly?: boolean;
 	iframe?: boolean;
@@ -28,16 +42,10 @@ interface IViewOptions extends ILanguageOptions {
 
 	allowTabNavigation?: boolean;
 
-	removeButtons: string[];
-	buttons: Buttons;
 	zIndex?: number;
 	fullsize?: boolean;
 	globalFullsize?: boolean;
-	showTooltip?: boolean;
-	showTooltipDelay?: number;
-	useNativeTooltip?: boolean;
-	textIcons?: boolean;
-	direction?: string;
+
 	controls?: Controls;
 }
 

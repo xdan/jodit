@@ -14,6 +14,7 @@ describe('Jodit Editor Tests', function() {
 					editor.destruct();
 				});
 			});
+
 			describe('Undefined,null,false,bad seelctor,function,number, text node', function() {
 				it('Should be not valid selector', function() {
 					expect(function() {
@@ -803,6 +804,43 @@ describe('Jodit Editor Tests', function() {
 			editor.execCommand('delete');
 			expect(editor.getEditorValue()).to.be.equal('');
 			editor.destruct();
+		});
+
+		describe('Editor after focus and after blur', function() {
+			it('Should change editorIsActive field', function() {
+				const
+					input = document.createElement('input'),
+					p = document.createElement('p'),
+					editor = new Jodit(appendTestArea());
+
+				input.type = 'input';
+				document.body.appendChild(input);
+
+				p.textContent = 'Hi';
+				document.body.appendChild(p);
+
+				editor.value = '<p>Hello world</p>';
+				editor.selection.focus();
+				editor.selection.setCursorAfter(editor.editor.firstChild);
+
+				expect(editor.editorIsActive).to.be.true;
+
+				input.focus();
+				simulateEvent('blur', 0, editor.editor);
+				expect(editor.editorIsActive).to.be.false;
+				document.body.removeChild(input);
+
+				editor.selection.focus();
+				editor.selection.setCursorAfter(editor.editor.firstChild);
+				expect(editor.editorIsActive).to.be.true;
+
+				const sel = window.getSelection();
+				sel.selectAllChildren(p);
+
+				simulateEvent('blur', 0, editor.editor);
+				expect(editor.editorIsActive).to.be.false;
+				document.body.removeChild(p);
+			});
 		});
 
 		describe('Cursor position', function() {

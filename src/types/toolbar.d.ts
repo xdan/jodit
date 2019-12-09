@@ -288,7 +288,7 @@ interface IToolbarCollection extends IComponent {
 
 	clear(): void;
 
-	immedateCheckActiveButtons: () => void;
+	immediateCheckActiveButtons: () => void;
 
 	buttonIsActive(button: IToolbarButton): boolean | void;
 

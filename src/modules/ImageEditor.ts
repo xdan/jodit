@@ -410,7 +410,7 @@ export class ImageEditor extends Component {
 		// btn group
 
 		$$('.jodit_btn_group', self.editor).forEach(group => {
-			const input: HTMLInputElement = group.querySelector(
+			const input = group.querySelector(
 				'input'
 			) as HTMLInputElement;
 			self.jodit.events.on(
@@ -835,13 +835,13 @@ export class ImageEditor extends Component {
 		) => `<div class="jodit_form_group">
 			<label>${i(label)}</label>
 			<div class="jodit_btn_group jodit_btn_radio_group">
-				<input ${act(active, 'checked')} type="checkbox" class="${jie}_${className}"/>
+				<input ${act(active, 'checked')} type="checkbox" class="${jie}_${className} jodit_input"/>
 
-				<button type="button" data-yes="1" class="jodit_btn jodit_btn_success">${
+				<button type="button" data-yes="1" class="jodit_btn jodit_status_success">${
 					i('Yes')
 				}</button>
 
-				<button type="button" class="jodit_btn">${
+				<button type="button" class="jodit_btn jodit_status_danger">${
 					i('No')
 				}</button>
 			</div>
@@ -889,13 +889,13 @@ export class ImageEditor extends Component {
 														<label for="${jie}_width">
 															${i('Width')}
 														</label>
-														<input type="number" class="${jie}_width"/>
+														<input type="number" class="${jie}_width jodit_input"/>
 													</div>
 													<div class="jodit_form_group">
 														<label for="${jie}_height">
 															${i('Height')}
 														</label>
-														<input type="number" class="${jie}_height"/>
+														<input type="number" class="${jie}_height jodit_input"/>
 													</div>
 													${switcher('Keep Aspect Ratio', 'keep_spect_ratio', r)}
 												</div>
