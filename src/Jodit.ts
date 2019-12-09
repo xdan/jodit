@@ -1051,37 +1051,45 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			this.element.style.display = 'none';
 		}
 
-		this.container.classList.add(
-			'jodit_' + (this.options.theme || 'default') + '_theme'
-		);
-
-		if (this.options.zIndex) {
-			this.container.style.zIndex = parseInt(
-				this.options.zIndex.toString(),
-				10
-			).toString();
-		}
+		this.__applyOptionsToContainer(this.container);
 
 		this.workplace = this.create.div('jodit_workplace', {
 			contenteditable: false
 		});
 
 		if (this.options.toolbar) {
+			let toolbarContainer: HTMLElement = this.container;
+
+			if (this.options.toolbar instanceof HTMLElement) {
+				toolbarContainer = this.options.toolbar;
+				this.__applyOptionsToContainer(toolbarContainer);
+			} else if (typeof this.options.toolbar === 'string') {
+				const selectedEl = document.querySelector(this.options.toolbar);
+				if (!(selectedEl instanceof HTMLElement)) {
+					throw new Error(
+						'Selector for toolbar did not return a valid element in the document'
+					);
+				}
+				toolbarContainer = selectedEl;
+				this.__applyOptionsToContainer(toolbarContainer);
+			}
+
 			this.toolbar.build(
 				splitArray(this.options.buttons).concat(
 					this.options.extraButtons
 				),
-				this.container
+				toolbarContainer
 			);
-		}
 
-		const bs = this.options.toolbarButtonSize.toLowerCase();
-		this.container.classList.add(
-			'jodit_toolbar_size-' +
+			const bs = this.options.toolbarButtonSize.toLowerCase();
+			toolbarContainer.classList.add(
+				'jodit_toolbar_size-' +
 				(['middle', 'large', 'small'].indexOf(bs) !== -1
 					? bs
 					: 'middle')
-		);
+			);
+		}
+
 
 		if (this.options.textIcons) {
 			this.container.classList.add('jodit_text_icons');
@@ -1151,6 +1159,21 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 			await this.afterInitHook();
 		})();
+	}
+
+	private __applyOptionsToContainer(element: HTMLElement) {
+
+
+		element.classList.add(
+			'jodit_' + (this.options.theme || 'default') + '_theme'
+		);
+
+		if (this.options.zIndex) {
+			element.style.zIndex = parseInt(
+				this.options.zIndex.toString(),
+				10
+			).toString();
+		}
 	}
 
 	isInited: boolean = false;

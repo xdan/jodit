@@ -359,9 +359,10 @@ export class Config implements IViewOptions {
 	tabIndex: number = -1;
 
 	/**
-	 * Show toolbar
+	 * Boolean, whether the toolbar should be shown.
+	 * Alternatively, a valid css-selector-string to use an element as toolbar container.
 	 */
-	toolbar: boolean = true;
+	toolbar: boolean | string | HTMLElement = true;
 
 	/**
 	 * Show tooltip after mouse enter on the button

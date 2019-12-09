@@ -81,6 +81,17 @@ describe('Toolbar', function() {
 			);
 		});
 	});
+	describe('Set toolbar options to css selector', function() {
+		it('Should render toolbar in different container', function() {
+			const editor = new Jodit(appendTestArea(), {
+				toolbar: appendTestDiv()
+			});
+
+			expect(null).to.be.not.equal(
+				document.querySelector('.jodit_toolbar')
+			);
+		});
+	});
 
 	describe('Popups', function() {
 		describe('Click on dots buttons in mobile size', function() {
