@@ -1,7 +1,7 @@
 /*!
  jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- Version: v3.2.65
+ Version: v3.3.1
  Url: https://xdsoft.net/jodit/
  License(s): GPL-2.0-or-later OR MIT OR Commercial
 */
@@ -106,7 +106,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ (function(module, exports) {
 
-module.exports.default = ["Type something","pencil"]
+module.exports.default = ["Type something","About Jodit","Jodit Editor","Free Non-commercial Version","GNU General Public License, version 2 or later","Jodit User's Guide","contains detailed help for using","For information about the license, please go to our website:","Buy full version","Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.","Anchor","Open in new tab","Open editor in fullsize","Clear Formatting","Fill color or set the text color","Redo","Undo","Bold","Italic","Insert Unordered List","Insert Ordered List","Align Center","Align Justify","Align Left","Align Right","Insert Horizontal Line","Insert Image","Insert file","Insert youtube/vimeo video","Insert link","Font size","Font family","Insert format block","Normal","Heading 1","Heading 2","Heading 3","Heading 4","Quote","Code","Insert","Insert table","Decrease Indent","Increase Indent","Select Special Character","Insert Special Character","Paint format","Change mode","Margins","top","right","bottom","left","Styles","Classes","Align","Right","Center","Left","--Not Set--","Src","Title","Alternative","Link","Open link in new tab","Image","file","Advanced","Image properties","Cancel","Ok","File Browser","Error on load list","Error on load folders","Are you sure?","Enter Directory name","Create directory","type name","Drop image","Drop file","or click","Alternative text","Upload","Browse","Background","Text","Top","Middle","Bottom","Insert column before","Insert column after","Insert row above","Insert row below","Delete table","Delete row","Delete column","Empty cell","Chars: %d","Words: %d","Strike through","Underline","superscript","subscript","Cut selection","Select all","Break","Search for","Replace with","Replace","Paste","Choose Content to Paste","source","bold","italic","brush","link","undo","redo","table","image","eraser","paragraph","fontsize","video","font","about","print","symbol","underline","strikethrough","indent","outdent","fullsize","shrink","copyformat","hr","ul","ol","cut","selectall","Embed code","Open link","Edit link","No follow","Unlink","Update","pencil","Eye"," URL","Edit","Horizontal align","Filter","Sort by changed","Sort by name","Sort by size","Add folder","Reset","Save","Save as ...","Resize","Crop","Width","Height","Keep Aspect Ratio","Yes","No","Remove","Select","Select %s","Vertical align","Split","Merge","Add column","Add row","License: %s","Delete","Split vertical","Split horizontal","Border","Your code is similar to HTML. Keep as HTML?","Paste as HTML","Keep","Insert as Text","Insert only Text","You can only edit your own images. Download this image on the host?","The image has been successfully uploaded to the host!","palette","There are no files","rename","Enter new name","preview","download","Paste from clipboard","Your browser doesn't support direct access to the clipboard.","Copy selection","copy","Border radius"]
 
 /***/ }),
 /* 1 */
@@ -190,7 +190,7 @@ module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M896 1152q0-36-20-69-
 /* 14 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 16 16\" style=\"stroke: #000000;\">\n    <g transform=\"translate(0,-1036.3622)\">\n        <path d=\"m 2,1050.3622 12,-12\"\n              style=\"fill:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none\"/>\n        <path d=\"m 2,1038.3622 12,12\"\n              style=\"fill:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none\"/>\n    </g>\n</svg>\n"
+module.exports = "<svg viewBox=\"0 0 16 16\">\n    <g transform=\"translate(0,-1036.3622)\">\n        <path d=\"m 2,1050.3622 12,-12\"\n              style=\"fill:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none\"/>\n        <path d=\"m 2,1038.3622 12,12\"\n              style=\"fill:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none\"/>\n    </g>\n</svg>\n"
 
 /***/ }),
 /* 15 */
@@ -286,7 +286,7 @@ module.exports = "<svg viewBox=\"0 0 1792 1792\">\n    <path d=\"M1152 512v-472q
 /* 30 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1728 608v704q0 92-66 158t-158 66h-1216q-92 0-158-66t-66-158v-960q0-92 66-158t158-66h320q92 0 158 66t66 158v32h672q92 0 158 66t66 158z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\">\n\t<path d=\"M1728 608v704q0 92-66 158t-158 66h-1216q-92 0-158-66t-66-158v-960q0-92 66-158t158-66h320q92 0 158 66t66 158v32h672q92 0 158 66t66 158z\"/>\n</svg>\n"
 
 /***/ }),
 /* 31 */
@@ -580,91 +580,91 @@ module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1792 352v1088q0 42-3
 /* 79 */
 /***/ (function(module, exports) {
 
-module.exports.default = ["إبدأ في الكتابة...","لتحرير"]
+module.exports.default = ["إبدأ في الكتابة...","حول جوديت","محرر جوديت","الإصدار الغير تجاري مجاني","رخصة جنو العمومية العامة ، الإصدار الثاني أو الأحدث","دليل مستخدم جوديت","يحتوي على مساعدة مفصلة للاستخدام","للحصول على معلومات حول الترخيص، يرجى الذهاب لموقعنا:","شراء النسخة الكاملة","حقوق الطبع والنشر © XDSoft.net - Chupurnov Valeriy. كل الحقوق محفوظة.","مِرْساة","فتح في نافذة جديدة","فتح المحرر في الحجم الكامل","مسح التنسيق","ملء اللون أو تعيين لون النص","إعادة","تراجع","عريض","مائل","إدراج قائمة غير مرتبة","إدراج قائمة مرتبة","محاذاة للوسط","محاذاة مثبتة","محاذاة لليسار","محاذاة لليمين","إدراج خط أفقي","إدراج صورة","ادخال الملف","إدراج فيديو يوتيوب/فيميو ","إدراج رابط","حجم الخط","نوع الخط","إدراج كتلة تنسيق","عادي","عنوان 1","عنوان 2","عنوان 3","عنوان 4","إقتباس","كود","إدراج","إدراج جدول","تقليل المسافة البادئة","زيادة المسافة البادئة","تحديد أحرف خاصة","إدراج حرف خاص","تنسيق الرسم","تغيير الوضع","هوامش","أعلى","يمين","أسفل","يسار","الأنماط","الطبقات","محاذاة","اليمين","الوسط","اليسار","--غير مضبوط--","Src","العنوان","العنوان البديل","الرابط","افتح الرابط في نافذة جديدة","الصورة","ملف","متقدم","خصائص الصورة","إلغاء","حسنا","متصفح الملفات","حدث خطأ في تحميل القائمة ","حدث خطأ في تحميل المجلدات","هل أنت واثق؟","أدخل اسم المجلد","إنشاء مجلد","أكتب إسم","إسقاط صورة","إسقاط الملف","أو أنقر","النص البديل","رفع","تصفح","الخلفية","نص","أعلى","الوسط","الأسفل","إدراج عمود قبل","إدراج عمود بعد","إدراج صف أعلى","إدراج صف أسفل","حذف الجدول","حذف الصف","حذف العمود","خلية فارغة","%d حرف","%d كلام","اضرب من خلال","أكد","حرف فوقي","مخطوطة","قطع الاختيار","اختر الكل","استراحة","البحث عن","استبدل ب","يحل محل","معجون","اختر محتوى للصق","مصدر","بالخط العريض","مائل","شغل","صلة","إلغاء","كرر","طاولة","صورة","نظيف","فقرة","حجم الخط","فيديو","الخط","حول المحرر","طباعة","رمز","أكد","شطب","المسافة البادئة","نتوء","ملء الشاشة","الحجم التقليدي","نسخ التنسيق","الخط","قائمة","قائمة مرقمة","قطع","اختر الكل","قانون","فتح الرابط","تعديل الرابط","سمة Nofollow","إزالة الرابط","تحديث","لتحرير","مراجعة","URL","تحرير","محاذاة أفقية","فلتر","عن طريق التغيير","بالاسم","حسب الحجم","إضافة مجلد","إعادة","احتفظ","حفظ باسم","تغيير الحجم","حجم القطع","عرض","ارتفاع","حافظ على النسب","أن","لا","حذف","تميز","تميز %s","محاذاة عمودية","انشق، مزق","اذهب","أضف العمود","اضف سطر","رخصة %s","حذف","انقسام عمودي","تقسيم أفقي","الحدود","يشبه الكود الخاص بك HTML. تبقي كما HTML؟","الصق ك HTML","احتفظ","إدراج كنص","إدراج النص فقط","يمكنك فقط تحرير صورك الخاصة. تحميل هذه الصورة على المضيف؟","تم تحميل الصورة بنجاح على الخادم!","لوحة","لا توجد ملفات في هذا الدليل.","إعادة تسمية","أدخل اسم جديد","معاينة","تحميل","لصق من الحافظة","متصفحك لا يدعم إمكانية الوصول المباشر إلى الحافظة.","نسخ التحديد","نسخ","دائرة نصف قطرها الحدود"]
 
 /***/ }),
 /* 80 */
 /***/ (function(module, exports) {
 
-module.exports.default = ["Napiš něco","Chcete-li upravit"]
+module.exports.default = ["Napiš něco","O Jodit","Editor Jodit","Verze pro nekomerční použití","Licence GNU (GPL), verze 2 nebo vyšší","Jodit Uživatelská příručka","obsahuje detailní nápovědu","Pro informace o licenci, prosím, přejděte na naši stránku:","Koupit plnou verzi","Copyright © XDSoft.net - Chupurnov Valeriy. Všechna práva vyhrazena.","Anchor","Otevřít v nové záložce","Otevřít v celoobrazovkovém režimu","Vyčistit formátování","Barva výplně a písma","Vpřed","Zpět","Tučné","Kurzíva","Odrážky","Číslovaný seznam","Zarovnat na střed","Zarovnat do bloku","Zarovnat vlevo","Zarovnat vpravo","Vložit horizontální linku","Vložit obrázek","Vložit soubor","Vložit video (YT/Vimeo)","Vložit odkaz","Velikost písma","Typ písma","Formátovat blok","Normální text","Nadpis 1","Nadpis 2","Nadpis 3","Nadpis 4","Citát","Kód","Vložit","Vložit tabulku","Zmenšit odsazení","Zvětšit odsazení","Vybrat speciální symbol","Vložit speciální symbol","Použít formát","Změnit mód","Okraje","horní","pravý","spodní","levý","Styly","Třídy","Zarovnání","Vpravo","Na střed","Vlevo","--nenastaveno--","src","Titulek","Alternativní text (alt)","Link","Otevřít link v nové záložce","Obrázek","soubor","Rozšířené","Vlastnosti obrázku","Zpět","Ok","Prohlížeč souborů","Chyba při načítání seznamu souborů","Chyba při načítání složek","Jste si jistý(á)?","Název složky","Vytvořit složku","název","Přetáhněte sem obrázek","Přetáhněte sem soubor","nebo klikněte","Alternativní text","Nahrát","Server","Pozadí","Text","Nahoru","Na střed","Dolu","Vložit sloupec před","Vložit sloupec za","Vložit řádek nad","Vložit řádek pod","Vymazat tabulku","Vymazat řádku","Vymazat sloupec","Vyčistit buňku","Znaky: %d","Slova: %d","Přeškrtnuto","Podtrženo","Horní index","Dolní index","Vyjmout označené","Označit vše","Zalomení","Najdi","Nahradit za","Nahradit","Vložit","Vyber obsah pro vložení","HTML","tučně","kurzíva","štětec","odkaz","zpět","vpřed","tabulka","obrázek","guma","odstavec","velikost písma","video","písmo","о editoru","tisk","symbol","podtrženo","přeškrtnuto","zvětšit odsazení","zmenšit odsazení","celoobrazovkový režim","smrsknout","Kopírovat formát","Linka","Odrážka","Číslovaný seznam","Vyjmout","Označit vše","Kód","Otevřít odkaz","Upravit odkaz","Atribut no-follow","Odstranit odkaz","Aktualizovat","Chcete-li upravit","Zobrazit","URL","Editovat","Horizontální zarovnání","Filtr","Dle poslední změny","Dle názvu","Dle velikosti","Přidat složku","Reset","Uložit","Uložit jako...","Změnit rozměr","Ořezat","Šířka","Výška","Ponechat poměr","Ano","Ne","Vyjmout","Označit","Označit %s","Vertikální zarovnání","Rozdělit","Spojit","Přidat sloupec","Přidat řádek","Licence: %s","Vymazat","Rozdělit vertikálně","Rozdělit horizontálně","Okraj","Váš text se podobá HTML. Vložit ho jako HTML?","Vložit jako HTML","Ponechat originál","Vložit jako TEXT","Vložit pouze TEXT","Můžete upravovat pouze své obrázky. Načíst obrázek?","Obrázek byl úspěšně nahrán!","paleta","V tomto adresáři nejsou žádné soubory.","přejmenovat","Zadejte nový název","náhled","Stažení","Vložit ze schránky","Váš prohlížeč nepodporuje přímý přístup do schránky.","Kopírovat výběr","kopírování","Border radius"]
 
 /***/ }),
 /* 81 */
 /***/ (function(module, exports) {
 
-module.exports.default = ["Bitte geben Sie einen Text ein","Bearbeiten"]
+module.exports.default = ["Bitte geben Sie einen Text ein","Über Jodit","Jodit Editor","Freie Nicht-kommerzielle Version","GNU General Public License, Version 2 oder höher","Das Jodit Benutzerhandbuch","beinhaltet ausführliche Informationen wie Sie den Editor verwenden können.","Für Lizenz-Informationen, besuchen Sie bitte unsere Webseite:","Vollversion kaufen","Copyright © XDSoft.net - Chupurnov Valeriy. Alle Rechte vorbehalten.","Anker","In neuer Registerkarte öffnen","Editor in voller Größe öffnen","Formatierung löschen","Füllfarbe oder Textfarbe ändern","Wiederholen","Rückgängig machen","Fett","Kursiv","Ungeordnete Liste einfügen","Sortierte Liste einfügen","Mittig ausrichten","Blocksatz","Links ausrichten","Rechts ausrichten","Horizontale Linie einfügen","Bild einfügen","Datei einfügen","Youtube/vimeo Video einfügen","Link einfügen","Schriftgröße","Schriftfamilie","Formatblock einfügen","Normal","Überschrift 1","Überschrift 2","Überschrift 3","Überschrift 4","Zitat","Code","Einfügen","Tabelle einfügen","Einzug verkleinern","Einzug vergrößern","Sonderzeichen auswählen","Sonderzeichen einfügen","Format kopieren","Änderungsmodus","Ränder","Oben","Rechts","Unten","Links","CSS Stiel","CSS Klassen","Ausrichten","Rechts","Zentriert","Links","Keine","Pfad","Titel","Alternativer Text","Link","Link in neuem Tab öffnen","Bild","Datei","Fortgeschritten","Bildeigenschaften","Abbrechen","OK","Dateibrowser","Fehler beim Laden der Liste","Fehler beim Laden der Ordner","Sind Sie sicher?","Geben Sie den Verzeichnisnamen ein","Verzeichnis erstellen","Typname","Bild hier hinziehen","Datei löschen","oder hier klicken","Alternativtext","Hochladen","Auswählen","Hintergrund","Text","Oben","Mittig","Unten","Spalte einfügen vor","Spalte einfügen nach","Zeile einfügen oberhalb","Zeile unterhalb einfügen","Tabelle löschen","Zeile löschen","Spalte löschen","Leere Zelle","Zeichen: %d","Wörter: %d","Durchschlagen","Unterstreichen","hochgestellt","Index","Auswahl ausschneid","Wählen Sie Alle aus","Pause","Suche nach","Ersetzen durch","Ersetzen","Einfügen","Wählen Sie Inhalt zum Einfügen","HTML","Fett gedruckt","kursiv","Bürste","Verknüpfung","rückgängig machen","wiederholen","Tabelle","Bild","Radiergummi","Absatz","Schriftgröße","Video","Schriftart","Über","drucken","Symbol","unterstreichen","durchgestrichen","Einzug","Aussenseiter","Vollgröße","schrumpfen","Format kopierenт","die Linie","Liste von","Nummerierte Liste","Schnitt","Wählen Sie Alle aus","Code einbetten","Link öffnen","Link bearbeiten","Nofollow-Attribut","Link entfernen","Aktualisieren","Bearbeiten","Ansehen","URL","Bearbeiten","Horizontale Ausrichtung","filter","Sortieren nach geändert","Nach Name sortieren","Nach Größe sortiert","Ordner hinzufügen","Wiederherstellen","Speichern","Speichern als","Ändern Sie die Größe","Größe anpassen","Breite","Höhe","Halten Sie Proportionen","Ja","Nein","Entfernen","Markieren","Markieren: %s","Vertikale Ausrichtung","Split","Verschmelzen","Spalte hinzufügen","Zeile hinzufügen",null,"Löschen","Split vertikal","Split horizontally","Rand","Es scheint als dass Sie HTML-Text einfügen möchten","Als HTML einfügen?","Original speichern","Als Text einfügen","Nur Text einfügen","Sie können nur Ihre eigenen Bilder bearbeiten. Laden Sie dieses Bild auf dem Host herunter?","Das Bild wurde erfolgreich auf den Server hochgeladen!null","Palette","In diesem Verzeichnis befinden sich keine Dateien.","umbenennen","Geben Sie einen neuen Namen ein","Vorschau","Herunterladen","Aus der Zwischenablage einfügen","Ihr browser unterstützt kein direkter Zugriff auf die Zwischenablage.","Auswahl kopieren","kopieren","Border-radius"]
 
 /***/ }),
 /* 82 */
 /***/ (function(module, exports) {
 
-module.exports.default = ["Escriba algo...","Para editar"]
+module.exports.default = ["Escriba algo...","Acerca de Jodit","Jodit Editor","Versión gratis no comercial","GNU General Public License, Versión 2 o posterior","Guía de usuario Jodit","contiene ayuda detallada para el uso.","Para información sobre la licencia, por favor visite nuestro sitio:","Compre la versión completa","Copyright © XDSoft.net - Chupurnov Valeriy. Todos los derechos reservados.","Anclar","Abrir en nueva pestaña","Abrir editor en pantalla completa","Limpiar formato","Color de relleno o de letra","Rehacer","Deshacer","Negrita","Cursiva","Insertar lista no ordenada","Insertar lista ordenada","Alinear Centrado","Alinear Justificado","Alinear Izquierda","Alinear Derecha","Insertar línea horizontal","Insertar imagen","Insertar archivo","Insertar video de Youtube/vimeo","Insertar vínculo","Tamaño de letra","Familia de letra","Insertar bloque","Normal","Encabezado 1","Encabezado 2","Encabezado 3","Encabezado 4","Cita","Código","Insertar","Insertar tabla","Disminuir sangría","Aumentar sangría","Seleccionar caracter especial","Insertar caracter especial","Copiar formato","Cambiar modo","Márgenes","arriba","derecha","abajo","izquierda","Estilos CSS","Clases CSS","Alinear","Derecha","Centrado","Izquierda","--No Establecido--","Fuente","Título","Texto Alternativo","Vínculo","Abrir vínculo en nueva pestaña","Imagen","Archivo","Avanzado","Propiedades de imagen","Cancelar","Aceptar","Buscar archivo","Error al cargar la lista","Error al cargar las carpetas","¿Está seguro?","Entre nombre de carpeta","Crear carpeta","Entre el nombre","Soltar imagen","Soltar archivo","o click","Texto alternativo","Subir","Buscar","Fondo","Texto","Arriba","Centro","Abajo","Insertar columna antes","Interar columna después","Insertar fila arriba","Insertar fila debajo","Borrar tabla","Borrar fila","Borrar columna","Vaciar celda","Caracteres: %d","Palabras: %d","Tachado","Subrayado","superíndice","subíndice","Cortar selección","Seleccionar todo","Pausa","Buscar","Reemplazar con","Reemplazar","Pegar","Seleccionar contenido para pegar","HTML","negrita","cursiva","Brocha","Vínculo","deshacer","rehacer","Tabla","Imagen","Borrar","Párrafo","Tamaño de letra","Video","Letra","Acerca de","Imprimir","Símbolo","subrayar","tachar","sangría","quitar sangría","Tamaño completo","encoger","Copiar formato","línea horizontal","lista sin ordenar","lista ordenada","Cortar","Seleccionar todo","Incluir código","Abrir vínculo","Editar vínculo","No seguir","Desvincular","Actualizar","Para editar","Ver","URL","Editar","Alineación horizontal","filtrar","Ordenar por fecha modificación","Ordenar por nombre","Ordenar por tamaño","Agregar carpeta","Resetear","Guardar","Guardar como...","Redimensionar","Recortar","Ancho","Alto","Mantener relación de aspecto","Si","No","Quitar","Seleccionar","Seleccionar: %s","Alineación vertical","Dividir","Mezclar","Agregar columna","Agregar fila",null,"Borrar","Dividir vertical","Dividir horizontal","Borde","El código es similar a HTML. ¿Mantener como HTML?","Pegar como HTML?","Mantener","Insertar como texto","Insertar solo texto","Solo puedes editar tus propias imágenes. ¿Descargar esta imagen en el servidor?","¡La imagen se ha subido correctamente al servidor!","paleta","No hay archivos en este directorio.","renombrar","Ingresa un nuevo nombre","avance","Descargar","Pegar desde el portapapeles","Su navegador no soporta el acceso directo en el portapapeles.","Selección de copia","copia","Radio frontera"]
 
 /***/ }),
 /* 83 */
 /***/ (function(module, exports) {
 
-module.exports.default = ["Ecrivez ici","Pour éditer"]
+module.exports.default = ["Ecrivez ici","A propos de Jodit","Editeur Jodit","Version gratuite, non commerciale","GNU General Public License, version 2 ou ultérieure","Guide de l'utilisateur","Aide détaillée à l'utilisation","Consulter la licence sur notre site web:","Acheter la version complète","Copyright © XDSoft.net - Chupurnov Valeriy. Tous droits réservés.","Ancre","Ouvrir dans un nouvel onglet","Ouvrir l'éditeur en pleine page","Supprimer le formattage","Modifier la couleur du fond ou du texte","Refaire","Défaire","Gras","Italique","Liste non ordonnée","Liste ordonnée","Centrer","Justifier","Aligner à gauche ","Aligner à droite","Insérer une ligne horizontale","Insérer une image","Insérer un fichier","Insérer une vidéo","Insérer un lien","Taille des caractères","Famille des caractères","Bloc formatté","Normal","Titre 1","Titre 2","Titre 3","Titre 4","Citation","Code","Insérer","Insérer un tableau","Diminuer le retrait","Retrait plus","Sélectionnez un caractère spécial","Insérer un caractère spécial","Cloner le format","Mode wysiwyg <-> code html","Marges","haut","droite","Bas","gauche","Styles","Classes","Alignement","Droite","Centre","Gauche","--Non disponible--","Source","Titre","Alternative","Lien","Ouvrir le lien dans un nouvel onglet","Image","fichier","Avancé","Propriétés de l'image","Effacer","OK","Explorateur de fichiers","Erreur de liste de chargement","Erreur de dossier de chargement","Etes-vous sûrs ?","Entrer le non de dossier","Créer un dossier","type de fichier","Coller une image","Déposer un fichier","ou cliquer","Texte de remplacemement","Charger","Chercher","Arrière-plan","Texte","Haut","Milieu","Bas","Insérer une colonne avant","Insérer une colonne après","Insérer une ligne en dessus","Insérer une ligne en dessous","Supprimer le tableau","Supprimer la ligne","Supprimer la colonne","Vider la cellule","Symboles: %d","Mots: %d","Frapper à travers","Souligner","exposant","indice","Couper la sélection","Tout sélectionner","Pause","Rechercher","Remplacer par","Remplacer","Coller","Choisissez le contenu à coller","la source","graisseux","italique","verser","lien","abolir","prêt","graphique","Image","la gommen","clause","taille de police","Video","police","à propos de l'éditeur","impression","caractère","souligné","barré","indentation","indifférent","taille réelle","taille conventionnelle","Format de copie","la ligne","Liste des","Liste numérotée","Couper","Sélectionner tout",null,"Ouvrir le lien","Modifier le lien","Attribut Nofollow","Supprimer le lien","Mettre à jour","Pour éditer","Voir","URL",null,"Alignement horizontal","Filtre","Trier par modifié","Trier par nom","Classer par taille","Ajouter le dossier","Restaurer","Sauvegarder","Enregistrer sous","Changer la taille","Taille de garniture","Largeur","Hauteur","Garder les proportions","Oui","Non","Supprimer","Mettre en évidence","Mettre en évidence: %s","Alignement vertical","Split","aller","Ajouter une colonne","Ajouter une rangée",null,"Effacer","Split vertical","Split horizontal",null,"Votre texte que vous essayez de coller est similaire au HTML. Collez-le en HTML?","Coller en HTML?","Sauvegarder l'original","Coller en tant que texte","Coller le texte seulement","Vous ne pouvez éditer que vos propres images. Téléchargez cette image sur l'hôte?","L'image a été téléchargée avec succès sur le serveur!null","Palette","Il n'y a aucun fichier dans ce répertoire.","renommer","Entrez un nouveau nom","Aperçu","Télécharger","Coller à partir du presse-papiers","Votre navigateur ne prend pas en charge l'accès direct à la presse-papiers.","Copier la sélection","copie","Rayon des frontières"]
 
 /***/ }),
 /* 84 */
 /***/ (function(module, exports) {
 
-module.exports.default = ["הקלד משהו...","כדי לערוך"]
+module.exports.default = ["הקלד משהו...","About Jodit","Jodit Editor","Free Non-commercial Version","GNU General Public License, version 2 or later","Jodit User's Guide","contains detailed help for using.","For information about the license, please go to our website:","Buy full version","Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.","מקום עיגון","פתח בכרטיסיה חדשה","פתח את העורך בחלון חדש","נקה עיצוב","שנה צבע טקסט או רקע","בצע שוב","בטל","מודגש","נטוי","הכנס רשימת תבליטים","הכנס רשימה ממוספרת","מרכז","ישר ","ישר לשמאל","ישר לימין","הכנס קו אופקי","הכנס תמונה","הכנס קובץ","הכנס סרטון וידאו מYouTube/Vimeo","הכנס קישור","גודל גופן","גופן","מעוצב מראש","רגיל","כותרת 1","כותרת 2","כותרת 3","כותרת 4","ציטוט","קוד","הכנס","הכנס טבלה","הקטן כניסה","הגדל כניסה","בחר תו מיוחד","הכנס תו מיוחד","העתק עיצוב","החלף מצב","ריווח","עליון","ימין","תחתון","שמאל","עיצוב CSS","מחלקת CSS","יישור","ימין","מרכז","שמאל","--לא נקבע--","מקור","כותרת","כיתוב חלופי","קישור","פתח בכרטיסיה חדשה","תמונה","קובץ","מתקדם","מאפייני תמונה","ביטול","אישור","סייר הקבצים","שגיאה  בזמן טעינת רשימה","שגיאה בזמן טעינת תקיות","האם אתה בטוח?","הכנס שם תקיה","צור תקיה","סוג הקובץ","הסר תמונה","הסר קובץ","או לחץ","כיתוב חלופי","העלה","סייר","רקע","טקסט","עליון","מרכז","תחתון","הכנס עמודה לפני","הכנס עמודה אחרי","הכנס שורה מעל","הכנס שורה מתחת","מחק טבלה","מחק שורה","מחק עמודה","רוקן תא","תווים: %d","מילים: %d","קו חוצה","קו תחתון","superscript","subscript","גזור בחירה","בחר הכל","שבירת שורה","חפש","החלף ב","החלף","הדבק","בחר תוכן להדבקה","HTML","מודגש","נטוי","מברשת","קישור","בטל","בצע שוב","טבלה","תמונה","מחק","פסקה","גודל גופן","וידאו","גופן","עלינו","הדפס","תו מיוחד","קו תחתון","קו חוצה","הגדל כניסה","הקטן כניסה","גודל מלא","כווץ","העתק עיצוב","קו אופקי","רשימת תבליטים","רשימה ממוספרת","חתוך","בחר הכל","הוסף קוד","פתח קישור","ערוך קישור","ללא מעקב","בטל קישור","עדכן","כדי לערוך","הצג","כתובת","ערוך","יישור אופקי","סנן","מין לפי שינוי","מיין לפי שם","מיין לפי גודל","הוסף תקייה","אפס","שמור","שמור בשם...","שנה גודל","חתוך","רוחב","גובה","שמור יחס","כן","לא","הסר","בחר","נבחר: %s","יישור אנכי","פיצול","מזג","הוסף עמודה","הוסף שורה",null,"מחק","פיצול אנכי","פיצול אופקי","מסגרת","הקוד דומה לHTML, האם להשאיר כHTML","הדבק כHTML","השאר","הכנס כטקסט","הכנס טקסט בלבד","רק קבצים המשוייכים שלך ניתנים לעריכה. האם להוריד את הקובץ?","התמונה עלתה בהצלחה!","לוח","אין קבצים בספריה זו.","הונגרית","הזן שם חדש","תצוגה מקדימה","הורד","להדביק מהלוח","הדפדפן שלך לא תומך גישה ישירה ללוח.","העתק בחירה","העתק","רדיוס הגבול"]
 
 /***/ }),
 /* 85 */
 /***/ (function(module, exports) {
 
-module.exports.default = ["Írjon be valamit","Szerkesztés"]
+module.exports.default = ["Írjon be valamit","Joditról","Jodit Editor","Ingyenes változat","GNU General Public License, Verzió 2 vagy későbbi","Jodit útmutató","további segítséget tartalmaz","További licence információkért látogassa meg a weboldalunkat:","Teljes verzió megvásárlása","Copyright © XDSoft.net - Chupurnov Valeriy. Minden jog fenntartva.","Horgony","Megnyitás új lapon","Megnyitás teljes méretben","Formázás törlése","Háttér/szöveg szín","Újra","Visszavon","Félkövér","Dőlt","Pontozott lista","Számozott lista","Középre zárt","Sorkizárt","Balra zárt","Jobbra zárt","Vízszintes vonal beszúrása","Kép beszúrás","Fájl beszúrás","Youtube videó beszúrása","Link beszúrás","Betűméret","Betűtípus","Formázott blokk beszúrása","Normál","Fejléc 1","Fejléc 2","Fejléc 3","Fejléc 4","Idézet","Kód","Beszúr","Táblázat beszúrása","Behúzás csökkentése","Behúzás növelése","Speciális karakter kiválasztása","Speciális karakter beszúrása","Kép formázása","Nézet váltása","Szegélyek","felső","jobb","alsó","bal","CSS stílusok","CSS osztályok","Igazítás","Jobbra","Középre","Balra","Nincs","Forrás","Cím","Helyettesítő szöveg","Link","Link megnyitása új lapon","Kép","Fájl","Haladó","Kép tulajdonságai","Mégsem","OK","Fájl tallózó","Hiba a lista betöltése közben","Hiba a mappák betöltése közben","Biztosan ezt szeretné?","Írjon be egy mappanevet","Mappa létrehozása","írjon be bevet","Húzza ide a képet","Húzza ide a fájlt","vagy kattintson","Helyettesítő szöveg","Feltölt","Tallóz","Háttér","Szöveg","Fent","Középen","Lent","Oszlop beszúrás elé","Oszlop beszúrás utána","Sor beszúrás fölé","Sor beszúrás alá","Táblázat törlése","Sor törlése","Oszlop törlése","Cella tartalmának törlése","Karakterek száma: %d","Szavak száma: %d","Áthúzott","Aláhúzott","Felső index","Alsó index","Kivágás","Összes kijelölése","Szünet","Keresés","Csere erre","Csere","Beillesztés","Válasszon tartalmat a beillesztéshez","HTML","Félkövér","Dőlt","Ecset","Link","Visszavon","Újra","Táblázat","Kép","Törlés","Paragráfus","Betűméret","Videó","Betű","Rólunk","Nyomtat","Szimbólum","Aláhúzott","Áthúzott","Behúzás","Aussenseiter","Teljes méret","Összenyom","Formátum másolás","Egyenes vonal","Lista","Számozott lista","Kivág","Összes kijelölése","Beágyazott kód","Link megnyitása","Link szerkesztése","Nincs követés","Link leválasztása","Frissít","Szerkesztés","felülvizsgálat","URL","Szerkeszt","Vízszintes igazítás","Szűrő","Rendezés módosítás szerint","Rendezés név szerint","Rendezés méret szerint","Mappa hozzáadás","Visszaállít","Mentés","Mentés másként...","Átméretezés","Kivág","Szélesség","Magasság","Képarány megtartása","Igen","Nem","Eltávolít","Kijelöl","Kijelöl: %s","Függőleges igazítás","Felosztás","Összevonás","Oszlop hozzáadás","Sor hozzáadás",null,"Törlés","Függőleges felosztás","Vízszintes felosztás","Szegély","A beillesztett szöveg HTML-nek tűnik. Megtartsuk HTML-ként?","Beszúrás HTML-ként","Megtartás","Beszúrás szövegként","Csak szöveg beillesztése","Csak a saját képeit tudja szerkeszteni. Letölti ezt a képet?","Kép sikeresen feltöltve!","Palette","Er zijn geen bestanden in deze map.","átnevezés","Adja meg az új nevet","előnézet","Letöltés","Illessze be a vágólap","A böngésző nem támogatja a közvetlen hozzáférést biztosít a vágólapra.","Másolás kiválasztása","másolás","Határ sugár"]
 
 /***/ }),
 /* 86 */
 /***/ (function(module, exports) {
 
-module.exports.default = ["Ketik sesuatu","pensil"]
+module.exports.default = ["Ketik sesuatu","Tentang Jodit","Editor Jodit","Versi Bebas Non-komersil","Lisensi Publik Umum (GPL), versi 2 atau terbaru","Panduan Pengguna Jodit","mencakup detail bantuan penggunaan","Untuk informasi tentang lisensi, silakan kunjungi website:","Beli versi lengkap","Hak Cipta © XDSoft.net - Chupurnov Valeriy. Hak cipta dilindungi undang-undang.","Tautan","Buka di tab baru","Buka editor dalam ukuran penuh","Hapus Pemformatan","Isi warna atau atur warna teks","Ulangi","Batalkan","Tebal","Miring","Sisipkan Daftar Tidak Berurut","Sisipkan Daftar Berurut","Tengah","Penuh","Kiri","Kanan","Sisipkan Garis Horizontal","Sisipkan Gambar","Sisipkan Berkas","Sisipkan video youtube/vimeo","Sisipkan tautan","Ukuran font","Keluarga font","Sisipkan blok format","Normal","Heading 1","Heading 2","Heading 3","Heading 4","Kutip","Kode","Sisipkan","Sisipkan tabel","Kurangi Indentasi","Tambah Indentasi","Pilih Karakter Spesial","Sisipkan Karakter Spesial","Formar warna","Ubah mode","Batas","atas","kanan","bawah","kiri","Gaya","Class","Rata","Kanan","Tengah","Kiri","--Tidak diset--","Src","Judul","Teks alternatif","Tautan","Buka tautan di tab baru","Gambar","berkas","Lanjutan","Properti gambar","Batal","Ya","Penjelajah Berkas","Error ketika memuat list","Error ketika memuat folder","Apakah Anda yakin?","Masukkan nama Direktori","Buat direktori","ketik nama","Letakkan gambar","Letakkan berkas","atau klik","Teks alternatif","Unggah","Jelajahi","Latar Belakang","Teks","Atas","Tengah","Bawah","Sisipkan kolom sebelumnya","Sisipkan kolom setelahnya","Sisipkan baris di atasnya","Sisipkan baris di bawahnya","Hapus tabel","Hapus baris","Hapus kolom","Kosongkan cell","Karakter: %d","Kata: %d","Coret","Garis Bawah","Superskrip","Subskrip","Potong pilihan","Pilih semua","Berhenti","Mencari","Ganti dengan","Ganti","Paste","Pilih konten untuk dipaste","sumber","tebal","miring","sikat","tautan","batalkan","ulangi","tabel","gambar","penghapus","paragraf","ukuran font","video","font","tentang","cetak","simbol","garis bawah","coret","menjorok ke dalam","menjorok ke luar","ukuran penuh","menyusut","salin format","hr","ul","ol","potong","Pilih semua","Kode embed","Buka tautan","Edit tautan","No follow","Hapus tautan","Perbarui","pensil","Mata","URL","Edit","Perataan horizontal","Filter","Urutkan berdasarkan perubahan","Urutkan berdasarkan nama","Urutkan berdasarkan ukuran","Tambah folder","Reset","Simpan","Simpan sebagai...","Ubah ukuran","Crop","Lebar","Tinggi","Jaga aspek rasio","Ya","Tidak","Copot","Pilih","Pilih %s","Rata vertikal","Bagi","Gabungkan","Tambah kolom","tambah baris","Lisensi: %s","Hapus","Bagi secara vertikal","Bagi secara horizontal","Bingkai","Kode Anda cenderung ke HTML. Biarkan sebagai HTML?","Paste sebagai HTML","Jaga","Sisipkan sebagai teks","Sisipkan hanya teks","Anda hanya dapat mengedit gambar Anda sendiri. Unduh gambar ini di host?","Gambar telah sukses diunggah ke host!","palet","Tidak ada berkas","ganti nama","Masukkan nama baru","pratinjau","Unduh","Paste dari clipboard","Browser anda tidak mendukung akses langsung ke clipboard.","Copy seleksi","copy","Border radius"]
 
 /***/ }),
 /* 87 */
 /***/ (function(module, exports) {
 
-module.exports.default = ["Scrivi qualcosa...","Per modificare"]
+module.exports.default = ["Scrivi qualcosa...","A proposito di Jodit","Jodit Editor","Versione gratuita non commerciale","Licenza pubblica generale GNU, versione 2 o successiva","Guida utente di Jodit","contiene una guida dettagliata per l'uso.","Per informazioni sulla licenza, si prega di visitare il nostro sito:","Acquista la versione completa","Copyright © XDSoft.net - Chupurnov Valeriy. Alle Rechte vorbehalten.","Ancora","Apri in una nuova scheda","Apri l'editor a schermo intero","Formato chiaro","Riempi colore o lettera","Ripristina","Annulla","Grassetto","Corsivo","Inserisci lista non ordinata","Inserisci l'elenco ordinato","Allinea Centra","Allineare Giustificato","Allinea a Sinistra","Allinea a Destra","Inserisci la linea orizzontale","Inserisci immagine","Inserisci un file","Inserisci video Youtube/Vimeo","Inserisci il link","Dimensione del carattere","Tipo di font","Inserisci blocco","Normale","Heading 1","Heading 2","Heading 3","Heading 4","Citazione","Codice","Inserisci","Inserisci tabella","Riduci il rientro","Aumenta il rientro","Seleziona una funzione speciale","Inserisci un carattere speciale","Copia formato","Cambia modo","Margini","su","destra","giù","sinistra","Stili CSS","Classi CSS","Allinea","Destra","Centro","Sinistra","--Non Impostato--","Fonte","Titolo","Testo Alternativo","Link","Apri il link in una nuova scheda","Immagine","Archivio","Avanzato","Proprietà dell'immagine","Annulla","Accetta","Cerca il file","Errore durante il caricamento dell'elenco","Errore durante il caricamento delle cartelle","Sei sicuro?","Inserisci il nome della cartella","Crea cartella","Entre el nombre","Rilascia l'immagine","Rilascia file","o click","Testo alternativo","Carica","Sfoglia","Sfondo","Testo","Su","Centro","Sotto","Inserisci prima la colonna","Inserisci colonna dopo","Inserisci la riga sopra","Inserisci la riga sotto","Elimina tabella","Elimina riga","Elimina colonna","Cella vuota","Caratteri: %d","Parole: %d","Barrato","Sottolineato","indice","deponente","Taglia la selezione","Seleziona tutto","Pausa","Cerca","Sostituisci con","Sostituisci","Incolla","Seleziona il contenuto da incollare","HTML","Grassetto","Corsivo","Pennello","Link","Annulla","Ripristina","Tabella","Immagine","Gomma","Paragrafo","Dimensione del carattere","Video","Font","Approposito di","Stampa","Simbolo","Sottolineato","Barrato","trattino","annulla rientro","A grandezza normale","comprimere","Copia il formato","linea orizzontale","lista non ordinata","lista ordinata","Taglia","Seleziona tutto","Includi codice","Apri link","Modifica link","Non seguire","Togli link","Aggiornare","Per modificare","Recensione"," URL","Modifica","Allineamento orizzontale","Filtro","Ordina per data di modifica","Ordina per nome","Ordina per dimensione","Aggiungi cartella","Reset","Salva","Salva con nome...","Ridimensiona","Tagliare","Larghezza","Altezza","Mantenere le proporzioni","Si","No","Rimuovere","Seleziona","Seleziona: %s","Allineamento verticala","Dividere","Fondi","Aggiungi colonna","Aggiungi riga",null,"Cancella","Dividere verticalmente","Diviso orizzontale","Bordo","Il codice è simile all'HTML. Mantieni come HTML?","Incolla come HTML?","Mantieni","Inserisci come testo","Inserisci solo il testo","Puoi modificare solo le tue immagini. Scarica questa immagine sul server?","L'immagine è stata caricata con successo sul server!","tavolozza","Non ci sono file in questa directory.","ungherese","Inserisci un nuovo nome","anteprima","Scaricare","Incolla dagli appunti","Il tuo browser non supporta l'accesso diretto agli appunti.","Selezione di copia","copia","Border radius"]
 
 /***/ }),
 /* 88 */
 /***/ (function(module, exports) {
 
-module.exports.default = ["Begin met typen..","Om te bewerken"]
+module.exports.default = ["Begin met typen..","Over Jodit","Jodit Editor","Gratis niet-commerciële versie","GNU General Public License, versie 2 of hoger","Jodit gebruikershandleiding","bevat gedetailleerde informatie voor gebruik.","Voor informatie over de licentie, ga naar onze website:","Volledige versie kopen","Copyright © XDSoft.net - Chupurnov Valeriy. Alle rechten voorbehouden.","Anker","Open in nieuwe tab","Editor in volledig scherm openen","Opmaak verwijderen","Vulkleur of tekstkleur aanpassen","Opnieuw","Ongedaan maken","Vet","Cursief","Geordende list invoegen","Ongeordende lijst invoegen","Centreren","Uitlijnen op volledige breedte","Links uitlijnen","Rechts uitlijnen","Horizontale lijn invoegen","Afbeelding invoegen","Bestand invoegen","Youtube/Vimeo video invoegen","Link toevoegen","Tekstgrootte","Lettertype","Format blok invoegen","Normaal","Koptekst 1","Koptekst 2","Koptekst 3","Koptekst 4","Citaat","Code","Invoegen","Tabel invoegen","Inspringing verkleinen","Inspringing vergroten","Symbool selecteren","Symbool invoegen","Opmaak kopieren","Modus veranderen","Marges","Boven","Rechts","Onder","Links","CSS styles","CSS classes","Uitlijning","Rechts","Gecentreerd","Links","--Leeg--","Src","Titel","Alternatieve tekst","Link","Link in nieuwe tab openen","Afbeelding","Bestand","Geavanceerd","Afbeeldingseigenschappen","Annuleren","OK","Bestandsbrowser","Fout bij het laden van de lijst","Fout bij het laden van de mappenlijst","Weet je het zeker?","Geef de map een naam","Map aanmaken","Type naam","Sleep hier een afbeelding naartoe","Sleep hier een bestand naartoe","of klik","Alternatieve tekst","Uploaden","Bladeren","Achtergrond","Tekst","Boven","Midden","Onder","Kolom invoegen (voor)","Kolom invoegen (na)","Rij invoegen (boven)","Rij invoegen (onder)","Tabel verwijderen","Rij verwijderen","Kolom verwijderen","Cel leegmaken","Tekens: %d","Woorden: %d","Doorstrepen","Onderstrepen","Superscript","Subscript","Selectie knippen","Selecteer alles","Enter","Zoek naar","Vervangen door","Vervangen","Plakken","Kies content om te plakken","Broncode","vet","cursief","kwast","link","ongedaan maken","opnieuw","tabel","afbeelding","gum","paragraaf","lettergrootte","video","lettertype","over","afdrukken","symbool","onderstreept","doorgestreept","inspringen","minder inspringen","volledige grootte","kleiner maken","opmaak kopiëren","horizontale lijn","lijst","genummerde lijst","knip","alles selecteren","Embed code","link openen","link aanpassen","niet volgen","link verwijderen","Updaten","Om te bewerken","Recensie"," URL","Bewerken","Horizontaal uitlijnen","Filteren","Sorteren op wijzigingsdatum","Sorteren op naam","Sorteren op grootte","Map toevoegen","Herstellen","Opslaan","Opslaan als ...","Grootte aanpassen","Bijknippen","Breedte","Hoogte","Verhouding behouden","Ja","Nee","Verwijderen","Selecteren","Selecteer: %s","Verticaal uitlijnen","Splitsen","Samenvoegen","Kolom toevoegen","Rij toevoegen",null,"Verwijderen","Verticaal splitsen","Horizontaal splitsen","Rand","Deze code lijkt op HTML. Als HTML behouden?","Invoegen als HTML","Origineel behouden","Als tekst invoegen","Als onopgemaakte tekst invoegen","Je kunt alleen je eigen afbeeldingen aanpassen. Deze afbeelding downloaden?","De afbeelding is succesvol geüploadet!","Palette","Er zijn geen bestanden in deze map.","Hongaars","Voer een nieuwe naam in","voorvertoning","Download","Plakken van klembord","Uw browser ondersteunt geen directe toegang tot het klembord.","Selectie kopiëren","kopiëren","Border radius"]
 
 /***/ }),
 /* 89 */
 /***/ (function(module, exports) {
 
-module.exports.default = ["Escreva algo...","Editar"]
+module.exports.default = ["Escreva algo...","Sobre o Jodit","Editor Jodit","Versão Gratuita não-comercial","Licença Pública GNU General, Versão 2 ou posterior","Guia de usuário Jodit","contém ajuda detalhada para o uso.","Para informação sobre a licença, por favor visite nosso site:","Compre a versão completa","Copyright © XDSoft.net - Chupurnov Valeriy. Todos os direitos reservados.","Link","Abrir em nova aba","Abrir editor em tela cheia","Limpar formatação","Cor de preenchimento ou cor do texto","Refazer","Desfazer","Negrito","Itálico","Inserir lista não ordenada","Inserir lista ordenada","Centralizar","Justificar","Alinhar à Esquerda","Alinhar à Direita","Inserir linha horizontal","Inserir imagem","Inserir arquivo","Inserir vídeo do Youtube/vimeo","Inserir link","Tamanho da letra","Fonte","Inserir bloco","Normal","Cabeçalho 1","Cabeçalho 2","Cabeçalho 3","Cabeçalho 4","Citação","Código","Inserir","Inserir tabela","Diminuir recuo","Aumentar recuo","Selecionar caractere especial","Inserir caractere especial","Copiar formato","Mudar modo","Margens","cima","direta","baixo","esquerda","Estilos CSS","Classes CSS","Alinhamento","Direita","Centro","Esquerda","--Não Estabelecido--","Fonte","Título","Texto Alternativo","Link","Abrir link em nova aba","Imagem","Arquivo","Avançado","Propriedades da imagem","Cancelar","Ok","Procurar arquivo","Erro ao carregar a lista","Erro ao carregar as pastas","Você tem certeza?","Escreva o nome da pasta","Criar pasta","Escreva seu nome","Soltar imagem","Soltar arquivo","ou clique","Texto alternativo","Upload","Explorar","Fundo","Texto","Cima","Meio","Baixo","Inserir coluna antes","Inserir coluna depois","Inserir linha acima","Inserir linha abaixo","Excluir tabela","Excluir linha","Excluir coluna","Limpar célula","Caracteres: %d","Palavras: %d","Tachado","Sublinhar","sobrescrito","subscrito","Cortar seleção","Selecionar tudo","Pausa","Procurar por","Substituir com","Substituir","Colar","Escolher conteúdo para colar","HTML","negrito","itálico","pincel","link","desfazer","refazer","tabela","imagem","apagar","parágrafo","tamanho da letra","vídeo","fonte","Sobre de","Imprimir","Símbolo","sublinhar","tachado","recuar","diminuir recuo","Tamanho completo","diminuir","Copiar formato","linha horizontal","lista não ordenada","lista ordenada","Cortar","Selecionar tudo","Incluir código","Abrir link","Editar link","Não siga","Remover link","Atualizar","Editar","Visualizar","URL","Editar","Alinhamento horizontal","filtrar","Ordenar por modificação","Ordenar por nome","Ordenar por tamanho","Adicionar pasta","Resetar","Salvar","Salvar como...","Redimensionar","Recortar","Largura","Altura","Manter a proporção","Sim","Não","Remover","Selecionar","Selecionar: %s","Alinhamento vertical","Dividir","Mesclar","Adicionar coluna","Adicionar linha",null,"Excluir","Dividir vertical","Dividir horizontal","Borda","Seu código é simular ao HTML. Manter como HTML?","Colar como HTML?","Manter","Inserir como Texto","Inserir somente o Texto","Você só pode editar suas próprias imagens. Baixar essa imagem pro servidor?","A imagem foi enviada com sucesso para o servidor!","Palette","Não há arquivos nesse diretório.","Húngara","Digite um novo nome","preview","Baixar","Colar da área de transferência","O seu navegador não oferece suporte a acesso direto para a área de transferência.","Selecção de cópia","cópia","Border radius"]
 
 /***/ }),
 /* 90 */
 /***/ (function(module, exports) {
 
-module.exports.default = ["Напишите что-либо","Редактировать"]
+module.exports.default = ["Напишите что-либо","О Jodit","Редактор Jodit","Версия для не коммерческого использования","Стандартная общественная лицензия GNU (GPL), версия 2 или выше","Jodit Руководство пользователя","содержит детальную информацию по использованию","Для получения сведений о лицензии , пожалуйста, перейдите на наш сайт:","Купить полную версию","Авторские права © XDSoft.net - Чупурнов Валерий. Все права защищены.","Анкор","Открывать ссылку в новой вкладке","Открыть редактор в полном размере","Очистить форматирование","Цвет заливки или цвет текста","Повтор","Отмена","Жирный","Наклонный","Вставка маркированного списка","Вставить нумерованный список","Выровнять по центру","Выровнять по ширине","Выровнять по левому краю","Выровнять по правому краю","Вставить горизонтальную линию","Вставить изображение","Вставить файл","Вставьте видео","Вставить ссылку","Размер шрифта","Шрифт","Вставить блочный элемент","Нормальный текст","Заголовок 1","Заголовок 2","Заголовок 3","Заголовок 4","Цитата","Код","Вставить","Вставить таблицу","Уменьшить отступ","Увеличить отступ","Выберите специальный символ","Вставить специальный символ","Формат краски","Источник","Отступы","сверху","справа","снизу","слева","Стили","Классы","Выравнивание","По правому краю","По центру","По левому краю","--не устанавливать--","src","Заголовок","Альтернативный текст (alt)","Ссылка","Открывать ссылку в новом окне",null,"Файл","Расширенные","Свойства изображения","Отмена","Ок","Браузер файлов","Ошибка при загрузке списка изображений","Ошибка при загрузке списка директорий","Вы уверены?","Введите название директории","Создать директорию","введите название","Перетащите сюда изображение","Перетащите сюда файл","или нажмите","Альтернативный текст","Загрузка","Сервер","Фон","Текст"," К верху","По середине","К низу","Вставить столбец до","Вставить столбец после","Вставить ряд выше","Вставить ряд ниже","Удалить таблицу","Удалять ряд","Удалить столбец","Отчистить ячейку","Символов: %d","Слов: %d","Перечеркнуть","Подчеркивание","верхний индекс","индекс","Вырезать","Выделить все","Разделитель","Найти","Заменить на","Заменить","Вставить","Выбрать контент для вставки","HTML","жирный","курсив","заливка","ссылка","отменить","повторить","таблица","Изображение","очистить","параграф","размер шрифта","видео","шрифт","о редакторе","печать","символ","подчеркнутый","перечеркнутый","отступ","выступ","во весь экран","обычный размер","Копировать формат","линия","Список","Нумерованный список","Вырезать","Выделить все","Код","Открыть ссылку","Редактировать ссылку","Атрибут nofollow","Убрать ссылку","Обновить","Редактировать","Просмотр","URL","Редактировать","Горизонтальное выравнивание","Фильтр","По изменению","По имени","По размеру","Добавить папку","Восстановить","Сохранить","Сохранить как","Изменить размер","Обрезать размер","Ширина","Высота","Сохранять пропорции","Да","Нет","Удалить","Выделить","Выделить: %s","Вертикальное выравнивание","Разделить","Объеденить в одну","Добавить столбец","Добавить строку","Лицензия: %s","Удалить","Разделить по вертикали","Разделить по горизонтали","Рамка","Ваш текст, который вы пытаетесь вставить похож на HTML. Вставить его как HTML?","Вставить как HTML?","Сохранить оригинал","Вставить как текст","Вставить только текст","Вы можете редактировать только свои собственные изображения. Загрузить это изображение на ваш сервер?","Изображение успешно загружено на сервер!","палитра","В данном каталоге нет файлов","Переименовать","Введите новое имя","Предпросмотр","Скачать","Вставить из буфера обмена","Ваш браузер не поддерживает прямой доступ к буферу обмена.","Скопировать выделенное","копия","Радиус границы"]
 
 /***/ }),
 /* 91 */
 /***/ (function(module, exports) {
 
-module.exports.default = ["Bir şey yazın.","Düzenlemek için"]
+module.exports.default = ["Bir şey yazın.","Jodit Hakkında","Jodit Editor","Ücretsiz, ticari olmayan versiyon","GNU General Public License, Versiyon 2 ve sonrası için","Jodit Kullanım Kılavuzu","kullanım için detaylı bilgiler içerir","Lisans hakkında bilgi için lütfen web sitemize gidin:","Tam versiyon satın al","Copyright © XDSoft.net - Chupurnov Valeriy. Tüm Hakları Saklıdır","Bağlantı","Yeni sekmede aç","Tam ekran editör","Stili temizle","Dolgu ve yazı rengi seç","İleri Al","Geri Al","Kalın","İtalik","Sırasız Liste Ekle","Sıralı Liste Ekle","Ortala","Kenarlara Yasla","Sola Yasla","Sağa Yasla","Yatay Çizgi Ekle","Resim Ekle","Dosya Ekle","Youtube/vimeo Videosu Ekle","Bağlantı Ekle","Font Boyutu","Font Ailesi","Blok Ekle","Normal","Başlık 1","Başlık 2","Başlık 3","Başlık 4","Alıntı","Code","Ekle","Tablo Ekle","Girintiyi Azalt","Girintiyi Arttır","Özel Karakter Seç","Özel Karakter Ekle","Resim Biçimi","Mod Değiştir","MEsafeler","Üst","Sağ","Alt","Sol","CSS Stilleri","CSS Sınıfları","Hizalama","Sağ","Ortalı","Sol","Belirlenmedi","Kaynak","Başlık","Alternatif Yazı","Link","Bağlantıyı yeni sekmede aç","Resim","Dosya","Gelişmiş","Resim özellikleri","İptal","Tamam","Dosya Gezgini","Liste yüklenirken hata oluştu","Klasörler yüklenirken hata oluştur","Emin misiniz?","Dizin yolu giriniz","Dizin oluştur","Typname","Resim bırak","Dosya bırak","veya tıkla","Alternatif yazı","Yükle","Ekle","Arka plan","Yazı","Üst","Orta","Aşağı","Öncesine kolon ekle","Sonrasına kolon ekle","Üstüne satır ekle","Altına satır ekle","Tabloyu sil","Satır sil","Kolon sil","Hücreyi boşalt","Harfler: %d","Kelimeler: %d","Durchschlagen","Alt çizgi","Üst yazı","Alt yazı","Seçilimi kes","Tümünü seç","Durdur","Ara","Şununla değiştir","Değiştir","Yapıştır","Yapıştırılacak içerik seç","Kaynak","Kalın","italik","Fırça","Bağlantı","Geri al","İleri al","Tablo","Resim","Silgi","Paragraf","Font boyutu","Video","Font","Hakkında","Yazdır","Sembol","Alt çizgi","Üstü çizili","Girinti","Çıkıntı","Tam ekran","Küçült","Kopyalama Biçimi","Ayraç","Sırasız liste","Sıralı liste","Kes","Tümünü seç","Kod ekle","Bağlantıyı aç","Bağlantıyı düzenle","Nofollow özelliği","Bağlantıyı kaldır","Güncelle","Düzenlemek için","Yorumu","URL","Düzenle","Yatay hizalama","Filtre","Değişime göre sırala","İsme göre sırala","Boyuta göre sırala","Klasör ekle","Sıfırla","Kaydet","Farklı kaydet","Boyutlandır","Kırp","Genişlik","Yükseklik","En boy oranını koru","Evet","Hayır","Sil","Seç","Seç: %s","Dikey hizalama","Ayır","Birleştir","Kolon ekle","Satır ekle",null,"Sil","Dikey ayır","Yatay ayır","Kenarlık","Kodunuz HTML koduna benziyor. HTML olarak devam etmek ister misiniz?","HTML olarak yapıştır","Sakla","Yazı olarak ekle","Nur Text einfügen","Sadece kendi resimlerinizi düzenleyebilirsiniz. Bu görseli kendi hostunuza indirmek ister misiniz?","Görsel başarıyla hostunuza yüklendi","Palette","Bu dizinde dosya yok.","Macarca","Yeni isim girin","Ön izleme","İndir","Panodan yapıştır ","Tarayıcınız pano doğrudan erişim desteklemiyor.","Kopya seçimi","kopya","Sınır yarıçapı"]
 
 /***/ }),
 /* 92 */
 /***/ (function(module, exports) {
 
-module.exports.default = ["输入一些内容","铅笔"]
+module.exports.default = ["输入一些内容","关于Jodit","Jodit Editor","Free Non-commercial Version","GNU General Public License, version 2 or later","开发者指南","使用帮助","有关许可证的信息，请访问我们的网站：","购买完整版本","Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.","Anchor","在新窗口打开","全屏编辑","清除样式","颜色","重做","撤销","粗体","斜体","符号列表","编号","居中","对齐文本","左对齐","右对齐","分割线","图片","文件","youtube/vimeo 视频","链接","字号","字体","格式块","文本","标题1","标题2","标题3","标题4","引用","代码","插入","表格","减少缩进","增加缩进","选择特殊符号","特殊符号","格式复制","改变模式","外边距（Margins）","top","right","bottom","left","样式","Classes","对齐方式","居右","居中","居左","无","Src","Title","Alternative","Link","在新窗口打开链接","图片","file","高级","图片属性","取消","确定","文件管理","加载list错误","加载folders错误","你确定吗？","输入路径","创建路径","type name","拖动图片到此","拖动文件到此","或点击","Alternative text","上传","浏览","背景色","文字","顶部","中间","底部","在之前插入列","在之后插入列","在之前插入行","在之后插入行","删除表格","删除行","删除列","清除内容","字符数: %d","单词数: %d","删除线","下划线","上标","下标","剪切","全选","Pause","查找","替换为","替换","粘贴","选择内容并粘贴","源码","粗体","斜体","颜色","链接","撤销","重做","表格","图片","橡皮擦","段落","字号","视频","字体","关于","打印","符号","下划线","上出现","增加缩进","减少缩进","全屏","收缩","复制格式","分割线","无序列表","顺序列表","剪切","全选","嵌入代码","打开链接","编辑链接","No follow","Unlink","更新","铅笔","回顧","URL",null,"水平对齐","筛选","修改时间排序","名称排序","大小排序","新建文件夹","重置","保存","保存为","调整大小","Crop","宽","高","保存长宽比","是","不","移除","选择","选择: %s","垂直对齐","拆分","合并","添加列","添加行",null,"删除","垂直拆分","水平拆分","边框","你粘贴的文本是一段html代码，是否保留源格式","html粘贴","保留源格式","把html代码视为普通文本","只保留文本","你只能编辑你自己的图片。Download this image on the host?","图片上传成功","调色板","此目录中沒有文件。","重命名","输入新名称","预览","下载","粘贴从剪贴板","你浏览器不支持直接访问的剪贴板。","复制的选择","复制","边界半径"]
 
 /***/ }),
 /* 93 */
 /***/ (function(module, exports) {
 
-module.exports.default = ["輸入一些內容","鉛筆"]
+module.exports.default = ["輸入一些內容","關於Jodit","Jodit Editor","Free Non-commercial Version","GNU General Public License, version 2 or later","開發者指南","使用幫助","有關許可證的信息，請訪問我們的網站：","購買完整版本","Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.","Anchor","在新窗口打開","全屏編輯","清除樣式","顏色","重做","撤銷","粗體","斜體","符號列表","編號","居中","對齊文本","左對齊","右對齊","分割線","圖片","文件","youtube/vimeo 影片","鏈接","字號","字體","格式塊","文本","標題1","標題2","標題3","標題4","引用","代碼","插入","表格","減少縮進","增加縮進","選擇特殊符號","特殊符號","格式複製","改變模式","外邊距（Margins）","top","right","bottom","left","樣式","Classes","對齊方式","居右","居中","居左","無","Src","Title","Alternative","Link","在新窗口打開鏈接","圖片","file","高級","圖片屬性","取消","確定","文件管理","加載list錯誤","加載folders錯誤","你確定嗎？","輸入路徑","創建路徑","type name","拖動圖片到此","拖動文件到此","或點擊","Alternative text","上傳","瀏覽","背景色","文字","頂部","中間","底部","在之前插入列","在之後插入列","在之前插入行","在之後插入行","刪除表格","刪除行","刪除列","清除內容","字符數: %d","單詞數: %d","刪除線","下劃線","上標","下標","剪切","全選","Pause","查找","替換為","替換","黏貼","選擇內容並黏貼","源碼","粗體","斜體","顏色","鏈接","撤銷","重做","表格","圖片","橡皮擦","段落","字號","影片","字體","關於","打印","符號","下劃線","上出現","增加縮進","減少縮進","全屏","收縮","複製格式","分割線","無序列表","順序列表","剪切","全選","嵌入代碼","打開鏈接","編輯鏈接","No follow","Unlink","更新","鉛筆","回顧","URL",null,"水平對齊","篩選","修改時間排序","名稱排序","大小排序","新建文件夾","重置","保存","保存為","調整大小","Crop","寬","高","保存長寬比","是","不","移除","選擇","選擇: %s","垂直對齊","拆分","合併","添加列","添加行",null,"刪除","垂直拆分","水平拆分","邊框","你黏貼的文本是一段html代碼，是否保留源格式","html黏貼","保留源格式","把html代碼視為普通文本","只保留文本","妳只能編輯妳自己的圖片。Download this image on the host?","圖片上傳成功","調色板","此目錄中沒有文件。","重命名","輸入新名稱","預覽","下載","วางจากคลิปบอร์ด","ของเบราว์เซอร์ไม่สนับสนุนโดยตรงเข้าไปยังคลิปบอร์ด","คัดลอกส่วนที่เลือก","คัดลอก","เส้นขอบรัศมี"]
 
 /***/ }),
 /* 94 */
@@ -735,20 +735,23 @@ __webpack_require__.d(helpers_namespaceObject, "JoditObject", function() { retur
 __webpack_require__.d(helpers_namespaceObject, "asArray", function() { return asArray; });
 __webpack_require__.d(helpers_namespaceObject, "inArray", function() { return inArray; });
 __webpack_require__.d(helpers_namespaceObject, "splitArray", function() { return splitArray; });
+__webpack_require__.d(helpers_namespaceObject, "debounce", function() { return debounce; });
+__webpack_require__.d(helpers_namespaceObject, "setTimeout", function() { return setTimeout_setTimeout; });
 __webpack_require__.d(helpers_namespaceObject, "isNumeric", function() { return isNumeric; });
 __webpack_require__.d(helpers_namespaceObject, "isPlainObject", function() { return isPlainObject; });
 __webpack_require__.d(helpers_namespaceObject, "isURL", function() { return isURL; });
 __webpack_require__.d(helpers_namespaceObject, "isWindow", function() { return isWindow; });
-__webpack_require__.d(helpers_namespaceObject, "normilizeCSSValue", function() { return normilizeCSSValue; });
+__webpack_require__.d(helpers_namespaceObject, "colorToHex", function() { return colorToHex; });
 __webpack_require__.d(helpers_namespaceObject, "camelCase", function() { return camelCase; });
 __webpack_require__.d(helpers_namespaceObject, "fromCamelCase", function() { return fromCamelCase; });
 __webpack_require__.d(helpers_namespaceObject, "appendScript", function() { return appendScript; });
 __webpack_require__.d(helpers_namespaceObject, "browser", function() { return browser; });
 __webpack_require__.d(helpers_namespaceObject, "convertMediaURLToVideoEmbed", function() { return convertMediaURLToVideoEmbed; });
 __webpack_require__.d(helpers_namespaceObject, "css", function() { return css_css; });
+__webpack_require__.d(helpers_namespaceObject, "clearCenterAlign", function() { return clearCenterAlign; });
 __webpack_require__.d(helpers_namespaceObject, "ctrlKey", function() { return ctrlKey; });
 __webpack_require__.d(helpers_namespaceObject, "dataBind", function() { return dataBind; });
-__webpack_require__.d(helpers_namespaceObject, "defaultLanguage", function() { return defaultLanguage; });
+__webpack_require__.d(helpers_namespaceObject, "defaultLanguage", function() { return defaultLanguage_defaultLanguage; });
 __webpack_require__.d(helpers_namespaceObject, "each", function() { return each; });
 __webpack_require__.d(helpers_namespaceObject, "completeUrl", function() { return completeUrl; });
 __webpack_require__.d(helpers_namespaceObject, "humanSizeToBytes", function() { return humanSizeToBytes; });
@@ -761,16 +764,15 @@ __webpack_require__.d(helpers_namespaceObject, "getXPathByElement", function() {
 __webpack_require__.d(helpers_namespaceObject, "hasOwn", function() { return hasOwn; });
 __webpack_require__.d(helpers_namespaceObject, "type", function() { return type_type; });
 __webpack_require__.d(helpers_namespaceObject, "val", function() { return val_val; });
-__webpack_require__.d(helpers_namespaceObject, "debounce", function() { return debounce; });
-__webpack_require__.d(helpers_namespaceObject, "setTimeout", function() { return setTimeout_setTimeout; });
 __webpack_require__.d(helpers_namespaceObject, "throttle", function() { return throttle; });
 __webpack_require__.d(helpers_namespaceObject, "isHTML", function() { return isHTML; });
 __webpack_require__.d(helpers_namespaceObject, "isHTMLFromWord", function() { return isHTMLFromWord; });
 __webpack_require__.d(helpers_namespaceObject, "isInt", function() { return isInt; });
 __webpack_require__.d(helpers_namespaceObject, "isLicense", function() { return isLicense; });
+__webpack_require__.d(helpers_namespaceObject, "isString", function() { return isString; });
+__webpack_require__.d(helpers_namespaceObject, "isFunction", function() { return isFunction; });
 __webpack_require__.d(helpers_namespaceObject, "hasBrowserColorPicker", function() { return hasBrowserColorPicker; });
 __webpack_require__.d(helpers_namespaceObject, "hexToRgb", function() { return hexToRgb; });
-__webpack_require__.d(helpers_namespaceObject, "colorToHex", function() { return colorToHex; });
 __webpack_require__.d(helpers_namespaceObject, "applyStyles", function() { return applyStyles; });
 __webpack_require__.d(helpers_namespaceObject, "cleanFromWord", function() { return cleanFromWord; });
 __webpack_require__.d(helpers_namespaceObject, "clear", function() { return clear_clear; });
@@ -783,11 +785,15 @@ __webpack_require__.d(helpers_namespaceObject, "normalizePath", function() { ret
 __webpack_require__.d(helpers_namespaceObject, "normalizeRelativePath", function() { return normalizeRelativePath; });
 __webpack_require__.d(helpers_namespaceObject, "normalizeSize", function() { return normalizeSize; });
 __webpack_require__.d(helpers_namespaceObject, "normalizeURL", function() { return normalizeURL; });
+__webpack_require__.d(helpers_namespaceObject, "normilizeCSSValue", function() { return normilizeCSSValue; });
 __webpack_require__.d(helpers_namespaceObject, "normalizeColor", function() { return normalizeColor; });
 __webpack_require__.d(helpers_namespaceObject, "getContentWidth", function() { return getContentWidth; });
 __webpack_require__.d(helpers_namespaceObject, "innerWidth", function() { return innerWidth_innerWidth; });
 __webpack_require__.d(helpers_namespaceObject, "offset", function() { return offset; });
 __webpack_require__.d(helpers_namespaceObject, "trim", function() { return trim; });
+__webpack_require__.d(helpers_namespaceObject, "ucfirst", function() { return ucfirst; });
+__webpack_require__.d(helpers_namespaceObject, "sprintf", function() { return sprintf; });
+__webpack_require__.d(helpers_namespaceObject, "i18n", function() { return i18n_i18n; });
 var modules_namespaceObject = {};
 __webpack_require__.r(modules_namespaceObject);
 __webpack_require__.d(modules_namespaceObject, "Ajax", function() { return Ajax_Ajax; });
@@ -850,7 +856,7 @@ __webpack_require__.d(plugins_namespaceObject, "placeholder", function() { retur
 __webpack_require__.d(plugins_namespaceObject, "redoundo", function() { return redoundo_redoundo; });
 __webpack_require__.d(plugins_namespaceObject, "resizer", function() { return resizer; });
 __webpack_require__.d(plugins_namespaceObject, "search", function() { return search_search; });
-__webpack_require__.d(plugins_namespaceObject, "size", function() { return size; });
+__webpack_require__.d(plugins_namespaceObject, "size", function() { return size_size; });
 __webpack_require__.d(plugins_namespaceObject, "source", function() { return source_source; });
 __webpack_require__.d(plugins_namespaceObject, "stat", function() { return stat_stat; });
 __webpack_require__.d(plugins_namespaceObject, "sticky", function() { return sticky_sticky; });
@@ -1442,6 +1448,32 @@ const isLicense = (license) => typeof license === 'string' &&
     license.length === 32 &&
     /^[a-z0-9]+$/.test(license);
 
+// CONCATENATED MODULE: ./src/modules/helpers/checker/isString.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
+ * For GPL see LICENSE-GPL.txt in the project root for license information.
+ * For MIT see LICENSE-MIT.txt in the project root for license information.
+ * For commercial licenses see https://xdsoft.net/jodit/commercial/
+ * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+const isString = (value) => {
+    return typeof value === 'string';
+};
+
+// CONCATENATED MODULE: ./src/modules/helpers/checker/isFunction.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
+ * For GPL see LICENSE-GPL.txt in the project root for license information.
+ * For MIT see LICENSE-MIT.txt in the project root for license information.
+ * For commercial licenses see https://xdsoft.net/jodit/commercial/
+ * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+const isFunction = (value) => {
+    return typeof value === 'function';
+};
+
 // CONCATENATED MODULE: ./src/modules/helpers/checker/isURL.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -1492,6 +1524,8 @@ const hasBrowserColorPicker = () => {
  * For commercial licenses see https://xdsoft.net/jodit/commercial/
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
+
 
 
 
@@ -1729,6 +1763,118 @@ const trim = (value) => {
         .replace(SPACE_REG_EXP_END, '');
 };
 
+// CONCATENATED MODULE: ./src/modules/helpers/string/ucfirst.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
+ * For GPL see LICENSE-GPL.txt in the project root for license information.
+ * For MIT see LICENSE-MIT.txt in the project root for license information.
+ * For commercial licenses see https://xdsoft.net/jodit/commercial/
+ * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+const ucfirst = (value) => {
+    if (!value.length) {
+        return '';
+    }
+    return value[0].toUpperCase() + value.substr(1);
+};
+
+// CONCATENATED MODULE: ./src/modules/helpers/defaultLanguage.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
+ * For GPL see LICENSE-GPL.txt in the project root for license information.
+ * For MIT see LICENSE-MIT.txt in the project root for license information.
+ * For commercial licenses see https://xdsoft.net/jodit/commercial/
+ * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+const defaultLanguage_defaultLanguage = (language, defaultLanguage = 'en') => {
+    if (language !== 'auto' && typeof language === 'string') {
+        return language;
+    }
+    if (document.documentElement && document.documentElement.lang) {
+        return document.documentElement.lang;
+    }
+    if (navigator.language) {
+        return navigator.language.substr(0, 2);
+    }
+    return defaultLanguage;
+};
+
+// CONCATENATED MODULE: ./src/modules/helpers/string/i18n.ts
+
+
+
+const sprintf = (str, args) => {
+    if (!args || !args.length) {
+        return str;
+    }
+    const reg = /%([sd])/g;
+    let fnd = reg.exec(str);
+    let res = str, i = 0;
+    while (fnd && args[i] !== undefined) {
+        res = res.replace(fnd[0], args[i].toString());
+        i += 1;
+        fnd = reg.exec(str);
+    }
+    return res;
+};
+const i18n_i18n = (key, params, options, safe = "production" === 'production') => {
+    var _a, _b;
+    const debug = Boolean(options !== undefined && options.debugLanguage);
+    let store;
+    const parse = (value) => (params && params.length) ? sprintf(value, params) : value, defaultLanguage = defaultLanguage_defaultLanguage(Config_Config.defaultOptions.language, Config_Config.defaultOptions.language), language = defaultLanguage_defaultLanguage((_a = options) === null || _a === void 0 ? void 0 : _a.language, defaultLanguage), tryGet = (store) => {
+        if (!store) {
+            return;
+        }
+        if (isString(store[key])) {
+            return parse(store[key]);
+        }
+        const lcKey = key.toLowerCase();
+        if (isString(store[lcKey])) {
+            return parse(store[lcKey]);
+        }
+        const ucfKey = ucfirst(key);
+        if (isString(store[ucfKey])) {
+            return parse(store[ucfKey]);
+        }
+        return;
+    };
+    if (Jodit_Jodit.lang[language] !== undefined) {
+        store = Jodit_Jodit.lang[language];
+    }
+    else {
+        if (Jodit_Jodit.lang[defaultLanguage] !== undefined) {
+            store = Jodit_Jodit.lang[defaultLanguage];
+        }
+        else {
+            store = Jodit_Jodit.lang.en;
+        }
+    }
+    const i18nOvr = (_b = options) === null || _b === void 0 ? void 0 : _b.i18n;
+    if (i18nOvr && i18nOvr[language]) {
+        const result = tryGet(i18nOvr[language]);
+        if (result) {
+            return result;
+        }
+    }
+    const result = tryGet(store);
+    if (result) {
+        return result;
+    }
+    if (Jodit_Jodit.lang.en && typeof Jodit_Jodit.lang.en[key] === 'string' && Jodit_Jodit.lang.en[key]) {
+        return parse(Jodit_Jodit.lang.en[key]);
+    }
+    if (debug) {
+        return '{' + key + '}';
+    }
+    if (!safe && language !== 'en') {
+        throw new TypeError(`i18n need "${key}" in "${language}"`);
+    }
+    return parse(key);
+};
+
+
 // CONCATENATED MODULE: ./src/modules/helpers/string/index.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -1738,6 +1884,8 @@ const trim = (value) => {
  * For commercial licenses see https://xdsoft.net/jodit/commercial/
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
+
 
 
 
@@ -2374,7 +2522,7 @@ const css_css = (element, key, value, onlyStyleMode = false) => {
                 _value = parseInt(_value.toString(), 10) + 'px';
             }
             if (_value !== undefined &&
-                css_css(elm, _key, void 0, true) !== normilizeCSSValue(_key, _value)) {
+                css_css(elm, _key, undefined, true) !== normilizeCSSValue(_key, _value)) {
                 elm.style[_key] = _value;
             }
         };
@@ -2391,16 +2539,28 @@ const css_css = (element, key, value, onlyStyleMode = false) => {
     }
     const key2 = fromCamelCase(key), doc = element.ownerDocument || document, win = doc ? doc.defaultView || doc.parentWindow : false;
     const currentValue = element.style[key];
-    let result = currentValue !== undefined && currentValue !== ''
-        ? currentValue
-        : win && !onlyStyleMode
-            ? win.getComputedStyle(element).getPropertyValue(key2)
-            : '';
+    let result = '';
+    if (currentValue !== undefined && currentValue !== '') {
+        result = currentValue;
+    }
+    else if (win && !onlyStyleMode) {
+        result = win.getComputedStyle(element).getPropertyValue(key2);
+    }
     if (numberFieldsReg.test(key) &&
         /^[\-+]?[0-9.]+px$/.test(result.toString())) {
         result = parseInt(result.toString(), 10);
     }
     return normilizeCSSValue(key, result);
+};
+const clearCenterAlign = (image) => {
+    if (css_css(image, 'display') === 'block') {
+        css_css(image, 'display', '');
+    }
+    if (image.style.marginLeft === 'auto' &&
+        image.style.marginRight === 'auto') {
+        image.style.marginLeft = '';
+        image.style.marginRight = '';
+    }
 };
 
 // CONCATENATED MODULE: ./src/modules/helpers/ctrlKey.ts
@@ -2450,24 +2610,6 @@ const dataBind = (elm, key, value) => {
     }
     store[key] = value;
 };
-
-// CONCATENATED MODULE: ./src/modules/helpers/defaultLanguage.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
- * For GPL see LICENSE-GPL.txt in the project root for license information.
- * For MIT see LICENSE-MIT.txt in the project root for license information.
- * For commercial licenses see https://xdsoft.net/jodit/commercial/
- * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-const defaultLanguage = (language) => language === 'auto' || language === undefined
-    ? (document.documentElement && document.documentElement.lang) ||
-        (navigator.language && navigator.language.substr(0, 2)) ||
-        (navigator.browserLanguage
-            ? navigator.browserLanguage.substr(0, 2)
-            : false) ||
-        'en'
-    : language;
 
 // CONCATENATED MODULE: ./src/modules/helpers/each.ts
 /*!
@@ -3212,11 +3354,12 @@ var Widget_Widget;
                 `<input type="file" accept="${isImage ? 'image/*' : '*'}" tabindex="-1" dir="auto" multiple=""/>` +
                 '</div>');
             editor.getInstance('Uploader').bind(dragbox, (resp) => {
-                let handler = editor.options.uploader.defaultHandlerSuccess || callbacks.upload;
+                let handler = isFunction(callbacks.upload) ? callbacks.upload : editor.options.uploader.defaultHandlerSuccess;
                 if (typeof handler === 'function') {
                     handler.call(editor, {
                         baseurl: resp.baseurl,
-                        files: resp.files
+                        files: resp.files,
+                        isImages: resp.isImages,
                     });
                 }
             }, (error) => {
@@ -3242,17 +3385,15 @@ var Widget_Widget;
             }
         }
         if (callbacks.url) {
-            const form = editor.create.fromHTML('<form onsubmit="return false;" class="jodit_form">' +
-                '<input type="text" required name="url" placeholder="http://"/>' +
-                '<input type="text" name="text" placeholder="' +
-                editor.i18n('Alternative text') +
-                '"/>' +
-                '<div style="text-align: right">' +
-                '<button>' +
-                editor.i18n('Insert') +
-                '</button>' +
-                '</div>' +
-                '</form>'), button = form.querySelector('button'), url = form.querySelector('input[name=url]');
+            const form = editor.create.fromHTML(`<form onsubmit="return false;" class="jodit_form">
+						<div class="jodit_form_group">
+							<input class="jodit_input" type="text" required name="url" placeholder="http://"/>
+						</div>
+						<div class="jodit_form_group">
+							<input class="jodit_input" type="text" name="text" placeholder="${editor.i18n('Alternative text')}"/>
+						</div>
+						<div style="text-align: right"><button class="jodit_button">${editor.i18n('Insert')}</button></div>
+					</form>`), button = form.querySelector('button'), url = form.querySelector('input[name=url]');
             currentImage = null;
             if (elm &&
                 elm.nodeType !== Node.TEXT_NODE &&
@@ -3378,7 +3519,7 @@ class Config_Config {
         this.direction = '';
         this.language = 'auto';
         this.debugLanguage = false;
-        this.i18n = 'en';
+        this.i18n = false;
         this.tabIndex = -1;
         this.toolbar = true;
         this.showTooltip = true;
@@ -3646,7 +3787,7 @@ Config_Config.prototype.controls = {
                 }
                 else {
                     mywindow.document.write('<!doctype html><html lang="' +
-                        defaultLanguage(editor.options.language) +
+                        defaultLanguage_defaultLanguage(editor.options.language) +
                         '"><head><title></title></head>' +
                         '<body>' +
                         editor.value +
@@ -3719,14 +3860,7 @@ Config_Config.prototype.controls = {
                     }
                     close();
                 },
-                upload: async (data) => {
-                    if (data.files && data.files.length) {
-                        for (let i = 0; i < data.files.length; i += 1) {
-                            await editor.selection.insertImage(data.baseurl + data.files[i], null, editor.options.imageDefaultWidth);
-                        }
-                    }
-                    close();
-                },
+                upload: true,
                 url: async (url, text) => {
                     const image = sourceImage || editor.create.inside.element('img');
                     image.setAttribute('src', url);
@@ -3771,15 +3905,7 @@ Config_Config.prototype.controls = {
                     }
                     close();
                 },
-                upload: (data) => {
-                    let i;
-                    if (data.files && data.files.length) {
-                        for (i = 0; i < data.files.length; i += 1) {
-                            insert(data.baseurl + data.files[i]);
-                        }
-                    }
-                    close();
-                },
+                upload: true,
                 url: (url, text) => {
                     if (sourceAnchor) {
                         sourceAnchor.setAttribute('href', url);
@@ -3798,12 +3924,16 @@ Config_Config.prototype.controls = {
     video: {
         popup: (editor, current, control, close) => {
             const bylink = editor.create.fromHTML(`<form class="jodit_form">
-												<input required name="code" placeholder="http://" type="url"/>
-												<button type="submit">${editor.i18n('Insert')}</button>
-												</form>`), bycode = editor.create.fromHTML(`<form class="jodit_form">
-												<textarea required name="code" placeholder="${editor.i18n('Embed code')}"></textarea>
-												<button type="submit">${editor.i18n('Insert')}</button>
-												</form>`), tab = {}, selinfo = editor.selection.save(), insertCode = (code) => {
+					<div class="jodit jodit_form_group">
+						<input class="jodit_input" required name="code" placeholder="http://" type="url"/>
+						<button class="jodit_button" type="submit">${editor.i18n('Insert')}</button>
+					</div>
+				</form>`), bycode = editor.create.fromHTML(`<form class="jodit_form">
+									<div class="jodit_form_group">
+										<textarea class="jodit_textarea" required name="code" placeholder="${editor.i18n('Embed code')}"></textarea>
+										<button class="jodit_button" type="submit">${editor.i18n('Insert')}</button>
+									</div>
+								</form>`), tab = {}, selinfo = editor.selection.save(), insertCode = (code) => {
                 editor.selection.restore(selinfo);
                 editor.selection.insertHTML(code);
                 close();
@@ -4212,6 +4342,7 @@ class Selection_Select {
             elm.nodeName === 'SPAN' &&
             elm.hasAttribute('data-' + MARKER_CLASS);
         this.focus = () => {
+            var _a, _b;
             if (!this.isFocused()) {
                 if (this.jodit.iframe) {
                     if (this.doc.readyState == 'complete') {
@@ -4226,6 +4357,9 @@ class Selection_Select {
                     range.collapse(true);
                     sel.removeAllRanges();
                     sel.addRange(range);
+                }
+                if (!this.jodit.editorIsActive) {
+                    (_b = (_a = this.jodit) === null || _a === void 0 ? void 0 : _a.events) === null || _b === void 0 ? void 0 : _b.fire('focus');
                 }
                 return true;
             }
@@ -4979,10 +5113,13 @@ class StatusBar_StatusBar extends Component_Component {
         this.hide();
     }
     hide() {
-        this.container && (this.container.style.display = 'none');
+        this.container && this.container.classList.add('jodit_hidden');
     }
     show() {
-        this.container && (this.container.style.display = 'block');
+        this.container && this.container.classList.remove('jodit_hidden');
+    }
+    getHeight() {
+        return this.container.offsetHeight;
     }
     append(child, inTheRight = false) {
         const wrapper = this.jodit.create.div('jodit_statusbar_item');
@@ -5701,10 +5838,11 @@ class panel_Panel extends Component_Component {
 
 
 
+
 class view_View extends panel_Panel {
     constructor(jodit, options) {
         super(jodit);
-        this.version = "3.2.65";
+        this.version = "3.3.1";
         this.__modulesInstances = {};
         this.buffer = storage_Storage.makeStorage();
         this.progress_bar = this.create.div('jodit_progress_bar', this.create.div());
@@ -5735,9 +5873,8 @@ class view_View extends panel_Panel {
         return 100;
     }
     i18n(text, ...params) {
-        return this.jodit && this.jodit !== this
-            ? this.jodit.i18n(text, ...params)
-            : Jodit_Jodit.prototype.i18n(text, ...params);
+        var _a, _b, _c;
+        return i18n_i18n(text, params, ((_b = (_a = this) === null || _a === void 0 ? void 0 : _a.jodit) === null || _b === void 0 ? void 0 : _b.options) || ((_c = this) === null || _c === void 0 ? void 0 : _c.options));
     }
     toggleFullSize(isFullSize) {
         super.toggleFullSize(isFullSize);
@@ -5891,7 +6028,8 @@ class popup_Popup extends Component_Component {
             .on(this.container, 'mousedown touchstart touchend', (e) => {
             e.stopPropagation();
         })
-            .on([this.jodit.ownerWindow, this.jodit.events], 'resize', this.throttleCalcPosition);
+            .on([this.jodit.ownerWindow, this.jodit.events], 'resize', this.throttleCalcPosition)
+            .on('afterInsertNode, afterInsertImage', this.close);
     }
     calcPosition() {
         if (!this.isOpened || this.isDestructed) {
@@ -5948,9 +6086,9 @@ class popup_Popup extends Component_Component {
     }
     doClose() {
     }
-    open(content, rightAlign, noStandartActions = false) {
+    open(content, rightAlign, noStandardActions = false) {
         Jodit_Jodit.fireEach('beforeOpenPopup closeAllPopups', this, content);
-        noStandartActions || this.jodit.events.on('closeAllPopups', this.close);
+        noStandardActions || this.jodit.events.on('closeAllPopups', this.close);
         this.container.classList.add(this.className + '-open');
         this.doOpen(content);
         this.target.appendChild(this.container);
@@ -5960,11 +6098,11 @@ class popup_Popup extends Component_Component {
         if (rightAlign !== undefined) {
             this.container.classList.toggle('jodit_right', rightAlign);
         }
-        if (!noStandartActions && this.container.parentNode) {
+        if (!noStandardActions && this.container.parentNode) {
             this.jodit.events.fire(this.container.parentNode, 'afterOpenPopup', this.container);
         }
         this.isOpened = true;
-        !noStandartActions && this.calcPosition();
+        !noStandardActions && this.calcPosition();
     }
     firstInFocus() { }
     destruct() {
@@ -6161,7 +6299,7 @@ class button_ToolbarButton extends element_ToolbarElement {
                 control.exec(this.jodit, getTarget(), control, originalEvent, this.container);
                 this.jodit.events.fire('synchro');
                 if (this.parentToolbar) {
-                    this.parentToolbar.immedateCheckActiveButtons();
+                    this.parentToolbar.immediateCheckActiveButtons();
                 }
                 this.jodit.events.fire('closeAllPopups afterExec');
             }
@@ -6322,6 +6460,7 @@ class separator_ToolbarSeparator extends element_ToolbarElement {
 
 
 
+
 class collection_ToolbarCollection extends Component_Component {
     constructor(jodit) {
         super(jodit);
@@ -6369,11 +6508,11 @@ class collection_ToolbarCollection extends Component_Component {
             this.jodit.events
                 .on(this.jodit.ownerWindow, 'mousedown touchend', this.closeAll)
                 .on(this.listenEvents, this.checkActiveButtons)
-                .on('afterSetMode focus', this.immedateCheckActiveButtons);
+                .on('afterSetMode focus', this.immediateCheckActiveButtons);
         };
         this.listenEvents = 'changeStack mousedown mouseup keydown change afterInit readonly afterResize ' +
-            'selectionchange changeSelection focus afterSetMode touchstart';
-        this.immedateCheckActiveButtons = () => {
+            'selectionchange changeSelection focus afterSetMode touchstart focus blur';
+        this.immediateCheckActiveButtons = () => {
             if (this.isDestructed || this.jodit.isLocked()) {
                 return;
             }
@@ -6388,7 +6527,7 @@ class collection_ToolbarCollection extends Component_Component {
             });
             this.jodit.events && this.jodit.events.fire('updateToolbar');
         };
-        this.checkActiveButtons = debounce(this.immedateCheckActiveButtons, this.jodit.defaultTimeout);
+        this.checkActiveButtons = debounce(this.immediateCheckActiveButtons, this.jodit.defaultTimeout);
         this.container = this.jodit.create.element('ul');
         this.container.classList.add('jodit_toolbar');
         this.initEvents();
@@ -6397,6 +6536,9 @@ class collection_ToolbarCollection extends Component_Component {
         return this.__buttons
             .map((a) => a instanceof button_ToolbarButton ? a.control.name : '')
             .filter(a => a !== '');
+    }
+    getParentContainer() {
+        return this.__parentContainer;
     }
     appendChild(button) {
         this.__buttons.push(button);
@@ -6414,7 +6556,8 @@ class collection_ToolbarCollection extends Component_Component {
             }
         }
     }
-    build(buttons, container, target) {
+    build(buttons, parentContainer, target) {
+        this.__parentContainer = parentContainer;
         let lastBtnSeparator = false;
         this.clear();
         const buttonsList = typeof buttons === 'string' ? buttons.split(/[,\s]+/) : buttons;
@@ -6443,10 +6586,10 @@ class collection_ToolbarCollection extends Component_Component {
                 this.appendChild(button);
             }
         });
-        if (this.container.parentNode !== container) {
-            container.appendChild(this.container);
+        if (this.container.parentNode !== parentContainer) {
+            parentContainer.appendChild(this.container);
         }
-        this.immedateCheckActiveButtons();
+        this.immediateCheckActiveButtons();
     }
     clear() {
         [...this.__buttons].forEach((button) => {
@@ -6456,6 +6599,9 @@ class collection_ToolbarCollection extends Component_Component {
         this.__buttons.length = 0;
     }
     buttonIsActive(button) {
+        if (isJoditObject(this.jodit) && !this.jodit.editorIsActive) {
+            return false;
+        }
         if (typeof button.control.isActive === 'function') {
             return button.control.isActive(this.jodit, button.control, button);
         }
@@ -6489,7 +6635,7 @@ class collection_ToolbarCollection extends Component_Component {
         this.jodit.events
             .off(this.jodit.ownerWindow, 'mousedown touchstart', this.closeAll)
             .off(this.listenEvents, this.checkActiveButtons)
-            .off('afterSetMode focus', this.immedateCheckActiveButtons);
+            .off('afterSetMode focus', this.immediateCheckActiveButtons);
         this.clear();
         Dom_Dom.safeRemove(this.container);
         delete this.container;
@@ -6623,22 +6769,6 @@ class viewWithToolbar_ViewWithToolbar extends view_View {
 }
 
 
-// CONCATENATED MODULE: ./src/modules/helpers/string/ucfirst.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
- * For GPL see LICENSE-GPL.txt in the project root for license information.
- * For MIT see LICENSE-MIT.txt in the project root for license information.
- * For commercial licenses see https://xdsoft.net/jodit/commercial/
- * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-const ucfirst = (value) => {
-    if (!value.length) {
-        return '';
-    }
-    return value[0].toUpperCase() + value.substr(1);
-};
-
 // CONCATENATED MODULE: ./src/Jodit.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -6648,7 +6778,6 @@ const ucfirst = (value) => {
  * For commercial licenses see https://xdsoft.net/jodit/commercial/
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-
 
 
 
@@ -6670,91 +6799,18 @@ class Jodit_Jodit extends viewWithToolbar_ViewWithToolbar {
         this.__selectionLocked = null;
         this.__wasReadOnly = false;
         this.storage = storage_Storage.makeStorage(true, this.id);
+        this.editorIsActive = false;
         this.iframe = null;
         this.__plugins = {};
         this.mode = MODE_WYSIWYG;
         this.__callChangeCount = 0;
-        this.i18n = (key, ...params) => {
-            const debug = this.options !== undefined && this.options.debugLanguage;
-            let store;
-            const sprintf = (str, args) => {
-                if (!args || !args.length) {
-                    return str;
-                }
-                const reg = /%([sd])/g;
-                let fnd = reg.exec(str);
-                let res = str, i = 0;
-                while (fnd && args[i] !== undefined) {
-                    res = res.replace(fnd[0], args[i].toString());
-                    i += 1;
-                    fnd = reg.exec(str);
-                }
-                return res;
-            };
-            const parse = (value) => params.length ? sprintf(value, params) : value, default_language = Config_Config.defaultOptions.language === 'auto'
-                ? defaultLanguage(Config_Config.defaultOptions.language)
-                : Config_Config.defaultOptions.language, language = defaultLanguage(this.options ? this.options.language : default_language);
-            if (this.options !== undefined && Jodit_Jodit.lang[language] !== undefined) {
-                store = Jodit_Jodit.lang[language];
-            }
-            else {
-                if (Jodit_Jodit.lang[default_language] !== undefined) {
-                    store = Jodit_Jodit.lang[default_language];
-                }
-                else {
-                    store = Jodit_Jodit.lang.en;
-                }
-            }
-            if (this.options !== undefined &&
-                this.options.i18n[language] !== undefined &&
-                this.options.i18n[language][key]) {
-                return parse(this.options.i18n[language][key]);
-            }
-            if (store && typeof store[key] === 'string' && store[key]) {
-                return parse(store[key]);
-            }
-            const lckey = key.toLowerCase();
-            if (store && typeof store[lckey] === 'string' && store[lckey]) {
-                return parse(store[lckey]);
-            }
-            const ucfkey = ucfirst(key);
-            if (store && typeof store[ucfkey] === 'string' && store[ucfkey]) {
-                return parse(store[ucfkey]);
-            }
-            if (debug) {
-                return '{' + key + '}';
-            }
-            if (typeof Jodit_Jodit.lang.en[key] === 'string' && Jodit_Jodit.lang.en[key]) {
-                return parse(Jodit_Jodit.lang.en[key]);
-            }
-            if (false) {}
-            return parse(key);
-        };
         this.isInited = false;
         this.options = new OptionsDefault(options);
         this.editorDocument = this.options.ownerDocument;
         this.editorWindow = this.options.ownerWindow;
         this.ownerDocument = this.options.ownerDocument;
         this.ownerWindow = this.options.ownerWindow;
-        if (typeof element === 'string') {
-            try {
-                this.element = this.ownerDocument.querySelector(element);
-            }
-            catch (_a) {
-                throw new Error('String "' + element + '" should be valid HTML selector');
-            }
-        }
-        else {
-            this.element = element;
-        }
-        if (!this.element ||
-            typeof this.element !== 'object' ||
-            this.element.nodeType !== Node.ELEMENT_NODE ||
-            !this.element.cloneNode) {
-            throw new Error('Element "' +
-                element +
-                '" should be string or HTMLElement instance');
-        }
+        this.element = this.resolveElement(element);
         if (this.element.attributes) {
             Array.from(this.element.attributes).forEach((attr) => {
                 const name = attr.name;
@@ -6802,21 +6858,11 @@ class Jodit_Jodit extends viewWithToolbar_ViewWithToolbar {
             }
             this.element.style.display = 'none';
         }
-        this.container.classList.add('jodit_' + (this.options.theme || 'default') + '_theme');
-        if (this.options.zIndex) {
-            this.container.style.zIndex = parseInt(this.options.zIndex.toString(), 10).toString();
-        }
+        this.applyOptionsToToolbarContainer(this.container);
         this.workplace = this.create.div('jodit_workplace', {
             contenteditable: false
         });
-        if (this.options.toolbar) {
-            this.toolbar.build(splitArray(this.options.buttons).concat(this.options.extraButtons), this.container);
-        }
-        const bs = this.options.toolbarButtonSize.toLowerCase();
-        this.container.classList.add('jodit_toolbar_size-' +
-            (['middle', 'large', 'small'].indexOf(bs) !== -1
-                ? bs
-                : 'middle'));
+        this.makeToolbar();
         if (this.options.textIcons) {
             this.container.classList.add('jodit_text_icons');
         }
@@ -6894,6 +6940,9 @@ class Jodit_Jodit extends viewWithToolbar_ViewWithToolbar {
                 editor.events.fire(events, ...args);
             }
         });
+    }
+    static make(element, options) {
+        return new Jodit_Jodit(element, options);
     }
     get uploader() {
         return this.getInstance('Uploader');
@@ -7185,6 +7234,49 @@ class Jodit_Jodit extends viewWithToolbar_ViewWithToolbar {
     }
     afterInitHook() {
     }
+    resolveElement(element) {
+        let resolved = element;
+        if (typeof element === 'string') {
+            try {
+                resolved = this.ownerDocument.querySelector(element);
+            }
+            catch (_a) {
+                throw new Error('String "' + element + '" should be valid HTML selector');
+            }
+        }
+        if (!resolved ||
+            typeof resolved !== 'object' ||
+            resolved.nodeType !== Node.ELEMENT_NODE ||
+            !resolved.cloneNode) {
+            throw new Error('Element "' +
+                element +
+                '" should be string or HTMLElement instance');
+        }
+        return resolved;
+    }
+    makeToolbar() {
+        if (!this.options.toolbar) {
+            return;
+        }
+        let toolbarContainer = this.create.div('jodit_toolbar_container');
+        this.container.appendChild(toolbarContainer);
+        if (this.options.toolbar instanceof HTMLElement || typeof this.options.toolbar === 'string') {
+            toolbarContainer = this.resolveElement(this.options.toolbar);
+        }
+        this.applyOptionsToToolbarContainer(toolbarContainer);
+        this.toolbar.build(splitArray(this.options.buttons).concat(this.options.extraButtons), toolbarContainer);
+        const bs = this.options.toolbarButtonSize.toLowerCase();
+        toolbarContainer.classList.add('jodit_toolbar_size-' +
+            (['middle', 'large', 'small'].indexOf(bs) !== -1
+                ? bs
+                : 'middle'));
+    }
+    applyOptionsToToolbarContainer(element) {
+        element.classList.add('jodit_' + (this.options.theme || 'default') + '_theme');
+        if (this.options.zIndex) {
+            element.style.zIndex = parseInt(this.options.zIndex.toString(), 10).toString();
+        }
+    }
     __initPlugines() {
         const dp = this.options.disablePlugins;
         const disable = Array.isArray(dp)
@@ -7254,6 +7346,8 @@ class Jodit_Jodit extends viewWithToolbar_ViewWithToolbar {
             .on('synchro', () => {
             this.setEditorValue();
         })
+            .on('focus', () => this.editorIsActive = true)
+            .on('blur', () => this.editorIsActive = false)
             .on(this.editor, 'selectionchange selectionstart keydown keyup keypress mousedown mouseup mousepress ' +
             'click copy cut dragstart drop dragover paste resize touchstart touchend focus blur', (event) => {
             if (this.options.readonly) {
@@ -7747,6 +7841,7 @@ Config_Config.prototype.controls.dialog = {
                     'function') {
                 return Config_Config.prototype.controls.fullsize.getLabel(editor, btn, button);
             }
+            return;
         },
         exec: dialog => {
             dialog.toggleFullSize();
@@ -8566,7 +8661,7 @@ Config_Config.prototype.controls.filebrowser = {
     sort: {
         isInput: true,
         getContent: (fb) => {
-            const select = fb.create.fromHTML('<select class="jodit_input">' +
+            const select = fb.create.fromHTML('<select class="jodit_input jodit_select">' +
                 `<option value="changed-asc">${fb.i18n('Sort by changed')} (⬆)</option>` +
                 `<option value="changed-desc">${fb.i18n('Sort by changed')} (⬇)</option>` +
                 `<option value="name-asc">${fb.i18n('Sort by name')} (⬆)</option>` +
@@ -9753,7 +9848,7 @@ Config_Config.prototype.imageeditor = {
     cropDefaultHeight: '70%'
 };
 const jie = 'jodit_image_editor';
-const gi = ToolbarIcon.getIcon;
+const ImageEditor_gi = ToolbarIcon.getIcon;
 class ImageEditor_ImageEditor extends Component_Component {
     constructor(editor) {
         super(editor);
@@ -9957,7 +10052,7 @@ class ImageEditor_ImageEditor extends Component_Component {
                     e.stopImmediatePropagation();
                 }
             });
-            $$('.jodit_btn_group', self.editor).forEach(group => {
+            $$('.jodit_button_group', self.editor).forEach(group => {
                 const input = group.querySelector('input');
                 self.jodit.events.on(group, 'click change', function () {
                     input.checked = !input.checked;
@@ -10178,18 +10273,18 @@ class ImageEditor_ImageEditor extends Component_Component {
         const r = this.resizeUseRatio;
         const c = this.cropUseRatio;
         this.buttons = [
-            this.jodit.create.fromHTML('<button data-action="reset" type="button" class="jodit_btn">' +
-                gi('update') +
+            this.jodit.create.fromHTML('<button data-action="reset" type="button" class="jodit_button">' +
+                ImageEditor_gi('update') +
                 '&nbsp;' +
                 i('Reset') +
                 '</button>'),
-            this.jodit.create.fromHTML('<button data-action="save" type="button" class="jodit_btn jodit_btn_success">' +
-                gi('save') +
+            this.jodit.create.fromHTML('<button data-action="save" type="button" class="jodit_button jodit_button_success">' +
+                ImageEditor_gi('save') +
                 '&nbsp;' +
                 i('Save') +
                 '</button>'),
-            this.jodit.create.fromHTML('<button data-action="saveas" type="button" class="jodit_btn jodit_btn_success">' +
-                gi('save') +
+            this.jodit.create.fromHTML('<button data-action="saveas" type="button" class="jodit_button jodit_button_success">' +
+                ImageEditor_gi('save') +
                 '&nbsp;' +
                 i('Save as ...') +
                 '</button>')
@@ -10198,12 +10293,12 @@ class ImageEditor_ImageEditor extends Component_Component {
         const act = (el, className = 'active') => el ? className : '';
         const switcher = (label, className, active = true) => `<div class="jodit_form_group">
 			<label>${i(label)}</label>
-			<div class="jodit_btn_group jodit_btn_radio_group">
-				<input ${act(active, 'checked')} type="checkbox" class="${jie}_${className}"/>
+			<div class="jodit_button_group jodit_button_radio_group">
+				<input ${act(active, 'checked')} type="checkbox" class="${jie}_${className} jodit_input"/>
 
-				<button type="button" data-yes="1" class="jodit_btn jodit_btn_success">${i('Yes')}</button>
+				<button type="button" data-yes="1" class="jodit_button jodit_status_success">${i('Yes')}</button>
 
-				<button type="button" class="jodit_btn">${i('No')}</button>
+				<button type="button" class="jodit_button jodit_status_danger">${i('No')}</button>
 			</div>
 		</div>`;
         this.editor = this.jodit.create.fromHTML(`<form class="${jie} jodit_properties">
@@ -10232,7 +10327,7 @@ class ImageEditor_ImageEditor extends Component_Component {
 								${o.resize
             ? `<div data-area="resize" class="${jie}_slider active">
 												<div class="${jie}_slider-title">
-													${gi('resize')}
+													${ImageEditor_gi('resize')}
 													${i('Resize')}
 												</div>
 												<div class="${jie}_slider-content">
@@ -10240,13 +10335,13 @@ class ImageEditor_ImageEditor extends Component_Component {
 														<label for="${jie}_width">
 															${i('Width')}
 														</label>
-														<input type="number" class="${jie}_width"/>
+														<input type="number" class="${jie}_width jodit_input"/>
 													</div>
 													<div class="jodit_form_group">
 														<label for="${jie}_height">
 															${i('Height')}
 														</label>
-														<input type="number" class="${jie}_height"/>
+														<input type="number" class="${jie}_height jodit_input"/>
 													</div>
 													${switcher('Keep Aspect Ratio', 'keep_spect_ratio', r)}
 												</div>
@@ -10255,7 +10350,7 @@ class ImageEditor_ImageEditor extends Component_Component {
 								${o.crop
             ? `<div data-area="crop" class="${jie}_slider ${act(!o.resize)}'">
 												<div class="${jie}_slider-title">
-													${gi('crop')}
+													${ImageEditor_gi('crop')}
 													${i('Crop')}
 												</div>
 												<div class="${jie}_slider-content">
@@ -12236,8 +12331,8 @@ Config_Config.prototype.controls.paste = {
             try {
                 const items = await navigator.clipboard.read();
                 if (items && items.length) {
-                    const textBlob = await items[0].getType("text/plain");
-                    text = await (new Response(textBlob)).text();
+                    const textBlob = await items[0].getType('text/plain');
+                    text = await new Response(textBlob).text();
                 }
             }
             catch (_a) { }
@@ -12274,22 +12369,22 @@ function paste(editor) {
         }
         const dialog = Confirm(`<div style="word-break: normal; white-space: normal">${msg}</div>`, title, callback);
         dialog.container.setAttribute('data-editor_id', editor.id);
-        const keep = dialog.create.fromHTML('<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
+        const keep = dialog.create.fromHTML('<a href="javascript:void(0)" class="jodit_button jodit_button_primary">' +
             '<span>' +
             editor.i18n('Keep') +
             '</span>' +
             '</a>');
-        const clear = dialog.create.fromHTML('<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
+        const clear = dialog.create.fromHTML('<a href="javascript:void(0)" class="jodit_button">' +
             '<span>' +
             editor.i18n(clearButton) +
             '</span>' +
             '</a>');
-        const clear2 = dialog.create.fromHTML('<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
+        const clear2 = dialog.create.fromHTML('<a href="javascript:void(0)" class="jodit_button">' +
             '<span>' +
             editor.i18n(clear2Button) +
             '</span>' +
             '</a>');
-        const cancel = dialog.create.fromHTML('<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
+        const cancel = dialog.create.fromHTML('<a href="javascript:void(0)" class="jodit_button">' +
             '<span>' +
             editor.i18n('Cancel') +
             '</span>' +
@@ -13771,23 +13866,30 @@ function fullsize(editor) {
                 });
             }
         }
-    }, toggle = (condition) => {
+    }, toggle = (enable) => {
+        var _a, _b;
         if (!editor.container) {
             return;
         }
-        if (condition === undefined) {
-            condition = !editor.container.classList.contains('jodit_fullsize');
+        if (enable === undefined) {
+            enable = !editor.container.classList.contains('jodit_fullsize');
         }
-        editor.options.fullsize = !!condition;
-        shown = condition;
-        editor.container.classList.toggle('jodit_fullsize', condition);
+        editor.options.fullsize = enable;
+        shown = enable;
+        editor.container.classList.toggle('jodit_fullsize', enable);
         if (editor.toolbar) {
+            if (!enable) {
+                (_a = editor.toolbar.getParentContainer()) === null || _a === void 0 ? void 0 : _a.appendChild(editor.toolbar.container);
+            }
+            else {
+                (_b = editor.container.querySelector('.jodit_toolbar_container')) === null || _b === void 0 ? void 0 : _b.appendChild(editor.toolbar.container);
+            }
             css_css(editor.toolbar.container, 'width', 'auto');
         }
         if (editor.options.globalFullsize) {
             let node = editor.container.parentNode;
             while (node && node.nodeType !== Node.DOCUMENT_NODE) {
-                node.classList.toggle('jodit_fullsize_box', condition);
+                node.classList.toggle('jodit_fullsize_box', enable);
                 node = node.parentNode;
             }
             resize();
@@ -13799,7 +13901,8 @@ function fullsize(editor) {
     }
     editor.events
         .on('afterInit afterOpen', () => {
-        editor.toggleFullSize(editor.options.fullsize);
+        var _a, _b;
+        editor.toggleFullSize((_b = (_a = editor) === null || _a === void 0 ? void 0 : _a.options) === null || _b === void 0 ? void 0 : _b.fullsize);
     })
         .on('toggleFullSize', toggle)
         .on('beforeDestruct beforeClose', () => {
@@ -14042,7 +14145,7 @@ function iframe_iframe(editor) {
             jodit.options.direction +
             '" class="jodit" ' +
             'lang="' +
-            defaultLanguage(jodit.options.language) +
+            defaultLanguage_defaultLanguage(jodit.options.language) +
             '">' +
             '<head>' +
             '<title>Jodit Editor</title>' +
@@ -14199,188 +14302,108 @@ Config_Config.prototype.image = {
     selectImageAfterClose: true
 };
 function imageProperties(editor) {
+    const i18n = editor.i18n, gi = ToolbarIcon.getIcon, opt = editor.options, dom = editor.create.fromHTML.bind(editor.create);
     const open = function (e) {
-        if (editor.options.readonly) {
+        if (opt.readonly) {
             return;
         }
         e && e.stopImmediatePropagation();
-        const dom = editor.create.fromHTML.bind(editor.create), image = this, dialog = new dialog_Dialog(editor), cancel = dom('<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
-            ToolbarIcon.getIcon('cancel') +
-            '<span>' +
-            editor.i18n('Cancel') +
-            '</span></a>'), check = dom('<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
-            ToolbarIcon.getIcon('check') +
-            '<span>' +
-            editor.i18n('Ok') +
-            '</span></a>'), buttons = {
-            remove: dom('<a href="javascript:void(0)" class="jodit_button">' +
-                ToolbarIcon.getIcon('bin') +
-                ' ' +
-                editor.i18n('Delete') +
-                '</a>')
-        }, prop = dom('<form class="jodit_properties">' +
-            '<div class="jodit_grid">' +
-            '<div class="jodit_col-lg-2-5">' +
-            '<div class="jodit_properties_view_box">' +
-            '<div style="' +
-            (!editor.options.image.showPreview ? 'display:none' : '') +
-            '" ' +
-            'class="jodit_properties_image_view"' +
-            '>' +
-            '<img class="imageViewSrc" src="" alt=""/>' +
-            '</div>' +
-            '<div style="' +
-            (!editor.options.image.editSize ? 'display:none' : '') +
-            '" ' +
-            'class="jodit_form_group jodit_properties_image_sizes"' +
-            '>' +
-            '<input type="number" class="imageWidth"/>' +
-            '<a class="jodit_lock_helper jodit_lock_size" href="javascript:void(0)">' +
-            ToolbarIcon.getIcon('lock') +
-            '</a>' +
-            '<input type="number" class="imageHeight"/>' +
-            '</div>' +
-            '</div>' +
-            '</div>' +
-            '<div class="jodit_col-lg-3-5 tabsbox"></div>' +
-            '</div>' +
-            '</form>'), positionTab = dom('<div ' +
-            'style="' +
-            (!editor.options.image.editMargins ? 'display:none' : '') +
-            '" class="jodit_form_group">' +
-            '<label>' +
-            editor.i18n('Margins') +
-            '</label>' +
-            '<div class="jodit_grid">' +
-            '<input class="jodit_col-lg-1-5 margins marginTop" data-id="marginTop" type="text" placeholder="' +
-            editor.i18n('top') +
-            '"/>' +
-            '<a style="text-align: center;" class="jodit_lock_helper jodit_lock_margin jodit_col-lg-1-5" ' +
-            'href="javascript:void(0)">' +
-            ToolbarIcon.getIcon('lock') +
-            '</a>' +
-            '<input disabled="true" class="jodit_col-lg-1-5 margins marginRight" data-id="marginRight" ' +
-            'type="text" placeholder="' +
-            editor.i18n('right') +
-            '"/>' +
-            '<input disabled="true" class="jodit_col-lg-1-5 margins marginBottom" data-id="marginBottom" ' +
-            'type="text" placeholder="' +
-            editor.i18n('bottom') +
-            '"/>' +
-            '<input disabled="true" class="jodit_col-lg-1-5 margins marginLeft" data-id="marginLeft" ' +
-            'type="text" placeholder="' +
-            editor.i18n('left') +
-            '"/>' +
-            '</div>' +
-            '</div>' +
-            '<div style="' +
-            (!editor.options.image.editStyle ? 'display:none' : '') +
-            '" class="jodit_form_group">' +
-            '<label>' +
-            editor.i18n('Styles') +
-            '</label>' +
-            '<input type="text" class="style"/>' +
-            '</div>' +
-            '<div style="' +
-            (!editor.options.image.editClass ? 'display:none' : '') +
-            '" class="jodit_form_group">' +
-            '<label for="classes">' +
-            editor.i18n('Classes') +
-            '</label>' +
-            '<input type="text" class="classes"/>' +
-            '</div>' +
-            '<div style="' +
-            (!editor.options.image.editId ? 'display:none' : '') +
-            '" class="jodit_form_group">' +
-            '<label for="id">Id</label>' +
-            '<input type="text" class="id"/>' +
-            '</div>' +
-            '<div style="' +
-            (!editor.options.image.editBorderRadius
-                ? 'display:none'
-                : '') +
-            '" class="jodit_form_group">' +
-            '<label for="border_radius">Border radius</label>' +
-            '<input type="number" class="border_radius"/>' +
-            '</div>' +
-            '<div style="' +
-            (!editor.options.image.editAlign ? 'display:none' : '') +
-            '" class="jodit_form_group">' +
-            '<label for="align">' +
-            editor.i18n('Align') +
-            '</label>' +
-            '<select class="select align">' +
-            '<option value="">' +
-            editor.i18n('--Not Set--') +
-            '</option>' +
-            '<option value="left">' +
-            editor.i18n('Left') +
-            '</option>' +
-            '<option value="center">' +
-            editor.i18n('Center') +
-            '</option>' +
-            '<option value="right">' +
-            editor.i18n('Right') +
-            '</option>' +
-            '</optgroup>' +
-            '</select>' +
-            '</div>'), mainTab = dom('<div style="' +
-            (!editor.options.image.editSrc ? 'display:none' : '') +
-            '" class="jodit_form_group">' +
-            '<label>' +
-            editor.i18n('Src') +
-            '</label>' +
-            '<div class="jodit_input_group">' +
-            '<input type="text" class="imageSrc"/>' +
-            (editor.options.filebrowser.ajax.url ||
-                editor.options.uploader.url
-                ? '<div class="jodit_input_group-buttons">' +
-                    (editor.options.filebrowser.ajax.url ||
-                        editor.options.uploader.url
-                        ? '<a class="jodit_button jodit_rechange" href="javascript:void(0)">' +
-                            ToolbarIcon.getIcon('image') +
-                            '</a>'
-                        : '') +
-                    (editor.options.image.useImageEditor &&
-                        editor.options.filebrowser.ajax.url
-                        ? '<a class="jodit_button jodit_use_image_editor" href="javascript:void(0)">' +
-                            ToolbarIcon.getIcon('crop') +
-                            '</a>'
-                        : '') +
-                    '</div>'
-                : '') +
-            '</div>' +
-            '</div>' +
-            '<div style="' +
-            (!editor.options.image.editTitle ? 'display:none' : '') +
-            '" class="jodit_form_group">' +
-            '<label for="imageTitle">' +
-            editor.i18n('Title') +
-            '</label>' +
-            '<input type="text" class="imageTitle"/>' +
-            '</div>' +
-            '<div style="' +
-            (!editor.options.image.editAlt ? 'display:none' : '') +
-            '" class="jodit_form_group">' +
-            '<label for="imageAlt">' +
-            editor.i18n('Alternative') +
-            '</label>' +
-            '<input type="text" class="imageAlt"/>' +
-            '</div>' +
-            '<div style="' +
-            (!editor.options.image.editLink ? 'display:none' : '') +
-            '" class="jodit_form_group">' +
-            '<label for="imageLink">' +
-            editor.i18n('Link') +
-            '</label>' +
-            '<input type="text" class="imageLink"/>' +
-            '</div>' +
-            '<div style="' +
-            (!editor.options.image.editLink ? 'display:none' : '') +
-            '" class="jodit_form_group">' +
-            '<input type="checkbox" class="imageLinkOpenInNewTab"/> ' +
-            editor.i18n('Open link in new tab') +
-            '</div>'), ratio = image.naturalWidth / image.naturalHeight || 1, $w = prop.querySelector('.imageWidth'), $h = prop.querySelector('.imageHeight'), updateAlign = () => {
+        const image = this, dialog = new dialog_Dialog(editor), check = dom(`<a href="javascript:void(0)" class="jodit_button  jodit_status_success">${gi('check')}<span>${i18n('Ok')}</span></a>`), buttons = {
+            remove: dom(`<a href="javascript:void(0)" class="jodit_button">${gi('bin')}<span>${i18n('Delete')}</span></a>`)
+        }, prop = dom(`<form class="jodit_properties">
+								<div class="jodit_grid">
+									<div class="jodit_col-lg-2-5">
+										<div class="jodit_properties_view_box">
+											<div style="${!opt.image.showPreview
+            ? 'display:none'
+            : ''}" class="jodit_properties_image_view">
+												<img class="imageViewSrc" src="" alt=""/>
+											</div>
+											<div style="${!opt.image.editSize
+            ? 'display:none'
+            : ''}" class="jodit_form_group jodit_properties_image_sizes">
+												<input type="number" class="imageWidth jodit_input"/>
+												<a class="jodit_lock_helper jodit_lock_size" href="javascript:void(0)">${gi('lock')}</a>
+												<input type="number" class="imageHeight jodit_input"/>
+											</div>
+										</div>
+									</div>
+									<div class="jodit_col-lg-3-5 tabsbox"></div>
+								</div>
+							</form>`), positionTab = dom(`<div style="${!opt.image.editMargins ? 'display:none' : ''}" class="jodit_form_group">
+								<label>${i18n('Margins')}</label>
+								<div class="jodit_grid jodit_vertical_middle">
+									<input class="jodit_col-lg-1-5 margins marginTop jodit_input" data-id="marginTop" type="text" placeholder="${i18n('top')}"/>
+									<a style="text-align: center;" class="jodit_lock_helper jodit_lock_margin jodit_col-lg-1-5" href="javascript:void(0)">${gi('lock')}</a>
+									<input disabled="true" class="jodit_col-lg-1-5 margins marginRight jodit_input" data-id="marginRight" type="text" placeholder="${i18n('right')}"/>
+									<input disabled="true" class="jodit_col-lg-1-5 margins marginBottom jodit_input" data-id="marginBottom" type="text" placeholder="${i18n('bottom')}"/>
+									<input disabled="true" class="jodit_col-lg-1-5 margins marginLeft jodit_input" data-id="marginLeft" type="text" placeholder="${i18n('left')}"/>
+								</div>
+							</div>
+							<div style="${!opt.image.editStyle ? 'display:none' : ''}" class="jodit_form_group">
+								<label>${i18n('Styles')}</label>
+								<input type="text" class="style jodit_input"/>
+							</div>
+							<div style="${!opt.image.editClass ? 'display:none' : ''}" class="jodit_form_group">
+								<label for="classes">${i18n('Classes')}</label>
+								<input type="text" class="classes jodit_input"/>
+							</div>
+							<div style="${!opt.image.editId ? 'display:none' : ''}" class="jodit_form_group">
+								<label for="id">Id</label>
+								<input type="text" class="id jodit_input"/>
+							</div>
+							<div
+								style="${!opt.image.editBorderRadius ? 'display:none' : ''}"
+								class="jodit_form_group"
+							>
+								<label for="border_radius">${i18n('Border radius')}</label>
+								<input type="number" class="border_radius jodit_input"/>
+							</div>
+							<div
+								style="${!opt.image.editAlign ? 'display:none' : ''}"
+								class="jodit_form_group"
+							>
+								<label for="align">${i18n('Align')}</label>
+								<select class="select align jodit_select">
+									<option value="">${i18n('--Not Set--')}</option>
+									<option value="left">${i18n('Left')}</option>
+									<option value="center">${i18n('Center')}</option>
+									<option value="right">${i18n('Right')}</option>
+								</select>
+							</div>`), hasFbUrl = opt.filebrowser.ajax.url || opt.uploader.url, hasEditor = opt.image.useImageEditor, mainTab = dom(`<div style="${!opt.image.editSrc ? 'display:none' : ''}" class="jodit_form_group">
+								<label>${i18n('Src')}</label>
+								<div class="jodit_input_group">
+									<input class="jodit_input imageSrc" type="text"/>
+									<div
+										class="jodit_input_group-buttons"
+										style="${hasFbUrl ? '' : 'display: none'}"
+									>
+											<a class="jodit_button jodit_rechange" href="javascript:void(0)">${gi('image')}</a>
+											<a
+												class="jodit_button jodit_use_image_editor" href="javascript:void(0)"
+												style="${hasEditor ? '' : 'display: none'}"
+											>${gi('crop')}</a>
+									</div>
+								</div>
+							</div>
+							<div style="${!opt.image.editTitle ? 'display:none' : ''}" class="jodit_form_group">
+								<label for="imageTitle">${i18n('Title')}</label>
+								<input type="text" class="imageTitle jodit_input"/>
+							</div>
+							<div style="${!opt.image.editAlt ? 'display:none' : ''}" class="jodit_form_group">
+								<label for="imageAlt">${i18n('Alternative')}</label>
+								<input type="text" class="imageAlt jodit_input"/>
+							</div>
+							<div style="${!opt.image.editLink ? 'display:none' : ''}" class="jodit_form_group">
+								<label for="imageLink">${i18n('Link')}</label>
+								<input type="text" class="imageLink jodit_input"/>
+							</div>
+							<div style="${!opt.image.editLink ? 'display:none' : ''}" class="jodit_form_group">
+								<div class="jodit_vertical_middle">
+									<input type="checkbox" class="imageLinkOpenInNewTab jodit_checkbox"/>
+									${i18n('Open link in new tab')}
+								</div>
+							</div>`), ratio = image.naturalWidth / image.naturalHeight || 1, $w = prop.querySelector('.imageWidth'), $h = prop.querySelector('.imageHeight'), updateAlign = () => {
             if (image.style.cssFloat &&
                 ['left', 'right'].indexOf(image.style.cssFloat.toLowerCase()) !== -1) {
                 val_val(prop, '.align', css_css(image, 'float'));
@@ -14401,7 +14424,7 @@ function imageProperties(editor) {
         }, updateClasses = () => {
             val_val(prop, '.classes', (image.getAttribute('class') || '').replace(/jodit_focused_image[\s]*/, ''));
         }, updateMargins = () => {
-            if (!editor.options.image.editMargins) {
+            if (!opt.image.editMargins) {
                 return;
             }
             let notequal = false;
@@ -14425,7 +14448,7 @@ function imageProperties(editor) {
             lockMargin = !notequal;
             const lock_margin = prop.querySelector('.jodit_lock_margin');
             if (lock_margin) {
-                lock_margin.innerHTML = ToolbarIcon.getIcon(lockMargin ? 'lock' : 'unlock');
+                lock_margin.innerHTML = gi(lockMargin ? 'lock' : 'unlock');
             }
             $$('.margins:not(.marginTop)', prop).forEach((elm) => !lockMargin
                 ? elm.removeAttribute('disabled')
@@ -14473,8 +14496,7 @@ function imageProperties(editor) {
         update();
         editor.events.on(dialog, 'afterClose', () => {
             dialog.destruct();
-            if (image.parentNode &&
-                editor.options.image.selectImageAfterClose) {
+            if (image.parentNode && opt.image.selectImageAfterClose) {
                 editor.selection.select(image);
             }
         });
@@ -14482,15 +14504,15 @@ function imageProperties(editor) {
             Dom_Dom.safeRemove(image);
             dialog.close();
         });
-        if (editor.options.image.useImageEditor) {
+        if (opt.image.useImageEditor) {
             $$('.jodit_use_image_editor', mainTab).forEach((btn) => {
                 editor.events.on(btn, 'mousedown touchstart', () => {
                     const url = image.getAttribute('src') || '', a = editor.create.element('a'), loadExternal = () => {
                         if (a.host !== location.host) {
-                            Confirm(editor.i18n('You can only edit your own images. Download this image on the host?'), (yes) => {
+                            Confirm(i18n('You can only edit your own images. Download this image on the host?'), (yes) => {
                                 if (yes && editor.uploader) {
                                     editor.uploader.uploadRemoteImage(a.href.toString(), (resp) => {
-                                        Alert(editor.i18n('The image has been successfully uploaded to the host!'), () => {
+                                        Alert(i18n('The image has been successfully uploaded to the host!'), () => {
                                             if (typeof resp.newfilename ===
                                                 'string') {
                                                 image.setAttribute('src', resp.baseurl +
@@ -14499,7 +14521,7 @@ function imageProperties(editor) {
                                             }
                                         });
                                     }, (error) => {
-                                        Alert(editor.i18n('There was an error loading %s', error.message));
+                                        Alert(i18n('There was an error loading %s', error.message));
                                     });
                                 }
                             });
@@ -14556,14 +14578,14 @@ function imageProperties(editor) {
         if (jodit_lock_size) {
             jodit_lock_size.addEventListener('click', function () {
                 lockSize = !lockSize;
-                this.innerHTML = ToolbarIcon.getIcon(lockSize ? 'lock' : 'unlock');
+                this.innerHTML = gi(lockSize ? 'lock' : 'unlock');
                 editor.events.fire($w, 'change');
             });
         }
         if (jodit_lock_margin) {
             jodit_lock_margin.addEventListener('click', function () {
                 lockMargin = !lockMargin;
-                this.innerHTML = ToolbarIcon.getIcon(lockMargin ? 'lock' : 'unlock');
+                this.innerHTML = gi(lockMargin ? 'lock' : 'unlock');
                 if (!lockMargin) {
                     $$('.margins', prop).forEach(elm => {
                         if (!elm.matches('.marginTop')) {
@@ -14601,13 +14623,10 @@ function imageProperties(editor) {
                 changeSizes(event);
             }
         });
-        dialog.setTitle([editor.i18n('Image properties'), buttons.remove]);
+        dialog.setTitle([i18n('Image properties'), buttons.remove]);
         dialog.setContent(prop);
-        cancel.addEventListener('click', () => {
-            dialog.close();
-        });
         check.addEventListener('click', () => {
-            if (editor.options.image.editStyle) {
+            if (opt.image.editStyle) {
                 if (val_val(prop, '.style')) {
                     image.setAttribute('style', val_val(prop, '.style'));
                 }
@@ -14671,7 +14690,7 @@ function imageProperties(editor) {
                     height: trim($h.value) ? normalSize($h.value) : null
                 });
             }
-            if (editor.options.image.editMargins) {
+            if (opt.image.editMargins) {
                 if (!lockMargin) {
                     $$('.margins', prop).forEach((margin) => {
                         const id = margin.getAttribute('data-id') || '';
@@ -14682,7 +14701,7 @@ function imageProperties(editor) {
                     css_css(image, 'margin', normalSize(val_val(prop, '.marginTop')));
                 }
             }
-            if (editor.options.image.editClass) {
+            if (opt.image.editClass) {
                 if (val_val(prop, '.classes')) {
                     image.setAttribute('class', val_val(prop, '.classes'));
                 }
@@ -14690,7 +14709,7 @@ function imageProperties(editor) {
                     image.removeAttribute('class');
                 }
             }
-            if (editor.options.image.editId) {
+            if (opt.image.editId) {
                 if (val_val(prop, '.id')) {
                     image.setAttribute('id', val_val(prop, '.id'));
                 }
@@ -14698,21 +14717,11 @@ function imageProperties(editor) {
                     image.removeAttribute('id');
                 }
             }
-            const clearCenterAlign = () => {
-                if (css_css(image, 'display') === 'block') {
-                    css_css(image, 'display', '');
-                }
-                if (image.style.marginLeft === 'auto' &&
-                    image.style.marginRight === 'auto') {
-                    image.style.marginLeft = '';
-                    image.style.marginRight = '';
-                }
-            };
-            if (editor.options.image.editAlign) {
+            if (opt.image.editAlign) {
                 if (val_val(prop, '.align')) {
                     if (['right', 'left'].indexOf(val_val(prop, '.align').toLowerCase()) !== -1) {
                         css_css(image, 'float', val_val(prop, '.align'));
-                        clearCenterAlign();
+                        clearCenterAlign(image);
                     }
                     else {
                         css_css(image, 'float', '');
@@ -14730,7 +14739,7 @@ function imageProperties(editor) {
                             .toLowerCase()) !== -1) {
                         css_css(image, 'float', '');
                     }
-                    clearCenterAlign();
+                    clearCenterAlign(image);
                 }
             }
             if (!image.getAttribute('style')) {
@@ -14739,7 +14748,7 @@ function imageProperties(editor) {
             editor.setEditorValue();
             dialog.close();
         });
-        dialog.setFooter([check, cancel]);
+        dialog.setFooter([check]);
         dialog.setSize(500);
         dialog.open();
         if (e) {
@@ -14749,7 +14758,7 @@ function imageProperties(editor) {
     };
     editor.events
         .on('afterInit', () => {
-        if (editor.options.image.openOnDblClick) {
+        if (opt.image.openOnDblClick) {
             editor.events.on(editor.editor, 'dblclick', open, 'img');
         }
         else {
@@ -14951,23 +14960,13 @@ Config_Config.prototype.popup = {
                 if (tagName !== 'img') {
                     return;
                 }
-                const clearCenterAlign = () => {
-                    if (css_css(image, 'display') === 'block') {
-                        css_css(image, 'display', '');
-                    }
-                    if (image.style.marginLeft === 'auto' &&
-                        image.style.marginRight === 'auto') {
-                        image.style.marginLeft = '';
-                        image.style.marginRight = '';
-                    }
-                };
                 const command = control.args && typeof control.args[1] === 'string'
                     ? control.args[1].toLowerCase()
                     : '';
                 if (command !== 'normal') {
                     if (['right', 'left'].indexOf(command) !== -1) {
                         css_css(image, 'float', command);
-                        clearCenterAlign();
+                        clearCenterAlign(image);
                     }
                     else {
                         css_css(image, 'float', '');
@@ -14983,7 +14982,7 @@ Config_Config.prototype.popup = {
                         ['right', 'left'].indexOf(css_css(image, 'float').toLowerCase()) !== -1) {
                         css_css(image, 'float', '');
                     }
-                    clearCenterAlign();
+                    clearCenterAlign(image);
                 }
                 editor.events.fire('recalcPositionPopup');
             },
@@ -15202,11 +15201,11 @@ class inline_popup_inlinePopup extends Plugin_Plugin {
             if (this.isExcludedTarget(type)) {
                 return true;
             }
-            this.isShown = true;
+            this.isOpened = true;
             this.isTargetAction = true;
             const windSize = this.calcWindSizes();
-            this.target.parentNode ||
-                this.jodit.ownerDocument.body.appendChild(this.target);
+            this.targetContainer.parentNode ||
+                this.jodit.ownerDocument.body.appendChild(this.targetContainer);
             this.toolbar.build(this.jodit.options.popup[type.toLowerCase()], this.container, elm);
             this.popup.open(this.container, false, true);
             this.__getRect = rect;
@@ -15224,9 +15223,9 @@ class inline_popup_inlinePopup extends Plugin_Plugin {
                 return;
             }
             this.isTargetAction = false;
-            this.isShown = false;
+            this.isOpened = false;
             this.popup.close();
-            Dom_Dom.safeRemove(this.target);
+            Dom_Dom.safeRemove(this.targetContainer);
         };
         this.onSelectionStart = (event) => {
             if (this.isDestructed || !this.jodit.isEditorMode()) {
@@ -15252,7 +15251,7 @@ class inline_popup_inlinePopup extends Plugin_Plugin {
                 this.isTargetAction = false;
             }
         };
-        this.isShown = false;
+        this.isOpened = false;
         this.onChangeSelection = () => {
             if (!this.jodit.options.toolbarInline || !this.jodit.isEditorMode()) {
                 return;
@@ -15285,13 +15284,14 @@ class inline_popup_inlinePopup extends Plugin_Plugin {
     afterInit(editor) {
         this.toolbar = joditToolbarCollection_JoditToolbarCollection.makeCollection(editor);
         this.target = editor.create.div('jodit_toolbar_popup-inline-target');
+        this.targetContainer = editor.create.div('jodit_toolbar_popup-inline-container', this.target);
         this.container = editor.create.div();
         this.popup = new popup_Popup(editor, this.target, undefined, 'jodit_toolbar_popup-inline');
         editor.events
             .on(this.target, 'mousedown keydown touchstart', (e) => {
             e.stopPropagation();
         })
-            .on('beforeOpenPopup hidePopup afterSetMode', this.hidePopup)
+            .on('beforeOpenPopup hidePopup afterSetMode blur', this.hidePopup)
             .on('recalcPositionPopup', this.reCalcPosition)
             .on('getDiffButtons.mobile', (_toolbar) => {
             if (this.toolbar === _toolbar) {
@@ -15306,7 +15306,7 @@ class inline_popup_inlinePopup extends Plugin_Plugin {
         })
             .on('selectionchange', this.onChangeSelection)
             .on('afterCommand afterExec', () => {
-            if (this.isShown && this.isSelectionPopup) {
+            if (this.isOpened && this.isSelectionPopup) {
                 this.onChangeSelection();
             }
         })
@@ -15558,27 +15558,29 @@ Config_Config.prototype.controls.link = {
     },
     popup: (editor, current, self, close) => {
         const sel = editor.selection.sel, form = editor.create.fromHTML('<form class="jodit_form">' +
-            '<input required type="text" name="url" placeholder="http://" type="text"/>' +
-            '<input name="text" placeholder="' +
-            editor.i18n('Text') +
-            '" type="text"/>' +
+            '<div class="jodit_form_group">' +
+            '<input class="jodit_input" required type="text" name="url" placeholder="http://" type="text"/>' +
+            '</div>' +
+            '<div class="jodit_form_group">' +
+            '<input class="jodit_input" name="text" placeholder="' + editor.i18n('Text') + '" type="text"/>' +
+            '</div>' +
             (editor.options.link.openInNewTabCheckbox
                 ? '<label>' +
-                    '<input name="target" type="checkbox"/> ' +
+                    '<input class="jodit_checkbox" name="target" type="checkbox"/> ' +
                     editor.i18n('Open in new tab') +
                     '</label>'
                 : '') +
             (editor.options.link.noFollowCheckbox
                 ? '<label>' +
-                    '<input name="nofollow" type="checkbox"/> ' +
+                    '<input class="jodit_checkbox" name="nofollow" type="checkbox"/> ' +
                     editor.i18n('No follow') +
                     '</label>'
                 : '') +
             '<div style="text-align: right">' +
-            '<button class="jodit_unlink_button" type="button">' +
+            '<button class="jodit_button jodit_unlink_button" type="button">' +
             editor.i18n('Unlink') +
             '</button> &nbsp;&nbsp;' +
-            '<button class="jodit_link_insert_button" type="submit"></button>' +
+            '<button class="jodit_button jodit_link_insert_button" type="submit"></button>' +
             '</div>' +
             '<form/>');
         if (current && Dom_Dom.closest(current, 'A', editor.editor)) {
@@ -15825,7 +15827,15 @@ Config_Config.prototype.controls.dots = {
                     }
                 }
             };
-            store.container.style.width = '100px';
+            let w = 32;
+            const size = editor.options.toolbarButtonSize;
+            if (size === 'large') {
+                w = 36;
+            }
+            else if (size === 'small') {
+                w = 24;
+            }
+            store.container.style.width = (w * 3) + 'px';
             control.data = store;
         }
         store.rebuild();
@@ -15872,7 +15882,7 @@ function mobile(editor) {
             }
             if (newStore.toString() !== store.toString()) {
                 store = newStore;
-                editor.toolbar.build(store.concat(editor.options.extraButtons), editor.container);
+                editor.toolbar.build(store.concat(editor.options.extraButtons), editor.toolbar.container.parentElement || editor.toolbar.getParentContainer());
             }
         });
     }
@@ -16820,7 +16830,7 @@ class search_search extends Plugin_Plugin {
 
 Config_Config.prototype.allowResizeX = false;
 Config_Config.prototype.allowResizeY = true;
-function size(editor) {
+function size_size(editor) {
     const setHeight = (height) => {
         css_css(editor.container, 'height', height);
         if (editor.options.saveHeightInStorage) {
@@ -16874,7 +16884,7 @@ function size(editor) {
         });
     }
     const getNotWorkHeight = () => (editor.options.toolbar ? editor.toolbar.container.offsetHeight : 0) +
-        (editor.statusbar ? editor.statusbar.container.offsetHeight : 0);
+        (editor.statusbar ? editor.statusbar.getHeight() : 0);
     const calcMinHeightWorkspace = () => {
         if (!editor.container || !editor.container.parentNode) {
             return;
@@ -17502,7 +17512,7 @@ class sticky_sticky extends Plugin_Plugin {
         super(...arguments);
         this.isToolbarSticked = false;
         this.createDummy = (toolbar) => {
-            if (!this.dummyBox) {
+            if (IS_IE && !this.dummyBox) {
                 this.dummyBox = this.jodit.create.div();
                 this.dummyBox.classList.add('jodit_sticky-dummy_toolbar');
                 this.jodit.container.insertBefore(this.dummyBox, toolbar);
@@ -17518,9 +17528,11 @@ class sticky_sticky extends Plugin_Plugin {
                 top: this.jodit.options.toolbarStickyOffset,
                 width: this.jodit.container.offsetWidth
             });
-            css_css(this.dummyBox, {
-                height: toolbar.offsetHeight
-            });
+            if (IS_IE && this.dummyBox) {
+                css_css(this.dummyBox, {
+                    height: toolbar.offsetHeight
+                });
+            }
         };
         this.removeSticky = (toolbar) => {
             if (this.isToolbarSticked) {
@@ -17552,16 +17564,16 @@ class sticky_sticky extends Plugin_Plugin {
                         offsetEditor.top + offsetEditor.height) &&
                 !(jodit.options.toolbarDisableStickyForMobile &&
                     this.isMobile());
-            if (jodit.options.toolbarSticky && jodit.options.toolbar) {
+            if (jodit.options.toolbarSticky && jodit.options.toolbar === true) {
                 doSticky
-                    ? this.addSticky(jodit.toolbar.container)
-                    : this.removeSticky(jodit.toolbar.container);
+                    ? this.addSticky(jodit.toolbar.getParentContainer())
+                    : this.removeSticky(jodit.toolbar.getParentContainer());
             }
             jodit.events.fire('toggleSticky', doSticky);
         });
     }
     beforeDestruct(jodit) {
-        Dom_Dom.safeRemove(this.dummyBox);
+        this.dummyBox && Dom_Dom.safeRemove(this.dummyBox);
     }
 }
 
@@ -18062,13 +18074,13 @@ Config_Config.prototype.controls.table = {
             if (control.data) {
                 const classList = control.data.classList;
                 Object.keys(classList).forEach((classes) => {
-                    out.push(`<label><input value="${classes}" type="checkbox"/>${classList[classes]}</label>`);
+                    out.push(`<label class="jodit_vertical_middle"><input class="jodit_checkbox" value="${classes}" type="checkbox"/>${classList[classes]}</label>`);
                 });
             }
             return out.join('');
         };
         const form = editor.create.fromHTML('<form class="jodit_form jodit_form_inserter">' +
-            '<label>' +
+            '<label class="jodit_form_center">' +
             '<span>1</span> &times; <span>1</span>' +
             '</label>' +
             '<div class="jodit_form-table-creator-box">' +
@@ -18642,19 +18654,7 @@ class xpath_xpath extends Plugin_Plugin {
         };
         this.tpl = (bindElement, path, name, title) => {
             const li = this.jodit.create.fromHTML('<li>' +
-                '<a ' +
-                'role="button" ' +
-                'data-path="' +
-                path +
-                '" ' +
-                'href="javascript:void(0)" ' +
-                'title="' +
-                title +
-                '" ' +
-                'tabindex="-1"' +
-                '>' +
-                trim(name) +
-                '</a>' +
+                `<a role="button" data-path="${path}" href="javascript:void(0)" title="${title}" tabindex="-1"'>${trim(name)}</a>` +
                 '</li>');
             const a = li.firstChild;
             this.jodit.events
