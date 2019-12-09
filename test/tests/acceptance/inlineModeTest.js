@@ -149,12 +149,14 @@ describe('Test Inline mode', function() {
 			describe('Click in the right side of editor', function() {
 				it('Should open inline-popup with float by right editor side', function() {
 					box.style.width = 'auto';
+
 					const editor = new Jodit(appendTestArea(), {
 						disablePlugins: 'mobile'
 					});
 
 					editor.value =
 						'<p>test <img style="width: 30px; float: right"/> test</p>';
+					editor.selection.focus();
 
 					simulateEvent(
 						'mousedown',
@@ -168,7 +170,7 @@ describe('Test Inline mode', function() {
 							']'
 					);
 
-					expect(popup).to.be.not.null;
+					expect(popup).not.null;
 
 					const positionPopup = offset(popup);
 					const positionContainer = offset(editor.container);
@@ -180,12 +182,14 @@ describe('Test Inline mode', function() {
 								(positionContainer.left +
 									positionContainer.width)
 						) < 2
-					).to.be.true;
+					).is.true;
 				});
+
 				describe('Click in the right side of editor in window with scroll', function() {
 					it('Should open inline-popup with float by right editor side', function() {
 						box.style.width = 'auto';
 						const brs = [];
+
 						for (let i = 0; i < 100; i += 1) {
 							const br = document.createElement('br');
 							document.body.appendChild(br);
@@ -198,6 +202,8 @@ describe('Test Inline mode', function() {
 
 						editor.value =
 							'<p>test <img style="width: 30px; float: right"/> test</p>';
+						editor.selection.focus();
+
 						simulateEvent(
 							'mousedown',
 							0,
@@ -210,7 +216,7 @@ describe('Test Inline mode', function() {
 								']'
 						);
 
-						expect(popup).to.be.not.null;
+						expect(popup).to.not.null;
 
 						const positionPopup = offset(popup);
 						const positionContainer = offset(editor.container);
@@ -222,7 +228,7 @@ describe('Test Inline mode', function() {
 									(positionContainer.left +
 										positionContainer.width)
 							) < 2
-						).to.be.true;
+						).to.true;
 
 						brs.forEach(function(br) {
 							br.parentNode && br.parentNode.removeChild(br);

@@ -31,11 +31,13 @@ describe('Test image', function() {
 			it('should change image border radius', function() {
 				const editor = new Jodit(appendTestArea());
 
-				editor.setEditorValue('<img style="width:100px; height: 100px; border-radius: 10px;" src="tests/artio.jpg"/>');
+				editor.value = '<img style="width:100px; height: 100px; border-radius: 10px;" src="tests/artio.jpg"/>';
+
 				simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
+
 				const dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
 
-				expect(dialog).to.be.not.equal(null);
+				expect(dialog).to.not.equal(null);
 
 				simulateEvent('mousedown', 0, dialog.querySelectorAll('.jodit_tabs_buttons a')[1]);
 
@@ -48,10 +50,11 @@ describe('Test image', function() {
 				tab.querySelector('.border_radius').value = 100;
 				simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer a.jodit_button')[0]);
 
-				expect(sortAttributes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="border-radius:100px;height:100px;width:100px">');
+				expect(sortAttributes(editor.value)).to.equal('<img src="tests/artio.jpg" style="border-radius:100px;height:100px;width:100px">');
 
 			});
 		});
+
 		describe('Change classes', function() {
 			it('should change image classlist', function() {
 				const editor = new Jodit(appendTestArea());
@@ -77,6 +80,7 @@ describe('Test image', function() {
 
 			});
 		});
+
 		describe('Change styles', function() {
 			it('should change image styles', function() {
 				const editor = new Jodit(appendTestArea());
@@ -566,15 +570,23 @@ describe('Test image', function() {
 				it('should not show buttons', function() {
 					const editor = new Jodit(appendTestArea());
 
-					editor.setEditorValue('<img src="tests/artio.jpg"/>');
+					editor.value = '<img src="tests/artio.jpg"/>';
 					simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
 					const dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
 
-					expect(dialog).to.be.not.equal(null);
-					expect(dialog.querySelector('.jodit_button.jodit_rechange')).to.be.equal(null);
-					expect(dialog.querySelector('.jodit_button.jodit_use_image_editor')).to.be.equal(null);
+					expect(dialog).to.not.equal(null);
+
+					const fb = dialog.querySelector('.jodit_button.jodit_rechange');
+					expect(fb).to.not.equal(null);
+
+					const edit = dialog.querySelector('.jodit_button.jodit_rechange');
+					expect(edit).to.not.equal(null);
+
+					expect(edit.parentNode.style.display).to.equal('none');
+
 				});
 			});
+
 			describe('Uploader and filebrowser settings set', function() {
 				const settings = {
 					uploader: {

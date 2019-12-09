@@ -1421,9 +1421,8 @@ describe('Toolbar', function() {
 				}
 			});
 
-			editor.setEditorValue(
-				'<strong>test</strong><em>test2</em><i>test3</i><b>test3</b>'
-			);
+			editor.value = '<strong>test</strong><em>test2</em><i>test3</i><b>test3</b>';
+			editor.selection.focus();
 
 			const sel = editor.editorWindow.getSelection(),
 				range = editor.editorDocument.createRange();
@@ -1669,9 +1668,8 @@ describe('Toolbar', function() {
 				}
 			});
 
-			editor.setEditorValue(
-				'<span style="font-weight: bold">test</span>'
-			);
+			editor.value = '<span style="font-weight: bold">test</span>';
+			editor.selection.focus();
 
 			const sel = editor.editorWindow.getSelection(),
 				range = editor.editorDocument.createRange();
@@ -1925,7 +1923,10 @@ describe('Toolbar', function() {
 						timeout: 0
 					}
 				});
-				editor.setEditorValue('<p>test<strong>bold</strong></p>');
+
+				editor.value = '<p>test<strong>bold</strong></p>';
+				editor.selection.focus();
+
 				const p = editor.editor.firstChild;
 				editor.selection.setCursorAfter(p.firstChild);
 
@@ -1974,9 +1975,9 @@ describe('Toolbar', function() {
 							timeout: 0
 						}
 					});
-					editor.setEditorValue(
-						'<p>test<span style="font-size: 12px">bold</span></p>'
-					);
+
+					editor.value = '<p>test<span style="font-size: 12px">bold</span></p>';
+					editor.selection.focus();
 
 					const p = editor.editor.firstChild;
 					const fontsize = editor.container.querySelector(
@@ -2004,9 +2005,9 @@ describe('Toolbar', function() {
 							timeout: 0
 						}
 					});
-					editor.setEditorValue(
-						'<p>test<span style="color: #ccc">bold</span></p>'
-					);
+
+					editor.value = '<p>test<span style="color: #ccc">bold</span></p>';
+					editor.selection.focus();
 
 					const p = editor.editor.firstChild;
 					const brush = editor.container.querySelector(
@@ -2042,9 +2043,9 @@ describe('Toolbar', function() {
 								timeout: 0
 							}
 						});
-						editor.setEditorValue(
-							'<p>test<span style="font-size: 16px">bold</span></p>'
-						);
+
+						editor.value = '<p>test<span style="font-size: 16px">bold</span></p>';
+						editor.selection.focus();
 
 						const p = editor.editor.firstChild;
 						const font = editor.container.querySelector(
@@ -2086,9 +2087,8 @@ describe('Toolbar', function() {
 							}
 						});
 
-						editor.setEditorValue(
-							'<p>test<span style="font-family: Georgia, serif;">bold</span></p>'
-						);
+						editor.value = '<p>test<span style="font-family: Georgia, serif;">bold</span></p>';
+						editor.selection.focus();
 
 						const p = editor.editor.firstChild;
 						const font = editor.container.querySelector(
@@ -2129,11 +2129,9 @@ describe('Toolbar', function() {
 								timeout: 0
 							}
 						});
-						editor.setEditorValue(
-							'<p>test</p>' +
-							'<h1>test</h1>' +
-							'<code>test</code>'
-						);
+
+						editor.value = '<p>test</p><h1>test</h1><code>test</code>';
+						editor.selection.focus();
 
 						const p = editor.editor.firstChild;
 						const paragraph = editor.container.querySelector(
@@ -2178,6 +2176,7 @@ describe('Toolbar', function() {
 					});
 
 					editor.value = '<em><strong><u>bold</u></strong></em>';
+					editor.selection.focus();
 
 					const range = editor.editorDocument.createRange();
 					range.setStartBefore(editor.editor.firstChild);
@@ -2229,6 +2228,8 @@ describe('Toolbar', function() {
 						editor.value = (
 							'<p>test<strong>bold</strong></p>'
 						);
+						editor.selection.focus();
+
 						expect(true).to.equal(
 							cut.classList.contains('jodit_disabled')
 						);
@@ -2259,6 +2260,7 @@ describe('Toolbar', function() {
 						editor.value = (
 							'<p>test<strong>bold</strong></p>'
 						);
+						editor.selection.focus();
 
 						expect(true).to.equal(
 							copy.classList.contains('jodit_disabled')
@@ -2288,8 +2290,8 @@ describe('Toolbar', function() {
 						}
 					});
 
-					editor.value =
-						'<p>test<span style="color: #ccc">bold</span></p>';
+					editor.value = '<p>test<span style="color: #ccc">bold</span></p>';
+					editor.selection.focus();
 
 					const p = editor.editor.firstChild,
 						brush = editor.container.querySelector(
@@ -2335,7 +2337,8 @@ describe('Toolbar', function() {
 		it('Click on Bold button should wrap current selection in <strong>', function() {
 			const editor = new Jodit(appendTestArea());
 
-			editor.setEditorValue('Text to text');
+			editor.value = 'Text to text';
+			editor.selection.focus();
 
 			const sel = editor.editorWindow.getSelection(),
 				range = editor.editorDocument.createRange();
@@ -2358,7 +2361,8 @@ describe('Toolbar', function() {
 		it('Click on Italic button when selection is collapsed should create new <em> element and set cursor into it', function() {
 			const editor = new Jodit(appendTestArea());
 
-			editor.setEditorValue('Text to text');
+			editor.value = 'Text to text';
+			editor.selection.focus();
 
 			const sel = editor.editorWindow.getSelection(),
 				range = editor.editorDocument.createRange();
@@ -2383,7 +2387,7 @@ describe('Toolbar', function() {
 		it('Click on unordered list button when selection is collapsed should wrap current box in  new <ul><li> element', function() {
 			const editor = new Jodit(appendTestArea());
 
-			editor.setEditorValue('<p>Text to text</p>');
+			editor.value = '<p>Text to text</p>';
 
 			const sel = editor.editorWindow.getSelection(),
 				range = editor.editorDocument.createRange();
@@ -2412,7 +2416,8 @@ describe('Toolbar', function() {
 			it('Should Open inline popup', function() {
 				const editor = new Jodit(appendTestArea());
 
-				editor.setEditorValue('<img src="/tests/artio.jpg"/>');
+				editor.value = '<img src="/tests/artio.jpg"/>';
+				editor.selection.focus();
 
 				simulateEvent(
 					'mousedown',
@@ -2433,7 +2438,8 @@ describe('Toolbar', function() {
 				it('Should Open edit image dialog', function() {
 					const editor = new Jodit(appendTestArea());
 
-					editor.setEditorValue('<img src="/tests/artio.jpg"/>');
+					editor.value = '<img src="/tests/artio.jpg"/>';
+					editor.selection.focus();
 
 					simulateEvent(
 						'mousedown',

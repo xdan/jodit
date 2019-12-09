@@ -5,13 +5,17 @@ describe('Test plugins', function() {
 		it('Should copy fontWeight from element and paste it in new selection', function() {
 			getBox().style.width = 'auto';
 			const editor = new Jodit(appendTestArea());
-			editor.setEditorValue('text <strong>test</strong> post');
+
+			editor.value = 'text <strong>test</strong> post';
+			editor.selection.focus();
 			editor.selection.setCursorIn(editor.editor.querySelector('strong'));
+
 			expect(
 				editor.container.querySelectorAll(
 					'.jodit_toolbar_btn-copyformat'
 				).length
 			).to.equal(1);
+
 			expect(
 				editor.container.querySelectorAll(
 					'.jodit_toolbar_btn-copyformat.jodit_active'
@@ -47,9 +51,9 @@ describe('Test plugins', function() {
 		it('Should copy fontSize from element and paste it in new selection', function() {
 			getBox().style.width = 'auto';
 			const editor = new Jodit(appendTestArea());
-			editor.setEditorValue(
-				'text <span style="font-size: 11px;">test</span> post'
-			);
+
+			editor.value = 'text <span style="font-size: 11px;">test</span> post';
+			editor.selection.focus();
 			editor.selection.setCursorIn(editor.editor.querySelector('span'));
 
 			expect(
@@ -93,12 +97,16 @@ describe('Test plugins', function() {
 			it('Should copy fontSize and color from element and paste it in new selection', function() {
 				getBox().style.width = 'auto';
 				const editor = new Jodit(appendTestArea());
-				editor.setEditorValue(
+
+				editor.value = (
 					'text <span style="font-size: 11px;color: rgb(255, 0, 0);">test</span> post'
 				);
+				editor.selection.focus();
+
 				editor.selection.setCursorIn(
 					editor.editor.querySelector('span')
 				);
+
 				expect(
 					editor.container.querySelectorAll(
 						'.jodit_toolbar_btn-copyformat'
@@ -141,10 +149,14 @@ describe('Test plugins', function() {
 
 		it('Should toggle active state after double click', function() {
 			getBox().style.width = 'auto';
+
 			const editor = new Jodit(appendTestArea());
-			editor.setEditorValue(
+
+			editor.value = (
 				'text <span style="font-size: 11px;color: rgb(255, 0, 0);">test</span> post'
 			);
+			editor.selection.focus();
+
 			editor.selection.setCursorIn(editor.editor.querySelector('span'));
 			expect(
 				editor.container.querySelectorAll(
@@ -198,6 +210,7 @@ describe('Test plugins', function() {
 		describe('For image', function() {
 			it('Should copy format from one image to another', function() {
 				getBox().style.width = 'auto';
+
 				const editor = new Jodit(appendTestArea()),
 					html =
 						'<img src="tests/artio.jpg" ' +
@@ -205,6 +218,8 @@ describe('Test plugins', function() {
 						'<img style="height: 100px;width: 100px;" src="tests/artio.jpg">';
 
 				editor.value = html;
+				editor.selection.focus();
+
 				expect(sortAttributes(editor.value)).to.be.equal(
 					sortAttributes(html)
 				);
@@ -249,9 +264,11 @@ describe('Test plugins', function() {
 			it('Should copy fontWeight from strong element, copy italic and background  style from em  and paste it in new selection', function() {
 				getBox().style.width = 'auto';
 				const editor = new Jodit(appendTestArea());
-				editor.setEditorValue(
+
+				editor.value = (
 					'text <em style="background-color: #ff0000"><strong>test</strong></em> post'
 				);
+				editor.selection.focus();
 
 				editor.selection.setCursorIn(
 					editor.editor.querySelector('strong')
