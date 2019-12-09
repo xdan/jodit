@@ -1048,17 +1048,31 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			contenteditable: false
 		});
 
+		let toolbarContainer: HTMLElement | null = this.container;
+		
 		if (this.options.toolbar) {
+			if (typeof this.options.toolbar === 'string') {
+				toolbarContainer = document.querySelector(this.options.toolbar);
+
+				if (toolbarContainer == null) {
+					throw new Error('Toolbar container element was not found in this document.');
+				} else {
+					toolbarContainer.classList.add(
+						'jodit_' + (this.options.theme || 'default') + '_theme'
+					);
+				}
+			}
+			
 			this.toolbar.build(
 				splitArray(this.options.buttons).concat(
 					this.options.extraButtons
 				),
-				this.container
+				toolbarContainer,
 			);
 		}
 
 		const bs = this.options.toolbarButtonSize.toLowerCase();
-		this.container.classList.add(
+		toolbarContainer.classList.add(
 			'jodit_toolbar_size-' +
 				(['middle', 'large', 'small'].indexOf(bs) !== -1
 					? bs

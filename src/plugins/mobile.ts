@@ -145,10 +145,15 @@ export function mobile(editor: IJodit) {
 
 			if (newStore.toString() !== store.toString()) {
 				store = newStore;
+				let toolbarContainer: HTMLElement = editor.container;
+
+				if (typeof editor.options.toolbar === 'string') {
+					toolbarContainer = document.querySelector(editor.options.toolbar) || toolbarContainer;	
+				}
 
 				editor.toolbar.build(
 					store.concat(editor.options.extraButtons),
-					editor.container
+					toolbarContainer
 				);
 			}
 		});
