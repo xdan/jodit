@@ -1039,8 +1039,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			contenteditable: false
 		});
 
-		const toolbarContainer: HTMLElement | null = this.container;
-
 		if (this.options.toolbar) {
 			let toolbarContainer: HTMLElement = this.container;
 
@@ -1054,6 +1052,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 						'Selector for toolbar did not return a valid element in the document'
 					);
 				}
+				toolbarContainer = selectedEl;
 				this.__applyOptionsToContainer(toolbarContainer);
 			}
 
@@ -1063,15 +1062,16 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 				),
 				toolbarContainer
 			);
-		}
 
-		const bs = this.options.toolbarButtonSize.toLowerCase();
-		toolbarContainer.classList.add(
-			'jodit_toolbar_size-' +
+			const bs = this.options.toolbarButtonSize.toLowerCase();
+			toolbarContainer.classList.add(
+				'jodit_toolbar_size-' +
 				(['middle', 'large', 'small'].indexOf(bs) !== -1
 					? bs
 					: 'middle')
-		);
+			);
+		}
+
 
 		if (this.options.textIcons) {
 			this.container.classList.add('jodit_text_icons');
@@ -1144,6 +1144,8 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	}
 
 	private __applyOptionsToContainer(element: HTMLElement) {
+
+
 		element.classList.add(
 			'jodit_' + (this.options.theme || 'default') + '_theme'
 		);
