@@ -307,4 +307,6 @@ interface IToolbarCollection extends IComponent {
 	setDirection(direction: 'rtl' | 'ltr'): void;
 
 	destruct(): void;
+
+	getContainer(): HTMLElement | undefined;
 }
