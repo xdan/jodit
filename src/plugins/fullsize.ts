@@ -109,7 +109,7 @@ export function fullsize(editor: IViewWithToolbar) {
 				);
 			}
 
-			editor.options.fullsize = !!condition;
+			editor.options.fullsize = Boolean(condition);
 
 			shown = condition;
 
@@ -139,7 +139,7 @@ export function fullsize(editor: IViewWithToolbar) {
 
 	editor.events
 		.on('afterInit afterOpen', () => {
-			editor.toggleFullSize(editor.options.fullsize);
+			editor.toggleFullSize(editor?.options?.fullsize);
 		})
 		.on('toggleFullSize', toggle)
 		.on('beforeDestruct beforeClose', () => {
