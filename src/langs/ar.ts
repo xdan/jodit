@@ -221,4 +221,5 @@ export default {
 	'Your browser doesn\'t support direct access to the clipboard.': 'متصفحك لا يدعم إمكانية الوصول المباشر إلى الحافظة.',
 	'Copy selection': 'نسخ التحديد',
 	'copy': 'نسخ',
+	'Border radius': 'دائرة نصف قطرها الحدود',
 } as IDictionary<string>;

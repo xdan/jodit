@@ -231,4 +231,5 @@ export default {
 	'Your browser doesn\'t support direct access to the clipboard.': 'Votre navigateur ne prend pas en charge l\'accès direct à la presse-papiers.',
 	'Copy selection': 'Copier la sélection',
 	'copy': 'copie',
+	'Border radius': 'Rayon des frontières',
 } as IDictionary<string>;

@@ -234,4 +234,5 @@ export default {
 	'Your browser doesn\'t support direct access to the clipboard.': 'Su navegador no soporta el acceso directo en el portapapeles.',
 	'Copy selection': 'Selección de copia',
 	'copy': 'copia',
+	'Border radius': 'Radio frontera',
 } as IDictionary<string>;

@@ -237,4 +237,5 @@ export default {
 	'Your browser doesn\'t support direct access to the clipboard.': 'Ваш браузер не поддерживает прямой доступ к буферу обмена.',
 	'Copy selection': 'Скопировать выделенное',
 	'copy': 'копия',
+	'Border radius': 'Радиус границы',
 } as IDictionary<string>;

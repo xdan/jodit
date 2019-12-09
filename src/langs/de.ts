@@ -235,4 +235,5 @@ export default {
 	'Your browser doesn\'t support direct access to the clipboard.': 'Ihr browser unterstützt kein direkter Zugriff auf die Zwischenablage.',
 	'Copy selection': 'Auswahl kopieren',
 	'copy': 'kopieren',
+	'Border radius': 'Border-radius',
 } as IDictionary<string>;

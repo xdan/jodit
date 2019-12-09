@@ -233,4 +233,5 @@ export default {
 	'Your browser doesn\'t support direct access to the clipboard.': 'Váš prohlížeč nepodporuje přímý přístup do schránky.',
 	'Copy selection': 'Kopírovat výběr',
 	'copy': 'kopírování',
+	'Border radius': 'Border radius',
 } as IDictionary<string>;

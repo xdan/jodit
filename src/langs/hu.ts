@@ -235,4 +235,5 @@ export default {
 	'Your browser doesn\'t support direct access to the clipboard.': 'A böngésző nem támogatja a közvetlen hozzáférést biztosít a vágólapra.',
 	'Copy selection': 'Másolás kiválasztása',
 	'copy': 'másolás',
+	'Border radius': 'Határ sugár',
 } as IDictionary<string>;

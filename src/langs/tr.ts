@@ -234,4 +234,5 @@ export default {
 	'Your browser doesn\'t support direct access to the clipboard.': 'Tarayıcınız pano doğrudan erişim desteklemiyor.',
 	'Copy selection': 'Kopya seçimi',
 	'copy': 'kopya',
+	'Border radius': 'Sınır yarıçapı',
 } as IDictionary<string>;

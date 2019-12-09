@@ -234,4 +234,5 @@ export default {
 	'Your browser doesn\'t support direct access to the clipboard.': 'O seu navegador não oferece suporte a acesso direto para a área de transferência.',
 	'Copy selection': 'Selecção de cópia',
 	'copy': 'cópia',
+	'Border radius': 'Border radius',
 } as IDictionary<string>;

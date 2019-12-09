@@ -231,4 +231,5 @@ export default {
 	'Your browser doesn\'t support direct access to the clipboard.': '你浏览器不支持直接访问的剪贴板。',
 	'Copy selection': '复制的选择',
 	'copy': '复制',
+	'Border radius': '边界半径',
 } as IDictionary<string>;
