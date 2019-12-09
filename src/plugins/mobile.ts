@@ -73,7 +73,17 @@ Config.prototype.controls.dots = {
 				}
 			};
 
-			store.container.style.width = '100px';
+			let w = 32;
+
+			const size = editor.options.toolbarButtonSize;
+
+			if (size === 'large') {
+				w = 36;
+			} else if (size === 'small') {
+				w = 24;
+			}
+
+			store.container.style.width = (w * 3)  + 'px';
 
 			control.data = store;
 		}
