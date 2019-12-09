@@ -29,6 +29,7 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 	extends Component<T>
 	implements IToolbarCollection {
 	private __buttons: ToolbarElement[] = [];
+	private __container?: HTMLElement;
 
 	private __getControlType = (
 		button: IControlType | string
@@ -96,6 +97,10 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 			.filter(a => a !== '');
 	}
 
+	public getContainer(): HTMLElement | undefined {
+		return this.__container;
+	}
+
 	appendChild(button: ToolbarElement) {
 		this.__buttons.push(button);
 		this.container.appendChild(button.container);
@@ -117,6 +122,7 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 	}
 
 	build(buttons: Buttons, container: HTMLElement, target?: HTMLElement) {
+		this.__container = container;
 		let lastBtnSeparator: boolean = false;
 		this.clear();
 		const buttonsList: Array<IControlType | string> =
