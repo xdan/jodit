@@ -8,7 +8,7 @@
  */
 
 import { Config } from '../Config';
-import { MODE_WYSIWYG } from '../constants';
+import { IS_IE, MODE_WYSIWYG } from '../constants';
 import { Plugin } from '../modules/Plugin';
 import { css } from '../modules/helpers/css';
 import { offset } from '../modules/helpers/size';
@@ -50,10 +50,10 @@ Config.prototype.toolbarStickyOffset = 0;
 
 export class sticky extends Plugin {
 	private isToolbarSticked: boolean = false;
-	private dummyBox: HTMLElement;
+	private dummyBox?: HTMLElement;
 
 	private createDummy = (toolbar: HTMLElement) => {
-		if (!this.dummyBox) {
+		if (IS_IE && !this.dummyBox) {
 			this.dummyBox = this.jodit.create.div();
 			this.dummyBox.classList.add('jodit_sticky-dummy_toolbar');
 			this.jodit.container.insertBefore(this.dummyBox, toolbar);
@@ -69,7 +69,7 @@ export class sticky extends Plugin {
 		);
 	}
 
-	public addSticky = (toolbar: HTMLElement) => {
+	addSticky = (toolbar: HTMLElement) => {
 		if (!this.isToolbarSticked) {
 			this.createDummy(toolbar);
 			this.jodit.container.classList.add('jodit_sticky');
@@ -83,12 +83,14 @@ export class sticky extends Plugin {
 			width: this.jodit.container.offsetWidth
 		});
 
-		css(this.dummyBox, {
-			height: toolbar.offsetHeight
-		});
+		if (IS_IE && this.dummyBox) {
+			css(this.dummyBox, {
+				height: toolbar.offsetHeight
+			});
+		}
 	};
 
-	public removeSticky = (toolbar: HTMLElement) => {
+	removeSticky = (toolbar: HTMLElement) => {
 		if (this.isToolbarSticked) {
 			css(toolbar, {
 				width: '',
@@ -110,12 +112,14 @@ export class sticky extends Plugin {
 						(jodit.ownerDocument.documentElement &&
 							jodit.ownerDocument.documentElement.scrollTop) ||
 						0,
+
 					offsetEditor: IBound = offset(
 						jodit.container,
 						jodit,
 						jodit.ownerDocument,
 						true
 					),
+
 					doSticky: boolean =
 						jodit.getMode() === MODE_WYSIWYG &&
 						(scrollWindowTop + jodit.options.toolbarStickyOffset >
@@ -128,10 +132,10 @@ export class sticky extends Plugin {
 							this.isMobile()
 						);
 
-				if (jodit.options.toolbarSticky && jodit.options.toolbar) {
+				if (jodit.options.toolbarSticky && jodit.options.toolbar === true) {
 					doSticky
-						? this.addSticky(jodit.toolbar.container)
-						: this.removeSticky(jodit.toolbar.container);
+						? this.addSticky(jodit.toolbar.getParentContainer())
+						: this.removeSticky(jodit.toolbar.getParentContainer());
 				}
 
 				jodit.events.fire('toggleSticky', doSticky);
@@ -140,6 +144,6 @@ export class sticky extends Plugin {
 	}
 
 	beforeDestruct(jodit?: IJodit): void {
-		Dom.safeRemove(this.dummyBox);
+		this.dummyBox && Dom.safeRemove(this.dummyBox);
 	}
 }

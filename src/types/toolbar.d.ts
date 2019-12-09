@@ -308,7 +308,7 @@ interface IToolbarCollection extends IComponent {
 
 	destruct(): void;
 
-	getContainer(): HTMLElement | undefined;
+	getParentContainer(): HTMLElement;
 }
 
 export interface IStatusBar {

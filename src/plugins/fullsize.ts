@@ -98,30 +98,36 @@ export function fullsize(editor: IViewWithToolbar) {
 				}
 			}
 		},
-		toggle = (condition?: boolean) => {
+
+		/**
+		 * Change editor's state between FullSize and normal
+		 * @param enable
+		 */
+		toggle = (enable?: boolean) => {
 			if (!editor.container) {
 				return;
 			}
 
-			if (condition === undefined) {
-				condition = !editor.container.classList.contains(
+			if (enable === undefined) {
+				enable = !editor.container.classList.contains(
 					'jodit_fullsize'
 				);
 			}
 
-			editor.options.fullsize = Boolean(condition);
+			editor.options.fullsize = enable;
 
-			shown = condition;
+			shown = enable;
 
-			editor.container.classList.toggle('jodit_fullsize', condition);
+			editor.container.classList.toggle('jodit_fullsize', enable);
 
 			if (editor.toolbar) {
-				if (!condition) {
-					const parent = editor.toolbar.getContainer()!;
-					parent.appendChild(editor.toolbar.container);
+				if (!enable) {
+					editor.toolbar.getParentContainer()?.appendChild(editor.toolbar.container);
 				} else {
-					document.querySelector('.jodit_container')!.insertAdjacentElement('afterbegin', editor.toolbar.container);
+					editor.container.querySelector('.jodit_toolbar_container')
+						?.appendChild(editor.toolbar.container);
 				}
+
 				css(editor.toolbar.container, 'width', 'auto');
 			}
 
@@ -129,7 +135,7 @@ export function fullsize(editor: IViewWithToolbar) {
 				let node = editor.container.parentNode as HTMLElement;
 
 				while (node && node.nodeType !== Node.DOCUMENT_NODE) {
-					node.classList.toggle('jodit_fullsize_box', condition);
+					node.classList.toggle('jodit_fullsize_box', enable);
 					node = node.parentNode as HTMLElement;
 				}
 

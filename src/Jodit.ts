@@ -107,6 +107,16 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		});
 	}
 
+	/**
+	 * Fabric for creating Jodit instance
+	 *
+	 * @param element
+	 * @param options
+	 */
+	static make(element: HTMLInputElement | string, options?: object): Jodit {
+		return new Jodit(element, options);
+	}
+
 	static defaultOptions: Config;
 	static plugins: any = {};
 	static modules: any = {};
@@ -841,6 +851,42 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	}
 
 	/**
+	 * Try to find element by selector
+	 * @param element
+	 */
+	private resolveElement(element: string | HTMLElement): HTMLElement {
+		let resolved = element;
+
+		if (typeof element === 'string') {
+			try {
+				resolved = this.ownerDocument.querySelector(
+					element
+				) as HTMLInputElement;
+			} catch {
+				throw new Error(
+					'String "' + element + '" should be valid HTML selector'
+				);
+			}
+		}
+
+		// Duck checking
+		if (
+			!resolved ||
+			typeof resolved !== 'object' ||
+			resolved.nodeType !== Node.ELEMENT_NODE ||
+			!resolved.cloneNode
+		) {
+			throw new Error(
+				'Element "' +
+				element +
+				'" should be string or HTMLElement instance'
+			);
+		}
+
+		return resolved;
+	}
+
+	/**
 	 * Create instance of Jodit
 	 * @constructor
 	 *
@@ -859,33 +905,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		this.ownerDocument = this.options.ownerDocument;
 		this.ownerWindow = this.options.ownerWindow;
 
-		if (typeof element === 'string') {
-			try {
-				this.element = this.ownerDocument.querySelector(
-					element
-				) as HTMLInputElement;
-			} catch {
-				throw new Error(
-					'String "' + element + '" should be valid HTML selector'
-				);
-			}
-		} else {
-			this.element = element;
-		}
-
-		// Duck checking
-		if (
-			!this.element ||
-			typeof this.element !== 'object' ||
-			this.element.nodeType !== Node.ELEMENT_NODE ||
-			!this.element.cloneNode
-		) {
-			throw new Error(
-				'Element "' +
-					element +
-					'" should be string or HTMLElement instance'
-			);
-		}
+		this.element = this.resolveElement(element);
 
 		if (this.element.attributes) {
 			Array.from(this.element.attributes).forEach((attr: Attr) => {
@@ -959,45 +979,13 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			this.element.style.display = 'none';
 		}
 
-		this.__applyOptionsToContainer(this.container);
+		this.applyOptionsToToolbarContainer(this.container);
 
 		this.workplace = this.create.div('jodit_workplace', {
 			contenteditable: false
 		});
 
-		if (this.options.toolbar) {
-			let toolbarContainer: HTMLElement = this.container;
-
-			if (this.options.toolbar instanceof HTMLElement) {
-				toolbarContainer = this.options.toolbar;
-				this.__applyOptionsToContainer(toolbarContainer);
-			} else if (typeof this.options.toolbar === 'string') {
-				const selectedEl = document.querySelector(this.options.toolbar);
-				if (!(selectedEl instanceof HTMLElement)) {
-					throw new Error(
-						'Selector for toolbar did not return a valid element in the document'
-					);
-				}
-				toolbarContainer = selectedEl;
-				this.__applyOptionsToContainer(toolbarContainer);
-			}
-
-			this.toolbar.build(
-				splitArray(this.options.buttons).concat(
-					this.options.extraButtons
-				),
-				toolbarContainer
-			);
-
-			const bs = this.options.toolbarButtonSize.toLowerCase();
-			toolbarContainer.classList.add(
-				'jodit_toolbar_size-' +
-				(['middle', 'large', 'small'].indexOf(bs) !== -1
-					? bs
-					: 'middle')
-			);
-		}
-
+		this.makeToolbar();
 
 		if (this.options.textIcons) {
 			this.container.classList.add('jodit_text_icons');
@@ -1069,9 +1057,37 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		})();
 	}
 
-	private __applyOptionsToContainer(element: HTMLElement) {
+	private makeToolbar() {
+		if (!this.options.toolbar) {
+			return;
+		}
 
+		let toolbarContainer: HTMLElement = this.create.div('jodit_toolbar_container');
+		this.container.appendChild(toolbarContainer);
 
+		if (this.options.toolbar instanceof HTMLElement || typeof this.options.toolbar === 'string') {
+			toolbarContainer = this.resolveElement(this.options.toolbar);
+		}
+
+		this.applyOptionsToToolbarContainer(toolbarContainer);
+
+		this.toolbar.build(
+			splitArray(this.options.buttons).concat(
+				this.options.extraButtons
+			),
+			toolbarContainer
+		);
+
+		const bs = this.options.toolbarButtonSize.toLowerCase();
+		toolbarContainer.classList.add(
+			'jodit_toolbar_size-' +
+			(['middle', 'large', 'small'].indexOf(bs) !== -1
+				? bs
+				: 'middle')
+		);
+	}
+
+	private applyOptionsToToolbarContainer(element: HTMLElement) {
 		element.classList.add(
 			'jodit_' + (this.options.theme || 'default') + '_theme'
 		);

@@ -246,6 +246,7 @@ describe('Jodit Editor Tests', function() {
 						const editor = new Jodit(appendTestArea(), {
 							height: 300
 						});
+
 						editor.setEditorValue('<p>test</p>'.repeat(20));
 						expect(editor.container.offsetHeight).to.be.equal(300);
 

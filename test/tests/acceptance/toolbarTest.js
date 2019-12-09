@@ -81,16 +81,42 @@ describe('Toolbar', function() {
 			);
 		});
 	});
+
 	describe('Set toolbar options to css selector', function() {
 		it('Should render toolbar in different container', function() {
-			const editor = new Jodit(appendTestArea(), {
-				toolbar: appendTestDiv()
-			});
+			const
+				div = appendTestDiv(),
+				editor = Jodit.make(appendTestArea(), {
+					toolbar: div
+				});
 
-			expect(null).to.be.not.equal(
-				document.querySelector('.jodit_toolbar')
-			);
+			const toolbar = document.querySelector('.jodit_toolbar');
+			const defaultContainer = editor.container.querySelector('.jodit_toolbar_container');
+
+			expect(null).to.not.equal(toolbar);
+			expect(div).to.equal(toolbar.parentElement);
+			expect(defaultContainer).to.not.equal(toolbar.parentElement);
 		});
+
+		describe('After enable Fullsize mode', function() {
+			it('Should render toolbar in default container', function() {
+				const
+					div = appendTestDiv(),
+					editor = Jodit.make(appendTestArea(), {
+						toolbar: div
+					});
+
+				const toolbar = document.querySelector('.jodit_toolbar');
+				const defaultContainer = editor.container.querySelector('.jodit_toolbar_container');
+
+				editor.toggleFullSize(true);
+				expect(defaultContainer).to.equal(toolbar.parentElement);
+
+				editor.toggleFullSize(false);
+				expect(div).to.equal(toolbar.parentElement);
+			});
+		});
+
 	});
 
 	describe('Popups', function() {

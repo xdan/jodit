@@ -2483,7 +2483,8 @@ describe('Test plugins', function() {
 					const area = appendTestArea(),
 						editor = new Jodit(area);
 
-					editor.setEditorValue('<p>stop</p>'.repeat(100));
+					editor.value = '<p>stop</p>'.repeat(100);
+
 					const offset = Jodit.modules.Helpers.offset(
 						editor.container,
 						editor,
@@ -2491,13 +2492,15 @@ describe('Test plugins', function() {
 					);
 
 					window.scroll(0, offset.top + offset.height / 2); // scroll page to bottom
+
 					simulateEvent('scroll', 0, window);
 
 					expect(true).to.be.equal(
 						editor.container.classList.contains('jodit_sticky')
 					);
-					expect(0).to.be.equal(
-						editor.toolbar.container.getBoundingClientRect().top
+
+					expect(0).to.equal(
+						editor.toolbar.getParentContainer().getBoundingClientRect().top
 					);
 				});
 				describe('On mobile devices - with toolbarDisableStickyForMobile = true', function() {
