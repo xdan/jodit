@@ -12,11 +12,11 @@ import { Widget } from '../modules/Widget';
 import ColorPickerWidget = Widget.ColorPickerWidget;
 import TabsWidget = Widget.TabsWidget;
 import { Dom } from '../modules/Dom';
-import { css, debounce, offset, splitArray } from '../modules/helpers/';
+import { clearCenterAlign, css, debounce, offset, splitArray } from '../modules/helpers/';
 import { Plugin } from '../modules/Plugin';
 import { Table } from '../modules/Table';
 import { Popup } from '../modules/popup/popup';
-import { IDictionary, IJodit, IToolbarCollection } from '../types';
+import { IDictionary, IJodit, IPopup, IToolbarCollection } from '../types';
 import { IControlType } from '../types/toolbar';
 import { IBound } from '../types/types';
 import { JoditToolbarCollection } from '../modules/toolbar/joditToolbarCollection';
@@ -140,19 +140,6 @@ Config.prototype.popup = {
 					return;
 				}
 
-				const clearCenterAlign = () => {
-					if (css(image, 'display') === 'block') {
-						css(image, 'display', '');
-					}
-					if (
-						image.style.marginLeft === 'auto' &&
-						image.style.marginRight === 'auto'
-					) {
-						image.style.marginLeft = '';
-						image.style.marginRight = '';
-					}
-				};
-
 				const command: string =
 					control.args && typeof control.args[1] === 'string'
 						? control.args[1].toLowerCase()
@@ -161,7 +148,8 @@ Config.prototype.popup = {
 				if (command !== 'normal') {
 					if (['right', 'left'].indexOf(command) !== -1) {
 						css(image, 'float', command);
-						clearCenterAlign();
+						clearCenterAlign(image);
+
 					} else {
 						css(image, 'float', '');
 						css(image, {
@@ -179,7 +167,8 @@ Config.prototype.popup = {
 					) {
 						css(image, 'float', '');
 					}
-					clearCenterAlign();
+
+					clearCenterAlign(image);
 				}
 
 				editor.events.fire('recalcPositionPopup');
@@ -370,9 +359,10 @@ Config.prototype.popup = {
  */
 export class inlinePopup extends Plugin {
 	private toolbar: IToolbarCollection;
-	private popup: Popup;
+	private popup: IPopup;
 
 	private target: HTMLDivElement;
+	private targetContainer: HTMLDivElement;
 	private container: HTMLDivElement;
 
 	private _hiddenClass = 'jodit_toolbar_popup-inline-target-hidden';
@@ -537,13 +527,13 @@ export class inlinePopup extends Plugin {
 			return true;
 		}
 
-		this.isShown = true;
+		this.isOpened = true;
 		this.isTargetAction = true;
 
 		const windSize: IBound = this.calcWindSizes();
 
-		this.target.parentNode ||
-			this.jodit.ownerDocument.body.appendChild(this.target);
+		this.targetContainer.parentNode ||
+			this.jodit.ownerDocument.body.appendChild(this.targetContainer);
 
 		this.toolbar.build(
 			this.jodit.options.popup[type.toLowerCase()],
@@ -578,10 +568,10 @@ export class inlinePopup extends Plugin {
 		}
 
 		this.isTargetAction = false;
-		this.isShown = false;
+		this.isOpened = false;
 		this.popup.close();
 
-		Dom.safeRemove(this.target);
+		Dom.safeRemove(this.targetContainer);
 	};
 
 	private onSelectionStart = (event: MouseEvent) => {
@@ -635,7 +625,7 @@ export class inlinePopup extends Plugin {
 		}
 	};
 
-	public isShown: boolean = false;
+	isOpened: boolean = false;
 
 	public onChangeSelection = () => {
 		if (!this.jodit.options.toolbarInline || !this.jodit.isEditorMode()) {
@@ -664,6 +654,8 @@ export class inlinePopup extends Plugin {
 		this.toolbar = JoditToolbarCollection.makeCollection(editor);
 
 		this.target = editor.create.div('jodit_toolbar_popup-inline-target');
+		this.targetContainer = editor.create.div('jodit_toolbar_popup-inline-container', this.target);
+
 		this.container = editor.create.div();
 
 		this.popup = new Popup(
@@ -681,7 +673,7 @@ export class inlinePopup extends Plugin {
 					e.stopPropagation();
 				}
 			)
-			.on('beforeOpenPopup hidePopup afterSetMode', this.hidePopup)
+			.on('beforeOpenPopup hidePopup afterSetMode blur', this.hidePopup)
 			.on('recalcPositionPopup', this.reCalcPosition)
 			.on(
 				'getDiffButtons.mobile',
@@ -701,7 +693,7 @@ export class inlinePopup extends Plugin {
 			)
 			.on('selectionchange', this.onChangeSelection)
 			.on('afterCommand afterExec', () => {
-				if (this.isShown && this.isSelectionPopup) {
+				if (this.isOpened && this.isSelectionPopup) {
 					this.onChangeSelection();
 				}
 			})

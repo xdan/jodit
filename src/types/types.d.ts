@@ -13,10 +13,13 @@ export interface IDictionary<T = any> {
 	[key: string]: T;
 }
 
-interface IComponent<T extends IViewBased = IViewBased> {
-	jodit: T;
+export interface IDestructible {
 	isDestructed: boolean;
 	destruct(): any;
+}
+
+interface IComponent<T extends IViewBased = IViewBased> extends IDestructible {
+	jodit: T;
 }
 
 export type NodeCondition = (

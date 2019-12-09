@@ -4,14 +4,13 @@
  * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 
-import { IBound } from '../../types/types';
 import { IViewBased } from '../../types/view';
 import { Dom } from '../Dom';
 import { css, offset, throttle } from '../helpers/';
 import { Component } from '../Component';
-import { IControlTypeStrong } from '../../types';
+import { IControlTypeStrong, IPopup } from '../../types';
 
-export class Popup extends Component {
+export class Popup extends Component implements IPopup {
 	private calcPosition() {
 		if (!this.isOpened || this.isDestructed) {
 			return;
@@ -19,14 +18,14 @@ export class Popup extends Component {
 
 		const popup: HTMLElement = this.container;
 
-		const offsetContainer: IBound = offset(
+		const offsetContainer = offset(
 			this.jodit.container as HTMLDivElement,
 			this.jodit,
 			this.jodit.ownerDocument,
 			true
 		);
 
-		const offsetPopup: IBound = offset(
+		const offsetPopup = offset(
 			popup,
 			this.jodit,
 			this.jodit.ownerDocument,
@@ -34,6 +33,7 @@ export class Popup extends Component {
 		);
 
 		const marginLeft: number = (css(popup, 'marginLeft') as number) || 0;
+
 		offsetPopup.left -= marginLeft;
 
 		let diffLeft: number = marginLeft;
@@ -113,18 +113,20 @@ export class Popup extends Component {
 	isOpened: boolean = false;
 
 	/**
+	 * Open popup
+	 *
 	 * @param {HTMLElement} content
 	 * @param {boolean} [rightAlign=false] Open popup on right side
-	 * @param {boolean} [noStandartActions=false] No call standarts action
+	 * @param {boolean} [noStandardActions=false] No call standarts action
 	 */
 	open(
 		content: string | HTMLElement | IControlTypeStrong,
 		rightAlign?: boolean,
-		noStandartActions: boolean = false
+		noStandardActions: boolean = false
 	) {
 		Jodit.fireEach('beforeOpenPopup closeAllPopups', this, content); // close popups in another editors too
 
-		noStandartActions || this.jodit.events.on('closeAllPopups', this.close);
+		noStandardActions || this.jodit.events.on('closeAllPopups', this.close);
 
 		this.container.classList.add(this.className + '-open');
 		this.doOpen(content);
@@ -139,7 +141,7 @@ export class Popup extends Component {
 			this.container.classList.toggle('jodit_right', rightAlign);
 		}
 
-		if (!noStandartActions && this.container.parentNode) {
+		if (!noStandardActions && this.container.parentNode) {
 			this.jodit.events.fire(
 				this.container.parentNode,
 				'afterOpenPopup',
@@ -149,9 +151,13 @@ export class Popup extends Component {
 
 		this.isOpened = true;
 
-		!noStandartActions && this.calcPosition();
+		!noStandardActions && this.calcPosition();
 	}
 
+	/**
+	 * Close popup
+	 * @param current
+	 */
 	close = (current?: HTMLElement | Popup) => {
 		if (!this.isOpened && !this.isDestructed) {
 			return;
@@ -176,7 +182,7 @@ export class Popup extends Component {
 		}
 	};
 
-	public container: HTMLElement;
+	container: HTMLElement;
 
 	constructor(
 		jodit: IViewBased,

@@ -9,3 +9,4 @@ export * from './types';
 export * from './storage';
 export * from './uploader';
 export * from './view';
+export * from './popup';

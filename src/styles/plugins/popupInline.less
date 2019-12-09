@@ -6,10 +6,16 @@
  * For commercial licenses see https://xdsoft.net/jodit/commercial/
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
+@import (reference) '../variables';
+
+.jodit_toolbar_popup-inline-container {
+	z-index: 1300;
+}
+
 .jodit_toolbar_popup-inline-target {
 	position: absolute;
-	width: 0;
-	height: 0;
+
 	&.jodit_toolbar_popup-inline-target-hidden {
 		display: none;
 	}
@@ -17,8 +23,8 @@
 
 .jodit_toolbar_popup-inline {
 	display: inline-block !important;
-
 	position: relative !important;
+
 	> div {
 		color: @color-background-gray;
 		background: @popup-bg-color;
@@ -37,29 +43,37 @@
 	.jodit_toolbar {
 		z-index: 7;
 		border: 0;
-		white-space: normal;
+		display: block;
+	}
+
+	.jodit_toolbar_btn {
+		display: inline-flex;
+	}
+
+	.jodit_toolbar_btn-break {
+		display: block;
+		width: 100%;
 	}
 
 	> div > .jodit_toolbar {
-		white-space: nowrap;
 		box-shadow: none;
-		vertical-align: top;
 	}
+
 	> .jodit_popup_triangle {
+		position: absolute;
 		padding: 0;
-		margin: 0;
+		margin: 0 0 0 -@popup-triangle-size / 2;
 		width: @popup-triangle-size;
 		height: @popup-triangle-size;
-		position: absolute;
 		top: -@popup-triangle-size / 2;
-		margin-left: -@popup-triangle-size / 2;
 		display: inline-block;
 		transform: rotate(45deg);
 		background: @popup-bg-color;
-		border: 1px solid @color-background-gray;
+		border: solid @color-background-gray;
 		border-width: 1px 0 0 1px;
 		z-index: 6;
 	}
+
 	&.jodit_toolbar_popup-inline-top {
 		> .jodit_popup_triangle {
 			top: auto;

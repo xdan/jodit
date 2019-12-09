@@ -49,7 +49,7 @@ Config.prototype.controls.dialog = {
 	},
 	fullsize: {
 		icon: 'fullsize',
-		getLabel: (editor, btn: IControlType, button) => {
+		getLabel: (editor, btn: IControlType, button): boolean | void => {
 			if (
 				Config.prototype.controls.fullsize &&
 				Config.prototype.controls.fullsize.getLabel &&
@@ -62,6 +62,8 @@ Config.prototype.controls.dialog = {
 					button
 				);
 			}
+
+			return;
 		},
 		exec: dialog => {
 			dialog.toggleFullSize();
@@ -574,7 +576,7 @@ export class Dialog extends View {
 	 * this.dispatchEvent(event)">Close</a>', 'Title');
 	 * ```
 	 */
-	public close = (e?: MouseEvent) => {
+	close = (e?: MouseEvent) => {
 		if (this.isDestructed) {
 			return;
 		}

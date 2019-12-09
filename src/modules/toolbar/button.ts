@@ -101,7 +101,7 @@ export class ToolbarButton extends ToolbarElement implements IToolbarButton {
 				false;
 
 		if (control.list) {
-			const list: PopupList = new PopupList(
+			const list = new PopupList(
 				this.jodit,
 				this.container,
 				this.target
@@ -122,7 +122,7 @@ export class ToolbarButton extends ToolbarElement implements IToolbarButton {
 			this.jodit.events.fire('synchro');
 
 			if (this.parentToolbar) {
-				this.parentToolbar.immedateCheckActiveButtons();
+				this.parentToolbar.immediateCheckActiveButtons();
 			}
 
 			/**
