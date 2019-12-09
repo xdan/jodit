@@ -428,6 +428,7 @@ export function imageProperties(editor: IJodit) {
 					);
 				}
 			},
+
 			update = () => {
 				updateSrc();
 				updateText();
@@ -579,9 +580,12 @@ export function imageProperties(editor: IJodit) {
 											data.baseurl + data.files[0]
 										);
 									}
+
 									update();
+
 									popup.close();
 								},
+
 								filebrowser: (
 									data: IFileBrowserCallBackData
 								) => {
@@ -595,7 +599,9 @@ export function imageProperties(editor: IJodit) {
 											'src',
 											data.files[0]
 										);
+
 										popup.close();
+
 										update();
 									}
 								}

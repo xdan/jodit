@@ -7,14 +7,11 @@
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-export * from './isHTML';
-export * from './isHTMLFromWord';
-export * from './isInt';
-export * from './isLicense';
-export * from './isNumeric';
-export * from './isString';
-export * from './isFunction';
-export * from './isPlainObject';
-export * from './isURL';
-export * from './isWindow';
-export * from './hasBrowserColorPicker';
+/**
+ * Check value is Function
+ *
+ * @param value
+ */
+export const isFunction = (value: unknown): value is Function => {
+	return  typeof value === 'function';
+};

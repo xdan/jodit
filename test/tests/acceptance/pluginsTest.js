@@ -787,7 +787,7 @@ describe('Test plugins', function() {
 							const disableRatioBtn = imageEditor
 								.querySelector('[data-area=crop].active')
 								.querySelector(
-									'.jodit_btn_radio_group button:last-child'
+									'.jodit_button_radio_group button:last-child'
 								);
 
 							expect(disableRatioBtn).not.to.equal(null);
@@ -1075,7 +1075,7 @@ describe('Test plugins', function() {
 							const disableRatioBtn = imageEditor
 								.querySelector('[data-area=resize].active')
 								.querySelector(
-									'.jodit_btn_radio_group button:last-child'
+									'.jodit_button_radio_group button:last-child'
 								);
 
 							expect(disableRatioBtn).not.to.equal(null);

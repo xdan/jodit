@@ -207,7 +207,8 @@ export class Popup extends Component implements IPopup {
 				[this.jodit.ownerWindow, this.jodit.events],
 				'resize',
 				this.throttleCalcPosition
-			);
+			)
+			.on('afterInsertNode, afterInsertImage', this.close);
 	}
 
 	firstInFocus() {}

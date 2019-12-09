@@ -963,21 +963,10 @@ Config.prototype.controls = {
 								);
 							}
 						}
-						close();
-					},
-					upload: async (data: IFileBrowserCallBackData) => {
-						if (data.files && data.files.length) {
-							for (let i = 0; i < data.files.length; i += 1) {
-								await editor.selection.insertImage(
-									data.baseurl + data.files[i],
-									null,
-									editor.options.imageDefaultWidth
-								);
-							}
-						}
 
 						close();
 					},
+					upload: true,
 					url: async (url: string, text: string) => {
 						const image: HTMLImageElement =
 							sourceImage || editor.create.inside.element('img');
@@ -1054,15 +1043,7 @@ Config.prototype.controls = {
 						}
 						close();
 					},
-					upload: (data: IFileBrowserCallBackData) => {
-						let i;
-						if (data.files && data.files.length) {
-							for (i = 0; i < data.files.length; i += 1) {
-								insert(data.baseurl + data.files[i]);
-							}
-						}
-						close();
-					},
+					upload: true,
 					url: (url: string, text: string) => {
 						if (sourceAnchor) {
 							sourceAnchor.setAttribute('href', url);
