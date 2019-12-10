@@ -53,7 +53,7 @@ ES2018 Version (if your users use only modern browsers)
 
 And some `<textarea>` element
 
-```xml
+```html
 <textarea id="editor" name="editor"></textarea>
 ```
 After this, you can init Jodit plugin
@@ -145,7 +145,7 @@ var editor = new Jodit('#editor', {
 ```javascript
 Jodit.plugins.yourplugin = function (editor) {
     editor.events.on('afterInit', function () {
-        editor.seleciotn.insertHTMl('Text');
+        editor.selection.insertHTMl('Text');
     });
 }
 ```
@@ -175,6 +175,28 @@ var editor = new Jodit('.someselector', {
             iconURL: 'http://xdsoft.net/jodit/logo.png',
             exec: function (editor) {
                 editor.selection.insertHTML((new Date).toDateString());
+            }
+        }
+    }
+})
+```
+
+button with plugin
+
+```javascript
+Jodit.plugins.insertText = function (editor) {
+    editor.events.on('someEvent', function (text) {
+        editor.selection.insertHTMl('Hello ' + text);
+    });
+};
+
+var editor = new Jodit('.someselector', {
+	buttons: ['bold', 'insertText'],
+    controls: {
+        insertText: {
+            iconURL: 'http://xdsoft.net/jodit/logo.png',
+            exec: function (editor) {
+                editor.events.fire('someEvent', 'world!!!');
             }
         }
     }
