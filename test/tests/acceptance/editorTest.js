@@ -835,8 +835,12 @@ describe('Jodit Editor Tests', function() {
 				editor.selection.setCursorAfter(editor.editor.firstChild);
 				expect(editor.editorIsActive).to.be.true;
 
-				const sel = window.getSelection();
-				sel.selectAllChildren(p);
+				const sel = window.getSelection(),
+					range = document.createRange();
+
+				range.selectNodeContents(p);
+				sel.removeAllRanges();
+				sel.addRange(range);
 
 				simulateEvent('blur', 0, editor.editor);
 				expect(editor.editorIsActive).to.be.false;
