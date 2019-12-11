@@ -7,6 +7,8 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const MinimizeJSPlugin = require('terser-webpack-plugin');
 
 const pkg = require('./package.json');
+const make = require('./make.js');
+const { createEntries } = require('./src/utils/create-entries.js');
 
 const banner = `/*!
  ${pkg.name} - ${pkg.description}
@@ -31,7 +33,7 @@ module.exports = (env, argv) => {
 
 	console.warn('ES mode: ' + ES);
 
-	const filename = 'jodit' + ((ES === 'es5' || isTest) ? '' : '.' + ES) + (uglify ? '.min' : '');
+	const filename = (name) => name + ((ES === 'es5' || isTest) ? '' : '.' + ES) + (uglify ? '.min' : '');
 
 	const css_loaders = [
 		(debug || isTest) ? 'style-loader' : MiniCssExtractPlugin.loader,
@@ -68,9 +70,10 @@ module.exports = (env, argv) => {
 
 		devtool: debug ? 'inline-sourcemap' : false,
 
-		entry: debug
-			? ['webpack-hot-middleware/client', './src/index']
-			: './src/index',
+		entry: {
+			jodit: (debug ? ['webpack-hot-middleware/client', './src/index'] : ['./src/index']),
+			...make.paths.reduce((entm, file) => ({...entm, ...createEntries(file)}), {})
+		},
 
 		resolve: {
 			extensions: ['.ts', '.d.ts', '.js', '.json', '.less', '.svg']
@@ -115,9 +118,9 @@ module.exports = (env, argv) => {
 			]
 		},
 
-		output: {
+		output:  {
 			path: path.join(__dirname, 'build'),
-			filename: filename + '.js',
+			filename: filename('[name]') + '.js',
 			publicPath: '/build/',
 			libraryTarget: 'umd'
 		},
@@ -127,6 +130,23 @@ module.exports = (env, argv) => {
 				{
 					test: /\.less$/,
 					use: css_loaders
+				},
+				{
+					test: /\.(ts)$/,
+					loader: 'ts-loader',
+					options: {
+						transpileOnly: uglify,
+						compilerOptions: {
+							target: ES
+						}
+					},
+					include: path.resolve('../'),
+					exclude: [
+						path.resolve('src/'),
+						path.resolve('node_modules/'),
+						path.resolve('examples/'),
+						path.resolve('test/'),
+					]
 				},
 				{
 					test: /\.(ts)$/,
@@ -148,14 +168,16 @@ module.exports = (env, argv) => {
 						}
 					},
 					exclude: [
-						/(node_modules|bower_components)/,
+						/(node_modules)/,
 						/langs\/[a-z]{2}\.ts/,
 						/langs\/[a-z]{2}_[a-z]{2}\.ts/,
 					]
 				},
 				{
 					test: /\.svg$/i,
-					use: 'raw-loader'
+					use: {
+						loader: path.resolve('src/utils/svg-loader.js')
+					}
 				}
 			]
 		},
@@ -189,7 +211,7 @@ module.exports = (env, argv) => {
 			case 'production':
 				config.plugins.push(
 					new MiniCssExtractPlugin({
-						filename: filename + '.css'
+						filename: filename('[name]') + '.css'
 					})
 				);
 

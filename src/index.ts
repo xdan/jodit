@@ -38,7 +38,7 @@ const esFilter = (key: string): boolean => key !== '__esModule';
 Object.keys(Icons)
 	.filter(esFilter)
 	.forEach((key: string) => {
-		ToolbarIcon.icons[key.replace('_', '-')] = (Icons as any)[key];
+		ToolbarIcon.setIcon(key.replace('_', '-'), (Icons as any)[key]);
 	});
 
 // Modules

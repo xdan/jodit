@@ -10,10 +10,20 @@
 import { IDictionary } from '../../types';
 
 export class ToolbarIcon {
-	static icons: IDictionary<string> = {};
+	private static icons: IDictionary<string> = {};
 
+	private static get(name: string): string | undefined {
+		return ToolbarIcon.icons[name] ||
+			ToolbarIcon.icons[name.replace(/-/g, '_')] ||
+			ToolbarIcon.icons[name.toLowerCase()];
+	}
+
+	/**
+	 * Check if icon exist in store
+	 * @param name
+	 */
 	static exists(name: string): boolean {
-		return ToolbarIcon.icons[name] !== undefined;
+		return this.get(name) !== undefined;
 	}
 
 	/**
@@ -26,12 +36,19 @@ export class ToolbarIcon {
 		name: string,
 		defaultValue: string = '<span></span>'
 	): string {
+		return this.get(name) || defaultValue;
+	}
 
-		const icon =
-			ToolbarIcon.icons[name] ||
-			ToolbarIcon.icons[name.replace(/-/g, '_')] ||
-			ToolbarIcon.icons[name.toLowerCase()];
-
-		return icon || defaultValue;
+	/**
+	 * Set SVG in store
+	 *
+	 * @param name
+	 * @param value
+	 */
+	static setIcon(
+		name: string,
+		value: string
+	): void {
+		this.icons[name.replace('_', '-')] = value;
 	}
 }
