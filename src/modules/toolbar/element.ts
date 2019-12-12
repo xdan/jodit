@@ -22,6 +22,7 @@ import { trim } from '../helpers/string';
 export abstract class ToolbarElement extends Component implements IToolbarElement {
 	container: HTMLElement;
 	parentToolbar?: IToolbarCollection;
+	use: boolean;
 
 	protected constructor(
 		parentToolbarOrView: IToolbarCollection | IViewBased,
@@ -37,6 +38,7 @@ export abstract class ToolbarElement extends Component implements IToolbarElemen
 
 		this.container = this.jodit.create.element(containerTag);
 		this.container.classList.add(containerClass);
+		this.use = true;
 	}
 
 	focus() {
@@ -55,8 +57,9 @@ export abstract class ToolbarElement extends Component implements IToolbarElemen
 
 	createIcon(clearName: string, control?: IControlTypeStrong): HTMLElement {
 		const icon: string = control ? control.icon || control.name : clearName;
+		const useText:boolean = control ? control.useText || false : false;	
 
-		if (!this.jodit.options.textIcons) {
+		if (!this.jodit.options.textIcons && !useText ) {
 			let iconSVG: string | void | HTMLElement = this.jodit.events.fire(
 				'getIcon',
 				icon,

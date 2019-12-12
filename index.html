@@ -72,12 +72,13 @@ cena quidem posse videamur?
 	const editor = new Jodit('#editor', {
 		// iframe: true,
 		// theme: 'dark',
-	  // "buttons": "bold,image,|,brush,paragraph,|,align,,undo,redo,|,eraser,test,dots",
-	  // "extraButtons": [{
-	  // 		name: 'test',
-		// 		icon: 'bold',
-		// 		exec: () => alert(111)
-		// }],
+	   "buttons": "source",
+	  "extraButtons": [{
+	  		name: 'test',
+			icon: 'bold',
+			useText:true,
+			exec: () => alert(111)
+		}],
 		toolbarButtonSize: 'large',
 		height: 100,
 		tabIndex: 0,

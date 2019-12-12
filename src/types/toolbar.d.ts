@@ -21,6 +21,7 @@ interface IControlType<
 	hotkeys?: string | string[];
 	data?: IDictionary;
 	isInput?: boolean;
+	useText?: boolean;
 
 	/**
 	 * You can use it function for control - active/not active button
@@ -246,6 +247,7 @@ interface IControlType<
 
 interface IControlTypeStrong extends IControlType {
 	name: string;
+	useText?: boolean;
 }
 
 export type Controls = IDictionary<IControlType>;
