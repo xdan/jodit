@@ -58,8 +58,12 @@ export abstract class ToolbarElement extends Component implements IToolbarElemen
 	createIcon(clearName: string, control?: IControlTypeStrong): HTMLElement {
 		const icon: string = control ? control.icon || control.name : clearName;
 		const useText:boolean = control ? control.useText || false : false;	
+		const isTextBox:boolean = control ? control.isTextBox || false : false;	
+		
+		const cssName:string = control ? control.cssName || '' : '';	
+		const idControl:string = control ? 'id='+control.idComponent || '' : '';	
 
-		if (!this.jodit.options.textIcons && !useText ) {
+		if (!this.jodit.options.textIcons && !useText && !isTextBox ) {
 			let iconSVG: string | void | HTMLElement = this.jodit.events.fire(
 				'getIcon',
 				icon,
@@ -92,11 +96,20 @@ export abstract class ToolbarElement extends Component implements IToolbarElemen
 
 			return iconElement;
 		}
+		else if (isTextBox){
+			const textValue:string = control ? control.textValue || '' : '';	
+			return this.jodit.create.fromHTML(
+				`<input type='text' ${idControl}  class="jodit_icon ${cssName}" value=${textValue}/>`
+			);
+		}
+
+		
 
 		return this.jodit.create.fromHTML(
-			`<span class="jodit_icon">${this.jodit.i18n(
+			`<span ${idControl}  class="jodit_icon ${cssName}">${this.jodit.i18n(
 				control ? control.name : clearName
 			)}</span>`
 		);
 	}
 }
+

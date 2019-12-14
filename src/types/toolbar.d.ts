@@ -21,7 +21,11 @@ interface IControlType<
 	hotkeys?: string | string[];
 	data?: IDictionary;
 	isInput?: boolean;
-	useText?: boolean;
+	useText?: boolean;//envoropaev
+	cssName?: string;//envoropaev
+	isTextBox?: boolean;//envoropaev
+	textValue?: string;//envoropaev
+	idComponent?: string;//envoropaev
 
 	/**
 	 * You can use it function for control - active/not active button

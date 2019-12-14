@@ -74,11 +74,23 @@ cena quidem posse videamur?
 		// theme: 'dark',
 	   "buttons": "source",
 	  "extraButtons": [{
+			cssName: 'myStyle',
+			idComponent:'uuud',
 	  		name: 'test',
 			icon: 'bold',
 			useText:true,
 			exec: () => alert(111)
-		}],
+		},
+		{
+			cssName: 'myStyle1',
+			idComponent:'uuud2',
+			textValue:'someText',
+			isInput:true,
+	  		name: 'test1',
+			icon: 'bold',
+			isTextBox:true
+		}
+	],
 		toolbarButtonSize: 'large',
 		height: 100,
 		tabIndex: 0,
