@@ -99,7 +99,7 @@ export abstract class ToolbarElement extends Component implements IToolbarElemen
 		else if (isTextBox){
 			const textValue:string = control ? control.textValue || '' : '';	
 			return this.jodit.create.fromHTML(
-				`<input type='text' ${idControl}  class="jodit_icon ${cssName}" value=${textValue}/>`
+				`<input type='text' ${idControl}  class="jodit_icon ${cssName}" value="${textValue}"  />`
 			);
 		}
 

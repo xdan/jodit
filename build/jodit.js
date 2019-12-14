@@ -5027,7 +5027,7 @@ var ToolbarElement = /** @class */ (function (_super) {
         }
         else if (isTextBox) {
             var textValue = control ? control.textValue || '' : '';
-            return this.jodit.create.fromHTML("<input type='text' " + idControl + "  class=\"jodit_icon " + cssName + "\" value=" + textValue + "/>");
+            return this.jodit.create.fromHTML("<input type='text' " + idControl + "  class=\"jodit_icon " + cssName + "\" value=\"" + textValue + "\"  />");
         }
         return this.jodit.create.fromHTML("<span " + idControl + "  class=\"jodit_icon " + cssName + "\">" + this.jodit.i18n(control ? control.name : clearName) + "</span>");
     };
