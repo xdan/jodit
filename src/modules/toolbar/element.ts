@@ -62,6 +62,9 @@ export abstract class ToolbarElement extends Component implements IToolbarElemen
 		
 		const cssName:string = control ? control.cssName || '' : '';	
 		const idControl:string = control ? 'id='+control.idComponent || '' : '';	
+		
+		if (control && control.name === 'addBlock')
+			console.log(icon);
 
 		if (!this.jodit.options.textIcons && !useText && !isTextBox ) {
 			let iconSVG: string | void | HTMLElement = this.jodit.events.fire(
