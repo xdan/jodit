@@ -1,7 +1,7 @@
 /*!
  jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- Version: v3.3.5
+ Version: v3.3.6
  Url: https://xdsoft.net/jodit/
  License(s): GPL-2.0-or-later OR MIT OR Commercial
 */
@@ -745,8 +745,8 @@ __webpack_require__.d(helpers_namespaceObject, "debounce", function() { return d
 __webpack_require__.d(helpers_namespaceObject, "setTimeout", function() { return setTimeout_setTimeout; });
 __webpack_require__.d(helpers_namespaceObject, "isNumeric", function() { return isNumeric; });
 __webpack_require__.d(helpers_namespaceObject, "isPlainObject", function() { return isPlainObject; });
-__webpack_require__.d(helpers_namespaceObject, "isURL", function() { return isURL; });
 __webpack_require__.d(helpers_namespaceObject, "isWindow", function() { return isWindow; });
+__webpack_require__.d(helpers_namespaceObject, "colorToHex", function() { return colorToHex; });
 __webpack_require__.d(helpers_namespaceObject, "camelCase", function() { return camelCase; });
 __webpack_require__.d(helpers_namespaceObject, "fromCamelCase", function() { return fromCamelCase; });
 __webpack_require__.d(helpers_namespaceObject, "appendScript", function() { return appendScript; });
@@ -776,9 +776,9 @@ __webpack_require__.d(helpers_namespaceObject, "isInt", function() { return isIn
 __webpack_require__.d(helpers_namespaceObject, "isLicense", function() { return isLicense; });
 __webpack_require__.d(helpers_namespaceObject, "isString", function() { return isString; });
 __webpack_require__.d(helpers_namespaceObject, "isFunction", function() { return isFunction; });
+__webpack_require__.d(helpers_namespaceObject, "isURL", function() { return isURL; });
 __webpack_require__.d(helpers_namespaceObject, "hasBrowserColorPicker", function() { return hasBrowserColorPicker; });
 __webpack_require__.d(helpers_namespaceObject, "hexToRgb", function() { return hexToRgb; });
-__webpack_require__.d(helpers_namespaceObject, "colorToHex", function() { return colorToHex; });
 __webpack_require__.d(helpers_namespaceObject, "applyStyles", function() { return applyStyles; });
 __webpack_require__.d(helpers_namespaceObject, "cleanFromWord", function() { return cleanFromWord; });
 __webpack_require__.d(helpers_namespaceObject, "clear", function() { return clear_clear; });
@@ -5848,7 +5848,7 @@ class panel_Panel extends Component_Component {
 class view_View extends panel_Panel {
     constructor(jodit, options) {
         super(jodit);
-        this.version = "3.3.5";
+        this.version = "3.3.6";
         this.__modulesInstances = {};
         this.buffer = storage_Storage.makeStorage();
         this.progress_bar = this.create.div('jodit_progress_bar', this.create.div());
@@ -17491,7 +17491,7 @@ class stat_stat extends Plugin_Plugin {
             this.wordCounter = this.jodit.create.span();
             this.jodit.statusbar.append(this.wordCounter, true);
         }
-        this.jodit.events.on('change', this.calc);
+        this.jodit.events.on('change keyup', this.calc);
         this.calc();
     }
     beforeDestruct() {
