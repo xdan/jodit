@@ -71,8 +71,18 @@ module.exports = (env, argv) => {
 		devtool: debug ? 'inline-sourcemap' : false,
 
 		entry: {
-			jodit: (debug ? ['webpack-hot-middleware/client', './src/index'] : ['./src/index']),
-			...make.paths.reduce((entm, file) => ({...entm, ...createEntries(file)}), {})
+			jodit: debug ? ['webpack-hot-middleware/client', './src/index'] : ['./src/index'],
+			...make.paths.reduce(
+				(res, pth) => ({...res, [pth.replace(/\.ts$/,'')]: pth}),
+				{}
+			)
+		},
+
+		output:  {
+			path: path.join(__dirname, 'build'),
+			filename: filename('[name]') + '.js',
+			publicPath: '/build/',
+			libraryTarget: 'umd'
 		},
 
 		resolve: {
@@ -116,13 +126,6 @@ module.exports = (env, argv) => {
 					}
 				})
 			]
-		},
-
-		output:  {
-			path: path.join(__dirname, 'build'),
-			filename: filename('[name]') + '.js',
-			publicPath: '/build/',
-			libraryTarget: 'umd'
 		},
 
 		module: {

@@ -1,5 +1,5 @@
 module.exports = {
 	paths: [
-		'./plugins/emoji/',
+		'./plugins/emoji/emoji.ts',
 	]
 };

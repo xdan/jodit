@@ -7,8 +7,8 @@
 /**
  * Support emoji
  */
-Jodit.plugins.emoji = class emoji {
-	afterInit(editor: any) {
+export class emoji {
+	afterInit() {
 		// const buttons = editor.options.buttons;
 		//
 		// if (!buttons.includes('emoji')) {
@@ -18,7 +18,7 @@ Jodit.plugins.emoji = class emoji {
 		// editor.options.buttons = buttons;
 	}
 
-	beforeDestruct(editor: any) {
+	beforeDestruct() {
 
 	}
 };
