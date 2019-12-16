@@ -112,8 +112,8 @@ export default {
 	'type name': 'wprowadź nazwę',
 
 	// Form module
-	'Drop image': 'Usuń grafikę',
-	'Drop file': 'Usuń plik',
+	'Drop image': 'Upuść plik graficzny',
+	'Drop file': 'Upuść plik',
 	'or click': 'lub kliknij tu',
 	'Alternative text': 'Tekst alternatywny',
 	Browse: 'Przeglądaj',
