@@ -41,7 +41,7 @@ export class stat extends Plugin {
 			this.jodit.statusbar.append(this.wordCounter, true);
 		}
 
-		this.jodit.events.on('change', this.calc);
+		this.jodit.events.on('change keyup', this.calc);
 		this.calc();
 	}
 
