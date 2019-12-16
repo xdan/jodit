@@ -530,6 +530,22 @@ function simulateEvent(type, keyCodeArg, element, options) {
 	element.dispatchEvent(evt);
 }
 
+/**
+ *
+ * @param element
+ * @param pastedText
+ */
+function simulatePaste(element, pastedText) {
+	simulateEvent('paste', 0, element, function(data) {
+		data.clipboardData = {
+			types: ['text/html'],
+			getData: function() {
+				return pastedText;
+			}
+		};
+	});
+};
+
 function setCursor(elm, inEnd) {
 	const range = document.createRange();
 	range.selectNodeContents(elm);

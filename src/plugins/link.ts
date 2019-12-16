@@ -19,7 +19,6 @@ import { IControlType } from '../types/toolbar';
  * @property {boolean} link.followOnDblClick=true Follow lnk address after dblclick
  * @property {boolean} link.processVideoLink=true Replace inserted youtube/vimeo link toWYSIWYG `iframe`
  * @property {boolean} link.processPastedLink=true Wrap inserted link in &lt;a href="link">link&lt;/a>
- * @property {boolean} link.openLinkDialogAfterPost=true Open Link dialog after post
  * @property {boolean} link.removeLinkAfterFormat=true When the button is pressed toWYSIWYG clean format,
  * if it was done on the link is removed like command `unlink`
  */
@@ -30,7 +29,6 @@ declare module '../Config' {
 			followOnDblClick: boolean;
 			processVideoLink: boolean;
 			processPastedLink: boolean;
-			openLinkDialogAfterPost: boolean;
 			removeLinkAfterFormat: boolean;
 			noFollowCheckbox: boolean;
 			openInNewTabCheckbox: boolean;
@@ -41,7 +39,6 @@ Config.prototype.link = {
 	followOnDblClick: true,
 	processVideoLink: true,
 	processPastedLink: true,
-	openLinkDialogAfterPost: true,
 	removeLinkAfterFormat: true,
 	noFollowCheckbox: true,
 	openInNewTabCheckbox: true
@@ -67,6 +64,7 @@ Config.prototype.controls.link = {
 		const current: Node | false = editor.selection.current();
 		return current && Dom.closest(current, 'a', editor.editor) !== false;
 	},
+
 	popup: (
 		editor: IJodit,
 		current: HTMLElement | false,
@@ -246,15 +244,17 @@ export function link(jodit: IJodit) {
 			'processPaste',
 			(event: ClipboardEvent, html: string): HTMLAnchorElement | void => {
 				if (isURL(html)) {
-					const embed: string = convertMediaURLToVideoEmbed(html);
+					if (jodit.options.link.processVideoLink) {
+						const embed = convertMediaURLToVideoEmbed(html);
 
-					if (embed !== html) {
-						return jodit.create.inside.fromHTML(
-							embed
-						) as HTMLAnchorElement;
+						if (embed !== html) {
+							return jodit.create.inside.fromHTML(
+								embed
+							) as HTMLAnchorElement;
+						}
 					}
 
-					const a: HTMLAnchorElement = jodit.create.inside.element(
+					const a = jodit.create.inside.element(
 						'a'
 					);
 
