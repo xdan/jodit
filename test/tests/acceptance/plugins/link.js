@@ -27,7 +27,7 @@ describe('Link plugin', function () {
 			it('Should insert iframe with video', function() {
 				const editor = new Jodit(appendTestArea());
 				simulatePaste(editor.editor, 'https://www.youtube.com/watch?v=8Qn_spdM5Zg');
-				expect(editor.value).equal('<iframe width="400" height="345" src="https://www.youtube.com/embed/8Qn_spdM5Zg" frameborder="0" allowfullscreen=""></iframe>');
+				expect(sortAttributes(editor.value)).equal(sortAttributes('<iframe width="400" height="345" src="https://www.youtube.com/embed/8Qn_spdM5Zg" frameborder="0" allowfullscreen=""></iframe>'));
 			});
 
 			describe('Disable', function () {

@@ -1,7 +1,7 @@
 /*!
  jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- Version: v3.3.4
+ Version: v3.3.5
  Url: https://xdsoft.net/jodit/
  License(s): GPL-2.0-or-later OR MIT OR Commercial
 */
@@ -5848,7 +5848,7 @@ class panel_Panel extends Component_Component {
 class view_View extends panel_Panel {
     constructor(jodit, options) {
         super(jodit);
-        this.version = "3.3.4";
+        this.version = "3.3.5";
         this.__modulesInstances = {};
         this.buffer = storage_Storage.makeStorage();
         this.progress_bar = this.create.div('jodit_progress_bar', this.create.div());
@@ -15549,7 +15549,6 @@ Config_Config.prototype.link = {
     followOnDblClick: true,
     processVideoLink: true,
     processPastedLink: true,
-    openLinkDialogAfterPost: true,
     removeLinkAfterFormat: true,
     noFollowCheckbox: true,
     openInNewTabCheckbox: true
@@ -15691,9 +15690,11 @@ function link_link(jodit) {
     if (jodit.options.link.processPastedLink) {
         jodit.events.on('processPaste', (event, html) => {
             if (isURL(html)) {
-                const embed = convertMediaURLToVideoEmbed(html);
-                if (embed !== html) {
-                    return jodit.create.inside.fromHTML(embed);
+                if (jodit.options.link.processVideoLink) {
+                    const embed = convertMediaURLToVideoEmbed(html);
+                    if (embed !== html) {
+                        return jodit.create.inside.fromHTML(embed);
+                    }
                 }
                 const a = jodit.create.inside.element('a');
                 a.setAttribute('href', html);
