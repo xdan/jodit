@@ -98,7 +98,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 * @param args
 	 */
 	static fireEach(events: string, ...args: any[]) {
-		Object.keys(Jodit.instances).forEach((key) => {
+		Object.keys(Jodit.instances).forEach(key => {
 			const editor: Jodit = Jodit.instances[key];
 
 			if (!editor.isDestructed && editor.events) {
@@ -202,7 +202,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 	helper: any;
 
-	__plugins: IDictionary<IPlugin> = {};
+	private __plugins: IDictionary<IPlugin> = {};
 
 	mode: Modes = consts.MODE_WYSIWYG;
 
@@ -878,8 +878,8 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		) {
 			throw new Error(
 				'Element "' +
-				element +
-				'" should be string or HTMLElement instance'
+					element +
+					'" should be string or HTMLElement instance'
 			);
 		}
 
@@ -1062,28 +1062,31 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			return;
 		}
 
-		let toolbarContainer: HTMLElement = this.create.div('jodit_toolbar_container');
+		let toolbarContainer: HTMLElement = this.create.div(
+			'jodit_toolbar_container'
+		);
 		this.container.appendChild(toolbarContainer);
 
-		if (this.options.toolbar instanceof HTMLElement || typeof this.options.toolbar === 'string') {
+		if (
+			this.options.toolbar instanceof HTMLElement ||
+			typeof this.options.toolbar === 'string'
+		) {
 			toolbarContainer = this.resolveElement(this.options.toolbar);
 		}
 
 		this.applyOptionsToToolbarContainer(toolbarContainer);
 
 		this.toolbar.build(
-			splitArray(this.options.buttons).concat(
-				this.options.extraButtons
-			),
+			splitArray(this.options.buttons).concat(this.options.extraButtons),
 			toolbarContainer
 		);
 
 		const bs = this.options.toolbarButtonSize.toLowerCase();
 		toolbarContainer.classList.add(
 			'jodit_toolbar_size-' +
-			(['middle', 'large', 'small'].indexOf(bs) !== -1
-				? bs
-				: 'middle')
+				(['middle', 'large', 'small'].indexOf(bs) !== -1
+					? bs
+					: 'middle')
 		);
 	}
 
@@ -1110,7 +1113,16 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		Object.keys(Jodit.plugins).forEach((key: string) => {
 			if (disable.indexOf(key.toLowerCase()) === -1) {
-				this.__plugins[key] = new Jodit.plugins[key](this);
+				const plugin = new Jodit.plugins[key](this);
+
+				if (
+					plugin.init !== undefined &&
+					typeof plugin.init === 'function'
+				) {
+					plugin.init(this);
+				}
+
+				this.__plugins[key] = plugin;
 			}
 		});
 	}
@@ -1134,9 +1146,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		let mode: number = this.options.defaultMode;
 
 		if (this.options.saveModeInStorage) {
-			const localMode = this.storage.get(
-				'jodit_default_mode'
-			);
+			const localMode = this.storage.get('jodit_default_mode');
 
 			if (typeof localMode === 'string') {
 				mode = parseInt(localMode, 10);
@@ -1214,8 +1224,8 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			.on('synchro', () => {
 				this.setEditorValue();
 			})
-			.on('focus', () => this.editorIsActive = true)
-			.on('blur', () => this.editorIsActive = false)
+			.on('focus', () => (this.editorIsActive = true))
+			.on('blur', () => (this.editorIsActive = false))
 			.on(
 				this.editor,
 				'selectionchange selectionstart keydown keyup keypress mousedown mouseup mousepress ' +
@@ -1302,7 +1312,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 					this.element.style.display = attr;
 					this.element.removeAttribute(this.__defaultStyleDisplayKey);
 				}
-
 			} else {
 				this.element.style.display = '';
 			}
@@ -1323,6 +1332,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		Object.keys(this.__plugins).forEach((pluginName: string) => {
 			const plugin = this.__plugins[pluginName];
+
 			if (
 				plugin !== undefined &&
 				plugin.destruct !== undefined &&

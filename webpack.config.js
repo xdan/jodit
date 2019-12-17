@@ -7,8 +7,8 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const MinimizeJSPlugin = require('terser-webpack-plugin');
 
 const pkg = require('./package.json');
-const make = require('./make.js');
-const { createEntries } = require('./src/utils/create-entries.js');
+// const make = require('./make.js');
+// const { createEntries } = require('./src/utils/create-entries.js');
 
 const banner = `/*!
  ${pkg.name} - ${pkg.description}
@@ -49,9 +49,7 @@ module.exports = (env, argv) => {
 			loader: 'postcss-loader',
 			options: {
 				sourceMap: debug,
-				plugins: () => {
-					return [require('precss'), require('autoprefixer')];
-				}
+				plugins: () => [require('precss'), require('autoprefixer')]
 			}
 		},
 		{
@@ -71,11 +69,7 @@ module.exports = (env, argv) => {
 		devtool: debug ? 'inline-sourcemap' : false,
 
 		entry: {
-			jodit: debug ? ['webpack-hot-middleware/client', './src/index'] : ['./src/index'],
-			...make.paths.reduce(
-				(res, pth) => ({...res, [pth.replace(/\.ts$/,'')]: pth}),
-				{}
-			)
+			jodit: debug ? ['webpack-hot-middleware/client', './src/index'] : ['./src/index']
 		},
 
 		output:  {
@@ -132,34 +126,18 @@ module.exports = (env, argv) => {
 			rules: [
 				{
 					test: /\.less$/,
-					use: css_loaders
-				},
-				{
-					test: /\.(ts)$/,
-					loader: 'ts-loader',
-					options: {
-						transpileOnly: uglify,
-						compilerOptions: {
-							target: ES
-						}
-					},
-					include: path.resolve('../'),
-					exclude: [
-						path.resolve('src/'),
-						path.resolve('node_modules/'),
-						path.resolve('examples/'),
-						path.resolve('test/'),
-					]
+					use: css_loaders,
+					include: path.resolve('./src')
 				},
 				{
 					test: /\.(ts)$/,
 					use: [
 						{
-							loader: path.resolve('src/utils/lang-loader.js')
+							loader: path.resolve('./src/utils/lang-loader.js')
 						}
 					],
-					include: path.resolve('src/langs'),
-					exclude: path.resolve('src/langs/index.ts')
+					include: path.resolve('./src/langs'),
+					exclude: path.resolve('./src/langs/index.ts')
 				},
 				{
 					test: /\.ts$/,
@@ -170,6 +148,7 @@ module.exports = (env, argv) => {
 							target: ES
 						}
 					},
+					include: path.resolve('src/'),
 					exclude: [
 						/(node_modules)/,
 						/langs\/[a-z]{2}\.ts/,

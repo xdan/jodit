@@ -194,6 +194,7 @@ export function backspace(editor: IJodit) {
 			return removePotential(node);
 		}
 	};
+
 	const isEmpty = (node: Node): boolean => {
 		if (node.nodeName.match(/^(TD|TH|TR|TABLE|LI)$/) !== null) {
 			return false;

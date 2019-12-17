@@ -76,6 +76,8 @@ cena quidem posse videamur?
 		// height: 100,
 		// "preset": "inline",
 		// toolbar: "#toolbar",
+		limitChars: 5,
+
 		tabIndex: 0,
 		// language: 'ru',
 
@@ -88,7 +90,9 @@ cena quidem posse videamur?
 				url: 'https://xdsoft.net/jodit/connector/index.php'
 			}
 		}
-	})
+	});
+
+	editor.value = '12345';
 </script>
 <style>
 	#box {

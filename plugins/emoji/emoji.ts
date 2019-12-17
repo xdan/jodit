@@ -1,14 +1,17 @@
+import { IJodit, IPlugin, IControlType } from '../../src/types';
 
-// Config.prototype.controls.emoji = {
-// 	icon: 'plugins/emoji/icon.svg',
-// 	tooltip: 'Insert Emoji'
-// } as IControlType;
+declare var Jodit: any;
+
+Jodit.defaultOptions.controls.emoji = {
+	icon: 'plugins/emoji/icon.svg',
+	tooltip: 'Insert Emoji'
+} as IControlType;
 
 /**
  * Support emoji
  */
-export class emoji {
-	afterInit() {
+class emoji implements IPlugin {
+	init(jodit: IJodit) {
 		// const buttons = editor.options.buttons;
 		//
 		// if (!buttons.includes('emoji')) {
@@ -18,7 +21,9 @@ export class emoji {
 		// editor.options.buttons = buttons;
 	}
 
-	beforeDestruct() {
+	destruct() {
 
 	}
-};
+}
+
+Jodit.plugins.emoji = emoji;

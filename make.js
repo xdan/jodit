@@ -1,5 +1,7 @@
+const path = require('path');
+
 module.exports = {
 	paths: [
-		'./plugins/emoji/emoji.ts',
+		path.resolve(__dirname, './plugins/emoji/'),
 	]
 };

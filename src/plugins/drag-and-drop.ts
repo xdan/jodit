@@ -191,7 +191,7 @@ export class DragAndDrop extends Plugin {
 		return dt.getData(TEXT_HTML) || dt.getData(TEXT_PLAIN);
 	};
 
-	public afterInit() {
+	afterInit() {
 		this.jodit.events
 			.on(window, 'dragover', this.onDrag)
 			.on(
@@ -203,7 +203,7 @@ export class DragAndDrop extends Plugin {
 			.on(window, 'dragend drop mouseup', this.onDragEnd);
 	}
 
-	public beforeDestruct() {
+	beforeDestruct() {
 		this.onDragEnd();
 	}
 }

@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"target": "es2018",
+		"target": "es2015",
 		"moduleResolution": "node",
 
 		"removeComments": true,
@@ -24,6 +24,5 @@
 		"lib": ["es5", "esnext", "dom", "scripthost"]
 	},
 
-	"typeRoots": ["./node_modules/@types/"],
 	"exclude": ["node_modules", "build"]
 }

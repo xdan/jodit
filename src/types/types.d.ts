@@ -8,6 +8,7 @@
  */
 
 import { IViewBased } from './view';
+import { IJodit } from './jodit';
 
 export interface IDictionary<T = any> {
 	[key: string]: T;
@@ -128,10 +129,8 @@ export interface markerInfo {
 }
 
 export interface IPlugin {
-	jodit: IViewBased;
 	destruct(): void;
-	afterInit(jodit?: IViewBased): void;
-	beforeDestruct(jodit?: IViewBased): void;
+	init(jodit: IJodit): void;
 }
 
 /**
