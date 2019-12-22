@@ -1,11 +1,14 @@
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
+const gulptasks = require('./gulpfile');
 
 const config = require('./webpack.config')([], {
 	es: 'es5',
 	isTest: true
 });
+
+gulptasks.watch();
 
 const compression = require('compression');
 const app = new (require('express'))();

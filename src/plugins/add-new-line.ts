@@ -57,7 +57,7 @@ export function addNewLine(editor: IJodit) {
 		return;
 	}
 
-	const line: HTMLDivElement = editor.create.fromHTML(
+	const line = editor.create.fromHTML(
 		'<div role="button" tabIndex="-1" title="' +
 			editor.i18n('Break') +
 			'" class="jodit-add-new-line"><span>' +
@@ -170,8 +170,9 @@ export function addNewLine(editor: IJodit) {
 							editor,
 							editor.editorDocument
 						);
-						const top: number =
-							e.pageY - editor.editorWindow.pageYOffset;
+
+						const top = e.pageY - editor.editorWindow.pageYOffset;
+
 						const p: HTMLElement = editor.editorDocument.createElement(
 							editor.options.enter
 						);

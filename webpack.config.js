@@ -1,14 +1,13 @@
 const path = require('path');
 
 const webpack = require('webpack');
+
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const MinimizeJSPlugin = require('terser-webpack-plugin');
 
 const pkg = require('./package.json');
-// const make = require('./make.js');
-// const { createEntries } = require('./src/utils/create-entries.js');
 
 const banner = `/*!
  ${pkg.name} - ${pkg.description}
@@ -85,6 +84,7 @@ module.exports = (env, argv) => {
 
 		optimization: {
 			minimize: !debug && uglify,
+
 			minimizer: [
 				new MinimizeJSPlugin({
 					parallel: true,
@@ -129,6 +129,7 @@ module.exports = (env, argv) => {
 					use: css_loaders,
 					include: path.resolve('./src')
 				},
+
 				{
 					test: /\.(ts)$/,
 					use: [
@@ -139,6 +140,7 @@ module.exports = (env, argv) => {
 					include: path.resolve('./src/langs'),
 					exclude: path.resolve('./src/langs/index.ts')
 				},
+
 				{
 					test: /\.ts$/,
 					loader: 'ts-loader',
@@ -155,6 +157,7 @@ module.exports = (env, argv) => {
 						/langs\/[a-z]{2}_[a-z]{2}\.ts/,
 					]
 				},
+
 				{
 					test: /\.svg$/i,
 					use: {

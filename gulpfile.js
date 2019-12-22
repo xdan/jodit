@@ -15,43 +15,62 @@ const rootPath = path.resolve(process.cwd()) + path.sep;
 const mergeStream = require('merge-stream');
 const files = entries.resolve(make.paths);
 
-exports.build = function build() {
-	const tasks = [];
-	for (const file of files) {
-		const full = path.dirname(path.resolve(file)).replace(rootPath, '');
-		let pipe = gulp.src(path.resolve(file));
+function buildOneFile(file) {
+	console.log('Build file: ' + file);
 
-		const ext = path.extname(path.resolve(file)).toLowerCase();
+	const full = path.dirname(path.resolve(file)).replace(rootPath, '');
 
-		switch (ext) {
-			case '.ts':
-				pipe = pipe.pipe(tsProject()).js;
-				break;
+	let pipe = gulp.src(path.resolve(file)).on('error', error => {
+		console.warn(error);
+	});
 
-			case '.less':
-				pipe = pipe.pipe(less());
-				break;
+	const ext = path.extname(path.resolve(file)).toLowerCase();
 
-			case '.ico':
-			case '.svg':
-			case '.png':
-			case '.jpg':
-			case '.jpeg':
-				pipe = pipe.pipe(imagemin());
-				break;
+	switch (ext) {
+		case '.ts':
+			pipe = pipe.pipe(tsProject(ts.reporter.defaultReporter())).js;
+			break;
 
-			default:
-				break;
-		}
+		case '.less':
+			pipe = pipe.pipe(less());
+			break;
 
-		tasks.push(pipe.pipe(gulp.dest('build/' + full)));
+		case '.ico':
+		case '.svg':
+		case '.png':
+		case '.jpg':
+		case '.jpeg':
+			pipe = pipe.pipe(imagemin());
+			break;
+
+		default:
+			break;
 	}
 
-	return mergeStream.apply(null, tasks);
+	return pipe.pipe(gulp.dest('build/' + full));
+}
+
+function build() {
+	if (!files.length) {
+		return gulp.src('.');
+	}
+
+	return mergeStream.apply(null, files.map(file => buildOneFile(file)));
+}
+
+exports.watch = function watch() {
+	if (!files.length) {
+		return gulp.src('.');
+	}
+
+	files.forEach(file => {
+		gulp.watch(
+			file,
+			{ ignoreInitial: false },
+			buildOneFile.bind(null, file)
+		);
+	});
 };
 
-exports.watch = function watch () {
-	gulp.watch(files, gulp.series('build'));
-};
-
-exports.default = () => gulp.series('watch');
+exports.default = () => gulp.parallel('watch');
+exports.build = build;
