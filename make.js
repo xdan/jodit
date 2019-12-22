@@ -1,7 +1,6 @@
-const path = require('path');
-
+// You can add here your extra plugins
 module.exports = {
 	paths: [
-		path.resolve(__dirname, './plugins/emoji/'),
+		// require('path').resolve(__dirname, './plugins/example/'),
 	]
 };
