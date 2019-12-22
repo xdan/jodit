@@ -558,6 +558,23 @@ export class Config implements IViewOptions {
 	disablePlugins: string[] | string = [];
 
 	/**
+	 * Init and download extra plugins
+	 * @example
+	 * ```typescript
+	 * var editor = new Jodit('.editor', {
+	 *    extraPlugins: 'emoji'
+	 * });
+	 * ```
+	 * It will try load %SCRIPT_PATH%/plugins/emoji/emoji.js and after load will try init it
+	 */
+	extraPlugins: string[] | string = [];
+
+	/**
+	 * Base path for download extra plugins
+	 */
+	basePath?: string;
+
+	/**
 	 * This buttons list will be added to option.buttons
 	 */
 	extraButtons: Array<string | IControlType> = [];

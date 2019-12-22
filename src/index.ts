@@ -56,7 +56,7 @@ Object.keys(Modules)
 Object.keys(Plugins)
 	.filter(esFilter)
 	.forEach((key: string) => {
-		DefaultJodit.plugins[key] = (Plugins as any)[key];
+		DefaultJodit.plugins.add(key, (Plugins as any)[key]);
 	});
 
 // Languages

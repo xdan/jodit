@@ -10,7 +10,7 @@
 import { Config } from '../../Config';
 import { IDialogOptions } from '../../types/dialog';
 import { KEY_ESC } from '../../constants';
-import { IDictionary, IJodit } from '../../types';
+import { IDictionary, IJodit, IToolbarCollection } from '../../types';
 import { IControlType } from '../../types/toolbar';
 import { IViewBased } from '../../types/view';
 import { $$, asArray, css } from '../helpers/';
@@ -84,7 +84,7 @@ export class Dialog extends View {
 	 * @property {HTMLDivElement} resizer
 	 */
 	private resizer: HTMLDivElement;
-	public toolbar: ToolbarCollection;
+	public toolbar: IToolbarCollection;
 
 	private offsetX: number;
 	private offsetY: number;
@@ -725,7 +725,7 @@ export class Dialog extends View {
 			);
 		}
 
-		Jodit.plugins.fullsize(self);
+		fullsize(self);
 	}
 
 	/**
@@ -763,5 +763,5 @@ export class Dialog extends View {
 	}
 }
 
-import { Jodit } from '../../Jodit';
-import { JoditToolbarCollection, ToolbarCollection } from '..';
+import { JoditToolbarCollection } from '../toolbar/joditToolbarCollection';
+import { fullsize } from '../../plugins';

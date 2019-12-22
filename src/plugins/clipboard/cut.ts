@@ -8,7 +8,6 @@
  */
 
 import { IControlType, IJodit, IPlugin } from '../../types';
-import { Plugin } from '../../modules';
 import { Config } from '../../Config';
 import { TEXT_HTML, TEXT_PLAIN } from '../../constants';
 import { stripTags } from '../../modules/helpers/html';
@@ -31,8 +30,8 @@ export const pluginKey = 'clipboard';
 /**
  * Clipboard plugin - cut and copy functionality
  */
-export class clipboard extends Plugin implements IPlugin {
-	afterInit(editor: IJodit): void {
+export class clipboard implements IPlugin {
+	init(editor: IJodit): void {
 		editor.events
 			.on(
 				`copy.${pluginKey} cut.${pluginKey}`,
@@ -63,7 +62,7 @@ export class clipboard extends Plugin implements IPlugin {
 			)
 	}
 
-	beforeDestruct(editor: IJodit): void {
+	destruct(editor: IJodit): void {
 		editor?.buffer?.set(pluginKey, '');
 		editor?.events?.off('.' + pluginKey);
 	}

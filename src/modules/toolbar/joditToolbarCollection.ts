@@ -9,7 +9,7 @@
 
 import { ToolbarCollection } from './collection';
 import { ToolbarButton } from './button';
-import { IDictionary } from '../../types/types';
+import { IDictionary, IToolbarCollection } from '../../types/';
 import { IJodit } from '../../types/jodit';
 import { IViewBased } from '../../types/view';
 import { Dom } from '../Dom';
@@ -154,7 +154,11 @@ export class JoditToolbarCollection extends ToolbarCollection<IJodit> {
 		return button.target || this.jodit.selection.current() || undefined;
 	}
 
-	static makeCollection(jodit: IViewBased): ToolbarCollection<IViewBased> {
+	/**
+	 * Collection factory
+	 * @param jodit
+	 */
+	static makeCollection(jodit: IViewBased): IToolbarCollection {
 		const collection = isJoditObject(jodit)
 			? new JoditToolbarCollection(jodit)
 			: new ToolbarCollection(jodit);

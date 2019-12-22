@@ -134,6 +134,7 @@ export class source extends Plugin {
 	private selInfo: markerInfo[] = [];
 
 	private lastTuple: null | CallbackAndElement = null;
+
 	private loadNext = (
 		i: number,
 		urls: string[],
@@ -192,9 +193,11 @@ export class source extends Plugin {
 		if (!this.__lock || force === true) {
 			this.__lock = true;
 			const new_value = this.jodit.getEditorValue(false);
+
 			if (new_value !== this.getMirrorValue()) {
 				this.setMirrorValue(new_value);
 			}
+
 			this.__lock = false;
 		}
 	};
@@ -243,6 +246,7 @@ export class source extends Plugin {
 	private selectAll = () => {
 		this.mirror.select();
 	};
+
 	private onSelectAll = (command: string): void | false => {
 		if (
 			command.toLowerCase() === 'selectall' &&
@@ -257,15 +261,19 @@ export class source extends Plugin {
 	private getSelectionStart: () => number = (): number => {
 		return this.mirror.selectionStart;
 	};
+
 	private getSelectionEnd: () => number = (): number => {
 		return this.mirror.selectionEnd;
 	};
+
 	private getMirrorValue(): string {
 		return this.mirror.value;
 	}
+
 	private setMirrorValue(value: string) {
 		this.mirror.value = value;
 	}
+
 	private setFocusToMirror() {
 		this.mirror.focus();
 	}
@@ -335,6 +343,7 @@ export class source extends Plugin {
 			this.toWYSIWYG();
 		}
 	};
+
 	private restoreSelection = () => {
 		if (!this.selInfo.length) {
 			return;
@@ -425,9 +434,11 @@ export class source extends Plugin {
 					editor.events.fire('canUndo', undoManager.hasUndo());
 				}
 			},
+
 			getLastColumnIndex = (row: number): number => {
 				return aceEditor.session.getLine(row).length;
 			},
+
 			getLastColumnIndices = (): number[] => {
 				const rows: number = aceEditor.session.getLength();
 				const lastColumnIndices: number[] = [];
@@ -441,6 +452,7 @@ export class source extends Plugin {
 				}
 				return lastColumnIndices;
 			},
+
 			getRowColumnIndices = (
 				characterIndex: number
 			): { row: number; column: number } => {
@@ -458,6 +470,7 @@ export class source extends Plugin {
 					characterIndex - lastColumnIndices[row - 1] - 1;
 				return { row, column };
 			},
+
 			setSelectionRangeIndices = (start: number, end: number) => {
 				const startRowColumn = getRowColumnIndices(start);
 				const endRowColumn = getRowColumnIndices(end);
@@ -466,12 +479,14 @@ export class source extends Plugin {
 					end: endRowColumn
 				});
 			},
+
 			getIndexByRowColumn = (row: number, column: number): number => {
 				const lastColumnIndices: number[] = getLastColumnIndices();
 				return (
 					lastColumnIndices[row] - getLastColumnIndex(row) + column
 				);
 			},
+
 			tryInitAceEditor = () => {
 				if (
 					aceEditor === undefined &&
@@ -511,12 +526,14 @@ export class source extends Plugin {
 						editor.options.sourceEditorNativeOptions
 							.highlightActiveLine
 					);
+
 					aceEditor.getSession().setUseWrapMode(true);
 					aceEditor.setOption('indentedSoftWrap', false);
 					aceEditor.setOption(
 						'wrap',
 						editor.options.sourceEditorNativeOptions.wrap
 					);
+
 					aceEditor.getSession().setUseWorker(false);
 					aceEditor.$blockScrolling = Infinity;
 

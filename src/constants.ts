@@ -131,3 +131,26 @@ export const KEY_ALIASES: IDictionary<string> = {
 	win: 'meta',
 	windows: 'meta'
 };
+
+export const BASE_PATH: string = ((): string => {
+	if (typeof document  === 'undefined') {
+		return '';
+	}
+
+	const script = document.currentScript as HTMLScriptElement,
+		removeScriptName = (s: string) => s.replace(/\/[^\/]+.js$/, '/');
+
+	if (script) {
+		return removeScriptName(script.src);
+	}
+
+	const scripts = document.querySelectorAll<HTMLScriptElement>(
+		'script[src]'
+	);
+
+	if (scripts && scripts.length) {
+		return removeScriptName(scripts[scripts.length - 1].src);
+	}
+
+	return window.location.href;
+})();

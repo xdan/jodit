@@ -23,6 +23,17 @@ export class View extends Panel implements IViewBased {
 	 */
 	id: string;
 
+	/**
+	 * Get path for loading extra staff
+	 */
+	get basePath(): string {
+		if (this.options.basePath) {
+			return this.options.basePath;
+		}
+
+		return BASE_PATH;
+	}
+
 	version: string = appVersion; // from webpack.config.js
 
 	private __modulesInstances: IDictionary<Component> = {};
@@ -149,3 +160,4 @@ export class View extends Panel implements IViewBased {
 }
 
 import { Jodit } from '../../Jodit';
+import { BASE_PATH } from '../../constants';

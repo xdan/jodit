@@ -35,10 +35,12 @@ app.get("/icons.html", function(req, res) {
 app.get("/test.html", function(req, res) {
     res.sendFile(__dirname + '/test.html')
 });
+
 app.get("/fake.html", function(req, res) {
     res.sendFile(__dirname + '/fake.html')
 });
-app.get("/build/jodit.*", function(req, res) {
+
+app.get("/build/*.*", function(req, res) {
     res.sendFile(__dirname + '/' + req.url)
 });
 

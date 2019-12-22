@@ -34,6 +34,8 @@ interface IToolbarOptions {
 }
 
 interface IViewOptions extends ILanguageOptions, IToolbarOptions {
+	basePath?: string;
+
 	disabled?: boolean;
 	readonly?: boolean;
 	iframe?: boolean;
@@ -71,6 +73,8 @@ interface IViewBased<T = IViewOptions> extends IPanel {
 	 * @property {string} ID attribute for source element, id add {id}_editor it's editor's id
 	 */
 	id: string;
+
+	basePath: string;
 
 	buffer: IStorage;
 

@@ -12,7 +12,6 @@ import { Component } from './Component';
 
 export abstract class Plugin extends Component<IJodit> implements IPlugin {
 	abstract afterInit(jodit: IJodit): void;
-
 	abstract beforeDestruct(jodit: IJodit): void;
 
 	constructor(jodit: IJodit) {
@@ -23,7 +22,7 @@ export abstract class Plugin extends Component<IJodit> implements IPlugin {
 			.on('beforeDestruct', this.destruct);
 	}
 
-	init() {}
+	init(jodit: IJodit) {}
 
 	destruct() {
 		if (!this.isDestructed) {

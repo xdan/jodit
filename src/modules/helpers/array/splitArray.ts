@@ -9,7 +9,6 @@
 
 /**
  * Split separated elements
- *
  * @param a
  */
 export const splitArray = (a: any[] | string): any[] =>

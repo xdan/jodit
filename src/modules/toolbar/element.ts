@@ -19,7 +19,8 @@ import { Dom } from '../Dom';
 import { IViewBased, TagNames } from '../../types';
 import { trim } from '../helpers/string';
 
-export abstract class ToolbarElement extends Component implements IToolbarElement {
+export abstract class ToolbarElement extends Component
+	implements IToolbarElement {
 	container: HTMLElement;
 	parentToolbar?: IToolbarCollection;
 
@@ -69,7 +70,9 @@ export abstract class ToolbarElement extends Component implements IToolbarElemen
 			if (control && control.iconURL && iconSVG === undefined) {
 				iconElement = this.jodit.create.element('i');
 				iconElement.style.backgroundImage =
-					'url(' + control.iconURL + ')';
+					'url(' +
+					control.iconURL.replace('{basePath}', this.jodit.basePath) +
+					')';
 			} else {
 				if (iconSVG === undefined) {
 					if (ToolbarIcon.exists(icon)) {

@@ -127,10 +127,14 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 	}
 
 	build(buttons: Buttons, parentContainer: HTMLElement, target?: HTMLElement) {
+		this.jodit.events.off('rebuildToolbar');
+		this.jodit.events.on('afterInit rebuildToolbar', () => this.build(buttons, parentContainer, target));
+
 		this.__parentContainer = parentContainer;
 
 		let lastBtnSeparator: boolean = false;
 		this.clear();
+
 		const buttonsList: Array<IControlType | string> =
 			typeof buttons === 'string' ? buttons.split(/[,\s]+/) : buttons;
 
