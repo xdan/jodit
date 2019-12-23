@@ -39,10 +39,11 @@ https://sitename.com/somepath/plugins/emoji/emoji.js
 In `plugins/example` folder you can find example.
 
 ### Build System
--------------
+
 In Build system was added gulp subsystem for build extra plugins.
 You can make extra plugins like `plugins/example` and after build,
-this plugin will notbe inside `jodit.min.js` file. It will be in separate
+this plugin will not be inside `jodit.min.js` file. It will be in separate
 folder (eg `build/plugins/emoji/`).
 
-Also in root you can find `make.js` file fot
+Also in root you can find `make.js` file for install your plugin
+in build system.
