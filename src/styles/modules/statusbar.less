@@ -25,7 +25,6 @@
 		line-height: 1.57142857em;
 		margin: 0 @padding-default 0 0;
 		padding: 0;
-		vertical-align: middle;
 		flex: 1;
 
 		&.jodit_statusbar_item-right {
@@ -36,7 +35,6 @@
 
 		.jodit_icon {
 			font-size: @font-size-small;
-			line-height: @font-size-small + 3px;
 		}
 
 		ul,
@@ -45,12 +43,17 @@
 			margin: 0;
 			padding: 0;
 			list-style: none;
-			display: inline-block;
-			vertical-align: top;
+			display: flex;
+			justify-content: center;
+			align-items: center;
 
 			li {
 				margin-right: @padding-default / 2;
 			}
+		}
+
+		ul {
+			justify-content: flex-start;
 		}
 
 		span,
