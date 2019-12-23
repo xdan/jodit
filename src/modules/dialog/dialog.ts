@@ -118,7 +118,7 @@ export class Dialog extends View {
 
 		asArray<ContentItem | ContentItem[]>(elements).forEach((elm: ContentItem | ContentItem[]): any => {
 			if (Array.isArray(elm)) {
-				const div = this.create.div('jodit_dialog_footer_col');
+				const div = this.create.div('jodit_dialog_column');
 
 				elements_list.push(div);
 				root.appendChild(div);

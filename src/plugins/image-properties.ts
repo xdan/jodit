@@ -871,7 +871,7 @@ export function imageProperties(editor: IJodit) {
 		});
 		buttons.cancel.addEventListener('click', () => dialog.close());
 
-		dialog.setFooter([[buttons.check, buttons.cancel],  buttons.remove]);
+		dialog.setFooter([[buttons.cancel, buttons.remove],  buttons.check]);
 
 		dialog.setSize(500);
 		dialog.open();
