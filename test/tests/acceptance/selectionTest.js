@@ -114,6 +114,7 @@ describe('Selection Module Tests', function() {
 					).to.be.true;
 				});
 			});
+
 			describe('Cursor in the end of text node but after this has image', function() {
 				it('Should return false', function() {
 					const editor = new Jodit(appendTestArea());
@@ -133,6 +134,7 @@ describe('Selection Module Tests', function() {
 					).to.equal(false);
 				});
 			});
+
 			describe('Cursor in the middle of text node', function() {
 				it('Should return false', function() {
 					const editor = new Jodit(appendTestArea());
@@ -353,6 +355,7 @@ describe('Selection Module Tests', function() {
 				});
 			});
 		});
+
 		describe('Cursor after element', function() {
 			it('Should return null', function() {
 				const editor = new Jodit(appendTestArea());
@@ -372,6 +375,7 @@ describe('Selection Module Tests', function() {
 				).to.be.equal(null);
 			});
 		});
+
 		describe('Cursor before element', function() {
 			it('Should return null', function() {
 				const editor = new Jodit(appendTestArea());
@@ -391,6 +395,7 @@ describe('Selection Module Tests', function() {
 				).to.be.equal(null);
 			});
 		});
+
 		describe('Cursor in the start of element ', function() {
 			it('Should return true', function() {
 				const editor = new Jodit(appendTestArea());
@@ -410,6 +415,7 @@ describe('Selection Module Tests', function() {
 				).to.be.true;
 			});
 		});
+
 		describe('Cursor in the end of element ', function() {
 			it('Should return true', function() {
 				const editor = new Jodit(appendTestArea());
@@ -429,6 +435,7 @@ describe('Selection Module Tests', function() {
 				).to.be.true;
 			});
 		});
+
 		describe('Cursor not in the end of element ', function() {
 			it('Should return false', function() {
 				const editor = new Jodit(appendTestArea());
@@ -450,6 +457,7 @@ describe('Selection Module Tests', function() {
 				).to.be.false;
 			});
 		});
+
 		describe('Cursor not in the start of element ', function() {
 			it('Should return false', function() {
 				const editor = new Jodit(appendTestArea());
@@ -471,6 +479,7 @@ describe('Selection Module Tests', function() {
 				).to.be.false;
 			});
 		});
+
 		describe('If cursor in the end of P', function() {
 			it('Should return true', function() {
 				const editor = new Jodit(appendTestArea());
@@ -499,6 +508,7 @@ describe('Selection Module Tests', function() {
 				expect(editor.selection.cursorInTheEdge(false)).to.equal(false);
 			});
 		});
+
 		describe('If cursor in the end of SPAN in the end of P', function() {
 			it('Should return true', function() {
 				const editor = new Jodit(appendTestArea());
@@ -520,6 +530,7 @@ describe('Selection Module Tests', function() {
 				).to.equal(true);
 			});
 		});
+
 		describe('Curson in the end of span inside P and check cursorInTheEdge(true)', function() {
 			it('Should return false', function() {
 				const editor = new Jodit(appendTestArea());
@@ -581,7 +592,7 @@ describe('Selection Module Tests', function() {
 				__done();
 			}, 4000);
 
-			new Jodit(appendTestArea(), {
+			Jodit.make(appendTestArea(), {
 				defaultMode: Jodit.MODE_SOURCE,
 				useAceEditor: true,
 				beautifyHTML: false,
@@ -601,6 +612,7 @@ describe('Selection Module Tests', function() {
 						range.selectNodeContents(
 							jodit.editor.querySelector('p')
 						);
+
 						range.collapse(false);
 						sel.removeAllRanges();
 						sel.addRange(range);

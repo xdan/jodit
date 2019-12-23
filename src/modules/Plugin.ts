@@ -17,6 +17,8 @@ export abstract class Plugin extends Component<IJodit> implements IPlugin {
 	constructor(jodit: IJodit) {
 		super(jodit);
 
+		this.destruct = this.destruct.bind(this, jodit);
+
 		jodit.events
 			.on('afterInit', this.afterInit.bind(this, jodit))
 			.on('beforeDestruct', this.destruct);
@@ -27,9 +29,7 @@ export abstract class Plugin extends Component<IJodit> implements IPlugin {
 	destruct() {
 		if (!this.isDestructed) {
 			this.jodit?.events?.off('beforeDestruct', this.destruct);
-
 			this.beforeDestruct(this.jodit);
-
 			super.destruct();
 		}
 	}

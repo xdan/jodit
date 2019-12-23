@@ -7,20 +7,9 @@
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { isString } from '../checker';
-
 /**
  * Split separated elements
  * @param a
  */
-export const splitArray = <N = string>(a: N[] | string): N[] | string[] => {
-	if (Array.isArray(a))  {
-		return a;
-	}
-
-	if (isString(a))  {
-		return a.split(/[,\s]+/);
-	}
-
-	return <N[]>[];
-};
+export const splitArray = (a: any[] | string): any[] =>
+    typeof a === 'string' ? a.split(/[,\s]+/) : a;

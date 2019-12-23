@@ -65,6 +65,7 @@ export class PluginSystem implements IPluginSystem {
 			doneList: string[] = [],
 			promiseList: IDictionary<PluginInstance | undefined> = {},
 			plugins: PluginInstance[] = [],
+			pluginsMap: IDictionary<PluginInstance> = {},
 			makeAndInit = (plugin: PluginType, name: string) => {
 				if (
 					disableList.includes(name) ||
@@ -79,6 +80,7 @@ export class PluginSystem implements IPluginSystem {
 				this.initOrWait(jodit, name, instance, doneList, promiseList);
 
 				plugins.push(instance);
+				pluginsMap[name] = instance;
 			};
 
 		if (extrasList && extrasList.length) {
@@ -98,6 +100,8 @@ export class PluginSystem implements IPluginSystem {
 		this.items.forEach(makeAndInit);
 
 		this.addListenerOnBeforeDestruct(jodit, plugins);
+
+		(jodit as any).__plugins = pluginsMap;
 	}
 
 	/**
@@ -185,8 +189,9 @@ export class PluginSystem implements IPluginSystem {
 					instance.destruct(jodit);
 				}
 			});
-
 			plugins.length = 0;
+
+			delete (jodit as any).__plugins;
 		});
 	}
 
