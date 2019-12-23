@@ -22,7 +22,7 @@ Jodit.plugins.add('insertText', function (editor) {
 console.log(Jodit.plugins.get('insertText'));
 Jodit.plugins.remove('insertText');
 ```
-### In options added extraPlugins
+### `extraPlugins` options
 
 Inside plugin you can use several fields:
 ```js
