@@ -57,7 +57,7 @@ https://sitename.com/somepath/plugins/emoji/emoji.css
 
 In `plugins/example` folder you can find example.
 
-extraPlugins option allows append in editor extra plugins form npm, bower etc.
+extraPlugins option allows append in editor extra plugins from npm, bower etc.
 
 ### Build System
 
