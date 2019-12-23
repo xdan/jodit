@@ -1,4 +1,5 @@
 import {
+	IExtraPlugin,
 	IDictionary,
 	IJodit,
 	IPlugin,
@@ -13,7 +14,8 @@ import {
 	isFunction,
 	appendScriptAsync,
 	splitArray,
-	appendStyleAsync
+	appendStyleAsync,
+	isString
 } from './helpers/';
 
 /**
@@ -54,10 +56,10 @@ export class PluginSystem implements IPluginSystem {
 	 * @param jodit
 	 */
 	async init(jodit: IJodit): Promise<void> {
-		const extras = splitArray(jodit.options.extraPlugins).map(s =>
-				s.toLowerCase()
-			),
-			disable = splitArray(jodit.options.disablePlugins).map(s =>
+		const extrasList: IExtraPlugin[] = jodit.options.extraPlugins.map(s => {
+				return isString(s) ? { name: s.toLowerCase() } : s;
+			}),
+			disableList = splitArray(jodit.options.disablePlugins).map(s =>
 				s.toLowerCase()
 			),
 			doneList: string[] = [],
@@ -65,7 +67,7 @@ export class PluginSystem implements IPluginSystem {
 			plugins: PluginInstance[] = [],
 			makeAndInit = (plugin: PluginType, name: string) => {
 				if (
-					disable.includes(name) ||
+					disableList.includes(name) ||
 					doneList.includes(name) ||
 					promiseList[name]
 				) {
@@ -79,10 +81,10 @@ export class PluginSystem implements IPluginSystem {
 				plugins.push(instance);
 			};
 
-		if (extras && extras.length) {
+		if (extrasList && extrasList.length) {
 			try {
-				const needLoadExtras = extras.filter(
-					key => !this.items.has(key)
+				const needLoadExtras = extrasList.filter(
+					extra => !this.items.has(extra.name)
 				);
 
 				if (needLoadExtras.length) {
@@ -194,7 +196,7 @@ export class PluginSystem implements IPluginSystem {
 	 * @param jodit
 	 * @param pluginList
 	 */
-	private load(jodit: IJodit, pluginList: string[]): Promise<any> {
+	private load(jodit: IJodit, pluginList: IExtraPlugin[]): Promise<any> {
 		const reflect = (p: Promise<any>) =>
 			p.then(
 				(v: any) => ({ v, status: 'fulfilled' }),
@@ -202,14 +204,16 @@ export class PluginSystem implements IPluginSystem {
 			);
 
 		return Promise.all(
-			pluginList.map(name =>
-				reflect(
+			pluginList.map(extra => {
+				const url = extra.url || PluginSystem.getFullUrl(jodit, name, true);
+
+				return reflect(
 					appendScriptAsync(
-						PluginSystem.getFullUrl(jodit, name, true),
+						url,
 						jodit.ownerDocument
 					)
-				)
-			)
+				);
+			})
 		);
 	}
 
@@ -233,7 +237,11 @@ export class PluginSystem implements IPluginSystem {
 	 * @param name
 	 * @param js
 	 */
-	private static getFullUrl(jodit: IJodit, name: string, js: boolean): string {
+	private static getFullUrl(
+		jodit: IJodit,
+		name: string,
+		js: boolean
+	): string {
 		return (
 			jodit.basePath +
 			'plugins/' +

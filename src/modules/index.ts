@@ -31,3 +31,4 @@ export { ToolbarButton } from './toolbar/button';
 export { Stack } from './Stack';
 export { Widget } from './Widget';
 export { Uploader } from './Uploader';
+export { PluginSystem } from './PluginSystem';

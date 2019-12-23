@@ -18,6 +18,11 @@ interface PluginFunction {
 export type PluginType = typeof IPlugin | IPlugin | PluginFunction;
 export type PluginInstance = IPlugin | object;
 
+export interface IExtraPlugin {
+	name: string;
+	url?: string;
+}
+
 export interface IPluginSystem {
 	add(name: string, plugin: PluginType): void;
 	remove(name: string): void;
