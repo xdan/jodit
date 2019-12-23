@@ -22,21 +22,42 @@ Jodit.plugins.add('insertText', function (editor) {
 console.log(Jodit.plugins.get('insertText'));
 Jodit.plugins.remove('insertText');
 ```
-
 ### In options added extraPlugins
 
-It allows append in editor extra plugins form npm, bower etc.
+Inside plugin you can use several fields:
+```js
+// emoji.js
+
+class Emoji {
+    hasStyle = true; //
+    requires = ['autocomplete'];
+    init(editor) {
+        // this code will be execute only after autocomplete.init
+    }
+}
+
+Jodit.plugins.add('emoji', Emoji);
+```
+And inside you init code
 ```javascript
 Jodit.make('#editor', {
 	basePath: 'https://sitename.com/somepath/',
 	extraPlugins: ['emoji']
 });
 ```
+
 It will try to download
 ```
 https://sitename.com/somepath/plugins/emoji/emoji.js
 ```
+`hasStyle = true;` means try download and include in page style file:
+```
+https://sitename.com/somepath/plugins/emoji/emoji.css
+```
+
 In `plugins/example` folder you can find example.
+
+extraPlugins option allows append in editor extra plugins form npm, bower etc.
 
 ### Build System
 
