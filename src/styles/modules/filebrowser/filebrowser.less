@@ -227,11 +227,14 @@
 			width: @col_size;
 			height: @col_size;
 
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
 			@media (max-width: @screen-xs) {
 				width: calc(50% - 10px);
 			}
 
-			line-height: @col_size;
 			text-align: center;
 			border: 1px solid @color-border;
 			margin: 5px;
@@ -242,7 +245,6 @@
 
 			img {
 				max-width: 100%;
-				vertical-align: middle;
 			}
 
 			&:hover {
