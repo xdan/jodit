@@ -109,7 +109,7 @@ Config.prototype.image = {
  */
 export function imageProperties(editor: IJodit) {
 	const i18n = editor.i18n,
-		gi = ToolbarIcon.getIcon,
+		gi = ToolbarIcon.getIcon.bind(ToolbarIcon),
 		opt = editor.options,
 		dom = editor.create.fromHTML.bind(editor.create);
 
@@ -139,18 +139,25 @@ export function imageProperties(editor: IJodit) {
 
 		const image = this as HTMLImageElement,
 			dialog = new Dialog(editor),
-			check = dom(
-				`<a href="javascript:void(0)" class="jodit_button  jodit_status_success">${gi(
-					'check'
-				)}<span>${i18n('Ok')}</span></a>`
-			),
+
 			buttons = {
+				check: dom(
+					`<a href="javascript:void(0)" class="jodit_button  jodit_status_success">${gi(
+						'check'
+					)}<span>${i18n('Ok')}</span></a>`
+				),
+				cancel: dom(
+					`<a href="javascript:void(0)" class="jodit_button  jodit_status_primary">${gi(
+						'cancel'
+					)}<span>${i18n('Cancel')}</span></a>`
+				),
 				remove: dom(
 					`<a href="javascript:void(0)" class="jodit_button">${gi(
 						'bin'
 					)}<span>${i18n('Delete')}</span></a>`
 				)
 			},
+
 			prop = dom(
 				`<form class="jodit_properties">
 								<div class="jodit_grid">
@@ -180,6 +187,7 @@ export function imageProperties(editor: IJodit) {
 								</div>
 							</form>`
 			),
+
 			positionTab = dom(
 				`<div style="${
 					!opt.image.editMargins ? 'display:none' : ''
@@ -241,8 +249,10 @@ export function imageProperties(editor: IJodit) {
 								</select>
 							</div>`
 			) as HTMLDivElement,
+
 			hasFbUrl = opt.filebrowser.ajax.url || opt.uploader.url,
 			hasEditor = opt.image.useImageEditor,
+
 			mainTab = dom(
 				`<div style="${
 					!opt.image.editSrc ? 'display:none' : ''
@@ -291,13 +301,17 @@ export function imageProperties(editor: IJodit) {
 								</div>
 							</div>`
 			) as HTMLDivElement,
+
 			ratio = image.naturalWidth / image.naturalHeight || 1,
+
 			$w: HTMLInputElement = prop.querySelector(
 				'.imageWidth'
 			) as HTMLInputElement,
+
 			$h: HTMLInputElement = prop.querySelector(
 				'.imageHeight'
 			) as HTMLInputElement,
+
 			updateAlign = () => {
 				if (
 					image.style.cssFloat &&
@@ -316,6 +330,7 @@ export function imageProperties(editor: IJodit) {
 					}
 				}
 			},
+
 			updateBorderRadius = () => {
 				val(
 					prop,
@@ -325,12 +340,15 @@ export function imageProperties(editor: IJodit) {
 					).toString()
 				);
 			},
+
 			updateId = () => {
 				val(prop, '.id', image.getAttribute('id') || '');
 			},
+
 			updateStyle = () => {
 				val(prop, '.style', image.getAttribute('style') || '');
 			},
+
 			updateClasses = () => {
 				val(
 					prop,
@@ -341,6 +359,7 @@ export function imageProperties(editor: IJodit) {
 					)
 				);
 			},
+
 			updateMargins = () => {
 				if (!opt.image.editMargins) {
 					return;
@@ -391,10 +410,12 @@ export function imageProperties(editor: IJodit) {
 							: elm.setAttribute('disabled', 'true')
 				);
 			},
+
 			updateSizes = () => {
 				$w.value = image.offsetWidth.toString();
 				$h.value = image.offsetHeight.toString();
 			},
+
 			updateText = () => {
 				if (image.hasAttribute('title')) {
 					val(prop, '.imageTitle', image.getAttribute('title') || '');
@@ -416,6 +437,7 @@ export function imageProperties(editor: IJodit) {
 						a.getAttribute('target') === '_blank';
 				}
 			},
+
 			updateSrc = () => {
 				val(prop, '.imageSrc', image.getAttribute('src') || '');
 				const imageViewSrc: HTMLInputElement | null = prop.querySelector(
@@ -444,6 +466,7 @@ export function imageProperties(editor: IJodit) {
 		let timer: number,
 			lockSize: boolean = true,
 			lockMargin: boolean = true;
+
 		const tabs: IDictionary<HTMLElement> = {},
 			tabsbox: HTMLElement | null = prop.querySelector('.tabsbox');
 
@@ -684,11 +707,11 @@ export function imageProperties(editor: IJodit) {
 			}
 		);
 
-		dialog.setTitle([i18n('Image properties'), buttons.remove]);
+		dialog.setTitle(i18n('Image properties'));
 
 		dialog.setContent(prop);
 
-		check.addEventListener('click', () => {
+		buttons.check.addEventListener('click', () => {
 			// styles
 			if (opt.image.editStyle) {
 				if (val(prop, '.style')) {
@@ -846,8 +869,9 @@ export function imageProperties(editor: IJodit) {
 
 			dialog.close();
 		});
+		buttons.cancel.addEventListener('click', () => dialog.close());
 
-		dialog.setFooter([check]);
+		dialog.setFooter([[buttons.check, buttons.cancel],  buttons.remove]);
 
 		dialog.setSize(500);
 		dialog.open();
