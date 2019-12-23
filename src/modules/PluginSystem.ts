@@ -44,6 +44,14 @@ export class PluginSystem implements IPluginSystem {
 	}
 
 	/**
+	 * Get plugin from store
+	 * @param name
+	 */
+	get(name: string): PluginType | void {
+		return this.items.get(name.toLowerCase());
+	}
+
+	/**
 	 * Remove plugin from store
 	 * @param name
 	 */

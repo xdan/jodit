@@ -25,6 +25,7 @@ export interface IExtraPlugin {
 
 export interface IPluginSystem {
 	add(name: string, plugin: PluginType): void;
+	get(name: string): PluginType | void;
 	remove(name: string): void;
 	init(jodit: IJodit): Promise<void>;
 }

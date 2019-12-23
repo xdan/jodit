@@ -47,7 +47,7 @@ Config.prototype.useSearch = true;
  * ```
  */
 export class search extends Plugin {
-	public static getSomePartOfStringIndex(
+	static getSomePartOfStringIndex(
 		needle: string,
 		haystack: string,
 		start: boolean = true
@@ -57,7 +57,7 @@ export class search extends Plugin {
 			| false;
 	}
 
-	public static findSomePartOfString(
+	static findSomePartOfString(
 		needle: string,
 		haystack: string,
 		start: boolean = true,
@@ -219,16 +219,16 @@ export class search extends Plugin {
 			parentBox.scrollIntoView();
 	}
 
-	public searchBox: HTMLDivElement;
-	public queryInput: HTMLInputElement;
-	public replaceInput: HTMLInputElement;
-	public closeButton: HTMLButtonElement;
-	public nextButton: HTMLButtonElement;
-	public prevButton: HTMLButtonElement;
-	public replaceButton: HTMLButtonElement;
-	public counterBox: HTMLSpanElement;
+	searchBox: HTMLDivElement;
+	queryInput: HTMLInputElement;
+	replaceInput: HTMLInputElement;
+	closeButton: HTMLButtonElement;
+	nextButton: HTMLButtonElement;
+	prevButton: HTMLButtonElement;
+	replaceButton: HTMLButtonElement;
+	counterBox: HTMLSpanElement;
 
-	public calcCounts = (
+	calcCounts = (
 		query: string,
 		current: ISelectionRange | false = false
 	): [number, number] => {
@@ -264,7 +264,8 @@ export class search extends Plugin {
 
 		return [currentIndex, count];
 	};
-	public findAndReplace = (start: Node | null, query: string): boolean => {
+
+	findAndReplace = (start: Node | null, query: string): boolean => {
 		const
 			range = this.jodit.selection.range,
 			bound: ISelectionRange | false = this.find(
@@ -310,7 +311,7 @@ export class search extends Plugin {
 	 * @param query
 	 * @param next
 	 */
-	public findAndSelect = (
+	findAndSelect = (
 		start: Node | null,
 		query: string,
 		next: boolean
@@ -344,7 +345,7 @@ export class search extends Plugin {
 		return false;
 	};
 
-	public find = (
+	find = (
 		start: Node | null,
 		query: string,
 		next: boolean,
@@ -478,7 +479,7 @@ export class search extends Plugin {
 		return false;
 	};
 
-	public open = (searchAndReplace: boolean = false) => {
+	open = (searchAndReplace: boolean = false) => {
 		if (!this.isOpened) {
 			this.searchBox.classList.add('jodit_search-active');
 			this.isOpened = true;
@@ -508,7 +509,7 @@ export class search extends Plugin {
 		}
 	};
 
-	public close = () => {
+	close = () => {
 		if (!this.isOpened) {
 			return;
 		}
