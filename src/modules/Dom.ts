@@ -162,6 +162,7 @@ export class Dom {
 				) {
 					return false;
 				}
+
 				node = Dom.next(node, nd => !!nd, elm);
 			}
 		}
@@ -355,7 +356,7 @@ export class Dom {
 			node instanceof (win as any).HTMLElement &&
 			this.isBlock(node, win) &&
 			!/^(TD|TH|CAPTION|FORM)$/.test(node.nodeName) &&
-			node.style !== void 0 &&
+			node.style !== undefined &&
 			!/^(fixed|absolute)/i.test(node.style.position)
 		);
 	}

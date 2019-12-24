@@ -270,6 +270,7 @@ export function paste(editor: IJodit) {
 				editor.i18n('Paste as HTML'),
 				(agree: boolean | number) => {
 					let insertType: string = INSERT_AS_HTML;
+
 					if (agree === false) {
 						insertType = INSERT_AS_TEXT;
 					}
@@ -291,6 +292,7 @@ export function paste(editor: IJodit) {
 				},
 				'Insert as Text'
 			);
+
 			return false;
 		}
 	};
