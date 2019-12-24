@@ -52,7 +52,7 @@ export class Config implements IViewOptions {
 
 	preset: string = 'custom';
 
-	presets: IDictionary<any> = {
+	presets: IDictionary = {
 		inline: {
 			inline: true,
 			toolbar: false,

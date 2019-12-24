@@ -11,30 +11,30 @@
 
 .jodit_statusbar {
 	.font();
+	font-size: @font-size-small;
+
 	display: flex;
-	justify-content: space-between;
+	justify-content: start;
 	border: 1px solid @color-border;
 	border-top: 0;
-	font-size: 0;
 	background-color: @color-toolbar;
 	padding: 0 @padding-default / 2;
 
-	.jodit_statusbar_item {
-		font-size: @font-size-small;
+	&:before {
+		content: '';
+		flex: auto;
+		order: 1;
+	}
 
+	.jodit_statusbar_item {
 		line-height: 1.57142857em;
 		margin: 0 @padding-default 0 0;
 		padding: 0;
-		flex: 1;
+		order: 0;
 
 		&.jodit_statusbar_item-right {
 			margin: 0 0 0 @padding-default;
-			order: 1;
-			flex: 0;
-		}
-
-		.jodit_icon {
-			font-size: @font-size-small;
+			order: 2;
 		}
 
 		ul,
@@ -91,14 +91,6 @@
 				color: @color-text;
 			}
 		}
-	}
-
-	&:after {
-		content: ' ';
-		display: block;
-		visibility: hidden;
-		font-size: 0;
-		height: 0;
 	}
 }
 .jodit_disabled .jodit_statusbar {

@@ -58,6 +58,7 @@ export class StatusBar extends Component implements IStatusBar {
 	constructor(jodit: IJodit, readonly target: HTMLElement) {
 		super(jodit);
 		this.container = jodit.create.div('jodit_statusbar');
+
 		target.appendChild(this.container);
 		this.hide();
 	}

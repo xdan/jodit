@@ -7,13 +7,14 @@
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+@color-source-area: #323232;
+
 .jodit_source {
 	display: none;
 	position: relative;
-	background-color: #f8f8f8;
-	font-size: 0;
+	background-color: @color-source-area;
 	min-height: 100%;
-	flex: 1;
+	flex: auto;
 	overflow: auto;
 
 	.jodit_source_mirror-fake {
@@ -45,10 +46,10 @@
 .jodit_source_mirror {
 	border: 0;
 	width: 100%;
-	background: #3f3f3f;
-	margin: 0;
 	height: 100%;
-	box-shadow: none;
+
+	background: @color-source-area;
+	margin: 0;
 	resize: none;
 	box-sizing: border-box;
 	color: #f0f0f0;
@@ -58,6 +59,7 @@
 	font-size: 13px;
 	line-height: 1.3em;
 
+	box-shadow: none;
 	overflow: auto;
 	z-index: 2;
 	padding: 10px;

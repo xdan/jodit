@@ -53,7 +53,7 @@ export const Promt = (
 		) as HTMLAnchorElement,
 
 		form: HTMLFormElement = dialog.create.element('form', {
-			class: 'jodit_promt'
+			class: 'jodit_prompt'
 		}),
 
 		inputElement: HTMLInputElement = dialog.create.element('input', {

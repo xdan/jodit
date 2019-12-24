@@ -33,7 +33,7 @@ export const Confirm = (
 ): Dialog => {
 	const dialog = new Dialog(),
 		$div: HTMLDivElement = dialog.create.fromHTML(
-			'<form class="jodit_promt"></form>'
+			'<form class="jodit_prompt"></form>'
 		) as HTMLDivElement,
 		$label: HTMLLabelElement = dialog.create.element('label');
 

@@ -60,18 +60,24 @@
 
 	.jodit_dialog {
 		z-index: @z-index-dialog;
-		display: inline-block;
-		vertical-align: middle;
+
+		display: flex;
+		flex-flow: column nowrap;
+
 		white-space: normal;
 		text-align: left;
+
 		position: fixed;
 		left: 0;
 		top: 0;
+
 		background-color: #fff;
 		box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19),
 			0 6px 6px rgba(0, 0, 0, 0.23);
+
 		min-width: 200px;
 		min-height: 100px;
+		max-height: 100%;
 
 		@media (max-width: @screen-xs) {
 			max-width: 100%;
@@ -81,7 +87,7 @@
 			left: 0 !important;
 		}
 
-		.jodit_promt {
+		.jodit_prompt {
 			max-width: 300px;
 			min-width: 200px;
 			padding: 10px;
@@ -104,13 +110,13 @@
 			display: flex;
 			justify-content: space-between;
 			text-align: left;
-			color: #222222;
 
-			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.16),
-				0 1px 2px rgba(0, 0, 0, 0.23);
 			cursor: move;
 			height: 48px;
 			overflow: hidden;
+
+			color: #222222;
+			border-bottom: 1px solid @color-border;
 
 			.jodit_dialog_header-toolbar,
 			.jodit_dialog_header-title {
@@ -166,7 +172,8 @@
 		}
 
 		.jodit_dialog_content {
-			height: calc(~'100% - 48px');
+			flex: 1 0;
+			min-height: 100px;
 			overflow: auto;
 
 			.jodit_form_group {
@@ -223,10 +230,6 @@
 		.jodit_dialog_footer {
 			padding: @padding-default;
 			display: none;
-		}
-
-		&.with_footer .jodit_dialog_content {
-			height: calc(~'100% - 96px');
 		}
 
 		&.with_footer .jodit_dialog_footer {

@@ -70,7 +70,11 @@ export const getDataTransfer = (
 		return (event as ClipboardEvent).clipboardData;
 	}
 
-	return (event as DragEvent).dataTransfer || new DataTransfer();
+	try {
+		return (event as DragEvent).dataTransfer || new DataTransfer();
+	} catch {
+		return null;
+	}
 };
 
 Config.prototype.controls.paste = {
@@ -342,7 +346,7 @@ export function paste(editor: IJodit) {
 						types_str += types[i] + ';';
 					}
 				} else {
-					types_str = types.toString() + ';';
+					types_str = (types || TEXT_PLAIN).toString() + ';';
 				}
 
 				const getText = () => {

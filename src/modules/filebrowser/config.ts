@@ -444,7 +444,7 @@ Config.prototype.filebrowser = {
 					alt="${name}"
 					loading="lazy"
 				/>
-				${(showName || showSize || showTime ? info : '')}
+				${showName || showSize || showTime ? info : ''}
 			</a>`;
 	},
 
