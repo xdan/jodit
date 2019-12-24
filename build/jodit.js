@@ -1,7 +1,7 @@
 /*!
  jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- Version: v3.3.8
+ Version: v3.3.10
  Url: https://xdsoft.net/jodit/
  License(s): GPL-2.0-or-later OR MIT OR Commercial
 */
@@ -99,7 +99,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 74);
+/******/ 	return __webpack_require__(__webpack_require__.s = 75);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -228,7 +228,7 @@ var Dom = (function () {
             node instanceof win.HTMLElement &&
             this.isBlock(node, win) &&
             !/^(TD|TH|CAPTION|FORM)$/.test(node.nodeName) &&
-            node.style !== void 0 &&
+            node.style !== undefined &&
             !/^(fixed|absolute)/i.test(node.style.position));
     };
     Dom.prev = function (node, condition, root, withChild) {
@@ -1411,29 +1411,29 @@ tslib_1.__exportStar(__webpack_require__(30), exports);
 tslib_1.__exportStar(__webpack_require__(5), exports);
 tslib_1.__exportStar(__webpack_require__(15), exports);
 tslib_1.__exportStar(__webpack_require__(34), exports);
-tslib_1.__exportStar(__webpack_require__(93), exports);
+tslib_1.__exportStar(__webpack_require__(94), exports);
 tslib_1.__exportStar(__webpack_require__(35), exports);
 tslib_1.__exportStar(__webpack_require__(20), exports);
 tslib_1.__exportStar(__webpack_require__(23), exports);
 tslib_1.__exportStar(__webpack_require__(9), exports);
 tslib_1.__exportStar(__webpack_require__(52), exports);
-tslib_1.__exportStar(__webpack_require__(113), exports);
 tslib_1.__exportStar(__webpack_require__(114), exports);
+tslib_1.__exportStar(__webpack_require__(115), exports);
 tslib_1.__exportStar(__webpack_require__(10), exports);
 tslib_1.__exportStar(__webpack_require__(55), exports);
-tslib_1.__exportStar(__webpack_require__(115), exports);
+tslib_1.__exportStar(__webpack_require__(116), exports);
 tslib_1.__exportStar(__webpack_require__(37), exports);
 tslib_1.__exportStar(__webpack_require__(24), exports);
 tslib_1.__exportStar(__webpack_require__(53), exports);
-tslib_1.__exportStar(__webpack_require__(116), exports);
+tslib_1.__exportStar(__webpack_require__(117), exports);
 tslib_1.__exportStar(__webpack_require__(32), exports);
 tslib_1.__exportStar(__webpack_require__(31), exports);
 tslib_1.__exportStar(__webpack_require__(54), exports);
 tslib_1.__exportStar(__webpack_require__(56), exports);
-tslib_1.__exportStar(__webpack_require__(117), exports);
+tslib_1.__exportStar(__webpack_require__(118), exports);
 tslib_1.__exportStar(__webpack_require__(13), exports);
 tslib_1.__exportStar(__webpack_require__(33), exports);
-tslib_1.__exportStar(__webpack_require__(118), exports);
+tslib_1.__exportStar(__webpack_require__(119), exports);
 
 
 /***/ }),
@@ -1454,7 +1454,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(1);
 tslib_1.__exportStar(__webpack_require__(43), exports);
 tslib_1.__exportStar(__webpack_require__(19), exports);
-tslib_1.__exportStar(__webpack_require__(85), exports);
+tslib_1.__exportStar(__webpack_require__(86), exports);
 
 
 /***/ }),
@@ -1702,7 +1702,7 @@ var JoditArray_1 = __webpack_require__(32);
 var JoditObject_1 = __webpack_require__(31);
 var observer_1 = __webpack_require__(57);
 var Selection_1 = __webpack_require__(60);
-var StatusBar_1 = __webpack_require__(120);
+var StatusBar_1 = __webpack_require__(121);
 var storage_1 = __webpack_require__(25);
 var viewWithToolbar_1 = __webpack_require__(63);
 var PluginSystem_1 = __webpack_require__(67);
@@ -2548,9 +2548,9 @@ var dialog_1 = __webpack_require__(17);
 exports.Dialog = dialog_1.Dialog;
 var alert_1 = __webpack_require__(187);
 exports.Alert = alert_1.Alert;
-var promt_1 = __webpack_require__(72);
+var promt_1 = __webpack_require__(73);
 exports.Promt = promt_1.Promt;
-var confirm_1 = __webpack_require__(73);
+var confirm_1 = __webpack_require__(74);
 exports.Confirm = confirm_1.Confirm;
 
 
@@ -3463,15 +3463,15 @@ exports.setTimeout = function (callback, timeout, a1, a2, a3) {
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(102), exports);
 tslib_1.__exportStar(__webpack_require__(103), exports);
 tslib_1.__exportStar(__webpack_require__(104), exports);
 tslib_1.__exportStar(__webpack_require__(105), exports);
 tslib_1.__exportStar(__webpack_require__(106), exports);
 tslib_1.__exportStar(__webpack_require__(107), exports);
 tslib_1.__exportStar(__webpack_require__(108), exports);
-tslib_1.__exportStar(__webpack_require__(51), exports);
 tslib_1.__exportStar(__webpack_require__(109), exports);
+tslib_1.__exportStar(__webpack_require__(51), exports);
+tslib_1.__exportStar(__webpack_require__(110), exports);
 
 
 /***/ }),
@@ -3542,9 +3542,9 @@ exports.isNumeric = function (value) {
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(110), exports);
 tslib_1.__exportStar(__webpack_require__(111), exports);
 tslib_1.__exportStar(__webpack_require__(112), exports);
+tslib_1.__exportStar(__webpack_require__(113), exports);
 
 
 /***/ }),
@@ -3744,9 +3744,9 @@ var tslib_1 = __webpack_require__(1);
 var Dom_1 = __webpack_require__(0);
 var helpers_1 = __webpack_require__(4);
 var element_1 = __webpack_require__(26);
-var list_1 = __webpack_require__(125);
+var list_1 = __webpack_require__(126);
 var popup_1 = __webpack_require__(28);
-var tooltip_1 = __webpack_require__(126);
+var tooltip_1 = __webpack_require__(127);
 var isJoditObject_1 = __webpack_require__(12);
 var constants_1 = __webpack_require__(2);
 var icon_1 = __webpack_require__(6);
@@ -4628,9 +4628,9 @@ exports.Table = Table;
 Object.defineProperty(exports, "__esModule", { value: true });
 var asArray_1 = __webpack_require__(42);
 exports.asArray = asArray_1.asArray;
-var inArray_1 = __webpack_require__(83);
+var inArray_1 = __webpack_require__(84);
 exports.inArray = inArray_1.inArray;
-var splitArray_1 = __webpack_require__(84);
+var splitArray_1 = __webpack_require__(85);
 exports.splitArray = splitArray_1.splitArray;
 
 
@@ -4774,17 +4774,17 @@ exports.type = function (obj) {
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(86), exports);
-tslib_1.__exportStar(__webpack_require__(45), exports);
 tslib_1.__exportStar(__webpack_require__(87), exports);
+tslib_1.__exportStar(__webpack_require__(45), exports);
 tslib_1.__exportStar(__webpack_require__(88), exports);
 tslib_1.__exportStar(__webpack_require__(89), exports);
 tslib_1.__exportStar(__webpack_require__(90), exports);
-tslib_1.__exportStar(__webpack_require__(12), exports);
 tslib_1.__exportStar(__webpack_require__(91), exports);
+tslib_1.__exportStar(__webpack_require__(12), exports);
+tslib_1.__exportStar(__webpack_require__(92), exports);
 tslib_1.__exportStar(__webpack_require__(22), exports);
 tslib_1.__exportStar(__webpack_require__(21), exports);
-tslib_1.__exportStar(__webpack_require__(92), exports);
+tslib_1.__exportStar(__webpack_require__(93), exports);
 tslib_1.__exportStar(__webpack_require__(46), exports);
 tslib_1.__exportStar(__webpack_require__(47), exports);
 tslib_1.__exportStar(__webpack_require__(44), exports);
@@ -4806,11 +4806,11 @@ tslib_1.__exportStar(__webpack_require__(44), exports);
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(95), exports);
 tslib_1.__exportStar(__webpack_require__(96), exports);
 tslib_1.__exportStar(__webpack_require__(99), exports);
 tslib_1.__exportStar(__webpack_require__(100), exports);
 tslib_1.__exportStar(__webpack_require__(101), exports);
+tslib_1.__exportStar(__webpack_require__(102), exports);
 
 
 /***/ }),
@@ -4883,9 +4883,9 @@ exports.defaultLanguage = function (language, defaultLanguage) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(1);
 var async_1 = __webpack_require__(5);
-var break_1 = __webpack_require__(124);
+var break_1 = __webpack_require__(125);
 var button_1 = __webpack_require__(27);
-var separator_1 = __webpack_require__(127);
+var separator_1 = __webpack_require__(128);
 var Dom_1 = __webpack_require__(0);
 var Component_1 = __webpack_require__(8);
 var Config_1 = __webpack_require__(3);
@@ -5788,7 +5788,7 @@ var Component_1 = __webpack_require__(8);
 var async_1 = __webpack_require__(5);
 var Snapshot_1 = __webpack_require__(58);
 var Stack_1 = __webpack_require__(59);
-var command_1 = __webpack_require__(119);
+var command_1 = __webpack_require__(120);
 Config_1.Config.prototype.observer = {
     timeout: 100
 };
@@ -7060,14 +7060,14 @@ var joditToolbarCollection_1 = __webpack_require__(16);
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(1);
 var eventsNative_1 = __webpack_require__(65);
-var panel_1 = __webpack_require__(122);
-var storage_1 = __webpack_require__(123);
+var panel_1 = __webpack_require__(123);
+var storage_1 = __webpack_require__(124);
 var helpers_1 = __webpack_require__(4);
 var View = (function (_super) {
     tslib_1.__extends(View, _super);
     function View(jodit, options) {
         var _this = _super.call(this, jodit) || this;
-        _this.version = "3.3.8";
+        _this.version = "3.3.10";
         _this.__modulesInstances = {};
         _this.buffer = storage_1.Storage.makeStorage();
         _this.progress_bar = _this.create.div('jodit_progress_bar', _this.create.div());
@@ -7166,7 +7166,7 @@ var constants_1 = __webpack_require__(2);
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(1);
-var store_1 = __webpack_require__(121);
+var store_1 = __webpack_require__(122);
 var EventsNative = (function () {
     function EventsNative(doc) {
         var _this = this;
@@ -7840,17 +7840,17 @@ exports.PluginSystem = PluginSystem_1.PluginSystem;
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var add_new_line_1 = __webpack_require__(146);
+var add_new_line_1 = __webpack_require__(147);
 exports.addNewLine = add_new_line_1.addNewLine;
-var autofocus_1 = __webpack_require__(147);
+var autofocus_1 = __webpack_require__(148);
 exports.autofocus = autofocus_1.autofocus;
-var backspace_1 = __webpack_require__(148);
+var backspace_1 = __webpack_require__(149);
 exports.backspace = backspace_1.backspace;
-var bold_1 = __webpack_require__(149);
+var bold_1 = __webpack_require__(150);
 exports.bold = bold_1.bold;
-var clean_html_1 = __webpack_require__(150);
+var clean_html_1 = __webpack_require__(151);
 exports.cleanHtml = clean_html_1.cleanHtml;
-var clipboard_1 = __webpack_require__(151);
+var clipboard_1 = __webpack_require__(70);
 exports.clipboard = clipboard_1.clipboard;
 exports.paste = clipboard_1.paste;
 exports.pasteStorage = clipboard_1.pasteStorage;
@@ -7926,6 +7926,20 @@ exports.xpath = xpath_1.xpath;
 
 "use strict";
 
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = __webpack_require__(1);
+tslib_1.__exportStar(__webpack_require__(71), exports);
+tslib_1.__exportStar(__webpack_require__(72), exports);
+tslib_1.__exportStar(__webpack_require__(153), exports);
+__webpack_require__(154);
+
+
+/***/ }),
+/* 71 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
@@ -7938,7 +7952,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Config_1 = __webpack_require__(3);
 var constants_1 = __webpack_require__(2);
 var html_1 = __webpack_require__(35);
-var paste_1 = __webpack_require__(71);
+var paste_1 = __webpack_require__(72);
 Config_1.Config.prototype.controls.cut = {
     command: 'cut',
     isDisable: function (editor) { return editor.selection.isCollapsed(); },
@@ -7985,7 +7999,7 @@ exports.clipboard = clipboard;
 
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8006,7 +8020,7 @@ var dialog_1 = __webpack_require__(14);
 var helpers_1 = __webpack_require__(4);
 var Dom_1 = __webpack_require__(0);
 var nl2br_1 = __webpack_require__(152);
-var cut_1 = __webpack_require__(70);
+var cut_1 = __webpack_require__(71);
 Config_1.Config.prototype.askBeforePasteHTML = true;
 Config_1.Config.prototype.askBeforePasteFromWord = true;
 Config_1.Config.prototype.nl2brInPlainText = true;
@@ -8015,7 +8029,12 @@ exports.getDataTransfer = function (event) {
     if (event.clipboardData) {
         return event.clipboardData;
     }
-    return event.dataTransfer || new DataTransfer();
+    try {
+        return event.dataTransfer || new DataTransfer();
+    }
+    catch (_a) {
+        return null;
+    }
 };
 Config_1.Config.prototype.controls.paste = {
     tooltip: 'Paste from clipboard',
@@ -8203,7 +8222,7 @@ function paste(editor) {
                 }
             }
             else {
-                types_str_1 = types.toString() + ';';
+                types_str_1 = (types || constants_1.TEXT_PLAIN).toString() + ';';
             }
             var getText = function () {
                 if (/text\/html/i.test(types_str_1)) {
@@ -8350,7 +8369,7 @@ exports.paste = paste;
 
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8368,7 +8387,7 @@ exports.Promt = function (msg, title, callback, placeholder, defaultValue) {
         '<span>' +
         Jodit_1.Jodit.prototype.i18n('Ok') +
         '</span></a>'), form = dialog.create.element('form', {
-        class: 'jodit_promt'
+        class: 'jodit_prompt'
     }), inputElement = dialog.create.element('input', {
         autofocus: true,
         class: 'jodit_input'
@@ -8409,7 +8428,7 @@ var Jodit_1 = __webpack_require__(11);
 
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8426,7 +8445,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var dialog_1 = __webpack_require__(17);
 var icon_1 = __webpack_require__(6);
 exports.Confirm = function (msg, title, callback) {
-    var dialog = new dialog_1.Dialog(), $div = dialog.create.fromHTML('<form class="jodit_promt"></form>'), $label = dialog.create.element('label');
+    var dialog = new dialog_1.Dialog(), $div = dialog.create.fromHTML('<form class="jodit_prompt"></form>'), $label = dialog.create.element('label');
     if (typeof title === 'function') {
         callback = title;
         title = undefined;
@@ -8471,14 +8490,14 @@ var Jodit_1 = __webpack_require__(11);
 
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(75);
+module.exports = __webpack_require__(76);
 
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8492,12 +8511,12 @@ module.exports = __webpack_require__(75);
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-__webpack_require__(76);
+__webpack_require__(77);
 if ( true && typeof window !== 'undefined') {
-    __webpack_require__(77);
+    __webpack_require__(78);
 }
 var Jodit_1 = __webpack_require__(11);
-var index_1 = __webpack_require__(128);
+var index_1 = __webpack_require__(129);
 var consts = __webpack_require__(2);
 var Modules = __webpack_require__(68);
 var Plugins = __webpack_require__(69);
@@ -8538,13 +8557,13 @@ exports.default = Jodit_1.Jodit;
 
 
 /***/ }),
-/* 76 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 77 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8558,8 +8577,8 @@ exports.default = Jodit_1.Jodit;
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-__webpack_require__(78);
 __webpack_require__(79);
+__webpack_require__(80);
 (function (e) {
     e.matches ||
         (e.matches =
@@ -8589,7 +8608,7 @@ if (!Array.prototype.includes) {
 
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (function(module, exports) {
 
 /*
@@ -8835,18 +8854,18 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 // This file can be required in Browserify and Node.js for automatic polyfill
 // To use it:  require('es6-promise/auto');
 
-module.exports = __webpack_require__(80).polyfill();
+module.exports = __webpack_require__(81).polyfill();
 
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process, global) {/*!
@@ -10023,10 +10042,10 @@ return Promise$1;
 
 //# sourceMappingURL=es6-promise.map
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(81), __webpack_require__(82)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(82), __webpack_require__(83)))
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -10216,7 +10235,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, exports) {
 
 var g;
@@ -10242,7 +10261,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 83 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10260,7 +10279,7 @@ exports.inArray = function (needle, haystack) { return haystack.indexOf(needle) 
 
 
 /***/ }),
-/* 84 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10280,7 +10299,7 @@ exports.splitArray = function (a) {
 
 
 /***/ }),
-/* 85 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10323,7 +10342,7 @@ exports.throttle = function (fn, timeout, ctx) {
 
 
 /***/ }),
-/* 86 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10352,7 +10371,7 @@ exports.hasBrowserColorPicker = function () {
 
 
 /***/ }),
-/* 87 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10372,7 +10391,7 @@ exports.isHTML = function (str) {
 
 
 /***/ }),
-/* 88 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10394,7 +10413,7 @@ exports.isHTMLFromWord = function (data) {
 
 
 /***/ }),
-/* 89 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10418,7 +10437,7 @@ exports.isDestructable = function (value) {
 
 
 /***/ }),
-/* 90 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10442,7 +10461,7 @@ exports.isInt = function (value) {
 
 
 /***/ }),
-/* 91 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10464,7 +10483,7 @@ exports.isLicense = function (license) {
 
 
 /***/ }),
-/* 92 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10484,7 +10503,7 @@ exports.isString = function (value) {
 
 
 /***/ }),
-/* 93 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10499,12 +10518,12 @@ exports.isString = function (value) {
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(94), exports);
+tslib_1.__exportStar(__webpack_require__(95), exports);
 tslib_1.__exportStar(__webpack_require__(48), exports);
 
 
 /***/ }),
-/* 94 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10535,7 +10554,7 @@ exports.hexToRgb = function (hex) {
 
 
 /***/ }),
-/* 95 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10551,6 +10570,16 @@ exports.hexToRgb = function (hex) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var Dom_1 = __webpack_require__(0);
 var selector_1 = __webpack_require__(13);
+var string_1 = __webpack_require__(9);
+function normalizeCSS(s) {
+    return s
+        .replace(/mso-[a-z\-]+:[\s]*[^;]+;/gi, '')
+        .replace(/mso-[a-z\-]+:[\s]*[^";]+$/gi, '')
+        .replace(/border[a-z\-]*:[\s]*[^;]+;/gi, '')
+        .replace(/([0-9.]+)pt/gi, function (match) {
+        return (parseFloat(match) * 1.328).toFixed(0) + 'px';
+    });
+}
 exports.applyStyles = function (html) {
     if (html.indexOf('<html ') === -1) {
         return html;
@@ -10577,16 +10606,26 @@ exports.applyStyles = function (html) {
                 }
                 collection = selector_1.$$(rules[idx].selectorText, iframeDoc.body);
                 collection.forEach(function (elm) {
-                    elm.style.cssText = rules[idx].style.cssText
-                        .replace(/mso-[a-z\-]+:[\s]*[^;]+;/g, '')
-                        .replace(/border[a-z\-]*:[\s]*[^;]+;/g, '') + elm.style.cssText;
+                    elm.style.cssText = normalizeCSS(rules[idx].style.cssText + ';' + elm.style.cssText);
                 });
             };
             for (var idx = 0; idx < rules.length; idx += 1) {
                 _loop_1(idx);
             }
+            Dom_1.Dom.each(iframeDoc.body, function (node) {
+                if (node.nodeType === Node.ELEMENT_NODE) {
+                    var elm = node;
+                    var css = elm.style.cssText;
+                    if (css) {
+                        elm.style.cssText = normalizeCSS(css);
+                    }
+                    if (elm.hasAttribute('lang')) {
+                        elm.removeAttribute('lang');
+                    }
+                }
+            });
             convertedString = iframeDoc.firstChild
-                ? iframeDoc.body.innerHTML
+                ? string_1.trim(iframeDoc.body.innerHTML)
                 : '';
         }
     }
@@ -10598,90 +10637,9 @@ exports.applyStyles = function (html) {
     if (convertedString) {
         html = convertedString;
     }
-    return html
+    return string_1.trim(html
         .replace(/<(\/)?(html|colgroup|col|o:p)[^>]*>/g, '')
-        .replace(/<!--[^>]*>/g, '');
-};
-
-
-/***/ }),
-/* 96 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
- * For GPL see LICENSE-GPL.txt in the project root for license information.
- * For MIT see LICENSE-MIT.txt in the project root for license information.
- * For commercial licenses see https://xdsoft.net/jodit/commercial/
- * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", { value: true });
-var Dom_1 = __webpack_require__(0);
-var string_1 = __webpack_require__(9);
-exports.cleanFromWord = function (html) {
-    if (html.indexOf('<html ') !== -1) {
-        html = html.substring(html.indexOf('<html '), html.length);
-        html = html.substring(0, html.lastIndexOf('</html>') + '</html>'.length);
-    }
-    var convertedString = '';
-    try {
-        var div = document.createElement('div');
-        div.innerHTML = html;
-        var marks_1 = [];
-        if (div.firstChild) {
-            Dom_1.Dom.all(div, function (node) {
-                if (!node) {
-                    return;
-                }
-                switch (node.nodeType) {
-                    case Node.ELEMENT_NODE:
-                        switch (node.nodeName) {
-                            case 'STYLE':
-                            case 'LINK':
-                            case 'META':
-                                marks_1.push(node);
-                                break;
-                            case 'W:SDT':
-                            case 'W:SDTPR':
-                            case 'FONT':
-                                Dom_1.Dom.unwrap(node);
-                                break;
-                            default:
-                                Array.from(node.attributes)
-                                    .forEach(function (attr) {
-                                    if ([
-                                        'src',
-                                        'href',
-                                        'rel',
-                                        'content',
-                                    ].indexOf(attr.name.toLowerCase()) ===
-                                        -1) {
-                                        node.removeAttribute(attr.name);
-                                    }
-                                });
-                        }
-                        break;
-                    case Node.TEXT_NODE:
-                        break;
-                    default:
-                        marks_1.push(node);
-                }
-            });
-        }
-        marks_1.forEach(Dom_1.Dom.safeRemove);
-        convertedString = div.innerHTML;
-    }
-    catch (e) { }
-    if (convertedString) {
-        html = convertedString;
-    }
-    html = html.split(/(\n)/).filter(string_1.trim).join('\n');
-    return html
-        .replace(/<(\/)?(html|colgroup|col|o:p)[^>]*>/g, '')
-        .replace(/<!--[^>]*>/g, '');
+        .replace(/<!--[^>]*>/g, ''));
 };
 
 
@@ -10797,6 +10755,87 @@ var Jodit_1 = __webpack_require__(11);
 "use strict";
 
 /*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
+ * For GPL see LICENSE-GPL.txt in the project root for license information.
+ * For MIT see LICENSE-MIT.txt in the project root for license information.
+ * For commercial licenses see https://xdsoft.net/jodit/commercial/
+ * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
+var Dom_1 = __webpack_require__(0);
+var string_1 = __webpack_require__(9);
+exports.cleanFromWord = function (html) {
+    if (html.indexOf('<html ') !== -1) {
+        html = html.substring(html.indexOf('<html '), html.length);
+        html = html.substring(0, html.lastIndexOf('</html>') + '</html>'.length);
+    }
+    var convertedString = '';
+    try {
+        var div = document.createElement('div');
+        div.innerHTML = html;
+        var marks_1 = [];
+        if (div.firstChild) {
+            Dom_1.Dom.all(div, function (node) {
+                if (!node) {
+                    return;
+                }
+                switch (node.nodeType) {
+                    case Node.ELEMENT_NODE:
+                        switch (node.nodeName) {
+                            case 'STYLE':
+                            case 'LINK':
+                            case 'META':
+                                marks_1.push(node);
+                                break;
+                            case 'W:SDT':
+                            case 'W:SDTPR':
+                            case 'FONT':
+                                Dom_1.Dom.unwrap(node);
+                                break;
+                            default:
+                                Array.from(node.attributes)
+                                    .forEach(function (attr) {
+                                    if ([
+                                        'src',
+                                        'href',
+                                        'rel',
+                                        'content',
+                                    ].indexOf(attr.name.toLowerCase()) ===
+                                        -1) {
+                                        node.removeAttribute(attr.name);
+                                    }
+                                });
+                        }
+                        break;
+                    case Node.TEXT_NODE:
+                        break;
+                    default:
+                        marks_1.push(node);
+                }
+            });
+        }
+        marks_1.forEach(Dom_1.Dom.safeRemove);
+        convertedString = div.innerHTML;
+    }
+    catch (e) { }
+    if (convertedString) {
+        html = convertedString;
+    }
+    html = html.split(/(\n)/).filter(string_1.trim).join('\n');
+    return html
+        .replace(/<(\/)?(html|colgroup|col|o:p)[^>]*>/g, '')
+        .replace(/<!--[^>]*>/g, '');
+};
+
+
+/***/ }),
+/* 100 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
 * Jodit Editor (https://xdsoft.net/jodit/)
 * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
 * For GPL see LICENSE-GPL.txt in the project root for license information.
@@ -10820,7 +10859,7 @@ exports.clear = function (value, removeEmptyBlocks) {
 
 
 /***/ }),
-/* 100 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10842,7 +10881,7 @@ exports.htmlspecialchars = function (html) {
 
 
 /***/ }),
-/* 101 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10864,7 +10903,7 @@ exports.stripTags = function (html) {
 
 
 /***/ }),
-/* 102 */
+/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10894,7 +10933,7 @@ exports.normalizeKeyAliases = function (keys) {
 
 
 /***/ }),
-/* 103 */
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10922,7 +10961,7 @@ exports.normalizeLicense = function (license, count) {
 
 
 /***/ }),
-/* 104 */
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10962,7 +11001,7 @@ exports.normalizeNode = function (node) {
 
 
 /***/ }),
-/* 105 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10999,7 +11038,7 @@ exports.normalizePath = function () {
 
 
 /***/ }),
-/* 106 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11036,7 +11075,7 @@ exports.normalizeRelativePath = function (path) {
 
 
 /***/ }),
-/* 107 */
+/* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11059,7 +11098,7 @@ exports.normalizeSize = function (value) {
 
 
 /***/ }),
-/* 108 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11087,7 +11126,7 @@ exports.normalizeURL = function () {
 
 
 /***/ }),
-/* 109 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11126,7 +11165,7 @@ exports.normalizeColor = function (colorInput) {
 
 
 /***/ }),
-/* 110 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11147,7 +11186,7 @@ exports.getContentWidth = function (element, win) {
 
 
 /***/ }),
-/* 111 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11172,7 +11211,7 @@ exports.innerWidth = function (element, win) {
 
 
 /***/ }),
-/* 112 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11210,7 +11249,7 @@ exports.offset = function (elm, jodit, doc, recurse) {
 
 
 /***/ }),
-/* 113 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11250,7 +11289,7 @@ exports.browser = function (browser) {
 
 
 /***/ }),
-/* 114 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11317,7 +11356,7 @@ exports.convertMediaURLToVideoEmbed = function (url, width, height) {
 
 
 /***/ }),
-/* 115 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11350,7 +11389,7 @@ exports.dataBind = function (elm, key, value) {
 
 
 /***/ }),
-/* 116 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11376,7 +11415,7 @@ exports.humanSizeToBytes = function (human) {
 
 
 /***/ }),
-/* 117 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11420,7 +11459,7 @@ exports.scrollIntoView = function (elm, root, doc) {
 
 
 /***/ }),
-/* 118 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11447,7 +11486,7 @@ exports.val = function (elm, selector, value) {
 
 
 /***/ }),
-/* 119 */
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11479,7 +11518,7 @@ exports.Command = Command;
 
 
 /***/ }),
-/* 120 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11537,7 +11576,7 @@ exports.StatusBar = StatusBar;
 
 
 /***/ }),
-/* 121 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11607,7 +11646,7 @@ exports.EventHandlersStore = EventHandlersStore;
 
 
 /***/ }),
-/* 122 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11685,7 +11724,7 @@ exports.Panel = Panel;
 
 
 /***/ }),
-/* 123 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11698,7 +11737,7 @@ tslib_1.__exportStar(__webpack_require__(25), exports);
 
 
 /***/ }),
-/* 124 */
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11727,7 +11766,7 @@ exports.ToolbarBreak = ToolbarBreak;
 
 
 /***/ }),
-/* 125 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11823,7 +11862,7 @@ exports.PopupList = PopupList;
 
 
 /***/ }),
-/* 126 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11884,7 +11923,7 @@ exports.ToolbarTooltip = ToolbarTooltip;
 
 
 /***/ }),
-/* 127 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11905,7 +11944,7 @@ exports.ToolbarSeparator = ToolbarSeparator;
 
 
 /***/ }),
-/* 128 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11919,23 +11958,23 @@ exports.ToolbarSeparator = ToolbarSeparator;
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var ar_1 = __webpack_require__(129);
-var cs_cz_1 = __webpack_require__(130);
-var de_1 = __webpack_require__(131);
-var en_1 = __webpack_require__(132);
-var es_1 = __webpack_require__(133);
-var fr_1 = __webpack_require__(134);
-var he_1 = __webpack_require__(135);
-var hu_1 = __webpack_require__(136);
-var id_1 = __webpack_require__(137);
-var it_1 = __webpack_require__(138);
-var nl_1 = __webpack_require__(139);
-var pl_1 = __webpack_require__(140);
-var pt_br_1 = __webpack_require__(141);
-var ru_1 = __webpack_require__(142);
-var tr_1 = __webpack_require__(143);
-var zh_cn_1 = __webpack_require__(144);
-var zh_tw_1 = __webpack_require__(145);
+var ar_1 = __webpack_require__(130);
+var cs_cz_1 = __webpack_require__(131);
+var de_1 = __webpack_require__(132);
+var en_1 = __webpack_require__(133);
+var es_1 = __webpack_require__(134);
+var fr_1 = __webpack_require__(135);
+var he_1 = __webpack_require__(136);
+var hu_1 = __webpack_require__(137);
+var id_1 = __webpack_require__(138);
+var it_1 = __webpack_require__(139);
+var nl_1 = __webpack_require__(140);
+var pl_1 = __webpack_require__(141);
+var pt_br_1 = __webpack_require__(142);
+var ru_1 = __webpack_require__(143);
+var tr_1 = __webpack_require__(144);
+var zh_cn_1 = __webpack_require__(145);
+var zh_tw_1 = __webpack_require__(146);
 var exp = {
     ar: ar_1.default,
     cs_cz: cs_cz_1.default,
@@ -11974,109 +12013,109 @@ exports.default = exp;
 
 
 /***/ }),
-/* 129 */
+/* 130 */
 /***/ (function(module, exports) {
 
 module.exports.default = ["إبدأ في الكتابة...","حول جوديت","محرر جوديت","الإصدار الغير تجاري مجاني","رخصة جنو العمومية العامة ، الإصدار الثاني أو الأحدث","دليل مستخدم جوديت","يحتوي على مساعدة مفصلة للاستخدام","للحصول على معلومات حول الترخيص، يرجى الذهاب لموقعنا:","شراء النسخة الكاملة","حقوق الطبع والنشر © XDSoft.net - Chupurnov Valeriy. كل الحقوق محفوظة.","مِرْساة","فتح في نافذة جديدة","فتح المحرر في الحجم الكامل","مسح التنسيق","ملء اللون أو تعيين لون النص","إعادة","تراجع","عريض","مائل","إدراج قائمة غير مرتبة","إدراج قائمة مرتبة","محاذاة للوسط","محاذاة مثبتة","محاذاة لليسار","محاذاة لليمين","إدراج خط أفقي","إدراج صورة","ادخال الملف","إدراج فيديو يوتيوب/فيميو ","إدراج رابط","حجم الخط","نوع الخط","إدراج كتلة تنسيق","عادي","عنوان 1","عنوان 2","عنوان 3","عنوان 4","إقتباس","كود","إدراج","إدراج جدول","تقليل المسافة البادئة","زيادة المسافة البادئة","تحديد أحرف خاصة","إدراج حرف خاص","تنسيق الرسم","تغيير الوضع","هوامش","أعلى","يمين","أسفل","يسار","الأنماط","الطبقات","محاذاة","اليمين","الوسط","اليسار","--غير مضبوط--","Src","العنوان","العنوان البديل","الرابط","افتح الرابط في نافذة جديدة","الصورة","ملف","متقدم","خصائص الصورة","إلغاء","حسنا","متصفح الملفات","حدث خطأ في تحميل القائمة ","حدث خطأ في تحميل المجلدات","هل أنت واثق؟","أدخل اسم المجلد","إنشاء مجلد","أكتب إسم","إسقاط صورة","إسقاط الملف","أو أنقر","النص البديل","رفع","تصفح","الخلفية","نص","أعلى","الوسط","الأسفل","إدراج عمود قبل","إدراج عمود بعد","إدراج صف أعلى","إدراج صف أسفل","حذف الجدول","حذف الصف","حذف العمود","خلية فارغة","%d حرف","%d كلام","اضرب من خلال","أكد","حرف فوقي","مخطوطة","قطع الاختيار","اختر الكل","استراحة","البحث عن","استبدل ب","يحل محل","معجون","اختر محتوى للصق","مصدر","بالخط العريض","مائل","شغل","صلة","إلغاء","كرر","طاولة","صورة","نظيف","فقرة","حجم الخط","فيديو","الخط","حول المحرر","طباعة","رمز","أكد","شطب","المسافة البادئة","نتوء","ملء الشاشة","الحجم التقليدي","نسخ التنسيق","الخط","قائمة","قائمة مرقمة","قطع","اختر الكل","قانون","فتح الرابط","تعديل الرابط","سمة Nofollow","إزالة الرابط","تحديث","لتحرير","مراجعة","URL","تحرير","محاذاة أفقية","فلتر","عن طريق التغيير","بالاسم","حسب الحجم","إضافة مجلد","إعادة","احتفظ","حفظ باسم","تغيير الحجم","حجم القطع","عرض","ارتفاع","حافظ على النسب","أن","لا","حذف","تميز","تميز %s","محاذاة عمودية","انشق، مزق","اذهب","أضف العمود","اضف سطر","رخصة %s","حذف","انقسام عمودي","تقسيم أفقي","الحدود","يشبه الكود الخاص بك HTML. تبقي كما HTML؟","الصق ك HTML","احتفظ","إدراج كنص","إدراج النص فقط","يمكنك فقط تحرير صورك الخاصة. تحميل هذه الصورة على المضيف؟","تم تحميل الصورة بنجاح على الخادم!","لوحة","لا توجد ملفات في هذا الدليل.","إعادة تسمية","أدخل اسم جديد","معاينة","تحميل","لصق من الحافظة","متصفحك لا يدعم إمكانية الوصول المباشر إلى الحافظة.","نسخ التحديد","نسخ","دائرة نصف قطرها الحدود"]
 
 /***/ }),
-/* 130 */
+/* 131 */
 /***/ (function(module, exports) {
 
 module.exports.default = ["Napiš něco","O Jodit","Editor Jodit","Verze pro nekomerční použití","Licence GNU (GPL), verze 2 nebo vyšší","Jodit Uživatelská příručka","obsahuje detailní nápovědu","Pro informace o licenci, prosím, přejděte na naši stránku:","Koupit plnou verzi","Copyright © XDSoft.net - Chupurnov Valeriy. Všechna práva vyhrazena.","Anchor","Otevřít v nové záložce","Otevřít v celoobrazovkovém režimu","Vyčistit formátování","Barva výplně a písma","Vpřed","Zpět","Tučné","Kurzíva","Odrážky","Číslovaný seznam","Zarovnat na střed","Zarovnat do bloku","Zarovnat vlevo","Zarovnat vpravo","Vložit horizontální linku","Vložit obrázek","Vložit soubor","Vložit video (YT/Vimeo)","Vložit odkaz","Velikost písma","Typ písma","Formátovat blok","Normální text","Nadpis 1","Nadpis 2","Nadpis 3","Nadpis 4","Citát","Kód","Vložit","Vložit tabulku","Zmenšit odsazení","Zvětšit odsazení","Vybrat speciální symbol","Vložit speciální symbol","Použít formát","Změnit mód","Okraje","horní","pravý","spodní","levý","Styly","Třídy","Zarovnání","Vpravo","Na střed","Vlevo","--nenastaveno--","src","Titulek","Alternativní text (alt)","Link","Otevřít link v nové záložce","Obrázek","soubor","Rozšířené","Vlastnosti obrázku","Zpět","Ok","Prohlížeč souborů","Chyba při načítání seznamu souborů","Chyba při načítání složek","Jste si jistý(á)?","Název složky","Vytvořit složku","název","Přetáhněte sem obrázek","Přetáhněte sem soubor","nebo klikněte","Alternativní text","Nahrát","Server","Pozadí","Text","Nahoru","Na střed","Dolu","Vložit sloupec před","Vložit sloupec za","Vložit řádek nad","Vložit řádek pod","Vymazat tabulku","Vymazat řádku","Vymazat sloupec","Vyčistit buňku","Znaky: %d","Slova: %d","Přeškrtnuto","Podtrženo","Horní index","Dolní index","Vyjmout označené","Označit vše","Zalomení","Najdi","Nahradit za","Nahradit","Vložit","Vyber obsah pro vložení","HTML","tučně","kurzíva","štětec","odkaz","zpět","vpřed","tabulka","obrázek","guma","odstavec","velikost písma","video","písmo","о editoru","tisk","symbol","podtrženo","přeškrtnuto","zvětšit odsazení","zmenšit odsazení","celoobrazovkový režim","smrsknout","Kopírovat formát","Linka","Odrážka","Číslovaný seznam","Vyjmout","Označit vše","Kód","Otevřít odkaz","Upravit odkaz","Atribut no-follow","Odstranit odkaz","Aktualizovat","Chcete-li upravit","Zobrazit","URL","Editovat","Horizontální zarovnání","Filtr","Dle poslední změny","Dle názvu","Dle velikosti","Přidat složku","Reset","Uložit","Uložit jako...","Změnit rozměr","Ořezat","Šířka","Výška","Ponechat poměr","Ano","Ne","Vyjmout","Označit","Označit %s","Vertikální zarovnání","Rozdělit","Spojit","Přidat sloupec","Přidat řádek","Licence: %s","Vymazat","Rozdělit vertikálně","Rozdělit horizontálně","Okraj","Váš text se podobá HTML. Vložit ho jako HTML?","Vložit jako HTML","Ponechat originál","Vložit jako TEXT","Vložit pouze TEXT","Můžete upravovat pouze své obrázky. Načíst obrázek?","Obrázek byl úspěšně nahrán!","paleta","V tomto adresáři nejsou žádné soubory.","přejmenovat","Zadejte nový název","náhled","Stažení","Vložit ze schránky","Váš prohlížeč nepodporuje přímý přístup do schránky.","Kopírovat výběr","kopírování","Border radius"]
 
 /***/ }),
-/* 131 */
+/* 132 */
 /***/ (function(module, exports) {
 
 module.exports.default = ["Bitte geben Sie einen Text ein","Über Jodit","Jodit Editor","Freie Nicht-kommerzielle Version","GNU General Public License, Version 2 oder höher","Das Jodit Benutzerhandbuch","beinhaltet ausführliche Informationen wie Sie den Editor verwenden können.","Für Lizenz-Informationen, besuchen Sie bitte unsere Webseite:","Vollversion kaufen","Copyright © XDSoft.net - Chupurnov Valeriy. Alle Rechte vorbehalten.","Anker","In neuer Registerkarte öffnen","Editor in voller Größe öffnen","Formatierung löschen","Füllfarbe oder Textfarbe ändern","Wiederholen","Rückgängig machen","Fett","Kursiv","Ungeordnete Liste einfügen","Sortierte Liste einfügen","Mittig ausrichten","Blocksatz","Links ausrichten","Rechts ausrichten","Horizontale Linie einfügen","Bild einfügen","Datei einfügen","Youtube/vimeo Video einfügen","Link einfügen","Schriftgröße","Schriftfamilie","Formatblock einfügen","Normal","Überschrift 1","Überschrift 2","Überschrift 3","Überschrift 4","Zitat","Code","Einfügen","Tabelle einfügen","Einzug verkleinern","Einzug vergrößern","Sonderzeichen auswählen","Sonderzeichen einfügen","Format kopieren","Änderungsmodus","Ränder","Oben","Rechts","Unten","Links","CSS Stiel","CSS Klassen","Ausrichten","Rechts","Zentriert","Links","Keine","Pfad","Titel","Alternativer Text","Link","Link in neuem Tab öffnen","Bild","Datei","Fortgeschritten","Bildeigenschaften","Abbrechen","OK","Dateibrowser","Fehler beim Laden der Liste","Fehler beim Laden der Ordner","Sind Sie sicher?","Geben Sie den Verzeichnisnamen ein","Verzeichnis erstellen","Typname","Bild hier hinziehen","Datei löschen","oder hier klicken","Alternativtext","Hochladen","Auswählen","Hintergrund","Text","Oben","Mittig","Unten","Spalte einfügen vor","Spalte einfügen nach","Zeile einfügen oberhalb","Zeile unterhalb einfügen","Tabelle löschen","Zeile löschen","Spalte löschen","Leere Zelle","Zeichen: %d","Wörter: %d","Durchschlagen","Unterstreichen","hochgestellt","Index","Auswahl ausschneid","Wählen Sie Alle aus","Pause","Suche nach","Ersetzen durch","Ersetzen","Einfügen","Wählen Sie Inhalt zum Einfügen","HTML","Fett gedruckt","kursiv","Bürste","Verknüpfung","rückgängig machen","wiederholen","Tabelle","Bild","Radiergummi","Absatz","Schriftgröße","Video","Schriftart","Über","drucken","Symbol","unterstreichen","durchgestrichen","Einzug","Aussenseiter","Vollgröße","schrumpfen","Format kopierenт","die Linie","Liste von","Nummerierte Liste","Schnitt","Wählen Sie Alle aus","Code einbetten","Link öffnen","Link bearbeiten","Nofollow-Attribut","Link entfernen","Aktualisieren","Bearbeiten","Ansehen","URL","Bearbeiten","Horizontale Ausrichtung","filter","Sortieren nach geändert","Nach Name sortieren","Nach Größe sortiert","Ordner hinzufügen","Wiederherstellen","Speichern","Speichern als","Ändern Sie die Größe","Größe anpassen","Breite","Höhe","Halten Sie Proportionen","Ja","Nein","Entfernen","Markieren","Markieren: %s","Vertikale Ausrichtung","Split","Verschmelzen","Spalte hinzufügen","Zeile hinzufügen",null,"Löschen","Split vertikal","Split horizontally","Rand","Es scheint als dass Sie HTML-Text einfügen möchten","Als HTML einfügen?","Original speichern","Als Text einfügen","Nur Text einfügen","Sie können nur Ihre eigenen Bilder bearbeiten. Laden Sie dieses Bild auf dem Host herunter?","Das Bild wurde erfolgreich auf den Server hochgeladen!null","Palette","In diesem Verzeichnis befinden sich keine Dateien.","umbenennen","Geben Sie einen neuen Namen ein","Vorschau","Herunterladen","Aus der Zwischenablage einfügen","Ihr browser unterstützt kein direkter Zugriff auf die Zwischenablage.","Auswahl kopieren","kopieren","Border-radius"]
 
 /***/ }),
-/* 132 */
+/* 133 */
 /***/ (function(module, exports) {
 
 module.exports.default = ["Type something","About Jodit","Jodit Editor","Free Non-commercial Version","GNU General Public License, version 2 or later","Jodit User's Guide","contains detailed help for using","For information about the license, please go to our website:","Buy full version","Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.","Anchor","Open in new tab","Open editor in fullsize","Clear Formatting","Fill color or set the text color","Redo","Undo","Bold","Italic","Insert Unordered List","Insert Ordered List","Align Center","Align Justify","Align Left","Align Right","Insert Horizontal Line","Insert Image","Insert file","Insert youtube/vimeo video","Insert link","Font size","Font family","Insert format block","Normal","Heading 1","Heading 2","Heading 3","Heading 4","Quote","Code","Insert","Insert table","Decrease Indent","Increase Indent","Select Special Character","Insert Special Character","Paint format","Change mode","Margins","top","right","bottom","left","Styles","Classes","Align","Right","Center","Left","--Not Set--","Src","Title","Alternative","Link","Open link in new tab","Image","file","Advanced","Image properties","Cancel","Ok","File Browser","Error on load list","Error on load folders","Are you sure?","Enter Directory name","Create directory","type name","Drop image","Drop file","or click","Alternative text","Upload","Browse","Background","Text","Top","Middle","Bottom","Insert column before","Insert column after","Insert row above","Insert row below","Delete table","Delete row","Delete column","Empty cell","Chars: %d","Words: %d","Strike through","Underline","superscript","subscript","Cut selection","Select all","Break","Search for","Replace with","Replace","Paste","Choose Content to Paste","source","bold","italic","brush","link","undo","redo","table","image","eraser","paragraph","fontsize","video","font","about","print","symbol","underline","strikethrough","indent","outdent","fullsize","shrink","copyformat","hr","ul","ol","cut","selectall","Embed code","Open link","Edit link","No follow","Unlink","Update","pencil","Eye"," URL","Edit","Horizontal align","Filter","Sort by changed","Sort by name","Sort by size","Add folder","Reset","Save","Save as ...","Resize","Crop","Width","Height","Keep Aspect Ratio","Yes","No","Remove","Select","Select %s","Vertical align","Split","Merge","Add column","Add row","License: %s","Delete","Split vertical","Split horizontal","Border","Your code is similar to HTML. Keep as HTML?","Paste as HTML","Keep","Insert as Text","Insert only Text","You can only edit your own images. Download this image on the host?","The image has been successfully uploaded to the host!","palette","There are no files","rename","Enter new name","preview","download","Paste from clipboard","Your browser doesn't support direct access to the clipboard.","Copy selection","copy","Border radius"]
 
 /***/ }),
-/* 133 */
+/* 134 */
 /***/ (function(module, exports) {
 
 module.exports.default = ["Escriba algo...","Acerca de Jodit","Jodit Editor","Versión gratis no comercial","GNU General Public License, Versión 2 o posterior","Guía de usuario Jodit","contiene ayuda detallada para el uso.","Para información sobre la licencia, por favor visite nuestro sitio:","Compre la versión completa","Copyright © XDSoft.net - Chupurnov Valeriy. Todos los derechos reservados.","Anclar","Abrir en nueva pestaña","Abrir editor en pantalla completa","Limpiar formato","Color de relleno o de letra","Rehacer","Deshacer","Negrita","Cursiva","Insertar lista no ordenada","Insertar lista ordenada","Alinear Centrado","Alinear Justificado","Alinear Izquierda","Alinear Derecha","Insertar línea horizontal","Insertar imagen","Insertar archivo","Insertar video de Youtube/vimeo","Insertar vínculo","Tamaño de letra","Familia de letra","Insertar bloque","Normal","Encabezado 1","Encabezado 2","Encabezado 3","Encabezado 4","Cita","Código","Insertar","Insertar tabla","Disminuir sangría","Aumentar sangría","Seleccionar caracter especial","Insertar caracter especial","Copiar formato","Cambiar modo","Márgenes","arriba","derecha","abajo","izquierda","Estilos CSS","Clases CSS","Alinear","Derecha","Centrado","Izquierda","--No Establecido--","Fuente","Título","Texto Alternativo","Vínculo","Abrir vínculo en nueva pestaña","Imagen","Archivo","Avanzado","Propiedades de imagen","Cancelar","Aceptar","Buscar archivo","Error al cargar la lista","Error al cargar las carpetas","¿Está seguro?","Entre nombre de carpeta","Crear carpeta","Entre el nombre","Soltar imagen","Soltar archivo","o click","Texto alternativo","Subir","Buscar","Fondo","Texto","Arriba","Centro","Abajo","Insertar columna antes","Interar columna después","Insertar fila arriba","Insertar fila debajo","Borrar tabla","Borrar fila","Borrar columna","Vaciar celda","Caracteres: %d","Palabras: %d","Tachado","Subrayado","superíndice","subíndice","Cortar selección","Seleccionar todo","Pausa","Buscar","Reemplazar con","Reemplazar","Pegar","Seleccionar contenido para pegar","HTML","negrita","cursiva","Brocha","Vínculo","deshacer","rehacer","Tabla","Imagen","Borrar","Párrafo","Tamaño de letra","Video","Letra","Acerca de","Imprimir","Símbolo","subrayar","tachar","sangría","quitar sangría","Tamaño completo","encoger","Copiar formato","línea horizontal","lista sin ordenar","lista ordenada","Cortar","Seleccionar todo","Incluir código","Abrir vínculo","Editar vínculo","No seguir","Desvincular","Actualizar","Para editar","Ver","URL","Editar","Alineación horizontal","filtrar","Ordenar por fecha modificación","Ordenar por nombre","Ordenar por tamaño","Agregar carpeta","Resetear","Guardar","Guardar como...","Redimensionar","Recortar","Ancho","Alto","Mantener relación de aspecto","Si","No","Quitar","Seleccionar","Seleccionar: %s","Alineación vertical","Dividir","Mezclar","Agregar columna","Agregar fila",null,"Borrar","Dividir vertical","Dividir horizontal","Borde","El código es similar a HTML. ¿Mantener como HTML?","Pegar como HTML?","Mantener","Insertar como texto","Insertar solo texto","Solo puedes editar tus propias imágenes. ¿Descargar esta imagen en el servidor?","¡La imagen se ha subido correctamente al servidor!","paleta","No hay archivos en este directorio.","renombrar","Ingresa un nuevo nombre","avance","Descargar","Pegar desde el portapapeles","Su navegador no soporta el acceso directo en el portapapeles.","Selección de copia","copia","Radio frontera"]
 
 /***/ }),
-/* 134 */
+/* 135 */
 /***/ (function(module, exports) {
 
 module.exports.default = ["Ecrivez ici","A propos de Jodit","Editeur Jodit","Version gratuite, non commerciale","GNU General Public License, version 2 ou ultérieure","Guide de l'utilisateur","Aide détaillée à l'utilisation","Consulter la licence sur notre site web:","Acheter la version complète","Copyright © XDSoft.net - Chupurnov Valeriy. Tous droits réservés.","Ancre","Ouvrir dans un nouvel onglet","Ouvrir l'éditeur en pleine page","Supprimer le formattage","Modifier la couleur du fond ou du texte","Refaire","Défaire","Gras","Italique","Liste non ordonnée","Liste ordonnée","Centrer","Justifier","Aligner à gauche ","Aligner à droite","Insérer une ligne horizontale","Insérer une image","Insérer un fichier","Insérer une vidéo","Insérer un lien","Taille des caractères","Famille des caractères","Bloc formatté","Normal","Titre 1","Titre 2","Titre 3","Titre 4","Citation","Code","Insérer","Insérer un tableau","Diminuer le retrait","Retrait plus","Sélectionnez un caractère spécial","Insérer un caractère spécial","Cloner le format","Mode wysiwyg <-> code html","Marges","haut","droite","Bas","gauche","Styles","Classes","Alignement","Droite","Centre","Gauche","--Non disponible--","Source","Titre","Alternative","Lien","Ouvrir le lien dans un nouvel onglet","Image","fichier","Avancé","Propriétés de l'image","Effacer","OK","Explorateur de fichiers","Erreur de liste de chargement","Erreur de dossier de chargement","Etes-vous sûrs ?","Entrer le non de dossier","Créer un dossier","type de fichier","Coller une image","Déposer un fichier","ou cliquer","Texte de remplacemement","Charger","Chercher","Arrière-plan","Texte","Haut","Milieu","Bas","Insérer une colonne avant","Insérer une colonne après","Insérer une ligne en dessus","Insérer une ligne en dessous","Supprimer le tableau","Supprimer la ligne","Supprimer la colonne","Vider la cellule","Symboles: %d","Mots: %d","Frapper à travers","Souligner","exposant","indice","Couper la sélection","Tout sélectionner","Pause","Rechercher","Remplacer par","Remplacer","Coller","Choisissez le contenu à coller","la source","graisseux","italique","verser","lien","abolir","prêt","graphique","Image","la gommen","clause","taille de police","Video","police","à propos de l'éditeur","impression","caractère","souligné","barré","indentation","indifférent","taille réelle","taille conventionnelle","Format de copie","la ligne","Liste des","Liste numérotée","Couper","Sélectionner tout",null,"Ouvrir le lien","Modifier le lien","Attribut Nofollow","Supprimer le lien","Mettre à jour","Pour éditer","Voir","URL",null,"Alignement horizontal","Filtre","Trier par modifié","Trier par nom","Classer par taille","Ajouter le dossier","Restaurer","Sauvegarder","Enregistrer sous","Changer la taille","Taille de garniture","Largeur","Hauteur","Garder les proportions","Oui","Non","Supprimer","Mettre en évidence","Mettre en évidence: %s","Alignement vertical","Split","aller","Ajouter une colonne","Ajouter une rangée",null,"Effacer","Split vertical","Split horizontal",null,"Votre texte que vous essayez de coller est similaire au HTML. Collez-le en HTML?","Coller en HTML?","Sauvegarder l'original","Coller en tant que texte","Coller le texte seulement","Vous ne pouvez éditer que vos propres images. Téléchargez cette image sur l'hôte?","L'image a été téléchargée avec succès sur le serveur!null","Palette","Il n'y a aucun fichier dans ce répertoire.","renommer","Entrez un nouveau nom","Aperçu","Télécharger","Coller à partir du presse-papiers","Votre navigateur ne prend pas en charge l'accès direct à la presse-papiers.","Copier la sélection","copie","Rayon des frontières"]
 
 /***/ }),
-/* 135 */
+/* 136 */
 /***/ (function(module, exports) {
 
 module.exports.default = ["הקלד משהו...","About Jodit","Jodit Editor","Free Non-commercial Version","GNU General Public License, version 2 or later","Jodit User's Guide","contains detailed help for using.","For information about the license, please go to our website:","Buy full version","Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.","מקום עיגון","פתח בכרטיסיה חדשה","פתח את העורך בחלון חדש","נקה עיצוב","שנה צבע טקסט או רקע","בצע שוב","בטל","מודגש","נטוי","הכנס רשימת תבליטים","הכנס רשימה ממוספרת","מרכז","ישר ","ישר לשמאל","ישר לימין","הכנס קו אופקי","הכנס תמונה","הכנס קובץ","הכנס סרטון וידאו מYouTube/Vimeo","הכנס קישור","גודל גופן","גופן","מעוצב מראש","רגיל","כותרת 1","כותרת 2","כותרת 3","כותרת 4","ציטוט","קוד","הכנס","הכנס טבלה","הקטן כניסה","הגדל כניסה","בחר תו מיוחד","הכנס תו מיוחד","העתק עיצוב","החלף מצב","ריווח","עליון","ימין","תחתון","שמאל","עיצוב CSS","מחלקת CSS","יישור","ימין","מרכז","שמאל","--לא נקבע--","מקור","כותרת","כיתוב חלופי","קישור","פתח בכרטיסיה חדשה","תמונה","קובץ","מתקדם","מאפייני תמונה","ביטול","אישור","סייר הקבצים","שגיאה  בזמן טעינת רשימה","שגיאה בזמן טעינת תקיות","האם אתה בטוח?","הכנס שם תקיה","צור תקיה","סוג הקובץ","הסר תמונה","הסר קובץ","או לחץ","כיתוב חלופי","העלה","סייר","רקע","טקסט","עליון","מרכז","תחתון","הכנס עמודה לפני","הכנס עמודה אחרי","הכנס שורה מעל","הכנס שורה מתחת","מחק טבלה","מחק שורה","מחק עמודה","רוקן תא","תווים: %d","מילים: %d","קו חוצה","קו תחתון","superscript","subscript","גזור בחירה","בחר הכל","שבירת שורה","חפש","החלף ב","החלף","הדבק","בחר תוכן להדבקה","HTML","מודגש","נטוי","מברשת","קישור","בטל","בצע שוב","טבלה","תמונה","מחק","פסקה","גודל גופן","וידאו","גופן","עלינו","הדפס","תו מיוחד","קו תחתון","קו חוצה","הגדל כניסה","הקטן כניסה","גודל מלא","כווץ","העתק עיצוב","קו אופקי","רשימת תבליטים","רשימה ממוספרת","חתוך","בחר הכל","הוסף קוד","פתח קישור","ערוך קישור","ללא מעקב","בטל קישור","עדכן","כדי לערוך","הצג","כתובת","ערוך","יישור אופקי","סנן","מין לפי שינוי","מיין לפי שם","מיין לפי גודל","הוסף תקייה","אפס","שמור","שמור בשם...","שנה גודל","חתוך","רוחב","גובה","שמור יחס","כן","לא","הסר","בחר","נבחר: %s","יישור אנכי","פיצול","מזג","הוסף עמודה","הוסף שורה",null,"מחק","פיצול אנכי","פיצול אופקי","מסגרת","הקוד דומה לHTML, האם להשאיר כHTML","הדבק כHTML","השאר","הכנס כטקסט","הכנס טקסט בלבד","רק קבצים המשוייכים שלך ניתנים לעריכה. האם להוריד את הקובץ?","התמונה עלתה בהצלחה!","לוח","אין קבצים בספריה זו.","הונגרית","הזן שם חדש","תצוגה מקדימה","הורד","להדביק מהלוח","הדפדפן שלך לא תומך גישה ישירה ללוח.","העתק בחירה","העתק","רדיוס הגבול"]
 
 /***/ }),
-/* 136 */
+/* 137 */
 /***/ (function(module, exports) {
 
 module.exports.default = ["Írjon be valamit","Joditról","Jodit Editor","Ingyenes változat","GNU General Public License, Verzió 2 vagy későbbi","Jodit útmutató","további segítséget tartalmaz","További licence információkért látogassa meg a weboldalunkat:","Teljes verzió megvásárlása","Copyright © XDSoft.net - Chupurnov Valeriy. Minden jog fenntartva.","Horgony","Megnyitás új lapon","Megnyitás teljes méretben","Formázás törlése","Háttér/szöveg szín","Újra","Visszavon","Félkövér","Dőlt","Pontozott lista","Számozott lista","Középre zárt","Sorkizárt","Balra zárt","Jobbra zárt","Vízszintes vonal beszúrása","Kép beszúrás","Fájl beszúrás","Youtube videó beszúrása","Link beszúrás","Betűméret","Betűtípus","Formázott blokk beszúrása","Normál","Fejléc 1","Fejléc 2","Fejléc 3","Fejléc 4","Idézet","Kód","Beszúr","Táblázat beszúrása","Behúzás csökkentése","Behúzás növelése","Speciális karakter kiválasztása","Speciális karakter beszúrása","Kép formázása","Nézet váltása","Szegélyek","felső","jobb","alsó","bal","CSS stílusok","CSS osztályok","Igazítás","Jobbra","Középre","Balra","Nincs","Forrás","Cím","Helyettesítő szöveg","Link","Link megnyitása új lapon","Kép","Fájl","Haladó","Kép tulajdonságai","Mégsem","OK","Fájl tallózó","Hiba a lista betöltése közben","Hiba a mappák betöltése közben","Biztosan ezt szeretné?","Írjon be egy mappanevet","Mappa létrehozása","írjon be bevet","Húzza ide a képet","Húzza ide a fájlt","vagy kattintson","Helyettesítő szöveg","Feltölt","Tallóz","Háttér","Szöveg","Fent","Középen","Lent","Oszlop beszúrás elé","Oszlop beszúrás utána","Sor beszúrás fölé","Sor beszúrás alá","Táblázat törlése","Sor törlése","Oszlop törlése","Cella tartalmának törlése","Karakterek száma: %d","Szavak száma: %d","Áthúzott","Aláhúzott","Felső index","Alsó index","Kivágás","Összes kijelölése","Szünet","Keresés","Csere erre","Csere","Beillesztés","Válasszon tartalmat a beillesztéshez","HTML","Félkövér","Dőlt","Ecset","Link","Visszavon","Újra","Táblázat","Kép","Törlés","Paragráfus","Betűméret","Videó","Betű","Rólunk","Nyomtat","Szimbólum","Aláhúzott","Áthúzott","Behúzás","Aussenseiter","Teljes méret","Összenyom","Formátum másolás","Egyenes vonal","Lista","Számozott lista","Kivág","Összes kijelölése","Beágyazott kód","Link megnyitása","Link szerkesztése","Nincs követés","Link leválasztása","Frissít","Szerkesztés","felülvizsgálat","URL","Szerkeszt","Vízszintes igazítás","Szűrő","Rendezés módosítás szerint","Rendezés név szerint","Rendezés méret szerint","Mappa hozzáadás","Visszaállít","Mentés","Mentés másként...","Átméretezés","Kivág","Szélesség","Magasság","Képarány megtartása","Igen","Nem","Eltávolít","Kijelöl","Kijelöl: %s","Függőleges igazítás","Felosztás","Összevonás","Oszlop hozzáadás","Sor hozzáadás",null,"Törlés","Függőleges felosztás","Vízszintes felosztás","Szegély","A beillesztett szöveg HTML-nek tűnik. Megtartsuk HTML-ként?","Beszúrás HTML-ként","Megtartás","Beszúrás szövegként","Csak szöveg beillesztése","Csak a saját képeit tudja szerkeszteni. Letölti ezt a képet?","Kép sikeresen feltöltve!","Palette","Er zijn geen bestanden in deze map.","átnevezés","Adja meg az új nevet","előnézet","Letöltés","Illessze be a vágólap","A böngésző nem támogatja a közvetlen hozzáférést biztosít a vágólapra.","Másolás kiválasztása","másolás","Határ sugár"]
 
 /***/ }),
-/* 137 */
+/* 138 */
 /***/ (function(module, exports) {
 
 module.exports.default = ["Ketik sesuatu","Tentang Jodit","Editor Jodit","Versi Bebas Non-komersil","Lisensi Publik Umum (GPL), versi 2 atau terbaru","Panduan Pengguna Jodit","mencakup detail bantuan penggunaan","Untuk informasi tentang lisensi, silakan kunjungi website:","Beli versi lengkap","Hak Cipta © XDSoft.net - Chupurnov Valeriy. Hak cipta dilindungi undang-undang.","Tautan","Buka di tab baru","Buka editor dalam ukuran penuh","Hapus Pemformatan","Isi warna atau atur warna teks","Ulangi","Batalkan","Tebal","Miring","Sisipkan Daftar Tidak Berurut","Sisipkan Daftar Berurut","Tengah","Penuh","Kiri","Kanan","Sisipkan Garis Horizontal","Sisipkan Gambar","Sisipkan Berkas","Sisipkan video youtube/vimeo","Sisipkan tautan","Ukuran font","Keluarga font","Sisipkan blok format","Normal","Heading 1","Heading 2","Heading 3","Heading 4","Kutip","Kode","Sisipkan","Sisipkan tabel","Kurangi Indentasi","Tambah Indentasi","Pilih Karakter Spesial","Sisipkan Karakter Spesial","Formar warna","Ubah mode","Batas","atas","kanan","bawah","kiri","Gaya","Class","Rata","Kanan","Tengah","Kiri","--Tidak diset--","Src","Judul","Teks alternatif","Tautan","Buka tautan di tab baru","Gambar","berkas","Lanjutan","Properti gambar","Batal","Ya","Penjelajah Berkas","Error ketika memuat list","Error ketika memuat folder","Apakah Anda yakin?","Masukkan nama Direktori","Buat direktori","ketik nama","Letakkan gambar","Letakkan berkas","atau klik","Teks alternatif","Unggah","Jelajahi","Latar Belakang","Teks","Atas","Tengah","Bawah","Sisipkan kolom sebelumnya","Sisipkan kolom setelahnya","Sisipkan baris di atasnya","Sisipkan baris di bawahnya","Hapus tabel","Hapus baris","Hapus kolom","Kosongkan cell","Karakter: %d","Kata: %d","Coret","Garis Bawah","Superskrip","Subskrip","Potong pilihan","Pilih semua","Berhenti","Mencari","Ganti dengan","Ganti","Paste","Pilih konten untuk dipaste","sumber","tebal","miring","sikat","tautan","batalkan","ulangi","tabel","gambar","penghapus","paragraf","ukuran font","video","font","tentang","cetak","simbol","garis bawah","coret","menjorok ke dalam","menjorok ke luar","ukuran penuh","menyusut","salin format","hr","ul","ol","potong","Pilih semua","Kode embed","Buka tautan","Edit tautan","No follow","Hapus tautan","Perbarui","pensil","Mata","URL","Edit","Perataan horizontal","Filter","Urutkan berdasarkan perubahan","Urutkan berdasarkan nama","Urutkan berdasarkan ukuran","Tambah folder","Reset","Simpan","Simpan sebagai...","Ubah ukuran","Crop","Lebar","Tinggi","Jaga aspek rasio","Ya","Tidak","Copot","Pilih","Pilih %s","Rata vertikal","Bagi","Gabungkan","Tambah kolom","tambah baris","Lisensi: %s","Hapus","Bagi secara vertikal","Bagi secara horizontal","Bingkai","Kode Anda cenderung ke HTML. Biarkan sebagai HTML?","Paste sebagai HTML","Jaga","Sisipkan sebagai teks","Sisipkan hanya teks","Anda hanya dapat mengedit gambar Anda sendiri. Unduh gambar ini di host?","Gambar telah sukses diunggah ke host!","palet","Tidak ada berkas","ganti nama","Masukkan nama baru","pratinjau","Unduh","Paste dari clipboard","Browser anda tidak mendukung akses langsung ke clipboard.","Copy seleksi","copy","Border radius"]
 
 /***/ }),
-/* 138 */
+/* 139 */
 /***/ (function(module, exports) {
 
 module.exports.default = ["Scrivi qualcosa...","A proposito di Jodit","Jodit Editor","Versione gratuita non commerciale","Licenza pubblica generale GNU, versione 2 o successiva","Guida utente di Jodit","contiene una guida dettagliata per l'uso.","Per informazioni sulla licenza, si prega di visitare il nostro sito:","Acquista la versione completa","Copyright © XDSoft.net - Chupurnov Valeriy. Alle Rechte vorbehalten.","Ancora","Apri in una nuova scheda","Apri l'editor a schermo intero","Formato chiaro","Riempi colore o lettera","Ripristina","Annulla","Grassetto","Corsivo","Inserisci lista non ordinata","Inserisci l'elenco ordinato","Allinea Centra","Allineare Giustificato","Allinea a Sinistra","Allinea a Destra","Inserisci la linea orizzontale","Inserisci immagine","Inserisci un file","Inserisci video Youtube/Vimeo","Inserisci il link","Dimensione del carattere","Tipo di font","Inserisci blocco","Normale","Heading 1","Heading 2","Heading 3","Heading 4","Citazione","Codice","Inserisci","Inserisci tabella","Riduci il rientro","Aumenta il rientro","Seleziona una funzione speciale","Inserisci un carattere speciale","Copia formato","Cambia modo","Margini","su","destra","giù","sinistra","Stili CSS","Classi CSS","Allinea","Destra","Centro","Sinistra","--Non Impostato--","Fonte","Titolo","Testo Alternativo","Link","Apri il link in una nuova scheda","Immagine","Archivio","Avanzato","Proprietà dell'immagine","Annulla","Accetta","Cerca il file","Errore durante il caricamento dell'elenco","Errore durante il caricamento delle cartelle","Sei sicuro?","Inserisci il nome della cartella","Crea cartella","Entre el nombre","Rilascia l'immagine","Rilascia file","o click","Testo alternativo","Carica","Sfoglia","Sfondo","Testo","Su","Centro","Sotto","Inserisci prima la colonna","Inserisci colonna dopo","Inserisci la riga sopra","Inserisci la riga sotto","Elimina tabella","Elimina riga","Elimina colonna","Cella vuota","Caratteri: %d","Parole: %d","Barrato","Sottolineato","indice","deponente","Taglia la selezione","Seleziona tutto","Pausa","Cerca","Sostituisci con","Sostituisci","Incolla","Seleziona il contenuto da incollare","HTML","Grassetto","Corsivo","Pennello","Link","Annulla","Ripristina","Tabella","Immagine","Gomma","Paragrafo","Dimensione del carattere","Video","Font","Approposito di","Stampa","Simbolo","Sottolineato","Barrato","trattino","annulla rientro","A grandezza normale","comprimere","Copia il formato","linea orizzontale","lista non ordinata","lista ordinata","Taglia","Seleziona tutto","Includi codice","Apri link","Modifica link","Non seguire","Togli link","Aggiornare","Per modificare","Recensione"," URL","Modifica","Allineamento orizzontale","Filtro","Ordina per data di modifica","Ordina per nome","Ordina per dimensione","Aggiungi cartella","Reset","Salva","Salva con nome...","Ridimensiona","Tagliare","Larghezza","Altezza","Mantenere le proporzioni","Si","No","Rimuovere","Seleziona","Seleziona: %s","Allineamento verticala","Dividere","Fondi","Aggiungi colonna","Aggiungi riga",null,"Cancella","Dividere verticalmente","Diviso orizzontale","Bordo","Il codice è simile all'HTML. Mantieni come HTML?","Incolla come HTML?","Mantieni","Inserisci come testo","Inserisci solo il testo","Puoi modificare solo le tue immagini. Scarica questa immagine sul server?","L'immagine è stata caricata con successo sul server!","tavolozza","Non ci sono file in questa directory.","ungherese","Inserisci un nuovo nome","anteprima","Scaricare","Incolla dagli appunti","Il tuo browser non supporta l'accesso diretto agli appunti.","Selezione di copia","copia","Border radius"]
 
 /***/ }),
-/* 139 */
+/* 140 */
 /***/ (function(module, exports) {
 
 module.exports.default = ["Begin met typen..","Over Jodit","Jodit Editor","Gratis niet-commerciële versie","GNU General Public License, versie 2 of hoger","Jodit gebruikershandleiding","bevat gedetailleerde informatie voor gebruik.","Voor informatie over de licentie, ga naar onze website:","Volledige versie kopen","Copyright © XDSoft.net - Chupurnov Valeriy. Alle rechten voorbehouden.","Anker","Open in nieuwe tab","Editor in volledig scherm openen","Opmaak verwijderen","Vulkleur of tekstkleur aanpassen","Opnieuw","Ongedaan maken","Vet","Cursief","Geordende list invoegen","Ongeordende lijst invoegen","Centreren","Uitlijnen op volledige breedte","Links uitlijnen","Rechts uitlijnen","Horizontale lijn invoegen","Afbeelding invoegen","Bestand invoegen","Youtube/Vimeo video invoegen","Link toevoegen","Tekstgrootte","Lettertype","Format blok invoegen","Normaal","Koptekst 1","Koptekst 2","Koptekst 3","Koptekst 4","Citaat","Code","Invoegen","Tabel invoegen","Inspringing verkleinen","Inspringing vergroten","Symbool selecteren","Symbool invoegen","Opmaak kopieren","Modus veranderen","Marges","Boven","Rechts","Onder","Links","CSS styles","CSS classes","Uitlijning","Rechts","Gecentreerd","Links","--Leeg--","Src","Titel","Alternatieve tekst","Link","Link in nieuwe tab openen","Afbeelding","Bestand","Geavanceerd","Afbeeldingseigenschappen","Annuleren","OK","Bestandsbrowser","Fout bij het laden van de lijst","Fout bij het laden van de mappenlijst","Weet je het zeker?","Geef de map een naam","Map aanmaken","Type naam","Sleep hier een afbeelding naartoe","Sleep hier een bestand naartoe","of klik","Alternatieve tekst","Uploaden","Bladeren","Achtergrond","Tekst","Boven","Midden","Onder","Kolom invoegen (voor)","Kolom invoegen (na)","Rij invoegen (boven)","Rij invoegen (onder)","Tabel verwijderen","Rij verwijderen","Kolom verwijderen","Cel leegmaken","Tekens: %d","Woorden: %d","Doorstrepen","Onderstrepen","Superscript","Subscript","Selectie knippen","Selecteer alles","Enter","Zoek naar","Vervangen door","Vervangen","Plakken","Kies content om te plakken","Broncode","vet","cursief","kwast","link","ongedaan maken","opnieuw","tabel","afbeelding","gum","paragraaf","lettergrootte","video","lettertype","over","afdrukken","symbool","onderstreept","doorgestreept","inspringen","minder inspringen","volledige grootte","kleiner maken","opmaak kopiëren","horizontale lijn","lijst","genummerde lijst","knip","alles selecteren","Embed code","link openen","link aanpassen","niet volgen","link verwijderen","Updaten","Om te bewerken","Recensie"," URL","Bewerken","Horizontaal uitlijnen","Filteren","Sorteren op wijzigingsdatum","Sorteren op naam","Sorteren op grootte","Map toevoegen","Herstellen","Opslaan","Opslaan als ...","Grootte aanpassen","Bijknippen","Breedte","Hoogte","Verhouding behouden","Ja","Nee","Verwijderen","Selecteren","Selecteer: %s","Verticaal uitlijnen","Splitsen","Samenvoegen","Kolom toevoegen","Rij toevoegen",null,"Verwijderen","Verticaal splitsen","Horizontaal splitsen","Rand","Deze code lijkt op HTML. Als HTML behouden?","Invoegen als HTML","Origineel behouden","Als tekst invoegen","Als onopgemaakte tekst invoegen","Je kunt alleen je eigen afbeeldingen aanpassen. Deze afbeelding downloaden?","De afbeelding is succesvol geüploadet!","Palette","Er zijn geen bestanden in deze map.","Hongaars","Voer een nieuwe naam in","voorvertoning","Download","Plakken van klembord","Uw browser ondersteunt geen directe toegang tot het klembord.","Selectie kopiëren","kopiëren","Border radius"]
 
 /***/ }),
-/* 140 */
+/* 141 */
 /***/ (function(module, exports) {
 
 module.exports.default = ["Napisz coś","O Jodit","Edytor Jodit","Darmowa wersja nie komercyjna","GNU General Public License, wersja 2 lub późniejsza","Instrukcja Jodit","zawiera szczegółowe informacje dotyczące użytkowania.","Odwiedź naszą stronę, aby uzyskać więcej informacji na temat licencji:","Zakup pełnej wersji","Copyright © XDSoft.net - Chupurnov Valeriy. Wszystkie prawa zastrzeżone.","Kotwica","Otwórz w nowej zakładce","Otwórz edytor w pełnym rozmiarze","Wyczyść formatowanie","Kolor wypełnienia lub ustaw kolor tekstu","Ponów","Cofnij","Pogrubienie","Kursywa","Wstaw listę wypunktowaną","Wstaw listę numeryczną","Wyśrodkuj","Wyjustuj","Wyrównaj do lewej","Wyrównaj do prawej","Wstaw linię poziomą","Wstaw grafikę","Wstaw plik","Wstaw film Youtube/vimeo","Wstaw link","Rozmiar tekstu","Krój czcionki","Wstaw formatowanie","Normalne","Nagłówek 1","Nagłówek 2","Nagłówek 3","Nagłówek 4","Cytat","Kod","Wstaw","Wstaw tabelę","Zmniejsz wcięcie","Zwiększ wcięcie","Wybierz znak specjalny","Wstaw znak specjalny","Malarz formatów","Zmień tryb","Marginesy","Górny","Prawy","Dolny","Levy","Style CSS","Klasy CSS","Wyrównanie","Prawa","środek","Lewa","brak","Źródło","Tytuł","Tekst alternatywny","Link","Otwórz w nowej zakładce","Grafika","Plik","Zaawansowane","Właściwości grafiki","Anuluj","OK","Przeglądarka plików","Błąd ładowania listy plików","Błąd ładowania folderów","Czy jesteś pewien?","Wprowadź nazwę folderu","Utwórz folder","wprowadź nazwę","Upuść plik graficzny","Upuść plik","lub kliknij tu","Tekst alternatywny","Wczytaj","Przeglądaj","Tło","Treść","Góra","Środek","Dół","Wstaw kolumnę przed","Wstaw kolumnę po","Wstaw wiersz przed","Wstaw wiersz po","Usuń tabelę","Usuń wiersz","Usuń kolumnę","Wyczyść komórkę","Znaki: %d","Słowa: %d","Przekreślenie","Podkreślenie","indeks górny","index dolny","Wytnij zaznaczenie","Wybierz wszystko","Przerwa","Szukaj","Zamień na","Zamień","Wklej","Wybierz zawartość do wklejenia","HTML","pogrubienie","kursywa","pędzel","link","cofnij","ponów","tabela","grafika","wyczyść","akapit","rozmiar czcionki","wideo","czcionka","O programie","drukuj","symbol","podkreślenie","przekreślenie","wcięcie","wycięcie","pełen rozmiar","przytnij","format kopii","linia pozioma","lista","lista numerowana","wytnij","zaznacz wszystko","Wstaw kod","otwórz link","edytuj link","Atrybut no-follow","Usuń link","Aktualizuj","edytuj","szukaj","URL","Edytuj","Wyrównywanie w poziomie","Filtruj","Sortuj wg zmiany","Sortuj wg nazwy","Sortuj wg rozmiaru","Dodaj folder","wyczyść","zapisz","zapisz jako","Zmień rozmiar","Przytnij","Szerokość","Wysokość","Zachowaj proporcje","Tak","Nie","Usuń","Wybierz","Wybierz: %s","Wyrównywanie w pionie","Podziel","Scal","Dodaj kolumnę","Dodaj wiersz",null,"Usuń","Podziel w pionie","Podziel w poziomie","Obramowanie","Twój kod wygląda jak HTML. Zachować HTML?","Wkleić jako HTML?","Oryginalny tekst","Wstaw jako tekst","Wstaw tylko treść","Możesz edytować tylko swoje grafiki. Czy chcesz pobrać tą grafikę?","Grafika została pomyślnienie dodana na serwer","Paleta","Brak plików.","zmień nazwę","Wprowadź nową nazwę","podgląd","pobierz","Wklej ze schowka","Twoja przeglądarka nie obsługuje schowka","Kopiuj zaznaczenie","kopiuj","Zaokrąglenie krawędzi"]
 
 /***/ }),
-/* 141 */
+/* 142 */
 /***/ (function(module, exports) {
 
 module.exports.default = ["Escreva algo...","Sobre o Jodit","Editor Jodit","Versão Gratuita não-comercial","Licença Pública GNU General, Versão 2 ou posterior","Guia de usuário Jodit","contém ajuda detalhada para o uso.","Para informação sobre a licença, por favor visite nosso site:","Compre a versão completa","Copyright © XDSoft.net - Chupurnov Valeriy. Todos os direitos reservados.","Link","Abrir em nova aba","Abrir editor em tela cheia","Limpar formatação","Cor de preenchimento ou cor do texto","Refazer","Desfazer","Negrito","Itálico","Inserir lista não ordenada","Inserir lista ordenada","Centralizar","Justificar","Alinhar à Esquerda","Alinhar à Direita","Inserir linha horizontal","Inserir imagem","Inserir arquivo","Inserir vídeo do Youtube/vimeo","Inserir link","Tamanho da letra","Fonte","Inserir bloco","Normal","Cabeçalho 1","Cabeçalho 2","Cabeçalho 3","Cabeçalho 4","Citação","Código","Inserir","Inserir tabela","Diminuir recuo","Aumentar recuo","Selecionar caractere especial","Inserir caractere especial","Copiar formato","Mudar modo","Margens","cima","direta","baixo","esquerda","Estilos CSS","Classes CSS","Alinhamento","Direita","Centro","Esquerda","--Não Estabelecido--","Fonte","Título","Texto Alternativo","Link","Abrir link em nova aba","Imagem","Arquivo","Avançado","Propriedades da imagem","Cancelar","Ok","Procurar arquivo","Erro ao carregar a lista","Erro ao carregar as pastas","Você tem certeza?","Escreva o nome da pasta","Criar pasta","Escreva seu nome","Soltar imagem","Soltar arquivo","ou clique","Texto alternativo","Upload","Explorar","Fundo","Texto","Cima","Meio","Baixo","Inserir coluna antes","Inserir coluna depois","Inserir linha acima","Inserir linha abaixo","Excluir tabela","Excluir linha","Excluir coluna","Limpar célula","Caracteres: %d","Palavras: %d","Tachado","Sublinhar","sobrescrito","subscrito","Cortar seleção","Selecionar tudo","Pausa","Procurar por","Substituir com","Substituir","Colar","Escolher conteúdo para colar","HTML","negrito","itálico","pincel","link","desfazer","refazer","tabela","imagem","apagar","parágrafo","tamanho da letra","vídeo","fonte","Sobre de","Imprimir","Símbolo","sublinhar","tachado","recuar","diminuir recuo","Tamanho completo","diminuir","Copiar formato","linha horizontal","lista não ordenada","lista ordenada","Cortar","Selecionar tudo","Incluir código","Abrir link","Editar link","Não siga","Remover link","Atualizar","Editar","Visualizar","URL","Editar","Alinhamento horizontal","filtrar","Ordenar por modificação","Ordenar por nome","Ordenar por tamanho","Adicionar pasta","Resetar","Salvar","Salvar como...","Redimensionar","Recortar","Largura","Altura","Manter a proporção","Sim","Não","Remover","Selecionar","Selecionar: %s","Alinhamento vertical","Dividir","Mesclar","Adicionar coluna","Adicionar linha",null,"Excluir","Dividir vertical","Dividir horizontal","Borda","Seu código é simular ao HTML. Manter como HTML?","Colar como HTML?","Manter","Inserir como Texto","Inserir somente o Texto","Você só pode editar suas próprias imagens. Baixar essa imagem pro servidor?","A imagem foi enviada com sucesso para o servidor!","Palette","Não há arquivos nesse diretório.","Húngara","Digite um novo nome","preview","Baixar","Colar da área de transferência","O seu navegador não oferece suporte a acesso direto para a área de transferência.","Selecção de cópia","cópia","Border radius"]
 
 /***/ }),
-/* 142 */
+/* 143 */
 /***/ (function(module, exports) {
 
 module.exports.default = ["Напишите что-либо","О Jodit","Редактор Jodit","Версия для не коммерческого использования","Стандартная общественная лицензия GNU (GPL), версия 2 или выше","Jodit Руководство пользователя","содержит детальную информацию по использованию","Для получения сведений о лицензии , пожалуйста, перейдите на наш сайт:","Купить полную версию","Авторские права © XDSoft.net - Чупурнов Валерий. Все права защищены.","Анкор","Открывать ссылку в новой вкладке","Открыть редактор в полном размере","Очистить форматирование","Цвет заливки или цвет текста","Повтор","Отмена","Жирный","Наклонный","Вставка маркированного списка","Вставить нумерованный список","Выровнять по центру","Выровнять по ширине","Выровнять по левому краю","Выровнять по правому краю","Вставить горизонтальную линию","Вставить изображение","Вставить файл","Вставьте видео","Вставить ссылку","Размер шрифта","Шрифт","Вставить блочный элемент","Нормальный текст","Заголовок 1","Заголовок 2","Заголовок 3","Заголовок 4","Цитата","Код","Вставить","Вставить таблицу","Уменьшить отступ","Увеличить отступ","Выберите специальный символ","Вставить специальный символ","Формат краски","Источник","Отступы","сверху","справа","снизу","слева","Стили","Классы","Выравнивание","По правому краю","По центру","По левому краю","--не устанавливать--","src","Заголовок","Альтернативный текст (alt)","Ссылка","Открывать ссылку в новом окне",null,"Файл","Расширенные","Свойства изображения","Отмена","Ок","Браузер файлов","Ошибка при загрузке списка изображений","Ошибка при загрузке списка директорий","Вы уверены?","Введите название директории","Создать директорию","введите название","Перетащите сюда изображение","Перетащите сюда файл","или нажмите","Альтернативный текст","Загрузка","Сервер","Фон","Текст"," К верху","По середине","К низу","Вставить столбец до","Вставить столбец после","Вставить ряд выше","Вставить ряд ниже","Удалить таблицу","Удалять ряд","Удалить столбец","Отчистить ячейку","Символов: %d","Слов: %d","Перечеркнуть","Подчеркивание","верхний индекс","индекс","Вырезать","Выделить все","Разделитель","Найти","Заменить на","Заменить","Вставить","Выбрать контент для вставки","HTML","жирный","курсив","заливка","ссылка","отменить","повторить","таблица","Изображение","очистить","параграф","размер шрифта","видео","шрифт","о редакторе","печать","символ","подчеркнутый","перечеркнутый","отступ","выступ","во весь экран","обычный размер","Копировать формат","линия","Список","Нумерованный список","Вырезать","Выделить все","Код","Открыть ссылку","Редактировать ссылку","Атрибут nofollow","Убрать ссылку","Обновить","Редактировать","Просмотр","URL","Редактировать","Горизонтальное выравнивание","Фильтр","По изменению","По имени","По размеру","Добавить папку","Восстановить","Сохранить","Сохранить как","Изменить размер","Обрезать размер","Ширина","Высота","Сохранять пропорции","Да","Нет","Удалить","Выделить","Выделить: %s","Вертикальное выравнивание","Разделить","Объеденить в одну","Добавить столбец","Добавить строку","Лицензия: %s","Удалить","Разделить по вертикали","Разделить по горизонтали","Рамка","Ваш текст, который вы пытаетесь вставить похож на HTML. Вставить его как HTML?","Вставить как HTML?","Сохранить оригинал","Вставить как текст","Вставить только текст","Вы можете редактировать только свои собственные изображения. Загрузить это изображение на ваш сервер?","Изображение успешно загружено на сервер!","палитра","В данном каталоге нет файлов","Переименовать","Введите новое имя","Предпросмотр","Скачать","Вставить из буфера обмена","Ваш браузер не поддерживает прямой доступ к буферу обмена.","Скопировать выделенное","копия","Радиус границы"]
 
 /***/ }),
-/* 143 */
+/* 144 */
 /***/ (function(module, exports) {
 
 module.exports.default = ["Bir şey yazın.","Jodit Hakkında","Jodit Editor","Ücretsiz, ticari olmayan versiyon","GNU General Public License, Versiyon 2 ve sonrası için","Jodit Kullanım Kılavuzu","kullanım için detaylı bilgiler içerir","Lisans hakkında bilgi için lütfen web sitemize gidin:","Tam versiyon satın al","Copyright © XDSoft.net - Chupurnov Valeriy. Tüm Hakları Saklıdır","Bağlantı","Yeni sekmede aç","Tam ekran editör","Stili temizle","Dolgu ve yazı rengi seç","İleri Al","Geri Al","Kalın","İtalik","Sırasız Liste Ekle","Sıralı Liste Ekle","Ortala","Kenarlara Yasla","Sola Yasla","Sağa Yasla","Yatay Çizgi Ekle","Resim Ekle","Dosya Ekle","Youtube/vimeo Videosu Ekle","Bağlantı Ekle","Font Boyutu","Font Ailesi","Blok Ekle","Normal","Başlık 1","Başlık 2","Başlık 3","Başlık 4","Alıntı","Code","Ekle","Tablo Ekle","Girintiyi Azalt","Girintiyi Arttır","Özel Karakter Seç","Özel Karakter Ekle","Resim Biçimi","Mod Değiştir","MEsafeler","Üst","Sağ","Alt","Sol","CSS Stilleri","CSS Sınıfları","Hizalama","Sağ","Ortalı","Sol","Belirlenmedi","Kaynak","Başlık","Alternatif Yazı","Link","Bağlantıyı yeni sekmede aç","Resim","Dosya","Gelişmiş","Resim özellikleri","İptal","Tamam","Dosya Gezgini","Liste yüklenirken hata oluştu","Klasörler yüklenirken hata oluştur","Emin misiniz?","Dizin yolu giriniz","Dizin oluştur","Typname","Resim bırak","Dosya bırak","veya tıkla","Alternatif yazı","Yükle","Ekle","Arka plan","Yazı","Üst","Orta","Aşağı","Öncesine kolon ekle","Sonrasına kolon ekle","Üstüne satır ekle","Altına satır ekle","Tabloyu sil","Satır sil","Kolon sil","Hücreyi boşalt","Harfler: %d","Kelimeler: %d","Durchschlagen","Alt çizgi","Üst yazı","Alt yazı","Seçilimi kes","Tümünü seç","Durdur","Ara","Şununla değiştir","Değiştir","Yapıştır","Yapıştırılacak içerik seç","Kaynak","Kalın","italik","Fırça","Bağlantı","Geri al","İleri al","Tablo","Resim","Silgi","Paragraf","Font boyutu","Video","Font","Hakkında","Yazdır","Sembol","Alt çizgi","Üstü çizili","Girinti","Çıkıntı","Tam ekran","Küçült","Kopyalama Biçimi","Ayraç","Sırasız liste","Sıralı liste","Kes","Tümünü seç","Kod ekle","Bağlantıyı aç","Bağlantıyı düzenle","Nofollow özelliği","Bağlantıyı kaldır","Güncelle","Düzenlemek için","Yorumu","URL","Düzenle","Yatay hizalama","Filtre","Değişime göre sırala","İsme göre sırala","Boyuta göre sırala","Klasör ekle","Sıfırla","Kaydet","Farklı kaydet","Boyutlandır","Kırp","Genişlik","Yükseklik","En boy oranını koru","Evet","Hayır","Sil","Seç","Seç: %s","Dikey hizalama","Ayır","Birleştir","Kolon ekle","Satır ekle",null,"Sil","Dikey ayır","Yatay ayır","Kenarlık","Kodunuz HTML koduna benziyor. HTML olarak devam etmek ister misiniz?","HTML olarak yapıştır","Sakla","Yazı olarak ekle","Nur Text einfügen","Sadece kendi resimlerinizi düzenleyebilirsiniz. Bu görseli kendi hostunuza indirmek ister misiniz?","Görsel başarıyla hostunuza yüklendi","Palette","Bu dizinde dosya yok.","Macarca","Yeni isim girin","Ön izleme","İndir","Panodan yapıştır ","Tarayıcınız pano doğrudan erişim desteklemiyor.","Kopya seçimi","kopya","Sınır yarıçapı"]
 
 /***/ }),
-/* 144 */
+/* 145 */
 /***/ (function(module, exports) {
 
 module.exports.default = ["输入一些内容","关于Jodit","Jodit Editor","Free Non-commercial Version","GNU General Public License, version 2 or later","开发者指南","使用帮助","有关许可证的信息，请访问我们的网站：","购买完整版本","Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.","Anchor","在新窗口打开","全屏编辑","清除样式","颜色","重做","撤销","粗体","斜体","符号列表","编号","居中","对齐文本","左对齐","右对齐","分割线","图片","文件","youtube/vimeo 视频","链接","字号","字体","格式块","文本","标题1","标题2","标题3","标题4","引用","代码","插入","表格","减少缩进","增加缩进","选择特殊符号","特殊符号","格式复制","改变模式","外边距（Margins）","top","right","bottom","left","样式","Classes","对齐方式","居右","居中","居左","无","Src","Title","Alternative","Link","在新窗口打开链接","图片","file","高级","图片属性","取消","确定","文件管理","加载list错误","加载folders错误","你确定吗？","输入路径","创建路径","type name","拖动图片到此","拖动文件到此","或点击","Alternative text","上传","浏览","背景色","文字","顶部","中间","底部","在之前插入列","在之后插入列","在之前插入行","在之后插入行","删除表格","删除行","删除列","清除内容","字符数: %d","单词数: %d","删除线","下划线","上标","下标","剪切","全选","Pause","查找","替换为","替换","粘贴","选择内容并粘贴","源码","粗体","斜体","颜色","链接","撤销","重做","表格","图片","橡皮擦","段落","字号","视频","字体","关于","打印","符号","下划线","上出现","增加缩进","减少缩进","全屏","收缩","复制格式","分割线","无序列表","顺序列表","剪切","全选","嵌入代码","打开链接","编辑链接","No follow","Unlink","更新","铅笔","回顧","URL",null,"水平对齐","筛选","修改时间排序","名称排序","大小排序","新建文件夹","重置","保存","保存为","调整大小","Crop","宽","高","保存长宽比","是","不","移除","选择","选择: %s","垂直对齐","拆分","合并","添加列","添加行",null,"删除","垂直拆分","水平拆分","边框","你粘贴的文本是一段html代码，是否保留源格式","html粘贴","保留源格式","把html代码视为普通文本","只保留文本","你只能编辑你自己的图片。Download this image on the host?","图片上传成功","调色板","此目录中沒有文件。","重命名","输入新名称","预览","下载","粘贴从剪贴板","你浏览器不支持直接访问的剪贴板。","复制的选择","复制","边界半径"]
 
 /***/ }),
-/* 145 */
+/* 146 */
 /***/ (function(module, exports) {
 
 module.exports.default = ["輸入一些內容","關於Jodit","Jodit Editor","Free Non-commercial Version","GNU General Public License, version 2 or later","開發者指南","使用幫助","有關許可證的信息，請訪問我們的網站：","購買完整版本","Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.","Anchor","在新窗口打開","全屏編輯","清除樣式","顏色","重做","撤銷","粗體","斜體","符號列表","編號","居中","對齊文本","左對齊","右對齊","分割線","圖片","文件","youtube/vimeo 影片","鏈接","字號","字體","格式塊","文本","標題1","標題2","標題3","標題4","引用","代碼","插入","表格","減少縮進","增加縮進","選擇特殊符號","特殊符號","格式複製","改變模式","外邊距（Margins）","top","right","bottom","left","樣式","Classes","對齊方式","居右","居中","居左","無","Src","Title","Alternative","Link","在新窗口打開鏈接","圖片","file","高級","圖片屬性","取消","確定","文件管理","加載list錯誤","加載folders錯誤","你確定嗎？","輸入路徑","創建路徑","type name","拖動圖片到此","拖動文件到此","或點擊","Alternative text","上傳","瀏覽","背景色","文字","頂部","中間","底部","在之前插入列","在之後插入列","在之前插入行","在之後插入行","刪除表格","刪除行","刪除列","清除內容","字符數: %d","單詞數: %d","刪除線","下劃線","上標","下標","剪切","全選","Pause","查找","替換為","替換","黏貼","選擇內容並黏貼","源碼","粗體","斜體","顏色","鏈接","撤銷","重做","表格","圖片","橡皮擦","段落","字號","影片","字體","關於","打印","符號","下劃線","上出現","增加縮進","減少縮進","全屏","收縮","複製格式","分割線","無序列表","順序列表","剪切","全選","嵌入代碼","打開鏈接","編輯鏈接","No follow","Unlink","更新","鉛筆","回顧","URL",null,"水平對齊","篩選","修改時間排序","名稱排序","大小排序","新建文件夾","重置","保存","保存為","調整大小","Crop","寬","高","保存長寬比","是","不","移除","選擇","選擇: %s","垂直對齊","拆分","合併","添加列","添加行",null,"刪除","垂直拆分","水平拆分","邊框","你黏貼的文本是一段html代碼，是否保留源格式","html黏貼","保留源格式","把html代碼視為普通文本","只保留文本","妳只能編輯妳自己的圖片。Download this image on the host?","圖片上傳成功","調色板","此目錄中沒有文件。","重命名","輸入新名稱","預覽","下載","วางจากคลิปบอร์ด","ของเบราว์เซอร์ไม่สนับสนุนโดยตรงเข้าไปยังคลิปบอร์ด","คัดลอกส่วนที่เลือก","คัดลอก","เส้นขอบรัศมี"]
 
 /***/ }),
-/* 146 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12273,7 +12312,7 @@ exports.addNewLine = addNewLine;
 
 
 /***/ }),
-/* 147 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12325,7 +12364,7 @@ exports.autofocus = autofocus;
 
 
 /***/ }),
-/* 148 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12512,8 +12551,8 @@ function backspace(editor) {
             if (!range) {
                 return false;
             }
-            var fakeNode = editor.ownerDocument.createTextNode(consts.INVISIBLE_SPACE);
-            var marker = editor.editorDocument.createElement('span');
+            var fakeNode = editor.create.inside.text(consts.INVISIBLE_SPACE);
+            var marker = editor.create.inside.span();
             try {
                 range.insertNode(fakeNode);
                 if (!Dom_1.Dom.isOrContains(editor.editor, fakeNode)) {
@@ -12639,7 +12678,7 @@ exports.backspace = backspace;
 
 
 /***/ }),
-/* 149 */
+/* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12728,7 +12767,7 @@ exports.bold = bold;
 
 
 /***/ }),
-/* 150 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13007,20 +13046,6 @@ function cleanHtml(editor) {
     });
 }
 exports.cleanHtml = cleanHtml;
-
-
-/***/ }),
-/* 151 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(70), exports);
-tslib_1.__exportStar(__webpack_require__(71), exports);
-tslib_1.__exportStar(__webpack_require__(153), exports);
-__webpack_require__(154);
 
 
 /***/ }),
@@ -13464,6 +13489,7 @@ var constants_1 = __webpack_require__(2);
 var Dom_1 = __webpack_require__(0);
 var helpers_1 = __webpack_require__(4);
 var Plugin_1 = __webpack_require__(7);
+var clipboard_1 = __webpack_require__(70);
 var DragAndDrop = (function (_super) {
     tslib_1.__extends(DragAndDrop, _super);
     function DragAndDrop() {
@@ -13589,12 +13615,9 @@ var DragAndDrop = (function (_super) {
                 });
             }
         };
-        _this.getDataTransfer = function (event) {
-            return event.dataTransfer || new DataTransfer();
-        };
         _this.getText = function (event) {
-            var dt = _this.getDataTransfer(event);
-            return dt.getData(constants_1.TEXT_HTML) || dt.getData(constants_1.TEXT_PLAIN);
+            var dt = clipboard_1.getDataTransfer(event);
+            return dt ? dt.getData(constants_1.TEXT_HTML) || dt.getData(constants_1.TEXT_PLAIN) : null;
         };
         return _this;
     }
@@ -19455,8 +19478,8 @@ var tslib_1 = __webpack_require__(1);
 var Config_1 = __webpack_require__(3);
 var consts = __webpack_require__(2);
 var dialog_1 = __webpack_require__(17);
-var confirm_1 = __webpack_require__(73);
-var promt_1 = __webpack_require__(72);
+var confirm_1 = __webpack_require__(74);
+var promt_1 = __webpack_require__(73);
 var icon_1 = __webpack_require__(6);
 var storage_1 = __webpack_require__(25);
 var each_1 = __webpack_require__(24);
@@ -20224,7 +20247,7 @@ Config_1.Config.prototype.filebrowser = {
         }
         switch (sortAttr) {
             case 'changed': {
-                var f = (new Date(a.changed)).getTime(), s = (new Date(b.changed)).getTime();
+                var f = new Date(a.changed).getTime(), s = new Date(b.changed).getTime();
                 return asc ? f - s : s - f;
             }
             case 'size': {
@@ -20284,38 +20307,12 @@ Config_1.Config.prototype.filebrowser = {
         if (item.file !== undefined) {
             name = item.file;
         }
-        info =
-            "<div class=\"" + consts_1.ITEM_CLASS + "-info\">" +
-                (showName
-                    ? "<span class=\"" + consts_1.ITEM_CLASS + "-info-filename\">" + name + "</span>"
-                    : '') +
-                (showSize
-                    ? "<span class=\"" + consts_1.ITEM_CLASS + "-info-filesize\">" + item.size + "</span>"
-                    : '') +
-                (showTime
-                    ? "<span class=\"" + consts_1.ITEM_CLASS + "-info-filechanged\">" + showTime + "</span>"
-                    : '') +
-                '</div>';
-        return ('<a ' +
-            ("data-is-file=\"" + (item.isImage ? 0 : 1) + "\" ") +
-            'draggable="true" ' +
-            ("class=\"" + consts_1.ITEM_CLASS + "\" ") +
-            ("href=\"" + item.fileURL + "\" ") +
-            ("data-source=\"" + source_name + "\" ") +
-            ("data-path=\"" + item.path + "\" ") +
-            ("data-name=\"" + name + "\" ") +
-            ("title=\"" + name + "\" ") +
-            ("data-url=\"" + item.fileURL + "\"") +
-            '>' +
-            "<img " +
-            ("data-is-file=\"" + (item.isImage ? 0 : 1) + "\" ") +
-            ("data-src=\"" + item.fileURL + "\" ") +
-            ("src=\"" + item.imageURL + "\" ") +
-            ("alt=\"" + name + "\" ") +
-            'loading="lazy" ' +
-            '/>' +
-            (showName || showSize || showTime ? info : '') +
-            '</a>');
+        info = "<div class=\"" + consts_1.ITEM_CLASS + "-info\">" + (showName ? "<span class=\"" + consts_1.ITEM_CLASS + "-info-filename\">" + name + "</span>" : '') + (showSize
+            ? "<span class=\"" + consts_1.ITEM_CLASS + "-info-filesize\">" + item.size + "</span>"
+            : '') + (showTime
+            ? "<span class=\"" + consts_1.ITEM_CLASS + "-info-filechanged\">" + showTime + "</span>"
+            : '') + "</div>";
+        return "<a\n\t\t\tdata-is-file=\"" + (item.isImage ? 0 : 1) + "\"\n\t\t\tdraggable=\"true\"\n\t\t\tclass=\"" + consts_1.ITEM_CLASS + "\"\n\t\t\thref=\"" + item.fileURL + "\"\n\t\t\tdata-source=\"" + source_name + "\"\n\t\t\tdata-path=\"" + item.path + "\"\n\t\t\tdata-name=\"" + name + "\"\n\t\t\ttitle=\"" + name + "\"\n\t\t\tdata-url=\"" + item.fileURL + "\">\n\t\t\t\t<img\n\t\t\t\t\tdata-is-file=\"" + (item.isImage ? 0 : 1) + "\"\n\t\t\t\t\tdata-src=\"" + item.fileURL + "\"\n\t\t\t\t\tsrc=\"" + item.imageURL + "\"\n\t\t\t\t\talt=\"" + name + "\"\n\t\t\t\t\tloading=\"lazy\"\n\t\t\t\t/>\n\t\t\t\t" + (showName || showSize || showTime ? info : '') + "\n\t\t\t</a>";
     },
     ajax: {
         url: '',
@@ -20420,7 +20417,9 @@ Config_1.Config.prototype.controls.filebrowser = {
     },
     select: {
         icon: 'check',
-        isDisable: function (browser) { return !browser.state.activeElements.length; },
+        isDisable: function (browser) {
+            return !browser.state.activeElements.length;
+        },
         exec: function (editor) {
             editor.events.fire('select.filebrowser');
         }
@@ -21878,31 +21877,32 @@ var Uploader = (function (_super) {
     Uploader.prototype.bind = function (form, handlerSuccess, handlerError) {
         var _this = this;
         var self = this, onPaste = function (e) {
-            var i, file, extension;
+            var i, file, extension, cData = e.clipboardData;
             var process = function (formdata) {
                 if (file) {
                     formdata.append('extension', extension);
                     formdata.append('mimetype', file.type);
                 }
             };
-            if (e.clipboardData &&
-                e.clipboardData.files &&
-                e.clipboardData.files.length) {
-                _this.sendFiles(e.clipboardData.files, handlerSuccess, handlerError);
+            if (cData && cData.files && cData.files.length) {
+                _this.sendFiles(cData.files, handlerSuccess, handlerError);
                 return false;
             }
             if (helpers_1.browser('ff') || constants_1.IS_IE) {
-                if (e.clipboardData &&
-                    (!e.clipboardData.types.length &&
-                        e.clipboardData.types[0] !== constants_1.TEXT_PLAIN)) {
+                if (cData &&
+                    (!cData.types ||
+                        !cData.types.length ||
+                        cData.types[0] !== constants_1.TEXT_PLAIN)) {
                     var div_1 = _this.jodit.create.div('', {
-                        'tabindex': -1,
-                        'style': 'left: -9999px; top: 0; width: 0; height: 100%;line-height: 140%; ' +
+                        tabindex: -1,
+                        style: 'left: -9999px; top: 0; width: 0; height: 100%;line-height: 140%; ' +
                             'overflow: hidden; position: fixed; z-index: 2147483647; word-break: break-all;',
-                        'contenteditable': true
+                        contenteditable: true
                     });
                     _this.jodit.ownerDocument.body.appendChild(div_1);
-                    var selection_1 = _this.jodit && isJoditObject_1.isJoditObject(_this.jodit) ? _this.jodit.selection.save() : null, restore_1 = function () {
+                    var selection_1 = _this.jodit && isJoditObject_1.isJoditObject(_this.jodit)
+                        ? _this.jodit.selection.save()
+                        : null, restore_1 = function () {
                         return selection_1 &&
                             _this.jodit &&
                             isJoditObject_1.isJoditObject(_this.jodit) &&
@@ -21921,10 +21921,8 @@ var Uploader = (function (_super) {
                 }
                 return;
             }
-            if (e.clipboardData &&
-                e.clipboardData.items &&
-                e.clipboardData.items.length) {
-                var items = e.clipboardData.items;
+            if (cData && cData.items && cData.items.length) {
+                var items = cData.items;
                 for (i = 0; i < items.length; i += 1) {
                     if (items[i].kind === 'file' &&
                         items[i].type === 'image/png') {
@@ -22022,8 +22020,7 @@ var Uploader = (function (_super) {
             try {
                 ajax.abort();
             }
-            catch (_a) {
-            }
+            catch (_a) { }
         });
         delete this.options;
         _super.prototype.destruct.call(this);

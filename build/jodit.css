@@ -1,7 +1,7 @@
 /*!
  jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- Version: v3.3.8
+ Version: v3.3.10
  Url: https://xdsoft.net/jodit/
  License(s): GPL-2.0-or-later OR MIT OR Commercial
 */
@@ -330,8 +330,10 @@
 }
 .jodit_dialog_box .jodit_dialog{
   z-index:2222223;
-  display:inline-block;
-  vertical-align:middle;
+  display:-ms-flexbox;
+  display:flex;
+  -ms-flex-flow:column nowrap;
+      flex-flow:column nowrap;
   white-space:normal;
   text-align:left;
   position:fixed;
@@ -341,6 +343,7 @@
   box-shadow:0 10px 20px rgba(0, 0, 0, .19),0 6px 6px rgba(0, 0, 0, .23);
   min-width:200px;
   min-height:100px;
+  max-height:100%;
 }
 @media (max-width:480px){
   .jodit_dialog_box .jodit_dialog{
@@ -351,13 +354,13 @@
     left:0 !important;
   }
 }
-.jodit_dialog_box .jodit_dialog .jodit_promt{
+.jodit_dialog_box .jodit_dialog .jodit_prompt{
   max-width:300px;
   min-width:200px;
   padding:10px;
   word-break:break-all;
 }
-.jodit_dialog_box .jodit_dialog .jodit_promt label{
+.jodit_dialog_box .jodit_dialog .jodit_prompt label{
   margin-bottom:5px;
   display:block;
 }
@@ -373,11 +376,11 @@
   -ms-flex-pack:justify;
       justify-content:space-between;
   text-align:left;
-  color:#222;
-  box-shadow:0 1px 3px rgba(0, 0, 0, .16),0 1px 2px rgba(0, 0, 0, .23);
   cursor:move;
   height:48px;
   overflow:hidden;
+  color:#222;
+  border-bottom:1px solid #ccc;
 }
 .jodit_dialog_box .jodit_dialog .jodit_dialog_header .jodit_dialog_header-title,.jodit_dialog_box .jodit_dialog .jodit_dialog_header .jodit_dialog_header-toolbar{
   display:-ms-flexbox;
@@ -425,7 +428,9 @@
   width:auto;
 }
 .jodit_dialog_box .jodit_dialog .jodit_dialog_content{
-  height:calc(100% - 48px);
+  -ms-flex:1 0;
+      flex:1 0;
+  min-height:100px;
   overflow:auto;
 }
 .jodit_dialog_box .jodit_dialog .jodit_dialog_content .jodit_form_group{
@@ -473,9 +478,6 @@
 .jodit_dialog_box .jodit_dialog .jodit_dialog_footer{
   padding:10px;
   display:none;
-}
-.jodit_dialog_box .jodit_dialog.with_footer .jodit_dialog_content{
-  height:calc(100% - 96px);
 }
 .jodit_dialog_box .jodit_dialog.with_footer .jodit_dialog_footer{
   display:-ms-flexbox;
@@ -528,7 +530,7 @@
 .jodit_toolbar_list>.jodit_toolbar{
   max-height:400px;
   overflow:auto;
-  box-shadow:0 3px 6px rgba(0, 0, 0, .16),0 3px 6px rgba(0, 0, 0, .23);
+  border-bottom-width:1px;
   padding:0;
   margin:auto;
   text-align:left;
@@ -544,6 +546,10 @@
 }
 .jodit_toolbar_list>.jodit_toolbar,.jodit_toolbar_list>.jodit_toolbar .jodit_toolbar{
   background:#f9f9f9;
+  -ms-flex-direction:column;
+      flex-direction:column;
+  -ms-flex-wrap:nowrap;
+      flex-wrap:nowrap;
 }
 .jodit_toolbar_list>.jodit_toolbar blockquote,.jodit_toolbar_list>.jodit_toolbar h1,.jodit_toolbar_list>.jodit_toolbar h2,.jodit_toolbar_list>.jodit_toolbar h3,.jodit_toolbar_list>.jodit_toolbar h4,.jodit_toolbar_list>.jodit_toolbar h5,.jodit_toolbar_list>.jodit_toolbar p,.jodit_toolbar_list>.jodit_toolbar pre{
   font-family:Helvetica,sans-serif,Arial;
@@ -1359,9 +1365,8 @@ svg.jodit_icon{
   list-style:none !important;
   font-size:0;
   background:#f9f9f9;
-  box-shadow:0 4px 4px -2px rgba(0, 0, 0, .14);
-  border:1px solid #ccc;
-  border-bottom:0;
+  border:solid #ccc;
+  border-width:1px 1px 0;
   min-height:16px !important;
 }
 .jodit_toolbar+.jodit_toolbar_dummy{
@@ -1547,7 +1552,6 @@ svg.jodit_icon{
   font-size:14px;
   line-height:14px !important;
   background:#fff;
-  box-shadow:0 2px 4px rgba(0, 0, 0, .2);
   border:1px solid rgba(0, 0, 0, .2);
 }
 .jodit_toolbar_popup .jodit_toolbar{
@@ -1631,33 +1635,34 @@ svg.jodit_icon{
 .jodit_statusbar{
   font-family:Helvetica,sans-serif,Arial;
   font-size:14px;
+  font-size:11px;
   display:-ms-flexbox;
   display:flex;
-  -ms-flex-pack:justify;
-      justify-content:space-between;
+  -ms-flex-pack:start;
+      justify-content:start;
   border:1px solid #ccc;
   border-top:0;
-  font-size:0;
   background-color:#f9f9f9;
   padding:0 5px;
 }
+.jodit_statusbar:before{
+  content:"";
+  -ms-flex:auto;
+      flex:auto;
+  -ms-flex-order:1;
+      order:1;
+}
 .jodit_statusbar .jodit_statusbar_item{
-  font-size:11px;
   line-height:1.57142857em;
   margin:0 10px 0 0;
   padding:0;
-  -ms-flex:1;
-      flex:1;
+  -ms-flex-order:0;
+      order:0;
 }
 .jodit_statusbar .jodit_statusbar_item.jodit_statusbar_item-right{
   margin:0 0 0 10px;
-  -ms-flex-order:1;
-      order:1;
-  -ms-flex:0;
-      flex:0;
-}
-.jodit_statusbar .jodit_statusbar_item .jodit_icon{
-  font-size:11px;
+  -ms-flex-order:2;
+      order:2;
 }
 .jodit_statusbar .jodit_statusbar_item li,.jodit_statusbar .jodit_statusbar_item ul{
   position:relative;
@@ -1711,13 +1716,6 @@ svg.jodit_icon{
   background-color:hsla(0, 0%, 88.2%, .99);
   text-decoration:none;
   color:#222;
-}
-.jodit_statusbar:after{
-  content:" ";
-  display:block;
-  visibility:hidden;
-  font-size:0;
-  height:0;
 }
 .jodit_disabled .jodit_statusbar{
   opacity:.4;
@@ -2283,6 +2281,8 @@ html.jodit_fullsize_box{
 .jodit_container .jodit_workplace{
   display:-ms-flexbox;
   display:flex;
+  -ms-flex-direction:column;
+      flex-direction:column;
   height:auto;
   min-height:50px;
   overflow:hidden;
@@ -2309,10 +2309,9 @@ html.jodit_fullsize_box{
 .jodit_source{
   display:none;
   position:relative;
-  background-color:#f8f8f8;
-  font-size:0;
-  -ms-flex:1;
-      flex:1;
+  background-color:#323232;
+  -ms-flex:auto;
+      flex:auto;
   overflow:auto;
 }
 .jodit_source,.jodit_source .jodit_source_mirror-fake{
@@ -2333,10 +2332,9 @@ html.jodit_fullsize_box{
 .jodit_source_mirror{
   border:0;
   width:100%;
-  background:#3f3f3f;
-  margin:0;
   height:100%;
-  box-shadow:none;
+  background:#323232;
+  margin:0;
   resize:none;
   box-sizing:border-box;
   color:#f0f0f0;
@@ -2344,6 +2342,7 @@ html.jodit_fullsize_box{
   font-family:Menlo,Monaco,monospace,sans-serif;
   font-size:13px;
   line-height:1.3em;
+  box-shadow:none;
   overflow:auto;
   z-index:2;
   padding:10px;

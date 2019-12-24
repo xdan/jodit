@@ -1,7 +1,7 @@
 /*!
  jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- Version: v3.3.8
+ Version: v3.3.10
  Url: https://xdsoft.net/jodit/
  License(s): GPL-2.0-or-later OR MIT OR Commercial
 */
@@ -749,14 +749,12 @@ __webpack_require__.d(helpers_namespaceObject, "JoditObject", function() { retur
 __webpack_require__.d(helpers_namespaceObject, "asArray", function() { return asArray; });
 __webpack_require__.d(helpers_namespaceObject, "inArray", function() { return inArray; });
 __webpack_require__.d(helpers_namespaceObject, "splitArray", function() { return splitArray; });
-__webpack_require__.d(helpers_namespaceObject, "debounce", function() { return debounce; });
-__webpack_require__.d(helpers_namespaceObject, "setTimeout", function() { return setTimeout_setTimeout; });
 __webpack_require__.d(helpers_namespaceObject, "isJoditObject", function() { return isJoditObject; });
 __webpack_require__.d(helpers_namespaceObject, "isNumeric", function() { return isNumeric; });
 __webpack_require__.d(helpers_namespaceObject, "isPlainObject", function() { return isPlainObject; });
 __webpack_require__.d(helpers_namespaceObject, "isURL", function() { return isURL; });
-__webpack_require__.d(helpers_namespaceObject, "isValidName", function() { return isValidName; });
 __webpack_require__.d(helpers_namespaceObject, "isWindow", function() { return isWindow; });
+__webpack_require__.d(helpers_namespaceObject, "normilizeCSSValue", function() { return normilizeCSSValue; });
 __webpack_require__.d(helpers_namespaceObject, "camelCase", function() { return camelCase; });
 __webpack_require__.d(helpers_namespaceObject, "fromCamelCase", function() { return fromCamelCase; });
 __webpack_require__.d(helpers_namespaceObject, "appendScript", function() { return appendScript; });
@@ -781,6 +779,8 @@ __webpack_require__.d(helpers_namespaceObject, "getXPathByElement", function() {
 __webpack_require__.d(helpers_namespaceObject, "hasOwn", function() { return hasOwn; });
 __webpack_require__.d(helpers_namespaceObject, "type", function() { return type_type; });
 __webpack_require__.d(helpers_namespaceObject, "val", function() { return val_val; });
+__webpack_require__.d(helpers_namespaceObject, "debounce", function() { return debounce; });
+__webpack_require__.d(helpers_namespaceObject, "setTimeout", function() { return setTimeout_setTimeout; });
 __webpack_require__.d(helpers_namespaceObject, "throttle", function() { return throttle; });
 __webpack_require__.d(helpers_namespaceObject, "hasBrowserColorPicker", function() { return hasBrowserColorPicker; });
 __webpack_require__.d(helpers_namespaceObject, "isFunction", function() { return isFunction; });
@@ -791,6 +791,7 @@ __webpack_require__.d(helpers_namespaceObject, "isDestructable", function() { re
 __webpack_require__.d(helpers_namespaceObject, "isInt", function() { return isInt; });
 __webpack_require__.d(helpers_namespaceObject, "isLicense", function() { return isLicense; });
 __webpack_require__.d(helpers_namespaceObject, "isString", function() { return isString; });
+__webpack_require__.d(helpers_namespaceObject, "isValidName", function() { return isValidName; });
 __webpack_require__.d(helpers_namespaceObject, "hexToRgb", function() { return hexToRgb; });
 __webpack_require__.d(helpers_namespaceObject, "colorToHex", function() { return colorToHex; });
 __webpack_require__.d(helpers_namespaceObject, "applyStyles", function() { return applyStyles; });
@@ -805,7 +806,6 @@ __webpack_require__.d(helpers_namespaceObject, "normalizePath", function() { ret
 __webpack_require__.d(helpers_namespaceObject, "normalizeRelativePath", function() { return normalizeRelativePath; });
 __webpack_require__.d(helpers_namespaceObject, "normalizeSize", function() { return normalizeSize; });
 __webpack_require__.d(helpers_namespaceObject, "normalizeURL", function() { return normalizeURL; });
-__webpack_require__.d(helpers_namespaceObject, "normilizeCSSValue", function() { return normilizeCSSValue; });
 __webpack_require__.d(helpers_namespaceObject, "normalizeColor", function() { return normalizeColor; });
 __webpack_require__.d(helpers_namespaceObject, "getContentWidth", function() { return getContentWidth; });
 __webpack_require__.d(helpers_namespaceObject, "innerWidth", function() { return innerWidth_innerWidth; });
@@ -1751,66 +1751,6 @@ const getXPathByElement = (element, root) => {
             : ''));
 };
 
-// CONCATENATED MODULE: ./src/modules/helpers/html/applyStyles.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
- * For GPL see LICENSE-GPL.txt in the project root for license information.
- * For MIT see LICENSE-MIT.txt in the project root for license information.
- * For commercial licenses see https://xdsoft.net/jodit/commercial/
- * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-const applyStyles = (html) => {
-    if (html.indexOf('<html ') === -1) {
-        return html;
-    }
-    html = html.substring(html.indexOf('<html '), html.length);
-    html = html.substring(0, html.lastIndexOf('</html>') + '</html>'.length);
-    const iframe = document.createElement('iframe');
-    iframe.style.display = 'none';
-    document.body.appendChild(iframe);
-    let convertedString = '', collection = [], rules = [];
-    try {
-        const iframeDoc = iframe.contentDocument ||
-            (iframe.contentWindow ? iframe.contentWindow.document : null);
-        if (iframeDoc) {
-            iframeDoc.open();
-            iframeDoc.write(html);
-            iframeDoc.close();
-            if (iframeDoc.styleSheets.length) {
-                rules = iframeDoc.styleSheets[iframeDoc.styleSheets.length - 1].cssRules;
-            }
-            for (let idx = 0; idx < rules.length; idx += 1) {
-                if (rules[idx].selectorText === '') {
-                    continue;
-                }
-                collection = $$(rules[idx].selectorText, iframeDoc.body);
-                collection.forEach((elm) => {
-                    elm.style.cssText = rules[idx].style.cssText
-                        .replace(/mso-[a-z\-]+:[\s]*[^;]+;/g, '')
-                        .replace(/border[a-z\-]*:[\s]*[^;]+;/g, '') + elm.style.cssText;
-                });
-            }
-            convertedString = iframeDoc.firstChild
-                ? iframeDoc.body.innerHTML
-                : '';
-        }
-    }
-    catch (_a) {
-    }
-    finally {
-        Dom_Dom.safeRemove(iframe);
-    }
-    if (convertedString) {
-        html = convertedString;
-    }
-    return html
-        .replace(/<(\/)?(html|colgroup|col|o:p)[^>]*>/g, '')
-        .replace(/<!--[^>]*>/g, '');
-};
-
 // CONCATENATED MODULE: ./src/modules/helpers/string/camelCase.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -1983,6 +1923,86 @@ const i18n_i18n = (key, params, options, safe = "production" === 'production') =
 
 
 
+
+// CONCATENATED MODULE: ./src/modules/helpers/html/applyStyles.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
+ * For GPL see LICENSE-GPL.txt in the project root for license information.
+ * For MIT see LICENSE-MIT.txt in the project root for license information.
+ * For commercial licenses see https://xdsoft.net/jodit/commercial/
+ * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+function normalizeCSS(s) {
+    return s
+        .replace(/mso-[a-z\-]+:[\s]*[^;]+;/gi, '')
+        .replace(/mso-[a-z\-]+:[\s]*[^";]+$/gi, '')
+        .replace(/border[a-z\-]*:[\s]*[^;]+;/gi, '')
+        .replace(/([0-9.]+)pt/gi, match => {
+        return (parseFloat(match) * 1.328).toFixed(0) + 'px';
+    });
+}
+const applyStyles = (html) => {
+    if (html.indexOf('<html ') === -1) {
+        return html;
+    }
+    html = html.substring(html.indexOf('<html '), html.length);
+    html = html.substring(0, html.lastIndexOf('</html>') + '</html>'.length);
+    const iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+    let convertedString = '', collection = [], rules = [];
+    try {
+        const iframeDoc = iframe.contentDocument ||
+            (iframe.contentWindow ? iframe.contentWindow.document : null);
+        if (iframeDoc) {
+            iframeDoc.open();
+            iframeDoc.write(html);
+            iframeDoc.close();
+            if (iframeDoc.styleSheets.length) {
+                rules = iframeDoc.styleSheets[iframeDoc.styleSheets.length - 1].cssRules;
+            }
+            for (let idx = 0; idx < rules.length; idx += 1) {
+                if (rules[idx].selectorText === '') {
+                    continue;
+                }
+                collection = $$(rules[idx].selectorText, iframeDoc.body);
+                collection.forEach((elm) => {
+                    elm.style.cssText = normalizeCSS(rules[idx].style.cssText + ';' + elm.style.cssText);
+                });
+            }
+            Dom_Dom.each(iframeDoc.body, node => {
+                if (node.nodeType === Node.ELEMENT_NODE) {
+                    const elm = node;
+                    const css = elm.style.cssText;
+                    if (css) {
+                        elm.style.cssText = normalizeCSS(css);
+                    }
+                    if (elm.hasAttribute('lang')) {
+                        elm.removeAttribute('lang');
+                    }
+                }
+            });
+            convertedString = iframeDoc.firstChild
+                ? trim(iframeDoc.body.innerHTML)
+                : '';
+        }
+    }
+    catch (_a) {
+    }
+    finally {
+        Dom_Dom.safeRemove(iframe);
+    }
+    if (convertedString) {
+        html = convertedString;
+    }
+    return trim(html
+        .replace(/<(\/)?(html|colgroup|col|o:p)[^>]*>/g, '')
+        .replace(/<!--[^>]*>/g, ''));
+};
 
 // CONCATENATED MODULE: ./src/modules/helpers/html/cleanFromWord.ts
 /*!
@@ -3015,7 +3035,7 @@ class Dom_Dom {
             node instanceof win.HTMLElement &&
             this.isBlock(node, win) &&
             !/^(TD|TH|CAPTION|FORM)$/.test(node.nodeName) &&
-            node.style !== void 0 &&
+            node.style !== undefined &&
             !/^(fixed|absolute)/i.test(node.style.position));
     }
     static prev(node, condition, root, withChild = true) {
@@ -5951,7 +5971,7 @@ class panel_Panel extends Component_Component {
 class view_View extends panel_Panel {
     constructor(jodit, options) {
         super(jodit);
-        this.version = "3.3.8";
+        this.version = "3.3.10";
         this.__modulesInstances = {};
         this.buffer = storage_Storage.makeStorage();
         this.progress_bar = this.create.div('jodit_progress_bar', this.create.div());
@@ -8439,8 +8459,8 @@ function backspace(editor) {
             if (!range) {
                 return false;
             }
-            const fakeNode = editor.ownerDocument.createTextNode(INVISIBLE_SPACE);
-            const marker = editor.editorDocument.createElement('span');
+            const fakeNode = editor.create.inside.text(INVISIBLE_SPACE);
+            const marker = editor.create.inside.span();
             try {
                 range.insertNode(fakeNode);
                 if (!Dom_Dom.isOrContains(editor.editor, fakeNode)) {
@@ -8951,7 +8971,12 @@ const getDataTransfer = (event) => {
     if (event.clipboardData) {
         return event.clipboardData;
     }
-    return event.dataTransfer || new DataTransfer();
+    try {
+        return event.dataTransfer || new DataTransfer();
+    }
+    catch (_a) {
+        return null;
+    }
 };
 Config_Config.prototype.controls.paste = {
     tooltip: 'Paste from clipboard',
@@ -9112,7 +9137,7 @@ function paste(editor) {
                 }
             }
             else {
-                types_str = types.toString() + ';';
+                types_str = (types || TEXT_PLAIN).toString() + ';';
             }
             const getText = () => {
                 if (/text\/html/i.test(types_str)) {
@@ -9727,6 +9752,7 @@ function color_color(editor) {
 
 
 
+
 class drag_and_drop_DragAndDrop extends Plugin_Plugin {
     constructor() {
         super(...arguments);
@@ -9851,12 +9877,9 @@ class drag_and_drop_DragAndDrop extends Plugin_Plugin {
                 });
             }
         };
-        this.getDataTransfer = (event) => {
-            return event.dataTransfer || new DataTransfer();
-        };
         this.getText = (event) => {
-            const dt = this.getDataTransfer(event);
-            return dt.getData(TEXT_HTML) || dt.getData(TEXT_PLAIN);
+            const dt = getDataTransfer(event);
+            return dt ? dt.getData(TEXT_HTML) || dt.getData(TEXT_PLAIN) : null;
         };
     }
     afterInit() {
@@ -16398,7 +16421,7 @@ const Promt = (msg, title, callback, placeholder, defaultValue) => {
         '<span>' +
         Jodit_Jodit.prototype.i18n('Ok') +
         '</span></a>'), form = dialog.create.element('form', {
-        class: 'jodit_promt'
+        class: 'jodit_prompt'
     }), inputElement = dialog.create.element('input', {
         autofocus: true,
         class: 'jodit_input'
@@ -16449,7 +16472,7 @@ const Promt = (msg, title, callback, placeholder, defaultValue) => {
 
 
 const Confirm = (msg, title, callback) => {
-    const dialog = new dialog_Dialog(), $div = dialog.create.fromHTML('<form class="jodit_promt"></form>'), $label = dialog.create.element('label');
+    const dialog = new dialog_Dialog(), $div = dialog.create.fromHTML('<form class="jodit_prompt"></form>'), $label = dialog.create.element('label');
     if (typeof title === 'function') {
         callback = title;
         title = undefined;
@@ -16565,7 +16588,7 @@ Config_Config.prototype.filebrowser = {
         }
         switch (sortAttr) {
             case 'changed': {
-                const f = (new Date(a.changed)).getTime(), s = (new Date(b.changed)).getTime();
+                const f = new Date(a.changed).getTime(), s = new Date(b.changed).getTime();
                 return asc ? f - s : s - f;
             }
             case 'size': {
@@ -16625,38 +16648,30 @@ Config_Config.prototype.filebrowser = {
         if (item.file !== undefined) {
             name = item.file;
         }
-        info =
-            `<div class="${ITEM_CLASS}-info">` +
-                (showName
-                    ? `<span class="${ITEM_CLASS}-info-filename">${name}</span>`
-                    : '') +
-                (showSize
-                    ? `<span class="${ITEM_CLASS}-info-filesize">${item.size}</span>`
-                    : '') +
-                (showTime
-                    ? `<span class="${ITEM_CLASS}-info-filechanged">${showTime}</span>`
-                    : '') +
-                '</div>';
-        return ('<a ' +
-            `data-is-file="${item.isImage ? 0 : 1}" ` +
-            'draggable="true" ' +
-            `class="${ITEM_CLASS}" ` +
-            `href="${item.fileURL}" ` +
-            `data-source="${source_name}" ` +
-            `data-path="${item.path}" ` +
-            `data-name="${name}" ` +
-            `title="${name}" ` +
-            `data-url="${item.fileURL}"` +
-            '>' +
-            `<img ` +
-            `data-is-file="${item.isImage ? 0 : 1}" ` +
-            `data-src="${item.fileURL}" ` +
-            `src="${item.imageURL}" ` +
-            `alt="${name}" ` +
-            'loading="lazy" ' +
-            '/>' +
-            (showName || showSize || showTime ? info : '') +
-            '</a>');
+        info = `<div class="${ITEM_CLASS}-info">${showName ? `<span class="${ITEM_CLASS}-info-filename">${name}</span>` : ''}${showSize
+            ? `<span class="${ITEM_CLASS}-info-filesize">${item.size}</span>`
+            : ''}${showTime
+            ? `<span class="${ITEM_CLASS}-info-filechanged">${showTime}</span>`
+            : ''}</div>`;
+        return `<a
+			data-is-file="${item.isImage ? 0 : 1}"
+			draggable="true"
+			class="${ITEM_CLASS}"
+			href="${item.fileURL}"
+			data-source="${source_name}"
+			data-path="${item.path}"
+			data-name="${name}"
+			title="${name}"
+			data-url="${item.fileURL}">
+				<img
+					data-is-file="${item.isImage ? 0 : 1}"
+					data-src="${item.fileURL}"
+					src="${item.imageURL}"
+					alt="${name}"
+					loading="lazy"
+				/>
+				${showName || showSize || showTime ? info : ''}
+			</a>`;
     },
     ajax: {
         url: '',
@@ -18817,31 +18832,32 @@ class Uploader_Uploader extends Component_Component {
     }
     bind(form, handlerSuccess, handlerError) {
         const self = this, onPaste = (e) => {
-            let i, file, extension;
+            let i, file, extension, cData = e.clipboardData;
             const process = (formdata) => {
                 if (file) {
                     formdata.append('extension', extension);
                     formdata.append('mimetype', file.type);
                 }
             };
-            if (e.clipboardData &&
-                e.clipboardData.files &&
-                e.clipboardData.files.length) {
-                this.sendFiles(e.clipboardData.files, handlerSuccess, handlerError);
+            if (cData && cData.files && cData.files.length) {
+                this.sendFiles(cData.files, handlerSuccess, handlerError);
                 return false;
             }
             if (browser('ff') || IS_IE) {
-                if (e.clipboardData &&
-                    (!e.clipboardData.types.length &&
-                        e.clipboardData.types[0] !== TEXT_PLAIN)) {
+                if (cData &&
+                    (!cData.types ||
+                        !cData.types.length ||
+                        cData.types[0] !== TEXT_PLAIN)) {
                     const div = this.jodit.create.div('', {
-                        'tabindex': -1,
-                        'style': 'left: -9999px; top: 0; width: 0; height: 100%;line-height: 140%; ' +
+                        tabindex: -1,
+                        style: 'left: -9999px; top: 0; width: 0; height: 100%;line-height: 140%; ' +
                             'overflow: hidden; position: fixed; z-index: 2147483647; word-break: break-all;',
-                        'contenteditable': true
+                        contenteditable: true
                     });
                     this.jodit.ownerDocument.body.appendChild(div);
-                    const selection = this.jodit && isJoditObject(this.jodit) ? this.jodit.selection.save() : null, restore = () => selection &&
+                    const selection = this.jodit && isJoditObject(this.jodit)
+                        ? this.jodit.selection.save()
+                        : null, restore = () => selection &&
                         this.jodit &&
                         isJoditObject(this.jodit) &&
                         this.jodit.selection.restore(selection);
@@ -18858,10 +18874,8 @@ class Uploader_Uploader extends Component_Component {
                 }
                 return;
             }
-            if (e.clipboardData &&
-                e.clipboardData.items &&
-                e.clipboardData.items.length) {
-                const items = e.clipboardData.items;
+            if (cData && cData.items && cData.items.length) {
+                const items = cData.items;
                 for (i = 0; i < items.length; i += 1) {
                     if (items[i].kind === 'file' &&
                         items[i].type === 'image/png') {
@@ -18956,8 +18970,7 @@ class Uploader_Uploader extends Component_Component {
             try {
                 ajax.abort();
             }
-            catch (_a) {
-            }
+            catch (_a) { }
         });
         delete this.options;
         super.destruct();

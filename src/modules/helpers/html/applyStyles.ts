@@ -9,17 +9,16 @@
 
 import { Dom } from '../../Dom';
 import { $$ } from '../selector';
+import { trim } from '../string';
 
 function normalizeCSS(s: string) {
-	return s.replace(/mso-[a-z\-]+:[\s]*[^;]+;/gi, '')
+	return s
+		.replace(/mso-[a-z\-]+:[\s]*[^;]+;/gi, '')
 		.replace(/mso-[a-z\-]+:[\s]*[^";]+$/gi, '')
 		.replace(/border[a-z\-]*:[\s]*[^;]+;/gi, '')
 		.replace(/([0-9.]+)pt/gi, match => {
-			return (
-				(parseFloat(match) * 1.328).toFixed(0) +
-				'px'
-			);
-		})
+			return (parseFloat(match) * 1.328).toFixed(0) + 'px';
+		});
 }
 
 export const applyStyles = (html: string): string => {
@@ -63,15 +62,16 @@ export const applyStyles = (html: string): string => {
 				collection = $$(rules[idx].selectorText, iframeDoc.body);
 
 				collection.forEach((elm: HTMLElement) => {
-					elm.style.cssText = normalizeCSS(rules[idx].style.cssText + ';' + elm.style.cssText);
+					elm.style.cssText = normalizeCSS(
+						rules[idx].style.cssText + ';' + elm.style.cssText
+					);
 				});
 			}
 
-			Dom.each(iframeDoc.body, (node) => {
-				if (node?.nodeType === Node.ELEMENT_NODE) {
+			Dom.each(iframeDoc.body, node => {
+				if (node.nodeType === Node.ELEMENT_NODE) {
 					const elm = node as HTMLElement;
-					const css = elm.style?.cssText;
-					console.log(css);
+					const css = elm.style.cssText;
 
 					if (css) {
 						elm.style.cssText = normalizeCSS(css);
@@ -84,7 +84,7 @@ export const applyStyles = (html: string): string => {
 			});
 
 			convertedString = iframeDoc.firstChild
-				? iframeDoc.body.innerHTML
+				? trim(iframeDoc.body.innerHTML)
 				: '';
 		}
 	} catch {
@@ -96,7 +96,9 @@ export const applyStyles = (html: string): string => {
 		html = convertedString;
 	}
 
-	return html
-		.replace(/<(\/)?(html|colgroup|col|o:p)[^>]*>/g, '')
-		.replace(/<!--[^>]*>/g, '');
+	return trim(
+		html
+			.replace(/<(\/)?(html|colgroup|col|o:p)[^>]*>/g, '')
+			.replace(/<!--[^>]*>/g, '')
+	);
 };

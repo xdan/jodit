@@ -212,7 +212,7 @@ describe('Clipboard text', function() {
 					};
 
 					simulateEvent('paste', 0, editor.editor, emulatePasteEvent);
-					expect(editor.value).to.be.equal('<p>test</p><br>');
+					expect(editor.value).to.equal('<p>test</p><br>');
 				});
 			});
 
