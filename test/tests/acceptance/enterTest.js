@@ -257,7 +257,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 					sel.removeAllRanges();
 					sel.addRange(range);
 
-					const node = editor.ownerDocument.createTextNode('stop');
+					const node = editor.create.text('stop');
 					editor.selection.insertNode(node, false);
 					expect('teststop').to.be.equal(editor.getEditorValue());
 
@@ -335,7 +335,7 @@ describe('Enter behavior Jodit Editor Tests', function() {
 					sel.removeAllRanges();
 					sel.addRange(range);
 
-					const node = editor.ownerDocument.createTextNode('stop');
+					const node = editor.create.text('stop');
 					editor.selection.insertNode(node, false);
 					expect('teststop').to.be.equal(editor.getEditorValue());
 
