@@ -90,15 +90,15 @@ export default {
 	'Your code is similar to HTML. Keep as HTML?':
 		'HTMLコードを保持しますか？',
 	'Paste as HTML': 'HTMLで貼付け',
-	Keep: '保留源格式',
+	Keep: 'HTMLを保持',
 	Clean: '匹配目標格式',
-	'Insert as Text': '把html代碼視為普通文本',
+	'Insert as Text': 'HTMLをテキストにする',
 	'Word Paste Detected': '文本黏貼',
 
 	'The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?':
 		'正在黏貼 Word/Excel 的文本，是否保留源格式？',
 
-	'Insert only Text': '只保留文本',
+	'Insert only Text': 'テキストだけ',
 
 	// File Browser module
 	'File Browser': '文件管理',
