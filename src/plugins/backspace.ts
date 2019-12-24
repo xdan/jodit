@@ -263,21 +263,19 @@ export function backspace(editor: IJodit) {
 						return false;
 					}
 
-					const
-						sel = editor.selection.sel,
-						range = sel && sel.rangeCount ? sel.getRangeAt(0) : false;
+					const sel = editor.selection.sel,
+						range =
+							sel && sel.rangeCount ? sel.getRangeAt(0) : false;
 
 					if (!range) {
 						return false;
 					}
 
-					const fakeNode: Node = editor.ownerDocument.createTextNode(
+					const fakeNode: Node = editor.create.inside.text(
 						consts.INVISIBLE_SPACE
 					);
 
-					const marker: HTMLElement = editor.editorDocument.createElement(
-						'span'
-					);
+					const marker: HTMLElement = editor.create.inside.span();
 
 					try {
 						range.insertNode(fakeNode);
