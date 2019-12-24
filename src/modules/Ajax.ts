@@ -195,7 +195,7 @@ export class Ajax implements IAjax {
 				}
 
 				if (this.options.headers && this.xhr.setRequestHeader) {
-					each(this.options.headers, (key: string, value: string) => {
+					each(this.options.headers, (key, value) => {
 						this.xhr.setRequestHeader(key, value);
 					});
 				}

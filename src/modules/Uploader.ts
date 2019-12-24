@@ -213,7 +213,7 @@ export class Uploader extends Component implements IUploader {
 			): Promise<any> => {
 				const ajax: Ajax = new Ajax(this.jodit || this, {
 					xhr: () => {
-						const xhr: XMLHttpRequest = new XMLHttpRequest();
+						const xhr = new XMLHttpRequest();
 
 						if (
 							(this.jodit.ownerWindow as any).FormData !==

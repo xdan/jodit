@@ -12,7 +12,8 @@ import { ToolbarIcon } from '../toolbar/icon';
 
 import {
 	IFileBrowser,
-	IFileBrowserAnswer, IFileBrowserItem,
+	IFileBrowserAnswer,
+	IFileBrowserItem,
 	IFileBrowserOptions,
 	ISource,
 	ISourceFile
@@ -294,8 +295,7 @@ Config.prototype.filebrowser = {
 	sortBy: 'changed-desc',
 
 	sort(this: IFileBrowser, a: any, b: any, sortBy: string): number {
-		const
-			[sortAttr, arrow] = sortBy.toLowerCase().split('-'),
+		const [sortAttr, arrow] = sortBy.toLowerCase().split('-'),
 			asc = arrow === 'asc';
 
 		const compareStr = (f: string, s: string): number => {
@@ -328,16 +328,14 @@ Config.prototype.filebrowser = {
 
 		switch (sortAttr) {
 			case 'changed': {
-				const
-					f = (new Date(a.changed)).getTime(),
-					s = (new Date(b.changed)).getTime();
+				const f = new Date(a.changed).getTime(),
+					s = new Date(b.changed).getTime();
 
 				return asc ? f - s : s - f;
 			}
 
 			case 'size': {
-				const
-					f = humanSizeToBytes(a.size),
+				const f = humanSizeToBytes(a.size),
 					s = humanSizeToBytes(b.size);
 
 				return asc ? f - s : s - f;
@@ -389,7 +387,7 @@ Config.prototype.filebrowser = {
 
 	getMessage(this: IFileBrowser, resp: IFileBrowserAnswer) {
 		return resp.data.messages !== undefined &&
-		Array.isArray(resp.data.messages)
+			Array.isArray(resp.data.messages)
 			? resp.data.messages.join(' ')
 			: '';
 	},
@@ -405,55 +403,49 @@ Config.prototype.filebrowser = {
 		source: ISource,
 		source_name: string
 	): string {
-		const
-			opt = this.options,
+		const opt = this.options,
 			showName = opt.showFileName,
 			showSize = opt.showFileSize && item.size,
 			showTime = opt.showFileChangeTime && item.time;
 
-		let
-			name: string = '',
+		let name: string = '',
 			info: string;
 
 		if (item.file !== undefined) {
 			name = item.file;
 		}
 
-		info =
-			`<div class="${IC}-info">` +
-			(showName
-				? `<span class="${IC}-info-filename">${name}</span>`
-				: '') +
-			(showSize
+		info = `<div class="${IC}-info">${
+			showName ? `<span class="${IC}-info-filename">${name}</span>` : ''
+		}${
+			showSize
 				? `<span class="${IC}-info-filesize">${item.size}</span>`
-				: '') +
-			(showTime
+				: ''
+		}${
+			showTime
 				? `<span class="${IC}-info-filechanged">${showTime}</span>`
-				: '') +
-			'</div>';
+				: ''
+		}</div>`;
 
-		return (
-			'<a ' +
-			`data-is-file="${item.isImage ? 0 : 1}" ` +
-			'draggable="true" ' +
-			`class="${IC}" ` +
-			`href="${item.fileURL}" ` +
-			`data-source="${source_name}" ` +
-			`data-path="${item.path}" ` +
-			`data-name="${name}" ` +
-			`title="${name}" ` +
-			`data-url="${item.fileURL}"` +
-			'>' +
-			`<img ` +
-			`data-is-file="${item.isImage ? 0 : 1}" ` +
-			`data-src="${item.fileURL}" ` +
-			`src="${item.imageURL}" ` +
-			`alt="${name}" ` +
-			'loading="lazy" ' +
-			'/>' +
-			(showName || showSize || showTime ? info : '') +
-			'</a>'
-		);
+		return `<a
+			data-is-file="${item.isImage ? 0 : 1}"
+			draggable="true"
+			class="${IC}"
+			href="${item.fileURL}"
+			data-source="${source_name}"
+			data-path="${item.path}"
+			data-name="${name}"
+			title="${name}"
+			data-url="${item.fileURL}">
+				<img
+					data-is-file="${item.isImage ? 0 : 1}"
+					data-src="${item.fileURL}"
+					src="${item.imageURL}"
+					alt="${name}"
+					loading="lazy"
+				/>
+				${(showName || showSize || showTime ? info : '')}
+			</a>`;
 	},
 
 	ajax: {
@@ -478,42 +470,55 @@ Config.prototype.filebrowser = {
 			return resp;
 		}
 	},
+
 	create: {
 		data: { action: 'folderCreate' }
 	},
+
 	getLocalFileByUrl: {
 		data: { action: 'getLocalFileByUrl' }
 	},
+
 	resize: {
 		data: { action: 'imageResize' }
 	},
+
 	crop: {
 		data: { action: 'imageCrop' }
 	},
+
 	fileMove: {
 		data: { action: 'fileMove' }
 	},
+
 	folderMove: {
 		data: { action: 'folderMove' }
 	},
+
 	fileRename: {
 		data: { action: 'fileRename' }
 	},
+
 	folderRename: {
 		data: { action: 'folderRename' }
 	},
+
 	fileRemove: {
 		data: { action: 'fileRemove' }
 	},
+
 	folderRemove: {
 		data: { action: 'folderRemove' }
 	},
+
 	items: {
 		data: { action: 'files' }
 	},
+
 	folder: {
 		data: { action: 'folders' }
 	},
+
 	permissions: {
 		data: { action: 'permissions' }
 	},
@@ -536,12 +541,12 @@ Config.prototype.controls.filebrowser = {
 			control: IControlType
 		): HTMLElement => {
 			const btn: HTMLElement = filebrowser.create.fromHTML(
-				'<span class="jodit_upload_button">' +
-				ToolbarIcon.getIcon('plus') +
-				'<input type="file" accept="' +
-				(filebrowser.state.onlyImages ? 'image/*' : '*') +
-				'" tabindex="-1" dir="auto" multiple=""/>' +
-				'</span>'
+					'<span class="jodit_upload_button">' +
+						ToolbarIcon.getIcon('plus') +
+						'<input type="file" accept="' +
+						(filebrowser.state.onlyImages ? 'image/*' : '*') +
+						'" tabindex="-1" dir="auto" multiple=""/>' +
+						'</span>'
 				),
 				input: HTMLInputElement = btn.querySelector(
 					'input'
@@ -582,7 +587,8 @@ Config.prototype.controls.filebrowser = {
 
 	select: {
 		icon: 'check',
-		isDisable: (browser: IFileBrowser): boolean => !browser.state.activeElements.length,
+		isDisable: (browser: IFileBrowser): boolean =>
+			!browser.state.activeElements.length,
 		exec: (editor: IViewBased) => {
 			editor.events.fire('select.filebrowser');
 		}
@@ -653,13 +659,25 @@ Config.prototype.controls.filebrowser = {
 		getContent: (fb: IFileBrowser): HTMLElement => {
 			const select: HTMLSelectElement = fb.create.fromHTML(
 				'<select class="jodit_input jodit_select">' +
-				`<option value="changed-asc">${fb.i18n('Sort by changed')} (⬆)</option>` +
-				`<option value="changed-desc">${fb.i18n('Sort by changed')} (⬇)</option>` +
-				`<option value="name-asc">${fb.i18n('Sort by name')} (⬆)</option>` +
-				`<option value="name-desc">${fb.i18n('Sort by name')} (⬇)</option>` +
-				`<option value="size-asc">${fb.i18n('Sort by size')} (⬆)</option>` +
-				`<option value="size-desc">${fb.i18n('Sort by size')} (⬇)</option>` +
-				'</select>'
+					`<option value="changed-asc">${fb.i18n(
+						'Sort by changed'
+					)} (⬆)</option>` +
+					`<option value="changed-desc">${fb.i18n(
+						'Sort by changed'
+					)} (⬇)</option>` +
+					`<option value="name-asc">${fb.i18n(
+						'Sort by name'
+					)} (⬆)</option>` +
+					`<option value="name-desc">${fb.i18n(
+						'Sort by name'
+					)} (⬇)</option>` +
+					`<option value="size-asc">${fb.i18n(
+						'Sort by size'
+					)} (⬆)</option>` +
+					`<option value="size-desc">${fb.i18n(
+						'Sort by size'
+					)} (⬇)</option>` +
+					'</select>'
 			) as HTMLSelectElement;
 
 			fb.events
@@ -674,6 +692,5 @@ Config.prototype.controls.filebrowser = {
 
 			return select;
 		}
-
 	} as IControlType
 } as IDictionary<IControlType>;
