@@ -146,7 +146,7 @@ export default {
 	'Search for': '検索',
 	'Replace with': '置換',
 	Replace: '置換',
-	Paste: '貼付け」',
+	Paste: '貼付け',
 	'Choose Content to Paste': '選択した内容を貼付け',
 
 	All: '全部',
@@ -187,7 +187,7 @@ export default {
 	' URL': 'URL',
 	Reset: 'リセット',
 	Save: '保存',
-	'Save as ...': '保存為',
+	'Save as ...': 'Save as ...',
 	Resize: 'リサイズ',
 	Crop: 'Crop',
 	Width: '幅',
