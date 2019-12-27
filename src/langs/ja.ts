@@ -96,7 +96,7 @@ export default {
 	'Word Paste Detected': 'Word Paste Detected',
 
 	'The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?':
-		'The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?'',
+		'The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?',
 
 	'Insert only Text': 'テキストだけ',
 
