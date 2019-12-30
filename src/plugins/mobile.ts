@@ -131,7 +131,8 @@ export function mobile(editor: IJodit) {
 		);
 
 	if (editor.options.toolbarAdaptive) {
-		editor.events.on('resize afterInit', () => {
+		editor.events
+			.on('resize afterInit recalcAdaptive', () => {
 			if (!editor.options.toolbar) {
 				return;
 			}
@@ -139,6 +140,8 @@ export function mobile(editor: IJodit) {
 			const width: number = editor.container.offsetWidth;
 
 			let newStore: Array<string | IControlType> = [];
+
+			console.log(width, editor.options.sizeLG);
 
 			if (width >= editor.options.sizeLG) {
 				newStore = splitArray(editor.options.buttons);
@@ -161,6 +164,7 @@ export function mobile(editor: IJodit) {
 					editor.toolbar.container.parentElement || editor.toolbar.getParentContainer()
 				);
 			}
-		});
+		})
+			.on(editor.ownerWindow, 'load', () => editor.events.fire('recalcAdaptive'));
 	}
 }

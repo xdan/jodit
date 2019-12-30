@@ -9,7 +9,7 @@
 
 import { Config } from '../Config';
 import { Dom } from '../modules/Dom';
-import { setTimeout } from '../modules/helpers/async';
+import { setTimeout, clearTimeout } from '../modules/helpers/async';
 import { IJodit } from '../types';
 
 declare module '../Config' {

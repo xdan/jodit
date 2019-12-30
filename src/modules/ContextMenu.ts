@@ -120,6 +120,8 @@ export class ContextMenu extends Component {
 	}
 
 	destruct() {
+		this.setStatus('beforeDestruct');
+
 		Dom.safeRemove(this.context);
 		delete this.context;
 		this.jodit.events.off(this.jodit.ownerWindow, 'mouseup', this.hide);

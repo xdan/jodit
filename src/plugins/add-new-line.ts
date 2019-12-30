@@ -9,7 +9,7 @@
 
 import { Config } from '../Config';
 import { Dom } from '../modules/Dom';
-import { debounce, setTimeout } from '../modules/helpers/async';
+import { debounce, setTimeout, clearTimeout } from '../modules/helpers/async';
 import { offset } from '../modules/helpers/size';
 import { ToolbarIcon } from '../modules/toolbar/icon';
 import { IBound, IJodit } from '../types';

@@ -1,0 +1,38 @@
+@import (reference) '../variables';
+@import (reference) '../mixins';
+
+.jodit_tooltip {
+	position: absolute;
+
+	background: #727171;
+	color: #fff;
+
+	.font();
+
+	font-size: 11px;
+	line-height: 15px;
+	white-space: normal;
+
+	padding: 6px;
+	z-index: @z-index-dropdownlist + 1;
+
+	max-width: 120px;
+	border-radius: 2px;
+
+	width: auto;
+	transition: opacity 0.2s ease 0s;
+
+	user-select: none;
+	background-clip: padding-box;
+	text-rendering: optimizelegibility;
+
+	opacity: 0;
+
+	@media (max-width: @screen-sm) {
+		display: none;
+	}
+}
+
+.jodit_tooltip.jodit_tooltip_visible {
+	opacity: 1;
+}

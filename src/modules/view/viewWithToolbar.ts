@@ -14,6 +14,7 @@ export class ViewWithToolbar extends View implements IViewWithToolbar {
 	toolbar = JoditToolbarCollection.makeCollection(this);
 
 	destruct() {
+		this.setStatus('beforeDestruct');
 		this.toolbar.destruct();
 		delete this.toolbar;
 		super.destruct();

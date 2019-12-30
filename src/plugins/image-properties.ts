@@ -16,6 +16,7 @@ import {
 	trim,
 	val,
 	setTimeout,
+	clearTimeout,
 	clearCenterAlign
 } from '../modules/helpers/';
 import { ToolbarIcon } from '../modules/toolbar/icon';

@@ -7,6 +7,7 @@
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 @import (reference) '../../mixins';
+@import (reference) '../../variables';
 
 @box-shadow-default: 0 4px 4px -2px rgba(0, 0, 0, 0.14);
 
@@ -77,31 +78,17 @@
 			outline: none;
 			text-decoration: none;
 
-			&:active + .jodit_tooltip {
-				visibility: hidden !important;
-			}
-
 			&:focus {
 				outline: 1px solid @color-border;
 			}
-		}
-
-		&.jodit_disabled .jodit_tooltip {
-			display: none !important;
 		}
 
 		> a {
 			line-height: 100%;
 		}
 
-		.jodit_toolbar_list-open .jodit_tooltip,
-		&.jodit_dropdown_open .jodit_tooltip,
-		&.jodit_popup_open .jodit_tooltip {
-			visibility: hidden !important;
-		}
-
 		&:not(.jodit_toolbar-input):hover {
-			background-color: #dde4ef;
+			background-color: @color-background-nav-button-hover;
 			outline: none;
 		}
 
@@ -154,31 +141,6 @@
 
 .jodit_toolbar.jodit_text_icons > .jodit_toolbar_btn > a {
 	line-height: 1;
-}
-
-.jodit_tooltip {
-	position: absolute;
-
-	background: #727171;
-	color: #fff;
-
-	.font();
-	font-size: 12px;
-	line-height: 15px;
-	white-space: normal;
-
-	padding: 4px 5px;
-	z-index: @z-index-dropdownlist + 1;
-
-	min-width: 90px;
-	max-width: 120px;
-
-	width: auto;
-	transition: opacity 0.3s linear;
-
-	@media (max-width: @screen-sm) {
-		display: none;
-	}
 }
 
 .jodit_toolbar_size {

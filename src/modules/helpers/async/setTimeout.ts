@@ -32,3 +32,11 @@ export const setTimeout = <T1, T2, T3>(
 
 	return 0;
 };
+
+/**
+ * Clear timeout
+ * @param timer
+ */
+export const clearTimeout = (timer: number) => {
+	window.clearTimeout(timer);
+};

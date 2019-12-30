@@ -22,9 +22,14 @@ export interface IDestructible {
 	destruct(jodit?: IJodit): any;
 }
 
+export type ComponentStatus = 'beforeInit' | 'ready' | 'beforeDestruct' | 'destructed';
+
 interface IComponent<T extends IViewBased = IViewBased> extends IDestructible {
 	jodit: T;
 	isDestructed: boolean;
+	isInDestruct: boolean;
+	componentStatus: ComponentStatus;
+	setStatus(componentStatus: ComponentStatus): void;
 }
 
 export type NodeCondition = (

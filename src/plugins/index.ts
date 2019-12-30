@@ -44,4 +44,5 @@ export { sticky } from './sticky';
 export { symbols } from './symbols';
 export { tableKeyboardNavigation } from './table-keyboard-navigation';
 export { TableProcessor as table } from './table';
+export { tooltip } from './tooltip';
 export { xpath } from './xpath';

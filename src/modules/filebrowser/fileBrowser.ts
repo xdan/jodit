@@ -35,7 +35,7 @@ import { normalizePath } from '../helpers/normalize/';
 import { $$ } from '../helpers/selector';
 import { ctrlKey } from '../helpers/ctrlKey';
 import { extend } from '../helpers/extend';
-import { setTimeout } from '../helpers/async/setTimeout';
+import { setTimeout, clearTimeout } from '../helpers/async/setTimeout';
 import { ViewWithToolbar } from '../view/viewWithToolbar';
 import { IJodit, IStorage } from '../../types';
 import './config';

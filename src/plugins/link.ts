@@ -58,7 +58,8 @@ Config.prototype.controls.unlink = {
 		}
 
 		editor.events.fire('hidePopup');
-	}
+	},
+	tooltip: 'Unlink'
 } as IControlType;
 
 Config.prototype.controls.link = {

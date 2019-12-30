@@ -16,6 +16,7 @@ import {
 	$$,
 	getContentWidth,
 	offset,
+	clearTimeout,
 	scrollIntoView
 } from '../modules/helpers/';
 import { setTimeout } from '../modules/helpers/async';

@@ -13,7 +13,7 @@ import { IS_IE } from '../constants';
 import { IBound } from '../types/types';
 import { Dom } from '../modules/Dom';
 import { $$ } from '../modules/helpers/selector';
-import { debounce, setTimeout } from '../modules/helpers/async';
+import { debounce, setTimeout, clearTimeout } from '../modules/helpers/async';
 import { offset, innerWidth } from '../modules/helpers/size';
 import { css } from '../modules/helpers';
 import { IJodit } from '../types';

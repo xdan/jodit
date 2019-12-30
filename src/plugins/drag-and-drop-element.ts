@@ -13,6 +13,7 @@ import {
 	ctrlKey,
 	dataBind,
 	setTimeout,
+	clearTimeout,
 	splitArray,
 	throttle
 } from '../modules/helpers/';
@@ -118,7 +119,7 @@ export class DragAndDropElement extends Plugin {
 	};
 
 	private onDragEnd = () => {
-		window.clearTimeout(this.timeout);
+		clearTimeout(this.timeout);
 
 		if (this.draggable) {
 			Dom.safeRemove(this.draggable);

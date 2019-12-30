@@ -8,7 +8,7 @@
  */
 
 import { CallbackFunction } from '../../../types';
-import { setTimeout } from './setTimeout';
+import { setTimeout, clearTimeout } from './setTimeout';
 
 /**
  * Debouncing enforces that a function not be called again until a certain amount of time has passed without

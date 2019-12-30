@@ -28,6 +28,8 @@ export abstract class Plugin extends Component<IJodit> implements IPlugin {
 
 	destruct() {
 		if (!this.isDestructed) {
+			this.setStatus('beforeDestruct');
+
 			this.jodit?.events?.off('beforeDestruct', this.destruct);
 			this.beforeDestruct(this.jodit);
 			super.destruct();

@@ -12,7 +12,7 @@ import { IControlTypeStrong, IPopup } from '../../types';
 
 export class Popup extends Component implements IPopup {
 	private calcPosition() {
-		if (!this.isOpened || this.isDestructed) {
+		if (!this.isOpened || this.isInDestruct) {
 			return;
 		}
 
@@ -217,6 +217,8 @@ export class Popup extends Component implements IPopup {
 		if (this.isDestructed) {
 			return;
 		}
+
+		this.setStatus('beforeDestruct');
 
 		this.jodit.events.off(
 			[this.jodit.ownerWindow, this.jodit.events],

@@ -64,6 +64,8 @@ export class StatusBar extends Component implements IStatusBar {
 	}
 
 	destruct() {
+		this.setStatus('beforeDestruct');
+
 		Dom.safeRemove(this.container);
 		delete this.container;
 		super.destruct();

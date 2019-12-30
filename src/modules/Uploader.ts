@@ -769,6 +769,8 @@ export class Uploader extends Component implements IUploader {
 	}
 
 	destruct(): any {
+		this.setStatus('beforeDestruct');
+
 		this.ajaxInstances.forEach(ajax => {
 			try {
 				ajax.abort();

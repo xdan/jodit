@@ -8,30 +8,48 @@
  */
 
 import { IViewBased } from '../types/view';
-import { IComponent } from '../types/types';
+import { ComponentStatus, IComponent } from '../types/types';
 import { isJoditObject } from './helpers/checker/isJoditObject';
 
 export abstract class Component<T extends IViewBased = IViewBased>
 	implements IComponent<T> {
 	jodit: T;
 
-	private __isDestructed = false;
+	private __componentStatus: ComponentStatus = 'beforeInit';
+	get componentStatus(): ComponentStatus {
+		return this.__componentStatus;
+	}
+
+	set componentStatus(componentStatus: ComponentStatus) {
+		this.__componentStatus = componentStatus;
+	}
+
+	setStatus(componentStatus: ComponentStatus) {
+		this.__componentStatus = componentStatus;
+	}
 
 	/**
-	 * Editor was destructed
-	 *
-	 * @type {boolean}
+	 * Component was destructed
 	 */
 	get isDestructed(): boolean {
-		return this.__isDestructed;
+		return this.componentStatus === 'destructed';
+	}
+
+	/**
+	 * Component is destructing
+	 */
+	get isInDestruct(): boolean {
+		return ['beforeDestruct', 'destructed'].includes(this.componentStatus);
 	}
 
 	destruct(): any {
+		this.setStatus('beforeDestruct');
+
 		if (this.jodit) {
 			(<any>this.jodit) = undefined;
 		}
 
-		this.__isDestructed = true;
+		this.setStatus('destructed');
 	}
 
 	constructor(jodit?: T) {

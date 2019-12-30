@@ -45,9 +45,11 @@ export abstract class ToolbarElement extends Component
 	}
 
 	destruct(): any {
-		if (this.isDestructed) {
+		if (this.isInDestruct) {
 			return;
 		}
+
+		this.setStatus('beforeDestruct');
 
 		Dom.safeRemove(this.container);
 		this.parentToolbar = undefined;

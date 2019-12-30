@@ -1022,17 +1022,17 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		(async () => {
 			await this.beforeInitHook();
 
-			await this.events.fire('beforeInit', this);
+			!this.isInDestruct && await this.events.fire('beforeInit', this);
 
 			try {
-				await Jodit.plugins.init(this);
+				!this.isInDestruct && await Jodit.plugins.init(this);
 			} catch (e) {
 				console.error(e);
 			}
 
-			await this.__initEditor(buffer);
+			!this.isInDestruct && await this.__initEditor(buffer);
 
-			if (this.isDestructed) {
+			if (this.isInDestruct) {
 				return;
 			}
 
@@ -1108,7 +1108,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	private async __initEditor(buffer: null | string) {
 		await this.__createEditor();
 
-		if (this.isDestructed) {
+		if (this.isInDestruct) {
 			return;
 		}
 
@@ -1181,7 +1181,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			this
 		);
 
-		if (this.isDestructed) {
+		if (this.isInDestruct) {
 			return;
 		}
 
@@ -1254,9 +1254,11 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 * Jodit's Destructor. Remove editor, and return source input
 	 */
 	destruct() {
-		if (this.isDestructed) {
+		if (this.isInDestruct) {
 			return;
 		}
+
+		this.setStatus('beforeDestruct');
 
 		/**
 		 * Triggered before {@link events:beforeDestruct|beforeDestruct} executed. If returned false method stopped
@@ -1323,7 +1325,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			if (
 				component.destruct !== undefined &&
 				typeof component.destruct === 'function' &&
-				!component.isDestructed
+				!component.isInDestruct
 			) {
 				component.destruct();
 			}

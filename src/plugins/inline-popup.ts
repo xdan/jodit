@@ -442,9 +442,9 @@ export class inlinePopup extends Plugin {
 
 		this.popup.target.classList.remove(this._hiddenClass);
 
-		const selectionCenterLeft: number = rect.left + rect.width / 2;
+		const selectionCenterLeft = rect.left + rect.width / 2;
 
-		const workplacePosition: IBound = offset(
+		const workplacePosition = offset(
 			this.jodit.workplace,
 			this.jodit,
 			this.jodit.ownerDocument,
