@@ -9,6 +9,11 @@
 
 @color-source-area: #323232;
 
+.fontSource() {
+	font: 12px / normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas',
+		'source-code-pro', monospace;
+}
+
 .jodit_source {
 	display: none;
 	position: relative;
@@ -19,6 +24,10 @@
 
 	.jodit_source_mirror-fake {
 		min-height: 100%;
+	}
+
+	* {
+		.fontSource();
 	}
 }
 
@@ -55,8 +64,7 @@
 	color: #f0f0f0;
 	outline: none;
 
-	font-family: Menlo, Monaco, monospace, sans-serif;
-	font-size: 13px;
+	.fontSource();
 	line-height: 1.3em;
 
 	box-shadow: none;
