@@ -28,6 +28,7 @@ import { setTimeout } from './setTimeout';
  * }, 100));
  * ```
  */
+
 export const debounce = function<T>(
     this: T,
     fn: CallbackFunction<T>,

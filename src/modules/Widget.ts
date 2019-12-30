@@ -419,9 +419,7 @@ export namespace Widget {
 
 					if (typeof handler === 'function') {
 						handler.call(editor, {
-							baseurl: resp.baseurl,
-							files: resp.files,
-							isImages: resp.isImages,
+							...resp
 						} as IFileBrowserCallBackData);
 					}
 				},

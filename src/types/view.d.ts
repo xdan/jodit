@@ -12,6 +12,7 @@ import { IComponent, IDictionary } from './types';
 import { ICreate } from './create';
 import { IEventsNative } from './events';
 import { IStorage } from './storage';
+import { IAsync } from './async';
 
 interface ILanguageOptions {
 	language?: string;
@@ -84,6 +85,7 @@ interface IViewBased<T = IViewOptions> extends IPanel {
 
 	events: IEventsNative;
 	create: ICreate;
+	async: IAsync;
 
 	i18n: (text: string, ...params: Array<string | number>) => string;
 

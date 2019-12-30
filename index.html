@@ -77,22 +77,24 @@ cena quidem posse videamur?
 		// "preset": "inline",
 		// toolbar: "#toolbar",
 		// limitChars: 5,
-		iframe: true,
+		// iframe: true,
 		tabIndex: 0,
 		// language: 'ru',
 
 		uploader: {
-			url: 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'
+			"insertImageAsBase64URI": true
+			// url: 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'
 		},
-
-		filebrowser: {
-			ajax: {
-				url: 'https://xdsoft.net/jodit/connector/index.php'
-			}
-		}
+		//
+		// filebrowser: {
+		// 	ajax: {
+		// 		url: 'https://xdsoft.net/jodit/connector/index.php'
+		// 	}
+		// }
 	});
 
-	editor.value = '12345';
+	editor.value = '<img style="float:right; margin: 10px;" src="https://xdsoft.net/jodit/files/download.jpg"\n' +
+		'\t\t\t\t\t alt="Itaque nostrum est-quod nostrum dico, artis est-ad ea principia, quae accepimus.">';
 </script>
 <style>
 	#box {

@@ -94,7 +94,7 @@
 	cursor: pointer;
 	height: 16px;
 	padding: 0;
-	margin: 0 4px 0;
+	margin-right: 4px;
 	width: 16px;
 	position: relative;
 	outline: none;
@@ -167,6 +167,13 @@
 	&.disabled {
 		opacity: 0.7;
 	}
+}
+
+.jodit_buttons {
+	margin-bottom: @padding-default;
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: space-between;
 }
 
 .jodit_button .jodit_icon,

@@ -139,7 +139,6 @@ export function imageProperties(editor: IJodit) {
 
 		const image = this as HTMLImageElement,
 			dialog = new Dialog(editor),
-
 			buttons = {
 				check: dom(
 					`<a href="javascript:void(0)" class="jodit_button  jodit_status_success">${gi(
@@ -157,7 +156,6 @@ export function imageProperties(editor: IJodit) {
 					)}<span>${i18n('Delete')}</span></a>`
 				)
 			},
-
 			prop = dom(
 				`<form class="jodit_properties">
 								<div class="jodit_grid">
@@ -187,7 +185,6 @@ export function imageProperties(editor: IJodit) {
 								</div>
 							</form>`
 			),
-
 			positionTab = dom(
 				`<div style="${
 					!opt.image.editMargins ? 'display:none' : ''
@@ -249,10 +246,8 @@ export function imageProperties(editor: IJodit) {
 								</select>
 							</div>`
 			) as HTMLDivElement,
-
 			hasFbUrl = opt.filebrowser.ajax.url || opt.uploader.url,
 			hasEditor = opt.image.useImageEditor,
-
 			mainTab = dom(
 				`<div style="${
 					!opt.image.editSrc ? 'display:none' : ''
@@ -295,23 +290,19 @@ export function imageProperties(editor: IJodit) {
 							<div style="${
 								!opt.image.editLink ? 'display:none' : ''
 							}" class="jodit_form_group">
-								<div class="jodit_vertical_middle">
+								<label class="jodit_vertical_middle">
 									<input type="checkbox" class="imageLinkOpenInNewTab jodit_checkbox"/>
-									${i18n('Open link in new tab')}
-								</div>
+									<span>${i18n('Open link in new tab')}</span>
+								</label>
 							</div>`
 			) as HTMLDivElement,
-
 			ratio = image.naturalWidth / image.naturalHeight || 1,
-
 			$w: HTMLInputElement = prop.querySelector(
 				'.imageWidth'
 			) as HTMLInputElement,
-
 			$h: HTMLInputElement = prop.querySelector(
 				'.imageHeight'
 			) as HTMLInputElement,
-
 			updateAlign = () => {
 				if (
 					image.style.cssFloat &&
@@ -330,7 +321,6 @@ export function imageProperties(editor: IJodit) {
 					}
 				}
 			},
-
 			updateBorderRadius = () => {
 				val(
 					prop,
@@ -340,15 +330,12 @@ export function imageProperties(editor: IJodit) {
 					).toString()
 				);
 			},
-
 			updateId = () => {
 				val(prop, '.id', image.getAttribute('id') || '');
 			},
-
 			updateStyle = () => {
 				val(prop, '.style', image.getAttribute('style') || '');
 			},
-
 			updateClasses = () => {
 				val(
 					prop,
@@ -359,7 +346,6 @@ export function imageProperties(editor: IJodit) {
 					)
 				);
 			},
-
 			updateMargins = () => {
 				if (!opt.image.editMargins) {
 					return;
@@ -410,12 +396,10 @@ export function imageProperties(editor: IJodit) {
 							: elm.setAttribute('disabled', 'true')
 				);
 			},
-
 			updateSizes = () => {
 				$w.value = image.offsetWidth.toString();
 				$h.value = image.offsetHeight.toString();
 			},
-
 			updateText = () => {
 				if (image.hasAttribute('title')) {
 					val(prop, '.imageTitle', image.getAttribute('title') || '');
@@ -437,7 +421,6 @@ export function imageProperties(editor: IJodit) {
 						a.getAttribute('target') === '_blank';
 				}
 			},
-
 			updateSrc = () => {
 				val(prop, '.imageSrc', image.getAttribute('src') || '');
 				const imageViewSrc: HTMLInputElement | null = prop.querySelector(
@@ -450,7 +433,6 @@ export function imageProperties(editor: IJodit) {
 					);
 				}
 			},
-
 			update = () => {
 				updateSrc();
 				updateText();
@@ -481,6 +463,7 @@ export function imageProperties(editor: IJodit) {
 
 		editor.events.on(dialog, 'afterClose', () => {
 			dialog.destruct();
+
 			if (image.parentNode && opt.image.selectImageAfterClose) {
 				editor.selection.select(image);
 			}
@@ -871,7 +854,7 @@ export function imageProperties(editor: IJodit) {
 		});
 		buttons.cancel.addEventListener('click', () => dialog.close());
 
-		dialog.setFooter([[buttons.cancel, buttons.remove],  buttons.check]);
+		dialog.setFooter([[buttons.cancel, buttons.remove], buttons.check]);
 
 		dialog.setSize(500);
 		dialog.open();
@@ -884,13 +867,21 @@ export function imageProperties(editor: IJodit) {
 	};
 
 	editor.events
+		.on('beforeDestruct', () => {
+			editor.events.off(editor.editor, 'dblclick.imageproperties');
+		})
 		.on('afterInit', () => {
 			if (opt.image.openOnDblClick) {
-				editor.events.on(editor.editor, 'dblclick', open, 'img');
+				editor.events.on(
+					editor.editor,
+					'dblclick.imageproperties',
+					open,
+					'img'
+				);
 			} else {
 				editor.events.on(
 					editor.editor,
-					'dblclick',
+					'dblclick.imageproperties',
 					function(this: HTMLImageElement, event: MouseEvent) {
 						event.stopImmediatePropagation();
 						editor.selection.select(this);

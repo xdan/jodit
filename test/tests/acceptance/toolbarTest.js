@@ -717,6 +717,7 @@ describe('Toolbar', function() {
 				});
 			});
 		});
+
 		it('Open image dialog and insert image by url.', function() {
 			const editor = new Jodit(appendTestArea());
 
@@ -767,6 +768,7 @@ describe('Toolbar', function() {
 			editor.container.querySelector(
 				'.jodit_toolbar_btn.jodit_toolbar_btn-image input[name=url]'
 			).value = 'http://xdsoft.net/jodit/images/artio.jpg';
+
 			simulateEvent(
 				'submit',
 				0,
@@ -885,6 +887,7 @@ describe('Toolbar', function() {
 
 				expect(popup).to.be.not.equal(null);
 			});
+
 			describe('Click on pencil', function() {
 				it('Should open edit link popup', function() {
 					const editor = new Jodit(appendTestArea(), {
@@ -934,231 +937,6 @@ describe('Toolbar', function() {
 						popup.parentNode.parentNode.parentNode
 					).to.be.not.equal(null);
 				});
-			});
-		});
-
-		describe('Open LINK insert dialog and insert new link', function() {
-			it('Should insert new link', function() {
-				let popup_opened = 0;
-
-				const editor = new Jodit(appendTestArea(), {
-					events: {
-						/**
-						 * @param {Node} target
-						 * @param {ControlType} control
-						 * @param {ToolbarPopup} popup
-						 * @return false | undefined - if return false - popup will not be shown
-						 */
-						beforeLinkOpenPopup: function(
-							target,
-							control,
-							popup
-						) {
-							popup_opened += 1;
-						},
-						/**
-						 *
-						 * @param {HTMLElement} popup_container
-						 */
-						afterLinkOpenPopup: function(popup_container) {
-							popup_opened += 1;
-						}
-					},
-					observer: {
-						timeout: 0
-					}
-				});
-
-				editor.value = '';
-
-				simulateEvent(
-					'mousedown',
-					0,
-					editor.container.querySelector(
-						'.jodit_toolbar_btn.jodit_toolbar_btn-link'
-					)
-				);
-
-				const list = editor.container.querySelector(
-					'.jodit_toolbar_popup'
-				);
-
-				expect(popup_opened).to.be.equal(2);
-				expect(
-					editor.ownerWindow.getComputedStyle(list).display
-				).to.equal('block');
-				expect(
-					editor.container.querySelector(
-						'.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_unlink_button'
-					).style.display
-				).to.equal('none');
-
-				const url = editor.container.querySelector(
-					'.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=url]'
-				);
-				expect(url).to.be.not.equal(null);
-
-				url.focus();
-				url.value = ''; // try wrong url
-				editor.container.querySelector(
-					'.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=text]'
-				).value = '123';
-				simulateEvent(
-					'submit',
-					0,
-					editor.container.querySelector(
-						'.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_form'
-					)
-				);
-
-				expect(url.classList.contains('jodit_error')).to.be.true;
-
-				url.focus();
-				url.value = 'tests/artio.jpg';
-				simulateEvent(
-					'submit',
-					0,
-					editor.container.querySelector(
-						'.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_form'
-					)
-				);
-
-				expect(sortAttributes(editor.value)).to.equal(
-					'<a href="tests/artio.jpg">123</a>'
-				);
-
-				simulateEvent('mousedown', 0, editor.editor);
-
-				expect(list.parentNode).to.equal(null);
-			});
-
-			describe('On selected text', function() {
-				it('Should wrap selected text in link', function() {
-					const editor = new Jodit(appendTestArea(), {
-						toolbarAdaptive: false,
-						observer: {
-							timeout: 0
-						}
-					});
-
-					editor.value = 'test <span>select</span> stop';
-					const range = editor.editorDocument.createRange();
-					range.selectNodeContents(
-						editor.editor.querySelector('span')
-					);
-					editor.selection.selectRange(range);
-
-					simulateEvent(
-						'mousedown',
-						0,
-						editor.container.querySelector(
-							'.jodit_toolbar_btn.jodit_toolbar_btn-link'
-						)
-					);
-
-					const popup = editor.container.querySelector(
-						'.jodit_toolbar_popup'
-					);
-					expect(popup).to.be.not.equal(null);
-					expect(
-						editor.ownerWindow.getComputedStyle(popup).display
-					).to.equal('block');
-					expect(
-						editor.container.querySelector(
-							'.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_unlink_button'
-						).style.display
-					).to.equal('none');
-
-					const url = popup.querySelector('input[name=url]');
-					expect(url).to.be.not.equal(null);
-					const text = popup.querySelector('input[name=text]');
-					expect(text).to.be.not.equal(null);
-
-					expect(text.value).to.be.equal('select');
-
-					url.focus();
-					url.value = 'tests/artio.jpg';
-					simulateEvent(
-						'submit',
-						0,
-						editor.container.querySelector(
-							'.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_form'
-						)
-					);
-
-					expect(sortAttributes(editor.value)).to.equal(
-						'test <a href="tests/artio.jpg">select</a> stop'
-					);
-
-					simulateEvent('mousedown', 0, editor.editor);
-
-					expect(popup.parentNode).to.equal(null);
-				});
-			});
-
-			it('Should restore source text after user clicked on Unlink button', function() {
-				const editor = new Jodit(appendTestArea(), {
-					observer: {
-						timeout: 0
-					}
-				});
-
-				editor.setEditorValue(
-					'<a target="_blank" rel="nofollow" href="#test">test</a>'
-				);
-
-				const sel = editor.editorWindow.getSelection(),
-					range = editor.editorDocument.createRange();
-
-				range.selectNode(editor.editor.firstChild);
-				sel.removeAllRanges();
-				sel.addRange(range);
-
-				simulateEvent(
-					'mousedown',
-					0,
-					editor.container.querySelector(
-						'.jodit_toolbar_btn.jodit_toolbar_btn-link'
-					)
-				);
-
-				expect(
-					editor.container.querySelector(
-						'.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=url]'
-					).value
-				).to.equal('#test');
-				expect(
-					editor.container.querySelector(
-						'.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=target]'
-					).checked
-				).to.equal(true);
-				expect(
-					editor.container.querySelector(
-						'.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=nofollow]'
-					).checked
-				).to.equal(true);
-				expect(
-					editor.container.querySelector(
-						'.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_unlink_button'
-					).style.display
-				).to.be.not.equal('none');
-				expect(
-					editor.container.querySelector(
-						'.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_link_insert_button'
-					).innerHTML
-				).to.equal(editor.i18n('Update'));
-
-				simulateEvent(
-					'mousedown',
-					0,
-					editor.container.querySelector(
-						'.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_unlink_button'
-					)
-				);
-
-				expect(sortAttributes(editor.getEditorValue())).to.equal(
-					'test'
-				);
 			});
 		});
 
@@ -1599,8 +1377,7 @@ describe('Toolbar', function() {
 										clear: 'Empty editor'
 									},
 									exec: function(editor) {
-										const key = this.args[0],
-											value = this.args[1];
+										const key = this.args[0];
 
 										if (key === 'clear') {
 											this.val('');
@@ -1658,8 +1435,7 @@ describe('Toolbar', function() {
 										clear: 'Empty editor'
 									},
 									exec: function(editor) {
-										const key = this.args[0],
-											value = this.args[1];
+										const key = this.args[0];
 
 										if (key === 'clear') {
 											this.val('');
@@ -2453,7 +2229,7 @@ describe('Toolbar', function() {
 			it('Should Open inline popup', function() {
 				const editor = new Jodit(appendTestArea());
 
-				editor.value = '<img src="/tests/artio.jpg"/>';
+				editor.value = '<img alt="" src="../artio.jpg"/>';
 				editor.selection.focus();
 
 				simulateEvent(
@@ -2475,7 +2251,7 @@ describe('Toolbar', function() {
 				it('Should Open edit image dialog', function() {
 					const editor = new Jodit(appendTestArea());
 
-					editor.value = '<img src="/tests/artio.jpg"/>';
+					editor.value = '<img alt="" src="../artio.jpg"/>';
 					editor.selection.focus();
 
 					simulateEvent(

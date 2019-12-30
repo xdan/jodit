@@ -6,7 +6,7 @@
 
 import * as consts from '../constants';
 import { HTMLTagNames, IJodit, NodeCondition } from '../types';
-import { css } from './helpers/';
+import { css, dataBind } from './helpers/';
 import { trim } from './helpers/string';
 
 export class Dom {
@@ -100,7 +100,7 @@ export class Dom {
 
 		const wrapper =
 			typeof tag === 'string'
-				? editor.editorDocument.createElement(tag)
+				? editor.create.inside.element(tag)
 				: tag;
 
 		if (!current.parentNode) {
@@ -780,5 +780,34 @@ export class Dom {
 	 */
 	static safeRemove(node: Node | false | null) {
 		node && node.parentNode && node.parentNode.removeChild(node);
+	}
+
+	/**
+	 * Hide element
+	 * @param node
+	 */
+	static hide(node: HTMLElement | null): void {
+		if (!node) {
+			return;
+		}
+
+		dataBind(node, '__old_display', node.style.display);
+		node.style.display = 'none';
+	}
+
+	/**
+	 * Show element
+	 * @param node
+	 */
+	static show(node: HTMLElement | null): void {
+		if (!node) {
+			return;
+		}
+
+		const display = dataBind(node, '__old_display');
+
+		if (node.style.display === 'none') {
+			node.style.display = display || '';
+		}
 	}
 }

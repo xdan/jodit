@@ -7,7 +7,7 @@
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IDictionary, IEventsNative } from '../../types';
+import { IAsync, IDictionary, IEventsNative } from '../../types';
 import { IViewBased, IViewOptions } from '../../types/view';
 import { Component } from '../Component';
 import { EventsNative } from '../events/eventsNative';
@@ -22,6 +22,8 @@ export class View extends Panel implements IViewBased {
 	 * @property{string} ID attribute for source element, id add {id}_editor it's editor's id
 	 */
 	id: string;
+
+	components: any = [];
 
 	/**
 	 * Get path for loading extra staff
@@ -75,8 +77,7 @@ export class View extends Panel implements IViewBased {
 	};
 
 	events: IEventsNative;
-
-	components: any = [];
+	async : IAsync = new Async(this);
 
 	/**
 	 * Internationalization method. Uses Jodit.lang object
@@ -100,7 +101,7 @@ export class View extends Panel implements IViewBased {
 		}
 	}
 
-	public getInstance<T = Component>(moduleName: string, options?: object): T {
+	getInstance<T = Component>(moduleName: string, options?: object): T {
 		if (typeof Jodit.modules[moduleName] !== 'function') {
 			throw new Error('Need real module name');
 		}
@@ -153,6 +154,11 @@ export class View extends Panel implements IViewBased {
 			delete this.events;
 		}
 
+		if (this.async) {
+			this.async.destruct();
+			delete this.async;
+		}
+
 		delete this.options;
 
 		super.destruct();
@@ -161,3 +167,4 @@ export class View extends Panel implements IViewBased {
 
 import { Jodit } from '../../Jodit';
 import { BASE_PATH } from '../../constants';
+import { Async } from '../Async';

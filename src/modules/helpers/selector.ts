@@ -8,8 +8,17 @@
  */
 
 import { IS_IE } from '../../constants';
+import { IDictionary } from '../../types/types';
+import { isString } from './checker';
 
-let $$temp: number = 1;
+let
+	temp = 1;
+
+const
+	$$temp = () => {
+		temp++;
+		return temp;
+	};
 
 /**
  * Find all elements by selector and return Array. If it did not find any element it return empty array
@@ -41,7 +50,7 @@ export const $$ = (
 		const id: string = (root as HTMLElement).id,
 			temp_id: string =
 				id ||
-				'_selector_id_' + ('' + Math.random()).slice(2) + $$temp++;
+				'_selector_id_' + ('' + Math.random()).slice(2) + $$temp();
 
 		selector = selector.replace(/:scope/g, '#' + temp_id);
 
@@ -87,5 +96,24 @@ export const getXPathByElement = (
 		(sames.length > 1
 			? '[' + (Array.from(sames).indexOf(element) + 1) + ']'
 			: '')
+	);
+};
+
+/**
+ *
+ * @param root
+ */
+export const refs = (root: HTMLElement): IDictionary<HTMLElement> => {
+	return $$('[ref]', root).reduce(
+		(def, child) => {
+			const key = child.getAttribute('ref');
+
+			if (key && isString(key)) {
+				def[key] = child;
+			}
+
+			return def;
+		},
+		<IDictionary<HTMLElement>>{}
 	);
 };

@@ -90,16 +90,14 @@ export function resizer(editor: IJodit) {
 		timeoutSizeViewer: number = 0;
 
 	const
-		resizerElm: HTMLElement = editor.create.fromHTML(
-			'<div data-editor_id="' +
-				editor.id +
-				'" style="display:none" class="jodit_resizer">' +
-				'<i class="jodit_resizer-topleft"></i>' +
-				'<i class="jodit_resizer-topright"></i>' +
-				'<i class="jodit_resizer-bottomright"></i>' +
-				'<i class="jodit_resizer-bottomleft"></i>' +
-				'<span>100x100</span>' +
-				'</div>'
+		resizerElm = editor.create.fromHTML(
+`<div data-editor_id="${editor.id}" style="display:none" class="jodit_resizer">
+				<i class="jodit_resizer-topleft"></i>
+				<i class="jodit_resizer-topright"></i>
+				<i class="jodit_resizer-bottomright"></i>
+				<i class="jodit_resizer-bottomleft"></i>
+				<span>100x100</span>
+			</div>`
 		),
 
 		sizeViewer: HTMLSpanElement = resizerElm.getElementsByTagName(
@@ -306,6 +304,7 @@ export function resizer(editor: IJodit) {
 								}
 							);
 						}
+
 						clearTimeout(timer);
 					}
 

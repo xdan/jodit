@@ -12,7 +12,7 @@ import { isPlainObject } from './helpers/checker/isPlainObject';
 import { each } from './helpers/each';
 import { asArray } from './helpers/array/asArray';
 import { Dom } from './Dom';
-import { css } from './helpers';
+import { css, refs } from './helpers';
 import { Attributes, Children, ICreate } from '../types/create';
 
 export class Create implements ICreate {
@@ -156,11 +156,12 @@ export class Create implements ICreate {
 	/**
 	 * Create DOM element from HTML text
 	 *
-	 * @param {string} html
+	 * @param html
+	 * @param refsToggleElement
 	 *
 	 * @return HTMLElement
 	 */
-	fromHTML(html: string | number): HTMLElement {
+	fromHTML(html: string | number, refsToggleElement?: IDictionary<boolean | void>): HTMLElement {
 		const div: HTMLDivElement = this.div();
 
 		div.innerHTML = html.toString();
@@ -171,6 +172,18 @@ export class Create implements ICreate {
 				: (div.firstChild as HTMLElement);
 
 		Dom.safeRemove(child);
+
+		if (refsToggleElement) {
+			const refElements = refs(child);
+
+			Object.keys(refsToggleElement).forEach((key) => {
+				const elm = refElements[key];
+
+				if (elm && refsToggleElement[key] === false) {
+					Dom.hide(elm);
+				}
+			});
+		}
 
 		return child;
 	}

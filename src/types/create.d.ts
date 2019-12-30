@@ -74,8 +74,9 @@ interface ICreate {
 	 * Create DOM element from HTML text
 	 *
 	 * @param {string} html
+	 * @param {Object} refs
 	 *
 	 * @return HTMLElement
 	 */
-	fromHTML(html: string): HTMLElement;
+	fromHTML(html: string, refs?: IDictionary<boolean>): HTMLElement;
 }

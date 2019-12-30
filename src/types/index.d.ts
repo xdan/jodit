@@ -1,4 +1,5 @@
 export * from './ajax';
+export * from './async';
 export * from './create';
 export * from './dialog';
 export * from './events';
