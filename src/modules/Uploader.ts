@@ -630,7 +630,10 @@ export class Uploader extends Component implements IUploader {
 		if (this.jodit && (<IJodit>this.jodit).editor !== form) {
 			self.jodit.events.on(form, 'paste', onPaste);
 		} else {
-			self.jodit.events.on('beforePaste', onPaste);
+			self.jodit.events.on(
+				'beforePaste',
+				onPaste
+			);
 		}
 
 		const hasFiles = (event: DragEvent): boolean =>

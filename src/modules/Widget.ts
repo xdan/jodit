@@ -418,9 +418,7 @@ export namespace Widget {
 					let handler = isFunction(callbacks.upload) ? callbacks.upload : editor.options.uploader.defaultHandlerSuccess;
 
 					if (typeof handler === 'function') {
-						handler.call(editor, {
-							...resp
-						} as IFileBrowserCallBackData);
+						handler.call(editor, resp);
 					}
 				},
 				(error: Error) => {

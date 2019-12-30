@@ -70,10 +70,6 @@ export function placeholder(this: any, editor: IJodit) {
 		return;
 	}
 
-	(this as any).destruct = () => {
-		Dom.safeRemove(placeholderElm);
-	};
-
 	const show = () => {
 			if (!placeholderElm.parentNode || editor.options.readonly) {
 				return;
@@ -93,13 +89,17 @@ export function placeholder(this: any, editor: IJodit) {
 				const style2: CSSStyleDeclaration = editor.editorWindow.getComputedStyle(
 					editor.editor.firstChild as Element
 				);
+
 				marginTop = parseInt(style2.getPropertyValue('margin-top'), 10);
+
 				marginLeft = parseInt(
 					style2.getPropertyValue('margin-left'),
 					10
 				);
+
 				placeholderElm.style.fontSize =
 					parseInt(style2.getPropertyValue('font-size'), 10) + 'px';
+
 				placeholderElm.style.lineHeight = style2.getPropertyValue(
 					'line-height'
 				);
@@ -124,16 +124,15 @@ export function placeholder(this: any, editor: IJodit) {
 			});
 		},
 		hide = () => {
-			if (placeholderElm.parentNode) {
-				placeholderElm.style.display = 'none';
-			}
+			Dom.hide(placeholderElm);
 		},
+
 		toggle = debounce(() => {
 			if (placeholderElm.parentNode === null) {
 				return;
 			}
 
-			if (!editor.editor) {
+			if (!editor.editor || editor.isInDestruct) {
 				return;
 			}
 
@@ -141,9 +140,9 @@ export function placeholder(this: any, editor: IJodit) {
 				return hide();
 			}
 
-			const value: string = editor.getEditorValue();
+			const value = editor.value;
 
-			if (value && !/^<(p|div|h[1-6])><\/\1>$/.test(value)) {
+			if (value.trim().length && !/^<(p|div|h[1-6])><\/\1>$/.test(value)) {
 				hide();
 			} else {
 				show();
@@ -177,6 +176,10 @@ export function placeholder(this: any, editor: IJodit) {
 				toggle();
 			}
 		})
+		.on('beforeDestruct', () => {
+			Dom.safeRemove(placeholderElm);
+			editor.events.off('.placeholder').off(window, 'load', toggle);
+		})
 		.on('afterInit', () => {
 			editor.workplace.appendChild(placeholderElm);
 
@@ -185,7 +188,8 @@ export function placeholder(this: any, editor: IJodit) {
 			editor.events.fire('placeholder', placeholderElm.innerHTML);
 			editor.events
 				.on(
-					'change keyup mouseup keydown mousedown afterSetMode',
+					'change.placeholder keyup.placeholder mouseup.placeholder keydown.placeholder ' +
+						'mousedown.placeholder afterSetMode.placeholder',
 					toggle
 				)
 				.on(window, 'load', toggle);

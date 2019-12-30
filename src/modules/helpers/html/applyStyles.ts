@@ -16,8 +16,16 @@ function normalizeCSS(s: string) {
 		.replace(/mso-[a-z\-]+:[\s]*[^;]+;/gi, '')
 		.replace(/mso-[a-z\-]+:[\s]*[^";]+$/gi, '')
 		.replace(/border[a-z\-]*:[\s]*[^;]+;/gi, '')
-		.replace(/([0-9.]+)pt/gi, match => {
-			return (parseFloat(match) * 1.328).toFixed(0) + 'px';
+		.replace(/([0-9.]+)(pt|cm)/gi, (match, units, metrics) => {
+			switch (metrics.toLowerCase()) {
+				case 'pt':
+					return (parseFloat(units) * 1.328).toFixed(0) + 'px';
+
+				case 'cm':
+					return (parseFloat(units) * 0.02645833).toFixed(0) + 'px';
+			}
+
+			return match;
 		});
 }
 

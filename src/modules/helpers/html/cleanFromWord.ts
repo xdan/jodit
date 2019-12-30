@@ -26,7 +26,7 @@ export const cleanFromWord = (html: string): string => {
     let convertedString: string = '';
 
     try {
-        const div: HTMLDivElement = document.createElement('div');
+        const div = document.createElement('div');
         div.innerHTML = html;
 
         const marks: Node[] = [];

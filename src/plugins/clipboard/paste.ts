@@ -43,7 +43,10 @@ declare module '../../Config' {
 		 * Ask before paste HTML in WYSIWYG mode
 		 */
 		askBeforePasteHTML: boolean;
+		processPasteHTML: boolean;
+
 		askBeforePasteFromWord: boolean;
+		processPasteFromWord: boolean;
 
 		/**
 		 * Inserts HTML line breaks before all newlines in a string
@@ -58,7 +61,11 @@ declare module '../../Config' {
 }
 
 Config.prototype.askBeforePasteHTML = true;
+Config.prototype.processPasteHTML = true;
+
 Config.prototype.askBeforePasteFromWord = true;
+Config.prototype.processPasteFromWord = true;
+
 Config.prototype.nl2brInPlainText = true;
 Config.prototype.defaultActionOnPaste = INSERT_AS_HTML;
 
@@ -253,36 +260,44 @@ export function paste(editor: IJodit) {
 		const buffer = editor.buffer.get(clipboardPluginKey);
 
 		if (isHTML(html) && buffer !== trimFragment(html)) {
-			editor.events.stopPropagation('beforePaste');
-
 			html = trimFragment(html);
-			clearOrKeep(
-				editor.i18n('Your code is similar to HTML. Keep as HTML?'),
-				editor.i18n('Paste as HTML'),
-				(agree: boolean | number) => {
-					let insertType: string = INSERT_AS_HTML;
 
-					if (agree === false) {
-						insertType = INSERT_AS_TEXT;
-					}
+			const pasteHTMLByType = (insertType: string) => {
+				if (event.type === 'drop') {
+					editor.selection.insertCursorAtPoint(
+						(event as DragEvent).clientX,
+						(event as DragEvent).clientY
+					);
+				}
 
-					if (agree === 0) {
-						insertType = INSERT_ONLY_TEXT;
-					}
+				insertByType(html, insertType);
 
-					if (event.type === 'drop') {
-						editor.selection.insertCursorAtPoint(
-							(event as DragEvent).clientX,
-							(event as DragEvent).clientY
-						);
-					}
+				editor.setEditorValue();
+			};
 
-					insertByType(html, insertType);
+			if (editor.options.askBeforePasteHTML) {
+				clearOrKeep(
+					editor.i18n('Your code is similar to HTML. Keep as HTML?'),
+					editor.i18n('Paste as HTML'),
+					(agree: boolean | number) => {
+						let insertType: string = INSERT_AS_HTML;
 
-					editor.setEditorValue();
-				},
-				'Insert as Text'
-			);
+						if (agree === false) {
+							insertType = INSERT_AS_TEXT;
+						}
+
+						if (agree === 0) {
+							insertType = INSERT_ONLY_TEXT;
+						}
+
+						pasteHTMLByType(insertType)
+					},
+					'Insert as Text'
+				);
+
+			} else {
+				pasteHTMLByType(editor.options.defaultActionOnPaste)
+			}
 
 			return false;
 		}
@@ -304,6 +319,151 @@ export function paste(editor: IJodit) {
 		return html;
 	};
 
+	const beforePaste = (event: ClipboardEvent | DragEvent): false | void => {
+		const dt = getDataTransfer(event);
+
+		if (!dt || !event || !dt.getData) {
+			return;
+		}
+
+		if (dt.getData(TEXT_HTML)) {
+			const processHTMLData = (html: string): void | false => {
+				const buffer = editor.buffer.get(clipboardPluginKey);
+
+				if (editor.options.processPasteHTML && isHTML(html) && buffer !== trimFragment(html)) {
+					if (editor.options.processPasteFromWord && isHTMLFromWord(html)) {
+						const pasteFromWordByType = (method: string) => {
+							if (method === INSERT_AS_HTML) {
+								html = applyStyles(html);
+
+								if (
+									editor.options.beautifyHTML &&
+									(editor.ownerWindow as any)
+										.html_beautify
+								) {
+									html = (editor.ownerWindow as any).html_beautify(
+										html
+									);
+								}
+							}
+
+							if (method === INSERT_AS_TEXT) {
+								html = cleanFromWord(html);
+							}
+
+							if (method === INSERT_ONLY_TEXT) {
+								html = stripTags(
+									cleanFromWord(html)
+								);
+							}
+
+							editor.selection.insertHTML(html);
+							editor.setEditorValue();
+						};
+
+						if (editor.options.askBeforePasteFromWord) {
+							clearOrKeep(
+								editor.i18n(
+									'The pasted content is coming from a Microsoft Word/Excel document. ' +
+									'Do you want to keep the format or clean it up?'
+								),
+
+								editor.i18n('Word Paste Detected'),
+								(agree: number | boolean) => {
+									let insertType: string = INSERT_AS_HTML;
+
+									if (agree === false) {
+										insertType = INSERT_AS_TEXT;
+									}
+
+									if (agree === 0) {
+										insertType = INSERT_ONLY_TEXT;
+									}
+
+									pasteFromWordByType(insertType);
+								}
+							);
+						} else {
+							pasteFromWordByType(editor.options.defaultActionOnPaste);
+						}
+					} else {
+						insertHTML(html, event);
+					}
+
+					return false;
+				}
+			};
+
+			if (
+				dt.types &&
+				Array.from(dt.types).indexOf('text/html') !== -1
+			) {
+				const html = dt.getData(TEXT_HTML);
+				return processHTMLData(html);
+			}
+
+			if (event.type !== 'drop') {
+				const div = editor.create.div('', {
+					tabindex: -1,
+					contenteditable: true,
+					style: {
+						left: -9999,
+						top: 0,
+						width: 0,
+						height: '100%',
+						lineHeight: '140%',
+						overflow: 'hidden',
+						position: 'fixed',
+						zIndex: 2147483647,
+						wordBreak: 'break-all'
+					}
+				});
+
+				editor.container.appendChild(div);
+
+				const selData = editor.selection.save();
+
+				div.focus();
+				let tick: number = 0;
+
+				const removeFakeFocus = () => {
+					Dom.safeRemove(div);
+					editor.selection &&
+					editor.selection.restore(selData);
+				};
+
+				const waitData = () => {
+					tick += 1;
+
+					// If data has been processes by browser, process it
+					if (div.childNodes && div.childNodes.length > 0) {
+						const pastedData: string = div.innerHTML;
+
+						removeFakeFocus();
+
+						if (processHTMLData(pastedData) !== false) {
+							editor.selection.insertHTML(pastedData);
+						}
+
+						return;
+					}
+
+					if (tick < 5) {
+						editor.async.setTimeout(waitData, 20);
+					} else {
+						removeFakeFocus();
+					}
+				};
+
+				waitData();
+			}
+		}
+
+		if (dt.getData(TEXT_PLAIN)) {
+			return insertHTML(dt.getData(TEXT_PLAIN), event);
+		}
+	};
+
 	editor.events.on(
 		'paste',
 		(event: ClipboardEvent | DragEvent): false | void => {
@@ -321,8 +481,7 @@ export function paste(editor: IJodit) {
 			 * });
 			 * ```
 			 */
-
-			if (editor.events.fire('beforePaste', event) === false) {
+			if (beforePaste(event) === false || editor.events.fire('beforePaste', event) === false) {
 				event.preventDefault();
 				return false;
 			}
@@ -438,142 +597,6 @@ export function paste(editor: IJodit) {
 			}
 		}
 	);
-
-	if (editor.options.askBeforePasteHTML) {
-		editor.events.on(
-			'beforePaste',
-			(event: ClipboardEvent | DragEvent): false | void => {
-				const dt = getDataTransfer(event);
-				if (event && dt && dt.getData(TEXT_PLAIN)) {
-					const html: string = dt.getData(TEXT_PLAIN);
-					return insertHTML(html, event);
-				}
-			}
-		);
-	}
-
-	if (editor.options.askBeforePasteFromWord) {
-		editor.events.on(
-			'beforePaste',
-			(event: ClipboardEvent): false | void => {
-				const dt = getDataTransfer(event);
-
-				if (event && dt && dt.getData && dt.getData(TEXT_HTML)) {
-					const processHTMLData = (html: string): void | false => {
-						const buffer = editor.buffer.get(clipboardPluginKey);
-
-						if (isHTML(html) && buffer !== trimFragment(html)) {
-							if (isHTMLFromWord(html)) {
-								clearOrKeep(
-									editor.i18n(
-										'The pasted content is coming from a Microsoft Word/Excel document. ' +
-											'Do you want to keep the format or clean it up?'
-									),
-
-									editor.i18n('Word Paste Detected'),
-									(agree: boolean | number) => {
-										if (agree === true) {
-											html = applyStyles(html);
-
-											if (
-												editor.options.beautifyHTML &&
-												(editor.ownerWindow as any)
-													.html_beautify
-											) {
-												html = (editor.ownerWindow as any).html_beautify(
-													html
-												);
-											}
-										}
-
-										if (agree === false) {
-											html = cleanFromWord(html);
-										}
-
-										if (agree === 0) {
-											html = stripTags(
-												cleanFromWord(html)
-											);
-										}
-
-										editor.selection.insertHTML(html);
-										editor.setEditorValue();
-									}
-								);
-							} else {
-								insertHTML(html, event);
-							}
-							return false;
-						}
-					};
-
-					if (
-						dt.types &&
-						Array.from(dt.types).indexOf('text/html') !== -1
-					) {
-						const html: string = dt.getData(TEXT_HTML);
-						return processHTMLData(html);
-					}
-
-					if (event.type !== 'drop') {
-						const div = editor.create.div('', {
-							tabindex: -1,
-							contenteditable: true,
-							style: {
-								left: -9999,
-								top: 0,
-								width: 0,
-								height: '100%',
-								lineHeight: '140%',
-								overflow: 'hidden',
-								position: 'fixed',
-								zIndex: 2147483647,
-								wordBreak: 'break-all'
-							}
-						});
-
-						editor.container.appendChild(div);
-
-						const selData = editor.selection.save();
-
-						div.focus();
-						let tick: number = 0;
-
-						const removeFakeFocus = () => {
-							Dom.safeRemove(div);
-							editor.selection &&
-								editor.selection.restore(selData);
-						};
-
-						const waitData = () => {
-							tick += 1;
-
-							// If data has been processes by browser, process it
-							if (div.childNodes && div.childNodes.length > 0) {
-								const pastedData: string = div.innerHTML;
-
-								removeFakeFocus();
-
-								if (processHTMLData(pastedData) !== false) {
-									editor.selection.insertHTML(pastedData);
-								}
-
-								return;
-							}
-
-							if (tick < 5) {
-								editor.async.setTimeout(waitData, 20);
-							} else {
-								removeFakeFocus();
-							}
-						};
-
-						waitData();
-					}
-				}
-			}
-		);
-	}
 
 	if (editor.options.nl2brInPlainText) {
 		editor.events.on(

@@ -11,10 +11,10 @@ import { IComponent, IDictionary } from './types';
 
 interface IUploaderData {
 	messages?: string[];
-	files?: string[];
+	files: string[];
 	isImages?: boolean[];
 	path?: string;
-	baseurl?: string;
+	baseurl: string;
 	newfilename?: string;
 }
 
