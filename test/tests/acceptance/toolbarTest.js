@@ -178,6 +178,7 @@ describe('Toolbar', function() {
 				});
 			});
 		});
+
 		describe('Click on some link', function() {
 			describe('in the left side of editor', function() {
 				it('Should open inline popup with float by left editor side', function() {
@@ -208,6 +209,7 @@ describe('Toolbar', function() {
 				});
 			});
 		});
+
 		describe('Click on some button with defined popup field', function() {
 			it('Should open popup in toolbar', function() {
 				const editor = new Jodit(appendTestArea(), {
@@ -308,7 +310,9 @@ describe('Toolbar', function() {
 				});
 			});
 		});
+
 		getBox().style.width = 'auto';
+
 		it('Open and close popap after clicking in another place', function() {
 			const editor = new Jodit(appendTestArea(), {
 				disablePlugins: 'mobile'
@@ -330,6 +334,7 @@ describe('Toolbar', function() {
 
 			expect(popup && popup.parentNode === null).to.equal(true);
 		});
+
 		describe('Open list', function() {
 			it('Should Open list in toolbar', function() {
 				const editor = new Jodit(appendTestArea(), {
@@ -427,6 +432,7 @@ describe('Toolbar', function() {
 				});
 			});
 		});
+
 		it('Open and close list after clicking in another place', function() {
 			const editor = new Jodit(appendTestArea());
 
@@ -718,73 +724,6 @@ describe('Toolbar', function() {
 			});
 		});
 
-		it('Open image dialog and insert image by url.', function() {
-			const editor = new Jodit(appendTestArea());
-
-			editor.setEditorValue(Jodit.INVISIBLE_SPACE); // IE in iframe mode can loose focus and we can not check where it paste image in start or in finish. It is only in IE
-
-			const sel = editor.editorWindow.getSelection(),
-				range = editor.editorDocument.createRange();
-
-			range.selectNodeContents(editor.editor);
-			range.collapse(false);
-			sel.removeAllRanges();
-			sel.addRange(range);
-
-			simulateEvent(
-				'mousedown',
-				0,
-				editor.container.querySelector(
-					'.jodit_toolbar_btn.jodit_toolbar_btn-image'
-				)
-			);
-
-			const list = editor.container.querySelector(
-				'.jodit_toolbar_popup'
-			);
-
-			expect(window.getComputedStyle(list).display).to.equal('block');
-
-			editor.container.querySelector(
-				'.jodit_toolbar_btn.jodit_toolbar_btn-image input[name=url]'
-			).value = ''; // try wrong url
-			editor.container.querySelector(
-				'.jodit_toolbar_btn.jodit_toolbar_btn-image input[name=text]'
-			).value = '123';
-			simulateEvent(
-				'submit',
-				0,
-				editor.container.querySelector(
-					'.jodit_toolbar_btn.jodit_toolbar_btn-image .jodit_form'
-				)
-			);
-
-			expect(
-				editor.container.querySelectorAll(
-					'.jodit_toolbar_btn.jodit_toolbar_btn-image input[name=url].jodit_error'
-				).length
-			).to.equal(1);
-
-			editor.container.querySelector(
-				'.jodit_toolbar_btn.jodit_toolbar_btn-image input[name=url]'
-			).value = 'http://xdsoft.net/jodit/images/artio.jpg';
-
-			simulateEvent(
-				'submit',
-				0,
-				editor.container.querySelector(
-					'.jodit_toolbar_btn.jodit_toolbar_btn-image .jodit_form'
-				)
-			);
-
-			expect(sortAttributes(editor.value)).to.equal(
-				'<img alt="123" src="http://xdsoft.net/jodit/images/artio.jpg" style="width:300px">'
-			);
-
-			simulateEvent('mousedown', 0, editor.editor);
-
-			expect(list.parentNode).to.equal(null);
-		});
 		it('Open video dialog and insert video by url from youtube.', function() {
 			const editor = new Jodit(appendTestArea(), {
 				disablePlugins: 'mobile'

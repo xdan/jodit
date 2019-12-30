@@ -769,6 +769,7 @@ describe('Test image', function() {
 			});
 		});
 	});
+
 	describe('Resize box', function() {
 		describe('In relative object', function() {
 			it('should be in front of image', function() {
