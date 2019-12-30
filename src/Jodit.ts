@@ -300,15 +300,18 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		return new_value.value;
 	}
 
+	/**
+	 * Get plain text
+	 */
 	getEditorText(): string {
 		if (this.editor) {
-			return this.editor.textContent || '';
+			return this.editor.innerText || '';
 		}
 
-		const div: HTMLDivElement = this.create.inside.div();
+		const div = this.create.inside.div();
 		div.innerHTML = this.getElementValue();
 
-		return div.textContent || '';
+		return div.innerText || '';
 	}
 
 	/**
