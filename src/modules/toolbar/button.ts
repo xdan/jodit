@@ -251,9 +251,12 @@ export class ToolbarButton extends ToolbarElement implements IToolbarButton {
 				const to =
 					this.jodit.options.showTooltipDelay ||
 					this.jodit.defaultTimeout;
+
+				let timeout: number = 0;
+
 				this.jodit.events
 					.on(this.anchor, 'mouseenter', () => {
-						this.jodit.async.setTimeout(
+						timeout = this.jodit.async.setTimeout(
 							() =>
 								!this.isDisable() &&
 								this.jodit.events.fire(
@@ -267,9 +270,10 @@ export class ToolbarButton extends ToolbarElement implements IToolbarButton {
 							}
 						);
 					})
-					.on(this.anchor, 'mouseleave', () =>
-						this.jodit.events.fire('hideTooltip')
-					);
+					.on(this.anchor, 'mouseleave', () => {
+						this.jodit.async.clearTimeout(timeout);
+						this.jodit.events.fire('hideTooltip');
+					});
 			} else {
 				this.anchor.setAttribute('title', this.tooltipText);
 			}

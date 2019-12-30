@@ -372,7 +372,7 @@ export class Config implements IViewOptions {
 	/**
 	 * Delay before show tooltip
 	 */
-	showTooltipDelay: number = 500;
+	showTooltipDelay: number = 300;
 
 	/**
 	 * Instead of create custop tooltip - use native title tooltips
