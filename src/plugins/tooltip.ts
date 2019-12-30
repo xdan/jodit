@@ -1,9 +1,17 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
+ * For GPL see LICENSE-GPL.txt in the project root for license information.
+ * For MIT see LICENSE-MIT.txt in the project root for license information.
+ * For commercial licenses see https://xdsoft.net/jodit/commercial/
+ * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
 import { IJodit } from '../types';
 import { offset } from '../modules/helpers/size';
 import { css } from '../modules/helpers';
 import { Plugin } from '../modules/Plugin';
 import { Dom } from '../modules/Dom';
-import { setTimeout, clearTimeout } from '../modules/helpers/async';
 
 export class tooltip extends Plugin {
 	private isOpened = false;
@@ -17,11 +25,11 @@ export class tooltip extends Plugin {
 		let timeout = 0;
 		jodit.events
 			.on('showTooltip.tooltip', (target: HTMLElement, content: string) => {
-				clearTimeout(timeout);
+				jodit.async.clearTimeout(timeout);
 				this.open(target, content)
 			})
 			.on('hideTooltip.tooltip change.tooltip updateToolbar.tooltip scroll.tooltip hidePopup.tooltip closeAllPopups.tooltip', () => {
-				timeout = setTimeout(() => this.close(), this.jodit.defaultTimeout);
+				timeout = jodit.async.setTimeout(() => this.close(), this.jodit.defaultTimeout);
 			});
 	}
 

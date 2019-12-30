@@ -884,7 +884,8 @@ Config.prototype.controls = {
 				mywindow.close();
 			}
 		},
-		mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG
+		mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG,
+		tooltip: 'Print'
 	} as IControlType,
 
 	about: {

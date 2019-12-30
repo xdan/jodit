@@ -1206,7 +1206,7 @@ describe('Test plugins', function() {
 				});
 			});
 
-			describe('Jodits tooltip', function() {
+			describe('Jodit tooltip', function() {
 				it('Should have different tooltip for each language', function() {
 					const area = appendTestArea();
 

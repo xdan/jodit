@@ -9,7 +9,6 @@
 
 import { Config } from '../Config';
 import { Dom } from '../modules/Dom';
-import { setTimeout } from '../modules/helpers/async';
 import { css } from '../modules/helpers';
 import { IJodit } from '../types';
 
@@ -90,10 +89,11 @@ export function errorMessages(editor: IJodit) {
 					messagesBox.appendChild(newmessage);
 
 					recalcOffsets();
-					setTimeout(() => {
+
+					editor.async.setTimeout(() => {
 						newmessage.classList.remove('active');
 
-						setTimeout(() => {
+						editor.async.setTimeout(() => {
 							Dom.safeRemove(newmessage);
 							recalcOffsets();
 						}, 300);

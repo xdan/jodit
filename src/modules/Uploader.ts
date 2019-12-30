@@ -575,7 +575,7 @@ export class Uploader extends Component implements IUploader {
 
 						div.focus();
 
-						setTimeout(() => {
+						this.jodit.async.setTimeout(() => {
 							const child: HTMLDivElement | null = div.firstChild as HTMLDivElement;
 
 							Dom.safeRemove(div);
@@ -590,7 +590,7 @@ export class Uploader extends Component implements IUploader {
 									handlerError
 								);
 							}
-						}, 200);
+						}, this.jodit.defaultTimeout);
 					}
 					return;
 				}

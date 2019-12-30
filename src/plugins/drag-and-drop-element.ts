@@ -12,8 +12,6 @@ import {
 	css,
 	ctrlKey,
 	dataBind,
-	setTimeout,
-	clearTimeout,
 	splitArray,
 	throttle
 } from '../modules/helpers/';
@@ -90,7 +88,7 @@ export class DragAndDropElement extends Plugin {
 		this.isCopyMode = ctrlKey(event); // we can move only element from editor
 		this.onDragEnd();
 
-		this.timeout = setTimeout(
+		this.timeout = this.jodit.async.setTimeout(
 			(lastNode?: HTMLElement) => {
 				if (!lastNode) {
 					return;
@@ -119,7 +117,7 @@ export class DragAndDropElement extends Plugin {
 	};
 
 	private onDragEnd = () => {
-		clearTimeout(this.timeout);
+		this.jodit.async.clearTimeout(this.timeout);
 
 		if (this.draggable) {
 			Dom.safeRemove(this.draggable);

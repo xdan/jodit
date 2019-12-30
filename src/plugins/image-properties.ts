@@ -10,15 +10,7 @@
 import { Config } from '../Config';
 import { Alert, Confirm, Dialog } from '../modules/dialog/';
 import { Dom } from '../modules/Dom';
-import {
-	$$,
-	css,
-	trim,
-	val,
-	setTimeout,
-	clearTimeout,
-	clearCenterAlign
-} from '../modules/helpers/';
+import { $$, css, trim, val, clearCenterAlign } from '../modules/helpers/';
 import { ToolbarIcon } from '../modules/toolbar/icon';
 import { Widget } from '../modules/Widget';
 import TabsWidget = Widget.TabsWidget;
@@ -446,8 +438,7 @@ export function imageProperties(editor: IJodit) {
 				updateStyle();
 			};
 
-		let timer: number,
-			lockSize: boolean = true,
+		let lockSize: boolean = true,
 			lockMargin: boolean = true;
 
 		const tabs: IDictionary<HTMLElement> = {},
@@ -679,15 +670,10 @@ export function imageProperties(editor: IJodit) {
 					return;
 				}
 
-				if (editor.defaultTimeout) {
-					clearTimeout(timer);
-					timer = setTimeout(
-						changeSizes.bind(this, event),
-						editor.defaultTimeout
-					);
-				} else {
-					changeSizes(event);
-				}
+				editor.async.setTimeout(changeSizes.bind(this, event), {
+					timeout: editor.defaultTimeout,
+					label: 'image-properties-changeSize'
+				});
 			}
 		);
 

@@ -9,7 +9,7 @@
 
 import { Config } from '../Config';
 import { Dom } from '../modules/Dom';
-import { debounce, setTimeout, clearTimeout } from '../modules/helpers/async';
+import { debounce } from '../modules/helpers/async';
 import { offset } from '../modules/helpers/size';
 import { ToolbarIcon } from '../modules/toolbar/icon';
 import { IBound, IJodit } from '../types';
@@ -87,7 +87,7 @@ export function addNewLine(editor: IJodit) {
 			return;
 		}
 
-		clearTimeout(timeout);
+		editor.async.clearTimeout(timeout);
 		line.classList.toggle('jodit-add-new-line_after', !preview);
 		line.style.display = 'block';
 		line.style.width = editor.editor.clientWidth + 'px';
@@ -95,7 +95,7 @@ export function addNewLine(editor: IJodit) {
 	};
 
 	const hideForce = () => {
-		clearTimeout(timeout);
+		editor.async.clearTimeout(timeout);
 		lineInFocus = false;
 		line.style.display = 'none';
 		hidden = true;
@@ -113,8 +113,11 @@ export function addNewLine(editor: IJodit) {
 		if (hidden || lineInFocus) {
 			return;
 		}
-		clearTimeout(timeout);
-		timeout = setTimeout(hideForce, 500);
+
+		timeout = editor.async.setTimeout(hideForce, {
+			timeout: 500,
+			label: 'add-new-line-hide'
+		});
 	};
 
 	editor.events
@@ -128,7 +131,7 @@ export function addNewLine(editor: IJodit) {
 					e.stopPropagation();
 				})
 				.on(line, 'mousedown touchstart', (e: MouseEvent) => {
-					const p: HTMLElement = editor.editorDocument.createElement(
+					const p: HTMLElement = editor.create.inside.element(
 						editor.options.enter
 					);
 
@@ -148,7 +151,7 @@ export function addNewLine(editor: IJodit) {
 		.on('afterInit', () => {
 			editor.events
 				.on(editor.editor, 'scroll', hideForce)
-				.on( 'change', hideForce)
+				.on('change', hideForce)
 				.on(editor.container, 'mouseleave', hide)
 				.on(line, 'mouseenter', () => {
 					clearTimeout(timeout);

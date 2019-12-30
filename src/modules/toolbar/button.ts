@@ -121,7 +121,7 @@ export class ToolbarButton extends ToolbarElement implements IToolbarButton {
 			control.exec(this.jodit, getTarget(), control, originalEvent, this
 				.container as HTMLLIElement);
 
-			this.jodit?.events.fire('synchro');
+			this.jodit.events && this.jodit.events.fire('synchro');
 
 			if (this.parentToolbar) {
 				this.parentToolbar.immediateCheckActiveButtons();
@@ -131,7 +131,8 @@ export class ToolbarButton extends ToolbarElement implements IToolbarButton {
 			 * Fired after calling `button.exec` function
 			 * @event afterExec
 			 */
-			this.jodit?.events.fire('closeAllPopups afterExec');
+			this.jodit.events &&
+				this.jodit.events.fire('closeAllPopups afterExec');
 		} else if (
 			control.popup !== undefined &&
 			typeof control.popup === 'function'
@@ -248,18 +249,25 @@ export class ToolbarButton extends ToolbarElement implements IToolbarButton {
 
 		if (this.jodit.options.showTooltip && control.tooltip) {
 			if (!this.jodit.options.useNativeTooltip) {
+				const to =
+					this.jodit.options.showTooltipDelay ||
+					this.jodit.defaultTimeout;
 				this.jodit.events
-					.on(
-						this.anchor,
-						'mouseenter',
-						() =>
-							!this.isDisable() &&
-							this.jodit.events.fire(
-								'showTooltip',
-								this.anchor,
-								this.tooltipText
-							)
-					)
+					.on(this.anchor, 'mouseenter', () => {
+						this.jodit.async.setTimeout(
+							() =>
+								!this.isDisable() &&
+								this.jodit.events.fire(
+									'showTooltip',
+									this.anchor,
+									this.tooltipText
+								),
+							{
+								timeout: to,
+								label: 'tooltip'
+							}
+						);
+					})
 					.on(this.anchor, 'mouseleave', () =>
 						this.jodit.events.fire('hideTooltip')
 					);

@@ -9,7 +9,6 @@
 
 import { Config } from '../Config';
 import { Dom } from '../modules/Dom';
-import { setTimeout, clearTimeout } from '../modules/helpers/async';
 import { IJodit } from '../types';
 
 declare module '../Config' {
@@ -29,12 +28,11 @@ Config.prototype.autofocus = false;
  * @param {Jodit} editor
  */
 export function autofocus(editor: IJodit) {
-	let timeout: number;
 	editor.events
 		.on('afterInit', () => {
 			if (editor.options.autofocus) {
 				if (editor.defaultTimeout) {
-					timeout = setTimeout(editor.selection.focus, 300);
+					editor.async.setTimeout(editor.selection.focus, 300);
 				} else {
 					editor.selection.focus();
 				}
@@ -53,8 +51,5 @@ export function autofocus(editor: IJodit) {
 					editor.selection.setCursorIn(e.target as HTMLElement);
 				}
 			}
-		})
-		.on('beforeDestruct', () => {
-			clearTimeout(timeout);
 		});
 }

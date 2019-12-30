@@ -77,7 +77,7 @@ export class View extends Panel implements IViewBased {
 	};
 
 	events: IEventsNative;
-	async : IAsync = new Async(this);
+	async : IAsync = new Async();
 
 	/**
 	 * Internationalization method. Uses Jodit.lang object
@@ -147,6 +147,11 @@ export class View extends Panel implements IViewBased {
 	destruct() {
 		if (this.isDestructed) {
 			return;
+		}
+
+		if (this.async) {
+			this.async.destruct();
+			delete this.async;
 		}
 
 		if (this.events) {

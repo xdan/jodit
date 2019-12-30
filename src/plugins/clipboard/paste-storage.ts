@@ -11,7 +11,6 @@ import { KEY_DOWN, KEY_ENTER, KEY_UP, SPACE_REG_EXP } from '../../constants';
 import { Dialog } from '../../modules/dialog/dialog';
 import { Plugin } from '../../modules/Plugin';
 import { Dom } from '../../modules/Dom';
-import { setTimeout } from '../../modules/helpers/async/setTimeout';
 
 /**
  * Show dialog choose content to paste
@@ -123,7 +122,7 @@ export class pasteStorage extends Plugin {
 
 		this.dialog && this.dialog.open();
 
-		setTimeout(() => {
+		this.jodit.async.setTimeout(() => {
 			this.selectIndex(0);
 		}, 100);
 	};

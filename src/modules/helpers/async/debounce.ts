@@ -32,7 +32,7 @@ import { setTimeout, clearTimeout } from './setTimeout';
 export const debounce = function<T>(
     this: T,
     fn: CallbackFunction<T>,
-    timeout?: number,
+    timeout: number,
     invokeAsap?: boolean,
     ctx?: T
 ) {

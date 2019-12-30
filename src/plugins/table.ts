@@ -16,10 +16,8 @@ import {
 	$$,
 	getContentWidth,
 	offset,
-	clearTimeout,
 	scrollIntoView
 } from '../modules/helpers/';
-import { setTimeout } from '../modules/helpers/async';
 import { IControlType } from '../types/toolbar';
 import { IBound, IDictionary } from '../types/types';
 import { IJodit } from '../types';
@@ -299,15 +297,17 @@ export class TableProcessor extends Plugin {
 	private __resizerHandler: HTMLElement;
 
 	showResizer() {
-		clearTimeout(this.hideTimeout);
+		this.jodit.async.clearTimeout(this.hideTimeout);
 		this.__resizerHandler.style.display = 'block';
 	}
 
 	hideResizer() {
-		clearTimeout(this.hideTimeout);
-		this.hideTimeout = setTimeout(() => {
+		this.hideTimeout = this.jodit.async.setTimeout(() => {
 			this.__resizerHandler.style.display = 'none';
-		}, this.jodit.defaultTimeout);
+		}, {
+			timeout: this.jodit.defaultTimeout,
+			label: 'hideResizer'
+		});
 	}
 
 	private hideTimeout: number;
@@ -437,7 +437,7 @@ export class TableProcessor extends Plugin {
 						}
 					)
 					.on(this.__resizerHandler, 'mouseenter.table', () => {
-						clearTimeout(this.hideTimeout);
+						this.jodit.async.clearTimeout(this.hideTimeout);
 					})
 					.on(
 						this.jodit.editorWindow,

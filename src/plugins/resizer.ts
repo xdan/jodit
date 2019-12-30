@@ -13,7 +13,7 @@ import { IS_IE } from '../constants';
 import { IBound } from '../types/types';
 import { Dom } from '../modules/Dom';
 import { $$ } from '../modules/helpers/selector';
-import { debounce, setTimeout, clearTimeout } from '../modules/helpers/async';
+import { debounce } from '../modules/helpers/async';
 import { offset, innerWidth } from '../modules/helpers/size';
 import { css } from '../modules/helpers';
 import { IJodit } from '../types';
@@ -86,8 +86,7 @@ export function resizer(editor: IJodit) {
 		new_w: number,
 		diff_x: number,
 		diff_y: number,
-		resizerIsVisible: boolean = false,
-		timeoutSizeViewer: number = 0;
+		resizerIsVisible: boolean = false;
 
 	const
 		resizerElm = editor.create.fromHTML(
@@ -128,10 +127,12 @@ export function resizer(editor: IJodit) {
 			sizeViewer.style.opacity = '1';
 			sizeViewer.innerHTML = `${w} x ${h}`;
 
-			clearTimeout(timeoutSizeViewer);
-			timeoutSizeViewer = setTimeout(
+			editor.async.setTimeout(
 				hideSizeViewer,
-				editor.options.resizer.hideSizeTimeout
+				{
+					timeout: editor.options.resizer.hideSizeTimeout,
+					label: 'hideSizeViewer'
+				}
 			);
 		},
 
@@ -305,10 +306,10 @@ export function resizer(editor: IJodit) {
 							);
 						}
 
-						clearTimeout(timer);
+						editor.async.clearTimeout(timer);
 					}
 
-					timer = setTimeout(() => {
+					timer = editor.async.setTimeout(() => {
 						resizeElementClicked = false;
 					}, 400);
 				});

@@ -35,7 +35,6 @@ import { normalizePath } from '../helpers/normalize/';
 import { $$ } from '../helpers/selector';
 import { ctrlKey } from '../helpers/ctrlKey';
 import { extend } from '../helpers/extend';
-import { setTimeout, clearTimeout } from '../helpers/async/setTimeout';
 import { ViewWithToolbar } from '../view/viewWithToolbar';
 import { IJodit, IStorage } from '../../types';
 import './config';
@@ -82,8 +81,6 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	});
 
 	dataProvider: IFileBrowserDataProvider;
-
-	private statusTimer: number;
 
 	async loadItems(
 		path: string = this.dataProvider.currentPath,
@@ -316,8 +313,6 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 			message = message.message;
 		}
 
-		clearTimeout(this.statusTimer);
-
 		this.status_line.classList.remove('success');
 
 		this.status_line.classList.add('active');
@@ -330,10 +325,13 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 			this.status_line.classList.add('success');
 		}
 
-		this.statusTimer = setTimeout(() => {
+		this.async.setTimeout(() => {
 			this.status_line.classList.remove('active');
 			Dom.detach(this.status_line);
-		}, this.options.howLongShowMsg);
+		}, {
+			timeout: this.options.howLongShowMsg,
+			label: 'fileBrowser.status'
+		});
 	};
 
 	/**

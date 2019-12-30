@@ -29,7 +29,6 @@ import {
 	isHTMLFromWord,
 	trim,
 	type,
-	setTimeout,
 	stripTags
 } from '../../modules/helpers/';
 
@@ -157,7 +156,7 @@ export function paste(editor: IJodit) {
 			return;
 		}
 
-		const dialog: Dialog = Confirm(
+		const dialog = Confirm(
 			`<div style="word-break: normal; white-space: normal">${msg}</div>`,
 			title,
 			callback
@@ -166,35 +165,27 @@ export function paste(editor: IJodit) {
 		dialog.container.setAttribute('data-editor_id', editor.id);
 
 		const keep = dialog.create.fromHTML(
-			'<a href="javascript:void(0)" class="jodit_button jodit_button_primary">' +
-				'<span>' +
-				editor.i18n('Keep') +
-				'</span>' +
-				'</a>'
+			`<a href="javascript:void(0)" class="jodit_button jodit_button_primary"><span>${editor.i18n(
+				'Keep'
+			)}</span></a>`
 		) as HTMLAnchorElement;
 
 		const clear = dialog.create.fromHTML(
-			'<a href="javascript:void(0)" class="jodit_button">' +
-				'<span>' +
-				editor.i18n(clearButton) +
-				'</span>' +
-				'</a>'
+			`<a href="javascript:void(0)" class="jodit_button"><span>${editor.i18n(
+				clearButton
+			)}</span></a>`
 		) as HTMLAnchorElement;
 
 		const clear2 = dialog.create.fromHTML(
-			'<a href="javascript:void(0)" class="jodit_button">' +
-				'<span>' +
-				editor.i18n(clear2Button) +
-				'</span>' +
-				'</a>'
+			`<a href="javascript:void(0)" class="jodit_button"><span>${editor.i18n(
+				clear2Button
+			)}</span></a>`
 		) as HTMLAnchorElement;
 
 		const cancel = dialog.create.fromHTML(
-			'<a href="javascript:void(0)" class="jodit_button">' +
-				'<span>' +
-				editor.i18n('Cancel') +
-				'</span>' +
-				'</a>'
+			`<a href="javascript:void(0)" class="jodit_button"><span>${editor.i18n(
+				'Cancel'
+			)}</span></a>`
 		) as HTMLAnchorElement;
 
 		editor.events.on(keep, 'click', () => {
@@ -571,7 +562,7 @@ export function paste(editor: IJodit) {
 							}
 
 							if (tick < 5) {
-								setTimeout(waitData, 20);
+								editor.async.setTimeout(waitData, 20);
 							} else {
 								removeFakeFocus();
 							}

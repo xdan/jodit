@@ -1,5 +1,4 @@
 import { ContextMenu } from '../../ContextMenu';
-import { setTimeout } from '../../helpers/async';
 import { Dialog } from '../../dialog';
 import { Dom } from '../../Dom';
 import { ToolbarIcon } from '../..';
@@ -30,7 +29,7 @@ export default (self: FileBrowser) => {
 			opt = self.options,
 			ga = (attr: string) => item.getAttribute(attr) || '';
 
-		setTimeout(() => {
+		self.async.setTimeout(() => {
 			contextmenu.show(
 				e.pageX,
 				e.pageY,
