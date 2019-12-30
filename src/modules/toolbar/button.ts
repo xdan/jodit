@@ -121,7 +121,7 @@ export class ToolbarButton extends ToolbarElement implements IToolbarButton {
 			control.exec(this.jodit, getTarget(), control, originalEvent, this
 				.container as HTMLLIElement);
 
-			this.jodit.events && this.jodit.events.fire('synchro');
+			this.jodit?.events.fire('synchro');
 
 			if (this.parentToolbar) {
 				this.parentToolbar.immediateCheckActiveButtons();
@@ -131,8 +131,7 @@ export class ToolbarButton extends ToolbarElement implements IToolbarButton {
 			 * Fired after calling `button.exec` function
 			 * @event afterExec
 			 */
-			this.jodit.events &&
-				this.jodit.events.fire('closeAllPopups afterExec');
+			this.jodit?.events.fire('closeAllPopups afterExec');
 		} else if (
 			control.popup !== undefined &&
 			typeof control.popup === 'function'

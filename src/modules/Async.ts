@@ -7,11 +7,11 @@
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IAsync, IAsyncParams, IDictionary } from '../types';
+import { IAsync, IAsyncParams } from '../types';
 import { setTimeout } from './helpers/async';
 
 export class Async implements IAsync {
-	private timers: IDictionary<number> = {};
+	private timers: Map<number | string, number> = new Map();
 
 	setTimeout<T = any>(callback: (...args: T[]) => void, timeout: number | IAsyncParams, ...args: T[]): number {
 		let options: IAsyncParams = {};
@@ -21,16 +21,16 @@ export class Async implements IAsync {
 			timeout = options.timeout || 0;
 		}
 
-		if (options.label && this.timers[options.label]) {
-			this.clearTimeout(this.timers[options.label]);
-			delete this.timers[options.label];
+		if (options.label && this.timers.has(options.label)) {
+			this.clearTimeout(this.timers.get(options.label) as number);
+			this.timers.delete(options.label);
 		}
 
 		const
 			timer = setTimeout(callback, timeout, ...args),
 			key = options.label || timer;
 
-		this.timers[key.toString()] = timer;
+		this.timers.set(key, timer);
 
 		return timer;
 	}
@@ -38,14 +38,14 @@ export class Async implements IAsync {
 	clearTimeout(timer: number): void {
 		clearTimeout(timer);
 
-		if (this.timers[timer]) {
-			delete this.timers[timer];
-		}
+		this.timers.delete(timer);
 	}
 
 	destruct(): any {
-		Object.keys(this.timers).forEach((key) => {
-			this.clearTimeout(this.timers[key]);
+		this.timers.forEach((key) => {
+			this.clearTimeout(this.timers.get(key) as number);
 		});
+
+		this.timers.clear();
 	}
 }

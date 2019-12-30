@@ -581,7 +581,7 @@ describe('Test plugins', function() {
 							},
 							disablePlugins: 'mobile'
 						});
-						editor.setEditorValue('<img src="tests/artio.jpg">');
+						editor.value = '<img alt="" src="https://xdsoft.net/jodit/files/th.jpg">';
 
 						simulateEvent(
 							'dblclick',
@@ -723,7 +723,8 @@ describe('Test plugins', function() {
 								}
 							}
 						});
-						editor.setEditorValue('<img src="tests/artio.jpg">');
+
+						editor.value = '<img alt="" src="https://xdsoft.net/jodit/files/th.jpg">';
 
 						simulateEvent(
 							'dblclick',
@@ -749,6 +750,7 @@ describe('Test plugins', function() {
 									area.id +
 									'].jodit.jodit_dialog_box.active .jodit_image_editor'
 							);
+
 							expect(imageEditor).to.be.not.equal(null);
 
 							expect(
@@ -1219,15 +1221,14 @@ describe('Test plugins', function() {
 					});
 
 					let button = editor.container.querySelector(
-						'.jodit_toolbar_btn.jodit_toolbar_btn-outdent'
+						'.jodit_toolbar_btn.jodit_toolbar_btn-indent'
 					);
 
 					expect(null).to.be.not.equal(button);
 
 					simulateEvent('mouseenter', 0, button.querySelector('a'));
 
-					let tooltip = button.querySelector('.jodit_tooltip');
-
+					let tooltip = editor.ownerDocument.querySelector('.jodit_tooltip');
 					expect(null).to.be.not.equal(tooltip);
 					const title = tooltip.textContent;
 					editor.destruct();
@@ -1241,16 +1242,19 @@ describe('Test plugins', function() {
 					});
 
 					button = editor.container.querySelector(
-						'.jodit_toolbar_btn.jodit_toolbar_btn-outdent'
+						'.jodit_toolbar_btn.jodit_toolbar_btn-indent'
 					);
 					expect(null).to.be.not.equal(button);
 
 					simulateEvent('mouseenter', 0, button.querySelector('a'));
 
-					tooltip = button.querySelector('.jodit_tooltip');
+					tooltip = editor.ownerDocument.querySelector('.jodit_tooltip');
 					expect(null).to.be.not.equal(tooltip);
 					simulateEvent('mouseleave', 0, button.querySelector('a'));
-					expect(null).to.be.equal(tooltip.parentNode);
+					expect(null).not.equal(tooltip.parentNode);
+
+					expect(parseInt(tooltip.style.left, 10)).to.equal(-5000);
+
 
 					expect(title).to.be.not.equal(tooltip.textContent);
 				});

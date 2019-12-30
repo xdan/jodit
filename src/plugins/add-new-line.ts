@@ -122,7 +122,9 @@ export function addNewLine(editor: IJodit) {
 
 	editor.events
 		.on('beforeDestruct', () => {
+			editor.async.clearTimeout(timeout);
 			Dom.safeRemove(line);
+			editor.events.off(line);
 		})
 		.on('afterInit', () => {
 			editor.container.appendChild(line);

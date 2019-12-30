@@ -155,18 +155,10 @@ function mockAjax() {
 						break;
 					case 'getLocalFileByUrl':
 						switch (ajax.options.data.url) {
-							case location.protocol +
-								'//' +
-								location.host +
-								'/tests/artio.jpg':
-							case location.protocol +
-								'//' +
-								location.host +
-								'/test/tests/artio.jpg':
-							case location.protocol +
-								'//' +
-								location.host +
-								'/jodit/test/tests/artio.jpg':
+							case location.protocol + '//' + location.host + '/artio.jpg':
+							case location.protocol + '//' + location.host + '/tests/artio.jpg':
+							case location.protocol + '//' + location.host + '/test/tests/artio.jpg':
+							case location.protocol + '//' + location.host + '/jodit/test/tests/artio.jpg':
 							case 'https://xdsoft.net/jodit/files/th.jpg':
 								resolve({
 									success: true,
