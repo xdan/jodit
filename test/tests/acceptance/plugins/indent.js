@@ -82,7 +82,6 @@ describe('Test editor indent plugin', function () {
   });
 
   afterEach(() => {
-    // console.log(stuff)
     removeStuff();
   });
 

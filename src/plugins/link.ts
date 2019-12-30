@@ -74,7 +74,7 @@ Config.prototype.controls.link = {
 		self: IControlType,
 		close: () => void
 	) => {
-		const i18n = editor.i18n,
+		const i18n = editor.i18n.bind(editor),
 			{ openInNewTabCheckbox, noFollowCheckbox } = editor.options.link,
 			form: HTMLFormElement = editor.create.fromHTML(
 				`<form class="jodit_form">

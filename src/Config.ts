@@ -13,6 +13,7 @@ import TabsWidget = Widget.TabsWidget;
 import FileSelectorWidget = Widget.FileSelectorWidget;
 import { Dom } from './modules/Dom';
 import {
+	$$,
 	convertMediaURLToVideoEmbed,
 	defaultLanguage,
 	isLicense,
@@ -937,6 +938,75 @@ Config.prototype.controls = {
 		command: 'insertHorizontalRule',
 		tags: ['hr'],
 		tooltip: 'Insert Horizontal Line'
+	} as IControlType,
+
+	image: {
+		popup: (
+			editor: IJodit,
+			current: HTMLImageElement | false,
+			self: IControlType,
+			close
+		) => {
+			let sourceImage: HTMLImageElement | null = null;
+
+			if (
+				current &&
+				current.nodeType !== Node.TEXT_NODE &&
+				(current.tagName === 'IMG' || $$('img', current).length)
+			) {
+				sourceImage =
+					current.tagName === 'IMG'
+						? current
+						: ($$('img', current)[0] as HTMLImageElement);
+			}
+
+			const selInfo = editor.selection.save();
+
+			return FileSelectorWidget(
+				editor,
+				{
+					filebrowser: async (data: IFileBrowserCallBackData) => {
+						editor.selection.restore(selInfo);
+
+						if (data.files && data.files.length) {
+							for (let i = 0; i < data.files.length; i += 1) {
+								await editor.selection.insertImage(
+									data.baseurl + data.files[i],
+									null,
+									editor.options.imageDefaultWidth
+								);
+							}
+						}
+
+						close();
+					},
+					upload: true,
+					url: async (url: string, text: string) => {
+						editor.selection.restore(selInfo);
+
+						const image: HTMLImageElement =
+							sourceImage || editor.create.inside.element('img');
+
+						image.setAttribute('src', url);
+						image.setAttribute('alt', text);
+
+						if (!sourceImage) {
+							await editor.selection.insertImage(
+								image,
+								null,
+								editor.options.imageDefaultWidth
+							);
+						}
+
+						close();
+					}
+				},
+				sourceImage,
+				close
+			);
+		},
+		tags: ['img'],
+		tooltip: 'Insert Image'
 	} as IControlType,
 
 	file: {

@@ -8,81 +8,9 @@
  */
 
 import { $$, debounce } from '../modules/helpers/';
-import { IControlType, IFileBrowserCallBackData, IJodit } from '../types';
-import { Config } from '../Config';
-import { Widget } from '../modules/Widget';
-import FileSelectorWidget = Widget.FileSelectorWidget;
+import { IJodit } from '../types';
 
 const JODIT_IMAGE_PROCESSOR_BINDED = '__jodit_imageprocessor_binded';
-
-Config.prototype.controls.image = {
-	popup: (
-		editor: IJodit,
-		current: HTMLImageElement | false,
-		self: IControlType,
-		close
-	) => {
-		let sourceImage: HTMLImageElement | null = null;
-
-		if (
-			current &&
-			current.nodeType !== Node.TEXT_NODE &&
-			(current.tagName === 'IMG' || $$('img', current).length)
-		) {
-			sourceImage =
-				current.tagName === 'IMG'
-					? current
-					: ($$('img', current)[0] as HTMLImageElement);
-		}
-
-		const selInfo = editor.selection.save();
-
-		return FileSelectorWidget(
-			editor,
-			{
-				filebrowser: async (data: IFileBrowserCallBackData) => {
-					editor.selection.restore(selInfo);
-
-					if (data.files && data.files.length) {
-						for (let i = 0; i < data.files.length; i += 1) {
-							await editor.selection.insertImage(
-								data.baseurl + data.files[i],
-								null,
-								editor.options.imageDefaultWidth
-							);
-						}
-					}
-
-					close();
-				},
-				upload: true,
-				url: async (url: string, text: string) => {
-					editor.selection.restore(selInfo);
-
-					const image: HTMLImageElement =
-						sourceImage || editor.create.inside.element('img');
-
-					image.setAttribute('src', url);
-					image.setAttribute('alt', text);
-
-					if (!sourceImage) {
-						await editor.selection.insertImage(
-							image,
-							null,
-							editor.options.imageDefaultWidth
-						);
-					}
-
-					close();
-				}
-			},
-			sourceImage,
-			close
-		);
-	},
-		tags: ['img'],
-		tooltip: 'Insert Image'
-} as IControlType;
 
 /**
  * Change editor's size after load all images

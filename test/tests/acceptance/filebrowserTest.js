@@ -600,7 +600,6 @@ describe('Jodit FileBrowser Tests', function() {
 								'.jodit_filebrowser_files_item'
 							);
 
-							console.log(key);
 							expect(
 								Array.from(items)
 									.map(function(item) {

@@ -516,6 +516,7 @@ function simulateEvent(type, keyCodeArg, element, options) {
 			changedTouches[key] = evt[key];
 		});
 
+
 		evt.changedTouches = changedTouches;
 	}
 

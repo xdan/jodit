@@ -1,14 +1,16 @@
-describe('Link plugin', function () {
-	describe('Insert link', function () {
-		describe('Insert simple link', function () {
+describe('Link plugin', function() {
+	describe('Insert link', function() {
+		describe('Insert simple link', function() {
 			it('Should insert as simple link', function() {
 				const editor = new Jodit(appendTestArea());
 				simulatePaste(editor.editor, 'https://www.youtube.com');
-				expect(editor.value).equal('<a href="https://www.youtube.com">https://www.youtube.com</a><br>');
+				expect(editor.value).equal(
+					'<a href="https://www.youtube.com">https://www.youtube.com</a><br>'
+				);
 			});
 
-			describe('Disable', function () {
-				describe('Disable any convert', function () {
+			describe('Disable', function() {
+				describe('Disable any convert', function() {
 					it('Should not change source link', function() {
 						const editor = new Jodit(appendTestArea(), {
 							link: {
@@ -23,15 +25,22 @@ describe('Link plugin', function () {
 			});
 		});
 
-		describe('Insert youtube link', function () {
+		describe('Insert youtube link', function() {
 			it('Should insert iframe with video', function() {
 				const editor = new Jodit(appendTestArea());
-				simulatePaste(editor.editor, 'https://www.youtube.com/watch?v=8Qn_spdM5Zg');
-				expect(sortAttributes(editor.value)).equal(sortAttributes('<iframe width="400" height="345" src="https://www.youtube.com/embed/8Qn_spdM5Zg" frameborder="0" allowfullscreen=""></iframe>'));
+				simulatePaste(
+					editor.editor,
+					'https://www.youtube.com/watch?v=8Qn_spdM5Zg'
+				);
+				expect(sortAttributes(editor.value)).equal(
+					sortAttributes(
+						'<iframe width="400" height="345" src="https://www.youtube.com/embed/8Qn_spdM5Zg" frameborder="0" allowfullscreen=""></iframe>'
+					)
+				);
 			});
 
-			describe('Disable', function () {
-				describe('Disable any convert', function () {
+			describe('Disable', function() {
+				describe('Disable any convert', function() {
 					it('Should not change source link', function() {
 						const editor = new Jodit(appendTestArea(), {
 							link: {
@@ -40,12 +49,17 @@ describe('Link plugin', function () {
 							}
 						});
 
-						simulatePaste(editor.editor, 'https://www.youtube.com/watch?v=8Qn_spdM5Zg');
-						expect(editor.value).equal('https://www.youtube.com/watch?v=8Qn_spdM5Zg');
+						simulatePaste(
+							editor.editor,
+							'https://www.youtube.com/watch?v=8Qn_spdM5Zg'
+						);
+						expect(editor.value).equal(
+							'https://www.youtube.com/watch?v=8Qn_spdM5Zg'
+						);
 					});
 				});
 
-				describe('Disable video convert', function () {
+				describe('Disable video convert', function() {
 					it('Should insert video link as simple link', function() {
 						const editor = new Jodit(appendTestArea(), {
 							link: {
@@ -53,8 +67,13 @@ describe('Link plugin', function () {
 							}
 						});
 
-						simulatePaste(editor.editor, 'https://www.youtube.com/watch?v=8Qn_spdM5Zg');
-						expect(editor.value).equal('<a href="https://www.youtube.com/watch?v=8Qn_spdM5Zg">https://www.youtube.com/watch?v=8Qn_spdM5Zg</a><br>');
+						simulatePaste(
+							editor.editor,
+							'https://www.youtube.com/watch?v=8Qn_spdM5Zg'
+						);
+						expect(editor.value).equal(
+							'<a href="https://www.youtube.com/watch?v=8Qn_spdM5Zg">https://www.youtube.com/watch?v=8Qn_spdM5Zg</a><br>'
+						);
 					});
 				});
 			});
@@ -190,7 +209,8 @@ describe('Link plugin', function () {
 							expect(popup).to.be.not.equal(null);
 
 							expect(
-								editor.ownerWindow.getComputedStyle(popup).display
+								editor.ownerWindow.getComputedStyle(popup)
+									.display
 							).to.equal('block');
 
 							expect(
@@ -202,7 +222,9 @@ describe('Link plugin', function () {
 							const url = popup.querySelector('[ref=url_input]');
 							expect(url).to.be.not.equal(null);
 
-							const text = popup.querySelector('[ref=content_input]');
+							const text = popup.querySelector(
+								'[ref=content_input]'
+							);
 							expect(text).to.be.not.equal(null);
 
 							expect(text.value).to.equal('select');
@@ -237,9 +259,12 @@ describe('Link plugin', function () {
 									}
 								});
 
-								editor.value = 'test <img style="width: 100px;height: 100px" src="https://xdsoft.net/jodit/build/images/artio.jpg" alt=""> stop';
+								editor.value =
+									'test <img style="width: 100px;height: 100px" src="https://xdsoft.net/jodit/build/images/artio.jpg" alt=""> stop';
 
-								editor.selection.select(editor.editor.querySelector('img'));
+								editor.selection.select(
+									editor.editor.querySelector('img')
+								);
 
 								simulateEvent(
 									'mousedown',
@@ -253,10 +278,13 @@ describe('Link plugin', function () {
 									'.jodit_toolbar_popup'
 								);
 
-								const text = popup.querySelector('[ref=content_input_box]');
+								const text = popup.querySelector(
+									'[ref=content_input_box]'
+								);
 
 								expect(
-									editor.ownerWindow.getComputedStyle(text).display
+									editor.ownerWindow.getComputedStyle(text)
+										.display
 								).to.equal('none');
 							});
 						});
@@ -269,9 +297,12 @@ describe('Link plugin', function () {
 								}
 							});
 
-							editor.value = 'test <img style="width: 100px;height: 100px" src="https://xdsoft.net/jodit/build/images/artio.jpg" alt=""> stop';
+							editor.value =
+								'test <img style="width: 100px;height: 100px" src="https://xdsoft.net/jodit/build/images/artio.jpg" alt=""> stop';
 
-							editor.selection.select(editor.editor.querySelector('img'));
+							editor.selection.select(
+								editor.editor.querySelector('img')
+							);
 
 							simulateEvent(
 								'mousedown',
@@ -286,11 +317,14 @@ describe('Link plugin', function () {
 							);
 							expect(popup).to.be.not.equal(null);
 							expect(
-								editor.ownerWindow.getComputedStyle(popup).display
+								editor.ownerWindow.getComputedStyle(popup)
+									.display
 							).to.equal('block');
 
 							const url = popup.querySelector('[ref=url_input]');
-							const text = popup.querySelector('[ref=content_input]');
+							const text = popup.querySelector(
+								'[ref=content_input]'
+							);
 
 							expect(text.value).to.equal('');
 
@@ -323,9 +357,8 @@ describe('Link plugin', function () {
 						}
 					});
 
-					editor.setEditorValue(
-						'<a target="_blank" rel="nofollow" href="#test">test</a>'
-					);
+					editor.value =
+						'<a target="_blank" rel="nofollow" href="#test">test</a>';
 
 					const sel = editor.editorWindow.getSelection(),
 						range = editor.editorDocument.createRange();
@@ -380,9 +413,7 @@ describe('Link plugin', function () {
 						)
 					);
 
-					expect(sortAttributes(editor.getEditorValue())).to.equal(
-						'test'
-					);
+					expect(sortAttributes(editor.value)).to.equal('test');
 				});
 			});
 		});

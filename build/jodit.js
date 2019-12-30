@@ -1,7 +1,7 @@
 /*!
  jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- Version: v3.3.10
+ Version: v3.3.12
  Url: https://xdsoft.net/jodit/
  License(s): GPL-2.0-or-later OR MIT OR Commercial
 */
@@ -104,6 +104,230 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__extends", function() { return __extends; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__assign", function() { return __assign; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__rest", function() { return __rest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__decorate", function() { return __decorate; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__param", function() { return __param; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__metadata", function() { return __metadata; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__awaiter", function() { return __awaiter; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__generator", function() { return __generator; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__exportStar", function() { return __exportStar; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__values", function() { return __values; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__read", function() { return __read; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__spread", function() { return __spread; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__spreadArrays", function() { return __spreadArrays; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__await", function() { return __await; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__asyncGenerator", function() { return __asyncGenerator; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__asyncDelegator", function() { return __asyncDelegator; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__asyncValues", function() { return __asyncValues; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__makeTemplateObject", function() { return __makeTemplateObject; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__importStar", function() { return __importStar; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__importDefault", function() { return __importDefault; });
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation. All rights reserved.
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+this file except in compliance with the License. You may obtain a copy of the
+License at http://www.apache.org/licenses/LICENSE-2.0
+
+THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+MERCHANTABLITY OR NON-INFRINGEMENT.
+
+See the Apache Version 2.0 License for specific language governing permissions
+and limitations under the License.
+***************************************************************************** */
+/* global Reflect, Promise */
+
+var extendStatics = function(d, b) {
+    extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return extendStatics(d, b);
+};
+
+function __extends(d, b) {
+    extendStatics(d, b);
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+}
+
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    }
+    return __assign.apply(this, arguments);
+}
+
+function __rest(s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+}
+
+function __decorate(decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+}
+
+function __param(paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+}
+
+function __metadata(metadataKey, metadataValue) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
+}
+
+function __awaiter(thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+}
+
+function __generator(thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+}
+
+function __exportStar(m, exports) {
+    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+}
+
+function __values(o) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
+    if (m) return m.call(o);
+    return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+}
+
+function __read(o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+}
+
+function __spread() {
+    for (var ar = [], i = 0; i < arguments.length; i++)
+        ar = ar.concat(__read(arguments[i]));
+    return ar;
+}
+
+function __spreadArrays() {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
+
+function __await(v) {
+    return this instanceof __await ? (this.v = v, this) : new __await(v);
+}
+
+function __asyncGenerator(thisArg, _arguments, generator) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var g = generator.apply(thisArg, _arguments || []), i, q = [];
+    return i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i;
+    function verb(n) { if (g[n]) i[n] = function (v) { return new Promise(function (a, b) { q.push([n, v, a, b]) > 1 || resume(n, v); }); }; }
+    function resume(n, v) { try { step(g[n](v)); } catch (e) { settle(q[0][3], e); } }
+    function step(r) { r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r); }
+    function fulfill(value) { resume("next", value); }
+    function reject(value) { resume("throw", value); }
+    function settle(f, v) { if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]); }
+}
+
+function __asyncDelegator(o) {
+    var i, p;
+    return i = {}, verb("next"), verb("throw", function (e) { throw e; }), verb("return"), i[Symbol.iterator] = function () { return this; }, i;
+    function verb(n, f) { i[n] = o[n] ? function (v) { return (p = !p) ? { value: __await(o[n](v)), done: n === "return" } : f ? f(v) : v; } : f; }
+}
+
+function __asyncValues(o) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var m = o[Symbol.asyncIterator], i;
+    return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
+    function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
+    function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
+}
+
+function __makeTemplateObject(cooked, raw) {
+    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+    return cooked;
+};
+
+function __importStar(mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result.default = mod;
+    return result;
+}
+
+function __importDefault(mod) {
+    return (mod && mod.__esModule) ? mod : { default: mod };
+}
+
+
+/***/ }),
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -379,6 +603,22 @@ var Dom = (function () {
     Dom.safeRemove = function (node) {
         node && node.parentNode && node.parentNode.removeChild(node);
     };
+    Dom.hide = function (node) {
+        if (!node) {
+            return;
+        }
+        helpers_1.dataBind(node, '__old_display', node.style.display);
+        node.style.display = 'none';
+    };
+    Dom.show = function (node) {
+        if (!node) {
+            return;
+        }
+        var display = helpers_1.dataBind(node, '__old_display');
+        if (node.style.display === 'none') {
+            node.style.display = display || '';
+        }
+    };
     Dom.wrapInline = function (current, tag, editor) {
         var tmp, first = current, last = current;
         var selInfo = editor.selection.save();
@@ -418,7 +658,7 @@ var Dom = (function () {
     Dom.wrap = function (current, tag, editor) {
         var selInfo = editor.selection.save();
         var wrapper = typeof tag === 'string'
-            ? editor.editorDocument.createElement(tag)
+            ? editor.create.inside.element(tag)
             : tag;
         if (!current.parentNode) {
             return null;
@@ -476,230 +716,6 @@ var Dom = (function () {
     return Dom;
 }());
 exports.Dom = Dom;
-
-
-/***/ }),
-/* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__extends", function() { return __extends; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__assign", function() { return __assign; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__rest", function() { return __rest; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__decorate", function() { return __decorate; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__param", function() { return __param; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__metadata", function() { return __metadata; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__awaiter", function() { return __awaiter; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__generator", function() { return __generator; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__exportStar", function() { return __exportStar; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__values", function() { return __values; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__read", function() { return __read; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__spread", function() { return __spread; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__spreadArrays", function() { return __spreadArrays; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__await", function() { return __await; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__asyncGenerator", function() { return __asyncGenerator; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__asyncDelegator", function() { return __asyncDelegator; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__asyncValues", function() { return __asyncValues; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__makeTemplateObject", function() { return __makeTemplateObject; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__importStar", function() { return __importStar; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__importDefault", function() { return __importDefault; });
-/*! *****************************************************************************
-Copyright (c) Microsoft Corporation. All rights reserved.
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use
-this file except in compliance with the License. You may obtain a copy of the
-License at http://www.apache.org/licenses/LICENSE-2.0
-
-THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
-WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
-MERCHANTABLITY OR NON-INFRINGEMENT.
-
-See the Apache Version 2.0 License for specific language governing permissions
-and limitations under the License.
-***************************************************************************** */
-/* global Reflect, Promise */
-
-var extendStatics = function(d, b) {
-    extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return extendStatics(d, b);
-};
-
-function __extends(d, b) {
-    extendStatics(d, b);
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-}
-
-var __assign = function() {
-    __assign = Object.assign || function __assign(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-        }
-        return t;
-    }
-    return __assign.apply(this, arguments);
-}
-
-function __rest(s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-                t[p[i]] = s[p[i]];
-        }
-    return t;
-}
-
-function __decorate(decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-}
-
-function __param(paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-}
-
-function __metadata(metadataKey, metadataValue) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
-}
-
-function __awaiter(thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-}
-
-function __generator(thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-}
-
-function __exportStar(m, exports) {
-    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-}
-
-function __values(o) {
-    var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
-    if (m) return m.call(o);
-    return {
-        next: function () {
-            if (o && i >= o.length) o = void 0;
-            return { value: o && o[i++], done: !o };
-        }
-    };
-}
-
-function __read(o, n) {
-    var m = typeof Symbol === "function" && o[Symbol.iterator];
-    if (!m) return o;
-    var i = m.call(o), r, ar = [], e;
-    try {
-        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
-    }
-    catch (error) { e = { error: error }; }
-    finally {
-        try {
-            if (r && !r.done && (m = i["return"])) m.call(i);
-        }
-        finally { if (e) throw e.error; }
-    }
-    return ar;
-}
-
-function __spread() {
-    for (var ar = [], i = 0; i < arguments.length; i++)
-        ar = ar.concat(__read(arguments[i]));
-    return ar;
-}
-
-function __spreadArrays() {
-    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
-    for (var r = Array(s), k = 0, i = 0; i < il; i++)
-        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
-            r[k] = a[j];
-    return r;
-};
-
-function __await(v) {
-    return this instanceof __await ? (this.v = v, this) : new __await(v);
-}
-
-function __asyncGenerator(thisArg, _arguments, generator) {
-    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
-    var g = generator.apply(thisArg, _arguments || []), i, q = [];
-    return i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i;
-    function verb(n) { if (g[n]) i[n] = function (v) { return new Promise(function (a, b) { q.push([n, v, a, b]) > 1 || resume(n, v); }); }; }
-    function resume(n, v) { try { step(g[n](v)); } catch (e) { settle(q[0][3], e); } }
-    function step(r) { r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r); }
-    function fulfill(value) { resume("next", value); }
-    function reject(value) { resume("throw", value); }
-    function settle(f, v) { if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]); }
-}
-
-function __asyncDelegator(o) {
-    var i, p;
-    return i = {}, verb("next"), verb("throw", function (e) { throw e; }), verb("return"), i[Symbol.iterator] = function () { return this; }, i;
-    function verb(n, f) { i[n] = o[n] ? function (v) { return (p = !p) ? { value: __await(o[n](v)), done: n === "return" } : f ? f(v) : v; } : f; }
-}
-
-function __asyncValues(o) {
-    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
-    var m = o[Symbol.asyncIterator], i;
-    return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
-    function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
-    function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
-}
-
-function __makeTemplateObject(cooked, raw) {
-    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
-    return cooked;
-};
-
-function __importStar(mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result.default = mod;
-    return result;
-}
-
-function __importDefault(mod) {
-    return (mod && mod.__esModule) ? mod : { default: mod };
-}
 
 
 /***/ }),
@@ -831,14 +847,14 @@ exports.BASE_PATH = (function () {
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(0);
 var consts = __webpack_require__(2);
 var Widget_1 = __webpack_require__(18);
 var TabsWidget = Widget_1.Widget.TabsWidget;
 var FileSelectorWidget = Widget_1.Widget.FileSelectorWidget;
-var Dom_1 = __webpack_require__(0);
+var Dom_1 = __webpack_require__(1);
 var helpers_1 = __webpack_require__(4);
-var icon_1 = __webpack_require__(6);
+var icon_1 = __webpack_require__(5);
 var extend_1 = __webpack_require__(15);
 var Config = (function () {
     function Config() {
@@ -914,7 +930,7 @@ var Config = (function () {
         this.tabIndex = -1;
         this.toolbar = true;
         this.showTooltip = true;
-        this.showTooltipDelay = 500;
+        this.showTooltipDelay = 300;
         this.useNativeTooltip = false;
         this.enter = consts.PARAGRAPH;
         this.enterBlock = consts.PARAGRAPH;
@@ -1198,7 +1214,8 @@ Config.prototype.controls = {
                 mywindow.close();
             }
         },
-        mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG
+        mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG,
+        tooltip: 'Print'
     },
     about: {
         exec: function (editor) {
@@ -1250,12 +1267,14 @@ Config.prototype.controls = {
                         ? current
                         : helpers_1.$$('img', current)[0];
             }
+            var selInfo = editor.selection.save();
             return FileSelectorWidget(editor, {
                 filebrowser: function (data) { return tslib_1.__awaiter(void 0, void 0, void 0, function () {
                     var i;
                     return tslib_1.__generator(this, function (_a) {
                         switch (_a.label) {
                             case 0:
+                                editor.selection.restore(selInfo);
                                 if (!(data.files && data.files.length)) return [3, 4];
                                 i = 0;
                                 _a.label = 1;
@@ -1280,6 +1299,7 @@ Config.prototype.controls = {
                     return tslib_1.__generator(this, function (_a) {
                         switch (_a.label) {
                             case 0:
+                                editor.selection.restore(selInfo);
                                 image = sourceImage || editor.create.inside.element('img');
                                 image.setAttribute('src', url);
                                 image.setAttribute('alt', text);
@@ -1406,15 +1426,15 @@ Config.prototype.controls = {
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(30), exports);
-tslib_1.__exportStar(__webpack_require__(5), exports);
+var tslib_1 = __webpack_require__(0);
+tslib_1.__exportStar(__webpack_require__(29), exports);
+tslib_1.__exportStar(__webpack_require__(6), exports);
 tslib_1.__exportStar(__webpack_require__(15), exports);
-tslib_1.__exportStar(__webpack_require__(34), exports);
+tslib_1.__exportStar(__webpack_require__(22), exports);
 tslib_1.__exportStar(__webpack_require__(94), exports);
-tslib_1.__exportStar(__webpack_require__(35), exports);
+tslib_1.__exportStar(__webpack_require__(34), exports);
+tslib_1.__exportStar(__webpack_require__(19), exports);
 tslib_1.__exportStar(__webpack_require__(20), exports);
-tslib_1.__exportStar(__webpack_require__(23), exports);
 tslib_1.__exportStar(__webpack_require__(9), exports);
 tslib_1.__exportStar(__webpack_require__(52), exports);
 tslib_1.__exportStar(__webpack_require__(114), exports);
@@ -1422,7 +1442,7 @@ tslib_1.__exportStar(__webpack_require__(115), exports);
 tslib_1.__exportStar(__webpack_require__(10), exports);
 tslib_1.__exportStar(__webpack_require__(55), exports);
 tslib_1.__exportStar(__webpack_require__(116), exports);
-tslib_1.__exportStar(__webpack_require__(37), exports);
+tslib_1.__exportStar(__webpack_require__(36), exports);
 tslib_1.__exportStar(__webpack_require__(24), exports);
 tslib_1.__exportStar(__webpack_require__(53), exports);
 tslib_1.__exportStar(__webpack_require__(117), exports);
@@ -1438,27 +1458,6 @@ tslib_1.__exportStar(__webpack_require__(119), exports);
 
 /***/ }),
 /* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
- * For GPL see LICENSE-GPL.txt in the project root for license information.
- * For MIT see LICENSE-MIT.txt in the project root for license information.
- * For commercial licenses see https://xdsoft.net/jodit/commercial/
- * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(43), exports);
-tslib_1.__exportStar(__webpack_require__(19), exports);
-tslib_1.__exportStar(__webpack_require__(86), exports);
-
-
-/***/ }),
-/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1497,6 +1496,27 @@ exports.ToolbarIcon = ToolbarIcon;
 
 
 /***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
+ * For GPL see LICENSE-GPL.txt in the project root for license information.
+ * For MIT see LICENSE-MIT.txt in the project root for license information.
+ * For commercial licenses see https://xdsoft.net/jodit/commercial/
+ * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = __webpack_require__(0);
+tslib_1.__exportStar(__webpack_require__(43), exports);
+tslib_1.__exportStar(__webpack_require__(30), exports);
+tslib_1.__exportStar(__webpack_require__(86), exports);
+
+
+/***/ }),
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1511,7 +1531,7 @@ exports.ToolbarIcon = ToolbarIcon;
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(0);
 var Component_1 = __webpack_require__(8);
 var Plugin = (function (_super) {
     tslib_1.__extends(Plugin, _super);
@@ -1527,6 +1547,7 @@ var Plugin = (function (_super) {
     Plugin.prototype.destruct = function () {
         var _a, _b;
         if (!this.isDestructed) {
+            this.setStatus('beforeDestruct');
             (_b = (_a = this.jodit) === null || _a === void 0 ? void 0 : _a.events) === null || _b === void 0 ? void 0 : _b.off('beforeDestruct', this.destruct);
             this.beforeDestruct(this.jodit);
             _super.prototype.destruct.call(this);
@@ -1555,7 +1576,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var isJoditObject_1 = __webpack_require__(12);
 var Component = (function () {
     function Component(jodit) {
-        this.__isDestructed = false;
+        this.__componentStatus = 'beforeInit';
         if (jodit && jodit instanceof Component) {
             this.jodit = jodit;
             if (isJoditObject_1.isJoditObject(jodit)) {
@@ -1563,18 +1584,39 @@ var Component = (function () {
             }
         }
     }
+    Object.defineProperty(Component.prototype, "componentStatus", {
+        get: function () {
+            return this.__componentStatus;
+        },
+        set: function (componentStatus) {
+            this.__componentStatus = componentStatus;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Component.prototype.setStatus = function (componentStatus) {
+        this.__componentStatus = componentStatus;
+    };
     Object.defineProperty(Component.prototype, "isDestructed", {
         get: function () {
-            return this.__isDestructed;
+            return this.componentStatus === 'destructed';
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Component.prototype, "isInDestruct", {
+        get: function () {
+            return ['beforeDestruct', 'destructed'].includes(this.componentStatus);
         },
         enumerable: true,
         configurable: true
     });
     Component.prototype.destruct = function () {
+        this.setStatus('beforeDestruct');
         if (this.jodit) {
             this.jodit = undefined;
         }
-        this.__isDestructed = true;
+        this.setStatus('destructed');
     };
     return Component;
 }());
@@ -1596,10 +1638,10 @@ exports.Component = Component;
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(0);
 tslib_1.__exportStar(__webpack_require__(49), exports);
 tslib_1.__exportStar(__webpack_require__(50), exports);
-tslib_1.__exportStar(__webpack_require__(36), exports);
+tslib_1.__exportStar(__webpack_require__(35), exports);
 tslib_1.__exportStar(__webpack_require__(97), exports);
 tslib_1.__exportStar(__webpack_require__(98), exports);
 
@@ -1620,7 +1662,7 @@ tslib_1.__exportStar(__webpack_require__(98), exports);
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var isPlainObject_1 = __webpack_require__(21);
-var isNumeric_1 = __webpack_require__(22);
+var isNumeric_1 = __webpack_require__(23);
 var normilizeCSSValue_1 = __webpack_require__(51);
 var camelCase_1 = __webpack_require__(49);
 var fromCamelCase_1 = __webpack_require__(50);
@@ -1693,10 +1735,10 @@ exports.clearCenterAlign = function (image) {
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(0);
 var Config_1 = __webpack_require__(3);
 var consts = __webpack_require__(2);
-var Dom_1 = __webpack_require__(0);
+var Dom_1 = __webpack_require__(1);
 var helpers_1 = __webpack_require__(4);
 var JoditArray_1 = __webpack_require__(32);
 var JoditObject_1 = __webpack_require__(31);
@@ -1804,30 +1846,46 @@ var Jodit = (function (_super) {
         _this.workplace.appendChild(_this.editor);
         _this.setNativeEditorValue(_this.getElementValue());
         (function () { return tslib_1.__awaiter(_this, void 0, void 0, function () {
-            var e_1, opt;
-            return tslib_1.__generator(this, function (_a) {
-                switch (_a.label) {
+            var _a, _b, e_1, _c, opt;
+            return tslib_1.__generator(this, function (_d) {
+                switch (_d.label) {
                     case 0: return [4, this.beforeInitHook()];
                     case 1:
-                        _a.sent();
+                        _d.sent();
+                        _a = !this.isInDestruct;
+                        if (!_a) return [3, 3];
                         return [4, this.events.fire('beforeInit', this)];
                     case 2:
-                        _a.sent();
-                        _a.label = 3;
+                        _a = (_d.sent());
+                        _d.label = 3;
                     case 3:
-                        _a.trys.push([3, 5, , 6]);
-                        return [4, Jodit.plugins.init(this)];
+                        _a;
+                        _d.label = 4;
                     case 4:
-                        _a.sent();
-                        return [3, 6];
+                        _d.trys.push([4, 7, , 8]);
+                        _b = !this.isInDestruct;
+                        if (!_b) return [3, 6];
+                        return [4, Jodit.plugins.init(this)];
                     case 5:
-                        e_1 = _a.sent();
-                        console.error(e_1);
-                        return [3, 6];
-                    case 6: return [4, this.__initEditor(buffer)];
+                        _b = (_d.sent());
+                        _d.label = 6;
+                    case 6:
+                        _b;
+                        return [3, 8];
                     case 7:
-                        _a.sent();
-                        if (this.isDestructed) {
+                        e_1 = _d.sent();
+                        console.error(e_1);
+                        return [3, 8];
+                    case 8:
+                        _c = !this.isInDestruct;
+                        if (!_c) return [3, 10];
+                        return [4, this.__initEditor(buffer)];
+                    case 9:
+                        _c = (_d.sent());
+                        _d.label = 10;
+                    case 10:
+                        _c;
+                        if (this.isInDestruct) {
                             return [2];
                         }
                         opt = this.options;
@@ -1837,15 +1895,15 @@ var Jodit = (function (_super) {
                             this.uploader.bind(this.editor);
                         }
                         this.isInited = true;
-                        if (!this.events) return [3, 9];
+                        if (!this.events) return [3, 12];
                         return [4, this.events.fire('afterInit', this)];
-                    case 8:
-                        _a.sent();
+                    case 11:
+                        _d.sent();
                         this.events.fire('afterConstructor', this);
-                        _a.label = 9;
-                    case 9: return [4, this.afterInitHook()];
-                    case 10:
-                        _a.sent();
+                        _d.label = 12;
+                    case 12: return [4, this.afterInitHook()];
+                    case 13:
+                        _d.sent();
                         return [2];
                 }
             });
@@ -1950,11 +2008,11 @@ var Jodit = (function (_super) {
     };
     Jodit.prototype.getEditorText = function () {
         if (this.editor) {
-            return this.editor.textContent || '';
+            return this.editor.innerText || '';
         }
         var div = this.create.inside.div();
         div.innerHTML = this.getElementValue();
-        return div.textContent || '';
+        return div.innerText || '';
     };
     Jodit.prototype.setElementValue = function (value) {
         if (typeof value !== 'string' && value !== undefined) {
@@ -2259,7 +2317,7 @@ var Jodit = (function (_super) {
                     case 0: return [4, this.__createEditor()];
                     case 1:
                         _a.sent();
-                        if (this.isDestructed) {
+                        if (this.isInDestruct) {
                             return [2];
                         }
                         if (this.element !== this.container) {
@@ -2311,7 +2369,7 @@ var Jodit = (function (_super) {
                         return [4, this.events.fire('createEditor', this)];
                     case 1:
                         stayDefault = _a.sent();
-                        if (this.isDestructed) {
+                        if (this.isInDestruct) {
                             return [2];
                         }
                         if (stayDefault === false) {
@@ -2363,9 +2421,11 @@ var Jodit = (function (_super) {
         });
     };
     Jodit.prototype.destruct = function () {
-        if (this.isDestructed) {
+        if (this.isInDestruct) {
             return;
         }
+        this.setStatus('beforeDestruct');
+        this.async.clear();
         if (this.events.fire('beforeDestruct') === false) {
             return;
         }
@@ -2406,7 +2466,7 @@ var Jodit = (function (_super) {
         this.components.forEach(function (component) {
             if (component.destruct !== undefined &&
                 typeof component.destruct === 'function' &&
-                !component.isDestructed) {
+                !component.isInDestruct) {
                 component.destruct();
             }
         });
@@ -2489,14 +2549,19 @@ var Jodit_1 = __webpack_require__(11);
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var constants_1 = __webpack_require__(2);
-var $$temp = 1;
+var checker_1 = __webpack_require__(22);
+var temp = 1;
+var $$temp = function () {
+    temp++;
+    return temp;
+};
 exports.$$ = function (selector, root) {
     var result;
     if (/:scope/.test(selector) &&
         constants_1.IS_IE &&
         !(root && root.nodeType === Node.DOCUMENT_NODE)) {
         var id = root.id, temp_id = id ||
-            '_selector_id_' + ('' + Math.random()).slice(2) + $$temp++;
+            '_selector_id_' + ('' + Math.random()).slice(2) + $$temp();
         selector = selector.replace(/:scope/g, '#' + temp_id);
         !id && root.setAttribute('id', temp_id);
         result = root.parentNode.querySelectorAll(selector);
@@ -2527,6 +2592,15 @@ exports.getXPathByElement = function (element, root) {
             ? '[' + (Array.from(sames).indexOf(element) + 1) + ']'
             : ''));
 };
+exports.refs = function (root) {
+    return exports.$$('[ref]', root).reduce(function (def, child) {
+        var key = child.getAttribute('ref');
+        if (key && checker_1.isString(key)) {
+            def[key] = child;
+        }
+        return def;
+    }, {});
+};
 
 
 /***/ }),
@@ -2546,7 +2620,7 @@ exports.getXPathByElement = function (element, root) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var dialog_1 = __webpack_require__(17);
 exports.Dialog = dialog_1.Dialog;
-var alert_1 = __webpack_require__(187);
+var alert_1 = __webpack_require__(189);
 exports.Alert = alert_1.Alert;
 var promt_1 = __webpack_require__(73);
 exports.Promt = promt_1.Promt;
@@ -2643,9 +2717,9 @@ exports.extend = extend;
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
-var collection_1 = __webpack_require__(38);
-var Dom_1 = __webpack_require__(0);
+var tslib_1 = __webpack_require__(0);
+var collection_1 = __webpack_require__(37);
+var Dom_1 = __webpack_require__(1);
 var css_1 = __webpack_require__(10);
 var consts = __webpack_require__(2);
 var isJoditObject_1 = __webpack_require__(12);
@@ -2759,12 +2833,12 @@ exports.JoditToolbarCollection = JoditToolbarCollection;
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(0);
 var Config_1 = __webpack_require__(3);
 var constants_1 = __webpack_require__(2);
 var helpers_1 = __webpack_require__(4);
 var view_1 = __webpack_require__(64);
-var Dom_1 = __webpack_require__(0);
+var Dom_1 = __webpack_require__(1);
 var isJoditObject_1 = __webpack_require__(12);
 Config_1.Config.prototype.dialog = {
     resizable: true,
@@ -3153,9 +3227,9 @@ var plugins_1 = __webpack_require__(69);
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var Dom_1 = __webpack_require__(0);
+var Dom_1 = __webpack_require__(1);
 var helpers_1 = __webpack_require__(4);
-var icon_1 = __webpack_require__(6);
+var icon_1 = __webpack_require__(5);
 var Widget;
 (function (Widget) {
     Widget.ColorPickerWidget = function (editor, callback, coldColor) {
@@ -3352,11 +3426,7 @@ var Widget;
             editor.getInstance('Uploader').bind(dragbox, function (resp) {
                 var handler = helpers_1.isFunction(callbacks.upload) ? callbacks.upload : editor.options.uploader.defaultHandlerSuccess;
                 if (typeof handler === 'function') {
-                    handler.call(editor, {
-                        baseurl: resp.baseurl,
-                        files: resp.files,
-                        isImages: resp.isImages,
-                    });
+                    handler.call(editor, resp);
                 }
             }, function (error) {
                 editor.events.fire('errorMessage', error.message);
@@ -3436,15 +3506,16 @@ var Widget;
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.setTimeout = function (callback, timeout, a1, a2, a3) {
-    if (!timeout) {
-        callback.call(null, a1, a2, a3);
-    }
-    else {
-        return window.setTimeout.call(window, callback, timeout, a1, a2, a3);
-    }
-    return 0;
-};
+var tslib_1 = __webpack_require__(0);
+tslib_1.__exportStar(__webpack_require__(103), exports);
+tslib_1.__exportStar(__webpack_require__(104), exports);
+tslib_1.__exportStar(__webpack_require__(105), exports);
+tslib_1.__exportStar(__webpack_require__(106), exports);
+tslib_1.__exportStar(__webpack_require__(107), exports);
+tslib_1.__exportStar(__webpack_require__(108), exports);
+tslib_1.__exportStar(__webpack_require__(109), exports);
+tslib_1.__exportStar(__webpack_require__(51), exports);
+tslib_1.__exportStar(__webpack_require__(110), exports);
 
 
 /***/ }),
@@ -3462,16 +3533,10 @@ exports.setTimeout = function (callback, timeout, a1, a2, a3) {
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(103), exports);
-tslib_1.__exportStar(__webpack_require__(104), exports);
-tslib_1.__exportStar(__webpack_require__(105), exports);
-tslib_1.__exportStar(__webpack_require__(106), exports);
-tslib_1.__exportStar(__webpack_require__(107), exports);
-tslib_1.__exportStar(__webpack_require__(108), exports);
-tslib_1.__exportStar(__webpack_require__(109), exports);
-tslib_1.__exportStar(__webpack_require__(51), exports);
-tslib_1.__exportStar(__webpack_require__(110), exports);
+var tslib_1 = __webpack_require__(0);
+tslib_1.__exportStar(__webpack_require__(111), exports);
+tslib_1.__exportStar(__webpack_require__(112), exports);
+tslib_1.__exportStar(__webpack_require__(113), exports);
 
 
 /***/ }),
@@ -3515,15 +3580,21 @@ exports.isPlainObject = function (obj) {
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isNumeric = function (value) {
-    if (typeof value === 'string') {
-        if (!value.match(/^([+\-])?[0-9]+(\.?)([0-9]+)?(e[0-9]+)?$/)) {
-            return false;
-        }
-        value = parseFloat(value);
-    }
-    return !isNaN(value) && isFinite(value);
-};
+var tslib_1 = __webpack_require__(0);
+tslib_1.__exportStar(__webpack_require__(87), exports);
+tslib_1.__exportStar(__webpack_require__(45), exports);
+tslib_1.__exportStar(__webpack_require__(88), exports);
+tslib_1.__exportStar(__webpack_require__(89), exports);
+tslib_1.__exportStar(__webpack_require__(90), exports);
+tslib_1.__exportStar(__webpack_require__(91), exports);
+tslib_1.__exportStar(__webpack_require__(12), exports);
+tslib_1.__exportStar(__webpack_require__(92), exports);
+tslib_1.__exportStar(__webpack_require__(23), exports);
+tslib_1.__exportStar(__webpack_require__(21), exports);
+tslib_1.__exportStar(__webpack_require__(93), exports);
+tslib_1.__exportStar(__webpack_require__(46), exports);
+tslib_1.__exportStar(__webpack_require__(47), exports);
+tslib_1.__exportStar(__webpack_require__(44), exports);
 
 
 /***/ }),
@@ -3541,10 +3612,15 @@ exports.isNumeric = function (value) {
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(111), exports);
-tslib_1.__exportStar(__webpack_require__(112), exports);
-tslib_1.__exportStar(__webpack_require__(113), exports);
+exports.isNumeric = function (value) {
+    if (typeof value === 'string') {
+        if (!value.match(/^([+\-])?[0-9]+(\.?)([0-9]+)?(e[0-9]+)?$/)) {
+            return false;
+        }
+        value = parseFloat(value);
+    }
+    return !isNaN(value) && isFinite(value);
+};
 
 
 /***/ }),
@@ -3655,101 +3731,15 @@ exports.Storage = Storage;
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
-var Component_1 = __webpack_require__(8);
-var collection_1 = __webpack_require__(38);
-var icon_1 = __webpack_require__(6);
-var Dom_1 = __webpack_require__(0);
-var string_1 = __webpack_require__(9);
-var ToolbarElement = (function (_super) {
-    tslib_1.__extends(ToolbarElement, _super);
-    function ToolbarElement(parentToolbarOrView, containerTag, containerClass) {
-        if (containerTag === void 0) { containerTag = 'li'; }
-        if (containerClass === void 0) { containerClass = 'jodit_toolbar_btn'; }
-        var _this = this;
-        if (parentToolbarOrView instanceof collection_1.ToolbarCollection) {
-            _this = _super.call(this, parentToolbarOrView.jodit) || this;
-            _this.parentToolbar = parentToolbarOrView;
-        }
-        else {
-            _this = _super.call(this, parentToolbarOrView) || this;
-        }
-        _this.container = _this.jodit.create.element(containerTag);
-        _this.container.classList.add(containerClass);
-        return _this;
-    }
-    ToolbarElement.prototype.focus = function () {
-        this.container.focus();
-    };
-    ToolbarElement.prototype.destruct = function () {
-        if (this.isDestructed) {
-            return;
-        }
-        Dom_1.Dom.safeRemove(this.container);
-        this.parentToolbar = undefined;
-        _super.prototype.destruct.call(this);
-    };
-    ToolbarElement.prototype.createIcon = function (clearName, control) {
-        var icon = control ? control.icon || control.name : clearName;
-        if (!this.jodit.options.textIcons) {
-            var iconSVG = this.jodit.events.fire('getIcon', icon, control, clearName);
-            var iconElement = void 0;
-            if (control && control.iconURL && iconSVG === undefined) {
-                iconElement = this.jodit.create.element('i');
-                iconElement.style.backgroundImage =
-                    'url(' +
-                        control.iconURL.replace('{basePath}', this.jodit.basePath) +
-                        ')';
-            }
-            else {
-                if (iconSVG === undefined) {
-                    if (icon_1.ToolbarIcon.exists(icon)) {
-                        iconSVG = icon_1.ToolbarIcon.getIcon(icon);
-                    }
-                    else {
-                        iconSVG = icon_1.ToolbarIcon.getIcon('empty');
-                    }
-                }
-                iconElement =
-                    typeof iconSVG === 'string'
-                        ? this.jodit.create.fromHTML(string_1.trim(iconSVG))
-                        : iconSVG;
-            }
-            iconElement.classList.add('jodit_icon', 'jodit_icon_' + clearName);
-            return iconElement;
-        }
-        return this.jodit.create.fromHTML("<span class=\"jodit_icon\">" + this.jodit.i18n(control ? control.name : clearName) + "</span>");
-    };
-    return ToolbarElement;
-}(Component_1.Component));
-exports.ToolbarElement = ToolbarElement;
-
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
- * For GPL see LICENSE-GPL.txt in the project root for license information.
- * For MIT see LICENSE-MIT.txt in the project root for license information.
- * For commercial licenses see https://xdsoft.net/jodit/commercial/
- * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
-var Dom_1 = __webpack_require__(0);
+var tslib_1 = __webpack_require__(0);
+var Dom_1 = __webpack_require__(1);
 var helpers_1 = __webpack_require__(4);
-var element_1 = __webpack_require__(26);
-var list_1 = __webpack_require__(126);
-var popup_1 = __webpack_require__(28);
-var tooltip_1 = __webpack_require__(127);
+var element_1 = __webpack_require__(38);
+var list_1 = __webpack_require__(127);
+var popup_1 = __webpack_require__(27);
 var isJoditObject_1 = __webpack_require__(12);
 var constants_1 = __webpack_require__(2);
-var icon_1 = __webpack_require__(6);
+var icon_1 = __webpack_require__(5);
 var ToolbarButton = (function (_super) {
     tslib_1.__extends(ToolbarButton, _super);
     function ToolbarButton(parentToolbarOrView, control, target) {
@@ -3757,7 +3747,9 @@ var ToolbarButton = (function (_super) {
         _this.__disabled = false;
         _this.__actived = false;
         _this.onMouseDown = function (originalEvent) {
-            if (originalEvent.type === 'keydown' && originalEvent.which !== constants_1.KEY_ENTER) {
+            var _a, _b;
+            if (originalEvent.type === 'keydown' &&
+                originalEvent.which !== constants_1.KEY_ENTER) {
                 return;
             }
             originalEvent.stopImmediatePropagation();
@@ -3779,15 +3771,18 @@ var ToolbarButton = (function (_super) {
                     _this.anchor.setAttribute('aria-expanded', 'false');
                 });
             }
-            else if (control.exec !== undefined && typeof control.exec === 'function') {
-                control.exec(_this.jodit, getTarget(), control, originalEvent, _this.container);
-                _this.jodit.events.fire('synchro');
+            else if (control.exec !== undefined &&
+                typeof control.exec === 'function') {
+                control.exec(_this.jodit, getTarget(), control, originalEvent, _this
+                    .container);
+                (_a = _this.jodit) === null || _a === void 0 ? void 0 : _a.events.fire('synchro');
                 if (_this.parentToolbar) {
                     _this.parentToolbar.immediateCheckActiveButtons();
                 }
-                _this.jodit.events.fire('closeAllPopups afterExec');
+                (_b = _this.jodit) === null || _b === void 0 ? void 0 : _b.events.fire('closeAllPopups afterExec');
             }
-            else if (control.popup !== undefined && typeof control.popup === 'function') {
+            else if (control.popup !== undefined &&
+                typeof control.popup === 'function') {
                 var popup = new popup_1.Popup(_this.jodit, _this.container, _this.target);
                 if (_this.jodit.events.fire(helpers_1.camelCase("before-" + control.name + "-OpenPopup"), getTarget(), control, popup) !== false) {
                     var popupElm = control.popup(_this.jodit, getTarget(), control, popup.close, _this);
@@ -3813,8 +3808,8 @@ var ToolbarButton = (function (_super) {
         _this.control = control;
         _this.target = target;
         _this.anchor = _this.jodit.create.element('a', {
-            "role": "button",
-            "href": "javascript:void(0)"
+            role: 'button',
+            href: 'javascript:void(0)'
         });
         var tabIndex = '-1';
         if (_this.jodit.options.allowTabNavigation) {
@@ -3824,7 +3819,23 @@ var ToolbarButton = (function (_super) {
         _this.container.appendChild(_this.anchor);
         if (_this.jodit.options.showTooltip && control.tooltip) {
             if (!_this.jodit.options.useNativeTooltip) {
-                _this.tooltip = new tooltip_1.ToolbarTooltip(_this);
+                var to_1 = _this.jodit.options.showTooltipDelay ||
+                    _this.jodit.defaultTimeout;
+                var timeout_1 = 0;
+                _this.jodit.events
+                    .on(_this.anchor, 'mouseenter', function () {
+                    timeout_1 = _this.jodit.async.setTimeout(function () {
+                        return !_this.isDisable() &&
+                            _this.jodit.events.fire('showTooltip', _this.anchor, _this.tooltipText);
+                    }, {
+                        timeout: to_1,
+                        label: 'tooltip'
+                    });
+                })
+                    .on(_this.anchor, 'mouseleave', function () {
+                    _this.jodit.async.clearTimeout(timeout_1);
+                    _this.jodit.events.fire('hideTooltip');
+                });
             }
             else {
                 _this.anchor.setAttribute('title', _this.tooltipText);
@@ -3853,7 +3864,8 @@ var ToolbarButton = (function (_super) {
         _this.container.classList.add('jodit_toolbar_btn-' + clearName);
         if (_this.jodit.options.direction) {
             var direction = _this.jodit.options.direction.toLowerCase();
-            _this.container.style.direction = direction === 'rtl' ? 'rtl' : 'ltr';
+            _this.container.style.direction =
+                direction === 'rtl' ? 'rtl' : 'ltr';
         }
         if (control.isInput) {
             _this.container.classList.add('jodit_toolbar-input');
@@ -3908,8 +3920,10 @@ var ToolbarButton = (function (_super) {
             if (!this.control.tooltip) {
                 return '';
             }
-            return this.jodit.i18n(this.control.tooltip) +
-                (this.control.hotkeys ? '<br>' + helpers_1.asArray(this.control.hotkeys).join(' ') : '');
+            return (this.jodit.i18n(this.control.tooltip) +
+                (this.control.hotkeys
+                    ? '<br>' + helpers_1.asArray(this.control.hotkeys).join(' ')
+                    : ''));
         },
         enumerable: true,
         configurable: true
@@ -3923,12 +3937,9 @@ var ToolbarButton = (function (_super) {
         }
         this.jodit &&
             this.jodit.events &&
+            this.jodit.events.off(this.anchor) &&
             this.jodit.events.off(this.container);
         _super.prototype.destruct.call(this);
-        if (this.tooltip) {
-            this.tooltip.destruct();
-            delete this.tooltip;
-        }
     };
     return ToolbarButton;
 }(element_1.ToolbarElement));
@@ -3936,7 +3947,7 @@ exports.ToolbarButton = ToolbarButton;
 
 
 /***/ }),
-/* 28 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3947,8 +3958,8 @@ exports.ToolbarButton = ToolbarButton;
  * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
-var Dom_1 = __webpack_require__(0);
+var tslib_1 = __webpack_require__(0);
+var Dom_1 = __webpack_require__(1);
 var helpers_1 = __webpack_require__(4);
 var Component_1 = __webpack_require__(8);
 var Popup = (function (_super) {
@@ -3987,7 +3998,7 @@ var Popup = (function (_super) {
         return _this;
     }
     Popup.prototype.calcPosition = function () {
-        if (!this.isOpened || this.isDestructed) {
+        if (!this.isOpened || this.isInDestruct) {
             return;
         }
         var popup = this.container;
@@ -4065,6 +4076,7 @@ var Popup = (function (_super) {
         if (this.isDestructed) {
             return;
         }
+        this.setStatus('beforeDestruct');
         this.jodit.events.off([this.jodit.ownerWindow, this.jodit.events], 'resize', this.throttleCalcPosition);
         Dom_1.Dom.safeRemove(this.container);
         delete this.container;
@@ -4077,7 +4089,7 @@ var Jodit_1 = __webpack_require__(11);
 
 
 /***/ }),
-/* 29 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4092,7 +4104,7 @@ var Jodit_1 = __webpack_require__(11);
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var consts = __webpack_require__(2);
-var Dom_1 = __webpack_require__(0);
+var Dom_1 = __webpack_require__(1);
 var helpers_1 = __webpack_require__(4);
 var Table = (function () {
     function Table() {
@@ -4612,7 +4624,7 @@ exports.Table = Table;
 
 
 /***/ }),
-/* 30 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4632,6 +4644,42 @@ var inArray_1 = __webpack_require__(84);
 exports.inArray = inArray_1.inArray;
 var splitArray_1 = __webpack_require__(85);
 exports.splitArray = splitArray_1.splitArray;
+
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
+ * For GPL see LICENSE-GPL.txt in the project root for license information.
+ * For MIT see LICENSE-MIT.txt in the project root for license information.
+ * For commercial licenses see https://xdsoft.net/jodit/commercial/
+ * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = __webpack_require__(0);
+function setTimeout(callback, timeout) {
+    var args = [];
+    for (var _i = 2; _i < arguments.length; _i++) {
+        args[_i - 2] = arguments[_i];
+    }
+    if (!timeout) {
+        callback.call.apply(callback, tslib_1.__spreadArrays([null], args));
+    }
+    else {
+        return window.setTimeout.apply(window, tslib_1.__spreadArrays([callback, timeout], args));
+    }
+    return 0;
+}
+exports.setTimeout = setTimeout;
+function clearTimeout(timer) {
+    window.clearTimeout(timer);
+}
+exports.clearTimeout = clearTimeout;
 
 
 /***/ }),
@@ -4773,39 +4821,7 @@ exports.type = function (obj) {
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(87), exports);
-tslib_1.__exportStar(__webpack_require__(45), exports);
-tslib_1.__exportStar(__webpack_require__(88), exports);
-tslib_1.__exportStar(__webpack_require__(89), exports);
-tslib_1.__exportStar(__webpack_require__(90), exports);
-tslib_1.__exportStar(__webpack_require__(91), exports);
-tslib_1.__exportStar(__webpack_require__(12), exports);
-tslib_1.__exportStar(__webpack_require__(92), exports);
-tslib_1.__exportStar(__webpack_require__(22), exports);
-tslib_1.__exportStar(__webpack_require__(21), exports);
-tslib_1.__exportStar(__webpack_require__(93), exports);
-tslib_1.__exportStar(__webpack_require__(46), exports);
-tslib_1.__exportStar(__webpack_require__(47), exports);
-tslib_1.__exportStar(__webpack_require__(44), exports);
-
-
-/***/ }),
-/* 35 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
- * For GPL see LICENSE-GPL.txt in the project root for license information.
- * For MIT see LICENSE-MIT.txt in the project root for license information.
- * For commercial licenses see https://xdsoft.net/jodit/commercial/
- * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(0);
 tslib_1.__exportStar(__webpack_require__(96), exports);
 tslib_1.__exportStar(__webpack_require__(99), exports);
 tslib_1.__exportStar(__webpack_require__(100), exports);
@@ -4814,7 +4830,7 @@ tslib_1.__exportStar(__webpack_require__(102), exports);
 
 
 /***/ }),
-/* 36 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4837,7 +4853,7 @@ exports.trim = function (value) {
 
 
 /***/ }),
-/* 37 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4867,7 +4883,7 @@ exports.defaultLanguage = function (language, defaultLanguage) {
 
 
 /***/ }),
-/* 38 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4881,12 +4897,12 @@ exports.defaultLanguage = function (language, defaultLanguage) {
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
-var async_1 = __webpack_require__(5);
-var break_1 = __webpack_require__(125);
-var button_1 = __webpack_require__(27);
+var tslib_1 = __webpack_require__(0);
+var async_1 = __webpack_require__(6);
+var break_1 = __webpack_require__(126);
+var button_1 = __webpack_require__(26);
 var separator_1 = __webpack_require__(128);
-var Dom_1 = __webpack_require__(0);
+var Dom_1 = __webpack_require__(1);
 var Component_1 = __webpack_require__(8);
 var Config_1 = __webpack_require__(3);
 var isJoditObject_1 = __webpack_require__(12);
@@ -5085,6 +5101,92 @@ exports.ToolbarCollection = ToolbarCollection;
 
 
 /***/ }),
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
+ * For GPL see LICENSE-GPL.txt in the project root for license information.
+ * For MIT see LICENSE-MIT.txt in the project root for license information.
+ * For commercial licenses see https://xdsoft.net/jodit/commercial/
+ * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = __webpack_require__(0);
+var Component_1 = __webpack_require__(8);
+var collection_1 = __webpack_require__(37);
+var icon_1 = __webpack_require__(5);
+var Dom_1 = __webpack_require__(1);
+var string_1 = __webpack_require__(9);
+var ToolbarElement = (function (_super) {
+    tslib_1.__extends(ToolbarElement, _super);
+    function ToolbarElement(parentToolbarOrView, containerTag, containerClass) {
+        if (containerTag === void 0) { containerTag = 'li'; }
+        if (containerClass === void 0) { containerClass = 'jodit_toolbar_btn'; }
+        var _this = this;
+        if (parentToolbarOrView instanceof collection_1.ToolbarCollection) {
+            _this = _super.call(this, parentToolbarOrView.jodit) || this;
+            _this.parentToolbar = parentToolbarOrView;
+        }
+        else {
+            _this = _super.call(this, parentToolbarOrView) || this;
+        }
+        _this.container = _this.jodit.create.element(containerTag);
+        _this.container.classList.add(containerClass);
+        return _this;
+    }
+    ToolbarElement.prototype.focus = function () {
+        this.container.focus();
+    };
+    ToolbarElement.prototype.destruct = function () {
+        if (this.isInDestruct) {
+            return;
+        }
+        this.setStatus('beforeDestruct');
+        Dom_1.Dom.safeRemove(this.container);
+        this.parentToolbar = undefined;
+        _super.prototype.destruct.call(this);
+    };
+    ToolbarElement.prototype.createIcon = function (clearName, control) {
+        var icon = control ? control.icon || control.name : clearName;
+        if (!this.jodit.options.textIcons) {
+            var iconSVG = this.jodit.events.fire('getIcon', icon, control, clearName);
+            var iconElement = void 0;
+            if (control && control.iconURL && iconSVG === undefined) {
+                iconElement = this.jodit.create.element('i');
+                iconElement.style.backgroundImage =
+                    'url(' +
+                        control.iconURL.replace('{basePath}', this.jodit.basePath) +
+                        ')';
+            }
+            else {
+                if (iconSVG === undefined) {
+                    if (icon_1.ToolbarIcon.exists(icon)) {
+                        iconSVG = icon_1.ToolbarIcon.getIcon(icon);
+                    }
+                    else {
+                        iconSVG = icon_1.ToolbarIcon.getIcon('empty');
+                    }
+                }
+                iconElement =
+                    typeof iconSVG === 'string'
+                        ? this.jodit.create.fromHTML(string_1.trim(iconSVG))
+                        : iconSVG;
+            }
+            iconElement.classList.add('jodit_icon', 'jodit_icon_' + clearName);
+            return iconElement;
+        }
+        return this.jodit.create.fromHTML("<span class=\"jodit_icon\">" + this.jodit.i18n(control ? control.name : clearName) + "</span>");
+    };
+    return ToolbarElement;
+}(Component_1.Component));
+exports.ToolbarElement = ToolbarElement;
+
+
+/***/ }),
 /* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5099,7 +5201,7 @@ exports.ToolbarCollection = ToolbarCollection;
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(0);
 var Config_1 = __webpack_require__(3);
 var helpers_1 = __webpack_require__(4);
 var buildQuery_1 = __webpack_require__(56);
@@ -5258,11 +5360,11 @@ exports.Ajax = Ajax;
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(0);
 var Component_1 = __webpack_require__(8);
 var css_1 = __webpack_require__(10);
-var icon_1 = __webpack_require__(6);
-var Dom_1 = __webpack_require__(0);
+var icon_1 = __webpack_require__(5);
+var Dom_1 = __webpack_require__(1);
 var ContextMenu = (function (_super) {
     tslib_1.__extends(ContextMenu, _super);
     function ContextMenu(editor) {
@@ -5312,6 +5414,7 @@ var ContextMenu = (function (_super) {
         this.context.classList.add('jodit_context_menu-show');
     };
     ContextMenu.prototype.destruct = function () {
+        this.setStatus('beforeDestruct');
         Dom_1.Dom.safeRemove(this.context);
         delete this.context;
         this.jodit.events.off(this.jodit.ownerWindow, 'mouseup', this.hide);
@@ -5359,7 +5462,7 @@ exports.asArray = function (a) { return (Array.isArray(a) ? a : [a]); };
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var setTimeout_1 = __webpack_require__(19);
+var setTimeout_1 = __webpack_require__(30);
 exports.debounce = function (fn, timeout, invokeAsap, ctx) {
     if (arguments.length === 3 && typeof invokeAsap !== 'boolean') {
         ctx = invokeAsap;
@@ -5373,7 +5476,7 @@ exports.debounce = function (fn, timeout, invokeAsap, ctx) {
             fn.apply(context, args);
         }
         if (timeout) {
-            clearTimeout(timer);
+            setTimeout_1.clearTimeout(timer);
             timer = setTimeout_1.setTimeout(function () {
                 if (!invokeAsap) {
                     fn.apply(context, args);
@@ -5579,7 +5682,7 @@ exports.fromCamelCase = function (key) {
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var isNumeric_1 = __webpack_require__(22);
+var isNumeric_1 = __webpack_require__(23);
 exports.normilizeCSSValue = function (key, value) {
     switch (key.toLowerCase()) {
         case 'font-weight':
@@ -5752,7 +5855,7 @@ exports.ctrlKey = function (e) {
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var checker_1 = __webpack_require__(34);
+var checker_1 = __webpack_require__(22);
 exports.buildQuery = function (data, prefix) {
     var str = [];
     var enc = encodeURIComponent;
@@ -5782,10 +5885,10 @@ exports.buildQuery = function (data, prefix) {
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(0);
 var Config_1 = __webpack_require__(3);
 var Component_1 = __webpack_require__(8);
-var async_1 = __webpack_require__(5);
+var async_1 = __webpack_require__(6);
 var Snapshot_1 = __webpack_require__(58);
 var Stack_1 = __webpack_require__(59);
 var command_1 = __webpack_require__(120);
@@ -5879,9 +5982,9 @@ exports.Observer = Observer;
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(0);
 var Component_1 = __webpack_require__(8);
-var Dom_1 = __webpack_require__(0);
+var Dom_1 = __webpack_require__(1);
 var Snapshot = (function (_super) {
     tslib_1.__extends(Snapshot, _super);
     function Snapshot() {
@@ -5991,6 +6094,7 @@ var Snapshot = (function (_super) {
             }
         }
         catch (__ignore) {
+            this.jodit.editor.lastChild && this.jodit.selection.setCursorAfter(this.jodit.editor.lastChild);
             if (false) {}
         }
         this.isBlocked = false;
@@ -6084,11 +6188,11 @@ exports.Stack = Stack;
 Object.defineProperty(exports, "__esModule", { value: true });
 var consts = __webpack_require__(2);
 var constants_1 = __webpack_require__(2);
-var Dom_1 = __webpack_require__(0);
+var Dom_1 = __webpack_require__(1);
 var css_1 = __webpack_require__(10);
-var normalize_1 = __webpack_require__(20);
+var normalize_1 = __webpack_require__(19);
 var selector_1 = __webpack_require__(13);
-var checker_1 = __webpack_require__(34);
+var checker_1 = __webpack_require__(22);
 var each_1 = __webpack_require__(24);
 var string_1 = __webpack_require__(9);
 var Select = (function () {
@@ -7023,7 +7127,7 @@ exports.MemoryStorageProvider = MemoryStorageProvider;
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(0);
 var view_1 = __webpack_require__(64);
 var ViewWithToolbar = (function (_super) {
     tslib_1.__extends(ViewWithToolbar, _super);
@@ -7033,6 +7137,7 @@ var ViewWithToolbar = (function (_super) {
         return _this;
     }
     ViewWithToolbar.prototype.destruct = function () {
+        this.setStatus('beforeDestruct');
         this.toolbar.destruct();
         delete this.toolbar;
         _super.prototype.destruct.call(this);
@@ -7058,7 +7163,7 @@ var joditToolbarCollection_1 = __webpack_require__(16);
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(0);
 var eventsNative_1 = __webpack_require__(65);
 var panel_1 = __webpack_require__(123);
 var storage_1 = __webpack_require__(124);
@@ -7067,7 +7172,8 @@ var View = (function (_super) {
     tslib_1.__extends(View, _super);
     function View(jodit, options) {
         var _this = _super.call(this, jodit) || this;
-        _this.version = "3.3.10";
+        _this.components = [];
+        _this.version = "3.3.12";
         _this.__modulesInstances = {};
         _this.buffer = storage_1.Storage.makeStorage();
         _this.progress_bar = _this.create.div('jodit_progress_bar', _this.create.div());
@@ -7080,7 +7186,7 @@ var View = (function (_super) {
             buttons: [],
             globalFullsize: true
         };
-        _this.components = [];
+        _this.async = new Async_1.Async();
         _this.getVersion = function () {
             return _this.version;
         };
@@ -7139,9 +7245,17 @@ var View = (function (_super) {
         if (this.isDestructed) {
             return;
         }
+        if (this.async) {
+            this.async.destruct();
+            delete this.async;
+        }
         if (this.events) {
             this.events.destruct();
             delete this.events;
+        }
+        if (this.async) {
+            this.async.destruct();
+            delete this.async;
         }
         delete this.options;
         _super.prototype.destruct.call(this);
@@ -7151,6 +7265,7 @@ var View = (function (_super) {
 exports.View = View;
 var Jodit_1 = __webpack_require__(11);
 var constants_1 = __webpack_require__(2);
+var Async_1 = __webpack_require__(125);
 
 
 /***/ }),
@@ -7165,7 +7280,7 @@ var constants_1 = __webpack_require__(2);
  * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(0);
 var store_1 = __webpack_require__(122);
 var EventsNative = (function () {
     function EventsNative(doc) {
@@ -7535,7 +7650,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var isPlainObject_1 = __webpack_require__(21);
 var each_1 = __webpack_require__(24);
 var asArray_1 = __webpack_require__(42);
-var Dom_1 = __webpack_require__(0);
+var Dom_1 = __webpack_require__(1);
 var helpers_1 = __webpack_require__(4);
 var Create = (function () {
     function Create(ownerDocument, editorDocument) {
@@ -7601,13 +7716,22 @@ var Create = (function () {
     Create.prototype.fragment = function () {
         return this.doc.createDocumentFragment();
     };
-    Create.prototype.fromHTML = function (html) {
+    Create.prototype.fromHTML = function (html, refsToggleElement) {
         var div = this.div();
         div.innerHTML = html.toString();
         var child = div.firstChild !== div.lastChild || !div.firstChild
             ? div
             : div.firstChild;
         Dom_1.Dom.safeRemove(child);
+        if (refsToggleElement) {
+            var refElements_1 = helpers_1.refs(child);
+            Object.keys(refsToggleElement).forEach(function (key) {
+                var elm = refElements_1[key];
+                if (elm && refsToggleElement[key] === false) {
+                    Dom_1.Dom.hide(elm);
+                }
+            });
+        }
         return child;
     };
     return Create;
@@ -7622,7 +7746,7 @@ exports.Create = Create;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(0);
 var helpers_1 = __webpack_require__(4);
 var PluginSystem = (function () {
     function PluginSystem() {
@@ -7785,17 +7909,17 @@ exports.Alert = dialog_1.Alert;
 exports.Confirm = dialog_1.Confirm;
 exports.Promt = dialog_1.Promt;
 exports.Dialog = dialog_1.Dialog;
-var Dom_1 = __webpack_require__(0);
+var Dom_1 = __webpack_require__(1);
 exports.Dom = Dom_1.Dom;
 var Plugin_1 = __webpack_require__(7);
 exports.Plugin = Plugin_1.Plugin;
 var Create_1 = __webpack_require__(66);
 exports.Create = Create_1.Create;
-var fileBrowser_1 = __webpack_require__(188);
+var fileBrowser_1 = __webpack_require__(190);
 exports.FileBrowser = fileBrowser_1.FileBrowser;
 var Helpers = __webpack_require__(4);
 exports.Helpers = Helpers;
-var ImageEditor_1 = __webpack_require__(194);
+var ImageEditor_1 = __webpack_require__(196);
 exports.ImageEditor = ImageEditor_1.ImageEditor;
 var observer_1 = __webpack_require__(57);
 exports.Observer = observer_1.Observer;
@@ -7805,21 +7929,21 @@ var storage_1 = __webpack_require__(25);
 exports.Storage = storage_1.Storage;
 var Snapshot_1 = __webpack_require__(58);
 exports.Snapshot = Snapshot_1.Snapshot;
-var Table_1 = __webpack_require__(29);
+var Table_1 = __webpack_require__(28);
 exports.Table = Table_1.Table;
-var icon_1 = __webpack_require__(6);
+var icon_1 = __webpack_require__(5);
 exports.ToolbarIcon = icon_1.ToolbarIcon;
 var joditToolbarCollection_1 = __webpack_require__(16);
 exports.JoditToolbarCollection = joditToolbarCollection_1.JoditToolbarCollection;
-var collection_1 = __webpack_require__(38);
+var collection_1 = __webpack_require__(37);
 exports.ToolbarCollection = collection_1.ToolbarCollection;
-var button_1 = __webpack_require__(27);
+var button_1 = __webpack_require__(26);
 exports.ToolbarButton = button_1.ToolbarButton;
 var Stack_1 = __webpack_require__(59);
 exports.Stack = Stack_1.Stack;
 var Widget_1 = __webpack_require__(18);
 exports.Widget = Widget_1.Widget;
-var Uploader_1 = __webpack_require__(195);
+var Uploader_1 = __webpack_require__(197);
 exports.Uploader = Uploader_1.Uploader;
 var PluginSystem_1 = __webpack_require__(67);
 exports.PluginSystem = PluginSystem_1.PluginSystem;
@@ -7840,83 +7964,85 @@ exports.PluginSystem = PluginSystem_1.PluginSystem;
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var add_new_line_1 = __webpack_require__(147);
+var add_new_line_1 = __webpack_require__(148);
 exports.addNewLine = add_new_line_1.addNewLine;
-var autofocus_1 = __webpack_require__(148);
+var autofocus_1 = __webpack_require__(149);
 exports.autofocus = autofocus_1.autofocus;
-var backspace_1 = __webpack_require__(149);
+var backspace_1 = __webpack_require__(150);
 exports.backspace = backspace_1.backspace;
-var bold_1 = __webpack_require__(150);
+var bold_1 = __webpack_require__(151);
 exports.bold = bold_1.bold;
-var clean_html_1 = __webpack_require__(151);
+var clean_html_1 = __webpack_require__(152);
 exports.cleanHtml = clean_html_1.cleanHtml;
 var clipboard_1 = __webpack_require__(70);
 exports.clipboard = clipboard_1.clipboard;
 exports.paste = clipboard_1.paste;
 exports.pasteStorage = clipboard_1.pasteStorage;
-var color_1 = __webpack_require__(155);
+var color_1 = __webpack_require__(156);
 exports.color = color_1.color;
-var drag_and_drop_1 = __webpack_require__(156);
+var drag_and_drop_1 = __webpack_require__(157);
 exports.DragAndDrop = drag_and_drop_1.DragAndDrop;
-var drag_and_drop_element_1 = __webpack_require__(157);
+var drag_and_drop_element_1 = __webpack_require__(158);
 exports.DragAndDropElement = drag_and_drop_element_1.DragAndDropElement;
-var enter_1 = __webpack_require__(158);
+var enter_1 = __webpack_require__(159);
 exports.enter = enter_1.enter;
-var error_messages_1 = __webpack_require__(159);
+var error_messages_1 = __webpack_require__(160);
 exports.errorMessages = error_messages_1.errorMessages;
-var font_1 = __webpack_require__(160);
+var font_1 = __webpack_require__(161);
 exports.font = font_1.font;
-var format_block_1 = __webpack_require__(161);
+var format_block_1 = __webpack_require__(162);
 exports.formatBlock = format_block_1.formatBlock;
-var fullsize_1 = __webpack_require__(162);
+var fullsize_1 = __webpack_require__(163);
 exports.fullsize = fullsize_1.fullsize;
-var hotkeys_1 = __webpack_require__(163);
+var hotkeys_1 = __webpack_require__(164);
 exports.hotkeys = hotkeys_1.hotkeys;
-var iframe_1 = __webpack_require__(164);
+var iframe_1 = __webpack_require__(165);
 exports.iframe = iframe_1.iframe;
-var image_processor_1 = __webpack_require__(165);
+var image_processor_1 = __webpack_require__(166);
 exports.imageProcessor = image_processor_1.imageProcessor;
-var image_properties_1 = __webpack_require__(166);
+var image_properties_1 = __webpack_require__(167);
 exports.imageProperties = image_properties_1.imageProperties;
-var indent_1 = __webpack_require__(167);
+var indent_1 = __webpack_require__(168);
 exports.indent = indent_1.indent;
-var inline_popup_1 = __webpack_require__(168);
+var inline_popup_1 = __webpack_require__(169);
 exports.inlinePopup = inline_popup_1.inlinePopup;
-var justify_1 = __webpack_require__(169);
+var justify_1 = __webpack_require__(170);
 exports.justify = justify_1.justify;
-var limit_1 = __webpack_require__(170);
+var limit_1 = __webpack_require__(171);
 exports.limit = limit_1.limit;
-var link_1 = __webpack_require__(171);
+var link_1 = __webpack_require__(172);
 exports.link = link_1.link;
-var media_1 = __webpack_require__(172);
+var media_1 = __webpack_require__(173);
 exports.media = media_1.media;
-var mobile_1 = __webpack_require__(173);
+var mobile_1 = __webpack_require__(174);
 exports.mobile = mobile_1.mobile;
-var orderedlist_1 = __webpack_require__(174);
+var orderedlist_1 = __webpack_require__(175);
 exports.orderedlist = orderedlist_1.orderedlist;
-var placeholder_1 = __webpack_require__(175);
+var placeholder_1 = __webpack_require__(176);
 exports.placeholder = placeholder_1.placeholder;
-var redoundo_1 = __webpack_require__(176);
+var redoundo_1 = __webpack_require__(177);
 exports.redoundo = redoundo_1.redoundo;
-var resizer_1 = __webpack_require__(177);
+var resizer_1 = __webpack_require__(178);
 exports.resizer = resizer_1.resizer;
-var search_1 = __webpack_require__(178);
+var search_1 = __webpack_require__(179);
 exports.search = search_1.search;
-var size_1 = __webpack_require__(179);
+var size_1 = __webpack_require__(180);
 exports.size = size_1.size;
-var source_1 = __webpack_require__(180);
+var source_1 = __webpack_require__(181);
 exports.source = source_1.source;
-var stat_1 = __webpack_require__(181);
+var stat_1 = __webpack_require__(182);
 exports.stat = stat_1.stat;
-var sticky_1 = __webpack_require__(182);
+var sticky_1 = __webpack_require__(183);
 exports.sticky = sticky_1.sticky;
-var symbols_1 = __webpack_require__(183);
+var symbols_1 = __webpack_require__(184);
 exports.symbols = symbols_1.symbols;
-var table_keyboard_navigation_1 = __webpack_require__(184);
+var table_keyboard_navigation_1 = __webpack_require__(185);
 exports.tableKeyboardNavigation = table_keyboard_navigation_1.tableKeyboardNavigation;
-var table_1 = __webpack_require__(185);
+var table_1 = __webpack_require__(186);
 exports.table = table_1.TableProcessor;
-var xpath_1 = __webpack_require__(186);
+var tooltip_1 = __webpack_require__(187);
+exports.tooltip = tooltip_1.tooltip;
+var xpath_1 = __webpack_require__(188);
 exports.xpath = xpath_1.xpath;
 
 
@@ -7927,11 +8053,11 @@ exports.xpath = xpath_1.xpath;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(0);
 tslib_1.__exportStar(__webpack_require__(71), exports);
 tslib_1.__exportStar(__webpack_require__(72), exports);
-tslib_1.__exportStar(__webpack_require__(153), exports);
-__webpack_require__(154);
+tslib_1.__exportStar(__webpack_require__(154), exports);
+__webpack_require__(155);
 
 
 /***/ }),
@@ -7951,7 +8077,7 @@ __webpack_require__(154);
 Object.defineProperty(exports, "__esModule", { value: true });
 var Config_1 = __webpack_require__(3);
 var constants_1 = __webpack_require__(2);
-var html_1 = __webpack_require__(35);
+var html_1 = __webpack_require__(34);
 var paste_1 = __webpack_require__(72);
 Config_1.Config.prototype.controls.cut = {
     command: 'cut',
@@ -8013,16 +8139,18 @@ exports.clipboard = clipboard;
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(0);
 var Config_1 = __webpack_require__(3);
 var constants_1 = __webpack_require__(2);
 var dialog_1 = __webpack_require__(14);
 var helpers_1 = __webpack_require__(4);
-var Dom_1 = __webpack_require__(0);
-var nl2br_1 = __webpack_require__(152);
+var Dom_1 = __webpack_require__(1);
+var nl2br_1 = __webpack_require__(153);
 var cut_1 = __webpack_require__(71);
 Config_1.Config.prototype.askBeforePasteHTML = true;
+Config_1.Config.prototype.processPasteHTML = true;
 Config_1.Config.prototype.askBeforePasteFromWord = true;
+Config_1.Config.prototype.processPasteFromWord = true;
 Config_1.Config.prototype.nl2brInPlainText = true;
 Config_1.Config.prototype.defaultActionOnPaste = constants_1.INSERT_AS_HTML;
 exports.getDataTransfer = function (event) {
@@ -8114,26 +8242,10 @@ function paste(editor) {
         }
         var dialog = dialog_1.Confirm("<div style=\"word-break: normal; white-space: normal\">" + msg + "</div>", title, callback);
         dialog.container.setAttribute('data-editor_id', editor.id);
-        var keep = dialog.create.fromHTML('<a href="javascript:void(0)" class="jodit_button jodit_button_primary">' +
-            '<span>' +
-            editor.i18n('Keep') +
-            '</span>' +
-            '</a>');
-        var clear = dialog.create.fromHTML('<a href="javascript:void(0)" class="jodit_button">' +
-            '<span>' +
-            editor.i18n(clearButton) +
-            '</span>' +
-            '</a>');
-        var clear2 = dialog.create.fromHTML('<a href="javascript:void(0)" class="jodit_button">' +
-            '<span>' +
-            editor.i18n(clear2Button) +
-            '</span>' +
-            '</a>');
-        var cancel = dialog.create.fromHTML('<a href="javascript:void(0)" class="jodit_button">' +
-            '<span>' +
-            editor.i18n('Cancel') +
-            '</span>' +
-            '</a>');
+        var keep = dialog.create.fromHTML("<a href=\"javascript:void(0)\" class=\"jodit_button jodit_button_primary\"><span>" + editor.i18n('Keep') + "</span></a>");
+        var clear = dialog.create.fromHTML("<a href=\"javascript:void(0)\" class=\"jodit_button\"><span>" + editor.i18n(clearButton) + "</span></a>");
+        var clear2 = dialog.create.fromHTML("<a href=\"javascript:void(0)\" class=\"jodit_button\"><span>" + editor.i18n(clear2Button) + "</span></a>");
+        var cancel = dialog.create.fromHTML("<a href=\"javascript:void(0)\" class=\"jodit_button\"><span>" + editor.i18n('Cancel') + "</span></a>");
         editor.events.on(keep, 'click', function () {
             dialog.close();
             callback && callback(true);
@@ -8177,22 +8289,29 @@ function paste(editor) {
     var insertHTML = function (html, event) {
         var buffer = editor.buffer.get(cut_1.pluginKey);
         if (helpers_1.isHTML(html) && buffer !== trimFragment(html)) {
-            editor.events.stopPropagation('beforePaste');
             html = trimFragment(html);
-            clearOrKeep(editor.i18n('Your code is similar to HTML. Keep as HTML?'), editor.i18n('Paste as HTML'), function (agree) {
-                var insertType = constants_1.INSERT_AS_HTML;
-                if (agree === false) {
-                    insertType = constants_1.INSERT_AS_TEXT;
-                }
-                if (agree === 0) {
-                    insertType = constants_1.INSERT_ONLY_TEXT;
-                }
+            var pasteHTMLByType_1 = function (insertType) {
                 if (event.type === 'drop') {
                     editor.selection.insertCursorAtPoint(event.clientX, event.clientY);
                 }
                 insertByType(html, insertType);
                 editor.setEditorValue();
-            }, 'Insert as Text');
+            };
+            if (editor.options.askBeforePasteHTML) {
+                clearOrKeep(editor.i18n('Your code is similar to HTML. Keep as HTML?'), editor.i18n('Paste as HTML'), function (agree) {
+                    var insertType = constants_1.INSERT_AS_HTML;
+                    if (agree === false) {
+                        insertType = constants_1.INSERT_AS_TEXT;
+                    }
+                    if (agree === 0) {
+                        insertType = constants_1.INSERT_ONLY_TEXT;
+                    }
+                    pasteHTMLByType_1(insertType);
+                }, 'Insert as Text');
+            }
+            else {
+                pasteHTMLByType_1(editor.options.defaultActionOnPaste);
+            }
             return false;
         }
     };
@@ -8207,8 +8326,113 @@ function paste(editor) {
         }
         return html;
     };
+    var beforePaste = function (event) {
+        var dt = exports.getDataTransfer(event);
+        if (!dt || !event || !dt.getData) {
+            return;
+        }
+        if (dt.getData(constants_1.TEXT_HTML)) {
+            var processHTMLData_1 = function (html) {
+                var buffer = editor.buffer.get(cut_1.pluginKey);
+                if (editor.options.processPasteHTML && helpers_1.isHTML(html) && buffer !== trimFragment(html)) {
+                    if (editor.options.processPasteFromWord && helpers_1.isHTMLFromWord(html)) {
+                        var pasteFromWordByType_1 = function (method) {
+                            if (method === constants_1.INSERT_AS_HTML) {
+                                html = helpers_1.applyStyles(html);
+                                if (editor.options.beautifyHTML &&
+                                    editor.ownerWindow
+                                        .html_beautify) {
+                                    html = editor.ownerWindow.html_beautify(html);
+                                }
+                            }
+                            if (method === constants_1.INSERT_AS_TEXT) {
+                                html = helpers_1.cleanFromWord(html);
+                            }
+                            if (method === constants_1.INSERT_ONLY_TEXT) {
+                                html = helpers_1.stripTags(helpers_1.cleanFromWord(html));
+                            }
+                            editor.selection.insertHTML(html);
+                            editor.setEditorValue();
+                        };
+                        if (editor.options.askBeforePasteFromWord) {
+                            clearOrKeep(editor.i18n('The pasted content is coming from a Microsoft Word/Excel document. ' +
+                                'Do you want to keep the format or clean it up?'), editor.i18n('Word Paste Detected'), function (agree) {
+                                var insertType = constants_1.INSERT_AS_HTML;
+                                if (agree === false) {
+                                    insertType = constants_1.INSERT_AS_TEXT;
+                                }
+                                if (agree === 0) {
+                                    insertType = constants_1.INSERT_ONLY_TEXT;
+                                }
+                                pasteFromWordByType_1(insertType);
+                            });
+                        }
+                        else {
+                            pasteFromWordByType_1(editor.options.defaultActionOnPaste);
+                        }
+                    }
+                    else {
+                        insertHTML(html, event);
+                    }
+                    return false;
+                }
+            };
+            if (dt.types &&
+                Array.from(dt.types).indexOf('text/html') !== -1) {
+                var html = dt.getData(constants_1.TEXT_HTML);
+                return processHTMLData_1(html);
+            }
+            if (event.type !== 'drop') {
+                var div_1 = editor.create.div('', {
+                    tabindex: -1,
+                    contenteditable: true,
+                    style: {
+                        left: -9999,
+                        top: 0,
+                        width: 0,
+                        height: '100%',
+                        lineHeight: '140%',
+                        overflow: 'hidden',
+                        position: 'fixed',
+                        zIndex: 2147483647,
+                        wordBreak: 'break-all'
+                    }
+                });
+                editor.container.appendChild(div_1);
+                var selData_1 = editor.selection.save();
+                div_1.focus();
+                var tick_1 = 0;
+                var removeFakeFocus_1 = function () {
+                    Dom_1.Dom.safeRemove(div_1);
+                    editor.selection &&
+                        editor.selection.restore(selData_1);
+                };
+                var waitData_1 = function () {
+                    tick_1 += 1;
+                    if (div_1.childNodes && div_1.childNodes.length > 0) {
+                        var pastedData = div_1.innerHTML;
+                        removeFakeFocus_1();
+                        if (processHTMLData_1(pastedData) !== false) {
+                            editor.selection.insertHTML(pastedData);
+                        }
+                        return;
+                    }
+                    if (tick_1 < 5) {
+                        editor.async.setTimeout(waitData_1, 20);
+                    }
+                    else {
+                        removeFakeFocus_1();
+                    }
+                };
+                waitData_1();
+            }
+        }
+        if (dt.getData(constants_1.TEXT_PLAIN)) {
+            return insertHTML(dt.getData(constants_1.TEXT_PLAIN), event);
+        }
+    };
     editor.events.on('paste', function (event) {
-        if (editor.events.fire('beforePaste', event) === false) {
+        if (beforePaste(event) === false || editor.events.fire('beforePaste', event) === false) {
             event.preventDefault();
             return false;
         }
@@ -8262,101 +8486,6 @@ function paste(editor) {
             return false;
         }
     });
-    if (editor.options.askBeforePasteHTML) {
-        editor.events.on('beforePaste', function (event) {
-            var dt = exports.getDataTransfer(event);
-            if (event && dt && dt.getData(constants_1.TEXT_PLAIN)) {
-                var html = dt.getData(constants_1.TEXT_PLAIN);
-                return insertHTML(html, event);
-            }
-        });
-    }
-    if (editor.options.askBeforePasteFromWord) {
-        editor.events.on('beforePaste', function (event) {
-            var dt = exports.getDataTransfer(event);
-            if (event && dt && dt.getData && dt.getData(constants_1.TEXT_HTML)) {
-                var processHTMLData_1 = function (html) {
-                    var buffer = editor.buffer.get(cut_1.pluginKey);
-                    if (helpers_1.isHTML(html) && buffer !== trimFragment(html)) {
-                        if (helpers_1.isHTMLFromWord(html)) {
-                            clearOrKeep(editor.i18n('The pasted content is coming from a Microsoft Word/Excel document. ' +
-                                'Do you want to keep the format or clean it up?'), editor.i18n('Word Paste Detected'), function (agree) {
-                                if (agree === true) {
-                                    html = helpers_1.applyStyles(html);
-                                    if (editor.options.beautifyHTML &&
-                                        editor.ownerWindow
-                                            .html_beautify) {
-                                        html = editor.ownerWindow.html_beautify(html);
-                                    }
-                                }
-                                if (agree === false) {
-                                    html = helpers_1.cleanFromWord(html);
-                                }
-                                if (agree === 0) {
-                                    html = helpers_1.stripTags(helpers_1.cleanFromWord(html));
-                                }
-                                editor.selection.insertHTML(html);
-                                editor.setEditorValue();
-                            });
-                        }
-                        else {
-                            insertHTML(html, event);
-                        }
-                        return false;
-                    }
-                };
-                if (dt.types &&
-                    Array.from(dt.types).indexOf('text/html') !== -1) {
-                    var html = dt.getData(constants_1.TEXT_HTML);
-                    return processHTMLData_1(html);
-                }
-                if (event.type !== 'drop') {
-                    var div_1 = editor.create.div('', {
-                        tabindex: -1,
-                        contenteditable: true,
-                        style: {
-                            left: -9999,
-                            top: 0,
-                            width: 0,
-                            height: '100%',
-                            lineHeight: '140%',
-                            overflow: 'hidden',
-                            position: 'fixed',
-                            zIndex: 2147483647,
-                            wordBreak: 'break-all'
-                        }
-                    });
-                    editor.container.appendChild(div_1);
-                    var selData_1 = editor.selection.save();
-                    div_1.focus();
-                    var tick_1 = 0;
-                    var removeFakeFocus_1 = function () {
-                        Dom_1.Dom.safeRemove(div_1);
-                        editor.selection &&
-                            editor.selection.restore(selData_1);
-                    };
-                    var waitData_1 = function () {
-                        tick_1 += 1;
-                        if (div_1.childNodes && div_1.childNodes.length > 0) {
-                            var pastedData = div_1.innerHTML;
-                            removeFakeFocus_1();
-                            if (processHTMLData_1(pastedData) !== false) {
-                                editor.selection.insertHTML(pastedData);
-                            }
-                            return;
-                        }
-                        if (tick_1 < 5) {
-                            helpers_1.setTimeout(waitData_1, 20);
-                        }
-                        else {
-                            removeFakeFocus_1();
-                        }
-                    };
-                    waitData_1();
-                }
-            }
-        });
-    }
     if (editor.options.nl2brInPlainText) {
         editor.events.on('processPaste', function (event, text, type) {
             if (type === constants_1.TEXT_PLAIN + ';' && !helpers_1.isHTML(text)) {
@@ -8376,7 +8505,7 @@ exports.paste = paste;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var dialog_1 = __webpack_require__(17);
-var icon_1 = __webpack_require__(6);
+var icon_1 = __webpack_require__(5);
 exports.Promt = function (msg, title, callback, placeholder, defaultValue) {
     var dialog = new dialog_1.Dialog(), cancelButton = dialog.create.fromHTML('<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
         icon_1.ToolbarIcon.getIcon('cancel') +
@@ -8443,7 +8572,7 @@ var Jodit_1 = __webpack_require__(11);
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var dialog_1 = __webpack_require__(17);
-var icon_1 = __webpack_require__(6);
+var icon_1 = __webpack_require__(5);
 exports.Confirm = function (msg, title, callback) {
     var dialog = new dialog_1.Dialog(), $div = dialog.create.fromHTML('<form class="jodit_prompt"></form>'), $label = dialog.create.element('label');
     if (typeof title === 'function') {
@@ -8520,9 +8649,9 @@ var index_1 = __webpack_require__(129);
 var consts = __webpack_require__(2);
 var Modules = __webpack_require__(68);
 var Plugins = __webpack_require__(69);
-var Icons = __webpack_require__(196);
+var Icons = __webpack_require__(198);
 var Config_1 = __webpack_require__(3);
-var icon_1 = __webpack_require__(6);
+var icon_1 = __webpack_require__(5);
 Object.keys(consts).forEach(function (key) {
     Jodit_1.Jodit[key] = consts[key];
 });
@@ -10313,7 +10442,7 @@ exports.splitArray = function (a) {
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var setTimeout_1 = __webpack_require__(19);
+var setTimeout_1 = __webpack_require__(30);
 exports.throttle = function (fn, timeout, ctx) {
     var timer = null, args, needInvoke, callee;
     return function () {
@@ -10451,7 +10580,7 @@ exports.isDestructable = function (value) {
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var isNumeric_1 = __webpack_require__(22);
+var isNumeric_1 = __webpack_require__(23);
 exports.isInt = function (value) {
     if (typeof value === 'string' && isNumeric_1.isNumeric(value)) {
         value = parseFloat(value);
@@ -10517,7 +10646,7 @@ exports.isString = function (value) {
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(0);
 tslib_1.__exportStar(__webpack_require__(95), exports);
 tslib_1.__exportStar(__webpack_require__(48), exports);
 
@@ -10568,7 +10697,7 @@ exports.hexToRgb = function (hex) {
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var Dom_1 = __webpack_require__(0);
+var Dom_1 = __webpack_require__(1);
 var selector_1 = __webpack_require__(13);
 var string_1 = __webpack_require__(9);
 function normalizeCSS(s) {
@@ -10576,8 +10705,14 @@ function normalizeCSS(s) {
         .replace(/mso-[a-z\-]+:[\s]*[^;]+;/gi, '')
         .replace(/mso-[a-z\-]+:[\s]*[^";]+$/gi, '')
         .replace(/border[a-z\-]*:[\s]*[^;]+;/gi, '')
-        .replace(/([0-9.]+)pt/gi, function (match) {
-        return (parseFloat(match) * 1.328).toFixed(0) + 'px';
+        .replace(/([0-9.]+)(pt|cm)/gi, function (match, units, metrics) {
+        switch (metrics.toLowerCase()) {
+            case 'pt':
+                return (parseFloat(units) * 1.328).toFixed(0) + 'px';
+            case 'cm':
+                return (parseFloat(units) * 0.02645833).toFixed(0) + 'px';
+        }
+        return match;
     });
 }
 exports.applyStyles = function (html) {
@@ -10674,7 +10809,7 @@ exports.ucfirst = function (value) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var Config_1 = __webpack_require__(3);
-var defaultLanguage_1 = __webpack_require__(37);
+var defaultLanguage_1 = __webpack_require__(36);
 var __1 = __webpack_require__(4);
 exports.sprintf = function (str, args) {
     if (!args || !args.length) {
@@ -10763,7 +10898,7 @@ var Jodit_1 = __webpack_require__(11);
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var Dom_1 = __webpack_require__(0);
+var Dom_1 = __webpack_require__(1);
 var string_1 = __webpack_require__(9);
 exports.cleanFromWord = function (html) {
     if (html.indexOf('<html ') !== -1) {
@@ -10844,7 +10979,7 @@ exports.cleanFromWord = function (html) {
 * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
 */
 Object.defineProperty(exports, "__esModule", { value: true });
-var trim_1 = __webpack_require__(36);
+var trim_1 = __webpack_require__(35);
 var constants_1 = __webpack_require__(2);
 exports.clear = function (value, removeEmptyBlocks) {
     if (removeEmptyBlocks === void 0) { removeEmptyBlocks = false; }
@@ -10976,7 +11111,7 @@ exports.normalizeLicense = function (license, count) {
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var constants_1 = __webpack_require__(2);
-var Dom_1 = __webpack_require__(0);
+var Dom_1 = __webpack_require__(1);
 exports.normalizeNode = function (node) {
     if (!node) {
         return;
@@ -11141,7 +11276,7 @@ exports.normalizeURL = function () {
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var colorToHex_1 = __webpack_require__(48);
-var trim_1 = __webpack_require__(36);
+var trim_1 = __webpack_require__(35);
 exports.normalizeColor = function (colorInput) {
     var newcolor = ['#'];
     var color = colorToHex_1.colorToHex(colorInput);
@@ -11223,7 +11358,7 @@ exports.offset = function (elm, jodit, doc, recurse) {
         clientTop: 0,
         clientLeft: 0,
         scrollTop: 0,
-        scrollLeft: 0,
+        scrollLeft: 0
     }, win = doc.defaultView || doc.parentWindow, scrollTop = win.pageYOffset || docElem.scrollTop || body.scrollTop, scrollLeft = win.pageXOffset || docElem.scrollLeft || body.scrollLeft, clientTop = docElem.clientTop || body.clientTop || 0, clientLeft = docElem.clientLeft || body.clientLeft || 0;
     var topValue, leftValue;
     if (!recurse &&
@@ -11243,7 +11378,7 @@ exports.offset = function (elm, jodit, doc, recurse) {
         top: Math.round(topValue),
         left: Math.round(leftValue),
         width: rect.width,
-        height: rect.height,
+        height: rect.height
     };
 };
 
@@ -11532,9 +11667,9 @@ exports.Command = Command;
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(0);
 var Component_1 = __webpack_require__(8);
-var Dom_1 = __webpack_require__(0);
+var Dom_1 = __webpack_require__(1);
 var StatusBar = (function (_super) {
     tslib_1.__extends(StatusBar, _super);
     function StatusBar(jodit, target) {
@@ -11566,6 +11701,7 @@ var StatusBar = (function (_super) {
         this.jodit.events.fire('resize');
     };
     StatusBar.prototype.destruct = function () {
+        this.setStatus('beforeDestruct');
         Dom_1.Dom.safeRemove(this.container);
         delete this.container;
         _super.prototype.destruct.call(this);
@@ -11660,9 +11796,9 @@ exports.EventHandlersStore = EventHandlersStore;
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(0);
 var Component_1 = __webpack_require__(8);
-var Dom_1 = __webpack_require__(0);
+var Dom_1 = __webpack_require__(1);
 var Create_1 = __webpack_require__(66);
 var isJoditObject_1 = __webpack_require__(12);
 var Panel = (function (_super) {
@@ -11730,7 +11866,7 @@ exports.Panel = Panel;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(0);
 tslib_1.__exportStar(__webpack_require__(62), exports);
 tslib_1.__exportStar(__webpack_require__(61), exports);
 tslib_1.__exportStar(__webpack_require__(25), exports);
@@ -11751,18 +11887,47 @@ tslib_1.__exportStar(__webpack_require__(25), exports);
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
-var element_1 = __webpack_require__(26);
-var ToolbarBreak = (function (_super) {
-    tslib_1.__extends(ToolbarBreak, _super);
-    function ToolbarBreak(jodit) {
-        var _this = _super.call(this, jodit) || this;
-        _this.container.classList.add('jodit_toolbar_btn-break');
-        return _this;
+var tslib_1 = __webpack_require__(0);
+var async_1 = __webpack_require__(6);
+var Async = (function () {
+    function Async() {
+        this.timers = new Map();
     }
-    return ToolbarBreak;
-}(element_1.ToolbarElement));
-exports.ToolbarBreak = ToolbarBreak;
+    Async.prototype.setTimeout = function (callback, timeout) {
+        var args = [];
+        for (var _i = 2; _i < arguments.length; _i++) {
+            args[_i - 2] = arguments[_i];
+        }
+        var options = {};
+        if (typeof timeout !== 'number') {
+            options = timeout;
+            timeout = options.timeout || 0;
+        }
+        if (options.label && this.timers.has(options.label)) {
+            this.clearTimeout(this.timers.get(options.label));
+            this.timers.delete(options.label);
+        }
+        var timer = async_1.setTimeout.apply(void 0, tslib_1.__spreadArrays([callback, timeout], args)), key = options.label || timer;
+        this.timers.set(key, timer);
+        return timer;
+    };
+    Async.prototype.clearTimeout = function (timer) {
+        clearTimeout(timer);
+        this.timers.delete(timer);
+    };
+    Async.prototype.clear = function () {
+        var _this = this;
+        this.timers.forEach(function (key) {
+            _this.clearTimeout(_this.timers.get(key));
+        });
+        this.timers.clear();
+    };
+    Async.prototype.destruct = function () {
+        this.clear();
+    };
+    return Async;
+}());
+exports.Async = Async;
 
 
 /***/ }),
@@ -11780,10 +11945,39 @@ exports.ToolbarBreak = ToolbarBreak;
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(0);
+var element_1 = __webpack_require__(38);
+var ToolbarBreak = (function (_super) {
+    tslib_1.__extends(ToolbarBreak, _super);
+    function ToolbarBreak(jodit) {
+        var _this = _super.call(this, jodit) || this;
+        _this.container.classList.add('jodit_toolbar_btn-break');
+        return _this;
+    }
+    return ToolbarBreak;
+}(element_1.ToolbarElement));
+exports.ToolbarBreak = ToolbarBreak;
+
+
+/***/ }),
+/* 127 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
+ * For GPL see LICENSE-GPL.txt in the project root for license information.
+ * For MIT see LICENSE-MIT.txt in the project root for license information.
+ * For commercial licenses see https://xdsoft.net/jodit/commercial/
+ * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = __webpack_require__(0);
 var helpers_1 = __webpack_require__(4);
-var button_1 = __webpack_require__(27);
-var popup_1 = __webpack_require__(28);
+var button_1 = __webpack_require__(26);
+var popup_1 = __webpack_require__(27);
 var joditToolbarCollection_1 = __webpack_require__(16);
 var PopupList = (function (_super) {
     tslib_1.__extends(PopupList, _super);
@@ -11862,75 +12056,14 @@ exports.PopupList = PopupList;
 
 
 /***/ }),
-/* 127 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
- * For GPL see LICENSE-GPL.txt in the project root for license information.
- * For MIT see LICENSE-MIT.txt in the project root for license information.
- * For commercial licenses see https://xdsoft.net/jodit/commercial/
- * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
-var Dom_1 = __webpack_require__(0);
-var async_1 = __webpack_require__(5);
-var element_1 = __webpack_require__(26);
-var ToolbarTooltip = (function (_super) {
-    tslib_1.__extends(ToolbarTooltip, _super);
-    function ToolbarTooltip(button) {
-        var _this = _super.call(this, button.parentToolbar || button.jodit, 'div', 'jodit_tooltip') || this;
-        _this.button = button;
-        _this.timeout = 0;
-        _this.show = function () {
-            var showElement = function () {
-                _this.button.container.appendChild(_this.container);
-                var diff = _this.container.offsetWidth -
-                    _this.button.container.offsetWidth;
-                _this.container.style.marginLeft = -diff / 2 + 'px';
-            }, delay = _this.button.jodit.options.showTooltipDelay ||
-                _this.button.jodit.defaultTimeout * 10;
-            _this.button.jodit.events.fire('hideTooltip');
-            _this.timeout = async_1.setTimeout(showElement, delay);
-        };
-        _this.hide = function () {
-            window.clearTimeout(_this.timeout);
-            Dom_1.Dom.safeRemove(_this.container);
-        };
-        if (button.control.tooltip) {
-            _this.container.innerHTML = button.tooltipText;
-            button.jodit.events
-                .on(button.anchor, 'mouseenter', _this.show)
-                .on(button.anchor, 'mouseleave', _this.hide)
-                .on('change updateToolbar scroll hidePopup closeAllPopups hideTooltip', _this.hide);
-        }
-        return _this;
-    }
-    ToolbarTooltip.prototype.destruct = function () {
-        this.hide();
-        if (this.jodit && this.jodit.events) {
-            this.jodit.events.off('change updateToolbar scroll hidePopup closeAllPopups hideTooltip', this.hide);
-        }
-        return _super.prototype.destruct.call(this);
-    };
-    return ToolbarTooltip;
-}(element_1.ToolbarElement));
-exports.ToolbarTooltip = ToolbarTooltip;
-
-
-/***/ }),
 /* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
-var element_1 = __webpack_require__(26);
+var tslib_1 = __webpack_require__(0);
+var element_1 = __webpack_require__(38);
 var ToolbarSeparator = (function (_super) {
     tslib_1.__extends(ToolbarSeparator, _super);
     function ToolbarSeparator(jodit) {
@@ -11968,13 +12101,14 @@ var he_1 = __webpack_require__(136);
 var hu_1 = __webpack_require__(137);
 var id_1 = __webpack_require__(138);
 var it_1 = __webpack_require__(139);
-var nl_1 = __webpack_require__(140);
-var pl_1 = __webpack_require__(141);
-var pt_br_1 = __webpack_require__(142);
-var ru_1 = __webpack_require__(143);
-var tr_1 = __webpack_require__(144);
-var zh_cn_1 = __webpack_require__(145);
-var zh_tw_1 = __webpack_require__(146);
+var ja_1 = __webpack_require__(140);
+var nl_1 = __webpack_require__(141);
+var pl_1 = __webpack_require__(142);
+var pt_br_1 = __webpack_require__(143);
+var ru_1 = __webpack_require__(144);
+var tr_1 = __webpack_require__(145);
+var zh_cn_1 = __webpack_require__(146);
+var zh_tw_1 = __webpack_require__(147);
 var exp = {
     ar: ar_1.default,
     cs_cz: cs_cz_1.default,
@@ -11986,6 +12120,7 @@ var exp = {
     hu: hu_1.default,
     id: id_1.default,
     it: it_1.default,
+    ja: ja_1.default,
     nl: nl_1.default,
     pl: pl_1.default,
     pt_br: pt_br_1.default,
@@ -12076,46 +12211,52 @@ module.exports.default = ["Scrivi qualcosa...","A proposito di Jodit","Jodit Edi
 /* 140 */
 /***/ (function(module, exports) {
 
-module.exports.default = ["Begin met typen..","Over Jodit","Jodit Editor","Gratis niet-commerciële versie","GNU General Public License, versie 2 of hoger","Jodit gebruikershandleiding","bevat gedetailleerde informatie voor gebruik.","Voor informatie over de licentie, ga naar onze website:","Volledige versie kopen","Copyright © XDSoft.net - Chupurnov Valeriy. Alle rechten voorbehouden.","Anker","Open in nieuwe tab","Editor in volledig scherm openen","Opmaak verwijderen","Vulkleur of tekstkleur aanpassen","Opnieuw","Ongedaan maken","Vet","Cursief","Geordende list invoegen","Ongeordende lijst invoegen","Centreren","Uitlijnen op volledige breedte","Links uitlijnen","Rechts uitlijnen","Horizontale lijn invoegen","Afbeelding invoegen","Bestand invoegen","Youtube/Vimeo video invoegen","Link toevoegen","Tekstgrootte","Lettertype","Format blok invoegen","Normaal","Koptekst 1","Koptekst 2","Koptekst 3","Koptekst 4","Citaat","Code","Invoegen","Tabel invoegen","Inspringing verkleinen","Inspringing vergroten","Symbool selecteren","Symbool invoegen","Opmaak kopieren","Modus veranderen","Marges","Boven","Rechts","Onder","Links","CSS styles","CSS classes","Uitlijning","Rechts","Gecentreerd","Links","--Leeg--","Src","Titel","Alternatieve tekst","Link","Link in nieuwe tab openen","Afbeelding","Bestand","Geavanceerd","Afbeeldingseigenschappen","Annuleren","OK","Bestandsbrowser","Fout bij het laden van de lijst","Fout bij het laden van de mappenlijst","Weet je het zeker?","Geef de map een naam","Map aanmaken","Type naam","Sleep hier een afbeelding naartoe","Sleep hier een bestand naartoe","of klik","Alternatieve tekst","Uploaden","Bladeren","Achtergrond","Tekst","Boven","Midden","Onder","Kolom invoegen (voor)","Kolom invoegen (na)","Rij invoegen (boven)","Rij invoegen (onder)","Tabel verwijderen","Rij verwijderen","Kolom verwijderen","Cel leegmaken","Tekens: %d","Woorden: %d","Doorstrepen","Onderstrepen","Superscript","Subscript","Selectie knippen","Selecteer alles","Enter","Zoek naar","Vervangen door","Vervangen","Plakken","Kies content om te plakken","Broncode","vet","cursief","kwast","link","ongedaan maken","opnieuw","tabel","afbeelding","gum","paragraaf","lettergrootte","video","lettertype","over","afdrukken","symbool","onderstreept","doorgestreept","inspringen","minder inspringen","volledige grootte","kleiner maken","opmaak kopiëren","horizontale lijn","lijst","genummerde lijst","knip","alles selecteren","Embed code","link openen","link aanpassen","niet volgen","link verwijderen","Updaten","Om te bewerken","Recensie"," URL","Bewerken","Horizontaal uitlijnen","Filteren","Sorteren op wijzigingsdatum","Sorteren op naam","Sorteren op grootte","Map toevoegen","Herstellen","Opslaan","Opslaan als ...","Grootte aanpassen","Bijknippen","Breedte","Hoogte","Verhouding behouden","Ja","Nee","Verwijderen","Selecteren","Selecteer: %s","Verticaal uitlijnen","Splitsen","Samenvoegen","Kolom toevoegen","Rij toevoegen",null,"Verwijderen","Verticaal splitsen","Horizontaal splitsen","Rand","Deze code lijkt op HTML. Als HTML behouden?","Invoegen als HTML","Origineel behouden","Als tekst invoegen","Als onopgemaakte tekst invoegen","Je kunt alleen je eigen afbeeldingen aanpassen. Deze afbeelding downloaden?","De afbeelding is succesvol geüploadet!","Palette","Er zijn geen bestanden in deze map.","Hongaars","Voer een nieuwe naam in","voorvertoning","Download","Plakken van klembord","Uw browser ondersteunt geen directe toegang tot het klembord.","Selectie kopiëren","kopiëren","Border radius"]
+module.exports.default = ["なにかタイプしてください","Joditについて","Jodit Editor","Free Non-commercial Version","GNU General Public License, version 2 or later","Jodit ユーザーズ・ガイド","詳しい使い方","ライセンス詳細についてはJodit Webサイトを確認ください：","フルバージョンを購入","Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.","Anchor","新しいタブで開く","エディターのサイズ（フル/ノーマル）","書式をクリア","テキストの色","やり直し","元に戻す","太字","斜体","箇条書き","番号付きリスト","中央揃え","両端揃え","左揃え","右揃え","区切り線を挿入","画像を挿入","ファイルを挿入","Youtube/Vimeo 動画","リンクを挿入","フォントサイズ","フォント","テキストのスタイル","指定なし","タイトル1","タイトル2","タイトル3","タイトル4","引用","コード","挿入","表を挿入","インデント減","インデント増","特殊文字を選択","特殊文字を挿入","書式を貼付け","編集モード切替え","マージン","上","右","下","左","スタイル","クラス","配置","右寄せ","中央寄せ","左寄せ","指定なし","ソース","タイトル","代替テキスト","リンク","新しいタブで開く","画像","ファイル","高度な設定","画像のプロパティー","キャンセル","確定","File Browser","Error on load list","Error on load folders","Are you sure?","Enter Directory name","Create directory","type name","ここに画像をドロップ","ここにファイルをドロップ","or クリック","代替テキスト","アップロード","ブラウズ","背景","文字","上","中央","下","左に列を挿入","右に列を挿入","上に行を挿入","下に行を挿入","表を削除","行を削除","列を削除","セルを空にする","文字数: %d","単語数: %d","取り消し線","下線","上付き文字","下付き文字","切り取り","すべて選択","Pause","検索","置換","置換","貼付け","選択した内容を貼付け","source","bold","italic","brush","link","undo","redo","table","image","eraser","paragraph","fontsize","video","font","about","print","symbol","underline","strikethrough","indent","outdent","fullsize","shrink","copyformat","分割線","箇条書き","番号付きリスト","切り取り","すべて選択","埋め込みコード","リンクを開く","リンクを編集","No follow","リンク解除","更新","鉛筆","サイトを確認","URL","編集","水平方向の配置","Filter","Sort by changed","Sort by name","Sort by size","Add folder","リセット","保存","Save as ...","リサイズ","Crop","幅","高さ","縦横比を保持","はい","いいえ","移除","選択","選択: %s","垂直方向の配置","分割","セルの結合","列を追加","行を追加",null,"削除","セルの分割（垂直方向）","セルの分割（水平方向）","境界線","HTMLコードを保持しますか？","HTMLで貼付け","HTMLを保持","HTMLをテキストにする","テキストだけ","You can only edit your own images. Download this image on the host?","The image has been successfully uploaded to the host!","パレット","There are no files","rename","Enter new name","プレビュー","ダウンロード","貼り付け","お使いのブラウザはクリップボードを使用できません","コピー","copy","角の丸み"]
 
 /***/ }),
 /* 141 */
 /***/ (function(module, exports) {
 
-module.exports.default = ["Napisz coś","O Jodit","Edytor Jodit","Darmowa wersja nie komercyjna","GNU General Public License, wersja 2 lub późniejsza","Instrukcja Jodit","zawiera szczegółowe informacje dotyczące użytkowania.","Odwiedź naszą stronę, aby uzyskać więcej informacji na temat licencji:","Zakup pełnej wersji","Copyright © XDSoft.net - Chupurnov Valeriy. Wszystkie prawa zastrzeżone.","Kotwica","Otwórz w nowej zakładce","Otwórz edytor w pełnym rozmiarze","Wyczyść formatowanie","Kolor wypełnienia lub ustaw kolor tekstu","Ponów","Cofnij","Pogrubienie","Kursywa","Wstaw listę wypunktowaną","Wstaw listę numeryczną","Wyśrodkuj","Wyjustuj","Wyrównaj do lewej","Wyrównaj do prawej","Wstaw linię poziomą","Wstaw grafikę","Wstaw plik","Wstaw film Youtube/vimeo","Wstaw link","Rozmiar tekstu","Krój czcionki","Wstaw formatowanie","Normalne","Nagłówek 1","Nagłówek 2","Nagłówek 3","Nagłówek 4","Cytat","Kod","Wstaw","Wstaw tabelę","Zmniejsz wcięcie","Zwiększ wcięcie","Wybierz znak specjalny","Wstaw znak specjalny","Malarz formatów","Zmień tryb","Marginesy","Górny","Prawy","Dolny","Levy","Style CSS","Klasy CSS","Wyrównanie","Prawa","środek","Lewa","brak","Źródło","Tytuł","Tekst alternatywny","Link","Otwórz w nowej zakładce","Grafika","Plik","Zaawansowane","Właściwości grafiki","Anuluj","OK","Przeglądarka plików","Błąd ładowania listy plików","Błąd ładowania folderów","Czy jesteś pewien?","Wprowadź nazwę folderu","Utwórz folder","wprowadź nazwę","Upuść plik graficzny","Upuść plik","lub kliknij tu","Tekst alternatywny","Wczytaj","Przeglądaj","Tło","Treść","Góra","Środek","Dół","Wstaw kolumnę przed","Wstaw kolumnę po","Wstaw wiersz przed","Wstaw wiersz po","Usuń tabelę","Usuń wiersz","Usuń kolumnę","Wyczyść komórkę","Znaki: %d","Słowa: %d","Przekreślenie","Podkreślenie","indeks górny","index dolny","Wytnij zaznaczenie","Wybierz wszystko","Przerwa","Szukaj","Zamień na","Zamień","Wklej","Wybierz zawartość do wklejenia","HTML","pogrubienie","kursywa","pędzel","link","cofnij","ponów","tabela","grafika","wyczyść","akapit","rozmiar czcionki","wideo","czcionka","O programie","drukuj","symbol","podkreślenie","przekreślenie","wcięcie","wycięcie","pełen rozmiar","przytnij","format kopii","linia pozioma","lista","lista numerowana","wytnij","zaznacz wszystko","Wstaw kod","otwórz link","edytuj link","Atrybut no-follow","Usuń link","Aktualizuj","edytuj","szukaj","URL","Edytuj","Wyrównywanie w poziomie","Filtruj","Sortuj wg zmiany","Sortuj wg nazwy","Sortuj wg rozmiaru","Dodaj folder","wyczyść","zapisz","zapisz jako","Zmień rozmiar","Przytnij","Szerokość","Wysokość","Zachowaj proporcje","Tak","Nie","Usuń","Wybierz","Wybierz: %s","Wyrównywanie w pionie","Podziel","Scal","Dodaj kolumnę","Dodaj wiersz",null,"Usuń","Podziel w pionie","Podziel w poziomie","Obramowanie","Twój kod wygląda jak HTML. Zachować HTML?","Wkleić jako HTML?","Oryginalny tekst","Wstaw jako tekst","Wstaw tylko treść","Możesz edytować tylko swoje grafiki. Czy chcesz pobrać tą grafikę?","Grafika została pomyślnienie dodana na serwer","Paleta","Brak plików.","zmień nazwę","Wprowadź nową nazwę","podgląd","pobierz","Wklej ze schowka","Twoja przeglądarka nie obsługuje schowka","Kopiuj zaznaczenie","kopiuj","Zaokrąglenie krawędzi"]
+module.exports.default = ["Begin met typen..","Over Jodit","Jodit Editor","Gratis niet-commerciële versie","GNU General Public License, versie 2 of hoger","Jodit gebruikershandleiding","bevat gedetailleerde informatie voor gebruik.","Voor informatie over de licentie, ga naar onze website:","Volledige versie kopen","Copyright © XDSoft.net - Chupurnov Valeriy. Alle rechten voorbehouden.","Anker","Open in nieuwe tab","Editor in volledig scherm openen","Opmaak verwijderen","Vulkleur of tekstkleur aanpassen","Opnieuw","Ongedaan maken","Vet","Cursief","Geordende list invoegen","Ongeordende lijst invoegen","Centreren","Uitlijnen op volledige breedte","Links uitlijnen","Rechts uitlijnen","Horizontale lijn invoegen","Afbeelding invoegen","Bestand invoegen","Youtube/Vimeo video invoegen","Link toevoegen","Tekstgrootte","Lettertype","Format blok invoegen","Normaal","Koptekst 1","Koptekst 2","Koptekst 3","Koptekst 4","Citaat","Code","Invoegen","Tabel invoegen","Inspringing verkleinen","Inspringing vergroten","Symbool selecteren","Symbool invoegen","Opmaak kopieren","Modus veranderen","Marges","Boven","Rechts","Onder","Links","CSS styles","CSS classes","Uitlijning","Rechts","Gecentreerd","Links","--Leeg--","Src","Titel","Alternatieve tekst","Link","Link in nieuwe tab openen","Afbeelding","Bestand","Geavanceerd","Afbeeldingseigenschappen","Annuleren","OK","Bestandsbrowser","Fout bij het laden van de lijst","Fout bij het laden van de mappenlijst","Weet je het zeker?","Geef de map een naam","Map aanmaken","Type naam","Sleep hier een afbeelding naartoe","Sleep hier een bestand naartoe","of klik","Alternatieve tekst","Uploaden","Bladeren","Achtergrond","Tekst","Boven","Midden","Onder","Kolom invoegen (voor)","Kolom invoegen (na)","Rij invoegen (boven)","Rij invoegen (onder)","Tabel verwijderen","Rij verwijderen","Kolom verwijderen","Cel leegmaken","Tekens: %d","Woorden: %d","Doorstrepen","Onderstrepen","Superscript","Subscript","Selectie knippen","Selecteer alles","Enter","Zoek naar","Vervangen door","Vervangen","Plakken","Kies content om te plakken","Broncode","vet","cursief","kwast","link","ongedaan maken","opnieuw","tabel","afbeelding","gum","paragraaf","lettergrootte","video","lettertype","over","afdrukken","symbool","onderstreept","doorgestreept","inspringen","minder inspringen","volledige grootte","kleiner maken","opmaak kopiëren","horizontale lijn","lijst","genummerde lijst","knip","alles selecteren","Embed code","link openen","link aanpassen","niet volgen","link verwijderen","Updaten","Om te bewerken","Recensie"," URL","Bewerken","Horizontaal uitlijnen","Filteren","Sorteren op wijzigingsdatum","Sorteren op naam","Sorteren op grootte","Map toevoegen","Herstellen","Opslaan","Opslaan als ...","Grootte aanpassen","Bijknippen","Breedte","Hoogte","Verhouding behouden","Ja","Nee","Verwijderen","Selecteren","Selecteer: %s","Verticaal uitlijnen","Splitsen","Samenvoegen","Kolom toevoegen","Rij toevoegen",null,"Verwijderen","Verticaal splitsen","Horizontaal splitsen","Rand","Deze code lijkt op HTML. Als HTML behouden?","Invoegen als HTML","Origineel behouden","Als tekst invoegen","Als onopgemaakte tekst invoegen","Je kunt alleen je eigen afbeeldingen aanpassen. Deze afbeelding downloaden?","De afbeelding is succesvol geüploadet!","Palette","Er zijn geen bestanden in deze map.","Hongaars","Voer een nieuwe naam in","voorvertoning","Download","Plakken van klembord","Uw browser ondersteunt geen directe toegang tot het klembord.","Selectie kopiëren","kopiëren","Border radius"]
 
 /***/ }),
 /* 142 */
 /***/ (function(module, exports) {
 
-module.exports.default = ["Escreva algo...","Sobre o Jodit","Editor Jodit","Versão Gratuita não-comercial","Licença Pública GNU General, Versão 2 ou posterior","Guia de usuário Jodit","contém ajuda detalhada para o uso.","Para informação sobre a licença, por favor visite nosso site:","Compre a versão completa","Copyright © XDSoft.net - Chupurnov Valeriy. Todos os direitos reservados.","Link","Abrir em nova aba","Abrir editor em tela cheia","Limpar formatação","Cor de preenchimento ou cor do texto","Refazer","Desfazer","Negrito","Itálico","Inserir lista não ordenada","Inserir lista ordenada","Centralizar","Justificar","Alinhar à Esquerda","Alinhar à Direita","Inserir linha horizontal","Inserir imagem","Inserir arquivo","Inserir vídeo do Youtube/vimeo","Inserir link","Tamanho da letra","Fonte","Inserir bloco","Normal","Cabeçalho 1","Cabeçalho 2","Cabeçalho 3","Cabeçalho 4","Citação","Código","Inserir","Inserir tabela","Diminuir recuo","Aumentar recuo","Selecionar caractere especial","Inserir caractere especial","Copiar formato","Mudar modo","Margens","cima","direta","baixo","esquerda","Estilos CSS","Classes CSS","Alinhamento","Direita","Centro","Esquerda","--Não Estabelecido--","Fonte","Título","Texto Alternativo","Link","Abrir link em nova aba","Imagem","Arquivo","Avançado","Propriedades da imagem","Cancelar","Ok","Procurar arquivo","Erro ao carregar a lista","Erro ao carregar as pastas","Você tem certeza?","Escreva o nome da pasta","Criar pasta","Escreva seu nome","Soltar imagem","Soltar arquivo","ou clique","Texto alternativo","Upload","Explorar","Fundo","Texto","Cima","Meio","Baixo","Inserir coluna antes","Inserir coluna depois","Inserir linha acima","Inserir linha abaixo","Excluir tabela","Excluir linha","Excluir coluna","Limpar célula","Caracteres: %d","Palavras: %d","Tachado","Sublinhar","sobrescrito","subscrito","Cortar seleção","Selecionar tudo","Pausa","Procurar por","Substituir com","Substituir","Colar","Escolher conteúdo para colar","HTML","negrito","itálico","pincel","link","desfazer","refazer","tabela","imagem","apagar","parágrafo","tamanho da letra","vídeo","fonte","Sobre de","Imprimir","Símbolo","sublinhar","tachado","recuar","diminuir recuo","Tamanho completo","diminuir","Copiar formato","linha horizontal","lista não ordenada","lista ordenada","Cortar","Selecionar tudo","Incluir código","Abrir link","Editar link","Não siga","Remover link","Atualizar","Editar","Visualizar","URL","Editar","Alinhamento horizontal","filtrar","Ordenar por modificação","Ordenar por nome","Ordenar por tamanho","Adicionar pasta","Resetar","Salvar","Salvar como...","Redimensionar","Recortar","Largura","Altura","Manter a proporção","Sim","Não","Remover","Selecionar","Selecionar: %s","Alinhamento vertical","Dividir","Mesclar","Adicionar coluna","Adicionar linha",null,"Excluir","Dividir vertical","Dividir horizontal","Borda","Seu código é simular ao HTML. Manter como HTML?","Colar como HTML?","Manter","Inserir como Texto","Inserir somente o Texto","Você só pode editar suas próprias imagens. Baixar essa imagem pro servidor?","A imagem foi enviada com sucesso para o servidor!","Palette","Não há arquivos nesse diretório.","Húngara","Digite um novo nome","preview","Baixar","Colar da área de transferência","O seu navegador não oferece suporte a acesso direto para a área de transferência.","Selecção de cópia","cópia","Border radius"]
+module.exports.default = ["Napisz coś","O Jodit","Edytor Jodit","Darmowa wersja nie komercyjna","GNU General Public License, wersja 2 lub późniejsza","Instrukcja Jodit","zawiera szczegółowe informacje dotyczące użytkowania.","Odwiedź naszą stronę, aby uzyskać więcej informacji na temat licencji:","Zakup pełnej wersji","Copyright © XDSoft.net - Chupurnov Valeriy. Wszystkie prawa zastrzeżone.","Kotwica","Otwórz w nowej zakładce","Otwórz edytor w pełnym rozmiarze","Wyczyść formatowanie","Kolor wypełnienia lub ustaw kolor tekstu","Ponów","Cofnij","Pogrubienie","Kursywa","Wstaw listę wypunktowaną","Wstaw listę numeryczną","Wyśrodkuj","Wyjustuj","Wyrównaj do lewej","Wyrównaj do prawej","Wstaw linię poziomą","Wstaw grafikę","Wstaw plik","Wstaw film Youtube/vimeo","Wstaw link","Rozmiar tekstu","Krój czcionki","Wstaw formatowanie","Normalne","Nagłówek 1","Nagłówek 2","Nagłówek 3","Nagłówek 4","Cytat","Kod","Wstaw","Wstaw tabelę","Zmniejsz wcięcie","Zwiększ wcięcie","Wybierz znak specjalny","Wstaw znak specjalny","Malarz formatów","Zmień tryb","Marginesy","Górny","Prawy","Dolny","Levy","Style CSS","Klasy CSS","Wyrównanie","Prawa","środek","Lewa","brak","Źródło","Tytuł","Tekst alternatywny","Link","Otwórz w nowej zakładce","Grafika","Plik","Zaawansowane","Właściwości grafiki","Anuluj","OK","Przeglądarka plików","Błąd ładowania listy plików","Błąd ładowania folderów","Czy jesteś pewien?","Wprowadź nazwę folderu","Utwórz folder","wprowadź nazwę","Upuść plik graficzny","Upuść plik","lub kliknij tu","Tekst alternatywny","Wczytaj","Przeglądaj","Tło","Treść","Góra","Środek","Dół","Wstaw kolumnę przed","Wstaw kolumnę po","Wstaw wiersz przed","Wstaw wiersz po","Usuń tabelę","Usuń wiersz","Usuń kolumnę","Wyczyść komórkę","Znaki: %d","Słowa: %d","Przekreślenie","Podkreślenie","indeks górny","index dolny","Wytnij zaznaczenie","Wybierz wszystko","Przerwa","Szukaj","Zamień na","Zamień","Wklej","Wybierz zawartość do wklejenia","HTML","pogrubienie","kursywa","pędzel","link","cofnij","ponów","tabela","grafika","wyczyść","akapit","rozmiar czcionki","wideo","czcionka","O programie","drukuj","symbol","podkreślenie","przekreślenie","wcięcie","wycięcie","pełen rozmiar","przytnij","format kopii","linia pozioma","lista","lista numerowana","wytnij","zaznacz wszystko","Wstaw kod","otwórz link","edytuj link","Atrybut no-follow","Usuń link","Aktualizuj","edytuj","szukaj","URL","Edytuj","Wyrównywanie w poziomie","Filtruj","Sortuj wg zmiany","Sortuj wg nazwy","Sortuj wg rozmiaru","Dodaj folder","wyczyść","zapisz","zapisz jako","Zmień rozmiar","Przytnij","Szerokość","Wysokość","Zachowaj proporcje","Tak","Nie","Usuń","Wybierz","Wybierz: %s","Wyrównywanie w pionie","Podziel","Scal","Dodaj kolumnę","Dodaj wiersz",null,"Usuń","Podziel w pionie","Podziel w poziomie","Obramowanie","Twój kod wygląda jak HTML. Zachować HTML?","Wkleić jako HTML?","Oryginalny tekst","Wstaw jako tekst","Wstaw tylko treść","Możesz edytować tylko swoje grafiki. Czy chcesz pobrać tą grafikę?","Grafika została pomyślnienie dodana na serwer","Paleta","Brak plików.","zmień nazwę","Wprowadź nową nazwę","podgląd","pobierz","Wklej ze schowka","Twoja przeglądarka nie obsługuje schowka","Kopiuj zaznaczenie","kopiuj","Zaokrąglenie krawędzi"]
 
 /***/ }),
 /* 143 */
 /***/ (function(module, exports) {
 
-module.exports.default = ["Напишите что-либо","О Jodit","Редактор Jodit","Версия для не коммерческого использования","Стандартная общественная лицензия GNU (GPL), версия 2 или выше","Jodit Руководство пользователя","содержит детальную информацию по использованию","Для получения сведений о лицензии , пожалуйста, перейдите на наш сайт:","Купить полную версию","Авторские права © XDSoft.net - Чупурнов Валерий. Все права защищены.","Анкор","Открывать ссылку в новой вкладке","Открыть редактор в полном размере","Очистить форматирование","Цвет заливки или цвет текста","Повтор","Отмена","Жирный","Наклонный","Вставка маркированного списка","Вставить нумерованный список","Выровнять по центру","Выровнять по ширине","Выровнять по левому краю","Выровнять по правому краю","Вставить горизонтальную линию","Вставить изображение","Вставить файл","Вставьте видео","Вставить ссылку","Размер шрифта","Шрифт","Вставить блочный элемент","Нормальный текст","Заголовок 1","Заголовок 2","Заголовок 3","Заголовок 4","Цитата","Код","Вставить","Вставить таблицу","Уменьшить отступ","Увеличить отступ","Выберите специальный символ","Вставить специальный символ","Формат краски","Источник","Отступы","сверху","справа","снизу","слева","Стили","Классы","Выравнивание","По правому краю","По центру","По левому краю","--не устанавливать--","src","Заголовок","Альтернативный текст (alt)","Ссылка","Открывать ссылку в новом окне",null,"Файл","Расширенные","Свойства изображения","Отмена","Ок","Браузер файлов","Ошибка при загрузке списка изображений","Ошибка при загрузке списка директорий","Вы уверены?","Введите название директории","Создать директорию","введите название","Перетащите сюда изображение","Перетащите сюда файл","или нажмите","Альтернативный текст","Загрузка","Сервер","Фон","Текст"," К верху","По середине","К низу","Вставить столбец до","Вставить столбец после","Вставить ряд выше","Вставить ряд ниже","Удалить таблицу","Удалять ряд","Удалить столбец","Отчистить ячейку","Символов: %d","Слов: %d","Перечеркнуть","Подчеркивание","верхний индекс","индекс","Вырезать","Выделить все","Разделитель","Найти","Заменить на","Заменить","Вставить","Выбрать контент для вставки","HTML","жирный","курсив","заливка","ссылка","отменить","повторить","таблица","Изображение","очистить","параграф","размер шрифта","видео","шрифт","о редакторе","печать","символ","подчеркнутый","перечеркнутый","отступ","выступ","во весь экран","обычный размер","Копировать формат","линия","Список","Нумерованный список","Вырезать","Выделить все","Код","Открыть ссылку","Редактировать ссылку","Атрибут nofollow","Убрать ссылку","Обновить","Редактировать","Просмотр","URL","Редактировать","Горизонтальное выравнивание","Фильтр","По изменению","По имени","По размеру","Добавить папку","Восстановить","Сохранить","Сохранить как","Изменить размер","Обрезать размер","Ширина","Высота","Сохранять пропорции","Да","Нет","Удалить","Выделить","Выделить: %s","Вертикальное выравнивание","Разделить","Объеденить в одну","Добавить столбец","Добавить строку","Лицензия: %s","Удалить","Разделить по вертикали","Разделить по горизонтали","Рамка","Ваш текст, который вы пытаетесь вставить похож на HTML. Вставить его как HTML?","Вставить как HTML?","Сохранить оригинал","Вставить как текст","Вставить только текст","Вы можете редактировать только свои собственные изображения. Загрузить это изображение на ваш сервер?","Изображение успешно загружено на сервер!","палитра","В данном каталоге нет файлов","Переименовать","Введите новое имя","Предпросмотр","Скачать","Вставить из буфера обмена","Ваш браузер не поддерживает прямой доступ к буферу обмена.","Скопировать выделенное","копия","Радиус границы"]
+module.exports.default = ["Escreva algo...","Sobre o Jodit","Editor Jodit","Versão Gratuita não-comercial","Licença Pública GNU General, Versão 2 ou posterior","Guia de usuário Jodit","contém ajuda detalhada para o uso.","Para informação sobre a licença, por favor visite nosso site:","Compre a versão completa","Copyright © XDSoft.net - Chupurnov Valeriy. Todos os direitos reservados.","Link","Abrir em nova aba","Abrir editor em tela cheia","Limpar formatação","Cor de preenchimento ou cor do texto","Refazer","Desfazer","Negrito","Itálico","Inserir lista não ordenada","Inserir lista ordenada","Centralizar","Justificar","Alinhar à Esquerda","Alinhar à Direita","Inserir linha horizontal","Inserir imagem","Inserir arquivo","Inserir vídeo do Youtube/vimeo","Inserir link","Tamanho da letra","Fonte","Inserir bloco","Normal","Cabeçalho 1","Cabeçalho 2","Cabeçalho 3","Cabeçalho 4","Citação","Código","Inserir","Inserir tabela","Diminuir recuo","Aumentar recuo","Selecionar caractere especial","Inserir caractere especial","Copiar formato","Mudar modo","Margens","cima","direta","baixo","esquerda","Estilos CSS","Classes CSS","Alinhamento","Direita","Centro","Esquerda","--Não Estabelecido--","Fonte","Título","Texto Alternativo","Link","Abrir link em nova aba","Imagem","Arquivo","Avançado","Propriedades da imagem","Cancelar","Ok","Procurar arquivo","Erro ao carregar a lista","Erro ao carregar as pastas","Você tem certeza?","Escreva o nome da pasta","Criar pasta","Escreva seu nome","Soltar imagem","Soltar arquivo","ou clique","Texto alternativo","Upload","Explorar","Fundo","Texto","Cima","Meio","Baixo","Inserir coluna antes","Inserir coluna depois","Inserir linha acima","Inserir linha abaixo","Excluir tabela","Excluir linha","Excluir coluna","Limpar célula","Caracteres: %d","Palavras: %d","Tachado","Sublinhar","sobrescrito","subscrito","Cortar seleção","Selecionar tudo","Pausa","Procurar por","Substituir com","Substituir","Colar","Escolher conteúdo para colar","HTML","negrito","itálico","pincel","link","desfazer","refazer","tabela","imagem","apagar","parágrafo","tamanho da letra","vídeo","fonte","Sobre de","Imprimir","Símbolo","sublinhar","tachado","recuar","diminuir recuo","Tamanho completo","diminuir","Copiar formato","linha horizontal","lista não ordenada","lista ordenada","Cortar","Selecionar tudo","Incluir código","Abrir link","Editar link","Não siga","Remover link","Atualizar","Editar","Visualizar","URL","Editar","Alinhamento horizontal","filtrar","Ordenar por modificação","Ordenar por nome","Ordenar por tamanho","Adicionar pasta","Resetar","Salvar","Salvar como...","Redimensionar","Recortar","Largura","Altura","Manter a proporção","Sim","Não","Remover","Selecionar","Selecionar: %s","Alinhamento vertical","Dividir","Mesclar","Adicionar coluna","Adicionar linha",null,"Excluir","Dividir vertical","Dividir horizontal","Borda","Seu código é simular ao HTML. Manter como HTML?","Colar como HTML?","Manter","Inserir como Texto","Inserir somente o Texto","Você só pode editar suas próprias imagens. Baixar essa imagem pro servidor?","A imagem foi enviada com sucesso para o servidor!","Palette","Não há arquivos nesse diretório.","Húngara","Digite um novo nome","preview","Baixar","Colar da área de transferência","O seu navegador não oferece suporte a acesso direto para a área de transferência.","Selecção de cópia","cópia","Border radius"]
 
 /***/ }),
 /* 144 */
 /***/ (function(module, exports) {
 
-module.exports.default = ["Bir şey yazın.","Jodit Hakkında","Jodit Editor","Ücretsiz, ticari olmayan versiyon","GNU General Public License, Versiyon 2 ve sonrası için","Jodit Kullanım Kılavuzu","kullanım için detaylı bilgiler içerir","Lisans hakkında bilgi için lütfen web sitemize gidin:","Tam versiyon satın al","Copyright © XDSoft.net - Chupurnov Valeriy. Tüm Hakları Saklıdır","Bağlantı","Yeni sekmede aç","Tam ekran editör","Stili temizle","Dolgu ve yazı rengi seç","İleri Al","Geri Al","Kalın","İtalik","Sırasız Liste Ekle","Sıralı Liste Ekle","Ortala","Kenarlara Yasla","Sola Yasla","Sağa Yasla","Yatay Çizgi Ekle","Resim Ekle","Dosya Ekle","Youtube/vimeo Videosu Ekle","Bağlantı Ekle","Font Boyutu","Font Ailesi","Blok Ekle","Normal","Başlık 1","Başlık 2","Başlık 3","Başlık 4","Alıntı","Code","Ekle","Tablo Ekle","Girintiyi Azalt","Girintiyi Arttır","Özel Karakter Seç","Özel Karakter Ekle","Resim Biçimi","Mod Değiştir","MEsafeler","Üst","Sağ","Alt","Sol","CSS Stilleri","CSS Sınıfları","Hizalama","Sağ","Ortalı","Sol","Belirlenmedi","Kaynak","Başlık","Alternatif Yazı","Link","Bağlantıyı yeni sekmede aç","Resim","Dosya","Gelişmiş","Resim özellikleri","İptal","Tamam","Dosya Gezgini","Liste yüklenirken hata oluştu","Klasörler yüklenirken hata oluştur","Emin misiniz?","Dizin yolu giriniz","Dizin oluştur","Typname","Resim bırak","Dosya bırak","veya tıkla","Alternatif yazı","Yükle","Ekle","Arka plan","Yazı","Üst","Orta","Aşağı","Öncesine kolon ekle","Sonrasına kolon ekle","Üstüne satır ekle","Altına satır ekle","Tabloyu sil","Satır sil","Kolon sil","Hücreyi boşalt","Harfler: %d","Kelimeler: %d","Durchschlagen","Alt çizgi","Üst yazı","Alt yazı","Seçilimi kes","Tümünü seç","Durdur","Ara","Şununla değiştir","Değiştir","Yapıştır","Yapıştırılacak içerik seç","Kaynak","Kalın","italik","Fırça","Bağlantı","Geri al","İleri al","Tablo","Resim","Silgi","Paragraf","Font boyutu","Video","Font","Hakkında","Yazdır","Sembol","Alt çizgi","Üstü çizili","Girinti","Çıkıntı","Tam ekran","Küçült","Kopyalama Biçimi","Ayraç","Sırasız liste","Sıralı liste","Kes","Tümünü seç","Kod ekle","Bağlantıyı aç","Bağlantıyı düzenle","Nofollow özelliği","Bağlantıyı kaldır","Güncelle","Düzenlemek için","Yorumu","URL","Düzenle","Yatay hizalama","Filtre","Değişime göre sırala","İsme göre sırala","Boyuta göre sırala","Klasör ekle","Sıfırla","Kaydet","Farklı kaydet","Boyutlandır","Kırp","Genişlik","Yükseklik","En boy oranını koru","Evet","Hayır","Sil","Seç","Seç: %s","Dikey hizalama","Ayır","Birleştir","Kolon ekle","Satır ekle",null,"Sil","Dikey ayır","Yatay ayır","Kenarlık","Kodunuz HTML koduna benziyor. HTML olarak devam etmek ister misiniz?","HTML olarak yapıştır","Sakla","Yazı olarak ekle","Nur Text einfügen","Sadece kendi resimlerinizi düzenleyebilirsiniz. Bu görseli kendi hostunuza indirmek ister misiniz?","Görsel başarıyla hostunuza yüklendi","Palette","Bu dizinde dosya yok.","Macarca","Yeni isim girin","Ön izleme","İndir","Panodan yapıştır ","Tarayıcınız pano doğrudan erişim desteklemiyor.","Kopya seçimi","kopya","Sınır yarıçapı"]
+module.exports.default = ["Напишите что-либо","О Jodit","Редактор Jodit","Версия для не коммерческого использования","Стандартная общественная лицензия GNU (GPL), версия 2 или выше","Jodit Руководство пользователя","содержит детальную информацию по использованию","Для получения сведений о лицензии , пожалуйста, перейдите на наш сайт:","Купить полную версию","Авторские права © XDSoft.net - Чупурнов Валерий. Все права защищены.","Анкор","Открывать ссылку в новой вкладке","Открыть редактор в полном размере","Очистить форматирование","Цвет заливки или цвет текста","Повтор","Отмена","Жирный","Наклонный","Вставка маркированного списка","Вставить нумерованный список","Выровнять по центру","Выровнять по ширине","Выровнять по левому краю","Выровнять по правому краю","Вставить горизонтальную линию","Вставить изображение","Вставить файл","Вставьте видео","Вставить ссылку","Размер шрифта","Шрифт","Вставить блочный элемент","Нормальный текст","Заголовок 1","Заголовок 2","Заголовок 3","Заголовок 4","Цитата","Код","Вставить","Вставить таблицу","Уменьшить отступ","Увеличить отступ","Выберите специальный символ","Вставить специальный символ","Формат краски","Источник","Отступы","сверху","справа","снизу","слева","Стили","Классы","Выравнивание","По правому краю","По центру","По левому краю","--не устанавливать--","src","Заголовок","Альтернативный текст (alt)","Ссылка","Открывать ссылку в новом окне",null,"Файл","Расширенные","Свойства изображения","Отмена","Ок","Браузер файлов","Ошибка при загрузке списка изображений","Ошибка при загрузке списка директорий","Вы уверены?","Введите название директории","Создать директорию","введите название","Перетащите сюда изображение","Перетащите сюда файл","или нажмите","Альтернативный текст","Загрузка","Сервер","Фон","Текст"," К верху","По середине","К низу","Вставить столбец до","Вставить столбец после","Вставить ряд выше","Вставить ряд ниже","Удалить таблицу","Удалять ряд","Удалить столбец","Отчистить ячейку","Символов: %d","Слов: %d","Перечеркнуть","Подчеркивание","верхний индекс","индекс","Вырезать","Выделить все","Разделитель","Найти","Заменить на","Заменить","Вставить","Выбрать контент для вставки","HTML","жирный","курсив","заливка","ссылка","отменить","повторить","таблица","Изображение","очистить","параграф","размер шрифта","видео","шрифт","о редакторе","печать","символ","подчеркнутый","перечеркнутый","отступ","выступ","во весь экран","обычный размер","Копировать формат","линия","Список","Нумерованный список","Вырезать","Выделить все","Код","Открыть ссылку","Редактировать ссылку","Атрибут nofollow","Убрать ссылку","Обновить","Редактировать","Просмотр","URL","Редактировать","Горизонтальное выравнивание","Фильтр","По изменению","По имени","По размеру","Добавить папку","Восстановить","Сохранить","Сохранить как","Изменить размер","Обрезать размер","Ширина","Высота","Сохранять пропорции","Да","Нет","Удалить","Выделить","Выделить: %s","Вертикальное выравнивание","Разделить","Объеденить в одну","Добавить столбец","Добавить строку","Лицензия: %s","Удалить","Разделить по вертикали","Разделить по горизонтали","Рамка","Ваш текст, который вы пытаетесь вставить похож на HTML. Вставить его как HTML?","Вставить как HTML?","Сохранить оригинал","Вставить как текст","Вставить только текст","Вы можете редактировать только свои собственные изображения. Загрузить это изображение на ваш сервер?","Изображение успешно загружено на сервер!","палитра","В данном каталоге нет файлов","Переименовать","Введите новое имя","Предпросмотр","Скачать","Вставить из буфера обмена","Ваш браузер не поддерживает прямой доступ к буферу обмена.","Скопировать выделенное","копия","Радиус границы"]
 
 /***/ }),
 /* 145 */
 /***/ (function(module, exports) {
 
-module.exports.default = ["输入一些内容","关于Jodit","Jodit Editor","Free Non-commercial Version","GNU General Public License, version 2 or later","开发者指南","使用帮助","有关许可证的信息，请访问我们的网站：","购买完整版本","Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.","Anchor","在新窗口打开","全屏编辑","清除样式","颜色","重做","撤销","粗体","斜体","符号列表","编号","居中","对齐文本","左对齐","右对齐","分割线","图片","文件","youtube/vimeo 视频","链接","字号","字体","格式块","文本","标题1","标题2","标题3","标题4","引用","代码","插入","表格","减少缩进","增加缩进","选择特殊符号","特殊符号","格式复制","改变模式","外边距（Margins）","top","right","bottom","left","样式","Classes","对齐方式","居右","居中","居左","无","Src","Title","Alternative","Link","在新窗口打开链接","图片","file","高级","图片属性","取消","确定","文件管理","加载list错误","加载folders错误","你确定吗？","输入路径","创建路径","type name","拖动图片到此","拖动文件到此","或点击","Alternative text","上传","浏览","背景色","文字","顶部","中间","底部","在之前插入列","在之后插入列","在之前插入行","在之后插入行","删除表格","删除行","删除列","清除内容","字符数: %d","单词数: %d","删除线","下划线","上标","下标","剪切","全选","Pause","查找","替换为","替换","粘贴","选择内容并粘贴","源码","粗体","斜体","颜色","链接","撤销","重做","表格","图片","橡皮擦","段落","字号","视频","字体","关于","打印","符号","下划线","上出现","增加缩进","减少缩进","全屏","收缩","复制格式","分割线","无序列表","顺序列表","剪切","全选","嵌入代码","打开链接","编辑链接","No follow","Unlink","更新","铅笔","回顧","URL",null,"水平对齐","筛选","修改时间排序","名称排序","大小排序","新建文件夹","重置","保存","保存为","调整大小","Crop","宽","高","保存长宽比","是","不","移除","选择","选择: %s","垂直对齐","拆分","合并","添加列","添加行",null,"删除","垂直拆分","水平拆分","边框","你粘贴的文本是一段html代码，是否保留源格式","html粘贴","保留源格式","把html代码视为普通文本","只保留文本","你只能编辑你自己的图片。Download this image on the host?","图片上传成功","调色板","此目录中沒有文件。","重命名","输入新名称","预览","下载","粘贴从剪贴板","你浏览器不支持直接访问的剪贴板。","复制的选择","复制","边界半径"]
+module.exports.default = ["Bir şey yazın.","Jodit Hakkında","Jodit Editor","Ücretsiz, ticari olmayan versiyon","GNU General Public License, Versiyon 2 ve sonrası için","Jodit Kullanım Kılavuzu","kullanım için detaylı bilgiler içerir","Lisans hakkında bilgi için lütfen web sitemize gidin:","Tam versiyon satın al","Copyright © XDSoft.net - Chupurnov Valeriy. Tüm Hakları Saklıdır","Bağlantı","Yeni sekmede aç","Tam ekran editör","Stili temizle","Dolgu ve yazı rengi seç","İleri Al","Geri Al","Kalın","İtalik","Sırasız Liste Ekle","Sıralı Liste Ekle","Ortala","Kenarlara Yasla","Sola Yasla","Sağa Yasla","Yatay Çizgi Ekle","Resim Ekle","Dosya Ekle","Youtube/vimeo Videosu Ekle","Bağlantı Ekle","Font Boyutu","Font Ailesi","Blok Ekle","Normal","Başlık 1","Başlık 2","Başlık 3","Başlık 4","Alıntı","Code","Ekle","Tablo Ekle","Girintiyi Azalt","Girintiyi Arttır","Özel Karakter Seç","Özel Karakter Ekle","Resim Biçimi","Mod Değiştir","MEsafeler","Üst","Sağ","Alt","Sol","CSS Stilleri","CSS Sınıfları","Hizalama","Sağ","Ortalı","Sol","Belirlenmedi","Kaynak","Başlık","Alternatif Yazı","Link","Bağlantıyı yeni sekmede aç","Resim","Dosya","Gelişmiş","Resim özellikleri","İptal","Tamam","Dosya Gezgini","Liste yüklenirken hata oluştu","Klasörler yüklenirken hata oluştur","Emin misiniz?","Dizin yolu giriniz","Dizin oluştur","Typname","Resim bırak","Dosya bırak","veya tıkla","Alternatif yazı","Yükle","Ekle","Arka plan","Yazı","Üst","Orta","Aşağı","Öncesine kolon ekle","Sonrasına kolon ekle","Üstüne satır ekle","Altına satır ekle","Tabloyu sil","Satır sil","Kolon sil","Hücreyi boşalt","Harfler: %d","Kelimeler: %d","Durchschlagen","Alt çizgi","Üst yazı","Alt yazı","Seçilimi kes","Tümünü seç","Durdur","Ara","Şununla değiştir","Değiştir","Yapıştır","Yapıştırılacak içerik seç","Kaynak","Kalın","italik","Fırça","Bağlantı","Geri al","İleri al","Tablo","Resim","Silgi","Paragraf","Font boyutu","Video","Font","Hakkında","Yazdır","Sembol","Alt çizgi","Üstü çizili","Girinti","Çıkıntı","Tam ekran","Küçült","Kopyalama Biçimi","Ayraç","Sırasız liste","Sıralı liste","Kes","Tümünü seç","Kod ekle","Bağlantıyı aç","Bağlantıyı düzenle","Nofollow özelliği","Bağlantıyı kaldır","Güncelle","Düzenlemek için","Yorumu","URL","Düzenle","Yatay hizalama","Filtre","Değişime göre sırala","İsme göre sırala","Boyuta göre sırala","Klasör ekle","Sıfırla","Kaydet","Farklı kaydet","Boyutlandır","Kırp","Genişlik","Yükseklik","En boy oranını koru","Evet","Hayır","Sil","Seç","Seç: %s","Dikey hizalama","Ayır","Birleştir","Kolon ekle","Satır ekle",null,"Sil","Dikey ayır","Yatay ayır","Kenarlık","Kodunuz HTML koduna benziyor. HTML olarak devam etmek ister misiniz?","HTML olarak yapıştır","Sakla","Yazı olarak ekle","Nur Text einfügen","Sadece kendi resimlerinizi düzenleyebilirsiniz. Bu görseli kendi hostunuza indirmek ister misiniz?","Görsel başarıyla hostunuza yüklendi","Palette","Bu dizinde dosya yok.","Macarca","Yeni isim girin","Ön izleme","İndir","Panodan yapıştır ","Tarayıcınız pano doğrudan erişim desteklemiyor.","Kopya seçimi","kopya","Sınır yarıçapı"]
 
 /***/ }),
 /* 146 */
 /***/ (function(module, exports) {
 
-module.exports.default = ["輸入一些內容","關於Jodit","Jodit Editor","Free Non-commercial Version","GNU General Public License, version 2 or later","開發者指南","使用幫助","有關許可證的信息，請訪問我們的網站：","購買完整版本","Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.","Anchor","在新窗口打開","全屏編輯","清除樣式","顏色","重做","撤銷","粗體","斜體","符號列表","編號","居中","對齊文本","左對齊","右對齊","分割線","圖片","文件","youtube/vimeo 影片","鏈接","字號","字體","格式塊","文本","標題1","標題2","標題3","標題4","引用","代碼","插入","表格","減少縮進","增加縮進","選擇特殊符號","特殊符號","格式複製","改變模式","外邊距（Margins）","top","right","bottom","left","樣式","Classes","對齊方式","居右","居中","居左","無","Src","Title","Alternative","Link","在新窗口打開鏈接","圖片","file","高級","圖片屬性","取消","確定","文件管理","加載list錯誤","加載folders錯誤","你確定嗎？","輸入路徑","創建路徑","type name","拖動圖片到此","拖動文件到此","或點擊","Alternative text","上傳","瀏覽","背景色","文字","頂部","中間","底部","在之前插入列","在之後插入列","在之前插入行","在之後插入行","刪除表格","刪除行","刪除列","清除內容","字符數: %d","單詞數: %d","刪除線","下劃線","上標","下標","剪切","全選","Pause","查找","替換為","替換","黏貼","選擇內容並黏貼","源碼","粗體","斜體","顏色","鏈接","撤銷","重做","表格","圖片","橡皮擦","段落","字號","影片","字體","關於","打印","符號","下劃線","上出現","增加縮進","減少縮進","全屏","收縮","複製格式","分割線","無序列表","順序列表","剪切","全選","嵌入代碼","打開鏈接","編輯鏈接","No follow","Unlink","更新","鉛筆","回顧","URL",null,"水平對齊","篩選","修改時間排序","名稱排序","大小排序","新建文件夾","重置","保存","保存為","調整大小","Crop","寬","高","保存長寬比","是","不","移除","選擇","選擇: %s","垂直對齊","拆分","合併","添加列","添加行",null,"刪除","垂直拆分","水平拆分","邊框","你黏貼的文本是一段html代碼，是否保留源格式","html黏貼","保留源格式","把html代碼視為普通文本","只保留文本","妳只能編輯妳自己的圖片。Download this image on the host?","圖片上傳成功","調色板","此目錄中沒有文件。","重命名","輸入新名稱","預覽","下載","วางจากคลิปบอร์ด","ของเบราว์เซอร์ไม่สนับสนุนโดยตรงเข้าไปยังคลิปบอร์ด","คัดลอกส่วนที่เลือก","คัดลอก","เส้นขอบรัศมี"]
+module.exports.default = ["输入一些内容","关于Jodit","Jodit Editor","Free Non-commercial Version","GNU General Public License, version 2 or later","开发者指南","使用帮助","有关许可证的信息，请访问我们的网站：","购买完整版本","Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.","Anchor","在新窗口打开","全屏编辑","清除样式","颜色","重做","撤销","粗体","斜体","符号列表","编号","居中","对齐文本","左对齐","右对齐","分割线","图片","文件","youtube/vimeo 视频","链接","字号","字体","格式块","文本","标题1","标题2","标题3","标题4","引用","代码","插入","表格","减少缩进","增加缩进","选择特殊符号","特殊符号","格式复制","改变模式","外边距（Margins）","top","right","bottom","left","样式","Classes","对齐方式","居右","居中","居左","无","Src","Title","Alternative","Link","在新窗口打开链接","图片","file","高级","图片属性","取消","确定","文件管理","加载list错误","加载folders错误","你确定吗？","输入路径","创建路径","type name","拖动图片到此","拖动文件到此","或点击","Alternative text","上传","浏览","背景色","文字","顶部","中间","底部","在之前插入列","在之后插入列","在之前插入行","在之后插入行","删除表格","删除行","删除列","清除内容","字符数: %d","单词数: %d","删除线","下划线","上标","下标","剪切","全选","Pause","查找","替换为","替换","粘贴","选择内容并粘贴","源码","粗体","斜体","颜色","链接","撤销","重做","表格","图片","橡皮擦","段落","字号","视频","字体","关于","打印","符号","下划线","上出现","增加缩进","减少缩进","全屏","收缩","复制格式","分割线","无序列表","顺序列表","剪切","全选","嵌入代码","打开链接","编辑链接","No follow","Unlink","更新","铅笔","回顧","URL",null,"水平对齐","筛选","修改时间排序","名称排序","大小排序","新建文件夹","重置","保存","保存为","调整大小","Crop","宽","高","保存长宽比","是","不","移除","选择","选择: %s","垂直对齐","拆分","合并","添加列","添加行",null,"删除","垂直拆分","水平拆分","边框","你粘贴的文本是一段html代码，是否保留源格式","html粘贴","保留源格式","把html代码视为普通文本","只保留文本","你只能编辑你自己的图片。Download this image on the host?","图片上传成功","调色板","此目录中沒有文件。","重命名","输入新名称","预览","下载","粘贴从剪贴板","你浏览器不支持直接访问的剪贴板。","复制的选择","复制","边界半径"]
 
 /***/ }),
 /* 147 */
+/***/ (function(module, exports) {
+
+module.exports.default = ["輸入一些內容","關於Jodit","Jodit Editor","Free Non-commercial Version","GNU General Public License, version 2 or later","開發者指南","使用幫助","有關許可證的信息，請訪問我們的網站：","購買完整版本","Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.","Anchor","在新窗口打開","全屏編輯","清除樣式","顏色","重做","撤銷","粗體","斜體","符號列表","編號","居中","對齊文本","左對齊","右對齊","分割線","圖片","文件","youtube/vimeo 影片","鏈接","字號","字體","格式塊","文本","標題1","標題2","標題3","標題4","引用","代碼","插入","表格","減少縮進","增加縮進","選擇特殊符號","特殊符號","格式複製","改變模式","外邊距（Margins）","top","right","bottom","left","樣式","Classes","對齊方式","居右","居中","居左","無","Src","Title","Alternative","Link","在新窗口打開鏈接","圖片","file","高級","圖片屬性","取消","確定","文件管理","加載list錯誤","加載folders錯誤","你確定嗎？","輸入路徑","創建路徑","type name","拖動圖片到此","拖動文件到此","或點擊","Alternative text","上傳","瀏覽","背景色","文字","頂部","中間","底部","在之前插入列","在之後插入列","在之前插入行","在之後插入行","刪除表格","刪除行","刪除列","清除內容","字符數: %d","單詞數: %d","刪除線","下劃線","上標","下標","剪切","全選","Pause","查找","替換為","替換","黏貼","選擇內容並黏貼","源碼","粗體","斜體","顏色","鏈接","撤銷","重做","表格","圖片","橡皮擦","段落","字號","影片","字體","關於","打印","符號","下劃線","上出現","增加縮進","減少縮進","全屏","收縮","複製格式","分割線","無序列表","順序列表","剪切","全選","嵌入代碼","打開鏈接","編輯鏈接","No follow","Unlink","更新","鉛筆","回顧","URL",null,"水平對齊","篩選","修改時間排序","名稱排序","大小排序","新建文件夾","重置","保存","保存為","調整大小","Crop","寬","高","保存長寬比","是","不","移除","選擇","選擇: %s","垂直對齊","拆分","合併","添加列","添加行",null,"刪除","垂直拆分","水平拆分","邊框","你黏貼的文本是一段html代碼，是否保留源格式","html黏貼","保留源格式","把html代碼視為普通文本","只保留文本","妳只能編輯妳自己的圖片。Download this image on the host?","圖片上傳成功","調色板","此目錄中沒有文件。","重命名","輸入新名稱","預覽","下載","วางจากคลิปบอร์ด","ของเบราว์เซอร์ไม่สนับสนุนโดยตรงเข้าไปยังคลิปบอร์ด","คัดลอกส่วนที่เลือก","คัดลอก","เส้นขอบรัศมี"]
+
+/***/ }),
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12130,10 +12271,10 @@ module.exports.default = ["輸入一些內容","關於Jodit","Jodit Editor","Fre
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var Config_1 = __webpack_require__(3);
-var Dom_1 = __webpack_require__(0);
-var async_1 = __webpack_require__(5);
-var size_1 = __webpack_require__(23);
-var icon_1 = __webpack_require__(6);
+var Dom_1 = __webpack_require__(1);
+var async_1 = __webpack_require__(6);
+var size_1 = __webpack_require__(20);
+var icon_1 = __webpack_require__(5);
 Config_1.Config.prototype.addNewLine = true;
 Config_1.Config.prototype.addNewLineOnDBLClick = true;
 Config_1.Config.prototype.addNewLineTagsTriggers = [
@@ -12166,14 +12307,14 @@ function addNewLine(editor) {
         if (editor.container.classList.contains('jodit_popup_active')) {
             return;
         }
-        clearTimeout(timeout);
+        editor.async.clearTimeout(timeout);
         line.classList.toggle('jodit-add-new-line_after', !preview);
         line.style.display = 'block';
         line.style.width = editor.editor.clientWidth + 'px';
         hidden = false;
     };
     var hideForce = function () {
-        clearTimeout(timeout);
+        editor.async.clearTimeout(timeout);
         lineInFocus = false;
         line.style.display = 'none';
         hidden = true;
@@ -12187,12 +12328,16 @@ function addNewLine(editor) {
         if (hidden || lineInFocus) {
             return;
         }
-        clearTimeout(timeout);
-        timeout = async_1.setTimeout(hideForce, 500);
+        timeout = editor.async.setTimeout(hideForce, {
+            timeout: 500,
+            label: 'add-new-line-hide'
+        });
     };
     editor.events
         .on('beforeDestruct', function () {
+        editor.async.clearTimeout(timeout);
         Dom_1.Dom.safeRemove(line);
+        editor.events.off(line);
     })
         .on('afterInit', function () {
         editor.container.appendChild(line);
@@ -12201,7 +12346,7 @@ function addNewLine(editor) {
             e.stopPropagation();
         })
             .on(line, 'mousedown touchstart', function (e) {
-            var p = editor.editorDocument.createElement(editor.options.enter);
+            var p = editor.create.inside.element(editor.options.enter);
             if (preview && current && current.parentNode) {
                 current.parentNode.insertBefore(p, current);
             }
@@ -12216,9 +12361,8 @@ function addNewLine(editor) {
     })
         .on('afterInit', function () {
         editor.events
-            .on(editor.editor, 'scroll', function () {
-            hideForce();
-        })
+            .on(editor.editor, 'scroll', hideForce)
+            .on('change', hideForce)
             .on(editor.container, 'mouseleave', hide)
             .on(line, 'mouseenter', function () {
             clearTimeout(timeout);
@@ -12312,7 +12456,7 @@ exports.addNewLine = addNewLine;
 
 
 /***/ }),
-/* 148 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12327,16 +12471,14 @@ exports.addNewLine = addNewLine;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var Config_1 = __webpack_require__(3);
-var Dom_1 = __webpack_require__(0);
-var async_1 = __webpack_require__(5);
+var Dom_1 = __webpack_require__(1);
 Config_1.Config.prototype.autofocus = false;
 function autofocus(editor) {
-    var timeout;
     editor.events
         .on('afterInit', function () {
         if (editor.options.autofocus) {
             if (editor.defaultTimeout) {
-                timeout = async_1.setTimeout(editor.selection.focus, 300);
+                editor.async.setTimeout(editor.selection.focus, 300);
             }
             else {
                 editor.selection.focus();
@@ -12355,16 +12497,13 @@ function autofocus(editor) {
                 editor.selection.setCursorIn(e.target);
             }
         }
-    })
-        .on('beforeDestruct', function () {
-        clearTimeout(timeout);
     });
 }
 exports.autofocus = autofocus;
 
 
 /***/ }),
-/* 149 */
+/* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12380,7 +12519,7 @@ exports.autofocus = autofocus;
 Object.defineProperty(exports, "__esModule", { value: true });
 var consts = __webpack_require__(2);
 var constants_1 = __webpack_require__(2);
-var Dom_1 = __webpack_require__(0);
+var Dom_1 = __webpack_require__(1);
 var helpers_1 = __webpack_require__(4);
 function backspace(editor) {
     var removeEmptyBlocks = function (container) {
@@ -12678,7 +12817,7 @@ exports.backspace = backspace;
 
 
 /***/ }),
-/* 150 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12692,7 +12831,7 @@ exports.backspace = backspace;
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(0);
 var Config_1 = __webpack_require__(3);
 Config_1.Config.prototype.controls.subscript = {
     tags: ['sub'],
@@ -12767,7 +12906,7 @@ exports.bold = bold;
 
 
 /***/ }),
-/* 151 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12784,7 +12923,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Config_1 = __webpack_require__(3);
 var consts = __webpack_require__(2);
 var constants_1 = __webpack_require__(2);
-var Dom_1 = __webpack_require__(0);
+var Dom_1 = __webpack_require__(1);
 var helpers_1 = __webpack_require__(4);
 Config_1.Config.prototype.cleanHTML = {
     timeout: 300,
@@ -13049,7 +13188,7 @@ exports.cleanHtml = cleanHtml;
 
 
 /***/ }),
-/* 152 */
+/* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13069,7 +13208,7 @@ exports.nl2br = function (html) {
 
 
 /***/ }),
-/* 153 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13083,12 +13222,11 @@ exports.nl2br = function (html) {
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(0);
 var constants_1 = __webpack_require__(2);
 var dialog_1 = __webpack_require__(17);
 var Plugin_1 = __webpack_require__(7);
-var Dom_1 = __webpack_require__(0);
-var setTimeout_1 = __webpack_require__(19);
+var Dom_1 = __webpack_require__(1);
 var pasteStorage = (function (_super) {
     tslib_1.__extends(pasteStorage, _super);
     function pasteStorage() {
@@ -13175,7 +13313,7 @@ var pasteStorage = (function (_super) {
                 _this.listBox && _this.listBox.appendChild(a);
             });
             _this.dialog && _this.dialog.open();
-            setTimeout_1.setTimeout(function () {
+            _this.jodit.async.setTimeout(function () {
                 _this.selectIndex(0);
             }, 100);
         };
@@ -13249,7 +13387,7 @@ exports.pasteStorage = pasteStorage;
 
 
 /***/ }),
-/* 154 */
+/* 155 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13264,7 +13402,7 @@ exports.pasteStorage = pasteStorage;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var Config_1 = __webpack_require__(3);
-var Dom_1 = __webpack_require__(0);
+var Dom_1 = __webpack_require__(1);
 var helpers_1 = __webpack_require__(4);
 var pluginKey = 'copyformat';
 var copyStyles = [
@@ -13352,7 +13490,7 @@ Config_1.Config.prototype.controls.copyformat = {
 
 
 /***/ }),
-/* 155 */
+/* 156 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13370,7 +13508,7 @@ var Config_1 = __webpack_require__(3);
 var Widget_1 = __webpack_require__(18);
 var TabsWidget = Widget_1.Widget.TabsWidget;
 var ColorPickerWidget = Widget_1.Widget.ColorPickerWidget;
-var Dom_1 = __webpack_require__(0);
+var Dom_1 = __webpack_require__(1);
 var helpers_1 = __webpack_require__(4);
 Config_1.Config.prototype.controls.brush = {
     isActive: function (editor, control, button) {
@@ -13470,7 +13608,7 @@ exports.color = color;
 
 
 /***/ }),
-/* 156 */
+/* 157 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13484,9 +13622,9 @@ exports.color = color;
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(0);
 var constants_1 = __webpack_require__(2);
-var Dom_1 = __webpack_require__(0);
+var Dom_1 = __webpack_require__(1);
 var helpers_1 = __webpack_require__(4);
 var Plugin_1 = __webpack_require__(7);
 var clipboard_1 = __webpack_require__(70);
@@ -13637,7 +13775,7 @@ exports.DragAndDrop = DragAndDrop;
 
 
 /***/ }),
-/* 157 */
+/* 158 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13651,11 +13789,11 @@ exports.DragAndDrop = DragAndDrop;
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(0);
 var Config_1 = __webpack_require__(3);
 var helpers_1 = __webpack_require__(4);
 var Plugin_1 = __webpack_require__(7);
-var Dom_1 = __webpack_require__(0);
+var Dom_1 = __webpack_require__(1);
 Config_1.Config.prototype.draggableTags = ['img', 'a', 'jodit-media', 'jodit'];
 var DragAndDropElement = (function (_super) {
     tslib_1.__extends(DragAndDropElement, _super);
@@ -13700,7 +13838,7 @@ var DragAndDropElement = (function (_super) {
             }
             _this.isCopyMode = helpers_1.ctrlKey(event);
             _this.onDragEnd();
-            _this.timeout = helpers_1.setTimeout(function (lastNode) {
+            _this.timeout = _this.jodit.async.setTimeout(function (lastNode) {
                 if (!lastNode) {
                     return;
                 }
@@ -13720,7 +13858,7 @@ var DragAndDropElement = (function (_super) {
             event.preventDefault();
         };
         _this.onDragEnd = function () {
-            window.clearTimeout(_this.timeout);
+            _this.jodit.async.clearTimeout(_this.timeout);
             if (_this.draggable) {
                 Dom_1.Dom.safeRemove(_this.draggable);
                 _this.draggable = null;
@@ -13769,7 +13907,7 @@ exports.DragAndDropElement = DragAndDropElement;
 
 
 /***/ }),
-/* 158 */
+/* 159 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13784,7 +13922,7 @@ exports.DragAndDropElement = DragAndDropElement;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var consts = __webpack_require__(2);
-var Dom_1 = __webpack_require__(0);
+var Dom_1 = __webpack_require__(1);
 var helpers_1 = __webpack_require__(4);
 exports.insertParagraph = function (editor, fake, wrapperTag, style) {
     var p = editor.create.inside.element(wrapperTag), helper_node = editor.create.inside.element('br');
@@ -13954,7 +14092,7 @@ exports.enter = enter;
 
 
 /***/ }),
-/* 159 */
+/* 160 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13969,8 +14107,7 @@ exports.enter = enter;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var Config_1 = __webpack_require__(3);
-var Dom_1 = __webpack_require__(0);
-var async_1 = __webpack_require__(5);
+var Dom_1 = __webpack_require__(1);
 var helpers_1 = __webpack_require__(4);
 Config_1.Config.prototype.showMessageErrors = true;
 Config_1.Config.prototype.showMessageErrorTime = 3000;
@@ -13996,9 +14133,9 @@ function errorMessages(editor) {
             var newmessage = editor.create.div('active ' + (className || ''), message);
             messagesBox_1.appendChild(newmessage);
             recalcOffsets_1();
-            async_1.setTimeout(function () {
+            editor.async.setTimeout(function () {
                 newmessage.classList.remove('active');
-                async_1.setTimeout(function () {
+                editor.async.setTimeout(function () {
                     Dom_1.Dom.safeRemove(newmessage);
                     recalcOffsets_1();
                 }, 300);
@@ -14010,7 +14147,7 @@ exports.errorMessages = errorMessages;
 
 
 /***/ }),
-/* 160 */
+/* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14025,7 +14162,7 @@ exports.errorMessages = errorMessages;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var Config_1 = __webpack_require__(3);
-var Dom_1 = __webpack_require__(0);
+var Dom_1 = __webpack_require__(1);
 var helpers_1 = __webpack_require__(4);
 Config_1.Config.prototype.controls.fontsize = {
     command: 'fontSize',
@@ -14159,7 +14296,7 @@ exports.font = font;
 
 
 /***/ }),
-/* 161 */
+/* 162 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14175,7 +14312,7 @@ exports.font = font;
 Object.defineProperty(exports, "__esModule", { value: true });
 var Config_1 = __webpack_require__(3);
 var consts = __webpack_require__(2);
-var Dom_1 = __webpack_require__(0);
+var Dom_1 = __webpack_require__(1);
 Config_1.Config.prototype.controls.paragraph = {
     command: 'formatBlock',
     getLabel: function (editor, btn, button) {
@@ -14293,7 +14430,7 @@ exports.formatBlock = formatBlock;
 
 
 /***/ }),
-/* 162 */
+/* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14310,7 +14447,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Config_1 = __webpack_require__(3);
 var consts = __webpack_require__(2);
 var helpers_1 = __webpack_require__(4);
-var icon_1 = __webpack_require__(6);
+var icon_1 = __webpack_require__(5);
 Config_1.Config.prototype.fullsize = false;
 Config_1.Config.prototype.globalFullsize = true;
 Config_1.Config.prototype.controls.fullsize = {
@@ -14401,7 +14538,7 @@ exports.fullsize = fullsize;
 
 
 /***/ }),
-/* 163 */
+/* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14415,10 +14552,10 @@ exports.fullsize = fullsize;
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(0);
 var Config_1 = __webpack_require__(3);
 var Plugin_1 = __webpack_require__(7);
-var normalize_1 = __webpack_require__(20);
+var normalize_1 = __webpack_require__(19);
 Config_1.Config.prototype.commandToHotkeys = {
     removeFormat: ['ctrl+shift+m', 'cmd+shift+m'],
     insertOrderedList: ['ctrl+shift+7', 'cmd+shift+7'],
@@ -14547,7 +14684,7 @@ exports.hotkeys = hotkeys;
 
 
 /***/ }),
-/* 164 */
+/* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14561,10 +14698,10 @@ exports.hotkeys = hotkeys;
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(0);
 var Config_1 = __webpack_require__(3);
-var defaultLanguage_1 = __webpack_require__(37);
-var async_1 = __webpack_require__(5);
+var defaultLanguage_1 = __webpack_require__(36);
+var async_1 = __webpack_require__(6);
 var css_1 = __webpack_require__(10);
 Config_1.Config.prototype.iframeBaseUrl = '';
 Config_1.Config.prototype.iframeDefaultSrc = 'about:blank';
@@ -14750,7 +14887,7 @@ exports.iframe = iframe;
 
 
 /***/ }),
-/* 165 */
+/* 166 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14792,7 +14929,7 @@ exports.imageProcessor = imageProcessor;
 
 
 /***/ }),
-/* 166 */
+/* 167 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14808,13 +14945,13 @@ exports.imageProcessor = imageProcessor;
 Object.defineProperty(exports, "__esModule", { value: true });
 var Config_1 = __webpack_require__(3);
 var dialog_1 = __webpack_require__(14);
-var Dom_1 = __webpack_require__(0);
+var Dom_1 = __webpack_require__(1);
 var helpers_1 = __webpack_require__(4);
-var icon_1 = __webpack_require__(6);
+var icon_1 = __webpack_require__(5);
 var Widget_1 = __webpack_require__(18);
 var TabsWidget = Widget_1.Widget.TabsWidget;
 var FileSelectorWidget = Widget_1.Widget.FileSelectorWidget;
-var popup_1 = __webpack_require__(28);
+var popup_1 = __webpack_require__(27);
 Config_1.Config.prototype.image = {
     openOnDblClick: true,
     editSrc: true,
@@ -14848,7 +14985,7 @@ function imageProperties(editor) {
             ? 'display:none'
             : '') + "\" class=\"jodit_properties_image_view\">\n\t\t\t\t\t\t\t\t\t\t\t\t<img class=\"imageViewSrc\" src=\"\" alt=\"\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div style=\"" + (!opt.image.editSize
             ? 'display:none'
-            : '') + "\" class=\"jodit_form_group jodit_properties_image_sizes\">\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" class=\"imageWidth jodit_input\"/>\n\t\t\t\t\t\t\t\t\t\t\t\t<a class=\"jodit_lock_helper jodit_lock_size\" href=\"javascript:void(0)\">" + gi('lock') + "</a>\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" class=\"imageHeight jodit_input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"jodit_col-lg-3-5 tabsbox\"></div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</form>"), positionTab = dom("<div style=\"" + (!opt.image.editMargins ? 'display:none' : '') + "\" class=\"jodit_form_group\">\n\t\t\t\t\t\t\t\t<label>" + i18n('Margins') + "</label>\n\t\t\t\t\t\t\t\t<div class=\"jodit_grid jodit_vertical_middle\">\n\t\t\t\t\t\t\t\t\t<input class=\"jodit_col-lg-1-5 margins marginTop jodit_input\" data-id=\"marginTop\" type=\"text\" placeholder=\"" + i18n('top') + "\"/>\n\t\t\t\t\t\t\t\t\t<a style=\"text-align: center;\" class=\"jodit_lock_helper jodit_lock_margin jodit_col-lg-1-5\" href=\"javascript:void(0)\">" + gi('lock') + "</a>\n\t\t\t\t\t\t\t\t\t<input disabled=\"true\" class=\"jodit_col-lg-1-5 margins marginRight jodit_input\" data-id=\"marginRight\" type=\"text\" placeholder=\"" + i18n('right') + "\"/>\n\t\t\t\t\t\t\t\t\t<input disabled=\"true\" class=\"jodit_col-lg-1-5 margins marginBottom jodit_input\" data-id=\"marginBottom\" type=\"text\" placeholder=\"" + i18n('bottom') + "\"/>\n\t\t\t\t\t\t\t\t\t<input disabled=\"true\" class=\"jodit_col-lg-1-5 margins marginLeft jodit_input\" data-id=\"marginLeft\" type=\"text\" placeholder=\"" + i18n('left') + "\"/>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div style=\"" + (!opt.image.editStyle ? 'display:none' : '') + "\" class=\"jodit_form_group\">\n\t\t\t\t\t\t\t\t<label>" + i18n('Styles') + "</label>\n\t\t\t\t\t\t\t\t<input type=\"text\" class=\"style jodit_input\"/>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div style=\"" + (!opt.image.editClass ? 'display:none' : '') + "\" class=\"jodit_form_group\">\n\t\t\t\t\t\t\t\t<label for=\"classes\">" + i18n('Classes') + "</label>\n\t\t\t\t\t\t\t\t<input type=\"text\" class=\"classes jodit_input\"/>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div style=\"" + (!opt.image.editId ? 'display:none' : '') + "\" class=\"jodit_form_group\">\n\t\t\t\t\t\t\t\t<label for=\"id\">Id</label>\n\t\t\t\t\t\t\t\t<input type=\"text\" class=\"id jodit_input\"/>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div\n\t\t\t\t\t\t\t\tstyle=\"" + (!opt.image.editBorderRadius ? 'display:none' : '') + "\"\n\t\t\t\t\t\t\t\tclass=\"jodit_form_group\"\n\t\t\t\t\t\t\t>\n\t\t\t\t\t\t\t\t<label for=\"border_radius\">" + i18n('Border radius') + "</label>\n\t\t\t\t\t\t\t\t<input type=\"number\" class=\"border_radius jodit_input\"/>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div\n\t\t\t\t\t\t\t\tstyle=\"" + (!opt.image.editAlign ? 'display:none' : '') + "\"\n\t\t\t\t\t\t\t\tclass=\"jodit_form_group\"\n\t\t\t\t\t\t\t>\n\t\t\t\t\t\t\t\t<label for=\"align\">" + i18n('Align') + "</label>\n\t\t\t\t\t\t\t\t<select class=\"select align jodit_select\">\n\t\t\t\t\t\t\t\t\t<option value=\"\">" + i18n('--Not Set--') + "</option>\n\t\t\t\t\t\t\t\t\t<option value=\"left\">" + i18n('Left') + "</option>\n\t\t\t\t\t\t\t\t\t<option value=\"center\">" + i18n('Center') + "</option>\n\t\t\t\t\t\t\t\t\t<option value=\"right\">" + i18n('Right') + "</option>\n\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t</div>"), hasFbUrl = opt.filebrowser.ajax.url || opt.uploader.url, hasEditor = opt.image.useImageEditor, mainTab = dom("<div style=\"" + (!opt.image.editSrc ? 'display:none' : '') + "\" class=\"jodit_form_group\">\n\t\t\t\t\t\t\t\t<label>" + i18n('Src') + "</label>\n\t\t\t\t\t\t\t\t<div class=\"jodit_input_group\">\n\t\t\t\t\t\t\t\t\t<input class=\"jodit_input imageSrc\" type=\"text\"/>\n\t\t\t\t\t\t\t\t\t<div\n\t\t\t\t\t\t\t\t\t\tclass=\"jodit_input_group-buttons\"\n\t\t\t\t\t\t\t\t\t\tstyle=\"" + (hasFbUrl ? '' : 'display: none') + "\"\n\t\t\t\t\t\t\t\t\t>\n\t\t\t\t\t\t\t\t\t\t\t<a class=\"jodit_button jodit_rechange\" href=\"javascript:void(0)\">" + gi('image') + "</a>\n\t\t\t\t\t\t\t\t\t\t\t<a\n\t\t\t\t\t\t\t\t\t\t\t\tclass=\"jodit_button jodit_use_image_editor\" href=\"javascript:void(0)\"\n\t\t\t\t\t\t\t\t\t\t\t\tstyle=\"" + (hasEditor ? '' : 'display: none') + "\"\n\t\t\t\t\t\t\t\t\t\t\t>" + gi('crop') + "</a>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div style=\"" + (!opt.image.editTitle ? 'display:none' : '') + "\" class=\"jodit_form_group\">\n\t\t\t\t\t\t\t\t<label for=\"imageTitle\">" + i18n('Title') + "</label>\n\t\t\t\t\t\t\t\t<input type=\"text\" class=\"imageTitle jodit_input\"/>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div style=\"" + (!opt.image.editAlt ? 'display:none' : '') + "\" class=\"jodit_form_group\">\n\t\t\t\t\t\t\t\t<label for=\"imageAlt\">" + i18n('Alternative') + "</label>\n\t\t\t\t\t\t\t\t<input type=\"text\" class=\"imageAlt jodit_input\"/>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div style=\"" + (!opt.image.editLink ? 'display:none' : '') + "\" class=\"jodit_form_group\">\n\t\t\t\t\t\t\t\t<label for=\"imageLink\">" + i18n('Link') + "</label>\n\t\t\t\t\t\t\t\t<input type=\"text\" class=\"imageLink jodit_input\"/>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div style=\"" + (!opt.image.editLink ? 'display:none' : '') + "\" class=\"jodit_form_group\">\n\t\t\t\t\t\t\t\t<div class=\"jodit_vertical_middle\">\n\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" class=\"imageLinkOpenInNewTab jodit_checkbox\"/>\n\t\t\t\t\t\t\t\t\t" + i18n('Open link in new tab') + "\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>"), ratio = image.naturalWidth / image.naturalHeight || 1, $w = prop.querySelector('.imageWidth'), $h = prop.querySelector('.imageHeight'), updateAlign = function () {
+            : '') + "\" class=\"jodit_form_group jodit_properties_image_sizes\">\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" class=\"imageWidth jodit_input\"/>\n\t\t\t\t\t\t\t\t\t\t\t\t<a class=\"jodit_lock_helper jodit_lock_size\" href=\"javascript:void(0)\">" + gi('lock') + "</a>\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" class=\"imageHeight jodit_input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"jodit_col-lg-3-5 tabsbox\"></div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</form>"), positionTab = dom("<div style=\"" + (!opt.image.editMargins ? 'display:none' : '') + "\" class=\"jodit_form_group\">\n\t\t\t\t\t\t\t\t<label>" + i18n('Margins') + "</label>\n\t\t\t\t\t\t\t\t<div class=\"jodit_grid jodit_vertical_middle\">\n\t\t\t\t\t\t\t\t\t<input class=\"jodit_col-lg-1-5 margins marginTop jodit_input\" data-id=\"marginTop\" type=\"text\" placeholder=\"" + i18n('top') + "\"/>\n\t\t\t\t\t\t\t\t\t<a style=\"text-align: center;\" class=\"jodit_lock_helper jodit_lock_margin jodit_col-lg-1-5\" href=\"javascript:void(0)\">" + gi('lock') + "</a>\n\t\t\t\t\t\t\t\t\t<input disabled=\"true\" class=\"jodit_col-lg-1-5 margins marginRight jodit_input\" data-id=\"marginRight\" type=\"text\" placeholder=\"" + i18n('right') + "\"/>\n\t\t\t\t\t\t\t\t\t<input disabled=\"true\" class=\"jodit_col-lg-1-5 margins marginBottom jodit_input\" data-id=\"marginBottom\" type=\"text\" placeholder=\"" + i18n('bottom') + "\"/>\n\t\t\t\t\t\t\t\t\t<input disabled=\"true\" class=\"jodit_col-lg-1-5 margins marginLeft jodit_input\" data-id=\"marginLeft\" type=\"text\" placeholder=\"" + i18n('left') + "\"/>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div style=\"" + (!opt.image.editStyle ? 'display:none' : '') + "\" class=\"jodit_form_group\">\n\t\t\t\t\t\t\t\t<label>" + i18n('Styles') + "</label>\n\t\t\t\t\t\t\t\t<input type=\"text\" class=\"style jodit_input\"/>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div style=\"" + (!opt.image.editClass ? 'display:none' : '') + "\" class=\"jodit_form_group\">\n\t\t\t\t\t\t\t\t<label for=\"classes\">" + i18n('Classes') + "</label>\n\t\t\t\t\t\t\t\t<input type=\"text\" class=\"classes jodit_input\"/>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div style=\"" + (!opt.image.editId ? 'display:none' : '') + "\" class=\"jodit_form_group\">\n\t\t\t\t\t\t\t\t<label for=\"id\">Id</label>\n\t\t\t\t\t\t\t\t<input type=\"text\" class=\"id jodit_input\"/>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div\n\t\t\t\t\t\t\t\tstyle=\"" + (!opt.image.editBorderRadius ? 'display:none' : '') + "\"\n\t\t\t\t\t\t\t\tclass=\"jodit_form_group\"\n\t\t\t\t\t\t\t>\n\t\t\t\t\t\t\t\t<label for=\"border_radius\">" + i18n('Border radius') + "</label>\n\t\t\t\t\t\t\t\t<input type=\"number\" class=\"border_radius jodit_input\"/>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div\n\t\t\t\t\t\t\t\tstyle=\"" + (!opt.image.editAlign ? 'display:none' : '') + "\"\n\t\t\t\t\t\t\t\tclass=\"jodit_form_group\"\n\t\t\t\t\t\t\t>\n\t\t\t\t\t\t\t\t<label for=\"align\">" + i18n('Align') + "</label>\n\t\t\t\t\t\t\t\t<select class=\"select align jodit_select\">\n\t\t\t\t\t\t\t\t\t<option value=\"\">" + i18n('--Not Set--') + "</option>\n\t\t\t\t\t\t\t\t\t<option value=\"left\">" + i18n('Left') + "</option>\n\t\t\t\t\t\t\t\t\t<option value=\"center\">" + i18n('Center') + "</option>\n\t\t\t\t\t\t\t\t\t<option value=\"right\">" + i18n('Right') + "</option>\n\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t</div>"), hasFbUrl = opt.filebrowser.ajax.url || opt.uploader.url, hasEditor = opt.image.useImageEditor, mainTab = dom("<div style=\"" + (!opt.image.editSrc ? 'display:none' : '') + "\" class=\"jodit_form_group\">\n\t\t\t\t\t\t\t\t<label>" + i18n('Src') + "</label>\n\t\t\t\t\t\t\t\t<div class=\"jodit_input_group\">\n\t\t\t\t\t\t\t\t\t<input class=\"jodit_input imageSrc\" type=\"text\"/>\n\t\t\t\t\t\t\t\t\t<div\n\t\t\t\t\t\t\t\t\t\tclass=\"jodit_input_group-buttons\"\n\t\t\t\t\t\t\t\t\t\tstyle=\"" + (hasFbUrl ? '' : 'display: none') + "\"\n\t\t\t\t\t\t\t\t\t>\n\t\t\t\t\t\t\t\t\t\t\t<a class=\"jodit_button jodit_rechange\" href=\"javascript:void(0)\">" + gi('image') + "</a>\n\t\t\t\t\t\t\t\t\t\t\t<a\n\t\t\t\t\t\t\t\t\t\t\t\tclass=\"jodit_button jodit_use_image_editor\" href=\"javascript:void(0)\"\n\t\t\t\t\t\t\t\t\t\t\t\tstyle=\"" + (hasEditor ? '' : 'display: none') + "\"\n\t\t\t\t\t\t\t\t\t\t\t>" + gi('crop') + "</a>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div style=\"" + (!opt.image.editTitle ? 'display:none' : '') + "\" class=\"jodit_form_group\">\n\t\t\t\t\t\t\t\t<label for=\"imageTitle\">" + i18n('Title') + "</label>\n\t\t\t\t\t\t\t\t<input type=\"text\" class=\"imageTitle jodit_input\"/>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div style=\"" + (!opt.image.editAlt ? 'display:none' : '') + "\" class=\"jodit_form_group\">\n\t\t\t\t\t\t\t\t<label for=\"imageAlt\">" + i18n('Alternative') + "</label>\n\t\t\t\t\t\t\t\t<input type=\"text\" class=\"imageAlt jodit_input\"/>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div style=\"" + (!opt.image.editLink ? 'display:none' : '') + "\" class=\"jodit_form_group\">\n\t\t\t\t\t\t\t\t<label for=\"imageLink\">" + i18n('Link') + "</label>\n\t\t\t\t\t\t\t\t<input type=\"text\" class=\"imageLink jodit_input\"/>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div style=\"" + (!opt.image.editLink ? 'display:none' : '') + "\" class=\"jodit_form_group\">\n\t\t\t\t\t\t\t\t<label class=\"jodit_vertical_middle\">\n\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" class=\"imageLinkOpenInNewTab jodit_checkbox\"/>\n\t\t\t\t\t\t\t\t\t<span>" + i18n('Open link in new tab') + "</span>\n\t\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t</div>"), ratio = image.naturalWidth / image.naturalHeight || 1, $w = prop.querySelector('.imageWidth'), $h = prop.querySelector('.imageHeight'), updateAlign = function () {
             if (image.style.cssFloat &&
                 ['left', 'right'].indexOf(image.style.cssFloat.toLowerCase()) !== -1) {
                 helpers_1.val(prop, '.align', helpers_1.css(image, 'float'));
@@ -14933,7 +15070,7 @@ function imageProperties(editor) {
             updateAlign();
             updateStyle();
         };
-        var timer, lockSize = true, lockMargin = true;
+        var lockSize = true, lockMargin = true;
         var tabs = {}, tabsbox = prop.querySelector('.tabsbox');
         tabs['Image'] = mainTab;
         tabs['Advanced'] = positionTab;
@@ -15062,13 +15199,10 @@ function imageProperties(editor) {
             if (!lockSize) {
                 return;
             }
-            if (editor.defaultTimeout) {
-                clearTimeout(timer);
-                timer = helpers_1.setTimeout(changeSizes.bind(_this, event), editor.defaultTimeout);
-            }
-            else {
-                changeSizes(event);
-            }
+            editor.async.setTimeout(changeSizes.bind(_this, event), {
+                timeout: editor.defaultTimeout,
+                label: 'image-properties-changeSize'
+            });
         });
         dialog.setTitle(i18n('Image properties'));
         dialog.setContent(prop);
@@ -15205,12 +15339,15 @@ function imageProperties(editor) {
         return false;
     };
     editor.events
+        .on('beforeDestruct', function () {
+        editor.events.off(editor.editor, 'dblclick.imageproperties');
+    })
         .on('afterInit', function () {
         if (opt.image.openOnDblClick) {
-            editor.events.on(editor.editor, 'dblclick', open, 'img');
+            editor.events.on(editor.editor, 'dblclick.imageproperties', open, 'img');
         }
         else {
-            editor.events.on(editor.editor, 'dblclick', function (event) {
+            editor.events.on(editor.editor, 'dblclick.imageproperties', function (event) {
                 event.stopImmediatePropagation();
                 editor.selection.select(this);
             }, 'img');
@@ -15224,7 +15361,7 @@ exports.imageProperties = imageProperties;
 
 
 /***/ }),
-/* 167 */
+/* 168 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15240,7 +15377,7 @@ exports.imageProperties = imageProperties;
 Object.defineProperty(exports, "__esModule", { value: true });
 var Config_1 = __webpack_require__(3);
 var constants_1 = __webpack_require__(2);
-var Dom_1 = __webpack_require__(0);
+var Dom_1 = __webpack_require__(1);
 Config_1.Config.prototype.controls.indent = {
     tooltip: 'Increase Indent'
 };
@@ -15307,7 +15444,7 @@ exports.indent = indent;
 
 
 /***/ }),
-/* 168 */
+/* 169 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15321,16 +15458,16 @@ exports.indent = indent;
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(0);
 var Config_1 = __webpack_require__(3);
 var Widget_1 = __webpack_require__(18);
 var ColorPickerWidget = Widget_1.Widget.ColorPickerWidget;
 var TabsWidget = Widget_1.Widget.TabsWidget;
-var Dom_1 = __webpack_require__(0);
+var Dom_1 = __webpack_require__(1);
 var helpers_1 = __webpack_require__(4);
 var Plugin_1 = __webpack_require__(7);
-var Table_1 = __webpack_require__(29);
-var popup_1 = __webpack_require__(28);
+var Table_1 = __webpack_require__(28);
+var popup_1 = __webpack_require__(27);
 var joditToolbarCollection_1 = __webpack_require__(16);
 Config_1.Config.prototype.toolbarInline = true;
 Config_1.Config.prototype.toolbarInlineDisableFor = [];
@@ -15809,7 +15946,7 @@ exports.inlinePopup = inlinePopup;
 
 
 /***/ }),
-/* 169 */
+/* 170 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15824,9 +15961,9 @@ exports.inlinePopup = inlinePopup;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var Config_1 = __webpack_require__(3);
-var Dom_1 = __webpack_require__(0);
+var Dom_1 = __webpack_require__(1);
 var helpers_1 = __webpack_require__(4);
-var icon_1 = __webpack_require__(6);
+var icon_1 = __webpack_require__(5);
 Config_1.Config.prototype.controls.align = {
     name: 'left',
     tooltip: 'Align',
@@ -15945,7 +16082,7 @@ exports.justify = justify;
 
 
 /***/ }),
-/* 170 */
+/* 171 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15953,8 +16090,8 @@ exports.justify = justify;
 Object.defineProperty(exports, "__esModule", { value: true });
 var Config_1 = __webpack_require__(3);
 var constants_1 = __webpack_require__(2);
-var async_1 = __webpack_require__(5);
-var html_1 = __webpack_require__(35);
+var async_1 = __webpack_require__(6);
+var html_1 = __webpack_require__(34);
 Config_1.Config.prototype.limitWords = false;
 Config_1.Config.prototype.limitChars = false;
 Config_1.Config.prototype.limitHTML = false;
@@ -16010,7 +16147,7 @@ exports.limit = limit;
 
 
 /***/ }),
-/* 171 */
+/* 172 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16025,7 +16162,7 @@ exports.limit = limit;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var Config_1 = __webpack_require__(3);
-var Dom_1 = __webpack_require__(0);
+var Dom_1 = __webpack_require__(1);
 var helpers_1 = __webpack_require__(4);
 Config_1.Config.prototype.link = {
     followOnDblClick: true,
@@ -16042,7 +16179,8 @@ Config_1.Config.prototype.controls.unlink = {
             Dom_1.Dom.unwrap(anchor);
         }
         editor.events.fire('hidePopup');
-    }
+    },
+    tooltip: 'Unlink'
 };
 Config_1.Config.prototype.controls.link = {
     isActive: function (editor) {
@@ -16050,66 +16188,41 @@ Config_1.Config.prototype.controls.link = {
         return current && Dom_1.Dom.closest(current, 'a', editor.editor) !== false;
     },
     popup: function (editor, current, self, close) {
-        var sel = editor.selection.sel, form = editor.create.fromHTML('<form class="jodit_form">' +
-            '<div class="jodit_form_group">' +
-            '<input class="jodit_input" required type="text" name="url" placeholder="http://" type="text"/>' +
-            '</div>' +
-            '<div class="jodit_form_group">' +
-            '<input class="jodit_input" name="text" placeholder="' + editor.i18n('Text') + '" type="text"/>' +
-            '</div>' +
-            (editor.options.link.openInNewTabCheckbox
-                ? '<label>' +
-                    '<input class="jodit_checkbox" name="target" type="checkbox"/> ' +
-                    editor.i18n('Open in new tab') +
-                    '</label>'
-                : '') +
-            (editor.options.link.noFollowCheckbox
-                ? '<label>' +
-                    '<input class="jodit_checkbox" name="nofollow" type="checkbox"/> ' +
-                    editor.i18n('No follow') +
-                    '</label>'
-                : '') +
-            '<div style="text-align: right">' +
-            '<button class="jodit_button jodit_unlink_button" type="button">' +
-            editor.i18n('Unlink') +
-            '</button> &nbsp;&nbsp;' +
-            '<button class="jodit_button jodit_link_insert_button" type="submit"></button>' +
-            '</div>' +
-            '<form/>');
+        var i18n = editor.i18n.bind(editor), _a = editor.options.link, openInNewTabCheckbox = _a.openInNewTabCheckbox, noFollowCheckbox = _a.noFollowCheckbox, form = editor.create.fromHTML("<form class=\"jodit_form\">\n\t\t\t\t\t\t<div class=\"jodit_form_group\">\n\t\t\t\t\t\t\t<input ref=\"url_input\" class=\"jodit_input\" required type=\"text\" name=\"url\" placeholder=\"http://\" type=\"text\"/>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div ref=\"content_input_box\" class=\"jodit_form_group\">\n\t\t\t\t\t\t\t<input ref=\"content_input\" class=\"jodit_input\" name=\"text\" placeholder=\"" + i18n('Text') + "\" type=\"text\"/>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<label ref=\"target_checkbox_box\">\n\t\t\t\t\t\t\t<input ref=\"target_checkbox\" class=\"jodit_checkbox\" name=\"target\" type=\"checkbox\"/>\n\t\t\t\t\t\t\t<span>" + i18n('Open in new tab') + "</span>\n\t\t\t\t\t\t</label>\n\t\t\t\t\t\t<label ref=\"nofollow_checkbox_box\">\n\t\t\t\t\t\t\t<input ref=\"nofollow_checkbox\" class=\"jodit_checkbox\" name=\"nofollow\" type=\"checkbox\"/>\n\t\t\t\t\t\t\t<span>" + i18n('No follow') + "</span>\n\t\t\t\t\t\t</label>\n\t\t\t\t\t\t<div class=\"jodit_buttons\">\n\t\t\t\t\t\t\t<button ref=\"unlink\" class=\"jodit_button jodit_unlink_button\" type=\"button\">" + i18n('Unlink') + "</button>\n\t\t\t\t\t\t\t<button ref=\"insert\" class=\"jodit_button jodit_link_insert_button\" type=\"submit\">" + i18n('Insert') + "</button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t<form/>", {
+            target_checkbox_box: openInNewTabCheckbox,
+            nofollow_checkbox_box: noFollowCheckbox
+        });
+        var elements = helpers_1.refs(form), insert = elements.insert, unlink = elements.unlink, content_input_box = elements.content_input_box, _b = elements, target_checkbox = _b.target_checkbox, nofollow_checkbox = _b.nofollow_checkbox, url_input = _b.url_input, content_input = _b.content_input, currentElement = current, isImageContent = Dom_1.Dom.isImage(currentElement, editor.editorWindow);
+        if (isImageContent) {
+            Dom_1.Dom.hide(content_input_box);
+        }
+        if (!isImageContent && current) {
+            content_input.value = current.textContent || '';
+        }
         if (current && Dom_1.Dom.closest(current, 'A', editor.editor)) {
             current = Dom_1.Dom.closest(current, 'A', editor.editor);
         }
         else {
             current = false;
         }
-        var lnk = form.querySelector('.jodit_link_insert_button'), unlink = form.querySelector('.jodit_unlink_button');
         if (current) {
-            helpers_1.val(form, 'input[name=url]', current.getAttribute('href') || '');
-            helpers_1.val(form, 'input[name=text]', current.textContent || '');
-            if (editor.options.link.openInNewTabCheckbox) {
-                form.querySelector('input[name=target]').checked =
+            url_input.value = current.getAttribute('href') || '';
+            if (openInNewTabCheckbox) {
+                target_checkbox.checked =
                     current.getAttribute('target') === '_blank';
             }
-            if (editor.options.link.noFollowCheckbox) {
-                form.querySelector('input[name=nofollow]').checked =
+            if (noFollowCheckbox) {
+                nofollow_checkbox.checked =
                     current.getAttribute('rel') === 'nofollow';
             }
-            if (lnk) {
-                lnk.innerHTML = editor.i18n('Update');
-            }
+            insert.textContent = i18n('Update');
         }
         else {
-            if (unlink) {
-                unlink.style.display = 'none';
-            }
-            helpers_1.val(form, 'input[name=text]', sel ? sel.toString() : '');
-            if (lnk) {
-                lnk.innerHTML = editor.i18n('Insert');
-            }
+            Dom_1.Dom.hide(unlink);
         }
         var selInfo = editor.selection.save();
         if (unlink) {
-            unlink.addEventListener('mousedown', function (e) {
+            editor.events.on(unlink, 'click', function (e) {
                 if (current) {
                     Dom_1.Dom.unwrap(current);
                 }
@@ -16118,28 +16231,29 @@ Config_1.Config.prototype.controls.link = {
                 e.preventDefault();
             });
         }
-        form.addEventListener('submit', function (event) {
+        editor.events.on(form, 'submit', function (event) {
             event.preventDefault();
-            editor.selection.restore(selInfo);
             var a = current ||
-                editor.editorDocument.createElement('a');
-            if (!helpers_1.val(form, 'input[name=url]')) {
-                form.querySelector('input[name=url]').focus();
-                form.querySelector('input[name=url]').classList.add('jodit_error');
+                editor.create.inside.element('a');
+            if (!url_input.value.trim().length) {
+                url_input.focus();
+                url_input.classList.add('jodit_error');
                 return false;
             }
-            a.setAttribute('href', helpers_1.val(form, 'input[name=url]'));
-            a.textContent = helpers_1.val(form, 'input[name=text]');
-            if (editor.options.link.openInNewTabCheckbox) {
-                if (form.querySelector('input[name=target]').checked) {
+            a.setAttribute('href', url_input.value);
+            if (!isImageContent) {
+                a.textContent = content_input.value;
+            }
+            if (openInNewTabCheckbox) {
+                if (target_checkbox.checked) {
                     a.setAttribute('target', '_blank');
                 }
                 else {
                     a.removeAttribute('target');
                 }
             }
-            if (editor.options.link.noFollowCheckbox) {
-                if (form.querySelector('input[name=nofollow]').checked) {
+            if (noFollowCheckbox) {
+                if (nofollow_checkbox.checked) {
                     a.setAttribute('rel', 'nofollow');
                 }
                 else {
@@ -16147,7 +16261,14 @@ Config_1.Config.prototype.controls.link = {
                 }
             }
             if (!current) {
-                editor.selection.insertNode(a);
+                if (!isImageContent) {
+                    editor.selection.restore(selInfo);
+                    editor.selection.insertNode(a);
+                }
+                else {
+                    currentElement && Dom_1.Dom.wrap(currentElement, a, editor);
+                    editor.selection.restore(selInfo);
+                }
             }
             close();
             return false;
@@ -16216,7 +16337,7 @@ exports.link = link;
 
 
 /***/ }),
-/* 172 */
+/* 173 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16232,7 +16353,7 @@ exports.link = link;
 Object.defineProperty(exports, "__esModule", { value: true });
 var Config_1 = __webpack_require__(3);
 var consts = __webpack_require__(2);
-var async_1 = __webpack_require__(5);
+var async_1 = __webpack_require__(6);
 var selector_1 = __webpack_require__(13);
 Config_1.Config.prototype.mediaFakeTag = 'jodit-media';
 Config_1.Config.prototype.mediaInFakeBlock = true;
@@ -16301,7 +16422,7 @@ exports.media = media;
 
 
 /***/ }),
-/* 173 */
+/* 174 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16317,7 +16438,7 @@ exports.media = media;
 Object.defineProperty(exports, "__esModule", { value: true });
 var Config_1 = __webpack_require__(3);
 var consts = __webpack_require__(2);
-var array_1 = __webpack_require__(30);
+var array_1 = __webpack_require__(29);
 var joditToolbarCollection_1 = __webpack_require__(16);
 Config_1.Config.prototype.mobileTapTimeout = 300;
 Config_1.Config.prototype.toolbarAdaptive = true;
@@ -16373,7 +16494,8 @@ function mobile(editor) {
         }
     });
     if (editor.options.toolbarAdaptive) {
-        editor.events.on('resize afterInit', function () {
+        editor.events
+            .on('resize afterInit recalcAdaptive', function () {
             if (!editor.options.toolbar) {
                 return;
             }
@@ -16395,14 +16517,15 @@ function mobile(editor) {
                 store = newStore;
                 editor.toolbar.build(store.concat(editor.options.extraButtons), editor.toolbar.container.parentElement || editor.toolbar.getParentContainer());
             }
-        });
+        })
+            .on(editor.ownerWindow, 'load', function () { return editor.events.fire('recalcAdaptive'); });
     }
 }
 exports.mobile = mobile;
 
 
 /***/ }),
-/* 174 */
+/* 175 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16417,7 +16540,7 @@ exports.mobile = mobile;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var Config_1 = __webpack_require__(3);
-var Dom_1 = __webpack_require__(0);
+var Dom_1 = __webpack_require__(1);
 Config_1.Config.prototype.controls.ul = {
     command: 'insertUnorderedList',
     controlName: 'ul',
@@ -16454,7 +16577,7 @@ exports.orderedlist = orderedlist;
 
 
 /***/ }),
-/* 175 */
+/* 176 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16471,8 +16594,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Config_1 = __webpack_require__(3);
 var consts = __webpack_require__(2);
 var css_1 = __webpack_require__(10);
-var async_1 = __webpack_require__(5);
-var Dom_1 = __webpack_require__(0);
+var async_1 = __webpack_require__(6);
+var Dom_1 = __webpack_require__(1);
 Config_1.Config.prototype.showPlaceholder = true;
 Config_1.Config.prototype.useInputsPlaceholder = true;
 Config_1.Config.prototype.placeholder = 'Type something';
@@ -16480,9 +16603,6 @@ function placeholder(editor) {
     if (!editor.options.showPlaceholder) {
         return;
     }
-    this.destruct = function () {
-        Dom_1.Dom.safeRemove(placeholderElm);
-    };
     var show = function () {
         if (!placeholderElm.parentNode || editor.options.readonly) {
             return;
@@ -16509,21 +16629,19 @@ function placeholder(editor) {
             marginLeft: Math.max(parseInt(style.getPropertyValue('margin-left'), 10), marginLeft)
         });
     }, hide = function () {
-        if (placeholderElm.parentNode) {
-            placeholderElm.style.display = 'none';
-        }
+        Dom_1.Dom.hide(placeholderElm);
     }, toggle = async_1.debounce(function () {
         if (placeholderElm.parentNode === null) {
             return;
         }
-        if (!editor.editor) {
+        if (!editor.editor || editor.isInDestruct) {
             return;
         }
         if (editor.getRealMode() !== consts.MODE_WYSIWYG) {
             return hide();
         }
-        var value = editor.getEditorValue();
-        if (value && !/^<(p|div|h[1-6])><\/\1>$/.test(value)) {
+        var value = editor.value;
+        if (value.trim().length && !/^<(p|div|h[1-6])><\/\1>$/.test(value)) {
             hide();
         }
         else {
@@ -16551,12 +16669,17 @@ function placeholder(editor) {
             toggle();
         }
     })
+        .on('beforeDestruct', function () {
+        Dom_1.Dom.safeRemove(placeholderElm);
+        editor.events.off('.placeholder').off(window, 'load', toggle);
+    })
         .on('afterInit', function () {
         editor.workplace.appendChild(placeholderElm);
         toggle();
         editor.events.fire('placeholder', placeholderElm.innerHTML);
         editor.events
-            .on('change keyup mouseup keydown mousedown afterSetMode', toggle)
+            .on('change.placeholder keyup.placeholder mouseup.placeholder keydown.placeholder ' +
+            'mousedown.placeholder afterSetMode.placeholder', toggle)
             .on(window, 'load', toggle);
     });
 }
@@ -16564,7 +16687,7 @@ exports.placeholder = placeholder;
 
 
 /***/ }),
-/* 176 */
+/* 177 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16578,7 +16701,7 @@ exports.placeholder = placeholder;
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(0);
 var Config_1 = __webpack_require__(3);
 var consts = __webpack_require__(2);
 var Plugin_1 = __webpack_require__(7);
@@ -16621,7 +16744,7 @@ exports.redoundo = redoundo;
 
 
 /***/ }),
-/* 177 */
+/* 178 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16638,10 +16761,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Config_1 = __webpack_require__(3);
 var consts = __webpack_require__(2);
 var constants_1 = __webpack_require__(2);
-var Dom_1 = __webpack_require__(0);
+var Dom_1 = __webpack_require__(1);
 var selector_1 = __webpack_require__(13);
-var async_1 = __webpack_require__(5);
-var size_1 = __webpack_require__(23);
+var async_1 = __webpack_require__(6);
+var size_1 = __webpack_require__(20);
 var helpers_1 = __webpack_require__(4);
 Config_1.Config.prototype.useIframeResizer = true;
 Config_1.Config.prototype.useTableResizer = true;
@@ -16654,16 +16777,8 @@ Config_1.Config.prototype.resizer = {
 };
 function resizer(editor) {
     var LOCK_KEY = 'resizer';
-    var handle, currentElement, resizeElementClicked = false, isResizing = false, start_x, start_y, width, height, ratio, new_h, new_w, diff_x, diff_y, resizerIsVisible = false, timeoutSizeViewer = 0;
-    var resizerElm = editor.create.fromHTML('<div data-editor_id="' +
-        editor.id +
-        '" style="display:none" class="jodit_resizer">' +
-        '<i class="jodit_resizer-topleft"></i>' +
-        '<i class="jodit_resizer-topright"></i>' +
-        '<i class="jodit_resizer-bottomright"></i>' +
-        '<i class="jodit_resizer-bottomleft"></i>' +
-        '<span>100x100</span>' +
-        '</div>'), sizeViewer = resizerElm.getElementsByTagName('span')[0], hideResizer = function () {
+    var handle, currentElement, resizeElementClicked = false, isResizing = false, start_x, start_y, width, height, ratio, new_h, new_w, diff_x, diff_y, resizerIsVisible = false;
+    var resizerElm = editor.create.fromHTML("<div data-editor_id=\"" + editor.id + "\" style=\"display:none\" class=\"jodit_resizer\">\n\t\t\t\t<i class=\"jodit_resizer-topleft\"></i>\n\t\t\t\t<i class=\"jodit_resizer-topright\"></i>\n\t\t\t\t<i class=\"jodit_resizer-bottomright\"></i>\n\t\t\t\t<i class=\"jodit_resizer-bottomleft\"></i>\n\t\t\t\t<span>100x100</span>\n\t\t\t</div>"), sizeViewer = resizerElm.getElementsByTagName('span')[0], hideResizer = function () {
         isResizing = false;
         resizerIsVisible = false;
         currentElement = null;
@@ -16680,8 +16795,10 @@ function resizer(editor) {
         }
         sizeViewer.style.opacity = '1';
         sizeViewer.innerHTML = w + " x " + h;
-        clearTimeout(timeoutSizeViewer);
-        timeoutSizeViewer = async_1.setTimeout(hideSizeViewer, editor.options.resizer.hideSizeTimeout);
+        editor.async.setTimeout(hideSizeViewer, {
+            timeout: editor.options.resizer.hideSizeTimeout,
+            label: 'hideSizeViewer'
+        });
     }, updateSize = function () {
         if (resizerIsVisible && currentElement && resizerElm) {
             var workplacePosition = size_1.offset((resizerElm.parentNode ||
@@ -16779,9 +16896,9 @@ function resizer(editor) {
                         }
                     });
                 }
-                clearTimeout(timer);
+                editor.async.clearTimeout(timer);
             }
-            timer = async_1.setTimeout(function () {
+            timer = editor.async.setTimeout(function () {
                 resizeElementClicked = false;
             }, 400);
         });
@@ -16949,7 +17066,7 @@ exports.resizer = resizer;
 
 
 /***/ }),
-/* 178 */
+/* 179 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16963,14 +17080,14 @@ exports.resizer = resizer;
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(0);
 var Config_1 = __webpack_require__(3);
 var consts = __webpack_require__(2);
 var constants_1 = __webpack_require__(2);
-var Dom_1 = __webpack_require__(0);
-var icon_1 = __webpack_require__(6);
+var Dom_1 = __webpack_require__(1);
+var icon_1 = __webpack_require__(5);
 var Plugin_1 = __webpack_require__(7);
-var async_1 = __webpack_require__(5);
+var async_1 = __webpack_require__(6);
 var string_1 = __webpack_require__(9);
 Config_1.Config.prototype.useSearch = true;
 var search = (function (_super) {
@@ -17388,7 +17505,7 @@ exports.search = search;
 
 
 /***/ }),
-/* 179 */
+/* 180 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17403,7 +17520,7 @@ exports.search = search;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var Config_1 = __webpack_require__(3);
-var async_1 = __webpack_require__(5);
+var async_1 = __webpack_require__(6);
 var css_1 = __webpack_require__(10);
 Config_1.Config.prototype.allowResizeX = false;
 Config_1.Config.prototype.allowResizeY = true;
@@ -17531,7 +17648,7 @@ exports.size = size;
 
 
 /***/ }),
-/* 180 */
+/* 181 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17545,16 +17662,16 @@ exports.size = size;
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(0);
 var Config_1 = __webpack_require__(3);
 var consts = __webpack_require__(2);
 var constants_1 = __webpack_require__(2);
 var Plugin_1 = __webpack_require__(7);
 var appendScript_1 = __webpack_require__(52);
-var async_1 = __webpack_require__(5);
+var async_1 = __webpack_require__(6);
 var selector_1 = __webpack_require__(13);
 var css_1 = __webpack_require__(10);
-var Dom_1 = __webpack_require__(0);
+var Dom_1 = __webpack_require__(1);
 Config_1.Config.prototype.beautifyHTML = true;
 Config_1.Config.prototype.useAceEditor = true;
 Config_1.Config.prototype.sourceEditorNativeOptions = {
@@ -18042,7 +18159,7 @@ exports.source = source;
 
 
 /***/ }),
-/* 181 */
+/* 182 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18056,12 +18173,12 @@ exports.source = source;
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(0);
 var Config_1 = __webpack_require__(3);
 var constants_1 = __webpack_require__(2);
-var async_1 = __webpack_require__(5);
+var async_1 = __webpack_require__(6);
 var Plugin_1 = __webpack_require__(7);
-var Dom_1 = __webpack_require__(0);
+var Dom_1 = __webpack_require__(1);
 Config_1.Config.prototype.showCharsCounter = true;
 Config_1.Config.prototype.showWordsCounter = true;
 var stat = (function (_super) {
@@ -18106,7 +18223,7 @@ exports.stat = stat;
 
 
 /***/ }),
-/* 182 */
+/* 183 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18120,13 +18237,13 @@ exports.stat = stat;
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(0);
 var Config_1 = __webpack_require__(3);
 var constants_1 = __webpack_require__(2);
 var Plugin_1 = __webpack_require__(7);
 var css_1 = __webpack_require__(10);
-var size_1 = __webpack_require__(23);
-var Dom_1 = __webpack_require__(0);
+var size_1 = __webpack_require__(20);
+var Dom_1 = __webpack_require__(1);
 Config_1.Config.prototype.toolbarSticky = true;
 Config_1.Config.prototype.toolbarDisableStickyForMobile = true;
 Config_1.Config.prototype.toolbarStickyOffset = 0;
@@ -18207,7 +18324,7 @@ exports.sticky = sticky;
 
 
 /***/ }),
-/* 183 */
+/* 184 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18558,7 +18675,7 @@ exports.symbols = symbols;
 
 
 /***/ }),
-/* 184 */
+/* 185 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18573,8 +18690,8 @@ exports.symbols = symbols;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var consts = __webpack_require__(2);
-var Dom_1 = __webpack_require__(0);
-var Table_1 = __webpack_require__(29);
+var Dom_1 = __webpack_require__(1);
+var Table_1 = __webpack_require__(28);
 function tableKeyboardNavigation(editor) {
     editor.events.on('keydown', function (event) {
         var current, block;
@@ -18688,7 +18805,7 @@ exports.tableKeyboardNavigation = tableKeyboardNavigation;
 
 
 /***/ }),
-/* 185 */
+/* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18702,14 +18819,13 @@ exports.tableKeyboardNavigation = tableKeyboardNavigation;
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(0);
 var Config_1 = __webpack_require__(3);
 var consts = __webpack_require__(2);
 var Plugin_1 = __webpack_require__(7);
-var Dom_1 = __webpack_require__(0);
-var Table_1 = __webpack_require__(29);
+var Dom_1 = __webpack_require__(1);
+var Table_1 = __webpack_require__(28);
 var helpers_1 = __webpack_require__(4);
-var async_1 = __webpack_require__(5);
 Config_1.Config.prototype.useTableProcessor = true;
 Config_1.Config.prototype.useExtraClassesOptions = true;
 Config_1.Config.prototype.controls.table = {
@@ -18906,7 +19022,7 @@ var TableProcessor = (function (_super) {
                         return false;
                     })
                         .on(_this.__resizerHandler, 'mouseenter.table', function () {
-                        clearTimeout(_this.hideTimeout);
+                        _this.jodit.async.clearTimeout(_this.hideTimeout);
                     })
                         .on(_this.jodit.editorWindow, 'mousemove.table touchmove.table', function (event) {
                         if (_this.__drag) {
@@ -18994,15 +19110,17 @@ var TableProcessor = (function (_super) {
         return !!tag && /^TD|TH$/i.test(tag.nodeName);
     };
     TableProcessor.prototype.showResizer = function () {
-        clearTimeout(this.hideTimeout);
+        this.jodit.async.clearTimeout(this.hideTimeout);
         this.__resizerHandler.style.display = 'block';
     };
     TableProcessor.prototype.hideResizer = function () {
         var _this = this;
-        clearTimeout(this.hideTimeout);
-        this.hideTimeout = async_1.setTimeout(function () {
+        this.hideTimeout = this.jodit.async.setTimeout(function () {
             _this.__resizerHandler.style.display = 'none';
-        }, this.jodit.defaultTimeout);
+        }, {
+            timeout: this.jodit.defaultTimeout,
+            label: 'hideResizer'
+        });
     };
     TableProcessor.prototype.__deSelectAll = function (table, currentCell) {
         var cells = table
@@ -19247,7 +19365,7 @@ exports.TableProcessor = TableProcessor;
 
 
 /***/ }),
-/* 186 */
+/* 187 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19261,15 +19379,92 @@ exports.TableProcessor = TableProcessor;
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(0);
+var size_1 = __webpack_require__(20);
+var helpers_1 = __webpack_require__(4);
+var Plugin_1 = __webpack_require__(7);
+var Dom_1 = __webpack_require__(1);
+var tooltip = (function (_super) {
+    tslib_1.__extends(tooltip, _super);
+    function tooltip() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.isOpened = false;
+        return _this;
+    }
+    tooltip.prototype.afterInit = function (jodit) {
+        var _this = this;
+        this.container = jodit.create.div('jodit_tooltip');
+        this.jodit.ownerDocument.body.appendChild(this.container);
+        var timeout = 0;
+        jodit.events
+            .on('showTooltip.tooltip', function (target, content) {
+            jodit.async.clearTimeout(timeout);
+            _this.open(target, content);
+        })
+            .on('hideTooltip.tooltip change.tooltip updateToolbar.tooltip scroll.tooltip hidePopup.tooltip closeAllPopups.tooltip', function () {
+            timeout = jodit.async.setTimeout(function () { return _this.close(); }, _this.jodit.defaultTimeout);
+        });
+    };
+    tooltip.prototype.beforeDestruct = function (jodit) {
+        var _a;
+        (_a = jodit) === null || _a === void 0 ? void 0 : _a.events.off('.tooltip');
+        this.close();
+        Dom_1.Dom.safeRemove(this.container);
+    };
+    tooltip.prototype.open = function (target, content) {
+        this.container.classList.add('jodit_tooltip_visible');
+        this.container.innerHTML = content;
+        this.isOpened = true;
+        this.calcPosition(target);
+    };
+    ;
+    tooltip.prototype.calcPosition = function (target) {
+        var bound = size_1.offset(target, this.jodit, this.jodit.ownerDocument);
+        helpers_1.css(this.container, {
+            left: bound.left - this.container.offsetWidth / 2 + bound.width / 2,
+            top: bound.top + bound.height
+        });
+    };
+    tooltip.prototype.close = function () {
+        if (this.isOpened) {
+            this.isOpened = false;
+            this.container.classList.remove('jodit_tooltip_visible');
+            helpers_1.css(this.container, {
+                left: -5000,
+                position: 'fixed'
+            });
+        }
+    };
+    ;
+    return tooltip;
+}(Plugin_1.Plugin));
+exports.tooltip = tooltip;
+
+
+/***/ }),
+/* 188 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
+ * For GPL see LICENSE-GPL.txt in the project root for license information.
+ * For MIT see LICENSE-MIT.txt in the project root for license information.
+ * For commercial licenses see https://xdsoft.net/jodit/commercial/
+ * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = __webpack_require__(0);
 var Config_1 = __webpack_require__(3);
 var constants_1 = __webpack_require__(2);
 var ContextMenu_1 = __webpack_require__(40);
-var Dom_1 = __webpack_require__(0);
-var async_1 = __webpack_require__(5);
+var Dom_1 = __webpack_require__(1);
+var async_1 = __webpack_require__(6);
 var selector_1 = __webpack_require__(13);
 var Plugin_1 = __webpack_require__(7);
-var button_1 = __webpack_require__(27);
+var button_1 = __webpack_require__(26);
 var string_1 = __webpack_require__(9);
 Config_1.Config.prototype.controls.selectall = {
     icon: 'select-all',
@@ -19418,14 +19613,14 @@ exports.xpath = xpath;
 
 
 /***/ }),
-/* 187 */
+/* 189 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var dialog_1 = __webpack_require__(17);
-var icon_1 = __webpack_require__(6);
+var icon_1 = __webpack_require__(5);
 exports.Alert = function (msg, title, callback, className) {
     if (className === void 0) { className = 'jodit_alert'; }
     if (typeof title === 'function') {
@@ -19455,12 +19650,12 @@ exports.Alert = function (msg, title, callback, className) {
     return dialog;
 };
 var Jodit_1 = __webpack_require__(11);
-var array_1 = __webpack_require__(30);
-var Dom_1 = __webpack_require__(0);
+var array_1 = __webpack_require__(29);
+var Dom_1 = __webpack_require__(1);
 
 
 /***/ }),
-/* 188 */
+/* 190 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19474,29 +19669,28 @@ var Dom_1 = __webpack_require__(0);
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(0);
 var Config_1 = __webpack_require__(3);
 var consts = __webpack_require__(2);
 var dialog_1 = __webpack_require__(17);
 var confirm_1 = __webpack_require__(74);
 var promt_1 = __webpack_require__(73);
-var icon_1 = __webpack_require__(6);
+var icon_1 = __webpack_require__(5);
 var storage_1 = __webpack_require__(25);
 var each_1 = __webpack_require__(24);
-var normalize_1 = __webpack_require__(20);
+var normalize_1 = __webpack_require__(19);
 var selector_1 = __webpack_require__(13);
 var ctrlKey_1 = __webpack_require__(55);
 var extend_1 = __webpack_require__(15);
-var setTimeout_1 = __webpack_require__(19);
 var viewWithToolbar_1 = __webpack_require__(63);
-__webpack_require__(189);
-var Dom_1 = __webpack_require__(0);
-var async_1 = __webpack_require__(5);
+__webpack_require__(191);
+var Dom_1 = __webpack_require__(1);
+var async_1 = __webpack_require__(6);
 var dialog_2 = __webpack_require__(14);
-var dataProvider_1 = __webpack_require__(190);
-var contextMenu_1 = __webpack_require__(191);
-var observeObject_1 = __webpack_require__(192);
-var item_1 = __webpack_require__(193);
+var dataProvider_1 = __webpack_require__(192);
+var contextMenu_1 = __webpack_require__(193);
+var observeObject_1 = __webpack_require__(194);
+var item_1 = __webpack_require__(195);
 var isValidName_1 = __webpack_require__(47);
 var consts_1 = __webpack_require__(41);
 var DEFAULT_SOURCE_NAME = 'default', ITEM_ACTIVE_CLASS = consts_1.ITEM_CLASS + '-active-true';
@@ -19530,7 +19724,6 @@ var FileBrowser = (function (_super) {
             if (typeof message !== 'string') {
                 message = message.message;
             }
-            clearTimeout(_this.statusTimer);
             _this.status_line.classList.remove('success');
             _this.status_line.classList.add('active');
             var messageBox = _this.create.div();
@@ -19539,10 +19732,13 @@ var FileBrowser = (function (_super) {
             if (success) {
                 _this.status_line.classList.add('success');
             }
-            _this.statusTimer = setTimeout_1.setTimeout(function () {
+            _this.async.setTimeout(function () {
                 _this.status_line.classList.remove('active');
                 Dom_1.Dom.detach(_this.status_line);
-            }, _this.options.howLongShowMsg);
+            }, {
+                timeout: _this.options.howLongShowMsg,
+                label: 'fileBrowser.status'
+            });
         };
         _this.close = function () {
             _this.dialog.close();
@@ -20188,7 +20384,7 @@ exports.FileBrowser = FileBrowser;
 
 
 /***/ }),
-/* 189 */
+/* 191 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20203,7 +20399,7 @@ exports.FileBrowser = FileBrowser;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var Config_1 = __webpack_require__(3);
-var icon_1 = __webpack_require__(6);
+var icon_1 = __webpack_require__(5);
 var debounce_1 = __webpack_require__(43);
 var helpers_1 = __webpack_require__(4);
 var consts_1 = __webpack_require__(41);
@@ -20495,13 +20691,13 @@ Config_1.Config.prototype.controls.filebrowser = {
 
 
 /***/ }),
-/* 190 */
+/* 192 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(0);
 var helpers_1 = __webpack_require__(4);
 var Ajax_1 = __webpack_require__(39);
 exports.DEFAULT_SOURCE_NAME = 'default';
@@ -20743,17 +20939,16 @@ exports.default = dataProvider;
 
 
 /***/ }),
-/* 191 */
+/* 193 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(0);
 var ContextMenu_1 = __webpack_require__(40);
-var async_1 = __webpack_require__(5);
 var dialog_1 = __webpack_require__(14);
-var Dom_1 = __webpack_require__(0);
+var Dom_1 = __webpack_require__(1);
 var __1 = __webpack_require__(68);
 var consts_1 = __webpack_require__(41);
 var CLASS_PREVIEW = consts_1.F_CLASS + '_preview_', preview_tpl_next = function (next, right) {
@@ -20773,7 +20968,7 @@ exports.default = (function (self) {
     return function (e) {
         var _this = this;
         var item = this, opt = self.options, ga = function (attr) { return item.getAttribute(attr) || ''; };
-        async_1.setTimeout(function () {
+        self.async.setTimeout(function () {
             contextmenu.show(e.pageX, e.pageY, [
                 ga('data-is-file') !== '1' &&
                     opt.editImage &&
@@ -20893,13 +21088,13 @@ exports.default = (function (self) {
 
 
 /***/ }),
-/* 192 */
+/* 194 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(0);
 var ObserveObject = (function () {
     function ObserveObject(data) {
         var _this = this;
@@ -20961,14 +21156,14 @@ exports.ObserveObject = ObserveObject;
 
 
 /***/ }),
-/* 193 */
+/* 195 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var extend_1 = __webpack_require__(15);
-var normalize_1 = __webpack_require__(20);
+var normalize_1 = __webpack_require__(19);
 var FileBrowserItem = (function () {
     function FileBrowserItem(data) {
         this.data = data;
@@ -21030,7 +21225,7 @@ exports.FileBrowserItem = FileBrowserItem;
 
 
 /***/ }),
-/* 194 */
+/* 196 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21044,13 +21239,13 @@ exports.FileBrowserItem = FileBrowserItem;
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(0);
 var Config_1 = __webpack_require__(3);
 var Component_1 = __webpack_require__(8);
 var dialog_1 = __webpack_require__(14);
 var helpers_1 = __webpack_require__(4);
-var icon_1 = __webpack_require__(6);
-var Dom_1 = __webpack_require__(0);
+var icon_1 = __webpack_require__(5);
+var Dom_1 = __webpack_require__(1);
 Config_1.Config.prototype.imageeditor = {
     min_width: 20,
     min_height: 20,
@@ -21569,18 +21764,18 @@ exports.ImageEditor = ImageEditor;
 
 
 /***/ }),
-/* 195 */
+/* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(0);
 var Config_1 = __webpack_require__(3);
 var constants_1 = __webpack_require__(2);
 var Ajax_1 = __webpack_require__(39);
 var helpers_1 = __webpack_require__(4);
-var Dom_1 = __webpack_require__(0);
+var Dom_1 = __webpack_require__(1);
 var isJoditObject_1 = __webpack_require__(12);
 var Component_1 = __webpack_require__(8);
 Config_1.Config.prototype.enableDragAndDropFileToEditor = true;
@@ -21909,7 +22104,7 @@ var Uploader = (function (_super) {
                             _this.jodit.selection.restore(selection_1);
                     };
                     div_1.focus();
-                    setTimeout(function () {
+                    _this.jodit.async.setTimeout(function () {
                         var child = div_1.firstChild;
                         Dom_1.Dom.safeRemove(div_1);
                         if (child && child.hasAttribute('src')) {
@@ -21917,7 +22112,7 @@ var Uploader = (function (_super) {
                             restore_1();
                             self.sendFiles([Uploader.dataURItoBlob(src)], handlerSuccess, handlerError);
                         }
-                    }, 200);
+                    }, _this.jodit.defaultTimeout);
                 }
                 return;
             }
@@ -22016,6 +22211,7 @@ var Uploader = (function (_super) {
         });
     };
     Uploader.prototype.destruct = function () {
+        this.setStatus('beforeDestruct');
         this.ajaxInstances.forEach(function (ajax) {
             try {
                 ajax.abort();
@@ -22031,7 +22227,7 @@ exports.Uploader = Uploader;
 
 
 /***/ }),
-/* 196 */
+/* 198 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22045,628 +22241,628 @@ exports.Uploader = Uploader;
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var about = __webpack_require__(197);
+var about = __webpack_require__(199);
 exports.about = about;
-var addcolumn = __webpack_require__(198);
+var addcolumn = __webpack_require__(200);
 exports.addcolumn = addcolumn;
-var addrow = __webpack_require__(199);
+var addrow = __webpack_require__(201);
 exports.addrow = addrow;
-var angle_down = __webpack_require__(200);
+var angle_down = __webpack_require__(202);
 exports.angle_down = angle_down;
-var angle_left = __webpack_require__(201);
+var angle_left = __webpack_require__(203);
 exports.angle_left = angle_left;
-var angle_right = __webpack_require__(202);
+var angle_right = __webpack_require__(204);
 exports.angle_right = angle_right;
-var angle_up = __webpack_require__(203);
+var angle_up = __webpack_require__(205);
 exports.angle_up = angle_up;
-var arrows_alt = __webpack_require__(204);
+var arrows_alt = __webpack_require__(206);
 exports.arrows_alt = arrows_alt;
-var arrows_h = __webpack_require__(205);
+var arrows_h = __webpack_require__(207);
 exports.arrows_h = arrows_h;
-var attachment = __webpack_require__(206);
+var attachment = __webpack_require__(208);
 exports.attachment = attachment;
-var bin = __webpack_require__(207);
+var bin = __webpack_require__(209);
 exports.bin = bin;
-var bold = __webpack_require__(208);
+var bold = __webpack_require__(210);
 exports.bold = bold;
-var brush = __webpack_require__(209);
+var brush = __webpack_require__(211);
 exports.brush = brush;
-var cancel = __webpack_require__(210);
+var cancel = __webpack_require__(212);
 exports.cancel = cancel;
-var center = __webpack_require__(211);
+var center = __webpack_require__(213);
 exports.center = center;
-var chain_broken = __webpack_require__(212);
+var chain_broken = __webpack_require__(214);
 exports.chain_broken = chain_broken;
-var check = __webpack_require__(213);
+var check = __webpack_require__(215);
 exports.check = check;
-var check_square = __webpack_require__(214);
+var check_square = __webpack_require__(216);
 exports.check_square = check_square;
-var copyformat = __webpack_require__(215);
+var copyformat = __webpack_require__(217);
 exports.copyformat = copyformat;
-var crop = __webpack_require__(216);
+var crop = __webpack_require__(218);
 exports.crop = crop;
-var copy = __webpack_require__(217);
+var copy = __webpack_require__(219);
 exports.copy = copy;
-var cut = __webpack_require__(218);
+var cut = __webpack_require__(220);
 exports.cut = cut;
-var dedent = __webpack_require__(219);
+var dedent = __webpack_require__(221);
 exports.dedent = dedent;
-var dots = __webpack_require__(220);
+var dots = __webpack_require__(222);
 exports.dots = dots;
-var dropdown_arrow = __webpack_require__(221);
+var dropdown_arrow = __webpack_require__(223);
 exports.dropdown_arrow = dropdown_arrow;
-var enter = __webpack_require__(222);
+var enter = __webpack_require__(224);
 exports.enter = enter;
-var eraser = __webpack_require__(223);
+var eraser = __webpack_require__(225);
 exports.eraser = eraser;
-var eye = __webpack_require__(224);
+var eye = __webpack_require__(226);
 exports.eye = eye;
-var file = __webpack_require__(225);
+var file = __webpack_require__(227);
 exports.file = file;
-var folder = __webpack_require__(226);
+var folder = __webpack_require__(228);
 exports.folder = folder;
-var font = __webpack_require__(227);
+var font = __webpack_require__(229);
 exports.font = font;
-var fontsize = __webpack_require__(228);
+var fontsize = __webpack_require__(230);
 exports.fontsize = fontsize;
-var fullsize = __webpack_require__(229);
+var fullsize = __webpack_require__(231);
 exports.fullsize = fullsize;
-var hr = __webpack_require__(230);
+var hr = __webpack_require__(232);
 exports.hr = hr;
-var image = __webpack_require__(231);
+var image = __webpack_require__(233);
 exports.image = image;
-var indent = __webpack_require__(232);
+var indent = __webpack_require__(234);
 exports.indent = indent;
-var info_circle = __webpack_require__(233);
+var info_circle = __webpack_require__(235);
 exports.info_circle = info_circle;
-var italic = __webpack_require__(234);
+var italic = __webpack_require__(236);
 exports.italic = italic;
-var justify = __webpack_require__(235);
+var justify = __webpack_require__(237);
 exports.justify = justify;
-var left = __webpack_require__(236);
+var left = __webpack_require__(238);
 exports.left = left;
-var link = __webpack_require__(237);
+var link = __webpack_require__(239);
 exports.link = link;
-var lock = __webpack_require__(238);
+var lock = __webpack_require__(240);
 exports.lock = lock;
-var menu = __webpack_require__(239);
+var menu = __webpack_require__(241);
 exports.menu = menu;
-var merge = __webpack_require__(240);
+var merge = __webpack_require__(242);
 exports.merge = merge;
-var ol = __webpack_require__(241);
+var ol = __webpack_require__(243);
 exports.ol = ol;
-var omega = __webpack_require__(242);
+var omega = __webpack_require__(244);
 exports.omega = omega;
-var outdent = __webpack_require__(243);
+var outdent = __webpack_require__(245);
 exports.outdent = outdent;
-var palette = __webpack_require__(244);
+var palette = __webpack_require__(246);
 exports.palette = palette;
-var paragraph = __webpack_require__(245);
+var paragraph = __webpack_require__(247);
 exports.paragraph = paragraph;
-var paste = __webpack_require__(246);
+var paste = __webpack_require__(248);
 exports.paste = paste;
-var pencil = __webpack_require__(247);
+var pencil = __webpack_require__(249);
 exports.pencil = pencil;
-var plus = __webpack_require__(248);
+var plus = __webpack_require__(250);
 exports.plus = plus;
-var print = __webpack_require__(249);
+var print = __webpack_require__(251);
 exports.print = print;
-var redo = __webpack_require__(250);
+var redo = __webpack_require__(252);
 exports.redo = redo;
-var resize = __webpack_require__(251);
+var resize = __webpack_require__(253);
 exports.resize = resize;
-var resizer = __webpack_require__(252);
+var resizer = __webpack_require__(254);
 exports.resizer = resizer;
-var right = __webpack_require__(253);
+var right = __webpack_require__(255);
 exports.right = right;
-var save = __webpack_require__(254);
+var save = __webpack_require__(256);
 exports.save = save;
-var select_all = __webpack_require__(255);
+var select_all = __webpack_require__(257);
 exports.select_all = select_all;
-var shrink = __webpack_require__(256);
+var shrink = __webpack_require__(258);
 exports.shrink = shrink;
-var source = __webpack_require__(257);
+var source = __webpack_require__(259);
 exports.source = source;
-var splitg = __webpack_require__(258);
+var splitg = __webpack_require__(260);
 exports.splitg = splitg;
-var splitv = __webpack_require__(259);
+var splitv = __webpack_require__(261);
 exports.splitv = splitv;
-var strikethrough = __webpack_require__(260);
+var strikethrough = __webpack_require__(262);
 exports.strikethrough = strikethrough;
-var subscript = __webpack_require__(261);
+var subscript = __webpack_require__(263);
 exports.subscript = subscript;
-var superscript = __webpack_require__(262);
+var superscript = __webpack_require__(264);
 exports.superscript = superscript;
-var table = __webpack_require__(263);
+var table = __webpack_require__(265);
 exports.table = table;
-var th = __webpack_require__(264);
+var th = __webpack_require__(266);
 exports.th = th;
-var th_list = __webpack_require__(265);
+var th_list = __webpack_require__(267);
 exports.th_list = th_list;
-var ul = __webpack_require__(266);
+var ul = __webpack_require__(268);
 exports.ul = ul;
-var underline = __webpack_require__(267);
+var underline = __webpack_require__(269);
 exports.underline = underline;
-var undo = __webpack_require__(268);
+var undo = __webpack_require__(270);
 exports.undo = undo;
-var unlink = __webpack_require__(269);
+var unlink = __webpack_require__(271);
 exports.unlink = unlink;
-var unlock = __webpack_require__(270);
+var unlock = __webpack_require__(272);
 exports.unlock = unlock;
-var update = __webpack_require__(271);
+var update = __webpack_require__(273);
 exports.update = update;
-var upload = __webpack_require__(272);
+var upload = __webpack_require__(274);
 exports.upload = upload;
-var valign = __webpack_require__(273);
+var valign = __webpack_require__(275);
 exports.valign = valign;
-var video = __webpack_require__(274);
+var video = __webpack_require__(276);
 exports.video = video;
 
-
-/***/ }),
-/* 197 */
-/***/ (function(module, exports) {
-
-module.exports = "<svg viewBox=\"0 0 1792 1792\"> <path d=\"M1088 1256v240q0 16-12 28t-28 12h-240q-16 0-28-12t-12-28v-240q0-16 12-28t28-12h240q16 0 28 12t12 28zm316-600q0 54-15.5 101t-35 76.5-55 59.5-57.5 43.5-61 35.5q-41 23-68.5 65t-27.5 67q0 17-12 32.5t-28 15.5h-240q-15 0-25.5-18.5t-10.5-37.5v-45q0-83 65-156.5t143-108.5q59-27 84-56t25-76q0-42-46.5-74t-107.5-32q-65 0-108 29-35 25-107 115-13 16-31 16-12 0-25-8l-164-125q-13-10-15.5-25t5.5-28q160-266 464-266 80 0 161 31t146 83 106 127.5 41 158.5z\"/> </svg> "
-
-/***/ }),
-/* 198 */
-/***/ (function(module, exports) {
-
-module.exports = "<svg viewBox=\"0 0 18.151 18.151\"> <g> <g> <path d=\"M6.237,16.546H3.649V1.604h5.916v5.728c0.474-0.122,0.968-0.194,1.479-0.194 c0.042,0,0.083,0.006,0.125,0.006V0H2.044v18.15h5.934C7.295,17.736,6.704,17.19,6.237,16.546z\"/> <path d=\"M11.169,8.275c-2.723,0-4.938,2.215-4.938,4.938s2.215,4.938,4.938,4.938s4.938-2.215,4.938-4.938 S13.892,8.275,11.169,8.275z M11.169,16.81c-1.983,0-3.598-1.612-3.598-3.598c0-1.983,1.614-3.597,3.598-3.597 s3.597,1.613,3.597,3.597C14.766,15.198,13.153,16.81,11.169,16.81z\"/> <polygon points=\"11.792,11.073 10.502,11.073 10.502,12.578 9.03,12.578 9.03,13.868 10.502,13.868 10.502,15.352 11.792,15.352 11.792,13.868 13.309,13.868 13.309,12.578 11.792,12.578 \"/> </g> </g> </svg> "
 
 /***/ }),
 /* 199 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 432 432\"> <g> <g> <polygon points=\"203.688,96 0,96 0,144 155.688,144 \"/> <polygon points=\"155.719,288 0,288 0,336 203.719,336 \"/> <rect x=\"252\" y=\"96\"/> <rect/> <rect x=\"252\" y=\"288\"/> <rect y=\"384\"/> <path d=\"M97.844,230.125c-3.701-3.703-5.856-8.906-5.856-14.141s2.154-10.438,5.856-14.141l9.844-9.844H0v48h107.719 L97.844,230.125z\"/> <polygon points=\"232,176 232,96 112,216 232,336 232,256 432,256 432,176 \"/> </g> </g> </svg> "
+module.exports = "<svg viewBox=\"0 0 1792 1792\"> <path d=\"M1088 1256v240q0 16-12 28t-28 12h-240q-16 0-28-12t-12-28v-240q0-16 12-28t28-12h240q16 0 28 12t12 28zm316-600q0 54-15.5 101t-35 76.5-55 59.5-57.5 43.5-61 35.5q-41 23-68.5 65t-27.5 67q0 17-12 32.5t-28 15.5h-240q-15 0-25.5-18.5t-10.5-37.5v-45q0-83 65-156.5t143-108.5q59-27 84-56t25-76q0-42-46.5-74t-107.5-32q-65 0-108 29-35 25-107 115-13 16-31 16-12 0-25-8l-164-125q-13-10-15.5-25t5.5-28q160-266 464-266 80 0 161 31t146 83 106 127.5 41 158.5z\"/> </svg> "
 
 /***/ }),
 /* 200 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"> <path d=\"M1395 736q0 13-10 23l-466 466q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l393 393 393-393q10-10 23-10t23 10l50 50q10 10 10 23z\"/> </svg>"
+module.exports = "<svg viewBox=\"0 0 18.151 18.151\"> <g> <g> <path d=\"M6.237,16.546H3.649V1.604h5.916v5.728c0.474-0.122,0.968-0.194,1.479-0.194 c0.042,0,0.083,0.006,0.125,0.006V0H2.044v18.15h5.934C7.295,17.736,6.704,17.19,6.237,16.546z\"/> <path d=\"M11.169,8.275c-2.723,0-4.938,2.215-4.938,4.938s2.215,4.938,4.938,4.938s4.938-2.215,4.938-4.938 S13.892,8.275,11.169,8.275z M11.169,16.81c-1.983,0-3.598-1.612-3.598-3.598c0-1.983,1.614-3.597,3.598-3.597 s3.597,1.613,3.597,3.597C14.766,15.198,13.153,16.81,11.169,16.81z\"/> <polygon points=\"11.792,11.073 10.502,11.073 10.502,12.578 9.03,12.578 9.03,13.868 10.502,13.868 10.502,15.352 11.792,15.352 11.792,13.868 13.309,13.868 13.309,12.578 11.792,12.578 \"/> </g> </g> </svg> "
 
 /***/ }),
 /* 201 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1203 544q0 13-10 23l-393 393 393 393q10 10 10 23t-10 23l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 432 432\"> <g> <g> <polygon points=\"203.688,96 0,96 0,144 155.688,144 \"/> <polygon points=\"155.719,288 0,288 0,336 203.719,336 \"/> <rect x=\"252\" y=\"96\"/> <rect/> <rect x=\"252\" y=\"288\"/> <rect y=\"384\"/> <path d=\"M97.844,230.125c-3.701-3.703-5.856-8.906-5.856-14.141s2.154-10.438,5.856-14.141l9.844-9.844H0v48h107.719 L97.844,230.125z\"/> <polygon points=\"232,176 232,96 112,216 232,336 232,256 432,256 432,176 \"/> </g> </g> </svg> "
 
 /***/ }),
 /* 202 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1171 960q0 13-10 23l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"> <path d=\"M1395 736q0 13-10 23l-466 466q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l393 393 393-393q10-10 23-10t23 10l50 50q10 10 10 23z\"/> </svg>"
 
 /***/ }),
 /* 203 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1395 1184q0 13-10 23l-50 50q-10 10-23 10t-23-10l-393-393-393 393q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l466 466q10 10 10 23z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1203 544q0 13-10 23l-393 393 393 393q10 10 10 23t-10 23l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23z\"/></svg>"
 
 /***/ }),
 /* 204 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1411 541l-355 355 355 355 144-144q29-31 70-14 39 17 39 59v448q0 26-19 45t-45 19h-448q-42 0-59-40-17-39 14-69l144-144-355-355-355 355 144 144q31 30 14 69-17 40-59 40h-448q-26 0-45-19t-19-45v-448q0-42 40-59 39-17 69 14l144 144 355-355-355-355-144 144q-19 19-45 19-12 0-24-5-40-17-40-59v-448q0-26 19-45t45-19h448q42 0 59 40 17 39-14 69l-144 144 355 355 355-355-144-144q-31-30-14-69 17-40 59-40h448q26 0 45 19t19 45v448q0 42-39 59-13 5-25 5-26 0-45-19z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1171 960q0 13-10 23l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23z\"/></svg>"
 
 /***/ }),
 /* 205 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1792 896q0 26-19 45l-256 256q-19 19-45 19t-45-19-19-45v-128h-1024v128q0 26-19 45t-45 19-45-19l-256-256q-19-19-19-45t19-45l256-256q19-19 45-19t45 19 19 45v128h1024v-128q0-26 19-45t45-19 45 19l256 256q19 19 19 45z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1395 1184q0 13-10 23l-50 50q-10 10-23 10t-23-10l-393-393-393 393q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l466 466q10 10 10 23z\"/></svg>"
 
 /***/ }),
 /* 206 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1596 1385q0 117-79 196t-196 79q-135 0-235-100l-777-776q-113-115-113-271 0-159 110-270t269-111q158 0 273 113l605 606q10 10 10 22 0 16-30.5 46.5t-46.5 30.5q-13 0-23-10l-606-607q-79-77-181-77-106 0-179 75t-73 181q0 105 76 181l776 777q63 63 145 63 64 0 106-42t42-106q0-82-63-145l-581-581q-26-24-60-24-29 0-48 19t-19 48q0 32 25 59l410 410q10 10 10 22 0 16-31 47t-47 31q-12 0-22-10l-410-410q-63-61-63-149 0-82 57-139t139-57q88 0 149 63l581 581q100 98 100 235z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1411 541l-355 355 355 355 144-144q29-31 70-14 39 17 39 59v448q0 26-19 45t-45 19h-448q-42 0-59-40-17-39 14-69l144-144-355-355-355 355 144 144q31 30 14 69-17 40-59 40h-448q-26 0-45-19t-19-45v-448q0-42 40-59 39-17 69 14l144 144 355-355-355-355-144 144q-19 19-45 19-12 0-24-5-40-17-40-59v-448q0-26 19-45t45-19h448q42 0 59 40 17 39-14 69l-144 144 355 355 355-355-144-144q-31-30-14-69 17-40 59-40h448q26 0 45 19t19 45v448q0 42-39 59-13 5-25 5-26 0-45-19z\"/></svg>"
 
 /***/ }),
 /* 207 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M704 1376v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm256 0v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm256 0v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm-544-992h448l-48-117q-7-9-17-11h-317q-10 2-17 11zm928 32v64q0 14-9 23t-23 9h-96v948q0 83-47 143.5t-113 60.5h-832q-66 0-113-58.5t-47-141.5v-952h-96q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h309l70-167q15-37 54-63t79-26h320q40 0 79 26t54 63l70 167h309q14 0 23 9t9 23z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1792 896q0 26-19 45l-256 256q-19 19-45 19t-45-19-19-45v-128h-1024v128q0 26-19 45t-45 19-45-19l-256-256q-19-19-19-45t19-45l256-256q19-19 45-19t45 19 19 45v128h1024v-128q0-26 19-45t45-19 45 19l256 256q19 19 19 45z\"/></svg>"
 
 /***/ }),
 /* 208 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M747 1521q74 32 140 32 376 0 376-335 0-114-41-180-27-44-61.5-74t-67.5-46.5-80.5-25-84-10.5-94.5-2q-73 0-101 10 0 53-.5 159t-.5 158q0 8-1 67.5t-.5 96.5 4.5 83.5 12 66.5zm-14-746q42 7 109 7 82 0 143-13t110-44.5 74.5-89.5 25.5-142q0-70-29-122.5t-79-82-108-43.5-124-14q-50 0-130 13 0 50 4 151t4 152q0 27-.5 80t-.5 79q0 46 1 69zm-541 889l2-94q15-4 85-16t106-27q7-12 12.5-27t8.5-33.5 5.5-32.5 3-37.5.5-34v-65.5q0-982-22-1025-4-8-22-14.5t-44.5-11-49.5-7-48.5-4.5-30.5-3l-4-83q98-2 340-11.5t373-9.5q23 0 68.5.5t67.5.5q70 0 136.5 13t128.5 42 108 71 74 104.5 28 137.5q0 52-16.5 95.5t-39 72-64.5 57.5-73 45-84 40q154 35 256.5 134t102.5 248q0 100-35 179.5t-93.5 130.5-138 85.5-163.5 48.5-176 14q-44 0-132-3t-132-3q-106 0-307 11t-231 12z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1596 1385q0 117-79 196t-196 79q-135 0-235-100l-777-776q-113-115-113-271 0-159 110-270t269-111q158 0 273 113l605 606q10 10 10 22 0 16-30.5 46.5t-46.5 30.5q-13 0-23-10l-606-607q-79-77-181-77-106 0-179 75t-73 181q0 105 76 181l776 777q63 63 145 63 64 0 106-42t42-106q0-82-63-145l-581-581q-26-24-60-24-29 0-48 19t-19 48q0 32 25 59l410 410q10 10 10 22 0 16-31 47t-47 31q-12 0-22-10l-410-410q-63-61-63-149 0-82 57-139t139-57q88 0 149 63l581 581q100 98 100 235z\"/></svg>"
 
 /***/ }),
 /* 209 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M896 1152q0-36-20-69-1-1-15.5-22.5t-25.5-38-25-44-21-50.5q-4-16-21-16t-21 16q-7 23-21 50.5t-25 44-25.5 38-15.5 22.5q-20 33-20 69 0 53 37.5 90.5t90.5 37.5 90.5-37.5 37.5-90.5zm512-128q0 212-150 362t-362 150-362-150-150-362q0-145 81-275 6-9 62.5-90.5t101-151 99.5-178 83-201.5q9-30 34-47t51-17 51.5 17 33.5 47q28 93 83 201.5t99.5 178 101 151 62.5 90.5q81 127 81 275z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M704 1376v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm256 0v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm256 0v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm-544-992h448l-48-117q-7-9-17-11h-317q-10 2-17 11zm928 32v64q0 14-9 23t-23 9h-96v948q0 83-47 143.5t-113 60.5h-832q-66 0-113-58.5t-47-141.5v-952h-96q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h309l70-167q15-37 54-63t79-26h320q40 0 79 26t54 63l70 167h309q14 0 23 9t9 23z\"/></svg>"
 
 /***/ }),
 /* 210 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 16 16\"> <g transform=\"translate(0,-1036.3622)\"> <path d=\"m 2,1050.3622 12,-12\" style=\"fill:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none\"/> <path d=\"m 2,1038.3622 12,12\" style=\"fill:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none\"/> </g> </svg> "
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M747 1521q74 32 140 32 376 0 376-335 0-114-41-180-27-44-61.5-74t-67.5-46.5-80.5-25-84-10.5-94.5-2q-73 0-101 10 0 53-.5 159t-.5 158q0 8-1 67.5t-.5 96.5 4.5 83.5 12 66.5zm-14-746q42 7 109 7 82 0 143-13t110-44.5 74.5-89.5 25.5-142q0-70-29-122.5t-79-82-108-43.5-124-14q-50 0-130 13 0 50 4 151t4 152q0 27-.5 80t-.5 79q0 46 1 69zm-541 889l2-94q15-4 85-16t106-27q7-12 12.5-27t8.5-33.5 5.5-32.5 3-37.5.5-34v-65.5q0-982-22-1025-4-8-22-14.5t-44.5-11-49.5-7-48.5-4.5-30.5-3l-4-83q98-2 340-11.5t373-9.5q23 0 68.5.5t67.5.5q70 0 136.5 13t128.5 42 108 71 74 104.5 28 137.5q0 52-16.5 95.5t-39 72-64.5 57.5-73 45-84 40q154 35 256.5 134t102.5 248q0 100-35 179.5t-93.5 130.5-138 85.5-163.5 48.5-176 14q-44 0-132-3t-132-3q-106 0-307 11t-231 12z\"/></svg>"
 
 /***/ }),
 /* 211 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-896q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h896q26 0 45 19t19 45zm256-384v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-640q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h640q26 0 45 19t19 45z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M896 1152q0-36-20-69-1-1-15.5-22.5t-25.5-38-25-44-21-50.5q-4-16-21-16t-21 16q-7 23-21 50.5t-25 44-25.5 38-15.5 22.5q-20 33-20 69 0 53 37.5 90.5t90.5 37.5 90.5-37.5 37.5-90.5zm512-128q0 212-150 362t-362 150-362-150-150-362q0-145 81-275 6-9 62.5-90.5t101-151 99.5-178 83-201.5q9-30 34-47t51-17 51.5 17 33.5 47q28 93 83 201.5t99.5 178 101 151 62.5 90.5q81 127 81 275z\"/></svg>"
 
 /***/ }),
 /* 212 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M503 1271l-256 256q-10 9-23 9-12 0-23-9-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23zm169 41v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm-224-224q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm1264 128q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-334-335q-21-21-42-56l239-18 273 274q27 27 68 27.5t68-26.5l147-146q28-28 28-67 0-40-28-68l-274-275 18-239q35 21 56 42l336 336q84 86 84 204zm-617-724l-239 18-273-274q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l274 274-18 240q-35-21-56-42l-336-336q-84-86-84-204 0-120 85-203l147-146q83-83 203-83 121 0 204 85l334 335q21 21 42 56zm633 84q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm-544-544v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm407 151l-256 256q-11 9-23 9t-23-9q-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 16 16\"> <g transform=\"translate(0,-1036.3622)\"> <path d=\"m 2,1050.3622 12,-12\" style=\"fill:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none\"/> <path d=\"m 2,1038.3622 12,12\" style=\"fill:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none\"/> </g> </svg> "
 
 /***/ }),
 /* 213 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1472 930v318q0 119-84.5 203.5t-203.5 84.5h-832q-119 0-203.5-84.5t-84.5-203.5v-832q0-119 84.5-203.5t203.5-84.5h832q63 0 117 25 15 7 18 23 3 17-9 29l-49 49q-10 10-23 10-3 0-9-2-23-6-45-6h-832q-66 0-113 47t-47 113v832q0 66 47 113t113 47h832q66 0 113-47t47-113v-254q0-13 9-22l64-64q10-10 23-10 6 0 12 3 20 8 20 29zm231-489l-814 814q-24 24-57 24t-57-24l-430-430q-24-24-24-57t24-57l110-110q24-24 57-24t57 24l263 263 647-647q24-24 57-24t57 24l110 110q24 24 24 57t-24 57z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-896q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h896q26 0 45 19t19 45zm256-384v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-640q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h640q26 0 45 19t19 45z\"/></svg>"
 
 /***/ }),
 /* 214 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M813 1299l614-614q19-19 19-45t-19-45l-102-102q-19-19-45-19t-45 19l-467 467-211-211q-19-19-45-19t-45 19l-102 102q-19 19-19 45t19 45l358 358q19 19 45 19t45-19zm851-883v960q0 119-84.5 203.5t-203.5 84.5h-960q-119 0-203.5-84.5t-84.5-203.5v-960q0-119 84.5-203.5t203.5-84.5h960q119 0 203.5 84.5t84.5 203.5z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M503 1271l-256 256q-10 9-23 9-12 0-23-9-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23zm169 41v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm-224-224q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm1264 128q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-334-335q-21-21-42-56l239-18 273 274q27 27 68 27.5t68-26.5l147-146q28-28 28-67 0-40-28-68l-274-275 18-239q35 21 56 42l336 336q84 86 84 204zm-617-724l-239 18-273-274q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l274 274-18 240q-35-21-56-42l-336-336q-84-86-84-204 0-120 85-203l147-146q83-83 203-83 121 0 204 85l334 335q21 21 42 56zm633 84q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm-544-544v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm407 151l-256 256q-11 9-23 9t-23-9q-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23z\"/></svg>"
 
 /***/ }),
 /* 215 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 16 16\"><path d=\"M16 9v-6h-3v-1c0-0.55-0.45-1-1-1h-11c-0.55 0-1 0.45-1 1v3c0 0.55 0.45 1 1 1h11c0.55 0 1-0.45 1-1v-1h2v4h-9v2h-0.5c-0.276 0-0.5 0.224-0.5 0.5v5c0 0.276 0.224 0.5 0.5 0.5h2c0.276 0 0.5-0.224 0.5-0.5v-5c0-0.276-0.224-0.5-0.5-0.5h-0.5v-1h9zM12 3h-11v-1h11v1z\"/></svg> "
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1472 930v318q0 119-84.5 203.5t-203.5 84.5h-832q-119 0-203.5-84.5t-84.5-203.5v-832q0-119 84.5-203.5t203.5-84.5h832q63 0 117 25 15 7 18 23 3 17-9 29l-49 49q-10 10-23 10-3 0-9-2-23-6-45-6h-832q-66 0-113 47t-47 113v832q0 66 47 113t113 47h832q66 0 113-47t47-113v-254q0-13 9-22l64-64q10-10 23-10 6 0 12 3 20 8 20 29zm231-489l-814 814q-24 24-57 24t-57-24l-430-430q-24-24-24-57t24-57l110-110q24-24 57-24t57 24l263 263 647-647q24-24 57-24t57 24l110 110q24 24 24 57t-24 57z\"/></svg>"
 
 /***/ }),
 /* 216 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"> <path d=\"M621 1280h595v-595zm-45-45l595-595h-595v595zm1152 77v192q0 14-9 23t-23 9h-224v224q0 14-9 23t-23 9h-192q-14 0-23-9t-9-23v-224h-864q-14 0-23-9t-9-23v-864h-224q-14 0-23-9t-9-23v-192q0-14 9-23t23-9h224v-224q0-14 9-23t23-9h192q14 0 23 9t9 23v224h851l246-247q10-9 23-9t23 9q9 10 9 23t-9 23l-247 246v851h224q14 0 23 9t9 23z\"/> </svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M813 1299l614-614q19-19 19-45t-19-45l-102-102q-19-19-45-19t-45 19l-467 467-211-211q-19-19-45-19t-45 19l-102 102q-19 19-19 45t19 45l358 358q19 19 45 19t45-19zm851-883v960q0 119-84.5 203.5t-203.5 84.5h-960q-119 0-203.5-84.5t-84.5-203.5v-960q0-119 84.5-203.5t203.5-84.5h960q119 0 203.5 84.5t84.5 203.5z\"/></svg>"
 
 /***/ }),
 /* 217 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M24.89,6.61H22.31V4.47A2.47,2.47,0,0,0,19.84,2H6.78A2.47,2.47,0,0,0,4.31,4.47V22.92a2.47,2.47,0,0,0,2.47,2.47H9.69V27.2a2.8,2.8,0,0,0,2.8,2.8h12.4a2.8,2.8,0,0,0,2.8-2.8V9.41A2.8,2.8,0,0,0,24.89,6.61ZM6.78,23.52a.61.61,0,0,1-.61-.6V4.47a.61.61,0,0,1,.61-.6H19.84a.61.61,0,0,1,.61.6V6.61h-8a2.8,2.8,0,0,0-2.8,2.8V23.52Zm19,3.68a.94.94,0,0,1-.94.93H12.49a.94.94,0,0,1-.94-.93V9.41a.94.94,0,0,1,.94-.93h12.4a.94.94,0,0,1,.94.93Z\"/> <path d=\"M23.49,13.53h-9.6a.94.94,0,1,0,0,1.87h9.6a.94.94,0,1,0,0-1.87Z\"/> <path d=\"M23.49,17.37h-9.6a.94.94,0,1,0,0,1.87h9.6a.94.94,0,1,0,0-1.87Z\"/> <path d=\"M23.49,21.22h-9.6a.93.93,0,1,0,0,1.86h9.6a.93.93,0,1,0,0-1.86Z\"/> </svg> "
+module.exports = "<svg viewBox=\"0 0 16 16\"><path d=\"M16 9v-6h-3v-1c0-0.55-0.45-1-1-1h-11c-0.55 0-1 0.45-1 1v3c0 0.55 0.45 1 1 1h11c0.55 0 1-0.45 1-1v-1h2v4h-9v2h-0.5c-0.276 0-0.5 0.224-0.5 0.5v5c0 0.276 0.224 0.5 0.5 0.5h2c0.276 0 0.5-0.224 0.5-0.5v-5c0-0.276-0.224-0.5-0.5-0.5h-0.5v-1h9zM12 3h-11v-1h11v1z\"/></svg> "
 
 /***/ }),
 /* 218 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"> <path d=\"M960 896q26 0 45 19t19 45-19 45-45 19-45-19-19-45 19-45 45-19zm300 64l507 398q28 20 25 56-5 35-35 51l-128 64q-13 7-29 7-17 0-31-8l-690-387-110 66q-8 4-12 5 14 49 10 97-7 77-56 147.5t-132 123.5q-132 84-277 84-136 0-222-78-90-84-79-207 7-76 56-147t131-124q132-84 278-84 83 0 151 31 9-13 22-22l122-73-122-73q-13-9-22-22-68 31-151 31-146 0-278-84-82-53-131-124t-56-147q-5-59 15.5-113t63.5-93q85-79 222-79 145 0 277 84 83 52 132 123t56 148q4 48-10 97 4 1 12 5l110 66 690-387q14-8 31-8 16 0 29 7l128 64q30 16 35 51 3 36-25 56zm-681-260q46-42 21-108t-106-117q-92-59-192-59-74 0-113 36-46 42-21 108t106 117q92 59 192 59 74 0 113-36zm-85 745q81-51 106-117t-21-108q-39-36-113-36-100 0-192 59-81 51-106 117t21 108q39 36 113 36 100 0 192-59zm178-613l96 58v-11q0-36 33-56l14-8-79-47-26 26q-3 3-10 11t-12 12q-2 2-4 3.5t-3 2.5zm224 224l96 32 736-576-128-64-768 431v113l-160 96 9 8q2 2 7 6 4 4 11 12t11 12l26 26zm704 416l128-64-520-408-177 138q-2 3-13 7z\"/> </svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"> <path d=\"M621 1280h595v-595zm-45-45l595-595h-595v595zm1152 77v192q0 14-9 23t-23 9h-224v224q0 14-9 23t-23 9h-192q-14 0-23-9t-9-23v-224h-864q-14 0-23-9t-9-23v-864h-224q-14 0-23-9t-9-23v-192q0-14 9-23t23-9h224v-224q0-14 9-23t23-9h192q14 0 23 9t9 23v224h851l246-247q10-9 23-9t23 9q9 10 9 23t-9 23l-247 246v851h224q14 0 23 9t9 23z\"/> </svg>"
 
 /***/ }),
 /* 219 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M384 544v576q0 13-9.5 22.5t-22.5 9.5q-14 0-23-9l-288-288q-9-9-9-23t9-23l288-288q9-9 23-9 13 0 22.5 9.5t9.5 22.5zm1408 768v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M24.89,6.61H22.31V4.47A2.47,2.47,0,0,0,19.84,2H6.78A2.47,2.47,0,0,0,4.31,4.47V22.92a2.47,2.47,0,0,0,2.47,2.47H9.69V27.2a2.8,2.8,0,0,0,2.8,2.8h12.4a2.8,2.8,0,0,0,2.8-2.8V9.41A2.8,2.8,0,0,0,24.89,6.61ZM6.78,23.52a.61.61,0,0,1-.61-.6V4.47a.61.61,0,0,1,.61-.6H19.84a.61.61,0,0,1,.61.6V6.61h-8a2.8,2.8,0,0,0-2.8,2.8V23.52Zm19,3.68a.94.94,0,0,1-.94.93H12.49a.94.94,0,0,1-.94-.93V9.41a.94.94,0,0,1,.94-.93h12.4a.94.94,0,0,1,.94.93Z\"/> <path d=\"M23.49,13.53h-9.6a.94.94,0,1,0,0,1.87h9.6a.94.94,0,1,0,0-1.87Z\"/> <path d=\"M23.49,17.37h-9.6a.94.94,0,1,0,0,1.87h9.6a.94.94,0,1,0,0-1.87Z\"/> <path d=\"M23.49,21.22h-9.6a.93.93,0,1,0,0,1.86h9.6a.93.93,0,1,0,0-1.86Z\"/> </svg> "
 
 /***/ }),
 /* 220 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg enable-background=\"new 0 0 24 24\" viewBox=\"0 0 24 24\" xml:space=\"preserve\" > <circle cx=\"12\" cy=\"12\" r=\"2.2\"/> <circle cx=\"12\" cy=\"5\" r=\"2.2\"/> <circle cx=\"12\" cy=\"19\" r=\"2.2\"/> </svg> "
+module.exports = "<svg viewBox=\"0 0 1792 1792\"> <path d=\"M960 896q26 0 45 19t19 45-19 45-45 19-45-19-19-45 19-45 45-19zm300 64l507 398q28 20 25 56-5 35-35 51l-128 64q-13 7-29 7-17 0-31-8l-690-387-110 66q-8 4-12 5 14 49 10 97-7 77-56 147.5t-132 123.5q-132 84-277 84-136 0-222-78-90-84-79-207 7-76 56-147t131-124q132-84 278-84 83 0 151 31 9-13 22-22l122-73-122-73q-13-9-22-22-68 31-151 31-146 0-278-84-82-53-131-124t-56-147q-5-59 15.5-113t63.5-93q85-79 222-79 145 0 277 84 83 52 132 123t56 148q4 48-10 97 4 1 12 5l110 66 690-387q14-8 31-8 16 0 29 7l128 64q30 16 35 51 3 36-25 56zm-681-260q46-42 21-108t-106-117q-92-59-192-59-74 0-113 36-46 42-21 108t106 117q92 59 192 59 74 0 113-36zm-85 745q81-51 106-117t-21-108q-39-36-113-36-100 0-192 59-81 51-106 117t21 108q39 36 113 36 100 0 192-59zm178-613l96 58v-11q0-36 33-56l14-8-79-47-26 26q-3 3-10 11t-12 12q-2 2-4 3.5t-3 2.5zm224 224l96 32 736-576-128-64-768 431v113l-160 96 9 8q2 2 7 6 4 4 11 12t11 12l26 26zm704 416l128-64-520-408-177 138q-2 3-13 7z\"/> </svg>"
 
 /***/ }),
 /* 221 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 10 10\"> <path d=\"M.941 4.523a.75.75 0 1 1 1.06-1.06l3.006 3.005 3.005-3.005a.75.75 0 1 1 1.06 1.06l-3.549 3.55a.75.75 0 0 1-1.168-.136L.941 4.523z\"/> </svg> "
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M384 544v576q0 13-9.5 22.5t-22.5 9.5q-14 0-23-9l-288-288q-9-9-9-23t9-23l288-288q9-9 23-9 13 0 22.5 9.5t9.5 22.5zm1408 768v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/></svg>"
 
 /***/ }),
 /* 222 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 128 128\" xml:space=\"preserve\"> <g> <polygon points=\"112.4560547,23.3203125 112.4560547,75.8154297 31.4853516,75.8154297 31.4853516,61.953125 16.0131836,72.6357422 0.5410156,83.3164063 16.0131836,93.9990234 31.4853516,104.6796875 31.4853516,90.8183594 112.4560547,90.8183594 112.4560547,90.8339844 127.4589844,90.8339844 127.4589844,23.3203125 \"/> </g> </svg>"
+module.exports = "<svg enable-background=\"new 0 0 24 24\" viewBox=\"0 0 24 24\" xml:space=\"preserve\" > <circle cx=\"12\" cy=\"12\" r=\"2.2\"/> <circle cx=\"12\" cy=\"5\" r=\"2.2\"/> <circle cx=\"12\" cy=\"19\" r=\"2.2\"/> </svg> "
 
 /***/ }),
 /* 223 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M832 1408l336-384h-768l-336 384h768zm1013-1077q15 34 9.5 71.5t-30.5 65.5l-896 1024q-38 44-96 44h-768q-38 0-69.5-20.5t-47.5-54.5q-15-34-9.5-71.5t30.5-65.5l896-1024q38-44 96-44h768q38 0 69.5 20.5t47.5 54.5z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 10 10\"> <path d=\"M.941 4.523a.75.75 0 1 1 1.06-1.06l3.006 3.005 3.005-3.005a.75.75 0 1 1 1.06 1.06l-3.549 3.55a.75.75 0 0 1-1.168-.136L.941 4.523z\"/> </svg> "
 
 /***/ }),
 /* 224 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1664 960q-152-236-381-353 61 104 61 225 0 185-131.5 316.5t-316.5 131.5-316.5-131.5-131.5-316.5q0-121 61-225-229 117-381 353 133 205 333.5 326.5t434.5 121.5 434.5-121.5 333.5-326.5zm-720-384q0-20-14-34t-34-14q-125 0-214.5 89.5t-89.5 214.5q0 20 14 34t34 14 34-14 14-34q0-86 61-147t147-61q20 0 34-14t14-34zm848 384q0 34-20 69-140 230-376.5 368.5t-499.5 138.5-499.5-139-376.5-368q-20-35-20-69t20-69q140-229 376.5-368t499.5-139 499.5 139 376.5 368q20 35 20 69z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 128 128\" xml:space=\"preserve\"> <g> <polygon points=\"112.4560547,23.3203125 112.4560547,75.8154297 31.4853516,75.8154297 31.4853516,61.953125 16.0131836,72.6357422 0.5410156,83.3164063 16.0131836,93.9990234 31.4853516,104.6796875 31.4853516,90.8183594 112.4560547,90.8183594 112.4560547,90.8339844 127.4589844,90.8339844 127.4589844,23.3203125 \"/> </g> </svg>"
 
 /***/ }),
 /* 225 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"> <path d=\"M1152 512v-472q22 14 36 28l408 408q14 14 28 36h-472zm-128 32q0 40 28 68t68 28h544v1056q0 40-28 68t-68 28h-1344q-40 0-68-28t-28-68v-1600q0-40 28-68t68-28h800v544z\"/> </svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M832 1408l336-384h-768l-336 384h768zm1013-1077q15 34 9.5 71.5t-30.5 65.5l-896 1024q-38 44-96 44h-768q-38 0-69.5-20.5t-47.5-54.5q-15-34-9.5-71.5t30.5-65.5l896-1024q38-44 96-44h768q38 0 69.5 20.5t47.5 54.5z\"/></svg>"
 
 /***/ }),
 /* 226 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"> <path d=\"M1728 608v704q0 92-66 158t-158 66h-1216q-92 0-158-66t-66-158v-960q0-92 66-158t158-66h320q92 0 158 66t66 158v32h672q92 0 158 66t66 158z\"/> </svg> "
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1664 960q-152-236-381-353 61 104 61 225 0 185-131.5 316.5t-316.5 131.5-316.5-131.5-131.5-316.5q0-121 61-225-229 117-381 353 133 205 333.5 326.5t434.5 121.5 434.5-121.5 333.5-326.5zm-720-384q0-20-14-34t-34-14q-125 0-214.5 89.5t-89.5 214.5q0 20 14 34t34 14 34-14 14-34q0-86 61-147t147-61q20 0 34-14t14-34zm848 384q0 34-20 69-140 230-376.5 368.5t-499.5 138.5-499.5-139-376.5-368q-20-35-20-69t20-69q140-229 376.5-368t499.5-139 499.5 139 376.5 368q20 35 20 69z\"/></svg>"
 
 /***/ }),
 /* 227 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M789 559l-170 450q33 0 136.5 2t160.5 2q19 0 57-2-87-253-184-452zm-725 1105l2-79q23-7 56-12.5t57-10.5 49.5-14.5 44.5-29 31-50.5l237-616 280-724h128q8 14 11 21l205 480q33 78 106 257.5t114 274.5q15 34 58 144.5t72 168.5q20 45 35 57 19 15 88 29.5t84 20.5q6 38 6 57 0 4-.5 13t-.5 13q-63 0-190-8t-191-8q-76 0-215 7t-178 8q0-43 4-78l131-28q1 0 12.5-2.5t15.5-3.5 14.5-4.5 15-6.5 11-8 9-11 2.5-14q0-16-31-96.5t-72-177.5-42-100l-450-2q-26 58-76.5 195.5t-50.5 162.5q0 22 14 37.5t43.5 24.5 48.5 13.5 57 8.5 41 4q1 19 1 58 0 9-2 27-58 0-174.5-10t-174.5-10q-8 0-26.5 4t-21.5 4q-80 14-188 14z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"> <path d=\"M1152 512v-472q22 14 36 28l408 408q14 14 28 36h-472zm-128 32q0 40 28 68t68 28h544v1056q0 40-28 68t-68 28h-1344q-40 0-68-28t-28-68v-1600q0-40 28-68t68-28h800v544z\"/> </svg>"
 
 /***/ }),
 /* 228 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1744 1408q33 0 42 18.5t-11 44.5l-126 162q-20 26-49 26t-49-26l-126-162q-20-26-11-44.5t42-18.5h80v-1024h-80q-33 0-42-18.5t11-44.5l126-162q20-26 49-26t49 26l126 162q20 26 11 44.5t-42 18.5h-80v1024h80zm-1663-1279l54 27q12 5 211 5 44 0 132-2t132-2q36 0 107.5.5t107.5.5h293q6 0 21 .5t20.5 0 16-3 17.5-9 15-17.5l42-1q4 0 14 .5t14 .5q2 112 2 336 0 80-5 109-39 14-68 18-25-44-54-128-3-9-11-48t-14.5-73.5-7.5-35.5q-6-8-12-12.5t-15.5-6-13-2.5-18-.5-16.5.5q-17 0-66.5-.5t-74.5-.5-64 2-71 6q-9 81-8 136 0 94 2 388t2 455q0 16-2.5 71.5t0 91.5 12.5 69q40 21 124 42.5t120 37.5q5 40 5 50 0 14-3 29l-34 1q-76 2-218-8t-207-10q-50 0-151 9t-152 9q-3-51-3-52v-9q17-27 61.5-43t98.5-29 78-27q19-42 19-383 0-101-3-303t-3-303v-117q0-2 .5-15.5t.5-25-1-25.5-3-24-5-14q-11-12-162-12-33 0-93 12t-80 26q-19 13-34 72.5t-31.5 111-42.5 53.5q-42-26-56-44v-383z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"> <path d=\"M1728 608v704q0 92-66 158t-158 66h-1216q-92 0-158-66t-66-158v-960q0-92 66-158t158-66h320q92 0 158 66t66 158v32h672q92 0 158 66t66 158z\"/> </svg> "
 
 /***/ }),
 /* 229 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 24 24\" > <path d=\"M22,20.6L3.4,2H8V0H0v8h2V3.4L20.6,22H16v2h8v-8h-2V20.6z M16,0v2h4.7l-6.3,6.3l1.4,1.4L22,3.5V8h2V0H16z M8.3,14.3L2,20.6V16H0v8h8v-2H3.5l6.3-6.3L8.3,14.3z\"/> </svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M789 559l-170 450q33 0 136.5 2t160.5 2q19 0 57-2-87-253-184-452zm-725 1105l2-79q23-7 56-12.5t57-10.5 49.5-14.5 44.5-29 31-50.5l237-616 280-724h128q8 14 11 21l205 480q33 78 106 257.5t114 274.5q15 34 58 144.5t72 168.5q20 45 35 57 19 15 88 29.5t84 20.5q6 38 6 57 0 4-.5 13t-.5 13q-63 0-190-8t-191-8q-76 0-215 7t-178 8q0-43 4-78l131-28q1 0 12.5-2.5t15.5-3.5 14.5-4.5 15-6.5 11-8 9-11 2.5-14q0-16-31-96.5t-72-177.5-42-100l-450-2q-26 58-76.5 195.5t-50.5 162.5q0 22 14 37.5t43.5 24.5 48.5 13.5 57 8.5 41 4q1 19 1 58 0 9-2 27-58 0-174.5-10t-174.5-10q-8 0-26.5 4t-21.5 4q-80 14-188 14z\"/></svg>"
 
 /***/ }),
 /* 230 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1600 736v192q0 40-28 68t-68 28h-1216q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h1216q40 0 68 28t28 68z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1744 1408q33 0 42 18.5t-11 44.5l-126 162q-20 26-49 26t-49-26l-126-162q-20-26-11-44.5t42-18.5h80v-1024h-80q-33 0-42-18.5t11-44.5l126-162q20-26 49-26t49 26l126 162q20 26 11 44.5t-42 18.5h-80v1024h80zm-1663-1279l54 27q12 5 211 5 44 0 132-2t132-2q36 0 107.5.5t107.5.5h293q6 0 21 .5t20.5 0 16-3 17.5-9 15-17.5l42-1q4 0 14 .5t14 .5q2 112 2 336 0 80-5 109-39 14-68 18-25-44-54-128-3-9-11-48t-14.5-73.5-7.5-35.5q-6-8-12-12.5t-15.5-6-13-2.5-18-.5-16.5.5q-17 0-66.5-.5t-74.5-.5-64 2-71 6q-9 81-8 136 0 94 2 388t2 455q0 16-2.5 71.5t0 91.5 12.5 69q40 21 124 42.5t120 37.5q5 40 5 50 0 14-3 29l-34 1q-76 2-218-8t-207-10q-50 0-151 9t-152 9q-3-51-3-52v-9q17-27 61.5-43t98.5-29 78-27q19-42 19-383 0-101-3-303t-3-303v-117q0-2 .5-15.5t.5-25-1-25.5-3-24-5-14q-11-12-162-12-33 0-93 12t-80 26q-19 13-34 72.5t-31.5 111-42.5 53.5q-42-26-56-44v-383z\"/></svg>"
 
 /***/ }),
 /* 231 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M576 576q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1024 384v448h-1408v-192l320-320 160 160 512-512zm96-704h-1600q-13 0-22.5 9.5t-9.5 22.5v1216q0 13 9.5 22.5t22.5 9.5h1600q13 0 22.5-9.5t9.5-22.5v-1216q0-13-9.5-22.5t-22.5-9.5zm160 32v1216q0 66-47 113t-113 47h-1600q-66 0-113-47t-47-113v-1216q0-66 47-113t113-47h1600q66 0 113 47t47 113z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 24 24\" > <path d=\"M22,20.6L3.4,2H8V0H0v8h2V3.4L20.6,22H16v2h8v-8h-2V20.6z M16,0v2h4.7l-6.3,6.3l1.4,1.4L22,3.5V8h2V0H16z M8.3,14.3L2,20.6V16H0v8h8v-2H3.5l6.3-6.3L8.3,14.3z\"/> </svg>"
 
 /***/ }),
 /* 232 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"> <path d=\"M352 832q0 14-9 23l-288 288q-9 9-23 9-13 0-22.5-9.5t-9.5-22.5v-576q0-13 9.5-22.5t22.5-9.5q14 0 23 9l288 288q9 9 9 23zm1440 480v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1600 736v192q0 40-28 68t-68 28h-1216q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h1216q40 0 68 28t28 68z\"/></svg>"
 
 /***/ }),
 /* 233 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1152 1376v-160q0-14-9-23t-23-9h-96v-512q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v160q0 14 9 23t23 9h96v320h-96q-14 0-23 9t-9 23v160q0 14 9 23t23 9h448q14 0 23-9t9-23zm-128-896v-160q0-14-9-23t-23-9h-192q-14 0-23 9t-9 23v160q0 14 9 23t23 9h192q14 0 23-9t9-23zm640 416q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M576 576q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1024 384v448h-1408v-192l320-320 160 160 512-512zm96-704h-1600q-13 0-22.5 9.5t-9.5 22.5v1216q0 13 9.5 22.5t22.5 9.5h1600q13 0 22.5-9.5t9.5-22.5v-1216q0-13-9.5-22.5t-22.5-9.5zm160 32v1216q0 66-47 113t-113 47h-1600q-66 0-113-47t-47-113v-1216q0-66 47-113t113-47h1600q66 0 113 47t47 113z\"/></svg>"
 
 /***/ }),
 /* 234 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M384 1662l17-85q6-2 81.5-21.5t111.5-37.5q28-35 41-101 1-7 62-289t114-543.5 52-296.5v-25q-24-13-54.5-18.5t-69.5-8-58-5.5l19-103q33 2 120 6.5t149.5 7 120.5 2.5q48 0 98.5-2.5t121-7 98.5-6.5q-5 39-19 89-30 10-101.5 28.5t-108.5 33.5q-8 19-14 42.5t-9 40-7.5 45.5-6.5 42q-27 148-87.5 419.5t-77.5 355.5q-2 9-13 58t-20 90-16 83.5-6 57.5l1 18q17 4 185 31-3 44-16 99-11 0-32.5 1.5t-32.5 1.5q-29 0-87-10t-86-10q-138-2-206-2-51 0-143 9t-121 11z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"> <path d=\"M352 832q0 14-9 23l-288 288q-9 9-23 9-13 0-22.5-9.5t-9.5-22.5v-576q0-13 9.5-22.5t22.5-9.5q14 0 23 9l288 288q9 9 9 23zm1440 480v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
 
 /***/ }),
 /* 235 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1152 1376v-160q0-14-9-23t-23-9h-96v-512q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v160q0 14 9 23t23 9h96v320h-96q-14 0-23 9t-9 23v160q0 14 9 23t23 9h448q14 0 23-9t9-23zm-128-896v-160q0-14-9-23t-23-9h-192q-14 0-23 9t-9 23v160q0 14 9 23t23 9h192q14 0 23-9t9-23zm640 416q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z\"/></svg>"
 
 /***/ }),
 /* 236 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-1280q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1280q26 0 45 19t19 45zm256-384v128q0 26-19 45t-45 19h-1536q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1536q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-1152q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1152q26 0 45 19t19 45z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M384 1662l17-85q6-2 81.5-21.5t111.5-37.5q28-35 41-101 1-7 62-289t114-543.5 52-296.5v-25q-24-13-54.5-18.5t-69.5-8-58-5.5l19-103q33 2 120 6.5t149.5 7 120.5 2.5q48 0 98.5-2.5t121-7 98.5-6.5q-5 39-19 89-30 10-101.5 28.5t-108.5 33.5q-8 19-14 42.5t-9 40-7.5 45.5-6.5 42q-27 148-87.5 419.5t-77.5 355.5q-2 9-13 58t-20 90-16 83.5-6 57.5l1 18q17 4 185 31-3 44-16 99-11 0-32.5 1.5t-32.5 1.5q-29 0-87-10t-86-10q-138-2-206-2-51 0-143 9t-121 11z\"/></svg>"
 
 /***/ }),
 /* 237 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45z\"/></svg>"
 
 /***/ }),
 /* 238 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M640 768h512v-192q0-106-75-181t-181-75-181 75-75 181v192zm832 96v576q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-576q0-40 28-68t68-28h32v-192q0-184 132-316t316-132 316 132 132 316v192h32q40 0 68 28t28 68z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-1280q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1280q26 0 45 19t19 45zm256-384v128q0 26-19 45t-45 19h-1536q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1536q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-1152q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1152q26 0 45 19t19 45z\"/></svg>"
 
 /***/ }),
 /* 239 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1664 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z\"/></svg>"
 
 /***/ }),
 /* 240 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 312 312\"> <g transform=\"translate(0.000000,312.000000) scale(0.100000,-0.100000)\" stroke=\"none\"> <path d=\"M50 3109 c0 -7 -11 -22 -25 -35 l-25 -23 0 -961 0 -961 32 -29 32 -30 501 -2 500 -3 3 -502 2 -502 31 -30 31 -31 958 0 958 0 23 25 c13 13 30 25 37 25 9 0 12 199 12 960 0 686 -3 960 -11 960 -6 0 -24 12 -40 28 l-29 27 -503 5 -502 5 -5 502 -5 503 -28 29 c-15 16 -27 34 -27 40 0 8 -274 11 -960 11 -710 0 -960 -3 -960 -11z m1738 -698 l2 -453 -40 -40 c-22 -22 -40 -43 -40 -47 0 -4 36 -42 79 -85 88 -87 82 -87 141 -23 l26 27 455 -2 454 -3 0 -775 0 -775 -775 0 -775 0 -3 450 -2 449 47 48 47 48 -82 80 c-44 44 -84 80 -87 80 -3 0 -25 -18 -48 -40 l-41 -40 -456 2 -455 3 -3 765 c-1 421 0 771 3 778 3 10 164 12 777 10 l773 -3 3 -454z\"/> <path d=\"M607 2492 c-42 -42 -77 -82 -77 -87 0 -6 86 -96 190 -200 105 -104 190 -197 190 -205 0 -8 -41 -56 -92 -107 -65 -65 -87 -94 -77 -98 8 -3 138 -4 289 -3 l275 3 3 275 c1 151 0 281 -3 289 -4 10 -35 -14 -103 -82 -54 -53 -103 -97 -109 -97 -7 0 -99 88 -206 195 -107 107 -196 195 -198 195 -3 0 -39 -35 -82 -78z\"/> <path d=\"M1470 1639 c-47 -49 -87 -91 -89 -94 -5 -6 149 -165 160 -165 9 0 189 179 189 188 0 12 -154 162 -165 161 -6 0 -48 -41 -95 -90z\"/> <path d=\"M1797 1303 c-9 -8 -9 -568 0 -576 4 -4 50 36 103 88 54 52 101 95 106 95 5 0 95 -85 199 -190 104 -104 194 -190 200 -190 6 0 46 36 90 80 l79 79 -197 196 c-108 108 -197 199 -197 203 0 4 45 52 99 106 55 55 98 103 95 108 -6 10 -568 11 -577 1z\"/> </g> </svg> "
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M640 768h512v-192q0-106-75-181t-181-75-181 75-75 181v192zm832 96v576q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-576q0-40 28-68t68-28h32v-192q0-184 132-316t316-132 316 132 132 316v192h32q40 0 68 28t28 68z\"/></svg>"
 
 /***/ }),
 /* 241 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg role=\"img\" viewBox=\"0 0 1792 1792\"> <path d=\"M381 1620q0 80-54.5 126t-135.5 46q-106 0-172-66l57-88q49 45 106 45 29 0 50.5-14.5t21.5-42.5q0-64-105-56l-26-56q8-10 32.5-43.5t42.5-54 37-38.5v-1q-16 0-48.5 1t-48.5 1v53h-106v-152h333v88l-95 115q51 12 81 49t30 88zm2-627v159h-362q-6-36-6-54 0-51 23.5-93t56.5-68 66-47.5 56.5-43.5 23.5-45q0-25-14.5-38.5t-39.5-13.5q-46 0-81 58l-85-59q24-51 71.5-79.5t105.5-28.5q73 0 123 41.5t50 112.5q0 50-34 91.5t-75 64.5-75.5 50.5-35.5 52.5h127v-60h105zm1409 319v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-14 9-23t23-9h1216q13 0 22.5 9.5t9.5 22.5zm-1408-899v99h-335v-99h107q0-41 .5-122t.5-121v-12h-2q-8 17-50 54l-71-76 136-127h106v404h108zm1408 387v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-14 9-23t23-9h1216q13 0 22.5 9.5t9.5 22.5zm0-512v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1664 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z\"/></svg>"
 
 /***/ }),
 /* 242 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 270 270\"> <path d=\"m240.443652,220.45085l-47.410809,0l0,-10.342138c13.89973,-8.43655 25.752896,-19.844464 34.686646,-33.469923c11.445525,-17.455846 17.496072,-37.709239 17.496072,-58.570077c0,-59.589197 -49.208516,-108.068714 -109.693558,-108.068714s-109.69263,48.479517 -109.69263,108.069628c0,20.860839 6.050547,41.113316 17.497001,58.570077c8.93375,13.625459 20.787845,25.032458 34.686646,33.469008l0,10.342138l-47.412666,0c-10.256959,0 -18.571354,8.191376 -18.571354,18.296574c0,10.105198 8.314395,18.296574 18.571354,18.296574l65.98402,0c10.256959,0 18.571354,-8.191376 18.571354,-18.296574l0,-39.496814c0,-7.073455 -4.137698,-13.51202 -10.626529,-16.537358c-25.24497,-11.772016 -41.557118,-37.145704 -41.557118,-64.643625c0,-39.411735 32.545369,-71.476481 72.549922,-71.476481c40.004553,0 72.550851,32.064746 72.550851,71.476481c0,27.497006 -16.312149,52.87161 -41.557118,64.643625c-6.487902,3.026253 -10.6256,9.464818 -10.6256,16.537358l0,39.496814c0,10.105198 8.314395,18.296574 18.571354,18.296574l65.982163,0c10.256959,0 18.571354,-8.191376 18.571354,-18.296574c0,-10.105198 -8.314395,-18.296574 -18.571354,-18.296574z\"/> </svg>"
+module.exports = "<svg viewBox=\"0 0 312 312\"> <g transform=\"translate(0.000000,312.000000) scale(0.100000,-0.100000)\" stroke=\"none\"> <path d=\"M50 3109 c0 -7 -11 -22 -25 -35 l-25 -23 0 -961 0 -961 32 -29 32 -30 501 -2 500 -3 3 -502 2 -502 31 -30 31 -31 958 0 958 0 23 25 c13 13 30 25 37 25 9 0 12 199 12 960 0 686 -3 960 -11 960 -6 0 -24 12 -40 28 l-29 27 -503 5 -502 5 -5 502 -5 503 -28 29 c-15 16 -27 34 -27 40 0 8 -274 11 -960 11 -710 0 -960 -3 -960 -11z m1738 -698 l2 -453 -40 -40 c-22 -22 -40 -43 -40 -47 0 -4 36 -42 79 -85 88 -87 82 -87 141 -23 l26 27 455 -2 454 -3 0 -775 0 -775 -775 0 -775 0 -3 450 -2 449 47 48 47 48 -82 80 c-44 44 -84 80 -87 80 -3 0 -25 -18 -48 -40 l-41 -40 -456 2 -455 3 -3 765 c-1 421 0 771 3 778 3 10 164 12 777 10 l773 -3 3 -454z\"/> <path d=\"M607 2492 c-42 -42 -77 -82 -77 -87 0 -6 86 -96 190 -200 105 -104 190 -197 190 -205 0 -8 -41 -56 -92 -107 -65 -65 -87 -94 -77 -98 8 -3 138 -4 289 -3 l275 3 3 275 c1 151 0 281 -3 289 -4 10 -35 -14 -103 -82 -54 -53 -103 -97 -109 -97 -7 0 -99 88 -206 195 -107 107 -196 195 -198 195 -3 0 -39 -35 -82 -78z\"/> <path d=\"M1470 1639 c-47 -49 -87 -91 -89 -94 -5 -6 149 -165 160 -165 9 0 189 179 189 188 0 12 -154 162 -165 161 -6 0 -48 -41 -95 -90z\"/> <path d=\"M1797 1303 c-9 -8 -9 -568 0 -576 4 -4 50 36 103 88 54 52 101 95 106 95 5 0 95 -85 199 -190 104 -104 194 -190 200 -190 6 0 46 36 90 80 l79 79 -197 196 c-108 108 -197 199 -197 203 0 4 45 52 99 106 55 55 98 103 95 108 -6 10 -568 11 -577 1z\"/> </g> </svg> "
 
 /***/ }),
 /* 243 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"> <path d=\"M384 544v576q0 13-9.5 22.5t-22.5 9.5q-14 0-23-9l-288-288q-9-9-9-23t9-23l288-288q9-9 23-9 13 0 22.5 9.5t9.5 22.5zm1408 768v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
+module.exports = "<svg role=\"img\" viewBox=\"0 0 1792 1792\"> <path d=\"M381 1620q0 80-54.5 126t-135.5 46q-106 0-172-66l57-88q49 45 106 45 29 0 50.5-14.5t21.5-42.5q0-64-105-56l-26-56q8-10 32.5-43.5t42.5-54 37-38.5v-1q-16 0-48.5 1t-48.5 1v53h-106v-152h333v88l-95 115q51 12 81 49t30 88zm2-627v159h-362q-6-36-6-54 0-51 23.5-93t56.5-68 66-47.5 56.5-43.5 23.5-45q0-25-14.5-38.5t-39.5-13.5q-46 0-81 58l-85-59q24-51 71.5-79.5t105.5-28.5q73 0 123 41.5t50 112.5q0 50-34 91.5t-75 64.5-75.5 50.5-35.5 52.5h127v-60h105zm1409 319v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-14 9-23t23-9h1216q13 0 22.5 9.5t9.5 22.5zm-1408-899v99h-335v-99h107q0-41 .5-122t.5-121v-12h-2q-8 17-50 54l-71-76 136-127h106v404h108zm1408 387v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-14 9-23t23-9h1216q13 0 22.5 9.5t9.5 22.5zm0-512v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
 
 /***/ }),
 /* 244 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg x=\"0px\" y=\"0px\" viewBox=\"0 0 459 459\"> <g> <g> <path d=\"M229.5,0C102,0,0,102,0,229.5S102,459,229.5,459c20.4,0,38.25-17.85,38.25-38.25c0-10.2-2.55-17.85-10.2-25.5 c-5.1-7.65-10.2-15.3-10.2-25.5c0-20.4,17.851-38.25,38.25-38.25h45.9c71.4,0,127.5-56.1,127.5-127.5C459,91.8,357,0,229.5,0z M89.25,229.5c-20.4,0-38.25-17.85-38.25-38.25S68.85,153,89.25,153s38.25,17.85,38.25,38.25S109.65,229.5,89.25,229.5z M165.75,127.5c-20.4,0-38.25-17.85-38.25-38.25S145.35,51,165.75,51S204,68.85,204,89.25S186.15,127.5,165.75,127.5z M293.25,127.5c-20.4,0-38.25-17.85-38.25-38.25S272.85,51,293.25,51s38.25,17.85,38.25,38.25S313.65,127.5,293.25,127.5z M369.75,229.5c-20.4,0-38.25-17.85-38.25-38.25S349.35,153,369.75,153S408,170.85,408,191.25S390.15,229.5,369.75,229.5z\" /> </g> </g> </svg> "
+module.exports = "<svg viewBox=\"0 0 270 270\"> <path d=\"m240.443652,220.45085l-47.410809,0l0,-10.342138c13.89973,-8.43655 25.752896,-19.844464 34.686646,-33.469923c11.445525,-17.455846 17.496072,-37.709239 17.496072,-58.570077c0,-59.589197 -49.208516,-108.068714 -109.693558,-108.068714s-109.69263,48.479517 -109.69263,108.069628c0,20.860839 6.050547,41.113316 17.497001,58.570077c8.93375,13.625459 20.787845,25.032458 34.686646,33.469008l0,10.342138l-47.412666,0c-10.256959,0 -18.571354,8.191376 -18.571354,18.296574c0,10.105198 8.314395,18.296574 18.571354,18.296574l65.98402,0c10.256959,0 18.571354,-8.191376 18.571354,-18.296574l0,-39.496814c0,-7.073455 -4.137698,-13.51202 -10.626529,-16.537358c-25.24497,-11.772016 -41.557118,-37.145704 -41.557118,-64.643625c0,-39.411735 32.545369,-71.476481 72.549922,-71.476481c40.004553,0 72.550851,32.064746 72.550851,71.476481c0,27.497006 -16.312149,52.87161 -41.557118,64.643625c-6.487902,3.026253 -10.6256,9.464818 -10.6256,16.537358l0,39.496814c0,10.105198 8.314395,18.296574 18.571354,18.296574l65.982163,0c10.256959,0 18.571354,-8.191376 18.571354,-18.296574c0,-10.105198 -8.314395,-18.296574 -18.571354,-18.296574z\"/> </svg>"
 
 /***/ }),
 /* 245 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1534 189v73q0 29-18.5 61t-42.5 32q-50 0-54 1-26 6-32 31-3 11-3 64v1152q0 25-18 43t-43 18h-108q-25 0-43-18t-18-43v-1218h-143v1218q0 25-17.5 43t-43.5 18h-108q-26 0-43.5-18t-17.5-43v-496q-147-12-245-59-126-58-192-179-64-117-64-259 0-166 88-286 88-118 209-159 111-37 417-37h479q25 0 43 18t18 43z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"> <path d=\"M384 544v576q0 13-9.5 22.5t-22.5 9.5q-14 0-23-9l-288-288q-9-9-9-23t9-23l288-288q9-9 23-9 13 0 22.5 9.5t9.5 22.5zm1408 768v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
 
 /***/ }),
 /* 246 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 20 20\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M10.5 20H2a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h1V3l2.03-.4a3 3 0 0 1 5.94 0L13 3v1h1a2 2 0 0 1 2 2v1h-2V6h-1v1H3V6H2v12h5v2h3.5zM8 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm2 4h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2zm0 2v8h8v-8h-8z\"/> </svg> "
+module.exports = "<svg x=\"0px\" y=\"0px\" viewBox=\"0 0 459 459\"> <g> <g> <path d=\"M229.5,0C102,0,0,102,0,229.5S102,459,229.5,459c20.4,0,38.25-17.85,38.25-38.25c0-10.2-2.55-17.85-10.2-25.5 c-5.1-7.65-10.2-15.3-10.2-25.5c0-20.4,17.851-38.25,38.25-38.25h45.9c71.4,0,127.5-56.1,127.5-127.5C459,91.8,357,0,229.5,0z M89.25,229.5c-20.4,0-38.25-17.85-38.25-38.25S68.85,153,89.25,153s38.25,17.85,38.25,38.25S109.65,229.5,89.25,229.5z M165.75,127.5c-20.4,0-38.25-17.85-38.25-38.25S145.35,51,165.75,51S204,68.85,204,89.25S186.15,127.5,165.75,127.5z M293.25,127.5c-20.4,0-38.25-17.85-38.25-38.25S272.85,51,293.25,51s38.25,17.85,38.25,38.25S313.65,127.5,293.25,127.5z M369.75,229.5c-20.4,0-38.25-17.85-38.25-38.25S349.35,153,369.75,153S408,170.85,408,191.25S390.15,229.5,369.75,229.5z\" /> </g> </g> </svg> "
 
 /***/ }),
 /* 247 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M491 1536l91-91-235-235-91 91v107h128v128h107zm523-928q0-22-22-22-10 0-17 7l-542 542q-7 7-7 17 0 22 22 22 10 0 17-7l542-542q7-7 7-17zm-54-192l416 416-832 832h-416v-416zm683 96q0 53-37 90l-166 166-416-416 166-165q36-38 90-38 53 0 91 38l235 234q37 39 37 91z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1534 189v73q0 29-18.5 61t-42.5 32q-50 0-54 1-26 6-32 31-3 11-3 64v1152q0 25-18 43t-43 18h-108q-25 0-43-18t-18-43v-1218h-143v1218q0 25-17.5 43t-43.5 18h-108q-26 0-43.5-18t-17.5-43v-496q-147-12-245-59-126-58-192-179-64-117-64-259 0-166 88-286 88-118 209-159 111-37 417-37h479q25 0 43 18t18 43z\"/></svg>"
 
 /***/ }),
 /* 248 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 20 20\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M10.5 20H2a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h1V3l2.03-.4a3 3 0 0 1 5.94 0L13 3v1h1a2 2 0 0 1 2 2v1h-2V6h-1v1H3V6H2v12h5v2h3.5zM8 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm2 4h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2zm0 2v8h8v-8h-8z\"/> </svg> "
 
 /***/ }),
 /* 249 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"> <path d=\"M448 1536h896v-256h-896v256zm0-640h896v-384h-160q-40 0-68-28t-28-68v-160h-640v640zm1152 64q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm128 0v416q0 13-9.5 22.5t-22.5 9.5h-224v160q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-160h-224q-13 0-22.5-9.5t-9.5-22.5v-416q0-79 56.5-135.5t135.5-56.5h64v-544q0-40 28-68t68-28h672q40 0 88 20t76 48l152 152q28 28 48 76t20 88v256h64q79 0 135.5 56.5t56.5 135.5z\"/> </svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M491 1536l91-91-235-235-91 91v107h128v128h107zm523-928q0-22-22-22-10 0-17 7l-542 542q-7 7-7 17 0 22 22 22 10 0 17-7l542-542q7-7 7-17zm-54-192l416 416-832 832h-416v-416zm683 96q0 53-37 90l-166 166-416-416 166-165q36-38 90-38 53 0 91 38l235 234q37 39 37 91z\"/></svg>"
 
 /***/ }),
 /* 250 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"> <path d=\"M1664 256v448q0 26-19 45t-45 19h-448q-42 0-59-40-17-39 14-69l138-138q-148-137-349-137-104 0-198.5 40.5t-163.5 109.5-109.5 163.5-40.5 198.5 40.5 198.5 109.5 163.5 163.5 109.5 198.5 40.5q119 0 225-52t179-147q7-10 23-12 14 0 25 9l137 138q9 8 9.5 20.5t-7.5 22.5q-109 132-264 204.5t-327 72.5q-156 0-298-61t-245-164-164-245-61-298 61-298 164-245 245-164 298-61q147 0 284.5 55.5t244.5 156.5l130-129q29-31 70-14 39 17 39 59z\"/> </svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z\"/></svg>"
 
 /***/ }),
 /* 251 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 24 24\" > <g> <g transform=\"translate(-251.000000, -443.000000)\"> <g transform=\"translate(215.000000, 119.000000)\"/> <path d=\"M252,448 L256,448 L256,444 L252,444 L252,448 Z M257,448 L269,448 L269,446 L257,446 L257,448 Z M257,464 L269,464 L269,462 L257,462 L257,464 Z M270,444 L270,448 L274,448 L274,444 L270,444 Z M252,462 L252,466 L256,466 L256,462 L252,462 Z M270,462 L270,466 L274,466 L274,462 L270,462 Z M254,461 L256,461 L256,449 L254,449 L254,461 Z M270,461 L272,461 L272,449 L270,449 L270,461 Z\"/> </g> </g> </svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"> <path d=\"M448 1536h896v-256h-896v256zm0-640h896v-384h-160q-40 0-68-28t-28-68v-160h-640v640zm1152 64q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm128 0v416q0 13-9.5 22.5t-22.5 9.5h-224v160q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-160h-224q-13 0-22.5-9.5t-9.5-22.5v-416q0-79 56.5-135.5t135.5-56.5h64v-544q0-40 28-68t68-28h672q40 0 88 20t76 48l152 152q28 28 48 76t20 88v256h64q79 0 135.5 56.5t56.5 135.5z\"/> </svg>"
 
 /***/ }),
 /* 252 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"> <path d=\"M844 472q0 60-19 113.5t-63 92.5-105 39q-76 0-138-57.5t-92-135.5-30-151q0-60 19-113.5t63-92.5 105-39q77 0 138.5 57.5t91.5 135 30 151.5zm-342 483q0 80-42 139t-119 59q-76 0-141.5-55.5t-100.5-133.5-35-152q0-80 42-139.5t119-59.5q76 0 141.5 55.5t100.5 134 35 152.5zm394-27q118 0 255 97.5t229 237 92 254.5q0 46-17 76.5t-48.5 45-64.5 20-76 5.5q-68 0-187.5-45t-182.5-45q-66 0-192.5 44.5t-200.5 44.5q-183 0-183-146 0-86 56-191.5t139.5-192.5 187.5-146 193-59zm239-211q-61 0-105-39t-63-92.5-19-113.5q0-74 30-151.5t91.5-135 138.5-57.5q61 0 105 39t63 92.5 19 113.5q0 73-30 151t-92 135.5-138 57.5zm432-104q77 0 119 59.5t42 139.5q0 74-35 152t-100.5 133.5-141.5 55.5q-77 0-119-59t-42-139q0-74 35-152.5t100.5-134 141.5-55.5z\"/> </svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"> <path d=\"M1664 256v448q0 26-19 45t-45 19h-448q-42 0-59-40-17-39 14-69l138-138q-148-137-349-137-104 0-198.5 40.5t-163.5 109.5-109.5 163.5-40.5 198.5 40.5 198.5 109.5 163.5 163.5 109.5 198.5 40.5q119 0 225-52t179-147q7-10 23-12 14 0 25 9l137 138q9 8 9.5 20.5t-7.5 22.5q-109 132-264 204.5t-327 72.5q-156 0-298-61t-245-164-164-245-61-298 61-298 164-245 245-164 298-61q147 0 284.5 55.5t244.5 156.5l130-129q29-31 70-14 39 17 39 59z\"/> </svg>"
 
 /***/ }),
 /* 253 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1280q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1280q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1536q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1536q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1152q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1152q26 0 45 19t19 45z\"/> </svg>"
+module.exports = "<svg viewBox=\"0 0 24 24\" > <g> <g transform=\"translate(-251.000000, -443.000000)\"> <g transform=\"translate(215.000000, 119.000000)\"/> <path d=\"M252,448 L256,448 L256,444 L252,444 L252,448 Z M257,448 L269,448 L269,446 L257,446 L257,448 Z M257,464 L269,464 L269,462 L257,462 L257,464 Z M270,444 L270,448 L274,448 L274,444 L270,444 Z M252,462 L252,466 L256,466 L256,462 L252,462 Z M270,462 L270,466 L274,466 L274,462 L270,462 Z M254,461 L256,461 L256,449 L254,449 L254,461 Z M270,461 L272,461 L272,449 L270,449 L270,461 Z\"/> </g> </g> </svg>"
 
 /***/ }),
 /* 254 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"> <path d=\"M512 1536h768v-384h-768v384zm896 0h128v-896q0-14-10-38.5t-20-34.5l-281-281q-10-10-34-20t-39-10v416q0 40-28 68t-68 28h-576q-40 0-68-28t-28-68v-416h-128v1280h128v-416q0-40 28-68t68-28h832q40 0 68 28t28 68v416zm-384-928v-320q0-13-9.5-22.5t-22.5-9.5h-192q-13 0-22.5 9.5t-9.5 22.5v320q0 13 9.5 22.5t22.5 9.5h192q13 0 22.5-9.5t9.5-22.5zm640 32v928q0 40-28 68t-68 28h-1344q-40 0-68-28t-28-68v-1344q0-40 28-68t68-28h928q40 0 88 20t76 48l280 280q28 28 48 76t20 88z\"/> </svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"> <path d=\"M844 472q0 60-19 113.5t-63 92.5-105 39q-76 0-138-57.5t-92-135.5-30-151q0-60 19-113.5t63-92.5 105-39q77 0 138.5 57.5t91.5 135 30 151.5zm-342 483q0 80-42 139t-119 59q-76 0-141.5-55.5t-100.5-133.5-35-152q0-80 42-139.5t119-59.5q76 0 141.5 55.5t100.5 134 35 152.5zm394-27q118 0 255 97.5t229 237 92 254.5q0 46-17 76.5t-48.5 45-64.5 20-76 5.5q-68 0-187.5-45t-182.5-45q-66 0-192.5 44.5t-200.5 44.5q-183 0-183-146 0-86 56-191.5t139.5-192.5 187.5-146 193-59zm239-211q-61 0-105-39t-63-92.5-19-113.5q0-74 30-151.5t91.5-135 138.5-57.5q61 0 105 39t63 92.5 19 113.5q0 73-30 151t-92 135.5-138 57.5zm432-104q77 0 119 59.5t42 139.5q0 74-35 152t-100.5 133.5-141.5 55.5q-77 0-119-59t-42-139q0-74 35-152.5t100.5-134 141.5-55.5z\"/> </svg>"
 
 /***/ }),
 /* 255 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 18 18\"> <g fill-rule=\"evenodd\" stroke=\"none\" stroke-width=\"1\"> <g transform=\"translate(-381.000000, -381.000000)\"> <g transform=\"translate(381.000000, 381.000000)\"> <path d=\"M0,2 L2,2 L2,0 C0.9,0 0,0.9 0,2 L0,2 Z M0,10 L2,10 L2,8 L0,8 L0,10 L0,10 Z M4,18 L6,18 L6,16 L4,16 L4,18 L4,18 Z M0,6 L2,6 L2,4 L0,4 L0,6 L0,6 Z M10,0 L8,0 L8,2 L10,2 L10,0 L10,0 Z M16,0 L16,2 L18,2 C18,0.9 17.1,0 16,0 L16,0 Z M2,18 L2,16 L0,16 C0,17.1 0.9,18 2,18 L2,18 Z M0,14 L2,14 L2,12 L0,12 L0,14 L0,14 Z M6,0 L4,0 L4,2 L6,2 L6,0 L6,0 Z M8,18 L10,18 L10,16 L8,16 L8,18 L8,18 Z M16,10 L18,10 L18,8 L16,8 L16,10 L16,10 Z M16,18 C17.1,18 18,17.1 18,16 L16,16 L16,18 L16,18 Z M16,6 L18,6 L18,4 L16,4 L16,6 L16,6 Z M16,14 L18,14 L18,12 L16,12 L16,14 L16,14 Z M12,18 L14,18 L14,16 L12,16 L12,18 L12,18 Z M12,2 L14,2 L14,0 L12,0 L12,2 L12,2 Z M4,14 L14,14 L14,4 L4,4 L4,14 L4,14 Z M6,6 L12,6 L12,12 L6,12 L6,6 L6,6 Z\"/> </g> </g> </g> </svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1280q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1280q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1536q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1536q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1152q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1152q26 0 45 19t19 45z\"/> </svg>"
 
 /***/ }),
 /* 256 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"> <path d=\"M896 960v448q0 26-19 45t-45 19-45-19l-144-144-332 332q-10 10-23 10t-23-10l-114-114q-10-10-10-23t10-23l332-332-144-144q-19-19-19-45t19-45 45-19h448q26 0 45 19t19 45zm755-672q0 13-10 23l-332 332 144 144q19 19 19 45t-19 45-45 19h-448q-26 0-45-19t-19-45v-448q0-26 19-45t45-19 45 19l144 144 332-332q10-10 23-10t23 10l114 114q10 10 10 23z\"/> </svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"> <path d=\"M512 1536h768v-384h-768v384zm896 0h128v-896q0-14-10-38.5t-20-34.5l-281-281q-10-10-34-20t-39-10v416q0 40-28 68t-68 28h-576q-40 0-68-28t-28-68v-416h-128v1280h128v-416q0-40 28-68t68-28h832q40 0 68 28t28 68v416zm-384-928v-320q0-13-9.5-22.5t-22.5-9.5h-192q-13 0-22.5 9.5t-9.5 22.5v320q0 13 9.5 22.5t22.5 9.5h192q13 0 22.5-9.5t9.5-22.5zm640 32v928q0 40-28 68t-68 28h-1344q-40 0-68-28t-28-68v-1344q0-40 28-68t68-28h928q40 0 88 20t76 48l280 280q28 28 48 76t20 88z\"/> </svg>"
 
 /***/ }),
 /* 257 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"> <path d=\"M553 1399l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23t-10 23l-393 393 393 393q10 10 10 23t-10 23zm591-1067l-373 1291q-4 13-15.5 19.5t-23.5 2.5l-62-17q-13-4-19.5-15.5t-2.5-24.5l373-1291q4-13 15.5-19.5t23.5-2.5l62 17q13 4 19.5 15.5t2.5 24.5zm657 651l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23t-10 23z\"/> </svg>"
+module.exports = "<svg viewBox=\"0 0 18 18\"> <g fill-rule=\"evenodd\" stroke=\"none\" stroke-width=\"1\"> <g transform=\"translate(-381.000000, -381.000000)\"> <g transform=\"translate(381.000000, 381.000000)\"> <path d=\"M0,2 L2,2 L2,0 C0.9,0 0,0.9 0,2 L0,2 Z M0,10 L2,10 L2,8 L0,8 L0,10 L0,10 Z M4,18 L6,18 L6,16 L4,16 L4,18 L4,18 Z M0,6 L2,6 L2,4 L0,4 L0,6 L0,6 Z M10,0 L8,0 L8,2 L10,2 L10,0 L10,0 Z M16,0 L16,2 L18,2 C18,0.9 17.1,0 16,0 L16,0 Z M2,18 L2,16 L0,16 C0,17.1 0.9,18 2,18 L2,18 Z M0,14 L2,14 L2,12 L0,12 L0,14 L0,14 Z M6,0 L4,0 L4,2 L6,2 L6,0 L6,0 Z M8,18 L10,18 L10,16 L8,16 L8,18 L8,18 Z M16,10 L18,10 L18,8 L16,8 L16,10 L16,10 Z M16,18 C17.1,18 18,17.1 18,16 L16,16 L16,18 L16,18 Z M16,6 L18,6 L18,4 L16,4 L16,6 L16,6 Z M16,14 L18,14 L18,12 L16,12 L16,14 L16,14 Z M12,18 L14,18 L14,16 L12,16 L12,18 L12,18 Z M12,2 L14,2 L14,0 L12,0 L12,2 L12,2 Z M4,14 L14,14 L14,4 L4,4 L4,14 L4,14 Z M6,6 L12,6 L12,12 L6,12 L6,6 L6,6 Z\"/> </g> </g> </g> </svg>"
 
 /***/ }),
 /* 258 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 48 48\"> <path d=\"M6 42h4v-4h-4v4zm4-28h-4v4h4v-4zm-4 20h4v-4h-4v4zm8 8h4v-4h-4v4zm-4-36h-4v4h4v-4zm8 0h-4v4h4v-4zm16 0h-4v4h4v-4zm-8 8h-4v4h4v-4zm0-8h-4v4h4v-4zm12 28h4v-4h-4v4zm-16 8h4v-4h-4v4zm-16-16h36v-4h-36v4zm32-20v4h4v-4h-4zm0 12h4v-4h-4v4zm-16 16h4v-4h-4v4zm8 8h4v-4h-4v4zm8 0h4v-4h-4v4z\"/><path d=\"M0 0h48v48h-48z\" fill=\"none\"/> </svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"> <path d=\"M896 960v448q0 26-19 45t-45 19-45-19l-144-144-332 332q-10 10-23 10t-23-10l-114-114q-10-10-10-23t10-23l332-332-144-144q-19-19-19-45t19-45 45-19h448q26 0 45 19t19 45zm755-672q0 13-10 23l-332 332 144 144q19 19 19 45t-19 45-45 19h-448q-26 0-45-19t-19-45v-448q0-26 19-45t45-19 45 19l144 144 332-332q10-10 23-10t23 10l114 114q10 10 10 23z\"/> </svg>"
 
 /***/ }),
 /* 259 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 48 48\"> <path d=\"M6 18h4v-4h-4v4zm0-8h4v-4h-4v4zm8 32h4v-4h-4v4zm0-16h4v-4h-4v4zm-8 0h4v-4h-4v4zm0 16h4v-4h-4v4zm0-8h4v-4h-4v4zm8-24h4v-4h-4v4zm24 24h4v-4h-4v4zm-16 8h4v-36h-4v36zm16 0h4v-4h-4v4zm0-16h4v-4h-4v4zm0-20v4h4v-4h-4zm0 12h4v-4h-4v4zm-8-8h4v-4h-4v4zm0 32h4v-4h-4v4zm0-16h4v-4h-4v4z\"/> <path d=\"M0 0h48v48h-48z\" fill=\"none\"/> </svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"> <path d=\"M553 1399l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23t-10 23l-393 393 393 393q10 10 10 23t-10 23zm591-1067l-373 1291q-4 13-15.5 19.5t-23.5 2.5l-62-17q-13-4-19.5-15.5t-2.5-24.5l373-1291q4-13 15.5-19.5t23.5-2.5l62 17q13 4 19.5 15.5t2.5 24.5zm657 651l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23t-10 23z\"/> </svg>"
 
 /***/ }),
 /* 260 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1760 896q14 0 23 9t9 23v64q0 14-9 23t-23 9h-1728q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h1728zm-1277-64q-28-35-51-80-48-97-48-188 0-181 134-309 133-127 393-127 50 0 167 19 66 12 177 48 10 38 21 118 14 123 14 183 0 18-5 45l-12 3-84-6-14-2q-50-149-103-205-88-91-210-91-114 0-182 59-67 58-67 146 0 73 66 140t279 129q69 20 173 66 58 28 95 52h-743zm507 256h411q7 39 7 92 0 111-41 212-23 55-71 104-37 35-109 81-80 48-153 66-80 21-203 21-114 0-195-23l-140-40q-57-16-72-28-8-8-8-22v-13q0-108-2-156-1-30 0-68l2-37v-44l102-2q15 34 30 71t22.5 56 12.5 27q35 57 80 94 43 36 105 57 59 22 132 22 64 0 139-27 77-26 122-86 47-61 47-129 0-84-81-157-34-29-137-71z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 48 48\"> <path d=\"M6 42h4v-4h-4v4zm4-28h-4v4h4v-4zm-4 20h4v-4h-4v4zm8 8h4v-4h-4v4zm-4-36h-4v4h4v-4zm8 0h-4v4h4v-4zm16 0h-4v4h4v-4zm-8 8h-4v4h4v-4zm0-8h-4v4h4v-4zm12 28h4v-4h-4v4zm-16 8h4v-4h-4v4zm-16-16h36v-4h-36v4zm32-20v4h4v-4h-4zm0 12h4v-4h-4v4zm-16 16h4v-4h-4v4zm8 8h4v-4h-4v4zm8 0h4v-4h-4v4z\"/><path d=\"M0 0h48v48h-48z\" fill=\"none\"/> </svg>"
 
 /***/ }),
 /* 261 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"> <path d=\"M1025 1369v167h-248l-159-252-24-42q-8-9-11-21h-3l-9 21q-10 20-25 44l-155 250h-258v-167h128l197-291-185-272h-137v-168h276l139 228q2 4 23 42 8 9 11 21h3q3-9 11-21l25-42 140-228h257v168h-125l-184 267 204 296h109zm639 217v206h-514l-4-27q-3-45-3-46 0-64 26-117t65-86.5 84-65 84-54.5 65-54 26-64q0-38-29.5-62.5t-70.5-24.5q-51 0-97 39-14 11-36 38l-105-92q26-37 63-66 80-65 188-65 110 0 178 59.5t68 158.5q0 66-34.5 118.5t-84 86-99.5 62.5-87 63-41 73h232v-80h126z\"/> </svg>"
+module.exports = "<svg viewBox=\"0 0 48 48\"> <path d=\"M6 18h4v-4h-4v4zm0-8h4v-4h-4v4zm8 32h4v-4h-4v4zm0-16h4v-4h-4v4zm-8 0h4v-4h-4v4zm0 16h4v-4h-4v4zm0-8h4v-4h-4v4zm8-24h4v-4h-4v4zm24 24h4v-4h-4v4zm-16 8h4v-36h-4v36zm16 0h4v-4h-4v4zm0-16h4v-4h-4v4zm0-20v4h4v-4h-4zm0 12h4v-4h-4v4zm-8-8h4v-4h-4v4zm0 32h4v-4h-4v4zm0-16h4v-4h-4v4z\"/> <path d=\"M0 0h48v48h-48z\" fill=\"none\"/> </svg>"
 
 /***/ }),
 /* 262 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"> <path d=\"M1025 1369v167h-248l-159-252-24-42q-8-9-11-21h-3l-9 21q-10 20-25 44l-155 250h-258v-167h128l197-291-185-272h-137v-168h276l139 228q2 4 23 42 8 9 11 21h3q3-9 11-21l25-42 140-228h257v168h-125l-184 267 204 296h109zm637-679v206h-514l-3-27q-4-28-4-46 0-64 26-117t65-86.5 84-65 84-54.5 65-54 26-64q0-38-29.5-62.5t-70.5-24.5q-51 0-97 39-14 11-36 38l-105-92q26-37 63-66 83-65 188-65 110 0 178 59.5t68 158.5q0 56-24.5 103t-62 76.5-81.5 58.5-82 50.5-65.5 51.5-30.5 63h232v-80h126z\"/> </svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1760 896q14 0 23 9t9 23v64q0 14-9 23t-23 9h-1728q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h1728zm-1277-64q-28-35-51-80-48-97-48-188 0-181 134-309 133-127 393-127 50 0 167 19 66 12 177 48 10 38 21 118 14 123 14 183 0 18-5 45l-12 3-84-6-14-2q-50-149-103-205-88-91-210-91-114 0-182 59-67 58-67 146 0 73 66 140t279 129q69 20 173 66 58 28 95 52h-743zm507 256h411q7 39 7 92 0 111-41 212-23 55-71 104-37 35-109 81-80 48-153 66-80 21-203 21-114 0-195-23l-140-40q-57-16-72-28-8-8-8-22v-13q0-108-2-156-1-30 0-68l2-37v-44l102-2q15 34 30 71t22.5 56 12.5 27q35 57 80 94 43 36 105 57 59 22 132 22 64 0 139-27 77-26 122-86 47-61 47-129 0-84-81-157-34-29-137-71z\"/></svg>"
 
 /***/ }),
 /* 263 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M576 1376v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm0-384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm-512-768v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm-512-768v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm0-384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm128-320v1088q0 66-47 113t-113 47h-1344q-66 0-113-47t-47-113v-1088q0-66 47-113t113-47h1344q66 0 113 47t47 113z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"> <path d=\"M1025 1369v167h-248l-159-252-24-42q-8-9-11-21h-3l-9 21q-10 20-25 44l-155 250h-258v-167h128l197-291-185-272h-137v-168h276l139 228q2 4 23 42 8 9 11 21h3q3-9 11-21l25-42 140-228h257v168h-125l-184 267 204 296h109zm639 217v206h-514l-4-27q-3-45-3-46 0-64 26-117t65-86.5 84-65 84-54.5 65-54 26-64q0-38-29.5-62.5t-70.5-24.5q-51 0-97 39-14 11-36 38l-105-92q26-37 63-66 80-65 188-65 110 0 178 59.5t68 158.5q0 66-34.5 118.5t-84 86-99.5 62.5-87 63-41 73h232v-80h126z\"/> </svg>"
 
 /***/ }),
 /* 264 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M512 1248v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm-640-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm-640-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"> <path d=\"M1025 1369v167h-248l-159-252-24-42q-8-9-11-21h-3l-9 21q-10 20-25 44l-155 250h-258v-167h128l197-291-185-272h-137v-168h276l139 228q2 4 23 42 8 9 11 21h3q3-9 11-21l25-42 140-228h257v168h-125l-184 267 204 296h109zm637-679v206h-514l-3-27q-4-28-4-46 0-64 26-117t65-86.5 84-65 84-54.5 65-54 26-64q0-38-29.5-62.5t-70.5-24.5q-51 0-97 39-14 11-36 38l-105-92q26-37 63-66 83-65 188-65 110 0 178 59.5t68 158.5q0 56-24.5 103t-62 76.5-81.5 58.5-82 50.5-65.5 51.5-30.5 63h232v-80h126z\"/> </svg>"
 
 /***/ }),
 /* 265 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M512 1248v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm1280 512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68zm-1280-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm1280 512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M576 1376v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm0-384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm-512-768v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm-512-768v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm0-384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm128-320v1088q0 66-47 113t-113 47h-1344q-66 0-113-47t-47-113v-1088q0-66 47-113t113-47h1344q66 0 113 47t47 113z\"/></svg>"
 
 /***/ }),
 /* 266 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M384 1408q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm0-512q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1408 416v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5zm-1408-928q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1408 416v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5zm0-512v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M512 1248v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm-640-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm-640-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68z\"/></svg>"
 
 /***/ }),
 /* 267 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M176 223q-37-2-45-4l-3-88q13-1 40-1 60 0 112 4 132 7 166 7 86 0 168-3 116-4 146-5 56 0 86-2l-1 14 2 64v9q-60 9-124 9-60 0-79 25-13 14-13 132 0 13 .5 32.5t.5 25.5l1 229 14 280q6 124 51 202 35 59 96 92 88 47 177 47 104 0 191-28 56-18 99-51 48-36 65-64 36-56 53-114 21-73 21-229 0-79-3.5-128t-11-122.5-13.5-159.5l-4-59q-5-67-24-88-34-35-77-34l-100 2-14-3 2-86h84l205 10q76 3 196-10l18 2q6 38 6 51 0 7-4 31-45 12-84 13-73 11-79 17-15 15-15 41 0 7 1.5 27t1.5 31q8 19 22 396 6 195-15 304-15 76-41 122-38 65-112 123-75 57-182 89-109 33-255 33-167 0-284-46-119-47-179-122-61-76-83-195-16-80-16-237v-333q0-188-17-213-25-36-147-39zm1488 1409v-64q0-14-9-23t-23-9h-1472q-14 0-23 9t-9 23v64q0 14 9 23t23 9h1472q14 0 23-9t9-23z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M512 1248v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm1280 512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68zm-1280-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm1280 512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68z\"/></svg>"
 
 /***/ }),
 /* 268 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1664 896q0 156-61 298t-164 245-245 164-298 61q-172 0-327-72.5t-264-204.5q-7-10-6.5-22.5t8.5-20.5l137-138q10-9 25-9 16 2 23 12 73 95 179 147t225 52q104 0 198.5-40.5t163.5-109.5 109.5-163.5 40.5-198.5-40.5-198.5-109.5-163.5-163.5-109.5-198.5-40.5q-98 0-188 35.5t-160 101.5l137 138q31 30 14 69-17 40-59 40h-448q-26 0-45-19t-19-45v-448q0-42 40-59 39-17 69 14l130 129q107-101 244.5-156.5t284.5-55.5q156 0 298 61t245 164 164 245 61 298z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M384 1408q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm0-512q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1408 416v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5zm-1408-928q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1408 416v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5zm0-512v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5z\"/></svg>"
 
 /***/ }),
 /* 269 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M503 1271l-256 256q-10 9-23 9-12 0-23-9-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23zm169 41v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm-224-224q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm1264 128q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-334-335q-21-21-42-56l239-18 273 274q27 27 68 27.5t68-26.5l147-146q28-28 28-67 0-40-28-68l-274-275 18-239q35 21 56 42l336 336q84 86 84 204zm-617-724l-239 18-273-274q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l274 274-18 240q-35-21-56-42l-336-336q-84-86-84-204 0-120 85-203l147-146q83-83 203-83 121 0 204 85l334 335q21 21 42 56zm633 84q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm-544-544v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm407 151l-256 256q-11 9-23 9t-23-9q-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M176 223q-37-2-45-4l-3-88q13-1 40-1 60 0 112 4 132 7 166 7 86 0 168-3 116-4 146-5 56 0 86-2l-1 14 2 64v9q-60 9-124 9-60 0-79 25-13 14-13 132 0 13 .5 32.5t.5 25.5l1 229 14 280q6 124 51 202 35 59 96 92 88 47 177 47 104 0 191-28 56-18 99-51 48-36 65-64 36-56 53-114 21-73 21-229 0-79-3.5-128t-11-122.5-13.5-159.5l-4-59q-5-67-24-88-34-35-77-34l-100 2-14-3 2-86h84l205 10q76 3 196-10l18 2q6 38 6 51 0 7-4 31-45 12-84 13-73 11-79 17-15 15-15 41 0 7 1.5 27t1.5 31q8 19 22 396 6 195-15 304-15 76-41 122-38 65-112 123-75 57-182 89-109 33-255 33-167 0-284-46-119-47-179-122-61-76-83-195-16-80-16-237v-333q0-188-17-213-25-36-147-39zm1488 1409v-64q0-14-9-23t-23-9h-1472q-14 0-23 9t-9 23v64q0 14 9 23t23 9h1472q14 0 23-9t9-23z\"/></svg>"
 
 /***/ }),
 /* 270 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1728 576v256q0 26-19 45t-45 19h-64q-26 0-45-19t-19-45v-256q0-106-75-181t-181-75-181 75-75 181v192h96q40 0 68 28t28 68v576q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-576q0-40 28-68t68-28h672v-192q0-185 131.5-316.5t316.5-131.5 316.5 131.5 131.5 316.5z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1664 896q0 156-61 298t-164 245-245 164-298 61q-172 0-327-72.5t-264-204.5q-7-10-6.5-22.5t8.5-20.5l137-138q10-9 25-9 16 2 23 12 73 95 179 147t225 52q104 0 198.5-40.5t163.5-109.5 109.5-163.5 40.5-198.5-40.5-198.5-109.5-163.5-163.5-109.5-198.5-40.5q-98 0-188 35.5t-160 101.5l137 138q31 30 14 69-17 40-59 40h-448q-26 0-45-19t-19-45v-448q0-42 40-59 39-17 69 14l130 129q107-101 244.5-156.5t284.5-55.5q156 0 298 61t245 164 164 245 61 298z\"/></svg>"
 
 /***/ }),
 /* 271 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1639 1056q0 5-1 7-64 268-268 434.5t-478 166.5q-146 0-282.5-55t-243.5-157l-129 129q-19 19-45 19t-45-19-19-45v-448q0-26 19-45t45-19h448q26 0 45 19t19 45-19 45l-137 137q71 66 161 102t187 36q134 0 250-65t186-179q11-17 53-117 8-23 30-23h192q13 0 22.5 9.5t9.5 22.5zm25-800v448q0 26-19 45t-45 19h-448q-26 0-45-19t-19-45 19-45l138-138q-148-137-349-137-134 0-250 65t-186 179q-11 17-53 117-8 23-30 23h-199q-13 0-22.5-9.5t-9.5-22.5v-7q65-268 270-434.5t480-166.5q146 0 284 55.5t245 156.5l130-129q19-19 45-19t45 19 19 45z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M503 1271l-256 256q-10 9-23 9-12 0-23-9-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23zm169 41v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm-224-224q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm1264 128q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-334-335q-21-21-42-56l239-18 273 274q27 27 68 27.5t68-26.5l147-146q28-28 28-67 0-40-28-68l-274-275 18-239q35 21 56 42l336 336q84 86 84 204zm-617-724l-239 18-273-274q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l274 274-18 240q-35-21-56-42l-336-336q-84-86-84-204 0-120 85-203l147-146q83-83 203-83 121 0 204 85l334 335q21 21 42 56zm633 84q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm-544-544v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm407 151l-256 256q-11 9-23 9t-23-9q-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23z\"/></svg>"
 
 /***/ }),
 /* 272 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1344 1472q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm256 0q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm128-224v320q0 40-28 68t-68 28h-1472q-40 0-68-28t-28-68v-320q0-40 28-68t68-28h427q21 56 70.5 92t110.5 36h256q61 0 110.5-36t70.5-92h427q40 0 68 28t28 68zm-325-648q-17 40-59 40h-256v448q0 26-19 45t-45 19h-256q-26 0-45-19t-19-45v-448h-256q-42 0-59-40-17-39 14-69l448-448q18-19 45-19t45 19l448 448q31 30 14 69z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1728 576v256q0 26-19 45t-45 19h-64q-26 0-45-19t-19-45v-256q0-106-75-181t-181-75-181 75-75 181v192h96q40 0 68 28t28 68v576q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-576q0-40 28-68t68-28h672v-192q0-185 131.5-316.5t316.5-131.5 316.5 131.5 131.5 316.5z\"/></svg>"
 
 /***/ }),
 /* 273 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1216 320q0 26-19 45t-45 19h-128v1024h128q26 0 45 19t19 45-19 45l-256 256q-19 19-45 19t-45-19l-256-256q-19-19-19-45t19-45 45-19h128v-1024h-128q-26 0-45-19t-19-45 19-45l256-256q19-19 45-19t45 19l256 256q19 19 19 45z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1639 1056q0 5-1 7-64 268-268 434.5t-478 166.5q-146 0-282.5-55t-243.5-157l-129 129q-19 19-45 19t-45-19-19-45v-448q0-26 19-45t45-19h448q26 0 45 19t19 45-19 45l-137 137q71 66 161 102t187 36q134 0 250-65t186-179q11-17 53-117 8-23 30-23h192q13 0 22.5 9.5t9.5 22.5zm25-800v448q0 26-19 45t-45 19h-448q-26 0-45-19t-19-45 19-45l138-138q-148-137-349-137-134 0-250 65t-186 179q-11 17-53 117-8 23-30 23h-199q-13 0-22.5-9.5t-9.5-22.5v-7q65-268 270-434.5t480-166.5q146 0 284 55.5t245 156.5l130-129q19-19 45-19t45 19 19 45z\"/></svg>"
 
 /***/ }),
 /* 274 */
+/***/ (function(module, exports) {
+
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1344 1472q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm256 0q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm128-224v320q0 40-28 68t-68 28h-1472q-40 0-68-28t-28-68v-320q0-40 28-68t68-28h427q21 56 70.5 92t110.5 36h256q61 0 110.5-36t70.5-92h427q40 0 68 28t28 68zm-325-648q-17 40-59 40h-256v448q0 26-19 45t-45 19h-256q-26 0-45-19t-19-45v-448h-256q-42 0-59-40-17-39 14-69l448-448q18-19 45-19t45 19l448 448q31 30 14 69z\"/></svg>"
+
+/***/ }),
+/* 275 */
+/***/ (function(module, exports) {
+
+module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1216 320q0 26-19 45t-45 19h-128v1024h128q26 0 45 19t19 45-19 45l-256 256q-19 19-45 19t-45-19l-256-256q-19-19-19-45t19-45 45-19h128v-1024h-128q-26 0-45-19t-19-45 19-45l256-256q19-19 45-19t45 19l256 256q19 19 19 45z\"/></svg>"
+
+/***/ }),
+/* 276 */
 /***/ (function(module, exports) {
 
 module.exports = "<svg viewBox=\"0 0 1792 1792\"><path d=\"M1792 352v1088q0 42-39 59-13 5-25 5-27 0-45-19l-403-403v166q0 119-84.5 203.5t-203.5 84.5h-704q-119 0-203.5-84.5t-84.5-203.5v-704q0-119 84.5-203.5t203.5-84.5h704q119 0 203.5 84.5t84.5 203.5v165l403-402q18-19 45-19 12 0 25 5 39 17 39 59z\"/></svg>"
