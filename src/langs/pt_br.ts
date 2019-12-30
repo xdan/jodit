@@ -89,7 +89,7 @@ export default {
 
 	// plugin paste
 	'Your code is similar to HTML. Keep as HTML?':
-		'Seu código é simular ao HTML. Manter como HTML?',
+		'Seu código é similar ao HTML. Manter como HTML?',
 	'Paste as HTML': 'Colar como HTML?',
 	Keep: 'Manter',
 	Clean: 'Limpar',
