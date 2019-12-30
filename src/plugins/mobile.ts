@@ -141,8 +141,6 @@ export function mobile(editor: IJodit) {
 
 			let newStore: Array<string | IControlType> = [];
 
-			console.log(width, editor.options.sizeLG);
-
 			if (width >= editor.options.sizeLG) {
 				newStore = splitArray(editor.options.buttons);
 

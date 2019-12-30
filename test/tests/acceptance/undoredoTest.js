@@ -40,7 +40,8 @@ describe('Undo/Redo behaviors', function() {
 
 			expect(editor.value).to.be.equal('<h1>test</h1>');
 		});
-		describe('Several oprations', function() {
+
+		describe('Several operations', function() {
 			it('Should work perfect', function() {
 				const editor = new Jodit(appendTestArea());
 				editor.value =
@@ -86,6 +87,7 @@ describe('Undo/Redo behaviors', function() {
 			});
 		});
 	});
+
 	describe('Commands', function() {
 		it('Undo. Enter text wait and again enter text. After execute "undo" command. First text should be returned', function() {
 			const editor = new Jodit(appendTestArea(), {
@@ -138,6 +140,7 @@ describe('Undo/Redo behaviors', function() {
 			expect(editor.getEditorValue()).to.equal('testtest2');
 		});
 	});
+
 	describe('Clear stack', function() {
 		it('Should disable both buttons in toolbar and all calls redo and undo must do nothing', function() {
 			const editor = new Jodit(appendTestArea(), {
@@ -187,5 +190,6 @@ describe('Undo/Redo behaviors', function() {
 			expect(editor.value).to.be.equal('stop');
 		});
 	});
+
 	afterEach(removeStuff);
 });

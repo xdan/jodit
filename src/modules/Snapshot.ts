@@ -22,7 +22,7 @@ export class Snapshot extends Component<IJodit> {
 	 * @param {SnapshotType} second - second shot
 	 * @return {boolean}
 	 */
-	public static equal(first: SnapshotType, second: SnapshotType): boolean {
+	static equal(first: SnapshotType, second: SnapshotType): boolean {
 		return (
 			first.html === second.html &&
 			JSON.stringify(first.range) === JSON.stringify(second.range)
@@ -222,8 +222,10 @@ export class Snapshot extends Component<IJodit> {
 				this.jodit.selection.selectRange(range);
 			}
 		} catch (__ignore) {
+			this.jodit.editor.lastChild && this.jodit.selection.setCursorAfter(this.jodit.editor.lastChild);
+
 			if (process.env.NODE_ENV !== 'production') {
-				throw __ignore;
+				console.warn('Broken snapshot', __ignore);
 			}
 		}
 

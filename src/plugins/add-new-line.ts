@@ -147,9 +147,8 @@ export function addNewLine(editor: IJodit) {
 		})
 		.on('afterInit', () => {
 			editor.events
-				.on(editor.editor, 'scroll', () => {
-					hideForce();
-				})
+				.on(editor.editor, 'scroll', hideForce)
+				.on( 'change', hideForce)
 				.on(editor.container, 'mouseleave', hide)
 				.on(line, 'mouseenter', () => {
 					clearTimeout(timeout);
