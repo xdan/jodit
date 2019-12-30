@@ -41,11 +41,15 @@ export class Async implements IAsync {
 		this.timers.delete(timer);
 	}
 
-	destruct(): any {
+	clear(): void {
 		this.timers.forEach((key) => {
 			this.clearTimeout(this.timers.get(key) as number);
 		});
 
 		this.timers.clear();
+	}
+
+	destruct(): any {
+		this.clear();
 	}
 }

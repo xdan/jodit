@@ -1263,7 +1263,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		this.setStatus('beforeDestruct');
 
-		this.async.destruct();
+		this.async.clear();
 
 		/**
 		 * Triggered before {@link events:beforeDestruct|beforeDestruct} executed. If returned false method stopped
