@@ -119,7 +119,9 @@ export class ToolbarButton extends ToolbarElement implements IToolbarButton {
 		} else if (control.exec !== undefined && typeof control.exec === 'function') {
 			control.exec(this.jodit, getTarget(), control, originalEvent, this.container as HTMLLIElement);
 
-			this.jodit.events.fire('synchro');
+			if (this.jodit.events){// млять при изменении state гдето теряется
+				this.jodit.events.fire('synchro');
+			}
 
 			if (this.parentToolbar) {
 				this.parentToolbar.immedateCheckActiveButtons();
@@ -129,7 +131,9 @@ export class ToolbarButton extends ToolbarElement implements IToolbarButton {
 			 * Fired after calling `button.exec` function
 			 * @event afterExec
 			 */
-			this.jodit.events.fire('closeAllPopups afterExec');
+			if (this.jodit.events){// млять при изменении state гдето теряется
+				this.jodit.events.fire('closeAllPopups afterExec');
+			}
 		} else if (
 			control.popup !== undefined && typeof control.popup === 'function'
 		) {
