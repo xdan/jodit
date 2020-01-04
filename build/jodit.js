@@ -5098,7 +5098,7 @@ var ToolbarButton = /** @class */ (function (_super) {
             }
             else if (control.exec !== undefined && typeof control.exec === 'function') {
                 control.exec(_this.jodit, getTarget(), control, originalEvent, _this.container);
-                if (_this.jodit.events) { // млять при изменении state гдето теряется
+                if (_this.jodit && _this.jodit.events) { // млять при изменении state гдето теряется
                     _this.jodit.events.fire('synchro');
                 }
                 if (_this.parentToolbar) {
@@ -5108,7 +5108,7 @@ var ToolbarButton = /** @class */ (function (_super) {
                  * Fired after calling `button.exec` function
                  * @event afterExec
                  */
-                if (_this.jodit.events) { // млять при изменении state гдето теряется
+                if (_this.jodit && _this.jodit.events) { // млять при изменении state гдето теряется
                     _this.jodit.events.fire('closeAllPopups afterExec');
                 }
             }
