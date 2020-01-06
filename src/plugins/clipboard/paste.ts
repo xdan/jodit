@@ -29,7 +29,7 @@ import {
 	isHTMLFromWord,
 	trim,
 	type,
-	stripTags
+	stripTags, isString
 } from '../../modules/helpers/';
 
 import { Dom } from '../../modules/Dom';
@@ -142,7 +142,9 @@ Config.prototype.controls.paste = {
  * Ask before paste HTML source
  */
 export function paste(editor: IJodit) {
-	const clearOrKeep = (
+	const
+		opt = editor.options,
+		clearOrKeep = (
 		msg: string,
 		title: string,
 		callback: (yes: boolean | number) => void,
@@ -216,16 +218,15 @@ export function paste(editor: IJodit) {
 
 		dialog.setFooter([keep, clear, clear2Button ? clear2 : '', cancel]);
 
-		editor.events &&
-			editor.events.fire(
-				'afterOpenPasteDialog',
-				dialog,
-				msg,
-				title,
-				callback,
-				clearButton,
-				clear2Button
-			);
+		editor.events?.fire(
+			'afterOpenPasteDialog',
+			dialog,
+			msg,
+			title,
+			callback,
+			clearButton,
+			clear2Button
+		);
 
 		return dialog;
 	};
@@ -239,9 +240,11 @@ export function paste(editor: IJodit) {
 				case INSERT_ONLY_TEXT:
 					html = stripTags(html);
 					break;
+
 				case INSERT_AS_TEXT:
 					html = htmlspecialchars(html);
 					break;
+
 				default:
 			}
 		}
@@ -275,7 +278,7 @@ export function paste(editor: IJodit) {
 				editor.setEditorValue();
 			};
 
-			if (editor.options.askBeforePasteHTML) {
+			if (opt.askBeforePasteHTML) {
 				clearOrKeep(
 					editor.i18n('Your code is similar to HTML. Keep as HTML?'),
 					editor.i18n('Paste as HTML'),
@@ -296,7 +299,7 @@ export function paste(editor: IJodit) {
 				);
 
 			} else {
-				pasteHTMLByType(editor.options.defaultActionOnPaste)
+				pasteHTMLByType(opt.defaultActionOnPaste)
 			}
 
 			return false;
@@ -330,20 +333,18 @@ export function paste(editor: IJodit) {
 			const processHTMLData = (html: string): void | false => {
 				const buffer = editor.buffer.get(clipboardPluginKey);
 
-				if (editor.options.processPasteHTML && isHTML(html) && buffer !== trimFragment(html)) {
-					if (editor.options.processPasteFromWord && isHTMLFromWord(html)) {
+				if (opt.processPasteHTML && isHTML(html) && buffer !== trimFragment(html)) {
+					if (opt.processPasteFromWord && isHTMLFromWord(html)) {
 						const pasteFromWordByType = (method: string) => {
 							if (method === INSERT_AS_HTML) {
 								html = applyStyles(html);
 
-								if (
-									editor.options.beautifyHTML &&
-									(editor.ownerWindow as any)
-										.html_beautify
-								) {
-									html = (editor.ownerWindow as any).html_beautify(
-										html
-									);
+								if (opt.beautifyHTML) {
+									const value = editor.events?.fire('beautifyHTML', html);
+
+									if (isString(value)) {
+										html = value;
+									}
 								}
 							}
 
@@ -361,7 +362,7 @@ export function paste(editor: IJodit) {
 							editor.setEditorValue();
 						};
 
-						if (editor.options.askBeforePasteFromWord) {
+						if (opt.askBeforePasteFromWord) {
 							clearOrKeep(
 								editor.i18n(
 									'The pasted content is coming from a Microsoft Word/Excel document. ' +
@@ -384,7 +385,7 @@ export function paste(editor: IJodit) {
 								}
 							);
 						} else {
-							pasteFromWordByType(editor.options.defaultActionOnPaste);
+							pasteFromWordByType(opt.defaultActionOnPaste);
 						}
 					} else {
 						insertHTML(html, event);
@@ -569,7 +570,7 @@ export function paste(editor: IJodit) {
 
 						insertByType(
 							clipboard_html,
-							editor.options.defaultActionOnPaste
+							opt.defaultActionOnPaste
 						);
 					}
 
@@ -598,7 +599,7 @@ export function paste(editor: IJodit) {
 		}
 	);
 
-	if (editor.options.nl2brInPlainText) {
+	if (opt.nl2brInPlainText) {
 		editor.events.on(
 			'processPaste',
 			(

@@ -222,6 +222,7 @@ export class PluginSystem implements IPluginSystem {
 
 				return reflect(
 					appendScriptAsync(
+						jodit,
 						url,
 						jodit.ownerDocument
 					)
@@ -238,6 +239,7 @@ export class PluginSystem implements IPluginSystem {
 	 */
 	private static loadStyle(jodit: IJodit, pluginName: string): void {
 		appendStyleAsync(
+			jodit,
 			PluginSystem.getFullUrl(jodit, pluginName, false),
 			jodit.ownerDocument
 		);

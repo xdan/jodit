@@ -15,4 +15,6 @@ export interface IAsync extends IDestructible {
 	clearTimeout(timer: number): void;
 
 	clear() : void;
+
+	promise<T>(executor: (resolve: (value?: T | PromiseLike<T>) => void, reject: (reason?: any) => void) => void): Promise<T>;
 }

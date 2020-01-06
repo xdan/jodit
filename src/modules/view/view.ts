@@ -61,7 +61,7 @@ export class View extends Panel implements IViewBased {
 	/**
 	 * progress_bar Progress bar
 	 */
-	progress_bar: HTMLDivElement = this.create.div(
+	progress_bar = this.create.div(
 		'jodit_progress_bar',
 		this.create.div()
 	);

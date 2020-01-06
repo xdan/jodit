@@ -41,12 +41,34 @@ export class Async implements IAsync {
 		this.timers.delete(timer);
 	}
 
+	private promisesRejections: Set<Function> = new Set();
+
+	promise<T>(executor: (resolve: (value?: T | PromiseLike<T>) => void, reject: (reason?: any) => void) => void): Promise<T> {
+		let rejectCallback: Function = () => {};
+
+		const promise = new Promise<T>((resolve, reject) => {
+			this.promisesRejections.add(reject);
+			rejectCallback = reject;
+			return executor(resolve, reject);
+		});
+
+		promise.finally(() => {
+			this.promisesRejections.delete(rejectCallback)
+		});
+
+		return promise;
+	}
+
 	clear(): void {
 		this.timers.forEach((key) => {
 			this.clearTimeout(this.timers.get(key) as number);
 		});
-
 		this.timers.clear();
+
+		this.promisesRejections.forEach((reject) => {
+			reject();
+		});
+		this.promisesRejections.clear();
 	}
 
 	destruct(): any {
