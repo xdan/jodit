@@ -78,7 +78,7 @@ export function placeholder(this: any, editor: IJodit) {
 			let marginTop: number = 0,
 				marginLeft: number = 0;
 
-			const style: CSSStyleDeclaration = editor.editorWindow.getComputedStyle(
+			const style = editor.editorWindow.getComputedStyle(
 				editor.editor
 			);
 
@@ -86,7 +86,7 @@ export function placeholder(this: any, editor: IJodit) {
 				editor.editor.firstChild &&
 				editor.editor.firstChild.nodeType === Node.ELEMENT_NODE
 			) {
-				const style2: CSSStyleDeclaration = editor.editorWindow.getComputedStyle(
+				const style2 = editor.editorWindow.getComputedStyle(
 					editor.editor.firstChild as Element
 				);
 
@@ -106,6 +106,7 @@ export function placeholder(this: any, editor: IJodit) {
 			} else {
 				placeholderElm.style.fontSize =
 					parseInt(style.getPropertyValue('font-size'), 10) + 'px';
+
 				placeholderElm.style.lineHeight = style.getPropertyValue(
 					'line-height'
 				);
@@ -126,7 +127,6 @@ export function placeholder(this: any, editor: IJodit) {
 		hide = () => {
 			Dom.hide(placeholderElm);
 		},
-
 		toggle = debounce(() => {
 			if (placeholderElm.parentNode === null) {
 				return;
@@ -142,7 +142,10 @@ export function placeholder(this: any, editor: IJodit) {
 
 			const value = editor.value;
 
-			if (value.trim().length && !/^<(p|div|h[1-6])><\/\1>$/.test(value)) {
+			if (
+				value.trim().length &&
+				!/^<(p|div|h[1-6])><\/\1>$/.test(value)
+			) {
 				hide();
 			} else {
 				show();
