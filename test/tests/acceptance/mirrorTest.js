@@ -19,12 +19,12 @@ describe('CodeMirror editor source code', function() {
 
 			editor = new Jodit(area, {
 				defaultMode: Jodit.MODE_SOURCE,
-				useAceEditor: true,
+				sourceEditor: 'ace',
 				events: {
 					beforeDestruct: function() {
 						return false;
 					},
-					aceInited: function(editor) {
+					sourceEditorReady: function(editor) {
 						expect(editor.container.querySelectorAll('.jodit_source_mirror-fake').length).to.equal(1);
 						__done.call(editor);
 					}
@@ -71,21 +71,29 @@ describe('CodeMirror editor source code', function() {
 
 		describe('After change mode to source mode and use insertHTML method', function() {
 			it('Should insert text on caret position', function(done) {
-				const editor = new Jodit(appendTestArea(), {
-					useAceEditor: true,
+				unmockPromise();
+
+				Jodit.make(appendTestArea(), {
+					sourceEditor: 'ace',
 					beautifyHTML: false,
 					events: {
-						aceInited: function(jodit) {
+						sourceEditorReady: function(jodit) {
+							jodit.selection.focus();
 							jodit.value = '<p>test <span>test</span> test</p>';
 							const range = jodit.editorDocument.createRange();
+
 							range.selectNodeContents(jodit.editor.querySelector('span'));
 							range.collapse(false);
+
 							jodit.selection.selectRange(range);
 
 							jodit.setMode(Jodit.MODE_SOURCE);
+							debugger
 							jodit.selection.insertHTML('loop');
 
-							expect(jodit.value).to.be.equal('<p>test <span>testloop</span> test</p>');
+							expect(jodit.value).equals('<p>test <span>testloop</span> test</p>');
+							mockPromise();
+
 							done();
 						}
 					}
@@ -97,6 +105,7 @@ describe('CodeMirror editor source code', function() {
 					const editor = new Jodit(appendTestArea(), {
 						useAceEditor: false
 					});
+
 					editor.value = '<p>one <span>two</span> three</p>';
 					const range = editor.editorDocument.createRange();
 					range.selectNodeContents(editor.editor.querySelector('span'));

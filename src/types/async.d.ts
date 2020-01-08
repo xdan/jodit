@@ -17,4 +17,6 @@ export interface IAsync extends IDestructible {
 	clear() : void;
 
 	promise<T>(executor: (resolve: (value?: T | PromiseLike<T>) => void, reject: (reason?: any) => void) => void): Promise<T>;
+
+	promiseState(p: Promise<any>): Promise<"pending" | "fulfilled" | "rejected">;
 }

@@ -7,7 +7,7 @@
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { CallbackFunction, IJodit } from '../../types';
+import { CallbackFunction, IJodit, ISourceEditor } from '../../types';
 
 export abstract class SourceEditor<T> {
 	instance: T;
@@ -22,8 +22,18 @@ export abstract class SourceEditor<T> {
 
 	abstract init(editor: IJodit): void;
 
+	isReady: boolean = false;
 	protected onReady() {
+		this.isReady = true;
 		this.jodit.events.fire(this, 'ready');
+	}
+
+	onReadyAlways(onReady: CallbackFunction) {
+		if (!this.isReady) {
+			this.jodit.events?.on(this, 'ready', onReady);
+		} else {
+			onReady();
+		}
 	}
 
 	static make(
@@ -33,7 +43,7 @@ export abstract class SourceEditor<T> {
 		toWYSIWYG: CallbackFunction,
 		fromWYSIWYG: CallbackFunction
 	) {
-		let sourceEditor;
+		let sourceEditor: ISourceEditor;
 
 		switch (type) {
 			case 'ace':
@@ -45,6 +55,11 @@ export abstract class SourceEditor<T> {
 		}
 
 		sourceEditor.init(editor);
+		sourceEditor.onReadyAlways(() => {
+			sourceEditor.setReadOnly(editor.options.readonly);
+		});
+
+
 
 		return sourceEditor;
 	}

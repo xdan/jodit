@@ -105,6 +105,10 @@ export class PluginSystem implements IPluginSystem {
 			}
 		}
 
+		if (jodit.isInDestruct) {
+			return;
+		}
+
 		this.items.forEach(makeAndInit);
 
 		this.addListenerOnBeforeDestruct(jodit, plugins);
@@ -197,6 +201,7 @@ export class PluginSystem implements IPluginSystem {
 					instance.destruct(jodit);
 				}
 			});
+
 			plugins.length = 0;
 
 			delete (jodit as any).__plugins;

@@ -21,7 +21,7 @@ export type CallbackAndElement = {
 const alreadyLoadedList = new Map<string, Promise<any>>();
 
 const cacheLoaders = (loader: Loader): Loader => {
-	return (jodit: IViewBased, url: string, doc: Document): Promise<any> => {
+	return async (jodit: IViewBased, url: string, doc: Document): Promise<any> => {
 		if (alreadyLoadedList.has(url)) {
 			return <Promise<any>>alreadyLoadedList.get(url);
 		}
@@ -45,23 +45,21 @@ const cacheLoaders = (loader: Loader): Loader => {
 export const appendScript = (
 	jodit: IViewBased,
 	url: string,
-	callback: (this: HTMLElement, e: Event) => any,
-	className: string,
+	callback: (this: HTMLElement, e?: Event) => any,
 	doc: Document
 ): CallbackAndElement => {
-	const script = doc.createElement('script');
+	const
+		script = doc.createElement('script');
 
-	script.className = className;
 	script.type = 'text/javascript';
 
 	if (callback !== undefined) {
 		script.addEventListener('load', callback);
-		jodit.events?.on('beforeDestruct', () => {
-			script.removeEventListener('load', callback);
-		});
 	}
 
-	script.src = completeUrl(url);
+	if (!script.src) {
+		script.src = completeUrl(url);
+	}
 
 	doc.body.appendChild(script);
 
@@ -76,8 +74,8 @@ export const appendScript = (
  */
 export const appendScriptAsync = cacheLoaders(
 	(jodit: IViewBased, url: string, doc: Document = document) => {
-		return jodit.async.promise((resolve, reject) => {
-			const { element } = appendScript(jodit, url, resolve, '', doc);
+		return new Promise((resolve, reject) => {
+			const { element } = appendScript(jodit, url, resolve, doc);
 			element.addEventListener('error', reject);
 		});
 	}
@@ -91,7 +89,7 @@ export const appendScriptAsync = cacheLoaders(
  */
 export const appendStyleAsync = cacheLoaders(
 	(jodit: IViewBased, url: string, doc: Document = document): Promise<HTMLElement> => {
-		return jodit.async.promise((resolve, reject) => {
+		return new Promise((resolve, reject) => {
 			const link = doc.createElement('link');
 
 			link.rel = 'stylesheet';
@@ -99,12 +97,8 @@ export const appendStyleAsync = cacheLoaders(
 			link.crossOrigin = 'anonymous';
 
 			const callback = () => resolve(link);
-			link.addEventListener('load', callback);
-			jodit.events?.on('beforeDestruct', () => {
-				link.removeEventListener('load', callback);
-				reject();
-			});
 
+			link.addEventListener('load', callback);
 			link.addEventListener('error', reject);
 
 			link.href = completeUrl(url);
@@ -117,32 +111,16 @@ export const appendStyleAsync = cacheLoaders(
 export const loadNext = (
 	jodit: IViewBased,
 	urls: string[],
-	eventOnFinalize: false | string,
 	i: number = 0
 ): Promise<void> => {
-
-	if (jodit.isInDestruct) {
-		return Promise.reject();
-	}
-
-	if (eventOnFinalize && urls[i] === undefined && !jodit.isDestructed) {
-		jodit?.events?.fire(eventOnFinalize);
-		jodit?.events?.fire(jodit.ownerWindow, eventOnFinalize);
-		return Promise.resolve();
-	}
-
 	if (!isString(urls[i])) {
 		return Promise.resolve();
 	}
 
-	if (urls[i] !== undefined) {
-		return appendScriptAsync(
-			jodit,
-			urls[i],
-			jodit.ownerDocument
-		).then(() => loadNext(jodit, urls, eventOnFinalize, i + 1));
-	}
-
-	return Promise.reject();
+	return appendScriptAsync(
+		jodit,
+		urls[i],
+		jodit.ownerDocument
+	).then(() => loadNext(jodit, urls, i + 1));
 };
 

@@ -15,4 +15,7 @@ export interface ISourceEditor extends IDestructible, IInitable {
 	setReadOnly(isReadOnly: boolean): void;
 
 	selectAll(): void;
+
+	isReady: boolean;
+	onReadyAlways(callback: Function): void;
 }

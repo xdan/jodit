@@ -556,9 +556,8 @@ describe('Selection Module Tests', function() {
 
 	describe('Change mode', function() {
 		it('Should restore collapsed selection when user change mode - from WYSIWYG to TEXTAREA', function() {
-			const editor = new Jodit(appendTestArea(), {
-				useAceEditor: false
-			});
+			const editor = new Jodit(appendTestArea());
+
 			editor.value = '<p>test</p>';
 
 			const sel = editor.selection.sel,
@@ -578,9 +577,11 @@ describe('Selection Module Tests', function() {
 			expect(mirror.value).to.equal('<p>test</p>');
 			expect(mirror.selectionStart).to.equal(5);
 			expect(mirror.selectionEnd).to.equal(5);
-		});
+		}).timeout(6000);
 
 		it('Should restore collapsed selection when user change mode - from WYSIWYG to TEXTAREA for long string', function(done) {
+			unmockPromise();
+
 			let timeout;
 			const __done = function() {
 				clearTimeout(timeout);
@@ -590,17 +591,17 @@ describe('Selection Module Tests', function() {
 			timeout = setTimeout(function() {
 				expect(false).to.equal(true);
 				__done();
-			}, 4000);
+			}, 140100);
 
 			Jodit.make(appendTestArea(), {
 				defaultMode: Jodit.MODE_SOURCE,
-				useAceEditor: true,
+				sourceEditor: 'ace',
 				beautifyHTML: false,
 				events: {
 					/**
 					 * @this Events
 					 */
-					aceInited: function(jodit) {
+					sourceEditorReady: function(jodit) {
 						jodit.setMode(Jodit.MODE_WYSIWYG);
 						jodit.setEditorValue(
 							('<p>' + 'test '.repeat(50) + '</p>').repeat(1)
@@ -621,30 +622,36 @@ describe('Selection Module Tests', function() {
 
 						jodit.setMode(Jodit.MODE_SOURCE);
 
+						const ace = jodit.__plugins.source.sourceEditor.instance;
+
+						expect(ace).not.null;
+
 						expect(
-							jodit.__plugins.source.aceEditor.getSelectionRange()
-								.start.column
+							ace.getSelectionRange().start.column
 						).to.equal(258);
+
 						expect(
-							jodit.__plugins.source.aceEditor.getSelectionRange()
+							ace.getSelectionRange()
 								.start.row
 						).to.equal(0);
 
-						jodit.__plugins.source.aceEditor.session.insert(
-							jodit.__plugins.source.aceEditor.getCursorPosition(),
+						ace.session.insert(
+							ace.getCursorPosition(),
 							' world'
 						);
 
 						expect(
-							jodit.__plugins.source.aceEditor.getValue()
+							jodit.__plugins.source.sourceEditor.getValue()
 						).to.equal(
 							'<p>' + 'test '.repeat(49) + 'test hello world</p>'
 						);
+
+						mockPromise();
 						__done();
 					}
 				}
 			});
-		}).timeout(6000);
+		}).timeout(116000);
 
 		it('Should restore collapsed selection when user change mode - from TEXTAREA to WYSIWYG', function() {
 			const editor = new Jodit(appendTestArea(), {

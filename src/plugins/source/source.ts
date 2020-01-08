@@ -273,13 +273,30 @@ export class source extends Plugin {
 	};
 
 	private onReadonlyReact = () => {
-		const isReadOnly: boolean = this.jodit.options.readonly;
-
-		this.sourceEditor.setReadOnly(isReadOnly);
+		this.sourceEditor.setReadOnly(this.jodit.options.readonly);
 	};
+
+	private initSourceEditor(editor: IJodit) {
+		if (editor.options.sourceEditor !== 'area') {
+			const sourceEditor = SourceEditor.make(editor.options.sourceEditor, editor, this.mirrorContainer, this.toWYSIWYG, this.fromWYSIWYG);
+
+			sourceEditor.onReadyAlways(() => {
+				this.sourceEditor?.destruct();
+				this.sourceEditor = sourceEditor;
+				editor.events?.fire('sourceEditorReady', editor);
+			});
+
+		} else {
+			this.sourceEditor.onReadyAlways(() => {
+				editor.events?.fire('sourceEditorReady', editor);
+			});
+		}
+	}
 
 	afterInit(editor: IJodit): void {
 		this.mirrorContainer = editor.create.div('jodit_source');
+		editor.workplace.appendChild(this.mirrorContainer);
+
 		this.sourceEditor = SourceEditor.make('area', editor, this.mirrorContainer, this.toWYSIWYG, this.fromWYSIWYG);
 
 		const addListeners = () => {
@@ -297,24 +314,11 @@ export class source extends Plugin {
 			.on(
 				'insertHTML.source',
 				(html: string): void | false => {
-					if (
-						!editor.options.readonly &&
-						!this.jodit.isEditorMode()
-					) {
+					if (!editor.options.readonly && !this.jodit.isEditorMode()) {
 						this.insertHTML(html);
 						return false;
 					}
 				}
-			)
-			.on(
-				'aceInited',
-				() => {
-					this.onReadonlyReact();
-					addListeners();
-				},
-				undefined,
-				undefined,
-				true
 			)
 			.on('readonly.source', this.onReadonlyReact)
 			.on('placeholder.source', (text: string) => {
@@ -323,40 +327,34 @@ export class source extends Plugin {
 			.on('beforeCommand.source', this.onSelectAll)
 			.on('change.source', this.fromWYSIWYG);
 
-		editor.workplace.appendChild(this.mirrorContainer);
-
-
 		editor.events.on('beautifyHTML', (html) => html);
 
-		if (
-			editor.options.beautifyHTML &&
-			(editor.ownerWindow as any).html_beautify === undefined
-		) {
-			loadNext(
-				editor,
-				editor.options.beautifyHTMLCDNUrlsJS,
-				false
-			).then(() => {
+		if (editor.options.beautifyHTML) {
+			const addEventListener = () => {
 				const html_beautify = (editor.ownerWindow as any).html_beautify;
 
-				if (html_beautify) {
+				if (html_beautify && !editor.isInDestruct) {
 					editor.events
 						?.off('beautifyHTML')
 						?.on('beautifyHTML', (html) => html_beautify(html));
+
+					return true;
 				}
-			});
-		}
 
-		if (editor.options.sourceEditor !== 'area') {
-			const sourceEditor = SourceEditor.make(editor.options.sourceEditor, editor, this.mirrorContainer, this.toWYSIWYG, this.fromWYSIWYG);
+				return false;
+			};
 
-			editor.events.on(sourceEditor, 'ready', () => {
-				this.sourceEditor?.destruct();
-				this.sourceEditor = sourceEditor;
-			});
+			if (!addEventListener()) {
+				loadNext(
+					editor,
+					editor.options.beautifyHTMLCDNUrlsJS
+				).then(addEventListener);
+			}
 		}
 
 		this.fromWYSIWYG();
+
+		this.initSourceEditor(editor);
 	}
 
 	beforeDestruct(jodit: IJodit): void {

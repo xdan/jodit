@@ -232,7 +232,7 @@ if (Jodit.defaultOptions.cleanHTML) {
 	Jodit.defaultOptions.cleanHTML.fillEmptyParagraph = false;
 }
 
-Jodit.defaultOptions.useAceEditor = false;
+Jodit.defaultOptions.sourceEditor = 'area';
 Jodit.defaultOptions.language = 'en';
 Jodit.defaultOptions.iframeCSSLinks.push('/app.css');
 Jodit.defaultOptions.iframeStyle +=

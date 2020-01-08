@@ -9,12 +9,16 @@
 
 import { IJodit, ISourceEditor } from '../../../types';
 import * as consts from '../../../constants';
-import { $$, isString, loadNext } from '../../../modules/helpers';
+import { isString, loadNext } from '../../../modules/helpers';
 import { SourceEditor } from '../SourceEditor';
 
 export class AceEditor extends SourceEditor<AceAjax.Editor>
 	implements ISourceEditor {
 	className = 'jodit_ace_editor';
+
+	private aceExists() {
+		return (this.jodit.ownerWindow as any).ace !== undefined;
+	}
 
 	/**
 	 * Proxy Method
@@ -108,76 +112,66 @@ export class AceEditor extends SourceEditor<AceAjax.Editor>
 
 	init(editor: IJodit): any {
 		const tryInitAceEditor = () => {
-			if (
-				this.instance === undefined &&
-				(this.jodit.ownerWindow as any).ace !== undefined
-			) {
-				this.jodit.events.off(
-					this.jodit.ownerWindow,
-					'aceReady',
-					tryInitAceEditor
-				);
+			if (this.instance !== undefined || !this.aceExists()) {
+				return;
+			}
 
-				const fakeMirror = this.jodit.create.div(
-					'jodit_source_mirror-fake'
-				);
+			const fakeMirror = this.jodit.create.div(
+				'jodit_source_mirror-fake'
+			);
 
-				this.container.appendChild(fakeMirror);
+			this.container.appendChild(fakeMirror);
 
-				this.instance = ((editor.ownerWindow as any)
-					.ace as AceAjax.Ace).edit(fakeMirror);
+			this.instance = ((editor.ownerWindow as any)
+				.ace as AceAjax.Ace).edit(fakeMirror);
 
-				this.instance.setTheme(
-					editor.options.sourceEditorNativeOptions.theme
-				);
+			this.instance.setTheme(
+				editor.options.sourceEditorNativeOptions.theme
+			);
 
-				this.instance.renderer.setShowGutter(
-					editor.options.sourceEditorNativeOptions.showGutter
-				);
+			this.instance.renderer.setShowGutter(
+				editor.options.sourceEditorNativeOptions.showGutter
+			);
 
-				this.instance
-					.getSession()
-					.setMode(editor.options.sourceEditorNativeOptions.mode);
+			this.instance
+				.getSession()
+				.setMode(editor.options.sourceEditorNativeOptions.mode);
 
-				this.instance.setHighlightActiveLine(
-					editor.options.sourceEditorNativeOptions.highlightActiveLine
-				);
+			this.instance.setHighlightActiveLine(
+				editor.options.sourceEditorNativeOptions.highlightActiveLine
+			);
 
-				this.instance.getSession().setUseWrapMode(true);
-				this.instance.setOption('indentedSoftWrap', false);
-				this.instance.setOption(
-					'wrap',
-					editor.options.sourceEditorNativeOptions.wrap
-				);
+			this.instance.getSession().setUseWrapMode(true);
+			this.instance.setOption('indentedSoftWrap', false);
+			this.instance.setOption(
+				'wrap',
+				editor.options.sourceEditorNativeOptions.wrap
+			);
 
-				this.instance.getSession().setUseWorker(false);
-				this.instance.$blockScrolling = Infinity;
+			this.instance.getSession().setUseWorker(false);
+			this.instance.$blockScrolling = Infinity;
 
-				this.instance.setOptions({
-					maxLines: Infinity
+			this.instance.setOptions({
+				maxLines: Infinity
+			});
+
+			this.instance.on('change', this.toWYSIWYG as any);
+			this.instance.on('focus', this.proxyOnFocus);
+			this.instance.on('mousedown', this.proxyOnMouseDown);
+
+			if (editor.getRealMode() !== consts.MODE_WYSIWYG) {
+				this.setValue(this.getValue());
+			}
+
+			editor.events
+				.on('afterResize', () => {
+					this.instance.resize();
 				});
 
-				this.instance.on('change', this.toWYSIWYG as any);
-				this.instance.on('focus', this.proxyOnFocus);
-				this.instance.on('mousedown', this.proxyOnMouseDown);
-
-				if (editor.getRealMode() !== consts.MODE_WYSIWYG) {
-					this.setValue(this.getValue());
-				}
-
-				editor.events
-					.on('afterResize', () => {
-						this.instance.resize();
-					})
-					.fire('aceInited', editor);
-
-				this.onReady();
-			}
+			this.onReady();
 		};
 
 		editor.events
-			.on(editor.ownerWindow, 'aceReady', tryInitAceEditor) // work in global scope
-			.on('aceReady', tryInitAceEditor) // work in local scope
 			.on('afterSetMode', () => {
 				if (
 					editor.getRealMode() !== consts.MODE_SOURCE &&
@@ -215,15 +209,15 @@ export class AceEditor extends SourceEditor<AceAjax.Editor>
 		tryInitAceEditor();
 
 		// global add ace editor in browser
-		if (
-			(editor.ownerWindow as any).ace === undefined &&
-			!$$('script.' + this.className, editor.ownerDocument.body).length
-		) {
+		if (!this.aceExists()) {
 			loadNext(
 				editor,
-				editor.options.sourceEditorCDNUrlsJS,
-				'aceReady'
-			).then(tryInitAceEditor);
+				editor.options.sourceEditorCDNUrlsJS
+			).then(() => {
+				if (!editor.isInDestruct) {
+					tryInitAceEditor();
+				}
+			});
 		}
 	}
 
@@ -237,9 +231,7 @@ export class AceEditor extends SourceEditor<AceAjax.Editor>
 	}
 
 	setValue(value: string) {
-		if (
-			this.jodit.options.beautifyHTML
-		) {
+		if (this.jodit.options.beautifyHTML) {
 			const html = this.jodit.events.fire('beautifyHTML', value);
 
 			if (isString(html)) {
