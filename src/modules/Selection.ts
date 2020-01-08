@@ -26,7 +26,11 @@ import { trim } from './helpers/string';
 type WindowSelection = Selection | null;
 
 export class Select {
-	constructor(readonly jodit: IJodit) {}
+	constructor(readonly jodit: IJodit) {
+		jodit.events.on('removeMarkers', () => {
+			this.removeMarkers();
+		});
+	}
 
 	/**
 	 * Throw Error exception if parameter is not Node

@@ -259,7 +259,7 @@ export class ToolbarButton extends ToolbarElement implements IToolbarButton {
 						timeout = this.jodit.async.setTimeout(
 							() =>
 								!this.isDisable() &&
-								this.jodit.events.fire(
+								this.jodit?.events.fire(
 									'showTooltip',
 									this.anchor,
 									this.tooltipText

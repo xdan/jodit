@@ -933,20 +933,18 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		}
 
 		if (this.options.events) {
-			Object.keys(this.options.events).forEach((key: string) => {
-				this.events.on(key, this.options.events[key]);
-			});
+			Object.keys(this.options.events).forEach((key: string) =>
+				this.events.on(key, this.options.events[key])
+			);
 		}
 
 		this.container.classList.add('jodit_container');
+		if (this.options.textIcons) {
+			this.container.classList.add('jodit_text_icons');
+		}
 		this.container.setAttribute('contenteditable', 'false');
 
 		this.selection = new Select(this);
-		this.events.on('removeMarkers', () => {
-			if (this.selection) {
-				this.selection.removeMarkers();
-			}
-		});
 
 		this.observer = new Observer(this);
 
@@ -983,16 +981,12 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		}
 
 		this.applyOptionsToToolbarContainer(this.container);
+		this.makeToolbar();
 
 		this.workplace = this.create.div('jodit_workplace', {
 			contenteditable: false
 		});
-
-		this.makeToolbar();
-
-		if (this.options.textIcons) {
-			this.container.classList.add('jodit_text_icons');
-		}
+		this.container.appendChild(this.workplace);
 
 		this.events.on(this.ownerWindow, 'resize', () => {
 			if (this.events) {
@@ -1000,7 +994,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			}
 		});
 
-		this.container.appendChild(this.workplace);
 		this.statusbar = new StatusBar(this, this.container);
 
 		this.workplace.appendChild(this.progress_bar);
@@ -1025,15 +1018,15 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		(async () => {
 			await this.beforeInitHook();
 
-			!this.isInDestruct && await this.events.fire('beforeInit', this);
+			!this.isInDestruct && (await this.events.fire('beforeInit', this));
 
 			try {
-				!this.isInDestruct && await Jodit.plugins.init(this);
+				!this.isInDestruct && (await Jodit.plugins.init(this));
 			} catch (e) {
 				console.error(e);
 			}
 
-			!this.isInDestruct && await this.__initEditor(buffer);
+			!this.isInDestruct && (await this.__initEditor(buffer));
 
 			if (this.isInDestruct) {
 				return;
