@@ -51,7 +51,7 @@ export class tooltip extends Plugin {
 	};
 
 	private calcPosition(target: HTMLElement) {
-		const bound = offset(target, this.jodit, this.jodit.ownerDocument);
+		const bound = offset(target, this.jodit, this.jodit.ownerDocument, true);
 
 		css(this.container, {
 			left: bound.left - this.container.offsetWidth / 2 + bound.width / 2,
