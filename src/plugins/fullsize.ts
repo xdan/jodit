@@ -142,7 +142,7 @@ export function fullsize(editor: IViewWithToolbar) {
 				resize();
 			}
 
-			editor.events.fire('afterResize');
+			editor.events?.fire('afterResize');
 		};
 
 	if (editor.options.globalFullsize) {

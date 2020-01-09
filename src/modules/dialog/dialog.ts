@@ -13,10 +13,8 @@ import { KEY_ESC } from '../../constants';
 import { IDictionary, IJodit, IToolbarCollection } from '../../types';
 import { IControlType } from '../../types/toolbar';
 import { IViewBased } from '../../types/view';
-import { $$, asArray, css } from '../helpers/';
-import { View } from '../view/view';
-import { Dom } from '../Dom';
-import { isJoditObject } from '../helpers/checker/isJoditObject';
+import { $$, asArray, css, isJoditObject } from '../helpers/';
+import { ViewWithToolbar } from '../view/viewWithToolbar';
 
 /**
  * @property {object} dialog module settings {@link Dialog|Dialog}
@@ -34,6 +32,7 @@ declare module '../../Config' {
 }
 
 Config.prototype.dialog = {
+	extraButtons: [],
 	resizable: true,
 	draggable: true,
 	buttons: ['dialog.close'],
@@ -80,12 +79,12 @@ type Content = ContentItem | ContentItem[] | Array<ContentItem | ContentItem[]>;
  * @param {Object} parent Jodit main object
  * @param {Object} [opt] Extend Options
  */
-export class Dialog extends View {
+export class Dialog extends ViewWithToolbar {
 	/**
 	 * @property {HTMLDivElement} resizer
 	 */
 	private resizer: HTMLDivElement;
-	public toolbar: IToolbarCollection;
+	toolbar: IToolbarCollection;
 
 	private offsetX: number;
 	private offsetY: number;
@@ -300,8 +299,8 @@ export class Dialog extends View {
 	public dialogbox_footer: HTMLDivElement;
 	public dialogbox_toolbar: HTMLDivElement;
 
-	public document: Document = document;
-	public window: Window = window;
+	document: Document = document;
+	window: Window = window;
 
 	/**
 	 * Specifies the size of the window
@@ -309,7 +308,7 @@ export class Dialog extends View {
 	 * @param {number} [w] - The width of the window
 	 * @param {number} [h] - The height of the window
 	 */
-	public setSize(w?: number | string, h?: number | string) {
+	setSize(w?: number | string, h?: number | string) {
 		if (w) {
 			css(this.dialog, 'width', w);
 		}
@@ -325,7 +324,7 @@ export class Dialog extends View {
 	 * @param {Number} [x] - Position px Horizontal
 	 * @param {Number} [y] - Position px Vertical
 	 */
-	public setPosition(x?: number, y?: number) {
+	setPosition(x?: number, y?: number) {
 		const
 			w: number = this.window.innerWidth,
 			h: number = this.window.innerHeight;
@@ -365,7 +364,7 @@ export class Dialog extends View {
 	 * dialog.open();
 	 * ```
 	 */
-	public setTitle(content: Content) {
+	setTitle(content: Content) {
 		this.setElements(this.dialogbox_header, content);
 	}
 
@@ -555,7 +554,7 @@ export class Dialog extends View {
 	 *
 	 * @return {boolean} - true window open
 	 */
-	public isOpened(): boolean {
+	isOpened(): boolean {
 		return (
 			!this.isDestructed &&
 			this.container &&
@@ -645,7 +644,7 @@ export class Dialog extends View {
 		const self: Dialog = this;
 
 		const opt =
-			jodit && (jodit as View).options
+			jodit && jodit.options
 				? (jodit as IJodit).options.dialog
 				: Config.prototype.dialog;
 
@@ -709,7 +708,6 @@ export class Dialog extends View {
 
 		self.container.addEventListener('close_dialog', self.close as any);
 
-		self.toolbar = JoditToolbarCollection.makeCollection(self);
 		self.toolbar.build(self.options.buttons, self.dialogbox_toolbar);
 
 		self.events
@@ -742,13 +740,8 @@ export class Dialog extends View {
 	 * It destroys all objects created for the windows and also includes all the handlers for the window object
 	 */
 	destruct() {
-		if (this.isDestructed) {
+		if (this.isInDestruct) {
 			return;
-		}
-
-		if (this.toolbar) {
-			this.toolbar.destruct();
-			delete this.toolbar;
 		}
 
 		if (this.events) {
@@ -759,19 +752,8 @@ export class Dialog extends View {
 				.off(this.window, 'resize', this.onResize);
 		}
 
-		if (!this.jodit && this.events) {
-			this.events.destruct();
-			delete this.events;
-		}
-
-		if (this.container) {
-			Dom.safeRemove(this.container);
-			delete this.container;
-		}
-
 		super.destruct();
 	}
 }
 
-import { JoditToolbarCollection } from '../toolbar/joditToolbarCollection';
 import { fullsize } from '../../plugins';

@@ -7,7 +7,7 @@
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { HTMLTagNames, IComponent, IDictionary, Modes } from './types';
+import { HTMLTagNames, IComponent, IDestructible, IDictionary, Modes } from './types';
 import { IViewBased } from './view';
 import { IJodit } from './jodit';
 import { IFileBrowser } from './fileBrowser';
@@ -311,9 +311,15 @@ interface IToolbarCollection extends IComponent {
 	getParentContainer(): HTMLElement;
 }
 
-export interface IStatusBar {
+export interface IStatusBar extends IDestructible {
 	show(): void;
 	hide(): void;
 	getHeight(): number;
 	append(el: HTMLElement, inTheRight?: boolean): void;
+}
+
+export interface IProgressBar extends IDestructible {
+	show(): IProgressBar;
+	progress(percentage: number): IProgressBar;
+	hide(): IProgressBar;
 }

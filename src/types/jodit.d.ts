@@ -7,13 +7,22 @@
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IViewWithToolbar } from './view';
+import { IViewOptions, IViewWithToolbar } from './view';
 import { Config } from '../Config';
 import { Observer } from '../modules/observer/observer';
 import { Select } from '../modules/Selection';
 import { CustomCommand, IStatusBar, IStorage, Modes } from './';
 import { IUploader } from './uploader';
 import { IFileBrowser } from './fileBrowser';
+
+interface IWorkPlace {
+	editor: HTMLDivElement | HTMLBodyElement;
+	element: HTMLElement;
+	container: HTMLDivElement;
+	workplace: HTMLDivElement;
+	statusbar: IStatusBar;
+	iframe?: HTMLIFrameElement | void;
+}
 
 interface IJodit extends IViewWithToolbar {
 	isJodit: true;
@@ -26,6 +35,10 @@ interface IJodit extends IViewWithToolbar {
 	getNativeEditorValue(): string;
 	getEditorValue(removeSelectionMarkers?: boolean): string;
 	setEditorValue(value?: string): void;
+
+	places: IWorkPlace[];
+	currentPlace: IWorkPlace;
+	addPlace(source: HTMLElement | string, options?: IViewOptions): void;
 
 	value: string;
 
@@ -88,4 +101,6 @@ interface IJodit extends IViewWithToolbar {
 	uploader: IUploader;
 	filebrowser: IFileBrowser;
 	storage: IStorage;
+
+	iframe?: HTMLIFrameElement | void;
 }

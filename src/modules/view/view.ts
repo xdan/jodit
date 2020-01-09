@@ -7,7 +7,7 @@
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IAsync, IDictionary, IEventsNative } from '../../types';
+import { IAsync, IComponent, IDictionary, IEventsNative, IProgressBar } from '../../types';
 import { IViewBased, IViewOptions } from '../../types/view';
 import { Component } from '../Component';
 import { EventsNative } from '../events/eventsNative';
@@ -23,7 +23,9 @@ export class View extends Panel implements IViewBased {
 	 */
 	id: string;
 
-	components: any = [];
+	workplace: HTMLDivElement;
+
+	components: IComponent[] = [];
 
 	/**
 	 * Get path for loading extra staff
@@ -61,10 +63,7 @@ export class View extends Panel implements IViewBased {
 	/**
 	 * progress_bar Progress bar
 	 */
-	progress_bar = this.create.div(
-		'jodit_progress_bar',
-		this.create.div()
-	);
+	progressbar: IProgressBar = new ProgressBar(this);
 
 	options: IViewOptions;
 
@@ -121,6 +120,8 @@ export class View extends Panel implements IViewBased {
 	/** @override */
 	protected initOptions(options?: IViewOptions): void {
 		super.initOptions({
+			extraButtons: [],
+			textIcons: false,
 			removeButtons: [],
 			zIndex: 100002,
 			fullsize: false,
@@ -159,13 +160,6 @@ export class View extends Panel implements IViewBased {
 			delete this.events;
 		}
 
-		if (this.async) {
-			this.async.destruct();
-			delete this.async;
-		}
-
-		delete this.options;
-
 		super.destruct();
 	}
 }
@@ -173,3 +167,4 @@ export class View extends Panel implements IViewBased {
 import { Jodit } from '../../Jodit';
 import { BASE_PATH } from '../../constants';
 import { Async } from '../Async';
+import { ProgressBar } from '../ProgressBar';

@@ -778,7 +778,7 @@ export class Dom {
 	 *
 	 * @param node
 	 */
-	static safeRemove(node: Node | false | null) {
+	static safeRemove(node: Node | false | null | void) {
 		node && node.parentNode && node.parentNode.removeChild(node);
 	}
 

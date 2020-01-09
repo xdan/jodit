@@ -37,6 +37,42 @@ export abstract class Panel extends Component implements IPanel {
 		this.ownerWindow = window;
 	}
 
+	/**
+	 * Try to find element by selector
+	 * @param element
+	 */
+	protected resolveElement(element: string | HTMLElement): HTMLElement {
+		let resolved = element;
+
+		if (typeof element === 'string') {
+			try {
+				resolved = this.ownerDocument.querySelector(
+					element
+				) as HTMLInputElement;
+			} catch {
+				throw new Error(
+					'String "' + element + '" should be valid HTML selector'
+				);
+			}
+		}
+
+		// Duck checking
+		if (
+			!resolved ||
+			typeof resolved !== 'object' ||
+			resolved.nodeType !== Node.ELEMENT_NODE ||
+			!resolved.cloneNode
+		) {
+			throw new Error(
+				'Element "' +
+				element +
+				'" should be string or HTMLElement instance'
+			);
+		}
+
+		return resolved;
+	}
+
 	protected constructor(jodit?: IViewBased, options?: IViewOptions) {
 		super(jodit);
 
@@ -54,17 +90,6 @@ export abstract class Panel extends Component implements IPanel {
 		);
 
 		this.container = this.create.div();
-	}
-
-	destruct(): any {
-		if (!this.isDestructed) {
-			return;
-		}
-
-		Dom.safeRemove(this.container);
-		delete this.container;
-
-		super.destruct();
 	}
 
 	isLocked = (): boolean => this.__whoLocked !== '';
@@ -108,5 +133,14 @@ export abstract class Panel extends Component implements IPanel {
 		}
 
 		this.__isFullSize = isFullSize;
+	}
+
+	destruct(): any {
+		if (!this.isDestructed) {
+			return;
+		}
+
+		Dom.safeRemove(this.container);
+		super.destruct();
 	}
 }

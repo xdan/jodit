@@ -9,7 +9,7 @@
  * @return {{top: number, left: number}} returns an object containing the properties top and left.
  */
 
-import { IBound, IHasScroll, IViewBased } from '../../../types';
+import { IBound, IHasScroll, IJodit, IViewBased } from '../../../types';
 
 export const offset = (
 	elm: HTMLElement | Range,
@@ -33,15 +33,17 @@ export const offset = (
 
 	let topValue: number, leftValue: number;
 
+	const iframe = (jodit as IJodit).iframe;
+
 	if (
 		!recurse &&
 		jodit &&
 		jodit.options &&
 		jodit.options.iframe &&
-		jodit.iframe
+		iframe
 	) {
 		const { top, left } = offset(
-			jodit.iframe,
+			iframe,
 			jodit,
 			jodit.ownerDocument,
 			true

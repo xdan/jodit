@@ -20,6 +20,7 @@ import * as Helpers from './helpers/';
 export { Helpers };
 export { ImageEditor } from './ImageEditor';
 export { Observer } from './observer/observer';
+export { ProgressBar } from './ProgressBar';
 export { Select } from './Selection';
 export { Storage } from './storage/storage';
 export { Snapshot } from './Snapshot';

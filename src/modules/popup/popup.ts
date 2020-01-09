@@ -191,6 +191,7 @@ export class Popup extends Component implements IPopup {
 		readonly className: string = 'jodit_toolbar_popup'
 	) {
 		super(jodit);
+
 		this.container = this.jodit.create.div(className, {
 			'data-editor_id': jodit.id
 		});

@@ -7,7 +7,7 @@
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Buttons, Controls, IToolbarCollection } from './toolbar';
+import { Buttons, Controls, IControlType, IProgressBar, IToolbarCollection } from './toolbar';
 import { IComponent, IDictionary } from './types';
 import { ICreate } from './create';
 import { IEventsNative } from './events';
@@ -21,9 +21,12 @@ interface ILanguageOptions {
 }
 
 interface IToolbarOptions {
+	theme?: string;
+	toolbar?: boolean | string | HTMLElement;
 	toolbarButtonSize?: 'small' | 'middle' | 'large'
 	textIcons?: boolean;
 
+	extraButtons: Array<string | IControlType>;
 	removeButtons: string[];
 	buttons: Buttons;
 
@@ -81,7 +84,7 @@ interface IViewBased<T = IViewOptions> extends IPanel<T> {
 
 	buffer: IStorage;
 
-	progress_bar: HTMLElement;
+	progressbar: IProgressBar;
 
 	options: T;
 
@@ -93,15 +96,17 @@ interface IViewBased<T = IViewOptions> extends IPanel<T> {
 
 	defaultTimeout: number;
 
-	iframe?: HTMLIFrameElement | null;
-
 	getInstance<T = IComponent>(moduleName: string, options?: object): T;
 
 	getVersion: () => string;
 
 	components: IComponent[];
+
+	workplace: HTMLDivElement;
 }
 
 interface IViewWithToolbar<T = IViewOptions> extends IViewBased<T> {
 	toolbar: IToolbarCollection;
+
+	setPanel(element: HTMLElement | string): void;
 }

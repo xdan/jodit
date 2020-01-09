@@ -229,21 +229,17 @@ export class Uploader extends Component implements IUploader {
 
 										percentComplete *= 100;
 
-										this.jodit.progress_bar.style.display =
-											'block';
-										this.jodit.progress_bar.style.width =
-											percentComplete + '%';
+										this.jodit.progressbar.show().progress(percentComplete);
 
-										if (percentComplete === 100) {
-											this.jodit.progress_bar.style.display =
-												'none';
+										if (percentComplete >= 100) {
+											this.jodit.progressbar.hide();
 										}
 									}
 								},
 								false
 							);
 						} else {
-							this.jodit.progress_bar.style.display = 'none';
+							this.jodit.progressbar.hide();
 						}
 
 						return xhr;

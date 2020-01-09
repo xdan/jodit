@@ -275,6 +275,8 @@ declare module '../../Config' {
 }
 
 Config.prototype.filebrowser = {
+	extraButtons: [],
+
 	filter(item: string | ISourceFile, search: string) {
 		search = search.toLowerCase();
 		if (typeof item === 'string') {
