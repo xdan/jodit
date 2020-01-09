@@ -18,14 +18,14 @@ describe('Clipboard text', function() {
 
 			simulateEvent('paste', 0, editor.editor, emulatePasteEvent);
 
-			expect(editor.value).to.be.equal('');
+			expect(editor.value).equals('');
 
 			const dialog = editor.ownerDocument.querySelector(
 				'.jodit.jodit_dialog_box.active.jodit_modal[data-editor_id=' +
 				editor.id +
 				']'
 			);
-			expect(dialog).to.be.not.equal(null);
+			expect(dialog).is.not.null;
 		});
 
 		describe('Prevent show dialog', function() {
@@ -57,14 +57,14 @@ describe('Clipboard text', function() {
 
 				simulateEvent('paste', 0, editor.editor, emulatePasteEvent);
 
-				expect(editor.value).to.be.equal('');
+				expect(editor.value).equals('');
 
 				const dialog = editor.ownerDocument.querySelector(
 					'.jodit.jodit_dialog_box.active.jodit_modal[data-editor_id=' +
 					editor.id +
 					']'
 				);
-				expect(dialog).to.be.equal(null);
+				expect(dialog).equals(null);
 			});
 
 			describe('Change dialog in afterOpenPasteDialog', function() {
@@ -97,15 +97,15 @@ describe('Clipboard text', function() {
 
 					simulateEvent('paste', 0, editor.editor, emulatePasteEvent);
 
-					expect(editor.value).to.be.equal('');
+					expect(editor.value).equals('');
 
 					const dialog = editor.ownerDocument.querySelector(
 						'.jodit.jodit_dialog_box.active.jodit_modal[data-editor_id=' +
 						editor.id +
 						']'
 					);
-					expect(dialog).to.be.not.equal(null);
-					expect(parseInt(dialog.style.left, 10)).to.be.equal(10);
+					expect(dialog).is.not.null;
+					expect(parseInt(dialog.style.left, 10)).equals(10);
 				});
 			});
 		});
@@ -130,14 +130,14 @@ describe('Clipboard text', function() {
 
 			simulateEvent('paste', 0, editor.editor, emulatePasteEvent);
 
-			expect(editor.value).to.be.equal('test');
+			expect(editor.value).equals('test');
 
 			const dialog = editor.ownerDocument.querySelector(
 				'.jodit.jodit_dialog_box.active.jodit_modal[data-editor_id=' +
 				editor.id +
 				']'
 			);
-			expect(dialog).to.be.equal(null);
+			expect(dialog).equals(null);
 		});
 	});
 
@@ -165,7 +165,7 @@ describe('Clipboard text', function() {
 
 					simulateEvent('paste', 0, editor.editor, emulatePasteEvent);
 
-					expect(editor.value).to.be.equal('test');
+					expect(editor.value).equals('test');
 				});
 			});
 
@@ -188,7 +188,7 @@ describe('Clipboard text', function() {
 					};
 
 					simulateEvent('paste', 0, editor.editor, emulatePasteEvent);
-					expect(editor.value).to.be.equal('&lt;p&gt;test&lt;/p&gt;');
+					expect(editor.value).equals('&lt;p&gt;test&lt;/p&gt;');
 				});
 			});
 
@@ -212,7 +212,7 @@ describe('Clipboard text', function() {
 					};
 
 					simulateEvent('paste', 0, editor.editor, emulatePasteEvent);
-					expect(editor.value).to.equal('<p>test</p><br>');
+					expect(editor.value).equals('<p>test</p><br>');
 				});
 			});
 
@@ -236,7 +236,7 @@ describe('Clipboard text', function() {
 					};
 
 					simulateEvent('paste', 0, editor.editor, emulatePasteEvent);
-					expect(editor.value).to.be.equal('<p>test</p><br>');
+					expect(editor.value).equals('<p>test</p><br>');
 				});
 			});
 		});
@@ -258,7 +258,7 @@ describe('Clipboard text', function() {
 
 				simulateEvent('paste', 0, editor.editor, emulatePasteEvent);
 
-				expect(editor.value).to.be.equal('test<br>\ntest<br>\ntest<br>\ntest<br>\ntest<br>\n');
+				expect(editor.value).equals('test<br>\ntest<br>\ntest<br>\ntest<br>\ntest<br>\n');
 			});
 		});
 	});
@@ -283,7 +283,7 @@ describe('Clipboard text', function() {
 						editor.execCommand('selectall');
 						simulateEvent(command, 0, editor.editor, function (p){});
 
-						expect(editor.buffer.get('clipboard')).to.equal(html);
+						expect(editor.buffer.get('clipboard')).equals(html);
 
 						editor.value = html;
 						editor.selection.focus();
@@ -291,10 +291,10 @@ describe('Clipboard text', function() {
 						editor.selection.select(editor.editor.querySelector('strong'));
 						simulateEvent(command, 0, editor.editor, function (p){});
 
-						expect(editor.buffer.get('clipboard')).to.equal('<strong>bold</strong>');
+						expect(editor.buffer.get('clipboard')).equals('<strong>bold</strong>');
 
 						if (command === 'cut') {
-							expect(editor.value).to.equal('<p>test</p>');
+							expect(editor.value).equals('<p>test</p>');
 						}
 
 					});

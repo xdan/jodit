@@ -9,7 +9,7 @@ describe('Test states', function() {
 						sourceEditor: 'area'
 					});
 					editor.setMode(Jodit.MODE_SOURCE);
-					expect(true).to.equal(editor.__plugins.source.sourceEditor.instance.hasAttribute('readonly'));
+					expect(true).equals(editor.__plugins.source.sourceEditor.instance.hasAttribute('readonly'));
 				});
 			});
 
@@ -22,8 +22,8 @@ describe('Test states', function() {
 						iframe: true,
 						events: {
 							afterConstructor: function() {
-								expect(false).to.equal(editor.editor.hasAttribute('contenteditable'));
-								expect('BODY').to.equal(editor.editor.nodeName);
+								expect(false).equals(editor.editor.hasAttribute('contenteditable'));
+								expect('BODY').equals(editor.editor.nodeName);
 								done();
 							}
 						}
@@ -36,7 +36,7 @@ describe('Test states', function() {
 				const editor = new Jodit(appendTestArea(), {
 					readonly: true
 				});
-				expect(false).to.equal(editor.editor.hasAttribute('contenteditable'));
+				expect(false).equals(editor.editor.hasAttribute('contenteditable'));
 			});
 
 			it('Should deny exec any commands', function() {
@@ -50,7 +50,7 @@ describe('Test states', function() {
 
 				editor.execCommand('bold');
 
-				expect('test').to.equal(editor.getEditorValue());
+				expect('test').equals(editor.getEditorValue());
 			});
 			it('Should disable all toolbar buttons besides source, print, about, fullsize', function() {
 				const editor = new Jodit(appendTestArea(), {
@@ -71,7 +71,7 @@ describe('Test states', function() {
 				});
 			});
 
-			describe('Readonly for ACE', function(done) {
+			describe('Readonly for ACE', function() {
 				it('Should deny edit content in ace source editor', function(done) {
 					unmockPromise();
 
@@ -90,7 +90,7 @@ describe('Test states', function() {
 					});
 
 					editor.setMode(Jodit.MODE_SOURCE);
-				}).timeout(16000);
+				}).timeout(6000);
 			});
 
 			it('Should hide placeholder', function() {
@@ -99,9 +99,9 @@ describe('Test states', function() {
 				const editor = new Jodit(table_editor_interface, {
 					readonly: true
 				});
-				expect(editor.container.querySelectorAll('.jodit_placeholder').length && editor.container.querySelector('.jodit_placeholder').style.display === 'none').to.be.equal(true);
+				expect(editor.container.querySelectorAll('.jodit_placeholder').length && editor.container.querySelector('.jodit_placeholder').style.display === 'none').equals(true);
 				editor.setEditorValue('test');
-				expect(editor.container.querySelectorAll('.jodit_placeholder').length && editor.container.querySelector('.jodit_placeholder').style.display === 'none').to.be.equal(true);
+				expect(editor.container.querySelectorAll('.jodit_placeholder').length && editor.container.querySelector('.jodit_placeholder').style.display === 'none').equals(true);
 			});
 
 			describe('Search plugin', function() {
@@ -116,13 +116,13 @@ describe('Test states', function() {
 							});
 
 							const search = editor.container.querySelector('.jodit_search');
-							expect(false).to.equal(search.classList.contains('jodit_search-active'));
+							expect(false).equals(search.classList.contains('jodit_search-active'));
 							simulateEvent('keydown', Jodit.KEY_H, editor.editor, function(options) {
 								options.ctrlKey = true;
 							});
-							expect(false).to.equal(search.classList.contains('jodit_search-active'));
-							expect(false).to.equal(search.classList.contains('jodit_search-and-replace'));
-							expect(false).to.equal(editor.ownerDocument.activeElement === search.querySelector('.jodit_search-query'));
+							expect(false).equals(search.classList.contains('jodit_search-active'));
+							expect(false).equals(search.classList.contains('jodit_search-and-replace'));
+							expect(false).equals(editor.ownerDocument.activeElement === search.querySelector('.jodit_search-query'));
 						});
 					});
 				});
@@ -134,13 +134,13 @@ describe('Test states', function() {
 						readonly: true
 					});
 
-					expect(true).to.equal(editor.getReadOnly());
+					expect(true).equals(editor.getReadOnly());
 					editor.setReadOnly(false);
-					expect(false).to.equal(editor.getReadOnly());
+					expect(false).equals(editor.getReadOnly());
 					editor.destruct();
 
 					const editor2 = new Jodit(appendTestArea());
-					expect(false).to.equal(editor2.getReadOnly());
+					expect(false).equals(editor2.getReadOnly());
 				});
 			});
 		});
@@ -153,8 +153,8 @@ describe('Test states', function() {
 
 				const editor = new Jodit(area);
 
-				expect(editor.editor.hasAttribute('contenteditable')).to.be.false;
-				expect(editor.getReadOnly()).to.be.true;
+				expect(editor.editor.hasAttribute('contenteditable')).is.false;
+				expect(editor.getReadOnly()).is.true;
 			});
 
 			describe('In short form', function() {
@@ -166,7 +166,7 @@ describe('Test states', function() {
 					const editor = new Jodit(area);
 
 					expect(editor.editor.hasAttribute('contenteditable')).to.be.false;
-					expect(editor.getReadOnly()).to.be.true;
+					expect(editor.getReadOnly()).is.true;
 				});
 
 			});
@@ -177,9 +177,9 @@ describe('Test states', function() {
 				const editor = new Jodit(appendTestArea(), {
 					readonly: true
 				});
-				expect(false).to.equal(editor.editor.hasAttribute('contenteditable'));
+				expect(false).equals(editor.editor.hasAttribute('contenteditable'));
 				editor.setReadOnly(false);
-				expect(true).to.equal(editor.editor.hasAttribute('contenteditable'));
+				expect(true).equals(editor.editor.hasAttribute('contenteditable'));
 			});
 
 			it('Should allow edit content in simple source editor', function() {
@@ -189,11 +189,11 @@ describe('Test states', function() {
 				});
 
 				editor.setMode(Jodit.MODE_SOURCE);
-				expect(true).to.equal(editor.__plugins.source.sourceEditor.instance.hasAttribute('readonly'));
+				expect(true).equals(editor.__plugins.source.sourceEditor.instance.hasAttribute('readonly'));
 
 				editor.setReadOnly(false);
 
-				expect(false).to.equal(editor.__plugins.source.sourceEditor.instance.hasAttribute('readonly'));
+				expect(false).equals(editor.__plugins.source.sourceEditor.instance.hasAttribute('readonly'));
 			});
 
 			it('Should allow edit content in ace source editor', function(done) {
@@ -205,7 +205,7 @@ describe('Test states', function() {
 					defaultMode: Jodit.MODE_SOURCE,
 					events: {
 						sourceEditorReady: function(editor) {
-							expect(null).to.be.not.equal(editor.__plugins.source.sourceEditor.instance);
+							expect(null).does.not.equal(editor.__plugins.source.sourceEditor.instance);
 							expect(true).equals(editor.__plugins.source.sourceEditor.instance.getReadOnly());
 
 							editor.setReadOnly(false);
@@ -233,10 +233,10 @@ describe('Test states', function() {
 
 				const editor = new Jodit(area);
 
-				expect(editor.container.classList.contains('jodit_disabled')).to.be.true;
+				expect(editor.container.classList.contains('jodit_disabled')).is.true;
 				expect(editor.editor.hasAttribute('contenteditable')).to.be.false;
-				expect(editor.getReadOnly()).to.be.true;
-				expect(editor.getDisabled()).to.be.true;
+				expect(editor.getReadOnly()).is.true;
+				expect(editor.getDisabled()).is.true;
 			});
 		});
 		describe('Switch disabled mode', function() {
@@ -248,13 +248,13 @@ describe('Test states', function() {
 
 				const editor = new Jodit(area);
 
-				expect(editor.getReadOnly()).to.be.true;
-				expect(editor.getDisabled()).to.be.true;
+				expect(editor.getReadOnly()).is.true;
+				expect(editor.getDisabled()).is.true;
 
 				editor.setDisabled(false);
 
 
-				expect(editor.getReadOnly()).to.be.true;
+				expect(editor.getReadOnly()).is.true;
 				expect(editor.getDisabled()).to.be.false;
 			});
 		});

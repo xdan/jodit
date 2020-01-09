@@ -9,7 +9,7 @@ describe('Search plugin', function() {
 				}
 			});
 			const search = editor.container.querySelector('.jodit_search');
-			expect(false).to.equal(
+			expect(false).equals(
 				search.classList.contains('jodit_search-active')
 			);
 			simulateEvent('keydown', Jodit.KEY_F, editor.editor, function(
@@ -17,10 +17,10 @@ describe('Search plugin', function() {
 			) {
 				options.ctrlKey = true;
 			});
-			expect(true).to.equal(
+			expect(true).equals(
 				search.classList.contains('jodit_search-active')
 			);
-			expect(true).to.equal(
+			expect(true).equals(
 				editor.ownerDocument.activeElement ===
 				search.querySelector('.jodit_search-query')
 			);
@@ -36,7 +36,7 @@ describe('Search plugin', function() {
 			});
 
 			const search = editor.container.querySelector('.jodit_search');
-			expect(false).to.equal(
+			expect(false).equals(
 				search.classList.contains('jodit_search-active')
 			);
 			simulateEvent('keydown', Jodit.KEY_H, editor.editor, function(
@@ -44,13 +44,13 @@ describe('Search plugin', function() {
 			) {
 				options.ctrlKey = true;
 			});
-			expect(true).to.equal(
+			expect(true).equals(
 				search.classList.contains('jodit_search-active')
 			);
-			expect(true).to.equal(
+			expect(true).equals(
 				search.classList.contains('jodit_search-and-replace')
 			);
-			expect(true).to.equal(
+			expect(true).equals(
 				editor.ownerDocument.activeElement ===
 				search.querySelector('.jodit_search-query')
 			);
@@ -69,7 +69,7 @@ describe('Search plugin', function() {
 				const search = editor.container.querySelector(
 					'.jodit_search'
 				);
-				expect(false).to.equal(
+				expect(false).equals(
 					search.classList.contains('jodit_search-active')
 				);
 				simulateEvent(
@@ -81,15 +81,15 @@ describe('Search plugin', function() {
 					}
 				);
 
-				expect(true).to.be.equal(
+				expect(true).equals(
 					search.classList.contains('jodit_search-active')
 				);
 
-				expect(true).to.be.equal(
+				expect(true).equals(
 					search.classList.contains('jodit_search-and-replace')
 				);
 
-				expect(true).to.be.equal(
+				expect(true).equals(
 					editor.ownerDocument.activeElement ===
 					search.querySelector('.jodit_search-query')
 				);
@@ -110,7 +110,7 @@ describe('Search plugin', function() {
 				simulateEvent('click', 0, replaceButton);
 				simulateEvent('click', 0, replaceButton);
 
-				expect('wesw wesw test').to.be.equal(
+				expect('wesw wesw test').equals(
 					editor.getEditorValue()
 				);
 			});
@@ -133,7 +133,7 @@ describe('Search plugin', function() {
 			editor.selection.selectRange(range);
 
 			const search = editor.container.querySelector('.jodit_search');
-			expect(false).to.equal(
+			expect(false).equals(
 				search.classList.contains('jodit_search-active')
 			);
 
@@ -144,10 +144,10 @@ describe('Search plugin', function() {
 				options.ctrlKey = true;
 			});
 
-			expect(true).to.equal(
+			expect(true).equals(
 				search.classList.contains('jodit_search-active')
 			);
-			expect(true).to.equal(
+			expect(true).equals(
 				editor.ownerDocument.activeElement ===
 				search.querySelector('.jodit_search-query')
 			);
@@ -165,14 +165,14 @@ describe('Search plugin', function() {
 
 			const sel = editor.editorWindow.getSelection();
 
-			expect(1).to.equal(sel.rangeCount);
+			expect(1).equals(sel.rangeCount);
 			range = sel.getRangeAt(0);
 
-			expect(editor.editor.firstChild).to.equal(range.startContainer);
-			expect(5).to.equal(range.startOffset);
+			expect(editor.editor.firstChild).equals(range.startContainer);
+			expect(5).equals(range.startOffset);
 
-			expect(editor.editor.firstChild).to.equal(range.endContainer);
-			expect(9).to.equal(range.endOffset);
+			expect(editor.editor.firstChild).equals(range.endContainer);
+			expect(9).equals(range.endOffset);
 		});
 
 		it('Should find the next match in a circle', function() {
@@ -191,7 +191,7 @@ describe('Search plugin', function() {
 
 			const search = editor.container.querySelector('.jodit_search');
 
-			expect(false).to.equal(
+			expect(false).equals(
 				search.classList.contains('jodit_search-active')
 			);
 
@@ -202,10 +202,10 @@ describe('Search plugin', function() {
 				options.ctrlKey = true;
 			});
 
-			expect(true).to.equal(
+			expect(true).equals(
 				search.classList.contains('jodit_search-active')
 			);
-			expect(true).to.equal(
+			expect(true).equals(
 				editor.ownerDocument.activeElement ===
 				search.querySelector('.jodit_search-query')
 			);
@@ -234,11 +234,11 @@ describe('Search plugin', function() {
 					}
 				); //
 
-				expect(1).to.equal(sel.rangeCount);
+				expect(1).equals(sel.rangeCount);
 				range = sel.getRangeAt(0);
 
-				expect(pars[0]).to.equal(range.startOffset);
-				expect(pars[1]).to.equal(range.endOffset);
+				expect(pars[0]).equals(range.startOffset);
+				expect(pars[1]).equals(range.endOffset);
 			});
 		});
 
@@ -261,7 +261,7 @@ describe('Search plugin', function() {
 					'.jodit_search'
 				);
 
-				expect(false).to.equal(
+				expect(false).equals(
 					search.classList.contains('jodit_search-active')
 				);
 
@@ -275,10 +275,10 @@ describe('Search plugin', function() {
 					}
 				);
 
-				expect(true).to.equal(
+				expect(true).equals(
 					search.classList.contains('jodit_search-active')
 				);
-				expect(true).to.equal(
+				expect(true).equals(
 					editor.ownerDocument.activeElement ===
 					search.querySelector('.jodit_search-query')
 				);
@@ -301,18 +301,18 @@ describe('Search plugin', function() {
 
 				const sel = editor.editorWindow.getSelection();
 
-				expect(1).to.equal(sel.rangeCount);
+				expect(1).equals(sel.rangeCount);
 				range = sel.getRangeAt(0);
 
-				expect(editor.editor.firstChild).to.equal(
+				expect(editor.editor.firstChild).equals(
 					range.startContainer
 				);
-				expect(10).to.equal(range.startOffset);
+				expect(10).equals(range.startOffset);
 
-				expect(editor.editor.firstChild).to.equal(
+				expect(editor.editor.firstChild).equals(
 					range.endContainer
 				);
-				expect(14).to.equal(range.endOffset);
+				expect(14).equals(range.endOffset);
 			});
 		});
 	});
@@ -330,7 +330,7 @@ describe('Search plugin', function() {
 			sel.addRange(range);
 
 			const search = editor.container.querySelector('.jodit_search');
-			expect(false).to.equal(
+			expect(false).equals(
 				search.classList.contains('jodit_search-active')
 			);
 			simulateEvent('keydown', Jodit.KEY_F, editor.editor, function(
@@ -339,10 +339,10 @@ describe('Search plugin', function() {
 				options.ctrlKey = true;
 			});
 
-			expect(true).to.equal(
+			expect(true).equals(
 				search.classList.contains('jodit_search-active')
 			);
-			expect(true).to.equal(
+			expect(true).equals(
 				editor.ownerDocument.activeElement ===
 				search.querySelector('.jodit_search-query')
 			);
@@ -352,10 +352,10 @@ describe('Search plugin', function() {
 				search.querySelector('.jodit_search-query')
 			);
 
-			expect(false).to.equal(
+			expect(false).equals(
 				search.classList.contains('jodit_search-active')
 			);
-			expect('ex').to.equal(sel.toString());
+			expect('ex').equals(sel.toString());
 		});
 	});
 
@@ -365,21 +365,21 @@ describe('Search plugin', function() {
 				const
 					str = 'Mr John Smith washed window';
 
-				expect(11).to.be.equal(
+				expect(11).equals(
 					search.getSomePartOfStringIndex(
 						'th was',
 						str
 					)
 				);
 
-				expect(11).to.be.equal(
+				expect(11).equals(
 					search.getSomePartOfStringIndex(
 						'TH WAS',
 						str
 					)
 				);
 
-				expect(false).to.be.equal(
+				expect(false).equals(
 					search.getSomePartOfStringIndex(
 						'TH WASNT',
 						str
@@ -389,45 +389,45 @@ describe('Search plugin', function() {
 
 			it('Should find needle in haystack steb by step', function() {
 				const str = 'Mr John Smith washed window';
-				expect(false).to.be.equal(
+				expect(false).equals(
 					search.getSomePartOfStringIndex(
 						'th was',
 						'Mr'
 					)
 				);
-				expect(false).to.be.equal(
+				expect(false).equals(
 					search.getSomePartOfStringIndex(
 						'th was',
 						'Mr John'
 					)
 				);
 
-				expect(11).to.be.equal(
+				expect(11).equals(
 					search.getSomePartOfStringIndex(
 						'th was',
 						'Mr John Smith'
 					)
 				);
-				expect(11).to.be.equal(
+				expect(11).equals(
 					search.getSomePartOfStringIndex(
 						'th was',
 						'Mr John Smith wa'
 					)
 				);
-				expect(false).to.be.equal(
+				expect(false).equals(
 					search.getSomePartOfStringIndex(
 						'th was',
 						'Mr John Smith s'
 					)
 				);
 
-				expect(11).to.be.equal(
+				expect(11).equals(
 					search.getSomePartOfStringIndex(
 						'th was',
 						'Mr John Smith washed'
 					)
 				);
-				expect(11).to.be.equal(
+				expect(11).equals(
 					search.getSomePartOfStringIndex(
 						'th was',
 						'Mr John Smith washed window'
@@ -437,28 +437,28 @@ describe('Search plugin', function() {
 
 			it('Should find needle in haystack steb by step in back direction', function() {
 				const str = 'Mr John Smith washed window';
-				expect(false).to.be.equal(
+				expect(false).equals(
 					search.getSomePartOfStringIndex(
 						'th was',
 						'window',
 						false
 					)
 				);
-				expect(0).to.be.equal(
+				expect(0).equals(
 					search.getSomePartOfStringIndex(
 						'th was',
 						'washed window',
 						false
 					)
 				);
-				expect(0).to.be.equal(
+				expect(0).equals(
 					search.getSomePartOfStringIndex(
 						'th was',
 						'h washed window',
 						false
 					)
 				);
-				expect(3).to.be.equal(
+				expect(3).equals(
 					search.getSomePartOfStringIndex(
 						'th was',
 						'Smith washed window',
@@ -471,19 +471,19 @@ describe('Search plugin', function() {
 		describe('Compare strings and return boolean', function() {
 			it('Should find needle in haystack', function() {
 				const str = 'Mr John Smith washed window';
-				expect(true).to.be.equal(
+				expect(true).equals(
 					search.findSomePartOfString('th was', str)
 				);
-				expect(true).to.be.equal(
+				expect(true).equals(
 					search.findSomePartOfString('TH WAS', str)
 				);
-				expect(true).to.be.equal(
+				expect(true).equals(
 					search.findSomePartOfString(
 						'TH  WAS',
 						str
 					)
 				);
-				expect(false).to.be.equal(
+				expect(false).equals(
 					search.findSomePartOfString(
 						'TH WASNT',
 						str
@@ -493,69 +493,69 @@ describe('Search plugin', function() {
 
 			it('Should find needle in haystack steb by step', function() {
 				const str = 'Mr John Smith washed window';
-				expect(false).to.be.equal(
+				expect(false).equals(
 					search.findSomePartOfString(
 						'th was',
 						'Mr'
 					)
 				);
-				expect(false).to.be.equal(
+				expect(false).equals(
 					search.findSomePartOfString(
 						'th was',
 						'Mr John'
 					)
 				);
 
-				expect('th').to.be.equal(
+				expect('th').equals(
 					search.findSomePartOfString(
 						'th was',
 						'Mr John Smith'
 					)
 				);
 
-				expect('th wa').to.be.equal(
+				expect('th wa').equals(
 					search.findSomePartOfString(
 						'th was',
 						'Mr John Smith wa'
 					)
 				);
 
-				expect('th wa').to.be.equal(
+				expect('th wa').equals(
 					search.findSomePartOfString(
 						'th  was',
 						'Mr John Smith wa'
 					)
 				);
 
-				expect('th  wa').to.be.equal(
+				expect('th  wa').equals(
 					search.findSomePartOfString(
 						'th was',
 						'Mr John Smith  wa'
 					)
 				);
 
-				expect(false).to.be.equal(
+				expect(false).equals(
 					search.findSomePartOfString(
 						'th was',
 						'Mr John Smith s'
 					)
 				);
 
-				expect(true).to.be.equal(
+				expect(true).equals(
 					search.findSomePartOfString(
 						'th was',
 						'Mr John Smith washed'
 					)
 				);
 
-				expect(true).to.be.equal(
+				expect(true).equals(
 					search.findSomePartOfString(
 						'th  was',
 						'Mr John Smith washed'
 					)
 				);
 
-				expect(true).to.be.equal(
+				expect(true).equals(
 					search.findSomePartOfString(
 						'th was',
 						'Mr John Smith washed window'
@@ -564,28 +564,28 @@ describe('Search plugin', function() {
 			});
 			it('Should find needle in haystack steb by step in back direction', function() {
 				const str = 'Mr John Smith washed window';
-				expect(false).to.be.equal(
+				expect(false).equals(
 					search.findSomePartOfString(
 						'th was',
 						'window',
 						false
 					)
 				);
-				expect('was').to.be.equal(
+				expect('was').equals(
 					search.findSomePartOfString(
 						'th was',
 						'washed window',
 						false
 					)
 				);
-				expect('h was').to.be.equal(
+				expect('h was').equals(
 					search.findSomePartOfString(
 						'th was',
 						'h washed window',
 						false
 					)
 				);
-				expect(true).to.be.equal(
+				expect(true).equals(
 					search.findSomePartOfString(
 						'th was',
 						'Smith washed window',
@@ -597,14 +597,14 @@ describe('Search plugin', function() {
 
 		describe('Haystack less needle', function() {
 			it('Should return false', function() {
-				expect(false).to.be.equal(
+				expect(false).equals(
 					search.findSomePartOfString(
 						'th was',
 						' ',
 						true
 					)
 				);
-				expect(false).to.be.equal(
+				expect(false).equals(
 					search.findSomePartOfString(
 						'Smith washed window',
 						'washed',
@@ -629,18 +629,18 @@ describe('Search plugin', function() {
 			sel.removeAllRanges();
 
 			editor.events.fire('search', 'th was');
-			expect(1).to.be.equal(sel.rangeCount);
+			expect(1).equals(sel.rangeCount);
 			const range = sel.getRangeAt(0);
 
 			expect(
 				editor.editor.firstChild.childNodes[4].firstChild
-			).to.be.equal(range.startContainer);
-			expect(3).to.be.equal(range.startOffset);
+			).equals(range.startContainer);
+			expect(3).equals(range.startOffset);
 
 			expect(
 				editor.editor.firstChild.childNodes[6].firstChild
-			).to.be.equal(range.endContainer);
-			expect(3).to.be.equal(range.startOffset);
+			).equals(range.endContainer);
+			expect(3).equals(range.startOffset);
 		});
 	});
 });

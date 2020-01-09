@@ -4,14 +4,14 @@ describe('Tables Jodit Editor Tests', function() {
 			const editor = new Jodit(appendTestArea());
 			expect(
 				editor.editor.querySelector('.jodit_table_resizer')
-			).to.equal(null);
+			).equals(null);
 
 			editor.selection.insertNode(editor.create.inside.element('table'));
 			editor.selection.insertNode(editor.create.inside.element('table'));
 
 			expect(
 				editor.container.querySelectorAll('.jodit_table_resizer').length
-			).to.equal(1);
+			).equals(1);
 		});
 
 		it('Process wrong tabel', function() {
@@ -32,7 +32,7 @@ describe('Tables Jodit Editor Tests', function() {
 
 			expect(
 				editor.container.querySelectorAll('.jodit_table_resizer').length
-			).to.equal(1);
+			).equals(1);
 		});
 		it('Method getRowsCount should return TR count', function() {
 			const editor = new Jodit(appendTestArea());
@@ -52,7 +52,7 @@ describe('Tables Jodit Editor Tests', function() {
 			// const table = new Jodit.modules.Table(editor);
 			expect(
 				Jodit.modules.Table.getRowsCount(editor.editor.firstChild)
-			).to.equal(4);
+			).equals(4);
 		});
 		it('Method getColumnsCount should return maximum of TH or TD in one row in table', function() {
 			const editor = new Jodit(appendTestArea());
@@ -69,7 +69,7 @@ describe('Tables Jodit Editor Tests', function() {
 
 			expect(
 				Jodit.modules.Table.getColumnsCount(editor.editor.firstChild)
-			).to.equal(4);
+			).equals(4);
 		});
 		it('Method appendRow should append one row in the end of table', function() {
 			const editor = new Jodit(appendTestArea());
@@ -82,7 +82,7 @@ describe('Tables Jodit Editor Tests', function() {
 
 			Jodit.modules.Table.appendRow(editor.editor.firstChild);
 
-			expect(editor.getEditorValue()).to.equal(
+			expect(editor.getEditorValue()).equals(
 				'<table><tbody><tr><td>1</td><td>2</td><td>3</td></tr><tr><td></td><td></td><td></td></tr></tbody></table>'
 			);
 		});
@@ -101,7 +101,7 @@ describe('Tables Jodit Editor Tests', function() {
 				editor.editor.firstChild.querySelector('tr')
 			);
 
-			expect(editor.getEditorValue()).to.equal(
+			expect(editor.getEditorValue()).equals(
 				'<table><tbody><tr><td>1</td><td>2</td><td>3</td></tr><tr><td></td><td></td><td></td></tr><tr><td>2</td><td>3</td><td>4</td></tr></tbody></table>'
 			);
 		});
@@ -121,7 +121,7 @@ describe('Tables Jodit Editor Tests', function() {
 				false
 			);
 
-			expect(editor.getEditorValue()).to.equal(
+			expect(editor.getEditorValue()).equals(
 				'<table><tbody><tr><td></td><td></td><td></td></tr><tr><td>1</td><td>2</td><td>3</td></tr><tr><td>2</td><td>3</td><td>4</td></tr></tbody></table>'
 			);
 		});
@@ -137,7 +137,7 @@ describe('Tables Jodit Editor Tests', function() {
 
 			Jodit.modules.Table.appendColumn(editor.editor.firstChild);
 
-			expect(editor.getEditorValue().toLowerCase()).to.equal(
+			expect(editor.getEditorValue().toLowerCase()).equals(
 				'<table>' +
 					'<tbody>' +
 					'<tr><td>1</td><td>2</td><td></td></tr>' +
@@ -158,7 +158,7 @@ describe('Tables Jodit Editor Tests', function() {
 
 			Jodit.modules.Table.appendColumn(editor.editor.firstChild, 0);
 
-			expect(editor.getEditorValue().toLowerCase()).to.equal(
+			expect(editor.getEditorValue().toLowerCase()).equals(
 				'<table>' +
 					'<tbody>' +
 					'<tr><td>1</td><td></td><td>2</td></tr>' +
@@ -183,7 +183,7 @@ describe('Tables Jodit Editor Tests', function() {
 				false
 			);
 
-			expect(editor.getEditorValue().toLowerCase()).to.equal(
+			expect(editor.getEditorValue().toLowerCase()).equals(
 				'<table>' +
 					'<tbody>' +
 					'<tr><td>1</td><td></td><td>2</td></tr>' +
@@ -211,7 +211,7 @@ describe('Tables Jodit Editor Tests', function() {
 
 			Jodit.modules.Table.removeRow(editor.editor.firstChild, 1);
 
-			expect(editor.getEditorValue().toLowerCase()).to.equal(
+			expect(editor.getEditorValue().toLowerCase()).equals(
 				'<table>' +
 					'<tbody>' +
 					'<tr><td>1</td><td>2</td><td>3</td></tr>' +
@@ -235,7 +235,7 @@ describe('Tables Jodit Editor Tests', function() {
 				// const table = new Jodit.modules.Table(editor);
 				Jodit.modules.Table.mergeSelected(editor.editor.firstChild);
 
-				expect(sortAttributes(editor.editor.innerHTML)).to.equal(
+				expect(sortAttributes(editor.editor.innerHTML)).equals(
 					'<table>' +
 						'<tbody>' +
 						'<tr>' +
@@ -265,7 +265,7 @@ describe('Tables Jodit Editor Tests', function() {
 				// const table = new Jodit.modules.Table(editor);
 				Jodit.modules.Table.mergeSelected(editor.editor.firstChild);
 
-				expect(sortAttributes(editor.editor.innerHTML)).to.equal(
+				expect(sortAttributes(editor.editor.innerHTML)).equals(
 					'<table>' +
 						'<tbody>' +
 						'<tr>' +
@@ -297,7 +297,7 @@ describe('Tables Jodit Editor Tests', function() {
 				// const table = new Jodit.modules.Table(editor);
 				Jodit.modules.Table.mergeSelected(editor.editor.firstChild);
 
-				expect(sortAttributes(editor.editor.innerHTML)).to.equal(
+				expect(sortAttributes(editor.editor.innerHTML)).equals(
 					'<table style="width:100%">' +
 						'<tbody>' +
 						'<tr>' +
@@ -354,7 +354,7 @@ describe('Tables Jodit Editor Tests', function() {
 				// const table = new Jodit.modules.Table(editor);
 				Jodit.modules.Table.mergeSelected(editor.editor.firstChild);
 
-				expect(sortAttributes(editor.editor.innerHTML)).to.equal(
+				expect(sortAttributes(editor.editor.innerHTML)).equals(
 					'<table style="width:100%">' +
 						'<tbody>' +
 						'<tr>' +
@@ -391,7 +391,7 @@ describe('Tables Jodit Editor Tests', function() {
 				// const table = new Jodit.modules.Table(editor);
 				Jodit.modules.Table.mergeSelected(editor.editor.firstChild);
 
-				expect(sortAttributes(editor.editor.innerHTML)).to.equal(
+				expect(sortAttributes(editor.editor.innerHTML)).equals(
 					'<table>' +
 						'<tbody>' +
 						'<tr>' +
@@ -418,7 +418,7 @@ describe('Tables Jodit Editor Tests', function() {
 				// const table = new Jodit.modules.Table(editor);
 				Jodit.modules.Table.splitHorizontal(editor.editor.firstChild);
 
-				expect(sortAttributes(editor.editor.innerHTML)).to.equal(
+				expect(sortAttributes(editor.editor.innerHTML)).equals(
 					'<table>' +
 						'<tbody>' +
 						'<tr><td>0,0</td></tr>' +
@@ -449,7 +449,7 @@ describe('Tables Jodit Editor Tests', function() {
 				// const table = new Jodit.modules.Table(editor);
 				Jodit.modules.Table.splitHorizontal(editor.editor.firstChild);
 
-				expect(sortAttributes(editor.editor.innerHTML)).to.equal(
+				expect(sortAttributes(editor.editor.innerHTML)).equals(
 					'<table>' +
 						'<tbody>' +
 						'<tr><td>0,0</td><td>0,1</td><td>0,2</td></tr>' +
@@ -485,7 +485,7 @@ describe('Tables Jodit Editor Tests', function() {
 				// const table = new Jodit.modules.Table(editor);
 				Jodit.modules.Table.splitHorizontal(editor.editor.firstChild);
 
-				expect(sortAttributes(editor.editor.innerHTML)).to.equal(
+				expect(sortAttributes(editor.editor.innerHTML)).equals(
 					'<table>' +
 						'<tbody>' +
 						'<tr><td>0,0</td><td>0,1</td><td>0,2</td></tr>' +
@@ -515,7 +515,7 @@ describe('Tables Jodit Editor Tests', function() {
 				// const table = new Jodit.modules.Table(editor);
 				Jodit.modules.Table.splitVertical(editor.editor.firstChild);
 
-				expect(sortAttributes(editor.editor.innerHTML)).to.equal(
+				expect(sortAttributes(editor.editor.innerHTML)).equals(
 					'<table style="width:300px">' +
 						'<tbody>' +
 						'<tr><td style="width:16.66%">0,0</td><td style="width:16.66%"><br></td><td>0,1</td></tr>' +
@@ -546,7 +546,7 @@ describe('Tables Jodit Editor Tests', function() {
 			editor.selection.setCursorIn(table, false); // set cursor in last cell
 			editor.selection.insertNode(editor.create.inside.text('ok'));
 
-			expect(editor.value).to.equal(
+			expect(editor.value).equals(
 				'<table><tr><td></td><td>ok</td></tr></table>'
 			);
 		});
@@ -562,7 +562,7 @@ describe('Tables Jodit Editor Tests', function() {
 					'</table>'
 			);
 
-			expect(editor.getEditorValue()).to.equal(
+			expect(editor.getEditorValue()).equals(
 				'<table><tbody><tr><td>1</td><td>2</td></tr></tbody></table>'
 			);
 		});
@@ -587,7 +587,7 @@ describe('Tables Jodit Editor Tests', function() {
 				false
 			);
 
-			expect(editor.value.replace('<br>', '')).to.equal(
+			expect(editor.value.replace('<br>', '')).equals(
 				'<table><tbody><tr><td>1</td><td>test</td></tr></tbody></table>'
 			);
 		});
@@ -618,7 +618,7 @@ describe('Tables Jodit Editor Tests', function() {
 				false
 			);
 
-			expect(editor.value.replace('<br>', '')).to.equal(
+			expect(editor.value.replace('<br>', '')).equals(
 				'<table><tbody><tr><td>test</td><td>2</td></tr></tbody></table>'
 			);
 		});
@@ -647,7 +647,7 @@ describe('Tables Jodit Editor Tests', function() {
 				false
 			);
 
-			expect(editor.getEditorValue()).to.equal(
+			expect(editor.getEditorValue()).equals(
 				'<table><tbody><tr><td>test1</td><td>2</td></tr></tbody></table>'
 			);
 		});
@@ -675,7 +675,7 @@ describe('Tables Jodit Editor Tests', function() {
 				false
 			);
 
-			expect(editor.getEditorValue()).to.equal(
+			expect(editor.getEditorValue()).equals(
 				'<table><tbody>' +
 					'<tr>' +
 					'<td>1test</td>' +
@@ -711,7 +711,7 @@ describe('Tables Jodit Editor Tests', function() {
 				false
 			);
 
-			expect(editor.getEditorValue()).to.equal(
+			expect(editor.getEditorValue()).equals(
 				'<table><tbody>' +
 					'<tr>' +
 					'<td>1</td>' +
@@ -754,7 +754,7 @@ describe('Tables Jodit Editor Tests', function() {
 				false
 			);
 
-			expect(editor.getEditorValue()).to.equal(
+			expect(editor.getEditorValue()).equals(
 				'<table><tbody>' +
 					'<tr>' +
 					'<td>1</td>' +
@@ -790,7 +790,7 @@ describe('Tables Jodit Editor Tests', function() {
 				false
 			);
 
-			expect(editor.getEditorValue()).to.equal(
+			expect(editor.getEditorValue()).equals(
 				'<table><tbody>' +
 					'<tr>' +
 					'<td>1</td>' +
@@ -817,7 +817,7 @@ describe('Tables Jodit Editor Tests', function() {
 				const table = new Jodit.modules.Table(editor);
 				Jodit.modules.Table.removeRow(editor.editor.firstChild, 0);
 
-				expect(editor.getEditorValue().toLowerCase()).to.equal(
+				expect(editor.getEditorValue().toLowerCase()).equals(
 					'<table>' +
 						'<tbody>' +
 						'<tr><td>3</td><td>4</td></tr>' +
@@ -838,7 +838,7 @@ describe('Tables Jodit Editor Tests', function() {
 				// const table = new Jodit.modules.Table(editor);
 				Jodit.modules.Table.removeRow(editor.editor.firstChild, 1);
 
-				expect(editor.getEditorValue().toLowerCase()).to.equal(
+				expect(editor.getEditorValue().toLowerCase()).equals(
 					'<table>' +
 						'<tbody>' +
 						'<tr><td>1</td><td>2</td></tr>' +
@@ -861,7 +861,7 @@ describe('Tables Jodit Editor Tests', function() {
 				// const table = new Jodit.modules.Table(editor);
 				Jodit.modules.Table.removeRow(editor.editor.firstChild, 1);
 
-				expect(editor.getEditorValue().toLowerCase()).to.equal(
+				expect(editor.getEditorValue().toLowerCase()).equals(
 					'<table>' +
 						'<tbody>' +
 						'<tr><td rowspan="2" colspan="2">1</td><td>2</td></tr>' +
@@ -884,7 +884,7 @@ describe('Tables Jodit Editor Tests', function() {
 				// const table = new Jodit.modules.Table(editor);
 				Jodit.modules.Table.removeRow(editor.editor.firstChild, 0);
 
-				expect(editor.getEditorValue().toLowerCase()).to.equal(
+				expect(editor.getEditorValue().toLowerCase()).equals(
 					'<table>' +
 						'<tbody>' +
 						'<tr><td>1</td><td>3</td></tr>' +
@@ -906,7 +906,7 @@ describe('Tables Jodit Editor Tests', function() {
 				// const table = new Jodit.modules.Table(editor);
 				Jodit.modules.Table.removeRow(editor.editor.firstChild, 0);
 
-				expect(editor.getEditorValue().toLowerCase()).to.equal(
+				expect(editor.getEditorValue().toLowerCase()).equals(
 					'<table>' +
 						'<tbody>' +
 						'<tr><td colspan="2">1</td><td>3</td></tr>' +
@@ -929,7 +929,7 @@ describe('Tables Jodit Editor Tests', function() {
 				// const table = new Jodit.modules.Table(editor);
 				Jodit.modules.Table.removeRow(editor.editor.firstChild, 1);
 
-				expect(editor.getEditorValue().toLowerCase()).to.equal(
+				expect(editor.getEditorValue().toLowerCase()).equals(
 					'<table>' +
 						'<tbody>' +
 						'<tr><td>1</td><td>2</td><td>3</td></tr>' +
@@ -954,7 +954,7 @@ describe('Tables Jodit Editor Tests', function() {
 				// const table = new Jodit.modules.Table(editor);
 				Jodit.modules.Table.removeColumn(editor.editor.firstChild, 0);
 
-				expect(editor.getEditorValue().toLowerCase()).to.equal(
+				expect(editor.getEditorValue().toLowerCase()).equals(
 					'<table>' +
 						'<tbody>' +
 						'<tr><td>2</td></tr>' +
@@ -978,7 +978,7 @@ describe('Tables Jodit Editor Tests', function() {
 				// const table = new Jodit.modules.Table(editor);
 				Jodit.modules.Table.removeColumn(editor.editor.firstChild, 0);
 
-				expect(editor.getEditorValue().toLowerCase()).to.equal(
+				expect(editor.getEditorValue().toLowerCase()).equals(
 					'<table>' +
 						'<tbody>' +
 						'<tr><td>2</td></tr>' +
@@ -1002,7 +1002,7 @@ describe('Tables Jodit Editor Tests', function() {
 				// const table = new Jodit.modules.Table(editor);
 				Jodit.modules.Table.removeColumn(editor.editor.firstChild, 1);
 
-				expect(editor.getEditorValue().toLowerCase()).to.equal(
+				expect(editor.getEditorValue().toLowerCase()).equals(
 					'<table>' +
 						'<tbody>' +
 						'<tr><td>1</td></tr>' +
@@ -1032,7 +1032,7 @@ describe('Tables Jodit Editor Tests', function() {
 				// in ie colspan and rowspan change places but it is not so important
 				result = result.replace('rowspan', 'colspan');
 
-				expect(result).to.equal(
+				expect(result).equals(
 					'<table>' +
 						'<tbody>' +
 						'<tr><td>1</td><td>2</td><td>3</td></tr>' +
@@ -1072,7 +1072,7 @@ describe('Tables Jodit Editor Tests', function() {
 					editor.editor.querySelectorAll('td')[3]
 				);
 
-				expect(sortAttributes(editor.editor.innerHTML)).to.equal(
+				expect(sortAttributes(editor.editor.innerHTML)).equals(
 					'<table>' +
 						'<tbody>' +
 						'<tr>' +
@@ -1134,7 +1134,7 @@ describe('Tables Jodit Editor Tests', function() {
 						.querySelectorAll('td')[3]
 				);
 
-				expect(sortAttributes(editor.editor.innerHTML)).to.equal(
+				expect(sortAttributes(editor.editor.innerHTML)).equals(
 					'<table><tbody><tr><td>1</td><td>2</td></tr><tr><td>3</td><td class="test"><table><tbody><tr><td data-jodit-selected-cell="1">1</td><td data-jodit-selected-cell="1">2</td></tr><tr><td data-jodit-selected-cell="1">3</td><td data-jodit-selected-cell="1">4</td></tr><tr><td>5</td><td>6</td></tr></tbody></table></td></tr><tr><td>5</td><td>6</td></tr></tbody></table>'
 				);
 			});
@@ -1174,7 +1174,7 @@ describe('Tables Jodit Editor Tests', function() {
 
 				expect(
 					sortAttributes(editor.editor.innerHTML) // ie change position between colspan and class
-				).to.equal(
+				).equals(
 					'<table style="width:100%"><tbody><tr><td colspan="3" data-jodit-selected-cell="1">0,0<br>0,1<br>0,2<br></td><td>0,3</td></tr><tr><td data-jodit-selected-cell="1" rowspan="3">1,0<br>2,0<br>3,0<br></td><td data-jodit-selected-cell="1">1,1</td><td data-jodit-selected-cell="1">1,2</td><td>1,3</td></tr><tr><td data-jodit-selected-cell="1">2,1</td><td data-jodit-selected-cell="1">2,2</td><td>2,3</td></tr><tr><td data-jodit-selected-cell="1">3,1</td><td data-jodit-selected-cell="1">3,2</td><td>3,3</td></tr></tbody></table>'
 				);
 			});
@@ -1235,8 +1235,8 @@ describe('Tables Jodit Editor Tests', function() {
 						const resizer = editor.container.querySelector(
 							'.jodit_table_resizer'
 						);
-						expect(resizer).to.be.not.equal(null);
-						expect(resizer.style.display === 'block').to.equal(
+						expect(resizer).is.not.null;
+						expect(resizer.style.display === 'block').equals(
 							true
 						);
 
@@ -1248,8 +1248,7 @@ describe('Tables Jodit Editor Tests', function() {
 
 						expect(Math.abs(resizerBox.left - box.left) < 10).to.be
 							.true;
-						expect(Math.abs(resizerBox.top - tablebox.top) < 10).to
-							.be.true;
+						expect(Math.abs(resizerBox.top - tablebox.top) < 10).is.true;
 
 						simulateEvent(
 							'mouseleave',
@@ -1267,7 +1266,7 @@ describe('Tables Jodit Editor Tests', function() {
 							editor.editor.querySelector('p')
 						);
 
-						expect(resizer.style.display === 'none').to.equal(true);
+						expect(resizer.style.display === 'none').equals(true);
 						done();
 					});
 				});
@@ -1324,7 +1323,7 @@ describe('Tables Jodit Editor Tests', function() {
 							.style.left,
 						10
 					) < 55
-				).to.equal(true);
+				).equals(true);
 				done();
 			});
 
@@ -1377,7 +1376,7 @@ describe('Tables Jodit Editor Tests', function() {
 							options.pageY = 0;
 						});
 
-						expect(editor.editor.innerHTML.toLowerCase()).to.equal(
+						expect(editor.editor.innerHTML.toLowerCase()).equals(
 							'<table style="width: 100px; border-collapse: separate;" cellspacing="0"><tbody>' +
 								'<tr>' +
 								'<td style="width: 30%;">1</td>' +
@@ -1451,7 +1450,7 @@ describe('Tables Jodit Editor Tests', function() {
 
 							editor.selection.insertHTML('stop');
 
-							expect(sortAttributes(editor.value)).to.equal(
+							expect(sortAttributes(editor.value)).equals(
 								'<p>teststop</p>' +
 									'<table cellspacing="0" style="border-collapse:separate;width:100px">' +
 									'<tbody>' +
@@ -1507,7 +1506,7 @@ describe('Tables Jodit Editor Tests', function() {
 
 				expect(
 					sortAttributes(editor.editor.innerHTML.toLowerCase())
-				).to.equal(
+				).equals(
 					'<table cellspacing="0" style="border-collapse:separate;width:83.33%"><tbody>' +
 						'<tr>' +
 						'<td>1</td>' +
@@ -1555,7 +1554,7 @@ describe('Tables Jodit Editor Tests', function() {
 
 				expect(
 					sortAttributes(editor.editor.innerHTML.toLowerCase())
-				).to.equal(
+				).equals(
 					'<table style="margin-left:27.77%;width:27.77%">' +
 						'<tbody>' +
 						'<tr>' +
@@ -1609,7 +1608,7 @@ describe('Tables Jodit Editor Tests', function() {
 
 						expect(
 							resizer && resizer.style.display === 'block'
-						).to.equal(true);
+						).equals(true);
 
 						const positionResizer = offset(resizer);
 						const positionImg = offset(
@@ -1619,10 +1618,10 @@ describe('Tables Jodit Editor Tests', function() {
 						expect(
 							Math.abs(positionResizer.left - positionImg.left) <
 								10
-						).to.be.true;
+						).is.true;
 						expect(
 							Math.abs(positionResizer.top - positionImg.top) < 10
-						).to.be.true;
+						).is.true;
 
 						document.body.removeChild(area);
 					});

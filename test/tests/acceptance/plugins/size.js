@@ -5,7 +5,7 @@ describe('Test editor size plugin', function () {
             height: 300,
             iframe: true
         });
-        expect(editor.container.querySelectorAll('.jodit_editor_resize').length).to.be.equal(1);
+        expect(editor.container.querySelectorAll('.jodit_editor_resize').length).equals(1);
     });
     describe('Disable auto-height', function () {
         describe('Resize handle', function () {
@@ -20,7 +20,7 @@ describe('Test editor size plugin', function () {
                     allowResizeX: true,
                     allowResizeY: true,
                 });
-                expect(editor.container.offsetHeight).to.be.equal(300);
+                expect(editor.container.offsetHeight).equals(300);
 
                 const handle = editor.container.querySelector('.jodit_editor_resize');
 
@@ -34,8 +34,8 @@ describe('Test editor size plugin', function () {
                 });
                 simulateEvent('mouseup', 0, window);
 
-                expect(editor.container.offsetHeight).to.be.equal(400);
-                expect(editor.container.offsetWidth).to.be.equal(500);
+                expect(editor.container.offsetHeight).equals(400);
+                expect(editor.container.offsetWidth).equals(500);
             });
             describe('Disable X resizing', function () {
                 it('Should resize editor only by vertical', function () {
@@ -51,8 +51,8 @@ describe('Test editor size plugin', function () {
 
                     const handle = editor.container.querySelector('.jodit_editor_resize');
 
-                    expect(editor.container.offsetHeight).to.be.equal(300);
-                    expect(editor.container.offsetWidth).to.be.equal(400);
+                    expect(editor.container.offsetHeight).equals(300);
+                    expect(editor.container.offsetWidth).equals(400);
 
 
                     simulateEvent('mousedown', 0, handle, function (options) {
@@ -66,8 +66,8 @@ describe('Test editor size plugin', function () {
                     });
                     simulateEvent('mouseup', 0, window);
 
-                    expect(editor.container.offsetHeight).to.be.equal(400);
-                    expect(editor.container.offsetWidth).to.be.equal(400);
+                    expect(editor.container.offsetHeight).equals(400);
+                    expect(editor.container.offsetWidth).equals(400);
                 });
             });
         });
@@ -84,7 +84,7 @@ describe('Test editor size plugin', function () {
 
                         const handle = editor.container.querySelector('.jodit_editor_resize');
 
-                        expect(editor.container.offsetHeight).to.be.equal(300);
+                        expect(editor.container.offsetHeight).equals(300);
 
                         simulateEvent('mousedown', 0, handle, function (options) {
                             options.clientX = 100;
@@ -100,8 +100,8 @@ describe('Test editor size plugin', function () {
 
                         box.style.width = '600px';
 
-                        expect(editor.container.offsetHeight).to.be.equal(400);
-                        expect(editor.container.offsetWidth).to.be.equal(600);
+                        expect(editor.container.offsetHeight).equals(400);
+                        expect(editor.container.offsetWidth).equals(600);
                     });
                 });
             });

@@ -14,7 +14,7 @@ describe('Jodit Events system Tests', function() {
 
 			simulateEvent('click', 0, div);
 
-			expect(work).to.be.equal(true);
+			expect(work).equals(true);
 
 			div.parentNode.removeChild(div);
 		});
@@ -34,7 +34,7 @@ describe('Jodit Events system Tests', function() {
 			simulateEvent('dblclick', 0, div);
 			simulateEvent('keydown', 0, div);
 
-			expect(work).to.be.equal(3);
+			expect(work).equals(3);
 			div.parentNode.removeChild(div);
 		});
 		it('Create simple event handler on all DOM elements which will be inside some starting DOm element', function() {
@@ -56,16 +56,16 @@ describe('Jodit Events system Tests', function() {
 			);
 
 			simulateEvent('click', 0, div);
-			expect(work).to.be.equal(0);
+			expect(work).equals(0);
 
 			div.appendChild(a);
 
 			simulateEvent('click', 0, a);
-			expect(work).to.be.equal(0);
+			expect(work).equals(0);
 
 			a.classList.add('active');
 			simulateEvent('click', 0, a);
-			expect(work).to.be.equal(1);
+			expect(work).equals(1);
 
 			div.parentNode.removeChild(div);
 		});
@@ -83,12 +83,12 @@ describe('Jodit Events system Tests', function() {
 			});
 
 			simulateEvent('click', 0, div);
-			expect(work).to.be.equal(1);
+			expect(work).equals(1);
 
 			editor.events.off(div, 'click');
 
 			simulateEvent('click', 0, div);
-			expect(work).to.be.equal(1);
+			expect(work).equals(1);
 
 			div.parentNode.removeChild(div);
 		});
@@ -118,7 +118,7 @@ describe('Jodit Events system Tests', function() {
 				simulateEvent('dblclick', 0, div);
 				simulateEvent('mousedown', 0, div);
 
-				expect(work).to.be.equal(3);
+				expect(work).equals(3);
 
 				editor.events.off(div);
 
@@ -126,7 +126,7 @@ describe('Jodit Events system Tests', function() {
 				simulateEvent('dblclick', 0, div);
 				simulateEvent('mousedown', 0, div);
 
-				expect(work).to.be.equal(3);
+				expect(work).equals(3);
 
 				div.parentNode.removeChild(div);
 			});
@@ -153,7 +153,7 @@ describe('Jodit Events system Tests', function() {
 
 			editor.events.fire(div2, 'click');
 
-			expect(work).to.be.equal('test1test2');
+			expect(work).equals('test1test2');
 
 			div1.parentNode.removeChild(div1);
 			div2.parentNode.removeChild(div2);
@@ -173,7 +173,7 @@ describe('Jodit Events system Tests', function() {
 				})
 				.fire(div, 'click');
 
-			expect(work).to.be.equal(1);
+			expect(work).equals(1);
 
 			div.parentNode.removeChild(div);
 		});
@@ -201,14 +201,14 @@ describe('Jodit Events system Tests', function() {
 					)
 					.fire(div, 'click');
 
-				expect(work).to.be.equal(0);
+				expect(work).equals(0);
 
 				editor.events.fire(a, 'click');
-				expect(work).to.be.equal(1);
+				expect(work).equals(1);
 
 				editor.events.off(div, 'click');
 				editor.events.fire(a, 'click');
-				expect(work).to.be.equal(1);
+				expect(work).equals(1);
 
 				editor.events.on(
 					div,
@@ -219,7 +219,7 @@ describe('Jodit Events system Tests', function() {
 					'a'
 				);
 				editor.events.fire(a, 'click');
-				expect(work).to.be.equal(2);
+				expect(work).equals(2);
 
 				div.parentNode.removeChild(div);
 			});
@@ -245,16 +245,16 @@ describe('Jodit Events system Tests', function() {
 
 				editor.events.fire(div, 'click');
 				editor.events.fire(div, 'mousedown');
-				expect(work).to.be.equal(4); // 4 handlers
+				expect(work).equals(4); // 4 handlers
 
 				editor.events.fire(div, 'click.test');
 				editor.events.fire(div, 'mousedown.test');
-				expect(work).to.be.equal(8); // 4 handlers - becouse for DOM elements will fire all listeners
+				expect(work).equals(8); // 4 handlers - becouse for DOM elements will fire all listeners
 
 				editor.events.off(div, '.test');
 				editor.events.fire(div, 'click');
 				editor.events.fire(div, 'mousedown');
-				expect(work).to.be.equal(10); // only 2 default handlers
+				expect(work).equals(10); // only 2 default handlers
 
 				div.parentNode.removeChild(div);
 			});
@@ -274,7 +274,7 @@ describe('Jodit Events system Tests', function() {
 
 			editor.events.fire(editor.editorWindow, 'mousedown');
 
-			expect(work).to.be.equal(1);
+			expect(work).equals(1);
 
 			window.removeEventListener('mousedown', mousedown);
 		});
@@ -290,7 +290,7 @@ describe('Jodit Events system Tests', function() {
 			});
 
 			simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
-			expect(enable).to.be.equal(true);
+			expect(enable).equals(true);
 		});
 
 		it('Delete event handler', function() {
@@ -305,7 +305,7 @@ describe('Jodit Events system Tests', function() {
 
 			simulateEvent('keydown', Jodit.KEY_Y, editor.editor);
 
-			expect(enable).to.be.equal(false);
+			expect(enable).equals(false);
 		});
 
 		it('Proxy events', function() {
@@ -319,7 +319,7 @@ describe('Jodit Events system Tests', function() {
 
 			simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-			expect(work).to.be.equal(true);
+			expect(work).equals(true);
 		});
 	});
 
@@ -339,7 +339,7 @@ describe('Jodit Events system Tests', function() {
 				eventEmmiter.fire(simpleObject, 'click', 2);
 				eventEmmiter.fire(simpleObject, 'click', 3);
 
-				expect(6).to.be.equal(clicked);
+				expect(6).equals(clicked);
 			});
 		});
 
@@ -370,7 +370,7 @@ describe('Jodit Events system Tests', function() {
 
 				eventEmmiter.fire(simpleObject, 'click');
 
-				expect('4,1,2,3').to.be.equal(clicked.toString());
+				expect('4,1,2,3').equals(clicked.toString());
 			});
 
 			describe('Stop propagation', function() {
@@ -416,7 +416,7 @@ describe('Jodit Events system Tests', function() {
 					eventEmmiter.fire(simpleObject, 'click');
 					eventEmmiter.fire(simpleObject, 'click');
 
-					expect('4,1,2,16,15,4,1,2,16,15').to.be.equal(
+					expect('4,1,2,16,15,4,1,2,16,15').equals(
 						clicked.toString()
 					);
 				});
@@ -462,7 +462,7 @@ describe('Jodit Events system Tests', function() {
 						eventEmmiter.fire('click');
 						eventEmmiter.fire('click');
 
-						expect('4,1,2,16,15,4,1,2,16,15').to.be.equal(
+						expect('4,1,2,16,15,4,1,2,16,15').equals(
 							clicked.toString()
 						);
 					});
@@ -482,7 +482,7 @@ describe('Jodit Events system Tests', function() {
 
 					eventEmmiter.fire('click');
 
-					expect(true).to.be.equal(clicked);
+					expect(true).equals(clicked);
 				});
 				describe('Namespaces', function() {
 					describe('Add handler with namespace', function() {
@@ -498,14 +498,14 @@ describe('Jodit Events system Tests', function() {
 								eventEmmiter.fire('click');
 								eventEmmiter.fire('click.jodit');
 
-								expect(2).to.be.equal(clicked);
+								expect(2).equals(clicked);
 
 								eventEmmiter.off('click');
 
 								eventEmmiter.fire('click.jodit');
 								eventEmmiter.fire('click');
 
-								expect(2).to.be.equal(clicked);
+								expect(2).equals(clicked);
 							});
 						});
 
@@ -522,14 +522,14 @@ describe('Jodit Events system Tests', function() {
 								eventEmmiter.fire('click');
 								eventEmmiter.fire('click.jodit');
 
-								expect(2).to.be.equal(clicked);
+								expect(2).equals(clicked);
 
 								eventEmmiter.off('click.jodit');
 
 								eventEmmiter.fire('click.jodit');
 								eventEmmiter.fire('click');
 
-								expect(2).to.be.equal(clicked);
+								expect(2).equals(clicked);
 							});
 						});
 					});
@@ -548,7 +548,7 @@ describe('Jodit Events system Tests', function() {
 
 								eventEmmiter.fire('click');
 
-								expect(2).to.be.equal(clicked);
+								expect(2).equals(clicked);
 							});
 						});
 
@@ -566,7 +566,7 @@ describe('Jodit Events system Tests', function() {
 
 								eventEmmiter.fire('click.jodit');
 
-								expect(1).to.be.equal(clicked);
+								expect(1).equals(clicked);
 							});
 						});
 
@@ -584,14 +584,14 @@ describe('Jodit Events system Tests', function() {
 									eventEmmiter.on('click.jodit', callback);
 
 									eventEmmiter.fire('click');
-									expect(2).to.be.equal(clicked);
+									expect(2).equals(clicked);
 
 									eventEmmiter.off('click.jodit');
 
 									eventEmmiter.fire('click.jodit');
 									eventEmmiter.fire('click');
 
-									expect(3).to.be.equal(clicked);
+									expect(3).equals(clicked);
 								});
 							});
 
@@ -609,14 +609,14 @@ describe('Jodit Events system Tests', function() {
 
 									eventEmmiter.fire('click');
 
-									expect(2).to.be.equal(clicked);
+									expect(2).equals(clicked);
 
 									eventEmmiter.off('click');
 
 									eventEmmiter.fire('click.jodit');
 									eventEmmiter.fire('click');
 
-									expect(2).to.be.equal(clicked);
+									expect(2).equals(clicked);
 								});
 							});
 						});
@@ -644,7 +644,7 @@ describe('Jodit Events system Tests', function() {
 
 				clicked = eventEmmiter.fire(simpleObject, 'click');
 
-				expect(60).to.be.equal(clicked);
+				expect(60).equals(clicked);
 			});
 		});
 
@@ -661,7 +661,7 @@ describe('Jodit Events system Tests', function() {
 
 				eventEmmiter.fire(simpleObject, 'click');
 
-				expect(true).to.be.equal(clicked);
+				expect(true).equals(clicked);
 			});
 
 			it('Should work with several handlers', function() {
@@ -678,7 +678,7 @@ describe('Jodit Events system Tests', function() {
 
 				eventEmmiter.fire(simpleObject, 'click');
 
-				expect('1,2').to.be.equal(clicked.toString());
+				expect('1,2').equals(clicked.toString());
 			});
 
 			describe('Add event to simple object with namespace', function() {
@@ -698,7 +698,7 @@ describe('Jodit Events system Tests', function() {
 
 						eventEmmiter.fire(simpleObject, 'click.test'); // should not work
 
-						expect(2).to.be.equal(clicked);
+						expect(2).equals(clicked);
 					});
 
 					it('Should work only for current object', function() {
@@ -715,7 +715,7 @@ describe('Jodit Events system Tests', function() {
 						eventEmmiter.fire(simpleObject, 'click.jodit');
 						eventEmmiter.fire(simpleObject2, 'click');
 
-						expect(1).to.be.equal(clicked);
+						expect(1).equals(clicked);
 					});
 				});
 
@@ -731,14 +731,14 @@ describe('Jodit Events system Tests', function() {
 						eventEmmiter.on(simpleObject, 'click.jodit', callback);
 						eventEmmiter.fire(simpleObject, 'click');
 
-						expect(1).to.be.equal(clicked);
+						expect(1).equals(clicked);
 
 						eventEmmiter.off(simpleObject, 'click.jodit');
 
 						eventEmmiter.fire(simpleObject, 'click.jodit');
 						eventEmmiter.fire(simpleObject, 'click');
 
-						expect(1).to.be.equal(clicked);
+						expect(1).equals(clicked);
 					});
 
 					it('Should remove handler  with namespace', function() {
@@ -752,14 +752,14 @@ describe('Jodit Events system Tests', function() {
 						eventEmmiter.on(simpleObject, 'click', callback);
 						eventEmmiter.fire(simpleObject, 'click');
 
-						expect(1).to.be.equal(clicked);
+						expect(1).equals(clicked);
 
 						eventEmmiter.off(simpleObject, 'click.jodit');
 
 						eventEmmiter.fire(simpleObject, 'click.jodit'); // should not work
 						eventEmmiter.fire(simpleObject, 'click');
 
-						expect(2).to.be.equal(clicked);
+						expect(2).equals(clicked);
 					});
 
 					describe('with namespace', function() {
@@ -783,24 +783,24 @@ describe('Jodit Events system Tests', function() {
 
 							eventEmmiter.fire(simpleObject, 'click');
 
-							expect('1').to.be.equal(clicked.toString());
+							expect('1').equals(clicked.toString());
 
 							eventEmmiter.off(simpleObject, 'click.jodit');
 
 							eventEmmiter.fire(simpleObject, 'click.jodit');
 							eventEmmiter.fire(simpleObject, 'click');
 
-							expect('1').to.be.equal(clicked.toString());
+							expect('1').equals(clicked.toString());
 
 							eventEmmiter.fire(simpleObject, 'mousedown');
 
-							expect('1,2,1').to.be.equal(clicked.toString());
+							expect('1,2,1').equals(clicked.toString());
 
 							eventEmmiter.off(simpleObject, 'mousedown');
 
 							eventEmmiter.fire(simpleObject, 'mousedown');
 
-							expect('1,2,1').to.be.equal(clicked.toString());
+							expect('1,2,1').equals(clicked.toString());
 						});
 					});
 
@@ -821,20 +821,20 @@ describe('Jodit Events system Tests', function() {
 
 							eventEmmiter.fire(simpleObject, 'click');
 
-							expect('2,1').to.be.equal(clicked.toString());
+							expect('2,1').equals(clicked.toString());
 
 							eventEmmiter.off(simpleObject, 'click.jodit', callback);
 							eventEmmiter.off(simpleObject, 'click.jodit', callback2);
 
 							eventEmmiter.fire(simpleObject, 'click.jodit');
 							eventEmmiter.fire(simpleObject, 'click');
-							expect('2,1,2').to.be.equal(clicked.toString());
+							expect('2,1,2').equals(clicked.toString());
 
 							eventEmmiter.off(simpleObject, 'click', callback2);
 
 							eventEmmiter.fire(simpleObject, 'click.jodit');
 							eventEmmiter.fire(simpleObject, 'click');
-							expect('2,1,2').to.be.equal(clicked.toString());
+							expect('2,1,2').equals(clicked.toString());
 						});
 					});
 
@@ -855,14 +855,14 @@ describe('Jodit Events system Tests', function() {
 							);
 							eventEmmiter.fire(simpleObject, 'click mousedown');
 
-							expect(2).to.be.equal(clicked);
+							expect(2).equals(clicked);
 
 							eventEmmiter.off(simpleObject, '.jodit');
 
 							eventEmmiter.fire(simpleObject, 'click');
 							eventEmmiter.fire(simpleObject, 'mousedown');
 
-							expect(2).to.be.equal(clicked);
+							expect(2).equals(clicked);
 						});
 					});
 				});
@@ -883,7 +883,7 @@ describe('Jodit Events system Tests', function() {
 
 				simulateEvent('click', 0, div);
 
-				expect(work).to.be.equal(true);
+				expect(work).equals(true);
 
 				div.parentNode.removeChild(div);
 			});
@@ -903,7 +903,7 @@ describe('Jodit Events system Tests', function() {
 				simulateEvent('dblclick', 0, div);
 				simulateEvent('keydown', 0, div);
 
-				expect(work).to.be.equal(3);
+				expect(work).equals(3);
 				div.parentNode.removeChild(div);
 			});
 
@@ -925,16 +925,16 @@ describe('Jodit Events system Tests', function() {
 				);
 
 				simulateEvent('click', 0, div);
-				expect(work).to.be.equal(0);
+				expect(work).equals(0);
 
 				div.appendChild(a);
 
 				simulateEvent('click', 0, a);
-				expect(work).to.be.equal(0);
+				expect(work).equals(0);
 
 				a.classList.add('active');
 				simulateEvent('click', 0, a);
-				expect(work).to.be.equal(1);
+				expect(work).equals(1);
 
 				div.parentNode.removeChild(div);
 			});
@@ -951,12 +951,12 @@ describe('Jodit Events system Tests', function() {
 				});
 
 				simulateEvent('click', 0, div);
-				expect(work).to.be.equal(1);
+				expect(work).equals(1);
 
 				eventEmmiter.off(div, 'click');
 
 				simulateEvent('click', 0, div);
-				expect(work).to.be.equal(1);
+				expect(work).equals(1);
 
 				div.parentNode.removeChild(div);
 			});
@@ -984,7 +984,7 @@ describe('Jodit Events system Tests', function() {
 				simulateEvent('dblclick', 0, div);
 				simulateEvent('mousedown', 0, div);
 
-				expect(work).to.be.equal(3);
+				expect(work).equals(3);
 
 				eventEmmiter.off(div);
 
@@ -992,7 +992,7 @@ describe('Jodit Events system Tests', function() {
 				simulateEvent('dblclick', 0, div);
 				simulateEvent('mousedown', 0, div);
 
-				expect(work).to.be.equal(3);
+				expect(work).equals(3);
 
 				div.parentNode.removeChild(div);
 			});
@@ -1018,7 +1018,7 @@ describe('Jodit Events system Tests', function() {
 				eventEmmiter.fire(div1, 'click');
 				eventEmmiter.fire(div2, 'click');
 
-				expect(work).to.be.equal('test1test2');
+				expect(work).equals('test1test2');
 
 				div1.parentNode.removeChild(div1);
 				div2.parentNode.removeChild(div2);
@@ -1036,7 +1036,7 @@ describe('Jodit Events system Tests', function() {
 				});
 
 				eventEmmiter.fire(div, 'click');
-				expect(work).to.be.equal(1);
+				expect(work).equals(1);
 
 				div.parentNode.removeChild(div);
 			});
@@ -1060,20 +1060,20 @@ describe('Jodit Events system Tests', function() {
 					document.body.appendChild(div);
 
 					eventEmmiter.fire(div, 'click');
-					expect(work).to.be.equal(0);
+					expect(work).equals(0);
 
 					div.appendChild(document.createElement('a'));
 					eventEmmiter.fire(div.querySelector('a'), 'click');
-					expect(work).to.be.equal(0);
+					expect(work).equals(0);
 
 					div.querySelector('a').appendChild(
 						document.createElement('img')
 					);
 					eventEmmiter.fire(div.querySelector('img'), 'click');
-					expect(work).to.be.equal(1);
+					expect(work).equals(1);
 
 					simulateEvent('click', 0, div.querySelector('img'));
-					expect(work).to.be.equal(2);
+					expect(work).equals(2);
 
 					div.parentNode.removeChild(div);
 				});
@@ -1101,14 +1101,14 @@ describe('Jodit Events system Tests', function() {
 					);
 
 					eventEmmiter.fire(div, 'click');
-					expect(work).to.be.equal(0);
+					expect(work).equals(0);
 
 					eventEmmiter.fire(a, 'click');
-					expect(work).to.be.equal(1);
+					expect(work).equals(1);
 
 					eventEmmiter.off(div, 'click');
 					eventEmmiter.fire(a, 'click');
-					expect(work).to.be.equal(1);
+					expect(work).equals(1);
 
 					eventEmmiter.on(
 						div,
@@ -1119,7 +1119,7 @@ describe('Jodit Events system Tests', function() {
 						'a'
 					);
 					eventEmmiter.fire(a, 'click');
-					expect(work).to.be.equal(2);
+					expect(work).equals(2);
 
 					div.parentNode.removeChild(div);
 				});
@@ -1146,7 +1146,7 @@ describe('Jodit Events system Tests', function() {
 					eventEmmiter.fire(div, 'click.test');
 					eventEmmiter.fire(div, 'mousedown.test');
 
-					expect(work).to.be.equal(4);
+					expect(work).equals(4);
 
 					eventEmmiter.off(div, '.test');
 
@@ -1155,7 +1155,7 @@ describe('Jodit Events system Tests', function() {
 					eventEmmiter.fire(div, 'click.test');
 					eventEmmiter.fire(div, 'mousedown.test');
 
-					expect(work).to.be.equal(4);
+					expect(work).equals(4);
 
 					div.parentNode.removeChild(div);
 				});
@@ -1172,7 +1172,7 @@ describe('Jodit Events system Tests', function() {
 
 				eventEmmiter.fire(window, 'mousedown');
 
-				expect(work).to.be.equal(1);
+				expect(work).equals(1);
 
 				window.removeEventListener('mousedown', mousedown);
 			});
@@ -1190,11 +1190,11 @@ describe('Jodit Events system Tests', function() {
 
 					editor.events.fire(window, 'updateSome1');
 
-					expect(1).to.be.equal(checker);
+					expect(1).equals(checker);
 
 					simulateEvent('updateSome1', 0, window);
 
-					expect(2).to.be.equal(checker);
+					expect(2).equals(checker);
 
 					editor.destruct();
 
@@ -1202,7 +1202,7 @@ describe('Jodit Events system Tests', function() {
 					simulateEvent('updateSome1', 0, window);
 					simulateEvent('updateSome1', 0, window);
 
-					expect(2).to.be.equal(checker);
+					expect(2).equals(checker);
 				});
 			});
 
@@ -1217,11 +1217,11 @@ describe('Jodit Events system Tests', function() {
 
 					editor.events.fire(document, 'updateSome1');
 
-					expect(1).to.be.equal(checker);
+					expect(1).equals(checker);
 
 					simulateEvent('updateSome1', 0, document);
 
-					expect(2).to.be.equal(checker);
+					expect(2).equals(checker);
 
 					editor.destruct();
 
@@ -1229,7 +1229,7 @@ describe('Jodit Events system Tests', function() {
 					simulateEvent('updateSome1', 0, document);
 					simulateEvent('updateSome1', 0, document);
 
-					expect(2).to.be.equal(checker);
+					expect(2).equals(checker);
 				});
 			});
 
@@ -1244,11 +1244,11 @@ describe('Jodit Events system Tests', function() {
 
 					editor.events.fire(document.body, 'updateSome1');
 
-					expect(1).to.be.equal(checker);
+					expect(1).equals(checker);
 
 					simulateEvent('updateSome1', 0, document.body);
 
-					expect(2).to.be.equal(checker);
+					expect(2).equals(checker);
 
 					editor.destruct();
 
@@ -1256,7 +1256,7 @@ describe('Jodit Events system Tests', function() {
 					simulateEvent('updateSome1', 0, document.body);
 					simulateEvent('updateSome1', 0, document.body);
 
-					expect(2).to.be.equal(checker);
+					expect(2).equals(checker);
 				});
 			});
 		});
@@ -1269,8 +1269,8 @@ describe('Jodit Events system Tests', function() {
 					stop: 2
 				};
 				Jodit.modules.Helpers.dataBind(obj, 'test', 1);
-				expect(Object.keys(obj).toString()).to.be.equal('stop');
-				expect(Jodit.modules.Helpers.dataBind(obj, 'test')).to.be.equal(
+				expect(Object.keys(obj).toString()).equals('stop');
+				expect(Jodit.modules.Helpers.dataBind(obj, 'test')).equals(
 					1
 				);
 			});
@@ -1282,23 +1282,23 @@ describe('Jodit Events system Tests', function() {
 					};
 
 					Jodit.modules.Helpers.dataBind(obj, 'test', 1);
-					expect(Object.keys(obj).toString()).to.be.equal('stop');
+					expect(Object.keys(obj).toString()).equals('stop');
 
 					expect(
 						Jodit.modules.Helpers.dataBind(obj, 'test')
-					).to.be.equal(1);
+					).equals(1);
 
 					Jodit.modules.Helpers.dataBind(obj, 'test', 2);
 
 					expect(
 						Jodit.modules.Helpers.dataBind(obj, 'test')
-					).to.be.equal(2);
+					).equals(2);
 
 					Jodit.modules.Helpers.dataBind(obj, 'test', null);
 
 					expect(
 						Jodit.modules.Helpers.dataBind(obj, 'test')
-					).to.be.not.equal(2);
+					).does.not.equal(2);
 				});
 			});
 		});
@@ -1322,7 +1322,7 @@ describe('Jodit Events system Tests', function() {
 			eventEmmiter.fire(simpleObject, 'CLICK', '2');
 			eventEmmiter.fire(simpleObject, 'click', '3');
 
-			expect('23').to.be.equal(clicked);
+			expect('23').equals(clicked);
 		});
 	});
 

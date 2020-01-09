@@ -5,11 +5,20 @@ describe('Test image', function() {
 				const editor = new Jodit(appendTestArea());
 
 				editor.setEditorValue('<img src="tests/artio.jpg"/>');
-				simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
-				const dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
+				simulateEvent(
+					'dblclick',
+					0,
+					editor.editor.querySelector('img')
+				);
+				const dialog = editor.ownerDocument.querySelector(
+					'.jodit.jodit_dialog_box.active[data-editor_id=' +
+						editor.id +
+						']'
+				);
 
-				expect(dialog).to.be.not.equal(null);
+				expect(dialog).is.not.null;
 			});
+
 			describe('Disable by image.openOnDblClick', function() {
 				it('should not open image properties dialog', function() {
 					const editor = new Jodit(appendTestArea(), {
@@ -19,10 +28,18 @@ describe('Test image', function() {
 					});
 
 					editor.setEditorValue('<img src="tests/artio.jpg"/>');
-					simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
-					const dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
+					simulateEvent(
+						'dblclick',
+						0,
+						editor.editor.querySelector('img')
+					);
+					const dialog = editor.ownerDocument.querySelector(
+						'.jodit.jodit_dialog_box.active[data-editor_id=' +
+							editor.id +
+							']'
+					);
 
-					expect(dialog).to.be.equal(null);
+					expect(dialog).equals(null);
 				});
 			});
 		});
@@ -31,27 +48,51 @@ describe('Test image', function() {
 			it('should change image border radius', function() {
 				const editor = new Jodit(appendTestArea());
 
-				editor.value = '<img style="width:100px; height: 100px; border-radius: 10px;" src="tests/artio.jpg"/>';
+				editor.value =
+					'<img style="width:100px; height: 100px; border-radius: 10px;" src="tests/artio.jpg"/>';
 
-				simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
+				simulateEvent(
+					'dblclick',
+					0,
+					editor.editor.querySelector('img')
+				);
 
-				const dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
+				const dialog = editor.ownerDocument.querySelector(
+					'.jodit.jodit_dialog_box.active[data-editor_id=' +
+						editor.id +
+						']'
+				);
 
-				expect(dialog).to.not.equal(null);
+				expect(dialog).is.not.null;
 
-				simulateEvent('mousedown', 0, dialog.querySelectorAll('.jodit_tabs_buttons a')[1]);
+				simulateEvent(
+					'mousedown',
+					0,
+					dialog.querySelectorAll('.jodit_tabs_buttons a')[1]
+				);
 
 				const tab = dialog.querySelector('.jodit_tab.active');
-				expect(tab).to.be.not.equal(null);
-				expect(tab.querySelector('.border_radius')).to.be.not.equal(null);
+				expect(tab).is.not.null;
+				expect(tab.querySelector('.border_radius')).does.not.equal(
+					null
+				);
 
-				expect(tab.querySelector('.border_radius').value.toString()).to.be.equal('10');
+				expect(
+					tab.querySelector('.border_radius').value.toString()
+				).equals('10');
 
 				tab.querySelector('.border_radius').value = 100;
-				simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer .jodit_button.jodit_status_success')[0]);
+				simulateEvent(
+					'click',
+					0,
+					dialog.querySelectorAll(
+						'.jodit_dialog_footer .jodit_button.jodit_status_success'
+					)[0]
+				);
 
-				expect(sortAttributes(editor.value)).to.equal('<img src="tests/artio.jpg" style="border-radius:100px;height:100px;width:100px">');
-
+				expect(sortAttributes(editor.value)).equals(
+					'<img src="tests/artio.jpg" style="border-radius:100px;height:100px;width:100px">'
+				);
 			});
 		});
 
@@ -59,25 +100,48 @@ describe('Test image', function() {
 			it('should change image classlist', function() {
 				const editor = new Jodit(appendTestArea());
 
-				editor.setEditorValue('<img class="images123" style="width:100px; height: 100px;" src="tests/artio.jpg"/>');
-				simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
-				const dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
+				editor.setEditorValue(
+					'<img class="images123" style="width:100px; height: 100px;" src="tests/artio.jpg"/>'
+				);
+				simulateEvent(
+					'dblclick',
+					0,
+					editor.editor.querySelector('img')
+				);
+				const dialog = editor.ownerDocument.querySelector(
+					'.jodit.jodit_dialog_box.active[data-editor_id=' +
+						editor.id +
+						']'
+				);
 
-				expect(dialog).to.be.not.equal(null);
+				expect(dialog).is.not.null;
 
-				simulateEvent('mousedown', 0, dialog.querySelectorAll('.jodit_tabs_buttons a')[1]);
+				simulateEvent(
+					'mousedown',
+					0,
+					dialog.querySelectorAll('.jodit_tabs_buttons a')[1]
+				);
 
 				const tab = dialog.querySelector('.jodit_tab.active');
-				expect(tab).to.be.not.equal(null);
-				expect(tab.querySelector('.classes')).to.be.not.equal(null);
+				expect(tab).is.not.null;
+				expect(tab.querySelector('.classes')).is.not.null;
 
-				expect(tab.querySelector('.classes').value.toString()).to.be.equal('images123');
+				expect(tab.querySelector('.classes').value.toString()).equals(
+					'images123'
+				);
 
 				tab.querySelector('.classes').value = 'tavble ';
-				simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer .jodit_button.jodit_status_success')[0]);
+				simulateEvent(
+					'click',
+					0,
+					dialog.querySelectorAll(
+						'.jodit_dialog_footer .jodit_button.jodit_status_success'
+					)[0]
+				);
 
-				expect(sortAttributes(editor.value)).to.be.equal('<img class="tavble " src="tests/artio.jpg" style="height:100px;width:100px">');
-
+				expect(sortAttributes(editor.value)).equals(
+					'<img class="tavble " src="tests/artio.jpg" style="height:100px;width:100px">'
+				);
 			});
 		});
 
@@ -85,512 +149,916 @@ describe('Test image', function() {
 			it('should change image styles', function() {
 				const editor = new Jodit(appendTestArea());
 
-				editor.setEditorValue('<img style="padding:10px;width:100px; height: 100px;" src="tests/artio.jpg"/>');
-				simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
-				const dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
+				editor.setEditorValue(
+					'<img style="padding:10px;width:100px; height: 100px;" src="tests/artio.jpg"/>'
+				);
+				simulateEvent(
+					'dblclick',
+					0,
+					editor.editor.querySelector('img')
+				);
+				const dialog = editor.ownerDocument.querySelector(
+					'.jodit.jodit_dialog_box.active[data-editor_id=' +
+						editor.id +
+						']'
+				);
 
-				expect(dialog).to.be.not.equal(null);
+				expect(dialog).is.not.null;
 
-				simulateEvent('mousedown', 0, dialog.querySelectorAll('.jodit_tabs_buttons a')[1]);
+				simulateEvent(
+					'mousedown',
+					0,
+					dialog.querySelectorAll('.jodit_tabs_buttons a')[1]
+				);
 
 				const tab = dialog.querySelector('.jodit_tab.active');
-				expect(tab).to.be.not.equal(null);
-				expect(tab.querySelector('.style')).to.be.not.equal(null);
+				expect(tab).is.not.null;
+				expect(tab.querySelector('.style')).is.not.null;
 
-				expect(sortStyles(tab.querySelector('.style').value.toString())).to.be.equal('height:100px;padding:10px;width:100px');
+				expect(
+					sortStyles(tab.querySelector('.style').value.toString())
+				).equals('height:100px;padding:10px;width:100px');
 
-				tab.querySelector('.style').value = 'padding:20px;background-color: #ff0000;';
-				simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer .jodit_button.jodit_status_success')[0]);
+				tab.querySelector('.style').value =
+					'padding:20px;background-color: #ff0000;';
+				simulateEvent(
+					'click',
+					0,
+					dialog.querySelectorAll(
+						'.jodit_dialog_footer .jodit_button.jodit_status_success'
+					)[0]
+				);
 
-				expect(sortAttributes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="background-color:#FF0000;height:100px;padding:20px;width:100px">');
-
+				expect(sortAttributes(editor.value)).equals(
+					'<img src="tests/artio.jpg" style="background-color:#FF0000;height:100px;padding:20px;width:100px">'
+				);
 			});
 		});
+
 		describe('Change id', function() {
 			it('should change image id', function() {
 				const editor = new Jodit(appendTestArea());
 
-				editor.setEditorValue('<img id="stop123"  style="width:100px; height: 100px;"  src="tests/artio.jpg"/>');
-				simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
-				const dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
+				editor.setEditorValue(
+					'<img id="stop123"  style="width:100px; height: 100px;"  src="tests/artio.jpg"/>'
+				);
+				simulateEvent(
+					'dblclick',
+					0,
+					editor.editor.querySelector('img')
+				);
+				const dialog = editor.ownerDocument.querySelector(
+					'.jodit.jodit_dialog_box.active[data-editor_id=' +
+						editor.id +
+						']'
+				);
 
-				expect(dialog).to.be.not.equal(null);
+				expect(dialog).is.not.null;
 
-				simulateEvent('mousedown', 0, dialog.querySelectorAll('.jodit_tabs_buttons a')[1]);
+				simulateEvent(
+					'mousedown',
+					0,
+					dialog.querySelectorAll('.jodit_tabs_buttons a')[1]
+				);
 
 				const tab = dialog.querySelector('.jodit_tab.active');
-				expect(tab).to.be.not.equal(null);
-				expect(tab.querySelector('.id')).to.be.not.equal(null);
+				expect(tab).is.not.null;
+				expect(tab.querySelector('.id')).is.not.null;
 
-				expect(tab.querySelector('.id').value.toString()).to.be.equal('stop123');
+				expect(tab.querySelector('.id').value.toString()).equals(
+					'stop123'
+				);
 
 				tab.querySelector('.id').value = 'fast12';
-				simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer .jodit_button.jodit_status_success')[0]);
+				simulateEvent(
+					'click',
+					0,
+					dialog.querySelectorAll(
+						'.jodit_dialog_footer .jodit_button.jodit_status_success'
+					)[0]
+				);
 
-				expect(sortAttributes(editor.value)).to.be.equal('<img id="fast12" src="tests/artio.jpg" style="height:100px;width:100px">');
-
+				expect(sortAttributes(editor.value)).equals(
+					'<img id="fast12" src="tests/artio.jpg" style="height:100px;width:100px">'
+				);
 			});
 		});
+
 		describe('Change align', function() {
 			describe('left', function() {
 				it('should change image horizontal align', function() {
 					const editor = new Jodit(appendTestArea());
 
-					editor.setEditorValue('<img  style="width:100px; height: 100px;"  src="tests/artio.jpg"/>');
-					simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
-					const dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
+					editor.setEditorValue(
+						'<img  style="width:100px; height: 100px;"  src="tests/artio.jpg"/>'
+					);
+					simulateEvent(
+						'dblclick',
+						0,
+						editor.editor.querySelector('img')
+					);
+					const dialog = editor.ownerDocument.querySelector(
+						'.jodit.jodit_dialog_box.active[data-editor_id=' +
+							editor.id +
+							']'
+					);
 
-					simulateEvent('mousedown', 0, dialog.querySelectorAll('.jodit_tabs_buttons a')[1]);
+					simulateEvent(
+						'mousedown',
+						0,
+						dialog.querySelectorAll('.jodit_tabs_buttons a')[1]
+					);
 
 					const tab = dialog.querySelector('.jodit_tab.active');
-					expect(tab).to.be.not.equal(null);
-					expect(tab.querySelector('.align')).to.be.not.equal(null);
+					expect(tab).is.not.null;
+					expect(tab.querySelector('.align')).is.not.null;
 
-					expect(tab.querySelector('.align').value.toString()).to.be.equal('');
+					expect(tab.querySelector('.align').value.toString()).equals(
+						''
+					);
 
 					tab.querySelector('.align').value = 'left';
-					simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer .jodit_button.jodit_status_success')[0]);
+					simulateEvent(
+						'click',
+						0,
+						dialog.querySelectorAll(
+							'.jodit_dialog_footer .jodit_button.jodit_status_success'
+						)[0]
+					);
 
-					expect(sortAttributes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="float:left;height:100px;width:100px">');
-
+					expect(sortAttributes(editor.value)).equals(
+						'<img src="tests/artio.jpg" style="float:left;height:100px;width:100px">'
+					);
 				});
 			});
 			describe('right', function() {
 				it('should change image horizontal align', function() {
 					const editor = new Jodit(appendTestArea());
 
-					editor.setEditorValue('<img  style="width:100px; height: 100px;"  src="tests/artio.jpg"/>');
-					simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
-					const dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
+					editor.setEditorValue(
+						'<img  style="width:100px; height: 100px;"  src="tests/artio.jpg"/>'
+					);
+					simulateEvent(
+						'dblclick',
+						0,
+						editor.editor.querySelector('img')
+					);
+					const dialog = editor.ownerDocument.querySelector(
+						'.jodit.jodit_dialog_box.active[data-editor_id=' +
+							editor.id +
+							']'
+					);
 
-					simulateEvent('mousedown', 0, dialog.querySelectorAll('.jodit_tabs_buttons a')[1]);
+					simulateEvent(
+						'mousedown',
+						0,
+						dialog.querySelectorAll('.jodit_tabs_buttons a')[1]
+					);
 
 					const tab = dialog.querySelector('.jodit_tab.active');
-					expect(tab).to.be.not.equal(null);
-					expect(tab.querySelector('.align')).to.be.not.equal(null);
+					expect(tab).is.not.null;
+					expect(tab.querySelector('.align')).is.not.null;
 
-					expect(tab.querySelector('.align').value.toString()).to.be.equal('');
+					expect(tab.querySelector('.align').value.toString()).equals(
+						''
+					);
 
 					tab.querySelector('.align').value = 'right';
-					simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer .jodit_button.jodit_status_success')[0]);
+					simulateEvent(
+						'click',
+						0,
+						dialog.querySelectorAll(
+							'.jodit_dialog_footer .jodit_button.jodit_status_success'
+						)[0]
+					);
 
-					expect(sortAttributes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="float:right;height:100px;width:100px">');
-
+					expect(sortAttributes(editor.value)).equals(
+						'<img src="tests/artio.jpg" style="float:right;height:100px;width:100px">'
+					);
 				});
 			});
 			describe('center', function() {
 				it('should change image horizontal align', function() {
 					const editor = new Jodit(appendTestArea());
 
-					editor.setEditorValue('<img style="float:left;width:100px; height: 100px;" src="tests/artio.jpg"/>');
-					simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
-					const dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
+					editor.setEditorValue(
+						'<img style="float:left;width:100px; height: 100px;" src="tests/artio.jpg"/>'
+					);
+					simulateEvent(
+						'dblclick',
+						0,
+						editor.editor.querySelector('img')
+					);
+					const dialog = editor.ownerDocument.querySelector(
+						'.jodit.jodit_dialog_box.active[data-editor_id=' +
+							editor.id +
+							']'
+					);
 
-					simulateEvent('mousedown', 0, dialog.querySelectorAll('.jodit_tabs_buttons a')[1]);
+					simulateEvent(
+						'mousedown',
+						0,
+						dialog.querySelectorAll('.jodit_tabs_buttons a')[1]
+					);
 
 					const tab = dialog.querySelector('.jodit_tab.active');
-					expect(tab).to.be.not.equal(null);
-					expect(tab.querySelector('.align')).to.be.not.equal(null);
+					expect(tab).is.not.null;
+					expect(tab.querySelector('.align')).is.not.null;
 
-					expect(tab.querySelector('.align').value.toString()).to.be.equal('left');
+					expect(tab.querySelector('.align').value.toString()).equals(
+						'left'
+					);
 
 					tab.querySelector('.align').value = 'center';
-					simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer .jodit_button.jodit_status_success')[0]);
+					simulateEvent(
+						'click',
+						0,
+						dialog.querySelectorAll(
+							'.jodit_dialog_footer .jodit_button.jodit_status_success'
+						)[0]
+					);
 
-					expect(sortAttributes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="display:block;height:100px;margin-left:auto;margin-right:auto;width:100px">');
-
+					expect(sortAttributes(editor.value)).equals(
+						'<img src="tests/artio.jpg" style="display:block;height:100px;margin-left:auto;margin-right:auto;width:100px">'
+					);
 				});
 			});
 			describe('Clear align', function() {
 				it('should clear some align', function() {
 					const editor = new Jodit(appendTestArea());
 
-					editor.setEditorValue('<img src="tests/artio.jpg" style="width:100px; height: 100px;display:block;margin-left:auto;margin-right:auto">');
-					simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
-					const dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
+					editor.setEditorValue(
+						'<img src="tests/artio.jpg" style="width:100px; height: 100px;display:block;margin-left:auto;margin-right:auto">'
+					);
+					simulateEvent(
+						'dblclick',
+						0,
+						editor.editor.querySelector('img')
+					);
+					const dialog = editor.ownerDocument.querySelector(
+						'.jodit.jodit_dialog_box.active[data-editor_id=' +
+							editor.id +
+							']'
+					);
 
-					simulateEvent('mousedown', 0, dialog.querySelectorAll('.jodit_tabs_buttons a')[1]);
+					simulateEvent(
+						'mousedown',
+						0,
+						dialog.querySelectorAll('.jodit_tabs_buttons a')[1]
+					);
 
 					const tab = dialog.querySelector('.jodit_tab.active');
-					expect(tab).to.be.not.equal(null);
-					expect(tab.querySelector('.align')).to.be.not.equal(null);
+					expect(tab).is.not.null;
+					expect(tab.querySelector('.align')).is.not.null;
 
-					expect(tab.querySelector('.align').value.toString()).to.be.equal('center');
+					expect(tab.querySelector('.align').value.toString()).equals(
+						'center'
+					);
 
 					tab.querySelector('.align').value = '';
-					simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer .jodit_button.jodit_status_success')[0]);
+					simulateEvent(
+						'click',
+						0,
+						dialog.querySelectorAll(
+							'.jodit_dialog_footer .jodit_button.jodit_status_success'
+						)[0]
+					);
 
-					expect(sortAttributes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="height:100px;width:100px">');
-
+					expect(sortAttributes(editor.value)).equals(
+						'<img src="tests/artio.jpg" style="height:100px;width:100px">'
+					);
 				});
 			});
 		});
+
 		describe('Change margins', function() {
 			describe('Change marginTop with lock', function() {
 				it('should change all margins', function() {
 					const editor = new Jodit(appendTestArea());
 
-					editor.setEditorValue('<img style="margin: 10px;width:100px; height: 100px;" src="tests/artio.jpg"/>');
-					simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
-					const dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
+					editor.setEditorValue(
+						'<img style="margin: 10px;width:100px; height: 100px;" src="tests/artio.jpg"/>'
+					);
+					simulateEvent(
+						'dblclick',
+						0,
+						editor.editor.querySelector('img')
+					);
+					const dialog = editor.ownerDocument.querySelector(
+						'.jodit.jodit_dialog_box.active[data-editor_id=' +
+							editor.id +
+							']'
+					);
 
-					simulateEvent('mousedown', 0, dialog.querySelectorAll('.jodit_tabs_buttons a')[1]);
+					simulateEvent(
+						'mousedown',
+						0,
+						dialog.querySelectorAll('.jodit_tabs_buttons a')[1]
+					);
 
 					const tab = dialog.querySelector('.jodit_tab.active');
 
-					expect(tab.querySelector('.marginTop')).to.be.not.equal(null);
-					expect(tab.querySelector('.marginBottom')).to.be.not.equal(null);
+					expect(tab.querySelector('.marginTop')).does.not.equal(
+						null
+					);
+					expect(tab.querySelector('.marginBottom')).does.not.equal(
+						null
+					);
 
-					expect(tab.querySelector('.marginTop').value.toString()).to.be.equal('10');
-					expect(tab.querySelector('.marginBottom').hasAttribute('disabled')).to.be.true;
+					expect(
+						tab.querySelector('.marginTop').value.toString()
+					).equals('10');
+					expect(
+						tab
+							.querySelector('.marginBottom')
+							.hasAttribute('disabled')
+					).is.true;
 
 					tab.querySelector('.marginTop').value = 100;
-					simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer .jodit_button.jodit_status_success')[0]);
+					simulateEvent(
+						'click',
+						0,
+						dialog.querySelectorAll(
+							'.jodit_dialog_footer .jodit_button.jodit_status_success'
+						)[0]
+					);
 
-					expect(sortAttributes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="height:100px;margin:100px;width:100px">');
-
+					expect(sortAttributes(editor.value)).equals(
+						'<img src="tests/artio.jpg" style="height:100px;margin:100px;width:100px">'
+					);
 				});
 			});
 			describe('Change marginTop with unlock', function() {
 				it('should change only marginTop', function() {
 					const editor = new Jodit(appendTestArea());
 
-					editor.setEditorValue('<img style="margin: 10px;width:100px; height: 100px;" src="tests/artio.jpg"/>');
-					simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
-					const dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
+					editor.setEditorValue(
+						'<img style="margin: 10px;width:100px; height: 100px;" src="tests/artio.jpg"/>'
+					);
+					simulateEvent(
+						'dblclick',
+						0,
+						editor.editor.querySelector('img')
+					);
+					const dialog = editor.ownerDocument.querySelector(
+						'.jodit.jodit_dialog_box.active[data-editor_id=' +
+							editor.id +
+							']'
+					);
 
-					simulateEvent('mousedown', 0, dialog.querySelectorAll('.jodit_tabs_buttons a')[1]);
+					simulateEvent(
+						'mousedown',
+						0,
+						dialog.querySelectorAll('.jodit_tabs_buttons a')[1]
+					);
 
 					const tab = dialog.querySelector('.jodit_tab.active');
 
-					const locker = tab.querySelector('.jodit_lock_helper.jodit_lock_margin');
-					expect(locker).to.be.not.equal(null);
+					const locker = tab.querySelector(
+						'.jodit_lock_helper.jodit_lock_margin'
+					);
+					expect(locker).is.not.null;
 					const lockerimg = locker.innerHTML;
 					simulateEvent('click', 0, locker);
-					expect(locker.innerHTML).to.be.not.equal(lockerimg);
+					expect(locker.innerHTML).does.not.equal(lockerimg);
 
-					expect(tab.querySelector('.marginTop').value.toString()).to.be.equal('10');
-					expect(tab.querySelector('.marginBottom').value.toString()).to.be.equal('10');
-					expect(tab.querySelector('.marginLeft').value.toString()).to.be.equal('10');
-					expect(tab.querySelector('.marginRight').value.toString()).to.be.equal('10');
-					expect(tab.querySelector('.marginBottom').hasAttribute('disabled')).to.be.false;
+					expect(
+						tab.querySelector('.marginTop').value.toString()
+					).equals('10');
+					expect(
+						tab.querySelector('.marginBottom').value.toString()
+					).equals('10');
+					expect(
+						tab.querySelector('.marginLeft').value.toString()
+					).equals('10');
+					expect(
+						tab.querySelector('.marginRight').value.toString()
+					).equals('10');
+					expect(
+						tab
+							.querySelector('.marginBottom')
+							.hasAttribute('disabled')
+					).to.be.false;
 
 					tab.querySelector('.marginTop').value = 100;
 					tab.querySelector('.marginBottom').value = 10;
 					tab.querySelector('.marginRight').value = 20;
 					tab.querySelector('.marginLeft').value = 220;
-					simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer .jodit_button.jodit_status_success')[0]);
+					simulateEvent(
+						'click',
+						0,
+						dialog.querySelectorAll(
+							'.jodit_dialog_footer .jodit_button.jodit_status_success'
+						)[0]
+					);
 
-					expect(sortAttributes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="height:100px;margin:100px 20px 10px 220px;width:100px">');
-
+					expect(sortAttributes(editor.value)).equals(
+						'<img src="tests/artio.jpg" style="height:100px;margin:100px 20px 10px 220px;width:100px">'
+					);
 				});
 			});
 		});
+
 		describe('Change title', function() {
 			it('should change image title', function() {
 				const editor = new Jodit(appendTestArea());
 
-				editor.setEditorValue('<img title="sting" style="width:100px; height: 100px;" src="tests/artio.jpg"/>');
-				simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
+				editor.setEditorValue(
+					'<img title="sting" style="width:100px; height: 100px;" src="tests/artio.jpg"/>'
+				);
+				simulateEvent(
+					'dblclick',
+					0,
+					editor.editor.querySelector('img')
+				);
 
-				const dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
+				const dialog = editor.ownerDocument.querySelector(
+					'.jodit.jodit_dialog_box.active[data-editor_id=' +
+						editor.id +
+						']'
+				);
 				const tab = dialog.querySelector('.jodit_tab.active');
 
-				expect(tab).to.be.not.equal(null);
-				expect(tab.querySelector('.imageTitle')).to.be.not.equal(null);
-				expect(tab.querySelector('.imageTitle').value).to.be.equal('sting');
+				expect(tab).is.not.null;
+				expect(tab.querySelector('.imageTitle')).is.not.null;
+				expect(tab.querySelector('.imageTitle').value).equals('sting');
 
 				dialog.querySelector('.imageTitle').value = 'Stop';
-				simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer .jodit_button.jodit_status_success')[0]);
+				simulateEvent(
+					'click',
+					0,
+					dialog.querySelectorAll(
+						'.jodit_dialog_footer .jodit_button.jodit_status_success'
+					)[0]
+				);
 
-				expect(sortAttributes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="height:100px;width:100px" title="Stop">');
-
+				expect(sortAttributes(editor.value)).equals(
+					'<img src="tests/artio.jpg" style="height:100px;width:100px" title="Stop">'
+				);
 			});
 		});
+
 		describe('Change alt', function() {
 			it('should change image alt', function(done) {
 				const editor = new Jodit(appendTestArea());
 				const image = new Image();
 				const doTest = function() {
-					editor.value = '<img alt="test" style="width:100px; height: 100px;" src="tests/artio.jpg"/>';
-					simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
+					editor.value =
+						'<img alt="test" style="width:100px; height: 100px;" src="tests/artio.jpg"/>';
+					simulateEvent(
+						'dblclick',
+						0,
+						editor.editor.querySelector('img')
+					);
 
-					const dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
+					const dialog = editor.ownerDocument.querySelector(
+						'.jodit.jodit_dialog_box.active[data-editor_id=' +
+							editor.id +
+							']'
+					);
 					const tab = dialog.querySelector('.jodit_tab.active');
 
-					expect(tab).to.be.not.equal(null);
-					expect(tab.querySelector('.imageAlt')).to.be.not.equal(null);
-					expect(tab.querySelector('.imageAlt').value).to.be.equal('test');
+					expect(tab).is.not.null;
+					expect(tab.querySelector('.imageAlt')).does.not.equal(null);
+					expect(tab.querySelector('.imageAlt').value).equals('test');
 
 					dialog.querySelector('.imageAlt').value = 'Stop';
-					simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer .jodit_button.jodit_status_success')[0]);
+					simulateEvent(
+						'click',
+						0,
+						dialog.querySelectorAll(
+							'.jodit_dialog_footer .jodit_button.jodit_status_success'
+						)[0]
+					);
 
-					expect(sortAttributes(editor.value)).to.be.equal('<img alt="Stop" src="tests/artio.jpg" style="height:100px;width:100px">');
+					expect(sortAttributes(editor.value)).equals(
+						'<img alt="Stop" src="tests/artio.jpg" style="height:100px;width:100px">'
+					);
 					done();
 				};
 
 				image.src = 'tests/artio.jpg';
 
-				if (image.complete) {
-					doTest();
-				} else {
-					image.onload = doTest;
-				}
+				onLoadImage(image, doTest);
 			});
 		});
+
 		describe('Change link', function() {
 			it('should change image wrapper', function() {
 				const editor = new Jodit(appendTestArea());
 
-				editor.setEditorValue('<img  style="width:100px; height: 100px;"  src="tests/artio.jpg"/>');
-				simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
+				editor.setEditorValue(
+					'<img  style="width:100px; height: 100px;"  src="tests/artio.jpg"/>'
+				);
+				simulateEvent(
+					'dblclick',
+					0,
+					editor.editor.querySelector('img')
+				);
 
-				const dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
+				const dialog = editor.ownerDocument.querySelector(
+					'.jodit.jodit_dialog_box.active[data-editor_id=' +
+						editor.id +
+						']'
+				);
 				const tab = dialog.querySelector('.jodit_tab.active');
 
-				expect(tab).to.be.not.equal(null);
-				expect(tab.querySelector('.imageLink')).to.be.not.equal(null);
-				expect(tab.querySelector('.imageLink').value).to.be.equal('');
+				expect(tab).is.not.null;
+				expect(tab.querySelector('.imageLink')).is.not.null;
+				expect(tab.querySelector('.imageLink').value).equals('');
 
-				dialog.querySelector('.imageLink').value = 'https://xdsoft.net/';
-				simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer .jodit_button.jodit_status_success')[0]);
+				dialog.querySelector('.imageLink').value =
+					'https://xdsoft.net/';
+				simulateEvent(
+					'click',
+					0,
+					dialog.querySelectorAll(
+						'.jodit_dialog_footer .jodit_button.jodit_status_success'
+					)[0]
+				);
 
-				expect(sortAttributes(editor.value)).to.be.equal('<a href="https://xdsoft.net/"><img src="tests/artio.jpg" style="height:100px;width:100px"></a>');
-
+				expect(sortAttributes(editor.value)).equals(
+					'<a href="https://xdsoft.net/"><img src="tests/artio.jpg" style="height:100px;width:100px"></a>'
+				);
 			});
 			describe('open link in new tab', function() {
 				it('should change image wrapper with target="_blank"', function() {
 					const editor = new Jodit(appendTestArea());
 
-					editor.setEditorValue('<img style="width:100px; height: 100px;" src="tests/artio.jpg"/>');
-					simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
+					editor.setEditorValue(
+						'<img style="width:100px; height: 100px;" src="tests/artio.jpg"/>'
+					);
+					simulateEvent(
+						'dblclick',
+						0,
+						editor.editor.querySelector('img')
+					);
 
-					const dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
+					const dialog = editor.ownerDocument.querySelector(
+						'.jodit.jodit_dialog_box.active[data-editor_id=' +
+							editor.id +
+							']'
+					);
 					const tab = dialog.querySelector('.jodit_tab.active');
 
-					expect(tab).to.be.not.equal(null);
-					expect(tab.querySelector('.imageLink')).to.be.not.equal(null);
-					expect(tab.querySelector('.imageLink').value).to.be.equal('');
+					expect(tab).is.not.null;
+					expect(tab.querySelector('.imageLink')).does.not.equal(
+						null
+					);
+					expect(tab.querySelector('.imageLink').value).equals('');
 
-					dialog.querySelector('.imageLink').value = 'https://xdsoft.net/';
-					dialog.querySelector('.imageLinkOpenInNewTab').checked = true;
+					dialog.querySelector('.imageLink').value =
+						'https://xdsoft.net/';
+					dialog.querySelector(
+						'.imageLinkOpenInNewTab'
+					).checked = true;
 
-					simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer .jodit_button.jodit_status_success')[0]);
+					simulateEvent(
+						'click',
+						0,
+						dialog.querySelectorAll(
+							'.jodit_dialog_footer .jodit_button.jodit_status_success'
+						)[0]
+					);
 
-					expect(sortAttributes(editor.value)).to.be.equal('<a href="https://xdsoft.net/" target="_blank"><img src="tests/artio.jpg" style="height:100px;width:100px"></a>');
-
+					expect(sortAttributes(editor.value)).equals(
+						'<a href="https://xdsoft.net/" target="_blank"><img src="tests/artio.jpg" style="height:100px;width:100px"></a>'
+					);
 				});
 			});
 			describe('Open dialog dor image wrapped in link', function() {
 				it('should change image wrapper', function() {
 					const editor = new Jodit(appendTestArea());
 
-					editor.setEditorValue('<a href="https://xdan.ru" target="_blank"><img  style="width:100px; height: 100px;"  src="tests/artio.jpg"/></a>');
-					simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
+					editor.setEditorValue(
+						'<a href="https://xdan.ru" target="_blank"><img  style="width:100px; height: 100px;"  src="tests/artio.jpg"/></a>'
+					);
+					simulateEvent(
+						'dblclick',
+						0,
+						editor.editor.querySelector('img')
+					);
 
-					const dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
+					const dialog = editor.ownerDocument.querySelector(
+						'.jodit.jodit_dialog_box.active[data-editor_id=' +
+							editor.id +
+							']'
+					);
 					const tab = dialog.querySelector('.jodit_tab.active');
 
-					expect(tab).to.be.not.equal(null);
-					expect(tab.querySelector('.imageLink')).to.be.not.equal(null);
-					expect(tab.querySelector('.imageLink').value).to.be.equal('https://xdan.ru');
-					expect(tab.querySelector('.imageLinkOpenInNewTab').checked).to.be.true;
+					expect(tab).is.not.null;
+					expect(tab.querySelector('.imageLink')).does.not.equal(
+						null
+					);
+					expect(tab.querySelector('.imageLink').value).equals(
+						'https://xdan.ru'
+					);
+					expect(tab.querySelector('.imageLinkOpenInNewTab').checked)
+						.is.true;
 
-					dialog.querySelector('.imageLink').value = 'https://xdsoft.net/';
-					dialog.querySelector('.imageLinkOpenInNewTab').checked = false;
+					dialog.querySelector('.imageLink').value =
+						'https://xdsoft.net/';
+					dialog.querySelector(
+						'.imageLinkOpenInNewTab'
+					).checked = false;
 
-					simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer .jodit_button.jodit_status_success')[0]);
+					simulateEvent(
+						'click',
+						0,
+						dialog.querySelectorAll(
+							'.jodit_dialog_footer .jodit_button.jodit_status_success'
+						)[0]
+					);
 
-					expect(sortAttributes(editor.value)).to.be.equal('<a href="https://xdsoft.net/"><img src="tests/artio.jpg" style="height:100px;width:100px"></a>');
-
+					expect(sortAttributes(editor.value)).equals(
+						'<a href="https://xdsoft.net/"><img src="tests/artio.jpg" style="height:100px;width:100px"></a>'
+					);
 				});
 			});
 			describe('Unlink', function() {
 				it('should remove image wrapper', function() {
 					const editor = new Jodit(appendTestArea());
 
-					editor.setEditorValue('<a href="https://xdan.ru" target="_blank"><img style="width:100px; height: 100px;" src="tests/artio.jpg"/></a>');
-					simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
+					editor.setEditorValue(
+						'<a href="https://xdan.ru" target="_blank"><img style="width:100px; height: 100px;" src="tests/artio.jpg"/></a>'
+					);
+					simulateEvent(
+						'dblclick',
+						0,
+						editor.editor.querySelector('img')
+					);
 
-					const dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
+					const dialog = editor.ownerDocument.querySelector(
+						'.jodit.jodit_dialog_box.active[data-editor_id=' +
+							editor.id +
+							']'
+					);
 					const tab = dialog.querySelector('.jodit_tab.active');
 
-					expect(tab).to.be.not.equal(null);
-					expect(tab.querySelector('.imageLink')).to.be.not.equal(null);
-					expect(tab.querySelector('.imageLink').value).to.be.equal('https://xdan.ru');
-					expect(tab.querySelector('.imageLinkOpenInNewTab').checked).to.be.true;
+					expect(tab).is.not.null;
+					expect(tab.querySelector('.imageLink')).does.not.equal(
+						null
+					);
+					expect(tab.querySelector('.imageLink').value).equals(
+						'https://xdan.ru'
+					);
+					expect(tab.querySelector('.imageLinkOpenInNewTab').checked)
+						.is.true;
 
 					dialog.querySelector('.imageLink').value = '';
-					dialog.querySelector('.imageLinkOpenInNewTab').checked = false;
+					dialog.querySelector(
+						'.imageLinkOpenInNewTab'
+					).checked = false;
 
-					simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer .jodit_button.jodit_status_success')[0]);
+					simulateEvent(
+						'click',
+						0,
+						dialog.querySelectorAll(
+							'.jodit_dialog_footer .jodit_button.jodit_status_success'
+						)[0]
+					);
 
-					expect(sortAttributes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="height:100px;width:100px">');
-
+					expect(sortAttributes(editor.value)).equals(
+						'<img src="tests/artio.jpg" style="height:100px;width:100px">'
+					);
 				});
 			});
 		});
-		describe('Change size functionality', function() {
-			it('should create connected inputs with width and height', function(done) {
-				const editor = new Jodit(appendTestArea());
 
-				editor.value = '<img src="tests/artio.jpg"/>';
-				const img = editor.editor.querySelector('img');
+		describe('Change size', function() {
+			describe('dblclick on image and open dialog', function() {
+				it('should create inputs contains width and height', function(done) {
+					const area = appendTestArea();
+					const editor = new Jodit(area);
 
-				function doTest() {
-					simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
+					editor.value = '<img src="tests/artio.jpg"/>';
+					const img = editor.editor.querySelector('img');
 
-					const dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
-					const imageWidth = dialog.querySelector('.imageWidth');
-					const imageHeight = dialog.querySelector('.imageHeight');
+					const callback = function () {
+						simulateEvent('dblclick', 0, img);
 
-					expect(imageWidth).to.be.not.equal(null);
-					expect(imageHeight).to.be.not.equal(null);
+						expect(area.id).equals(editor.id);
 
-					expect(imageWidth.value).to.be.equal(img.offsetWidth.toString());
-					expect(imageHeight.value).to.be.equal(img.offsetHeight.toString());
+						const dialog = editor.ownerDocument.querySelector(
+							'.jodit.jodit_dialog_box.active[data-editor_id=' +
+								editor.id +
+								']'
+						);
+						expect(dialog).is.not.null;
 
+						const imageWidth = dialog.querySelector('.imageWidth');
+						const imageHeight = dialog.querySelector(
+							'.imageHeight'
+						);
 
-					imageWidth.value = 100;
-					simulateEvent('change', 0, imageWidth);
-					expect(imageHeight.value).to.be.not.equal(img.offsetHeight.toString());
+						expect(imageWidth).is.not.null;
+						expect(imageHeight).is.not.null;
 
-					imageHeight.value = 200;
-					simulateEvent('change', 0, imageHeight);
-					expect(imageWidth.value).to.be.not.equal('100');
+						expect(imageWidth.value).equals(
+							img.offsetWidth.toString()
+						);
+						expect(imageHeight.value).equals(
+							img.offsetHeight.toString()
+						);
 
-					simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer .jodit_button.jodit_status_success')[0]);
+						imageWidth.value = 100;
+						simulateEvent('change', 0, imageWidth);
+						expect(imageHeight.value).does.not.equal(
+							img.offsetHeight.toString()
+						);
 
-					expect(sortAttributes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="height:200px;width:356px">');
+						imageHeight.value = 200;
+						simulateEvent('change', 0, imageHeight);
+						expect(imageWidth.value).does.not.equal('100');
 
-					done();
-				}
+						simulateEvent(
+							'click',
+							0,
+							dialog.querySelectorAll(
+								'.jodit_dialog_footer .jodit_button.jodit_status_success'
+							)[0]
+						);
 
+						expect(sortAttributes(editor.value)).equals(
+							'<img src="tests/artio.jpg" style="height:200px;width:356px">'
+						);
 
-				if (img.complete) {
-					doTest();
-				} else {
-					img.onload = doTest;
-				}
+						done();
+					};
+
+					onLoadImage(img, callback);
+				});
 			});
-			describe('unlock ratio', function(done) {
-				it('should create connected inputs with width and height', function(done) {
+
+			describe('unlock ratio', function() {
+				it('should create inputs with width and height', function(done) {
 					const editor = new Jodit(appendTestArea());
 
 					editor.value = '<img src="tests/artio.jpg"/>';
 					const img = editor.editor.querySelector('img');
 
-					function doTest() {
-						simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
+					const callback = function () {
+						simulateEvent('dblclick', 0, img);
 
-						const dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
+						const dialog = editor.ownerDocument.querySelector(
+							'.jodit.jodit_dialog_box.active[data-editor_id=' +
+								editor.id +
+								']'
+						);
+
+						expect(dialog).is.not.null;
+
 						const imageWidth = dialog.querySelector('.imageWidth');
-						const imageHeight = dialog.querySelector('.imageHeight');
-						const locker = dialog.querySelector('.jodit_lock_helper.jodit_lock_size');
+						const imageHeight = dialog.querySelector(
+							'.imageHeight'
+						);
+						const locker = dialog.querySelector(
+							'.jodit_lock_helper.jodit_lock_size'
+						);
 
-						expect(locker).to.be.not.equal(null);
-						expect(imageWidth).to.be.not.equal(null);
-						expect(imageHeight).to.be.not.equal(null);
+						expect(locker).is.not.null;
+						expect(imageWidth).is.not.null;
+						expect(imageHeight).is.not.null;
 
-						expect(imageWidth.value).to.be.equal(img.offsetWidth.toString());
-						expect(imageHeight.value).to.be.equal(img.offsetHeight.toString());
+						expect(imageWidth.value).equals(
+							img.offsetWidth.toString()
+						);
+						expect(imageHeight.value).equals(
+							img.offsetHeight.toString()
+						);
 
 						simulateEvent('click', 0, locker);
 
 						imageWidth.value = 100;
 						simulateEvent('change', 0, imageWidth);
-						expect(imageHeight.value).to.be.equal(img.offsetHeight.toString());
+						expect(imageHeight.value).equals(
+							img.offsetHeight.toString()
+						);
 
 						imageHeight.value = 200;
 						simulateEvent('change', 0, imageHeight);
-						expect(imageWidth.value).to.be.equal('100');
+						expect(imageWidth.value).equals('100');
 
-						simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer .jodit_button.jodit_status_success')[0]);
+						simulateEvent(
+							'click',
+							0,
+							dialog.querySelectorAll(
+								'.jodit_dialog_footer .jodit_button.jodit_status_success'
+							)[0]
+						);
 
-						expect(sortAttributes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="height:200px;width:100px">');
+						expect(sortAttributes(editor.value)).equals(
+							'<img src="tests/artio.jpg" style="height:200px;width:100px">'
+						);
 
 						done();
-					}
+					};
 
-
-					if (img.complete) {
-						doTest();
-					} else {
-						img.onload = doTest;
-					}
+					onLoadImage(img, callback);
 				});
-				describe('Toggle ratio again', function(done) {
+
+				describe('Toggle ratio again', function() {
 					it('should create connected inputs with width and height', function(done) {
 						const editor = new Jodit(appendTestArea());
 
 						editor.value = '<img src="tests/artio.jpg"/>';
 						const img = editor.editor.querySelector('img');
 
-						function doTest() {
-							simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
+						const callback = function () {
+							simulateEvent('dblclick', 0, img);
 
-							const dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
-							const imageWidth = dialog.querySelector('.imageWidth');
-							const imageHeight = dialog.querySelector('.imageHeight');
-							const locker = dialog.querySelector('.jodit_lock_helper.jodit_lock_size');
+							const dialog = editor.ownerDocument.querySelector(
+								'.jodit.jodit_dialog_box.active[data-editor_id=' +
+									editor.id +
+									']'
+							);
+							expect(dialog).is.not.null;
+
+							const imageWidth = dialog.querySelector(
+								'.imageWidth'
+							);
+							const imageHeight = dialog.querySelector(
+								'.imageHeight'
+							);
+							const locker = dialog.querySelector(
+								'.jodit_lock_helper.jodit_lock_size'
+							);
 							const lockerimg = locker.innerHTML;
 
 							simulateEvent('click', 0, locker);
-							expect(locker.innerHTML).to.be.not.equal(lockerimg);
+							expect(locker.innerHTML).does.not.equal(lockerimg);
 							simulateEvent('click', 0, locker);
-							expect(locker.innerHTML).to.be.equal(lockerimg);
+							expect(locker.innerHTML).equals(lockerimg);
 
 							imageWidth.value = 100;
 							simulateEvent('change', 0, imageWidth);
-							expect(imageHeight.value).to.be.not.equal(img.offsetHeight.toString());
+							expect(imageHeight.value).does.not.equal(
+								img.offsetHeight.toString()
+							);
 
 							imageHeight.value = 200;
 							simulateEvent('change', 0, imageHeight);
-							expect(imageWidth.value).to.be.not.equal('100');
+							expect(imageWidth.value).does.not.equal('100');
 
-							simulateEvent('click', 0, dialog.querySelectorAll('.jodit_dialog_footer .jodit_button.jodit_status_success')[0]);
+							simulateEvent(
+								'click',
+								0,
+								dialog.querySelectorAll(
+									'.jodit_dialog_footer .jodit_button.jodit_status_success'
+								)[0]
+							);
 
-							expect(sortAttributes(editor.value)).to.be.equal('<img src="tests/artio.jpg" style="height:200px;width:356px">');
+							expect(sortAttributes(editor.value)).equals(
+								'<img src="tests/artio.jpg" style="height:200px;width:356px">'
+							);
 
 							done();
-						}
+						};
 
-
-						if (img.complete) {
-							doTest();
-						} else {
-							img.onload = doTest;
-						}
+						onLoadImage(img, callback);
 					});
 				});
 			});
 		});
+
 		describe('Show filebrowser buttons and edit image button', function() {
-			describe('If uploader or filebrowser settings don\'t setted', function() {
+			describe("If uploader or filebrowser settings don't setted", function() {
 				it('should not show buttons', function() {
 					const editor = new Jodit(appendTestArea());
 
 					editor.value = '<img src="tests/artio.jpg"/>';
-					simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
-					const dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
+					simulateEvent(
+						'dblclick',
+						0,
+						editor.editor.querySelector('img')
+					);
+					const dialog = editor.ownerDocument.querySelector(
+						'.jodit.jodit_dialog_box.active[data-editor_id=' +
+							editor.id +
+							']'
+					);
 
-					expect(dialog).to.not.equal(null);
+					expect(dialog).is.not.null;
 
-					const fb = dialog.querySelector('.jodit_button.jodit_rechange');
-					expect(fb).to.not.equal(null);
+					const fb = dialog.querySelector(
+						'.jodit_button.jodit_rechange'
+					);
+					expect(fb).is.not.null;
 
-					const edit = dialog.querySelector('.jodit_button.jodit_rechange');
-					expect(edit).to.not.equal(null);
+					const edit = dialog.querySelector(
+						'.jodit_button.jodit_rechange'
+					);
+					expect(edit).is.not.null;
 
-					expect(edit.parentNode.style.display).to.equal('none');
-
+					expect(edit.parentNode.style.display).equals('none');
 				});
 			});
 
 			describe('Uploader and filebrowser settings set', function() {
 				const settings = {
 					uploader: {
-						url: 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'
+						url:
+							'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'
 					},
 
 					filebrowser: {
@@ -605,62 +1073,131 @@ describe('Test image', function() {
 					const editor = new Jodit(appendTestArea(), settings);
 
 					editor.setEditorValue('<img src="tests/artio.jpg"/>');
-					simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
-					const dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
+					simulateEvent(
+						'dblclick',
+						0,
+						editor.editor.querySelector('img')
+					);
+					const dialog = editor.ownerDocument.querySelector(
+						'.jodit.jodit_dialog_box.active[data-editor_id=' +
+							editor.id +
+							']'
+					);
 
-					expect(dialog.querySelector('.jodit_button.jodit_rechange')).to.be.not.equal(null);
-					expect(dialog.querySelector('.jodit_button.jodit_use_image_editor')).to.be.not.equal(null);
+					expect(dialog.querySelector('.jodit_button.jodit_rechange'))
+						.is.not.null;
+
+					expect(
+						dialog.querySelector(
+							'.jodit_button.jodit_use_image_editor'
+						)
+					).is.not.null;
 				});
 
 				describe('Click on filebrowser button', function() {
 					it('should open popup', function() {
 						const editor = new Jodit(appendTestArea(), settings);
 
-						editor.setEditorValue('<img src="tests/artio.jpg"/>');
-						simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
-						const dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
-						const rechange = dialog.querySelector('.jodit_button.jodit_rechange');
-						expect(rechange).to.be.not.equal(null);
+						editor.value = '<img src="tests/artio.jpg"/>';
+
+						simulateEvent(
+							'dblclick',
+							0,
+							editor.editor.querySelector('img')
+						);
+
+						const dialog = editor.ownerDocument.querySelector(
+							'.jodit.jodit_dialog_box.active[data-editor_id=' +
+								editor.id +
+								']'
+						);
+
+						const rechange = dialog.querySelector(
+							'.jodit_button.jodit_rechange'
+						);
+
+						expect(rechange).is.not.null;
 						simulateEvent('mousedown', 0, rechange);
-						expect(dialog.querySelector('.jodit_toolbar_popup.jodit_toolbar_popup-open.jodit_right')).to.be.not.equal(null);
+						expect(
+							dialog.querySelector(
+								'.jodit_toolbar_popup.jodit_toolbar_popup-open.jodit_right'
+							)
+						).is.not.null;
 					});
 				});
 				describe('Click on edit button', function() {
 					describe('When photo it is not my', function() {
 						it('should open image editor', function(done) {
-							const editor = new Jodit(appendTestArea(), settings);
+							const editor = new Jodit(
+								appendTestArea(),
+								settings
+							);
 
-							editor.value = '<img src="https://xdsoft.net/jodit/build/images/artio.jpg"/>';
-							simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
+							editor.value =
+								'<img src="https://xdsoft.net/jodit/build/images/artio.jpg"/>';
+							simulateEvent(
+								'dblclick',
+								0,
+								editor.editor.querySelector('img')
+							);
 
-							const dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']');
-							expect(dialog).to.be.not.null;
+							const dialog = editor.ownerDocument.querySelector(
+								'.jodit.jodit_dialog_box.active[data-editor_id=' +
+									editor.id +
+									']'
+							);
+							expect(dialog).is.not.null;
 
-							const edi = dialog.querySelector('.jodit_button.jodit_use_image_editor');
-							expect(edi).to.be.not.null;
+							const edi = dialog.querySelector(
+								'.jodit_button.jodit_use_image_editor'
+							);
+							expect(edi).is.not.null;
 
 							simulateEvent('mousedown', 0, edi);
 
-							const dialog2 = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active.jodit_modal');
-							expect(dialog2).to.be.not.equal(null);
-							expect(dialog2).to.be.not.equal(dialog);
+							const dialog2 = editor.ownerDocument.querySelector(
+								'.jodit.jodit_dialog_box.active.jodit_modal'
+							);
+							expect(dialog2).is.not.null;
+							expect(dialog2).does.not.equal(dialog);
 
-							simulateEvent('click', 0, dialog2.querySelector('a.jodit_button'));
+							simulateEvent(
+								'click',
+								0,
+								dialog2.querySelector('a.jodit_button')
+							);
 
-							const dialog3 = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active.jodit_modal');
+							const dialog3 = editor.ownerDocument.querySelector(
+								'.jodit.jodit_dialog_box.active.jodit_modal'
+							);
 
-							expect(dialog3).to.be.not.equal(null);
-							expect(dialog3).to.be.not.equal(dialog2);
+							expect(dialog3).is.not.null;
+							expect(dialog3).does.not.equal(dialog2);
 
-							simulateEvent('click', 0, dialog3.querySelector('a.jodit_button'));
+							simulateEvent(
+								'click',
+								0,
+								dialog3.querySelector('a.jodit_button')
+							);
 
-							const dialog4 = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active.jodit_modal');
+							const dialog4 = editor.ownerDocument.querySelector(
+								'.jodit.jodit_dialog_box.active.jodit_modal'
+							);
 
-							expect(dialog4).to.be.not.equal(null);
-							expect(dialog4).to.be.not.equal(dialog3);
-							simulateEvent('click', 0, dialog4.querySelector('a.jodit_button'));
+							expect(dialog4).is.not.null;
+							expect(dialog4).does.not.equal(dialog3);
 
-							expect(dialog.querySelector('.imageSrc').value).to.be.equal('https://xdsoft.net/jodit/files/artio.jpg');
+							simulateEvent(
+								'click',
+								0,
+								dialog4.querySelector('a.jodit_button')
+							);
+
+							expect(
+								dialog.querySelector('.imageSrc').value
+							).equals(
+								'https://xdsoft.net/jodit/files/artio.jpg'
+							);
 
 							done();
 						});
@@ -674,18 +1211,20 @@ describe('Test image', function() {
 		const editor = new Jodit(appendTestArea(), {
 			image: { openOnDblClick: false }
 		});
-		editor.setEditorValue('<img src="tests/artio.jpg"/>');
+		editor.value = '<img src="tests/artio.jpg"/>';
+
 		simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
-		const dialogs = document.querySelectorAll('.jodit.jodit_dialog_box.active');
+		const dialogs = document.querySelectorAll(
+			'.jodit.jodit_dialog_box.active'
+		);
 
-		expect(dialogs.length).to.equal(0);
+		expect(dialogs.length).equals(0);
 
-		expect(editor.selection.current().tagName).to.equal('IMG');
+		expect(editor.selection.current().tagName).equals('IMG');
 	});
 
 	describe('One click on image', function() {
 		it('should show resizer', function() {
-
 			const editor = new Jodit(appendTestArea());
 			editor.setEditorValue('<img src="tests/artio.jpg"/>');
 
@@ -693,28 +1232,32 @@ describe('Test image', function() {
 
 			simulateEvent('mousedown', 0, img);
 
-			const resizer = document.querySelector('.jodit_resizer[data-editor_id=' + editor.id + ']');
+			const resizer = document.querySelector(
+				'.jodit_resizer[data-editor_id=' + editor.id + ']'
+			);
 
-			expect(resizer.style.display === 'block').to.equal(true);
+			expect(resizer.style.display === 'block').equals(true);
 		});
 
 		describe('in full size mode', function() {
 			it('should show resizer and set mmaximum zIndex', function() {
-
 				const editor = new Jodit(appendTestArea(), {
 					fullsize: true
 				});
 				editor.value = '<img src="tests/artio.jpg"/>';
 
-
 				const img = editor.editor.querySelector('img');
 
 				simulateEvent('mousedown', 0, img);
 
-				const resizer = document.querySelector('.jodit_resizer[data-editor_id=' + editor.id + ']');
+				const resizer = document.querySelector(
+					'.jodit_resizer[data-editor_id=' + editor.id + ']'
+				);
 
-				expect(resizer.style.display).to.be.equal('block');
-				expect(resizer.style.zIndex).to.be.equal(window.getComputedStyle(editor.container).zIndex);
+				expect(resizer.style.display).equals('block');
+				expect(resizer.style.zIndex).equals(
+					window.getComputedStyle(editor.container).zIndex
+				);
 			});
 		});
 	});
@@ -727,16 +1270,19 @@ describe('Test image', function() {
 
 		simulateEvent('mousedown', 0, td);
 
-		const resizer = document.querySelector('.jodit_resizer[data-editor_id=' + editor.id + ']');
+		const resizer = document.querySelector(
+			'.jodit_resizer[data-editor_id=' + editor.id + ']'
+		);
 
-		expect(resizer.style.display === 'block').to.equal(true);
+		expect(resizer.style.display === 'block').equals(true);
 	});
 
 	describe('Popup box', function() {
 		describe('In relative object', function() {
 			it('should be under image', function() {
 				const div = document.createElement('div');
-				div.innerHTML = '<div style="width:800px; margin:auto; border:1px solid red;">\n' +
+				div.innerHTML =
+					'<div style="width:800px; margin:auto; border:1px solid red;">\n' +
 					'        wrong image selection\n' +
 					'        <div style="position:relative;text-align: left">\n' +
 					'            <textarea id="text_area0"> <img src="https://xdsoft.net/jodit/build/images/artio.jpg" style="border:1px solid red;width:100px;height:100px;"/></textarea>\n' +
@@ -750,19 +1296,34 @@ describe('Test image', function() {
 					}
 				});
 				window.scrollTo(0, offset(div).top);
-				simulateEvent('mousedown', 0, editor.editor.querySelector('img'));
+				simulateEvent(
+					'mousedown',
+					0,
+					editor.editor.querySelector('img')
+				);
 
-				const popup = document.querySelector('.jodit_toolbar_popup-inline[data-editor_id=text_area0]');
+				const popup = document.querySelector(
+					'.jodit_toolbar_popup-inline[data-editor_id=text_area0]'
+				);
 
-				expect(popup.parentNode.parentNode !== null).to.equal(true);
+				expect(popup.parentNode.parentNode !== null).equals(true);
 
 				const positionPopup = offset(popup.parentNode);
 				const positionImg = offset(editor.editor.querySelector('img'));
 
+				expect(
+					Math.abs(
+						positionPopup.left -
+							(positionImg.left + positionImg.width / 2)
+					) < 20
+				).is.true;
 
-				expect(Math.abs(positionPopup.left - (positionImg.left + positionImg.width / 2)) < 20).to.be.true;
-				expect(Math.abs(positionPopup.top - (positionImg.top + positionImg.height)) < 20).to.be.true;
-
+				expect(
+					Math.abs(
+						positionPopup.top -
+							(positionImg.top + positionImg.height)
+					) < 20
+				).is.true;
 
 				editor.destruct();
 				document.body.removeChild(div);
@@ -774,7 +1335,8 @@ describe('Test image', function() {
 		describe('In relative object', function() {
 			it('should be in front of image', function() {
 				const div = document.createElement('div');
-				div.innerHTML = '<div style="width:800px; margin:auto; border:1px solid red;">\n' +
+				div.innerHTML =
+					'<div style="width:800px; margin:auto; border:1px solid red;">\n' +
 					'        wrong image selection\n' +
 					'        <div style="position:relative;text-align: left">\n' +
 					'            <textarea id="text_area0"> <img src="https://xdsoft.net/jodit/build/images/artio.jpg" style="border:1px solid red;width:100px;height:100px;"/></textarea>\n' +
@@ -783,16 +1345,24 @@ describe('Test image', function() {
 
 				document.body.appendChild(div);
 				const editor = new Jodit('#text_area0');
-				simulateEvent('mousedown', 0, editor.editor.querySelector('img'));
+				simulateEvent(
+					'mousedown',
+					0,
+					editor.editor.querySelector('img')
+				);
 
-				const resizer = document.querySelector('.jodit_resizer[data-editor_id=text_area0]');
-				expect(resizer.style.display === 'block').to.equal(true);
+				const resizer = document.querySelector(
+					'.jodit_resizer[data-editor_id=text_area0]'
+				);
+				expect(resizer.style.display === 'block').equals(true);
 
 				const positionResizer = offset(resizer);
 				const positionImg = offset(editor.editor.querySelector('img'));
 
-				expect(Math.abs(positionResizer.left - positionImg.left) < 2).to.be.true;
-				expect(Math.abs(positionResizer.top - positionImg.top) < 2).to.be.true;
+				expect(Math.abs(positionResizer.left - positionImg.left) < 2).is
+					.true;
+				expect(Math.abs(positionResizer.top - positionImg.top) < 2).is
+					.true;
 
 				editor.destruct();
 				document.body.removeChild(div);
@@ -801,7 +1371,8 @@ describe('Test image', function() {
 		describe('After resize - popup', function() {
 			it('should be hidden and after this should be shown', function() {
 				const div = document.createElement('div');
-				div.innerHTML = '<div style="width:800px; margin:auto; border:1px solid red;">\n' +
+				div.innerHTML =
+					'<div style="width:800px; margin:auto; border:1px solid red;">\n' +
 					'        wrong image selection\n' +
 					'        <div style="position:relative;text-align: left">\n' +
 					'            <textarea id="text_area1"> &lt;img src="https://xdsoft.net/jodit/build/images/artio.jpg" style="border:1px solid red;width:100px;height:100px;"/&gt;</textarea>\n' +
@@ -811,31 +1382,45 @@ describe('Test image', function() {
 				document.body.appendChild(div);
 
 				const editor = new Jodit(document.getElementById('text_area1'));
-				simulateEvent('mousedown', 0, editor.editor.querySelector('img'));
+				simulateEvent(
+					'mousedown',
+					0,
+					editor.editor.querySelector('img')
+				);
 				//
-				const popup = editor.ownerDocument.querySelector('.jodit_toolbar_popup-inline[data-editor_id=text_area1]');
+				const popup = editor.ownerDocument.querySelector(
+					'.jodit_toolbar_popup-inline[data-editor_id=text_area1]'
+				);
 				//
-				expect(popup.parentNode.parentNode !== null).to.equal(true);
+				expect(popup.parentNode.parentNode !== null).equals(true);
 				//
-				const resizer = editor.ownerDocument.querySelector('.jodit_resizer[data-editor_id=text_area1]');
-				expect(resizer.style.display === 'block').to.equal(true);
+				const resizer = editor.ownerDocument.querySelector(
+					'.jodit_resizer[data-editor_id=text_area1]'
+				);
+				expect(resizer.style.display === 'block').equals(true);
 				//
 				const positionResizer = offset(resizer);
 				//
-				simulateEvent('mousedown', 0, resizer.getElementsByTagName('i')[0]);
-				simulateEvent('mousemove', 0, editor.ownerWindow, function(data) {
+				simulateEvent(
+					'mousedown',
+					0,
+					resizer.getElementsByTagName('i')[0]
+				);
+				simulateEvent('mousemove', 0, editor.ownerWindow, function(
+					data
+				) {
 					data.clientX = positionResizer.left - 10;
 					data.clientY = positionResizer.top - 10;
 				});
 				//
-				expect(popup.parentNode).to.be.equal(null);
+				expect(popup.parentNode).equals(null);
 
 				simulateEvent('mouseup', 0, editor.ownerWindow, function(data) {
 					data.clientX = positionResizer.left - 10;
 					data.clientY = positionResizer.top - 10;
 				});
 
-				expect(popup.parentNode).to.be.equal(null);
+				expect(popup.parentNode).equals(null);
 				//
 				editor.destruct();
 				div.parentNode && div.parentNode.removeChild(div);
@@ -852,33 +1437,55 @@ describe('Test image', function() {
 							hideSizeTimeout: 400
 						}
 					});
-					editor.value = '<img src="tests/artio.jpg" style="width:500px;height: 281px;"/>';
-					simulateEvent('mousedown', 0, editor.editor.querySelector('img'));
-					const resizer = document.querySelector('.jodit_resizer[data-editor_id=' + editor.id + ']');
-					expect(resizer).to.be.not.null;
+					editor.value =
+						'<img src="tests/artio.jpg" style="width:500px;height: 281px;"/>';
+					simulateEvent(
+						'mousedown',
+						0,
+						editor.editor.querySelector('img')
+					);
+
+					const resizer = document.querySelector(
+						'.jodit_resizer[data-editor_id=' + editor.id + ']'
+					);
+					expect(resizer).is.not.null;
+
 					const sizer = resizer.querySelector('span');
-					expect(sizer).to.be.not.null;
-					expect(editor.ownerWindow.getComputedStyle(sizer).opacity).to.be.equal('0');
+					expect(sizer).is.not.null;
+					expect(
+						editor.ownerWindow.getComputedStyle(sizer).opacity
+					).equals('0');
 
 					const positionResizer = offset(resizer);
 
-					simulateEvent('mousedown', 0, resizer.getElementsByTagName('i')[1]);
-					simulateEvent('mousemove', 0, editor.ownerWindow, function(data) {
-						data.clientX = positionResizer.left + 10;
-						data.clientY = positionResizer.top + 10;
-					});
-					simulateEvent('mouseup', 0, editor.ownerWindow, function(data) {
+					simulateEvent(
+						'mousedown',
+						0,
+						resizer.getElementsByTagName('i')[1]
+					);
+
+					simulateEvent('mousemove', 0, editor.ownerWindow, function(
+						data
+					) {
 						data.clientX = positionResizer.left + 10;
 						data.clientY = positionResizer.top + 10;
 					});
 
-					expect(sizer.style.opacity).to.be.equal('1');
+					simulateEvent('mouseup', 0, editor.ownerWindow, function(
+						data
+					) {
+						data.clientX = positionResizer.left + 10;
+						data.clientY = positionResizer.top + 10;
+					});
+
+					expect(sizer.style.opacity).equals('1');
 
 					setTimeout(function() {
-						expect(sizer.style.opacity).to.be.equal('0');
+						expect(sizer.style.opacity).equals('0');
 						done();
 					}, 500);
 				});
+
 				describe('For small state', function() {
 					it('Should hide size', function() {
 						const editor = new Jodit(appendTestArea(), {
@@ -890,77 +1497,109 @@ describe('Test image', function() {
 							}
 						});
 
-						editor.value = '<img src="tests/artio.jpg" style="width:500px;height: 281px;"/>';
-						simulateEvent('mousedown', 0, editor.editor.querySelector('img'));
-						const resizer = document.querySelector('.jodit_resizer[data-editor_id=' + editor.id + ']');
-						expect(resizer).to.be.not.null;
+						editor.value =
+							'<img src="tests/artio.jpg" style="width:500px;height: 281px;"/>';
+						simulateEvent(
+							'mousedown',
+							0,
+							editor.editor.querySelector('img')
+						);
+
+						const resizer = document.querySelector(
+							'.jodit_resizer[data-editor_id=' + editor.id + ']'
+						);
+						expect(resizer).is.not.null;
+
 						const sizer = resizer.querySelector('span');
-						expect(sizer).to.be.not.null;
-						expect(editor.ownerWindow.getComputedStyle(sizer).opacity).to.be.equal('0');
+						expect(sizer).is.not.null;
+						expect(
+							editor.ownerWindow.getComputedStyle(sizer).opacity
+						).equals('0');
 
 						const positionResizer = offset(resizer);
 
-						simulateEvent('mousedown', 0, resizer.getElementsByTagName('i')[1]);
-						simulateEvent('mousemove', 0, editor.ownerWindow, function(data) {
-							data.clientX = positionResizer.left - 480;
-							data.clientY = positionResizer.top - 200;
-						});
-						simulateEvent('mouseup', 0, editor.ownerWindow, function(data) {
-							data.clientX = positionResizer.left - 480;
-							data.clientY = positionResizer.top - 200;
-						});
+						simulateEvent(
+							'mousedown',
+							0,
+							resizer.getElementsByTagName('i')[1]
+						);
+						simulateEvent(
+							'mousemove',
+							0,
+							editor.ownerWindow,
+							function(data) {
+								data.clientX = positionResizer.left - 480;
+								data.clientY = positionResizer.top - 200;
+							}
+						);
+						simulateEvent(
+							'mouseup',
+							0,
+							editor.ownerWindow,
+							function(data) {
+								data.clientX = positionResizer.left - 480;
+								data.clientY = positionResizer.top - 200;
+							}
+						);
 
-						expect(sizer.style.opacity).to.be.equal('0');
+						expect(sizer.style.opacity).equals('0');
 					});
 				});
 			});
+
 			it('Should not allow to resize image more then width of editor', function(done) {
 				box.style.width = '600px';
 				const editor = new Jodit(appendTestArea());
 				const image = new Image();
 				image.src = 'tests/artio.jpg';
 
-				const doit = function() {
+				const callback = function() {
 					const ratio = image.naturalWidth / image.naturalHeight;
 
-					editor.value = '<img src="tests/artio.jpg" style="width:500px;height: 281px;"/>';
+					editor.value =
+						'<img src="tests/artio.jpg" style="width:500px;height: 281px;"/>';
 					const img = editor.editor.querySelector('img');
-					simulateEvent('mousedown', 0, editor.editor.querySelector('img'));
-					const resizer = document.querySelector('.jodit_resizer[data-editor_id=' + editor.id + ']');
-					expect(resizer).to.be.not.null;
+					simulateEvent('mousedown', 0, img);
+					const resizer = document.querySelector(
+						'.jodit_resizer[data-editor_id=' + editor.id + ']'
+					);
+					expect(resizer).is.not.null;
 
 					const positionResizer = offset(resizer);
 					//
 
-					simulateEvent('mousedown', 0, resizer.getElementsByTagName('i')[1]);
-					simulateEvent('mousemove', 0, editor.ownerWindow, function(data) {
+					simulateEvent(
+						'mousedown',
+						0,
+						resizer.getElementsByTagName('i')[1]
+					);
+					simulateEvent('mousemove', 0, editor.ownerWindow, function(
+						data
+					) {
 						data.clientX = positionResizer.left + 1000;
 						data.clientY = positionResizer.top + 1000;
 					});
 
-
-					simulateEvent('mouseup', 0, editor.ownerWindow, function(data) {
+					simulateEvent('mouseup', 0, editor.ownerWindow, function(
+						data
+					) {
 						data.clientX = positionResizer.left + 1000;
 						data.clientY = positionResizer.top + 1000;
 					});
 					const newratio = img.offsetWidth / img.offsetHeight;
 
-					expect(img.offsetWidth).to.be.equal(editor.editor.offsetWidth - 20);
+					expect(img.offsetWidth).equals(
+						editor.editor.offsetWidth - 20
+					);
 
-					expect(Math.abs(newratio - ratio) < 0.003).to.be.true;
+					expect(Math.abs(newratio - ratio) < 0.003).is.true;
 					done();
 				};
 
-				if (image.complete) {
-					doit();
-				} else {
-					image.onload = doit;
-				}
-				// expect(popup.parentNode).to.be.equal(null);
+				onLoadImage(image, callback);
 			});
 		});
 	});
-
 
 	afterEach(removeStuff);
 });

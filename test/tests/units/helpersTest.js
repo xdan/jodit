@@ -15,7 +15,7 @@ describe('Test helpers', function() {
 				};
 
 				Object.keys(hotkeys).forEach(function(key) {
-					expect(hotkeys[key]).to.be.equal(Jodit.modules.Helpers.normalizeKeyAliases(key));
+					expect(hotkeys[key]).equals(Jodit.modules.Helpers.normalizeKeyAliases(key));
 				});
 			});
 		});
@@ -32,7 +32,7 @@ describe('Test helpers', function() {
 				};
 
 				Object.keys(variants).forEach(function(key) {
-					expect(key).to.be.equal(Jodit.modules.Helpers.normalizePath.apply(null, variants[key]));
+					expect(key).equals(Jodit.modules.Helpers.normalizePath.apply(null, variants[key]));
 				});
 			});
 		});
@@ -55,7 +55,7 @@ describe('Test helpers', function() {
 				];
 
 				for (let i = 0; i < values.length; i += 2) {
-					expect(values[i + 1]).to.be.equal(Jodit.modules.Helpers.isInt(values[i]));
+					expect(values[i + 1]).equals(Jodit.modules.Helpers.isInt(values[i]));
 				}
 			});
 		});
@@ -80,7 +80,7 @@ describe('Test helpers', function() {
 				];
 
 				for (let i = 0; i < values.length; i += 2) {
-					expect(values[i + 1]).to.be.equal(Jodit.modules.Helpers.isNumeric(values[i]));
+					expect(values[i + 1]).equals(Jodit.modules.Helpers.isNumeric(values[i]));
 				}
 			});
 		});
@@ -102,7 +102,7 @@ describe('Test helpers', function() {
 					];
 
 					for (let i = 0; i < values.length; i += 3) {
-						expect(values[i + 1]).to.equal(i18n(values[i], [], {
+						expect(values[i + 1]).equals(i18n(values[i], [], {
 							language: values[i + 2],
 						}, true));
 					}
@@ -119,7 +119,7 @@ describe('Test helpers', function() {
 						];
 
 						for (let i = 0; i < values.length; i += 4) {
-							expect(values[i + 1]).to.equal(i18n(values[i], values[i + 3], {
+							expect(values[i + 1]).equals(i18n(values[i], values[i + 3], {
 								language: values[i + 2],
 							}, true));
 						}
@@ -137,7 +137,7 @@ describe('Test helpers', function() {
 					];
 
 					for (let i = 0; i < values.length; i += 3) {
-						expect(values[i + 1]).to.equal(i18n(values[i], [], {
+						expect(values[i + 1]).equals(i18n(values[i], [], {
 							language: values[i + 2],
 							debugLanguage: true
 						}, true));
@@ -164,7 +164,7 @@ describe('Test helpers', function() {
 					};
 
 					for (let i = 0; i < values.length; i += 3) {
-						expect(values[i + 1]).to.equal(i18n(values[i], [], {
+						expect(values[i + 1]).equals(i18n(values[i], [], {
 							language: values[i + 2],
 							i18n: opt,
 							debugLanguage: true

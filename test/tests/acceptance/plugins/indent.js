@@ -31,9 +31,9 @@ describe('Test editor indent plugin', function () {
 
     editor.execCommand('indent');
 
-    expect(el1.style.marginLeft).to.be.equal('10px');
-    expect(el2.style.marginLeft).to.be.equal('10px');
-    expect(el3.style.marginLeft).to.be.equal('');
+    expect(el1.style.marginLeft).equals('10px');
+    expect(el2.style.marginLeft).equals('10px');
+    expect(el3.style.marginLeft).equals('');
   });
 
   it(`should indent multi-line selection of "dd" and "dt" child elements only on 1st 2 dt/dd groups`, function () {
@@ -72,12 +72,12 @@ describe('Test editor indent plugin', function () {
 
     editor.execCommand('indent');
 
-    expect(el1.style.marginLeft).to.be.equal('10px');
-    expect(el2.style.marginLeft).to.be.equal('10px');
-    expect(el3.style.marginLeft).to.be.equal('10px');
-    expect(el4.style.marginLeft).to.be.equal('10px');
-    expect(el5.style.marginLeft).to.be.equal('');
-    expect(el6.style.marginLeft).to.be.equal('');
+    expect(el1.style.marginLeft).equals('10px');
+    expect(el2.style.marginLeft).equals('10px');
+    expect(el3.style.marginLeft).equals('10px');
+    expect(el4.style.marginLeft).equals('10px');
+    expect(el5.style.marginLeft).equals('');
+    expect(el6.style.marginLeft).equals('');
 
   });
 

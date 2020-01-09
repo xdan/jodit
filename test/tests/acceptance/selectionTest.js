@@ -30,7 +30,7 @@ describe('Selection Module Tests', function() {
 
 				editor.selection.selectRange(range);
 
-				expect(editor.selection.current()).to.be.equal(
+				expect(editor.selection.current()).equals(
 					editor.editor.firstChild.firstChild
 				); //one
 			});
@@ -44,7 +44,7 @@ describe('Selection Module Tests', function() {
 				range.collapse(true);
 				editor.selection.selectRange(range);
 
-				expect(editor.selection.current()).to.be.equal(
+				expect(editor.selection.current()).equals(
 					editor.editor.firstChild.firstChild
 				); // test
 			});
@@ -58,7 +58,7 @@ describe('Selection Module Tests', function() {
 				range.collapse(true);
 				editor.selection.selectRange(range);
 
-				expect(editor.selection.current()).to.be.equal(
+				expect(editor.selection.current()).equals(
 					editor.editor.firstChild.firstChild
 				); // test
 			});
@@ -86,7 +86,7 @@ describe('Selection Module Tests', function() {
 				range.selectNode(editor.editor.querySelector('img'));
 				editor.selection.selectRange(range);
 
-				expect(editor.selection.current()).to.be.equal(
+				expect(editor.selection.current()).equals(
 					editor.editor.querySelector('img')
 				);
 			});
@@ -111,7 +111,7 @@ describe('Selection Module Tests', function() {
 							false,
 							editor.editor.firstChild
 						)
-					).to.be.true;
+					).is.true;
 				});
 			});
 
@@ -131,7 +131,7 @@ describe('Selection Module Tests', function() {
 							false,
 							editor.editor.firstChild
 						)
-					).to.equal(false);
+					).equals(false);
 				});
 			});
 
@@ -151,7 +151,7 @@ describe('Selection Module Tests', function() {
 							false,
 							editor.editor.firstChild
 						)
-					).to.equal(false);
+					).equals(false);
 				});
 				describe('Cursor in the middle of text node but after cursor only invisible spaces', function() {
 					it('Should return true', function() {
@@ -175,7 +175,7 @@ describe('Selection Module Tests', function() {
 								false,
 								editor.editor.firstChild
 							)
-						).to.equal(true);
+						).equals(true);
 					});
 				});
 				describe('Cursor in the middle of text node but before cursor only invisible spaces', function() {
@@ -200,7 +200,7 @@ describe('Selection Module Tests', function() {
 								true,
 								editor.editor.firstChild
 							)
-						).to.equal(true);
+						).equals(true);
 					});
 				});
 				describe('Cursor in the end of text node but after this has several not empty text nodes', function() {
@@ -270,7 +270,7 @@ describe('Selection Module Tests', function() {
 									false,
 									editor.editor.firstChild
 								)
-							).to.equal(true);
+							).equals(true);
 						});
 					});
 					describe('Inverse', function() {
@@ -347,7 +347,7 @@ describe('Selection Module Tests', function() {
 											true,
 											editor.editor.firstChild
 										)
-									).to.equal(true);
+									).equals(true);
 								});
 							});
 						});
@@ -372,7 +372,7 @@ describe('Selection Module Tests', function() {
 						false,
 						editor.editor.firstChild
 					)
-				).to.be.equal(null);
+				).equals(null);
 			});
 		});
 
@@ -392,7 +392,7 @@ describe('Selection Module Tests', function() {
 						true,
 						editor.editor.firstChild
 					)
-				).to.be.equal(null);
+				).equals(null);
 			});
 		});
 
@@ -412,7 +412,7 @@ describe('Selection Module Tests', function() {
 						true,
 						editor.editor.firstChild
 					)
-				).to.be.true;
+				).is.true;
 			});
 		});
 
@@ -432,7 +432,7 @@ describe('Selection Module Tests', function() {
 						false,
 						editor.editor.firstChild
 					)
-				).to.be.true;
+				).is.true;
 			});
 		});
 
@@ -498,14 +498,14 @@ describe('Selection Module Tests', function() {
 						false,
 						editor.editor.firstChild
 					)
-				).to.equal(true);
+				).equals(true);
 
 				range.setStart(editor.editor.firstChild.firstChild, 2);
 				range.collapse(true);
 				sel.removeAllRanges();
 				sel.addRange(range);
 
-				expect(editor.selection.cursorInTheEdge(false)).to.equal(false);
+				expect(editor.selection.cursorInTheEdge(false)).equals(false);
 			});
 		});
 
@@ -527,7 +527,7 @@ describe('Selection Module Tests', function() {
 						false,
 						editor.editor.firstChild
 					)
-				).to.equal(true);
+				).equals(true);
 			});
 		});
 
@@ -574,9 +574,9 @@ describe('Selection Module Tests', function() {
 				'textarea.jodit_source_mirror'
 			);
 
-			expect(mirror.value).to.equal('<p>test</p>');
-			expect(mirror.selectionStart).to.equal(5);
-			expect(mirror.selectionEnd).to.equal(5);
+			expect(mirror.value).equals('<p>test</p>');
+			expect(mirror.selectionStart).equals(5);
+			expect(mirror.selectionEnd).equals(5);
 		}).timeout(6000);
 
 		it('Should restore collapsed selection when user change mode - from WYSIWYG to TEXTAREA for long string', function(done) {
@@ -589,7 +589,7 @@ describe('Selection Module Tests', function() {
 			};
 
 			timeout = setTimeout(function() {
-				expect(false).to.equal(true);
+				expect(false).equals(true);
 				__done();
 			}, 140100);
 
@@ -628,12 +628,12 @@ describe('Selection Module Tests', function() {
 
 						expect(
 							ace.getSelectionRange().start.column
-						).to.equal(258);
+						).equals(258);
 
 						expect(
 							ace.getSelectionRange()
 								.start.row
-						).to.equal(0);
+						).equals(0);
 
 						ace.session.insert(
 							ace.getCursorPosition(),
@@ -642,7 +642,7 @@ describe('Selection Module Tests', function() {
 
 						expect(
 							jodit.__plugins.source.sourceEditor.getValue()
-						).to.equal(
+						).equals(
 							'<p>' + 'test '.repeat(49) + 'test hello world</p>'
 						);
 
@@ -670,7 +670,7 @@ describe('Selection Module Tests', function() {
 				editor.editorDocument.createTextNode(' a ')
 			);
 
-			expect(editor.getEditorValue()).to.equal('<p>te a st</p>');
+			expect(editor.getEditorValue()).equals('<p>te a st</p>');
 		});
 
 		it('Should restore non collapsed selection when user change mode - from WYSIWYG to TEXTAREA', function() {
@@ -693,9 +693,9 @@ describe('Selection Module Tests', function() {
 				'textarea.jodit_source_mirror'
 			);
 
-			expect(mirror.value).to.equal('<p>test</p>');
-			expect(mirror.selectionStart).to.equal(4);
-			expect(mirror.selectionEnd).to.equal(6);
+			expect(mirror.value).equals('<p>test</p>');
+			expect(mirror.selectionStart).equals(4);
+			expect(mirror.selectionEnd).equals(6);
 		});
 
 		describe('Problem', function() {
@@ -714,10 +714,10 @@ describe('Selection Module Tests', function() {
 
 				editor.setMode(Jodit.MODE_WYSIWYG);
 
-				expect(editor.selection.isCollapsed()).to.equal(false);
+				expect(editor.selection.isCollapsed()).equals(false);
 
 				editor.selection.insertNode(editor.create.inside.text(' a '));
-				expect(editor.getEditorValue()).to.equal(' a ');
+				expect(editor.getEditorValue()).equals(' a ');
 			});
 		});
 
@@ -734,11 +734,11 @@ describe('Selection Module Tests', function() {
 			mirror.setSelectionRange(4, 4);
 
 			editor.setMode(Jodit.MODE_WYSIWYG);
-			expect(editor.selection.isCollapsed()).to.equal(true);
+			expect(editor.selection.isCollapsed()).equals(true);
 			editor.selection.insertNode(
 				editor.editorDocument.createTextNode(' a ')
 			);
-			expect(editor.getEditorValue()).to.equal('<a>1 a 1</a>');
+			expect(editor.getEditorValue()).equals('<a>1 a 1</a>');
 		});
 	});
 	describe('Click on empty tag', function() {
@@ -751,7 +751,7 @@ describe('Selection Module Tests', function() {
 				editor.editor.getElementsByTagName('p')[1]
 			);
 			editor.selection.insertHTML('test');
-			expect('<p></p><p>test</p><p></p>').to.be.equal(editor.value);
+			expect('<p></p><p>test</p><p></p>').equals(editor.value);
 		});
 	});
 	describe('Method setCursorIn', function() {
@@ -781,7 +781,7 @@ describe('Selection Module Tests', function() {
 			editor.selection.setCursorIn(editor.editor.lastChild);
 			editor.selection.insertHTML('test');
 
-			expect(editor.value).to.be.equal('<p>1</p><p>2test</p>');
+			expect(editor.value).equals('<p>1</p><p>2test</p>');
 		});
 		describe('With inStart = true', function() {
 			it('Should move cursor inside node in the start', function() {
@@ -791,7 +791,7 @@ describe('Selection Module Tests', function() {
 				editor.selection.setCursorIn(editor.editor.lastChild, true);
 				editor.selection.insertHTML('test');
 
-				expect(editor.value).to.be.equal('<p>1</p><p>test2</p>');
+				expect(editor.value).equals('<p>1</p><p>test2</p>');
 			});
 		});
 	});
@@ -812,7 +812,7 @@ describe('Selection Module Tests', function() {
 
 			expect(
 				['P', 'P', 'STRONG', 'P', '#text'].toString().toLowerCase()
-			).to.be.equal(nodesNames.toString().toLowerCase());
+			).equals(nodesNames.toString().toLowerCase());
 		});
 		it('Should call callback for each node in selection range', function() {
 			const editor = new Jodit(appendTestArea());
@@ -828,7 +828,7 @@ describe('Selection Module Tests', function() {
 				nodesNames.push(node.nodeName);
 			});
 
-			expect(['p', 'strong', 'p'].toString().toLowerCase()).to.be.equal(
+			expect(['p', 'strong', 'p'].toString().toLowerCase()).equals(
 				nodesNames.toString().toLowerCase()
 			);
 		});
@@ -843,7 +843,7 @@ describe('Selection Module Tests', function() {
 				nodesNames.push(node.nodeName);
 			});
 
-			expect(['#text'].toString().toLowerCase()).to.be.equal(
+			expect(['#text'].toString().toLowerCase()).equals(
 				nodesNames.toString().toLowerCase()
 			);
 		});
@@ -858,7 +858,7 @@ describe('Selection Module Tests', function() {
 				nodesNames.push(node.nodeName);
 			});
 
-			expect(['#text'].toString().toLowerCase()).to.be.equal(
+			expect(['#text'].toString().toLowerCase()).equals(
 				nodesNames.toString().toLowerCase()
 			);
 		});

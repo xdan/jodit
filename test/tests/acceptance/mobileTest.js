@@ -79,7 +79,7 @@ describe('Test mobile mode', function() {
 					buttonsXS: 'source'
 				});
 
-				expect(4).to.be.equal(
+				expect(4).equals(
 					editor.container.querySelectorAll('.jodit_toolbar > li')
 						.length
 				);
@@ -87,7 +87,7 @@ describe('Test mobile mode', function() {
 				getBox().style.width = '790px';
 				simulateEvent('resize', 0, window);
 
-				expect(3).to.be.equal(
+				expect(3).equals(
 					editor.container.querySelectorAll('.jodit_toolbar > li')
 						.length
 				);
@@ -95,7 +95,7 @@ describe('Test mobile mode', function() {
 				getBox().style.width = '690px';
 				simulateEvent('resize', 0, window);
 
-				expect(2).to.be.equal(
+				expect(2).equals(
 					editor.container.querySelectorAll('.jodit_toolbar > li')
 						.length
 				);
@@ -103,7 +103,7 @@ describe('Test mobile mode', function() {
 				getBox().style.width = '390px';
 				simulateEvent('resize', 0, window);
 
-				expect(1).to.be.equal(
+				expect(1).equals(
 					editor.container.querySelectorAll('.jodit_toolbar > li')
 						.length
 				);
@@ -124,7 +124,7 @@ describe('Test mobile mode', function() {
 					sizeSM: 200
 				});
 
-				expect(4).to.be.equal(
+				expect(4).equals(
 					editor.container.querySelectorAll('.jodit_toolbar > li')
 						.length
 				);
@@ -132,7 +132,7 @@ describe('Test mobile mode', function() {
 				getBox().style.width = '390px';
 				simulateEvent('resize', 0, window);
 
-				expect(3).to.be.equal(
+				expect(3).equals(
 					editor.container.querySelectorAll('.jodit_toolbar > li')
 						.length
 				);
@@ -140,7 +140,7 @@ describe('Test mobile mode', function() {
 				getBox().style.width = '290px';
 				simulateEvent('resize', 0, window);
 
-				expect(2).to.be.equal(
+				expect(2).equals(
 					editor.container.querySelectorAll('.jodit_toolbar > li')
 						.length
 				);
@@ -148,7 +148,7 @@ describe('Test mobile mode', function() {
 				getBox().style.width = '190px';
 				simulateEvent('resize', 0, window);
 
-				expect(1).to.be.equal(
+				expect(1).equals(
 					editor.container.querySelectorAll('.jodit_toolbar > li')
 						.length
 				);
@@ -169,7 +169,7 @@ describe('Test mobile mode', function() {
 					toolbarAdaptive: false
 				});
 
-				expect(4).to.be.equal(
+				expect(4).equals(
 					editor.container.querySelectorAll('.jodit_toolbar > li')
 						.length
 				);
@@ -177,7 +177,7 @@ describe('Test mobile mode', function() {
 				getBox().style.width = '390px';
 				simulateEvent('resize', 0, window);
 
-				expect(4).to.be.equal(
+				expect(4).equals(
 					editor.container.querySelectorAll('.jodit_toolbar > li')
 						.length
 				);
@@ -185,7 +185,7 @@ describe('Test mobile mode', function() {
 				getBox().style.width = '290px';
 				simulateEvent('resize', 0, window);
 
-				expect(4).to.be.equal(
+				expect(4).equals(
 					editor.container.querySelectorAll('.jodit_toolbar > li')
 						.length
 				);
@@ -193,7 +193,7 @@ describe('Test mobile mode', function() {
 				getBox().style.width = '190px';
 				simulateEvent('resize', 0, window);
 
-				expect(4).to.be.equal(
+				expect(4).equals(
 					editor.container.querySelectorAll('.jodit_toolbar > li')
 						.length
 				);

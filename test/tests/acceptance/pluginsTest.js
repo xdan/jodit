@@ -14,13 +14,13 @@ describe('Test plugins', function() {
 				editor.container.querySelectorAll(
 					'.jodit_toolbar_btn-copyformat'
 				).length
-			).to.equal(1);
+			).equals(1);
 
 			expect(
 				editor.container.querySelectorAll(
 					'.jodit_toolbar_btn-copyformat.jodit_active'
 				).length
-			).to.equal(0);
+			).equals(0);
 
 			simulateEvent(
 				'mousedown',
@@ -32,7 +32,7 @@ describe('Test plugins', function() {
 				editor.container.querySelectorAll(
 					'.jodit_toolbar_btn-copyformat.jodit_active'
 				).length
-			).to.equal(1);
+			).equals(1);
 
 			const sel = editor.editorWindow.getSelection(),
 				range = editor.editorDocument.createRange();
@@ -43,7 +43,7 @@ describe('Test plugins', function() {
 
 			simulateEvent('mouseup', 0, editor.editor);
 
-			expect(editor.getEditorValue().replace('700', 'bold')).to.equal(
+			expect(editor.getEditorValue().replace('700', 'bold')).equals(
 				'text <strong>test</strong><span style="font-weight: bold;"> post</span>'
 			);
 		});
@@ -52,7 +52,8 @@ describe('Test plugins', function() {
 			getBox().style.width = 'auto';
 			const editor = new Jodit(appendTestArea());
 
-			editor.value = 'text <span style="font-size: 11px;">test</span> post';
+			editor.value =
+				'text <span style="font-size: 11px;">test</span> post';
 			editor.selection.focus();
 			editor.selection.setCursorIn(editor.editor.querySelector('span'));
 
@@ -60,12 +61,12 @@ describe('Test plugins', function() {
 				editor.container.querySelectorAll(
 					'.jodit_toolbar_btn-copyformat'
 				).length
-			).to.equal(1);
+			).equals(1);
 			expect(
 				editor.container.querySelectorAll(
 					'.jodit_toolbar_btn-copyformat.jodit_active'
 				).length
-			).to.equal(0);
+			).equals(0);
 
 			simulateEvent(
 				'mousedown',
@@ -77,7 +78,7 @@ describe('Test plugins', function() {
 				editor.container.querySelectorAll(
 					'.jodit_toolbar_btn-copyformat.jodit_active'
 				).length
-			).to.equal(1);
+			).equals(1);
 
 			const sel = editor.editorWindow.getSelection(),
 				range = editor.editorDocument.createRange();
@@ -88,7 +89,7 @@ describe('Test plugins', function() {
 
 			simulateEvent('mouseup', 0, editor.editor);
 
-			expect(editor.getEditorValue()).to.equal(
+			expect(editor.getEditorValue()).equals(
 				'text <span style="font-size: 11px;">test</span><span style="font-size: 11px;"> post</span>'
 			);
 		});
@@ -98,9 +99,8 @@ describe('Test plugins', function() {
 				getBox().style.width = 'auto';
 				const editor = new Jodit(appendTestArea());
 
-				editor.value = (
-					'text <span style="font-size: 11px;color: rgb(255, 0, 0);">test</span> post'
-				);
+				editor.value =
+					'text <span style="font-size: 11px;color: rgb(255, 0, 0);">test</span> post';
 				editor.selection.focus();
 
 				editor.selection.setCursorIn(
@@ -111,12 +111,12 @@ describe('Test plugins', function() {
 					editor.container.querySelectorAll(
 						'.jodit_toolbar_btn-copyformat'
 					).length
-				).to.equal(1);
+				).equals(1);
 				expect(
 					editor.container.querySelectorAll(
 						'.jodit_toolbar_btn-copyformat.jodit_active'
 					).length
-				).to.equal(0);
+				).equals(0);
 
 				simulateEvent(
 					'mousedown',
@@ -130,7 +130,7 @@ describe('Test plugins', function() {
 					editor.container.querySelectorAll(
 						'.jodit_toolbar_btn-copyformat.jodit_active'
 					).length
-				).to.equal(1);
+				).equals(1);
 
 				const sel = editor.editorWindow.getSelection(),
 					range = editor.editorDocument.createRange();
@@ -141,7 +141,7 @@ describe('Test plugins', function() {
 
 				simulateEvent('mouseup', 0, editor.editor);
 
-				expect(sortAttributes(editor.getEditorValue())).to.equal(
+				expect(sortAttributes(editor.getEditorValue())).equals(
 					'text <span style="color:#FF0000;font-size:11px">test</span><span style="color:#FF0000;font-size:11px"> post</span>'
 				);
 			});
@@ -152,9 +152,8 @@ describe('Test plugins', function() {
 
 			const editor = new Jodit(appendTestArea());
 
-			editor.value = (
-				'text <span style="font-size: 11px;color: rgb(255, 0, 0);">test</span> post'
-			);
+			editor.value =
+				'text <span style="font-size: 11px;color: rgb(255, 0, 0);">test</span> post';
 			editor.selection.focus();
 
 			editor.selection.setCursorIn(editor.editor.querySelector('span'));
@@ -162,12 +161,12 @@ describe('Test plugins', function() {
 				editor.container.querySelectorAll(
 					'.jodit_toolbar_btn-copyformat'
 				).length
-			).to.equal(1);
+			).equals(1);
 			expect(
 				editor.container.querySelectorAll(
 					'.jodit_toolbar_btn-copyformat.jodit_active'
 				).length
-			).to.equal(0);
+			).equals(0);
 
 			simulateEvent(
 				'mousedown',
@@ -179,7 +178,7 @@ describe('Test plugins', function() {
 				editor.container.querySelectorAll(
 					'.jodit_toolbar_btn-copyformat.jodit_active'
 				).length
-			).to.equal(1);
+			).equals(1);
 
 			simulateEvent(
 				'mousedown',
@@ -191,7 +190,7 @@ describe('Test plugins', function() {
 				editor.container.querySelectorAll(
 					'.jodit_toolbar_btn-copyformat.jodit_active'
 				).length
-			).to.equal(0);
+			).equals(0);
 
 			const sel = editor.editorWindow.getSelection(),
 				range = editor.editorDocument.createRange();
@@ -202,7 +201,7 @@ describe('Test plugins', function() {
 
 			simulateEvent('mouseup', 0, editor.editor);
 
-			expect(sortAttributes(editor.getEditorValue())).to.equal(
+			expect(sortAttributes(editor.getEditorValue())).equals(
 				'text <span style="color:#FF0000;font-size:11px">test</span> post'
 			);
 		});
@@ -220,7 +219,7 @@ describe('Test plugins', function() {
 				editor.value = html;
 				editor.selection.focus();
 
-				expect(sortAttributes(editor.value)).to.be.equal(
+				expect(sortAttributes(editor.value)).equals(
 					sortAttributes(html)
 				);
 
@@ -249,7 +248,7 @@ describe('Test plugins', function() {
 					editor.editor.querySelectorAll('img')[1]
 				);
 
-				expect(sortAttributes(editor.value)).to.be.equal(
+				expect(sortAttributes(editor.value)).equals(
 					sortAttributes(
 						'<img src="tests/artio.jpg" ' +
 							'style="border-image:none;border-radius:50%;border:1px solid #CCCCCC;height:100px;margin:20px;width:100px"> test ' +
@@ -265,9 +264,8 @@ describe('Test plugins', function() {
 				getBox().style.width = 'auto';
 				const editor = new Jodit(appendTestArea());
 
-				editor.value = (
-					'text <em style="background-color: #ff0000"><strong>test</strong></em> post'
-				);
+				editor.value =
+					'text <em style="background-color: #ff0000"><strong>test</strong></em> post';
 				editor.selection.focus();
 
 				editor.selection.setCursorIn(
@@ -277,12 +275,12 @@ describe('Test plugins', function() {
 					editor.container.querySelectorAll(
 						'.jodit_toolbar_btn-copyformat'
 					).length
-				).to.equal(1);
+				).equals(1);
 				expect(
 					editor.container.querySelectorAll(
 						'.jodit_toolbar_btn-copyformat.jodit_active'
 					).length
-				).to.equal(0);
+				).equals(0);
 
 				simulateEvent(
 					'mousedown',
@@ -296,7 +294,7 @@ describe('Test plugins', function() {
 					editor.container.querySelectorAll(
 						'.jodit_toolbar_btn-copyformat.jodit_active'
 					).length
-				).to.equal(1);
+				).equals(1);
 
 				const sel = editor.editorWindow.getSelection(),
 					range = editor.editorDocument.createRange();
@@ -314,7 +312,7 @@ describe('Test plugins', function() {
 							.replace(/700/g, 'bold')
 							.replace(/rgb\(255, 0, 0\)/g, '#ff0000')
 					)
-				).to.equal(
+				).equals(
 					'text <em style="background-color:#ff0000"><strong>test</strong></em><span style="background-color:#ff0000;font-style:italic;font-weight:bold"> post</span>'
 				);
 			});
@@ -326,7 +324,7 @@ describe('Test plugins', function() {
 			const editor = new Jodit(appendTestArea());
 			expect(
 				editor.container.querySelectorAll('.jodit-add-new-line').length
-			).to.equal(1);
+			).equals(1);
 		});
 
 		it('Should show .jodit-add-new-line after user move mouse under Table,Ifrmae or IMG ', function() {
@@ -363,10 +361,10 @@ describe('Test plugins', function() {
 				'.jodit-add-new-line'
 			);
 
-			expect(newline).not.to.equal(null);
-			expect(
-				editor.ownerWindow.getComputedStyle(newline).display
-			).to.equal('block');
+			expect(newline).not.equals(null);
+			expect(editor.ownerWindow.getComputedStyle(newline).display).equals(
+				'block'
+			);
 		});
 
 		it('Should add new paragraph after user clicked on newline ', function() {
@@ -403,13 +401,13 @@ describe('Test plugins', function() {
 				'.jodit-add-new-line'
 			);
 
-			expect(newline).not.to.equal(null);
-			expect(
-				editor.ownerWindow.getComputedStyle(newline).display
-			).to.equal('block');
+			expect(newline).not.equals(null);
+			expect(editor.ownerWindow.getComputedStyle(newline).display).equals(
+				'block'
+			);
 
 			simulateEvent('mousedown', 0, newline.querySelector('span'));
-			expect(editor.getElementValue()).to.equal(
+			expect(editor.getElementValue()).equals(
 				'<p></p><table><tbody>' +
 					'<tr><td>2</td></tr>' +
 					'<tr><td>2</td></tr>' +
@@ -451,13 +449,13 @@ describe('Test plugins', function() {
 				'.jodit-add-new-line'
 			);
 
-			expect(newline).not.to.equal(null);
-			expect(
-				editor.ownerWindow.getComputedStyle(newline).display
-			).to.equal('block');
+			expect(newline).not.equals(null);
+			expect(editor.ownerWindow.getComputedStyle(newline).display).equals(
+				'block'
+			);
 
 			simulateEvent('mousedown', 0, newline.querySelector('span'));
-			expect(editor.getElementValue()).to.equal(
+			expect(editor.getElementValue()).equals(
 				'<table><tbody>' +
 					'<tr><td>3</td></tr>' +
 					'<tr><td>2</td></tr>' +
@@ -499,13 +497,13 @@ describe('Test plugins', function() {
 				'.jodit-add-new-line'
 			);
 
-			expect(newline).not.to.equal(null);
-			expect(
-				editor.ownerWindow.getComputedStyle(newline).display
-			).to.equal('block');
+			expect(newline).not.equals(null);
+			expect(editor.ownerWindow.getComputedStyle(newline).display).equals(
+				'block'
+			);
 
 			simulateEvent('mousedown', 0, newline.querySelector('span'));
-			expect(editor.getElementValue()).to.equal(
+			expect(editor.getElementValue()).equals(
 				'<table><tbody>' +
 					'<tr><td>3</td></tr>' +
 					'<tr><td>2</td></tr>' +
@@ -530,7 +528,7 @@ describe('Test plugins', function() {
 				); // elementFromPoint works only with visible part of view
 
 				const img = editor.editor.querySelector('img');
-				expect(null).to.be.not.equal(img);
+				expect(null).does.not.equal(img);
 
 				simulateEvent('mousemove', 0, editor.editor, function(e) {
 					const pos = Jodit.modules.Helpers.offset(
@@ -546,15 +544,15 @@ describe('Test plugins', function() {
 					'.jodit-add-new-line'
 				);
 
-				expect(null).to.be.not.equal(newline);
-				expect(newline.style.display).to.equal('block');
+				expect(null).does.not.equal(newline);
+				expect(newline.style.display).equals('block');
 				simulateEvent('mousedown', 0, newline.querySelector('span'));
 
 				editor.selection.insertHTML('stop');
 
 				expect(
 					'<p>stop</p><p><img alt="" src="tests/artio.jpg" style="height:100px;width:100px"></p>'
-				).to.be.equal(sortAttributes(editor.getEditorValue()));
+				).equals(sortAttributes(editor.getEditorValue()));
 			});
 		});
 	});
@@ -581,7 +579,8 @@ describe('Test plugins', function() {
 							},
 							disablePlugins: 'mobile'
 						});
-						editor.value = '<img alt="" src="https://xdsoft.net/jodit/files/th.jpg">';
+						editor.value =
+							'<img alt="" src="https://xdsoft.net/jodit/files/th.jpg">';
 
 						simulateEvent(
 							'dblclick',
@@ -595,11 +594,11 @@ describe('Test plugins', function() {
 								'].jodit.jodit_dialog_box.active'
 						);
 
-						expect(dialog.style.display).to.be.not.equal('none');
+						expect(dialog.style.display).does.not.equal('none');
 						expect(
 							dialog.querySelectorAll('a.jodit_use_image_editor')
 								.length
-						).to.equal(1);
+						).equals(1);
 
 						editor.events.on('afterImageEditor', function() {
 							const imageEditor = editor.ownerDocument.querySelector(
@@ -607,17 +606,17 @@ describe('Test plugins', function() {
 									area.id +
 									'].jodit.jodit_dialog_box.active .jodit_image_editor'
 							);
-							expect(imageEditor).to.be.not.equal(null);
+							expect(imageEditor).is.not.null;
 
 							expect(
 								imageEditor.querySelectorAll('[data-area=crop]')
 									.length
-							).to.equal(1);
+							).equals(1);
 							expect(
 								imageEditor.querySelectorAll(
 									'[data-area=crop].active'
 								).length
-							).to.equal(0);
+							).equals(0);
 
 							simulateEvent(
 								'click',
@@ -631,13 +630,13 @@ describe('Test plugins', function() {
 								imageEditor.querySelectorAll(
 									'[data-area=crop].active'
 								).length
-							).to.equal(1);
+							).equals(1);
 
 							const cropper = imageEditor.querySelector(
 								'.jodit_image_editor_croper'
 							);
 
-							expect(cropper).not.to.equal(null);
+							expect(cropper).not.equals(null);
 
 							const oldRatio =
 								cropper.offsetWidth / cropper.offsetHeight;
@@ -691,7 +690,7 @@ describe('Test plugins', function() {
 									cropper.offsetWidth / cropper.offsetHeight -
 										oldRatio
 								) < 0.02
-							).to.be.equal(true);
+							).equals(true);
 
 							done();
 						});
@@ -724,7 +723,8 @@ describe('Test plugins', function() {
 							}
 						});
 
-						editor.value = '<img alt="" src="https://xdsoft.net/jodit/files/th.jpg">';
+						editor.value =
+							'<img alt="" src="https://xdsoft.net/jodit/files/th.jpg">';
 
 						simulateEvent(
 							'dblclick',
@@ -738,11 +738,11 @@ describe('Test plugins', function() {
 								'].jodit.jodit_dialog_box.active'
 						);
 
-						expect(dialog.style.display).to.be.not.equal('none');
+						expect(dialog.style.display).does.not.equal('none');
 						expect(
 							dialog.querySelectorAll('a.jodit_use_image_editor')
 								.length
-						).to.equal(1);
+						).equals(1);
 
 						editor.events.on('afterImageEditor', function() {
 							const imageEditor = editor.ownerDocument.querySelector(
@@ -751,17 +751,18 @@ describe('Test plugins', function() {
 									'].jodit.jodit_dialog_box.active .jodit_image_editor'
 							);
 
-							expect(imageEditor).to.be.not.equal(null);
+							expect(imageEditor).is.not.null;
 
 							expect(
 								imageEditor.querySelectorAll('[data-area=crop]')
 									.length
-							).to.equal(1);
+							).equals(1);
+
 							expect(
 								imageEditor.querySelectorAll(
 									'[data-area=crop].active'
 								).length
-							).to.equal(0);
+							).equals(0);
 
 							simulateEvent(
 								'click',
@@ -775,13 +776,13 @@ describe('Test plugins', function() {
 								imageEditor.querySelectorAll(
 									'[data-area=crop].active'
 								).length
-							).to.equal(1);
+							).equals(1);
 
 							const cropper = imageEditor.querySelector(
 								'.jodit_image_editor_croper'
 							);
 
-							expect(cropper).not.to.equal(null);
+							expect(cropper).not.equals(null);
 
 							const oldRatio =
 								cropper.offsetWidth / cropper.offsetHeight;
@@ -792,7 +793,7 @@ describe('Test plugins', function() {
 									'.jodit_button_radio_group button:last-child'
 								);
 
-							expect(disableRatioBtn).not.to.equal(null);
+							expect(disableRatioBtn).not.equals(null);
 							simulateEvent('click', 0, disableRatioBtn);
 
 							simulateEvent(
@@ -844,7 +845,7 @@ describe('Test plugins', function() {
 									cropper.offsetWidth / cropper.offsetHeight -
 										oldRatio
 								) > 1
-							).to.be.equal(true);
+							).equals(true);
 
 							done();
 						});
@@ -892,11 +893,11 @@ describe('Test plugins', function() {
 								'].jodit.jodit_dialog_box.active'
 						);
 
-						expect(dialog.style.display).to.be.not.equal('none');
+						expect(dialog.style.display).does.not.equal('none');
 						expect(
 							dialog.querySelectorAll('a.jodit_use_image_editor')
 								.length
-						).to.equal(1);
+						).equals(1);
 
 						editor.events.on('afterImageEditor', function() {
 							const imageEditor = editor.ownerDocument.querySelector(
@@ -904,18 +905,18 @@ describe('Test plugins', function() {
 									area.id +
 									'].jodit.jodit_dialog_box.active .jodit_image_editor'
 							);
-							expect(imageEditor).to.be.not.equal(null);
+							expect(imageEditor).is.not.null;
 
 							expect(
 								imageEditor.querySelectorAll(
 									'[data-area=resize]'
 								).length
-							).to.equal(1);
+							).equals(1);
 							expect(
 								imageEditor.querySelectorAll(
 									'[data-area=resize].active'
 								).length
-							).to.equal(1); // default mode
+							).equals(1); // default mode
 
 							simulateEvent(
 								'click',
@@ -929,13 +930,13 @@ describe('Test plugins', function() {
 								imageEditor.querySelectorAll(
 									'[data-area=resize].active'
 								).length
-							).to.equal(1);
+							).equals(1);
 
 							const resizer = imageEditor.querySelector(
 								'.jodit_image_editor_resizer'
 							);
 
-							expect(resizer).not.to.equal(null);
+							expect(resizer).not.equals(null);
 
 							const oldRatio =
 								resizer.offsetWidth / resizer.offsetHeight;
@@ -990,7 +991,7 @@ describe('Test plugins', function() {
 									resizer.offsetWidth / resizer.offsetHeight -
 										oldRatio
 								) < 0.05
-							).to.be.equal(true);
+							).equals(true);
 
 							done();
 						});
@@ -1035,11 +1036,11 @@ describe('Test plugins', function() {
 								'].jodit.jodit_dialog_box.active'
 						);
 
-						expect(dialog.style.display).to.be.not.equal('none');
+						expect(dialog.style.display).does.not.equal('none');
 						expect(
 							dialog.querySelectorAll('a.jodit_use_image_editor')
 								.length
-						).to.equal(1);
+						).equals(1);
 
 						editor.events.on('afterImageEditor', function() {
 							const imageEditor = editor.ownerDocument.querySelector(
@@ -1047,18 +1048,18 @@ describe('Test plugins', function() {
 									area.id +
 									'].jodit.jodit_dialog_box.active .jodit_image_editor'
 							);
-							expect(imageEditor).to.be.not.equal(null);
+							expect(imageEditor).is.not.null;
 
 							expect(
 								imageEditor.querySelectorAll(
 									'[data-area=resize]'
 								).length
-							).to.equal(1);
+							).equals(1);
 							expect(
 								imageEditor.querySelectorAll(
 									'[data-area=resize].active'
 								).length
-							).to.equal(1); // default mode
+							).equals(1); // default mode
 
 							simulateEvent(
 								'click',
@@ -1072,7 +1073,7 @@ describe('Test plugins', function() {
 								imageEditor.querySelectorAll(
 									'[data-area=resize].active'
 								).length
-							).to.equal(1);
+							).equals(1);
 
 							const disableRatioBtn = imageEditor
 								.querySelector('[data-area=resize].active')
@@ -1080,14 +1081,14 @@ describe('Test plugins', function() {
 									'.jodit_button_radio_group button:last-child'
 								);
 
-							expect(disableRatioBtn).not.to.equal(null);
+							expect(disableRatioBtn).not.equals(null);
 							simulateEvent('click', 0, disableRatioBtn);
 
 							const resizer = imageEditor.querySelector(
 								'.jodit_image_editor_resizer'
 							);
 
-							expect(resizer).not.to.equal(null);
+							expect(resizer).not.equals(null);
 
 							const oldRatio =
 								resizer.offsetWidth / resizer.offsetHeight;
@@ -1142,7 +1143,7 @@ describe('Test plugins', function() {
 									resizer.offsetWidth / resizer.offsetHeight -
 										oldRatio
 								) > 1
-							).to.be.equal(true);
+							).equals(true);
 
 							done();
 						});
@@ -1171,7 +1172,7 @@ describe('Test plugins', function() {
 						language: 'en'
 					});
 
-					expect(null).to.be.not.equal(
+					expect(null).does.not.equal(
 						editor.container.querySelector(
 							'.jodit_toolbar_btn.jodit_toolbar_btn-outdent [title]'
 						)
@@ -1192,13 +1193,13 @@ describe('Test plugins', function() {
 						language: 'ru'
 					});
 
-					expect(null).to.be.not.equal(
+					expect(null).does.not.equal(
 						editor2.container.querySelector(
 							'.jodit_toolbar_btn.jodit_toolbar_btn-outdent [title]'
 						)
 					);
 
-					expect(title).to.be.not.equal(
+					expect(title).does.not.equal(
 						editor2.container
 							.querySelector(
 								'.jodit_toolbar_btn.jodit_toolbar_btn-outdent [title]'
@@ -1224,12 +1225,14 @@ describe('Test plugins', function() {
 						'.jodit_toolbar_btn.jodit_toolbar_btn-indent'
 					);
 
-					expect(null).to.be.not.equal(button);
+					expect(null).does.not.equal(button);
 
 					simulateEvent('mouseenter', 0, button.querySelector('a'));
 
-					let tooltip = editor.ownerDocument.querySelector('.jodit_tooltip');
-					expect(null).to.be.not.equal(tooltip);
+					let tooltip = editor.ownerDocument.querySelector(
+						'.jodit_tooltip'
+					);
+					expect(null).does.not.equal(tooltip);
 					const title = tooltip.textContent;
 					editor.destruct();
 
@@ -1244,19 +1247,20 @@ describe('Test plugins', function() {
 					button = editor.container.querySelector(
 						'.jodit_toolbar_btn.jodit_toolbar_btn-indent'
 					);
-					expect(null).to.be.not.equal(button);
+					expect(null).does.not.equal(button);
 
 					simulateEvent('mouseenter', 0, button.querySelector('a'));
 
-					tooltip = editor.ownerDocument.querySelector('.jodit_tooltip');
-					expect(null).to.be.not.equal(tooltip);
+					tooltip = editor.ownerDocument.querySelector(
+						'.jodit_tooltip'
+					);
+					expect(null).does.not.equal(tooltip);
 					simulateEvent('mouseleave', 0, button.querySelector('a'));
 					expect(null).not.equal(tooltip.parentNode);
 
-					expect(parseInt(tooltip.style.left, 10)).to.equal(-5000);
+					expect(parseInt(tooltip.style.left, 10)).equals(-5000);
 
-
-					expect(title).to.be.not.equal(tooltip.textContent);
+					expect(title).does.not.equal(tooltip.textContent);
 				});
 			});
 		});
@@ -1273,7 +1277,7 @@ describe('Test plugins', function() {
 
 			simulateEvent('mousedown', 0, editor.editor.firstChild);
 
-			expect(null).to.be.not.equal(
+			expect(null).does.not.equal(
 				editor.container.querySelector(
 					'.jodit_toolbar_btn.jodit_toolbar_btn-outdent.jodit_disabled'
 				)
@@ -1281,7 +1285,7 @@ describe('Test plugins', function() {
 
 			editor.editor.firstChild.style.marginLeft = '100px';
 			simulateEvent('mousedown', 0, editor.editor.firstChild);
-			expect(null).to.be.equal(
+			expect(null).equals(
 				editor.container.querySelector(
 					'.jodit_toolbar_btn.jodit_toolbar_btn-outdent.jodit_disabled'
 				)
@@ -1331,7 +1335,7 @@ describe('Test plugins', function() {
 
 				expect(
 					'<h1 style="margin-left: 15px;">test</h1><p style="margin-left: 15px;">text</p><p>text</p>'
-				).to.be.equal(editor.getEditorValue());
+				).equals(editor.getEditorValue());
 
 				simulateEvent(
 					'mousedown',
@@ -1357,7 +1361,7 @@ describe('Test plugins', function() {
 					)
 				);
 
-				expect('<h1>test</h1><p>text</p><p>text</p>').to.equal(
+				expect('<h1>test</h1><p>text</p><p>text</p>').equals(
 					editor.value
 				);
 			});
@@ -1372,7 +1376,7 @@ describe('Test plugins', function() {
 				editor.execCommand('indent');
 				expect(
 					'<p style="margin-left: 10px;">a<br>b<br>c<br></p>'
-				).to.be.equal(editor.value);
+				).equals(editor.value);
 			});
 		});
 	});
@@ -1389,13 +1393,13 @@ describe('Test plugins', function() {
 			const btn = editor.container.querySelector(
 				'.jodit_toolbar_btn.jodit_toolbar_btn-symbol'
 			);
-			expect(null).to.be.not.equal(btn);
+			expect(null).does.not.equal(btn);
 
 			simulateEvent('mousedown', 0, btn);
 			const dialog = editor.ownerDocument.querySelector(
 				'.jodit_dialog_box.active.jodit_modal .jodit_dialog_content .jodit_symbols'
 			);
-			expect(null).to.be.not.equal(dialog);
+			expect(null).does.not.equal(dialog);
 		});
 
 		describe('Symbols dialog', function() {
@@ -1410,15 +1414,15 @@ describe('Test plugins', function() {
 				const btn = editor.container.querySelector(
 					'.jodit_toolbar_btn.jodit_toolbar_btn-symbol'
 				);
-				expect(null).to.be.not.equal(btn);
+				expect(null).does.not.equal(btn);
 
 				simulateEvent('mousedown', 0, btn);
 				const dialog = editor.ownerDocument.querySelector(
 					'.jodit_dialog_box.active.jodit_modal .jodit_dialog_content .jodit_symbols'
 				);
-				expect(null).to.be.not.equal(dialog);
+				expect(null).does.not.equal(dialog);
 
-				expect(dialog.querySelector('a')).to.be.equal(
+				expect(dialog.querySelector('a')).equals(
 					editor.ownerDocument.activeElement
 				);
 			});
@@ -1435,13 +1439,13 @@ describe('Test plugins', function() {
 					const btn = editor.container.querySelector(
 						'.jodit_toolbar_btn.jodit_toolbar_btn-symbol'
 					);
-					expect(null).to.be.not.equal(btn);
+					expect(null).does.not.equal(btn);
 
 					simulateEvent('mousedown', 0, btn);
 					const dialog = editor.ownerDocument.querySelector(
 						'.jodit_dialog_box.active.jodit_modal .jodit_dialog_content .jodit_symbols'
 					);
-					expect(null).to.be.not.equal(dialog);
+					expect(null).does.not.equal(dialog);
 
 					const currentActive = dialog.getElementsByTagName('a')[10];
 
@@ -1454,7 +1458,7 @@ describe('Test plugins', function() {
 						}
 					);
 
-					expect(editor.ownerDocument.activeElement).to.be.equal(
+					expect(editor.ownerDocument.activeElement).equals(
 						dialog.getElementsByTagName('a')[9]
 					);
 				});
@@ -1471,13 +1475,13 @@ describe('Test plugins', function() {
 					const btn = editor.container.querySelector(
 						'.jodit_toolbar_btn.jodit_toolbar_btn-symbol'
 					);
-					expect(null).to.be.not.equal(btn);
+					expect(null).does.not.equal(btn);
 
 					simulateEvent('mousedown', 0, btn);
 					const dialog = editor.ownerDocument.querySelector(
 						'.jodit_dialog_box.active.jodit_modal .jodit_dialog_content .jodit_symbols'
 					);
-					expect(null).to.be.not.equal(dialog);
+					expect(null).does.not.equal(dialog);
 
 					const currentActive = dialog.getElementsByTagName('a')[10];
 
@@ -1490,7 +1494,7 @@ describe('Test plugins', function() {
 						}
 					);
 
-					expect(editor.ownerDocument.activeElement).to.be.equal(
+					expect(editor.ownerDocument.activeElement).equals(
 						dialog.getElementsByTagName('a')[11]
 					);
 				});
@@ -1509,13 +1513,13 @@ describe('Test plugins', function() {
 					const btn = editor.container.querySelector(
 						'.jodit_toolbar_btn.jodit_toolbar_btn-symbol'
 					);
-					expect(null).to.be.not.equal(btn);
+					expect(null).does.not.equal(btn);
 
 					simulateEvent('mousedown', 0, btn);
 					const dialog = editor.ownerDocument.querySelector(
 						'.jodit_dialog_box.active.jodit_modal .jodit_dialog_content .jodit_symbols'
 					);
-					expect(null).to.be.not.equal(dialog);
+					expect(null).does.not.equal(dialog);
 
 					let currentActive = dialog.getElementsByTagName('a')[30];
 
@@ -1528,7 +1532,7 @@ describe('Test plugins', function() {
 						}
 					);
 
-					expect(editor.ownerDocument.activeElement).to.be.equal(
+					expect(editor.ownerDocument.activeElement).equals(
 						dialog.getElementsByTagName('a')[13]
 					);
 
@@ -1543,7 +1547,7 @@ describe('Test plugins', function() {
 						}
 					);
 
-					expect(editor.ownerDocument.activeElement).to.be.equal(
+					expect(editor.ownerDocument.activeElement).equals(
 						dialog.getElementsByTagName('a')[197]
 					);
 				});
@@ -1561,13 +1565,13 @@ describe('Test plugins', function() {
 					const btn = editor.container.querySelector(
 						'.jodit_toolbar_btn.jodit_toolbar_btn-symbol'
 					);
-					expect(null).to.be.not.equal(btn);
+					expect(null).does.not.equal(btn);
 
 					simulateEvent('mousedown', 0, btn);
 					const dialog = editor.ownerDocument.querySelector(
 						'.jodit_dialog_box.active.jodit_modal .jodit_dialog_content .jodit_symbols'
 					);
-					expect(null).to.be.not.equal(dialog);
+					expect(null).does.not.equal(dialog);
 
 					let currentActive = dialog.getElementsByTagName('a')[30];
 
@@ -1580,7 +1584,7 @@ describe('Test plugins', function() {
 						}
 					);
 
-					expect(editor.ownerDocument.activeElement).to.be.equal(
+					expect(editor.ownerDocument.activeElement).equals(
 						dialog.getElementsByTagName('a')[47]
 					);
 
@@ -1595,7 +1599,7 @@ describe('Test plugins', function() {
 						}
 					);
 
-					expect(editor.ownerDocument.activeElement).to.be.equal(
+					expect(editor.ownerDocument.activeElement).equals(
 						dialog.getElementsByTagName('a')[13]
 					);
 				});
@@ -1613,27 +1617,27 @@ describe('Test plugins', function() {
 					const btn = editor.container.querySelector(
 						'.jodit_toolbar_btn.jodit_toolbar_btn-symbol'
 					);
-					expect(null).to.be.not.equal(btn);
+					expect(null).does.not.equal(btn);
 
 					simulateEvent('mousedown', 0, btn);
 					let dialog = editor.ownerDocument.querySelector(
 						'.jodit_dialog_box.active.jodit_modal .jodit_dialog_content .jodit_symbols'
 					);
 
-					expect(null).to.be.not.equal(dialog);
+					expect(null).does.not.equal(dialog);
 
 					const currentActive = dialog.getElementsByTagName('a')[5];
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, currentActive);
 
-					expect('&amp;').to.be.equal(editor.getEditorValue());
+					expect('&amp;').equals(editor.getEditorValue());
 
 					simulateEvent('mousedown', 0, btn);
 					dialog = editor.ownerDocument.querySelector(
 						'.jodit_dialog_box.active.jodit_modal .jodit_dialog_content .jodit_symbols'
 					);
 
-					expect(null).to.be.not.equal(dialog);
+					expect(null).does.not.equal(dialog);
 
 					const currentActive2 = dialog.getElementsByTagName(
 						'a'
@@ -1641,7 +1645,7 @@ describe('Test plugins', function() {
 
 					simulateEvent('mousedown', 0, currentActive2);
 
-					expect('&amp;½').to.be.equal(editor.getEditorValue());
+					expect('&amp;½').equals(editor.getEditorValue());
 				});
 			});
 		});
@@ -1663,28 +1667,26 @@ describe('Test plugins', function() {
 				const btn = editor.container.querySelector(
 					'.jodit_toolbar_btn.jodit_toolbar_btn-symbol'
 				);
-				expect(null).to.be.not.equal(btn);
+				expect(null).does.not.equal(btn);
 
 				simulateEvent('mousedown', 0, btn);
 				const dialog = editor.ownerDocument.querySelector(
 					'.jodit_dialog_box.active.jodit_modal .jodit_dialog_content .jodit_symbols'
 				);
-				expect(null).to.be.equal(dialog);
+				expect(null).equals(dialog);
 
 				const popup = editor.container.querySelector(
 					'.jodit_toolbar_popup'
 				);
-				expect(null).to.be.not.equal(popup);
-				expect('block').to.be.equal(
-					window.getComputedStyle(popup).display
-				);
+				expect(null).does.not.equal(popup);
+				expect('block').equals(window.getComputedStyle(popup).display);
 
 				const currentActive = popup.getElementsByTagName('a')[125];
 
 				simulateEvent('mousedown', 0, currentActive);
 
-				expect('½test').to.be.equal(editor.getEditorValue());
-				expect(null).to.be.equal(popup.parentNode);
+				expect('½test').equals(editor.getEditorValue());
+				expect(null).equals(popup.parentNode);
 			});
 		});
 	});
@@ -1711,9 +1713,7 @@ describe('Test plugins', function() {
 					data.ctrlKey = true;
 				});
 
-				expect('test<u> tes</u>t test').to.be.equal(
-					editor.getEditorValue()
-				);
+				expect('test<u> tes</u>t test').equals(editor.getEditorValue());
 			});
 			describe('Replace ctrl+b to ctrl+shift+b for bold command', function() {
 				it('Should not execute bold on ctrl+b', function() {
@@ -1736,16 +1736,14 @@ describe('Test plugins', function() {
 						data.ctrlKey = true;
 					});
 
-					expect('test test test').to.be.equal(
-						editor.getEditorValue()
-					); // should not sork
+					expect('test test test').equals(editor.getEditorValue()); // should not sork
 
 					simulateEvent('keydown', 66, editor.editor, function(data) {
 						data.shiftKey = true;
 						data.ctrlKey = true;
 					});
 
-					expect('test<strong> tes</strong>t test').to.be.equal(
+					expect('test<strong> tes</strong>t test').equals(
 						editor.getEditorValue()
 					);
 				});
@@ -1768,7 +1766,7 @@ describe('Test plugins', function() {
 						data.ctrlKey = true;
 					});
 
-					expect('test<strong> tes</strong>t test').to.be.equal(
+					expect('test<strong> tes</strong>t test').equals(
 						editor.getEditorValue()
 					);
 				});
@@ -1796,7 +1794,7 @@ describe('Test plugins', function() {
 						data.ctrlKey = true;
 					});
 
-					expect('test<em> tes</em>t test').to.be.equal(editor.value);
+					expect('test<em> tes</em>t test').equals(editor.value);
 
 					editor.value = 'test test test';
 
@@ -1811,7 +1809,7 @@ describe('Test plugins', function() {
 						data.ctrlKey = true;
 					});
 
-					expect('test<em> tes</em>t test').to.be.equal(editor.value);
+					expect('test<em> tes</em>t test').equals(editor.value);
 
 					// standart ctrl+shift+7
 					simulateEvent('keydown', 103, editor.editor, function(
@@ -1821,9 +1819,9 @@ describe('Test plugins', function() {
 						data.ctrlKey = true;
 					});
 
-					expect(
-						'<ol><li>test<em> tes</em>t test</li></ol>'
-					).to.be.equal(editor.value.replace('<br>', ''));
+					expect('<ol><li>test<em> tes</em>t test</li></ol>').equals(
+						editor.value.replace('<br>', '')
+					);
 				});
 			});
 		});
@@ -1835,7 +1833,7 @@ describe('Test plugins', function() {
 					editor = new Jodit(area);
 
 				editor.setEditorValue('<p>stop</p>'.repeat(100));
-				expect(false).to.be.equal(
+				expect(false).equals(
 					editor.container.classList.contains('jodit_sticky')
 				);
 			});
@@ -1858,12 +1856,14 @@ describe('Test plugins', function() {
 
 					simulateEvent('scroll', 0, window);
 
-					expect(true).to.be.equal(
+					expect(true).equals(
 						editor.container.classList.contains('jodit_sticky')
 					);
 
-					expect(0).to.equal(
-						editor.toolbar.getParentContainer().getBoundingClientRect().top
+					expect(0).equals(
+						editor.toolbar
+							.getParentContainer()
+							.getBoundingClientRect().top
 					);
 				});
 				describe('On mobile devices - with toolbarDisableStickyForMobile = true', function() {
@@ -1883,10 +1883,10 @@ describe('Test plugins', function() {
 						window.scroll(0, offset.top + offset.height / 2); // scroll page to bottom
 						simulateEvent('scroll', 0, window);
 
-						expect(false).to.be.equal(
+						expect(false).equals(
 							editor.container.classList.contains('jodit_sticky')
 						);
-						expect(0).to.be.not.equal(
+						expect(0).does.not.equal(
 							editor.toolbar.container.getBoundingClientRect().top
 						);
 						getBox().style.width = 'auto'; // IPhone 7
@@ -1908,10 +1908,10 @@ describe('Test plugins', function() {
 						window.scroll(0, offset.top + offset.height / 2); // scroll page to bottom
 						simulateEvent('scroll', 0, window);
 
-						expect(true).to.be.equal(
+						expect(true).equals(
 							editor.container.classList.contains('jodit_sticky')
 						);
-						expect(0).to.be.equal(
+						expect(0).equals(
 							editor.toolbar.container.getBoundingClientRect().top
 						);
 					});
@@ -1933,10 +1933,10 @@ describe('Test plugins', function() {
 						window.scroll(0, offset.top + offset.height / 2); // scroll page to bottom
 						simulateEvent('scroll', 0, window);
 
-						expect(true).to.be.equal(
+						expect(true).equals(
 							editor.container.classList.contains('jodit_sticky')
 						);
-						expect(100).to.be.equal(
+						expect(100).equals(
 							editor.toolbar.container.getBoundingClientRect().top
 						);
 					});
@@ -1959,13 +1959,13 @@ describe('Test plugins', function() {
 						window.scroll(0, offset.top + offset.height / 2); // scroll page to bottom
 						simulateEvent('scroll', 0, window);
 
-						expect(false).to.be.equal(
+						expect(false).equals(
 							editor.container.classList.contains('jodit_sticky')
 						);
-						expect(100).to.be.not.equal(
+						expect(100).does.not.equal(
 							editor.toolbar.container.getBoundingClientRect().top
 						);
-						expect(0).to.be.not.equal(
+						expect(0).does.not.equal(
 							editor.toolbar.container.getBoundingClientRect().top
 						);
 					});
@@ -1997,7 +1997,7 @@ describe('Test plugins', function() {
 					window.scroll(0, offset.top - 200); // scroll page above editor
 					simulateEvent('scroll', 0, window);
 
-					expect(false).to.be.equal(
+					expect(false).equals(
 						editor.container.classList.contains('jodit_sticky')
 					);
 
@@ -2033,11 +2033,11 @@ describe('Test plugins', function() {
 				const button = editor.container.querySelector(
 					'.jodit_toolbar_btn.jodit_toolbar_btn-eraser'
 				);
-				expect(null).to.be.not.equal(button);
+				expect(null).does.not.equal(button);
 
 				simulateEvent('mousedown', 0, button);
 
-				expect('start test test test elm').to.be.equal(
+				expect('start test test test elm').equals(
 					editor
 						.getEditorValue()
 						.replace('<span>', '')
@@ -2062,7 +2062,7 @@ describe('Test plugins', function() {
 
 				editor.selection.insertHTML(' some ');
 
-				expect(editor.value).to.be.equal(
+				expect(editor.value).equals(
 					'test <strong>ol some d</strong> test'
 				);
 			});
@@ -2089,7 +2089,7 @@ describe('Test plugins', function() {
 
 					editor.selection.insertHTML(' some ');
 
-					expect(editor.value).to.be.equal(
+					expect(editor.value).equals(
 						'<div>test <strong>ol some d</strong> test</div>'
 					);
 				});
@@ -2115,9 +2115,7 @@ describe('Test plugins', function() {
 
 					editor.selection.insertHTML(' some ');
 
-					expect(editor.value).to.be.equal(
-						'test <b>ol some d</b> test'
-					);
+					expect(editor.value).equals('test <b>ol some d</b> test');
 				});
 			});
 		});
@@ -2131,7 +2129,7 @@ describe('Test plugins', function() {
 					});
 					editor.value =
 						'<p>te<strong>stop</strong>st</p><h1>pop</h1>';
-					expect(editor.value).to.be.equal('<h1>pop</h1>');
+					expect(editor.value).equals('<h1>pop</h1>');
 				});
 			});
 		});
@@ -2145,7 +2143,7 @@ describe('Test plugins', function() {
 					});
 					editor.value =
 						'<p>te<strong>stop</strong>st</p><h1>pop</h1>';
-					expect(editor.value).to.be.equal('<p>test</p>');
+					expect(editor.value).equals('<p>test</p>');
 				});
 			});
 			describe('Parameter like hash', function() {
@@ -2159,7 +2157,7 @@ describe('Test plugins', function() {
 					});
 					editor.value =
 						'<p>te<strong>stop</strong>st</p><h1>pop</h1>';
-					expect(editor.value).to.be.equal('<p>test</p>');
+					expect(editor.value).equals('<p>test</p>');
 				});
 			});
 			describe('Allow attributes', function() {
@@ -2175,7 +2173,7 @@ describe('Test plugins', function() {
 					});
 					editor.value =
 						'<p style="color: red;" data-id="111">te<strong>stop</strong>st</p><h1>pop</h1>';
-					expect(editor.value).to.be.equal(
+					expect(editor.value).equals(
 						'<p style="color: red;">test</p>'
 					);
 				});
@@ -2194,7 +2192,7 @@ describe('Test plugins', function() {
 					editor.value = '<p style="color: red;" data-id="111">te<strong>stop</strong>st</p><h1>pop</h1>'.repeat(
 						500
 					);
-					expect(editor.value).to.be.equal(
+					expect(editor.value).equals(
 						'<p style="color: red;">test</p>'.repeat(500)
 					);
 				}).timeout(1500);
@@ -2208,7 +2206,7 @@ describe('Test plugins', function() {
 					}
 				});
 				editor.value = '<p></p><p></p><div></div>';
-				expect(editor.value).to.be.equal(
+				expect(editor.value).equals(
 					'<p><br></p><p><br></p><div><br></div>'
 				);
 			});
@@ -2220,9 +2218,7 @@ describe('Test plugins', function() {
 						}
 					});
 					editor.value = '<p></p><p></p><div></div>';
-					expect(editor.value).to.be.equal(
-						'<p></p><p></p><div></div>'
-					);
+					expect(editor.value).equals('<p></p><p></p><div></div>');
 				});
 			});
 		});
@@ -2249,7 +2245,7 @@ describe('Test plugins', function() {
 					height: 222
 				});
 
-				expect(editor.container.offsetHeight).to.be.equal(222);
+				expect(editor.container.offsetHeight).equals(222);
 			});
 		});
 	});
@@ -2281,7 +2277,7 @@ describe('Test plugins', function() {
 				chacksizes.map(function(key, index) {
 					expect(
 						equal(editor[key].offsetHeight, sizes[index])
-					).to.be.true;
+					).is.true;
 				});
 			});
 		});
@@ -2309,7 +2305,7 @@ describe('Test plugins', function() {
 
 					expect(
 						editor.ownerWindow.getComputedStyle(statusbar).display
-					).to.be.equal('flex');
+					).equals('flex');
 				});
 
 				it('Should show path to selection element', function() {
@@ -2330,10 +2326,10 @@ describe('Test plugins', function() {
 						'.jodit_statusbar ul'
 					);
 
-					expect(statusbar).to.not.equal(null);
-					expect(statusbar.firstChild.textContent.trim()).to.equal('');
-					expect(statusbar.childNodes[1].textContent).to.equal('p');
-					expect(statusbar.childNodes[2].textContent).to.equal('a');
+					expect(statusbar).is.not.null;
+					expect(statusbar.firstChild.textContent.trim()).equals('');
+					expect(statusbar.childNodes[1].textContent).equals('p');
+					expect(statusbar.childNodes[2].textContent).equals('a');
 				});
 
 				describe('After change selection', function() {
@@ -2356,24 +2352,18 @@ describe('Test plugins', function() {
 							'.jodit_statusbar ul'
 						);
 
-						expect(statusbar).to.be.not.equal(null);
-						expect(statusbar.firstChild.innerText).to.be.equal('');
-						expect(statusbar.childNodes[1].textContent).to.be.equal(
-							'p'
-						);
-						expect(statusbar.childNodes[2].textContent).to.be.equal(
-							'a'
-						);
+						expect(statusbar).is.not.null;
+						expect(statusbar.firstChild.innerText).equals('');
+						expect(statusbar.childNodes[1].textContent).equals('p');
+						expect(statusbar.childNodes[2].textContent).equals('a');
 
 						editor.selection.setCursorIn(
 							editor.editor.querySelector('span')
 						);
 
-						expect(statusbar.firstChild.innerText).to.be.equal('');
-						expect(statusbar.childNodes[1].textContent).to.be.equal(
-							'p'
-						);
-						expect(statusbar.childNodes[2].textContent).to.be.equal(
+						expect(statusbar.firstChild.innerText).equals('');
+						expect(statusbar.childNodes[1].textContent).equals('p');
+						expect(statusbar.childNodes[2].textContent).equals(
 							'span'
 						);
 					});
@@ -2398,14 +2388,10 @@ describe('Test plugins', function() {
 							'.jodit_statusbar ul'
 						);
 
-						expect(statusbar).to.be.not.equal(null);
-						expect(statusbar.firstChild.innerText).to.be.equal('');
-						expect(statusbar.childNodes[1].textContent).to.be.equal(
-							'p'
-						);
-						expect(statusbar.childNodes[2].textContent).to.be.equal(
-							'a'
-						);
+						expect(statusbar).is.not.null;
+						expect(statusbar.firstChild.innerText).equals('');
+						expect(statusbar.childNodes[1].textContent).equals('p');
+						expect(statusbar.childNodes[2].textContent).equals('a');
 
 						simulateEvent(
 							'click',
@@ -2417,10 +2403,8 @@ describe('Test plugins', function() {
 							Jodit.modules.Helpers.trim(
 								editor.editorWindow.getSelection().toString()
 							)
-						).to.be.equal('sss');
-						expect(statusbar.childNodes[2].textContent).to.be.equal(
-							'a'
-						);
+						).equals('sss');
+						expect(statusbar.childNodes[2].textContent).equals('a');
 
 						simulateEvent(
 							'click',
@@ -2432,8 +2416,8 @@ describe('Test plugins', function() {
 							Jodit.modules.Helpers.trim(
 								editor.editorWindow.getSelection().toString()
 							)
-						).to.be.equal('Simple text ssss');
-						expect(statusbar.childNodes.length).to.be.equal(3);
+						).equals('Simple text ssss');
+						expect(statusbar.childNodes.length).equals(3);
 					});
 				});
 				describe('Context menu on element of path', function() {
@@ -2456,14 +2440,10 @@ describe('Test plugins', function() {
 							'.jodit_statusbar ul'
 						);
 
-						expect(statusbar).to.be.not.equal(null);
-						expect(statusbar.firstChild.innerText).to.be.equal('');
-						expect(statusbar.childNodes[1].textContent).to.be.equal(
-							'p'
-						);
-						expect(statusbar.childNodes[2].textContent).to.be.equal(
-							'a'
-						);
+						expect(statusbar).is.not.null;
+						expect(statusbar.firstChild.innerText).equals('');
+						expect(statusbar.childNodes[1].textContent).equals('p');
+						expect(statusbar.childNodes[2].textContent).equals('a');
 
 						simulateEvent(
 							'contextmenu',
@@ -2476,18 +2456,18 @@ describe('Test plugins', function() {
 								editor.id +
 								']'
 						);
-						expect(context).to.be.not.equal(null);
+						expect(context).is.not.null;
 						expect(
 							editor.ownerWindow.getComputedStyle(context).display
-						).to.be.equal('block');
+						).equals('block');
 
 						simulateEvent('click', 0, context.querySelector('a'));
-						expect(editor.value).to.be.equal(
+						expect(editor.value).equals(
 							'<p>Simple text <span>s</span></p>'
 						);
 						expect(
 							editor.ownerWindow.getComputedStyle(context).display
-						).to.be.equal('none');
+						).equals('none');
 					});
 				});
 			});
@@ -2509,7 +2489,7 @@ describe('Test plugins', function() {
 						editor.id +
 						']'
 				);
-				expect(dialog).to.be.equal(null);
+				expect(dialog).equals(null);
 			});
 		});
 		describe('After copy elements', function() {
@@ -2562,7 +2542,7 @@ describe('Test plugins', function() {
 						editor.id +
 						']'
 				);
-				expect(dialog).to.be.not.equal(null);
+				expect(dialog).is.not.null;
 			});
 			describe('After click on some of elements', function() {
 				it('Sholud select this', function() {
@@ -2612,7 +2592,7 @@ describe('Test plugins', function() {
 							editor.id +
 							']'
 					);
-					expect(dialog).to.be.not.equal(null);
+					expect(dialog).is.not.null;
 
 					simulateEvent(
 						'click',
@@ -2623,7 +2603,7 @@ describe('Test plugins', function() {
 						dialog
 							.querySelectorAll('.jodit_paste_storage a')[1]
 							.classList.contains('jodit_active')
-					).to.be.equal(true);
+					).equals(true);
 
 					simulateEvent(
 						'dblclick',
@@ -2633,9 +2613,9 @@ describe('Test plugins', function() {
 
 					expect(
 						editor.ownerWindow.getComputedStyle(dialog).display
-					).to.be.equal('none');
+					).equals('none');
 
-					expect(editor.value).to.be.equal('aacde');
+					expect(editor.value).equals('aacde');
 				});
 			});
 			describe('Press key up/down/enter', function() {
@@ -2686,7 +2666,7 @@ describe('Test plugins', function() {
 							editor.id +
 							']'
 					);
-					expect(dialog).to.be.not.equal(null);
+					expect(dialog).is.not.null;
 
 					simulateEvent(
 						'click',
@@ -2697,7 +2677,7 @@ describe('Test plugins', function() {
 						dialog
 							.querySelectorAll('.jodit_paste_storage a')[0]
 							.classList.contains('jodit_active')
-					).to.be.equal(true);
+					).equals(true);
 
 					simulateEvent(
 						'keydown',
@@ -2708,7 +2688,7 @@ describe('Test plugins', function() {
 						dialog
 							.querySelectorAll('.jodit_paste_storage a')[1]
 							.classList.contains('jodit_active')
-					).to.be.equal(true);
+					).equals(true);
 
 					simulateEvent(
 						'keydown',
@@ -2719,7 +2699,7 @@ describe('Test plugins', function() {
 						dialog
 							.querySelectorAll('.jodit_paste_storage a')[0]
 							.classList.contains('jodit_active')
-					).to.be.equal(true);
+					).equals(true);
 
 					simulateEvent(
 						'keydown',
@@ -2730,7 +2710,7 @@ describe('Test plugins', function() {
 						dialog
 							.querySelectorAll('.jodit_paste_storage a')[1]
 							.classList.contains('jodit_active')
-					).to.be.equal(true);
+					).equals(true);
 
 					simulateEvent(
 						'keydown',
@@ -2740,9 +2720,9 @@ describe('Test plugins', function() {
 
 					expect(
 						editor.ownerWindow.getComputedStyle(dialog).display
-					).to.be.equal('none');
+					).equals('none');
 
-					expect(editor.value).to.be.equal('aacde');
+					expect(editor.value).equals('aacde');
 				});
 			});
 		});

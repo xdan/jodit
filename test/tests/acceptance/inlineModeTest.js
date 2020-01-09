@@ -7,12 +7,12 @@ describe('Test Inline mode', function() {
 						inline: true
 					});
 
-				expect(editor.container).to.be.not.equal(area);
-				expect(editor.container.classList.contains('jodit_inline')).to
-					.be.true;
-				expect(editor.container.nextSibling).to.be.equal(area);
-				expect(area.style.display).to.be.equal('none');
-				expect(area.value).to.be.equal(editor.value);
+				expect(editor.container).does.not.equal(area);
+				expect(editor.container.classList.contains('jodit_inline')).is
+					.true;
+				expect(editor.container.nextSibling).equals(area);
+				expect(area.style.display).equals('none');
+				expect(area.value).equals(editor.value);
 			});
 		});
 		describe('For DIV', function() {
@@ -29,19 +29,17 @@ describe('Test Inline mode', function() {
 					}
 				});
 
-				expect(editor.container).to.be.equal(div);
-				expect(editor.container.classList.contains('jodit_inline')).to
-					.be.true;
-				expect(
-					editor.container.querySelector('.jodit_workplace')
-				).to.be.not.equal(null);
-				expect(
-					editor.container.querySelector('.jodit_wysiwyg')
-				).to.be.not.equal(null);
-				expect(
-					editor.ownerWindow.getComputedStyle(div).display
-				).to.be.equal('block');
-				expect(value).to.be.equal(editor.value);
+				expect(editor.container).equals(div);
+				expect(editor.container.classList.contains('jodit_inline')).is
+					.true;
+				expect(editor.container.querySelector('.jodit_workplace')).is
+					.not.null;
+				expect(editor.container.querySelector('.jodit_wysiwyg')).is.not
+					.null;
+				expect(editor.ownerWindow.getComputedStyle(div).display).equals(
+					'block'
+				);
+				expect(value).equals(editor.value);
 			});
 		});
 		describe('For H1', function() {
@@ -60,24 +58,23 @@ describe('Test Inline mode', function() {
 					}
 				});
 
-				expect(editor.container).to.be.equal(div);
-				expect(editor.container.classList.contains('jodit_inline')).to
-					.be.true;
-				expect(
-					editor.container.querySelector('.jodit_workplace')
-				).to.be.not.equal(null);
-				expect(
-					editor.container.querySelector('.jodit_wysiwyg')
-				).to.be.not.equal(null);
-				expect(
-					editor.ownerWindow.getComputedStyle(div).display
-				).to.be.equal('block');
-				expect(value).to.be.equal(editor.value);
+				expect(editor.container).equals(div);
+				expect(editor.container.classList.contains('jodit_inline')).is
+					.true;
+				expect(editor.container.querySelector('.jodit_workplace')).is
+					.not.null;
+				expect(editor.container.querySelector('.jodit_wysiwyg')).is.not
+					.null;
+				expect(editor.ownerWindow.getComputedStyle(div).display).equals(
+					'block'
+				);
+				expect(value).equals(editor.value);
 
 				div.parentNode.removeChild(div);
 			});
 		});
 	});
+
 	describe('Destruct Jodit', function() {
 		describe('For TEXTAREA', function() {
 			it('Should show textarea like standart mode', function() {
@@ -87,7 +84,7 @@ describe('Test Inline mode', function() {
 					});
 
 				editor.destruct();
-				expect(area.style.display).to.be.not.equal('none');
+				expect(area.style.display).does.not.equal('none');
 			});
 		});
 		describe('For DIV', function() {
@@ -107,28 +104,31 @@ describe('Test Inline mode', function() {
 
 				editor.destruct();
 
-				expect(
-					editor.ownerWindow.getComputedStyle(div).display
-				).to.be.equal('block');
+				expect(editor.ownerWindow.getComputedStyle(div).display).equals(
+					'block'
+				);
 
-				expect(div.innerHTML).to.be.equal(value);
-				expect(div.className.toString()).to.be.equal('');
+				expect(div.innerHTML).equals(value);
+				expect(div.className.toString()).equals('');
 			});
 		});
 	});
+
 	describe('Inline popups', function() {
 		describe('Click on Image', function() {
 			it('Should show inline popup', function() {
 				const editor = new Jodit(appendTestDiv());
+
 				editor.value = '<p>test <img/> test</p>';
 				const img = editor.editor.querySelector('img');
 				simulateEvent('mousedown', 0, img);
+
 				const popup = editor.ownerDocument.querySelector(
 					'.jodit_toolbar_popup-inline[data-editor_id=' +
 						editor.id +
 						']'
 				);
-				expect(popup).to.be.not.equal(null);
+				expect(popup).is.not.null;
 			});
 			describe('Disable toolbarInline = false', function() {
 				it('Should show inline popup', function() {
@@ -143,7 +143,7 @@ describe('Test Inline mode', function() {
 							editor.id +
 							']'
 					);
-					expect(popup).to.be.equal(null);
+					expect(popup).equals(null);
 				});
 			});
 			describe('Click in the right side of editor', function() {
@@ -255,7 +255,7 @@ describe('Test Inline mode', function() {
 							editor.id +
 							']'
 					);
-					expect(popup).to.be.not.null;
+					expect(popup).is.not.null;
 
 					let imgPosition = offset(img);
 					let popupPosition = offset(popup);
@@ -266,7 +266,7 @@ describe('Test Inline mode', function() {
 								(imgPosition.top + imgPosition.height) -
 								10
 						) < 2
-					).to.be.true;
+					).is.true;
 
 					editor.editor.scrollTop = editor.editor.scrollTop + 50;
 					simulateEvent('scroll', 0, editor.editor);
@@ -280,7 +280,7 @@ describe('Test Inline mode', function() {
 								(imgPosition.top + imgPosition.height) -
 								10
 						) < 2
-					).to.be.true;
+					).is.true;
 				});
 			});
 
@@ -303,7 +303,7 @@ describe('Test Inline mode', function() {
 							editor.id +
 							']'
 					);
-					expect(popup).to.be.not.null;
+					expect(popup).is.not.null;
 
 					const imgPosition = offset(img);
 					const popupPosition = offset(popup);
@@ -314,7 +314,7 @@ describe('Test Inline mode', function() {
 								(imgPosition.top + imgPosition.height) -
 								10
 						) < 2
-					).to.be.true;
+					).is.true;
 
 					editor.editor.scrollTop = editor.editor.scrollTop + 1000;
 					simulateEvent('scroll', 0, editor.editor);
@@ -323,7 +323,7 @@ describe('Test Inline mode', function() {
 						popup.parentNode.classList.contains(
 							'jodit_toolbar_popup-inline-target-hidden'
 						)
-					).to.be.true;
+					).is.true;
 
 					img.scrollIntoView();
 					simulateEvent('scroll', 0, editor.editor);
@@ -336,6 +336,7 @@ describe('Test Inline mode', function() {
 				});
 			});
 		});
+
 		describe('Click on Image', function() {
 			describe('On mobile', function() {
 				it('Should show inline popup', function() {
@@ -348,10 +349,11 @@ describe('Test Inline mode', function() {
 							editor.id +
 							']'
 					);
-					expect(popup).to.be.not.equal(null);
+					expect(popup).is.not.null;
 				});
 			});
 		});
+
 		describe('Click on link', function() {
 			it('Should show inline popup', function() {
 				const editor = new Jodit(appendTestDiv());
@@ -363,7 +365,7 @@ describe('Test Inline mode', function() {
 						editor.id +
 						']'
 				);
-				expect(popup).to.be.not.equal(null);
+				expect(popup).is.not.null;
 			});
 			describe('Disable with toolbarInlineDisableFor', function() {
 				describe('Option like string', function() {
@@ -384,7 +386,7 @@ describe('Test Inline mode', function() {
 								editor.id +
 								']'
 						);
-						expect(popup).to.be.equal(null);
+						expect(popup).equals(null);
 
 						simulateEvent('mousedown', 0, img);
 						popup = editor.ownerDocument.querySelector(
@@ -393,7 +395,7 @@ describe('Test Inline mode', function() {
 								']'
 						);
 
-						expect(popup).to.be.equal(null);
+						expect(popup).equals(null);
 
 						simulateEvent('mousedown', 0, td);
 						popup = editor.ownerDocument.querySelector(
@@ -402,7 +404,7 @@ describe('Test Inline mode', function() {
 								']'
 						);
 
-						expect(popup).to.be.not.equal(null);
+						expect(popup).is.not.null;
 					});
 				});
 				describe('Option like srray', function() {
@@ -423,7 +425,7 @@ describe('Test Inline mode', function() {
 								editor.id +
 								']'
 						);
-						expect(popup).to.be.equal(null);
+						expect(popup).equals(null);
 
 						simulateEvent('mousedown', 0, img);
 						popup = editor.ownerDocument.querySelector(
@@ -432,7 +434,7 @@ describe('Test Inline mode', function() {
 								']'
 						);
 
-						expect(popup).to.be.not.equal(null);
+						expect(popup).is.not.null;
 
 						simulateEvent('mousedown', 0, td);
 						popup = editor.ownerDocument.querySelector(
@@ -441,11 +443,12 @@ describe('Test Inline mode', function() {
 								']'
 						);
 
-						expect(popup).to.be.equal(null);
+						expect(popup).equals(null);
 					});
 				});
 			});
 		});
+
 		describe('Click on table cell', function() {
 			it('Should show inline popup', function() {
 				const editor = new Jodit(appendTestDiv());
@@ -458,9 +461,10 @@ describe('Test Inline mode', function() {
 						editor.id +
 						']'
 				);
-				expect(popup).to.be.not.equal(null);
+				expect(popup).is.not.null;
 			});
 		});
+
 		describe('Selection some text inside the editor', function() {
 			it('Should show inline popup', function() {
 				const editor = new Jodit(appendTestDiv(), {
@@ -474,8 +478,9 @@ describe('Test Inline mode', function() {
 						editor.id +
 						']'
 				);
-				expect(popup).to.be.not.equal(null);
+				expect(popup).is.not.null;
 			});
+
 			describe('In readonly mode', function() {
 				it('Should not show inline popup', function() {
 					const editor = new Jodit(appendTestDiv(), {
@@ -490,7 +495,7 @@ describe('Test Inline mode', function() {
 							editor.id +
 							']'
 					);
-					expect(popup).to.be.null;
+					expect(popup).is.null;
 				});
 				describe('After disable readonly mode', function() {
 					it('Should show inline popup', function() {
@@ -507,7 +512,7 @@ describe('Test Inline mode', function() {
 								editor.id +
 								']'
 						);
-						expect(popup).to.be.null;
+						expect(popup).is.null;
 
 						editor.setReadOnly(false);
 
@@ -518,13 +523,14 @@ describe('Test Inline mode', function() {
 								editor.id +
 								']'
 						);
-						expect(popup).to.be.not.null;
+						expect(popup).is.not.null;
 						expect(
 							editor.ownerWindow.getComputedStyle(popup).display
-						).to.be.equal('inline-block');
+						).equals('inline-block');
 					});
 				});
 			});
+
 			describe('After then selection was collapsed', function() {
 				it('Should hide inline popup', function() {
 					const editor = new Jodit(appendTestDiv(), {
@@ -538,15 +544,16 @@ describe('Test Inline mode', function() {
 							editor.id +
 							']'
 					);
-					expect(popup).to.be.not.null;
+					expect(popup).is.not.null;
 					const range = editor.editorDocument.createRange();
 					range.setStart(editor.editor.firstChild, 0);
 					range.collapse(true);
 					editor.selection.selectRange(range);
 					simulateEvent('mousedown', 0, editor.editor);
-					expect(popup.parentNode).to.be.null;
+					expect(popup.parentNode).is.null;
 				});
 			});
+
 			describe('Select some text in one editor and after this select focus in another', function() {
 				it('Should hide inline popup in first', function() {
 					const editor = new Jodit(appendTestDiv(), {
@@ -561,19 +568,24 @@ describe('Test Inline mode', function() {
 								timeout: 0
 							}
 						});
+
+					expect(editor.async).does.not.equal(editor2.async);
+
 					editor.value = 'test<br>test';
 					editor2.value = 'test<br>test';
 
 					editor.selection.select(editor.editor.firstChild);
+
 					simulateEvent('mousedown', 0, editor.editor);
 					simulateEvent('mouseup', 0, editor.editor);
+
 					const popup = editor.ownerDocument.querySelector(
 						'.jodit_toolbar_popup-inline[data-editor_id=' +
 							editor.id +
 							']'
 					);
-					expect(popup).to.be.not.null;
-					expect(popup.parentNode).to.be.not.null;
+					expect(popup).is.not.null;
+					expect(popup.parentNode).is.not.null;
 
 					const range = editor2.editorDocument.createRange();
 					range.setStart(editor2.editor.firstChild, 0);
@@ -581,11 +593,12 @@ describe('Test Inline mode', function() {
 					editor2.selection.selectRange(range);
 					simulateEvent('mousedown', 0, editor2.ownerWindow);
 
-					expect(popup.parentNode).to.be.null;
+					expect(popup.parentNode).is.null;
 				});
 			});
 		});
 	});
+
 	describe('In iframe mode', function() {
 		describe('Inline popups', function() {
 			describe('Click on Image', function() {
@@ -604,7 +617,7 @@ describe('Test Inline mode', function() {
 										editor.id +
 										']'
 								);
-								expect(popup).to.be.not.equal(null);
+								expect(popup).is.not.null;
 								done();
 							}
 						}
@@ -628,7 +641,7 @@ describe('Test Inline mode', function() {
 											editor.id +
 											']'
 									);
-									expect(popup).to.be.equal(null);
+									expect(popup).equals(null);
 									done();
 								}
 							}
@@ -654,7 +667,7 @@ describe('Test Inline mode', function() {
 											editor.id +
 											']'
 									);
-									expect(popup).to.be.not.equal(null);
+									expect(popup).is.not.null;
 									done();
 								}
 							}
@@ -678,7 +691,7 @@ describe('Test Inline mode', function() {
 										editor.id +
 										']'
 								);
-								expect(popup).to.be.not.equal(null);
+								expect(popup).is.not.null;
 								done();
 							}
 						}
@@ -712,7 +725,7 @@ describe('Test Inline mode', function() {
 												editor.id +
 												']'
 										);
-										expect(popup).to.be.equal(null);
+										expect(popup).equals(null);
 
 										simulateEvent('mousedown', 0, img);
 										popup = editor.ownerDocument.querySelector(
@@ -721,7 +734,7 @@ describe('Test Inline mode', function() {
 												']'
 										);
 
-										expect(popup).to.be.equal(null);
+										expect(popup).equals(null);
 
 										simulateEvent('mousedown', 0, td);
 										popup = editor.ownerDocument.querySelector(
@@ -730,7 +743,7 @@ describe('Test Inline mode', function() {
 												']'
 										);
 
-										expect(popup).to.be.not.equal(null);
+										expect(popup).is.not.null;
 										done();
 									}
 								}
@@ -764,7 +777,7 @@ describe('Test Inline mode', function() {
 												editor.id +
 												']'
 										);
-										expect(popup).to.be.equal(null);
+										expect(popup).equals(null);
 
 										simulateEvent('mousedown', 0, img);
 										popup = editor.ownerDocument.querySelector(
@@ -773,7 +786,7 @@ describe('Test Inline mode', function() {
 												']'
 										);
 
-										expect(popup).to.be.not.equal(null);
+										expect(popup).is.not.null;
 
 										simulateEvent('mousedown', 0, td);
 										popup = editor.ownerDocument.querySelector(
@@ -782,7 +795,7 @@ describe('Test Inline mode', function() {
 												']'
 										);
 
-										expect(popup).to.be.equal(null);
+										expect(popup).equals(null);
 										done();
 									}
 								}
@@ -807,7 +820,7 @@ describe('Test Inline mode', function() {
 										editor.id +
 										']'
 								);
-								expect(popup).to.be.not.equal(null);
+								expect(popup).is.not.null;
 								done();
 							}
 						}
@@ -836,7 +849,7 @@ describe('Test Inline mode', function() {
 										editor.id +
 										']'
 								);
-								expect(popup).to.be.not.equal(null);
+								expect(popup).is.not.null;
 								done();
 							}
 						}

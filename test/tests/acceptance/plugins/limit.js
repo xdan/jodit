@@ -12,7 +12,7 @@ describe('Limit plugin', function() {
 				editor.value = '11111';
 				editor.selection.insertHTML('a');
 				setTimeout(() => {
-					expect('11111').to.be.equal(editor.value);
+					expect('11111').equals(editor.value);
 					done();
 				}, 200);
 			});
@@ -32,9 +32,9 @@ describe('Limit plugin', function() {
 					editor.selection.insertHTML('a');
 
 					setTimeout(() => {
-						expect('a1111').to.equal(editor.value);
+						expect('a1111').equals(editor.value);
 						const chars = editor.statusbar.container.querySelector('.jodit_statusbar_item');
-						expect(chars.textContent.trim()).to.equal('Chars: 5');
+						expect(chars.textContent.trim()).equals('Chars: 5');
 						done();
 					}, 200);
 				});
@@ -64,9 +64,9 @@ describe('Limit plugin', function() {
 						simulateEvent('keydown', Jodit.KEY_V, editor.editor);
 
 						setTimeout(() => {
-							expect('1111vv').to.equal(editor.value);
+							expect('1111vv').equals(editor.value);
 							const chars = editor.statusbar.container.querySelector('.jodit_statusbar_item');
-							expect(chars.textContent.trim()).to.equal('Chars: 6');
+							expect(chars.textContent.trim()).equals('Chars: 6');
 							done();
 						}, 200);
 					});
@@ -97,7 +97,7 @@ describe('Limit plugin', function() {
 				});
 
 				setTimeout(() => {
-					expect('11111').to.be.equal(editor.value);
+					expect('11111').equals(editor.value);
 					done();
 				}, 200);
 			});
@@ -136,7 +136,7 @@ describe('Limit plugin', function() {
 
 					const timeout = () => {
 						setTimeout(() => {
-							expect('11111 aaa aaa').to.be.equal(
+							expect('11111 aaa aaa').equals(
 								editor.value
 							);
 							done();
@@ -144,10 +144,10 @@ describe('Limit plugin', function() {
 					};
 
 					paste();
-					expect('11111 aaa').to.be.equal(editor.value);
+					expect('11111 aaa').equals(editor.value);
 
 					paste();
-					expect('11111 aaa aaa').to.be.equal(editor.value);
+					expect('11111 aaa aaa').equals(editor.value);
 
 					paste();
 					timeout();

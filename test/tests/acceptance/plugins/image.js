@@ -26,7 +26,7 @@ describe('Process Images plugins', function() {
 					'.jodit_toolbar_popup'
 				);
 
-				expect(window.getComputedStyle(list).display).to.equal('block');
+				expect(window.getComputedStyle(list).display).equals('block');
 
 				editor.container.querySelector(
 					'.jodit_toolbar_btn.jodit_toolbar_btn-image input[name=url]'
@@ -47,7 +47,7 @@ describe('Process Images plugins', function() {
 					editor.container.querySelectorAll(
 						'.jodit_toolbar_btn.jodit_toolbar_btn-image input[name=url].jodit_error'
 					).length
-				).to.equal(1);
+				).equals(1);
 
 				editor.container.querySelector(
 					'.jodit_toolbar_btn.jodit_toolbar_btn-image input[name=url]'
@@ -61,13 +61,13 @@ describe('Process Images plugins', function() {
 					)
 				);
 
-				expect(sortAttributes(editor.value)).to.equal(
+				expect(sortAttributes(editor.value)).equals(
 					'<img alt="123" src="http://xdsoft.net/jodit/images/artio.jpg" style="width:300px">'
 				);
 
 				simulateEvent('mousedown', 0, editor.editor);
 
-				expect(list.parentNode).to.equal(null);
+				expect(list.parentNode).equals(null);
 			});
 
 			describe('When the cursor in the middle of some text', function() {
@@ -107,7 +107,7 @@ describe('Process Images plugins', function() {
 						)
 					);
 
-					expect(sortAttributes(editor.value)).to.equal(
+					expect(sortAttributes(editor.value)).equals(
 						'hello<img alt="" src="http://xdsoft.net/jodit/images/artio.jpg" style="width:300px"> world!'
 					);
 				});

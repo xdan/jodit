@@ -22,12 +22,12 @@ describe('Toolbar', function() {
 				)
 			);
 
-			expect(btns.length).to.be.equal(2);
+			expect(btns.length).equals(2);
 
 			btns.forEach(function(btn) {
 				const icon = btn.querySelector('.jodit_icon');
 
-				expect(icon).to.be.not.null;
+				expect(icon).is.not.null;;
 
 				const style = window.getComputedStyle(icon),
 					height = parseInt(style.height),
@@ -57,7 +57,7 @@ describe('Toolbar', function() {
 					]
 				});
 
-				expect(editor.toolbar.getButtonsList().toString()).to.equal('image,alert_some');
+				expect(editor.toolbar.getButtonsList().toString()).equals('image,alert_some');
 
 				simulateEvent(
 					'mousedown',
@@ -65,7 +65,7 @@ describe('Toolbar', function() {
 					editor.container.querySelector('.jodit_toolbar_btn-alert_some')
 				);
 
-				expect(editor.value).to.equal('<p><span>indigo</span></p><br>');
+				expect(editor.value).equals('<p><span>indigo</span></p><br>');
 			});
 		});
 	});
@@ -76,7 +76,7 @@ describe('Toolbar', function() {
 				toolbar: false
 			});
 
-			expect(null).to.be.equal(
+			expect(null).equals(
 				editor.container.querySelector('.jodit_toolbar')
 			);
 		});
@@ -94,7 +94,7 @@ describe('Toolbar', function() {
 			const defaultContainer = editor.container.querySelector('.jodit_toolbar_container');
 
 			expect(null).to.not.equal(toolbar);
-			expect(div).to.equal(toolbar.parentElement);
+			expect(div).equals(toolbar.parentElement);
 			expect(defaultContainer).to.not.equal(toolbar.parentElement);
 		});
 
@@ -110,10 +110,10 @@ describe('Toolbar', function() {
 				const defaultContainer = editor.container.querySelector('.jodit_toolbar_container');
 
 				editor.toggleFullSize(true);
-				expect(defaultContainer).to.equal(toolbar.parentElement);
+				expect(defaultContainer).equals(toolbar.parentElement);
 
 				editor.toggleFullSize(false);
-				expect(div).to.equal(toolbar.parentElement);
+				expect(div).equals(toolbar.parentElement);
 			});
 		});
 
@@ -127,25 +127,25 @@ describe('Toolbar', function() {
 				const dots = editor.container.querySelector(
 					'.jodit_toolbar_btn.jodit_toolbar_btn-dots'
 				);
-				expect(dots).to.be.not.equal(null);
+				expect(dots).is.not.null;
 				simulateEvent('mousedown', 0, dots);
 				const popup = dots.querySelector(
 					'.jodit_toolbar_popup.jodit_toolbar_popup-open'
 				);
 
-				expect(popup).to.be.not.equal(null);
+				expect(popup).is.not.null;
 
 				const video = popup.querySelector(
 					'.jodit_toolbar_btn.jodit_toolbar_btn-video'
 				);
-				expect(video).to.be.not.equal(null);
+				expect(video).is.not.null;
 
 				simulateEvent('mousedown', 0, video);
 
 				const popup2 = video.querySelector(
 					'.jodit_toolbar_popup.jodit_toolbar_popup-open'
 				);
-				expect(popup2).to.be.not.equal(null);
+				expect(popup2).is.not.null;
 				getBox().style.width = 'auto';
 			});
 			describe('Some with touchend', function() {
@@ -155,25 +155,25 @@ describe('Toolbar', function() {
 					const dots = editor.container.querySelector(
 						'.jodit_toolbar_btn.jodit_toolbar_btn-dots'
 					);
-					expect(dots).to.be.not.equal(null);
+					expect(dots).is.not.null;
 					simulateEvent('touchend', 0, dots);
 					const popup = dots.querySelector(
 						'.jodit_toolbar_popup.jodit_toolbar_popup-open'
 					);
 
-					expect(popup).to.be.not.equal(null);
+					expect(popup).is.not.null;
 
 					const video = popup.querySelector(
 						'.jodit_toolbar_btn.jodit_toolbar_btn-video'
 					);
-					expect(video).to.be.not.equal(null);
+					expect(video).is.not.null;
 
 					simulateEvent('touchend', 0, video);
 
 					const popup2 = video.querySelector(
 						'.jodit_toolbar_popup.jodit_toolbar_popup-open'
 					);
-					expect(popup2).to.be.not.equal(null);
+					expect(popup2).is.not.null;
 					getBox().style.width = 'auto';
 				});
 			});
@@ -198,12 +198,12 @@ describe('Toolbar', function() {
 
 					expect(
 						popup && popup.style.display !== 'none'
-					).to.be.equal(true);
+					).equals(true);
 
 					const positionPopup = offset(popup);
 					const positionContainer = offset(editor.container);
 
-					expect(true).to.be.equal(
+					expect(true).equals(
 						positionPopup.left >= positionContainer.left
 					);
 				});
@@ -227,7 +227,7 @@ describe('Toolbar', function() {
 					'.jodit_toolbar_popup'
 				);
 
-				expect(popup && popup.style.display === 'block').to.equal(
+				expect(popup && popup.style.display === 'block').equals(
 					true
 				);
 			});
@@ -252,12 +252,12 @@ describe('Toolbar', function() {
 						']'
 					);
 
-					expect(popup).to.be.not.equal(null);
+					expect(popup).is.not.null;
 
 					const positionPopup = offset(popup);
 					const positionContainer = offset(editor.container);
 
-					expect(true).to.be.equal(
+					expect(true).equals(
 						positionPopup.left >= positionContainer.left
 					);
 				});
@@ -294,7 +294,7 @@ describe('Toolbar', function() {
 						']'
 					);
 
-					expect(popup).to.be.not.equal(null);
+					expect(popup).is.not.null;
 
 					const positionPopup = offset(popup);
 					const positionContainer = offset(editor.container);
@@ -306,7 +306,7 @@ describe('Toolbar', function() {
 							(positionContainer.left +
 								positionContainer.width)
 						) < 2
-					).to.be.true;
+					).is.true;
 				});
 			});
 		});
@@ -328,11 +328,11 @@ describe('Toolbar', function() {
 				'.jodit_toolbar_popup'
 			);
 
-			expect(popup && popup.style.display === 'block').to.equal(true);
+			expect(popup && popup.style.display === 'block').equals(true);
 
 			simulateEvent('mousedown', 0, window);
 
-			expect(popup && popup.parentNode === null).to.equal(true);
+			expect(popup && popup.parentNode === null).equals(true);
 		});
 
 		describe('Open list', function() {
@@ -357,7 +357,7 @@ describe('Toolbar', function() {
 					list &&
 					window.getComputedStyle(list).display === 'block' &&
 					list.parentNode !== null
-				).to.equal(true);
+				).equals(true);
 			});
 			describe('Change defaiult list', function() {
 				it('Should change default FONT list in toolbar', function() {
@@ -398,11 +398,11 @@ describe('Toolbar', function() {
 						window.getComputedStyle(list).display ===
 						'block' &&
 						list.parentNode !== null
-					).to.equal(true);
+					).equals(true);
 
 					expect(
 						list.textContent.match('Custom')
-					).to.be.not.equal(null);
+					).is.not.null;
 				});
 				it('Should change default FONT size list in toolbar', function() {
 					const editor = new Jodit(appendTestArea(), {
@@ -428,7 +428,7 @@ describe('Toolbar', function() {
 
 					expect(
 						list.getElementsByTagName('li').length
-					).to.be.equal(3);
+					).equals(3);
 				});
 			});
 		});
@@ -450,11 +450,11 @@ describe('Toolbar', function() {
 
 			expect(
 				list && window.getComputedStyle(list).display === 'block'
-			).to.equal(true);
+			).equals(true);
 
 			simulateEvent('mousedown', 0, window);
 
-			expect(list && list.parentNode === null).to.equal(true);
+			expect(list && list.parentNode === null).equals(true);
 		});
 
 		it('Open colorpicker set background and color. After this click in another any place. White when popap will be closed. Open again and remove all styles.', function() {
@@ -482,7 +482,7 @@ describe('Toolbar', function() {
 				'.jodit_toolbar_popup'
 			);
 
-			expect(window.getComputedStyle(list).display).to.equal('block');
+			expect(window.getComputedStyle(list).display).equals('block');
 
 			simulateEvent(
 				'mousedown',
@@ -492,12 +492,12 @@ describe('Toolbar', function() {
 				)
 			);
 
-			expect(editor.getEditorValue()).to.equal(
+			expect(editor.getEditorValue()).equals(
 				'tex<span style="background-color: rgb(249, 203, 156);">t2t</span>ext'
 			);
 
 			// simulateEvent('mousedown', 0, editor.editor)
-			expect(list.parentNode).to.equal(null);
+			expect(list.parentNode).equals(null);
 
 			range.selectNodeContents(editor.editor.querySelector('span'));
 			// range.collapse(true);
@@ -515,7 +515,7 @@ describe('Toolbar', function() {
 			const list2 = editor.container.querySelector(
 				'.jodit_toolbar_popup.jodit_toolbar_popup-open'
 			);
-			expect(window.getComputedStyle(list2).display).to.equal(
+			expect(window.getComputedStyle(list2).display).equals(
 				'block'
 			);
 
@@ -526,7 +526,7 @@ describe('Toolbar', function() {
 					'.jodit_toolbar_btn.jodit_toolbar_btn-brush .jodit_colorpicker > a > svg'
 				)
 			);
-			expect(editor.getEditorValue()).to.equal('text2text');
+			expect(editor.getEditorValue()).equals('text2text');
 		});
 
 		describe('Show native color picker', function() {
@@ -553,7 +553,7 @@ describe('Toolbar', function() {
 					// In two tabs text-color and background-color
 					expect(
 						list.querySelectorAll('input[type="color"]').length
-					).to.be.equal(2);
+					).equals(2);
 				});
 			});
 			describe('Disable', function() {
@@ -578,7 +578,7 @@ describe('Toolbar', function() {
 
 					expect(
 						list.querySelectorAll('input[type="color"]').length
-					).to.be.equal(0);
+					).equals(0);
 				});
 			});
 		});
@@ -608,7 +608,7 @@ describe('Toolbar', function() {
 				'.jodit_toolbar_list'
 			);
 
-			expect(window.getComputedStyle(list).display).to.equal('block');
+			expect(window.getComputedStyle(list).display).equals('block');
 
 			simulateEvent(
 				'mousedown',
@@ -618,17 +618,17 @@ describe('Toolbar', function() {
 				)
 			);
 
-			expect(editor.getEditorValue()).to.equal('<h1>text2text</h1>');
+			expect(editor.getEditorValue()).equals('<h1>text2text</h1>');
 
 			simulateEvent('mousedown', 0, editor.editor);
 
-			expect(list.parentNode).to.equal(null);
+			expect(list.parentNode).equals(null);
 
 			editor.selection.insertNode(
 				editor.editorDocument.createTextNode(' a ')
 			);
 
-			expect(editor.getEditorValue()).to.equal('<h1>tex a ext</h1>');
+			expect(editor.getEditorValue()).equals('<h1>tex a ext</h1>');
 		});
 		describe('FontName', function() {
 			describe('Open fontname list and select some element', function() {
@@ -645,7 +645,7 @@ describe('Toolbar', function() {
 					const fontname = editor.container.querySelector(
 						'.jodit_toolbar_btn.jodit_with_dropdownlist.jodit_toolbar_btn-font'
 					);
-					expect(fontname).to.be.not.equal(null);
+					expect(fontname).is.not.null;
 
 					function openFontnameList() {
 						simulateEvent('mousedown', 0, fontname);
@@ -655,7 +655,7 @@ describe('Toolbar', function() {
 						);
 					}
 
-					expect(openFontnameList()).to.be.not.null;
+					expect(openFontnameList()).is.not.null;;
 
 					Array.from(openFontnameList().childNodes).map(function(
 						font,
@@ -669,7 +669,7 @@ describe('Toolbar', function() {
 							.getAttribute('style')
 							.replace(/"/g, "'");
 
-						expect(sortAttributes(editor.value)).to.be.equal(
+						expect(sortAttributes(editor.value)).equals(
 							sortAttributes(
 								'<p><span style="' +
 								fontFamily +
@@ -700,7 +700,7 @@ describe('Toolbar', function() {
 						const fontname = editor.container.querySelector(
 							'.jodit_toolbar_btn.jodit_with_dropdownlist.jodit_toolbar_btn-font'
 						);
-						expect(fontname).to.be.not.equal(null);
+						expect(fontname).is.not.null;
 
 						simulateEvent('mousedown', 0, fontname);
 
@@ -708,13 +708,13 @@ describe('Toolbar', function() {
 							'.jodit_toolbar_list.jodit_toolbar_list-open > ul'
 						);
 
-						expect(list).to.be.not.equal(null);
+						expect(list).is.not.null;
 
 						const font =
 							list.childNodes[list.childNodes.length - 1];
 						simulateEvent('mousedown', 0, font);
 
-						expect(sortAttributes(editor.value)).to.be.equal(
+						expect(sortAttributes(editor.value)).equals(
 							sortAttributes(
 								"<p><span style=\"font-family:-apple-system,BlinkMacSystemFont,'Segoe WPC','Segoe UI',HelveticaNeue-Light,Ubuntu,'Droid Sans',sans-serif\">test</span></p>"
 							)
@@ -743,7 +743,7 @@ describe('Toolbar', function() {
 				'.jodit_toolbar_popup'
 			);
 
-			expect(popup.style.display).to.equal('block');
+			expect(popup.style.display).equals('block');
 
 			popup.querySelector('input[name=code]').value =
 				'sddhttps://www.youtube.com/watch?v=7CcEYRfxUOQ'; // try wrong url
@@ -752,19 +752,19 @@ describe('Toolbar', function() {
 			expect(
 				popup.querySelectorAll('input[name=code].jodit_error')
 					.length
-			).to.equal(1);
+			).equals(1);
 
 			popup.querySelector('input[name=code]').value =
 				'https://www.youtube.com/watch?v=7CcEYRfxUOQ';
 			simulateEvent('submit', 0, popup.querySelector('.jodit_form'));
 
-			expect(sortAttributes(editor.value)).to.equal(
+			expect(sortAttributes(editor.value)).equals(
 				'<iframe allowfullscreen="" frameborder="0" height="345" src="https://www.youtube.com/embed/7CcEYRfxUOQ" width="400"></iframe>'
 			);
 
 			simulateEvent('mousedown', 0, editor.editor);
 
-			expect(popup.parentNode).to.equal(null);
+			expect(popup.parentNode).equals(null);
 		});
 		it('Open align list and choose Right align.', function() {
 			const editor = new Jodit(appendTestArea());
@@ -783,7 +783,7 @@ describe('Toolbar', function() {
 				'.jodit_toolbar_list'
 			);
 
-			expect(window.getComputedStyle(list).display).to.equal('block');
+			expect(window.getComputedStyle(list).display).equals('block');
 
 			simulateEvent(
 				'mousedown',
@@ -793,13 +793,13 @@ describe('Toolbar', function() {
 				)
 			);
 
-			expect(sortAttributes(editor.getEditorValue())).to.equal(
+			expect(sortAttributes(editor.getEditorValue())).equals(
 				'<p style="text-align:right">Test</p>'
 			);
 
 			simulateEvent('mousedown', 0, editor.editor);
 
-			expect(list.parentNode).to.equal(null);
+			expect(list.parentNode).equals(null);
 		});
 
 		describe('Click inside the link', function() {
@@ -810,7 +810,7 @@ describe('Toolbar', function() {
 					}
 				});
 
-				editor.setEditorValue('test test <a href="#">test</a>');
+				editor.value = 'test test <a href="#">test</a>';
 
 				simulateEvent(
 					'mousedown',
@@ -824,7 +824,7 @@ describe('Toolbar', function() {
 					']'
 				);
 
-				expect(popup).to.be.not.equal(null);
+				expect(popup).is.not.null;
 			});
 
 			describe('Click on pencil', function() {
@@ -848,33 +848,33 @@ describe('Toolbar', function() {
 						']'
 					);
 
-					expect(popup).to.be.not.equal(null);
+					expect(popup).is.not.null;
 					expect(
 						popup.classList.contains(
 							'jodit_toolbar_popup-inline-open'
 						)
-					).to.be.equal(true);
+					).equals(true);
 
 					const pencil = popup.querySelector(
 						'.jodit_toolbar_btn.jodit_toolbar_btn-link a'
 					);
-					expect(pencil).to.be.not.equal(null);
+					expect(pencil).is.not.null;
 
 					simulateEvent('mousedown', 0, pencil);
 					const subpopup = popup.querySelector(
 						'.jodit_toolbar_popup'
 					);
 
-					expect(subpopup).to.be.not.equal(null);
-					expect(subpopup.style.display).to.be.equal('block');
+					expect(subpopup).is.not.null;
+					expect(subpopup.style.display).equals('block');
 					expect(
 						popup.classList.contains(
 							'jodit_toolbar_popup-inline-open'
 						)
-					).to.be.equal(true);
+					).equals(true);
 					expect(
 						popup.parentNode.parentNode.parentNode
-					).to.be.not.equal(null);
+					).is.not.null;
 				});
 			});
 		});
@@ -895,7 +895,7 @@ describe('Toolbar', function() {
 						'.jodit_toolbar_popup'
 					);
 
-					expect(window.getComputedStyle(list).display).to.equal(
+					expect(window.getComputedStyle(list).display).equals(
 						'block'
 					);
 
@@ -910,7 +910,7 @@ describe('Toolbar', function() {
 						list.querySelectorAll(
 							'.jodit_form-container div.hovered'
 						).length
-					).to.equal(10);
+					).equals(10);
 				});
 				describe('In iframe mode', function() {
 					it('Should works same way', function() {
@@ -932,7 +932,7 @@ describe('Toolbar', function() {
 
 						expect(
 							window.getComputedStyle(list).display
-						).to.equal('block');
+						).equals('block');
 
 						const divs = list.querySelectorAll(
 							'.jodit_form-container div'
@@ -946,7 +946,7 @@ describe('Toolbar', function() {
 							list.querySelectorAll(
 								'.jodit_form-container div.hovered'
 							).length
-						).to.equal(10);
+						).equals(10);
 					});
 				});
 			});
@@ -972,7 +972,7 @@ describe('Toolbar', function() {
 						'.jodit_toolbar_btn-source'
 					).textContent;
 
-				expect(label1).to.be.not.equal(label2);
+				expect(label1).does.not.equal(label2);
 			});
 
 			it('Should create buttons with text', function() {
@@ -983,12 +983,12 @@ describe('Toolbar', function() {
 					editor.container.querySelectorAll(
 						'.jodit_toolbar_btn-source'
 					).length
-				).to.be.equal(1);
+				).equals(1);
 				expect(
 					editor.container.querySelectorAll(
 						'.jodit_toolbar_btn-source svg'
 					).length
-				).to.be.equal(0);
+				).equals(0);
 			});
 
 			it("Should add jodit_text_icons class to editor's container", function() {
@@ -997,7 +997,7 @@ describe('Toolbar', function() {
 				});
 				expect(
 					editor.container.classList.contains('jodit_text_icons')
-				).to.be.true;
+				).is.true;
 			});
 
 			it('Should set font-size more them 0', function() {
@@ -1026,7 +1026,7 @@ describe('Toolbar', function() {
 						editor.container.querySelector(
 							'.jodit_toolbar_btn-image'
 						)
-					).to.be.not.equal(null);
+					).is.not.null;
 
 					simulateEvent(
 						'mousedown',
@@ -1040,11 +1040,11 @@ describe('Toolbar', function() {
 						'.jodit_toolbar_btn-image .jodit_toolbar_popup.jodit_toolbar_popup-open'
 					);
 
-					expect(popup).to.be.not.equal(null);
+					expect(popup).is.not.null;
 
 					expect(
 						popup.querySelectorAll('svg, img').length
-					).to.be.equal(0);
+					).equals(0);
 				});
 			});
 
@@ -1058,7 +1058,7 @@ describe('Toolbar', function() {
 						editor.container.querySelector(
 							'.jodit_toolbar_btn-brush'
 						)
-					).to.be.not.equal(null);
+					).is.not.null;
 
 					simulateEvent(
 						'mousedown',
@@ -1072,11 +1072,11 @@ describe('Toolbar', function() {
 						'.jodit_toolbar_btn-brush .jodit_toolbar_popup.jodit_toolbar_popup-open'
 					);
 
-					expect(popup).to.be.not.equal(null);
+					expect(popup).is.not.null;
 
 					expect(
 						popup.querySelectorAll('svg, img').length
-					).to.be.equal(0);
+					).equals(0);
 				});
 			});
 
@@ -1091,7 +1091,7 @@ describe('Toolbar', function() {
 						editor.container.querySelector(
 							'.jodit_toolbar_btn-video'
 						)
-					).to.be.not.equal(null);
+					).is.not.null;
 
 					simulateEvent(
 						'mousedown',
@@ -1105,11 +1105,11 @@ describe('Toolbar', function() {
 						'.jodit_toolbar_btn-video .jodit_toolbar_popup.jodit_toolbar_popup-open'
 					);
 
-					expect(popup).to.be.not.equal(null);
+					expect(popup).is.not.null;
 
 					expect(
 						popup.querySelectorAll('svg, img').length
-					).to.be.equal(0);
+					).equals(0);
 				});
 			});
 		});
@@ -1120,7 +1120,7 @@ describe('Toolbar', function() {
 				editor.container.querySelectorAll(
 					'.jodit_toolbar_btn-source'
 				).length
-			).to.equal(1);
+			).equals(1);
 			editor.destruct();
 
 			const editor2 = new Jodit(appendTestArea(), {
@@ -1131,7 +1131,7 @@ describe('Toolbar', function() {
 				editor2.container.querySelectorAll(
 					'.jodit_toolbar_btn-source'
 				).length
-			).to.equal(0);
+			).equals(0);
 		});
 
 		it('Add own button', function() {
@@ -1154,7 +1154,7 @@ describe('Toolbar', function() {
 				editor.container.querySelectorAll(
 					'.jodit_toolbar_btn-insertDate'
 				).length
-			).to.equal(1);
+			).equals(1);
 
 			editor.setEditorValue('');
 
@@ -1165,7 +1165,7 @@ describe('Toolbar', function() {
 					'.jodit_toolbar_btn-insertDate'
 				)
 			);
-			expect(editor.getEditorValue()).to.equal('Wed Mar 16 2016');
+			expect(editor.getEditorValue()).equals('Wed Mar 16 2016');
 		});
 
 		it('When cursor inside STRONG tag, Bold button should be selected', function() {
@@ -1192,7 +1192,7 @@ describe('Toolbar', function() {
 				editor.container.querySelectorAll(
 					'.jodit_toolbar_btn-bold.jodit_active'
 				).length
-			).to.equal(1);
+			).equals(1);
 
 			range.setStart(
 				editor.editor.firstChild.nextSibling.firstChild,
@@ -1208,12 +1208,12 @@ describe('Toolbar', function() {
 				editor.container.querySelectorAll(
 					'.jodit_toolbar_btn-bold.jodit_active'
 				).length
-			).to.equal(0);
+			).equals(0);
 			expect(
 				editor.container.querySelectorAll(
 					'.jodit_toolbar_btn-italic.jodit_active'
 				).length
-			).to.equal(1);
+			).equals(1);
 
 			range.setStart(
 				editor.editor.firstChild.nextSibling.nextSibling.firstChild,
@@ -1229,12 +1229,12 @@ describe('Toolbar', function() {
 				editor.container.querySelectorAll(
 					'.jodit_toolbar_btn-bold.jodit_active'
 				).length
-			).to.equal(0);
+			).equals(0);
 			expect(
 				editor.container.querySelectorAll(
 					'.jodit_toolbar_btn-italic.jodit_active'
 				).length
-			).to.equal(1);
+			).equals(1);
 
 			range.setStart(
 				editor.editor.firstChild.nextSibling.nextSibling.nextSibling
@@ -1251,12 +1251,12 @@ describe('Toolbar', function() {
 				editor.container.querySelectorAll(
 					'.jodit_toolbar_btn-bold.jodit_active'
 				).length
-			).to.equal(1);
+			).equals(1);
 			expect(
 				editor.container.querySelectorAll(
 					'.jodit_toolbar_btn-italic.jodit_active'
 				).length
-			).to.equal(0);
+			).equals(0);
 		});
 
 		describe('Disable for mode', function() {
@@ -1277,12 +1277,12 @@ describe('Toolbar', function() {
 					editor.container.querySelectorAll(
 						'.jodit_toolbar_btn-bold.jodit_disabled'
 					).length
-				).to.equal(1);
+				).equals(1);
 				expect(
 					editor.container.querySelectorAll(
 						'.jodit_toolbar_btn-source.jodit_disabled'
 					).length
-				).to.equal(0);
+				).equals(0);
 
 				editor.setMode(Jodit.MODE_WYSIWYG);
 
@@ -1290,12 +1290,12 @@ describe('Toolbar', function() {
 					editor.container.querySelectorAll(
 						'.jodit_toolbar_btn-bold.jodit_disabled'
 					).length
-				).to.equal(0);
+				).equals(0);
 				expect(
 					editor.container.querySelectorAll(
 						'.jodit_toolbar_btn-source.jodit_disabled'
 					).length
-				).to.equal(0);
+				).equals(0);
 			});
 
 			describe('For list', function() {
@@ -1339,7 +1339,7 @@ describe('Toolbar', function() {
 						const btn = editor.container.querySelector(
 							'.jodit_toolbar_btn-list_test'
 						);
-						expect(btn).to.be.not.null;
+						expect(btn).is.not.null;;
 
 						expect(btn.classList.contains('jodit_disabled')).to
 							.be.false;
@@ -1349,11 +1349,11 @@ describe('Toolbar', function() {
 						const list = btn.querySelector(
 							'.jodit_toolbar_list'
 						);
-						expect(list).to.be.not.null;
+						expect(list).is.not.null;;
 
 						expect(
 							list.querySelectorAll('.jodit_disabled').length
-						).to.be.equal(0);
+						).equals(0);
 					});
 				});
 
@@ -1397,17 +1397,16 @@ describe('Toolbar', function() {
 						const btn = editor.container.querySelector(
 							'.jodit_toolbar_btn-list_test'
 						);
-						expect(btn).to.be.not.null;
+						expect(btn).is.not.null;;
 
-						expect(btn.classList.contains('jodit_disabled')).to
-							.be.true;
+						expect(btn.classList.contains('jodit_disabled')).is.true;
 
 						simulateEvent('mousedown', 0, btn);
 
 						const list = btn.querySelector(
 							'.jodit_toolbar_list'
 						);
-						expect(list).to.be.null;
+						expect(list).is.null;
 					});
 				});
 			});
@@ -1436,7 +1435,7 @@ describe('Toolbar', function() {
 				editor.container.querySelectorAll(
 					'.jodit_toolbar_btn-bold.jodit_active'
 				).length
-			).to.equal(1);
+			).equals(1);
 		});
 
 		describe('Check Redo Undo functionality', function() {
@@ -1456,12 +1455,12 @@ describe('Toolbar', function() {
 					editor.container.querySelectorAll(
 						'.jodit_toolbar_btn-undo.jodit_disabled'
 					).length
-				).to.equal(0);
+				).equals(0);
 				expect(
 					editor.container.querySelectorAll(
 						'.jodit_toolbar_btn-redo.jodit_disabled'
 					).length
-				).to.equal(1);
+				).equals(1);
 
 				simulateEvent(
 					'mousedown',
@@ -1475,14 +1474,14 @@ describe('Toolbar', function() {
 					editor.container.querySelectorAll(
 						'.jodit_toolbar_btn-undo.jodit_disabled'
 					).length
-				).to.equal(1);
+				).equals(1);
 				expect(
 					editor.container.querySelectorAll(
 						'.jodit_toolbar_btn-redo.jodit_disabled'
 					).length
-				).to.equal(0);
+				).equals(0);
 
-				expect(editor.value).to.equal('top');
+				expect(editor.value).equals('top');
 			});
 		});
 
@@ -1506,7 +1505,7 @@ describe('Toolbar', function() {
 			while (node && node.nodeType !== Node.DOCUMENT_NODE) {
 				expect(
 					node.classList.contains('jodit_fullsize_box')
-				).to.equal(true);
+				).equals(true);
 				node = node.parentNode;
 			}
 		});
@@ -1534,7 +1533,7 @@ describe('Toolbar', function() {
 						editor.container.querySelectorAll(
 							'.jodit_toolbar_btn-adddate'
 						).length
-					).to.equal(1);
+					).equals(1);
 
 					simulateEvent(
 						'mousedown',
@@ -1542,7 +1541,7 @@ describe('Toolbar', function() {
 						editor.container.querySelector('.jodit_toolbar_btn-adddate')
 					);
 
-					expect(editor.value).to.equal('111');
+					expect(editor.value).equals('111');
 				});
 
 				describe('extraButtons always append in the end', function () {
@@ -1563,7 +1562,7 @@ describe('Toolbar', function() {
 							]
 						});
 
-						expect(editor.toolbar.getButtonsList().toString()).to.equal('indent,outdent,bold,adddate,dots,adddate')
+						expect(editor.toolbar.getButtonsList().toString()).equals('indent,outdent,bold,adddate,dots,adddate')
 					});
 				})
 			});
@@ -1576,27 +1575,27 @@ describe('Toolbar', function() {
 					disablePlugins: 'mobile'
 				});
 
-				expect(null).to.be.not.equal(
+				expect(null).does.not.equal(
 					editor.container.querySelector(
 						'.jodit_toolbar_btn.jodit_toolbar_btn-indent'
 					)
 				);
-				expect(null).to.be.not.equal(
+				expect(null).does.not.equal(
 					editor.container.querySelector(
 						'.jodit_toolbar_btn.jodit_toolbar_btn-outdent'
 					)
 				);
-				expect(null).to.be.not.equal(
+				expect(null).does.not.equal(
 					editor.container.querySelector(
 						'.jodit_toolbar_btn.jodit_toolbar_btn-bold'
 					)
 				);
-				expect(null).to.be.not.equal(
+				expect(null).does.not.equal(
 					editor.container.querySelector(
 						'.jodit_toolbar_btn.jodit_toolbar_btn-customxxx'
 					)
 				);
-				expect(null).to.be.equal(
+				expect(null).equals(
 					editor.container.querySelector(
 						'.jodit_toolbar_btn.jodit_toolbar_btn-source'
 					)
@@ -1633,7 +1632,7 @@ describe('Toolbar', function() {
 					);
 					editor.selection.insertHTML('text');
 
-					expect(editor.getEditorValue()).to.equal(
+					expect(editor.getEditorValue()).equals(
 						'<p>test<strong>text</strong>text</p>'
 					);
 				});
@@ -1661,7 +1660,7 @@ describe('Toolbar', function() {
 						)
 					);
 
-					expect(editor.getEditorValue()).to.equal(
+					expect(editor.getEditorValue()).equals(
 						'<strong>test</strong> test test'
 					);
 				});
@@ -1691,10 +1690,10 @@ describe('Toolbar', function() {
 					'.jodit_toolbar_btn-left'
 				);
 
-				expect(false).to.equal(
+				expect(false).equals(
 					align.classList.contains('jodit_active')
 				);
-				expect(false).to.equal(
+				expect(false).equals(
 					bold.classList.contains('jodit_active')
 				);
 
@@ -1703,19 +1702,19 @@ describe('Toolbar', function() {
 				);
 				simulateEvent('mousedown', 0, p);
 				// editor.selection.insertHTML('ddd');
-				expect(false).to.equal(
+				expect(false).equals(
 					align.classList.contains('jodit_active')
 				);
-				expect(true).to.equal(
+				expect(true).equals(
 					bold.classList.contains('jodit_active')
 				);
 
 				p.style.textAlign = 'right';
 				simulateEvent('mousedown', 0, p);
-				expect(true).to.equal(
+				expect(true).equals(
 					align.classList.contains('jodit_active')
 				);
-				expect(true).to.equal(
+				expect(true).equals(
 					bold.classList.contains('jodit_active')
 				);
 			});
@@ -1738,13 +1737,13 @@ describe('Toolbar', function() {
 
 					editor.selection.setCursorAfter(p.firstChild);
 					simulateEvent('mousedown', 0, p);
-					expect(false).to.equal(
+					expect(false).equals(
 						fontsize.classList.contains('jodit_active')
 					);
 
 					editor.selection.setCursorIn(p.lastChild);
 					simulateEvent('mousedown', 0, p);
-					expect(true).to.equal(
+					expect(true).equals(
 						fontsize.classList.contains('jodit_active')
 					);
 				});
@@ -1771,17 +1770,17 @@ describe('Toolbar', function() {
 
 					editor.selection.setCursorAfter(p.firstChild);
 					simulateEvent('mousedown', 0, p);
-					expect(false).to.equal(
+					expect(false).equals(
 						brush.classList.contains('jodit_active')
 					);
-					expect('').to.equal(brushIcon.style.fill);
+					expect('').equals(brushIcon.style.fill);
 
 					editor.selection.setCursorIn(p.lastChild);
 					simulateEvent('mousedown', 0, p);
-					expect(true).to.equal(
+					expect(true).equals(
 						brush.classList.contains('jodit_active')
 					);
-					expect('rgb(204, 204, 204)').to.equal(
+					expect('rgb(204, 204, 204)').equals(
 						brushIcon.style.fill
 					);
 				});
@@ -1804,18 +1803,18 @@ describe('Toolbar', function() {
 							'.jodit_toolbar_btn-fontsize'
 						);
 
-						expect(null).to.be.not.equal(font);
+						expect(null).does.not.equal(font);
 
 						editor.selection.setCursorAfter(p.firstChild);
 						simulateEvent('mousedown', 0, p);
-						expect(false).to.equal(
+						expect(false).equals(
 							font.classList.contains('jodit_active')
 						);
 
 						editor.selection.setCursorIn(p.lastChild);
 
 						simulateEvent('mousedown', 0, p);
-						expect(true).to.equal(
+						expect(true).equals(
 							font.classList.contains('jodit_active')
 						);
 
@@ -1824,7 +1823,7 @@ describe('Toolbar', function() {
 						const font16 = font.querySelector(
 							'.jodit_toolbar_btn-6'
 						);
-						expect(true).to.equal(
+						expect(true).equals(
 							font16.classList.contains('jodit_active')
 						);
 					});
@@ -1847,18 +1846,18 @@ describe('Toolbar', function() {
 							'.jodit_toolbar_btn-font'
 						);
 
-						expect(null).to.be.not.equal(font);
+						expect(null).does.not.equal(font);
 
 						editor.selection.setCursorAfter(p.firstChild);
 						simulateEvent('mousedown', 0, p);
-						expect(false).to.equal(
+						expect(false).equals(
 							font.classList.contains('jodit_active')
 						);
 
 						editor.selection.setCursorIn(p.lastChild);
 
 						simulateEvent('mousedown', 0, p);
-						expect(true).to.equal(
+						expect(true).equals(
 							font.classList.contains('jodit_active')
 						);
 
@@ -1867,8 +1866,8 @@ describe('Toolbar', function() {
 						const fontGeorgia = font.querySelector(
 							'.jodit_toolbar_btn-Georgia_serif'
 						);
-						expect(fontGeorgia).to.be.not.equal(font);
-						expect(true).to.equal(
+						expect(fontGeorgia).does.not.equal(font);
+						expect(true).equals(
 							fontGeorgia.classList.contains('jodit_active')
 						);
 					});
@@ -1890,11 +1889,11 @@ describe('Toolbar', function() {
 							'.jodit_toolbar_btn-paragraph'
 						);
 
-						expect(null).to.be.not.equal(paragraph);
+						expect(null).does.not.equal(paragraph);
 
 						editor.selection.setCursorAfter(p.firstChild);
 						simulateEvent('mousedown', 0, p);
-						expect(false).to.equal(
+						expect(false).equals(
 							paragraph.classList.contains('jodit_active')
 						);
 
@@ -1903,7 +1902,7 @@ describe('Toolbar', function() {
 						);
 
 						simulateEvent('mousedown', 0, p);
-						expect(true).to.equal(
+						expect(true).equals(
 							paragraph.classList.contains('jodit_active')
 						);
 
@@ -1912,7 +1911,7 @@ describe('Toolbar', function() {
 						const header = paragraph.querySelector(
 							'.jodit_toolbar_btn-h1'
 						);
-						expect(true).to.equal(
+						expect(true).equals(
 							header.classList.contains('jodit_active')
 						);
 					});
@@ -1947,15 +1946,15 @@ describe('Toolbar', function() {
 						'.jodit_toolbar_btn-underline'
 					);
 
-					expect(true).to.be.equal(
+					expect(true).equals(
 						bold.classList.contains('jodit_active')
 					);
 
-					expect(true).to.be.equal(
+					expect(true).equals(
 						italic.classList.contains('jodit_active')
 					);
 
-					expect(true).to.be.equal(
+					expect(true).equals(
 						underline.classList.contains('jodit_active')
 					);
 				});
@@ -1982,7 +1981,7 @@ describe('Toolbar', function() {
 						);
 						editor.selection.focus();
 
-						expect(true).to.equal(
+						expect(true).equals(
 							cut.classList.contains('jodit_disabled')
 						);
 
@@ -1990,7 +1989,7 @@ describe('Toolbar', function() {
 
 						editor.selection.select(p.firstChild);
 
-						expect(false).to.equal(
+						expect(false).equals(
 							cut.classList.contains('jodit_disabled')
 						);
 					});
@@ -2014,7 +2013,7 @@ describe('Toolbar', function() {
 						);
 						editor.selection.focus();
 
-						expect(true).to.equal(
+						expect(true).equals(
 							copy.classList.contains('jodit_disabled')
 						);
 
@@ -2022,7 +2021,7 @@ describe('Toolbar', function() {
 
 						editor.selection.select(p.firstChild);
 
-						expect(false).to.equal(
+						expect(false).equals(
 							copy.classList.contains('jodit_disabled')
 						);
 					});
@@ -2055,17 +2054,17 @@ describe('Toolbar', function() {
 
 					editor.selection.setCursorAfter(p.firstChild);
 					simulateEvent('mousedown', 0, p);
-					expect(false).to.equal(
+					expect(false).equals(
 						brush.classList.contains('jodit_active')
 					);
-					expect('').to.equal(brushIcon.style.fill);
+					expect('').equals(brushIcon.style.fill);
 
 					editor.selection.setCursorIn(p.lastChild);
 					simulateEvent('mousedown', 0, p);
-					expect(false).to.equal(
+					expect(false).equals(
 						brush.classList.contains('jodit_active')
 					);
-					expect('').to.equal(brushIcon.style.fill);
+					expect('').equals(brushIcon.style.fill);
 
 					color.isDisable = defaultIsDisabled;
 				});
@@ -2083,7 +2082,7 @@ describe('Toolbar', function() {
 				editor.container.querySelector('.jodit_toolbar_btn-source')
 			);
 
-			expect(editor.getMode()).to.equal(Jodit.MODE_SOURCE);
+			expect(editor.getMode()).equals(Jodit.MODE_SOURCE);
 		});
 
 		it('Click on Bold button should wrap current selection in <strong>', function() {
@@ -2105,7 +2104,7 @@ describe('Toolbar', function() {
 				editor.container.querySelector('.jodit_toolbar_btn-bold')
 			);
 
-			expect(editor.getEditorValue()).to.equal(
+			expect(editor.getEditorValue()).equals(
 				'Tex<strong>t to te</strong>xt'
 			);
 		});
@@ -2131,7 +2130,7 @@ describe('Toolbar', function() {
 
 			editor.selection.insertHTML('test');
 
-			expect(editor.getEditorValue()).to.equal(
+			expect(editor.getEditorValue()).equals(
 				'<em>test</em>Text to text'
 			);
 		});
@@ -2157,7 +2156,7 @@ describe('Toolbar', function() {
 
 			editor.selection.insertHTML('test ');
 
-			expect(editor.getEditorValue()).to.equal(
+			expect(editor.getEditorValue()).equals(
 				'<ul><li>test Text to text</li></ul>'
 			);
 		});
@@ -2183,7 +2182,7 @@ describe('Toolbar', function() {
 
 				expect(
 					popup && popup.parentNode.parentNode !== null
-				).to.equal(true);
+				).equals(true);
 			});
 
 			describe('and click in opened popup on pencil button', function() {
@@ -2205,7 +2204,7 @@ describe('Toolbar', function() {
 
 					expect(
 						popup && popup.parentNode.parentNode !== null
-					).to.equal(true);
+					).equals(true);
 
 					simulateEvent(
 						'mousedown',
@@ -2221,7 +2220,7 @@ describe('Toolbar', function() {
 						']'
 					);
 
-					expect(dialog).to.be.not.equal(null);
+					expect(dialog).is.not.null;
 				});
 			});
 		});
@@ -2243,7 +2242,7 @@ describe('Toolbar', function() {
 				'.jodit_toolbar_popup-inline'
 			);
 
-			expect(popup && popup.parentNode.parentNode !== null).to.equal(
+			expect(popup && popup.parentNode.parentNode !== null).equals(
 				true
 			);
 		});
@@ -2263,7 +2262,7 @@ describe('Toolbar', function() {
 
 					expect(
 						td.hasAttribute(Jodit.JODIT_SELECTED_CELL_MARKER)
-					).to.equal(true);
+					).equals(true);
 				});
 				describe('and press brushh button', function() {
 					it('Should Select table cell and fill it in yellow', function() {
@@ -2284,7 +2283,7 @@ describe('Toolbar', function() {
 
 						expect(
 							popup && popup.parentNode.parentNode !== null
-						).to.equal(true);
+						).equals(true);
 
 						simulateEvent(
 							'mousedown',
@@ -2300,7 +2299,7 @@ describe('Toolbar', function() {
 						expect(
 							popupColor &&
 							window.getComputedStyle(popupColor).display
-						).to.equal('block');
+						).equals('block');
 
 						simulateEvent(
 							'mousedown',
@@ -2314,7 +2313,7 @@ describe('Toolbar', function() {
 							Jodit.modules.Helpers.normalizeColor(
 								td.style.backgroundColor
 							)
-						).to.equal('#000000');
+						).equals('#000000');
 					});
 				});
 			});
@@ -2336,7 +2335,7 @@ describe('Toolbar', function() {
 				'.jodit_toolbar_popup-inline'
 			);
 
-			expect(popup && popup.parentNode.parentNode !== null).to.equal(
+			expect(popup && popup.parentNode.parentNode !== null).equals(
 				true
 			);
 
@@ -2349,11 +2348,11 @@ describe('Toolbar', function() {
 			const popupColor = popup.querySelector('.jodit_toolbar_list');
 			expect(
 				popupColor && window.getComputedStyle(popupColor).display
-			).to.equal('block');
+			).equals('block');
 
 			simulateEvent('mousedown', 0, popupColor.querySelector('li>a'));
 
-			expect(td.style.verticalAlign).to.equal('top');
+			expect(td.style.verticalAlign).equals('top');
 		});
 
 		it('Select table cell and split it by vertical', function() {
@@ -2382,7 +2381,7 @@ describe('Toolbar', function() {
 			const list = popup.querySelector(
 				'.jodit_toolbar_list.jodit_toolbar_list-open'
 			);
-			expect(list).to.be.not.equal(null);
+			expect(list).is.not.null;
 			simulateEvent(
 				'mousedown',
 				0,
@@ -2391,7 +2390,7 @@ describe('Toolbar', function() {
 				)
 			);
 
-			expect(sortAttributes(editor.getEditorValue())).to.equal(
+			expect(sortAttributes(editor.getEditorValue())).equals(
 				'<table style="width:300px"><tbody><tr><td style="width:49.83%">3</td><td style="width:49.83%"><br></td></tr></tbody></table>'
 			);
 		});
@@ -2421,7 +2420,7 @@ describe('Toolbar', function() {
 			const list = popup.querySelector(
 				'.jodit_toolbar_list.jodit_toolbar_list-open'
 			);
-			expect(list).to.be.not.equal(null);
+			expect(list).is.not.null;
 			simulateEvent(
 				'mousedown',
 				0,
@@ -2430,7 +2429,7 @@ describe('Toolbar', function() {
 				)
 			);
 
-			expect(sortAttributes(editor.getEditorValue())).to.equal(
+			expect(sortAttributes(editor.getEditorValue())).equals(
 				'<table style="width:300px"><tbody><tr><td>5</td></tr><tr><td><br></td></tr></tbody></table>'
 			);
 		});
@@ -2463,7 +2462,7 @@ describe('Toolbar', function() {
 				popup.querySelector('.jodit_toolbar_btn-merge>a')
 			);
 
-			expect(editor.getEditorValue()).to.equal(
+			expect(editor.getEditorValue()).equals(
 				'<table style="width: 300px;"><tbody><tr><td >5<br>6</td></tr></tbody></table>'
 			);
 		});
@@ -2483,7 +2482,7 @@ describe('Toolbar', function() {
 				'.jodit_toolbar_popup-inline'
 			);
 
-			expect(popup && popup.parentNode.parentNode !== null).to.equal(
+			expect(popup && popup.parentNode.parentNode !== null).equals(
 				true
 			);
 
@@ -2496,11 +2495,11 @@ describe('Toolbar', function() {
 			const popupColor = popup.querySelector('.jodit_toolbar_list');
 			expect(
 				popupColor && window.getComputedStyle(popupColor).display
-			).to.equal('block');
+			).equals('block');
 
 			simulateEvent('mousedown', 0, popupColor.querySelector('li>a'));
 
-			expect(editor.getEditorValue()).to.equal(
+			expect(editor.getEditorValue()).equals(
 				'<table><tbody><tr><td></td><td >3</td></tr></tbody></table>'
 			);
 		});
@@ -2520,7 +2519,7 @@ describe('Toolbar', function() {
 				'.jodit_toolbar_popup-inline'
 			);
 
-			expect(popup && popup.parentNode.parentNode !== null).to.equal(
+			expect(popup && popup.parentNode.parentNode !== null).equals(
 				true
 			);
 
@@ -2533,11 +2532,11 @@ describe('Toolbar', function() {
 			const popupColor = popup.querySelector('.jodit_toolbar_list');
 			expect(
 				popupColor && window.getComputedStyle(popupColor).display
-			).to.equal('block');
+			).equals('block');
 
 			simulateEvent('mousedown', 0, popupColor.querySelector('li>a'));
 
-			expect(editor.getEditorValue()).to.equal(
+			expect(editor.getEditorValue()).equals(
 				'<table><tbody><tr><td></td></tr><tr><td >3</td></tr></tbody></table>'
 			);
 		});
@@ -2561,7 +2560,7 @@ describe('Toolbar', function() {
 				'.jodit_toolbar_popup-inline'
 			);
 
-			expect(popup && popup.parentNode.parentNode !== null).to.equal(
+			expect(popup && popup.parentNode.parentNode !== null).equals(
 				true
 			);
 
@@ -2574,7 +2573,7 @@ describe('Toolbar', function() {
 			const popupColor = popup.querySelector('.jodit_toolbar_list');
 			expect(
 				popupColor && window.getComputedStyle(popupColor).display
-			).to.equal('block');
+			).equals('block');
 
 			simulateEvent(
 				'mousedown',
@@ -2582,7 +2581,7 @@ describe('Toolbar', function() {
 				popupColor.querySelectorAll('li>a')[1]
 			);
 
-			expect(editor.value).to.equal(
+			expect(editor.value).equals(
 				'<table><tbody><tr><td>1</td></tr><tr><td>3</td></tr></tbody></table>'
 			);
 		});
@@ -2606,7 +2605,7 @@ describe('Toolbar', function() {
 				'.jodit_toolbar_popup-inline'
 			);
 
-			expect(popup && popup.parentNode.parentNode !== null).to.equal(
+			expect(popup && popup.parentNode.parentNode !== null).equals(
 				true
 			);
 
@@ -2619,7 +2618,7 @@ describe('Toolbar', function() {
 			const popupColor = popup.querySelector('.jodit_toolbar_list');
 			expect(
 				popupColor && window.getComputedStyle(popupColor).display
-			).to.equal('block');
+			).equals('block');
 
 			simulateEvent(
 				'mousedown',
@@ -2627,9 +2626,9 @@ describe('Toolbar', function() {
 				popupColor.querySelectorAll('li>a')[0]
 			);
 
-			expect(editor.value).to.equal('');
+			expect(editor.value).equals('');
 
-			expect(popup && popup.parentNode).to.be.equal(null);
+			expect(popup && popup.parentNode).equals(null);
 		});
 	});
 
@@ -2662,7 +2661,7 @@ describe('Toolbar', function() {
 					'.jodit_toolbar_popup'
 				);
 
-				expect(popup && popup.style.display !== 'none').to.equal(
+				expect(popup && popup.style.display !== 'none').equals(
 					true
 				);
 				simulateEvent(
@@ -2677,9 +2676,9 @@ describe('Toolbar', function() {
 					']'
 				);
 
-				expect(dialog).to.be.not.equal(null);
+				expect(dialog).is.not.null;
 
-				expect(3).to.equal(
+				expect(3).equals(
 					dialog.querySelectorAll(
 						'.jodit_dialog_header .jodit_dialog_header-title .jodit_toolbar_btn'
 					).length

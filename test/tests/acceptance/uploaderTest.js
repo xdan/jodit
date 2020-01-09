@@ -9,8 +9,8 @@ describe('Test uploader module', function() {
 						},
 						events: {
 							afterInsertImage: function(img) {
-								expect(img.src).to.be.equal(file.dataURI);
-								expect(sortAttributes(editor.value)).to.equal('<img src="' + file.dataURI + '" style="width:300px">');
+								expect(img.src).equals(file.dataURI);
+								expect(sortAttributes(editor.value)).equals('<img src="' + file.dataURI + '" style="width:300px">');
 								done();
 							}
 						}
@@ -39,10 +39,10 @@ describe('Test uploader module', function() {
 						},
 						events: {
 							afterInsertImage: function(img) {
-								expect(img.src).to.equal('https://xdsoft.net/jodit/files/logo.gif');
+								expect(img.src).equals('https://xdsoft.net/jodit/files/logo.gif');
 
 								expect(sortAttributes(editor.value))
-									.to.equal('<img src="https://xdsoft.net/jodit/files/logo.gif" style="width:300px">');
+									.equals('<img src="https://xdsoft.net/jodit/files/logo.gif" style="width:300px">');
 
 								done();
 							}
@@ -72,12 +72,12 @@ describe('Test uploader module', function() {
 							},
 							events: {
 								afterInsertImage: function(img) {
-									expect(img.src).to.equal(
+									expect(img.src).equals(
 										'https://xdsoft.net/jodit/files/logo.gif'
 									);
 									expect(
 										sortAttributes(editor.value)
-									).to.be.equal(
+									).equals(
 										'<img src="https://xdsoft.net/jodit/files/logo.gif" style="width:300px">'
 									);
 									done();
@@ -111,10 +111,10 @@ describe('Test uploader module', function() {
 						},
 						events: {
 							afterInsertNode: function(node) {
-								expect(node.href).to.be.equal(
+								expect(node.href).equals(
 									'https://xdsoft.net/jodit/files/file.xls'
 								);
-								expect(editor.value).to.be.equal(
+								expect(editor.value).equals(
 									'<a href="https://xdsoft.net/jodit/files/file.xls">https://xdsoft.net/jodit/files/file.xls</a>'
 								);
 								done();
@@ -145,10 +145,10 @@ describe('Test uploader module', function() {
 							},
 							events: {
 								afterInsertNode: function(node) {
-									expect(node.href).to.be.equal(
+									expect(node.href).equals(
 										'https://xdsoft.net/jodit/files/file.xls'
 									);
-									expect(editor.value).to.be.equal(
+									expect(editor.value).equals(
 										'<a href="https://xdsoft.net/jodit/files/file.xls">https://xdsoft.net/jodit/files/file.xls</a>'
 									);
 									done();

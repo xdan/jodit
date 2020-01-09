@@ -15,13 +15,13 @@ describe('Stat plugin', function() {
 				'.jodit_statusbar'
 			);
 
-			expect(statusbar).to.be.not.equal(null);
+			expect(statusbar).is.not.null;
 
 			expect(
 				statusbar.textContent.match(/Chars: 20/)
-			).to.be.not.equal(null);
+			).is.not.null;
 
-			expect(statusbar.textContent.match(/Words: 4/)).to.be.not.equal(
+			expect(statusbar.textContent.match(/Words: 4/)).does.not.equal(
 				null
 			);
 		});
@@ -41,14 +41,14 @@ describe('Stat plugin', function() {
 					'.jodit_statusbar'
 				);
 
-				expect(statusbar).to.be.not.equal(null);
+				expect(statusbar).is.not.null;
 
 				expect(
 					statusbar.textContent.match(/Chars: 10/)
-				).to.be.equal(null);
+				).equals(null);
 				expect(
 					statusbar.textContent.match(/Words: 2/)
-				).to.be.not.equal(null);
+				).is.not.null;
 			});
 		});
 
@@ -68,12 +68,12 @@ describe('Stat plugin', function() {
 					'.jodit_statusbar'
 				);
 
-				expect(statusbar).to.be.not.equal(null);
+				expect(statusbar).is.not.null;
 
 				expect(
 					statusbar.textContent.match(/Chars: 10/)
-				).to.be.not.equal(null);
-				expect(statusbar.textContent.match(/Words: 2/)).to.be.equal(
+				).is.not.null;
+				expect(statusbar.textContent.match(/Words: 2/)).equals(
 					null
 				);
 			});
@@ -96,15 +96,15 @@ describe('Stat plugin', function() {
 					'.jodit_statusbar'
 				);
 
-				expect(statusbar).to.be.not.equal(null);
+				expect(statusbar).is.not.null;
 
 				expect(
 					statusbar.textContent.match(/Chars: 10/)
-				).to.be.equal(null);
-				expect(statusbar.textContent.match(/Words: 2/)).to.be.equal(
+				).equals(null);
+				expect(statusbar.textContent.match(/Words: 2/)).equals(
 					null
 				);
-				expect(statusbar.offsetHeight).to.be.equal(0);
+				expect(statusbar.offsetHeight).equals(0);
 			});
 		});
 	});

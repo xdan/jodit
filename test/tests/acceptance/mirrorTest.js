@@ -13,7 +13,7 @@ describe('CodeMirror editor source code', function() {
 				};
 
 			timeout = setTimeout(function() {
-				expect(false).to.equal(true);
+				expect(false).equals(true);
 				__done.call(editor);
 			}, 5000);
 
@@ -25,7 +25,7 @@ describe('CodeMirror editor source code', function() {
 						return false;
 					},
 					sourceEditorReady: function(editor) {
-						expect(editor.container.querySelectorAll('.jodit_source_mirror-fake').length).to.equal(1);
+						expect(editor.container.querySelectorAll('.jodit_source_mirror-fake').length).equals(1);
 						__done.call(editor);
 					}
 				}
@@ -36,7 +36,7 @@ describe('CodeMirror editor source code', function() {
 		describe('In WYSIWYG mode isEditorMode', function() {
 			it('Should return true', function() {
 				const editor = new Jodit(appendTestArea());
-				expect(editor.isEditorMode()).to.be.true;
+				expect(editor.isEditorMode()).is.true;
 				editor.toggleMode();
 				expect(editor.isEditorMode()).to.be.false;
 			});
@@ -54,8 +54,8 @@ describe('CodeMirror editor source code', function() {
 
 			editor.events
 				.on('change', function(value, oldvalue) {
-					expect(oldvalue).to.be.not.equal(value);
-					expect(defaultValue).to.be.not.equal(value);
+					expect(oldvalue).does.not.equal(value);
+					expect(defaultValue).does.not.equal(value);
 					count++;
 				});
 
@@ -66,7 +66,7 @@ describe('CodeMirror editor source code', function() {
 			editor.value = defaultValue;
 			editor.value = 'another';
 
-			expect(1).to.be.equal(count);
+			expect(1).equals(count);
 		});
 
 		describe('After change mode to source mode and use insertHTML method', function() {
@@ -88,7 +88,7 @@ describe('CodeMirror editor source code', function() {
 							jodit.selection.selectRange(range);
 
 							jodit.setMode(Jodit.MODE_SOURCE);
-							debugger
+
 							jodit.selection.insertHTML('loop');
 
 							expect(jodit.value).equals('<p>test <span>testloop</span> test</p>');
@@ -113,12 +113,12 @@ describe('CodeMirror editor source code', function() {
 					editor.selection.selectRange(range);
 
 					editor.selection.insertHTML('stop');
-					expect(editor.value).to.be.equal('<p>one <span>twostop</span> three</p>');
+					expect(editor.value).equals('<p>one <span>twostop</span> three</p>');
 
 					editor.setMode(Jodit.MODE_SOURCE);
 
 					editor.selection.insertHTML('loop');
-					expect(editor.value).to.be.equal('<p>one <span>twostoploop</span> three</p>');
+					expect(editor.value).equals('<p>one <span>twostoploop</span> three</p>');
 				});
 			});
 		});

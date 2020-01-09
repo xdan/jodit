@@ -42,7 +42,7 @@ describe('Test i18n functionality', function() {
 								return filter.indexOf(key) === -1;
 							})
 							.forEach(function(key) {
-								expect('{' + key + '}').to.be.not.equal(
+								expect('{' + key + '}').does.not.equal(
 									editor.i18n(key)
 								);
 							});
@@ -62,11 +62,11 @@ describe('Test i18n functionality', function() {
 					}
 				}
 			});
-			expect(editor.i18n('Type something')).to.be.equal(
+			expect(editor.i18n('Type something')).equals(
 				'Напишите что-либо'
 			);
-			expect(editor.i18n('Test %s', 'строка')).to.be.equal('Тест строка');
-			expect(editor.i18n('Test %s %d', 'строка', 1)).to.be.equal(
+			expect(editor.i18n('Test %s', 'строка')).equals('Тест строка');
+			expect(editor.i18n('Test %s %d', 'строка', 1)).equals(
 				'Тест строка 1'
 			);
 		});

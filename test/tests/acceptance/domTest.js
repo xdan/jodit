@@ -13,20 +13,20 @@ describe('Check Dom module', function() {
 			Jodit.modules.Dom.each(node, function(elm) {
 				names.push(elm.nodeName);
 			});
-			expect('UL,LI,#text,LI,#text,LI,IMG,#text').to.equal(names.toString());
+			expect('UL,LI,#text,LI,#text,LI,IMG,#text').equals(names.toString());
 		});
 	});
 	describe('Method isBlock', function() {
 		it('Should return true then it gets BLOCK element', function() {
-			expect(true).to.equal(Jodit.modules.Dom.isBlock(document.documentElement, window));
-			expect(true).to.equal(Jodit.modules.Dom.isBlock(document.createElement('div'), window));
-			expect(true).to.equal(Jodit.modules.Dom.isBlock(document.createElement('table'), window));
-			expect(true).to.equal(Jodit.modules.Dom.isBlock(document.createElement('dt'), window));
-			expect(true).to.equal(Jodit.modules.Dom.isBlock(document.createElement('dd'), window));
+			expect(true).equals(Jodit.modules.Dom.isBlock(document.documentElement, window));
+			expect(true).equals(Jodit.modules.Dom.isBlock(document.createElement('div'), window));
+			expect(true).equals(Jodit.modules.Dom.isBlock(document.createElement('table'), window));
+			expect(true).equals(Jodit.modules.Dom.isBlock(document.createElement('dt'), window));
+			expect(true).equals(Jodit.modules.Dom.isBlock(document.createElement('dd'), window));
 		});
 		it('Should return false then it gets not BLOCK element', function() {
-			expect(false).to.equal(Jodit.modules.Dom.isBlock(document.createTextNode('test'), window));
-			expect(false).to.equal(Jodit.modules.Dom.isBlock(document.createElement('span'), window));
+			expect(false).equals(Jodit.modules.Dom.isBlock(document.createTextNode('test'), window));
+			expect(false).equals(Jodit.modules.Dom.isBlock(document.createElement('span'), window));
 		});
 	});
 
@@ -40,10 +40,10 @@ describe('Check Dom module', function() {
 				'</p>';
 			document.body.appendChild(box);
 
-			expect(true).to.equal(Jodit.modules.Dom.isInlineBlock(box.firstChild.childNodes[0]));
-			expect(true).to.equal(Jodit.modules.Dom.isInlineBlock(box.firstChild.childNodes[1]));
-			expect(false).to.equal(Jodit.modules.Dom.isInlineBlock(box.firstChild.childNodes[2]));
-			expect(false).to.equal(Jodit.modules.Dom.isInlineBlock(box.firstChild));
+			expect(true).equals(Jodit.modules.Dom.isInlineBlock(box.firstChild.childNodes[0]));
+			expect(true).equals(Jodit.modules.Dom.isInlineBlock(box.firstChild.childNodes[1]));
+			expect(false).equals(Jodit.modules.Dom.isInlineBlock(box.firstChild.childNodes[2]));
+			expect(false).equals(Jodit.modules.Dom.isInlineBlock(box.firstChild));
 
 			document.body.removeChild(box);
 		});
@@ -51,10 +51,10 @@ describe('Check Dom module', function() {
 
 	describe('Method isEmpty', function() {
 		it('Should return true then element is empty', function() {
-			expect(true).to.equal(Jodit.modules.Dom.isEmpty(document.createElement('div')));
-			expect(true).to.equal(Jodit.modules.Dom.isEmpty(document.createElement('table')));
-			expect(true).to.equal(Jodit.modules.Dom.isEmpty(document.createTextNode('\uFEFF')));
-			expect(true).to.equal(Jodit.modules.Dom.isEmpty(document.createTextNode(' ')));
+			expect(true).equals(Jodit.modules.Dom.isEmpty(document.createElement('div')));
+			expect(true).equals(Jodit.modules.Dom.isEmpty(document.createElement('table')));
+			expect(true).equals(Jodit.modules.Dom.isEmpty(document.createTextNode('\uFEFF')));
+			expect(true).equals(Jodit.modules.Dom.isEmpty(document.createTextNode(' ')));
 
 			const node = document.createElement('div');
 			node.innerHTML = '<ul>' +
@@ -63,11 +63,11 @@ describe('Check Dom module', function() {
 				'<li></li>' +
 				'</ul>';
 
-			expect(true).to.equal(Jodit.modules.Dom.isEmpty(node));
+			expect(true).equals(Jodit.modules.Dom.isEmpty(node));
 		});
 		it('Should return false then element is not empty', function() {
-			expect(false).to.equal(Jodit.modules.Dom.isEmpty(document.documentElement));
-			expect(false).to.equal(Jodit.modules.Dom.isEmpty(document.createTextNode('test')));
+			expect(false).equals(Jodit.modules.Dom.isEmpty(document.documentElement));
+			expect(false).equals(Jodit.modules.Dom.isEmpty(document.createTextNode('test')));
 
 			const node = document.createElement('div');
 			node.innerHTML = '<ul>' +
@@ -76,7 +76,7 @@ describe('Check Dom module', function() {
 				'<li><img> text</li>' +
 				'</ul>';
 
-			expect(false).to.equal(Jodit.modules.Dom.isEmpty(node));
+			expect(false).equals(Jodit.modules.Dom.isEmpty(node));
 		});
 	});
 

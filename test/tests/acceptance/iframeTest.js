@@ -6,13 +6,14 @@ describe('Iframe mode', function() {
 				iframe: true,
 				events: {
 					afterConstructor: function(editor) {
-						expect(editor.ownerDocument).to.be.not.equal(editor.editorDocument);
-						expect('true').to.be.equal(editor.editorDocument.body.getAttribute('contenteditable'));
+						expect(editor.ownerDocument).does.not.equal(editor.editorDocument);
+						expect('true').equals(editor.editorDocument.body.getAttribute('contenteditable'));
 						done();
 					}
 				}
 			});
 		});
+
 		describe('And exec command', function() {
 			it('Should use body like editor area', function(done) {
 				unmockPromise();
@@ -22,7 +23,7 @@ describe('Iframe mode', function() {
 						afterConstructor: function(editor) {
 							mockPromise();
 							editor.value = 'test test stop';
-							expect('test test stop').to.be.equal(editor.editorDocument.body.innerHTML);
+							expect('test test stop').equals(editor.editorDocument.body.innerHTML);
 
 							const range = editor.selection.createRange();
 							range.selectNodeContents(editor.editorDocument.body);
@@ -30,7 +31,7 @@ describe('Iframe mode', function() {
 
 							editor.execCommand('bold');
 
-							expect('<strong>test test stop</strong>').to.be.equal(editor.editorDocument.body.innerHTML);
+							expect('<strong>test test stop</strong>').equals(editor.editorDocument.body.innerHTML);
 							done();
 						}
 					}
@@ -48,15 +49,15 @@ describe('Iframe mode', function() {
 					iframe: true,
 					events: {
 						afterConstructor: function(editor) {
-							expect(editor.value).to.equal('test');
+							expect(editor.value).equals('test');
 							done();
 						}
 					}
 				});
 
-				expect(editor.value).to.equal('stop');
+				expect(editor.value).equals('stop');
 				editor.value = 'test';
-				expect(editor.value).to.equal('test');
+				expect(editor.value).equals('test');
 			});
 		});
 	});
@@ -73,8 +74,8 @@ describe('Iframe mode', function() {
 				// fullsize: true,
 				events: {
 					afterConstructor: function(jodit) {
-						expect(jodit.editor.getAttribute('secret-attriute')).to.be.equal('435'); // loaded from index.html
-						expect(Jodit.modules.Helpers.trim(jodit.value)).to.be.equal('test 435'); // loaded from index.html
+						expect(jodit.editor.getAttribute('secret-attriute')).equals('435'); // loaded from index.html
+						expect(Jodit.modules.Helpers.trim(jodit.value)).equals('test 435'); // loaded from index.html
 						done();
 					},
 					['beforeSetValueToEditor']: function() {
@@ -99,4 +100,32 @@ describe('Iframe mode', function() {
 		}).timeout(5000);
 	});
 	afterEach(removeStuff);
+});
+
+describe('Editor inside iframe', function () {
+	describe('In creator doc field', function () {
+		it('Should be iframe.contentDocument', function () {
+			const iframe = document.createElement('iframe');
+			iframe.style.width = '900px';
+			box.appendChild(iframe);
+
+			const win = iframe.contentWindow;
+			const doc = win.document;
+			doc.open();
+			doc.write('<html><body><textarea id="editor"></textarea><' + 'script src="./build/jodit.js"><' + '/script></body></html>');
+			doc.close();
+
+			const editor = new Jodit('#editor', {
+				ownerWindow: win,
+				ownerDocument: doc
+			});
+
+			expect(editor.create.doc).does.not.equal(document);
+			expect(editor.create.doc).equals(doc);
+			expect(editor.create.inside.doc).equals(doc);
+
+			editor.destruct();
+			Jodit.modules.Dom.safeRemove(iframe);
+		});
+	});
 });

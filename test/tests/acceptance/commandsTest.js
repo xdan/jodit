@@ -14,7 +14,7 @@ describe('Commands Jodit Editor Tests', function() {
 
 			editor.execCommand('formatBlock', false, 'h1');
 
-			expect(editor.getEditorValue()).to.equal(
+			expect(editor.getEditorValue()).equals(
 				'<h1>test</h1><h1>test2</h1>'
 			);
 		});
@@ -29,7 +29,7 @@ describe('Commands Jodit Editor Tests', function() {
 
 				jodit.execCommand('formatBlock', false, 'h1');
 
-				expect(jodit.value).to.equal(
+				expect(jodit.value).equals(
 					'<h1>stop <span>post</span> ice</h1>'
 				);
 			});
@@ -53,7 +53,7 @@ describe('Commands Jodit Editor Tests', function() {
 				editor.editorDocument.createTextNode(' a ')
 			);
 
-			expect(editor.getEditorValue()).to.equal('<h1>te a st</h1>');
+			expect(editor.getEditorValue()).equals('<h1>te a st</h1>');
 		});
 		it('Try exec the command "formatBlock" in the end of text node then selection is collapsed it should wrap it node in H1', function() {
 			const editor = new Jodit(appendTestArea());
@@ -73,7 +73,7 @@ describe('Commands Jodit Editor Tests', function() {
 				editor.editorDocument.createTextNode(' a ')
 			);
 
-			expect(editor.getEditorValue()).to.equal('<h1>test a </h1>');
+			expect(editor.getEditorValue()).equals('<h1>test a </h1>');
 		});
 
 		it('Try exec the command "formatBlock" for several text nodes', function() {
@@ -106,7 +106,7 @@ describe('Commands Jodit Editor Tests', function() {
 
 			editor.execCommand('formatBlock', false, 'h1');
 
-			expect(editor.getEditorValue()).to.equal(
+			expect(editor.getEditorValue()).equals(
 				'<h1>test test2 test3<span> test4</span></h1>'
 			);
 		});
@@ -119,7 +119,7 @@ describe('Commands Jodit Editor Tests', function() {
 
 			editor.selection.insertHTML('test');
 
-			expect(editor.getEditorValue()).to.equal('<h1>test</h1>');
+			expect(editor.getEditorValue()).equals('<h1>test</h1>');
 		});
 
 		describe('For UL>li elements', function() {
@@ -145,7 +145,7 @@ describe('Commands Jodit Editor Tests', function() {
 					editor.selection.selectRange(range);
 
 					editor.execCommand('formatBlock', false, 'h1');
-					expect(editor.value).to.be.equal(
+					expect(editor.value).equals(
 						'<ul>' +
 						'<li><h1>1</h1></li>' +
 						'<li><h1>2</h1></li>' +
@@ -154,7 +154,7 @@ describe('Commands Jodit Editor Tests', function() {
 					);
 
 					editor.execCommand('formatBlock', false, 'p');
-					expect(editor.value).to.be.equal(
+					expect(editor.value).equals(
 						'<ul>' +
 						'<li>1</li>' +
 						'<li>2</li>' +
@@ -178,7 +178,7 @@ describe('Commands Jodit Editor Tests', function() {
 					editor.selection.selectRange(range);
 
 					editor.execCommand('formatBlock', false, 'h1');
-					expect(editor.value).to.be.equal(
+					expect(editor.value).equals(
 						'<ul>' +
 						'<li><h1>1</h1></li>' +
 						'<li><h1>2</h1></li>' +
@@ -187,7 +187,7 @@ describe('Commands Jodit Editor Tests', function() {
 					);
 
 					editor.execCommand('formatBlock', false, 'p');
-					expect(editor.value).to.be.equal(
+					expect(editor.value).equals(
 						'<ul>' +
 						'<li>1</li>' +
 						'<li>2</li>' +
@@ -209,7 +209,7 @@ describe('Commands Jodit Editor Tests', function() {
 				range.setEnd(editor.editor.firstChild.firstChild, 4);
 				editor.selection.selectRange(range);
 				editor.execCommand('subscript');
-				expect(editor.value).to.be.equal('<p>te<sub>st</sub></p>');
+				expect(editor.value).equals('<p>te<sub>st</sub></p>');
 			});
 		});
 		describe('sup', function() {
@@ -221,7 +221,7 @@ describe('Commands Jodit Editor Tests', function() {
 				range.setEnd(editor.editor.firstChild.firstChild, 4);
 				editor.selection.selectRange(range);
 				editor.execCommand('superscript');
-				expect(editor.value).to.be.equal('<p>te<sup>st</sup></p>');
+				expect(editor.value).equals('<p>te<sup>st</sup></p>');
 			});
 		});
 	});
@@ -246,7 +246,7 @@ describe('Commands Jodit Editor Tests', function() {
 				editor.execCommand('bold');
 
 				style.parentNode.removeChild(style);
-				expect(editor.getEditorValue()).to.equal(
+				expect(editor.getEditorValue()).equals(
 					'<p><strong>test</strong></p>'
 				);
 			});
@@ -275,7 +275,7 @@ describe('Commands Jodit Editor Tests', function() {
 				editor.create.inside.text('def')
 			);
 
-			expect(editor.getEditorValue()).to.equal(
+			expect(editor.getEditorValue()).equals(
 				'test<strong>abc</strong>def'
 			);
 		});
@@ -293,7 +293,7 @@ describe('Commands Jodit Editor Tests', function() {
 
 				editor.execCommand('bold');
 
-				expect(editor.getEditorValue()).to.equal(
+				expect(editor.getEditorValue()).equals(
 					'<strong>test</strong>'
 				);
 			});
@@ -312,7 +312,7 @@ describe('Commands Jodit Editor Tests', function() {
 
 					editor.execCommand('bold');
 
-					expect(editor.getEditorValue()).to.equal(
+					expect(editor.getEditorValue()).equals(
 						'te<strong>st</strong>'
 					);
 				});
@@ -330,7 +330,7 @@ describe('Commands Jodit Editor Tests', function() {
 
 					editor.execCommand('bold');
 
-					expect(editor.getEditorValue()).to.equal(
+					expect(editor.getEditorValue()).equals(
 						'<strong>te</strong>st'
 					);
 				});
@@ -348,7 +348,7 @@ describe('Commands Jodit Editor Tests', function() {
 
 					editor.execCommand('bold');
 
-					expect(editor.getEditorValue()).to.equal(
+					expect(editor.getEditorValue()).equals(
 						'<strong>t</strong>es<strong>t</strong>'
 					);
 				});
@@ -367,7 +367,7 @@ describe('Commands Jodit Editor Tests', function() {
 					editor.execCommand('bold');
 					editor.execCommand('bold');
 
-					expect(editor.getEditorValue()).to.equal(
+					expect(editor.getEditorValue()).equals(
 						'<strong>1</strong><strong> 2 </strong><strong>3</strong>'
 					);
 				});
@@ -388,7 +388,7 @@ describe('Commands Jodit Editor Tests', function() {
 
 				editor.execCommand('bold');
 
-				expect(editor.getEditorValue()).to.equal('test test test');
+				expect(editor.getEditorValue()).equals('test test test');
 			});
 		});
 		describe('Try exec the command "bold"', function() {
@@ -405,7 +405,7 @@ describe('Commands Jodit Editor Tests', function() {
 
 				editor.execCommand('bold');
 
-				expect(editor.getEditorValue()).to.equal(
+				expect(editor.getEditorValue()).equals(
 					'<p><strong>test</strong></p>'
 				);
 			});
@@ -424,7 +424,7 @@ describe('Commands Jodit Editor Tests', function() {
 					editor.execCommand('bold');
 					editor.execCommand('bold');
 
-					expect(editor.getEditorValue()).to.equal('<p>test</p>');
+					expect(editor.getEditorValue()).equals('<p>test</p>');
 				});
 			});
 		});
@@ -445,7 +445,7 @@ describe('Commands Jodit Editor Tests', function() {
 				editor.execCommand('bold');
 				// editor.execCommand('bold');
 
-				expect(editor.getEditorValue()).to.equal('test');
+				expect(editor.getEditorValue()).equals('test');
 			});
 		});
 		describe('Exec bold for collapsed range and move cursor in another place', function() {
@@ -463,13 +463,13 @@ describe('Commands Jodit Editor Tests', function() {
 				editor.selection.selectRange(range);
 
 				editor.execCommand('bold');
-				expect(editor.value).to.be.equal('test<strong></strong>test');
+				expect(editor.value).equals('test<strong></strong>test');
 
 				range.setStart(editor.editor.lastChild, 2);
 				range.collapse(true);
 				editor.selection.selectRange(range);
 				simulateEvent('mousedown', 0, editor.editor);
-				expect(editor.value).to.be.equal('testtest');
+				expect(editor.value).equals('testtest');
 			});
 		});
 		describe('Exec bold command for SPAN with font-size', function() {
@@ -490,7 +490,7 @@ describe('Commands Jodit Editor Tests', function() {
 
 				editor.execCommand('bold');
 
-				expect(sortAttributes(editor.value)).to.equal(
+				expect(sortAttributes(editor.value)).equals(
 					sortAttributes(
 						'<span style="font-size: 36px;"><strong>asdasd</strong></span>'
 					)
@@ -519,7 +519,7 @@ describe('Commands Jodit Editor Tests', function() {
 				editor.editorDocument.createTextNode('top')
 			);
 
-			expect(editor.getEditorValue()).to.equal('<p>tetopt</p>');
+			expect(editor.getEditorValue()).equals('<p>tetopt</p>');
 		});
 		describe('in collapsed selection', function() {
 			it('should place cursor inward', function() {
@@ -540,7 +540,7 @@ describe('Commands Jodit Editor Tests', function() {
 					editor.editorDocument.createTextNode('data')
 				);
 
-				expect(editor.getEditorValue()).to.equal(
+				expect(editor.getEditorValue()).equals(
 					'<p>te<u>data</u>st</p>'
 				);
 			});
@@ -555,7 +555,7 @@ describe('Commands Jodit Editor Tests', function() {
 			editor.execCommand('selectAll');
 			editor.execCommand('insertUnorderedList');
 
-			expect(editor.getEditorValue()).to.equal(
+			expect(editor.getEditorValue()).equals(
 				'<ul><li>test</li><li>test</li><li>test</li></ul>'
 			);
 		});
@@ -578,7 +578,7 @@ describe('Commands Jodit Editor Tests', function() {
 				editor.editorDocument.createTextNode(' a ')
 			);
 
-			expect(editor.getEditorValue()).to.equal(
+			expect(editor.getEditorValue()).equals(
 				'<ul><li>test</li><li> a <br></li></ul>'
 			);
 		});
@@ -601,7 +601,7 @@ describe('Commands Jodit Editor Tests', function() {
 				editor.editorDocument.createTextNode(' a ')
 			);
 
-			expect(editor.getEditorValue()).to.equal(
+			expect(editor.getEditorValue()).equals(
 				'<ul><li>te</li><li> a st</li></ul>'
 			);
 		});
@@ -622,7 +622,7 @@ describe('Commands Jodit Editor Tests', function() {
 
 			editor.execCommand('formatBlock', false, 'h5');
 
-			expect(editor.getEditorValue()).to.equal(
+			expect(editor.getEditorValue()).equals(
 				'<h5>testy oprst <span>lets go</span></h5>'
 			);
 		});
@@ -641,7 +641,7 @@ describe('Commands Jodit Editor Tests', function() {
 
 			editor.execCommand('formatBlock', false, 'h1');
 
-			expect(editor.getEditorValue()).to.equal(
+			expect(editor.getEditorValue()).equals(
 				'<h1>test</h1><table><tbody><tr><td>post</td></tr></tbody></table>'
 			);
 		});
@@ -663,7 +663,7 @@ describe('Commands Jodit Editor Tests', function() {
 				editor.execCommand('justifyLeft');
 				editor.execCommand('fontSize', false, 14);
 
-				expect(editor.getEditorValue()).to.equal(
+				expect(editor.getEditorValue()).equals(
 					'<h5 style="text-align: left;">testy<span style="font-size: 14px;"></span> oprst <span>lets go</span></h5>'
 				);
 			});
@@ -681,7 +681,7 @@ describe('Commands Jodit Editor Tests', function() {
 
 			editor.execCommand('formatBlock', false, 'h1');
 
-			expect(editor.getEditorValue()).to.equal(
+			expect(editor.getEditorValue()).equals(
 				'<table><tbody><tr><td><h1>1</h1></td></tr></tbody></table>'
 			);
 		});
@@ -704,7 +704,7 @@ describe('Commands Jodit Editor Tests', function() {
 
 			expect(
 				'<p><span style="color: rgb(255, 0, 0);">1</span></p><p><span style="color: rgb(255, 0, 0);">2</span></p><p><span style="color: rgb(255, 0, 0);">3</span></p>'
-			).to.equal(editor.getEditorValue());
+			).equals(editor.getEditorValue());
 		});
 		it('Set colour to collapsed position should create empty span and insert inward cursor', function() {
 			const editor = new Jodit(appendTestArea());
@@ -721,7 +721,7 @@ describe('Commands Jodit Editor Tests', function() {
 
 			editor.execCommand('foreColor', false, '#f00');
 
-			expect(editor.getEditorValue()).to.equal(
+			expect(editor.getEditorValue()).equals(
 				'testy<span style="color: rgb(255, 0, 0);"></span> oprst <span>lets go</span>'
 			);
 		});
@@ -744,12 +744,12 @@ describe('Commands Jodit Editor Tests', function() {
 
 				editor.execCommand('fontSize', false, 12);
 
-				expect(editor.getEditorValue()).to.equal(
+				expect(editor.getEditorValue()).equals(
 					'<p> testy oprst <span style="font-size: 12px;">lets go</span></p>'
 				);
 
 				editor.execCommand('fontSize', false, '12%');
-				expect(editor.getEditorValue()).to.equal(
+				expect(editor.getEditorValue()).equals(
 					'<p> testy oprst <span style="font-size: 12%;">lets go</span></p>'
 				);
 			});
@@ -769,7 +769,7 @@ describe('Commands Jodit Editor Tests', function() {
 
 					editor.execCommand('fontSize', false, 12);
 
-					expect(editor.getEditorValue()).to.equal(
+					expect(editor.getEditorValue()).equals(
 						'<span style="font-size: 12px;">test</span>'
 					);
 				});
@@ -794,7 +794,7 @@ describe('Commands Jodit Editor Tests', function() {
 
 					editor.execCommand('fontName', false, 'Arial');
 
-					expect(editor.getEditorValue()).to.equal(
+					expect(editor.getEditorValue()).equals(
 						'<p>te<span style="font-family: Arial;">st</span></p>'
 					);
 				});
@@ -814,7 +814,7 @@ describe('Commands Jodit Editor Tests', function() {
 
 				editor.execCommand('fontName', false, 'Arial');
 
-				expect(editor.getEditorValue()).to.equal(
+				expect(editor.getEditorValue()).equals(
 					'<p>te<span style="font-family: Arial;">st</span></p>'
 				);
 			});
@@ -836,7 +836,7 @@ describe('Commands Jodit Editor Tests', function() {
 
 			editor.execCommand('justifyright');
 
-			expect(editor.getEditorValue()).to.equal(
+			expect(editor.getEditorValue()).equals(
 				'<p style="text-align: right;">test</p>'
 			);
 		});
@@ -855,7 +855,7 @@ describe('Commands Jodit Editor Tests', function() {
 
 			editor.execCommand('justifycenter');
 
-			expect(editor.getEditorValue()).to.equal(
+			expect(editor.getEditorValue()).equals(
 				'<p style="text-align: center;">test</p>'
 			);
 		});
@@ -876,7 +876,7 @@ describe('Commands Jodit Editor Tests', function() {
 
 			editor.execCommand('justifyleft');
 
-			expect(editor.getEditorValue()).to.equal(
+			expect(editor.getEditorValue()).equals(
 				'<p style="text-align: left;">test some text <span>test</span><br></p><p>data</p>'
 			);
 		});
@@ -895,7 +895,7 @@ describe('Commands Jodit Editor Tests', function() {
 
 			editor.execCommand('justifyleft');
 
-			expect(editor.getEditorValue()).to.equal(
+			expect(editor.getEditorValue()).equals(
 				'<ul><li style="text-align: left;">test</li><li>data</li></ul>'
 			);
 		});
@@ -914,7 +914,7 @@ describe('Commands Jodit Editor Tests', function() {
 
 			editor.execCommand('justifyfull');
 
-			expect(editor.getEditorValue()).to.equal(
+			expect(editor.getEditorValue()).equals(
 				'<h1 style="text-align: justify;">test some text <span>test</span></h1>'
 			);
 		});
@@ -936,7 +936,7 @@ describe('Commands Jodit Editor Tests', function() {
 
 				editor.execCommand('justifyleft');
 
-				expect(editor.getEditorValue()).to.equal(
+				expect(editor.getEditorValue()).equals(
 					'<p style="text-align: left;">test</p>'
 				);
 			});
@@ -957,10 +957,10 @@ describe('Commands Jodit Editor Tests', function() {
 				this.setEditorValue('stop');
 			});
 
-			expect('stop').to.be.not.equal(editor.getEditorValue());
+			expect('stop').does.not.equal(editor.getEditorValue());
 
 			editor.execCommand('someCommand');
-			expect('stop').to.be.equal(editor.getEditorValue());
+			expect('stop').equals(editor.getEditorValue());
 
 			editor.registerCommand('someCommands', {
 				hotkeys: 'ctrl+d',
@@ -969,13 +969,13 @@ describe('Commands Jodit Editor Tests', function() {
 				}
 			});
 
-			expect('even').to.be.not.equal(editor.getEditorValue());
+			expect('even').does.not.equal(editor.getEditorValue());
 			// ctrl+d
 			simulateEvent('keydown', 68, editor.editor, function(data) {
 				// data.shiftKey = true;
 				data.ctrlKey = true;
 			});
-			expect('even').to.be.equal(editor.getEditorValue());
+			expect('even').equals(editor.getEditorValue());
 		});
 	});
 	describe('Indent', function() {
@@ -993,20 +993,20 @@ describe('Commands Jodit Editor Tests', function() {
 				editor.selection.selectRange(range);
 
 				editor.execCommand('indent');
-				expect(editor.value).to.be.equal(
+				expect(editor.value).equals(
 					'<ul><li style="margin-left: 10px;">test</li></ul>'
 				);
 
 				editor.execCommand('indent');
-				expect(editor.value).to.be.equal(
+				expect(editor.value).equals(
 					'<ul><li style="margin-left: 20px;">test</li></ul>'
 				);
 				editor.execCommand('indent');
-				expect(editor.value).to.be.equal(
+				expect(editor.value).equals(
 					'<ul><li style="margin-left: 30px;">test</li></ul>'
 				);
 				editor.execCommand('outdent');
-				expect(editor.value).to.be.equal(
+				expect(editor.value).equals(
 					'<ul><li style="margin-left: 20px;">test</li></ul>'
 				);
 			});

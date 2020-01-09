@@ -27,7 +27,7 @@ describe('Drag and drop element inside Editor', function () {
                     options.clientY = box.top + 5 - document.documentElement.scrollTop;
                 });
 
-                expect(sortAttributes(editor.value)).to.be.equal(
+                expect(sortAttributes(editor.value)).equals(
                     '<p>1111</p>' +
                     '<p>22<img alt="" src="https://xdsoft.net/jodit/build/images/artio.jpg" style="width:100px">22</p>' +
                     '<p>3333</p>' +
@@ -58,7 +58,7 @@ describe('Drag and drop element inside Editor', function () {
 
                 });
 
-                expect(editor.value).to.be.equal('<p>1111</p><p>22<a href="#test"><img style="width: 100px" src="https://xdsoft.net/jodit/build/images/artio.jpg" alt=""></a>22</p><p>3333</p><p>4444</p>');
+                expect(editor.value).equals('<p>1111</p><p>22<a href="#test"><img style="width: 100px" src="https://xdsoft.net/jodit/build/images/artio.jpg" alt=""></a>22</p><p>3333</p><p>4444</p>');
             });
         });
         describe('Disable dragging', function () {
@@ -88,7 +88,7 @@ describe('Drag and drop element inside Editor', function () {
                     options.clientY = box.top + 5 - document.documentElement.scrollTop;
                 });
 
-                expect(editor.value).to.be.equal(defaultValue);
+                expect(editor.value).equals(defaultValue);
             });
         });
     });

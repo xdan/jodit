@@ -128,20 +128,20 @@ describe('Link plugin', function() {
 						'.jodit_toolbar_popup'
 					);
 
-					expect(popup_opened).to.equal(2);
+					expect(popup_opened).equals(2);
 					expect(
 						editor.ownerWindow.getComputedStyle(list).display
-					).to.equal('block');
+					).equals('block');
 					expect(
 						editor.container.querySelector(
 							'.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_unlink_button'
 						).style.display
-					).to.equal('none');
+					).equals('none');
 
 					const url = editor.container.querySelector(
 						'.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=url]'
 					);
-					expect(url).to.be.not.equal(null);
+					expect(url).is.not.null;
 
 					url.focus();
 					url.value = ''; // try wrong url
@@ -156,7 +156,7 @@ describe('Link plugin', function() {
 						)
 					);
 
-					expect(url.classList.contains('jodit_error')).to.be.true;
+					expect(url.classList.contains('jodit_error')).is.true;
 
 					url.focus();
 					url.value = 'tests/artio.jpg';
@@ -168,13 +168,13 @@ describe('Link plugin', function() {
 						)
 					);
 
-					expect(sortAttributes(editor.value)).to.equal(
+					expect(sortAttributes(editor.value)).equals(
 						'<a href="tests/artio.jpg">123</a>'
 					);
 
 					simulateEvent('mousedown', 0, editor.editor);
 
-					expect(list.parentNode).to.equal(null);
+					expect(list.parentNode).equals(null);
 				});
 
 				describe('On selected content', function() {
@@ -206,28 +206,28 @@ describe('Link plugin', function() {
 							const popup = editor.container.querySelector(
 								'.jodit_toolbar_popup'
 							);
-							expect(popup).to.be.not.equal(null);
+							expect(popup).is.not.null;
 
 							expect(
 								editor.ownerWindow.getComputedStyle(popup)
 									.display
-							).to.equal('block');
+							).equals('block');
 
 							expect(
 								editor.container.querySelector(
 									'.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_unlink_button'
 								).style.display
-							).to.equal('none');
+							).equals('none');
 
 							const url = popup.querySelector('[ref=url_input]');
-							expect(url).to.be.not.equal(null);
+							expect(url).is.not.null;
 
 							const text = popup.querySelector(
 								'[ref=content_input]'
 							);
-							expect(text).to.be.not.equal(null);
+							expect(text).is.not.null;
 
-							expect(text.value).to.equal('select');
+							expect(text.value).equals('select');
 
 							url.focus();
 							url.value = 'tests/artio.jpg';
@@ -239,13 +239,13 @@ describe('Link plugin', function() {
 								)
 							);
 
-							expect(sortAttributes(editor.value)).to.equal(
+							expect(sortAttributes(editor.value)).equals(
 								'test <a href="tests/artio.jpg">select</a> stop'
 							);
 
 							simulateEvent('mousedown', 0, editor.editor);
 
-							expect(popup.parentNode).to.equal(null);
+							expect(popup.parentNode).equals(null);
 						});
 					});
 
@@ -285,7 +285,7 @@ describe('Link plugin', function() {
 								expect(
 									editor.ownerWindow.getComputedStyle(text)
 										.display
-								).to.equal('none');
+								).equals('none');
 							});
 						});
 
@@ -315,18 +315,18 @@ describe('Link plugin', function() {
 							const popup = editor.container.querySelector(
 								'.jodit_toolbar_popup'
 							);
-							expect(popup).to.be.not.equal(null);
+							expect(popup).is.not.null;
 							expect(
 								editor.ownerWindow.getComputedStyle(popup)
 									.display
-							).to.equal('block');
+							).equals('block');
 
 							const url = popup.querySelector('[ref=url_input]');
 							const text = popup.querySelector(
 								'[ref=content_input]'
 							);
 
-							expect(text.value).to.equal('');
+							expect(text.value).equals('');
 
 							url.focus();
 							url.value = 'tests/artio.jpg';
@@ -339,13 +339,13 @@ describe('Link plugin', function() {
 								)
 							);
 
-							expect(sortAttributes(editor.value)).to.equal(
+							expect(sortAttributes(editor.value)).equals(
 								'test <a href="tests/artio.jpg"><img alt="" src="https://xdsoft.net/jodit/build/images/artio.jpg" style="height:100px;width:100px"></a> stop'
 							);
 
 							simulateEvent('mousedown', 0, editor.editor);
 
-							expect(popup.parentNode).to.equal(null);
+							expect(popup.parentNode).equals(null);
 						});
 					});
 				});
@@ -379,31 +379,31 @@ describe('Link plugin', function() {
 						editor.container.querySelector(
 							'.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=url]'
 						).value
-					).to.equal('#test');
+					).equals('#test');
 
 					expect(
 						editor.container.querySelector(
 							'.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=target]'
 						).checked
-					).to.equal(true);
+					).equals(true);
 
 					expect(
 						editor.container.querySelector(
 							'.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=nofollow]'
 						).checked
-					).to.equal(true);
+					).equals(true);
 
 					expect(
 						editor.container.querySelector(
 							'.jodit_toolbar_btn.jodit_toolbar_btn-link .jodit_unlink_button'
 						).style.display
-					).to.be.not.equal('none');
+					).does.not.equal('none');
 
 					expect(
 						editor.container.querySelector(
 							'.jodit_toolbar_btn.jodit_toolbar_btn-link [ref=insert]'
 						).innerHTML
-					).to.equal(editor.i18n('Update'));
+					).equals(editor.i18n('Update'));
 
 					simulateEvent(
 						'click',
@@ -413,7 +413,7 @@ describe('Link plugin', function() {
 						)
 					);
 
-					expect(sortAttributes(editor.value)).to.equal('test');
+					expect(sortAttributes(editor.value)).equals('test');
 				});
 			});
 		});

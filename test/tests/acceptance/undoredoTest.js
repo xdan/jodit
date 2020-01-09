@@ -30,15 +30,15 @@ describe('Undo/Redo behaviors', function() {
 				list.querySelector('.jodit_toolbar_btn.jodit_toolbar_btn-h1')
 			);
 
-			expect(editor.value).to.be.equal('<h1>test</h1>');
+			expect(editor.value).equals('<h1>test</h1>');
 
 			editor.execCommand('undo');
 
-			expect(editor.value).to.be.equal('test');
+			expect(editor.value).equals('test');
 
 			editor.execCommand('redo');
 
-			expect(editor.value).to.be.equal('<h1>test</h1>');
+			expect(editor.value).equals('<h1>test</h1>');
 		});
 
 		describe('Several operations', function() {
@@ -59,13 +59,13 @@ describe('Undo/Redo behaviors', function() {
 
 				simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
 
-				expect(editor.value).to.be.equal(
+				expect(editor.value).equals(
 					'<p>t</p><ul><li>test3</li><li><a>test4</a></li></ul>'
 				);
 
 				editor.execCommand('undo');
 
-				expect(editor.value).to.be.equal(
+				expect(editor.value).equals(
 					'<p>test</p><ul><li>test2</li><li>test3</li><li><a>test4</a></li></ul>'
 				);
 
@@ -75,13 +75,13 @@ describe('Undo/Redo behaviors', function() {
 
 				simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
 
-				expect(editor.value).to.be.equal(
+				expect(editor.value).equals(
 					'<p>t</p><ul><li>test2</li><li>test3</li><li><a>test4</a></li></ul>'
 				);
 
 				editor.execCommand('undo');
 
-				expect(editor.value).to.be.equal(
+				expect(editor.value).equals(
 					'<p>test</p><ul><li>test2</li><li>test3</li><li><a>test4</a></li></ul>'
 				);
 			});
@@ -99,7 +99,7 @@ describe('Undo/Redo behaviors', function() {
 			editor.setEditorValue('test');
 			editor.setEditorValue('test2');
 			editor.execCommand('undo');
-			expect(editor.getEditorValue()).to.equal('test');
+			expect(editor.getEditorValue()).equals('test');
 		});
 		it('Redo. Enter text wait and again enter text. After execute "undo" + "redo" command in editor should be second text', function() {
 			const editor = new Jodit(appendTestArea(), {
@@ -111,9 +111,9 @@ describe('Undo/Redo behaviors', function() {
 			editor.setEditorValue('test');
 			editor.setEditorValue('test2');
 			editor.execCommand('undo');
-			expect(editor.getEditorValue()).to.equal('test');
+			expect(editor.getEditorValue()).equals('test');
 			editor.execCommand('redo');
-			expect(editor.getEditorValue()).to.equal('test2');
+			expect(editor.getEditorValue()).equals('test2');
 		});
 		it('Check react UndoRedo to another changes', function() {
 			const editor = new Jodit(appendTestArea(), {
@@ -134,10 +134,10 @@ describe('Undo/Redo behaviors', function() {
 				editor.editorDocument.createTextNode('test2')
 			);
 			editor.execCommand('undo');
-			expect(editor.getEditorValue()).to.equal('test');
+			expect(editor.getEditorValue()).equals('test');
 
 			editor.execCommand('redo');
-			expect(editor.getEditorValue()).to.equal('testtest2');
+			expect(editor.getEditorValue()).equals('testtest2');
 		});
 	});
 
@@ -153,41 +153,41 @@ describe('Undo/Redo behaviors', function() {
 			const undo = editor.container.querySelector(
 				'.jodit_toolbar_btn.jodit_toolbar_btn-undo'
 			);
-			expect(undo).to.be.not.equal(null);
+			expect(undo).is.not.null;
 			const redo = editor.container.querySelector(
 				'.jodit_toolbar_btn.jodit_toolbar_btn-redo'
 			);
-			expect(redo).to.be.not.equal(null);
+			expect(redo).is.not.null;
 
-			expect(undo.classList.contains('jodit_disabled')).to.be.true;
-			expect(redo.classList.contains('jodit_disabled')).to.be.true;
+			expect(undo.classList.contains('jodit_disabled')).is.true;
+			expect(redo.classList.contains('jodit_disabled')).is.true;
 
 			editor.value = 'test';
 			editor.value = 'stop';
 
 			expect(undo.classList.contains('jodit_disabled')).to.be.false;
-			expect(redo.classList.contains('jodit_disabled')).to.be.true;
+			expect(redo.classList.contains('jodit_disabled')).is.true;
 
 			simulateEvent('mousedown', 0, undo);
-			expect(editor.value).to.be.equal('test');
+			expect(editor.value).equals('test');
 			expect(undo.classList.contains('jodit_disabled')).to.be.false;
 			expect(redo.classList.contains('jodit_disabled')).to.be.false;
 
 			simulateEvent('mousedown', 0, redo);
-			expect(editor.value).to.be.equal('stop');
+			expect(editor.value).equals('stop');
 			expect(undo.classList.contains('jodit_disabled')).to.be.false;
-			expect(redo.classList.contains('jodit_disabled')).to.be.true;
+			expect(redo.classList.contains('jodit_disabled')).is.true;
 
 			editor.observer.clear();
 
-			expect(undo.classList.contains('jodit_disabled')).to.be.true;
-			expect(redo.classList.contains('jodit_disabled')).to.be.true;
-			expect(editor.value).to.be.equal('stop');
+			expect(undo.classList.contains('jodit_disabled')).is.true;
+			expect(redo.classList.contains('jodit_disabled')).is.true;
+			expect(editor.value).equals('stop');
 
 			editor.execCommand('undo');
-			expect(undo.classList.contains('jodit_disabled')).to.be.true;
-			expect(redo.classList.contains('jodit_disabled')).to.be.true;
-			expect(editor.value).to.be.equal('stop');
+			expect(undo.classList.contains('jodit_disabled')).is.true;
+			expect(redo.classList.contains('jodit_disabled')).is.true;
+			expect(editor.value).equals('stop');
 		});
 	});
 

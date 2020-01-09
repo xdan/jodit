@@ -1,4 +1,5 @@
 typeof window.chai !== 'undefined' && (chai.config.includeStack = true);
+typeof window.mocha !== 'undefined' && mocha.timeout(15000);
 
 const oldI18n = Jodit.prototype.i18n,
 	oldAjaxSender = Jodit.modules.Ajax.prototype.send,
@@ -317,6 +318,7 @@ function appendTestArea(id, noput) {
 	const textarea = document.createElement('textarea');
 	textarea.setAttribute('id', id || 'editor_' + new Date().getTime());
 	box.appendChild(textarea);
+
 	!noput && stuff.push(textarea);
 	return textarea;
 }
@@ -521,6 +523,36 @@ function simulateEvent(type, keyCodeArg, element, options) {
 	}
 
 	element.dispatchEvent(evt);
+}
+
+/**
+ * Set listener and remove it after first call
+ *
+ * @param {string} event
+ * @param {HTMLElement} element
+ * @param {Function} callback
+ */
+function one(event, element, callback) {
+	const on = function () {
+		element.removeEventListener(event, on);
+		callback.apply(element, arguments);
+	};
+
+	element.addEventListener(event, on);
+}
+
+/**
+ * Set one handler for load image
+ *
+ * @param {HTMLImageElement} image
+ * @param {Function} callback
+ */
+function onLoadImage(image, callback) {
+	if (!image.complete) {
+		one('load', image, callback);
+	} else {
+		callback.apply(image);
+	}
 }
 
 /**

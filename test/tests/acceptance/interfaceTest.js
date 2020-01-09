@@ -10,17 +10,17 @@ describe('Test interface', function() {
 				'.jodit_toolbar_btn.jodit_toolbar_btn-about'
 			);
 
-			expect(aboutButton).to.be.not.equal(null);
+			expect(aboutButton).is.not.null;
 			simulateEvent('mousedown', 0, aboutButton);
 
 			const dialog = editor.ownerDocument.querySelector(
 				'.jodit.jodit_dialog_box.active[data-editor_id=' + area.id + ']'
 			);
-			expect(dialog).to.be.not.equal(null);
+			expect(dialog).is.not.null;
 
 			expect(
 				dialog.textContent.match(/License:.*(GPL|GNU)/)
-			).to.be.not.equal(null);
+			).is.not.null;
 		});
 
 		describe('Set license', function() {
@@ -34,7 +34,7 @@ describe('Test interface', function() {
 					'.jodit_toolbar_btn.jodit_toolbar_btn-about'
 				);
 
-				expect(aboutButton).to.be.not.equal(null);
+				expect(aboutButton).is.not.null;
 				simulateEvent('mousedown', 0, aboutButton);
 
 				const dialog = editor.ownerDocument.querySelector(
@@ -42,17 +42,17 @@ describe('Test interface', function() {
 						area.id +
 						']'
 				);
-				expect(dialog).to.be.not.equal(null);
+				expect(dialog).is.not.null;
 
 				expect(
 					dialog.textContent.match(/License:.*(GPL|GNU)/)
-				).to.be.equal(null);
+				).equals(null);
 
 				expect(
 					dialog.textContent.match(
 						/License: 12345678-\*\*\*\*\*\*\*\*-\*\*\*\*\*\*\*\*-56789022/
 					)
-				).to.be.not.equal(null);
+				).is.not.null;
 			});
 		});
 	});
@@ -64,9 +64,9 @@ describe('Test interface', function() {
 					direction: 'rtl'
 				});
 
-				expect('rtl').to.be.equal(editor.editor.getAttribute('dir'));
-				expect('rtl').to.be.equal(editor.container.getAttribute('dir'));
-				expect('rtl').to.be.equal(
+				expect('rtl').equals(editor.editor.getAttribute('dir'));
+				expect('rtl').equals(editor.container.getAttribute('dir'));
+				expect('rtl').equals(
 					editor.toolbar.container.getAttribute('dir')
 				);
 			});
@@ -80,10 +80,10 @@ describe('Test interface', function() {
 					language: 'de'
 				});
 
-				expect('rtl').to.be.equal(
+				expect('rtl').equals(
 					editor.editorDocument.documentElement.getAttribute('dir')
 				);
-				expect('de').to.be.equal(
+				expect('de').equals(
 					editor.editorDocument.documentElement.getAttribute('lang')
 				);
 			});
