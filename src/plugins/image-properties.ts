@@ -462,7 +462,7 @@ export function imageProperties(editor: IJodit) {
 		});
 
 		buttons.remove.addEventListener('click', () => {
-			Dom.safeRemove(image);
+			editor.selection.removeNode(image);
 			dialog.close();
 		});
 

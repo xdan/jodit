@@ -102,6 +102,19 @@ export class Select {
 	}
 
 	/**
+	 * Remove node element from editor
+	 * @param node
+	 */
+	removeNode(node: Node): void {
+		if (!Dom.isOrContains(this.jodit.editor, node, true)) {
+			throw new Error('Selection.removeNode can remove only editor\'s children');
+		}
+
+		Dom.safeRemove(node);
+		this.jodit.events.fire('afterRemoveNode', node);
+	}
+
+	/**
 	 * Insert the cursor toWYSIWYG any point x, y
 	 *
 	 * @method insertAtPoint

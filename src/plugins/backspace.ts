@@ -38,7 +38,7 @@ export function backspace(editor: IJodit) {
 				container !== editor.editor
 			) {
 				parent = box.parentNode;
-				Dom.safeRemove(box);
+				editor.selection.removeNode(box);
 			} else {
 				break;
 			}
@@ -118,7 +118,7 @@ export function backspace(editor: IJodit) {
 				range.collapse(true);
 				editor.selection.selectRange(range);
 
-				Dom.safeRemove(box.node);
+				editor.selection.removeNode(box.node);
 
 				box.node = nextElement;
 			}
@@ -142,7 +142,7 @@ export function backspace(editor: IJodit) {
 
 	const removePotential = (node: Node | null): false | void => {
 		if (node && potentialRemovable.test(node.nodeName)) {
-			Dom.safeRemove(node);
+			editor.selection.removeNode(node);
 			return false;
 		}
 	};
@@ -226,7 +226,7 @@ export function backspace(editor: IJodit) {
 					current.firstChild &&
 					current.firstChild.nodeName === 'BR'
 				) {
-					Dom.safeRemove(current.firstChild);
+					editor.selection.removeNode(current.firstChild);
 				}
 
 				if (
@@ -240,7 +240,7 @@ export function backspace(editor: IJodit) {
 						editor.editor
 					);
 
-					Dom.safeRemove(node);
+					editor.selection.removeNode(node);
 				}
 			}
 		})
@@ -359,7 +359,7 @@ export function backspace(editor: IJodit) {
 								);
 						} else {
 							if (prevBox && isEmpty(prevBox)) {
-								Dom.safeRemove(prevBox);
+								editor.selection.removeNode(prevBox);
 								return false;
 							}
 						}
@@ -416,7 +416,7 @@ export function backspace(editor: IJodit) {
 										UL !== nextBox
 									) {
 										Dom.moveContent(nextBox, UL, !toLeft);
-										Dom.safeRemove(nextBox);
+										editor.selection.removeNode(nextBox);
 									}
 								}
 							}
@@ -439,7 +439,7 @@ export function backspace(editor: IJodit) {
 								parent.parentNode &&
 								parent !== editor.editor
 							) {
-								Dom.safeRemove(parent);
+								editor.selection.removeNode(parent);
 							}
 						}
 

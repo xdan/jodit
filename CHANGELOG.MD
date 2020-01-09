@@ -19,7 +19,7 @@ Jodit.make('#editor', {
 	ownerDocument: doc
 });
 ```
-### Feature
+## Feature
 Source plugin was separated on several classes. Now you can choose SourceEditor
 or make yourself (https://github.com/xdan/jodit/issues/242)
 > Before
@@ -50,6 +50,17 @@ editor.async.setTimeout(() => {
 editor.destruct();
 ```
 After destruct first timeout will throw the error, but second will be cleared.
+
+### Events
+Added `afterRemoveNode` event
+```js
+const editor = new Jodit('#editor');
+editor.events.on('afterRemoveNode', (node) => {
+	if (node.nodeName === 'IMG') {
+		fetch('delete.php', {image: node.src});
+	}
+});
+```
 
 ## 3.3.8
 

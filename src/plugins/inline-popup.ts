@@ -62,10 +62,8 @@ Config.prototype.popup = {
 			name: 'bin',
 			tooltip: 'Delete',
 			exec: (editor: IJodit, image: Node) => {
-				if (image.parentNode) {
-					Dom.safeRemove(image);
-					editor.events.fire('hidePopup');
-				}
+				editor.selection.removeNode(image);
+				editor.events.fire('hidePopup');
 			}
 		}
 	],
@@ -74,10 +72,8 @@ Config.prototype.popup = {
 			name: 'bin',
 			tooltip: 'Delete',
 			exec: (editor: IJodit, image: Node) => {
-				if (image.parentNode) {
-					Dom.safeRemove(image);
-					editor.events.fire('hidePopup');
-				}
+				editor.selection.removeNode(image);
+				editor.events.fire('hidePopup');
 			}
 		}
 	],
@@ -87,10 +83,8 @@ Config.prototype.popup = {
 			icon: 'bin',
 			tooltip: 'Delete',
 			exec: (editor: IJodit, image: Node) => {
-				if (image.parentNode) {
-					Dom.safeRemove(image);
-					editor.events.fire('hidePopup');
-				}
+				editor.selection.removeNode(image);
+				editor.events.fire('hidePopup');
 			}
 		},
 		{
