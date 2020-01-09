@@ -55,7 +55,8 @@ export class tooltip extends Plugin {
 
 		css(this.container, {
 			left: bound.left - this.container.offsetWidth / 2 + bound.width / 2,
-			top: bound.top + bound.height
+			top: bound.top + bound.height,
+			position: null
 		});
 	}
 

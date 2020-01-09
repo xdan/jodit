@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.3.14
+Fixed https://github.com/xdan/jodit/issues/316
+
 ## 3.3.8
 
 ### Plugin system was changed
