@@ -197,16 +197,23 @@ export class ImageEditor extends Component {
 
 		this.calcCropBox();
 
-		this.new_w = this.calcValueByPercent(
-			this.cropImage.offsetWidth || this.image.offsetWidth,
-			this.options.cropDefaultWidth
-		);
+		const w =
+			this.cropImage.offsetWidth ||
+			this.image.offsetWidth ||
+			this.image.naturalWidth;
+
+		this.new_w = this.calcValueByPercent(w, this.options.cropDefaultWidth);
+
+		const h =
+			this.cropImage.offsetHeight ||
+			this.image.offsetHeight ||
+			this.image.naturalHeight;
 
 		if (this.cropUseRatio) {
 			this.new_h = this.new_w / this.ratio;
 		} else {
 			this.new_h = this.calcValueByPercent(
-				this.cropImage.offsetHeight || this.image.offsetHeight,
+				h,
 				this.options.cropDefaultHeight
 			);
 		}
@@ -215,12 +222,8 @@ export class ImageEditor extends Component {
 			backgroundImage: 'url(' + this.cropImage.getAttribute('src') + ')',
 			width: this.new_w,
 			height: this.new_h,
-			left:
-				(this.cropImage.offsetWidth || this.image.offsetWidth) / 2 -
-				this.new_w / 2,
-			top:
-				(this.cropImage.offsetHeight || this.image.offsetHeight) / 2 -
-				this.new_h / 2
+			left: w / 2 - this.new_w / 2,
+			top: h / 2 - this.new_h / 2
 		});
 
 		this.jodit.events.fire(this.cropHandler, 'updatesize');
@@ -411,9 +414,7 @@ export class ImageEditor extends Component {
 		// btn group
 
 		$$('.jodit_button_group', self.editor).forEach(group => {
-			const input = group.querySelector(
-				'input'
-			) as HTMLInputElement;
+			const input = group.querySelector('input') as HTMLInputElement;
 			self.jodit.events.on(
 				group,
 				'click change',
@@ -535,8 +536,8 @@ export class ImageEditor extends Component {
 					return;
 				}
 
-				let new_x: number = css(self.cropHandler, 'left') as number,
-					new_y: number = css(self.cropHandler, 'top') as number,
+				let new_x = css(self.cropHandler, 'left') as number,
+					new_y = css(self.cropHandler, 'top') as number,
 					new_width = self.cropHandler.offsetWidth,
 					new_height = self.cropHandler.offsetHeight;
 
@@ -706,7 +707,7 @@ export class ImageEditor extends Component {
 			failed: (error: Error) => void
 		) => void
 	): Promise<Dialog> => {
-		return new Promise(resolve => {
+		return this.jodit.async.promise<Dialog>(resolve => {
 			const timestamp = new Date().getTime();
 
 			this.image = this.jodit.create.element('img');
@@ -755,7 +756,7 @@ export class ImageEditor extends Component {
 
 				this.resize_box.appendChild(this.image);
 
-				this.cropImage = this.image.cloneNode() as HTMLImageElement;
+				this.cropImage = this.image.cloneNode(true) as HTMLImageElement;
 
 				this.crop_box.appendChild(this.cropImage);
 
@@ -837,15 +838,18 @@ export class ImageEditor extends Component {
 		) => `<div class="jodit_form_group">
 			<label>${i(label)}</label>
 			<div class="jodit_button_group jodit_button_radio_group">
-				<input ${act(active, 'checked')} type="checkbox" class="${jie}_${className} jodit_input"/>
+				<input ${act(
+					active,
+					'checked'
+				)} type="checkbox" class="${jie}_${className} jodit_input"/>
 
-				<button type="button" data-yes="1" class="jodit_button jodit_status_success">${
-					i('Yes')
-				}</button>
+				<button type="button" data-yes="1" class="jodit_button jodit_status_success">${i(
+					'Yes'
+				)}</button>
 
-				<button type="button" class="jodit_button jodit_status_danger">${
-					i('No')
-				}</button>
+				<button type="button" class="jodit_button jodit_status_danger">${i(
+					'No'
+				)}</button>
 			</div>
 		</div>`;
 

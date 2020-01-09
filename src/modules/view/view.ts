@@ -119,7 +119,7 @@ export class View extends Panel implements IViewBased {
 	};
 
 	/** @override */
-	initOptions(options?: IViewOptions): void {
+	protected initOptions(options?: IViewOptions): void {
 		super.initOptions({
 			removeButtons: [],
 			zIndex: 100002,

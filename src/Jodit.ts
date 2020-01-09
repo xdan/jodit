@@ -31,7 +31,7 @@ import {
 	CustomCommand,
 	ExecCommandCallback,
 	IDictionary,
-	IPluginSystem,
+	IPluginSystem, IViewOptions,
 	markerInfo,
 	Modes
 } from './types';
@@ -889,6 +889,21 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		return resolved;
 	}
 
+	/** @override **/
+	protected initOptions(options?: object): void {
+		this.options = new OptionsDefault(options) as Config;
+	}
+
+	/** @override **/
+	protected initOwners(): void {
+		// in iframe it can be changed
+		this.editorDocument = this.options.ownerDocument;
+		this.editorWindow = this.options.ownerWindow;
+
+		this.ownerDocument = this.options.ownerDocument;
+		this.ownerWindow = this.options.ownerWindow;
+	}
+
 	/**
 	 * Create instance of Jodit
 	 * @constructor
@@ -897,16 +912,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 * @param {object} options Editor's options
 	 */
 	constructor(element: HTMLInputElement | string, options?: object) {
-		super();
-
-		this.options = new OptionsDefault(options) as Config;
-
-		// in iframe it can be changed
-		this.editorDocument = this.options.ownerDocument;
-		this.editorWindow = this.options.ownerWindow;
-
-		this.ownerDocument = this.options.ownerDocument;
-		this.ownerWindow = this.options.ownerWindow;
+		super(undefined, options as IViewOptions);
 
 		this.element = this.resolveElement(element);
 

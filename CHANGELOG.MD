@@ -24,15 +24,15 @@ Source plugin was separated on several classes. Now you can choose SourceEditor
 or make yourself (https://github.com/xdan/jodit/issues/242)
 > Before
 ```js
-const editor = new Jodit('#editor', {
+Jodit.make('#editor', {
 	useAceEditor: true || false
 });
 ```
 
 > Now
 ```js
-const editor = new Jodit('#editor', {
-	sourceEditor: 'area' || 'ace'
+Jodit.make('#editor', {
+	sourceEditor: 'area' || 'ace' // || 'mirror' in PRO
 });
 ```
 In PRO version you can choose mirrror&

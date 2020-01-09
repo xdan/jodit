@@ -31,6 +31,7 @@ export class DragAndDrop extends Plugin {
 			Dom.safeRemove(this.draggable);
 			this.draggable = null;
 		}
+
 		this.isCopyMode = false;
 	};
 

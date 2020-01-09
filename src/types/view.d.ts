@@ -69,8 +69,6 @@ interface IPanel<T = IViewOptions>  extends IComponent {
 	toggleFullSize(isFullSize?: boolean): void;
 
 	options: T;
-	initOptions(): void;
-	initOwners(): void;
 }
 
 interface IViewBased<T = IViewOptions> extends IPanel<T> {

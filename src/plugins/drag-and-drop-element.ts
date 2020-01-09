@@ -117,6 +117,10 @@ export class DragAndDropElement extends Plugin {
 	};
 
 	private onDragEnd = () => {
+		if (this.isInDestruct) {
+			return;
+		}
+
 		this.jodit.async.clearTimeout(this.timeout);
 
 		if (this.draggable) {

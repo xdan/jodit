@@ -28,11 +28,11 @@ export abstract class Panel extends Component implements IPanel {
 	create: Create;
 
 	abstract options: IViewOptions;
-	initOptions(options?: IViewOptions): void {
+	protected initOptions(options?: IViewOptions): void {
 		this.options = { ...(this.options || {}), ...options };
 	}
 
-	initOwners(): void {
+	protected initOwners(): void {
 		this.ownerDocument = window.document;
 		this.ownerWindow = window;
 	}

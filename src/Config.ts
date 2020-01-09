@@ -815,9 +815,8 @@ export class Config implements IViewOptions {
 	}
 }
 
-export const OptionsDefault: any = function(this: any, options: any) {
-	const def = Config.defaultOptions,
-		self: any = this;
+export const OptionsDefault: any = function(this: any, options: any, def: any = Config.defaultOptions) {
+	const self: any = this;
 
 	self.plainOptions = options;
 
