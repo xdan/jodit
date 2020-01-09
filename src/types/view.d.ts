@@ -52,7 +52,7 @@ interface IViewOptions extends ILanguageOptions, IToolbarOptions {
 	controls?: Controls;
 }
 
-interface IPanel extends IComponent {
+interface IPanel<T = IViewOptions>  extends IComponent {
 	container: HTMLElement;
 	create: ICreate;
 
@@ -67,9 +67,13 @@ interface IPanel extends IComponent {
 
 	isFullSize: () => boolean;
 	toggleFullSize(isFullSize?: boolean): void;
+
+	options: T;
+	initOptions(): void;
+	initOwners(): void;
 }
 
-interface IViewBased<T = IViewOptions> extends IPanel {
+interface IViewBased<T = IViewOptions> extends IPanel<T> {
 	/**
 	 * @property {string} ID attribute for source element, id add {id}_editor it's editor's id
 	 */

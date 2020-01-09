@@ -66,15 +66,7 @@ export class View extends Panel implements IViewBased {
 		this.create.div()
 	);
 
-	options: IViewOptions = {
-		removeButtons: [],
-		zIndex: 100002,
-		fullsize: false,
-		showTooltip: true,
-		useNativeTooltip: false,
-		buttons: [],
-		globalFullsize: true
-	};
+	options: IViewOptions;
 
 	events: IEventsNative;
 	async : IAsync = new Async();
@@ -126,22 +118,30 @@ export class View extends Panel implements IViewBased {
 		return this.version;
 	};
 
-	constructor(jodit?: IViewBased, options?: IViewOptions) {
-		super(jodit);
+	/** @override */
+	initOptions(options?: IViewOptions): void {
+		super.initOptions({
+			removeButtons: [],
+			zIndex: 100002,
+			fullsize: false,
+			showTooltip: true,
+			useNativeTooltip: false,
+			buttons: [],
+			globalFullsize: true,
+			...options
+		});
+	}
 
-		this.id =
-			jodit && jodit.id ? jodit.id : new Date().getTime().toString();
+	constructor(jodit?: IViewBased, options?: IViewOptions) {
+		super(jodit, options);
+
+		this.id = jodit?.id || new Date().getTime().toString();
 
 		this.jodit = jodit || this;
 
-		this.events =
-			jodit && jodit.events
-				? jodit.events
-				: new EventsNative(this.ownerDocument);
+		this.events = jodit?.events || new EventsNative(this.ownerDocument);
 
-		this.buffer = jodit && jodit.buffer ? jodit.buffer : Storage.makeStorage();
-
-		this.options = { ...this.options, ...options };
+		this.buffer = jodit?.buffer || Storage.makeStorage();
 	}
 
 	destruct() {

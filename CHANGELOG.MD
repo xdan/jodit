@@ -1,7 +1,55 @@
 # Changelog
 
 ## 3.3.14
+### Bugfix
 Fixed https://github.com/xdan/jodit/issues/316
+Fixed bug when Jodit was initialized inside iframe.
+```js
+const iframe = document.createElement('iframe');
+document.body.appendChild(iframe);
+
+const win = iframe.contentWindow;
+const doc = win.document;
+doc.open();
+doc.write('<html><body><textarea id="editor"></textarea><' + 'script src="./build/jodit.js"><' + '/script></body></html>');
+doc.close();
+
+Jodit.make('#editor', {
+	ownerWindow: win,
+	ownerDocument: doc
+});
+```
+### Feature
+Source plugin was separated on several classes. Now you can choose SourceEditor
+or make yourself (https://github.com/xdan/jodit/issues/242)
+> Before
+```js
+const editor = new Jodit('#editor', {
+	useAceEditor: true || false
+});
+```
+
+> Now
+```js
+const editor = new Jodit('#editor', {
+	sourceEditor: 'area' || 'ace'
+});
+```
+In PRO version you can choose mirrror&
+* Added Async module for control asynchronous operations
+```javascript
+const editor = new Jodit('#editor');
+setTimeout(() => {
+	editor.selection.insertHTML('Hello!')
+}, 1000);
+
+editor.async.setTimeout(() => {
+	editor.selection.insertHTML('World!')
+}, 1000);
+
+editor.destruct();
+```
+After destruct first timeout will throw the error, but second will be cleared.
 
 ## 3.3.8
 

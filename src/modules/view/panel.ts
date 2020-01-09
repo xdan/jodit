@@ -8,27 +8,40 @@
  */
 
 import { Component } from '../Component';
-import { IPanel, IViewBased } from '../../types/view';
+import { IPanel, IViewBased, IViewOptions } from '../../types/view';
 import { Dom } from '../Dom';
 import { Create } from '../Create';
 import { isJoditObject } from '../helpers/checker/isJoditObject';
 
-export class Panel extends Component implements IPanel {
+export abstract class Panel extends Component implements IPanel {
 	protected __whoLocked: string | false = '';
 	protected __isFullSize: boolean = false;
 
-	ownerDocument: Document = document;
-	ownerWindow: Window = window;
+	ownerDocument: Document;
+	ownerWindow: Window;
 
 	container: HTMLDivElement;
 
 	/**
 	 * @property {Create} Native DOM element creator
 	 */
-	public create: Create;
+	create: Create;
 
-	constructor(jodit?: IViewBased) {
+	abstract options: IViewOptions;
+	initOptions(options?: IViewOptions): void {
+		this.options = { ...(this.options || {}), ...options };
+	}
+
+	initOwners(): void {
+		this.ownerDocument = window.document;
+		this.ownerWindow = window;
+	}
+
+	protected constructor(jodit?: IViewBased, options?: IViewOptions) {
 		super(jodit);
+
+		this.initOptions(options);
+		this.initOwners();
 
 		if (jodit && jodit.ownerDocument) {
 			this.ownerDocument = jodit.ownerDocument;
