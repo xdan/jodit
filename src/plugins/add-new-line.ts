@@ -89,7 +89,7 @@ export function addNewLine(editor: IJodit) {
 
 		editor.async.clearTimeout(timeout);
 		line.classList.toggle('jodit-add-new-line_after', !preview);
-		line.style.display = 'block';
+		editor.container.appendChild(line);
 		line.style.width = editor.editor.clientWidth + 'px';
 		hidden = false;
 	};
@@ -97,7 +97,7 @@ export function addNewLine(editor: IJodit) {
 	const hideForce = () => {
 		editor.async.clearTimeout(timeout);
 		lineInFocus = false;
-		line.style.display = 'none';
+		Dom.safeRemove(line);
 		hidden = true;
 	};
 
@@ -127,7 +127,6 @@ export function addNewLine(editor: IJodit) {
 			editor.events.off(line);
 		})
 		.on('afterInit', () => {
-			editor.container.appendChild(line);
 			editor.events
 				.on(line, 'mousemove', (e: MouseEvent) => {
 					e.stopPropagation();

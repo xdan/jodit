@@ -44,7 +44,6 @@ const getStyle = (
 ): string | number | undefined => {
 	let result: string | number | undefined = css(box, key);
 
-	// TODO need check 0 == "0" and another cases
 	if (result === defaultStyles[key]) {
 		if (
 			box.parentNode &&

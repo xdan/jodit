@@ -11,7 +11,6 @@ import { Component } from '../Component';
 import { IPanel, IViewBased, IViewOptions } from '../../types/view';
 import { Dom } from '../Dom';
 import { Create } from '../Create';
-import { isJoditObject } from '../helpers/checker/isJoditObject';
 
 export abstract class Panel extends Component implements IPanel {
 	protected __whoLocked: string | false = '';
@@ -84,10 +83,7 @@ export abstract class Panel extends Component implements IPanel {
 			this.ownerWindow = jodit.ownerWindow;
 		}
 
-		this.create = new Create(
-			this.ownerDocument,
-			isJoditObject(jodit) ? jodit.editorDocument : undefined
-		);
+		this.create = new Create(this);
 
 		this.container = this.create.div();
 	}

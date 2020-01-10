@@ -8,7 +8,7 @@
  */
 
 import { IViewBased } from '../types/view';
-import { Component } from './Component';
+import { Component, STATUSES } from './Component';
 import { css } from './helpers/css';
 import { ToolbarIcon } from './toolbar/icon';
 import { Dom } from './Dom';
@@ -120,7 +120,7 @@ export class ContextMenu extends Component {
 	}
 
 	destruct() {
-		this.setStatus('beforeDestruct');
+		this.setStatus(STATUSES.beforeDestruct);
 
 		Dom.safeRemove(this.context);
 		delete this.context;

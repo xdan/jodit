@@ -7,34 +7,30 @@
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IDictionary } from '../types';
+import { IDictionary, IJodit, IPanel } from '../types';
 import { isPlainObject } from './helpers/checker/isPlainObject';
 import { each } from './helpers/each';
 import { asArray } from './helpers/array/asArray';
 import { Dom } from './Dom';
-import { css, refs } from './helpers';
+import { css, isJoditObject, refs } from './helpers';
 import { Attributes, Children, ICreate } from '../types/create';
 
 export class Create implements ICreate {
-	private doc: Document;
-	public inside: Create;
+	inside: Create;
 
-	constructor(ownerDocument: Document, editorDocument?: Document | null) {
-		this.doc = ownerDocument;
-
-		if (editorDocument !== null) {
-			this.inside = editorDocument
-				? new Create(editorDocument)
-				: new Create(ownerDocument, null);
-		}
+	private get doc(): Document {
+		return this.insideCreator && isJoditObject(this.jodit)
+			? this.jodit.editorDocument
+			: this.jodit.ownerDocument;
 	}
 
-	/**
-	 * Set document creator
-	 * @param doc
-	 */
-	setDocument(doc: Document): void {
-		this.doc = doc;
+	constructor(
+		readonly jodit: IJodit | IPanel,
+		readonly insideCreator: boolean = false
+	) {
+		if (!insideCreator) {
+			this.inside = new Create(jodit, true);
+		}
 	}
 
 	element<K extends keyof HTMLElementTagNameMap>(
@@ -161,7 +157,10 @@ export class Create implements ICreate {
 	 *
 	 * @return HTMLElement
 	 */
-	fromHTML(html: string | number, refsToggleElement?: IDictionary<boolean | void>): HTMLElement {
+	fromHTML(
+		html: string | number,
+		refsToggleElement?: IDictionary<boolean | void>
+	): HTMLElement {
 		const div: HTMLDivElement = this.div();
 
 		div.innerHTML = html.toString();
@@ -176,7 +175,7 @@ export class Create implements ICreate {
 		if (refsToggleElement) {
 			const refElements = refs(child);
 
-			Object.keys(refsToggleElement).forEach((key) => {
+			Object.keys(refsToggleElement).forEach(key => {
 				const elm = refElements[key];
 
 				if (elm && refsToggleElement[key] === false) {

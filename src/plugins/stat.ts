@@ -27,22 +27,28 @@ Config.prototype.showWordsCounter = true;
  * Show stat data - words and chars count
  */
 export class stat extends Plugin {
-	private charCounter: HTMLElement | null;
-	private wordCounter: HTMLElement | null;
+	private charCounter: HTMLElement;
+	private wordCounter: HTMLElement;
 
 	afterInit() {
-		if (this.jodit.options.showCharsCounter) {
-			this.charCounter = this.jodit.create.span();
-			this.jodit.statusbar.append(this.charCounter, true);
-		}
+		this.charCounter = this.jodit.create.span();
+		this.wordCounter = this.jodit.create.span();
 
-		if (this.jodit.options.showWordsCounter) {
-			this.wordCounter = this.jodit.create.span();
-			this.jodit.statusbar.append(this.wordCounter, true);
-		}
+		this.jodit.events.on('afterInit changePlace', () => {
+			if (this.jodit.options.showCharsCounter) {
+				this.jodit.statusbar.append(this.charCounter, true);
+			}
 
-		this.jodit.events.on('change keyup', this.calc);
-		this.calc();
+			if (this.jodit.options.showWordsCounter) {
+				this.jodit.statusbar.append(this.wordCounter, true);
+			}
+
+			this.jodit.events
+				.off('change keyup', this.calc)
+				.on('change keyup', this.calc);
+
+			this.calc();
+		});
 	}
 
 	private calc = throttle(() => {
@@ -70,7 +76,7 @@ export class stat extends Plugin {
 		Dom.safeRemove(this.charCounter);
 		Dom.safeRemove(this.wordCounter);
 
-		this.charCounter = null;
-		this.wordCounter = null;
+		delete this.charCounter;
+		delete this.wordCounter;
 	}
 }

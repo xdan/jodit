@@ -382,11 +382,13 @@ export function imageProperties(editor: IJodit) {
 					lock_margin.innerHTML = gi(lockMargin ? 'lock' : 'unlock');
 				}
 
-				$$('.margins:not(.marginTop)', prop).forEach(
-					(elm: HTMLElement) =>
-						!lockMargin
-							? elm.removeAttribute('disabled')
-							: elm.setAttribute('disabled', 'true')
+				$$(
+					'.margins:not(.marginTop)',
+					prop
+				).forEach((elm: HTMLElement) =>
+					!lockMargin
+						? elm.removeAttribute('disabled')
+						: elm.setAttribute('disabled', 'true')
 				);
 			},
 			updateSizes = () => {
@@ -855,9 +857,11 @@ export function imageProperties(editor: IJodit) {
 
 	editor.events
 		.on('beforeDestruct', () => {
-			editor.events.off(editor.editor, 'dblclick.imageproperties');
+			editor.events.off(editor.editor, '.imageproperties');
 		})
-		.on('afterInit', () => {
+		.on('afterInit changePlace', () => {
+			editor.events.off(editor.editor,'.imageproperties');
+
 			if (opt.image.openOnDblClick) {
 				editor.events.on(
 					editor.editor,

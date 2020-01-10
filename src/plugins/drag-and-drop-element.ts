@@ -153,7 +153,7 @@ export class DragAndDropElement extends Plugin {
 		this.jodit.events.fire('synchro');
 	};
 
-	public afterInit() {
+	afterInit() {
 		this.dragList = this.jodit.options.draggableTags
 			? splitArray(this.jodit.options.draggableTags)
 					.filter(item => item)

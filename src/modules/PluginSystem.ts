@@ -223,14 +223,11 @@ export class PluginSystem implements IPluginSystem {
 
 		return Promise.all(
 			pluginList.map(extra => {
-				const url = extra.url || PluginSystem.getFullUrl(jodit, name, true);
+				const url =
+					extra.url || PluginSystem.getFullUrl(jodit, name, true);
 
 				return reflect(
-					appendScriptAsync(
-						jodit,
-						url,
-						jodit.ownerDocument
-					)
+					appendScriptAsync(jodit, url, jodit.ownerDocument)
 				);
 			})
 		);

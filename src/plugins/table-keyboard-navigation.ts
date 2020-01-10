@@ -18,9 +18,11 @@ import { IJodit } from '../types';
  * @param {Jodit} editor
  */
 export function tableKeyboardNavigation(editor: IJodit) {
-	editor.events.on(
-		'keydown',
-		(event: KeyboardEvent): false | void => {
+	editor.events
+		.off('.tableKeyboardNavigation')
+		.on('keydown.tableKeyboardNavigation', (event: KeyboardEvent):
+			| false
+			| void => {
 			let current: Element, block: HTMLElement;
 
 			if (
@@ -173,6 +175,5 @@ export function tableKeyboardNavigation(editor: IJodit) {
 				}
 				return false;
 			}
-		}
-	);
+		});
 }

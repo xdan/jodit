@@ -57,8 +57,6 @@ export function errorMessages(editor: IJodit) {
 				});
 			};
 
-		editor.workplace.appendChild(messagesBox);
-
 		/**
 		 * Вывести всплывающее сообщение внизу редактора
 		 *
@@ -81,6 +79,8 @@ export function errorMessages(editor: IJodit) {
 			.on(
 				'errorMessage',
 				(message: string, className: string, timeout: number) => {
+					editor.workplace.appendChild(messagesBox);
+
 					const newmessage = editor.create.div(
 						'active ' + (className || ''),
 						message

@@ -8,7 +8,7 @@
  */
 
 import { IJodit, IPlugin } from '../types';
-import { Component } from './Component';
+import { Component, STATUSES } from './Component';
 
 export abstract class Plugin extends Component<IJodit> implements IPlugin {
 	abstract afterInit(jodit: IJodit): void;
@@ -28,7 +28,7 @@ export abstract class Plugin extends Component<IJodit> implements IPlugin {
 
 	destruct() {
 		if (!this.isDestructed) {
-			this.setStatus('beforeDestruct');
+			this.setStatus(STATUSES.beforeDestruct);
 
 			this.jodit?.events?.off('beforeDestruct', this.destruct);
 			this.beforeDestruct(this.jodit);

@@ -38,8 +38,9 @@ import {
 } from './types';
 
 import { ViewWithToolbar } from './modules/view/viewWithToolbar';
-import { IJodit, IFileBrowser, IUploader } from './types/';
+import { IFileBrowser, IJodit, IUploader } from './types/';
 import { PluginSystem } from './modules/PluginSystem';
+import { STATUSES } from './modules/Component';
 
 const SAFE_COUNT_CHANGE_CALL = 10;
 
@@ -116,7 +117,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 * @param element
 	 * @param options
 	 */
-	static make(element: HTMLInputElement | string, options?: object): Jodit {
+	static make(element: HTMLElement | string, options?: object): Jodit {
 		return new Jodit(element, options);
 	}
 
@@ -136,16 +137,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	private __wasReadOnly: boolean = false;
 
 	/**
-	 * @property {HTMLDocument} editorDocument
-	 */
-	editorDocument: HTMLDocument;
-
-	/**
-	 * @property {Window} editorWindow
-	 */
-	editorWindow: Window;
-
-	/**
 	 * Container for set/get value
 	 * @type {Storage}
 	 */
@@ -157,9 +148,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	editorIsActive: boolean = false;
 
 	observer: Observer;
-
-	currentPlace: IWorkPlace = {} as any;
-	places: IWorkPlace[];
 
 	private setPlaceField(field: keyof IWorkPlace, value: any): void {
 		if (!this.currentPlace) {
@@ -224,8 +212,37 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		this.setPlaceField('iframe', iframe);
 	}
 
+	/**
+	 * In iframe mode editor's window can be different by owner
+	 */
+	get editorWindow(): Window {
+		return this.currentPlace.editorWindow;
+	}
+
+	set editorWindow(win: Window) {
+		this.setPlaceField('editorWindow', win);
+	}
+
+	/**
+	 * In iframe mode editor's window can be different by owner
+	 */
+	get editorDocument(): Document {
+		return this.currentPlace.editorWindow.document;
+	}
+
+	currentPlace: IWorkPlace;
+	places: IWorkPlace[];
+
+	private elementToPlace: Map<HTMLElement, IWorkPlace> = new Map();
+
+	/**
+	 * Create and init current editable place
+	 * @param source
+	 * @param options
+	 */
 	addPlace(source: HTMLElement | string, options?: object): void {
 		const element = this.resolveElement(source);
+
 		if (!this.places.length) {
 			this.id =
 				element.getAttribute('id') || new Date().getTime().toString();
@@ -252,6 +269,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 				}
 			});
 		}
+
 		let container = this.create.div('jodit_container');
 
 		container.classList.add('jodit_container');
@@ -289,9 +307,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			element.style.display = 'none';
 		}
 
-		this.applyOptionsToToolbarContainer(container);
-		this.makeToolbar(container);
-
 		const workplace = this.create.div('jodit_workplace', {
 			contenteditable: false
 		});
@@ -312,54 +327,69 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		workplace.appendChild(editor);
 
-		this.currentPlace = {
+		const currentPlace = {
 			editor,
 			element,
 			container,
 			workplace,
-			statusbar
+			statusbar,
+			editorWindow: this.ownerWindow
 		};
 
-		this.places.push(this.currentPlace);
+		this.elementToPlace.set(editor, currentPlace);
+
+		this.setCurrentPlace(currentPlace);
+		this.places.push(currentPlace);
 
 		this.setNativeEditorValue(this.getElementValue()); // Init value
 
-		(async () => {
-			await this.beforeInitHook();
+		const opt = this.options;
 
-			!this.isInDestruct && (await this.events.fire('beforeInit', this));
+		if (
+			opt.enableDragAndDropFileToEditor &&
+			opt.uploader &&
+			(opt.uploader.url || opt.uploader.insertImageAsBase64URI)
+		) {
+			this.uploader.bind(editor);
+		}
 
-			try {
-				!this.isInDestruct && (await Jodit.plugins.init(this));
-			} catch (e) {
-				console.error(e);
-			}
+		this.initEditor(buffer);
 
-			!this.isInDestruct && (await this.__initEditor(buffer));
+		// in initEditor - the editor could change
+		if (!this.elementToPlace.get(this.editor)) {
+			this.elementToPlace.set(this.editor, currentPlace);
+		}
+	}
 
-			if (this.isInDestruct) {
-				return;
-			}
+	/**
+	 * Set current place object
+	 * @param place
+	 */
+	setCurrentPlace(place: IWorkPlace): void {
+		if (this.currentPlace === place) {
+			return;
+		}
 
-			const opt = this.options;
+		this.currentPlace = place;
 
-			if (
-				opt.enableDragAndDropFileToEditor &&
-				opt.uploader &&
-				(opt.uploader.url || opt.uploader.insertImageAsBase64URI)
-			) {
-				this.uploader.bind(this.editor);
-			}
+		this.applyOptionsToToolbarContainer(place.container);
+		this.makeToolbar(place.container);
 
-			this.isInited = true;
+		if (this.isReady) {
+			this.events.fire('changePlace', place);
+		}
+	}
 
-			if (this.events) {
-				await this.events.fire('afterInit', this);
-				this.events.fire('afterConstructor', this);
-			}
+	private initPlugins(): void {
+		this.beforeInitHook();
 
-			await this.afterInitHook();
-		})();
+		this.events.fire('beforeInit', this);
+
+		try {
+			Jodit.plugins.init(this);
+		} catch (e) {
+			console.error(e);
+		}
 	}
 
 	/**
@@ -1045,7 +1075,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	/** @override **/
 	protected initOwners(): void {
 		// in iframe it can be changed
-		this.editorDocument = this.options.ownerDocument;
 		this.editorWindow = this.options.ownerWindow;
 
 		this.ownerDocument = this.options.ownerDocument;
@@ -1061,6 +1090,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 */
 	constructor(element: HTMLElement | string, options?: object) {
 		super(undefined, options as IViewOptions);
+		this.setStatus(STATUSES.beforeInit);
 
 		if (this.options.events) {
 			Object.keys(this.options.events).forEach((key: string) =>
@@ -1077,16 +1107,24 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		this.selection = new Select(this);
 		this.observer = new Observer(this);
 
+		this.initPlugins();
+
 		this.places.length = 0;
 		this.addPlace(element, options);
+
+		if (this.events) {
+			this.events.fire('afterInit', this);
+			this.events.fire('afterConstructor', this);
+		}
+
+		this.afterInitHook();
+		this.setStatus(STATUSES.ready);
 
 		Jodit.instances[this.id] = this;
 	}
 
-	isInited: boolean = false;
-
-	private async __initEditor(buffer: null | string) {
-		await this.__createEditor();
+	private initEditor(buffer: null | string) {
+		this.createEditor();
 
 		if (this.isInDestruct) {
 			return;
@@ -1152,10 +1190,10 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 *
 	 * @private
 	 */
-	private async __createEditor() {
+	private createEditor() {
 		const defaultEditorArea: HTMLElement = this.editor;
 
-		const stayDefault: boolean | undefined = await this.events.fire(
+		const stayDefault: boolean | undefined = this.events.fire(
 			'createEditor',
 			this
 		);
@@ -1176,6 +1214,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			css(this.editor, this.options.style);
 		}
 
+		const editor = this.editor;
 		// proxy events
 		this.events
 			.on('synchro', () => {
@@ -1185,9 +1224,15 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 				this.editorIsActive = true;
 			})
 			.on('blur', () => (this.editorIsActive = false))
+			.on(editor, 'mousedown touchstart focus', () => {
+				const place = this.elementToPlace.get(editor);
+				if (place) {
+					this.setCurrentPlace(place);
+				}
+			})
 			.on(
-				this.editor,
-				'selectionchange selectionstart keydown keyup keypress mousedown mouseup mousepress ' +
+				editor,
+				'selectionchange selectionstart keydown keyup keypress dblclick mousedown mouseup ' +
 					'click copy cut dragstart drop dragover paste resize touchstart touchend focus blur',
 				(event: Event): false | void => {
 					if (this.options.readonly) {
@@ -1239,9 +1284,10 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			return;
 		}
 
-		this.setStatus('beforeDestruct');
+		this.setStatus(STATUSES.beforeDestruct);
 
 		this.async.clear();
+		this.elementToPlace.clear();
 
 		/**
 		 * Triggered before {@link events:beforeDestruct|beforeDestruct} executed. If returned false method stopped

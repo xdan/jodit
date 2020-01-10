@@ -24,7 +24,7 @@ import { Ajax } from './Ajax';
 import { browser, extend, isPlainObject } from './helpers/';
 import { Dom } from './Dom';
 import { isJoditObject } from './helpers/checker/isJoditObject';
-import { Component } from './Component';
+import { Component, STATUSES } from './Component';
 
 declare module '../Config' {
 	interface Config {
@@ -96,9 +96,9 @@ Config.prototype.uploader = {
 						? ['img', 'src']
 						: ['a', 'href'];
 
-				const elm: HTMLElement = this.jodit.create.inside.element(<
-					'img' | 'a'
-				>tagName);
+				const elm: HTMLElement = this.jodit.create.inside.element(
+					<'img' | 'a'>tagName
+				);
 
 				elm.setAttribute(attr, resp.baseurl + filename);
 
@@ -229,7 +229,9 @@ export class Uploader extends Component implements IUploader {
 
 										percentComplete *= 100;
 
-										this.jodit.progressbar.show().progress(percentComplete);
+										this.jodit.progressbar
+											.show()
+											.progress(percentComplete);
 
 										if (percentComplete >= 100) {
 											this.jodit.progressbar.hide();
@@ -626,10 +628,7 @@ export class Uploader extends Component implements IUploader {
 		if (this.jodit && (<IJodit>this.jodit).editor !== form) {
 			self.jodit.events.on(form, 'paste', onPaste);
 		} else {
-			self.jodit.events.on(
-				'beforePaste',
-				onPaste
-			);
+			self.jodit.events.on('beforePaste', onPaste);
 		}
 
 		const hasFiles = (event: DragEvent): boolean =>
@@ -661,27 +660,23 @@ export class Uploader extends Component implements IUploader {
 					event.preventDefault();
 				}
 			})
-			.on(
-				form,
-				'drop',
-				(event: DragEvent): false | void => {
-					form.classList.remove('jodit_draghover');
+			.on(form, 'drop', (event: DragEvent): false | void => {
+				form.classList.remove('jodit_draghover');
 
-					if (
-						hasFiles(event) &&
-						event.dataTransfer &&
-						event.dataTransfer.files
-					) {
-						event.preventDefault();
-						event.stopImmediatePropagation();
-						this.sendFiles(
-							event.dataTransfer.files,
-							handlerSuccess,
-							handlerError
-						);
-					}
+				if (
+					hasFiles(event) &&
+					event.dataTransfer &&
+					event.dataTransfer.files
+				) {
+					event.preventDefault();
+					event.stopImmediatePropagation();
+					this.sendFiles(
+						event.dataTransfer.files,
+						handlerSuccess,
+						handlerError
+					);
 				}
-			);
+			});
 
 		const inputFile: HTMLInputElement | null = form.querySelector(
 			'input[type=file]'
@@ -768,7 +763,7 @@ export class Uploader extends Component implements IUploader {
 	}
 
 	destruct(): any {
-		this.setStatus('beforeDestruct');
+		this.setStatus(STATUSES.beforeDestruct);
 
 		this.ajaxInstances.forEach(ajax => {
 			try {

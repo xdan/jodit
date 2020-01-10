@@ -77,9 +77,9 @@ export class pasteStorage extends Plugin {
 
 	private selectIndex = (index: number) => {
 		if (this.listBox) {
-			Array.from(<NodeListOf<HTMLAnchorElement>>(
-				this.listBox.childNodes
-			)).forEach((a, i) => {
+			Array.from(
+				<NodeListOf<HTMLAnchorElement>>this.listBox.childNodes
+			).forEach((a, i) => {
 				a.classList.remove('jodit_active');
 				if (index === i && this.previewBox) {
 					a.classList.add('jodit_active');
@@ -183,24 +183,27 @@ export class pasteStorage extends Plugin {
 		);
 	}
 
-	public afterInit() {
-		this.jodit.events.on('afterCopy', (html: string) => {
-			if (this.list.indexOf(html) !== -1) {
-				this.list.splice(this.list.indexOf(html), 1);
-			}
+	afterInit() {
+		this.jodit.events
+			.off('afterCopy.paste-storage')
+			.on('afterCopy.paste-storage', (html: string) => {
+				if (this.list.indexOf(html) !== -1) {
+					this.list.splice(this.list.indexOf(html), 1);
+				}
 
-			this.list.unshift(html);
-			if (this.list.length > 5) {
-				this.list.length = 5;
-			}
-		});
+				this.list.unshift(html);
+				if (this.list.length > 5) {
+					this.list.length = 5;
+				}
+			});
 
 		this.jodit.registerCommand('showPasteStorage', {
 			exec: this.showDialog,
 			hotkeys: ['ctrl+shift+v', 'cmd+shift+v']
 		});
 	}
-	public beforeDestruct(): void {
+
+	beforeDestruct(): void {
 		this.dialog && this.dialog.destruct();
 
 		Dom.safeRemove(this.previewBox);

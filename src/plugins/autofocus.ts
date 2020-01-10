@@ -28,17 +28,20 @@ Config.prototype.autofocus = false;
  * @param {Jodit} editor
  */
 export function autofocus(editor: IJodit) {
-	editor.events
-		.on('afterInit', () => {
-			if (editor.options.autofocus) {
-				if (editor.defaultTimeout) {
-					editor.async.setTimeout(editor.selection.focus, 300);
-				} else {
-					editor.selection.focus();
-				}
+	editor.events.on('afterInit', () => {
+		if (editor.options.autofocus) {
+			if (editor.defaultTimeout) {
+				editor.async.setTimeout(editor.selection.focus, 300);
+			} else {
+				editor.selection.focus();
 			}
-		})
-		.on('mousedown', (e: MouseEvent) => {
+		}
+	});
+
+	editor.events.on('afterInit changePlace', () => {
+		editor.events
+			.off(editor.editor, 'mousedown.autofocus')
+			.on(editor.editor, 'mousedown.autofocus', (e: MouseEvent) => {
 			if (
 				editor.isEditorMode() &&
 				e.target &&
@@ -52,4 +55,5 @@ export function autofocus(editor: IJodit) {
 				}
 			}
 		});
+	});
 }

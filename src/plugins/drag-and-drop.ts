@@ -96,15 +96,16 @@ export class DragAndDrop extends Plugin {
 							''
 					);
 					if (tagName === 'a') {
-						fragment.textContent = fragment.getAttribute(attr) || '';
+						fragment.textContent =
+							fragment.getAttribute(attr) || '';
 					}
 				} else {
 					fragment = dataBind(this.draggable, 'target');
 				}
 			} else if (this.getText(event)) {
-				fragment = this.jodit.create.inside.fromHTML(this.getText(
-					event
-				) as string);
+				fragment = this.jodit.create.inside.fromHTML(
+					this.getText(event) as string
+				);
 			}
 
 			sel && sel.removeAllRanges();
@@ -191,14 +192,25 @@ export class DragAndDrop extends Plugin {
 
 	afterInit() {
 		this.jodit.events
-			.on(window, 'dragover', this.onDrag)
-			.on(
+			.off(window, '.DragAndDrop')
+			.off('.DragAndDrop')
+			.off(
 				[window, this.jodit.editorDocument, this.jodit.editor],
-				'dragstart',
+				'dragstart.DragAndDrop',
 				this.onDragStart
 			)
-			.on('drop', this.onDrop)
-			.on(window, 'dragend drop mouseup', this.onDragEnd);
+			.on(window, 'dragover.DragAndDrop', this.onDrag)
+			.on(
+				[window, this.jodit.editorDocument, this.jodit.editor],
+				'dragstart.DragAndDrop',
+				this.onDragStart
+			)
+			.on('drop.DragAndDrop', this.onDrop)
+			.on(
+				window,
+				'dragend.DragAndDrop drop.DragAndDrop mouseup.DragAndDrop',
+				this.onDragEnd
+			);
 	}
 
 	beforeDestruct() {

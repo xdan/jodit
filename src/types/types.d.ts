@@ -22,12 +22,14 @@ export interface IDestructible {
 	destruct(jodit?: IJodit): any;
 }
 
-export type ComponentStatus = 'beforeInit' | 'ready' | 'beforeDestruct' | 'destructed';
+export type ComponentStatus = number;
 
 interface IComponent<T extends IViewBased = IViewBased> extends IDestructible {
 	jodit: T;
 	isDestructed: boolean;
 	isInDestruct: boolean;
+	isReady: boolean;
+
 	componentStatus: ComponentStatus;
 	setStatus(componentStatus: ComponentStatus): void;
 }

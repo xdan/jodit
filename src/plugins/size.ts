@@ -157,7 +157,7 @@ export function size(editor: IJodit) {
 			}
 		})
 		.on(
-			'afterInit',
+			'afterInit changePlace',
 			() => {
 				if (!editor.options.inline) {
 					css(editor.editor, {

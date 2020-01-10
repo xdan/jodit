@@ -659,6 +659,21 @@ export class Dom {
 	}
 
 	/**
+	 * Append new element in the start of root
+	 * @param root
+	 * @param newElement
+	 */
+	static appendChildFirst(root: HTMLElement, newElement: HTMLElement | DocumentFragment): void {
+		const child = root.firstChild;
+
+		if (child) {
+			root.insertBefore(newElement, child);
+		} else {
+			root.appendChild(newElement);
+		}
+	}
+
+	/**
 	 * Insert newElement after element
 	 *
 	 * @param elm

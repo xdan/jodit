@@ -19,7 +19,7 @@ const JODIT_IMAGE_PROCESSOR_BINDED = '__jodit_imageprocessor_binded';
  */
 export function imageProcessor(editor: IJodit) {
 	editor.events.on(
-		'change afterInit',
+		'change afterInit changePlace',
 		debounce(() => {
 			if (editor.editor) {
 				$$('img', editor.editor).forEach((elm: HTMLElement) => {

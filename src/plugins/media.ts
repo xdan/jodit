@@ -53,17 +53,7 @@ export function media(editor: IJodit) {
 			let wrapper: HTMLElement;
 
 			wrapper = editor.create.inside.fromHTML(
-				'<' +
-					mediaFakeTag +
-					' data-jodit-temp="1" ' +
-					'contenteditable="false" ' +
-					'draggable="true" ' +
-					'data-' +
-					keyFake +
-					'="1">' +
-					'</' +
-					mediaFakeTag +
-					'>'
+				`<${mediaFakeTag} data-jodit-temp="1" contenteditable="false" draggable="true" data-${keyFake}="1"></${mediaFakeTag}>`
 			);
 
 			wrapper.style.display =
@@ -102,7 +92,7 @@ export function media(editor: IJodit) {
 				}
 			})
 			.on(
-				'change afterInit afterSetMode',
+				'change afterInit afterSetMode changePlace',
 				debounce(() => {
 					if (
 						!editor.isDestructed &&

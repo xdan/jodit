@@ -124,21 +124,20 @@ export function placeholder(this: any, editor: IJodit) {
 				)
 			});
 		},
-		hide = () => {
-			Dom.hide(placeholderElm);
+		hide = (): void => {
+			Dom.safeRemove(placeholderElm);
 		},
 		toggle = debounce(() => {
-			if (placeholderElm.parentNode === null) {
-				return;
-			}
-
 			if (!editor.editor || editor.isInDestruct) {
 				return;
 			}
 
 			if (editor.getRealMode() !== consts.MODE_WYSIWYG) {
-				return hide();
+				hide();
+				return;
 			}
+
+			editor.workplace.appendChild(placeholderElm);
 
 			const value = editor.value;
 
@@ -152,7 +151,7 @@ export function placeholder(this: any, editor: IJodit) {
 			}
 		}, editor.defaultTimeout / 10);
 
-	const placeholderElm: HTMLElement = editor.create.fromHTML(
+	const placeholderElm = editor.create.fromHTML(
 		'<span style="display: none;" class="jodit_placeholder">' +
 			editor.i18n(editor.options.placeholder) +
 			'</span>'
@@ -161,14 +160,6 @@ export function placeholder(this: any, editor: IJodit) {
 	if (editor.options.direction === 'rtl') {
 		placeholderElm.style.right = '0px';
 		placeholderElm.style.direction = 'rtl';
-	}
-
-	if (
-		editor.options.useInputsPlaceholder &&
-		editor.element.hasAttribute('placeholder')
-	) {
-		placeholderElm.innerHTML =
-			editor.element.getAttribute('placeholder') || '';
 	}
 
 	editor.events
@@ -183,13 +174,20 @@ export function placeholder(this: any, editor: IJodit) {
 			Dom.safeRemove(placeholderElm);
 			editor.events.off('.placeholder').off(window, 'load', toggle);
 		})
-		.on('afterInit', () => {
-			editor.workplace.appendChild(placeholderElm);
+		.on('afterInit changePlace', () => {
+			if (
+				editor.options.useInputsPlaceholder &&
+				editor.element.hasAttribute('placeholder')
+			) {
+				placeholderElm.innerHTML =
+					editor.element.getAttribute('placeholder') || '';
+			}
 
 			toggle();
 
 			editor.events.fire('placeholder', placeholderElm.innerHTML);
 			editor.events
+				.off('.placeholder')
 				.on(
 					'change.placeholder keyup.placeholder mouseup.placeholder keydown.placeholder ' +
 						'mousedown.placeholder afterSetMode.placeholder',

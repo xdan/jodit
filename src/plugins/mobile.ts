@@ -132,7 +132,7 @@ export function mobile(editor: IJodit) {
 
 	if (editor.options.toolbarAdaptive) {
 		editor.events
-			.on('resize afterInit recalcAdaptive', () => {
+			.on('resize afterInit recalcAdaptive changePlace', () => {
 			if (!editor.options.toolbar) {
 				return;
 			}

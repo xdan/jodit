@@ -24,13 +24,23 @@ export class tooltip extends Plugin {
 
 		let timeout = 0;
 		jodit.events
-			.on('showTooltip.tooltip', (target: HTMLElement, content: string) => {
-				jodit.async.clearTimeout(timeout);
-				this.open(target, content)
-			})
-			.on('hideTooltip.tooltip change.tooltip updateToolbar.tooltip scroll.tooltip hidePopup.tooltip closeAllPopups.tooltip', () => {
-				timeout = jodit.async.setTimeout(() => this.close(), this.jodit.defaultTimeout);
-			});
+			.off('.tooltip')
+			.on(
+				'showTooltip.tooltip',
+				(target: HTMLElement, content: string) => {
+					jodit.async.clearTimeout(timeout);
+					this.open(target, content);
+				}
+			)
+			.on(
+				'hideTooltip.tooltip change.tooltip updateToolbar.tooltip scroll.tooltip changePlace.tooltip hidePopup.tooltip closeAllPopups.tooltip',
+				() => {
+					timeout = jodit.async.setTimeout(
+						() => this.close(),
+						this.jodit.defaultTimeout
+					);
+				}
+			);
 	}
 
 	beforeDestruct(jodit: IJodit): void {
@@ -39,19 +49,21 @@ export class tooltip extends Plugin {
 		Dom.safeRemove(this.container);
 	}
 
-	private open(
-		target: HTMLElement,
-		content: string,
-	): void {
+	private open(target: HTMLElement, content: string): void {
 		this.container.classList.add('jodit_tooltip_visible');
 		this.container.innerHTML = content;
 
 		this.isOpened = true;
 		this.calcPosition(target);
-	};
+	}
 
 	private calcPosition(target: HTMLElement) {
-		const bound = offset(target, this.jodit, this.jodit.ownerDocument, true);
+		const bound = offset(
+			target,
+			this.jodit,
+			this.jodit.ownerDocument,
+			true
+		);
 
 		css(this.container, {
 			left: bound.left - this.container.offsetWidth / 2 + bound.width / 2,
@@ -69,5 +81,5 @@ export class tooltip extends Plugin {
 				position: 'fixed'
 			});
 		}
-	};
+	}
 }

@@ -9,6 +9,10 @@
 
 import { IViewWithToolbar } from '../../types/view';
 import { View } from './view';
+import { JoditToolbarCollection } from '../toolbar/joditToolbarCollection';
+import { splitArray } from '../helpers/array';
+import { STATUSES } from '../Component';
+import { Dom } from '../Dom';
 
 export class ViewWithToolbar extends View implements IViewWithToolbar {
 	toolbar = JoditToolbarCollection.makeCollection(this);
@@ -22,33 +26,38 @@ export class ViewWithToolbar extends View implements IViewWithToolbar {
 		this.makeToolbar(this.container);
 	}
 
+	private toolbarContainer: HTMLElement;
+
 	protected makeToolbar(container: HTMLElement) {
 		if (!this.options.toolbar) {
 			return;
 		}
 
-		let toolbarContainer: HTMLElement = this.create.div(
-			'jodit_toolbar_container'
-		);
-		container.appendChild(toolbarContainer);
+		if (!this.toolbarContainer) {
+			this.toolbarContainer = this.create.div(
+				'jodit_toolbar_container'
+			);
+		}
 
 		if (
 			this.options.toolbar instanceof HTMLElement ||
 			typeof this.options.toolbar === 'string'
 		) {
-			toolbarContainer = this.resolveElement(this.options.toolbar);
+			this.toolbarContainer = this.resolveElement(this.options.toolbar);
+		} else {
+			Dom.appendChildFirst(container, this.toolbarContainer);
 		}
 
-		this.applyOptionsToToolbarContainer(toolbarContainer);
+		this.applyOptionsToToolbarContainer(this.toolbarContainer);
 
 		this.toolbar.build(
 			splitArray(this.options.buttons).concat(this.options.extraButtons),
-			toolbarContainer
+			this.toolbarContainer
 		);
 
 		const bs = (this.options.toolbarButtonSize || 'middle').toLowerCase();
 
-		toolbarContainer.classList.add(
+		this.toolbarContainer.classList.add(
 			'jodit_toolbar_size-' +
 			(['middle', 'large', 'small'].indexOf(bs) !== -1
 				? bs
@@ -72,12 +81,10 @@ export class ViewWithToolbar extends View implements IViewWithToolbar {
 	}
 
 	destruct() {
-		this.setStatus('beforeDestruct');
+		this.setStatus(STATUSES.beforeDestruct);
 		this.toolbar.destruct();
 		delete this.toolbar;
 		super.destruct();
 	}
 }
 
-import { JoditToolbarCollection } from '../toolbar/joditToolbarCollection';
-import { splitArray } from '../helpers/array';

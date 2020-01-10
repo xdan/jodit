@@ -11,11 +11,18 @@ import { IViewBased } from '../types/view';
 import { ComponentStatus, IComponent } from '../types/types';
 import { isJoditObject } from './helpers/checker/isJoditObject';
 
+export const STATUSES = {
+	beforeInit: 0,
+	ready: 1,
+	beforeDestruct: 2,
+	destructed: 3
+};
+
 export abstract class Component<T extends IViewBased = IViewBased>
 	implements IComponent<T> {
 	jodit: T;
 
-	private __componentStatus: ComponentStatus = 'beforeInit';
+	private __componentStatus: ComponentStatus = STATUSES.beforeInit;
 	get componentStatus(): ComponentStatus {
 		return this.__componentStatus;
 	}
@@ -28,28 +35,32 @@ export abstract class Component<T extends IViewBased = IViewBased>
 		this.__componentStatus = componentStatus;
 	}
 
+	get isReady(): boolean {
+		return this.componentStatus === STATUSES.ready;
+	}
+
 	/**
 	 * Component was destructed
 	 */
 	get isDestructed(): boolean {
-		return this.componentStatus === 'destructed';
+		return this.componentStatus === STATUSES.destructed;
 	}
 
 	/**
 	 * Component is destructing
 	 */
 	get isInDestruct(): boolean {
-		return ['beforeDestruct', 'destructed'].includes(this.componentStatus);
+		return [STATUSES.beforeDestruct, STATUSES.destructed].includes(this.componentStatus);
 	}
 
 	destruct(): any {
-		this.setStatus('beforeDestruct');
+		this.setStatus(STATUSES.beforeDestruct);
 
 		if (this.jodit) {
 			(<any>this.jodit) = undefined;
 		}
 
-		this.setStatus('destructed');
+		this.setStatus(STATUSES.destructed);
 	}
 
 	constructor(jodit?: T) {

@@ -7,7 +7,7 @@
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Component } from './Component';
+import { Component, STATUSES } from './Component';
 import { Dom } from './Dom';
 import { IJodit, IStatusBar } from '../types';
 
@@ -35,6 +35,15 @@ export class StatusBar extends Component implements IStatusBar {
 		return this.container.offsetHeight;
 	}
 
+	private findEmpty(inTheRight: boolean = false): HTMLDivElement | void {
+		const items = this.container.querySelectorAll('.jodit_statusbar_item' + (inTheRight ? '.jodit_statusbar_item-right' : ''));
+		for (let i = 0; i < items.length; i += 1) {
+			if (!items[i].innerHTML.trim().length) {
+				return items[i] as HTMLDivElement;
+			}
+		}
+	}
+
 	/**
 	 * Add element in statusbar
 	 *
@@ -42,7 +51,7 @@ export class StatusBar extends Component implements IStatusBar {
 	 * @param inTheRight
 	 */
 	append(child: HTMLElement, inTheRight: boolean = false) {
-		const wrapper = this.jodit.create.div('jodit_statusbar_item');
+		const wrapper = this.findEmpty(inTheRight) || this.jodit.create.div('jodit_statusbar_item');
 
 		if (inTheRight) {
 			wrapper.classList.add('jodit_statusbar_item-right');
@@ -64,7 +73,7 @@ export class StatusBar extends Component implements IStatusBar {
 	}
 
 	destruct() {
-		this.setStatus('beforeDestruct');
+		this.setStatus(STATUSES.beforeDestruct);
 
 		Dom.safeRemove(this.container);
 		delete this.container;

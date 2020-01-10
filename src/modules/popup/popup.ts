@@ -7,8 +7,9 @@
 import { IViewBased } from '../../types/view';
 import { Dom } from '../Dom';
 import { css, offset, throttle } from '../helpers/';
-import { Component } from '../Component';
+import { Component, STATUSES } from '../Component';
 import { IControlTypeStrong, IPopup } from '../../types';
+import { Jodit } from '../../Jodit';
 
 export class Popup extends Component implements IPopup {
 	private calcPosition() {
@@ -219,7 +220,7 @@ export class Popup extends Component implements IPopup {
 			return;
 		}
 
-		this.setStatus('beforeDestruct');
+		this.setStatus(STATUSES.beforeDestruct);
 
 		this.jodit.events.off(
 			[this.jodit.ownerWindow, this.jodit.events],
@@ -233,4 +234,3 @@ export class Popup extends Component implements IPopup {
 	}
 }
 
-import { Jodit } from '../../Jodit';

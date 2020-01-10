@@ -22,6 +22,7 @@ interface IWorkPlace {
 	workplace: HTMLDivElement;
 	statusbar: IStatusBar;
 	iframe?: HTMLIFrameElement | void;
+	editorWindow: Window;
 }
 
 interface IJodit extends IViewWithToolbar {
@@ -39,6 +40,7 @@ interface IJodit extends IViewWithToolbar {
 	places: IWorkPlace[];
 	currentPlace: IWorkPlace;
 	addPlace(source: HTMLElement | string, options?: IViewOptions): void;
+	setCurrentPlace(place: IWorkPlace): void;
 
 	value: string;
 
@@ -72,8 +74,6 @@ interface IJodit extends IViewWithToolbar {
 	getMode(): Modes;
 	isEditorMode(): boolean;
 	toggleMode(): void;
-
-	isInited: boolean;
 
 	editorIsActive: boolean;
 

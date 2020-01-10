@@ -228,10 +228,12 @@ Config.prototype.controls.link = {
  */
 export function link(jodit: IJodit) {
 	if (jodit.options.link.followOnDblClick) {
-		jodit.events.on('afterInit', () => {
-			jodit.events.on(
+		jodit.events.on('afterInit changePlace', () => {
+			jodit.events
+				.off('dblclick.link')
+				.on(
 				jodit.editor,
-				'dblclick',
+				'dblclick.link',
 				function(this: HTMLAnchorElement, e: MouseEvent) {
 					const href: string | null = this.getAttribute('href');
 					if (href) {
@@ -245,7 +247,7 @@ export function link(jodit: IJodit) {
 	}
 	if (jodit.options.link.processPastedLink) {
 		jodit.events.on(
-			'processPaste',
+			'processPaste.link',
 			(event: ClipboardEvent, html: string): HTMLAnchorElement | void => {
 				if (isURL(html)) {
 					if (jodit.options.link.processVideoLink) {
@@ -269,7 +271,7 @@ export function link(jodit: IJodit) {
 		);
 	}
 	if (jodit.options.link.removeLinkAfterFormat) {
-		jodit.events.on('afterCommand', (command: string) => {
+		jodit.events.on('afterCommand.link', (command: string) => {
 			const sel: Select = jodit.selection;
 
 			let newtag: Node, node: Node | false;

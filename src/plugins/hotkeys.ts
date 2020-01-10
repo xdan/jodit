@@ -57,7 +57,7 @@ export class hotkeys extends Plugin {
 		return normalizeKeyAliases(modif.join('+'));
 	};
 
-	public specialKeys: { [key: number]: string } = {
+	specialKeys: { [key: number]: string } = {
 		8: 'backspace',
 		9: 'tab',
 		10: 'return',
@@ -140,6 +140,7 @@ export class hotkeys extends Plugin {
 		let itIsHotkey: boolean = false;
 
 		editor.events
+			.off('.hotkeys')
 			.on(
 				'keydown.hotkeys',
 				(event: KeyboardEvent): void | false => {
@@ -158,8 +159,8 @@ export class hotkeys extends Plugin {
 						return false;
 					}
 				},
-				void 0,
-				void 0,
+				undefined,
+				undefined,
 				true
 			)
 			.on(
@@ -171,8 +172,8 @@ export class hotkeys extends Plugin {
 						return false;
 					}
 				},
-				void 0,
-				void 0,
+				undefined,
+				undefined,
 				true
 			);
 	}

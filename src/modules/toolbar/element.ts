@@ -7,12 +7,8 @@
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import {
-	IControlTypeStrong,
-	IToolbarCollection,
-	IToolbarElement
-} from '../../types/toolbar';
-import { Component } from '../Component';
+import { IControlTypeStrong, IToolbarCollection, IToolbarElement } from '../../types/toolbar';
+import { Component, STATUSES } from '../Component';
 import { ToolbarCollection } from './collection';
 import { ToolbarIcon } from './icon';
 import { Dom } from '../Dom';
@@ -49,7 +45,7 @@ export abstract class ToolbarElement extends Component
 			return;
 		}
 
-		this.setStatus('beforeDestruct');
+		this.setStatus(STATUSES.beforeDestruct);
 
 		Dom.safeRemove(this.container);
 		this.parentToolbar = undefined;

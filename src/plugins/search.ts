@@ -114,36 +114,35 @@ export class search extends Plugin {
 		return false;
 	}
 
-	private template =
-		'<div class="jodit_search">' +
-		'<div class="jodit_search_box">' +
-		'<div class="jodit_search_inputs">' +
-		'<input tabindex="0" class="jodit_search-query" placeholder="' +
-		this.jodit.i18n('Search for') +
-		'" type="text"/>' +
-		'<input tabindex="0" class="jodit_search-replace" placeholder="' +
-		this.jodit.i18n('Replace with') +
-		'" type="text"/>' +
-		'</div>' +
-		'<div class="jodit_search_counts">' +
-		'<span>0/0</span>' +
-		'</div>' +
-		'<div class="jodit_search_buttons">' +
-		'<button tabindex="0" type="button" class="jodit_search_buttons-next">' +
-		ToolbarIcon.getIcon('angle-down') +
-		'</button>' +
-		'<button tabindex="0" type="button" class="jodit_search_buttons-prev">' +
-		ToolbarIcon.getIcon('angle-up') +
-		'</button>' +
-		'<button tabindex="0" type="button" class="jodit_search_buttons-cancel">' +
-		ToolbarIcon.getIcon('cancel') +
-		'</button>' +
-		'<button tabindex="0" type="button" class="jodit_search_buttons-replace">' +
-		this.jodit.i18n('Replace') +
-		'</button>' +
-		'</div>' +
-		'</div>' +
-		'</div>';
+	private template = `<div class="jodit_search">
+			<div class="jodit_search_box">
+				<div class="jodit_search_inputs">
+					<input tabindex="0" class="jodit_search-query" placeholder="${this.jodit.i18n(
+						'Search for'
+					)}" type="text"/>
+					<input tabindex="0" class="jodit_search-replace" placeholder="${this.jodit.i18n(
+						'Replace with'
+					)}" type="text"/>
+				</div>
+				<div class="jodit_search_counts">
+					<span>0/0</span>
+				</div>
+				<div class="jodit_search_buttons">
+					<button tabindex="0" type="button" class="jodit_search_buttons-next">${ToolbarIcon.getIcon(
+						'angle-down'
+					)}</button>
+					<button tabindex="0" type="button" class="jodit_search_buttons-prev">${ToolbarIcon.getIcon(
+						'angle-up'
+					)}</button>
+					<button tabindex="0" type="button" class="jodit_search_buttons-cancel">${ToolbarIcon.getIcon(
+						'cancel'
+					)}</button>
+					<button tabindex="0" type="button" class="jodit_search_buttons-replace">${this.jodit.i18n(
+						'Replace'
+					)}</button>
+				</div>
+			</div>
+		</div>`;
 
 	private isOpened: boolean = false;
 
@@ -266,8 +265,7 @@ export class search extends Plugin {
 	};
 
 	findAndReplace = (start: Node | null, query: string): boolean => {
-		const
-			range = this.jodit.selection.range,
+		const range = this.jodit.selection.range,
 			bound: ISelectionRange | false = this.find(
 				start,
 				query,
@@ -561,9 +559,41 @@ export class search extends Plugin {
 				'.jodit_search_counts span'
 			) as HTMLButtonElement;
 
-			editor.workplace.appendChild(this.searchBox);
+			const onInit = () => {
+				editor.workplace.appendChild(this.searchBox);
+
+				editor.events
+					.off(this.jodit.container,'keydown.search')
+					.on(
+					this.jodit.container,
+					'keydown.search',
+					(e: KeyboardEvent) => {
+						if (editor.getRealMode() !== MODE_WYSIWYG) {
+							return;
+						}
+
+						switch (e.which) {
+							case consts.KEY_ESC:
+								this.close();
+								break;
+							case consts.KEY_F3:
+								if (self.queryInput.value) {
+									editor.events.fire(
+										!e.shiftKey
+											? 'searchNext'
+											: 'searchPrevious'
+									);
+									e.preventDefault();
+								}
+								break;
+						}
+					}
+				);
+			};
+			onInit();
 
 			editor.events
+				.on('changePlace', onInit)
 				.on(self.closeButton, 'click', this.close)
 				.on(self.queryInput, 'mousedown', () => {
 					if (editor.selection.isFocused()) {
@@ -611,31 +641,6 @@ export class search extends Plugin {
 								break;
 						}
 					}, this.jodit.defaultTimeout)
-				)
-				.on(
-					this.jodit.container,
-					'keydown.search',
-					(e: KeyboardEvent) => {
-						if (editor.getRealMode() !== MODE_WYSIWYG) {
-							return;
-						}
-
-						switch (e.which) {
-							case consts.KEY_ESC:
-								this.close();
-								break;
-							case consts.KEY_F3:
-								if (self.queryInput.value) {
-									editor.events.fire(
-										!e.shiftKey
-											? 'searchNext'
-											: 'searchPrevious'
-									);
-									e.preventDefault();
-								}
-								break;
-						}
-					}
 				)
 				.on('beforeSetMode.search', () => {
 					this.close();

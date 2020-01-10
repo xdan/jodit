@@ -106,11 +106,9 @@ export class xpath extends Plugin {
 		title: string
 	): HTMLElement => {
 		const li = this.jodit.create.fromHTML(
-			'<li>' +
-				`<a role="button" data-path="${path}" href="javascript:void(0)" title="${title}" tabindex="-1"'>${trim(
-					name
-				)}</a>` +
-				'</li>'
+			`<li><a role="button" data-path="${path}" href="javascript:void(0)" title="${title}" tabindex="-1"'>${trim(
+				name
+			)}</a></li>`
 		) as HTMLLIElement;
 
 		const a = li.firstChild as HTMLAnchorElement;
@@ -129,6 +127,7 @@ export class xpath extends Plugin {
 			delete this.selectAllButton;
 		}
 	};
+
 	private appendSelectAll = () => {
 		this.removeSelectAll();
 		this.selectAllButton = new ToolbarButton(this.jodit, <
@@ -198,21 +197,23 @@ export class xpath extends Plugin {
 		this.jodit.defaultTimeout * 2
 	);
 
-	public container: HTMLElement | null = null;
-	public menu: ContextMenu | null = null;
+	container: HTMLElement;
+	menu: ContextMenu | null = null;
 
 	afterInit() {
 		if (this.jodit.options.showXPathInStatusbar) {
 			this.container = this.jodit.create.element('ul');
 			this.container.classList.add('jodit_xpath');
-			this.jodit.statusbar.append(this.container);
 
 			this.jodit.events
+				.off('.xpath')
 				.on(
 					'mouseup.xpath change.xpath keydown.xpath changeSelection.xpath',
 					this.calcPath
 				)
-				.on('afterSetMode.xpath afterInit.xpath', () => {
+				.on('afterSetMode.xpath afterInit.xpath changePlace.xpath', () => {
+					this.jodit.statusbar.append(this.container);
+
 					if (this.jodit.getRealMode() === MODE_WYSIWYG) {
 						this.calcPath();
 					} else {
@@ -237,7 +238,7 @@ export class xpath extends Plugin {
 		this.menu && this.menu.destruct();
 		Dom.safeRemove(this.container);
 
-		this.menu = null;
-		this.container = null;
+		delete this.menu;
+		delete this.container;
 	}
 }

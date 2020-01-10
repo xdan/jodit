@@ -17,8 +17,6 @@ export type Children = string | Array<string | Node> | Node;
 interface ICreate {
 	inside: ICreate;
 
-	setDocument(doc: Document): void;
-
 	element<K extends keyof HTMLElementTagNameMap>(
 		tagName: K,
 		childrenOrAttributes?: Children

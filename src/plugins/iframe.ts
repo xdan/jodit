@@ -201,12 +201,10 @@ export function iframe(editor: IJodit) {
 				}
 			}
 		)
-		.on('createEditor', async (): Promise<void | false> => {
+		.on('createEditor', (): void | false => {
 			if (!editor.options.iframe) {
 				return;
 			}
-
-			delete editor.editor;
 
 			const iframe = editor.create.element('iframe');
 
@@ -220,17 +218,14 @@ export function iframe(editor: IJodit) {
 			editor.workplace.appendChild(iframe);
 			editor.iframe = iframe;
 
-			await editor.events.fire(
+			editor.events.fire(
 				'generateDocumentStructure.iframe',
 				null,
 				editor
 			);
 
 			const doc = (editor.iframe.contentWindow as Window).document;
-			editor.editorDocument = doc;
 			editor.editorWindow = editor.iframe.contentWindow as Window;
-
-			editor.create.inside.setDocument(doc);
 
 			editor.editor = doc.body as HTMLBodyElement;
 
@@ -251,6 +246,7 @@ export function iframe(editor: IJodit) {
 						);
 					}
 				}, editor.defaultTimeout / 2);
+
 				editor.events
 					.on('change afterInit afterSetMode resize', resizeIframe)
 					.on(
@@ -270,15 +266,18 @@ export function iframe(editor: IJodit) {
 			})((editor.editorWindow as any).Element.prototype);
 
 			// throw events in our world
-			if (editor.editorDocument.documentElement) {
+			if (doc.documentElement) {
 				editor.events
 					.on(
-						editor.editorDocument.documentElement,
+						doc.documentElement,
 						'mousedown touchend',
 						() => {
 							if (!editor.selection.isFocused()) {
 								editor.selection.focus();
-								editor.selection.setCursorIn(editor.editor);
+
+								if (editor.editor === doc.body) {
+									editor.selection.setCursorIn(doc.body);
+								}
 							}
 						}
 					)

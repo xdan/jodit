@@ -12,7 +12,13 @@ import { Widget } from '../modules/Widget';
 import ColorPickerWidget = Widget.ColorPickerWidget;
 import TabsWidget = Widget.TabsWidget;
 import { Dom } from '../modules/Dom';
-import { clearCenterAlign, css, debounce, offset, splitArray } from '../modules/helpers/';
+import {
+	clearCenterAlign,
+	css,
+	debounce,
+	offset,
+	splitArray
+} from '../modules/helpers/';
 import { Plugin } from '../modules/Plugin';
 import { Table } from '../modules/Table';
 import { Popup } from '../modules/popup/popup';
@@ -143,7 +149,6 @@ Config.prototype.popup = {
 					if (['right', 'left'].indexOf(command) !== -1) {
 						css(image, 'float', command);
 						clearCenterAlign(image);
-
 					} else {
 						css(image, 'float', '');
 						css(image, {
@@ -621,7 +626,7 @@ export class inlinePopup extends Plugin {
 
 	isOpened: boolean = false;
 
-	public onChangeSelection = () => {
+	private onChangeSelection = () => {
 		if (!this.jodit.options.toolbarInline || !this.jodit.isEditorMode()) {
 			return;
 		}
@@ -644,11 +649,16 @@ export class inlinePopup extends Plugin {
 		}
 	};
 
-	afterInit(editor: IJodit) {
+	afterInit(jodit: IJodit): void {}
+
+	init(editor: IJodit) {
 		this.toolbar = JoditToolbarCollection.makeCollection(editor);
 
 		this.target = editor.create.div('jodit_toolbar_popup-inline-target');
-		this.targetContainer = editor.create.div('jodit_toolbar_popup-inline-container', this.target);
+		this.targetContainer = editor.create.div(
+			'jodit_toolbar_popup-inline-container',
+			this.target
+		);
 
 		this.container = editor.create.div();
 
@@ -669,22 +679,19 @@ export class inlinePopup extends Plugin {
 			)
 			.on('beforeOpenPopup hidePopup afterSetMode blur', this.hidePopup)
 			.on('recalcPositionPopup', this.reCalcPosition)
-			.on(
-				'getDiffButtons.mobile',
-				(_toolbar: ToolbarCollection): void | string[] => {
-					if (this.toolbar === _toolbar) {
-						return splitArray(editor.options.buttons)
-							.filter(name => name !== '|' && name !== '\n')
-							.filter((name: string) => {
-								return (
-									this.toolbar
-										.getButtonsList()
-										.indexOf(name) < 0
-								);
-							});
-					}
+			.on('getDiffButtons.mobile', (_toolbar: ToolbarCollection):
+				| void
+				| string[] => {
+				if (this.toolbar === _toolbar) {
+					return splitArray(editor.options.buttons)
+						.filter(name => name !== '|' && name !== '\n')
+						.filter((name: string) => {
+							return (
+								this.toolbar.getButtonsList().indexOf(name) < 0
+							);
+						});
 				}
-			)
+			})
 			.on('selectionchange', this.onChangeSelection)
 			.on('afterCommand afterExec', () => {
 				if (this.isOpened && this.isSelectionPopup) {
@@ -709,22 +716,27 @@ export class inlinePopup extends Plugin {
 				}
 			)
 
-			.on('mousedown keydown touchstart', this.onSelectionStart)
-			.on(
-				[editor.ownerWindow, editor.editor],
-				'scroll resize',
-				this.reCalcPosition
-			)
-			.on(
-				[editor.ownerWindow],
-				'mouseup keyup touchend',
-				this.onSelectionEnd
-			)
-			.on(
-				[editor.ownerWindow],
-				'mousedown keydown touchstart',
-				this.checkIsTargetEvent
-			);
+			.on('mousedown keydown touchstart', this.onSelectionStart);
+
+		editor.events.on('afterInit changePlace', () => {
+			editor.events
+				.off('.inlinePopup')
+				.on(
+					[editor.ownerWindow, editor.editor],
+					'scroll.inlinePopup resize.inlinePopup',
+					this.reCalcPosition
+				)
+				.on(
+					[editor.ownerWindow],
+					'mouseup.inlinePopup keyup.inlinePopup touchend.inlinePopup',
+					this.onSelectionEnd
+				)
+				.on(
+					[editor.ownerWindow],
+					'mousedown.inlinePopup keydown.inlinePopup touchstart.inlinePopup',
+					this.checkIsTargetEvent
+				);
+		});
 	}
 
 	beforeDestruct(editor: IJodit) {

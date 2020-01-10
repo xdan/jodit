@@ -107,7 +107,9 @@ Config.prototype.controls.eraser = {
 export function cleanHtml(editor: IJodit) {
 	// TODO compare this functionality and plugin paste.ts
 	if (editor.options.cleanHTML.cleanOnPaste) {
-		editor.events.on('processPaste', (event: Event, html: string) => {
+		editor.events
+			.off('processPaste.cleanHtml')
+			.on('processPaste.cleanHtml', (event: Event, html: string) => {
 			return cleanFromWord(html);
 		});
 	}

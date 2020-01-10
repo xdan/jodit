@@ -29,7 +29,8 @@ import {
 	isHTMLFromWord,
 	trim,
 	type,
-	stripTags, isString
+	stripTags,
+	isString
 } from '../../modules/helpers/';
 
 import { Dom } from '../../modules/Dom';
@@ -142,94 +143,93 @@ Config.prototype.controls.paste = {
  * Ask before paste HTML source
  */
 export function paste(editor: IJodit) {
-	const
-		opt = editor.options,
+	const opt = editor.options,
 		clearOrKeep = (
-		msg: string,
-		title: string,
-		callback: (yes: boolean | number) => void,
-		clearButton: string = 'Clean',
-		clear2Button: string = 'Insert only Text'
-	): Dialog | void => {
-		if (
-			editor.events &&
-			editor.events.fire(
-				'beforeOpenPasteDialog',
+			msg: string,
+			title: string,
+			callback: (yes: boolean | number) => void,
+			clearButton: string = 'Clean',
+			clear2Button: string = 'Insert only Text'
+		): Dialog | void => {
+			if (
+				editor.events &&
+				editor.events.fire(
+					'beforeOpenPasteDialog',
+					msg,
+					title,
+					callback,
+					clearButton,
+					clear2Button
+				) === false
+			) {
+				return;
+			}
+
+			const dialog = Confirm(
+				`<div style="word-break: normal; white-space: normal">${msg}</div>`,
+				title,
+				callback
+			);
+
+			dialog.container.setAttribute('data-editor_id', editor.id);
+
+			const keep = dialog.create.fromHTML(
+				`<a href="javascript:void(0)" class="jodit_button jodit_button_primary"><span>${editor.i18n(
+					'Keep'
+				)}</span></a>`
+			) as HTMLAnchorElement;
+
+			const clear = dialog.create.fromHTML(
+				`<a href="javascript:void(0)" class="jodit_button"><span>${editor.i18n(
+					clearButton
+				)}</span></a>`
+			) as HTMLAnchorElement;
+
+			const clear2 = dialog.create.fromHTML(
+				`<a href="javascript:void(0)" class="jodit_button"><span>${editor.i18n(
+					clear2Button
+				)}</span></a>`
+			) as HTMLAnchorElement;
+
+			const cancel = dialog.create.fromHTML(
+				`<a href="javascript:void(0)" class="jodit_button"><span>${editor.i18n(
+					'Cancel'
+				)}</span></a>`
+			) as HTMLAnchorElement;
+
+			editor.events.on(keep, 'click', () => {
+				dialog.close();
+				callback && callback(true);
+			});
+
+			editor.events.on(clear, 'click', () => {
+				dialog.close();
+				callback && callback(false);
+			});
+
+			editor.events.on(clear2, 'click', () => {
+				dialog.close();
+				callback && callback(0);
+			});
+
+			editor.events.on(cancel, 'click', () => {
+				dialog.close();
+			});
+
+			dialog.setFooter([keep, clear, clear2Button ? clear2 : '', cancel]);
+
+			editor.events?.fire(
+				'afterOpenPasteDialog',
+				dialog,
 				msg,
 				title,
 				callback,
 				clearButton,
 				clear2Button
-			) === false
-		) {
-			return;
-		}
+			);
 
-		const dialog = Confirm(
-			`<div style="word-break: normal; white-space: normal">${msg}</div>`,
-			title,
-			callback
-		);
-
-		dialog.container.setAttribute('data-editor_id', editor.id);
-
-		const keep = dialog.create.fromHTML(
-			`<a href="javascript:void(0)" class="jodit_button jodit_button_primary"><span>${editor.i18n(
-				'Keep'
-			)}</span></a>`
-		) as HTMLAnchorElement;
-
-		const clear = dialog.create.fromHTML(
-			`<a href="javascript:void(0)" class="jodit_button"><span>${editor.i18n(
-				clearButton
-			)}</span></a>`
-		) as HTMLAnchorElement;
-
-		const clear2 = dialog.create.fromHTML(
-			`<a href="javascript:void(0)" class="jodit_button"><span>${editor.i18n(
-				clear2Button
-			)}</span></a>`
-		) as HTMLAnchorElement;
-
-		const cancel = dialog.create.fromHTML(
-			`<a href="javascript:void(0)" class="jodit_button"><span>${editor.i18n(
-				'Cancel'
-			)}</span></a>`
-		) as HTMLAnchorElement;
-
-		editor.events.on(keep, 'click', () => {
-			dialog.close();
-			callback && callback(true);
-		});
-
-		editor.events.on(clear, 'click', () => {
-			dialog.close();
-			callback && callback(false);
-		});
-
-		editor.events.on(clear2, 'click', () => {
-			dialog.close();
-			callback && callback(0);
-		});
-
-		editor.events.on(cancel, 'click', () => {
-			dialog.close();
-		});
-
-		dialog.setFooter([keep, clear, clear2Button ? clear2 : '', cancel]);
-
-		editor.events?.fire(
-			'afterOpenPasteDialog',
-			dialog,
-			msg,
-			title,
-			callback,
-			clearButton,
-			clear2Button
-		);
-
-		return dialog;
-	};
+			return dialog;
+		};
 
 	const insertByType = (html: string | Node, subtype: string) => {
 		if (typeof html === 'string') {
@@ -293,13 +293,12 @@ export function paste(editor: IJodit) {
 							insertType = INSERT_ONLY_TEXT;
 						}
 
-						pasteHTMLByType(insertType)
+						pasteHTMLByType(insertType);
 					},
 					'Insert as Text'
 				);
-
 			} else {
-				pasteHTMLByType(opt.defaultActionOnPaste)
+				pasteHTMLByType(opt.defaultActionOnPaste);
 			}
 
 			return false;
@@ -333,14 +332,21 @@ export function paste(editor: IJodit) {
 			const processHTMLData = (html: string): void | false => {
 				const buffer = editor.buffer.get(clipboardPluginKey);
 
-				if (opt.processPasteHTML && isHTML(html) && buffer !== trimFragment(html)) {
+				if (
+					opt.processPasteHTML &&
+					isHTML(html) &&
+					buffer !== trimFragment(html)
+				) {
 					if (opt.processPasteFromWord && isHTMLFromWord(html)) {
 						const pasteFromWordByType = (method: string) => {
 							if (method === INSERT_AS_HTML) {
 								html = applyStyles(html);
 
 								if (opt.beautifyHTML) {
-									const value = editor.events?.fire('beautifyHTML', html);
+									const value = editor.events?.fire(
+										'beautifyHTML',
+										html
+									);
 
 									if (isString(value)) {
 										html = value;
@@ -353,9 +359,7 @@ export function paste(editor: IJodit) {
 							}
 
 							if (method === INSERT_ONLY_TEXT) {
-								html = stripTags(
-									cleanFromWord(html)
-								);
+								html = stripTags(cleanFromWord(html));
 							}
 
 							editor.selection.insertHTML(html);
@@ -366,7 +370,7 @@ export function paste(editor: IJodit) {
 							clearOrKeep(
 								editor.i18n(
 									'The pasted content is coming from a Microsoft Word/Excel document. ' +
-									'Do you want to keep the format or clean it up?'
+										'Do you want to keep the format or clean it up?'
 								),
 
 								editor.i18n('Word Paste Detected'),
@@ -395,10 +399,7 @@ export function paste(editor: IJodit) {
 				}
 			};
 
-			if (
-				dt.types &&
-				Array.from(dt.types).indexOf('text/html') !== -1
-			) {
+			if (dt.types && Array.from(dt.types).indexOf('text/html') !== -1) {
 				const html = dt.getData(TEXT_HTML);
 				return processHTMLData(html);
 			}
@@ -429,8 +430,7 @@ export function paste(editor: IJodit) {
 
 				const removeFakeFocus = () => {
 					Dom.safeRemove(div);
-					editor.selection &&
-					editor.selection.restore(selData);
+					editor.selection && editor.selection.restore(selData);
 				};
 
 				const waitData = () => {
@@ -465,9 +465,11 @@ export function paste(editor: IJodit) {
 		}
 	};
 
-	editor.events.on(
-		'paste',
-		(event: ClipboardEvent | DragEvent): false | void => {
+	editor.events
+		.off('paste.paste')
+		.on('paste.paste', (event: ClipboardEvent | DragEvent):
+			| false
+			| void => {
 			/**
 			 * Triggered before pasting something into the Jodit Editor
 			 *
@@ -482,7 +484,10 @@ export function paste(editor: IJodit) {
 			 * });
 			 * ```
 			 */
-			if (beforePaste(event) === false || editor.events.fire('beforePaste', event) === false) {
+			if (
+				beforePaste(event) === false ||
+				editor.events.fire('beforePaste', event) === false
+			) {
 				event.preventDefault();
 				return false;
 			}
@@ -568,10 +573,7 @@ export function paste(editor: IJodit) {
 							);
 						}
 
-						insertByType(
-							clipboard_html,
-							opt.defaultActionOnPaste
-						);
+						insertByType(clipboard_html, opt.defaultActionOnPaste);
 					}
 
 					event.preventDefault();
@@ -596,21 +598,22 @@ export function paste(editor: IJodit) {
 			if (editor.events.fire('afterPaste', event) === false) {
 				return false;
 			}
-		}
-	);
+		});
 
 	if (opt.nl2brInPlainText) {
-		editor.events.on(
-			'processPaste',
-			(
-				event: ClipboardEvent,
-				text: string,
-				type: string
-			): string | void => {
-				if (type === TEXT_PLAIN + ';' && !isHTML(text)) {
-					return nl2br(text);
+		editor.events
+			.off('processPaste.paste')
+			.on(
+				'processPaste.paste',
+				(
+					event: ClipboardEvent,
+					text: string,
+					type: string
+				): string | void => {
+					if (type === TEXT_PLAIN + ';' && !isHTML(text)) {
+						return nl2br(text);
+					}
 				}
-			}
-		);
+			);
 	}
 }

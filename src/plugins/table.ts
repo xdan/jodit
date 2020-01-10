@@ -63,9 +63,7 @@ Config.prototype.controls.table = {
 
 				Object.keys(classList).forEach((classes: string) => {
 					out.push(
-						`<label class="jodit_vertical_middle"><input class="jodit_checkbox" value="${classes}" type="checkbox"/>${
-							classList[classes]
-						}</label>`
+						`<label class="jodit_vertical_middle"><input class="jodit_checkbox" value="${classes}" type="checkbox"/>${classList[classes]}</label>`
 					);
 				});
 			}
@@ -80,7 +78,7 @@ Config.prototype.controls.table = {
 					'<div class="jodit_form-table-creator-box">' +
 					'<div class="jodit_form-container"></div>' +
 					'<div class="jodit_form-options">' +
-						generateExtraClasses() +
+					generateExtraClasses() +
 					'</div>' +
 					'</div>' +
 					'</form>'
@@ -302,12 +300,15 @@ export class TableProcessor extends Plugin {
 	}
 
 	hideResizer() {
-		this.hideTimeout = this.jodit.async.setTimeout(() => {
-			this.__resizerHandler.style.display = 'none';
-		}, {
-			timeout: this.jodit.defaultTimeout,
-			label: 'hideResizer'
-		});
+		this.hideTimeout = this.jodit.async.setTimeout(
+			() => {
+				this.__resizerHandler.style.display = 'none';
+			},
+			{
+				timeout: this.jodit.defaultTimeout,
+				label: 'hideResizer'
+			}
+		);
 	}
 
 	private hideTimeout: number;
@@ -787,6 +788,8 @@ export class TableProcessor extends Plugin {
 		}
 
 		editor.events
+			.off(this.jodit.ownerWindow, '.table')
+			.off('.table')
 			.on(this.jodit.ownerWindow, 'mouseup.table touchend.table', () => {
 				if (this.__selectMode || this.__drag) {
 					this.__selectMode = false;
@@ -934,11 +937,13 @@ export class TableProcessor extends Plugin {
 			.on('beforeSetMode.table', () => {
 				Table.getAllSelectedCells(editor.editor).forEach(td => {
 					Table.restoreSelection(td);
-					Table.normalizeTable(Dom.closest(
-						td,
-						'table',
-						editor.editor
-					) as HTMLTableElement);
+					Table.normalizeTable(
+						Dom.closest(
+							td,
+							'table',
+							editor.editor
+						) as HTMLTableElement
+					);
 				});
 			})
 			.on('keydown.table', (event: KeyboardEvent) => {
