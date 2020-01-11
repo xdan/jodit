@@ -1,7 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Licensed under GNU General Public License version 2 or later or a commercial license;
- * Copyright 2013-2019 Valeriy Chupurnov https://xdsoft.net
+ * Copyright 2013-2020 Valeriy Chupurnov https://xdsoft.net
  */
 
 import * as consts from '../constants';
