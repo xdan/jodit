@@ -1331,7 +1331,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 * Jodit's Destructor. Remove editor, and return source input
 	 */
 	destruct() {
-		console.log('destruct');
 		if (this.isInDestruct) {
 			return;
 		}

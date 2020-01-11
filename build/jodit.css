@@ -1,7 +1,7 @@
 /*!
  jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- Version: v3.3.13
+ Version: v3.3.14
  Url: https://xdsoft.net/jodit/
  License(s): GPL-2.0-or-later OR MIT OR Commercial
 */
@@ -1244,33 +1244,18 @@ svg.jodit_icon{
   line-height:100%;
   position:relative;
 }
-.jodit_image_editor_area.jodit_image_editor_area_crop:before{
-  content:"";
-  line-height:100%;
-  vertical-align:middle;
-  height:100%;
-  display:inline-block;
-}
 .jodit_image_editor_area.jodit_image_editor_area_crop .jodit_image_editor_box{
   height:100%;
   overflow:visible;
-  display:inline-block;
-  vertical-align:middle;
   pointer-events:all;
-  font-size:0;
   text-align:left;
   line-height:100%;
 }
 .jodit_image_editor_area.jodit_image_editor_area_crop .jodit_image_editor_box img{
   max-width:100%;
   max-height:100%;
-}
-.jodit_image_editor_area.jodit_image_editor_area_crop .jodit_image_editor_box:before{
-  content:"";
-  line-height:100%;
-  vertical-align:middle;
+  width:100%;
   height:100%;
-  display:inline-block;
 }
 .jodit_image_editor_area.jodit_image_editor_area_crop .jodit_image_editor_box:after{
   content:"";
@@ -1300,6 +1285,14 @@ svg.jodit_icon{
   border-radius:.4em;
   padding:9px 6px;
   display:block;
+}
+.jodit_image_editor_area.jodit_image_editor_area_crop.active{
+  display:-ms-flexbox;
+  display:flex;
+  -ms-flex-pack:center;
+      justify-content:center;
+  -ms-flex-align:center;
+      align-items:center;
 }
 .jodit_properties{
   font-family:Helvetica,sans-serif,Arial;
@@ -1374,8 +1367,7 @@ svg.jodit_icon{
   list-style:none !important;
   font-size:0;
   background:#f9f9f9;
-  border:solid #ddd;
-  border-width:1px 1px 0;
+  border:1px solid #ddd;
   min-height:16px !important;
 }
 .jodit_toolbar+.jodit_toolbar_dummy{
@@ -1618,7 +1610,7 @@ svg.jodit_icon{
   display:-ms-flexbox;
   display:flex;
   -ms-flex-pack:start;
-      justify-content:start;
+      justify-content:flex-start;
   border:1px solid #ddd;
   border-top:0;
   background-color:#f9f9f9;
@@ -1793,23 +1785,23 @@ svg.jodit_icon{
     opacity:.6;
   }
 }
-.jodit_progress_bar{
+.jodit_progressbar{
   position:absolute;
   top:0;
   left:0;
   height:2px;
   z-index:2147483647;
   border-radius:1px;
-  display:none;
+  opacity:.7;
 }
-.jodit_progress_bar div{
+.jodit_progressbar div{
   position:relative;
   background:#b91f1f;
   height:2px;
   transition:width .5s ease-out,opacity .5s linear;
   will-change:width, opacity;
 }
-.jodit_progress_bar div:after,.jodit_progress_bar div:before{
+.jodit_progressbar div:after,.jodit_progressbar div:before{
   animation:pulse 2s ease-out 0s infinite;
   content:"";
   display:inline-block;
@@ -1820,12 +1812,12 @@ svg.jodit_icon{
   border-radius:100%;
   opacity:.6;
 }
-.jodit_progress_bar div:before{
+.jodit_progressbar div:before{
   width:180px;
   right:-80px;
   clip:rect(-6px, 90px, 14px, -6px);
 }
-.jodit_progress_bar div:after{
+.jodit_progressbar div:after{
   width:20px;
   right:0;
   clip:rect(-6px, 22px, 14px, 10px);
@@ -1934,7 +1926,7 @@ svg.jodit_icon{
   top:0;
   outline:none;
   margin-top:-10px;
-  display:none;
+  display:block;
 }
 .jodit-add-new-line,.jodit-add-new-line *{
   box-sizing:border-box;
@@ -2053,8 +2045,6 @@ html.jodit_fullsize_box{
   height:calc(100% - 27px);
 }
 .jodit_placeholder{
-  font-family:Helvetica,sans-serif,Arial;
-  font-size:14px;
   -webkit-user-select:none !important;
      -moz-user-select:none !important;
       -ms-user-select:none !important;
@@ -2322,7 +2312,7 @@ html.jodit_fullsize_box{
   color:#f0f0f0;
   outline:none;
   font:12px / normal Monaco,Menlo,Ubuntu Mono,Consolas,source-code-pro,monospace;
-  line-height:1.3em;
+  line-height:1.5;
   box-shadow:none;
   overflow:auto;
   z-index:2;
@@ -2732,6 +2722,9 @@ html.jodit_fullsize_box{
 }
 .jodit_container:not(.jodit_inline) .jodit_workplace{
   border:1px solid #ddd;
+}
+.jodit_container:not(.jodit_inline) .jodit_toolbar_container:not(:empty)+.jodit_workplace{
+  border-top-width:0;
 }
 .jodit_disabled{
   -webkit-user-select:none !important;

@@ -840,7 +840,6 @@ describe('Test plugins', function() {
 								}
 							);
 
-							debugger
 							expect(
 								Math.abs(
 									cropper.offsetWidth / cropper.offsetHeight -
