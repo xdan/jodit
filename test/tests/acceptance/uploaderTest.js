@@ -60,6 +60,10 @@ describe('Test uploader module', function() {
 
 			describe('For iframe mode', function() {
 				it('Should upload file and insert image with SRC from server', function(done) {
+					const timer = setTimeout(function () {
+						expect(true).is.false;
+					}, 4000)
+
 					const file = new FileImage(),
 						editor = new Jodit(appendTestArea(), {
 							iframe: true,
@@ -72,6 +76,8 @@ describe('Test uploader module', function() {
 							},
 							events: {
 								afterInsertImage: function(img) {
+									clearTimeout(timer);
+
 									expect(img.src).equals(
 										'https://xdsoft.net/jodit/files/logo.gif'
 									);

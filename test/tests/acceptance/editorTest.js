@@ -226,7 +226,8 @@ describe('Jodit Editor Tests', function() {
 					const editor = new Jodit(appendTestArea(), {
 						height: 300
 					});
-					editor.setEditorValue('<p>test</p>'.repeat(20));
+
+					editor.value = '<p>test</p>'.repeat(20);
 					expect(editor.container.offsetHeight).equals(300);
 
 					simulateEvent('resize', 0, window);
@@ -503,7 +504,7 @@ describe('Jodit Editor Tests', function() {
 					const area = appendTestArea();
 					area.value = '111';
 					const editor = new Jodit(area);
-					expect(editor.container.querySelectorAll('.jodit_placeholder').length && editor.container.querySelector('.jodit_placeholder').style.display === 'none').equals(true);
+					expect(!editor.container.querySelectorAll('.jodit_placeholder').length).equals(true);
 				});
 			});
 		});
@@ -514,12 +515,11 @@ describe('Jodit Editor Tests', function() {
 
 			editor.setEditorValue('');
 
-
 			expect(editor.container.querySelectorAll('.jodit_placeholder').length && editor.container.querySelector('.jodit_placeholder').style.display === 'block').equals(true);
 
 			editor.selection.insertNode(editor.editorDocument.createTextNode('test'));
 
-			expect(editor.container.querySelectorAll('.jodit_placeholder').length && editor.container.querySelector('.jodit_placeholder').style.display === 'none').equals(true);
+			expect(!editor.container.querySelectorAll('.jodit_placeholder').length).equals(true);
 		});
 
 		describe('For element with fontsize 12px', function() {

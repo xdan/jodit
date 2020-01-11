@@ -1,6 +1,8 @@
 describe('CodeMirror editor source code', function() {
 	describe('Init', function() {
 		it('After init container must has codeeditor container', function(done) {
+			unmockPromise();
+
 			let timeout;
 			const
 				area = appendTestArea(false, true),

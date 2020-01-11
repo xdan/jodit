@@ -19,6 +19,8 @@ Jodit.make('#editor', {
 	ownerDocument: doc
 });
 ```
+Fixed bug with ProgressBar - it simple does not work(
+
 ## Feature
 Source plugin was separated on several classes. Now you can choose SourceEditor
 or make yourself (https://github.com/xdan/jodit/issues/242)
@@ -50,6 +52,7 @@ editor.async.setTimeout(() => {
 editor.destruct();
 ```
 After destruct first timeout will throw the error, but second will be cleared.
+Added two methods setPanel and addPlace
 
 ### Events
 Added `afterRemoveNode` event

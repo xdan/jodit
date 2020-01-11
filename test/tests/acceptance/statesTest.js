@@ -21,9 +21,9 @@ describe('Test states', function() {
 						readonly: true,
 						iframe: true,
 						events: {
-							afterConstructor: function() {
-								expect(false).equals(editor.editor.hasAttribute('contenteditable'));
-								expect('BODY').equals(editor.editor.nodeName);
+							afterConstructor: function(jodit) {
+								expect(false).equals(jodit.editor.hasAttribute('contenteditable'));
+								expect('BODY').equals(jodit.editor.nodeName);
 								done();
 							}
 						}
@@ -96,12 +96,14 @@ describe('Test states', function() {
 			it('Should hide placeholder', function() {
 				const table_editor_interface = appendTestArea();
 				table_editor_interface.value = '';
+
 				const editor = new Jodit(table_editor_interface, {
 					readonly: true
 				});
-				expect(editor.container.querySelectorAll('.jodit_placeholder').length && editor.container.querySelector('.jodit_placeholder').style.display === 'none').equals(true);
+
+				expect(!editor.container.querySelectorAll('.jodit_placeholder').length).equals(true);
 				editor.setEditorValue('test');
-				expect(editor.container.querySelectorAll('.jodit_placeholder').length && editor.container.querySelector('.jodit_placeholder').style.display === 'none').equals(true);
+				expect(!editor.container.querySelectorAll('.jodit_placeholder').length).equals(true);
 			});
 
 			describe('Search plugin', function() {

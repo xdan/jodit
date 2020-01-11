@@ -320,11 +320,11 @@ describe('Test plugins', function() {
 	});
 
 	describe('Add new Line plugin', function() {
-		it('Should add new line element in container', function() {
+		it('Should not add new line element in container before first use', function() {
 			const editor = new Jodit(appendTestArea());
 			expect(
 				editor.container.querySelectorAll('.jodit-add-new-line').length
-			).equals(1);
+			).equals(0);
 		});
 
 		it('Should show .jodit-add-new-line after user move mouse under Table,Ifrmae or IMG ', function() {
@@ -545,7 +545,7 @@ describe('Test plugins', function() {
 				);
 
 				expect(null).does.not.equal(newline);
-				expect(newline.style.display).equals('block');
+				expect(editor.ownerWindow.getComputedStyle(newline).display).equals('block');
 				simulateEvent('mousedown', 0, newline.querySelector('span'));
 
 				editor.selection.insertHTML('stop');
@@ -840,6 +840,7 @@ describe('Test plugins', function() {
 								}
 							);
 
+							debugger
 							expect(
 								Math.abs(
 									cropper.offsetWidth / cropper.offsetHeight -

@@ -49,15 +49,15 @@ describe('Iframe mode', function() {
 					iframe: true,
 					events: {
 						afterConstructor: function(editor) {
-							expect(editor.value).equals('test');
+							expect(editor.value).equals('stop'); // Because it run in sync
 							done();
 						}
 					}
 				});
 
 				expect(editor.value).equals('stop');
-				editor.value = 'test';
-				expect(editor.value).equals('test');
+				editor.value = 'test1';
+				expect(editor.value).equals('test1');
 			});
 		});
 	});
@@ -68,17 +68,15 @@ describe('Iframe mode', function() {
 
 			area.value = 'start value';
 
-			const editor = new Jodit(area, {
+			Jodit.make(area, {
 				iframe: true,
-				// preset: "inline",
-				// fullsize: true,
 				events: {
 					afterConstructor: function(jodit) {
 						expect(jodit.editor.getAttribute('secret-attriute')).equals('435'); // loaded from index.html
 						expect(Jodit.modules.Helpers.trim(jodit.value)).equals('test 435'); // loaded from index.html
 						done();
 					},
-					['beforeSetValueToEditor']: function() {
+					beforeSetValueToEditor: function() {
 						return false;
 					},
 					['generateDocumentStructure.iframe']: function(doc, jodit) {

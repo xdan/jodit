@@ -323,6 +323,13 @@ function appendTestArea(id, noput) {
 	return textarea;
 }
 
+/**
+ * Create empty DIV block and but it inside Box
+ *
+ * @param [id]
+ * @param [noput]
+ * @returns {HTMLDivElement}
+ */
 function appendTestDiv(id, noput) {
 	const textarea = document.createElement('div');
 	textarea.setAttribute('id', id || 'editor_' + new Date().getTime());
