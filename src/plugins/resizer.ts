@@ -88,7 +88,7 @@ export function resizer(editor: IJodit) {
 		resizerIsVisible: boolean = false;
 
 	const resizerElm = editor.create.fromHTML(
-			`<div data-editor_id="${editor.id}" style="display:none" class="jodit_resizer">
+			`<div style="display:none" class="jodit_resizer">
 				<i class="jodit_resizer-topleft"></i>
 				<i class="jodit_resizer-topright"></i>
 				<i class="jodit_resizer-bottomright"></i>
@@ -127,6 +127,10 @@ export function resizer(editor: IJodit) {
 			});
 		},
 		updateSize = () => {
+			if (editor.isInDestruct) {
+				return;
+			}
+
 			if (resizerIsVisible && currentElement && resizerElm) {
 				const workplacePosition: IBound = offset(
 						(resizerElm.parentNode ||
@@ -181,6 +185,7 @@ export function resizer(editor: IJodit) {
 			}
 
 			if (!resizerElm.parentNode) {
+				editor.markOwner(resizerElm);
 				editor.workplace.appendChild(resizerElm);
 			}
 

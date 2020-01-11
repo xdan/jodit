@@ -35,6 +35,10 @@ export class EventsNative implements IEventsNative {
 	}
 
 	private getStore(subject: any): EventHandlersStore {
+		if (!subject) {
+			throw new Error('Need subject');
+		}
+
 		if (subject[this.__key] === undefined) {
 			const store: EventHandlersStore = new EventHandlersStore();
 

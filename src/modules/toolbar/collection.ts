@@ -126,7 +126,34 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 		}
 	}
 
+	private applyContainerOptions() {
+		this.container.classList.add(
+			'jodit_' + (this.jodit.options.theme || 'default') + '_theme'
+		);
+
+		this.jodit.container.classList.toggle('jodit_text_icons', this.jodit.options.textIcons);
+		this.container.classList.toggle('jodit_text_icons', this.jodit.options.textIcons);
+
+		if (this.jodit.options.zIndex) {
+			this.container.style.zIndex = parseInt(
+				this.jodit.options.zIndex.toString(),
+				10
+			).toString();
+		}
+
+		const bs = (this.jodit.options.toolbarButtonSize || 'middle').toLowerCase();
+
+		this.container.classList.add(
+			'jodit_toolbar_size-' +
+			(['middle', 'large', 'small'].indexOf(bs) !== -1
+				? bs
+				: 'middle')
+		);
+	}
+
 	build(buttons: Buttons, parentContainer: HTMLElement, target?: HTMLElement) {
+		this.applyContainerOptions();
+
 		this.jodit.events.off('rebuildToolbar');
 		this.jodit.events.on('afterInit rebuildToolbar', () => this.build(buttons, parentContainer, target));
 
@@ -279,6 +306,7 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 
 	constructor(jodit: IViewBased) {
 		super(<T>jodit);
+
 		this.container = this.jodit.create.element('ul');
 		this.container.classList.add('jodit_toolbar');
 

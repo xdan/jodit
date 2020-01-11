@@ -79,6 +79,7 @@ interface IViewBased<T = IViewOptions> extends IPanel<T> {
 	 * @property {string} ID attribute for source element, id add {id}_editor it's editor's id
 	 */
 	id: string;
+	markOwner(elm: HTMLElement): void;
 
 	basePath: string;
 
@@ -100,7 +101,7 @@ interface IViewBased<T = IViewOptions> extends IPanel<T> {
 
 	getVersion: () => string;
 
-	components: IComponent[];
+	components: Set<IComponent>;
 
 	workplace: HTMLDivElement;
 }

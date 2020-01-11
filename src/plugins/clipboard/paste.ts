@@ -171,7 +171,7 @@ export function paste(editor: IJodit) {
 				callback
 			);
 
-			dialog.container.setAttribute('data-editor_id', editor.id);
+			editor.markOwner(dialog.container);
 
 			const keep = dialog.create.fromHTML(
 				`<a href="javascript:void(0)" class="jodit_button jodit_button_primary"><span>${editor.i18n(

@@ -297,6 +297,10 @@ export class source extends Plugin {
 		this.mirrorContainer = editor.create.div('jodit_source');
 		editor.workplace.appendChild(this.mirrorContainer);
 
+		editor.events.on('afterAddPlace changePlace afterInit', () => {
+			editor.workplace.appendChild(this.mirrorContainer);
+		});
+
 		this.sourceEditor = SourceEditor.make('area', editor, this.mirrorContainer, this.toWYSIWYG, this.fromWYSIWYG);
 
 		const addListeners = () => {

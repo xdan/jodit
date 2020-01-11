@@ -311,7 +311,7 @@ interface IToolbarCollection extends IComponent {
 	getParentContainer(): HTMLElement;
 }
 
-export interface IStatusBar extends IDestructible {
+export interface IStatusBar extends IComponent {
 	show(): void;
 	hide(): void;
 	getHeight(): number;

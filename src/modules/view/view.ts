@@ -23,9 +23,14 @@ export class View extends Panel implements IViewBased {
 	 */
 	id: string;
 
+	markOwner(elm: HTMLElement): void {
+		elm.setAttribute('data-editor_id', this.id);
+	}
+
+
 	workplace: HTMLDivElement;
 
-	components: IComponent[] = [];
+	components: Set<IComponent> = new Set();
 
 	/**
 	 * Get path for loading extra staff

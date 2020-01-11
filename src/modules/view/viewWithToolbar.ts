@@ -13,9 +13,13 @@ import { JoditToolbarCollection } from '../toolbar/joditToolbarCollection';
 import { splitArray } from '../helpers/array';
 import { STATUSES } from '../Component';
 import { Dom } from '../Dom';
+import { IToolbarCollection } from '../../types';
 
 export class ViewWithToolbar extends View implements IViewWithToolbar {
-	toolbar = JoditToolbarCollection.makeCollection(this);
+	private __toolbar = JoditToolbarCollection.makeCollection(this);
+	get toolbar(): IToolbarCollection {
+		return this.__toolbar;
+	}
 
 	/**
 	 * Change panel container
@@ -23,68 +27,43 @@ export class ViewWithToolbar extends View implements IViewWithToolbar {
 	 */
 	setPanel(element: HTMLElement | string): void {
 		this.jodit.options.toolbar = element;
-		this.makeToolbar(this.container);
+		this.buildToolbar(this.container);
 	}
 
-	private toolbarContainer: HTMLElement;
-
-	protected makeToolbar(container: HTMLElement) {
+	protected buildToolbar(container: HTMLElement) {
 		if (!this.options.toolbar) {
 			return;
 		}
 
-		if (!this.toolbarContainer) {
-			this.toolbarContainer = this.create.div(
+		let toolbarContainer: HTMLElement | null = container.querySelector(
+			'.jodit_toolbar_container'
+		);
+
+		if (!toolbarContainer) {
+			toolbarContainer = this.create.div(
 				'jodit_toolbar_container'
 			);
+
+			Dom.appendChildFirst(container, toolbarContainer);
 		}
 
 		if (
 			this.options.toolbar instanceof HTMLElement ||
 			typeof this.options.toolbar === 'string'
 		) {
-			this.toolbarContainer = this.resolveElement(this.options.toolbar);
-		} else {
-			Dom.appendChildFirst(container, this.toolbarContainer);
+			toolbarContainer = this.resolveElement(this.options.toolbar);
 		}
-
-		this.applyOptionsToToolbarContainer(this.toolbarContainer);
 
 		this.toolbar.build(
 			splitArray(this.options.buttons).concat(this.options.extraButtons),
-			this.toolbarContainer
+			toolbarContainer
 		);
-
-		const bs = (this.options.toolbarButtonSize || 'middle').toLowerCase();
-
-		this.toolbarContainer.classList.add(
-			'jodit_toolbar_size-' +
-			(['middle', 'large', 'small'].indexOf(bs) !== -1
-				? bs
-				: 'middle')
-		);
-	}
-
-	protected applyOptionsToToolbarContainer(element: HTMLElement) {
-		element.classList.add(
-			'jodit_' + (this.options.theme || 'default') + '_theme'
-		);
-
-		element.classList.toggle('jodit_text_icons', this.options.textIcons);
-
-		if (this.options.zIndex) {
-			element.style.zIndex = parseInt(
-				this.options.zIndex.toString(),
-				10
-			).toString();
-		}
 	}
 
 	destruct() {
 		this.setStatus(STATUSES.beforeDestruct);
 		this.toolbar.destruct();
-		delete this.toolbar;
+		delete this.__toolbar;
 		super.destruct();
 	}
 }
-

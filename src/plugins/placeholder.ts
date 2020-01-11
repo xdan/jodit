@@ -71,7 +71,7 @@ export function placeholder(this: any, editor: IJodit) {
 	}
 
 	const show = () => {
-			if (!placeholderElm.parentNode || editor.options.readonly) {
+			if (editor.options.readonly) {
 				return;
 			}
 
@@ -81,6 +81,8 @@ export function placeholder(this: any, editor: IJodit) {
 			const style = editor.editorWindow.getComputedStyle(
 				editor.editor
 			);
+
+			editor.workplace.appendChild(placeholderElm);
 
 			if (
 				editor.editor.firstChild &&
@@ -136,8 +138,6 @@ export function placeholder(this: any, editor: IJodit) {
 				hide();
 				return;
 			}
-
-			editor.workplace.appendChild(placeholderElm);
 
 			const value = editor.value;
 

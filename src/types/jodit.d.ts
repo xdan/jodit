@@ -23,6 +23,7 @@ interface IWorkPlace {
 	statusbar: IStatusBar;
 	iframe?: HTMLIFrameElement | void;
 	editorWindow: Window;
+	observer: Observer;
 }
 
 interface IJodit extends IViewWithToolbar {

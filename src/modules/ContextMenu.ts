@@ -107,14 +107,13 @@ export class ContextMenu extends Component {
 		);
 
 		this.context.classList.add('jodit_context_menu-show');
+		this.jodit.markOwner(this.context);
 	}
 
 	constructor(editor: IViewBased) {
 		super(editor);
 
-		this.context = editor.create.div('jodit_context_menu', {
-			'data-editor_id': this.jodit.id
-		});
+		this.context = editor.create.div('jodit_context_menu');
 
 		editor.ownerDocument.body.appendChild(this.context);
 	}

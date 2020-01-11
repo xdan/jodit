@@ -7,18 +7,6 @@
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-export * from './hasBrowserColorPicker';
-export * from './isFunction';
-export * from './isHTML';
-export * from './isHTMLFromWord';
-export * from './isInitable';
-export * from './isInt';
-export * from './isJoditObject';
-export * from './isLicense';
-export * from './isNumeric';
-export * from './isPlainObject';
-export * from './isString';
-export * from './isURL';
-export * from './isValidName';
-export * from './isWindow';
-export * from './isPromise';
+export function isPromise(val: any | Promise<any>): val is Promise<any> {
+	return val && typeof (<Promise<any>>val).then === 'function';
+}

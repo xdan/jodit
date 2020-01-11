@@ -670,10 +670,7 @@ export class Dialog extends ViewWithToolbar {
 		) as HTMLDivElement;
 
 		if (jodit && (<IViewBased>jodit).id) {
-			self.container.setAttribute(
-				'data-editor_id',
-				(<IViewBased>jodit).id
-			);
+			(<IViewBased>jodit).markOwner(self.container);
 		}
 
 		Object.defineProperty(self.container, '__jodit_dialog', {

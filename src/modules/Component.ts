@@ -56,6 +56,10 @@ export abstract class Component<T extends IViewBased = IViewBased>
 	destruct(): any {
 		this.setStatus(STATUSES.beforeDestruct);
 
+		if (isJoditObject(this.jodit)) {
+			this.jodit.components.delete(this);
+		}
+
 		if (this.jodit) {
 			(<any>this.jodit) = undefined;
 		}
@@ -68,7 +72,7 @@ export abstract class Component<T extends IViewBased = IViewBased>
 			this.jodit = jodit;
 
 			if (isJoditObject(jodit)) {
-				jodit.components.push(this);
+				jodit.components.add(this);
 			}
 		}
 	}

@@ -704,7 +704,6 @@ export class search extends Plugin {
 
 	beforeDestruct(jodit: IJodit): void {
 		Dom.safeRemove(this.searchBox);
-		jodit.events && jodit.events.off('.search');
-		jodit.events && jodit.events.off(jodit.container, '.search');
+		jodit.events?.off('.search');
 	}
 }

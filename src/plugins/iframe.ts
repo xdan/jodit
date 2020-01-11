@@ -12,6 +12,7 @@ import { defaultLanguage } from '../modules/helpers/defaultLanguage';
 import { throttle } from '../modules/helpers/async';
 import { css } from '../modules/helpers/css';
 import { IJodit } from '../types';
+import { isPromise } from '../modules/helpers/checker';
 
 declare module '../Config' {
 	interface Config {
@@ -201,7 +202,7 @@ export function iframe(editor: IJodit) {
 				}
 			}
 		)
-		.on('createEditor', (): void | false => {
+		.on('createEditor', (): void | Promise<void> | false => {
 			if (!editor.options.iframe) {
 				return;
 			}
@@ -218,79 +219,91 @@ export function iframe(editor: IJodit) {
 			editor.workplace.appendChild(iframe);
 			editor.iframe = iframe;
 
-			editor.events.fire(
+			const result = editor.events.fire(
 				'generateDocumentStructure.iframe',
 				null,
 				editor
 			);
 
-			const doc = (editor.iframe.contentWindow as Window).document;
-			editor.editorWindow = editor.iframe.contentWindow as Window;
+			const init = () => {
+				if (!editor.iframe) {
+					return;
+				}
 
-			editor.editor = doc.body as HTMLBodyElement;
+				const doc = (editor.iframe.contentWindow as Window).document;
+				editor.editorWindow = editor.iframe.contentWindow as Window;
 
-			if (editor.options.height === 'auto') {
-				doc.documentElement &&
-				(doc.documentElement.style.overflowY = 'hidden');
+				editor.editor = doc.body as HTMLBodyElement;
 
-				const resizeIframe = throttle(() => {
-					if (
-						editor.editor &&
-						editor.iframe &&
-						editor.options.height === 'auto'
-					) {
-						css(
-							editor.iframe,
-							'height',
-							editor.editor.offsetHeight
-						);
-					}
-				}, editor.defaultTimeout / 2);
+				if (editor.options.height === 'auto') {
+					doc.documentElement &&
+					(doc.documentElement.style.overflowY = 'hidden');
 
-				editor.events
-					.on('change afterInit afterSetMode resize', resizeIframe)
-					.on(
-						[
-							editor.iframe,
-							editor.editorWindow,
-							doc.documentElement
-						],
-						'load',
-						resizeIframe
-					)
-					.on(doc, 'readystatechange DOMContentLoaded', resizeIframe);
-			}
+					const resizeIframe = throttle(() => {
+						if (
+							editor.editor &&
+							editor.iframe &&
+							editor.options.height === 'auto'
+						) {
+							css(
+								editor.iframe,
+								'height',
+								editor.editor.offsetHeight
+							);
+						}
+					}, editor.defaultTimeout / 2);
 
-			(e => {
-				e.matches || (e.matches = Element.prototype.matches); // fix inside iframe polifill
-			})((editor.editorWindow as any).Element.prototype);
+					editor.events
+						.on('change afterInit afterSetMode resize', resizeIframe)
+						.on(
+							[
+								editor.iframe,
+								editor.editorWindow,
+								doc.documentElement
+							],
+							'load',
+							resizeIframe
+						)
+						.on(doc, 'readystatechange DOMContentLoaded', resizeIframe);
+				}
 
-			// throw events in our world
-			if (doc.documentElement) {
-				editor.events
-					.on(
-						doc.documentElement,
-						'mousedown touchend',
-						() => {
-							if (!editor.selection.isFocused()) {
-								editor.selection.focus();
+				(e => {
+					e.matches || (e.matches = Element.prototype.matches); // fix inside iframe polifill
+				})((editor.editorWindow as any).Element.prototype);
 
-								if (editor.editor === doc.body) {
-									editor.selection.setCursorIn(doc.body);
+				// throw events in our world
+				if (doc.documentElement) {
+					editor.events
+						.on(
+							doc.documentElement,
+							'mousedown touchend',
+							() => {
+								if (!editor.selection.isFocused()) {
+									editor.selection.focus();
+
+									if (editor.editor === doc.body) {
+										editor.selection.setCursorIn(doc.body);
+									}
 								}
 							}
-						}
-					)
-					.on(
-						editor.editorWindow,
-						'mousedown touchstart keydown keyup touchend click mouseup mousemove scroll',
-						(e: Event) => {
-							editor.events &&
-							editor.events.fire &&
-							editor.events.fire(editor.ownerWindow, e);
-						}
-					);
+						)
+						.on(
+							editor.editorWindow,
+							'mousedown touchstart keydown keyup touchend click mouseup mousemove scroll',
+							(e: Event) => {
+								editor.events &&
+								editor.events.fire &&
+								editor.events.fire(editor.ownerWindow, e);
+							}
+						);
+				}
+			};
+
+			if (isPromise(result)) {
+				return result.then(init);
 			}
+
+			init();
 
 			return false;
 		});

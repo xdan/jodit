@@ -128,6 +128,7 @@ export class Popup extends Component implements IPopup {
 		Jodit.fireEach('beforeOpenPopup closeAllPopups', this, content); // close popups in another editors too
 
 		noStandardActions || this.jodit.events.on('closeAllPopups', this.close);
+		this.jodit.markOwner(this.container);
 
 		this.container.classList.add(this.className + '-open');
 		this.doOpen(content);
@@ -193,9 +194,7 @@ export class Popup extends Component implements IPopup {
 	) {
 		super(jodit);
 
-		this.container = this.jodit.create.div(className, {
-			'data-editor_id': jodit.id
-		});
+		this.container = this.jodit.create.div(className);
 
 		this.jodit.events
 			.on(
