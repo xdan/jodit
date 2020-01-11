@@ -42,6 +42,7 @@ import { ViewWithToolbar } from './modules/view/viewWithToolbar';
 import { IFileBrowser, IJodit, IUploader } from './types/';
 import { PluginSystem } from './modules/PluginSystem';
 import { STATUSES } from './modules/Component';
+import { MODE_WYSIWYG } from './constants';
 
 const SAFE_COUNT_CHANGE_CALL = 10;
 
@@ -381,6 +382,10 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	setCurrentPlace(place: IWorkPlace): void {
 		if (this.currentPlace === place) {
 			return;
+		}
+
+		if (!this.isEditorMode()) {
+			this.setMode(MODE_WYSIWYG);
 		}
 
 		this.currentPlace = place;

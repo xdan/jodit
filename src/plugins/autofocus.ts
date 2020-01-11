@@ -38,7 +38,7 @@ export function autofocus(editor: IJodit) {
 		}
 	});
 
-	editor.events.on('afterInit changePlace', () => {
+	editor.events.on('afterInit afterAddPlace', () => {
 		editor.events
 			.off(editor.editor, 'mousedown.autofocus')
 			.on(editor.editor, 'mousedown.autofocus', (e: MouseEvent) => {
