@@ -1,4 +1,8 @@
-typeof window.chai !== 'undefined' && (chai.config.includeStack = true);
+typeof window.chai !== 'undefined' &&
+	(function() {
+		chai.config.includeStack = true;
+		chai.config.showDiff = true;
+	})();
 typeof window.mocha !== 'undefined' && mocha.timeout(15000);
 
 const oldI18n = Jodit.prototype.i18n,
@@ -156,10 +160,22 @@ function mockAjax() {
 						break;
 					case 'getLocalFileByUrl':
 						switch (ajax.options.data.url) {
-							case location.protocol + '//' + location.host + '/artio.jpg':
-							case location.protocol + '//' + location.host + '/tests/artio.jpg':
-							case location.protocol + '//' + location.host + '/test/tests/artio.jpg':
-							case location.protocol + '//' + location.host + '/jodit/test/tests/artio.jpg':
+							case location.protocol +
+								'//' +
+								location.host +
+								'/artio.jpg':
+							case location.protocol +
+								'//' +
+								location.host +
+								'/tests/artio.jpg':
+							case location.protocol +
+								'//' +
+								location.host +
+								'/test/tests/artio.jpg':
+							case location.protocol +
+								'//' +
+								location.host +
+								'/jodit/test/tests/artio.jpg':
 							case 'https://xdsoft.net/jodit/files/th.jpg':
 								resolve({
 									success: true,
@@ -217,8 +233,7 @@ const excludeI18nKeys = ['adddate'];
 
 Jodit.prototype.i18n = function(key) {
 	excludeI18nKeys.indexOf(key) === -1 &&
-
-	i18nkeys.indexOf(key) === -1 &&
+		i18nkeys.indexOf(key) === -1 &&
 		key.indexOf('<svg') === -1 &&
 		i18nkeys.push(key);
 
@@ -293,8 +308,6 @@ function removeStuff() {
 
 	stuff.forEach(function(elm) {
 		elm && elm.parentNode && elm.parentNode.removeChild(elm);
-
-		delete elm;
 	});
 
 	stuff.length = 0;
@@ -373,7 +386,7 @@ function sortStyles(matches) {
 			}
 
 			if (/rgb\(/.test(keyValue[1])) {
-				keyValue[1] = keyValue[1].replace(/rgb\([^\)]+\)/, function(
+				keyValue[1] = keyValue[1].replace(/rgb\([^)]+\)/, function(
 					match
 				) {
 					return Jodit.modules.Helpers.normalizeColor(match);
@@ -425,7 +438,7 @@ function sortStyles(matches) {
 				.join(':');
 		})
 		.sort(function(a, b) {
-			return a < b ? -1 : a > b ? 1 : 0;
+			return a - b;
 		});
 
 	return styles.join(';');
@@ -470,7 +483,11 @@ function sortAttributes(html) {
 		} while (matches);
 
 		attrs.sort(function(a, b) {
-			return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
+			if (a.name < b.name) {
+				return -1;
+			}
+
+			return a.name > b.name ? 1 : 0;
 		});
 
 		attrs.forEach(function(elm, i) {
@@ -486,7 +503,7 @@ function sortAttributes(html) {
 		});
 	}
 
-	tags.forEach(function(elm, i) {
+	tags.forEach(function(elm) {
 		html = html.replace(elm.name, elm.value);
 	});
 
@@ -525,7 +542,6 @@ function simulateEvent(type, keyCodeArg, element, options) {
 			changedTouches[key] = evt[key];
 		});
 
-
 		evt.changedTouches = changedTouches;
 	}
 
@@ -540,7 +556,7 @@ function simulateEvent(type, keyCodeArg, element, options) {
  * @param {Function} callback
  */
 function one(event, element, callback) {
-	const on = function () {
+	const on = function() {
 		element.removeEventListener(event, on);
 		callback.apply(element, arguments);
 	};
@@ -576,7 +592,7 @@ function simulatePaste(element, pastedText) {
 			}
 		};
 	});
-};
+}
 
 function setCursor(elm, inEnd) {
 	const range = document.createRange();
@@ -660,14 +676,11 @@ function offset(el) {
 				}
 
 				output.push('</', node.tagName, '>');
-
 			} else {
 				output.push('/>');
 			}
-
 		} else if (nodeType === 8) {
 			output.push('<!--', node.nodeValue, '-->');
-
 		} else {
 			throw 'Error serializing XML. Unhandled node of type: ' + nodeType;
 		}
@@ -677,7 +690,7 @@ function offset(el) {
 	Object.defineProperty(SVGElement.prototype, 'innerHTML', {
 		get: function() {
 			const output = [];
-			let  childNode = this.firstChild;
+			let childNode = this.firstChild;
 
 			while (childNode) {
 				serializeXML(childNode, output);
@@ -700,7 +713,7 @@ function offset(el) {
 				// Wrap the markup into a SVG node to ensure parsing works.
 				sXML =
 					"<svg xmlns='http://www.w3.org/2000/svg'>" +
-						markupText +
+					markupText +
 					'</svg>';
 				const svgDocElement = dXML.parseFromString(sXML, 'text/xml')
 					.documentElement;
@@ -716,7 +729,7 @@ function offset(el) {
 					childNode = childNode.nextSibling;
 				}
 			} catch (e) {
-				throw new Error('Error parsing XML string');
+				throw new Error('Error parsing XML string' + e.toString());
 			}
 		}
 	});

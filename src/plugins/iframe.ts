@@ -243,6 +243,14 @@ export function iframe(editor: IJodit) {
 
 				const docMode = editor.options.editHTMLDocumentMode;
 
+				const toggleEditable = () => {
+					Dom.toggleAttribute(
+						doc.body,
+						'contenteditable',
+						editor.getMode() !== MODE_SOURCE
+					);
+				};
+
 				const clearMarkers = (html: string): string => {
 					const bodyReg = /<body.*<\/body>/is,
 						bodyMarker = '{%%BODY%%}',
@@ -257,7 +265,13 @@ export function iframe(editor: IJodit) {
 								/&lt;span([^&]*?)&gt;(.*?)&lt;\/span&gt;/gis,
 								''
 							)
-							.replace(bodyMarker, body[0]);
+							.replace(
+								bodyMarker,
+								body[0].replace(
+									/(<body[^>]+?)([\s]*["'])?contenteditable["'\s]*=[\s"']*true["']?/is,
+									'$1'
+								)
+							);
 					}
 
 					return html;
@@ -281,8 +295,6 @@ export function iframe(editor: IJodit) {
 						.on(
 							'beforeSetNativeEditorValue',
 							(value: string): boolean => {
-								console.log(value, /<(html|body)/i.test(value));
-								console.log(clearMarkers(value), /<(html|body)/i.test(value));
 								if (/<(html|body)/i.test(value)) {
 									const old = doc.documentElement.outerHTML;
 
@@ -291,6 +303,8 @@ export function iframe(editor: IJodit) {
 										doc.write(clearMarkers(value));
 										doc.close();
 										editor.editor = doc.documentElement;
+
+										toggleEditable();
 									}
 								} else {
 									doc.body.innerHTML = value;
@@ -305,13 +319,7 @@ export function iframe(editor: IJodit) {
 
 				editor.events.on(
 					'afterSetMode afterInit afterAddPlace',
-					() => {
-						Dom.toggleAttribute(
-							doc.body,
-							'contenteditable',
-							editor.getMode() !== MODE_SOURCE
-						);
-					}
+					toggleEditable
 				);
 
 				if (editor.options.height === 'auto') {

@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
 	<meta charset="UTF-8"/>
 	<meta name="viewport"
@@ -30,9 +30,11 @@
 <script>
 	mocha.setup({
 		ui: 'bdd',
-		bail: true
+		bail: true,
+		inlineDiffs: true
 	});
 
+	// mocha.checkLeaks();
 	mocha.reporter('html');
 </script>
 

@@ -42,7 +42,6 @@
 		"@types/es6-promise": "^3.3.0",
 		"@types/node": "^12.12.24",
 		"autoprefixer": "^6.7.7",
-		"chai": "^4.2.0",
 		"classlist-polyfill": "^1.2.0",
 		"clean-css-loader": "0.0.4",
 		"compression": "^1.7.4",
@@ -68,7 +67,6 @@
 		"lint-staged": "^8.2.1",
 		"merge-stream": "^2.0.0",
 		"mini-css-extract-plugin": "^0.4.5",
-		"mocha": "^6.2.2",
 		"optimize-css-assets-webpack-plugin": "^5.0.3",
 		"postcss-loader": "^2.1.6",
 		"precss": "^2.0.0",
@@ -113,6 +111,8 @@
 		]
 	},
 	"dependencies": {
-		"gulp-typescript": "^5.0.1"
+		"chai": "^4.2.0",
+		"gulp-typescript": "^5.0.1",
+		"mocha": "^7.0.0"
 	}
 }

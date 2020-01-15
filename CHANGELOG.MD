@@ -1,5 +1,29 @@
 # Changelog
 
+## 3.3.15
+
+### Bugfix
+Fixed SPLIT_MODE
+
+### Feature
+Added `editHTMLDocumentMode` in order to allow the user to edit the entire document [#241](https://github.com/xdan/jodit/issues/241).
+```js
+const editor = Jodit.make('#editor', {
+	iframe: true,
+	editHTMLDocumentMode: true,
+	iframeStyle: ''
+});
+
+console.log(editor.value);
+
+// <html dir="" class="jodit" lang="en" spellcheck="true" style="min-height: 113px;">
+// <head>
+//     <title>Jodit Editor</title>
+// </head>
+// <body class="jodit_wysiwyg" style="outline:none">test test <a href="#">test</a></body>
+// </html>
+```
+
 ## 3.3.14
 ### Bugfix
 Fixed https://github.com/xdan/jodit/issues/316
@@ -21,13 +45,13 @@ Jodit.make('#editor', {
 ```
 Fixed bug with ProgressBar - it simple does not work(
 
-## Feature
+### Feature
 Source plugin was separated on several classes. Now you can choose SourceEditor
 or make yourself (https://github.com/xdan/jodit/issues/242)
 > Before
 ```js
 Jodit.make('#editor', {
-	useAceEditor: true || false
+	useAceEditor: true
 });
 ```
 

@@ -473,7 +473,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 * @param {string} [value]
 	 */
 	setElementValue(value?: string) {
-		if (typeof value !== 'string' && value !== undefined) {
+		if (!isString(value) && value !== undefined) {
 			throw error('value must be string');
 		}
 
