@@ -247,7 +247,7 @@ export function iframe(editor: IJodit) {
 					Dom.toggleAttribute(
 						doc.body,
 						'contenteditable',
-						editor.getMode() !== MODE_SOURCE
+						editor.getMode() !== MODE_SOURCE && !editor.getReadOnly()
 					);
 				};
 

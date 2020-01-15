@@ -141,7 +141,7 @@ describe('Iframe mode', function() {
 						it('Should replace entire document', function() {
 							const editor = Jodit.make(appendTestArea(), opt);
 							editor.value =
-								'<htm lang="en"><head><title>Hi</title></head><body><strong>Test</strong></body></html>';
+								'<html lang="en"><head><title>Hi</title></head><body><strong>Test</strong></body></html>';
 
 							expect(
 								sortAttributes(

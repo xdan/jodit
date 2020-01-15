@@ -38,6 +38,9 @@ interface IJodit extends IViewWithToolbar {
 	getEditorValue(removeSelectionMarkers?: boolean): string;
 	setEditorValue(value?: string): void;
 
+	getReadOnly(): boolean;
+	setReadOnly(enable: boolean): void;
+
 	places: IWorkPlace[];
 	currentPlace: IWorkPlace;
 	addPlace(source: HTMLElement | string, options?: IViewOptions): void;
