@@ -49,3 +49,11 @@ export const type = (obj: any): string => {
 		? class2type[toString.call(obj)] || 'object'
 		: typeof obj;
 };
+
+/**
+ * Helper for create Error object
+ * @param message
+ */
+export function error(message: string): Error {
+	return new TypeError(message);
+}

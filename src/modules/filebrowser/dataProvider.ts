@@ -9,25 +9,25 @@ import {
 	IDictionary
 } from '../../types';
 
-import { extend, normalizeRelativePath } from '../helpers';
+import { error, extend, normalizeRelativePath } from '../helpers';
 import { Ajax } from '../Ajax';
 
 export const DEFAULT_SOURCE_NAME = 'default';
 
 const possableRules = [
-	"allowFiles",
-	"allowFileMove",
-	"allowFileUpload",
-	"allowFileUploadRemote",
-	"allowFileRemove",
-	"allowFileRename",
-	"allowFolders",
-	"allowFolderMove",
-	"allowFolderCreate",
-	"allowFolderRemove",
-	"allowFolderRename",
-	"allowImageResize",
-	"allowImageCrop"
+	'allowFiles',
+	'allowFileMove',
+	'allowFileUpload',
+	'allowFileUploadRemote',
+	'allowFileRemove',
+	'allowFileRename',
+	'allowFolders',
+	'allowFolderMove',
+	'allowFolderCreate',
+	'allowFolderRemove',
+	'allowFolderRename',
+	'allowImageResize',
+	'allowImageCrop'
 ];
 
 export default class dataProvider implements IFileBrowserDataProvider {
@@ -38,14 +38,14 @@ export default class dataProvider implements IFileBrowserDataProvider {
 
 		if (process.env.NODE_ENV !== 'production') {
 			if (!possableRules.includes(rule)) {
-				throw new Error('Wrong action ' + action);
+				throw error('Wrong action ' + action);
 			}
 		}
 
 		return (
 			this.__currentPermissions === null ||
-			(this.__currentPermissions[rule] === undefined ||
-				this.__currentPermissions[rule])
+			this.__currentPermissions[rule] === undefined ||
+				this.__currentPermissions[rule]
 		);
 	}
 
@@ -207,7 +207,7 @@ export default class dataProvider implements IFileBrowserDataProvider {
 				if (this.options.isSuccess(resp)) {
 					success(resp.data.path, resp.data.name, resp.data.source);
 				} else {
-					onFailed(new Error(this.options.getMessage(resp)));
+					onFailed(error(this.options.getMessage(resp)));
 				}
 			},
 			onFailed

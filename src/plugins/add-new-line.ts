@@ -251,12 +251,13 @@ export function addNewLine(editor: IJodit) {
 							}
 						}
 
-						const editorBound: IBound = offset(
+						const editorBound = offset(
 							editor.editor,
 							editor,
 							editor.editorDocument
 						);
-						const position: IBound = offset(
+
+						const position = offset(
 							currentElement as HTMLElement,
 							editor,
 							editor.editorDocument

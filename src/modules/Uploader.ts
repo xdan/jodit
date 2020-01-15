@@ -21,7 +21,7 @@ import {
 	IViewBased
 } from '../types/';
 import { Ajax } from './Ajax';
-import { browser, extend, isPlainObject } from './helpers/';
+import { browser, error, extend, isPlainObject } from './helpers/';
 import { Dom } from './Dom';
 import { isJoditObject } from './helpers/checker/isJoditObject';
 import { Component, STATUSES } from './Component';
@@ -301,7 +301,7 @@ export class Uploader extends Component implements IUploader {
 		process?: (form: FormData) => void
 	): Promise<any> {
 		if (!files) {
-			return Promise.reject(new Error('Need files'));
+			return Promise.reject(error('Need files'));
 		}
 
 		const uploader: Uploader = this;
@@ -309,7 +309,7 @@ export class Uploader extends Component implements IUploader {
 		let fileList: File[] = Array.from(files);
 
 		if (!fileList.length) {
-			return Promise.reject(new Error('Need files'));
+			return Promise.reject(error('Need files'));
 		}
 
 		const promises: Array<Promise<any>> = [];
@@ -455,7 +455,7 @@ export class Uploader extends Component implements IUploader {
 									uploader.options
 										.defaultHandlerError) as HandlerError).call(
 									uploader,
-									new Error(
+									error(
 										uploader.options.getMessage.call(
 											uploader,
 											resp
@@ -739,7 +739,7 @@ export class Uploader extends Component implements IUploader {
 					) {
 						(handlerError || this.options.defaultHandlerError).call(
 							uploader,
-							new Error(
+							error(
 								uploader.options.getMessage.call(this, resp)
 							)
 						);

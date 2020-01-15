@@ -13,9 +13,13 @@ import { throttle } from '../modules/helpers/async';
 import { css } from '../modules/helpers/css';
 import { IJodit } from '../types';
 import { isPromise } from '../modules/helpers/checker';
+import { Dom } from '../modules';
+import { error } from '../modules/helpers';
+import { MODE_SOURCE } from '../constants';
 
 declare module '../Config' {
 	interface Config {
+		editHTMLDocumentMode: boolean;
 		iframeDefaultSrc: string;
 		iframeBaseUrl: string;
 		iframeStyle: string;
@@ -143,6 +147,11 @@ Config.prototype.iframeStyle =
 Config.prototype.iframeCSSLinks = [];
 
 /**
+ * Allow editing the entire HTML document(html, head)
+ */
+Config.prototype.editHTMLDocumentMode = false;
+
+/**
  * Iframe plugin - use `iframe` instead of DIV in editor. It can be need when you want attach custom styles in editor
  * in backend of you system
  */
@@ -156,28 +165,29 @@ export function iframe(editor: IJodit) {
 		.on(
 			'generateDocumentStructure.iframe',
 			(__doc: Document | undefined, jodit: IJodit) => {
-				const
-					doc = __doc || ((jodit.iframe as HTMLIFrameElement).contentWindow as Window).document;
+				const doc =
+					__doc ||
+					((jodit.iframe as HTMLIFrameElement)
+						.contentWindow as Window).document;
 
 				doc.open();
 				doc.write(
-					'<!DOCTYPE html>' +
-					'<html dir="' +
-					jodit.options.direction +
-					'" class="jodit" ' +
-					'lang="' +
-					defaultLanguage(jodit.options.language) +
-					'">' +
-					'<head>' +
-					'<title>Jodit Editor</title>' +
-					(jodit.options.iframeBaseUrl
-						? '<base href="' +
-						jodit.options.iframeBaseUrl +
-						'"/>'
-						: '') +
-					'</head>' +
-					'<body class="jodit_wysiwyg" style="outline:none" contenteditable="true"></body>' +
-					'</html>'
+					`<!DOCTYPE html>` +
+						`<html dir="${
+							jodit.options.direction
+						}" class="jodit" lang="${defaultLanguage(
+							jodit.options.language
+						)}">
+						<head>
+							<title>Jodit Editor</title>
+							${
+								jodit.options.iframeBaseUrl
+									? `<base href="${jodit.options.iframeBaseUrl}"/>`
+									: ''
+							}
+						</head>
+						<body class="jodit_wysiwyg" style="outline:none"></body>
+					</html>`
 				);
 
 				doc.close();
@@ -195,9 +205,7 @@ export function iframe(editor: IJodit) {
 
 				if (jodit.options.iframeStyle) {
 					const style = doc.createElement('style');
-
 					style.innerHTML = jodit.options.iframeStyle;
-
 					doc.head && doc.head.appendChild(style);
 				}
 			}
@@ -233,11 +241,82 @@ export function iframe(editor: IJodit) {
 				const doc = (editor.iframe.contentWindow as Window).document;
 				editor.editorWindow = editor.iframe.contentWindow as Window;
 
-				editor.editor = doc.body as HTMLBodyElement;
+				const docMode = editor.options.editHTMLDocumentMode;
+
+				const clearMarkers = (html: string): string => {
+					const bodyReg = /<body.*<\/body>/is,
+						bodyMarker = '{%%BODY%%}',
+						body = bodyReg.exec(html);
+
+					if (body) {
+						// remove markers
+						html = html
+							.replace(bodyReg, bodyMarker)
+							.replace(/<span([^>]*?)>(.*?)<\/span>/gis, '')
+							.replace(
+								/&lt;span([^&]*?)&gt;(.*?)&lt;\/span&gt;/gis,
+								''
+							)
+							.replace(bodyMarker, body[0]);
+					}
+
+					return html;
+				};
+
+				if (docMode) {
+					const tag = editor.element.tagName;
+
+					if (tag !== 'TEXTAREA' && tag !== 'INPUT') {
+						throw error(
+							'If enable `editHTMLDocumentMode` - source element should be INPUT or TEXTAREA'
+						);
+					}
+
+					editor.editor = doc.documentElement;
+
+					editor.events
+						.on('beforeGetNativeEditorValue', (): string =>
+							clearMarkers(doc.documentElement.outerHTML)
+						)
+						.on(
+							'beforeSetNativeEditorValue',
+							(value: string): boolean => {
+								console.log(value, /<(html|body)/i.test(value));
+								console.log(clearMarkers(value), /<(html|body)/i.test(value));
+								if (/<(html|body)/i.test(value)) {
+									const old = doc.documentElement.outerHTML;
+
+									if (old !== value) {
+										doc.open('text/html', 'replace');
+										doc.write(clearMarkers(value));
+										doc.close();
+										editor.editor = doc.documentElement;
+									}
+								} else {
+									doc.body.innerHTML = value;
+								}
+
+								return true;
+							}
+						);
+				} else {
+					editor.editor = doc.body as HTMLBodyElement;
+				}
+
+				editor.events.on(
+					'afterSetMode afterInit afterAddPlace',
+					() => {
+						Dom.toggleAttribute(
+							doc.body,
+							'contenteditable',
+							editor.getMode() !== MODE_SOURCE
+						);
+					}
+				);
 
 				if (editor.options.height === 'auto') {
 					doc.documentElement &&
-					(doc.documentElement.style.overflowY = 'hidden');
+						(doc.documentElement.style.overflowY = 'hidden');
 
 					const resizeIframe = throttle(() => {
 						if (
@@ -254,7 +333,10 @@ export function iframe(editor: IJodit) {
 					}, editor.defaultTimeout / 2);
 
 					editor.events
-						.on('change afterInit afterSetMode resize', resizeIframe)
+						.on(
+							'change afterInit afterSetMode resize',
+							resizeIframe
+						)
 						.on(
 							[
 								editor.iframe,
@@ -264,7 +346,11 @@ export function iframe(editor: IJodit) {
 							'load',
 							resizeIframe
 						)
-						.on(doc, 'readystatechange DOMContentLoaded', resizeIframe);
+						.on(
+							doc,
+							'readystatechange DOMContentLoaded',
+							resizeIframe
+						);
 				}
 
 				(e => {
@@ -274,26 +360,22 @@ export function iframe(editor: IJodit) {
 				// throw events in our world
 				if (doc.documentElement) {
 					editor.events
-						.on(
-							doc.documentElement,
-							'mousedown touchend',
-							() => {
-								if (!editor.selection.isFocused()) {
-									editor.selection.focus();
+						.on(doc.documentElement, 'mousedown touchend', () => {
+							if (!editor.selection.isFocused()) {
+								editor.selection.focus();
 
-									if (editor.editor === doc.body) {
-										editor.selection.setCursorIn(doc.body);
-									}
+								if (editor.editor === doc.body) {
+									editor.selection.setCursorIn(doc.body);
 								}
 							}
-						)
+						})
 						.on(
 							editor.editorWindow,
 							'mousedown touchstart keydown keyup touchend click mouseup mousemove scroll',
 							(e: Event) => {
 								editor.events &&
-								editor.events.fire &&
-								editor.events.fire(editor.ownerWindow, e);
+									editor.events.fire &&
+									editor.events.fire(editor.ownerWindow, e);
 							}
 						);
 				}

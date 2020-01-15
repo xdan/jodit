@@ -51,7 +51,7 @@ export function limit(jodit: IJodit) {
 		): void | boolean => {
 			const text: string =
 				inputText ||
-				(jodit.options.limitHTML ? jodit.value : jodit.getEditorText());
+				(jodit.options.limitHTML ? jodit.value : jodit.text);
 
 			const words: string[] = text
 				.replace(INVISIBLE_SPACE_REG_EXP, '')
@@ -83,12 +83,9 @@ export function limit(jodit: IJodit) {
 
 		jodit.events
 			.off('.limit')
-			.on(
-				'beforePaste.limit',
-				() => {
-					snapshot = jodit.observer.snapshot.make();
-				}
-			)
+			.on('beforePaste.limit', () => {
+				snapshot = jodit.observer.snapshot.make();
+			})
 			.on(
 				'keydown.limit keyup.limit beforeEnter.limit beforePaste.limit',
 				(event: KeyboardEvent): false | void => {
@@ -112,14 +109,11 @@ export function limit(jodit: IJodit) {
 					}
 				}, jodit.defaultTimeout)
 			)
-			.on(
-				'afterPaste.limit',
-				(): false | void => {
-					if (callback(null) === false && snapshot) {
-						jodit.observer.snapshot.restore(snapshot);
-						return false;
-					}
+			.on('afterPaste.limit', (): false | void => {
+				if (callback(null) === false && snapshot) {
+					jodit.observer.snapshot.restore(snapshot);
+					return false;
 				}
-			);
+			});
 	}
 }

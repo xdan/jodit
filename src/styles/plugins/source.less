@@ -43,10 +43,14 @@
 }
 
 .jodit_container.jodit_split_mode {
+	.jodit_workplace {
+		flex-wrap: nowrap;
+		flex-direction: row;
+	}
+
 	.jodit_wysiwyg,
 	.jodit_wysiwyg_iframe,
 	.jodit_source {
-		display: block !important;
 		width: 50%;
 		flex: 1;
 	}

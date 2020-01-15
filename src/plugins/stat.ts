@@ -54,7 +54,7 @@ export class stat extends Plugin {
 	}
 
 	private calc = throttle(() => {
-		const text = this.jodit.getEditorText();
+		const text = this.jodit.text;
 
 		if (this.jodit.options.showCharsCounter) {
 			this.charCounter.textContent = this.jodit.i18n(

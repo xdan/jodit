@@ -11,6 +11,7 @@
 import { CallbackFunction, EventHandlerBlock } from '../../types';
 import { defaultNameSpace, EventHandlersStore } from './store';
 import { IEventsNative } from '../../types/events';
+import { error } from '../helpers';
 
 export class EventsNative implements IEventsNative {
 	readonly __key: string = '__JoditEventsNativeNamespaces';
@@ -36,7 +37,7 @@ export class EventsNative implements IEventsNative {
 
 	private getStore(subject: any): EventHandlersStore {
 		if (!subject) {
-			throw new Error('Need subject');
+			throw error('Need subject');
 		}
 
 		if (subject[this.__key] === undefined) {
@@ -232,11 +233,11 @@ export class EventsNative implements IEventsNative {
 		const store: EventHandlersStore = this.getStore(subject);
 
 		if (typeof events !== 'string' || events === '') {
-			throw new Error('Need events names');
+			throw error('Need events names');
 		}
 
 		if (typeof callback !== 'function') {
-			throw new Error('Need event handler');
+			throw error('Need event handler');
 		}
 
 		if (Array.isArray(subject)) {
@@ -309,7 +310,7 @@ export class EventsNative implements IEventsNative {
 			events,
 			(event: string, namespace: string): void => {
 				if (event === '') {
-					throw new Error('Need event name');
+					throw error('Need event name');
 				}
 
 				if (store.indexOf(event, namespace, callback) === false) {
@@ -481,7 +482,7 @@ export class EventsNative implements IEventsNative {
 				: (eventsList as string);
 
 		if (typeof events !== 'string') {
-			throw new Error('Need event names');
+			throw error('Need event names');
 		}
 
 		const store: EventHandlersStore = this.getStore(subject);
@@ -564,7 +565,7 @@ export class EventsNative implements IEventsNative {
 			typeof (subject as any).dispatchEvent === 'function';
 
 		if (!isDOMElement && typeof events !== 'string') {
-			throw new Error('Need events names');
+			throw error('Need events names');
 		}
 
 		const store: EventHandlersStore = this.getStore(subject);

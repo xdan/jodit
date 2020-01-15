@@ -13,7 +13,7 @@ import { Component } from '../Component';
 import { EventsNative } from '../events/eventsNative';
 import { Panel } from './panel';
 import { Storage } from '../storage';
-import { i18n } from '../../modules/helpers';
+import { error, i18n } from '../../modules/helpers';
 
 declare let appVersion: string;
 
@@ -99,7 +99,7 @@ export class View extends Panel implements IViewBased {
 
 	getInstance<T = Component>(moduleName: string, options?: object): T {
 		if (typeof Jodit.modules[moduleName] !== 'function') {
-			throw new Error('Need real module name');
+			throw error('Need real module name');
 		}
 
 		if (this.__modulesInstances[moduleName] === undefined) {

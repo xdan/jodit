@@ -9,7 +9,7 @@
 
 import { Config } from '../Config';
 import { IDictionary, IRequest, IViewBased } from '../types';
-import { each, extend, isPlainObject, parseQuery } from './helpers/';
+import { each, error, extend, isPlainObject, parseQuery } from './helpers/';
 
 /**
  * @property {object} defaultAjaxOptions A set of key/value pairs that configure the Ajax request. All settings
@@ -127,22 +127,22 @@ export class Ajax implements IAjax {
 					}
 
 					if (!result) {
-						throw new Error('No JSON format');
+						throw error('No JSON format');
 					}
 
 					return result;
 				};
 
 				this.xhr.onabort = () => {
-					reject(new Error(this.xhr.statusText));
+					reject(error(this.xhr.statusText));
 				};
 
 				this.xhr.onerror = () => {
-					reject(new Error(this.xhr.statusText));
+					reject(error(this.xhr.statusText));
 				};
 
 				this.xhr.ontimeout = () => {
-					reject(new Error(this.xhr.statusText));
+					reject(error(this.xhr.statusText));
 				};
 
 				this.xhr.onload = () => {
@@ -167,7 +167,7 @@ export class Ajax implements IAjax {
 						} else {
 							reject.call(
 								this.xhr,
-								new Error(
+								error(
 									this.xhr.statusText ||
 										this.jodit.i18n('Connection error!')
 								)
@@ -214,7 +214,7 @@ export class Ajax implements IAjax {
 
 	prepareRequest(): IRequest {
 		if (!this.options.url) {
-			throw new Error('Need URL for AJAX request');
+			throw error('Need URL for AJAX request');
 		}
 
 		let url: string = this.options.url;

@@ -22,6 +22,7 @@ import { $$ } from './helpers/selector';
 import { isPlainObject } from './helpers/checker';
 import { each } from './helpers/each';
 import { trim } from './helpers/string';
+import { error } from './helpers';
 
 type WindowSelection = Selection | null;
 
@@ -38,7 +39,7 @@ export class Select {
 	 */
 	private errorNode(node: unknown) {
 		if (!Dom.isNode(node, this.win)) {
-			throw new Error('Parameter node must be instance of Node');
+			throw error('Parameter node must be instance of Node');
 		}
 	}
 
@@ -107,7 +108,7 @@ export class Select {
 	 */
 	removeNode(node: Node): void {
 		if (!Dom.isOrContains(this.jodit.editor, node, true)) {
-			throw new Error('Selection.removeNode can remove only editor\'s children');
+			throw error('Selection.removeNode can remove only editor\'s children');
 		}
 
 		Dom.safeRemove(node);
@@ -808,7 +809,7 @@ export class Select {
 				this.area
 			)
 		) {
-			throw new Error('Node element must be in editor');
+			throw error('Node element must be in editor');
 		}
 
 		const range = this.createRange();
@@ -925,7 +926,7 @@ export class Select {
 				this.area
 			)
 		) {
-			throw new Error('Node element must be in editor');
+			throw error('Node element must be in editor');
 		}
 
 		const range = this.createRange();
@@ -967,7 +968,7 @@ export class Select {
 				this.area
 			)
 		) {
-			throw new Error('Node element must be in editor');
+			throw error('Node element must be in editor');
 		}
 
 		const range = this.createRange();
@@ -1046,7 +1047,7 @@ export class Select {
 				this.area
 			)
 		) {
-			throw new Error('Node element must be in editor');
+			throw error('Node element must be in editor');
 		}
 
 		const range = this.createRange();

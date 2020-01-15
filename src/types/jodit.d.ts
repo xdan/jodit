@@ -44,6 +44,7 @@ interface IJodit extends IViewWithToolbar {
 	setCurrentPlace(place: IWorkPlace): void;
 
 	value: string;
+	text: string;
 
 	/**
 	 * @property {HTMLDocument} editorDocument
@@ -73,6 +74,7 @@ interface IJodit extends IViewWithToolbar {
 	 */
 	getRealMode(): Modes;
 	getMode(): Modes;
+	mode: Modes;
 	isEditorMode(): boolean;
 	toggleMode(): void;
 
@@ -89,8 +91,6 @@ interface IJodit extends IViewWithToolbar {
 		hotkeys: string | string[],
 		commandName: string
 	): void;
-
-	getEditorText(): string;
 
 	/**
 	 * workplace It contains source and wysiwyg editors

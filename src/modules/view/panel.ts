@@ -11,6 +11,7 @@ import { Component } from '../Component';
 import { IPanel, IViewBased, IViewOptions } from '../../types/view';
 import { Dom } from '../Dom';
 import { Create } from '../Create';
+import { error } from '../helpers';
 
 export abstract class Panel extends Component implements IPanel {
 	protected __whoLocked: string | false = '';
@@ -49,7 +50,7 @@ export abstract class Panel extends Component implements IPanel {
 					element
 				) as HTMLInputElement;
 			} catch {
-				throw new Error(
+				throw error(
 					'String "' + element + '" should be valid HTML selector'
 				);
 			}
@@ -62,10 +63,10 @@ export abstract class Panel extends Component implements IPanel {
 			resolved.nodeType !== Node.ELEMENT_NODE ||
 			!resolved.cloneNode
 		) {
-			throw new Error(
+			throw error(
 				'Element "' +
-				element +
-				'" should be string or HTMLElement instance'
+					element +
+					'" should be string or HTMLElement instance'
 			);
 		}
 

@@ -798,6 +798,21 @@ export class Dom {
 	}
 
 	/**
+	 * Add or remove attribute
+	 *
+	 * @param elm
+	 * @param attr
+	 * @param enable
+	 */
+	static toggleAttribute(elm: HTMLElement, attr: string, enable: boolean | number) {
+		if (enable !== false) {
+			elm.setAttribute(attr, enable.toString());
+		} else{
+			elm.removeAttribute(attr);
+		}
+	}
+
+	/**
 	 * Hide element
 	 * @param node
 	 */
