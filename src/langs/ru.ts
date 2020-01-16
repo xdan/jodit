@@ -133,7 +133,7 @@ export default {
 	'Delete table': 'Удалить таблицу',
 	'Delete row': 'Удалять ряд',
 	'Delete column': 'Удалить столбец',
-	'Empty cell': 'Отчистить ячейку',
+	'Empty cell': 'Очистить ячейку',
 
 	source: 'HTML',
 	bold: 'жирный',
@@ -205,7 +205,7 @@ export default {
 	Split: 'Разделить',
 	'Split vertical': 'Разделить по вертикали',
 	'Split horizontal': 'Разделить по горизонтали',
-	Merge: 'Объеденить в одну',
+	Merge: 'Объединить в одну',
 	'Add column': 'Добавить столбец',
 	'Add row': 'Добавить строку',
 	Delete: 'Удалить',
