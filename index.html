@@ -14,7 +14,7 @@
 		<div id="box">
 			<div id="toolbar-optional-container"></div>
 			asdsad
-			<div id="editor"></div>
+			<textarea id="editor"></textarea>
 			<div id="editor2"></div>
 			<div id="editor3"></div>
 		</div>
@@ -33,10 +33,11 @@
 			doc.close();
 
 			const editor = new Jodit('#editor', {
+				iframe: true,
+				editHTMLDocumentMode: true,
+				iframeStyle: '',
 				height: 300,
-				observer: {
-					timeout: 0
-				},
+				// defaultMode: Jodit.MODE_SPLIT,
 				// iframe: true,
 				uploader: {
 					url: 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'
@@ -52,8 +53,8 @@
 			// editor.value = '';
 			editor.value = 'test test <a href="#">test</a>';
 
-			editor.addPlace('#editor2')
-			editor.addPlace('#editor3')
+			// editor.addPlace('#editor2')
+			// editor.addPlace('#editor3')
 			// editor.setPanel('#toolbar-optional-container')
 
 			// editor.setReadOnly(true);
