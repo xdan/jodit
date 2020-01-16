@@ -7,9 +7,12 @@ Fixed SPLIT_MODE
 
 ### Feature
 Added `editHTMLDocumentMode` in order to allow the user to edit the entire document [#241](https://github.com/xdan/jodit/issues/241).
+Also added `iframeTitle` and `iframeDoctype` options
 ```js
 const editor = Jodit.make('#editor', {
 	iframe: true,
+	iframeTitle: 'Hello world!',
+	iframeDoctype: '<!DOCTYPE html>',
 	editHTMLDocumentMode: true,
 	iframeStyle: ''
 });
@@ -18,7 +21,7 @@ console.log(editor.value);
 
 // <html dir="" class="jodit" lang="en" spellcheck="true" style="min-height: 113px;">
 // <head>
-//     <title>Jodit Editor</title>
+//     <title>Hello world!</title>
 // </head>
 // <body class="jodit_wysiwyg" style="outline:none">test test <a href="#">test</a></body>
 // </html>
