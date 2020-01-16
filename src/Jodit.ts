@@ -1026,6 +1026,8 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		if (!this.places.length) {
 			this.id =
 				element.getAttribute('id') || new Date().getTime().toString();
+
+			Jodit.instances[this.id] = this;
 		}
 
 		if (element.attributes) {

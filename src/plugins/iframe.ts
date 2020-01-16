@@ -22,6 +22,8 @@ declare module '../Config' {
 		editHTMLDocumentMode: boolean;
 		iframeDefaultSrc: string;
 		iframeBaseUrl: string;
+		iframeTitle: string;
+		iframeDoctype: string;
 		iframeStyle: string;
 		iframeCSSLinks: string[];
 	}
@@ -39,6 +41,16 @@ declare module '../Config' {
  * ```
  */
 Config.prototype.iframeBaseUrl = '';
+
+/**
+ * Iframe title's content
+ */
+Config.prototype.iframeTitle = 'Jodit Editor';
+
+/**
+ * Iframe's DOCTYPE
+ */
+Config.prototype.iframeDoctype = '<!DOCTYPE html>';
 
 /**
  * You can redefine default page
@@ -156,6 +168,8 @@ Config.prototype.editHTMLDocumentMode = false;
  * in backend of you system
  */
 export function iframe(editor: IJodit) {
+	const opt = editor.options;
+
 	editor.events
 		.on('afterSetMode', () => {
 			if (editor.isEditorMode()) {
@@ -172,17 +186,17 @@ export function iframe(editor: IJodit) {
 
 				doc.open();
 				doc.write(
-					`<!DOCTYPE html>` +
+					`${opt.iframeDoctype}` +
 						`<html dir="${
-							jodit.options.direction
+							opt.direction
 						}" class="jodit" lang="${defaultLanguage(
-							jodit.options.language
+							opt.language
 						)}">
 						<head>
-							<title>Jodit Editor</title>
+							<title>${opt.iframeTitle}</title>
 							${
-								jodit.options.iframeBaseUrl
-									? `<base href="${jodit.options.iframeBaseUrl}"/>`
+							opt.iframeBaseUrl
+									? `<base href="${opt.iframeBaseUrl}"/>`
 									: ''
 							}
 						</head>
@@ -192,8 +206,8 @@ export function iframe(editor: IJodit) {
 
 				doc.close();
 
-				if (jodit.options.iframeCSSLinks) {
-					jodit.options.iframeCSSLinks.forEach(href => {
+				if (opt.iframeCSSLinks) {
+					opt.iframeCSSLinks.forEach(href => {
 						const link = doc.createElement('link');
 
 						link.setAttribute('rel', 'stylesheet');
@@ -203,15 +217,15 @@ export function iframe(editor: IJodit) {
 					});
 				}
 
-				if (jodit.options.iframeStyle) {
+				if (opt.iframeStyle) {
 					const style = doc.createElement('style');
-					style.innerHTML = jodit.options.iframeStyle;
+					style.innerHTML = opt.iframeStyle;
 					doc.head && doc.head.appendChild(style);
 				}
 			}
 		)
 		.on('createEditor', (): void | Promise<void> | false => {
-			if (!editor.options.iframe) {
+			if (!opt.iframe) {
 				return;
 			}
 
@@ -221,7 +235,7 @@ export function iframe(editor: IJodit) {
 			iframe.src = 'about:blank';
 			iframe.className = 'jodit_wysiwyg_iframe';
 			iframe.setAttribute('allowtransparency', 'true');
-			iframe.setAttribute('tabindex', editor.options.tabIndex.toString());
+			iframe.setAttribute('tabindex', opt.tabIndex.toString());
 			iframe.setAttribute('frameborder', '0');
 
 			editor.workplace.appendChild(iframe);
@@ -241,7 +255,7 @@ export function iframe(editor: IJodit) {
 				const doc = (editor.iframe.contentWindow as Window).document;
 				editor.editorWindow = editor.iframe.contentWindow as Window;
 
-				const docMode = editor.options.editHTMLDocumentMode;
+				const docMode = opt.editHTMLDocumentMode;
 
 				const toggleEditable = () => {
 					Dom.toggleAttribute(
@@ -252,7 +266,7 @@ export function iframe(editor: IJodit) {
 				};
 
 				const clearMarkers = (html: string): string => {
-					const bodyReg = /<body.*<\/body>/is,
+					const bodyReg = /<body.*<\/body>/im,
 						bodyMarker = '{%%BODY%%}',
 						body = bodyReg.exec(html);
 
@@ -260,15 +274,15 @@ export function iframe(editor: IJodit) {
 						// remove markers
 						html = html
 							.replace(bodyReg, bodyMarker)
-							.replace(/<span([^>]*?)>(.*?)<\/span>/gis, '')
+							.replace(/<span([^>]*?)>(.*?)<\/span>/gim, '')
 							.replace(
-								/&lt;span([^&]*?)&gt;(.*?)&lt;\/span&gt;/gis,
+								/&lt;span([^&]*?)&gt;(.*?)&lt;\/span&gt;/gim,
 								''
 							)
 							.replace(
 								bodyMarker,
 								body[0].replace(
-									/(<body[^>]+?)([\s]*["'])?contenteditable["'\s]*=[\s"']*true["']?/is,
+									/(<body[^>]+?)([\s]*["'])?contenteditable["'\s]*=[\s"']*true["']?/im,
 									'$1'
 								)
 							);
@@ -322,7 +336,7 @@ export function iframe(editor: IJodit) {
 					toggleEditable
 				);
 
-				if (editor.options.height === 'auto') {
+				if (opt.height === 'auto') {
 					doc.documentElement &&
 						(doc.documentElement.style.overflowY = 'hidden');
 
@@ -330,7 +344,7 @@ export function iframe(editor: IJodit) {
 						if (
 							editor.editor &&
 							editor.iframe &&
-							editor.options.height === 'auto'
+							opt.height === 'auto'
 						) {
 							css(
 								editor.iframe,
@@ -381,9 +395,7 @@ export function iframe(editor: IJodit) {
 							editor.editorWindow,
 							'mousedown touchstart keydown keyup touchend click mouseup mousemove scroll',
 							(e: Event) => {
-								editor.events &&
-									editor.events.fire &&
-									editor.events.fire(editor.ownerWindow, e);
+									editor.events?.fire(editor.ownerWindow, e);
 							}
 						);
 				}

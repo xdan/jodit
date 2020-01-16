@@ -78,6 +78,7 @@ describe('Iframe mode', function() {
 			describe('With DIV source element', function() {
 				it('Should throw error', function() {
 					const div = appendTestDiv();
+
 					expect(function() {
 						Jodit.make(div, {
 							iframe: true,
@@ -90,6 +91,7 @@ describe('Iframe mode', function() {
 			describe('With AREA source element', function() {
 				const opt = {
 					iframe: true,
+					iframeTitle: 'Hi',
 					disablePlugins: ['size'],
 					height: 300,
 					iframeStyle: '',
@@ -110,10 +112,14 @@ describe('Iframe mode', function() {
 						const editor = Jodit.make(appendTestArea(), opt);
 
 						expect(
-							sortAttributes(editor.value.replace(/[\t\n]/g, ''))
+							sortAttributes(
+								editor.value
+									.replace(/[\t\n]/g, '')
+									.replace(/<br>/g, '')
+							)
 						).equals(
 							'<html class="jodit" dir="" lang="en" spellcheck="true">' +
-								'<head><title>Jodit Editor</title></head>' +
+								'<head><title>Hi</title></head>' +
 								'<body class="jodit_wysiwyg" style="outline:none" ></body>' +
 								'</html>'
 						);
@@ -126,11 +132,13 @@ describe('Iframe mode', function() {
 
 							expect(
 								sortAttributes(
-									editor.value.replace(/[\t\n]/g, '')
+									editor.value
+										.replace(/[\t\n]/g, '')
+										.replace(/<br>/g, '')
 								)
 							).equals(
 								'<html class="jodit" dir="" lang="en" spellcheck="true">' +
-									'<head><title>Jodit Editor</title></head>' +
+									'<head><title>Hi</title></head>' +
 									'<body class="jodit_wysiwyg" style="outline:none" >' +
 									'<strong>Test</strong></body></html>'
 							);
