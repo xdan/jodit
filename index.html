@@ -11,36 +11,24 @@
 		<link rel="stylesheet" href="./build/jodit.css" />
 	</head>
 	<body>
+		<style>
+			#box {
+				padding: 100px;
+				margin: 20px;
+				position: relative;
+			}
+		</style>
 		<div id="box">
-			<div id="toolbar-optional-container"></div>
-			asdsad
 			<textarea id="editor"></textarea>
-			<div id="editor2"></div>
-			<div id="editor3"></div>
 		</div>
-		<div id="toolbar"></div>
 		<script src="./build/jodit.js"></script>
 		<script>
-			// editor.destruct();
-			const iframe = document.createElement('iframe');
-			iframe.style.width = '900px';
-			box.appendChild(iframe);
-
-			const win = iframe.contentWindow;
-			const doc = win.document;
-			doc.open();
-			doc.write('<html><body><textarea id="editor"></textarea><' + 'script src="./build/jodit.js"><' + '/script></body></html>');
-			doc.close();
-
 			const editor = new Jodit('#editor', {
-				iframe: true,
-				editHTMLDocumentMode: true,
-				iframeStyle: '',
 				height: 300,
-				// defaultMode: Jodit.MODE_SPLIT,
-				// iframe: true,
+				autofocus: true,
 				uploader: {
-					url: 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'
+					url:
+						'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'
 				},
 
 				filebrowser: {
@@ -49,22 +37,6 @@
 					}
 				}
 			});
-
-			// editor.value = '';
-			editor.value = 'test test <a href="#">test</a>';
-
-			// editor.addPlace('#editor2')
-			// editor.addPlace('#editor3')
-			// editor.setPanel('#toolbar-optional-container')
-
-			// editor.setReadOnly(true);
 		</script>
-		<style>
-			#box {
-				padding: 100px;
-				margin: 20px;
-				position: relative;
-			}
-		</style>
 	</body>
 </html>
