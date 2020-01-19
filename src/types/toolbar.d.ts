@@ -216,7 +216,7 @@ interface IControlType<
 	 *      {
 	 *          icon: "insertCode",
 	 *          popup: function (editor) {
-	 *              var div = dccument.createElement('div'), button = dccument.createElement('button');
+	 *              var div = document.createElement('div'), button = dccument.createElement('button');
 	 *              div.innerHTML = 'Hi! Click button and enter your code';
 	 *              button.innerHTML = 'Click me';
 	 *

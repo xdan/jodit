@@ -588,10 +588,10 @@ export class TableProcessor extends Plugin {
 
 				switch (command) {
 					case 'splitv':
-						Table.splitVertical(table);
+						Table.splitVertical(table, this.jodit.create.inside);
 						break;
 					case 'splitg':
-						Table.splitHorizontal(table);
+						Table.splitHorizontal(table, this.jodit.create.inside);
 						break;
 					case 'merge':
 						Table.mergeSelected(table);
@@ -618,7 +618,8 @@ export class TableProcessor extends Plugin {
 						Table.appendColumn(
 							table,
 							cell.cellIndex,
-							command === 'addcolumnafter'
+							command === 'addcolumnafter',
+							this.jodit.create.inside
 						);
 						break;
 					case 'addrowafter':
@@ -626,7 +627,8 @@ export class TableProcessor extends Plugin {
 						Table.appendRow(
 							table,
 							cell.parentNode as HTMLTableRowElement,
-							command === 'addrowafter'
+							command === 'addrowafter',
+							this.jodit.create.inside
 						);
 						break;
 				}
@@ -661,7 +663,7 @@ export class TableProcessor extends Plugin {
 					) {
 						if (!cell.firstChild) {
 							cell.appendChild(
-								this.jodit.editorDocument.createElement('br')
+								this.jodit.create.inside.element('br')
 							);
 						}
 

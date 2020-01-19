@@ -2,9 +2,9 @@ describe('Tables Jodit Editor Tests', function() {
 	describe('Methods', function() {
 		it('After init container must has one element .jodit_table_resizer', function() {
 			const editor = new Jodit(appendTestArea());
-			expect(
-				editor.editor.querySelector('.jodit_table_resizer')
-			).equals(null);
+			expect(editor.editor.querySelector('.jodit_table_resizer')).equals(
+				null
+			);
 
 			editor.selection.insertNode(editor.create.inside.element('table'));
 			editor.selection.insertNode(editor.create.inside.element('table'));
@@ -80,12 +80,18 @@ describe('Tables Jodit Editor Tests', function() {
 					'</table>'
 			);
 
-			Jodit.modules.Table.appendRow(editor.editor.firstChild);
+			Jodit.modules.Table.appendRow(
+				editor.editor.firstChild,
+				false,
+				true,
+				editor.create.inside
+			);
 
 			expect(editor.getEditorValue()).equals(
 				'<table><tbody><tr><td>1</td><td>2</td><td>3</td></tr><tr><td></td><td></td><td></td></tr></tbody></table>'
 			);
 		});
+
 		it('Method appendRow with second argument should append one row after row', function() {
 			const editor = new Jodit(appendTestArea());
 
@@ -98,7 +104,9 @@ describe('Tables Jodit Editor Tests', function() {
 
 			Jodit.modules.Table.appendRow(
 				editor.editor.firstChild,
-				editor.editor.firstChild.querySelector('tr')
+				editor.editor.firstChild.querySelector('tr'),
+				true,
+				editor.create.inside
 			);
 
 			expect(editor.getEditorValue()).equals(
@@ -118,7 +126,8 @@ describe('Tables Jodit Editor Tests', function() {
 			Jodit.modules.Table.appendRow(
 				editor.editor.firstChild,
 				editor.editor.firstChild.querySelector('tr'),
-				false
+				false,
+				editor.create.inside
 			);
 
 			expect(editor.getEditorValue()).equals(
@@ -135,7 +144,12 @@ describe('Tables Jodit Editor Tests', function() {
 					'</table>'
 			);
 
-			Jodit.modules.Table.appendColumn(editor.editor.firstChild);
+			Jodit.modules.Table.appendColumn(
+				editor.editor.firstChild,
+				-1,
+				true,
+				editor.create.inside
+			);
 
 			expect(editor.getEditorValue().toLowerCase()).equals(
 				'<table>' +
@@ -156,7 +170,12 @@ describe('Tables Jodit Editor Tests', function() {
 					'</table>'
 			);
 
-			Jodit.modules.Table.appendColumn(editor.editor.firstChild, 0);
+			Jodit.modules.Table.appendColumn(
+				editor.editor.firstChild,
+				0,
+				true,
+				editor.create.inside
+			);
 
 			expect(editor.getEditorValue().toLowerCase()).equals(
 				'<table>' +
@@ -180,7 +199,8 @@ describe('Tables Jodit Editor Tests', function() {
 			Jodit.modules.Table.appendColumn(
 				editor.editor.firstChild,
 				1,
-				false
+				false,
+				editor.create.inside
 			);
 
 			expect(editor.getEditorValue().toLowerCase()).equals(
@@ -416,7 +436,10 @@ describe('Tables Jodit Editor Tests', function() {
 				);
 
 				// const table = new Jodit.modules.Table(editor);
-				Jodit.modules.Table.splitHorizontal(editor.editor.firstChild);
+				Jodit.modules.Table.splitHorizontal(
+					editor.editor.firstChild,
+					editor.create.inside
+				);
 
 				expect(sortAttributes(editor.editor.innerHTML)).equals(
 					'<table>' +
@@ -447,7 +470,10 @@ describe('Tables Jodit Editor Tests', function() {
 				);
 
 				// const table = new Jodit.modules.Table(editor);
-				Jodit.modules.Table.splitHorizontal(editor.editor.firstChild);
+				Jodit.modules.Table.splitHorizontal(
+					editor.editor.firstChild,
+					editor.create.inside
+				);
 
 				expect(sortAttributes(editor.editor.innerHTML)).equals(
 					'<table>' +
@@ -483,7 +509,10 @@ describe('Tables Jodit Editor Tests', function() {
 				);
 
 				// const table = new Jodit.modules.Table(editor);
-				Jodit.modules.Table.splitHorizontal(editor.editor.firstChild);
+				Jodit.modules.Table.splitHorizontal(
+					editor.editor.firstChild,
+					editor.create.inside
+				);
 
 				expect(sortAttributes(editor.editor.innerHTML)).equals(
 					'<table>' +
@@ -513,7 +542,10 @@ describe('Tables Jodit Editor Tests', function() {
 				);
 
 				// const table = new Jodit.modules.Table(editor);
-				Jodit.modules.Table.splitVertical(editor.editor.firstChild);
+				Jodit.modules.Table.splitVertical(
+					editor.editor.firstChild,
+					editor.create.inside
+				);
 
 				expect(sortAttributes(editor.editor.innerHTML)).equals(
 					'<table style="width:300px">' +
@@ -651,6 +683,7 @@ describe('Tables Jodit Editor Tests', function() {
 				'<table><tbody><tr><td>test1</td><td>2</td></tr></tbody></table>'
 			);
 		});
+
 		it('After press Left arrow in the start of cell it should work like tab + shift', function() {
 			const editor = new Jodit(appendTestArea());
 
@@ -684,6 +717,7 @@ describe('Tables Jodit Editor Tests', function() {
 					'</tbody></table>'
 			);
 		});
+
 		it("After press Top arrow in the first cell's line cursor should move into top cell", function() {
 			const editor = new Jodit(appendTestArea());
 
@@ -1236,9 +1270,7 @@ describe('Tables Jodit Editor Tests', function() {
 							'.jodit_table_resizer'
 						);
 						expect(resizer).is.not.null;
-						expect(resizer.style.display === 'block').equals(
-							true
-						);
+						expect(resizer.style.display === 'block').equals(true);
 
 						const resizerBox = Jodit.modules.Helpers.offset(
 							resizer,
@@ -1248,7 +1280,8 @@ describe('Tables Jodit Editor Tests', function() {
 
 						expect(Math.abs(resizerBox.left - box.left) < 10).to.be
 							.true;
-						expect(Math.abs(resizerBox.top - tablebox.top) < 10).is.true;
+						expect(Math.abs(resizerBox.top - tablebox.top) < 10).is
+							.true;
 
 						simulateEvent(
 							'mouseleave',

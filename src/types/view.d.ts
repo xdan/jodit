@@ -9,7 +9,7 @@
 
 import { Buttons, Controls, IControlType, IProgressBar, IToolbarCollection } from './toolbar';
 import { IComponent, IDictionary } from './types';
-import { ICreate } from './create';
+import { Attributes, ICreate } from './create';
 import { IEventsNative } from './events';
 import { IStorage } from './storage';
 import { IAsync } from './async';
@@ -37,6 +37,8 @@ interface IToolbarOptions {
 	direction?: string;
 }
 
+type NodeFunction = (elm: HTMLElement) => void;
+
 interface IViewOptions extends ILanguageOptions, IToolbarOptions {
 	basePath?: string;
 
@@ -53,6 +55,8 @@ interface IViewOptions extends ILanguageOptions, IToolbarOptions {
 	globalFullsize?: boolean;
 
 	controls?: Controls;
+
+	createAttributes?: IDictionary<Attributes | NodeFunction>;
 }
 
 interface IPanel<T = IViewOptions>  extends IComponent {

@@ -12,7 +12,7 @@ import { isPlainObject } from './helpers/checker/isPlainObject';
 import { each } from './helpers/each';
 import { asArray } from './helpers/array/asArray';
 import { Dom } from './Dom';
-import { css, isJoditObject, refs } from './helpers';
+import { css, isFunction, isJoditObject, refs } from './helpers';
 import { Attributes, Children, ICreate } from '../types/create';
 
 export class Create implements ICreate {
@@ -33,6 +33,22 @@ export class Create implements ICreate {
 		}
 	}
 
+	/**
+	 * Apply some object key-value to HTMLElement
+	 *
+	 * @param elm
+	 * @param attrs
+	 */
+	private applyAttributes = (elm: HTMLElement, attrs: Attributes) => {
+		each(attrs, (key: string, value) => {
+			if (isPlainObject(value) && key === 'style') {
+				css(elm, <IDictionary<string>>value);
+			} else {
+				elm.setAttribute(key, value.toString());
+			}
+		});
+	};
+
 	element<K extends keyof HTMLElementTagNameMap>(
 		tagName: K,
 		childrenOrAttributes?: Children
@@ -47,17 +63,24 @@ export class Create implements ICreate {
 		childrenOrAttributes?: Attributes | Children,
 		children?: Children
 	): HTMLElement {
-		const elm: HTMLElement = this.doc.createElement(tagName.toLowerCase());
+		const elm = this.doc.createElement(tagName.toLowerCase());
+
+		if (this.insideCreator) {
+			const ca = this.jodit.options.createAttributes;
+			if (ca && ca[tagName.toLowerCase()]) {
+				const attrs = ca[tagName.toLowerCase()];
+
+				if (isFunction(attrs)) {
+					attrs(elm);
+				} else if (isPlainObject(attrs)) {
+					this.applyAttributes(elm, attrs);
+				}
+			}
+		}
 
 		if (childrenOrAttributes) {
 			if (isPlainObject(childrenOrAttributes)) {
-				each(<Attributes>childrenOrAttributes, (key: string, value) => {
-					if (isPlainObject(value) && key === 'style') {
-						css(elm, <IDictionary<string>>value);
-					} else {
-						elm.setAttribute(key, value.toString());
-					}
-				});
+				this.applyAttributes(elm, <Attributes>childrenOrAttributes);
 			} else {
 				children = <Children>childrenOrAttributes;
 			}

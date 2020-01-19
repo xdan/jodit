@@ -176,7 +176,7 @@ export function addNewLine(editor: IJodit) {
 
 						const top = e.pageY - editor.editorWindow.pageYOffset;
 
-						const p: HTMLElement = editor.editorDocument.createElement(
+						const p = editor.create.inside.element(
 							editor.options.enter
 						);
 

@@ -15,7 +15,7 @@
  * @return {string}
  */
 export const htmlspecialchars = (html: string): string => {
-    const tmp: HTMLDivElement = document.createElement('div');
+    const tmp = document.createElement('div');
     tmp.textContent = html;
     return tmp.innerHTML;
 };

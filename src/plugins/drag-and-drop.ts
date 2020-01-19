@@ -88,7 +88,7 @@ export class DragAndDrop extends Plugin {
 						this.draggable.getAttribute('data-is-file') === '1'
 							? ['a', 'href']
 							: ['img', 'src'];
-					fragment = this.jodit.editorDocument.createElement(tagName);
+					fragment = this.jodit.create.inside.element(tagName);
 					fragment.setAttribute(
 						attr,
 						this.draggable.getAttribute('data-src') ||

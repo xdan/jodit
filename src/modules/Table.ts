@@ -20,46 +20,47 @@
 import * as consts from '../constants';
 import { Dom } from './Dom';
 import { $$, each, trim } from './helpers/';
+import { ICreate } from '../types';
 
 export class Table {
-	public static addSelected(td: HTMLTableCellElement) {
+	static addSelected(td: HTMLTableCellElement) {
 		td.setAttribute(consts.JODIT_SELECTED_CELL_MARKER, '1');
 	}
-	public static restoreSelection(td: HTMLTableCellElement) {
+	static restoreSelection(td: HTMLTableCellElement) {
 		td.removeAttribute(consts.JODIT_SELECTED_CELL_MARKER);
 	}
 
 	/**
-	 *
+	 * Returns array of selected cells
 	 * @param {HTMLTableElement} table
 	 * @return {HTMLTableCellElement[]}
 	 */
-	public static getAllSelectedCells(
+	static getAllSelectedCells(
 		table: HTMLElement | HTMLTableElement
 	): HTMLTableCellElement[] {
 		return table
 			? ($$(
-					`td[${consts.JODIT_SELECTED_CELL_MARKER}],th[${
-						consts.JODIT_SELECTED_CELL_MARKER
-					}]`,
+					`td[${consts.JODIT_SELECTED_CELL_MARKER}],th[${consts.JODIT_SELECTED_CELL_MARKER}]`,
 					table
 			  ) as HTMLTableCellElement[])
 			: [];
 	}
 
 	/**
+	 * Returns rows count in the table
 	 * @param {HTMLTableElement} table
 	 * @return {number}
 	 */
-	public static getRowsCount(table: HTMLTableElement) {
+	static getRowsCount(table: HTMLTableElement) {
 		return table.rows.length;
 	}
 
 	/**
+	 * Returns columns count in the table
 	 * @param {HTMLTableElement} table
 	 * @return {number}
 	 */
-	public static getColumnsCount(table: HTMLTableElement) {
+	static getColumnsCount(table: HTMLTableElement) {
 		const matrix = Table.formalMatrix(table);
 		return matrix.reduce((max_count, cells) => {
 			return Math.max(max_count, cells.length);
@@ -67,12 +68,13 @@ export class Table {
 	}
 
 	/**
+	 * Generate formal table martix columns*rows
 	 *
 	 * @param {HTMLTableElement} table
 	 * @param {function(HTMLTableCellElement, int, int, int, int):boolean} [callback] if return false cycle break
 	 * @return {Array}
 	 */
-	public static formalMatrix(
+	static formalMatrix(
 		table: HTMLTableElement,
 		callback?: (
 			cell: HTMLTableCellElement,
@@ -140,7 +142,7 @@ export class Table {
 	/**
 	 * Get cell coordinate in formal table (without colspan and rowspan)
 	 */
-	public static formalCoordinate(
+	static formalCoordinate(
 		table: HTMLTableElement,
 		cell: HTMLTableCellElement,
 		max = false
@@ -184,17 +186,17 @@ export class Table {
 	 * line contains the selected cell
 	 * @param {Boolean} [after=true] Insert a new line after line contains the selected cell
 	 */
-	public static appendRow(
+	static appendRow(
 		table: HTMLTableElement,
-		line: false | HTMLTableRowElement = false,
-		after = true
+		line: false | HTMLTableRowElement,
+		after: boolean,
+		create: ICreate
 	) {
-		const doc: Document = table.ownerDocument || document,
-			columnsCount: number = Table.getColumnsCount(table),
-			row: HTMLTableRowElement = doc.createElement('tr');
+		const columnsCount: number = Table.getColumnsCount(table),
+			row: HTMLTableRowElement = create.element('tr');
 
 		for (let j: number = 0; j < columnsCount; j += 1) {
-			row.appendChild(doc.createElement('td'));
+			row.appendChild(create.element('td'));
 		}
 
 		if (after && line && line.nextSibling) {
@@ -213,7 +215,7 @@ export class Table {
 	 * @param {HTMLTableElement} table
 	 * @param {int} rowIndex
 	 */
-	public static removeRow(table: HTMLTableElement, rowIndex: number) {
+	static removeRow(table: HTMLTableElement, rowIndex: number) {
 		const box = Table.formalMatrix(table);
 		let dec: boolean;
 		const row = table.rows[rowIndex];
@@ -276,23 +278,26 @@ export class Table {
 	/**
 	 * Insert column before / after all the columns containing the selected cells
 	 *
+	 * @param table
+	 * @param j
+	 * @param after
+	 * @param create
 	 */
-	public static appendColumn(
+	static appendColumn(
 		table: HTMLTableElement,
 		j: number,
-		after = true
+		after: boolean,
+		create: ICreate
 	) {
 		const box: HTMLTableCellElement[][] = Table.formalMatrix(table);
 		let i: number;
 
-		if (j === undefined) {
+		if (j === undefined || j < 0) {
 			j = Table.getColumnsCount(table) - 1;
 		}
 
 		for (i = 0; i < box.length; i += 1) {
-			const cell: HTMLTableCellElement = (
-				table.ownerDocument || document
-			).createElement('td');
+			const cell = create.element('td');
 			const td: HTMLTableCellElement = box[i][j];
 			let added: boolean = false;
 			if (after) {
@@ -336,7 +341,7 @@ export class Table {
 	 * @param {HTMLTableElement} table
 	 * @param {int} [j]
 	 */
-	public static removeColumn(table: HTMLTableElement, j: number) {
+	static removeColumn(table: HTMLTableElement, j: number) {
 		const box: HTMLTableCellElement[][] = Table.formalMatrix(table);
 
 		let dec: boolean;
@@ -368,11 +373,14 @@ export class Table {
 	 * @param {Array.<HTMLTableCellElement>} selectedCells
 	 * @return {number[][]}
 	 */
-	public static getSelectedBound(
+	static getSelectedBound(
 		table: HTMLTableElement,
 		selectedCells: HTMLTableCellElement[]
 	): number[][] {
-		const bound = [[Infinity, Infinity], [0, 0]];
+		const bound = [
+			[Infinity, Infinity],
+			[0, 0]
+		];
 		const box = Table.formalMatrix(table);
 		let i: number, j: number, k: number;
 
@@ -418,10 +426,10 @@ export class Table {
 	}
 
 	/**
-	 *
+	 * Try recalculate all coluns and rows after change
 	 * @param {HTMLTableElement} table
 	 */
-	public static normalizeTable(table: HTMLTableElement) {
+	static normalizeTable(table: HTMLTableElement) {
 		let i: number, j: number, min: number, not: boolean;
 
 		const __marked: HTMLTableCellElement[] = [],
@@ -517,16 +525,15 @@ export class Table {
 
 	/**
 	 * It combines all of the selected cells into one. The contents of the cells will also be combined
-	 *
 	 * @param {HTMLTableElement} table
-	 *
 	 */
-	public static mergeSelected(table: HTMLTableElement) {
+	static mergeSelected(table: HTMLTableElement) {
 		const html: string[] = [],
 			bound: number[][] = Table.getSelectedBound(
 				table,
 				Table.getAllSelectedCells(table)
 			);
+
 		let w: number = 0,
 			first: HTMLTableCellElement | null = null,
 			first_j: number = 0,
@@ -637,7 +644,7 @@ export class Table {
 	/**
 	 * Divides all selected by `jodit_focused_cell` class table cell in 2 parts vertical. Those division into 2 columns
 	 */
-	public static splitHorizontal(table: HTMLTableElement) {
+	static splitHorizontal(table: HTMLTableElement, create: ICreate) {
 		let coord: number[],
 			td: HTMLTableCellElement,
 			tr: HTMLTableRowElement,
@@ -646,13 +653,11 @@ export class Table {
 
 		const __marked: HTMLTableCellElement[] = [];
 
-		const doc: Document = table.ownerDocument || document;
-
 		Table.getAllSelectedCells(table).forEach(
 			(cell: HTMLTableCellElement) => {
-				td = doc.createElement('td');
-				td.appendChild(doc.createElement('br'));
-				tr = doc.createElement('tr');
+				td = create.element('td');
+				td.appendChild(create.element('br'));
+				tr = create.element('tr');
 
 				coord = Table.formalCoordinate(table, cell);
 
@@ -715,14 +720,12 @@ export class Table {
 
 	/**
 	 * It splits all the selected cells into 2 parts horizontally. Those. are added new row
-	 *
 	 * @param {HTMLTableElement} table
 	 */
-	public static splitVertical(table: HTMLTableElement) {
+	static splitVertical(table: HTMLTableElement, create: ICreate) {
 		let coord: number[], td: HTMLTableCellElement, percentage: number;
 
 		const __marked: HTMLTableCellElement[] = [];
-		const doc: Document = table.ownerDocument || document;
 
 		Table.getAllSelectedCells(table).forEach(
 			(cell: HTMLTableCellElement) => {
@@ -746,8 +749,8 @@ export class Table {
 					Table.__mark(cell, 'colspan', cell.colSpan - 1, __marked);
 				}
 
-				td = doc.createElement('td');
-				td.appendChild(doc.createElement('br'));
+				td = create.element('td');
+				td.appendChild(create.element('br'));
 
 				if (cell.rowSpan > 1) {
 					Table.__mark(td, 'rowspan', cell.rowSpan, __marked);
@@ -786,14 +789,14 @@ export class Table {
 	 * @param {int} j column
 	 * @param {int} delta
 	 * @param {boolean} noUnmark
-	 * @param {HTMLTableCellElement[]} __marked
+	 * @param {HTMLTableCellElement[]} marked
 	 */
-	public static setColumnWidthByDelta(
+	static setColumnWidthByDelta(
 		table: HTMLTableElement,
 		j: number,
 		delta: number,
 		noUnmark: boolean,
-		__marked: HTMLTableCellElement[]
+		marked: HTMLTableCellElement[]
 	) {
 		const box = Table.formalMatrix(table);
 		let i: number, w: number, percent: number;
@@ -805,12 +808,12 @@ export class Table {
 				box[i][j],
 				'width',
 				percent.toFixed(consts.ACCURACY) + '%',
-				__marked
+				marked
 			);
 		}
 
 		if (!noUnmark) {
-			Table.__unmark(__marked);
+			Table.__unmark(marked);
 		}
 	}
 
@@ -819,24 +822,24 @@ export class Table {
 	 * @param {HTMLTableCellElement} cell
 	 * @param {string} key
 	 * @param {string} value
-	 * @param {HTMLTableCellElement[]} __marked
+	 * @param {HTMLTableCellElement[]} marked
 	 * @private
 	 */
 	private static __mark(
 		cell: HTMLTableCellElement,
 		key: string,
 		value: string | number,
-		__marked: HTMLTableCellElement[]
+		marked: HTMLTableCellElement[]
 	) {
-		__marked.push(cell);
+		marked.push(cell);
 		if (!(cell as any).__marked_value) {
 			(cell as any).__marked_value = {};
 		}
 		(cell as any).__marked_value[key] = value === undefined ? 1 : value;
 	}
 
-	private static __unmark(__marked: HTMLTableCellElement[]) {
-		__marked.forEach(cell => {
+	private static __unmark(marked: HTMLTableCellElement[]) {
+		marked.forEach(cell => {
 			if ((cell as any).__marked_value) {
 				each(
 					(cell as any).__marked_value,

@@ -327,6 +327,13 @@ if (typeof afterEach === 'function') {
 	afterEach(removeStuff);
 }
 
+/**
+ * Create and insert into DOM test textarea
+ *
+ * @param [id]
+ * @param [noput]
+ * @returns {HTMLTextAreaElement}
+ */
 function appendTestArea(id, noput) {
 	const textarea = document.createElement('textarea');
 	textarea.setAttribute('id', id || 'editor_' + new Date().getTime());

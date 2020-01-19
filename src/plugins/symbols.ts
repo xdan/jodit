@@ -9,7 +9,7 @@
 
 import { Config } from '../Config';
 import { KEY_DOWN, KEY_ENTER, KEY_LEFT, KEY_RIGHT, KEY_UP } from '../constants';
-import { Alert, Dialog } from '../modules/dialog/';
+import { Alert } from '../modules/dialog/';
 import { IControlType } from '../types/toolbar';
 import { IJodit } from '../types';
 
@@ -245,23 +245,24 @@ Config.prototype.controls.symbol = {
 		);
 		if (container) {
 			if (editor.options.usePopupForSpecialCharacters) {
-				const box: HTMLDivElement = editor.ownerDocument.createElement(
-					'div'
-				);
+				const box = editor.create.div();
+
 				box.classList.add('jodit_symbols');
 				box.appendChild(container);
 				editor.events.on(container, 'close_dialog', close);
 				return box;
 			} else {
-				const dialog: Dialog = Alert(
+				const dialog = Alert(
 					container,
 					editor.i18n('Select Special Character'),
-					void 0,
+					undefined,
 					'jodit_symbols'
 				);
+
 				const a: HTMLAnchorElement | null = container.querySelector(
 					'a'
 				);
+
 				a && a.focus();
 				editor.events.on('beforeDestruct', () => {
 					dialog && dialog.close();

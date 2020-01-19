@@ -226,9 +226,7 @@ export class PluginSystem implements IPluginSystem {
 				const url =
 					extra.url || PluginSystem.getFullUrl(jodit, name, true);
 
-				return reflect(
-					appendScriptAsync(jodit, url, jodit.ownerDocument)
-				);
+				return reflect(appendScriptAsync(jodit, url));
 			})
 		);
 	}
@@ -239,11 +237,10 @@ export class PluginSystem implements IPluginSystem {
 	 * @param jodit
 	 * @param pluginName
 	 */
-	private static loadStyle(jodit: IJodit, pluginName: string): void {
-		appendStyleAsync(
+	private static loadStyle(jodit: IJodit, pluginName: string): Promise<void> {
+		return appendStyleAsync(
 			jodit,
-			PluginSystem.getFullUrl(jodit, pluginName, false),
-			jodit.ownerDocument
+			PluginSystem.getFullUrl(jodit, pluginName, false)
 		);
 	}
 

@@ -117,7 +117,8 @@ export function tableKeyboardNavigation(editor: IJodit) {
 								: (table.querySelector(
 										'tr'
 								  ) as HTMLTableRowElement),
-							sibling === 'next'
+							sibling === 'next',
+							editor.create.inside
 						);
 						next = (Dom as any)[sibling](
 							block,
@@ -157,9 +158,7 @@ export function tableKeyboardNavigation(editor: IJodit) {
 
 			if (next) {
 				if (!next.firstChild) {
-					const first: Node = editor.editorDocument.createElement(
-						'br'
-					);
+					const first = editor.create.inside.element('br');
 					next.appendChild(first);
 					editor.selection.setCursorBefore(first);
 				} else {

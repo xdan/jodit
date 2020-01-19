@@ -272,7 +272,7 @@ export function cleanHtml(editor: IJodit) {
 									tagName,
 									true,
 									false,
-									editor.editorDocument
+									editor.create.inside
 								);
 								editor.selection.restore(selInfo);
 							}

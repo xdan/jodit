@@ -112,7 +112,7 @@ export function imageProperties(editor: IJodit) {
 	 * @example
 	 * ```javascript
 	 * var editor = new Jodit('#editor');
-	 *     img = editor.editorDocument.createElement('img');
+	 *     img = editor.create.inside.element('img');
 	 *
 	 * img.setAttribute('src', 'images/someimage.png');
 	 * editor.{@link Selection~select|select}(img);

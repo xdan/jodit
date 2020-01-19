@@ -5,7 +5,7 @@
  */
 
 import * as consts from '../constants';
-import { HTMLTagNames, IJodit, NodeCondition } from '../types';
+import { HTMLTagNames, ICreate, IJodit, NodeCondition } from '../types';
 import { css, dataBind } from './helpers/';
 import { trim } from './helpers/string';
 
@@ -99,9 +99,7 @@ export class Dom {
 		const selInfo = editor.selection.save();
 
 		const wrapper =
-			typeof tag === 'string'
-				? editor.create.inside.element(tag)
-				: tag;
+			typeof tag === 'string' ? editor.create.inside.element(tag) : tag;
 
 		if (!current.parentNode) {
 			return null;
@@ -190,11 +188,11 @@ export class Dom {
 		newTagName: string | HTMLElement,
 		withAttributes = false,
 		notMoveContent = false,
-		doc: Document
+		create: ICreate
 	): HTMLElement {
 		const tag: HTMLElement =
 			typeof newTagName === 'string'
-				? doc.createElement(newTagName)
+				? create.element(newTagName)
 				: newTagName;
 
 		if (!notMoveContent) {
@@ -254,22 +252,19 @@ export class Dom {
 
 		return (
 			!node.nodeName.toLowerCase().match(condNoEmptyElement) &&
-			Dom.each(
-				node as HTMLElement,
-				(elm: Node | null): false | void => {
-					if (
-						(elm &&
-							elm.nodeType === Node.TEXT_NODE &&
-							(elm.nodeValue !== null &&
-								trim(elm.nodeValue).length !== 0)) ||
-						(elm &&
-							elm.nodeType === Node.ELEMENT_NODE &&
-							condNoEmptyElement.test(elm.nodeName.toLowerCase()))
-					) {
-						return false;
-					}
+			Dom.each(node as HTMLElement, (elm: Node | null): false | void => {
+				if (
+					(elm &&
+						elm.nodeType === Node.TEXT_NODE &&
+						elm.nodeValue !== null &&
+							trim(elm.nodeValue).length !== 0) ||
+					(elm &&
+						elm.nodeType === Node.ELEMENT_NODE &&
+						condNoEmptyElement.test(elm.nodeName.toLowerCase()))
+				) {
+					return false;
 				}
-			)
+			})
 		);
 	}
 
@@ -663,7 +658,10 @@ export class Dom {
 	 * @param root
 	 * @param newElement
 	 */
-	static appendChildFirst(root: HTMLElement, newElement: HTMLElement | DocumentFragment): void {
+	static appendChildFirst(
+		root: HTMLElement,
+		newElement: HTMLElement | DocumentFragment
+	): void {
 		const child = root.firstChild;
 
 		if (child) {
@@ -804,10 +802,14 @@ export class Dom {
 	 * @param attr
 	 * @param enable
 	 */
-	static toggleAttribute(elm: HTMLElement, attr: string, enable: boolean | number) {
+	static toggleAttribute(
+		elm: HTMLElement,
+		attr: string,
+		enable: boolean | number
+	) {
 		if (enable !== false) {
 			elm.setAttribute(attr, enable.toString());
-		} else{
+		} else {
 			elm.removeAttribute(attr);
 		}
 	}

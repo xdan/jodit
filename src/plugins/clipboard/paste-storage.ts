@@ -108,7 +108,7 @@ export class pasteStorage extends Plugin {
 		}
 
 		this.list.forEach((html: string, index: number) => {
-			const a: HTMLElement = this.jodit.ownerDocument.createElement('a');
+			const a: HTMLElement = this.jodit.create.element('a');
 			a.textContent = index + 1 + '. ' + html.replace(SPACE_REG_EXP, '');
 
 			a.addEventListener('keydown', this.onKeyDown);
@@ -150,10 +150,10 @@ export class pasteStorage extends Plugin {
 
 		cancelButton.addEventListener('click', this.dialog.close);
 
-		this.container = this.jodit.ownerDocument.createElement('div');
+		this.container = this.jodit.create.div();
 		this.container.classList.add('jodit_paste_storage');
-		this.listBox = this.jodit.ownerDocument.createElement('div');
-		this.previewBox = this.jodit.ownerDocument.createElement('div');
+		this.listBox = this.jodit.create.div();
+		this.previewBox = this.jodit.create.div();
 
 		this.container.appendChild(this.listBox);
 		this.container.appendChild(this.previewBox);

@@ -108,7 +108,9 @@ export class Select {
 	 */
 	removeNode(node: Node): void {
 		if (!Dom.isOrContains(this.jodit.editor, node, true)) {
-			throw error('Selection.removeNode can remove only editor\'s children');
+			throw error(
+				"Selection.removeNode can remove only editor's children"
+			);
 		}
 
 		Dom.safeRemove(node);
@@ -1160,9 +1162,10 @@ export class Select {
 						if (
 							mode === UNWRAP ||
 							css(elm, rule) ===
-								normilizeCSSValue(rule, cssRules[
-									rule
-								] as string)
+								normilizeCSSValue(
+									rule,
+									cssRules[rule] as string
+								)
 						) {
 							css(elm, rule, '');
 							if (mode === undefined) {
@@ -1332,7 +1335,7 @@ export class Select {
 									nodeName,
 									false,
 									false,
-									this.doc
+									this.jodit.create.inside
 								),
 								cssRules &&
 									nodeName.toUpperCase() === defaultTag

@@ -610,7 +610,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		 * ```javascript
 		 * parent.events.on('beforeCommand', function (command) {
 		 *  if (command === 'justifyCenter') {
-		 *      var p = parent.getDocument().createElement('p')
+		 *      var p = parent.create.element('p')
 		 *      parent.selection.insertNode(p)
 		 *      parent.selection.setCursorIn(p);
 		 *      p.style.textAlign = 'justyfy';

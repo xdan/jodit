@@ -23,7 +23,7 @@ import {
 	val
 } from './modules/helpers/';
 import { ToolbarIcon } from './modules/toolbar/icon';
-import { IExtraPlugin, IDictionary, IJodit, IViewOptions } from './types';
+import { IExtraPlugin, IDictionary, IJodit, IViewOptions, NodeFunction, Attributes } from './types';
 import { IFileBrowserCallBackData } from './types/fileBrowser';
 import { Buttons, Controls, IControlType } from './types/toolbar';
 import { extend } from './modules/helpers/extend';
@@ -578,6 +578,11 @@ export class Config implements IViewOptions {
 	 * This buttons list will be added to option.buttons
 	 */
 	extraButtons: Array<string | IControlType> = [];
+
+	/**
+	 * Default attributes for created inside editor elements
+	 */
+	createAttributes: IDictionary<Attributes | NodeFunction> = {};
 
 	/**
 	 * The width of the editor, accepted as the biggest. Used to the responsive version of the editor

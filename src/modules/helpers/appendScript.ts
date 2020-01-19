@@ -11,7 +11,7 @@ import { completeUrl } from './completeUrl';
 import { IViewBased } from '../../types';
 import { isString } from './checker';
 
-export type Loader = (jodit: IViewBased, url: string, doc: Document) => Promise<any>;
+export type Loader = (jodit: IViewBased, url: string) => Promise<any>;
 
 export type CallbackAndElement = {
 	callback: EventListener;
@@ -21,12 +21,12 @@ export type CallbackAndElement = {
 const alreadyLoadedList = new Map<string, Promise<any>>();
 
 const cacheLoaders = (loader: Loader): Loader => {
-	return async (jodit: IViewBased, url: string, doc: Document): Promise<any> => {
+	return async (jodit: IViewBased, url: string): Promise<any> => {
 		if (alreadyLoadedList.has(url)) {
 			return <Promise<any>>alreadyLoadedList.get(url);
 		}
 
-		const promise = loader(jodit, url, doc);
+		const promise = loader(jodit, url);
 
 		alreadyLoadedList.set(url, promise);
 
@@ -45,11 +45,9 @@ const cacheLoaders = (loader: Loader): Loader => {
 export const appendScript = (
 	jodit: IViewBased,
 	url: string,
-	callback: (this: HTMLElement, e?: Event) => any,
-	doc: Document
+	callback: (this: HTMLElement, e?: Event) => any
 ): CallbackAndElement => {
-	const
-		script = doc.createElement('script');
+	const script = jodit.create.element('script');
 
 	script.type = 'text/javascript';
 
@@ -61,7 +59,7 @@ export const appendScript = (
 		script.src = completeUrl(url);
 	}
 
-	doc.body.appendChild(script);
+	jodit.ownerDocument.body.appendChild(script);
 
 	return {
 		callback,
@@ -73,9 +71,9 @@ export const appendScript = (
  * Load script and return promise
  */
 export const appendScriptAsync = cacheLoaders(
-	(jodit: IViewBased, url: string, doc: Document = document) => {
+	(jodit: IViewBased, url: string) => {
 		return new Promise((resolve, reject) => {
-			const { element } = appendScript(jodit, url, resolve, doc);
+			const { element } = appendScript(jodit, url, resolve);
 			element.addEventListener('error', reject);
 		});
 	}
@@ -88,9 +86,9 @@ export const appendScriptAsync = cacheLoaders(
  * @param doc
  */
 export const appendStyleAsync = cacheLoaders(
-	(jodit: IViewBased, url: string, doc: Document = document): Promise<HTMLElement> => {
+	(jodit: IViewBased, url: string): Promise<HTMLElement> => {
 		return new Promise((resolve, reject) => {
-			const link = doc.createElement('link');
+			const link = jodit.create.element('link');
 
 			link.rel = 'stylesheet';
 			link.media = 'all';
@@ -103,7 +101,7 @@ export const appendStyleAsync = cacheLoaders(
 
 			link.href = completeUrl(url);
 
-			doc.body.appendChild(link);
+			jodit.ownerDocument.body.appendChild(link);
 		});
 	}
 );
@@ -117,10 +115,7 @@ export const loadNext = (
 		return Promise.resolve();
 	}
 
-	return appendScriptAsync(
-		jodit,
-		urls[i],
-		jodit.ownerDocument
-	).then(() => loadNext(jodit, urls, i + 1));
+	return appendScriptAsync(jodit, urls[i]).then(() =>
+		loadNext(jodit, urls, i + 1)
+	);
 };
-

@@ -290,7 +290,7 @@ export function link(jodit: IJodit) {
 							(node as HTMLElement).innerHTML
 						);
 					} else {
-						newtag = jodit.editorDocument.createElement('span');
+						newtag = jodit.create.inside.element('span');
 						(newtag as HTMLElement).innerHTML = (node as HTMLElement).innerHTML;
 					}
 

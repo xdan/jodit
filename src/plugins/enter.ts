@@ -179,7 +179,7 @@ export function enter(editor: IJodit) {
 					);
 
 					if (Dom.isEmpty(currentBox)) {
-						const helper_node: HTMLBRElement = editor.editorDocument.createElement(
+						const helper_node = editor.create.inside.element(
 							'br'
 						);
 

@@ -1,5 +1,29 @@
 # Changelog
 
+## 3.3.16
+Added `createAttributes` option [#243](https://github.com/xdan/jodit/issues/243)
+All elements which will be inserted in editor will be created with these attributes
+
+```js
+const editor2 = Jodit.make('#editor', {
+    createAttributes: {
+      div: {
+        class: 'test'
+      },
+      ul: function (ul) {
+        ul.classList.add('ui-test');
+      }
+    }
+});
+
+const div2 = editor2.create.inside.div();
+expect(div2.className).equals('test');
+
+const ul = editor2.create.inside.element('ul');
+expect(ul.className).equals('ui-test');
+
+```
+
 ## 3.3.15
 
 ### Bugfix

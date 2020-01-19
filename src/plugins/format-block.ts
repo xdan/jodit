@@ -26,7 +26,7 @@ Config.prototype.controls.paragraph = {
 						editor.editor
 					) as HTMLElement) || editor.editor,
 				currentValue: string = currentBox.nodeName.toLowerCase(),
-				list = (btn.list as any);
+				list = btn.list as any;
 
 			if (
 				button &&
@@ -35,9 +35,9 @@ Config.prototype.controls.paragraph = {
 				btn.list &&
 				list[currentValue]
 			) {
-				button.textBox.innerHTML = `<span>${
-					editor.i18n(list[currentValue])
-				}</span>`;
+				button.textBox.innerHTML = `<span>${editor.i18n(
+					list[currentValue]
+				)}</span>`;
 
 				(button.textBox.firstChild as HTMLElement).classList.add(
 					'jodit_icon'
@@ -172,7 +172,7 @@ export function formatBlock(editor: IJodit) {
 							third,
 							true,
 							false,
-							editor.editorDocument
+							editor.create.inside
 						);
 					}
 				} else {
@@ -188,9 +188,7 @@ export function formatBlock(editor: IJodit) {
 			});
 
 			if (!work) {
-				const currentBox: HTMLElement = editor.editorDocument.createElement(
-					third
-				);
+				const currentBox = editor.create.inside.element(third);
 				currentBox.innerHTML = consts.INVISIBLE_SPACE;
 				editor.selection.insertNode(currentBox, false);
 				editor.selection.setCursorIn(currentBox);
