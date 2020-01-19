@@ -1,7 +1,7 @@
 /*!
  jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- Version: v3.3.16
+ Version: v3.3.17
  Url: https://xdsoft.net/jodit/
  License(s): GPL-2.0-or-later OR MIT OR Commercial
 */
@@ -6292,7 +6292,7 @@ class view_View extends panel_Panel {
         var _a, _b, _c;
         super(jodit, options);
         this.components = new Set();
-        this.version = "3.3.16";
+        this.version = "3.3.17";
         this.__modulesInstances = {};
         this.buffer = storage_Storage.makeStorage();
         this.progressbar = new ProgressBar_ProgressBar(this);
@@ -14706,7 +14706,40 @@ Config_Config.prototype.controls.source = {
     tooltip: 'Change mode'
 };
 
-// CONCATENATED MODULE: ./src/plugins/source/editors/area.ts
+// CONCATENATED MODULE: ./src/plugins/source/editor/SourceEditor.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
+ * For GPL see LICENSE-GPL.txt in the project root for license information.
+ * For MIT see LICENSE-MIT.txt in the project root for license information.
+ * For commercial licenses see https://xdsoft.net/jodit/commercial/
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+class SourceEditor {
+    constructor(jodit, container, toWYSIWYG, fromWYSIWYG) {
+        this.jodit = jodit;
+        this.container = container;
+        this.toWYSIWYG = toWYSIWYG;
+        this.fromWYSIWYG = fromWYSIWYG;
+        this.className = '';
+        this.isReady = false;
+    }
+    onReady() {
+        this.isReady = true;
+        this.jodit.events.fire(this, 'ready');
+    }
+    onReadyAlways(onReady) {
+        var _a;
+        if (!this.isReady) {
+            (_a = this.jodit.events) === null || _a === void 0 ? void 0 : _a.on(this, 'ready', onReady);
+        }
+        else {
+            onReady();
+        }
+    }
+}
+
+// CONCATENATED MODULE: ./src/plugins/source/editor/engines/area.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
@@ -14719,7 +14752,7 @@ Config_Config.prototype.controls.source = {
 
 
 
-class area_TextAreaEditor extends SourceEditor_SourceEditor {
+class area_TextAreaEditor extends SourceEditor {
     constructor() {
         super(...arguments);
         this.autosize = debounce(() => {
@@ -14794,7 +14827,7 @@ class area_TextAreaEditor extends SourceEditor_SourceEditor {
     }
 }
 
-// CONCATENATED MODULE: ./src/plugins/source/editors/ace.ts
+// CONCATENATED MODULE: ./src/plugins/source/editor/engines/ace.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
@@ -14806,7 +14839,7 @@ class area_TextAreaEditor extends SourceEditor_SourceEditor {
 
 
 
-class ace_AceEditor extends SourceEditor_SourceEditor {
+class ace_AceEditor extends SourceEditor {
     constructor() {
         super(...arguments);
         this.className = 'jodit_ace_editor';
@@ -14993,7 +15026,7 @@ class ace_AceEditor extends SourceEditor_SourceEditor {
     }
 }
 
-// CONCATENATED MODULE: ./src/plugins/source/editors/index.ts
+// CONCATENATED MODULE: ./src/plugins/source/editor/engines/index.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
@@ -15005,7 +15038,7 @@ class ace_AceEditor extends SourceEditor_SourceEditor {
 
 
 
-// CONCATENATED MODULE: ./src/plugins/source/SourceEditor.ts
+// CONCATENATED MODULE: ./src/plugins/source/editor/factory.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
@@ -15014,45 +15047,22 @@ class ace_AceEditor extends SourceEditor_SourceEditor {
  * For commercial licenses see https://xdsoft.net/jodit/commercial/
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-class SourceEditor_SourceEditor {
-    constructor(jodit, container, toWYSIWYG, fromWYSIWYG) {
-        this.jodit = jodit;
-        this.container = container;
-        this.toWYSIWYG = toWYSIWYG;
-        this.fromWYSIWYG = fromWYSIWYG;
-        this.className = '';
-        this.isReady = false;
+
+function createSourceEditor(type, editor, container, toWYSIWYG, fromWYSIWYG) {
+    let sourceEditor;
+    switch (type) {
+        case 'ace':
+            sourceEditor = new ace_AceEditor(editor, container, toWYSIWYG, fromWYSIWYG);
+            break;
+        default:
+            sourceEditor = new area_TextAreaEditor(editor, container, toWYSIWYG, fromWYSIWYG);
     }
-    onReady() {
-        this.isReady = true;
-        this.jodit.events.fire(this, 'ready');
-    }
-    onReadyAlways(onReady) {
-        var _a;
-        if (!this.isReady) {
-            (_a = this.jodit.events) === null || _a === void 0 ? void 0 : _a.on(this, 'ready', onReady);
-        }
-        else {
-            onReady();
-        }
-    }
-    static make(type, editor, container, toWYSIWYG, fromWYSIWYG) {
-        let sourceEditor;
-        switch (type) {
-            case 'ace':
-                sourceEditor = new ace_AceEditor(editor, container, toWYSIWYG, fromWYSIWYG);
-                break;
-            default:
-                sourceEditor = new area_TextAreaEditor(editor, container, toWYSIWYG, fromWYSIWYG);
-        }
-        sourceEditor.init(editor);
-        sourceEditor.onReadyAlways(() => {
-            sourceEditor.setReadOnly(editor.options.readonly);
-        });
-        return sourceEditor;
-    }
+    sourceEditor.init(editor);
+    sourceEditor.onReadyAlways(() => {
+        sourceEditor.setReadOnly(editor.options.readonly);
+    });
+    return sourceEditor;
 }
-
 
 // CONCATENATED MODULE: ./src/plugins/source/source.ts
 /*!
@@ -15244,7 +15254,7 @@ class source_source extends Plugin_Plugin {
     }
     initSourceEditor(editor) {
         if (editor.options.sourceEditor !== 'area') {
-            const sourceEditor = SourceEditor_SourceEditor.make(editor.options.sourceEditor, editor, this.mirrorContainer, this.toWYSIWYG, this.fromWYSIWYG);
+            const sourceEditor = createSourceEditor(editor.options.sourceEditor, editor, this.mirrorContainer, this.toWYSIWYG, this.fromWYSIWYG);
             sourceEditor.onReadyAlways(() => {
                 var _a, _b;
                 (_a = this.sourceEditor) === null || _a === void 0 ? void 0 : _a.destruct();
@@ -15265,7 +15275,7 @@ class source_source extends Plugin_Plugin {
         editor.events.on('afterAddPlace changePlace afterInit', () => {
             editor.workplace.appendChild(this.mirrorContainer);
         });
-        this.sourceEditor = SourceEditor_SourceEditor.make('area', editor, this.mirrorContainer, this.toWYSIWYG, this.fromWYSIWYG);
+        this.sourceEditor = createSourceEditor('area', editor, this.mirrorContainer, this.toWYSIWYG, this.fromWYSIWYG);
         const addListeners = () => {
             editor.events
                 .off('beforeSetMode.source afterSetMode.source')
