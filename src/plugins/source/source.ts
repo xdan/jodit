@@ -13,7 +13,7 @@ import { Plugin } from '../../modules/Plugin';
 import { IJodit, ISourceEditor, markerInfo } from '../../types';
 import { Dom } from '../../modules/Dom';
 import { isString, loadNext } from '../../modules/helpers';
-import { SourceEditor } from './SourceEditor';
+import { createSourceEditor } from './editor/factory';
 
 /**
  * Plug-in change simple textarea on CodeMirror editor in Source code mode
@@ -278,7 +278,7 @@ export class source extends Plugin {
 
 	private initSourceEditor(editor: IJodit) {
 		if (editor.options.sourceEditor !== 'area') {
-			const sourceEditor = SourceEditor.make(editor.options.sourceEditor, editor, this.mirrorContainer, this.toWYSIWYG, this.fromWYSIWYG);
+			const sourceEditor = createSourceEditor(editor.options.sourceEditor, editor, this.mirrorContainer, this.toWYSIWYG, this.fromWYSIWYG);
 
 			sourceEditor.onReadyAlways(() => {
 				this.sourceEditor?.destruct();
@@ -301,7 +301,7 @@ export class source extends Plugin {
 			editor.workplace.appendChild(this.mirrorContainer);
 		});
 
-		this.sourceEditor = SourceEditor.make('area', editor, this.mirrorContainer, this.toWYSIWYG, this.fromWYSIWYG);
+		this.sourceEditor = createSourceEditor('area', editor, this.mirrorContainer, this.toWYSIWYG, this.fromWYSIWYG);
 
 		const addListeners = () => {
 			// save restore selection

@@ -7,13 +7,13 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { CallbackFunction, IJodit, ISourceEditor } from '../../types';
+import { CallbackFunction, IJodit } from '../../../types';
 
 export abstract class SourceEditor<T> {
 	instance: T;
 	className: string = '';
 
-	protected constructor(
+	constructor(
 		readonly jodit: IJodit,
 		readonly container: HTMLElement,
 		readonly toWYSIWYG: CallbackFunction,
@@ -35,34 +35,4 @@ export abstract class SourceEditor<T> {
 			onReady();
 		}
 	}
-
-	static make(
-		type: 'ace' | 'mirror' | 'area',
-		editor: IJodit,
-		container: HTMLElement,
-		toWYSIWYG: CallbackFunction,
-		fromWYSIWYG: CallbackFunction
-	) {
-		let sourceEditor: ISourceEditor;
-
-		switch (type) {
-			case 'ace':
-				sourceEditor = new AceEditor(editor, container, toWYSIWYG, fromWYSIWYG);
-				break;
-
-			default:
-				sourceEditor = new TextAreaEditor(editor, container, toWYSIWYG, fromWYSIWYG);
-		}
-
-		sourceEditor.init(editor);
-		sourceEditor.onReadyAlways(() => {
-			sourceEditor.setReadOnly(editor.options.readonly);
-		});
-
-
-
-		return sourceEditor;
-	}
 }
-
-import { AceEditor, TextAreaEditor } from './editors';

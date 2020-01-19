@@ -7,10 +7,10 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IJodit, ISourceEditor } from '../../../types';
-import { debounce } from '../../../modules/helpers/async';
-import { css } from '../../../modules/helpers';
-import { Dom } from '../../../modules';
+import { IJodit, ISourceEditor } from '../../../../types';
+import { debounce } from '../../../../modules/helpers/async';
+import { css } from '../../../../modules/helpers';
+import { Dom } from '../../../../modules';
 import { SourceEditor } from '../SourceEditor';
 
 export class TextAreaEditor extends SourceEditor<HTMLTextAreaElement>
