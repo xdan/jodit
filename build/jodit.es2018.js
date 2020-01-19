@@ -1,7 +1,7 @@
 /*!
  jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- Version: v3.3.15
+ Version: v3.3.16
  Url: https://xdsoft.net/jodit/
  License(s): GPL-2.0-or-later OR MIT OR Commercial
 */
@@ -2544,17 +2544,17 @@ const completeUrl = (url) => {
 
 const alreadyLoadedList = new Map();
 const cacheLoaders = (loader) => {
-    return async (jodit, url, doc) => {
+    return async (jodit, url) => {
         if (alreadyLoadedList.has(url)) {
             return alreadyLoadedList.get(url);
         }
-        const promise = loader(jodit, url, doc);
+        const promise = loader(jodit, url);
         alreadyLoadedList.set(url, promise);
         return promise;
     };
 };
-const appendScript = (jodit, url, callback, doc) => {
-    const script = doc.createElement('script');
+const appendScript = (jodit, url, callback) => {
+    const script = jodit.create.element('script');
     script.type = 'text/javascript';
     if (callback !== undefined) {
         script.addEventListener('load', callback);
@@ -2562,21 +2562,21 @@ const appendScript = (jodit, url, callback, doc) => {
     if (!script.src) {
         script.src = completeUrl(url);
     }
-    doc.body.appendChild(script);
+    jodit.ownerDocument.body.appendChild(script);
     return {
         callback,
         element: script
     };
 };
-const appendScriptAsync = cacheLoaders((jodit, url, doc = document) => {
+const appendScriptAsync = cacheLoaders((jodit, url) => {
     return new Promise((resolve, reject) => {
-        const { element } = appendScript(jodit, url, resolve, doc);
+        const { element } = appendScript(jodit, url, resolve);
         element.addEventListener('error', reject);
     });
 });
-const appendStyleAsync = cacheLoaders((jodit, url, doc = document) => {
+const appendStyleAsync = cacheLoaders((jodit, url) => {
     return new Promise((resolve, reject) => {
-        const link = doc.createElement('link');
+        const link = jodit.create.element('link');
         link.rel = 'stylesheet';
         link.media = 'all';
         link.crossOrigin = 'anonymous';
@@ -2584,14 +2584,14 @@ const appendStyleAsync = cacheLoaders((jodit, url, doc = document) => {
         link.addEventListener('load', callback);
         link.addEventListener('error', reject);
         link.href = completeUrl(url);
-        doc.body.appendChild(link);
+        jodit.ownerDocument.body.appendChild(link);
     });
 });
 const loadNext = (jodit, urls, i = 0) => {
     if (!isString(urls[i])) {
         return Promise.resolve();
     }
-    return appendScriptAsync(jodit, urls[i], jodit.ownerDocument).then(() => loadNext(jodit, urls, i + 1));
+    return appendScriptAsync(jodit, urls[i]).then(() => loadNext(jodit, urls, i + 1));
 };
 
 // CONCATENATED MODULE: ./src/modules/helpers/browser.ts
@@ -3020,9 +3020,9 @@ class Dom_Dom {
         }
         return true;
     }
-    static replace(elm, newTagName, withAttributes = false, notMoveContent = false, doc) {
+    static replace(elm, newTagName, withAttributes = false, notMoveContent = false, create) {
         const tag = typeof newTagName === 'string'
-            ? doc.createElement(newTagName)
+            ? create.element(newTagName)
             : newTagName;
         if (!notMoveContent) {
             while (elm.firstChild) {
@@ -3057,8 +3057,8 @@ class Dom_Dom {
             Dom_Dom.each(node, (elm) => {
                 if ((elm &&
                     elm.nodeType === Node.TEXT_NODE &&
-                    (elm.nodeValue !== null &&
-                        trim(elm.nodeValue).length !== 0)) ||
+                    elm.nodeValue !== null &&
+                    trim(elm.nodeValue).length !== 0) ||
                     (elm &&
                         elm.nodeType === Node.ELEMENT_NODE &&
                         condNoEmptyElement.test(elm.nodeName.toLowerCase()))) {
@@ -3310,9 +3310,7 @@ Dom_Dom.wrapInline = (current, tag, editor) => {
 };
 Dom_Dom.wrap = (current, tag, editor) => {
     const selInfo = editor.selection.save();
-    const wrapper = typeof tag === 'string'
-        ? editor.create.inside.element(tag)
-        : tag;
+    const wrapper = typeof tag === 'string' ? editor.create.inside.element(tag) : tag;
     if (!current.parentNode) {
         return null;
     }
@@ -3863,6 +3861,7 @@ class Config_Config {
         this.disablePlugins = [];
         this.extraPlugins = [];
         this.extraButtons = [];
+        this.createAttributes = {};
         this.sizeLG = 900;
         this.sizeMD = 700;
         this.sizeSM = 400;
@@ -4704,7 +4703,7 @@ class Selection_Select {
     }
     removeNode(node) {
         if (!Dom_Dom.isOrContains(this.jodit.editor, node, true)) {
-            throw type_error('Selection.removeNode can remove only editor\'s children');
+            throw type_error("Selection.removeNode can remove only editor's children");
         }
         Dom_Dom.safeRemove(node);
         this.jodit.events.fire('afterRemoveNode', node);
@@ -5327,7 +5326,7 @@ class Selection_Select {
                             mode = WRAP;
                         }
                         if (mode === WRAP) {
-                            css_css(Dom_Dom.replace(font, nodeName, false, false, this.doc), cssRules &&
+                            css_css(Dom_Dom.replace(font, nodeName, false, false, this.jodit.create.inside), cssRules &&
                                 nodeName.toUpperCase() === defaultTag
                                 ? cssRules
                                 : {});
@@ -5973,6 +5972,16 @@ class Create_Create {
     constructor(jodit, insideCreator = false) {
         this.jodit = jodit;
         this.insideCreator = insideCreator;
+        this.applyAttributes = (elm, attrs) => {
+            each(attrs, (key, value) => {
+                if (isPlainObject(value) && key === 'style') {
+                    css_css(elm, value);
+                }
+                else {
+                    elm.setAttribute(key, value.toString());
+                }
+            });
+        };
         if (!insideCreator) {
             this.inside = new Create_Create(jodit, true);
         }
@@ -5984,16 +5993,21 @@ class Create_Create {
     }
     element(tagName, childrenOrAttributes, children) {
         const elm = this.doc.createElement(tagName.toLowerCase());
+        if (this.insideCreator) {
+            const ca = this.jodit.options.createAttributes;
+            if (ca && ca[tagName.toLowerCase()]) {
+                const attrs = ca[tagName.toLowerCase()];
+                if (isFunction(attrs)) {
+                    attrs(elm);
+                }
+                else if (isPlainObject(attrs)) {
+                    this.applyAttributes(elm, attrs);
+                }
+            }
+        }
         if (childrenOrAttributes) {
             if (isPlainObject(childrenOrAttributes)) {
-                each(childrenOrAttributes, (key, value) => {
-                    if (isPlainObject(value) && key === 'style') {
-                        css_css(elm, value);
-                    }
-                    else {
-                        elm.setAttribute(key, value.toString());
-                    }
-                });
+                this.applyAttributes(elm, childrenOrAttributes);
             }
             else {
                 children = childrenOrAttributes;
@@ -6278,7 +6292,7 @@ class view_View extends panel_Panel {
         var _a, _b, _c;
         super(jodit, options);
         this.components = new Set();
-        this.version = "3.3.15";
+        this.version = "3.3.16";
         this.__modulesInstances = {};
         this.buffer = storage_Storage.makeStorage();
         this.progressbar = new ProgressBar_ProgressBar(this);
@@ -7335,11 +7349,11 @@ class PluginSystem_PluginSystem {
         const reflect = (p) => p.then((v) => ({ v, status: 'fulfilled' }), (e) => ({ e, status: 'rejected' }));
         return Promise.all(pluginList.map(extra => {
             const url = extra.url || PluginSystem_PluginSystem.getFullUrl(jodit, name, true);
-            return reflect(appendScriptAsync(jodit, url, jodit.ownerDocument));
+            return reflect(appendScriptAsync(jodit, url));
         }));
     }
     static loadStyle(jodit, pluginName) {
-        appendStyleAsync(jodit, PluginSystem_PluginSystem.getFullUrl(jodit, pluginName, false), jodit.ownerDocument);
+        return appendStyleAsync(jodit, PluginSystem_PluginSystem.getFullUrl(jodit, pluginName, false));
     }
     static getFullUrl(jodit, name, js) {
         return (jodit.basePath +
@@ -8585,7 +8599,7 @@ function addNewLine(editor) {
                 editor.selection.isCollapsed()) {
                 const editorBound = offset(editor.editor, editor, editor.editorDocument);
                 const top = e.pageY - editor.editorWindow.pageYOffset;
-                const p = editor.editorDocument.createElement(editor.options.enter);
+                const p = editor.create.inside.element(editor.options.enter);
                 if (Math.abs(top - editorBound.top) <
                     Math.abs(top - (editorBound.height + editorBound.top)) &&
                     editor.editor.firstChild) {
@@ -9211,7 +9225,7 @@ function cleanHtml(editor) {
                     const oldParent = Dom_Dom.closest(current, tags, editor.editor);
                     if (oldParent) {
                         const selInfo = editor.selection.save(), tagName = replaceOldTags[oldParent.nodeName.toLowerCase()] || replaceOldTags[oldParent.nodeName];
-                        Dom_Dom.replace(oldParent, tagName, true, false, editor.editorDocument);
+                        Dom_Dom.replace(oldParent, tagName, true, false, editor.create.inside);
                         editor.selection.restore(selInfo);
                     }
                 }
@@ -9891,7 +9905,7 @@ class paste_storage_pasteStorage extends Plugin_Plugin {
                 this.previewBox.innerHTML = '';
             }
             this.list.forEach((html, index) => {
-                const a = this.jodit.ownerDocument.createElement('a');
+                const a = this.jodit.create.element('a');
                 a.textContent = index + 1 + '. ' + html.replace(SPACE_REG_EXP, '');
                 a.addEventListener('keydown', this.onKeyDown);
                 a.setAttribute('href', 'javascript:void(0)');
@@ -9919,10 +9933,10 @@ class paste_storage_pasteStorage extends Plugin_Plugin {
             '</span>' +
             '</a>');
         cancelButton.addEventListener('click', this.dialog.close);
-        this.container = this.jodit.ownerDocument.createElement('div');
+        this.container = this.jodit.create.div();
         this.container.classList.add('jodit_paste_storage');
-        this.listBox = this.jodit.ownerDocument.createElement('div');
-        this.previewBox = this.jodit.ownerDocument.createElement('div');
+        this.listBox = this.jodit.create.div();
+        this.previewBox = this.jodit.create.div();
         this.container.appendChild(this.listBox);
         this.container.appendChild(this.previewBox);
         this.dialog.setTitle(this.jodit.i18n('Choose Content to Paste'));
@@ -10247,7 +10261,7 @@ class drag_and_drop_DragAndDrop extends Plugin_Plugin {
                         const [tagName, attr] = this.draggable.getAttribute('data-is-file') === '1'
                             ? ['a', 'href']
                             : ['img', 'src'];
-                        fragment = this.jodit.editorDocument.createElement(tagName);
+                        fragment = this.jodit.create.inside.element(tagName);
                         fragment.setAttribute(attr, this.draggable.getAttribute('data-src') ||
                             this.draggable.getAttribute('src') ||
                             '');
@@ -10556,7 +10570,7 @@ function enter_enter(editor) {
                 }, editor.editor);
                 currentBox = Dom_Dom.wrapInline(needWrap, editor.options.enter, editor);
                 if (Dom_Dom.isEmpty(currentBox)) {
-                    const helper_node = editor.editorDocument.createElement('br');
+                    const helper_node = editor.create.inside.element('br');
                     currentBox.appendChild(helper_node);
                     editor.selection.setCursorBefore(helper_node);
                 }
@@ -10923,7 +10937,7 @@ function formatBlock(editor) {
                     Dom_Dom.unwrap(currentBox);
                 }
                 else {
-                    Dom_Dom.replace(currentBox, third, true, false, editor.editorDocument);
+                    Dom_Dom.replace(currentBox, third, true, false, editor.create.inside);
                 }
             }
             else {
@@ -10938,7 +10952,7 @@ function formatBlock(editor) {
             editor.selection.restore(selectionInfo);
         });
         if (!work) {
-            const currentBox = editor.editorDocument.createElement(third);
+            const currentBox = editor.create.inside.element(third);
             currentBox.innerHTML = INVISIBLE_SPACE;
             editor.selection.insertNode(currentBox, false);
             editor.selection.setCursorIn(currentBox);
@@ -12125,10 +12139,10 @@ class Table_Table {
         });
         return [i, j, width, height];
     }
-    static appendRow(table, line = false, after = true) {
-        const doc = table.ownerDocument || document, columnsCount = Table_Table.getColumnsCount(table), row = doc.createElement('tr');
+    static appendRow(table, line, after, create) {
+        const columnsCount = Table_Table.getColumnsCount(table), row = create.element('tr');
         for (let j = 0; j < columnsCount; j += 1) {
-            row.appendChild(doc.createElement('td'));
+            row.appendChild(create.element('td'));
         }
         if (after && line && line.nextSibling) {
             line.parentNode &&
@@ -12185,14 +12199,14 @@ class Table_Table {
         });
         Dom_Dom.safeRemove(row);
     }
-    static appendColumn(table, j, after = true) {
+    static appendColumn(table, j, after, create) {
         const box = Table_Table.formalMatrix(table);
         let i;
-        if (j === undefined) {
+        if (j === undefined || j < 0) {
             j = Table_Table.getColumnsCount(table) - 1;
         }
         for (i = 0; i < box.length; i += 1) {
-            const cell = (table.ownerDocument || document).createElement('td');
+            const cell = create.element('td');
             const td = box[i][j];
             let added = false;
             if (after) {
@@ -12249,7 +12263,10 @@ class Table_Table {
         });
     }
     static getSelectedBound(table, selectedCells) {
-        const bound = [[Infinity, Infinity], [0, 0]];
+        const bound = [
+            [Infinity, Infinity],
+            [0, 0]
+        ];
         const box = Table_Table.formalMatrix(table);
         let i, j, k;
         for (i = 0; i < box.length; i += 1) {
@@ -12421,14 +12438,13 @@ class Table_Table {
             }
         }
     }
-    static splitHorizontal(table) {
+    static splitHorizontal(table, create) {
         let coord, td, tr, parent, after;
         const __marked = [];
-        const doc = table.ownerDocument || document;
         Table_Table.getAllSelectedCells(table).forEach((cell) => {
-            td = doc.createElement('td');
-            td.appendChild(doc.createElement('br'));
-            tr = doc.createElement('tr');
+            td = create.element('td');
+            td.appendChild(create.element('br'));
+            tr = create.element('tr');
             coord = Table_Table.formalCoordinate(table, cell);
             if (cell.rowSpan < 2) {
                 Table_Table.formalMatrix(table, (tdElm, i, j) => {
@@ -12470,10 +12486,9 @@ class Table_Table {
         });
         this.normalizeTable(table);
     }
-    static splitVertical(table) {
+    static splitVertical(table, create) {
         let coord, td, percentage;
         const __marked = [];
-        const doc = table.ownerDocument || document;
         Table_Table.getAllSelectedCells(table).forEach((cell) => {
             coord = Table_Table.formalCoordinate(table, cell);
             if (cell.colSpan < 2) {
@@ -12488,8 +12503,8 @@ class Table_Table {
             else {
                 Table_Table.__mark(cell, 'colspan', cell.colSpan - 1, __marked);
             }
-            td = doc.createElement('td');
-            td.appendChild(doc.createElement('br'));
+            td = create.element('td');
+            td.appendChild(create.element('br'));
             if (cell.rowSpan > 1) {
                 Table_Table.__mark(td, 'rowspan', cell.rowSpan, __marked);
             }
@@ -12503,27 +12518,27 @@ class Table_Table {
         });
         Table_Table.normalizeTable(table);
     }
-    static setColumnWidthByDelta(table, j, delta, noUnmark, __marked) {
+    static setColumnWidthByDelta(table, j, delta, noUnmark, marked) {
         const box = Table_Table.formalMatrix(table);
         let i, w, percent;
         for (i = 0; i < box.length; i += 1) {
             w = box[i][j].offsetWidth;
             percent = ((w + delta) / table.offsetWidth) * 100;
-            Table_Table.__mark(box[i][j], 'width', percent.toFixed(ACCURACY) + '%', __marked);
+            Table_Table.__mark(box[i][j], 'width', percent.toFixed(ACCURACY) + '%', marked);
         }
         if (!noUnmark) {
-            Table_Table.__unmark(__marked);
+            Table_Table.__unmark(marked);
         }
     }
-    static __mark(cell, key, value, __marked) {
-        __marked.push(cell);
+    static __mark(cell, key, value, marked) {
+        marked.push(cell);
         if (!cell.__marked_value) {
             cell.__marked_value = {};
         }
         cell.__marked_value[key] = value === undefined ? 1 : value;
     }
-    static __unmark(__marked) {
-        __marked.forEach(cell => {
+    static __unmark(marked) {
+        marked.forEach(cell => {
             if (cell.__marked_value) {
                 each(cell.__marked_value, (key, value) => {
                     switch (key) {
@@ -13419,7 +13434,7 @@ function link_link(jodit) {
                         newtag = jodit.editorDocument.createTextNode(node.innerHTML);
                     }
                     else {
-                        newtag = jodit.editorDocument.createElement('span');
+                        newtag = jodit.create.inside.element('span');
                         newtag.innerHTML = node.innerHTML;
                     }
                     if (node.parentNode) {
@@ -15691,14 +15706,14 @@ Config_Config.prototype.controls.symbol = {
         const container = editor.events.fire('generateSpecialCharactersTable.symbols');
         if (container) {
             if (editor.options.usePopupForSpecialCharacters) {
-                const box = editor.ownerDocument.createElement('div');
+                const box = editor.create.div();
                 box.classList.add('jodit_symbols');
                 box.appendChild(container);
                 editor.events.on(container, 'close_dialog', close);
                 return box;
             }
             else {
-                const dialog = Alert(container, editor.i18n('Select Special Character'), void 0, 'jodit_symbols');
+                const dialog = Alert(container, editor.i18n('Select Special Character'), undefined, 'jodit_symbols');
                 const a = container.querySelector('a');
                 a && a.focus();
                 editor.events.on('beforeDestruct', () => {
@@ -15872,7 +15887,7 @@ function tableKeyboardNavigation(editor) {
                 if (!next) {
                     Table_Table.appendRow(table, sibling === 'next'
                         ? false
-                        : table.querySelector('tr'), sibling === 'next');
+                        : table.querySelector('tr'), sibling === 'next', editor.create.inside);
                     next = Dom_Dom[sibling](block, (elm) => elm && Dom_Dom.isCell(elm, editor.editorWindow), table);
                 }
                 break;
@@ -15901,7 +15916,7 @@ function tableKeyboardNavigation(editor) {
         }
         if (next) {
             if (!next.firstChild) {
-                const first = editor.editorDocument.createElement('br');
+                const first = editor.create.inside.element('br');
                 next.appendChild(first);
                 editor.selection.setCursorBefore(first);
             }
@@ -16178,10 +16193,10 @@ class table_TableProcessor extends Plugin_Plugin {
                     const table = Dom_Dom.closest(cell, 'table', this.jodit.editor);
                     switch (command) {
                         case 'splitv':
-                            Table_Table.splitVertical(table);
+                            Table_Table.splitVertical(table, this.jodit.create.inside);
                             break;
                         case 'splitg':
-                            Table_Table.splitHorizontal(table);
+                            Table_Table.splitHorizontal(table, this.jodit.create.inside);
                             break;
                         case 'merge':
                             Table_Table.mergeSelected(table);
@@ -16200,11 +16215,11 @@ class table_TableProcessor extends Plugin_Plugin {
                             break;
                         case 'addcolumnafter':
                         case 'addcolumnbefore':
-                            Table_Table.appendColumn(table, cell.cellIndex, command === 'addcolumnafter');
+                            Table_Table.appendColumn(table, cell.cellIndex, command === 'addcolumnafter', this.jodit.create.inside);
                             break;
                         case 'addrowafter':
                         case 'addrowbefore':
-                            Table_Table.appendRow(table, cell.parentNode, command === 'addrowafter');
+                            Table_Table.appendRow(table, cell.parentNode, command === 'addrowafter', this.jodit.create.inside);
                             break;
                     }
                 }
@@ -16290,7 +16305,7 @@ class table_TableProcessor extends Plugin_Plugin {
                 cell instanceof
                     this.jodit.editorWindow.HTMLElement) {
                 if (!cell.firstChild) {
-                    cell.appendChild(this.jodit.editorDocument.createElement('br'));
+                    cell.appendChild(this.jodit.create.inside.element('br'));
                 }
                 start = cell;
                 Table_Table.addSelected(cell);
