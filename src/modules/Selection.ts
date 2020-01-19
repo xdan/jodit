@@ -818,7 +818,7 @@ export class Select {
 		let fakeNode: Text | false = false;
 
 		if (node.nodeType !== Node.TEXT_NODE) {
-			fakeNode = this.doc.createTextNode(consts.INVISIBLE_SPACE);
+			fakeNode = this.jodit.create.inside.text(consts.INVISIBLE_SPACE);
 			range.setStartAfter(node);
 			range.insertNode(fakeNode);
 			range.selectNode(fakeNode);
@@ -907,6 +907,22 @@ export class Select {
 		}
 
 		return checkSiblings(current) !== false;
+	}
+
+	/**
+	 * Wrapper for cursorInTheEdge
+	 * @param parentBlock
+	 */
+	cursorOnTheLeft(parentBlock: HTMLElement): boolean | null {
+		return this.cursorInTheEdge(true, parentBlock);
+	}
+
+	/**
+	 * Wrapper for cursorInTheEdge
+	 * @param parentBlock
+	 */
+	cursorOnTheRight(parentBlock: HTMLElement): boolean | null {
+		return this.cursorInTheEdge(false, parentBlock);
 	}
 
 	/**

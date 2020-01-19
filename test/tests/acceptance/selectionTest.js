@@ -24,7 +24,7 @@ describe('Selection Module Tests', function() {
 			it('Should return text before this span', function() {
 				const editor = new Jodit(appendTestArea());
 				editor.value = '<h1>one<span>two</span>tree</h1>';
-				const range = editor.editorDocument.createRange();
+				const range = editor.selection.createRange();
 				range.setStart(editor.editor.firstChild, 1);
 				range.collapse(true);
 
@@ -39,7 +39,7 @@ describe('Selection Module Tests', function() {
 			it('Should return text', function() {
 				const editor = new Jodit(appendTestArea());
 				editor.value = '<h1>test</h1>';
-				const range = editor.editorDocument.createRange();
+				const range = editor.selection.createRange();
 				range.setStart(editor.editor.firstChild.firstChild, 1);
 				range.collapse(true);
 				editor.selection.selectRange(range);
@@ -53,7 +53,7 @@ describe('Selection Module Tests', function() {
 			it('Should return text inside h1', function() {
 				const editor = new Jodit(appendTestArea());
 				editor.value = '<h1>test</h1>';
-				const range = editor.editorDocument.createRange();
+				const range = editor.selection.createRange();
 				range.setStart(editor.editor, 1);
 				range.collapse(true);
 				editor.selection.selectRange(range);
@@ -66,7 +66,7 @@ describe('Selection Module Tests', function() {
 				it('Should return h1', function() {
 					const editor = new Jodit(appendTestArea());
 					editor.value = '<h1>test</h1>';
-					const range = editor.editorDocument.createRange();
+					const range = editor.selection.createRange();
 					range.setStart(editor.editor, 1);
 					range.collapse(true);
 					editor.selection.selectRange(range);
@@ -82,7 +82,7 @@ describe('Selection Module Tests', function() {
 			it('Should return this image', function() {
 				const editor = new Jodit(appendTestArea());
 				editor.value = '<h1>test <img src="#" alt=""> sdfsdfs</h1>';
-				const range = editor.editorDocument.createRange();
+				const range = editor.selection.createRange();
 				range.selectNode(editor.editor.querySelector('img'));
 				editor.selection.selectRange(range);
 
@@ -95,12 +95,74 @@ describe('Selection Module Tests', function() {
 
 	describe('cursorInTheEdge', function() {
 		describe('Cursor in the text', function() {
+			describe('cursorOnTheLeft and cursorOnTheRight', function() {
+				describe('Cursor inside P but inside Li', function() {
+					describe('Cursor in the end of text node', function() {
+						it('Should work correct', function() {
+							const editor = new Jodit(appendTestArea());
+							editor.value = '<ul><li><p>test</p></li></ul>';
+
+							const range = editor.selection.createRange();
+
+							range.setStartAfter(
+								editor.editor.querySelector('p').firstChild
+							);
+							range.collapse(true);
+							editor.selection.selectRange(range);
+
+							['li', 'p'].forEach(function(tag) {
+								expect(
+									editor.selection.cursorOnTheLeft(
+										editor.editor.querySelector(tag)
+									)
+								).is.false;
+
+								expect(
+									editor.selection.cursorOnTheRight(
+										editor.editor.querySelector(tag)
+									)
+								).is.true;
+							});
+						});
+					});
+
+					describe('Cursor in the start of text node', function() {
+						it('Should work correct', function() {
+							const editor = new Jodit(appendTestArea());
+							editor.value = '<ul><li><p>test</p></li></ul>';
+
+							const range = editor.selection.createRange();
+
+							range.setStartBefore(
+								editor.editor.querySelector('p').firstChild
+							);
+							range.collapse(true);
+							editor.selection.selectRange(range);
+
+							['li', 'p'].forEach(function(tag) {
+								expect(
+									editor.selection.cursorOnTheLeft(
+										editor.editor.querySelector(tag)
+									)
+								).is.true;
+
+								expect(
+									editor.selection.cursorOnTheRight(
+										editor.editor.querySelector(tag)
+									)
+								).is.false;
+							});
+						});
+					});
+				});
+			});
+
 			describe('Cursor in the end of text node but after this has BR', function() {
 				it('Should return true', function() {
 					const editor = new Jodit(appendTestArea());
-					editor.setEditorValue('<p>test<br></p>');
+					editor.value = '<p>test<br></p>';
 
-					const range = editor.editorDocument.createRange();
+					const range = editor.selection.createRange();
 
 					range.setStart(editor.editor.firstChild.firstChild, 4);
 					range.collapse(true);
@@ -118,9 +180,9 @@ describe('Selection Module Tests', function() {
 			describe('Cursor in the end of text node but after this has image', function() {
 				it('Should return false', function() {
 					const editor = new Jodit(appendTestArea());
-					editor.setEditorValue('<p>test<img/></p>');
+					editor.value = '<p>test<img/></p>';
 
-					const range = editor.editorDocument.createRange();
+					const range = editor.selection.createRange();
 
 					range.setStart(editor.editor.firstChild.firstChild, 4);
 					range.collapse(true);
@@ -138,9 +200,9 @@ describe('Selection Module Tests', function() {
 			describe('Cursor in the middle of text node', function() {
 				it('Should return false', function() {
 					const editor = new Jodit(appendTestArea());
-					editor.setEditorValue('<p>test</p>');
+					editor.value = '<p>test</p>';
 
-					const range = editor.editorDocument.createRange();
+					const range = editor.selection.createRange();
 
 					range.setStart(editor.editor.firstChild.firstChild, 2);
 					range.collapse(true);
@@ -156,15 +218,14 @@ describe('Selection Module Tests', function() {
 				describe('Cursor in the middle of text node but after cursor only invisible spaces', function() {
 					it('Should return true', function() {
 						const editor = new Jodit(appendTestArea());
-						editor.setEditorValue(
+						editor.value =
 							'<p>test' +
-								Jodit.INVISIBLE_SPACE +
-								Jodit.INVISIBLE_SPACE +
-								Jodit.INVISIBLE_SPACE +
-								'</p>'
-						);
+							Jodit.INVISIBLE_SPACE +
+							Jodit.INVISIBLE_SPACE +
+							Jodit.INVISIBLE_SPACE +
+							'</p>';
 
-						const range = editor.editorDocument.createRange();
+						const range = editor.selection.createRange();
 
 						range.setStart(editor.editor.firstChild.firstChild, 4);
 						range.collapse(true);
@@ -181,15 +242,14 @@ describe('Selection Module Tests', function() {
 				describe('Cursor in the middle of text node but before cursor only invisible spaces', function() {
 					it('Should return true', function() {
 						const editor = new Jodit(appendTestArea());
-						editor.setEditorValue(
+						editor.value =
 							'<p>' +
-								Jodit.INVISIBLE_SPACE +
-								Jodit.INVISIBLE_SPACE +
-								Jodit.INVISIBLE_SPACE +
-								'test</p>'
-						);
+							Jodit.INVISIBLE_SPACE +
+							Jodit.INVISIBLE_SPACE +
+							Jodit.INVISIBLE_SPACE +
+							'test</p>';
 
-						const range = editor.editorDocument.createRange();
+						const range = editor.selection.createRange();
 
 						range.setStart(editor.editor.firstChild.firstChild, 3);
 						range.collapse(true);
@@ -206,15 +266,15 @@ describe('Selection Module Tests', function() {
 				describe('Cursor in the end of text node but after this has several not empty text nodes', function() {
 					it('Should return false', function() {
 						const editor = new Jodit(appendTestArea());
-						editor.setEditorValue('<p>test</p>');
+						editor.value = '<p>test</p>';
 
-						const range = editor.editorDocument.createRange();
+						const range = editor.selection.createRange();
 
 						range.setStart(editor.editor.firstChild.firstChild, 4);
 						range.collapse(true);
 						editor.selection.selectRange(range);
 						editor.selection.insertNode(
-							editor.editorDocument.createTextNode('a')
+							editor.create.inside.text('a')
 						);
 
 						range.setStart(editor.editor.firstChild.firstChild, 4);
@@ -231,9 +291,9 @@ describe('Selection Module Tests', function() {
 					describe('Cursor in the end of text node and after are only text nodes with invisible spaces', function() {
 						it('Should return true', function() {
 							const editor = new Jodit(appendTestArea());
-							editor.setEditorValue('<p>test</p>');
+							editor.value = '<p>test</p>';
 
-							const range = editor.editorDocument.createRange();
+							const range = editor.selection.createRange();
 
 							range.setStart(
 								editor.editor.firstChild.firstChild,
@@ -243,19 +303,13 @@ describe('Selection Module Tests', function() {
 							editor.selection.selectRange(range);
 
 							editor.selection.insertNode(
-								editor.editorDocument.createTextNode(
-									Jodit.INVISIBLE_SPACE
-								)
+								editor.create.inside.text(Jodit.INVISIBLE_SPACE)
 							);
 							editor.selection.insertNode(
-								editor.editorDocument.createTextNode(
-									Jodit.INVISIBLE_SPACE
-								)
+								editor.create.inside.text(Jodit.INVISIBLE_SPACE)
 							);
 							editor.selection.insertNode(
-								editor.editorDocument.createTextNode(
-									Jodit.INVISIBLE_SPACE
-								)
+								editor.create.inside.text(Jodit.INVISIBLE_SPACE)
 							);
 
 							range.setStart(
@@ -277,9 +331,9 @@ describe('Selection Module Tests', function() {
 						describe('Cursor in the start of text node but before this has several not empty text nodes', function() {
 							it('Should return false', function() {
 								const editor = new Jodit(appendTestArea());
-								editor.setEditorValue('<p>test</p>');
+								editor.value = '<p>test</p>';
 
-								const range = editor.editorDocument.createRange();
+								const range = editor.selection.createRange();
 
 								range.setStart(
 									editor.editor.firstChild.firstChild,
@@ -288,7 +342,7 @@ describe('Selection Module Tests', function() {
 								range.collapse(true);
 								editor.selection.selectRange(range);
 								editor.selection.insertNode(
-									editor.editorDocument.createTextNode('a')
+									editor.create.inside.text('a')
 								);
 
 								range.setStart(
@@ -308,9 +362,9 @@ describe('Selection Module Tests', function() {
 							describe('Cursor in the start of text node and before are only text nodes with invisible spaces', function() {
 								it('Should return true', function() {
 									const editor = new Jodit(appendTestArea());
-									editor.setEditorValue('<p>test</p>');
+									editor.value = '<p>test</p>';
 
-									const range = editor.editorDocument.createRange();
+									const range = editor.selection.createRange();
 
 									range.setStart(
 										editor.editor.firstChild.firstChild,
@@ -320,17 +374,17 @@ describe('Selection Module Tests', function() {
 									editor.selection.selectRange(range);
 
 									editor.selection.insertNode(
-										editor.editorDocument.createTextNode(
+										editor.create.inside.text(
 											Jodit.INVISIBLE_SPACE
 										)
 									);
 									editor.selection.insertNode(
-										editor.editorDocument.createTextNode(
+										editor.create.inside.text(
 											Jodit.INVISIBLE_SPACE
 										)
 									);
 									editor.selection.insertNode(
-										editor.editorDocument.createTextNode(
+										editor.create.inside.text(
 											Jodit.INVISIBLE_SPACE
 										)
 									);
@@ -359,9 +413,9 @@ describe('Selection Module Tests', function() {
 		describe('Cursor after element', function() {
 			it('Should return null', function() {
 				const editor = new Jodit(appendTestArea());
-				editor.setEditorValue('<p>test</p>');
+				editor.value = '<p>test</p>';
 
-				const range = editor.editorDocument.createRange();
+				const range = editor.selection.createRange();
 
 				range.setStartAfter(editor.editor.firstChild);
 				range.collapse(true);
@@ -379,9 +433,9 @@ describe('Selection Module Tests', function() {
 		describe('Cursor before element', function() {
 			it('Should return null', function() {
 				const editor = new Jodit(appendTestArea());
-				editor.setEditorValue('<p>test</p>');
+				editor.value = '<p>test</p>';
 
-				const range = editor.editorDocument.createRange();
+				const range = editor.selection.createRange();
 
 				range.setStartBefore(editor.editor.firstChild);
 				range.collapse(true);
@@ -399,9 +453,9 @@ describe('Selection Module Tests', function() {
 		describe('Cursor in the start of element ', function() {
 			it('Should return true', function() {
 				const editor = new Jodit(appendTestArea());
-				editor.setEditorValue('<p><span>test</span></p>');
+				editor.value = '<p><span>test</span></p>';
 
-				const range = editor.editorDocument.createRange();
+				const range = editor.selection.createRange();
 
 				range.setStartBefore(editor.editor.firstChild.firstChild);
 				range.collapse(true);
@@ -419,9 +473,9 @@ describe('Selection Module Tests', function() {
 		describe('Cursor in the end of element ', function() {
 			it('Should return true', function() {
 				const editor = new Jodit(appendTestArea());
-				editor.setEditorValue('<p><span>test</span></p>');
+				editor.value = '<p><span>test</span></p>';
 
-				const range = editor.editorDocument.createRange();
+				const range = editor.selection.createRange();
 
 				range.setStartAfter(editor.editor.firstChild.firstChild);
 				range.collapse(true);
@@ -439,11 +493,9 @@ describe('Selection Module Tests', function() {
 		describe('Cursor not in the end of element ', function() {
 			it('Should return false', function() {
 				const editor = new Jodit(appendTestArea());
-				editor.setEditorValue(
-					'<p><span>test</span><span>stop</span></p>'
-				);
+				editor.value = '<p><span>test</span><span>stop</span></p>';
 
-				const range = editor.editorDocument.createRange();
+				const range = editor.selection.createRange();
 
 				range.setStartAfter(editor.editor.firstChild.firstChild);
 				range.collapse(true);
@@ -461,11 +513,9 @@ describe('Selection Module Tests', function() {
 		describe('Cursor not in the start of element ', function() {
 			it('Should return false', function() {
 				const editor = new Jodit(appendTestArea());
-				editor.setEditorValue(
-					'<p><span>test</span><span>stop</span></p>'
-				);
+				editor.value = '<p><span>test</span><span>stop</span></p>';
 
-				const range = editor.editorDocument.createRange();
+				const range = editor.selection.createRange();
 
 				range.setStartAfter(editor.editor.firstChild.firstChild);
 				range.collapse(true);
@@ -483,10 +533,10 @@ describe('Selection Module Tests', function() {
 		describe('If cursor in the end of P', function() {
 			it('Should return true', function() {
 				const editor = new Jodit(appendTestArea());
-				editor.setEditorValue('<p>test</p>>');
+				editor.value = '<p>test</p>>';
 
-				const sel = editor.editorWindow.getSelection(),
-					range = editor.editorDocument.createRange();
+				const sel = editor.selection.sel,
+					range = editor.selection.createRange();
 
 				range.setStart(editor.editor.firstChild.firstChild, 4);
 				range.collapse(true);
@@ -512,10 +562,10 @@ describe('Selection Module Tests', function() {
 		describe('If cursor in the end of SPAN in the end of P', function() {
 			it('Should return true', function() {
 				const editor = new Jodit(appendTestArea());
-				editor.setEditorValue('<p>test<span>1</span></p>');
+				editor.value = '<p>test<span>1</span></p>';
 
-				const sel = editor.editorWindow.getSelection(),
-					range = editor.editorDocument.createRange();
+				const sel = editor.selection.sel,
+					range = editor.selection.createRange();
 
 				range.selectNodeContents(editor.editor.firstChild.lastChild);
 				range.collapse(false);
@@ -534,10 +584,10 @@ describe('Selection Module Tests', function() {
 		describe('Curson in the end of span inside P and check cursorInTheEdge(true)', function() {
 			it('Should return false', function() {
 				const editor = new Jodit(appendTestArea());
-				editor.setEditorValue('<p>Some <span>text</span></p>');
+				editor.value = '<p>Some <span>text</span></p>';
 
-				const sel = editor.editorWindow.getSelection(),
-					range = editor.editorDocument.createRange();
+				const sel = editor.selection.sel,
+					range = editor.selection.createRange();
 
 				range.selectNodeContents(editor.editor.firstChild.lastChild);
 				range.collapse(false);
@@ -622,23 +672,18 @@ describe('Selection Module Tests', function() {
 
 						jodit.setMode(Jodit.MODE_SOURCE);
 
-						const ace = jodit.__plugins.source.sourceEditor.instance;
+						const ace =
+							jodit.__plugins.source.sourceEditor.instance;
 
 						expect(ace).not.null;
 
-						expect(
-							ace.getSelectionRange().start.column
-						).equals(258);
-
-						expect(
-							ace.getSelectionRange()
-								.start.row
-						).equals(0);
-
-						ace.session.insert(
-							ace.getCursorPosition(),
-							' world'
+						expect(ace.getSelectionRange().start.column).equals(
+							258
 						);
+
+						expect(ace.getSelectionRange().start.row).equals(0);
+
+						ace.session.insert(ace.getCursorPosition(), ' world');
 
 						expect(
 							jodit.__plugins.source.sourceEditor.getValue()
@@ -658,7 +703,7 @@ describe('Selection Module Tests', function() {
 				useAceEditor: false,
 				defaultMode: Jodit.MODE_SOURCE
 			});
-			editor.setEditorValue('<p>test</p>');
+			editor.value = '<p>test</p>';
 
 			const mirror = editor.container.querySelector(
 				'textarea.jodit_source_mirror'
@@ -666,21 +711,19 @@ describe('Selection Module Tests', function() {
 			mirror.setSelectionRange(5, 5);
 
 			editor.setMode(Jodit.MODE_WYSIWYG);
-			editor.selection.insertNode(
-				editor.editorDocument.createTextNode(' a ')
-			);
+			editor.selection.insertNode(editor.create.inside.text(' a '));
 
-			expect(editor.getEditorValue()).equals('<p>te a st</p>');
+			expect(editor.value).equals('<p>te a st</p>');
 		});
 
 		it('Should restore non collapsed selection when user change mode - from WYSIWYG to TEXTAREA', function() {
 			const editor = new Jodit(appendTestArea(), {
 				useAceEditor: false
 			});
-			editor.setEditorValue('<p>test</p>');
+			editor.value = '<p>test</p>';
 
-			const sel = editor.editorWindow.getSelection(),
-				range = editor.editorDocument.createRange();
+			const sel = editor.selection.sel,
+				range = editor.selection.createRange();
 
 			range.setStart(editor.editor.firstChild.firstChild, 1);
 			range.setEnd(editor.editor.firstChild.firstChild, 3);
@@ -705,7 +748,7 @@ describe('Selection Module Tests', function() {
 					defaultMode: Jodit.MODE_SOURCE
 				});
 				editor.selection.focus();
-				editor.setEditorValue('<p>test</p>');
+				editor.value = '<p>test</p>';
 
 				const mirror = editor.container.querySelector(
 					'textarea.jodit_source_mirror'
@@ -717,7 +760,7 @@ describe('Selection Module Tests', function() {
 				expect(editor.selection.isCollapsed()).equals(false);
 
 				editor.selection.insertNode(editor.create.inside.text(' a '));
-				expect(editor.getEditorValue()).equals(' a ');
+				expect(editor.value).equals(' a ');
 			});
 		});
 
@@ -726,7 +769,7 @@ describe('Selection Module Tests', function() {
 				useAceEditor: false,
 				defaultMode: Jodit.MODE_SOURCE
 			});
-			editor.setEditorValue('<a>11</a>');
+			editor.value = '<a>11</a>';
 
 			const mirror = editor.container.querySelector(
 				'textarea.jodit_source_mirror'
@@ -735,10 +778,8 @@ describe('Selection Module Tests', function() {
 
 			editor.setMode(Jodit.MODE_WYSIWYG);
 			expect(editor.selection.isCollapsed()).equals(true);
-			editor.selection.insertNode(
-				editor.editorDocument.createTextNode(' a ')
-			);
-			expect(editor.getEditorValue()).equals('<a>1 a 1</a>');
+			editor.selection.insertNode(editor.create.inside.text(' a '));
+			expect(editor.value).equals('<a>1 a 1</a>');
 		});
 	});
 	describe('Click on empty tag', function() {
@@ -800,7 +841,7 @@ describe('Selection Module Tests', function() {
 			const editor = new Jodit(appendTestArea());
 			editor.value =
 				'<p>1</p><p>2</p><strong><span>22</span></strong><p>4</p>stop';
-			const range = editor.editorDocument.createRange();
+			const range = editor.selection.createRange();
 			range.setStartBefore(editor.editor.firstChild);
 			range.setEndAfter(editor.editor.lastChild);
 			editor.selection.selectRange(range);
@@ -818,7 +859,7 @@ describe('Selection Module Tests', function() {
 			const editor = new Jodit(appendTestArea());
 			editor.value =
 				'<p>1</p><p>2</p><strong><span>22</span></strong><p>4</p>stop';
-			const range = editor.editorDocument.createRange();
+			const range = editor.selection.createRange();
 			range.setStartBefore(editor.editor.firstChild.nextSibling);
 			range.setEndAfter(editor.editor.lastChild.previousSibling);
 			editor.selection.selectRange(range);
