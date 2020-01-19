@@ -104,7 +104,21 @@ editor.async.setTimeout(() => {
 editor.destruct();
 ```
 After destruct first timeout will throw the error, but second will be cleared.
+
 Added two methods setPanel and addPlace
+```html
+<textarea id="editor"></textarea>
+<textarea id="editor2"></textarea>
+<textarea id="editor3"></textarea>
+<div id="toolbar"></div>
+```
+```js
+const editor = new Jodit('#editor');
+editor.setPanel('#toolbar');
+//add id instance to editor
+editor.addPlace('#editor2');
+editor.addPlace('#editor3');
+```
 
 ### Events
 Added `afterRemoveNode` event
