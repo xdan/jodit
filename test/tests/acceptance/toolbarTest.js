@@ -218,7 +218,7 @@ describe('Toolbar', function() {
 				it('Should open inline popup with float by left editor side', function() {
 					const editor = new Jodit(appendTestArea(), {});
 
-					editor.setEditorValue('asas <a href="#">test</a>');
+					editor.value = 'asas <a href="#">test</a>';
 
 					simulateEvent(
 						'mousedown',
@@ -259,7 +259,7 @@ describe('Toolbar', function() {
 					'.jodit_toolbar_popup'
 				);
 
-				expect(popup && popup.style.display === 'block').equals(true);
+				expect(popup && popup.style.display === 'block').is.true;
 			});
 			describe('in the left side', function() {
 				it('Should open popup in toolbar with float by left editor side', function() {
@@ -354,11 +354,11 @@ describe('Toolbar', function() {
 				'.jodit_toolbar_popup'
 			);
 
-			expect(popup && popup.style.display === 'block').equals(true);
+			expect(popup && popup.style.display === 'block').is.true;
 
 			simulateEvent('mousedown', 0, window);
 
-			expect(popup && popup.parentNode === null).equals(true);
+			expect(popup && popup.parentNode === null).is.true;
 		});
 
 		describe('Open list', function() {
@@ -383,7 +383,7 @@ describe('Toolbar', function() {
 					list &&
 						window.getComputedStyle(list).display === 'block' &&
 						list.parentNode !== null
-				).equals(true);
+				).is.true;
 			});
 			describe('Change defaiult list', function() {
 				it('Should change default FONT list in toolbar', function() {
@@ -423,7 +423,7 @@ describe('Toolbar', function() {
 						list &&
 							window.getComputedStyle(list).display === 'block' &&
 							list.parentNode !== null
-					).equals(true);
+					).is.true;
 
 					expect(list.textContent.match('Custom')).is.not.null;
 				});
@@ -469,20 +469,20 @@ describe('Toolbar', function() {
 
 			expect(
 				list && window.getComputedStyle(list).display === 'block'
-			).equals(true);
+			).is.true;
 
 			simulateEvent('mousedown', 0, window);
 
-			expect(list && list.parentNode === null).equals(true);
+			expect(list && list.parentNode === null).is.true;
 		});
 
 		it('Open colorpicker set background and color. After this click in another any place. White when popap will be closed. Open again and remove all styles.', function() {
 			const editor = new Jodit(appendTestArea());
 
-			editor.setEditorValue('text2text');
+			editor.value = 'text2text';
 
-			const sel = editor.editorWindow.getSelection(),
-				range = editor.editorDocument.createRange();
+			const sel = editor.selection.sel,
+				range = editor.selection.createRange();
 
 			range.setStart(editor.editor.firstChild, 3);
 			range.setEnd(editor.editor.firstChild, 6);
@@ -509,12 +509,12 @@ describe('Toolbar', function() {
 				)
 			);
 
-			expect(editor.getEditorValue()).equals(
+			expect(editor.value).equals(
 				'tex<span style="background-color: rgb(249, 203, 156);">t2t</span>ext'
 			);
 
 			// simulateEvent('mousedown', 0, editor.editor)
-			expect(list.parentNode).equals(null);
+			expect(list.parentNode).is.null;
 
 			range.selectNodeContents(editor.editor.querySelector('span'));
 			// range.collapse(true);
@@ -541,7 +541,7 @@ describe('Toolbar', function() {
 					'.jodit_toolbar_btn.jodit_toolbar_btn-brush .jodit_colorpicker > a > svg'
 				)
 			);
-			expect(editor.getEditorValue()).equals('text2text');
+			expect(editor.value).equals('text2text');
 		});
 
 		describe('Show native color picker', function() {
@@ -603,8 +603,8 @@ describe('Toolbar', function() {
 
 			editor.value = 'text2text';
 
-			const sel = editor.editorWindow.getSelection(),
-				range = editor.editorDocument.createRange();
+			const sel = editor.selection.sel,
+				range = editor.selection.createRange();
 
 			range.setStart(editor.editor.firstChild, 3);
 			range.setEnd(editor.editor.firstChild, 6);
@@ -631,17 +631,17 @@ describe('Toolbar', function() {
 				)
 			);
 
-			expect(editor.getEditorValue()).equals('<h1>text2text</h1>');
+			expect(editor.value).equals('<h1>text2text</h1>');
 
 			simulateEvent('mousedown', 0, editor.editor);
 
-			expect(list.parentNode).equals(null);
+			expect(list.parentNode).is.null;
 
 			editor.selection.insertNode(
-				editor.editorDocument.createTextNode(' a ')
+				editor.create.inside.text(' a ')
 			);
 
-			expect(editor.getEditorValue()).equals('<h1>tex a ext</h1>');
+			expect(editor.value).equals('<h1>tex a ext</h1>');
 		});
 		describe('FontName', function() {
 			describe('Open fontname list and select some element', function() {
@@ -776,12 +776,12 @@ describe('Toolbar', function() {
 
 			simulateEvent('mousedown', 0, editor.editor);
 
-			expect(popup.parentNode).equals(null);
+			expect(popup.parentNode).is.null;
 		});
 		it('Open align list and choose Right align.', function() {
 			const editor = new Jodit(appendTestArea());
 
-			editor.setEditorValue('Test');
+			editor.value = 'Test';
 
 			simulateEvent(
 				'mousedown',
@@ -803,13 +803,13 @@ describe('Toolbar', function() {
 				)
 			);
 
-			expect(sortAttributes(editor.getEditorValue())).equals(
+			expect(sortAttributes(editor.value)).equals(
 				'<p style="text-align:right">Test</p>'
 			);
 
 			simulateEvent('mousedown', 0, editor.editor);
 
-			expect(list.parentNode).equals(null);
+			expect(list.parentNode).is.null;
 		});
 
 		describe('Click inside the link', function() {
@@ -841,7 +841,7 @@ describe('Toolbar', function() {
 						}
 					});
 
-					editor.setEditorValue('test test <a href="#">test</a>');
+					editor.value = 'test test <a href="#">test</a>';
 
 					simulateEvent(
 						'mousedown',
@@ -859,7 +859,7 @@ describe('Toolbar', function() {
 						popup.classList.contains(
 							'jodit_toolbar_popup-inline-open'
 						)
-					).equals(true);
+					).is.true;
 
 					const pencil = popup.querySelector(
 						'.jodit_toolbar_btn.jodit_toolbar_btn-link a'
@@ -877,7 +877,7 @@ describe('Toolbar', function() {
 						popup.classList.contains(
 							'jodit_toolbar_popup-inline-open'
 						)
-					).equals(true);
+					).is.true;
 					expect(popup.parentNode.parentNode.parentNode).is.not.null;
 				});
 			});
@@ -1149,14 +1149,14 @@ describe('Toolbar', function() {
 				).length
 			).equals(1);
 
-			editor.setEditorValue('');
+			editor.value = '';
 
 			simulateEvent(
 				'mousedown',
 				0,
 				editor.container.querySelector('.jodit_toolbar_btn-insertDate')
 			);
-			expect(editor.getEditorValue()).equals('Wed Mar 16 2016');
+			expect(editor.value).equals('Wed Mar 16 2016');
 		});
 
 		it('When cursor inside STRONG tag, Bold button should be selected', function() {
@@ -1170,8 +1170,8 @@ describe('Toolbar', function() {
 				'<strong>test</strong><em>test2</em><i>test3</i><b>test3</b>';
 			editor.selection.focus();
 
-			const sel = editor.editorWindow.getSelection(),
-				range = editor.editorDocument.createRange();
+			const sel = editor.selection.sel,
+				range = editor.selection.createRange();
 
 			range.setStart(editor.editor.firstChild.firstChild, 2);
 			range.collapse(true);
@@ -1256,9 +1256,9 @@ describe('Toolbar', function() {
 					}
 				});
 
-				editor.setEditorValue(
+				editor.value =
 					'<strong>test</strong><em>test2</em><i>test3</i><b>test3</b>'
-				);
+				;
 
 				editor.setMode(Jodit.MODE_SOURCE);
 
@@ -1404,8 +1404,8 @@ describe('Toolbar', function() {
 			editor.value = '<span style="font-weight: bold">test</span>';
 			editor.selection.focus();
 
-			const sel = editor.editorWindow.getSelection(),
-				range = editor.editorDocument.createRange();
+			const sel = editor.selection.sel,
+				range = editor.selection.createRange();
 			range.setStart(editor.editor.firstChild.firstChild, 2);
 			range.collapse(true);
 			sel.removeAllRanges();
@@ -1496,7 +1496,7 @@ describe('Toolbar', function() {
 							{
 								name: 'adddate',
 								exec: function(editor) {
-									const a = editor.editorDocument.createTextNode(
+									const a = editor.create.inside.text(
 										'111'
 									);
 									editor.selection.insertNode(a);
@@ -1539,7 +1539,7 @@ describe('Toolbar', function() {
 								{
 									name: 'adddate',
 									exec: function(editor) {
-										const a = editor.editorDocument.createTextNode(
+										const a = editor.create.inside.text(
 											'111'
 										);
 										editor.selection.insertNode(a);
@@ -1620,7 +1620,7 @@ describe('Toolbar', function() {
 					);
 					editor.selection.insertHTML('text');
 
-					expect(editor.getEditorValue()).equals(
+					expect(editor.value).equals(
 						'<p>test<strong>text</strong>text</p>'
 					);
 				});
@@ -1648,7 +1648,7 @@ describe('Toolbar', function() {
 						)
 					);
 
-					expect(editor.getEditorValue()).equals(
+					expect(editor.value).equals(
 						'<strong>test</strong> test test'
 					);
 				});
@@ -1908,7 +1908,7 @@ describe('Toolbar', function() {
 					editor.value = '<em><strong><u>bold</u></strong></em>';
 					editor.selection.focus();
 
-					const range = editor.editorDocument.createRange();
+					const range = editor.selection.createRange();
 					range.setStartBefore(editor.editor.firstChild);
 					range.setEndAfter(editor.editor.firstChild);
 					editor.selection.selectRange(range);
@@ -2067,8 +2067,8 @@ describe('Toolbar', function() {
 			editor.value = 'Text to text';
 			editor.selection.focus();
 
-			const sel = editor.editorWindow.getSelection(),
-				range = editor.editorDocument.createRange();
+			const sel = editor.selection.sel,
+				range = editor.selection.createRange();
 			range.setStart(editor.editor.firstChild, 3);
 			range.setEnd(editor.editor.firstChild, 10);
 			sel.removeAllRanges();
@@ -2080,7 +2080,7 @@ describe('Toolbar', function() {
 				editor.container.querySelector('.jodit_toolbar_btn-bold')
 			);
 
-			expect(editor.getEditorValue()).equals(
+			expect(editor.value).equals(
 				'Tex<strong>t to te</strong>xt'
 			);
 		});
@@ -2091,8 +2091,8 @@ describe('Toolbar', function() {
 			editor.value = 'Text to text';
 			editor.selection.focus();
 
-			const sel = editor.editorWindow.getSelection(),
-				range = editor.editorDocument.createRange();
+			const sel = editor.selection.sel,
+				range = editor.selection.createRange();
 			range.setStart(editor.editor.firstChild, 0);
 			range.collapse(true);
 			sel.removeAllRanges();
@@ -2106,7 +2106,7 @@ describe('Toolbar', function() {
 
 			editor.selection.insertHTML('test');
 
-			expect(editor.getEditorValue()).equals('<em>test</em>Text to text');
+			expect(editor.value).equals('<em>test</em>Text to text');
 		});
 
 		it('Click on unordered list button when selection is collapsed should wrap current box in  new <ul><li> element', function() {
@@ -2114,8 +2114,8 @@ describe('Toolbar', function() {
 
 			editor.value = '<p>Text to text</p>';
 
-			const sel = editor.editorWindow.getSelection(),
-				range = editor.editorDocument.createRange();
+			const sel = editor.selection.sel,
+				range = editor.selection.createRange();
 
 			range.setStart(editor.editor.firstChild.firstChild, 0);
 			range.collapse(true);
@@ -2130,7 +2130,7 @@ describe('Toolbar', function() {
 
 			editor.selection.insertHTML('test ');
 
-			expect(editor.getEditorValue()).equals(
+			expect(editor.value).equals(
 				'<ul><li>test Text to text</li></ul>'
 			);
 		});
@@ -2178,7 +2178,7 @@ describe('Toolbar', function() {
 
 					expect(
 						popup && popup.parentNode.parentNode !== null
-					).equals(true);
+					).is.true;
 
 					simulateEvent(
 						'mousedown',
@@ -2202,9 +2202,9 @@ describe('Toolbar', function() {
 		it('Open inline popup after click inside the cell', function() {
 			const editor = new Jodit(appendTestArea());
 
-			editor.setEditorValue(
+			editor.value =
 				'<table>' + '<tr><td>1</td></tr>' + '</table>'
-			);
+			;
 
 			simulateEvent('mousedown', 0, editor.editor.querySelector('td'));
 
@@ -2212,7 +2212,7 @@ describe('Toolbar', function() {
 				'.jodit_toolbar_popup-inline'
 			);
 
-			expect(popup && popup.parentNode.parentNode !== null).equals(true);
+			expect(popup && popup.parentNode.parentNode !== null).is.true;
 		});
 
 		describe('Table button', function() {
@@ -2220,9 +2220,9 @@ describe('Toolbar', function() {
 				it('Should Select table cell', function() {
 					const editor = new Jodit(appendTestArea());
 
-					editor.setEditorValue(
+					editor.value =
 						'<table>' + '<tr><td>2</td></tr>' + '</table>'
-					);
+					;
 
 					const td = editor.editor.querySelector('td');
 
@@ -2230,15 +2230,15 @@ describe('Toolbar', function() {
 
 					expect(
 						td.hasAttribute(Jodit.JODIT_SELECTED_CELL_MARKER)
-					).equals(true);
+					).is.true;
 				});
 				describe('and press brushh button', function() {
 					it('Should Select table cell and fill it in yellow', function() {
 						const editor = new Jodit(appendTestArea());
 
-						editor.setEditorValue(
+						editor.value =
 							'<table>' + '<tr><td>3</td></tr>' + '</table>'
-						);
+						;
 
 						const td = editor.editor.querySelector('td');
 
@@ -2251,7 +2251,7 @@ describe('Toolbar', function() {
 
 						expect(
 							popup && popup.parentNode.parentNode !== null
-						).equals(true);
+						).is.true;
 
 						simulateEvent(
 							'mousedown',
@@ -2301,7 +2301,7 @@ describe('Toolbar', function() {
 				'.jodit_toolbar_popup-inline'
 			);
 
-			expect(popup && popup.parentNode.parentNode !== null).equals(true);
+			expect(popup && popup.parentNode.parentNode !== null).is.true;
 
 			simulateEvent(
 				'mousedown',
@@ -2322,11 +2322,11 @@ describe('Toolbar', function() {
 		it('Select table cell and split it by vertical', function() {
 			const editor = new Jodit(appendTestArea());
 
-			editor.setEditorValue(
+			editor.value =
 				'<table style="width: 300px;">' +
 					'<tr><td>3</td></tr>' +
 					'</table>'
-			);
+			;
 
 			const td = editor.editor.querySelector('td');
 
@@ -2354,7 +2354,7 @@ describe('Toolbar', function() {
 				)
 			);
 
-			expect(sortAttributes(editor.getEditorValue())).equals(
+			expect(sortAttributes(editor.value)).equals(
 				'<table style="width:300px"><tbody><tr><td style="width:49.83%">3</td><td style="width:49.83%"><br></td></tr></tbody></table>'
 			);
 		});
@@ -2362,11 +2362,11 @@ describe('Toolbar', function() {
 		it('Select table cell and split it by horizontal', function() {
 			const editor = new Jodit(appendTestArea());
 
-			editor.setEditorValue(
+			editor.value =
 				'<table style="width: 300px;">' +
 					'<tr><td>5</td></tr>' +
 					'</table>'
-			);
+			;
 
 			const td = editor.editor.querySelector('td');
 
@@ -2393,7 +2393,7 @@ describe('Toolbar', function() {
 				)
 			);
 
-			expect(sortAttributes(editor.getEditorValue())).equals(
+			expect(sortAttributes(editor.value)).equals(
 				'<table style="width:300px"><tbody><tr><td>5</td></tr><tr><td><br></td></tr></tbody></table>'
 			);
 		});
@@ -2401,11 +2401,11 @@ describe('Toolbar', function() {
 		it('Select two table cells and merge then in one', function() {
 			const editor = new Jodit(appendTestArea());
 
-			editor.setEditorValue(
+			editor.value =
 				'<table style="width: 300px;">' +
 					'<tr><td>5</td><td>6</td></tr>' +
 					'</table>'
-			);
+			;
 
 			const td = editor.editor.querySelector('td');
 
@@ -2426,7 +2426,7 @@ describe('Toolbar', function() {
 				popup.querySelector('.jodit_toolbar_btn-merge>a')
 			);
 
-			expect(editor.getEditorValue()).equals(
+			expect(editor.value).equals(
 				'<table style="width: 300px;"><tbody><tr><td >5<br>6</td></tr></tbody></table>'
 			);
 		});
@@ -2434,9 +2434,9 @@ describe('Toolbar', function() {
 		it('Select table cell add column before this', function() {
 			const editor = new Jodit(appendTestArea());
 
-			editor.setEditorValue(
+			editor.value =
 				'<table>' + '<tr><td>3</td></tr>' + '</table>'
-			);
+			;
 
 			const td = editor.editor.querySelector('td');
 
@@ -2446,7 +2446,7 @@ describe('Toolbar', function() {
 				'.jodit_toolbar_popup-inline'
 			);
 
-			expect(popup && popup.parentNode.parentNode !== null).equals(true);
+			expect(popup && popup.parentNode.parentNode !== null).is.true;
 
 			simulateEvent(
 				'mousedown',
@@ -2461,7 +2461,7 @@ describe('Toolbar', function() {
 
 			simulateEvent('mousedown', 0, popupColor.querySelector('li>a'));
 
-			expect(editor.getEditorValue()).equals(
+			expect(editor.value).equals(
 				'<table><tbody><tr><td></td><td >3</td></tr></tbody></table>'
 			);
 		});
@@ -2469,9 +2469,9 @@ describe('Toolbar', function() {
 		it('Select table cell and add row above this', function() {
 			const editor = new Jodit(appendTestArea());
 
-			editor.setEditorValue(
+			editor.value =
 				'<table>' + '<tr><td>3</td></tr>' + '</table>'
-			);
+			;
 
 			const td = editor.editor.querySelector('td');
 
@@ -2481,7 +2481,7 @@ describe('Toolbar', function() {
 				'.jodit_toolbar_popup-inline'
 			);
 
-			expect(popup && popup.parentNode.parentNode !== null).equals(true);
+			expect(popup && popup.parentNode.parentNode !== null).is.true;
 
 			simulateEvent(
 				'mousedown',
@@ -2496,7 +2496,7 @@ describe('Toolbar', function() {
 
 			simulateEvent('mousedown', 0, popupColor.querySelector('li>a'));
 
-			expect(editor.getEditorValue()).equals(
+			expect(editor.value).equals(
 				'<table><tbody><tr><td></td></tr><tr><td >3</td></tr></tbody></table>'
 			);
 		});
@@ -2504,13 +2504,13 @@ describe('Toolbar', function() {
 		it('Select table cell and remove it row', function() {
 			const editor = new Jodit(appendTestArea());
 
-			editor.setEditorValue(
+			editor.value =
 				'<table>' +
 					'<tr><td>1</td></tr>' +
 					'<tr><td>2</td></tr>' +
 					'<tr><td>3</td></tr>' +
 					'</table>'
-			);
+			;
 
 			const td = editor.editor.querySelectorAll('td')[1];
 
@@ -2520,7 +2520,7 @@ describe('Toolbar', function() {
 				'.jodit_toolbar_popup-inline'
 			);
 
-			expect(popup && popup.parentNode.parentNode !== null).equals(true);
+			expect(popup && popup.parentNode.parentNode !== null).is.true;
 
 			simulateEvent(
 				'mousedown',
@@ -2547,13 +2547,13 @@ describe('Toolbar', function() {
 		it('Select table cell and remove whole table should hide inline popup', function() {
 			const editor = new Jodit(appendTestArea());
 
-			editor.setEditorValue(
+			editor.value =
 				'<table>' +
 					'<tr><td>1</td></tr>' +
 					'<tr><td>2</td></tr>' +
 					'<tr><td>3</td></tr>' +
 					'</table>'
-			);
+			;
 
 			const td = editor.editor.querySelectorAll('td')[1];
 
@@ -2563,7 +2563,7 @@ describe('Toolbar', function() {
 				'.jodit_toolbar_popup-inline'
 			);
 
-			expect(popup && popup.parentNode.parentNode !== null).equals(true);
+			expect(popup && popup.parentNode.parentNode !== null).is.true;
 
 			simulateEvent(
 				'mousedown',
@@ -2584,7 +2584,7 @@ describe('Toolbar', function() {
 
 			expect(editor.value).equals('');
 
-			expect(popup && popup.parentNode).equals(null);
+			expect(popup && popup.parentNode).is.null;
 		});
 	});
 
@@ -2616,7 +2616,7 @@ describe('Toolbar', function() {
 					'.jodit_toolbar_popup'
 				);
 
-				expect(popup && popup.style.display !== 'none').equals(true);
+				expect(popup && popup.style.display !== 'none').is.true;
 				simulateEvent(
 					'mousedown',
 					0,

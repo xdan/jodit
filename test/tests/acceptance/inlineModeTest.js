@@ -143,7 +143,7 @@ describe('Test Inline mode', function() {
 							editor.id +
 							']'
 					);
-					expect(popup).equals(null);
+					expect(popup).is.null;
 				});
 			});
 			describe('Click in the right side of editor', function() {
@@ -332,7 +332,7 @@ describe('Test Inline mode', function() {
 						popup.parentNode.classList.contains(
 							'jodit_toolbar_popup-inline-target-hidden'
 						)
-					).to.be.false;
+					).is.false;
 				});
 			});
 		});
@@ -386,7 +386,7 @@ describe('Test Inline mode', function() {
 								editor.id +
 								']'
 						);
-						expect(popup).equals(null);
+						expect(popup).is.null;
 
 						simulateEvent('mousedown', 0, img);
 						popup = editor.ownerDocument.querySelector(
@@ -395,7 +395,7 @@ describe('Test Inline mode', function() {
 								']'
 						);
 
-						expect(popup).equals(null);
+						expect(popup).is.null;
 
 						simulateEvent('mousedown', 0, td);
 						popup = editor.ownerDocument.querySelector(
@@ -425,7 +425,7 @@ describe('Test Inline mode', function() {
 								editor.id +
 								']'
 						);
-						expect(popup).equals(null);
+						expect(popup).is.null;
 
 						simulateEvent('mousedown', 0, img);
 						popup = editor.ownerDocument.querySelector(
@@ -443,7 +443,7 @@ describe('Test Inline mode', function() {
 								']'
 						);
 
-						expect(popup).equals(null);
+						expect(popup).is.null;
 					});
 				});
 			});
@@ -545,7 +545,7 @@ describe('Test Inline mode', function() {
 							']'
 					);
 					expect(popup).is.not.null;
-					const range = editor.editorDocument.createRange();
+					const range = editor.selection.createRange();
 					range.setStart(editor.editor.firstChild, 0);
 					range.collapse(true);
 					editor.selection.selectRange(range);
@@ -641,7 +641,7 @@ describe('Test Inline mode', function() {
 											editor.id +
 											']'
 									);
-									expect(popup).equals(null);
+									expect(popup).is.null;
 									done();
 								}
 							}
@@ -725,7 +725,7 @@ describe('Test Inline mode', function() {
 												editor.id +
 												']'
 										);
-										expect(popup).equals(null);
+										expect(popup).is.null;
 
 										simulateEvent('mousedown', 0, img);
 										popup = editor.ownerDocument.querySelector(
@@ -734,7 +734,7 @@ describe('Test Inline mode', function() {
 												']'
 										);
 
-										expect(popup).equals(null);
+										expect(popup).is.null;
 
 										simulateEvent('mousedown', 0, td);
 										popup = editor.ownerDocument.querySelector(
@@ -777,7 +777,7 @@ describe('Test Inline mode', function() {
 												editor.id +
 												']'
 										);
-										expect(popup).equals(null);
+										expect(popup).is.null;
 
 										simulateEvent('mousedown', 0, img);
 										popup = editor.ownerDocument.querySelector(
@@ -795,7 +795,7 @@ describe('Test Inline mode', function() {
 												']'
 										);
 
-										expect(popup).equals(null);
+										expect(popup).is.null;
 										done();
 									}
 								}

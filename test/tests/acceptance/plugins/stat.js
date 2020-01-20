@@ -45,7 +45,7 @@ describe('Stat plugin', function() {
 
 				expect(
 					statusbar.textContent.match(/Chars: 10/)
-				).equals(null);
+				).is.null;
 				expect(
 					statusbar.textContent.match(/Words: 2/)
 				).is.not.null;
@@ -100,7 +100,7 @@ describe('Stat plugin', function() {
 
 				expect(
 					statusbar.textContent.match(/Chars: 10/)
-				).equals(null);
+				).is.null;
 				expect(statusbar.textContent.match(/Words: 2/)).equals(
 					null
 				);

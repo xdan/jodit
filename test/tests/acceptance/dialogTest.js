@@ -15,7 +15,7 @@ describe('Dialog system tests', function() {
 			const dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active');
 			expect(dialog).is.not.null;
 
-			expect(dialog.innerHTML.indexOf('xdsoft.net') !== -1).equals(true);
+			expect(dialog.innerHTML.indexOf('xdsoft.net') !== -1).is.true;
 		});
 
 		describe('Close About dialog', function() {
@@ -53,7 +53,7 @@ describe('Dialog system tests', function() {
 		});
 		it('Should return Dialog instance', function() {
 			const dialog = Jodit.Alert('Hello');
-			expect(dialog instanceof Jodit.modules.Dialog).equals(true);
+			expect(dialog instanceof Jodit.modules.Dialog).is.true;
 			dialog.close();
 		});
 		describe('Show not string', function() {
@@ -91,7 +91,7 @@ describe('Dialog system tests', function() {
 						openOnDblClick: true
 					}
 				});
-				editor.setEditorValue('<img src="https://xdsoft.net/jodit/build/images/artio.jpg" style="margin:10px;border:1px solid red;width:100px;height:100px;"/>');
+				editor.value = '<img src="https://xdsoft.net/jodit/build/images/artio.jpg" style="margin:10px;border:1px solid red;width:100px;height:100px;"/>';
 				simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
 
 				const dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active');
@@ -108,7 +108,7 @@ describe('Dialog system tests', function() {
 						openOnDblClick: true
 					}
 				});
-				editor.setEditorValue('<img src="https://xdsoft.net/jodit/build/images/artio.jpg" style="margin:10px 5px;border:1px solid red;width:100px;height:100px;"/>');
+				editor.value = '<img src="https://xdsoft.net/jodit/build/images/artio.jpg" style="margin:10px 5px;border:1px solid red;width:100px;height:100px;"/>';
 				simulateEvent('dblclick', 0, editor.editor.querySelector('img'));
 
 				const dialog = editor.ownerDocument.querySelector('.jodit.jodit_dialog_box.active');

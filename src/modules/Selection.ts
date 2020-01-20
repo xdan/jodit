@@ -10,8 +10,8 @@
 import * as consts from '../constants';
 import {
 	INVISIBLE_SPACE,
-	INVISIBLE_SPACE_REG_EXP_END,
-	INVISIBLE_SPACE_REG_EXP_START
+	INVISIBLE_SPACE_REG_EXP_END as INV_END,
+	INVISIBLE_SPACE_REG_EXP_START as INV_START
 } from '../constants';
 
 import { HTMLTagNames, IDictionary, IJodit, markerInfo } from '../types';
@@ -845,68 +845,54 @@ export class Select {
 	 * @return {boolean | null} true - the cursor is at the end(start) block, null - cursor somewhere outside
 	 */
 	cursorInTheEdge(start: boolean, parentBlock: HTMLElement): boolean | null {
-		const sel = this.sel,
-			range: Range | null =
-				sel && sel.rangeCount ? sel.getRangeAt(0) : null;
+		const
+			end = !start,
+			range = this.sel?.getRangeAt(0),
+			current = this.current(false);
 
-		if (!range) {
+		if (!range || !current || !Dom.isOrContains(parentBlock, current, true)) {
 			return null;
 		}
 
-		const container = start ? range.startContainer : range.endContainer,
-			sibling = (node: Node): Node | false => {
-				return start
-					? Dom.prev(node, elm => !!elm, parentBlock)
-					: Dom.next(node, elm => !!elm, parentBlock);
-			},
-			checkSiblings = (next: Node | false): false | void => {
-				while (next) {
-					next = sibling(next);
-					if (
-						next &&
-						!Dom.isEmptyTextNode(next) &&
-						next.nodeName !== 'BR'
-					) {
-						return false;
-					}
+		const container = start ? range.startContainer : range.endContainer;
+		const offset = start ? range.startOffset : range.endOffset;
+		const check = (elm: Node | null) =>
+			elm && elm.nodeName !== 'BR' && !Dom.isEmptyTextNode(elm);
+
+		// check right offset
+		if (Dom.isText(container)) {
+			const text = container.nodeValue || '';
+
+			if (end && text.replace(INV_END, '').length > offset) {
+				return false;
+			}
+
+			const inv = INV_START.exec(text);
+			if (start && ((inv && inv[0].length < offset) || (!inv && offset > 0))) {
+				return false;
+			}
+		} else {
+			const children = Array.from(container.childNodes);
+
+			if (end) {
+				if (children.slice(offset).some(check)) {
+					return false;
 				}
-			};
-
-		if (container.nodeType === Node.TEXT_NODE) {
-			const value: string = container.nodeValue || '';
-			if (
-				start &&
-				range.startOffset >
-					value.length -
-						value.replace(INVISIBLE_SPACE_REG_EXP_START, '').length
-			) {
-				return false;
-			}
-			if (
-				!start &&
-				range.startOffset <
-					value.replace(INVISIBLE_SPACE_REG_EXP_END, '').length
-			) {
-				return false;
-			}
-
-			if (checkSiblings(container) === false) {
-				return false;
+			} else {
+				if (children.slice(0, offset).some(check)) {
+					return false;
+				}
 			}
 		}
 
-		const current: Node | false = this.current(false);
-		if (!current || !Dom.isOrContains(parentBlock, current, true)) {
-			return null;
-		}
 
-		if (!start && range.startContainer.childNodes[range.startOffset]) {
-			if (current && !Dom.isEmptyTextNode(current)) {
-				return false;
-			}
-		}
 
-		return checkSiblings(current) !== false;
+		const next = start
+			? Dom.prev(current, check, parentBlock)
+			: Dom.next(current, check, parentBlock);
+
+		return !next;
+		//'<li><p><span>test</span>s<span>test</span></p></li>'
 	}
 
 	/**

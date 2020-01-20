@@ -14,7 +14,7 @@ describe('Jodit Events system Tests', function() {
 
 			simulateEvent('click', 0, div);
 
-			expect(work).equals(true);
+			expect(work).is.true;
 
 			div.parentNode.removeChild(div);
 		});
@@ -290,7 +290,7 @@ describe('Jodit Events system Tests', function() {
 			});
 
 			simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
-			expect(enable).equals(true);
+			expect(enable).is.true;
 		});
 
 		it('Delete event handler', function() {
@@ -305,7 +305,7 @@ describe('Jodit Events system Tests', function() {
 
 			simulateEvent('keydown', Jodit.KEY_Y, editor.editor);
 
-			expect(enable).equals(false);
+			expect(enable).is.false;
 		});
 
 		it('Proxy events', function() {
@@ -319,7 +319,7 @@ describe('Jodit Events system Tests', function() {
 
 			simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-			expect(work).equals(true);
+			expect(work).is.true;
 		});
 	});
 
@@ -883,7 +883,7 @@ describe('Jodit Events system Tests', function() {
 
 				simulateEvent('click', 0, div);
 
-				expect(work).equals(true);
+				expect(work).is.true;
 
 				div.parentNode.removeChild(div);
 			});

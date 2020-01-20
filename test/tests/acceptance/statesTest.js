@@ -44,13 +44,13 @@ describe('Test states', function() {
 					readonly: true
 				});
 
-				editor.setEditorValue('test');
+				editor.value = 'test';
 
 				editor.selection.select(editor.editor.firstChild);
 
 				editor.execCommand('bold');
 
-				expect('test').equals(editor.getEditorValue());
+				expect('test').equals(editor.value);
 			});
 			it('Should disable all toolbar buttons besides source, print, about, fullsize', function() {
 				const editor = new Jodit(appendTestArea(), {
@@ -61,7 +61,7 @@ describe('Test states', function() {
 					}
 				});
 
-				editor.setEditorValue('test');
+				editor.value = 'test';
 				const buttons = [].slice.call(editor.container.querySelectorAll('.jodit_toolbar_btn'));
 				buttons.forEach(function(btn) {
 					if (!/(source|print|about|fullsize|separator|selectall|break)/.test(btn.className)) {
@@ -101,9 +101,9 @@ describe('Test states', function() {
 					readonly: true
 				});
 
-				expect(!editor.container.querySelectorAll('.jodit_placeholder').length).equals(true);
-				editor.setEditorValue('test');
-				expect(!editor.container.querySelectorAll('.jodit_placeholder').length).equals(true);
+				expect(!editor.container.querySelectorAll('.jodit_placeholder').length).is.true;
+				editor.value = 'test';
+				expect(!editor.container.querySelectorAll('.jodit_placeholder').length).is.true;
 			});
 
 			describe('Search plugin', function() {
@@ -167,7 +167,7 @@ describe('Test states', function() {
 
 					const editor = new Jodit(area);
 
-					expect(editor.editor.hasAttribute('contenteditable')).to.be.false;
+					expect(editor.editor.hasAttribute('contenteditable')).is.false;
 					expect(editor.getReadOnly()).is.true;
 				});
 
@@ -236,7 +236,7 @@ describe('Test states', function() {
 				const editor = new Jodit(area);
 
 				expect(editor.container.classList.contains('jodit_disabled')).is.true;
-				expect(editor.editor.hasAttribute('contenteditable')).to.be.false;
+				expect(editor.editor.hasAttribute('contenteditable')).is.false;
 				expect(editor.getReadOnly()).is.true;
 				expect(editor.getDisabled()).is.true;
 			});
@@ -257,7 +257,7 @@ describe('Test states', function() {
 
 
 				expect(editor.getReadOnly()).is.true;
-				expect(editor.getDisabled()).to.be.false;
+				expect(editor.getDisabled()).is.false;
 			});
 		});
 	});

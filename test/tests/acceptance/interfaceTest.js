@@ -46,7 +46,7 @@ describe('Test interface', function() {
 
 				expect(
 					dialog.textContent.match(/License:.*(GPL|GNU)/)
-				).equals(null);
+				).is.null;
 
 				expect(
 					dialog.textContent.match(

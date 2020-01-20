@@ -64,7 +64,7 @@ describe('Clipboard text', function() {
 					editor.id +
 					']'
 				);
-				expect(dialog).equals(null);
+				expect(dialog).is.null;
 			});
 
 			describe('Change dialog in afterOpenPasteDialog', function() {
@@ -137,7 +137,7 @@ describe('Clipboard text', function() {
 				editor.id +
 				']'
 			);
-			expect(dialog).equals(null);
+			expect(dialog).is.null;
 		});
 	});
 

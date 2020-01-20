@@ -51,16 +51,16 @@ describe('Limit plugin', function() {
 						editor.value = '1111';
 
 						const sel = editor.selection.sel,
-							range = editor.editorDocument.createRange();
+							range = editor.selection.createRange();
 
 						range.setEndAfter(editor.editor.firstChild);
 						range.collapse(false);
 
 						editor.selection.selectRange(range);
-						range.insertNode(editor.editorDocument.createTextNode('v'));
+						range.insertNode(editor.create.inside.text('v'));
 						simulateEvent('keydown', Jodit.KEY_V, editor.editor);
 
-						range.insertNode(editor.editorDocument.createTextNode('v'));
+						range.insertNode(editor.create.inside.text('v'));
 						simulateEvent('keydown', Jodit.KEY_V, editor.editor);
 
 						setTimeout(() => {

@@ -174,7 +174,7 @@ describe('Link plugin', function() {
 
 					simulateEvent('mousedown', 0, editor.editor);
 
-					expect(list.parentNode).equals(null);
+					expect(list.parentNode).is.null;
 				});
 
 				describe('On selected content', function() {
@@ -189,7 +189,7 @@ describe('Link plugin', function() {
 
 							editor.value = 'test <span>select</span> stop';
 
-							const range = editor.editorDocument.createRange();
+							const range = editor.selection.createRange();
 							range.selectNodeContents(
 								editor.editor.querySelector('span')
 							);
@@ -245,7 +245,7 @@ describe('Link plugin', function() {
 
 							simulateEvent('mousedown', 0, editor.editor);
 
-							expect(popup.parentNode).equals(null);
+							expect(popup.parentNode).is.null;
 						});
 					});
 
@@ -345,7 +345,7 @@ describe('Link plugin', function() {
 
 							simulateEvent('mousedown', 0, editor.editor);
 
-							expect(popup.parentNode).equals(null);
+							expect(popup.parentNode).is.null;
 						});
 					});
 				});
@@ -360,8 +360,8 @@ describe('Link plugin', function() {
 					editor.value =
 						'<a target="_blank" rel="nofollow" href="#test">test</a>';
 
-					const sel = editor.editorWindow.getSelection(),
-						range = editor.editorDocument.createRange();
+					const sel = editor.selection.sel,
+						range = editor.selection.createRange();
 
 					range.selectNode(editor.editor.firstChild);
 					sel.removeAllRanges();
@@ -385,13 +385,13 @@ describe('Link plugin', function() {
 						editor.container.querySelector(
 							'.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=target]'
 						).checked
-					).equals(true);
+					).is.true;
 
 					expect(
 						editor.container.querySelector(
 							'.jodit_toolbar_btn.jodit_toolbar_btn-link input[name=nofollow]'
 						).checked
-					).equals(true);
+					).is.true;
 
 					expect(
 						editor.container.querySelector(

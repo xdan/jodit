@@ -20,8 +20,8 @@ describe('Test editor indent plugin', function() {
 		const el2 = children[1];
 		const el3 = children[2];
 
-		const sel = editor.editorWindow.getSelection(),
-			range = editor.editorDocument.createRange();
+		const sel = editor.selection.sel,
+			range = editor.selection.createRange();
 
 		range.setStart(el1Child, 0);
 		range.setEnd(el2, 1);
@@ -62,8 +62,8 @@ describe('Test editor indent plugin', function() {
 		const el5 = children[4];
 		const el6 = children[5];
 
-		const sel = editor.editorWindow.getSelection(),
-			range = editor.editorDocument.createRange();
+		const sel = editor.selection.sel,
+			range = editor.selection.createRange();
 
 		range.setStart(el1, 0);
 		range.setEnd(el4, 1);

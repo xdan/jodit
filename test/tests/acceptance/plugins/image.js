@@ -4,10 +4,10 @@ describe('Process Images plugins', function() {
 			it('Should open image dialog and insert image by url.', function() {
 				const editor = new Jodit(appendTestArea());
 
-				editor.setEditorValue(Jodit.INVISIBLE_SPACE); // IE in iframe mode can loose focus and we can not check where it paste image in start or in finish. It is only in IE
+				editor.value = Jodit.INVISIBLE_SPACE; // IE in iframe mode can loose focus and we can not check where it paste image in start or in finish. It is only in IE
 
-				const sel = editor.editorWindow.getSelection(),
-					range = editor.editorDocument.createRange();
+				const sel = editor.selection.sel,
+					range = editor.selection.createRange();
 
 				range.selectNodeContents(editor.editor);
 				range.collapse(false);
@@ -67,7 +67,7 @@ describe('Process Images plugins', function() {
 
 				simulateEvent('mousedown', 0, editor.editor);
 
-				expect(list.parentNode).equals(null);
+				expect(list.parentNode).is.null;
 			});
 
 			describe('When the cursor in the middle of some text', function() {
@@ -76,7 +76,7 @@ describe('Process Images plugins', function() {
 
 					editor.value = 'hello world!';
 
-					const range = editor.editorDocument.createRange();
+					const range = editor.selection.createRange();
 
 					range.setEnd(editor.editor.firstChild, 5);
 					range.collapse(false);

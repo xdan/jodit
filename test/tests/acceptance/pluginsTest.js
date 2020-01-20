@@ -34,8 +34,8 @@ describe('Test plugins', function() {
 				).length
 			).equals(1);
 
-			const sel = editor.editorWindow.getSelection(),
-				range = editor.editorDocument.createRange();
+			const sel = editor.selection.sel,
+				range = editor.selection.createRange();
 
 			range.selectNode(editor.editor.lastChild);
 			sel.removeAllRanges();
@@ -43,7 +43,7 @@ describe('Test plugins', function() {
 
 			simulateEvent('mouseup', 0, editor.editor);
 
-			expect(editor.getEditorValue().replace('700', 'bold')).equals(
+			expect(editor.value.replace('700', 'bold')).equals(
 				'text <strong>test</strong><span style="font-weight: bold;"> post</span>'
 			);
 		});
@@ -80,8 +80,8 @@ describe('Test plugins', function() {
 				).length
 			).equals(1);
 
-			const sel = editor.editorWindow.getSelection(),
-				range = editor.editorDocument.createRange();
+			const sel = editor.selection.sel,
+				range = editor.selection.createRange();
 
 			range.selectNode(editor.editor.lastChild);
 			sel.removeAllRanges();
@@ -89,7 +89,7 @@ describe('Test plugins', function() {
 
 			simulateEvent('mouseup', 0, editor.editor);
 
-			expect(editor.getEditorValue()).equals(
+			expect(editor.value).equals(
 				'text <span style="font-size: 11px;">test</span><span style="font-size: 11px;"> post</span>'
 			);
 		});
@@ -132,8 +132,8 @@ describe('Test plugins', function() {
 					).length
 				).equals(1);
 
-				const sel = editor.editorWindow.getSelection(),
-					range = editor.editorDocument.createRange();
+				const sel = editor.selection.sel,
+					range = editor.selection.createRange();
 
 				range.selectNode(editor.editor.lastChild);
 				sel.removeAllRanges();
@@ -141,7 +141,7 @@ describe('Test plugins', function() {
 
 				simulateEvent('mouseup', 0, editor.editor);
 
-				expect(sortAttributes(editor.getEditorValue())).equals(
+				expect(sortAttributes(editor.value)).equals(
 					'text <span style="color:#FF0000;font-size:11px">test</span><span style="color:#FF0000;font-size:11px"> post</span>'
 				);
 			});
@@ -192,8 +192,8 @@ describe('Test plugins', function() {
 				).length
 			).equals(0);
 
-			const sel = editor.editorWindow.getSelection(),
-				range = editor.editorDocument.createRange();
+			const sel = editor.selection.sel,
+				range = editor.selection.createRange();
 
 			range.selectNode(editor.editor.lastChild);
 			sel.removeAllRanges();
@@ -201,7 +201,7 @@ describe('Test plugins', function() {
 
 			simulateEvent('mouseup', 0, editor.editor);
 
-			expect(sortAttributes(editor.getEditorValue())).equals(
+			expect(sortAttributes(editor.value)).equals(
 				'text <span style="color:#FF0000;font-size:11px">test</span> post'
 			);
 		});
@@ -296,8 +296,8 @@ describe('Test plugins', function() {
 					).length
 				).equals(1);
 
-				const sel = editor.editorWindow.getSelection(),
-					range = editor.editorDocument.createRange();
+				const sel = editor.selection.sel,
+					range = editor.selection.createRange();
 
 				range.selectNode(editor.editor.lastChild);
 				sel.removeAllRanges();
@@ -361,7 +361,7 @@ describe('Test plugins', function() {
 				'.jodit-add-new-line'
 			);
 
-			expect(newline).not.equals(null);
+			expect(newline).not.is.null;
 			expect(editor.ownerWindow.getComputedStyle(newline).display).equals(
 				'block'
 			);
@@ -369,14 +369,14 @@ describe('Test plugins', function() {
 
 		it('Should add new paragraph after user clicked on newline ', function() {
 			const editor = new Jodit(appendTestArea());
-			editor.setEditorValue(
+			editor.value =
 				'<table><tbody>' +
 					'<tr><td>2</td></tr>' +
 					'<tr><td>2</td></tr>' +
 					'<tr><td>3</td></tr>' +
 					'<tr><td>4</td></tr>' +
 					'</tbody></table>'
-			);
+			;
 
 			window.scrollTo(
 				0,
@@ -401,7 +401,7 @@ describe('Test plugins', function() {
 				'.jodit-add-new-line'
 			);
 
-			expect(newline).not.equals(null);
+			expect(newline).not.is.null;
 			expect(editor.ownerWindow.getComputedStyle(newline).display).equals(
 				'block'
 			);
@@ -419,12 +419,12 @@ describe('Test plugins', function() {
 
 		it('Should add new paragraph after user clicked on newline below table', function() {
 			const editor = new Jodit(appendTestArea());
-			editor.setEditorValue(
+			editor.value =
 				'<table><tbody>' +
 					'<tr><td>3</td></tr>' +
 					'<tr><td>2</td></tr>' +
 					'</tbody></table>'
-			);
+			;
 
 			window.scrollTo(
 				0,
@@ -449,7 +449,7 @@ describe('Test plugins', function() {
 				'.jodit-add-new-line'
 			);
 
-			expect(newline).not.equals(null);
+			expect(newline).not.is.null;
 			expect(editor.ownerWindow.getComputedStyle(newline).display).equals(
 				'block'
 			);
@@ -467,12 +467,12 @@ describe('Test plugins', function() {
 			const editor = new Jodit(appendTestArea(), {
 				ifarme: true
 			});
-			editor.setEditorValue(
+			editor.value =
 				'<table><tbody>' +
 					'<tr><td>3</td></tr>' +
 					'<tr><td>2</td></tr>' +
 					'</tbody></table>'
-			);
+			;
 
 			window.scrollTo(
 				0,
@@ -497,7 +497,7 @@ describe('Test plugins', function() {
 				'.jodit-add-new-line'
 			);
 
-			expect(newline).not.equals(null);
+			expect(newline).not.is.null;
 			expect(editor.ownerWindow.getComputedStyle(newline).display).equals(
 				'block'
 			);
@@ -514,9 +514,9 @@ describe('Test plugins', function() {
 		describe('Insert line on top of IMG element that was inside P element', function() {
 			it('Should insert new P before parent P element', function() {
 				const editor = new Jodit(appendTestArea());
-				editor.setEditorValue(
+				editor.value =
 					'<p><img src="tests/artio.jpg" style="width: 100px; height: 100px;" alt=""></p>'
-				);
+				;
 
 				window.scrollTo(
 					0,
@@ -552,7 +552,7 @@ describe('Test plugins', function() {
 
 				expect(
 					'<p>stop</p><p><img alt="" src="tests/artio.jpg" style="height:100px;width:100px"></p>'
-				).equals(sortAttributes(editor.getEditorValue()));
+				).equals(sortAttributes(editor.value));
 			});
 		});
 	});
@@ -636,7 +636,7 @@ describe('Test plugins', function() {
 								'.jodit_image_editor_croper'
 							);
 
-							expect(cropper).not.equals(null);
+							expect(cropper).not.is.null;
 
 							const oldRatio =
 								cropper.offsetWidth / cropper.offsetHeight;
@@ -690,7 +690,7 @@ describe('Test plugins', function() {
 									cropper.offsetWidth / cropper.offsetHeight -
 										oldRatio
 								) < 0.02
-							).equals(true);
+							).is.true;
 
 							done();
 						});
@@ -782,7 +782,7 @@ describe('Test plugins', function() {
 								'.jodit_image_editor_croper'
 							);
 
-							expect(cropper).not.equals(null);
+							expect(cropper).not.is.null;
 
 							const oldRatio =
 								cropper.offsetWidth / cropper.offsetHeight;
@@ -793,7 +793,7 @@ describe('Test plugins', function() {
 									'.jodit_button_radio_group button:last-child'
 								);
 
-							expect(disableRatioBtn).not.equals(null);
+							expect(disableRatioBtn).not.is.null;
 							simulateEvent('click', 0, disableRatioBtn);
 
 							simulateEvent(
@@ -845,7 +845,7 @@ describe('Test plugins', function() {
 									cropper.offsetWidth / cropper.offsetHeight -
 										oldRatio
 								) > 1
-							).equals(true);
+							).is.true;
 
 							done();
 						});
@@ -936,7 +936,7 @@ describe('Test plugins', function() {
 								'.jodit_image_editor_resizer'
 							);
 
-							expect(resizer).not.equals(null);
+							expect(resizer).not.is.null;
 
 							const oldRatio =
 								resizer.offsetWidth / resizer.offsetHeight;
@@ -991,7 +991,7 @@ describe('Test plugins', function() {
 									resizer.offsetWidth / resizer.offsetHeight -
 										oldRatio
 								) < 0.05
-							).equals(true);
+							).is.true;
 
 							done();
 						});
@@ -1022,7 +1022,7 @@ describe('Test plugins', function() {
 								}
 							}
 						});
-						editor.setEditorValue('<img src="tests/artio.jpg">');
+						editor.value = '<img src="tests/artio.jpg">';
 
 						simulateEvent(
 							'dblclick',
@@ -1081,14 +1081,14 @@ describe('Test plugins', function() {
 									'.jodit_button_radio_group button:last-child'
 								);
 
-							expect(disableRatioBtn).not.equals(null);
+							expect(disableRatioBtn).not.is.null;
 							simulateEvent('click', 0, disableRatioBtn);
 
 							const resizer = imageEditor.querySelector(
 								'.jodit_image_editor_resizer'
 							);
 
-							expect(resizer).not.equals(null);
+							expect(resizer).not.is.null;
 
 							const oldRatio =
 								resizer.offsetWidth / resizer.offsetHeight;
@@ -1143,7 +1143,7 @@ describe('Test plugins', function() {
 									resizer.offsetWidth / resizer.offsetHeight -
 										oldRatio
 								) > 1
-							).equals(true);
+							).is.true;
 
 							done();
 						});
@@ -1303,7 +1303,7 @@ describe('Test plugins', function() {
 
 				editor.value = '<h1>test</h1><p>text</p><p>text</p>';
 
-				const range = editor.editorDocument.createRange();
+				const range = editor.selection.createRange();
 
 				range.setStartBefore(editor.editor.firstChild);
 				range.setEndAfter(editor.editor.firstChild.nextSibling);
@@ -1335,7 +1335,7 @@ describe('Test plugins', function() {
 
 				expect(
 					'<h1 style="margin-left: 15px;">test</h1><p style="margin-left: 15px;">text</p><p>text</p>'
-				).equals(editor.getEditorValue());
+				).equals(editor.value);
 
 				simulateEvent(
 					'mousedown',
@@ -1388,7 +1388,7 @@ describe('Test plugins', function() {
 				toolbarAdaptive: false,
 				buttons: 'symbol'
 			});
-			editor.setEditorValue('test');
+			editor.value = 'test';
 
 			const btn = editor.container.querySelector(
 				'.jodit_toolbar_btn.jodit_toolbar_btn-symbol'
@@ -1409,7 +1409,7 @@ describe('Test plugins', function() {
 					toolbarAdaptive: false,
 					buttons: 'symbol'
 				});
-				editor.setEditorValue('test');
+				editor.value = 'test';
 
 				const btn = editor.container.querySelector(
 					'.jodit_toolbar_btn.jodit_toolbar_btn-symbol'
@@ -1434,7 +1434,7 @@ describe('Test plugins', function() {
 						toolbarAdaptive: false,
 						buttons: 'symbol'
 					});
-					editor.setEditorValue('test');
+					editor.value = 'test';
 
 					const btn = editor.container.querySelector(
 						'.jodit_toolbar_btn.jodit_toolbar_btn-symbol'
@@ -1470,7 +1470,7 @@ describe('Test plugins', function() {
 						toolbarAdaptive: false,
 						buttons: 'symbol'
 					});
-					editor.setEditorValue('test');
+					editor.value = 'test';
 
 					const btn = editor.container.querySelector(
 						'.jodit_toolbar_btn.jodit_toolbar_btn-symbol'
@@ -1508,7 +1508,7 @@ describe('Test plugins', function() {
 						buttons: 'symbol'
 					});
 
-					editor.setEditorValue('test');
+					editor.value = 'test';
 
 					const btn = editor.container.querySelector(
 						'.jodit_toolbar_btn.jodit_toolbar_btn-symbol'
@@ -1560,7 +1560,7 @@ describe('Test plugins', function() {
 						toolbarAdaptive: false,
 						buttons: 'symbol'
 					});
-					editor.setEditorValue('test');
+					editor.value = 'test';
 
 					const btn = editor.container.querySelector(
 						'.jodit_toolbar_btn.jodit_toolbar_btn-symbol'
@@ -1612,7 +1612,7 @@ describe('Test plugins', function() {
 						buttons: 'symbol'
 					});
 
-					editor.setEditorValue('');
+					editor.value = '';
 
 					const btn = editor.container.querySelector(
 						'.jodit_toolbar_btn.jodit_toolbar_btn-symbol'
@@ -1630,7 +1630,7 @@ describe('Test plugins', function() {
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, currentActive);
 
-					expect('&amp;').equals(editor.getEditorValue());
+					expect('&amp;').equals(editor.value);
 
 					simulateEvent('mousedown', 0, btn);
 					dialog = editor.ownerDocument.querySelector(
@@ -1645,7 +1645,7 @@ describe('Test plugins', function() {
 
 					simulateEvent('mousedown', 0, currentActive2);
 
-					expect('&amp;½').equals(editor.getEditorValue());
+					expect('&amp;½').equals(editor.value);
 				});
 			});
 		});
@@ -1658,8 +1658,8 @@ describe('Test plugins', function() {
 					usePopupForSpecialCharacters: true
 				});
 
-				editor.setEditorValue('test');
-				const range = editor.editorDocument.createRange();
+				editor.value = 'test';
+				const range = editor.selection.createRange();
 				range.setStart(editor.editor.firstChild, 0);
 				range.collapse(true);
 				editor.selection.selectRange(range);
@@ -1685,7 +1685,7 @@ describe('Test plugins', function() {
 
 				simulateEvent('mousedown', 0, currentActive);
 
-				expect('½test').equals(editor.getEditorValue());
+				expect('½test').equals(editor.value);
 				expect(null).equals(popup.parentNode);
 			});
 		});
@@ -1701,8 +1701,8 @@ describe('Test plugins', function() {
 						}
 					});
 
-				editor.setEditorValue('test test test');
-				const range = editor.editorDocument.createRange();
+				editor.value = 'test test test';
+				const range = editor.selection.createRange();
 				range.setStart(editor.editor.firstChild, 4);
 				range.setEnd(editor.editor.firstChild, 8);
 				editor.selection.selectRange(range);
@@ -1713,7 +1713,7 @@ describe('Test plugins', function() {
 					data.ctrlKey = true;
 				});
 
-				expect('test<u> tes</u>t test').equals(editor.getEditorValue());
+				expect('test<u> tes</u>t test').equals(editor.value);
 			});
 			describe('Replace ctrl+b to ctrl+shift+b for bold command', function() {
 				it('Should not execute bold on ctrl+b', function() {
@@ -1724,8 +1724,8 @@ describe('Test plugins', function() {
 								italic: ['ctrl+i', 'ctrl+shift+i']
 							}
 						});
-					editor.setEditorValue('test test test');
-					const range = editor.editorDocument.createRange();
+					editor.value = 'test test test';
+					const range = editor.selection.createRange();
 					range.setStart(editor.editor.firstChild, 4);
 					range.setEnd(editor.editor.firstChild, 8);
 					editor.selection.selectRange(range);
@@ -1736,7 +1736,7 @@ describe('Test plugins', function() {
 						data.ctrlKey = true;
 					});
 
-					expect('test test test').equals(editor.getEditorValue()); // should not sork
+					expect('test test test').equals(editor.value); // should not sork
 
 					simulateEvent('keydown', 66, editor.editor, function(data) {
 						data.shiftKey = true;
@@ -1744,7 +1744,7 @@ describe('Test plugins', function() {
 					});
 
 					expect('test<strong> tes</strong>t test').equals(
-						editor.getEditorValue()
+						editor.value
 					);
 				});
 				it('Should execute bold on ctrl+shift+b', function() {
@@ -1755,8 +1755,8 @@ describe('Test plugins', function() {
 								italic: ['ctrl+i', 'ctrl+shift+i']
 							}
 						});
-					editor.setEditorValue('test test test');
-					const range = editor.editorDocument.createRange();
+					editor.value = 'test test test';
+					const range = editor.selection.createRange();
 					range.setStart(editor.editor.firstChild, 4);
 					range.setEnd(editor.editor.firstChild, 8);
 					editor.selection.selectRange(range);
@@ -1767,7 +1767,7 @@ describe('Test plugins', function() {
 					});
 
 					expect('test<strong> tes</strong>t test').equals(
-						editor.getEditorValue()
+						editor.value
 					);
 				});
 			});
@@ -1783,7 +1783,7 @@ describe('Test plugins', function() {
 
 					editor.value = 'test test test';
 
-					const range = editor.editorDocument.createRange();
+					const range = editor.selection.createRange();
 					range.setStart(editor.editor.firstChild, 4);
 					range.setEnd(editor.editor.firstChild, 8);
 					editor.selection.selectRange(range);
@@ -1798,7 +1798,7 @@ describe('Test plugins', function() {
 
 					editor.value = 'test test test';
 
-					const range2 = editor.editorDocument.createRange();
+					const range2 = editor.selection.createRange();
 					range2.setStart(editor.editor.firstChild, 4);
 					range2.setEnd(editor.editor.firstChild, 8);
 					editor.selection.selectRange(range2);
@@ -1832,7 +1832,7 @@ describe('Test plugins', function() {
 				const area = appendTestArea(),
 					editor = new Jodit(area);
 
-				editor.setEditorValue('<p>stop</p>'.repeat(100));
+				editor.value = '<p>stop</p>'.repeat(100);
 				expect(false).equals(
 					editor.container.classList.contains('jodit_sticky')
 				);
@@ -1873,7 +1873,7 @@ describe('Test plugins', function() {
 						const area = appendTestArea(),
 							editor = new Jodit(area);
 
-						editor.setEditorValue('<p>stop</p>'.repeat(100));
+						editor.value = '<p>stop</p>'.repeat(100);
 						const offset = Jodit.modules.Helpers.offset(
 							editor.container,
 							editor,
@@ -1898,7 +1898,7 @@ describe('Test plugins', function() {
 							iframe: true
 						});
 
-						editor.setEditorValue('<p>stop</p>'.repeat(100));
+						editor.value = '<p>stop</p>'.repeat(100);
 						const offset = Jodit.modules.Helpers.offset(
 							editor.container,
 							editor,
@@ -1923,7 +1923,7 @@ describe('Test plugins', function() {
 								toolbarStickyOffset: 100
 							});
 
-						editor.setEditorValue('<p>stop</p>'.repeat(100));
+						editor.value = '<p>stop</p>'.repeat(100);
 						const offset = Jodit.modules.Helpers.offset(
 							editor.container,
 							editor,
@@ -1949,7 +1949,7 @@ describe('Test plugins', function() {
 								toolbarSticky: false
 							});
 
-						editor.setEditorValue('<p>stop</p>'.repeat(100));
+						editor.value = '<p>stop</p>'.repeat(100);
 						const offset = Jodit.modules.Helpers.offset(
 							editor.container,
 							editor,
@@ -1987,7 +1987,7 @@ describe('Test plugins', function() {
 						);
 					});
 
-					editor.setEditorValue('<p>stop</p>'.repeat(100));
+					editor.value = '<p>stop</p>'.repeat(100);
 					const offset = Jodit.modules.Helpers.offset(
 						editor.container,
 						editor,
@@ -2022,10 +2022,10 @@ describe('Test plugins', function() {
 				const area = appendTestArea(),
 					editor = new Jodit(area);
 
-				editor.setEditorValue(
+				editor.value =
 					'start <span style="background-color: red; color: blue;">test test test</span> elm'
-				);
-				const range = editor.editorDocument.createRange();
+				;
+				const range = editor.selection.createRange();
 				range.setStartBefore(editor.editor.querySelector('span'));
 				range.setEndAfter(editor.editor.querySelector('span'));
 				editor.selection.selectRange(range);
@@ -2053,7 +2053,7 @@ describe('Test plugins', function() {
 					}
 				});
 				editor.value = 'test <b>old</b> test';
-				const range = editor.editorDocument.createRange();
+				const range = editor.selection.createRange();
 				range.setStart(editor.editor.querySelector('b').firstChild, 2);
 				range.collapse(true);
 				editor.selection.selectRange(range);
@@ -2077,7 +2077,7 @@ describe('Test plugins', function() {
 						}
 					});
 					editor.value = '<p>test <b>old</b> test</p>';
-					const range = editor.editorDocument.createRange();
+					const range = editor.selection.createRange();
 					range.setStart(
 						editor.editor.querySelector('b').firstChild,
 						2
@@ -2103,7 +2103,7 @@ describe('Test plugins', function() {
 						}
 					});
 					editor.value = 'test <b>old</b> test';
-					const range = editor.editorDocument.createRange();
+					const range = editor.selection.createRange();
 					range.setStart(
 						editor.editor.querySelector('b').firstChild,
 						2
@@ -2231,7 +2231,7 @@ describe('Test plugins', function() {
 					minHeight: 300
 				});
 
-				editor.setEditorValue('');
+				editor.value = '';
 
 				editor.toggleMode();
 				editor.toggleMode();
@@ -2269,7 +2269,7 @@ describe('Test plugins', function() {
 				chacksizes.map(function(key, index) {
 					expect(
 						equal(editor[key].offsetHeight, sizes[index])
-					).to.be.false;
+					).is.false;
 				});
 
 				editor.toggleFullSize(false);
@@ -2401,7 +2401,7 @@ describe('Test plugins', function() {
 
 						expect(
 							Jodit.modules.Helpers.trim(
-								editor.editorWindow.getSelection().toString()
+								editor.selection.sel.toString()
 							)
 						).equals('sss');
 						expect(statusbar.childNodes[2].textContent).equals('a');
@@ -2414,7 +2414,7 @@ describe('Test plugins', function() {
 
 						expect(
 							Jodit.modules.Helpers.trim(
-								editor.editorWindow.getSelection().toString()
+								editor.selection.sel.toString()
 							)
 						).equals('Simple text ssss');
 						expect(statusbar.childNodes.length).equals(3);
@@ -2489,7 +2489,7 @@ describe('Test plugins', function() {
 						editor.id +
 						']'
 				);
-				expect(dialog).equals(null);
+				expect(dialog).is.null;
 			});
 		});
 		describe('After copy elements', function() {
@@ -2603,7 +2603,7 @@ describe('Test plugins', function() {
 						dialog
 							.querySelectorAll('.jodit_paste_storage a')[1]
 							.classList.contains('jodit_active')
-					).equals(true);
+					).is.true;
 
 					simulateEvent(
 						'dblclick',
@@ -2677,7 +2677,7 @@ describe('Test plugins', function() {
 						dialog
 							.querySelectorAll('.jodit_paste_storage a')[0]
 							.classList.contains('jodit_active')
-					).equals(true);
+					).is.true;
 
 					simulateEvent(
 						'keydown',
@@ -2688,7 +2688,7 @@ describe('Test plugins', function() {
 						dialog
 							.querySelectorAll('.jodit_paste_storage a')[1]
 							.classList.contains('jodit_active')
-					).equals(true);
+					).is.true;
 
 					simulateEvent(
 						'keydown',
@@ -2699,7 +2699,7 @@ describe('Test plugins', function() {
 						dialog
 							.querySelectorAll('.jodit_paste_storage a')[0]
 							.classList.contains('jodit_active')
-					).equals(true);
+					).is.true;
 
 					simulateEvent(
 						'keydown',
@@ -2710,7 +2710,7 @@ describe('Test plugins', function() {
 						dialog
 							.querySelectorAll('.jodit_paste_storage a')[1]
 							.classList.contains('jodit_active')
-					).equals(true);
+					).is.true;
 
 					simulateEvent(
 						'keydown',

@@ -15,7 +15,7 @@ describe('CodeMirror editor source code', function() {
 				};
 
 			timeout = setTimeout(function() {
-				expect(false).equals(true);
+				expect(false).is.true;
 				__done.call(editor);
 			}, 5000);
 
@@ -40,7 +40,7 @@ describe('CodeMirror editor source code', function() {
 				const editor = new Jodit(appendTestArea());
 				expect(editor.isEditorMode()).is.true;
 				editor.toggleMode();
-				expect(editor.isEditorMode()).to.be.false;
+				expect(editor.isEditorMode()).is.false;
 			});
 		});
 
@@ -109,7 +109,7 @@ describe('CodeMirror editor source code', function() {
 					});
 
 					editor.value = '<p>one <span>two</span> three</p>';
-					const range = editor.editorDocument.createRange();
+					const range = editor.selection.createRange();
 					range.selectNodeContents(editor.editor.querySelector('span'));
 					range.collapse(false);
 					editor.selection.selectRange(range);

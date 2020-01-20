@@ -198,7 +198,7 @@ describe('Jodit FileBrowser Tests', function() {
 
 							expect(
 								edit.classList.contains('jodit_disabled')
-							).to.be.false;
+							).is.false;
 							filebrowser.close();
 							done();
 						})
@@ -240,7 +240,7 @@ describe('Jodit FileBrowser Tests', function() {
 
 							expect(
 								edit.classList.contains('jodit_disabled')
-							).to.be.false;
+							).is.false;
 
 							simulateEvent(
 								'click',
@@ -358,7 +358,7 @@ describe('Jodit FileBrowser Tests', function() {
 										remove.classList.contains(
 											'jodit_disabled'
 										)
-									).to.be.false;
+									).is.false;
 									filebrowser.close();
 									done();
 								})
@@ -404,7 +404,7 @@ describe('Jodit FileBrowser Tests', function() {
 						).is.true;
 						expect(
 							list.classList.contains('jodit_active')
-						).to.be.false;
+						).is.false;
 
 						filebrowser.close();
 						done();
@@ -446,7 +446,7 @@ describe('Jodit FileBrowser Tests', function() {
 							).is.true;
 							expect(
 								list.classList.contains('jodit_active')
-							).to.be.false;
+							).is.false;
 
 							simulateEvent('mousedown', 0, list);
 
@@ -454,7 +454,7 @@ describe('Jodit FileBrowser Tests', function() {
 								files.classList.contains(
 									'jodit_filebrowser_files_view-tiles'
 								)
-							).to.be.false;
+							).is.false;
 							expect(
 								files.classList.contains(
 									'jodit_filebrowser_files_view-list'
@@ -462,7 +462,7 @@ describe('Jodit FileBrowser Tests', function() {
 							).is.true;
 							expect(
 								tiles.classList.contains('jodit_active')
-							).to.be.false;
+							).is.false;
 							expect(
 								list.classList.contains('jodit_active')
 							).is.true;
@@ -668,7 +668,7 @@ describe('Jodit FileBrowser Tests', function() {
 
 						expect(
 							select.classList.contains('jodit_disabled')
-						).to.be.false;
+						).is.false;
 
 						simulateEvent('mousedown', 0, select);
 					})

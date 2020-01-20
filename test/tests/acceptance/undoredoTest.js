@@ -7,9 +7,9 @@ describe('Undo/Redo behaviors', function() {
 				}
 			});
 
-			editor.setEditorValue('test');
+			editor.value = 'test';
 
-			const range = editor.editorDocument.createRange();
+			const range = editor.selection.createRange();
 			range.setEnd(editor.editor.firstChild, 4);
 			range.collapse(false);
 			editor.selection.selectRange(range);
@@ -52,7 +52,7 @@ describe('Undo/Redo behaviors', function() {
 					'<li><a>test4</a></li>' +
 					'</ul>';
 
-				const range = editor.editorDocument.createRange();
+				const range = editor.selection.createRange();
 				range.setStart(editor.editor.firstChild.firstChild, 1);
 				range.setEnd(editor.editor.lastChild.firstChild, 1);
 				editor.selection.selectRange(range);
@@ -96,10 +96,10 @@ describe('Undo/Redo behaviors', function() {
 				}
 			});
 
-			editor.setEditorValue('test');
-			editor.setEditorValue('test2');
+			editor.value = 'test';
+			editor.value = 'test2';
 			editor.execCommand('undo');
-			expect(editor.getEditorValue()).equals('test');
+			expect(editor.value).equals('test');
 		});
 		it('Redo. Enter text wait and again enter text. After execute "undo" + "redo" command in editor should be second text', function() {
 			const editor = new Jodit(appendTestArea(), {
@@ -108,12 +108,12 @@ describe('Undo/Redo behaviors', function() {
 				}
 			});
 
-			editor.setEditorValue('test');
-			editor.setEditorValue('test2');
+			editor.value = 'test';
+			editor.value = 'test2';
 			editor.execCommand('undo');
-			expect(editor.getEditorValue()).equals('test');
+			expect(editor.value).equals('test');
 			editor.execCommand('redo');
-			expect(editor.getEditorValue()).equals('test2');
+			expect(editor.value).equals('test2');
 		});
 		it('Check react UndoRedo to another changes', function() {
 			const editor = new Jodit(appendTestArea(), {
@@ -122,22 +122,22 @@ describe('Undo/Redo behaviors', function() {
 				}
 			});
 
-			editor.setEditorValue('test');
+			editor.value = 'test';
 
-			const range = editor.editorDocument.createRange();
+			const range = editor.selection.createRange();
 			range.setEnd(editor.editor.firstChild, 4);
 			range.collapse(false);
-			editor.editorWindow.getSelection().removeAllRanges();
-			editor.editorWindow.getSelection().addRange(range);
+			editor.selection.sel.removeAllRanges();
+			editor.selection.sel.addRange(range);
 
 			editor.selection.insertNode(
-				editor.editorDocument.createTextNode('test2')
+				editor.create.inside.text('test2')
 			);
 			editor.execCommand('undo');
-			expect(editor.getEditorValue()).equals('test');
+			expect(editor.value).equals('test');
 
 			editor.execCommand('redo');
-			expect(editor.getEditorValue()).equals('testtest2');
+			expect(editor.value).equals('testtest2');
 		});
 	});
 
@@ -165,17 +165,17 @@ describe('Undo/Redo behaviors', function() {
 			editor.value = 'test';
 			editor.value = 'stop';
 
-			expect(undo.classList.contains('jodit_disabled')).to.be.false;
+			expect(undo.classList.contains('jodit_disabled')).is.false;
 			expect(redo.classList.contains('jodit_disabled')).is.true;
 
 			simulateEvent('mousedown', 0, undo);
 			expect(editor.value).equals('test');
-			expect(undo.classList.contains('jodit_disabled')).to.be.false;
-			expect(redo.classList.contains('jodit_disabled')).to.be.false;
+			expect(undo.classList.contains('jodit_disabled')).is.false;
+			expect(redo.classList.contains('jodit_disabled')).is.false;
 
 			simulateEvent('mousedown', 0, redo);
 			expect(editor.value).equals('stop');
-			expect(undo.classList.contains('jodit_disabled')).to.be.false;
+			expect(undo.classList.contains('jodit_disabled')).is.false;
 			expect(redo.classList.contains('jodit_disabled')).is.true;
 
 			editor.observer.clear();
