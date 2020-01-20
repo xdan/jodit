@@ -444,7 +444,7 @@ export class Select {
 				const child = (nd: Node): Node | null =>
 					rightMode ? nd.lastChild : nd.firstChild;
 
-				if (node.nodeType !== Node.TEXT_NODE) {
+				if (!Dom.isText(node)) {
 					node = range.startContainer.childNodes[range.startOffset];
 
 					if (!node) {
@@ -455,25 +455,18 @@ export class Select {
 						rightMode = true;
 					}
 
-					if (
-						node &&
-						sel.isCollapsed &&
-						node.nodeType !== Node.TEXT_NODE
-					) {
+					if (node && sel.isCollapsed && !Dom.isText(node)) {
 						// test Current method - Cursor in the left of some SPAN
 						if (
 							!rightMode &&
 							node.previousSibling &&
-							node.previousSibling.nodeType === Node.TEXT_NODE
+							Dom.isText(node.previousSibling)
 						) {
 							node = node.previousSibling;
 						} else if (checkChild) {
 							let current: Node | null = child(node);
 							while (current) {
-								if (
-									current &&
-									current.nodeType === Node.TEXT_NODE
-								) {
+								if (current && Dom.isText(current)) {
 									node = current;
 									break;
 								}
@@ -482,11 +475,7 @@ export class Select {
 						}
 					}
 
-					if (
-						node &&
-						!sel.isCollapsed &&
-						node.nodeType !== Node.TEXT_NODE
-					) {
+					if (node && !sel.isCollapsed && !Dom.isText(node)) {
 						let leftChild: Node | null = node,
 							rightChild: Node | null = node;
 
@@ -496,13 +485,13 @@ export class Select {
 						} while (
 							leftChild &&
 							rightChild &&
-							leftChild.nodeType !== Node.TEXT_NODE
+							!Dom.isText(leftChild)
 						);
 
 						if (
 							leftChild === rightChild &&
 							leftChild &&
-							leftChild.nodeType === Node.TEXT_NODE
+							!Dom.isText(leftChild)
 						) {
 							node = leftChild;
 						}
@@ -845,12 +834,15 @@ export class Select {
 	 * @return {boolean | null} true - the cursor is at the end(start) block, null - cursor somewhere outside
 	 */
 	cursorInTheEdge(start: boolean, parentBlock: HTMLElement): boolean | null {
-		const
-			end = !start,
+		const end = !start,
 			range = this.sel?.getRangeAt(0),
 			current = this.current(false);
 
-		if (!range || !current || !Dom.isOrContains(parentBlock, current, true)) {
+		if (
+			!range ||
+			!current ||
+			!Dom.isOrContains(parentBlock, current, true)
+		) {
 			return null;
 		}
 
@@ -868,7 +860,10 @@ export class Select {
 			}
 
 			const inv = INV_START.exec(text);
-			if (start && ((inv && inv[0].length < offset) || (!inv && offset > 0))) {
+			if (
+				start &&
+				((inv && inv[0].length < offset) || (!inv && offset > 0))
+			) {
 				return false;
 			}
 		} else {
@@ -884,8 +879,6 @@ export class Select {
 				}
 			}
 		}
-
-
 
 		const next = start
 			? Dom.prev(current, check, parentBlock)
