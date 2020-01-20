@@ -56,53 +56,56 @@ Config.prototype.indentMargin = 10;
 export function indent(editor: IJodit) {
 	const callback = (command: string): void | false => {
 		const indentedBoxes: HTMLElement[] = [];
-		editor.selection.eachSelection(
-			(current: Node): false | void => {
-				const selectionInfo = editor.selection.save();
-				let currentBox: HTMLElement | false = current
-					? (Dom.up(
-							current,
-							node => Dom.isBlock(node, editor.editorWindow),
-							editor.editor
-					  ) as HTMLElement)
-					: false;
 
-				const enter: string = editor.options.enter;
-				if (!currentBox && current) {
-					currentBox = Dom.wrapInline(
+		editor.selection.eachSelection((current: Node): false | void => {
+			const selectionInfo = editor.selection.save();
+
+			let currentBox: HTMLElement | false = current
+				? (Dom.up(
 						current,
-						enter !== BR ? <HTMLTagNames>enter : PARAGRAPH,
-						editor
-					);
-				}
+						node => Dom.isBlock(node, editor.editorWindow),
+						editor.editor
+				  ) as HTMLElement)
+				: false;
 
-				if (!currentBox) {
-					editor.selection.restore(selectionInfo);
-					return false;
-				}
+			const enter: string = editor.options.enter;
 
-				const alreadyIndented: boolean =
-					indentedBoxes.indexOf(currentBox) !== -1;
-				if (currentBox && currentBox.style && !alreadyIndented) {
-					indentedBoxes.push(currentBox);
-
-					let marginLeft: number = currentBox.style.marginLeft
-						? parseInt(currentBox.style.marginLeft, 10)
-						: 0;
-					marginLeft +=
-						editor.options.indentMargin *
-						(command === 'outdent' ? -1 : 1);
-					currentBox.style.marginLeft =
-						marginLeft > 0 ? marginLeft + 'px' : '';
-
-					if (!currentBox.getAttribute('style')) {
-						currentBox.removeAttribute('style');
-					}
-				}
-
-				editor.selection.restore(selectionInfo);
+			if (!currentBox && current) {
+				currentBox = Dom.wrapInline(
+					current,
+					enter !== BR ? <HTMLTagNames>enter : PARAGRAPH,
+					editor
+				);
 			}
-		);
+
+			if (!currentBox) {
+				editor.selection.restore(selectionInfo);
+				return false;
+			}
+
+			const alreadyIndented = indentedBoxes.indexOf(currentBox) !== -1;
+
+			if (currentBox && currentBox.style && !alreadyIndented) {
+				indentedBoxes.push(currentBox);
+
+				let marginLeft = currentBox.style.marginLeft
+					? parseInt(currentBox.style.marginLeft, 10)
+					: 0;
+
+				marginLeft +=
+					editor.options.indentMargin *
+					(command === 'outdent' ? -1 : 1);
+
+				currentBox.style.marginLeft =
+					marginLeft > 0 ? marginLeft + 'px' : '';
+
+				if (!currentBox.getAttribute('style')) {
+					currentBox.removeAttribute('style');
+				}
+			}
+
+			editor.selection.restore(selectionInfo);
+		});
 
 		editor.setEditorValue();
 
@@ -113,6 +116,7 @@ export function indent(editor: IJodit) {
 		exec: callback,
 		hotkeys: ['ctrl+]', 'cmd+]']
 	});
+
 	editor.registerCommand('outdent', {
 		exec: callback,
 		hotkeys: ['ctrl+[', 'cmd+[']

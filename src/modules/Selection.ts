@@ -754,6 +754,10 @@ export class Select {
 			);
 
 			const forEvery = (current: Node): void => {
+				if (!Dom.isOrContains(this.jodit.editor, current, true)) {
+					return;
+				}
+
 				if (current.nodeName.match(/^(UL|OL)$/)) {
 					return Array.from(current.childNodes).forEach(forEvery);
 				}
@@ -765,6 +769,7 @@ export class Select {
 						const currentB = this.jodit.create.inside.text(
 							INVISIBLE_SPACE
 						);
+
 						current.appendChild(currentB);
 						current = currentB;
 					}

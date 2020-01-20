@@ -81,7 +81,23 @@ describe('Test editor indent plugin', function() {
 		expect(el6.style.marginLeft).equals('');
 	});
 
-	afterEach(() => {
-		removeStuff();
+	describe('If selection element outside the editor', function () {
+		it(`should do nothing`, function() {
+			const editor = new Jodit(appendTestArea()), div = appendTestDiv();
+			editor.value = `test`;
+
+			div.innerHTML = 'text';
+
+			const range = editor.selection.createRange();
+
+			range.setStart(div.firstChild, 0);
+			range.setEnd(div.firstChild, 1);
+
+			editor.selection.selectRange(range);
+
+			editor.execCommand('indent');
+
+			expect(div.style.marginLeft).does.not.equals('10px');
+		});
 	});
 });
