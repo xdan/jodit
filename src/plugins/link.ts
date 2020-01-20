@@ -286,7 +286,7 @@ export function link(jodit: IJodit) {
 						(node as HTMLElement).innerHTML ===
 						(node as HTMLElement).textContent
 					) {
-						newtag = jodit.editorDocument.createTextNode(
+						newtag = jodit.create.inside.text(
 							(node as HTMLElement).innerHTML
 						);
 					} else {

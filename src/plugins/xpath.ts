@@ -211,18 +211,21 @@ export class xpath extends Plugin {
 					'mouseup.xpath change.xpath keydown.xpath changeSelection.xpath',
 					this.calcPath
 				)
-				.on('afterSetMode.xpath afterInit.xpath changePlace.xpath', () => {
-					this.jodit.statusbar.append(this.container);
+				.on(
+					'afterSetMode.xpath afterInit.xpath changePlace.xpath',
+					() => {
+						this.jodit.statusbar.append(this.container);
 
-					if (this.jodit.getRealMode() === MODE_WYSIWYG) {
-						this.calcPath();
-					} else {
-						if (this.container) {
-							this.container.innerHTML = INVISIBLE_SPACE;
+						if (this.jodit.getRealMode() === MODE_WYSIWYG) {
+							this.calcPath();
+						} else {
+							if (this.container) {
+								this.container.innerHTML = INVISIBLE_SPACE;
+							}
+							this.appendSelectAll();
 						}
-						this.appendSelectAll();
 					}
-				});
+				);
 
 			this.calcPath();
 		}

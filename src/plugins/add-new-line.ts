@@ -132,7 +132,7 @@ export function addNewLine(editor: IJodit) {
 					e.stopPropagation();
 				})
 				.on(line, 'mousedown touchstart', (e: MouseEvent) => {
-					const p: HTMLElement = editor.create.inside.element(
+					const p = editor.create.inside.element(
 						editor.options.enter
 					);
 

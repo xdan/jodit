@@ -287,7 +287,7 @@ export class search extends Plugin {
 					rng.setEnd(bound.endContainer, bound.endOffset as number);
 					rng.deleteContents();
 
-					const textNode: Node = this.jodit.editorDocument.createTextNode(
+					const textNode: Node = this.jodit.create.inside.text(
 						this.replaceInput.value
 					);
 
