@@ -8,7 +8,10 @@
  */
 
 import { Config } from '../Config';
-import * as consts from '../constants';
+import {
+	INVISIBLE_SPACE_REG_EXP as INV_REG,
+	SPACE_REG_EXP
+} from '../constants';
 import { IS_INLINE } from '../constants';
 import { Dom } from '../modules/Dom';
 import {
@@ -17,8 +20,8 @@ import {
 	normalizeNode,
 	trim
 } from '../modules/helpers/';
-import { Select } from '../modules/Selection';
 import { IDictionary, IJodit } from '../types';
+import { Plugin } from '../modules/Plugin';
 
 /**
  * @property {object} cleanHTML {@link cleanHtml|cleanHtml}'s options
@@ -75,9 +78,9 @@ declare module '../Config' {
 			cleanOnPaste: boolean;
 			fillEmptyParagraph: boolean;
 			removeEmptyElements: boolean;
-			replaceOldTags: { [key: string]: string } | false;
-			allowTags: false | string | { [key: string]: string };
-			denyTags: false | string | { [key: string]: string };
+			replaceOldTags: IDictionary<string> | false;
+			allowTags: false | string | IDictionary<string>;
+			denyTags: false | string | IDictionary<string>;
 		};
 	}
 }
@@ -104,24 +107,166 @@ Config.prototype.controls.eraser = {
 /**
  * Clean HTML after removeFormat and insertHorizontalRule command
  */
-export function cleanHtml(editor: IJodit) {
-	// TODO compare this functionality and plugin paste.ts
-	if (editor.options.cleanHTML.cleanOnPaste) {
-		editor.events
-			.off('processPaste.cleanHtml')
-			.on('processPaste.cleanHtml', (event: Event, html: string) => {
-			return cleanFromWord(html);
-		});
+export class cleanHtml extends Plugin {
+	afterInit(jodit: IJodit): void {
+		this.observePasteHTML();
+
+		jodit.events
+			.off('.cleanHtml')
+			.on(
+				'change.cleanHtml afterSetMode.cleanHtml afterInit.cleanHtml mousedown.cleanHtml keydown.cleanHtml',
+				debounce(this.onChange, jodit.options.cleanHTML.timeout)
+			)
+			.on('keyup.cleanHtml', this.onKeyUpCleanUp)
+			.on('afterCommand.cleanHtml', this.afterCommand);
 	}
 
-	const
-		attributesReg = /([^\[]*)\[([^\]]+)]/,
-		seperator = /[\s]*,[\s]*/,
-		attrReg = /^(.*)[\s]*=[\s]*(.*)$/;
+	private observePasteHTML() {
+		// TODO compare this functionality and plugin paste.ts
+		if (this.jodit.options.cleanHTML.cleanOnPaste) {
+			this.jodit.events
+				.off('processPaste.cleanHtml')
+				.on('processPaste.cleanHtml', (event: Event, html: string) =>
+					cleanFromWord(html)
+				);
+		}
+	}
 
-	const getHash = (
+	private onChange = () => {
+		const editor = this.jodit;
+
+		if (!this.allowEdit()) {
+			return;
+		}
+
+		const current = editor.selection.current();
+
+		const replaceOldTags = editor.options.cleanHTML.replaceOldTags;
+
+		if (replaceOldTags && current) {
+			const tags = Object.keys(replaceOldTags).join('|');
+
+			if (editor.selection.isCollapsed()) {
+				const oldParent: Node | false = Dom.closest(
+					current,
+					tags,
+					editor.editor
+				);
+
+				if (oldParent) {
+					const selInfo = editor.selection.save(),
+						tagName: string =
+							replaceOldTags[oldParent.nodeName.toLowerCase()] ||
+							replaceOldTags[oldParent.nodeName];
+
+					Dom.replace(
+						oldParent as HTMLElement,
+						tagName,
+						true,
+						false,
+						editor.create.inside
+					);
+
+					editor.selection.restore(selInfo);
+				}
+			}
+		}
+
+		let node: Node | null = null;
+
+		if (editor.editor.firstChild) {
+			node = editor.editor.firstChild as Element;
+		}
+
+		const remove: Node[] = [];
+		const work = this.checkNode(node, current, remove);
+
+		remove.forEach(Dom.safeRemove);
+
+		if (remove.length || work) {
+			editor.events && editor.events.fire('syncho');
+		}
+	};
+
+	private allowEdit(): boolean {
+		return !(
+			this.jodit.isInDestruct ||
+			this.jodit.isEditorMode() ||
+			this.jodit.getReadOnly()
+		);
+	}
+
+	checkNode = (
+		nodeElm: Element | Node | null,
+		current: Node | false,
+		remove: Node[]
+	): boolean => {
+		let work = false;
+
+		if (nodeElm) {
+			if (this.isRemovableNode(nodeElm, current)) {
+				remove.push(nodeElm);
+
+				return this.checkNode(nodeElm.nextSibling, current, remove);
+			}
+
+			if (
+				this.jodit.options.cleanHTML.fillEmptyParagraph &&
+				Dom.isBlock(nodeElm, this.jodit.editorWindow) &&
+				Dom.isEmpty(
+					nodeElm,
+					/^(img|svg|canvas|input|textarea|form|br)$/
+				)
+			) {
+				const br = this.jodit.create.inside.element('br');
+
+				nodeElm.appendChild(br);
+			}
+
+			const allow = this.allowTagsHash;
+
+			if (allow && allow[nodeElm.nodeName] !== true) {
+				const attrs: NamedNodeMap = (nodeElm as Element).attributes;
+
+				if (attrs && attrs.length) {
+					const removeAttrs: string[] = [];
+
+					for (let i = 0; i < attrs.length; i += 1) {
+						const attr = allow[nodeElm.nodeName][attrs[i].name];
+
+						if (
+							!attr ||
+							(attr !== true && attr !== attrs[i].value)
+						) {
+							removeAttrs.push(attrs[i].name);
+						}
+					}
+
+					if (removeAttrs.length) {
+						work = true;
+					}
+
+					removeAttrs.forEach(attr => {
+						(nodeElm as Element).removeAttribute(attr);
+					});
+				}
+			}
+
+			work =
+				work ||
+				this.checkNode(nodeElm.firstChild, current, remove) ||
+				this.checkNode(nodeElm.nextSibling, current, remove);
+		}
+
+		return work;
+	};
+
+	private static getHash(
 		tags: false | string | IDictionary<string>
-	): IDictionary | false => {
+	): IDictionary | false {
+		const attributesReg = /([^\[]*)\[([^\]]+)]/;
+		const seperator = /[\s]*,[\s]*/,
+			attrReg = /^(.*)[\s]*=[\s]*(.*)$/;
 		const tagsHash: IDictionary = {};
 
 		if (typeof tags === 'string') {
@@ -156,26 +301,207 @@ export function cleanHtml(editor: IJodit) {
 		}
 
 		if (tags) {
-			Object.keys(tags).forEach((tagName: string) => {
+			Object.keys(tags).forEach(tagName => {
 				tagsHash[tagName.toUpperCase()] = tags[tagName];
 			});
+
 			return tagsHash;
 		}
 
 		return false;
+	}
+
+	private allowTagsHash: IDictionary | false = cleanHtml.getHash(
+		this.jodit.options.cleanHTML.allowTags
+	);
+
+	private denyTagsHash: IDictionary | false = cleanHtml.getHash(
+		this.jodit.options.cleanHTML.denyTags
+	);
+
+	// remove invisible chars if node has another chars
+	private onKeyUpCleanUp = () => {
+		const editor = this.jodit;
+
+		if (!this.allowEdit()) {
+			return;
+		}
+
+		const currentNode = editor.selection.current();
+
+		if (currentNode) {
+			const currentParagraph: Node | false = Dom.up(
+				currentNode,
+				node => Dom.isBlock(node, editor.editorWindow),
+				editor.editor
+			);
+
+			if (currentParagraph) {
+				Dom.all(currentParagraph, node => {
+					if (node && node.nodeType === Node.TEXT_NODE) {
+						if (
+							node.nodeValue !== null &&
+							INV_REG.test(node.nodeValue) &&
+							node.nodeValue.replace(INV_REG, '').length !== 0
+						) {
+							node.nodeValue = node.nodeValue.replace(
+								INV_REG,
+								''
+							);
+							if (
+								node === currentNode &&
+								editor.selection.isCollapsed()
+							) {
+								editor.selection.setCursorAfter(node);
+							}
+						}
+					}
+				});
+			}
+		}
 	};
 
-	let current: Node | false;
+	private afterCommand = (command: string) => {
+		const editor = this.jodit;
+		const sel = editor.selection;
 
-	const
-		allowTagsHash: IDictionary | false = getHash(
-			editor.options.cleanHTML.allowTags
-		),
-		denyTagsHash: IDictionary | false = getHash(
-			editor.options.cleanHTML.denyTags
+		switch (command.toLowerCase()) {
+			case 'inserthorizontalrule':
+				const hr: HTMLHRElement | null = editor.editor.querySelector(
+					'hr[id=null]'
+				);
+
+				if (hr) {
+					let node = Dom.next(
+						hr,
+						node => Dom.isBlock(node, editor.editorWindow),
+						editor.editor,
+						false
+					) as Node | null;
+
+					if (!node) {
+						node = editor.create.inside.element(
+							editor.options.enter
+						);
+
+						if (node) {
+							Dom.after(hr, node as HTMLElement);
+						}
+					}
+
+					sel.setCursorIn(node);
+				}
+				break;
+
+			case 'removeformat':
+				let node: Node | null = sel.current() as Node;
+
+				if (!sel.isCollapsed()) {
+					editor.selection.eachSelection((currentNode: Node):
+						| false
+						| void => {
+						this.cleanNode(currentNode);
+					});
+				} else {
+					while (
+						node &&
+						node.nodeType !== Node.ELEMENT_NODE &&
+						node !== editor.editor
+					) {
+						this.cleanNode(node);
+
+						if (node) {
+							node = node.parentNode;
+						}
+					}
+				}
+
+				break;
+		}
+	};
+
+	private cleanNode = (elm: Node): false | void => {
+		switch (elm.nodeType) {
+			case Node.ELEMENT_NODE:
+				Dom.each(elm, this.cleanNode);
+
+				if (elm.nodeName === 'FONT') {
+					Dom.unwrap(elm);
+				} else {
+					// clean some "style" attributes in selected range
+					Array.from((elm as Element).attributes).forEach(
+						(attr: Attr) => {
+							if (
+								['src', 'href', 'rel', 'content'].indexOf(
+									attr.name.toLowerCase()
+								) === -1
+							) {
+								(elm as Element).removeAttribute(attr.name);
+							}
+						}
+					);
+
+					normalizeNode(elm);
+				}
+				break;
+
+			case Node.TEXT_NODE:
+				if (
+					this.jodit.options.cleanHTML.replaceNBSP &&
+					Dom.isText(elm) &&
+					elm.nodeValue !== null &&
+					elm.nodeValue.match(SPACE_REG_EXP)
+				) {
+					elm.nodeValue = elm.nodeValue.replace(SPACE_REG_EXP, ' ');
+				}
+				break;
+
+			default:
+				Dom.safeRemove(elm);
+		}
+	};
+
+	private isRemovableNode(node: Node, current: Node | false): boolean {
+		if (
+			node.nodeType !== Node.TEXT_NODE &&
+			((this.allowTagsHash && !this.allowTagsHash[node.nodeName]) ||
+				(this.denyTagsHash && this.denyTagsHash[node.nodeName]))
+		) {
+			return true;
+		}
+
+		// remove extra br
+		if (
+			current &&
+			node.nodeName === 'BR' &&
+			cleanHtml.hasNotEmptyTextSibling(node) &&
+			!cleanHtml.hasNotEmptyTextSibling(node, true) &&
+			Dom.up(
+				node,
+				node => Dom.isBlock(node, this.jodit.editorWindow),
+				this.jodit.editor
+			) !==
+				Dom.up(
+					current,
+					node => Dom.isBlock(node, this.jodit.editorWindow),
+					this.jodit.editor
+				)
+		) {
+			return true;
+		}
+
+		return (
+			this.jodit.options.cleanHTML.removeEmptyElements &&
+			current !== false &&
+			node.nodeType === Node.ELEMENT_NODE &&
+			node.nodeName.match(IS_INLINE) !== null &&
+			!this.jodit.selection.isMarker(node) &&
+			trim((node as Element).innerHTML).length === 0 &&
+			!Dom.isOrContains(node, current)
 		);
+	}
 
-	const hasNotEmptyTextSibling = (node: Node, next = false): boolean => {
+	private static hasNotEmptyTextSibling(node: Node, next = false): boolean {
 		let prev: Node | null = next ? node.nextSibling : node.previousSibling;
 
 		while (prev) {
@@ -185,321 +511,14 @@ export function cleanHtml(editor: IJodit) {
 			) {
 				return true;
 			}
+
 			prev = next ? prev.nextSibling : prev.previousSibling;
 		}
 
 		return false;
-	};
+	}
 
-	const isRemovableNode = (node: Node): boolean => {
-		if (
-			node.nodeType !== Node.TEXT_NODE &&
-			((allowTagsHash && !allowTagsHash[node.nodeName]) ||
-				(denyTagsHash && denyTagsHash[node.nodeName]))
-		) {
-			return true;
-		}
-
-		// remove extra br
-		if (
-			current &&
-			node.nodeName === 'BR' &&
-			hasNotEmptyTextSibling(node) &&
-			!hasNotEmptyTextSibling(node, true) &&
-			Dom.up(
-				node,
-				node => Dom.isBlock(node, editor.editorWindow),
-				editor.editor
-			) !==
-				Dom.up(
-					current,
-					node => Dom.isBlock(node, editor.editorWindow),
-					editor.editor
-				)
-		) {
-			return true;
-		}
-
-		return (
-			editor.options.cleanHTML.removeEmptyElements &&
-			current !== false &&
-			node.nodeType === Node.ELEMENT_NODE &&
-			node.nodeName.match(IS_INLINE) !== null &&
-			!editor.selection.isMarker(node) &&
-			trim((node as Element).innerHTML).length === 0 &&
-			!Dom.isOrContains(node, current)
-		);
-	};
-
-	editor.events
-		.on(
-			'change afterSetMode afterInit mousedown keydown',
-			debounce(() => {
-				if (
-					!editor.isDestructed &&
-					editor.isEditorMode() &&
-					editor.selection
-				) {
-					current = editor.selection.current();
-
-					let node: Node | null = null,
-						work: boolean = false,
-						i: number = 0;
-
-					const remove: Node[] = [],
-						replaceOldTags: { [key: string]: string } | false =
-							editor.options.cleanHTML.replaceOldTags;
-
-					if (replaceOldTags && current) {
-						const tags: string = Object.keys(replaceOldTags).join(
-							'|'
-						);
-						if (editor.selection.isCollapsed()) {
-							const oldParent: Node | false = Dom.closest(
-								current,
-								tags,
-								editor.editor
-							);
-							if (oldParent) {
-								const selInfo = editor.selection.save(),
-									tagName: string =
-										replaceOldTags[
-											oldParent.nodeName.toLowerCase()
-										] || replaceOldTags[oldParent.nodeName];
-
-								Dom.replace(
-									oldParent as HTMLElement,
-									tagName,
-									true,
-									false,
-									editor.create.inside
-								);
-								editor.selection.restore(selInfo);
-							}
-						}
-					}
-
-					const checkNode = (
-						nodeElm: Element | Node | null
-					): void => {
-						if (nodeElm) {
-							if (isRemovableNode(nodeElm)) {
-								remove.push(nodeElm);
-								return checkNode(nodeElm.nextSibling);
-							}
-
-							if (
-								editor.options.cleanHTML.fillEmptyParagraph &&
-								Dom.isBlock(nodeElm, editor.editorWindow) &&
-								Dom.isEmpty(
-									nodeElm,
-									/^(img|svg|canvas|input|textarea|form|br)$/
-								)
-							) {
-								const br: HTMLBRElement = editor.create.inside.element(
-									'br'
-								);
-								nodeElm.appendChild(br);
-							}
-
-							if (
-								allowTagsHash &&
-								allowTagsHash[nodeElm.nodeName] !== true
-							) {
-								const attributes: NamedNodeMap = (nodeElm as Element)
-									.attributes;
-
-								if (attributes && attributes.length) {
-									const removeAttrs: string[] = [];
-									for (i = 0; i < attributes.length; i += 1) {
-										if (
-											!allowTagsHash[nodeElm.nodeName][
-												attributes[i].name
-											] ||
-											(allowTagsHash[nodeElm.nodeName][
-												attributes[i].name
-											] !== true &&
-												allowTagsHash[nodeElm.nodeName][
-													attributes[i].name
-												] !== attributes[i].value)
-										) {
-											removeAttrs.push(
-												attributes[i].name
-											);
-										}
-									}
-
-									if (removeAttrs.length) {
-										work = true;
-									}
-
-									removeAttrs.forEach((attr: string) => {
-										(nodeElm as Element).removeAttribute(
-											attr
-										);
-									});
-								}
-							}
-
-							checkNode(nodeElm.firstChild);
-							checkNode(nodeElm.nextSibling);
-						}
-					};
-
-					if (editor.editor.firstChild) {
-						node = editor.editor.firstChild as Element;
-					}
-
-					checkNode(node);
-
-					remove.forEach(Dom.safeRemove);
-
-					if (remove.length || work) {
-						editor.events && editor.events.fire('syncho');
-					}
-				}
-			}, editor.options.cleanHTML.timeout)
-		)
-		// remove invisible chars if node has another chars
-		.on('keyup', () => {
-			if (editor.options.readonly) {
-				return;
-			}
-
-			const currentNode: false | Node = editor.selection.current();
-
-			if (currentNode) {
-				const currentParagraph: Node | false = Dom.up(
-					currentNode,
-					node => Dom.isBlock(node, editor.editorWindow),
-					editor.editor
-				);
-				if (currentParagraph) {
-					Dom.all(currentParagraph, node => {
-						if (node && node.nodeType === Node.TEXT_NODE) {
-							if (
-								node.nodeValue !== null &&
-								consts.INVISIBLE_SPACE_REG_EXP.test(
-									node.nodeValue
-								) &&
-								node.nodeValue.replace(
-									consts.INVISIBLE_SPACE_REG_EXP,
-									''
-								).length !== 0
-							) {
-								node.nodeValue = node.nodeValue.replace(
-									consts.INVISIBLE_SPACE_REG_EXP,
-									''
-								);
-								if (
-									node === currentNode &&
-									editor.selection.isCollapsed()
-								) {
-									editor.selection.setCursorAfter(node);
-								}
-							}
-						}
-					});
-				}
-			}
-		})
-		.on('afterCommand', (command: string) => {
-			const sel: Select = editor.selection;
-
-			let hr: HTMLHRElement | null, node: Node | null;
-
-			switch (command.toLowerCase()) {
-				case 'inserthorizontalrule':
-					hr = editor.editor.querySelector('hr[id=null]');
-					if (hr) {
-						node = Dom.next(
-							hr,
-							node => Dom.isBlock(node, editor.editorWindow),
-							editor.editor,
-							false
-						) as Node | null;
-
-						if (!node) {
-							node = editor.create.inside.element(
-								editor.options.enter
-							);
-							if (node) {
-								Dom.after(hr, node as HTMLElement);
-							}
-						}
-
-						sel.setCursorIn(node);
-					}
-					break;
-				case 'removeformat':
-					node = sel.current() as Node;
-					const clean: (elm: Node) => false | void = (elm: Node) => {
-						switch (elm.nodeType) {
-							case Node.ELEMENT_NODE:
-								Dom.each(elm, clean);
-								if (elm.nodeName === 'FONT') {
-									Dom.unwrap(elm);
-								} else {
-									// clean some "style" attributes in selected range
-									[].slice
-										.call((elm as Element).attributes)
-										.forEach((attr: Attr) => {
-											if (
-												[
-													'src',
-													'href',
-													'rel',
-													'content'
-												].indexOf(
-													attr.name.toLowerCase()
-												) === -1
-											) {
-												(elm as Element).removeAttribute(
-													attr.name
-												);
-											}
-										});
-									normalizeNode(elm);
-								}
-								break;
-							case Node.TEXT_NODE:
-								if (
-									editor.options.cleanHTML.replaceNBSP &&
-									elm.nodeType === Node.TEXT_NODE &&
-									elm.nodeValue !== null &&
-									elm.nodeValue.match(consts.SPACE_REG_EXP)
-								) {
-									elm.nodeValue = elm.nodeValue.replace(
-										consts.SPACE_REG_EXP,
-										' '
-									);
-								}
-								break;
-							default:
-								Dom.safeRemove(elm);
-						}
-					};
-
-					if (!sel.isCollapsed()) {
-						editor.selection.eachSelection(
-							(currentNode: Node): false | void => {
-								clean(currentNode);
-							}
-						);
-					} else {
-						while (
-							node &&
-							node.nodeType !== Node.ELEMENT_NODE &&
-							node !== editor.editor
-						) {
-							clean(node);
-							if (node) {
-								node = node.parentNode;
-							}
-						}
-					}
-
-					break;
-			}
-		});
+	beforeDestruct(jodit: IJodit): void {
+		this.jodit.events.off('.cleanHtml');
+	}
 }
