@@ -1925,17 +1925,17 @@ describe('Toolbar', function() {
 						'.jodit_toolbar_btn-underline'
 					);
 
-					expect(true).equals(
+					expect(
 						bold.classList.contains('jodit_active')
-					);
+					).is.true;
 
-					expect(true).equals(
+					expect(
 						italic.classList.contains('jodit_active')
-					);
+					).is.true;
 
-					expect(true).equals(
+					expect(
 						underline.classList.contains('jodit_active')
-					);
+					).is.true;
 				});
 			});
 		});
