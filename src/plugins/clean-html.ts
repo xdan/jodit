@@ -9,6 +9,7 @@
 
 import { Config } from '../Config';
 import {
+	INVISIBLE_SPACE_REG_EXP,
 	INVISIBLE_SPACE_REG_EXP as INV_REG,
 	SPACE_REG_EXP
 } from '../constants';
@@ -108,8 +109,10 @@ Config.prototype.controls.eraser = {
  * Clean HTML after removeFormat and insertHorizontalRule command
  */
 export class cleanHtml extends Plugin {
-	afterInit(jodit: IJodit): void {
-		this.observePasteHTML();
+	protected afterInit(jodit: IJodit): void {
+		if (this.jodit.options.cleanHTML.cleanOnPaste) {
+			this.observePasteHTML();
+		}
 
 		jodit.events
 			.off('.cleanHtml')
@@ -123,21 +126,20 @@ export class cleanHtml extends Plugin {
 
 	private observePasteHTML() {
 		// TODO compare this functionality and plugin paste.ts
-		if (this.jodit.options.cleanHTML.cleanOnPaste) {
-			this.jodit.events
-				.off('processPaste.cleanHtml')
-				.on('processPaste.cleanHtml', (event: Event, html: string) =>
-					cleanFromWord(html)
-				);
-		}
+
+		this.jodit.events
+			.off('processPaste.cleanHtml')
+			.on('processPaste.cleanHtml', (event: Event, html: string) =>
+				cleanFromWord(html)
+			);
 	}
 
 	private onChange = () => {
-		const editor = this.jodit;
-
 		if (!this.allowEdit()) {
 			return;
 		}
+
+		const editor = this.jodit;
 
 		const current = editor.selection.current();
 
@@ -191,72 +193,66 @@ export class cleanHtml extends Plugin {
 	private allowEdit(): boolean {
 		return !(
 			this.jodit.isInDestruct ||
-			this.jodit.isEditorMode() ||
+			!this.jodit.isEditorMode() ||
 			this.jodit.getReadOnly()
 		);
 	}
 
-	checkNode = (
+	private checkNode = (
 		nodeElm: Element | Node | null,
 		current: Node | false,
 		remove: Node[]
 	): boolean => {
 		let work = false;
 
-		if (nodeElm) {
-			if (this.isRemovableNode(nodeElm, current)) {
-				remove.push(nodeElm);
-
-				return this.checkNode(nodeElm.nextSibling, current, remove);
-			}
-
-			if (
-				this.jodit.options.cleanHTML.fillEmptyParagraph &&
-				Dom.isBlock(nodeElm, this.jodit.editorWindow) &&
-				Dom.isEmpty(
-					nodeElm,
-					/^(img|svg|canvas|input|textarea|form|br)$/
-				)
-			) {
-				const br = this.jodit.create.inside.element('br');
-
-				nodeElm.appendChild(br);
-			}
-
-			const allow = this.allowTagsHash;
-
-			if (allow && allow[nodeElm.nodeName] !== true) {
-				const attrs: NamedNodeMap = (nodeElm as Element).attributes;
-
-				if (attrs && attrs.length) {
-					const removeAttrs: string[] = [];
-
-					for (let i = 0; i < attrs.length; i += 1) {
-						const attr = allow[nodeElm.nodeName][attrs[i].name];
-
-						if (
-							!attr ||
-							(attr !== true && attr !== attrs[i].value)
-						) {
-							removeAttrs.push(attrs[i].name);
-						}
-					}
-
-					if (removeAttrs.length) {
-						work = true;
-					}
-
-					removeAttrs.forEach(attr => {
-						(nodeElm as Element).removeAttribute(attr);
-					});
-				}
-			}
-
-			work =
-				work ||
-				this.checkNode(nodeElm.firstChild, current, remove) ||
-				this.checkNode(nodeElm.nextSibling, current, remove);
+		if (!nodeElm) {
+			return work;
 		}
+
+		if (this.isRemovableNode(nodeElm, current)) {
+			remove.push(nodeElm);
+			return this.checkNode(nodeElm.nextSibling, current, remove);
+		}
+
+		if (
+			this.jodit.options.cleanHTML.fillEmptyParagraph &&
+			Dom.isBlock(nodeElm, this.jodit.editorWindow) &&
+			Dom.isEmpty(nodeElm, /^(img|svg|canvas|input|textarea|form|br)$/)
+		) {
+			const br = this.jodit.create.inside.element('br');
+
+			nodeElm.appendChild(br);
+			work = true;
+		}
+
+		const allow = this.allowTagsHash;
+
+		if (allow && allow[nodeElm.nodeName] !== true) {
+			const attrs: NamedNodeMap = (nodeElm as Element).attributes;
+
+			if (attrs && attrs.length) {
+				const removeAttrs: string[] = [];
+
+				for (let i = 0; i < attrs.length; i += 1) {
+					const attr = allow[nodeElm.nodeName][attrs[i].name];
+
+					if (!attr || (attr !== true && attr !== attrs[i].value)) {
+						removeAttrs.push(attrs[i].name);
+					}
+				}
+
+				if (removeAttrs.length) {
+					work = true;
+				}
+
+				removeAttrs.forEach(attr => {
+					(nodeElm as Element).removeAttribute(attr);
+				});
+			}
+		}
+
+		work = this.checkNode(nodeElm.firstChild, current, remove) || work;
+		work = this.checkNode(nodeElm.nextSibling, current, remove) || work;
 
 		return work;
 	};
@@ -362,72 +358,104 @@ export class cleanHtml extends Plugin {
 	};
 
 	private afterCommand = (command: string) => {
-		const editor = this.jodit;
-		const sel = editor.selection;
+		if (command.toLowerCase() === 'inserthorizontalrule') {
+			this.onInsertHorizontalLine();
+			return;
+		}
 
-		switch (command.toLowerCase()) {
-			case 'inserthorizontalrule':
-				const hr: HTMLHRElement | null = editor.editor.querySelector(
-					'hr[id=null]'
-				);
-
-				if (hr) {
-					let node = Dom.next(
-						hr,
-						node => Dom.isBlock(node, editor.editorWindow),
-						editor.editor,
-						false
-					) as Node | null;
-
-					if (!node) {
-						node = editor.create.inside.element(
-							editor.options.enter
-						);
-
-						if (node) {
-							Dom.after(hr, node as HTMLElement);
-						}
-					}
-
-					sel.setCursorIn(node);
-				}
-				break;
-
-			case 'removeformat':
-				let node: Node | null = sel.current() as Node;
-
-				if (!sel.isCollapsed()) {
-					editor.selection.eachSelection((currentNode: Node):
-						| false
-						| void => {
-						this.cleanNode(currentNode);
-					});
-				} else {
-					while (
-						node &&
-						node.nodeType !== Node.ELEMENT_NODE &&
-						node !== editor.editor
-					) {
-						this.cleanNode(node);
-
-						if (node) {
-							node = node.parentNode;
-						}
-					}
-				}
-
-				break;
+		if (command.toLowerCase() === 'removeformat') {
+			this.onRemoveFormat();
+			return;
 		}
 	};
 
-	private cleanNode = (elm: Node): false | void => {
+	private onInsertHorizontalLine() {
+		const hr: HTMLHRElement | null = this.jodit.editor.querySelector(
+			'hr[id=null]'
+		);
+
+		if (hr) {
+			let node = Dom.next(
+				hr,
+				node => Dom.isBlock(node, this.jodit.editorWindow),
+				this.jodit.editor,
+				false
+			) as Node | null;
+
+			if (!node) {
+				node = this.jodit.create.inside.element(
+					this.jodit.options.enter
+				);
+
+				if (node) {
+					Dom.after(hr, node as HTMLElement);
+				}
+			}
+
+			this.jodit.selection.setCursorIn(node);
+		}
+	}
+
+	private onRemoveFormat() {
+		const sel = this.jodit.selection;
+		const current = sel.current();
+
+		if (!current) {
+			return;
+		}
+
+		const up = (node: Node | null) =>
+			node && Dom.up(node, Dom.isInlineBlock, this.jodit.editor);
+
+		let parentNode = up(current),
+			anotherParent = parentNode;
+
+		while (anotherParent) {
+			anotherParent = up(anotherParent.parentNode);
+
+			if (anotherParent) {
+				parentNode = anotherParent;
+			}
+		}
+
+		const collapsed = sel.isCollapsed();
+
+		if (parentNode) {
+			let fragment: DocumentFragment | null = null;
+			if (!collapsed) {
+				fragment = sel.range.extractContents();
+			}
+
+			if (parentNode.parentNode && parentNode.parentNode !== fragment) {
+				this.jodit.selection.splitSelection(parentNode as HTMLElement);
+				this.jodit.selection.setCursorAfter(parentNode);
+
+				if (Dom.isEmpty(parentNode)) {
+					Dom.safeRemove(parentNode);
+				}
+			}
+
+			if (fragment && fragment.textContent) {
+				sel.insertHTML(fragment.textContent);
+			}
+		}
+
+		this.cleanNode(this.jodit.editor, true);
+	}
+
+	private cleanNode = (
+		elm: Node,
+		onlyRemoveFont: boolean = false
+	): false | void => {
 		switch (elm.nodeType) {
 			case Node.ELEMENT_NODE:
-				Dom.each(elm, this.cleanNode);
+				Dom.each(elm, child => {
+					this.cleanNode(child, onlyRemoveFont);
+				});
 
 				if (elm.nodeName === 'FONT') {
 					Dom.unwrap(elm);
-				} else {
+				} else if (!onlyRemoveFont) {
 					// clean some "style" attributes in selected range
 					Array.from((elm as Element).attributes).forEach(
 						(attr: Attr) => {
@@ -447,12 +475,15 @@ export class cleanHtml extends Plugin {
 
 			case Node.TEXT_NODE:
 				if (
+					!onlyRemoveFont &&
 					this.jodit.options.cleanHTML.replaceNBSP &&
 					Dom.isText(elm) &&
 					elm.nodeValue !== null &&
 					elm.nodeValue.match(SPACE_REG_EXP)
 				) {
-					elm.nodeValue = elm.nodeValue.replace(SPACE_REG_EXP, ' ');
+					elm.nodeValue = elm.nodeValue
+						.replace(INVISIBLE_SPACE_REG_EXP, '')
+						.replace(SPACE_REG_EXP, ' ');
 				}
 				break;
 
@@ -462,9 +493,11 @@ export class cleanHtml extends Plugin {
 	};
 
 	private isRemovableNode(node: Node, current: Node | false): boolean {
+		const allow = this.allowTagsHash;
+
 		if (
-			node.nodeType !== Node.TEXT_NODE &&
-			((this.allowTagsHash && !this.allowTagsHash[node.nodeName]) ||
+			!Dom.isText(node) &&
+			((allow && !allow[node.nodeName]) ||
 				(this.denyTagsHash && this.denyTagsHash[node.nodeName]))
 		) {
 			return true;
@@ -518,7 +551,7 @@ export class cleanHtml extends Plugin {
 		return false;
 	}
 
-	beforeDestruct(jodit: IJodit): void {
+	protected beforeDestruct(jodit: IJodit): void {
 		this.jodit.events.off('.cleanHtml');
 	}
 }

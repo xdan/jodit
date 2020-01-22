@@ -125,17 +125,7 @@ export class enter extends Plugin {
 		if (sel.cursorInTheEdge(false, currentBox) === false) {
 			// if we are not in right edge of paragraph
 			// split p,h1 etc on two parts
-			const leftRange = sel.createRange();
-
-			leftRange.setStartBefore(currentBox);
-			leftRange.setEnd(range.startContainer, range.startOffset);
-
-			const fragment = leftRange.extractContents();
-
-			if (currentBox.parentNode) {
-				currentBox.parentNode.insertBefore(fragment, currentBox);
-			}
-
+			sel.splitSelection(currentBox);
 			sel.setCursorIn(currentBox, true);
 		} else {
 			const fake = sel.setCursorAfter(currentBox);

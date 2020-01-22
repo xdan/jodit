@@ -11,8 +11,8 @@ import { IJodit, IPlugin } from '../types';
 import { Component, STATUSES } from './Component';
 
 export abstract class Plugin extends Component<IJodit> implements IPlugin {
-	abstract afterInit(jodit: IJodit): void;
-	abstract beforeDestruct(jodit: IJodit): void;
+	protected abstract afterInit(jodit: IJodit): void;
+	protected abstract beforeDestruct(jodit: IJodit): void;
 
 	constructor(jodit: IJodit) {
 		super(jodit);

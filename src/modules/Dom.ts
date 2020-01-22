@@ -625,9 +625,11 @@ export class Dom {
 			if (condition(start)) {
 				return start;
 			}
+
 			if (start === root || !start.parentNode) {
 				break;
 			}
+
 			start = start.parentNode;
 		} while (start && start !== root);
 

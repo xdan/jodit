@@ -758,6 +758,7 @@ describe('Selection Module Tests', function() {
 			expect(editor.value).equals('<a>1 a 1</a>');
 		});
 	});
+
 	describe('Click on empty tag', function() {
 		it('Should move cursore inside that', function() {
 			const editor = new Jodit(appendTestArea());
@@ -771,6 +772,7 @@ describe('Selection Module Tests', function() {
 			expect('<p></p><p>test</p><p></p>').equals(editor.value);
 		});
 	});
+
 	describe('Method setCursorIn', function() {
 		describe('Call for not Node element', function() {
 			it('Should throw exception', function() {
@@ -782,7 +784,20 @@ describe('Selection Module Tests', function() {
 					);
 				}).to.throw();
 			});
+
+			describe('Call for inserted fragment', function() {
+				it('Should not throw exception', function() {
+					const editor = new Jodit(appendTestArea());
+					editor.value = '<p>1<span>3</span>2</p>';
+					editor.selection.select(
+						editor.editor.querySelector('span')
+					);
+					const fragment = editor.selection.range.extractContents();
+					editor.selection.insertNode(fragment);
+				});
+			});
 		});
+
 		describe('Call for element what is not inside the current editor', function() {
 			it('Should throw exception', function() {
 				const editor = new Jodit(appendTestArea());
@@ -791,6 +806,7 @@ describe('Selection Module Tests', function() {
 				}).to.throw();
 			});
 		});
+
 		it('Should move cursor inside node in the end', function() {
 			const editor = new Jodit(appendTestArea());
 			editor.value = '<p>1</p><p>2</p>';
@@ -800,6 +816,7 @@ describe('Selection Module Tests', function() {
 
 			expect(editor.value).equals('<p>1</p><p>2test</p>');
 		});
+
 		describe('With inStart = true', function() {
 			it('Should move cursor inside node in the start', function() {
 				const editor = new Jodit(appendTestArea());
@@ -812,6 +829,7 @@ describe('Selection Module Tests', function() {
 			});
 		});
 	});
+
 	describe('Method eachSelection', function() {
 		it('Should call callback for each node in selection', function() {
 			const editor = new Jodit(appendTestArea());

@@ -544,7 +544,11 @@ export class Select {
 		}
 
 		if (insertCursorAfter) {
-			this.setCursorAfter(node);
+			if (node.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
+				node.lastChild && this.setCursorAfter(node.lastChild);
+			} else {
+				this.setCursorAfter(node);
+			}
 		}
 
 		if (fireChange && this.jodit.events) {
@@ -1385,5 +1389,28 @@ export class Select {
 				this.setCursorIn(node);
 			}
 		}
+	}
+
+	/**
+	 * Split selection on two parts
+	 * @param currentBox
+	 */
+	splitSelection(currentBox: HTMLElement): Element | null {
+		if (!this.isCollapsed()) {
+			return null;
+		}
+
+		const leftRange = this.createRange(), range = this.range;
+
+		leftRange.setStartBefore(currentBox);
+		leftRange.setEnd(range.startContainer, range.startOffset);
+
+		const fragment = leftRange.extractContents();
+
+		if (currentBox.parentNode) {
+			currentBox.parentNode.insertBefore(fragment, currentBox);
+		}
+
+		return currentBox.previousElementSibling;
 	}
 }
