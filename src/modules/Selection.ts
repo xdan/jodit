@@ -459,12 +459,12 @@ export class Select {
 						// test Current method - Cursor in the left of some SPAN
 						if (
 							!rightMode &&
-							node.previousSibling &&
 							Dom.isText(node.previousSibling)
 						) {
 							node = node.previousSibling;
 						} else if (checkChild) {
 							let current: Node | null = child(node);
+
 							while (current) {
 								if (current && Dom.isText(current)) {
 									node = current;
@@ -491,7 +491,7 @@ export class Select {
 						if (
 							leftChild === rightChild &&
 							leftChild &&
-							!Dom.isText(leftChild)
+							Dom.isText(leftChild)
 						) {
 							node = leftChild;
 						}

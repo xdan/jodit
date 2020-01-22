@@ -330,8 +330,8 @@ export class Dom {
 	 * Check if element is text node
 	 * @param node
 	 */
-	static isText(node: Node): node is Text {
-		return node.nodeType === Node.TEXT_NODE;
+	static isText(node: Node | null): node is Text {
+		return Boolean(node && node.nodeType === Node.TEXT_NODE);
 	}
 
 	/**

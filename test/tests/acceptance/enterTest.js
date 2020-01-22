@@ -602,9 +602,9 @@ describe('Enter behavior Jodit Editor Tests', function() {
 		});
 
 		describe('If Enter was pressed in the end of SPAN inside P', function() {
-			it('should simple create P and move cursor inside this', function() {
+			it('should simple create P>SPAN and move cursor inside this', function() {
 				const editor = new Jodit(appendTestArea());
-				editor.value = '<p>Some <span>text</span></p>';
+				editor.value = '<p>Some <span style="color: red">text</span></p>';
 
 				const sel = editor.selection.sel,
 					range = editor.selection.createRange();
@@ -619,7 +619,30 @@ describe('Enter behavior Jodit Editor Tests', function() {
 				editor.selection.insertNode(editor.create.inside.text(' a '));
 
 				expect(editor.value).equals(
-					'<p>Some <span>text</span></p><p> a <br></p>'
+					'<p>Some <span style="color: red">text</span></p><p><span style="color: red"> a </span><br></p>'
+				);
+			});
+		});
+
+		describe('If Enter was pressed in the end of STRONG inside P', function() {
+			it('should simple create P>STRONG and move cursor inside this', function() {
+				const editor = new Jodit(appendTestArea());
+				editor.value = '<p>Some <strong>text</strong></p>';
+
+				const sel = editor.selection.sel,
+					range = editor.selection.createRange();
+
+				range.selectNodeContents(editor.editor.firstChild.lastChild);
+				range.collapse(false);
+				sel.removeAllRanges();
+				sel.addRange(range);
+
+				simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
+
+				editor.selection.insertNode(editor.create.inside.text(' a '));
+
+				expect(editor.value).equals(
+					'<p>Some <strong>text</strong></p><p><strong> a </strong><br></p>'
 				);
 			});
 		});
