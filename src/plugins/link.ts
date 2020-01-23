@@ -182,7 +182,11 @@ Config.prototype.controls.link = {
 			a.setAttribute('href', url_input.value);
 
 			if (!isImageContent) {
-				a.textContent = content_input.value;
+				if (content_input.value.trim().length) {
+					a.textContent = content_input.value;
+				} else {
+					a.textContent = url_input.value;
+				}
 			}
 
 			if (openInNewTabCheckbox) {
