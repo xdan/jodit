@@ -1,8 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
- * License GNU General Public License version 2 or later;
+ * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright 2013-2020 Valeriy Chupurnov https://xdsoft.net
- * @author Patrick Sachs https://github.com/PatrickSachs
  */
 
 export const normalizeRelativePath = (path: string) => {

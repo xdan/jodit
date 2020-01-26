@@ -6,9 +6,6 @@ export default {
 	Advanced: '高度な設定',
 	'About Jodit': 'Joditについて',
 	'Jodit Editor': 'Jodit Editor',
-	'Free Non-commercial Version': 'Free Non-commercial Version',
-	'GNU General Public License, version 2 or later':
-		'GNU General Public License, version 2 or later',
 	"Jodit User's Guide": "Jodit ユーザーズ・ガイド",
 	'contains detailed help for using': '詳しい使い方',
 	'For information about the license, please go to our website:':

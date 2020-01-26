@@ -6,8 +6,6 @@ export default {
 	'About Jodit': 'O Jodit',
 	'Jodit Editor': 'Editor Jodit',
 	'Free Non-commercial Version': 'Verze pro nekomerční použití',
-	'GNU General Public License, version 2 or later':
-		'Licence GNU (GPL), verze 2 nebo vyšší',
 
 	"Jodit User's Guide": 'Jodit Uživatelská příručka',
 	'contains detailed help for using': 'obsahuje detailní nápovědu',

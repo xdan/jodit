@@ -8,8 +8,6 @@ export default {
 	'About Jodit': 'Over Jodit',
 	'Jodit Editor': 'Jodit Editor',
 	'Free Non-commercial Version': 'Gratis niet-commerciële versie',
-	'GNU General Public License, version 2 or later':
-		'GNU General Public License, versie 2 of hoger',
 	"Jodit User's Guide": 'Jodit gebruikershandleiding',
 	'contains detailed help for using':
 		'bevat gedetailleerde informatie voor gebruik.',

@@ -6,8 +6,6 @@ export default {
   'About Jodit': 'Tentang Jodit',
   'Jodit Editor': 'Editor Jodit',
   'Free Non-commercial Version': 'Versi Bebas Non-komersil',
-  'GNU General Public License, version 2 or later':
-    'Lisensi Publik Umum (GPL), versi 2 atau terbaru',
 
   "Jodit User's Guide": 'Panduan Pengguna Jodit',
   'contains detailed help for using': 'mencakup detail bantuan penggunaan',

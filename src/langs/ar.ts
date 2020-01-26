@@ -5,9 +5,7 @@ export default {
 	// About
 	'About Jodit': 'حول جوديت',
 	'Jodit Editor': 'محرر جوديت',
-	'Free Non-commercial Version': 'الإصدار الغير تجاري مجاني',
-	'GNU General Public License, version 2 or later':
-		'رخصة جنو العمومية العامة ، الإصدار الثاني أو الأحدث',
+
 	"Jodit User's Guide": 'دليل مستخدم جوديت',
 	'contains detailed help for using': 'يحتوي على مساعدة مفصلة للاستخدام',
 	'For information about the license, please go to our website:':

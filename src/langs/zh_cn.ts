@@ -7,8 +7,6 @@ export default {
 	'About Jodit': '关于Jodit',
 	'Jodit Editor': 'Jodit Editor',
 	'Free Non-commercial Version': 'Free Non-commercial Version',
-	'GNU General Public License, version 2 or later':
-		'GNU General Public License, version 2 or later',
 	"Jodit User's Guide": '开发者指南',
 	'contains detailed help for using': '使用帮助',
 	'For information about the license, please go to our website:':

@@ -1,8 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
- * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
  * Released under MIT see LICENSE.txt in the project root for license information.
-  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 import * as consts from './constants';
@@ -21,7 +20,14 @@ import {
 	val
 } from './modules/helpers/';
 import { ToolbarIcon } from './modules/toolbar/icon';
-import { IExtraPlugin, IDictionary, IJodit, IViewOptions, NodeFunction, Attributes } from './types';
+import {
+	IExtraPlugin,
+	IDictionary,
+	IJodit,
+	IViewOptions,
+	NodeFunction,
+	Attributes
+} from './types';
 import { IFileBrowserCallBackData } from './types/fileBrowser';
 import { Buttons, Controls, IControlType } from './types/toolbar';
 import { extend } from './modules/helpers/extend';
@@ -820,7 +826,11 @@ export class Config implements IViewOptions {
 	}
 }
 
-export const OptionsDefault: any = function(this: any, options: any, def: any = Config.defaultOptions) {
+export const OptionsDefault: any = function(
+	this: any,
+	options: any,
+	def: any = Config.defaultOptions
+) {
 	const self: any = this;
 
 	self.plainOptions = options;
@@ -910,9 +920,7 @@ Config.prototype.controls = {
 					editor.i18n(
 						'License: %s',
 						!isLicense(editor.options.license)
-							? editor.i18n(
-									'GNU General Public License, version 2 or later'
-							  )
+							? 'MIT'
 							: normalizeLicense(editor.options.license)
 					) +
 					'</div>' +

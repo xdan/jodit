@@ -8,8 +8,7 @@ export default {
 	'About Jodit': 'Joditról',
 	'Jodit Editor': 'Jodit Editor',
 	'Free Non-commercial Version': 'Ingyenes változat',
-	'GNU General Public License, version 2 or later':
-		'GNU General Public License, Verzió 2 vagy későbbi',
+
 	"Jodit User's Guide": 'Jodit útmutató',
 	'contains detailed help for using': 'további segítséget tartalmaz',
 	'For information about the license, please go to our website:':

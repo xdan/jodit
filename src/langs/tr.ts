@@ -7,9 +7,6 @@ export default {
 	Advanced: 'Gelişmiş',
 	'About Jodit': 'Jodit Hakkında',
 	'Jodit Editor': 'Jodit Editor',
-	'Free Non-commercial Version': 'Ücretsiz, ticari olmayan versiyon',
-	'GNU General Public License, version 2 or later':
-		'GNU General Public License, Versiyon 2 ve sonrası için',
 	"Jodit User's Guide": 'Jodit Kullanım Kılavuzu',
 	'contains detailed help for using': 'kullanım için detaylı bilgiler içerir',
 	'For information about the license, please go to our website:':

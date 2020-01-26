@@ -5,10 +5,6 @@ export default {
 	// About
 	'About Jodit': 'О Jodit',
 	'Jodit Editor': 'Редактор Jodit',
-	'Free Non-commercial Version': 'Версия для не коммерческого использования',
-	'GNU General Public License, version 2 or later':
-		'Стандартная общественная лицензия GNU (GPL), версия 2 или выше',
-
 	'Jodit User\'s Guide': 'Jodit Руководство пользователя',
 	'contains detailed help for using':
 		'содержит детальную информацию по использованию',
