@@ -9,6 +9,7 @@ import { Dom } from '../modules/Dom';
 import { $$, scrollIntoView } from '../modules/helpers/';
 import { HTMLTagNames, IJodit } from '../types';
 import { Plugin } from '../modules/Plugin';
+import { INVISIBLE_SPACE } from '../constants';
 
 /**
  * Insert default paragraph
@@ -130,8 +131,9 @@ export class enter extends Plugin {
 		let current = sel.current(false) as Node;
 
 		if (!current || current === editor.editor) {
-			sel.focus();
-			current = sel.current(false) as Node;
+			current = editor.create.inside.text(INVISIBLE_SPACE);
+			sel.insertNode(current)
+			sel.select(current);
 		}
 
 		let currentBox = this.getBlockWrapper(current);
@@ -177,7 +179,7 @@ export class enter extends Plugin {
 
 			insertParagraph(editor, fake, this.defaultTag);
 
-			if (cursorOnTheLeft) {
+			if (cursorOnTheLeft && !cursorOnTheRight) {
 				sel.setCursorIn(currentBox, true);
 			}
 

@@ -71,7 +71,7 @@ export class placeholder extends Plugin {
 		}
 
 		this.toggle = editor.async.debounce(
-			this.toggle,
+			this.toggle.bind(this),
 			this.jodit.defaultTimeout / 10
 		);
 
@@ -110,16 +110,13 @@ export class placeholder extends Plugin {
 				editor.element.getAttribute('placeholder') || '';
 		}
 
-		editor.events.fire(
-			'placeholder',
-			this.placeholderElm.innerHTML
-		);
+		editor.events.fire('placeholder', this.placeholderElm.innerHTML);
 
 		editor.events
 			.off('.placeholder')
 			.on(
 				'change.placeholder focus.placeholder keyup.placeholder mouseup.placeholder keydown.placeholder ' +
-				'mousedown.placeholder afterSetMode.placeholder',
+					'mousedown.placeholder afterSetMode.placeholder',
 				this.toggle
 			)
 			.on(window, 'load', this.toggle);
@@ -194,7 +191,7 @@ export class placeholder extends Plugin {
 			return;
 		}
 
-		if (this.isEmpty(editor.editor)) {
+		if (!this.isEmpty(editor.editor)) {
 			this.hide();
 		} else {
 			this.show();
@@ -202,7 +199,6 @@ export class placeholder extends Plugin {
 	}
 
 	private isEmpty(root: HTMLElement): boolean {
-		debugger
 		if (!root.firstChild) {
 			return true;
 		}
@@ -215,7 +211,14 @@ export class placeholder extends Plugin {
 			root
 		);
 
-		if (!next && Dom.each(first, (elm) => Dom.isEmpty(elm) || elm.nodeName === 'BR')) {
+		if (Dom.isText(first) && !next) {
+			return Dom.isEmptyTextNode(first);
+		}
+
+		if (
+			!next &&
+			Dom.each(first, elm => Dom.isEmpty(elm) || elm.nodeName === 'BR')
+		) {
 			return true;
 		}
 
