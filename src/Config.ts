@@ -904,41 +904,33 @@ Config.prototype.controls = {
 
 	about: {
 		exec: (editor: IJodit) => {
-			const dialog: any = editor.getInstance('Dialog');
+			const dialog: any = editor.getInstance('Dialog'),
+				i18n = editor.i18n.bind(editor);
 
-			dialog.setTitle(editor.i18n('About Jodit'));
+			dialog.setTitle(i18n('About Jodit'));
 
 			dialog.setContent(
-				'<div class="jodit_about">\
-										<div>' +
-					editor.i18n('Jodit Editor') +
-					' v.' +
-					editor.getVersion() +
-					' ' +
-					'</div>' +
-					'<div>' +
-					editor.i18n(
+				`<div class="jodit_about">
+					<div>${i18n('Jodit Editor')} v.${editor.getVersion()}</div>
+					<div>${i18n(
 						'License: %s',
 						!isLicense(editor.options.license)
 							? 'MIT'
 							: normalizeLicense(editor.options.license)
-					) +
-					'</div>' +
-					'<div>' +
-					'<a href="https://xdsoft.net/jodit/" target="_blank">http://xdsoft.net/jodit/</a>' +
-					'</div>' +
-					'<div>' +
-					'<a href="https://xdsoft.net/jodit/doc/" target="_blank">' +
-					editor.i18n("Jodit User's Guide") +
-					'</a> ' +
-					editor.i18n('contains detailed help for using') +
-					'</div>' +
-					'<div>' +
-					editor.i18n(
+					)}</div>
+					<div>
+						<a href="https://xdsoft.net/jodit/" target="_blank">http://xdsoft.net/jodit/</a>
+					</div>
+					<div>
+						<a href="https://xdsoft.net/jodit/doc/" target="_blank">${i18n(
+							"Jodit User's Guide"
+						)}</a>
+						${i18n('contains detailed help for using')}
+					</div>
+					<div>${i18n(
 						'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.'
-					) +
-					'</div>' +
-					'</div>'
+					)}</div>
+				</div>`
 			);
 			dialog.open();
 		},
