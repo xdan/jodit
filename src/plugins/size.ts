@@ -8,7 +8,7 @@
  */
 
 import { Config } from '../Config';
-import { debounce, throttle } from '../modules/helpers/async';
+import { throttle } from '../modules/helpers/async';
 import { css } from '../modules/helpers/css';
 import { IJodit, IPointBound } from '../types';
 
@@ -46,8 +46,7 @@ export function size(editor: IJodit) {
 		editor.options.height !== 'auto' &&
 		(editor.options.allowResizeX || editor.options.allowResizeY)
 	) {
-		const
-			handle = editor.create.div(
+		const handle = editor.create.div(
 				'jodit_editor_resize',
 				'<a tabindex="-1" href="javascript:void(0)"></a>'
 			),
@@ -147,7 +146,10 @@ export function size(editor: IJodit) {
 		}
 	};
 
-	const resizeWorkspace = debounce(resizeWorkspaceImd, editor.defaultTimeout);
+	const resizeWorkspace = editor.async.debounce(
+		resizeWorkspaceImd,
+		editor.defaultTimeout
+	);
 
 	editor.events
 		.on('toggleFullSize', (fullsize: boolean) => {

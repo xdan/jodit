@@ -13,12 +13,12 @@ import { Dom } from './modules/Dom';
 import {
 	asArray,
 	css,
-	debounce,
 	inArray,
 	isDestructable,
 	isPromise,
 	normalizeKeyAliases,
-	error, isString
+	error,
+	isString
 } from './modules/helpers/';
 
 import { JoditArray } from './modules/helpers/JoditArray';
@@ -1344,7 +1344,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			if (this.options.triggerChangeEvent) {
 				this.events.on(
 					'change',
-					debounce(() => {
+					this.async.debounce(() => {
 						this.events && this.events.fire(this.element, 'change');
 					}, this.defaultTimeout)
 				);

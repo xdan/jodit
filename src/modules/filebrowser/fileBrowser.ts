@@ -41,7 +41,6 @@ import { ViewWithToolbar } from '../view/viewWithToolbar';
 import { IJodit, IStorage } from '../../types';
 import './config';
 import { Dom } from '../Dom';
-import { debounce } from '../helpers/async';
 import { Alert } from '../dialog';
 import DataProvider from './dataProvider';
 import contextMenu from './builders/contextMenu';
@@ -558,7 +557,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 
 			.on(
 				'change.elements',
-				debounce(() => {
+				this.async.debounce(() => {
 					Dom.detach(files);
 
 					if (state.elements.length) {
@@ -578,7 +577,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 
 			.on(
 				'change.folders',
-				debounce(() => {
+				this.async.debounce(() => {
 					Dom.detach(this.tree);
 
 					let lastSource = DEFAULT_SOURCE_NAME,

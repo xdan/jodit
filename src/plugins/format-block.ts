@@ -8,7 +8,6 @@
  */
 
 import { Config } from '../Config';
-import * as consts from '../constants';
 import { Dom } from '../modules/Dom';
 import { HTMLTagNames, IJodit, markerInfo } from '../types';
 import { IControlType } from '../types/toolbar';
@@ -49,6 +48,7 @@ Config.prototype.controls.paragraph = {
 
 		return false;
 	},
+
 	exec: (editor: IJodit, event, control: IControlType) => {
 		editor.execCommand(
 			control.command as string,
@@ -56,9 +56,11 @@ Config.prototype.controls.paragraph = {
 			control.args ? control.args[0] : undefined
 		);
 	},
+
 	data: {
 		currentValue: 'left'
 	},
+
 	list: {
 		p: 'Normal',
 		h1: 'Heading 1',
@@ -67,6 +69,7 @@ Config.prototype.controls.paragraph = {
 		h4: 'Heading 4',
 		blockquote: 'Quote'
 	},
+
 	isActiveChild: (editor: IJodit, control: IControlType): boolean => {
 		const current: Node | false = editor.selection.current();
 
@@ -87,6 +90,7 @@ Config.prototype.controls.paragraph = {
 
 		return false;
 	},
+
 	isActive: (editor: IJodit, control: IControlType): boolean => {
 		const current: Node | false = editor.selection.current();
 
@@ -110,17 +114,13 @@ Config.prototype.controls.paragraph = {
 
 		return false;
 	},
+
 	template: (editor: IJodit, key: string, value: string) => {
-		return (
-			'<' +
-			key +
-			' class="jodit_list_element"><span>' +
-			editor.i18n(value) +
-			'</span></' +
-			key +
-			'></li>'
-		);
+		return `<${key} class="jodit_list_element"><span>${editor.i18n(
+			value
+		)}</span></${key}></li>`;
 	},
+
 	tooltip: 'Insert format block'
 } as IControlType;
 
@@ -188,8 +188,8 @@ export function formatBlock(editor: IJodit) {
 			});
 
 			if (!work) {
-				const currentBox = editor.create.inside.element(third);
-				currentBox.innerHTML = consts.INVISIBLE_SPACE;
+				const br = editor.create.inside.element('br');
+				const currentBox = editor.create.inside.element(third, br);
 				editor.selection.insertNode(currentBox, false);
 				editor.selection.setCursorIn(currentBox);
 			}

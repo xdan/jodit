@@ -9,7 +9,6 @@
 
 import { Config } from '../Config';
 import { Dom } from '../modules/Dom';
-import { debounce } from '../modules/helpers/async';
 import { offset } from '../modules/helpers/size';
 import { ToolbarIcon } from '../modules/toolbar/icon';
 import { IBound, IJodit } from '../types';
@@ -204,7 +203,7 @@ export function addNewLine(editor: IJodit) {
 				.on(
 					editor.editor,
 					'mousemove',
-					debounce((e: MouseEvent) => {
+					editor.async.debounce((e: MouseEvent) => {
 						let currentElement: HTMLElement = editor.editorDocument.elementFromPoint(
 							e.pageX - editor.editorWindow.pageXOffset,
 							e.pageY - editor.editorWindow.pageYOffset

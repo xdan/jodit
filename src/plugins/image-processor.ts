@@ -7,7 +7,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { $$, debounce } from '../modules/helpers/';
+import { $$ } from '../modules/helpers/';
 import { IJodit } from '../types';
 
 const JODIT_IMAGE_PROCESSOR_BINDED = '__jodit_imageprocessor_binded';
@@ -20,7 +20,7 @@ const JODIT_IMAGE_PROCESSOR_BINDED = '__jodit_imageprocessor_binded';
 export function imageProcessor(editor: IJodit) {
 	editor.events.on(
 		'change afterInit changePlace',
-		debounce(() => {
+		editor.async.debounce(() => {
 			if (editor.editor) {
 				$$('img', editor.editor).forEach((elm: HTMLElement) => {
 					if (!(elm as any)[JODIT_IMAGE_PROCESSOR_BINDED]) {

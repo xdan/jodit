@@ -8,14 +8,13 @@
  */
 
 import { IJodit, ISourceEditor } from '../../../../types';
-import { debounce } from '../../../../modules/helpers/async';
 import { css } from '../../../../modules/helpers';
 import { Dom } from '../../../../modules';
 import { SourceEditor } from '../SourceEditor';
 
 export class TextAreaEditor extends SourceEditor<HTMLTextAreaElement>
 	implements ISourceEditor {
-	private autosize = debounce(() => {
+	private autosize = this.jodit.async.debounce(() => {
 		this.instance.style.height = 'auto';
 		this.instance.style.height = this.instance.scrollHeight + 'px';
 	}, this.jodit.defaultTimeout);
@@ -31,7 +30,7 @@ export class TextAreaEditor extends SourceEditor<HTMLTextAreaElement>
 			.on(
 				this.instance,
 				'mousedown keydown touchstart input',
-				debounce(this.toWYSIWYG, editor.defaultTimeout)
+				editor.async.debounce(this.toWYSIWYG, editor.defaultTimeout)
 			)
 			.on('setMinHeight.source', (minHeightD: number) => {
 				css(this.instance, 'minHeight', minHeightD);

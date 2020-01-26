@@ -7,11 +7,15 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IAsync, IAsyncParams } from '../types';
+import {
+	CallbackArrowFunction,
+	IAsync,
+	IAsyncParams
+} from '../types';
 import { setTimeout, clearTimeout } from './helpers/async';
 
 export class Async implements IAsync {
-	private timers: Map<number | string, number> = new Map();
+	private timers: Map<number | string | Function, number> = new Map();
 
 	setTimeout<T = any>(
 		callback: (...args: T[]) => void,
@@ -26,7 +30,7 @@ export class Async implements IAsync {
 		}
 
 		if (options.label && this.timers.has(options.label)) {
-			this.clearTimeout(this.timers.get(options.label) as number);
+			clearTimeout(this.timers.get(options.label) as number);
 			this.timers.delete(options.label);
 		}
 
@@ -42,6 +46,42 @@ export class Async implements IAsync {
 		clearTimeout(timer);
 
 		this.timers.delete(timer);
+	}
+
+	/**
+	 * Debouncing enforces that a function not be called again until a certain amount of time has passed without
+	 * it being called. As in "execute this function only if 100 milliseconds have passed without it being called."
+	 *
+	 * @param {function} fn
+	 * @param {int} timeout
+	 * @return {function}
+	 *
+	 * @example
+	 * ```javascript
+	 * var jodit = new Jodit('.editor');
+	 *	jodit.events.on('mousemove', jodit.async.debounce(function() {
+	 *     // Do expensive things
+	 * }, 100));
+	 * ```
+	 *
+	 * @param fn
+	 * @param timeout
+	 */
+	debounce(
+		fn: CallbackArrowFunction,
+		timeout: number
+	): CallbackArrowFunction {
+		let timer: number = 0;
+
+		return (...args: any[]) => {
+			if (!timeout) {
+				fn(...args);
+			} else {
+				clearTimeout(timer);
+				timer = this.setTimeout(() => fn(...args), timeout);
+				this.timers.set(fn, timer);
+			}
+		};
 	}
 
 	private promisesRejections: Set<Function> = new Set();
@@ -80,13 +120,13 @@ export class Async implements IAsync {
 
 		// Hi IE11
 		if (!Promise.race) {
-			return new Promise((resolve) => {
+			return new Promise(resolve => {
 				p.then(
-					(v) => {
+					v => {
 						resolve('fulfilled');
 						return v;
 					},
-					(e) => {
+					e => {
 						resolve('rejected');
 						throw e;
 					}
@@ -94,7 +134,7 @@ export class Async implements IAsync {
 
 				this.setTimeout(() => {
 					resolve('pending');
-				}, 100)
+				}, 100);
 			});
 		}
 
@@ -108,8 +148,9 @@ export class Async implements IAsync {
 
 	clear(): void {
 		this.timers.forEach(key => {
-			this.clearTimeout(this.timers.get(key) as number);
+			clearTimeout(this.timers.get(key) as number);
 		});
+
 		this.timers.clear();
 
 		this.promisesRejections.forEach(reject => {

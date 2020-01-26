@@ -1,4 +1,4 @@
-import { IDestructible } from './types';
+import { CallbackFunction, IDestructible } from './types';
 
 export interface IAsyncParams {
 	timeout?: number;
@@ -19,4 +19,11 @@ export interface IAsync extends IDestructible {
 	promise<T>(executor: (resolve: (value?: T | PromiseLike<T>) => void, reject?: (reason?: any) => void) => void): Promise<T>;
 
 	promiseState(p: Promise<any>): Promise<"pending" | "fulfilled" | "rejected">;
+
+	debounce<T>(
+		fn: CallbackFunction<T>,
+		timeout: number,
+		invokeAsap?: boolean,
+		ctx?: T
+	): CallbackFunction<T>;
 }

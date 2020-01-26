@@ -9,7 +9,6 @@
 
 import { Config } from '../Config';
 import * as consts from '../constants';
-import { debounce } from '../modules/helpers/async';
 import { $$ } from '../modules/helpers/selector';
 import { IJodit } from '../types';
 
@@ -93,7 +92,7 @@ export function media(editor: IJodit) {
 			})
 			.on(
 				'change afterInit afterSetMode changePlace',
-				debounce(() => {
+				editor.async.debounce(() => {
 					if (
 						!editor.isDestructed &&
 						editor.getMode() !== consts.MODE_SOURCE

@@ -12,7 +12,6 @@ import {
 	INVISIBLE_SPACE_REG_EXP,
 	SPACE_REG_EXP
 } from '../constants';
-import { debounce } from '../modules/helpers/async';
 import { IJodit, SnapshotType } from '../types';
 import { stripTags } from '../modules/helpers/html';
 
@@ -96,7 +95,7 @@ export function limit(jodit: IJodit) {
 			)
 			.on(
 				'change.limit',
-				debounce((newValue: string, oldValue: string) => {
+				jodit.async.debounce((newValue: string, oldValue: string) => {
 					if (
 						callback(
 							null,

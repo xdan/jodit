@@ -13,7 +13,6 @@ import { IS_IE } from '../constants';
 import { IBound } from '../types/types';
 import { Dom } from '../modules/Dom';
 import { $$ } from '../modules/helpers/selector';
-import { debounce } from '../modules/helpers/async';
 import { offset, innerWidth } from '../modules/helpers/size';
 import { css } from '../modules/helpers';
 import { IJodit } from '../types';
@@ -489,7 +488,7 @@ export function resizer(editor: IJodit) {
 		.on('hideResizer', hideResizer)
 		.on(
 			'change afterInit afterSetMode',
-			debounce(() => {
+			editor.async.debounce(() => {
 				if (resizerIsVisible) {
 					if (!currentElement || !currentElement.parentNode) {
 						hideResizer();

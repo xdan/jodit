@@ -89,6 +89,7 @@ export interface IPermissions {
 }
 
 export type CallbackFunction<T = any> = (this: T, ...args: any[]) => any | void;
+export type CallbackArrowFunction = (...args: any[]) => any | void;
 export type BooleanFunction<T = any> = (this: T, ...args: any[]) => boolean;
 
 export type ExecCommandCallback<T> =

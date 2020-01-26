@@ -16,7 +16,6 @@ import {
 } from '../../types/toolbar';
 
 import { IViewBased } from '../../types/view';
-import { debounce } from '../helpers/async';
 import { ToolbarBreak } from './break';
 import { ToolbarButton } from './button';
 import { ToolbarElement } from './element';
@@ -288,7 +287,7 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 		return button.target;
 	}
 
-	checkActiveButtons = debounce(
+	checkActiveButtons = this.jodit.async.debounce(
 		this.immediateCheckActiveButtons,
 		this.jodit.defaultTimeout
 	);

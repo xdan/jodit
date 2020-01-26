@@ -10,7 +10,6 @@
 import { Config } from '../../Config';
 import { IJodit, SnapshotType } from '../../types';
 import { Component } from '../Component';
-import { debounce } from '../helpers/async';
 import { Snapshot } from '../Snapshot';
 import { Stack } from '../Stack';
 import { Command } from './command';
@@ -92,7 +91,7 @@ export class Observer extends Component<IJodit> {
 		super(editor);
 		this.snapshot = new Snapshot(editor);
 
-		const onChangeStack = debounce(
+		const onChangeStack = editor.async.debounce(
 			this.onChangeStack,
 			editor.defaultTimeout
 		);

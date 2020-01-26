@@ -11,7 +11,6 @@ import { Config } from '../Config';
 import { INVISIBLE_SPACE, MODE_WYSIWYG } from '../constants';
 import { ContextMenu } from '../modules/ContextMenu';
 import { Dom } from '../modules/Dom';
-import { debounce } from '../modules/helpers/async';
 import { getXPathByElement } from '../modules/helpers/selector';
 import { Plugin } from '../modules/Plugin';
 import { ToolbarButton } from '../modules/toolbar/button';
@@ -192,7 +191,7 @@ export class xpath extends Plugin {
 		this.appendSelectAll();
 	};
 
-	private calcPath: () => void = debounce(
+	private calcPath: () => void = this.jodit.async.debounce(
 		this.calcPathImd,
 		this.jodit.defaultTimeout * 2
 	);

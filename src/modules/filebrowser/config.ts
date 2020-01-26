@@ -23,7 +23,6 @@ import { IControlType } from '../../types/toolbar';
 import { IDictionary } from '../../types/types';
 import { IUploader } from '../../types/uploader';
 import { IViewBased } from '../../types/view';
-import { debounce } from '../helpers/async/debounce';
 import { humanSizeToBytes } from '../helpers';
 import { ITEM_CLASS as IC } from './consts';
 
@@ -647,7 +646,7 @@ Config.prototype.controls.filebrowser = {
 			filebrowser.events.on(
 				input,
 				'keydown mousedown',
-				debounce(() => {
+				filebrowser.async.debounce(() => {
 					filebrowser.events.fire('filter.filebrowser', input.value);
 				}, filebrowser.defaultTimeout)
 			);

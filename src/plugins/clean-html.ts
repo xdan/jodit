@@ -16,8 +16,8 @@ import {
 import { IS_INLINE } from '../constants';
 import { Dom } from '../modules/Dom';
 import {
+	$$,
 	cleanFromWord,
-	debounce,
 	normalizeNode,
 	trim
 } from '../modules/helpers/';
@@ -118,7 +118,7 @@ export class cleanHtml extends Plugin {
 			.off('.cleanHtml')
 			.on(
 				'change.cleanHtml afterSetMode.cleanHtml afterInit.cleanHtml mousedown.cleanHtml keydown.cleanHtml',
-				debounce(this.onChange, jodit.options.cleanHTML.timeout)
+				jodit.async.debounce(this.onChange, jodit.options.cleanHTML.timeout)
 			)
 			.on('keyup.cleanHtml', this.onKeyUpCleanUp)
 			.on('afterCommand.cleanHtml', this.afterCommand);
@@ -334,7 +334,7 @@ export class cleanHtml extends Plugin {
 
 			if (currentParagraph) {
 				Dom.all(currentParagraph, node => {
-					if (node && node.nodeType === Node.TEXT_NODE) {
+					if (node && Dom.isText(node)) {
 						if (
 							node.nodeValue !== null &&
 							INV_REG.test(node.nodeValue) &&
@@ -344,6 +344,7 @@ export class cleanHtml extends Plugin {
 								INV_REG,
 								''
 							);
+
 							if (
 								node === currentNode &&
 								editor.selection.isCollapsed()
@@ -440,9 +441,14 @@ export class cleanHtml extends Plugin {
 			}
 		}
 
-		this.cleanNode(this.jodit.editor, true);
+		$$('font', this.jodit.editor).forEach(Dom.unwrap);
 	}
 
+	/**
+	 * @deprecated
+	 * @param elm
+	 * @param onlyRemoveFont
+	 */
 	private cleanNode = (
 		elm: Node,
 		onlyRemoveFont: boolean = false
@@ -526,7 +532,7 @@ export class cleanHtml extends Plugin {
 		return (
 			this.jodit.options.cleanHTML.removeEmptyElements &&
 			current !== false &&
-			node.nodeType === Node.ELEMENT_NODE &&
+			Dom.isElement(node) &&
 			node.nodeName.match(IS_INLINE) !== null &&
 			!this.jodit.selection.isMarker(node) &&
 			trim((node as Element).innerHTML).length === 0 &&
@@ -538,10 +544,7 @@ export class cleanHtml extends Plugin {
 		let prev: Node | null = next ? node.nextSibling : node.previousSibling;
 
 		while (prev) {
-			if (
-				prev.nodeType === Node.ELEMENT_NODE ||
-				!Dom.isEmptyTextNode(prev)
-			) {
+			if (Dom.isElement(prev) || !Dom.isEmptyTextNode(prev)) {
 				return true;
 			}
 

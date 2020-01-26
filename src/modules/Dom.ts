@@ -148,20 +148,17 @@ export class Dom {
 	 */
 	static each(
 		elm: Node | HTMLElement,
-		callback: (this: Node, node: Node) => void | false
+		callback: (node: Node) => void | boolean
 	): boolean {
 		let node: Node | null | false = elm.firstChild;
 
 		if (node) {
 			while (node) {
-				if (
-					callback.call(node, node) === false ||
-					!Dom.each(node, callback)
-				) {
+				if (callback(node) === false || !Dom.each(node, callback)) {
 					return false;
 				}
 
-				node = Dom.next(node, nd => !!nd, elm);
+				node = Dom.next(node, Boolean, elm);
 			}
 		}
 
@@ -223,8 +220,7 @@ export class Dom {
 	 */
 	static isEmptyTextNode(node: Node): boolean {
 		return (
-			node &&
-			node.nodeType === Node.TEXT_NODE &&
+			Dom.isText(node) &&
 			(!node.nodeValue ||
 				node.nodeValue.replace(consts.INVISIBLE_SPACE_REG_EXP, '')
 					.length === 0)
@@ -232,7 +228,7 @@ export class Dom {
 	}
 
 	/**
-	 * Check if element is not empty
+	 * Check if element is empty
 	 *
 	 * @param {Node} node
 	 * @param {RegExp} condNoEmptyElement
@@ -246,20 +242,18 @@ export class Dom {
 			return true;
 		}
 
-		if (node.nodeType === Node.TEXT_NODE) {
+		if (Dom.isText(node)) {
 			return node.nodeValue === null || trim(node.nodeValue).length === 0;
 		}
 
 		return (
-			!node.nodeName.toLowerCase().match(condNoEmptyElement) &&
+			!condNoEmptyElement.test(node.nodeName.toLowerCase()) &&
 			Dom.each(node as HTMLElement, (elm: Node | null): false | void => {
 				if (
-					(elm &&
-						elm.nodeType === Node.TEXT_NODE &&
+					(Dom.isText(elm) &&
 						elm.nodeValue !== null &&
-							trim(elm.nodeValue).length !== 0) ||
-					(elm &&
-						elm.nodeType === Node.ELEMENT_NODE &&
+						trim(elm.nodeValue).length !== 0) ||
+					(Dom.isElement(elm) &&
 						condNoEmptyElement.test(elm.nodeName.toLowerCase()))
 				) {
 					return false;
@@ -335,14 +329,21 @@ export class Dom {
 	}
 
 	/**
+	 * Check if element is element node
+	 * @param node
+	 */
+	static isElement(node: Node | null): node is Element {
+		return Boolean(node && node.nodeType === Node.ELEMENT_NODE);
+	}
+
+	/**
 	 * Check element is inline block
 	 *
 	 * @param node
 	 */
-	static isInlineBlock(node: unknown): boolean {
+	static isInlineBlock(node: Node | null): boolean {
 		return (
-			!!node &&
-			(<Node>node).nodeType === Node.ELEMENT_NODE &&
+			this.isElement(node) &&
 			['inline', 'inline-block'].indexOf(
 				css(node as HTMLElement, 'display').toString()
 			) !== -1
@@ -713,13 +714,8 @@ export class Dom {
 			from.ownerDocument || document
 		).createDocumentFragment();
 
-		[].slice.call(from.childNodes).forEach((node: Node) => {
-			if (
-				node.nodeType !== Node.TEXT_NODE ||
-				node.nodeValue !== consts.INVISIBLE_SPACE
-			) {
-				fragment.appendChild(node);
-			}
+		Array.from(from.childNodes).forEach((node: Node) => {
+			fragment.appendChild(node);
 		});
 
 		if (!inStart || !to.firstChild) {

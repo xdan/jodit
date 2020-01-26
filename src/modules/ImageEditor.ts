@@ -17,7 +17,7 @@ import {
 import { IViewBased } from '../types/view';
 import { Component } from './Component';
 import { Alert, Dialog, Promt } from './dialog/';
-import { $$, css, debounce, throttle, trim } from './helpers/';
+import { $$, css, throttle, trim } from './helpers/';
 import { ToolbarIcon } from './toolbar/icon';
 import { Dom } from './Dom';
 
@@ -431,9 +431,10 @@ export class ImageEditor extends Component {
 				this.editor,
 				'click.' + jie,
 				function(this: HTMLElement) {
-					$$(`.${jie}_slider,.${jie}_area`, self.editor).forEach(
-						elm => elm.classList.remove('active')
-					);
+					$$(
+						`.${jie}_slider,.${jie}_area`,
+						self.editor
+					).forEach(elm => elm.classList.remove('active'));
 					const slide = this.parentNode as HTMLElement;
 					slide.classList.add('active');
 					self.activeTab =
@@ -456,7 +457,7 @@ export class ImageEditor extends Component {
 			.on(
 				self.widthInput,
 				`change.${jie} mousedown.${jie} keydown.${jie}`,
-				debounce(() => {
+				self.jodit.async.debounce(() => {
 					const value: number = parseInt(self.widthInput.value, 10);
 					let another: number;
 					if (value > self.options.min_width) {
@@ -476,7 +477,7 @@ export class ImageEditor extends Component {
 			.on(
 				self.heightInput,
 				`change.${jie} mousedown.${jie} keydown.${jie}`,
-				debounce(() => {
+				self.jodit.async.debounce(() => {
 					if (this.isDestructed) {
 						return;
 					}

@@ -13,7 +13,6 @@ import { MODE_WYSIWYG } from '../constants';
 import { Dom } from '../modules/Dom';
 import { ToolbarIcon } from '../modules/toolbar/icon';
 import { Plugin } from '../modules/Plugin';
-import { debounce } from '../modules/helpers/async';
 import { trim } from '../modules/helpers/string';
 import { ISelectionRange, markerInfo } from '../types/types';
 import { IJodit } from '../types';
@@ -627,7 +626,7 @@ export class search extends Plugin {
 				.on(
 					this.queryInput,
 					'keydown',
-					debounce((e: KeyboardEvent) => {
+					this.jodit.async.debounce((e: KeyboardEvent) => {
 						switch (e.which) {
 							case consts.KEY_ENTER:
 								e.preventDefault();

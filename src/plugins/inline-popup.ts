@@ -15,7 +15,6 @@ import { Dom } from '../modules/Dom';
 import {
 	clearCenterAlign,
 	css,
-	debounce,
 	offset,
 	splitArray
 } from '../modules/helpers/';
@@ -371,7 +370,7 @@ export class inlinePopup extends Plugin {
 	// was started selection
 	private isSelectionStarted = false;
 
-	private onSelectionEnd = debounce(() => {
+	private onSelectionEnd = this.jodit.async.debounce(() => {
 		if (this.isDestructed || !this.jodit.isEditorMode()) {
 			return;
 		}

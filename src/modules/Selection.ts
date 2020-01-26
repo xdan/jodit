@@ -457,10 +457,7 @@ export class Select {
 
 					if (node && sel.isCollapsed && !Dom.isText(node)) {
 						// test Current method - Cursor in the left of some SPAN
-						if (
-							!rightMode &&
-							Dom.isText(node.previousSibling)
-						) {
+						if (!rightMode && Dom.isText(node.previousSibling)) {
 							node = node.previousSibling;
 						} else if (checkChild) {
 							let current: Node | null = child(node);
@@ -1400,10 +1397,30 @@ export class Select {
 			return null;
 		}
 
-		const leftRange = this.createRange(), range = this.range;
+		const leftRange = this.createRange();
+		const range = this.range;
 
 		leftRange.setStartBefore(currentBox);
-		leftRange.setEnd(range.startContainer, range.startOffset);
+
+		const cursorOnTheRight = this.cursorOnTheRight(currentBox);
+		const cursorOnTheLeft = this.cursorOnTheLeft(currentBox);
+
+		if (cursorOnTheRight || cursorOnTheLeft) {
+			const br = this.jodit.create.inside.element('br');
+			range.insertNode(br);
+
+			if (cursorOnTheRight) {
+				leftRange.setEndBefore(br);
+				range.setEndBefore(br);
+			} else {
+				leftRange.setEndAfter(br);
+				range.setEndAfter(br);
+			}
+
+		} else {
+			leftRange.setEnd(range.startContainer, range.startOffset);
+		}
+
 
 		const fragment = leftRange.extractContents();
 

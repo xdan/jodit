@@ -7,6 +7,5 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-export * from './debounce';
 export * from './setTimeout';
 export * from './throttle';
