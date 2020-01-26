@@ -10,6 +10,7 @@ import { css } from '../modules/helpers/css';
 import { Dom } from '../modules/Dom';
 import { IJodit } from '../types';
 import { Plugin } from '../modules/Plugin';
+import { MAY_BE_REMOVED_WITH_KEY } from '../constants';
 
 /**
  * Show placeholder
@@ -204,6 +205,10 @@ export class placeholder extends Plugin {
 		}
 
 		const first = root.firstChild;
+
+		if (MAY_BE_REMOVED_WITH_KEY.test(first.nodeName)) {
+			return false;
+		}
 
 		const next = Dom.next(
 			first,

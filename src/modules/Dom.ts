@@ -343,7 +343,7 @@ export class Dom {
 	 */
 	static isInlineBlock(node: Node | null): boolean {
 		return (
-			this.isElement(node) &&
+			Dom.isElement(node) &&
 			['inline', 'inline-block'].indexOf(
 				css(node as HTMLElement, 'display').toString()
 			) !== -1
@@ -358,7 +358,7 @@ export class Dom {
 		return (
 			node &&
 			node instanceof (win as any).HTMLElement &&
-			this.isBlock(node, win) &&
+			Dom.isBlock(node, win) &&
 			!/^(TD|TH|CAPTION|FORM)$/.test(node.nodeName) &&
 			node.style !== undefined &&
 			!/^(fixed|absolute)/i.test(node.style.position)
@@ -420,7 +420,7 @@ export class Dom {
 		node: HTMLElement,
 		className: string
 	): HTMLElement | false {
-		return <HTMLElement | false>this.prev(
+		return <HTMLElement | false>Dom.prev(
 			node,
 			node => {
 				return (
@@ -437,7 +437,7 @@ export class Dom {
 		node: HTMLElement,
 		className: string
 	): HTMLElement | false {
-		return <HTMLElement | false>this.next(
+		return <HTMLElement | false>Dom.next(
 			node,
 			node => {
 				return (
