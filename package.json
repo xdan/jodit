@@ -32,7 +32,7 @@
 		"jodit"
 	],
 	"author": "Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)",
-	"license": "GPL-2.0-or-later OR MIT OR Commercial",
+	"license": "MIT",
 	"bugs": {
 		"url": "https://github.com/xdan/jodit/issues"
 	},
