@@ -157,11 +157,7 @@ export class xpath extends Plugin {
 			Dom.up(
 				current,
 				(elm: Node | null) => {
-					if (
-						elm &&
-						this.jodit.editor !== elm &&
-						elm.nodeType !== Node.TEXT_NODE
-					) {
+					if (elm && this.jodit.editor !== elm && !Dom.isText(elm)) {
 						name = elm.nodeName.toLowerCase();
 						xpth = getXPathByElement(
 							elm as HTMLElement,

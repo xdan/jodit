@@ -95,16 +95,18 @@ describe('Commands Jodit Editor Tests', function() {
 				'<h1>test test2 test3<span> test4</span></h1>'
 			);
 		});
-		it('Should create empty element and set cursor into it when editor is empty', function() {
-			const editor = new Jodit(appendTestArea());
-			editor.value = '';
-			editor.selection.focus();
 
-			editor.execCommand('formatBlock', false, 'h1');
+		describe('editor is empty', function() {
+			it('Should create empty element and set cursor into it', function() {
+				const editor = new Jodit(appendTestArea());
+				editor.value = '';
+				editor.selection.focus();
 
-			editor.selection.insertHTML('test');
+				editor.execCommand('formatBlock', false, 'h1');
+				editor.selection.insertHTML('test');
 
-			expect(editor.value).equals('<h1>test</h1>');
+				expect(editor.value).equals('<h1>test<br></h1>');
+			});
 		});
 
 		describe('For UL>li elements', function() {

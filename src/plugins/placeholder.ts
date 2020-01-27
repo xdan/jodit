@@ -206,7 +206,7 @@ export class placeholder extends Plugin {
 
 		const first = root.firstChild;
 
-		if (MAY_BE_REMOVED_WITH_KEY.test(first.nodeName)) {
+		if (MAY_BE_REMOVED_WITH_KEY.test(first.nodeName) || /^(TABLE)$/i.test(first.nodeName)) {
 			return false;
 		}
 

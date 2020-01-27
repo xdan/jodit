@@ -57,7 +57,7 @@ export function tableKeyboardNavigation(editor: IJodit) {
 								block
 							) ||
 								(event.which !== consts.KEY_UP &&
-									current.nodeType === Node.TEXT_NODE &&
+									Dom.isText(current) &&
 									range.startOffset !== 0))) ||
 						((event.which === consts.KEY_RIGHT ||
 							event.which === consts.KEY_DOWN) &&
@@ -70,7 +70,7 @@ export function tableKeyboardNavigation(editor: IJodit) {
 								block
 							) ||
 								(event.which !== consts.KEY_DOWN &&
-									current.nodeType === Node.TEXT_NODE &&
+									Dom.isText(current) &&
 									current.nodeValue &&
 									range.startOffset !==
 										current.nodeValue.length)))

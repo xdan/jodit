@@ -93,7 +93,7 @@ Config.prototype.controls.copyformat = {
 						(Dom.up(
 							current,
 							(elm: Node | null) =>
-								elm && elm.nodeType !== Node.TEXT_NODE,
+								elm && !Dom.isText(elm),
 							editor.editor
 						) as HTMLElement) || editor.editor;
 

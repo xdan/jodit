@@ -44,14 +44,8 @@ export class Snapshot extends Component<IJodit> {
 		for (j = 0; j < elms.length; j += 1) {
 			if (
 				last &&
-				(!(
-					elms[j].nodeType === Node.TEXT_NODE &&
-					elms[j].textContent === ''
-				) &&
-					!(
-						last.nodeType === Node.TEXT_NODE &&
-						elms[j].nodeType === Node.TEXT_NODE
-					))
+				!(Dom.isText(elms[j]) && elms[j].textContent === '') &&
+				!(Dom.isText(last) && Dom.isText(elms[j]))
 			) {
 				count += 1;
 			}
@@ -74,11 +68,11 @@ export class Snapshot extends Component<IJodit> {
 	 * @return {number}
 	 */
 	private static strokeOffset(elm: Node | null, offset: number): number {
-		while (elm && elm.nodeType === Node.TEXT_NODE) {
+		while (Dom.isText(elm)) {
 			elm = elm.previousSibling;
+
 			if (
-				elm &&
-				elm.nodeType === Node.TEXT_NODE &&
+				Dom.isText(elm) &&
 				elm.textContent !== null
 			) {
 				offset += elm.textContent.length;
@@ -153,13 +147,11 @@ export class Snapshot extends Component<IJodit> {
 		const sel = this.jodit.selection.sel;
 
 		if (sel && sel.rangeCount) {
-			const
-				range = sel.getRangeAt(0),
+			const range = sel.getRangeAt(0),
 				startContainer = this.calcHierarchyLadder(range.startContainer),
 				endContainer = this.calcHierarchyLadder(range.endContainer);
 
-			let
-				startOffset = Snapshot.strokeOffset(
+			let startOffset = Snapshot.strokeOffset(
 					range.startContainer,
 					range.startOffset
 				),
@@ -219,7 +211,10 @@ export class Snapshot extends Component<IJodit> {
 				this.jodit.selection.selectRange(range);
 			}
 		} catch (__ignore) {
-			this.jodit.editor.lastChild && this.jodit.selection.setCursorAfter(this.jodit.editor.lastChild);
+			this.jodit.editor.lastChild &&
+				this.jodit.selection.setCursorAfter(
+					this.jodit.editor.lastChild
+				);
 
 			if (process.env.NODE_ENV !== 'production') {
 				console.warn('Broken snapshot', __ignore);

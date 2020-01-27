@@ -123,7 +123,7 @@ export function backspace(editor: IJodit) {
 						: nextElement.firstChild;
 				}
 
-				if (nextElement && nextElement.nodeType === Node.TEXT_NODE) {
+				if (Dom.isText(nextElement)) {
 					box.node = nextElement;
 					return removeChar(box, toLeft, range);
 				}
@@ -176,8 +176,7 @@ export function backspace(editor: IJodit) {
 			}
 
 			while (
-				node &&
-				node.nodeType === Node.TEXT_NODE &&
+				Dom.isText(node) &&
 				node.nodeValue &&
 				node.nodeValue.match(/^[\n\r]+$/)
 			) {
@@ -200,7 +199,7 @@ export function backspace(editor: IJodit) {
 			return true;
 		}
 
-		if (node.nodeType === Node.TEXT_NODE && !Dom.isEmptyTextNode(node)) {
+		if (Dom.isText(node) && !Dom.isEmptyTextNode(node)) {
 			return false;
 		}
 
@@ -357,7 +356,7 @@ export function backspace(editor: IJodit) {
 						editor.selection.insertNode(marker, false, false);
 
 						if (
-							tmpNode.nodeType === Node.TEXT_NODE &&
+							Dom.isText(tmpNode) &&
 							tmpNode.nodeValue === consts.INVISIBLE_SPACE
 						) {
 							Dom.safeRemove(tmpNode);

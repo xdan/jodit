@@ -119,7 +119,7 @@ export class enter extends Plugin {
 		let currentBox = this.getBlockWrapper(current);
 
 		if (!currentBox) {
-			this.wrapText(current)
+			this.wrapText(current);
 		}
 	};
 
@@ -132,7 +132,7 @@ export class enter extends Plugin {
 
 		if (!current || current === editor.editor) {
 			current = editor.create.inside.text(INVISIBLE_SPACE);
-			sel.insertNode(current)
+			sel.insertNode(current);
 			sel.select(current);
 		}
 
@@ -150,7 +150,7 @@ export class enter extends Plugin {
 			currentBox = this.wrapText(current);
 		}
 
-		if (!currentBox) {
+		if (!currentBox || currentBox === current) {
 			insertParagraph(editor, false, isLi ? 'li' : defaultTag);
 			return false;
 		}
@@ -164,11 +164,16 @@ export class enter extends Plugin {
 			return false;
 		}
 
-		const isDefault =  currentBox.tagName.toLowerCase() === this.defaultTag;
+		const canSplit =
+			currentBox.tagName.toLowerCase() === this.defaultTag || isLi;
+
 		const cursorOnTheRight = sel.cursorOnTheRight(currentBox);
 		const cursorOnTheLeft = sel.cursorOnTheLeft(currentBox);
 
-		if ((!isDefault || Dom.isEmpty(currentBox)) && (cursorOnTheRight || cursorOnTheLeft)) {
+		if (
+			(!canSplit || Dom.isEmpty(currentBox)) &&
+			(cursorOnTheRight || cursorOnTheLeft)
+		) {
 			let fake: Text | false = false;
 
 			if (cursorOnTheRight) {
@@ -189,7 +194,10 @@ export class enter extends Plugin {
 		sel.splitSelection(currentBox);
 	}
 
-	private getBlockWrapper(current: Node | null, tagReg = consts.IS_BLOCK): HTMLElement | false {
+	private getBlockWrapper(
+		current: Node | null,
+		tagReg = consts.IS_BLOCK
+	): HTMLElement | false {
 		let node = current;
 		const root = this.jodit.editor;
 
@@ -203,7 +211,10 @@ export class enter extends Plugin {
 					return node as HTMLLIElement;
 				}
 
-				return this.getBlockWrapper(node.parentNode, /^li$/i) || node as HTMLElement;
+				return (
+					this.getBlockWrapper(node.parentNode, /^li$/i) ||
+					(node as HTMLElement)
+				);
 			}
 
 			node = node.parentNode;

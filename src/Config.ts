@@ -955,7 +955,7 @@ Config.prototype.controls = {
 
 			if (
 				current &&
-				current.nodeType !== Node.TEXT_NODE &&
+				!Dom.isText(current) &&
 				(current.tagName === 'IMG' || $$('img', current).length)
 			) {
 				sourceImage =

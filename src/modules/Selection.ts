@@ -256,10 +256,7 @@ export class Select {
 				if (selection.collapsed || !end) {
 					const previousNode: Node | null = start.previousSibling;
 
-					if (
-						previousNode &&
-						previousNode.nodeType === Node.TEXT_NODE
-					) {
+					if (Dom.isText(previousNode)) {
 						range.setStart(
 							previousNode,
 							previousNode.nodeValue
@@ -373,14 +370,14 @@ export class Select {
 			this.win.focus();
 			this.area.focus();
 
-			const sel = this.sel,
-				range = this.createRange();
+			const sel: WindowSelection = this.sel,
+				range = sel?.rangeCount ? sel?.getRangeAt(0) : null;
 
-			if (sel && (!sel.rangeCount || !this.current())) {
+			if (!range || !Dom.isOrContains(this.area, range.startContainer)) {
+				const range = this.createRange();
 				range.setStart(this.area, 0);
 				range.collapse(true);
-				sel.removeAllRanges();
-				sel.addRange(range);
+				this.selectRange(range);
 			}
 
 			if (!this.jodit.editorIsActive) {
@@ -516,7 +513,9 @@ export class Select {
 	) {
 		this.errorNode(node);
 
-		this.focus();
+		if (!this.isFocused() && this.jodit.isEditorMode()) {
+			this.focus();
+		}
 
 		const sel = this.sel;
 
@@ -528,8 +527,20 @@ export class Select {
 			const range = sel.getRangeAt(0);
 
 			if (Dom.isOrContains(this.area, range.commonAncestorContainer)) {
-				range.deleteContents();
-				range.insertNode(node);
+				if (
+					/^(BR|HR|IMG|VIDEO)$/i.test(
+						range.startContainer.nodeName
+					) &&
+					range.collapsed
+				) {
+					range.startContainer.parentNode?.insertBefore(
+						node,
+						range.startContainer
+					);
+				} else {
+					range.deleteContents();
+					range.insertNode(node);
+				}
 			} else {
 				this.area.appendChild(node);
 			}
@@ -612,8 +623,7 @@ export class Select {
 		lastEditorElement = this.area.lastChild;
 
 		while (
-			lastEditorElement &&
-			lastEditorElement.nodeType === Node.TEXT_NODE &&
+			Dom.isText(lastEditorElement) &&
 			lastEditorElement.previousSibling &&
 			lastEditorElement.nodeValue &&
 			/^\s*$/.test(lastEditorElement.nodeValue)
@@ -625,7 +635,7 @@ export class Select {
 			if (
 				lastEditorElement &&
 				lastChild === lastEditorElement &&
-				lastChild.nodeType === Node.ELEMENT_NODE
+				Dom.isElement(lastChild)
 			) {
 				this.area.appendChild(this.jodit.create.inside.element('br'));
 			}
@@ -809,7 +819,7 @@ export class Select {
 		const range = this.createRange();
 		let fakeNode: Text | false = false;
 
-		if (node.nodeType !== Node.TEXT_NODE) {
+		if (!Dom.isText(node)) {
 			fakeNode = this.jodit.create.inside.text(consts.INVISIBLE_SPACE);
 			range.setStartAfter(node);
 			range.insertNode(fakeNode);
@@ -932,8 +942,8 @@ export class Select {
 		const range = this.createRange();
 		let fakeNode: Text | false = false;
 
-		if (node.nodeType !== Node.TEXT_NODE) {
-			fakeNode = this.doc.createTextNode(consts.INVISIBLE_SPACE);
+		if (!Dom.isText(node)) {
+			fakeNode = this.jodit.create.inside.text(consts.INVISIBLE_SPACE);
 			range.setStartBefore(node);
 			range.collapse(true);
 			range.insertNode(fakeNode);
@@ -977,7 +987,7 @@ export class Select {
 			last: Node = node;
 
 		do {
-			if (start.nodeType === Node.TEXT_NODE) {
+			if (Dom.isText(start)) {
 				break;
 			}
 			last = start;
@@ -985,7 +995,7 @@ export class Select {
 		} while (start);
 
 		if (!start) {
-			const fakeNode: Text = this.doc.createTextNode(
+			const fakeNode = this.jodit.create.inside.text(
 				consts.INVISIBLE_SPACE
 			);
 			if (!/^(img|br|input)$/i.test(last.nodeName)) {
@@ -1406,6 +1416,31 @@ export class Select {
 			const br = this.jodit.create.inside.element('br');
 			range.insertNode(br);
 
+			const clearBR = (
+				start: Node,
+				getNext: (node: Node) => Node | null
+			) => {
+				let next = getNext(start);
+
+				while (next) {
+					const nextSib = getNext(next);
+
+					if (
+						next &&
+						(next.nodeName === 'BR' || Dom.isEmptyTextNode(next))
+					) {
+						Dom.safeRemove(next);
+					} else {
+						break;
+					}
+
+					next = nextSib;
+				}
+			};
+
+			clearBR(br, (n: Node) => n.nextSibling);
+			clearBR(br, (n: Node) => n.previousSibling);
+
 			if (cursorOnTheRight) {
 				leftRange.setEndBefore(br);
 				range.setEndBefore(br);
@@ -1413,11 +1448,9 @@ export class Select {
 				leftRange.setEndAfter(br);
 				range.setEndAfter(br);
 			}
-
 		} else {
 			leftRange.setEnd(range.startContainer, range.startOffset);
 		}
-
 
 		const fragment = leftRange.extractContents();
 

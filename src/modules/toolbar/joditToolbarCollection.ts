@@ -107,7 +107,7 @@ export class JoditToolbarCollection extends ToolbarCollection<IJodit> {
 				Dom.up(
 					elm,
 					(node: Node | null): boolean | void => {
-						if (node && node.nodeType !== Node.TEXT_NODE) {
+						if (node && !Dom.isText(node)) {
 							return this.checkActiveStatus(
 								css,
 								node as HTMLElement

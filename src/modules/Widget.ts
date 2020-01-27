@@ -471,7 +471,7 @@ export namespace Widget {
 
 			if (
 				elm &&
-				elm.nodeType !== Node.TEXT_NODE &&
+				!Dom.isText(elm) &&
 				(elm.tagName === 'IMG' || $$('img', elm).length)
 			) {
 				currentImage = elm.tagName === 'IMG' ? elm : $$('img', elm)[0];
@@ -482,7 +482,7 @@ export namespace Widget {
 
 			if (
 				elm &&
-				elm.nodeType !== Node.TEXT_NODE &&
+				!Dom.isText(elm) &&
 				elm.nodeName === 'A'
 			) {
 				val(form, 'input[name=url]', elm.getAttribute('href') || '');

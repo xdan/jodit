@@ -1,11 +1,11 @@
 describe('Test interface', function() {
 	describe('About dialog', function() {
 		it('Should conteins License element', function() {
-			const area = appendTestArea(),
-				editor = new Jodit(area, {
+			const editor = new Jodit(appendTestArea(), {
 					license: '111',
 					toolbarAdaptive: false
 				});
+
 			const aboutButton = editor.container.querySelector(
 				'.jodit_toolbar_btn.jodit_toolbar_btn-about'
 			);
@@ -14,12 +14,13 @@ describe('Test interface', function() {
 			simulateEvent('mousedown', 0, aboutButton);
 
 			const dialog = editor.ownerDocument.querySelector(
-				'.jodit.jodit_dialog_box.active[data-editor_id=' + area.id + ']'
+				'.jodit.jodit_dialog_box.active[data-editor_id=' + editor.id + ']'
 			);
+
 			expect(dialog).is.not.null;
 
 			expect(
-				dialog.textContent.match(/License:.*(GPL|GNU)/)
+				dialog.textContent.match(/License:.*(MIT)/)
 			).is.not.null;
 		});
 

@@ -61,6 +61,10 @@
 	.jodit_form-table-creator-box {
 		display: flex;
 
+		@media (max-width: @screen-sm) {
+			flex-direction: column;
+		}
+
 		.jodit_form-container {
 			padding: 0;
 			margin: 0;
@@ -95,7 +99,6 @@
 
 		.jodit_form-options {
 			font-size: @font-size-default;
-			vertical-align: top;
 
 			label {
 				text-align: left;

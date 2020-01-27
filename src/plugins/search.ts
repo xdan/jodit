@@ -359,7 +359,7 @@ export class search extends Plugin {
 				start,
 				(elm: Node): boolean => {
 					if (
-						elm.nodeType === Node.TEXT_NODE &&
+						Dom.isText(elm) &&
 						elm.nodeValue !== null &&
 						elm.nodeValue.length
 					) {
@@ -559,32 +559,32 @@ export class search extends Plugin {
 				editor.workplace.appendChild(this.searchBox);
 
 				editor.events
-					.off(this.jodit.container,'keydown.search')
+					.off(this.jodit.container, 'keydown.search')
 					.on(
-					this.jodit.container,
-					'keydown.search',
-					(e: KeyboardEvent) => {
-						if (editor.getRealMode() !== MODE_WYSIWYG) {
-							return;
-						}
+						this.jodit.container,
+						'keydown.search',
+						(e: KeyboardEvent) => {
+							if (editor.getRealMode() !== MODE_WYSIWYG) {
+								return;
+							}
 
-						switch (e.which) {
-							case consts.KEY_ESC:
-								this.close();
-								break;
-							case consts.KEY_F3:
-								if (self.queryInput.value) {
-									editor.events.fire(
-										!e.shiftKey
-											? 'searchNext'
-											: 'searchPrevious'
-									);
-									e.preventDefault();
-								}
-								break;
+							switch (e.which) {
+								case consts.KEY_ESC:
+									this.close();
+									break;
+								case consts.KEY_F3:
+									if (self.queryInput.value) {
+										editor.events.fire(
+											!e.shiftKey
+												? 'searchNext'
+												: 'searchPrevious'
+										);
+										e.preventDefault();
+									}
+									break;
+							}
 						}
-					}
-				);
+					);
 			};
 			onInit();
 
