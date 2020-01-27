@@ -14,7 +14,7 @@ import {
 import { IViewBased } from '../types/view';
 import { Component } from './Component';
 import { Alert, Dialog, Promt } from './dialog/';
-import { $$, css, throttle, trim } from './helpers/';
+import { $$, css, trim } from './helpers/';
 import { ToolbarIcon } from './toolbar/icon';
 import { Dom } from './Dom';
 
@@ -283,7 +283,7 @@ export class ImageEditor extends Component {
 			.on(
 				this.jodit.ownerWindow,
 				`mousemove.${jie}` + self.jodit.id,
-				throttle((e: MouseEvent) => {
+				this.jodit.async.throttle((e: MouseEvent) => {
 					if (self.clicked) {
 						self.diff_x = e.clientX - self.start_x;
 						self.diff_y = e.clientY - self.start_y;

@@ -703,7 +703,6 @@ export class Config implements IViewOptions {
 		'cut',
 		'copy',
 		'paste',
-		'eraser',
 		'copyformat',
 		'|',
 		'hr',
@@ -772,7 +771,6 @@ export class Config implements IViewOptions {
 		'undo',
 		'redo',
 		'|',
-		'eraser',
 		'copyformat',
 		'fullsize',
 		'dots'
@@ -787,13 +785,13 @@ export class Config implements IViewOptions {
 		'|',
 		'brush',
 		'paragraph',
+		'eraser',
 		'|',
 		'align',
 		'|',
 		'undo',
 		'redo',
 		'|',
-		'eraser',
 		'dots'
 	];
 

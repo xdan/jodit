@@ -6,7 +6,6 @@
 
 import { Config } from '../Config';
 import { defaultLanguage } from '../modules/helpers/defaultLanguage';
-import { throttle } from '../modules/helpers/async';
 import { css } from '../modules/helpers/css';
 import { IJodit } from '../types';
 import { isPromise } from '../modules/helpers/checker';
@@ -337,7 +336,7 @@ export function iframe(editor: IJodit) {
 					doc.documentElement &&
 						(doc.documentElement.style.overflowY = 'hidden');
 
-					const resizeIframe = throttle(() => {
+					const resizeIframe = editor.async.throttle(() => {
 						if (
 							editor.editor &&
 							editor.iframe &&

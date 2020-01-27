@@ -6,7 +6,6 @@
 
 import { Config } from '../Config';
 import { INVISIBLE_SPACE_REG_EXP, SPACE_REG_EXP } from '../constants';
-import { throttle } from '../modules/helpers/async';
 import { Plugin } from '../modules/Plugin';
 import { Dom } from '../modules/Dom';
 
@@ -50,7 +49,7 @@ export class stat extends Plugin {
 		this.reInit();
 	}
 
-	private calc = throttle(() => {
+	private calc = this.jodit.async.throttle(() => {
 		const text = this.jodit.text;
 
 		if (this.jodit.options.showCharsCounter) {

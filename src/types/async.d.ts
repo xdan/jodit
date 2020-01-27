@@ -20,10 +20,13 @@ export interface IAsync extends IDestructible {
 
 	promiseState(p: Promise<any>): Promise<"pending" | "fulfilled" | "rejected">;
 
-	debounce<T>(
-		fn: CallbackFunction<T>,
-		timeout: number,
-		invokeAsap?: boolean,
-		ctx?: T
-	): CallbackFunction<T>;
+	debounce(
+		fn: CallbackFunction,
+		timeout: number
+	): CallbackFunction;
+
+	throttle(
+		fn: CallbackFunction,
+		timeout: number
+	): CallbackFunction;
 }

@@ -5,7 +5,6 @@
  */
 
 import { Config } from '../Config';
-import { throttle } from '../modules/helpers/async';
 import { css } from '../modules/helpers/css';
 import { IJodit, IPointBound } from '../types';
 
@@ -71,7 +70,7 @@ export function size(editor: IJodit) {
 			.on(
 				editor.ownerWindow,
 				'mousemove touchmove',
-				throttle((e: MouseEvent) => {
+				editor.async.throttle((e: MouseEvent) => {
 					if (isResized) {
 						if (editor.options.allowResizeY) {
 							setHeight(start.h + e.clientY - start.y);

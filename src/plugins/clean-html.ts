@@ -12,12 +12,7 @@ import {
 } from '../constants';
 import { IS_INLINE } from '../constants';
 import { Dom } from '../modules/Dom';
-import {
-	$$,
-	cleanFromWord,
-	normalizeNode,
-	trim
-} from '../modules/helpers/';
+import { $$, normalizeNode, trim } from '../modules/helpers/';
 import { IDictionary, IJodit } from '../types';
 import { Plugin } from '../modules/Plugin';
 
@@ -73,7 +68,6 @@ declare module '../Config' {
 		cleanHTML: {
 			timeout: number;
 			replaceNBSP: boolean;
-			cleanOnPaste: boolean;
 			fillEmptyParagraph: boolean;
 			removeEmptyElements: boolean;
 			replaceOldTags: IDictionary<string> | false;
@@ -88,7 +82,6 @@ Config.prototype.cleanHTML = {
 	removeEmptyElements: true,
 	fillEmptyParagraph: true,
 	replaceNBSP: true,
-	cleanOnPaste: true,
 	replaceOldTags: {
 		i: 'em',
 		b: 'strong'
@@ -107,28 +100,17 @@ Config.prototype.controls.eraser = {
  */
 export class cleanHtml extends Plugin {
 	protected afterInit(jodit: IJodit): void {
-		if (this.jodit.options.cleanHTML.cleanOnPaste) {
-			this.observePasteHTML();
-		}
-
 		jodit.events
 			.off('.cleanHtml')
 			.on(
 				'change.cleanHtml afterSetMode.cleanHtml afterInit.cleanHtml mousedown.cleanHtml keydown.cleanHtml',
-				jodit.async.debounce(this.onChange, jodit.options.cleanHTML.timeout)
+				jodit.async.debounce(
+					this.onChange,
+					jodit.options.cleanHTML.timeout
+				)
 			)
 			.on('keyup.cleanHtml', this.onKeyUpCleanUp)
 			.on('afterCommand.cleanHtml', this.afterCommand);
-	}
-
-	private observePasteHTML() {
-		// TODO compare this functionality and plugin paste.ts
-
-		this.jodit.events
-			.off('processPaste.cleanHtml')
-			.on('processPaste.cleanHtml', (event: Event, html: string) =>
-				cleanFromWord(html)
-			);
 	}
 
 	private onChange = () => {

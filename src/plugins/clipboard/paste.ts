@@ -545,18 +545,21 @@ export function paste(editor: IJodit) {
 					 * });
 					 * ```
 					 */
-
 					clipboard_html = trimFragment(clipboard_html);
 
 					const buffer = editor.buffer.get(clipboardPluginKey);
 
 					if (buffer !== clipboard_html) {
-						clipboard_html = editor.events.fire(
+						const result = editor.events.fire(
 							'processPaste',
 							event,
 							clipboard_html,
 							types_str
 						);
+
+						if (result !== undefined) {
+							clipboard_html = result;
+						}
 					}
 
 					if (

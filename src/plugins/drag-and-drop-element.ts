@@ -5,13 +5,7 @@
  */
 
 import { Config } from '../Config';
-import {
-	css,
-	ctrlKey,
-	dataBind,
-	splitArray,
-	throttle
-} from '../modules/helpers/';
+import { css, ctrlKey, dataBind, splitArray } from '../modules/helpers/';
 import { Plugin } from '../modules/Plugin';
 import { Dom } from '../modules/Dom';
 
@@ -37,7 +31,7 @@ export class DragAndDropElement extends Plugin {
 
 	private timeout: number = 0;
 
-	private onDrag = throttle((event: DragEvent) => {
+	private onDrag = this.jodit.async.throttle((event: DragEvent) => {
 		if (!this.draggable) {
 			return;
 		}

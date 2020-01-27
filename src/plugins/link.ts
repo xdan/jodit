@@ -242,6 +242,7 @@ export function link(jodit: IJodit) {
 			);
 		});
 	}
+
 	if (jodit.options.link.processPastedLink) {
 		jodit.events.on(
 			'processPaste.link',
@@ -267,6 +268,7 @@ export function link(jodit: IJodit) {
 			}
 		);
 	}
+
 	if (jodit.options.link.removeLinkAfterFormat) {
 		jodit.events.on('afterCommand.link', (command: string) => {
 			const sel: Select = jodit.selection;

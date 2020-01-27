@@ -249,7 +249,7 @@ describe('Jodit Events system Tests', function() {
 
 				editor.events.fire(div, 'click.test');
 				editor.events.fire(div, 'mousedown.test');
-				expect(work).equals(8); // 4 handlers - becouse for DOM elements will fire all listeners
+				expect(work).equals(8); // 4 handlers - because for DOM elements will fire all listeners
 
 				editor.events.off(div, '.test');
 				editor.events.fire(div, 'click');

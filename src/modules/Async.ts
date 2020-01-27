@@ -5,7 +5,7 @@
  */
 
 import {
-	CallbackArrowFunction,
+	CallbackFunction,
 	IAsync,
 	IAsyncParams
 } from '../types';
@@ -65,9 +65,9 @@ export class Async implements IAsync {
 	 * @param timeout
 	 */
 	debounce(
-		fn: CallbackArrowFunction,
+		fn: CallbackFunction,
 		timeout: number
-	): CallbackArrowFunction {
+	): CallbackFunction {
 		let timer: number = 0;
 
 		return (...args: any[]) => {
@@ -80,6 +80,57 @@ export class Async implements IAsync {
 			}
 		};
 	}
+
+	/**
+	 * Throttling enforces a maximum number of times a function can be called over time.
+	 * As in "execute this function at most once every 100 milliseconds."
+	 *
+	 * @method throttle
+	 * @param {function} fn
+	 * @param {int} timeout
+	 * @param {context} [ctx] Context
+	 * @return {function}
+	 * @example
+	 * ```javascript
+	 * var jodit = new Jodit('.editor');
+	 * jodit.events.on(document.body, 'scroll', jodit.helper.throttle(function() {
+	 *     // Do expensive things
+	 * }, 100));
+	 * ```
+	 */
+	throttle(
+		fn: CallbackFunction,
+		timeout: number,
+	): CallbackFunction {
+		let timer: number | null = null,
+			needInvoke: boolean,
+			callee: () => void;
+
+		return (...args: any[]) => {
+			needInvoke = true;
+
+			if (!timeout) {
+				fn(...args);
+				return;
+			}
+
+			if (!timer) {
+				callee = () => {
+					if (needInvoke) {
+						fn(...args);
+						needInvoke = false;
+						timer = this.setTimeout(callee, timeout);
+						this.timers.set(callee, timer);
+					} else {
+						timer = null;
+					}
+				};
+
+				callee();
+			}
+		};
+	};
+
 
 	private promisesRejections: Set<Function> = new Set();
 

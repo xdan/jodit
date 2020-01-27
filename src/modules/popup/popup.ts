@@ -6,7 +6,7 @@
 
 import { IViewBased } from '../../types/view';
 import { Dom } from '../Dom';
-import { css, offset, throttle } from '../helpers/';
+import { css, offset } from '../helpers/';
 import { Component, STATUSES } from '../Component';
 import { IControlTypeStrong, IPopup } from '../../types';
 import { Jodit } from '../../Jodit';
@@ -83,8 +83,8 @@ export class Popup extends Component implements IPopup {
 		css(popup, 'width', width);
 	}
 
-	private throttleCalcPosition = throttle(
-		this.calcPosition,
+	private throttleCalcPosition = this.jodit.async.throttle(
+		this.calcPosition.bind(this),
 		this.jodit.defaultTimeout
 	);
 

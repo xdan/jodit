@@ -5,4 +5,3 @@
  */
 
 export * from './setTimeout';
-export * from './throttle';
