@@ -3,7 +3,7 @@
  Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
  Version: v3.3.17
  Url: https://xdsoft.net/jodit/
- License(s): GPL-2.0-or-later OR MIT OR Commercial
+ License(s): MIT
 */
 
 .jodit_wysiwyg{
@@ -2386,6 +2386,12 @@ html.jodit_fullsize_box{
   display:-ms-flexbox;
   display:flex;
 }
+@media (max-width:768px){
+  .jodit_form_inserter .jodit_form-table-creator-box{
+    -ms-flex-direction:column;
+        flex-direction:column;
+  }
+}
 .jodit_form_inserter .jodit_form-table-creator-box .jodit_form-container{
   padding:0;
   margin:0;
@@ -2416,7 +2422,6 @@ html.jodit_fullsize_box{
 }
 .jodit_form_inserter .jodit_form-table-creator-box .jodit_form-options{
   font-size:14px;
-  vertical-align:top;
 }
 .jodit_form_inserter .jodit_form-table-creator-box .jodit_form-options label{
   text-align:left;
