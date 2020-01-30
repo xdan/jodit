@@ -19231,8 +19231,7 @@ class Uploader_Uploader extends Component_Component {
             }
             if (browser('ff') || IS_IE) {
                 if (cData &&
-                    (!cData.types ||
-                        !cData.types.length ||
+                    (!cData.types.length ||
                         cData.types[0] !== TEXT_PLAIN)) {
                     const div = this.jodit.create.div('', {
                         tabindex: -1,
