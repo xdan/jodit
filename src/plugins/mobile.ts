@@ -88,7 +88,8 @@ Config.prototype.controls.dots = {
 		store.rebuild();
 
 		return store.container;
-	}
+	},
+	tooltip: 'Show all'
 } as IControlType;
 
 /**

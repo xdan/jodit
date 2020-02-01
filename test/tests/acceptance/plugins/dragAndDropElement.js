@@ -22,11 +22,16 @@ describe('Drag and drop element inside Editor', function() {
 							editor.editor.getElementsByTagName('img')[0]
 						);
 
-						window.scrollTo(0, 100000);
-						const box = offset(
-							editor.editor.querySelectorAll('p')[1]
+						window.scrollTo(0, 1000000);
+
+						const box = Jodit.modules.Helpers.offset(
+							editor.editor.querySelectorAll('p')[1],
+							editor,
+							editor.editorDocument
 						);
+
 						// createPoint(box.left + 15, box.top + 5);
+						// debugger
 
 						simulateEvent(events[1], 0, editor.editor, function(
 							options
@@ -48,18 +53,21 @@ describe('Drag and drop element inside Editor', function() {
 								document.documentElement.scrollTop;
 						});
 
-						expect(sortAttributes(editor.value)).equals(
+						const result =
 							'<p>1111</p>' +
-								'<p>22<img alt="" src="https://xdsoft.net/jodit/build/images/artio.jpg" style="width:100px">22</p>' +
-								'<p>3333</p>' +
-								'<p>4444</p>'
-						);
+							'<p>22<img alt="" src="https://xdsoft.net/jodit/build/images/artio.jpg" style="width:100px">22</p>' +
+							'<p>3333</p>' +
+							'<p>4444</p>';
+
+						expect(sortAttributes(editor.value)).equals(result);
 					});
 				}
 			);
+
 			describe(events[1] + ' image inside anchor', function() {
 				it('Should ' + events[1] + ' anchor with image', function() {
 					const editor = new Jodit(appendTestArea());
+
 					editor.value =
 						'<p>1111</p>' +
 						'<p>2222</p>' +
@@ -72,6 +80,8 @@ describe('Drag and drop element inside Editor', function() {
 						0,
 						editor.editor.getElementsByTagName('img')[0]
 					);
+
+					window.scrollTo(0, 1000000);
 
 					const box = Jodit.modules.Helpers.offset(
 						editor.editor.querySelectorAll('p')[1],
@@ -86,6 +96,7 @@ describe('Drag and drop element inside Editor', function() {
 						options.clientY =
 							box.top + 5 - document.documentElement.scrollTop;
 					});
+
 					simulateEvent(events[2], 0, editor.editor, function(
 						options
 					) {
@@ -99,6 +110,7 @@ describe('Drag and drop element inside Editor', function() {
 					);
 				});
 			});
+
 			describe('Disable dragging', function() {
 				it('Should not move image', function() {
 					const editor = new Jodit(appendTestArea(), {

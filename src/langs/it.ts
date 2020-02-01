@@ -232,4 +232,5 @@ export default {
 	'Copy selection': 'Selezione di copia',
 	'copy': 'copia',
 	'Border radius': 'Border radius',
+	'Show all': 'Mostra tutti',
 } as IDictionary<string>;

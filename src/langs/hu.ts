@@ -235,4 +235,5 @@ export default {
 	'Copy selection': 'Másolás kiválasztása',
 	'copy': 'másolás',
 	'Border radius': 'Határ sugár',
+	'Show all': 'Összes',
 } as IDictionary<string>;

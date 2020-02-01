@@ -6,6 +6,7 @@
 
 import { Config } from '../Config';
 import {
+	INVISIBLE_SPACE,
 	INVISIBLE_SPACE_REG_EXP,
 	INVISIBLE_SPACE_REG_EXP as INV_REG,
 	SPACE_REG_EXP
@@ -400,21 +401,29 @@ export class cleanHtml extends Plugin {
 
 		const collapsed = sel.isCollapsed();
 
+		const range = sel.range;
+
 		if (parentNode) {
 			let fragment: DocumentFragment | null = null;
+
 			if (!collapsed) {
-				fragment = sel.range.extractContents();
+				fragment = range.extractContents();
 			}
 
-			if (parentNode.parentNode && parentNode.parentNode !== fragment) {
-				this.jodit.selection.splitSelection(parentNode as HTMLElement);
-				this.jodit.selection.setCursorAfter(parentNode);
+			const tmp = this.jodit.create.inside.text(INVISIBLE_SPACE);
+			range.insertNode(tmp);
+			const insideParent = Dom.isOrContains(parentNode, tmp, true);
+			Dom.safeRemove(tmp);
+			range.collapse(true);
+
+			if (insideParent && parentNode.parentNode && parentNode.parentNode !== fragment) {
+				const second = this.jodit.selection.splitSelection(parentNode as HTMLElement);
+				this.jodit.selection.setCursorAfter(second || parentNode);
 
 				if (Dom.isEmpty(parentNode)) {
 					Dom.safeRemove(parentNode);
 				}
 			}
-
 			if (fragment && fragment.textContent) {
 				sel.insertHTML(fragment.textContent);
 			}

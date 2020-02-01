@@ -229,4 +229,5 @@ export default {
 	'Copy selection': 'コピー',
 	'copy': 'copy',
 	'Border radius': '角の丸み',
+	'Show all': '全て表示',
 } as IDictionary<string>;

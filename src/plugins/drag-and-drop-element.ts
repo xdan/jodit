@@ -144,7 +144,7 @@ export class DragAndDropElement extends Plugin {
 		this.jodit.events.fire('synchro');
 	};
 
-	afterInit() {
+	protected afterInit() {
 		this.dragList = this.jodit.options.draggableTags
 			? splitArray(this.jodit.options.draggableTags)
 					.filter(item => item)
@@ -166,7 +166,17 @@ export class DragAndDropElement extends Plugin {
 			.on(window, 'mouseup touchend', this.onDragEnd);
 	}
 
-	public beforeDestruct() {
+	protected beforeDestruct() {
 		this.onDragEnd();
+
+		this.jodit.events
+			.off(this.jodit.editor, 'mousemove touchmove', this.onDrag)
+			.off(
+				this.jodit.editor,
+				'mousedown touchstart dragstart',
+				this.onDragStart
+			)
+			.off('mouseup touchend', this.onDrop)
+			.off(window, 'mouseup touchend', this.onDragEnd);
 	}
 }

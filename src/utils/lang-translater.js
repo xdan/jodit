@@ -76,5 +76,5 @@ const translateAll = (text) => {
 	});
 };
 
-translateAll('Border radius');
+translateAll('Show all');
 

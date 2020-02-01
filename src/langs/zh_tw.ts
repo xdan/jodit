@@ -230,4 +230,5 @@ export default {
 	'Copy selection': 'คัดลอกส่วนที่เลือก',
 	'copy': 'คัดลอก',
 	'Border radius': 'เส้นขอบรัศมี',
+	'Show all': 'แสดงทั้งหมด',
 } as IDictionary<string>;

@@ -231,4 +231,5 @@ export default {
 	'Copy selection': 'Kopiuj zaznaczenie',
 	'copy': 'kopiuj',
 	'Border radius': 'Zaokrąglenie krawędzi',
+	'Show all': 'Pokaż wszystkie',
 } as IDictionary<string>;

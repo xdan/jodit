@@ -126,35 +126,26 @@ export class Select {
 		this.removeMarkers();
 
 		try {
-			let rng: Range = this.createRange();
+			let rng = this.createRange();
 
-			if ((this.doc as any).caretPositionFromPoint) {
-				const caret: CaretPosition = (this
-					.doc as any).caretPositionFromPoint(x, y);
-				rng.setStart(caret.offsetNode, caret.offset);
-			} else if (this.doc.caretRangeFromPoint) {
-				const caret: Range = this.doc.caretRangeFromPoint(x, y);
-				rng.setStart(caret.startContainer, caret.startOffset);
-			}
+			(() => {
+				if (this.doc.caretPositionFromPoint) {
+					const caret = this.doc.caretPositionFromPoint(x, y);
 
-			if (rng) {
-				rng.collapse(true);
-				const sel = this.sel;
-
-				if (sel) {
-					sel.removeAllRanges();
-					sel.addRange(rng);
+					if (caret) {
+						rng.setStart(caret.offsetNode, caret.offset);
+						return;
+					}
 				}
-			} else if (
-				typeof (this.doc as any).body.createTextRange !== 'undefined'
-			) {
-				const range: any = (this.doc as any).body.createTextRange();
-				range.moveToPoint(x, y);
-				const endRange: any = range.duplicate();
-				endRange.moveToPoint(x, y);
-				range.setEndPoint('EndToEnd', endRange);
-				range.select();
-			}
+
+				if (this.doc.caretRangeFromPoint) {
+					const caret = this.doc.caretRangeFromPoint(x, y);
+					rng.setStart(caret.startContainer, caret.startOffset);
+				}
+			})();
+
+			rng.collapse(true);
+			this.selectRange(rng);
 
 			return true;
 		} catch {}
@@ -1455,7 +1446,10 @@ export class Select {
 		const fragment = leftRange.extractContents();
 
 		if (currentBox.parentNode) {
-			currentBox.parentNode.insertBefore(fragment, currentBox);
+			try{
+				currentBox.parentNode.insertBefore(fragment, currentBox);
+			} catch {
+			}
 		}
 
 		return currentBox.previousElementSibling;

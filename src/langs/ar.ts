@@ -220,4 +220,5 @@ export default {
 	'Copy selection': 'نسخ التحديد',
 	'copy': 'نسخ',
 	'Border radius': 'دائرة نصف قطرها الحدود',
+	'Show all': 'عرض كل',
 } as IDictionary<string>;

@@ -14,10 +14,10 @@ import { setTimeout, clearTimeout } from './helpers/async';
 export class Async implements IAsync {
 	private timers: Map<number | string | Function, number> = new Map();
 
-	setTimeout<T = any>(
-		callback: (...args: T[]) => void,
+	setTimeout(
+		callback: (...args: any[]) => void,
 		timeout: number | IAsyncParams,
-		...args: T[]
+		...args: any[]
 	): number {
 		let options: IAsyncParams = {};
 

@@ -232,4 +232,5 @@ export default {
 	'Copy selection': 'העתק בחירה',
 	'copy': 'העתק',
 	'Border radius': 'רדיוס הגבול',
+	'Show all': 'הצג את כל',
 } as IDictionary<string>;

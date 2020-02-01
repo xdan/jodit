@@ -11,36 +11,59 @@ describe('Clean html plugin', function() {
 
 				[
 					[
-						'start <span style="background-color: red; color: blue;">test test test</span> elm',
-						'span',
-						'start test test test elm'
-					],
-					[
-						'start <strong style="background-color: red; color: blue;">test test test</strong> elm',
-						'strong',
-						'start test test test elm'
-					],
-					[
-						'start <strong style="background-color: red; color: blue;">test test test</strong> elm',
+						'<p>as<strong>da</strong>sd</p>' +
+						'<p>asd<strong>as</strong>d</p>' +
+						'<p>a<strong>sdsad</strong>a</p>',
 						function(range) {
-							const elm = editor.editor.querySelector('strong');
-							range.setStart(elm.firstChild, 5);
-							range.setEnd(elm.firstChild, 9);
+							range.selectNodeContents(editor.editor);
 						},
-						'start <strong style="background-color: red; color: blue;">test </strong>test<strong style="background-color: red; color: blue;"> test</strong> elm'
+						'<p>asdasd</p>' +
+						'<p>asdasd</p>' +
+						'<p>asdsada</p>'
 					],
 					[
-						'<p>start <strong style="background-color: red; color: blue;"><span style="align-content: baseline;">test test te</span>st</strong> elm</p>',
+						'<p>four <strong style="background-color: red; color: blue;"><span style="align-content: baseline;">rust blog go</span>st</strong> elm</p>',
 						function(range) {
 							const elm = editor.editor.querySelector('span');
 							range.setStart(elm.firstChild, 5);
 							range.setEnd(elm.firstChild, 9);
 						},
-						'<p>start ' +
-						'<span style="align-content: baseline;"><strong><span style="background-color: red;">test </span></strong></span>' +
-						'<span style="align-content: baseline;"><strong><span style="background-color: red;"> te</span></strong></span>' +
-						'test<strong><span style="background-color: red;">st</span></strong> elm</p>'
-					]
+						'<p>four <strong style="background-color: red; color: blue;"><span style="align-content: baseline;">rust </span></strong>' +
+						'blog' +
+						'<strong style="background-color: red; color: blue;"><span style="align-content: baseline;"> go</span>st</strong> elm</p>'
+					],
+					[
+						'<p>five <strong style="background-color: red; color: blue;">one two three</strong> elm</p>',
+						function(range) {
+							const elm = editor.editor.querySelector('strong');
+							range.setStart(elm.firstChild, 4);
+							range.setEnd(elm.firstChild, 7);
+						},
+						'<p>five <strong style="background-color: red; color: blue;">one </strong>' +
+							'two' +
+							'<strong style="background-color: red; color: blue;"> three</strong> elm</p>'
+					],
+					[
+						'three <strong style="background-color: red; color: blue;">one two three</strong> elm',
+						function(range) {
+							const elm = editor.editor.querySelector('strong');
+							range.setStart(elm.firstChild, 4);
+							range.setEnd(elm.firstChild, 7);
+						},
+						'three <strong style="background-color: red; color: blue;">one </strong>' +
+							'two' +
+							'<strong style="background-color: red; color: blue;"> three</strong> elm'
+					],
+					[
+						'one <span style="background-color: red; color: blue;">test test test</span> elm',
+						'span',
+						'one test test test elm'
+					],
+					[
+						'two <strong style="background-color: red; color: blue;">test test test</strong> elm',
+						'strong',
+						'two test test test elm'
+					],
 				].forEach(function(test) {
 					editor.value = test[0];
 
@@ -56,10 +79,9 @@ describe('Clean html plugin', function() {
 					}
 
 					editor.selection.selectRange(range);
-
 					simulateEvent('mousedown', 0, button);
 
-					expect(test[2]).equals(editor.value);
+					expect(editor.value).equals(test[2]);
 				});
 			});
 		});
@@ -105,7 +127,7 @@ describe('Clean html plugin', function() {
 
 					editor.selection.insertHTML(' pop ');
 
-					expect(test[2]).equals(editor.value);
+					expect(editor.value).equals(test[2]);
 				});
 			});
 		});

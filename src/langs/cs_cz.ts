@@ -232,4 +232,5 @@ export default {
 	'Copy selection': 'Kopírovat výběr',
 	'copy': 'kopírování',
 	'Border radius': 'Border radius',
+	'Show all': 'Zobrazit všechny',
 } as IDictionary<string>;
