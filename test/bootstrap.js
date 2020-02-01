@@ -241,8 +241,8 @@ Jodit.prototype.i18n = function(key) {
 };
 
 Jodit.defaultOptions.filebrowser.saveStateInStorage = false;
-
 Jodit.defaultOptions.observer.timeout = 0;
+
 if (Jodit.defaultOptions.cleanHTML) {
 	Jodit.defaultOptions.cleanHTML.timeout = 0;
 	Jodit.defaultOptions.cleanHTML.fillEmptyParagraph = false;
@@ -557,6 +557,22 @@ function simulateEvent(type, keyCodeArg, element, options) {
 	}
 
 	element.dispatchEvent(evt);
+}
+
+/**
+ * Click and trigger some button event
+ *
+ * @param {string} buttonName
+ * @param {Jodit} editor
+ */
+function clickButton(buttonName, editor) {
+	simulateEvent(
+		'mousedown',
+		0,
+		editor.container.querySelector(
+			'.jodit_toolbar_btn.jodit_toolbar_btn-' + buttonName
+		)
+	);
 }
 
 /**

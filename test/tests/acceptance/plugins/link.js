@@ -3,7 +3,9 @@ describe('Link plugin', function() {
 		describe('Insert simple link', function() {
 			it('Should insert as simple link', function() {
 				const editor = new Jodit(appendTestArea());
+
 				simulatePaste(editor.editor, 'https://www.youtube.com');
+
 				expect(editor.value).equal(
 					'<a href="https://www.youtube.com">https://www.youtube.com</a><br>'
 				);
@@ -81,7 +83,7 @@ describe('Link plugin', function() {
 	});
 
 	describe('Toolbar link', function() {
-		describe('Click LINk button', function() {
+		describe('Click link button', function() {
 			describe('Open LINK insert dialog and insert new link', function() {
 				it('Should insert new link', function() {
 					let popup_opened = 0;
@@ -414,6 +416,31 @@ describe('Link plugin', function() {
 					);
 
 					expect(sortAttributes(editor.value)).equals('test');
+				});
+			});
+
+			describe('Was selected part of text', function() {
+				it('Should show dialog form with this text', function() {
+					const editor = new Jodit(appendTestArea());
+
+					editor.value = '<p>one green bottle hanging under wall</p>';
+					const range = editor.selection.createRange();
+					range.setStart(editor.editor.firstChild.firstChild, 10);
+					range.setEnd(editor.editor.firstChild.firstChild, 16);
+					editor.selection.selectRange(range);
+
+					clickButton('link', editor);
+
+					const popup = editor.container.querySelector(
+						'.jodit_toolbar_popup'
+					);
+
+					const textInput = popup.querySelector(
+						'input[ref=content_input]'
+					);
+					expect(textInput).is.not.null;
+
+					expect(textInput.value).equals('bottle');
 				});
 			});
 		});

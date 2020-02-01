@@ -122,7 +122,7 @@ Config.prototype.controls.link = {
 		}
 
 		if (!isImageContent && current) {
-			content_input.value = current.textContent || '';
+			content_input.value = editor.selection.sel?.toString() || '';
 		}
 
 		if (current && Dom.closest(current, 'A', editor.editor)) {
