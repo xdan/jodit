@@ -119,15 +119,14 @@ export class Dom {
 	 * @param node
 	 */
 	static unwrap(node: Node) {
-		const parent: Node | null = node.parentNode,
-			el = node;
+		const parent = node.parentNode;
 
 		if (parent) {
-			while (el.firstChild) {
-				parent.insertBefore(el.firstChild, el);
+			while (node.firstChild) {
+				parent.insertBefore(node.firstChild, node);
 			}
 
-			Dom.safeRemove(el);
+			Dom.safeRemove(node);
 		}
 	}
 
@@ -154,11 +153,18 @@ export class Dom {
 
 		if (node) {
 			while (node) {
-				if (callback(node) === false || !Dom.each(node, callback)) {
+				const next = Dom.next(node, Boolean, elm);
+
+				if (callback(node) === false) {
 					return false;
 				}
 
-				node = Dom.next(node, Boolean, elm);
+				// inside callback - node could be removed
+				if (node.parentNode && !Dom.each(node, callback)) {
+					return false;
+				}
+
+				node = next;
 			}
 		}
 

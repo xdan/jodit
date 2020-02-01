@@ -6,6 +6,5 @@
 
 export * from './applyStyles';
 export * from './cleanFromWord';
-export * from './clear';
 export * from './htmlspecialchars';
 export * from './stripTags';

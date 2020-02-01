@@ -16,8 +16,8 @@ export const SPACE_REG_EXP_START = /^[\s\n\t\r\uFEFF\u200b]+/g;
 export const SPACE_REG_EXP_END = /[\s\n\t\r\uFEFF\u200b]+$/g;
 
 export const IS_BLOCK = /^(PRE|DIV|P|LI|H[1-6]|BLOCKQUOTE|TD|TH|TABLE|BODY|HTML|FIGCAPTION|FIGURE|DT|DD)$/i;
-export const IS_INLINE = /^(STRONG|SPAN|I|EM|B|SUP|SUB)$/;
-export const MAY_BE_REMOVED_WITH_KEY = /^(IMG|BR|IFRAME|SCRIPT|INPUT|TEXTAREA|HR|JODIT|JODIT-MEDIA)$/;
+export const IS_INLINE = /^(STRONG|SPAN|I|EM|B|SUP|SUB)$/i;
+export const MAY_BE_REMOVED_WITH_KEY = /^(IMG|BR|IFRAME|SCRIPT|INPUT|TEXTAREA|HR|JODIT|JODIT-MEDIA)$/i;
 
 export const KEY_BACKSPACE = 8;
 export const KEY_TAB = 9;

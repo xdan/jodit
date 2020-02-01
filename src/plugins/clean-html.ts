@@ -9,11 +9,11 @@ import {
 	INVISIBLE_SPACE,
 	INVISIBLE_SPACE_REG_EXP,
 	INVISIBLE_SPACE_REG_EXP as INV_REG,
-	SPACE_REG_EXP
+	SPACE_REG_EXP,
+	IS_INLINE
 } from '../constants';
-import { IS_INLINE } from '../constants';
 import { Dom } from '../modules/Dom';
-import { $$, normalizeNode, trim } from '../modules/helpers/';
+import { normalizeNode, trim } from '../modules/helpers/';
 import { IDictionary, IJodit } from '../types';
 import { Plugin } from '../modules/Plugin';
 
@@ -111,6 +111,7 @@ export class cleanHtml extends Plugin {
 				)
 			)
 			.on('keyup.cleanHtml', this.onKeyUpCleanUp)
+			.on('beforeCommand.cleanHtml', this.beforeCommand)
 			.on('afterCommand.cleanHtml', this.afterCommand);
 	}
 
@@ -338,14 +339,16 @@ export class cleanHtml extends Plugin {
 		}
 	};
 
+	private beforeCommand = (command: string): void | false => {
+		if (command.toLowerCase() === 'removeformat') {
+			this.onRemoveFormat();
+			return false;
+		}
+	};
+
 	private afterCommand = (command: string) => {
 		if (command.toLowerCase() === 'inserthorizontalrule') {
 			this.onInsertHorizontalLine();
-			return;
-		}
-
-		if (command.toLowerCase() === 'removeformat') {
-			this.onRemoveFormat();
 			return;
 		}
 	};
@@ -403,33 +406,49 @@ export class cleanHtml extends Plugin {
 
 		const range = sel.range;
 
+		let fragment: DocumentFragment | null = null;
+
+		if (!collapsed) {
+			fragment = range.extractContents();
+		}
+
 		if (parentNode) {
-			let fragment: DocumentFragment | null = null;
-
-			if (!collapsed) {
-				fragment = range.extractContents();
-			}
-
 			const tmp = this.jodit.create.inside.text(INVISIBLE_SPACE);
 			range.insertNode(tmp);
 			const insideParent = Dom.isOrContains(parentNode, tmp, true);
 			Dom.safeRemove(tmp);
 			range.collapse(true);
 
-			if (insideParent && parentNode.parentNode && parentNode.parentNode !== fragment) {
-				const second = this.jodit.selection.splitSelection(parentNode as HTMLElement);
+			if (
+				insideParent &&
+				parentNode.parentNode &&
+				parentNode.parentNode !== fragment
+			) {
+				const second = this.jodit.selection.splitSelection(
+					parentNode as HTMLElement
+				);
 				this.jodit.selection.setCursorAfter(second || parentNode);
 
 				if (Dom.isEmpty(parentNode)) {
 					Dom.safeRemove(parentNode);
 				}
 			}
-			if (fragment && fragment.textContent) {
-				sel.insertHTML(fragment.textContent);
-			}
 		}
 
-		$$('font', this.jodit.editor).forEach(Dom.unwrap);
+		if (fragment) {
+			sel.insertNode(this.cleanFragment(fragment));
+		}
+	}
+
+	private cleanFragment(fragment: Node): Node {
+		Dom.each(fragment, node => {
+			if (Dom.isElement(node) && IS_INLINE.test(node.nodeName)) {
+				this.cleanFragment(node);
+				Dom.unwrap(node);
+			}
+		});
+
+		return fragment;
 	}
 
 	/**
