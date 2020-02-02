@@ -15,7 +15,8 @@ import {
 	isPromise,
 	normalizeKeyAliases,
 	error,
-	isString
+	isString,
+	markDeprecated
 } from './modules/helpers/';
 
 import { JoditArray } from './modules/helpers/JoditArray';
@@ -69,6 +70,15 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		return div.innerText || '';
 	}
+
+	/**
+	 * @deprecated
+	 * @see text
+	 */
+	getEditorText = markDeprecated((): string => this.text, [
+		'getEditorText',
+		'text'
+	]);
 
 	get value(): string {
 		return this.getEditorValue();
