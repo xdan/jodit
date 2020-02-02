@@ -158,7 +158,7 @@ export class DragAndDrop extends Plugin {
 		this.startDragPoint.y = event.clientY;
 
 		if (
-			target.nodeType === Node.ELEMENT_NODE &&
+			Dom.isElement(target) &&
 			target.matches('.jodit_filebrowser_files_item')
 		) {
 			target = target.querySelector('img') as HTMLElement;

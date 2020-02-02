@@ -16,7 +16,7 @@ import { Dom } from './Dom';
 import { css } from './helpers/css';
 import { normalizeNode, normilizeCSSValue } from './helpers/normalize';
 import { $$ } from './helpers/selector';
-import { isPlainObject } from './helpers/checker';
+import { isFunction, isPlainObject } from './helpers/checker';
 import { each } from './helpers/each';
 import { trim } from './helpers/string';
 import { error } from './helpers';
@@ -159,7 +159,7 @@ export class Select {
 	 */
 	isMarker = (elm: Node): boolean =>
 		Dom.isNode(elm, this.win) &&
-		elm.nodeType === Node.ELEMENT_NODE &&
+		Dom.isElement(elm) &&
 		elm.nodeName === 'SPAN' &&
 		(elm as Element).hasAttribute('data-' + consts.MARKER_CLASS);
 
@@ -1084,6 +1084,59 @@ export class Select {
 	}
 
 	/**
+	 * Wrap all selected fragments inside Tag or apply some callback
+	 * @param tagOrCallback
+	 */
+	wrapInTag(
+		tagOrCallback: HTMLTagNames | ((font: HTMLElement) => void)
+	): HTMLElement[] {
+		// fix issue https://github.com/xdan/jodit/issues/65
+		$$('*[style*=font-size]', this.area).forEach((elm: HTMLElement) => {
+			elm.style &&
+				elm.style.fontSize &&
+				elm.setAttribute(
+					'data-font-size',
+					elm.style.fontSize.toString()
+				);
+		});
+
+		this.doc.execCommand('fontsize', false, '7');
+
+		$$('*[data-font-size]', this.area).forEach((elm: HTMLElement) => {
+			const fontSize = elm.getAttribute('data-font-size');
+
+			if (elm.style && fontSize) {
+				elm.style.fontSize = fontSize;
+				elm.removeAttribute('data-font-size');
+			}
+		});
+
+		const result: HTMLElement[] = [];
+
+		$$('font[size="7"]', this.area).forEach((font: HTMLElement) => {
+			try {
+				if (isFunction(tagOrCallback)) {
+					tagOrCallback(font);
+				} else {
+					result.push(
+						Dom.replace(
+							font,
+							tagOrCallback,
+							this.jodit.create.inside
+						)
+					);
+				}
+			} finally {
+				if (font.parentNode) {
+					Dom.unwrap(font);
+				}
+			}
+		});
+
+		return result;
+	}
+
+	/**
 	 * Apply some css rules for all selections. It method wraps selections in nodeName tag.
 	 *
 	 * @param {object} cssRules
@@ -1113,7 +1166,7 @@ export class Select {
 		const checkCssRulesFor = (elm: HTMLElement): boolean => {
 			return (
 				elm.nodeName !== FONT &&
-				elm.nodeType === Node.ELEMENT_NODE &&
+				Dom.isElement(elm) &&
 				((isPlainObject(options) &&
 					each(
 						options as IDictionary<string[]>,
@@ -1143,7 +1196,7 @@ export class Select {
 				return false;
 			}
 
-			const reg: RegExp = new RegExp('^' + elm.nodeName + '$', 'i');
+			const reg = RegExp('^' + elm.nodeName + '$', 'i');
 
 			return (
 				(reg.test(nodeName) ||
@@ -1194,164 +1247,7 @@ export class Select {
 			}
 		};
 
-		if (!this.isCollapsed()) {
-			const selInfo: markerInfo[] = this.save();
-			normalizeNode(this.area.firstChild); // FF fix for test "commandsTest - Exec command "bold"
-			// for some text that contains a few STRONG elements, should unwrap all of these"
-
-			// fix issue https://github.com/xdan/jodit/issues/65
-			$$('*[style*=font-size]', this.area).forEach((elm: HTMLElement) => {
-				elm.style &&
-					elm.style.fontSize &&
-					elm.setAttribute(
-						'data-font-size',
-						elm.style.fontSize.toString()
-					);
-			});
-
-			this.doc.execCommand('fontsize', false, '7');
-
-			$$('*[data-font-size]', this.area).forEach((elm: HTMLElement) => {
-				const fontSize = elm.getAttribute('data-font-size');
-
-				if (elm.style && fontSize) {
-					elm.style.fontSize = fontSize;
-					elm.removeAttribute('data-font-size');
-				}
-			});
-
-			$$('font[size="7"]', this.area).forEach((font: HTMLElement) => {
-				if (
-					!Dom.next(
-						font,
-						findNextCondition,
-						font.parentNode as HTMLElement
-					) &&
-					!Dom.prev(
-						font,
-						findNextCondition,
-						font.parentNode as HTMLElement
-					) &&
-					isSuitElement(font.parentNode as HTMLElement) &&
-					font.parentNode !== this.area &&
-					(!Dom.isBlock(font.parentNode, this.win) ||
-						consts.IS_BLOCK.test(nodeName))
-				) {
-					toggleStyles(font.parentNode as HTMLElement);
-				} else if (
-					font.firstChild &&
-					!Dom.next(
-						font.firstChild,
-						findNextCondition,
-						font as HTMLElement
-					) &&
-					!Dom.prev(
-						font.firstChild,
-						findNextCondition,
-						font as HTMLElement
-					) &&
-					isSuitElement(font.firstChild as HTMLElement)
-				) {
-					toggleStyles(font.firstChild as HTMLElement);
-				} else if (Dom.closest(font, isSuitElement, this.area)) {
-					const leftRange = this.createRange(),
-						wrapper = Dom.closest(
-							font,
-							isSuitElement,
-							this.area
-						) as HTMLElement;
-
-					leftRange.setStartBefore(wrapper);
-					leftRange.setEndBefore(font);
-
-					const leftFragment: DocumentFragment = leftRange.extractContents();
-
-					if (
-						(!leftFragment.textContent ||
-							!trim(leftFragment.textContent).length) &&
-						leftFragment.firstChild
-					) {
-						Dom.unwrap(leftFragment.firstChild);
-					}
-
-					if (wrapper.parentNode) {
-						wrapper.parentNode.insertBefore(leftFragment, wrapper);
-					}
-
-					leftRange.setStartAfter(font);
-					leftRange.setEndAfter(wrapper);
-					const rightFragment = leftRange.extractContents();
-
-					// case then marker can be inside fragnment
-					if (
-						(!rightFragment.textContent ||
-							!trim(rightFragment.textContent).length) &&
-						rightFragment.firstChild
-					) {
-						Dom.unwrap(rightFragment.firstChild);
-					}
-
-					Dom.after(wrapper, rightFragment);
-
-					toggleStyles(wrapper);
-				} else {
-					// unwrap all suit elements inside
-					const needUnwrap: Node[] = [];
-					let firstElementSuit: boolean | undefined;
-
-					if (font.firstChild) {
-						Dom.find(
-							font.firstChild,
-							(elm: Node | null) => {
-								if (elm && isSuitElement(elm as HTMLElement)) {
-									if (firstElementSuit === undefined) {
-										firstElementSuit = true;
-									}
-									needUnwrap.push(elm);
-								} else {
-									if (firstElementSuit === undefined) {
-										firstElementSuit = false;
-									}
-								}
-								return false;
-							},
-							font,
-							true
-						);
-					}
-
-					needUnwrap.forEach(Dom.unwrap);
-
-					if (!firstElementSuit) {
-						if (mode === undefined) {
-							mode = WRAP;
-						}
-
-						if (mode === WRAP) {
-							css(
-								Dom.replace(
-									font,
-									nodeName,
-									false,
-									false,
-									this.jodit.create.inside
-								),
-								cssRules &&
-									nodeName.toUpperCase() === defaultTag
-									? cssRules
-									: {}
-							);
-						}
-					}
-				}
-
-				if (font.parentNode) {
-					Dom.unwrap(font);
-				}
-			});
-
-			this.restore(selInfo);
-		} else {
+		if (this.isCollapsed()) {
 			let clearStyle: boolean = false;
 
 			if (
@@ -1359,18 +1255,20 @@ export class Select {
 				Dom.closest(this.current() as Node, nodeName, this.area)
 			) {
 				clearStyle = true;
-				const closest: Node = Dom.closest(
+				const closest = Dom.closest(
 					this.current() as Node,
 					nodeName,
 					this.area
-				) as Node;
+				);
+
 				if (closest) {
 					this.setCursorAfter(closest);
 				}
 			}
 
 			if (nodeName.toUpperCase() === defaultTag || !clearStyle) {
-				const node: Node = this.jodit.create.inside.element(nodeName);
+				const node = this.jodit.create.inside.element(nodeName);
+
 				node.appendChild(
 					this.jodit.create.inside.text(consts.INVISIBLE_SPACE)
 				);
@@ -1382,8 +1280,142 @@ export class Select {
 				}
 
 				this.setCursorIn(node);
+
+				return;
 			}
 		}
+
+		const selInfo: markerInfo[] = this.save();
+
+		normalizeNode(this.area.firstChild); // FF fix for test "commandsTest - Exec command "bold"
+		// for some text that contains a few STRONG elements, should unwrap all of these"
+		this.wrapInTag((font: HTMLElement) => {
+			if (
+				!Dom.next(
+					font,
+					findNextCondition,
+					font.parentNode as HTMLElement
+				) &&
+				!Dom.prev(
+					font,
+					findNextCondition,
+					font.parentNode as HTMLElement
+				) &&
+				isSuitElement(font.parentNode as HTMLElement) &&
+				font.parentNode !== this.area &&
+				(!Dom.isBlock(font.parentNode, this.win) ||
+					consts.IS_BLOCK.test(nodeName))
+			) {
+				toggleStyles(font.parentNode as HTMLElement);
+				return;
+			}
+
+			if (
+				font.firstChild &&
+				!Dom.next(
+					font.firstChild,
+					findNextCondition,
+					font as HTMLElement
+				) &&
+				!Dom.prev(
+					font.firstChild,
+					findNextCondition,
+					font as HTMLElement
+				) &&
+				isSuitElement(font.firstChild as HTMLElement)
+			) {
+				toggleStyles(font.firstChild as HTMLElement);
+				return;
+			}
+
+			if (Dom.closest(font, isSuitElement, this.area)) {
+				const leftRange = this.createRange(),
+					wrapper = Dom.closest(
+						font,
+						isSuitElement,
+						this.area
+					) as HTMLElement;
+
+				leftRange.setStartBefore(wrapper);
+				leftRange.setEndBefore(font);
+
+				const leftFragment = leftRange.extractContents();
+
+				if (
+					(!leftFragment.textContent ||
+						!trim(leftFragment.textContent).length) &&
+					leftFragment.firstChild
+				) {
+					Dom.unwrap(leftFragment.firstChild);
+				}
+
+				if (wrapper.parentNode) {
+					wrapper.parentNode.insertBefore(leftFragment, wrapper);
+				}
+
+				leftRange.setStartAfter(font);
+				leftRange.setEndAfter(wrapper);
+
+				const rightFragment = leftRange.extractContents();
+
+				// case then marker can be inside fragnment
+				if (
+					(!rightFragment.textContent ||
+						!trim(rightFragment.textContent).length) &&
+					rightFragment.firstChild
+				) {
+					Dom.unwrap(rightFragment.firstChild);
+				}
+
+				Dom.after(wrapper, rightFragment);
+
+				toggleStyles(wrapper);
+				return;
+			}
+			// unwrap all suit elements inside
+			const needUnwrap: Node[] = [];
+			let firstElementSuit: boolean | undefined;
+
+			if (font.firstChild) {
+				Dom.find(
+					font.firstChild,
+					(elm: Node | null) => {
+						if (elm && isSuitElement(elm as HTMLElement)) {
+							if (firstElementSuit === undefined) {
+								firstElementSuit = true;
+							}
+							needUnwrap.push(elm);
+						} else {
+							if (firstElementSuit === undefined) {
+								firstElementSuit = false;
+							}
+						}
+						return false;
+					},
+					font,
+					true
+				);
+			}
+
+			needUnwrap.forEach(Dom.unwrap);
+
+			if (!firstElementSuit) {
+				if (mode === undefined) {
+					mode = WRAP;
+				}
+
+				if (mode === WRAP) {
+					css(
+						Dom.replace(font, nodeName, this.jodit.create.inside),
+						cssRules && nodeName.toUpperCase() === defaultTag
+							? cssRules
+							: {}
+					);
+				}
+			}
+		});
+
+		this.restore(selInfo);
 	}
 
 	/**
@@ -1446,10 +1478,9 @@ export class Select {
 		const fragment = leftRange.extractContents();
 
 		if (currentBox.parentNode) {
-			try{
+			try {
 				currentBox.parentNode.insertBefore(fragment, currentBox);
-			} catch {
-			}
+			} catch {}
 		}
 
 		return currentBox.previousElementSibling;

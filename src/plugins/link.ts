@@ -6,7 +6,12 @@
 
 import { Config } from '../Config';
 import { Dom } from '../modules/Dom';
-import { convertMediaURLToVideoEmbed, isURL, refs } from '../modules/helpers/';
+import {
+	convertMediaURLToVideoEmbed,
+	isURL,
+	refs,
+	stripTags
+} from '../modules/helpers/';
 import { Select } from '../modules/Selection';
 import { IDictionary, IJodit } from '../types';
 import { IControlType } from '../types/toolbar';
@@ -121,27 +126,39 @@ Config.prototype.controls.link = {
 			Dom.hide(content_input_box);
 		}
 
+		const getSelectionText = () =>
+			stripTags(
+				editor.selection.range.cloneContents(),
+				editor.editorDocument
+			);
+
 		if (!isImageContent && current) {
-			content_input.value = editor.selection.sel?.toString() || '';
+			content_input.value = getSelectionText();
 		}
+
+		let link: false | HTMLAnchorElement;
 
 		if (current && Dom.closest(current, 'A', editor.editor)) {
-			current = Dom.closest(current, 'A', editor.editor) as HTMLElement;
+			link = Dom.closest(
+				current,
+				'A',
+				editor.editor
+			) as HTMLAnchorElement;
 		} else {
-			current = false;
+			link = false;
 		}
 
-		if (current) {
-			url_input.value = current.getAttribute('href') || '';
+		if (link) {
+			url_input.value = link.getAttribute('href') || '';
 
 			if (openInNewTabCheckbox) {
 				target_checkbox.checked =
-					current.getAttribute('target') === '_blank';
+					link.getAttribute('target') === '_blank';
 			}
 
 			if (noFollowCheckbox) {
 				nofollow_checkbox.checked =
-					current.getAttribute('rel') === 'nofollow';
+					link.getAttribute('rel') === 'nofollow';
 			}
 
 			insert.textContent = i18n('Update');
@@ -153,8 +170,8 @@ Config.prototype.controls.link = {
 
 		if (unlink) {
 			editor.events.on(unlink, 'click', (e: MouseEvent) => {
-				if (current) {
-					Dom.unwrap(current);
+				if (link) {
+					Dom.unwrap(link);
 				}
 
 				editor.selection.restore(selInfo);
@@ -165,10 +182,7 @@ Config.prototype.controls.link = {
 
 		editor.events.on(form, 'submit', (event: Event) => {
 			event.preventDefault();
-
-			const a =
-				(current as HTMLAnchorElement) ||
-				editor.create.inside.element('a');
+			event.stopImmediatePropagation();
 
 			if (!url_input.value.trim().length) {
 				url_input.focus();
@@ -176,41 +190,56 @@ Config.prototype.controls.link = {
 				return false;
 			}
 
-			a.setAttribute('href', url_input.value);
+			let links: HTMLAnchorElement[];
 
-			if (!isImageContent) {
-				if (content_input.value.trim().length) {
-					a.textContent = content_input.value;
+			editor.selection.restore(selInfo);
+
+			const textWasChanged =
+				getSelectionText() !== content_input.value.trim();
+
+			if (!link) {
+				if (!editor.selection.isCollapsed()) {
+					links = editor.selection.wrapInTag(
+						'a'
+					) as HTMLAnchorElement[];
 				} else {
-					a.textContent = url_input.value;
-				}
-			}
-
-			if (openInNewTabCheckbox) {
-				if (target_checkbox.checked) {
-					a.setAttribute('target', '_blank');
-				} else {
-					a.removeAttribute('target');
-				}
-			}
-
-			if (noFollowCheckbox) {
-				if (nofollow_checkbox.checked) {
-					a.setAttribute('rel', 'nofollow');
-				} else {
-					a.removeAttribute('rel');
-				}
-			}
-
-			if (!current) {
-				if (!isImageContent) {
-					editor.selection.restore(selInfo);
+					const a = editor.create.inside.element('a');
 					editor.selection.insertNode(a);
-				} else {
-					currentElement && Dom.wrap(currentElement, a, editor);
-					editor.selection.restore(selInfo);
+					links = [a];
 				}
+			} else {
+				links = [link];
 			}
+
+			links.forEach(a => {
+				a.setAttribute('href', url_input.value);
+
+				if (!isImageContent) {
+					if (content_input.value.trim().length) {
+						if (textWasChanged) {
+							a.textContent = content_input.value;
+						}
+					} else {
+						a.textContent = url_input.value;
+					}
+				}
+
+				if (openInNewTabCheckbox) {
+					if (target_checkbox.checked) {
+						a.setAttribute('target', '_blank');
+					} else {
+						a.removeAttribute('target');
+					}
+				}
+
+				if (noFollowCheckbox) {
+					if (nofollow_checkbox.checked) {
+						a.setAttribute('rel', 'nofollow');
+					} else {
+						a.removeAttribute('rel');
+					}
+				}
+			});
 
 			close();
 			return false;
@@ -230,9 +259,7 @@ Config.prototype.controls.link = {
 export function link(jodit: IJodit) {
 	if (jodit.options.link.followOnDblClick) {
 		jodit.events.on('afterInit changePlace', () => {
-			jodit.events
-				.off('dblclick.link')
-				.on(
+			jodit.events.off('dblclick.link').on(
 				jodit.editor,
 				'dblclick.link',
 				function(this: HTMLAnchorElement, e: MouseEvent) {

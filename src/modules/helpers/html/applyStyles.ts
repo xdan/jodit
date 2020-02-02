@@ -74,7 +74,7 @@ export const applyStyles = (html: string): string => {
 			}
 
 			Dom.each(iframeDoc.body, node => {
-				if (node.nodeType === Node.ELEMENT_NODE) {
+				if (Dom.isElement(node)) {
 					const elm = node as HTMLElement;
 					const css = elm.style.cssText;
 

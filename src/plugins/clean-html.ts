@@ -14,7 +14,7 @@ import {
 } from '../constants';
 import { Dom } from '../modules/Dom';
 import { normalizeNode, trim } from '../modules/helpers/';
-import { IDictionary, IJodit } from '../types';
+import { HTMLTagNames, IDictionary, IJodit } from '../types';
 import { Plugin } from '../modules/Plugin';
 
 /**
@@ -144,10 +144,10 @@ export class cleanHtml extends Plugin {
 
 					Dom.replace(
 						oldParent as HTMLElement,
-						tagName,
+						tagName as HTMLTagNames,
+						editor.create.inside,
 						true,
-						false,
-						editor.create.inside
+						false
 					);
 
 					editor.selection.restore(selInfo);

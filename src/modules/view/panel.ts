@@ -57,7 +57,7 @@ export abstract class Panel extends Component implements IPanel {
 		if (
 			!resolved ||
 			typeof resolved !== 'object' ||
-			resolved.nodeType !== Node.ELEMENT_NODE ||
+			!Dom.isElement(resolved) ||
 			!resolved.cloneNode
 		) {
 			throw error(

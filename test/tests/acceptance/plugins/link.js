@@ -183,17 +183,19 @@ describe('Link plugin', function() {
 					describe('Selected text', function() {
 						it('Should wrap selected text in link', function() {
 							const editor = new Jodit(appendTestArea(), {
-								toolbarAdaptive: false,
-								observer: {
-									timeout: 0
-								}
+								toolbarAdaptive: false
 							});
 
 							editor.value = 'test <span>select</span> stop';
 
 							const range = editor.selection.createRange();
-							range.selectNodeContents(
-								editor.editor.querySelector('span')
+							range.setStart(
+								editor.editor.querySelector('span').firstChild,
+								0
+							);
+							range.setEnd(
+								editor.editor.querySelector('span').firstChild,
+								6
 							);
 							editor.selection.selectRange(range);
 
@@ -242,7 +244,7 @@ describe('Link plugin', function() {
 							);
 
 							expect(sortAttributes(editor.value)).equals(
-								'test <a href="tests/artio.jpg">select</a> stop'
+								'test <span><a href="tests/artio.jpg">select</a></span> stop'
 							);
 
 							simulateEvent('mousedown', 0, editor.editor);
@@ -441,6 +443,79 @@ describe('Link plugin', function() {
 					expect(textInput).is.not.null;
 
 					expect(textInput.value).equals('bottle');
+				});
+			});
+
+			describe('Was selected part of html', function() {
+				it('Should show dialog form with selection text content from this HTML', function() {
+					const editor = new Jodit(appendTestArea());
+
+					editor.value =
+						'<p>one green <strong>bottle hanging</strong> under wall</p>' +
+						'<p>two green <em>bottles hanging</em> under wall</p>';
+
+					const range = editor.selection.createRange();
+					range.setStart(editor.editor.firstChild.firstChild, 4);
+					range.setEnd(editor.editor.lastChild.lastChild, 6);
+					editor.selection.selectRange(range);
+
+					clickButton('link', editor);
+
+					const popup = editor.container.querySelector(
+						'.jodit_toolbar_popup'
+					);
+
+					const textInput = popup.querySelector(
+						'input[ref=content_input]'
+					);
+					expect(textInput).is.not.null;
+
+					expect(textInput.value).equals(
+						'green bottle hanging under wall two green bottles hanging under'
+					);
+				});
+
+				describe('After submit this part', function() {
+					it('should be wrapped inside anchor', function() {
+						const editor = new Jodit(appendTestArea());
+
+						editor.value =
+							'<p>one green <strong>bottle hanging</strong> under wall</p>' +
+							'<p>two green <em>bottles hanging</em> under wall</p>';
+
+						const range = editor.selection.createRange();
+						range.setStart(editor.editor.firstChild.firstChild, 4);
+						range.setEnd(editor.editor.lastChild.lastChild, 6);
+						editor.selection.selectRange(range);
+
+						clickButton('link', editor);
+
+						const popup = editor.container.querySelector(
+							'.jodit_toolbar_popup'
+						);
+
+						const form = popup.querySelector('.jodit_form');
+						expect(form).is.not.null;
+
+						const input = form.querySelector(
+							'input[ref=url_input]'
+						);
+
+						expect(input).is.not.null;
+
+						input.value = 'https://xdsoft.net/jodit/';
+
+						simulateEvent(
+							'submit',
+							0,
+							form
+						);
+
+						expect(editor.value).equals(
+							'<p>one <a href="https://xdsoft.net/jodit/">green <strong>bottle hanging</strong> under wall</a></p>' +
+							'<p><a href="https://xdsoft.net/jodit/">two green <em>bottles hanging</em> under</a> wall</p>'
+						);
+					});
 				});
 			});
 		});

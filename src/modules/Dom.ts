@@ -6,7 +6,7 @@
 
 import * as consts from '../constants';
 import { HTMLTagNames, ICreate, IJodit, NodeCondition } from '../types';
-import { css, dataBind } from './helpers/';
+import { css, dataBind, isString } from './helpers/';
 import { trim } from './helpers/string';
 
 export class Dom {
@@ -188,15 +188,14 @@ export class Dom {
 	 */
 	static replace(
 		elm: HTMLElement,
-		newTagName: string | HTMLElement,
+		newTagName: HTMLTagNames | HTMLElement,
+		create: ICreate,
 		withAttributes = false,
-		notMoveContent = false,
-		create: ICreate
+		notMoveContent = false
 	): HTMLElement {
-		const tag: HTMLElement =
-			typeof newTagName === 'string'
-				? create.element(newTagName)
-				: newTagName;
+		const tag = isString(newTagName)
+			? create.element(newTagName)
+			: newTagName;
 
 		if (!notMoveContent) {
 			while (elm.firstChild) {
@@ -430,9 +429,7 @@ export class Dom {
 			node,
 			node => {
 				return (
-					node &&
-					node.nodeType === Node.ELEMENT_NODE &&
-					(<HTMLElement>node).classList.contains(className)
+					Dom.isElement(node) && node.classList.contains(className)
 				);
 			},
 			<HTMLElement>node.parentNode
@@ -447,9 +444,7 @@ export class Dom {
 			node,
 			node => {
 				return (
-					node &&
-					node.nodeType === Node.ELEMENT_NODE &&
-					(<HTMLElement>node).classList.contains(className)
+					Dom.isElement(node) && node.classList.contains(className)
 				);
 			},
 			<HTMLElement>node.parentNode

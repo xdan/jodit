@@ -41,9 +41,7 @@ Config.prototype.controls.fontsize = (<IControlType<IJodit>>{
 					elm => {
 						return (
 							Dom.isBlock(elm, editor.editorWindow) ||
-							(elm &&
-								Dom.isNode(elm, editor.editorWindow) &&
-								elm.nodeType === Node.ELEMENT_NODE)
+							(elm && Dom.isElement(elm))
 						);
 					},
 					editor.editor
@@ -69,9 +67,7 @@ Config.prototype.controls.fontsize = (<IControlType<IJodit>>{
 					elm => {
 						return (
 							Dom.isBlock(elm, editor.editorWindow) ||
-							(elm &&
-								Dom.isNode(elm, editor.editorWindow) &&
-								elm.nodeType === Node.ELEMENT_NODE)
+							(elm && Dom.isElement(elm))
 						);
 					},
 					editor.editor
@@ -128,9 +124,7 @@ Config.prototype.controls.font = (<IControlType<IJodit>>{
 					elm => {
 						return (
 							Dom.isBlock(elm, editor.editorWindow) ||
-							(elm &&
-								Dom.isNode(elm, editor.editorWindow) &&
-								elm.nodeType === Node.ELEMENT_NODE)
+							(elm && Dom.isElement(elm))
 						);
 					},
 					editor.editor
@@ -162,9 +156,7 @@ Config.prototype.controls.font = (<IControlType<IJodit>>{
 					(elm: Node | null) => {
 						return (
 							Dom.isBlock(elm, editor.editorWindow) ||
-							(Dom.isNode(elm, editor.editorWindow) &&
-								elm &&
-								elm.nodeType === Node.ELEMENT_NODE)
+							Dom.isElement(elm)
 						);
 					},
 					editor.editor

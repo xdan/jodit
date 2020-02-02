@@ -166,10 +166,10 @@ export function formatBlock(editor: IJodit) {
 					} else {
 						Dom.replace(
 							currentBox,
-							third,
+							third as HTMLTagNames,
+							editor.create.inside,
 							true,
-							false,
-							editor.create.inside
+							false
 						);
 					}
 				} else {

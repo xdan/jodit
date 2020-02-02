@@ -19,8 +19,7 @@ Config.prototype.controls.brush = {
 			return true;
 		}
 
-		const
-			current: Node | false = editor.selection.current(),
+		const current: Node | false = editor.selection.current(),
 			icon = button.container.querySelector('svg');
 
 		if (icon && icon.style.fill) {
@@ -34,16 +33,13 @@ Config.prototype.controls.brush = {
 					elm => {
 						return (
 							Dom.isBlock(elm, editor.editorWindow) ||
-							(elm &&
-								Dom.isNode(elm, editor.editorWindow) &&
-								elm.nodeType === Node.ELEMENT_NODE)
+							(elm && Dom.isElement(elm))
 						);
 					},
 					editor.editor
 				) as HTMLElement) || editor.editor;
 
-			const
-				colorHEX = css(currentBpx, 'color').toString(),
+			const colorHEX = css(currentBpx, 'color').toString(),
 				bgHEX = css(currentBpx, 'background-color').toString();
 
 			if (colorHEX !== css(editor.editor, 'color').toString()) {
@@ -75,7 +71,7 @@ Config.prototype.controls.brush = {
 			current &&
 			current !== editor.editor &&
 			Dom.isNode(current, editor.editorWindow) &&
-			current.nodeType === Node.ELEMENT_NODE
+			Dom.isElement(current)
 		) {
 			colorHEX = css(current as HTMLElement, 'color').toString();
 			bg_color = css(

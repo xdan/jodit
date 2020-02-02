@@ -197,14 +197,14 @@ export class search extends Plugin {
 		// find scrollable element
 		let parentBox: HTMLElement | false = Dom.closest(
 			startContainer,
-			elm => elm && elm.nodeType === Node.ELEMENT_NODE,
+			Dom.isElement,
 			this.jodit.editor
 		) as HTMLElement | false;
 
 		if (!parentBox) {
 			parentBox = Dom.prev(
 				startContainer,
-				(elm: Node | null) => elm && elm.nodeType === Node.ELEMENT_NODE,
+				Dom.isElement,
 				this.jodit.editor
 			) as HTMLElement | false;
 		}
