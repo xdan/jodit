@@ -25,7 +25,12 @@ module.exports = function (source) {
 
 		const box = {};
 
-		vm.runInNewContext(content, box);
+		try {
+			vm.runInNewContext(content, box);
+		}
+		catch(e) {
+			vm.runInNewContext('var exports={};' + content, box);
+		}
 
 		const lang = box.result;
 
