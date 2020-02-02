@@ -63,6 +63,7 @@ Config.prototype.controls.align = {
 					node => Dom.isBlock(node, editor.editorWindow),
 					editor.editor
 				) as HTMLElement) || editor.editor;
+
 			return (
 				btn.defaultValue.indexOf(
 					css(currentBox, 'text-align').toString()
@@ -86,6 +87,7 @@ Config.prototype.controls.center = {
 	},
 	tooltip: 'Align Center'
 };
+
 Config.prototype.controls.justify = {
 	command: 'justifyFull',
 	css: {
@@ -93,6 +95,7 @@ Config.prototype.controls.justify = {
 	},
 	tooltip: 'Align Justify'
 };
+
 Config.prototype.controls.left = {
 	command: 'justifyLeft',
 	css: {
@@ -100,6 +103,7 @@ Config.prototype.controls.left = {
 	},
 	tooltip: 'Align Left'
 };
+
 Config.prototype.controls.right = {
 	command: 'justifyRight',
 	css: {
@@ -110,7 +114,6 @@ Config.prototype.controls.right = {
 
 /**
  * Process commands: `justifyfull`, `justifyleft`, `justifyright`, `justifycenter`
- *
  * @param {Jodit} editor
  */
 export function justify(editor: IJodit) {

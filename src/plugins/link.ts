@@ -28,6 +28,8 @@ import { IControlType } from '../types/toolbar';
 declare module '../Config' {
 	interface Config {
 		link: {
+			formTemplate: (editor: IJodit) => string;
+			formClassName?: string;
 			followOnDblClick: boolean;
 			processVideoLink: boolean;
 			processPastedLink: boolean;
@@ -39,6 +41,36 @@ declare module '../Config' {
 }
 
 Config.prototype.link = {
+	formTemplate: (editor): string => {
+		const i18n = editor.i18n.bind(editor);
+
+		return `<form class="jodit_form">
+			<div class="jodit_form_group">
+				<input ref="url_input" class="jodit_input" required type="text" name="url" placeholder="http://" type="text"/>
+			</div>
+			<div ref="content_input_box" class="jodit_form_group">
+				<input ref="content_input" class="jodit_input" name="text" placeholder="${i18n(
+					'Text'
+				)}" type="text"/>
+			</div>
+			<label ref="target_checkbox_box">
+				<input ref="target_checkbox" class="jodit_checkbox" name="target" type="checkbox"/>
+				<span>${i18n('Open in new tab')}</span>
+			</label>
+			<label ref="nofollow_checkbox_box">
+				<input ref="nofollow_checkbox" class="jodit_checkbox" name="nofollow" type="checkbox"/>
+				<span>${i18n('No follow')}</span>
+			</label>
+			<div class="jodit_buttons">
+				<button ref="unlink" class="jodit_button jodit_unlink_button" type="button">${i18n(
+					'Unlink'
+				)}</button>
+				<button ref="insert" class="jodit_button jodit_link_insert_button" type="submit">${i18n(
+					'Insert'
+				)}</button>
+			</div>
+		<form/>`;
+	},
 	followOnDblClick: true,
 	processVideoLink: true,
 	processPastedLink: true,
@@ -77,34 +109,14 @@ Config.prototype.controls.link = {
 		close: () => void
 	) => {
 		const i18n = editor.i18n.bind(editor),
-			{ openInNewTabCheckbox, noFollowCheckbox } = editor.options.link,
-			form: HTMLFormElement = editor.create.fromHTML(
-				`<form class="jodit_form">
-						<div class="jodit_form_group">
-							<input ref="url_input" class="jodit_input" required type="text" name="url" placeholder="http://" type="text"/>
-						</div>
-						<div ref="content_input_box" class="jodit_form_group">
-							<input ref="content_input" class="jodit_input" name="text" placeholder="${i18n(
-								'Text'
-							)}" type="text"/>
-						</div>
-						<label ref="target_checkbox_box">
-							<input ref="target_checkbox" class="jodit_checkbox" name="target" type="checkbox"/>
-							<span>${i18n('Open in new tab')}</span>
-						</label>
-						<label ref="nofollow_checkbox_box">
-							<input ref="nofollow_checkbox" class="jodit_checkbox" name="nofollow" type="checkbox"/>
-							<span>${i18n('No follow')}</span>
-						</label>
-						<div class="jodit_buttons">
-							<button ref="unlink" class="jodit_button jodit_unlink_button" type="button">${i18n(
-								'Unlink'
-							)}</button>
-							<button ref="insert" class="jodit_button jodit_link_insert_button" type="submit">${i18n(
-								'Insert'
-							)}</button>
-						</div>
-					<form/>`,
+			{
+				openInNewTabCheckbox,
+				noFollowCheckbox,
+				formTemplate,
+				formClassName
+			} = editor.options.link,
+			form = editor.create.fromHTML(
+				formTemplate(editor),
 				{
 					target_checkbox_box: openInNewTabCheckbox,
 					nofollow_checkbox_box: noFollowCheckbox
@@ -116,11 +128,23 @@ Config.prototype.controls.link = {
 			{
 				target_checkbox,
 				nofollow_checkbox,
-				url_input,
-				content_input
+				url_input
 			} = elements as IDictionary<HTMLInputElement>,
 			currentElement = current,
 			isImageContent = Dom.isImage(currentElement, editor.editorWindow);
+
+		let {content_input} = elements as IDictionary<HTMLInputElement>;
+
+		if (!content_input) {
+			content_input = editor.create.element('input', {
+				type: 'hidden',
+				ref: "content_input"
+			})
+		}
+
+		if (formClassName) {
+			form.classList.add(formClassName);
+		}
 
 		if (isImageContent) {
 			Dom.hide(content_input_box);
@@ -151,12 +175,12 @@ Config.prototype.controls.link = {
 		if (link) {
 			url_input.value = link.getAttribute('href') || '';
 
-			if (openInNewTabCheckbox) {
+			if (openInNewTabCheckbox && target_checkbox) {
 				target_checkbox.checked =
 					link.getAttribute('target') === '_blank';
 			}
 
-			if (noFollowCheckbox) {
+			if (noFollowCheckbox && nofollow_checkbox) {
 				nofollow_checkbox.checked =
 					link.getAttribute('rel') === 'nofollow';
 			}
@@ -224,7 +248,7 @@ Config.prototype.controls.link = {
 					}
 				}
 
-				if (openInNewTabCheckbox) {
+				if (openInNewTabCheckbox && target_checkbox) {
 					if (target_checkbox.checked) {
 						a.setAttribute('target', '_blank');
 					} else {
@@ -232,7 +256,7 @@ Config.prototype.controls.link = {
 					}
 				}
 
-				if (noFollowCheckbox) {
+				if (noFollowCheckbox && nofollow_checkbox) {
 					if (nofollow_checkbox.checked) {
 						a.setAttribute('rel', 'nofollow');
 					} else {

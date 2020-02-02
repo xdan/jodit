@@ -179,6 +179,69 @@ describe('Link plugin', function() {
 					expect(list.parentNode).is.null;
 				});
 
+				describe('Set custom popup template', function() {
+					it('Should show this template inside popup', function() {
+						const tpl =
+							'<form class="form_url"><input ref="url_input" type="url"><button>save</button></form>';
+
+						const editor = new Jodit(appendTestArea(), {
+							link: {
+								formTemplate: function() {
+									return tpl;
+								}
+							}
+						});
+
+						editor.value = '123';
+						editor.selection.select(editor.editor.firstChild);
+
+						clickButton('link', editor);
+
+						const popup = editor.container.querySelector(
+							'.jodit_toolbar_popup'
+						);
+
+						expect(
+							sortAttributes(
+								popup.querySelector('form').outerHTML
+							)
+						).equals(tpl);
+
+						const url = editor.container.querySelector(
+							'[ref=url_input]'
+						);
+						expect(url).is.not.null;
+
+						url.focus();
+						url.value = 'tests/artio.jpg';
+
+						simulateEvent('submit', 0, popup.querySelector('form'));
+
+						expect(sortAttributes(editor.value)).equals(
+							'<a href="tests/artio.jpg">123</a>'
+						);
+					});
+
+					describe('Add class name in form', function() {
+						it('Should show form with this class', function() {
+							const editor = new Jodit(appendTestArea(), {
+								link: {
+									formClassName: "bootstrap_form"
+								}
+							});
+
+							clickButton('link', editor);
+
+							const form = editor.container.querySelector(
+								'.jodit_toolbar_popup form'
+							);
+
+							expect(form).is.not.null;
+							expect(form.classList.contains('bootstrap_form')).is.true;
+						});
+					});
+				});
+
 				describe('On selected content', function() {
 					describe('Selected text', function() {
 						it('Should wrap selected text in link', function() {
@@ -505,15 +568,11 @@ describe('Link plugin', function() {
 
 						input.value = 'https://xdsoft.net/jodit/';
 
-						simulateEvent(
-							'submit',
-							0,
-							form
-						);
+						simulateEvent('submit', 0, form);
 
 						expect(editor.value).equals(
 							'<p>one <a href="https://xdsoft.net/jodit/">green <strong>bottle hanging</strong> under wall</a></p>' +
-							'<p><a href="https://xdsoft.net/jodit/">two green <em>bottles hanging</em> under</a> wall</p>'
+								'<p><a href="https://xdsoft.net/jodit/">two green <em>bottles hanging</em> under</a> wall</p>'
 						);
 					});
 				});
