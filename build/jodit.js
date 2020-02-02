@@ -1,7 +1,7 @@
 /*!
  jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- Version: v3.3.18
+ Version: v3.3.19
  Url: https://xdsoft.net/jodit/
  License(s): MIT
 */
@@ -11661,7 +11661,7 @@ var View = (function (_super) {
         var _a, _b, _c;
         var _this = _super.call(this, jodit, options) || this;
         _this.components = new Set();
-        _this.version = "3.3.18";
+        _this.version = "3.3.19";
         _this.__modulesInstances = {};
         _this.buffer = storage_1.Storage.makeStorage();
         _this.progressbar = new ProgressBar_1.ProgressBar(_this);
@@ -16355,6 +16355,10 @@ var Config_1 = __webpack_require__(4);
 var Dom_1 = __webpack_require__(1);
 var helpers_1 = __webpack_require__(3);
 Config_1.Config.prototype.link = {
+    formTemplate: function (editor) {
+        var i18n = editor.i18n.bind(editor);
+        return "<form class=\"jodit_form\">\n\t\t\t<div class=\"jodit_form_group\">\n\t\t\t\t<input ref=\"url_input\" class=\"jodit_input\" required type=\"text\" name=\"url\" placeholder=\"http://\" type=\"text\"/>\n\t\t\t</div>\n\t\t\t<div ref=\"content_input_box\" class=\"jodit_form_group\">\n\t\t\t\t<input ref=\"content_input\" class=\"jodit_input\" name=\"text\" placeholder=\"" + i18n('Text') + "\" type=\"text\"/>\n\t\t\t</div>\n\t\t\t<label ref=\"target_checkbox_box\">\n\t\t\t\t<input ref=\"target_checkbox\" class=\"jodit_checkbox\" name=\"target\" type=\"checkbox\"/>\n\t\t\t\t<span>" + i18n('Open in new tab') + "</span>\n\t\t\t</label>\n\t\t\t<label ref=\"nofollow_checkbox_box\">\n\t\t\t\t<input ref=\"nofollow_checkbox\" class=\"jodit_checkbox\" name=\"nofollow\" type=\"checkbox\"/>\n\t\t\t\t<span>" + i18n('No follow') + "</span>\n\t\t\t</label>\n\t\t\t<div class=\"jodit_buttons\">\n\t\t\t\t<button ref=\"unlink\" class=\"jodit_button jodit_unlink_button\" type=\"button\">" + i18n('Unlink') + "</button>\n\t\t\t\t<button ref=\"insert\" class=\"jodit_button jodit_link_insert_button\" type=\"submit\">" + i18n('Insert') + "</button>\n\t\t\t</div>\n\t\t<form/>";
+    },
     followOnDblClick: true,
     processVideoLink: true,
     processPastedLink: true,
@@ -16378,11 +16382,21 @@ Config_1.Config.prototype.controls.link = {
         return current && Dom_1.Dom.closest(current, 'a', editor.editor) !== false;
     },
     popup: function (editor, current, self, close) {
-        var i18n = editor.i18n.bind(editor), _a = editor.options.link, openInNewTabCheckbox = _a.openInNewTabCheckbox, noFollowCheckbox = _a.noFollowCheckbox, form = editor.create.fromHTML("<form class=\"jodit_form\">\n\t\t\t\t\t\t<div class=\"jodit_form_group\">\n\t\t\t\t\t\t\t<input ref=\"url_input\" class=\"jodit_input\" required type=\"text\" name=\"url\" placeholder=\"http://\" type=\"text\"/>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div ref=\"content_input_box\" class=\"jodit_form_group\">\n\t\t\t\t\t\t\t<input ref=\"content_input\" class=\"jodit_input\" name=\"text\" placeholder=\"" + i18n('Text') + "\" type=\"text\"/>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<label ref=\"target_checkbox_box\">\n\t\t\t\t\t\t\t<input ref=\"target_checkbox\" class=\"jodit_checkbox\" name=\"target\" type=\"checkbox\"/>\n\t\t\t\t\t\t\t<span>" + i18n('Open in new tab') + "</span>\n\t\t\t\t\t\t</label>\n\t\t\t\t\t\t<label ref=\"nofollow_checkbox_box\">\n\t\t\t\t\t\t\t<input ref=\"nofollow_checkbox\" class=\"jodit_checkbox\" name=\"nofollow\" type=\"checkbox\"/>\n\t\t\t\t\t\t\t<span>" + i18n('No follow') + "</span>\n\t\t\t\t\t\t</label>\n\t\t\t\t\t\t<div class=\"jodit_buttons\">\n\t\t\t\t\t\t\t<button ref=\"unlink\" class=\"jodit_button jodit_unlink_button\" type=\"button\">" + i18n('Unlink') + "</button>\n\t\t\t\t\t\t\t<button ref=\"insert\" class=\"jodit_button jodit_link_insert_button\" type=\"submit\">" + i18n('Insert') + "</button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t<form/>", {
+        var i18n = editor.i18n.bind(editor), _a = editor.options.link, openInNewTabCheckbox = _a.openInNewTabCheckbox, noFollowCheckbox = _a.noFollowCheckbox, formTemplate = _a.formTemplate, formClassName = _a.formClassName, form = editor.create.fromHTML(formTemplate(editor), {
             target_checkbox_box: openInNewTabCheckbox,
             nofollow_checkbox_box: noFollowCheckbox
         });
-        var elements = helpers_1.refs(form), insert = elements.insert, unlink = elements.unlink, content_input_box = elements.content_input_box, _b = elements, target_checkbox = _b.target_checkbox, nofollow_checkbox = _b.nofollow_checkbox, url_input = _b.url_input, content_input = _b.content_input, currentElement = current, isImageContent = Dom_1.Dom.isImage(currentElement, editor.editorWindow);
+        var elements = helpers_1.refs(form), insert = elements.insert, unlink = elements.unlink, content_input_box = elements.content_input_box, _b = elements, target_checkbox = _b.target_checkbox, nofollow_checkbox = _b.nofollow_checkbox, url_input = _b.url_input, currentElement = current, isImageContent = Dom_1.Dom.isImage(currentElement, editor.editorWindow);
+        var content_input = elements.content_input;
+        if (!content_input) {
+            content_input = editor.create.element('input', {
+                type: 'hidden',
+                ref: "content_input"
+            });
+        }
+        if (formClassName) {
+            form.classList.add(formClassName);
+        }
         if (isImageContent) {
             Dom_1.Dom.hide(content_input_box);
         }
@@ -16401,11 +16415,11 @@ Config_1.Config.prototype.controls.link = {
         }
         if (link) {
             url_input.value = link.getAttribute('href') || '';
-            if (openInNewTabCheckbox) {
+            if (openInNewTabCheckbox && target_checkbox) {
                 target_checkbox.checked =
                     link.getAttribute('target') === '_blank';
             }
-            if (noFollowCheckbox) {
+            if (noFollowCheckbox && nofollow_checkbox) {
                 nofollow_checkbox.checked =
                     link.getAttribute('rel') === 'nofollow';
             }
@@ -16461,7 +16475,7 @@ Config_1.Config.prototype.controls.link = {
                         a.textContent = url_input.value;
                     }
                 }
-                if (openInNewTabCheckbox) {
+                if (openInNewTabCheckbox && target_checkbox) {
                     if (target_checkbox.checked) {
                         a.setAttribute('target', '_blank');
                     }
@@ -16469,7 +16483,7 @@ Config_1.Config.prototype.controls.link = {
                         a.removeAttribute('target');
                     }
                 }
-                if (noFollowCheckbox) {
+                if (noFollowCheckbox && nofollow_checkbox) {
                     if (nofollow_checkbox.checked) {
                         a.setAttribute('rel', 'nofollow');
                     }
