@@ -1,5 +1,27 @@
 # Changelog
 
+## 3.3.19
+### BugFix
+* Fixed a lots bugs inside `link` plugin
+[#331](https://github.com/xdan/jodit/issues/331)
+[#334](https://github.com/xdan/jodit/issues/334)
+[#334](https://github.com/xdan/jodit/issues/334)
+[#235](https://github.com/xdan/jodit/issues/235)
+
+### Feature
+* In `link` plugin added `formTemplate` and `formClassName` options [#333](https://github.com/xdan/jodit/issues/333)
+```js
+const editor = new Jodit(appendTestArea(), {
+  link: {
+    formTemplate: function() {
+      return '<form class="form_url"><input ref="url_input" type="url"><button>save</button></form>';
+    },
+    formClassName: "some_class"
+  }
+});
+```
+* Added deprecated mechanism. Some methods will not be removed and only will be marked as deprecated until major release. [#330](https://github.com/xdan/jodit/issues/330)
+
 ## 3.3.16
 Added `createAttributes` option [#243](https://github.com/xdan/jodit/issues/243)
 All elements which will be inserted in editor will be created with these attributes
