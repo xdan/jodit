@@ -50,7 +50,7 @@ Config.prototype.controls.dialog = {
 				Config.prototype.controls.fullsize &&
 				Config.prototype.controls.fullsize.getLabel &&
 				typeof Config.prototype.controls.fullsize.getLabel ===
-				'function'
+					'function'
 			) {
 				return Config.prototype.controls.fullsize.getLabel(
 					editor,
@@ -112,25 +112,27 @@ export class Dialog extends ViewWithToolbar {
 	) {
 		const elements_list: HTMLElement[] = [];
 
-		asArray<ContentItem | ContentItem[]>(elements).forEach((elm: ContentItem | ContentItem[]): any => {
-			if (Array.isArray(elm)) {
-				const div = this.create.div('jodit_dialog_column');
+		asArray<ContentItem | ContentItem[]>(elements).forEach(
+			(elm: ContentItem | ContentItem[]): any => {
+				if (Array.isArray(elm)) {
+					const div = this.create.div('jodit_dialog_column');
 
-				elements_list.push(div);
-				root.appendChild(div);
+					elements_list.push(div);
+					root.appendChild(div);
 
-				return this.setElements(div, elm);
+					return this.setElements(div, elm);
+				}
+
+				const element: HTMLElement =
+					typeof elm === 'string' ? this.create.fromHTML(elm) : elm;
+
+				elements_list.push(element);
+
+				if (element.parentNode !== root) {
+					root.appendChild(element);
+				}
 			}
-
-			const element: HTMLElement =
-				typeof elm === 'string' ? this.create.fromHTML(elm) : elm;
-
-			elements_list.push(element);
-
-			if (element.parentNode !== root) {
-				root.appendChild(element);
-			}
-		});
+		);
 
 		Array.from(root.childNodes).forEach((elm: ChildNode) => {
 			if (elements_list.indexOf(elm as HTMLElement) === -1) {
@@ -322,12 +324,10 @@ export class Dialog extends ViewWithToolbar {
 	 * @param {Number} [y] - Position px Vertical
 	 */
 	setPosition(x?: number, y?: number) {
-		const
-			w: number = this.window.innerWidth,
+		const w: number = this.window.innerWidth,
 			h: number = this.window.innerHeight;
 
-		let
-			left: number = w / 2 - this.dialog.offsetWidth / 2,
+		let left: number = w / 2 - this.dialog.offsetWidth / 2,
 			top: number = h / 2 - this.dialog.offsetHeight / 2;
 
 		if (left < 0) {
@@ -472,11 +472,11 @@ export class Dialog extends ViewWithToolbar {
 		[this.destination, this.destination.parentNode].forEach(
 			(box: Node | null) => {
 				box &&
-				(box as HTMLElement).classList &&
-				(box as HTMLElement).classList.toggle(
-					'jodit_fullsize_box',
-					condition
-				);
+					(box as HTMLElement).classList &&
+					(box as HTMLElement).classList.toggle(
+						'jodit_fullsize_box',
+						condition
+					);
 			}
 		);
 
@@ -603,8 +603,8 @@ export class Dialog extends ViewWithToolbar {
 		}
 
 		this.container &&
-		this.container.classList &&
-		this.container.classList.remove('active');
+			this.container.classList &&
+			this.container.classList.remove('active');
 
 		if (this.iSetMaximization) {
 			this.maximization(false);
@@ -649,22 +649,28 @@ export class Dialog extends ViewWithToolbar {
 
 		self.container = this.create.fromHTML(
 			'<div style="z-index:' +
-			self.options.zIndex +
-			'" class="jodit jodit_dialog_box">' +
-			'<div class="jodit_dialog_overlay"></div>' +
-			'<div class="jodit_dialog">' +
-			'<div class="jodit_dialog_header non-selected">' +
-			'<div class="jodit_dialog_header-title"></div>' +
-			'<div class="jodit_dialog_header-toolbar"></div>' +
-			'</div>' +
-			'<div class="jodit_dialog_content"></div>' +
-			'<div class="jodit_dialog_footer"></div>' +
-			(self.options.resizable
-				? '<div class="jodit_dialog_resizer"></div>'
-				: '') +
-			'</div>' +
-			'</div>'
+				self.options.zIndex +
+				'" class="jodit jodit_dialog_box">' +
+				'<div class="jodit_dialog_overlay"></div>' +
+				'<div class="jodit_dialog">' +
+				'<div class="jodit_dialog_header non-selected">' +
+				'<div class="jodit_dialog_header-title"></div>' +
+				'<div class="jodit_dialog_header-toolbar"></div>' +
+				'</div>' +
+				'<div class="jodit_dialog_content"></div>' +
+				'<div class="jodit_dialog_footer"></div>' +
+				(self.options.resizable
+					? '<div class="jodit_dialog_resizer"></div>'
+					: '') +
+				'</div>' +
+				'</div>'
 		) as HTMLDivElement;
+
+		if (jodit && (<IJodit>jodit).options.theme) {
+			self.container.classList.add(
+				'jodit_' + (jodit.options.theme || 'default') + '_theme'
+			);
+		}
 
 		if (jodit && (<IViewBased>jodit).id) {
 			(<IViewBased>jodit).markOwner(self.container);
@@ -715,10 +721,10 @@ export class Dialog extends ViewWithToolbar {
 		);
 
 		headerBox &&
-		headerBox.addEventListener(
-			'mousedown',
-			self.onHeaderMouseDown.bind(self)
-		);
+			headerBox.addEventListener(
+				'mousedown',
+				self.onHeaderMouseDown.bind(self)
+			);
 
 		if (self.options.resizable) {
 			self.resizer.addEventListener(

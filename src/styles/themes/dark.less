@@ -4,6 +4,8 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+@import (reference) '../variables';
+
 .jodit_dark_theme {
 	&.jodit_container {
 		background-color: @dark_background_color;
@@ -17,8 +19,8 @@
 		background-color: @dark_background_color;
 	}
 
-	.jodit_workplace {
-		border-color: fade(@dark_background_color, 80%);
+	&.jodit_container:not(.jodit_inline) .jodit_workplace {
+		border-color: @dark_background_color;
 	}
 
 	.jodit_statusbar {
@@ -31,6 +33,7 @@
 		}
 	}
 
+	.jodit_popup_triangle,
 	.jodit_toolbar_popup-inline,
 	.jodit_toolbar_popup {
 		background: @dark_background_color;
@@ -76,8 +79,13 @@
 		}
 	}
 
+	.jodit_upload_button svg,
 	.jodit_icon {
 		fill: @dark_icon_color;
+	}
+
+	.jodit_icon_close {
+		stroke: @dark_icon_color;
 	}
 
 	.jodit_wysiwyg_iframe,
@@ -158,5 +166,23 @@
 	.jodit_resizer > i {
 		background: @dark_toolbar_seperator_color3;
 		border-color: @dark_icon_color;
+	}
+
+	.jodit_input {
+		border-color: fade(@dark_text_color, 50);
+		background-color: @dark_text_color;
+	}
+
+	&.jodit_dialog_box .jodit_dialog {
+		background-color: @dark_background_color;
+
+		.jodit_filebrowser_files.active .jodit_filebrowser_files_item,
+		.jodit_dialog_header {
+			border-color: @dark_border_color;
+		}
+
+		.jodit_filebrowser_files.active .jodit_filebrowser_files_item-info {
+			background-color: @dark_text_color;
+		}
 	}
 }

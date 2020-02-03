@@ -1062,6 +1062,10 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		let container = this.create.div('jodit_container');
 
 		container.classList.add('jodit_container');
+		container.classList.add(
+			'jodit_' + (this.options.theme || 'default') + '_theme'
+		);
+
 		container.setAttribute('contenteditable', 'false');
 
 		let buffer: null | string = null;
