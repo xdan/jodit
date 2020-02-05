@@ -224,7 +224,7 @@ export default {
 		'Das Bild wurde erfolgreich auf den Server hochgeladen!null',
 	palette: 'Palette',
 	'There are no files': 'In diesem Verzeichnis befinden sich keine Dateien.',
-	rename: 'umbenennen',
+	Rename: 'umbenennen',
 	'Enter new name': 'Geben Sie einen neuen Namen ein',
 	preview: 'Vorschau',
 	download: 'Herunterladen',

@@ -222,7 +222,7 @@ export default {
     'Gambar telah sukses diunggah ke host!',
   palette: 'palet',
   'There are no files': 'Tidak ada berkas',
-  rename: 'ganti nama',
+  Rename: 'ganti nama',
   'Enter new name': 'Masukkan nama baru',
   preview: 'pratinjau',
   download: 'Unduh',

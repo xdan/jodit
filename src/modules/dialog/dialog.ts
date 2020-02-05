@@ -12,6 +12,7 @@ import { IControlType } from '../../types/toolbar';
 import { IViewBased } from '../../types/view';
 import { $$, asArray, css, isJoditObject } from '../helpers/';
 import { ViewWithToolbar } from '../view/viewWithToolbar';
+import { Dom } from '../Dom';
 
 /**
  * @property {object} dialog module settings {@link Dialog|Dialog}
@@ -620,10 +621,8 @@ export class Dialog extends ViewWithToolbar {
 		 * @event afterClose
 		 * @this {Dialog} current dialog
 		 */
-		if (this.jodit && this.jodit.events) {
-			this.jodit.events.fire(this, 'afterClose');
-			this.jodit.events.fire(this.ownerWindow, 'jodit_close_dialog');
-		}
+		this.jodit?.events?.fire(this, 'afterClose');
+		this.jodit?.events?.fire(this.ownerWindow, 'jodit_close_dialog');
 	};
 
 	constructor(jodit?: IViewBased, options: any = Config.prototype.dialog) {
@@ -647,6 +646,7 @@ export class Dialog extends ViewWithToolbar {
 
 		self.options = { ...opt, ...self.options } as IDialogOptions;
 
+		Dom.safeRemove(self.container);
 		self.container = this.create.fromHTML(
 			'<div style="z-index:' +
 				self.options.zIndex +
@@ -683,6 +683,7 @@ export class Dialog extends ViewWithToolbar {
 		self.dialog = self.container.querySelector(
 			'.jodit_dialog'
 		) as HTMLDivElement;
+
 		self.resizer = self.container.querySelector(
 			'.jodit_dialog_resizer'
 		) as HTMLDivElement;
@@ -744,6 +745,8 @@ export class Dialog extends ViewWithToolbar {
 			return;
 		}
 
+		this.setStatus(STATUSES.beforeDestruct);
+
 		if (this.events) {
 			this.events
 				.off(this.window, 'mousemove', this.onMouseMove)
@@ -757,3 +760,4 @@ export class Dialog extends ViewWithToolbar {
 }
 
 import { fullsize } from '../../plugins';
+import { STATUSES } from '../Component';

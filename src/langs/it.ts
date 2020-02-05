@@ -223,7 +223,7 @@ export default {
 		"L'immagine è stata caricata con successo sul server!",
 	palette: 'tavolozza',
 	'There are no files': 'Non ci sono file in questa directory.',
-	rename: 'ungherese',
+	Rename: 'ungherese',
 	'Enter new name': 'Inserisci un nuovo nome',
 	preview: 'anteprima',
 	download: 'Scaricare',

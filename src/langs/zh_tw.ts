@@ -221,7 +221,7 @@ export default {
 	palette: '調色板',
 	pencil: '鉛筆',
 	'There are no files': '此目錄中沒有文件。',
-	rename: '重命名',
+	Rename: '重命名',
 	'Enter new name': '輸入新名稱',
 	preview: '預覽',
 	download: '下載',

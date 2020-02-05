@@ -223,7 +223,7 @@ export default {
 		'התמונה עלתה בהצלחה!',
 	palette: 'לוח',
 	'There are no files': 'אין קבצים בספריה זו.',
-	rename: 'הונגרית',
+	Rename: 'הונגרית',
 	'Enter new name': 'הזן שם חדש',
 	preview: 'תצוגה מקדימה',
 	download: 'הורד',

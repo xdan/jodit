@@ -219,7 +219,7 @@ export default {
 		"L'image a été téléchargée avec succès sur le serveur!null",
 	palette: 'Palette',
 	'There are no files': 'Il n\'y a aucun fichier dans ce répertoire.',
-	rename: 'renommer',
+	Rename: 'renommer',
 	'Enter new name': 'Entrez un nouveau nom',
 	preview: 'Aperçu',
 	download: 'Télécharger',

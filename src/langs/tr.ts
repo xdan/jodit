@@ -223,7 +223,7 @@ export default {
 		'Görsel başarıyla hostunuza yüklendi',
 	palette: 'Palette',
 	'There are no files': 'Bu dizinde dosya yok.',
-	rename: 'Macarca',
+	Rename: 'Macarca',
 	'Enter new name': 'Yeni isim girin',
 	preview: 'Ön izleme',
 	download: 'İndir',

@@ -211,7 +211,7 @@ export default {
 		'تم تحميل الصورة بنجاح على الخادم!',
 	palette: 'لوحة',
 	'There are no files': 'لا توجد ملفات في هذا الدليل.',
-	rename: 'إعادة تسمية',
+	Rename: 'إعادة تسمية',
 	'Enter new name': 'أدخل اسم جديد',
 	preview: 'معاينة',
 	download: 'تحميل',

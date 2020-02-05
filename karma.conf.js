@@ -88,7 +88,10 @@ module.exports = function(config) {
 		webpack: webpackConfig(),
 
 		client: {
-			captureConsole: true
+			captureConsole: true,
+			mocha: {
+				bail: true
+			}
 		},
 
 		webpackMiddleware: {

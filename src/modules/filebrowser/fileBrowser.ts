@@ -1207,11 +1207,16 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	}
 
 	destruct() {
+		if (this.isInDestruct) {
+			return;
+		}
+
 		this.dialog.destruct();
 		delete this.dialog;
 		this.events && this.events.off('.filebrowser');
 		this.uploader && this.uploader.destruct();
 		delete this.uploader;
+
 		super.destruct();
 	}
 }

@@ -534,6 +534,13 @@ function simulateEvent(type, keyCodeArg, element, options) {
 			simulateEvent(event, keyCodeArg, element, options);
 		});
 	}
+
+	if (Array.isArray(element)) {
+		return element.forEach(function (elm) {
+			simulateEvent(type, keyCodeArg, elm, options);
+		});
+	}
+
 	const evt = (element.ownerDocument || document).createEvent('HTMLEvents');
 
 	evt.initEvent(type, true, true);

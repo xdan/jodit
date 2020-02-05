@@ -222,7 +222,7 @@ export default {
 		'Obrázek byl úspěšně nahrán!',
 	palette: 'paleta',
 	'There are no files': 'V tomto adresáři nejsou žádné soubory.',
-	rename: 'přejmenovat',
+	Rename: 'přejmenovat',
 	'Enter new name': 'Zadejte nový název',
 	preview: 'náhled',
 	download: 'Stažení',

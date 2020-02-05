@@ -743,6 +743,7 @@ export class inlinePopup extends Plugin {
 
 		Dom.safeRemove(this.target);
 		Dom.safeRemove(this.container);
+		Dom.safeRemove(this.targetContainer);
 
 		editor.events &&
 			editor.events

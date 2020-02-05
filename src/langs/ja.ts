@@ -220,7 +220,7 @@ export default {
 	palette: 'パレット',
 	pencil: '鉛筆',
 	'There are no files': 'There are no files',
-	rename: 'rename',
+	Rename: 'Rename',
 	'Enter new name': 'Enter new name',
 	preview: 'プレビュー',
 	download: 'ダウンロード',

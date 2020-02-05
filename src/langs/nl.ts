@@ -225,7 +225,7 @@ export default {
 		'De afbeelding is succesvol geüploadet!',
 	palette: 'Palette',
 	'There are no files': 'Er zijn geen bestanden in deze map.',
-	rename: 'Hongaars',
+	Rename: 'Hongaars',
 	'Enter new name': 'Voer een nieuwe naam in',
 	preview: 'voorvertoning',
 	download: 'Download',

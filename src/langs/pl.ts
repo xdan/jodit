@@ -222,7 +222,7 @@ export default {
 		'Grafika została pomyślnienie dodana na serwer',
 	palette: 'Paleta',
 	'There are no files': 'Brak plików.',
-	rename: 'zmień nazwę',
+	Rename: 'zmień nazwę',
 	'Enter new name': 'Wprowadź nową nazwę',
 	preview: 'podgląd',
 	download: 'pobierz',

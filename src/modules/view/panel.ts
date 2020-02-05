@@ -130,7 +130,7 @@ export abstract class Panel extends Component implements IPanel {
 	}
 
 	destruct(): any {
-		if (!this.isDestructed) {
+		if (this.isDestructed) {
 			return;
 		}
 

@@ -2226,6 +2226,7 @@ describe('Test plugins', function() {
 
 						editor.value =
 							'<p>Simple text <a href="#">sss</a><span>s</span></p>';
+
 						editor.selection.setCursorIn(
 							editor.editor.querySelector('a')
 						);
@@ -2250,18 +2251,20 @@ describe('Test plugins', function() {
 								editor.id +
 								']'
 						);
+
 						expect(context).is.not.null;
 						expect(
 							editor.ownerWindow.getComputedStyle(context).display
 						).equals('block');
 
-						simulateEvent('click', 0, context.querySelector('a'));
+						simulateEvent('mousedown', 0, context.querySelector('a'));
 						expect(editor.value).equals(
 							'<p>Simple text <span>s</span></p>'
 						);
+
 						expect(
-							editor.ownerWindow.getComputedStyle(context).display
-						).equals('none');
+							context.parentNode
+						).is.null;
 					});
 				});
 			});

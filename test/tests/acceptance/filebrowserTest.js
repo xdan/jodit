@@ -19,6 +19,8 @@ describe('Jodit FileBrowser Tests', function() {
 				expect(
 					document.querySelectorAll('.jodit_dialog_box.active').length
 				).equals(0);
+
+				filebrowser.destruct();
 			});
 		});
 
@@ -31,13 +33,16 @@ describe('Jodit FileBrowser Tests', function() {
 				}
 			});
 
-			new Jodit.modules.FileBrowser(editor).open(function() {});
+			const filebrowser = new Jodit.modules.FileBrowser(editor);
+			filebrowser.open(function() {});
 
 			expect(
 				editor.ownerDocument.querySelectorAll(
 					'.jodit_dialog_box.active[data-editor_id=' + editor.id + ']'
 				).length
 			).equals(1);
+
+			filebrowser.destruct();
 		});
 
 		it('Should add filebrowser icon in image buttons popup', function() {
@@ -112,6 +117,7 @@ describe('Jodit FileBrowser Tests', function() {
 							expect(req.url).to.be.match(/\?action/);
 						});
 
+						filebrowser.destruct();
 						done();
 					})
 					.catch(function(e) {
@@ -138,6 +144,7 @@ describe('Jodit FileBrowser Tests', function() {
 							);
 						});
 
+						filebrowser.destruct();
 						done();
 					})
 					.catch(function(e) {
@@ -164,7 +171,9 @@ describe('Jodit FileBrowser Tests', function() {
 								'.jodit_toolbar_btn'
 							).length
 						).equals(12);
+
 						filebrowser.close();
+						filebrowser.destruct();
 						done();
 					})
 					.catch(function(e) {
@@ -203,7 +212,10 @@ describe('Jodit FileBrowser Tests', function() {
 							expect(
 								edit.classList.contains('jodit_disabled')
 							).is.false;
+
 							filebrowser.close();
+							filebrowser.destruct();
+
 							done();
 						})
 						.catch(function(e) {
@@ -257,7 +269,7 @@ describe('Jodit FileBrowser Tests', function() {
 										!navigator.userAgent.indexOf('Mac OS X')
 											? 'ctrlKey'
 											: 'metaKey'
-									] = true;
+										] = true;
 								}
 							);
 
@@ -266,6 +278,8 @@ describe('Jodit FileBrowser Tests', function() {
 							).is.true;
 
 							filebrowser.close();
+							filebrowser.destruct();
+
 							done();
 						})
 						.catch(function(e) {
@@ -314,7 +328,10 @@ describe('Jodit FileBrowser Tests', function() {
 											'jodit_disabled'
 										)
 									).is.true;
+
 									filebrowser.close();
+									filebrowser.destruct();
+
 									done();
 								})
 								.catch(function(e) {
@@ -363,7 +380,10 @@ describe('Jodit FileBrowser Tests', function() {
 											'jodit_disabled'
 										)
 									).is.false;
+
 									filebrowser.close();
+									filebrowser.destruct();
+
 									done();
 								})
 								.catch(function(e) {
@@ -411,6 +431,8 @@ describe('Jodit FileBrowser Tests', function() {
 						).is.false;
 
 						filebrowser.close();
+						filebrowser.destruct();
+
 						done();
 					})
 					.catch(function(e) {
@@ -472,6 +494,8 @@ describe('Jodit FileBrowser Tests', function() {
 							).is.true;
 
 							filebrowser.close();
+							filebrowser.destruct();
+
 							done();
 						})
 						.catch(function(e) {
@@ -525,6 +549,8 @@ describe('Jodit FileBrowser Tests', function() {
 						).equals(count);
 
 						filebrowser.close();
+						filebrowser.destruct();
+
 						done();
 					})
 					.catch(function(e) {
@@ -616,6 +642,8 @@ describe('Jodit FileBrowser Tests', function() {
 						}
 
 						filebrowser.close();
+						filebrowser.destruct();
+
 						done();
 					})
 					.catch(function(e) {
@@ -645,6 +673,8 @@ describe('Jodit FileBrowser Tests', function() {
 						);
 
 						filebrowser.close();
+						filebrowser.destruct();
+
 						done();
 					})
 					.then(function() {
@@ -740,6 +770,9 @@ describe('Jodit FileBrowser Tests', function() {
 						expect(image.parentNode).is.not.null;
 						simulateEvent('drop', 0, window);
 						expect(image.parentNode).is.null;
+
+						filebrowser.destruct();
+
 						done();
 					})
 					.catch(function(e) {
@@ -747,6 +780,7 @@ describe('Jodit FileBrowser Tests', function() {
 					});
 			});
 		});
+
 		describe('Drag and drop File from filebrowser', function() {
 			it('Should create A element in editor', function(done) {
 				const editor = new Jodit(appendTestArea(), {
@@ -801,6 +835,8 @@ describe('Jodit FileBrowser Tests', function() {
 						expect(image.parentNode).is.not.null;
 						simulateEvent('drop', 0, window);
 						expect(image.parentNode).is.null;
+
+						filebrowser.destruct();
 						done();
 					})
 					.catch(function(e) {
@@ -855,6 +891,7 @@ describe('Jodit FileBrowser Tests', function() {
 							'<p>Some text</p><p>Another<img src="https://xdsoft.net/jodit/files/ibanez-s520-443140.jpg" style="width: 300px;"> text</p><p>Another some text</p>'
 						);
 
+						filebrowser.destruct();
 						done();
 					})
 					.catch(function(e) {
@@ -906,6 +943,7 @@ describe('Jodit FileBrowser Tests', function() {
 							'<p>Some text</p><p>Another<a href="https://xdsoft.net/jodit/files/test.txt" title="https://xdsoft.net/jodit/files/test.txt">https://xdsoft.net/jodit/files/test.txt</a> text</p><p>Another some text</p>'
 						);
 
+						filebrowser.destruct();
 						done();
 					})
 					.catch(function(e) {
@@ -950,6 +988,7 @@ describe('Jodit FileBrowser Tests', function() {
 					});
 				});
 			});
+
 			describe('File', function(done) {
 				it('Should create A element', function(done) {
 					const editor = new Jodit(appendTestArea(), {
@@ -1021,6 +1060,7 @@ describe('Jodit FileBrowser Tests', function() {
 						);
 
 						expect(trigger).is.not.null;
+						filebrowser.destruct();
 
 						done();
 					})
@@ -1063,11 +1103,13 @@ describe('Jodit FileBrowser Tests', function() {
 
 						const context = document.body.querySelector(
 							'[data-editor_id="' +
-								editor.id +
-								'"].jodit_context_menu.jodit_context_menu-show'
+							editor.id +
+							'"].jodit_context_menu.jodit_context_menu-show'
 						);
 
 						expect(context).is.not.null;
+						filebrowser.destruct();
+
 						done();
 					})
 					.catch(function(e) {
@@ -1077,6 +1119,8 @@ describe('Jodit FileBrowser Tests', function() {
 
 			describe('Click on preview', function() {
 				it('Should open preview dialog', function(done) {
+					unmockPromise();
+
 					const editor = new Jodit(appendTestArea(), {
 						filebrowser: {
 							ajax: {
@@ -1107,8 +1151,8 @@ describe('Jodit FileBrowser Tests', function() {
 
 							const context = document.body.querySelector(
 								'[data-editor_id="' +
-									editor.id +
-									'"].jodit_context_menu.jodit_context_menu-show'
+								editor.id +
+								'"].jodit_context_menu.jodit_context_menu-show'
 							);
 
 							expect(context).is.not.null;
@@ -1116,19 +1160,19 @@ describe('Jodit FileBrowser Tests', function() {
 							editor.events.on(
 								'previewOpenedAndLoaded',
 								function() {
-									const dlgSel =
-										'[data-editor_id="' +
-										editor.id +
-										'"].jodit.jodit_dialog_box.active ';
+									const dlgSel = '[data-editor_id="' + editor.id + '"].jodit.jodit_dialog_box.jodit_filebrowser_preview_dialog.active ';
 
-									const previewsButtons = document.body.querySelectorAll(
-										dlgSel +
-											' .jodit_filebrowser_preview .jodit_filebrowser_preview_navigation.jodit_filebrowser_preview_navigation-prev, ' +
-											dlgSel +
-											' .jodit_filebrowser_preview .jodit_filebrowser_preview_navigation.jodit_filebrowser_preview_navigation-next'
+									const dialog = editor.ownerDocument.querySelector(dlgSel);
+
+									expect(dialog).is.not.null;
+
+									const previewsButtons = dialog.querySelectorAll(
+										' .jodit_filebrowser_preview .jodit_filebrowser_preview_navigation.jodit_filebrowser_preview_navigation-prev, ' +
+										' .jodit_filebrowser_preview .jodit_filebrowser_preview_navigation.jodit_filebrowser_preview_navigation-next'
 									);
 
 									expect(previewsButtons.length).equals(2);
+									filebrowser.destruct();
 
 									done();
 								}

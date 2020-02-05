@@ -24,6 +24,7 @@ export interface Action {
  */
 export class ContextMenu extends Component {
 	private context: HTMLElement;
+	private evnts = 'mousedown jodit_close_dialog scroll';
 
 	/**
 	 * Hide context menu
@@ -31,8 +32,8 @@ export class ContextMenu extends Component {
 	 * @method hide
 	 */
 	hide = () => {
-		this.context.classList.remove('jodit_context_menu-show');
-		this.jodit.ownerWindow.removeEventListener('mouseup', this.hide);
+		Dom.safeRemove(this.context);
+		this.jodit.events.off(this.jodit.ownerWindow, this.evnts, this.hide);
 	};
 
 	/**
@@ -55,6 +56,7 @@ export class ContextMenu extends Component {
 		zIndex?: number
 	) {
 		const self = this;
+
 		if (!Array.isArray(actions)) {
 			return;
 		}
@@ -63,7 +65,7 @@ export class ContextMenu extends Component {
 			this.context.style.zIndex = zIndex.toString();
 		}
 
-		this.context.innerHTML = '';
+		Dom.detach(this.context);
 
 		actions.forEach(item => {
 			if (!item) {
@@ -78,12 +80,10 @@ export class ContextMenu extends Component {
 					'<span></span></a>'
 			) as HTMLAnchorElement;
 
-			const span: HTMLSpanElement = action.querySelector(
-				'span'
-			) as HTMLSpanElement;
+			const span = action.querySelector('span') as HTMLSpanElement;
 
-			action.addEventListener('click', (e: MouseEvent) => {
-				item.exec && item.exec.call(self, e);
+			action.addEventListener('mousedown', (e: MouseEvent) => {
+				item.exec?.call(self, e);
 				self.hide();
 				return false;
 			});
@@ -97,30 +97,30 @@ export class ContextMenu extends Component {
 			top: y
 		});
 
-		this.jodit.events.on(
-			this.jodit.ownerWindow,
-			'mouseup jodit_close_dialog',
-			self.hide
-		);
+		this.jodit.events.on(this.jodit.ownerWindow, this.evnts, self.hide);
 
-		this.context.classList.add('jodit_context_menu-show');
 		this.jodit.markOwner(this.context);
+
+		this.jodit?.ownerDocument.body.appendChild(this.context);
 	}
 
 	constructor(editor: IViewBased) {
 		super(editor);
 
 		this.context = editor.create.div('jodit_context_menu');
-
-		editor.ownerDocument.body.appendChild(this.context);
+		this.context.classList.add('jodit_context_menu-show');
 	}
 
 	destruct() {
-		this.setStatus(STATUSES.beforeDestruct);
+		if (this.isInDestruct) {
+			return;
+		}
 
+		this.setStatus(STATUSES.beforeDestruct);
 		Dom.safeRemove(this.context);
 		delete this.context;
-		this.jodit.events.off(this.jodit.ownerWindow, 'mouseup', this.hide);
+
+		this.jodit.events.off(this.jodit.ownerWindow, this.evnts, this.hide);
 		super.destruct();
 	}
 }
