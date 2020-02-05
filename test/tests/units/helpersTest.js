@@ -138,12 +138,15 @@ describe('Test helpers', function() {
 						'Type something',
 						'Напишите что-либо',
 						'ru',
+
 						'rename',
 						'Переименовать',
 						'ru',
+
 						'Rename',
 						'Переименовать',
 						'ru',
+
 						'About Jodit',
 						'حول جوديت',
 						'ar',
@@ -292,9 +295,18 @@ describe('Test helpers', function() {
 				it('Should return only text', function() {
 					const values = [
 						['<p>Type something<p>', 'Type something'],
-						['<p>Type <strong>something</strong><p>', 'Type something'],
-						['<p>Type <strong>some<br>thing</strong><p>', 'Type some thing'],
-						['<p>Type <strong>something</strong></p><p>Type <strong>something</strong></p>', 'Type something Type something'],
+						[
+							'<p>Type <strong>something</strong><p>',
+							'Type something'
+						],
+						[
+							'<p>Type <strong>some<br>thing</strong><p>',
+							'Type some thing'
+						],
+						[
+							'<p>Type <strong>something</strong></p><p>Type <strong>something</strong></p>',
+							'Type something Type something'
+						]
 					];
 
 					for (let i = 0; i < values.length; i += 1) {

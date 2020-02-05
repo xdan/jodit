@@ -1179,7 +1179,7 @@ describe('Jodit FileBrowser Tests', function() {
 							);
 
 							simulateEvent(
-								'click',
+								'mousedown',
 								0,
 								context.querySelector('a[data-icon="eye"]')
 							);

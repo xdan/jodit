@@ -1,7 +1,7 @@
 /*!
  jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- Version: v3.3.19
+ Version: v3.3.20
  Url: https://xdsoft.net/jodit/
  License(s): MIT
 */
@@ -106,7 +106,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ (function(module, exports) {
 
-module.exports.default = ["Type something","About Jodit","Jodit Editor","Jodit User's Guide","contains detailed help for using","For information about the license, please go to our website:","Buy full version","Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.","Anchor","Open in new tab","Open editor in fullsize","Clear Formatting","Fill color or set the text color","Redo","Undo","Bold","Italic","Insert Unordered List","Insert Ordered List","Align Center","Align Justify","Align Left","Align Right","Insert Horizontal Line","Insert Image","Insert file","Insert youtube/vimeo video","Insert link","Font size","Font family","Insert format block","Normal","Heading 1","Heading 2","Heading 3","Heading 4","Quote","Code","Insert","Insert table","Decrease Indent","Increase Indent","Select Special Character","Insert Special Character","Paint format","Change mode","Margins","top","right","bottom","left","Styles","Classes","Align","Right","Center","Left","--Not Set--","Src","Title","Alternative","Link","Open link in new tab","Image","file","Advanced","Image properties","Cancel","Ok","File Browser","Error on load list","Error on load folders","Are you sure?","Enter Directory name","Create directory","type name","Drop image","Drop file","or click","Alternative text","Upload","Browse","Background","Text","Top","Middle","Bottom","Insert column before","Insert column after","Insert row above","Insert row below","Delete table","Delete row","Delete column","Empty cell","Chars: %d","Words: %d","Strike through","Underline","superscript","subscript","Cut selection","Select all","Break","Search for","Replace with","Replace","Paste","Choose Content to Paste","source","bold","italic","brush","link","undo","redo","table","image","eraser","paragraph","fontsize","video","font","about","print","symbol","underline","strikethrough","indent","outdent","fullsize","shrink","copyformat","hr","ul","ol","cut","selectall","Embed code","Open link","Edit link","No follow","Unlink","Update","pencil","Eye"," URL","Edit","Horizontal align","Filter","Sort by changed","Sort by name","Sort by size","Add folder","Reset","Save","Save as ...","Resize","Crop","Width","Height","Keep Aspect Ratio","Yes","No","Remove","Select","Select %s","Vertical align","Split","Merge","Add column","Add row","License: %s","Delete","Split vertical","Split horizontal","Border","Your code is similar to HTML. Keep as HTML?","Paste as HTML","Keep","Insert as Text","Insert only Text","You can only edit your own images. Download this image on the host?","The image has been successfully uploaded to the host!","palette","There are no files","rename","Enter new name","preview","download","Paste from clipboard","Your browser doesn't support direct access to the clipboard.","Copy selection","copy","Border radius","Show all"]
+module.exports.default = ["Type something","About Jodit","Jodit Editor","Jodit User's Guide","contains detailed help for using","For information about the license, please go to our website:","Buy full version","Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.","Anchor","Open in new tab","Open editor in fullsize","Clear Formatting","Fill color or set the text color","Redo","Undo","Bold","Italic","Insert Unordered List","Insert Ordered List","Align Center","Align Justify","Align Left","Align Right","Insert Horizontal Line","Insert Image","Insert file","Insert youtube/vimeo video","Insert link","Font size","Font family","Insert format block","Normal","Heading 1","Heading 2","Heading 3","Heading 4","Quote","Code","Insert","Insert table","Decrease Indent","Increase Indent","Select Special Character","Insert Special Character","Paint format","Change mode","Margins","top","right","bottom","left","Styles","Classes","Align","Right","Center","Left","--Not Set--","Src","Title","Alternative","Link","Open link in new tab","Image","file","Advanced","Image properties","Cancel","Ok","File Browser","Error on load list","Error on load folders","Are you sure?","Enter Directory name","Create directory","type name","Drop image","Drop file","or click","Alternative text","Upload","Browse","Background","Text","Top","Middle","Bottom","Insert column before","Insert column after","Insert row above","Insert row below","Delete table","Delete row","Delete column","Empty cell","Chars: %d","Words: %d","Strike through","Underline","superscript","subscript","Cut selection","Select all","Break","Search for","Replace with","Replace","Paste","Choose Content to Paste","source","bold","italic","brush","link","undo","redo","table","image","eraser","paragraph","fontsize","video","font","about","print","symbol","underline","strikethrough","indent","outdent","fullsize","shrink","copyformat","hr","ul","ol","cut","selectall","Embed code","Open link","Edit link","No follow","Unlink","Update","pencil","Eye"," URL","Edit","Horizontal align","Filter","Sort by changed","Sort by name","Sort by size","Add folder","Reset","Save","Save as ...","Resize","Crop","Width","Height","Keep Aspect Ratio","Yes","No","Remove","Select","Select %s","Vertical align","Split","Merge","Add column","Add row","License: %s","Delete","Split vertical","Split horizontal","Border","Your code is similar to HTML. Keep as HTML?","Paste as HTML","Keep","Insert as Text","Insert only Text","You can only edit your own images. Download this image on the host?","The image has been successfully uploaded to the host!","palette","There are no files","Rename","Enter new name","preview","download","Paste from clipboard","Your browser doesn't support direct access to the clipboard.","Copy selection","copy","Border radius","Show all"]
 
 /***/ }),
 /* 1 */
@@ -634,7 +634,7 @@ module.exports.default = ["Scrivi qualcosa...","A proposito di Jodit","Jodit Edi
 /* 88 */
 /***/ (function(module, exports) {
 
-module.exports.default = ["なにかタイプしてください","Joditについて","Jodit Editor","Jodit ユーザーズ・ガイド","詳しい使い方","ライセンス詳細についてはJodit Webサイトを確認ください：","フルバージョンを購入","Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.","Anchor","新しいタブで開く","エディターのサイズ（フル/ノーマル）","書式をクリア","テキストの色","やり直し","元に戻す","太字","斜体","箇条書き","番号付きリスト","中央揃え","両端揃え","左揃え","右揃え","区切り線を挿入","画像を挿入","ファイルを挿入","Youtube/Vimeo 動画","リンクを挿入","フォントサイズ","フォント","テキストのスタイル","指定なし","タイトル1","タイトル2","タイトル3","タイトル4","引用","コード","挿入","表を挿入","インデント減","インデント増","特殊文字を選択","特殊文字を挿入","書式を貼付け","編集モード切替え","マージン","上","右","下","左","スタイル","クラス","配置","右寄せ","中央寄せ","左寄せ","指定なし","ソース","タイトル","代替テキスト","リンク","新しいタブで開く","画像","ファイル","高度な設定","画像のプロパティー","キャンセル","確定","File Browser","Error on load list","Error on load folders","Are you sure?","Enter Directory name","Create directory","type name","ここに画像をドロップ","ここにファイルをドロップ","or クリック","代替テキスト","アップロード","ブラウズ","背景","文字","上","中央","下","左に列を挿入","右に列を挿入","上に行を挿入","下に行を挿入","表を削除","行を削除","列を削除","セルを空にする","文字数: %d","単語数: %d","取り消し線","下線","上付き文字","下付き文字","切り取り","すべて選択","Pause","検索","置換","置換","貼付け","選択した内容を貼付け","source","bold","italic","brush","link","undo","redo","table","image","eraser","paragraph","fontsize","video","font","about","print","symbol","underline","strikethrough","indent","outdent","fullsize","shrink","copyformat","分割線","箇条書き","番号付きリスト","切り取り","すべて選択","埋め込みコード","リンクを開く","リンクを編集","No follow","リンク解除","更新","鉛筆","サイトを確認","URL","編集","水平方向の配置","Filter","Sort by changed","Sort by name","Sort by size","Add folder","リセット","保存","Save as ...","リサイズ","Crop","幅","高さ","縦横比を保持","はい","いいえ","移除","選択","選択: %s","垂直方向の配置","分割","セルの結合","列を追加","行を追加",null,"削除","セルの分割（垂直方向）","セルの分割（水平方向）","境界線","HTMLコードを保持しますか？","HTMLで貼付け","HTMLを保持","HTMLをテキストにする","テキストだけ","You can only edit your own images. Download this image on the host?","The image has been successfully uploaded to the host!","パレット","There are no files","rename","Enter new name","プレビュー","ダウンロード","貼り付け","お使いのブラウザはクリップボードを使用できません","コピー","copy","角の丸み","全て表示"]
+module.exports.default = ["なにかタイプしてください","Joditについて","Jodit Editor","Jodit ユーザーズ・ガイド","詳しい使い方","ライセンス詳細についてはJodit Webサイトを確認ください：","フルバージョンを購入","Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.","Anchor","新しいタブで開く","エディターのサイズ（フル/ノーマル）","書式をクリア","テキストの色","やり直し","元に戻す","太字","斜体","箇条書き","番号付きリスト","中央揃え","両端揃え","左揃え","右揃え","区切り線を挿入","画像を挿入","ファイルを挿入","Youtube/Vimeo 動画","リンクを挿入","フォントサイズ","フォント","テキストのスタイル","指定なし","タイトル1","タイトル2","タイトル3","タイトル4","引用","コード","挿入","表を挿入","インデント減","インデント増","特殊文字を選択","特殊文字を挿入","書式を貼付け","編集モード切替え","マージン","上","右","下","左","スタイル","クラス","配置","右寄せ","中央寄せ","左寄せ","指定なし","ソース","タイトル","代替テキスト","リンク","新しいタブで開く","画像","ファイル","高度な設定","画像のプロパティー","キャンセル","確定","File Browser","Error on load list","Error on load folders","Are you sure?","Enter Directory name","Create directory","type name","ここに画像をドロップ","ここにファイルをドロップ","or クリック","代替テキスト","アップロード","ブラウズ","背景","文字","上","中央","下","左に列を挿入","右に列を挿入","上に行を挿入","下に行を挿入","表を削除","行を削除","列を削除","セルを空にする","文字数: %d","単語数: %d","取り消し線","下線","上付き文字","下付き文字","切り取り","すべて選択","Pause","検索","置換","置換","貼付け","選択した内容を貼付け","source","bold","italic","brush","link","undo","redo","table","image","eraser","paragraph","fontsize","video","font","about","print","symbol","underline","strikethrough","indent","outdent","fullsize","shrink","copyformat","分割線","箇条書き","番号付きリスト","切り取り","すべて選択","埋め込みコード","リンクを開く","リンクを編集","No follow","リンク解除","更新","鉛筆","サイトを確認","URL","編集","水平方向の配置","Filter","Sort by changed","Sort by name","Sort by size","Add folder","リセット","保存","Save as ...","リサイズ","Crop","幅","高さ","縦横比を保持","はい","いいえ","移除","選択","選択: %s","垂直方向の配置","分割","セルの結合","列を追加","行を追加",null,"削除","セルの分割（垂直方向）","セルの分割（水平方向）","境界線","HTMLコードを保持しますか？","HTMLで貼付け","HTMLを保持","HTMLをテキストにする","テキストだけ","You can only edit your own images. Download this image on the host?","The image has been successfully uploaded to the host!","パレット","There are no files","Rename","Enter new name","プレビュー","ダウンロード","貼り付け","お使いのブラウザはクリップボードを使用できません","コピー","copy","角の丸み","全て表示"]
 
 /***/ }),
 /* 89 */
@@ -3824,13 +3824,10 @@ Config_Config.prototype.controls = {
             }
             const selInfo = editor.selection.save();
             return FileSelectorWidget(editor, {
-                filebrowser: async (data) => {
+                filebrowser: (data) => {
                     editor.selection.restore(selInfo);
-                    if (data.files && data.files.length) {
-                        for (let i = 0; i < data.files.length; i += 1) {
-                            await editor.selection.insertImage(data.baseurl + data.files[i], null, editor.options.imageDefaultWidth);
-                        }
-                    }
+                    data.files &&
+                        data.files.forEach(file => editor.selection.insertImage(data.baseurl + file, null, editor.options.imageDefaultWidth));
                     close();
                 },
                 upload: true,
@@ -3852,13 +3849,7 @@ Config_Config.prototype.controls = {
     file: {
         popup: (editor, current, self, close) => {
             const insert = (url, title = '') => {
-                editor.selection.insertNode(editor.create.inside.fromHTML('<a href="' +
-                    url +
-                    '" title="' +
-                    title +
-                    '">' +
-                    (title || url) +
-                    '</a>'));
+                editor.selection.insertNode(editor.create.inside.fromHTML(`<a href="${url}" title="${title}">${title || url}</a>`));
             };
             let sourceAnchor = null;
             if (current &&
@@ -3871,12 +3862,8 @@ Config_Config.prototype.controls = {
             }
             return FileSelectorWidget(editor, {
                 filebrowser: (data) => {
-                    if (data.files && data.files.length) {
-                        let i;
-                        for (i = 0; i < data.files.length; i += 1) {
-                            insert(data.baseurl + data.files[i]);
-                        }
-                    }
+                    data.files &&
+                        data.files.forEach(file => insert(data.baseurl + file));
                     close();
                 },
                 upload: true,
@@ -4473,13 +4460,13 @@ class Selection_Select {
     }
     restore(selectionInfo = []) {
         if (Array.isArray(selectionInfo)) {
-            const sel = this.sel;
-            sel && sel.removeAllRanges();
+            let range = false;
             selectionInfo.forEach((selection) => {
-                const range = this.createRange(), end = this.area.querySelector('#' + selection.endId), start = this.area.querySelector('#' + selection.startId);
+                const end = this.area.querySelector('#' + selection.endId), start = this.area.querySelector('#' + selection.startId);
                 if (!start) {
                     return;
                 }
+                range = this.createRange();
                 if (selection.collapsed || !end) {
                     const previousNode = start.previousSibling;
                     if (Dom_Dom.isText(previousNode)) {
@@ -4499,8 +4486,10 @@ class Selection_Select {
                     range.setEndBefore(end);
                     Dom_Dom.safeRemove(end);
                 }
-                sel && sel.addRange(range);
             });
+            if (range) {
+                this.selectRange(range);
+            }
         }
     }
     save() {
@@ -5895,7 +5884,7 @@ class panel_Panel extends Component_Component {
         this.__isFullSize = isFullSize;
     }
     destruct() {
-        if (!this.isDestructed) {
+        if (this.isDestructed) {
             return;
         }
         Dom_Dom.safeRemove(this.container);
@@ -6070,7 +6059,7 @@ class view_View extends panel_Panel {
         var _a, _b, _c;
         super(jodit, options);
         this.components = new Set();
-        this.version = "3.3.19";
+        this.version = "3.3.20";
         this.__modulesInstances = {};
         this.buffer = storage_Storage.makeStorage();
         this.progressbar = new ProgressBar_ProgressBar(this);
@@ -7611,6 +7600,7 @@ class Jodit_Jodit extends viewWithToolbar_ViewWithToolbar {
         }
         let container = this.create.div('jodit_container');
         container.classList.add('jodit_container');
+        container.classList.add('jodit_' + (this.options.theme || 'default') + '_theme');
         container.setAttribute('contenteditable', 'false');
         let buffer = null;
         if (this.options.inline) {
@@ -8181,14 +8171,16 @@ Ajax_Ajax.log = [];
 class ContextMenu_ContextMenu extends Component_Component {
     constructor(editor) {
         super(editor);
+        this.evnts = 'mousedown jodit_close_dialog scroll';
         this.hide = () => {
-            this.context.classList.remove('jodit_context_menu-show');
-            this.jodit.ownerWindow.removeEventListener('mouseup', this.hide);
+            Dom_Dom.safeRemove(this.context);
+            this.jodit.events.off(this.jodit.ownerWindow, this.evnts, this.hide);
         };
         this.context = editor.create.div('jodit_context_menu');
-        editor.ownerDocument.body.appendChild(this.context);
+        this.context.classList.add('jodit_context_menu-show');
     }
     show(x, y, actions, zIndex) {
+        var _a;
         const self = this;
         if (!Array.isArray(actions)) {
             return;
@@ -8196,7 +8188,7 @@ class ContextMenu_ContextMenu extends Component_Component {
         if (zIndex) {
             this.context.style.zIndex = zIndex.toString();
         }
-        this.context.innerHTML = '';
+        Dom_Dom.detach(this.context);
         actions.forEach(item => {
             if (!item) {
                 return;
@@ -8206,8 +8198,9 @@ class ContextMenu_ContextMenu extends Component_Component {
                 (item.icon ? ToolbarIcon.getIcon(item.icon) : '') +
                 '<span></span></a>');
             const span = action.querySelector('span');
-            action.addEventListener('click', (e) => {
-                item.exec && item.exec.call(self, e);
+            action.addEventListener('mousedown', (e) => {
+                var _a;
+                (_a = item.exec) === null || _a === void 0 ? void 0 : _a.call(self, e);
                 self.hide();
                 return false;
             });
@@ -8218,15 +8211,18 @@ class ContextMenu_ContextMenu extends Component_Component {
             left: x,
             top: y
         });
-        this.jodit.events.on(this.jodit.ownerWindow, 'mouseup jodit_close_dialog', self.hide);
-        this.context.classList.add('jodit_context_menu-show');
+        this.jodit.events.on(this.jodit.ownerWindow, this.evnts, self.hide);
         this.jodit.markOwner(this.context);
+        (_a = this.jodit) === null || _a === void 0 ? void 0 : _a.ownerDocument.body.appendChild(this.context);
     }
     destruct() {
+        if (this.isInDestruct) {
+            return;
+        }
         this.setStatus(STATUSES.beforeDestruct);
         Dom_Dom.safeRemove(this.context);
         delete this.context;
-        this.jodit.events.off(this.jodit.ownerWindow, 'mouseup', this.hide);
+        this.jodit.events.off(this.jodit.ownerWindow, this.evnts, this.hide);
         super.destruct();
     }
 }
@@ -11518,7 +11514,6 @@ function imageProperties(editor) {
                     },
                     filebrowser: (data) => {
                         if (data &&
-                            data.files &&
                             Array.isArray(data.files) &&
                             data.files.length) {
                             image.setAttribute('src', data.files[0]);
@@ -12792,6 +12787,7 @@ class inline_popup_inlinePopup extends Plugin_Plugin {
         delete this.toolbar;
         Dom_Dom.safeRemove(this.target);
         Dom_Dom.safeRemove(this.container);
+        Dom_Dom.safeRemove(this.targetContainer);
         editor.events &&
             editor.events
                 .off([editor.ownerWindow], 'scroll resize', this.reCalcPosition)
@@ -13046,7 +13042,7 @@ Config_Config.prototype.controls.link = {
         if (!content_input) {
             content_input = editor.create.element('input', {
                 type: 'hidden',
-                ref: "content_input"
+                ref: 'content_input'
             });
         }
         if (formClassName) {
@@ -13055,16 +13051,18 @@ Config_Config.prototype.controls.link = {
         if (isImageContent) {
             Dom_Dom.hide(content_input_box);
         }
-        const getSelectionText = () => stripTags(editor.selection.range.cloneContents(), editor.editorDocument);
-        if (!isImageContent && current) {
-            content_input.value = getSelectionText();
-        }
         let link;
+        const getSelectionText = () => link
+            ? link.innerText
+            : stripTags(editor.selection.range.cloneContents(), editor.editorDocument);
         if (current && Dom_Dom.closest(current, 'A', editor.editor)) {
             link = Dom_Dom.closest(current, 'A', editor.editor);
         }
         else {
             link = false;
+        }
+        if (!isImageContent && current) {
+            content_input.value = getSelectionText();
         }
         if (link) {
             url_input.value = link.getAttribute('href') || '';
@@ -16478,6 +16476,7 @@ class xpath_xpath extends Plugin_Plugin {
 
 
 
+
 Config_Config.prototype.dialog = {
     extraButtons: [],
     resizable: true,
@@ -16597,6 +16596,7 @@ class dialog_Dialog extends viewWithToolbar_ViewWithToolbar {
         this.document = document;
         this.window = window;
         this.close = (e) => {
+            var _a, _b, _c, _d;
             if (this.isDestructed) {
                 return;
             }
@@ -16616,10 +16616,8 @@ class dialog_Dialog extends viewWithToolbar_ViewWithToolbar {
             if (this.destroyAfterClose) {
                 this.destruct();
             }
-            if (this.jodit && this.jodit.events) {
-                this.jodit.events.fire(this, 'afterClose');
-                this.jodit.events.fire(this.ownerWindow, 'jodit_close_dialog');
-            }
+            (_b = (_a = this.jodit) === null || _a === void 0 ? void 0 : _a.events) === null || _b === void 0 ? void 0 : _b.fire(this, 'afterClose');
+            (_d = (_c = this.jodit) === null || _c === void 0 ? void 0 : _c.events) === null || _d === void 0 ? void 0 : _d.fire(this.ownerWindow, 'jodit_close_dialog');
         };
         if (isJoditObject(jodit)) {
             this.window = jodit.ownerWindow;
@@ -16633,6 +16631,7 @@ class dialog_Dialog extends viewWithToolbar_ViewWithToolbar {
             ? jodit.options.dialog
             : Config_Config.prototype.dialog;
         self.options = { ...opt, ...self.options };
+        Dom_Dom.safeRemove(self.container);
         self.container = this.create.fromHTML('<div style="z-index:' +
             self.options.zIndex +
             '" class="jodit jodit_dialog_box">' +
@@ -16649,6 +16648,9 @@ class dialog_Dialog extends viewWithToolbar_ViewWithToolbar {
                 : '') +
             '</div>' +
             '</div>');
+        if (jodit && jodit.options.theme) {
+            self.container.classList.add('jodit_' + (jodit.options.theme || 'default') + '_theme');
+        }
         if (jodit && jodit.id) {
             jodit.markOwner(self.container);
         }
@@ -16818,6 +16820,7 @@ class dialog_Dialog extends viewWithToolbar_ViewWithToolbar {
         if (this.isInDestruct) {
             return;
         }
+        this.setStatus(STATUSES.beforeDestruct);
         if (this.events) {
             this.events
                 .off(this.window, 'mousemove', this.onMouseMove)
@@ -16828,6 +16831,7 @@ class dialog_Dialog extends viewWithToolbar_ViewWithToolbar {
         super.destruct();
     }
 }
+
 
 
 // CONCATENATED MODULE: ./src/modules/dialog/alert.ts
@@ -17176,7 +17180,25 @@ Config_Config.prototype.filebrowser = {
     permissions: {
         data: { action: 'permissions' }
     },
-    uploader: null
+    uploader: null,
+    defaultCallback: (filebrowser, data) => {
+        const jodit = filebrowser.jodit;
+        if (jodit && jodit.isJodit) {
+            if (data.files && data.files.length) {
+                data.files.forEach((file, i) => {
+                    const url = data.baseurl + file;
+                    const isImage = data.isImages ? data.isImages[i] : false;
+                    if (isImage) {
+                        jodit.selection.insertImage(url, null, jodit.options.imageDefaultWidth);
+                    }
+                    else {
+                        jodit.selection.insertNode(jodit.create.inside.fromHTML(`<a href="${url}" title="${url}">${url}</a>`));
+                    }
+                });
+                filebrowser.close();
+            }
+        }
+    }
 };
 Config_Config.prototype.controls.filebrowser = {
     upload: {
@@ -17518,6 +17540,7 @@ const CLASS_PREVIEW = F_CLASS + '_preview_', preview_tpl_next = (next = 'next', 
     }
     const contextmenu = new ContextMenu_ContextMenu(self.jodit || self);
     return function (e) {
+        var _a;
         let item = this, opt = self.options, ga = (attr) => item.getAttribute(attr) || '';
         self.async.setTimeout(() => {
             contextmenu.show(e.pageX, e.pageY, [
@@ -17564,8 +17587,11 @@ const CLASS_PREVIEW = F_CLASS + '_preview_', preview_tpl_next = (next = 'next', 
                                 image.setAttribute('src', src);
                                 const onload = () => {
                                     var _a, _b;
-                                    image.removeEventListener('load', onload);
-                                    temp_content.innerHTML = '';
+                                    if (self.isInDestruct) {
+                                        return;
+                                    }
+                                    self.events.off(image, 'load');
+                                    Dom_Dom.detach(temp_content);
                                     if (opt.showPreviewNavigation) {
                                         if (Dom_Dom.prevWithClass(item, ITEM_CLASS)) {
                                             temp_content.appendChild(prev);
@@ -17579,12 +17605,11 @@ const CLASS_PREVIEW = F_CLASS + '_preview_', preview_tpl_next = (next = 'next', 
                                     preview.setPosition();
                                     (_b = (_a = self) === null || _a === void 0 ? void 0 : _a.events) === null || _b === void 0 ? void 0 : _b.fire('previewOpenedAndLoaded');
                                 };
-                                image.addEventListener('load', onload);
+                                self.events.on(image, 'load', onload);
                                 if (image.complete) {
                                     onload();
                                 }
                             };
-                            addLoadHandler(ga('href'));
                             self.events.on([next, prev], 'click', function () {
                                 if (this.classList.contains(CLASS_PREVIEW +
                                     'navigation-next')) {
@@ -17601,10 +17626,14 @@ const CLASS_PREVIEW = F_CLASS + '_preview_', preview_tpl_next = (next = 'next', 
                                 temp_content.innerHTML = ICON_LOADER;
                                 addLoadHandler(ga('href'));
                             });
+                            preview.container.classList.add(F_CLASS + '_preview_dialog');
                             preview.setContent(temp_content);
                             preview.setPosition();
                             preview.open();
-                            (_b = (_a = self) === null || _a === void 0 ? void 0 : _a.events) === null || _b === void 0 ? void 0 : _b.fire('previewOpened');
+                            addLoadHandler(ga('href'));
+                            (_b = (_a = self) === null || _a === void 0 ? void 0 : _a.events) === null || _b === void 0 ? void 0 : _b.on('beforeDestruct', () => {
+                                preview.destruct();
+                            }).fire('previewOpened');
                         }
                     }
                     : false,
@@ -17620,6 +17649,9 @@ const CLASS_PREVIEW = F_CLASS + '_preview_', preview_tpl_next = (next = 'next', 
                 }
             ], self.dialog.getZIndex() + 1);
         }, self.defaultTimeout);
+        (_a = self) === null || _a === void 0 ? void 0 : _a.events.on('beforeDestruct', () => {
+            contextmenu.destruct();
+        });
         e.stopPropagation();
         e.preventDefault();
         return false;
@@ -18044,17 +18076,26 @@ class fileBrowser_FileBrowser extends viewWithToolbar_ViewWithToolbar {
     onSelect(callback) {
         return () => {
             if (this.state.activeElements.length) {
-                const urls = [];
+                const files = [];
+                const isImages = [];
                 this.state.activeElements.forEach(elm => {
                     const url = elm.fileURL;
-                    url && urls.push(url);
+                    if (url) {
+                        files.push(url);
+                        isImages.push(elm.isImage || false);
+                    }
                 });
                 this.close();
-                if (typeof callback === 'function') {
-                    callback({
-                        baseurl: '',
-                        files: urls
-                    });
+                const data = {
+                    baseurl: '',
+                    files,
+                    isImages
+                };
+                if (typeof callback !== 'function') {
+                    this.options.defaultCallback(this, data);
+                }
+                else {
+                    callback(data);
                 }
             }
             return false;
@@ -18410,6 +18451,9 @@ class fileBrowser_FileBrowser extends viewWithToolbar_ViewWithToolbar {
         });
     }
     destruct() {
+        if (this.isInDestruct) {
+            return;
+        }
         this.dialog.destruct();
         delete this.dialog;
         this.events && this.events.off('.filebrowser');
