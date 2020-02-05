@@ -16,7 +16,7 @@
 		"build-no-uglify-es18": "webpack --progress --mode production --es es2018",
 		"test": "karma start --browsers Firefox karma.conf.js",
 		"test-chrome": "karma start --browsers Chrome karma.conf.js",
-		"jodit": "cd ../jodit-react/ && npm update && npm run newversion && cd ../jodit-angular/ && npm run newversion && cd ../jodit-joomla && npm run newversion && cd ../jodit-docs && npm run newversion && cd ../jodit-play && npm run newversion",
+		"jodit": "cd ../jodit-react/ && npm update && npm run newversion && cd ../jodit-angular/ && npm run newversion && cd ../jodit-joomla && npm run newversion && cd ../jodit-docs && npm run newversion && cd ../jodit-master && npm run newversion",
 		"types": "rm -rf types/* && tsc --project . --declaration --outDir types --emitDeclarationOnly",
 		"pretty": "prettier --write ./src/*.{ts,less} ./src/**/*.{ts,less} ./src/**/**/*.{ts,less}",
 		"fix": "tslint -c tslint.json ./src/**/*.ts ./src/**/**/*.ts ./src/*.ts --fix && npm run pretty"
@@ -87,7 +87,7 @@
 		"webpack": "^4.41.5",
 		"webpack-cli": "^3.3.10",
 		"webpack-dev-middleware": "^3.7.2",
-		"webpack-dev-server": "^3.10.2",
+		"webpack-dev-server": "^3.10.3",
 		"webpack-hot-middleware": "^2.25.0"
 	},
 	"husky": {

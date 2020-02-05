@@ -58,9 +58,11 @@ describe('Jodit FileBrowser Tests', function() {
 			);
 
 			expect(
-				editor.container.querySelector(
-					'.jodit_toolbar_btn.jodit_toolbar_btn-image .jodit_tabs_buttons .active'
-				).textContent.trim()
+				editor.container
+					.querySelector(
+						'.jodit_toolbar_btn.jodit_toolbar_btn-image .jodit_tabs_buttons .active'
+					)
+					.textContent.trim()
 			).equals('Browse');
 		});
 
@@ -105,16 +107,16 @@ describe('Jodit FileBrowser Tests', function() {
 
 				filebrowser
 					.open(function() {})
-					.then(function () {
-							Jodit.modules.Ajax.log.forEach(function (req) {
-								expect(req.url).to.be.match(/\?action/);
-							});
+					.then(function() {
+						Jodit.modules.Ajax.log.forEach(function(req) {
+							expect(req.url).to.be.match(/\?action/);
+						});
 
 						done();
 					})
 					.catch(function(e) {
-					throw e;
-				});
+						throw e;
+					});
 			});
 		});
 
@@ -129,9 +131,11 @@ describe('Jodit FileBrowser Tests', function() {
 
 				filebrowser
 					.open(function() {})
-					.then(function () {
-						Jodit.modules.Ajax.log.forEach(function (req) {
-							expect(req.url).equals('https://xdsoft.net/jodit/connector/index.php');
+					.then(function() {
+						Jodit.modules.Ajax.log.forEach(function(req) {
+							expect(req.url).equals(
+								'https://xdsoft.net/jodit/connector/index.php'
+							);
 						});
 
 						done();
@@ -183,7 +187,7 @@ describe('Jodit FileBrowser Tests', function() {
 							const edit = filebrowser.dialog.dialogbox_header.querySelector(
 								'.jodit_toolbar_btn-edit'
 							);
-							expect(edit).is.not.null;;
+							expect(edit).is.not.null;
 							expect(
 								edit.classList.contains('jodit_disabled')
 							).is.true;
@@ -221,7 +225,7 @@ describe('Jodit FileBrowser Tests', function() {
 								'.jodit_toolbar_btn-edit'
 							);
 
-							expect(edit).is.not.null;;
+							expect(edit).is.not.null;
 							expect(
 								edit.classList.contains('jodit_disabled')
 							).is.true;
@@ -290,7 +294,7 @@ describe('Jodit FileBrowser Tests', function() {
 									const remove = filebrowser.dialog.dialogbox_header.querySelector(
 										'.jodit_toolbar_btn-remove'
 									);
-									expect(remove).is.not.null;;
+									expect(remove).is.not.null;
 									expect(
 										remove.classList.contains(
 											'jodit_disabled'
@@ -339,7 +343,7 @@ describe('Jodit FileBrowser Tests', function() {
 									const remove = filebrowser.dialog.dialogbox_header.querySelector(
 										'.jodit_toolbar_btn-remove'
 									);
-									expect(remove).is.not.null;;
+									expect(remove).is.not.null;
 									expect(
 										remove.classList.contains(
 											'jodit_disabled'
@@ -393,7 +397,7 @@ describe('Jodit FileBrowser Tests', function() {
 							'.jodit_filebrowser_files'
 						);
 
-						expect(files).is.not.null;;
+						expect(files).is.not.null;
 						expect(
 							files.classList.contains(
 								'jodit_filebrowser_files_view-tiles'
@@ -496,9 +500,9 @@ describe('Jodit FileBrowser Tests', function() {
 							'.jodit_filebrowser_files'
 						);
 
-						expect(files).is.not.null;;
-						expect(filter).is.not.null;;
-						expect(input).is.not.null;;
+						expect(files).is.not.null;
+						expect(filter).is.not.null;
+						expect(input).is.not.null;
 
 						const count = files.querySelectorAll(
 							'.jodit_filebrowser_files_item'
@@ -548,9 +552,9 @@ describe('Jodit FileBrowser Tests', function() {
 							'.jodit_filebrowser_files'
 						);
 
-						expect(files).is.not.null;;
-						expect(sort).is.not.null;;
-						expect(select).is.not.null;;
+						expect(files).is.not.null;
+						expect(sort).is.not.null;
+						expect(select).is.not.null;
 
 						const pars = {
 							'changed-asc': [
@@ -651,8 +655,8 @@ describe('Jodit FileBrowser Tests', function() {
 							'.jodit_filebrowser_files'
 						);
 
-						expect(files).is.not.null;;
-						expect(select).is.not.null;;
+						expect(files).is.not.null;
+						expect(select).is.not.null;
 
 						expect(
 							select.classList.contains('jodit_disabled')
@@ -699,7 +703,7 @@ describe('Jodit FileBrowser Tests', function() {
 							'.jodit_filebrowser_files'
 						);
 
-						expect(files).is.not.null;;
+						expect(files).is.not.null;
 
 						simulateEvent(
 							'dragstart',
@@ -718,7 +722,7 @@ describe('Jodit FileBrowser Tests', function() {
 							'img[data-src="https://xdsoft.net/jodit/files/images.jpg"][alt="images.jpg"][style*="fixed"]'
 						);
 
-						expect(image).is.not.null;;
+						expect(image).is.not.null;
 						expect(image.style.position).equals('fixed');
 
 						simulateEvent('drop', 0, editor.editor, function(data) {
@@ -733,7 +737,7 @@ describe('Jodit FileBrowser Tests', function() {
 							'<img src="https://xdsoft.net/jodit/files/images.jpg">'
 						);
 
-						expect(image.parentNode).is.not.null;;
+						expect(image.parentNode).is.not.null;
 						simulateEvent('drop', 0, window);
 						expect(image.parentNode).is.null;
 						done();
@@ -762,7 +766,7 @@ describe('Jodit FileBrowser Tests', function() {
 							'.jodit_filebrowser_files'
 						);
 
-						expect(files).is.not.null;;
+						expect(files).is.not.null;
 
 						simulateEvent(
 							'dragstart',
@@ -780,7 +784,7 @@ describe('Jodit FileBrowser Tests', function() {
 						const image = editor.ownerDocument.querySelector(
 							'img[data-src="https://xdsoft.net/jodit/files/test.txt"][alt="test.txt"][style*="fixed"]'
 						);
-						expect(image).is.not.null;;
+						expect(image).is.not.null;
 						expect(image.style.position).equals('fixed');
 
 						simulateEvent('drop', 0, editor.editor, function(data) {
@@ -794,9 +798,114 @@ describe('Jodit FileBrowser Tests', function() {
 						expect(editor.value).equals(
 							'<a href="https://xdsoft.net/jodit/files/test.txt">https://xdsoft.net/jodit/files/test.txt</a>'
 						);
-						expect(image.parentNode).is.not.null;;
+						expect(image.parentNode).is.not.null;
 						simulateEvent('drop', 0, window);
 						expect(image.parentNode).is.null;
+						done();
+					})
+					.catch(function(e) {
+						throw e;
+					});
+			});
+		});
+	});
+
+	describe('DblClick', function() {
+		describe('DblClick on image from filebrowser', function() {
+			it('Should insert IMG element in editor in the selected before place', function(done) {
+				const editor = new Jodit(appendTestArea(), {
+					filebrowser: {
+						ajax: {
+							url: 'https://xdsoft.net/jodit/connector/index.php'
+						}
+					}
+				});
+
+				editor.value =
+					'<p>Some text</p><p>Another text</p><p>Another some text</p>';
+				const range = editor.selection.createRange();
+				range.setStart(
+					editor.editor.querySelectorAll('p')[1].firstChild,
+					7
+				);
+
+				range.collapse(true);
+				editor.selection.selectRange(range);
+
+				const filebrowser = editor.getInstance('FileBrowser');
+
+				filebrowser
+					.open()
+					.then(function() {
+						const files = filebrowser.browser.querySelector(
+							'.jodit_filebrowser_files'
+						);
+
+						expect(files).is.not.null;
+
+						simulateEvent(
+							['click', 'dblclick'],
+							0,
+							files.querySelector(
+								'a[data-is-file="0"].jodit_filebrowser_files_item'
+							)
+						);
+
+						expect(editor.value).equals(
+							'<p>Some text</p><p>Another<img src="https://xdsoft.net/jodit/files/ibanez-s520-443140.jpg" style="width: 300px;"> text</p><p>Another some text</p>'
+						);
+
+						done();
+					})
+					.catch(function(e) {
+						throw e;
+					});
+			});
+		});
+
+		describe('DblClick on File from filebrowser', function() {
+			it('Should insert A element in editor in the selected before place', function(done) {
+				const editor = new Jodit(appendTestArea(), {
+					filebrowser: {
+						ajax: {
+							url: 'https://xdsoft.net/jodit/connector/index.php'
+						}
+					}
+				});
+
+				editor.value =
+					'<p>Some text</p><p>Another text</p><p>Another some text</p>';
+				const range = editor.selection.createRange();
+				range.setStart(
+					editor.editor.querySelectorAll('p')[1].firstChild,
+					7
+				);
+				range.collapse(true);
+				editor.selection.selectRange(range);
+
+				const filebrowser = editor.getInstance('FileBrowser');
+
+				filebrowser
+					.open()
+					.then(function() {
+						const files = filebrowser.browser.querySelector(
+							'.jodit_filebrowser_files'
+						);
+
+						expect(files).is.not.null;
+
+						simulateEvent(
+							['click', 'dblclick'],
+							0,
+							files.querySelector(
+								'a[data-is-file="1"].jodit_filebrowser_files_item'
+							)
+						);
+
+						expect(editor.value).equals(
+							'<p>Some text</p><p>Another<a href="https://xdsoft.net/jodit/files/test.txt" title="https://xdsoft.net/jodit/files/test.txt">https://xdsoft.net/jodit/files/test.txt</a> text</p><p>Another some text</p>'
+						);
+
 						done();
 					})
 					.catch(function(e) {
@@ -899,19 +1008,19 @@ describe('Jodit FileBrowser Tests', function() {
 							'.jodit_filebrowser_tree'
 						);
 
-						expect(tree).is.not.null;;
+						expect(tree).is.not.null;
 
 						const item = tree.querySelector(
 							'.jodit_filebrowser_tree_item'
 						);
 
-						expect(item).is.not.null;;
+						expect(item).is.not.null;
 
 						const trigger = tree.querySelector(
 							'.jodit_icon_folder_rename'
 						);
 
-						expect(trigger).is.not.null;;
+						expect(trigger).is.not.null;
 
 						done();
 					})
@@ -924,7 +1033,7 @@ describe('Jodit FileBrowser Tests', function() {
 
 	describe('Context menu', function() {
 		describe('Right click on image', function() {
-			it('Should open context menu', function (done) {
+			it('Should open context menu', function(done) {
 				const editor = new Jodit(appendTestArea(), {
 					filebrowser: {
 						ajax: {
@@ -942,7 +1051,7 @@ describe('Jodit FileBrowser Tests', function() {
 							'.jodit_filebrowser_files'
 						);
 
-						expect(files).is.not.null;;
+						expect(files).is.not.null;
 
 						simulateEvent(
 							'contextmenu',
@@ -953,10 +1062,12 @@ describe('Jodit FileBrowser Tests', function() {
 						);
 
 						const context = document.body.querySelector(
-							'[data-editor_id="' + editor.id + '"].jodit_context_menu.jodit_context_menu-show'
+							'[data-editor_id="' +
+								editor.id +
+								'"].jodit_context_menu.jodit_context_menu-show'
 						);
 
-						expect(context).is.not.null;;
+						expect(context).is.not.null;
 						done();
 					})
 					.catch(function(e) {
@@ -965,11 +1076,12 @@ describe('Jodit FileBrowser Tests', function() {
 			});
 
 			describe('Click on preview', function() {
-				it('Should open preview dialog', function (done) {
+				it('Should open preview dialog', function(done) {
 					const editor = new Jodit(appendTestArea(), {
 						filebrowser: {
 							ajax: {
-								url: 'https://xdsoft.net/jodit/connector/index.php'
+								url:
+									'https://xdsoft.net/jodit/connector/index.php'
 							}
 						}
 					});
@@ -983,7 +1095,7 @@ describe('Jodit FileBrowser Tests', function() {
 								'.jodit_filebrowser_files'
 							);
 
-							expect(files).is.not.null;;
+							expect(files).is.not.null;
 
 							simulateEvent(
 								'contextmenu',
@@ -994,30 +1106,38 @@ describe('Jodit FileBrowser Tests', function() {
 							);
 
 							const context = document.body.querySelector(
-								'[data-editor_id="' + editor.id + '"].jodit_context_menu.jodit_context_menu-show'
+								'[data-editor_id="' +
+									editor.id +
+									'"].jodit_context_menu.jodit_context_menu-show'
 							);
 
-							expect(context).is.not.null;;
+							expect(context).is.not.null;
 
-							editor.events.on('previewOpenedAndLoaded', function () {
-								const dlgSel = '[data-editor_id="' + editor.id + '"].jodit.jodit_dialog_box.active ';
+							editor.events.on(
+								'previewOpenedAndLoaded',
+								function() {
+									const dlgSel =
+										'[data-editor_id="' +
+										editor.id +
+										'"].jodit.jodit_dialog_box.active ';
 
-								const previewsButtons = document.body.querySelectorAll(
-									dlgSel + ' .jodit_filebrowser_preview .jodit_filebrowser_preview_navigation.jodit_filebrowser_preview_navigation-prev, ' +
-									dlgSel + ' .jodit_filebrowser_preview .jodit_filebrowser_preview_navigation.jodit_filebrowser_preview_navigation-next'
-								);
+									const previewsButtons = document.body.querySelectorAll(
+										dlgSel +
+											' .jodit_filebrowser_preview .jodit_filebrowser_preview_navigation.jodit_filebrowser_preview_navigation-prev, ' +
+											dlgSel +
+											' .jodit_filebrowser_preview .jodit_filebrowser_preview_navigation.jodit_filebrowser_preview_navigation-next'
+									);
 
-								expect(previewsButtons.length).equals(2);
+									expect(previewsButtons.length).equals(2);
 
-								done();
-							});
+									done();
+								}
+							);
 
 							simulateEvent(
 								'click',
 								0,
-								context.querySelector(
-									'a[data-icon="eye"]'
-								)
+								context.querySelector('a[data-icon="eye"]')
 							);
 						})
 						.catch(function(e) {
@@ -1027,6 +1147,4 @@ describe('Jodit FileBrowser Tests', function() {
 			});
 		});
 	});
-
-	afterEach(removeStuff);
 });

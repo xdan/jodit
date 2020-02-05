@@ -240,23 +240,33 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 		this.state.elements = elements;
 	}
 
-	private onSelect(callback: (data: IFileBrowserCallBackData) => void) {
+	private onSelect(callback?: (data: IFileBrowserCallBackData) => void) {
 		return () => {
 			if (this.state.activeElements.length) {
-				const urls: string[] = [];
+				const files: string[] = [];
+				const isImages: boolean[] = [];
 
 				this.state.activeElements.forEach(elm => {
 					const url = elm.fileURL;
-					url && urls.push(url);
+
+					if (url) {
+						files.push(url);
+						isImages.push(elm.isImage || false);
+					}
 				});
 
 				this.close();
 
-				if (typeof callback === 'function') {
-					callback({
-						baseurl: '',
-						files: urls
-					} as IFileBrowserCallBackData);
+				const data = {
+					baseurl: '',
+					files,
+					isImages
+				} as IFileBrowserCallBackData;
+
+				if (typeof callback !== 'function') {
+					this.options.defaultCallback(this, data);
+				} else {
+					callback(data);
 				}
 			}
 
@@ -358,7 +368,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	 * @return Promise
 	 */
 	open = (
-		callback: (data: IFileBrowserCallBackData) => void,
+		callback?: (data: IFileBrowserCallBackData) => void,
 		onlyImages: boolean = false
 	): Promise<void> => {
 		this.state.onlyImages = onlyImages;
@@ -377,7 +387,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 					this.files,
 					'touchstart',
 					() => {
-						const now: number = new Date().getTime();
+						const now = new Date().getTime();
 
 						if (
 							now - localTimeout <

@@ -115,13 +115,10 @@ Config.prototype.controls.link = {
 				formTemplate,
 				formClassName
 			} = editor.options.link,
-			form = editor.create.fromHTML(
-				formTemplate(editor),
-				{
-					target_checkbox_box: openInNewTabCheckbox,
-					nofollow_checkbox_box: noFollowCheckbox
-				}
-			) as HTMLFormElement;
+			form = editor.create.fromHTML(formTemplate(editor), {
+				target_checkbox_box: openInNewTabCheckbox,
+				nofollow_checkbox_box: noFollowCheckbox
+			}) as HTMLFormElement;
 
 		const elements = refs(form),
 			{ insert, unlink, content_input_box } = elements,
@@ -133,13 +130,13 @@ Config.prototype.controls.link = {
 			currentElement = current,
 			isImageContent = Dom.isImage(currentElement, editor.editorWindow);
 
-		let {content_input} = elements as IDictionary<HTMLInputElement>;
+		let { content_input } = elements as IDictionary<HTMLInputElement>;
 
 		if (!content_input) {
 			content_input = editor.create.element('input', {
 				type: 'hidden',
-				ref: "content_input"
-			})
+				ref: 'content_input'
+			});
 		}
 
 		if (formClassName) {
@@ -150,17 +147,15 @@ Config.prototype.controls.link = {
 			Dom.hide(content_input_box);
 		}
 
-		const getSelectionText = () =>
-			stripTags(
-				editor.selection.range.cloneContents(),
-				editor.editorDocument
-			);
-
-		if (!isImageContent && current) {
-			content_input.value = getSelectionText();
-		}
-
 		let link: false | HTMLAnchorElement;
+
+		const getSelectionText = () =>
+			link
+				? link.innerText
+				: stripTags(
+						editor.selection.range.cloneContents(),
+						editor.editorDocument
+				  );
 
 		if (current && Dom.closest(current, 'A', editor.editor)) {
 			link = Dom.closest(
@@ -170,6 +165,10 @@ Config.prototype.controls.link = {
 			) as HTMLAnchorElement;
 		} else {
 			link = false;
+		}
+
+		if (!isImageContent && current) {
+			content_input.value = getSelectionText();
 		}
 
 		if (link) {

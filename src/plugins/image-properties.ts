@@ -588,7 +588,6 @@ export function imageProperties(editor: IJodit) {
 								) => {
 									if (
 										data &&
-										data.files &&
 										Array.isArray(data.files) &&
 										data.files.length
 									) {
@@ -857,7 +856,7 @@ export function imageProperties(editor: IJodit) {
 			editor.events.off(editor.editor, '.imageproperties');
 		})
 		.on('afterInit changePlace', () => {
-			editor.events.off(editor.editor,'.imageproperties');
+			editor.events.off(editor.editor, '.imageproperties');
 
 			if (opt.image.openOnDblClick) {
 				editor.events.on(

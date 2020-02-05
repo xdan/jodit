@@ -84,6 +84,268 @@ describe('Link plugin', function() {
 
 	describe('Toolbar link', function() {
 		describe('Click link button', function() {
+			describe('Edit exists link', function() {
+				describe('Content input was not changed', function() {
+					it('Should save link content', function() {
+						const editor = new Jodit(appendTestArea());
+
+						editor.value =
+							'<p>test <a href="#somelink">link <strong>strong</strong></a> open</p>';
+
+						const range = editor.selection.createRange();
+						range.setStart(
+							editor.editor.querySelector('a').firstChild,
+							4
+						);
+						range.collapse(true);
+						editor.selection.selectRange(range);
+
+						simulateEvent(
+							'mousedown',
+							0,
+							editor.editor.querySelector('a')
+						);
+
+						const inlinePopup = document.querySelector(
+							'.jodit_toolbar_popup-inline[data-editor_id=' +
+								editor.id +
+								']'
+						);
+						expect(inlinePopup).is.not.null;
+
+						clickButton('link', inlinePopup);
+
+						const popup = inlinePopup.querySelector(
+							'.jodit_toolbar_popup'
+						);
+
+						expect(popup).is.not.null;
+
+						const content = popup.querySelector(
+							'[ref=content_input]'
+						);
+						expect(content).is.not.null;
+						expect(content.value).equals('link strong');
+
+						const url = popup.querySelector('[ref=url_input]');
+						expect(url).is.not.null;
+						expect(url.value).equals('#somelink');
+
+						url.value = 'https://xdan.ru';
+
+						simulateEvent('submit', 0, popup.querySelector('form'));
+
+						expect(editor.value).equals(
+							'<p>test <a href="https://xdan.ru">link <strong>strong</strong></a> open</p>'
+						);
+					});
+				});
+
+				describe('Content input was changed', function() {
+					it('Should replace link content', function() {
+						const editor = new Jodit(appendTestArea());
+
+						editor.value =
+							'<p>test <a href="#somelink">link <strong>strong</strong></a> open</p>';
+
+						const range = editor.selection.createRange();
+						range.setStart(
+							editor.editor.querySelector('a').firstChild,
+							4
+						);
+						range.collapse(true);
+						editor.selection.selectRange(range);
+
+						simulateEvent(
+							'mousedown',
+							0,
+							editor.editor.querySelector('a')
+						);
+
+						const inlinePopup = document.querySelector(
+							'.jodit_toolbar_popup-inline[data-editor_id=' +
+								editor.id +
+								']'
+						);
+
+						clickButton('link', inlinePopup);
+
+						const popup = inlinePopup.querySelector(
+							'.jodit_toolbar_popup'
+						);
+
+						const content = popup.querySelector(
+							'[ref=content_input]'
+						);
+
+						content.value = 'some text';
+
+						simulateEvent('submit', 0, popup.querySelector('form'));
+
+						expect(editor.value).equals(
+							'<p>test <a href="#somelink">some text</a> open</p>'
+						);
+					});
+
+					describe('Content stay clear', function() {
+						it('Should replace link content to url', function() {
+							const editor = new Jodit(appendTestArea());
+
+							editor.value =
+								'<p>test <a href="#somelink">link <strong>strong</strong></a> open</p>';
+
+							const range = editor.selection.createRange();
+							range.setStart(
+								editor.editor.querySelector('a').firstChild,
+								4
+							);
+							range.collapse(true);
+							editor.selection.selectRange(range);
+
+							simulateEvent(
+								'mousedown',
+								0,
+								editor.editor.querySelector('a')
+							);
+
+							const inlinePopup = document.querySelector(
+								'.jodit_toolbar_popup-inline[data-editor_id=' +
+								editor.id +
+								']'
+							);
+
+							clickButton('link', inlinePopup);
+
+							const popup = inlinePopup.querySelector(
+								'.jodit_toolbar_popup'
+							);
+
+							const content = popup.querySelector(
+								'[ref=content_input]'
+							);
+
+							content.value = '';
+
+							simulateEvent('submit', 0, popup.querySelector('form'));
+
+							expect(editor.value).equals(
+								'<p>test <a href="#somelink">#somelink</a> open</p>'
+							);
+						});
+					});
+				});
+
+				describe('Select some text inside link', function() {
+					describe('Content input was not changed', function() {
+						it('Should open edit popup with full link\'s content', function() {
+							const editor = new Jodit(appendTestArea());
+
+							editor.value =
+								'<p>test <a href="#somelink">link <strong>strong</strong></a> open</p>';
+
+							const range = editor.selection.createRange();
+							range.setStart(
+								editor.editor.querySelector('a').firstChild,
+								2
+							);
+							range.setEnd(
+								editor.editor.querySelector('a').firstChild,
+								4
+							);
+							editor.selection.selectRange(range);
+
+							simulateEvent(
+								'mousedown',
+								0,
+								editor.editor.querySelector('a')
+							);
+
+							const inlinePopup = document.querySelector(
+								'.jodit_toolbar_popup-inline[data-editor_id=' +
+								editor.id +
+								']'
+							);
+
+							clickButton('link', inlinePopup);
+
+							const popup = inlinePopup.querySelector(
+								'.jodit_toolbar_popup'
+							);
+
+							const content = popup.querySelector(
+								'[ref=content_input]'
+							);
+
+							expect(content.value).equals('link strong');
+
+							const url = popup.querySelector('[ref=url_input]');
+							expect(url).is.not.null;
+							expect(url.value).equals('#somelink');
+
+							url.value = 'https://xdan.ru';
+
+							simulateEvent('submit', 0, popup.querySelector('form'));
+
+							expect(editor.value).equals(
+								'<p>test <a href="https://xdan.ru">link <strong>strong</strong></a> open</p>'
+							);
+						});
+					});
+
+					describe('Content input was changed', function() {
+						it('Should open edit popup with full link\'s content and after submit should replace full link\'s content', function() {
+							const editor = new Jodit(appendTestArea());
+
+							editor.value =
+								'<p>test <a href="#somelink">link <strong>strong</strong></a> open</p>';
+
+							const range = editor.selection.createRange();
+							range.setStart(
+								editor.editor.querySelector('a').firstChild,
+								2
+							);
+							range.setEnd(
+								editor.editor.querySelector('a').firstChild,
+								4
+							);
+							editor.selection.selectRange(range);
+
+							simulateEvent(
+								'mousedown',
+								0,
+								editor.editor.querySelector('a')
+							);
+
+							const inlinePopup = document.querySelector(
+								'.jodit_toolbar_popup-inline[data-editor_id="' +
+								editor.id +
+								'"]'
+							);
+
+							clickButton('link', inlinePopup);
+
+							const popup = inlinePopup.querySelector(
+								'.jodit_toolbar_popup'
+							);
+
+							const content = popup.querySelector(
+								'[ref=content_input]'
+							);
+
+							expect(content.value).equals('link strong');
+
+							content.value = 'https://xdan.ru';
+
+							simulateEvent('submit', 0, popup.querySelector('form'));
+
+							expect(editor.value).equals(
+								'<p>test <a href="#somelink">https://xdan.ru</a> open</p>'
+							);
+						});
+					});
+				});
+			});
+
 			describe('Open LINK insert dialog and insert new link', function() {
 				it('Should insert new link', function() {
 					let popup_opened = 0;
@@ -226,7 +488,7 @@ describe('Link plugin', function() {
 						it('Should show form with this class', function() {
 							const editor = new Jodit(appendTestArea(), {
 								link: {
-									formClassName: "bootstrap_form"
+									formClassName: 'bootstrap_form'
 								}
 							});
 
@@ -237,7 +499,8 @@ describe('Link plugin', function() {
 							);
 
 							expect(form).is.not.null;
-							expect(form.classList.contains('bootstrap_form')).is.true;
+							expect(form.classList.contains('bootstrap_form')).is
+								.true;
 						});
 					});
 				});

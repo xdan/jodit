@@ -10,6 +10,7 @@ import { ToolbarIcon } from '../toolbar/icon';
 import {
 	IFileBrowser,
 	IFileBrowserAnswer,
+	IFileBrowserCallBackData,
 	IFileBrowserItem,
 	IFileBrowserOptions,
 	ISource,
@@ -22,6 +23,7 @@ import { IUploader } from '../../types/uploader';
 import { IViewBased } from '../../types/view';
 import { humanSizeToBytes } from '../helpers';
 import { ITEM_CLASS as IC } from './consts';
+import { IJodit } from '../../types';
 
 declare module '../../Config' {
 	interface Config {
@@ -521,7 +523,39 @@ Config.prototype.filebrowser = {
 		data: { action: 'permissions' }
 	},
 
-	uploader: null // use default Uploader's settings
+	uploader: null, // use default Uploader's settings
+
+	defaultCallback: (
+		filebrowser: IFileBrowser,
+		data: IFileBrowserCallBackData
+	) => {
+		const jodit = filebrowser.jodit as IJodit;
+
+		if (jodit && jodit.isJodit) {
+			if (data.files && data.files.length) {
+				data.files.forEach((file, i) => {
+					const url = data.baseurl + file;
+					const isImage = data.isImages ? data.isImages[i] : false;
+
+					if (isImage) {
+						jodit.selection.insertImage(
+							url,
+							null,
+							jodit.options.imageDefaultWidth
+						);
+					} else {
+						jodit.selection.insertNode(
+							jodit.create.inside.fromHTML(
+								`<a href="${url}" title="${url}">${url}</a>`
+							)
+						);
+					}
+				});
+
+				filebrowser.close();
+			}
+		}
+	}
 } as IFileBrowserOptions;
 
 Config.prototype.controls.filebrowser = {

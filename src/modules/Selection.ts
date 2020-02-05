@@ -228,12 +228,10 @@ export class Select {
 	 */
 	restore(selectionInfo: markerInfo[] | null = []) {
 		if (Array.isArray(selectionInfo)) {
-			const sel = this.sel;
-			sel && sel.removeAllRanges();
+			let range: Range | false = false;
 
 			selectionInfo.forEach((selection: markerInfo) => {
-				const range = this.createRange(),
-					end = this.area.querySelector(
+				const end = this.area.querySelector(
 						'#' + selection.endId
 					) as HTMLElement,
 					start = this.area.querySelector(
@@ -243,6 +241,8 @@ export class Select {
 				if (!start) {
 					return;
 				}
+
+				range = this.createRange();
 
 				if (selection.collapsed || !end) {
 					const previousNode: Node | null = start.previousSibling;
@@ -268,9 +268,11 @@ export class Select {
 					range.setEndBefore(end);
 					Dom.safeRemove(end);
 				}
-
-				sel && sel.addRange(range);
 			});
+
+			if (range) {
+				this.selectRange(range);
+			}
 		}
 	}
 
@@ -294,6 +296,7 @@ export class Select {
 
 		for (i = 0; i < length; i += 1) {
 			ranges[i] = sel.getRangeAt(i);
+
 			if (ranges[i].collapsed) {
 				start = this.marker(true, ranges[i]);
 
@@ -305,6 +308,7 @@ export class Select {
 			} else {
 				start = this.marker(true, ranges[i]);
 				end = this.marker(false, ranges[i]);
+
 				info[i] = {
 					startId: start.id,
 					endId: end.id,

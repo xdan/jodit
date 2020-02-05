@@ -141,12 +141,15 @@ export interface IFileBrowserOptions extends IViewOptions {
 	permissions: IFileBrowserAjaxOptions | null;
 
 	uploader: null | IUploaderOptions<IUploader>; // use default Uploader's settings
+
+	defaultCallback: (filebrowser: IFileBrowser, data: IFileBrowserCallBackData) => void;
 	[key: string]: any;
 }
 
 export interface IFileBrowserCallBackData {
 	baseurl: string;
 	files: string[];
+	isImages?: boolean[];
 }
 
 export interface IFileBrowserDataProvider {
@@ -247,8 +250,8 @@ export interface IFileBrowser extends IViewWithToolbar<IFileBrowserOptions> {
 	): Promise<Dialog>;
 
 	open(
-		callback: (data: IFileBrowserCallBackData) => void,
-		onlyImages: boolean
+		callback?: (data: IFileBrowserCallBackData) => void,
+		onlyImages?: boolean
 	): Promise<void>;
 }
 

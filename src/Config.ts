@@ -967,18 +967,17 @@ Config.prototype.controls = {
 			return FileSelectorWidget(
 				editor,
 				{
-					filebrowser: async (data: IFileBrowserCallBackData) => {
+					filebrowser: (data: IFileBrowserCallBackData) => {
 						editor.selection.restore(selInfo);
 
-						if (data.files && data.files.length) {
-							for (let i = 0; i < data.files.length; i += 1) {
-								await editor.selection.insertImage(
-									data.baseurl + data.files[i],
+						data.files &&
+							data.files.forEach(file =>
+								editor.selection.insertImage(
+									data.baseurl + file,
 									null,
 									editor.options.imageDefaultWidth
-								);
-							}
-						}
+								)
+							);
 
 						close();
 					},
@@ -1021,13 +1020,7 @@ Config.prototype.controls = {
 			const insert = (url: string, title: string = '') => {
 				editor.selection.insertNode(
 					editor.create.inside.fromHTML(
-						'<a href="' +
-							url +
-							'" title="' +
-							title +
-							'">' +
-							(title || url) +
-							'</a>'
+						`<a href="${url}" title="${title}">${title || url}</a>`
 					)
 				);
 			};
@@ -1053,12 +1046,11 @@ Config.prototype.controls = {
 				editor,
 				{
 					filebrowser: (data: IFileBrowserCallBackData) => {
-						if (data.files && data.files.length) {
-							let i: number;
-							for (i = 0; i < data.files.length; i += 1) {
-								insert(data.baseurl + data.files[i]);
-							}
-						}
+						data.files &&
+							data.files.forEach(file =>
+								insert(data.baseurl + file)
+							);
+
 						close();
 					},
 					upload: true,
