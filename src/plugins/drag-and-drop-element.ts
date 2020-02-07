@@ -29,8 +29,6 @@ export class DragAndDropElement extends Plugin {
 	private draggable: HTMLElement | null = null;
 	private wasMoved: boolean = false;
 
-	private timeout: number = 0;
-
 	private onDrag = this.jodit.async.throttle((event: DragEvent) => {
 		if (!this.draggable) {
 			return;
@@ -40,12 +38,23 @@ export class DragAndDropElement extends Plugin {
 		this.jodit.events.fire('hidePopup hideResizer');
 
 		if (!this.draggable.parentNode) {
+			css(this.draggable, {
+				'z-index': 100000000000000,
+				'pointer-events': 'none',
+				position: 'fixed',
+				display: 'inline-block',
+				left: event.clientX,
+				top: event.clientY,
+				width: this.draggable.offsetWidth,
+				height: this.draggable.offsetHeight
+			});
+
 			this.jodit.ownerDocument.body.appendChild(this.draggable);
 		}
 
 		css(this.draggable, {
-			left: event.clientX + 20,
-			top: event.clientY + 20
+			left: event.clientX,
+			top: event.clientY
 		});
 
 		this.jodit.selection.insertCursorAtPoint(event.clientX, event.clientY);
@@ -60,7 +69,7 @@ export class DragAndDropElement extends Plugin {
 		}
 
 		do {
-			if (this.dragList.indexOf(target.nodeName.toLowerCase()) !== -1) {
+			if (this.dragList.includes(target.nodeName.toLowerCase())) {
 				if (
 					!last ||
 					(target.firstChild === last && target.lastChild === last)
@@ -79,40 +88,14 @@ export class DragAndDropElement extends Plugin {
 		this.isCopyMode = ctrlKey(event); // we can move only element from editor
 		this.onDragEnd();
 
-		this.timeout = this.jodit.async.setTimeout(
-			(lastNode?: HTMLElement) => {
-				if (!lastNode) {
-					return;
-				}
-
-				this.draggable = lastNode.cloneNode(true) as HTMLElement;
-
-				dataBind(this.draggable, 'target', lastNode);
-
-				css(this.draggable, {
-					'z-index': 100000000000000,
-					'pointer-events': 'none',
-					position: 'fixed',
-					display: 'inlin-block',
-					left: event.clientX,
-					top: event.clientY,
-					width: lastNode.offsetWidth,
-					height: lastNode.offsetHeight
-				});
-			},
-			this.jodit.defaultTimeout,
-			last
-		);
-
-		event.preventDefault();
+		this.draggable = last.cloneNode(true) as HTMLElement;
+		dataBind(this.draggable, 'target', last);
 	};
 
 	private onDragEnd = () => {
 		if (this.isInDestruct) {
 			return;
 		}
-
-		this.jodit.async.clearTimeout(this.timeout);
 
 		if (this.draggable) {
 			Dom.safeRemove(this.draggable);

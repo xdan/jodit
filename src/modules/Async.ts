@@ -93,7 +93,7 @@ export class Async implements IAsync {
 	 * @example
 	 * ```javascript
 	 * var jodit = new Jodit('.editor');
-	 * jodit.events.on(document.body, 'scroll', jodit.helper.throttle(function() {
+	 * jodit.events.on(document.body, 'scroll', jodit.async.throttle(function() {
 	 *     // Do expensive things
 	 * }, 100));
 	 * ```
@@ -104,20 +104,22 @@ export class Async implements IAsync {
 	): CallbackFunction {
 		let timer: number | null = null,
 			needInvoke: boolean,
-			callee: () => void;
+			callee: () => void,
+			lastArgs: any[];
 
 		return (...args: any[]) => {
 			needInvoke = true;
+			lastArgs = args;
 
 			if (!timeout) {
-				fn(...args);
+				fn(...lastArgs);
 				return;
 			}
 
 			if (!timer) {
 				callee = () => {
 					if (needInvoke) {
-						fn(...args);
+						fn(...lastArgs);
 						needInvoke = false;
 						timer = this.setTimeout(callee, timeout);
 						this.timers.set(callee, timer);

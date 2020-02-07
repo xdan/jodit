@@ -636,7 +636,8 @@ export class inlinePopup extends Plugin {
 
 			if (sel && sel.rangeCount) {
 				this.isSelectionPopup = true;
-				const range: Range = sel.getRangeAt(0);
+				const range = sel.getRangeAt(0);
+
 				this.showPopup(
 					() => offset(range, this.jodit, this.jodit.editorDocument),
 					'selection'
@@ -673,7 +674,7 @@ export class inlinePopup extends Plugin {
 					e.stopPropagation();
 				}
 			)
-			.on('beforeOpenPopup hidePopup afterSetMode blur', this.hidePopup)
+			.on('beforeOpenPopup hidePopup afterSetMode', this.hidePopup)
 			.on('recalcPositionPopup', this.reCalcPosition)
 			.on('getDiffButtons.mobile', (_toolbar: ToolbarCollection):
 				| void

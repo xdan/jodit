@@ -1,7 +1,7 @@
 /*!
  jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- Version: v3.3.20
+ Version: v3.3.21
  Url: https://xdsoft.net/jodit/
  License(s): MIT
 */
@@ -11652,7 +11652,7 @@ var View = (function (_super) {
         var _a, _b, _c;
         var _this = _super.call(this, jodit, options) || this;
         _this.components = new Set();
-        _this.version = "3.3.20";
+        _this.version = "3.3.21";
         _this.__modulesInstances = {};
         _this.buffer = storage_1.Storage.makeStorage();
         _this.progressbar = new ProgressBar_1.ProgressBar(_this);
@@ -11977,21 +11977,22 @@ var Async = (function () {
     };
     Async.prototype.throttle = function (fn, timeout) {
         var _this = this;
-        var timer = null, needInvoke, callee;
+        var timer = null, needInvoke, callee, lastArgs;
         return function () {
             var args = [];
             for (var _i = 0; _i < arguments.length; _i++) {
                 args[_i] = arguments[_i];
             }
             needInvoke = true;
+            lastArgs = args;
             if (!timeout) {
-                fn.apply(void 0, args);
+                fn.apply(void 0, lastArgs);
                 return;
             }
             if (!timer) {
                 callee = function () {
                     if (needInvoke) {
-                        fn.apply(void 0, args);
+                        fn.apply(void 0, lastArgs);
                         needInvoke = false;
                         timer = _this.setTimeout(callee, timeout);
                         _this.timers.set(callee, timer);
@@ -13951,7 +13952,6 @@ var DragAndDropElement = (function (_super) {
         _this.isCopyMode = false;
         _this.draggable = null;
         _this.wasMoved = false;
-        _this.timeout = 0;
         _this.onDrag = _this.jodit.async.throttle(function (event) {
             if (!_this.draggable) {
                 return;
@@ -13959,11 +13959,21 @@ var DragAndDropElement = (function (_super) {
             _this.wasMoved = true;
             _this.jodit.events.fire('hidePopup hideResizer');
             if (!_this.draggable.parentNode) {
+                helpers_1.css(_this.draggable, {
+                    'z-index': 100000000000000,
+                    'pointer-events': 'none',
+                    position: 'fixed',
+                    display: 'inline-block',
+                    left: event.clientX,
+                    top: event.clientY,
+                    width: _this.draggable.offsetWidth,
+                    height: _this.draggable.offsetHeight
+                });
                 _this.jodit.ownerDocument.body.appendChild(_this.draggable);
             }
             helpers_1.css(_this.draggable, {
-                left: event.clientX + 20,
-                top: event.clientY + 20
+                left: event.clientX,
+                top: event.clientY
             });
             _this.jodit.selection.insertCursorAtPoint(event.clientX, event.clientY);
         }, _this.jodit.defaultTimeout);
@@ -13973,7 +13983,7 @@ var DragAndDropElement = (function (_super) {
                 return;
             }
             do {
-                if (_this.dragList.indexOf(target.nodeName.toLowerCase()) !== -1) {
+                if (_this.dragList.includes(target.nodeName.toLowerCase())) {
                     if (!last ||
                         (target.firstChild === last && target.lastChild === last)) {
                         last = target;
@@ -13986,30 +13996,13 @@ var DragAndDropElement = (function (_super) {
             }
             _this.isCopyMode = helpers_1.ctrlKey(event);
             _this.onDragEnd();
-            _this.timeout = _this.jodit.async.setTimeout(function (lastNode) {
-                if (!lastNode) {
-                    return;
-                }
-                _this.draggable = lastNode.cloneNode(true);
-                helpers_1.dataBind(_this.draggable, 'target', lastNode);
-                helpers_1.css(_this.draggable, {
-                    'z-index': 100000000000000,
-                    'pointer-events': 'none',
-                    position: 'fixed',
-                    display: 'inlin-block',
-                    left: event.clientX,
-                    top: event.clientY,
-                    width: lastNode.offsetWidth,
-                    height: lastNode.offsetHeight
-                });
-            }, _this.jodit.defaultTimeout, last);
-            event.preventDefault();
+            _this.draggable = last.cloneNode(true);
+            helpers_1.dataBind(_this.draggable, 'target', last);
         };
         _this.onDragEnd = function () {
             if (_this.isInDestruct) {
                 return;
             }
-            _this.jodit.async.clearTimeout(_this.timeout);
             if (_this.draggable) {
                 Dom_1.Dom.safeRemove(_this.draggable);
                 _this.draggable = null;
@@ -16080,7 +16073,7 @@ var inlinePopup = (function (_super) {
             .on(this.target, 'mousedown keydown touchstart', function (e) {
             e.stopPropagation();
         })
-            .on('beforeOpenPopup hidePopup afterSetMode blur', this.hidePopup)
+            .on('beforeOpenPopup hidePopup afterSetMode', this.hidePopup)
             .on('recalcPositionPopup', this.reCalcPosition)
             .on('getDiffButtons.mobile', function (_toolbar) {
             if (_this.toolbar === _toolbar) {
