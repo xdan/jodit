@@ -1,4 +1,4 @@
-import { IDictionary } from './types';
+import { IDestructible, IDictionary } from './types';
 import { IViewBased } from './view';
 
 export type DataVariant = | IDictionary<string>
@@ -13,7 +13,7 @@ export interface IRequest {
 	data: DataVariant;
 }
 
-export interface IAjax {
+export interface IAjax extends IDestructible {
 	status: number;
 
 	response: string;

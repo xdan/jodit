@@ -1,3 +1,9 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
 import { IFileBrowserItemElement, IFileBrowserItemWrapper } from '../../../types';
 import { extend } from '../../helpers/extend';
 import { normalizePath, normalizeURL } from '../../helpers/normalize';

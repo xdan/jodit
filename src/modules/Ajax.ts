@@ -110,7 +110,12 @@ export class Ajax implements IAjax {
 		return this;
 	}
 
+	private resolved = false;
+	private activated = false;
+
 	send(): Promise<any> {
+		this.activated = true;
+
 		return new Promise(
 			(
 				resolve: (this: XMLHttpRequest, resp: object) => any,
@@ -145,6 +150,8 @@ export class Ajax implements IAjax {
 				this.xhr.onload = () => {
 					this.response = this.xhr.responseText;
 					this.status = this.xhr.status;
+					this.resolved = true;
+
 					resolve.call(this.xhr, __parse(this.response) || {});
 				};
 
@@ -154,6 +161,7 @@ export class Ajax implements IAjax {
 
 						this.response = resp;
 						this.status = this.xhr.status;
+						this.resolved = true;
 
 						if (
 							this.success_response_codes.indexOf(
@@ -176,13 +184,9 @@ export class Ajax implements IAjax {
 				this.xhr.withCredentials =
 					this.options.withCredentials || false;
 
-				const {url, data, method} = this.prepareRequest();
+				const { url, data, method } = this.prepareRequest();
 
-				this.xhr.open(
-					method,
-					url,
-					true
-				);
+				this.xhr.open(method, url, true);
 
 				if (this.options.contentType && this.xhr.setRequestHeader) {
 					this.xhr.setRequestHeader(
@@ -199,11 +203,7 @@ export class Ajax implements IAjax {
 
 				// IE
 				setTimeout(() => {
-					this.xhr.send(
-						data
-							? this.__buildParams(data)
-							: undefined
-					);
+					this.xhr.send(data ? this.__buildParams(data) : undefined);
 				}, 0);
 			}
 		);
@@ -222,10 +222,13 @@ export class Ajax implements IAjax {
 			const qIndex = url.indexOf('?');
 
 			if (qIndex !== -1) {
-				const urlData = parseQuery(url) ;
-				url = url.substr(0, qIndex) + '?' + buildQuery({...urlData, ...data as IDictionary})
+				const urlData = parseQuery(url);
+				url =
+					url.substr(0, qIndex) +
+					'?' +
+					buildQuery({ ...urlData, ...(data as IDictionary) });
 			} else {
-				url += '?' + buildQuery(this.options.data as IDictionary)
+				url += '?' + buildQuery(this.options.data as IDictionary);
 			}
 		}
 
@@ -260,5 +263,12 @@ export class Ajax implements IAjax {
 			editor.events.on('beforeDestruct', () => {
 				this.abort();
 			});
+	}
+
+	destruct(): any {
+		if (this.activated && !this.resolved) {
+			this.abort();
+			this.resolved = true;
+		}
 	}
 }

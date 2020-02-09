@@ -5,7 +5,7 @@
  */
 
 import { Buttons } from './toolbar';
-import { IDictionary, ImageBox, IPermissions } from './types';
+import { IDestructible, IDictionary, ImageBox, IPermissions } from './types';
 import { IUploader, IUploaderOptions } from './uploader';
 import { IViewOptions, IViewWithToolbar } from './view';
 import { Dialog } from '../modules/dialog';
@@ -142,7 +142,10 @@ export interface IFileBrowserOptions extends IViewOptions {
 
 	uploader: null | IUploaderOptions<IUploader>; // use default Uploader's settings
 
-	defaultCallback: (filebrowser: IFileBrowser, data: IFileBrowserCallBackData) => void;
+	defaultCallback: (
+		filebrowser: IFileBrowser,
+		data: IFileBrowserCallBackData
+	) => void;
 	[key: string]: any;
 }
 
@@ -152,7 +155,7 @@ export interface IFileBrowserCallBackData {
 	isImages?: boolean[];
 }
 
-export interface IFileBrowserDataProvider {
+export interface IFileBrowserDataProvider extends IDestructible {
 	currentPath: string;
 	currentSource: string;
 	currentBaseUrl: string;
@@ -285,4 +288,5 @@ export interface IFileBrowserItemWrapper {
 	uniqueHashKey: string;
 }
 
-export type IFileBrowserItem = IFileBrowserItemWrapper & IFileBrowserItemElement;
+export type IFileBrowserItem = IFileBrowserItemWrapper &
+	IFileBrowserItemElement;

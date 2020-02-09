@@ -39,13 +39,13 @@ import { IJodit, IStorage } from '../../types';
 import './config';
 import { Dom } from '../Dom';
 import { Alert } from '../dialog';
-import DataProvider from './dataProvider';
 import contextMenu from './builders/contextMenu';
 import { ObserveObject } from '../events/observeObject';
 import { FileBrowserItem } from './builders/item';
 import { isValidName } from '../helpers/checker/isValidName';
 import { F_CLASS, ICON_LOADER, ITEM_CLASS } from './consts';
 import { error } from '../helpers';
+import { makeDataProvider } from './factories';
 
 const DEFAULT_SOURCE_NAME = 'default',
 	ITEM_ACTIVE_CLASS = ITEM_CLASS + '-active-true';
@@ -1136,7 +1136,8 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 			this.options.filebrowser.saveStateInStorage
 		);
 
-		self.dataProvider = new DataProvider(self.options, self.jodit || self);
+		self.dataProvider = makeDataProvider(self.jodit || self, self.options);
+
 		self.dialog = new Dialog(editor || self, {
 			fullsize: self.options.fullsize,
 			buttons: ['dialog.fullsize', 'dialog.close']

@@ -9,12 +9,7 @@ import { Component, STATUSES } from './Component';
 import { css } from './helpers/css';
 import { ToolbarIcon } from './toolbar/icon';
 import { Dom } from './Dom';
-
-export interface Action {
-	icon?: string;
-	title?: string;
-	exec?: (this: ContextMenu, e: MouseEvent) => false | void;
-}
+import { IContextMenu, IContextMenuAction } from '../types';
 
 /**
  * Module to generate context menu
@@ -22,7 +17,7 @@ export interface Action {
  * @module ContextMenu
  * @param {Object} parent Jodit main object
  */
-export class ContextMenu extends Component {
+export class ContextMenu extends Component implements IContextMenu {
 	private context: HTMLElement;
 	private evnts = 'mousedown jodit_close_dialog scroll';
 
@@ -52,7 +47,7 @@ export class ContextMenu extends Component {
 	show(
 		x: number,
 		y: number,
-		actions: Array<false | Action>,
+		actions: Array<false | IContextMenuAction>,
 		zIndex?: number
 	) {
 		const self = this;

@@ -1,4 +1,9 @@
-import { ContextMenu } from '../../ContextMenu';
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
 import { Dialog } from '../../dialog';
 import { Dom } from '../../Dom';
 import { ToolbarIcon } from '../..';
@@ -16,7 +21,7 @@ export default (self: FileBrowser) => {
 		return () => {};
 	}
 
-	const contextmenu = new ContextMenu(self.jodit || self);
+	const contextmenu = makeContextMenu(self.jodit || self);
 
 	return function(this: HTMLElement, e: DragEvent): boolean | void {
 		let item: HTMLElement = this,
@@ -70,8 +75,10 @@ export default (self: FileBrowser) => {
 										ga('data-name'),
 										ga('data-source')
 									);
+
 									self.state.activeElements = [];
-									self.loadTree();
+
+									await self.loadTree();
 								}
 						  }
 						: false,
@@ -241,3 +248,4 @@ export default (self: FileBrowser) => {
 
 import { FileBrowser } from '../fileBrowser';
 import { error } from '../../helpers';
+import { makeContextMenu } from '../factories';

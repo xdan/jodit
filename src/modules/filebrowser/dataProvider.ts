@@ -1,3 +1,9 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
 import {
 	IFileBrowserAjaxOptions,
 	IFileBrowserAnswer,
@@ -6,7 +12,8 @@ import {
 	IPermissions,
 	IFileBrowserDataProvider,
 	ImageBox,
-	IDictionary
+	IDictionary,
+	IAjax
 } from '../../types';
 
 import { error, extend, normalizeRelativePath } from '../helpers';
@@ -30,7 +37,7 @@ const possableRules = [
 	'allowImageCrop'
 ];
 
-export default class dataProvider implements IFileBrowserDataProvider {
+export default class DataProvider implements IFileBrowserDataProvider {
 	private __currentPermissions: IPermissions | null = null;
 
 	canI(action: string): boolean {
@@ -45,7 +52,7 @@ export default class dataProvider implements IFileBrowserDataProvider {
 		return (
 			this.__currentPermissions === null ||
 			this.__currentPermissions[rule] === undefined ||
-				this.__currentPermissions[rule]
+			this.__currentPermissions[rule]
 		);
 	}
 
@@ -54,9 +61,11 @@ export default class dataProvider implements IFileBrowserDataProvider {
 	currentBaseUrl: string = '';
 
 	constructor(
-		readonly options: IFileBrowserOptions,
-		readonly parent: IViewBased
+		readonly parent: IViewBased,
+		readonly options: IFileBrowserOptions
 	) {}
+
+	private ajaxInstances: IAjax[] = [];
 
 	/**
 	 *
@@ -86,6 +95,8 @@ export default class dataProvider implements IFileBrowserDataProvider {
 		const ajax = new Ajax(this.parent, opts);
 
 		const promise = ajax.send();
+
+		this.ajaxInstances.push(ajax);
 
 		if (success) {
 			promise.then(success);
@@ -449,5 +460,10 @@ export default class dataProvider implements IFileBrowserDataProvider {
 		this.options.resize.data.source = source;
 
 		return this.get('resize');
+	}
+
+	destruct(): any {
+		this.ajaxInstances.forEach(a => a.destruct());
+		this.ajaxInstances.length = 0;
 	}
 }
