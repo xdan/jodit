@@ -3,6 +3,7 @@
 ## 3.3.22
 ### BugFix
 * [#325](https://github.com/xdan/jodit/issues/325)
+* [#327](https://github.com/xdan/jodit/issues/327)
 
 ### Feature
 * Added `Dom`.`isTag` method

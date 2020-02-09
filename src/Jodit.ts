@@ -4,9 +4,10 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Config, OptionsDefault } from './Config';
+import { Config, configFactory } from './Config';
 import * as consts from './constants';
 import { Dom } from './modules/Dom';
+
 import {
 	asArray,
 	css,
@@ -80,6 +81,9 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		'text'
 	]);
 
+	/**
+	 * HTML value
+	 */
 	get value(): string {
 		return this.getEditorValue();
 	}
@@ -260,7 +264,13 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	/**
 	 * options All Jodit settings default + second arguments of constructor
 	 */
-	options: Config;
+	get options(): Config {
+		return this.currentPlace.options as Config;
+	}
+
+	set options(opt: Config) {
+		this.setPlaceField('options', opt);
+	}
 
 	/**
 	 * @property {Select} selection
@@ -943,7 +953,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 	/** @override **/
 	protected initOptions(options?: object): void {
-		this.options = new OptionsDefault(options) as Config;
+		this.options = configFactory(options);
 	}
 
 	/** @override **/
@@ -990,6 +1000,11 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		this.initPlugins();
 
+		this.events.on('changePlace', () => {
+			this.setReadOnly(this.options.readonly);
+			this.setDisabled(this.options.disabled);
+		});
+
 		this.places.length = 0;
 		const addPlaceResult = this.addPlace(element, options);
 
@@ -1030,7 +1045,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	): void | Promise<any> {
 		const element = this.resolveElement(source);
 
-		if (!this.places.length) {
+		if (!this.isReady) {
 			this.id =
 				element.getAttribute('id') || new Date().getTime().toString();
 
@@ -1125,6 +1140,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			container,
 			workplace,
 			statusbar,
+			options: this.isReady ? configFactory(options) : this.options,
 			observer: new Observer(this),
 			editorWindow: this.ownerWindow
 		};
@@ -1136,9 +1152,9 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		this.setNativeEditorValue(this.getElementValue()); // Init value
 
-		const opt = this.options;
-
 		const initResult = this.initEditor(buffer);
+
+		const opt = this.options;
 
 		const init = () => {
 			if (

@@ -1154,3 +1154,7 @@ Config.prototype.controls = {
 		tooltip: 'Insert youtube/vimeo video'
 	} as IControlType
 };
+
+export function configFactory(options?: object): Config {
+	return new OptionsDefault(options) as Config;
+}

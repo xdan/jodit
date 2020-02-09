@@ -206,6 +206,13 @@ export class xpath extends Plugin {
 				.on(
 					'afterSetMode.xpath afterInit.xpath changePlace.xpath',
 					() => {
+						console.log(this.jodit.id, this.jodit.events.current);
+
+						if (!this.jodit.options.showXPathInStatusbar) {
+							return;
+						}
+						console.log(this.jodit.id, this.jodit.events.current);
+
 						this.jodit.statusbar.append(this.container);
 
 						if (this.jodit.getRealMode() === MODE_WYSIWYG) {

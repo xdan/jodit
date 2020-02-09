@@ -21,6 +21,7 @@ interface IWorkPlace {
 	iframe?: HTMLIFrameElement | void;
 	editorWindow: Window;
 	observer: Observer;
+	options: IViewOptions
 }
 
 interface IJodit extends IViewWithToolbar {
