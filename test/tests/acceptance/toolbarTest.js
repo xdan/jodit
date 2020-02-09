@@ -783,13 +783,7 @@ describe('Toolbar', function() {
 
 			editor.value = 'Test';
 
-			simulateEvent(
-				'mousedown',
-				0,
-				editor.container.querySelector(
-					'.jodit_toolbar_btn.jodit_toolbar_btn-left'
-				)
-			);
+			clickButton('left', editor);
 
 			const list = editor.container.querySelector('.jodit_toolbar_list');
 

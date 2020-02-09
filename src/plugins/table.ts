@@ -18,6 +18,7 @@ import {
 import { IControlType } from '../types/toolbar';
 import { IBound, IDictionary } from '../types/types';
 import { IJodit } from '../types';
+import { alignElement } from './justify';
 
 declare module '../Config' {
 	interface Config {
@@ -954,8 +955,17 @@ export class TableProcessor extends Plugin {
 					);
 				}
 			})
-			.on('beforeCommand.table', this.onExecCommand.bind(this));
+			.on('beforeCommand.table', this.onExecCommand.bind(this))
+			.on('afterCommand.table', this.onAfterCommand.bind(this));
 	}
+
+	private onAfterCommand(command: string) {
+		if (/^justify/.test(command)) {
+			$$('[data-jodit-selected-cell]', this.jodit.editor).forEach(elm =>
+				alignElement(command, elm, this.jodit)
+			);
+		}
+	};
 
 	beforeDestruct(jodit: IJodit): void {
 		if (jodit.events) {

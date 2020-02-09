@@ -6,7 +6,7 @@
 
 import { Config } from '../Config';
 import { Dom } from '../modules/Dom';
-import { $$, css } from '../modules/helpers/';
+import { css } from '../modules/helpers/';
 import { ToolbarIcon } from '../modules/toolbar/icon';
 import { IControlType } from '../types/toolbar';
 import { IJodit } from '../types';
@@ -113,66 +113,86 @@ Config.prototype.controls.right = {
 };
 
 /**
+ * Remove text-align style for all selected children
+ *
+ * @param node
+ * @param editor
+ */
+export const clearAlign = (node: Node, editor: IJodit) => {
+	Dom.each(node, (elm) => {
+		if (Dom.isHTMLElement(elm, editor.editorWindow)) {
+			if (elm.style.textAlign) {
+				elm.style.textAlign = '';
+
+				if (!elm.style.cssText.trim().length) {
+					elm.removeAttribute('style');
+				}
+			}
+		}
+	})
+};
+
+/**
+ * Apply align for element
+ *
+ * @param command
+ * @param box
+ * @param editor
+ */
+export const alignElement = (
+	command: string,
+	box: HTMLElement,
+	editor: IJodit
+) => {
+	if (Dom.isNode(box, editor.editorWindow) && Dom.isElement(box)) {
+		clearAlign(box, editor);
+
+		switch (command.toLowerCase()) {
+			case 'justifyfull':
+				box.style.textAlign = 'justify';
+				break;
+			case 'justifyright':
+				box.style.textAlign = 'right';
+				break;
+			case 'justifyleft':
+				box.style.textAlign = 'left';
+				break;
+			case 'justifycenter':
+				box.style.textAlign = 'center';
+				break;
+		}
+	}
+};
+
+/**
  * Process commands: `justifyfull`, `justifyleft`, `justifyright`, `justifycenter`
  * @param {Jodit} editor
  */
 export function justify(editor: IJodit) {
 	const callback = (command: string): false | void => {
-		const justifyElm = (box: HTMLElement) => {
-			if (box instanceof (editor.editorWindow as any).HTMLElement) {
-				switch (command.toLowerCase()) {
-					case 'justifyfull':
-						box.style.textAlign = 'justify';
-						break;
-					case 'justifyright':
-						box.style.textAlign = 'right';
-						break;
-					case 'justifyleft':
-						box.style.textAlign = 'left';
-						break;
-					case 'justifycenter':
-						box.style.textAlign = 'center';
-						break;
-				}
-			}
-		};
-
 		editor.selection.focus();
 
-		editor.selection.eachSelection(
-			(current: Node): false | void => {
-				if (!current) {
-					if (editor.editor.querySelector('.jodit_selected_cell')) {
-						$$('.jodit_selected_cell', editor.editor).forEach(
-							justifyElm
-						);
-						return false;
-					}
-				}
-
-				if (!(current instanceof (editor.editorWindow as any).Node)) {
-					return;
-				}
-
-				let currentBox: HTMLElement | false | null = current
-					? (Dom.up(
-							current,
-							node => Dom.isBlock(node, editor.editorWindow),
-							editor.editor
-					  ) as HTMLElement)
-					: false;
-
-				if (!currentBox && current) {
-					currentBox = Dom.wrapInline(
-						current,
-						editor.options.enterBlock,
-						editor
-					);
-				}
-
-				justifyElm(currentBox as HTMLElement);
+		editor.selection.eachSelection((current: Node): false | void => {
+			if (!current) {
+				return;
 			}
-		);
+
+			let currentBox = Dom.up(
+				current,
+				node => Dom.isBlock(node, editor.editorWindow),
+				editor.editor
+			) as HTMLElement;
+
+			if (!currentBox) {
+				currentBox = Dom.wrapInline(
+					current,
+					editor.options.enterBlock,
+					editor
+				) as HTMLElement;
+			}
+
+			alignElement(command, currentBox, editor);
+		});
 
 		return false;
 	};
