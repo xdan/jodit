@@ -345,7 +345,7 @@ export class Dom {
 	 * Check if element is HTMLelement node
 	 * @param node
 	 */
-	static isHTMLElement(node: Node | null | false | EventTarget, win: Window): node is HTMLElement {
+	static isHTMLElement(node: unknown, win: Window): node is HTMLElement {
 		return Dom.isNode(node, win) && node instanceof (win as any).HTMLElement;
 	}
 

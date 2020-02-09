@@ -45,7 +45,7 @@ export class ViewWithToolbar extends View implements IViewWithToolbar {
 		}
 
 		if (
-			this.options.toolbar instanceof HTMLElement ||
+			Dom.isHTMLElement(this.options.toolbar, this.jodit.ownerWindow) ||
 			typeof this.options.toolbar === 'string'
 		) {
 			toolbarContainer = this.resolveElement(this.options.toolbar);

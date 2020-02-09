@@ -1690,6 +1690,7 @@ describe('Test plugins', function() {
 			});
 		});
 	});
+
 	describe('Hotkeys', function() {
 		describe('Override default shortcuts for some commands', function() {
 			it('Should work default shortcuts for another commands', function() {
@@ -1826,6 +1827,7 @@ describe('Test plugins', function() {
 			});
 		});
 	});
+
 	describe('Sticky plugin', function() {
 		describe('Without scrolling', function() {
 			it('Should not have `jodit_sticky` class and toolbar must be in normal state', function() {
@@ -2043,6 +2045,7 @@ describe('Test plugins', function() {
 			});
 		});
 	});
+
 	describe('Fullsize plugin', function() {
 		describe('Toggle fullsize', function() {
 			it('Should resize all boxes to first state', function() {

@@ -1,6 +1,8 @@
 # Changelog
 
 ## 3.3.22
+### BugFix
+* [#325](https://github.com/xdan/jodit/issues/325)
 
 ### Feature
 * Added Dom.isTag method

@@ -580,6 +580,7 @@ describe('Commands Jodit Editor Tests', function() {
 				'<h5>testy oprst <span>lets go</span></h5>'
 			);
 		});
+
 		it('Should wrap text into H1 tag near Table, but table must be after this tag', function() {
 			const editor = new Jodit(appendTestArea());
 			editor.value = 'test<table><tr><td>post</td></tr></table>';
@@ -599,6 +600,7 @@ describe('Commands Jodit Editor Tests', function() {
 				'<h1>test</h1><table><tbody><tr><td>post</td></tr></tbody></table>'
 			);
 		});
+
 		describe('justifyLeft', function() {
 			it('Should set align for element which was created using formatBlock', function() {
 				const editor = new Jodit(appendTestArea());
@@ -622,6 +624,7 @@ describe('Commands Jodit Editor Tests', function() {
 				);
 			});
 		});
+
 		it('Insert H1 inside TD should crearte new H1 withow replacement', function() {
 			const editor = new Jodit(appendTestArea());
 			editor.value = '<table><tr><td>1</td></tr></table>';
@@ -772,6 +775,7 @@ describe('Commands Jodit Editor Tests', function() {
 			});
 		});
 	});
+
 	describe('Align', function() {
 		it('Justify to right', function() {
 			const editor = new Jodit(appendTestArea());
@@ -792,6 +796,7 @@ describe('Commands Jodit Editor Tests', function() {
 				'<p style="text-align: right;">test</p>'
 			);
 		});
+
 		it('Justify to center', function() {
 			const editor = new Jodit(appendTestArea());
 			editor.value = 'test';
@@ -830,6 +835,7 @@ describe('Commands Jodit Editor Tests', function() {
 				'<p style="text-align: left;">test some text <span>test</span><br></p><p>data</p>'
 			);
 		});
+
 		it('Justify to left in element of unordered list', function() {
 			const editor = new Jodit(appendTestArea());
 			editor.value = '<ul><li>test</li><li>data</li></ul>';
@@ -849,6 +855,7 @@ describe('Commands Jodit Editor Tests', function() {
 				'<ul><li style="text-align: left;">test</li><li>data</li></ul>'
 			);
 		});
+
 		it('Justify to full', function() {
 			const editor = new Jodit(appendTestArea());
 			editor.value = '<h1>test some text <span>test</span></h1>';
@@ -868,6 +875,7 @@ describe('Commands Jodit Editor Tests', function() {
 				'<h1 style="text-align: justify;">test some text <span>test</span></h1>'
 			);
 		});
+
 		describe('Justify plain text with enter = br mode', function() {
 			it('Should wrap this text in enterBlock element', function() {
 				const editor = new Jodit(appendTestArea(), {
@@ -889,6 +897,64 @@ describe('Commands Jodit Editor Tests', function() {
 				expect(editor.value).equals(
 					'<p style="text-align: left;">test</p>'
 				);
+			});
+		});
+
+		describe('Table cells', function() {
+			describe('Selected table cells', function() {
+				it('Should apply align to all selected cells', function() {
+					const editor = Jodit.make(appendTestArea());
+					editor.value =
+						'<table><tbody><tr><td>1</td><td>2</td></tr></tbody></table>';
+
+					simulateEvent(
+						'mousedown',
+						0,
+						editor.editor.querySelector('td')
+					);
+
+					editor.selection.select(
+						editor.editor.querySelector('td').firstChild
+					);
+					editor.execCommand('justifyright');
+
+					expect(sortAttributes(editor.value)).equals(
+						'<table><tbody><tr><td  style="text-align:right">1</td><td>2</td></tr></tbody></table>'
+					);
+				});
+
+				describe('After change obe cell - select all', function() {
+					it('Should apply align to whole table and remove from cells', function() {
+						const editor = Jodit.make(appendTestArea());
+						editor.value =
+							'<table><tbody><tr><td>1</td><td>2</td></tr></tbody></table>';
+
+						simulateEvent(
+							'mousedown',
+							0,
+							editor.editor.querySelector('td')
+						);
+
+						editor.selection.select(
+							editor.editor.querySelector('td').firstChild
+						);
+
+						editor.execCommand('justifyright');
+
+						simulateEvent(
+							'mousedown',
+							0,
+							editor.editor.firstChild
+						);
+
+						editor.execCommand('selectall');
+						editor.execCommand('justifyfull');
+
+						expect(sortAttributes(editor.value)).equals(
+							'<table style="text-align:justify"><tbody><tr><td>1</td><td>2</td></tr></tbody></table>'
+						);
+					});
+				});
 			});
 		});
 	});
