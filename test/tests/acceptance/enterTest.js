@@ -29,6 +29,67 @@ describe('Enter behavior Jodit Editor Tests', function() {
 				});
 			});
 
+			describe('HR before P', function() {
+				it('Should simple remove HR but cursor should leave inside P', function() {
+					const editor = new Jodit(appendTestArea());
+
+					editor.value = '<p>lets</p><hr><p>test</p>';
+
+					const range = editor.selection.createRange();
+
+					// set cursor in start of element
+
+					range.selectNodeContents(editor.editor.lastChild);
+					range.collapse(true);
+					editor.selection.selectRange(range);
+
+					simulateEvent(
+						'keydown',
+						Jodit.KEY_BACKSPACE,
+						editor.editor
+					);
+
+					editor.selection.insertNode(
+						editor.create.inside.text(' 2 ')
+					);
+					expect(editor.value).equals('<p>lets</p><p> 2 test</p>');
+				});
+
+				describe('HR has different display style', function() {
+					it('Should also remove HR but cursor should leave inside P', function() {
+						const editor = new Jodit(appendTestArea(), {
+							iframe: true,
+							iframeStyle:
+								Jodit.defaultOptions.iframeStyle +
+								'hr {display: inline-block;}'
+						});
+
+						editor.value = '<p>lets</p><hr><p>test</p>';
+
+						const range = editor.selection.createRange();
+
+						// set cursor in start of element
+
+						range.selectNodeContents(editor.editor.lastChild);
+						range.collapse(true);
+						editor.selection.selectRange(range);
+
+						simulateEvent(
+							'keydown',
+							Jodit.KEY_BACKSPACE,
+							editor.editor
+						);
+
+						editor.selection.insertNode(
+							editor.create.inside.text(' 2 ')
+						);
+						expect(editor.value).equals(
+							'<p>lets</p><p> 2 test</p>'
+						);
+					});
+				});
+			});
+
 			describe('Backspace and Previous was empty H1', function() {
 				it('Should simple remove this H1', function() {
 					const editor = new Jodit(appendTestArea());
@@ -286,9 +347,9 @@ describe('Enter behavior Jodit Editor Tests', function() {
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
-					expect(
+					expect(editor.value).equals(
 						'<ul><li>Test</li></ul><p><br></p><ul><li>Some text</li></ul>'
-					).equals(editor.value);
+					);
 
 					editor.selection.focus();
 					simulateEvent(
@@ -297,17 +358,17 @@ describe('Enter behavior Jodit Editor Tests', function() {
 						editor.editor
 					);
 
-					expect('<ul><li>Test</li><li>Some text</li></ul>').equals(
-						editor.value
+					expect(editor.value).equals(
+						'<ul><li>Test<br></li><li>Some text</li></ul>'
 					);
 
 					editor.selection.focus();
 					editor.selection.insertNode(
 						editor.create.inside.text(' a ')
 					);
-					expect(
-						'<ul><li>Test a </li><li>Some text</li></ul>'
-					).equals(editor.value);
+					expect(editor.value).equals(
+						'<ul><li>Test a <br></li><li>Some text</li></ul>'
+					);
 				});
 			});
 		});

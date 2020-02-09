@@ -343,12 +343,12 @@ export class Dom {
 
 	/**
 	 * Check element is inline block
-	 *
 	 * @param node
 	 */
 	static isInlineBlock(node: Node | null | false): boolean {
 		return (
 			Dom.isElement(node) &&
+			!/^(BR|HR)$/i.test(node.tagName) &&
 			['inline', 'inline-block'].indexOf(
 				css(node as HTMLElement, 'display').toString()
 			) !== -1

@@ -7,16 +7,17 @@
 import * as consts from '../constants';
 import { MAY_BE_REMOVED_WITH_KEY } from '../constants';
 import { Dom } from '../modules/Dom';
-import { isString, normalizeNode, trim } from '../modules/helpers/';
+import { call, isString, normalizeNode, trim } from '../modules/helpers/';
 import { IJodit } from '../types';
+import { Plugin } from '../modules/Plugin';
 
 /**
  * Plug-in process entering Backspace key
  *
  * @module backspace
  */
-export function backspace(editor: IJodit) {
-	const removeEmptyBlocks = (container: HTMLElement) => {
+export class backspace extends Plugin {
+	private removeEmptyBlocks(container: HTMLElement): void {
 		let box: HTMLElement | null = container,
 			parent: Node | null;
 
@@ -30,130 +31,134 @@ export function backspace(editor: IJodit) {
 
 			if (
 				(!html.length || html === '<br>') &&
-				!Dom.isCell(box, editor.editorWindow) &&
+				!Dom.isCell(box, this.jodit.editorWindow) &&
 				box.parentNode &&
-				container !== editor.editor
+				container !== this.jodit.editor
 			) {
 				parent = box.parentNode;
-				editor.selection.removeNode(box);
+				this.jodit.selection.removeNode(box);
 			} else {
 				break;
 			}
 
 			box = parent as HTMLElement | null;
-		} while (box && box !== editor.editor);
-	};
+		} while (box && box !== this.jodit.editor);
+	}
 
-	const removeChar = (
+	private removeChar(
 		box: { node: Node | null },
 		toLeft: boolean,
 		range: Range
-	): void | boolean => {
-		if (Dom.isText(box.node) && isString(box.node.nodeValue)) {
-			// remove invisible spaces
-			let value = box.node.nodeValue,
-				startOffset: number = toLeft ? value.length : 0;
+	): void | true {
+		let nextElement: Node | null = null;
 
-			const increment: number = toLeft ? -1 : 1,
-				startOffsetInRange: number = startOffset;
+		do {
+			if (Dom.isText(box.node) && isString(box.node.nodeValue)) {
+				// remove invisible spaces
+				let value = box.node.nodeValue,
+					startOffset: number = toLeft ? value.length : 0;
 
-			while (
-				startOffset >= 0 &&
-				startOffset <= value.length &&
-				value[startOffset + (toLeft ? -1 : 0)] ===
-					consts.INVISIBLE_SPACE
-			) {
-				startOffset += increment;
-			}
+				const increment: number = toLeft ? -1 : 1,
+					startOffsetInRange: number = startOffset;
 
-			if (startOffset !== startOffsetInRange) {
-				if (toLeft) {
-					value =
-						value.substr(0, startOffset) +
-						value.substr(startOffsetInRange);
-				} else {
-					value =
-						value.substr(0, startOffsetInRange) +
-						value.substr(startOffset);
-					startOffset = startOffsetInRange;
+				while (
+					startOffset >= 0 &&
+					startOffset <= value.length &&
+					value[startOffset + (toLeft ? -1 : 0)] ===
+						consts.INVISIBLE_SPACE
+				) {
+					startOffset += increment;
 				}
 
-				box.node.nodeValue = value;
-			}
-
-			range.setStart(box.node, startOffset);
-			range.collapse(true);
-			editor.selection.selectRange(range);
-
-			let nextElement: Node | null = Dom.findInline(
-				box.node,
-				toLeft,
-				editor.editor
-			);
-
-			if (value.length) {
-				let setRange: boolean = false;
-				if (toLeft) {
-					if (startOffset) {
-						setRange = true;
+				if (startOffset !== startOffsetInRange) {
+					if (toLeft) {
+						value =
+							value.substr(0, startOffset) +
+							value.substr(startOffsetInRange);
+					} else {
+						value =
+							value.substr(0, startOffsetInRange) +
+							value.substr(startOffset);
+						startOffset = startOffsetInRange;
 					}
-				} else {
-					if (startOffset < value.length) {
-						setRange = true;
-					}
+
+					box.node.nodeValue = value;
 				}
 
-				if (setRange) {
-					return true;
-				}
-			} else {
-				range.setStartBefore(box.node);
+				range.setStart(box.node, startOffset);
 				range.collapse(true);
-				editor.selection.selectRange(range);
+				this.jodit.selection.selectRange(range);
 
-				editor.selection.removeNode(box.node);
+				nextElement = Dom.findInline(
+					box.node,
+					toLeft,
+					this.jodit.editor
+				);
 
-				box.node = nextElement;
-			}
+				if (value.length) {
+					let setRange: boolean = false;
+					if (toLeft) {
+						if (startOffset) {
+							setRange = true;
+						}
+					} else {
+						if (startOffset < value.length) {
+							setRange = true;
+						}
+					}
 
-			if (nextElement) {
-				if (Dom.isInlineBlock(nextElement)) {
-					nextElement = toLeft
-						? nextElement.lastChild
-						: nextElement.firstChild;
-				}
+					if (setRange) {
+						return true;
+					}
+				} else {
+					range.setStartBefore(box.node);
+					range.collapse(true);
+					this.jodit.selection.selectRange(range);
 
-				if (Dom.isText(nextElement)) {
+					this.jodit.selection.removeNode(box.node);
+
 					box.node = nextElement;
-					return removeChar(box, toLeft, range);
+				}
+
+				if (nextElement) {
+					if (Dom.isInlineBlock(nextElement)) {
+						nextElement = toLeft
+							? nextElement.lastChild
+							: nextElement.firstChild;
+					}
+
+					if (Dom.isText(nextElement)) {
+						box.node = nextElement;
+					}
 				}
 			}
-		}
-	};
+		} while (Dom.isText(nextElement));
+	}
 
-	const potentialRemovable: RegExp = MAY_BE_REMOVED_WITH_KEY;
+	private potentialRemovable: RegExp = MAY_BE_REMOVED_WITH_KEY;
 
-	const removePotential = (node: Node | null): false | void => {
-		if (node && potentialRemovable.test(node.nodeName)) {
-			editor.selection.removeNode(node);
+	private removePotential(node: Node | null): false | void {
+		if (node && this.potentialRemovable.test(node.nodeName)) {
+			this.jodit.selection.removeNode(node);
 			return false;
 		}
-	};
+	}
 
-	const removeInline = (
+	private removeInline(
 		box: { node: Node | null },
 		toLeft: boolean,
 		range: Range
-	): boolean | void => {
+	): boolean | void {
 		if (box.node) {
-			const workElement: Node = box.node;
-			const removeCharFlag: void | boolean = removeChar(
+			const workElement = box.node;
+
+			const removeCharFlag: void | true = this.removeChar(
 				box,
 				toLeft,
 				range
 			);
 
-			if (removeCharFlag !== undefined) {
+			if (removeCharFlag) {
 				return true;
 			}
 
@@ -161,13 +166,13 @@ export function backspace(editor: IJodit) {
 				box.node = workElement.parentNode;
 			}
 
-			if (box.node === editor.editor) {
+			if (box.node === this.jodit.editor) {
 				return false;
 			}
 
-			let node: Node | null = box.node;
+			let node = box.node;
 
-			if (removePotential(node) === false) {
+			if (this.removePotential(node) === false) {
 				return false;
 			}
 
@@ -183,18 +188,18 @@ export function backspace(editor: IJodit) {
 				node = toLeft ? node.previousSibling : node.nextSibling;
 			}
 
-			return removePotential(node);
+			return this.removePotential(node);
 		}
-	};
+	}
 
-	const isEmpty = (node: Node): boolean => {
+	private isEmpty = (node: Node): boolean => {
 		if (node.nodeName.match(/^(TD|TH|TR|TABLE|LI)$/) !== null) {
 			return false;
 		}
 
 		if (
 			Dom.isEmpty(node) ||
-			node.nodeName.match(potentialRemovable) !== null
+			node.nodeName.match(this.potentialRemovable) !== null
 		) {
 			return true;
 		}
@@ -203,260 +208,241 @@ export function backspace(editor: IJodit) {
 			return false;
 		}
 
-		return node.childNodes.length
-			? Array.from(node.childNodes).every(isEmpty)
-			: true;
+		return Array.from(node.childNodes).every(this.isEmpty);
 	};
 
-	editor.events
-		.on('afterCommand', (command: string) => {
-			if (command === 'delete') {
-				const current: Node | false = editor.selection.current();
-
+	protected afterInit(jodit: IJodit): void {
+		jodit.events
+			.on('afterCommand', (command: string) => {
+				if (command === 'delete') {
+					this.afterCommand();
+				}
+			})
+			.on('keydown', (event: KeyboardEvent): false | void => {
 				if (
-					current &&
-					current.firstChild &&
-					current.firstChild.nodeName === 'BR'
+					event.which === consts.KEY_BACKSPACE ||
+					event.which === consts.KEY_DELETE
 				) {
-					editor.selection.removeNode(current.firstChild);
+					return this.onDelete(event.which === consts.KEY_BACKSPACE);
+				}
+			});
+	}
+
+	private afterCommand(): void {
+		const jodit = this.jodit;
+
+		const current: Node | false = jodit.selection.current();
+
+		if (current && Dom.isTag(current.firstChild, 'br')) {
+			jodit.selection.removeNode(current.firstChild);
+		}
+
+		if (
+			!trim(jodit.editor.textContent || '') &&
+			!jodit.editor.querySelector('img') &&
+			(!current || !Dom.closest(current, 'table', jodit.editor))
+		) {
+			jodit.editor.innerHTML = '';
+
+			const node = jodit.selection.setCursorIn(jodit.editor);
+
+			jodit.selection.removeNode(node);
+		}
+	}
+	private onDelete(toLeft: boolean): false | void {
+		const jodit = this.jodit;
+
+		if (!jodit.selection.isFocused()) {
+			jodit.selection.focus();
+		}
+
+		if (!jodit.selection.isCollapsed()) {
+			jodit.execCommand('Delete');
+			return false;
+		}
+
+		const sel = jodit.selection.sel,
+			range = sel && sel.rangeCount ? sel.getRangeAt(0) : false;
+
+		if (!range) {
+			return false;
+		}
+
+		const fakeNode = jodit.create.inside.text(consts.INVISIBLE_SPACE);
+
+		const marker = jodit.create.inside.span();
+
+		try {
+			range.insertNode(fakeNode);
+
+			if (!Dom.isOrContains(jodit.editor, fakeNode)) {
+				return false;
+			}
+
+			let container = Dom.up(
+				fakeNode,
+				node => Dom.isBlock(node, jodit.editorWindow),
+				jodit.editor
+			) as HTMLElement | null;
+
+			const workElement: Node | null = Dom.findInline(
+				fakeNode,
+				toLeft,
+				jodit.editor
+			);
+
+			const box = {
+				node: workElement
+			};
+
+			let tryRemoveInline: boolean | void;
+
+			if (workElement) {
+				tryRemoveInline = this.removeInline(box, toLeft, range);
+			} else if (fakeNode.parentNode) {
+				tryRemoveInline = this.removeInline(
+					{
+						node: toLeft
+							? fakeNode.parentNode.previousSibling
+							: fakeNode.parentNode.nextSibling
+					},
+					toLeft,
+					range
+				);
+			}
+
+			if (tryRemoveInline !== undefined) {
+				return tryRemoveInline ? undefined : false;
+			}
+
+			if (container && container.nodeName.match(/^(TD)$/)) {
+				return false;
+			}
+
+			let prevBox = call(
+				toLeft ? Dom.prev : Dom.next,
+				box.node || fakeNode,
+				node => Dom.isBlock(node, jodit.editorWindow),
+				jodit.editor
+			);
+
+			if (!prevBox && container && container.parentNode) {
+				prevBox = jodit.create.inside.element(jodit.options.enter);
+
+				let boxNode: Node = container;
+
+				while (
+					boxNode &&
+					boxNode.parentNode &&
+					boxNode.parentNode !== jodit.editor
+				) {
+					boxNode = boxNode.parentNode;
 				}
 
-				if (
-					!trim(editor.editor.textContent || '') &&
-					!editor.editor.querySelector('img') &&
-					(!current || !Dom.closest(current, 'table', editor.editor))
-				) {
-					editor.editor.innerHTML = '';
-
-					const node: Node = editor.selection.setCursorIn(
-						editor.editor
-					);
-
-					editor.selection.removeNode(node);
+				boxNode.parentNode &&
+					boxNode.parentNode.insertBefore(prevBox, boxNode);
+			} else {
+				if (prevBox && this.isEmpty(prevBox)) {
+					jodit.selection.removeNode(prevBox);
+					return false;
 				}
 			}
-		})
-		.on('keydown', (event: KeyboardEvent): false | void => {
-			if (
-				event.which === consts.KEY_BACKSPACE ||
-				event.which === consts.KEY_DELETE
-			) {
-				const toLeft: boolean = event.which === consts.KEY_BACKSPACE;
 
-				if (!editor.selection.isFocused()) {
-					editor.selection.focus();
+			if (prevBox) {
+				const tmpNode = jodit.selection.setCursorIn(prevBox, !toLeft);
+
+				jodit.selection.insertNode(marker, false, false);
+
+				if (
+					Dom.isText(tmpNode) &&
+					tmpNode.nodeValue === consts.INVISIBLE_SPACE
+				) {
+					Dom.safeRemove(tmpNode);
 				}
+			}
 
-				if (!editor.selection.isCollapsed()) {
-					editor.execCommand('Delete');
-					return false;
-				}
+			if (container) {
+				let parentContainer = container.parentNode;
 
-				const sel = editor.selection.sel,
-					range = sel && sel.rangeCount ? sel.getRangeAt(0) : false;
+				this.removeEmptyBlocks(container);
 
-				if (!range) {
-					return false;
-				}
-
-				const fakeNode: Node = editor.create.inside.text(
-					consts.INVISIBLE_SPACE
-				);
-
-				const marker = editor.create.inside.span();
-
-				try {
-					range.insertNode(fakeNode);
-
-					if (!Dom.isOrContains(editor.editor, fakeNode)) {
-						return false;
+				if (prevBox && parentContainer) {
+					if (
+						container.nodeName === prevBox.nodeName &&
+						parentContainer &&
+						prevBox.parentNode &&
+						parentContainer !== jodit.editor &&
+						prevBox.parentNode !== jodit.editor &&
+						parentContainer !== prevBox.parentNode &&
+						parentContainer.nodeName === prevBox.parentNode.nodeName
+					) {
+						container = parentContainer as HTMLElement;
+						prevBox = prevBox.parentNode as HTMLElement;
 					}
+					Dom.moveContent(container, prevBox, !toLeft);
+					normalizeNode(prevBox);
+				}
 
-					let container: HTMLElement | null = Dom.up(
-						fakeNode,
-						node => Dom.isBlock(node, editor.editorWindow),
-						editor.editor
-					) as HTMLElement | null;
-
-					const workElement: Node | null = Dom.findInline(
-						fakeNode,
-						toLeft,
-						editor.editor
+				if (Dom.isTag(prevBox, 'li')) {
+					const UL: Node | false = Dom.closest(
+						prevBox,
+						'Ul|OL',
+						jodit.editor
 					);
 
-					const box = {
-						node: workElement
-					};
-
-					let tryRemoveInline: boolean | void;
-
-					if (workElement) {
-						tryRemoveInline = removeInline(box, toLeft, range);
-					} else if (fakeNode.parentNode) {
-						tryRemoveInline = removeInline(
-							{
-								node: toLeft
-									? fakeNode.parentNode.previousSibling
-									: fakeNode.parentNode.nextSibling
-							},
-							toLeft,
-							range
-						);
-					}
-
-					if (tryRemoveInline !== undefined) {
-						return tryRemoveInline ? undefined : false;
-					}
-
-					if (container && container.nodeName.match(/^(TD)$/)) {
-						return false;
-					}
-
-					let prevBox: Node | false | null = toLeft
-						? Dom.prev(
-								box.node || fakeNode,
-								node => Dom.isBlock(node, editor.editorWindow),
-								editor.editor
-						  )
-						: Dom.next(
-								box.node || fakeNode,
-								node => Dom.isBlock(node, editor.editorWindow),
-								editor.editor
-						  );
-
-					if (!prevBox && container && container.parentNode) {
-						prevBox = editor.create.inside.element(
-							editor.options.enter
-						);
-						let boxNode: Node = container;
-
-						while (
-							boxNode &&
-							boxNode.parentNode &&
-							boxNode.parentNode !== editor.editor
-						) {
-							boxNode = boxNode.parentNode;
-						}
-
-						boxNode.parentNode &&
-							boxNode.parentNode.insertBefore(prevBox, boxNode);
-					} else {
-						if (prevBox && isEmpty(prevBox)) {
-							editor.selection.removeNode(prevBox);
-							return false;
-						}
-					}
-
-					if (prevBox) {
-						const tmpNode: Node = editor.selection.setCursorIn(
-							prevBox,
-							!toLeft
-						);
-
-						editor.selection.insertNode(marker, false, false);
+					if (UL) {
+						const nextBox = UL.nextSibling;
 
 						if (
-							Dom.isText(tmpNode) &&
-							tmpNode.nodeValue === consts.INVISIBLE_SPACE
+							nextBox &&
+							nextBox.nodeName === UL.nodeName &&
+							UL !== nextBox
 						) {
-							Dom.safeRemove(tmpNode);
+							Dom.moveContent(nextBox, UL, !toLeft);
+							jodit.selection.removeNode(nextBox);
 						}
 					}
-
-					if (container) {
-						removeEmptyBlocks(container);
-
-						if (prevBox && container.parentNode) {
-							if (
-								container.nodeName === prevBox.nodeName &&
-								container.parentNode &&
-								prevBox.parentNode &&
-								container.parentNode !== editor.editor &&
-								prevBox.parentNode !== editor.editor &&
-								container.parentNode !== prevBox.parentNode &&
-								container.parentNode.nodeName ===
-									prevBox.parentNode.nodeName
-							) {
-								container = container.parentNode as HTMLElement;
-								prevBox = prevBox.parentNode as HTMLElement;
-							}
-							Dom.moveContent(container, prevBox, !toLeft);
-							normalizeNode(prevBox);
-						}
-
-						if (prevBox && prevBox.nodeName === 'LI') {
-							const UL: Node | false = Dom.closest(
-								prevBox,
-								'Ul|OL',
-								editor.editor
-							);
-							if (UL) {
-								const nextBox: Node | null = UL.nextSibling;
-								if (
-									nextBox &&
-									nextBox.nodeName === UL.nodeName &&
-									UL !== nextBox
-								) {
-									Dom.moveContent(nextBox, UL, !toLeft);
-									editor.selection.removeNode(nextBox);
-								}
-							}
-						}
-
-						removeEmptyBlocks(container);
-
-						return false;
-					}
-				} finally {
-					if (
-						fakeNode.parentNode &&
-						fakeNode.nodeValue === consts.INVISIBLE_SPACE
-					) {
-						const parent: Node = fakeNode.parentNode;
-
-						Dom.safeRemove(fakeNode);
-
-						if (
-							!parent.firstChild &&
-							parent.parentNode &&
-							parent !== editor.editor
-						) {
-							editor.selection.removeNode(parent);
-						}
-					}
-
-					if (
-						marker &&
-						Dom.isOrContains(editor.editor, marker, true)
-					) {
-						const tmpNode:
-							| Text
-							| false = editor.selection.setCursorBefore(marker);
-
-						Dom.safeRemove(marker);
-
-						if (
-							tmpNode &&
-							tmpNode.parentNode &&
-							(Dom.findInline(
-								tmpNode,
-								true,
-								tmpNode.parentNode
-							) ||
-								Dom.findInline(
-									tmpNode,
-									true,
-									tmpNode.parentNode
-								))
-						) {
-							Dom.safeRemove(tmpNode);
-						}
-					}
-
-					editor.setEditorValue();
 				}
+
+				this.removeEmptyBlocks(container);
 
 				return false;
 			}
-		});
+		} finally {
+			const parent = fakeNode.parentNode;
+
+			if (parent && fakeNode.nodeValue === consts.INVISIBLE_SPACE) {
+				Dom.safeRemove(fakeNode);
+
+				if (
+					!parent.firstChild &&
+					parent.parentNode &&
+					parent !== jodit.editor
+				) {
+					jodit.selection.removeNode(parent);
+				}
+			}
+
+			if (marker && Dom.isOrContains(jodit.editor, marker, true)) {
+				const tmpNode = jodit.selection.setCursorBefore(marker);
+
+				Dom.safeRemove(marker);
+
+				if (
+					tmpNode &&
+					tmpNode.parentNode &&
+					(Dom.findInline(tmpNode, true, tmpNode.parentNode) ||
+						Dom.findInline(tmpNode, false, tmpNode.parentNode))
+				) {
+					Dom.safeRemove(tmpNode);
+				}
+			}
+
+			jodit.setEditorValue();
+		}
+
+		return false;
+	}
+
+	protected beforeDestruct(jodit: IJodit): void {}
 }

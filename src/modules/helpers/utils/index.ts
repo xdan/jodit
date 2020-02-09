@@ -5,3 +5,7 @@
  */
 
 export * from './markDeprecated';
+
+export function call<T extends Array<any>, R>(func: (...args: T) => R, ...args: T): R {
+	return func(...args);
+}
