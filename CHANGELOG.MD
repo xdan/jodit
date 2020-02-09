@@ -5,7 +5,7 @@
 * [#325](https://github.com/xdan/jodit/issues/325)
 
 ### Feature
-* Added Dom.isTag method
+* Added `Dom`.`isTag` method
 ```js
 const editor = Jodit.make('#editor');
 
@@ -14,6 +14,11 @@ const br = document.createElement('br');
 
 Jodit.modules.Dom.isTag(a, 'a') // true
 Jodit.modules.Dom.isTag(br, 'br') // true
+```
+* Added `Helpers`.`call` method
+```js
+const f = Math.random();
+Jodit.modules.Helpers.call(f > 0.5 ? Math.ceil : Math.floor, f);
 ```
 
 ## 3.3.19
