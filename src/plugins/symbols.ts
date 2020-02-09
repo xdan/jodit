@@ -9,6 +9,7 @@ import { KEY_DOWN, KEY_ENTER, KEY_LEFT, KEY_RIGHT, KEY_UP } from '../constants';
 import { Alert } from '../modules/dialog/';
 import { IControlType } from '../types/toolbar';
 import { IJodit } from '../types';
+import { Dom } from '../modules';
 
 declare module '../Config' {
 	interface Config {
@@ -308,14 +309,14 @@ export class symbols {
 					const td: HTMLTableCellElement = editor.create.element(
 							'td'
 						),
-						a: HTMLAnchorElement = editor.create.fromHTML(
+						a = editor.create.fromHTML(
 							`<a
-                                    data-index="${i}"
-                                    data-index-j="${j}"
-                                    href="javascript:void(0)"
-                                    role="option"
-                                    tabindex="-1"
-                                >${editor.options.specialCharacters[i]}</a>`
+											data-index="${i}"
+											data-index-j="${j}"
+											href="javascript:void(0)"
+											role="option"
+											tabindex="-1"
+									>${editor.options.specialCharacters[i]}</a>`
 						) as HTMLAnchorElement;
 
 					chars.push(a);
@@ -335,7 +336,7 @@ export class symbols {
 					this: HTMLAnchorElement,
 					e?: MouseEvent
 				) {
-					if (this && this.nodeName === 'A') {
+					if (Dom.isTag(this, 'a')) {
 						editor.selection.focus();
 						editor.selection.insertHTML(this.innerHTML);
 						editor.events.fire(this, 'close_dialog');
@@ -344,13 +345,14 @@ export class symbols {
 					}
 				})
 				.on(chars, 'mouseenter', function(this: HTMLAnchorElement) {
-					if (this && this.nodeName === 'A') {
+					if (Dom.isTag(this, 'a')) {
 						this.focus();
 					}
 				})
 				.on(chars, 'keydown', (e: KeyboardEvent) => {
-					const target: HTMLAnchorElement = e.target as HTMLAnchorElement;
-					if (target && target.nodeName === 'A') {
+					const target = e.target;
+
+					if (Dom.isTag(target, 'a')) {
 						const index: number = parseInt(
 								target.getAttribute('data-index') || '0',
 								10

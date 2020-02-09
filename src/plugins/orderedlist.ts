@@ -33,17 +33,17 @@ export function orderedlist(editor: IJodit) {
 				editor.editor
 			);
 
-			if (ul && ul.parentNode && ul.parentNode.nodeName === 'P') {
+			if (ul && Dom.isTag(ul.parentNode, 'p')) {
 				const selection: markerInfo[] = editor.selection.save();
+
 				Dom.unwrap(ul.parentNode);
+
 				Array.from(ul.childNodes).forEach((li: Node) => {
-					if (
-						Dom.isElement(li.lastChild) &&
-						li.lastChild.nodeName === 'BR'
-					) {
+					if (Dom.isTag(li.lastChild, 'br')) {
 						Dom.safeRemove(li.lastChild);
 					}
 				});
+
 				editor.selection.restore(selection);
 			}
 			editor.setEditorValue();

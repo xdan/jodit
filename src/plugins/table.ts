@@ -357,7 +357,7 @@ export class TableProcessor extends Plugin {
 		this.__workCell = cell;
 		this.__workTable = Dom.up(
 			cell,
-			(elm: Node | null) => elm && elm.nodeName === 'TABLE',
+			(elm: Node | null) => Dom.isTag(elm, 'table'),
 			this.jodit.editor
 		) as HTMLTableElement;
 	}
@@ -867,7 +867,7 @@ export class TableProcessor extends Plugin {
 				if (this.__drag) {
 					const parent = Dom.up(
 						this.__workCell,
-						(elm: Node | null) => elm && elm.nodeName === 'TABLE',
+						(elm: Node | null) => Dom.isTag(elm, 'table'),
 						editor.editor
 					) as HTMLElement;
 					if (parent) {

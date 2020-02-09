@@ -206,7 +206,10 @@ export class placeholder extends Plugin {
 
 		const first = root.firstChild;
 
-		if (MAY_BE_REMOVED_WITH_KEY.test(first.nodeName) || /^(TABLE)$/i.test(first.nodeName)) {
+		if (
+			MAY_BE_REMOVED_WITH_KEY.test(first.nodeName) ||
+			/^(TABLE)$/i.test(first.nodeName)
+		) {
 			return false;
 		}
 
@@ -222,7 +225,7 @@ export class placeholder extends Plugin {
 
 		if (
 			!next &&
-			Dom.each(first, elm => Dom.isEmpty(elm) || elm.nodeName === 'BR')
+			Dom.each(first, elm => Dom.isEmpty(elm) || Dom.isTag(elm, 'br'))
 		) {
 			return true;
 		}

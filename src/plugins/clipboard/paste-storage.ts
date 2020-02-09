@@ -164,7 +164,7 @@ export class pasteStorage extends Plugin {
 			'click dblclick',
 			(e: MouseEvent) => {
 				const a: HTMLAnchorElement | null = e.target as HTMLAnchorElement;
-				if (a && a.nodeName === 'A' && a.hasAttribute('data-index')) {
+				if (Dom.isTag(a, 'a') && a.hasAttribute('data-index')) {
 					this.selectIndex(
 						parseInt(a.getAttribute('data-index') || '0', 10)
 					);

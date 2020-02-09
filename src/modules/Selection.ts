@@ -160,7 +160,7 @@ export class Select {
 	isMarker = (elm: Node): boolean =>
 		Dom.isNode(elm, this.win) &&
 		Dom.isElement(elm) &&
-		elm.nodeName === 'SPAN' &&
+		Dom.isTag(elm, 'span') &&
 		(elm as Element).hasAttribute('data-' + consts.MARKER_CLASS);
 
 	/**
@@ -748,7 +748,10 @@ export class Select {
 					}
 
 					// checks parentElement as well because partial selections are not equal to entire element
-					return node === end || (node && node.contains && node.contains(end));
+					return (
+						node === end ||
+						(node && node.contains && node.contains(end))
+					);
 				},
 				this.area,
 				true,
@@ -765,7 +768,7 @@ export class Select {
 					return Array.from(current.childNodes).forEach(forEvery);
 				}
 
-				if (current.nodeName === 'LI') {
+				if (Dom.isTag(current, 'li')) {
 					if (current.firstChild) {
 						current = current.firstChild;
 					} else {
@@ -857,7 +860,7 @@ export class Select {
 		const container = start ? range.startContainer : range.endContainer;
 		const offset = start ? range.startOffset : range.endOffset;
 		const check = (elm: Node | null) =>
-			elm && elm.nodeName !== 'BR' && !Dom.isEmptyTextNode(elm);
+			elm && !Dom.isTag(elm, 'br') && !Dom.isEmptyTextNode(elm);
 
 		// check right offset
 		if (Dom.isText(container)) {
@@ -1157,8 +1160,7 @@ export class Select {
 	) {
 		const WRAP = 1,
 			UNWRAP = 0,
-			defaultTag = 'SPAN',
-			FONT = 'FONT';
+			defaultTag = 'SPAN';
 
 		let mode: number;
 
@@ -1169,7 +1171,7 @@ export class Select {
 
 		const checkCssRulesFor = (elm: HTMLElement): boolean => {
 			return (
-				elm.nodeName !== FONT &&
+				!Dom.isTag(elm, 'font') &&
 				Dom.isElement(elm) &&
 				((isPlainObject(options) &&
 					each(
@@ -1454,7 +1456,7 @@ export class Select {
 
 					if (
 						next &&
-						(next.nodeName === 'BR' || Dom.isEmptyTextNode(next))
+						(Dom.isTag(next, 'br') || Dom.isEmptyTextNode(next))
 					) {
 						Dom.safeRemove(next);
 					} else {

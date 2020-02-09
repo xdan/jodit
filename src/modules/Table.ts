@@ -236,8 +236,7 @@ export class Table {
 
 						const nextRow: HTMLTableRowElement = Dom.next(
 							cell.parentNode,
-							(elm: Node | null) =>
-								Dom.isElement(elm) && elm.nodeName === 'TR',
+							(elm: Node | null) => Dom.isTag(elm, 'tr'),
 							table
 						) as HTMLTableRowElement;
 

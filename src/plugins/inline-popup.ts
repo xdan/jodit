@@ -9,12 +9,7 @@ import { Widget } from '../modules/Widget';
 import ColorPickerWidget = Widget.ColorPickerWidget;
 import TabsWidget = Widget.TabsWidget;
 import { Dom } from '../modules/Dom';
-import {
-	clearCenterAlign,
-	css,
-	offset,
-	splitArray
-} from '../modules/helpers/';
+import { clearCenterAlign, css, offset, splitArray } from '../modules/helpers/';
 import { Plugin } from '../modules/Plugin';
 import { Table } from '../modules/Table';
 import { Popup } from '../modules/popup/popup';
@@ -581,14 +576,16 @@ export class inlinePopup extends Plugin {
 			const elements: string = Object.keys(this.jodit.options.popup).join(
 					'|'
 				),
-				target: HTMLElement | false =
-					(event.target as Node).nodeName === 'IMG'
-						? (event.target as HTMLImageElement)
-						: (Dom.closest(
-								event.target as Node,
-								elements,
-								this.jodit.editor
-						  ) as HTMLTableElement);
+				target: HTMLElement | false = Dom.isTag(
+					event.target as Node,
+					'img'
+				)
+					? (event.target as HTMLImageElement)
+					: (Dom.closest(
+							event.target as Node,
+							elements,
+							this.jodit.editor
+					  ) as HTMLTableElement);
 
 			if (
 				!target ||

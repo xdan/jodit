@@ -121,7 +121,7 @@ Config.prototype.controls.copyformat = {
 						| false = editor.selection.current();
 
 					if (currentNode) {
-						if (currentNode.nodeName === 'IMG') {
+						if (Dom.isTag(currentNode, 'img')) {
 							css(currentNode as HTMLElement, format);
 						} else {
 							editor.selection.applyCSS(format);

@@ -52,7 +52,7 @@ export function tableKeyboardNavigation(editor: IJodit) {
 								current,
 								(elm: Node | null) =>
 									event.which === consts.KEY_UP
-										? elm && elm.nodeName === 'BR'
+										? Dom.isTag(elm, 'br')
 										: !!elm,
 								block
 							) ||
@@ -65,7 +65,7 @@ export function tableKeyboardNavigation(editor: IJodit) {
 								current,
 								(elm: Node | null) =>
 									event.which === consts.KEY_DOWN
-										? elm && elm.nodeName === 'BR'
+										? Dom.isTag(elm, 'br')
 										: !!elm,
 								block
 							) ||

@@ -265,7 +265,7 @@ export function resizer(editor: IJodit) {
 				.on(element, 'dragstart', hideResizer)
 				.on(element, 'mousedown', (event: MouseEvent) => {
 					// for IE don't show native resizer
-					if (IS_IE && element.nodeName === 'IMG') {
+					if (IS_IE && Dom.isTag(element, 'img')) {
 						event.preventDefault();
 					}
 				})

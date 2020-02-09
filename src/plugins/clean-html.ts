@@ -466,7 +466,7 @@ export class cleanHtml extends Plugin {
 					this.cleanNode(child, onlyRemoveFont);
 				});
 
-				if (elm.nodeName === 'FONT') {
+				if (Dom.isTag(elm, 'font')) {
 					Dom.unwrap(elm);
 				} else if (!onlyRemoveFont) {
 					// clean some "style" attributes in selected range
@@ -519,7 +519,7 @@ export class cleanHtml extends Plugin {
 		// remove extra br
 		if (
 			current &&
-			node.nodeName === 'BR' &&
+			Dom.isTag(node, 'br') &&
 			cleanHtml.hasNotEmptyTextSibling(node) &&
 			!cleanHtml.hasNotEmptyTextSibling(node, true) &&
 			Dom.up(

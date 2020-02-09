@@ -120,7 +120,7 @@ export class DragAndDropElement extends Plugin {
 
 		this.jodit.selection.insertNode(fragment, true, false);
 
-		if (fragment.nodeName === 'IMG' && this.jodit.events) {
+		if (Dom.isTag(fragment, 'img') && this.jodit.events) {
 			this.jodit.events.fire('afterInsertImage', fragment);
 		}
 

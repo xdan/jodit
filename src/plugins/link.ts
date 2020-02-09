@@ -331,14 +331,11 @@ export function link(jodit: IJodit) {
 
 			if (command === 'removeFormat') {
 				node = sel.current();
-				if (node && node.nodeName !== 'A') {
+				if (node && !Dom.isTag(node, 'a')) {
 					node = Dom.closest(node, 'A', jodit.editor);
 				}
-				if (node && node.nodeName === 'A') {
-					if (
-						(node as HTMLElement).innerHTML ===
-						(node as HTMLElement).textContent
-					) {
+				if (Dom.isTag(node, 'a')) {
+					if (node.innerHTML === node.textContent) {
 						newtag = jodit.create.inside.text(
 							(node as HTMLElement).innerHTML
 						);

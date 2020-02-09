@@ -1029,17 +1029,16 @@ Config.prototype.controls = {
 
 			if (
 				current &&
-				(current.nodeName === 'A' ||
+				(Dom.isTag(current, 'a') ||
 					Dom.closest(current, 'A', editor.editor))
 			) {
-				sourceAnchor =
-					current.nodeName === 'A'
-						? (current as HTMLAnchorElement)
-						: (Dom.closest(
-								current,
-								'A',
-								editor.editor
-						  ) as HTMLAnchorElement);
+				sourceAnchor = Dom.isTag(current, 'a')
+					? current
+					: (Dom.closest(
+							current,
+							'A',
+							editor.editor
+					  ) as HTMLAnchorElement);
 			}
 
 			return FileSelectorWidget(

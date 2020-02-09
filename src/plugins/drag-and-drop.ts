@@ -114,13 +114,15 @@ export class DragAndDrop extends Plugin {
 
 			if (fragment) {
 				this.jodit.selection.insertNode(fragment, false, false);
+
 				if (range && fragment.firstChild && fragment.lastChild) {
 					range.setStartBefore(fragment.firstChild);
 					range.setEndAfter(fragment.lastChild);
 					this.jodit.selection.selectRange(range);
 					this.jodit.events.fire('synchro');
 				}
-				if (fragment.nodeName === 'IMG' && this.jodit.events) {
+
+				if (Dom.isTag(fragment, 'img') && this.jodit.events) {
 					this.jodit.events.fire('afterInsertImage', fragment);
 				}
 			}
@@ -164,7 +166,7 @@ export class DragAndDrop extends Plugin {
 			target = target.querySelector('img') as HTMLElement;
 		}
 
-		if (target.nodeName === 'IMG') {
+		if (Dom.isTag(target, 'img')) {
 			this.draggable = target.cloneNode(true) as HTMLElement;
 
 			dataBind(this.draggable, 'target', target);

@@ -329,7 +329,7 @@ export class Dom {
 	 * Check if element is text node
 	 * @param node
 	 */
-	static isText(node: Node | null): node is Text {
+	static isText(node: Node | null | false): node is Text {
 		return Boolean(node && node.nodeType === Node.TEXT_NODE);
 	}
 
@@ -337,8 +337,8 @@ export class Dom {
 	 * Check if element is element node
 	 * @param node
 	 */
-	static isElement(node: Node | null): node is Element {
-		return Boolean(node && node.nodeType === Node.ELEMENT_NODE);
+	static isElement(node: Node | null | false | EventTarget): node is Element {
+		return Boolean(node && (node as Node).nodeType === Node.ELEMENT_NODE);
 	}
 
 	/**
@@ -346,7 +346,7 @@ export class Dom {
 	 *
 	 * @param node
 	 */
-	static isInlineBlock(node: Node | null): boolean {
+	static isInlineBlock(node: Node | null | false): boolean {
 		return (
 			Dom.isElement(node) &&
 			['inline', 'inline-block'].indexOf(
@@ -848,5 +848,21 @@ export class Dom {
 		if (node.style.display === 'none') {
 			node.style.display = display || '';
 		}
+	}
+
+	/**
+	 * Check if element is some tag
+	 *
+	 * @param node
+	 * @param tag
+	 */
+	static isTag<K extends keyof HTMLElementTagNameMap>(
+		node: Node | null | false | EventTarget,
+		tag: K
+	): node is HTMLElementTagNameMap[K] {
+		return (
+			Dom.isElement(node) &&
+			node.tagName.toLowerCase() === tag.toLowerCase()
+		);
 	}
 }

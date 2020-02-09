@@ -102,7 +102,7 @@ Config.prototype.controls.paragraph = {
 				currentBpx &&
 				currentBpx !== editor.editor &&
 				control.list !== undefined &&
-				currentBpx.nodeName.toLowerCase() !== 'p' &&
+				!Dom.isTag(currentBpx, 'p') &&
 				((control.list as any)[
 					currentBpx.nodeName.toLowerCase()
 				] as any) !== undefined
@@ -143,7 +143,7 @@ export function formatBlock(editor: IJodit) {
 					  ) as HTMLElement)
 					: false;
 
-				if ((!currentBox || currentBox.nodeName === 'LI') && current) {
+				if ((!currentBox || Dom.isTag(currentBox, 'li')) && current) {
 					currentBox = Dom.wrapInline(
 						current,
 						editor.options.enter,
@@ -159,8 +159,7 @@ export function formatBlock(editor: IJodit) {
 				if (!currentBox.tagName.match(/TD|TH|TBODY|TABLE|THEAD/i)) {
 					if (
 						third === editor.options.enterBlock.toLowerCase() &&
-						currentBox.parentNode &&
-						currentBox.parentNode.nodeName === 'LI'
+						Dom.isTag(currentBox.parentNode, 'li')
 					) {
 						Dom.unwrap(currentBox);
 					} else {

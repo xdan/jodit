@@ -138,7 +138,7 @@ export class enter extends Plugin {
 
 		let currentBox = this.getBlockWrapper(current);
 
-		const isLi = currentBox && currentBox.nodeName === 'LI';
+		const isLi = Dom.isTag(currentBox, 'li');
 
 		// if use <br> defaultTag for break line or when was entered SHIFt key or in <td> or <th> or <blockquote>
 		if (!isLi && this.checkBR(current, event.shiftKey) === false) {
@@ -207,8 +207,8 @@ export class enter extends Plugin {
 			}
 
 			if (tagReg.test(node.nodeName)) {
-				if (node.nodeName === 'LI') {
-					return node as HTMLLIElement;
+				if (Dom.isTag(node, 'li')) {
+					return node;
 				}
 
 				return (
@@ -313,7 +313,7 @@ export class enter extends Plugin {
 		if (
 			!Dom.prev(
 				currentBox,
-				(elm: Node | null) => elm && elm.nodeName === 'LI',
+				(elm: Node | null) => Dom.isTag(elm, 'li'),
 				ul
 			)
 		) {
@@ -322,7 +322,7 @@ export class enter extends Plugin {
 		} else if (
 			!Dom.next(
 				currentBox,
-				(elm: Node | null) => elm && elm.nodeName === 'LI',
+				(elm: Node | null) => Dom.isTag(elm, 'li'),
 				ul
 			)
 		) {
