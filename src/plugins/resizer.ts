@@ -13,7 +13,7 @@ import { $$ } from '../modules/helpers/selector';
 import { offset, innerWidth } from '../modules/helpers/size';
 import { css } from '../modules/helpers';
 import { IJodit } from '../types';
-import { Plugin } from '../modules';
+import { Plugin } from '../modules/Plugin';
 
 /**
  * The module creates a supporting frame for resizing of the elements img and table
@@ -71,8 +71,6 @@ export class resizer extends Plugin {
 	private handle: HTMLElement;
 	private element: null | HTMLElement;
 
-	private elementClicked: boolean = false;
-
 	private isResized: boolean = false;
 	private isShown: boolean = false;
 
@@ -82,8 +80,8 @@ export class resizer extends Plugin {
 	private height: number;
 	private ratio: number;
 
-	private resizerElm = this.jodit.create.fromHTML(
-		`<div style="display:none" class="jodit_resizer">
+	private rect = this.jodit.create.fromHTML(
+		`<div class="jodit_resizer">
 				<i class="jodit_resizer-topleft"></i>
 				<i class="jodit_resizer-topright"></i>
 				<i class="jodit_resizer-bottomright"></i>
@@ -92,12 +90,12 @@ export class resizer extends Plugin {
 			</div>`
 	);
 
-	private sizeViewer: HTMLSpanElement = this.resizerElm.getElementsByTagName(
+	private sizeViewer: HTMLSpanElement = this.rect.getElementsByTagName(
 		'span'
 	)[0];
 
 	protected afterInit(editor: IJodit): void {
-		$$('i', this.resizerElm).forEach((resizeHandle: HTMLElement) => {
+		$$('i', this.rect).forEach((resizeHandle: HTMLElement) => {
 			editor.events.on(
 				resizeHandle,
 				'mousedown.resizer touchstart.resizer',
@@ -111,45 +109,7 @@ export class resizer extends Plugin {
 					this.hide();
 				}
 			})
-			.on('afterInit changePlace', () => {
-				editor.events
-					.off(editor.editor, '.resizer')
-					.off(editor.ownerWindow, '.resizer')
-					.on(
-						editor.editor,
-						'keydown.resizer',
-						(e: KeyboardEvent) => {
-							if (
-								this.isShown &&
-								e.which === consts.KEY_DELETE &&
-								this.element &&
-								!Dom.isTag(this.element, 'table')
-							) {
-								this.onDelete(e);
-							}
-						}
-					)
-					.on(
-						editor.ownerWindow,
-						'mousemove.resizer touchmove.resizer',
-						this.onResize
-					)
-					.on(editor.ownerWindow, 'resize.resizer', this.updateSize)
-					.on(
-						editor.ownerWindow,
-						'mouseup.resizer keydown.resizer touchend.resizer',
-						this.onClickOutside
-					)
-					.on(
-						[editor.ownerWindow, editor.editor],
-						'scroll.resizer',
-						() => {
-							if (this.isShown && !this.isResized) {
-								this.hide();
-							}
-						}
-					);
-			})
+			.on('afterInit changePlace', this.addEventListeners.bind(this))
 			.on(
 				'afterGetValueFromEditor.resizer',
 				(data: { value: string }) => {
@@ -168,6 +128,42 @@ export class resizer extends Plugin {
 					editor.defaultTimeout
 				)
 			);
+
+		this.addEventListeners();
+	}
+
+	private addEventListeners() {
+		const editor = this.jodit;
+
+		editor.events
+			.off(editor.editor, '.resizer')
+			.off(editor.ownerWindow, '.resizer')
+			.on(editor.editor, 'keydown.resizer', (e: KeyboardEvent) => {
+				if (
+					this.isShown &&
+					e.which === consts.KEY_DELETE &&
+					this.element &&
+					!Dom.isTag(this.element, 'table')
+				) {
+					this.onDelete(e);
+				}
+			})
+			.on(
+				editor.ownerWindow,
+				'mousemove.resizer touchmove.resizer',
+				this.onResize
+			)
+			.on(editor.ownerWindow, 'resize.resizer', this.updateSize)
+			.on(
+				editor.ownerWindow,
+				'mouseup.resizer keydown.resizer touchend.resizer',
+				this.onClickOutside
+			)
+			.on([editor.ownerWindow, editor.editor], 'scroll.resizer', () => {
+				if (this.isShown && !this.isResized) {
+					this.hide();
+				}
+			});
 	}
 
 	private onClickHandle(
@@ -179,7 +175,6 @@ export class resizer extends Plugin {
 			return false;
 		}
 
-		// resizeElementClicked = false;
 		this.handle = resizeHandle;
 
 		e.preventDefault();
@@ -244,10 +239,7 @@ export class resizer extends Plugin {
 			}
 
 			if (new_w > this.jodit.options.resizer.min_width) {
-				if (
-					new_w <
-					(this.resizerElm.parentNode as HTMLElement).offsetWidth
-				) {
+				if (new_w < (this.rect.parentNode as HTMLElement).offsetWidth) {
 					css(this.element, 'width', new_w);
 				} else {
 					css(this.element, 'width', '100%');
@@ -270,7 +262,7 @@ export class resizer extends Plugin {
 	};
 
 	private onClickOutside = (e: MouseEvent) => {
-		if (this.isShown && !this.elementClicked) {
+		if (this.isShown) {
 			if (this.isResized) {
 				this.jodit.unlock();
 				this.isResized = false;
@@ -388,8 +380,6 @@ export class resizer extends Plugin {
 				});
 		}
 
-		let timer: number;
-
 		this.jodit.events
 			.on(element, 'dragstart', this.hide)
 			.on(element, 'mousedown', (event: MouseEvent) => {
@@ -398,9 +388,8 @@ export class resizer extends Plugin {
 					event.preventDefault();
 				}
 			})
-			.on(element, 'mousedown touchstart', () => {
-				if (!this.elementClicked) {
-					this.elementClicked = true;
+			.on(element, 'click', () => {
+				if (this.element !== element || !this.isShown) {
 					this.element = element;
 
 					this.show();
@@ -415,13 +404,7 @@ export class resizer extends Plugin {
 							this.updateSize
 						);
 					}
-
-					this.jodit.async.clearTimeout(timer);
 				}
-
-				timer = this.jodit.async.setTimeout(() => {
-					this.elementClicked = false;
-				}, 400);
 			});
 	}
 
@@ -430,9 +413,9 @@ export class resizer extends Plugin {
 			return;
 		}
 
-		if (this.element && this.resizerElm) {
+		if (this.element && this.rect) {
 			const workplacePosition: IBound = offset(
-					(this.resizerElm.parentNode ||
+					(this.rect.parentNode ||
 						this.jodit.ownerDocument
 							.documentElement) as HTMLElement,
 					this.jodit,
@@ -444,10 +427,10 @@ export class resizer extends Plugin {
 					this.jodit,
 					this.jodit.editorDocument
 				),
-				left: number = parseInt(this.resizerElm.style.left || '0', 10),
-				top: number = parseInt(this.resizerElm.style.top || '0', 10),
-				w: number = this.resizerElm.offsetWidth,
-				h: number = this.resizerElm.offsetHeight;
+				left: number = parseInt(this.rect.style.left || '0', 10),
+				top: number = parseInt(this.rect.style.top || '0', 10),
+				w: number = this.rect.offsetWidth,
+				h: number = this.rect.offsetHeight;
 
 			// 1 - because need move border higher and toWYSIWYG the left than the picture
 			// 2 - in box-sizing: border-box mode width is real width indifferent by border-width.
@@ -461,7 +444,7 @@ export class resizer extends Plugin {
 				w !== this.element.offsetWidth ||
 				h !== this.element.offsetHeight
 			) {
-				css(this.resizerElm, {
+				css(this.rect, {
 					top: newTop,
 					left: newLeft,
 					width: this.element.offsetWidth,
@@ -494,7 +477,7 @@ export class resizer extends Plugin {
 		}
 
 		this.sizeViewer.style.opacity = '1';
-		this.sizeViewer.innerHTML = `${w} x ${h}`;
+		this.sizeViewer.textContent = `${w} x ${h}`;
 
 		this.jodit.async.setTimeout(this.hideSizeViewer, {
 			timeout: this.jodit.options.resizer.hideSizeTimeout,
@@ -502,6 +485,9 @@ export class resizer extends Plugin {
 		});
 	}
 
+	/**
+	 * Show resizer
+	 */
 	private show() {
 		if (this.jodit.options.readonly || this.isShown) {
 			return;
@@ -509,13 +495,13 @@ export class resizer extends Plugin {
 
 		this.isShown = true;
 
-		if (!this.resizerElm.parentNode) {
-			this.jodit.markOwner(this.resizerElm);
-			this.jodit.workplace.appendChild(this.resizerElm);
+		if (!this.rect.parentNode) {
+			this.jodit.markOwner(this.rect);
+			this.jodit.workplace.appendChild(this.rect);
 		}
 
 		if (this.jodit.isFullSize()) {
-			this.resizerElm.style.zIndex = css(
+			this.rect.style.zIndex = css(
 				this.jodit.container,
 				'zIndex'
 			).toString();
@@ -524,11 +510,14 @@ export class resizer extends Plugin {
 		this.updateSize();
 	}
 
+	/**
+	 * Hide resizer
+	 */
 	private hide = () => {
 		this.isResized = false;
 		this.isShown = false;
 		this.element = null;
-		Dom.safeRemove(this.resizerElm);
+		Dom.safeRemove(this.rect);
 	};
 
 	private hideSizeViewer = () => {
@@ -537,6 +526,9 @@ export class resizer extends Plugin {
 
 	protected beforeDestruct(jodit: IJodit): void {
 		this.hide();
-		this.jodit.events.off('.resizer');
+
+		this.jodit.events
+			.off(this.jodit.ownerWindow, '.resizer')
+			.off('.resizer');
 	}
 }
