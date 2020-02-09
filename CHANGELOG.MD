@@ -1,5 +1,19 @@
 # Changelog
 
+## 3.3.22
+
+### Feature
+* Added Dom.isTag method
+```js
+const editor = Jodit.make('#editor');
+
+const a = editor.create.inside.element('a');
+const br = document.createElement('br');
+
+Jodit.modules.Dom.isTag(a, 'a') // true
+Jodit.modules.Dom.isTag(br, 'br') // true
+```
+
 ## 3.3.19
 ### BugFix
 * Fixed a lots bugs inside `link` plugin
