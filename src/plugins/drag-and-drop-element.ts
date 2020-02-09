@@ -29,36 +29,9 @@ export class DragAndDropElement extends Plugin {
 	private draggable: HTMLElement | null = null;
 	private wasMoved: boolean = false;
 
-	private onDrag = this.jodit.async.throttle((event: DragEvent) => {
-		if (!this.draggable) {
-			return;
-		}
-
-		this.wasMoved = true;
-		this.jodit.events.fire('hidePopup hideResizer');
-
-		if (!this.draggable.parentNode) {
-			css(this.draggable, {
-				'z-index': 100000000000000,
-				'pointer-events': 'none',
-				position: 'fixed',
-				display: 'inline-block',
-				left: event.clientX,
-				top: event.clientY,
-				width: this.draggable.offsetWidth,
-				height: this.draggable.offsetHeight
-			});
-
-			this.jodit.ownerDocument.body.appendChild(this.draggable);
-		}
-
-		css(this.draggable, {
-			left: event.clientX,
-			top: event.clientY
-		});
-
-		this.jodit.selection.insertCursorAtPoint(event.clientX, event.clientY);
-	}, this.jodit.defaultTimeout);
+	private diffStep = 10;
+	private startX = 0;
+	private startY = 0;
 
 	private onDragStart = (event: DragEvent) => {
 		let target: Node | null = event.target as Node,
@@ -85,12 +58,57 @@ export class DragAndDropElement extends Plugin {
 			return;
 		}
 
+		this.startX = event.clientX;
+		this.startY = event.clientY;
+
 		this.isCopyMode = ctrlKey(event); // we can move only element from editor
 		this.onDragEnd();
 
 		this.draggable = last.cloneNode(true) as HTMLElement;
 		dataBind(this.draggable, 'target', last);
 	};
+
+	private onDrag = this.jodit.async.throttle((event: DragEvent) => {
+		if (!this.draggable) {
+			return;
+		}
+
+		const x = event.clientX,
+			y = event.clientY;
+
+		if (
+			Math.sqrt(
+				Math.pow(x - this.startX, 2) + Math.pow(y - this.startY, 2)
+			) < this.diffStep
+		) {
+			return;
+		}
+
+		this.wasMoved = true;
+		// this.jodit.events.fire('hidePopup hideResizer');
+
+		if (!this.draggable.parentNode) {
+			css(this.draggable, {
+				'z-index': 100000000000000,
+				'pointer-events': 'none',
+				position: 'fixed',
+				display: 'inline-block',
+				left: event.clientX,
+				top: event.clientY,
+				width: this.draggable.offsetWidth,
+				height: this.draggable.offsetHeight
+			});
+
+			this.jodit.ownerDocument.body.appendChild(this.draggable);
+		}
+
+		css(this.draggable, {
+			left: event.clientX,
+			top: event.clientY
+		});
+
+		this.jodit.selection.insertCursorAtPoint(event.clientX, event.clientY);
+	}, this.jodit.defaultTimeout);
 
 	private onDragEnd = () => {
 		if (this.isInDestruct) {
