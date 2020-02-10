@@ -3,11 +3,7 @@
 		"target": "es5",
 		"moduleResolution": "node",
 
-		"resolveJsonModule": true,
-		"allowJs": true,
-
 		"removeComments": true,
-
 		"strict": true,
 		"strictNullChecks": true,
 		"strictFunctionTypes": true,
@@ -17,7 +13,6 @@
 		"noImplicitAny": true,
 		"noImplicitReturns": true,
 		"noUnusedLocals": true,
-		"noUnusedParameters": false,
 		"noImplicitThis": true,
 
 		"forceConsistentCasingInFileNames": true,
@@ -25,9 +20,9 @@
 		"sourceMap": true,
 
 		"importHelpers": true,
-		"typeRoots": ["./node_modules/@types"],
+
 		"lib": ["es5", "esnext", "dom", "scripthost"]
 	},
-	"include": ["./src/**/*.ts", "./test/**/*.ts", "./types/**/*.d.ts"],
+
 	"exclude": ["node_modules", "build"]
 }
