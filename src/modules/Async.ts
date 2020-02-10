@@ -68,14 +68,16 @@ export class Async implements IAsync {
 		fn: CallbackFunction,
 		timeout: number
 	): CallbackFunction {
-		let timer: number = 0;
+		let timer: number = 0, lastArgs: any[];
 
 		return (...args: any[]) => {
+			lastArgs = args;
+
 			if (!timeout) {
-				fn(...args);
+				fn(...lastArgs);
 			} else {
 				clearTimeout(timer);
-				timer = this.setTimeout(() => fn(...args), timeout);
+				timer = this.setTimeout(() => fn(...lastArgs), timeout);
 				this.timers.set(fn, timer);
 			}
 		};

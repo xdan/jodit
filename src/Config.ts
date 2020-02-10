@@ -90,6 +90,7 @@ export class Config implements IViewOptions {
 	ownerDocument: Document = (typeof document !== 'undefined'
 		? document
 		: null) as Document;
+
 	ownerWindow: Window = (typeof window !== 'undefined'
 		? window
 		: null) as Window;

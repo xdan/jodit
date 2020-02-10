@@ -7,3 +7,4 @@
 export * from './getContentWidth';
 export * from './innerWidth';
 export * from './offset';
+export * from './position';
