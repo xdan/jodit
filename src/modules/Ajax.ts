@@ -68,7 +68,7 @@ Config.prototype.defaultAjaxOptions = {
 export class Ajax implements IAjax {
 	static log: IRequest[] = [];
 
-	private readonly xhr: XMLHttpRequest;
+	private readonly xhr!: XMLHttpRequest;
 
 	private success_response_codes = [200, 201, 202];
 
@@ -94,9 +94,9 @@ export class Ajax implements IAjax {
 		return buildQuery(obj);
 	}
 
-	status: number;
+	status!: number;
 
-	response: string;
+	response!: string;
 
 	options: AjaxOptions;
 

@@ -68,17 +68,17 @@ Config.prototype.resizer = {
  */
 export class resizer extends Plugin {
 	private LOCK_KEY = 'resizer';
-	private handle: HTMLElement;
-	private element: null | HTMLElement;
+	private handle!: HTMLElement;
+	private element: null | HTMLElement = null;
 
 	private isResized: boolean = false;
 	private isShown: boolean = false;
 
-	private start_x: number;
-	private start_y: number;
-	private width: number;
-	private height: number;
-	private ratio: number;
+	private start_x: number = 0;
+	private start_y: number = 0;
+	private width: number = 0;
+	private height: number = 0;
+	private ratio: number = 0;
 
 	private rect = this.jodit.create.fromHTML(
 		`<div class="jodit_resizer">
@@ -464,7 +464,7 @@ export class resizer extends Plugin {
 				}
 			}
 		}
-	}
+	};
 
 	private showSizeViewer(w: number, h: number) {
 		if (!this.jodit.options.resizer.showSize) {

@@ -348,16 +348,16 @@ Config.prototype.popup = {
  * @param {Jodit} editor
  */
 export class inlinePopup extends Plugin {
-	private toolbar: IToolbarCollection;
-	private popup: IPopup;
+	private toolbar!: IToolbarCollection;
+	private popup!: IPopup;
 
-	private target: HTMLDivElement;
-	private targetContainer: HTMLDivElement;
-	private container: HTMLDivElement;
+	private target!: HTMLDivElement;
+	private targetContainer!: HTMLDivElement;
+	private container!: HTMLDivElement;
 
 	private _hiddenClass = 'jodit_toolbar_popup-inline-target-hidden';
 
-	private __getRect: () => IBound;
+	private __getRect!: () => IBound;
 
 	// was started selection
 	private isSelectionStarted = false;

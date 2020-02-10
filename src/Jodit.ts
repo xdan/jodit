@@ -1029,8 +1029,8 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		}
 	}
 
-	currentPlace: IWorkPlace
-	places: IWorkPlace[];
+	currentPlace!: IWorkPlace;
+	places!: IWorkPlace[];
 
 	private elementToPlace: Map<HTMLElement, IWorkPlace> = new Map();
 

@@ -13,7 +13,7 @@ import { css, isFunction, isJoditObject, refs } from './helpers';
 import { Attributes, Children, ICreate } from '../types/create';
 
 export class Create implements ICreate {
-	inside: Create;
+	inside!: Create;
 
 	private get doc(): Document {
 		return this.insideCreator && isJoditObject(this.jodit)

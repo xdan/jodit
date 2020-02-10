@@ -81,11 +81,11 @@ export class Dialog extends ViewWithToolbar {
 	/**
 	 * @property {HTMLDivElement} resizer
 	 */
-	private resizer: HTMLDivElement;
-	toolbar: IToolbarCollection;
+	private resizer!: HTMLDivElement;
+	toolbar!: IToolbarCollection;
 
-	private offsetX: number;
-	private offsetY: number;
+	private offsetX: number = 0;
+	private offsetY: number = 0;
 
 	private destination: HTMLElement = document.body;
 	private destroyAfterClose: boolean = false;
@@ -287,17 +287,17 @@ export class Dialog extends ViewWithToolbar {
 		}
 	}
 
-	public options: IDialogOptions;
+	public options!: IDialogOptions;
 
 	/**
 	 * @property {HTMLDivElement} dialog
 	 */
-	public dialog: HTMLDivElement;
+	public dialog!: HTMLDivElement;
 
-	public dialogbox_header: HTMLHeadingElement;
-	public dialogbox_content: HTMLDivElement;
-	public dialogbox_footer: HTMLDivElement;
-	public dialogbox_toolbar: HTMLDivElement;
+	public dialogbox_header!: HTMLHeadingElement;
+	public dialogbox_content!: HTMLDivElement;
+	public dialogbox_footer!: HTMLDivElement;
+	public dialogbox_toolbar!: HTMLDivElement;
 
 	document: Document = document;
 	window: Window = window;

@@ -25,7 +25,7 @@ export class View extends Panel implements IViewBased {
 	}
 
 
-	workplace: HTMLDivElement;
+	workplace!: HTMLDivElement;
 
 	components: Set<IComponent> = new Set();
 
@@ -67,7 +67,7 @@ export class View extends Panel implements IViewBased {
 	 */
 	progressbar: IProgressBar = new ProgressBar(this);
 
-	options: IViewOptions;
+	options!: IViewOptions;
 
 	events: IEventsNative;
 	async : IAsync = new Async();

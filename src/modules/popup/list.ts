@@ -103,7 +103,7 @@ export class PopupList extends Popup {
 		this.toolbar.checkActiveButtons();
 	}
 
-	public toolbar: IToolbarCollection;
+	toolbar!: IToolbarCollection;
 
 	firstInFocus() {
 		this.toolbar.firstButton.focus();

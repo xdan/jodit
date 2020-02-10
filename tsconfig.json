@@ -10,7 +10,7 @@
 		"strictBindCallApply": true,
 
 		"forceConsistentCasingInFileNames": true,
-		"strictPropertyInitialization": false,
+		"strictPropertyInitialization": true,
 
 		"sourceMap": true,
 

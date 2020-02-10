@@ -14,8 +14,8 @@ export abstract class Panel extends Component implements IPanel {
 	protected __whoLocked: string | false = '';
 	protected __isFullSize: boolean = false;
 
-	ownerDocument: Document;
-	ownerWindow: Window;
+	ownerDocument!: Document;
+	ownerWindow!: Window;
 
 	container: HTMLDivElement;
 

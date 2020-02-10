@@ -93,7 +93,7 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 			.filter(a => a !== '');
 	}
 
-	private __parentContainer: HTMLElement;
+	private __parentContainer!: HTMLElement;
 
 	/**
 	 * Returns parent container

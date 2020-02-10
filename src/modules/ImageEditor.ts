@@ -93,29 +93,29 @@ export class ImageEditor extends Component {
 	private cropUseRatio: boolean = true;
 
 	private dialog: Dialog;
-	private image: HTMLImageElement;
-	private cropImage: HTMLImageElement;
+	private image!: HTMLImageElement;
+	private cropImage!: HTMLImageElement;
 	private clicked = false;
-	private target: HTMLElement;
+	private target!: HTMLElement;
 
-	private start_x: number;
-	private start_y: number;
-	private top_x: number;
-	private top_y: number;
+	private start_x: number = 0;
+	private start_y: number = 0;
+	private top_x: number = 0;
+	private top_y: number = 0;
 
-	private width: number;
-	private height: number;
+	private width: number = 0;
+	private height: number = 0;
 
 	private activeTab: ImageAction = 'resize';
 
-	private naturalWidth: number;
-	private naturalHeight: number;
+	private naturalWidth: number = 0;
+	private naturalHeight: number = 0;
 
-	private ratio: number;
-	private new_h: number;
-	private new_w: number;
-	private diff_x: number;
-	private diff_y: number;
+	private ratio: number = 0;
+	private new_h: number = 0;
+	private new_w: number = 0;
+	private diff_x: number = 0;
+	private diff_y: number = 0;
 
 	private buttons: HTMLElement[];
 
@@ -648,7 +648,7 @@ export class ImageEditor extends Component {
 
 	options: ImageEditorOptions;
 
-	onSave: (
+	onSave!: (
 		name: void | string,
 		data: ImageEditorActionBox,
 		hide: () => void,

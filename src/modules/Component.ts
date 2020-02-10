@@ -17,7 +17,7 @@ export const STATUSES = {
 
 export abstract class Component<T extends IViewBased = IViewBased>
 	implements IComponent<T> {
-	jodit: T;
+	jodit!: T;
 
 	private __componentStatus: ComponentStatus = STATUSES.beforeInit;
 	get componentStatus(): ComponentStatus {

@@ -13,7 +13,7 @@ import { Dom } from '../modules/Dom';
 export class tooltip extends Plugin {
 	private isOpened = false;
 
-	container: HTMLElement;
+	container!: HTMLElement;
 
 	afterInit(jodit: IJodit) {
 		this.container = jodit.create.div('jodit_tooltip');

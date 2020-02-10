@@ -18,9 +18,9 @@ import { createSourceEditor } from './editor/factory';
  * @module source
  */
 export class source extends Plugin {
-	sourceEditor: ISourceEditor;
+	sourceEditor!: ISourceEditor;
 
-	private mirrorContainer: HTMLDivElement;
+	private mirrorContainer!: HTMLDivElement;
 
 	private __lock = false;
 	private __oldMirrorValue = '';

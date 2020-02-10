@@ -78,7 +78,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 		onlyImages: false
 	});
 
-	dataProvider: IFileBrowserDataProvider;
+	dataProvider!: IFileBrowserDataProvider;
 
 	async loadItems(
 		path: string = this.dataProvider.currentPath,
@@ -282,16 +282,16 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 		}
 	};
 
-	options: IFileBrowserOptions;
+	options!: IFileBrowserOptions;
 
-	dialog: Dialog;
+	dialog!: Dialog;
 
 	/**
 	 * Container for set/get value
 	 */
-	storage: IStorage;
+	storage!: IStorage;
 
-	uploader: IUploader;
+	uploader!: IUploader;
 
 	/**
 	 *

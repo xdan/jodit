@@ -290,7 +290,7 @@ export class TableProcessor extends Plugin {
 	private __selectMode: boolean = false;
 
 	private __resizerDelta: number = 0;
-	private __resizerHandler: HTMLElement;
+	private __resizerHandler!: HTMLElement;
 
 	showResizer() {
 		this.jodit.async.clearTimeout(this.hideTimeout);
@@ -309,16 +309,16 @@ export class TableProcessor extends Plugin {
 		);
 	}
 
-	private hideTimeout: number;
+	private hideTimeout: number = 0;
 
 	private __drag: boolean = false;
 
-	private __wholeTable: boolean | null;
-	private __workCell: HTMLTableCellElement;
-	private __workTable: HTMLTableElement;
+	private __wholeTable!: boolean | null;
+	private __workCell!: HTMLTableCellElement;
+	private __workTable!: HTMLTableElement;
 
-	private __minX: number;
-	private __maxX: number;
+	private __minX: number = 0;
+	private __maxX: number = 0;
 
 	/**
 	 *

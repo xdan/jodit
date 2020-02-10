@@ -7,7 +7,7 @@
 import { CallbackFunction, IJodit } from '../../../types';
 
 export abstract class SourceEditor<T> {
-	instance: T;
+	instance!: T;
 	className: string = '';
 
 	constructor(

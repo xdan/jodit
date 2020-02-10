@@ -214,14 +214,14 @@ export class search extends Plugin {
 			parentBox.scrollIntoView();
 	}
 
-	searchBox: HTMLDivElement;
-	queryInput: HTMLInputElement;
-	replaceInput: HTMLInputElement;
-	closeButton: HTMLButtonElement;
-	nextButton: HTMLButtonElement;
-	prevButton: HTMLButtonElement;
-	replaceButton: HTMLButtonElement;
-	counterBox: HTMLSpanElement;
+	searchBox!: HTMLDivElement;
+	queryInput!: HTMLInputElement;
+	replaceInput!: HTMLInputElement;
+	closeButton!: HTMLButtonElement;
+	nextButton!: HTMLButtonElement;
+	prevButton!: HTMLButtonElement;
+	replaceButton!: HTMLButtonElement;
+	counterBox!: HTMLSpanElement;
 
 	calcCounts = (
 		query: string,
