@@ -189,15 +189,16 @@ Config.prototype.controls.link = {
 			Dom.hide(unlink);
 		}
 
-		const selInfo = editor.selection.save();
+		const snapshot = editor.observer.snapshot.make();
 
 		if (unlink) {
 			editor.events.on(unlink, 'click', (e: MouseEvent) => {
+				editor.observer.snapshot.restore(snapshot);
+
 				if (link) {
 					Dom.unwrap(link);
 				}
 
-				editor.selection.restore(selInfo);
 				close();
 				e.preventDefault();
 			});
@@ -215,7 +216,7 @@ Config.prototype.controls.link = {
 
 			let links: HTMLAnchorElement[];
 
-			editor.selection.restore(selInfo);
+			editor.observer.snapshot.restore(snapshot);
 
 			const textWasChanged =
 				getSelectionText() !== content_input.value.trim();

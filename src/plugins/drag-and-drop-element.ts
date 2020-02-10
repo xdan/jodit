@@ -85,7 +85,7 @@ export class DragAndDropElement extends Plugin {
 		}
 
 		this.wasMoved = true;
-		// this.jodit.events.fire('hidePopup hideResizer');
+		this.jodit.events.fire('hidePopup hideResizer');
 
 		if (!this.draggable.parentNode) {
 			css(this.draggable, {
@@ -164,7 +164,11 @@ export class DragAndDropElement extends Plugin {
 				this.onDragStart
 			)
 			.on('mouseup touchend', this.onDrop)
-			.on(window, 'mouseup touchend', this.onDragEnd);
+			.on(
+				[this.jodit.editorWindow, this.jodit.ownerWindow],
+				'mouseup touchend',
+				this.onDragEnd
+			);
 	}
 
 	protected beforeDestruct() {

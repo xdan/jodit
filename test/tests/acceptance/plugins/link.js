@@ -210,8 +210,8 @@ describe('Link plugin', function() {
 
 							const inlinePopup = document.querySelector(
 								'.jodit_toolbar_popup-inline[data-editor_id=' +
-								editor.id +
-								']'
+									editor.id +
+									']'
 							);
 
 							clickButton('link', inlinePopup);
@@ -226,7 +226,11 @@ describe('Link plugin', function() {
 
 							content.value = '';
 
-							simulateEvent('submit', 0, popup.querySelector('form'));
+							simulateEvent(
+								'submit',
+								0,
+								popup.querySelector('form')
+							);
 
 							expect(editor.value).equals(
 								'<p>test <a href="#somelink">#somelink</a> open</p>'
@@ -237,7 +241,7 @@ describe('Link plugin', function() {
 
 				describe('Select some text inside link', function() {
 					describe('Content input was not changed', function() {
-						it('Should open edit popup with full link\'s content', function() {
+						it("Should open edit popup with full link's content", function() {
 							const editor = new Jodit(appendTestArea());
 
 							editor.value =
@@ -262,8 +266,8 @@ describe('Link plugin', function() {
 
 							const inlinePopup = document.querySelector(
 								'.jodit_toolbar_popup-inline[data-editor_id=' +
-								editor.id +
-								']'
+									editor.id +
+									']'
 							);
 
 							clickButton('link', inlinePopup);
@@ -284,7 +288,11 @@ describe('Link plugin', function() {
 
 							url.value = 'https://xdan.ru';
 
-							simulateEvent('submit', 0, popup.querySelector('form'));
+							simulateEvent(
+								'submit',
+								0,
+								popup.querySelector('form')
+							);
 
 							expect(editor.value).equals(
 								'<p>test <a href="https://xdan.ru">link <strong>strong</strong></a> open</p>'
@@ -293,7 +301,7 @@ describe('Link plugin', function() {
 					});
 
 					describe('Content input was changed', function() {
-						it('Should open edit popup with full link\'s content and after submit should replace full link\'s content', function() {
+						it("Should open edit popup with full link's content and after submit should replace full link's content", function() {
 							const editor = new Jodit(appendTestArea());
 
 							editor.value =
@@ -318,8 +326,8 @@ describe('Link plugin', function() {
 
 							const inlinePopup = document.querySelector(
 								'.jodit_toolbar_popup-inline[data-editor_id="' +
-								editor.id +
-								'"]'
+									editor.id +
+									'"]'
 							);
 
 							clickButton('link', inlinePopup);
@@ -336,7 +344,11 @@ describe('Link plugin', function() {
 
 							content.value = 'https://xdan.ru';
 
-							simulateEvent('submit', 0, popup.querySelector('form'));
+							simulateEvent(
+								'submit',
+								0,
+								popup.querySelector('form')
+							);
 
 							expect(editor.value).equals(
 								'<p>test <a href="#somelink">https://xdan.ru</a> open</p>'
@@ -799,6 +811,54 @@ describe('Link plugin', function() {
 					expect(textInput.value).equals(
 						'green bottle hanging under wall two green bottles hanging under'
 					);
+				});
+
+				describe('Was selected image', function() {
+					describe('Image had not anchor parent', function() {
+						it('Should show dialog without content input and after submit wrap this image', function() {
+							const editor = new Jodit(appendTestArea());
+
+							editor.value =
+								'<p>one green <img src="https://xdsoft.net/jodit/build/images/artio.jpg" alt="test"> under wall</p>';
+
+							editor.selection.select(
+								editor.editor.querySelector('img')
+							);
+
+							clickButton('link', editor);
+
+							const popup = editor.container.querySelector(
+								'.jodit_toolbar_popup'
+							);
+
+							const textInput = popup.querySelector(
+								'input[ref=content_input]'
+							);
+
+							expect(
+								textInput.parentElement.style.display
+							).equals('none');
+							expect(textInput.value).equals('');
+
+							const urlInput = popup.querySelector(
+								'input[ref=url_input]'
+							);
+							expect(urlInput).is.not.null;
+							urlInput.focus();
+							urlInput.value = 'https://xdsoft.net';
+							urlInput.select();
+
+							simulateEvent(
+								'submit',
+								0,
+								popup.querySelector('form')
+							);
+
+							expect(sortAttributes(editor.value)).equals(
+								'<p>one green <a href="https://xdsoft.net"><img alt="test" src="https://xdsoft.net/jodit/build/images/artio.jpg"></a> under wall</p>'
+							);
+						});
+					});
 				});
 
 				describe('After submit this part', function() {
