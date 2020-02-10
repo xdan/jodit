@@ -146,10 +146,13 @@ export class AceEditor extends SourceEditor<AceAjax.Editor>
 			);
 
 			this.instance.getSession().setUseWorker(false);
+
 			this.instance.$blockScrolling = Infinity;
 
 			this.instance.setOptions({
-				maxLines: Infinity
+				autoScrollEditorIntoView:
+					editor.options.sourceEditorNativeOptions
+						.autoScrollEditorIntoView
 			});
 
 			this.instance.on('change', this.toWYSIWYG as any);
@@ -160,10 +163,23 @@ export class AceEditor extends SourceEditor<AceAjax.Editor>
 				this.setValue(this.getValue());
 			}
 
-			editor.events
-				.on('afterResize', () => {
-					this.instance.resize();
-				});
+			const onResize = this.jodit.async.debounce(() => {
+				if (editor.options.height !== 'auto') {
+					this.instance.setOption(
+						'maxLines',
+						editor.workplace.offsetHeight /
+							this.instance.renderer.lineHeight
+					);
+				} else {
+					this.instance.setOption('maxLines', Infinity);
+				}
+
+				this.instance.resize(true);
+			}, this.jodit.defaultTimeout * 2);
+
+			editor.events.on('afterResize afterSetMode', onResize);
+
+			onResize();
 
 			this.onReady();
 		};
@@ -180,37 +196,31 @@ export class AceEditor extends SourceEditor<AceAjax.Editor>
 				this.fromWYSIWYG();
 				tryInitAceEditor();
 			})
-			.on(
-				'beforeCommand',
-				(command: string): false | void => {
+			.on('beforeCommand', (command: string): false | void => {
+				if (
+					editor.getRealMode() !== consts.MODE_WYSIWYG &&
+					(command === 'redo' || command === 'undo') &&
+					this.undoManager
+				) {
 					if (
-						editor.getRealMode() !== consts.MODE_WYSIWYG &&
-						(command === 'redo' || command === 'undo') &&
-						this.undoManager
+						(this.undoManager as any)[
+							'has' +
+								command.substr(0, 1).toUpperCase() +
+								command.substr(1)
+						]
 					) {
-						if (
-							(this.undoManager as any)[
-								'has' +
-									command.substr(0, 1).toUpperCase() +
-									command.substr(1)
-							]
-						) {
-							this.instance[command]();
-						}
-						this.updateButtons();
-						return false;
+						this.instance[command]();
 					}
+					this.updateButtons();
+					return false;
 				}
-			);
+			});
 
 		tryInitAceEditor();
 
 		// global add ace editor in browser
 		if (!this.aceExists()) {
-			loadNext(
-				editor,
-				editor.options.sourceEditorCDNUrlsJS
-			).then(() => {
+			loadNext(editor, editor.options.sourceEditorCDNUrlsJS).then(() => {
 				if (!editor.isInDestruct) {
 					tryInitAceEditor();
 				}

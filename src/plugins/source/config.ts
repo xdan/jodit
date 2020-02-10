@@ -23,6 +23,7 @@ declare module '../../Config' {
 			showGutter: boolean;
 			theme: string;
 			mode: string;
+			autoScrollEditorIntoView: boolean;
 			wrap: string | boolean | number;
 			highlightActiveLine: boolean;
 		};
@@ -68,13 +69,18 @@ Config.prototype.sourceEditorNativeOptions = {
 	wrap: true,
 
 	/**
+	 * Auto scroll into view
+	 */
+	autoScrollEditorIntoView: true,
+
+	/**
 	 * Highlight active line
 	 */
 	highlightActiveLine: true
 };
 
 Config.prototype.sourceEditorCDNUrlsJS = [
-	'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.7/ace.js'
+	'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.8/ace.js'
 ];
 
 Config.prototype.beautifyHTMLCDNUrlsJS = [

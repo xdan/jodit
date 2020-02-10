@@ -5,6 +5,7 @@
 * [#325](https://github.com/xdan/jodit/issues/325) [#239](https://github.com/xdan/jodit/issues/239)
 * [#327](https://github.com/xdan/jodit/issues/327)
 * [#292](https://github.com/xdan/jodit/issues/292)
+* [#203](https://github.com/xdan/jodit/issues/203)
 
 ### Feature
 * Added `Dom`.`isTag` method
