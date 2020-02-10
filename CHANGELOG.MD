@@ -2,7 +2,7 @@
 
 ## 3.3.22
 ### BugFix
-* [#325](https://github.com/xdan/jodit/issues/325)
+* [#325](https://github.com/xdan/jodit/issues/325) [#239](https://github.com/xdan/jodit/issues/239)
 * [#327](https://github.com/xdan/jodit/issues/327)
 * [#292](https://github.com/xdan/jodit/issues/292)
 
@@ -22,7 +22,10 @@ Jodit.modules.Dom.isTag(br, 'br') // true
 const f = Math.random();
 Jodit.modules.Helpers.call(f > 0.5 ? Math.ceil : Math.floor, f);
 ```
-
+* Added `Helpers`.`position` method - Helper function to get an element's exact position
+```js
+console.log(Jodit.modules.Helpers.position(editor.editor.querySelector('p')));
+```
 ## 3.3.19
 ### BugFix
 * Fixed a lots bugs inside `link` plugin
