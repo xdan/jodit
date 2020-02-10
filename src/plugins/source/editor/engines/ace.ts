@@ -149,12 +149,6 @@ export class AceEditor extends SourceEditor<AceAjax.Editor>
 
 			this.instance.$blockScrolling = Infinity;
 
-			this.instance.setOptions({
-				autoScrollEditorIntoView:
-					editor.options.sourceEditorNativeOptions
-						.autoScrollEditorIntoView
-			});
-
 			this.instance.on('change', this.toWYSIWYG as any);
 			this.instance.on('focus', this.proxyOnFocus);
 			this.instance.on('mousedown', this.proxyOnMouseDown);
@@ -164,6 +158,10 @@ export class AceEditor extends SourceEditor<AceAjax.Editor>
 			}
 
 			const onResize = this.jodit.async.debounce(() => {
+				if (editor.isInDestruct) {
+					return;
+				}
+
 				if (editor.options.height !== 'auto') {
 					this.instance.setOption(
 						'maxLines',
@@ -174,7 +172,7 @@ export class AceEditor extends SourceEditor<AceAjax.Editor>
 					this.instance.setOption('maxLines', Infinity);
 				}
 
-				this.instance.resize(true);
+				this.instance.resize();
 			}, this.jodit.defaultTimeout * 2);
 
 			editor.events.on('afterResize afterSetMode', onResize);

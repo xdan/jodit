@@ -1,6 +1,6 @@
 # Changelog
 
-## 3.3.22
+## 3.3.23
 ### BugFix
 * [#325](https://github.com/xdan/jodit/issues/325) [#239](https://github.com/xdan/jodit/issues/239)
 * [#327](https://github.com/xdan/jodit/issues/327)
