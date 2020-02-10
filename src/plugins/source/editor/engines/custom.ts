@@ -4,13 +4,13 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IJodit, ISourceEditor } from '../../../../types';
+import { ISourceEditor } from '../../../../types';
 import { SourceEditor } from '../SourceEditor';
 
 export class CustomEditor extends SourceEditor<HTMLTextAreaElement>
 	implements ISourceEditor {
 
-	init(editor: IJodit): any {
+	init(): any {
 		this.onReady();
 	}
 

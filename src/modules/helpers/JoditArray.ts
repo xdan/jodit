@@ -7,8 +7,9 @@
 import { extend } from './extend';
 
 export class JoditArray {
-	public length: number = 0;
-	public toString() {
+	length: number = 0;
+
+	toString() {
 		const out = [];
 
 		for (let i = 0; i < this.length; i += 1) {
@@ -17,6 +18,7 @@ export class JoditArray {
 
 		return out.toString();
 	}
+
 	constructor(data: any[]) {
 		extend(true, this, data);
 		this.length = data.length;
