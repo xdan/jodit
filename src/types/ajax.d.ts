@@ -5,7 +5,7 @@ export type DataVariant = | IDictionary<string>
 	| null
 	| FormData
 	| string
-	| IDictionary<string | IDictionary<any>>;
+	| IDictionary<string | IDictionary>;
 
 export interface IRequest {
 	url: string;

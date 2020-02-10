@@ -4,6 +4,7 @@
 ### BugFix
 * [#325](https://github.com/xdan/jodit/issues/325)
 * [#327](https://github.com/xdan/jodit/issues/327)
+* [#292](https://github.com/xdan/jodit/issues/292)
 
 ### Feature
 * Added `Dom`.`isTag` method

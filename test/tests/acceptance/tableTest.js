@@ -1584,7 +1584,7 @@ describe('Tables Jodit Editor Tests', function() {
 							'</table>';
 
 						simulateEvent(
-							'mousedown',
+							'click',
 							1,
 							editor.editor.querySelector('img')
 						);
@@ -1594,8 +1594,8 @@ describe('Tables Jodit Editor Tests', function() {
 						);
 
 						expect(
-							resizer && resizer.style.display === 'block'
-						).is.true;
+							resizer
+						).is.not.null;
 
 						const positionResizer = offset(resizer);
 						const positionImg = offset(

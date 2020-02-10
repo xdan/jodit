@@ -101,8 +101,7 @@ describe('Test image', function() {
 				const editor = new Jodit(appendTestArea());
 
 				editor.value =
-					'<img class="images123" style="width:100px; height: 100px;" src="tests/artio.jpg"/>'
-				;
+					'<img class="images123" style="width:100px; height: 100px;" src="tests/artio.jpg"/>';
 				simulateEvent(
 					'dblclick',
 					0,
@@ -150,8 +149,7 @@ describe('Test image', function() {
 				const editor = new Jodit(appendTestArea());
 
 				editor.value =
-					'<img style="padding:10px;width:100px; height: 100px;" src="tests/artio.jpg"/>'
-				;
+					'<img style="padding:10px;width:100px; height: 100px;" src="tests/artio.jpg"/>';
 				simulateEvent(
 					'dblclick',
 					0,
@@ -200,8 +198,7 @@ describe('Test image', function() {
 				const editor = new Jodit(appendTestArea());
 
 				editor.value =
-					'<img id="stop123"  style="width:100px; height: 100px;"  src="tests/artio.jpg"/>'
-				;
+					'<img id="stop123"  style="width:100px; height: 100px;"  src="tests/artio.jpg"/>';
 				simulateEvent(
 					'dblclick',
 					0,
@@ -250,8 +247,7 @@ describe('Test image', function() {
 					const editor = new Jodit(appendTestArea());
 
 					editor.value =
-						'<img  style="width:100px; height: 100px;"  src="tests/artio.jpg"/>'
-					;
+						'<img  style="width:100px; height: 100px;"  src="tests/artio.jpg"/>';
 					simulateEvent(
 						'dblclick',
 						0,
@@ -296,8 +292,7 @@ describe('Test image', function() {
 					const editor = new Jodit(appendTestArea());
 
 					editor.value =
-						'<img  style="width:100px; height: 100px;"  src="tests/artio.jpg"/>'
-					;
+						'<img  style="width:100px; height: 100px;"  src="tests/artio.jpg"/>';
 					simulateEvent(
 						'dblclick',
 						0,
@@ -342,8 +337,7 @@ describe('Test image', function() {
 					const editor = new Jodit(appendTestArea());
 
 					editor.value =
-						'<img style="float:left;width:100px; height: 100px;" src="tests/artio.jpg"/>'
-					;
+						'<img style="float:left;width:100px; height: 100px;" src="tests/artio.jpg"/>';
 					simulateEvent(
 						'dblclick',
 						0,
@@ -388,8 +382,7 @@ describe('Test image', function() {
 					const editor = new Jodit(appendTestArea());
 
 					editor.value =
-						'<img src="tests/artio.jpg" style="width:100px; height: 100px;display:block;margin-left:auto;margin-right:auto">'
-					;
+						'<img src="tests/artio.jpg" style="width:100px; height: 100px;display:block;margin-left:auto;margin-right:auto">';
 					simulateEvent(
 						'dblclick',
 						0,
@@ -437,8 +430,7 @@ describe('Test image', function() {
 					const editor = new Jodit(appendTestArea());
 
 					editor.value =
-						'<img style="margin: 10px;width:100px; height: 100px;" src="tests/artio.jpg"/>'
-					;
+						'<img style="margin: 10px;width:100px; height: 100px;" src="tests/artio.jpg"/>';
 					simulateEvent(
 						'dblclick',
 						0,
@@ -493,8 +485,7 @@ describe('Test image', function() {
 					const editor = new Jodit(appendTestArea());
 
 					editor.value =
-						'<img style="margin: 10px;width:100px; height: 100px;" src="tests/artio.jpg"/>'
-					;
+						'<img style="margin: 10px;width:100px; height: 100px;" src="tests/artio.jpg"/>';
 					simulateEvent(
 						'dblclick',
 						0,
@@ -564,8 +555,7 @@ describe('Test image', function() {
 				const editor = new Jodit(appendTestArea());
 
 				editor.value =
-					'<img title="sting" style="width:100px; height: 100px;" src="tests/artio.jpg"/>'
-				;
+					'<img title="sting" style="width:100px; height: 100px;" src="tests/artio.jpg"/>';
 				simulateEvent(
 					'dblclick',
 					0,
@@ -648,8 +638,7 @@ describe('Test image', function() {
 				const editor = new Jodit(appendTestArea());
 
 				editor.value =
-					'<img  style="width:100px; height: 100px;"  src="tests/artio.jpg"/>'
-				;
+					'<img  style="width:100px; height: 100px;"  src="tests/artio.jpg"/>';
 				simulateEvent(
 					'dblclick',
 					0,
@@ -686,8 +675,7 @@ describe('Test image', function() {
 					const editor = new Jodit(appendTestArea());
 
 					editor.value =
-						'<img style="width:100px; height: 100px;" src="tests/artio.jpg"/>'
-					;
+						'<img style="width:100px; height: 100px;" src="tests/artio.jpg"/>';
 					simulateEvent(
 						'dblclick',
 						0,
@@ -731,8 +719,7 @@ describe('Test image', function() {
 					const editor = new Jodit(appendTestArea());
 
 					editor.value =
-						'<a href="https://xdan.ru" target="_blank"><img  style="width:100px; height: 100px;"  src="tests/artio.jpg"/></a>'
-					;
+						'<a href="https://xdan.ru" target="_blank"><img  style="width:100px; height: 100px;"  src="tests/artio.jpg"/></a>';
 					simulateEvent(
 						'dblclick',
 						0,
@@ -780,8 +767,7 @@ describe('Test image', function() {
 					const editor = new Jodit(appendTestArea());
 
 					editor.value =
-						'<a href="https://xdan.ru" target="_blank"><img style="width:100px; height: 100px;" src="tests/artio.jpg"/></a>'
-					;
+						'<a href="https://xdan.ru" target="_blank"><img style="width:100px; height: 100px;" src="tests/artio.jpg"/></a>';
 					simulateEvent(
 						'dblclick',
 						0,
@@ -834,7 +820,7 @@ describe('Test image', function() {
 					editor.value = '<img src="tests/artio.jpg"/>';
 					const img = editor.editor.querySelector('img');
 
-					const callback = function () {
+					const callback = function() {
 						simulateEvent('dblclick', 0, img);
 
 						expect(area.id).equals(editor.id);
@@ -897,7 +883,7 @@ describe('Test image', function() {
 					editor.value = '<img src="tests/artio.jpg"/>';
 					const img = editor.editor.querySelector('img');
 
-					const callback = function () {
+					const callback = function() {
 						simulateEvent('dblclick', 0, img);
 
 						const dialog = editor.ownerDocument.querySelector(
@@ -964,7 +950,7 @@ describe('Test image', function() {
 						editor.value = '<img src="tests/artio.jpg"/>';
 						const img = editor.editor.querySelector('img');
 
-						const callback = function () {
+						const callback = function() {
 							simulateEvent('dblclick', 0, img);
 
 							const dialog = editor.ownerDocument.querySelector(
@@ -1230,13 +1216,13 @@ describe('Test image', function() {
 
 			const img = editor.editor.querySelector('img');
 
-			simulateEvent('mousedown', 0, img);
+			simulateEvent('click', 0, img);
 
-			const resizer = document.querySelector(
+			const resizer = editor.ownerDocument.querySelector(
 				'.jodit_resizer[data-editor_id=' + editor.id + ']'
 			);
 
-			expect(resizer.style.display === 'block').is.true;
+			expect(resizer).is.not.null;
 		});
 
 		describe('in full size mode', function() {
@@ -1248,13 +1234,13 @@ describe('Test image', function() {
 
 				const img = editor.editor.querySelector('img');
 
-				simulateEvent('mousedown', 0, img);
+				simulateEvent('click', 0, img);
 
 				const resizer = document.querySelector(
 					'.jodit_resizer[data-editor_id=' + editor.id + ']'
 				);
 
-				expect(resizer.style.display).equals('block');
+				expect(resizer).is.not.null;
 				expect(resizer.style.zIndex).equals(
 					window.getComputedStyle(editor.container).zIndex
 				);
@@ -1268,13 +1254,13 @@ describe('Test image', function() {
 
 		const td = editor.editor.querySelector('td');
 
-		simulateEvent('mousedown', 0, td);
+		simulateEvent('click', 0, td);
 
 		const resizer = document.querySelector(
 			'.jodit_resizer[data-editor_id=' + editor.id + ']'
 		);
 
-		expect(resizer.style.display === 'block').is.true;
+		expect(resizer).is.not.null;
 	});
 
 	describe('Popup box', function() {
@@ -1344,17 +1330,14 @@ describe('Test image', function() {
 					'    </div>';
 
 				document.body.appendChild(div);
+
 				const editor = new Jodit('#text_area0');
-				simulateEvent(
-					'mousedown',
-					0,
-					editor.editor.querySelector('img')
-				);
+				simulateEvent('click', 0, editor.editor.querySelector('img'));
 
 				const resizer = document.querySelector(
 					'.jodit_resizer[data-editor_id=text_area0]'
 				);
-				expect(resizer.style.display === 'block').is.true;
+				expect(resizer).is.not.null;
 
 				const positionResizer = offset(resizer);
 				const positionImg = offset(editor.editor.querySelector('img'));
@@ -1383,7 +1366,7 @@ describe('Test image', function() {
 
 				const editor = new Jodit(document.getElementById('text_area1'));
 				simulateEvent(
-					'mousedown',
+					['mousedown', 'mouseup', 'click'],
 					0,
 					editor.editor.querySelector('img')
 				);
@@ -1397,7 +1380,7 @@ describe('Test image', function() {
 				const resizer = editor.ownerDocument.querySelector(
 					'.jodit_resizer[data-editor_id=text_area1]'
 				);
-				expect(resizer.style.display === 'block').is.true;
+				expect(resizer).is.not.null;
 				//
 				const positionResizer = offset(resizer);
 				//
@@ -1439,8 +1422,9 @@ describe('Test image', function() {
 					});
 					editor.value =
 						'<img src="tests/artio.jpg" style="width:500px;height: 281px;"/>';
+
 					simulateEvent(
-						'mousedown',
+						['mousedown', 'mouseup', 'click'],
 						0,
 						editor.editor.querySelector('img')
 					);
@@ -1499,8 +1483,9 @@ describe('Test image', function() {
 
 						editor.value =
 							'<img src="tests/artio.jpg" style="width:500px;height: 281px;"/>';
+
 						simulateEvent(
-							'mousedown',
+							['mousedown', 'mouseup', 'click'],
 							0,
 							editor.editor.querySelector('img')
 						);
@@ -1559,7 +1544,7 @@ describe('Test image', function() {
 					editor.value =
 						'<img src="tests/artio.jpg" style="width:500px;height: 281px;"/>';
 					const img = editor.editor.querySelector('img');
-					simulateEvent('mousedown', 0, img);
+					simulateEvent(['mousedown', 'mouseup', 'click'], 0, img);
 					const resizer = document.querySelector(
 						'.jodit_resizer[data-editor_id=' + editor.id + ']'
 					);
@@ -1600,6 +1585,4 @@ describe('Test image', function() {
 			});
 		});
 	});
-
-	afterEach(removeStuff);
 });

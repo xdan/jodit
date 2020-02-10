@@ -38,13 +38,13 @@ export const Alert = (
 	}
 
 	const
-		dialog: Dialog = new Dialog(),
-		container: HTMLDivElement = dialog.create.div(className),
+		dialog = new Dialog(),
+		container = dialog.create.div(className),
 		okButton: HTMLAnchorElement = dialog.create.fromHTML(
 			'<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
 			ToolbarIcon.getIcon('cancel') +
 			'<span>' +
-			Jodit.prototype.i18n('Ok') +
+			dialog.i18n('Ok') +
 			'</span></a>'
 		) as HTMLAnchorElement;
 
@@ -74,6 +74,5 @@ export const Alert = (
 	return dialog;
 };
 
-import { Jodit } from '../../Jodit';
 import { asArray } from '../helpers/array';
 import { Dom } from '../Dom';

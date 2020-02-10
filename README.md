@@ -12,6 +12,7 @@ An excellent WYSIWYG editor written in pure TypeScript without the use of additi
  * [Playground - play with options](https://xdsoft.net/jodit/play.html)
  * [Documentation](https://xdsoft.net/jodit/doc/)
  * [Download&Changes](https://github.com/xdan/jodit/releases)
+ * [Changelog](https://github.com/xdan/jodit/blob/master/CHANGELOG.MD)
 
 > For old version, please follow here [https://github.com/xdan/jodit2](https://github.com/xdan/jodit2)
 

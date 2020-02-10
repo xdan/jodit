@@ -31,7 +31,6 @@ describe('Drag and drop element inside Editor', function() {
 						);
 
 						// createPoint(box.left + 15, box.top + 5);
-						// debugger
 
 						simulateEvent(events[1], 0, editor.editor, function(
 							options

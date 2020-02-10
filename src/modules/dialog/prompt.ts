@@ -7,16 +7,16 @@ import { Dialog } from './dialog';
 import { ToolbarIcon } from '../toolbar/icon';
 
 /**
- * Show `promt` dialog. Work without Jodit object
+ * Show `Prompt` dialog. Work without Jodit object
  *
- * @method Promt
+ * @method Prompt
  * @param {string} msg Message
  * @param {string|function} [title] Title or callback
  * @param {function} [callback] callback. The first argument is the value entered
  * @param {string} [placeholder] Placeholder for input
  * @example
  * ```javascript
- * Jodit.Promt("Enter your name", "Promt Dialog", function (name) {
+ * Jodit.Prompt("Enter your name", "Prompt Dialog", function (name) {
  *     if (name.length < 3) {
  *         Jodit.Alert("The name must be at least 3 letters");
  *         return false;
@@ -25,7 +25,7 @@ import { ToolbarIcon } from '../toolbar/icon';
  * });
  * ```
  */
-export const Promt = (
+export const Prompt = (
 	msg: string,
 	title: string | (() => false | void) | undefined,
 	callback: (value: string) => false | void,
@@ -37,27 +37,23 @@ export const Promt = (
 			'<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
 				ToolbarIcon.getIcon('cancel') +
 				'<span>' +
-				Jodit.prototype.i18n('Cancel') +
+				dialog.i18n('Cancel') +
 				'</span></a>'
 		) as HTMLAnchorElement,
-
 		okButton: HTMLAnchorElement = dialog.create.fromHTML(
 			'<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
 				ToolbarIcon.getIcon('check') +
 				'<span>' +
-				Jodit.prototype.i18n('Ok') +
+				dialog.i18n('Ok') +
 				'</span></a>'
 		) as HTMLAnchorElement,
-
 		form: HTMLFormElement = dialog.create.element('form', {
 			class: 'jodit_prompt'
 		}),
-
 		inputElement: HTMLInputElement = dialog.create.element('input', {
 			autofocus: true,
 			class: 'jodit_input'
 		}),
-
 		labelElement: HTMLLabelElement = dialog.create.element(
 			'label'
 		) as HTMLLabelElement;
@@ -107,5 +103,3 @@ export const Promt = (
 
 	return dialog;
 };
-
-import { Jodit } from '../../Jodit';

@@ -130,6 +130,7 @@ export class resizer extends Plugin {
 			);
 
 		this.addEventListeners();
+		this.onChangeEditor();
 	}
 
 	private addEventListeners() {
@@ -388,28 +389,30 @@ export class resizer extends Plugin {
 					event.preventDefault();
 				}
 			})
-			.on(element, 'click', () => {
-				if (this.element !== element || !this.isShown) {
-					this.element = element;
-
-					this.show();
-
-					if (
-						Dom.isTag(this.element, 'img') &&
-						!this.element.complete
-					) {
-						this.jodit.events.on(
-							this.element,
-							'load',
-							this.updateSize
-						);
-					}
-				}
-			});
+			.on(element, 'click', () => this.onClickElement(element));
 	}
 
-	private updateSize() {
-		if (this.jodit.isInDestruct || !this.isShown) {
+	private onClickElement = (element: HTMLElement) => {
+		if (this.element !== element || !this.isShown) {
+			this.element = element;
+
+			this.show();
+
+			if (
+				Dom.isTag(this.element, 'img') &&
+				!this.element.complete
+			) {
+				this.jodit.events.on(
+					this.element,
+					'load',
+					this.updateSize
+				);
+			}
+		}
+	};
+
+	private updateSize = () => {
+		if (this.isInDestruct || !this.isShown) {
 			return;
 		}
 

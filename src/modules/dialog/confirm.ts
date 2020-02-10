@@ -46,7 +46,7 @@ export const Confirm = (
 		'<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
 			ToolbarIcon.getIcon('cancel') +
 			'<span>' +
-			Jodit.prototype.i18n('Cancel') +
+			dialog.i18n('Cancel') +
 			'</span>' +
 			'</a>'
 	) as HTMLAnchorElement;
@@ -69,7 +69,7 @@ export const Confirm = (
 		'<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
 			ToolbarIcon.getIcon('check') +
 			'<span>' +
-			Jodit.prototype.i18n('Yes') +
+			dialog.i18n('Yes') +
 			'</span>' +
 			'</a>'
 	) as HTMLAnchorElement;
@@ -88,5 +88,3 @@ export const Confirm = (
 
 	return dialog;
 };
-
-import { Jodit } from '../../Jodit';

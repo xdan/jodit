@@ -13,7 +13,7 @@ import {
 } from '../types';
 import { IViewBased } from '../types/view';
 import { Component } from './Component';
-import { Alert, Dialog, Promt } from './dialog/';
+import { Alert, Dialog, Prompt } from './dialog/';
 import { $$, css, trim } from './helpers/';
 import { ToolbarIcon } from './toolbar/icon';
 import { Dom } from './Dom';
@@ -432,7 +432,9 @@ export class ImageEditor extends Component {
 						`.${jie}_slider,.${jie}_area`,
 						self.editor
 					).forEach(elm => elm.classList.remove('active'));
+
 					const slide = this.parentNode as HTMLElement;
+
 					slide.classList.add('active');
 					self.activeTab =
 						<ImageAction>slide.getAttribute('data-area') ||
@@ -502,7 +504,7 @@ export class ImageEditor extends Component {
 		);
 		if (rationResizeButton) {
 			rationResizeButton.addEventListener('change', () => {
-				self.resizeUseRatio = rationResizeButton.checked;
+				this.resizeUseRatio = rationResizeButton.checked;
 			});
 		}
 
@@ -513,7 +515,7 @@ export class ImageEditor extends Component {
 
 		if (rationCropButton) {
 			rationCropButton.addEventListener('change', () => {
-				self.cropUseRatio = rationCropButton.checked;
+				this.cropUseRatio = rationCropButton.checked;
 			});
 		}
 
@@ -595,7 +597,7 @@ export class ImageEditor extends Component {
 
 				switch (button.getAttribute('data-action')) {
 					case 'saveas':
-						Promt(
+						Prompt(
 							self.jodit.i18n('Enter new name'),
 							self.jodit.i18n('Save in new file'),
 							(name: string): false | void => {

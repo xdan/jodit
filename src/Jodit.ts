@@ -984,7 +984,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		this.setStatus(STATUSES.beforeInit);
 
-		if (this.options.events) {
+		if (this.options?.events) {
 			Object.keys(this.options.events).forEach((key: string) =>
 				this.events.on(key, this.options.events[key])
 			);
@@ -1029,7 +1029,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		}
 	}
 
-	currentPlace: IWorkPlace;
+	currentPlace: IWorkPlace
 	places: IWorkPlace[];
 
 	private elementToPlace: Map<HTMLElement, IWorkPlace> = new Map();

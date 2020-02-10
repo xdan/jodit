@@ -6,5 +6,5 @@
 
 export { Dialog } from './dialog';
 export { Alert } from './alert';
-export { Promt } from './promt';
+export { Prompt } from './prompt';
 export { Confirm } from './confirm';

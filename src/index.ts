@@ -45,7 +45,7 @@ Object.keys(Modules)
 		DefaultJodit.modules[key] = (Modules as any)[key];
 	});
 
-['Confirm', 'Alert', 'Promt'].forEach((key: string) => {
+['Confirm', 'Alert', 'Prompt'].forEach((key: string) => {
 	(DefaultJodit as any)[key] = (Modules as any)[key];
 });
 

@@ -2696,15 +2696,15 @@ describe('Toolbar', function() {
 				const editPlaces = editor.ownerDocument.querySelectorAll('.jodit_wysiwyg');
 				expect(editPlaces.length).equals(3);
 
-				editPlaces[0].focus();
+				simulateEvent('focus', 0, editPlaces[0]);
 				expect(editor.options.readonly).is.false;
 				expect(editor.options.showCharsCounter).is.true;
 
-				editPlaces[1].focus();
+				simulateEvent('focus', 0, editPlaces[1]);
 				expect(editor.options.readonly).is.true;
 				expect(editor.options.showCharsCounter).is.false;
 
-				editPlaces[2].focus();
+				simulateEvent('focus', 0, editPlaces[2]);
 				expect(editor.options.readonly).is.false;
 				expect(editor.options.showCharsCounter).is.false;
 
