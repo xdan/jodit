@@ -1490,7 +1490,7 @@ export class Select {
 			try {
 				currentBox.parentNode.insertBefore(fragment, currentBox);
 
-				if (br && br.parentNode) {
+				if (cursorOnTheRight && br && br.parentNode) {
 					const range = this.createRange();
 					range.setStartBefore(br);
 					this.selectRange(range);

@@ -95,6 +95,8 @@ describe('Test position/offset helpers', function() {
 
 		describe('In iframe', function() {
 			it('Should calculate correct screen position of element', function() {
+				fillBox(100);
+
 				const jodit = Jodit.make(appendTestArea(), {
 					iframe: true,
 					height: 10000

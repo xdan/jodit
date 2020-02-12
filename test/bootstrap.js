@@ -344,6 +344,18 @@ function appendTestArea(id, noput) {
 }
 
 /**
+ * Add in box several elements
+ * @param count
+ */
+function fillBox(count) {
+	for (let i = 0; i < count; i += 1) {
+		const br = document.createElement('br');
+		box.appendChild(br);
+		stuff.push(br);
+	}
+}
+
+/**
  * Create empty DIV block and but it inside Box
  *
  * @param [id]
