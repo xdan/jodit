@@ -149,11 +149,6 @@ export class resizer extends Plugin {
 					this.onDelete(e);
 				}
 			})
-			.on(
-				editor.ownerWindow,
-				'mousemove.resizer touchmove.resizer',
-				this.onResize
-			)
 			.on(editor.ownerWindow, 'resize.resizer', this.updateSize)
 			.on(
 				editor.ownerWindow,
@@ -193,6 +188,12 @@ export class resizer extends Plugin {
 		this.jodit.events.fire('hidePopup');
 
 		this.jodit.lock(this.LOCK_KEY);
+
+		this.jodit.events.on(
+			this.jodit.ownerWindow,
+			'mousemove.resizer touchmove.resizer',
+			this.onResize
+		);
 	}
 
 	private onResize = (e: MouseEvent) => {
@@ -269,6 +270,13 @@ export class resizer extends Plugin {
 				this.isResized = false;
 				this.jodit.setEditorValue();
 				e.stopImmediatePropagation();
+
+				this.jodit.events.off(
+					this.jodit.ownerWindow,
+					'mousemove.resizer touchmove.resizer',
+					this.onResize
+				);
+
 			} else {
 				this.hide();
 			}
@@ -398,15 +406,8 @@ export class resizer extends Plugin {
 
 			this.show();
 
-			if (
-				Dom.isTag(this.element, 'img') &&
-				!this.element.complete
-			) {
-				this.jodit.events.on(
-					this.element,
-					'load',
-					this.updateSize
-				);
+			if (Dom.isTag(this.element, 'img') && !this.element.complete) {
+				this.jodit.events.on(this.element, 'load', this.updateSize);
 			}
 		}
 	};

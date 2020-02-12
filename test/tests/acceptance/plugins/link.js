@@ -524,9 +524,10 @@ describe('Link plugin', function() {
 								toolbarAdaptive: false
 							});
 
-							editor.value = 'test <span>select</span> stop';
+							editor.value = 'test <span style="color: #ccc;">select </span> stop';
 
 							const range = editor.selection.createRange();
+
 							range.setStart(
 								editor.editor.querySelector('span').firstChild,
 								0
@@ -535,6 +536,7 @@ describe('Link plugin', function() {
 								editor.editor.querySelector('span').firstChild,
 								6
 							);
+
 							editor.selection.selectRange(range);
 
 							simulateEvent(
@@ -582,7 +584,7 @@ describe('Link plugin', function() {
 							);
 
 							expect(sortAttributes(editor.value)).equals(
-								'test <span><a href="tests/artio.jpg">select</a></span> stop'
+								'test <span style="color:#ccc"><a href="tests/artio.jpg">select</a> </span> stop'
 							);
 
 							simulateEvent('mousedown', 0, editor.editor);

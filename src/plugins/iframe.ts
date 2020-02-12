@@ -74,26 +74,28 @@ Config.prototype.iframeDefaultSrc = 'about:blank';
 
 Config.prototype.iframeStyle =
 	'html{' +
-	'margin: 0px;' +
+	'margin:0;' +
+	'padding:0;' +
 	'min-height: 100%;' +
 	'}' +
 	'body{' +
-	'box-sizing: border-box;' +
-	'font-size: 13px;' +
-	'    line-height: 1.6;' +
+	'box-sizing:border-box;' +
+	'font-size:13px;' +
+	'line-height:1.6;' +
 	'padding:10px;' +
+	'margin:0;' +
 	'background:transparent;' +
 	'color:#000;' +
 	'position:' +
 	'relative;' +
-	'z-index: 2;' +
+	'z-index:2;' +
 	'user-select:auto;' +
 	'margin:0px;' +
 	'overflow:auto;' +
 	'}' +
 	'table{' +
 	'width:100%;' +
-	'border: none;' +
+	'border:none;' +
 	'border-collapse:collapse;' +
 	'empty-cells: show;' +
 	'max-width: 100%;' +

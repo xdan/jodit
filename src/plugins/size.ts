@@ -53,7 +53,22 @@ export function size(editor: IJodit) {
 				h: 0
 			};
 
-		let isResized: boolean = false;
+		let isResized: boolean = false,
+			onMouseMove = editor.async.throttle((e: MouseEvent) => {
+				if (isResized) {
+					if (editor.options.allowResizeY) {
+						setHeight(start.h + e.clientY - start.y);
+					}
+
+					if (editor.options.allowResizeX) {
+						setWidth(start.w + e.clientX - start.x);
+					}
+
+					resizeWorkspaceImd();
+
+					editor.events.fire('resize');
+				}
+			}, editor.defaultTimeout / 10);
 
 		editor.events
 			.on(handle, 'mousedown touchstart', (e: MouseEvent) => {
@@ -65,30 +80,25 @@ export function size(editor: IJodit) {
 				start.h = editor.container.offsetHeight;
 
 				editor.lock();
+
+				editor.events.on(
+					editor.ownerWindow,
+					'mousemove touchmove',
+					onMouseMove
+				);
+
 				e.preventDefault();
 			})
-			.on(
-				editor.ownerWindow,
-				'mousemove touchmove',
-				editor.async.throttle((e: MouseEvent) => {
-					if (isResized) {
-						if (editor.options.allowResizeY) {
-							setHeight(start.h + e.clientY - start.y);
-						}
-
-						if (editor.options.allowResizeX) {
-							setWidth(start.w + e.clientX - start.x);
-						}
-
-						resizeWorkspaceImd();
-
-						editor.events.fire('resize');
-					}
-				}, editor.defaultTimeout / 10)
-			)
 			.on(editor.ownerWindow, 'mouseup touchsend', () => {
 				if (isResized) {
 					isResized = false;
+
+					editor.events.off(
+						editor.ownerWindow,
+						'mousemove touchmove',
+						onMouseMove
+					);
+
 					editor.unlock();
 				}
 			})

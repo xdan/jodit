@@ -73,6 +73,7 @@ export class tooltip extends Plugin {
 		if (this.isOpened) {
 			this.isOpened = false;
 			this.container.classList.remove('jodit_tooltip_visible');
+
 			css(this.container, {
 				left: -5000,
 				position: 'fixed'

@@ -66,6 +66,12 @@ export class DragAndDropElement extends Plugin {
 
 		this.draggable = last.cloneNode(true) as HTMLElement;
 		dataBind(this.draggable, 'target', last);
+
+		this.jodit.events.on(
+			this.jodit.editor,
+			'mousemove touchmove',
+			this.onDrag
+		);
 	};
 
 	private onDrag = this.jodit.async.throttle((event: DragEvent) => {
@@ -119,6 +125,12 @@ export class DragAndDropElement extends Plugin {
 			Dom.safeRemove(this.draggable);
 			this.draggable = null;
 			this.wasMoved = false;
+
+			this.jodit.events.off(
+				this.jodit.editor,
+				'mousemove touchmove',
+				this.onDrag
+			);
 		}
 	};
 
@@ -157,7 +169,6 @@ export class DragAndDropElement extends Plugin {
 		}
 
 		this.jodit.events
-			.on(this.jodit.editor, 'mousemove touchmove', this.onDrag)
 			.on(
 				this.jodit.editor,
 				'mousedown touchstart dragstart',

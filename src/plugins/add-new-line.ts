@@ -18,6 +18,7 @@ declare module '../Config' {
 		addNewLine: boolean;
 		addNewLineTagsTriggers: string[];
 		addNewLineOnDBLClick: boolean;
+		addNewLineDeltaShow: number;
 	}
 }
 
@@ -45,6 +46,12 @@ Config.prototype.addNewLineTagsTriggers = [
 	'jodit'
 ];
 
+/**
+ * Absolute delta between cursor position and edge(top or bottom)
+ * of element when show line
+ */
+Config.prototype.addNewLineDeltaShow = 20;
+
 const ns = 'addnewline';
 
 /**
@@ -61,7 +68,6 @@ export class addNewLine extends Plugin {
 		)}</span></div>`
 	) as HTMLDivElement;
 
-	private delta = 10;
 	private isMatchedTag = new RegExp(
 		'^(' + this.jodit.options.addNewLineTagsTriggers.join('|') + ')$',
 		'i'
@@ -142,7 +148,7 @@ export class addNewLine extends Plugin {
 			.on(this.line, 'mouseleave', () => {
 				this.lineInFocus = false;
 			})
-			.on('changePlace', this.addEventListeners);
+			.on('changePlace', this.addEventListeners.bind(this));
 
 		this.addEventListeners();
 	}
@@ -164,7 +170,7 @@ export class addNewLine extends Plugin {
 			.on(
 				editor.editor,
 				'mousemove' + '.' + ns,
-				editor.async.debounce(this.onMouseMove, editor.defaultTimeout)
+				editor.async.debounce(this.onMouseMove, editor.defaultTimeout * 3)
 			);
 	}
 
@@ -268,16 +274,25 @@ export class addNewLine extends Plugin {
 			}
 		}
 
-		const pos = position(currentElement);
+		const pos = position(currentElement, this.jodit);
 
 		let top: false | number = false;
 
-		if (Math.abs(e.clientY - pos.top) < this.delta) {
+		let { clientY } = e;
+
+		if (this.jodit.iframe) {
+			const { top } = position(this.jodit.iframe, this.jodit, true);
+			clientY += top;
+		}
+
+		const delta = this.jodit.options.addNewLineDeltaShow;
+
+		if (Math.abs(clientY - pos.top) <= delta) {
 			top = pos.top;
 			this.preview = true;
 		}
 
-		if (Math.abs(e.clientY - (pos.top + pos.height)) < this.delta) {
+		if (Math.abs(clientY - (pos.top + pos.height)) <= delta) {
 			top = pos.top + pos.height;
 			this.preview = false;
 		}

@@ -71,10 +71,7 @@ export class Snapshot extends Component<IJodit> {
 		while (Dom.isText(elm)) {
 			elm = elm.previousSibling;
 
-			if (
-				Dom.isText(elm) &&
-				elm.textContent !== null
-			) {
+			if (Dom.isText(elm) && elm.textContent !== null) {
 				offset += elm.textContent.length;
 			}
 		}
@@ -193,16 +190,32 @@ export class Snapshot extends Component<IJodit> {
 	 */
 	restore(snapshot: SnapshotType) {
 		this.isBlocked = true;
-		this.jodit.setEditorValue(snapshot.html);
 
+		const value = this.jodit.getNativeEditorValue();
+		if (value !== snapshot.html) {
+			this.jodit.setEditorValue(snapshot.html);
+		}
+
+		this.restoreOnlySelection(snapshot);
+		this.isBlocked = false;
+	}
+
+	/**
+	 * Restore selection from snapshot
+	 *
+	 * @param {object} snapshot - snapshot of editor resulting from the `{@link Snapshot~make|make}`
+	 * @see make
+	 */
+	restoreOnlySelection(snapshot: SnapshotType): void {
 		try {
 			if (snapshot.range) {
-				const range: Range = this.jodit.editorDocument.createRange();
+				const range = this.jodit.editorDocument.createRange();
 
 				range.setStart(
 					this.getElementByLadder(snapshot.range.startContainer),
 					snapshot.range.startOffset
 				);
+
 				range.setEnd(
 					this.getElementByLadder(snapshot.range.endContainer),
 					snapshot.range.endOffset
@@ -220,8 +233,6 @@ export class Snapshot extends Component<IJodit> {
 				console.warn('Broken snapshot', __ignore);
 			}
 		}
-
-		this.isBlocked = false;
 	}
 
 	destruct(): any {

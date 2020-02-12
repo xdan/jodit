@@ -144,6 +144,9 @@ export class Dialog extends ViewWithToolbar {
 
 	private onMouseUp = () => {
 		if (this.draggable || this.resizable) {
+			this.events
+				.off(this.window, 'mousemove', this.onMouseMove);
+
 			this.draggable = false;
 			this.resizable = false;
 			this.unlockSelect();
@@ -163,12 +166,14 @@ export class Dialog extends ViewWithToolbar {
 	 */
 	private onHeaderMouseDown = (e: MouseEvent) => {
 		const target: HTMLElement = e.target as HTMLElement;
+
 		if (
 			!this.options.draggable ||
 			(target && target.nodeName.match(/^(INPUT|SELECT)$/))
 		) {
 			return;
 		}
+
 		this.draggable = true;
 		this.startX = e.clientX;
 		this.startY = e.clientY;
@@ -179,6 +184,9 @@ export class Dialog extends ViewWithToolbar {
 		e.preventDefault();
 
 		this.lockSelect();
+
+		this.events
+			.on(this.window, 'mousemove', this.onMouseMove);
 
 		if (this.jodit && this.jodit.events) {
 			/**
@@ -712,7 +720,6 @@ export class Dialog extends ViewWithToolbar {
 		self.toolbar.build(self.options.buttons, self.dialogbox_toolbar);
 
 		self.events
-			.on(this.window, 'mousemove', self.onMouseMove)
 			.on(this.window, 'mouseup', self.onMouseUp)
 			.on(this.window, 'keydown', self.onKeyDown)
 			.on(this.window, 'resize', self.onResize);

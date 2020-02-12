@@ -24,32 +24,23 @@ describe('Drag and drop element inside Editor', function() {
 
 						window.scrollTo(0, 1000000);
 
-						const box = Jodit.modules.Helpers.offset(
+						const box = Jodit.modules.Helpers.position(
 							editor.editor.querySelectorAll('p')[1],
-							editor,
-							editor.editorDocument
+							editor
 						);
-
-						// createPoint(box.left + 15, box.top + 5);
 
 						simulateEvent(events[1], 0, editor.editor, function(
 							options
 						) {
 							options.clientX = box.left + 15;
-							options.clientY =
-								box.top +
-								5 -
-								document.documentElement.scrollTop;
+							options.clientY = box.top + 5;
 						});
 
 						simulateEvent(events[2], 0, editor.editor, function(
 							options
 						) {
-							options.clientX = box.left + 20;
-							options.clientY =
-								box.top +
-								5 -
-								document.documentElement.scrollTop;
+							options.clientX = box.left + 15;
+							options.clientY = box.top + 5;
 						});
 
 						const result =
@@ -82,26 +73,23 @@ describe('Drag and drop element inside Editor', function() {
 
 					window.scrollTo(0, 1000000);
 
-					const box = Jodit.modules.Helpers.offset(
+					const box = Jodit.modules.Helpers.position(
 						editor.editor.querySelectorAll('p')[1],
-						editor,
-						editor.editorDocument
+						editor
 					);
 
 					simulateEvent(events[1], 0, editor.editor, function(
 						options
 					) {
 						options.clientX = box.left + 15;
-						options.clientY =
-							box.top + 5 - document.documentElement.scrollTop;
+						options.clientY = box.top + 5;
 					});
 
 					simulateEvent(events[2], 0, editor.editor, function(
 						options
 					) {
 						options.clientX = box.left + 20;
-						options.clientY =
-							box.top + 5 - document.documentElement.scrollTop;
+						options.clientY = box.top + 5;
 					});
 
 					expect(editor.value).equals(
@@ -131,31 +119,26 @@ describe('Drag and drop element inside Editor', function() {
 						editor.editor.getElementsByTagName('img')[0]
 					);
 
-					const box = Jodit.modules.Helpers.offset(
+					const box = Jodit.modules.Helpers.position(
 						editor.editor.querySelectorAll('p')[1],
-						editor,
-						editor.editorDocument
+						editor
 					);
 
 					simulateEvent(events[1], 0, editor.editor, function(
 						options
 					) {
 						options.clientX = box.left + 15;
-						options.clientY =
-							box.top + 5 - document.documentElement.scrollTop;
+						options.clientY = box.top + 5;
 					});
 					simulateEvent(events[2], 0, editor.editor, function(
 						options
 					) {
 						options.clientX = box.left + 20;
-						options.clientY =
-							box.top + 5 - document.documentElement.scrollTop;
+						options.clientY = box.top + 5;
 					});
 
 					expect(editor.value).equals(defaultValue);
 				});
 			});
 		});
-
-	afterEach(removeStuff);
 });

@@ -327,14 +327,28 @@ describe('Test plugins', function() {
 			).equals(0);
 		});
 
+		const moveCursorUnder = function (editor, elm) {
+			simulateEvent('mousemove', 0, editor.editor, function(e) {
+				const pos = Jodit.modules.Helpers.position(
+					elm,
+					editor
+				);
+
+				e.clientX = pos.left + 5;
+				e.clientY = pos.top + 5;
+			});
+		};
+
 		it('Should show .jodit-add-new-line after user move mouse under Table,Ifrmae or IMG ', function() {
 			const editor = new Jodit(appendTestArea());
 			editor.value =
 				'<table>' +
+				'<tbody>' +
 				'<tr><td>1</td></tr>' +
 				'<tr><td>2</td></tr>' +
 				'<tr><td>3</td></tr>' +
 				'<tr><td>4</td></tr>' +
+				'</tbody>' +
 				'</table>';
 
 			window.scrollTo(
@@ -346,16 +360,7 @@ describe('Test plugins', function() {
 				).top
 			); // elementFromPoint works only with visible part of view
 
-			simulateEvent('mousemove', 0, editor.editor, function(e) {
-				const pos = Jodit.modules.Helpers.offset(
-					editor.editor.firstChild,
-					editor,
-					editor.editorDocument
-				);
-				e.pageX = pos.left + 5;
-				e.pageY = pos.top + 5;
-				// createPoint(e.pageX, e.pageY)
-			});
+			moveCursorUnder(editor, editor.editor.firstChild);
 
 			const newline = editor.container.querySelector(
 				'.jodit-add-new-line'
@@ -387,15 +392,7 @@ describe('Test plugins', function() {
 				).top
 			); // elementFromPoint works only with visible part of view
 
-			simulateEvent('mousemove', 0, editor.editor, function(data) {
-				const pos = Jodit.modules.Helpers.offset(
-					editor.editor.firstChild,
-					editor,
-					editor.editorDocument
-				);
-				data.pageX = pos.left + 5;
-				data.pageY = pos.top + 5;
-			});
+			moveCursorUnder(editor, editor.editor.firstChild);
 
 			const newline = editor.container.querySelector(
 				'.jodit-add-new-line'
@@ -436,13 +433,13 @@ describe('Test plugins', function() {
 			); // elementFromPoint works only with visible part of view
 
 			simulateEvent('mousemove', 0, editor.editor, function(data) {
-				const pos = Jodit.modules.Helpers.offset(
+				const pos = Jodit.modules.Helpers.position(
 					editor.editor.firstChild,
-					editor,
-					editor.editorDocument
+					editor
 				);
-				data.pageX = pos.left + 5;
-				data.pageY = pos.top + (pos.height - 5);
+
+				data.clientX = pos.left + 5;
+				data.clientY = pos.top + (pos.height - 5);
 			});
 
 			const newline = editor.container.querySelector(
@@ -484,13 +481,13 @@ describe('Test plugins', function() {
 			); // elementFromPoint works only with visible part of view
 
 			simulateEvent('mousemove', 0, editor.editor, function(data) {
-				const pos = Jodit.modules.Helpers.offset(
+				const pos = Jodit.modules.Helpers.position(
 					editor.editor.firstChild,
-					editor,
-					editor.editorDocument
+					editor
 				);
-				data.pageX = pos.left + 5;
-				data.pageY = pos.top + (pos.height - 5);
+
+				data.clientX = pos.left + 5;
+				data.clientY = pos.top + (pos.height - 5);
 			});
 
 			const newline = editor.container.querySelector(
@@ -530,15 +527,7 @@ describe('Test plugins', function() {
 				const img = editor.editor.querySelector('img');
 				expect(null).does.not.equal(img);
 
-				simulateEvent('mousemove', 0, editor.editor, function(e) {
-					const pos = Jodit.modules.Helpers.offset(
-						img,
-						editor,
-						editor.editorDocument
-					);
-					e.pageX = pos.left + 5;
-					e.pageY = pos.top + 5;
-				});
+				moveCursorUnder(editor, img);
 
 				const newline = editor.container.querySelector(
 					'.jodit-add-new-line'
