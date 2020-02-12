@@ -1441,8 +1441,11 @@ export class Select {
 		const cursorOnTheRight = this.cursorOnTheRight(currentBox);
 		const cursorOnTheLeft = this.cursorOnTheLeft(currentBox);
 
+		let br: HTMLElement | null = null;
+
 		if (cursorOnTheRight || cursorOnTheLeft) {
-			const br = this.jodit.create.inside.element('br');
+			br = this.jodit.create.inside.element('br');
+
 			range.insertNode(br);
 
 			const clearBR = (
@@ -1486,7 +1489,15 @@ export class Select {
 		if (currentBox.parentNode) {
 			try {
 				currentBox.parentNode.insertBefore(fragment, currentBox);
-			} catch {}
+
+				if (br && br.parentNode) {
+					const range = this.createRange();
+					range.setStartBefore(br);
+					this.selectRange(range);
+				}
+			} catch(e) {
+				console.log(e)
+			}
 		}
 
 		return currentBox.previousElementSibling;
