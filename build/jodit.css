@@ -1,7 +1,7 @@
 /*!
  jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- Version: v3.3.22
+ Version: v3.3.23
  Url: https://xdsoft.net/jodit/
  License(s): MIT
 */
@@ -1918,52 +1918,46 @@ svg.jodit_icon{
 }
 .jodit-add-new-line{
   z-index:1;
-  position:absolute;
-  height:20px;
-  line-height:100%;
-  vertical-align:middle;
-  font-size:0;
+  position:fixed;
+  height:1px;
   top:0;
   outline:none;
-  margin-top:-10px;
   display:block;
 }
 .jodit-add-new-line,.jodit-add-new-line *{
   box-sizing:border-box;
 }
-.jodit-add-new-line:before{
-  height:100%;
-}
-.jodit-add-new-line:after,.jodit-add-new-line:before{
-  display:inline-block;
-  vertical-align:middle;
-  content:"";
-}
 .jodit-add-new-line:after{
-  box-sizing:border-box;
-  border-top:1px solid #ddd;
+  content:"";
+  background-color:#ddd;
   height:1px;
+  display:block;
   width:calc(100% - 30px);
 }
 .jodit-add-new-line span{
-  right:0;
   position:absolute;
-  display:inline-block;
+  right:0;
+  display:-ms-flexbox;
+  display:flex;
+  -ms-flex-pack:center;
+      justify-content:center;
+  -ms-flex-align:center;
+      align-items:center;
   width:30px;
   height:20px;
   background:rgba(236, 235, 233, .3);
-  vertical-align:top;
   border:1px solid #ddd;
-  padding:0 5px;
   cursor:pointer;
 }
 .jodit-add-new-line span:hover{
   background:#ecebe9;
 }
+.jodit-add-new-line_after span{
+  bottom:0;
+}
 .jodit-add-new-line svg{
   width:16px;
   fill:#ddd;
-  vertical-align:top;
 }
 .jodit_source_mode .jodit-add-new-line{
   display:none !important;
@@ -2159,7 +2153,6 @@ html.jodit_fullsize_box{
   border:1px solid rgba(3, 14, 82, .92);
   top:0;
   left:0;
-  display:none;
   pointer-events:none;
   font-size:0;
 }

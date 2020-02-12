@@ -1,7 +1,7 @@
 /*!
  jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- Version: v3.3.22
+ Version: v3.3.23
  Url: https://xdsoft.net/jodit/
  License(s): MIT
 */
@@ -792,6 +792,7 @@ __webpack_require__.d(helpers_namespaceObject, "normalizeColor", function() { re
 __webpack_require__.d(helpers_namespaceObject, "getContentWidth", function() { return getContentWidth; });
 __webpack_require__.d(helpers_namespaceObject, "innerWidth", function() { return innerWidth_innerWidth; });
 __webpack_require__.d(helpers_namespaceObject, "offset", function() { return offset_offset; });
+__webpack_require__.d(helpers_namespaceObject, "position", function() { return position; });
 __webpack_require__.d(helpers_namespaceObject, "camelCase", function() { return camelCase; });
 __webpack_require__.d(helpers_namespaceObject, "fromCamelCase", function() { return fromCamelCase; });
 __webpack_require__.d(helpers_namespaceObject, "trim", function() { return trim; });
@@ -827,7 +828,7 @@ __webpack_require__.d(helpers_namespaceObject, "error", function() { return type
 __webpack_require__.d(helpers_namespaceObject, "val", function() { return val_val; });
 var plugins_namespaceObject = {};
 __webpack_require__.r(plugins_namespaceObject);
-__webpack_require__.d(plugins_namespaceObject, "addNewLine", function() { return addNewLine; });
+__webpack_require__.d(plugins_namespaceObject, "addNewLine", function() { return add_new_line_addNewLine; });
 __webpack_require__.d(plugins_namespaceObject, "autofocus", function() { return autofocus; });
 __webpack_require__.d(plugins_namespaceObject, "backspace", function() { return backspace_backspace; });
 __webpack_require__.d(plugins_namespaceObject, "bold", function() { return bold; });
@@ -857,7 +858,7 @@ __webpack_require__.d(plugins_namespaceObject, "mobile", function() { return mob
 __webpack_require__.d(plugins_namespaceObject, "orderedlist", function() { return orderedlist; });
 __webpack_require__.d(plugins_namespaceObject, "placeholder", function() { return placeholder_placeholder; });
 __webpack_require__.d(plugins_namespaceObject, "redoundo", function() { return redoundo_redoundo; });
-__webpack_require__.d(plugins_namespaceObject, "resizer", function() { return resizer; });
+__webpack_require__.d(plugins_namespaceObject, "resizer", function() { return resizer_resizer; });
 __webpack_require__.d(plugins_namespaceObject, "search", function() { return search_search; });
 __webpack_require__.d(plugins_namespaceObject, "size", function() { return size_size; });
 __webpack_require__.d(plugins_namespaceObject, "source", function() { return source_source; });
@@ -876,7 +877,7 @@ __webpack_require__.d(modules_namespaceObject, "Component", function() { return 
 __webpack_require__.d(modules_namespaceObject, "ContextMenu", function() { return ContextMenu_ContextMenu; });
 __webpack_require__.d(modules_namespaceObject, "Alert", function() { return Alert; });
 __webpack_require__.d(modules_namespaceObject, "Confirm", function() { return Confirm; });
-__webpack_require__.d(modules_namespaceObject, "Promt", function() { return Promt; });
+__webpack_require__.d(modules_namespaceObject, "Prompt", function() { return Prompt; });
 __webpack_require__.d(modules_namespaceObject, "Dialog", function() { return dialog_Dialog; });
 __webpack_require__.d(modules_namespaceObject, "Dom", function() { return Dom_Dom; });
 __webpack_require__.d(modules_namespaceObject, "Plugin", function() { return Plugin_Plugin; });
@@ -2310,12 +2311,43 @@ const offset_offset = (elm, jodit, doc, recurse = false) => {
     };
 };
 
+// CONCATENATED MODULE: ./src/modules/helpers/size/position.ts
+function position(elm, jodit, recurse = false) {
+    var _a;
+    let xPos = 0, yPos = 0, el = elm;
+    const doc = elm.ownerDocument || ((_a = jodit) === null || _a === void 0 ? void 0 : _a.ownerDocument) || document;
+    while (el) {
+        if (el.tagName == 'BODY') {
+            const xScroll = el.scrollLeft || doc.documentElement.scrollLeft, yScroll = el.scrollTop || doc.documentElement.scrollTop;
+            xPos += el.offsetLeft - xScroll + el.clientLeft;
+            yPos += el.offsetTop - yScroll + el.clientTop;
+        }
+        else {
+            xPos += el.offsetLeft - el.scrollLeft + el.clientLeft;
+            yPos += el.offsetTop - el.scrollTop + el.clientTop;
+        }
+        el = el.offsetParent;
+    }
+    if (jodit && jodit.iframe && !recurse) {
+        const { left, top } = position(jodit.iframe, jodit, true);
+        xPos += left;
+        yPos += top;
+    }
+    return {
+        left: xPos,
+        top: yPos,
+        width: elm.offsetWidth,
+        height: elm.offsetHeight
+    };
+}
+
 // CONCATENATED MODULE: ./src/modules/helpers/size/index.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
 
 
 
@@ -2857,6 +2889,9 @@ class Dom_Dom {
     }
     static isElement(node) {
         return Boolean(node && node.nodeType === Node.ELEMENT_NODE);
+    }
+    static isHTMLElement(node, win) {
+        return Dom_Dom.isNode(node, win) && node instanceof win.HTMLElement;
     }
     static isInlineBlock(node) {
         return (Dom_Dom.isElement(node) &&
@@ -3950,6 +3985,9 @@ Config_Config.prototype.controls = {
         tooltip: 'Insert youtube/vimeo video'
     }
 };
+function configFactory(options) {
+    return new OptionsDefault(options);
+}
 
 // CONCATENATED MODULE: ./src/modules/Component.ts
 /*!
@@ -4043,8 +4081,7 @@ class Snapshot_Snapshot extends Component_Component {
     static strokeOffset(elm, offset) {
         while (Dom_Dom.isText(elm)) {
             elm = elm.previousSibling;
-            if (Dom_Dom.isText(elm) &&
-                elm.textContent !== null) {
+            if (Dom_Dom.isText(elm) && elm.textContent !== null) {
                 offset += elm.textContent.length;
             }
         }
@@ -4106,7 +4143,14 @@ class Snapshot_Snapshot extends Component_Component {
     }
     restore(snapshot) {
         this.isBlocked = true;
-        this.jodit.setEditorValue(snapshot.html);
+        const value = this.jodit.getNativeEditorValue();
+        if (value !== snapshot.html) {
+            this.jodit.setEditorValue(snapshot.html);
+        }
+        this.restoreOnlySelection(snapshot);
+        this.isBlocked = false;
+    }
+    restoreOnlySelection(snapshot) {
         try {
             if (snapshot.range) {
                 const range = this.jodit.editorDocument.createRange();
@@ -4120,7 +4164,6 @@ class Snapshot_Snapshot extends Component_Component {
                 this.jodit.selection.setCursorAfter(this.jodit.editor.lastChild);
             if (false) {}
         }
-        this.isBlocked = false;
     }
     destruct() {
         this.isBlocked = false;
@@ -5095,8 +5138,9 @@ class Selection_Select {
         leftRange.setStartBefore(currentBox);
         const cursorOnTheRight = this.cursorOnTheRight(currentBox);
         const cursorOnTheLeft = this.cursorOnTheLeft(currentBox);
+        let br = null;
         if (cursorOnTheRight || cursorOnTheLeft) {
-            const br = this.jodit.create.inside.element('br');
+            br = this.jodit.create.inside.element('br');
             range.insertNode(br);
             const clearBR = (start, getNext) => {
                 let next = getNext(start);
@@ -5130,8 +5174,15 @@ class Selection_Select {
         if (currentBox.parentNode) {
             try {
                 currentBox.parentNode.insertBefore(fragment, currentBox);
+                if (cursorOnTheRight && br && br.parentNode) {
+                    const range = this.createRange();
+                    range.setStartBefore(br);
+                    this.selectRange(range);
+                }
             }
-            catch (_a) { }
+            catch (e) {
+                console.log(e);
+            }
         }
         return currentBox.previousElementSibling;
     }
@@ -5944,14 +5995,15 @@ class Async_Async {
         this.timers.delete(timer);
     }
     debounce(fn, timeout) {
-        let timer = 0;
+        let timer = 0, lastArgs;
         return (...args) => {
+            lastArgs = args;
             if (!timeout) {
-                fn(...args);
+                fn(...lastArgs);
             }
             else {
                 setTimeout_clearTimeout(timer);
-                timer = this.setTimeout(() => fn(...args), timeout);
+                timer = this.setTimeout(() => fn(...lastArgs), timeout);
                 this.timers.set(fn, timer);
             }
         };
@@ -6076,7 +6128,7 @@ class view_View extends panel_Panel {
         var _a, _b, _c;
         super(jodit, options);
         this.components = new Set();
-        this.version = "3.3.22";
+        this.version = "3.3.23";
         this.__modulesInstances = {};
         this.buffer = storage_Storage.makeStorage();
         this.progressbar = new ProgressBar_ProgressBar(this);
@@ -6998,7 +7050,7 @@ class viewWithToolbar_ViewWithToolbar extends view_View {
             toolbarContainer = this.create.div('jodit_toolbar_container');
             Dom_Dom.appendChildFirst(container, toolbarContainer);
         }
-        if (this.options.toolbar instanceof HTMLElement ||
+        if (Dom_Dom.isHTMLElement(this.options.toolbar, this.jodit.ownerWindow) ||
             typeof this.options.toolbar === 'string') {
             toolbarContainer = this.resolveElement(this.options.toolbar);
         }
@@ -7151,6 +7203,7 @@ class PluginSystem_PluginSystem {
 const SAFE_COUNT_CHANGE_CALL = 10;
 class Jodit_Jodit extends viewWithToolbar_ViewWithToolbar {
     constructor(element, options) {
+        var _a;
         super(undefined, options);
         this.getEditorText = markDeprecated(() => this.text, [
             'getEditorText',
@@ -7174,7 +7227,7 @@ class Jodit_Jodit extends viewWithToolbar_ViewWithToolbar {
             throw e;
         }
         this.setStatus(STATUSES.beforeInit);
-        if (this.options.events) {
+        if ((_a = this.options) === null || _a === void 0 ? void 0 : _a.events) {
             Object.keys(this.options.events).forEach((key) => this.events.on(key, this.options.events[key]));
         }
         this.events.on(this.ownerWindow, 'resize', () => {
@@ -7184,6 +7237,10 @@ class Jodit_Jodit extends viewWithToolbar_ViewWithToolbar {
         });
         this.selection = new Selection_Select(this);
         this.initPlugins();
+        this.events.on('changePlace', () => {
+            this.setReadOnly(this.options.readonly);
+            this.setDisabled(this.options.disabled);
+        });
         this.places.length = 0;
         const addPlaceResult = this.addPlace(element, options);
         Jodit_Jodit.instances[this.id] = this;
@@ -7286,6 +7343,12 @@ class Jodit_Jodit extends viewWithToolbar_ViewWithToolbar {
     }
     get editorDocument() {
         return this.currentPlace.editorWindow.document;
+    }
+    get options() {
+        return this.currentPlace.options;
+    }
+    set options(opt) {
+        this.setPlaceField('options', opt);
     }
     get uploader() {
         return this.getInstance('Uploader');
@@ -7585,7 +7648,7 @@ class Jodit_Jodit extends viewWithToolbar_ViewWithToolbar {
     afterInitHook() {
     }
     initOptions(options) {
-        this.options = new OptionsDefault(options);
+        this.options = configFactory(options);
     }
     initOwners() {
         this.editorWindow = this.options.ownerWindow;
@@ -7594,7 +7657,7 @@ class Jodit_Jodit extends viewWithToolbar_ViewWithToolbar {
     }
     addPlace(source, options) {
         const element = this.resolveElement(source);
-        if (!this.places.length) {
+        if (!this.isReady) {
             this.id =
                 element.getAttribute('id') || new Date().getTime().toString();
             Jodit_Jodit.instances[this.id] = this;
@@ -7656,6 +7719,7 @@ class Jodit_Jodit extends viewWithToolbar_ViewWithToolbar {
             container,
             workplace,
             statusbar,
+            options: this.isReady ? configFactory(options) : this.options,
             observer: new observer_Observer(this),
             editorWindow: this.ownerWindow
         };
@@ -7663,8 +7727,8 @@ class Jodit_Jodit extends viewWithToolbar_ViewWithToolbar {
         this.setCurrentPlace(currentPlace);
         this.places.push(currentPlace);
         this.setNativeEditorValue(this.getElementValue());
-        const opt = this.options;
         const initResult = this.initEditor(buffer);
+        const opt = this.options;
         const init = () => {
             if (opt.enableDragAndDropFileToEditor &&
                 opt.uploader &&
@@ -8256,12 +8320,42 @@ class ContextMenu_ContextMenu extends Component_Component {
     }
 }
 
+// CONCATENATED MODULE: ./src/modules/Plugin.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+class Plugin_Plugin extends Component_Component {
+    constructor(jodit) {
+        super(jodit);
+        this.destruct = this.destruct.bind(this, jodit);
+        jodit.events
+            .on('afterInit', this.afterInit.bind(this, jodit))
+            .on('beforeDestruct', this.destruct);
+    }
+    init(jodit) { }
+    destruct() {
+        var _a, _b;
+        if (!this.isDestructed) {
+            this.setStatus(STATUSES.beforeDestruct);
+            (_b = (_a = this.jodit) === null || _a === void 0 ? void 0 : _a.events) === null || _b === void 0 ? void 0 : _b.off('beforeDestruct', this.destruct);
+            this.beforeDestruct(this.jodit);
+            super.destruct();
+        }
+    }
+}
+
 // CONCATENATED MODULE: ./src/plugins/add-new-line.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
+
+
 
 
 
@@ -8275,93 +8369,56 @@ Config_Config.prototype.addNewLineTagsTriggers = [
     'hr',
     'jodit'
 ];
-function addNewLine(editor) {
-    if (!editor.options.addNewLine) {
-        return;
-    }
-    const line = editor.create.fromHTML('<div role="button" tabIndex="-1" title="' +
-        editor.i18n('Break') +
-        '" class="jodit-add-new-line"><span>' +
-        ToolbarIcon.getIcon('enter') +
-        '</span></div>');
-    const delta = 10;
-    const isMatchedTag = new RegExp('^(' + editor.options.addNewLineTagsTriggers.join('|') + ')$', 'i');
-    let timeout;
-    let hidden = false;
-    let preview = false;
-    let current;
-    let lineInFocus = false;
-    const show = () => {
-        if (editor.options.readonly || editor.isLocked()) {
-            return;
-        }
-        if (editor.container.classList.contains('jodit_popup_active')) {
-            return;
-        }
-        editor.async.clearTimeout(timeout);
-        line.classList.toggle('jodit-add-new-line_after', !preview);
-        editor.container.appendChild(line);
-        line.style.width = editor.editor.clientWidth + 'px';
-        hidden = false;
-    };
-    const hideForce = () => {
-        editor.async.clearTimeout(timeout);
-        lineInFocus = false;
-        Dom_Dom.safeRemove(line);
-        hidden = true;
-    };
-    const canGetFocus = (elm) => {
-        return (elm !== null &&
-            Dom_Dom.isBlock(elm, editor.editorWindow) &&
-            !/^(img|table|iframe|hr)$/i.test(elm.nodeName));
-    };
-    const hide = () => {
-        if (hidden || lineInFocus) {
-            return;
-        }
-        timeout = editor.async.setTimeout(hideForce, {
-            timeout: 500,
-            label: 'add-new-line-hide'
-        });
-    };
-    editor.events
-        .on('beforeDestruct', () => {
-        editor.async.clearTimeout(timeout);
-        Dom_Dom.safeRemove(line);
-        editor.events.off(line);
-    })
-        .on('afterInit', () => {
-        editor.events
-            .on(line, 'mousemove', (e) => {
-            e.stopPropagation();
-        })
-            .on(line, 'mousedown touchstart', (e) => {
+Config_Config.prototype.addNewLineDeltaShow = 20;
+const ns = 'addnewline';
+class add_new_line_addNewLine extends Plugin_Plugin {
+    constructor() {
+        super(...arguments);
+        this.line = this.jodit.create.fromHTML(`<div role="button" tabIndex="-1" title="${this.jodit.i18n('Break')}" class="jodit-add-new-line"><span>${ToolbarIcon.getIcon('enter')}</span></div>`);
+        this.isMatchedTag = new RegExp('^(' + this.jodit.options.addNewLineTagsTriggers.join('|') + ')$', 'i');
+        this.preview = false;
+        this.lineInFocus = false;
+        this.isShown = false;
+        this.hideForce = () => {
+            if (!this.isShown) {
+                return;
+            }
+            this.isShown = false;
+            this.jodit.async.clearTimeout(this.timeout);
+            this.lineInFocus = false;
+            Dom_Dom.safeRemove(this.line);
+        };
+        this.hide = () => {
+            if (!this.isShown || this.lineInFocus) {
+                return;
+            }
+            this.timeout = this.jodit.async.setTimeout(this.hideForce, {
+                timeout: 500,
+                label: 'add-new-line-hide'
+            });
+        };
+        this.canGetFocus = (elm) => {
+            return (elm !== null &&
+                Dom_Dom.isBlock(elm, this.jodit.editorWindow) &&
+                !/^(img|table|iframe|hr)$/i.test(elm.nodeName));
+        };
+        this.onClickLine = (e) => {
+            const editor = this.jodit;
             const p = editor.create.inside.element(editor.options.enter);
-            if (preview && current && current.parentNode) {
-                current.parentNode.insertBefore(p, current);
+            if (this.preview && this.current && this.current.parentNode) {
+                this.current.parentNode.insertBefore(p, this.current);
             }
             else {
                 editor.editor.appendChild(p);
             }
             editor.selection.setCursorIn(p);
+            scrollIntoView(p, editor.editor, editor.editorDocument);
             editor.events.fire('synchro');
-            hideForce();
+            this.hideForce();
             e.preventDefault();
-        });
-    })
-        .on('afterInit', () => {
-        editor.events
-            .on(editor.editor, 'scroll', hideForce)
-            .on('change', hideForce)
-            .on(editor.container, 'mouseleave', hide)
-            .on(line, 'mouseenter', () => {
-            clearTimeout(timeout);
-            lineInFocus = true;
-        })
-            .on(line, 'mouseleave', () => {
-            lineInFocus = false;
-        })
-            .on(editor.editor, 'dblclick', (e) => {
+        };
+        this.onDblClickEditor = (e) => {
+            const editor = this.jodit;
             if (!editor.options.readonly &&
                 editor.options.addNewLineOnDBLClick &&
                 e.target === editor.editor &&
@@ -8379,68 +8436,120 @@ function addNewLine(editor) {
                 }
                 editor.selection.setCursorIn(p);
                 editor.setEditorValue();
-                hideForce();
+                this.hideForce();
                 e.preventDefault();
             }
-        })
-            .on(editor.editor, 'mousemove', editor.async.debounce((e) => {
-            let currentElement = editor.editorDocument.elementFromPoint(e.pageX - editor.editorWindow.pageXOffset, e.pageY - editor.editorWindow.pageYOffset);
-            if (currentElement &&
-                Dom_Dom.isOrContains(line, currentElement)) {
+        };
+        this.onMouseMove = (e) => {
+            const editor = this.jodit;
+            let currentElement = editor.editorDocument.elementFromPoint(e.clientX, e.clientY);
+            if (!Dom_Dom.isHTMLElement(currentElement, editor.editorWindow) ||
+                Dom_Dom.isOrContains(this.line, currentElement)) {
                 return;
             }
-            if (!currentElement ||
-                !Dom_Dom.isOrContains(editor.editor, currentElement)) {
+            if (!Dom_Dom.isOrContains(editor.editor, currentElement)) {
                 return;
             }
-            if (!currentElement ||
-                !currentElement.nodeName.match(isMatchedTag) ||
-                !Dom_Dom.isOrContains(editor.editor, currentElement)) {
-                currentElement = Dom_Dom.closest(currentElement, isMatchedTag, editor.editor);
-                if (!currentElement) {
-                    hide();
-                    return;
-                }
+            if (!this.isMatchedTag.test(currentElement.nodeName)) {
+                currentElement = Dom_Dom.closest(currentElement, this.isMatchedTag, editor.editor);
             }
-            if (isMatchedTag.test(currentElement.nodeName)) {
+            if (!currentElement) {
+                this.hide();
+                return;
+            }
+            if (this.isMatchedTag.test(currentElement.nodeName)) {
                 const parentBox = Dom_Dom.up(currentElement, node => Dom_Dom.isBlock(node, editor.editorWindow), editor.editor);
                 if (parentBox && parentBox !== editor.editor) {
                     currentElement = parentBox;
                 }
             }
-            const editorBound = offset_offset(editor.editor, editor, editor.editorDocument);
-            const position = offset_offset(currentElement, editor, editor.editorDocument);
+            const pos = position(currentElement, this.jodit);
             let top = false;
-            if (Math.abs(e.pageY - position.top) < delta) {
-                top = position.top;
-                if (top - editorBound.top >= 20) {
-                    top -= 15;
-                }
-                preview = true;
+            let { clientY } = e;
+            if (this.jodit.iframe) {
+                const { top } = position(this.jodit.iframe, this.jodit, true);
+                clientY += top;
             }
-            if (Math.abs(e.pageY - (position.top + position.height)) < delta) {
-                top = position.top + position.height;
-                if (editorBound.top + editorBound.height - top >=
-                    25) {
-                    top += 15;
-                }
-                preview = false;
+            const delta = this.jodit.options.addNewLineDeltaShow;
+            if (Math.abs(clientY - pos.top) <= delta) {
+                top = pos.top;
+                this.preview = true;
+            }
+            if (Math.abs(clientY - (pos.top + pos.height)) <= delta) {
+                top = pos.top + pos.height;
+                this.preview = false;
             }
             if (top !== false &&
-                ((preview &&
-                    !Dom_Dom.prev(currentElement, canGetFocus, editor.editor)) ||
-                    (!preview &&
-                        !Dom_Dom.next(currentElement, canGetFocus, editor.editor)))) {
-                line.style.top = top + 'px';
-                current = currentElement;
-                show();
+                !call(this.preview ? Dom_Dom.prev : Dom_Dom.next, currentElement, this.canGetFocus, editor.editor)) {
+                this.line.style.top = top + 'px';
+                this.current = currentElement;
+                this.show();
             }
             else {
-                current = false;
-                hide();
+                this.current = false;
+                this.hide();
             }
-        }, editor.defaultTimeout));
-    });
+        };
+    }
+    show() {
+        if (this.isShown ||
+            this.jodit.options.readonly ||
+            this.jodit.isLocked()) {
+            return;
+        }
+        this.isShown = true;
+        if (this.jodit.container.classList.contains('jodit_popup_active')) {
+            return;
+        }
+        this.jodit.async.clearTimeout(this.timeout);
+        this.line.classList.toggle('jodit-add-new-line_after', !this.preview);
+        this.jodit.container.appendChild(this.line);
+        this.line.style.width = this.jodit.editor.clientWidth + 'px';
+    }
+    afterInit(editor) {
+        if (!editor.options.addNewLine) {
+            return;
+        }
+        editor.events
+            .on(this.line, 'mousemove', (e) => {
+            e.stopPropagation();
+        })
+            .on(this.line, 'mousedown touchstart', this.onClickLine)
+            .on('change', this.hideForce)
+            .on(this.line, 'mouseenter', () => {
+            this.jodit.async.clearTimeout(this.timeout);
+            this.lineInFocus = true;
+        })
+            .on(this.line, 'mouseleave', () => {
+            this.lineInFocus = false;
+        })
+            .on('changePlace', this.addEventListeners.bind(this));
+        this.addEventListeners();
+    }
+    addEventListeners() {
+        const editor = this.jodit;
+        editor.events
+            .off(editor.editor, '.' + ns)
+            .off(editor.container, '.' + ns)
+            .on([editor.ownerWindow, editor.editorWindow, editor.editor], `scroll` + '.' + ns, this.hideForce)
+            .on(editor.editor, 'dblclick' + '.' + ns, this.onDblClickEditor)
+            .on(editor.editor, 'click' + '.' + ns, this.hide)
+            .on(editor.container, 'mouseleave' + '.' + ns, this.hide)
+            .on(editor.editor, 'mousemove' + '.' + ns, editor.async.debounce(this.onMouseMove, editor.defaultTimeout * 3));
+    }
+    beforeDestruct() {
+        this.jodit.async.clearTimeout(this.timeout);
+        this.jodit.events.off(this.line);
+        this.jodit.events.off('changePlace', this.addEventListeners);
+        Dom_Dom.safeRemove(this.line);
+        this.jodit.events
+            .off([
+            this.jodit.ownerWindow,
+            this.jodit.editorWindow,
+            this.jodit.editor
+        ], '.' + ns)
+            .off(this.jodit.container, '.' + ns);
+    }
 }
 
 // CONCATENATED MODULE: ./src/plugins/autofocus.ts
@@ -8480,33 +8589,6 @@ function autofocus(editor) {
             }
         });
     });
-}
-
-// CONCATENATED MODULE: ./src/modules/Plugin.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-class Plugin_Plugin extends Component_Component {
-    constructor(jodit) {
-        super(jodit);
-        this.destruct = this.destruct.bind(this, jodit);
-        jodit.events
-            .on('afterInit', this.afterInit.bind(this, jodit))
-            .on('beforeDestruct', this.destruct);
-    }
-    init(jodit) { }
-    destruct() {
-        var _a, _b;
-        if (!this.isDestructed) {
-            this.setStatus(STATUSES.beforeDestruct);
-            (_b = (_a = this.jodit) === null || _a === void 0 ? void 0 : _a.events) === null || _b === void 0 ? void 0 : _b.off('beforeDestruct', this.destruct);
-            this.beforeDestruct(this.jodit);
-            super.destruct();
-        }
-    }
 }
 
 // CONCATENATED MODULE: ./src/plugins/backspace.ts
@@ -10159,8 +10241,40 @@ class drag_and_drop_element_DragAndDropElement extends Plugin_Plugin {
         this.isCopyMode = false;
         this.draggable = null;
         this.wasMoved = false;
+        this.diffStep = 10;
+        this.startX = 0;
+        this.startY = 0;
+        this.onDragStart = (event) => {
+            let target = event.target, last = null;
+            if (!this.dragList.length) {
+                return;
+            }
+            do {
+                if (this.dragList.includes(target.nodeName.toLowerCase())) {
+                    if (!last ||
+                        (target.firstChild === last && target.lastChild === last)) {
+                        last = target;
+                    }
+                }
+                target = target.parentNode;
+            } while (target && target !== this.jodit.editor);
+            if (!last) {
+                return;
+            }
+            this.startX = event.clientX;
+            this.startY = event.clientY;
+            this.isCopyMode = ctrlKey(event);
+            this.onDragEnd();
+            this.draggable = last.cloneNode(true);
+            dataBind(this.draggable, 'target', last);
+            this.jodit.events.on(this.jodit.editor, 'mousemove touchmove', this.onDrag);
+        };
         this.onDrag = this.jodit.async.throttle((event) => {
             if (!this.draggable) {
+                return;
+            }
+            const x = event.clientX, y = event.clientY;
+            if (Math.sqrt(Math.pow(x - this.startX, 2) + Math.pow(y - this.startY, 2)) < this.diffStep) {
                 return;
             }
             this.wasMoved = true;
@@ -10184,28 +10298,6 @@ class drag_and_drop_element_DragAndDropElement extends Plugin_Plugin {
             });
             this.jodit.selection.insertCursorAtPoint(event.clientX, event.clientY);
         }, this.jodit.defaultTimeout);
-        this.onDragStart = (event) => {
-            let target = event.target, last = null;
-            if (!this.dragList.length) {
-                return;
-            }
-            do {
-                if (this.dragList.includes(target.nodeName.toLowerCase())) {
-                    if (!last ||
-                        (target.firstChild === last && target.lastChild === last)) {
-                        last = target;
-                    }
-                }
-                target = target.parentNode;
-            } while (target && target !== this.jodit.editor);
-            if (!last) {
-                return;
-            }
-            this.isCopyMode = ctrlKey(event);
-            this.onDragEnd();
-            this.draggable = last.cloneNode(true);
-            dataBind(this.draggable, 'target', last);
-        };
         this.onDragEnd = () => {
             if (this.isInDestruct) {
                 return;
@@ -10214,6 +10306,7 @@ class drag_and_drop_element_DragAndDropElement extends Plugin_Plugin {
                 Dom_Dom.safeRemove(this.draggable);
                 this.draggable = null;
                 this.wasMoved = false;
+                this.jodit.events.off(this.jodit.editor, 'mousemove touchmove', this.onDrag);
             }
         };
         this.onDrop = () => {
@@ -10243,10 +10336,9 @@ class drag_and_drop_element_DragAndDropElement extends Plugin_Plugin {
             return;
         }
         this.jodit.events
-            .on(this.jodit.editor, 'mousemove touchmove', this.onDrag)
             .on(this.jodit.editor, 'mousedown touchstart dragstart', this.onDragStart)
             .on('mouseup touchend', this.onDrop)
-            .on(window, 'mouseup touchend', this.onDragEnd);
+            .on([this.jodit.editorWindow, this.jodit.ownerWindow], 'mouseup touchend', this.onDragEnd);
     }
     beforeDestruct() {
         this.onDragEnd();
@@ -11001,26 +11093,28 @@ Config_Config.prototype.iframeDoctype = '<!DOCTYPE html>';
 Config_Config.prototype.iframeDefaultSrc = 'about:blank';
 Config_Config.prototype.iframeStyle =
     'html{' +
-        'margin: 0px;' +
+        'margin:0;' +
+        'padding:0;' +
         'min-height: 100%;' +
         '}' +
         'body{' +
-        'box-sizing: border-box;' +
-        'font-size: 13px;' +
-        '    line-height: 1.6;' +
+        'box-sizing:border-box;' +
+        'font-size:13px;' +
+        'line-height:1.6;' +
         'padding:10px;' +
+        'margin:0;' +
         'background:transparent;' +
         'color:#000;' +
         'position:' +
         'relative;' +
-        'z-index: 2;' +
+        'z-index:2;' +
         'user-select:auto;' +
         'margin:0px;' +
         'overflow:auto;' +
         '}' +
         'table{' +
         'width:100%;' +
-        'border: none;' +
+        'border:none;' +
         'border-collapse:collapse;' +
         'empty-cells: show;' +
         'max-width: 100%;' +
@@ -12902,44 +12996,49 @@ Config_Config.prototype.controls.right = {
     },
     tooltip: 'Align Right'
 };
-function justify(editor) {
-    const callback = (command) => {
-        const justifyElm = (box) => {
-            if (box instanceof editor.editorWindow.HTMLElement) {
-                switch (command.toLowerCase()) {
-                    case 'justifyfull':
-                        box.style.textAlign = 'justify';
-                        break;
-                    case 'justifyright':
-                        box.style.textAlign = 'right';
-                        break;
-                    case 'justifyleft':
-                        box.style.textAlign = 'left';
-                        break;
-                    case 'justifycenter':
-                        box.style.textAlign = 'center';
-                        break;
+const clearAlign = (node, editor) => {
+    Dom_Dom.each(node, (elm) => {
+        if (Dom_Dom.isHTMLElement(elm, editor.editorWindow)) {
+            if (elm.style.textAlign) {
+                elm.style.textAlign = '';
+                if (!elm.style.cssText.trim().length) {
+                    elm.removeAttribute('style');
                 }
             }
-        };
+        }
+    });
+};
+const alignElement = (command, box, editor) => {
+    if (Dom_Dom.isNode(box, editor.editorWindow) && Dom_Dom.isElement(box)) {
+        clearAlign(box, editor);
+        switch (command.toLowerCase()) {
+            case 'justifyfull':
+                box.style.textAlign = 'justify';
+                break;
+            case 'justifyright':
+                box.style.textAlign = 'right';
+                break;
+            case 'justifyleft':
+                box.style.textAlign = 'left';
+                break;
+            case 'justifycenter':
+                box.style.textAlign = 'center';
+                break;
+        }
+    }
+};
+function justify(editor) {
+    const callback = (command) => {
         editor.selection.focus();
         editor.selection.eachSelection((current) => {
             if (!current) {
-                if (editor.editor.querySelector('.jodit_selected_cell')) {
-                    $$('.jodit_selected_cell', editor.editor).forEach(justifyElm);
-                    return false;
-                }
-            }
-            if (!(current instanceof editor.editorWindow.Node)) {
                 return;
             }
-            let currentBox = current
-                ? Dom_Dom.up(current, node => Dom_Dom.isBlock(node, editor.editorWindow), editor.editor)
-                : false;
-            if (!currentBox && current) {
+            let currentBox = Dom_Dom.up(current, node => Dom_Dom.isBlock(node, editor.editorWindow), editor.editor);
+            if (!currentBox) {
                 currentBox = Dom_Dom.wrapInline(current, editor.options.enterBlock, editor);
             }
-            justifyElm(currentBox);
+            alignElement(command, currentBox, editor);
         });
         return false;
     };
@@ -13107,13 +13206,13 @@ Config_Config.prototype.controls.link = {
         else {
             Dom_Dom.hide(unlink);
         }
-        const selInfo = editor.selection.save();
+        const snapshot = editor.observer.snapshot.make();
         if (unlink) {
             editor.events.on(unlink, 'click', (e) => {
+                editor.observer.snapshot.restore(snapshot);
                 if (link) {
                     Dom_Dom.unwrap(link);
                 }
-                editor.selection.restore(selInfo);
                 close();
                 e.preventDefault();
             });
@@ -13127,7 +13226,7 @@ Config_Config.prototype.controls.link = {
                 return false;
             }
             let links;
-            editor.selection.restore(selInfo);
+            editor.observer.snapshot.restore(snapshot);
             const textWasChanged = getSelectionText() !== content_input.value.trim();
             if (!link) {
                 if (!editor.selection.isCollapsed()) {
@@ -13459,7 +13558,7 @@ class placeholder_placeholder extends Plugin_Plugin {
             editor.events
                 .off('.placeholder')
                 .on('change.placeholder focus.placeholder keyup.placeholder mouseup.placeholder keydown.placeholder ' +
-                'mousedown.placeholder afterSetMode.placeholder', this.toggle)
+                'mousedown.placeholder afterSetMode.placeholder changePlace.placeholder', this.toggle)
                 .on(window, 'load', this.toggle);
             this.toggle();
         };
@@ -13610,6 +13709,7 @@ class redoundo_redoundo extends Plugin_Plugin {
 
 
 
+
 Config_Config.prototype.useIframeResizer = true;
 Config_Config.prototype.useTableResizer = true;
 Config_Config.prototype.useImageResizer = true;
@@ -13619,284 +13719,218 @@ Config_Config.prototype.resizer = {
     min_width: 10,
     min_height: 10
 };
-function resizer(editor) {
-    const LOCK_KEY = 'resizer';
-    let handle, currentElement, resizeElementClicked = false, isResizing = false, start_x, start_y, width, height, ratio, new_h, new_w, diff_x, diff_y, resizerIsVisible = false;
-    const resizerElm = editor.create.fromHTML(`<div style="display:none" class="jodit_resizer">
+class resizer_resizer extends Plugin_Plugin {
+    constructor() {
+        super(...arguments);
+        this.LOCK_KEY = 'resizer';
+        this.element = null;
+        this.isResized = false;
+        this.isShown = false;
+        this.start_x = 0;
+        this.start_y = 0;
+        this.width = 0;
+        this.height = 0;
+        this.ratio = 0;
+        this.rect = this.jodit.create.fromHTML(`<div class="jodit_resizer">
 				<i class="jodit_resizer-topleft"></i>
 				<i class="jodit_resizer-topright"></i>
 				<i class="jodit_resizer-bottomright"></i>
 				<i class="jodit_resizer-bottomleft"></i>
 				<span>100x100</span>
-			</div>`), sizeViewer = resizerElm.getElementsByTagName('span')[0], hideResizer = () => {
-        isResizing = false;
-        resizerIsVisible = false;
-        currentElement = null;
-        resizerElm.style.display = 'none';
-    }, hideSizeViewer = () => {
-        sizeViewer.style.opacity = '0';
-    }, showSizeViewer = (w, h) => {
-        if (!editor.options.resizer.showSize) {
-            return;
-        }
-        if (w < sizeViewer.offsetWidth || h < sizeViewer.offsetHeight) {
-            hideSizeViewer();
-            return;
-        }
-        sizeViewer.style.opacity = '1';
-        sizeViewer.innerHTML = `${w} x ${h}`;
-        editor.async.setTimeout(hideSizeViewer, {
-            timeout: editor.options.resizer.hideSizeTimeout,
-            label: 'hideSizeViewer'
-        });
-    }, updateSize = () => {
-        if (editor.isInDestruct) {
-            return;
-        }
-        if (resizerIsVisible && currentElement && resizerElm) {
-            const workplacePosition = offset_offset((resizerElm.parentNode ||
-                editor.ownerDocument
-                    .documentElement), editor, editor.ownerDocument, true), pos = offset_offset(currentElement, editor, editor.editorDocument), left = parseInt(resizerElm.style.left || '0', 10), top = parseInt(resizerElm.style.top || '0', 10), w = resizerElm.offsetWidth, h = resizerElm.offsetHeight;
-            const newTop = pos.top - 1 - workplacePosition.top, newLeft = pos.left - 1 - workplacePosition.left;
-            if (top !== newTop ||
-                left !== newLeft ||
-                w !== currentElement.offsetWidth ||
-                h !== currentElement.offsetHeight) {
-                resizerElm.style.top = newTop + 'px';
-                resizerElm.style.left = newLeft + 'px';
-                resizerElm.style.width = currentElement.offsetWidth + 'px';
-                resizerElm.style.height =
-                    currentElement.offsetHeight + 'px';
-                if (editor.events) {
-                    editor.events.fire(currentElement, 'changesize');
-                    if (!isNaN(left)) {
-                        editor.events.fire('resize');
-                    }
-                }
-            }
-        }
-    }, showResizer = () => {
-        if (editor.options.readonly) {
-            return;
-        }
-        if (!resizerElm.parentNode) {
-            editor.markOwner(resizerElm);
-            editor.workplace.appendChild(resizerElm);
-        }
-        resizerIsVisible = true;
-        resizerElm.style.display = 'block';
-        if (editor.isFullSize()) {
-            resizerElm.style.zIndex = css_css(editor.container, 'zIndex').toString();
-        }
-        updateSize();
-    }, bind = (element) => {
-        let wrapper;
-        if (element.tagName === 'IFRAME') {
-            const iframe = element;
-            if (element.parentNode &&
-                element.parentNode.getAttribute('data-jodit_iframe_wrapper')) {
-                element = element.parentNode;
-            }
-            else {
-                wrapper = editor.create.inside.fromHTML('<jodit ' +
-                    'data-jodit-temp="1" ' +
-                    'contenteditable="false" ' +
-                    'draggable="true" ' +
-                    'data-jodit_iframe_wrapper="1"' +
-                    '></jodit>');
-                wrapper.style.display =
-                    element.style.display === 'inline-block'
-                        ? 'inline-block'
-                        : 'block';
-                wrapper.style.width = element.offsetWidth + 'px';
-                wrapper.style.height = element.offsetHeight + 'px';
-                if (element.parentNode) {
-                    element.parentNode.insertBefore(wrapper, element);
-                }
-                wrapper.appendChild(element);
-                element = wrapper;
-            }
-            editor.events
-                .off(element, 'mousedown.select touchstart.select')
-                .on(element, 'mousedown.select touchstart.select', () => {
-                editor.selection.select(element);
-            });
-            editor.events
-                .off(element, 'changesize')
-                .on(element, 'changesize', () => {
-                iframe.setAttribute('width', element.offsetWidth + 'px');
-                iframe.setAttribute('height', element.offsetHeight + 'px');
-            });
-        }
-        let timer;
-        editor.events
-            .on(element, 'dragstart', hideResizer)
-            .on(element, 'mousedown', (event) => {
-            if (IS_IE && Dom_Dom.isTag(element, 'img')) {
-                event.preventDefault();
-            }
-        })
-            .on(element, 'mousedown touchstart', () => {
-            if (!resizeElementClicked) {
-                resizeElementClicked = true;
-                currentElement = element;
-                showResizer();
-                if (currentElement.tagName === 'IMG' &&
-                    !currentElement.complete) {
-                    currentElement.addEventListener('load', function ElementOnLoad() {
-                        updateSize();
-                        if (currentElement) {
-                            currentElement.removeEventListener('load', ElementOnLoad);
-                        }
-                    });
-                }
-                editor.async.clearTimeout(timer);
-            }
-            timer = editor.async.setTimeout(() => {
-                resizeElementClicked = false;
-            }, 400);
-        });
-    };
-    $$('i', resizerElm).forEach((resizeHandle) => {
-        editor.events.on(resizeHandle, 'mousedown touchstart', (e) => {
-            if (!currentElement || !currentElement.parentNode) {
-                hideResizer();
-                return false;
-            }
-            handle = resizeHandle;
-            e.preventDefault();
-            e.stopImmediatePropagation();
-            width = currentElement.offsetWidth;
-            height = currentElement.offsetHeight;
-            ratio = width / height;
-            isResizing = true;
-            start_x = e.clientX;
-            start_y = e.clientY;
-            editor.events.fire('hidePopup');
-            editor.lock(LOCK_KEY);
-        });
-    });
-    editor.events
-        .on('readonly', (isReadOnly) => {
-        if (isReadOnly) {
-            hideResizer();
-        }
-    })
-        .on('beforeDestruct', () => {
-        Dom_Dom.safeRemove(resizerElm);
-    })
-        .on('afterInit changePlace', () => {
-        editor.events
-            .off(editor.editor, '.resizer')
-            .off(editor.ownerWindow, '.resizer')
-            .on(editor.editor, 'keydown.resizer', (e) => {
-            if (resizerIsVisible &&
-                e.which === KEY_DELETE &&
-                currentElement &&
-                currentElement.tagName.toLowerCase() !== 'table') {
-                if (currentElement.tagName !== 'JODIT') {
-                    editor.selection.select(currentElement);
-                }
-                else {
-                    Dom_Dom.safeRemove(currentElement);
-                    hideResizer();
-                    e.preventDefault();
-                }
-            }
-        })
-            .on(editor.ownerWindow, 'mousemove.resizer touchmove.resizer', (e) => {
-            if (isResizing) {
-                diff_x = e.clientX - start_x;
-                diff_y = e.clientY - start_y;
-                if (!currentElement) {
+			</div>`);
+        this.sizeViewer = this.rect.getElementsByTagName('span')[0];
+        this.onResize = (e) => {
+            if (this.isResized) {
+                const diff_x = e.clientX - this.start_x, diff_y = e.clientY - this.start_y;
+                if (!this.element) {
                     return;
                 }
-                const className = handle.className;
-                if ('IMG' === currentElement.tagName) {
+                const className = this.handle.className;
+                let new_w = 0, new_h = 0;
+                if (Dom_Dom.isTag(this.element, 'img')) {
                     if (diff_x) {
                         new_w =
-                            width +
-                                (className.match(/left/) ? -1 : 1) *
-                                    diff_x;
-                        new_h = Math.round(new_w / ratio);
+                            this.width +
+                                (className.match(/left/) ? -1 : 1) * diff_x;
+                        new_h = Math.round(new_w / this.ratio);
                     }
                     else {
                         new_h =
-                            height +
-                                (className.match(/top/) ? -1 : 1) *
-                                    diff_y;
-                        new_w = Math.round(new_h * ratio);
+                            this.height +
+                                (className.match(/top/) ? -1 : 1) * diff_y;
+                        new_w = Math.round(new_h * this.ratio);
                     }
                     if (new_w >
-                        innerWidth_innerWidth(editor.editor, editor.ownerWindow)) {
-                        new_w = innerWidth_innerWidth(editor.editor, editor.ownerWindow);
-                        new_h = Math.round(new_w / ratio);
+                        innerWidth_innerWidth(this.jodit.editor, this.jodit.ownerWindow)) {
+                        new_w = innerWidth_innerWidth(this.jodit.editor, this.jodit.ownerWindow);
+                        new_h = Math.round(new_w / this.ratio);
                     }
                 }
                 else {
                     new_w =
-                        width +
-                            (className.match(/left/) ? -1 : 1) * diff_x;
+                        this.width + (className.match(/left/) ? -1 : 1) * diff_x;
                     new_h =
-                        height +
-                            (className.match(/top/) ? -1 : 1) * diff_y;
+                        this.height + (className.match(/top/) ? -1 : 1) * diff_y;
                 }
-                if (new_w > editor.options.resizer.min_width) {
-                    if (new_w <
-                        resizerElm.parentNode
-                            .offsetWidth) {
-                        currentElement.style.width = new_w + 'px';
+                if (new_w > this.jodit.options.resizer.min_width) {
+                    if (new_w < this.rect.parentNode.offsetWidth) {
+                        css_css(this.element, 'width', new_w);
                     }
                     else {
-                        currentElement.style.width = '100%';
+                        css_css(this.element, 'width', '100%');
                     }
                 }
-                if (new_h > editor.options.resizer.min_height) {
-                    currentElement.style.height = new_h + 'px';
+                if (new_h > this.jodit.options.resizer.min_height) {
+                    css_css(this.element, 'height', new_h);
                 }
-                updateSize();
-                showSizeViewer(currentElement.offsetWidth, currentElement.offsetHeight);
+                this.updateSize();
+                this.showSizeViewer(this.element.offsetWidth, this.element.offsetHeight);
                 e.stopImmediatePropagation();
             }
-        })
-            .on(editor.ownerWindow, 'resize.resizer', () => {
-            if (resizerIsVisible) {
-                updateSize();
-            }
-        })
-            .on(editor.ownerWindow, 'mouseup.resizer keydown.resizer touchend.resizer', (e) => {
-            if (resizerIsVisible && !resizeElementClicked) {
-                if (isResizing) {
-                    editor.unlock();
-                    isResizing = false;
-                    editor.setEditorValue();
+        };
+        this.onClickOutside = (e) => {
+            if (this.isShown) {
+                if (this.isResized) {
+                    this.jodit.unlock();
+                    this.isResized = false;
+                    this.jodit.setEditorValue();
                     e.stopImmediatePropagation();
+                    this.jodit.events.off(this.jodit.ownerWindow, 'mousemove.resizer touchmove.resizer', this.onResize);
                 }
                 else {
-                    hideResizer();
+                    this.hide();
                 }
             }
+        };
+        this.onClickElement = (element) => {
+            if (this.element !== element || !this.isShown) {
+                this.element = element;
+                this.show();
+                if (Dom_Dom.isTag(this.element, 'img') && !this.element.complete) {
+                    this.jodit.events.on(this.element, 'load', this.updateSize);
+                }
+            }
+        };
+        this.updateSize = () => {
+            if (this.isInDestruct || !this.isShown) {
+                return;
+            }
+            if (this.element && this.rect) {
+                const workplacePosition = offset_offset((this.rect.parentNode ||
+                    this.jodit.ownerDocument
+                        .documentElement), this.jodit, this.jodit.ownerDocument, true), pos = offset_offset(this.element, this.jodit, this.jodit.editorDocument), left = parseInt(this.rect.style.left || '0', 10), top = parseInt(this.rect.style.top || '0', 10), w = this.rect.offsetWidth, h = this.rect.offsetHeight;
+                const newTop = pos.top - 1 - workplacePosition.top, newLeft = pos.left - 1 - workplacePosition.left;
+                if (top !== newTop ||
+                    left !== newLeft ||
+                    w !== this.element.offsetWidth ||
+                    h !== this.element.offsetHeight) {
+                    css_css(this.rect, {
+                        top: newTop,
+                        left: newLeft,
+                        width: this.element.offsetWidth,
+                        height: this.element.offsetHeight
+                    });
+                    if (this.jodit.events) {
+                        this.jodit.events.fire(this.element, 'changesize');
+                        if (!isNaN(left)) {
+                            this.jodit.events.fire('resize');
+                        }
+                    }
+                }
+            }
+        };
+        this.hide = () => {
+            this.isResized = false;
+            this.isShown = false;
+            this.element = null;
+            Dom_Dom.safeRemove(this.rect);
+        };
+        this.hideSizeViewer = () => {
+            this.sizeViewer.style.opacity = '0';
+        };
+    }
+    afterInit(editor) {
+        $$('i', this.rect).forEach((resizeHandle) => {
+            editor.events.on(resizeHandle, 'mousedown.resizer touchstart.resizer', this.onClickHandle.bind(this, resizeHandle));
+        });
+        editor.events
+            .on('readonly', (isReadOnly) => {
+            if (isReadOnly) {
+                this.hide();
+            }
         })
+            .on('afterInit changePlace', this.addEventListeners.bind(this))
+            .on('afterGetValueFromEditor.resizer', (data) => {
+            const rgx = /<jodit[^>]+data-jodit_iframe_wrapper[^>]+>(.*?<iframe[^>]+>[\s\n\r]*<\/iframe>.*?)<\/jodit>/gi;
+            if (rgx.test(data.value)) {
+                data.value = data.value.replace(rgx, '$1');
+            }
+        })
+            .on('hideResizer', this.hide)
+            .on('change afterInit afterSetMode', editor.async.debounce(this.onChangeEditor.bind(this), editor.defaultTimeout));
+        this.addEventListeners();
+        this.onChangeEditor();
+    }
+    addEventListeners() {
+        const editor = this.jodit;
+        editor.events
+            .off(editor.editor, '.resizer')
+            .off(editor.ownerWindow, '.resizer')
+            .on(editor.editor, 'keydown.resizer', (e) => {
+            if (this.isShown &&
+                e.which === KEY_DELETE &&
+                this.element &&
+                !Dom_Dom.isTag(this.element, 'table')) {
+                this.onDelete(e);
+            }
+        })
+            .on(editor.ownerWindow, 'resize.resizer', this.updateSize)
+            .on(editor.ownerWindow, 'mouseup.resizer keydown.resizer touchend.resizer', this.onClickOutside)
             .on([editor.ownerWindow, editor.editor], 'scroll.resizer', () => {
-            if (resizerIsVisible && !isResizing) {
-                hideResizer();
+            if (this.isShown && !this.isResized) {
+                this.hide();
             }
         });
-    })
-        .on('afterGetValueFromEditor.resizer', (data) => {
-        const rgx = /<jodit[^>]+data-jodit_iframe_wrapper[^>]+>(.*?<iframe[^>]+>[\s\n\r]*<\/iframe>.*?)<\/jodit>/gi;
-        if (rgx.test(data.value)) {
-            data.value = data.value.replace(rgx, '$1');
+    }
+    onClickHandle(resizeHandle, e) {
+        if (!this.element || !this.element.parentNode) {
+            this.hide();
+            return false;
         }
-    })
-        .on('hideResizer', hideResizer)
-        .on('change afterInit afterSetMode', editor.async.debounce(() => {
-        if (resizerIsVisible) {
-            if (!currentElement || !currentElement.parentNode) {
-                hideResizer();
+        this.handle = resizeHandle;
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        this.width = this.element.offsetWidth;
+        this.height = this.element.offsetHeight;
+        this.ratio = this.width / this.height;
+        this.isResized = true;
+        this.start_x = e.clientX;
+        this.start_y = e.clientY;
+        this.jodit.events.fire('hidePopup');
+        this.jodit.lock(this.LOCK_KEY);
+        this.jodit.events.on(this.jodit.ownerWindow, 'mousemove.resizer touchmove.resizer', this.onResize);
+    }
+    onDelete(e) {
+        if (!this.element) {
+            return;
+        }
+        if (this.element.tagName !== 'JODIT') {
+            this.jodit.selection.select(this.element);
+        }
+        else {
+            Dom_Dom.safeRemove(this.element);
+            this.hide();
+            e.preventDefault();
+        }
+    }
+    onChangeEditor() {
+        const editor = this.jodit;
+        if (this.isShown) {
+            if (!this.element || !this.element.parentNode) {
+                this.hide();
             }
             else {
-                updateSize();
+                this.updateSize();
             }
         }
         if (!editor.isDestructed) {
@@ -13905,18 +13939,102 @@ function resizer(editor) {
                     return;
                 }
                 if (!elm.__jodit_resizer_binded &&
-                    ((elm.tagName === 'IFRAME' &&
+                    ((Dom_Dom.isTag(elm, 'iframe') &&
                         editor.options.useIframeResizer) ||
-                        (elm.tagName === 'IMG' &&
+                        (Dom_Dom.isTag(elm, 'img') &&
                             editor.options.useImageResizer) ||
-                        (elm.tagName === 'TABLE' &&
+                        (Dom_Dom.isTag(elm, 'table') &&
                             editor.options.useTableResizer))) {
                     elm.__jodit_resizer_binded = true;
-                    bind(elm);
+                    this.bind(elm);
                 }
             });
         }
-    }, editor.defaultTimeout));
+    }
+    bind(element) {
+        let wrapper;
+        if (Dom_Dom.isTag(element, 'iframe')) {
+            const iframe = element;
+            if (element.parentNode &&
+                element.parentNode.getAttribute('data-jodit_iframe_wrapper')) {
+                element = element.parentNode;
+            }
+            else {
+                wrapper = this.jodit.create.inside.fromHTML('<jodit ' +
+                    'data-jodit-temp="1" ' +
+                    'contenteditable="false" ' +
+                    'draggable="true" ' +
+                    'data-jodit_iframe_wrapper="1"' +
+                    '></jodit>');
+                css_css(wrapper, {
+                    display: element.style.display === 'inline-block'
+                        ? 'inline-block'
+                        : 'block',
+                    width: element.offsetWidth,
+                    height: element.offsetHeight
+                });
+                if (element.parentNode) {
+                    element.parentNode.insertBefore(wrapper, element);
+                }
+                wrapper.appendChild(element);
+                element = wrapper;
+            }
+            this.jodit.events
+                .off(element, 'mousedown.select touchstart.select')
+                .on(element, 'mousedown.select touchstart.select', () => {
+                this.jodit.selection.select(element);
+            })
+                .off(element, 'changesize')
+                .on(element, 'changesize', () => {
+                iframe.setAttribute('width', element.offsetWidth + 'px');
+                iframe.setAttribute('height', element.offsetHeight + 'px');
+            });
+        }
+        this.jodit.events
+            .on(element, 'dragstart', this.hide)
+            .on(element, 'mousedown', (event) => {
+            if (IS_IE && Dom_Dom.isTag(element, 'img')) {
+                event.preventDefault();
+            }
+        })
+            .on(element, 'click', () => this.onClickElement(element));
+    }
+    showSizeViewer(w, h) {
+        if (!this.jodit.options.resizer.showSize) {
+            return;
+        }
+        if (w < this.sizeViewer.offsetWidth ||
+            h < this.sizeViewer.offsetHeight) {
+            this.hideSizeViewer();
+            return;
+        }
+        this.sizeViewer.style.opacity = '1';
+        this.sizeViewer.textContent = `${w} x ${h}`;
+        this.jodit.async.setTimeout(this.hideSizeViewer, {
+            timeout: this.jodit.options.resizer.hideSizeTimeout,
+            label: 'hideSizeViewer'
+        });
+    }
+    show() {
+        if (this.jodit.options.readonly || this.isShown) {
+            return;
+        }
+        this.isShown = true;
+        if (!this.rect.parentNode) {
+            this.jodit.markOwner(this.rect);
+            this.jodit.workplace.appendChild(this.rect);
+        }
+        if (this.jodit.isFullSize()) {
+            this.rect.style.zIndex = css_css(this.jodit.container, 'zIndex').toString();
+        }
+        this.updateSize();
+    }
+    beforeDestruct(jodit) {
+        this.hide();
+        this.jodit.events
+            .off(this.jodit.ownerWindow, '.resizer')
+            .off('.resizer');
+    }
 }
 
 // CONCATENATED MODULE: ./src/plugins/search.ts
@@ -14355,18 +14473,7 @@ function size_size(editor) {
             w: 0,
             h: 0
         };
-        let isResized = false;
-        editor.events
-            .on(handle, 'mousedown touchstart', (e) => {
-            isResized = true;
-            start.x = e.clientX;
-            start.y = e.clientY;
-            start.w = editor.container.offsetWidth;
-            start.h = editor.container.offsetHeight;
-            editor.lock();
-            e.preventDefault();
-        })
-            .on(editor.ownerWindow, 'mousemove touchmove', editor.async.throttle((e) => {
+        let isResized = false, onMouseMove = editor.async.throttle((e) => {
             if (isResized) {
                 if (editor.options.allowResizeY) {
                     setHeight(start.h + e.clientY - start.y);
@@ -14377,10 +14484,22 @@ function size_size(editor) {
                 resizeWorkspaceImd();
                 editor.events.fire('resize');
             }
-        }, editor.defaultTimeout / 10))
+        }, editor.defaultTimeout / 10);
+        editor.events
+            .on(handle, 'mousedown touchstart', (e) => {
+            isResized = true;
+            start.x = e.clientX;
+            start.y = e.clientY;
+            start.w = editor.container.offsetWidth;
+            start.h = editor.container.offsetHeight;
+            editor.lock();
+            editor.events.on(editor.ownerWindow, 'mousemove touchmove', onMouseMove);
+            e.preventDefault();
+        })
             .on(editor.ownerWindow, 'mouseup touchsend', () => {
             if (isResized) {
                 isResized = false;
+                editor.events.off(editor.ownerWindow, 'mousemove touchmove', onMouseMove);
                 editor.unlock();
             }
         })
@@ -14700,19 +14819,27 @@ class ace_AceEditor extends SourceEditor {
             this.instance.setOption('wrap', editor.options.sourceEditorNativeOptions.wrap);
             this.instance.getSession().setUseWorker(false);
             this.instance.$blockScrolling = Infinity;
-            this.instance.setOptions({
-                maxLines: Infinity
-            });
             this.instance.on('change', this.toWYSIWYG);
             this.instance.on('focus', this.proxyOnFocus);
             this.instance.on('mousedown', this.proxyOnMouseDown);
             if (editor.getRealMode() !== MODE_WYSIWYG) {
                 this.setValue(this.getValue());
             }
-            editor.events
-                .on('afterResize', () => {
+            const onResize = this.jodit.async.debounce(() => {
+                if (editor.isInDestruct) {
+                    return;
+                }
+                if (editor.options.height !== 'auto') {
+                    this.instance.setOption('maxLines', editor.workplace.offsetHeight /
+                        this.instance.renderer.lineHeight);
+                }
+                else {
+                    this.instance.setOption('maxLines', Infinity);
+                }
                 this.instance.resize();
-            });
+            }, this.jodit.defaultTimeout * 2);
+            editor.events.on('afterResize afterSetMode', onResize);
+            onResize();
             this.onReady();
         };
         editor.events
@@ -15705,6 +15832,7 @@ function tableKeyboardNavigation(editor) {
 
 
 
+
 Config_Config.prototype.useTableProcessor = true;
 Config_Config.prototype.useExtraClassesOptions = true;
 Config_Config.prototype.controls.table = {
@@ -15860,7 +15988,10 @@ class table_TableProcessor extends Plugin_Plugin {
         this.__key = 'table_processor_observer';
         this.__selectMode = false;
         this.__resizerDelta = 0;
+        this.hideTimeout = 0;
         this.__drag = false;
+        this.__minX = 0;
+        this.__maxX = 0;
         this.__addResizer = () => {
             if (!this.__resizerHandler) {
                 this.__resizerHandler = this.jodit.container.querySelector('.jodit_table_resizer');
@@ -16224,8 +16355,15 @@ class table_TableProcessor extends Plugin_Plugin {
                 });
             }
         })
-            .on('beforeCommand.table', this.onExecCommand.bind(this));
+            .on('beforeCommand.table', this.onExecCommand.bind(this))
+            .on('afterCommand.table', this.onAfterCommand.bind(this));
     }
+    onAfterCommand(command) {
+        if (/^justify/.test(command)) {
+            $$('[data-jodit-selected-cell]', this.jodit.editor).forEach(elm => alignElement(command, elm, this.jodit));
+        }
+    }
+    ;
     beforeDestruct(jodit) {
         if (jodit.events) {
             jodit.events.off(this.jodit.ownerWindow, '.table');
@@ -16422,6 +16560,9 @@ class xpath_xpath extends Plugin_Plugin {
                 .off('.xpath')
                 .on('mouseup.xpath change.xpath keydown.xpath changeSelection.xpath', this.calcPath)
                 .on('afterSetMode.xpath afterInit.xpath changePlace.xpath', () => {
+                if (!this.jodit.options.showXPathInStatusbar) {
+                    return;
+                }
                 this.jodit.statusbar.append(this.container);
                 if (this.jodit.getRealMode() === MODE_WYSIWYG) {
                     this.calcPath();
@@ -16538,6 +16679,8 @@ Config_Config.prototype.controls.dialog = {
 class dialog_Dialog extends viewWithToolbar_ViewWithToolbar {
     constructor(jodit, options = Config_Config.prototype.dialog) {
         super(jodit, options);
+        this.offsetX = 0;
+        this.offsetY = 0;
         this.destination = document.body;
         this.destroyAfterClose = false;
         this.moved = false;
@@ -16555,6 +16698,8 @@ class dialog_Dialog extends viewWithToolbar_ViewWithToolbar {
         };
         this.onMouseUp = () => {
             if (this.draggable || this.resizable) {
+                this.events
+                    .off(this.window, 'mousemove', this.onMouseMove);
                 this.draggable = false;
                 this.resizable = false;
                 this.unlockSelect();
@@ -16577,6 +16722,8 @@ class dialog_Dialog extends viewWithToolbar_ViewWithToolbar {
             this.setMaxZIndex();
             e.preventDefault();
             this.lockSelect();
+            this.events
+                .on(this.window, 'mousemove', this.onMouseMove);
             if (this.jodit && this.jodit.events) {
                 this.jodit.events.fire(this, 'startMove');
             }
@@ -16698,7 +16845,6 @@ class dialog_Dialog extends viewWithToolbar_ViewWithToolbar {
         self.container.addEventListener('close_dialog', self.close);
         self.toolbar.build(self.options.buttons, self.dialogbox_toolbar);
         self.events
-            .on(this.window, 'mousemove', self.onMouseMove)
             .on(this.window, 'mouseup', self.onMouseUp)
             .on(this.window, 'keydown', self.onKeyDown)
             .on(this.window, 'resize', self.onResize);
@@ -16873,7 +17019,7 @@ const Alert = (msg, title, callback, className = 'jodit_alert') => {
     const dialog = new dialog_Dialog(), container = dialog.create.div(className), okButton = dialog.create.fromHTML('<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
         ToolbarIcon.getIcon('cancel') +
         '<span>' +
-        Jodit_Jodit.prototype.i18n('Ok') +
+        dialog.i18n('Ok') +
         '</span></a>');
     asArray(msg).forEach(oneMessage => {
         container.appendChild(Dom_Dom.isNode(oneMessage, dialog.window)
@@ -16895,19 +17041,18 @@ const Alert = (msg, title, callback, className = 'jodit_alert') => {
 
 
 
+// CONCATENATED MODULE: ./src/modules/dialog/prompt.ts
 
-// CONCATENATED MODULE: ./src/modules/dialog/promt.ts
 
-
-const Promt = (msg, title, callback, placeholder, defaultValue) => {
+const Prompt = (msg, title, callback, placeholder, defaultValue) => {
     const dialog = new dialog_Dialog(), cancelButton = dialog.create.fromHTML('<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
         ToolbarIcon.getIcon('cancel') +
         '<span>' +
-        Jodit_Jodit.prototype.i18n('Cancel') +
+        dialog.i18n('Cancel') +
         '</span></a>'), okButton = dialog.create.fromHTML('<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
         ToolbarIcon.getIcon('check') +
         '<span>' +
-        Jodit_Jodit.prototype.i18n('Ok') +
+        dialog.i18n('Ok') +
         '</span></a>'), form = dialog.create.element('form', {
         class: 'jodit_prompt'
     }), inputElement = dialog.create.element('input', {
@@ -16947,7 +17092,6 @@ const Promt = (msg, title, callback, placeholder, defaultValue) => {
     return dialog;
 };
 
-
 // CONCATENATED MODULE: ./src/modules/dialog/confirm.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -16967,7 +17111,7 @@ const Confirm = (msg, title, callback) => {
     const $cancel = dialog.create.fromHTML('<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
         ToolbarIcon.getIcon('cancel') +
         '<span>' +
-        Jodit_Jodit.prototype.i18n('Cancel') +
+        dialog.i18n('Cancel') +
         '</span>' +
         '</a>');
     $cancel.addEventListener('click', () => {
@@ -16985,7 +17129,7 @@ const Confirm = (msg, title, callback) => {
     const $ok = dialog.create.fromHTML('<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
         ToolbarIcon.getIcon('check') +
         '<span>' +
-        Jodit_Jodit.prototype.i18n('Yes') +
+        dialog.i18n('Yes') +
         '</span>' +
         '</a>');
     $ok.addEventListener('click', onok);
@@ -16998,7 +17142,6 @@ const Confirm = (msg, title, callback) => {
     $ok.focus();
     return dialog;
 };
-
 
 // CONCATENATED MODULE: ./src/modules/dialog/index.ts
 /*!
@@ -18326,7 +18469,7 @@ class fileBrowser_FileBrowser extends viewWithToolbar_ViewWithToolbar {
         })
             .on('fileRename.filebrowser', (name, path, source) => {
             if (self.state.activeElements.length === 1) {
-                Promt(self.i18n('Enter new name'), self.i18n('Rename'), (newName) => {
+                Prompt(self.i18n('Enter new name'), self.i18n('Rename'), (newName) => {
                     if (!isValidName(newName)) {
                         self.status(self.i18n('Enter new name'));
                         return false;
@@ -18390,7 +18533,7 @@ class fileBrowser_FileBrowser extends viewWithToolbar_ViewWithToolbar {
             .on(self.tree, 'click', function (e) {
             const a = this
                 .parentNode, name = a.getAttribute('data-name') || '', path = a.getAttribute('data-source-path') || '';
-            Promt(self.i18n('Enter new name'), self.i18n('Rename'), (newName) => {
+            Prompt(self.i18n('Enter new name'), self.i18n('Rename'), (newName) => {
                 if (!isValidName(newName)) {
                     self.status(self.i18n('Enter new name'));
                     return false;
@@ -18419,7 +18562,7 @@ class fileBrowser_FileBrowser extends viewWithToolbar_ViewWithToolbar {
         }, 'a>.jodit_icon_folder_rename')
             .on(self.tree, 'click', function () {
             if (this.classList.contains('addfolder')) {
-                Promt(self.i18n('Enter Directory name'), self.i18n('Create directory'), (name) => {
+                Prompt(self.i18n('Enter Directory name'), self.i18n('Create directory'), (name) => {
                     self.dataProvider
                         .createFolder(name, this.getAttribute('data-path') || '', this.getAttribute('data-source') || '')
                         .then(resp => {
@@ -18567,7 +18710,20 @@ class ImageEditor_ImageEditor extends Component_Component {
         this.resizeUseRatio = true;
         this.cropUseRatio = true;
         this.clicked = false;
+        this.start_x = 0;
+        this.start_y = 0;
+        this.top_x = 0;
+        this.top_y = 0;
+        this.width = 0;
+        this.height = 0;
         this.activeTab = 'resize';
+        this.naturalWidth = 0;
+        this.naturalHeight = 0;
+        this.ratio = 0;
+        this.new_h = 0;
+        this.new_w = 0;
+        this.diff_x = 0;
+        this.diff_y = 0;
         this.cropBox = {
             x: 0,
             y: 0,
@@ -18827,13 +18983,13 @@ class ImageEditor_ImageEditor extends Component_Component {
             const rationResizeButton = self.editor.querySelector(`.${jie}_keep_spect_ratio`);
             if (rationResizeButton) {
                 rationResizeButton.addEventListener('change', () => {
-                    self.resizeUseRatio = rationResizeButton.checked;
+                    this.resizeUseRatio = rationResizeButton.checked;
                 });
             }
             const rationCropButton = self.editor.querySelector(`.${jie}_keep_spect_ratio_crop`);
             if (rationCropButton) {
                 rationCropButton.addEventListener('change', () => {
-                    self.cropUseRatio = rationCropButton.checked;
+                    this.cropUseRatio = rationCropButton.checked;
                 });
             }
             self.jodit.events
@@ -18895,7 +19051,7 @@ class ImageEditor_ImageEditor extends Component_Component {
                     };
                     switch (button.getAttribute('data-action')) {
                         case 'saveas':
-                            Promt(self.jodit.i18n('Enter new name'), self.jodit.i18n('Save in new file'), (name) => {
+                            Prompt(self.jodit.i18n('Enter new name'), self.jodit.i18n('Save in new file'), (name) => {
                                 if (!trim(name)) {
                                     Alert(self.jodit.i18n('The name should not be empty'));
                                     return false;
@@ -19933,7 +20089,7 @@ Object.keys(modules_namespaceObject)
     .forEach((key) => {
     Jodit_Jodit.modules[key] = modules_namespaceObject[key];
 });
-['Confirm', 'Alert', 'Promt'].forEach((key) => {
+['Confirm', 'Alert', 'Prompt'].forEach((key) => {
     Jodit_Jodit[key] = modules_namespaceObject[key];
 });
 Object.keys(plugins_namespaceObject)
