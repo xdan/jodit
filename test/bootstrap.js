@@ -320,6 +320,8 @@ function removeStuff() {
 
 	Jodit.modules.Ajax.log.length = 0;
 
+	getBox().removeAttribute('style');
+
 	mockPromise();
 }
 

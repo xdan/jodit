@@ -1,4 +1,74 @@
 describe('Test editor indent plugin', function() {
+	describe('Indent', function() {
+		describe('Exec Indent command several times', function() {
+			it('Should increase margin-left', function() {
+				const editor = new Jodit(appendTestArea());
+				editor.value = '<ul><li>test</li></ul>';
+
+				const range = editor.selection.createRange();
+				range.setStart(
+					editor.editor.firstChild.firstChild.firstChild,
+					0
+				);
+				range.collapse(true);
+				editor.selection.selectRange(range);
+
+				editor.execCommand('indent');
+				expect(editor.value).equals(
+					'<ul><li style="margin-left: 10px;">test</li></ul>'
+				);
+
+				editor.execCommand('indent');
+				expect(editor.value).equals(
+					'<ul><li style="margin-left: 20px;">test</li></ul>'
+				);
+				editor.execCommand('indent');
+				expect(editor.value).equals(
+					'<ul><li style="margin-left: 30px;">test</li></ul>'
+				);
+				editor.execCommand('outdent');
+				expect(editor.value).equals(
+					'<ul><li style="margin-left: 20px;">test</li></ul>'
+				);
+			});
+
+			describe('For RTL direction', function() {
+				it('Should increase margin-right', function() {
+					const editor = new Jodit(appendTestArea(), {
+						direction: 'rtl'
+					});
+					editor.value = '<ul><li>test</li></ul>';
+
+					const range = editor.selection.createRange();
+					range.setStart(
+						editor.editor.firstChild.firstChild.firstChild,
+						0
+					);
+					range.collapse(true);
+					editor.selection.selectRange(range);
+
+					editor.execCommand('indent');
+					expect(editor.value).equals(
+						'<ul><li style="margin-right: 10px;">test</li></ul>'
+					);
+
+					editor.execCommand('indent');
+					expect(editor.value).equals(
+						'<ul><li style="margin-right: 20px;">test</li></ul>'
+					);
+					editor.execCommand('indent');
+					expect(editor.value).equals(
+						'<ul><li style="margin-right: 30px;">test</li></ul>'
+					);
+					editor.execCommand('outdent');
+					expect(editor.value).equals(
+						'<ul><li style="margin-right: 20px;">test</li></ul>'
+					);
+				});
+			});
+		});
+	});
+
 	it(`should indent multi-line selection of various child elements only on 1st 2 lines`, function() {
 		const editor = new Jodit(appendTestArea());
 		editor.value = `

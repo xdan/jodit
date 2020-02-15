@@ -74,7 +74,7 @@ describe('Test position/offset helpers', function() {
 
 			createPoint(pos.left, pos.top, '#cdf', true);
 
-			expect(pos.top).equals(204);
+			expect(Math.abs(pos.top - 204)).is.below(20);
 			expect(pos.left).equals(240);
 		});
 

@@ -14,6 +14,13 @@ Config.prototype.controls.indent = {
 	tooltip: 'Increase Indent'
 } as IControlType;
 
+/**
+ * Get style rule key for current direction
+ * @param direction
+ */
+const getKey = (direction: string) =>
+	direction === 'rtl' ? 'marginRight' : 'marginLeft';
+
 Config.prototype.controls.outdent = {
 	isDisable: (editor: IJodit): boolean => {
 		const current: Node | false = editor.selection.current();
@@ -24,8 +31,11 @@ Config.prototype.controls.outdent = {
 				node => Dom.isBlock(node, editor.editorWindow),
 				editor.editor
 			) as HTMLElement | false;
-			if (currentBox && currentBox.style && currentBox.style.marginLeft) {
-				return parseInt(currentBox.style.marginLeft, 10) <= 0;
+
+			const key = getKey(editor.options.direction);
+
+			if (currentBox && currentBox.style && currentBox.style[key]) {
+				return parseInt(currentBox.style[key], 10) <= 0;
 			}
 		}
 
@@ -51,13 +61,15 @@ Config.prototype.indentMargin = 10;
  * @param {Jodit} editor
  */
 export function indent(editor: IJodit) {
+	const key = getKey(editor.options.direction);
+
 	const callback = (command: string): void | false => {
 		const indentedBoxes: HTMLElement[] = [];
 
 		editor.selection.eachSelection((current: Node): false | void => {
 			const selectionInfo = editor.selection.save();
 
-			let currentBox: HTMLElement | false = current
+			let currentBox = current
 				? (Dom.up(
 						current,
 						node => Dom.isBlock(node, editor.editorWindow),
@@ -65,7 +77,7 @@ export function indent(editor: IJodit) {
 				  ) as HTMLElement)
 				: false;
 
-			const enter: string = editor.options.enter;
+			const enter = editor.options.enter;
 
 			if (!currentBox && current) {
 				currentBox = Dom.wrapInline(
@@ -85,16 +97,15 @@ export function indent(editor: IJodit) {
 			if (currentBox && currentBox.style && !alreadyIndented) {
 				indentedBoxes.push(currentBox);
 
-				let marginLeft = currentBox.style.marginLeft
-					? parseInt(currentBox.style.marginLeft, 10)
+				let value = currentBox.style[key]
+					? parseInt(currentBox.style[key], 10)
 					: 0;
 
-				marginLeft +=
+				value +=
 					editor.options.indentMargin *
 					(command === 'outdent' ? -1 : 1);
 
-				currentBox.style.marginLeft =
-					marginLeft > 0 ? marginLeft + 'px' : '';
+				currentBox.style[key] = value > 0 ? value + 'px' : '';
 
 				if (!currentBox.getAttribute('style')) {
 					currentBox.removeAttribute('style');
