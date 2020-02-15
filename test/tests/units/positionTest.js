@@ -1,9 +1,51 @@
 describe('Test position/offset helpers', function() {
-	let box;
+	let box,
+		mainBox = getBox(),
+		iframe = document.createElement('iframe');
+	iframe.setAttribute(
+		'style',
+		'position: absolute; left: 0; top: 0; border: 0; width: 2000px; height: 3000px; background: purple; z-index: 1000000;'
+	);
+	let mainDoc;
+
+	beforeEach(function() {
+		mainBox.appendChild(iframe);
+		mainDoc = iframe.contentWindow.document;
+
+		const lines = [];
+
+		Jodit.modules.Helpers.$$('style, link', document).forEach(function(
+			elm
+		) {
+			const t = elm.tagName.toLowerCase();
+
+			let content;
+
+			if (t === 'link') {
+				content = Array.from(elm.sheet.cssRules)
+					.map(function(f) {
+						return f.cssText;
+					})
+					.join('\n');
+			} else {
+				content = elm.innerHTML;
+			}
+
+			lines.push('<style>' + content + '</style>');
+		});
+
+		mainDoc.open();
+		mainDoc.write(
+			'<html><head>' +
+				lines.join('') +
+				'<style>textarea {display: none}strong {height:18px;display:block}</style></head><body><div></div><textarea></textarea></body></html>'
+		);
+		mainDoc.close();
+	});
 
 	function makeBox(doc) {
-		doc = doc || document;
-		const win = document.defaultView;
+		doc = doc || mainDoc;
+		const win = doc.defaultView;
 
 		box = doc.createElement('div');
 		box.id = 'uniq';
@@ -48,68 +90,75 @@ describe('Test position/offset helpers', function() {
 			'position: relative; min-height: 200px; width: 100%;border: 10px solid green; padding: 20px 0 0 20px; margin: 20px 0 0 20px;'
 		);
 
-		const span = doc.createElement('span');
+		const div6 = doc.createElement('div');
 		div3.appendChild(doc.createElement('strong'));
 		div3.appendChild(doc.createElement('strong'));
 		div3.appendChild(doc.createElement('strong'));
-		div3.appendChild(span);
-		span.setAttribute(
+		div3.appendChild(div6);
+		div6.setAttribute(
 			'style',
 			'width: 100%;border: 10px solid blue; padding: 20px 0 0 20px; margin: 20px 0 0 20px;'
 		);
-		span.innerHTML = 'hi';
+		div6.innerHTML = 'hi';
 
 		div.scrollTo(0, 100000);
 
-		return span;
+		return div6;
+	}
+
+	function fillBox(count, box) {
+		for (let i = 0; i < count; i += 1) {
+			const br = mainDoc.createElement('strong');
+			box.appendChild(br);
+		}
 	}
 
 	describe('Test position helper', function() {
 		it('Should calculate correct screen position of element', function() {
-			const jodit = Jodit.make(appendTestArea());
-
 			const span = makeBox();
 
-			const pos = Jodit.modules.Helpers.position(span, jodit);
+			const pos = Jodit.modules.Helpers.position(span);
 
 			createPoint(pos.left, pos.top, '#cdf', true);
 
-			expect(Math.abs(pos.top - 204)).is.below(20);
-			expect(pos.left).equals(240);
+			expect(pos.top).equals(264);
+			expect(pos.left).equals(250);
 		});
 
 		describe('In the out of the screen', function() {
 			it('Should show negative screen coordinates', function() {
-				const jodit = Jodit.make(appendTestArea());
-
 				const span = makeBox();
 
-				window.scrollTo(0, box.offsetTop + 1500);
-				const pos = Jodit.modules.Helpers.position(span, jodit);
+				iframe.contentWindow.scrollTo(0, box.offsetTop + 1500);
+				const pos = Jodit.modules.Helpers.position(span);
 
-				expect(Math.abs(pos.top - -1294)).is.below(4);
-				expect(pos.left).equals(240);
+				expect(pos.top).equals(-1236);
+				expect(pos.left).equals(250);
 				createPoint(pos.left, pos.top, '#cdf', true);
 			});
 		});
 
 		describe('In iframe', function() {
 			it('Should calculate correct screen position of element', function() {
-				fillBox(100);
+				fillBox(100, mainDoc.querySelector('div'));
 
-				const jodit = Jodit.make(appendTestArea(), {
+				const jodit = Jodit.make('textarea', {
+					ownerWindow: iframe.contentWindow,
+					ownerDocument: mainDoc,
 					iframe: true,
 					height: 10000
 				});
 
 				const span = makeBox(jodit.editorDocument);
-				window.scrollTo(0, jodit.container.offsetTop - 100);
+
+				jodit.ownerWindow.scrollTo(0, jodit.container.offsetTop - 100);
 
 				const pos = Jodit.modules.Helpers.position(span, jodit);
+
 				createPoint(pos.left, pos.top, '#cdf', true);
 
-				expect(Math.abs(pos.top - 403)).is.below(3);
-				expect(pos.left).equals(251);
+				expect(pos.top).equals(461);
+				expect(pos.left).equals(261);
 			});
 		});
 	});
@@ -117,12 +166,15 @@ describe('Test position/offset helpers', function() {
 	describe('Test offset helper', function() {
 		it('Should calculate correct absolute position of element from top of document', function() {
 			const span = makeBox(),
-				jodit = Jodit.make(appendTestArea());
+				jodit = Jodit.make('textarea', {
+					ownerWindow: iframe.contentWindow,
+					ownerDocument: mainDoc
+				});
 
 			jodit.editor.appendChild(box);
 			box.firstChild.scrollTo(0, 100000);
 
-			window.scrollTo(0, jodit.container.offsetTop);
+			iframe.contentWindow.scrollTo(0, jodit.container.offsetTop);
 			jodit.editor.scrollTo(0, span.offsetTop);
 
 			const pos = Jodit.modules.Helpers.offset(
@@ -133,13 +185,17 @@ describe('Test position/offset helpers', function() {
 
 			createPoint(pos.left, pos.top, '#cdf');
 
-			expect(pos.top - box.offsetTop - window.scrollY).equals(832);
+			expect(
+				pos.top - box.offsetTop - iframe.contentWindow.scrollY
+			).equals(881);
 			expect(pos.left).equals(251);
 		});
 
 		describe('In iframe', function() {
 			it('Should calculate correct absolute position of element from top of document', function() {
-				const jodit = Jodit.make(appendTestArea(), {
+				const jodit = Jodit.make('textarea', {
+					ownerWindow: iframe.contentWindow,
+					ownerDocument: mainDoc,
 					iframe: true,
 					height: 10000
 				});
@@ -147,7 +203,7 @@ describe('Test position/offset helpers', function() {
 				span = makeBox(jodit.editorDocument);
 				box.firstChild.scrollTo(0, 100000);
 
-				window.scrollTo(0, jodit.container.offsetTop);
+				iframe.contentWindow.scrollTo(0, jodit.container.offsetTop);
 				jodit.editor.scrollTo(0, span.offsetTop);
 
 				const pos = Jodit.modules.Helpers.offset(
@@ -157,11 +213,11 @@ describe('Test position/offset helpers', function() {
 				);
 
 				expect(
-					Math.abs(pos.top -
+					pos.top -
 						box.offsetTop -
 						jodit.ownerWindow.scrollY -
-						jodit.editorWindow.screenY - 250)
-				).is.below(3);
+						jodit.editorWindow.scrollY
+				).equals(321);
 				expect(pos.left).equals(251);
 
 				createPoint(pos.left, pos.top, '#cdf');
@@ -171,5 +227,6 @@ describe('Test position/offset helpers', function() {
 
 	afterEach(function() {
 		Jodit.modules.Dom.safeRemove(box);
+		Jodit.modules.Dom.safeRemove(iframe);
 	});
 });
