@@ -1,57 +1,38 @@
-html {
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
-}
-body {
-    font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 16px;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizelegibility;
-    line-height: 1.5;
-    height: 100%;
-    margin: 0;
-}
-.jodit_wysiwyg{
-    color: #000;
-    padding: 10px;
-    overflow-x: auto;
-    color: #000;
-    padding: 10px;
-    min-height: 40px;
-}
-* {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-}
-.table, .p {
-    margin: 0 0 16px 0;
+html, body {
+	min-height: 100%;
 }
 
-table {
-    margin-top: 10px;
-    margin-bottom: 10px;
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	vertical-align: baseline;
 }
-. table tr {
-    user-select: none;
-    -o-user-select: none;
-    -moz-user-select: none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
+
+body {
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 16px;
+	line-height: 18px;
 }
-. table td, . table th {
-    user-select: text;
-    -o-user-select: text;
-    -moz-user-select: text;
-    -khtml-user-select: text;
-    -webkit-user-select: text;
-    -ms-user-select: text;
+
+body, * {
+	box-sizing: border-box;
 }
-. table th,.  table td {
-    box-sizeing: border-box;
-    padding: 6px 5px;
-    vertical-align: top;
-}
-.table td, . table th {
-    border: 1px solid #ddd;
+
+.table,
+.p {
+	margin: 0 0 16px 0;
 }

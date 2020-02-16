@@ -214,5 +214,13 @@ export class DragAndDrop extends Plugin {
 
 	beforeDestruct() {
 		this.onDragEnd();
+		this.jodit.events
+			.off(window, '.DragAndDrop')
+			.off('.DragAndDrop')
+			.off(
+				[window, this.jodit.editorDocument, this.jodit.editor],
+				'dragstart.DragAndDrop',
+				this.onDragStart
+			);
 	}
 }

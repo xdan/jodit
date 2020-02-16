@@ -6,15 +6,32 @@ describe('Tables Jodit Editor Tests', function() {
 				null
 			);
 
-			editor.selection.insertNode(editor.create.inside.element('table'));
-			editor.selection.insertNode(editor.create.inside.element('table'));
+			const table1 = editor.create.inside.fromHTML(
+				'<table><tr><td>1</td></tr></table>'
+			);
+			editor.selection.insertNode(table1);
+			simulateEvent('mousemove', 0, table1.querySelector('td'), function(
+				opt
+			) {
+				opt.offsetX = 3;
+			});
+
+			const table2 = editor.create.inside.fromHTML(
+				'<table><tr><td>2</td></tr></table>'
+			);
+			editor.selection.insertNode(table2);
+			simulateEvent('mousemove', 0, table2.querySelector('td'), function(
+				opt
+			) {
+				opt.offsetX = 3;
+			});
 
 			expect(
 				editor.container.querySelectorAll('.jodit_table_resizer').length
 			).equals(1);
 		});
 
-		it('Process wrong tabel', function() {
+		it('Process wrong table', function() {
 			const editor = new Jodit(appendTestArea());
 			editor.value =
 				'<table>' +
@@ -28,6 +45,15 @@ describe('Tables Jodit Editor Tests', function() {
 
 			// const table = new Jodit.modules.Table(editor);
 			Jodit.modules.Table.mergeSelected(editor.editor.firstChild);
+
+			simulateEvent(
+				'mousemove',
+				0,
+				editor.editor.querySelector('td'),
+				function(opt) {
+					opt.offsetX = 3;
+				}
+			);
 
 			expect(
 				editor.container.querySelectorAll('.jodit_table_resizer').length
@@ -68,6 +94,7 @@ describe('Tables Jodit Editor Tests', function() {
 				Jodit.modules.Table.getColumnsCount(editor.editor.firstChild)
 			).equals(4);
 		});
+
 		it('Method appendRow should append one row in the end of table', function() {
 			const editor = new Jodit(appendTestArea());
 
@@ -108,6 +135,7 @@ describe('Tables Jodit Editor Tests', function() {
 				'<table><tbody><tr><td>1</td><td>2</td><td>3</td></tr><tr><td></td><td></td><td></td></tr><tr><td>2</td><td>3</td><td>4</td></tr></tbody></table>'
 			);
 		});
+
 		it('Method appendRow with second=TR  and third=false arguments should append and one row before row', function() {
 			const editor = new Jodit(appendTestArea());
 
@@ -128,6 +156,7 @@ describe('Tables Jodit Editor Tests', function() {
 				'<table><tbody><tr><td></td><td></td><td></td></tr><tr><td>1</td><td>2</td><td>3</td></tr><tr><td>2</td><td>3</td><td>4</td></tr></tbody></table>'
 			);
 		});
+
 		it('Method appendColumn should append column in the end', function() {
 			const editor = new Jodit(appendTestArea());
 
@@ -153,6 +182,7 @@ describe('Tables Jodit Editor Tests', function() {
 					'</table>'
 			);
 		});
+
 		it('Method appendColumn with second argument should append column after that column', function() {
 			const editor = new Jodit(appendTestArea());
 
@@ -178,6 +208,7 @@ describe('Tables Jodit Editor Tests', function() {
 					'</table>'
 			);
 		});
+
 		it('Method appendColumn with second argument and third = false should append column before that column', function() {
 			const editor = new Jodit(appendTestArea());
 
@@ -203,6 +234,7 @@ describe('Tables Jodit Editor Tests', function() {
 					'</table>'
 			);
 		});
+
 		it('Remove row should delete TR from table', function() {
 			const editor = new Jodit(appendTestArea());
 
@@ -230,6 +262,7 @@ describe('Tables Jodit Editor Tests', function() {
 					'</table>'
 			);
 		});
+
 		describe('Method merge selected cells', function() {
 			it('Simple should merge all selected cells into one ', function() {
 				const editor = new Jodit(appendTestArea());
@@ -258,6 +291,7 @@ describe('Tables Jodit Editor Tests', function() {
 						'</table>'
 				);
 			});
+
 			it('With colspan and rowspan into one ', function() {
 				const editor = new Jodit(appendTestArea());
 
@@ -289,6 +323,7 @@ describe('Tables Jodit Editor Tests', function() {
 						'</table>'
 				);
 			});
+
 			it('A few cells with colspan and rowspan', function() {
 				const editor = new Jodit(appendTestArea());
 
@@ -333,6 +368,7 @@ describe('Tables Jodit Editor Tests', function() {
 						'</table>'
 				);
 			});
+
 			it('Merge cells in center', function() {
 				const editor = new Jodit(appendTestArea());
 
@@ -377,6 +413,7 @@ describe('Tables Jodit Editor Tests', function() {
 						'</table>'
 				);
 			});
+
 			it('Normalize merged cells', function() {
 				const editor = new Jodit(appendTestArea());
 
@@ -407,6 +444,7 @@ describe('Tables Jodit Editor Tests', function() {
 				);
 			});
 		});
+
 		describe('Split selected cells', function() {
 			it('Split cell by Horizontal', function() {
 				const editor = new Jodit(appendTestArea());
@@ -435,6 +473,7 @@ describe('Tables Jodit Editor Tests', function() {
 						'</table>'
 				);
 			});
+
 			it('Split cell with rowspan by horizontal ', function() {
 				const editor = new Jodit(appendTestArea());
 
@@ -473,6 +512,7 @@ describe('Tables Jodit Editor Tests', function() {
 						'</table>'
 				);
 			});
+
 			it('Split cell with rowspan by horizontal 2', function() {
 				const editor = new Jodit(appendTestArea());
 
@@ -511,6 +551,7 @@ describe('Tables Jodit Editor Tests', function() {
 						'</table>'
 				);
 			});
+
 			it('Split cell by vertical', function() {
 				const editor = new Jodit(appendTestArea());
 
@@ -539,6 +580,7 @@ describe('Tables Jodit Editor Tests', function() {
 			});
 		});
 	});
+
 	describe('Work with tables', function() {
 		it('Create table and insert into cell some text', function() {
 			const editor = new Jodit(appendTestArea());
@@ -563,6 +605,7 @@ describe('Tables Jodit Editor Tests', function() {
 				'<table><tr><td></td><td>ok</td></tr></table>'
 			);
 		});
+
 		it('After insert table like html without tbody, it should be appear', function() {
 			const editor = new Jodit(appendTestArea());
 
@@ -578,6 +621,7 @@ describe('Tables Jodit Editor Tests', function() {
 				'<table><tbody><tr><td>1</td><td>2</td></tr></tbody></table>'
 			);
 		});
+
 		it('After press Tab button cursor should be in next cell in table', function() {
 			const editor = new Jodit(appendTestArea());
 
@@ -602,6 +646,7 @@ describe('Tables Jodit Editor Tests', function() {
 				'<table><tbody><tr><td>1</td><td>test</td></tr></tbody></table>'
 			);
 		});
+
 		it('After press Tab + Shift buttons cursor should be in next cell in table', function() {
 			const editor = new Jodit(appendTestArea());
 
@@ -736,6 +781,7 @@ describe('Tables Jodit Editor Tests', function() {
 					'</tbody></table>'
 			);
 		});
+
 		it("After press Bottom arrow in the first cell's line cursor should move into bottom cell", function() {
 			const editor = new Jodit(appendTestArea());
 
@@ -775,6 +821,7 @@ describe('Tables Jodit Editor Tests', function() {
 					'</tbody></table>'
 			);
 		});
+
 		it("After press Tab in last table's cell in table should add new row and move into first cell form it", function() {
 			const editor = new Jodit(appendTestArea());
 
@@ -810,6 +857,7 @@ describe('Tables Jodit Editor Tests', function() {
 					'</tbody></table>'
 			);
 		});
+
 		describe('Remove row', function() {
 			it('Remove simple row without rowspan should simple remove row', function() {
 				const editor = new Jodit(appendTestArea());
@@ -940,6 +988,7 @@ describe('Tables Jodit Editor Tests', function() {
 				);
 			});
 		});
+
 		describe('Remove column', function() {
 			it('Remove simple column without colspan should simple remove all cells in column', function() {
 				const editor = new Jodit(appendTestArea());
@@ -1186,7 +1235,7 @@ describe('Tables Jodit Editor Tests', function() {
 				});
 
 				describe('Normal scroll', function() {
-					it('should show resizer element', function(done) {
+					it("should show element's resizer", function(done) {
 						const editor = new Jodit(appendTestArea());
 						window.scrollTo(
 							0,
@@ -1207,6 +1256,7 @@ describe('Tables Jodit Editor Tests', function() {
 							editor,
 							editor.editorDocument
 						);
+
 						const tablebox = Jodit.modules.Helpers.offset(
 							editor.editor.querySelector('table'),
 							editor,
@@ -1218,10 +1268,7 @@ describe('Tables Jodit Editor Tests', function() {
 							1,
 							editor.editor.getElementsByTagName('td')[1],
 							function(options) {
-								options.clientX = box.left;
-								options.clientY = box.top;
-								options.pageX = 0;
-								options.pageY = 0;
+								options.offsetX = 3;
 							}
 						);
 
@@ -1229,7 +1276,6 @@ describe('Tables Jodit Editor Tests', function() {
 							'.jodit_table_resizer'
 						);
 						expect(resizer).is.not.null;
-						expect(resizer.style.display === 'block').is.true;
 
 						const resizerBox = Jodit.modules.Helpers.offset(
 							resizer,
@@ -1237,8 +1283,9 @@ describe('Tables Jodit Editor Tests', function() {
 							editor.ownerDocument
 						);
 
-						expect(Math.abs(resizerBox.left - box.left) < 10).to.be
+						expect(Math.abs(resizerBox.left - box.left) < 10).is
 							.true;
+
 						expect(Math.abs(resizerBox.top - tablebox.top) < 10).is
 							.true;
 
@@ -1258,7 +1305,8 @@ describe('Tables Jodit Editor Tests', function() {
 							editor.editor.querySelector('p')
 						);
 
-						expect(resizer.style.display === 'none').is.true;
+						expect(resizer.parentNode).is.null;
+
 						done();
 					});
 				});
@@ -1318,18 +1366,75 @@ describe('Tables Jodit Editor Tests', function() {
 				done();
 			});
 
-			describe('Resize column', function() {
-				describe('When move mouse over left edge of cell and press mouse button and move cursor to right in 5 pixels', function(done) {
-					it('should decrease the width of the right column and the width of the left column should increase', function(done) {
+			describe('When move mouse over left edge of cell and press mouse button and move cursor to right in 5 pixels', function() {
+				it('should decrease the width of the right column and the width of the left column should increase', function(done) {
+					const editor = new Jodit(appendTestArea());
+
+					editor.value =
+						'<table style="width: 100px; border-collapse: separate;" cellspacing="0">' +
+						'<tr><td>1</td><td>2</td><td>3</td><td>4</td></tr>' +
+						'</table>';
+
+					const td = editor.editor.querySelectorAll('td')[1],
+						box = td.getBoundingClientRect();
+					simulateEvent('mousemove', 1, td, function(options) {
+						options.clientX = box.left;
+						options.offsetX = 0;
+						options.pageX = 0;
+						options.pageY = 0;
+					});
+
+					simulateEvent(
+						'mousedown',
+						1,
+						editor.container.querySelector('.jodit_table_resizer'),
+						function(options) {
+							options.clientX = box.left;
+							options.pageX = 0;
+							options.pageY = 0;
+						}
+					);
+
+					simulateEvent('mousemove', 1, editor.editorWindow, function(
+						options
+					) {
+						options.clientX = box.left + 5; // move on 5 pixels
+						options.pageX = 0;
+						options.pageY = 0;
+					});
+					simulateEvent('mouseup', 1, window, function(options) {
+						options.clientX = box.left + 5; // move on 5 pixels
+						options.pageX = 0;
+						options.pageY = 0;
+					});
+
+					expect(editor.editor.innerHTML.toLowerCase()).equals(
+						'<table style="width: 100px; border-collapse: separate;" cellspacing="0"><tbody>' +
+							'<tr>' +
+							'<td style="width: 30%;">1</td>' +
+							'<td style="width: 20%;">2</td>' +
+							'<td>3</td>' +
+							'<td>4</td>' +
+							'</tr>' +
+							'</tbody></table>'
+					);
+					done();
+				});
+
+				describe('After resize', function() {
+					it('it should restore selection', function(done) {
 						const editor = new Jodit(appendTestArea());
 
 						editor.value =
-							'<table style="width: 100px; border-collapse: separate;" cellspacing="0">' +
+							'<p>test</p><table style="width: 100px; border-collapse: separate;" cellspacing="0">' +
 							'<tr><td>1</td><td>2</td><td>3</td><td>4</td></tr>' +
 							'</table>';
 
 						const td = editor.editor.querySelectorAll('td')[1],
 							box = td.getBoundingClientRect();
+
+						editor.selection.setCursorIn(editor.editor.firstChild);
+
 						simulateEvent('mousemove', 1, td, function(options) {
 							options.clientX = box.left;
 							options.offsetX = 0;
@@ -1360,28 +1465,112 @@ describe('Tables Jodit Editor Tests', function() {
 								options.pageY = 0;
 							}
 						);
-						simulateEvent('mouseup', 1, window, function(options) {
-							options.clientX = box.left + 5; // move on 5 pixels
+						simulateEvent(
+							'mouseup',
+							1,
+							editor.ownerWindow,
+							function(options) {
+								options.clientX = box.left + 5; // move on 5 pixels
+								options.pageX = 0;
+								options.pageY = 0;
+							}
+						);
+
+						editor.selection.insertHTML('stop');
+
+						expect(sortAttributes(editor.value)).equals(
+							'<p>teststop</p>' +
+								'<table cellspacing="0" style="border-collapse:separate;width:100px">' +
+								'<tbody>' +
+								'<tr>' +
+								'<td style="width:30%">1</td>' +
+								'<td style="width:20%">2</td>' +
+								'<td>3</td>' +
+								'<td>4</td>' +
+								'</tr>' +
+								'</tbody>' +
+								'</table>'
+						);
+
+						done();
+					});
+				});
+
+				describe('For RTL direction', function() {
+					it('should decrease the width of the left column and the width of the right column should increase', function(done) {
+						const editor = new Jodit(appendTestArea(), {
+							direction: 'rtl'
+						});
+
+						editor.value =
+							'<table style="width: 100px; border-collapse: separate;" cellspacing="0">' +
+							'<tr><td>1</td><td>2</td><td>3</td><td>4</td></tr>' +
+							'</table>';
+
+						const td = editor.editor.querySelectorAll('td')[1],
+							box = td.getBoundingClientRect();
+
+						simulateEvent('mousemove', 1, td, function(options) {
+							options.clientX = box.left;
+							options.offsetX = 0;
 							options.pageX = 0;
 							options.pageY = 0;
 						});
 
+						simulateEvent(
+							'mousedown',
+							1,
+							editor.container.querySelector(
+								'.jodit_table_resizer'
+							),
+							function(options) {
+								options.clientX = box.left;
+								options.pageX = 0;
+								options.pageY = 0;
+							}
+						);
+
+						simulateEvent(
+							'mousemove',
+							1,
+							editor.editorWindow,
+							function(options) {
+								options.clientX = box.left + 5; // move on 5 pixels
+								options.pageX = 0;
+								options.pageY = 0;
+							}
+						);
+
+						simulateEvent(
+							'mouseup',
+							1,
+							editor.ownerWindow,
+							function(options) {
+								options.clientX = box.left + 5; // move on 5 pixels
+								options.pageX = 0;
+								options.pageY = 0;
+							}
+						);
+
 						expect(editor.editor.innerHTML.toLowerCase()).equals(
 							'<table style="width: 100px; border-collapse: separate;" cellspacing="0"><tbody>' +
 								'<tr>' +
-								'<td style="width: 30%;">1</td>' +
+								'<td>1</td>' +
 								'<td style="width: 20%;">2</td>' +
-								'<td>3</td>' +
+								'<td style="width: 30%;">3</td>' +
 								'<td>4</td>' +
 								'</tr>' +
 								'</tbody></table>'
 						);
+
 						done();
 					});
 
 					describe('After resize', function() {
 						it('it should restore selection', function(done) {
-							const editor = new Jodit(appendTestArea());
+							const editor = new Jodit(appendTestArea(), {
+								direction: 'rtl'
+							});
 
 							editor.value =
 								'<p>test</p><table style="width: 100px; border-collapse: separate;" cellspacing="0">' +
@@ -1427,6 +1616,7 @@ describe('Tables Jodit Editor Tests', function() {
 									options.pageY = 0;
 								}
 							);
+
 							simulateEvent(
 								'mouseup',
 								1,
@@ -1445,9 +1635,9 @@ describe('Tables Jodit Editor Tests', function() {
 									'<table cellspacing="0" style="border-collapse:separate;width:100px">' +
 									'<tbody>' +
 									'<tr>' +
-									'<td style="width:30%">1</td>' +
+									'<td>1</td>' +
 									'<td style="width:20%">2</td>' +
-									'<td>3</td>' +
+									'<td style="width:30%">3</td>' +
 									'<td>4</td>' +
 									'</tr>' +
 									'</tbody>' +
@@ -1507,53 +1697,64 @@ describe('Tables Jodit Editor Tests', function() {
 				);
 			});
 
-			it('When move mouse over left edge of first cell and press mouse button and move cursor to left in 50 pixels - the width of the whole table should increase', function() {
-				const editor = new Jodit(appendTestArea());
+			describe('When move mouse over left edge of first cell', function() {
+				describe('press mouse button and move cursor to left in 50 pixels', function() {
+					it('should increase the width of the whole table', function() {
+						const editor = new Jodit(appendTestArea());
 
-				getBox().style.width = '202px';
-				editor.value =
-					'<table style="width: 100px">' +
-					'<tr><td>1</td><td>2</td><td>3</td><td>4</td></tr>' +
-					'</table>';
+						getBox().style.width = '202px';
 
-				const td = editor.editor.querySelectorAll('td')[0],
-					box = td.getBoundingClientRect();
+						editor.value =
+							'<table style="width: 100px">' +
+							'<tr><td>1</td><td>2</td><td>3</td><td>4</td></tr>' +
+							'</table>';
 
-				simulateEvent('mousemove', 1, td, function(options) {
-					options.clientX = box.left;
-					options.offsetX = 0;
+						const td = editor.editor.querySelectorAll('td')[0],
+							box = td.getBoundingClientRect();
+
+						simulateEvent('mousemove', 1, td, function(options) {
+							options.clientX = box.left;
+							options.offsetX = 0;
+						});
+
+						simulateEvent(
+							'mousedown',
+							1,
+							editor.container.querySelector(
+								'.jodit_table_resizer'
+							),
+							function(options) {
+								options.clientX = box.left;
+							}
+						);
+
+						simulateEvent('mousemove', 1, window, function(
+							options
+						) {
+							options.clientX = box.left + 50;
+						});
+						simulateEvent('mouseup', 1, window, function(options) {
+							options.clientX = box.left + 50;
+						});
+
+						expect(
+							sortAttributes(
+								editor.editor.innerHTML.toLowerCase()
+							)
+						).equals(
+							'<table style="margin-left:27.77%;width:27.77%">' +
+								'<tbody>' +
+								'<tr>' +
+								'<td>1</td>' +
+								'<td>2</td>' +
+								'<td>3</td>' +
+								'<td>4</td>' +
+								'</tr>' +
+								'</tbody>' +
+								'</table>'
+						);
+					});
 				});
-
-				simulateEvent(
-					'mousedown',
-					1,
-					editor.container.querySelector('.jodit_table_resizer'),
-					function(options) {
-						options.clientX = box.left;
-					}
-				);
-
-				simulateEvent('mousemove', 1, window, function(options) {
-					options.clientX = box.left + 50;
-				});
-				simulateEvent('mouseup', 1, window, function(options) {
-					options.clientX = box.left + 50;
-				});
-
-				expect(
-					sortAttributes(editor.editor.innerHTML.toLowerCase())
-				).equals(
-					'<table style="margin-left:27.77%;width:27.77%">' +
-						'<tbody>' +
-						'<tr>' +
-						'<td>1</td>' +
-						'<td>2</td>' +
-						'<td>3</td>' +
-						'<td>4</td>' +
-						'</tr>' +
-						'</tbody>' +
-						'</table>'
-				);
 			});
 		});
 
@@ -1593,9 +1794,7 @@ describe('Tables Jodit Editor Tests', function() {
 							'.jodit_resizer[data-editor_id=should_show_resizer_for_this_image]'
 						);
 
-						expect(
-							resizer
-						).is.not.null;
+						expect(resizer).is.not.null;
 
 						const positionResizer = offset(resizer);
 						const positionImg = offset(
@@ -1606,6 +1805,7 @@ describe('Tables Jodit Editor Tests', function() {
 							Math.abs(positionResizer.left - positionImg.left) <
 								10
 						).is.true;
+
 						expect(
 							Math.abs(positionResizer.top - positionImg.top) < 10
 						).is.true;
@@ -1616,6 +1816,4 @@ describe('Tables Jodit Editor Tests', function() {
 			});
 		});
 	});
-
-	afterEach(removeStuff);
 });

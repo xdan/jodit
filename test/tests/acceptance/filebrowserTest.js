@@ -729,6 +729,9 @@ describe('Jodit FileBrowser Tests', function() {
 				filebrowser
 					.open(function() {})
 					.then(function() {
+						if (editor.isInDestruct) {
+							debugger
+						}
 						const files = filebrowser.browser.querySelector(
 							'.jodit_filebrowser_files'
 						);
