@@ -50,7 +50,7 @@ module.exports = function(config) {
 		hostname: '127.0.0.1',
 		colors: true,
 		logLevel: config.LOG_INFO,
-		browsers: ['ChromeHeadless', 'IE', 'IE9', 'Firefox'],
+		browsers: ['ChromeHeadless', 'FirefoxHeadless', 'IE', 'IE9', 'Firefox'],
 		customLaunchers: {
 			IE9: {
 				base: 'IE',
@@ -59,13 +59,14 @@ module.exports = function(config) {
 			FirefoxHeadless: {
 				base: 'Firefox',
 				flags: [
-					'--window-size=1920,1000'
+					"-width", 1440, "-height", 900,
+					"-headless"
 				]
 			},
 			ChromeHeadless: {
 				base: 'Chrome',
 				flags: [
-					'--window-size=1920,1000',
+					'--window-size=1440,900',
 					'--disable-gpu',
 					'--disable-extensions',
 					'--disable-translate'

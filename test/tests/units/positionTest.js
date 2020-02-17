@@ -123,6 +123,7 @@ describe('Test position/offset helpers', function() {
 
 			if (pos.top !== 261) {
 				console.log(pos);
+				console.log(JSON.stringify(window.outerWidth));
 				console.log(JSON.stringify(window.screen.width));
 				console.log(JSON.stringify(window.screen.height));
 				console.log(JSON.stringify(span.getBoundingClientRect()));
