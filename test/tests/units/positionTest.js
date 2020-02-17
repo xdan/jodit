@@ -149,7 +149,7 @@ describe('Test position/offset helpers', function() {
 						// for all other non-BODY elements
 						xPos += el.offsetLeft - el.scrollLeft + el.clientLeft;
 						yPos += el.offsetTop - el.scrollTop + el.clientTop;
-						console.log('f', xPos, yPos);
+						console.log('f', xPos, yPos, el.outerHTML.replace(/^(<[^>]+>)(.*)/, '$1'));
 						console.log('fx', el.offsetLeft, el.scrollLeft, el.clientLeft);
 						console.log('fy', el.offsetTop, el.scrollTop, el.clientTop);
 					}
