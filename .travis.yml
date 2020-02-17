@@ -1,14 +1,12 @@
 language: node_js
-
 node_js:
   - "8"
-
-dist: trusty
 services:
   - xvfb
 
-before_install:
-  - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1440x900x24"
-
-script:
-  xvfb-run -s '-screen 0 1440x900x24' npm test;
+before_script:
+  - "export DISPLAY=:99.0"
+  - "export SCREEN_WIDTH 1440"
+  - "export SCREEN_HEIGHT 900"
+  - "export SCREEN_DEPTH 24"
+  - sleep 3 # give xvfb some time to start
