@@ -150,13 +150,15 @@ describe('Test position/offset helpers', function() {
 						xPos += el.offsetLeft - el.scrollLeft + el.clientLeft;
 						yPos += el.offsetTop - el.scrollTop + el.clientTop;
 						console.log('f', xPos, yPos);
+						console.log('fx', el.offsetLeft, el.scrollLeft, el.clientLeft);
+						console.log('fy', el.offsetTop, el.scrollTop, el.clientTop);
 					}
 
 					el = el.offsetParent;
 				}
 			}
 
-			expect(pos.top).equals(264);
+			expect(pos.top).equals(261);
 			expect(pos.left).equals(250);
 		});
 
