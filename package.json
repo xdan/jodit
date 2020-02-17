@@ -14,7 +14,7 @@
 		"build-es18": "webpack --progress --mode production --es es2018 --uglify true",
 		"build-no-uglify-es5": "webpack --progress --mode production --es es5",
 		"build-no-uglify-es18": "webpack --progress --mode production --es es2018",
-		"test": "karma start --browsers Firefox karma.conf.js",
+		"test": "karma start --browsers FirefoxHeadless karma.conf.js",
 		"test-chrome": "karma start --browsers Chrome karma.conf.js",
 		"jodit": "cd ../jodit-react/ && npm update && npm run newversion && cd ../jodit-angular/ && npm run newversion && cd ../jodit-joomla && npm run newversion && cd ../jodit-docs && npm run newversion && cd ../jodit-master && npm run newversion",
 		"types": "rm -rf types/* && tsc --project . --declaration --outDir types --emitDeclarationOnly",

@@ -1,10 +1,11 @@
 const webpack = require('./webpack.config');
-const webpackConfig = (es = 'es5') => webpack([], {
-	mode: 'production',
-	isTest: true,
-	uglify: true,
-	es
-});
+const webpackConfig = (es = 'es5') =>
+	webpack([], {
+		mode: 'production',
+		isTest: true,
+		uglify: true,
+		es
+	});
 
 module.exports = function(config) {
 	config.set({
@@ -56,14 +57,12 @@ module.exports = function(config) {
 				base: 'IE',
 				'x-ua-compatible': 'IE=EmulateIE9'
 			},
+
 			FirefoxHeadless: {
 				base: 'Firefox',
-
-				flags: [
-					"-width", 1440, "-height", 900,
-					"-headless"
-				]
+				flags: ['-width', 1440, '-height', 900, '-headless']
 			},
+
 			ChromeHeadless: {
 				base: 'Chrome',
 				flags: [
