@@ -150,7 +150,7 @@ describe('Test position/offset helpers', function() {
 						console.log('f', xPos, yPos);
 					}
 
-					el = el.offsetParent as HTMLElement;
+					el = el.offsetParent;
 				}
 			}
 
