@@ -121,9 +121,10 @@ describe('Test position/offset helpers', function() {
 
 			createPoint(pos.left, pos.top, '#cdf', true);
 
-			if (pos.top !== 264) {
+			if (pos.top !== 261) {
 				console.log(pos);
-				console.log(JSON.stringify(window.screen));
+				console.log(JSON.stringify(window.screen.width));
+				console.log(JSON.stringify(window.screen.height));
 				console.log(JSON.stringify(span.getBoundingClientRect()));
 				console.log(JSON.stringify(span.getClientRects()));
 				console.log(JSON.stringify(span.getClientRects()));
