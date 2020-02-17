@@ -3,9 +3,12 @@ language: node_js
 node_js:
   - "8"
 
+dist: xenial
 services:
   - xvfb
 
 before_script:
   - "export DISPLAY=:99.0"
   - sleep 3 # give xvfb some time to start
+
+script: xvfb-run --server-args="-screen 0 1440x900x24" make test
