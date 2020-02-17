@@ -73,7 +73,7 @@ describe('Test position/offset helpers', function() {
 		box.appendChild(div);
 		div.setAttribute(
 			'style',
-			'position: relative; height: 300px; width: 100%;border: 20px solid red; padding: 20px 0 0 20px; margin: 20px 0 0 20px; overflow: auto;'
+			'position: relative; height: 300px; width: 100%;border: 20px solid red; padding: 20px 0 0 20px; margin: 20px 0 0 20px; overflow: hidden;'
 		);
 
 		const div2 = doc.createElement('div');
@@ -159,7 +159,7 @@ describe('Test position/offset helpers', function() {
 				}
 			}
 
-			expect(pos.top).equals(261);
+			expect(pos.top).equals(264);
 			expect(pos.left).equals(250);
 		});
 
