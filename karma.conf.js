@@ -56,6 +56,12 @@ module.exports = function(config) {
 				base: 'IE',
 				'x-ua-compatible': 'IE=EmulateIE9'
 			},
+			FirefoxHeadless: {
+				base: 'Firefox',
+				flags: [
+					'--window-size=1920,1000'
+				]
+			},
 			ChromeHeadless: {
 				base: 'Chrome',
 				flags: [
