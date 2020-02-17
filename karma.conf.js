@@ -58,6 +58,7 @@ module.exports = function(config) {
 			},
 			FirefoxHeadless: {
 				base: 'Firefox',
+
 				flags: [
 					"-width", 1440, "-height", 900,
 					"-headless"
