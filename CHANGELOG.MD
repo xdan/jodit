@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.3.24
+### BugFix
+* [342](https://github.com/xdan/jodit/issues/342)
+* [343](https://github.com/xdan/jodit/issues/343)
+
 ## 3.3.23
 ### BugFix
 * [#325](https://github.com/xdan/jodit/issues/325) [#239](https://github.com/xdan/jodit/issues/239)

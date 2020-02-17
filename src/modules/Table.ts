@@ -138,6 +138,10 @@ export class Table {
 
 	/**
 	 * Get cell coordinate in formal table (without colspan and rowspan)
+	 *
+	 * @param table
+	 * @param cell
+	 * @param max
 	 */
 	static formalCoordinate(
 		table: HTMLTableElement,
@@ -163,10 +167,12 @@ export class Table {
 					j = jj;
 					width = colSpan || 1;
 					height = rowSpan || 1;
+
 					if (max) {
 						j += (colSpan || 1) - 1;
 						i += (rowSpan || 1) - 1;
 					}
+
 					return false;
 				}
 			}

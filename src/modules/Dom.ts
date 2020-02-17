@@ -271,6 +271,10 @@ export class Dom {
 	 * Returns true if it is a DOM node
 	 */
 	static isNode(object: unknown, win?: Window): object is Node {
+		if (!object) {
+			return false;
+		}
+
 		if (
 			typeof win === 'object' &&
 			win &&

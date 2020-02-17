@@ -121,6 +121,39 @@ describe('Test position/offset helpers', function() {
 
 			createPoint(pos.left, pos.top, '#cdf', true);
 
+			if (pos.top !== 264) {
+				console.log(pos);
+				console.log(span.getBoundingClientRect());
+				console.log(span.getClientRects());
+				console.log(span.getClientRects());
+
+				let xPos = 0,
+					yPos = 0,
+					el = span;
+
+				const doc = mainDoc;
+
+				while (el) {
+					if (el.tagName == 'BODY') {
+						// deal with browser quirks with body/window/document and page scroll
+						const xScroll = el.scrollLeft || doc.documentElement.scrollLeft,
+							yScroll = el.scrollTop || doc.documentElement.scrollTop;
+
+						xPos += el.offsetLeft - xScroll + el.clientLeft;
+						yPos += el.offsetTop - yScroll + el.clientTop;
+
+						console.log('s', xPos, yPos);
+					} else {
+						// for all other non-BODY elements
+						xPos += el.offsetLeft - el.scrollLeft + el.clientLeft;
+						yPos += el.offsetTop - el.scrollTop + el.clientTop;
+						console.log('f', xPos, yPos);
+					}
+
+					el = el.offsetParent as HTMLElement;
+				}
+			}
+
 			expect(pos.top).equals(264);
 			expect(pos.left).equals(250);
 		});
