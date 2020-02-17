@@ -504,7 +504,7 @@ export function paste(editor: IJodit) {
 					types_str = (types || TEXT_PLAIN).toString() + ';';
 				}
 
-				const getText = () => {
+				const getText = (): string | null => {
 					if (/text\/html/i.test(types_str)) {
 						return dt.getData('text/html');
 					}
@@ -521,14 +521,14 @@ export function paste(editor: IJodit) {
 						return dt.getData(TEXT_PLAIN);
 					}
 
-					return '';
+					return null;
 				};
 
 				let clipboard_html = getText();
 
 				if (
 					Dom.isNode(clipboard_html, editor.editorWindow) ||
-					trim(clipboard_html) !== ''
+					(clipboard_html && trim(clipboard_html) !== '')
 				) {
 					/**
 					 * Triggered after the content is pasted from the clipboard into the Jodit.
