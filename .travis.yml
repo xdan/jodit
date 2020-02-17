@@ -6,7 +6,7 @@ services:
 
 before_script:
   - "export DISPLAY=:99.0"
-  - "export SCREEN_WIDTH 1440"
-  - "export SCREEN_HEIGHT 900"
-  - "export SCREEN_DEPTH 24"
+  - "export SCREEN_WIDTH=1440"
+  - "export SCREEN_HEIGHT=900"
+  - "export SCREEN_DEPTH=24"
   - sleep 3 # give xvfb some time to start
