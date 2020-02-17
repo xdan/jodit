@@ -8366,8 +8366,8 @@ function paste(editor) {
                 return '';
             };
             var clipboard_html = getText();
-            if (Dom_1.Dom.isNode(clipboard_html, editor.editorWindow) ||
-                helpers_1.trim(clipboard_html) !== '') {
+            if (clipboard_html != null && (Dom_1.Dom.isNode(clipboard_html, editor.editorWindow) ||
+                helpers_1.trim(clipboard_html) !== '')) {
                 clipboard_html = trimFragment(clipboard_html);
                 var buffer = editor.buffer.get(cut_1.pluginKey);
                 if (buffer !== clipboard_html) {
