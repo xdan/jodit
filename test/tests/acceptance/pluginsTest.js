@@ -327,12 +327,9 @@ describe('Test plugins', function() {
 			).equals(0);
 		});
 
-		const moveCursorUnder = function (editor, elm) {
+		const moveCursorUnder = function(editor, elm) {
 			simulateEvent('mousemove', 0, editor.editor, function(e) {
-				const pos = Jodit.modules.Helpers.position(
-					elm,
-					editor
-				);
+				const pos = Jodit.modules.Helpers.position(elm, editor);
 
 				e.clientX = pos.left + 5;
 				e.clientY = pos.top + 5;
@@ -376,12 +373,11 @@ describe('Test plugins', function() {
 			const editor = new Jodit(appendTestArea());
 			editor.value =
 				'<table><tbody>' +
-					'<tr><td>2</td></tr>' +
-					'<tr><td>2</td></tr>' +
-					'<tr><td>3</td></tr>' +
-					'<tr><td>4</td></tr>' +
-					'</tbody></table>'
-			;
+				'<tr><td>2</td></tr>' +
+				'<tr><td>2</td></tr>' +
+				'<tr><td>3</td></tr>' +
+				'<tr><td>4</td></tr>' +
+				'</tbody></table>';
 
 			window.scrollTo(
 				0,
@@ -418,10 +414,9 @@ describe('Test plugins', function() {
 			const editor = new Jodit(appendTestArea());
 			editor.value =
 				'<table><tbody>' +
-					'<tr><td>3</td></tr>' +
-					'<tr><td>2</td></tr>' +
-					'</tbody></table>'
-			;
+				'<tr><td>3</td></tr>' +
+				'<tr><td>2</td></tr>' +
+				'</tbody></table>';
 
 			window.scrollTo(
 				0,
@@ -466,10 +461,9 @@ describe('Test plugins', function() {
 			});
 			editor.value =
 				'<table><tbody>' +
-					'<tr><td>3</td></tr>' +
-					'<tr><td>2</td></tr>' +
-					'</tbody></table>'
-			;
+				'<tr><td>3</td></tr>' +
+				'<tr><td>2</td></tr>' +
+				'</tbody></table>';
 
 			window.scrollTo(
 				0,
@@ -512,8 +506,7 @@ describe('Test plugins', function() {
 			it('Should insert new P before parent P element', function() {
 				const editor = new Jodit(appendTestArea());
 				editor.value =
-					'<p><img src="tests/artio.jpg" style="width: 100px; height: 100px;" alt=""></p>'
-				;
+					'<p><img src="tests/artio.jpg" style="width: 100px; height: 100px;" alt=""></p>';
 
 				window.scrollTo(
 					0,
@@ -534,7 +527,9 @@ describe('Test plugins', function() {
 				);
 
 				expect(null).does.not.equal(newline);
-				expect(editor.ownerWindow.getComputedStyle(newline).display).equals('block');
+				expect(
+					editor.ownerWindow.getComputedStyle(newline).display
+				).equals('block');
 				simulateEvent('mousedown', 0, newline.querySelector('span'));
 
 				editor.selection.insertHTML('stop');
@@ -1965,6 +1960,8 @@ describe('Test plugins', function() {
 
 			describe('and scroll page to the top', function() {
 				it('Should remove class `jodit_sticky` from editor and toolbar must have normal position', function() {
+					fillBoxBr(100);
+
 					const area = appendTestArea(),
 						editor = new Jodit(area),
 						brs = [0, 0, 0, 0, 0, 0, 0, 0, 0].map(function() {
@@ -1995,8 +1992,9 @@ describe('Test plugins', function() {
 					expect(5).to.be.above(
 						Math.abs(
 							200 -
-								editor.toolbar.container.getBoundingClientRect()
-									.top
+								Jodit.modules.Helpers.position(
+									editor.toolbar.container
+								).top
 						)
 					);
 
@@ -2249,14 +2247,16 @@ describe('Test plugins', function() {
 							editor.ownerWindow.getComputedStyle(context).display
 						).equals('block');
 
-						simulateEvent('mousedown', 0, context.querySelector('a'));
+						simulateEvent(
+							'mousedown',
+							0,
+							context.querySelector('a')
+						);
 						expect(editor.value).equals(
 							'<p>Simple text <span>s</span></p>'
 						);
 
-						expect(
-							context.parentNode
-						).is.null;
+						expect(context.parentNode).is.null;
 					});
 				});
 			});

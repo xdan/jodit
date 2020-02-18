@@ -121,44 +121,6 @@ describe('Test position/offset helpers', function() {
 
 			createPoint(pos.left, pos.top, '#cdf', true);
 
-			if (pos.top !== 261) {
-				console.log(pos);
-				console.log(JSON.stringify(window.outerWidth));
-				console.log(JSON.stringify(window.screen.width));
-				console.log(JSON.stringify(window.screen.height));
-				console.log(JSON.stringify(span.getBoundingClientRect()));
-				console.log(JSON.stringify(span.getClientRects()));
-				console.log(JSON.stringify(span.getClientRects()));
-
-				let xPos = 0,
-					yPos = 0,
-					el = span;
-
-				const doc = mainDoc;
-
-				while (el) {
-					if (el.tagName == 'BODY') {
-						// deal with browser quirks with body/window/document and page scroll
-						const xScroll = el.scrollLeft || doc.documentElement.scrollLeft,
-							yScroll = el.scrollTop || doc.documentElement.scrollTop;
-
-						xPos += el.offsetLeft - xScroll + el.clientLeft;
-						yPos += el.offsetTop - yScroll + el.clientTop;
-
-						console.log('s', xPos, yPos);
-					} else {
-						// for all other non-BODY elements
-						xPos += el.offsetLeft - el.scrollLeft + el.clientLeft;
-						yPos += el.offsetTop - el.scrollTop + el.clientTop;
-						console.log('f', xPos, yPos, el.outerHTML.replace(/^(<[^>]+>)(.*)/, '$1'));
-						console.log('fx', el.offsetLeft, el.scrollLeft, el.clientLeft);
-						console.log('fy', el.offsetTop, el.scrollTop, el.clientTop);
-					}
-
-					el = el.offsetParent;
-				}
-			}
-
 			expect(pos.top).equals(264);
 			expect(pos.left).equals(250);
 		});

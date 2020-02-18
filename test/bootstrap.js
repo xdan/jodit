@@ -524,6 +524,18 @@ function sortAttributes(html) {
 }
 
 /**
+ * Fill the box some elements for space
+ * @param count
+ */
+function fillBoxBr(count) {
+	for (let i = 0; i < 100; i += 1) {
+		const br = document.createElement('br');
+		getBox().appendChild(br);
+		stuff.push(br);
+	}
+}
+
+/**
  *
  * @param type
  * @param keyCodeArg
