@@ -1,7 +1,7 @@
 /*!
  jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- Version: v3.3.23
+ Version: v3.3.24
  Url: https://xdsoft.net/jodit/
  License(s): MIT
 */
@@ -421,6 +421,9 @@ var Dom = (function () {
             }));
     };
     Dom.isNode = function (object, win) {
+        if (!object) {
+            return false;
+        }
         if (typeof win === 'object' &&
             win &&
             (typeof win.Node === 'function' ||
@@ -8363,11 +8366,11 @@ function paste(editor) {
                 if (/text/i.test(types_str_1) && constants_1.IS_IE) {
                     return dt.getData(constants_1.TEXT_PLAIN);
                 }
-                return '';
+                return null;
             };
             var clipboard_html = getText();
             if (Dom_1.Dom.isNode(clipboard_html, editor.editorWindow) ||
-                helpers_1.trim(clipboard_html) !== '') {
+                (clipboard_html && helpers_1.trim(clipboard_html) !== '')) {
                 clipboard_html = trimFragment(clipboard_html);
                 var buffer = editor.buffer.get(cut_1.pluginKey);
                 if (buffer !== clipboard_html) {
@@ -11935,7 +11938,7 @@ var View = (function (_super) {
         var _a, _b, _c;
         var _this = _super.call(this, jodit, options) || this;
         _this.components = new Set();
-        _this.version = "3.3.23";
+        _this.version = "3.3.24";
         _this.__modulesInstances = {};
         _this.buffer = storage_1.Storage.makeStorage();
         _this.progressbar = new ProgressBar_1.ProgressBar(_this);
@@ -14240,6 +14243,10 @@ var DragAndDrop = (function (_super) {
     };
     DragAndDrop.prototype.beforeDestruct = function () {
         this.onDragEnd();
+        this.jodit.events
+            .off(window, '.DragAndDrop')
+            .off('.DragAndDrop')
+            .off([window, this.jodit.editorDocument, this.jodit.editor], 'dragstart.DragAndDrop', this.onDragStart);
     };
     return DragAndDrop;
 }(Plugin_1.Plugin));
@@ -15897,13 +15904,17 @@ var Dom_1 = __webpack_require__(1);
 Config_1.Config.prototype.controls.indent = {
     tooltip: 'Increase Indent'
 };
+var getKey = function (direction) {
+    return direction === 'rtl' ? 'marginRight' : 'marginLeft';
+};
 Config_1.Config.prototype.controls.outdent = {
     isDisable: function (editor) {
         var current = editor.selection.current();
         if (current) {
             var currentBox = Dom_1.Dom.closest(current, function (node) { return Dom_1.Dom.isBlock(node, editor.editorWindow); }, editor.editor);
-            if (currentBox && currentBox.style && currentBox.style.marginLeft) {
-                return parseInt(currentBox.style.marginLeft, 10) <= 0;
+            var key = getKey(editor.options.direction);
+            if (currentBox && currentBox.style && currentBox.style[key]) {
+                return parseInt(currentBox.style[key], 10) <= 0;
             }
         }
         return true;
@@ -15912,6 +15923,7 @@ Config_1.Config.prototype.controls.outdent = {
 };
 Config_1.Config.prototype.indentMargin = 10;
 function indent(editor) {
+    var key = getKey(editor.options.direction);
     var callback = function (command) {
         var indentedBoxes = [];
         editor.selection.eachSelection(function (current) {
@@ -15930,14 +15942,13 @@ function indent(editor) {
             var alreadyIndented = indentedBoxes.indexOf(currentBox) !== -1;
             if (currentBox && currentBox.style && !alreadyIndented) {
                 indentedBoxes.push(currentBox);
-                var marginLeft = currentBox.style.marginLeft
-                    ? parseInt(currentBox.style.marginLeft, 10)
+                var value = currentBox.style[key]
+                    ? parseInt(currentBox.style[key], 10)
                     : 0;
-                marginLeft +=
+                value +=
                     editor.options.indentMargin *
                         (command === 'outdent' ? -1 : 1);
-                currentBox.style.marginLeft =
-                    marginLeft > 0 ? marginLeft + 'px' : '';
+                currentBox.style[key] = value > 0 ? value + 'px' : '';
                 if (!currentBox.getAttribute('style')) {
                     currentBox.removeAttribute('style');
                 }
@@ -19487,7 +19498,7 @@ Config_1.Config.prototype.controls.table = {
         };
         var mouseenter = function (e, index) {
             var dv = e.target;
-            if (!dv || dv.tagName !== 'DIV') {
+            if (!Dom_1.Dom.isTag(dv, 'div')) {
                 return;
             }
             var k = index === undefined || isNaN(index)
@@ -19511,7 +19522,7 @@ Config_1.Config.prototype.controls.table = {
             var dv = e.target;
             e.preventDefault();
             e.stopImmediatePropagation();
-            if (dv.tagName !== 'DIV') {
+            if (!Dom_1.Dom.isTag(dv, 'div')) {
                 return;
             }
             var k = parseInt(dv.getAttribute('data-index') || '0', 10);
@@ -19577,88 +19588,73 @@ var TableProcessor = (function (_super) {
     tslib_1.__extends(TableProcessor, _super);
     function TableProcessor() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.__key = 'table_processor_observer';
-        _this.__selectMode = false;
-        _this.__resizerDelta = 0;
-        _this.hideTimeout = 0;
-        _this.__drag = false;
-        _this.__minX = 0;
-        _this.__maxX = 0;
-        _this.__addResizer = function () {
-            if (!_this.__resizerHandler) {
-                _this.__resizerHandler = _this.jodit.container.querySelector('.jodit_table_resizer');
-                if (!_this.__resizerHandler) {
-                    _this.__resizerHandler = _this.jodit.create.div('jodit_table_resizer');
-                    var startX_1 = 0;
-                    _this.jodit.events
-                        .on(_this.__resizerHandler, 'mousedown.table touchstart.table', function (event) {
-                        _this.__drag = true;
-                        startX_1 = event.clientX;
-                        _this.jodit.lock(_this.__key);
-                        _this.__resizerHandler.classList.add('jodit_table_resizer-moved');
-                        var box, tableBox = _this.__workTable.getBoundingClientRect();
-                        _this.__minX = 0;
-                        _this.__maxX = 1000000;
-                        if (_this.__wholeTable !== null) {
-                            tableBox = _this.__workTable
-                                .parentNode.getBoundingClientRect();
-                            _this.__minX = tableBox.left;
-                            _this.__maxX = tableBox.left + tableBox.width;
-                        }
-                        else {
-                            var coordinate_1 = Table_1.Table.formalCoordinate(_this.__workTable, _this.__workCell, true);
-                            Table_1.Table.formalMatrix(_this.__workTable, function (td, i, j) {
-                                if (coordinate_1[1] === j) {
-                                    box = td.getBoundingClientRect();
-                                    _this.__minX = Math.max(box.left + consts.NEARBY / 2, _this.__minX);
-                                }
-                                if (coordinate_1[1] + 1 === j) {
-                                    box = td.getBoundingClientRect();
-                                    _this.__maxX = Math.min(box.left +
-                                        box.width -
-                                        consts.NEARBY / 2, _this.__maxX);
-                                }
-                            });
-                        }
-                        return false;
-                    })
-                        .on(_this.__resizerHandler, 'mouseenter.table', function () {
-                        _this.jodit.async.clearTimeout(_this.hideTimeout);
-                    })
-                        .on(_this.jodit.editorWindow, 'mousemove.table touchmove.table', function (event) {
-                        if (_this.__drag) {
-                            var x = event.clientX;
-                            var workplacePosition = helpers_1.offset((_this.__resizerHandler.parentNode ||
-                                _this.jodit.ownerDocument
-                                    .documentElement), _this.jodit, _this.jodit.ownerDocument, true);
-                            if (x < _this.__minX) {
-                                x = _this.__minX;
-                            }
-                            if (x > _this.__maxX) {
-                                x = _this.__maxX;
-                            }
-                            _this.__resizerDelta =
-                                x -
-                                    startX_1 +
-                                    (!_this.jodit.options.iframe
-                                        ? 0
-                                        : workplacePosition.left);
-                            _this.__resizerHandler.style.left =
-                                x -
-                                    (_this.jodit.options.iframe
-                                        ? 0
-                                        : workplacePosition.left) +
-                                    'px';
-                            var sel = _this.jodit.selection.sel;
-                            sel && sel.removeAllRanges();
-                            if (event.preventDefault) {
-                                event.preventDefault();
-                            }
-                        }
-                    });
-                    _this.jodit.workplace.appendChild(_this.__resizerHandler);
-                }
+        _this.isCell = function (tag) {
+            return ((Dom_1.Dom.isHTMLElement(tag, _this.jodit.editorWindow) &&
+                Dom_1.Dom.isTag(tag, 'td')) ||
+                Dom_1.Dom.isTag(tag, 'th'));
+        };
+        _this.key = 'table_processor_observer';
+        _this.selectMode = false;
+        _this.resizeDelta = 0;
+        _this.createResizeHandle = function () {
+            if (!_this.resizeHandler) {
+                _this.resizeHandler = _this.jodit.create.div('jodit_table_resizer');
+                _this.jodit.events
+                    .on(_this.resizeHandler, 'mousedown.table touchstart.table', _this.onHandleMouseDown.bind(_this))
+                    .on(_this.resizeHandler, 'mouseenter.table', function () {
+                    _this.jodit.async.clearTimeout(_this.hideTimeout);
+                });
             }
+        };
+        _this.hideTimeout = 0;
+        _this.drag = false;
+        _this.minX = 0;
+        _this.maxX = 0;
+        _this.startX = 0;
+        _this.onMouseMove = function (event) {
+            if (!_this.drag) {
+                return;
+            }
+            var x = event.clientX;
+            var workplacePosition = helpers_1.offset((_this.resizeHandler.parentNode ||
+                _this.jodit.ownerDocument.documentElement), _this.jodit, _this.jodit.ownerDocument, true);
+            if (x < _this.minX) {
+                x = _this.minX;
+            }
+            if (x > _this.maxX) {
+                x = _this.maxX;
+            }
+            _this.resizeDelta =
+                x -
+                    _this.startX +
+                    (!_this.jodit.options.iframe ? 0 : workplacePosition.left);
+            _this.resizeHandler.style.left =
+                x - (_this.jodit.options.iframe ? 0 : workplacePosition.left) + 'px';
+            var sel = _this.jodit.selection.sel;
+            sel && sel.removeAllRanges();
+            if (event.preventDefault) {
+                event.preventDefault();
+            }
+        };
+        _this.onMouseUp = function () {
+            if (_this.selectMode || _this.drag) {
+                _this.selectMode = false;
+                _this.jodit.unlock();
+            }
+            if (!_this.resizeHandler || !_this.drag) {
+                return;
+            }
+            _this.drag = false;
+            _this.jodit.events.off(_this.jodit.editorWindow, 'mousemove.table touchmove.table', _this.onMouseMove);
+            _this.resizeHandler.classList.remove('jodit_table_resizer-moved');
+            if (_this.wholeTable === null) {
+                _this.resizeColumns();
+            }
+            else {
+                _this.resizeTable();
+            }
+            _this.jodit.setEditorValue();
+            _this.jodit.selection.focus();
         };
         _this.onExecCommand = function (command) {
             if (/table(splitv|splitg|merge|empty|bin|binrow|bincolumn|addcolumn|addrow)/.test(command)) {
@@ -19707,23 +19703,83 @@ var TableProcessor = (function (_super) {
         };
         return _this;
     }
-    TableProcessor.isCell = function (tag) {
-        return !!tag && /^TD|TH$/i.test(tag.nodeName);
-    };
-    TableProcessor.prototype.showResizer = function () {
+    Object.defineProperty(TableProcessor.prototype, "isRTL", {
+        get: function () {
+            return this.jodit.options.direction === 'rtl';
+        },
+        enumerable: true,
+        configurable: true
+    });
+    TableProcessor.prototype.showResizeHandle = function () {
         this.jodit.async.clearTimeout(this.hideTimeout);
-        this.__resizerHandler.style.display = 'block';
+        this.jodit.workplace.appendChild(this.resizeHandler);
     };
-    TableProcessor.prototype.hideResizer = function () {
+    TableProcessor.prototype.hideResizeHandle = function () {
         var _this = this;
         this.hideTimeout = this.jodit.async.setTimeout(function () {
-            _this.__resizerHandler.style.display = 'none';
+            Dom_1.Dom.safeRemove(_this.resizeHandler);
         }, {
             timeout: this.jodit.defaultTimeout,
             label: 'hideResizer'
         });
     };
-    TableProcessor.prototype.__deSelectAll = function (table, currentCell) {
+    TableProcessor.prototype.onHandleMouseDown = function (event) {
+        var _this = this;
+        this.drag = true;
+        this.jodit.events.on(this.jodit.editorWindow, 'mousemove.table touchmove.table', this.onMouseMove);
+        this.startX = event.clientX;
+        this.jodit.lock(this.key);
+        this.resizeHandler.classList.add('jodit_table_resizer-moved');
+        var box, tableBox = this.workTable.getBoundingClientRect();
+        this.minX = 0;
+        this.maxX = 1000000;
+        if (this.wholeTable !== null) {
+            tableBox = this.workTable
+                .parentNode.getBoundingClientRect();
+            this.minX = tableBox.left;
+            this.maxX = this.minX + tableBox.width;
+        }
+        else {
+            var coordinate_1 = Table_1.Table.formalCoordinate(this.workTable, this.workCell, true);
+            Table_1.Table.formalMatrix(this.workTable, function (td, i, j) {
+                if (coordinate_1[1] === j) {
+                    box = td.getBoundingClientRect();
+                    _this.minX = Math.max(box.left + consts.NEARBY / 2, _this.minX);
+                }
+                if (coordinate_1[1] + (_this.isRTL ? -1 : 1) === j) {
+                    box = td.getBoundingClientRect();
+                    _this.maxX = Math.min(box.left + box.width - consts.NEARBY / 2, _this.maxX);
+                }
+            });
+        }
+        return false;
+    };
+    TableProcessor.prototype.resizeColumns = function () {
+        var delta = this.resizeDelta;
+        var marked = [];
+        Table_1.Table.setColumnWidthByDelta(this.workTable, Table_1.Table.formalCoordinate(this.workTable, this.workCell, true)[1], delta, true, marked);
+        var nextTD = helpers_1.call(this.isRTL ? Dom_1.Dom.prev : Dom_1.Dom.next, this.workCell, this.isCell, this.workCell.parentNode);
+        Table_1.Table.setColumnWidthByDelta(this.workTable, Table_1.Table.formalCoordinate(this.workTable, nextTD)[1], -delta, false, marked);
+    };
+    TableProcessor.prototype.resizeTable = function () {
+        var delta = this.resizeDelta * (this.isRTL ? -1 : 1);
+        var width = this.workTable.offsetWidth, parentWidth = helpers_1.getContentWidth(this.workTable.parentNode, this.jodit.editorWindow);
+        var rightSide = !this.wholeTable;
+        var needChangeWidth = this.isRTL ? !rightSide : rightSide;
+        if (needChangeWidth) {
+            this.workTable.style.width =
+                ((width + delta) / parentWidth) * 100 + '%';
+        }
+        else {
+            var side = this.isRTL ? 'marginRight' : 'marginLeft';
+            var margin = parseInt(this.jodit.editorWindow.getComputedStyle(this.workTable)[side] || '0', 10);
+            this.workTable.style.width =
+                ((width - delta) / parentWidth) * 100 + '%';
+            this.workTable.style[side] =
+                ((margin + delta) / parentWidth) * 100 + '%';
+        }
+    };
+    TableProcessor.prototype.deSelectAll = function (table, currentCell) {
         var cells = table
             ? Table_1.Table.getAllSelectedCells(table)
             : Table_1.Table.getAllSelectedCells(this.jodit.editor);
@@ -19735,125 +19791,44 @@ var TableProcessor = (function (_super) {
             });
         }
     };
-    TableProcessor.prototype.__setWorkCell = function (cell, wholeTable) {
+    TableProcessor.prototype.setWorkCell = function (cell, wholeTable) {
         if (wholeTable === void 0) { wholeTable = null; }
-        this.__wholeTable = wholeTable;
-        this.__workCell = cell;
-        this.__workTable = Dom_1.Dom.up(cell, function (elm) { return Dom_1.Dom.isTag(elm, 'table'); }, this.jodit.editor);
+        this.wholeTable = wholeTable;
+        this.workCell = cell;
+        this.workTable = Dom_1.Dom.up(cell, function (elm) { return Dom_1.Dom.isTag(elm, 'table'); }, this.jodit.editor);
     };
-    TableProcessor.prototype.__calcResizerPosition = function (table, cell, offsetX, delta) {
+    TableProcessor.prototype.calcHandlePosition = function (table, cell, offsetX, delta) {
         if (offsetX === void 0) { offsetX = 0; }
         if (delta === void 0) { delta = 0; }
         var box = helpers_1.offset(cell, this.jodit, this.jodit.editorDocument);
-        if (offsetX <= consts.NEARBY || box.width - offsetX <= consts.NEARBY) {
-            var workplacePosition = helpers_1.offset((this.__resizerHandler.parentNode ||
-                this.jodit.ownerDocument
-                    .documentElement), this.jodit, this.jodit.ownerDocument, true), parentBox = helpers_1.offset(table, this.jodit, this.jodit.editorDocument);
-            this.__resizerHandler.style.left =
-                (offsetX <= consts.NEARBY ? box.left : box.left + box.width) -
-                    workplacePosition.left +
-                    delta +
-                    'px';
-            this.__resizerHandler.style.height = parentBox.height + 'px';
-            this.__resizerHandler.style.top =
-                parentBox.top - workplacePosition.top + 'px';
-            this.showResizer();
-            if (offsetX <= consts.NEARBY) {
-                var prevTD = Dom_1.Dom.prev(cell, TableProcessor.isCell, cell.parentNode);
-                if (prevTD) {
-                    this.__setWorkCell(prevTD);
-                }
-                else {
-                    this.__setWorkCell(cell, true);
-                }
+        if (offsetX > consts.NEARBY && offsetX < box.width - consts.NEARBY) {
+            this.hideResizeHandle();
+            return;
+        }
+        var workplacePosition = helpers_1.offset(this.jodit.workplace, this.jodit, this.jodit.ownerDocument, true), parentBox = helpers_1.offset(table, this.jodit, this.jodit.editorDocument);
+        this.resizeHandler.style.left =
+            (offsetX <= consts.NEARBY ? box.left : box.left + box.width) -
+                workplacePosition.left +
+                delta +
+                'px';
+        Object.assign(this.resizeHandler.style, {
+            height: parentBox.height + 'px',
+            top: parentBox.top - workplacePosition.top + 'px'
+        });
+        this.showResizeHandle();
+        if (offsetX <= consts.NEARBY) {
+            var prevTD = helpers_1.call(this.isRTL ? Dom_1.Dom.next : Dom_1.Dom.prev, cell, this.isCell, cell.parentNode);
+            if (prevTD) {
+                this.setWorkCell(prevTD);
             }
             else {
-                var nextTD = Dom_1.Dom.next(cell, TableProcessor.isCell, cell.parentNode);
-                this.__setWorkCell(cell, !nextTD ? false : null);
+                this.setWorkCell(cell, true);
             }
         }
         else {
-            this.hideResizer();
+            var nextTD = helpers_1.call(!this.isRTL ? Dom_1.Dom.next : Dom_1.Dom.prev, cell, this.isCell, cell.parentNode);
+            this.setWorkCell(cell, !nextTD ? false : null);
         }
-    };
-    TableProcessor.prototype.observe = function (table) {
-        var _this = this;
-        table[this.__key] = true;
-        var start;
-        this.jodit.events
-            .on(table, 'mousedown.table touchstart.table', function (event) {
-            if (_this.jodit.options.readonly) {
-                return;
-            }
-            var cell = Dom_1.Dom.up(event.target, TableProcessor.isCell, table);
-            if (cell &&
-                cell instanceof
-                    _this.jodit.editorWindow.HTMLElement) {
-                if (!cell.firstChild) {
-                    cell.appendChild(_this.jodit.create.inside.element('br'));
-                }
-                start = cell;
-                Table_1.Table.addSelected(cell);
-                _this.__selectMode = true;
-            }
-        })
-            .on(table, 'mouseleave.table', function (e) {
-            if (_this.__resizerHandler &&
-                _this.__resizerHandler !== e.relatedTarget) {
-                _this.hideResizer();
-            }
-        })
-            .on(table, 'mousemove.table touchmove.table', function (event) {
-            if (_this.jodit.options.readonly) {
-                return;
-            }
-            if (_this.__drag || _this.jodit.isLockedNotBy(_this.__key)) {
-                return;
-            }
-            var cell = Dom_1.Dom.up(event.target, TableProcessor.isCell, table);
-            if (cell) {
-                if (_this.__selectMode) {
-                    if (cell !== start) {
-                        _this.jodit.lock(_this.__key);
-                        var sel = _this.jodit.selection.sel;
-                        sel && sel.removeAllRanges();
-                        if (event.preventDefault) {
-                            event.preventDefault();
-                        }
-                    }
-                    _this.__deSelectAll(table);
-                    var bound = Table_1.Table.getSelectedBound(table, [
-                        cell,
-                        start
-                    ]), box = Table_1.Table.formalMatrix(table);
-                    for (var i = bound[0][0]; i <= bound[1][0]; i += 1) {
-                        for (var j = bound[0][1]; j <= bound[1][1]; j += 1) {
-                            Table_1.Table.addSelected(box[i][j]);
-                        }
-                    }
-                    var max_1 = box[bound[1][0]][bound[1][1]], min_1 = box[bound[0][0]][bound[0][1]];
-                    _this.jodit.events.fire('showPopup', table, function () {
-                        var minOffset = helpers_1.offset(min_1, _this.jodit, _this.jodit.editorDocument);
-                        var maxOffset = helpers_1.offset(max_1, _this.jodit, _this.jodit.editorDocument);
-                        return {
-                            left: minOffset.left,
-                            top: minOffset.top,
-                            width: maxOffset.left -
-                                minOffset.left +
-                                maxOffset.width,
-                            height: maxOffset.top -
-                                minOffset.top +
-                                maxOffset.height
-                        };
-                    });
-                    event.stopPropagation();
-                }
-                else {
-                    _this.__calcResizerPosition(table, cell, event.offsetX);
-                }
-            }
-        });
-        this.__addResizer();
     };
     TableProcessor.prototype.afterInit = function (editor) {
         var _this = this;
@@ -19863,69 +19838,31 @@ var TableProcessor = (function (_super) {
         editor.events
             .off(this.jodit.ownerWindow, '.table')
             .off('.table')
-            .on(this.jodit.ownerWindow, 'mouseup.table touchend.table', function () {
-            if (_this.__selectMode || _this.__drag) {
-                _this.__selectMode = false;
-                _this.jodit.unlock();
-            }
-            if (_this.__resizerHandler && _this.__drag) {
-                _this.__drag = false;
-                _this.__resizerHandler.classList.remove('jodit_table_resizer-moved');
-                if (_this.__wholeTable === null) {
-                    var __marked = [];
-                    Table_1.Table.setColumnWidthByDelta(_this.__workTable, Table_1.Table.formalCoordinate(_this.__workTable, _this.__workCell, true)[1], _this.__resizerDelta, true, __marked);
-                    var nextTD = Dom_1.Dom.next(_this.__workCell, TableProcessor.isCell, _this.__workCell.parentNode);
-                    Table_1.Table.setColumnWidthByDelta(_this.__workTable, Table_1.Table.formalCoordinate(_this.__workTable, nextTD)[1], -_this.__resizerDelta, false, __marked);
-                }
-                else {
-                    var width = _this.__workTable.offsetWidth, parentWidth = helpers_1.getContentWidth(_this.__workTable.parentNode, _this.jodit.editorWindow);
-                    if (!_this.__wholeTable) {
-                        _this.__workTable.style.width =
-                            ((width + _this.__resizerDelta) / parentWidth) *
-                                100 +
-                                '%';
-                    }
-                    else {
-                        var margin = parseInt(_this.jodit.editorWindow.getComputedStyle(_this.__workTable).marginLeft || '0', 10);
-                        _this.__workTable.style.width =
-                            ((width - _this.__resizerDelta) / parentWidth) *
-                                100 +
-                                '%';
-                        _this.__workTable.style.marginLeft =
-                            ((margin + _this.__resizerDelta) / parentWidth) *
-                                100 +
-                                '%';
-                    }
-                }
-                editor.setEditorValue();
-                editor.selection.focus();
-            }
-        })
+            .on(this.jodit.ownerWindow, 'mouseup.table touchend.table', this.onMouseUp)
             .on(this.jodit.ownerWindow, 'scroll.table', function () {
-            if (_this.__drag) {
-                var parent_1 = Dom_1.Dom.up(_this.__workCell, function (elm) { return Dom_1.Dom.isTag(elm, 'table'); }, editor.editor);
+            if (_this.drag) {
+                var parent_1 = Dom_1.Dom.up(_this.workCell, function (elm) { return Dom_1.Dom.isTag(elm, 'table'); }, editor.editor);
                 if (parent_1) {
                     var parentBox = parent_1.getBoundingClientRect();
-                    _this.__resizerHandler.style.top = parentBox.top + 'px';
+                    _this.resizeHandler.style.top = parentBox.top + 'px';
                 }
             }
         })
             .on(this.jodit.ownerWindow, 'mousedown.table touchend.table', function (event) {
             var current_cell = Dom_1.Dom.closest(event.originalEvent.target, 'TD|TH', _this.jodit.editor);
             var table = null;
-            if (current_cell instanceof
-                _this.jodit.editorWindow.HTMLTableCellElement) {
+            if (_this.isCell(current_cell)) {
                 table = Dom_1.Dom.closest(current_cell, 'table', _this.jodit.editor);
             }
             if (table) {
-                _this.__deSelectAll(table, current_cell instanceof
+                _this.deSelectAll(table, current_cell instanceof
                     _this.jodit.editorWindow
                         .HTMLTableCellElement
                     ? current_cell
                     : false);
             }
             else {
-                _this.__deSelectAll();
+                _this.deSelectAll();
             }
         })
             .on('afterGetValueFromEditor.table', function (data) {
@@ -19936,7 +19873,7 @@ var TableProcessor = (function (_super) {
         })
             .on('change.table afterCommand.table afterSetMode.table', function () {
             helpers_1.$$('table', editor.editor).forEach(function (table) {
-                if (!table[_this.__key]) {
+                if (!table[_this.key]) {
                     _this.observe(table);
                 }
             });
@@ -19950,12 +19887,90 @@ var TableProcessor = (function (_super) {
             .on('keydown.table', function (event) {
             if (event.which === consts.KEY_TAB) {
                 helpers_1.$$('table', editor.editor).forEach(function (table) {
-                    _this.__deSelectAll(table);
+                    _this.deSelectAll(table);
                 });
             }
         })
             .on('beforeCommand.table', this.onExecCommand.bind(this))
             .on('afterCommand.table', this.onAfterCommand.bind(this));
+    };
+    TableProcessor.prototype.observe = function (table) {
+        var _this = this;
+        table[this.key] = true;
+        var start;
+        this.jodit.events
+            .on(table, 'mousedown.table touchstart.table', function (event) {
+            if (_this.jodit.options.readonly) {
+                return;
+            }
+            var cell = Dom_1.Dom.up(event.target, _this.isCell, table);
+            if (cell) {
+                if (!cell.firstChild) {
+                    cell.appendChild(_this.jodit.create.inside.element('br'));
+                }
+                start = cell;
+                Table_1.Table.addSelected(cell);
+                _this.selectMode = true;
+            }
+        })
+            .on(table, 'mouseleave.table', function (e) {
+            if (_this.resizeHandler &&
+                _this.resizeHandler !== e.relatedTarget) {
+                _this.hideResizeHandle();
+            }
+        })
+            .on(table, 'mousemove.table touchmove.table', function (event) {
+            if (_this.jodit.options.readonly) {
+                return;
+            }
+            if (_this.drag || _this.jodit.isLockedNotBy(_this.key)) {
+                return;
+            }
+            var cell = Dom_1.Dom.up(event.target, _this.isCell, table);
+            if (!cell) {
+                return;
+            }
+            if (_this.selectMode) {
+                if (cell !== start) {
+                    _this.jodit.lock(_this.key);
+                    var sel = _this.jodit.selection.sel;
+                    sel && sel.removeAllRanges();
+                    if (event.preventDefault) {
+                        event.preventDefault();
+                    }
+                }
+                _this.deSelectAll(table);
+                var bound = Table_1.Table.getSelectedBound(table, [
+                    cell,
+                    start
+                ]), box = Table_1.Table.formalMatrix(table);
+                for (var i = bound[0][0]; i <= bound[1][0]; i += 1) {
+                    for (var j = bound[0][1]; j <= bound[1][1]; j += 1) {
+                        Table_1.Table.addSelected(box[i][j]);
+                    }
+                }
+                var max_1 = box[bound[1][0]][bound[1][1]], min_1 = box[bound[0][0]][bound[0][1]];
+                _this.jodit.events.fire('showPopup', table, function () {
+                    var minOffset = helpers_1.offset(min_1, _this.jodit, _this.jodit.editorDocument);
+                    var maxOffset = helpers_1.offset(max_1, _this.jodit, _this.jodit.editorDocument);
+                    return {
+                        left: minOffset.left,
+                        top: minOffset.top,
+                        width: maxOffset.left -
+                            minOffset.left +
+                            maxOffset.width,
+                        height: maxOffset.top -
+                            minOffset.top +
+                            maxOffset.height
+                    };
+                });
+                event.stopPropagation();
+            }
+            else {
+                _this.calcHandlePosition(table, cell, event.offsetX);
+            }
+        });
+        this.createResizeHandle();
     };
     TableProcessor.prototype.onAfterCommand = function (command) {
         var _this = this;
@@ -19965,7 +19980,6 @@ var TableProcessor = (function (_super) {
             });
         }
     };
-    ;
     TableProcessor.prototype.beforeDestruct = function (jodit) {
         if (jodit.events) {
             jodit.events.off(this.jodit.ownerWindow, '.table');

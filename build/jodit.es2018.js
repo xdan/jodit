@@ -1,7 +1,7 @@
 /*!
  jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- Version: v3.3.23
+ Version: v3.3.24
  Url: https://xdsoft.net/jodit/
  License(s): MIT
 */
@@ -2863,6 +2863,9 @@ class Dom_Dom {
             }));
     }
     static isNode(object, win) {
+        if (!object) {
+            return false;
+        }
         if (typeof win === 'object' &&
             win &&
             (typeof win.Node === 'function' ||
@@ -6128,7 +6131,7 @@ class view_View extends panel_Panel {
         var _a, _b, _c;
         super(jodit, options);
         this.components = new Set();
-        this.version = "3.3.23";
+        this.version = "3.3.24";
         this.__modulesInstances = {};
         this.buffer = storage_Storage.makeStorage();
         this.progressbar = new ProgressBar_ProgressBar(this);
@@ -9611,11 +9614,11 @@ function paste(editor) {
                 if (/text/i.test(types_str) && IS_IE) {
                     return dt.getData(TEXT_PLAIN);
                 }
-                return '';
+                return null;
             };
             let clipboard_html = getText();
             if (Dom_Dom.isNode(clipboard_html, editor.editorWindow) ||
-                trim(clipboard_html) !== '') {
+                (clipboard_html && trim(clipboard_html) !== '')) {
                 clipboard_html = trimFragment(clipboard_html);
                 const buffer = editor.buffer.get(pluginKey);
                 if (buffer !== clipboard_html) {
@@ -10220,6 +10223,10 @@ class drag_and_drop_DragAndDrop extends Plugin_Plugin {
     }
     beforeDestruct() {
         this.onDragEnd();
+        this.jodit.events
+            .off(window, '.DragAndDrop')
+            .off('.DragAndDrop')
+            .off([window, this.jodit.editorDocument, this.jodit.editor], 'dragstart.DragAndDrop', this.onDragStart);
     }
 }
 
@@ -11860,13 +11867,15 @@ function imageProperties(editor) {
 Config_Config.prototype.controls.indent = {
     tooltip: 'Increase Indent'
 };
+const getKey = (direction) => direction === 'rtl' ? 'marginRight' : 'marginLeft';
 Config_Config.prototype.controls.outdent = {
     isDisable: (editor) => {
         const current = editor.selection.current();
         if (current) {
             const currentBox = Dom_Dom.closest(current, node => Dom_Dom.isBlock(node, editor.editorWindow), editor.editor);
-            if (currentBox && currentBox.style && currentBox.style.marginLeft) {
-                return parseInt(currentBox.style.marginLeft, 10) <= 0;
+            const key = getKey(editor.options.direction);
+            if (currentBox && currentBox.style && currentBox.style[key]) {
+                return parseInt(currentBox.style[key], 10) <= 0;
             }
         }
         return true;
@@ -11875,6 +11884,7 @@ Config_Config.prototype.controls.outdent = {
 };
 Config_Config.prototype.indentMargin = 10;
 function indent(editor) {
+    const key = getKey(editor.options.direction);
     const callback = (command) => {
         const indentedBoxes = [];
         editor.selection.eachSelection((current) => {
@@ -11893,14 +11903,13 @@ function indent(editor) {
             const alreadyIndented = indentedBoxes.indexOf(currentBox) !== -1;
             if (currentBox && currentBox.style && !alreadyIndented) {
                 indentedBoxes.push(currentBox);
-                let marginLeft = currentBox.style.marginLeft
-                    ? parseInt(currentBox.style.marginLeft, 10)
+                let value = currentBox.style[key]
+                    ? parseInt(currentBox.style[key], 10)
                     : 0;
-                marginLeft +=
+                value +=
                     editor.options.indentMargin *
                         (command === 'outdent' ? -1 : 1);
-                currentBox.style.marginLeft =
-                    marginLeft > 0 ? marginLeft + 'px' : '';
+                currentBox.style[key] = value > 0 ? value + 'px' : '';
                 if (!currentBox.getAttribute('style')) {
                     currentBox.removeAttribute('style');
                 }
@@ -15896,7 +15905,7 @@ Config_Config.prototype.controls.table = {
         };
         const mouseenter = (e, index) => {
             const dv = e.target;
-            if (!dv || dv.tagName !== 'DIV') {
+            if (!Dom_Dom.isTag(dv, 'div')) {
                 return;
             }
             let k = index === undefined || isNaN(index)
@@ -15920,7 +15929,7 @@ Config_Config.prototype.controls.table = {
             const dv = e.target;
             e.preventDefault();
             e.stopImmediatePropagation();
-            if (dv.tagName !== 'DIV') {
+            if (!Dom_Dom.isTag(dv, 'div')) {
                 return;
             }
             let k = parseInt(dv.getAttribute('data-index') || '0', 10);
@@ -15985,88 +15994,73 @@ Config_Config.prototype.controls.table = {
 class table_TableProcessor extends Plugin_Plugin {
     constructor() {
         super(...arguments);
-        this.__key = 'table_processor_observer';
-        this.__selectMode = false;
-        this.__resizerDelta = 0;
-        this.hideTimeout = 0;
-        this.__drag = false;
-        this.__minX = 0;
-        this.__maxX = 0;
-        this.__addResizer = () => {
-            if (!this.__resizerHandler) {
-                this.__resizerHandler = this.jodit.container.querySelector('.jodit_table_resizer');
-                if (!this.__resizerHandler) {
-                    this.__resizerHandler = this.jodit.create.div('jodit_table_resizer');
-                    let startX = 0;
-                    this.jodit.events
-                        .on(this.__resizerHandler, 'mousedown.table touchstart.table', (event) => {
-                        this.__drag = true;
-                        startX = event.clientX;
-                        this.jodit.lock(this.__key);
-                        this.__resizerHandler.classList.add('jodit_table_resizer-moved');
-                        let box, tableBox = this.__workTable.getBoundingClientRect();
-                        this.__minX = 0;
-                        this.__maxX = 1000000;
-                        if (this.__wholeTable !== null) {
-                            tableBox = this.__workTable
-                                .parentNode.getBoundingClientRect();
-                            this.__minX = tableBox.left;
-                            this.__maxX = tableBox.left + tableBox.width;
-                        }
-                        else {
-                            const coordinate = Table_Table.formalCoordinate(this.__workTable, this.__workCell, true);
-                            Table_Table.formalMatrix(this.__workTable, (td, i, j) => {
-                                if (coordinate[1] === j) {
-                                    box = td.getBoundingClientRect();
-                                    this.__minX = Math.max(box.left + NEARBY / 2, this.__minX);
-                                }
-                                if (coordinate[1] + 1 === j) {
-                                    box = td.getBoundingClientRect();
-                                    this.__maxX = Math.min(box.left +
-                                        box.width -
-                                        NEARBY / 2, this.__maxX);
-                                }
-                            });
-                        }
-                        return false;
-                    })
-                        .on(this.__resizerHandler, 'mouseenter.table', () => {
-                        this.jodit.async.clearTimeout(this.hideTimeout);
-                    })
-                        .on(this.jodit.editorWindow, 'mousemove.table touchmove.table', (event) => {
-                        if (this.__drag) {
-                            let x = event.clientX;
-                            const workplacePosition = offset_offset((this.__resizerHandler.parentNode ||
-                                this.jodit.ownerDocument
-                                    .documentElement), this.jodit, this.jodit.ownerDocument, true);
-                            if (x < this.__minX) {
-                                x = this.__minX;
-                            }
-                            if (x > this.__maxX) {
-                                x = this.__maxX;
-                            }
-                            this.__resizerDelta =
-                                x -
-                                    startX +
-                                    (!this.jodit.options.iframe
-                                        ? 0
-                                        : workplacePosition.left);
-                            this.__resizerHandler.style.left =
-                                x -
-                                    (this.jodit.options.iframe
-                                        ? 0
-                                        : workplacePosition.left) +
-                                    'px';
-                            const sel = this.jodit.selection.sel;
-                            sel && sel.removeAllRanges();
-                            if (event.preventDefault) {
-                                event.preventDefault();
-                            }
-                        }
-                    });
-                    this.jodit.workplace.appendChild(this.__resizerHandler);
-                }
+        this.isCell = (tag) => {
+            return ((Dom_Dom.isHTMLElement(tag, this.jodit.editorWindow) &&
+                Dom_Dom.isTag(tag, 'td')) ||
+                Dom_Dom.isTag(tag, 'th'));
+        };
+        this.key = 'table_processor_observer';
+        this.selectMode = false;
+        this.resizeDelta = 0;
+        this.createResizeHandle = () => {
+            if (!this.resizeHandler) {
+                this.resizeHandler = this.jodit.create.div('jodit_table_resizer');
+                this.jodit.events
+                    .on(this.resizeHandler, 'mousedown.table touchstart.table', this.onHandleMouseDown.bind(this))
+                    .on(this.resizeHandler, 'mouseenter.table', () => {
+                    this.jodit.async.clearTimeout(this.hideTimeout);
+                });
             }
+        };
+        this.hideTimeout = 0;
+        this.drag = false;
+        this.minX = 0;
+        this.maxX = 0;
+        this.startX = 0;
+        this.onMouseMove = (event) => {
+            if (!this.drag) {
+                return;
+            }
+            let x = event.clientX;
+            const workplacePosition = offset_offset((this.resizeHandler.parentNode ||
+                this.jodit.ownerDocument.documentElement), this.jodit, this.jodit.ownerDocument, true);
+            if (x < this.minX) {
+                x = this.minX;
+            }
+            if (x > this.maxX) {
+                x = this.maxX;
+            }
+            this.resizeDelta =
+                x -
+                    this.startX +
+                    (!this.jodit.options.iframe ? 0 : workplacePosition.left);
+            this.resizeHandler.style.left =
+                x - (this.jodit.options.iframe ? 0 : workplacePosition.left) + 'px';
+            const sel = this.jodit.selection.sel;
+            sel && sel.removeAllRanges();
+            if (event.preventDefault) {
+                event.preventDefault();
+            }
+        };
+        this.onMouseUp = () => {
+            if (this.selectMode || this.drag) {
+                this.selectMode = false;
+                this.jodit.unlock();
+            }
+            if (!this.resizeHandler || !this.drag) {
+                return;
+            }
+            this.drag = false;
+            this.jodit.events.off(this.jodit.editorWindow, 'mousemove.table touchmove.table', this.onMouseMove);
+            this.resizeHandler.classList.remove('jodit_table_resizer-moved');
+            if (this.wholeTable === null) {
+                this.resizeColumns();
+            }
+            else {
+                this.resizeTable();
+            }
+            this.jodit.setEditorValue();
+            this.jodit.selection.focus();
         };
         this.onExecCommand = (command) => {
             if (/table(splitv|splitg|merge|empty|bin|binrow|bincolumn|addcolumn|addrow)/.test(command)) {
@@ -16114,22 +16108,77 @@ class table_TableProcessor extends Plugin_Plugin {
             }
         };
     }
-    static isCell(tag) {
-        return !!tag && /^TD|TH$/i.test(tag.nodeName);
+    get isRTL() {
+        return this.jodit.options.direction === 'rtl';
     }
-    showResizer() {
+    showResizeHandle() {
         this.jodit.async.clearTimeout(this.hideTimeout);
-        this.__resizerHandler.style.display = 'block';
+        this.jodit.workplace.appendChild(this.resizeHandler);
     }
-    hideResizer() {
+    hideResizeHandle() {
         this.hideTimeout = this.jodit.async.setTimeout(() => {
-            this.__resizerHandler.style.display = 'none';
+            Dom_Dom.safeRemove(this.resizeHandler);
         }, {
             timeout: this.jodit.defaultTimeout,
             label: 'hideResizer'
         });
     }
-    __deSelectAll(table, currentCell) {
+    onHandleMouseDown(event) {
+        this.drag = true;
+        this.jodit.events.on(this.jodit.editorWindow, 'mousemove.table touchmove.table', this.onMouseMove);
+        this.startX = event.clientX;
+        this.jodit.lock(this.key);
+        this.resizeHandler.classList.add('jodit_table_resizer-moved');
+        let box, tableBox = this.workTable.getBoundingClientRect();
+        this.minX = 0;
+        this.maxX = 1000000;
+        if (this.wholeTable !== null) {
+            tableBox = this.workTable
+                .parentNode.getBoundingClientRect();
+            this.minX = tableBox.left;
+            this.maxX = this.minX + tableBox.width;
+        }
+        else {
+            const coordinate = Table_Table.formalCoordinate(this.workTable, this.workCell, true);
+            Table_Table.formalMatrix(this.workTable, (td, i, j) => {
+                if (coordinate[1] === j) {
+                    box = td.getBoundingClientRect();
+                    this.minX = Math.max(box.left + NEARBY / 2, this.minX);
+                }
+                if (coordinate[1] + (this.isRTL ? -1 : 1) === j) {
+                    box = td.getBoundingClientRect();
+                    this.maxX = Math.min(box.left + box.width - NEARBY / 2, this.maxX);
+                }
+            });
+        }
+        return false;
+    }
+    resizeColumns() {
+        const delta = this.resizeDelta;
+        const marked = [];
+        Table_Table.setColumnWidthByDelta(this.workTable, Table_Table.formalCoordinate(this.workTable, this.workCell, true)[1], delta, true, marked);
+        const nextTD = call(this.isRTL ? Dom_Dom.prev : Dom_Dom.next, this.workCell, this.isCell, this.workCell.parentNode);
+        Table_Table.setColumnWidthByDelta(this.workTable, Table_Table.formalCoordinate(this.workTable, nextTD)[1], -delta, false, marked);
+    }
+    resizeTable() {
+        const delta = this.resizeDelta * (this.isRTL ? -1 : 1);
+        const width = this.workTable.offsetWidth, parentWidth = getContentWidth(this.workTable.parentNode, this.jodit.editorWindow);
+        const rightSide = !this.wholeTable;
+        const needChangeWidth = this.isRTL ? !rightSide : rightSide;
+        if (needChangeWidth) {
+            this.workTable.style.width =
+                ((width + delta) / parentWidth) * 100 + '%';
+        }
+        else {
+            const side = this.isRTL ? 'marginRight' : 'marginLeft';
+            const margin = parseInt(this.jodit.editorWindow.getComputedStyle(this.workTable)[side] || '0', 10);
+            this.workTable.style.width =
+                ((width - delta) / parentWidth) * 100 + '%';
+            this.workTable.style[side] =
+                ((margin + delta) / parentWidth) * 100 + '%';
+        }
+    }
+    deSelectAll(table, currentCell) {
         const cells = table
             ? Table_Table.getAllSelectedCells(table)
             : Table_Table.getAllSelectedCells(this.jodit.editor);
@@ -16141,121 +16190,41 @@ class table_TableProcessor extends Plugin_Plugin {
             });
         }
     }
-    __setWorkCell(cell, wholeTable = null) {
-        this.__wholeTable = wholeTable;
-        this.__workCell = cell;
-        this.__workTable = Dom_Dom.up(cell, (elm) => Dom_Dom.isTag(elm, 'table'), this.jodit.editor);
+    setWorkCell(cell, wholeTable = null) {
+        this.wholeTable = wholeTable;
+        this.workCell = cell;
+        this.workTable = Dom_Dom.up(cell, (elm) => Dom_Dom.isTag(elm, 'table'), this.jodit.editor);
     }
-    __calcResizerPosition(table, cell, offsetX = 0, delta = 0) {
+    calcHandlePosition(table, cell, offsetX = 0, delta = 0) {
         const box = offset_offset(cell, this.jodit, this.jodit.editorDocument);
-        if (offsetX <= NEARBY || box.width - offsetX <= NEARBY) {
-            const workplacePosition = offset_offset((this.__resizerHandler.parentNode ||
-                this.jodit.ownerDocument
-                    .documentElement), this.jodit, this.jodit.ownerDocument, true), parentBox = offset_offset(table, this.jodit, this.jodit.editorDocument);
-            this.__resizerHandler.style.left =
-                (offsetX <= NEARBY ? box.left : box.left + box.width) -
-                    workplacePosition.left +
-                    delta +
-                    'px';
-            this.__resizerHandler.style.height = parentBox.height + 'px';
-            this.__resizerHandler.style.top =
-                parentBox.top - workplacePosition.top + 'px';
-            this.showResizer();
-            if (offsetX <= NEARBY) {
-                const prevTD = Dom_Dom.prev(cell, table_TableProcessor.isCell, cell.parentNode);
-                if (prevTD) {
-                    this.__setWorkCell(prevTD);
-                }
-                else {
-                    this.__setWorkCell(cell, true);
-                }
+        if (offsetX > NEARBY && offsetX < box.width - NEARBY) {
+            this.hideResizeHandle();
+            return;
+        }
+        const workplacePosition = offset_offset(this.jodit.workplace, this.jodit, this.jodit.ownerDocument, true), parentBox = offset_offset(table, this.jodit, this.jodit.editorDocument);
+        this.resizeHandler.style.left =
+            (offsetX <= NEARBY ? box.left : box.left + box.width) -
+                workplacePosition.left +
+                delta +
+                'px';
+        Object.assign(this.resizeHandler.style, {
+            height: parentBox.height + 'px',
+            top: parentBox.top - workplacePosition.top + 'px'
+        });
+        this.showResizeHandle();
+        if (offsetX <= NEARBY) {
+            const prevTD = call(this.isRTL ? Dom_Dom.next : Dom_Dom.prev, cell, this.isCell, cell.parentNode);
+            if (prevTD) {
+                this.setWorkCell(prevTD);
             }
             else {
-                const nextTD = Dom_Dom.next(cell, table_TableProcessor.isCell, cell.parentNode);
-                this.__setWorkCell(cell, !nextTD ? false : null);
+                this.setWorkCell(cell, true);
             }
         }
         else {
-            this.hideResizer();
+            const nextTD = call(!this.isRTL ? Dom_Dom.next : Dom_Dom.prev, cell, this.isCell, cell.parentNode);
+            this.setWorkCell(cell, !nextTD ? false : null);
         }
-    }
-    observe(table) {
-        table[this.__key] = true;
-        let start;
-        this.jodit.events
-            .on(table, 'mousedown.table touchstart.table', (event) => {
-            if (this.jodit.options.readonly) {
-                return;
-            }
-            const cell = Dom_Dom.up(event.target, table_TableProcessor.isCell, table);
-            if (cell &&
-                cell instanceof
-                    this.jodit.editorWindow.HTMLElement) {
-                if (!cell.firstChild) {
-                    cell.appendChild(this.jodit.create.inside.element('br'));
-                }
-                start = cell;
-                Table_Table.addSelected(cell);
-                this.__selectMode = true;
-            }
-        })
-            .on(table, 'mouseleave.table', (e) => {
-            if (this.__resizerHandler &&
-                this.__resizerHandler !== e.relatedTarget) {
-                this.hideResizer();
-            }
-        })
-            .on(table, 'mousemove.table touchmove.table', (event) => {
-            if (this.jodit.options.readonly) {
-                return;
-            }
-            if (this.__drag || this.jodit.isLockedNotBy(this.__key)) {
-                return;
-            }
-            const cell = Dom_Dom.up(event.target, table_TableProcessor.isCell, table);
-            if (cell) {
-                if (this.__selectMode) {
-                    if (cell !== start) {
-                        this.jodit.lock(this.__key);
-                        const sel = this.jodit.selection.sel;
-                        sel && sel.removeAllRanges();
-                        if (event.preventDefault) {
-                            event.preventDefault();
-                        }
-                    }
-                    this.__deSelectAll(table);
-                    const bound = Table_Table.getSelectedBound(table, [
-                        cell,
-                        start
-                    ]), box = Table_Table.formalMatrix(table);
-                    for (let i = bound[0][0]; i <= bound[1][0]; i += 1) {
-                        for (let j = bound[0][1]; j <= bound[1][1]; j += 1) {
-                            Table_Table.addSelected(box[i][j]);
-                        }
-                    }
-                    const max = box[bound[1][0]][bound[1][1]], min = box[bound[0][0]][bound[0][1]];
-                    this.jodit.events.fire('showPopup', table, () => {
-                        const minOffset = offset_offset(min, this.jodit, this.jodit.editorDocument);
-                        const maxOffset = offset_offset(max, this.jodit, this.jodit.editorDocument);
-                        return {
-                            left: minOffset.left,
-                            top: minOffset.top,
-                            width: maxOffset.left -
-                                minOffset.left +
-                                maxOffset.width,
-                            height: maxOffset.top -
-                                minOffset.top +
-                                maxOffset.height
-                        };
-                    });
-                    event.stopPropagation();
-                }
-                else {
-                    this.__calcResizerPosition(table, cell, event.offsetX);
-                }
-            }
-        });
-        this.__addResizer();
     }
     afterInit(editor) {
         if (!editor.options.useTableProcessor) {
@@ -16264,69 +16233,31 @@ class table_TableProcessor extends Plugin_Plugin {
         editor.events
             .off(this.jodit.ownerWindow, '.table')
             .off('.table')
-            .on(this.jodit.ownerWindow, 'mouseup.table touchend.table', () => {
-            if (this.__selectMode || this.__drag) {
-                this.__selectMode = false;
-                this.jodit.unlock();
-            }
-            if (this.__resizerHandler && this.__drag) {
-                this.__drag = false;
-                this.__resizerHandler.classList.remove('jodit_table_resizer-moved');
-                if (this.__wholeTable === null) {
-                    const __marked = [];
-                    Table_Table.setColumnWidthByDelta(this.__workTable, Table_Table.formalCoordinate(this.__workTable, this.__workCell, true)[1], this.__resizerDelta, true, __marked);
-                    const nextTD = Dom_Dom.next(this.__workCell, table_TableProcessor.isCell, this.__workCell.parentNode);
-                    Table_Table.setColumnWidthByDelta(this.__workTable, Table_Table.formalCoordinate(this.__workTable, nextTD)[1], -this.__resizerDelta, false, __marked);
-                }
-                else {
-                    const width = this.__workTable.offsetWidth, parentWidth = getContentWidth(this.__workTable.parentNode, this.jodit.editorWindow);
-                    if (!this.__wholeTable) {
-                        this.__workTable.style.width =
-                            ((width + this.__resizerDelta) / parentWidth) *
-                                100 +
-                                '%';
-                    }
-                    else {
-                        const margin = parseInt(this.jodit.editorWindow.getComputedStyle(this.__workTable).marginLeft || '0', 10);
-                        this.__workTable.style.width =
-                            ((width - this.__resizerDelta) / parentWidth) *
-                                100 +
-                                '%';
-                        this.__workTable.style.marginLeft =
-                            ((margin + this.__resizerDelta) / parentWidth) *
-                                100 +
-                                '%';
-                    }
-                }
-                editor.setEditorValue();
-                editor.selection.focus();
-            }
-        })
+            .on(this.jodit.ownerWindow, 'mouseup.table touchend.table', this.onMouseUp)
             .on(this.jodit.ownerWindow, 'scroll.table', () => {
-            if (this.__drag) {
-                const parent = Dom_Dom.up(this.__workCell, (elm) => Dom_Dom.isTag(elm, 'table'), editor.editor);
+            if (this.drag) {
+                const parent = Dom_Dom.up(this.workCell, (elm) => Dom_Dom.isTag(elm, 'table'), editor.editor);
                 if (parent) {
                     const parentBox = parent.getBoundingClientRect();
-                    this.__resizerHandler.style.top = parentBox.top + 'px';
+                    this.resizeHandler.style.top = parentBox.top + 'px';
                 }
             }
         })
             .on(this.jodit.ownerWindow, 'mousedown.table touchend.table', (event) => {
             const current_cell = Dom_Dom.closest(event.originalEvent.target, 'TD|TH', this.jodit.editor);
             let table = null;
-            if (current_cell instanceof
-                this.jodit.editorWindow.HTMLTableCellElement) {
+            if (this.isCell(current_cell)) {
                 table = Dom_Dom.closest(current_cell, 'table', this.jodit.editor);
             }
             if (table) {
-                this.__deSelectAll(table, current_cell instanceof
+                this.deSelectAll(table, current_cell instanceof
                     this.jodit.editorWindow
                         .HTMLTableCellElement
                     ? current_cell
                     : false);
             }
             else {
-                this.__deSelectAll();
+                this.deSelectAll();
             }
         })
             .on('afterGetValueFromEditor.table', (data) => {
@@ -16337,7 +16268,7 @@ class table_TableProcessor extends Plugin_Plugin {
         })
             .on('change.table afterCommand.table afterSetMode.table', () => {
             $$('table', editor.editor).forEach((table) => {
-                if (!table[this.__key]) {
+                if (!table[this.key]) {
                     this.observe(table);
                 }
             });
@@ -16351,19 +16282,95 @@ class table_TableProcessor extends Plugin_Plugin {
             .on('keydown.table', (event) => {
             if (event.which === KEY_TAB) {
                 $$('table', editor.editor).forEach((table) => {
-                    this.__deSelectAll(table);
+                    this.deSelectAll(table);
                 });
             }
         })
             .on('beforeCommand.table', this.onExecCommand.bind(this))
             .on('afterCommand.table', this.onAfterCommand.bind(this));
     }
+    observe(table) {
+        table[this.key] = true;
+        let start;
+        this.jodit.events
+            .on(table, 'mousedown.table touchstart.table', (event) => {
+            if (this.jodit.options.readonly) {
+                return;
+            }
+            const cell = Dom_Dom.up(event.target, this.isCell, table);
+            if (cell) {
+                if (!cell.firstChild) {
+                    cell.appendChild(this.jodit.create.inside.element('br'));
+                }
+                start = cell;
+                Table_Table.addSelected(cell);
+                this.selectMode = true;
+            }
+        })
+            .on(table, 'mouseleave.table', (e) => {
+            if (this.resizeHandler &&
+                this.resizeHandler !== e.relatedTarget) {
+                this.hideResizeHandle();
+            }
+        })
+            .on(table, 'mousemove.table touchmove.table', (event) => {
+            if (this.jodit.options.readonly) {
+                return;
+            }
+            if (this.drag || this.jodit.isLockedNotBy(this.key)) {
+                return;
+            }
+            const cell = Dom_Dom.up(event.target, this.isCell, table);
+            if (!cell) {
+                return;
+            }
+            if (this.selectMode) {
+                if (cell !== start) {
+                    this.jodit.lock(this.key);
+                    const sel = this.jodit.selection.sel;
+                    sel && sel.removeAllRanges();
+                    if (event.preventDefault) {
+                        event.preventDefault();
+                    }
+                }
+                this.deSelectAll(table);
+                const bound = Table_Table.getSelectedBound(table, [
+                    cell,
+                    start
+                ]), box = Table_Table.formalMatrix(table);
+                for (let i = bound[0][0]; i <= bound[1][0]; i += 1) {
+                    for (let j = bound[0][1]; j <= bound[1][1]; j += 1) {
+                        Table_Table.addSelected(box[i][j]);
+                    }
+                }
+                const max = box[bound[1][0]][bound[1][1]], min = box[bound[0][0]][bound[0][1]];
+                this.jodit.events.fire('showPopup', table, () => {
+                    const minOffset = offset_offset(min, this.jodit, this.jodit.editorDocument);
+                    const maxOffset = offset_offset(max, this.jodit, this.jodit.editorDocument);
+                    return {
+                        left: minOffset.left,
+                        top: minOffset.top,
+                        width: maxOffset.left -
+                            minOffset.left +
+                            maxOffset.width,
+                        height: maxOffset.top -
+                            minOffset.top +
+                            maxOffset.height
+                    };
+                });
+                event.stopPropagation();
+            }
+            else {
+                this.calcHandlePosition(table, cell, event.offsetX);
+            }
+        });
+        this.createResizeHandle();
+    }
     onAfterCommand(command) {
         if (/^justify/.test(command)) {
             $$('[data-jodit-selected-cell]', this.jodit.editor).forEach(elm => alignElement(command, elm, this.jodit));
         }
     }
-    ;
     beforeDestruct(jodit) {
         if (jodit.events) {
             jodit.events.off(this.jodit.ownerWindow, '.table');
