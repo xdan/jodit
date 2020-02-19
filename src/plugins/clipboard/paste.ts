@@ -250,7 +250,8 @@ export function paste(editor: IJodit) {
 			editor.buffer.set(clipboardPluginKey, html);
 		}
 
-		editor.selection.insertHTML(html);
+		//editor.selection.insertHTML(html);           //looks like other instructions already do this (waitData_1 for example).
+		                                               //Plus, here the selection seems to be at the wrong place 
 	};
 
 	const insertHTML = (
@@ -488,7 +489,7 @@ export function paste(editor: IJodit) {
 				event.preventDefault();
 				return false;
 			}
-
+      const preventDefault = true;                       //need this to disable preventdefault when pasting text
 			const dt = getDataTransfer(event);
 
 			if (event && dt) {
@@ -574,10 +575,12 @@ export function paste(editor: IJodit) {
 						}
 
 						insertByType(clipboard_html, opt.defaultActionOnPaste);
+						preventDefault = false;                //so that the pasting process will be executed by waitData_1 inside beforePaste
 					}
-
-					event.preventDefault();
-					event.stopPropagation();
+          if (preventDefault){
+					  event.preventDefault();
+					  event.stopPropagation();
+					}
 				}
 			}
 
