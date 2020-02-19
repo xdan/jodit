@@ -1,7 +1,7 @@
 /*!
  jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- Version: v3.3.24
+ Version: v3.3.25
  Url: https://xdsoft.net/jodit/
  License(s): MIT
 */
@@ -8184,7 +8184,8 @@ function paste(editor) {
         if (typeof html === 'string') {
             editor.buffer.set(cut_1.pluginKey, html);
         }
-        editor.selection.insertHTML(html);
+        //editor.selection.insertHTML(html);      //looks like other instructions already do this (waitData_1 for example).
+			                                            //Plus, here the selection seems to be at the wrong place 
     };
     var insertHTML = function (html, event) {
         var buffer = editor.buffer.get(cut_1.pluginKey);
@@ -8341,6 +8342,9 @@ function paste(editor) {
             event.preventDefault();
             return false;
         }
+		
+		    var preventDefault = true;  //need this to disable preventdefault when pasting text
+		
         var dt = exports.getDataTransfer(event);
         if (event && dt) {
             var types = dt.types;
@@ -8385,9 +8389,12 @@ function paste(editor) {
                         editor.selection.insertCursorAtPoint(event.clientX, event.clientY);
                     }
                     insertByType(clipboard_html, opt.defaultActionOnPaste);
+					          preventDefault = false;    //so that the pasting process will be executed by waitData_1 function
                 }
-                event.preventDefault();
-                event.stopPropagation();
+				if (preventDefault){
+					event.preventDefault();
+					event.stopPropagation();
+				}
             }
         }
         if (editor.events.fire('afterPaste', event) === false) {
