@@ -77,8 +77,10 @@ export function bold(editor: IJodit) {
 
 		editor.selection.applyCSS(
 			cssRules,
-			control.tags ? control.tags[0] : undefined,
-			control.css as any
+			{
+				alternativeNodeName: control.tags ? control.tags[0] : undefined,
+				rules: control.css
+			}
 		);
 
 		editor.events.fire('synchro');

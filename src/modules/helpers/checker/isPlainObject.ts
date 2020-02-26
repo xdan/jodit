@@ -6,13 +6,13 @@
 
 import { isWindow } from './isWindow';
 import { hasOwn } from '../type';
+import { IDictionary } from '../../../types';
 
 /**
  * Check if element is simple plaint object
- *
  * @param obj
  */
-export const isPlainObject = (obj: any): boolean => {
+export const isPlainObject = <T>(obj: any | IDictionary<T>): obj is IDictionary<T> => {
     if (typeof obj !== 'object' || obj.nodeType || isWindow(obj)) {
         return false;
     }

@@ -16,7 +16,7 @@ import { Dom } from './Dom';
 import { css } from './helpers/css';
 import { normalizeNode, normilizeCSSValue } from './helpers/normalize';
 import { $$ } from './helpers/selector';
-import { isFunction, isPlainObject } from './helpers/checker';
+import { isFunction, isPlainObject, isString } from './helpers/checker';
 import { each } from './helpers/each';
 import { trim } from './helpers/string';
 import { error } from './helpers';
@@ -1146,21 +1146,28 @@ export class Select {
 	/**
 	 * Apply some css rules for all selections. It method wraps selections in nodeName tag.
 	 *
-	 * @param {object} cssRules
-	 * @param {string} nodeName
-	 * @param {object} options
+	 * @param cssRules
+	 * @param options
+	 * @param options.alternativeNodeName - tag - equal CSSRule (e.g. strong === font-weight: 700)
+	 * @param options.defaultTag - tag for wrapping
+	 * @param options.rules - cssRules
 	 */
 	applyCSS(
 		cssRules: IDictionary<string | number | undefined>,
-		nodeName: HTMLTagNames = 'span',
-		options?:
-			| ((jodit: IJodit, elm: HTMLElement) => boolean)
-			| IDictionary<string | string[]>
-			| IDictionary<(editor: IJodit, elm: HTMLElement) => boolean>
+		options: {
+			alternativeNodeName?: HTMLTagNames;
+			defaultTag?: HTMLTagNames;
+			rules?: IDictionary<string | string[]>;
+		} = {}
 	) {
 		const WRAP = 1,
 			UNWRAP = 0,
-			defaultTag = 'SPAN';
+			tlc = (v: unknown): HTMLTagNames =>
+				isString(v) ? (v.toLowerCase() as HTMLTagNames) : 'span',
+			alternativeNodeName: HTMLTagNames = tlc(
+				options.alternativeNodeName
+			),
+			defaultTag = tlc(options.defaultTag);
 
 		let mode: number;
 
@@ -1170,30 +1177,23 @@ export class Select {
 			!this.isMarker(elm as HTMLElement);
 
 		const checkCssRulesFor = (elm: HTMLElement): boolean => {
+			const rules = options.rules;
+
 			return (
 				!Dom.isTag(elm, 'font') &&
 				Dom.isElement(elm) &&
-				((isPlainObject(options) &&
-					each(
-						options as IDictionary<string[]>,
-						(cssPropertyKey, cssPropertyValues) => {
-							const value = css(
-								elm,
-								cssPropertyKey,
-								undefined,
-								true
-							);
+				isPlainObject(rules) &&
+				each(rules, (cssPropertyKey, cssPropertyValues) => {
+					const value = css(elm, cssPropertyKey, undefined, true);
 
-							return (
-								value !== null &&
-								value !== '' &&
-								cssPropertyValues.indexOf(
-									value.toString().toLowerCase()
-								) !== -1
-							);
-						}
-					)) ||
-					(typeof options === 'function' && options(this.jodit, elm)))
+					return (
+						value !== null &&
+						value !== '' &&
+						cssPropertyValues.indexOf(
+							value.toString().toLowerCase()
+						) !== -1
+					);
+				})
 			);
 		};
 
@@ -1205,8 +1205,8 @@ export class Select {
 			const reg = RegExp('^' + elm.nodeName + '$', 'i');
 
 			return (
-				(reg.test(nodeName) ||
-					!!(options && checkCssRulesFor(elm as HTMLElement))) &&
+				(reg.test(alternativeNodeName) ||
+					!!(options.rules && checkCssRulesFor(elm as HTMLElement))) &&
 				findNextCondition(elm)
 			);
 		};
@@ -1214,8 +1214,7 @@ export class Select {
 		const toggleStyles = (elm: HTMLElement) => {
 			if (isSuitElement(elm)) {
 				// toggle CSS rules
-				if (elm.nodeName === defaultTag && cssRules) {
-					// TODO need check == and ===
+				if (tlc(elm.nodeName) === defaultTag && cssRules) {
 					Object.keys(cssRules).forEach((rule: string) => {
 						if (
 							mode === UNWRAP ||
@@ -1240,7 +1239,8 @@ export class Select {
 
 				if (
 					!Dom.isBlock(elm, this.win) &&
-					(!elm.getAttribute('style') || elm.nodeName !== defaultTag)
+					(!elm.getAttribute('style') ||
+						tlc(elm.nodeName) !== defaultTag)
 				) {
 					// toggle `<strong>test</strong>` toWYSIWYG `test`, and
 					// `<span style="">test</span>` toWYSIWYG `test`
@@ -1258,12 +1258,16 @@ export class Select {
 
 			if (
 				this.current() &&
-				Dom.closest(this.current() as Node, nodeName, this.area)
+				Dom.closest(
+					this.current() as Node,
+					alternativeNodeName,
+					this.area
+				)
 			) {
 				clearStyle = true;
 				const closest = Dom.closest(
 					this.current() as Node,
-					nodeName,
+					alternativeNodeName,
 					this.area
 				);
 
@@ -1272,8 +1276,10 @@ export class Select {
 				}
 			}
 
-			if (nodeName.toUpperCase() === defaultTag || !clearStyle) {
-				const node = this.jodit.create.inside.element(nodeName);
+			if (alternativeNodeName === defaultTag || !clearStyle) {
+				const node = this.jodit.create.inside.element(
+					alternativeNodeName
+				);
 
 				node.appendChild(
 					this.jodit.create.inside.text(consts.INVISIBLE_SPACE)
@@ -1281,7 +1287,7 @@ export class Select {
 
 				this.insertNode(node, false, false);
 
-				if (nodeName.toUpperCase() === defaultTag && cssRules) {
+				if (alternativeNodeName === defaultTag && cssRules) {
 					css(node as HTMLElement, cssRules);
 				}
 
@@ -1310,7 +1316,7 @@ export class Select {
 				isSuitElement(font.parentNode as HTMLElement) &&
 				font.parentNode !== this.area &&
 				(!Dom.isBlock(font.parentNode, this.win) ||
-					consts.IS_BLOCK.test(nodeName))
+					consts.IS_BLOCK.test(alternativeNodeName))
 			) {
 				toggleStyles(font.parentNode as HTMLElement);
 				return;
@@ -1412,8 +1418,13 @@ export class Select {
 
 				if (mode === WRAP) {
 					css(
-						Dom.replace(font, nodeName, this.jodit.create.inside),
-						cssRules && nodeName.toUpperCase() === defaultTag
+						Dom.replace(
+							font,
+							alternativeNodeName,
+							this.jodit.create.inside
+						),
+						cssRules &&
+							alternativeNodeName === defaultTag
 							? cssRules
 							: {}
 					);
@@ -1495,8 +1506,8 @@ export class Select {
 					range.setStartBefore(br);
 					this.selectRange(range);
 				}
-			} catch(e) {
-				console.log(e)
+			} catch (e) {
+				console.log(e);
 			}
 		}
 

@@ -169,7 +169,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 * Container for set/get value
 	 * @type {Storage}
 	 */
-	storage = Storage.makeStorage(true, this.id);
+	readonly storage = Storage.makeStorage(true, this.id);
 
 	/**
 	 * Editor has focus in this time
@@ -1421,7 +1421,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		const buffer = this.getEditorValue();
 
 		this.storage.clear();
-		delete this.storage;
 
 		this.buffer.clear();
 		delete this.buffer;

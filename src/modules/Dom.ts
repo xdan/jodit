@@ -11,9 +11,8 @@ import { trim } from './helpers/string';
 
 export class Dom {
 	/**
-	 * Remove all connetn form element
-	 *
-	 * @param {Node} node
+	 * Remove all content from element
+	 * @param node
 	 */
 	static detach(node: Node) {
 		while (node.firstChild) {
@@ -22,12 +21,11 @@ export class Dom {
 	}
 
 	/**
+	 * Wrap all inline siblings
 	 *
-	 * @param {Node} current
-	 * @param {String | Node} tag
-	 * @param {Jodit} editor
-	 *
-	 * @return {HTMLElement}
+	 * @param current
+	 * @param tag
+	 * @param editor
 	 */
 	static wrapInline = (
 		current: Node,
@@ -72,9 +70,11 @@ export class Dom {
 		while (next) {
 			next = first.nextSibling;
 			wrapper.appendChild(first);
+
 			if (first === last || !next) {
 				break;
 			}
+
 			first = next;
 		}
 
@@ -84,12 +84,11 @@ export class Dom {
 	};
 
 	/**
+	 * Wrap node inside another node
 	 *
-	 * @param {Node} current
-	 * @param {String | Node} tag
-	 * @param {Jodit} editor
-	 *
-	 * @return {HTMLElement}
+	 * @param current
+	 * @param tag
+	 * @param editor
 	 */
 	static wrap = (
 		current: Node,
@@ -115,7 +114,7 @@ export class Dom {
 	};
 
 	/**
-	 *
+	 * Remove parent of node and insert this node instead that parent
 	 * @param node
 	 */
 	static unwrap(node: Node) {

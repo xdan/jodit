@@ -173,7 +173,9 @@ export function formatBlock(editor: IJodit) {
 					}
 				} else {
 					if (!editor.selection.isCollapsed()) {
-						editor.selection.applyCSS({}, <HTMLTagNames>third);
+						editor.selection.applyCSS({}, {
+							alternativeNodeName: <HTMLTagNames>third
+						});
 					} else {
 						Dom.wrapInline(current, <HTMLTagNames>third, editor);
 					}

@@ -154,9 +154,7 @@ interface IControlType<
 	 */
 	tags?: HTMLTagNames[];
 	options?: any;
-	css?:
-		| IDictionary<string | string[]>
-		| IDictionary<(editor: T, value: string) => boolean>;
+	css?: IDictionary<string | string[]>
 
 	/**
 	 * String name for existing icons.
