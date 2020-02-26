@@ -52,6 +52,7 @@ describe('Test states', function() {
 
 				expect('test').equals(editor.value);
 			});
+
 			it('Should disable all toolbar buttons besides source, print, about, fullsize', function() {
 				const editor = new Jodit(appendTestArea(), {
 					readonly: true,
@@ -91,19 +92,6 @@ describe('Test states', function() {
 
 					editor.setMode(Jodit.MODE_SOURCE);
 				}).timeout(6000);
-			});
-
-			it('Should hide placeholder', function() {
-				const table_editor_interface = appendTestArea();
-				table_editor_interface.value = '';
-
-				const editor = new Jodit(table_editor_interface, {
-					readonly: true
-				});
-
-				expect(!editor.container.querySelectorAll('.jodit_placeholder').length).is.true;
-				editor.value = 'test';
-				expect(!editor.container.querySelectorAll('.jodit_placeholder').length).is.true;
 			});
 
 			describe('Search plugin', function() {

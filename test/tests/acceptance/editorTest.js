@@ -346,55 +346,6 @@ describe('Jodit Editor Tests', function() {
 			expect(editor.editor.innerHTML).equals('<div>Test<div></div></div>');
 		});
 
-		describe('Placeholder', function() {
-			describe('After init on empty textarea', function() {
-				it('Should show placeholder', function() {
-					const
-						area = appendTestArea();
-
-					area.value = '';
-
-					const
-						editor = new Jodit(area);
-
-					expect(editor.container.querySelectorAll('.jodit_placeholder').length && editor.container.querySelector('.jodit_placeholder').style.display === 'block').is.true;
-				});
-			});
-
-			describe('After init on not empty textarea', function() {
-				it('Should hide placeholder', function() {
-					const area = appendTestArea();
-					area.value = '111';
-					const editor = new Jodit(area);
-					expect(!editor.container.querySelectorAll('.jodit_placeholder').length).is.true;
-				});
-			});
-		});
-
-		it('Show placeholder', function() {
-			const area = appendTestArea();
-			const editor = new Jodit(area);
-
-			editor.value = '';
-
-			expect(editor.container.querySelectorAll('.jodit_placeholder').length && editor.container.querySelector('.jodit_placeholder').style.display === 'block').is.true;
-
-			editor.selection.insertNode(editor.create.inside.text('test'));
-
-			expect(!editor.container.querySelectorAll('.jodit_placeholder').length).is.true;
-		});
-
-		describe('For element with fontsize 12px', function() {
-			it('Should set Placeholder\'s fontsize', function() {
-				const area = appendTestArea();
-				const editor = new Jodit(area);
-
-				editor.editor.style.fontSize = '12px';
-				simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
-				expect(editor.container.querySelectorAll('.jodit_placeholder').length && editor.container.querySelector('.jodit_placeholder').style.fontSize === '12px').is.true;
-			});
-		});
-
 		describe('Synchronization', function() {
 			it('Check synchronization between element and editor', function() {
 				const area = appendTestArea();
