@@ -95,66 +95,98 @@ describe('Tables Jodit Editor Tests', function() {
 			).equals(4);
 		});
 
-		it('Method appendRow should append one row in the end of table', function() {
-			const editor = new Jodit(appendTestArea());
+		describe('appendRow', function () {
+			it('should append one row in the end of table', function() {
+				const editor = new Jodit(appendTestArea());
 
-			editor.value =
-				'<table>' +
-				'<tr><td>1</td><td>2</td><td>3</td></tr>' +
-				'</table>';
+				editor.value =
+					'<table>' +
+					'<tr><td>1</td><td>2</td><td>3</td></tr>' +
+					'</table>';
 
-			Jodit.modules.Table.appendRow(
-				editor.editor.firstChild,
-				false,
-				true,
-				editor.create.inside
-			);
+				Jodit.modules.Table.appendRow(
+					editor.editor.firstChild,
+					false,
+					true,
+					editor.create.inside
+				);
 
-			expect(editor.value).equals(
-				'<table><tbody><tr><td>1</td><td>2</td><td>3</td></tr><tr><td></td><td></td><td></td></tr></tbody></table>'
-			);
-		});
+				expect(editor.value).equals(
+					'<table><tbody><tr><td>1</td><td>2</td><td>3</td></tr><tr><td></td><td></td><td></td></tr></tbody></table>'
+				);
+			});
 
-		it('Method appendRow with second argument should append one row after row', function() {
-			const editor = new Jodit(appendTestArea());
+			describe('with second argument', function () {
+				it('should append one row after row', function() {
+					const editor = new Jodit(appendTestArea());
 
-			editor.value =
-				'<table>' +
-				'<tr><td>1</td><td>2</td><td>3</td></tr>' +
-				'<tr><td>2</td><td>3</td><td>4</td></tr>' +
-				'</table>';
+					editor.value =
+						'<table>' +
+						'<tr><td>1</td><td>2</td><td>3</td></tr>' +
+						'<tr><td>2</td><td>3</td><td>4</td></tr>' +
+						'</table>';
 
-			Jodit.modules.Table.appendRow(
-				editor.editor.firstChild,
-				editor.editor.firstChild.querySelector('tr'),
-				true,
-				editor.create.inside
-			);
+					Jodit.modules.Table.appendRow(
+						editor.editor.firstChild,
+						editor.editor.firstChild.querySelector('tr'),
+						true,
+						editor.create.inside
+					);
 
-			expect(editor.value).equals(
-				'<table><tbody><tr><td>1</td><td>2</td><td>3</td></tr><tr><td></td><td></td><td></td></tr><tr><td>2</td><td>3</td><td>4</td></tr></tbody></table>'
-			);
-		});
+					expect(editor.value).equals(
+						'<table><tbody><tr><td>1</td><td>2</td><td>3</td></tr><tr><td></td><td></td><td></td></tr><tr><td>2</td><td>3</td><td>4</td></tr></tbody></table>'
+					);
+				});
 
-		it('Method appendRow with second=TR  and third=false arguments should append and one row before row', function() {
-			const editor = new Jodit(appendTestArea());
+				describe('with styled row', function () {
+					it('should append one row after this row and copy matching styles', function() {
+						const editor = new Jodit(appendTestArea());
 
-			editor.value =
-				'<table>' +
-				'<tr><td>1</td><td>2</td><td>3</td></tr>' +
-				'<tr><td>2</td><td>3</td><td>4</td></tr>' +
-				'</table>';
+						editor.value =
+							'<table>' +
+							'<tr><td style="color: red">1</td><td class="blue">2</td><td>3</td></tr>' +
+							'<tr><td>2</td><td>3</td><td>4</td></tr>' +
+							'</table>';
 
-			Jodit.modules.Table.appendRow(
-				editor.editor.firstChild,
-				editor.editor.firstChild.querySelector('tr'),
-				false,
-				editor.create.inside
-			);
+						Jodit.modules.Table.appendRow(
+							editor.editor.firstChild,
+							editor.editor.firstChild.querySelector('tr'),
+							true,
+							editor.create.inside
+						);
 
-			expect(editor.value).equals(
-				'<table><tbody><tr><td></td><td></td><td></td></tr><tr><td>1</td><td>2</td><td>3</td></tr><tr><td>2</td><td>3</td><td>4</td></tr></tbody></table>'
-			);
+						expect(editor.value).equals(
+							'<table><tbody>' +
+							'<tr><td style="color: red">1</td><td class="blue">2</td><td>3</td></tr>' +
+							'<tr><td style="color: red"></td><td class="blue"></td><td></td></tr>' +
+							'<tr><td>2</td><td>3</td><td>4</td></tr></tbody></table>'
+						);
+					});
+				});
+			});
+
+			describe('with second=TR  and third=false arguments ', function () {
+				it('should append and one row before row', function() {
+					const editor = new Jodit(appendTestArea());
+
+					editor.value =
+						'<table>' +
+						'<tr><td>1</td><td>2</td><td>3</td></tr>' +
+						'<tr><td>2</td><td>3</td><td>4</td></tr>' +
+						'</table>';
+
+					Jodit.modules.Table.appendRow(
+						editor.editor.firstChild,
+						editor.editor.firstChild.querySelector('tr'),
+						false,
+						editor.create.inside
+					);
+
+					expect(editor.value).equals(
+						'<table><tbody><tr><td></td><td></td><td></td></tr><tr><td>1</td><td>2</td><td>3</td></tr><tr><td>2</td><td>3</td><td>4</td></tr></tbody></table>'
+					);
+				});
+			});
 		});
 
 		it('Method appendColumn should append column in the end', function() {
