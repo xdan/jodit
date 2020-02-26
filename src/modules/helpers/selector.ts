@@ -7,15 +7,14 @@
 import { IS_IE } from '../../constants';
 import { IDictionary } from '../../types/types';
 import { isString } from './checker';
+import { attr } from './utils';
 
-let
-	temp = 1;
+let temp = 1;
 
-const
-	$$temp = () => {
-		temp++;
-		return temp;
-	};
+const $$temp = () => {
+	temp++;
+	return temp;
+};
 
 /**
  * Find all elements by selector and return Array. If it did not find any element it return empty array
@@ -97,20 +96,17 @@ export const getXPathByElement = (
 };
 
 /**
- *
+ * Find all `ref` or `data-ref` elements inside HTMLElement
  * @param root
  */
 export const refs = (root: HTMLElement): IDictionary<HTMLElement> => {
-	return $$('[ref]', root).reduce(
-		(def, child) => {
-			const key = child.getAttribute('ref');
+	return $$('[ref],[data-ref]', root).reduce((def, child) => {
+		const key = attr(child, '-ref');
 
-			if (key && isString(key)) {
-				def[key] = child;
-			}
+		if (key && isString(key)) {
+			def[key] = child;
+		}
 
-			return def;
-		},
-		<IDictionary<HTMLElement>>{}
-	);
+		return def;
+	}, <IDictionary<HTMLElement>>{});
 };

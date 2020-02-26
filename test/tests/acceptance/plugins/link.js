@@ -496,6 +496,50 @@ describe('Link plugin', function() {
 						);
 					});
 
+					describe('Use data-ref instead ref', function() {
+						it('Should show this template inside popup', function() {
+							const tpl =
+								'<form class="form_url"><input data-ref="url_input" type="url"><button>save</button></form>';
+
+							const editor = new Jodit(appendTestArea(), {
+								link: {
+									formTemplate: function() {
+										return tpl;
+									}
+								}
+							});
+
+							editor.value = '123';
+							editor.selection.select(editor.editor.firstChild);
+
+							clickButton('link', editor);
+
+							const popup = editor.container.querySelector(
+								'.jodit_toolbar_popup'
+							);
+
+							expect(
+								sortAttributes(
+									popup.querySelector('form').outerHTML
+								)
+							).equals(tpl);
+
+							const url = editor.container.querySelector(
+								'[data-ref=url_input]'
+							);
+							expect(url).is.not.null;
+
+							url.focus();
+							url.value = 'tests/artio.jpg';
+
+							simulateEvent('submit', 0, popup.querySelector('form'));
+
+							expect(sortAttributes(editor.value)).equals(
+								'<a href="tests/artio.jpg">123</a>'
+							);
+						});
+					});
+
 					describe('Add class name in form', function() {
 						it('Should show form with this class', function() {
 							const editor = new Jodit(appendTestArea(), {
