@@ -11,6 +11,7 @@ import { Dom } from '../modules/Dom';
 import { IJodit } from '../types';
 import { Plugin } from '../modules/Plugin';
 import { MAY_BE_REMOVED_WITH_KEY } from '../constants';
+import { attr } from '../modules/helpers/utils';
 
 /**
  * Show placeholder
@@ -108,7 +109,7 @@ export class placeholder extends Plugin {
 			editor.element.hasAttribute('placeholder')
 		) {
 			this.placeholderElm.innerHTML =
-				editor.element.getAttribute('placeholder') || '';
+				attr(editor.element, 'placeholder') || '';
 		}
 
 		editor.events.fire('placeholder', this.placeholderElm.innerHTML);

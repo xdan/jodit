@@ -13,6 +13,7 @@ import { Plugin } from '../modules/Plugin';
 import { ToolbarButton } from '../modules/toolbar/button';
 import { IControlType, IControlTypeStrong } from '../types/toolbar';
 import { trim } from '../modules/helpers/string';
+import { attr } from '../modules/helpers/utils';
 
 declare module '../Config' {
 	interface Config {
@@ -65,8 +66,7 @@ export class xpath extends Plugin {
 	private onSelectPath = (bindElement: Node, event: MouseEvent) => {
 		this.jodit.selection.focus();
 
-		const path: string =
-			(event.target as HTMLElement).getAttribute('data-path') || '/';
+		const path = attr(event.target as HTMLElement, '-path') || '/';
 
 		if (path === '/') {
 			this.jodit.execCommand('selectall');

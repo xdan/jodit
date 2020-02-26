@@ -9,6 +9,7 @@ import { BR, PARAGRAPH } from '../constants';
 import { Dom } from '../modules/Dom';
 import { IControlType } from '../types/toolbar';
 import { HTMLTagNames, IJodit } from '../types';
+import { attr } from '../modules/helpers/utils';
 
 Config.prototype.controls.indent = {
 	tooltip: 'Increase Indent'
@@ -107,7 +108,7 @@ export function indent(editor: IJodit) {
 
 				currentBox.style[key] = value > 0 ? value + 'px' : '';
 
-				if (!currentBox.getAttribute('style')) {
+				if (!attr(currentBox, 'style')) {
 					currentBox.removeAttribute('style');
 				}
 			}

@@ -14,7 +14,7 @@ import {
 import { IViewBased } from '../types/view';
 import { Component } from './Component';
 import { Alert, Dialog, Prompt } from './dialog/';
-import { $$, css, trim } from './helpers/';
+import { $$, attr, css, trim } from './helpers/';
 import { ToolbarIcon } from './toolbar/icon';
 import { Dom } from './Dom';
 
@@ -216,7 +216,7 @@ export class ImageEditor extends Component {
 		}
 
 		css(this.cropHandler, {
-			backgroundImage: 'url(' + this.cropImage.getAttribute('src') + ')',
+			backgroundImage: 'url(' + attr(this.cropImage, 'src') + ')',
 			width: this.new_w,
 			height: this.new_h,
 			left: w / 2 - this.new_w / 2,
@@ -437,8 +437,7 @@ export class ImageEditor extends Component {
 
 					slide.classList.add('active');
 					self.activeTab =
-						<ImageAction>slide.getAttribute('data-area') ||
-						'resize';
+						<ImageAction>attr(slide, '-area') || 'resize';
 
 					const tab: HTMLDivElement | null = self.editor.querySelector(
 						`.${jie}_area.${jie}_area_` + self.activeTab
@@ -595,7 +594,7 @@ export class ImageEditor extends Component {
 							: self.cropBox
 				} as ImageEditorActionBox;
 
-				switch (button.getAttribute('data-action')) {
+				switch (attr(button, '-action')) {
 					case 'saveas':
 						Prompt(
 							self.jodit.i18n('Enter new name'),

@@ -7,7 +7,7 @@
 export const val = (
 	elm: HTMLInputElement | HTMLElement,
 	selector: string,
-	value?: string
+	value?: string | null
 ): string => {
 	const child = elm.querySelector(selector) as HTMLInputElement;
 

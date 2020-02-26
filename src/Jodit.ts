@@ -17,7 +17,8 @@ import {
 	normalizeKeyAliases,
 	error,
 	isString,
-	markDeprecated
+	markDeprecated,
+	attr
 } from './modules/helpers/';
 
 import { JoditArray } from './modules/helpers/JoditArray';
@@ -1046,8 +1047,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		const element = this.resolveElement(source);
 
 		if (!this.isReady) {
-			this.id =
-				element.getAttribute('id') || new Date().getTime().toString();
+			this.id = attr(element, 'id') || new Date().getTime().toString();
 
 			Jodit.instances[this.id] = this;
 		}
@@ -1455,12 +1455,13 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			}) => {
 				if (element !== container) {
 					if (element.hasAttribute(this.__defaultStyleDisplayKey)) {
-						const attr = element.getAttribute(
+						const display = attr(
+							element,
 							this.__defaultStyleDisplayKey
 						);
 
-						if (attr) {
-							element.style.display = attr;
+						if (display) {
+							element.style.display = display;
 							element.removeAttribute(
 								this.__defaultStyleDisplayKey
 							);
@@ -1471,16 +1472,12 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 				} else {
 					if (element.hasAttribute(this.__defaultClassesKey)) {
 						element.className =
-							element.getAttribute(this.__defaultClassesKey) ||
-							'';
+							attr(element, this.__defaultClassesKey) || '';
 						element.removeAttribute(this.__defaultClassesKey);
 					}
 				}
 
-				if (
-					element.hasAttribute('style') &&
-					!element.getAttribute('style')
-				) {
+				if (element.hasAttribute('style') && !attr(element, 'style')) {
 					element.removeAttribute('style');
 				}
 

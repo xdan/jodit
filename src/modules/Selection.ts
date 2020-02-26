@@ -19,7 +19,7 @@ import { $$ } from './helpers/selector';
 import { isFunction, isPlainObject, isString } from './helpers/checker';
 import { each } from './helpers/each';
 import { trim } from './helpers/string';
-import { error } from './helpers';
+import { attr, error } from './helpers';
 
 type WindowSelection = Selection | null;
 
@@ -1110,7 +1110,7 @@ export class Select {
 		this.doc.execCommand('fontsize', false, '7');
 
 		$$('*[data-font-size]', this.area).forEach((elm: HTMLElement) => {
-			const fontSize = elm.getAttribute('data-font-size');
+			const fontSize = attr(elm, 'data-font-size');
 
 			if (elm.style && fontSize) {
 				elm.style.fontSize = fontSize;
@@ -1206,7 +1206,9 @@ export class Select {
 
 			return (
 				(reg.test(alternativeNodeName) ||
-					!!(options.rules && checkCssRulesFor(elm as HTMLElement))) &&
+					!!(
+						options.rules && checkCssRulesFor(elm as HTMLElement)
+					)) &&
 				findNextCondition(elm)
 			);
 		};
@@ -1239,8 +1241,7 @@ export class Select {
 
 				if (
 					!Dom.isBlock(elm, this.win) &&
-					(!elm.getAttribute('style') ||
-						tlc(elm.nodeName) !== defaultTag)
+					(!attr(elm, 'style') || tlc(elm.nodeName) !== defaultTag)
 				) {
 					// toggle `<strong>test</strong>` toWYSIWYG `test`, and
 					// `<span style="">test</span>` toWYSIWYG `test`
@@ -1423,8 +1424,7 @@ export class Select {
 							alternativeNodeName,
 							this.jodit.create.inside
 						),
-						cssRules &&
-							alternativeNodeName === defaultTag
+						cssRules && alternativeNodeName === defaultTag
 							? cssRules
 							: {}
 					);

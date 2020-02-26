@@ -9,7 +9,13 @@ import { Widget } from '../modules/Widget';
 import ColorPickerWidget = Widget.ColorPickerWidget;
 import TabsWidget = Widget.TabsWidget;
 import { Dom } from '../modules/Dom';
-import { clearCenterAlign, css, offset, splitArray } from '../modules/helpers/';
+import {
+	attr,
+	clearCenterAlign,
+	css,
+	offset,
+	splitArray
+} from '../modules/helpers/';
 import { Plugin } from '../modules/Plugin';
 import { Table } from '../modules/Table';
 import { Popup } from '../modules/popup/popup';
@@ -36,9 +42,10 @@ Config.prototype.popup = {
 			name: 'eye',
 			tooltip: 'Open link',
 			exec: (editor: IJodit, current: Node) => {
-				const href:
-					| string
-					| null = (current as HTMLElement).getAttribute('href');
+				const href = attr(
+					current as HTMLElement,
+					'href'
+				);
 
 				if (current && href) {
 					editor.ownerWindow.open(href);

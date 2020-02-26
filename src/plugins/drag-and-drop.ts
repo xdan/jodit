@@ -6,7 +6,7 @@
 
 import { TEXT_HTML, TEXT_PLAIN } from '../constants';
 import { Dom } from '../modules/Dom';
-import { css, ctrlKey, dataBind } from '../modules/helpers';
+import { attr, css, ctrlKey, dataBind } from '../modules/helpers';
 import { Plugin } from '../modules/Plugin';
 import { IPoint } from '../types/types';
 import { getDataTransfer } from './clipboard';
@@ -81,20 +81,21 @@ export class DragAndDrop extends Plugin {
 					: range.extractContents();
 			} else if (this.draggable) {
 				if (this.isCopyMode) {
-					const [tagName, attr]: string[] =
-						this.draggable.getAttribute('data-is-file') === '1'
+					const [tagName, field] =
+						attr(this.draggable, '-is-file') === '1'
 							? ['a', 'href']
 							: ['img', 'src'];
+
 					fragment = this.jodit.create.inside.element(tagName);
+
 					fragment.setAttribute(
-						attr,
-						this.draggable.getAttribute('data-src') ||
-							this.draggable.getAttribute('src') ||
+						field,
+						attr(this.draggable, 'data-src') ||
+							attr(this.draggable, 'src') ||
 							''
 					);
 					if (tagName === 'a') {
-						fragment.textContent =
-							fragment.getAttribute(attr) || '';
+						fragment.textContent = attr(fragment, field) || '';
 					}
 				} else {
 					fragment = dataBind(this.draggable, 'target');

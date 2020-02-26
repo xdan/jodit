@@ -10,6 +10,7 @@ import { Alert } from '../modules/dialog/';
 import { IControlType } from '../types/toolbar';
 import { IJodit } from '../types';
 import { Dom } from '../modules';
+import { attr } from '../modules/helpers/utils';
 
 declare module '../Config' {
 	interface Config {
@@ -354,11 +355,11 @@ export class symbols {
 
 					if (Dom.isTag(target, 'a')) {
 						const index: number = parseInt(
-								target.getAttribute('data-index') || '0',
+								attr(target, '-index') || '0',
 								10
 							),
 							jIndex: number = parseInt(
-								target.getAttribute('data-index-j') || '0',
+								attr(target, 'data-index-j') || '0',
 								10
 							);
 

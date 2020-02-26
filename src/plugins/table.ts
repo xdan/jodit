@@ -11,6 +11,7 @@ import { Dom } from '../modules/Dom';
 import { Table } from '../modules/Table';
 import {
 	$$,
+	attr,
 	call,
 	getContentWidth,
 	offset,
@@ -134,7 +135,7 @@ Config.prototype.controls.table = {
 
 			let k =
 				index === undefined || isNaN(index)
-					? parseInt(dv.getAttribute('data-index') || '0', 10)
+					? parseInt(attr(dv, '-index') || '0', 10)
 					: index || 0;
 
 			const rows_count = Math.ceil((k + 1) / default_cols_count),
@@ -170,7 +171,7 @@ Config.prototype.controls.table = {
 					return;
 				}
 
-				let k = parseInt(dv.getAttribute('data-index') || '0', 10);
+				let k = parseInt(attr(dv, '-index') || '0', 10);
 
 				const rows_count = Math.ceil((k + 1) / default_cols_count),
 					cols_count = (k % default_cols_count) + 1;
@@ -525,14 +526,13 @@ export class TableProcessor extends Plugin {
 		if (needChangeWidth) {
 			this.workTable.style.width =
 				((width + delta) / parentWidth) * 100 + '%';
-
 		} else {
 			const side = this.isRTL ? 'marginRight' : 'marginLeft';
 
 			const margin = parseInt(
 				this.jodit.editorWindow.getComputedStyle(this.workTable)[
 					side
-					] || '0',
+				] || '0',
 				10
 			);
 

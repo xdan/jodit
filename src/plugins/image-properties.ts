@@ -7,7 +7,14 @@
 import { Config } from '../Config';
 import { Alert, Confirm, Dialog } from '../modules/dialog/';
 import { Dom } from '../modules/Dom';
-import { $$, css, trim, val, clearCenterAlign } from '../modules/helpers/';
+import {
+	$$,
+	css,
+	trim,
+	val,
+	clearCenterAlign,
+	attr
+} from '../modules/helpers/';
 import { ToolbarIcon } from '../modules/toolbar/icon';
 import { Widget } from '../modules/Widget';
 import TabsWidget = Widget.TabsWidget;
@@ -321,16 +328,16 @@ export function imageProperties(editor: IJodit) {
 				);
 			},
 			updateId = () => {
-				val(prop, '.id', image.getAttribute('id') || '');
+				val(prop, '.id', attr(image, 'id') || '');
 			},
 			updateStyle = () => {
-				val(prop, '.style', image.getAttribute('style') || '');
+				val(prop, '.style', attr(image, 'style') || '');
 			},
 			updateClasses = () => {
 				val(
 					prop,
 					'.classes',
-					(image.getAttribute('class') || '').replace(
+					(attr(image, 'class') || '').replace(
 						/jodit_focused_image[\s]*/,
 						''
 					)
@@ -344,7 +351,8 @@ export function imageProperties(editor: IJodit) {
 				let notequal = false;
 
 				$$('.margins', prop).forEach((elm: HTMLElement) => {
-					const id: string = elm.getAttribute('data-id') || '';
+					const id = attr(elm, 'data-id') || '';
+
 					let value: number | string = (image.style as any)[
 						id
 					] as string;
@@ -394,10 +402,10 @@ export function imageProperties(editor: IJodit) {
 			},
 			updateText = () => {
 				if (image.hasAttribute('title')) {
-					val(prop, '.imageTitle', image.getAttribute('title') || '');
+					val(prop, '.imageTitle', attr(image, 'title') || '');
 				}
 				if (image.hasAttribute('alt')) {
-					val(prop, '.imageAlt', image.getAttribute('alt') || '');
+					val(prop, '.imageAlt', attr(image, 'alt') || '');
 				}
 
 				const a: HTMLAnchorElement | null = Dom.closest(
@@ -406,23 +414,20 @@ export function imageProperties(editor: IJodit) {
 					editor.editor
 				) as HTMLAnchorElement;
 				if (a) {
-					val(prop, '.imageLink', a.getAttribute('href') || '');
+					val(prop, '.imageLink', attr(a, 'href') || '');
 					(prop.querySelector(
 						'.imageLinkOpenInNewTab'
 					) as HTMLInputElement).checked =
-						a.getAttribute('target') === '_blank';
+						attr(a, 'target') === '_blank';
 				}
 			},
 			updateSrc = () => {
-				val(prop, '.imageSrc', image.getAttribute('src') || '');
+				val(prop, '.imageSrc', attr(image, 'src') || '');
 				const imageViewSrc: HTMLInputElement | null = prop.querySelector(
 					'.imageViewSrc'
 				);
 				if (imageViewSrc) {
-					imageViewSrc.setAttribute(
-						'src',
-						image.getAttribute('src') || ''
-					);
+					imageViewSrc.setAttribute('src', attr(image, 'src') || '');
 				}
 			},
 			update = () => {
@@ -471,7 +476,7 @@ export function imageProperties(editor: IJodit) {
 				mainTab
 			) as HTMLAnchorElement[]).forEach((btn: HTMLAnchorElement) => {
 				editor.events.on(btn, 'mousedown touchstart', () => {
-					const url: string = image.getAttribute('src') || '',
+					const url: string = attr(image, 'src') || '',
 						a = editor.create.element('a'),
 						loadExternal = () => {
 							if (a.host !== location.host) {
@@ -770,8 +775,7 @@ export function imageProperties(editor: IJodit) {
 				if (!lockMargin) {
 					($$('.margins', prop) as HTMLInputElement[]).forEach(
 						(margin: HTMLInputElement) => {
-							const id: string =
-								margin.getAttribute('data-id') || '';
+							const id = attr(margin, 'data-id') || '';
 							css(image, id, normalSize(margin.value));
 						}
 					);
@@ -829,7 +833,7 @@ export function imageProperties(editor: IJodit) {
 				}
 			}
 
-			if (!image.getAttribute('style')) {
+			if (!attr(image,'style')) {
 				image.removeAttribute('style');
 			}
 

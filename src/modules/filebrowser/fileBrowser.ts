@@ -44,7 +44,7 @@ import { ObserveObject } from '../events/observeObject';
 import { FileBrowserItem } from './builders/item';
 import { isValidName } from '../helpers/checker/isValidName';
 import { F_CLASS, ICON_LOADER, ITEM_CLASS } from './consts';
-import { error } from '../helpers';
+import { attr, error } from '../helpers';
 import { makeDataProvider } from './factories';
 
 const DEFAULT_SOURCE_NAME = 'default',
@@ -826,7 +826,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 				function(this: HTMLElement, e: MouseEvent) {
 					const a: HTMLAnchorElement = this
 							.parentNode as HTMLAnchorElement,
-						path: string = a.getAttribute('data-path') || '';
+						path = attr(a, '-path') || '';
 
 					Confirm(
 						self.i18n('Are you sure?'),
@@ -836,8 +836,8 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 								self.dataProvider
 									.folderRemove(
 										path,
-										a.getAttribute('data-name') || '',
-										a.getAttribute('data-source') || ''
+										attr(a, '-name') || '',
+										attr(a, '-source') || ''
 									)
 									.then(resp => {
 										if (
@@ -880,8 +880,8 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 				function(this: HTMLElement, e: MouseEvent) {
 					const a: HTMLAnchorElement = this
 							.parentNode as HTMLAnchorElement,
-						name: string = a.getAttribute('data-name') || '',
-						path: string = a.getAttribute('data-source-path') || '';
+						name = attr(a, '-name') || '',
+						path = attr(a, '-source-path') || '';
 
 					Prompt(
 						self.i18n('Enter new name'),
@@ -895,9 +895,9 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 							self.dataProvider
 								.folderRename(
 									path,
-									a.getAttribute('data-name') || '',
+									attr(a, '-name') || '',
 									newName,
-									a.getAttribute('data-source') || ''
+									attr(a, '-source') || ''
 								)
 								.then(resp => {
 									if (
@@ -950,8 +950,8 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 								self.dataProvider
 									.createFolder(
 										name,
-										this.getAttribute('data-path') || '',
-										this.getAttribute('data-source') || ''
+										attr(this, '-path') || '',
+										attr(this, '-source') || ''
 									)
 									.then(resp => {
 										if (self.options.isSuccess(resp)) {
@@ -969,9 +969,10 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 						);
 					} else {
 						self.dataProvider.currentPath =
-							this.getAttribute('data-path') || '';
+							attr(this, '-path') || '';
 						self.dataProvider.currentSource =
-							this.getAttribute('data-source') || '';
+							attr(this, '-source') || '';
+
 						self.loadTree();
 					}
 				},
@@ -995,8 +996,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 						(self.options.moveFile || self.options.moveFolder) &&
 						dragElement
 					) {
-						let path: string =
-							dragElement.getAttribute('data-path') || '';
+						let path = attr(dragElement, '-path') || '';
 
 						// move folder
 						if (
@@ -1010,7 +1010,8 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 
 						// move file
 						if (dragElement.classList.contains(ITEM_CLASS)) {
-							path += dragElement.getAttribute('data-name');
+							path += attr(dragElement, '-name');
+
 							if (!self.options.moveFile) {
 								return false;
 							}
@@ -1019,8 +1020,8 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 						self.dataProvider
 							.move(
 								path,
-								this.getAttribute('data-path') || '',
-								this.getAttribute('data-source') || '',
+								attr(this, '-path') || '',
+								attr(this, '-source') || '',
 								dragElement.classList.contains(ITEM_CLASS)
 							)
 							.then(resp => {
@@ -1201,7 +1202,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 		}
 
 		self.dataProvider.currentBaseUrl = $$('base', editorDoc).length
-			? $$('base', editorDoc)[0].getAttribute('href') || ''
+			? attr($$('base', editorDoc)[0], 'href') || ''
 			: location.protocol + '//' + location.host;
 
 		self.initUploader(editor);

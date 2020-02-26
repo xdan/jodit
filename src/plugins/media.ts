@@ -8,6 +8,7 @@ import { Config } from '../Config';
 import * as consts from '../constants';
 import { $$ } from '../modules/helpers/selector';
 import { IJodit } from '../types';
+import { attr } from '../modules/helpers/utils';
 
 declare module '../Config' {
 	interface Config {
@@ -40,9 +41,7 @@ export function media(editor: IJodit) {
 	const wrap = (element: HTMLElement) => {
 		if (
 			element.parentNode &&
-			(element.parentNode as HTMLElement).getAttribute(
-				'data-jodit_iframe_wrapper'
-			)
+			attr(element.parentNode as HTMLElement, 'data-jodit_iframe_wrapper')
 		) {
 			element = element.parentNode as HTMLElement;
 		} else {

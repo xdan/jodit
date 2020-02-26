@@ -11,7 +11,7 @@ import { IBound } from '../types/types';
 import { Dom } from '../modules/Dom';
 import { $$ } from '../modules/helpers/selector';
 import { offset, innerWidth } from '../modules/helpers/size';
-import { css } from '../modules/helpers';
+import { attr, css } from '../modules/helpers';
 import { IJodit } from '../types';
 import { Plugin } from '../modules/Plugin';
 
@@ -276,7 +276,6 @@ export class resizer extends Plugin {
 					'mousemove.resizer touchmove.resizer',
 					this.onResize
 				);
-
 			} else {
 				this.hide();
 			}
@@ -343,10 +342,7 @@ export class resizer extends Plugin {
 			const iframe = element;
 
 			if (
-				element.parentNode &&
-				(element.parentNode as HTMLElement).getAttribute(
-					'data-jodit_iframe_wrapper'
-				)
+				attr(element.parentNode as HTMLElement, '-jodit_iframe_wrapper')
 			) {
 				element = element.parentNode as HTMLElement;
 			} else {

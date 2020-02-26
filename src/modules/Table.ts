@@ -16,7 +16,7 @@
 
 import * as consts from '../constants';
 import { Dom } from './Dom';
-import { $$, each, trim } from './helpers/';
+import { $$, attr, each, trim } from './helpers/';
 import { ICreate } from '../types';
 
 export class Table {
@@ -327,8 +327,7 @@ export class Table {
 				box[i][j].setAttribute(
 					'colspan',
 					(
-						parseInt(box[i][j].getAttribute('colspan') || '1', 10) +
-						1
+						parseInt(attr(box[i][j], 'colspan') || '1', 10) + 1
 					).toString()
 				);
 			}
@@ -513,7 +512,7 @@ export class Table {
 				}
 				if (
 					box[i][j].hasAttribute('class') &&
-					!box[i][j].getAttribute('class')
+					!attr(box[i][j], 'class')
 				) {
 					box[i][j].removeAttribute('class');
 				}

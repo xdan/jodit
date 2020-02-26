@@ -24,7 +24,8 @@ import {
 	isFunction,
 	normalizeColor,
 	val,
-	hasBrowserColorPicker
+	hasBrowserColorPicker,
+	attr
 } from './helpers/';
 import { ToolbarIcon } from './toolbar/icon';
 
@@ -79,7 +80,6 @@ export namespace Widget {
 						')';
 				}
 			},
-
 			eachColor = (colors: string[] | IDictionary<string[]>) => {
 				const stack: string[] = [];
 
@@ -93,7 +93,6 @@ export namespace Widget {
 						stack.push(eachColor((colors as any)[key]));
 						stack.push('</div>');
 					});
-
 				} else if (Array.isArray(colors)) {
 					colors.forEach(color => {
 						stack.push(
@@ -203,7 +202,7 @@ export namespace Widget {
 				active.innerHTML = '';
 			}
 
-			const color: string = target.getAttribute('data-color') || '';
+			const color: string = attr(target, '-color') || '';
 
 			if (color) {
 				setColor(target, color);
@@ -367,7 +366,9 @@ export namespace Widget {
 	interface ImageSelectorCallbacks {
 		url?: (this: IJodit, url: string, alt: string) => void;
 		filebrowser?: (data: IFileBrowserCallBackData) => void;
-		upload?: ((this: IJodit, data: IFileBrowserCallBackData) => void) | true;
+		upload?:
+			| ((this: IJodit, data: IFileBrowserCallBackData) => void)
+			| true;
 	}
 
 	/**
@@ -412,7 +413,9 @@ export namespace Widget {
 			editor.getInstance<IUploader>('Uploader').bind(
 				dragbox,
 				(resp: IUploaderData) => {
-					let handler = isFunction(callbacks.upload) ? callbacks.upload : editor.options.uploader.defaultHandlerSuccess;
+					let handler = isFunction(callbacks.upload)
+						? callbacks.upload
+						: editor.options.uploader.defaultHandlerSuccess;
 
 					if (typeof handler === 'function') {
 						handler.call(editor, resp);
@@ -450,22 +453,22 @@ export namespace Widget {
 
 		if (callbacks.url) {
 			const form = editor.create.fromHTML(
-		`<form onsubmit="return false;" class="jodit_form">
+					`<form onsubmit="return false;" class="jodit_form">
 						<div class="jodit_form_group">
 							<input class="jodit_input" type="text" required name="url" placeholder="http://"/>
 						</div>
 						<div class="jodit_form_group">
-							<input class="jodit_input" type="text" name="text" placeholder="${editor.i18n('Alternative text')}"/>
+							<input class="jodit_input" type="text" name="text" placeholder="${editor.i18n(
+								'Alternative text'
+							)}"/>
 						</div>
-						<div style="text-align: right"><button class="jodit_button">${editor.i18n('Insert')}</button></div>
+						<div style="text-align: right"><button class="jodit_button">${editor.i18n(
+							'Insert'
+						)}</button></div>
 					</form>`
 				) as HTMLFormElement,
-				button = form.querySelector(
-					'button'
-				) as HTMLButtonElement,
-				url = form.querySelector(
-					'input[name=url]'
-				) as HTMLInputElement;
+				button = form.querySelector('button') as HTMLButtonElement,
+				url = form.querySelector('input[name=url]') as HTMLInputElement;
 
 			currentImage = null;
 
@@ -475,17 +478,14 @@ export namespace Widget {
 				(Dom.isTag(elm, 'img') || $$('img', elm).length)
 			) {
 				currentImage = elm.tagName === 'IMG' ? elm : $$('img', elm)[0];
-				val(form, 'input[name=url]', currentImage.getAttribute('src'));
-				val(form, 'input[name=text]', currentImage.getAttribute('alt'));
+				val(form, 'input[name=url]', attr(currentImage,'src'));
+				val(form, 'input[name=text]', attr(currentImage,'alt'));
 				button.textContent = editor.i18n('Update');
 			}
 
-			if (
-				elm &&
-				Dom.isTag(elm, 'a')
-			) {
-				val(form, 'input[name=url]', elm.getAttribute('href') || '');
-				val(form, 'input[name=text]', elm.getAttribute('title') || '');
+			if (elm && Dom.isTag(elm, 'a')) {
+				val(form, 'input[name=url]', attr(elm,'href'));
+				val(form, 'input[name=text]', attr(elm,'title'));
 				button.textContent = editor.i18n('Update');
 			}
 

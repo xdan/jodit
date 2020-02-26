@@ -7,6 +7,7 @@
 import { Config } from '../Config';
 import { Dom } from '../modules/Dom';
 import {
+	attr,
 	convertMediaURLToVideoEmbed,
 	isURL,
 	refs,
@@ -172,16 +173,14 @@ Config.prototype.controls.link = {
 		}
 
 		if (link) {
-			url_input.value = link.getAttribute('href') || '';
+			url_input.value = attr(link, 'href') || '';
 
 			if (openInNewTabCheckbox && target_checkbox) {
-				target_checkbox.checked =
-					link.getAttribute('target') === '_blank';
+				target_checkbox.checked = attr(link, 'target') === '_blank';
 			}
 
 			if (noFollowCheckbox && nofollow_checkbox) {
-				nofollow_checkbox.checked =
-					link.getAttribute('rel') === 'nofollow';
+				nofollow_checkbox.checked = attr(link, 'rel') === 'nofollow';
 			}
 
 			insert.textContent = i18n('Update');
@@ -287,7 +286,8 @@ export function link(jodit: IJodit) {
 				jodit.editor,
 				'dblclick.link',
 				function(this: HTMLAnchorElement, e: MouseEvent) {
-					const href: string | null = this.getAttribute('href');
+					const href = attr(this, 'href');
+
 					if (href) {
 						location.href = href;
 						e.preventDefault();

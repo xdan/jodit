@@ -28,7 +28,7 @@ export function call<T extends Array<any>, R>(func: (...args: T) => R, ...args: 
  * @param elm
  * @param key
  */
-export function attr(elm: HTMLElement, key: string): null | string {
+export function attr(elm: HTMLElement | null, key: string): null | string {
 	if (!elm || !isFunction(elm.getAttribute)) {
 		return null;
 	}

@@ -8,6 +8,7 @@ import { KEY_DOWN, KEY_ENTER, KEY_UP, SPACE_REG_EXP } from '../../constants';
 import { Dialog } from '../../modules/dialog/dialog';
 import { Plugin } from '../../modules/Plugin';
 import { Dom } from '../../modules/Dom';
+import { attr } from '../../modules/helpers/utils';
 
 /**
  * Show dialog choose content to paste
@@ -166,7 +167,7 @@ export class pasteStorage extends Plugin {
 				const a: HTMLAnchorElement | null = e.target as HTMLAnchorElement;
 				if (Dom.isTag(a, 'a') && a.hasAttribute('data-index')) {
 					this.selectIndex(
-						parseInt(a.getAttribute('data-index') || '0', 10)
+						parseInt(attr(a, '-index') || '0', 10)
 					);
 				}
 

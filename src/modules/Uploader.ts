@@ -8,7 +8,8 @@ import { IS_IE, TEXT_PLAIN } from '../constants';
 import {
 	BuildDataResult,
 	HandlerError,
-	HandlerSuccess, IAjax,
+	HandlerSuccess,
+	IAjax,
 	IDictionary,
 	IJodit,
 	IUploader,
@@ -18,7 +19,7 @@ import {
 	IViewBased
 } from '../types/';
 import { Ajax } from './Ajax';
-import { browser, error, extend, isPlainObject } from './helpers/';
+import { attr, browser, error, extend, isPlainObject } from './helpers/';
 import { Dom } from './Dom';
 import { isJoditObject } from './helpers/checker/isJoditObject';
 import { Component, STATUSES } from './Component';
@@ -545,8 +546,7 @@ export class Uploader extends Component implements IUploader {
 				if (browser('ff') || IS_IE) {
 					if (
 						cData &&
-						(!cData.types.length ||
-							cData.types[0] !== TEXT_PLAIN)
+						(!cData.types.length || cData.types[0] !== TEXT_PLAIN)
 					) {
 						const div = this.jodit.create.div('', {
 							tabindex: -1,
@@ -576,9 +576,10 @@ export class Uploader extends Component implements IUploader {
 							Dom.safeRemove(div);
 
 							if (child && child.hasAttribute('src')) {
-								const src: string =
-									child.getAttribute('src') || '';
+								const src = attr(child, 'src') || '';
+
 								restore();
+
 								self.sendFiles(
 									[Uploader.dataURItoBlob(src) as File],
 									handlerSuccess,
@@ -736,9 +737,7 @@ export class Uploader extends Component implements IUploader {
 					) {
 						(handlerError || this.options.defaultHandlerError).call(
 							uploader,
-							error(
-								uploader.options.getMessage.call(this, resp)
-							)
+							error(uploader.options.getMessage.call(this, resp))
 						);
 						return;
 					}

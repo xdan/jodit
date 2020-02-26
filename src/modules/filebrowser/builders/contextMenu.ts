@@ -26,7 +26,7 @@ export default (self: FileBrowser) => {
 	return function(this: HTMLElement, e: DragEvent): boolean | void {
 		let item: HTMLElement = this,
 			opt = self.options,
-			ga = (attr: string) => item.getAttribute(attr) || '';
+			ga = (key: string) => attr(item, key) || '';
 
 		self.async.setTimeout(() => {
 			contextmenu.show(
@@ -247,5 +247,5 @@ export default (self: FileBrowser) => {
 };
 
 import { FileBrowser } from '../fileBrowser';
-import { error } from '../../helpers';
+import { attr, error } from '../../helpers';
 import { makeContextMenu } from '../factories';
