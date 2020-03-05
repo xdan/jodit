@@ -10,7 +10,7 @@ export class JoditArray {
 	length: number = 0;
 
 	toString() {
-		const out = [];
+		const out: any[] = [];
 
 		for (let i = 0; i < this.length; i += 1) {
 			out[i] = (this as any)[i];
