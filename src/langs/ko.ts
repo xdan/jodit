@@ -226,7 +226,7 @@ export default {
 	download: '다운로드',
 	'Paste from clipboard': '클립보드 붙여넣기',
 	'Your browser doesn\'t support direct access to the clipboard.':
-		'사용중인 브라우저가 바로 접근을 지원하지 않아요.',
+		'사용중인 브라우저가 클립보드 접근을 지원하지 않아요.',
 	'Copy selection': '선택 복사',
 	'copy': '복사',
 	'Border radius': '둥근 테두리',
