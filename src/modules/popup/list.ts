@@ -11,10 +11,10 @@ import {
 	IToolbarCollection
 } from '../../types/toolbar';
 import { IViewBased } from '../../types/view';
-import { each } from '../helpers/';
-import { ToolbarButton } from '../toolbar/button';
+import { each, isString } from '../helpers/';
+import { ToolbarButton } from '../toolbar/button/button';
 import { Popup } from './popup';
-import { JoditToolbarCollection } from '../toolbar/joditToolbarCollection';
+import { makeCollection } from '../toolbar/factory';
 
 export class PopupList extends Popup {
 	private defaultControl = {
@@ -30,12 +30,11 @@ export class PopupList extends Popup {
 	}
 
 	doOpen(control: IControlTypeStrong) {
-		this.toolbar = JoditToolbarCollection.makeCollection(this.jodit);
+		this.toolbar = makeCollection(this.jodit);
 
-		const list: any =
-			typeof control.list === 'string'
-				? control.list.split(/[\s,]+/)
-				: control.list;
+		const list: any = isString(control.list)
+			? control.list.split(/[\s,]+/)
+			: control.list;
 
 		each(list, (key: number | string, value: string | IControlType) => {
 			let button: ToolbarButton,
@@ -43,9 +42,9 @@ export class PopupList extends Popup {
 				getControl = (key: string): IControlType | void =>
 					controls && controls[key];
 
-			if (typeof value === 'string' && getControl(value)) {
+			if (isString(value) && getControl(value)) {
 				button = new ToolbarButton(
-					this.toolbar,
+					this.jodit,
 					{
 						name: value.toString(),
 						...getControl(value)
@@ -53,12 +52,12 @@ export class PopupList extends Popup {
 					this.current
 				); // list like array {"align": {list: ["left", "right"]}}
 			} else if (
-				typeof key === 'string' &&
+				isString(key) &&
 				getControl(key) &&
 				typeof value === 'object'
 			) {
 				button = new ToolbarButton(
-					this.toolbar,
+					this.jodit,
 					{
 						name: key.toString(),
 						...getControl(key),
@@ -68,13 +67,13 @@ export class PopupList extends Popup {
 				); // list like object {"align": {list: {"left": {exec: alert}, "right": {}}}}
 			} else {
 				button = new ToolbarButton(
-					this.toolbar,
+					this.jodit,
 					{
 						name: key.toString(),
 						exec: control.exec,
 						command: control.command,
 						isActive: control.isActiveChild,
-						isDisable: control.isDisableChild,
+						isDisabled: control.isChildDisabled,
 						mode: control.mode,
 						args: [
 							(control.args && control.args[0]) || key,
@@ -87,7 +86,7 @@ export class PopupList extends Popup {
 				const template =
 					control.template || this.defaultControl.template;
 
-				button.textBox.innerHTML = template(
+				button.textContainer.innerHTML = template(
 					this.jodit,
 					key.toString(),
 					value.toString()
@@ -100,13 +99,13 @@ export class PopupList extends Popup {
 		this.container.appendChild(this.toolbar.container);
 		this.container.style.removeProperty('marginLeft');
 
-		this.toolbar.checkActiveButtons();
+		this.toolbar.update();
 	}
 
 	toolbar!: IToolbarCollection;
 
 	firstInFocus() {
-		this.toolbar.firstButton.focus();
+		this.toolbar.firstButton?.focus();
 	}
 
 	constructor(

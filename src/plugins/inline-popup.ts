@@ -13,6 +13,7 @@ import {
 	attr,
 	clearCenterAlign,
 	css,
+	isString,
 	offset,
 	splitArray
 } from '../modules/helpers/';
@@ -22,8 +23,8 @@ import { Popup } from '../modules/popup/popup';
 import { IDictionary, IJodit, IPopup, IToolbarCollection } from '../types';
 import { IControlType } from '../types/toolbar';
 import { IBound } from '../types/types';
-import { JoditToolbarCollection } from '../modules/toolbar/joditToolbarCollection';
 import { ToolbarCollection } from '../modules';
+import { makeCollection } from '../modules/toolbar/factory';
 
 declare module '../Config' {
 	interface Config {
@@ -42,10 +43,7 @@ Config.prototype.popup = {
 			name: 'eye',
 			tooltip: 'Open link',
 			exec: (editor: IJodit, current: Node) => {
-				const href = attr(
-					current as HTMLElement,
-					'href'
-				);
+				const href = attr(current as HTMLElement, 'href');
 
 				if (current && href) {
 					editor.ownerWindow.open(href);
@@ -110,13 +108,13 @@ Config.prototype.popup = {
 				image: HTMLImageElement,
 				control: IControlType
 			) => {
-				const tagName: string = (image as HTMLElement).tagName.toLowerCase();
+				const tagName = (image as HTMLElement).tagName.toLowerCase();
 				if (tagName !== 'img') {
 					return;
 				}
 
-				const command: string =
-					control.args && typeof control.args[1] === 'string'
+				const command =
+					control.args && isString(control.args[1])
 						? control.args[1].toLowerCase()
 						: '';
 
@@ -653,7 +651,7 @@ export class inlinePopup extends Plugin {
 	afterInit(jodit: IJodit): void {}
 
 	init(editor: IJodit) {
-		this.toolbar = JoditToolbarCollection.makeCollection(editor);
+		this.toolbar = makeCollection(editor);
 
 		this.target = editor.create.div('jodit_toolbar_popup-inline-target');
 		this.targetContainer = editor.create.div(

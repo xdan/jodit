@@ -6,6 +6,7 @@
 
 /**
  * Converts rgba text representation of color in hex
+ *
  * @param {string} color - string like rgba(red, green, blue, alpha) or rgb(red, green, blue)
  * @return {string | NaN} hex color view, NaN - for transparent color
  * @example
@@ -17,37 +18,38 @@
  * ```
  */
 export const colorToHex = (color: string): string | false => {
-    if (color === 'rgba(0, 0, 0, 0)' || color === '') {
-        return false;
-    }
+	if (color === 'rgba(0, 0, 0, 0)' || color === '') {
+		return false;
+	}
 
-    if (!color) {
-        return '#000000';
-    }
+	if (!color) {
+		return '#000000';
+	}
 
-    if (color.substr(0, 1) === '#') {
-        return color;
-    }
+	if (color.substr(0, 1) === '#') {
+		return color;
+	}
 
-    const digits =
-        /([\s\n\t\r]*?)rgb\((\d+), (\d+), (\d+)\)/.exec(color) ||
-        /([\s\n\t\r]*?)rgba\((\d+), (\d+), (\d+), ([\d.]+)\)/.exec(color);
-    let hex, red, green, blue, rgb;
+	const digits =
+		/([\s\n\t\r]*?)rgb\((\d+), (\d+), (\d+)\)/.exec(color) ||
+		/([\s\n\t\r]*?)rgba\((\d+), (\d+), (\d+), ([\d.]+)\)/.exec(color);
 
-    if (!digits) {
-        return '#000000';
-    }
+	let hex, red, green, blue, rgb;
 
-    red = parseInt(digits[2], 10);
-    green = parseInt(digits[3], 10);
-    blue = parseInt(digits[4], 10);
-    rgb = blue | (green << 8) | (red << 16);
+	if (!digits) {
+		return '#000000';
+	}
 
-    hex = rgb.toString(16).toUpperCase();
+	red = parseInt(digits[2], 10);
+	green = parseInt(digits[3], 10);
+	blue = parseInt(digits[4], 10);
+	rgb = blue | (green << 8) | (red << 16);
 
-    while (hex.length < 6) {
-        hex = '0' + hex;
-    }
+	hex = rgb.toString(16).toUpperCase();
 
-    return digits[1] + '#' + hex;
+	while (hex.length < 6) {
+		hex = '0' + hex;
+	}
+
+	return digits[1] + '#' + hex;
 };

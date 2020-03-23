@@ -586,8 +586,8 @@ Config.prototype.controls.filebrowser = {
 
 			filebrowser.events
 				.on('updateToolbar', () => {
-					if (control && control.isDisable) {
-						control.isDisable(filebrowser, control)
+					if (control && control.isDisabled) {
+						control.isDisabled(filebrowser, control)
 							? input.setAttribute('disabled', 'disabled')
 							: input.removeAttribute('disabled');
 					}

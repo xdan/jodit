@@ -26,7 +26,7 @@ Config.prototype.controls.brush = {
 			icon.style.removeProperty('fill');
 		}
 
-		if (current && !button.isDisable()) {
+		if (current && !button.isDisabled()) {
 			const currentBpx: HTMLElement =
 				(Dom.closest(
 					current,

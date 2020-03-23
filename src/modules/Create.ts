@@ -62,8 +62,16 @@ export class Create implements ICreate {
 	): HTMLElement {
 		const elm = this.doc.createElement(tagName.toLowerCase());
 
+		if (this.jodit.options.direction) {
+			const direction = this.jodit.options.direction.toLowerCase();
+
+			elm.style.direction =
+				direction === 'rtl' ? 'rtl' : 'ltr';
+		}
+
 		if (this.insideCreator) {
 			const ca = this.jodit.options.createAttributes;
+
 			if (ca && ca[tagName.toLowerCase()]) {
 				const attrs = ca[tagName.toLowerCase()];
 

@@ -25,7 +25,7 @@ export { Table } from './Table';
 export { ToolbarIcon } from './toolbar/icon';
 export { JoditToolbarCollection } from './toolbar/joditToolbarCollection';
 export { ToolbarCollection } from './toolbar/collection';
-export { ToolbarButton } from './toolbar/button';
+export { ToolbarButton } from './toolbar/button/button';
 export { Stack } from './Stack';
 export { Widget } from './Widget';
 export { Uploader } from './Uploader';

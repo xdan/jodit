@@ -54,10 +54,10 @@ Config.prototype.controls.fullsize = {
 		const mode: string = editor.isFullSize() ? 'shrink' : 'fullsize';
 
 		if (button) {
-			button.textBox.innerHTML = !editor.options.textIcons
+			button.textContainer.innerHTML = !editor.options.textIcons
 				? ToolbarIcon.getIcon(mode)
 				: `<span>${editor.i18n(mode)}</span>`;
-			(button.textBox.firstChild as HTMLElement).classList.add(
+			(button.textContainer.firstChild as HTMLElement).classList.add(
 				'jodit_icon'
 			);
 		}

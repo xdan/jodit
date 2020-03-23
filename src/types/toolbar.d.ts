@@ -4,15 +4,25 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { HTMLTagNames, IComponent, IDestructible, IDictionary, Modes } from './types';
+import {
+	CanUndef,
+	HTMLTagNames,
+	IComponent,
+	IContainer,
+	IDestructible,
+	IDictionary,
+	Modes,
+	Nullable
+} from './types';
+import { IButton, IFocusable } from './form';
 import { IViewBased } from './view';
 import { IJodit } from './jodit';
 import { IFileBrowser } from './fileBrowser';
+
 interface IControlType<
 	T = IJodit | IViewBased | IFileBrowser,
 	Button = IToolbarButton
 > {
-	controlName?: string;
 	name?: string;
 	mode?: Modes;
 	hotkeys?: string | string[];
@@ -90,13 +100,13 @@ interface IControlType<
 	 * })
 	 * ```
 	 */
-	isDisable?: (
+	isDisabled?: (
 		editor: T,
 		control: IControlType<T, Button>,
 		button?: Button
 	) => boolean;
 
-	isDisableChild?: (
+	isChildDisabled?: (
 		editor: T,
 		control: IControlType<T, Button>,
 		button?: Button
@@ -153,8 +163,8 @@ interface IControlType<
 	 * Tag list:  when cursor inward tag from this list, button will be highlighted
 	 */
 	tags?: HTMLTagNames[];
-	options?: any;
-	css?: IDictionary<string | string[]>
+
+	css?: IDictionary<string | string[]>;
 
 	/**
 	 * String name for existing icons.
@@ -173,6 +183,7 @@ interface IControlType<
 	 * ```
 	 */
 	icon?: string;
+
 	/**
 	 * Use this property if you want set background image for the button. This icon can be 16 * 16 px in SVG or
 	 * another image formats
@@ -244,66 +255,43 @@ interface IControlTypeStrong extends IControlType {
 }
 
 export type Controls = IDictionary<IControlType>;
+
 export type Buttons = Array<string | IControlType> | string;
 
-interface IToolbarElement extends IComponent {
-	container: HTMLElement;
+interface IToolbarElement extends IComponent, IContainer, IFocusable {
 	parentToolbar?: IToolbarCollection;
-
-	createIcon(clearName: string, control?: IControlTypeStrong): HTMLElement;
-
-	focus(): void;
+	setParentToolbar(parentToolbar: IToolbarCollection | null): void;
 }
 
-interface IToolbarButton extends IToolbarElement {
-	disable: boolean;
-	active: boolean;
-	control: IControlTypeStrong;
-	target: HTMLElement | undefined;
-	textBox: HTMLSpanElement;
-	anchor: HTMLAnchorElement;
+interface IToolbarButton extends IToolbarElement, IButton {
+	textContainer: HTMLElement;
+	trigger: Nullable<HTMLElement>;
+	target?: HTMLElement;
 
-	tooltipText: string;
-
-	isDisable(): boolean;
-	isActive(): boolean;
+	isShouldBeDisabled(): boolean;
+	isShouldBeActive(): boolean;
+	update(): void;
 }
 
-interface IToolbarCollection extends IComponent {
-	readonly listenEvents: string;
-
-	getButtonsList(): string[];
-	firstButton: IToolbarElement;
-
+interface IToolbarCollection extends IComponent, IContainer {
 	appendChild(button: IToolbarElement): void;
 
 	removeChild(button: IToolbarElement): void;
 
 	build(buttons: Buttons, container: HTMLElement, target?: HTMLElement): void;
 
+	getButtonsList(): string[];
+
 	clear(): void;
-
-	immediateCheckActiveButtons: () => void;
-
-	buttonIsActive(button: IToolbarButton): boolean | void;
-
-	buttonIsDisabled(button: IToolbarButton): boolean | void;
-	/**
-	 * Target for button element
-	 *
-	 * @param button
-	 */
-	getTarget(button: IToolbarButton): Node | void;
-
-	checkActiveButtons: () => void;
-
-	container: HTMLElement;
 
 	setDirection(direction: 'rtl' | 'ltr'): void;
 
-	destruct(): void;
-
 	getParentContainer(): HTMLElement;
+
+	firstButton: Nullable<IToolbarButton>;
+
+	update(): void;
+	immediateUpdate(): void;
 }
 
 export interface IStatusBar extends IComponent {
@@ -315,6 +303,6 @@ export interface IStatusBar extends IComponent {
 
 export interface IProgressBar extends IDestructible {
 	show(): IProgressBar;
-	progress(percentage: number): IProgressBar;
 	hide(): IProgressBar;
+	progress(percentage: number): IProgressBar;
 }

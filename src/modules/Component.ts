@@ -47,7 +47,9 @@ export abstract class Component<T extends IViewBased = IViewBased>
 	 * Component is destructing
 	 */
 	get isInDestruct(): boolean {
-		return [STATUSES.beforeDestruct, STATUSES.destructed].includes(this.componentStatus);
+		return [STATUSES.beforeDestruct, STATUSES.destructed].includes(
+			this.componentStatus
+		);
 	}
 
 	destruct(): any {

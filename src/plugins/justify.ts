@@ -41,10 +41,10 @@ Config.prototype.controls.align = {
 				btn.list &&
 				(btn.list as string[]).indexOf(currentValue) !== -1
 			) {
-				button.textBox.innerHTML = !editor.options.textIcons
+				button.textContainer.innerHTML = !editor.options.textIcons
 					? ToolbarIcon.getIcon(currentValue, '')
 					: `<span>${currentValue}</span>`;
-				(button.textBox.firstChild as HTMLElement).classList.add(
+				(button.textContainer.firstChild as HTMLElement).classList.add(
 					'jodit_icon'
 				);
 				btn.data.currentValue = currentValue;

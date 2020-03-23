@@ -6,47 +6,87 @@
 
 import { Config } from '../Config';
 import { Dom } from '../modules/Dom';
-import { IJodit, markerInfo } from '../types';
+import { IControlType, IJodit } from '../types';
+import { Plugin } from '../modules/Plugin';
+
+function exec(editor: IJodit, event: Node | false, control: IControlType) {
+	editor.events.fire(
+		'insertList',
+		control.command as string,
+		control.args && control.args[0]
+	);
+}
 
 Config.prototype.controls.ul = {
 	command: 'insertUnorderedList',
-	controlName: 'ul',
+	exec,
 	tags: ['ul'],
-	tooltip: 'Insert Unordered List'
-};
+	tooltip: 'Insert Unordered List',
+	list: {
+		default: 'Default',
+		circle: 'Circle',
+		disc: 'Disc',
+		square: 'Square'
+	}
+} as IControlType;
+
 Config.prototype.controls.ol = {
 	command: 'insertOrderedList',
-	controlName: 'ol',
+	exec,
 	tags: ['ol'],
-	tooltip: 'Insert Ordered List'
-};
+	tooltip: 'Insert Ordered List',
+	list: {
+		default: 'Default',
+		'lower-alpha': 'Lower Alpha',
+		'lower-greek': 'Lower Greek',
+		'lower-roman': 'Lower Roman',
+		'upper-alpha': 'Upper Alpha',
+		'upper-roman': 'Upper Roman'
+	}
+} as IControlType;
 
 /**
  * Process commands insertOrderedList and insertUnOrderedList
  */
-export function orderedlist(editor: IJodit) {
-	editor.events.on('afterCommand', (command: string): false | void => {
-		if (/insert(un)?orderedlist/i.test(command)) {
-			const ul: Node | false = Dom.up(
-				editor.selection.current() as Node,
+export class orderedlist extends Plugin {
+	protected afterInit(jodit: IJodit): void {
+		jodit.events.on('insertList', (command: string): false | void => {
+			let ul = Dom.up(
+				jodit.selection.current() as Node,
 				(tag: Node | null) => tag && /^UL|OL$/i.test(tag.nodeName),
-				editor.editor
-			);
+				jodit.editor
+			) as HTMLUListElement;
 
-			if (ul && Dom.isTag(ul.parentNode, 'p')) {
-				const selection: markerInfo[] = editor.selection.save();
-
-				Dom.unwrap(ul.parentNode);
-
-				Array.from(ul.childNodes).forEach((li: Node) => {
-					if (Dom.isTag(li.lastChild, 'br')) {
-						Dom.safeRemove(li.lastChild);
-					}
+			if (!ul) {
+				ul = this.jodit.create.inside.element('ul');
+				const items = this.jodit.selection.wrapInTag('li');
+				items.forEach(li => {
+					ul.appendChild(li);
 				});
-
-				editor.selection.restore(selection);
 			}
-			editor.setEditorValue();
+
+			ul && this.unwrapIfHasParent(ul);
+
+			jodit.setEditorValue();
+		});
+	}
+
+	private unwrapIfHasParent(ul: HTMLUListElement): void {
+		if (Dom.isTag(ul.parentNode, 'p')) {
+			const selection = this.jodit.selection.save();
+
+			Dom.unwrap(ul.parentNode);
+
+			Array.from(ul.childNodes).forEach(li => {
+				if (Dom.isTag(li.lastChild, 'br')) {
+					Dom.safeRemove(li.lastChild);
+				}
+			});
+
+			this.jodit.selection.restore(selection);
 		}
-	});
+	};
+
+	protected beforeDestruct(jodit: IJodit): void {
+	}
 }

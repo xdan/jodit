@@ -6,14 +6,15 @@
 
 import { IViewWithToolbar } from '../../types/view';
 import { View } from './view';
-import { JoditToolbarCollection } from '../toolbar/joditToolbarCollection';
 import { splitArray } from '../helpers/array';
 import { STATUSES } from '../Component';
 import { Dom } from '../Dom';
 import { IToolbarCollection } from '../../types';
+import { makeCollection } from '../toolbar/factory';
 
 export class ViewWithToolbar extends View implements IViewWithToolbar {
-	private __toolbar = JoditToolbarCollection.makeCollection(this);
+	private __toolbar = makeCollection(this);
+
 	get toolbar(): IToolbarCollection {
 		return this.__toolbar;
 	}

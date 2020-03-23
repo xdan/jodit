@@ -31,11 +31,11 @@ Config.prototype.controls.paragraph = {
 				btn.list &&
 				list[currentValue]
 			) {
-				button.textBox.innerHTML = `<span>${editor.i18n(
+				button.textContainer.innerHTML = `<span>${editor.i18n(
 					list[currentValue]
 				)}</span>`;
 
-				(button.textBox.firstChild as HTMLElement).classList.add(
+				(button.textContainer.firstChild as HTMLElement).classList.add(
 					'jodit_icon'
 				);
 

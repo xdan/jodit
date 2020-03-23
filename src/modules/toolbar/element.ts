@@ -4,39 +4,67 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { IControlTypeStrong, IToolbarCollection, IToolbarElement } from '../../types/toolbar';
+import {
+	IControlTypeStrong,
+	IToolbarCollection,
+	IToolbarElement
+} from '../../types/toolbar';
 import { Component, STATUSES } from '../Component';
-import { ToolbarCollection } from './collection';
 import { ToolbarIcon } from './icon';
 import { Dom } from '../Dom';
-import { IViewBased, TagNames } from '../../types';
+import { IViewBased } from '../../types';
 import { trim } from '../helpers/string';
+import { isString } from '../helpers/checker';
+import { css } from '../helpers';
 
-export abstract class ToolbarElement extends Component
+export abstract class ToolbarElement<T extends IViewBased = IViewBased>
+	extends Component<T>
 	implements IToolbarElement {
-	container: HTMLElement;
+	container!: HTMLElement;
 	parentToolbar?: IToolbarCollection;
 
-	protected constructor(
-		parentToolbarOrView: IToolbarCollection | IViewBased,
-		containerTag: TagNames = 'li',
-		containerClass: string = 'jodit_toolbar_btn'
-	) {
-		if (parentToolbarOrView instanceof ToolbarCollection) {
-			super(parentToolbarOrView.jodit);
-			this.parentToolbar = <IToolbarCollection>parentToolbarOrView;
-		} else {
-			super(<IViewBased>parentToolbarOrView);
-		}
-
-		this.container = this.jodit.create.element(containerTag);
-		this.container.classList.add(containerClass);
+	constructor(jodit: T) {
+		super(jodit);
+		this.container = this.createContainer();
 	}
 
+	/**
+	 * Container factory
+	 */
+	protected abstract createContainer(): HTMLElement;
+
+	/**
+	 * Set parent toolbar to element
+	 * @param parentToolbar
+	 */
+	setParentToolbar(parentToolbar: IToolbarCollection | null): void {
+		this.parentToolbar = parentToolbar || undefined;
+
+		if (parentToolbar) {
+			parentToolbar.container.appendChild(this.container);
+		} else {
+			Dom.safeRemove(this.container);
+		}
+	}
+
+	/**
+	 * Set focus on element
+	 */
 	focus() {
 		this.container.focus();
 	}
 
+	/**
+	 * Element has focus
+	 */
+	isFocused(): boolean {
+		const { activeElement } = this.jodit.ownerDocument;
+		return Boolean(
+			activeElement && Dom.isOrContains(this.container, activeElement)
+		);
+	}
+
+	/** @override */
 	destruct(): any {
 		if (this.isInDestruct) {
 			return;
@@ -44,54 +72,55 @@ export abstract class ToolbarElement extends Component
 
 		this.setStatus(STATUSES.beforeDestruct);
 
-		Dom.safeRemove(this.container);
-		this.parentToolbar = undefined;
+		this.setParentToolbar(null);
 		super.destruct();
 	}
+}
 
-	createIcon(clearName: string, control?: IControlTypeStrong): HTMLElement {
-		const icon: string = control ? control.icon || control.name : clearName;
+export function createIcon(
+	jodit: IViewBased,
+	clearName: string,
+	control?: IControlTypeStrong
+): HTMLElement {
+	const icon: string = control ? control.icon || control.name : clearName;
 
-		if (!this.jodit.options.textIcons) {
-			let iconSVG: string | void | HTMLElement = this.jodit.events.fire(
-				'getIcon',
-				icon,
-				control,
-				clearName
-			);
-
-			let iconElement: HTMLElement;
-
-			if (control && control.iconURL && iconSVG === undefined) {
-				iconElement = this.jodit.create.element('i');
-				iconElement.style.backgroundImage =
-					'url(' +
-					control.iconURL.replace('{basePath}', this.jodit.basePath) +
-					')';
-			} else {
-				if (iconSVG === undefined) {
-					if (ToolbarIcon.exists(icon)) {
-						iconSVG = ToolbarIcon.getIcon(icon);
-					} else {
-						iconSVG = ToolbarIcon.getIcon('empty');
-					}
-				}
-
-				iconElement =
-					typeof iconSVG === 'string'
-						? this.jodit.create.fromHTML(trim(iconSVG))
-						: iconSVG;
-			}
-
-			iconElement.classList.add('jodit_icon', 'jodit_icon_' + clearName);
-
-			return iconElement;
-		}
-
-		return this.jodit.create.fromHTML(
-			`<span class="jodit_icon">${this.jodit.i18n(
+	if (jodit.options.textIcons) {
+		return jodit.create.fromHTML(
+			`<span class="jodit_icon">${jodit.i18n(
 				control ? control.name : clearName
 			)}</span>`
 		);
 	}
+
+	let iconSVG: string | void | HTMLElement = jodit.events.fire(
+		'getIcon',
+		icon,
+		control,
+		clearName
+	);
+
+	let iconElement: HTMLElement;
+
+	if (control && control.iconURL && iconSVG === undefined) {
+		iconElement = jodit.create.element('span');
+		css(
+			iconElement,
+			'backgroundImage',
+			'url(' + control.iconURL.replace('{basePath}', jodit.basePath) + ')'
+		);
+	} else {
+		if (iconSVG === undefined) {
+			iconSVG = ToolbarIcon.getIcon(
+				ToolbarIcon.exists(icon) ? icon : 'empty'
+			);
+		}
+
+		iconElement = isString(iconSVG)
+			? jodit.create.fromHTML(trim(iconSVG))
+			: iconSVG;
+	}
+
+	iconElement.classList.add('jodit_icon', 'jodit_icon_' + clearName);
+
+	return iconElement;
 }

@@ -6,9 +6,8 @@
 
 /**
  * Check value is String
- *
  * @param value
  */
 export const isString = (value: unknown): value is string => {
-	return  typeof value === 'string';
+	return typeof value === 'string';
 };

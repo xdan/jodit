@@ -17,18 +17,27 @@ import { isFunction } from '../checker';
  * Jodit.modules.Helpers.call(f > 0.5 ? Math.ceil : Math.floor, f);
  * ```
  */
-export function call<T extends Array<any>, R>(func: (...args: T) => R, ...args: T): R {
+export function call<T extends Array<any>, R>(
+	func: (...args: T) => R,
+	...args: T
+): R {
 	return func(...args);
 }
 
 /**
  * Alias for `elm.getAttribute` but if set second argument `-{key}`
  * it will also check `data-{key}` attribute
+ * if set `value` it is alias for setAttribute with same logic
  *
  * @param elm
  * @param key
+ * @param [value]
  */
-export function attr(elm: HTMLElement | null, key: string): null | string {
+export function attr(
+	elm: HTMLElement | null,
+	key: string,
+	value?: string | number | null
+): null | string {
 	if (!elm || !isFunction(elm.getAttribute)) {
 		return null;
 	}
@@ -41,6 +50,15 @@ export function attr(elm: HTMLElement | null, key: string): null | string {
 		}
 
 		key = key.substr(1);
+	}
+
+	if (value !== undefined) {
+		if (value === null) {
+			elm.hasAttribute(key) && elm.removeAttribute(key);
+		} else {
+			elm.setAttribute(key, value.toString());
+			return value.toString();
+		}
 	}
 
 	return elm.getAttribute(key);

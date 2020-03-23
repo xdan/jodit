@@ -8,8 +8,8 @@ import { Config } from '../Config';
 import * as consts from '../constants';
 import { IControlType, IToolbarCollection } from '../types/toolbar';
 import { splitArray } from '../modules/helpers/array';
-import { JoditToolbarCollection } from '../modules/toolbar/joditToolbarCollection';
 import { IJodit } from '../types';
+import { makeCollection } from '../modules/toolbar/factory';
 
 declare module '../Config' {
 	interface Config {
@@ -50,7 +50,7 @@ Config.prototype.controls.dots = {
 		if (store === undefined) {
 			store = {
 				container: editor.create.div(),
-				toolbar: JoditToolbarCollection.makeCollection(editor),
+				toolbar: makeCollection(editor),
 				rebuild: () => {
 					if (button) {
 						const buttons:

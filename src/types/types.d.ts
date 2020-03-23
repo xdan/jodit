@@ -11,6 +11,9 @@ export interface IDictionary<T = any> {
 	[key: string]: T;
 }
 
+export type CanUndef<T> = T | undefined;
+export type Nullable<T> = T | null;
+
 export interface IInitable {
 	init(jodit: IViewBased): any;
 }
@@ -20,6 +23,10 @@ export interface IDestructible {
 }
 
 export type ComponentStatus = number;
+
+export interface IContainer {
+	container: HTMLElement;
+}
 
 interface IComponent<T extends IViewBased = IViewBased> extends IDestructible {
 	jodit: T;
