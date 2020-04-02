@@ -1,24 +1,48 @@
 import './button.less';
 import { createIcon, ToolbarElement } from '../element';
-import { IControlTypeStrong, IToolbarButton, IViewBased, Nullable } from '../../../types';
-import { attr } from '../../helpers/utils';
+import {
+	IControlTypeStrong,
+	IToolbarButton,
+	IViewBased,
+	Nullable
+} from '../../../types';
+import { attr, call } from '../../helpers/utils';
 import { isFunction, isJoditObject, isString } from '../../helpers/checker';
 import { Dom } from '../../Dom';
 import { asArray } from '../../helpers/array';
-import { ToolbarIcon } from '../icon';
 
-export class ToolbarButton<T extends IViewBased = IViewBased> extends ToolbarElement<T> implements IToolbarButton {
-	private get clearName(): string {
-		return this.control.name.replace(/[^a-zA-Z0-9]/g, '_');
+export class ToolbarButton<T extends IViewBased = IViewBased>
+	extends ToolbarElement<T>
+	implements IToolbarButton {
+	/**
+	 * ToolbarElement is button
+	 */
+	isToolbarButton: true = true;
+
+	/**
+	 * Valid name only with valid chars
+	 */
+	protected clearName(name: string): string {
+		return name.replace(/[^a-zA-Z0-9]/g, '_');
 	}
 
 	get textContainer(): HTMLElement {
-		return this.container.querySelector('.jodit-toolbar__button-text') as HTMLElement;
-	};
+		return this.container.querySelector(
+			'.jodit-toolbar__button-text'
+		) as HTMLElement;
+	}
 
 	get trigger(): Nullable<HTMLElement> {
-		return this.container.querySelector('.jodit-toolbar__button-text');
-	};
+		return this.container.querySelector('.jodit-toolbar__button-trigger');
+	}
+
+	get button(): HTMLElement {
+		return (
+			(this.container.querySelector(
+				'.jodit_toolbar__button'
+			) as HTMLElement) || this.container
+		);
+	}
 
 	/**
 	 * Disable/Enable button
@@ -74,52 +98,6 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends ToolbarEle
 	}
 
 	/**
-	 * Button should be active
-	 */
-	isShouldBeActive(): boolean {
-		if (isJoditObject(this.jodit) && !this.jodit.editorIsActive) {
-			return false;
-		}
-
-		if (isFunction(this.control.isActive)) {
-			return this.control.isActive(this.jodit, this.control, this);
-		}
-
-		return false;
-	}
-
-	/**
-	 * Button should be disabled
-	 */
-	isShouldBeDisabled(): boolean {
-		if (this.jodit.options.disabled) {
-			return true;
-		}
-
-		if (
-			this.jodit.options.readonly &&
-			(!this.jodit.options.activeButtonsInReadOnly ||
-				this.jodit.options.activeButtonsInReadOnly.indexOf(
-					this.control.name
-				) === -1)
-		) {
-			return true;
-		}
-
-		let isDisabled: boolean = false;
-
-		if (isFunction(this.control.isDisabled)) {
-			isDisabled = this.control.isDisabled(
-				this.jodit,
-				this.control,
-				this
-			);
-		}
-
-		return isDisabled;
-	}
-
-	/**
 	 * Update content
 	 */
 	update(): void {
@@ -141,10 +119,11 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends ToolbarEle
 			);
 		}
 
-		this.setDisabled(this.isShouldBeDisabled());
+		this.parentToolbar &&
+			this.setDisabled(this.parentToolbar.shouldBeDisabled(this));
 
-		if (!this.isDisabled()) {
-			this.setActive(this.isShouldBeActive());
+		if (this.parentToolbar && !this.isDisabled()) {
+			this.setActive(this.parentToolbar.shouldBeActive(this));
 		}
 
 		let tabIndex = '-1';
@@ -159,45 +138,27 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends ToolbarEle
 	constructor(
 		jodit: T,
 		readonly control: IControlTypeStrong,
-		readonly target?: HTMLElement,
+		readonly target?: HTMLElement
 	) {
-		super(jodit);
+		super(jodit, control, target);
 
-		const {clearName} = this;
-		this.container.classList.add('jodit_toolbar__button_' + clearName);
-		this.container.appendChild(createIcon(this.jodit, clearName, this.control));
+		const clearName = this.clearName(control.name);
+		this.container.classList.add('jodit_toolbar__item_' + clearName);
 
-		this.addTrigger();
 		this.update();
 		this.initTooltip();
 
-
 		this.jodit.events
-			.on(
-				this.container,
-				`click.${clearName}`,
-				this.onAction.bind(this)
-			)
+			.on(this.button, `click.${clearName}`, this.onAction.bind(this))
+			.on(this.button, `mousedown.${clearName}`, (e: MouseEvent) => {
+				e.preventDefault();
+			})
 			.on(
 				`click-${this.clearName}-btn.${clearName}`,
 				this.onAction.bind(this)
 			);
 	}
 
-	protected addTrigger() {
-		if (this.control.list) {
-			const trigger = this.jodit.create
-				.fromHTML(`<span class="jodit_toolbar__button-trigger">
-					${ToolbarIcon.getIcon('dropdown-arrow')}
-				</span>`);
-
-			this.container.appendChild(trigger);
-
-			this.container.classList.add('jodit_toolbar__button_with_trigger');
-
-			this.jodit.events.on(trigger, `click.${this.clearName}`, this.onTriggerAction.bind(this));
-		}
-	}
 	protected initTooltip() {
 		const { control } = this;
 		const tooltipText = this.tooltipText();
@@ -263,12 +224,12 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends ToolbarEle
 	}
 
 	/** @override */
-	protected createContainer(): HTMLElement {
+	protected createContainer(control: IControlTypeStrong): HTMLElement {
 		const container = this.jodit.create.element('button');
 
 		attr(container, 'role', 'button');
 
-		container.classList.add('jodit-toolbar__button');
+		container.classList.add('jodit-toolbar__button', 'jodit-toolbar__item');
 
 		const textContainer = this.jodit.create.span(
 			'jodit-toolbar__button-text'
@@ -276,9 +237,52 @@ export class ToolbarButton<T extends IViewBased = IViewBased> extends ToolbarEle
 
 		container.appendChild(textContainer);
 
+		const clearName = this.clearName(control.name);
+		container.appendChild(createIcon(this.jodit, clearName, control));
+
 		return container;
 	}
 
-	protected onAction() {}
-	protected onTriggerAction() {}
+	protected onAction(originalEvent: MouseEvent) {
+		const { control } = this;
+
+		if (isFunction(control.exec)) {
+			control.exec(
+				this.jodit,
+				this.target || false,
+				control,
+				originalEvent,
+				this.container as HTMLLIElement
+			);
+
+			this.jodit?.events.fire('synchro');
+
+			if (this.parentToolbar) {
+				this.parentToolbar.immediateUpdate();
+			}
+
+			/**
+			 * Fired after calling `button.exec` function
+			 * @event afterExec
+			 */
+			this.jodit?.events.fire('closeAllPopups afterExec');
+
+			return;
+		}
+
+		if (control.command || control.name) {
+			call(
+				isJoditObject(this.jodit)
+					? this.jodit.execCommand.bind(this.jodit)
+					: this.jodit.ownerDocument.execCommand.bind(
+							this.jodit.ownerDocument
+					  ),
+				control.command || control.name,
+				(control.args && control.args[0]) || false,
+				(control.args && control.args[1]) || null
+			);
+
+			this.jodit.events.fire('closeAllPopups');
+		}
+	}
 }

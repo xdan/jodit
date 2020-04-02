@@ -83,17 +83,6 @@
 			line-height: 100%;
 		}
 
-		&:not(.jodit_toolbar-input):hover {
-			background-color: @color-background-nav-button-hover;
-			outline: none;
-		}
-
-		&:not(.jodit_toolbar-input):active,
-		&.jodit_active {
-			background-color: fade(#dddddd, 40);
-			outline: none;
-		}
-
 		&.jodit-btn-hidden {
 			display: none !important;
 		}
@@ -121,8 +110,6 @@
 		border-top: 1px solid @color-separator;
 		height: 0 !important;
 	}
-
-	.toolbar_size(@toolbar_middle_size);
 }
 
 .jodit_toolbar_btn > a {
@@ -138,16 +125,6 @@
 
 .jodit_toolbar.jodit_text_icons > .jodit_toolbar_btn > a {
 	line-height: 1;
-}
-
-.jodit_toolbar_size {
-	&-small .jodit_toolbar {
-		.toolbar_size(@toolbar_small_size);
-	}
-
-	&-large .jodit_toolbar {
-		.toolbar_size(@toolbar_large_size);
-	}
 }
 
 @jodit_toolbar_popup_border: rgba(0, 0, 0, 0.2);

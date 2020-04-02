@@ -144,8 +144,7 @@ export class Dialog extends ViewWithToolbar {
 
 	private onMouseUp = () => {
 		if (this.draggable || this.resizable) {
-			this.events
-				.off(this.window, 'mousemove', this.onMouseMove);
+			this.events.off(this.window, 'mousemove', this.onMouseMove);
 
 			this.draggable = false;
 			this.resizable = false;
@@ -185,8 +184,7 @@ export class Dialog extends ViewWithToolbar {
 
 		this.lockSelect();
 
-		this.events
-			.on(this.window, 'mousemove', this.onMouseMove);
+		this.events.on(this.window, 'mousemove', this.onMouseMove);
 
 		if (this.jodit && this.jodit.events) {
 			/**
@@ -703,12 +701,15 @@ export class Dialog extends ViewWithToolbar {
 		self.dialogbox_header = self.container.querySelector(
 			'.jodit_dialog_header>.jodit_dialog_header-title'
 		) as HTMLHeadingElement;
+
 		self.dialogbox_content = self.container.querySelector(
 			'.jodit_dialog_content'
 		) as HTMLDivElement;
+
 		self.dialogbox_footer = self.container.querySelector(
 			'.jodit_dialog_footer'
 		) as HTMLDivElement;
+
 		self.dialogbox_toolbar = self.container.querySelector(
 			'.jodit_dialog_header>.jodit_dialog_header-toolbar'
 		) as HTMLDivElement;
@@ -717,7 +718,10 @@ export class Dialog extends ViewWithToolbar {
 
 		self.container.addEventListener('close_dialog', self.close as any);
 
-		self.toolbar.build(self.options.buttons, self.dialogbox_toolbar);
+		self.toolbar.build(
+			splitArray(self.options.buttons),
+			self.dialogbox_toolbar
+		);
 
 		self.events
 			.on(this.window, 'mouseup', self.onMouseUp)
@@ -768,3 +772,4 @@ export class Dialog extends ViewWithToolbar {
 
 import { fullsize } from '../../plugins';
 import { STATUSES } from '../Component';
+import { splitArray } from '../helpers/array/splitArray';

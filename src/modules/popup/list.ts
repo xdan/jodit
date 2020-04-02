@@ -7,14 +7,14 @@
 import {
 	Controls,
 	IControlType,
-	IControlTypeStrong,
+	IControlTypeStrongList,
+	IToolbarButton,
 	IToolbarCollection
 } from '../../types/toolbar';
+
 import { IViewBased } from '../../types/view';
-import { each, isString } from '../helpers/';
-import { ToolbarButton } from '../toolbar/button/button';
+import { each, isString, splitArray } from '../helpers/';
 import { Popup } from './popup';
-import { makeCollection } from '../toolbar/factory';
 
 export class PopupList extends Popup {
 	private defaultControl = {
@@ -29,21 +29,21 @@ export class PopupList extends Popup {
 		}
 	}
 
-	doOpen(control: IControlTypeStrong) {
+	doOpen(control: IControlTypeStrongList) {
 		this.toolbar = makeCollection(this.jodit);
 
-		const list: any = isString(control.list)
-			? control.list.split(/[\s,]+/)
+		const list = isString(control.list)
+			? splitArray(control.list)
 			: control.list;
 
 		each(list, (key: number | string, value: string | IControlType) => {
-			let button: ToolbarButton,
+			let button: IToolbarButton,
 				controls: Controls | void = this.jodit.options.controls,
 				getControl = (key: string): IControlType | void =>
 					controls && controls[key];
 
 			if (isString(value) && getControl(value)) {
-				button = new ToolbarButton(
+				button = makeButton(
 					this.jodit,
 					{
 						name: value.toString(),
@@ -56,7 +56,7 @@ export class PopupList extends Popup {
 				getControl(key) &&
 				typeof value === 'object'
 			) {
-				button = new ToolbarButton(
+				button = makeButton(
 					this.jodit,
 					{
 						name: key.toString(),
@@ -66,7 +66,7 @@ export class PopupList extends Popup {
 					this.current
 				); // list like object {"align": {list: {"left": {exec: alert}, "right": {}}}}
 			} else {
-				button = new ToolbarButton(
+				button = makeButton(
 					this.jodit,
 					{
 						name: key.toString(),
@@ -116,6 +116,7 @@ export class PopupList extends Popup {
 	) {
 		super(jodit, target, current, className);
 	}
+
 	destruct() {
 		if (this.isDestructed) {
 			return;
@@ -126,3 +127,5 @@ export class PopupList extends Popup {
 		super.destruct();
 	}
 }
+
+import { makeButton, makeCollection } from '../toolbar/factory';

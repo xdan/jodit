@@ -26,10 +26,10 @@ import {
 	IJodit,
 	IViewOptions,
 	NodeFunction,
-	Attributes
+	Attributes, ButtonsOption
 } from './types';
 import { IFileBrowserCallBackData } from './types/fileBrowser';
-import { Buttons, Controls, IControlType } from './types/toolbar';
+import { Controls, IControlType } from './types/toolbar';
 import { extend } from './modules/helpers/extend';
 
 /**
@@ -377,7 +377,7 @@ export class Config implements IViewOptions {
 	/**
 	 * Delay before show tooltip
 	 */
-	showTooltipDelay: number = 300;
+	showTooltipDelay: number = 1000;
 
 	/**
 	 * Instead of create custop tooltip - use native title tooltips
@@ -667,7 +667,7 @@ export class Config implements IViewOptions {
 	 *  });
 	 *  ```
 	 */
-	buttons: Buttons = [
+	buttons: ButtonsOption = [
 		'source',
 		'|',
 		'bold',
@@ -716,7 +716,7 @@ export class Config implements IViewOptions {
 	/**
 	 * The list of buttons that appear in the editor's toolbar on medium places (≥ options.sizeMD).
 	 */
-	buttonsMD: Buttons = [
+	buttonsMD: ButtonsOption = [
 		'source',
 		'|',
 		'bold',
@@ -749,7 +749,7 @@ export class Config implements IViewOptions {
 	/**
 	 * The list of buttons that appear in the editor's toolbar on small places (≥ options.sizeSM).
 	 */
-	buttonsSM: Buttons = [
+	buttonsSM: ButtonsOption = [
 		'source',
 		'|',
 		'bold',
@@ -780,7 +780,7 @@ export class Config implements IViewOptions {
 	/**
 	 * The list of buttons that appear in the editor's toolbar on extra small places (< options.sizeSM).
 	 */
-	buttonsXS: Buttons = [
+	buttonsXS: ButtonsOption = [
 		'bold',
 		'image',
 		'|',

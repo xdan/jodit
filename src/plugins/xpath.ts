@@ -10,10 +10,10 @@ import { ContextMenu } from '../modules/ContextMenu';
 import { Dom } from '../modules/Dom';
 import { getXPathByElement } from '../modules/helpers/selector';
 import { Plugin } from '../modules/Plugin';
-import { ToolbarButton } from '../modules/toolbar/button/button';
-import { IControlType, IControlTypeStrong } from '../types/toolbar';
+import { IControlType, IControlTypeStrong, IToolbarButton } from '../types/toolbar';
 import { trim } from '../modules/helpers/string';
 import { attr } from '../modules/helpers/utils';
+import { makeButton } from '../modules/toolbar/factory';
 
 declare module '../Config' {
 	interface Config {
@@ -116,7 +116,7 @@ export class xpath extends Plugin {
 		return li;
 	};
 
-	private selectAllButton!: ToolbarButton;
+	private selectAllButton!: IToolbarButton;
 
 	private removeSelectAll = () => {
 		if (this.selectAllButton) {
@@ -127,7 +127,8 @@ export class xpath extends Plugin {
 
 	private appendSelectAll = () => {
 		this.removeSelectAll();
-		this.selectAllButton = new ToolbarButton(this.jodit, {
+
+		this.selectAllButton = makeButton(this.jodit, {
 			name: 'selectall',
 			...this.jodit.options.controls.selectall
 		} as IControlTypeStrong);

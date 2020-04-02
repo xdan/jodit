@@ -36,7 +36,7 @@ export function call<T extends Array<any>, R>(
 export function attr(
 	elm: HTMLElement | null,
 	key: string,
-	value?: string | number | null
+	value?: string | number | boolean | null
 ): null | string {
 	if (!elm || !isFunction(elm.getAttribute)) {
 		return null;

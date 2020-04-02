@@ -20,7 +20,7 @@ import {
 import { Plugin } from '../modules/Plugin';
 import { Table } from '../modules/Table';
 import { Popup } from '../modules/popup/popup';
-import { IDictionary, IJodit, IPopup, IToolbarCollection } from '../types';
+import { Buttons, IDictionary, IJodit, IPopup, IToolbarCollection } from '../types';
 import { IControlType } from '../types/toolbar';
 import { IBound } from '../types/types';
 import { ToolbarCollection } from '../modules';
@@ -500,6 +500,7 @@ export class inlinePopup extends Plugin {
 				.indexOf(type.toLowerCase()) !== -1
 		);
 	}
+
 	private reCalcPosition = () => {
 		if (this.__getRect) {
 			this.calcPosition(this.__getRect(), this.calcWindSizes());
@@ -680,14 +681,13 @@ export class inlinePopup extends Plugin {
 			.on('recalcPositionPopup', this.reCalcPosition)
 			.on('getDiffButtons.mobile', (_toolbar: ToolbarCollection):
 				| void
-				| string[] => {
+				| Buttons => {
 				if (this.toolbar === _toolbar) {
 					return splitArray(editor.options.buttons)
-						.filter(name => name !== '|' && name !== '\n')
-						.filter((name: string) => {
-							return (
-								this.toolbar.getButtonsList().indexOf(name) < 0
-							);
+						.filter((item) => {
+							const name = isString(item) ? item : item.name;
+
+							return name && name !== '|' && name !== '\n' && this.toolbar.getButtonsList().indexOf(name) < 0
 						});
 				}
 			})

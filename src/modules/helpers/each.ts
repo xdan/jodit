@@ -17,12 +17,18 @@ export function each<T>(
 
 export function each<T>(
 	obj: T[] | IDictionary<T>,
+	callback: eachCallback<T, number | string>
+): boolean;
+
+export function each<T>(
+	obj: T[] | IDictionary<T>,
 	callback: eachCallback<T, any>
 ): boolean {
 	let length: number, keys: string[], i: number;
 
 	if (Array.isArray(obj)) {
 		length = obj.length;
+
 		for (i = 0; i < length; i += 1) {
 			if (callback.call(obj[i], i, obj[i]) === false) {
 				return false;
@@ -30,6 +36,7 @@ export function each<T>(
 		}
 	} else {
 		keys = Object.keys(obj);
+
 		for (i = 0; i < keys.length; i += 1) {
 			if (callback.call(obj[keys[i]], keys[i], obj[keys[i]]) === false) {
 				return false;

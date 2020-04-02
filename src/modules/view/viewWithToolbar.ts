@@ -9,7 +9,7 @@ import { View } from './view';
 import { splitArray } from '../helpers/array';
 import { STATUSES } from '../Component';
 import { Dom } from '../Dom';
-import { IToolbarCollection } from '../../types';
+import { Buttons, IToolbarCollection } from '../../types';
 import { makeCollection } from '../toolbar/factory';
 
 export class ViewWithToolbar extends View implements IViewWithToolbar {
@@ -52,8 +52,10 @@ export class ViewWithToolbar extends View implements IViewWithToolbar {
 			toolbarContainer = this.resolveElement(this.options.toolbar);
 		}
 
+		const buttons = splitArray(this.options.buttons) as Buttons;
+
 		this.toolbar.build(
-			splitArray(this.options.buttons).concat(this.options.extraButtons),
+			buttons.concat(this.options.extraButtons),
 			toolbarContainer
 		);
 	}

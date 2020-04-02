@@ -17,21 +17,21 @@ import { trim } from '../helpers/string';
 import { isString } from '../helpers/checker';
 import { css } from '../helpers';
 
-export abstract class ToolbarElement<T extends IViewBased = IViewBased>
+export abstract class ToolbarElement<T extends IViewBased = IViewBased, N = unknown>
 	extends Component<T>
 	implements IToolbarElement {
 	container!: HTMLElement;
 	parentToolbar?: IToolbarCollection;
 
-	constructor(jodit: T) {
+	constructor(jodit: T, ...args: N[]) {
 		super(jodit);
-		this.container = this.createContainer();
+		this.container = this.createContainer(...args);
 	}
 
 	/**
 	 * Container factory
 	 */
-	protected abstract createContainer(): HTMLElement;
+	protected abstract createContainer(...args: N[]): HTMLElement;
 
 	/**
 	 * Set parent toolbar to element

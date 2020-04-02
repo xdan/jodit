@@ -1,11 +1,106 @@
+@import (reference) '../../../styles/variables';
+@import (reference) '../../../styles/mixins';
+
+@color-button-background-hover: #dde4ef;
+
+.button-size(@size, @plus: 20px) {
+	min-width: @size + @plus;
+	height: @size + @plus;
+
+	.jodit_icon {
+		width: @size;
+		height: @size;
+	}
+
+	&.jodit-toolbar__button,
+	.jodit-toolbar__button {
+		min-width: @size + @plus;
+		height: @size + @plus;
+	}
+
+	.jodit-toolbar__item-trigger {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		width: @size;
+		height: 100%;
+
+		svg {
+			width: @size - @plus / 5;
+		}
+	}
+}
+
+.button-state() {
+	&:hover {
+		background-color: @color-button-background-hover;
+		outline: 0;
+		opacity: 1;
+	}
+
+	&:active,
+	&.jodit-toolbar__button_active {
+		background-color: fade(@color-button-background-hover, 40);
+		outline: 0;
+	}
+}
+
 .jodit-toolbar {
+	&__button,
+	&__item {
+		box-sizing: border-box;
+		user-select: none;
+		background-clip: padding-box;
+		text-decoration: none;
+
+		outline: 0;
+	}
+
 	&__button {
-		margin: 0;
 		padding: 0;
-		outline: none;
 		position: relative;
 		text-align: center;
-		cursor: pointer;
-		transition: background-color 0.2s linear, opacity 0.1s linear;
+
+		background: 0 0;
+		text-transform: none;
+		font-style: normal;
+		box-shadow: none;
+		border: 0;
+
+		.button-state();
+	}
+
+	&__item {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin: 4px 2px;
+
+		.jodit-toolbar__button {
+			margin: 0;
+		}
+
+		border-radius: 3px;
+		border: 1px solid transparent;
+
+		&:hover {
+			border-color: @color-button-background-hover;
+		}
+
+		.button-size(@icon_middle_size);
+
+		&_small {
+			.button-size(@icon_small_size);
+		}
+
+		&_large {
+			.button-size(@icon_large_size);
+		}
+	}
+
+	&__item-trigger {
+		opacity: 0.4;
+		.button-state();
 	}
 }

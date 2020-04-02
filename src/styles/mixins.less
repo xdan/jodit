@@ -5,10 +5,9 @@
  */
 @import (reference) './variables';
 
-.size (@size) {
-	min-width: @size;
-	height: @size;
-	line-height: @size;
+.size (@width, @height) {
+	width: @width;
+	height: @height;
 }
 
 .font() {
@@ -20,33 +19,6 @@
 	background-image: none;
 	box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15),
 		0 1px 2px rgba(0, 0, 0, 0.05);
-}
-
-.toolbar_size (@size) {
-	min-height: @size !important;
-
-	.jodit_toolbar_btn {
-		.size(@size * 2);
-
-		&.jodit_toolbar_btn-separator {
-			height: @size * 2 - 4px;
-			width: 0;
-			min-width: 0;
-		}
-
-		&.jodit_with_dropdownlist {
-			padding: 0 @size / 2 - 1px;
-
-			.jodit_with_dropdownlist-trigger {
-				padding-left: @size / 3;
-
-				svg {
-					width: @size / 2;
-					height: @size / 2;
-				}
-			}
-		}
-	}
 }
 
 .jodit_status(

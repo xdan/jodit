@@ -6,7 +6,7 @@
 
 import { Config } from '../Config';
 import * as consts from '../constants';
-import { IControlType, IToolbarCollection } from '../types/toolbar';
+import { Buttons, IControlType, IToolbarCollection } from '../types/toolbar';
 import { splitArray } from '../modules/helpers/array';
 import { IJodit } from '../types';
 import { makeCollection } from '../modules/toolbar/factory';
@@ -117,10 +117,10 @@ export function mobile(editor: IJodit) {
 		})
 		.on('getDiffButtons.mobile', (toolbar: IToolbarCollection):
 			| void
-			| string[] => {
+			| Buttons => {
 			if (toolbar === editor.toolbar) {
 				return splitArray(editor.options.buttons).filter(
-					(i: string | IControlType) => {
+					(i) => {
 						return store.indexOf(i) < 0;
 					}
 				);

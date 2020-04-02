@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Buttons, Controls, IControlType, IProgressBar, IToolbarCollection } from './toolbar';
+import { Buttons, ButtonsOption, Controls, IControlType, IProgressBar, IToolbarCollection } from './toolbar';
 import { IComponent, IDictionary } from './types';
 import { Attributes, ICreate } from './create';
 import { IEventsNative } from './events';
@@ -23,9 +23,10 @@ interface IToolbarOptions {
 	toolbarButtonSize?: 'small' | 'middle' | 'large'
 	textIcons?: boolean;
 
-	extraButtons: Array<string | IControlType>;
+	extraButtons: Buttons;
 	removeButtons: string[];
-	buttons: Buttons;
+
+	buttons: ButtonsOption;
 
 	showTooltip?: boolean;
 	showTooltipDelay?: number;

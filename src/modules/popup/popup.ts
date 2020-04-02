@@ -9,7 +9,6 @@ import { Dom } from '../Dom';
 import { css, offset } from '../helpers/';
 import { Component, STATUSES } from '../Component';
 import { IControlTypeStrong, IPopup } from '../../types';
-import { Jodit } from '../../Jodit';
 
 export class Popup extends Component implements IPopup {
 	private calcPosition() {
@@ -130,7 +129,7 @@ export class Popup extends Component implements IPopup {
 		noStandardActions || this.jodit.events.on('closeAllPopups', this.close);
 		this.jodit.markOwner(this.container);
 
-		this.container.classList.add(this.className + '-open');
+		this.container.classList.add(this.className + '_open');
 		this.doOpen(content);
 
 		this.target.appendChild(this.container);
@@ -190,7 +189,7 @@ export class Popup extends Component implements IPopup {
 		jodit: IViewBased,
 		readonly target: HTMLElement,
 		readonly current?: HTMLElement,
-		readonly className: string = 'jodit_toolbar_popup'
+		readonly className: string = 'jodit-toolbar__popup'
 	) {
 		super(jodit);
 
@@ -232,4 +231,3 @@ export class Popup extends Component implements IPopup {
 		super.destruct();
 	}
 }
-

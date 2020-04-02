@@ -22,13 +22,13 @@ import * as center from './center.svg';
 import * as chain_broken from './chain-broken.svg';
 import * as check from './check.svg';
 import * as check_square from './check-square.svg';
+import * as chevron from './chevron.svg';
 import * as copyformat from './copyformat.svg';
 import * as crop from './crop.svg';
 import * as copy from './copy.svg';
 import * as cut from './cut.svg';
 import * as dedent from './dedent.svg';
 import * as dots from './dots.svg';
-import * as dropdown_arrow from './dropdown-arrow.svg';
 import * as enter from './enter.svg';
 import * as eraser from './eraser.svg';
 import * as eye from './eye.svg';
@@ -108,7 +108,7 @@ export {
 	cut,
 	dedent,
 	dots,
-	dropdown_arrow,
+	chevron,
 	enter,
 	eraser,
 	eye,

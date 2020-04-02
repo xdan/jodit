@@ -254,9 +254,15 @@ interface IControlTypeStrong extends IControlType {
 	name: string;
 }
 
+interface IControlTypeStrongList extends IControlTypeStrong {
+	list: IDictionary<string> | string[] | string;
+}
+
 export type Controls = IDictionary<IControlType>;
 
-export type Buttons = Array<string | IControlType> | string;
+export type Buttons = Array<string | IControlType>;
+
+export type ButtonsOption = Buttons | string;
 
 interface IToolbarElement extends IComponent, IContainer, IFocusable {
 	parentToolbar?: IToolbarCollection;
@@ -268,8 +274,9 @@ interface IToolbarButton extends IToolbarElement, IButton {
 	trigger: Nullable<HTMLElement>;
 	target?: HTMLElement;
 
-	isShouldBeDisabled(): boolean;
-	isShouldBeActive(): boolean;
+	control: IControlTypeStrong;
+	isToolbarButton: true;
+
 	update(): void;
 }
 
@@ -292,6 +299,9 @@ interface IToolbarCollection extends IComponent, IContainer {
 
 	update(): void;
 	immediateUpdate(): void;
+
+	shouldBeDisabled(button: IToolbarButton): boolean;
+	shouldBeActive(button: IToolbarButton): boolean;
 }
 
 export interface IStatusBar extends IComponent {

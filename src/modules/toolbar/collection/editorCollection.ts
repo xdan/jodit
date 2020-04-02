@@ -1,22 +1,28 @@
-import { ToolbarButton } from './button';
-import * as consts from '../../../constants';
-import { IDictionary, IJodit, IViewBased } from '../../../types';
-import { Dom } from '../../Dom';
-import { css } from '../../helpers';
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2020 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
 
-export class ToolbarEditorButton extends ToolbarButton<IJodit> {
+import { ToolbarCollection } from './collection';
+import { IJodit } from '../../../types/jodit';
+import * as consts from '../../../constants';
+import { Dom } from '../../Dom';
+import { IDictionary, IToolbarButton, IViewBased } from '../../../types';
+import { css, isFunction } from '../../helpers';
+
+export class ToolbarEditorCollection extends ToolbarCollection<IJodit> {
 	/** @override */
-	isShouldBeDisabled(): boolean  {
-		const disabled = super.isShouldBeDisabled();
+	shouldBeDisabled(button: IToolbarButton): boolean  {
+		const disabled = super.shouldBeDisabled(button);
 
 		if (disabled !== undefined) {
 			return disabled;
 		}
 
-		const mode: number =
-			this.control === undefined || this.control.mode === undefined
+		const mode: number = button.control.mode === undefined
 				? consts.MODE_WYSIWYG
-				: this.control.mode;
+				: button.control.mode;
 
 		return !(
 			mode === consts.MODE_SPLIT || mode === this.jodit.getRealMode()
@@ -24,8 +30,8 @@ export class ToolbarEditorButton extends ToolbarButton<IJodit> {
 	}
 
 	/** @override */
-	isShouldBeActive(): boolean {
-		const active = super.isShouldBeActive();
+	shouldBeActive(button: IToolbarButton): boolean {
+		const active = super.shouldBeActive(button);
 
 		if (active !== undefined) {
 			return active;
@@ -41,8 +47,8 @@ export class ToolbarEditorButton extends ToolbarButton<IJodit> {
 
 		let elm: Node | false;
 
-		if (this.control.tags) {
-			let tags: string[] = this.control.tags;
+		if (button.control.tags) {
+			let tags: string[] = button.control.tags;
 
 			elm = element;
 
@@ -65,8 +71,8 @@ export class ToolbarEditorButton extends ToolbarButton<IJodit> {
 		}
 
 		// activate by supposed css
-		if (this.control.css) {
-			const css = this.control.css;
+		if (button.control.css) {
+			const css = button.control.css;
 
 			elm = element;
 			if (
@@ -90,6 +96,11 @@ export class ToolbarEditorButton extends ToolbarButton<IJodit> {
 		return false;
 	}
 
+	/** @override */
+	getTarget(): Node | void {
+		return this.jodit.selection.current() || undefined;
+	}
+
 	private checkActiveStatus = (
 		cssObject:
 			| IDictionary<string | string[]>
@@ -102,7 +113,7 @@ export class ToolbarEditorButton extends ToolbarButton<IJodit> {
 		Object.keys(cssObject).forEach((cssProperty: string) => {
 			const cssValue = cssObject[cssProperty];
 
-			if (typeof cssValue === 'function') {
+			if (isFunction(cssValue)) {
 				if (cssValue(this.jodit, css(node, cssProperty).toString())) {
 					matches += 1;
 				}
